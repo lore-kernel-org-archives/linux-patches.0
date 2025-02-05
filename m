@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DA71FC100;
-	Wed,  5 Feb 2025 14:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35F218D656;
+	Wed,  5 Feb 2025 14:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766939; cv=none; b=seqtHKR6n5AZHpuueLM1m6ZESh88ya5560nwX9TwAahL9BKEYq3SIuAjAF4FxDqmdn/94TTM9lhhbODWLPdvP63AMcziAIkt1ghfH+cUn3rxZNg7hYt9UGDQKYDK/MOJb+Ke1ILqrGFSl5H2+3NvhDLyWRFhY3SRPQoi8JwU78c=
+	t=1738766942; cv=none; b=H6n6E2+Ma2yHJlFj6n9s6+MTFJ66sBw9ZuOp6ja+yJzUAE6l3SABa7CYM9rsqn0JXwsCmFWFKFQzlcefrPF00orIJ3H/dYbfhlQ6FeDamgyBivAnLD2ts4adHvctdUkprNYoyZnhjZXmPy50G2D5KeWqPMWq//RNm9mTd9iqIvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766939; c=relaxed/simple;
-	bh=yAKCj0MhBVkT6mzSt6COoBNFepHUB9l/aZROav9VYN4=;
+	s=arc-20240116; t=1738766942; c=relaxed/simple;
+	bh=W36YvPwS1vTkGt6y1YU539yM4cOUAAtikAxKOCf0cYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxXFZtu0vs6w8I9yXPBDNwwOSVemIsjPEzP8xbeIYQoxO94bg+zLGt6KbeWzA/GMfoC8iZsd/jGdikT4Z4wOrE9ezwrdTzQt2cB8gDP+Y00ZUanYz7CBK+McmQq85mNwrFr5qaEezjd44Qtu0kCxZOVmFkC8FrCzFP40djh/iDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQYO0Btn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k9D8lvXp6imYyOUXcfV5MmjpVO+aZ5LV/EfqVgB5fqaQUuuwcJhQrSI+oQlvF1Sboy+GwCayz4b/Uy+fdDpaBxPhQa3T5eO8KfEJnBhSpvgNGWrSXkhVmTsGu9LUhd+nUsTfRBO0Xdu/kmoIotYRQjdc/C3GYZI2bvIGK0zYyaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/EbGoyv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQYO0Btn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF85CC4CED1;
-	Wed,  5 Feb 2025 14:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/EbGoyv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1A9C4CED1;
+	Wed,  5 Feb 2025 14:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766938;
-	bh=yAKCj0MhBVkT6mzSt6COoBNFepHUB9l/aZROav9VYN4=;
+	s=korg; t=1738766941;
+	bh=W36YvPwS1vTkGt6y1YU539yM4cOUAAtikAxKOCf0cYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQYO0Btn1PqWV2ZYZNw0T3hCDXQDvWN/1TVjzGvTMeZsXOUo35Zqw6aLu0ZDx8g0Y
-	 fvJleIiNY6Rk3dT4g6Ac1SJpgVUxD/UjHIk/CE5L9OthbPtNoNgTzhYpMnJh0b7o1N
-	 18PJyRAfHraFxlr4IMpid8fu51op5dt+9xYDmAME=
+	b=s/EbGoyvd3FJUTfuzLPZO37wAjlUYj1G0MVzcCD+Gu2Dzqnux/kKnkhZZwpmD2FNu
+	 akEi6jd/lMeJVcDpi3JTVcY4qQbrVlxFY0UYmkRVHtDtIKcwb9KP17879TBZp7BI+f
+	 mlwy3GvmsCEu73Acp6Y4NpRT0jqeLR5pOXN9Lht4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Val Packett <val@packett.cool>,
+	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 331/623] ARM: at91: pm: change BU Power Switch to automatic mode
-Date: Wed,  5 Feb 2025 14:41:13 +0100
-Message-ID: <20250205134508.886363144@linuxfoundation.org>
+Subject: [PATCH 6.12 383/590] arm64: dts: mediatek: add per-SoC compatibles for keypad nodes
+Date: Wed,  5 Feb 2025 14:42:18 +0100
+Message-ID: <20250205134509.920255121@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,95 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 6fc5bdfa872b7da51b5507a1327a17c3db2fcf95 ]
+[ Upstream commit 6139d9e9e397dc9711cf10f8f548a8f9da3b5323 ]
 
-Change how the Backup Unit Power is configured and force the
-automatic/hardware mode.
-This change eliminates the need for software management of the power
-switch, ensuring it transitions to the backup power source before
-entering low power modes.
+The mt6779-keypad binding specifies using a compatible for the
+actual SoC before the generic MT6779 one.
 
-This is done in the only location where this switch was configured. It's
-usually done in the bootloader.
-
-Previously, the loss of the VDDANA (or VDDIN33) power source was not
-automatically compensated by an alternative power source. This resulted
-in the loss of Backup Unit content, including Backup Self-refresh low
-power mode information, OTP emulation configuration, and boot
-configuration, for instance.
-
-Fixes: ac809e7879b1 ("ARM: at91: pm: switch backup area to vbat in backup mode")
-Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Link: https://lore.kernel.org/r/20241125165648.509162-1-nicolas.ferre@microchip.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Fixes: a8013418d35c ("arm64: dts: mediatek: mt8183: add keyboard node")
+Fixes: 6ff945376556 ("arm64: dts: mediatek: Initial mt8365-evk support")
+Signed-off-by: Val Packett <val@packett.cool>
+Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20241225192631.25017-3-val@packett.cool
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-at91/pm.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183.dtsi | 3 ++-
+ arch/arm64/boot/dts/mediatek/mt8365.dtsi | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mach-at91/pm.c b/arch/arm/mach-at91/pm.c
-index b9b995f8a36e1..05a1547642b60 100644
---- a/arch/arm/mach-at91/pm.c
-+++ b/arch/arm/mach-at91/pm.c
-@@ -598,7 +598,21 @@ static int at91_suspend_finish(unsigned long val)
- 	return 0;
- }
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+index 0a6578aacf828..9cd5e0cef02a2 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+@@ -1024,7 +1024,8 @@
+ 		};
  
--static void at91_pm_switch_ba_to_vbat(void)
-+/**
-+ * at91_pm_switch_ba_to_auto() - Configure Backup Unit Power Switch
-+ * to automatic/hardware mode.
-+ *
-+ * The Backup Unit Power Switch can be managed either by software or hardware.
-+ * Enabling hardware mode allows the automatic transition of power between
-+ * VDDANA (or VDDIN33) and VDDBU (or VBAT, respectively), based on the
-+ * availability of these power sources.
-+ *
-+ * If the Backup Unit Power Switch is already in automatic mode, no action is
-+ * required. If it is in software-controlled mode, it is switched to automatic
-+ * mode to enhance safety and eliminate the need for toggling between power
-+ * sources.
-+ */
-+static void at91_pm_switch_ba_to_auto(void)
- {
- 	unsigned int offset = offsetof(struct at91_pm_sfrbu_regs, pswbu);
- 	unsigned int val;
-@@ -609,24 +623,19 @@ static void at91_pm_switch_ba_to_vbat(void)
+ 		keyboard: keyboard@10010000 {
+-			compatible = "mediatek,mt6779-keypad";
++			compatible = "mediatek,mt8183-keypad",
++				     "mediatek,mt6779-keypad";
+ 			reg = <0 0x10010000 0 0x1000>;
+ 			interrupts = <GIC_SPI 186 IRQ_TYPE_EDGE_FALLING>;
+ 			clocks = <&clk26m>;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8365.dtsi b/arch/arm64/boot/dts/mediatek/mt8365.dtsi
+index 9c91fe8ea0f96..2bf8c9d02b6ee 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8365.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8365.dtsi
+@@ -449,7 +449,8 @@
+ 		};
  
- 	val = readl(soc_pm.data.sfrbu + offset);
- 
--	/* Already on VBAT. */
--	if (!(val & soc_pm.sfrbu_regs.pswbu.state))
-+	/* Already on auto/hardware. */
-+	if (!(val & soc_pm.sfrbu_regs.pswbu.ctrl))
- 		return;
- 
--	val &= ~soc_pm.sfrbu_regs.pswbu.softsw;
--	val |= soc_pm.sfrbu_regs.pswbu.key | soc_pm.sfrbu_regs.pswbu.ctrl;
-+	val &= ~soc_pm.sfrbu_regs.pswbu.ctrl;
-+	val |= soc_pm.sfrbu_regs.pswbu.key;
- 	writel(val, soc_pm.data.sfrbu + offset);
--
--	/* Wait for update. */
--	val = readl(soc_pm.data.sfrbu + offset);
--	while (val & soc_pm.sfrbu_regs.pswbu.state)
--		val = readl(soc_pm.data.sfrbu + offset);
- }
- 
- static void at91_pm_suspend(suspend_state_t state)
- {
- 	if (soc_pm.data.mode == AT91_PM_BACKUP) {
--		at91_pm_switch_ba_to_vbat();
-+		at91_pm_switch_ba_to_auto();
- 
- 		cpu_suspend(0, at91_suspend_finish);
- 
+ 		keypad: keypad@10010000 {
+-			compatible = "mediatek,mt6779-keypad";
++			compatible = "mediatek,mt8365-keypad",
++				     "mediatek,mt6779-keypad";
+ 			reg = <0 0x10010000 0 0x1000>;
+ 			wakeup-source;
+ 			interrupts = <GIC_SPI 124 IRQ_TYPE_EDGE_FALLING>;
 -- 
 2.39.5
 
