@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A958151988;
-	Wed,  5 Feb 2025 14:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045B77DA6A;
+	Wed,  5 Feb 2025 14:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765966; cv=none; b=OO0w18AVWbvPuJuzuRrEABD/+0mrkZZSBgSMLN08Dr1uI4K17DGVH2Z3S8e/gPYz/WsyNilCiVTLZ0fLH/AUM3Um03UpquLdznDRicwXgVVM7q68+Hn2BjgKyM2I5gVVHYbPx410OC8v0526OzPZV7E84E6ujvlRgJu8IMu/Fj4=
+	t=1738765970; cv=none; b=qqrqosYlnw9WViU8WbsbtTQrWK0gdOl/QeGP0/6d/3firP080n8DU/d7gU1twl0ICACG+k8KQBTTruriuZ30vwuSwdhxt0+zeyPA+DF8481cmNiEyvrr03FSjduTnDzFE237ls7a/Ow3SvV0cOEoIl7IsTU2sC+2wexY5sREJiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765966; c=relaxed/simple;
-	bh=YtlqvZondOfJln95ATmeHOu+gsMoBiU+QAT9tJUq/+c=;
+	s=arc-20240116; t=1738765970; c=relaxed/simple;
+	bh=E2iB9iHL7g7c2NJTL7xjp4+GJpJ94WA+28epPbUMUgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a1MRjWQ4FXmZPB+Sx6ZBy2uFJUG5cR7fLvX9pdyB925Jpppn2tlc9O7vvyV5mThZhjv6tW2+DOCnxcuPLg75UEeFIP6GfIWJ49tZyEBNi6LqXBnq/ltI5rKT1gGQ4zLvkRSlypQT8/4UwX3aUf5qyqpycFKPEo264S660qguXC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGlJyo+P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JRzO9g9w5t4PxPwDrgE8KAYFbB36KZv1xyPtAUfG/yeOZsDJ/iKVrSjXNu5LFxejy2DJzOJz+OuawhQ/KUscxpInh7L/dFEZ8FLVaaEL2uNCIqDyFlFtzSmx5lmVlzJyRp1S6YBBoA6hi0PbHJHRbwE31hAEfo9EyoXs/1eVxvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bmg6wXAF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGlJyo+P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF683C4CED6;
-	Wed,  5 Feb 2025 14:32:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bmg6wXAF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB7FC4CED6;
+	Wed,  5 Feb 2025 14:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765966;
-	bh=YtlqvZondOfJln95ATmeHOu+gsMoBiU+QAT9tJUq/+c=;
+	s=korg; t=1738765969;
+	bh=E2iB9iHL7g7c2NJTL7xjp4+GJpJ94WA+28epPbUMUgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGlJyo+PJciOnk5g1JiUAR+vK+BHND3YYucIyqSnqc+59gALr3X87y7TXj9KvFA5W
-	 Mdv+jhScWg0PiIufKk3CxsleNTcsCiFcJ3lf4d/MyFYRIXO1Lp+VfAPXFVurmxSW1N
-	 gkJFQxR6iddfXZxSF5XqM5d5OcGZ6l2tdYNAlGnI=
+	b=Bmg6wXAFM0TCOxpnQzaD4N9DNBcjiU6ylJuUcy/hr28BsCqooAnc1cs5X7lrzJ5ja
+	 kLgDnHnDniqjjp5zXGTgSTXLIYaxC807PsoNRlmt8NFn03KBcMmYvKmIllRxlWbe93
+	 T+p4wywDTrd7Pd2vr7jq3jPotD1wV5q2EKz7hFQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 316/393] xfrm: replay: Fix the update of replay_esn->oseq_hi for GSO
-Date: Wed,  5 Feb 2025 14:43:55 +0100
-Message-ID: <20250205134432.406090947@linuxfoundation.org>
+Subject: [PATCH 6.13 230/623] net: phy: realtek: always clear NBase-T lpa
+Date: Wed,  5 Feb 2025 14:39:32 +0100
+Message-ID: <20250205134505.024938423@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,63 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit c05c5e5aa163f4682ca97a2f0536575fc7dbdecb ]
+[ Upstream commit d3eb58549842c60ed46f37da7f4da969e3d6ecd3 ]
 
-When skb needs GSO and wrap around happens, if xo->seq.low (seqno of
-the first skb segment) is before the last seq number but oseq (seqno
-of the last segment) is after it, xo->seq.low is still bigger than
-replay_esn->oseq while oseq is smaller than it, so the update of
-replay_esn->oseq_hi is missed for this case wrap around because of
-the change in the cited commit.
+Clear NBase-T link partner advertisement before calling
+rtlgen_read_status() to avoid phy_resolve_aneg_linkmode() wrongly
+setting speed and duplex.
 
-For example, if sending a packet with gso_segs=3 while old
-replay_esn->oseq=0xfffffffe, we calculate:
-    xo->seq.low = 0xfffffffe + 1 = 0x0xffffffff
-    oseq = 0xfffffffe + 3 = 0x1
-(oseq < replay_esn->oseq) is true, but (xo->seq.low <
-replay_esn->oseq) is false, so replay_esn->oseq_hi is not incremented.
+This fixes bogus 2.5G/5G/10G link partner advertisement and thus
+speed and duplex being set by phy_resolve_aneg_linkmode() due to stale
+NBase-T lpa.
 
-To fix this issue, change the outer checking back for the update of
-replay_esn->oseq_hi. And add new checking inside for the update of
-packet's oseq_hi.
-
-Fixes: 4b549ccce941 ("xfrm: replay: Fix ESN wrap around for GSO")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 68d5cd09e891 ("net: phy: realtek: change order of calls in C22 read_status()")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_replay.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/phy/realtek.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/xfrm/xfrm_replay.c b/net/xfrm/xfrm_replay.c
-index ce56d659c55a6..7f52bb2e14c13 100644
---- a/net/xfrm/xfrm_replay.c
-+++ b/net/xfrm/xfrm_replay.c
-@@ -714,10 +714,12 @@ static int xfrm_replay_overflow_offload_esn(struct xfrm_state *x, struct sk_buff
- 			oseq += skb_shinfo(skb)->gso_segs;
- 		}
+diff --git a/drivers/net/phy/realtek.c b/drivers/net/phy/realtek.c
+index 93704abb67878..9cefca1aefa1b 100644
+--- a/drivers/net/phy/realtek.c
++++ b/drivers/net/phy/realtek.c
+@@ -952,15 +952,15 @@ static int rtl822x_read_status(struct phy_device *phydev)
+ {
+ 	int lpadv, ret;
  
--		if (unlikely(xo->seq.low < replay_esn->oseq)) {
--			XFRM_SKB_CB(skb)->seq.output.hi = ++oseq_hi;
--			xo->seq.hi = oseq_hi;
--			replay_esn->oseq_hi = oseq_hi;
-+		if (unlikely(oseq < replay_esn->oseq)) {
-+			replay_esn->oseq_hi = ++oseq_hi;
-+			if (xo->seq.low < replay_esn->oseq) {
-+				XFRM_SKB_CB(skb)->seq.output.hi = oseq_hi;
-+				xo->seq.hi = oseq_hi;
-+			}
- 			if (replay_esn->oseq_hi == 0) {
- 				replay_esn->oseq--;
- 				replay_esn->oseq_hi--;
++	mii_10gbt_stat_mod_linkmode_lpa_t(phydev->lp_advertising, 0);
++
+ 	ret = rtlgen_read_status(phydev);
+ 	if (ret < 0)
+ 		return ret;
+ 
+ 	if (phydev->autoneg == AUTONEG_DISABLE ||
+-	    !phydev->autoneg_complete) {
+-		mii_10gbt_stat_mod_linkmode_lpa_t(phydev->lp_advertising, 0);
++	    !phydev->autoneg_complete)
+ 		return 0;
+-	}
+ 
+ 	lpadv = phy_read_paged(phydev, 0xa5d, 0x13);
+ 	if (lpadv < 0)
 -- 
 2.39.5
 
