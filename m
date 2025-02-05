@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7699156886;
-	Wed,  5 Feb 2025 14:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B68314F136;
+	Wed,  5 Feb 2025 14:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765424; cv=none; b=fLaQP7KBX5oQpoLVC8f4EolOJnt/Qdlwnhe8iGHmk5hyg/CH8IS2TlU7J46jVVQJhMe1UFwqMxdn6tizPABANSOoj5+1W4r7cbxW58+arETmLH8uyUp5LpGRDWbL+XKCVCWfvr171C9xFyLpiW+eOAIrEyeazpZv7qoOVIQRXoo=
+	t=1738765428; cv=none; b=pZv8cIB/A0xmLbdMdSwRBZV60HxnIV0Fl0lUFM3v7tls4Q5I4cHlhlAnv01aIi0+enED604J2USs8VYZk9sYu9MT4/1/NoKUt3rP1TxBdtismrPHhVBL9gas7ALVcfqMRKLQGKUbgyxgFN7ytiRiL+9ChnkbngwHqouLSg6/pz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765424; c=relaxed/simple;
-	bh=SqcJNi30XMhdA/UBN71P/QCyfNBTutLafddnPPMaRO0=;
+	s=arc-20240116; t=1738765428; c=relaxed/simple;
+	bh=Abbz0biAIwnfDkzOh0EEY2IpyHPh+iYUNTUMaO7UwMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LT60noVHc+2HSwi+6OBx7DvjhPNrxJLo47s7Gr1NGnv80uvIUSiWwYqOZclrBL88vEkDDuD6FojkPU/mezPcz/CtlMv84BnaPDsORA0y63fjEuGfgyMc/LFm4loYUtbeeGInlLuNCbw9NifoDMhZhwxkLLgNQciVGoXmG6ERwW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qa+KvmcC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RcQePXHBEnLZ5/t1miSGqNWQEg5GsJPG3SpO7hXxIv/ezKJKNxl1hOl14H0jFgbvIZ7cw+I1cwAflgBSgICLm1XSqvTeYFD7lASEnq6cav5AsjBd4cG7rLfbB7m8jLTlJMRGbfT+hJatQzQNEbTugX8u0wKC8uggmTugtpzn11k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXghtQD6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qa+KvmcC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A73C4CED1;
-	Wed,  5 Feb 2025 14:23:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXghtQD6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B71AC4CED1;
+	Wed,  5 Feb 2025 14:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765424;
-	bh=SqcJNi30XMhdA/UBN71P/QCyfNBTutLafddnPPMaRO0=;
+	s=korg; t=1738765427;
+	bh=Abbz0biAIwnfDkzOh0EEY2IpyHPh+iYUNTUMaO7UwMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qa+KvmcC3ChiysBtCxEjXRvw9hGYy+T7PeOhgDWdFSIDsCoH/dwKZWQu06qwneHRv
-	 g8RIOtplASV2tQJ4O0w7p2Ex4Y1IuSSPzW7CUAX4aj6OoTpmKyKGTC6IWvl5hvNjXM
-	 gvKXhgtVJNg1Zz0lzR0LznWQS1AsUEAR2BNPLSmE=
+	b=DXghtQD6jRyxu/c0M7iz8AaZdl/JYEmk1QdP6rzgfKF50//mSxjEYN5GqyXvMFkyE
+	 I77NPeV/WhZLhQyrorRwfTQGYCvL0V2bPVdEGGJ0LXJuwzBJfKUF1n9LcDXXIMdJAN
+	 5KDlNA+3ahfBBSj3AGGZNB03GCTVhWk+GU4JE4zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
+	Dave Chinner <david@fromorbit.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Paul Moore <paul@paul-moore.com>,
+	syzbot+34b68f850391452207df@syzkaller.appspotmail.com,
+	syzbot+360866a59e3c80510a62@syzkaller.appspotmail.com,
+	Ubisectech Sirius <bugreport@ubisectech.com>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 266/393] dts: arm64: mediatek: mt8195: Remove MT8183 compatible for OVL
-Date: Wed,  5 Feb 2025 14:43:05 +0100
-Message-ID: <20250205134430.490241025@linuxfoundation.org>
+Subject: [PATCH 6.13 177/623] landlock: Handle weird files
+Date: Wed,  5 Feb 2025 14:38:39 +0100
+Message-ID: <20250205134503.005919459@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,43 +51,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit ce3dbc46d7e30a84b8e99c730e3172dd5efbf094 ]
+[ Upstream commit 49440290a0935f428a1e43a5ac8dc275a647ff80 ]
 
-The OVL hardware capabilities have changed starting from MT8195,
-making the MT8183 compatible no longer applicable.
-Therefore, it is necessary to remove the MT8183 compatible for OVL.
+A corrupted filesystem (e.g. bcachefs) might return weird files.
+Instead of throwing a warning and allowing access to such file, treat
+them as regular files.
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Fixes: b852ee68fd72 ("arm64: dts: mt8195: Add display node for vdosys0")
-Link: https://lore.kernel.org/r/20241219181531.4282-5-jason-jh.lin@mediatek.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: Paul Moore <paul@paul-moore.com>
+Reported-by: syzbot+34b68f850391452207df@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/000000000000a65b35061cffca61@google.com
+Reported-by: syzbot+360866a59e3c80510a62@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/67379b3f.050a0220.85a0.0001.GAE@google.com
+Reported-by: Ubisectech Sirius <bugreport@ubisectech.com>
+Closes: https://lore.kernel.org/r/c426821d-8380-46c4-a494-7008bbd7dd13.bugreport@ubisectech.com
+Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
+Reviewed-by: Günther Noack <gnoack3000@gmail.com>
+Link: https://lore.kernel.org/r/20250110153918.241810-1-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/landlock/fs.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index 1cb22257adb36..7ba30209ba9a9 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -2677,7 +2677,7 @@
- 		};
+diff --git a/security/landlock/fs.c b/security/landlock/fs.c
+index e31b97a9f175a..7adb25150488f 100644
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -937,10 +937,6 @@ static access_mask_t get_mode_access(const umode_t mode)
+ 	switch (mode & S_IFMT) {
+ 	case S_IFLNK:
+ 		return LANDLOCK_ACCESS_FS_MAKE_SYM;
+-	case 0:
+-		/* A zero mode translates to S_IFREG. */
+-	case S_IFREG:
+-		return LANDLOCK_ACCESS_FS_MAKE_REG;
+ 	case S_IFDIR:
+ 		return LANDLOCK_ACCESS_FS_MAKE_DIR;
+ 	case S_IFCHR:
+@@ -951,9 +947,12 @@ static access_mask_t get_mode_access(const umode_t mode)
+ 		return LANDLOCK_ACCESS_FS_MAKE_FIFO;
+ 	case S_IFSOCK:
+ 		return LANDLOCK_ACCESS_FS_MAKE_SOCK;
++	case S_IFREG:
++	case 0:
++		/* A zero mode translates to S_IFREG. */
+ 	default:
+-		WARN_ON_ONCE(1);
+-		return 0;
++		/* Treats weird files as regular files. */
++		return LANDLOCK_ACCESS_FS_MAKE_REG;
+ 	}
+ }
  
- 		ovl0: ovl@1c000000 {
--			compatible = "mediatek,mt8195-disp-ovl", "mediatek,mt8183-disp-ovl";
-+			compatible = "mediatek,mt8195-disp-ovl";
- 			reg = <0 0x1c000000 0 0x1000>;
- 			interrupts = <GIC_SPI 636 IRQ_TYPE_LEVEL_HIGH 0>;
- 			power-domains = <&spm MT8195_POWER_DOMAIN_VDOSYS0>;
 -- 
 2.39.5
 
