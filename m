@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28B5151988;
-	Wed,  5 Feb 2025 14:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEA7151988;
+	Wed,  5 Feb 2025 14:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766203; cv=none; b=CWrOCkWSejjOgQXgFaaWGm9fuVAu1vSD2hQuOLSc0XSXkk4Eo2WVaJl049N+wyWibY11FBky/ZdrSzJpryUk1/aCQvMbk94L+UX6phWoHl6uzgDSXrSbYJShGcYluMjopjHgBBQDKHSVtkBwpu4qatqIv4pkh4Lz8Q2qondjv54=
+	t=1738766207; cv=none; b=Y1O/LDCOgVmvdFd/U+G9rvOZmbQTWJALLCtRPXADt6MEl0b2nWyJMHEQAxRWI5NPzLSD7MD3CDgGg8wjMK27+ozHIQAAIeu82I6N3nAEwO/aGKNlZohowLVxiVnlt8mPrrnUs6gbj0NyH9wJk4lNEYCjnyt0K6vjVpxKNz2cy2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766203; c=relaxed/simple;
-	bh=isx3sx9eiCoGXWQRCr5SIDTAxN9xTULs9pZCwijIq5I=;
+	s=arc-20240116; t=1738766207; c=relaxed/simple;
+	bh=bbpzJ9JgP5TZLkgcOpePTIkLs3c+90pODV/1I2Cz+qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SnDYjpiDSueegQr96xE6BUQW9p2KMIylqAPo/co9O7m4jRLx4eRe98GYopba5qQ12hKZNT9ZgspV/7SnFtScAV33srRN+kWid0GSLAqfjo9qjYqrjnfyYlQWg5SEoKXZY9iRJ5vhtMmknc18Zo+jMOOmuVulZqTRyb7cwBUDiq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RfCvJzhy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TlJx9wj5szweQwxTL7ExFj/a5lNywnDWmcWbAgttNOHyDlUS4ov7hQBn341R5BtaAzT41R/fK9S5mI/UsRql61UrLIOllf7tjuc0z6v7a1C2f9wGCHs7YA9VTXEjs7z7+CLYkHOdbk91ES/wa7J3ngNEtnUSPzPMFgCwmU1975E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Doc6lohx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RfCvJzhy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A251C4CEE3;
-	Wed,  5 Feb 2025 14:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Doc6lohx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BFCAC4CED6;
+	Wed,  5 Feb 2025 14:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766203;
-	bh=isx3sx9eiCoGXWQRCr5SIDTAxN9xTULs9pZCwijIq5I=;
+	s=korg; t=1738766207;
+	bh=bbpzJ9JgP5TZLkgcOpePTIkLs3c+90pODV/1I2Cz+qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RfCvJzhyh2VU5TtvCoNN6npx28spTP7jEVL2n0pELsBioG7htivJuOz4eXYIiu6Ks
-	 iy2efSygNvU9+seeV3GqxMWtMMJVfBCgvrN7erZGQtLUA42CANOFUkSfpp4caMbquX
-	 Aj4P2fs+AfO20ZUr3W7E1LFXX2wnkdfEA1U5oRkE=
+	b=Doc6lohxVKiXvZgeeePbmeE5/T7yiIqTTNwUlXwbsVpOnvKMtBxvu71amB45HOIJr
+	 8s071tW+6qE3+YzoIyvs16sXhmlYKxA/r4fjNPfYUe+Er6lUV+yiy/bycGzTbkg2nY
+	 X7Qod+OENSlChnwUQwPny4Ob55XnPbGsMC34lGno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 234/623] net/mlxfw: Drop hard coded max FW flash image size
-Date: Wed,  5 Feb 2025 14:39:36 +0100
-Message-ID: <20250205134505.178057344@linuxfoundation.org>
+Subject: [PATCH 6.13 252/623] ASoC: cs42l84: Use *-y for Makefile
+Date: Wed,  5 Feb 2025 14:39:54 +0100
+Message-ID: <20250205134505.873344384@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -54,51 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 70d81f25cc92cc4e914516c9935ae752f27d78ad ]
+[ Upstream commit 7916a8d8782d4e53fe0133c8dace20a925e0204e ]
 
-Currently, mlxfw kernel module limits FW flash image size to be
-10MB at most, preventing the ability to burn recent BlueField-3
-FW that exceeds the said size limit.
+We should use *-y instead of *-objs in Makefile for the module
+objects.  *-objs is used rather for host programs.
 
-Thus, drop the hard coded limit. Instead, rely on FW's
-max_component_size threshold that is reported in MCQI register
-as the size limit for FW image.
-
-Fixes: 410ed13cae39 ("Add the mlxfw module for Mellanox firmware flash process")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/1737030796-1441634-1-git-send-email-moshe@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 250304a0fb34 ("ASoC: cs42l84: Add new codec driver")
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20241203141823.22393-5-tiwai@suse.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c | 2 --
- 1 file changed, 2 deletions(-)
+ sound/soc/codecs/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c
-index 46245e0b24623..43c84900369a3 100644
---- a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c
-+++ b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c
-@@ -14,7 +14,6 @@
- #define MLXFW_FSM_STATE_WAIT_TIMEOUT_MS 30000
- #define MLXFW_FSM_STATE_WAIT_ROUNDS \
- 	(MLXFW_FSM_STATE_WAIT_TIMEOUT_MS / MLXFW_FSM_STATE_WAIT_CYCLE_MS)
--#define MLXFW_FSM_MAX_COMPONENT_SIZE (10 * (1 << 20))
- 
- static const int mlxfw_fsm_state_errno[] = {
- 	[MLXFW_FSM_STATE_ERR_ERROR] = -EIO,
-@@ -229,7 +228,6 @@ static int mlxfw_flash_component(struct mlxfw_dev *mlxfw_dev,
- 		return err;
- 	}
- 
--	comp_max_size = min_t(u32, comp_max_size, MLXFW_FSM_MAX_COMPONENT_SIZE);
- 	if (comp->data_size > comp_max_size) {
- 		MLXFW_ERR_MSG(mlxfw_dev, extack,
- 			      "Component size is bigger than limit", -EINVAL);
+diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
+index 57d3aab27d2fe..5a83ee9639661 100644
+--- a/sound/soc/codecs/Makefile
++++ b/sound/soc/codecs/Makefile
+@@ -92,7 +92,7 @@ snd-soc-cs42l52-y := cs42l52.o
+ snd-soc-cs42l56-y := cs42l56.o
+ snd-soc-cs42l73-y := cs42l73.o
+ snd-soc-cs42l83-i2c-y := cs42l83-i2c.o
+-snd-soc-cs42l84-objs := cs42l84.o
++snd-soc-cs42l84-y := cs42l84.o
+ snd-soc-cs4234-y := cs4234.o
+ snd-soc-cs4265-y := cs4265.o
+ snd-soc-cs4270-y := cs4270.o
 -- 
 2.39.5
 
