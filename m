@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CF61459F6;
-	Wed,  5 Feb 2025 14:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7699156886;
+	Wed,  5 Feb 2025 14:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765418; cv=none; b=bx4kq+2HH8RcdwT30YrkMflLJeWCqXSmpvrYQvEPuMPsZBgC+KIZI5lj+U+iM0RAvliOT2Ki3yBTmH0JiRTwgpbN7BqmZSv/vaS1t/14rBJF4GQmFBxfK4c0+7hc8zJACXpYj5YjUIRhzoQSjSMDnxPWqg/mDd46uVXIs7Syglk=
+	t=1738765424; cv=none; b=fLaQP7KBX5oQpoLVC8f4EolOJnt/Qdlwnhe8iGHmk5hyg/CH8IS2TlU7J46jVVQJhMe1UFwqMxdn6tizPABANSOoj5+1W4r7cbxW58+arETmLH8uyUp5LpGRDWbL+XKCVCWfvr171C9xFyLpiW+eOAIrEyeazpZv7qoOVIQRXoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765418; c=relaxed/simple;
-	bh=2rFq29rEC3XCQWnz8sgDxgL5vhzLwWNjFM6qvdFlJeY=;
+	s=arc-20240116; t=1738765424; c=relaxed/simple;
+	bh=SqcJNi30XMhdA/UBN71P/QCyfNBTutLafddnPPMaRO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Okz7v/dHuAsosP4/x58eRQ/Jh5oWvV0pjegxJ7TVkALTfoVO6CO2bUd1mc/WC0CYsYFMDT/LYp3jOf+6gX9HgOkVD0VLx1cKMV+kPbiKFZsqOtrQnQgiykVueuBblKPK3eXx0ReR69u0k+Ksmh29IyvaNqOjd/dFSuxRrwtzy+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SF0Zr/oQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LT60noVHc+2HSwi+6OBx7DvjhPNrxJLo47s7Gr1NGnv80uvIUSiWwYqOZclrBL88vEkDDuD6FojkPU/mezPcz/CtlMv84BnaPDsORA0y63fjEuGfgyMc/LFm4loYUtbeeGInlLuNCbw9NifoDMhZhwxkLLgNQciVGoXmG6ERwW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qa+KvmcC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SF0Zr/oQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31AFFC4CED1;
-	Wed,  5 Feb 2025 14:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qa+KvmcC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A73C4CED1;
+	Wed,  5 Feb 2025 14:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765418;
-	bh=2rFq29rEC3XCQWnz8sgDxgL5vhzLwWNjFM6qvdFlJeY=;
+	s=korg; t=1738765424;
+	bh=SqcJNi30XMhdA/UBN71P/QCyfNBTutLafddnPPMaRO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SF0Zr/oQ44M7xyaaOq6gqub1XObMm5O5ItWlrLrEbicQnrVAVuyYORy5qCaMIwgxU
-	 tLGC2hoI6JUwhC5rRzQTrOJ85XyfQ1XvE6MI77vDJ1Aq2pMZZHiUHnnP8MlEFrMqQL
-	 e7eRU/UIIpFSg9hj52NI/Eyi6MwlDYTFQcEhylP0=
+	b=qa+KvmcC3ChiysBtCxEjXRvw9hGYy+T7PeOhgDWdFSIDsCoH/dwKZWQu06qwneHRv
+	 g8RIOtplASV2tQJ4O0w7p2Ex4Y1IuSSPzW7CUAX4aj6OoTpmKyKGTC6IWvl5hvNjXM
+	 gvKXhgtVJNg1Zz0lzR0LznWQS1AsUEAR2BNPLSmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 218/590] dev: Acquire netdev_rename_lock before restoring dev->name in dev_change_name().
-Date: Wed,  5 Feb 2025 14:39:33 +0100
-Message-ID: <20250205134503.626800757@linuxfoundation.org>
+Subject: [PATCH 6.6 266/393] dts: arm64: mediatek: mt8195: Remove MT8183 compatible for OVL
+Date: Wed,  5 Feb 2025 14:43:05 +0100
+Message-ID: <20250205134430.490241025@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
 
-[ Upstream commit e361560a7912958ba3059f51e7dd21612d119169 ]
+[ Upstream commit ce3dbc46d7e30a84b8e99c730e3172dd5efbf094 ]
 
-The cited commit forgot to add netdev_rename_lock in one of the
-error paths in dev_change_name().
+The OVL hardware capabilities have changed starting from MT8195,
+making the MT8183 compatible no longer applicable.
+Therefore, it is necessary to remove the MT8183 compatible for OVL.
 
-Let's hold netdev_rename_lock before restoring the old dev->name.
-
-Fixes: 0840556e5a3a ("net: Protect dev->name by seqlock.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250115095545.52709-2-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+Fixes: b852ee68fd72 ("arm64: dts: mt8195: Add display node for vdosys0")
+Link: https://lore.kernel.org/r/20241219181531.4282-5-jason-jh.lin@mediatek.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 1867a6a8d76da..9bdb8fe5ffaa5 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -1279,7 +1279,9 @@ int dev_change_name(struct net_device *dev, const char *newname)
- rollback:
- 	ret = device_rename(&dev->dev, dev->name);
- 	if (ret) {
-+		write_seqlock_bh(&netdev_rename_lock);
- 		memcpy(dev->name, oldname, IFNAMSIZ);
-+		write_sequnlock_bh(&netdev_rename_lock);
- 		WRITE_ONCE(dev->name_assign_type, old_assign_type);
- 		up_write(&devnet_rename_sem);
- 		return ret;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index 1cb22257adb36..7ba30209ba9a9 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -2677,7 +2677,7 @@
+ 		};
+ 
+ 		ovl0: ovl@1c000000 {
+-			compatible = "mediatek,mt8195-disp-ovl", "mediatek,mt8183-disp-ovl";
++			compatible = "mediatek,mt8195-disp-ovl";
+ 			reg = <0 0x1c000000 0 0x1000>;
+ 			interrupts = <GIC_SPI 636 IRQ_TYPE_LEVEL_HIGH 0>;
+ 			power-domains = <&spm MT8195_POWER_DOMAIN_VDOSYS0>;
 -- 
 2.39.5
 
