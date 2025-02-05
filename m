@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6894E1519BE;
-	Wed,  5 Feb 2025 14:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0DF1519BE;
+	Wed,  5 Feb 2025 14:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765249; cv=none; b=B5+mgW3eu933pQuHpEA9ajQp0vWvH1+xLUtiED5oStccUl8lX4UKOuxs0sfWIOFSFipeLISDG1e5RrnR5y5frxv+g8ZfIFx6GZ2yziCkl6FM100O9MGvCLNAq728uB95VQ+V1PZSCaELRZ2zg+K61zWogDPgGkKbPpM2LlEWveM=
+	t=1738765253; cv=none; b=mzQnCV2slFBYENEQYWtXdRkkTOCxOv/r6ujGUu/i5jU+Id7u5UgaAId+8/V2FzDuvG1en4p0slTuuzvPmyupqSAe//q2bbzKuBfPOjUe5iybjzyZGGxaLUUVWarIv7iztc8ytGD1qI6bpRZhsdUTDjaghOxqTVASUTRwdBkMEhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765249; c=relaxed/simple;
-	bh=FMK0lm2De6xQ3hwcfsSlEnqTpB9yk5pNfq5pSqosOY8=;
+	s=arc-20240116; t=1738765253; c=relaxed/simple;
+	bh=lz2p8uIdDz5edkBt5R91chzMZCsswtWeUYhjmajYvr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imIc6NIAfsZqGgrI/FmVdB+tOcO8ct+m3IsKSDUsqxE/gCy+jrZMAoOS6G5FZfXqIjNRnXV8DXvTEcwR9BBgjLTIeQCIePf+yTYbiyKK89sYNpbtvX8g1lHz6UC/b6Fiuht1XJytqRFvdi8Ihdl3+KrBYPKTYDmkNGtEDokyDmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVMwXvoZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f1LOglVq9S6ERDV1q13kpGgUTe+xMn/D3SbpuZh6UvUzTKrAaHZG9wD6hGojVlzgNgZzSaWhccXEsUFSy6sFKdEnCSbhbF7hYCAqGqbREjwNzJPSnjT8gf8eB8AuXLt8xv2B2u7u4NOvwED/TeCytosZHOkJDcddFgNZFxaQN0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hfnky/28; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVMwXvoZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2995C4CED1;
-	Wed,  5 Feb 2025 14:20:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hfnky/28"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E16EC4CED1;
+	Wed,  5 Feb 2025 14:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765249;
-	bh=FMK0lm2De6xQ3hwcfsSlEnqTpB9yk5pNfq5pSqosOY8=;
+	s=korg; t=1738765252;
+	bh=lz2p8uIdDz5edkBt5R91chzMZCsswtWeUYhjmajYvr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qVMwXvoZV9YyhpDV3rn3K3in/tYKPNzls/xOddowsUeHJcjCFe9zFz1BRBnBe25GS
-	 v/k1fdGBKRGKDI4u3m+w2mUNM+JTwDIAJ7Ist4K7h4UEv1kfLmyCm8v4PF8NrdqsEk
-	 2XVRj22m7XJY+VnF//P5nK7bVFdBJhpS1Rft43Mg=
+	b=Hfnky/28NEqjaPsFHpfN0jnXpNatn+hP4ezZuL/Tl3+gJ1E7MnkRAHE5N6+I2H8VW
+	 5S+DGWQuufhLiaSVOdOzB/t2KqYIMnB+Rx6nRYw6TIyynzUM7htcRndP/JCBmvLSQr
+	 hIkxFL/ZhSN8sBO/U02ZsJhOxeYVpdsoVoSH+z+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 203/590] wifi: mt76: mt7996: add max mpdu len capability
-Date: Wed,  5 Feb 2025 14:39:18 +0100
-Message-ID: <20250205134503.048034245@linuxfoundation.org>
+Subject: [PATCH 6.6 247/393] arm64: dts: qcom: sm8350: correct sleep clock frequency
+Date: Wed,  5 Feb 2025 14:42:46 +0100
+Message-ID: <20250205134429.757901945@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 1816ad9381e0c150e4c44ce6dd6ee2c52008a052 ]
+[ Upstream commit f4cc8c75cfc5d06084a31da2ff67e477565f0cae ]
 
-Set max mpdu len to 11454 according to hardware capability.
-Without this patch, the max ampdu length would be 3895 and count not get
-expected performance.
+The SM8350 platform uses PMK8350 to provide sleep clock. According to the
+documentation, that clock has 32.7645 kHz frequency. Correct the sleep
+clock definition.
 
-Fixes: 348533eb968d ("wifi: mt76: mt7996: add EHT capability init")
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20250114101026.3587702-1-shayne.chen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: b7e8f433a673 ("arm64: dts: qcom: Add basic devicetree support for SM8350 SoC")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-14-e9b08fbeadd3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index d5f53abc4dcb4..50ee1e443dfa4 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -1187,7 +1187,9 @@ mt7996_init_eht_caps(struct mt7996_phy *phy, enum nl80211_band band,
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index d4f1b36c7aebe..dded95fa52f07 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -40,7 +40,7 @@
  
- 	eht_cap_elem->mac_cap_info[0] =
- 		IEEE80211_EHT_MAC_CAP0_EPCS_PRIO_ACCESS |
--		IEEE80211_EHT_MAC_CAP0_OM_CONTROL;
-+		IEEE80211_EHT_MAC_CAP0_OM_CONTROL |
-+		u8_encode_bits(IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_11454,
-+			       IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_MASK);
- 
- 	eht_cap_elem->phy_cap_info[0] =
- 		IEEE80211_EHT_PHY_CAP0_NDP_4_EHT_LFT_32_GI |
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+-			clock-frequency = <32000>;
++			clock-frequency = <32764>;
+ 			#clock-cells = <0>;
+ 		};
+ 	};
 -- 
 2.39.5
 
