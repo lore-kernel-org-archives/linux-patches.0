@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71AD315198D;
-	Wed,  5 Feb 2025 14:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB1C15198D;
+	Wed,  5 Feb 2025 14:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764154; cv=none; b=GC6Fb6Hw0+6uoh/E5Bixp9Htxij5gguy/TacSEgCFqunUBK2zB2Xsg1k0G5Erkq2CI3y4AC8E3Qulvd7J/2NuyjV8wDkDmBJMrpoMhGkt+zGJbZ+sv8LCBUwcX1Q1pQ4iTHiQXSSRCxcrANQkNN9UG2Itp9kqjPDEYWIut7lqko=
+	t=1738764157; cv=none; b=XKGte/2LeFRUhSEfBMHf4gmlNUgt1crSRL1WWGPB8+FHVLjDHb96zjEp6drNa7L/c/RJK1YCNCjUChql4CR5ISwtI5aszszf6W8KZTCn757mPNaAzV/3zpEFKLK3SJzywjj6hlg2awUxmPE+CfLhuwmCE2Vmhul1vAx5f56c8Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764154; c=relaxed/simple;
-	bh=jA+4HxfiYS7cCJ7HO6QP16tOBHXyB564PnCGRc7Uv2g=;
+	s=arc-20240116; t=1738764157; c=relaxed/simple;
+	bh=jfVt4wlRccKJxTHdzHGGKO0Ece6ITtECHGg4gEJWclk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYlQVtYoZevxMjdDtpXNsB7CdsMvtSW26Gfk4yIdPfCv/K2BPnwAzrnipOAqPUJK3DrF6XmkmUY+Q8GNTT700fwmWTNevJXreJs6aPMozDjqo7voJHdlDjfk5NCxcYtb+R2hc4leESJUT5hlXQzXSyaMBWlkTqcic0R+qpDkdWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISnMU/D5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fd4uf+oKASzZyjFkATEv22SluOWFiW49KsRZFtXVd8bQlOCA81gEFpV9NvmBqA3ASIT8uYO962VmL+A3Z1VbQ4liWnkjnrPKemOMm79yMgWu2+tMixS4UjwmxnjI2Y5KMcRiPpk83NEbX+cTS/PZYBARReJoZG/kWIKzPsAU8jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbraQCk9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISnMU/D5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39D0C4CED6;
-	Wed,  5 Feb 2025 14:02:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbraQCk9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DECC4CED6;
+	Wed,  5 Feb 2025 14:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764154;
-	bh=jA+4HxfiYS7cCJ7HO6QP16tOBHXyB564PnCGRc7Uv2g=;
+	s=korg; t=1738764157;
+	bh=jfVt4wlRccKJxTHdzHGGKO0Ece6ITtECHGg4gEJWclk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISnMU/D58tBnX/sRA5pO23aHJSvkGp8Dqz8z9IIqaSXbzBiywPp1uJnJxgJtLbc4e
-	 VX26tPV+0tdJ4sflFapwGVHsQ4Gl1nNLz9LX/NX1pTF+ZdfbEQo5ENE8M5L0DtXUr9
-	 mZWuGTpSoL7wMAjgvUbp+uOJvqYQM7BD4wIJme7Q=
+	b=YbraQCk9Ezs0F+mVSf93Lto/xqUttISxFq4hw6vK8HOIiZbmRnujOpI4DIU1mxwbH
+	 Icc1O4oWM+nL84zqNjCLFSydxF/eqozi/Gt8XMRFUlvrlQ/9vIlZ5/LE3ne4PPO/5N
+	 MMzk5kSSwaGhxyXWBmbAkagxrkMpQn0hTx14/PcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/590] wifi: rtlwifi: destroy workqueue at rtl_deinit_core
-Date: Wed,  5 Feb 2025 14:37:29 +0100
-Message-ID: <20250205134458.852698766@linuxfoundation.org>
+Subject: [PATCH 6.6 145/393] netfilter: nf_tables: de-constify set commit ops function argument
+Date: Wed,  5 Feb 2025 14:41:04 +0100
+Message-ID: <20250205134425.852030946@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,90 +46,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit d8ece6fc3694657e4886191b32ca1690af11adda ]
+[ Upstream commit 256001672153af5786c6ca148114693d7d76d836 ]
 
-rtl_wq is allocated at rtl_init_core, so it makes more sense to destroy it
-at rtl_deinit_core. In the case of USB, where _rtl_usb_init does not
-require anything to be undone, that is fine. But for PCI, rtl_pci_init,
-which is called after rtl_init_core, needs to deallocate data, but only if
-it has been called.
+The set backend using this already has to work around this via ugly
+cast, don't spread this pattern.
 
-That means that destroying the workqueue needs to be done whether
-rtl_pci_init has been called or not. And since rtl_pci_deinit was doing it,
-it has to be moved out of there.
-
-It makes more sense to move it to rtl_deinit_core and have it done in both
-cases, USB and PCI.
-
-Since this is a requirement for a followup memory leak fix, mark this as
-fixing such memory leak.
-
-Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241206173713.3222187-3-cascardo@igalia.com
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 8d738c1869f6 ("netfilter: nf_tables: fix set size with rbtree backend")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/base.c | 6 ++++++
- drivers/net/wireless/realtek/rtlwifi/pci.c  | 2 --
- drivers/net/wireless/realtek/rtlwifi/usb.c  | 5 -----
- 3 files changed, 6 insertions(+), 7 deletions(-)
+ include/net/netfilter/nf_tables.h | 2 +-
+ net/netfilter/nft_set_pipapo.c    | 7 +++----
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/base.c b/drivers/net/wireless/realtek/rtlwifi/base.c
-index fd28c7a722d89..ff61867d142fa 100644
---- a/drivers/net/wireless/realtek/rtlwifi/base.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/base.c
-@@ -575,9 +575,15 @@ static void rtl_free_entries_from_ack_queue(struct ieee80211_hw *hw,
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 8321915dddb28..12a30d8e7efe0 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -481,7 +481,7 @@ struct nft_set_ops {
+ 					       const struct nft_set *set,
+ 					       const struct nft_set_elem *elem,
+ 					       unsigned int flags);
+-	void				(*commit)(const struct nft_set *set);
++	void				(*commit)(struct nft_set *set);
+ 	void				(*abort)(const struct nft_set *set);
+ 	u64				(*privsize)(const struct nlattr * const nla[],
+ 						    const struct nft_set_desc *desc);
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 334958ef8d66c..5dab9905ebbec 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1574,12 +1574,11 @@ static void nft_pipapo_gc_deactivate(struct net *net, struct nft_set *set,
  
- void rtl_deinit_core(struct ieee80211_hw *hw)
+ /**
+  * pipapo_gc() - Drop expired entries from set, destroy start and end elements
+- * @_set:	nftables API set representation
++ * @set:	nftables API set representation
+  * @m:		Matching data
+  */
+-static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
++static void pipapo_gc(struct nft_set *set, struct nft_pipapo_match *m)
  {
-+	struct rtl_priv *rtlpriv = rtl_priv(hw);
-+
- 	rtl_c2hcmd_launcher(hw, 0);
- 	rtl_free_entries_from_scan_list(hw);
- 	rtl_free_entries_from_ack_queue(hw, false);
-+	if (rtlpriv->works.rtl_wq) {
-+		destroy_workqueue(rtlpriv->works.rtl_wq);
-+		rtlpriv->works.rtl_wq = NULL;
-+	}
- }
- EXPORT_SYMBOL_GPL(rtl_deinit_core);
- 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 4388066eb9e27..e60ac910e750b 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -1656,8 +1656,6 @@ static void rtl_pci_deinit(struct ieee80211_hw *hw)
- 	synchronize_irq(rtlpci->pdev->irq);
- 	tasklet_kill(&rtlpriv->works.irq_tasklet);
- 	cancel_work_sync(&rtlpriv->works.lps_change_work);
--
--	destroy_workqueue(rtlpriv->works.rtl_wq);
- }
- 
- static int rtl_pci_init(struct ieee80211_hw *hw, struct pci_dev *pdev)
-diff --git a/drivers/net/wireless/realtek/rtlwifi/usb.c b/drivers/net/wireless/realtek/rtlwifi/usb.c
-index 0368ecea2e817..f5718e570011e 100644
---- a/drivers/net/wireless/realtek/rtlwifi/usb.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/usb.c
-@@ -629,11 +629,6 @@ static void _rtl_usb_cleanup_rx(struct ieee80211_hw *hw)
- 	tasklet_kill(&rtlusb->rx_work_tasklet);
- 	cancel_work_sync(&rtlpriv->works.lps_change_work);
- 
--	if (rtlpriv->works.rtl_wq) {
--		destroy_workqueue(rtlpriv->works.rtl_wq);
--		rtlpriv->works.rtl_wq = NULL;
--	}
--
- 	skb_queue_purge(&rtlusb->rx_queue);
- 
- 	while ((urb = usb_get_from_anchor(&rtlusb->rx_cleanup_urbs))) {
+-	struct nft_set *set = (struct nft_set *) _set;
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+ 	struct net *net = read_pnet(&set->net);
+ 	int rules_f0, first_rule = 0;
+@@ -1693,7 +1692,7 @@ static void pipapo_reclaim_match(struct rcu_head *rcu)
+  * We also need to create a new working copy for subsequent insertions and
+  * deletions.
+  */
+-static void nft_pipapo_commit(const struct nft_set *set)
++static void nft_pipapo_commit(struct nft_set *set)
+ {
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+ 	struct nft_pipapo_match *new_clone, *old;
 -- 
 2.39.5
 
