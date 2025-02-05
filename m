@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426EF1662EF;
-	Wed,  5 Feb 2025 14:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1A01662EF;
+	Wed,  5 Feb 2025 14:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766573; cv=none; b=AsL4G7mgTXbp4fSQzBge6Dgyge5Fh9v9x6QkvD9rMcHgt6Y2MaJxKZ5xX70D8ZDyqUFejvoC7GYisySEVlmAlnLKALkqgX4iqWJVjbosU3g19N5Fwe4avr1Vl+soApVhU+ZZNxwRPa+YfMfZyHe36BrFq9L886kt7F3HyBLykX8=
+	t=1738766577; cv=none; b=YNLTkF8yapeMsJwpO+dBs1ITIyU2MVsMpuO5A2cs+UooO7ldlnLbvuemF+j2lt8AXI3IwgcteqYB+WVJf3A8/ZqiD6P/pUAtIaDdAOKfBJBoHcb8dnUOYCaH7zVN2erd/pR5ZY+KeJ0d+8thm/KakCnlEBTuuvbi/ELRUdOp3Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766573; c=relaxed/simple;
-	bh=jaGXjdMW6kQP5ZAxyj3PNAuv0XkhzB1BHwmPc49xMWk=;
+	s=arc-20240116; t=1738766577; c=relaxed/simple;
+	bh=Tz0bc7aQixPodbD7tz7qxgeSXVpQT2qwvAn9cJbH/wQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDFKoHT+GKgU/6sVh16HmTty+JTNwmIjttyZB2Fryyl+ePjYznP6pnANHQlFviIRyEYR8vm7sMxiNVpRYiRXpBvyguvC+QvuEb3ozU1G16gSGo+CYI4uSc/lYmnEfH52ypW0ohegUxzThuvliyl5TOJX3ww2ifxi25+XFIInEIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7tmfpBZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BJoGKeKpFSZBsvwFguBviTH/ea8ItCf9+7TZe53SY8lNBCriFL7DJaBA+pCCIQhYN3m4wiV4LyC7DmUbitWc+rYm3TlVrp6qHJOD3JAMjt8cBrSHL+UqeTu5cJknsWpgCkGQvB4BM7jVif6MH1xRc0e5zoAi4Yff90ChNdh/228=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmgGm6XN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7tmfpBZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A51C4CED1;
-	Wed,  5 Feb 2025 14:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmgGm6XN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A46C4CED1;
+	Wed,  5 Feb 2025 14:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766573;
-	bh=jaGXjdMW6kQP5ZAxyj3PNAuv0XkhzB1BHwmPc49xMWk=;
+	s=korg; t=1738766576;
+	bh=Tz0bc7aQixPodbD7tz7qxgeSXVpQT2qwvAn9cJbH/wQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D7tmfpBZDLe+1qruZryxg0ivDH4l4eGpFzS9ndKLqTAS+oMdkr94eCmcfaMsDCa8l
-	 wr5sdGHwB7offduQ9dGyJ/IDFYIAsirn7sxLnh37RhhJrZxCpmo48xOXfGDgpGbur/
-	 6APjXPr3dJVyOwBSkHI1/2AH2o01zpy2Wupdo+VI=
+	b=BmgGm6XNYpYmEA8uGBa5+tD3JAfyJGuyAD+xnhcOPMkEbfTvcCEVRZrNIIq+kwjYH
+	 I7xCekjGK07JbDY5vu8Y2J4/Rr2W15x8HBbBDh2UEtB9NWCAT3heJGto1SmicuTrBN
+	 8xqRRK6Jkm//nWxhQ6iijqOnkBgTKFhxegoV0QxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 336/590] arm64: dts: mediatek: mt8183-kukui-jacuzzi: Drop pp3300_panel voltage settings
-Date: Wed,  5 Feb 2025 14:41:31 +0100
-Message-ID: <20250205134508.131677033@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+d7e968426f644b567e31@syzkaller.appspotmail.com
+Subject: [PATCH 6.6 375/393] net: usb: rtl8150: enable basic endpoint checking
+Date: Wed,  5 Feb 2025 14:44:54 +0100
+Message-ID: <20250205134434.642565873@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +47,120 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 0b5b1c881a909f17c05ef4b1ccb421e077f6e466 ]
+commit 90b7f2961798793275b4844348619b622f983907 upstream.
 
-The pp3300_panel fixed regulator is just a load switch. It does not have
-any regulating capabilities. Thus having voltage constraints on it is
-wrong.
+Syzkaller reports [1] encountering a common issue of utilizing a wrong
+usb endpoint type during URB submitting stage. This, in turn, triggers
+a warning shown below.
 
-Remove the voltage constraints.
+For now, enable simple endpoint checking (specifically, bulk and
+interrupt eps, testing control one is not essential) to mitigate
+the issue with a view to do other related cosmetic changes later,
+if they are necessary.
 
-Fixes: cabc71b08eb5 ("arm64: dts: mt8183: Add kukui-jacuzzi-damu board")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20241030070224.1006331-2-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[1] Syzkaller report:
+usb 1-1: BOGUS urb xfer, pipe 3 != type 1
+WARNING: CPU: 1 PID: 2586 at drivers/usb/core/urb.c:503 usb_submit_urb+0xe4b/0x1730 driv>
+Modules linked in:
+CPU: 1 UID: 0 PID: 2586 Comm: dhcpcd Not tainted 6.11.0-rc4-syzkaller-00069-gfc88bb11617>
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+RIP: 0010:usb_submit_urb+0xe4b/0x1730 drivers/usb/core/urb.c:503
+Code: 84 3c 02 00 00 e8 05 e4 fc fc 4c 89 ef e8 fd 25 d7 fe 45 89 e0 89 e9 4c 89 f2 48 8>
+RSP: 0018:ffffc9000441f740 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: ffff888112487a00 RCX: ffffffff811a99a9
+RDX: ffff88810df6ba80 RSI: ffffffff811a99b6 RDI: 0000000000000001
+RBP: 0000000000000003 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000001
+R13: ffff8881023bf0a8 R14: ffff888112452a20 R15: ffff888112487a7c
+FS:  00007fc04eea5740(0000) GS:ffff8881f6300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f0a1de9f870 CR3: 000000010dbd0000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ rtl8150_open+0x300/0xe30 drivers/net/usb/rtl8150.c:733
+ __dev_open+0x2d4/0x4e0 net/core/dev.c:1474
+ __dev_change_flags+0x561/0x720 net/core/dev.c:8838
+ dev_change_flags+0x8f/0x160 net/core/dev.c:8910
+ devinet_ioctl+0x127a/0x1f10 net/ipv4/devinet.c:1177
+ inet_ioctl+0x3aa/0x3f0 net/ipv4/af_inet.c:1003
+ sock_do_ioctl+0x116/0x280 net/socket.c:1222
+ sock_ioctl+0x22e/0x6c0 net/socket.c:1341
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:907 [inline]
+ __se_sys_ioctl fs/ioctl.c:893 [inline]
+ __x64_sys_ioctl+0x193/0x220 fs/ioctl.c:893
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fc04ef73d49
+...
+
+This change has not been tested on real hardware.
+
+Reported-and-tested-by: syzbot+d7e968426f644b567e31@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d7e968426f644b567e31
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://patch.msgid.link/20250124093020.234642-1-n.zhandarovich@fintech.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/usb/rtl8150.c |   22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-index 49e053b932e76..80888bd4ad823 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-@@ -39,8 +39,6 @@
- 	pp3300_panel: pp3300-panel {
- 		compatible = "regulator-fixed";
- 		regulator-name = "pp3300_panel";
--		regulator-min-microvolt = <3300000>;
--		regulator-max-microvolt = <3300000>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pp3300_panel_pins>;
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -71,6 +71,14 @@
+ #define MSR_SPEED		(1<<3)
+ #define MSR_LINK		(1<<2)
  
--- 
-2.39.5
-
++/* USB endpoints */
++enum rtl8150_usb_ep {
++	RTL8150_USB_EP_CONTROL = 0,
++	RTL8150_USB_EP_BULK_IN = 1,
++	RTL8150_USB_EP_BULK_OUT = 2,
++	RTL8150_USB_EP_INT_IN = 3,
++};
++
+ /* Interrupt pipe data */
+ #define INT_TSR			0x00
+ #define INT_RSR			0x01
+@@ -867,6 +875,13 @@ static int rtl8150_probe(struct usb_inte
+ 	struct usb_device *udev = interface_to_usbdev(intf);
+ 	rtl8150_t *dev;
+ 	struct net_device *netdev;
++	static const u8 bulk_ep_addr[] = {
++		RTL8150_USB_EP_BULK_IN | USB_DIR_IN,
++		RTL8150_USB_EP_BULK_OUT | USB_DIR_OUT,
++		0};
++	static const u8 int_ep_addr[] = {
++		RTL8150_USB_EP_INT_IN | USB_DIR_IN,
++		0};
+ 
+ 	netdev = alloc_etherdev(sizeof(rtl8150_t));
+ 	if (!netdev)
+@@ -880,6 +895,13 @@ static int rtl8150_probe(struct usb_inte
+ 		return -ENOMEM;
+ 	}
+ 
++	/* Verify that all required endpoints are present */
++	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr) ||
++	    !usb_check_int_endpoints(intf, int_ep_addr)) {
++		dev_err(&intf->dev, "couldn't find required endpoints\n");
++		goto out;
++	}
++
+ 	tasklet_setup(&dev->tl, rx_fixup);
+ 	spin_lock_init(&dev->rx_pool_lock);
+ 
 
 
