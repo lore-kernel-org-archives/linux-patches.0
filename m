@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468141519AA;
-	Wed,  5 Feb 2025 13:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC04D15573F;
+	Wed,  5 Feb 2025 13:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763853; cv=none; b=bXil1IpTOs4wMAOqKTpaXRx9grPBNfZ+UJDggspMUjuO8muYwLJ++nFLVTzFnU/YBCRcojktF26DRp5R1NZRpZqeqzH/LVekj3oV5UssQbw+oSJHbsLEN43D5eijfItHEIIpSMgu5jCY4X/A+/GCa+qlH8Y7ux3pn2hvYGiehpo=
+	t=1738763856; cv=none; b=CrSJHteM1CIyM7LE6TYN2j7ypbipF0Y4Ay6WChxfKta939BThxtIolWMItLWO5DKpDwt8hpW68kVdUbCRNge6sN67CXFLiDRfMUTsH8ed/BFs/QRGjivx3v/2JQC7gnjmL/ban+IgeJvlQeqdaP/WES69PhQ2zAiOffnuY3I2MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763853; c=relaxed/simple;
-	bh=3i/jnRrzr/h8bXW5YYTDlCiMhOB8rxS3c0vElHXCMQ0=;
+	s=arc-20240116; t=1738763856; c=relaxed/simple;
+	bh=jiFfABDCQroDxmh4j0HC0QEt0E2PNF2Zh+RKJ853X2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BovyKoktZzHJC/nCyxQLNz71boRmYSOkoldiexS6fZLHBXMwObngadPQRFk/jUWDgGGV4ES/dGREvhscemD9eOw3UVpLaNtM2scMu6qLb2Hcm0xwZJEUwwwla8pUMdfEDV3yQlvVZB9aktAgG3aSD36uIX7ipxfWsek8iLt/Ny4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbpplG8j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jExxPcm8TBtig2jzAW5ZjWPqn6Svxn9n2SkWy9/8wVoCpWSsUXYMaT3248HdnCp0RPdz4Y2aWolyGMoOeR5hA3q/uXKW2NQ/FJTmnCpHNeRpvEkMvP8GdqiqRtjOUZl9oxtgocICPoU5fYMbOfCnb+8rWQx0PDRL19tBdHSOELo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiPMtDEF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbpplG8j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8266C4CEDD;
-	Wed,  5 Feb 2025 13:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiPMtDEF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A5BC4CED1;
+	Wed,  5 Feb 2025 13:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763853;
-	bh=3i/jnRrzr/h8bXW5YYTDlCiMhOB8rxS3c0vElHXCMQ0=;
+	s=korg; t=1738763856;
+	bh=jiFfABDCQroDxmh4j0HC0QEt0E2PNF2Zh+RKJ853X2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rbpplG8jZhyIm82kzIJI+Dc4NL8bz6+V6+slSBJ1QyWzwuBY2nC4eglZ/hoGx89Db
-	 cUJ9qZaG+vSxnbFpWMOe2WwinJqlQlXYEwclzrIQj5YnCInqgHrhEipnHjKHzfAr99
-	 qCiE3guEh5HdhsXaJeC8zd4xXnhQa6AXceyVzJWY=
+	b=tiPMtDEF6cgUE2aOpP+SIBWrefl/d1Na8yKuLcI8WHu+lxlco8c9DWdl7hG5qBXmn
+	 AagO9jtgjKRK0xQqySA/uHbEKbaoQtezM9LtkeN/lWJaKz98qT2PQa8npKqjMf1nh5
+	 K1XCWaIDcp33qVmgKjVOtgAwoqhcP8LetJ68ZwWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 024/623] nvme: Add error path for xa_store in nvme_init_effects
-Date: Wed,  5 Feb 2025 14:36:06 +0100
-Message-ID: <20250205134457.153166328@linuxfoundation.org>
+Subject: [PATCH 6.12 067/590] drm/msm: dont clean up priv->kms prematurely
+Date: Wed,  5 Feb 2025 14:37:02 +0100
+Message-ID: <20250205134457.821469307@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,72 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit d4a95adeabc6b5a39405e49c6d5ed14dd83682c4 ]
+[ Upstream commit ebc0deda3c2948d40419677d388b4e6081688a06 ]
 
-The xa_store() may fail due to memory allocation failure because there
-is no guarantee that the index NVME_CSI_NVM is already used. This fix
-introduces a new function to handle the error path.
+MSM display drivers provide kms structure allocated during probe().
+Don't clean up priv->kms field in case of an error. Otherwise probe
+functions might fail after KMS probe deferral.
 
-Fixes: cc115cbe12d9 ("nvme: always initialize known command effects")
-Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: a2ab5d5bb6b1 ("drm/msm: allow passing struct msm_kms to msm_drv_probe()")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: 506efcba3129 ("drm/msm: carve out KMS code from msm_drv.c")
+Patchwork: https://patchwork.freedesktop.org/patch/590411/
+Link: https://lore.kernel.org/r/20240420-mdp4-fixes-v1-1-96a70f64fa85@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/msm_kms.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 315692cb2e614..7c4a19f5c951a 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3175,6 +3175,25 @@ static int nvme_init_non_mdts_limits(struct nvme_ctrl *ctrl)
- 	return ret;
- }
- 
-+static int nvme_init_effects_log(struct nvme_ctrl *ctrl,
-+		u8 csi, struct nvme_effects_log **log)
-+{
-+	struct nvme_effects_log *effects, *old;
-+
-+	effects = kzalloc(sizeof(*effects), GFP_KERNEL);
-+	if (effects)
-+		return -ENOMEM;
-+
-+	old = xa_store(&ctrl->cels, csi, effects, GFP_KERNEL);
-+	if (xa_is_err(old)) {
-+		kfree(effects);
-+		return xa_err(old);
-+	}
-+
-+	*log = effects;
-+	return 0;
-+}
-+
- static void nvme_init_known_nvm_effects(struct nvme_ctrl *ctrl)
- {
- 	struct nvme_effects_log	*log = ctrl->effects;
-@@ -3221,10 +3240,9 @@ static int nvme_init_effects(struct nvme_ctrl *ctrl, struct nvme_id_ctrl *id)
+diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
+index af6a6fcb11736..6749f0fbca96d 100644
+--- a/drivers/gpu/drm/msm/msm_kms.c
++++ b/drivers/gpu/drm/msm/msm_kms.c
+@@ -244,7 +244,6 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
+ 	ret = priv->kms_init(ddev);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "failed to load kms\n");
+-		priv->kms = NULL;
+ 		return ret;
  	}
  
- 	if (!ctrl->effects) {
--		ctrl->effects = kzalloc(sizeof(*ctrl->effects), GFP_KERNEL);
--		if (!ctrl->effects)
--			return -ENOMEM;
--		xa_store(&ctrl->cels, NVME_CSI_NVM, ctrl->effects, GFP_KERNEL);
-+		ret = nvme_init_effects_log(ctrl, NVME_CSI_NVM, &ctrl->effects);
-+		if (ret < 0)
-+			return ret;
- 	}
- 
- 	nvme_init_known_nvm_effects(ctrl);
 -- 
 2.39.5
 
