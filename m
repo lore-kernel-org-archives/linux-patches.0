@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A34615198D;
-	Wed,  5 Feb 2025 14:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D82BF510;
+	Wed,  5 Feb 2025 14:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764037; cv=none; b=awLDocYBR46Yxo5ueXtZa+kPX22gpemqPmgWesVfn+YAjCorBxeSPZa2seHj3bFPKNrqQUYbusdQ9/v8ZWVcXAtvFvUYzS+tv7MLsdzlKpmiUnbgyf6dd7Xz42L2XEngc04b1NvVDstGv17OYpSWt+zlWPxPaOi8LpGjl4ab+kM=
+	t=1738764040; cv=none; b=J4f6OUwaM87jDXcHjlCh0nA93wYG6AUXvbF8Vrd0lL7d94hm3yZOu/i6s33OSJZCS7wZICm+VQtYj/dkvEaNyxEQvr1nIs6i1cdT8zLIhi8UCtNXvFg5qbF+HMaPiIO7w/OrSJTTvntwrNEgAn1VSYdfpw70fx+c7Go+BlUmQis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764037; c=relaxed/simple;
-	bh=RndF5E1XV1yqMjh5IT2m1CpxexcdQpQ2AElaJ+Z4N2U=;
+	s=arc-20240116; t=1738764040; c=relaxed/simple;
+	bh=ZRWxGg3Uh36JnEFgOYM+WzubxLDiAd4H5LhZBxbgS4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kooaraq0dtrrrHsVBMD3PCy/JNzjEUS69jSBL6X10P55DCII4kkmHu69syz72vzKLrpat9XA9mM/aiqFV3oFFUVqAezO179P2JpuzlQHn2xh3BujblUexT6cTHzKBv/77wZ137pvC2v8S8ScQJb8Olsxxh3R1dIGXAvxZHI9CkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmTfjXYk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=odIHn+9WGPzJcS1mgL1X9D1HLT1VPyNmyvuBD9+smLgbw8NHH8rxK9XHUdan0hFjqM1AJxyxZ51Y0lpwM79Q/GxEHXWd5v68L5xEoxoiyRQnZk7pQSocdq3SmoSjQF3VAxi93w7daXBHOjRVkcdionKtB47ADgpY8DLr1npzZiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nijIgOpt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmTfjXYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B073C4CED1;
-	Wed,  5 Feb 2025 14:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nijIgOpt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8197C4CED1;
+	Wed,  5 Feb 2025 14:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764037;
-	bh=RndF5E1XV1yqMjh5IT2m1CpxexcdQpQ2AElaJ+Z4N2U=;
+	s=korg; t=1738764040;
+	bh=ZRWxGg3Uh36JnEFgOYM+WzubxLDiAd4H5LhZBxbgS4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pmTfjXYk1c3qBFP75r7zxOXZS1hFycxzR8ASyvXfC3bIdhbMWi17zv+/jxNAiemea
-	 Z5ZM2ZYBoFuo0GT+jnxNRcJfLlibCiJ5hUw9kxIOuCV53zzu3qbdYgIyHI5lFp59jh
-	 tpZoQjAg3nUEcjwe9yRAYj2ckTtEE/OQngFFB6l4=
+	b=nijIgOpt49oh6lkABvUDUx//ekdrKkh2GIWU1Ms20ZTOKRVdBpVfG//QFnAgr92TM
+	 Z8yCLknpLO8u8wrGdlFogHwbwAxK0rJbK/2W19o9SXmzsGC4tKI3j3m3stTA8llEoE
+	 m8Mh8LefgGD3GqYHj81nS9XmbnUEIUm5qxXGuurc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/590] clk: renesas: cpg-mssr: Fix soc node handling in cpg_mssr_reserved_init()
-Date: Wed,  5 Feb 2025 14:37:18 +0100
-Message-ID: <20250205134458.428914075@linuxfoundation.org>
+Subject: [PATCH 6.6 111/393] wifi: mac80211: Fix common size calculation for ML element
+Date: Wed,  5 Feb 2025 14:40:30 +0100
+Message-ID: <20250205134424.541663751@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +48,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit a6ca7e6240f0651412da6a17d0e7a8f66d3455a6 ]
+[ Upstream commit 19aa842dcbb5860509b7e1b7745dbae0b791f6c4 ]
 
-A device_node reference obtained via of_find_node_by_path() requires
-explicit calls to of_node_put() after it is no longer required to avoid
-leaking the resource.
+When the ML type is EPCS the control bitmap is reserved, the length
+is always 7 and is captured by the 1st octet after the control.
 
-Instead of adding the missing calls to of_node_put() in all execution
-paths, use the cleanup attribute for 'soc' by means of the __free()
-macro, which automatically calls of_node_put() when the variable goes
-out of scope.
-
-Fixes: 6aa175476490 ("clk: renesas: cpg-mssr: Ignore all clocks assigned to non-Linux system")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20241031-clk-renesas-cpg-mssr-cleanup-v2-1-0010936d1154@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 0f48b8b88aa9 ("wifi: ieee80211: add definitions for multi-link element")
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250102161730.5790376754a7.I381208cbb72b1be2a88239509294099e9337e254@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/renesas-cpg-mssr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/ieee80211.h | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
-index 1b421b8097965..0f27c33192e10 100644
---- a/drivers/clk/renesas/renesas-cpg-mssr.c
-+++ b/drivers/clk/renesas/renesas-cpg-mssr.c
-@@ -981,7 +981,7 @@ static void __init cpg_mssr_reserved_exit(struct cpg_mssr_priv *priv)
- static int __init cpg_mssr_reserved_init(struct cpg_mssr_priv *priv,
- 					 const struct cpg_mssr_info *info)
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index 5f1e5a16d7b2c..0ff10007eb1a5 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -4826,28 +4826,24 @@ static inline u8 ieee80211_mle_common_size(const u8 *data)
  {
--	struct device_node *soc = of_find_node_by_path("/soc");
-+	struct device_node *soc __free(device_node) = of_find_node_by_path("/soc");
- 	struct device_node *node;
- 	uint32_t args[MAX_PHANDLE_ARGS];
- 	unsigned int *ids = NULL;
+ 	const struct ieee80211_multi_link_elem *mle = (const void *)data;
+ 	u16 control = le16_to_cpu(mle->control);
+-	u8 common = 0;
+ 
+ 	switch (u16_get_bits(control, IEEE80211_ML_CONTROL_TYPE)) {
+ 	case IEEE80211_ML_CONTROL_TYPE_BASIC:
+ 	case IEEE80211_ML_CONTROL_TYPE_PREQ:
+ 	case IEEE80211_ML_CONTROL_TYPE_TDLS:
+ 	case IEEE80211_ML_CONTROL_TYPE_RECONF:
++	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+ 		/*
+ 		 * The length is the first octet pointed by mle->variable so no
+ 		 * need to add anything
+ 		 */
+ 		break;
+-	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+-		if (control & IEEE80211_MLC_PRIO_ACCESS_PRES_AP_MLD_MAC_ADDR)
+-			common += ETH_ALEN;
+-		return common;
+ 	default:
+ 		WARN_ON(1);
+ 		return 0;
+ 	}
+ 
+-	return sizeof(*mle) + common + mle->variable[0];
++	return sizeof(*mle) + mle->variable[0];
+ }
+ 
+ /**
+@@ -4989,8 +4985,7 @@ static inline bool ieee80211_mle_size_ok(const u8 *data, size_t len)
+ 		check_common_len = true;
+ 		break;
+ 	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+-		if (control & IEEE80211_MLC_PRIO_ACCESS_PRES_AP_MLD_MAC_ADDR)
+-			common += ETH_ALEN;
++		common = ETH_ALEN + 1;
+ 		break;
+ 	default:
+ 		/* we don't know this type */
 -- 
 2.39.5
 
