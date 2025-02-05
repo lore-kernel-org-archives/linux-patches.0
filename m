@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479DA1519AA;
-	Wed,  5 Feb 2025 14:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C423E15198D;
+	Wed,  5 Feb 2025 14:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764173; cv=none; b=PaBVODdOsDacSo+KTJ7KP35SqAPMlg4nOORRHEZW+QM/s7wYeVIGSmPFCZ5YzN2ul2FKJQZ3O+MCBhJLJHR++3sIfGTe+zFM2ZOL8dw4U2GJ9WwuDvww1yiSFWyugqACLdk0syvfldPsPdlsY2g8/YwU21w6+YbQaYBsJYk4gxg=
+	t=1738764176; cv=none; b=lW8jZBy3yxKWpvuFLO9Rk7jd7WQufJe8GCVsZT2uWv4fuBxXU7ofpL74U53pZSm+geQ3u21xak5NuelsqEBynoYvln0Wm4Z2Spjshzf2l1/piyu5UYif/pCNBZIbyyAziuzNSaE9WOwRl/s+Y/fiIxfgLCcIQrU9tJj3f0DSP+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764173; c=relaxed/simple;
-	bh=1Pt50D20RzQZJjFdqLETBFAQJ0bDCTx1KYr/fC7NChc=;
+	s=arc-20240116; t=1738764176; c=relaxed/simple;
+	bh=UbDmymL9tsfU1d2h2hVFjWqaJkg9wG/B+cupSZcH+n8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j1xa1qVFCPg2qSSVJpZQNanqaVldWxdzROEEcpPOrZX7akIOUZR8QEarquV71Xc73I5kAVPmyGVUM1413pbNXHOq0mlaRLsSWl/W0jY7rmMkL8neY6NMWnkrFF7Un/2aV8kSkHpyyfjExmug3LW7xpg71WDFVLd9lWkds1kH+MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjZ0dwlq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iyk0mqBPTGQ1+ZLdIvqApo9pty5v2MAFe431XE9MnbNJvBcsVoFxb/ChcdZI+2GFq0t3FCa/zsYLCXoNmL/yYV0NSL26EWPonUxoJ2qmGxsUpzpQ1ED0/Kkdxr/9Uvx9HjvIH+WTOZinroNYB99/ZXdLT6+USLe3OGs9Cttw0PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arZkuuid; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjZ0dwlq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8693C4CED6;
-	Wed,  5 Feb 2025 14:02:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arZkuuid"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2966EC4CEDD;
+	Wed,  5 Feb 2025 14:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764173;
-	bh=1Pt50D20RzQZJjFdqLETBFAQJ0bDCTx1KYr/fC7NChc=;
+	s=korg; t=1738764176;
+	bh=UbDmymL9tsfU1d2h2hVFjWqaJkg9wG/B+cupSZcH+n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kjZ0dwlq1lB7Ur5IRPden3a6yuRwVk8DRVqSjZ0ctyOmBJOK6A2/8Dz95q3RmOYVE
-	 VD4m/A2gyVR4w7fPJ2y/8G3ISsGFXYId7gK/SdChVlZcfpRfE30WiQfmjuzaIHh+qX
-	 NK6fbBVRbo91ilJUW5XVJKOljVxjh7snvbNdrSLM=
+	b=arZkuuidIF/wAHx0jrGXCjy1oOWeX1N+C9ikq0WlQfA2urT77GI4pWKMHFaDgvL+U
+	 lrgOb/+J7JqWLvmzlI8t1elEEo1BPm/XEkI2kenvnbEFKj8S+tAhw+GeH8oJzOyNw9
+	 golkZojMwqLPwP7rar+HvopiLpTvXp+mMMRR+X+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 146/393] netfilter: nft_set_rbtree: rename gc deactivate+erase function
-Date: Wed,  5 Feb 2025 14:41:05 +0100
-Message-ID: <20250205134425.889302195@linuxfoundation.org>
+Subject: [PATCH 6.13 054/623] drm/msm/dpu: check dpu_plane_atomic_print_state() for valid sspp
+Date: Wed,  5 Feb 2025 14:36:36 +0100
+Message-ID: <20250205134458.296583434@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,69 +49,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-[ Upstream commit 8079fc30f79799e59d9602e7e080d434936a482d ]
+[ Upstream commit 789384eb1437aed94155dc0eac8a8a6ba1baf578 ]
 
-Next patch adds a cllaer that doesn't hold the priv->write lock and
-will need a similar function.
+Similar to the r_pipe sspp protect, add a check to protect
+the pipe state prints to avoid NULL ptr dereference for cases when
+the state is dumped without a corresponding atomic_check() where the
+pipe->sspp is assigned.
 
-Rename the existing function to make it clear that it can only
-be used for opportunistic gc during insertion.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 8d738c1869f6 ("netfilter: nf_tables: fix set size with rbtree backend")
+Fixes: 31f7148fd370 ("drm/msm/dpu: move pstate->pipe initialization to dpu_plane_atomic_check")
+Reported-by: Stephen Boyd <swboyd@chromium.org>
+Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/67
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Stephen Boyd <swboyd@chromium.org> # sc7180-trogdor
+Patchwork: https://patchwork.freedesktop.org/patch/628404/
+Link: https://lore.kernel.org/r/20241211-check-state-before-dump-v2-1-62647a501e8c@quicinc.com
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index afbda7e3fd048..896a9a7024b04 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -221,14 +221,15 @@ static void *nft_rbtree_get(const struct net *net, const struct nft_set *set,
- 	return rbe;
- }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 3ffac24333a2a..703e58901d53f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -1335,12 +1335,15 @@ static void dpu_plane_atomic_print_state(struct drm_printer *p,
  
--static void nft_rbtree_gc_remove(struct net *net, struct nft_set *set,
--				 struct nft_rbtree *priv,
--				 struct nft_rbtree_elem *rbe)
-+static void nft_rbtree_gc_elem_remove(struct net *net, struct nft_set *set,
-+				      struct nft_rbtree *priv,
-+				      struct nft_rbtree_elem *rbe)
- {
- 	struct nft_set_elem elem = {
- 		.priv	= rbe,
- 	};
+ 	drm_printf(p, "\tstage=%d\n", pstate->stage);
  
-+	lockdep_assert_held_write(&priv->lock);
- 	nft_setelem_data_deactivate(net, set, &elem);
- 	rb_erase(&rbe->node, &priv->root);
- }
-@@ -263,7 +264,7 @@ nft_rbtree_gc_elem(const struct nft_set *__set, struct nft_rbtree *priv,
- 	rbe_prev = NULL;
- 	if (prev) {
- 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
--		nft_rbtree_gc_remove(net, set, priv, rbe_prev);
-+		nft_rbtree_gc_elem_remove(net, set, priv, rbe_prev);
+-	drm_printf(p, "\tsspp[0]=%s\n", pipe->sspp->cap->name);
+-	drm_printf(p, "\tmultirect_mode[0]=%s\n", dpu_get_multirect_mode(pipe->multirect_mode));
+-	drm_printf(p, "\tmultirect_index[0]=%s\n",
+-		   dpu_get_multirect_index(pipe->multirect_index));
+-	drm_printf(p, "\tsrc[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->src_rect));
+-	drm_printf(p, "\tdst[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->dst_rect));
++	if (pipe->sspp) {
++		drm_printf(p, "\tsspp[0]=%s\n", pipe->sspp->cap->name);
++		drm_printf(p, "\tmultirect_mode[0]=%s\n",
++			   dpu_get_multirect_mode(pipe->multirect_mode));
++		drm_printf(p, "\tmultirect_index[0]=%s\n",
++			   dpu_get_multirect_index(pipe->multirect_index));
++		drm_printf(p, "\tsrc[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->src_rect));
++		drm_printf(p, "\tdst[0]=" DRM_RECT_FMT "\n", DRM_RECT_ARG(&pipe_cfg->dst_rect));
++	}
  
- 		/* There is always room in this trans gc for this element,
- 		 * memory allocation never actually happens, hence, the warning
-@@ -277,7 +278,7 @@ nft_rbtree_gc_elem(const struct nft_set *__set, struct nft_rbtree *priv,
- 		nft_trans_gc_elem_add(gc, rbe_prev);
- 	}
- 
--	nft_rbtree_gc_remove(net, set, priv, rbe);
-+	nft_rbtree_gc_elem_remove(net, set, priv, rbe);
- 	gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
- 	if (WARN_ON_ONCE(!gc))
- 		return ERR_PTR(-ENOMEM);
+ 	if (r_pipe->sspp) {
+ 		drm_printf(p, "\tsspp[1]=%s\n", r_pipe->sspp->cap->name);
 -- 
 2.39.5
 
