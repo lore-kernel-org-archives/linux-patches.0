@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4481922C4;
-	Wed,  5 Feb 2025 14:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97C7195811;
+	Wed,  5 Feb 2025 14:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766466; cv=none; b=JTlsrr6mlTgvI/Zsqlm4toVpIv81FksRcA+bCvIFmrvipfzid6yk/pjjgxlxDMuLe3G8zJ7hMIcp5aUhAX6uT8rvpeBYreTkgFtui8q1vc8S6w7HFPHhUjucVj26fIe1TswkYSCZiytS/W7burTmTL26DSVhpdW2LjOtueJsxGc=
+	t=1738766469; cv=none; b=rT22gcVrnEoAb1D/UgnDZ8bMMg2bmUq7lalQHvy0WW5EJDH8aW+/cFsZkz+Hz3zXpQ3AZnia4ISi63+gMj+m1IgMnX5U6aSJiTOOuBnUOtTyMPTUn0t0tw5VcxvaVGA1csfF9umDsaKKcCE7wa6J+fzBVwB1ty5Pvdmi8nnwbok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766466; c=relaxed/simple;
-	bh=+HEAaJF8Vfn0JysQdJusarpQaXO7hTReiidKIIHz9pk=;
+	s=arc-20240116; t=1738766469; c=relaxed/simple;
+	bh=zPvB/gozm8Di/91X9jmSGnjvbdKatgBTMdaFIub/Kwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UUNhvSBqkrHJfYs4/r5qfQkTevvBEmwWEyKqNeUveKsE+VKp5LGe0DGmB2RRZz3Cv48ViseJmXrXWxh9sEzkkfx1FoVNg5ROcSpO9vlAc+x3Xw2kpCZp0PkqbCHuwn1BwkvVjmgE0zId6CNQK6afFSzisbPcB6k8pBE9xhCJv9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KMrCQYl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G7Kn/dvzX0/BFL67U3Ouqugrlk5LX68HRzmzKzwPOyffOwytXOnzeESTVrKTecR9jC7uAMUdM9jdlbS3KDl7u/ocFX+TDW7o6Bs7TFwT9L+qvF1DTgSNu3iFycI02PgHf8LyBj0zIXaefaqPb3v4Xy0fvX3AeRk26qZWZ5AVSD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmLvc16J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KMrCQYl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79C7C4CED1;
-	Wed,  5 Feb 2025 14:41:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmLvc16J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D187C4AF11;
+	Wed,  5 Feb 2025 14:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766466;
-	bh=+HEAaJF8Vfn0JysQdJusarpQaXO7hTReiidKIIHz9pk=;
+	s=korg; t=1738766469;
+	bh=zPvB/gozm8Di/91X9jmSGnjvbdKatgBTMdaFIub/Kwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2KMrCQYl8DlxkfvevgMoK3qJ/Gtf3vXiZter9WChzpsxbxmy3cB7r7sRvRuCowkxD
-	 +Y+ZxzuIVbUaxl+q8L13r5Kz+SAdAJ/3dzH1Lx4aW9nisTvQqSfZOJBgxp8cTRs7W2
-	 kjZAz+oxCOL1ye+W9raw//h29Yr5U8l79U1q2Sc4=
+	b=DmLvc16JsE0hFntb7yf001cu6CQABxiMT0yGcRjTOhpUkugDgR9971M94rwu68P9g
+	 58NhoLuohMQ3kihalMPBUDmtFiwIN4pInejkXZzFqOnv+DY5Oo04pFYCSsCLXwhpFP
+	 l31ljN1OOEOfux+dgblEmV0DHE/cq5InoCLf3iNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Brian Cain <bcain@quicinc.com>,
-	Brian Cain <brian.cain@oss.qualcomm.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 365/393] hexagon: fix using plain integer as NULL pointer warning in cmpxchg
-Date: Wed,  5 Feb 2025 14:44:44 +0100
-Message-ID: <20250205134434.264582788@linuxfoundation.org>
+Subject: [PATCH 6.13 279/623] crypto: ixp4xx - fix OF node reference leaks in init_ixp_crypto()
+Date: Wed,  5 Feb 2025 14:40:21 +0100
+Message-ID: <20250205134506.903913521@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,63 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 8a20030038742b9915c6d811a4e6c14b126cafb4 ]
+[ Upstream commit 472a989029aac2b78ef2f0b18b27c568bf76d104 ]
 
-Sparse reports
+init_ixp_crypto() calls of_parse_phandle_with_fixed_args() multiple
+times, but does not release all the obtained refcounts. Fix it by adding
+of_node_put() calls.
 
-    net/ipv4/inet_diag.c:1511:17: sparse: sparse: Using plain integer as NULL pointer
+This bug was found by an experimental static analysis tool that I am
+developing.
 
-Due to this code calling cmpxchg on a non-integer type
-struct inet_diag_handler *
-
-    return !cmpxchg((const struct inet_diag_handler**)&inet_diag_table[type],
-                    NULL, h) ? 0 : -EEXIST;
-
-While hexagon's cmpxchg assigns an integer value to a variable of this
-type.
-
-    __typeof__(*(ptr)) __oldval = 0;
-
-Update this assignment to cast 0 to the correct type.
-
-The original issue is easily reproduced at head with the below block,
-and is absent after this change.
-
-    make LLVM=1 ARCH=hexagon defconfig
-    make C=1 LLVM=1 ARCH=hexagon net/ipv4/inet_diag.o
-
-Fixes: 99a70aa051d2 ("Hexagon: Add processor and system headers")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202411091538.PGSTqUBi-lkp@intel.com/
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Tested-by: Christian Gmeiner <cgmeiner@igalia.com>
-Link: https://lore.kernel.org/r/20241203221736.282020-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Brian Cain <bcain@quicinc.com>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Fixes: 76f24b4f46b8 ("crypto: ixp4xx - Add device tree support")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/hexagon/include/asm/cmpxchg.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/hexagon/include/asm/cmpxchg.h b/arch/hexagon/include/asm/cmpxchg.h
-index bf6cf5579cf45..9c58fb81f7fd6 100644
---- a/arch/hexagon/include/asm/cmpxchg.h
-+++ b/arch/hexagon/include/asm/cmpxchg.h
-@@ -56,7 +56,7 @@ __arch_xchg(unsigned long x, volatile void *ptr, int size)
- 	__typeof__(ptr) __ptr = (ptr);				\
- 	__typeof__(*(ptr)) __old = (old);			\
- 	__typeof__(*(ptr)) __new = (new);			\
--	__typeof__(*(ptr)) __oldval = 0;			\
-+	__typeof__(*(ptr)) __oldval = (__typeof__(*(ptr))) 0;	\
- 								\
- 	asm volatile(						\
- 		"1:	%0 = memw_locked(%1);\n"		\
+diff --git a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
+index 449c6d3ab2db1..fcc0cf4df637d 100644
+--- a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
++++ b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
+@@ -471,6 +471,7 @@ static int init_ixp_crypto(struct device *dev)
+ 			return -ENODEV;
+ 		}
+ 		npe_id = npe_spec.args[0];
++		of_node_put(npe_spec.np);
+ 
+ 		ret = of_parse_phandle_with_fixed_args(np, "queue-rx", 1, 0,
+ 						       &queue_spec);
+@@ -479,6 +480,7 @@ static int init_ixp_crypto(struct device *dev)
+ 			return -ENODEV;
+ 		}
+ 		recv_qid = queue_spec.args[0];
++		of_node_put(queue_spec.np);
+ 
+ 		ret = of_parse_phandle_with_fixed_args(np, "queue-txready", 1, 0,
+ 						       &queue_spec);
+@@ -487,6 +489,7 @@ static int init_ixp_crypto(struct device *dev)
+ 			return -ENODEV;
+ 		}
+ 		send_qid = queue_spec.args[0];
++		of_node_put(queue_spec.np);
+ 	} else {
+ 		/*
+ 		 * Hardcoded engine when using platform data, this goes away
 -- 
 2.39.5
 
