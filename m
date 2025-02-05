@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4349914B959;
-	Wed,  5 Feb 2025 14:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4174C155A30;
+	Wed,  5 Feb 2025 14:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765367; cv=none; b=cFKRtOeH/fwp5tqFXaIsMG7IImEPpPcjOAT+tnAHjjJj+m8q5UIeE+sUISONLA9VAOtTNJTbFzVIzgbvKKetz+nXXkb/1+avsYlclYc+lrj355gq20o7qfAx1SxIf7qbjtHaRH/L1yntp+4Xh5JZWLAECJOHnJQ75g8f2xOzvQM=
+	t=1738765370; cv=none; b=a+hi073bEINpZTQK6JlvW7syrQ2frs2i9aw6QkH05n9leIljMx8BhyX1Mqp02AJVRdiH9Yn53Z4B4qskvHoEQw8kuylMZnc04WQk9JfNvC337/G4YwUxbh66lLEw+6DpsSLhjKMh/i/tRczw1QJmHaxQE/LUj4CqSFNiQdWoIRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765367; c=relaxed/simple;
-	bh=9naWWCTWx2kMCcU/yG8R2sEsFkJCEMp6JJs3IvUslBo=;
+	s=arc-20240116; t=1738765370; c=relaxed/simple;
+	bh=pQkT87eykZB5+Lo2TZyLY+d8wMya631JOGSy1vfUPVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VvA/8HMheiA35Xdsg838dfGEIbDVEGiDAnTUAgbQr7G5W/Ua96phQbmG1e5KArlbkLGdAD7v1wrPa3GBEnMXNHvqGUNzEPxdrIFwNZh680WizDWtmj29U6Ftf4b0Al3jL5qIq+gYgXjLMjJRt0GLioEkglNF45KT8pbRd+xbAVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inFA3euW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q8sst2E/s/1oA+Od7r/Ztq/gFuTJ9Wwd9slYcP+n/Pt99lYIX3C68TiAhKrt1YoAAel5v99jxCShhdSBsnrtQYX2UW0+epmmyr2VTxMo+GlqKzd/1Of0NhzUOvm0ckpZcbsdpkAYlQJri75hzTJYe9MJNAniOmQhWBZ1g4J/7Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvfiJFQT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inFA3euW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29ACDC4CED1;
-	Wed,  5 Feb 2025 14:22:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvfiJFQT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1156C4CED1;
+	Wed,  5 Feb 2025 14:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765366;
-	bh=9naWWCTWx2kMCcU/yG8R2sEsFkJCEMp6JJs3IvUslBo=;
+	s=korg; t=1738765370;
+	bh=pQkT87eykZB5+Lo2TZyLY+d8wMya631JOGSy1vfUPVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=inFA3euWs+rbYsVV6l+a2WYrA0xArWr3Thu+CIZjxpwvhUUrQWM00pYH9Kyd38Vs9
-	 Jf3xRsP5jY2QwuVb0+mSqTlmjPz3CHnZV946TVcKaAv/Svn557CMGxPspcafMVlANH
-	 N8HWtS0af+GG7n9owzCdcTix8znp/iw1OfbYkRq8=
+	b=CvfiJFQT+56nF1rYgScO7xnNrNlkgFi3Td/KiI8amqEKKdz68KkH/6PKW+cUHRSG9
+	 gGmfrxO3ycWYM+TzIfUGUI4CFkW5YyrnqRIa2N5VDybNtGILnJo35uy+OgZtlBj9Ma
+	 +2oyJ9FxVB6ILUOD7HokD2Hn68QYnuHQ0FiQwlyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 257/393] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: remove disabled ov7251 camera
-Date: Wed,  5 Feb 2025 14:42:56 +0100
-Message-ID: <20250205134430.143104562@linuxfoundation.org>
+Subject: [PATCH 6.13 172/623] clk: ralink: mtmips: remove duplicated xtal clock for Ralink SoC RT3883
+Date: Wed,  5 Feb 2025 14:38:34 +0100
+Message-ID: <20250205134502.815773396@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,84 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-[ Upstream commit 80b47f14d5433068dd6738c9e6e17ff6648bae41 ]
+[ Upstream commit 830d8062d25581cf0beaa334486eea06834044da ]
 
-The ov7251node has bindings check errors in the endpoint, and the
-camera node was disabled since the beginning. Even when switching the
-node to okay, the endpoint description to the csiphy is missing along
-with the csiphy parameters.
+Ralink SoC RT3883 has already 'xtal' defined as a base clock so there is no
+need to redefine it again in fixed clocks section. Hence, remove the duplicate
+one from there.
 
-Drop the ov7251 camera entirely until it's properly described.
-
-This obviously fixes:
-sdm845-db845c-navigation-mezzanine.dtso: camera@60: port:endpoint:data-lanes: [0, 1] is too long
-	from schema $id: http://devicetree.org/schemas/media/i2c/ovti,ov7251.yaml#
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241230-topic-misc-dt-fixes-v4-2-1e6880e9dda3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: d34db686a3d7 ("clk: ralink: mtmips: fix clocks probe order in oldest ralink SoCs")
+Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Link: https://lore.kernel.org/r/20250108093636.265033-1-sergio.paracuellos@gmail.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../sdm845-db845c-navigation-mezzanine.dtso   | 42 -------------------
- 1 file changed, 42 deletions(-)
+ drivers/clk/ralink/clk-mtmips.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-index b5f717d0ddd97..51f1a4883ab8f 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-@@ -68,45 +68,3 @@
- 		};
- 	};
+diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
+index 97b8ca0f91816..19d433034884a 100644
+--- a/drivers/clk/ralink/clk-mtmips.c
++++ b/drivers/clk/ralink/clk-mtmips.c
+@@ -266,7 +266,6 @@ static int mtmips_register_pherip_clocks(struct device_node *np,
+ 	}
+ 
+ static struct mtmips_clk_fixed rt3883_fixed_clocks[] = {
+-	CLK_FIXED("xtal", NULL, 40000000),
+ 	CLK_FIXED("periph", "xtal", 40000000)
  };
--
--&cci_i2c1 {
--	#address-cells = <1>;
--	#size-cells = <0>;
--
--	camera@60 {
--		compatible = "ovti,ov7251";
--
--		/* I2C address as per ov7251.txt linux documentation */
--		reg = <0x60>;
--
--		/* CAM3_RST_N */
--		enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
--		pinctrl-names = "default";
--		pinctrl-0 = <&cam3_default>;
--
--		clocks = <&clock_camcc CAM_CC_MCLK3_CLK>;
--		clock-names = "xclk";
--		clock-frequency = <24000000>;
--
--		/*
--		 * The &vreg_s4a_1p8 trace always powered on.
--		 *
--		 * The 2.8V vdda-supply regulator is enabled when the
--		 * vreg_s4a_1p8 trace is pulled high.
--		 * It too is represented by a fixed regulator.
--		 *
--		 * No 1.2V vddd-supply regulator is used.
--		 */
--		vdddo-supply = <&vreg_lvs1a_1p8>;
--		vdda-supply = <&cam3_avdd_2v8>;
--
--		status = "disabled";
--
--		port {
--			ov7251_ep: endpoint {
--				data-lanes = <0 1>;
--/*				remote-endpoint = <&csiphy3_ep>; */
--			};
--		};
--	};
--};
+ 
 -- 
 2.39.5
 
