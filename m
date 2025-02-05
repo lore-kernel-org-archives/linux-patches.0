@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BB9522A;
-	Wed,  5 Feb 2025 14:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5868634E;
+	Wed,  5 Feb 2025 14:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765617; cv=none; b=cvrKvUpHWSaPAmzG7L4fEQZVDLF/CeoRBuIzicbQcy7EapGOSwGeOqE+kr6gMHDTf+urfZSqcRgAUZmh0vcRimoNAA/58B1gHebYwhzhAIDnP41Ufa9mEKUdRTiqGRVvndbucg1K4X91RhRb0Q4mJ0okCNQPoJivVz+/rmq3yN0=
+	t=1738765621; cv=none; b=e+oUeynvUFKAkfgsjACYROmuzdJjhwnBMzH0OPKDtha85pdhty2UlFmI3k7ujEdyh3D3/5HcjCbW/zETz4yOGF7IsGJzjJ3s0coAmRhAaAIn6J4Su1I0YLG5yCKxSFl/QoUOFKKB7h1oUM/BU0pvXTs6gtwvCxFWEiWZq3IgJsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765617; c=relaxed/simple;
-	bh=KzYi5AlAL3+CJm/xBp3/csuTFwLkusp9olODe4Su2c4=;
+	s=arc-20240116; t=1738765621; c=relaxed/simple;
+	bh=S5nwppMebko5rUvS8qCuNdOGIaVu2pAKiCrT/RJcAvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bk1ju21piS6bhAejVXtGCF3OhPxp6gEehN3XPG2XDxSDC3hOJy9xWvko0ftWNP9wBKGKR0NFiiMAFRB1ltVBzH+aj48C5OcCcWhGe+PqTNvY/msqO+t3wamnFjIs/lFGJwI+NY26xi2/VKMlEAg88YeRBzMfDTMK1VCmjlCWm1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvUmDuC6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NVJ/Qb5exVwSLzdDmfAb3/SFYQau+wtyHVTUSpFH/BP/kkN4t6QUYFG+qSPI6Wd8ma5tIwNi5yqBwqX6uYdVrzRJvSYdDoFWVWYT3bGYHlgAwGnAIX9g2WXp/FYMLWGfRnM3X0/+L1J1nhbhXBLz95VQjez+QEsxuoEAYG0hpVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O73xzljV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvUmDuC6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE08C4CED1;
-	Wed,  5 Feb 2025 14:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O73xzljV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85273C4CED1;
+	Wed,  5 Feb 2025 14:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765617;
-	bh=KzYi5AlAL3+CJm/xBp3/csuTFwLkusp9olODe4Su2c4=;
+	s=korg; t=1738765621;
+	bh=S5nwppMebko5rUvS8qCuNdOGIaVu2pAKiCrT/RJcAvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hvUmDuC6CAA2laVqZc/KdRIJxokKq5VkAMrWS41gQHX+AlxPfxgbmTTA+xS23dHW5
-	 SUo4kLgEtmdwWaDtwt8E3X+AoMJGhumbDSHm8LncADjVJxinzRRh61QJ5zNr1LcF8t
-	 Q7DJAhy4NI+4l/cIYLWBR0RY68vPbLBm0Oi4Vws4=
+	b=O73xzljVSpUjt+NCBehwEQrZRNBqjqgsJ33eso4SP8KzzoMUmhnHtoTHUEhFihc1E
+	 47GDzbXsl3fwwW3buCtZrr+7qq5snvlInUQMV94Bk3oB2Vf+HEDZ0cRRmYAZ38PTpS
+	 50/nJswxk2xzHTy7athLvNweS6X6sKtSxLjkc4RQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 237/590] libbpf: dont adjust USDT semaphore address if .stapsdt.base addr is missing
-Date: Wed,  5 Feb 2025 14:39:52 +0100
-Message-ID: <20250205134504.348418099@linuxfoundation.org>
+Subject: [PATCH 6.6 284/393] media: marvell: Add check for clk_enable()
+Date: Wed,  5 Feb 2025 14:43:23 +0100
+Message-ID: <20250205134431.177245879@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 98ebe5ef6f5c4517ba92fb3e56f95827ebea83fd ]
+[ Upstream commit 11f68d2ba2e1521a608af773bf788e8cfa260f68 ]
 
-USDT ELF note optionally can record an offset of .stapsdt.base, which is
-used to make adjustments to USDT target attach address. Currently,
-libbpf will do this address adjustment unconditionally if it finds
-.stapsdt.base ELF section in target binary. But there is a corner case
-where .stapsdt.base ELF section is present, but specific USDT note
-doesn't reference it. In such case, libbpf will basically just add base
-address and end up with absolutely incorrect USDT target address.
+Add check for the return value of clk_enable() to guarantee the success.
 
-This adjustment has to be done only if both .stapsdt.sema section is
-present and USDT note is recording a reference to it.
-
-Fixes: 74cc6311cec9 ("libbpf: Add USDT notes parsing and resolution logic")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20241121224558.796110-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 81a409bfd551 ("media: marvell-ccic: provide a clock for the sensor")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+[Sakari Ailus: Fix spelling in commit message.]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/usdt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/marvell/mcam-core.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
-index 93794f01bb67c..6ff28e7bf5e3d 100644
---- a/tools/lib/bpf/usdt.c
-+++ b/tools/lib/bpf/usdt.c
-@@ -659,7 +659,7 @@ static int collect_usdt_targets(struct usdt_manager *man, Elf *elf, const char *
- 		 *   [0] https://sourceware.org/systemtap/wiki/UserSpaceProbeImplementation
- 		 */
- 		usdt_abs_ip = note.loc_addr;
--		if (base_addr)
-+		if (base_addr && note.base_addr)
- 			usdt_abs_ip += base_addr - note.base_addr;
+diff --git a/drivers/media/platform/marvell/mcam-core.c b/drivers/media/platform/marvell/mcam-core.c
+index 66688b4aece5d..555f560238c9a 100644
+--- a/drivers/media/platform/marvell/mcam-core.c
++++ b/drivers/media/platform/marvell/mcam-core.c
+@@ -935,7 +935,12 @@ static int mclk_enable(struct clk_hw *hw)
+ 	ret = pm_runtime_resume_and_get(cam->dev);
+ 	if (ret < 0)
+ 		return ret;
+-	clk_enable(cam->clk[0]);
++	ret = clk_enable(cam->clk[0]);
++	if (ret) {
++		pm_runtime_put(cam->dev);
++		return ret;
++	}
++
+ 	mcam_reg_write(cam, REG_CLKCTRL, (mclk_src << 29) | mclk_div);
+ 	mcam_ctlr_power_up(cam);
  
- 		/* When attaching uprobes (which is what USDTs basically are)
 -- 
 2.39.5
 
