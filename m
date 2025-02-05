@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0001957FC;
-	Wed,  5 Feb 2025 15:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F7F1898F8;
+	Wed,  5 Feb 2025 15:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767606; cv=none; b=IQ1RNO0CZzoqAv9SvI0sOXRGeduLRJWtovgSaej6C/QcDDUUHX4aoeFQdU07HDQp1mRTFPWAB2qsE+Tzya0gUQs/dI+/Z6zFSB3Ayljx75tYPw9QuM9FXK/46vHUxriVNqaCTO8MKfrOFuzoJLPNJ+JyWYb+XD+xL2t21qSOfPY=
+	t=1738767610; cv=none; b=c8J8T1rY0FiMDeQeBv28LOG2qs5vg9IAbaKEm4Iv60IJNARJtks5fOTdP7cFxZCK13R3wMLI1aC6lEKz9Ipajw1DNe3XrXqaJRdBIRpuoPByeEVDZPyAtdUBFyaLKSTmi7hOrkbfF1dYwQoLDEQdRSVFTeUGUNOpJWjD9DSIOrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767606; c=relaxed/simple;
-	bh=x7tOIT5v+6vo7PZvYRVcEGyoncc8pb4WKUyFpVp4ql0=;
+	s=arc-20240116; t=1738767610; c=relaxed/simple;
+	bh=aPISWEpci008E8jDwPYx62m/pUVVb+yqrduiUHoi8YE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ciw4MF78eVFwX7rhmRn247igt29Ba+zqHOGWtEjiMXPk8ppySQ9/0txree0ujrynO9G2vJ0BisugtHrxElUFe0+tieKD1xTiB/tmdKGAdciGON/JAGurLmSe/ap6i5fU/8dLm7Xjb/vv7sdmOKfdiA4HohTscg5BTSvKXpoeoio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2UGQK3r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T+sMr5b3J0eAwS2SYbfQcHsL/ob3brv5j2I+UrKRSBT+BqsGoulxsyntViqzD/8M1Oy/A7vKju19omKH3UdVotF8+ZHME59dmW4XKYxyrlwBmbSbhEhU2j9Jizja4RfaZKtME3Ueas8O/i7EL4J0VUpArETZzzG3DvHF6mPKTKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gn96qDUc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2UGQK3r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1DFC4CED1;
-	Wed,  5 Feb 2025 15:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gn96qDUc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7561DC4CED1;
+	Wed,  5 Feb 2025 15:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767606;
-	bh=x7tOIT5v+6vo7PZvYRVcEGyoncc8pb4WKUyFpVp4ql0=;
+	s=korg; t=1738767609;
+	bh=aPISWEpci008E8jDwPYx62m/pUVVb+yqrduiUHoi8YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f2UGQK3r3tqm8SxyZI5Bkz0IuzRNNl3GHjgCVTflNjymeM4BBZI3wOQHQrjFoVRnq
-	 N7Saghc45jbCEJEG0rPpVqliV01EsFpew0RvBllnagPu1N8TvIkJOgJYpoWssRpdP7
-	 Zf0ZEDLnTdgJ9veqOXWkTP4uf8gFR2gDW3mLWN7w=
+	b=Gn96qDUcKdGKMJ70Tn7bNPqJsUQr3gI4EfOAvV3ioNEDWtfRyvc5jwJnssRn9abM5
+	 8aKEfXo4d6Bbnu5TegE9i6p/QRuzWrFjLltu0eHfzJFuVZgqaSyZzzQtP5yhBanxjN
+	 QOxdPe7m5hFJx8+a1yvlaKlerj8cStiugxMQa89w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 481/590] xfrm: Dont disable preemption while looking up cache state.
-Date: Wed,  5 Feb 2025 14:43:56 +0100
-Message-ID: <20250205134513.662981387@linuxfoundation.org>
+Subject: [PATCH 6.13 428/623] i3c: dw: Fix use-after-free in dw_i3c_master driver due to race condition
+Date: Wed,  5 Feb 2025 14:42:50 +0100
+Message-ID: <20250205134512.597374933@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Sewior <bigeasy@linutronix.de>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 6c9b7db96db62ee9ad8d359d90ff468d462518c4 ]
+[ Upstream commit b75439c945b94dd8a2b645355bdb56f948052601 ]
 
-For the state cache lookup xfrm_input_state_lookup() first disables
-preemption, to remain on the CPU and then retrieves a per-CPU pointer.
-Within the preempt-disable section it also acquires
-netns_xfrm::xfrm_state_lock, a spinlock_t. This lock must not be
-acquired with explicit disabled preemption (such as by get_cpu())
-because this lock becomes a sleeping lock on PREEMPT_RT.
+In dw_i3c_common_probe, &master->hj_work is bound with
+dw_i3c_hj_work. And dw_i3c_master_irq_handler can call
+dw_i3c_master_irq_handle_ibis function to start the work.
 
-To remain on the same CPU is just an optimisation for the CPU local
-lookup. The actual modification of the per-CPU variable happens with
-netns_xfrm::xfrm_state_lock acquired.
+If we remove the module which will call dw_i3c_common_remove to
+make cleanup, it will free master->base through i3c_master_unregister
+while the work mentioned above will be used. The sequence of operations
+that may lead to a UAF bug is as follows:
 
-Remove get_cpu() and use the state_cache_input on the current CPU.
+CPU0                                      CPU1
 
-Reported-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Closes: https://lore.kernel.org/all/CAADnVQKkCLaj=roayH=Mjiiqz_svdf1tsC3OE4EC0E=mAD+L1A@mail.gmail.com/
-Fixes: 81a331a0e72dd ("xfrm: Add an inbound percpu state cache.")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+                                     | dw_i3c_hj_work
+dw_i3c_common_remove                 |
+i3c_master_unregister(&master->base) |
+device_unregister(&master->dev)      |
+device_release                       |
+//free master->base                  |
+                                     | i3c_master_do_daa(&master->base)
+                                     | //use master->base
+
+Fix it by ensuring that the work is canceled before proceeding with
+the cleanup in dw_i3c_common_remove.
+
+Fixes: 1dd728f5d4d4 ("i3c: master: Add driver for Synopsys DesignWare IP")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Acked-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Link: https://lore.kernel.org/r/bfc49c9527be5b513e7ceafeba314ca40a5be4bc.1732703537.git.xiaopei01@kylinos.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/i3c/master/dw-i3c-master.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 567f02ff88597..6441e94233daa 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -1150,9 +1150,8 @@ struct xfrm_state *xfrm_input_state_lookup(struct net *net, u32 mark,
- 	struct xfrm_hash_state_ptrs state_ptrs;
- 	struct hlist_head *state_cache_input;
- 	struct xfrm_state *x = NULL;
--	int cpu = get_cpu();
+diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
+index d4b80eb8cecdf..343b2f9ca63c3 100644
+--- a/drivers/i3c/master/dw-i3c-master.c
++++ b/drivers/i3c/master/dw-i3c-master.c
+@@ -1647,6 +1647,7 @@ EXPORT_SYMBOL_GPL(dw_i3c_common_probe);
  
--	state_cache_input =  per_cpu_ptr(net->xfrm.state_cache_input, cpu);
-+	state_cache_input = raw_cpu_ptr(net->xfrm.state_cache_input);
+ void dw_i3c_common_remove(struct dw_i3c_master *master)
+ {
++	cancel_work_sync(&master->hj_work);
+ 	i3c_master_unregister(&master->base);
  
- 	rcu_read_lock();
- 	hlist_for_each_entry_rcu(x, state_cache_input, state_cache_input) {
-@@ -1186,7 +1185,6 @@ struct xfrm_state *xfrm_input_state_lookup(struct net *net, u32 mark,
- 
- out:
- 	rcu_read_unlock();
--	put_cpu();
- 	return x;
- }
- EXPORT_SYMBOL(xfrm_input_state_lookup);
+ 	pm_runtime_disable(master->dev);
 -- 
 2.39.5
 
