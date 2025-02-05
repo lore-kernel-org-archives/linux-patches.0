@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35F218D656;
-	Wed,  5 Feb 2025 14:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4879C18D656;
+	Wed,  5 Feb 2025 14:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766942; cv=none; b=H6n6E2+Ma2yHJlFj6n9s6+MTFJ66sBw9ZuOp6ja+yJzUAE6l3SABa7CYM9rsqn0JXwsCmFWFKFQzlcefrPF00orIJ3H/dYbfhlQ6FeDamgyBivAnLD2ts4adHvctdUkprNYoyZnhjZXmPy50G2D5KeWqPMWq//RNm9mTd9iqIvs=
+	t=1738766945; cv=none; b=apMWOqjcQT1+1IPR3DQhem4gj8RCAkJFsRb2owXe2Ktb5a6z+sxUjbHysM5td0usEYLeVFCSDKU2qLcl9/0mms7bLsYeg6ZwOIn+GPSny9PzcETSHCGx2AMKmEWNC84ibu+ZHqdWDMOxqsRgO8Q/+EAmnlcLP8gidpLulO/xIMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766942; c=relaxed/simple;
-	bh=W36YvPwS1vTkGt6y1YU539yM4cOUAAtikAxKOCf0cYs=;
+	s=arc-20240116; t=1738766945; c=relaxed/simple;
+	bh=rqNB9L9Vy/JXDfEmUsdu/c/KdTgq9K7/HQAb1UK/xx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k9D8lvXp6imYyOUXcfV5MmjpVO+aZ5LV/EfqVgB5fqaQUuuwcJhQrSI+oQlvF1Sboy+GwCayz4b/Uy+fdDpaBxPhQa3T5eO8KfEJnBhSpvgNGWrSXkhVmTsGu9LUhd+nUsTfRBO0Xdu/kmoIotYRQjdc/C3GYZI2bvIGK0zYyaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/EbGoyv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZYWB6EDZy89g4TqFCxPuL8tgltaxU6WLdi1eOAhgvWVadHXMoamwpAzTo3Jc9nBWi5B3OmSBHJRpT0rUZbRoXZXk6JSWhEAIlnCs5VhaVkVlemSIqGpWBUwOgBTzZ8W2zCgUaLXQ+V1QzvH4ZWgvfa1+6P9CP8yGC5BsCMD2IqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=es0EODdb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/EbGoyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1A9C4CED1;
-	Wed,  5 Feb 2025 14:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="es0EODdb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0177C4CED1;
+	Wed,  5 Feb 2025 14:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766941;
-	bh=W36YvPwS1vTkGt6y1YU539yM4cOUAAtikAxKOCf0cYs=;
+	s=korg; t=1738766945;
+	bh=rqNB9L9Vy/JXDfEmUsdu/c/KdTgq9K7/HQAb1UK/xx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/EbGoyvd3FJUTfuzLPZO37wAjlUYj1G0MVzcCD+Gu2Dzqnux/kKnkhZZwpmD2FNu
-	 akEi6jd/lMeJVcDpi3JTVcY4qQbrVlxFY0UYmkRVHtDtIKcwb9KP17879TBZp7BI+f
-	 mlwy3GvmsCEu73Acp6Y4NpRT0jqeLR5pOXN9Lht4=
+	b=es0EODdb+7LKbO3xNARx19bbvo9xZlIyaLWZ0QRj8pbZSEtdT4la9a9X2lP/91GwL
+	 Ij+7TVI0xPNIb6oVVV+Mo04E6J3NRmW3bDeuFdB0jTwpzo3xfWGaZpZU6Y/G3Qvxa3
+	 YLDAxzFogDplYwUzhfKhsVRLclJMbHdeaqPibOKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Markus Niebel <markus.niebel@ew.tq-group.com>,
+	Bruno Thomsen <bruno.thomsen@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 383/590] arm64: dts: mediatek: add per-SoC compatibles for keypad nodes
-Date: Wed,  5 Feb 2025 14:42:18 +0100
-Message-ID: <20250205134509.920255121@linuxfoundation.org>
+Subject: [PATCH 6.13 332/623] ARM: dts: imx7-tqma7: add missing vs-supply for LM75A (rev. 01xxx)
+Date: Wed,  5 Feb 2025 14:41:14 +0100
+Message-ID: <20250205134508.924848237@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +49,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 6139d9e9e397dc9711cf10f8f548a8f9da3b5323 ]
+[ Upstream commit 78e08cebfe41a99d12a3a79d3e3be913559182e2 ]
 
-The mt6779-keypad binding specifies using a compatible for the
-actual SoC before the generic MT6779 one.
+Add missing supply for LM75. Fixes the kernel warning:
+  lm75 0-0048: supply vs not found, using dummy regulator
 
-Fixes: a8013418d35c ("arm64: dts: mediatek: mt8183: add keyboard node")
-Fixes: 6ff945376556 ("arm64: dts: mediatek: Initial mt8365-evk support")
-Signed-off-by: Val Packett <val@packett.cool>
-Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241225192631.25017-3-val@packett.cool
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: c9d4affbe60a ("ARM: dts: imx: tqma7: add lm75a sensor (rev. 01xxx)")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Markus Niebel <markus.niebel@ew.tq-group.com>
+Reviewed-by: Bruno Thomsen <bruno.thomsen@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183.dtsi | 3 ++-
- arch/arm64/boot/dts/mediatek/mt8365.dtsi | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-index 0a6578aacf828..9cd5e0cef02a2 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-@@ -1024,7 +1024,8 @@
- 		};
+diff --git a/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi b/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
+index 028961eb71089..91ca23a66bf3c 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
+@@ -135,6 +135,7 @@
+ 	lm75a: temperature-sensor@48 {
+ 		compatible = "national,lm75a";
+ 		reg = <0x48>;
++		vs-supply = <&vgen4_reg>;
+ 	};
  
- 		keyboard: keyboard@10010000 {
--			compatible = "mediatek,mt6779-keypad";
-+			compatible = "mediatek,mt8183-keypad",
-+				     "mediatek,mt6779-keypad";
- 			reg = <0 0x10010000 0 0x1000>;
- 			interrupts = <GIC_SPI 186 IRQ_TYPE_EDGE_FALLING>;
- 			clocks = <&clk26m>;
-diff --git a/arch/arm64/boot/dts/mediatek/mt8365.dtsi b/arch/arm64/boot/dts/mediatek/mt8365.dtsi
-index 9c91fe8ea0f96..2bf8c9d02b6ee 100644
---- a/arch/arm64/boot/dts/mediatek/mt8365.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8365.dtsi
-@@ -449,7 +449,8 @@
- 		};
- 
- 		keypad: keypad@10010000 {
--			compatible = "mediatek,mt6779-keypad";
-+			compatible = "mediatek,mt8365-keypad",
-+				     "mediatek,mt6779-keypad";
- 			reg = <0 0x10010000 0 0x1000>;
- 			wakeup-source;
- 			interrupts = <GIC_SPI 124 IRQ_TYPE_EDGE_FALLING>;
+ 	/* NXP SE97BTP with temperature sensor + eeprom, TQMa7x 02xx */
 -- 
 2.39.5
 
