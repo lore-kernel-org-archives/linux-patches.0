@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE67E522A;
-	Wed,  5 Feb 2025 14:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE85B1519BE;
+	Wed,  5 Feb 2025 14:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765234; cv=none; b=I1I7/3t8PRmMb4BLNIiZqxjKmZF2ZGAIcB4/bElj+W28S8IzgHmeDJI1t+SXbxDeiO6tERvP2ZhOwN9+5JfCJG9p2bVNDY2yW/XVd5Ijbu67+l5yMLOPAvwGThpaOOUUSy6qCepIGl3awdSd4/iLka+VRjBtllTWcigN2qFhNSw=
+	t=1738765237; cv=none; b=R6s+JiTfJr2yoF4+uphDXZIzy1rYEsuYHtV8F7UX+5m1p2oHP7xJa640rluO8ss3OKZwxev0nuWUCneuSCVQtEDsrvTaU9Xkk4gL5S54WGum90MEtlJahlhZ2iDb3QERyPTFgBx+n4626TtZ1JWo5D76S+egeE7SxijQwt1DrVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765234; c=relaxed/simple;
-	bh=rB1QPDrlkaVBHuxwtWTAJSaA80tp8epqO+6XB8vCon0=;
+	s=arc-20240116; t=1738765237; c=relaxed/simple;
+	bh=NyXTl0VOoOrQrtnaFBxqUxOa7uNb0JFVwJSBHYHQnCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mrhnGvasZsqeTgX2ucGlPC9zNMJUZ0csGDSewLjLBPNCGusYMQ0oY4DXsilRZJmjYK5eJxD6IWgk+3WMmp8KMFah8n8V+8N8GO+yDYiCI9kR+1jM/kGHusyDELiPTG+nLyeW5NQDGN+tfLXTd7aKK8FTHXYOHla75lyIgGWxaf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAvbkAl4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vC3VLlCnX8mbU0bs2kpt+bIzj0fjTipTDwuJOFJd4ykAdX+6k6S4yWu5h9MJnoeiP6P21fMPQwMQYntpv9eOF2laIIEqlPdHQhAREji6WyOOb37PC9RAT3xzy1jh6/pd94OH+iB+4t5p92mlkIKXX7/QWHQ30pwVbgB5e7gn6ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPz9JhSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAvbkAl4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B26C4CED1;
-	Wed,  5 Feb 2025 14:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPz9JhSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F242C4CED1;
+	Wed,  5 Feb 2025 14:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765234;
-	bh=rB1QPDrlkaVBHuxwtWTAJSaA80tp8epqO+6XB8vCon0=;
+	s=korg; t=1738765237;
+	bh=NyXTl0VOoOrQrtnaFBxqUxOa7uNb0JFVwJSBHYHQnCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OAvbkAl44CZqI3iBjZ6KjiXW+mXzJOid3SbRB2NG26/Pd9KBtVjghySJtJWRMGrhT
-	 cwSm6h9kTJaf2MqTAx9RpecvhiFEPutsJVPU4LQMDgNrRjMgECuolgDfycRMsyb/sw
-	 fmMBvQBXZ5rAyiLVsM1R/5nfZclyTIOyQ4GMGDyE=
+	b=NPz9JhSAyzlPm4KpavCQ1qNqFRIwEtcN4EhXBZLDXLMQ4Zwqrzwxz0s16e6c+y6r7
+	 0YuV3MSNovhAwKjRMJ43smyY34nIy8kbIV+J/C7P8FrloMraLsFWPzQWEYh5XUWfQU
+	 T5uEvFc0iw1TiWezWpG9dY9MUy1vEmYgn9FFAp60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Shengyu Qu <wiagn233@outlook.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 202/590] wifi: mt76: mt7996: fix register mapping
-Date: Wed,  5 Feb 2025 14:39:17 +0100
-Message-ID: <20250205134503.009659113@linuxfoundation.org>
+Subject: [PATCH 6.6 246/393] arm64: dts: qcom: sm8250: correct sleep clock frequency
+Date: Wed,  5 Feb 2025 14:42:45 +0100
+Message-ID: <20250205134429.719859701@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit d07ecb4f7070e84de49e8fa4e5a83dd52716d805 ]
+[ Upstream commit 75420e437eed69fa95d1d7c339dad86dea35319a ]
 
-Bypass the entry when ofs is equal to dev->reg.map[i].size.
-Without this patch, it would get incorrect register mapping when the CR
-address is located at the boundary of an entry.
+The SM8250 platform uses PM8150 to provide sleep clock. According to the
+documentation, that clock has 32.7645 kHz frequency. Correct the sleep
+clock definition.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shengyu Qu <wiagn233@outlook.com>
-Link: https://patch.msgid.link/OSZPR01MB84344FEFF53004B5CF40BCC198132@OSZPR01MB8434.jpnprd01.prod.outlook.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 9ff8b0591fcf ("arm64: dts: qcom: sm8250: use the right clock-freqency for sleep-clk")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-13-e9b08fbeadd3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mmio.c | 2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-index 40e45fb2b6260..442f72450352b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-@@ -177,7 +177,7 @@ static u32 __mt7996_reg_addr(struct mt7996_dev *dev, u32 addr)
- 			continue;
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index b522d19f3a132..88e8f0437e938 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -85,7 +85,7 @@
  
- 		ofs = addr - dev->reg.map[i].phys;
--		if (ofs > dev->reg.map[i].size)
-+		if (ofs >= dev->reg.map[i].size)
- 			continue;
- 
- 		return dev->reg.map[i].mapped + ofs;
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+-			clock-frequency = <32768>;
++			clock-frequency = <32764>;
+ 			#clock-cells = <0>;
+ 		};
+ 	};
 -- 
 2.39.5
 
