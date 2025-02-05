@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66ACA142E86;
-	Wed,  5 Feb 2025 13:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC99E13C9C4;
+	Wed,  5 Feb 2025 13:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763479; cv=none; b=XQbfKRNzTeMeANTLytJeOl3hFdiPmh5Viqo4SVhPTUVJEUV4H6505BrSx0vKCvz3gPLtmP13zDgLoGSrDqXvVpv7Re7i4mMWcC3WkGHLc64q8HO1mXkGuje6tgeQI5fs9ZngvrcMw+jw/4lsYuw9028SwRuZlo+2dhy2y/adEOk=
+	t=1738763483; cv=none; b=psZ7s9gOwCbHCYGRjwvASvLWbl6tUVLIOCVT+iYBqmQw2gekRhy4ryo33U8J8D5yMO6NpWL8i//qBSi12mJa6SePHyLfkGSUYBiyu4qzUSRmHHO5vR5UKgSR5toVtpaKpzc3UhrdSQn51LYQd4uomjq+E3T7Mjj2HzqJGc7u1uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763479; c=relaxed/simple;
-	bh=U2VnthXZIF7GNaG68BFIwDfT8iu1t34r7ITUdAC7mqA=;
+	s=arc-20240116; t=1738763483; c=relaxed/simple;
+	bh=mfo0u0H9AaTeuUNwq5HAe0FD4UeiDCZGzoyrZKZg1Ok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RbN4uwx7EeuuGgwjtBe+ArVJxQFd8KDqHgZ4APvnW4buqb1FwsTpvNBpfNm5WxPWPmBR9N+d6jJWLKxzBvALK3D5oo4rN4k3oOploG7qyEKMNfMmZd4NnZMncLYYIRVx0/4OT9lfgX3KueExoj5ikrdjVVGcDi4A4mobOd/4GQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPaxcPSn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YN4rM89J1CWnxlrN0Tdk+FDa21B6kzC2lv8wOmAi0UrJhA1XgIfw0PYeDbhPRxjCQwUAhxZvLw4AHumzm1aWpkUI21VadjXppKuFSbBs6wRT5TG2WeeOaFFaf4AppE8GGr6UnopJHlmRu32CW6NIxLCzigK78s7MAYMSaCgKFDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkXIzCLY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPaxcPSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF280C4CED1;
-	Wed,  5 Feb 2025 13:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkXIzCLY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A874C4CED1;
+	Wed,  5 Feb 2025 13:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763479;
-	bh=U2VnthXZIF7GNaG68BFIwDfT8iu1t34r7ITUdAC7mqA=;
+	s=korg; t=1738763482;
+	bh=mfo0u0H9AaTeuUNwq5HAe0FD4UeiDCZGzoyrZKZg1Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hPaxcPSn/fc5lSLGP07bhU3J47QKeg4mElAA8AM2VPEM9lKnvRLASrJ6IuxUr7dbO
-	 6NdmygdS0/n+JGsC4vXQZSPpiVt4FAoQim6M+wTkkdHXumXjKYbYwnAKJU553vbQx4
-	 wcT9fcucSuHHUSi0BnrD/7gAQ6kDDxVlAIPqdD0Y=
+	b=qkXIzCLY4dz7zhol09adQdhvBdX2AEz9PfIV7x6CT81vhYu7wKPo3oue6i5+Ef4eg
+	 Ry27T3sTppX8e4Qw5om71bup6fHWwh+NZa+JB489iTRs164Fbh0U+hJhCT7qtJ8b9+
+	 oQmUw0RRoKR8utGIYIxdufXLCNLpQbhYH9/RYtBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Rabeeh Khoury <rabeeh@solid-run.com>,
+	Jacob Siverskog <jacob@teenage.engineering>,
+	Sergej Sawazki <sergej@taudac.com>,
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/393] regulator: dt-bindings: mt6315: Drop regulator-compatible property
-Date: Wed,  5 Feb 2025 14:39:50 +0100
-Message-ID: <20250205134423.009498840@linuxfoundation.org>
+Subject: [PATCH 6.6 062/393] clk: si5351: allow PLLs to be adjusted without reset
+Date: Wed,  5 Feb 2025 14:39:41 +0100
+Message-ID: <20250205134422.667209566@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -46,66 +49,152 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Alvin Šipraga <alsi@bang-olufsen.dk>
 
-[ Upstream commit 08242719a8af603db54a2a79234a8fe600680105 ]
+[ Upstream commit b2adbc9cea752539f6421e9d4642408f666c1251 ]
 
-The "regulator-compatible" property has been deprecated since 2012 in
-commit 13511def87b9 ("regulator: deprecate regulator-compatible DT
-property"), which is so old it's not even mentioned in the converted
-regulator bindings YAML file. It should not have been used for new
-submissions such as the MT6315.
+Introduce a new PLL reset mode flag which controls whether or not to
+reset a PLL after adjusting its rate. The mode can be configured through
+platform data or device tree.
 
-Drop the property from the MT6315 regulator binding and its examples.
+Since commit 6dc669a22c77 ("clk: si5351: Add PLL soft reset"), the
+driver unconditionally resets a PLL whenever its rate is adjusted.
+The rationale was that a PLL reset was required to get three outputs
+working at the same time. Before this change, the driver never reset the
+PLLs.
 
-Fixes: 977fb5b58469 ("regulator: document binding for MT6315 regulator")
-Fixes: 6d435a94ba5b ("regulator: mt6315: Enforce regulator-compatible, not name")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20241211052427.4178367-2-wenst@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Commit b26ff127c52c ("clk: si5351: Apply PLL soft reset before enabling
+the outputs") subsequently introduced an option to reset the PLL when
+enabling a clock output that sourced it. Here, the rationale was that
+this is required to get a deterministic phase relationship between
+multiple output clocks.
+
+This clearly shows that it is useful to reset the PLLs in applications
+where multiple clock outputs are used. However, the Si5351 also allows
+for glitch-free rate adjustment of its PLLs if one avoids resetting the
+PLL. In our audio application where a single Si5351 clock output is used
+to supply a runtime adjustable bit clock, this unconditional PLL reset
+behaviour introduces unwanted glitches in the clock output.
+
+It would appear that the problem being solved in the former commit
+may be solved by using the optional device tree property introduced in
+the latter commit, obviating the need for an unconditional PLL reset
+after rate adjustment. But it's not OK to break the default behaviour of
+the driver, and it cannot be assumed that all device trees are using the
+property introduced in the latter commit. Hence, the new behaviour is
+made opt-in.
+
+Cc: Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+Cc: Rabeeh Khoury <rabeeh@solid-run.com>
+Cc: Jacob Siverskog <jacob@teenage.engineering>
+Cc: Sergej Sawazki <sergej@taudac.com>
+Signed-off-by: Alvin Šipraga <alsi@bang-olufsen.dk>
+Acked-by: Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+Link: https://lore.kernel.org/r/20231124-alvin-clk-si5351-no-pll-reset-v6-3-69b82311cb90@bang-olufsen.dk
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: 28fa3291cad1 ("clk: fix an OF node reference leak in of_clk_get_parent_name()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/regulator/mt6315-regulator.yaml     | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/clk/clk-si5351.c             | 47 ++++++++++++++++++++++++++--
+ include/linux/platform_data/si5351.h |  2 ++
+ 2 files changed, 46 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml b/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
-index 6317daf76d1fb..2bed57a347827 100644
---- a/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
-+++ b/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
-@@ -31,10 +31,6 @@ properties:
-         $ref: regulator.yaml#
-         unevaluatedProperties: false
+diff --git a/drivers/clk/clk-si5351.c b/drivers/clk/clk-si5351.c
+index 00fb9b09e030c..95d7afb8cfc6a 100644
+--- a/drivers/clk/clk-si5351.c
++++ b/drivers/clk/clk-si5351.c
+@@ -506,6 +506,8 @@ static int si5351_pll_set_rate(struct clk_hw *hw, unsigned long rate,
+ {
+ 	struct si5351_hw_data *hwdata =
+ 		container_of(hw, struct si5351_hw_data, hw);
++	struct si5351_platform_data *pdata =
++		hwdata->drvdata->client->dev.platform_data;
+ 	u8 reg = (hwdata->num == 0) ? SI5351_PLLA_PARAMETERS :
+ 		SI5351_PLLB_PARAMETERS;
  
--        properties:
--          regulator-compatible:
--            pattern: "^vbuck[1-4]$"
--
-     additionalProperties: false
+@@ -518,9 +520,10 @@ static int si5351_pll_set_rate(struct clk_hw *hw, unsigned long rate,
+ 		(hwdata->params.p2 == 0) ? SI5351_CLK_INTEGER_MODE : 0);
  
- required:
-@@ -52,7 +48,6 @@ examples:
+ 	/* Do a pll soft reset on the affected pll */
+-	si5351_reg_write(hwdata->drvdata, SI5351_PLL_RESET,
+-			 hwdata->num == 0 ? SI5351_PLL_RESET_A :
+-					    SI5351_PLL_RESET_B);
++	if (pdata->pll_reset[hwdata->num])
++		si5351_reg_write(hwdata->drvdata, SI5351_PLL_RESET,
++				 hwdata->num == 0 ? SI5351_PLL_RESET_A :
++						    SI5351_PLL_RESET_B);
  
-       regulators {
-         vbuck1 {
--          regulator-compatible = "vbuck1";
-           regulator-min-microvolt = <300000>;
-           regulator-max-microvolt = <1193750>;
-           regulator-enable-ramp-delay = <256>;
-@@ -60,7 +55,6 @@ examples:
-         };
+ 	dev_dbg(&hwdata->drvdata->client->dev,
+ 		"%s - %s: p1 = %lu, p2 = %lu, p3 = %lu, parent_rate = %lu, rate = %lu\n",
+@@ -1222,6 +1225,44 @@ static int si5351_dt_parse(struct i2c_client *client,
+ 		}
+ 	}
  
-         vbuck3 {
--          regulator-compatible = "vbuck3";
-           regulator-min-microvolt = <300000>;
-           regulator-max-microvolt = <1193750>;
-           regulator-enable-ramp-delay = <256>;
++	/*
++	 * Parse PLL reset mode. For compatibility with older device trees, the
++	 * default is to always reset a PLL after setting its rate.
++	 */
++	pdata->pll_reset[0] = true;
++	pdata->pll_reset[1] = true;
++
++	of_property_for_each_u32(np, "silabs,pll-reset-mode", prop, p, num) {
++		if (num >= 2) {
++			dev_err(&client->dev,
++				"invalid pll %d on pll-reset-mode prop\n", num);
++			return -EINVAL;
++		}
++
++		p = of_prop_next_u32(prop, p, &val);
++		if (!p) {
++			dev_err(&client->dev,
++				"missing pll-reset-mode for pll %d\n", num);
++			return -EINVAL;
++		}
++
++		switch (val) {
++		case 0:
++			/* Reset PLL whenever its rate is adjusted */
++			pdata->pll_reset[num] = true;
++			break;
++		case 1:
++			/* Don't reset PLL whenever its rate is adjusted */
++			pdata->pll_reset[num] = false;
++			break;
++		default:
++			dev_err(&client->dev,
++				"invalid pll-reset-mode %d for pll %d\n", val,
++				num);
++			return -EINVAL;
++		}
++	}
++
+ 	/* per clkout properties */
+ 	for_each_child_of_node(np, child) {
+ 		if (of_property_read_u32(child, "reg", &num)) {
+diff --git a/include/linux/platform_data/si5351.h b/include/linux/platform_data/si5351.h
+index c71a2dd661437..5f412a615532b 100644
+--- a/include/linux/platform_data/si5351.h
++++ b/include/linux/platform_data/si5351.h
+@@ -105,10 +105,12 @@ struct si5351_clkout_config {
+  * @clk_xtal: xtal input clock
+  * @clk_clkin: clkin input clock
+  * @pll_src: array of pll source clock setting
++ * @pll_reset: array indicating if plls should be reset after setting the rate
+  * @clkout: array of clkout configuration
+  */
+ struct si5351_platform_data {
+ 	enum si5351_pll_src pll_src[2];
++	bool pll_reset[2];
+ 	struct si5351_clkout_config clkout[8];
+ };
+ 
 -- 
 2.39.5
 
