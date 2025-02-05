@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FCD1684B0;
-	Wed,  5 Feb 2025 14:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A381A76BC;
+	Wed,  5 Feb 2025 14:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766609; cv=none; b=urtUsPH5Hn3RnLcAISMX/lzjd80bIwVD9ioYwvSMBVUjEB2be2DNvepqYcSDW1fpvZbJfvVUZUHID9i/EdiQuuVFFq/3+XMg0VfgdfW3XRyQVuoCgcnNSOj0t3m+/XtbQzBhMYWSTolxrKSQCugdwD2NAqICf8WVHA7K3s3VPzI=
+	t=1738766612; cv=none; b=YI2J6YvMozIoDRorebae2vZF+ic+KqF2oA6dX7PuCOZwCwPl2bmjOA3BVkVnFXY0PmR+YUy/CgG2lNXSwjyZad8zzkZGO/JgGnQ+sokGDtcRMEMcm35SZwIu411/Y3cmJQEZLc/5wlg2RoyNqzNgW3SpXdfDmTugCldjr2ZZZA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766609; c=relaxed/simple;
-	bh=q+BXet4NAClAhK7g7RutEheia3jm/RYDd64udsqvsXs=;
+	s=arc-20240116; t=1738766612; c=relaxed/simple;
+	bh=I1NnVbG8wwNWt/y6p1CtWdMSyohWy1GmjUAkLQfSWC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EuY/h/9F279que14Igy457HxKiK9/G8PqPApde/rKG9dZ6OuC0bGsGCa2My602VDZ4DURF/mfUAKZ0v1hSUmV4WZBZ19rFIj3rqO7o55UjQE0jz89P8DNIHesiNExwhqnkUgm9l5FsgT6Lzaf54qfZ4WQBnVT851nrk8+4LTIcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAOJjB57; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gF1wIGRB7ZF0ApWBT3++ys5VD7LZmNs9iCjTDkTuo4Iad4TDPQBhKV/nhkO5AjRQ6dhfT+yLKDMoVupvd/7qbX61Oa4RK1CFrBJFLOSxuJqccaSzb1SRg6tcJfq513UuIlRzktMNS82tMJYPjo7XI4iBy1/Zqd8EMhdcL0it7lQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7/LwM2v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAOJjB57"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31337C4CED6;
-	Wed,  5 Feb 2025 14:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7/LwM2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D7FC4CEE7;
+	Wed,  5 Feb 2025 14:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766608;
-	bh=q+BXet4NAClAhK7g7RutEheia3jm/RYDd64udsqvsXs=;
+	s=korg; t=1738766612;
+	bh=I1NnVbG8wwNWt/y6p1CtWdMSyohWy1GmjUAkLQfSWC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pAOJjB57wXFVUlLSKHF2h56e2SM9z+VZWfkaC6tpFLU6GbDL4/nEwJPZfng9em8TK
-	 lJnI6lHbXLH5pe2UXsowl0/S//WRc9v1urui4Km+NKWROYBOBg9FSGbOs+KcNwwoTZ
-	 0faOtzDlD67dVtYD3uFSljTwggHAH2qWfirCL0nw=
+	b=V7/LwM2vH2Jn3IcOIahc8v7WjNE9ISWwKwSHseqjpWJWEjgAsVgIBbsSUfYlPBx0M
+	 6KKtrZsA+6v0tYqm/pq0mFO5JkzDjanEyiLvmegPpkt5zO9XF6uf01aQqEnXV3IyQA
+	 H73OyseZD32P0zdTuoRRGxadxuzT+3NKn8JuGRCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Burton <ross.burton@arm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 339/590] arm64: defconfig: remove obsolete CONFIG_SM_DISPCC_8650
-Date: Wed,  5 Feb 2025 14:41:34 +0100
-Message-ID: <20250205134508.244097599@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.6 378/393] usb: gadget: f_tcm: Fix Get/SetInterface return value
+Date: Wed,  5 Feb 2025 14:44:57 +0100
+Message-ID: <20250205134434.756233018@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,43 +45,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ross Burton <ross.burton@arm.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-[ Upstream commit 9be2923ff9641d6491b8ea43791382966505435f ]
+commit 3b997089903b909684114aca6f79d683e5c64a0e upstream.
 
-This option was removed from the Kconfig in commit 802b83205519 ("clk:
-qcom: fold dispcc-sm8650 info dispcc-sm8550") but it was not removed
-from the defconfig.
+Check to make sure that the GetInterface and SetInterface are for valid
+interface. Return proper alternate setting number on GetInterface.
 
-Fixes: 802b83205519 ("clk: qcom: fold dispcc-sm8650 info dispcc-sm8550")
-Signed-off-by: Ross Burton <ross.burton@arm.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241213-clkmaster-v1-1-dcbf7fad37b1@arm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0b8b1a1fede0 ("usb: gadget: f_tcm: Provide support to get alternate setting in tcm function")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/ffd91b4640945ea4d3b4f4091cf1abbdbd9cf4fc.1733876548.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/configs/defconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/usb/gadget/function/f_tcm.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 5fdbfea7a5b29..8fe7dbae33bf9 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1347,7 +1347,6 @@ CONFIG_SM_DISPCC_6115=m
- CONFIG_SM_DISPCC_8250=y
- CONFIG_SM_DISPCC_8450=m
- CONFIG_SM_DISPCC_8550=m
--CONFIG_SM_DISPCC_8650=m
- CONFIG_SM_GCC_4450=y
- CONFIG_SM_GCC_6115=y
- CONFIG_SM_GCC_8350=y
--- 
-2.39.5
-
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -2048,9 +2048,14 @@ static void tcm_delayed_set_alt(struct w
+ 
+ static int tcm_get_alt(struct usb_function *f, unsigned intf)
+ {
+-	if (intf == bot_intf_desc.bInterfaceNumber)
++	struct f_uas *fu = to_f_uas(f);
++
++	if (fu->iface != intf)
++		return -EOPNOTSUPP;
++
++	if (fu->flags & USBG_IS_BOT)
+ 		return USB_G_ALT_INT_BBB;
+-	if (intf == uasp_intf_desc.bInterfaceNumber)
++	else if (fu->flags & USBG_IS_UAS)
+ 		return USB_G_ALT_INT_UAS;
+ 
+ 	return -EOPNOTSUPP;
+@@ -2060,6 +2065,9 @@ static int tcm_set_alt(struct usb_functi
+ {
+ 	struct f_uas *fu = to_f_uas(f);
+ 
++	if (fu->iface != intf)
++		return -EOPNOTSUPP;
++
+ 	if ((alt == USB_G_ALT_INT_BBB) || (alt == USB_G_ALT_INT_UAS)) {
+ 		struct guas_setup_wq *work;
+ 
 
 
