@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B7B15198D;
-	Wed,  5 Feb 2025 14:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94DF1519AA;
+	Wed,  5 Feb 2025 14:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764896; cv=none; b=qbCNR002GrQ2fcbNkhYMTNZe9AGuBMoHFjx5jS6JM2Ntc4f2/+8VWVrOXdNHbXHkSTq7wD3UrINrAyxwtmjZNUe4r+x2jFDoThlAtiy2/GC5dd5kd+OEIDZW50loKi3QWgu7oI2fqaWUZHfsoN+bq7ePwInEe4IqBdYrYPbQEYs=
+	t=1738764899; cv=none; b=ADK2Shpr0i0xsQjaxn6YKgX5wB3WLiLK0lyN0mHV/tkFSLciFRd0dj9a36XcM60XvXxWuK/I+ZHNgtd2epEcogTeib73lZJsWAWpmAqTqmKl/xLjlqBMUBckoUcy8Han38G5wl5yeQh6AJ+vKQ0h36xf+QF9AF6MruYJ2SLsngM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764896; c=relaxed/simple;
-	bh=nBIAJB15vB47iKQquxarG/dN2TdfENBtRUKcw767JSg=;
+	s=arc-20240116; t=1738764899; c=relaxed/simple;
+	bh=z3KUtzS4Gd9k3jkBm2wrCXT2y6r/6BHF/Ft15X5pFLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6SzSpQfdTf2OwXnrJoAqI9jINFkR9EHun8f6DoZNCXBHI61KJg94Y/PbGFRARiA21R0YLg678xQGAt1cWEHKDQkuJCl6HCQZidBzF7vil9O06KoPiBafIJT7s4+nlJlXIik5PAOrlpMBrk0qHHs4EvM6PVMR20E5PO2hTIxU0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvNb6LXE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BGynisnMRlQarAw9EY1xMSiTsbPcsQzLmVHdetzlLBaAE4dAiz9Zwgevhwo4pMDr0ykHnrq2WrXvJaT4Al6T7gZVQJOd5diNEsC86D4TIfnYWbshsesN9WLSWuzMJkLbg5DHiUd+dKElIEtxkKdZxQroUvGR2NqVWjw5Ijk2kfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jy3KTxaa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvNb6LXE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E713DC4CED1;
-	Wed,  5 Feb 2025 14:14:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jy3KTxaa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D01C4CED1;
+	Wed,  5 Feb 2025 14:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764896;
-	bh=nBIAJB15vB47iKQquxarG/dN2TdfENBtRUKcw767JSg=;
+	s=korg; t=1738764899;
+	bh=z3KUtzS4Gd9k3jkBm2wrCXT2y6r/6BHF/Ft15X5pFLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yvNb6LXEHknWeTRS7nX6q/BE9h+ZHul9Qw7PIMhLBy8RtBueHkQ14Z6W/jmekpZXs
-	 9SOsAd7NuvNU2qwlIUCa12relTTI+5xUc3jaYES0BtumdgU/oikXz+4QVUxHRUZy6V
-	 sta1O+vU3s3Nv2zIoUsr3vUY9ifgmyntABShf9z0=
+	b=Jy3KTxaaDdfUhamKkuStPR1bN4Gy/nmT12JcLvk3ACxqIcUpBHwypEs5iHf+b50b2
+	 8xi49g7fWzDHXSYdPeIbly+HJzjRdW549jeWWHqJRE9Y0cgDkNNMwDXpb4zL3vkAdj
+	 IVZqTL7Q4BimEbD7v+yhjdG9pbw5KlfGx2awGpu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Drew Fustini <dfustini@tenstorrent.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 167/590] clk: thead: Fix clk gate registration to pass flags
-Date: Wed,  5 Feb 2025 14:38:42 +0100
-Message-ID: <20250205134501.671246555@linuxfoundation.org>
+Subject: [PATCH 6.13 123/623] selftests: ktap_helpers: Fix uninitialized variable
+Date: Wed,  5 Feb 2025 14:37:45 +0100
+Message-ID: <20250205134500.926865177@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,43 +47,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Drew Fustini <dfustini@tenstorrent.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit a826e53fd78c7f07b8ff83446c44b227b2181920 ]
+[ Upstream commit 3e707b07f582c12ed78fa5516a97bf701bf0634c ]
 
-Modify the call to devm_clk_hw_register_gate_parent_data() to actually
-pass the clk flags from hw.init instead of just 0. This is necessary to
-allow individual clk gates to specify their own clk flags.
+__ktap_test() may be called without the optional third argument which is
+an issue for scripts using `set -u` to detect uninitialized variables
+and potential bugs.
 
-Fixes: ae81b69fd2b1 ("clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks")
-Signed-off-by: Drew Fustini <dfustini@tenstorrent.com>
-Link: https://lore.kernel.org/r/20250113-th1520-clk_ignore_unused-v1-1-0b08fb813438@tenstorrent.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fix this optional "directive" argument by either using the third
+argument or an empty string.
+
+This is required for the next commit to properly test script execution
+control.
+
+Cc: Kees Cook <kees@kernel.org>
+Cc: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Cc: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 14571ab1ad21 ("kselftest: Add new test for detecting unprobed Devicetree devices")
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Link: https://lore.kernel.org/r/20241212174223.389435-7-mic@digikod.net
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/thead/clk-th1520-ap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/kselftest/ktap_helpers.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/thead/clk-th1520-ap.c b/drivers/clk/thead/clk-th1520-ap.c
-index 1015fab952515..c95b6e26ca531 100644
---- a/drivers/clk/thead/clk-th1520-ap.c
-+++ b/drivers/clk/thead/clk-th1520-ap.c
-@@ -1048,7 +1048,8 @@ static int th1520_clk_probe(struct platform_device *pdev)
- 		hw = devm_clk_hw_register_gate_parent_data(dev,
- 							   cg->common.hw.init->name,
- 							   cg->common.hw.init->parent_data,
--							   0, base + cg->common.cfg0,
-+							   cg->common.hw.init->flags,
-+							   base + cg->common.cfg0,
- 							   ffs(cg->enable) - 1, 0, NULL);
- 		if (IS_ERR(hw))
- 			return PTR_ERR(hw);
+diff --git a/tools/testing/selftests/kselftest/ktap_helpers.sh b/tools/testing/selftests/kselftest/ktap_helpers.sh
+index 79a125eb24c2e..14e7f3ec3f84c 100644
+--- a/tools/testing/selftests/kselftest/ktap_helpers.sh
++++ b/tools/testing/selftests/kselftest/ktap_helpers.sh
+@@ -40,7 +40,7 @@ ktap_skip_all() {
+ __ktap_test() {
+ 	result="$1"
+ 	description="$2"
+-	directive="$3" # optional
++	directive="${3:-}" # optional
+ 
+ 	local directive_str=
+ 	[ ! -z "$directive" ] && directive_str="# $directive"
 -- 
 2.39.5
 
