@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4174C155A30;
-	Wed,  5 Feb 2025 14:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224FA15990C;
+	Wed,  5 Feb 2025 14:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765370; cv=none; b=a+hi073bEINpZTQK6JlvW7syrQ2frs2i9aw6QkH05n9leIljMx8BhyX1Mqp02AJVRdiH9Yn53Z4B4qskvHoEQw8kuylMZnc04WQk9JfNvC337/G4YwUxbh66lLEw+6DpsSLhjKMh/i/tRczw1QJmHaxQE/LUj4CqSFNiQdWoIRs=
+	t=1738765374; cv=none; b=ODuvv0M6h4czTE+4afJhTBaZVeHGXkVfvATcPBotey3Y7qWm/gG0UowqHkC87uBd3mpZHxUWenWCgVavvonSh+dXjxQZY/3HADQPZHRcShrVgSHcCdPUA4NYHqZuAUOxv6uslOGWXEiRLhQNkRfIuMlxksI0qsovYkKy2jWRPuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765370; c=relaxed/simple;
-	bh=pQkT87eykZB5+Lo2TZyLY+d8wMya631JOGSy1vfUPVc=;
+	s=arc-20240116; t=1738765374; c=relaxed/simple;
+	bh=nkyXBCqIaFO6Y/tpOgWLrrP6W7rB/YaSCBXTkxrxnRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q8sst2E/s/1oA+Od7r/Ztq/gFuTJ9Wwd9slYcP+n/Pt99lYIX3C68TiAhKrt1YoAAel5v99jxCShhdSBsnrtQYX2UW0+epmmyr2VTxMo+GlqKzd/1Of0NhzUOvm0ckpZcbsdpkAYlQJri75hzTJYe9MJNAniOmQhWBZ1g4J/7Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvfiJFQT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q56wo2DuhIk7DnRr1ajrD+Y77ROpbF3ez7zwF2NfqfSnReFFcurRpu8MIybWITp5P9vhHeIPvKBzhVTgnaMNNooRmA+vPIAUwOexenKW58dSAOtM2tRYcfV1xOuGNdWSCHX41kswaTVSmuCkcd2QFBBDlK/qX8lgkINRvQ2MyfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PEPHehWu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvfiJFQT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1156C4CED1;
-	Wed,  5 Feb 2025 14:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEPHehWu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22415C4CED1;
+	Wed,  5 Feb 2025 14:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765370;
-	bh=pQkT87eykZB5+Lo2TZyLY+d8wMya631JOGSy1vfUPVc=;
+	s=korg; t=1738765373;
+	bh=nkyXBCqIaFO6Y/tpOgWLrrP6W7rB/YaSCBXTkxrxnRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CvfiJFQT+56nF1rYgScO7xnNrNlkgFi3Td/KiI8amqEKKdz68KkH/6PKW+cUHRSG9
-	 gGmfrxO3ycWYM+TzIfUGUI4CFkW5YyrnqRIa2N5VDybNtGILnJo35uy+OgZtlBj9Ma
-	 +2oyJ9FxVB6ILUOD7HokD2Hn68QYnuHQ0FiQwlyg=
+	b=PEPHehWup/wnPCcT1WTPi1Ov1xPlEXAr5jLLzVw7+4+mifZsB3WcLWATIpkhhTnaa
+	 CaxQK5ZJ4nZVX//oEnUgXuXt00RPZpZAaZR/2kyoB+aPlYGZ41s0cerZRc7dZO9+/z
+	 g862Z2BAjnhjLaim5X5VJaB/vzQP7DQEstrKAZrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Charles Han <hanchunchao@inspur.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 172/623] clk: ralink: mtmips: remove duplicated xtal clock for Ralink SoC RT3883
-Date: Wed,  5 Feb 2025 14:38:34 +0100
-Message-ID: <20250205134502.815773396@linuxfoundation.org>
+Subject: [PATCH 6.12 214/590] Bluetooth: btbcm: Fix NULL deref in btbcm_get_board_name()
+Date: Wed,  5 Feb 2025 14:39:29 +0100
+Message-ID: <20250205134503.475198945@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit 830d8062d25581cf0beaa334486eea06834044da ]
+[ Upstream commit b88655bc6593c6a7fdc1248b212d17e581c4334e ]
 
-Ralink SoC RT3883 has already 'xtal' defined as a base clock so there is no
-need to redefine it again in fixed clocks section. Hence, remove the duplicate
-one from there.
+devm_kstrdup() can return a NULL pointer on failure,but this
+returned value in btbcm_get_board_name() is not checked.
+Add NULL check in btbcm_get_board_name(), to handle kernel NULL
+pointer dereference error.
 
-Fixes: d34db686a3d7 ("clk: ralink: mtmips: fix clocks probe order in oldest ralink SoCs")
-Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Link: https://lore.kernel.org/r/20250108093636.265033-1-sergio.paracuellos@gmail.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: f9183eaad915 ("Bluetooth: btbcm: Use devm_kstrdup()")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ralink/clk-mtmips.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/bluetooth/btbcm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
-index 97b8ca0f91816..19d433034884a 100644
---- a/drivers/clk/ralink/clk-mtmips.c
-+++ b/drivers/clk/ralink/clk-mtmips.c
-@@ -266,7 +266,6 @@ static int mtmips_register_pherip_clocks(struct device_node *np,
- 	}
+diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
+index a1153ada74d20..0a60660fc8ce8 100644
+--- a/drivers/bluetooth/btbcm.c
++++ b/drivers/bluetooth/btbcm.c
+@@ -553,6 +553,9 @@ static const char *btbcm_get_board_name(struct device *dev)
  
- static struct mtmips_clk_fixed rt3883_fixed_clocks[] = {
--	CLK_FIXED("xtal", NULL, 40000000),
- 	CLK_FIXED("periph", "xtal", 40000000)
- };
+ 	/* get rid of any '/' in the compatible string */
+ 	board_type = devm_kstrdup(dev, tmp, GFP_KERNEL);
++	if (!board_type)
++		return NULL;
++
+ 	strreplace(board_type, '/', '-');
  
+ 	return board_type;
 -- 
 2.39.5
 
