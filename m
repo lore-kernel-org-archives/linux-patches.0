@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E5818B460;
-	Wed,  5 Feb 2025 14:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BC21FC0F4;
+	Wed,  5 Feb 2025 14:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766790; cv=none; b=ApZkbr4q2MhaDSTMGvVaGZU7DCGcgjoVrS/79aN9lhF83PECZeyfJudgzGlC3h86iHO9fq5AnpMt32pQKJ6XRPKPo4XYfVcs3TbPX1HOQkGjPVHAvExuTBg53vx76bTcRwEEU6mUV67OzHi9uXmPpJRUm2EpS8kd5Yq0usJftwo=
+	t=1738766793; cv=none; b=VwFJohZvKGBDEvOHjavM53IkU2DA/0JWgE1WXOQdELaDDDTJa4szFQgdK4pF1+h5cDzp7o/gNQmTx0VDlXFLgF86VcTVretbR3sQ/mojHWe1KAbjb3Uv00foQEgVJWPPGPYNIZln8lP4BikznuOnytSyO1+aS5JiHK401KhHEa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766790; c=relaxed/simple;
-	bh=ctZKat2qf0gZzoSpb4eypkaDIq6mWQmxjDrqvDKdpnE=;
+	s=arc-20240116; t=1738766793; c=relaxed/simple;
+	bh=w6ns1Sgc2tlHx4ibxPKxt+aw9KB5JmOGTQqNCVa6sZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACCGg7DObQ8OdZs9Z10ntvAzkYeT/SBkmKOt3/szQwUKXBHUM1u+DfOn1mKNld8UZI5nhg3+77+mrIRjMOutXQ7VhBXQn4vPdFIKSNgyWKRhsTEwFBsmgUYpuvPzO9Zy/EULUD8U4UQu7PEznaeklGQ4kLJ2jZXkGCTOTfEYVWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pK2NwO6S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YxS+xlRxSorLGr+Gufn++A++vDOOiGLbOszSMG4C5/+AFTIRxfihlok9mHyB3KP/gHQHeRygnTr7YE+XQ5aqkN0anWZb0gtXHA0bA3P+dgKAmGQ/YH5oSR1Zo+6B7uodRShQWZrrCFqAF+oKGhoFgsBTtaVUHgJoqb5oashlGnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZOaRvl0P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pK2NwO6S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87558C4CED1;
-	Wed,  5 Feb 2025 14:46:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZOaRvl0P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB806C4CED1;
+	Wed,  5 Feb 2025 14:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766790;
-	bh=ctZKat2qf0gZzoSpb4eypkaDIq6mWQmxjDrqvDKdpnE=;
+	s=korg; t=1738766793;
+	bh=w6ns1Sgc2tlHx4ibxPKxt+aw9KB5JmOGTQqNCVa6sZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pK2NwO6SPiinnFApBR1gjY/JlIEqsvd/icNZ47GJXmbSOaHjVut9IUj3J+oZ2g2DP
-	 5uFGMbtqgN750DIil3RLM2aT9K+dhEZ2IP5ISdiEpcT2qCCJEFZUc1+9qXJK/eZHIU
-	 LN6i1+qvrnIUC+KCBBAyQ2A+++xhH2csNcn2U6R0=
+	b=ZOaRvl0PHyLhNAaNlCJxNAuEarT1iC3y3MJwB7YvK3Z8VL7RH0whO/iS2HFh4m9R/
+	 7GU/vFroNREu1AhSChSSeDNtRJNezqFp6FVCAniuz3AepnnLc0uSHSwk9QInqaGuav
+	 eb6lwchJCjTju17h/3IbDVJ4nUvBI8JWcwVOlHmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mihai Sain <mihai.sain@microchip.com>,
-	Cristian Birsan <cristian.birsan@microchip.com>,
-	Andrei Simion <andrei.simion@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Pu Lehui <pulehui@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 361/590] ARM: dts: microchip: sama5d29_curiosity: Add no-1-8-v property to sdmmc0 node
-Date: Wed,  5 Feb 2025 14:41:56 +0100
-Message-ID: <20250205134509.081321236@linuxfoundation.org>
+Subject: [PATCH 6.13 309/623] selftests/bpf: Fix btf leak on new btf alloc failure in btf_distill test
+Date: Wed,  5 Feb 2025 14:40:51 +0100
+Message-ID: <20250205134508.048267264@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Birsan <cristian.birsan@microchip.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit c21c23a0f2e9869676eff0d53fb89e151e14c873 ]
+[ Upstream commit 4a04cb326a6c7f9a2c066f8c2ca78a5a9b87ddab ]
 
-Add no-1-8-v property to sdmmc0 node to keep VDDSDMMC power rail at 3.3V.
-This property will stop the LDO regulator from switching to 1.8V when the
-MMC core detects an UHS SD Card. VDDSDMMC power rail is used by all the
-SDMMC interface pins in GPIO mode (PA0 - PA13).
+Fix btf leak on new btf alloc failure in btf_distill test.
 
-On this board, PA6 is used as GPIO to enable the power switch controlling
-USB Vbus for the USB Host. The change is needed to fix the PA6 voltage
-level to 3.3V instead of 1.8V.
-
-Fixes: d85c4229e925 ("ARM: dts: at91: sama5d29_curiosity: Add device tree for sama5d29_curiosity board")
-Suggested-by: Mihai Sain <mihai.sain@microchip.com>
-Signed-off-by: Cristian Birsan <cristian.birsan@microchip.com>
-Tested-by: Andrei Simion <andrei.simion@microchip.com>
-Link: https://lore.kernel.org/r/20241119160107.598411-2-cristian.birsan@microchip.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Fixes: affdeb50616b ("selftests/bpf: Extend distilled BTF tests to cover BTF relocation")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250115100241.4171581-1-pulehui@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/microchip/at91-sama5d29_curiosity.dts | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/bpf/prog_tests/btf_distill.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/microchip/at91-sama5d29_curiosity.dts b/arch/arm/boot/dts/microchip/at91-sama5d29_curiosity.dts
-index 951a0c97d3c6b..5933840bb8f7e 100644
---- a/arch/arm/boot/dts/microchip/at91-sama5d29_curiosity.dts
-+++ b/arch/arm/boot/dts/microchip/at91-sama5d29_curiosity.dts
-@@ -514,6 +514,7 @@
- 
- &sdmmc0 {
- 	bus-width = <4>;
-+	no-1-8-v;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_sdmmc0_default>;
- 	disable-wp;
+diff --git a/tools/testing/selftests/bpf/prog_tests/btf_distill.c b/tools/testing/selftests/bpf/prog_tests/btf_distill.c
+index ca84726d5ac1b..b72b966df77b9 100644
+--- a/tools/testing/selftests/bpf/prog_tests/btf_distill.c
++++ b/tools/testing/selftests/bpf/prog_tests/btf_distill.c
+@@ -385,7 +385,7 @@ static void test_distilled_base_missing_err(void)
+ 		"[2] INT 'int' size=8 bits_offset=0 nr_bits=64 encoding=SIGNED");
+ 	btf5 = btf__new_empty();
+ 	if (!ASSERT_OK_PTR(btf5, "empty_reloc_btf"))
+-		return;
++		goto cleanup;
+ 	btf__add_int(btf5, "int", 4, BTF_INT_SIGNED);   /* [1] int */
+ 	VALIDATE_RAW_BTF(
+ 		btf5,
+@@ -478,7 +478,7 @@ static void test_distilled_base_multi_err2(void)
+ 		"[1] INT 'int' size=4 bits_offset=0 nr_bits=32 encoding=SIGNED");
+ 	btf5 = btf__new_empty();
+ 	if (!ASSERT_OK_PTR(btf5, "empty_reloc_btf"))
+-		return;
++		goto cleanup;
+ 	btf__add_int(btf5, "int", 4, BTF_INT_SIGNED);   /* [1] int */
+ 	btf__add_int(btf5, "int", 4, BTF_INT_SIGNED);   /* [2] int */
+ 	VALIDATE_RAW_BTF(
 -- 
 2.39.5
 
