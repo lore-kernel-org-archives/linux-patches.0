@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90D41519AA;
-	Wed,  5 Feb 2025 14:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15848155751;
+	Wed,  5 Feb 2025 14:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764529; cv=none; b=Neo5JssGQLLt19YlBfP6r2xSqOjUtMdqeDOO4XPxrJcNb8NxraNld0avjA8tbvaeEzHib/yJtyHW+7uwV6lFv80pKIR7It3upi+/4JRuN89Zc9rSVBJgJiOyAwUMLM5EbTCcZhxDskvUcgRUh81vud474elrm1IW/lOToh+UOYA=
+	t=1738764534; cv=none; b=e39+CIj/pxov/7cpISt4BFAoh3M5drN78P+VpC+N++ZiQZ5dKsyhcHj7TQl+VNMMUsnNJ6dDfnSRHBc7TzFIANERD+QgW6MDawjhge1jukLCptSnItUBd55gx2HELBQdHjk4JZW9qJmdU3OT09cXeI/DXO9Y7h98AiQKJwDkBpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764529; c=relaxed/simple;
-	bh=TDANKLy7BsG5MNa47ggkRlUFzlwKWhnIOesbgAgxaxc=;
+	s=arc-20240116; t=1738764534; c=relaxed/simple;
+	bh=szj79unMALy0fGAiJIskT0PkfGUSif06t84ci7Kjtr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mE5eGb1JxWmAchBrM/jpeU+HAAnQAG3Bd+k5/c8ZIYQNevTHDq4vyA+SgAzWzIsyOetxoT8xYkUi82Oyt6tqged9CfHLP0elBBjC/sjzQKfPETVSq3ZVjDCxqVUj2eO8PdMK0970rhVvLkcesbC4pKD/3mhfAYFWJQzDtnVdzO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcViaN22; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oXSw4WcucqAH/PV0SPf6WLGpVNRHE2sFDLMVIf2TDW2PaMIC03C+iiq/XFaLqHKfdwcKch5k/TDAzY32joPd7zBHU7CfShWRlAFHOBziSKzzAU04aeJSNExyhDpD7V7ercJmdQWk1G/R+ec0FwKElEH3kofvHQGbSxQc7pE57iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdOjlwux; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcViaN22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C73C4CED1;
-	Wed,  5 Feb 2025 14:08:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdOjlwux"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C088C4CED1;
+	Wed,  5 Feb 2025 14:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764529;
-	bh=TDANKLy7BsG5MNa47ggkRlUFzlwKWhnIOesbgAgxaxc=;
+	s=korg; t=1738764532;
+	bh=szj79unMALy0fGAiJIskT0PkfGUSif06t84ci7Kjtr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wcViaN22u3kfTjoUJUEQ4hIzGvxv7Zxjn7cDnEGxaXcF4Zb14GnIg7thpP7m5lF76
-	 NWBAyCVEsS3c+cPpC2FUnhCmNQaai0WJpWrx0GiEc3RjXpcnsK4c+9NLAYyF9C9AdJ
-	 LmhffSIimlCi0Ijcx5imkzhKCFteX7tGcSXrFRDM=
+	b=tdOjlwuxE1Rq2Li8NAgD35/1PqQhBtvmshcsLF4VJIo6yeLavg577/l1FBmKF9rNr
+	 jpJzmuEJ3UTRYIV67uHGLssnPvrhgLIxf8AYaTGa58zrAv842UWdSiK/DeEVbge6pf
+	 SC62iupes3QSYWgbKXEh+vi4B3UqT4GxI1Nmu3uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Erez Shitrit <erezsh@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 135/590] net/mlx5: HWS, fix definers HWS_SET32 macro for negative offset
-Date: Wed,  5 Feb 2025 14:38:10 +0100
-Message-ID: <20250205134500.433360404@linuxfoundation.org>
+Subject: [PATCH 6.13 088/623] wifi: rtlwifi: wait for firmware loading before releasing memory
+Date: Wed,  5 Feb 2025 14:37:10 +0100
+Message-ID: <20250205134459.591611501@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,46 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yevgeny Kliteynik <kliteyn@nvidia.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit be482f1d10da781db9445d2753c1e3f1fd82babf ]
+[ Upstream commit b4b26642b31ef282df6ff7ea8531985edfdef12a ]
 
-When bit offset for HWS_SET32 macro is negative,
-UBSAN complains about the shift-out-of-bounds:
+At probe error path, the firmware loading work may have already been
+queued. In such a case, it will try to access memory allocated by the probe
+function, which is about to be released. In such paths, wait for the
+firmware worker to finish before releasing memory.
 
-  UBSAN: shift-out-of-bounds in
-  drivers/net/ethernet/mellanox/mlx5/core/steering/hws/definer.c:177:2
-  shift exponent -8 is negative
-
-Fixes: 74a778b4a63f ("net/mlx5: HWS, added definers handling")
-Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Reviewed-by: Erez Shitrit <erezsh@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250102181415.1477316-12-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a7f7c15e945a ("rtlwifi: rtl8192cu: Free ieee80211_hw if probing fails")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241107133322.855112-4-cascardo@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c  | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/usb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
-index 3f4c58bada374..ab5f8f07f1f7e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_definer.c
-@@ -70,7 +70,7 @@
- 			u32 second_dw_mask = (mask) & ((1 << _bit_off) - 1); \
- 			_HWS_SET32(p, (v) >> _bit_off, byte_off, 0, (mask) >> _bit_off); \
- 			_HWS_SET32(p, (v) & second_dw_mask, (byte_off) + DW_SIZE, \
--				    (bit_off) % BITS_IN_DW, second_dw_mask); \
-+				    (bit_off + BITS_IN_DW) % BITS_IN_DW, second_dw_mask); \
- 		} else { \
- 			_HWS_SET32(p, v, byte_off, (bit_off), (mask)); \
- 		} \
+diff --git a/drivers/net/wireless/realtek/rtlwifi/usb.c b/drivers/net/wireless/realtek/rtlwifi/usb.c
+index c3aa0cd9ff211..c27b116ccdff5 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/usb.c
++++ b/drivers/net/wireless/realtek/rtlwifi/usb.c
+@@ -1028,13 +1028,15 @@ int rtl_usb_probe(struct usb_interface *intf,
+ 	err = ieee80211_register_hw(hw);
+ 	if (err) {
+ 		pr_err("Can't register mac80211 hw.\n");
+-		goto error_out;
++		goto error_init_vars;
+ 	}
+ 	rtlpriv->mac80211.mac80211_registered = 1;
+ 
+ 	set_bit(RTL_STATUS_INTERFACE_START, &rtlpriv->status);
+ 	return 0;
+ 
++error_init_vars:
++	wait_for_completion(&rtlpriv->firmware_loading_complete);
+ error_out:
+ 	rtl_deinit_core(hw);
+ error_out2:
 -- 
 2.39.5
 
