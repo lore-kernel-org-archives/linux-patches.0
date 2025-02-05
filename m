@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FADEDF59;
-	Wed,  5 Feb 2025 15:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7611A1C6BE;
+	Wed,  5 Feb 2025 15:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768172; cv=none; b=aW1VoHw9ZQuOK+R1UrNGCeUkadmq4YZE2+VfuaOPVAKKRGe88Zb1sxBngwMi9rWQVbM4ltyB3miJTsLSrEq6N3uhu8xhxLfo+UsrSvp/+ZnfroRxsnw9ujxcrLrrlE2nHEzk1jryCfaCCHY5NyrFaS1SlW0AE9sBN42LKBZ41Bo=
+	t=1738768175; cv=none; b=Ki87z3lWtCAWbw2EO+TNf/QZI1o1YFUcAOaCWdc4bxOcirbZ6Qzov/I/nVwAfgQ2ycoZ9M/g3pXqZrSxOOmd7Z0M/7Mj9W4rc44U9jmk94L7Xt4YwCEml2anwlCpo+aZoUasEd9EVPfab8nEnRArH20Xs4Ta0jeaCYB8ekan6b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768172; c=relaxed/simple;
-	bh=zBohVMKDf1hcI9PgrikyzhUkx23surPYGJnNTzC92BQ=;
+	s=arc-20240116; t=1738768175; c=relaxed/simple;
+	bh=U7VYQDs+S46imtRldExLPE7uRSirgmNPE9mWHVF2McA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EoCL8mPvmtad6lK/zL+t6GjoQHkTqcS47rfs7QIKCUEJUZvE55qMuod4Y1NW1gjBmzMtJhsJVr5GwNcdClSobo8eJk6HJLL70kuNemFEmjLc8TT3v9ANP3M08RDVIpMI/OJdCZP9aAgfmygOmOL+WhgjshyVRejpW3FyFGhKaAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8gpOg62; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qLZQE0T/nXkScVB+OT1POJcnSeSPVPjf+MGbGWsHOSNJbLlDexDr0SXaVoOmdowVE+/21XywWnjT6pwCDx7VtAxKZ21mTewiSmrd5/wHJUEXunp8veXJ8eEJfr0++L/wgb/8SY777SsaT5MGCxBM7aZtSW8+smY9lfp1exw+lKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyxKKFpa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8gpOg62"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2054C4CED1;
-	Wed,  5 Feb 2025 15:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyxKKFpa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8D7C4CED1;
+	Wed,  5 Feb 2025 15:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768172;
-	bh=zBohVMKDf1hcI9PgrikyzhUkx23surPYGJnNTzC92BQ=;
+	s=korg; t=1738768175;
+	bh=U7VYQDs+S46imtRldExLPE7uRSirgmNPE9mWHVF2McA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c8gpOg62oXf5kHkhLXnrQP3k4oU095qkRMjlzEZN7MahBC0qeJmPIBI366j/4Hfs7
-	 pYE2hUkgqH03CJTvIPN09szy+i9EX6knrXfhwccwCsxIZZsy1p0HDc7E1kRbUlnCjV
-	 PSiagQ82Jo2eh/5OoyNnx8+ONZbDCyNN93hsAVME=
+	b=MyxKKFpaSStF4IPF2NrqcyPlAenBEUt3FrB0FGr4nFoCr+WobE623jjBbr9WA4CDx
+	 gFC5eqcr555ggEQ0Hc5Zww1vOAvN1nPETcEgwZM+4Qb5EbSw11gNuPEcrfcuSBy4c2
+	 ll35oXtpXq7am7U09ZW4r6/v9Huv/S2hiQuk3PWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cd16e79c1e45f3fe0377@syzkaller.appspotmail.com,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 563/590] mptcp: pm: only set fullmesh for subflow endp
-Date: Wed,  5 Feb 2025 14:45:18 +0100
-Message-ID: <20250205134516.807435215@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.12 550/590] xfs: dont shut down the filesystem for media failures beyond end of log
+Date: Wed,  5 Feb 2025 14:45:05 +0100
+Message-ID: <20250205134516.313145134@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -52,107 +50,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 1bb0d1348546ad059f55c93def34e67cb2a034a6 upstream.
+commit f4ed93037966aea07ae6b10ab208976783d24e2e upstream.
 
-With the in-kernel path-manager, it is possible to change the 'fullmesh'
-flag. The code in mptcp_pm_nl_fullmesh() expects to change it only on
-'subflow' endpoints, to recreate more or less subflows using the linked
-address.
+If the filesystem has an external log device on pmem and the pmem
+reports a media error beyond the end of the log area, don't shut down
+the filesystem because we don't use that space.
 
-Unfortunately, the set_flags() hook was a bit more permissive, and
-allowed 'implicit' endpoints to get the 'fullmesh' flag while it is not
-allowed before.
-
-That's what syzbot found, triggering the following warning:
-
-  WARNING: CPU: 0 PID: 6499 at net/mptcp/pm_netlink.c:1496 __mark_subflow_endp_available net/mptcp/pm_netlink.c:1496 [inline]
-  WARNING: CPU: 0 PID: 6499 at net/mptcp/pm_netlink.c:1496 mptcp_pm_nl_fullmesh net/mptcp/pm_netlink.c:1980 [inline]
-  WARNING: CPU: 0 PID: 6499 at net/mptcp/pm_netlink.c:1496 mptcp_nl_set_flags net/mptcp/pm_netlink.c:2003 [inline]
-  WARNING: CPU: 0 PID: 6499 at net/mptcp/pm_netlink.c:1496 mptcp_pm_nl_set_flags+0x974/0xdc0 net/mptcp/pm_netlink.c:2064
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 6499 Comm: syz.1.413 Not tainted 6.13.0-rc5-syzkaller-00172-gd1bf27c4e176 #0
-  Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-  RIP: 0010:__mark_subflow_endp_available net/mptcp/pm_netlink.c:1496 [inline]
-  RIP: 0010:mptcp_pm_nl_fullmesh net/mptcp/pm_netlink.c:1980 [inline]
-  RIP: 0010:mptcp_nl_set_flags net/mptcp/pm_netlink.c:2003 [inline]
-  RIP: 0010:mptcp_pm_nl_set_flags+0x974/0xdc0 net/mptcp/pm_netlink.c:2064
-  Code: 01 00 00 49 89 c5 e8 fb 45 e8 f5 e9 b8 fc ff ff e8 f1 45 e8 f5 4c 89 f7 be 03 00 00 00 e8 44 1d 0b f9 eb a0 e8 dd 45 e8 f5 90 <0f> 0b 90 e9 17 ff ff ff 89 d9 80 e1 07 38 c1 0f 8c c9 fc ff ff 48
-  RSP: 0018:ffffc9000d307240 EFLAGS: 00010293
-  RAX: ffffffff8bb72e03 RBX: 0000000000000000 RCX: ffff88807da88000
-  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-  RBP: ffffc9000d307430 R08: ffffffff8bb72cf0 R09: 1ffff1100b842a5e
-  R10: dffffc0000000000 R11: ffffed100b842a5f R12: ffff88801e2e5ac0
-  R13: ffff88805c214800 R14: ffff88805c2152e8 R15: 1ffff1100b842a5d
-  FS:  00005555619f6500(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000000020002840 CR3: 00000000247e6000 CR4: 00000000003526f0
-  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  Call Trace:
-   <TASK>
-   genl_family_rcv_msg_doit net/netlink/genetlink.c:1115 [inline]
-   genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
-   genl_rcv_msg+0xb14/0xec0 net/netlink/genetlink.c:1210
-   netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2542
-   genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
-   netlink_unicast_kernel net/netlink/af_netlink.c:1321 [inline]
-   netlink_unicast+0x7f6/0x990 net/netlink/af_netlink.c:1347
-   netlink_sendmsg+0x8e4/0xcb0 net/netlink/af_netlink.c:1891
-   sock_sendmsg_nosec net/socket.c:711 [inline]
-   __sock_sendmsg+0x221/0x270 net/socket.c:726
-   ____sys_sendmsg+0x52a/0x7e0 net/socket.c:2583
-   ___sys_sendmsg net/socket.c:2637 [inline]
-   __sys_sendmsg+0x269/0x350 net/socket.c:2669
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7f5fe8785d29
-  Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-  RSP: 002b:00007fff571f5558 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-  RAX: ffffffffffffffda RBX: 00007f5fe8975fa0 RCX: 00007f5fe8785d29
-  RDX: 0000000000000000 RSI: 0000000020000480 RDI: 0000000000000007
-  RBP: 00007f5fe8801b08 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-  R13: 00007f5fe8975fa0 R14: 00007f5fe8975fa0 R15: 00000000000011f4
-   </TASK>
-
-Here, syzbot managed to set the 'fullmesh' flag on an 'implicit' and
-used -- according to 'id_avail_bitmap' -- endpoint, causing the PM to
-try decrement the local_addr_used counter which is only incremented for
-the 'subflow' endpoint.
-
-Note that 'no type' endpoints -- not 'subflow', 'signal', 'implicit' --
-are fine, because their ID will not be marked as used in the 'id_avail'
-bitmap, and setting 'fullmesh' can help forcing the creation of subflow
-when receiving an ADD_ADDR.
-
-Fixes: 73c762c1f07d ("mptcp: set fullmesh flag in pm_netlink")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+cd16e79c1e45f3fe0377@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/6786ac51.050a0220.216c54.00a6.GAE@google.com
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/540
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250123-net-mptcp-syzbot-issues-v1-2-af73258a726f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: <stable@vger.kernel.org> # v6.0
+Fixes: 6f643c57d57c56 ("xfs: implement ->notify_failure() for XFS")
+Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_notify_failure.c |  121 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 82 insertions(+), 39 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -2049,7 +2049,8 @@ int mptcp_pm_nl_set_flags(struct sk_buff
- 		return -EINVAL;
+--- a/fs/xfs/xfs_notify_failure.c
++++ b/fs/xfs/xfs_notify_failure.c
+@@ -154,6 +154,79 @@ xfs_dax_notify_failure_thaw(
+ }
+ 
+ static int
++xfs_dax_translate_range(
++	struct xfs_buftarg	*btp,
++	u64			offset,
++	u64			len,
++	xfs_daddr_t		*daddr,
++	uint64_t		*bblen)
++{
++	u64			dev_start = btp->bt_dax_part_off;
++	u64			dev_len = bdev_nr_bytes(btp->bt_bdev);
++	u64			dev_end = dev_start + dev_len - 1;
++
++	/* Notify failure on the whole device. */
++	if (offset == 0 && len == U64_MAX) {
++		offset = dev_start;
++		len = dev_len;
++	}
++
++	/* Ignore the range out of filesystem area */
++	if (offset + len - 1 < dev_start)
++		return -ENXIO;
++	if (offset > dev_end)
++		return -ENXIO;
++
++	/* Calculate the real range when it touches the boundary */
++	if (offset > dev_start)
++		offset -= dev_start;
++	else {
++		len -= dev_start - offset;
++		offset = 0;
++	}
++	if (offset + len - 1 > dev_end)
++		len = dev_end - offset + 1;
++
++	*daddr = BTOBB(offset);
++	*bblen = BTOBB(len);
++	return 0;
++}
++
++static int
++xfs_dax_notify_logdev_failure(
++	struct xfs_mount	*mp,
++	u64			offset,
++	u64			len,
++	int			mf_flags)
++{
++	xfs_daddr_t		daddr;
++	uint64_t		bblen;
++	int			error;
++
++	/*
++	 * Return ENXIO instead of shutting down the filesystem if the failed
++	 * region is beyond the end of the log.
++	 */
++	error = xfs_dax_translate_range(mp->m_logdev_targp,
++			offset, len, &daddr, &bblen);
++	if (error)
++		return error;
++
++	/*
++	 * In the pre-remove case the failure notification is attempting to
++	 * trigger a force unmount.  The expectation is that the device is
++	 * still present, but its removal is in progress and can not be
++	 * cancelled, proceed with accessing the log device.
++	 */
++	if (mf_flags & MF_MEM_PRE_REMOVE)
++		return 0;
++
++	xfs_err(mp, "ondisk log corrupt, shutting down fs!");
++	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_ONDISK);
++	return -EFSCORRUPTED;
++}
++
++static int
+ xfs_dax_notify_ddev_failure(
+ 	struct xfs_mount	*mp,
+ 	xfs_daddr_t		daddr,
+@@ -263,8 +336,9 @@ xfs_dax_notify_failure(
+ 	int			mf_flags)
+ {
+ 	struct xfs_mount	*mp = dax_holder(dax_dev);
+-	u64			ddev_start;
+-	u64			ddev_end;
++	xfs_daddr_t		daddr;
++	uint64_t		bblen;
++	int			error;
+ 
+ 	if (!(mp->m_super->s_flags & SB_BORN)) {
+ 		xfs_warn(mp, "filesystem is not ready for notify_failure()!");
+@@ -279,17 +353,7 @@ xfs_dax_notify_failure(
+ 
+ 	if (mp->m_logdev_targp && mp->m_logdev_targp->bt_daxdev == dax_dev &&
+ 	    mp->m_logdev_targp != mp->m_ddev_targp) {
+-		/*
+-		 * In the pre-remove case the failure notification is attempting
+-		 * to trigger a force unmount.  The expectation is that the
+-		 * device is still present, but its removal is in progress and
+-		 * can not be cancelled, proceed with accessing the log device.
+-		 */
+-		if (mf_flags & MF_MEM_PRE_REMOVE)
+-			return 0;
+-		xfs_err(mp, "ondisk log corrupt, shutting down fs!");
+-		xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_ONDISK);
+-		return -EFSCORRUPTED;
++		return xfs_dax_notify_logdev_failure(mp, offset, len, mf_flags);
  	}
- 	if ((addr.flags & MPTCP_PM_ADDR_FLAG_FULLMESH) &&
--	    (entry->flags & MPTCP_PM_ADDR_FLAG_SIGNAL)) {
-+	    (entry->flags & (MPTCP_PM_ADDR_FLAG_SIGNAL |
-+			     MPTCP_PM_ADDR_FLAG_IMPLICIT))) {
- 		spin_unlock_bh(&pernet->lock);
- 		GENL_SET_ERR_MSG(info, "invalid addr flags");
- 		return -EINVAL;
+ 
+ 	if (!xfs_has_rmapbt(mp)) {
+@@ -297,33 +361,12 @@ xfs_dax_notify_failure(
+ 		return -EOPNOTSUPP;
+ 	}
+ 
+-	ddev_start = mp->m_ddev_targp->bt_dax_part_off;
+-	ddev_end = ddev_start + bdev_nr_bytes(mp->m_ddev_targp->bt_bdev) - 1;
+-
+-	/* Notify failure on the whole device. */
+-	if (offset == 0 && len == U64_MAX) {
+-		offset = ddev_start;
+-		len = bdev_nr_bytes(mp->m_ddev_targp->bt_bdev);
+-	}
+-
+-	/* Ignore the range out of filesystem area */
+-	if (offset + len - 1 < ddev_start)
+-		return -ENXIO;
+-	if (offset > ddev_end)
+-		return -ENXIO;
+-
+-	/* Calculate the real range when it touches the boundary */
+-	if (offset > ddev_start)
+-		offset -= ddev_start;
+-	else {
+-		len -= ddev_start - offset;
+-		offset = 0;
+-	}
+-	if (offset + len - 1 > ddev_end)
+-		len = ddev_end - offset + 1;
++	error = xfs_dax_translate_range(mp->m_ddev_targp, offset, len, &daddr,
++			&bblen);
++	if (error)
++		return error;
+ 
+-	return xfs_dax_notify_ddev_failure(mp, BTOBB(offset), BTOBB(len),
+-			mf_flags);
++	return xfs_dax_notify_ddev_failure(mp, daddr, bblen, mf_flags);
+ }
+ 
+ const struct dax_holder_operations xfs_dax_holder_operations = {
 
 
