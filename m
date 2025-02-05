@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A541632D3;
-	Wed,  5 Feb 2025 14:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA82190052;
+	Wed,  5 Feb 2025 14:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767063; cv=none; b=PpKwFugNLEqUv1OhfigAbV7cvU57jpUsr9jlSmExu/aGWc2KgsTsKvSwNeNpxfp66rf0kG1wToHWjwelSJj81q0fzVJjLcs0a6KK2jzx+av2JYfQGcgcbR9BYT28R2vmmK0/NpKUEMDovJqRQfP9ZGoMckSVascvH5L421uBdds=
+	t=1738767066; cv=none; b=odr/S6DPXFSgz5Ak4VB3X77nnpnrT8LfYNu7lXwRSp6GLByuzpanOfpQWQ7gSyBrVwsjTz7VMDnoyL+J51W4alk4NdabwQDit/Kk04yB6LSo55ux0IqnAWeBK60pIcVQPm9+w49FLgK5Vzcuvdqcutz7BH2dAVR4hnP//BFEJhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767063; c=relaxed/simple;
-	bh=q2fMgM9PGBeatQEwHZG8qWMktSejGM8vmEqkKRZdJ3Q=;
+	s=arc-20240116; t=1738767066; c=relaxed/simple;
+	bh=K3tptoHByeKnCeXlMJLprwvgUZLWyIhjlHuhikYYCcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XSyRy5PuF9nM7QwYMY++SPAyc+/mDD3ZcGO5z3dSba4TP4sbqJVlMKj0DrNpDPKMPN7DFZQWtC/peQDDXwKdkkYBJhSKN+1j2bMcb5gRyLWvgUGGBHw8g5Oww4k2B1Ns4MKZHMDO7im6IpTQHYxdx8OHidnen2EcSlQKugQXF/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oxeFbtk/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iXMa3S6+wmzhWwvsqmByLNBTxs8Zjth58I7D+IbfliT+wlYWVDwVOrnJuTOeLlno+Yt5M1FjOm+HA88fUHZ0v5L19GR7D4y8MmTqPl/ne89iUrQEysQj7s3dXfmXzBoXjHt2rUz/6uBgBNBAvLcahrhs9k2XmW+OQALsCGH1AQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3e85XbS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oxeFbtk/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863F6C4CED1;
-	Wed,  5 Feb 2025 14:51:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3e85XbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDC9C4CED1;
+	Wed,  5 Feb 2025 14:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767063;
-	bh=q2fMgM9PGBeatQEwHZG8qWMktSejGM8vmEqkKRZdJ3Q=;
+	s=korg; t=1738767066;
+	bh=K3tptoHByeKnCeXlMJLprwvgUZLWyIhjlHuhikYYCcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oxeFbtk/fGFVXJInu+RpL2RgIn1Hj/wlLH3WUz3h2Vgc0rrSaFS5Vf+DtvZUrrg53
-	 VWsVTTsyiUrZZz6YIUSEG7HQJGgHRW0u6yGWHOQxaDHCcHm/vKV/6X6xxqG13QfxrE
-	 wBgEkfAwjWwwAb3v9XBN/TXuqKWK83XjN3JP7+uA=
+	b=C3e85XbStUCiB/FDTVMYCOgex8XoK7OobJRdnXfM+7vyopAX3+nu6dExl6tF60cT1
+	 GP1r6TtpdatkFuBJZR5HERKME5EmLE3b7p9em5WMAXg+lbt/jFrGvYJKaPIb8NeWBQ
+	 ibWl3Nl03NF1xPCmCwFlAP8QMeOG2f8DEuIGVVnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c92878e123785b1fa2db@syzkaller.appspotmail.com,
-	Suraj Sonawane <surajsonawane0215@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 401/590] iommu: iommufd: fix WARNING in iommufd_device_unbind
-Date: Wed,  5 Feb 2025 14:42:36 +0100
-Message-ID: <20250205134510.604746113@linuxfoundation.org>
+Subject: [PATCH 6.13 343/623] arm64: dts: renesas: rzg3s-smarc: Fix the debug serial alias
+Date: Wed,  5 Feb 2025 14:41:25 +0100
+Message-ID: <20250205134509.349546704@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suraj Sonawane <surajsonawane0215@gmail.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit d9df72c6acd683adf6dd23c061f3a414ec00b1f8 ]
+[ Upstream commit 08811b984f5af8eeda4fb157894fe9bf230ec1e1 ]
 
-Fix an issue detected by syzbot:
+The debug serial of the RZ/G3S is SCIF0 which is routed on the Renesas
+RZ SMARC Carrier II board on the SER3_UART. Use serial3 alias for it for
+better hardware description. Along with it, the chosen properties were
+moved to the device tree corresponding to the RZ SMARC Carrier II board.
 
-WARNING in iommufd_device_unbind iommufd: Time out waiting for iommufd object to become free
-
-Resolve a warning in iommufd_device_unbind caused by a timeout while
-waiting for the shortterm_users reference count to reach zero. The
-existing 10-second timeout is insufficient in some scenarios, resulting in
-failures the above warning.
-
-Increase the timeout in iommufd_object_dec_wait_shortterm from 10 seconds
-to 60 seconds to allow sufficient time for the reference count to drop to
-zero. This change prevents premature timeouts and reduces the likelihood
-of warnings during iommufd_device_unbind.
-
-Fixes: 6f9c4d8c468c ("iommufd: Do not UAF during iommufd_put_object()")
-Link: https://patch.msgid.link/r/20241123195900.3176-1-surajsonawane0215@gmail.com
-Reported-by: syzbot+c92878e123785b1fa2db@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c92878e123785b1fa2db
-Tested-by: syzbot+c92878e123785b1fa2db@syzkaller.appspotmail.com
-Signed-off-by: Suraj Sonawane <surajsonawane0215@gmail.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: adb4f0c5699c ("arm64: dts: renesas: Add initial support for RZ/G3S SMARC SoM")
+Fixes: d1ae4200bb26 ("arm64: dts: renesas: Add initial device tree for RZ SMARC Carrier-II Board")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20241115134401.3893008-6-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi | 5 -----
+ arch/arm64/boot/dts/renesas/rzg3s-smarc.dtsi     | 7 ++++++-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/main.c b/drivers/iommu/iommufd/main.c
-index b5f5d27ee9634..649fe79d0f0cc 100644
---- a/drivers/iommu/iommufd/main.c
-+++ b/drivers/iommu/iommufd/main.c
-@@ -130,7 +130,7 @@ static int iommufd_object_dec_wait_shortterm(struct iommufd_ctx *ictx,
- 	if (wait_event_timeout(ictx->destroy_wait,
- 				refcount_read(&to_destroy->shortterm_users) ==
- 					0,
--				msecs_to_jiffies(10000)))
-+				msecs_to_jiffies(60000)))
- 		return 0;
+diff --git a/arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi b/arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi
+index 2ed01d391554b..55c72c8a07350 100644
+--- a/arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi
+@@ -43,11 +43,6 @@
+ #endif
+ 	};
  
- 	pr_crit("Time out waiting for iommufd object to become free\n");
+-	chosen {
+-		bootargs = "ignore_loglevel";
+-		stdout-path = "serial0:115200n8";
+-	};
+-
+ 	memory@48000000 {
+ 		device_type = "memory";
+ 		/* First 128MB is reserved for secure area. */
+diff --git a/arch/arm64/boot/dts/renesas/rzg3s-smarc.dtsi b/arch/arm64/boot/dts/renesas/rzg3s-smarc.dtsi
+index 4509151344c43..33b9873b225a8 100644
+--- a/arch/arm64/boot/dts/renesas/rzg3s-smarc.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzg3s-smarc.dtsi
+@@ -12,10 +12,15 @@
+ / {
+ 	aliases {
+ 		i2c0 = &i2c0;
+-		serial0 = &scif0;
++		serial3 = &scif0;
+ 		mmc1 = &sdhi1;
+ 	};
+ 
++	chosen {
++		bootargs = "ignore_loglevel";
++		stdout-path = "serial3:115200n8";
++	};
++
+ 	keys {
+ 		compatible = "gpio-keys";
+ 
 -- 
 2.39.5
 
