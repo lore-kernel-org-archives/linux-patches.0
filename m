@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675AE155333;
-	Wed,  5 Feb 2025 15:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D981E89C;
+	Wed,  5 Feb 2025 15:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768144; cv=none; b=JtsqJp7/SUXQuKnB1cyj5mgStu7OB71VG9YqZwJi9VTdzoTt+ABOxlPPQMx72XyO7wbUHReCm3fDfTU7VS1ni8Y0i78GLXoCww3JtsL6hdTXiyEf5c2GbwsyKq7AHL9wzGxRBE0XBIuVahz+iqEGKKwOcHLODseEwIOcd+DZQ+0=
+	t=1738768148; cv=none; b=IOqJRlY4Xi6wEm5UnsRa92tIm4FF8d87q0IwprJx5NG5Aad8haTGZ7RYLrJBjQyZMUlhBo8XsBNhtcjQtK2n9rVNpLCnstn9YslYnWnEy9+vGLer/QUfNdwqbbP/iQbQvpPhyXah++mfqtehyirCkTIQ2tWDHFcG++YSd/0tG+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768144; c=relaxed/simple;
-	bh=In1/mOePGvPIWRMnbPbESVcJH5lJ3hd15MFaL/MbPD4=;
+	s=arc-20240116; t=1738768148; c=relaxed/simple;
+	bh=WzPghb5qosyu8oon1XRDdt895ySa/HXzNw2ow6QaP5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lnl6N65X9qgUNzw79/Tb9/76cyOdnRJildsfFoREcXB3f0Xuh6uAMlWRXlFh13nsLQvoBFiZn50DPABBI0dhoEqPaV5w3To1Tawx5NHYisZ9m1uDiMNe23GVFsbvbSuAbeDaMQAeKMnkoFTB/dcj7N6JmMikaPJIqvlX2ZvJoJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8WA5bWy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mF4aP128IwXc5DPDuYT0m37b4etz8May5StU4XleDvtl5ZDNVCZJEWtQPEe2QFmod2aJ+MQpsy5eySb3IRI32Np7mkGYNzkV1Yq5oao5TYIGgKvmz33DHlJpRyAXudp2k2UFgBk7ymiPXn3KrPY4iJXQxyIc8tl0otbAlXlIfdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvQzX7P/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8WA5bWy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A4FC4CED1;
-	Wed,  5 Feb 2025 15:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvQzX7P/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49057C4CED6;
+	Wed,  5 Feb 2025 15:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768144;
-	bh=In1/mOePGvPIWRMnbPbESVcJH5lJ3hd15MFaL/MbPD4=;
+	s=korg; t=1738768147;
+	bh=WzPghb5qosyu8oon1XRDdt895ySa/HXzNw2ow6QaP5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8WA5bWyD7/wRCJ/2aKRvyRCwhqWaj0+IDnYTIICJ6gMYuzb2cBsTlW+zCxvQ1PFR
-	 5SiAyaYnHyMri+C6io9p3+oiXS9ZLll7yv46uA/4PVCP6rQnvi3+OwnFkmYcbNLsXn
-	 //uvyJYWZNZR7OySJZ8BdkQK9AGr+Ya9gTAJdYR4=
+	b=kvQzX7P/P+7btocTDFocQcMFIBtTKFlLW9DfHs4ajs28zeDJYE0ZsmnTziaYBHEeU
+	 n8gGQQNpOvXFTVJt1vNCJ+Zwp981CXx+nrZzI4xtI/BFtQl6AwuomDCH72xMVTMyQK
+	 rmqZ6tvdwCblUyfoboJkuA0QvLilDgEZ7qBlhhZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jos Wang <joswang@lenovo.com>,
-	Badhri Jagan Sridharan <badhri@google.com>
-Subject: [PATCH 6.12 559/590] usb: typec: tcpm: set SRC_SEND_CAPABILITIES timeout to PD_T_SENDER_RESPONSE
-Date: Wed,  5 Feb 2025 14:45:14 +0100
-Message-ID: <20250205134516.654717451@linuxfoundation.org>
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 504/623] net: airoha: Fix wrong GDM4 register definition
+Date: Wed,  5 Feb 2025 14:44:06 +0100
+Message-ID: <20250205134515.500983086@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,40 +49,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jos Wang <joswang@lenovo.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit 2eb3da037c2c20fa30bc502bc092479b2a1aaae2 upstream.
+[ Upstream commit d31a49d37cb132b31cc6683eef2122f8609d6229 ]
 
-As PD2.0 spec ("8.3.3.2.3 PE_SRC_Send_Capabilities state"), after the
-Source receives the GoodCRC Message from the Sink in response to the
-Source_Capabilities message, it should start the SenderResponseTimer,
-after the timer times out, the state machine transitions to the
-HARD_RESET state.
+Fix wrong GDM4 register definition, in Airoha SDK GDM4 is defined at
+offset 0x2400 but this doesn't make sense as it does conflict with the
+CDM4 that is in the same location.
 
-Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jos Wang <joswang@lenovo.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Link: https://lore.kernel.org/r/20250105135245.7493-1-joswang1221@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Following the pattern where each GDM base is at the FWD_CFG, currently
+GDM4 base offset is set to 0x2500. This is correct but REG_GDM4_FWD_CFG
+and REG_GDM4_SRC_PORT_SET are still using the SDK reference with the
+0x2400 offset. Fix these 2 define by subtracting 0x100 to each register
+to reflect the real address location.
+
+Fixes: 23020f049327 ("net: airoha: Introduce ethernet support for EN7581 SoC")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250120154148.13424-1-ansuelsmth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mediatek/airoha_eth.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -4757,7 +4757,7 @@ static void run_state_machine(struct tcp
- 			port->caps_count = 0;
- 			port->pd_capable = true;
- 			tcpm_set_state_cond(port, SRC_SEND_CAPABILITIES_TIMEOUT,
--					    PD_T_SEND_SOURCE_CAP);
-+					    PD_T_SENDER_RESPONSE);
- 		}
- 		break;
- 	case SRC_SEND_CAPABILITIES_TIMEOUT:
+diff --git a/drivers/net/ethernet/mediatek/airoha_eth.c b/drivers/net/ethernet/mediatek/airoha_eth.c
+index d8bfc21a5b194..00b80fb9d87ac 100644
+--- a/drivers/net/ethernet/mediatek/airoha_eth.c
++++ b/drivers/net/ethernet/mediatek/airoha_eth.c
+@@ -258,11 +258,11 @@
+ #define REG_GDM3_FWD_CFG		GDM3_BASE
+ #define GDM3_PAD_EN_MASK		BIT(28)
+ 
+-#define REG_GDM4_FWD_CFG		(GDM4_BASE + 0x100)
++#define REG_GDM4_FWD_CFG		GDM4_BASE
+ #define GDM4_PAD_EN_MASK		BIT(28)
+ #define GDM4_SPORT_OFFSET0_MASK		GENMASK(11, 8)
+ 
+-#define REG_GDM4_SRC_PORT_SET		(GDM4_BASE + 0x33c)
++#define REG_GDM4_SRC_PORT_SET		(GDM4_BASE + 0x23c)
+ #define GDM4_SPORT_OFF2_MASK		GENMASK(19, 16)
+ #define GDM4_SPORT_OFF1_MASK		GENMASK(15, 12)
+ #define GDM4_SPORT_OFF0_MASK		GENMASK(11, 8)
+-- 
+2.39.5
+
 
 
