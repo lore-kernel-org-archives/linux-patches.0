@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111322AD22;
-	Wed,  5 Feb 2025 14:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431E61519BE;
+	Wed,  5 Feb 2025 14:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764979; cv=none; b=byVgaJAHlHw6nQn3dncpqvc6z2OTJ28ysff9fQjBJjrkYi3yuxt1pdTeTgN7zMOlWLW9wPTFINhYtruHjJGlpec65uPqf1hCJb8zx8DCoKnYcoADJHj5ikg0S/FQbGeg/R2NFCmK2tYg+LFXf2puO5a8jhoU8heNjgrdWiRdD1k=
+	t=1738764983; cv=none; b=jinbvY3eFu66s3cMIRRQaW5wCCDV6Lt8mJC4qUz3/iv0pbjX1rxsT0oYmfW4YuQtPiUdHp4xC5qnv3cyLHHRG5mTGO4uKrUqcLanCpEU+9SwQEOTCR0dTTnqL7ICiduXwtolCIa7VWtW/eetXidnWUdgBj9yvegYtUXgF2BDaDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764979; c=relaxed/simple;
-	bh=RWB37dAkmkwOj+AOdXe5VzPql/AD5gDNucOUQ/tKP1I=;
+	s=arc-20240116; t=1738764983; c=relaxed/simple;
+	bh=hba3cf2Fg3hkp7otQv73gNMKCounjCJtlNSI9Lg25E4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TZTakFulk8UiyDPsOaPid0CCSbMTOstPsgS6Q+OlVotqt4vkCUel2vmQ1dWzv89kQBiUTU5oR1DmhUfFDqkxvWUnuGMao93IYhypefYVVWJIFPkwenDi909iwybTsee8qRczYPBXKk31IjOM9ML9kyUI+OANSpbXHvF5QRZ9YrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gm1pu6LP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ado1TdYAMu2T5dwW5iVwq/kmp+11rmPqBT+u+vgTkQ67N7xgjd/Zrm9Cvuy/EAVVo/DFWnKTIU2YXt4EoC5LWLWhH/41jzHTXf71dpiF0QKNeM5eDw0yNqwdfc6hYMZHUU647dkFF9o4esXR4vz8myDsfEwt3yskPN+hG1GlciU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gN+hmirm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gm1pu6LP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8586AC4CED1;
-	Wed,  5 Feb 2025 14:16:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gN+hmirm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EF2C4CED1;
+	Wed,  5 Feb 2025 14:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764978;
-	bh=RWB37dAkmkwOj+AOdXe5VzPql/AD5gDNucOUQ/tKP1I=;
+	s=korg; t=1738764983;
+	bh=hba3cf2Fg3hkp7otQv73gNMKCounjCJtlNSI9Lg25E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gm1pu6LP/ap3ELvbfpFA4g8IFL/gtYgzRf+5lBAra5OZKOLAjbsCncOeW9NagPJu4
-	 dXy+El/Vw7ZiSPH6/2C72hbi/93epW9a6q9a1PnYeh372E2iQBCjNg2RKDEhXMQGq6
-	 YE1moK3YhNSwsk3BxRpvnSh9Of4e8Ar02VeiBOWI=
+	b=gN+hmirmGlvJe2BrqAM/6obVE1/99b9+Fjrdp6Xm9WGqwwyjl+xPFYvKp2va1cyqF
+	 8SuPcWdjPvPkdpg6siqPLiovyFETB+WIBdN1KwQbyXdexgDm4PqG2DKkzU599ZksRE
+	 xquJBcFAe5YxaE/Dfi/Czn5aM+Qu5gToVQYqY/gQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 132/623] clk: imx93: Add IMX93_CLK_SPDIF_IPG clock
-Date: Wed,  5 Feb 2025 14:37:54 +0100
-Message-ID: <20250205134501.280704931@linuxfoundation.org>
+Subject: [PATCH 6.6 221/393] arm64: dts: mediatek: mt8195: Remove suspend-breaking reset from pcie1
+Date: Wed,  5 Feb 2025 14:42:20 +0100
+Message-ID: <20250205134428.763756919@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,63 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 6a7853544482e2336b5b8bb9a4b964f9d687f290 ]
+[ Upstream commit 3d7fdd8e38aafd4858935df2392762c1ab8fb40f ]
 
-Split IMX93_CLK_SPDIF_IPG from IMX93_CLK_SPDIF_GATE
-because the IMX93_CLK_SPDIF_GATE controls the gate
-of IPG clock and root clock. Without this change,
-disabling IMX93_CLK_SPDIF_GATE would also disable
-the IPG clock, causing register access failures.
+The MAC reset for PCIe port 1 on MT8195 when asserted during suspend
+causes the system to hang during resume with the following error (with
+no_console_suspend enabled):
 
-Fixes: 1c4a4f7362fd ("arm64: dts: imx93: Add audio device nodes")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241119015805.3840606-3-shengjiu.wang@nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+  mtk-pcie-gen3 112f8000.pcie: PCIe link down, current LTSSM state: detect.quiet (0x0)
+  mtk-pcie-gen3 112f8000.pcie: PM: dpm_run_callback(): genpd_resume_noirq+0x0/0x24 returns -110
+  mtk-pcie-gen3 112f8000.pcie: PM: failed to resume noirq: error -110
+
+This issue is specific to MT8195. On MT8192 with the PCIe reset,
+MT8192_INFRA_RST4_PCIE_TOP_SWRST, added to the DT node, the issue is not
+observed.
+
+Since without the reset, the PCIe controller and WiFi card connected to
+it, work just as well, remove the reset to allow the system to suspend
+and resume properly.
+
+Fixes: ecc0af6a3fe6 ("arm64: dts: mt8195: Add pcie and pcie phy nodes")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Link: https://lore.kernel.org/r/20241218-mt8195-pcie1-reset-suspend-fix-v1-1-1c021dda42a6@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx93.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx93.c b/drivers/clk/imx/clk-imx93.c
-index 58a516dd385bf..eb818db008fb6 100644
---- a/drivers/clk/imx/clk-imx93.c
-+++ b/drivers/clk/imx/clk-imx93.c
-@@ -15,7 +15,7 @@
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index 5a087404ccc2d..1cb22257adb36 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -1572,9 +1572,6 @@
+ 			phy-names = "pcie-phy";
+ 			power-domains = <&spm MT8195_POWER_DOMAIN_PCIE_MAC_P1>;
  
- #include "clk.h"
- 
--#define IMX93_CLK_END 207
-+#define IMX93_CLK_END 208
- 
- #define PLAT_IMX93 BIT(0)
- #define PLAT_IMX91 BIT(1)
-@@ -38,6 +38,7 @@ static u32 share_count_sai2;
- static u32 share_count_sai3;
- static u32 share_count_mub;
- static u32 share_count_pdm;
-+static u32 share_count_spdif;
- 
- static const char * const a55_core_sels[] = {"a55_alt", "arm_pll"};
- static const char *parent_names[MAX_SEL][4] = {
-@@ -252,7 +253,8 @@ static const struct imx93_clk_ccgr {
- 	{ IMX93_CLK_MQS1_GATE,		"mqs1",		"sai1_root",		0x9b00, },
- 	{ IMX93_CLK_MQS2_GATE,		"mqs2",		"sai3_root",		0x9b40, },
- 	{ IMX93_CLK_AUD_XCVR_GATE,	"aud_xcvr",	"audio_xcvr_root",	0x9b80, },
--	{ IMX93_CLK_SPDIF_GATE,		"spdif",	"spdif_root",		0x9c00, },
-+	{ IMX93_CLK_SPDIF_IPG,		"spdif_ipg_clk", "bus_wakeup_root",	0x9c00, 0, &share_count_spdif},
-+	{ IMX93_CLK_SPDIF_GATE,		"spdif",	"spdif_root",		0x9c00, 0, &share_count_spdif},
- 	{ IMX93_CLK_HSIO_32K_GATE,	"hsio_32k",	"osc_32k",		0x9dc0, },
- 	{ IMX93_CLK_ENET1_GATE,		"enet1",	"wakeup_axi_root",	0x9e00, 0, NULL, PLAT_IMX93, },
- 	{ IMX93_CLK_ENET_QOS_GATE,	"enet_qos",	"wakeup_axi_root",	0x9e40, 0, NULL, PLAT_IMX93, },
+-			resets = <&infracfg_ao MT8195_INFRA_RST2_PCIE_P1_SWRST>;
+-			reset-names = "mac";
+-
+ 			#interrupt-cells = <1>;
+ 			interrupt-map-mask = <0 0 0 7>;
+ 			interrupt-map = <0 0 0 1 &pcie_intc1 0>,
 -- 
 2.39.5
 
