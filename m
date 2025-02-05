@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FB02E634;
-	Wed,  5 Feb 2025 14:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1BB1519AA;
+	Wed,  5 Feb 2025 14:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764429; cv=none; b=iGfuKgv50i6vmOScvYcGxW4wq9Dg0CzRjd2n7b9NDKCENGLyQ0fEBD7H5spE4LtMqdq1WPmEOeE2SAaLR0KM/FDJUo+dyrmCxbzJ/YD+mRQ1ZEq4ms8bpvUIS/dzuWPDXnFJTFYGnPUAGlQBXLOgAH1X4PZFkauR8Ac9uHnlWfQ=
+	t=1738764433; cv=none; b=H3f+ooqjuN/nHRgNTLgCkrw6mAjtJJ8L1locsjjBr2ikMrqDgy67fG7y8hlKqUXcWt5RvULCFFjLRPfWk41zCroNqN6VUr1wLCn/wFl3+dCic01p5j7ewmSLI8w1E2r7p6ljCdS9s9oLvv9VDJo3kBZmU7O7cG1Iz2DkMs/7uOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764429; c=relaxed/simple;
-	bh=Jo5R8emoLK/aVjUoMCS+1EdS+puDkAgrsLfgQegyDfQ=;
+	s=arc-20240116; t=1738764433; c=relaxed/simple;
+	bh=RKKSZsU+4Ywa95KqkGkTh5LILB4toSSx6cOMFGmyRS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bQEHp/cO+nG3eTu7APpluY6jliOjRSx3WhxNw6E+fMK8nnuOtYjtuOtEXz5H1Uf+BjHAc6Bnx1Wfxqm0yE0V/kZU/ho0CQxrL9j5LNMZddG5zS3UCgW74dDjwaiYff51SyZg5kxebqnw9d55pMneJJycj3P+5VkaI92bt8sTdcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXyRZiJ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qpx9giF9CpL+DbdANhkVqZFJsUUtfXxYYGLZcXHQKAGZ/acENea0hHKgFR65xiz7kUSCHa/VLW9OaSL1msyYacvNfntMFAhuNC6lHjjv7XA+c2fEfxKXwVEOM5BcQxMjUBdgvy9UeR1wajbyEMk7kmHyw07CWRKDhi0KSV1nmM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZVH84Ip; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXyRZiJ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41DAC4CED6;
-	Wed,  5 Feb 2025 14:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZVH84Ip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D36C4CED1;
+	Wed,  5 Feb 2025 14:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764429;
-	bh=Jo5R8emoLK/aVjUoMCS+1EdS+puDkAgrsLfgQegyDfQ=;
+	s=korg; t=1738764432;
+	bh=RKKSZsU+4Ywa95KqkGkTh5LILB4toSSx6cOMFGmyRS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hXyRZiJ6OVsv2GDsgQAt9FiJdhh/6Ga701vwVdjzOiX2LRTNQm95V1vRgUQdQtnEl
-	 7+49vjgeT0Mcy4xCR5ZXGjMRuPCKK/5HPy4nlI6eclt0aNIqxwmRYpf6QLSUzR2ouW
-	 wOPUSqw5IwdrCpNKjoJh0vrbLNAMRYthRwnCZ23c=
+	b=lZVH84IpZWAetPxsr5UzsGAJK7VnJBLt3yosAmh7w/DXl/duQdrRZO62UE37U4o2K
+	 +y8Tpn49QrEkY4VC5828V+Wvva15y6vzo8eFANLuWxqIQ94I7ldSyCQSUcJhKr6Vwd
+	 4HbrfqQHWJbre/W/WQxeq9cCqTjFRf27mu0EooQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Pengfei Li <pengfei.li_1@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 171/393] ALSA: seq: remove redundant tristate for SND_SEQ_UMP_CLIENT
-Date: Wed,  5 Feb 2025 14:41:30 +0100
-Message-ID: <20250205134426.838025236@linuxfoundation.org>
+Subject: [PATCH 6.12 123/590] clk: imx93: Move IMX93_CLK_END macro to clk driver
+Date: Wed,  5 Feb 2025 14:37:58 +0100
+Message-ID: <20250205134459.968031371@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Pengfei Li <pengfei.li_1@nxp.com>
 
-[ Upstream commit 8e8bc5000328a1ba8f93d43faf427e8ac31fb416 ]
+[ Upstream commit 0af18ba60752e8a4ba34404c1d9a4a799da690f5 ]
 
-'def_tristate' is a shorthand for 'default' + 'tristate'.
+IMX93_CLK_END was previously defined in imx93-clock.h to indicate
+the number of clocks. However, it is not part of the ABI. For starters
+it does no really appear in DTS. But what's more important - new clocks
+are described later, which contradicts this define in binding header.
+So move this macro to clock driver.
 
-Another 'tristate' is redundant.
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://lore.kernel.org/r/20240215135304.1909431-1-masahiroy@kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 9001d5154435 ("ALSA: seq: Make dependency on UMP clearer")
+Signed-off-by: Pengfei Li <pengfei.li_1@nxp.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20241023184651.381265-2-pengfei.li_1@nxp.com
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Stable-dep-of: 6a7853544482 ("clk: imx93: Add IMX93_CLK_SPDIF_IPG clock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/clk/imx/clk-imx93.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/core/seq/Kconfig b/sound/core/seq/Kconfig
-index c14981daf9432..0374bbf51cd4d 100644
---- a/sound/core/seq/Kconfig
-+++ b/sound/core/seq/Kconfig
-@@ -71,7 +71,6 @@ config SND_SEQ_UMP
- 	  among legacy and UMP clients.
+diff --git a/drivers/clk/imx/clk-imx93.c b/drivers/clk/imx/clk-imx93.c
+index c6a9bc8ecc1fc..c8b65146e76ea 100644
+--- a/drivers/clk/imx/clk-imx93.c
++++ b/drivers/clk/imx/clk-imx93.c
+@@ -15,6 +15,8 @@
  
- config SND_SEQ_UMP_CLIENT
--	tristate
- 	def_tristate SND_UMP
+ #include "clk.h"
  
- endif # SND_SEQUENCER
++#define IMX93_CLK_END 202
++
+ enum clk_sel {
+ 	LOW_SPEED_IO_SEL,
+ 	NON_IO_SEL,
 -- 
 2.39.5
 
