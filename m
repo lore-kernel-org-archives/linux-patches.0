@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE701714D0;
-	Wed,  5 Feb 2025 14:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A76F7E792;
+	Wed,  5 Feb 2025 14:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766327; cv=none; b=rFnch4mtdRLZ8o+MvfuclvgW5GCGJJixVYVhJX184SzQhaMFqvNy4CDzmSJoXTCl8BZoFguh7yW+oRIoNziJkfaEOZ2mtDMY0llTyWcnN2mr2+8d/pfkSg339oXjfqGPBwuy6t0r2/+NB0Va7N5xAiIn3xpvBdG4V3g4zVC0q9s=
+	t=1738766330; cv=none; b=RXnncmI/wVcdupYhSXFjK3Vll9t1ZG8b5Ll9NF3I4xHleIC+60HbvqXTI59w6CDKDAUuroz/Us9tVQC6RDLm6i4375AwDRcx3BC4wd3hngrWyzflfZQzBZzhik0RGdfv2kyn58UrgKv2BKbyCYPkwtiGT6Xbvi2QkyoZ0MioSeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766327; c=relaxed/simple;
-	bh=C6Sd2qlaZtzlc9O2dG42ji4oo/YzbruzmSIFsk9M9s4=;
+	s=arc-20240116; t=1738766330; c=relaxed/simple;
+	bh=r+m7l9/rJK5uoitkwhR4LeqB2OjcEBMZgxUdKT+A+yQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmV1k+AhsvQdSTbupmhkdxyVWG/U6RBWhYx2xK9jZ2w2bezwUWyTbNpp1463KXmf92DfEmg/OThDd116YQf647nMSPSXKzw6+RWobX1l+14QoGndONFxZ5lS42eSBfoCcKEEp9MqBDk3ZhAjrazdwQ8qeueBBReI6O7Nwlg3w7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZvOHOzh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HzkvHEbz1wVOci7RpPs/qCESCza1NZUALWat6pVvjeoWBm7jUQOaX+i7uQIg8k4drpW6Mb0lx57HX3ZNDf+awQ0R5PcJONuLSz8Z0MdA/TEIBZ8iSwxD4Olh1wmJsOq/SCpETg3ua7VW4szQX/pF47GjFZbn6ZEQ9Cn3QQl3XvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubD3SO+q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZvOHOzh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A1FC4CED1;
-	Wed,  5 Feb 2025 14:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubD3SO+q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE43BC4CED1;
+	Wed,  5 Feb 2025 14:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766326;
-	bh=C6Sd2qlaZtzlc9O2dG42ji4oo/YzbruzmSIFsk9M9s4=;
+	s=korg; t=1738766330;
+	bh=r+m7l9/rJK5uoitkwhR4LeqB2OjcEBMZgxUdKT+A+yQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZvOHOzh71ONveuAn4x3Ig6a0lXSeafxHIrvkKc4P16g2VOQxUBCJGfxVnrswTFZX
-	 Q8hgY7GeRO++QGCdr/fivEnHrwPRSN5IZXf0xhjx37CuwlMOfjOMzf7hjwAt3AWeyw
-	 bv4JGVYMEpFimuNc4gaB80kk/tsRfiC0oI+5f0+w=
+	b=ubD3SO+qUiOvPKnNvnegDAHOWFqYH92VyNl3VT7yMAfqI+g0wJnLyD2bVXk3F+KoC
+	 l9pv3axWzcD2YEt/GlKpoPiQCSNsvbyTpSIilKnPXbgOd0aCmzBHs0+6yG/sir5Hla
+	 WV9RMuYNkcBOWFK7dWt/Lq5GB5z2Acz5gZUiHrAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert.xu@redhat.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 263/623] crypto: api - Fix boot-up self-test race
-Date: Wed,  5 Feb 2025 14:40:05 +0100
-Message-ID: <20250205134506.292455278@linuxfoundation.org>
+Subject: [PATCH 6.12 311/590] ARM: dts: stm32: Fix IPCC EXTI declaration on stm32mp151
+Date: Wed,  5 Feb 2025 14:41:06 +0100
+Message-ID: <20250205134507.173066583@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
 
-[ Upstream commit 8dd458cbc5be9ce4427ffce7a9dcdbff4dfc4ac9 ]
+[ Upstream commit 4ea654242e0c75bdf6b45d3c619c5fdcb2e9312a ]
 
-During the boot process self-tests are postponed so that all
-algorithms are registered when the test starts.  In the event
-that algorithms are still being registered during these tests,
-which can occur either because the algorithm is registered at
-late_initcall, or because a self-test itself triggers the creation
-of an instance, some self-tests may never start at all.
+The GIC IRQ type used for IPCC RX should be IRQ_TYPE_LEVEL_HIGH.
+Replacing the interrupt with the EXTI event changes the type to
+the numeric value 1, meaning IRQ_TYPE_EDGE_RISING.
 
-Fix this by setting the flag at the start of crypto_start_tests.
+The issue is that EXTI event 61 is a direct event.The IRQ type of
+direct events is not used by EXTI and is propagated to the parent
+IRQ controller of EXTI, the GIC.
 
-Note that this race is theoretical and has never been observed
-in practice.
+Align the IRQ type to the value expected by the GIC by replacing
+the second parameter "1" with IRQ_TYPE_LEVEL_HIGH.
 
-Fixes: adad556efcdd ("crypto: api - Fix built-in testing dependency failures")
-Signed-off-by: Herbert Xu <herbert.xu@redhat.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 7d9802bb0e34 ("ARM: dts: stm32: remove the IPCC "wakeup" IRQ on stm32mp151")
+Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/algapi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/st/stm32mp151.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/crypto/algapi.c b/crypto/algapi.c
-index 16f7c7a9d8ab6..7e061d8a1d52d 100644
---- a/crypto/algapi.c
-+++ b/crypto/algapi.c
-@@ -1016,6 +1016,8 @@ static void __init crypto_start_tests(void)
- 	if (IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS))
- 		return;
- 
-+	set_crypto_boot_test_finished();
-+
- 	for (;;) {
- 		struct crypto_larval *larval = NULL;
- 		struct crypto_alg *q;
-@@ -1047,8 +1049,6 @@ static void __init crypto_start_tests(void)
- 		if (!larval)
- 			break;
- 	}
--
--	set_crypto_boot_test_finished();
- }
- 
- static int __init crypto_algapi_init(void)
+diff --git a/arch/arm/boot/dts/st/stm32mp151.dtsi b/arch/arm/boot/dts/st/stm32mp151.dtsi
+index 4f878ec102c1f..fdc42a89bd37d 100644
+--- a/arch/arm/boot/dts/st/stm32mp151.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp151.dtsi
+@@ -129,7 +129,7 @@
+ 			reg = <0x4c001000 0x400>;
+ 			st,proc-id = <0>;
+ 			interrupts-extended =
+-				<&exti 61 1>,
++				<&exti 61 IRQ_TYPE_LEVEL_HIGH>,
+ 				<&intc GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "rx", "tx";
+ 			clocks = <&rcc IPCC>;
 -- 
 2.39.5
 
