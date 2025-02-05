@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497AF13C9C4;
-	Wed,  5 Feb 2025 14:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEEDEED7;
+	Wed,  5 Feb 2025 14:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764903; cv=none; b=fuMYMc56JO94beo6UQnDHYgjktt/db9cEaUgeYwQnAdsnkx07DMgprFCXIPUBjMXxzL6VhFY5pjUL6/8eBtHOMDceu2vTGy5KLEfeE9FnT5sQpKHNIK42/H80ssTCDqcV7r9VQeC+BHYZzQigtsZj04x+b8yagG7TW9CwzRIMpI=
+	t=1738764906; cv=none; b=Fju3SDs1Hg8FrSjvdo1Nb0tviOc6hlCjSSh7/ZQURFt5ldIb2cd0GwMHh/UDAVqJ0jUyh6Rccgs2RTO9dFI3nQjDwFKjasd6TiL2pffHtp4vA/XQv4ESvkn79OQnVWAHUqv2qJQUE5GaRWWmUZY8/w1HNEoOhShgJGstrVZETSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764903; c=relaxed/simple;
-	bh=O5kA18C9aLhP5X/baRKbeeS9UAYX3cC85K2vfcT3Hec=;
+	s=arc-20240116; t=1738764906; c=relaxed/simple;
+	bh=UJBBMJ9oE6fcYHJeu5sXt4sSg87fADNPkiBU7t8WyxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b4a4ETRsABcOxHBwtY4O25Vsgi4LLl37x7wI5r+NFgbthy1Xcs57DZfkTNsVrK655Ul11poLuAFphGsKtWOf8ig672oNTQnxKLhXpjS6ZS/nzuakxdS6kLuTl80qRxQTPTNCCikfG4VFRdnyUvQxO/XoOKjWf9gnEWOFlVmuJ8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvVg9Gz7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B/ZS2v4EQImD34fMTt67rAwYvTuS2n4eWGvLyJcTwyzEJl1KXFPoGXbryZ0EII0CU6+0mfyj8shJZkxrn4xhr2PFb7XGw53iXv/DU8arIFIx/WO7Ln9EPRSN3W6Gb118/xAiuMCz5RrX5FBs84YezG0wxIsYelLJbETg4C1g/W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mchNAlZe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvVg9Gz7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95192C4CED1;
-	Wed,  5 Feb 2025 14:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mchNAlZe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF529C4CED1;
+	Wed,  5 Feb 2025 14:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764903;
-	bh=O5kA18C9aLhP5X/baRKbeeS9UAYX3cC85K2vfcT3Hec=;
+	s=korg; t=1738764906;
+	bh=UJBBMJ9oE6fcYHJeu5sXt4sSg87fADNPkiBU7t8WyxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvVg9Gz7QI885zegSjEJrTq5r4wrVIMB+YDvY+yrH5bTEyGUciZEho53Zu1S4aCG+
-	 ZmOM0BiUOoh52UmjeclzuptgYMk/8FOhRFRnWfsFNEwhJwFxvhb2ktchCc2Oy4VJNG
-	 ZldnkqAWRGsPyeDJ+nFbI1a9R+ZWtMKnduQbFIIo=
+	b=mchNAlZeISpuOVT7wB2aXsJmnpoxJjBgMvXrA/pnOoF1Wf4MGo0ruUJ4d+mU9aDcV
+	 aO8M3bqcw1kAMF0DmhFrrmFTZ5eUnJkNnCQVOy2etWSSuja6nLKu2ZysCkO64zFAy0
+	 Md3GYTX9x5kcRJ9rH3wLnAyJvEO6FMsSsQR6/P80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Macek <wmacek@google.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Ricky CX Wu <ricky.cx.wu.wiwynn@gmail.com>,
+	Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 196/393] arm64: dts: mediatek: mt8186: Move wakeup to MTU3 to get working suspend
-Date: Wed,  5 Feb 2025 14:41:55 +0100
-Message-ID: <20250205134427.798458658@linuxfoundation.org>
+Subject: [PATCH 6.6 214/393] ARM: dts: aspeed: yosemite4: correct the compatible string for max31790
+Date: Wed,  5 Feb 2025 14:42:13 +0100
+Message-ID: <20250205134428.487688308@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -46,84 +46,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Ricky CX Wu <ricky.cx.wu.wiwynn@gmail.com>
 
-[ Upstream commit 253b4e96f5783fddede1b82274a7b4e0aa57d761 ]
+[ Upstream commit b1a1ecb669bfa763ee5e86a038d7c9363eee7548 ]
 
-The current DT has the wakeup-source and mediatek,syscon-wakeup
-properties in the XHCI nodes, which configures USB wakeup after powering
-down the XHCI hardware block. However, since the XHCI controller is
-behind an MTU3 (USB3 DRD controller), the MTU3 only gets powered down
-after USB wakeup has been configured, causing the system to detect a
-wakeup, and results in broken suspend support as the system resumes
-immediately.
+Fix the compatible string for max31790 to match the binding document.
 
-Move the wakeup properties to the MTU3 nodes so that USB wakeup is only
-enabled after the MTU3 has powered down.
-
-With this change in place, it is possible to suspend and resume, and
-also to wakeup through USB, as tested on the Google Steelix (Lenovo 300e
-Yoga Chromebook Gen 4).
-
-Fixes: f6c3e61c5486 ("arm64: dts: mediatek: mt8186: Add MTU3 nodes")
-Reported-by: Wojciech Macek <wmacek@google.com>
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241106-mt8186-suspend-with-usb-wakeup-v1-1-07734a4c8236@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 2b8d94f4b4a4 ("ARM: dts: aspeed: yosemite4: add Facebook Yosemite 4 BMC")
+Signed-off-by: Ricky CX Wu <ricky.cx.wu.wiwynn@gmail.com>
+Signed-off-by: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
+Link: https://patch.msgid.link/20241003074251.3818101-6-Delphine_CC_Chiu@wiwynn.com
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8186.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../dts/aspeed/aspeed-bmc-facebook-yosemite4.dts | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8186.dtsi b/arch/arm64/boot/dts/mediatek/mt8186.dtsi
-index 2c184f9e0fc39..a63c59bc8e978 100644
---- a/arch/arm64/boot/dts/mediatek/mt8186.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8186.dtsi
-@@ -1545,6 +1545,8 @@
- 			#address-cells = <2>;
- 			#size-cells = <2>;
- 			ranges;
-+			wakeup-source;
-+			mediatek,syscon-wakeup = <&pericfg 0x420 2>;
- 			status = "disabled";
- 
- 			usb_host0: usb@11200000 {
-@@ -1558,8 +1560,6 @@
- 					 <&infracfg_ao CLK_INFRA_AO_SSUSB_TOP_XHCI>;
- 				clock-names = "sys_ck", "ref_ck", "mcu_ck", "dma_ck", "xhci_ck";
- 				interrupts = <GIC_SPI 294 IRQ_TYPE_LEVEL_HIGH 0>;
--				mediatek,syscon-wakeup = <&pericfg 0x420 2>;
--				wakeup-source;
- 				status = "disabled";
+diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
+index e9eaffa9b504e..f5d38a9f47638 100644
+--- a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
++++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
+@@ -454,10 +454,8 @@
  			};
- 		};
-@@ -1611,6 +1611,8 @@
- 			#address-cells = <2>;
- 			#size-cells = <2>;
- 			ranges;
-+			wakeup-source;
-+			mediatek,syscon-wakeup = <&pericfg 0x424 2>;
- 			status = "disabled";
  
- 			usb_host1: usb@11280000 {
-@@ -1624,8 +1626,6 @@
- 					 <&infracfg_ao CLK_INFRA_AO_SSUSB_TOP_P1_XHCI>;
- 				clock-names = "sys_ck", "ref_ck", "mcu_ck", "dma_ck","xhci_ck";
- 				interrupts = <GIC_SPI 324 IRQ_TYPE_LEVEL_HIGH 0>;
--				mediatek,syscon-wakeup = <&pericfg 0x424 2>;
--				wakeup-source;
- 				status = "disabled";
+ 			pwm@20{
+-				compatible = "max31790";
++				compatible = "maxim,max31790";
+ 				reg = <0x20>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
  			};
- 		};
+ 
+ 			gpio@22{
+@@ -468,10 +466,8 @@
+ 			};
+ 
+ 			pwm@23{
+-				compatible = "max31790";
++				compatible = "maxim,max31790";
+ 				reg = <0x23>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+ 			};
+ 
+ 			adc@33 {
+@@ -506,10 +502,8 @@
+ 			};
+ 
+ 			pwm@20{
+-				compatible = "max31790";
++				compatible = "maxim,max31790";
+ 				reg = <0x20>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+ 			};
+ 
+ 			gpio@22{
+@@ -520,10 +514,8 @@
+ 			};
+ 
+ 			pwm@23{
+-				compatible = "max31790";
++				compatible = "maxim,max31790";
+ 				reg = <0x23>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+ 			};
+ 
+ 			adc@33 {
 -- 
 2.39.5
 
