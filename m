@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247FF157465;
-	Wed,  5 Feb 2025 14:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812B814B959;
+	Wed,  5 Feb 2025 14:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765340; cv=none; b=eXB8FREN0FKlERc80Gd5kafXHkNWprs/CnXoGmUvBXU+2o47a93U0ef37LBO6orTYeUxYJKLkbUZpHzUoUb9rGHkAvkMxslTJSk0QXIivisTKW87mu0Cbc7ijX+b6jJrzjw9F2IrLziYVNgpHxeu3KmF4z/5ZyeUY3diGg07wNI=
+	t=1738765343; cv=none; b=E6kKR0Ok5B9DtHeSroxO9C25mjPwVARw/RS85QMnoXNLxc5tQfxZ0LDBTxHTPE8yGaiLVQ50VW1mP63y0S+YOXg/C3LCWyh2vNecw6aVahWzVVNNo3FgDcallTAnSDHb1fItlSLtn8pc9ipsuzUddEUwwB3Jf7ImtRwFQYjQjJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765340; c=relaxed/simple;
-	bh=aZ/hbv3PAzUe9NeBFFiQ60UhdgTGOyMYgODwpA03v10=;
+	s=arc-20240116; t=1738765343; c=relaxed/simple;
+	bh=5EAT2JcRGXsnu1xDquM4TvF4HLSjQj1nwFGYdanpJDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ntRZfHpytsO8ybSgNt174GJTAehnByXO4aHihUHQKzW5OnCfTLsgCI2nzdsrkqIWP+uN0fSbxAzxP/kyU7VkofQi1t7m/HEjwW7BSt/B6lGtARISL3w08CNtDtMNQMkpIJAv+BMvqvu3pir40eONozTxxVvHgMQFXhF84K5WfDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sA4Jt47k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WhvGam+WpunGfNzyagvx1qrBhJuc2IqPl/PWzIknvuGfUPyQJnlBlTo6sqAS6DOoOL45UvcFvEELwWPhBfg+V3gk61C2MEern6c1r4KeNWQ4XSaqtAj5Zi8gOk4zc5y3eHG9erTR0RgFFzAo+8Q5+1Qh0yxGAbZYuc2ClWZCQS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbukN6P3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sA4Jt47k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA72C4CED1;
-	Wed,  5 Feb 2025 14:22:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbukN6P3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D31C4CED1;
+	Wed,  5 Feb 2025 14:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765339;
-	bh=aZ/hbv3PAzUe9NeBFFiQ60UhdgTGOyMYgODwpA03v10=;
+	s=korg; t=1738765343;
+	bh=5EAT2JcRGXsnu1xDquM4TvF4HLSjQj1nwFGYdanpJDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sA4Jt47k4ikgcfgFcseYxvgV0BaDeDO3ERDjUDXv1g2CEGTObNG1w6mtkjtfssjhD
-	 VUpi+1SteHJSevbjzjSg2wOslsYfF73dKo9b3mAd2GU/XZawky/UbuBzaooETyh4q4
-	 js7+eDIz2L7BwcVORQfyT4vYReXYwolMQhYcR+gA=
+	b=gbukN6P3Xcq7vURS6kEi/ZZgVmXsWCzPQyEc/Tvszafk/ej10ohKN4tXsYAzv+3jT
+	 y7aNlJXHzetX0/zTyWCtH6qtwgE3rBMCdEptMWBa9M5Eim9gWlmBhUeVNtxzUeWDV3
+	 GHhM1/jL5JrWGVXo5I7MAP7yc21HV3CKFf2hd4B8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Aaro Koskinen <aaro.koskinen@iki.fi>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 211/590] selftests: timers: clocksource-switch: Adapt progress to kselftest framework
-Date: Wed,  5 Feb 2025 14:39:26 +0100
-Message-ID: <20250205134503.359201374@linuxfoundation.org>
+Subject: [PATCH 6.6 255/393] ARM: omap1: Fix up the Retu IRQ on Nokia 770
+Date: Wed,  5 Feb 2025 14:42:54 +0100
+Message-ID: <20250205134430.064927888@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Aaro Koskinen <aaro.koskinen@iki.fi>
 
-[ Upstream commit 8694e6a7f7dba23d3abd9f5a96f64d161704c7b1 ]
+[ Upstream commit ad455e48bba7f21bb5108406da0854cf8dede8ea ]
 
-When adapting the test to the kselftest framework, a few printf() calls
-indicating test progress were not updated.
+The Retu IRQ is off by one, as a result the power button does not work.
+Fix it.
 
-Fix this by replacing these printf() calls by ksft_print_msg() calls.
-
-Link: https://lore.kernel.org/r/7dd4b9ab6e43268846e250878ebf25ae6d3d01ce.1733994134.git.geert+renesas@glider.be
-Fixes: ce7d101750ff ("selftests: timers: clocksource-switch: adapt to kselftest framework")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 084b6f216778 ("ARM: omap1: Fix up the Nokia 770 board device IRQs")
+Signed-off-by: Aaro Koskinen <aaro.koskinen@iki.fi>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/Z3UxH_fOzuftjnuX@darkstar.musicnaut.iki.fi
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/timers/clocksource-switch.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm/mach-omap1/board-nokia770.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/timers/clocksource-switch.c b/tools/testing/selftests/timers/clocksource-switch.c
-index c5264594064c8..83faa4e354e38 100644
---- a/tools/testing/selftests/timers/clocksource-switch.c
-+++ b/tools/testing/selftests/timers/clocksource-switch.c
-@@ -156,8 +156,8 @@ int main(int argc, char **argv)
- 	/* Check everything is sane before we start switching asynchronously */
- 	if (do_sanity_check) {
- 		for (i = 0; i < count; i++) {
--			printf("Validating clocksource %s\n",
--				clocksource_list[i]);
-+			ksft_print_msg("Validating clocksource %s\n",
-+					clocksource_list[i]);
- 			if (change_clocksource(clocksource_list[i])) {
- 				status = -1;
- 				goto out;
-@@ -169,7 +169,7 @@ int main(int argc, char **argv)
- 		}
- 	}
- 
--	printf("Running Asynchronous Switching Tests...\n");
-+	ksft_print_msg("Running Asynchronous Switching Tests...\n");
- 	pid = fork();
- 	if (!pid)
- 		return run_tests(runtime);
+diff --git a/arch/arm/mach-omap1/board-nokia770.c b/arch/arm/mach-omap1/board-nokia770.c
+index 3312ef93355da..a5bf5554800fe 100644
+--- a/arch/arm/mach-omap1/board-nokia770.c
++++ b/arch/arm/mach-omap1/board-nokia770.c
+@@ -289,7 +289,7 @@ static struct gpiod_lookup_table nokia770_irq_gpio_table = {
+ 		GPIO_LOOKUP("gpio-0-15", 15, "ads7846_irq",
+ 			    GPIO_ACTIVE_HIGH),
+ 		/* GPIO used for retu IRQ */
+-		GPIO_LOOKUP("gpio-48-63", 15, "retu_irq",
++		GPIO_LOOKUP("gpio-48-63", 14, "retu_irq",
+ 			    GPIO_ACTIVE_HIGH),
+ 		/* GPIO used for tahvo IRQ */
+ 		GPIO_LOOKUP("gpio-32-47", 8, "tahvo_irq",
 -- 
 2.39.5
 
