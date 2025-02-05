@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643C616EB42;
-	Wed,  5 Feb 2025 15:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09D1155A30;
+	Wed,  5 Feb 2025 15:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768370; cv=none; b=aGz3wJ9jDKuZkgA8E1kLVBWr+6BGivjmw0dFuJhouSlipODsEHrIJuFztrWP64Q4Fwsp1Cccpu+dBnw+USy+JccY8WwhPhg/BxQoHIm3ECMBwSXg7L37cOXH3kBbfI4ZWNRanZaJEYFLbxUc/GSRdjl85k2cFavjAQXwr+zo00E=
+	t=1738768373; cv=none; b=lZnwTmVP17b8+p/mqITwLUP+E8JlwHCvooW+ZBGYucwHjpW+AdqcV0fgKNcs0E/AgfMcn3UoiIpbNMNOevaxIy3/jmV75ysuatfgEOqNYSIXTj9kVe3OEAKB81PBv3BQeScq1IO54Vb0CKZ0B5zlKdG9eKD9IWos+LLDnglSrv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768370; c=relaxed/simple;
-	bh=MQXEJz2jUXOkXHD3UHpbtDEGZ2NFGCCBd14aDjdYHv8=;
+	s=arc-20240116; t=1738768373; c=relaxed/simple;
+	bh=LHsdY40JHM3IvCZ/F/xhUtDYrebCUn8ySu1NSGpth1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bSdNwVJt3eab1336jF9u8YzxEUX7RTFJLd3cGlrTjd1jMsbuGezMmJ/h7j4mPoXPI7OysTAwSIZy5y/ygnFJgd/Pei3QAqozEcHQ7SqWJH544JIqBjacZ2QpquEjSBOvEly60bXmze1XmVoh/BEdS4K1IcFqSYJ4xydaLGUCyr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwYzYvRm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f8tdqCLVc+yl6YQC7iEgR15E/WYYF66bC+mU9D0h6KufLpA5llSOqzyRYtpM9ECBclp+YBZMAMX+yZSPyeg9Gco2ya2tYN+CoZebFnEyREzBU8HS5bUUkby1MClbzf4kUEiS3PH+oHg9AmdLVXq75nFsl0u5R9IRqfL/TPak3UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g3BJQcHf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwYzYvRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A8DC4CEE4;
-	Wed,  5 Feb 2025 15:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g3BJQcHf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C963C4CED1;
+	Wed,  5 Feb 2025 15:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768370;
-	bh=MQXEJz2jUXOkXHD3UHpbtDEGZ2NFGCCBd14aDjdYHv8=;
+	s=korg; t=1738768373;
+	bh=LHsdY40JHM3IvCZ/F/xhUtDYrebCUn8ySu1NSGpth1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fwYzYvRmsV0e3UMfDtW8C5E/MWt6aDwErhVGEEdFcgNsf/rG6abWpJds9OP6L1OCr
-	 wsiaaSfqS9Dy3tY9mPOGR7Njno2FhLzsFG7BVcH0bxNzOJmMQRVZf5tmQrlgeQdHa9
-	 KiGPYyXwgbDyqJgLIREM+k4AHNk7zGMBn86ysgYA=
+	b=g3BJQcHfOgNCodAoPgp9vUgmxDXlWpwAHP/W6c9F+kH6rMvXpTEDY8P3ncHXVeMmR
+	 r3eUH/roVQvQnnmEvvrBNW4O8ONZQH+81FU5dK1RXLhcAWyWsXVjOzreq6IHWRppgU
+	 t2V9e3nd+xJX66fPE9kRyZGvbRqAqlBsmiE2gebA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.12 590/590] btrfs: do proper folio cleanup when run_delalloc_nocow() failed
-Date: Wed,  5 Feb 2025 14:45:45 +0100
-Message-ID: <20250205134517.834681199@linuxfoundation.org>
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 537/623] bonding: Correctly support GSO ESP offload
+Date: Wed,  5 Feb 2025 14:44:39 +0100
+Message-ID: <20250205134516.767976220@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,278 +49,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-commit c2b47df81c8e20a8e8cd94f0d7df211137ae94ed upstream.
+[ Upstream commit 9e6c4e6b605c1fa3e24f74ee0b641e95f090188a ]
 
-[BUG]
-With CONFIG_DEBUG_VM set, test case generic/476 has some chance to crash
-with the following VM_BUG_ON_FOLIO():
+The referenced fix is incomplete. It correctly computes
+bond_dev->gso_partial_features across slaves, but unfortunately
+netdev_fix_features discards gso_partial_features from the feature set
+if NETIF_F_GSO_PARTIAL isn't set in bond_dev->features.
 
-  BTRFS error (device dm-3): cow_file_range failed, start 1146880 end 1253375 len 106496 ret -28
-  BTRFS error (device dm-3): run_delalloc_nocow failed, start 1146880 end 1253375 len 106496 ret -28
-  page: refcount:4 mapcount:0 mapping:00000000592787cc index:0x12 pfn:0x10664
-  aops:btrfs_aops [btrfs] ino:101 dentry name(?):"f1774"
-  flags: 0x2fffff80004028(uptodate|lru|private|node=0|zone=2|lastcpupid=0xfffff)
-  page dumped because: VM_BUG_ON_FOLIO(!folio_test_locked(folio))
-  ------------[ cut here ]------------
-  kernel BUG at mm/page-writeback.c:2992!
-  Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
-  CPU: 2 UID: 0 PID: 3943513 Comm: kworker/u24:15 Tainted: G           OE      6.12.0-rc7-custom+ #87
-  Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-  Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
-  Workqueue: events_unbound btrfs_async_reclaim_data_space [btrfs]
-  pc : folio_clear_dirty_for_io+0x128/0x258
-  lr : folio_clear_dirty_for_io+0x128/0x258
-  Call trace:
-   folio_clear_dirty_for_io+0x128/0x258
-   btrfs_folio_clamp_clear_dirty+0x80/0xd0 [btrfs]
-   __process_folios_contig+0x154/0x268 [btrfs]
-   extent_clear_unlock_delalloc+0x5c/0x80 [btrfs]
-   run_delalloc_nocow+0x5f8/0x760 [btrfs]
-   btrfs_run_delalloc_range+0xa8/0x220 [btrfs]
-   writepage_delalloc+0x230/0x4c8 [btrfs]
-   extent_writepage+0xb8/0x358 [btrfs]
-   extent_write_cache_pages+0x21c/0x4e8 [btrfs]
-   btrfs_writepages+0x94/0x150 [btrfs]
-   do_writepages+0x74/0x190
-   filemap_fdatawrite_wbc+0x88/0xc8
-   start_delalloc_inodes+0x178/0x3a8 [btrfs]
-   btrfs_start_delalloc_roots+0x174/0x280 [btrfs]
-   shrink_delalloc+0x114/0x280 [btrfs]
-   flush_space+0x250/0x2f8 [btrfs]
-   btrfs_async_reclaim_data_space+0x180/0x228 [btrfs]
-   process_one_work+0x164/0x408
-   worker_thread+0x25c/0x388
-   kthread+0x100/0x118
-   ret_from_fork+0x10/0x20
-  Code: 910a8021 a90363f7 a9046bf9 94012379 (d4210000)
-  ---[ end trace 0000000000000000 ]---
+This is visible with ethtool -k bond0 | grep esp:
+tx-esp-segmentation: off [requested on]
+esp-hw-offload: on
+esp-tx-csum-hw-offload: on
 
-[CAUSE]
-The first two lines of extra debug messages show the problem is caused
-by the error handling of run_delalloc_nocow().
+This patch reworks the bonding GSO offload support by:
+- making aggregating gso_partial_features across slaves similar to the
+  other feature sets (this part is a no-op).
+- advertising the default partial gso features on empty bond devs, same
+  as with other feature sets (also a no-op).
+- adding NETIF_F_GSO_PARTIAL to hw_enc_features filtered across slaves.
+- adding NETIF_F_GSO_PARTIAL to features in bond_setup()
 
-E.g. we have the following dirtied range (4K blocksize 4K page size):
+With all of these, 'ethtool -k bond0 | grep esp' now reports:
+tx-esp-segmentation: on
+esp-hw-offload: on
+esp-tx-csum-hw-offload: on
 
-    0                 16K                  32K
-    |//////////////////////////////////////|
-    |  Pre-allocated  |
-
-And the range [0, 16K) has a preallocated extent.
-
-- Enter run_delalloc_nocow() for range [0, 16K)
-  Which found range [0, 16K) is preallocated, can do the proper NOCOW
-  write.
-
-- Enter fallback_to_fow() for range [16K, 32K)
-  Since the range [16K, 32K) is not backed by preallocated extent, we
-  have to go COW.
-
-- cow_file_range() failed for range [16K, 32K)
-  So cow_file_range() will do the clean up by clearing folio dirty,
-  unlock the folios.
-
-  Now the folios in range [16K, 32K) is unlocked.
-
-- Enter extent_clear_unlock_delalloc() from run_delalloc_nocow()
-  Which is called with PAGE_START_WRITEBACK to start page writeback.
-  But folios can only be marked writeback when it's properly locked,
-  thus this triggered the VM_BUG_ON_FOLIO().
-
-Furthermore there is another hidden but common bug that
-run_delalloc_nocow() is not clearing the folio dirty flags in its error
-handling path.
-This is the common bug shared between run_delalloc_nocow() and
-cow_file_range().
-
-[FIX]
-- Clear folio dirty for range [@start, @cur_offset)
-  Introduce a helper, cleanup_dirty_folios(), which
-  will find and lock the folio in the range, clear the dirty flag and
-  start/end the writeback, with the extra handling for the
-  @locked_folio.
-
-- Introduce a helper to clear folio dirty, start and end writeback
-
-- Introduce a helper to record the last failed COW range end
-  This is to trace which range we should skip, to avoid double
-  unlocking.
-
-- Skip the failed COW range for the error handling
-
-CC: stable@vger.kernel.org
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4861333b4217 ("bonding: add ESP offload features when slaves support")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20250127104147.759658-1-cratiu@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c   |   95 +++++++++++++++++++++++++++++++++++++++++++++++++----
- fs/btrfs/subpage.h |   13 +++++++
- 2 files changed, 102 insertions(+), 6 deletions(-)
+ drivers/net/bonding/bond_main.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -2002,6 +2002,53 @@ static int can_nocow_file_extent(struct
- }
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 7b78c2bada814..e45bba240cbcd 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1538,17 +1538,20 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
+ 				 NETIF_F_HIGHDMA | NETIF_F_LRO)
  
- /*
-+ * Cleanup the dirty folios which will never be submitted due to error.
-+ *
-+ * When running a delalloc range, we may need to split the ranges (due to
-+ * fragmentation or NOCOW). If we hit an error in the later part, we will error
-+ * out and previously successfully executed range will never be submitted, thus
-+ * we have to cleanup those folios by clearing their dirty flag, starting and
-+ * finishing the writeback.
-+ */
-+static void cleanup_dirty_folios(struct btrfs_inode *inode,
-+				 struct folio *locked_folio,
-+				 u64 start, u64 end, int error)
-+{
-+	struct btrfs_fs_info *fs_info = inode->root->fs_info;
-+	struct address_space *mapping = inode->vfs_inode.i_mapping;
-+	pgoff_t start_index = start >> PAGE_SHIFT;
-+	pgoff_t end_index = end >> PAGE_SHIFT;
-+	u32 len;
-+
-+	ASSERT(end + 1 - start < U32_MAX);
-+	ASSERT(IS_ALIGNED(start, fs_info->sectorsize) &&
-+	       IS_ALIGNED(end + 1, fs_info->sectorsize));
-+	len = end + 1 - start;
-+
-+	/*
-+	 * Handle the locked folio first.
-+	 * The btrfs_folio_clamp_*() helpers can handle range out of the folio case.
-+	 */
-+	btrfs_folio_clamp_finish_io(fs_info, locked_folio, start, len);
-+
-+	for (pgoff_t index = start_index; index <= end_index; index++) {
-+		struct folio *folio;
-+
-+		/* Already handled at the beginning. */
-+		if (index == locked_folio->index)
-+			continue;
-+		folio = __filemap_get_folio(mapping, index, FGP_LOCK, GFP_NOFS);
-+		/* Cache already dropped, no need to do any cleanup. */
-+		if (IS_ERR(folio))
-+			continue;
-+		btrfs_folio_clamp_finish_io(fs_info, locked_folio, start, len);
-+		folio_unlock(folio);
-+		folio_put(folio);
-+	}
-+	mapping_set_error(mapping, error);
-+}
-+
-+/*
-  * when nowcow writeback call back.  This checks for snapshots or COW copies
-  * of the extents that exist in the file, and COWs the file as required.
-  *
-@@ -2016,6 +2063,11 @@ static noinline int run_delalloc_nocow(s
- 	struct btrfs_root *root = inode->root;
- 	struct btrfs_path *path;
- 	u64 cow_start = (u64)-1;
-+	/*
-+	 * If not 0, represents the inclusive end of the last fallback_to_cow()
-+	 * range. Only for error handling.
-+	 */
-+	u64 cow_end = 0;
- 	u64 cur_offset = start;
- 	int ret;
- 	bool check_prev = true;
-@@ -2176,6 +2228,7 @@ must_cow:
- 					      found_key.offset - 1);
- 			cow_start = (u64)-1;
- 			if (ret) {
-+				cow_end = found_key.offset - 1;
- 				btrfs_dec_nocow_writers(nocow_bg);
- 				goto error;
- 			}
-@@ -2249,11 +2302,12 @@ must_cow:
- 		cow_start = cur_offset;
+ #define BOND_ENC_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
+-				 NETIF_F_RXCSUM | NETIF_F_GSO_SOFTWARE)
++				 NETIF_F_RXCSUM | NETIF_F_GSO_SOFTWARE | \
++				 NETIF_F_GSO_PARTIAL)
  
- 	if (cow_start != (u64)-1) {
--		cur_offset = end;
- 		ret = fallback_to_cow(inode, locked_folio, cow_start, end);
- 		cow_start = (u64)-1;
--		if (ret)
-+		if (ret) {
-+			cow_end = end;
- 			goto error;
-+		}
+ #define BOND_MPLS_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
+ 				 NETIF_F_GSO_SOFTWARE)
+ 
++#define BOND_GSO_PARTIAL_FEATURES (NETIF_F_GSO_ESP)
++
+ 
+ static void bond_compute_features(struct bonding *bond)
+ {
++	netdev_features_t gso_partial_features = BOND_GSO_PARTIAL_FEATURES;
+ 	unsigned int dst_release_flag = IFF_XMIT_DST_RELEASE |
+ 					IFF_XMIT_DST_RELEASE_PERM;
+-	netdev_features_t gso_partial_features = NETIF_F_GSO_ESP;
+ 	netdev_features_t vlan_features = BOND_VLAN_FEATURES;
+ 	netdev_features_t enc_features  = BOND_ENC_FEATURES;
+ #ifdef CONFIG_XFRM_OFFLOAD
+@@ -1582,8 +1585,9 @@ static void bond_compute_features(struct bonding *bond)
+ 							  BOND_XFRM_FEATURES);
+ #endif /* CONFIG_XFRM_OFFLOAD */
+ 
+-		if (slave->dev->hw_enc_features & NETIF_F_GSO_PARTIAL)
+-			gso_partial_features &= slave->dev->gso_partial_features;
++		gso_partial_features = netdev_increment_features(gso_partial_features,
++								 slave->dev->gso_partial_features,
++								 BOND_GSO_PARTIAL_FEATURES);
+ 
+ 		mpls_features = netdev_increment_features(mpls_features,
+ 							  slave->dev->mpls_features,
+@@ -1598,12 +1602,8 @@ static void bond_compute_features(struct bonding *bond)
  	}
+ 	bond_dev->hard_header_len = max_hard_header_len;
  
- 	btrfs_free_path(path);
-@@ -2261,12 +2315,41 @@ must_cow:
- 
- error:
- 	/*
-+	 * There are several error cases:
-+	 *
-+	 * 1) Failed without falling back to COW
-+	 *    start         cur_offset             end
-+	 *    |/////////////|                      |
-+	 *
-+	 *    For range [start, cur_offset) the folios are already unlocked (except
-+	 *    @locked_folio), EXTENT_DELALLOC already removed.
-+	 *    Only need to clear the dirty flag as they will never be submitted.
-+	 *    Ordered extent and extent maps are handled by
-+	 *    btrfs_mark_ordered_io_finished() inside run_delalloc_range().
-+	 *
-+	 * 2) Failed with error from fallback_to_cow()
-+	 *    start         cur_offset  cow_end    end
-+	 *    |/////////////|-----------|          |
-+	 *
-+	 *    For range [start, cur_offset) it's the same as case 1).
-+	 *    But for range [cur_offset, cow_end), the folios have dirty flag
-+	 *    cleared and unlocked, EXTENT_DEALLLOC cleared by cow_file_range().
-+	 *
-+	 *    Thus we should not call extent_clear_unlock_delalloc() on range
-+	 *    [cur_offset, cow_end), as the folios are already unlocked.
-+	 *
-+	 * So clear the folio dirty flags for [start, cur_offset) first.
-+	 */
-+	if (cur_offset > start)
-+		cleanup_dirty_folios(inode, locked_folio, start, cur_offset - 1, ret);
-+
-+	/*
- 	 * If an error happened while a COW region is outstanding, cur_offset
--	 * needs to be reset to cow_start to ensure the COW region is unlocked
--	 * as well.
-+	 * needs to be reset to @cow_end + 1 to skip the COW range, as
-+	 * cow_file_range() will do the proper cleanup at error.
- 	 */
--	if (cow_start != (u64)-1)
--		cur_offset = cow_start;
-+	if (cow_end)
-+		cur_offset = cow_end + 1;
- 
- 	/*
- 	 * We need to lock the extent here because we're clearing DELALLOC and
---- a/fs/btrfs/subpage.h
-+++ b/fs/btrfs/subpage.h
-@@ -152,6 +152,19 @@ DECLARE_BTRFS_SUBPAGE_OPS(writeback);
- DECLARE_BTRFS_SUBPAGE_OPS(ordered);
- DECLARE_BTRFS_SUBPAGE_OPS(checked);
- 
-+/*
-+ * Helper for error cleanup, where a folio will have its dirty flag cleared,
-+ * with writeback started and finished.
-+ */
-+static inline void btrfs_folio_clamp_finish_io(struct btrfs_fs_info *fs_info,
-+					       struct folio *locked_folio,
-+					       u64 start, u32 len)
-+{
-+	btrfs_folio_clamp_clear_dirty(fs_info, locked_folio, start, len);
-+	btrfs_folio_clamp_set_writeback(fs_info, locked_folio, start, len);
-+	btrfs_folio_clamp_clear_writeback(fs_info, locked_folio, start, len);
-+}
-+
- bool btrfs_subpage_clear_and_test_dirty(const struct btrfs_fs_info *fs_info,
- 					struct folio *folio, u64 start, u32 len);
- 
+-	if (gso_partial_features & NETIF_F_GSO_ESP)
+-		bond_dev->gso_partial_features |= NETIF_F_GSO_ESP;
+-	else
+-		bond_dev->gso_partial_features &= ~NETIF_F_GSO_ESP;
+-
+ done:
++	bond_dev->gso_partial_features = gso_partial_features;
+ 	bond_dev->vlan_features = vlan_features;
+ 	bond_dev->hw_enc_features = enc_features | NETIF_F_GSO_ENCAP_ALL |
+ 				    NETIF_F_HW_VLAN_CTAG_TX |
+@@ -6046,6 +6046,7 @@ void bond_setup(struct net_device *bond_dev)
+ 	bond_dev->hw_features |= NETIF_F_GSO_ENCAP_ALL;
+ 	bond_dev->features |= bond_dev->hw_features;
+ 	bond_dev->features |= NETIF_F_HW_VLAN_CTAG_TX | NETIF_F_HW_VLAN_STAG_TX;
++	bond_dev->features |= NETIF_F_GSO_PARTIAL;
+ #ifdef CONFIG_XFRM_OFFLOAD
+ 	bond_dev->hw_features |= BOND_XFRM_FEATURES;
+ 	/* Only enable XFRM features if this is an active-backup config */
+-- 
+2.39.5
+
 
 
