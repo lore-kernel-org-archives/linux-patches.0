@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C5F151988;
-	Wed,  5 Feb 2025 14:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FA8151988;
+	Wed,  5 Feb 2025 14:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766152; cv=none; b=Tihs7lL9mJmgLJGtVALc3grMkhnOmTrWSfdZO+aHrycWQjC4gGLl+R+T+C3jQn4mbm9grG892iNcdmwlo5CqHnzWBxN7NkCHCDmt/wPlK4AyS2tagWbl6bsXmbNIMaDmBom+I3zyGaTm5I5S2yXG9iFTG+rlbvcWxscxZNgPNGs=
+	t=1738766155; cv=none; b=dU+NdEeUDMmV1pHe31SpqSdMtvzSIqIhxk44lYKv/rz2IdwReQYBOpp3neY1dstV0Pu9h4boYvBt0SAzdPb9BK74nOd9APKF9eQbEhgWVZ3qX1Zp4n9j/bDFopjt+tmLMJk+IwKwEgAiDAgo09M2yqJgCBy4sa0tcb1a8Z2YQDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766152; c=relaxed/simple;
-	bh=FnKI1L94WnQ4Lz7BHpsXOPvFisuPp2Cp5GU+/or8VuM=;
+	s=arc-20240116; t=1738766155; c=relaxed/simple;
+	bh=pwhhGS27Qo5M85M5Pd1gytO4cnn1ZXKrTGYcwPeYPNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GfqmRvAUK4wz/ON8MDrYnGJXpDubzu2Vi8Fpwvk4mRhrr05PujXWCcLEiVjFalcb4cD3FgxxMS//hjdjaJrhMc8yNEmCt9Rdzl+kCZmJeGau+u/irBYNlxbJQhkMOr5CAcPE3dreEzoR9Y9iAzmNxKMWSChxNzaH2kB9CZGVWxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmssQ8Su; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E/irkgtl/bpyNxXQotnaKGcfr4+IyfqASwDjshhd46Aj6TIb4lVn0O8v1yHE3VMeaxfRtEC0SE6W32Sg+JoMqFA/KVa2M0+AgxYHKU9ISEuG2PuGMBetJWe8xn4WFWooStta6wByC/UK8WRiwGTHeo6RuDb2MZ//QvHXxu0cz5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zC5rF/Ef; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmssQ8Su"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38F6C4CED1;
-	Wed,  5 Feb 2025 14:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zC5rF/Ef"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252EFC4CED1;
+	Wed,  5 Feb 2025 14:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766152;
-	bh=FnKI1L94WnQ4Lz7BHpsXOPvFisuPp2Cp5GU+/or8VuM=;
+	s=korg; t=1738766155;
+	bh=pwhhGS27Qo5M85M5Pd1gytO4cnn1ZXKrTGYcwPeYPNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hmssQ8SuByrNiOIt9C9gQ+AZd/fKhaaUcukCHHSd6Z33edbJzzBOViAskvlpKj4ch
-	 4HUvjbwWjwrSW7DJqF1K/VAJEkfRb1JCr13bq73XDRyH8HLSTqTaW+4PKg8ysIb98i
-	 G3LYrzctvKpdkcfVhffoSbB5WhalRJAFLjKpYgy4=
+	b=zC5rF/EfAS+tF/bmgUwYL9Rwxp04sGieCA7sp+b1fm0aCrWC/leSZNUB5LpfEeUCc
+	 XZIJ5vMYs9eGEvbbJA28m397P1TjyTxhyebY1L9qYSnyCF7wU4IfwWlEoruQbhESsW
+	 4bQKPb605xYB77NK7olZMCxpwCW4CI4iGAg7qA70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vishal Chourasia <vishalc@linux.ibm.com>,
+	Song Yoong Siang <yoong.siang.song@intel.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 247/623] pinctrl: samsung: Fix irq handling if an error occurs in exynos_irq_demux_eint16_31()
-Date: Wed,  5 Feb 2025 14:39:49 +0100
-Message-ID: <20250205134505.675051055@linuxfoundation.org>
+Subject: [PATCH 6.12 292/590] tools: Sync if_xdp.h uapi tooling header
+Date: Wed,  5 Feb 2025 14:40:47 +0100
+Message-ID: <20250205134506.449150706@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,56 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Vishal Chourasia <vishalc@linux.ibm.com>
 
-[ Upstream commit f686a2b52e9d78cf401f1b7f446bf0c3a81ebcc0 ]
+[ Upstream commit 01f3ce5328c405179b2c69ea047c423dad2bfa6d ]
 
-chained_irq_enter(() should be paired with a corresponding
-chained_irq_exit().
+Sync if_xdp.h uapi header to remove following warning:
 
-Here, if clk_enable() fails, a early return occurs and chained_irq_exit()
-is not called.
+  Warning: Kernel ABI header at 'tools/include/uapi/linux/if_xdp.h'
+  differs from latest version at 'include/uapi/linux/if_xdp.h'
 
-Add a new label and a goto for fix it.
-
-Fixes: f9c744747973 ("pinctrl: samsung: support a bus clock")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: André Draszik <andre.draszik@linaro.org>
-Link: https://lore.kernel.org/r/f148d823acfb3326a115bd49a0eed60f2345f909.1731844995.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 48eb03dd2630 ("xsk: Add TX timestamp and TX checksum offload support")
+Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20250115032248.125742-1-yoong.siang.song@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/samsung/pinctrl-exynos.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/include/uapi/linux/if_xdp.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/samsung/pinctrl-exynos.c b/drivers/pinctrl/samsung/pinctrl-exynos.c
-index b79c211c03749..ac6dc22b37c98 100644
---- a/drivers/pinctrl/samsung/pinctrl-exynos.c
-+++ b/drivers/pinctrl/samsung/pinctrl-exynos.c
-@@ -636,7 +636,7 @@ static void exynos_irq_demux_eint16_31(struct irq_desc *desc)
- 		if (clk_enable(b->drvdata->pclk)) {
- 			dev_err(b->gpio_chip.parent,
- 				"unable to enable clock for pending IRQs\n");
--			return;
-+			goto out;
- 		}
- 	}
+diff --git a/tools/include/uapi/linux/if_xdp.h b/tools/include/uapi/linux/if_xdp.h
+index 2f082b01ff228..42ec5ddaab8dc 100644
+--- a/tools/include/uapi/linux/if_xdp.h
++++ b/tools/include/uapi/linux/if_xdp.h
+@@ -117,12 +117,12 @@ struct xdp_options {
+ 	((1ULL << XSK_UNALIGNED_BUF_OFFSET_SHIFT) - 1)
  
-@@ -652,6 +652,7 @@ static void exynos_irq_demux_eint16_31(struct irq_desc *desc)
- 	if (eintd->nr_banks)
- 		clk_disable(eintd->banks[0]->drvdata->pclk);
+ /* Request transmit timestamp. Upon completion, put it into tx_timestamp
+- * field of union xsk_tx_metadata.
++ * field of struct xsk_tx_metadata.
+  */
+ #define XDP_TXMD_FLAGS_TIMESTAMP		(1 << 0)
  
-+out:
- 	chained_irq_exit(chip, desc);
- }
- 
+ /* Request transmit checksum offload. Checksum start position and offset
+- * are communicated via csum_start and csum_offset fields of union
++ * are communicated via csum_start and csum_offset fields of struct
+  * xsk_tx_metadata.
+  */
+ #define XDP_TXMD_FLAGS_CHECKSUM			(1 << 1)
 -- 
 2.39.5
 
