@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28DA4A28;
-	Wed,  5 Feb 2025 14:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CE11519AA;
+	Wed,  5 Feb 2025 14:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765100; cv=none; b=Te76Mvd0BT3FcjQfS0LOe0bMgHUpxAjZo2qBJkJybh7WvPIMr7TtodhGpcNjIk6EOqsxXNOnDVpTkY50Qj2Gk1XoKOaCFZ1OFeEHdT2oybzSq8+wZ6otRfXdx0zROGfE3UxaF+Y+5uwVPqs5e0PuYOSyi7HSfYnsWr5wX77Gk84=
+	t=1738765103; cv=none; b=JnWPvixRYbD/PtFN3fTAM+QKKmNQw+Q28p13zZiWk5z7br/QU+UOoyVadWHZlhrk/uPom12tBSbJ0ZyqyfE7Ui80f0HUeg4GXARk/4rLSc8ARt32v9FAFpVOrAZCYQIlu/dsJUoZqttCJZMLEPb0OfG2+C8XFGCfSKd7vFJoJrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765100; c=relaxed/simple;
-	bh=29y330C9qF272twf62HYr/w5STOKDi0SJnlRvue6Cbw=;
+	s=arc-20240116; t=1738765103; c=relaxed/simple;
+	bh=kKGnngo1EVJIQ2S/OvlJSghuipdycGQVWXXGLyzwY8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fcWPr0aceJaXAvzD3A97xOatEf2msiFnpQeCGVq5n+rrSktC7Eui/F6810YU4vdakXFZz3dAFgfosgAWjwqdWzxpheon3bGKdSoGQ2pZp5Tznzl2VyIdSe7u9a2urk0Tg3PDL+qhTHu0uW0YvzKbPwz6/WGvBlhX4cA/Nj1kLsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCpHtXTZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NAGOoDSAPrm9iFUXzI4nL0iINijN4Z8jkbRQjyIX3jvA4bMezW3lltZpAKvX0Uzd28+oXuVZpNJiXGIL1hXCU94QkhNkgSkZq2tX0dPWlAd2CK29mxKIY6jfYCP3WoDws0fPPp+HepZO/JAkKcsNSoT4EdGIS+ak3fCaowgxzNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5QlHCLo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCpHtXTZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F58C4CED1;
-	Wed,  5 Feb 2025 14:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5QlHCLo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F608C4CED1;
+	Wed,  5 Feb 2025 14:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765099;
-	bh=29y330C9qF272twf62HYr/w5STOKDi0SJnlRvue6Cbw=;
+	s=korg; t=1738765103;
+	bh=kKGnngo1EVJIQ2S/OvlJSghuipdycGQVWXXGLyzwY8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kCpHtXTZM/iDlUSev/Gk0HWJcMlSDvbQcMWC27ZzXj8iaTvNYLzMNUQHAHfnIDoHh
-	 15q1QxjRbv59y9TN8837ATaT/mg7hV+r1KUuVDcPXUw+T01C+jUNnmiCPDsuWkyU5j
-	 uitny2YUBLWHeUfjjzNszXkLqYQikQVi02ZebtGc=
+	b=A5QlHCLo2hWidLr2QTRJB7V6rz4huj8wm6JIZoLQoUx5/NTHttWqJcaws5L110c+9
+	 Xsd1KYhu/gvjIVE5Bz+t2fb9PrPD1zDAifvU8ZtrA0JxfVuokDAhp2PqOjPty6x1BJ
+	 oIbN7Vc3A8QW4TYbyAPhDWL9FFJnpA2QC0rA3g/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 232/393] arm64: dts: qcom: msm8996: Fix up USB3 interrupts
-Date: Wed,  5 Feb 2025 14:42:31 +0100
-Message-ID: <20250205134429.181834244@linuxfoundation.org>
+Subject: [PATCH 6.12 190/590] wifi: mt76: mt7925: Update mt792x_rx_get_wcid for per-link STA
+Date: Wed,  5 Feb 2025 14:39:05 +0100
+Message-ID: <20250205134502.549141897@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-[ Upstream commit 9cb9c9f4e1380da317a056afd26d66a835c5796c ]
+[ Upstream commit 90c10286b176421068b136da51ed83059a68e322 ]
 
-Add the missing interrupt lines and fix qusb2_phy being an impostor
-of hs_phy_irq.
+Update mt792x_rx_get_wcid to support per-link STA.
 
-This happens to also fix warnings such as:
-
-usb@6af8800: interrupt-names: ['hs_phy_irq', 'ss_phy_irq'] is too short
-
-Fixes: 4753492de9df ("arm64: dts: qcom: msm8996: Add usb3 interrupts")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20241129-topic-qcom_usb_dtb_fixup-v1-3-cba24120c058@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20241211011926.5002-11-sean.wang@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt792x_mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 1f7cbb35886db..70ef8c83e7b9f 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -3046,9 +3046,14 @@
- 			#size-cells = <1>;
- 			ranges;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
+index 106273935b267..05978d9c7b916 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
+@@ -153,7 +153,7 @@ struct mt76_wcid *mt792x_rx_get_wcid(struct mt792x_dev *dev, u16 idx,
+ 		return NULL;
  
--			interrupts = <GIC_SPI 347 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts = <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 347 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 243 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "hs_phy_irq", "ss_phy_irq";
-+			interrupt-names = "pwr_event",
-+					  "qusb2_phy",
-+					  "hs_phy_irq",
-+					  "ss_phy_irq";
+ 	link = container_of(wcid, struct mt792x_link_sta, wcid);
+-	sta = container_of(link, struct mt792x_sta, deflink);
++	sta = link->sta;
+ 	if (!sta->vif)
+ 		return NULL;
  
- 			clocks = <&gcc GCC_SYS_NOC_USB3_AXI_CLK>,
- 				 <&gcc GCC_USB30_MASTER_CLK>,
 -- 
 2.39.5
 
