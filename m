@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA60142E86;
-	Wed,  5 Feb 2025 13:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A95142E86;
+	Wed,  5 Feb 2025 13:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763704; cv=none; b=SD89OAA6jDjwK4FZCysbjFxzGgccdh/+AGc2cYif5brDah8KMUJBoBrYSF+d5Z+oSyzRATCw7avcuN4FHmdG5W/ztVfL11k0A5j2CNrmoSvvAJFNdeEScZ705/wm/7soHACfnQv1rTmsrnS+5a3yvV8HElWZ7kP44k33wcPMUFk=
+	t=1738763708; cv=none; b=O1dHW8daQfSSU9uCISN6CsPgWdOknI++dEA3y/3N2o/EFggrbd27bivI4IRqgJ8vrApnhMINk/sp+2Z0cgFNr5Nbu2anK1gyoRIPqjPkFb313+ANoV5g4sqxkKJeF6mz9u+mLI20k17e9cZAuz0stS2hpY2N8mygLGyMnBq8VOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763704; c=relaxed/simple;
-	bh=aWkSnKtcWeqcJWR/stZ2ifqknDLsce1LpFP42lQxy1k=;
+	s=arc-20240116; t=1738763708; c=relaxed/simple;
+	bh=Nte7VqKIAce/GPTEpBARcFLd/HcZ+tb5paz2hOBbfY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0b3szIQar2uIPwk6hFsR9zkuxgZPojut/DovVn9nYyd25EERg98m/mzFwFL9KwPY6Gk4Q39hrh2AdpeXCWhXXnH2sEbmhxnvUxouxewXapiaQDEp+n3bCZME0u0oTnRb30TvpxvOWdmlRp6hvRvX4fPelVbYFypze66hL/w3Ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDCHVCR/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pfpfd+WVAP52P9uPXmQTWIJ2XjLUnrLaATx06cKc0M+NSAsdFPdslhIGLJTFF+ZPR8RqFwL5yUrougnOeWi+wdpLQgCHe7OFt2LZ5eIJZEXavVrywaZH0WjY63cQw5wXlY5zq7qnZS89tk2t3mGw30rF/4y6G1iJGFROABFk42U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3uXTBn0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDCHVCR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6C6C4CED1;
-	Wed,  5 Feb 2025 13:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3uXTBn0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD92C4CED1;
+	Wed,  5 Feb 2025 13:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763704;
-	bh=aWkSnKtcWeqcJWR/stZ2ifqknDLsce1LpFP42lQxy1k=;
+	s=korg; t=1738763708;
+	bh=Nte7VqKIAce/GPTEpBARcFLd/HcZ+tb5paz2hOBbfY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hDCHVCR/BPn4saW7LLJurN3m78XzxSKD8UvF4NWXxzethiMhJTo0+VNJ0/pgeW3o1
-	 67VKfCD0+XaFkXHBCv/a10NyewH5nj+77R2Oq5LIY+7Fe9GCZe6a1HXaQ3HxdTMJxR
-	 faXGmlGKYSzXFJJHPDX7XAw037eiDrrA2u1+PqQM=
+	b=R3uXTBn0T30Yl4Mg6igXLW4kMnr6VDGwbt6B8l4vEFPy4wXBOFoUpv4KDsVwWmUBX
+	 7l+GzVeuBiZm9Zud7T++5rEw95P58Jh781BHY8Sc1tQNmtPxmdn3V+VQ75sNW3Rprz
+	 bQNOGkemlab5tla27y4DYN2/6gbqALB1NQucIqns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Foreman <derek.foreman@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Maxime Ripard <mripard@kernel.org>,
+	Amit Pundir <amit.pundir@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 049/590] drm/connector: Allow clearing HDMI infoframes
-Date: Wed,  5 Feb 2025 14:36:44 +0100
-Message-ID: <20250205134457.132214620@linuxfoundation.org>
+Subject: [PATCH 6.6 098/393] clk: qcom: gcc-sdm845: Do not use shared clk_ops for QUPs
+Date: Wed,  5 Feb 2025 14:40:17 +0100
+Message-ID: <20250205134424.045323784@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,78 +47,187 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Derek Foreman <derek.foreman@collabora.com>
+From: Amit Pundir <amit.pundir@linaro.org>
 
-[ Upstream commit d34357743b360c99903b5a59daab08f55b2f41a1 ]
+[ Upstream commit f760a4bb5e927a133dcd75f7b69ccae2a331e42c ]
 
-Our infoframe setting code currently lacks the ability to clear
-infoframes. For some of the infoframes, we only need to replace them,
-so if an error occurred when generating a new infoframe we would leave
-a stale frame instead of clearing the frame.
+Similar to the earlier fixes meant for sm8x50 and x1e platforms,
+we have to stop using the shared clk ops for sdm845 QUPs as well.
 
-However, the Dynamic Range and Mastering (DRM) infoframe should only
-be present when displaying HDR content (ie: the HDR_OUTPUT_METADATA blob
-is set). If we can't clear infoframes, the stale DRM infoframe will
-remain and we can never set the display back to SDR mode.
+As Stephen Boyd pointed out in earlier fixes, there wasn't a problem
+to mark QUP clks shared until we started parking shared RCGs at clk
+registration time in commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs
+upon registration"). Parking at init is actually harmful to the UART
+when earlycon is used. If the device is pumping out data while the
+frequency changes and we see garbage on the serial console until the
+driver can probe and actually set a proper frequency.
 
-With this change, we clear infoframes when they can not, or should not,
-be generated. This fixes switching to an SDR mode from an HDR one.
+This patch reverts the QUP clk sharing ops part of commit 06391eddb60a
+("clk: qcom: Add Global Clock controller (GCC) driver for SDM845"), so
+that the QUPs on sdm845 don't get parked during clk registration and
+break UART operations.
 
-Fixes: f378b77227bc ("drm/connector: hdmi: Add Infoframes generation")
-Signed-off-by: Derek Foreman <derek.foreman@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241202181939.724011-1-derek.foreman@collabora.com
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+Link: https://lore.kernel.org/r/20241209174912.2526928-1-amit.pundir@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_hdmi_state_helper.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/clk/qcom/gcc-sdm845.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/display/drm_hdmi_state_helper.c b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-index feb7a3a759811..936a8f95d80f7 100644
---- a/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-+++ b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-@@ -347,6 +347,8 @@ static int hdmi_generate_avi_infoframe(const struct drm_connector *connector,
- 		is_limited_range ? HDMI_QUANTIZATION_RANGE_LIMITED : HDMI_QUANTIZATION_RANGE_FULL;
- 	int ret;
+diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
+index ea4c3bf4fb9bf..1a23bfd9356d5 100644
+--- a/drivers/clk/qcom/gcc-sdm845.c
++++ b/drivers/clk/qcom/gcc-sdm845.c
+@@ -454,7 +454,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s0_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s0_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
  
-+	infoframe->set = false;
-+
- 	ret = drm_hdmi_avi_infoframe_from_display_mode(frame, connector, mode);
- 	if (ret)
- 		return ret;
-@@ -376,6 +378,8 @@ static int hdmi_generate_spd_infoframe(const struct drm_connector *connector,
- 		&infoframe->data.spd;
- 	int ret;
+ static struct clk_rcg2 gcc_qupv3_wrap0_s0_clk_src = {
+@@ -470,7 +470,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s1_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s1_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
  
-+	infoframe->set = false;
-+
- 	ret = hdmi_spd_infoframe_init(frame,
- 				      connector->hdmi.vendor,
- 				      connector->hdmi.product);
-@@ -398,6 +402,8 @@ static int hdmi_generate_hdr_infoframe(const struct drm_connector *connector,
- 		&infoframe->data.drm;
- 	int ret;
+ static struct clk_rcg2 gcc_qupv3_wrap0_s1_clk_src = {
+@@ -486,7 +486,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s2_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s2_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
  
-+	infoframe->set = false;
-+
- 	if (connector->max_bpc < 10)
- 		return 0;
+ static struct clk_rcg2 gcc_qupv3_wrap0_s2_clk_src = {
+@@ -502,7 +502,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s3_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s3_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
  
-@@ -425,6 +431,8 @@ static int hdmi_generate_hdmi_vendor_infoframe(const struct drm_connector *conne
- 		&infoframe->data.vendor.hdmi;
- 	int ret;
+ static struct clk_rcg2 gcc_qupv3_wrap0_s3_clk_src = {
+@@ -518,7 +518,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s4_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s4_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
  
-+	infoframe->set = false;
-+
- 	if (!info->has_hdmi_infoframe)
- 		return 0;
+ static struct clk_rcg2 gcc_qupv3_wrap0_s4_clk_src = {
+@@ -534,7 +534,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s5_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s5_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
  
+ static struct clk_rcg2 gcc_qupv3_wrap0_s5_clk_src = {
+@@ -550,7 +550,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s6_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s6_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap0_s6_clk_src = {
+@@ -566,7 +566,7 @@ static struct clk_init_data gcc_qupv3_wrap0_s7_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap0_s7_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap0_s7_clk_src = {
+@@ -582,7 +582,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s0_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s0_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s0_clk_src = {
+@@ -598,7 +598,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s1_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s1_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s1_clk_src = {
+@@ -614,7 +614,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s2_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s2_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s2_clk_src = {
+@@ -630,7 +630,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s3_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s3_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s3_clk_src = {
+@@ -646,7 +646,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s4_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s4_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s4_clk_src = {
+@@ -662,7 +662,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s5_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s5_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s5_clk_src = {
+@@ -678,7 +678,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s6_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s6_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s6_clk_src = {
+@@ -694,7 +694,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s7_clk_src_init = {
+ 	.name = "gcc_qupv3_wrap1_s7_clk_src",
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_ops,
+ };
+ 
+ static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
 -- 
 2.39.5
 
