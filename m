@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4649DFC0B;
-	Wed,  5 Feb 2025 13:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74477FC0B;
+	Wed,  5 Feb 2025 13:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763721; cv=none; b=YoDFxTT6eSoL2Yl/hBPu3cU7DWHcGYotU1ZRVwZnkj3aYfWZAGEL9Y3dzwp//Vzm3hpNek2PfjlLL4fpN++Gj18HuWpZiWfRH+yEEDyawgofviL70ogRS93jTdqXoV0S+F1sw2oTPaHwfDHn8P4f0NRYt54HzqiiOSY782LDSfw=
+	t=1738763724; cv=none; b=FlGgMSW8O0mA6zUmXH/o09cvTFoxzdq6QIYUB7LvVK4fgEN3aeQ95E0ee6B1GeZln3JVs/eD6HayEmG1nLFgacb4391XP+wLRi0U+ozX5vPOvBVXxDN29Ick9TkidSezodK6WrdIFIi3vHuIEKTemzHCXt1Km4Pi3NZKxBEmdVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763721; c=relaxed/simple;
-	bh=JKEzVxiPs6diUxIMa7dmIZEycWDm+AUlPzyUn4PVh78=;
+	s=arc-20240116; t=1738763724; c=relaxed/simple;
+	bh=eO1faI50EkKfCIJecrCmdEltzA8oBU5/4mKzgHz7xLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ew6Qtu8wWeN1WktDwb+DAotInWw4Ed3jUpwrkDJhYqZjdYP+2hJLy5cqlViK5MnyepS7Lm0LuKQ4ygQoaIBR39SGBwTQdDKAmoVXflzeifGlyvNQc145nM1kNgZrQYesp/y921gGZcYtcTjHh6cnd7vpBKltvUEjWMk8xNfwwng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NwAvKmBS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uGzdD83oomYr7OqoHz4s3wV8pJcfFJLnUsr8rTeZIExIOLgOIbFXrXZ3yRrBglNCv0Qh+zpVTZDDl5Ttez0g8i8oEJsO7X27D/2sY3gK3GfxLGZAsx3s2mg4jDRFSGXZpoTZxCofzIV1ZrLhKa6Nw6K3DxUQlblEp3xwfPbMIOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QgKXbcS3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NwAvKmBS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE99C4CED1;
-	Wed,  5 Feb 2025 13:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QgKXbcS3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECFDFC4CED1;
+	Wed,  5 Feb 2025 13:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763721;
-	bh=JKEzVxiPs6diUxIMa7dmIZEycWDm+AUlPzyUn4PVh78=;
+	s=korg; t=1738763724;
+	bh=eO1faI50EkKfCIJecrCmdEltzA8oBU5/4mKzgHz7xLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NwAvKmBSZa7valeg+UNiojlm/FPLiuJ/T7e7AdraBxJhVE7tAHMMWoVG4G6Xvb03q
-	 /cbLm76SmK4GfnPpVKScEasrf/CnYxo6tuz4r3XFmxoOzU1119XX1rmXyVsELjcHfr
-	 Rr1sdNgb64+sT4FJlqeOSuZUAejmreGhLXKe3c40=
+	b=QgKXbcS3mfaxHAuTPMePEw6tab4PArINoMgib6RscPKdqS7oPIUlr01CIs4WM3/Gv
+	 uROSDnfIcwlK8LkrFA39fTFbRPU+Yzb5K0iL/hBCTcn+No5Hwh9Yiygw4WxAENTmU6
+	 Y1qpOsLFbsgUBNQKCQNSXGqs5yrnQWCwip4eUDjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Hortmann <philipp.g.hortmann@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Derek Foreman <derek.foreman@collabora.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 012/623] ps3disk: Do not use dev->bounce_size before it is set
-Date: Wed,  5 Feb 2025 14:35:54 +0100
-Message-ID: <20250205134456.700385042@linuxfoundation.org>
+Subject: [PATCH 6.12 051/590] drm/rockchip: vop2: Setup delay cycle for Esmart2/3
+Date: Wed,  5 Feb 2025 14:36:46 +0100
+Message-ID: <20250205134457.208685895@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +49,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit c2398e6d5f16e15598d3a37e17107fea477e3f91 ]
+[ Upstream commit c766998ba6df126ab6934d32ff2ff080316ec630 ]
 
-dev->bounce_size is only initialized after it is used to set the queue
-limits.  Fix this by using BOUNCE_SIZE instead.
+Each layer needs to set the correct delay cycle to display properly
+without unexpected offset on screen.
 
-Fixes: a7f18b74dbe17162 ("ps3disk: pass queue_limits to blk_mq_alloc_disk")
-Reported-by: Philipp Hortmann <philipp.g.hortmann@gmail.com>
-Closes: https://lore.kernel.org/39256db9-3d73-4e86-a49b-300dfd670212@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/06988f959ea6885b8bd7fb3b9059dd54bc6bbad7.1735894216.git.geert+renesas@glider.be
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 5a028e8f062f ("drm/rockchip: vop2: Add support for rk3588")
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Tested-by: Derek Foreman <derek.foreman@collabora.com>
+Tested-by: Detlev Casanova <detlev.casanova@collabora.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241214081719.3330518-5-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ps3disk.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/block/ps3disk.c b/drivers/block/ps3disk.c
-index ff45ed7664695..226ffc743238e 100644
---- a/drivers/block/ps3disk.c
-+++ b/drivers/block/ps3disk.c
-@@ -384,9 +384,9 @@ static int ps3disk_probe(struct ps3_system_bus_device *_dev)
- 	unsigned int devidx;
- 	struct queue_limits lim = {
- 		.logical_block_size	= dev->blk_size,
--		.max_hw_sectors		= dev->bounce_size >> 9,
-+		.max_hw_sectors		= BOUNCE_SIZE >> 9,
- 		.max_segments		= -1,
--		.max_segment_size	= dev->bounce_size,
-+		.max_segment_size	= BOUNCE_SIZE,
- 		.dma_alignment		= dev->blk_size - 1,
- 		.features		= BLK_FEAT_WRITE_CACHE |
- 					  BLK_FEAT_ROTATIONAL,
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index cd3fb906d0089..68b5c438cdaba 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -2493,9 +2493,11 @@ static void vop2_setup_dly_for_windows(struct vop2 *vop2)
+ 			sdly |= FIELD_PREP(RK3568_SMART_DLY_NUM__ESMART1, dly);
+ 			break;
+ 		case ROCKCHIP_VOP2_SMART0:
++		case ROCKCHIP_VOP2_ESMART2:
+ 			sdly |= FIELD_PREP(RK3568_SMART_DLY_NUM__SMART0, dly);
+ 			break;
+ 		case ROCKCHIP_VOP2_SMART1:
++		case ROCKCHIP_VOP2_ESMART3:
+ 			sdly |= FIELD_PREP(RK3568_SMART_DLY_NUM__SMART1, dly);
+ 			break;
+ 		}
 -- 
 2.39.5
 
