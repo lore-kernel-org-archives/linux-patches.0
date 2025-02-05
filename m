@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5387DA6A;
-	Wed,  5 Feb 2025 14:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6AE151988;
+	Wed,  5 Feb 2025 14:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766142; cv=none; b=ogUVVOZrgvricP0qgz9YK7QbPMCoqQj6tK9HKm2YzjLiZb2tHyEwn7IsfojaprwI3+yIc/mjsqfsa8bDnB2O727Mh9ArDRp8wY5XcnkKBWLdqvZqyhpuaSQZ+kEna+h81lh03v/0jZc00YsFMQDpRAsykyWVM6qP8M4WeHFHecg=
+	t=1738766145; cv=none; b=DChVkM9dMq5xQiWanu+0erTv/OZ9rjKNs4F0TO04OTDt0YLfcmC89aKuhCxnIh2J2SR7OSSqYlTOFtwmUfmGsKBTf/MZQ7QDnBNfgn7V3HzEyZKeBtDBhUWRfo44W5WvKEvOfP/75SclQ5dG8Kuu9qQ7+5u3lPWD8zvTXv5yAu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766142; c=relaxed/simple;
-	bh=xlmhOtS1GSNXMVjmq51FUb/rJDiIe4++xFz5gkPLjac=;
+	s=arc-20240116; t=1738766145; c=relaxed/simple;
+	bh=APqhtl95sGUHAh2OcMWabZoz1U8rZPd1xSUW2bFsnN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QK9Ar7EoEc/84tTIc2BtD4C7oQ55Dz30TpYimRrrwDQYnH021Uhx/5DeXWDSn5tSYWAdvV3/Sx6F/OAOnJCAj0ECqnkXqyXXKmCIea4ky0Du9NeaEBSiEZPahIDPQms4e8mPjE0JBaeLQCmTQWDQ7hf7QQAV2+4pJhZjF0nag0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ObdfoupB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=odG2elBf12oa+feopMg2Fw8zF7oF8NflS/ywCSdQZWt6Ne3VRzA7DmQJE69Ofdn1Aa9Mg5wXmHm4FK9/unZYabWpZ7TZjangkSJlZCgTPOEl/tR/0fAUQmB0dP4Ij+IXAV3Tgd9xE8hBnkoYfjor+/cQ/vz6Y7gVRABO3r6imJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rerQNf+/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ObdfoupB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC08C4CED1;
-	Wed,  5 Feb 2025 14:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rerQNf+/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A270C4CED1;
+	Wed,  5 Feb 2025 14:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766142;
-	bh=xlmhOtS1GSNXMVjmq51FUb/rJDiIe4++xFz5gkPLjac=;
+	s=korg; t=1738766145;
+	bh=APqhtl95sGUHAh2OcMWabZoz1U8rZPd1xSUW2bFsnN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ObdfoupBTtx0BNbT8s5TyIOzEZ1oTLPOpVrEwiAQMuQAUbtoHjn/RdC+Uvz9D7RqC
-	 MAVkQKqklG3emJhHmc7/S8kY5E092saPGNNxMY2H022V78pGZBOcuICpHnvlXMbVBT
-	 WNnCy3eSJsg8AumgBLYpQ7r3XjRBn6FRPW+G1UG0=
+	b=rerQNf+/EtURVEffq7UAnaK22okgRUUrRlB3eWdbsxCCBQ4yIV0SWs1wWbr0KaUbv
+	 QEI+NDF+S4bRnqnvU67UJ+J/mIaqMUGjlwW+52mLzCXalftxINBbVvvN6mL8JWmaB6
+	 cdJAkTiEp8cGKaGR+lG9HuCOmfSbp7sEt3pIhFdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 246/623] platform/x86: x86-android-tablets: make platform data be static
-Date: Wed,  5 Feb 2025 14:39:48 +0100
-Message-ID: <20250205134505.637544378@linuxfoundation.org>
+Subject: [PATCH 6.12 291/590] ALSA: hda/realtek - Fixed headphone distorted sound on Acer Aspire A115-31 laptop
+Date: Wed,  5 Feb 2025 14:40:46 +0100
+Message-ID: <20250205134506.409903069@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 6e0fb1bdb71cf8078c8532617e565e3db22c0d3c ]
+[ Upstream commit 5cb4e5b056772e341b590755a976081776422053 ]
 
-make lenovo_yoga_tab2_1380_bq24190_pdata and lenovo_yoga_tab2_1380_modules
-to be static
+Sound played through headphones is distorted.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202410160432.oJAPbrW9-lkp@intel.com/
-Fixes: 3eee73ad42c3 ("platform/x86: x86-android-tablets: Add Lenovo Yoga Tablet 2 Pro 1380F/L data")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/daafd1371e7e9946217712ce8720e29cd5c52f7a.1732161310.git.xiaopei01@kylinos.cn
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 34ab5bbc6e82 ("ALSA: hda/realtek - Add Headset Mic supported Acer NB platform")
+Closes: https://lore.kernel.org/linux-sound/e142749b-7714-4733-9452-918fbe328c8f@gmail.com/
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/0a89b6c18ed94378a105fa61e9f290e4@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/x86-android-tablets/lenovo.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/x86-android-tablets/lenovo.c b/drivers/platform/x86/x86-android-tablets/lenovo.c
-index ae087f1471c17..a60efbaf4817f 100644
---- a/drivers/platform/x86/x86-android-tablets/lenovo.c
-+++ b/drivers/platform/x86/x86-android-tablets/lenovo.c
-@@ -601,7 +601,7 @@ static const struct regulator_init_data lenovo_yoga_tab2_1380_bq24190_vbus_init_
- 	.num_consumer_supplies = 1,
- };
- 
--struct bq24190_platform_data lenovo_yoga_tab2_1380_bq24190_pdata = {
-+static struct bq24190_platform_data lenovo_yoga_tab2_1380_bq24190_pdata = {
- 	.regulator_init_data = &lenovo_yoga_tab2_1380_bq24190_vbus_init_data,
- };
- 
-@@ -726,7 +726,7 @@ static const struct platform_device_info lenovo_yoga_tab2_1380_pdevs[] __initcon
- 	},
- };
- 
--const char * const lenovo_yoga_tab2_1380_modules[] __initconst = {
-+static const char * const lenovo_yoga_tab2_1380_modules[] __initconst = {
- 	"bq24190_charger",            /* For the Vbus regulator for lc824206xa */
- 	NULL
- };
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 8c4de5a253add..5d99a4ea176a1 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10143,6 +10143,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1025, 0x1308, "Acer Aspire Z24-890", ALC286_FIXUP_ACER_AIO_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x132a, "Acer TravelMate B114-21", ALC233_FIXUP_ACER_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x1330, "Acer TravelMate X514-51T", ALC255_FIXUP_ACER_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1025, 0x1360, "Acer Aspire A115", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x141f, "Acer Spin SP513-54N", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x142b, "Acer Swift SF314-42", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x1430, "Acer TravelMate B311R-31", ALC256_FIXUP_ACER_MIC_NO_PRESENCE),
 -- 
 2.39.5
 
