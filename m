@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAF2155382;
-	Wed,  5 Feb 2025 14:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A28158D96;
+	Wed,  5 Feb 2025 14:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765706; cv=none; b=WWXBs7ucjDmhDGT/d/AX6px02KMCzzRnTOWGcugmMv4VCacJnPTT4JPj8IWnLwbIPgg/hIo1oy0ss7emJ2XFhE29MhX0ltdrRn82HaT2NzkIFbUgbCbPPLvgYGKDAx2eAwiTZx6/hCln8mmclMnsnQ+UCbNPfud81VBff1yfxmQ=
+	t=1738765710; cv=none; b=Enb7602eJKiCtbGKZl1/889j4mz46OYSxt7dAwQHZDBld/omacFhAMYm7gZQmHGUxo8dy7ZS9fcrV9wojgmzUSCIylpq52K72c7XhpwVyQD7Zl0OlfFJ1DvzOWZyBYWGzUl3DgQFWq58p1YziAF3JkyTFYtN6ZX2ngEFF31fT1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765706; c=relaxed/simple;
-	bh=Y56BcKlRdBADW7I8zeIEJErbQNauliNkWAq1tKvTErE=;
+	s=arc-20240116; t=1738765710; c=relaxed/simple;
+	bh=fRR2D4UYg+u22yROjoe9xvnaPvmCZnLfDzkDY7+a7p4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AAqx3/NkPQD8heyiBkph2rLor+8JCzVITP56ZgkmqXZVWl5+4tAWhjMIrzw+8dpXZNrSziSAp+NYrj3JwF6mWfajV5TzD36ItXCMJwSqzXy9aSovr0CiS9HMDMD4puft3SDfrwe470MrY7GQ5fLhUOl0P+vKDnpJjwJS5R+yT+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZaXYGEuT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rkzIFnvQzlvTN0FrTZjQR4gqNKnszDjAQwSnF9vSJztPW1SX+HxpgZNDoMzAJRoBMPLU8dtHOf6G3X+2qA7ZX4d9D1CxirnIH4+3G601K1k7kRRIL7cCSGHD/Nv8Yr4gONX77QuXPplfEvQ4mzArv49X7r8wTg6IxDkHA5yeGrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LHhrgzQ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZaXYGEuT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232DBC4CEE7;
-	Wed,  5 Feb 2025 14:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LHhrgzQ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87FDDC4CEE9;
+	Wed,  5 Feb 2025 14:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765706;
-	bh=Y56BcKlRdBADW7I8zeIEJErbQNauliNkWAq1tKvTErE=;
+	s=korg; t=1738765710;
+	bh=fRR2D4UYg+u22yROjoe9xvnaPvmCZnLfDzkDY7+a7p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZaXYGEuTwJEXAPQIxz90RLCkgRIuuL14g049fiDkuFiyupY45HeGmYglx5R7MU52I
-	 FWsfvFVjHW3hbK/3zVimHuhVZ2L7Wu2Pn/Siy+6LoiOfZ2ltR4uCZHXuiWteBG6YWw
-	 OSwdh6eLAciDEPt+wZJIDyqsZDPw9tHzmeHYJMRY=
+	b=LHhrgzQ9tbdDVlUlPStBEN86Tagd5CBPdfogz2qRCU8enTy0X3WrGEBfQGlkZbwiE
+	 AO9W4Thtx1uSfIUGWuZAu5AFSsE/B/0yqbMhoQ9SOYH/Yu+Qeuhchx/JLI6zvMCAWn
+	 h9BZwbOwJpiik3TUjaZERtafUMZy9gJtjLpjrnbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 206/623] wifi: mt76: mt7915: fix omac index assignment after hardware reset
-Date: Wed,  5 Feb 2025 14:39:08 +0100
-Message-ID: <20250205134504.110016910@linuxfoundation.org>
+Subject: [PATCH 6.12 245/590] selftests/bpf: Fix fill_link_info selftest on powerpc
+Date: Wed,  5 Feb 2025 14:40:00 +0100
+Message-ID: <20250205134504.654644161@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,50 +47,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
 
-[ Upstream commit cd043bbba6f9b71ebe0781d1bd2107565363c4b9 ]
+[ Upstream commit 4d33dc1bc31df80356c49e40dbd3ddff19500bcb ]
 
-Reset per-phy mac address slot mask in order to avoid leaking entries.
+With CONFIG_KPROBES_ON_FTRACE enabled on powerpc, ftrace_location_range
+returns ftrace location for bpf_fentry_test1 at offset of 4 bytes from
+function entry. This is because branch to _mcount function is at offset
+of 4 bytes in function profile sequence.
 
-Fixes: 8a55712d124f ("wifi: mt76: mt7915: enable full system reset support")
-Link: https://patch.msgid.link/20241230194202.95065-12-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+To fix this, add entry_offset of 4 bytes while verifying the address for
+kprobe entry address of bpf_fentry_test1 in verify_perf_link_info in
+selftest, when CONFIG_KPROBES_ON_FTRACE is enabled.
+
+Disassemble of bpf_fentry_test1:
+
+c000000000e4b080 <bpf_fentry_test1>:
+c000000000e4b080:       a6 02 08 7c     mflr    r0
+c000000000e4b084:       b9 e2 22 4b     bl      c00000000007933c <_mcount>
+c000000000e4b088:       01 00 63 38     addi    r3,r3,1
+c000000000e4b08c:       b4 07 63 7c     extsw   r3,r3
+c000000000e4b090:       20 00 80 4e     blr
+
+When CONFIG_PPC_FTRACE_OUT_OF_LINE [1] is enabled, these function profile
+sequence is moved out of line with an unconditional branch at offset 0.
+So, the test works without altering the offset for
+'CONFIG_KPROBES_ON_FTRACE && CONFIG_PPC_FTRACE_OUT_OF_LINE' case.
+
+Disassemble of bpf_fentry_test1:
+
+c000000000f95190 <bpf_fentry_test1>:
+c000000000f95190:       00 00 00 60     nop
+c000000000f95194:       01 00 63 38     addi    r3,r3,1
+c000000000f95198:       b4 07 63 7c     extsw   r3,r3
+c000000000f9519c:       20 00 80 4e     blr
+
+[1] https://lore.kernel.org/all/20241030070850.1361304-13-hbathini@linux.ibm.com/
+
+Fixes: 23cf7aa539dc ("selftests/bpf: Add selftest for fill_link_info")
+Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241209065720.234344-1-skb99@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ .../selftests/bpf/prog_tests/fill_link_info.c       |  4 ++++
+ .../selftests/bpf/progs/test_fill_link_info.c       | 13 ++++++++++---
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-index b890a58d37300..799e8d2cc7e6e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-@@ -1444,9 +1444,11 @@ static void
- mt7915_mac_full_reset(struct mt7915_dev *dev)
+diff --git a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
+index d50cbd8040d45..e59af2aa66016 100644
+--- a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
++++ b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
+@@ -171,6 +171,10 @@ static void test_kprobe_fill_link_info(struct test_fill_link_info *skel,
+ 		/* See also arch_adjust_kprobe_addr(). */
+ 		if (skel->kconfig->CONFIG_X86_KERNEL_IBT)
+ 			entry_offset = 4;
++		if (skel->kconfig->CONFIG_PPC64 &&
++		    skel->kconfig->CONFIG_KPROBES_ON_FTRACE &&
++		    !skel->kconfig->CONFIG_PPC_FTRACE_OUT_OF_LINE)
++			entry_offset = 4;
+ 		err = verify_perf_link_info(link_fd, type, kprobe_addr, 0, entry_offset);
+ 		ASSERT_OK(err, "verify_perf_link_info");
+ 	} else {
+diff --git a/tools/testing/selftests/bpf/progs/test_fill_link_info.c b/tools/testing/selftests/bpf/progs/test_fill_link_info.c
+index 6afa834756e9f..fac33a14f2009 100644
+--- a/tools/testing/selftests/bpf/progs/test_fill_link_info.c
++++ b/tools/testing/selftests/bpf/progs/test_fill_link_info.c
+@@ -6,13 +6,20 @@
+ #include <stdbool.h>
+ 
+ extern bool CONFIG_X86_KERNEL_IBT __kconfig __weak;
++extern bool CONFIG_PPC_FTRACE_OUT_OF_LINE __kconfig __weak;
++extern bool CONFIG_KPROBES_ON_FTRACE __kconfig __weak;
++extern bool CONFIG_PPC64 __kconfig __weak;
+ 
+-/* This function is here to have CONFIG_X86_KERNEL_IBT
+- * used and added to object BTF.
++/* This function is here to have CONFIG_X86_KERNEL_IBT,
++ * CONFIG_PPC_FTRACE_OUT_OF_LINE, CONFIG_KPROBES_ON_FTRACE,
++ * CONFIG_PPC6 used and added to object BTF.
+  */
+ int unused(void)
  {
- 	struct mt76_phy *ext_phy;
-+	struct mt7915_phy *phy2;
- 	int i;
+-	return CONFIG_X86_KERNEL_IBT ? 0 : 1;
++	return CONFIG_X86_KERNEL_IBT ||
++			CONFIG_PPC_FTRACE_OUT_OF_LINE ||
++			CONFIG_KPROBES_ON_FTRACE ||
++			CONFIG_PPC64 ? 0 : 1;
+ }
  
- 	ext_phy = dev->mt76.phys[MT_BAND1];
-+	phy2 = ext_phy ? ext_phy->priv : NULL;
- 
- 	dev->recovery.hw_full_reset = true;
- 
-@@ -1476,6 +1478,9 @@ mt7915_mac_full_reset(struct mt7915_dev *dev)
- 
- 	memset(dev->mt76.wcid_mask, 0, sizeof(dev->mt76.wcid_mask));
- 	dev->mt76.vif_mask = 0;
-+	dev->phy.omac_mask = 0;
-+	if (phy2)
-+		phy2->omac_mask = 0;
- 
- 	i = mt76_wcid_alloc(dev->mt76.wcid_mask, MT7915_WTBL_STA);
- 	dev->mt76.global_wcid.idx = i;
+ SEC("kprobe")
 -- 
 2.39.5
 
