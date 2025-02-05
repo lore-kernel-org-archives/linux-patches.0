@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3321547F2;
-	Wed,  5 Feb 2025 13:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F094815696E;
+	Wed,  5 Feb 2025 13:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763960; cv=none; b=msWZh5SBsRRsHgUbQloIrFg8cENeNbZE0mAacBNc2x4iD8eNHZiAjJKjwGUTvFPiYkpwr69d0trh4+9d2CgwIC375cCLC0q/OUa3CW4fzIw34rBIqqFtMjIy1eVys0+0CiOqciItG/dsuJoZ3SPv16lEUabYLYIa2sYaN4B8HL0=
+	t=1738763963; cv=none; b=ZRFfT6lHQ/ZpbSWWpGI/7zife8lCoe63lI+GCSIzBZvc1NjODYrahxY7+ABULqHVqjHry+eMVKudtbPmnWh6onX2Qp5KHuHYmig/cM6fxlQ5/JQo7I35EIIk/r5sE/DbXATjRfEX1mn93Ph5kqhQUSlnlBxi4lRRBQa6FcYQKMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763960; c=relaxed/simple;
-	bh=8WRI6RZ7l2rSeRAfXd9c9q/SaOLEiaiXw4Q16TcsBQE=;
+	s=arc-20240116; t=1738763963; c=relaxed/simple;
+	bh=Xwtfu7RbZOX/C8pwOTw3yTwwosx0T6VPijoM0bC5EUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fXkSUFWlVmb1VeE22bkO+aBeg9U2Bdw5TWTRi6mTMcu+Umkq0VJVmrAK0POEFoqzNpR4Ko+I4NSb51zbHQLZQmfdvEpcNrx1O5eSP75XqmJL5zHPLVMsdjbYKjlsr8r7K0QJzS0myC3FM6v3Ve3npTXMI423PKoQjSBaLIlTCOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o72OGa29; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UCTGJb2rZlVp7sJr7m/+nFyTK1tqAZuKpx+NFlY6bK9ckbmkQHg3cw2J4dUfjnJVdnB556FyxL2v/tMPQU+uxraHfzAZlmTj8nJ2QvpKPRsSaoghcRYZj9hBcXBdNK2nl7wchI7b618Goc6tesEYbfdPNBAmfLiSvPHi+nBpydQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knjXEcJJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o72OGa29"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECB8C4CED1;
-	Wed,  5 Feb 2025 13:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knjXEcJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AEEC4CED6;
+	Wed,  5 Feb 2025 13:59:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763959;
-	bh=8WRI6RZ7l2rSeRAfXd9c9q/SaOLEiaiXw4Q16TcsBQE=;
+	s=korg; t=1738763962;
+	bh=Xwtfu7RbZOX/C8pwOTw3yTwwosx0T6VPijoM0bC5EUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o72OGa29pQX7w7X6vFrF0Q6FV6s/p592z4fL+vtbeFGCtxXc7PMsh76MGQkeVzGbU
-	 11HnPP1eq/5TGOyjxi6XpeYuFcO2OwAbfsuH/jeZ7W+dIAH52a0Vd1i/7Pzkxg6Qs0
-	 VWgM+XgnlfwvBKms7gN5vJN4J0wuXqO3vSMGRN7E=
+	b=knjXEcJJO1zAEVAGaRI7lBMC48dAckYmXpvtNx2ETg1sJmTSWNUljQmSEz1oL16Nf
+	 Dzbnll+/S0tsfkgwW8PS1QHGMIKXkErbvCgP9PrQCyZCWwTP4RBrSYSCjC5E9yt0A+
+	 Y9xkE3AwFs84lv/9QGQTxstAORwvXMCTDbqMja2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Su Hui <suhui@nfschina.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/590] wifi: rtlwifi: rtl8821ae: phy: restore removed code to fix infinite loop
-Date: Wed,  5 Feb 2025 14:37:11 +0100
-Message-ID: <20250205134458.161969239@linuxfoundation.org>
+Subject: [PATCH 6.6 123/393] wifi: mt76: mt7915: fix omac index assignment after hardware reset
+Date: Wed,  5 Feb 2025 14:40:42 +0100
+Message-ID: <20250205134424.999074790@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +46,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 5e5903a442bb889a62a0f5d89ac33e53ab08592c ]
+[ Upstream commit cd043bbba6f9b71ebe0781d1bd2107565363c4b9 ]
 
-A previous clean-up fix removed the assignment of v2 inside a while loop
-that turned it into an infinite loop. Fix this by restoring the assignment
-of v2 from array[] so that v2 is updated inside the loop.
+Reset per-phy mac address slot mask in order to avoid leaking entries.
 
-Fixes: cda37445718d ("wifi: rtlwifi: rtl8821ae: phy: remove some useless code")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Tested-by: Ping-Ke Shih <pkshih@realtek.com>
-Reviewed-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241106154642.1627886-1-colin.i.king@gmail.com
+Fixes: 8a55712d124f ("wifi: mt76: mt7915: enable full system reset support")
+Link: https://patch.msgid.link/20241230194202.95065-12-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
-index 1be51ea3f3c82..9eddbada8af12 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
-@@ -2033,8 +2033,10 @@ static bool _rtl8821ae_phy_config_bb_with_pgheaderfile(struct ieee80211_hw *hw,
- 			if (!_rtl8821ae_check_condition(hw, v1)) {
- 				i += 2; /* skip the pair of expression*/
- 				v2 = array[i+1];
--				while (v2 != 0xDEAD)
-+				while (v2 != 0xDEAD) {
- 					i += 3;
-+					v2 = array[i + 1];
-+				}
- 			}
- 		}
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index 55c52c2d97b09..92d7dc8e3cc55 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -1439,9 +1439,11 @@ static void
+ mt7915_mac_full_reset(struct mt7915_dev *dev)
+ {
+ 	struct mt76_phy *ext_phy;
++	struct mt7915_phy *phy2;
+ 	int i;
+ 
+ 	ext_phy = dev->mt76.phys[MT_BAND1];
++	phy2 = ext_phy ? ext_phy->priv : NULL;
+ 
+ 	dev->recovery.hw_full_reset = true;
+ 
+@@ -1470,6 +1472,9 @@ mt7915_mac_full_reset(struct mt7915_dev *dev)
+ 
+ 	memset(dev->mt76.wcid_mask, 0, sizeof(dev->mt76.wcid_mask));
+ 	dev->mt76.vif_mask = 0;
++	dev->phy.omac_mask = 0;
++	if (phy2)
++		phy2->omac_mask = 0;
+ 
+ 	i = mt76_wcid_alloc(dev->mt76.wcid_mask, MT7915_WTBL_STA);
+ 	dev->mt76.global_wcid.idx = i;
 -- 
 2.39.5
 
