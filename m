@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C16C13C9C4;
-	Wed,  5 Feb 2025 13:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA15F13C9C4;
+	Wed,  5 Feb 2025 13:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763580; cv=none; b=DjtAxlKvPWqS/Q2Gsiay/OIN4pOWtc5NJcme0HZXEKJrVCwiCKLmL18qQIW+AZwNLKeESZjQS0CGXgMDEjSlFlm1YgkFVyetCHsPDrO/XN+eRGH+ojm/SAF0Pkj+8yuwnpp0qUPciUVBDHUBZZ23I1+BFoixou0T+obN4p7Vk/Y=
+	t=1738763584; cv=none; b=Z9HrYwaa6hCWq2aI2Hw4kOs2mZEryMlGUdo75ycn2VY/xUnEqIzLBOK1r724YKLSqjZrWyIZbS/tNc09NihBz0S75QibgV1cJwcMAvVLzMjS0ilC5eKxhYdDzM9UzvJG3OOAxTLiVBXJ46OIUukVwjkaNMPkt6K/LrxG9uOqj34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763580; c=relaxed/simple;
-	bh=ig288cnFNJgYfAXWnxtKX7S12Ip674lqWx7qyXsOja0=;
+	s=arc-20240116; t=1738763584; c=relaxed/simple;
+	bh=XNkVD8zda0f8pj2VtTQge6sJPzeo6o8/tkBlMngbziw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SQ8P2DHt2nTGXDlfVep1H23GvMd0qMmgoizaHkfZ9dh/5UIldpM/1DcvnCFSvjjAEJXqoL9hFUhSdwHtkjOWo9JG7FGljK98xj4+sz4wDVlTRYCN+WB7hZKj1tJ1yk0rwAhW+ZQHS0qURVOP4o3KZbjueUn975cu/inzxggkDqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAwR7Zvj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NKJVqgxNPqTdoHC9DM703NXSza3flDVPLhq+JK4pcjpxiMgpJALA2ZlR42sQbJi38LK04IFtIgeOkVceGrLTqZrNPMbl3zpLbJx7ua5hLhzYk2Jjn/8+Af+AUOow94rR9By9DxQvy1TLjO4CKMuEAqSEkR0lKWCP3p8wwDr5eIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+BuHpcI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAwR7Zvj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E9B8C4CED6;
-	Wed,  5 Feb 2025 13:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+BuHpcI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A550C4CEDD;
+	Wed,  5 Feb 2025 13:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763580;
-	bh=ig288cnFNJgYfAXWnxtKX7S12Ip674lqWx7qyXsOja0=;
+	s=korg; t=1738763584;
+	bh=XNkVD8zda0f8pj2VtTQge6sJPzeo6o8/tkBlMngbziw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iAwR7Zvj3+4Cl8GM1dvn+/ZQkQLncCSttjM/8Lev/jjpPKKIahyH+yLUYmxImZNGq
-	 9tUIBlDXmZ57ncjfr6SmeuLK79qeB9WoGTfRKUME2SAoLevxyViAdAFZUzazL9O1d5
-	 j2TDM0xfP1asYx24cCC17FKQXAmPxF4oPBrZWL9I=
+	b=q+BuHpcILxnlFiaDfa0hstL2LFOLpgBSy9s29d+uB2PStqDjrFse/OhmbtsdepllF
+	 9puJyk+KTtCQszKUfm2H0alDrDATFAZTjFCMwMJZl+dqr5SGxWhvfuIdXkGNnKdNhM
+	 XyVW6yjCGZWdEiujWQbQYpesKh5l5gc/QZB1i0Rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	John Stultz <jstultz@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Metin Kaya <metin.kaya@arm.com>,
+	Qais Yousef <qyousef@layalina.io>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 084/393] gpio: pca953x: Fully convert to device managed resources
-Date: Wed,  5 Feb 2025 14:40:03 +0100
-Message-ID: <20250205134423.507964842@linuxfoundation.org>
+Subject: [PATCH 6.12 033/590] sched: Split out __schedule() deactivate task logic into a helper
+Date: Wed,  5 Feb 2025 14:36:28 +0100
+Message-ID: <20250205134456.518230907@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,144 +50,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: John Stultz <jstultz@google.com>
 
-[ Upstream commit 53c59d66c44c5eb98b34da9967f937e5387f8624 ]
+[ Upstream commit 7b3d61f6578ab06f130ecc13cd2f3010a6c295bb ]
 
-Curtrently the error path is unsynchronised with removal due to
-regulator being disabled before other device managed resources
-are handled. Correct that by wrapping regulator enablement in
-the respective call.
+As we're going to re-use the deactivation logic,
+split it into a helper.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Stable-dep-of: 7cef813a91c4 ("gpio: pca953x: log an error when failing to get the reset GPIO")
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Metin Kaya <metin.kaya@arm.com>
+Reviewed-by: Qais Yousef <qyousef@layalina.io>
+Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Tested-by: Metin Kaya <metin.kaya@arm.com>
+Link: https://lore.kernel.org/r/20241009235352.1614323-7-jstultz@google.com
+Stable-dep-of: 7d9da040575b ("psi: Fix race when task wakes up before psi_sched_switch() adjusts flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pca953x.c | 68 +++++++++++++++++++------------------
- 1 file changed, 35 insertions(+), 33 deletions(-)
+ kernel/sched/core.c | 67 +++++++++++++++++++++++++++------------------
+ 1 file changed, 40 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index b52548822ecc3..cf5d85c6c8925 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -1047,13 +1047,40 @@ static int device_pca957x_init(struct pca953x_chip *chip)
- 	return ret;
- }
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index d07dc87787dff..d794d9bb429fd 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -6507,6 +6507,45 @@ pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
+ #define SM_PREEMPT		1
+ #define SM_RTLOCK_WAIT		2
  
-+static void pca953x_disable_regulator(void *reg)
++/*
++ * Helper function for __schedule()
++ *
++ * If a task does not have signals pending, deactivate it
++ * Otherwise marks the task's __state as RUNNING
++ */
++static bool try_to_block_task(struct rq *rq, struct task_struct *p,
++			      unsigned long task_state)
 +{
-+	regulator_disable(reg);
++	int flags = DEQUEUE_NOCLOCK;
++
++	if (signal_pending_state(task_state, p)) {
++		WRITE_ONCE(p->__state, TASK_RUNNING);
++		return false;
++	}
++
++	p->sched_contributes_to_load =
++		(task_state & TASK_UNINTERRUPTIBLE) &&
++		!(task_state & TASK_NOLOAD) &&
++		!(task_state & TASK_FROZEN);
++
++	if (unlikely(is_special_task_state(task_state)))
++		flags |= DEQUEUE_SPECIAL;
++
++	/*
++	 * __schedule()			ttwu()
++	 *   prev_state = prev->state;    if (p->on_rq && ...)
++	 *   if (prev_state)		    goto out;
++	 *     p->on_rq = 0;		  smp_acquire__after_ctrl_dep();
++	 *				  p->state = TASK_WAKING
++	 *
++	 * Where __schedule() and ttwu() have matching control dependencies.
++	 *
++	 * After this, schedule() must not care about p->state any more.
++	 */
++	block_task(rq, p, flags);
++	return true;
 +}
 +
-+static int pca953x_get_and_enable_regulator(struct pca953x_chip *chip)
-+{
-+	struct device *dev = &chip->client->dev;
-+	struct regulator *reg = chip->regulator;
-+	int ret;
-+
-+	reg = devm_regulator_get(dev, "vcc");
-+	if (IS_ERR(reg))
-+		return dev_err_probe(dev, PTR_ERR(reg), "reg get err\n");
-+
-+	ret = regulator_enable(reg);
-+	if (ret)
-+	        return dev_err_probe(dev, ret, "reg en err\n");
-+
-+	ret = devm_add_action_or_reset(dev, pca953x_disable_regulator, reg);
-+	if (ret)
-+		return ret;
-+
-+	chip->regulator = reg;
-+	return 0;
-+}
-+
- static int pca953x_probe(struct i2c_client *client)
- {
-+	struct device *dev = &client->dev;
- 	struct pca953x_platform_data *pdata;
- 	struct pca953x_chip *chip;
- 	int irq_base;
- 	int ret;
--	struct regulator *reg;
- 	const struct regmap_config *regmap_config;
- 
- 	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
-@@ -1088,16 +1115,9 @@ static int pca953x_probe(struct i2c_client *client)
- 	if (!chip->driver_data)
- 		return -ENODEV;
- 
--	reg = devm_regulator_get(&client->dev, "vcc");
--	if (IS_ERR(reg))
--		return dev_err_probe(&client->dev, PTR_ERR(reg), "reg get err\n");
+ /*
+  * __schedule() is the main scheduler function.
+  *
+@@ -6615,33 +6654,7 @@ static void __sched notrace __schedule(int sched_mode)
+ 			goto picked;
+ 		}
+ 	} else if (!preempt && prev_state) {
+-		if (signal_pending_state(prev_state, prev)) {
+-			WRITE_ONCE(prev->__state, TASK_RUNNING);
+-		} else {
+-			int flags = DEQUEUE_NOCLOCK;
 -
--	ret = regulator_enable(reg);
--	if (ret) {
--		dev_err(&client->dev, "reg en err: %d\n", ret);
-+	ret = pca953x_get_and_enable_regulator(chip);
-+	if (ret)
- 		return ret;
--	}
--	chip->regulator = reg;
- 
- 	i2c_set_clientdata(client, chip);
- 
-@@ -1120,10 +1140,8 @@ static int pca953x_probe(struct i2c_client *client)
+-			prev->sched_contributes_to_load =
+-				(prev_state & TASK_UNINTERRUPTIBLE) &&
+-				!(prev_state & TASK_NOLOAD) &&
+-				!(prev_state & TASK_FROZEN);
+-
+-			if (unlikely(is_special_task_state(prev_state)))
+-				flags |= DEQUEUE_SPECIAL;
+-
+-			/*
+-			 * __schedule()			ttwu()
+-			 *   prev_state = prev->state;    if (p->on_rq && ...)
+-			 *   if (prev_state)		    goto out;
+-			 *     p->on_rq = 0;		  smp_acquire__after_ctrl_dep();
+-			 *				  p->state = TASK_WAKING
+-			 *
+-			 * Where __schedule() and ttwu() have matching control dependencies.
+-			 *
+-			 * After this, schedule() must not care about p->state any more.
+-			 */
+-			block_task(rq, prev, flags);
+-			block = true;
+-		}
++		block = try_to_block_task(rq, prev, prev_state);
+ 		switch_count = &prev->nvcsw;
  	}
- 
- 	chip->regmap = devm_regmap_init_i2c(client, regmap_config);
--	if (IS_ERR(chip->regmap)) {
--		ret = PTR_ERR(chip->regmap);
--		goto err_exit;
--	}
-+	if (IS_ERR(chip->regmap))
-+		return PTR_ERR(chip->regmap);
- 
- 	regcache_mark_dirty(chip->regmap);
- 
-@@ -1158,28 +1176,13 @@ static int pca953x_probe(struct i2c_client *client)
- 		ret = device_pca95xx_init(chip);
- 	}
- 	if (ret)
--		goto err_exit;
-+		return ret;
- 
- 	ret = pca953x_irq_setup(chip, irq_base);
- 	if (ret)
--		goto err_exit;
--
--	ret = devm_gpiochip_add_data(&client->dev, &chip->gpio_chip, chip);
--	if (ret)
--		goto err_exit;
--
--	return 0;
--
--err_exit:
--	regulator_disable(chip->regulator);
--	return ret;
--}
--
--static void pca953x_remove(struct i2c_client *client)
--{
--	struct pca953x_chip *chip = i2c_get_clientdata(client);
-+		return ret;
- 
--	regulator_disable(chip->regulator);
-+	return devm_gpiochip_add_data(dev, &chip->gpio_chip, chip);
- }
- 
- #ifdef CONFIG_PM_SLEEP
-@@ -1347,7 +1350,6 @@ static struct i2c_driver pca953x_driver = {
- 		.acpi_match_table = pca953x_acpi_ids,
- 	},
- 	.probe		= pca953x_probe,
--	.remove		= pca953x_remove,
- 	.id_table	= pca953x_id,
- };
  
 -- 
 2.39.5
