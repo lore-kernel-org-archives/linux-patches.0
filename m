@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30A3197A76;
-	Wed,  5 Feb 2025 14:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8B8197A8B;
+	Wed,  5 Feb 2025 14:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767116; cv=none; b=mb4hH+XqmhAOm9S0A19AtBijo/xAV9lWll/2PZA7qdIQA/AzreAdPL9irs0QGvoT3o9JVjsl3jjYCfx3VCjQO0pAe1UQCqZzaO2ffRgup55dr0X3+huW4mVAVsYIXD2/fIMv3/msh/7HXXxIXshCUGVevjfjxmZAuZ2mV6iP6Tk=
+	t=1738767120; cv=none; b=mOkpokSs9qZsPLlYGfHWIaaiVLm5nFp3DvmQ509hO6kCBciJyjRaVPIqS451DZQIHgPaXwPt1QvhuOBN11e+O7/gboOk8gILfcmhD8GaZutJIpACLKbAnP3T2fp7Y3c586eaMeWOSXtDh1NrQsObKY1uFcB74fafvMS/0OJy8n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767116; c=relaxed/simple;
-	bh=IKX1q/bvASayUUG9JN+Wfvi7rQVoTdynRwnnzhaclJk=;
+	s=arc-20240116; t=1738767120; c=relaxed/simple;
+	bh=yYcRNfZyxJ/bVN0SOMGF/2jifwlBpaIjuiiLKsiqYqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=og7OmqjOmtEBGlBK1jFVmdISG4CRLJUoAQ8twdzDhTY7C1S7fxckSfgfpbQ6SxGzvbbD4uo2nWHB0mm/g0APx07p6ldivfpJGUaoZWtY303MRVYiSOdUe9NNBJqbYHECFbupTphYVVCQ8PRP+E/dm/D8UZjOGcbh9mG6i8exJbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1r0LQj3T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sv8f5CodullRoAPnxM7iJoxw3drRyademrvaZuFNV/EqIk9Gmz4nznIlhFJwnm31J7q3RRIqEd+sZdl39L3yfSUxs4ATlibID/Mjfovjj1ZDRG7l9Rc7XIaYiuKaVTksM0gLT79mg4N4qFSrEnhEVjTZSF6fWulK2Mq5LnYoAaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4x59fE/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1r0LQj3T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D002C4CED1;
-	Wed,  5 Feb 2025 14:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4x59fE/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76275C4CED1;
+	Wed,  5 Feb 2025 14:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767116;
-	bh=IKX1q/bvASayUUG9JN+Wfvi7rQVoTdynRwnnzhaclJk=;
+	s=korg; t=1738767120;
+	bh=yYcRNfZyxJ/bVN0SOMGF/2jifwlBpaIjuiiLKsiqYqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1r0LQj3Tx/2k/0jjU2BpJMEpNG/Nt/Hp75mNE2DyViTY/K5aS3qmoTmKD3SE/+t6N
-	 KNgq0gncMY78r2YRTPmUVHPtEtE5U70U42LekRTW4oGnpqTpxt+bTkPjLEptWbI1l8
-	 PXGjzbWwYIC0TeUYZCHP8jvM8ueUUU4genZBqcws=
+	b=e4x59fE/on2Q+4ilakuYuGZFAKZxBc/Lu7lmrdv/4wAP1oHr3yjit8WYqh0hiiuz4
+	 UsvEAW5nyvt3sT1Jq8PKgdr+yMv9637K/hjofaiWoxBUpxjEjhDHilovfFOiLP/7Ef
+	 0mwW2O3uAEhvKftfeUC/kbLYdQXXq9z7Zr9cigjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 408/590] PCI: endpoint: Destroy the EPC device in devm_pci_epc_destroy()
-Date: Wed,  5 Feb 2025 14:42:43 +0100
-Message-ID: <20250205134510.876637348@linuxfoundation.org>
+Subject: [PATCH 6.13 359/623] arm64: dts: mediatek: mt8183: kenzo: Support second source touchscreen
+Date: Wed,  5 Feb 2025 14:41:41 +0100
+Message-ID: <20250205134509.957938717@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Hsin-Te Yuan <yuanhsinte@chromium.org>
 
-[ Upstream commit d4929755e4d02bd3de3ae5569dab69cb9502c54f ]
+[ Upstream commit 5ec5dc73c5ac0c6e06803dc3b5aea4493e856568 ]
 
-The devm_pci_epc_destroy() comment says destroys the EPC device, but it
-does not actually do that since devres_destroy() does not call
-devm_pci_epc_release(), and it also can not fully undo what the API
-devm_pci_epc_create() does, so it is faulty.
+Some kenzo devices use second source touchscreen.
 
-Fortunately, the faulty API has not been used by current kernel tree.  Use
-devres_release() instead of devres_destroy() so the EPC device will be
-released.
-
-Link: https://lore.kernel.org/r/20241210-pci-epc-core_fix-v3-1-4d86dd573e4b@quicinc.com
-Fixes: 5e8cb4033807 ("PCI: endpoint: Add EP core layer to enable EP controller and EP functions")
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: 0a9cefe21aec ("arm64: dts: mt8183: Add kukui-jacuzzi-kenzo board")
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Link: https://lore.kernel.org/r/20241213-touchscreen-v3-1-7c1f670913f9@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/pci-epc-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts   | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
-index 62f7dff437309..de665342dc16d 100644
---- a/drivers/pci/endpoint/pci-epc-core.c
-+++ b/drivers/pci/endpoint/pci-epc-core.c
-@@ -856,7 +856,7 @@ void devm_pci_epc_destroy(struct device *dev, struct pci_epc *epc)
- {
- 	int r;
- 
--	r = devres_destroy(dev, devm_pci_epc_release, devm_pci_epc_match,
-+	r = devres_release(dev, devm_pci_epc_release, devm_pci_epc_match,
- 			   epc);
- 	dev_WARN_ONCE(dev, r, "couldn't find PCI EPC resource\n");
- }
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts
+index e8241587949b2..561770fcf69e6 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts
+@@ -12,3 +12,18 @@
+ 	chassis-type = "laptop";
+ 	compatible = "google,juniper-sku17", "google,juniper", "mediatek,mt8183";
+ };
++
++&i2c0 {
++	touchscreen@40 {
++		compatible = "hid-over-i2c";
++		reg = <0x40>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&touchscreen_pins>;
++
++		interrupts-extended = <&pio 155 IRQ_TYPE_LEVEL_LOW>;
++
++		post-power-on-delay-ms = <70>;
++		hid-descr-addr = <0x0001>;
++	};
++};
 -- 
 2.39.5
 
