@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927EB13D52B;
-	Wed,  5 Feb 2025 13:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C0313C9C4;
+	Wed,  5 Feb 2025 13:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763333; cv=none; b=C2R2BaFsoOtIBEuuBnBbWEsol/ffXeQgufwBj0d5pDJEv29hw6yY0OKoONtX7haKG25omQuAyNUK2cJ3pPTqsQwRXxbNWplDJOqtqrBkO9xCtcQvcj47nwQ6Gu6s/wA9qKo5xVJcenfyStt/1UHdUR9hrYAqKQ9R+RjIy0dfzEo=
+	t=1738763337; cv=none; b=RH0kwGSPFnwxQ9Zj9fUxOyhzAIL+bCnhAcMMunwW+8oIZT5+09LMu3Y0HhB8U70T7Jyx6Z+g8VWzMw4zfHA9+QU2OaB8dBV8xROgfEzLhH7U+ZZ0DqGUozDG2dn1XPPhyz2BSPYoMs/zOnUX/tb3gBxM14QliygIZcTjLw30hlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763333; c=relaxed/simple;
-	bh=6HEbxa3hjIKdKzHY8sS20HVJWLvbzuF6wLrCsLSPeR4=;
+	s=arc-20240116; t=1738763337; c=relaxed/simple;
+	bh=e40hUqg96V7BbVRbYKOkxHmkhF0bSWlqFhAy0OpW8BU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5dALMMDwe3wdRAljGxJ16IxNZVJeEvdadbmq2ud3pXmCBRdWEkBW/IRtvUzIXaeHEcHuSo4Jo+3kQCKwt+bBxP+yLPO/n6UeLyfIl3vZx/MOgOCsRvBExip+5fHcess+0BkFp4OWbnxc5SI46K1JdmEIi/9osGktTpw1HAzAzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7fPVHtM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mDFDVfUcKBm/bbP9Ms7dhg7Jing9zAcdKXkhKSa/OZ31X72lhIbmAW1L1aTLIdKk6YUr0ZlsKmGyuiPj0q+ldzbDhhXKpBdSwzPIRf7OCbxXKb8eziJTgZmMBTzw3sLe/IazRgKVOEQ+2lzV4lnspEw+EExhHF4jfGebbAE6jEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsMgPMcw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7fPVHtM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0268CC4CED6;
-	Wed,  5 Feb 2025 13:48:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsMgPMcw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D3CC4CED1;
+	Wed,  5 Feb 2025 13:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763333;
-	bh=6HEbxa3hjIKdKzHY8sS20HVJWLvbzuF6wLrCsLSPeR4=;
+	s=korg; t=1738763337;
+	bh=e40hUqg96V7BbVRbYKOkxHmkhF0bSWlqFhAy0OpW8BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7fPVHtMqfq3b1Pufk9oR7yBIT5ee28ArXnj1+iwsQFZ2IefDPZBz8cyxF/BrZ2kG
-	 Mx9Z7zRSvRk+uBZvfta2imsAlkFB06eze0oDwI0Ar+CTLHFK7ORBhzQNRAa+GYOwUV
-	 XeSRV0O88B6Jk2yi5sW6qTMQf2Hb/yOhCjVv2Zzk=
+	b=BsMgPMcwMP7GVrEtI8J2P4YwIHJANPNvAxlqsAYccM5fF7y8HvBGnGfo7ercCZbfS
+	 fvihgUcgJKY4sZh2ZSAs/w6d+jH/YFCWgbWMtqccWKw9sqbfadl0O5or/f9AHjngEO
+	 +V1FcxkwaKkv0YcsBwtSEIiFGpwjyXHUXLGJs1IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Hermes Wu <hermes.wu@ite.com.tw>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Jiang Liu <gerry@linux.alibaba.com>,
+	Kent Russell <kent.russell@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/393] drm/bridge: it6505: Change definition of AUX_FIFO_MAX_SIZE
-Date: Wed,  5 Feb 2025 14:39:23 +0100
-Message-ID: <20250205134421.988109960@linuxfoundation.org>
+Subject: [PATCH 6.6 045/393] drm/amdgpu: tear down ttm range manager for doorbell in amdgpu_ttm_fini()
+Date: Wed,  5 Feb 2025 14:39:24 +0100
+Message-ID: <20250205134422.025409749@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -52,37 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hermes Wu <hermes.wu@ite.com.tw>
+From: Jiang Liu <gerry@linux.alibaba.com>
 
-[ Upstream commit c14870218c14532b0f0a7805b96a4d3c92d06fb2 ]
+[ Upstream commit 60a2c0c12b644450e420ffc42291d1eb248bacb7 ]
 
-The hardware AUX FIFO is 16 bytes
-Change definition of AUX_FIFO_MAX_SIZE to 16
+Tear down ttm range manager for doorbell in function amdgpu_ttm_fini(),
+to avoid memory leakage.
 
-Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Hermes Wu <hermes.wu@ite.com.tw>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241230-v7-upstream-v7-1-e0fdd4844703@ite.corp-partner.google.com
+Fixes: 792b84fb9038 ("drm/amdgpu: initialize ttm for doorbells")
+Signed-off-by: Jiang Liu <gerry@linux.alibaba.com>
+Signed-off-by: Kent Russell <kent.russell@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ite-it6505.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
-index 26d3b9b843267..24c5a926af8d1 100644
---- a/drivers/gpu/drm/bridge/ite-it6505.c
-+++ b/drivers/gpu/drm/bridge/ite-it6505.c
-@@ -299,7 +299,7 @@
- #define MAX_CR_LEVEL 0x03
- #define MAX_EQ_LEVEL 0x03
- #define AUX_WAIT_TIMEOUT_MS 15
--#define AUX_FIFO_MAX_SIZE 32
-+#define AUX_FIFO_MAX_SIZE 16
- #define PIXEL_CLK_DELAY 1
- #define PIXEL_CLK_INVERSE 0
- #define ADJUST_PHASE_THRESHOLD 80000
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+index c89264242bea3..69dfc3da5e15c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -2049,6 +2049,7 @@ void amdgpu_ttm_fini(struct amdgpu_device *adev)
+ 	ttm_range_man_fini(&adev->mman.bdev, AMDGPU_PL_GDS);
+ 	ttm_range_man_fini(&adev->mman.bdev, AMDGPU_PL_GWS);
+ 	ttm_range_man_fini(&adev->mman.bdev, AMDGPU_PL_OA);
++	ttm_range_man_fini(&adev->mman.bdev, AMDGPU_PL_DOORBELL);
+ 	ttm_device_fini(&adev->mman.bdev);
+ 	adev->mman.initialized = false;
+ 	DRM_INFO("amdgpu: ttm finalized\n");
 -- 
 2.39.5
 
