@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77A2FC0B;
-	Wed,  5 Feb 2025 14:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29AFFC0B;
+	Wed,  5 Feb 2025 14:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764385; cv=none; b=UnZ6Xm9RVRrkYoGp9YUTv9Ga0qefFmw7YzloHt/YEpg3gqr+7WL7Wv/ifRhHTEYSVi3iLFdBKSuPmJAiM9nmLHPv0eLqQ+uZIareZraa2ado4gGbe2klGgTHV8fXaYUsaFrIUvRO8gFP21ipPWWf1iN3pKvkx0GIo16g11Js3a4=
+	t=1738764388; cv=none; b=YiKSZ/k/tIZvSFMZg7FlJbYmBHnx4SWTeYuUV9tK2ulkqsJvDTCNmS1lgQwxCTp0Yg92Ng/ASnkdCyPo9ahX8ipnXqh2vDG3+S44qSmCFDNLCbeZ0vd14z3vjOzXZMQGSd4/E80JpkQ4zTNReO99ANf17aQZAlExC8spqbUZOnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764385; c=relaxed/simple;
-	bh=Qx2RvgbNITCMaiGr6NQY4j4L3lkalAVeXak+jfys0wE=;
+	s=arc-20240116; t=1738764388; c=relaxed/simple;
+	bh=yG/3XdV98V+x4i/A8gOJgI3HSNReSp3N6XHvIQmltp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qqHlAqyXZsIuQQDZx5EAObQsesLL23PIEc6ZKYyVks2DNWinA/qAhGmle3QzyNf0G+cVvn1qJspHPNth5TfesIsmyUgZBu2oskRyTVeYxeDx7aFpatZ1jMCna8AN/uVIzl3UGshuyTmsmEuIDA9f2XJh0MIVa02b+XQMYeEE4sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3JW7i7/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ccCTfem+YsnFGuKyofLXjTEZoGLAkFPfdeBWYXBl+LmsP7ZeGcG5mdLGvZVWgqdlXL7PaDNini9RG7IOLUmvXbI4A51couqFLpZgtI/a2r3lZni1hELM5b6Xvolv7ntX5C9H1Vm/e6aO4U9Llq8of03G6QdBr87RUe8sIH7M4B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z55010vK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3JW7i7/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DBDC4CED1;
-	Wed,  5 Feb 2025 14:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z55010vK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474E7C4CED1;
+	Wed,  5 Feb 2025 14:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764385;
-	bh=Qx2RvgbNITCMaiGr6NQY4j4L3lkalAVeXak+jfys0wE=;
+	s=korg; t=1738764388;
+	bh=yG/3XdV98V+x4i/A8gOJgI3HSNReSp3N6XHvIQmltp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3JW7i7/+jjnGe28wRDwEWrOEiph34xbbEclNR/hniVVRXriFDk9jJGPsi3KeH7N1
-	 Y4RbXBdKUcJobarme1ltp1ExO3zk+gV2RgfL76SLW1HrBpLatYTLS5LgIOZm5LD1f7
-	 o7ta6umPe9/QGG3F3lw6CjHcGPXzTZ5D1jxaLPOE=
+	b=z55010vKIhRHKnkrg2k7OG39TVDt2Wm8/80Tkwo+mMoVsZmOGwd+r9MOVEuxNbBbu
+	 142xIFKI55i+284FACbsrqh3p10sTWkJsUlqoJSFCYpzz6u5SbSCEOwpRZSDQ39OnP
+	 ufpFnIP+S6roq2TUSEn1GabB1CTMAyUx0OFuwitQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Marek Vasut <marex@denx.de>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 167/393] crypto: hisilicon/sec2 - optimize the error return process
-Date: Wed,  5 Feb 2025 14:41:26 +0100
-Message-ID: <20250205134426.685691302@linuxfoundation.org>
+Subject: [PATCH 6.12 119/590] clk: imx8mp: Fix clkout1/2 support
+Date: Wed,  5 Feb 2025 14:37:54 +0100
+Message-ID: <20250205134459.812707406@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chenghai Huang <huangchenghai2@huawei.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 1bed82257b1881b689ee41f14ecb4c20a273cac0 ]
+[ Upstream commit a9b7c84d22fb1687d63ca2a386773015cf59436b ]
 
-Add the printf of an error message and optimized the handling
-process of ret.
+The CLKOUTn may be fed from PLL1/2/3, but the PLL1/2/3 has to be enabled
+first by setting PLL_CLKE bit 11 in CCM_ANALOG_SYS_PLLn_GEN_CTRL register.
+The CCM_ANALOG_SYS_PLLn_GEN_CTRL bit 11 is modeled by plln_out clock. Fix
+the clock tree and place the clkout1/2 under plln_sel instead of plain plln
+to let the clock subsystem correctly control the bit 11 and enable the PLL
+in case the CLKOUTn is supplied by PLL1/2/3.
 
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: fd337f852b26 ("crypto: hisilicon/sec2 - fix for aead icv error")
+Fixes: 43896f56b59e ("clk: imx8mp: add clkout1/2 support")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20241112013718.333771-1-marex@denx.de
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/clk/imx/clk-imx8mp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index 932cc277eb3a5..7b5012cf1ffac 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -849,6 +849,7 @@ static int sec_skcipher_setkey(struct crypto_skcipher *tfm, const u8 *key,
- 		ret = sec_skcipher_aes_sm4_setkey(c_ctx, keylen, c_mode);
- 		break;
- 	default:
-+		dev_err(dev, "sec c_alg err!\n");
- 		return -EINVAL;
- 	}
+diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
+index 516dbd170c8a3..fb18f507f1213 100644
+--- a/drivers/clk/imx/clk-imx8mp.c
++++ b/drivers/clk/imx/clk-imx8mp.c
+@@ -399,8 +399,9 @@ static const char * const imx8mp_dram_core_sels[] = {"dram_pll_out", "dram_alt_r
  
-@@ -1174,7 +1175,8 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- 		return 0;
- 	}
+ static const char * const imx8mp_clkout_sels[] = {"audio_pll1_out", "audio_pll2_out", "video_pll1_out",
+ 						  "dummy", "dummy", "gpu_pll_out", "vpu_pll_out",
+-						  "arm_pll_out", "sys_pll1", "sys_pll2", "sys_pll3",
+-						  "dummy", "dummy", "osc_24m", "dummy", "osc_32k"};
++						  "arm_pll_out", "sys_pll1_out", "sys_pll2_out",
++						  "sys_pll3_out", "dummy", "dummy", "osc_24m",
++						  "dummy", "osc_32k"};
  
--	if (crypto_authenc_extractkeys(&keys, key, keylen))
-+	ret = crypto_authenc_extractkeys(&keys, key, keylen);
-+	if (ret)
- 		goto bad_key;
- 
- 	ret = sec_aead_aes_set_key(c_ctx, &keys);
-@@ -1191,6 +1193,7 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- 
- 	if ((ctx->a_ctx.mac_len & SEC_SQE_LEN_RATE_MASK)  ||
- 	    (ctx->a_ctx.a_key_len & SEC_SQE_LEN_RATE_MASK)) {
-+		ret = -EINVAL;
- 		dev_err(dev, "MAC or AUTH key length error!\n");
- 		goto bad_key;
- 	}
-@@ -1199,7 +1202,7 @@ static int sec_aead_setkey(struct crypto_aead *tfm, const u8 *key,
- 
- bad_key:
- 	memzero_explicit(&keys, sizeof(struct crypto_authenc_keys));
--	return -EINVAL;
-+	return ret;
- }
- 
- 
+ static struct clk_hw **hws;
+ static struct clk_hw_onecell_data *clk_hw_data;
 -- 
 2.39.5
 
