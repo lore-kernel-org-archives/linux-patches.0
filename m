@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B314B165F16;
-	Wed,  5 Feb 2025 15:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3957319259A;
+	Wed,  5 Feb 2025 15:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768328; cv=none; b=r7SY6MDY0zOuVtycXKXHioAtlqO1+zK54ZzGO9oezUN58a9b+rC2qrkwVmnhLa/dc1fCwWXMWlHzJFgjt1mvfotLvNdcEoIhgLGsTc7qHOR0uGB8ejEaR6yFMNAqUDnQ/GMi7WfK818tWOaaDEbdBG2IobdAmTxSirElTeKtFuI=
+	t=1738768332; cv=none; b=nQXRQ5Oj8IcVgXXVhEbAmPjdvISpKZeeqiBYcaXJkDQgs/+ElnRTqacJKOyD3hQ8lR2zL011LlwWK89usd1SDvAykj6S6djEoORbPoZ2jVIcQ4sBHPmK8TDeP66N4s8iGF46sc+CgNcUmWPdqUu1CZk1Z2Gnx+QhyhkckiSkxSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768328; c=relaxed/simple;
-	bh=jfTFVhK6OsiuDfeFTrHnHx+zXWcKWMUsZ1rKGWZOQPY=;
+	s=arc-20240116; t=1738768332; c=relaxed/simple;
+	bh=7+mybLEliGQjTK4PnAHueTdSxQ8BgbwkuOT/d98f+dQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uqOW7zn659FOwhivz6y/76WSRV3h6uojKuM+GTKcvciyuLtRfFe5ZI9V3whYFywHs8MGvcdpjk2c4/pkkDGifhd1dNbJ94mte4ginhevEExaXqCF84qwSQiEU+V2B11SiBQvvy1VzDQ1MVvJop4gUMd+vmfnMhYF9pGCZRVnyyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10my7jU9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TnuYynbznNIw0c3XuRijZYOjMQq55WNpd4r5o7nsn1rMn/VEsVdibWIegcmsiV31++ExiUD/KxEd9laj1RQAiwVhxokRxFDAk6lticBZx/HK3KoF30cYtwT1WHHIaTATdHp8sM3EvUJoDhwbbdIJ4GSrzxgBog1RlVas63/qsng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZNn5kp8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10my7jU9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E02C4CEDD;
-	Wed,  5 Feb 2025 15:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZNn5kp8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9771BC4CED1;
+	Wed,  5 Feb 2025 15:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768328;
-	bh=jfTFVhK6OsiuDfeFTrHnHx+zXWcKWMUsZ1rKGWZOQPY=;
+	s=korg; t=1738768332;
+	bh=7+mybLEliGQjTK4PnAHueTdSxQ8BgbwkuOT/d98f+dQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10my7jU99XSkd6gjOYN8DFzZawaqUpM8S5QR5LYbdZaxiE4z/UlwGuj5f7RlDuVRP
-	 042L68vy130ZwFMMC/eEPsuSIuA4JCu5PNQSHagwSoKp7ZaUFTu8l1XyOEcEaPqqvd
-	 piAwCHny7PYw8U2FYO8U1RFVwXxYlr6GhwUwtB5c=
+	b=2ZNn5kp8L1gDlKD9x7uc1/As55MbBsl4tCB5Er6tr2N8R3U15LUmh3vogngRpE4I8
+	 uh+slxdFMTFvvv1YnHsEjprdxmsnh9RfLY/n/y7FVVU/iM6VFMqLD6T1eaRBw6MCiO
+	 aSwNWktyOSVuH0NF7UQ+AeZA2ptwo3TtYxsNHFa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 531/623] net: davicom: fix UAF in dm9000_drv_remove
-Date: Wed,  5 Feb 2025 14:44:33 +0100
-Message-ID: <20250205134516.541631269@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 6.12 585/590] s390: Add -std=gnu11 to decompressor and purgatory CFLAGS
+Date: Wed,  5 Feb 2025 14:45:40 +0100
+Message-ID: <20250205134517.643720141@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,56 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 19e65c45a1507a1a2926649d2db3583ed9d55fd9 ]
+commit 3b8b80e993766dc96d1a1c01c62f5d15fafc79b9 upstream.
 
-dm is netdev private data and it cannot be
-used after free_netdev() call. Using dm after free_netdev()
-can cause UAF bug. Fix it by moving free_netdev() at the end of the
-function.
+GCC changed the default C standard dialect from gnu17 to gnu23,
+which should not have impacted the kernel because it explicitly requests
+the gnu11 standard in the main Makefile. However, there are certain
+places in the s390 code that use their own CFLAGS without a '-std='
+value, which break with this dialect change because of the kernel's own
+definitions of bool, false, and true conflicting with the C23 reserved
+keywords.
 
-This is similar to the issue fixed in commit
-ad297cd2db89 ("net: qcom/emac: fix UAF in emac_remove").
+  include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
+     11 |         false   = 0,
+        |         ^~~~~
+  include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
+  include/linux/types.h:35:33: error: 'bool' cannot be defined via 'typedef'
+     35 | typedef _Bool                   bool;
+        |                                 ^~~~
+  include/linux/types.h:35:33: note: 'bool' is a keyword with '-std=c23' onwards
 
-This bug is detected by our static analysis tool.
+Add '-std=gnu11' to the decompressor and purgatory CFLAGS to eliminate
+these errors and make the C standard version of these areas match the
+rest of the kernel.
 
-Fixes: cf9e60aa69ae ("net: davicom: Fix regulator not turned off on driver removal")
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-CC: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20250123214213.623518-1-chenyuan0y@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250122-s390-fix-std-for-gcc-15-v1-1-8b00cadee083@kernel.org
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/davicom/dm9000.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/Makefile           |    2 +-
+ arch/s390/purgatory/Makefile |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/davicom/dm9000.c b/drivers/net/ethernet/davicom/dm9000.c
-index 8735e333034cf..b87eaf0c250ce 100644
---- a/drivers/net/ethernet/davicom/dm9000.c
-+++ b/drivers/net/ethernet/davicom/dm9000.c
-@@ -1777,10 +1777,11 @@ static void dm9000_drv_remove(struct platform_device *pdev)
+--- a/arch/s390/Makefile
++++ b/arch/s390/Makefile
+@@ -22,7 +22,7 @@ KBUILD_AFLAGS_DECOMPRESSOR := $(CLANG_FL
+ ifndef CONFIG_AS_IS_LLVM
+ KBUILD_AFLAGS_DECOMPRESSOR += $(if $(CONFIG_DEBUG_INFO),$(aflags_dwarf))
+ endif
+-KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -mpacked-stack
++KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -mpacked-stack -std=gnu11
+ KBUILD_CFLAGS_DECOMPRESSOR += -DDISABLE_BRANCH_PROFILING -D__NO_FORTIFY
+ KBUILD_CFLAGS_DECOMPRESSOR += -D__DECOMPRESSOR
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-delete-null-pointer-checks -msoft-float -mbackchain
+--- a/arch/s390/purgatory/Makefile
++++ b/arch/s390/purgatory/Makefile
+@@ -13,7 +13,7 @@ CFLAGS_sha256.o := -D__DISABLE_EXPORTS -
+ $(obj)/mem.o: $(srctree)/arch/s390/lib/mem.S FORCE
+ 	$(call if_changed_rule,as_o_S)
  
- 	unregister_netdev(ndev);
- 	dm9000_release_board(pdev, dm);
--	free_netdev(ndev);		/* free device structure */
- 	if (dm->power_supply)
- 		regulator_disable(dm->power_supply);
- 
-+	free_netdev(ndev);		/* free device structure */
-+
- 	dev_dbg(&pdev->dev, "released and freed device\n");
- }
- 
--- 
-2.39.5
-
+-KBUILD_CFLAGS := -fno-strict-aliasing -Wall -Wstrict-prototypes
++KBUILD_CFLAGS := -std=gnu11 -fno-strict-aliasing -Wall -Wstrict-prototypes
+ KBUILD_CFLAGS += -Wno-pointer-sign -Wno-sign-compare
+ KBUILD_CFLAGS += -fno-zero-initialized-in-bss -fno-builtin -ffreestanding
+ KBUILD_CFLAGS += -Os -m64 -msoft-float -fno-common
 
 
