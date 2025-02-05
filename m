@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E77B15FA7B;
-	Wed,  5 Feb 2025 15:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A9C17C79;
+	Wed,  5 Feb 2025 15:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768561; cv=none; b=BxoTwVU4jiMg33w61sJrDWtqxAP5aMBQZqQl+8ZVjNnn8iqW8kdB1+B9AUXHYYq3p8fCv7mNqAEAFdP5L1Bb5K+2ehy3zcRT78uBKTj2W2VEHQKPn61he/u6VWr74qXt8MLW5jpJeVcoKZ/eEAKvV9BJd90RxvlIxdcI7voLtj0=
+	t=1738768564; cv=none; b=rjrKlAIPMkcyP0a/U72tGncOdJEPevVHX75atTvQijWVwBfjQ7owYQrF4HwTjaxX+s+fxEtltzHrJCmef+nD3f1OEdA6U8+Y6yPDLcG3iv5zAHNruYOIWZaSfnaslTz/F5Iz/12qCsUMmNlkTPto/YmC53fB3S0CvHhq29LTmcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768561; c=relaxed/simple;
-	bh=fFkTZHKNjaoCez33iLoUEWpTAYtLex49y3TxXcekhWU=;
+	s=arc-20240116; t=1738768564; c=relaxed/simple;
+	bh=sZ2Dlzmb1Il/SKkvDrs/RqvG9mTFlaz27EUp+X/cpKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZPyYkMfRWAF8RG6rGGFEbyAc71HMG1hNufDCCFvERgUQlpKqZc/wt7qGPYbCpWxOooP9laFMJDDlouJ0BIgq38kSa/ymX1lhEYbfMpSOIaGc6bCGeBp2rlN8MsKeMK0iVXPYZYrvfjVDSOll/rcBsheYUr5YRi+R56BrO+fy/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4rinDue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eDAugbOfrhsvfH4M/zsMR3UifuLCRceWzuV0x9NIgGQWCqC6e/sjoPvlLW+V/Qwty5LCfWTlnpsnf8m6Vlt+3OtRG1AOnczxhAMIA3xUF8rj6ltnDiqcseCjGqU75weMV8cw8tDHY6g6j4TnqBjotNHKb1+xs7AvhZjEsWr1/nA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dwrq+5xg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4rinDue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82BFC4CED1;
-	Wed,  5 Feb 2025 15:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dwrq+5xg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3C5C4CED1;
+	Wed,  5 Feb 2025 15:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768561;
-	bh=fFkTZHKNjaoCez33iLoUEWpTAYtLex49y3TxXcekhWU=;
+	s=korg; t=1738768564;
+	bh=sZ2Dlzmb1Il/SKkvDrs/RqvG9mTFlaz27EUp+X/cpKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n4rinDueRidONitSEPoLG64RLxfu7SGhNFj5ICULKRAM2fzFZH/hne8zeNolPAT8w
-	 +XwZpKrFRnOy1I+TAZg2et0cjXnyptXz4q+eoU+5LNa4HJFhZfB/qlhetSX/X1pKQS
-	 4eigFSK/wl278ZAruuk7v7UxegI7cKzS9JHuYMhA=
+	b=Dwrq+5xghVBS9px4I5g/cJHblfL9SKQH3JxHxZ6LKUrNx4+PfVkoeJm7AmCw3otj5
+	 r2d9H0ff0CZJm3In7CD9KYiY2KhB2W2aa7/4rz5mKIn5ZGtO9pBi6U5ymf/fn4OE4K
+	 4OnEhbyrv4TjZJ8A5aBWwF7ockot0PAgumvcunWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
 	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.13 592/623] usb: gadget: f_tcm: Fix Get/SetInterface return value
-Date: Wed,  5 Feb 2025 14:45:34 +0100
-Message-ID: <20250205134518.873917063@linuxfoundation.org>
+Subject: [PATCH 6.13 593/623] usb: dwc3-am62: Fix an OF node leak in phy_syscon_pll_refclk()
+Date: Wed,  5 Feb 2025 14:45:35 +0100
+Message-ID: <20250205134518.912425024@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -49,50 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-commit 3b997089903b909684114aca6f79d683e5c64a0e upstream.
+commit a266462b937beba065e934a563efe13dd246a164 upstream.
 
-Check to make sure that the GetInterface and SetInterface are for valid
-interface. Return proper alternate setting number on GetInterface.
+phy_syscon_pll_refclk() leaks an OF node obtained by
+of_parse_phandle_with_fixed_args(), thus add an of_node_put() call.
 
-Fixes: 0b8b1a1fede0 ("usb: gadget: f_tcm: Provide support to get alternate setting in tcm function")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/ffd91b4640945ea4d3b4f4091cf1abbdbd9cf4fc.1733876548.git.Thinh.Nguyen@synopsys.com
+Cc: stable <stable@kernel.org>
+Fixes: e8784c0aec03 ("drivers: usb: dwc3: Add AM62 USB wrapper driver")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20250109001638.70033-1-joe@pf.is.s.u-tokyo.ac.jp
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_tcm.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/usb/dwc3/dwc3-am62.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -2051,9 +2051,14 @@ static void tcm_delayed_set_alt(struct w
+--- a/drivers/usb/dwc3/dwc3-am62.c
++++ b/drivers/usb/dwc3/dwc3-am62.c
+@@ -166,6 +166,7 @@ static int phy_syscon_pll_refclk(struct
+ 	if (ret)
+ 		return ret;
  
- static int tcm_get_alt(struct usb_function *f, unsigned intf)
- {
--	if (intf == bot_intf_desc.bInterfaceNumber)
-+	struct f_uas *fu = to_f_uas(f);
-+
-+	if (fu->iface != intf)
-+		return -EOPNOTSUPP;
-+
-+	if (fu->flags & USBG_IS_BOT)
- 		return USB_G_ALT_INT_BBB;
--	if (intf == uasp_intf_desc.bInterfaceNumber)
-+	else if (fu->flags & USBG_IS_UAS)
- 		return USB_G_ALT_INT_UAS;
++	of_node_put(args.np);
+ 	am62->offset = args.args[0];
  
- 	return -EOPNOTSUPP;
-@@ -2063,6 +2068,9 @@ static int tcm_set_alt(struct usb_functi
- {
- 	struct f_uas *fu = to_f_uas(f);
- 
-+	if (fu->iface != intf)
-+		return -EOPNOTSUPP;
-+
- 	if ((alt == USB_G_ALT_INT_BBB) || (alt == USB_G_ALT_INT_UAS)) {
- 		struct guas_setup_wq *work;
- 
+ 	/* Core voltage. PHY_CORE_VOLTAGE bit Recommended to be 0 always */
 
 
