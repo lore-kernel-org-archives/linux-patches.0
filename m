@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D44B13C8E2;
-	Wed,  5 Feb 2025 14:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F9E13C8E2;
+	Wed,  5 Feb 2025 14:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766704; cv=none; b=sOta2Zotz4Fh8aK/EZB0ScLbMPS80TdRX3YAvYBvfKOk7VLlF7SWHnudCFagCzwf5/b3/DL3V1xPzQCA+3QaaP0vxV9ZbhGiek1nr/PwSnY7ho2ptTR/qSkGowd9OmxG+kVzl8XY8yf9sXuM3mjT4Y1jXfkouTq8H7Q0wcoWim8=
+	t=1738766708; cv=none; b=Lq6Htkwdb1R04/6ZA3RQfFh0zky9S6BSyUOXnzLKSmX6qS0ddkoebimLj0u2SU3lRcHGHcH5HEqMaN9wVXpGZOWziKz97a+uViUWVIYxNs6mGXfK1w2NsB9BJY9huHLFSnQwUwDVBuVbD28u0pcnUlNOjdc8bZN4pt707ysdqY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766704; c=relaxed/simple;
-	bh=USr3WlkJVwqDlDuQFRay04z7UqIJ/NbTEQwqusZusaQ=;
+	s=arc-20240116; t=1738766708; c=relaxed/simple;
+	bh=wPo35ld3lvoTuCIrsWMnZS2Wa+Zu0XSvfFaSvla15Os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qro9aRC99aqVVHymikppJ5fjsV32BLF8+KSydA2nLNAwln/Bl28aSX1CTT7seilZ6IWd0CuWVPKgk8oxh5G92sO6SvfQDwzGXXdKNKW23N9Js5M6d9MdpQ2ZzrfH3JOsj9v16lzjoRAMAtY/Y3uGzhOqMZHHg8Jl1dKbi49Q7OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PyoW+fiB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bFT51FYCDsXQEYYkaSYqXDpnaKJB28zEhIJVP8lCzxZ+gfqpyQIp3rl458QM8fcFO11h0gpMrzKqxzMnl3GgR7sy0aepTS8PqLqgwFW9LAhn6KqAoCLgqJkATrGHnNsajztLQ2SyT6QXuafwx8X71yfSVGma7VTT8ZokfqQPDeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grxwRpgO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PyoW+fiB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC66DC4CED1;
-	Wed,  5 Feb 2025 14:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grxwRpgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF38C4CED1;
+	Wed,  5 Feb 2025 14:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766704;
-	bh=USr3WlkJVwqDlDuQFRay04z7UqIJ/NbTEQwqusZusaQ=;
+	s=korg; t=1738766707;
+	bh=wPo35ld3lvoTuCIrsWMnZS2Wa+Zu0XSvfFaSvla15Os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PyoW+fiBGSxRKTnYJJ5ztLgUsTCOkIEbikmHk0H1UkkRFIzm6N9SoKJ5FNvnXlgLk
-	 kQ/vxK63gUI7rlMYsMTh0+q7rlGMI+wb5zjfCPHL7hzIfRonlrRAN32F5b73Avz41H
-	 nOBObAd6QKSKCDUnyp/+WWJMNnRRq/cAHK7odnc0=
+	b=grxwRpgO52wj4c4MC1lJwl2kahb1ZN/6Bpu6P6YaSjyY93yebzUw0l8arjMzgMUjC
+	 0cpY3AsqmhlzCcQeJFQUL8+aLHAwPHGVa0KBxXzeYn1F98fZwBkE71kRc1xD/LKMMP
+	 S2IpQzX7o1GmFravOcJEjora7YZdLCmsDS9psMTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 345/590] arm64: dts: qcom: msm8994: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:41:40 +0100
-Message-ID: <20250205134508.471545301@linuxfoundation.org>
+Subject: [PATCH 6.12 352/590] arm64: dts: qcom: sm6125: correct sleep clock frequency
+Date: Wed,  5 Feb 2025 14:41:47 +0100
+Message-ID: <20250205134508.738035371@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -53,30 +53,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit a4148d869d47d8c86da0291dd95d411a5ebe90c8 ]
+[ Upstream commit b3c547e1507862f0e4d46432b665c5c6e61e14d6 ]
 
-The MSM8994 platform uses PM8994/6 to provide sleep clock. According to the
+The SM6125 platform uses PM6125 to provide sleep clock. According to the
 documentation, that clock has 32.7645 kHz frequency. Correct the sleep
 clock definition.
 
-Fixes: feeaf56ac78d ("arm64: dts: msm8994 SoC and Huawei Angler (Nexus 6P) support")
+Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-3-e9b08fbeadd3@linaro.org
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-11-e9b08fbeadd3@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8994.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sm6125.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index ed2b90148d9f7..8a7de1dba2b9d 100644
---- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -34,7 +34,7 @@
+diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+index 133610d14fc41..1f7fd429ad428 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+@@ -28,7 +28,7 @@
  		sleep_clk: sleep-clk {
  			compatible = "fixed-clock";
  			#clock-cells = <0>;
--			clock-frequency = <32768>;
+-			clock-frequency = <32000>;
 +			clock-frequency = <32764>;
  			clock-output-names = "sleep_clk";
  		};
