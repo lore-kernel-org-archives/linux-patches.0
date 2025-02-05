@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1A01662EF;
-	Wed,  5 Feb 2025 14:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DB9170A13;
+	Wed,  5 Feb 2025 14:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766577; cv=none; b=YNLTkF8yapeMsJwpO+dBs1ITIyU2MVsMpuO5A2cs+UooO7ldlnLbvuemF+j2lt8AXI3IwgcteqYB+WVJf3A8/ZqiD6P/pUAtIaDdAOKfBJBoHcb8dnUOYCaH7zVN2erd/pR5ZY+KeJ0d+8thm/KakCnlEBTuuvbi/ELRUdOp3Ug=
+	t=1738766580; cv=none; b=hhCUHQEdfKxahlD8YlG5tn/F79PG3FGzV+3ELAdmOOYFzjZ0qTMkKsPVun+ouGDf7286DCwCOD/B9VrHnxBKoB6Rp6GyVFbwp4VTTI/Q3DC/0KNPp38/IzVLQt6O8pmTe79sB/wL04Js19FFBDDk9K+EhTUTpqkZQUsKXDBLfX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766577; c=relaxed/simple;
-	bh=Tz0bc7aQixPodbD7tz7qxgeSXVpQT2qwvAn9cJbH/wQ=;
+	s=arc-20240116; t=1738766580; c=relaxed/simple;
+	bh=GNlYFCH5peNiICbmxItCv1YBJ8+iireHoTZry6yXV9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BJoGKeKpFSZBsvwFguBviTH/ea8ItCf9+7TZe53SY8lNBCriFL7DJaBA+pCCIQhYN3m4wiV4LyC7DmUbitWc+rYm3TlVrp6qHJOD3JAMjt8cBrSHL+UqeTu5cJknsWpgCkGQvB4BM7jVif6MH1xRc0e5zoAi4Yff90ChNdh/228=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmgGm6XN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GxHO8ZOxwSotZYkQz/N/Cq2WAzGTRf93hPhviajPy9g41Z0BoVoZJMToJ/tSCNNFMMATe66HQ/jKHxLr29wc8WmewDGx3PcUuubI9HYloxtv/51VVYUPVT/7hDwMvUl4j+bDFP1TBq01kJvCB0Y+3Fo4bZpQ+daggxqLYYu0o1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0wDyrgT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmgGm6XN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A46C4CED1;
-	Wed,  5 Feb 2025 14:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0wDyrgT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671A4C4CEE2;
+	Wed,  5 Feb 2025 14:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766576;
-	bh=Tz0bc7aQixPodbD7tz7qxgeSXVpQT2qwvAn9cJbH/wQ=;
+	s=korg; t=1738766580;
+	bh=GNlYFCH5peNiICbmxItCv1YBJ8+iireHoTZry6yXV9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BmgGm6XNYpYmEA8uGBa5+tD3JAfyJGuyAD+xnhcOPMkEbfTvcCEVRZrNIIq+kwjYH
-	 I7xCekjGK07JbDY5vu8Y2J4/Rr2W15x8HBbBDh2UEtB9NWCAT3heJGto1SmicuTrBN
-	 8xqRRK6Jkm//nWxhQ6iijqOnkBgTKFhxegoV0QxE=
+	b=b0wDyrgT2qvep+7zOqbBxT/HBsPs6+K68BdWUfGcg6fWIgl74SgtP7GdIiI+Zm6U8
+	 TSxVaY5S2T0GnsP+/BYU8j96AdXs5UyA4/e4Q84kFgFFGaVKg9esKoAjObWQkVAQhP
+	 7oMWl2ovWnXlR9JuL1RfxMVAGFlmiJci/uO/f+7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
-	syzbot+d7e968426f644b567e31@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 375/393] net: usb: rtl8150: enable basic endpoint checking
-Date: Wed,  5 Feb 2025 14:44:54 +0100
-Message-ID: <20250205134434.642565873@linuxfoundation.org>
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 289/623] perf maps: Fix display of kernel symbols
+Date: Wed,  5 Feb 2025 14:40:31 +0100
+Message-ID: <20250205134507.287721012@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,120 +56,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit 90b7f2961798793275b4844348619b622f983907 upstream.
+[ Upstream commit dae29277fddaaf6670d17dfcbb916a2ca29c912f ]
 
-Syzkaller reports [1] encountering a common issue of utilizing a wrong
-usb endpoint type during URB submitting stage. This, in turn, triggers
-a warning shown below.
+Since commit 659ad3492b913c90 ("perf maps: Switch from rbtree to lazily
+sorted array for addresses"), perf doesn't display anymore kernel
+symbols on powerpc, allthough it still detects them as kernel addresses.
 
-For now, enable simple endpoint checking (specifically, bulk and
-interrupt eps, testing control one is not essential) to mitigate
-the issue with a view to do other related cosmetic changes later,
-if they are necessary.
+	# Overhead  Command     Shared Object  Symbol
+	# ........  ..........  ............. ......................................
+	#
+	    80.49%  Coeur main  [unknown]      [k] 0xc005f0f8
+	     3.91%  Coeur main  gau            [.] engine_loop.constprop.0.isra.0
+	     1.72%  Coeur main  [unknown]      [k] 0xc005f11c
+	     1.09%  Coeur main  [unknown]      [k] 0xc01f82c8
+	     0.44%  Coeur main  libc.so.6      [.] epoll_wait
+	     0.38%  Coeur main  [unknown]      [k] 0xc0011718
+	     0.36%  Coeur main  [unknown]      [k] 0xc01f45c0
 
-[1] Syzkaller report:
-usb 1-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 1 PID: 2586 at drivers/usb/core/urb.c:503 usb_submit_urb+0xe4b/0x1730 driv>
-Modules linked in:
-CPU: 1 UID: 0 PID: 2586 Comm: dhcpcd Not tainted 6.11.0-rc4-syzkaller-00069-gfc88bb11617>
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
-RIP: 0010:usb_submit_urb+0xe4b/0x1730 drivers/usb/core/urb.c:503
-Code: 84 3c 02 00 00 e8 05 e4 fc fc 4c 89 ef e8 fd 25 d7 fe 45 89 e0 89 e9 4c 89 f2 48 8>
-RSP: 0018:ffffc9000441f740 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: ffff888112487a00 RCX: ffffffff811a99a9
-RDX: ffff88810df6ba80 RSI: ffffffff811a99b6 RDI: 0000000000000001
-RBP: 0000000000000003 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000001
-R13: ffff8881023bf0a8 R14: ffff888112452a20 R15: ffff888112487a7c
-FS:  00007fc04eea5740(0000) GS:ffff8881f6300000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f0a1de9f870 CR3: 000000010dbd0000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- rtl8150_open+0x300/0xe30 drivers/net/usb/rtl8150.c:733
- __dev_open+0x2d4/0x4e0 net/core/dev.c:1474
- __dev_change_flags+0x561/0x720 net/core/dev.c:8838
- dev_change_flags+0x8f/0x160 net/core/dev.c:8910
- devinet_ioctl+0x127a/0x1f10 net/ipv4/devinet.c:1177
- inet_ioctl+0x3aa/0x3f0 net/ipv4/af_inet.c:1003
- sock_do_ioctl+0x116/0x280 net/socket.c:1222
- sock_ioctl+0x22e/0x6c0 net/socket.c:1341
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:907 [inline]
- __se_sys_ioctl fs/ioctl.c:893 [inline]
- __x64_sys_ioctl+0x193/0x220 fs/ioctl.c:893
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fc04ef73d49
-...
+This is because function maps__find_next_entry() now returns current
+entry instead of next entry, leading to kernel map end address getting
+mis-configured with its own start address instead of the start address
+of the following map.
 
-This change has not been tested on real hardware.
+Fix it by really taking the next entry, also make sure that entry
+follows current one by making sure entries are sorted.
 
-Reported-and-tested-by: syzbot+d7e968426f644b567e31@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d7e968426f644b567e31
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patch.msgid.link/20250124093020.234642-1-n.zhandarovich@fintech.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 659ad3492b913c90 ("perf maps: Switch from rbtree to lazily sorted array for addresses")
+Reviewed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/2ea4501209d5363bac71a6757fe91c0747558a42.1736329923.git.christophe.leroy@csgroup.eu
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rtl8150.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ tools/perf/util/maps.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -71,6 +71,14 @@
- #define MSR_SPEED		(1<<3)
- #define MSR_LINK		(1<<2)
+diff --git a/tools/perf/util/maps.c b/tools/perf/util/maps.c
+index 432399cbe5dd3..09c9cc326c08d 100644
+--- a/tools/perf/util/maps.c
++++ b/tools/perf/util/maps.c
+@@ -1136,8 +1136,13 @@ struct map *maps__find_next_entry(struct maps *maps, struct map *map)
+ 	struct map *result = NULL;
  
-+/* USB endpoints */
-+enum rtl8150_usb_ep {
-+	RTL8150_USB_EP_CONTROL = 0,
-+	RTL8150_USB_EP_BULK_IN = 1,
-+	RTL8150_USB_EP_BULK_OUT = 2,
-+	RTL8150_USB_EP_INT_IN = 3,
-+};
-+
- /* Interrupt pipe data */
- #define INT_TSR			0x00
- #define INT_RSR			0x01
-@@ -867,6 +875,13 @@ static int rtl8150_probe(struct usb_inte
- 	struct usb_device *udev = interface_to_usbdev(intf);
- 	rtl8150_t *dev;
- 	struct net_device *netdev;
-+	static const u8 bulk_ep_addr[] = {
-+		RTL8150_USB_EP_BULK_IN | USB_DIR_IN,
-+		RTL8150_USB_EP_BULK_OUT | USB_DIR_OUT,
-+		0};
-+	static const u8 int_ep_addr[] = {
-+		RTL8150_USB_EP_INT_IN | USB_DIR_IN,
-+		0};
- 
- 	netdev = alloc_etherdev(sizeof(rtl8150_t));
- 	if (!netdev)
-@@ -880,6 +895,13 @@ static int rtl8150_probe(struct usb_inte
- 		return -ENOMEM;
- 	}
- 
-+	/* Verify that all required endpoints are present */
-+	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr) ||
-+	    !usb_check_int_endpoints(intf, int_ep_addr)) {
-+		dev_err(&intf->dev, "couldn't find required endpoints\n");
-+		goto out;
+ 	down_read(maps__lock(maps));
++	while (!maps__maps_by_address_sorted(maps)) {
++		up_read(maps__lock(maps));
++		maps__sort_by_address(maps);
++		down_read(maps__lock(maps));
 +	}
-+
- 	tasklet_setup(&dev->tl, rx_fixup);
- 	spin_lock_init(&dev->rx_pool_lock);
+ 	i = maps__by_address_index(maps, map);
+-	if (i < maps__nr_maps(maps))
++	if (++i < maps__nr_maps(maps))
+ 		result = map__get(maps__maps_by_address(maps)[i]);
  
+ 	up_read(maps__lock(maps));
+-- 
+2.39.5
+
 
 
