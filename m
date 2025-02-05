@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74C28634E;
-	Wed,  5 Feb 2025 14:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F65522A;
+	Wed,  5 Feb 2025 14:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765082; cv=none; b=qCmnD0RIKIo4A2HebDs3Z1Bi4PrggEZnE8pgaR+GGBWAcQuDa2K3I7VgnbMkT7bAsUPZBtsA6FQs0aSwrXaS+9+x0YaQxBipd8/y9y/7jiUOIxvNipTneL/bytR8qX485tDvd8nb0us2Yx8f2GAGLrHKyZs5oCT+/DDeY9Bd8Q0=
+	t=1738765086; cv=none; b=MPTjaT952hlci3nxGqnEKuOmNKUsxjP4mAXX3Lm3fcAEE+DRqOaGVypmJK5HiVC1CmKrraPmZPTeWkkVj+2pT/9Hvc52C3qsrMsiWZExAQgWMkxUI3pFEwnw4yW5+bsmcRWTp27E4JBea8ayFQyfTNX+ARCVTZunXwDkoVpz+wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765082; c=relaxed/simple;
-	bh=/wI28X7y/QLlQL4bMHMt/Hi3HUu2RR9mqORrRZYrSPM=;
+	s=arc-20240116; t=1738765086; c=relaxed/simple;
+	bh=1Ql/qXH+e4jvTjVOSQUKuaMZCPfeXebpj06HS7+PPqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eaTH38pUG3epojdXa7viJHIuf9jaKiOTGiyi/JJ9Fvv/T+eH/BFcEtIX1r6E9g0XMgDk1cNjO1aNE83cu6+5jItZgQ99FVoPHJDeTnOHSPEtXFNEYdRem8O02nbjUqlqvI78MfHrmFAoWBB4iLUzffvAphCZlMilQmS00o/iFow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvZzav7O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ftb04o9M2fg6YvLEwsAyhpcjQXuGFKdn0jW3MzBhHz1I8VJZnitjJeb47rVstVE13f0GQnnk4vqzb1/NgInXet/MSxM+4ZQqLanF0r9n4NTpG8AHrWNzRaSojXLrOkwWDIyzJORl09JzX2o+9tgVGJwB9lsNcnopAre+AlsUVDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/nXwZ+/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvZzav7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6429C4CEE3;
-	Wed,  5 Feb 2025 14:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/nXwZ+/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7900C4CED6;
+	Wed,  5 Feb 2025 14:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765082;
-	bh=/wI28X7y/QLlQL4bMHMt/Hi3HUu2RR9mqORrRZYrSPM=;
+	s=korg; t=1738765086;
+	bh=1Ql/qXH+e4jvTjVOSQUKuaMZCPfeXebpj06HS7+PPqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uvZzav7Og1pT7gKQyzBdX7qSSkn2iLjPcVbDMMneWjPilOML131caeLGXnGqyTq6W
-	 yQubzg4xnMuoDDAEAZCulRTC35rNpt0CAuEcskBtqALas+NnI2774YVAJw6tGA9tX1
-	 5i/K9kwKjOnqHbIm2IhEr1oRy1HcQ3vuCy/TVvJs=
+	b=Y/nXwZ+/jDruFivMf2KPbUG+548PRC1a0T67vY3abW00aNz0Ocd7E2pJAgY5vETW1
+	 CmN/M5HRF30Vallonve066zgX0nhkrqUQdMHnEJHCX8BiVl405Q26rFOY8EeuvRy9F
+	 Ienv+5ZRdSTbsZOJJLP6HfKTdtmuA10G3r7oZFXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 188/590] wifi: mt76: Enhance mt7925_mac_link_sta_add to support MLO
-Date: Wed,  5 Feb 2025 14:39:03 +0100
-Message-ID: <20250205134502.471647628@linuxfoundation.org>
+Subject: [PATCH 6.13 142/623] OPP: OF: Fix an OF node leak in _opp_add_static_v2()
+Date: Wed,  5 Feb 2025 14:38:04 +0100
+Message-ID: <20250205134501.666597737@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit e6803d39a8aa59e557402a541a97ee04b06c49b2 ]
+[ Upstream commit 1d38eb7f7b26261a0b642f6e0923269c7c000a97 ]
 
-Enhance mt7925_mac_link_sta_add to support MLO.
+_opp_add_static_v2() leaks the obtained OF node reference when
+_of_opp_alloc_required_opps() fails. Add an of_node_put() call in the
+error path.
 
-Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/20241211011926.5002-9-sean.wang@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 3466ea2cd6b6 ("OPP: Don't drop opp->np reference while it is still in use")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/opp/of.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index 3cd3c3e289e72..1140af6577937 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -878,9 +878,14 @@ static int mt7925_mac_link_sta_add(struct mt76_dev *mdev,
- 	link_conf = mt792x_vif_to_bss_conf(vif, link_id);
+diff --git a/drivers/opp/of.c b/drivers/opp/of.c
+index fd5ed28582588..a24f76f5fd017 100644
+--- a/drivers/opp/of.c
++++ b/drivers/opp/of.c
+@@ -926,7 +926,7 @@ static struct dev_pm_opp *_opp_add_static_v2(struct opp_table *opp_table,
  
- 	/* should update bss info before STA add */
--	if (vif->type == NL80211_IFTYPE_STATION && !link_sta->sta->tdls)
--		mt7925_mcu_add_bss_info(&dev->phy, mconf->mt76.ctx,
--					link_conf, link_sta, false);
-+	if (vif->type == NL80211_IFTYPE_STATION && !link_sta->sta->tdls) {
-+		if (ieee80211_vif_is_mld(vif))
-+			mt7925_mcu_add_bss_info(&dev->phy, mconf->mt76.ctx,
-+						link_conf, link_sta, link_sta != mlink->pri_link);
-+		else
-+			mt7925_mcu_add_bss_info(&dev->phy, mconf->mt76.ctx,
-+						link_conf, link_sta, false);
-+	}
+ 	ret = _of_opp_alloc_required_opps(opp_table, new_opp);
+ 	if (ret)
+-		goto free_opp;
++		goto put_node;
  
- 	if (ieee80211_vif_is_mld(vif) &&
- 	    link_sta == mlink->pri_link) {
+ 	if (!of_property_read_u32(np, "clock-latency-ns", &val))
+ 		new_opp->clock_latency_ns = val;
+@@ -976,6 +976,8 @@ static struct dev_pm_opp *_opp_add_static_v2(struct opp_table *opp_table,
+ 
+ free_required_opps:
+ 	_of_opp_free_required_opps(opp_table, new_opp);
++put_node:
++	of_node_put(np);
+ free_opp:
+ 	_opp_free(new_opp);
+ 
 -- 
 2.39.5
 
