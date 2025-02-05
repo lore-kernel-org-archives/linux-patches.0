@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804EB1547E9;
-	Wed,  5 Feb 2025 14:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515B118D649;
+	Wed,  5 Feb 2025 14:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767480; cv=none; b=NE1X+WmHR1Ym8bEzRV+UsfJICPPZ/6s7rS8fAW5BulH/1YJOOEciMjim8+19K+ffpBwgToahslk5awXQQE+RplSqhgvDJ1JYuxrGbnE4BvGisEGrCBuuornXFOa+ZxpdrxICv6QrwIRBlLrvmFHiof4gSrP2B+9OwkstD1umpII=
+	t=1738767484; cv=none; b=hHmweBAevpXWZID8tMzl07vLh6XmjwFJ4Vexb8UolLVHsL734ULdP2t8R8eS4dd0zSylPhagGykBd+qJrTESt2DcNV2ULsAr49qJLQir++4CnDRlYKxKciScE0sRb5pRI9XE8poEaQmjV3/ATw4p9/ChYkpfKphBtC+2UJGQKsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767480; c=relaxed/simple;
-	bh=abgb3gDk3lsCXylqzjjVFahxPAZHMO23HWyR1bZ6XSQ=;
+	s=arc-20240116; t=1738767484; c=relaxed/simple;
+	bh=Iv3h0c1+ciJO8x2v9p4GRQr255hDUOFbfpBoy5UrumQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IxglqYwEF2exYgiGxk9tlZnbtNd3ClyqJsb62L0OWvFBhKxj13svTusO1bJmxJA0gjdL77/c/xzk3PtzONz9jNofx+KXCqfKqAU3kH6jeSVUSW4JqFo3E2hSFkEBVHpkeyeW9ZDi5mMBK5fx6bt9d2gCKwJCW/CMuFsXPwyETQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWge3TWW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=avI0AL6Bs28QPKGpqs7gM8xJC/Z3baN3mXM5JTWmYSCpTdz1TwhLANHxOOLE9RO3QgPwr16krv7fAeS5PHzjEoea6n88RxFI8lBBSyz4qkR4XKcACZMNYGO9+uxoA7MxqZnRBOn2KbYnXOIvKzTbgJ74I1wYsVSFjIrff7mZBxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLCYu97F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWge3TWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72A2C4CED1;
-	Wed,  5 Feb 2025 14:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLCYu97F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F90FC4CED1;
+	Wed,  5 Feb 2025 14:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767480;
-	bh=abgb3gDk3lsCXylqzjjVFahxPAZHMO23HWyR1bZ6XSQ=;
+	s=korg; t=1738767483;
+	bh=Iv3h0c1+ciJO8x2v9p4GRQr255hDUOFbfpBoy5UrumQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWge3TWWelNBVTHvSfdFmxCWtZj9hgrZs8rnJn7mKPM9z6nuTPGItQQtnuNiBCPO/
-	 llwjt2cBouymVxEOGDjct2ComciWHV9y3nQmabYkc5MrKTAHQpilKUpSx6NBUtCmSR
-	 dU3JuqXIcSsntdVhVCVtqZ0OeR/p8bs/wV/Wre6U=
+	b=GLCYu97FdINZkUAreMCGxdZUo/V/ZRM1gPbxEFjOqJ5jJnWqp7goOXnHtqN/R6uuj
+	 2xfvhtYiJXDXG/81NX8/WDt+0usTd73A6d3NLK/dFliFzWll1J5Z2duCML+0ozmYN1
+	 sjBDJ6KSk1y6L99KMXVM8KG586KtuQ1dZ/T5H4aI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Adam Ford <aford173@gmail.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 410/623] arm64: dts: qcom: sc8280xp: Fix up remoteproc register space sizes
-Date: Wed,  5 Feb 2025 14:42:32 +0100
-Message-ID: <20250205134511.909452742@linuxfoundation.org>
+Subject: [PATCH 6.12 463/590] phy: freescale: fsl-samsung-hdmi: Simplify REG21_PMS_S_MASK lookup
+Date: Wed,  5 Feb 2025 14:43:38 +0100
+Message-ID: <20250205134512.974802928@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +50,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 7ec7e327286182c65d0b5b81dff498d620fe9e8c ]
+[ Upstream commit 375ee44adb3640099508c5c0c01d86f0bdb16e97 ]
 
-Make sure the remoteproc reg ranges reflect the entire register space
-they refer to.
+The value of 'S' is writen to two places, PHY_REG3[7:4] and
+PHY_REG21[3:0].  There is a lookup table which contains
+the value of PHY_REG3.  Rather than using a switch statement
+based on the pixel clock to search for the value of 'S' again,
+just shift the contents of PHY_REG3[7:4] >> 4 and place the value
+in PHY_REG21[3:0].  Doing this can eliminate an entire function.
 
-Since they're unused by the driver, there's no functional change.
-
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20241212-topic-8280_rproc_reg-v1-1-bd1c696e91b0@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Tested-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Reviewed-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Link: https://lore.kernel.org/r/20240914112816.520224-3-aford173@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: d567679f2b6a ("phy: freescale: fsl-samsung-hdmi: Clean up fld_tg_code calculation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/phy/freescale/phy-fsl-samsung-hdmi.c | 39 ++------------------
+ 1 file changed, 4 insertions(+), 35 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index ef06d1ac084d3..c97d1eeaf890f 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -2743,7 +2743,7 @@
+diff --git a/drivers/phy/freescale/phy-fsl-samsung-hdmi.c b/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
+index acea7008aefc5..4f6874226f9ab 100644
+--- a/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
++++ b/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
+@@ -364,40 +364,6 @@ to_fsl_samsung_hdmi_phy(struct clk_hw *hw)
+ 	return container_of(hw, struct fsl_samsung_hdmi_phy, hw);
+ }
  
- 		remoteproc_adsp: remoteproc@3000000 {
- 			compatible = "qcom,sc8280xp-adsp-pas";
--			reg = <0 0x03000000 0 0x100>;
-+			reg = <0 0x03000000 0 0x10000>;
+-static void
+-fsl_samsung_hdmi_phy_configure_pixclk(struct fsl_samsung_hdmi_phy *phy,
+-				      const struct phy_config *cfg)
+-{
+-	u8 div = 0x1;
+-
+-	switch (cfg->pixclk) {
+-	case  22250000 ...  33750000:
+-		div = 0xf;
+-		break;
+-	case  35000000 ...  40000000:
+-		div = 0xb;
+-		break;
+-	case  43200000 ...  47500000:
+-		div = 0x9;
+-		break;
+-	case  50349650 ...  63500000:
+-		div = 0x7;
+-		break;
+-	case  67500000 ...  90000000:
+-		div = 0x5;
+-		break;
+-	case  94000000 ... 148500000:
+-		div = 0x3;
+-		break;
+-	case 154000000 ... 297000000:
+-		div = 0x1;
+-		break;
+-	}
+-
+-	writeb(REG21_SEL_TX_CK_INV | FIELD_PREP(REG21_PMS_S_MASK, div),
+-	       phy->regs + PHY_REG(21));
+-}
+-
+ static void
+ fsl_samsung_hdmi_phy_configure_pll_lock_det(struct fsl_samsung_hdmi_phy *phy,
+ 					    const struct phy_config *cfg)
+@@ -466,7 +432,10 @@ static int fsl_samsung_hdmi_phy_configure(struct fsl_samsung_hdmi_phy *phy,
+ 	for (i = 0; i < PHY_PLL_DIV_REGS_NUM; i++)
+ 		writeb(cfg->pll_div_regs[i], phy->regs + PHY_REG(2) + i * 4);
  
- 			interrupts-extended = <&intc GIC_SPI 162 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
-@@ -5254,7 +5254,7 @@
+-	fsl_samsung_hdmi_phy_configure_pixclk(phy, cfg);
++	/* High nibble of pll_div_regs[1] contains S which also gets written to REG21 */
++	writeb(REG21_SEL_TX_CK_INV | FIELD_PREP(REG21_PMS_S_MASK,
++	       cfg->pll_div_regs[1] >> 4), phy->regs + PHY_REG(21));
++
+ 	fsl_samsung_hdmi_phy_configure_pll_lock_det(phy, cfg);
  
- 		remoteproc_nsp0: remoteproc@1b300000 {
- 			compatible = "qcom,sc8280xp-nsp0-pas";
--			reg = <0 0x1b300000 0 0x100>;
-+			reg = <0 0x1b300000 0 0x10000>;
- 
- 			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_nsp0_in 0 IRQ_TYPE_EDGE_RISING>,
-@@ -5385,7 +5385,7 @@
- 
- 		remoteproc_nsp1: remoteproc@21300000 {
- 			compatible = "qcom,sc8280xp-nsp1-pas";
--			reg = <0 0x21300000 0 0x100>;
-+			reg = <0 0x21300000 0 0x10000>;
- 
- 			interrupts-extended = <&intc GIC_SPI 887 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_nsp1_in 0 IRQ_TYPE_EDGE_RISING>,
+ 	writeb(REG33_FIX_DA | REG33_MODE_SET_DONE, phy->regs + PHY_REG(33));
 -- 
 2.39.5
 
