@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242CF151988;
-	Wed,  5 Feb 2025 14:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F9A151988;
+	Wed,  5 Feb 2025 14:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766107; cv=none; b=REoG2/kXijdFuYRoezaf9YtlVDuNSGR1pmf8xQOxMQEDS9AfsXZZkk7KZRIhVu0b/uVI8PbpGiCAvd0GBSg76/HDSTk+nZgSgq7V02fGW6EVVvOKTRXwoszWaMFYUHBb1TPTlqIoDNSs5UgXz0S8ON0K9+obN3vqU+L8rJB28z8=
+	t=1738766110; cv=none; b=SvypNwmeKGuwBSwsdReGqzAt7DWktQ3pZd5bMIfoIFA+r0CYftmF1yh/ps9L8oESXSArt0o7/QZOq/n09BE29agplH84HT3EwO9T3D0uCKoDTY0yrVj+53vZsEyPAOa6iHychpCmlN+JSB+faWwhqV9tLONIn+zwf1aQcbrB0AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766107; c=relaxed/simple;
-	bh=UqLAA1o5/fb2MmgCCEhj68EtnbHu9S413BainDcamTA=;
+	s=arc-20240116; t=1738766110; c=relaxed/simple;
+	bh=cLyOOQ4Og5kJsKCJoBtvriCG7tpqp+l9bv/w1qRflb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JFnzLM6Kab7qBKEiOsVQSqSAuAVnMf9l21MHrKGuf1jDpTALN10Iy8Ax328l6lroVryQHE127zSg4P1JP9qoJ9dDvDUBWzsEliuZdAx1qOd72KYehxEEX9EvFY/VMapN/Ok44/MkBopCT/hz1VtqE8oie89rTMAQlrhSJgQGw3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2nOA2dl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sdwh4Rk7K9EKmEXOXjwqG51yLISveFnzuzVYwVkymWSU5xO1p7GgJG/EFLN0pD+czhH/AYxnBHAlvWa0Gm647f8TiEfC6EU9DTNokr8wfFzJ1FLjirnbKnNomWYkgU8raI0dwhzzqHoWnFIdl49zyR7TliawPiV0NlmEYjXEWFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wS5NooGw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2nOA2dl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A54C4CED1;
-	Wed,  5 Feb 2025 14:35:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wS5NooGw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05ACCC4CEE4;
+	Wed,  5 Feb 2025 14:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766107;
-	bh=UqLAA1o5/fb2MmgCCEhj68EtnbHu9S413BainDcamTA=;
+	s=korg; t=1738766110;
+	bh=cLyOOQ4Og5kJsKCJoBtvriCG7tpqp+l9bv/w1qRflb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H2nOA2dlx1u95Z5jIwdXNs88ZoNZB0vI9J2LPTlXKfvzfNzgcCsU+a4xocu5h2Rlx
-	 nlop/oAtX0sNsnIH+jY14VuhFwWe4SXAyt1r05ADTnTm9Yr1EFBPo/SB4emls/JE7V
-	 2FsAwf7EMFi5nKO/Wm9JOFvK99IveKRwgizqBrCw=
+	b=wS5NooGwXhyZJx4QmXec+M9rxPpFZ5Ldr6iok61ZJy38sc6jbCqKeZBWJsuIZ7/ua
+	 2swxCXp9DJ2eHqezM+RtPjtjuaQCMgzebJMA6te2uDCLhdhlNzGcU83IxNvTet3Wud
+	 o8zxd1zNtBVGzuALq6ZoM+T5DIWkPDZdxpW6S5sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2e5de9e3ab986b71d2bf@syzkaller.appspotmail.com,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mahdi Arghavani <ma.arghavani@yahoo.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Haibo Zhang <haibo.zhang@otago.ac.nz>,
+	David Eyers <david.eyers@otago.ac.nz>,
+	Abbas Arghavani <abbas.arghavani@mdu.se>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 330/393] net: netdevsim: try to close UDP port harness races
-Date: Wed,  5 Feb 2025 14:44:09 +0100
-Message-ID: <20250205134432.940027734@linuxfoundation.org>
+Subject: [PATCH 6.13 243/623] tcp_cubic: fix incorrect HyStart round start detection
+Date: Wed,  5 Feb 2025 14:39:45 +0100
+Message-ID: <20250205134505.522971658@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,177 +53,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Mahdi Arghavani <ma.arghavani@yahoo.com>
 
-[ Upstream commit 50bf398e1ceacb9a7f85bd3bdca065ebe5cb6159 ]
+[ Upstream commit 25c1a9ca53db5780757e7f53e688b8f916821baa ]
 
-syzbot discovered that we remove the debugfs files after we free
-the netdev. Try to clean up the relevant dir while the device
-is still around.
+I noticed that HyStart incorrectly marks the start of rounds,
+leading to inaccurate measurements of ACK train lengths and
+resetting the `ca->sample_cnt` variable. This inaccuracy can impact
+HyStart's functionality in terminating exponential cwnd growth during
+Slow-Start, potentially degrading TCP performance.
 
-Reported-by: syzbot+2e5de9e3ab986b71d2bf@syzkaller.appspotmail.com
-Fixes: 424be63ad831 ("netdevsim: add UDP tunnel port offload support")
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250122224503.762705-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The issue arises because the changes introduced in commit 4e1fddc98d25
+("tcp_cubic: fix spurious Hystart ACK train detections for not-cwnd-limited flows")
+moved the caller of the `bictcp_hystart_reset` function inside the `hystart_update` function.
+This modification added an additional condition for triggering the caller,
+requiring that (tcp_snd_cwnd(tp) >= hystart_low_window) must also
+be satisfied before invoking `bictcp_hystart_reset`.
+
+This fix ensures that `bictcp_hystart_reset` is correctly called
+at the start of a new round, regardless of the congestion window size.
+This is achieved by moving the condition
+(tcp_snd_cwnd(tp) >= hystart_low_window)
+from before calling `bictcp_hystart_reset` to after it.
+
+I tested with a client and a server connected through two Linux software routers.
+In this setup, the minimum RTT was 150 ms, the bottleneck bandwidth was 50 Mbps,
+and the bottleneck buffer size was 1 BDP, calculated as (50M / 1514 / 8) * 0.150 = 619 packets.
+I conducted the test twice, transferring data from the server to the client for 1.5 seconds.
+Before the patch was applied, HYSTART-DELAY stopped the exponential growth of cwnd when
+cwnd = 516, and the bottleneck link was not yet saturated (516 < 619).
+After the patch was applied, HYSTART-ACK-TRAIN stopped the exponential growth of cwnd when
+cwnd = 632, and the bottleneck link was saturated (632 > 619).
+In this test, applying the patch resulted in 300 KB more data delivered.
+
+Fixes: 4e1fddc98d25 ("tcp_cubic: fix spurious Hystart ACK train detections for not-cwnd-limited flows")
+Signed-off-by: Mahdi Arghavani <ma.arghavani@yahoo.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Cc: Neal Cardwell <ncardwell@google.com>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Haibo Zhang <haibo.zhang@otago.ac.nz>
+Cc: David Eyers <david.eyers@otago.ac.nz>
+Cc: Abbas Arghavani <abbas.arghavani@mdu.se>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Tested-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/netdevsim.h             |  1 +
- drivers/net/netdevsim/udp_tunnels.c           | 23 +++++++++++--------
- .../drivers/net/netdevsim/udp_tunnel_nic.sh   | 16 ++++++-------
- 3 files changed, 23 insertions(+), 17 deletions(-)
+ net/ipv4/tcp_cubic.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/netdevsim/netdevsim.h b/drivers/net/netdevsim/netdevsim.h
-index 028c825b86db1..dfc6e00b718e3 100644
---- a/drivers/net/netdevsim/netdevsim.h
-+++ b/drivers/net/netdevsim/netdevsim.h
-@@ -121,6 +121,7 @@ struct netdevsim {
- 		u32 sleep;
- 		u32 __ports[2][NSIM_UDP_TUNNEL_N_PORTS];
- 		u32 (*ports)[NSIM_UDP_TUNNEL_N_PORTS];
-+		struct dentry *ddir;
- 		struct debugfs_u32_array dfs_ports[2];
- 	} udp_ports;
+diff --git a/net/ipv4/tcp_cubic.c b/net/ipv4/tcp_cubic.c
+index 5dbed91c61782..76c23675ae50a 100644
+--- a/net/ipv4/tcp_cubic.c
++++ b/net/ipv4/tcp_cubic.c
+@@ -392,6 +392,10 @@ static void hystart_update(struct sock *sk, u32 delay)
+ 	if (after(tp->snd_una, ca->end_seq))
+ 		bictcp_hystart_reset(sk);
  
-diff --git a/drivers/net/netdevsim/udp_tunnels.c b/drivers/net/netdevsim/udp_tunnels.c
-index 02dc3123eb6c1..640b4983a9a0d 100644
---- a/drivers/net/netdevsim/udp_tunnels.c
-+++ b/drivers/net/netdevsim/udp_tunnels.c
-@@ -112,9 +112,11 @@ nsim_udp_tunnels_info_reset_write(struct file *file, const char __user *data,
- 	struct net_device *dev = file->private_data;
- 	struct netdevsim *ns = netdev_priv(dev);
- 
--	memset(ns->udp_ports.ports, 0, sizeof(ns->udp_ports.__ports));
- 	rtnl_lock();
--	udp_tunnel_nic_reset_ntf(dev);
-+	if (dev->reg_state == NETREG_REGISTERED) {
-+		memset(ns->udp_ports.ports, 0, sizeof(ns->udp_ports.__ports));
-+		udp_tunnel_nic_reset_ntf(dev);
-+	}
- 	rtnl_unlock();
- 
- 	return count;
-@@ -144,23 +146,23 @@ int nsim_udp_tunnels_info_create(struct nsim_dev *nsim_dev,
- 	else
- 		ns->udp_ports.ports = nsim_dev->udp_ports.__ports;
- 
--	debugfs_create_u32("udp_ports_inject_error", 0600,
--			   ns->nsim_dev_port->ddir,
-+	ns->udp_ports.ddir = debugfs_create_dir("udp_ports",
-+						ns->nsim_dev_port->ddir);
++	/* hystart triggers when cwnd is larger than some threshold */
++	if (tcp_snd_cwnd(tp) < hystart_low_window)
++		return;
 +
-+	debugfs_create_u32("inject_error", 0600, ns->udp_ports.ddir,
- 			   &ns->udp_ports.inject_error);
+ 	if (hystart_detect & HYSTART_ACK_TRAIN) {
+ 		u32 now = bictcp_clock_us(sk);
  
- 	ns->udp_ports.dfs_ports[0].array = ns->udp_ports.ports[0];
- 	ns->udp_ports.dfs_ports[0].n_elements = NSIM_UDP_TUNNEL_N_PORTS;
--	debugfs_create_u32_array("udp_ports_table0", 0400,
--				 ns->nsim_dev_port->ddir,
-+	debugfs_create_u32_array("table0", 0400, ns->udp_ports.ddir,
- 				 &ns->udp_ports.dfs_ports[0]);
+@@ -467,9 +471,7 @@ __bpf_kfunc static void cubictcp_acked(struct sock *sk, const struct ack_sample
+ 	if (ca->delay_min == 0 || ca->delay_min > delay)
+ 		ca->delay_min = delay;
  
- 	ns->udp_ports.dfs_ports[1].array = ns->udp_ports.ports[1];
- 	ns->udp_ports.dfs_ports[1].n_elements = NSIM_UDP_TUNNEL_N_PORTS;
--	debugfs_create_u32_array("udp_ports_table1", 0400,
--				 ns->nsim_dev_port->ddir,
-+	debugfs_create_u32_array("table1", 0400, ns->udp_ports.ddir,
- 				 &ns->udp_ports.dfs_ports[1]);
- 
--	debugfs_create_file("udp_ports_reset", 0200, ns->nsim_dev_port->ddir,
-+	debugfs_create_file("reset", 0200, ns->udp_ports.ddir,
- 			    dev, &nsim_udp_tunnels_info_reset_fops);
- 
- 	/* Note: it's not normal to allocate the info struct like this!
-@@ -196,6 +198,9 @@ int nsim_udp_tunnels_info_create(struct nsim_dev *nsim_dev,
- 
- void nsim_udp_tunnels_info_destroy(struct net_device *dev)
- {
-+	struct netdevsim *ns = netdev_priv(dev);
-+
-+	debugfs_remove_recursive(ns->udp_ports.ddir);
- 	kfree(dev->udp_tunnel_nic_info);
- 	dev->udp_tunnel_nic_info = NULL;
- }
-diff --git a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-index 185b02d2d4cd1..7af78990b5bb6 100755
---- a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-+++ b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-@@ -142,7 +142,7 @@ function pre_ethtool {
+-	/* hystart triggers when cwnd is larger than some threshold */
+-	if (!ca->found && tcp_in_slow_start(tp) && hystart &&
+-	    tcp_snd_cwnd(tp) >= hystart_low_window)
++	if (!ca->found && tcp_in_slow_start(tp) && hystart)
+ 		hystart_update(sk, delay);
  }
  
- function check_table {
--    local path=$NSIM_DEV_DFS/ports/$port/udp_ports_table$1
-+    local path=$NSIM_DEV_DFS/ports/$port/udp_ports/table$1
-     local -n expected=$2
-     local last=$3
- 
-@@ -212,7 +212,7 @@ function check_tables {
- }
- 
- function print_table {
--    local path=$NSIM_DEV_DFS/ports/$port/udp_ports_table$1
-+    local path=$NSIM_DEV_DFS/ports/$port/udp_ports/table$1
-     read -a have < $path
- 
-     tree $NSIM_DEV_DFS/
-@@ -640,7 +640,7 @@ for port in 0 1; do
-     NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
- 
--    echo 110 > $NSIM_DEV_DFS/ports/$port/udp_ports_inject_error
-+    echo 110 > $NSIM_DEV_DFS/ports/$port/udp_ports/inject_error
- 
-     msg="1 - create VxLANs v6"
-     exp0=( 0 0 0 0 )
-@@ -662,7 +662,7 @@ for port in 0 1; do
-     new_geneve gnv0 20000
- 
-     msg="2 - destroy GENEVE"
--    echo 2 > $NSIM_DEV_DFS/ports/$port/udp_ports_inject_error
-+    echo 2 > $NSIM_DEV_DFS/ports/$port/udp_ports/inject_error
-     exp1=( `mke 20000 2` 0 0 0 )
-     del_dev gnv0
- 
-@@ -763,7 +763,7 @@ for port in 0 1; do
-     msg="create VxLANs v4"
-     new_vxlan vxlan0 10000 $NSIM_NETDEV
- 
--    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
-     check_tables
- 
-     msg="NIC device goes down"
-@@ -774,7 +774,7 @@ for port in 0 1; do
-     fi
-     check_tables
- 
--    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
-     check_tables
- 
-     msg="NIC device goes up again"
-@@ -788,7 +788,7 @@ for port in 0 1; do
-     del_dev vxlan0
-     check_tables
- 
--    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
-     check_tables
- 
-     msg="destroy NIC"
-@@ -895,7 +895,7 @@ msg="vacate VxLAN in overflow table"
- exp0=( `mke 10000 1` `mke 10004 1` 0 `mke 10003 1` )
- del_dev vxlan2
- 
--echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
- check_tables
- 
- msg="tunnels destroyed 2"
 -- 
 2.39.5
 
