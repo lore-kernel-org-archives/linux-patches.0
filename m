@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA37D18D621;
-	Wed,  5 Feb 2025 15:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C29918D656;
+	Wed,  5 Feb 2025 15:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768673; cv=none; b=CDwqR0tXMzjIfArs0v0eBPbP9tCCAo0tsmZkrrUyLYXmUSwZfQUEvAuXKsuWdaZdmPXP7ZufKffhJzM5DupeoJJNPCdnkHpdFsxLr/vpZRASEAsBt/NGzpG8uFWlh3jfjbeK0pt3yw/2QP06hmBI9ceJ1pFqJ8IorvzdjBGgx+4=
+	t=1738768677; cv=none; b=YJCJApPdPAtROGwk5uSjmkQXqaMmbDS0tV1YwnDL0TiZBrsceMaJuFjDwmA99475SyNC+GJgMFY9rEy/rm97hBiERWChyOkdoZLaTZAuCYqI5WtKyGoaJ5TL8R8qSnXO23zl5qjAW0cTeaudwnfzUrErJnLuI3SbvfVwzGoyWjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768673; c=relaxed/simple;
-	bh=UAHow0vY0X2aKcKktSeX6qPRlYonw2KZNoe8WJ5bqRY=;
+	s=arc-20240116; t=1738768677; c=relaxed/simple;
+	bh=sPxu/k/e5/5oej5jEralDtIGs+bOcrRKAUUn5CmiWu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HFCgf8d0yQMQwX3iiP3IH+sBAncjXXj/TXx6YOUc3SEcvlnI4d+fubrXgUI5dln8aWlJhY+h9kyFwLfyRq2ibxo8GhmeNIEq0d81/8ZPhC4B7ovckjpRMaj/QMOeFtVoZPvvQ8meTn0/9Q9FAsHxXR0K+U53XJF9DMEYWAUHvJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHrrtCrW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NBvunmrd047Qyb9JdUxYB+YnPgS+uO6XsGAB4lEjO3r9C0164lwJBdvKy4wI1/aJWl7hdicjeHW/c6U/abJpBQKukPxWQ0agjEVHeuIcHl9Eq7IloObS0g9KU7jTlp/jBBj1t431hY8ykBDXtNY4Ne7UeTZ+doTQ5IJuPUO20to=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThPU6qwm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHrrtCrW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39023C4CED1;
-	Wed,  5 Feb 2025 15:17:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThPU6qwm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94686C4CED1;
+	Wed,  5 Feb 2025 15:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768673;
-	bh=UAHow0vY0X2aKcKktSeX6qPRlYonw2KZNoe8WJ5bqRY=;
+	s=korg; t=1738768677;
+	bh=sPxu/k/e5/5oej5jEralDtIGs+bOcrRKAUUn5CmiWu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHrrtCrWvsWp5P1C2ex06wS4Nc1z4xJkYqLgPwYY6+LM1CIr6M64n4zYAZ//uJApp
-	 Al6qmu3Pa3EOj2AUFiNMyYakwQ0Q/na+sFZXOlzp2XBNZW7qABfkIH6jbHkrpK3jjU
-	 +iv1JIDaqwjEW0HgqTIL2kN2RpxsFxztulKwYjzw=
+	b=ThPU6qwmOmslbdCKpupVRFEoeIa0xCQYi34BONo/GGhSeqWkO7nWm4Ua3HYR+FOm0
+	 weB0ABhggE+zgKUVA/kivMh4qMZIuH48GlKbc3OvqgQTRTlnb90x/0TuWIPP1bwZJB
+	 7cz+IgBx8sPQa/87CY+VKYO8JYkx91L6TPkLVbjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Gao <chao.gao@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.13 618/623] KVM: x86: Plumb in the vCPU to kvm_x86_ops.hwapic_isr_update()
-Date: Wed,  5 Feb 2025 14:46:00 +0100
-Message-ID: <20250205134519.857221783@linuxfoundation.org>
+	Chen Ridong <chenridong@huawei.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeelb@google.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.13 619/623] memcg: fix soft lockup in the OOM process
+Date: Wed,  5 Feb 2025 14:46:01 +0100
+Message-ID: <20250205134519.894445132@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -44,114 +50,125 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Chen Ridong <chenridong@huawei.com>
 
-commit 76bce9f10162cd4b36ac0b7889649b22baf70ebd upstream.
+commit ade81479c7dda1ce3eedb215c78bc615bbd04f06 upstream.
 
-Pass the target vCPU to the hwapic_isr_update() vendor hook so that VMX
-can defer the update until after nested VM-Exit if an EOI for L1's vAPIC
-occurs while L2 is active.
+A soft lockup issue was found in the product with about 56,000 tasks were
+in the OOM cgroup, it was traversing them when the soft lockup was
+triggered.
 
-Note, commit d39850f57d21 ("KVM: x86: Drop @vcpu parameter from
-kvm_x86_ops.hwapic_isr_update()") removed the parameter with the
-justification that doing so "allows for a decent amount of (future)
-cleanup in the APIC code", but it's not at all clear what cleanup was
-intended, or if it was ever realized.
+watchdog: BUG: soft lockup - CPU#2 stuck for 23s! [VM Thread:1503066]
+CPU: 2 PID: 1503066 Comm: VM Thread Kdump: loaded Tainted: G
+Hardware name: Huawei Cloud OpenStack Nova, BIOS
+RIP: 0010:console_unlock+0x343/0x540
+RSP: 0000:ffffb751447db9a0 EFLAGS: 00000247 ORIG_RAX: ffffffffffffff13
+RAX: 0000000000000001 RBX: 0000000000000000 RCX: 00000000ffffffff
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000247
+RBP: ffffffffafc71f90 R08: 0000000000000000 R09: 0000000000000040
+R10: 0000000000000080 R11: 0000000000000000 R12: ffffffffafc74bd0
+R13: ffffffffaf60a220 R14: 0000000000000247 R15: 0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f2fe6ad91f0 CR3: 00000004b2076003 CR4: 0000000000360ee0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ vprintk_emit+0x193/0x280
+ printk+0x52/0x6e
+ dump_task+0x114/0x130
+ mem_cgroup_scan_tasks+0x76/0x100
+ dump_header+0x1fe/0x210
+ oom_kill_process+0xd1/0x100
+ out_of_memory+0x125/0x570
+ mem_cgroup_out_of_memory+0xb5/0xd0
+ try_charge+0x720/0x770
+ mem_cgroup_try_charge+0x86/0x180
+ mem_cgroup_try_charge_delay+0x1c/0x40
+ do_anonymous_page+0xb5/0x390
+ handle_mm_fault+0xc4/0x1f0
 
-No functional change intended.
+This is because thousands of processes are in the OOM cgroup, it takes a
+long time to traverse all of them.  As a result, this lead to soft lockup
+in the OOM process.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Chao Gao <chao.gao@intel.com>
-Tested-by: Chao Gao <chao.gao@intel.com>
-Link: https://lore.kernel.org/r/20241128000010.4051275-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+To fix this issue, call 'cond_resched' in the 'mem_cgroup_scan_tasks'
+function per 1000 iterations.  For global OOM, call
+'touch_softlockup_watchdog' per 1000 iterations to avoid this issue.
+
+Link: https://lkml.kernel.org/r/20241224025238.3768787-1-chenridong@huaweicloud.com
+Fixes: 9cbb78bb3143 ("mm, memcg: introduce own oom handler to iterate only over its own threads")
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Shakeel Butt <shakeelb@google.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Michal Koutný <mkoutny@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm_host.h |    2 +-
- arch/x86/kvm/lapic.c            |   11 +++++------
- arch/x86/kvm/vmx/vmx.c          |    2 +-
- arch/x86/kvm/vmx/x86_ops.h      |    2 +-
- 4 files changed, 8 insertions(+), 9 deletions(-)
+ mm/memcontrol.c |    7 ++++++-
+ mm/oom_kill.c   |    8 +++++++-
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -1735,7 +1735,7 @@ struct kvm_x86_ops {
- 	bool allow_apicv_in_x2apic_without_x2apic_virtualization;
- 	void (*refresh_apicv_exec_ctrl)(struct kvm_vcpu *vcpu);
- 	void (*hwapic_irr_update)(struct kvm_vcpu *vcpu, int max_irr);
--	void (*hwapic_isr_update)(int isr);
-+	void (*hwapic_isr_update)(struct kvm_vcpu *vcpu, int isr);
- 	void (*load_eoi_exitmap)(struct kvm_vcpu *vcpu, u64 *eoi_exit_bitmap);
- 	void (*set_virtual_apic_mode)(struct kvm_vcpu *vcpu);
- 	void (*set_apic_access_page_addr)(struct kvm_vcpu *vcpu);
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -763,7 +763,7 @@ static inline void apic_set_isr(int vec,
- 	 * just set SVI.
- 	 */
- 	if (unlikely(apic->apicv_active))
--		kvm_x86_call(hwapic_isr_update)(vec);
-+		kvm_x86_call(hwapic_isr_update)(apic->vcpu, vec);
- 	else {
- 		++apic->isr_count;
- 		BUG_ON(apic->isr_count > MAX_APIC_VECTOR);
-@@ -808,7 +808,7 @@ static inline void apic_clear_isr(int ve
- 	 * and must be left alone.
- 	 */
- 	if (unlikely(apic->apicv_active))
--		kvm_x86_call(hwapic_isr_update)(apic_find_highest_isr(apic));
-+		kvm_x86_call(hwapic_isr_update)(apic->vcpu, apic_find_highest_isr(apic));
- 	else {
- 		--apic->isr_count;
- 		BUG_ON(apic->isr_count < 0);
-@@ -2806,7 +2806,7 @@ void kvm_lapic_reset(struct kvm_vcpu *vc
- 	if (apic->apicv_active) {
- 		kvm_x86_call(apicv_post_state_restore)(vcpu);
- 		kvm_x86_call(hwapic_irr_update)(vcpu, -1);
--		kvm_x86_call(hwapic_isr_update)(-1);
-+		kvm_x86_call(hwapic_isr_update)(vcpu, -1);
- 	}
- 
- 	vcpu->arch.apic_arb_prio = 0;
-@@ -3121,9 +3121,8 @@ int kvm_apic_set_state(struct kvm_vcpu *
- 	kvm_apic_update_apicv(vcpu);
- 	if (apic->apicv_active) {
- 		kvm_x86_call(apicv_post_state_restore)(vcpu);
--		kvm_x86_call(hwapic_irr_update)(vcpu,
--						apic_find_highest_irr(apic));
--		kvm_x86_call(hwapic_isr_update)(apic_find_highest_isr(apic));
-+		kvm_x86_call(hwapic_irr_update)(vcpu, apic_find_highest_irr(apic));
-+		kvm_x86_call(hwapic_isr_update)(vcpu, apic_find_highest_isr(apic));
- 	}
- 	kvm_make_request(KVM_REQ_EVENT, vcpu);
- 	if (ioapic_in_kernel(vcpu->kvm))
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6862,7 +6862,7 @@ void vmx_set_apic_access_page_addr(struc
- 	read_unlock(&vcpu->kvm->mmu_lock);
- }
- 
--void vmx_hwapic_isr_update(int max_isr)
-+void vmx_hwapic_isr_update(struct kvm_vcpu *vcpu, int max_isr)
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -1161,6 +1161,7 @@ void mem_cgroup_scan_tasks(struct mem_cg
  {
- 	u16 status;
- 	u8 old;
---- a/arch/x86/kvm/vmx/x86_ops.h
-+++ b/arch/x86/kvm/vmx/x86_ops.h
-@@ -48,7 +48,7 @@ void vmx_migrate_timers(struct kvm_vcpu
- void vmx_set_virtual_apic_mode(struct kvm_vcpu *vcpu);
- void vmx_apicv_pre_state_restore(struct kvm_vcpu *vcpu);
- void vmx_hwapic_irr_update(struct kvm_vcpu *vcpu, int max_irr);
--void vmx_hwapic_isr_update(int max_isr);
-+void vmx_hwapic_isr_update(struct kvm_vcpu *vcpu, int max_isr);
- int vmx_sync_pir_to_irr(struct kvm_vcpu *vcpu);
- void vmx_deliver_interrupt(struct kvm_lapic *apic, int delivery_mode,
- 			   int trig_mode, int vector);
+ 	struct mem_cgroup *iter;
+ 	int ret = 0;
++	int i = 0;
+ 
+ 	BUG_ON(mem_cgroup_is_root(memcg));
+ 
+@@ -1169,8 +1170,12 @@ void mem_cgroup_scan_tasks(struct mem_cg
+ 		struct task_struct *task;
+ 
+ 		css_task_iter_start(&iter->css, CSS_TASK_ITER_PROCS, &it);
+-		while (!ret && (task = css_task_iter_next(&it)))
++		while (!ret && (task = css_task_iter_next(&it))) {
++			/* Avoid potential softlockup warning */
++			if ((++i & 1023) == 0)
++				cond_resched();
+ 			ret = fn(task, arg);
++		}
+ 		css_task_iter_end(&it);
+ 		if (ret) {
+ 			mem_cgroup_iter_break(memcg, iter);
+--- a/mm/oom_kill.c
++++ b/mm/oom_kill.c
+@@ -44,6 +44,7 @@
+ #include <linux/init.h>
+ #include <linux/mmu_notifier.h>
+ #include <linux/cred.h>
++#include <linux/nmi.h>
+ 
+ #include <asm/tlb.h>
+ #include "internal.h"
+@@ -430,10 +431,15 @@ static void dump_tasks(struct oom_contro
+ 		mem_cgroup_scan_tasks(oc->memcg, dump_task, oc);
+ 	else {
+ 		struct task_struct *p;
++		int i = 0;
+ 
+ 		rcu_read_lock();
+-		for_each_process(p)
++		for_each_process(p) {
++			/* Avoid potential softlockup warning */
++			if ((++i & 1023) == 0)
++				touch_softlockup_watchdog();
+ 			dump_task(p, oc);
++		}
+ 		rcu_read_unlock();
+ 	}
+ }
 
 
