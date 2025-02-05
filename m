@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C85B35946;
-	Wed,  5 Feb 2025 15:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0D61547D8;
+	Wed,  5 Feb 2025 15:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768460; cv=none; b=bwvw2ME+/sMoWnByZYBESzhH+nVyy25qWV2Qbrl+7ObH0MSxZw+wRfdunjdTkj4ccWW0vuiG3SZITQJH02ZKguPK9bHaiKunqcEzzhizYhhBAmRCfVVNtGHLiOsmsGFuDGy2ube2HE1hr6KeaQVpc4xNsLdsX9k1N4JMxorkpBU=
+	t=1738768463; cv=none; b=CE4wkArOVjQTs4zhJ9KZerEF6q3iloM35cIEwlDpAga5a+TZ3IGK9/zaoJTDP/qrL7fscIqSL41Om/jZfD423avFxEpCOoZkaMTq0jAhaaSy0Dt4dv4XFHj/3CUaoFNGcaqcYdUGNAlVnl0zGyre8h8S6Oc2mP0S0asDv7QHlIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768460; c=relaxed/simple;
-	bh=5D3RcLr/RNPhZr/zaRKBLQUInl67+KCyAYsfqe6fM9U=;
+	s=arc-20240116; t=1738768463; c=relaxed/simple;
+	bh=2Af98qBmmMSl3eDWZWZOojZdjSG0LXhZBqVRfNKNPAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DyT5oVJL9rOhAX1LME2iYuUTw+9K2Tfh3H9FZzaca2XU0/oY7ykHLXpBYC9tao0ymBaHMavM0cJPqae/esBuUVSBeN32XmyRjlh0bEWHSqEahDL5+TKiOl9QMQV1inxB/rhEByLyE/U2Mgi6kGh0bYMOlLnor+ggP6XL1cn9Zm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ck+hYr9I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=njChkpTl7dPvobpg0KNqsTyQStDLzoMxpxyKTBiohTS0q8OCMn41kCHUusj7O3D0nN+6ATFJB6NyjyOim+j1tz4xWPaa4m6HzVXo4E6sZ1QxPKVrVg1vIGehJ1TIiAGxwDvqbSa00DfOsMeLHw0P3LdFiAJXylK5eyXEMhhNn5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdgW09hJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ck+hYr9I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7517EC4CED1;
-	Wed,  5 Feb 2025 15:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdgW09hJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E8DC4CED1;
+	Wed,  5 Feb 2025 15:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768459;
-	bh=5D3RcLr/RNPhZr/zaRKBLQUInl67+KCyAYsfqe6fM9U=;
+	s=korg; t=1738768463;
+	bh=2Af98qBmmMSl3eDWZWZOojZdjSG0LXhZBqVRfNKNPAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ck+hYr9Ie6S3Kuc67n30V1/Q1EAoREwhT8OM1Fo7A3cGCUcxM68AU91KCjyRSdcNq
-	 atrXc/WadpNph/znYdi88fanF2yro3Cxs86bWqyvIwNsu4ACYlgFDHJBzOZCe+Oci5
-	 6OPW8R1foHlgQ3mpKRaZs9UdGUqTofVciwYll7tE=
+	b=EdgW09hJtZ+S8FHzY979l4LOD6bu8snvU7acKjoWdzctD6xu9P8cJ8eeyoozVp9sn
+	 qea6Lhzswk1MmFgxHcf/fUAUA19GufAFuATzJiQz66vT92aGo8XNV/GeoLIM2AmVQo
+	 WytVCQW4kWbe+tLwPXURqil1EYrbsPbI8q4EBPFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 564/623] cifs: Validate EAs for WSL reparse points
-Date: Wed,  5 Feb 2025 14:45:06 +0100
-Message-ID: <20250205134517.794932266@linuxfoundation.org>
+Subject: [PATCH 6.13 565/623] cifs: Fix getting and setting SACLs over SMB1
+Date: Wed,  5 Feb 2025 14:45:07 +0100
+Message-ID: <20250205134517.833495567@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -54,79 +54,147 @@ Content-Transfer-Encoding: 8bit
 
 From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit ef201e8759d20bf82b5943101147072de12bc524 ]
+[ Upstream commit 8b19dfb34d17e77a0809d433cc128b779282131b ]
 
-Major and minor numbers for char and block devices are mandatory for stat.
-So check that the WSL EA $LXDEV is present for WSL CHR and BLK reparse
-points.
+SMB1 callback get_cifs_acl_by_fid() currently ignores its last argument and
+therefore ignores request for SACL_SECINFO. Fix this issue by correctly
+propagating info argument from get_cifs_acl() and get_cifs_acl_by_fid() to
+CIFSSMBGetCIFSACL() function and pass SACL_SECINFO when requested.
 
-WSL reparse point tag determinate type of the file. But file type is
-present also in the WSL EA $LXMOD. So check that both file types are same.
+For accessing SACLs it is needed to open object with SYSTEM_SECURITY
+access. Pass this flag when trying to get or set SACLs.
 
-Fixes: 78e26bec4d6d ("smb: client: parse uid, gid, mode and dev from WSL reparse points")
+Same logic is in the SMB2+ code path.
+
+This change fixes getting and setting of "system.cifs_ntsd_full" and
+"system.smb3_ntsd_full" xattrs over SMB1 as currently it silentely ignored
+SACL part of passed xattr buffer.
+
+Fixes: 3970acf7ddb9 ("SMB3: Add support for getting and setting SACLs")
 Signed-off-by: Pali Rohár <pali@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ fs/smb/client/cifsacl.c   | 25 +++++++++++++++----------
+ fs/smb/client/cifsproto.h |  2 +-
+ fs/smb/client/cifssmb.c   |  4 ++--
+ 3 files changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index d88b41133e00c..b387dfbaf16b0 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -747,11 +747,12 @@ int smb2_parse_reparse_point(struct cifs_sb_info *cifs_sb,
- 	return parse_reparse_point(buf, plen, cifs_sb, full_path, true, data);
- }
- 
--static void wsl_to_fattr(struct cifs_open_info_data *data,
-+static bool wsl_to_fattr(struct cifs_open_info_data *data,
- 			 struct cifs_sb_info *cifs_sb,
- 			 u32 tag, struct cifs_fattr *fattr)
+diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
+index ba79aa2107cc9..699a3f76d0834 100644
+--- a/fs/smb/client/cifsacl.c
++++ b/fs/smb/client/cifsacl.c
+@@ -1395,7 +1395,7 @@ static int build_sec_desc(struct smb_ntsd *pntsd, struct smb_ntsd *pnntsd,
+ #ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
+ struct smb_ntsd *get_cifs_acl_by_fid(struct cifs_sb_info *cifs_sb,
+ 				      const struct cifs_fid *cifsfid, u32 *pacllen,
+-				      u32 __maybe_unused unused)
++				      u32 info)
  {
- 	struct smb2_file_full_ea_info *ea;
-+	bool have_xattr_dev = false;
- 	u32 next = 0;
+ 	struct smb_ntsd *pntsd = NULL;
+ 	unsigned int xid;
+@@ -1407,7 +1407,7 @@ struct smb_ntsd *get_cifs_acl_by_fid(struct cifs_sb_info *cifs_sb,
  
- 	switch (tag) {
-@@ -794,13 +795,24 @@ static void wsl_to_fattr(struct cifs_open_info_data *data,
- 			fattr->cf_uid = wsl_make_kuid(cifs_sb, v);
- 		else if (!strncmp(name, SMB2_WSL_XATTR_GID, nlen))
- 			fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
--		else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen))
-+		else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
-+			/* File type in reparse point tag and in xattr mode must match. */
-+			if (S_DT(fattr->cf_mode) != S_DT(le32_to_cpu(*(__le32 *)v)))
-+				return false;
- 			fattr->cf_mode = (umode_t)le32_to_cpu(*(__le32 *)v);
--		else if (!strncmp(name, SMB2_WSL_XATTR_DEV, nlen))
-+		} else if (!strncmp(name, SMB2_WSL_XATTR_DEV, nlen)) {
- 			fattr->cf_rdev = reparse_mkdev(v);
-+			have_xattr_dev = true;
-+		}
- 	} while (next);
- out:
-+
-+	/* Major and minor numbers for char and block devices are mandatory. */
-+	if (!have_xattr_dev && (tag == IO_REPARSE_TAG_LX_CHR || tag == IO_REPARSE_TAG_LX_BLK))
-+		return false;
-+
- 	fattr->cf_dtype = S_DT(fattr->cf_mode);
-+	return true;
+ 	xid = get_xid();
+ 	rc = CIFSSMBGetCIFSACL(xid, tlink_tcon(tlink), cifsfid->netfid, &pntsd,
+-				pacllen);
++				pacllen, info);
+ 	free_xid(xid);
+ 
+ 	cifs_put_tlink(tlink);
+@@ -1419,7 +1419,7 @@ struct smb_ntsd *get_cifs_acl_by_fid(struct cifs_sb_info *cifs_sb,
  }
  
- static bool posix_reparse_to_fattr(struct cifs_sb_info *cifs_sb,
-@@ -874,7 +886,9 @@ bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
- 	case IO_REPARSE_TAG_AF_UNIX:
- 	case IO_REPARSE_TAG_LX_CHR:
- 	case IO_REPARSE_TAG_LX_BLK:
--		wsl_to_fattr(data, cifs_sb, tag, fattr);
-+		ok = wsl_to_fattr(data, cifs_sb, tag, fattr);
-+		if (!ok)
-+			return false;
- 		break;
- 	case IO_REPARSE_TAG_NFS:
- 		ok = posix_reparse_to_fattr(cifs_sb, fattr, data);
+ static struct smb_ntsd *get_cifs_acl_by_path(struct cifs_sb_info *cifs_sb,
+-		const char *path, u32 *pacllen)
++		const char *path, u32 *pacllen, u32 info)
+ {
+ 	struct smb_ntsd *pntsd = NULL;
+ 	int oplock = 0;
+@@ -1446,9 +1446,12 @@ static struct smb_ntsd *get_cifs_acl_by_path(struct cifs_sb_info *cifs_sb,
+ 		.fid = &fid,
+ 	};
+ 
++	if (info & SACL_SECINFO)
++		oparms.desired_access |= SYSTEM_SECURITY;
++
+ 	rc = CIFS_open(xid, &oparms, &oplock, NULL);
+ 	if (!rc) {
+-		rc = CIFSSMBGetCIFSACL(xid, tcon, fid.netfid, &pntsd, pacllen);
++		rc = CIFSSMBGetCIFSACL(xid, tcon, fid.netfid, &pntsd, pacllen, info);
+ 		CIFSSMBClose(xid, tcon, fid.netfid);
+ 	}
+ 
+@@ -1472,7 +1475,7 @@ struct smb_ntsd *get_cifs_acl(struct cifs_sb_info *cifs_sb,
+ 	if (inode)
+ 		open_file = find_readable_file(CIFS_I(inode), true);
+ 	if (!open_file)
+-		return get_cifs_acl_by_path(cifs_sb, path, pacllen);
++		return get_cifs_acl_by_path(cifs_sb, path, pacllen, info);
+ 
+ 	pntsd = get_cifs_acl_by_fid(cifs_sb, &open_file->fid, pacllen, info);
+ 	cifsFileInfo_put(open_file);
+@@ -1485,7 +1488,7 @@ int set_cifs_acl(struct smb_ntsd *pnntsd, __u32 acllen,
+ {
+ 	int oplock = 0;
+ 	unsigned int xid;
+-	int rc, access_flags;
++	int rc, access_flags = 0;
+ 	struct cifs_tcon *tcon;
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
+ 	struct tcon_link *tlink = cifs_sb_tlink(cifs_sb);
+@@ -1498,10 +1501,12 @@ int set_cifs_acl(struct smb_ntsd *pnntsd, __u32 acllen,
+ 	tcon = tlink_tcon(tlink);
+ 	xid = get_xid();
+ 
+-	if (aclflag == CIFS_ACL_OWNER || aclflag == CIFS_ACL_GROUP)
+-		access_flags = WRITE_OWNER;
+-	else
+-		access_flags = WRITE_DAC;
++	if (aclflag & CIFS_ACL_OWNER || aclflag & CIFS_ACL_GROUP)
++		access_flags |= WRITE_OWNER;
++	if (aclflag & CIFS_ACL_SACL)
++		access_flags |= SYSTEM_SECURITY;
++	if (aclflag & CIFS_ACL_DACL)
++		access_flags |= WRITE_DAC;
+ 
+ 	oparms = (struct cifs_open_parms) {
+ 		.tcon = tcon,
+diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
+index d26f9bbb53829..2d3b7b68f7360 100644
+--- a/fs/smb/client/cifsproto.h
++++ b/fs/smb/client/cifsproto.h
+@@ -560,7 +560,7 @@ extern int CIFSSMBSetEA(const unsigned int xid, struct cifs_tcon *tcon,
+ 		const struct nls_table *nls_codepage,
+ 		struct cifs_sb_info *cifs_sb);
+ extern int CIFSSMBGetCIFSACL(const unsigned int xid, struct cifs_tcon *tcon,
+-			__u16 fid, struct smb_ntsd **acl_inf, __u32 *buflen);
++			__u16 fid, struct smb_ntsd **acl_inf, __u32 *buflen, __u32 info);
+ extern int CIFSSMBSetCIFSACL(const unsigned int, struct cifs_tcon *, __u16,
+ 			struct smb_ntsd *pntsd, __u32 len, int aclflag);
+ extern int cifs_do_get_acl(const unsigned int xid, struct cifs_tcon *tcon,
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index ab0b949924d77..a993d4ac58411 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -3375,7 +3375,7 @@ validate_ntransact(char *buf, char **ppparm, char **ppdata,
+ /* Get Security Descriptor (by handle) from remote server for a file or dir */
+ int
+ CIFSSMBGetCIFSACL(const unsigned int xid, struct cifs_tcon *tcon, __u16 fid,
+-		  struct smb_ntsd **acl_inf, __u32 *pbuflen)
++		  struct smb_ntsd **acl_inf, __u32 *pbuflen, __u32 info)
+ {
+ 	int rc = 0;
+ 	int buf_type = 0;
+@@ -3398,7 +3398,7 @@ CIFSSMBGetCIFSACL(const unsigned int xid, struct cifs_tcon *tcon, __u16 fid,
+ 	pSMB->MaxSetupCount = 0;
+ 	pSMB->Fid = fid; /* file handle always le */
+ 	pSMB->AclFlags = cpu_to_le32(CIFS_ACL_OWNER | CIFS_ACL_GROUP |
+-				     CIFS_ACL_DACL);
++				     CIFS_ACL_DACL | info);
+ 	pSMB->ByteCount = cpu_to_le16(11); /* 3 bytes pad + 8 bytes parm */
+ 	inc_rfc1001_len(pSMB, 11);
+ 	iov[0].iov_base = (char *)pSMB;
 -- 
 2.39.5
 
