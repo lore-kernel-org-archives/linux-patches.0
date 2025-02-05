@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B30C1E89C;
-	Wed,  5 Feb 2025 14:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA4A1E89C;
+	Wed,  5 Feb 2025 14:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767579; cv=none; b=GVshpK//IvcsPfDgNaxOj64QdMAkf+yNq1Je/XINndyhAAhMmyBTkiQPF9tnUdGvE96eSxK8iJxjoN5hVias5HJzWLj9fhSxuRj+K1oSgN/waMvv+4UIZP7nDYH+J/45pKbSrH4a4ladxkKrypaTiL6QODyxmh+25yUIynnkt0c=
+	t=1738767583; cv=none; b=Qo07g/gSfXU+lb8VAdzV8NQw9Vto7uXTH6eKvHrqMMsshkBffKKxKMmb2dO6D4xC4nH11m6dxuiW7uF3u5S1qbh3k2AXBbFOUoUeQ4pRBZT6L2B/Gqj9CDB2LR0CLMsj5EOYTSj2cxLLCrfr5xGBSH5CaG4IeB6XfPba9tb6vLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767579; c=relaxed/simple;
-	bh=CWlmG8xx784GCOI2QBgdRqGt0bmS13rHgRfyNnC8NsI=;
+	s=arc-20240116; t=1738767583; c=relaxed/simple;
+	bh=7Aqi+ZImQYxogtlqyjxtySZcHrVWy81q+bOjKWSTJ2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mG9RPXVOPFH3qtanHmiMzuubbPuv+sfErUgUi1h5DjfQGCg90wKWiT5gMWCqa90z5MozyqKDrm+kMO/gj4bLAlugzznGuGF7F5xsMYXbmbQkqrqeoLeHF2zhqq0mssYtGUeHk5S7bprgfSRMVUfoJPgsvAp31IHvlG1F+wI2NlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1O7O6Vj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eiy/OrirSWAY3b1YoLaq4fbYPhNT1fzmkrx+fyUtyCW81+/RqzYCQBitz1JLAXYkI+Eo6rcJwpFwEGrladIzDvMPNYU8cEQmmjjf61Y1bWKgCJ9KmLyxzKngTlKeX+NUdXLVVkp7TaO94fQ56HFB7gx1xSuUvboRX2Ux9fTk+F8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2qUocKs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1O7O6Vj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57DF1C4CEDD;
-	Wed,  5 Feb 2025 14:59:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2qUocKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEF0C4CED1;
+	Wed,  5 Feb 2025 14:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767578;
-	bh=CWlmG8xx784GCOI2QBgdRqGt0bmS13rHgRfyNnC8NsI=;
+	s=korg; t=1738767582;
+	bh=7Aqi+ZImQYxogtlqyjxtySZcHrVWy81q+bOjKWSTJ2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z1O7O6Vjq9njRhkPzLFbgLavp6JBomlci8biDCrTxQ9qcUaUThk5g19DPcS+y5mOs
-	 3PXVj6Rw4zGFUP+DVw9+RF0Es+uAO8x0nYh0duOZB6kNIlUEAG0LeWledRjEE1Iort
-	 5uybZuWuVnhXAKnUHvDzAZiIH51Jw4C/JCabFWw8=
+	b=r2qUocKsAOE1Wh5pBjh7VFN/ElnkArlqpjqEnr2AJbUxLrTIWXu+cNp4UJ2v+MIcW
+	 r68FnuJFUo38u1h3emlHoghTbuVuTtBtCOiQczfee3BwgJU5amgRN6k10/GcYlBbtX
+	 8OOF4J5wPoBqOqfwovOkqqhneWD+zJdx9hYYcbeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Josua Mayer <josua@solid-run.com>,
-	Nishanth Menon <nm@ti.com>,
+	syzbot+5cfae50c0e5f2c500013@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 424/623] arm64: dts: ti: k3-am642-hummingboard-t: Convert overlay to board dts
-Date: Wed,  5 Feb 2025 14:42:46 +0100
-Message-ID: <20250205134512.445954709@linuxfoundation.org>
+Subject: [PATCH 6.12 478/590] ipmr: do not call mr_mfc_uses_dev() for unres entries
+Date: Wed,  5 Feb 2025 14:43:53 +0100
+Message-ID: <20250205134513.549171771@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,124 +49,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e2b69180431968250bf3c0c581155f1b37d057c1 ]
+[ Upstream commit 15a901361ec3fb1c393f91880e1cbf24ec0a88bd ]
 
-SolidRun HummingBoard-T has two options for M.2 connector, supporting
-either PCI-E or USB-3.1 Gen 1 - depending on configuration of a mux
-on the serdes lane.
-The required configurations in device-tree were modeled as overlays.
+syzbot found that calling mr_mfc_uses_dev() for unres entries
+would crash [1], because c->mfc_un.res.minvif / c->mfc_un.res.maxvif
+alias to "struct sk_buff_head unresolved", which contain two pointers.
 
-The USB-3.1 overlay uses /delete-property/ to unset a boolean property
-on the usb controller limiting it to USB-2.0 by default.
-Overlays can not delete a property from the base dtb, therefore this
-overlay is at this time useless.
+This code never worked, lets remove it.
 
-Convert both overlays into full dts by including the base board dts.
-While the pcie overlay was functional, both are converted for a
-consistent user experience when selecting between the two mutually
-exclusive configurations.
+[1]
+Unable to handle kernel paging request at virtual address ffff5fff2d536613
+KASAN: maybe wild-memory-access in range [0xfffefff96a9b3098-0xfffefff96a9b309f]
+Modules linked in:
+CPU: 1 UID: 0 PID: 7321 Comm: syz.0.16 Not tainted 6.13.0-rc7-syzkaller-g1950a0af2d55 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : mr_mfc_uses_dev net/ipv4/ipmr_base.c:290 [inline]
+ pc : mr_table_dump+0x5a4/0x8b0 net/ipv4/ipmr_base.c:334
+ lr : mr_mfc_uses_dev net/ipv4/ipmr_base.c:289 [inline]
+ lr : mr_table_dump+0x694/0x8b0 net/ipv4/ipmr_base.c:334
+Call trace:
+  mr_mfc_uses_dev net/ipv4/ipmr_base.c:290 [inline] (P)
+  mr_table_dump+0x5a4/0x8b0 net/ipv4/ipmr_base.c:334 (P)
+  mr_rtm_dumproute+0x254/0x454 net/ipv4/ipmr_base.c:382
+  ipmr_rtm_dumproute+0x248/0x4b4 net/ipv4/ipmr.c:2648
+  rtnl_dump_all+0x2e4/0x4e8 net/core/rtnetlink.c:4327
+  rtnl_dumpit+0x98/0x1d0 net/core/rtnetlink.c:6791
+  netlink_dump+0x4f0/0xbc0 net/netlink/af_netlink.c:2317
+  netlink_recvmsg+0x56c/0xe64 net/netlink/af_netlink.c:1973
+  sock_recvmsg_nosec net/socket.c:1033 [inline]
+  sock_recvmsg net/socket.c:1055 [inline]
+  sock_read_iter+0x2d8/0x40c net/socket.c:1125
+  new_sync_read fs/read_write.c:484 [inline]
+  vfs_read+0x740/0x970 fs/read_write.c:565
+  ksys_read+0x15c/0x26c fs/read_write.c:708
 
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Closes: https://lore.kernel.org/linux-devicetree/CAMuHMdXTgpTnJ9U7egC2XjFXXNZ5uiY1O+WxNd6LPJW5Rs5KTw@mail.gmail.com
-Fixes: bbef42084cc1 ("arm64: dts: ti: hummingboard-t: add overlays for m.2 pci-e and usb-3")
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Link: https://lore.kernel.org/r/20250101-am64-hb-fix-overlay-v2-1-78143f5da28c@solid-run.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: cb167893f41e ("net: Plumb support for filtering ipv4 and ipv6 multicast route dumps")
+Reported-by: syzbot+5cfae50c0e5f2c500013@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/678fe2d1.050a0220.15cac.00b3.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250121181241.841212-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/Makefile                    |  4 ----
- ...-pcie.dtso => k3-am642-hummingboard-t-pcie.dts} | 14 ++++++++------
- ...-usb3.dtso => k3-am642-hummingboard-t-usb3.dts} | 13 ++++++++-----
- 3 files changed, 16 insertions(+), 15 deletions(-)
- rename arch/arm64/boot/dts/ti/{k3-am642-hummingboard-t-pcie.dtso => k3-am642-hummingboard-t-pcie.dts} (78%)
- rename arch/arm64/boot/dts/ti/{k3-am642-hummingboard-t-usb3.dtso => k3-am642-hummingboard-t-usb3.dts} (74%)
+ net/ipv4/ipmr_base.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/Makefile b/arch/arm64/boot/dts/ti/Makefile
-index 379bfa4425d49..2b3b48a9a8842 100644
---- a/arch/arm64/boot/dts/ti/Makefile
-+++ b/arch/arm64/boot/dts/ti/Makefile
-@@ -42,10 +42,6 @@ dtb-$(CONFIG_ARCH_K3) += k3-am62x-sk-csi2-imx219.dtbo
- dtb-$(CONFIG_ARCH_K3) += k3-am62x-sk-hdmi-audio.dtbo
+diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
+index 03b6eee407a24..28d77d454d442 100644
+--- a/net/ipv4/ipmr_base.c
++++ b/net/ipv4/ipmr_base.c
+@@ -330,9 +330,6 @@ int mr_table_dump(struct mr_table *mrt, struct sk_buff *skb,
+ 	list_for_each_entry(mfc, &mrt->mfc_unres_queue, list) {
+ 		if (e < s_e)
+ 			goto next_entry2;
+-		if (filter->dev &&
+-		    !mr_mfc_uses_dev(mrt, mfc, filter->dev))
+-			goto next_entry2;
  
- # Boards with AM64x SoC
--k3-am642-hummingboard-t-pcie-dtbs := \
--	k3-am642-hummingboard-t.dtb k3-am642-hummingboard-t-pcie.dtbo
--k3-am642-hummingboard-t-usb3-dtbs := \
--	k3-am642-hummingboard-t.dtb k3-am642-hummingboard-t-usb3.dtbo
- dtb-$(CONFIG_ARCH_K3) += k3-am642-evm.dtb
- dtb-$(CONFIG_ARCH_K3) += k3-am642-evm-icssg1-dualemac.dtbo
- dtb-$(CONFIG_ARCH_K3) += k3-am642-evm-icssg1-dualemac-mii.dtbo
-diff --git a/arch/arm64/boot/dts/ti/k3-am642-hummingboard-t-pcie.dtso b/arch/arm64/boot/dts/ti/k3-am642-hummingboard-t-pcie.dts
-similarity index 78%
-rename from arch/arm64/boot/dts/ti/k3-am642-hummingboard-t-pcie.dtso
-rename to arch/arm64/boot/dts/ti/k3-am642-hummingboard-t-pcie.dts
-index bd9a5caf20da5..023b2a6aaa566 100644
---- a/arch/arm64/boot/dts/ti/k3-am642-hummingboard-t-pcie.dtso
-+++ b/arch/arm64/boot/dts/ti/k3-am642-hummingboard-t-pcie.dts
-@@ -2,17 +2,19 @@
- /*
-  * Copyright (C) 2023 Josua Mayer <josua@solid-run.com>
-  *
-- * Overlay for SolidRun AM642 HummingBoard-T to enable PCI-E.
-+ * DTS for SolidRun AM642 HummingBoard-T,
-+ * running on Cortex A53, with PCI-E.
-+ *
-  */
- 
--/dts-v1/;
--/plugin/;
--
--#include <dt-bindings/gpio/gpio.h>
--#include <dt-bindings/phy/phy.h>
-+#include "k3-am642-hummingboard-t.dts"
- 
- #include "k3-serdes.h"
- 
-+/ {
-+	model = "SolidRun AM642 HummingBoard-T with PCI-E";
-+};
-+
- &pcie0_rc {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pcie0_default_pins>;
-diff --git a/arch/arm64/boot/dts/ti/k3-am642-hummingboard-t-usb3.dtso b/arch/arm64/boot/dts/ti/k3-am642-hummingboard-t-usb3.dts
-similarity index 74%
-rename from arch/arm64/boot/dts/ti/k3-am642-hummingboard-t-usb3.dtso
-rename to arch/arm64/boot/dts/ti/k3-am642-hummingboard-t-usb3.dts
-index ffcc3bd3c7bc5..ee9bd618f3701 100644
---- a/arch/arm64/boot/dts/ti/k3-am642-hummingboard-t-usb3.dtso
-+++ b/arch/arm64/boot/dts/ti/k3-am642-hummingboard-t-usb3.dts
-@@ -2,16 +2,19 @@
- /*
-  * Copyright (C) 2023 Josua Mayer <josua@solid-run.com>
-  *
-- * Overlay for SolidRun AM642 HummingBoard-T to enable USB-3.1.
-+ * DTS for SolidRun AM642 HummingBoard-T,
-+ * running on Cortex A53, with USB-3.1 Gen 1.
-+ *
-  */
- 
--/dts-v1/;
--/plugin/;
--
--#include <dt-bindings/phy/phy.h>
-+#include "k3-am642-hummingboard-t.dts"
- 
- #include "k3-serdes.h"
- 
-+/ {
-+	model = "SolidRun AM642 HummingBoard-T with USB-3.1 Gen 1";
-+};
-+
- &serdes0 {
- 	#address-cells = <1>;
- 	#size-cells = <0>;
+ 		err = fill(mrt, skb, NETLINK_CB(cb->skb).portid,
+ 			   cb->nlh->nlmsg_seq, mfc, RTM_NEWROUTE, flags);
 -- 
 2.39.5
 
