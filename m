@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7044918BC26;
-	Wed,  5 Feb 2025 15:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8354618BC26;
+	Wed,  5 Feb 2025 15:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767660; cv=none; b=VP+WcwSreyyIqHjLk4OrbOGW1SUdxUJtkR0SZl3a22k4pKc9rNr78ir+M9OjBs3UZArJ/Ci+F7npHL/jnlkzPjhC0ZMpeKAtAZuKO/fBzhBYpSvjido4kOjb/3l6yNfN/TaOKQjb0eAVsKlObDD7tBjQ8hzMlDwGxcR3dipv5Wc=
+	t=1738767663; cv=none; b=S6Ivk4JOffzqezoPIwqpGHqWzDaSaXwyPh7tW+mb5zm7Lmma/8bgi9jk8DhgT1UVD8vwWxy0v5TsYsy0/0F6RVqnRgnjz23VR3AL8ttLyZZc4wGwS/UmnyOeAd5uVxsjE4WReHEt0HhHy84qvlSJ7P35udRauYlQSIRd/4d0Soc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767660; c=relaxed/simple;
-	bh=IEz68ZCEYgTdVPhc/wM+ZwLOlMOkJe8sc4v2ewPNitM=;
+	s=arc-20240116; t=1738767663; c=relaxed/simple;
+	bh=Dy+AS9BigNrPik5PkrP3SKkZxAv0f5b7yls7owpTlBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JtBlFM8bTqsNhpCTowqGSiWlbQnHVUs3H9/C3OIXww+AGGNiZqYKRA3vyC6+aOYUB/OfaWoVCGt2jhm7GdGHLxZ00NQ0RMz9/wpkQsQ0BGBgWwA6NrKpUBYyFvY2+2QIZmk2w//IQANyJF61OUC42WUfgnRqmv5Eli6KgE2ccI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CITMQSqR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XdiupGlldoinLDO66BgbB6IymUrk5SSxYkbuQ6DlY0fBb+M9YHw0p+PCSdq5cDAEooHvCTfzb3VGSGVmpxfRjop+HShppbPNNBc4GuH2ZVRt6pOMQycWWwVO1jfjVFmMClUe+oeZuU47WAXcgJ8PZkzpon0wWtmG3kocjiYVgbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlliiEXY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CITMQSqR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2864C4CED1;
-	Wed,  5 Feb 2025 15:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlliiEXY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3ED1C4CED1;
+	Wed,  5 Feb 2025 15:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767660;
-	bh=IEz68ZCEYgTdVPhc/wM+ZwLOlMOkJe8sc4v2ewPNitM=;
+	s=korg; t=1738767663;
+	bh=Dy+AS9BigNrPik5PkrP3SKkZxAv0f5b7yls7owpTlBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CITMQSqR+lP9yLEbNBWSdLCv6zHk0WDUh8PDwKcAWdGObAFcrZ+2/TF/YF8esq/tY
-	 i0tlxzYshzYU4aUauteuxGigoIm9z+4vTjipKC45buhF+OlsRSEo06HwrlegsGVLb/
-	 8NAjQJbRBuUfKXMm08LblH3B5KTr89TOImPlTttQ=
+	b=nlliiEXYq9VPZ9fx0V+Ga+MkVR5HEhyU7np+ozz0nFvsJNtFNgJwefgiku0f39e47
+	 LAjdsCJKkpKXUauuXaACDOCnFzJkTzgyWyOLvUEKY9NuO/99fPlw+Qq6k1PD37oqW0
+	 7+7W6bsvJYCgXoOKzrVTCdkU+zOzJoMfVsAY+dok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c92878e123785b1fa2db@syzkaller.appspotmail.com,
-	Suraj Sonawane <surajsonawane0215@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 435/623] iommu: iommufd: fix WARNING in iommufd_device_unbind
-Date: Wed,  5 Feb 2025 14:42:57 +0100
-Message-ID: <20250205134512.861102122@linuxfoundation.org>
+	Mateusz Polchlopek <mateusz.polchlopek@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.12 489/590] ice: remove invalid parameter of equalizer
+Date: Wed,  5 Feb 2025 14:44:04 +0100
+Message-ID: <20250205134513.977179438@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +49,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suraj Sonawane <surajsonawane0215@gmail.com>
+From: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
 
-[ Upstream commit d9df72c6acd683adf6dd23c061f3a414ec00b1f8 ]
+[ Upstream commit c5cc2a27e04f2fcd77c74ada9aef76a758a24697 ]
 
-Fix an issue detected by syzbot:
+It occurred that in the commit 70838938e89c ("ice: Implement driver
+functionality to dump serdes equalizer values") the invalid DRATE parameter
+for reading has been added. The output of the command:
 
-WARNING in iommufd_device_unbind iommufd: Time out waiting for iommufd object to become free
+  $ ethtool -d <ethX>
 
-Resolve a warning in iommufd_device_unbind caused by a timeout while
-waiting for the shortterm_users reference count to reach zero. The
-existing 10-second timeout is insufficient in some scenarios, resulting in
-failures the above warning.
+returns the garbage value in the place where DRATE value should be
+stored.
 
-Increase the timeout in iommufd_object_dec_wait_shortterm from 10 seconds
-to 60 seconds to allow sufficient time for the reference count to drop to
-zero. This change prevents premature timeouts and reduces the likelihood
-of warnings during iommufd_device_unbind.
+Remove mentioned parameter to prevent return of corrupted data to
+userspace.
 
-Fixes: 6f9c4d8c468c ("iommufd: Do not UAF during iommufd_put_object()")
-Link: https://patch.msgid.link/r/20241123195900.3176-1-surajsonawane0215@gmail.com
-Reported-by: syzbot+c92878e123785b1fa2db@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c92878e123785b1fa2db
-Tested-by: syzbot+c92878e123785b1fa2db@syzkaller.appspotmail.com
-Signed-off-by: Suraj Sonawane <surajsonawane0215@gmail.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 70838938e89c ("ice: Implement driver functionality to dump serdes equalizer values")
+Signed-off-by: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_adminq_cmd.h | 1 -
+ drivers/net/ethernet/intel/ice/ice_ethtool.c    | 1 -
+ drivers/net/ethernet/intel/ice/ice_ethtool.h    | 1 -
+ 3 files changed, 3 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/main.c b/drivers/iommu/iommufd/main.c
-index 97c5e3567d33e..d898d05be690f 100644
---- a/drivers/iommu/iommufd/main.c
-+++ b/drivers/iommu/iommufd/main.c
-@@ -104,7 +104,7 @@ static int iommufd_object_dec_wait_shortterm(struct iommufd_ctx *ictx,
- 	if (wait_event_timeout(ictx->destroy_wait,
- 				refcount_read(&to_destroy->shortterm_users) ==
- 					0,
--				msecs_to_jiffies(10000)))
-+				msecs_to_jiffies(60000)))
- 		return 0;
- 
- 	pr_crit("Time out waiting for iommufd object to become free\n");
+diff --git a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
+index 2a61e1da993ed..66ae0352c6bca 100644
+--- a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
++++ b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
+@@ -1491,7 +1491,6 @@ struct ice_aqc_dnl_equa_param {
+ #define ICE_AQC_RX_EQU_POST1 (0x12 << ICE_AQC_RX_EQU_SHIFT)
+ #define ICE_AQC_RX_EQU_BFLF (0x13 << ICE_AQC_RX_EQU_SHIFT)
+ #define ICE_AQC_RX_EQU_BFHF (0x14 << ICE_AQC_RX_EQU_SHIFT)
+-#define ICE_AQC_RX_EQU_DRATE (0x15 << ICE_AQC_RX_EQU_SHIFT)
+ #define ICE_AQC_RX_EQU_CTLE_GAINHF (0x20 << ICE_AQC_RX_EQU_SHIFT)
+ #define ICE_AQC_RX_EQU_CTLE_GAINLF (0x21 << ICE_AQC_RX_EQU_SHIFT)
+ #define ICE_AQC_RX_EQU_CTLE_GAINDC (0x22 << ICE_AQC_RX_EQU_SHIFT)
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+index f94b6bddbeaa1..7d1feeb317be3 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -710,7 +710,6 @@ static int ice_get_tx_rx_equa(struct ice_hw *hw, u8 serdes_num,
+ 		{ ICE_AQC_RX_EQU_POST1, rx, &ptr->rx_equ_post1 },
+ 		{ ICE_AQC_RX_EQU_BFLF, rx, &ptr->rx_equ_bflf },
+ 		{ ICE_AQC_RX_EQU_BFHF, rx, &ptr->rx_equ_bfhf },
+-		{ ICE_AQC_RX_EQU_DRATE, rx, &ptr->rx_equ_drate },
+ 		{ ICE_AQC_RX_EQU_CTLE_GAINHF, rx, &ptr->rx_equ_ctle_gainhf },
+ 		{ ICE_AQC_RX_EQU_CTLE_GAINLF, rx, &ptr->rx_equ_ctle_gainlf },
+ 		{ ICE_AQC_RX_EQU_CTLE_GAINDC, rx, &ptr->rx_equ_ctle_gaindc },
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.h b/drivers/net/ethernet/intel/ice/ice_ethtool.h
+index 8f2ad1c172c06..23b2cfbc9684c 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.h
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.h
+@@ -15,7 +15,6 @@ struct ice_serdes_equalization_to_ethtool {
+ 	int rx_equ_post1;
+ 	int rx_equ_bflf;
+ 	int rx_equ_bfhf;
+-	int rx_equ_drate;
+ 	int rx_equ_ctle_gainhf;
+ 	int rx_equ_ctle_gainlf;
+ 	int rx_equ_ctle_gaindc;
 -- 
 2.39.5
 
