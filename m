@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356D2189F57;
-	Wed,  5 Feb 2025 14:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E69F189F57;
+	Wed,  5 Feb 2025 14:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766750; cv=none; b=kaK5MsjL6ZLi31iXdZGXu6TwHn1Vy1YYuO9sS/Nm9uAyfBaleDziyi+WywnYxtXdHMakMPNHVDVPE2DPis/is8RjFbWpjvFNdaGOWvUwnQ1fEiOfDrGopjHA+A18pJrD/OQLuLox2H2XZxmdCkT2f1EaiZiZA7pJ9G/Vy8u34k8=
+	t=1738766753; cv=none; b=RrzTZ/u7MNvvvNDzDU0Njcpcdr9gzpjIzcbw2x54F4WbDHJ30nOBeBUIi02dQe6xpsBfNM0yMkujaHghRECdWrSFTny7M7d7U1bk3ogaLl7SoNcc2N9qWuzKqv64BJaCjjjUjmx03GNN2VoSXVCkybgZTYegI5SenpSAZrqzzsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766750; c=relaxed/simple;
-	bh=gfVJqYnjy+cU1ihJ0y+FAteKrqD8KjfOr+w1bQHcZyk=;
+	s=arc-20240116; t=1738766753; c=relaxed/simple;
+	bh=gJsW59BvgJNLDabZ3KhEbUcqHaocmDrp8SFqEIGE5eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/dnFnOk+XcuV7EPVkU4Xs10FJjwdLBApbq1II5viG68HL+AZ3NSokHS0euwxNQSy5Y42M4Xc60Q3aP0RCl8nVQzDHzBmFt1vRIu2mSqdRlRaji1fZANUywexdlIWFjPn03yfpWM68m9gEF8yxGv3GmP3gW/3mun0gjYI17O8uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7BwTzuX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qzV3hma51txnK5aXioCZ5BP1uoiI84f90Rp87E8EHvdm/FQFUpWeO8B2uMQcC346HuOed/ydwicAxSk5jpnqBy6JFanQhWSTwUlTOCJyGShDXUPkZBq+ioVLNB6W3praFUNo0IL+sMhyWPi8pPFKgcWIPQ0E2lUaiCY9S3YDCiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UuiNa/1J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7BwTzuX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966ACC4CED1;
-	Wed,  5 Feb 2025 14:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UuiNa/1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C28C1C4CED1;
+	Wed,  5 Feb 2025 14:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766750;
-	bh=gfVJqYnjy+cU1ihJ0y+FAteKrqD8KjfOr+w1bQHcZyk=;
+	s=korg; t=1738766753;
+	bh=gJsW59BvgJNLDabZ3KhEbUcqHaocmDrp8SFqEIGE5eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7BwTzuXels/IclSJC0CCV6WUOXQHxzR5VEl+nphBWBVP8ce1nCXKWSA9njsP31Sp
-	 heAm3UNrqjpKkwnc4jUu2F55fKgdVflPQ3+LDLB3HDRsR+ekB4tCZ1I0DEgBLwzthK
-	 V7hZypdVB8/Mb/5W6Og90vkrWzgcQzwsFky+SH0U=
+	b=UuiNa/1JvojRYvtkYZDIWCgH+1mWGRFEgnYzvZUK6IFMZe6XP81ty8jD/mG/9Dy58
+	 oC8F8CBIDLzqn3Hc7pQto+a37fexbMMhrnFV7ikDDcTFeDq3tz1HbAx64VJPQt4r0z
+	 eb/Und+J2l3gkIcajx/r26r2RQMG3SsEhMar79zA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 356/590] arm64: dts: qcom: sm8450: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:41:51 +0100
-Message-ID: <20250205134508.888898847@linuxfoundation.org>
+	WANG Xuerui <git@xen0n.name>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 393/393] LoongArch: Change 8 to 14 for LOONGARCH_MAX_{BRP,WRP}
+Date: Wed,  5 Feb 2025 14:45:12 +0100
+Message-ID: <20250205134435.329395771@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +47,151 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit c375ff3b887abf376607d4769c1114c5e3b6ea72 ]
+commit f502ea618bf16d615d7dc6138c8988d3118fe750 upstream.
 
-The SM8450 platform uses PMK8350 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+The maximum number of load/store watchpoints and fetch instruction
+watchpoints is 14 each according to LoongArch Reference Manual, so
+change 8 to 14 for the related code.
 
-Fixes: 5188049c9b36 ("arm64: dts: qcom: Add base SM8450 DTSI")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-15-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.html#control-and-status-registers-related-to-watchpoints
+Cc: stable@vger.kernel.org
+Fixes: edffa33c7bb5 ("LoongArch: Add hardware breakpoints/watchpoints support")
+Reviewed-by: WANG Xuerui <git@xen0n.name>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/include/asm/hw_breakpoint.h |    4 -
+ arch/loongarch/include/asm/loongarch.h     |   60 +++++++++++++++++++++++++++++
+ arch/loongarch/kernel/hw_breakpoint.c      |   16 ++++++-
+ 3 files changed, 76 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 38cb524cc5689..f7d52e491b694 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -43,7 +43,7 @@
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
--			clock-frequency = <32000>;
-+			clock-frequency = <32764>;
- 		};
- 	};
+--- a/arch/loongarch/include/asm/hw_breakpoint.h
++++ b/arch/loongarch/include/asm/hw_breakpoint.h
+@@ -38,8 +38,8 @@ struct arch_hw_breakpoint {
+  * Limits.
+  * Changing these will require modifications to the register accessors.
+  */
+-#define LOONGARCH_MAX_BRP		8
+-#define LOONGARCH_MAX_WRP		8
++#define LOONGARCH_MAX_BRP		14
++#define LOONGARCH_MAX_WRP		14
  
--- 
-2.39.5
-
+ /* Virtual debug register bases. */
+ #define CSR_CFG_ADDR	0
+--- a/arch/loongarch/include/asm/loongarch.h
++++ b/arch/loongarch/include/asm/loongarch.h
+@@ -928,6 +928,36 @@
+ #define LOONGARCH_CSR_DB7CTRL		0x34a	/* data breakpoint 7 control */
+ #define LOONGARCH_CSR_DB7ASID		0x34b	/* data breakpoint 7 asid */
+ 
++#define LOONGARCH_CSR_DB8ADDR		0x350	/* data breakpoint 8 address */
++#define LOONGARCH_CSR_DB8MASK		0x351	/* data breakpoint 8 mask */
++#define LOONGARCH_CSR_DB8CTRL		0x352	/* data breakpoint 8 control */
++#define LOONGARCH_CSR_DB8ASID		0x353	/* data breakpoint 8 asid */
++
++#define LOONGARCH_CSR_DB9ADDR		0x358	/* data breakpoint 9 address */
++#define LOONGARCH_CSR_DB9MASK		0x359	/* data breakpoint 9 mask */
++#define LOONGARCH_CSR_DB9CTRL		0x35a	/* data breakpoint 9 control */
++#define LOONGARCH_CSR_DB9ASID		0x35b	/* data breakpoint 9 asid */
++
++#define LOONGARCH_CSR_DB10ADDR		0x360	/* data breakpoint 10 address */
++#define LOONGARCH_CSR_DB10MASK		0x361	/* data breakpoint 10 mask */
++#define LOONGARCH_CSR_DB10CTRL		0x362	/* data breakpoint 10 control */
++#define LOONGARCH_CSR_DB10ASID		0x363	/* data breakpoint 10 asid */
++
++#define LOONGARCH_CSR_DB11ADDR		0x368	/* data breakpoint 11 address */
++#define LOONGARCH_CSR_DB11MASK		0x369	/* data breakpoint 11 mask */
++#define LOONGARCH_CSR_DB11CTRL		0x36a	/* data breakpoint 11 control */
++#define LOONGARCH_CSR_DB11ASID		0x36b	/* data breakpoint 11 asid */
++
++#define LOONGARCH_CSR_DB12ADDR		0x370	/* data breakpoint 12 address */
++#define LOONGARCH_CSR_DB12MASK		0x371	/* data breakpoint 12 mask */
++#define LOONGARCH_CSR_DB12CTRL		0x372	/* data breakpoint 12 control */
++#define LOONGARCH_CSR_DB12ASID		0x373	/* data breakpoint 12 asid */
++
++#define LOONGARCH_CSR_DB13ADDR		0x378	/* data breakpoint 13 address */
++#define LOONGARCH_CSR_DB13MASK		0x379	/* data breakpoint 13 mask */
++#define LOONGARCH_CSR_DB13CTRL		0x37a	/* data breakpoint 13 control */
++#define LOONGARCH_CSR_DB13ASID		0x37b	/* data breakpoint 13 asid */
++
+ #define LOONGARCH_CSR_FWPC		0x380	/* instruction breakpoint config */
+ #define LOONGARCH_CSR_FWPS		0x381	/* instruction breakpoint status */
+ 
+@@ -971,6 +1001,36 @@
+ #define LOONGARCH_CSR_IB7CTRL		0x3ca	/* inst breakpoint 7 control */
+ #define LOONGARCH_CSR_IB7ASID		0x3cb	/* inst breakpoint 7 asid */
+ 
++#define LOONGARCH_CSR_IB8ADDR		0x3d0	/* inst breakpoint 8 address */
++#define LOONGARCH_CSR_IB8MASK		0x3d1	/* inst breakpoint 8 mask */
++#define LOONGARCH_CSR_IB8CTRL		0x3d2	/* inst breakpoint 8 control */
++#define LOONGARCH_CSR_IB8ASID		0x3d3	/* inst breakpoint 8 asid */
++
++#define LOONGARCH_CSR_IB9ADDR		0x3d8	/* inst breakpoint 9 address */
++#define LOONGARCH_CSR_IB9MASK		0x3d9	/* inst breakpoint 9 mask */
++#define LOONGARCH_CSR_IB9CTRL		0x3da	/* inst breakpoint 9 control */
++#define LOONGARCH_CSR_IB9ASID		0x3db	/* inst breakpoint 9 asid */
++
++#define LOONGARCH_CSR_IB10ADDR		0x3e0	/* inst breakpoint 10 address */
++#define LOONGARCH_CSR_IB10MASK		0x3e1	/* inst breakpoint 10 mask */
++#define LOONGARCH_CSR_IB10CTRL		0x3e2	/* inst breakpoint 10 control */
++#define LOONGARCH_CSR_IB10ASID		0x3e3	/* inst breakpoint 10 asid */
++
++#define LOONGARCH_CSR_IB11ADDR		0x3e8	/* inst breakpoint 11 address */
++#define LOONGARCH_CSR_IB11MASK		0x3e9	/* inst breakpoint 11 mask */
++#define LOONGARCH_CSR_IB11CTRL		0x3ea	/* inst breakpoint 11 control */
++#define LOONGARCH_CSR_IB11ASID		0x3eb	/* inst breakpoint 11 asid */
++
++#define LOONGARCH_CSR_IB12ADDR		0x3f0	/* inst breakpoint 12 address */
++#define LOONGARCH_CSR_IB12MASK		0x3f1	/* inst breakpoint 12 mask */
++#define LOONGARCH_CSR_IB12CTRL		0x3f2	/* inst breakpoint 12 control */
++#define LOONGARCH_CSR_IB12ASID		0x3f3	/* inst breakpoint 12 asid */
++
++#define LOONGARCH_CSR_IB13ADDR		0x3f8	/* inst breakpoint 13 address */
++#define LOONGARCH_CSR_IB13MASK		0x3f9	/* inst breakpoint 13 mask */
++#define LOONGARCH_CSR_IB13CTRL		0x3fa	/* inst breakpoint 13 control */
++#define LOONGARCH_CSR_IB13ASID		0x3fb	/* inst breakpoint 13 asid */
++
+ #define LOONGARCH_CSR_DEBUG		0x500	/* debug config */
+ #define LOONGARCH_CSR_DERA		0x501	/* debug era */
+ #define LOONGARCH_CSR_DESAVE		0x502	/* debug save */
+--- a/arch/loongarch/kernel/hw_breakpoint.c
++++ b/arch/loongarch/kernel/hw_breakpoint.c
+@@ -51,7 +51,13 @@ int hw_breakpoint_slots(int type)
+ 	READ_WB_REG_CASE(OFF, 4, REG, T, VAL);		\
+ 	READ_WB_REG_CASE(OFF, 5, REG, T, VAL);		\
+ 	READ_WB_REG_CASE(OFF, 6, REG, T, VAL);		\
+-	READ_WB_REG_CASE(OFF, 7, REG, T, VAL);
++	READ_WB_REG_CASE(OFF, 7, REG, T, VAL);		\
++	READ_WB_REG_CASE(OFF, 8, REG, T, VAL);		\
++	READ_WB_REG_CASE(OFF, 9, REG, T, VAL);		\
++	READ_WB_REG_CASE(OFF, 10, REG, T, VAL);		\
++	READ_WB_REG_CASE(OFF, 11, REG, T, VAL);		\
++	READ_WB_REG_CASE(OFF, 12, REG, T, VAL);		\
++	READ_WB_REG_CASE(OFF, 13, REG, T, VAL);
+ 
+ #define GEN_WRITE_WB_REG_CASES(OFF, REG, T, VAL)	\
+ 	WRITE_WB_REG_CASE(OFF, 0, REG, T, VAL);		\
+@@ -61,7 +67,13 @@ int hw_breakpoint_slots(int type)
+ 	WRITE_WB_REG_CASE(OFF, 4, REG, T, VAL);		\
+ 	WRITE_WB_REG_CASE(OFF, 5, REG, T, VAL);		\
+ 	WRITE_WB_REG_CASE(OFF, 6, REG, T, VAL);		\
+-	WRITE_WB_REG_CASE(OFF, 7, REG, T, VAL);
++	WRITE_WB_REG_CASE(OFF, 7, REG, T, VAL);		\
++	WRITE_WB_REG_CASE(OFF, 8, REG, T, VAL);		\
++	WRITE_WB_REG_CASE(OFF, 9, REG, T, VAL);		\
++	WRITE_WB_REG_CASE(OFF, 10, REG, T, VAL);	\
++	WRITE_WB_REG_CASE(OFF, 11, REG, T, VAL);	\
++	WRITE_WB_REG_CASE(OFF, 12, REG, T, VAL);	\
++	WRITE_WB_REG_CASE(OFF, 13, REG, T, VAL);
+ 
+ static u64 read_wb_reg(int reg, int n, int t)
+ {
 
 
