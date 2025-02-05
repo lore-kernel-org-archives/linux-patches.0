@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A16B7DA6A;
-	Wed,  5 Feb 2025 14:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917C37BAEC;
+	Wed,  5 Feb 2025 14:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765845; cv=none; b=hIroiaaTA8bDEPAxRFspRuwDAS7EAwXDTVkgzMQnjH9ANUlO5bhSPNg84tkBj5JtwMZEP22qAEcWbo9rmv0N6cpmXCZvVzuEogUnXocdVZWpeQmQkXfS71Bh61z8jY7HP/L+GYIbJ3bPiPa2/4wvMoiZzkiQd2VxQU2kbHDYDfw=
+	t=1738765848; cv=none; b=HqDONQ/ecML7W/g0gs99JWnKlGZ3GRLyGo7saqnWzQQGQ99bURO59JF/NXAzSkTgFA/rZprBlP0PXQOy0duy5B1aB454B3ZKH26eHWiwh4d21aq7efkO7BysQ1/w39KSdl8BAZM3zk6xtRmdp8FGuZDL0if5mOVaGQxfKboku/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765845; c=relaxed/simple;
-	bh=0iPRKzKih1pquTPRbq7J62Hk/do/vdm/nr8K2CpdhNA=;
+	s=arc-20240116; t=1738765848; c=relaxed/simple;
+	bh=F5aWU8i4Uf5rBIsMBmeNRwPUxl5wWnKoknWtWegp2vI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lg2PHz0fmMMJlciFW3baF875HyQFJTFDdU/QoWLaZIIPWntt4epyiV3XdB9lL3vQOqUaa71rs+hDq0LF9W6fy9UnEUFRl5boZc17U48/0p7rMdEX4Gm7O37WNaEv+Sjtg1g+DtC7kR4ExZSgKVrotLZ2a20WQ1x+ALeYel5aKfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jvXLwdL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kWSgUKVoWxxJvk/Kc6vMza8/0btXMLvMkDzGNvC402cphcbrgkDNzM9MQ/qRpAnx8IEiSHs+r5CVpTbyLiy+dULOICmgcQtRCwvi1UzW2BIQk0J9XIPhthbqW5LuaKPcGY/Dq3r3C2fACnnFqkN0+xgAlGrbrRVWNn/koQUt7CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8WiEHJI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jvXLwdL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92F1C4CED1;
-	Wed,  5 Feb 2025 14:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8WiEHJI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C39C4CED1;
+	Wed,  5 Feb 2025 14:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765844;
-	bh=0iPRKzKih1pquTPRbq7J62Hk/do/vdm/nr8K2CpdhNA=;
+	s=korg; t=1738765848;
+	bh=F5aWU8i4Uf5rBIsMBmeNRwPUxl5wWnKoknWtWegp2vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2jvXLwdLQuDv+6BXM8CPBQE7Z28LVtSnBK6TpeNrMp8KGDXRHLGCxFnhU6tQGcdD/
-	 4jZgUp5xbhpUUycZs06zaUVokgcH85Y5jcpppALKVkwEGOlp+QPRSArWTnA49MqK3W
-	 kffLkyLdTUTgZq4mUa+ZYsO9kgUTp+C0S3Q7884E=
+	b=w8WiEHJIehMq96kjPIRnxZai/XxCpTHjXdCkZqMFkVnH4UpS6E/bSGNhJLxuL+GBm
+	 KCNNb5ov/9NNIcFPKqKIbfcLGtpM4pL85AoHwtNX4js6Vojq1Vic9hrZxswdsJfta/
+	 vSuymavVZGsidqr7MA6oHu2wH3JyYUXcfRVJLynM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Yue <glass.su@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"Dmitry V. Levin" <ldv@strace.io>,
+	Kees Cook <kees@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 305/393] ocfs2: mark dquot as inactive if failed to start trans while releasing dquot
-Date: Wed,  5 Feb 2025 14:43:44 +0100
-Message-ID: <20250205134431.979294561@linuxfoundation.org>
+Subject: [PATCH 6.13 219/623] selftests: harness: fix printing of mismatch values in __EXPECT()
+Date: Wed,  5 Feb 2025 14:39:21 +0100
+Message-ID: <20250205134504.603748533@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,69 +48,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Yue <glass.su@suse.com>
+From: Dmitry V. Levin <ldv@strace.io>
 
-[ Upstream commit 276c61385f6bc3223a5ecd307cf4aba2dfbb9a31 ]
+[ Upstream commit 02bc220dc6dc7c56edc4859bc5dd2c08b95d5fb5 ]
 
-While running fstests generic/329, the kernel workqueue
-quota_release_workfn is dead looping in calling ocfs2_release_dquot().
-The ocfs2 state is already readonly but ocfs2_release_dquot wants to
-start a transaction but fails and returns.
+intptr_t and uintptr_t are not big enough types on 32-bit architectures
+when printing 64-bit values, resulting to the following incorrect
+diagnostic output:
 
-=====================================================================
-[ 2918.123602 ][  T275 ] On-disk corruption discovered. Please run
-fsck.ocfs2 once the filesystem is unmounted.
-[ 2918.124034 ][  T275 ] (kworker/u135:1,275,11):ocfs2_release_dquot:765
-ERROR: status = -30
-[ 2918.124452 ][  T275 ] (kworker/u135:1,275,11):ocfs2_release_dquot:795
-ERROR: status = -30
-[ 2918.124883 ][  T275 ] (kworker/u135:1,275,11):ocfs2_start_trans:357
-ERROR: status = -30
-[ 2918.125276 ][  T275 ] OCFS2: abort (device dm-0): ocfs2_start_trans:
-Detected aborted journal
-[ 2918.125710 ][  T275 ] On-disk corruption discovered. Please run
-fsck.ocfs2 once the filesystem is unmounted.
-=====================================================================
+  # get_syscall_info.c:209:get_syscall_info:Expected exp_args[2] (3134324433) == info.entry.args[1] (3134324433)
 
-ocfs2_release_dquot() is much like dquot_release(), which is called by
-ext4 to handle similar situation.  So here fix it by marking the dquot as
-inactive like what dquot_release() does.
+Replace intptr_t and uintptr_t with intmax_t and uintmax_t, respectively.
+With this fix, the same test produces more usable diagnostic output:
 
-Link: https://lkml.kernel.org/r/20250106140653.92292-1-glass.su@suse.com
-Fixes: 9e33d69f553a ("ocfs2: Implementation of local and global quota file handling")
-Signed-off-by: Su Yue <glass.su@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  # get_syscall_info.c:209:get_syscall_info:Expected exp_args[2] (3134324433) == info.entry.args[1] (18446744072548908753)
+
+Link: https://lore.kernel.org/r/20250108170757.GA6723@strace.io
+Fixes: b5bb6d3068ea ("selftests/seccomp: fix 32-bit build warnings")
+Signed-off-by: Dmitry V. Levin <ldv@strace.io>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/quota_global.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/testing/selftests/kselftest_harness.h | 24 ++++++++++-----------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/fs/ocfs2/quota_global.c b/fs/ocfs2/quota_global.c
-index 0dffd6a44d39d..24b031dc44ee1 100644
---- a/fs/ocfs2/quota_global.c
-+++ b/fs/ocfs2/quota_global.c
-@@ -749,6 +749,11 @@ static int ocfs2_release_dquot(struct dquot *dquot)
- 	handle = ocfs2_start_trans(osb,
- 		ocfs2_calc_qdel_credits(dquot->dq_sb, dquot->dq_id.type));
- 	if (IS_ERR(handle)) {
-+		/*
-+		 * Mark dquot as inactive to avoid endless cycle in
-+		 * quota_release_workfn().
-+		 */
-+		clear_bit(DQ_ACTIVE_B, &dquot->dq_flags);
- 		status = PTR_ERR(handle);
- 		mlog_errno(status);
- 		goto out_ilock;
+diff --git a/tools/testing/selftests/kselftest_harness.h b/tools/testing/selftests/kselftest_harness.h
+index a5a72415e37b0..666c9fde76da9 100644
+--- a/tools/testing/selftests/kselftest_harness.h
++++ b/tools/testing/selftests/kselftest_harness.h
+@@ -760,33 +760,33 @@
+ 		/* Report with actual signedness to avoid weird output. */ \
+ 		switch (is_signed_type(__exp) * 2 + is_signed_type(__seen)) { \
+ 		case 0: { \
+-			unsigned long long __exp_print = (uintptr_t)__exp; \
+-			unsigned long long __seen_print = (uintptr_t)__seen; \
+-			__TH_LOG("Expected %s (%llu) %s %s (%llu)", \
++			uintmax_t __exp_print = (uintmax_t)__exp; \
++			uintmax_t __seen_print = (uintmax_t)__seen; \
++			__TH_LOG("Expected %s (%ju) %s %s (%ju)", \
+ 				 _expected_str, __exp_print, #_t, \
+ 				 _seen_str, __seen_print); \
+ 			break; \
+ 			} \
+ 		case 1: { \
+-			unsigned long long __exp_print = (uintptr_t)__exp; \
+-			long long __seen_print = (intptr_t)__seen; \
+-			__TH_LOG("Expected %s (%llu) %s %s (%lld)", \
++			uintmax_t __exp_print = (uintmax_t)__exp; \
++			intmax_t  __seen_print = (intmax_t)__seen; \
++			__TH_LOG("Expected %s (%ju) %s %s (%jd)", \
+ 				 _expected_str, __exp_print, #_t, \
+ 				 _seen_str, __seen_print); \
+ 			break; \
+ 			} \
+ 		case 2: { \
+-			long long __exp_print = (intptr_t)__exp; \
+-			unsigned long long __seen_print = (uintptr_t)__seen; \
+-			__TH_LOG("Expected %s (%lld) %s %s (%llu)", \
++			intmax_t  __exp_print = (intmax_t)__exp; \
++			uintmax_t __seen_print = (uintmax_t)__seen; \
++			__TH_LOG("Expected %s (%jd) %s %s (%ju)", \
+ 				 _expected_str, __exp_print, #_t, \
+ 				 _seen_str, __seen_print); \
+ 			break; \
+ 			} \
+ 		case 3: { \
+-			long long __exp_print = (intptr_t)__exp; \
+-			long long __seen_print = (intptr_t)__seen; \
+-			__TH_LOG("Expected %s (%lld) %s %s (%lld)", \
++			intmax_t  __exp_print = (intmax_t)__exp; \
++			intmax_t  __seen_print = (intmax_t)__seen; \
++			__TH_LOG("Expected %s (%jd) %s %s (%jd)", \
+ 				 _expected_str, __exp_print, #_t, \
+ 				 _seen_str, __seen_print); \
+ 			break; \
 -- 
 2.39.5
 
