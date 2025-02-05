@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0593113C9C4;
-	Wed,  5 Feb 2025 13:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7321014A630;
+	Wed,  5 Feb 2025 13:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763836; cv=none; b=gLobIV2t9v7UqbKWLqdENNJtiIDNQZ/S1Vqv8p9iVnZIK6RgJdgV7Ajz/nE+w+gxE6YfcqQjVk+NrdR1TMvFHdn5Kv6UQ0oGxgfLvsRblCTz3r1i2NG38ZFrSvgg+/xPE1XqknXAiBNqEyWyBi9ma9FMPW1JZJEQouZDObhrKAg=
+	t=1738763839; cv=none; b=gsqQYsQ3PTwcV+zOcEx6RjouZ9tqHHUraAV9kMHy0bMRYTswiatLEvQK365MBd/2IGWT4R62ynGQz483BsmvnqNOIEj4E52jdTr5mBysi6zeKWz4y0tkj9PqF2GNLqWabJ5Lymp49Jdx8NIXtu4G6kCxTYbUpdrzoiQclw/8H5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763836; c=relaxed/simple;
-	bh=XQGN9BMtQcfw9hg8CfEhkhJjzeNB32CxgP9mcDeJi0U=;
+	s=arc-20240116; t=1738763839; c=relaxed/simple;
+	bh=JZuVZtlxZeKpI/r1iJp18kiSUubaW6/d6Y8L/ZJPv8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V7VIG9MnfF69JZuCb8LYjibqJHX6oF9bj2xoCCdC6oU94iR39lQ1L2BxAgiEjjQ8OXEaPreZ//hBVUs3mRusG2Xcn07T3HOGOOYJVWHGjvAeAP42FANPU25a7e98hm/ZVBfIeg53/SeLv03vKdNewJ8XI+RH2Lb8MYpGZOIHrq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3gFCvtO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AZ1K3JXRMJcD2ybHlrK9eYqa3SkwVBJ5lWp95Qi3ujtnvOfHknVI/yPVXW90gfc+qz9LqISAhYg1D3z3D0wSsYAXyuRE7fhccPPWDi/o+0X7YRTHi96HJQbaXzzV6Zm7b5Mbh8woZDtLWW9+/qa1X3+qlz3IW6N9j//RGP47mv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QlFsiikb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3gFCvtO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7167CC4CED1;
-	Wed,  5 Feb 2025 13:57:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QlFsiikb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D369EC4CED1;
+	Wed,  5 Feb 2025 13:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763835;
-	bh=XQGN9BMtQcfw9hg8CfEhkhJjzeNB32CxgP9mcDeJi0U=;
+	s=korg; t=1738763839;
+	bh=JZuVZtlxZeKpI/r1iJp18kiSUubaW6/d6Y8L/ZJPv8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L3gFCvtOEJGTQuvpee34qeSMYa3yYeDcaphMbh2TSorLxvrsKCYEZzUFnk60WDOgs
-	 Ozt8QksvgOyloLIJ6hZh72ZRWo4C+pE1UesI08c+/2QBunQB9ZvjUsguNcl6IhlEiZ
-	 H1kdrsWltX9Bo5m4W80FdPKT7kFPEkDNHKvsR92Q=
+	b=QlFsiikbGDpsMMw7EQpxpvaBKxDjTXpK+nIyIWXioZzAAXs8fe/c/jpUy8T5AL6Ft
+	 Hh9F6SGKwj0oL5xWidHTL1eOu+lDjLd2W6k4WWBNsf1xBGhr5+i0Red6xOUwPAGJVz
+	 eAPOIHJdxPYWoAAOVD9o/17Cvc3UcWybjoLk6y1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/590] drm/msm/dpu: link DSPP_2/_3 blocks on SM8250
-Date: Wed,  5 Feb 2025 14:36:56 +0100
-Message-ID: <20250205134457.592435626@linuxfoundation.org>
+Subject: [PATCH 6.6 112/393] wifi: mac80211: dont flush non-uploaded STAs
+Date: Wed,  5 Feb 2025 14:40:31 +0100
+Message-ID: <20250205134424.578763921@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 8252028092f86d413b3a83e5e76a9615073a0c7f ]
+[ Upstream commit aa3ce3f8fafa0b8fb062f28024855ea8cb3f3450 ]
 
-Link DSPP_2 to the LM_2 and DSPP_3 to the LM_3 mixer blocks. This allows
-using colour transformation matrix (aka night mode) with more outputs at
-the same time.
+If STA state is pre-moved to AUTHORIZED (such as in IBSS
+scenarios) and insertion fails, the station is freed.
+In this case, the driver never knew about the station,
+so trying to flush it is unexpected and may crash.
 
-Fixes: 05ae91d960fd ("drm/msm/dpu: enable DSPP support on SM8[12]50")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/629956/
-Link: https://lore.kernel.org/r/20241220-dpu-fix-catalog-v2-4-38fa961ea992@linaro.org
+Check if the sta was uploaded to the driver before and
+fix this.
+
+Fixes: d00800a289c9 ("wifi: mac80211: add flush_sta method")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250102161730.e3d10970a7c7.I491bbcccc46f835ade07df0640a75f6ed92f20a3@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/driver-ops.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-index a57d50b1f0280..e8916ae826a6d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-@@ -162,6 +162,7 @@ static const struct dpu_lm_cfg sm8250_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.lm_pair = LM_3,
- 		.pingpong = PINGPONG_2,
-+		.dspp = DSPP_2,
- 	}, {
- 		.name = "lm_3", .id = LM_3,
- 		.base = 0x47000, .len = 0x320,
-@@ -169,6 +170,7 @@ static const struct dpu_lm_cfg sm8250_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.lm_pair = LM_2,
- 		.pingpong = PINGPONG_3,
-+		.dspp = DSPP_3,
- 	}, {
- 		.name = "lm_4", .id = LM_4,
- 		.base = 0x48000, .len = 0x320,
+diff --git a/net/mac80211/driver-ops.h b/net/mac80211/driver-ops.h
+index 2bc2fbe58f944..78aa3bc51586e 100644
+--- a/net/mac80211/driver-ops.h
++++ b/net/mac80211/driver-ops.h
+@@ -665,6 +665,9 @@ static inline void drv_flush_sta(struct ieee80211_local *local,
+ 	if (sdata && !check_sdata_in_driver(sdata))
+ 		return;
+ 
++	if (!sta->uploaded)
++		return;
++
+ 	trace_drv_flush_sta(local, sdata, &sta->sta);
+ 	if (local->ops->flush_sta)
+ 		local->ops->flush_sta(&local->hw, &sdata->vif, &sta->sta);
 -- 
 2.39.5
 
