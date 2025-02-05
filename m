@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F68715CD74;
-	Wed,  5 Feb 2025 15:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A7115CD74;
+	Wed,  5 Feb 2025 15:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768497; cv=none; b=tWS1Qftysgsps5hnKu9hBSedWPM/l15wYM+X/TYdZ/vWGUyMGnDpYn7j3prKxaovMhi5EdIk4U3+xx72ywTivy6XDxXqxXDXN8oWjVuONHPe4vIiN09882tlSavFt4zNdYRsYZSGRnFaFKGiRIhAOc5N8Kako2e4yuS8ixDPICo=
+	t=1738768500; cv=none; b=hhc+VPQpz4VSyQXOaV8SH/SCug+d8OmPmwXfXM0cNUaZdCia6x/1c+VQVlfAt8N2XXoNmMMAWCaxXV1lGNcyjm5MqDmq8AycA0c/47CzSx/6CRfqyj6oF8k4BaoGQwCWngAM9iwy3S/GuEC0vOQoeA+ziSZPggTZueYN/8JHux0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768497; c=relaxed/simple;
-	bh=jvfLAuOXeBdaE68dIhOk1IsKPjhsEQc5SXe9DZSbLGs=;
+	s=arc-20240116; t=1738768500; c=relaxed/simple;
+	bh=PUJrOE+OSnWHTys26T+z0Uq+/2UjZZ+0Dg7ffFQaDtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FPpLG1+taDFphH34y/lzmwkXsRL1ZV7g75Sgb+yV6XvekjP56k62wt6TUHUMv0zKRFDsL6Hoxedfv0fYP2C1S39YJmLoal5eaf9HZzo6XrHm6XEWCNej72BdsueiWXsjoDDbJyINE0SWFuWQNUmPUYR3irvgr1qh1sh/MjWxPL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fk0jTbd8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oVdKXXtMRzbAcvJ5W5prKBVF92uGG/l6oYI0AcBhPDV2Xcm2LtQfY7cU+TX2fDkFCc26IoRktmnLAAFkTdTEF7SMNE96nGRZNJOSxlmhw+L3ey8BhFEqsdiEF+gY2aR4N8rB/crauEDtBGy5NoEY8Gqo7mDIMQ0wDY4IAlGoSFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mj9QC2oG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fk0jTbd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9336AC4CED6;
-	Wed,  5 Feb 2025 15:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mj9QC2oG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12466C4CED1;
+	Wed,  5 Feb 2025 15:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768497;
-	bh=jvfLAuOXeBdaE68dIhOk1IsKPjhsEQc5SXe9DZSbLGs=;
+	s=korg; t=1738768500;
+	bh=PUJrOE+OSnWHTys26T+z0Uq+/2UjZZ+0Dg7ffFQaDtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fk0jTbd8gkfbdM7Zh0qq0a60wj/GEChDn0zc0u0KUTvuaC97Fe5lPQWNOCco19kzV
-	 8ji6i9hNjmo2zDmy+YXkr6OcF4z66Q/BMINUjR2NZMQjRaX9uAV9SfX4l/J7UTOF6r
-	 9jISog+xNTHZatSmRjPn2MtmUJIOB+JTghQ2vj0M=
+	b=Mj9QC2oGVS4WjzW7s4Eg0rFAcxX14yI4ID0LTqIt25IiwHrDXHmuJbsplNWWSJzCh
+	 1I5ta6nkt1hKOg1j4BK2bdiTzT/V7zXiL7tT3Rk7k6vv/MMOd3e/Wm+K7bhloFJldS
+	 aJOeIlGR0tgcMu09kYosFftxEYeUHHfKMxFhHxEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yu Kuai <yukuai3@huawei.com>,
+	Xiao Ni <xni@redhat.com>,
 	Song Liu <song@kernel.org>,
 	Yu Kuai <yukuai1@huaweicloud.com>
-Subject: [PATCH 6.13 574/623] md/md-bitmap: remove the last parameter for bimtap_ops->endwrite()
-Date: Wed,  5 Feb 2025 14:45:16 +0100
-Message-ID: <20250205134518.181106903@linuxfoundation.org>
+Subject: [PATCH 6.13 575/623] md: add a new callback pers->bitmap_sector()
+Date: Wed,  5 Feb 2025 14:45:17 +0100
+Message-ID: <20250205134518.219655594@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -53,341 +54,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-commit 4f0e7d0e03b7b80af84759a9e7cfb0f81ac4adae upstream.
+commit 0c984a283a3ea3f10bebecd6c57c1d41b2e4f518 upstream.
 
-For the case that IO failed for one rdev, the bit will be mark as NEEDED
-in following cases:
-
-1) If badblocks is set and rdev is not faulty;
-2) If rdev is faulty;
-
-Case 1) is useless because synchronize data to badblocks make no sense.
-Case 2) can be replaced with mddev->degraded.
-
-Also remove R1BIO_Degraded, R10BIO_Degraded and STRIPE_DEGRADED since
-case 2) no longer use them.
+This callback will be used in raid5 to convert io ranges from array to
+bitmap.
 
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20250109015145.158868-3-yukuai1@huaweicloud.com
+Reviewed-by: Xiao Ni <xni@redhat.com>
+Link: https://lore.kernel.org/r/20250109015145.158868-4-yukuai1@huaweicloud.com
 Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Yu Kuai <yukuai1@huaweicloud.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md-bitmap.c   |   19 ++++++++++---------
- drivers/md/md-bitmap.h   |    2 +-
- drivers/md/raid1.c       |   26 +++-----------------------
- drivers/md/raid1.h       |    1 -
- drivers/md/raid10.c      |   23 +++--------------------
- drivers/md/raid10.h      |    1 -
- drivers/md/raid5-cache.c |    3 +--
- drivers/md/raid5.c       |   15 +++------------
- drivers/md/raid5.h       |    1 -
- 9 files changed, 21 insertions(+), 70 deletions(-)
+ drivers/md/md.h |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -1726,7 +1726,7 @@ static int bitmap_startwrite(struct mdde
- }
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -746,6 +746,9 @@ struct md_personality
+ 	void *(*takeover) (struct mddev *mddev);
+ 	/* Changes the consistency policy of an active array. */
+ 	int (*change_consistency_policy)(struct mddev *mddev, const char *buf);
++	/* convert io ranges from array to bitmap */
++	void (*bitmap_sector)(struct mddev *mddev, sector_t *offset,
++			      unsigned long *sectors);
+ };
  
- static void bitmap_endwrite(struct mddev *mddev, sector_t offset,
--			    unsigned long sectors, bool success)
-+			    unsigned long sectors)
- {
- 	struct bitmap *bitmap = mddev->bitmap;
- 
-@@ -1745,15 +1745,16 @@ static void bitmap_endwrite(struct mddev
- 			return;
- 		}
- 
--		if (success && !bitmap->mddev->degraded &&
--		    bitmap->events_cleared < bitmap->mddev->events) {
--			bitmap->events_cleared = bitmap->mddev->events;
--			bitmap->need_sync = 1;
--			sysfs_notify_dirent_safe(bitmap->sysfs_can_clear);
--		}
--
--		if (!success && !NEEDED(*bmc))
-+		if (!bitmap->mddev->degraded) {
-+			if (bitmap->events_cleared < bitmap->mddev->events) {
-+				bitmap->events_cleared = bitmap->mddev->events;
-+				bitmap->need_sync = 1;
-+				sysfs_notify_dirent_safe(
-+						bitmap->sysfs_can_clear);
-+			}
-+		} else if (!NEEDED(*bmc)) {
- 			*bmc |= NEEDED_MASK;
-+		}
- 
- 		if (COUNTER(*bmc) == COUNTER_MAX)
- 			wake_up(&bitmap->overflow_wait);
---- a/drivers/md/md-bitmap.h
-+++ b/drivers/md/md-bitmap.h
-@@ -92,7 +92,7 @@ struct bitmap_operations {
- 	int (*startwrite)(struct mddev *mddev, sector_t offset,
- 			  unsigned long sectors);
- 	void (*endwrite)(struct mddev *mddev, sector_t offset,
--			 unsigned long sectors, bool success);
-+			 unsigned long sectors);
- 	bool (*start_sync)(struct mddev *mddev, sector_t offset,
- 			   sector_t *blocks, bool degraded);
- 	void (*end_sync)(struct mddev *mddev, sector_t offset, sector_t *blocks);
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -423,8 +423,7 @@ static void close_write(struct r1bio *r1
- 	if (test_bit(R1BIO_BehindIO, &r1_bio->state))
- 		mddev->bitmap_ops->end_behind_write(mddev);
- 	/* clear the bitmap if all writes complete successfully */
--	mddev->bitmap_ops->endwrite(mddev, r1_bio->sector, r1_bio->sectors,
--				    !test_bit(R1BIO_Degraded, &r1_bio->state));
-+	mddev->bitmap_ops->endwrite(mddev, r1_bio->sector, r1_bio->sectors);
- 	md_write_end(mddev);
- }
- 
-@@ -481,8 +480,6 @@ static void raid1_end_write_request(stru
- 		if (!test_bit(Faulty, &rdev->flags))
- 			set_bit(R1BIO_WriteError, &r1_bio->state);
- 		else {
--			/* Fail the request */
--			set_bit(R1BIO_Degraded, &r1_bio->state);
- 			/* Finished with this branch */
- 			r1_bio->bios[mirror] = NULL;
- 			to_put = bio;
-@@ -1536,11 +1533,8 @@ static void raid1_write_request(struct m
- 			write_behind = true;
- 
- 		r1_bio->bios[i] = NULL;
--		if (!rdev || test_bit(Faulty, &rdev->flags)) {
--			if (i < conf->raid_disks)
--				set_bit(R1BIO_Degraded, &r1_bio->state);
-+		if (!rdev || test_bit(Faulty, &rdev->flags))
- 			continue;
--		}
- 
- 		atomic_inc(&rdev->nr_pending);
- 		if (test_bit(WriteErrorSeen, &rdev->flags)) {
-@@ -1559,16 +1553,6 @@ static void raid1_write_request(struct m
- 					 */
- 					max_sectors = bad_sectors;
- 				rdev_dec_pending(rdev, mddev);
--				/* We don't set R1BIO_Degraded as that
--				 * only applies if the disk is
--				 * missing, so it might be re-added,
--				 * and we want to know to recover this
--				 * chunk.
--				 * In this case the device is here,
--				 * and the fact that this chunk is not
--				 * in-sync is recorded in the bad
--				 * block log
--				 */
- 				continue;
- 			}
- 			if (is_bad) {
-@@ -2616,12 +2600,10 @@ static void handle_write_finished(struct
- 			 * errors.
- 			 */
- 			fail = true;
--			if (!narrow_write_error(r1_bio, m)) {
-+			if (!narrow_write_error(r1_bio, m))
- 				md_error(conf->mddev,
- 					 conf->mirrors[m].rdev);
- 				/* an I/O failed, we can't clear the bitmap */
--				set_bit(R1BIO_Degraded, &r1_bio->state);
--			}
- 			rdev_dec_pending(conf->mirrors[m].rdev,
- 					 conf->mddev);
- 		}
-@@ -2712,8 +2694,6 @@ static void raid1d(struct md_thread *thr
- 			list_del(&r1_bio->retry_list);
- 			idx = sector_to_idx(r1_bio->sector);
- 			atomic_dec(&conf->nr_queued[idx]);
--			if (mddev->degraded)
--				set_bit(R1BIO_Degraded, &r1_bio->state);
- 			if (test_bit(R1BIO_WriteError, &r1_bio->state))
- 				close_write(r1_bio);
- 			raid_end_bio_io(r1_bio);
---- a/drivers/md/raid1.h
-+++ b/drivers/md/raid1.h
-@@ -188,7 +188,6 @@ struct r1bio {
- enum r1bio_state {
- 	R1BIO_Uptodate,
- 	R1BIO_IsSync,
--	R1BIO_Degraded,
- 	R1BIO_BehindIO,
- /* Set ReadError on bios that experience a readerror so that
-  * raid1d knows what to do with them.
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -429,8 +429,7 @@ static void close_write(struct r10bio *r
- 	struct mddev *mddev = r10_bio->mddev;
- 
- 	/* clear the bitmap if all writes complete successfully */
--	mddev->bitmap_ops->endwrite(mddev, r10_bio->sector, r10_bio->sectors,
--				    !test_bit(R10BIO_Degraded, &r10_bio->state));
-+	mddev->bitmap_ops->endwrite(mddev, r10_bio->sector, r10_bio->sectors);
- 	md_write_end(mddev);
- }
- 
-@@ -500,7 +499,6 @@ static void raid10_end_write_request(str
- 				set_bit(R10BIO_WriteError, &r10_bio->state);
- 			else {
- 				/* Fail the request */
--				set_bit(R10BIO_Degraded, &r10_bio->state);
- 				r10_bio->devs[slot].bio = NULL;
- 				to_put = bio;
- 				dec_rdev = 1;
-@@ -1437,10 +1435,8 @@ static void raid10_write_request(struct
- 		r10_bio->devs[i].bio = NULL;
- 		r10_bio->devs[i].repl_bio = NULL;
- 
--		if (!rdev && !rrdev) {
--			set_bit(R10BIO_Degraded, &r10_bio->state);
-+		if (!rdev && !rrdev)
- 			continue;
--		}
- 		if (rdev && test_bit(WriteErrorSeen, &rdev->flags)) {
- 			sector_t first_bad;
- 			sector_t dev_sector = r10_bio->devs[i].addr;
-@@ -1457,14 +1453,6 @@ static void raid10_write_request(struct
- 					 * to other devices yet
- 					 */
- 					max_sectors = bad_sectors;
--				/* We don't set R10BIO_Degraded as that
--				 * only applies if the disk is missing,
--				 * so it might be re-added, and we want to
--				 * know to recover this chunk.
--				 * In this case the device is here, and the
--				 * fact that this chunk is not in-sync is
--				 * recorded in the bad block log.
--				 */
- 				continue;
- 			}
- 			if (is_bad) {
-@@ -2964,11 +2952,8 @@ static void handle_write_completed(struc
- 				rdev_dec_pending(rdev, conf->mddev);
- 			} else if (bio != NULL && bio->bi_status) {
- 				fail = true;
--				if (!narrow_write_error(r10_bio, m)) {
-+				if (!narrow_write_error(r10_bio, m))
- 					md_error(conf->mddev, rdev);
--					set_bit(R10BIO_Degraded,
--						&r10_bio->state);
--				}
- 				rdev_dec_pending(rdev, conf->mddev);
- 			}
- 			bio = r10_bio->devs[m].repl_bio;
-@@ -3027,8 +3012,6 @@ static void raid10d(struct md_thread *th
- 			r10_bio = list_first_entry(&tmp, struct r10bio,
- 						   retry_list);
- 			list_del(&r10_bio->retry_list);
--			if (mddev->degraded)
--				set_bit(R10BIO_Degraded, &r10_bio->state);
- 
- 			if (test_bit(R10BIO_WriteError,
- 				     &r10_bio->state))
---- a/drivers/md/raid10.h
-+++ b/drivers/md/raid10.h
-@@ -161,7 +161,6 @@ enum r10bio_state {
- 	R10BIO_IsSync,
- 	R10BIO_IsRecover,
- 	R10BIO_IsReshape,
--	R10BIO_Degraded,
- /* Set ReadError on bios that experience a read error
-  * so that raid10d knows what to do with them.
-  */
---- a/drivers/md/raid5-cache.c
-+++ b/drivers/md/raid5-cache.c
-@@ -314,8 +314,7 @@ void r5c_handle_cached_data_endio(struct
- 			set_bit(R5_UPTODATE, &sh->dev[i].flags);
- 			r5c_return_dev_pending_writes(conf, &sh->dev[i]);
- 			conf->mddev->bitmap_ops->endwrite(conf->mddev,
--					sh->sector, RAID5_STRIPE_SECTORS(conf),
--					!test_bit(STRIPE_DEGRADED, &sh->state));
-+					sh->sector, RAID5_STRIPE_SECTORS(conf));
- 		}
- 	}
- }
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -1345,8 +1345,6 @@ again:
- 				submit_bio_noacct(rbi);
- 		}
- 		if (!rdev && !rrdev) {
--			if (op_is_write(op))
--				set_bit(STRIPE_DEGRADED, &sh->state);
- 			pr_debug("skip op %d on disc %d for sector %llu\n",
- 				bi->bi_opf, i, (unsigned long long)sh->sector);
- 			clear_bit(R5_LOCKED, &sh->dev[i].flags);
-@@ -2884,7 +2882,6 @@ static void raid5_end_write_request(stru
- 			set_bit(R5_MadeGoodRepl, &sh->dev[i].flags);
- 	} else {
- 		if (bi->bi_status) {
--			set_bit(STRIPE_DEGRADED, &sh->state);
- 			set_bit(WriteErrorSeen, &rdev->flags);
- 			set_bit(R5_WriteError, &sh->dev[i].flags);
- 			if (!test_and_set_bit(WantReplacement, &rdev->flags))
-@@ -3664,8 +3661,7 @@ handle_failed_stripe(struct r5conf *conf
- 		}
- 		if (bitmap_end)
- 			conf->mddev->bitmap_ops->endwrite(conf->mddev,
--					sh->sector, RAID5_STRIPE_SECTORS(conf),
--					false);
-+					sh->sector, RAID5_STRIPE_SECTORS(conf));
- 		bitmap_end = 0;
- 		/* and fail all 'written' */
- 		bi = sh->dev[i].written;
-@@ -3711,8 +3707,7 @@ handle_failed_stripe(struct r5conf *conf
- 		}
- 		if (bitmap_end)
- 			conf->mddev->bitmap_ops->endwrite(conf->mddev,
--					sh->sector, RAID5_STRIPE_SECTORS(conf),
--					false);
-+					sh->sector, RAID5_STRIPE_SECTORS(conf));
- 		/* If we were in the middle of a write the parity block might
- 		 * still be locked - so just clear all R5_LOCKED flags
- 		 */
-@@ -4062,8 +4057,7 @@ returnbi:
- 					wbi = wbi2;
- 				}
- 				conf->mddev->bitmap_ops->endwrite(conf->mddev,
--					sh->sector, RAID5_STRIPE_SECTORS(conf),
--					!test_bit(STRIPE_DEGRADED, &sh->state));
-+					sh->sector, RAID5_STRIPE_SECTORS(conf));
- 				if (head_sh->batch_head) {
- 					sh = list_first_entry(&sh->batch_list,
- 							      struct stripe_head,
-@@ -4340,7 +4334,6 @@ static void handle_parity_checks5(struct
- 		s->locked++;
- 		set_bit(R5_Wantwrite, &dev->flags);
- 
--		clear_bit(STRIPE_DEGRADED, &sh->state);
- 		set_bit(STRIPE_INSYNC, &sh->state);
- 		break;
- 	case check_state_run:
-@@ -4497,7 +4490,6 @@ static void handle_parity_checks6(struct
- 			clear_bit(R5_Wantwrite, &dev->flags);
- 			s->locked--;
- 		}
--		clear_bit(STRIPE_DEGRADED, &sh->state);
- 
- 		set_bit(STRIPE_INSYNC, &sh->state);
- 		break;
-@@ -4899,7 +4891,6 @@ static void break_stripe_batch_list(stru
- 
- 		set_mask_bits(&sh->state, ~(STRIPE_EXPAND_SYNC_FLAGS |
- 					    (1 << STRIPE_PREREAD_ACTIVE) |
--					    (1 << STRIPE_DEGRADED) |
- 					    (1 << STRIPE_ON_UNPLUG_LIST)),
- 			      head_sh->state & (1 << STRIPE_INSYNC));
- 
---- a/drivers/md/raid5.h
-+++ b/drivers/md/raid5.h
-@@ -358,7 +358,6 @@ enum {
- 	STRIPE_REPLACED,
- 	STRIPE_PREREAD_ACTIVE,
- 	STRIPE_DELAYED,
--	STRIPE_DEGRADED,
- 	STRIPE_BIT_DELAY,
- 	STRIPE_EXPANDING,
- 	STRIPE_EXPAND_SOURCE,
+ struct md_sysfs_entry {
 
 
