@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758C315198D;
-	Wed,  5 Feb 2025 14:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BE813C9C4;
+	Wed,  5 Feb 2025 14:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764770; cv=none; b=QwKYae9g1yskaYkbCsFcfo9OuNrXH9zRq1jzmvinEdsUnBVVsjmR18Q0FBcrSyBQzqZI2QQChWMxsckngcFT/rQngSo8iqSXuzIj4kql4GK+3h05Nz4eJU4fmqzfRTwsb7KU7eagxUuVq6qlbMD/aBAkwCZ1tGpNmEGYts8a9xo=
+	t=1738764773; cv=none; b=NhGozjRlZyojAmC7zvUgLSUH8D/bp/fnoqappYEiJqvv2H8CyrwYPex23FeTFQv+BOh37h85U7hGCI6/OHSESJZpVbCbFoVFL/d4Jfpfx/wVch3ViQn1zLEj2x1J5K9r1zeSgpfwoXDX3AnWNMZbLBvCLz4kfMuw3tYMPPkZpcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764770; c=relaxed/simple;
-	bh=z5bMtcdCJr7FriL9JMkNTKmLGoxn59uWfv+7+sQTOO4=;
+	s=arc-20240116; t=1738764773; c=relaxed/simple;
+	bh=zkkvxXf5OqS5fY0YBeTyDVJB5OnWuUbGUL5+oOmiYAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eK+T68dPX73jTIpafpt+ecKXB8RsQIjko1uatfsGl7e9AX3zdOoGPVRdNAeefqZGWuntLmptK4KOYKzlkXNgPUizaL59Ermi6f8w8z/+vi7tfuP47UP/f4Oa7qsvkWz2xFJysPwOzSOdhiMKwU16kJxDxe2gj4uQ/yoFfgXtQuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfToKZuz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eL/OhmGQN+jtMZIWwRLN+BUvjhZ3Fw+wUnbpA3q8+j5e17L8xqDHvJvFu0w3GpaTH0j3TEStRuVYqD8NVpPh7XDutZfqZ3hs1hZAMx3BDGHdfd9DQqQZnpl1HlBJq5XeNbWuqvTHSUQIJwAhSY43NKQI455J1I6UaEMY3Se1wDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJS+ncF5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfToKZuz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2F4C4CED1;
-	Wed,  5 Feb 2025 14:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJS+ncF5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C956AC4CED1;
+	Wed,  5 Feb 2025 14:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764770;
-	bh=z5bMtcdCJr7FriL9JMkNTKmLGoxn59uWfv+7+sQTOO4=;
+	s=korg; t=1738764773;
+	bh=zkkvxXf5OqS5fY0YBeTyDVJB5OnWuUbGUL5+oOmiYAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CfToKZuzTF0ZsP4umitZUHMI2UU9J6YjDZDuXmwidUb+8MbBcRBD2YaUJtecHVAyj
-	 3llDm0NjH8nGKY9U2+iJCZLzqR+dR+FFD8Ehj7ThHAopsrj+PrUEaz9cv/qUukd/te
-	 GEx3sWrVu5ScEc8mSZ8lkk0Fq2jJJWAZURvwAZQc=
+	b=OJS+ncF5MAsuJjAeK7YheCtsxUCnYNw7jyfaixkYou70mm7bj17Ac7d8rqc68a+Di
+	 5WFp8PSoPExNkj1LiY8OQqWPHw5JlXAT0wH1j2ZOxxdyi7NNI/iDHdQcYIg61ZyD0t
+	 +1eHVRqLATZcdQR2PjythX6Dy8xpAuNbN8sBLujc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 112/623] hwmon: (nct6775): Actually make use of the HWMON_NCT6775 symbol namespace
-Date: Wed,  5 Feb 2025 14:37:34 +0100
-Message-ID: <20250205134500.500469963@linuxfoundation.org>
+Subject: [PATCH 6.6 203/393] RDMA/mlx4: Avoid false error about access to uninitialized gids array
+Date: Wed,  5 Feb 2025 14:42:02 +0100
+Message-ID: <20250205134428.072538082@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,52 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 2505f87eb3af55f3dd7f57d7cb7783b94b52a2d9 ]
+[ Upstream commit 1f53d88cbb0dcc7df235bf6611ae632b254fccd8 ]
 
-DEFAULT_SYMBOL_NAMESPACE must already be defined when <linux/export.h>
-is included. So move the define above the include block.
+Smatch generates the following false error report:
+drivers/infiniband/hw/mlx4/main.c:393 mlx4_ib_del_gid() error: uninitialized symbol 'gids'.
 
-Fixes: c3963bc0a0cf ("hwmon: (nct6775) Split core and platform driver")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Traditionally, we are not changing kernel code and asking people to fix
+the tools. However in this case, the fix can be done by simply rearranging
+the code to be more clear.
+
+Fixes: e26be1bfef81 ("IB/mlx4: Implement ib_device callbacks")
+Link: https://patch.msgid.link/6a3a1577463da16962463fcf62883a87506e9b62.1733233426.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6775-core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/mlx4/main.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
-index c243b51837d2f..fa3351351825b 100644
---- a/drivers/hwmon/nct6775-core.c
-+++ b/drivers/hwmon/nct6775-core.c
-@@ -42,6 +42,9 @@
+diff --git a/drivers/infiniband/hw/mlx4/main.c b/drivers/infiniband/hw/mlx4/main.c
+index 529db874d67c6..b1bbdcff631d5 100644
+--- a/drivers/infiniband/hw/mlx4/main.c
++++ b/drivers/infiniband/hw/mlx4/main.c
+@@ -351,7 +351,7 @@ static int mlx4_ib_del_gid(const struct ib_gid_attr *attr, void **context)
+ 	struct mlx4_port_gid_table   *port_gid_table;
+ 	int ret = 0;
+ 	int hw_update = 0;
+-	struct gid_entry *gids;
++	struct gid_entry *gids = NULL;
  
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 	if (!rdma_cap_roce_gid_table(attr->device, attr->port_num))
+ 		return -EINVAL;
+@@ -389,10 +389,10 @@ static int mlx4_ib_del_gid(const struct ib_gid_attr *attr, void **context)
+ 	}
+ 	spin_unlock_bh(&iboe->lock);
  
-+#undef DEFAULT_SYMBOL_NAMESPACE
-+#define DEFAULT_SYMBOL_NAMESPACE "HWMON_NCT6775"
+-	if (!ret && hw_update) {
++	if (gids)
+ 		ret = mlx4_ib_update_gids(gids, ibdev, attr->port_num);
+-		kfree(gids);
+-	}
 +
- #include <linux/module.h>
- #include <linux/init.h>
- #include <linux/slab.h>
-@@ -56,9 +59,6 @@
- #include "lm75.h"
- #include "nct6775.h"
++	kfree(gids);
+ 	return ret;
+ }
  
--#undef DEFAULT_SYMBOL_NAMESPACE
--#define DEFAULT_SYMBOL_NAMESPACE "HWMON_NCT6775"
--
- #define USE_ALTERNATE
- 
- /* used to set data->name = nct6775_device_names[data->sio_kind] */
 -- 
 2.39.5
 
