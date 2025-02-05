@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73B913C9C4;
-	Wed,  5 Feb 2025 13:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B6A142E86;
+	Wed,  5 Feb 2025 13:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763527; cv=none; b=YDQ4m4lknJGFZKEw2fEPYVu+cMktfD0ogYcBKO4BDLpcicpGVIR/il6PpuMfpuMRsi4TrKYHAeWBP1zAkZyq1+LAstm4tgMMA+QP1cRPE4FpTrm/LdVFIhQ4YFHqwcekTRjui3CGQ0iYXS2rVhKRdlHCK/iWfAt2jZORmGppJxE=
+	t=1738763531; cv=none; b=iXMW4MPX06Uzs4yL4uov58hyK+CQs2JQciveXwIExrSquddjnhrVwvrhG5kf6kZjurdIkY6j9g76gqe94YFuZYN/E6fx21YNse+oMwTyhtTiCTvLaQWX6m6suAw57Q7PMzZmj14z9LoFd5ThIDjww6dzpLX4IRnpcauhIAEU81A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763527; c=relaxed/simple;
-	bh=Ezm2MulwvXwuLMx324VsWchRMkKA5Mwo4jccOCFtGtM=;
+	s=arc-20240116; t=1738763531; c=relaxed/simple;
+	bh=hULc9IEk4xjBf+jFvmwwdcHgHEYgItah3aY0Jt01To8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hlUOCOoATXHrvQwEo9jWSAvNIcgPdpDVqLl5GyN6xZwhV/AWksJyjsJQRnPlFmRydVeMg9Oy9iRk0hFqGO21uUWh0h2J1X8ZR7nUrEFnu9b8ThoYuYArwboyEDLRcqU3fpylkH8zvBOa42xS2t4pX3ghcdOyWI/0aUZcsSkC3hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYmY+H+0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VJ7u8Eo+gGmpbH/HCHBKKICp5aXNm3w40XSbAHFrg8h3isjvOa2ER9hscDInWxjXBRIG7pO2bf3c9HA+XJ2JWGATWoGlr5l69qyAWMclMHblzZd9eiNwuY7moBhSw1ppVqFM+Dd731InzfJ5sOYuq7bvOw8mM3BqMHmdK0/Pw0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/MQCyIl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYmY+H+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA4AC4CED1;
-	Wed,  5 Feb 2025 13:52:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/MQCyIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BDCC4CED1;
+	Wed,  5 Feb 2025 13:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763527;
-	bh=Ezm2MulwvXwuLMx324VsWchRMkKA5Mwo4jccOCFtGtM=;
+	s=korg; t=1738763531;
+	bh=hULc9IEk4xjBf+jFvmwwdcHgHEYgItah3aY0Jt01To8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYmY+H+0PeBbf3OsGaBhUvcgHVOVIYrkxQuro07ikq4x+M5xWxXR1vDdP5qGpQhuh
-	 Yr7R12vZz7sO6rPzsSU9WBxv1h6irW+O8oonJcpo7rApUbs6BGqnZtou0RHu3b48Ih
-	 /3NF3lbUaFXpPgroWSgouzc36jKWV3YDpYQr16aI=
+	b=O/MQCyIl//GVVcnJsSEMmElgKCr6QqUZhwJcBnypAiwbtqegYw+CRZ5y4d5k3dbHD
+	 26Vqe+N31YDsy2rNBC1jCFJ0XjYJKL5cIMN10a2pjt2dNsaVJvEllx5ttnDWXcav7w
+	 6qrkL33oUAK3p8Nq3tr+gqmJwv2mr2iKhGQJxip8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 077/393] inetpeer: remove create argument of inet_getpeer_v[46]()
-Date: Wed,  5 Feb 2025 14:39:56 +0100
-Message-ID: <20250205134423.242362022@linuxfoundation.org>
+Subject: [PATCH 6.12 026/590] afs: Fix the fallback handling for the YFS.RemoveFile2 RPC call
+Date: Wed,  5 Feb 2025 14:36:21 +0100
+Message-ID: <20250205134456.246952170@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,153 +49,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 661cd8fc8e9039819ca0c22e0add52b632240a9e ]
+[ Upstream commit e30458d690f35abb01de8b3cbc09285deb725d00 ]
 
-All callers of inet_getpeer_v4() and inet_getpeer_v6()
-want to create an inetpeer.
+Fix a pair of bugs in the fallback handling for the YFS.RemoveFile2 RPC
+call:
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241215175629.1248773-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a853c609504e ("inetpeer: do not get a refcount in inet_getpeer()")
+ (1) Fix the abort code check to also look for RXGEN_OPCODE.  The lack of
+     this masks the second bug.
+
+ (2) call->server is now not used for ordinary filesystem RPC calls that
+     have an operation descriptor.  Fix to use call->op->server instead.
+
+Fixes: e49c7b2f6de7 ("afs: Build an abstraction around an "operation" concept")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/109541.1736865963@warthog.procyon.org.uk
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inetpeer.h | 9 ++++-----
- net/ipv4/icmp.c        | 2 +-
- net/ipv4/ip_fragment.c | 2 +-
- net/ipv4/route.c       | 4 ++--
- net/ipv6/icmp.c        | 2 +-
- net/ipv6/ip6_output.c  | 2 +-
- net/ipv6/ndisc.c       | 2 +-
- 7 files changed, 11 insertions(+), 12 deletions(-)
+ fs/afs/yfsclient.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/inetpeer.h b/include/net/inetpeer.h
-index 74ff688568a0c..6f51f81d6cb19 100644
---- a/include/net/inetpeer.h
-+++ b/include/net/inetpeer.h
-@@ -101,25 +101,24 @@ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
- 
- static inline struct inet_peer *inet_getpeer_v4(struct inet_peer_base *base,
- 						__be32 v4daddr,
--						int vif, int create)
-+						int vif)
+diff --git a/fs/afs/yfsclient.c b/fs/afs/yfsclient.c
+index 024227aba4cd5..362845f9aaaef 100644
+--- a/fs/afs/yfsclient.c
++++ b/fs/afs/yfsclient.c
+@@ -666,8 +666,9 @@ static int yfs_deliver_fs_remove_file2(struct afs_call *call)
+ static void yfs_done_fs_remove_file2(struct afs_call *call)
  {
- 	struct inetpeer_addr daddr;
- 
- 	daddr.a4.addr = v4daddr;
- 	daddr.a4.vif = vif;
- 	daddr.family = AF_INET;
--	return inet_getpeer(base, &daddr, create);
-+	return inet_getpeer(base, &daddr, 1);
- }
- 
- static inline struct inet_peer *inet_getpeer_v6(struct inet_peer_base *base,
--						const struct in6_addr *v6daddr,
--						int create)
-+						const struct in6_addr *v6daddr)
- {
- 	struct inetpeer_addr daddr;
- 
- 	daddr.a6 = *v6daddr;
- 	daddr.family = AF_INET6;
--	return inet_getpeer(base, &daddr, create);
-+	return inet_getpeer(base, &daddr, 1);
- }
- 
- static inline int inetpeer_addr_cmp(const struct inetpeer_addr *a,
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index 9dffdd876fef5..203734e29d462 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -326,7 +326,7 @@ static bool icmpv4_xrlim_allow(struct net *net, struct rtable *rt,
- 		goto out;
- 
- 	vif = l3mdev_master_ifindex(dst->dev);
--	peer = inet_getpeer_v4(net->ipv4.peers, fl4->daddr, vif, 1);
-+	peer = inet_getpeer_v4(net->ipv4.peers, fl4->daddr, vif);
- 	rc = inet_peer_xrlim_allow(peer,
- 				   READ_ONCE(net->ipv4.sysctl_icmp_ratelimit));
- 	if (peer)
-diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
-index fb947d1613fe2..e8cc225fcf250 100644
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -89,7 +89,7 @@ static void ip4_frag_init(struct inet_frag_queue *q, const void *a)
- 	q->key.v4 = *key;
- 	qp->ecn = 0;
- 	qp->peer = q->fqdir->max_dist ?
--		inet_getpeer_v4(net->ipv4.peers, key->saddr, key->vif, 1) :
-+		inet_getpeer_v4(net->ipv4.peers, key->saddr, key->vif) :
- 		NULL;
- }
- 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 285482060082f..fb1ac5976d4c1 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -885,7 +885,7 @@ void ip_rt_send_redirect(struct sk_buff *skb)
- 	rcu_read_unlock();
- 
- 	net = dev_net(rt->dst.dev);
--	peer = inet_getpeer_v4(net->ipv4.peers, ip_hdr(skb)->saddr, vif, 1);
-+	peer = inet_getpeer_v4(net->ipv4.peers, ip_hdr(skb)->saddr, vif);
- 	if (!peer) {
- 		icmp_send(skb, ICMP_REDIRECT, ICMP_REDIR_HOST,
- 			  rt_nexthop(rt, ip_hdr(skb)->daddr));
-@@ -988,7 +988,7 @@ static int ip_error(struct sk_buff *skb)
+ 	if (call->error == -ECONNABORTED &&
+-	    call->abort_code == RX_INVALID_OPERATION) {
+-		set_bit(AFS_SERVER_FL_NO_RM2, &call->server->flags);
++	    (call->abort_code == RX_INVALID_OPERATION ||
++	     call->abort_code == RXGEN_OPCODE)) {
++		set_bit(AFS_SERVER_FL_NO_RM2, &call->op->server->flags);
+ 		call->op->flags |= AFS_OPERATION_DOWNGRADE;
  	}
- 
- 	peer = inet_getpeer_v4(net->ipv4.peers, ip_hdr(skb)->saddr,
--			       l3mdev_master_ifindex(skb->dev), 1);
-+			       l3mdev_master_ifindex(skb->dev));
- 
- 	send = true;
- 	if (peer) {
-diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
-index 25a3a726fa117..74b4050c746af 100644
---- a/net/ipv6/icmp.c
-+++ b/net/ipv6/icmp.c
-@@ -222,7 +222,7 @@ static bool icmpv6_xrlim_allow(struct sock *sk, u8 type,
- 		if (rt->rt6i_dst.plen < 128)
- 			tmo >>= ((128 - rt->rt6i_dst.plen)>>5);
- 
--		peer = inet_getpeer_v6(net->ipv6.peers, &fl6->daddr, 1);
-+		peer = inet_getpeer_v6(net->ipv6.peers, &fl6->daddr);
- 		res = inet_peer_xrlim_allow(peer, tmo);
- 		if (peer)
- 			inet_putpeer(peer);
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 2341a4373bb94..ea1839fe47012 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -612,7 +612,7 @@ int ip6_forward(struct sk_buff *skb)
- 		else
- 			target = &hdr->daddr;
- 
--		peer = inet_getpeer_v6(net->ipv6.peers, &hdr->daddr, 1);
-+		peer = inet_getpeer_v6(net->ipv6.peers, &hdr->daddr);
- 
- 		/* Limit redirects both by destination (here)
- 		   and by source (inside ndisc_send_redirect)
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index 23b46b5705c53..a5989a18ccd73 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -1717,7 +1717,7 @@ void ndisc_send_redirect(struct sk_buff *skb, const struct in6_addr *target)
- 			  "Redirect: destination is not a neighbour\n");
- 		goto release;
- 	}
--	peer = inet_getpeer_v6(net->ipv6.peers, &ipv6_hdr(skb)->saddr, 1);
-+	peer = inet_getpeer_v6(net->ipv6.peers, &ipv6_hdr(skb)->saddr);
- 	ret = inet_peer_xrlim_allow(peer, 1*HZ);
- 	if (peer)
- 		inet_putpeer(peer);
+ }
 -- 
 2.39.5
 
