@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D0413C3F6;
-	Wed,  5 Feb 2025 14:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889051519BE;
+	Wed,  5 Feb 2025 14:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765299; cv=none; b=a9Zgd/cyAzZsudm0cNdEftT+3ZJVm9o7vp8XusfG9CySJ8yVAr4+5RUsOK+LZ71l1Sto1V6FJOZKB/3vFz3t48b0BETvA+Jd6J240lRXVey7rxz47laV8fDWRFmqta0I3pJGyFgTf/uBgd/tZjlLUmv5ZWHVZcelgPBfRASwFTo=
+	t=1738765302; cv=none; b=uWlipZClzrNijtLJMHQl2y7WGYjcNS/0rGs1FpZdGD79UYx/TJzPnyV0Ogl0Pfnt3u/KnL1BuLZumg6Swwrg9cNwrkeoaZRYjQ60JaynWZrYPdQROa3+WH+H/Qhz0R+t1WWFFgxq/NAoq+1wmCnmWs5aWKlNGSs4GQP2I7W/lj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765299; c=relaxed/simple;
-	bh=JRQJCi0r+G9T3B9J+VGYjJhZ7rPeKedrxmpfkV4H7Lg=;
+	s=arc-20240116; t=1738765302; c=relaxed/simple;
+	bh=UXb83zwmOUkNt5hVI+n8cZsDWMNNd9jNS9Rd1NROzqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OUSbhnaQcO38tidl5zYwfGA5HaORZxLQ4jzJm7vKjQR29U35BIgCGSbCiiDKcIHklXCHP8mx/cmg+mClLX+4UZ38D0PzKJo5yqReAbt5WeYgL8UjCih2v3sdpXG6QQKHnBc46nIICgRHdbl7ZwpyRUjygAIDHMxVEITPaFx5n2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVzDrdbO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QWS0m+LY40JAYmVZWR6qrCvrJpPsZtJ7RuLoU/TFdz2qP+b+DF2lxp2qp9CgYXvSuCG+/N/GB8OwIpllNDOE2zEisZvt4oGk4BP0/pVUi43LrmFBf1g9NRV5O2yUYou1TX3oHHhWTs4KL9m+wSvJC8Rut2SVaUBhSMOv2sN2Hy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtnfCuUY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVzDrdbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D4BC4CED1;
-	Wed,  5 Feb 2025 14:21:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtnfCuUY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD96C4CED1;
+	Wed,  5 Feb 2025 14:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765298;
-	bh=JRQJCi0r+G9T3B9J+VGYjJhZ7rPeKedrxmpfkV4H7Lg=;
+	s=korg; t=1738765302;
+	bh=UXb83zwmOUkNt5hVI+n8cZsDWMNNd9jNS9Rd1NROzqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qVzDrdbOlHJP5tui3S25gXZW2FWb5J9AngEnV2nHHekkwI+ozz5umo1UcFwd+oaUC
-	 5LdgV7ovAYy/X5LhZWz28+BFPsNDR/6bAKDjWnEK35O9IClkx/gEwfl3KkTk3OVZ+w
-	 daIol+lMFoSoHuXP8knJJ1fnzfrNt3bO5jzDc+mQ=
+	b=CtnfCuUYqcpRt74Zbs+nVq+hDwQ/dRufLxASn+80hxXYmiItFCHx6oVYjOLrdSvE/
+	 krXABbVUvsfBg/nLFFaQw/0F75SOQULDYW1tr0xkdKzYTPs4eL/8L2I0l0GyQBp5Gn
+	 3efuTGrmtSJ6pH64dKS6prPZI6ojBpiVH91hNccs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Will McVicker <willmcvicker@google.com>,
-	Pankaj Dubey <pankaj.dubey@samsung.com>,
-	Lee Jones <lee@kernel.org>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 149/623] mfd: syscon: Fix race in device_node_get_regmap()
-Date: Wed,  5 Feb 2025 14:38:11 +0100
-Message-ID: <20250205134501.935750459@linuxfoundation.org>
+Subject: [PATCH 6.13 164/623] wifi: iwlwifi: mvm: avoid NULL pointer dereference
+Date: Wed,  5 Feb 2025 14:38:26 +0100
+Message-ID: <20250205134502.509895741@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -54,123 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 805f7aaf7fee14a57b56af01d270edf6c10765e8 ]
+[ Upstream commit cf704a7624f99eb2ffca1a16c69183e85544a613 ]
 
-It is possible for multiple, simultaneous callers calling
-device_node_get_regmap() with the same node to fail to find an entry in
-the syscon_list. There is a period of time while the first caller is
-calling of_syscon_register() that subsequent callers also fail to find
-an entry in the syscon_list and then call of_syscon_register() a second
-time.
+When iterating over the links of a vif, we need to make sure that the
+pointer is valid (in other words - that the link exists) before
+dereferncing it.
+Use for_each_vif_active_link that also does the check.
 
-Fix this by keeping the lock held until after of_syscon_register()
-completes and adds the node to syscon_list. Convert the spinlock to a
-mutex as many of the functions called in of_syscon_register() such as
-kzalloc() and of_clk_get() may sleep.
-
-Fixes: bdb0066df96e ("mfd: syscon: Decouple syscon interface from platform devices")
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Will McVicker <willmcvicker@google.com>
-Tested-by: Pankaj Dubey <pankaj.dubey@samsung.com>
-Reviewed-by: Pankaj Dubey <pankaj.dubey@samsung.com>
-Link: https://lore.kernel.org/r/20241217-syscon-fixes-v2-1-4f56d750541d@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 2b7ee1a10a72 ("wifi: iwlwiif: mvm: handle the new BT notif")
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20241229164246.31d41f7d3eab.I7fb7036a0b187c1636b01970207259cb2327952c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/syscon.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/coex.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mfd/syscon.c b/drivers/mfd/syscon.c
-index 3e1d699ba9340..72f20de9652da 100644
---- a/drivers/mfd/syscon.c
-+++ b/drivers/mfd/syscon.c
-@@ -15,6 +15,7 @@
- #include <linux/io.h>
- #include <linux/init.h>
- #include <linux/list.h>
-+#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
- #include <linux/of_platform.h>
-@@ -27,7 +28,7 @@
- 
- static struct platform_driver syscon_driver;
- 
--static DEFINE_SPINLOCK(syscon_list_slock);
-+static DEFINE_MUTEX(syscon_list_lock);
- static LIST_HEAD(syscon_list);
- 
- struct syscon {
-@@ -54,6 +55,8 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_res)
- 	struct resource res;
- 	struct reset_control *reset;
- 
-+	WARN_ON(!mutex_is_locked(&syscon_list_lock));
-+
- 	struct syscon *syscon __free(kfree) = kzalloc(sizeof(*syscon), GFP_KERNEL);
- 	if (!syscon)
- 		return ERR_PTR(-ENOMEM);
-@@ -146,9 +149,7 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_res)
- 	syscon->regmap = regmap;
- 	syscon->np = np;
- 
--	spin_lock(&syscon_list_slock);
- 	list_add_tail(&syscon->list, &syscon_list);
--	spin_unlock(&syscon_list_slock);
- 
- 	return_ptr(syscon);
- 
-@@ -169,7 +170,7 @@ static struct regmap *device_node_get_regmap(struct device_node *np,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/coex.c b/drivers/net/wireless/intel/iwlwifi/mvm/coex.c
+index 36726ea4b822a..21641d41a958c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/coex.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/coex.c
+@@ -530,18 +530,15 @@ static void iwl_mvm_bt_coex_notif_iterator(void *_data, u8 *mac,
+ 					   struct ieee80211_vif *vif)
  {
- 	struct syscon *entry, *syscon = NULL;
+ 	struct iwl_mvm *mvm = _data;
++	struct ieee80211_bss_conf *link_conf;
++	unsigned int link_id;
  
--	spin_lock(&syscon_list_slock);
-+	mutex_lock(&syscon_list_lock);
+ 	lockdep_assert_held(&mvm->mutex);
  
- 	list_for_each_entry(entry, &syscon_list, list)
- 		if (entry->np == np) {
-@@ -177,11 +178,11 @@ static struct regmap *device_node_get_regmap(struct device_node *np,
- 			break;
- 		}
+ 	if (vif->type != NL80211_IFTYPE_STATION)
+ 		return;
  
--	spin_unlock(&syscon_list_slock);
--
- 	if (!syscon)
- 		syscon = of_syscon_register(np, check_res);
- 
-+	mutex_unlock(&syscon_list_lock);
-+
- 	if (IS_ERR(syscon))
- 		return ERR_CAST(syscon);
- 
-@@ -212,7 +213,7 @@ int of_syscon_register_regmap(struct device_node *np, struct regmap *regmap)
- 		return -ENOMEM;
- 
- 	/* check if syscon entry already exists */
--	spin_lock(&syscon_list_slock);
-+	mutex_lock(&syscon_list_lock);
- 
- 	list_for_each_entry(entry, &syscon_list, list)
- 		if (entry->np == np) {
-@@ -225,12 +226,12 @@ int of_syscon_register_regmap(struct device_node *np, struct regmap *regmap)
- 
- 	/* register the regmap in syscon list */
- 	list_add_tail(&syscon->list, &syscon_list);
--	spin_unlock(&syscon_list_slock);
-+	mutex_unlock(&syscon_list_lock);
- 
- 	return 0;
- 
- err_unlock:
--	spin_unlock(&syscon_list_slock);
-+	mutex_unlock(&syscon_list_lock);
- 	kfree(syscon);
- 	return ret;
- }
+-	for (int link_id = 0;
+-	     link_id < IEEE80211_MLD_MAX_NUM_LINKS;
+-	     link_id++) {
+-		struct ieee80211_bss_conf *link_conf =
+-			rcu_dereference_check(vif->link_conf[link_id],
+-					      lockdep_is_held(&mvm->mutex));
++	for_each_vif_active_link(vif, link_conf, link_id) {
+ 		struct ieee80211_chanctx_conf *chanctx_conf =
+ 			rcu_dereference_check(link_conf->chanctx_conf,
+ 					      lockdep_is_held(&mvm->mutex));
 -- 
 2.39.5
 
