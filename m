@@ -1,42 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5EB186E56;
-	Wed,  5 Feb 2025 14:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149F815CD74;
+	Wed,  5 Feb 2025 14:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765935; cv=none; b=r3lW2QcBYgTCbC6JgqK29Xo2aYJ8Vid7SN5pwR89iMNBK54wdsiHK3QK1bHZcytCtvH+B+FR5Xn1vT42IIOMawSExDafCd4JzpjejvpqHUSuD/NTqSOpv1mDGbViyDSYmo0D3yVRi8np/RnhJqte532/E5ImrBaJ4bG5Izw6Gak=
+	t=1738765939; cv=none; b=TAWO5LQuLWcY/GYwUGioADU1hZ64otaRjQB4R546gfRm9zEVs+4atzJ4yjspna2HemJ/0Up3SNLnouie1ICOrolDT19C0jviWDP5hLZV4wZ93EKAvrMQABeCc40XLzs7bjs5YeFP+hzg9OB3K/8iPhJXwdqGas2pbGsFp1kCVeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765935; c=relaxed/simple;
-	bh=0PSNE/WMr7KGTEb7qlQjdRmtwTo3aLQqUa4oRmyERpA=;
+	s=arc-20240116; t=1738765939; c=relaxed/simple;
+	bh=5D0kLIVzGFhiYwnyUi3d/WkxNnnu8WCgTJjqkOVWxac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tz0L+1XFJBjOSadKsCccTnXRXw9vKldSQ+zZcqN2DaAR8HoIBVAGaDoAs1+WfPHuIdf1mPQASees8msyaUkY6e0SKgR1DItOGdyTN5i5+lwQJ43eFA07uQlsXt5FzQwFy8zCAnx1+HUsS/plCwsCgRKncIbwHiUcqhf42bn+71k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlNmBByy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bjXdV5zY8bOc9efeOB4mijHXW27GIyS3wIm2+P+C2w73lzQhPRIoOFRkPw8a/jX3ooeqLsqaal94dF1QktM4MHQ00tMJc6ukzsf6nLu0csDAg/EW5a1InVwySROUV0y/HBXRnVRwALUFfRlsxmp3Vcd0ODMZE6l9lh5P3DaeeB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QC3b8uJg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlNmBByy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A80C4CED6;
-	Wed,  5 Feb 2025 14:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QC3b8uJg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484EEC4CED1;
+	Wed,  5 Feb 2025 14:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765935;
-	bh=0PSNE/WMr7KGTEb7qlQjdRmtwTo3aLQqUa4oRmyERpA=;
+	s=korg; t=1738765939;
+	bh=5D0kLIVzGFhiYwnyUi3d/WkxNnnu8WCgTJjqkOVWxac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vlNmBByyVHUdf66H4xYubl2LZCl9kkAFJO0QX9N/UZWZ57bVOjShk2O8aGFuMtlq5
-	 GtZcF+n5h/PW8QJmEQEny5iWZ0CwjNy3YsizYiFyFBiN9AUJeyQy3e1c8tiOL8Rlz2
-	 x3xAOLvU+tGnfl0kwoi22IZh+oPIx499NQSDt9cg=
+	b=QC3b8uJgDL1k1xI/AXyNEWnsTKay57OCusYM3zo6Kvuv+Y0URp5FNTCDqp+LijCzb
+	 O0zhIsv2jRNH7qTyeTIaye3zCad/umk5D1bcrc4rew1R5HMdiU3zD4hoIKutNoYJHI
+	 MJYF9PppfbOsLzfxnBY0AMLtj0hlSx8hrIXHTmP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingwei Zheng <zmw12306@gmail.com>,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 227/623] pwm: stm32: Add check for clk_enable()
-Date: Wed,  5 Feb 2025 14:39:29 +0100
-Message-ID: <20250205134504.908251288@linuxfoundation.org>
+Subject: [PATCH 6.12 269/590] perf maps: Fix display of kernel symbols
+Date: Wed,  5 Feb 2025 14:40:24 +0100
+Message-ID: <20250205134505.565747500@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +54,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingwei Zheng <zmw12306@gmail.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit e8c59791ebb60790c74b2c3ab520f04a8a57219a ]
+[ Upstream commit dae29277fddaaf6670d17dfcbb916a2ca29c912f ]
 
-Add check for the return value of clk_enable() to catch the potential
-error.
+Since commit 659ad3492b913c90 ("perf maps: Switch from rbtree to lazily
+sorted array for addresses"), perf doesn't display anymore kernel
+symbols on powerpc, allthough it still detects them as kernel addresses.
 
-Fixes: 19f1016ea960 ("pwm: stm32: Fix enable count for clk in .probe()")
-Signed-off-by: Mingwei Zheng <zmw12306@gmail.com>
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://lore.kernel.org/r/20241215224752.220318-1-zmw12306@gmail.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+	# Overhead  Command     Shared Object  Symbol
+	# ........  ..........  ............. ......................................
+	#
+	    80.49%  Coeur main  [unknown]      [k] 0xc005f0f8
+	     3.91%  Coeur main  gau            [.] engine_loop.constprop.0.isra.0
+	     1.72%  Coeur main  [unknown]      [k] 0xc005f11c
+	     1.09%  Coeur main  [unknown]      [k] 0xc01f82c8
+	     0.44%  Coeur main  libc.so.6      [.] epoll_wait
+	     0.38%  Coeur main  [unknown]      [k] 0xc0011718
+	     0.36%  Coeur main  [unknown]      [k] 0xc01f45c0
+
+This is because function maps__find_next_entry() now returns current
+entry instead of next entry, leading to kernel map end address getting
+mis-configured with its own start address instead of the start address
+of the following map.
+
+Fix it by really taking the next entry, also make sure that entry
+follows current one by making sure entries are sorted.
+
+Fixes: 659ad3492b913c90 ("perf maps: Switch from rbtree to lazily sorted array for addresses")
+Reviewed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/2ea4501209d5363bac71a6757fe91c0747558a42.1736329923.git.christophe.leroy@csgroup.eu
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/perf/util/maps.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index 17e591f61efb6..a59de4de18b6e 100644
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -858,8 +858,11 @@ static int stm32_pwm_probe(struct platform_device *pdev)
- 	chip->ops = &stm32pwm_ops;
+diff --git a/tools/perf/util/maps.c b/tools/perf/util/maps.c
+index 432399cbe5dd3..09c9cc326c08d 100644
+--- a/tools/perf/util/maps.c
++++ b/tools/perf/util/maps.c
+@@ -1136,8 +1136,13 @@ struct map *maps__find_next_entry(struct maps *maps, struct map *map)
+ 	struct map *result = NULL;
  
- 	/* Initialize clock refcount to number of enabled PWM channels. */
--	for (i = 0; i < num_enabled; i++)
--		clk_enable(priv->clk);
-+	for (i = 0; i < num_enabled; i++) {
-+		ret = clk_enable(priv->clk);
-+		if (ret)
-+			return ret;
+ 	down_read(maps__lock(maps));
++	while (!maps__maps_by_address_sorted(maps)) {
++		up_read(maps__lock(maps));
++		maps__sort_by_address(maps);
++		down_read(maps__lock(maps));
 +	}
+ 	i = maps__by_address_index(maps, map);
+-	if (i < maps__nr_maps(maps))
++	if (++i < maps__nr_maps(maps))
+ 		result = map__get(maps__maps_by_address(maps)[i]);
  
- 	ret = devm_pwmchip_add(dev, chip);
- 	if (ret < 0)
+ 	up_read(maps__lock(maps));
 -- 
 2.39.5
 
