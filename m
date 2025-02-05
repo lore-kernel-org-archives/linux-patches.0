@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CB1126C18;
-	Wed,  5 Feb 2025 13:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9ADE126C18;
+	Wed,  5 Feb 2025 13:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763281; cv=none; b=nxeBlYEzkgZfYAYnSBhD7MgWJGFWYNVBMKo8Q9e0dBUn9oglhhUY/XFWNjG7p8czvsHHVYfwf2P8C0cXnCkEX5cCpKkeEYudboeHCz/F/2MF3xe7rOrCZtWaVIOsvTELcjlYDyfrPJxFzKt4/lm/Z27Ny7JD+P66IPdu2oe0dQM=
+	t=1738763285; cv=none; b=pdP3OYzUfQtEWSiU6jk3RMgoYPWHaH5ItSWj1XSst7lh4OOmjpWvziv24oZlAoHBIV2DzKjtURvhiW1Ly9wdHi0cry8PEq6MJUycgKSr8zDEHn3gMUpvgBUBLrl6DRfvhmM9QwOKbNmL1BetUTbkYEcXmocztZDZmSh6FArnVfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763281; c=relaxed/simple;
-	bh=8KiUNB6sEd9ifK+sPyUOQPRiNaq3ZtQhn+dmMYjUcJ4=;
+	s=arc-20240116; t=1738763285; c=relaxed/simple;
+	bh=TdJ+B+aihFquNfVAxxxgrEp2EpuOvqXv77zJp1Aty/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PUpFEkyzTr3BpY9LcXSSRJLeJDv629XdXbfV4LJ13+L9wUN+bArnurtQt89VEeWvmyYvsiKjJr69i0IZEC4veh4soO4UBw7zmU+53xB9I3wMNvwS9xoM1Ukr0agUTDqQdD0PdymWr8LL09h33LX6I41ugrWE2YlS8XNxbzO7oSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6vbZ+ZK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RePICxWgCqystDnUNo0U/KjeDxS0ga6zOeXrzBqu0+EuQDeVL1Unz8wEvLd3peoS1IHKV1o9033guGjTkTzdCdh9cHfGroQ2n24XsAXh59Be7uoYSWdHDfsD3RBD3HI9F+dbThovxnTqxucuVhdMlmjMePhFv/qbJD1a560n8gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgboZKj4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6vbZ+ZK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46494C4CED1;
-	Wed,  5 Feb 2025 13:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgboZKj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32F8C4CED1;
+	Wed,  5 Feb 2025 13:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763281;
-	bh=8KiUNB6sEd9ifK+sPyUOQPRiNaq3ZtQhn+dmMYjUcJ4=;
+	s=korg; t=1738763285;
+	bh=TdJ+B+aihFquNfVAxxxgrEp2EpuOvqXv77zJp1Aty/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m6vbZ+ZKnou3tXbT5/YO/os8kjBSHV5FafgdSHjGvpwBLfWLqNN5T6Bj0CVGPdQqd
-	 Y1yvR8EVeSkeydBnEHAxwX0qiC9k/5FUdCMzzvhNbQmQ7YD/FIdcl0riTXpEf3EDA+
-	 8BKNQ0WVgptCXPMi/nTiOoppkUsp08fBcPAMGVDE=
+	b=dgboZKj4k1qM6jcSTsULsK8zqNf80ZrYFUc4uUNljMJJjz0HwK34EtTzuhYuKPBRf
+	 sQL4bY7Eq2fwndKmGFEuzPFPUuWfAOZItqPybXOV7T8ROBmPxTCKLraQCFNoJSxnm7
+	 c4O3OzXlxTqlPgMfBbM5+k4R8FPIGQaPPjID8FXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/393] selftests/powerpc: Fix argument order to timer_sub()
-Date: Wed,  5 Feb 2025 14:38:50 +0100
-Message-ID: <20250205134420.728312667@linuxfoundation.org>
+Subject: [PATCH 6.6 012/393] nvme: Add error path for xa_store in nvme_init_effects
+Date: Wed,  5 Feb 2025 14:38:51 +0100
+Message-ID: <20250205134420.766260041@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -51,49 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
 
-[ Upstream commit 2bf66e66d2e6feece6175ec09ec590a0a8563bdd ]
+[ Upstream commit d4a95adeabc6b5a39405e49c6d5ed14dd83682c4 ]
 
-Commit c814bf958926 ("powerpc/selftests: Use timersub() for
-gettimeofday()"), got the order of arguments to timersub() wrong,
-leading to a negative time delta being reported, eg:
+The xa_store() may fail due to memory allocation failure because there
+is no guarantee that the index NVME_CSI_NVM is already used. This fix
+introduces a new function to handle the error path.
 
-  test: gettimeofday
-  tags: git_version:v6.12-rc5-409-gdddf291c3030
-  time = -3.297781
-  success: gettimeofday
-
-The correct order is minuend, subtrahend, which in this case is end,
-start. Which gives:
-
-  test: gettimeofday
-  tags: git_version:v6.12-rc5-409-gdddf291c3030-dirty
-  time = 3.300650
-  success: gettimeofday
-
-Fixes: c814bf958926 ("powerpc/selftests: Use timersub() for gettimeofday()")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20241218114347.428108-1-mpe@ellerman.id.au
+Fixes: cc115cbe12d9 ("nvme: always initialize known command effects")
+Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/powerpc/benchmarks/gettimeofday.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/powerpc/benchmarks/gettimeofday.c b/tools/testing/selftests/powerpc/benchmarks/gettimeofday.c
-index 580fcac0a09f3..b71ef8a493ed1 100644
---- a/tools/testing/selftests/powerpc/benchmarks/gettimeofday.c
-+++ b/tools/testing/selftests/powerpc/benchmarks/gettimeofday.c
-@@ -20,7 +20,7 @@ static int test_gettimeofday(void)
- 		gettimeofday(&tv_end, NULL);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 37485b8cc1281..75ea4795188f2 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -2945,6 +2945,25 @@ static int nvme_init_non_mdts_limits(struct nvme_ctrl *ctrl)
+ 	return ret;
+ }
+ 
++static int nvme_init_effects_log(struct nvme_ctrl *ctrl,
++		u8 csi, struct nvme_effects_log **log)
++{
++	struct nvme_effects_log *effects, *old;
++
++	effects = kzalloc(sizeof(*effects), GFP_KERNEL);
++	if (effects)
++		return -ENOMEM;
++
++	old = xa_store(&ctrl->cels, csi, effects, GFP_KERNEL);
++	if (xa_is_err(old)) {
++		kfree(effects);
++		return xa_err(old);
++	}
++
++	*log = effects;
++	return 0;
++}
++
+ static void nvme_init_known_nvm_effects(struct nvme_ctrl *ctrl)
+ {
+ 	struct nvme_effects_log	*log = ctrl->effects;
+@@ -2991,10 +3010,9 @@ static int nvme_init_effects(struct nvme_ctrl *ctrl, struct nvme_id_ctrl *id)
  	}
  
--	timersub(&tv_start, &tv_end, &tv_diff);
-+	timersub(&tv_end, &tv_start, &tv_diff);
+ 	if (!ctrl->effects) {
+-		ctrl->effects = kzalloc(sizeof(*ctrl->effects), GFP_KERNEL);
+-		if (!ctrl->effects)
+-			return -ENOMEM;
+-		xa_store(&ctrl->cels, NVME_CSI_NVM, ctrl->effects, GFP_KERNEL);
++		ret = nvme_init_effects_log(ctrl, NVME_CSI_NVM, &ctrl->effects);
++		if (ret < 0)
++			return ret;
+ 	}
  
- 	printf("time = %.6f\n", tv_diff.tv_sec + (tv_diff.tv_usec) * 1e-6);
- 
+ 	nvme_init_known_nvm_effects(ctrl);
 -- 
 2.39.5
 
