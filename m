@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F00B1FECB9;
-	Wed,  5 Feb 2025 14:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0425818E377;
+	Wed,  5 Feb 2025 14:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767024; cv=none; b=OaOS3JYsf4/OwXrtaqfhuRgFiW1C7I3IsXUT/0rWeCcuxveK/Tg9IZRWDtabUjeyUG2liQoFrnB5BUvGZZOTJfSUH6zuI4GQ+EjBmCl48D2SnF1bjwaSyYDn4K3rykjocGAtkuLuhaquLu6XenN79MfB5d6YGPJQWQQTDKVEdeg=
+	t=1738767027; cv=none; b=CBJAtHdcMEv/vMarbKsf53j4Rf8ouXzClnIelLeDYfvXC/19/G1xkFUsBzJ+wZ/JArnJhsmmsnr38CyAGo+XR/1e8S9aA7EkL5HhJeNAtN++jcmKHaK9yuJmLvudeIqyMoNMt1Z8GvjUqcjU4StK8G37g20p7GknbM5Q82cFUrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767024; c=relaxed/simple;
-	bh=dTVRz5MEBp7pz6rHn5nkdfc3fVPjFq/t3mX2msyw7KE=;
+	s=arc-20240116; t=1738767027; c=relaxed/simple;
+	bh=7st6haTkXdW/YMMY2xolQbnx80c5i2eoqAYxZd2BXqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JkWHnmGY+DpDOiBueuaxCvE04QrH1uqU3jBc9lZvSJckwTB7rdH9L96s2lM94CRx+vXCIOlv0D3gm/DxgbCeLrOckM/DZUHDvu76KyD4BQsFyv5BNSldD+9aV15grEJlsrj+zhSStDHlSv+8RILJhSR3ua5DAjQi9yQKI/dN6NU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1l8o6Ay; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rbUezwM7mUsyFSfNgWnKaeFYZJn3M+UZLcqsHAKmo7JMMPxqWF8r8Sm5LPhTHrIiEW/cDBOr2yEJ1UjesDdAK3BEBIjcWiaVh1pn5/fStcgoBxC4uAGSNFI75fumlh1Jz2F5n9yoiuwh8CLh0EoFr09itpKt/OgeRevVnuZABwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVTf525G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1l8o6Ay"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43339C4CED1;
-	Wed,  5 Feb 2025 14:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVTf525G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76960C4CED1;
+	Wed,  5 Feb 2025 14:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767023;
-	bh=dTVRz5MEBp7pz6rHn5nkdfc3fVPjFq/t3mX2msyw7KE=;
+	s=korg; t=1738767026;
+	bh=7st6haTkXdW/YMMY2xolQbnx80c5i2eoqAYxZd2BXqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z1l8o6AyWOOueOdZ2D6qhAuCjrHIGDfIWAjceiZMFyRaQmj9978UVdEzAflcVRNfy
-	 pppvQrGB7VDewpa14T94VjoqexXMpZmgsDFaSWzEOsIIjeK+CIkIvs0gG8X5QixIFR
-	 5l74K9nuDQYyyhHv/mZuWlssIYSJ2taRVg4J9kfw=
+	b=RVTf525G01oqOtcmBG/vVBFCwPbepMadrLOuijfW3D1aI30ne4Fv/CX64lrMVo8Q4
+	 TGampONn6xhEQ9ve6bKNofloOgPdNrJ6E1KJJjqop5VL+Kjp8utecks33uZOX542Nq
+	 D+9RAaU4lrrc/eugnFm8byjBlgEPF+oow9VGKVlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 320/623] ALSA: hda/realtek - Fixed headphone distorted sound on Acer Aspire A115-31 laptop
-Date: Wed,  5 Feb 2025 14:41:02 +0100
-Message-ID: <20250205134508.463860023@linuxfoundation.org>
+Subject: [PATCH 6.13 315/623] iommu/amd: Remove domain_alloc()
+Date: Wed,  5 Feb 2025 14:40:57 +0100
+Message-ID: <20250205134508.273837220@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,34 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 5cb4e5b056772e341b590755a976081776422053 ]
+[ Upstream commit f9b80f941e0e68c3347c5d22a17a0f636a064e2c ]
 
-Sound played through headphones is distorted.
+IOMMU drivers should not be sensitive to the domain type, a paging domain
+should be created based only on the flags passed in, the same for all
+callers.
 
-Fixes: 34ab5bbc6e82 ("ALSA: hda/realtek - Add Headset Mic supported Acer NB platform")
-Closes: https://lore.kernel.org/linux-sound/e142749b-7714-4733-9452-918fbe328c8f@gmail.com/
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/0a89b6c18ed94378a105fa61e9f290e4@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+AMD was using the domain_alloc() path to force VFIO into a v1 domain type,
+because v1 gives higher performance. However now that
+IOMMU_HWPT_ALLOC_PASID is present, and a NULL device is not possible,
+domain_alloc_paging_flags() will do the right thing for VFIO.
+
+When invoked from VFIO flags will be 0 and the amd_iommu_pgtable type of
+domain will be selected. This is v1 by default unless the kernel command
+line has overridden it to v2.
+
+If the admin is forcing v2 assume they know what they are doing so force
+it everywhere, including for VFIO.
+
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/2-v2-9776c53c2966+1c7-amd_paging_flags_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: 082f1bcae8d1 ("iommu/amd: Fully decode all combinations of alloc_paging_flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/amd/iommu.c | 20 --------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index ad66378d7321a..2d523b53b3d73 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10158,6 +10158,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1025, 0x1308, "Acer Aspire Z24-890", ALC286_FIXUP_ACER_AIO_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x132a, "Acer TravelMate B114-21", ALC233_FIXUP_ACER_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x1330, "Acer TravelMate X514-51T", ALC255_FIXUP_ACER_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1025, 0x1360, "Acer Aspire A115", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x141f, "Acer Spin SP513-54N", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x142b, "Acer Swift SF314-42", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x1430, "Acer TravelMate B311R-31", ALC256_FIXUP_ACER_MIC_NO_PRESENCE),
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 7e7246c49006a..96d87406f8946 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -2386,25 +2386,6 @@ static struct iommu_domain *do_iommu_domain_alloc(unsigned int type,
+ 	return &domain->domain;
+ }
+ 
+-static struct iommu_domain *amd_iommu_domain_alloc(unsigned int type)
+-{
+-	struct iommu_domain *domain;
+-	int pgtable = amd_iommu_pgtable;
+-
+-	/*
+-	 * Force IOMMU v1 page table when allocating
+-	 * domain for pass-through devices.
+-	 */
+-	if (type == IOMMU_DOMAIN_UNMANAGED)
+-		pgtable = AMD_IOMMU_V1;
+-
+-	domain = do_iommu_domain_alloc(type, NULL, 0, pgtable);
+-	if (IS_ERR(domain))
+-		return NULL;
+-
+-	return domain;
+-}
+-
+ static struct iommu_domain *
+ amd_iommu_domain_alloc_paging_flags(struct device *dev, u32 flags,
+ 				    const struct iommu_user_data *user_data)
+@@ -2881,7 +2862,6 @@ const struct iommu_ops amd_iommu_ops = {
+ 	.blocked_domain = &blocked_domain,
+ 	.release_domain = &release_domain,
+ 	.identity_domain = &identity_domain.domain,
+-	.domain_alloc = amd_iommu_domain_alloc,
+ 	.domain_alloc_paging_flags = amd_iommu_domain_alloc_paging_flags,
+ 	.domain_alloc_sva = amd_iommu_domain_alloc_sva,
+ 	.probe_device = amd_iommu_probe_device,
 -- 
 2.39.5
 
