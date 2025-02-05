@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8F6F510;
-	Wed,  5 Feb 2025 14:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E4C1519AA;
+	Wed,  5 Feb 2025 14:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764207; cv=none; b=ohtUXZ+Z7otWkS678J10nyYjh/sqE1/tCGe262tZFUdLmH81gz4enxjWSbZG1wx2xbrd18D4/t0peHrAIX1l+Dg8dxT0VZC6NI7JcjLMD/IX0RdEt6PyhxAivtHwsucFxtlkBc2bcWhOccua2ANNB1vYZkm4NEtf59W8lXQf02o=
+	t=1738764210; cv=none; b=XH3gomwIn5vkpchgZUP9fv0pFa+s6u9nFUPzjrpFL19GXOBvXOyOsfAf886Z+q525RTksNVV9LcVbSV1+IEgv21v3ZT4D7TT6znznABsxgLFuDIIgGtyR+/b9BpWzEd/1Y2hVsVoATQy5MetGT+PsqT8TuAvdb1KVsXpIhQjpug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764207; c=relaxed/simple;
-	bh=EecEOO7JDUG0i326G63NVdgJGRJ2kj+TirL3azTdglQ=;
+	s=arc-20240116; t=1738764210; c=relaxed/simple;
+	bh=NCieyCbgnnyl00XLHYqkmE43fuMQ42EU/oM9PDURWNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e1qG30fdXj6nqNQ/woSdKWPaDRt1YdgWafru05iWGm5l3UHuWOUHqxjjanHN0ArtmmH5GycTWj7UuvF7JCXVDE/ihy1n7T2AKyyLlg3Bcay4UUzsqFQsR8zD3J6I+s+bIWijDG/HCxVVgBXoUGSiZ3U4WpJrKA3b8g0DR3BRXdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TwJ6dVrM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LIH1dKQhelViVECaMkROvtnHO0wg/X9cf9PXshUCd+bcN0id+wHF+3md7C39jrwLtAov5THRbcQYEfJhR7lP5kqBHVWhHyvoL9gb77hHd91Y8WPS4akaFdJgPp7TO+cjvQgkB5ucrJqJYgj9XqsVL4aoRKONVgXJLDcP78+kods=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mJIRBey; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TwJ6dVrM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFB6C4CED6;
-	Wed,  5 Feb 2025 14:03:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mJIRBey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF35C4CED1;
+	Wed,  5 Feb 2025 14:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764206;
-	bh=EecEOO7JDUG0i326G63NVdgJGRJ2kj+TirL3azTdglQ=;
+	s=korg; t=1738764210;
+	bh=NCieyCbgnnyl00XLHYqkmE43fuMQ42EU/oM9PDURWNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TwJ6dVrMKgg/WzjQ35deqklHtzIYgZ6iL11kq5JZTgqmhWih4gdphUMCrVb8kr9rN
-	 pysXV8gmM7J0CCJz//7/U6sq50z2OariVh2h+sqgw07kboSdqy+nnFRGv/UkaLam28
-	 FZl8RHUpnpakpQTYhpMyw7cJYNNeVXRIIl9/j3O8=
+	b=2mJIRBeym7HoRQILcfI+sq3zGg99UJFfcJ69pyEUhrmSOnnKwDKCE9VvgK7psmOGI
+	 xTbDTnWsQB9GWTeTlDljERGO5BHz3E//3rpWfsUfLyJaVgWByi2FU1vk6tTjmuNkYJ
+	 PFYCNDGde2tGkiM4ke0wloPHvrgYkpSzUxcK0k6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Derek Foreman <derek.foreman@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 149/393] netfilter: nft_flow_offload: update tcp state flags under lock
-Date: Wed,  5 Feb 2025 14:41:08 +0100
-Message-ID: <20250205134426.004088712@linuxfoundation.org>
+Subject: [PATCH 6.13 057/623] drm/connector: Allow clearing HDMI infoframes
+Date: Wed,  5 Feb 2025 14:36:39 +0100
+Message-ID: <20250205134458.409584734@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +49,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Derek Foreman <derek.foreman@collabora.com>
 
-[ Upstream commit 7a4b61406395291ffb7220a10e8951a9a8684819 ]
+[ Upstream commit d34357743b360c99903b5a59daab08f55b2f41a1 ]
 
-The conntrack entry is already public, there is a small chance that another
-CPU is handling a packet in reply direction and racing with the tcp state
-update.
+Our infoframe setting code currently lacks the ability to clear
+infoframes. For some of the infoframes, we only need to replace them,
+so if an error occurred when generating a new infoframe we would leave
+a stale frame instead of clearing the frame.
 
-Move this under ct spinlock.
+However, the Dynamic Range and Mastering (DRM) infoframe should only
+be present when displaying HDR content (ie: the HDR_OUTPUT_METADATA blob
+is set). If we can't clear infoframes, the stale DRM infoframe will
+remain and we can never set the display back to SDR mode.
 
-This is done once, when ct is about to be offloaded, so this should
-not result in a noticeable performance hit.
+With this change, we clear infoframes when they can not, or should not,
+be generated. This fixes switching to an SDR mode from an HDR one.
 
-Fixes: 8437a6209f76 ("netfilter: nft_flow_offload: set liberal tracking mode for tcp")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: f378b77227bc ("drm/connector: hdmi: Add Infoframes generation")
+Signed-off-by: Derek Foreman <derek.foreman@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241202181939.724011-1-derek.foreman@collabora.com
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_flow_offload.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/display/drm_hdmi_state_helper.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
-index 397351fa4d5f8..5a3d685420420 100644
---- a/net/netfilter/nft_flow_offload.c
-+++ b/net/netfilter/nft_flow_offload.c
-@@ -288,6 +288,15 @@ static bool nft_flow_offload_skip(struct sk_buff *skb, int family)
- 	return false;
- }
+diff --git a/drivers/gpu/drm/display/drm_hdmi_state_helper.c b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
+index feb7a3a759811..936a8f95d80f7 100644
+--- a/drivers/gpu/drm/display/drm_hdmi_state_helper.c
++++ b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
+@@ -347,6 +347,8 @@ static int hdmi_generate_avi_infoframe(const struct drm_connector *connector,
+ 		is_limited_range ? HDMI_QUANTIZATION_RANGE_LIMITED : HDMI_QUANTIZATION_RANGE_FULL;
+ 	int ret;
  
-+static void flow_offload_ct_tcp(struct nf_conn *ct)
-+{
-+	/* conntrack will not see all packets, disable tcp window validation. */
-+	spin_lock_bh(&ct->lock);
-+	ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
-+	ct->proto.tcp.seen[1].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
-+	spin_unlock_bh(&ct->lock);
-+}
++	infoframe->set = false;
 +
- static void nft_flow_offload_eval(const struct nft_expr *expr,
- 				  struct nft_regs *regs,
- 				  const struct nft_pktinfo *pkt)
-@@ -355,11 +364,8 @@ static void nft_flow_offload_eval(const struct nft_expr *expr,
- 		goto err_flow_alloc;
+ 	ret = drm_hdmi_avi_infoframe_from_display_mode(frame, connector, mode);
+ 	if (ret)
+ 		return ret;
+@@ -376,6 +378,8 @@ static int hdmi_generate_spd_infoframe(const struct drm_connector *connector,
+ 		&infoframe->data.spd;
+ 	int ret;
  
- 	flow_offload_route_init(flow, &route);
--
--	if (tcph) {
--		ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
--		ct->proto.tcp.seen[1].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
--	}
-+	if (tcph)
-+		flow_offload_ct_tcp(ct);
++	infoframe->set = false;
++
+ 	ret = hdmi_spd_infoframe_init(frame,
+ 				      connector->hdmi.vendor,
+ 				      connector->hdmi.product);
+@@ -398,6 +402,8 @@ static int hdmi_generate_hdr_infoframe(const struct drm_connector *connector,
+ 		&infoframe->data.drm;
+ 	int ret;
  
- 	ret = flow_offload_add(flowtable, flow);
- 	if (ret < 0)
++	infoframe->set = false;
++
+ 	if (connector->max_bpc < 10)
+ 		return 0;
+ 
+@@ -425,6 +431,8 @@ static int hdmi_generate_hdmi_vendor_infoframe(const struct drm_connector *conne
+ 		&infoframe->data.vendor.hdmi;
+ 	int ret;
+ 
++	infoframe->set = false;
++
+ 	if (!info->has_hdmi_infoframe)
+ 		return 0;
+ 
 -- 
 2.39.5
 
