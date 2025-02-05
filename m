@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06701519B4;
-	Wed,  5 Feb 2025 15:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416821519B4;
+	Wed,  5 Feb 2025 15:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768390; cv=none; b=OTq/O8F9IIK8CV/EY+0f9I/Klol5SruJ2mr2BFCFiVNpjlsRTmHiUP5znLwBhpJGpK+0B/EdBv1EbskKnCyfDew0tIepn47LdpqOqu6HnqloXLRBlZVlc9rHUmPvZmffLZldN/YcSS3AktXsibzMnUPr/wffJm4p8IGdpVqAgbk=
+	t=1738768394; cv=none; b=EuhdB3X83lgTRMxfY2sML8TWBtkvsdI8POHe7vTQOeiQKHtBNGViWDK3ZDZ9+SIlJaDP/FZLR3zfWqyISAL+fREjpFrsqq8kE/fYlXuuR14HEetedRe3oSb8EqnkJUa2t3pTPQCXKgHbdf19oxVDmZClgPO+TaJGkUT0xHNflEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768390; c=relaxed/simple;
-	bh=S0uRdZkoDOgAH6muUI30Iv/ExzFPjpSDrI6c/eS1qX4=;
+	s=arc-20240116; t=1738768394; c=relaxed/simple;
+	bh=6ifo1ABKk78/Ey3ZHqhqsM3w6JBWw/bfSyvZ22MOdGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pMdHd5iCUUeJ4jYOHD9ga8EVbVMAp4nAyHFmDG5ngqP1X6Ausj3v4O8EEyFbXnv+p28/Dk0mPYGYuuTydS5pEF5PKZqxdWAdM0++gaTMYZgN3WqnpV+QUEM8ww8oCxIJGdANymlaJku0EZpk7XVzjyEyvWj9yXn1jQx2PTx/IN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAOsj2Ib; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kW95i9xcS8//PLQOUH6CccZi+BJoyfrX9YPAnIqC1UvMCJsKT5cH3iKruSXR00b8B9jugwmuAXY76ZHd3mQ3EMZ7eLES9fLuQFLPYv8P+0x3Yz/+gj7Yuy15LYIhWSh74a/JZ7VzKqeHJKQPBRSONc43XzFE7w4gJt3KGpJOWho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vr4xOU+B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAOsj2Ib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EFD8C4CED1;
-	Wed,  5 Feb 2025 15:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vr4xOU+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D71C4CED1;
+	Wed,  5 Feb 2025 15:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768390;
-	bh=S0uRdZkoDOgAH6muUI30Iv/ExzFPjpSDrI6c/eS1qX4=;
+	s=korg; t=1738768394;
+	bh=6ifo1ABKk78/Ey3ZHqhqsM3w6JBWw/bfSyvZ22MOdGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oAOsj2IbgDw/yr9DfxFC4SIxY5sizVB8CZat7H4uNl/F2vm9Tmvy3M9KRGsTvbiff
-	 L19aZUx/pQhMgsJjdDQHKAI+FyER2tQasvD0MgTP2pGX63pvQGIVEomzo85biJ0OaO
-	 jukaZARTWvpCjncc8KoRjSKZaJXPgZ+EpxjELIrY=
+	b=Vr4xOU+BxHp0vUUFtfFz/4NKXR+qJfxWAFjuSbYFN5nG9ltOyHFgyDxsUZe9sqvr2
+	 f58Iahl7n8u0tDChsLUqD/2Q3n+jd8cVUUi4Q0V/yiPgbtBacb0u2zieOrB6uXo544
+	 8yl6HH/G3laJOTKm6GKv/AJAuMBaJLWEbkTC6RvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 542/623] Bluetooth: btusb: mediatek: Add locks for usb_driver_claim_interface()
-Date: Wed,  5 Feb 2025 14:44:44 +0100
-Message-ID: <20250205134516.957708847@linuxfoundation.org>
+Subject: [PATCH 6.13 522/623] net: rose: fix timer races against user threads
+Date: Wed,  5 Feb 2025 14:44:24 +0100
+Message-ID: <20250205134516.195620303@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,71 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e9087e828827e5a5c85e124ce77503f2b81c3491 ]
+[ Upstream commit 5de7665e0a0746b5ad7943554b34db8f8614a196 ]
 
-The documentation for usb_driver_claim_interface() says that "the
-device lock" is needed when the function is called from places other
-than probe(). This appears to be the lock for the USB interface
-device. The Mediatek btusb code gets called via this path:
+Rose timers only acquire the socket spinlock, without
+checking if the socket is owned by one user thread.
 
-  Workqueue: hci0 hci_power_on [bluetooth]
-  Call trace:
-   usb_driver_claim_interface
-   btusb_mtk_claim_iso_intf
-   btusb_mtk_setup
-   hci_dev_open_sync
-   hci_power_on
-   process_scheduled_works
-   worker_thread
-   kthread
+Add a check and rearm the timers if needed.
 
-With the above call trace the device lock hasn't been claimed. Claim
-it.
+BUG: KASAN: slab-use-after-free in rose_timer_expiry+0x31d/0x360 net/rose/rose_timer.c:174
+Read of size 2 at addr ffff88802f09b82a by task swapper/0/0
 
-Without this fix, we'd sometimes see the error "Failed to claim iso
-interface". Sometimes we'd even see worse errors, like a NULL pointer
-dereference (where `intf->dev.driver` was NULL) with a trace like:
+CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.13.0-rc5-syzkaller-00172-gd1bf27c4e176 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Call Trace:
+ <IRQ>
+  __dump_stack lib/dump_stack.c:94 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+  print_address_description mm/kasan/report.c:378 [inline]
+  print_report+0x169/0x550 mm/kasan/report.c:489
+  kasan_report+0x143/0x180 mm/kasan/report.c:602
+  rose_timer_expiry+0x31d/0x360 net/rose/rose_timer.c:174
+  call_timer_fn+0x187/0x650 kernel/time/timer.c:1793
+  expire_timers kernel/time/timer.c:1844 [inline]
+  __run_timers kernel/time/timer.c:2418 [inline]
+  __run_timer_base+0x66a/0x8e0 kernel/time/timer.c:2430
+  run_timer_base kernel/time/timer.c:2439 [inline]
+  run_timer_softirq+0xb7/0x170 kernel/time/timer.c:2449
+  handle_softirqs+0x2d4/0x9b0 kernel/softirq.c:561
+  __do_softirq kernel/softirq.c:595 [inline]
+  invoke_softirq kernel/softirq.c:435 [inline]
+  __irq_exit_rcu+0xf7/0x220 kernel/softirq.c:662
+  irq_exit_rcu+0x9/0x30 kernel/softirq.c:678
+  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
+  sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1049
+ </IRQ>
 
-  Call trace:
-   usb_suspend_both
-   usb_runtime_suspend
-   __rpm_callback
-   rpm_suspend
-   pm_runtime_work
-   process_scheduled_works
-
-Both errors appear to be fixed with the proper locking.
-
-Fixes: ceac1cb0259d ("Bluetooth: btusb: mediatek: add ISO data transmission functions")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250122180244.1861468-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/rose/rose_timer.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 279fe6c115fac..f69df515d668b 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2638,8 +2638,15 @@ static void btusb_mtk_claim_iso_intf(struct btusb_data *data)
- 	struct btmtk_data *btmtk_data = hci_get_priv(data->hdev);
- 	int err;
+diff --git a/net/rose/rose_timer.c b/net/rose/rose_timer.c
+index f06ddbed3fed6..1525773e94aa1 100644
+--- a/net/rose/rose_timer.c
++++ b/net/rose/rose_timer.c
+@@ -122,6 +122,10 @@ static void rose_heartbeat_expiry(struct timer_list *t)
+ 	struct rose_sock *rose = rose_sk(sk);
  
-+	/*
-+	 * The function usb_driver_claim_interface() is documented to need
-+	 * locks held if it's not called from a probe routine. The code here
-+	 * is called from the hci_power_on workqueue, so grab the lock.
-+	 */
-+	device_lock(&btmtk_data->isopkt_intf->dev);
- 	err = usb_driver_claim_interface(&btusb_driver,
- 					 btmtk_data->isopkt_intf, data);
-+	device_unlock(&btmtk_data->isopkt_intf->dev);
- 	if (err < 0) {
- 		btmtk_data->isopkt_intf = NULL;
- 		bt_dev_err(data->hdev, "Failed to claim iso interface");
+ 	bh_lock_sock(sk);
++	if (sock_owned_by_user(sk)) {
++		sk_reset_timer(sk, &sk->sk_timer, jiffies + HZ/20);
++		goto out;
++	}
+ 	switch (rose->state) {
+ 	case ROSE_STATE_0:
+ 		/* Magic here: If we listen() and a new link dies before it
+@@ -152,6 +156,7 @@ static void rose_heartbeat_expiry(struct timer_list *t)
+ 	}
+ 
+ 	rose_start_heartbeat(sk);
++out:
+ 	bh_unlock_sock(sk);
+ 	sock_put(sk);
+ }
+@@ -162,6 +167,10 @@ static void rose_timer_expiry(struct timer_list *t)
+ 	struct sock *sk = &rose->sock;
+ 
+ 	bh_lock_sock(sk);
++	if (sock_owned_by_user(sk)) {
++		sk_reset_timer(sk, &rose->timer, jiffies + HZ/20);
++		goto out;
++	}
+ 	switch (rose->state) {
+ 	case ROSE_STATE_1:	/* T1 */
+ 	case ROSE_STATE_4:	/* T2 */
+@@ -182,6 +191,7 @@ static void rose_timer_expiry(struct timer_list *t)
+ 		}
+ 		break;
+ 	}
++out:
+ 	bh_unlock_sock(sk);
+ 	sock_put(sk);
+ }
+@@ -192,6 +202,10 @@ static void rose_idletimer_expiry(struct timer_list *t)
+ 	struct sock *sk = &rose->sock;
+ 
+ 	bh_lock_sock(sk);
++	if (sock_owned_by_user(sk)) {
++		sk_reset_timer(sk, &rose->idletimer, jiffies + HZ/20);
++		goto out;
++	}
+ 	rose_clear_queues(sk);
+ 
+ 	rose_write_internal(sk, ROSE_CLEAR_REQUEST);
+@@ -207,6 +221,7 @@ static void rose_idletimer_expiry(struct timer_list *t)
+ 		sk->sk_state_change(sk);
+ 		sock_set_flag(sk, SOCK_DEAD);
+ 	}
++out:
+ 	bh_unlock_sock(sk);
+ 	sock_put(sk);
+ }
 -- 
 2.39.5
 
