@@ -1,40 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128B916CD1D;
-	Wed,  5 Feb 2025 14:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88AB1917F1;
+	Wed,  5 Feb 2025 14:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766567; cv=none; b=A6X6Kecc6TnSvKPJPRONsjjqUR6RIrIaThDrIHZMio1DQR5lDzXBOttbo3eSaxBiQPEVI2bW0q4Vm39OHwbjr+r0lGPEWyVrJFr/lfjvJKzGjAEU+Mfp99L38CPZGSAiJSYJnlQmmCZRB399Bxe5D9Xy3uLu8aZgrAnpOSJmDAM=
+	t=1738766569; cv=none; b=tEHb+1djsXdQCHNSD9fC4akPfTDR/igD8Jtful535WpkNoJg3QO2X7ap58vd+03DmcsNE7WMY5RiMFhysgskFlOkoEYctkbZjSyYyaZZU56KS5hCYUSwaNbqm106/FN0KE9cseECL81QrYxtuuybqbExv3EVYk0DpFMjfhEYS2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766567; c=relaxed/simple;
-	bh=aomcDuHp3vtr5q/ZiY5jqcKC+++/VNzeumaUgaog9RQ=;
+	s=arc-20240116; t=1738766569; c=relaxed/simple;
+	bh=ghFPL9FRZ2U6Z0A4yUxlaC0fYMuAI1uehUVwiik0was=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rcGAMoukZQIla3PTmHZtfMoEyIIxu8fgF8tEFR+3ycx1rcyQffnnEyBRmEsTaDF20K4CAnnx/fWjnPtxAY7dvLwg8f+WVJbsJ5hSmJwowHivlM95ktjnRX2yJePMio1+NyI5m0l+gEwVCNAsKMdHLHDJIOwIlyJrBnMvZr8ucrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oR7C+GG0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eNm8y01JG43LjHSxvrFkdPw0cNA0WsgNJTJ4rYbi4SZSDmNYK88T8BoQd4PiKlhb7xkBSy23L4jmg9yCMrKcXJtW4JA/osmhIaMN5tgpjQf8V59lO/oFU24vm7J6WSEtHgX/lBMBEds68aT3gAnu/fyetGl7U0u3nwZKnASj6kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHfVPyae; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oR7C+GG0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D06C4CED1;
-	Wed,  5 Feb 2025 14:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHfVPyae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B90C4CED1;
+	Wed,  5 Feb 2025 14:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766566;
-	bh=aomcDuHp3vtr5q/ZiY5jqcKC+++/VNzeumaUgaog9RQ=;
+	s=korg; t=1738766569;
+	bh=ghFPL9FRZ2U6Z0A4yUxlaC0fYMuAI1uehUVwiik0was=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oR7C+GG0ERblN9stYAPjuy8HCG6SXOC/jSpq3qdAzyRq2jvT9YCOxrTNYedyEh9UN
-	 rYFh2kRxivryrKdBSI9PMwmNgokz19RIQmkCGhaeDgsuEXd4D7S5W9h+9tlkR5+WSb
-	 0Ni5w74Vcu77NtYBYntLtGDw8ZjsFz17mwc26iBE=
+	b=wHfVPyaetF9glxkwcMdSWYOfsXmXZQcuTCCbdclh7JwEnbA1RWCgoTow68rECiPr5
+	 hkerA1Mp7mYD7Vx45gegcCgtxTg/j59zY/wxPnQS/ff8XS7RxqT9bjBMWkdRyvpxmy
+	 s5Int8j8/jE2MnUkzhn7p24cGnnWV5OZFJSAaAjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lianqin Hu <hulianqin@vivo.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 374/393] ALSA: usb-audio: Add delay quirk for iBasso DC07 Pro
-Date: Wed,  5 Feb 2025 14:44:53 +0100
-Message-ID: <20250205134434.604795688@linuxfoundation.org>
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 288/623] perf top: Dont complain about lack of vmlinux when not resolving some kernel samples
+Date: Wed,  5 Feb 2025 14:40:30 +0100
+Message-ID: <20250205134507.248883024@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,42 +53,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lianqin Hu <hulianqin@vivo.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-commit d85fc52cbb9a719c8335d93a28d6a79d7acd419f upstream.
+[ Upstream commit 058b38ccd2af9e5c95590b018e8425fa148d7aca ]
 
-Audio control requests that sets sampling frequency sometimes fail on
-this card. Adding delay between control messages eliminates that problem.
+Recently we got a case where a kernel sample wasn't being resolved due
+to a bug that was not setting the end address on kernel functions
+implemented in assembly (see Link: tag), and then those were not being
+found by machine__resolve() -> map__find_symbol().
 
-usb 1-1: New USB device found, idVendor=2fc6, idProduct=f0b7
-usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-usb 1-1: Product: iBasso DC07 Pro
-usb 1-1: Manufacturer: iBasso
-usb 1-1: SerialNumber: CTUA171130B
+So we ended up with:
 
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/TYUPR06MB62174A48D04E09A37996DF84D2ED2@TYUPR06MB6217.apcprd06.prod.outlook.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  # perf top --stdio
+  PerfTop: 0 irqs/s  kernel: 0%  exact: 0% lost: 0/0 drop: 0/0 [cycles/P]
+  -----------------------------------------------------------------------
+
+  Warning:
+  A vmlinux file was not found.
+  Kernel samples will not be resolved.
+  ^Z
+  [1]+  Stopped                 perf top --stdio
+  #
+
+But then resolving all other kernel symbols.
+
+So just fixup the logic to only print that warning when there are no
+symbols in the kernel map.
+
+Fixes: d88205db9caa0e9d ("perf dso: Add dso__has_symbols() method")
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/lkml/Z3buKhcCsZi3_aGb@x1
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ tools/perf/builtin-top.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2243,6 +2243,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x2d95, 0x8021, /* VIVO USB-C-XE710 HEADSET */
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
-+	DEVICE_FLG(0x2fc6, 0xf0b7, /* iBasso DC07 Pro */
-+		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
- 	DEVICE_FLG(0x413c, 0xa506, /* Dell AE515 sound bar */
+diff --git a/tools/perf/builtin-top.c b/tools/perf/builtin-top.c
+index 724a793863212..ca3e8eca6610e 100644
+--- a/tools/perf/builtin-top.c
++++ b/tools/perf/builtin-top.c
+@@ -809,7 +809,7 @@ static void perf_event__process_sample(const struct perf_tool *tool,
+ 		 * invalid --vmlinux ;-)
+ 		 */
+ 		if (!machine->kptr_restrict_warned && !top->vmlinux_warned &&
+-		    __map__is_kernel(al.map) && map__has_symbols(al.map)) {
++		    __map__is_kernel(al.map) && !map__has_symbols(al.map)) {
+ 			if (symbol_conf.vmlinux_name) {
+ 				char serr[256];
+ 
+-- 
+2.39.5
+
 
 
