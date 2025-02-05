@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB97376;
-	Wed,  5 Feb 2025 15:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6742D1519BF;
+	Wed,  5 Feb 2025 15:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767954; cv=none; b=gs9CAiqbBKwrC7jTXB9PggeeQYeJLWTz04vidJRgGP2hbyIyv1yDhn/QFC4ByJXUW8nh2r1ayh/jY4jOnREhnqiZ918Rq0qXIQmUlmAt9ph2+kjkL0FU5HE7y30Fv7QDC4GUwacu5pRkUmAyzEyEEl0fVgOYB9bDVC13tEsFZGk=
+	t=1738767957; cv=none; b=EzD8syJW+q3+MdfOwHwODgzo+4RNcI4nJE1WiYVN93NXzN8xnkp1FCx+XnT++qglnkjtSYII9sR6KK6NdZDafbdKIB0453AnlYD9QVaOUsHotMcDDeqixtvalWrnsN7U2RMrDTHTT9AI/3x/QVFZqs5bmaPW2p1HxO1n1xpybrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767954; c=relaxed/simple;
-	bh=VKa34jBRg8yKKhlDo1O+BnT5tcyL53zaXHc/jm6ZvNQ=;
+	s=arc-20240116; t=1738767957; c=relaxed/simple;
+	bh=ii2YBr65DIvLJpDCYz5gZ4rjM/U+z6F3BqaqrOFzaaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rwg1gywW/58t7duMsaaMmpg0LmRUv0zD6B29fhgU+m7exPcrdXphEZbR68Pgp8i+jnuNAegaxE//tIXBUGZzmUCEInErnIFuWEMNlgj6uin33cxstuJBehMRC1booJ02VfUU3W6+jNGN8zgkVZ8JU8ieKmtijGfv47bUbrTxaao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IQugZw3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qwRxwImm35ByA8TuB5o6PUWo2nGDTchTL1SEuYpTdysf9JAqMu0KPEKvP8a55t4HgAAgtkVDi8GQp64+GR7CmwlHmgr40AEAF/wZQms8wbvPPWybK4XUjC/FJ6t6Tkn8Kzzdj/1yMPESdifNk0bny6mzXLf1QJSa87M1TbpZAbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B92dw80X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IQugZw3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09ECBC4CED6;
-	Wed,  5 Feb 2025 15:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B92dw80X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D0EEC4CED1;
+	Wed,  5 Feb 2025 15:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767953;
-	bh=VKa34jBRg8yKKhlDo1O+BnT5tcyL53zaXHc/jm6ZvNQ=;
+	s=korg; t=1738767956;
+	bh=ii2YBr65DIvLJpDCYz5gZ4rjM/U+z6F3BqaqrOFzaaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1IQugZw3kfpPx/OtvCkwXxTtzKJHhPy/iT48ILfFAcoihigc9geklDWX6vnniiqkI
-	 kYFB2V0Q629zHL3ENC0LLpDYyjO6WKHnINjFhAHSUB+REvX0a/3lUpvGlH1pg+zUaG
-	 MGONJ8cRxNWzp0BZdz9qlJi9Uz16dKy98iSjVDSo=
+	b=B92dw80XhQswj1GGPt+k5VXc7QzT5ijqkg9TP8t8sPP+MVrUTuBN+Aznw2eCOZ7Al
+	 coxbQJTGSn9Mph/YTa6PQMKbXNq7WMz3vQXe6pqlJxYyAHY2zFQF8adwMFfaf6rlV4
+	 UZj6wZiLwd/FB1wO21sEqVTiVAPbodTV5sAwmxls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Brian Cain <bcain@quicinc.com>,
-	Brian Cain <brian.cain@oss.qualcomm.com>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 534/590] hexagon: fix using plain integer as NULL pointer warning in cmpxchg
-Date: Wed,  5 Feb 2025 14:44:49 +0100
-Message-ID: <20250205134515.696673372@linuxfoundation.org>
+Subject: [PATCH 6.13 477/623] erofs: fix potential return value overflow of z_erofs_shrink_scan()
+Date: Wed,  5 Feb 2025 14:43:39 +0100
+Message-ID: <20250205134514.466291004@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,63 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 8a20030038742b9915c6d811a4e6c14b126cafb4 ]
+[ Upstream commit db902986dee453bfb5835cbc8efa67154ab34caf ]
 
-Sparse reports
+z_erofs_shrink_scan() could return small numbers due to the mistyped
+`freed`.
 
-    net/ipv4/inet_diag.c:1511:17: sparse: sparse: Using plain integer as NULL pointer
+Although I don't think it has any visible impact.
 
-Due to this code calling cmpxchg on a non-integer type
-struct inet_diag_handler *
-
-    return !cmpxchg((const struct inet_diag_handler**)&inet_diag_table[type],
-                    NULL, h) ? 0 : -EEXIST;
-
-While hexagon's cmpxchg assigns an integer value to a variable of this
-type.
-
-    __typeof__(*(ptr)) __oldval = 0;
-
-Update this assignment to cast 0 to the correct type.
-
-The original issue is easily reproduced at head with the below block,
-and is absent after this change.
-
-    make LLVM=1 ARCH=hexagon defconfig
-    make C=1 LLVM=1 ARCH=hexagon net/ipv4/inet_diag.o
-
-Fixes: 99a70aa051d2 ("Hexagon: Add processor and system headers")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202411091538.PGSTqUBi-lkp@intel.com/
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Tested-by: Christian Gmeiner <cgmeiner@igalia.com>
-Link: https://lore.kernel.org/r/20241203221736.282020-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Brian Cain <bcain@quicinc.com>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Fixes: 3883a79abd02 ("staging: erofs: introduce VLE decompression support")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250114040058.459981-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/hexagon/include/asm/cmpxchg.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/erofs/zdata.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/hexagon/include/asm/cmpxchg.h b/arch/hexagon/include/asm/cmpxchg.h
-index bf6cf5579cf45..9c58fb81f7fd6 100644
---- a/arch/hexagon/include/asm/cmpxchg.h
-+++ b/arch/hexagon/include/asm/cmpxchg.h
-@@ -56,7 +56,7 @@ __arch_xchg(unsigned long x, volatile void *ptr, int size)
- 	__typeof__(ptr) __ptr = (ptr);				\
- 	__typeof__(*(ptr)) __old = (old);			\
- 	__typeof__(*(ptr)) __new = (new);			\
--	__typeof__(*(ptr)) __oldval = 0;			\
-+	__typeof__(*(ptr)) __oldval = (__typeof__(*(ptr))) 0;	\
- 								\
- 	asm volatile(						\
- 		"1:	%0 = memw_locked(%1);\n"		\
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 19ef4ff2a1345..f416b73e0ca31 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -927,8 +927,7 @@ unsigned long z_erofs_shrink_scan(struct erofs_sb_info *sbi,
+ 				  unsigned long nr_shrink)
+ {
+ 	struct z_erofs_pcluster *pcl;
+-	unsigned int freed = 0;
+-	unsigned long index;
++	unsigned long index, freed = 0;
+ 
+ 	xa_lock(&sbi->managed_pslots);
+ 	xa_for_each(&sbi->managed_pslots, index, pcl) {
 -- 
 2.39.5
 
