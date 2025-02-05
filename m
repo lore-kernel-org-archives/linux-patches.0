@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8774913C9C4;
-	Wed,  5 Feb 2025 14:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEFF14A088;
+	Wed,  5 Feb 2025 14:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764745; cv=none; b=iOvUGH7f2Z3UN806+RcO8B9m+7SGMjB1bpITRqKwxK2vTzmLO+epP262uqrQEgqfcZS58Oh8ZK4b4Kqictj2RgtMEBy4J/OIY/4pTm+JINZZmk21LQmSUzFuUWrsKaY3dyZAVmRq6CSavZB4BwPcnGKFmvyKaV2JqAr7TSgGcyk=
+	t=1738764749; cv=none; b=r8CCyv3M8oWuQ1k1r4VJtGRQAG6VB5ySJow58djwxsdqZRiIMdmXTRTuw2WCLhcwNYYmKa1ydZQeLu1y+llX2vqSwGDf/t+HAY5ckY31ddDOWWXzBR5Sc7mFMcx+NR9iNvLyhMVufDE/v35/h2gl5qYUfQTGGyLI4I+fdsj4cDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764745; c=relaxed/simple;
-	bh=VTuaufDvVhY2u54/qC8UTck05SEIQ/843agIvetbXSA=;
+	s=arc-20240116; t=1738764749; c=relaxed/simple;
+	bh=c8zwyVes9rkRIsoguMk/JD598gizJNzyUfaCfsqEhng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tkCKOHPJqPR2JG2I+XVVWwePwAwPyLYnxrcVG8g8WJNErT0P4CLWUuD6rP5sNn8JenMpVf5iMHrTRFOaxprpROSGTqJXs86pwi9bzQDmpCu0Z65TAkSDbvM4b770Bk7u1KthWNendOTWliL6yKiO1Rd9kD5V0+UpIUTz+MVvfQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4sJwV0m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IlKzIrO14sSQ4c3FvKUyTEZ2Ok8Ht8fGRHAQJwUwPOAigZ43CGzKI1CBH4egCwAdegpQWiYwq+tUajKItnNuUZkBMe2PUMdI0MQzyJ/m9cG2DFbJtnbJJrZTPgqOBfcotpOs0sbvzKsZizEehe43wUDwK1Kedj+XdG+0MG3ZHHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ns89Dd3H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4sJwV0m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79EAAC4CED1;
-	Wed,  5 Feb 2025 14:12:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ns89Dd3H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0C6C4CED1;
+	Wed,  5 Feb 2025 14:12:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764745;
-	bh=VTuaufDvVhY2u54/qC8UTck05SEIQ/843agIvetbXSA=;
+	s=korg; t=1738764748;
+	bh=c8zwyVes9rkRIsoguMk/JD598gizJNzyUfaCfsqEhng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4sJwV0mCom13JUA6Np9KY6mEXZYfqj5fZoEMqolGy9XFGBZdmTg/Uyk9PcA6sKLq
-	 YX6DCtYbnbuTYs+bcouuXC2aF9rJrvp+xspioVv6+SXpgtskGE1XqkYTOcQrTwF+Ci
-	 BPTK5vB/5ahuZ++yzViL5XfkyBuTmQq2uovJ7ZhQ=
+	b=ns89Dd3Hy5U2N6tV3q9w4b0FDKaj2DGnQIUIlv4k3NOWwy0XEKzgFcMz15oGEts20
+	 gWYtN1t4CnMkxUcmFNWecyvBqr1HzhGrLWwoZlJ/B8wwJyvBwqygDwVOuFwMCBwyhJ
+	 Kf3WmqjGuvbQd3gxFnyWq44rzxnMQo5mGj3dsTL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Aditya Kumar Singh <quic_adisi@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 194/393] soc: atmel: fix device_node release in atmel_soc_device_init()
-Date: Wed,  5 Feb 2025 14:41:53 +0100
-Message-ID: <20250205134427.717165276@linuxfoundation.org>
+Subject: [PATCH 6.13 110/623] wifi: ath12k: fix read pointer after free in ath12k_mac_assign_vif_to_vdev()
+Date: Wed,  5 Feb 2025 14:37:32 +0100
+Message-ID: <20250205134500.423396951@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Aditya Kumar Singh <quic_adisi@quicinc.com>
 
-[ Upstream commit d3455ab798100f40af77123e7c2443ec979c546b ]
+[ Upstream commit 5a10971c7645a95f5d5dc23c26fbac4bf61801d0 ]
 
-A device_node acquired via of_find_node_by_path() requires explicit
-calls to of_node_put() when it is no longer needed to avoid leaking the
-resource.
+In ath12k_mac_assign_vif_to_vdev(), if arvif is created on a different
+radio, it gets deleted from that radio through a call to
+ath12k_mac_unassign_link_vif(). This action frees the arvif pointer.
+Subsequently, there is a check involving arvif, which will result in a
+read-after-free scenario.
 
-Instead of adding the missing calls to of_node_put() in all execution
-paths, use the cleanup attribute for 'np' by means of the __free()
-macro, which automatically calls of_node_put() when the variable goes
-out of scope.
+Fix this by moving this check after arvif is again assigned via call to
+ath12k_mac_assign_link_vif().
 
-Fixes: 960ddf70cc11 ("drivers: soc: atmel: Avoid calling at91_soc_init on non AT91 SoCs")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20241031-soc-atmel-soc-cleanup-v2-1-73f2d235fd98@gmail.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
+
+Closes: https://scan5.scan.coverity.com/#/project-view/63541/10063?selectedIssue=1636423
+Fixes: b5068bc9180d ("wifi: ath12k: Cache vdev configs before vdev create")
+Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
+Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Acked-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20241210-read_after_free-v1-1-969f69c7d66c@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/atmel/soc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soc/atmel/soc.c b/drivers/soc/atmel/soc.c
-index cc9a3e107479a..c892c7083ecc9 100644
---- a/drivers/soc/atmel/soc.c
-+++ b/drivers/soc/atmel/soc.c
-@@ -376,7 +376,7 @@ static const struct of_device_id at91_soc_allowed_list[] __initconst = {
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index d493ec812055f..cf4f4245f6068 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -7173,9 +7173,6 @@ static struct ath12k *ath12k_mac_assign_vif_to_vdev(struct ieee80211_hw *hw,
  
- static int __init atmel_soc_device_init(void)
- {
--	struct device_node *np = of_find_node_by_path("/");
-+	struct device_node *np __free(device_node) = of_find_node_by_path("/");
+ 	ab = ar->ab;
  
- 	if (!of_match_node(at91_soc_allowed_list, np))
- 		return 0;
+-	if (arvif->is_created)
+-		goto flush;
+-
+ 	/* Assign arvif again here since previous radio switch block
+ 	 * would've unassigned and cleared it.
+ 	 */
+@@ -7186,6 +7183,9 @@ static struct ath12k *ath12k_mac_assign_vif_to_vdev(struct ieee80211_hw *hw,
+ 		goto unlock;
+ 	}
+ 
++	if (arvif->is_created)
++		goto flush;
++
+ 	if (ar->num_created_vdevs > (TARGET_NUM_VDEVS - 1)) {
+ 		ath12k_warn(ab, "failed to create vdev, reached max vdev limit %d\n",
+ 			    TARGET_NUM_VDEVS);
 -- 
 2.39.5
 
