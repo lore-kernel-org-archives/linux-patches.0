@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09D1155A30;
-	Wed,  5 Feb 2025 15:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD3A1519B4;
+	Wed,  5 Feb 2025 15:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768373; cv=none; b=lZnwTmVP17b8+p/mqITwLUP+E8JlwHCvooW+ZBGYucwHjpW+AdqcV0fgKNcs0E/AgfMcn3UoiIpbNMNOevaxIy3/jmV75ysuatfgEOqNYSIXTj9kVe3OEAKB81PBv3BQeScq1IO54Vb0CKZ0B5zlKdG9eKD9IWos+LLDnglSrv8=
+	t=1738768377; cv=none; b=ggsXuGdfaYLe4zkUkKa2/MBBzRcT51z3nPn2+VN6RTODVaclvab+tjH0HC5pbRnyQl8yqEW9DIYT9b2CrL/zjfOOP4WpXbYZjAFsf+fMLHUwlFnE0DLOI5yienOsFBII4TiCz3Vdp/0+Vn2JFk8U5R53+HBOzbcrCSMkrhkquOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768373; c=relaxed/simple;
-	bh=LHsdY40JHM3IvCZ/F/xhUtDYrebCUn8ySu1NSGpth1M=;
+	s=arc-20240116; t=1738768377; c=relaxed/simple;
+	bh=b5MWfYxjBHkSCE9CVJwQgiMxnQdSEAJaACXK1gsKGig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f8tdqCLVc+yl6YQC7iEgR15E/WYYF66bC+mU9D0h6KufLpA5llSOqzyRYtpM9ECBclp+YBZMAMX+yZSPyeg9Gco2ya2tYN+CoZebFnEyREzBU8HS5bUUkby1MClbzf4kUEiS3PH+oHg9AmdLVXq75nFsl0u5R9IRqfL/TPak3UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g3BJQcHf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PaDY9xMppLfBTR+gpp77e3zR0TF8mtGOMiVf1G4vyKoHjm0XvVD2C9sfFTQRZDuFuFKjDJjVZXHSZjtebgh3LwMJ0fFn2QVY/wgx77RCm5T9AyYKPk9qTB8Q1BvKVSfkzu5D9SovtIAkS6m6HE8mdXIGzi3c1Q13ACRX8nyjx7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GF6J32hg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g3BJQcHf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C963C4CED1;
-	Wed,  5 Feb 2025 15:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GF6J32hg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A545FC4CED1;
+	Wed,  5 Feb 2025 15:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768373;
-	bh=LHsdY40JHM3IvCZ/F/xhUtDYrebCUn8ySu1NSGpth1M=;
+	s=korg; t=1738768377;
+	bh=b5MWfYxjBHkSCE9CVJwQgiMxnQdSEAJaACXK1gsKGig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g3BJQcHfOgNCodAoPgp9vUgmxDXlWpwAHP/W6c9F+kH6rMvXpTEDY8P3ncHXVeMmR
-	 r3eUH/roVQvQnnmEvvrBNW4O8ONZQH+81FU5dK1RXLhcAWyWsXVjOzreq6IHWRppgU
-	 t2V9e3nd+xJX66fPE9kRyZGvbRqAqlBsmiE2gebA=
+	b=GF6J32hgYhbl6ezZu/f50OEoHLa15prOlT/+rqW3V5z7Ho3800CDk5JrVRVbGRTWi
+	 OtB1wK9xcx385Xd/cj6c7q4tSagCvevbyGdOCdRXyyKHgS+cC596Nd7kXeJ0QrdZxo
+	 kVdCdXrLnNlK5FOTpDQY0WB6sqEpRmbK/iOOAJyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sheshu Ramanandan <sheshu.ramanandan@ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 537/623] bonding: Correctly support GSO ESP offload
-Date: Wed,  5 Feb 2025 14:44:39 +0100
-Message-ID: <20250205134516.767976220@linuxfoundation.org>
+Subject: [PATCH 6.13 538/623] s390/sclp: Initialize sclp subsystem via arch_cpu_finalize_init()
+Date: Wed,  5 Feb 2025 14:44:40 +0100
+Message-ID: <20250205134516.805197530@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -53,105 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 9e6c4e6b605c1fa3e24f74ee0b641e95f090188a ]
+[ Upstream commit 3bcc8a1af581af152d43e42b53db3534018301b5 ]
 
-The referenced fix is incomplete. It correctly computes
-bond_dev->gso_partial_features across slaves, but unfortunately
-netdev_fix_features discards gso_partial_features from the feature set
-if NETIF_F_GSO_PARTIAL isn't set in bond_dev->features.
+With the switch to GENERIC_CPU_DEVICES an early call to the sclp subsystem
+was added to smp_prepare_cpus(). This will usually succeed since the sclp
+subsystem is implicitly initialized early enough if an sclp based console
+is present.
 
-This is visible with ethtool -k bond0 | grep esp:
-tx-esp-segmentation: off [requested on]
-esp-hw-offload: on
-esp-tx-csum-hw-offload: on
+If no such console is present the initialization happens with an
+arch_initcall(); in such cases calls to the sclp subsystem will fail.
+For CPU detection this means that the fallback sigp loop will be used
+permanently to detect CPUs instead of the preferred READ_CPU_INFO sclp
+request.
 
-This patch reworks the bonding GSO offload support by:
-- making aggregating gso_partial_features across slaves similar to the
-  other feature sets (this part is a no-op).
-- advertising the default partial gso features on empty bond devs, same
-  as with other feature sets (also a no-op).
-- adding NETIF_F_GSO_PARTIAL to hw_enc_features filtered across slaves.
-- adding NETIF_F_GSO_PARTIAL to features in bond_setup()
+Fix this by adding an explicit early sclp_init() call via
+arch_cpu_finalize_init().
 
-With all of these, 'ethtool -k bond0 | grep esp' now reports:
-tx-esp-segmentation: on
-esp-hw-offload: on
-esp-tx-csum-hw-offload: on
-
-Fixes: 4861333b4217 ("bonding: add ESP offload features when slaves support")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20250127104147.759658-1-cratiu@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Sheshu Ramanandan <sheshu.ramanandan@ibm.com>
+Fixes: 4a39f12e753d ("s390/smp: Switch to GENERIC_CPU_DEVICES")
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ arch/s390/Kconfig            |  1 +
+ arch/s390/include/asm/sclp.h |  1 +
+ arch/s390/kernel/setup.c     |  5 +++++
+ drivers/s390/char/sclp.c     | 12 ++----------
+ 4 files changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 7b78c2bada814..e45bba240cbcd 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1538,17 +1538,20 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
- 				 NETIF_F_HIGHDMA | NETIF_F_LRO)
+diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
+index 0077969170e8b..83b1d7bbd8880 100644
+--- a/arch/s390/Kconfig
++++ b/arch/s390/Kconfig
+@@ -72,6 +72,7 @@ config S390
+ 	select ARCH_ENABLE_MEMORY_HOTPLUG if SPARSEMEM
+ 	select ARCH_ENABLE_MEMORY_HOTREMOVE
+ 	select ARCH_ENABLE_SPLIT_PMD_PTLOCK if PGTABLE_LEVELS > 2
++	select ARCH_HAS_CPU_FINALIZE_INIT
+ 	select ARCH_HAS_CURRENT_STACK_POINTER
+ 	select ARCH_HAS_DEBUG_VIRTUAL
+ 	select ARCH_HAS_DEBUG_VM_PGTABLE
+diff --git a/arch/s390/include/asm/sclp.h b/arch/s390/include/asm/sclp.h
+index eb00fa1771da0..ad17d91ad2e66 100644
+--- a/arch/s390/include/asm/sclp.h
++++ b/arch/s390/include/asm/sclp.h
+@@ -137,6 +137,7 @@ void sclp_early_printk(const char *s);
+ void __sclp_early_printk(const char *s, unsigned int len);
+ void sclp_emergency_printk(const char *s);
  
- #define BOND_ENC_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
--				 NETIF_F_RXCSUM | NETIF_F_GSO_SOFTWARE)
-+				 NETIF_F_RXCSUM | NETIF_F_GSO_SOFTWARE | \
-+				 NETIF_F_GSO_PARTIAL)
- 
- #define BOND_MPLS_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
- 				 NETIF_F_GSO_SOFTWARE)
- 
-+#define BOND_GSO_PARTIAL_FEATURES (NETIF_F_GSO_ESP)
++int sclp_init(void);
+ int sclp_early_get_memsize(unsigned long *mem);
+ int sclp_early_get_hsa_size(unsigned long *hsa_size);
+ int _sclp_get_core_info(struct sclp_core_info *info);
+diff --git a/arch/s390/kernel/setup.c b/arch/s390/kernel/setup.c
+index a3fea683b2270..99f165726ca9e 100644
+--- a/arch/s390/kernel/setup.c
++++ b/arch/s390/kernel/setup.c
+@@ -1006,3 +1006,8 @@ void __init setup_arch(char **cmdline_p)
+ 	/* Add system specific data to the random pool */
+ 	setup_randomness();
+ }
 +
++void __init arch_cpu_finalize_init(void)
++{
++	sclp_init();
++}
+diff --git a/drivers/s390/char/sclp.c b/drivers/s390/char/sclp.c
+index fbffd451031fd..45bd001206a2b 100644
+--- a/drivers/s390/char/sclp.c
++++ b/drivers/s390/char/sclp.c
+@@ -245,7 +245,6 @@ static void sclp_request_timeout(bool force_restart);
+ static void sclp_process_queue(void);
+ static void __sclp_make_read_req(void);
+ static int sclp_init_mask(int calculate);
+-static int sclp_init(void);
  
- static void bond_compute_features(struct bonding *bond)
+ static void
+ __sclp_queue_read_req(void)
+@@ -1251,8 +1250,7 @@ static struct platform_driver sclp_pdrv = {
+ 
+ /* Initialize SCLP driver. Return zero if driver is operational, non-zero
+  * otherwise. */
+-static int
+-sclp_init(void)
++int sclp_init(void)
  {
-+	netdev_features_t gso_partial_features = BOND_GSO_PARTIAL_FEATURES;
- 	unsigned int dst_release_flag = IFF_XMIT_DST_RELEASE |
- 					IFF_XMIT_DST_RELEASE_PERM;
--	netdev_features_t gso_partial_features = NETIF_F_GSO_ESP;
- 	netdev_features_t vlan_features = BOND_VLAN_FEATURES;
- 	netdev_features_t enc_features  = BOND_ENC_FEATURES;
- #ifdef CONFIG_XFRM_OFFLOAD
-@@ -1582,8 +1585,9 @@ static void bond_compute_features(struct bonding *bond)
- 							  BOND_XFRM_FEATURES);
- #endif /* CONFIG_XFRM_OFFLOAD */
+ 	unsigned long flags;
+ 	int rc = 0;
+@@ -1305,13 +1303,7 @@ sclp_init(void)
  
--		if (slave->dev->hw_enc_features & NETIF_F_GSO_PARTIAL)
--			gso_partial_features &= slave->dev->gso_partial_features;
-+		gso_partial_features = netdev_increment_features(gso_partial_features,
-+								 slave->dev->gso_partial_features,
-+								 BOND_GSO_PARTIAL_FEATURES);
- 
- 		mpls_features = netdev_increment_features(mpls_features,
- 							  slave->dev->mpls_features,
-@@ -1598,12 +1602,8 @@ static void bond_compute_features(struct bonding *bond)
- 	}
- 	bond_dev->hard_header_len = max_hard_header_len;
- 
--	if (gso_partial_features & NETIF_F_GSO_ESP)
--		bond_dev->gso_partial_features |= NETIF_F_GSO_ESP;
--	else
--		bond_dev->gso_partial_features &= ~NETIF_F_GSO_ESP;
+ static __init int sclp_initcall(void)
+ {
+-	int rc;
 -
- done:
-+	bond_dev->gso_partial_features = gso_partial_features;
- 	bond_dev->vlan_features = vlan_features;
- 	bond_dev->hw_enc_features = enc_features | NETIF_F_GSO_ENCAP_ALL |
- 				    NETIF_F_HW_VLAN_CTAG_TX |
-@@ -6046,6 +6046,7 @@ void bond_setup(struct net_device *bond_dev)
- 	bond_dev->hw_features |= NETIF_F_GSO_ENCAP_ALL;
- 	bond_dev->features |= bond_dev->hw_features;
- 	bond_dev->features |= NETIF_F_HW_VLAN_CTAG_TX | NETIF_F_HW_VLAN_STAG_TX;
-+	bond_dev->features |= NETIF_F_GSO_PARTIAL;
- #ifdef CONFIG_XFRM_OFFLOAD
- 	bond_dev->hw_features |= BOND_XFRM_FEATURES;
- 	/* Only enable XFRM features if this is an active-backup config */
+-	rc = platform_driver_register(&sclp_pdrv);
+-	if (rc)
+-		return rc;
+-
+-	return sclp_init();
++	return platform_driver_register(&sclp_pdrv);
+ }
+ 
+ arch_initcall(sclp_initcall);
 -- 
 2.39.5
 
