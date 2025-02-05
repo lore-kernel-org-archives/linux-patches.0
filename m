@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F82A151988;
-	Wed,  5 Feb 2025 14:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693DC151988;
+	Wed,  5 Feb 2025 14:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766120; cv=none; b=QGlTSwEKTzEXNqzCpBwgpvRtsKh7p/8z2HYBniqn313u/lEr3ZJ9NLw/5lpJDTUPtJM+5VfmofsaX2NByz0Vm0HmVUhpQt7NDBKzavj3qDuqtdFQY7D2dG01FdHHmvOwAaXh+TV1C5OqH9tJ4ZKal0rk6z63mqdCW8lteMTEffo=
+	t=1738766123; cv=none; b=uxHR/TDxIH7xtpaNbDu/eCDFX7aIMp+VwDe0WRWvAHyS5Q6lZPf1pT80+eP8qTXFk2DYDa2GQHC2ZIymN7VNnXcejmeJwK8TSgMlnyat/r2E9rJ0Kmd3XvuWqxxPf3l8Deq2N2rlzOaOdyVZahFkWJxQmRvrIFS0spFUivT0zwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766120; c=relaxed/simple;
-	bh=fV8OcBB220stPXPocGuZyd6z0UvjzGTe/EJ4CzLP/xA=;
+	s=arc-20240116; t=1738766123; c=relaxed/simple;
+	bh=iF9qAu9PYZQ6GYZ+5N5uEUuZTyy672RqwUAxcAPLpu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G4b5X6LlanR0COVEQeOyE3YbypuLX1JO2nesCr0TSfC+KOI02BG2k4p6MY/SjWuYgpVLCcJcD6wBgpobCi1FRasQmMZHm05O9vsJfYSNo2lQHdq/HmVmQvaIY1YWtNGEx5rjWHscrAojqzkBOqo+gULYlzcHqvO4zrOMmmwQYbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1/fre8w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Co8Rck3VkXaqrCal1x7gZ2W6y5B6KejN6WFAvUn203I2eXuMZdOpflzHgNgjXh/6YAakgj4SjuO43QOuuF1ZIoEudWKwDNjOBCT86yy5vGM+3rHCYasbbzFMaROP94FIcVkjxTlKLn0kGqK/dIDNXSROTaED08IsWCDkUC/16ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYSZTnTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1/fre8w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC74C4CED1;
-	Wed,  5 Feb 2025 14:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYSZTnTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C77C4CEDD;
+	Wed,  5 Feb 2025 14:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766120;
-	bh=fV8OcBB220stPXPocGuZyd6z0UvjzGTe/EJ4CzLP/xA=;
+	s=korg; t=1738766123;
+	bh=iF9qAu9PYZQ6GYZ+5N5uEUuZTyy672RqwUAxcAPLpu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l1/fre8wXx+iWdQ9H0XaN8Cu9DKhdnLhlURauuYrN1/BhYJIUPtOSv29/rNQrm1PJ
-	 Q4PK9DjAg7ThKnTlHftmtTKLhop3Wjs8fLpLhctixQgJIte5k96YKJcfCPT/zNcO3F
-	 WaL7Jv5tDoAEGUoaXymZah9imj/PTsosvoXzJ2bA=
+	b=VYSZTnTkVSi2c2/uf3g+aHQu/pqtuqr0LvOX/qaAd3Kx3AG9Ed37BQJfPBQJjCeV/
+	 xoqUkLrHI/ewCxHa4tM9hok7HMGM2fceqsFsSY6VAfzW3s+LcxmlCxkb/M+D3a4Ido
+	 oP0khd8GRZwUBEwvTMSEmXrWn7+CCjG2yVxGJjG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Daniel Xu <dxu@dxuuu.xyz>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 244/623] net/rose: prevent integer overflows in rose_setsockopt()
-Date: Wed,  5 Feb 2025 14:39:46 +0100
-Message-ID: <20250205134505.560849593@linuxfoundation.org>
+Subject: [PATCH 6.12 289/590] bpf: tcp: Mark bpf_load_hdr_opt() arg2 as read-write
+Date: Wed,  5 Feb 2025 14:40:44 +0100
+Message-ID: <20250205134506.333759840@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,92 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Daniel Xu <dxu@dxuuu.xyz>
 
-[ Upstream commit d640627663bfe7d8963c7615316d7d4ef60f3b0b ]
+[ Upstream commit 8ac412a3361173e3000b16167af3d1f6f90af613 ]
 
-In case of possible unpredictably large arguments passed to
-rose_setsockopt() and multiplied by extra values on top of that,
-integer overflows may occur.
+MEM_WRITE attribute is defined as: "Non-presence of MEM_WRITE means that
+MEM is only being read". bpf_load_hdr_opt() both reads and writes from
+its arg2 - void *search_res.
 
-Do the safest minimum and fix these issues by checking the
-contents of 'opt' and returning -EINVAL if they are too large. Also,
-switch to unsigned int and remove useless check for negative 'opt'
-in ROSE_IDLE case.
+This matters a lot for the next commit where we more precisely track
+stack accesses. Without this annotation, the verifier will make false
+assumptions about the contents of memory written to by helpers and
+possibly prune valid branches.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patch.msgid.link/20250115164220.19954-1-n.zhandarovich@fintech.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6fad274f06f0 ("bpf: Add MEM_WRITE attribute")
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Daniel Xu <dxu@dxuuu.xyz>
+Link: https://lore.kernel.org/r/730e45f8c39be2a5f3d8c4406cceca9d574cbf14.1736886479.git.dxu@dxuuu.xyz
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/core/filter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 59050caab65c8..72c65d938a150 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -397,15 +397,15 @@ static int rose_setsockopt(struct socket *sock, int level, int optname,
- {
- 	struct sock *sk = sock->sk;
- 	struct rose_sock *rose = rose_sk(sk);
--	int opt;
-+	unsigned int opt;
- 
- 	if (level != SOL_ROSE)
- 		return -ENOPROTOOPT;
- 
--	if (optlen < sizeof(int))
-+	if (optlen < sizeof(unsigned int))
- 		return -EINVAL;
- 
--	if (copy_from_sockptr(&opt, optval, sizeof(int)))
-+	if (copy_from_sockptr(&opt, optval, sizeof(unsigned int)))
- 		return -EFAULT;
- 
- 	switch (optname) {
-@@ -414,31 +414,31 @@ static int rose_setsockopt(struct socket *sock, int level, int optname,
- 		return 0;
- 
- 	case ROSE_T1:
--		if (opt < 1)
-+		if (opt < 1 || opt > UINT_MAX / HZ)
- 			return -EINVAL;
- 		rose->t1 = opt * HZ;
- 		return 0;
- 
- 	case ROSE_T2:
--		if (opt < 1)
-+		if (opt < 1 || opt > UINT_MAX / HZ)
- 			return -EINVAL;
- 		rose->t2 = opt * HZ;
- 		return 0;
- 
- 	case ROSE_T3:
--		if (opt < 1)
-+		if (opt < 1 || opt > UINT_MAX / HZ)
- 			return -EINVAL;
- 		rose->t3 = opt * HZ;
- 		return 0;
- 
- 	case ROSE_HOLDBACK:
--		if (opt < 1)
-+		if (opt < 1 || opt > UINT_MAX / HZ)
- 			return -EINVAL;
- 		rose->hb = opt * HZ;
- 		return 0;
- 
- 	case ROSE_IDLE:
--		if (opt < 0)
-+		if (opt > UINT_MAX / (60 * HZ))
- 			return -EINVAL;
- 		rose->idle = opt * 60 * HZ;
- 		return 0;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 46da488ff0703..a2f990bf51e5e 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -7662,7 +7662,7 @@ static const struct bpf_func_proto bpf_sock_ops_load_hdr_opt_proto = {
+ 	.gpl_only	= false,
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_PTR_TO_CTX,
+-	.arg2_type	= ARG_PTR_TO_MEM,
++	.arg2_type	= ARG_PTR_TO_MEM | MEM_WRITE,
+ 	.arg3_type	= ARG_CONST_SIZE,
+ 	.arg4_type	= ARG_ANYTHING,
+ };
 -- 
 2.39.5
 
