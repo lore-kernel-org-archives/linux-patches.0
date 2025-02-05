@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898BE14B959;
-	Wed,  5 Feb 2025 14:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814AE156C5E;
+	Wed,  5 Feb 2025 14:29:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765770; cv=none; b=jXoMv3tTycuqDt+SIpXiqRHVSWZqmHgZaavy7jkp3ZFgiOiyobaBMj1MakWjAakIUVvN/uuT7tUCLgup//oDraVuQ4u/ZN2uOtcwEopjBsfdtXntZFkUdqYi3vZrWjl8QUZnZkpSDkFjUyzmHeGtF2rdnWmmjOWQyTrGiKoHQ+Q=
+	t=1738765773; cv=none; b=VQRel78Eug5SYcE3NDCp9Y6JadxdS5eXcxdJd5XB9QMwYnWTewBtkaH1xQz6A3KJSD1BqofGK3M9C1woSiWGi6bhMoJ0On/qpclyXxMELT5YGh/oV3C6JMRXf2LulL8hjMr8Kvggj+dpaeaKDcJEx+1eEJCVSdg/UDjJ5PdHu84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765770; c=relaxed/simple;
-	bh=7q21dvIFbvssZmzMhahlzCh9Ydl1kl3xTHD1yg+wBOw=;
+	s=arc-20240116; t=1738765773; c=relaxed/simple;
+	bh=FcIRQ40uWOKLaxlrx/mNOyAB97/G/C2EQjZU3sqKfVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hrw0jmxfNJr+OOFLPIPRE31UjQjqanjvsJyDC2rNvQQzhZEchSDNmtb4gip2rWrngNiwGENPqPmSula6PSUwwVyqg+0p5sfDiZb3Dpuu/x+OBvU+v4d/yK+PE8kb1Z/vPULNF3e5kora9bdTvCE2JEYj6NeUdhLwxs+UmS+pi6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3kRwJ1h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u5XUAEbsCZgbgRqHIADzvqHasWREejAzEuV2yNuXYRQsHRYrCvxZkM19NnLzszFJe/Lkd8Kzph6N7zS4ymXfG42zSiRnFWv+2zOVBUnSFSGUTojvsbl2w52CUAMbv0KOLRDLDFHnaCO6n7g7HNMbwPmlXCD1rV1agkKRZ+3o3NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfgMB93Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3kRwJ1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832EFC4CED1;
-	Wed,  5 Feb 2025 14:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfgMB93Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3429C4CED6;
+	Wed,  5 Feb 2025 14:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765770;
-	bh=7q21dvIFbvssZmzMhahlzCh9Ydl1kl3xTHD1yg+wBOw=;
+	s=korg; t=1738765773;
+	bh=FcIRQ40uWOKLaxlrx/mNOyAB97/G/C2EQjZU3sqKfVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3kRwJ1hT99SF7rhs3vD7Ih/0sE1qHdAmj3ueU9Zz8XhwrXNOEO/LfpdM3S6mOn9w
-	 iAMYMG3o2RNrZdj4f//e/MKZj+itNwyVrNcUyMz7uKaH1q8F/tylDBBTwT4DwrUy3u
-	 JKw+UOBrkdzCSq5C/OtbFY4S9+KjV89zk2mrUmRo=
+	b=vfgMB93ZxubVphyerJ0jDWfI843FBBcFl44+Fm2XFMgwwKEi+5FFOIk6+rNiMkPCp
+	 mmKbNgKuE8PKRI9H9Phh4/9kueed5N6MG/IyaYfHTsBOnx7hg5tNInbKIdXzfBfvDi
+	 YTYVpQz/VF4AWtAPdKe/0e6pOUfLZ7+2lwk56mlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Desnes Nunes <desnesn@redhat.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 297/393] media: dvb-usb-v2: af9035: fix ISO C90 compilation error on af9035_i2c_master_xfer
-Date: Wed,  5 Feb 2025 14:43:36 +0100
-Message-ID: <20250205134431.675686025@linuxfoundation.org>
+Subject: [PATCH 6.13 212/623] wifi: mt76: mt7996: fix incorrect indexing of MIB FW event
+Date: Wed,  5 Feb 2025 14:39:14 +0100
+Message-ID: <20250205134504.338912892@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +48,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Desnes Nunes <desnesn@redhat.com>
+From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
 
-[ Upstream commit c36b9ad1a8add3c114e25fe167efa217a813b0c7 ]
+[ Upstream commit 5c2a25a1ab76a2976dddc5ffd58498866f3ef7c2 ]
 
-This fixes a 'ISO C90 forbids mixed declarations and code' compilation
-error on af9035_i2c_master_xfer, which is caused by the sanity check added
-on user controlled msg[i], before declaring the demodulator register.
+Fix wrong calculation of the channel times due to incorrect
+interpretation from the FW event.
 
-Fixes: 7bf744f2de0a ("media: dvb-usb-v2: af9035: Fix null-ptr-deref in af9035_i2c_master_xfer")
-Signed-off-by: Desnes Nunes <desnesn@redhat.com>
-Link: https://lore.kernel.org/r/20240919172755.196907-1-desnesn@redhat.com
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20250114101026.3587702-4-shayne.chen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/af9035.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7996/mcu.c   | 45 ++++++++++++-------
+ 1 file changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/af9035.c b/drivers/media/usb/dvb-usb-v2/af9035.c
-index 4eb7dd4599b7e..7caf5e90721a4 100644
---- a/drivers/media/usb/dvb-usb-v2/af9035.c
-+++ b/drivers/media/usb/dvb-usb-v2/af9035.c
-@@ -322,13 +322,16 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
- 			ret = -EOPNOTSUPP;
- 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
- 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
-+			/* demod access via firmware interface */
-+			u32 reg;
-+
- 			if (msg[0].len < 3 || msg[1].len < 1) {
- 				ret = -EOPNOTSUPP;
- 				goto unlock;
- 			}
--			/* demod access via firmware interface */
--			u32 reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
--					msg[0].buf[2];
-+
-+			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
-+				msg[0].buf[2];
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index 6c445a9dbc03d..d6d80b1b2d697 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -3666,6 +3666,13 @@ int mt7996_mcu_get_chip_config(struct mt7996_dev *dev, u32 *cap)
  
- 			if (msg[0].addr == state->af9033_i2c_addr[1])
- 				reg |= 0x100000;
-@@ -385,13 +388,16 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
- 			ret = -EOPNOTSUPP;
- 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
- 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
-+			/* demod access via firmware interface */
-+			u32 reg;
-+
- 			if (msg[0].len < 3) {
- 				ret = -EOPNOTSUPP;
- 				goto unlock;
- 			}
--			/* demod access via firmware interface */
--			u32 reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
--					msg[0].buf[2];
-+
-+			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
-+				msg[0].buf[2];
+ int mt7996_mcu_get_chan_mib_info(struct mt7996_phy *phy, bool chan_switch)
+ {
++	enum {
++		IDX_TX_TIME,
++		IDX_RX_TIME,
++		IDX_OBSS_AIRTIME,
++		IDX_NON_WIFI_TIME,
++		IDX_NUM
++	};
+ 	struct {
+ 		struct {
+ 			u8 band;
+@@ -3675,16 +3682,15 @@ int mt7996_mcu_get_chan_mib_info(struct mt7996_phy *phy, bool chan_switch)
+ 			__le16 tag;
+ 			__le16 len;
+ 			__le32 offs;
+-		} data[4];
++		} data[IDX_NUM];
+ 	} __packed req = {
+ 		.hdr.band = phy->mt76->band_idx,
+ 	};
+-	/* strict order */
+ 	static const u32 offs[] = {
+-		UNI_MIB_TX_TIME,
+-		UNI_MIB_RX_TIME,
+-		UNI_MIB_OBSS_AIRTIME,
+-		UNI_MIB_NON_WIFI_TIME,
++		[IDX_TX_TIME] = UNI_MIB_TX_TIME,
++		[IDX_RX_TIME] = UNI_MIB_RX_TIME,
++		[IDX_OBSS_AIRTIME] = UNI_MIB_OBSS_AIRTIME,
++		[IDX_NON_WIFI_TIME] = UNI_MIB_NON_WIFI_TIME,
+ 	};
+ 	struct mt76_channel_state *state = phy->mt76->chan_state;
+ 	struct mt76_channel_state *state_ts = &phy->state_ts;
+@@ -3693,7 +3699,7 @@ int mt7996_mcu_get_chan_mib_info(struct mt7996_phy *phy, bool chan_switch)
+ 	struct sk_buff *skb;
+ 	int i, ret;
  
- 			if (msg[0].addr == state->af9033_i2c_addr[1])
- 				reg |= 0x100000;
+-	for (i = 0; i < 4; i++) {
++	for (i = 0; i < IDX_NUM; i++) {
+ 		req.data[i].tag = cpu_to_le16(UNI_CMD_MIB_DATA);
+ 		req.data[i].len = cpu_to_le16(sizeof(req.data[i]));
+ 		req.data[i].offs = cpu_to_le32(offs[i]);
+@@ -3712,17 +3718,24 @@ int mt7996_mcu_get_chan_mib_info(struct mt7996_phy *phy, bool chan_switch)
+ 		goto out;
+ 
+ #define __res_u64(s) le64_to_cpu(res[s].data)
+-	state->cc_tx += __res_u64(1) - state_ts->cc_tx;
+-	state->cc_bss_rx += __res_u64(2) - state_ts->cc_bss_rx;
+-	state->cc_rx += __res_u64(2) + __res_u64(3) - state_ts->cc_rx;
+-	state->cc_busy += __res_u64(0) + __res_u64(1) + __res_u64(2) + __res_u64(3) -
++	state->cc_tx += __res_u64(IDX_TX_TIME) - state_ts->cc_tx;
++	state->cc_bss_rx += __res_u64(IDX_RX_TIME) - state_ts->cc_bss_rx;
++	state->cc_rx += __res_u64(IDX_RX_TIME) +
++			__res_u64(IDX_OBSS_AIRTIME) -
++			state_ts->cc_rx;
++	state->cc_busy += __res_u64(IDX_TX_TIME) +
++			  __res_u64(IDX_RX_TIME) +
++			  __res_u64(IDX_OBSS_AIRTIME) +
++			  __res_u64(IDX_NON_WIFI_TIME) -
+ 			  state_ts->cc_busy;
+-
+ out:
+-	state_ts->cc_tx = __res_u64(1);
+-	state_ts->cc_bss_rx = __res_u64(2);
+-	state_ts->cc_rx = __res_u64(2) + __res_u64(3);
+-	state_ts->cc_busy = __res_u64(0) + __res_u64(1) + __res_u64(2) + __res_u64(3);
++	state_ts->cc_tx = __res_u64(IDX_TX_TIME);
++	state_ts->cc_bss_rx = __res_u64(IDX_RX_TIME);
++	state_ts->cc_rx = __res_u64(IDX_RX_TIME) + __res_u64(IDX_OBSS_AIRTIME);
++	state_ts->cc_busy = __res_u64(IDX_TX_TIME) +
++			    __res_u64(IDX_RX_TIME) +
++			    __res_u64(IDX_OBSS_AIRTIME) +
++			    __res_u64(IDX_NON_WIFI_TIME);
+ #undef __res_u64
+ 
+ 	dev_kfree_skb(skb);
 -- 
 2.39.5
 
