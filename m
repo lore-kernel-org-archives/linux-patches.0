@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1B51E89C;
-	Wed,  5 Feb 2025 15:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704C9DF59;
+	Wed,  5 Feb 2025 15:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768568; cv=none; b=vDfqmkd9Ymwsjodo0grWdY6q9LLV/X2SA3O/E7TlScOFo2sAkTVf50QVEPORuwIG5IjvlboNgU5CkUi1pc4Drvxn4UQE20MBM2xK/T49YLOLYqGYEvCRoqUa34HtcMbq5RxlVWFJvrlx2RP2d+VINkByo3aYOPwwSxw8u2ln1ic=
+	t=1738768571; cv=none; b=smKTfp6LgH6+/WNWCmk290DxjieeSe+cO6XWK6H97lfk4RmciCp/fx7gTRPsVJlUZF2qNrODR3sLMaQZDifft3K9DUQOmVO0ORXA7Nq39p4Va2IObBdx5bNfxxrFkZNXq/aE/QakaecImC5gTalA+sWGD+gz1AX11lrKtfDprc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768568; c=relaxed/simple;
-	bh=VaOdZTHz6AJugvs1I96ue/N643wZ1zsDyhrYXM7HH4Q=;
+	s=arc-20240116; t=1738768571; c=relaxed/simple;
+	bh=/EM4gDgD5ZPnxkS8sO3H6WWyUJbc61sWtOBQXdNjGi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qabYcAjDJUnAoYzkRyh+Ak3QxyeZlBp2Ro5hJjI1KHdO1zbBxKlXfy1OU9qhdCmCuake3/5mkc668hvB4qGRNU3ZKLxKvqQiZAhx11gWyAsQ1UYA40glPr3ONOcq7BVWdYEIGWJCbN9Y5DRQKCPVpxTFrSvSh1Un2x13e/yh/+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BpfxmJIP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mr6bgUpZ0cwJTxswCogAUCDVetTnaguj9rqeLYsJtO4iamuniKpJV5Q1mM+IuArU8SND/ZuPpjL8aTvvvM+liKGUSM+2RQse+fvXOtBhD8+/YOaMbWX2LfkSG3qC/sYlY9+KreLPnqrWA9IhWFhfaGy/DjasUtasYIdtJg8M46o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QluKZE1x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BpfxmJIP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E77C4CED1;
-	Wed,  5 Feb 2025 15:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QluKZE1x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2B8C4CED6;
+	Wed,  5 Feb 2025 15:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768567;
-	bh=VaOdZTHz6AJugvs1I96ue/N643wZ1zsDyhrYXM7HH4Q=;
+	s=korg; t=1738768571;
+	bh=/EM4gDgD5ZPnxkS8sO3H6WWyUJbc61sWtOBQXdNjGi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BpfxmJIP+KWrn4qv8OvMcvWQuQbkj6IbwwaVJqV4nqqUMwngRBQpdDX+3XdX0DOkj
-	 zt6YEf0/vqtn9YnP0FRmxofQ41o4pvqfKrveWJLaLL4Fl7o0G64PryG/iwOsJIT9yK
-	 ZGY7NtHd0XJQIlzhljDVuVytr0xrIL9xHMpHtdms=
+	b=QluKZE1xLscmmB/XvFc5h/MpNaWC0qOPk1n6P4j//JvXDcUgYEUTSV15YbwgmFAbx
+	 a6SN3VMxZtO9UAzuuuZ5Pi5ez7AJL9yLIakZy6jPq7ZHyM2K3A5H2cQtNXxu5aHpq3
+	 hrsTcPIvOTcHFT3Lbm/unHC3Hb2VmDgKJF0hue/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Kyle Tso <kyletso@google.com>,
+	Ray Chi <raychi@google.com>,
 	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.13 594/623] usb: dwc3: core: Defer the probe until USB power supply ready
-Date: Wed,  5 Feb 2025 14:45:36 +0100
-Message-ID: <20250205134518.949555365@linuxfoundation.org>
+Subject: [PATCH 6.13 595/623] usb: dwc3: Skip resume if pm_runtime_set_active() fails
+Date: Wed,  5 Feb 2025 14:45:37 +0100
+Message-ID: <20250205134518.987197042@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,87 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Tso <kyletso@google.com>
+From: Ray Chi <raychi@google.com>
 
-commit 66e0ea341a2a78d14336117f19763bd9be26d45d upstream.
+commit e3a9bd247cddfb6fa0c29c2361f70b76c359eaa0 upstream.
 
-Currently, DWC3 driver attempts to acquire the USB power supply only
-once during the probe. If the USB power supply is not ready at that
-time, the driver simply ignores the failure and continues the probe,
-leading to permanent non-functioning of the gadget vbus_draw callback.
+When the system begins to enter suspend mode, dwc3_suspend() is called
+by PM suspend. There is a problem that if someone interrupt the system
+suspend process between dwc3_suspend() and pm_suspend() of its parent
+device, PM suspend will be canceled and attempt to resume suspended
+devices so that dwc3_resume() will be called. However, dwc3 and its
+parent device (like the power domain or glue driver) may already be
+suspended by runtime PM in fact. If this sutiation happened, the
+pm_runtime_set_active() in dwc3_resume() will return an error since
+parent device was suspended. This can lead to unexpected behavior if
+DWC3 proceeds to execute dwc3_resume_common().
 
-Address this problem by delaying the dwc3 driver initialization until
-the USB power supply is registered.
+EX.
+RPM suspend: ... -> dwc3_runtime_suspend()
+                      -> rpm_suspend() of parent device
+...
+PM suspend: ... -> dwc3_suspend() -> pm_suspend of parent device
+                                 ^ interrupt, so resume suspended device
+          ...  <-  dwc3_resume()  <-/
+                      ^ pm_runtime_set_active() returns error
 
-Fixes: 6f0764b5adea ("usb: dwc3: add a power supply for current control")
+To prevent the problem, this commit will skip dwc3_resume_common() and
+return the error if pm_runtime_set_active() fails.
+
+Fixes: 68c26fe58182 ("usb: dwc3: set pm runtime active before resume common")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Kyle Tso <kyletso@google.com>
+Signed-off-by: Ray Chi <raychi@google.com>
 Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20250115044548.2701138-1-kyletso@google.com
+Link: https://lore.kernel.org/r/20250106082240.3822059-1-raychi@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |   30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ drivers/usb/dwc3/core.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
-@@ -1664,8 +1664,6 @@ static void dwc3_get_properties(struct d
- 	u8			tx_thr_num_pkt_prd = 0;
- 	u8			tx_max_burst_prd = 0;
- 	u8			tx_fifo_resize_max_num;
--	const char		*usb_psy_name;
--	int			ret;
+@@ -2601,12 +2601,15 @@ static int dwc3_resume(struct device *de
+ 	pinctrl_pm_select_default_state(dev);
  
- 	/* default to highest possible threshold */
- 	lpm_nyet_threshold = 0xf;
-@@ -1700,13 +1698,6 @@ static void dwc3_get_properties(struct d
+ 	pm_runtime_disable(dev);
+-	pm_runtime_set_active(dev);
++	ret = pm_runtime_set_active(dev);
++	if (ret)
++		goto out;
  
- 	dwc->sys_wakeup = device_may_wakeup(dwc->sysdev);
+ 	ret = dwc3_resume_common(dwc, PMSG_RESUME);
+ 	if (ret)
+ 		pm_runtime_set_suspended(dev);
  
--	ret = device_property_read_string(dev, "usb-psy-name", &usb_psy_name);
--	if (ret >= 0) {
--		dwc->usb_psy = power_supply_get_by_name(usb_psy_name);
--		if (!dwc->usb_psy)
--			dev_err(dev, "couldn't get usb power supply\n");
--	}
--
- 	dwc->has_lpm_erratum = device_property_read_bool(dev,
- 				"snps,has-lpm-erratum");
- 	device_property_read_u8(dev, "snps,lpm-nyet-threshold",
-@@ -2109,6 +2100,23 @@ static int dwc3_get_num_ports(struct dwc
- 	return 0;
- }
++out:
+ 	pm_runtime_enable(dev);
  
-+static struct power_supply *dwc3_get_usb_power_supply(struct dwc3 *dwc)
-+{
-+	struct power_supply *usb_psy;
-+	const char *usb_psy_name;
-+	int ret;
-+
-+	ret = device_property_read_string(dwc->dev, "usb-psy-name", &usb_psy_name);
-+	if (ret < 0)
-+		return NULL;
-+
-+	usb_psy = power_supply_get_by_name(usb_psy_name);
-+	if (!usb_psy)
-+		return ERR_PTR(-EPROBE_DEFER);
-+
-+	return usb_psy;
-+}
-+
- static int dwc3_probe(struct platform_device *pdev)
- {
- 	struct device		*dev = &pdev->dev;
-@@ -2165,6 +2173,10 @@ static int dwc3_probe(struct platform_de
- 
- 	dwc3_get_software_properties(dwc);
- 
-+	dwc->usb_psy = dwc3_get_usb_power_supply(dwc);
-+	if (IS_ERR(dwc->usb_psy))
-+		return dev_err_probe(dev, PTR_ERR(dwc->usb_psy), "couldn't get usb power supply\n");
-+
- 	dwc->reset = devm_reset_control_array_get_optional_shared(dev);
- 	if (IS_ERR(dwc->reset)) {
- 		ret = PTR_ERR(dwc->reset);
+ 	return ret;
 
 
