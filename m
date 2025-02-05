@@ -1,53 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83722151988;
-	Wed,  5 Feb 2025 14:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23A715EFA1;
+	Wed,  5 Feb 2025 14:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766380; cv=none; b=NycqocM5a+mnSaPv2NT8gZpF/n8YJx4wSQ1JRW931XQSsvmbD9J4fS3m43iPa7FlnB2QqCWJc25+Wu//OjrbnxfFafJRKHFpRA9Z7PUKWw67/AiJJllYCF5O/NGvPuWZk59MIWt70zDtLw7gtPTNGhdu68VWLAy0hP3AtBhJhhY=
+	t=1738766383; cv=none; b=jvzrl8bcDWSRucu7smX+uRCklc6ZfUj0I/LrCxXsqADlNRobZbwTz1/hl+opGDEmG2e3DvVGPAXPGxGdZbcDqlR1lsoYeBu6A4ZHwW6hdMHeBSAu22Jmz1qxCUQvlGXA6VKSAXeNgrV7on2y7erR5tJ9H7ttHL+DTmcXPfODoUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766380; c=relaxed/simple;
-	bh=oNsf0sJhEcRqRcuYD4d2fkw4qsV29foR9FgftHAB7JY=;
+	s=arc-20240116; t=1738766383; c=relaxed/simple;
+	bh=1Y5/BYA5a9yYCRwiZyplmE5xD8QV9FgfJWJN4nexH9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kNVVslsvNqohbe+se703G/PZSBLjpvZTp6PE2TkEoBGrzhwQIh5tlyqf9j5gKtLe8/wxa9zqputBxcwXei6mnH45/8YS4dcqTgxxDYh9giV+Eu2xZ/O3j50OUqLz3ILVbuA/yWaVbn0QFdBAk/N7nCbLi8pGOj0yC4708FLF0Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z95UbogR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=amEvCL85890PDcgwmrGAo+YsJTJeygmC0KLHOl7NAVUg6dWWGB92oR/QCZ8HnuUtlmOUu/hNXZojHdfi8rtoSNTdSaB1UPquMYAIQDW2fH+n2KGX4nK0PNzjxHCOkE8e/NuNVd8umMYtFSuIQw1j1owPWdlKuou80SIj7KE3Fu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lu69ugYv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z95UbogR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D398EC4CED1;
-	Wed,  5 Feb 2025 14:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lu69ugYv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375B3C4CEDD;
+	Wed,  5 Feb 2025 14:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766380;
-	bh=oNsf0sJhEcRqRcuYD4d2fkw4qsV29foR9FgftHAB7JY=;
+	s=korg; t=1738766383;
+	bh=1Y5/BYA5a9yYCRwiZyplmE5xD8QV9FgfJWJN4nexH9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z95UbogRvwqn3tM9fPQJtH5hmRWoo0NsmCgYHcRZ9HPqy3vwG85ld4zfLepQCDP5E
-	 s1B9IF+s8oD9aLCBzZOduzTQb8p3EjJ96xe5tr+eIuW2u/6tb1NfXDJxka8hcatEeH
-	 LhOnyA4lkD9RfyuynCp3SjJUYdxto4yrMft5CKMo=
+	b=Lu69ugYvXi9FHSPW2uXKDpOu+ip2VWy/sGJL+TvIO/gMd+VTfFDQvIBdjrwvfnS49
+	 ZjRNrE6+JEsbjz8xZfpGWDmZiAcxg7c5bXWyE4d2aNSCnl0RSE6qEPog1KhXYTipAs
+	 3Dq3qWWEO5Cwqyoti3PuN9Ak8DTh19kGmSpxuXEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Song Liu <song@kernel.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 268/623] perf header: Fix one memory leakage in process_bpf_prog_info()
-Date: Wed,  5 Feb 2025 14:40:10 +0100
-Message-ID: <20250205134506.482044565@linuxfoundation.org>
+Subject: [PATCH 6.12 301/590] soc: atmel: fix device_node release in atmel_soc_device_init()
+Date: Wed,  5 Feb 2025 14:40:56 +0100
+Message-ID: <20250205134506.795249260@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -59,101 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit a7da6c7030e1aec32f0a41c7b4fa70ec96042019 ]
+[ Upstream commit d3455ab798100f40af77123e7c2443ec979c546b ]
 
-Function __perf_env__insert_bpf_prog_info() will return without inserting
-bpf prog info node into perf env again due to a duplicate bpf prog info
-node insertion, causing the temporary info_linear and info_node memory to
-leak. Modify the return type of this function to bool and add a check to
-ensure the memory is freed if the function returns false.
+A device_node acquired via of_find_node_by_path() requires explicit
+calls to of_node_put() when it is no longer needed to avoid leaking the
+resource.
 
-Fixes: 606f972b1361f477 ("perf bpf: Save bpf_prog_info information as headers to perf.data")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Song Liu <song@kernel.org>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20241205084500.823660-3-quic_zhonhan@quicinc.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Instead of adding the missing calls to of_node_put() in all execution
+paths, use the cleanup attribute for 'np' by means of the __free()
+macro, which automatically calls of_node_put() when the variable goes
+out of scope.
+
+Fixes: 960ddf70cc11 ("drivers: soc: atmel: Avoid calling at91_soc_init on non AT91 SoCs")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20241031-soc-atmel-soc-cleanup-v2-1-73f2d235fd98@gmail.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/env.c    | 5 +++--
- tools/perf/util/env.h    | 2 +-
- tools/perf/util/header.c | 5 ++++-
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/soc/atmel/soc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
-index e2843ca2edd92..d7865ae5f8f55 100644
---- a/tools/perf/util/env.c
-+++ b/tools/perf/util/env.c
-@@ -32,7 +32,7 @@ void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 	up_write(&env->bpf_progs.lock);
- }
+diff --git a/drivers/soc/atmel/soc.c b/drivers/soc/atmel/soc.c
+index 2a42b28931c96..298b542dd1c06 100644
+--- a/drivers/soc/atmel/soc.c
++++ b/drivers/soc/atmel/soc.c
+@@ -399,7 +399,7 @@ static const struct of_device_id at91_soc_allowed_list[] __initconst = {
  
--void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
-+bool __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
+ static int __init atmel_soc_device_init(void)
  {
- 	__u32 prog_id = info_node->info_linear->info.id;
- 	struct bpf_prog_info_node *node;
-@@ -50,13 +50,14 @@ void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info
- 			p = &(*p)->rb_right;
- 		} else {
- 			pr_debug("duplicated bpf prog info %u\n", prog_id);
--			return;
-+			return false;
- 		}
- 	}
+-	struct device_node *np = of_find_node_by_path("/");
++	struct device_node *np __free(device_node) = of_find_node_by_path("/");
  
- 	rb_link_node(&info_node->rb_node, parent, p);
- 	rb_insert_color(&info_node->rb_node, &env->bpf_progs.infos);
- 	env->bpf_progs.infos_cnt++;
-+	return true;
- }
- 
- struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
-diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
-index ae604c4edbb7e..9db2e5a625ede 100644
---- a/tools/perf/util/env.h
-+++ b/tools/perf/util/env.h
-@@ -176,7 +176,7 @@ const char *perf_env__raw_arch(struct perf_env *env);
- int perf_env__nr_cpus_avail(struct perf_env *env);
- 
- void perf_env__init(struct perf_env *env);
--void __perf_env__insert_bpf_prog_info(struct perf_env *env,
-+bool __perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				      struct bpf_prog_info_node *info_node);
- void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				    struct bpf_prog_info_node *info_node);
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index fbba6ffafec4a..d06aa86352d3c 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -3158,7 +3158,10 @@ static int process_bpf_prog_info(struct feat_fd *ff, void *data __maybe_unused)
- 		/* after reading from file, translate offset to address */
- 		bpil_offs_to_addr(info_linear);
- 		info_node->info_linear = info_linear;
--		__perf_env__insert_bpf_prog_info(env, info_node);
-+		if (!__perf_env__insert_bpf_prog_info(env, info_node)) {
-+			free(info_linear);
-+			free(info_node);
-+		}
- 	}
- 
- 	up_write(&env->bpf_progs.lock);
+ 	if (!of_match_node(at91_soc_allowed_list, np))
+ 		return 0;
 -- 
 2.39.5
 
