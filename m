@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644DE1632C8;
-	Wed,  5 Feb 2025 14:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE701714D0;
+	Wed,  5 Feb 2025 14:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766323; cv=none; b=OVO127V5yLGibD435RIZSSun6eRHk7yhDT0oP5/sKJsOeh4l083cI3XptMIMqTUX//r0WjmB7zyCpXOselXhAgL7EKOBBRCMpZv2XDo+P+ev38LH5yFjn6aO7MXgQoJfcMnEN+Q/xfrKSqxCYXrwIbxPmspZv+P0RyW6lbVALz4=
+	t=1738766327; cv=none; b=rFnch4mtdRLZ8o+MvfuclvgW5GCGJJixVYVhJX184SzQhaMFqvNy4CDzmSJoXTCl8BZoFguh7yW+oRIoNziJkfaEOZ2mtDMY0llTyWcnN2mr2+8d/pfkSg339oXjfqGPBwuy6t0r2/+NB0Va7N5xAiIn3xpvBdG4V3g4zVC0q9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766323; c=relaxed/simple;
-	bh=pNNzTnHvwL7m4TvQeQzmRCmby/bGgatwk8V2m5KJR9I=;
+	s=arc-20240116; t=1738766327; c=relaxed/simple;
+	bh=C6Sd2qlaZtzlc9O2dG42ji4oo/YzbruzmSIFsk9M9s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CQCYuiWJoa2L2qpBpfk6ZbS86TS2+TxQf3x157PjNOQqweJEZLbSt+90RBphuT6r3GdSUrepHnUX9g3pXFEhXUpeDX9BhPz+A4iiwNZ0A8bLMJ5Vf20gAPmmHDwuvltHfR9T+pOjdpynu8SvGrd7ZKWsdbzHPi5cvDJkCzmUHpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTLEoU2T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QmV1k+AhsvQdSTbupmhkdxyVWG/U6RBWhYx2xK9jZ2w2bezwUWyTbNpp1463KXmf92DfEmg/OThDd116YQf647nMSPSXKzw6+RWobX1l+14QoGndONFxZ5lS42eSBfoCcKEEp9MqBDk3ZhAjrazdwQ8qeueBBReI6O7Nwlg3w7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZvOHOzh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTLEoU2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BEBC4CED1;
-	Wed,  5 Feb 2025 14:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZvOHOzh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A1FC4CED1;
+	Wed,  5 Feb 2025 14:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766323;
-	bh=pNNzTnHvwL7m4TvQeQzmRCmby/bGgatwk8V2m5KJR9I=;
+	s=korg; t=1738766326;
+	bh=C6Sd2qlaZtzlc9O2dG42ji4oo/YzbruzmSIFsk9M9s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTLEoU2TM+ddZMh5k08qxGV0RmB7Yy1dAa/N3piDM0/8/Je68+gdNuRZScoBBqjYZ
-	 xaKB3xW/idb5WdcGGPGxuAAzi53MvTrhb/g5IvM7mVvEBJKTARMBnlXGNLBQyGP82D
-	 ztV2auTHSpd2L/C0iznLpGDauwDv8kqrqTr6lpcY=
+	b=GZvOHOzh71ONveuAn4x3Ig6a0lXSeafxHIrvkKc4P16g2VOQxUBCJGfxVnrswTFZX
+	 Q8hgY7GeRO++QGCdr/fivEnHrwPRSN5IZXf0xhjx37CuwlMOfjOMzf7hjwAt3AWeyw
+	 bv4JGVYMEpFimuNc4gaB80kk/tsRfiC0oI+5f0+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Richard Weinberger <richard@nod.at>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.6 352/393] hostfs: Add const qualifier to host_root in hostfs_fill_super()
-Date: Wed,  5 Feb 2025 14:44:31 +0100
-Message-ID: <20250205134433.773810540@linuxfoundation.org>
+	Herbert Xu <herbert.xu@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 263/623] crypto: api - Fix boot-up self-test race
+Date: Wed,  5 Feb 2025 14:40:05 +0100
+Message-ID: <20250205134506.292455278@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +47,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 104eef133fd9c17e4dc28bf43f592a86f26d8a59 upstream.
+[ Upstream commit 8dd458cbc5be9ce4427ffce7a9dcdbff4dfc4ac9 ]
 
-After the recent conversion to the new mount API, there is a warning
-when building hostfs (which may be upgraded to an error via
-CONFIG_WERROR=y):
+During the boot process self-tests are postponed so that all
+algorithms are registered when the test starts.  In the event
+that algorithms are still being registered during these tests,
+which can occur either because the algorithm is registered at
+late_initcall, or because a self-test itself triggers the creation
+of an instance, some self-tests may never start at all.
 
-  fs/hostfs/hostfs_kern.c: In function 'hostfs_fill_super':
-  fs/hostfs/hostfs_kern.c:942:27: warning: initialization discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-    942 |         char *host_root = fc->source;
-        |                           ^~
+Fix this by setting the flag at the start of crypto_start_tests.
 
-Add the 'const' qualifier, as host_root will not be modified after its
-assignment. Move the assignment to keep the existing reverse Christmas
-tree order intact.
+Note that this race is theoretical and has never been observed
+in practice.
 
-Fixes: cd140ce9f611 ("hostfs: convert hostfs to use the new mount API")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20240611-hostfs-fix-mount-api-conversion-v1-1-ef75bbc77f44@kernel.org
-Acked-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: adad556efcdd ("crypto: api - Fix built-in testing dependency failures")
+Signed-off-by: Herbert Xu <herbert.xu@redhat.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hostfs/hostfs_kern.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ crypto/algapi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/hostfs/hostfs_kern.c
-+++ b/fs/hostfs/hostfs_kern.c
-@@ -925,8 +925,8 @@ static const struct inode_operations hos
- static int hostfs_fill_super(struct super_block *sb, struct fs_context *fc)
- {
- 	struct hostfs_fs_info *fsi = sb->s_fs_info;
-+	const char *host_root = fc->source;
- 	struct inode *root_inode;
--	char *host_root = fc->source;
- 	int err;
+diff --git a/crypto/algapi.c b/crypto/algapi.c
+index 16f7c7a9d8ab6..7e061d8a1d52d 100644
+--- a/crypto/algapi.c
++++ b/crypto/algapi.c
+@@ -1016,6 +1016,8 @@ static void __init crypto_start_tests(void)
+ 	if (IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS))
+ 		return;
  
- 	sb->s_blocksize = 1024;
++	set_crypto_boot_test_finished();
++
+ 	for (;;) {
+ 		struct crypto_larval *larval = NULL;
+ 		struct crypto_alg *q;
+@@ -1047,8 +1049,6 @@ static void __init crypto_start_tests(void)
+ 		if (!larval)
+ 			break;
+ 	}
+-
+-	set_crypto_boot_test_finished();
+ }
+ 
+ static int __init crypto_algapi_init(void)
+-- 
+2.39.5
+
 
 
