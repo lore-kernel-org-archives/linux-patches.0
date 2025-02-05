@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD451459F6;
-	Wed,  5 Feb 2025 14:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5F71459F6;
+	Wed,  5 Feb 2025 14:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765518; cv=none; b=V+MYXmP49DWk7XO5peiNS3FECyi10KFHN7scJd5x6FR5xgHQU80quHGIwfYooRwcOQ2rMp7hqm8eoWIpZ+NQsqJFikR72pcEtjZDJUI+j/XVt8ciKId/J30XYVHv/oW88KtHyVovhn3Qlp+ZriuOKycoqjmKE9t4tm1rw3WYkkE=
+	t=1738765522; cv=none; b=tQllNjW3edFbYACvuPRpbcnIX4sAnnIluIyBtIQ5GF1G6JY87/UMwWANVoxDxMi2i+hQwyrmzWckb4ZZbA2MH5rJ7fbam/LyVN6zs+gA/Bsq7kFg8Jvs2ePUD6l3CYwRxoHMivUUhgvZOxlx048MyMPw28DEpy8XGDv7tBQ2Dq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765518; c=relaxed/simple;
-	bh=QdvqxqjowOnyStB6Qhb9JeTy9pFEh4JZ3D8g/Wrz/wU=;
+	s=arc-20240116; t=1738765522; c=relaxed/simple;
+	bh=1EMZ6cyu0lQko5kDWhcLb68uOhXoy++58Fj7YBYsQlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RPMtWcshwlxNPcQtGn4+9Saj+l4XF0lUi3ZhryJbAvKdi1rh5RJ1j7AWqQ5LtKmxdLOLCZRTqvhuk5yLWrE01tx62BF2Jo3SZK5Psylrh5tMMoecLc5ipkeusE5wbDtJRC5KlBWXGcfkjNFxOoZfx3b+6sdyKLEXJh+Qj5aeZcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVSQe7er; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JtVc6XA7UUlyQtsMk51yz/+5neAvDhrgqcd0trijTHYp1wJWNAV+luEYa7nIRWbYSd3e6iMzjzXCsNCHKQtMhx7G/QTAOwISN8cvW05W2A3rZgIBI9YsKH/U1UxVRjXlDQq+ixWfPoOH+8mpHbCX5CTiX/BSIU7kSPr0jKFtTA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b32tFcwC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVSQe7er"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2097C4CED1;
-	Wed,  5 Feb 2025 14:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b32tFcwC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F141C4CED1;
+	Wed,  5 Feb 2025 14:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765518;
-	bh=QdvqxqjowOnyStB6Qhb9JeTy9pFEh4JZ3D8g/Wrz/wU=;
+	s=korg; t=1738765522;
+	bh=1EMZ6cyu0lQko5kDWhcLb68uOhXoy++58Fj7YBYsQlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wVSQe7erpJ/jJLpBX8FW7GwgCdajEel3T0oQF8rsjs2K8CHn7dAPZMiA1i+muHAZC
-	 lloCl7BszK1dR9lLOqd27t5XZzWpYL/B9q+xtBautQsuks51NXyjZOYtRRbfT/UWM2
-	 u1sWo/qiWBiYrZuZoC3dJ/Eu7z3aVOhDsm7SJeg4=
+	b=b32tFcwCda924C/mKmy8ySMPxv88I3f7acAzTMKC5SPLrOeEpMZW29vernV7j84JL
+	 qNtZhWvKbUbqpkmpUUaheweKvD6cy6RQ8OWBJpc0xvS6tZ6ROCa3SEpRRcKX3CCcoP
+	 nBvqzsBOn9wmlxLXtt28AY6nX8k7+e/HVcpmlXpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xueqin Luo <luoxueqin@kylinos.cn>,
-	Felix Fietkau <nbd@nbd.name>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 185/623] wifi: mt76: mt7996: fix overflows seen when writing limit attributes
-Date: Wed,  5 Feb 2025 14:38:47 +0100
-Message-ID: <20250205134503.314657014@linuxfoundation.org>
+Subject: [PATCH 6.13 170/623] wifi: mac80211: Fix common size calculation for ML element
+Date: Wed,  5 Feb 2025 14:38:32 +0100
+Message-ID: <20250205134502.737830709@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,37 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: xueqin Luo <luoxueqin@kylinos.cn>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 5adbc8ce5bbe7e311e2600b7d7d998a958873e98 ]
+[ Upstream commit 19aa842dcbb5860509b7e1b7745dbae0b791f6c4 ]
 
-DIV_ROUND_CLOSEST() after kstrtoul() results in an overflow if a large
-number such as 18446744073709551615 is provided by the user.
-Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
-This commit was inspired by commit: 57ee12b6c514.
+When the ML type is EPCS the control bitmap is reserved, the length
+is always 7 and is captured by the 1st octet after the control.
 
-Fixes: 6879b2e94172 ("wifi: mt76: mt7996: add thermal sensor device support")
-Signed-off-by: xueqin Luo <luoxueqin@kylinos.cn>
-Link: https://patch.msgid.link/20241202031917.23741-2-luoxueqin@kylinos.cn
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 0f48b8b88aa9 ("wifi: ieee80211: add definitions for multi-link element")
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250102161730.5790376754a7.I381208cbb72b1be2a88239509294099e9337e254@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/ieee80211.h | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index efa7b0697a406..d5f53abc4dcb4 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -82,7 +82,7 @@ static ssize_t mt7996_thermal_temp_store(struct device *dev,
- 		return ret;
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index 05dedc45505ce..a96db2915aabe 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -5055,28 +5055,24 @@ static inline u8 ieee80211_mle_common_size(const u8 *data)
+ {
+ 	const struct ieee80211_multi_link_elem *mle = (const void *)data;
+ 	u16 control = le16_to_cpu(mle->control);
+-	u8 common = 0;
  
- 	mutex_lock(&phy->dev->mt76.mutex);
--	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 40, 130);
-+	val = DIV_ROUND_CLOSEST(clamp_val(val, 40 * 1000, 130 * 1000), 1000);
+ 	switch (u16_get_bits(control, IEEE80211_ML_CONTROL_TYPE)) {
+ 	case IEEE80211_ML_CONTROL_TYPE_BASIC:
+ 	case IEEE80211_ML_CONTROL_TYPE_PREQ:
+ 	case IEEE80211_ML_CONTROL_TYPE_TDLS:
+ 	case IEEE80211_ML_CONTROL_TYPE_RECONF:
++	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+ 		/*
+ 		 * The length is the first octet pointed by mle->variable so no
+ 		 * need to add anything
+ 		 */
+ 		break;
+-	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+-		if (control & IEEE80211_MLC_PRIO_ACCESS_PRES_AP_MLD_MAC_ADDR)
+-			common += ETH_ALEN;
+-		return common;
+ 	default:
+ 		WARN_ON(1);
+ 		return 0;
+ 	}
  
- 	/* add a safety margin ~10 */
- 	if ((i - 1 == MT7996_CRIT_TEMP_IDX &&
+-	return sizeof(*mle) + common + mle->variable[0];
++	return sizeof(*mle) + mle->variable[0];
+ }
+ 
+ /**
+@@ -5314,8 +5310,7 @@ static inline bool ieee80211_mle_size_ok(const u8 *data, size_t len)
+ 		check_common_len = true;
+ 		break;
+ 	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+-		if (control & IEEE80211_MLC_PRIO_ACCESS_PRES_AP_MLD_MAC_ADDR)
+-			common += ETH_ALEN;
++		common = ETH_ALEN + 1;
+ 		break;
+ 	default:
+ 		/* we don't know this type */
 -- 
 2.39.5
 
