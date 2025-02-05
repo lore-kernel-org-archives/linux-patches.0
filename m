@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416821519B4;
-	Wed,  5 Feb 2025 15:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6846D156C5E;
+	Wed,  5 Feb 2025 15:13:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768394; cv=none; b=EuhdB3X83lgTRMxfY2sML8TWBtkvsdI8POHe7vTQOeiQKHtBNGViWDK3ZDZ9+SIlJaDP/FZLR3zfWqyISAL+fREjpFrsqq8kE/fYlXuuR14HEetedRe3oSb8EqnkJUa2t3pTPQCXKgHbdf19oxVDmZClgPO+TaJGkUT0xHNflEc=
+	t=1738768398; cv=none; b=O/Hzb8cNLq6tESYxeWsIuvIgr0bF+j+5WBnJFy7AzZx6Q5HoVUvy9itaZKzbf/GMUnQ2f99lcqMXjUB8iWSEhvgOkBgkJcQDHeYYWd9mZelMzpvUVWmhj35N4CqVzNx7iIkGGBdp0SQhSP5QqUebFIGsUAnI/fINY2+E2KaOwKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768394; c=relaxed/simple;
-	bh=6ifo1ABKk78/Ey3ZHqhqsM3w6JBWw/bfSyvZ22MOdGI=;
+	s=arc-20240116; t=1738768398; c=relaxed/simple;
+	bh=SQPTs65JFDwS8ZzZw3eB1VOyQm2vw0wRPtf39v+ymKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kW95i9xcS8//PLQOUH6CccZi+BJoyfrX9YPAnIqC1UvMCJsKT5cH3iKruSXR00b8B9jugwmuAXY76ZHd3mQ3EMZ7eLES9fLuQFLPYv8P+0x3Yz/+gj7Yuy15LYIhWSh74a/JZ7VzKqeHJKQPBRSONc43XzFE7w4gJt3KGpJOWho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vr4xOU+B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H4MNmEKhdXct30NOqDsqmFDDhBQvYiYNPtVC++zuvaAvcmFez7zSwcDq4UunhZBjI4X15X02c31mRyoCcmdgeO6i8FbJ0+peGyazxe8xydqbUDGQTW1YKUX7Pll9/ayCI5ZAJ801J53ZQpAsp+qIexRAa2Ma7gdsOnWkCZyQYjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y86P5Laj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vr4xOU+B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D71C4CED1;
-	Wed,  5 Feb 2025 15:13:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y86P5Laj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F07C4CEDD;
+	Wed,  5 Feb 2025 15:13:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768394;
-	bh=6ifo1ABKk78/Ey3ZHqhqsM3w6JBWw/bfSyvZ22MOdGI=;
+	s=korg; t=1738768397;
+	bh=SQPTs65JFDwS8ZzZw3eB1VOyQm2vw0wRPtf39v+ymKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vr4xOU+BxHp0vUUFtfFz/4NKXR+qJfxWAFjuSbYFN5nG9ltOyHFgyDxsUZe9sqvr2
-	 f58Iahl7n8u0tDChsLUqD/2Q3n+jd8cVUUi4Q0V/yiPgbtBacb0u2zieOrB6uXo544
-	 8yl6HH/G3laJOTKm6GKv/AJAuMBaJLWEbkTC6RvA=
+	b=y86P5Laj1OPQdYjtCaXd0CvrcFOniwIh0Y0OVxEgyEfucXxSlHDu57c6ZHBJ39d/H
+	 TB5R1m5QQdN0cIVJ2ZQYgTl4U4U77N844cnZrhkJuNfSB9unkEum5H53p8uWm+jxCR
+	 wiH/1ZrZl39Q6dCjMpoRyNyfHh0JoyCmg7KR25HE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 522/623] net: rose: fix timer races against user threads
-Date: Wed,  5 Feb 2025 14:44:24 +0100
-Message-ID: <20250205134516.195620303@linuxfoundation.org>
+Subject: [PATCH 6.13 543/623] Bluetooth: btnxpuart: Fix glitches seen in dual A2DP streaming
+Date: Wed,  5 Feb 2025 14:44:45 +0100
+Message-ID: <20250205134516.996101028@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -52,114 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
 
-[ Upstream commit 5de7665e0a0746b5ad7943554b34db8f8614a196 ]
+[ Upstream commit 7de119bb79a63f6a1959b83117a98734914fb0b0 ]
 
-Rose timers only acquire the socket spinlock, without
-checking if the socket is owned by one user thread.
+This fixes a regression caused by previous commit for fixing truncated
+ACL data, which is causing some intermittent glitches when running two
+A2DP streams.
 
-Add a check and rearm the timers if needed.
+serdev_device_write_buf() is the root cause of the glitch, which is
+reverted, and the TX work will continue to write until the queue is empty.
 
-BUG: KASAN: slab-use-after-free in rose_timer_expiry+0x31d/0x360 net/rose/rose_timer.c:174
-Read of size 2 at addr ffff88802f09b82a by task swapper/0/0
+This change fixes both issues. No A2DP streaming glitches or truncated
+ACL data issue observed.
 
-CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.13.0-rc5-syzkaller-00172-gd1bf27c4e176 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-Call Trace:
- <IRQ>
-  __dump_stack lib/dump_stack.c:94 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
-  print_address_description mm/kasan/report.c:378 [inline]
-  print_report+0x169/0x550 mm/kasan/report.c:489
-  kasan_report+0x143/0x180 mm/kasan/report.c:602
-  rose_timer_expiry+0x31d/0x360 net/rose/rose_timer.c:174
-  call_timer_fn+0x187/0x650 kernel/time/timer.c:1793
-  expire_timers kernel/time/timer.c:1844 [inline]
-  __run_timers kernel/time/timer.c:2418 [inline]
-  __run_timer_base+0x66a/0x8e0 kernel/time/timer.c:2430
-  run_timer_base kernel/time/timer.c:2439 [inline]
-  run_timer_softirq+0xb7/0x170 kernel/time/timer.c:2449
-  handle_softirqs+0x2d4/0x9b0 kernel/softirq.c:561
-  __do_softirq kernel/softirq.c:595 [inline]
-  invoke_softirq kernel/softirq.c:435 [inline]
-  __irq_exit_rcu+0xf7/0x220 kernel/softirq.c:662
-  irq_exit_rcu+0x9/0x30 kernel/softirq.c:678
-  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
-  sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1049
- </IRQ>
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250122180244.1861468-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8023dd220425 ("Bluetooth: btnxpuart: Fix driver sending truncated data")
+Fixes: 689ca16e5232 ("Bluetooth: NXP: Add protocol support for NXP Bluetooth chipsets")
+Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/rose_timer.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/bluetooth/btnxpuart.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/rose/rose_timer.c b/net/rose/rose_timer.c
-index f06ddbed3fed6..1525773e94aa1 100644
---- a/net/rose/rose_timer.c
-+++ b/net/rose/rose_timer.c
-@@ -122,6 +122,10 @@ static void rose_heartbeat_expiry(struct timer_list *t)
- 	struct rose_sock *rose = rose_sk(sk);
+diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
+index 1230045d78a5f..aa5ec1d444a9d 100644
+--- a/drivers/bluetooth/btnxpuart.c
++++ b/drivers/bluetooth/btnxpuart.c
+@@ -1381,13 +1381,12 @@ static void btnxpuart_tx_work(struct work_struct *work)
  
- 	bh_lock_sock(sk);
-+	if (sock_owned_by_user(sk)) {
-+		sk_reset_timer(sk, &sk->sk_timer, jiffies + HZ/20);
-+		goto out;
-+	}
- 	switch (rose->state) {
- 	case ROSE_STATE_0:
- 		/* Magic here: If we listen() and a new link dies before it
-@@ -152,6 +156,7 @@ static void rose_heartbeat_expiry(struct timer_list *t)
- 	}
+ 	while ((skb = nxp_dequeue(nxpdev))) {
+ 		len = serdev_device_write_buf(serdev, skb->data, skb->len);
+-		serdev_device_wait_until_sent(serdev, 0);
+ 		hdev->stat.byte_tx += len;
  
- 	rose_start_heartbeat(sk);
-+out:
- 	bh_unlock_sock(sk);
- 	sock_put(sk);
- }
-@@ -162,6 +167,10 @@ static void rose_timer_expiry(struct timer_list *t)
- 	struct sock *sk = &rose->sock;
- 
- 	bh_lock_sock(sk);
-+	if (sock_owned_by_user(sk)) {
-+		sk_reset_timer(sk, &rose->timer, jiffies + HZ/20);
-+		goto out;
-+	}
- 	switch (rose->state) {
- 	case ROSE_STATE_1:	/* T1 */
- 	case ROSE_STATE_4:	/* T2 */
-@@ -182,6 +191,7 @@ static void rose_timer_expiry(struct timer_list *t)
+ 		skb_pull(skb, len);
+ 		if (skb->len > 0) {
+ 			skb_queue_head(&nxpdev->txq, skb);
+-			break;
++			continue;
  		}
- 		break;
- 	}
-+out:
- 	bh_unlock_sock(sk);
- 	sock_put(sk);
- }
-@@ -192,6 +202,10 @@ static void rose_idletimer_expiry(struct timer_list *t)
- 	struct sock *sk = &rose->sock;
  
- 	bh_lock_sock(sk);
-+	if (sock_owned_by_user(sk)) {
-+		sk_reset_timer(sk, &rose->idletimer, jiffies + HZ/20);
-+		goto out;
-+	}
- 	rose_clear_queues(sk);
- 
- 	rose_write_internal(sk, ROSE_CLEAR_REQUEST);
-@@ -207,6 +221,7 @@ static void rose_idletimer_expiry(struct timer_list *t)
- 		sk->sk_state_change(sk);
- 		sock_set_flag(sk, SOCK_DEAD);
- 	}
-+out:
- 	bh_unlock_sock(sk);
- 	sock_put(sk);
- }
+ 		switch (hci_skb_pkt_type(skb)) {
 -- 
 2.39.5
 
