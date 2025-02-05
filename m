@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA216156225;
-	Wed,  5 Feb 2025 15:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6A51519B4;
+	Wed,  5 Feb 2025 15:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768123; cv=none; b=JUmo1kSDzRKuysjVSS/ONKO/6QjwEvYhk8/12DHrP3OET2/kBktnfvE6gzDPw8cplH7Hf2uiBU8t63i2ju3uzurKOl+0Jp7vsh5joyvP0B8NIa161v8PHPLe2WyQcxR++Dl2ZHbHVNbC//1iRNGFp9n+eCv3KpBAaj1hLa6geKg=
+	t=1738768127; cv=none; b=BYqN52mJOVMYJ6tsIYDTkta3nX9Y6NOBLYGqkcqMLopwZFSlr1fpZGivsl9VY9W5KedlP9NuNBo1iGLMXncwUiBrISHpUHmqFzq3B5kF+dz0kUaTVnZhB4yL4XYmihrvgJgrM95PT+2ieeya01FIoncRb4xRoyw1BHF3+gcjvUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768123; c=relaxed/simple;
-	bh=EQFymjZYxTolKkPNl//Fkvb1xG7z+tNq6YyqoabItIc=;
+	s=arc-20240116; t=1738768127; c=relaxed/simple;
+	bh=jsN8NzJnh8MHkXA3lc+7LAMYZbb1DuBcDPEEpsFJrX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TAZnfXmHjJB0+9oFgBgogJNyu7TIeYi96MSzx1sF7WiH3DdJ7VqxEeElqFhBQrBgbHCfMRIRThui/7IKDELHxped/dktACIXwH0gntNsU1FoKbM0f9WVsnyMZIpc7UwAxC5tLB1EmqYod9i/T3T+kjnsHB/7GJaN4XK7ft+mymI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9GC+Vor; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FoKTwXbIMpbQw+iSXZ8AMM6RuAOROcWU4in2t044rNcy9Z051i1e8rAvpAzLybzF2g7z3Clq6xK7b0y9z0j/wF8/pf1Y+Jhy4Tx5EA33xJy83ec7dKmlTptMyFvEsieRDnfHKZv5tHB0kbwMSJAErdm/YydL0BbaJowybEZwDFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXJbBzHz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9GC+Vor"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CBDC4CED1;
-	Wed,  5 Feb 2025 15:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXJbBzHz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0138C4CED1;
+	Wed,  5 Feb 2025 15:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768123;
-	bh=EQFymjZYxTolKkPNl//Fkvb1xG7z+tNq6YyqoabItIc=;
+	s=korg; t=1738768127;
+	bh=jsN8NzJnh8MHkXA3lc+7LAMYZbb1DuBcDPEEpsFJrX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9GC+VormSNFyTTOjWD/TnM99t6gcrJ2p35RgMceafC1bJpCN0piddNbXYSJbaagz
-	 r4+odRQpfZCdLGPjVSW7kI//J0o9esKdQNigEePJmW+ry8Jet/iEqNvncR0G7KdRNf
-	 qWTaiUNxYUdKisE4yoLbeDuyZZgO6pbMC524QpuU=
+	b=PXJbBzHznmpSve1YF02ShhnQAUFyMbk3Tcd6fn3iNrURZyFT/Y3KjrIlz0GVsGS+t
+	 j5/9A78htdIaYStF9Y9lClucVWB1a6Tg/8KETf+E8Gn5DfRwauP3ra1CGjAosyNMeE
+	 WCaE/aWOY0rzKct54oAex0eqW5fEITrBLTWsnn0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Lam <dennis.lamerice@gmail.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	=?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>,
-	Richard Weinberger <richard@nod.at>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 501/623] ubi: Revert "ubi: wl: Close down wear-leveling before nand is suspended"
-Date: Wed,  5 Feb 2025 14:44:03 +0100
-Message-ID: <20250205134515.386716963@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Kyle Tso <kyletso@google.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.12 557/590] usb: dwc3: core: Defer the probe until USB power supply ready
+Date: Wed,  5 Feb 2025 14:45:12 +0100
+Message-ID: <20250205134516.579400576@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,128 +45,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Kyle Tso <kyletso@google.com>
 
-[ Upstream commit 844c6fdc13cf3d9d251533631988a58f8356a8c8 ]
+commit 66e0ea341a2a78d14336117f19763bd9be26d45d upstream.
 
-Commit 5580cdae05ae ("ubi: wl: Close down wear-leveling before nand is
-suspended") added a reboot notification in UBI layer to shutdown the
-wear-leveling subsystem, which imported an UAF problem[1]. Besides that,
-the method also brings other potential UAF problems, for example:
-       reboot             kworker
- ubi_wl_reboot_notifier
-  ubi_wl_close
-   ubi_fastmap_close
-    kfree(ubi->fm)
-                     update_fastmap_work_fn
-		      ubi_update_fastmap
-		       old_fm = ubi->fm
-		       if (old_fm && old_fm->e[i]) // UAF!
+Currently, DWC3 driver attempts to acquire the USB power supply only
+once during the probe. If the USB power supply is not ready at that
+time, the driver simply ignores the failure and continues the probe,
+leading to permanent non-functioning of the gadget vbus_draw callback.
 
-Actually, the problem fixed by commit 5580cdae05ae ("ubi: wl: Close down
-wear-leveling before nand is suspended") has been solved by commit
-8cba323437a4 ("mtd: rawnand: protect access to rawnand devices while in
-suspend"), which was discussed in [2]. So we can revert the commit
-5580cdae05ae ("ubi: wl: Close down wear-leveling before nand is
-suspended") directly.
+Address this problem by delaying the dwc3 driver initialization until
+the USB power supply is registered.
 
-[1] https://lore.kernel.org/linux-mtd/20241208175211.9406-2-dennis.lamerice@gmail.com/
-[2] https://lore.kernel.org/all/9bf76f5d-12a4-46ff-90d4-4a7f0f47c381@axis.com/
-
-Fixes: 5580cdae05ae ("ubi: wl: Close down wear-leveling before nand is suspended")
-Reported-by: Dennis Lam <dennis.lamerice@gmail.com>
-Closes: https://lore.kernel.org/linux-mtd/20241208175211.9406-2-dennis.lamerice@gmail.com/
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Acked-by: Mårten Lindahl <marten.lindahl@axis.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6f0764b5adea ("usb: dwc3: add a power supply for current control")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Kyle Tso <kyletso@google.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20250115044548.2701138-1-kyletso@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/ubi/ubi.h |  2 --
- drivers/mtd/ubi/wl.c  | 21 ---------------------
- 2 files changed, 23 deletions(-)
+ drivers/usb/dwc3/core.c |   30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/mtd/ubi/ubi.h b/drivers/mtd/ubi/ubi.h
-index 26cc53ad34ec7..c792b9bcab9bc 100644
---- a/drivers/mtd/ubi/ubi.h
-+++ b/drivers/mtd/ubi/ubi.h
-@@ -549,7 +549,6 @@ struct ubi_debug_info {
-  * @peb_buf: a buffer of PEB size used for different purposes
-  * @buf_mutex: protects @peb_buf
-  * @ckvol_mutex: serializes static volume checking when opening
-- * @wl_reboot_notifier: close all wear-leveling work before reboot
-  *
-  * @dbg: debugging information for this UBI device
-  */
-@@ -652,7 +651,6 @@ struct ubi_device {
- 	void *peb_buf;
- 	struct mutex buf_mutex;
- 	struct mutex ckvol_mutex;
--	struct notifier_block wl_reboot_notifier;
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1660,8 +1660,6 @@ static void dwc3_get_properties(struct d
+ 	u8			tx_thr_num_pkt_prd = 0;
+ 	u8			tx_max_burst_prd = 0;
+ 	u8			tx_fifo_resize_max_num;
+-	const char		*usb_psy_name;
+-	int			ret;
  
- 	struct ubi_debug_info dbg;
- };
-diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
-index 4f6f339d8fb8a..fbd399cf65033 100644
---- a/drivers/mtd/ubi/wl.c
-+++ b/drivers/mtd/ubi/wl.c
-@@ -89,7 +89,6 @@
- #include <linux/crc32.h>
- #include <linux/freezer.h>
- #include <linux/kthread.h>
--#include <linux/reboot.h>
- #include "ubi.h"
- #include "wl.h"
+ 	/* default to highest possible threshold */
+ 	lpm_nyet_threshold = 0xf;
+@@ -1696,13 +1694,6 @@ static void dwc3_get_properties(struct d
  
-@@ -128,8 +127,6 @@ static int self_check_in_wl_tree(const struct ubi_device *ubi,
- 				 struct ubi_wl_entry *e, struct rb_root *root);
- static int self_check_in_pq(const struct ubi_device *ubi,
- 			    struct ubi_wl_entry *e);
--static int ubi_wl_reboot_notifier(struct notifier_block *n,
--				  unsigned long state, void *cmd);
+ 	dwc->sys_wakeup = device_may_wakeup(dwc->sysdev);
  
- /**
-  * wl_tree_add - add a wear-leveling entry to a WL RB-tree.
-@@ -1953,13 +1950,6 @@ int ubi_wl_init(struct ubi_device *ubi, struct ubi_attach_info *ai)
- 	if (!ubi->ro_mode && !ubi->fm_disabled)
- 		ubi_ensure_anchor_pebs(ubi);
- #endif
--
--	if (!ubi->wl_reboot_notifier.notifier_call) {
--		ubi->wl_reboot_notifier.notifier_call = ubi_wl_reboot_notifier;
--		ubi->wl_reboot_notifier.priority = 1; /* Higher than MTD */
--		register_reboot_notifier(&ubi->wl_reboot_notifier);
+-	ret = device_property_read_string(dev, "usb-psy-name", &usb_psy_name);
+-	if (ret >= 0) {
+-		dwc->usb_psy = power_supply_get_by_name(usb_psy_name);
+-		if (!dwc->usb_psy)
+-			dev_err(dev, "couldn't get usb power supply\n");
 -	}
 -
+ 	dwc->has_lpm_erratum = device_property_read_bool(dev,
+ 				"snps,has-lpm-erratum");
+ 	device_property_read_u8(dev, "snps,lpm-nyet-threshold",
+@@ -2105,6 +2096,23 @@ static int dwc3_get_num_ports(struct dwc
  	return 0;
- 
- out_free:
-@@ -2005,17 +1995,6 @@ void ubi_wl_close(struct ubi_device *ubi)
- 	kfree(ubi->lookuptbl);
  }
  
--static int ubi_wl_reboot_notifier(struct notifier_block *n,
--				  unsigned long state, void *cmd)
--{
--	struct ubi_device *ubi;
--
--	ubi = container_of(n, struct ubi_device, wl_reboot_notifier);
--	ubi_wl_close(ubi);
--
--	return NOTIFY_DONE;
--}
--
- /**
-  * self_check_ec - make sure that the erase counter of a PEB is correct.
-  * @ubi: UBI device description object
--- 
-2.39.5
-
++static struct power_supply *dwc3_get_usb_power_supply(struct dwc3 *dwc)
++{
++	struct power_supply *usb_psy;
++	const char *usb_psy_name;
++	int ret;
++
++	ret = device_property_read_string(dwc->dev, "usb-psy-name", &usb_psy_name);
++	if (ret < 0)
++		return NULL;
++
++	usb_psy = power_supply_get_by_name(usb_psy_name);
++	if (!usb_psy)
++		return ERR_PTR(-EPROBE_DEFER);
++
++	return usb_psy;
++}
++
+ static int dwc3_probe(struct platform_device *pdev)
+ {
+ 	struct device		*dev = &pdev->dev;
+@@ -2161,6 +2169,10 @@ static int dwc3_probe(struct platform_de
+ 
+ 	dwc3_get_software_properties(dwc);
+ 
++	dwc->usb_psy = dwc3_get_usb_power_supply(dwc);
++	if (IS_ERR(dwc->usb_psy))
++		return dev_err_probe(dev, PTR_ERR(dwc->usb_psy), "couldn't get usb power supply\n");
++
+ 	dwc->reset = devm_reset_control_array_get_optional_shared(dev);
+ 	if (IS_ERR(dwc->reset)) {
+ 		ret = PTR_ERR(dwc->reset);
 
 
