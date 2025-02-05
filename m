@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E7D126C18;
-	Wed,  5 Feb 2025 13:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2CF126C18;
+	Wed,  5 Feb 2025 13:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763462; cv=none; b=jCQBXqx07ZlbWSF/cyAVOudFoy7tMiwWzHwiDQQwR7RpRpJLOO7+egOjjt2n8brjpxpOsHfmHCE4qtiVQRPzcOTPUZAmRJz2l7C0it5pBNQnbO1VctB1TYlk7Mns/NbFEWneQVvNlUTrg4Rc1gegiFfnVdkVMJCKGkOZVXMHxUw=
+	t=1738763466; cv=none; b=aIATTYNPIvjrhx1auZ5IB2w8YSyUE+iwGboeDyEMuKDJj61SGydeoFEMyiAMjcIQc7azbZuO76PMNPUoczR/zo2/q+P2g+GnuugEyL4cCuhuncnRnKOPaJabGBIBI0g/CILbcB78fSzcCc5naI0F+frrPB0+671kyvFVzRPEVYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763462; c=relaxed/simple;
-	bh=rfuwMxO9LaZWt5SrvTe33m8oUKtamFeuK/4wuKRHCgg=;
+	s=arc-20240116; t=1738763466; c=relaxed/simple;
+	bh=Fz+I96vPbsMNsGwo3tWIZ7oqDt2zOS5d0lALahflZjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5e6nBjIlzgaqoDVCwTvcbNIE9Py0RSdosqcCT4PNS5JzAoQS5mW69aFr2OVRauP3Adyu0FAz90vw7GezJxrzDDCvptaX1IgJFOkNPleinPxYVI47Pe7GLZDIGxVMjxi3xuystBm+87Z4l7oKUaageVzQyffPeKcxe3NzsNSNHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWqhaBfU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FhJ/BnnlYJSemSE9hNUPKrYSb3h8gU+7EcPow7gA3LYsoBC95l6zB0OXAdKLDn+kEHVk7bD87Yi8Xyc/lDy2c4LDT4Uumia6aCnePWzhFE+/vYXTXgYH/C3St2zI5Jkc/dtNx8mDedinjzn94+2taob0McJaPcEDMeuBBv5TeQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FayKSgoo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWqhaBfU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A59C4CED1;
-	Wed,  5 Feb 2025 13:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FayKSgoo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63955C4CED1;
+	Wed,  5 Feb 2025 13:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763462;
-	bh=rfuwMxO9LaZWt5SrvTe33m8oUKtamFeuK/4wuKRHCgg=;
+	s=korg; t=1738763466;
+	bh=Fz+I96vPbsMNsGwo3tWIZ7oqDt2zOS5d0lALahflZjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWqhaBfUUZnVEgX5P1uoQWR7OPVJNwrljIvBMjKxssR89Hm+h06WLzkvUr5I8qClD
-	 SMHk0guQBQTBnN1fkynwY6+iHYOHthPNt2xAjzjndBkzum6PHYcp5lGh5PNUff58ur
-	 pY34zvhLY7IMFuOOvkrHokXJPF1EfU05xKDIKkAs=
+	b=FayKSgooycH5n1TPiCfsLssg2/I53akRalCztha/8ydUSekjXpP/EPYl5sRppWrZV
+	 ySeKkPN5cZuICo519WCAd8lvbqE5Wn2fmXNSrsMB/EOjCaapGZKT3JGwDEURuaoD+9
+	 b8DpT8PO7GE3sdlv5dOqZgXADYeNtlUwhuCIyaow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/590] nvme: Add error check for xa_store in nvme_get_effects_log
-Date: Wed,  5 Feb 2025 14:36:12 +0100
-Message-ID: <20250205134455.900114901@linuxfoundation.org>
+Subject: [PATCH 6.6 069/393] wifi: rtlwifi: pci: wait for firmware loading before releasing memory
+Date: Wed,  5 Feb 2025 14:39:48 +0100
+Message-ID: <20250205134422.933655022@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,54 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit ac32057acc7f3d7a238dafaa9b2aa2bc9750080e ]
+[ Upstream commit b59b86c5d08be7d761c04affcbcec8184738c200 ]
 
-The xa_store() may fail due to memory allocation failure because there
-is no guarantee that the index csi is already used. This fix adds an
-error check of the return value of xa_store() in nvme_get_effects_log().
+At probe error path, the firmware loading work may have already been
+queued. In such a case, it will try to access memory allocated by the probe
+function, which is about to be released. In such paths, wait for the
+firmware worker to finish before releasing memory.
 
-Fixes: 1cf7a12e09aa ("nvme: use an xarray to lookup the Commands Supported and Effects log")
-Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 3d86b93064c7 ("rtlwifi: Fix PCI probe error path orphaned memory")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241206173713.3222187-5-cascardo@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 249914b90dbfa..f5ea15bfe6feb 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3085,7 +3085,7 @@ int nvme_get_log(struct nvme_ctrl *ctrl, u32 nsid, u8 log_page, u8 lsp, u8 csi,
- static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
- 				struct nvme_effects_log **log)
- {
--	struct nvme_effects_log	*cel = xa_load(&ctrl->cels, csi);
-+	struct nvme_effects_log *old, *cel = xa_load(&ctrl->cels, csi);
- 	int ret;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index 711f75ce7690a..3abd0c4c954bc 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -2220,6 +2220,7 @@ int rtl_pci_probe(struct pci_dev *pdev,
+ fail4:
+ 	rtl_deinit_core(hw);
+ fail3:
++	wait_for_completion(&rtlpriv->firmware_loading_complete);
+ 	rtlpriv->cfg->ops->deinit_sw_vars(hw);
  
- 	if (cel)
-@@ -3102,7 +3102,11 @@ static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
- 		return ret;
- 	}
- 
--	xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
-+	old = xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
-+	if (xa_is_err(old)) {
-+		kfree(cel);
-+		return xa_err(old);
-+	}
- out:
- 	*log = cel;
- 	return 0;
+ fail2:
 -- 
 2.39.5
 
