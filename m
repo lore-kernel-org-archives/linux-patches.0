@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0EB1FECAA;
-	Wed,  5 Feb 2025 14:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F00B1FECB9;
+	Wed,  5 Feb 2025 14:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767020; cv=none; b=iKmIkisiCXCC0qawySULglPjQmsew9/EuSZCDbOFsc9PqOSGRebR//GxukSTiG6a7VPx+dhKssKzb33gmfdmzoiizJ6gs1dAHGH6iNDzyn9IWUVUAqms5MieTG8vTg3KvoXy3p09aTnixsLcUoeyVkaNjKYHPAdJ/WXcAG7xQOQ=
+	t=1738767024; cv=none; b=OaOS3JYsf4/OwXrtaqfhuRgFiW1C7I3IsXUT/0rWeCcuxveK/Tg9IZRWDtabUjeyUG2liQoFrnB5BUvGZZOTJfSUH6zuI4GQ+EjBmCl48D2SnF1bjwaSyYDn4K3rykjocGAtkuLuhaquLu6XenN79MfB5d6YGPJQWQQTDKVEdeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767020; c=relaxed/simple;
-	bh=fffpDjZzk70PfmOgx4Kc4RDeLIcylJJz6bNaCJN/VSY=;
+	s=arc-20240116; t=1738767024; c=relaxed/simple;
+	bh=dTVRz5MEBp7pz6rHn5nkdfc3fVPjFq/t3mX2msyw7KE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HM4HAzh+BBJY3GzqaT9qbjSoBJWXlukU7GZjDGDT3AxQFa021wa3QFjBtNtxuJcHgppYtLhtUQTMTTxWfIiPWzhuog1uRvJCPU1JbU3YcVumDSZIcUJKa1erePwfMXvRhkIL9oMZXMqVNvcLIcNw8ukCaksJ4QvWI++ZnkZrjqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UuCbKycx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JkWHnmGY+DpDOiBueuaxCvE04QrH1uqU3jBc9lZvSJckwTB7rdH9L96s2lM94CRx+vXCIOlv0D3gm/DxgbCeLrOckM/DZUHDvu76KyD4BQsFyv5BNSldD+9aV15grEJlsrj+zhSStDHlSv+8RILJhSR3ua5DAjQi9yQKI/dN6NU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1l8o6Ay; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UuCbKycx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18366C4CED1;
-	Wed,  5 Feb 2025 14:50:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1l8o6Ay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43339C4CED1;
+	Wed,  5 Feb 2025 14:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767020;
-	bh=fffpDjZzk70PfmOgx4Kc4RDeLIcylJJz6bNaCJN/VSY=;
+	s=korg; t=1738767023;
+	bh=dTVRz5MEBp7pz6rHn5nkdfc3fVPjFq/t3mX2msyw7KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UuCbKycxywBrWkE87Sb2KlAoUMG1gLcsvTz7F6dkEKIV4/BycDaOXb/lpqHRG0quO
-	 7gyTTQ/9f3DcSYKFCpSZpQr3vQ/gbjprqX/HjAMt+rdxH2wh8YvtJNipPshc+lwmO/
-	 Y5dmMggtwExBsMe9xTrk5wKSgoEeHpm+++DJKdh8=
+	b=z1l8o6AyWOOueOdZ2D6qhAuCjrHIGDfIWAjceiZMFyRaQmj9978UVdEzAflcVRNfy
+	 pppvQrGB7VDewpa14T94VjoqexXMpZmgsDFaSWzEOsIIjeK+CIkIvs0gG8X5QixIFR
+	 5l74K9nuDQYyyhHv/mZuWlssIYSJ2taRVg4J9kfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 371/590] arm64: dts: qcom: qcm6490-shift-otter: remove invalid orientation-switch
-Date: Wed,  5 Feb 2025 14:42:06 +0100
-Message-ID: <20250205134509.464162704@linuxfoundation.org>
+Subject: [PATCH 6.13 320/623] ALSA: hda/realtek - Fixed headphone distorted sound on Acer Aspire A115-31 laptop
+Date: Wed,  5 Feb 2025 14:41:02 +0100
+Message-ID: <20250205134508.463860023@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit abb00f0fbf31d71b9f725e58d6a29634175f28a8 ]
+[ Upstream commit 5cb4e5b056772e341b590755a976081776422053 ]
 
-The orientation-switch property is not documented in the PHY bindings,
-remove it.
+Sound played through headphones is distorted.
 
-This fixes:
-qcm6490-shift-otter.dts: phy@88e3000: 'orientation-switch' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/phy/qcom,usb-snps-femto-v2.yaml#
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241230-topic-misc-dt-fixes-v4-1-1e6880e9dda3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 34ab5bbc6e82 ("ALSA: hda/realtek - Add Headset Mic supported Acer NB platform")
+Closes: https://lore.kernel.org/linux-sound/e142749b-7714-4733-9452-918fbe328c8f@gmail.com/
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/0a89b6c18ed94378a105fa61e9f290e4@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts | 2 --
- 1 file changed, 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-index 4667e47a74bc5..75930f9576966 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-@@ -942,8 +942,6 @@
- 
- 	qcom,squelch-detector-bp = <(-2090)>;
- 
--	orientation-switch;
--
- 	status = "okay";
- };
- 
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index ad66378d7321a..2d523b53b3d73 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10158,6 +10158,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1025, 0x1308, "Acer Aspire Z24-890", ALC286_FIXUP_ACER_AIO_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x132a, "Acer TravelMate B114-21", ALC233_FIXUP_ACER_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x1330, "Acer TravelMate X514-51T", ALC255_FIXUP_ACER_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1025, 0x1360, "Acer Aspire A115", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x141f, "Acer Spin SP513-54N", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x142b, "Acer Swift SF314-42", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x1430, "Acer TravelMate B311R-31", ALC256_FIXUP_ACER_MIC_NO_PRESENCE),
 -- 
 2.39.5
 
