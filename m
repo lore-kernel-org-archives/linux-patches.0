@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389F718A922;
-	Wed,  5 Feb 2025 15:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6551607B7;
+	Wed,  5 Feb 2025 15:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768664; cv=none; b=Ovdcb2nh8gzAgruv8spZpbUZLXnBETjuj3rxMohZmozL1avTuGmLxeebGyUau6NXRCyAK3T9yNx+ElTqwsyIQp9/OFjrgEZ5aK+3Qk+7AweGqh/GxQ9eAxVuXJiw8GwOgkTqqxUPFGLseVJLHtdGpBBzDb7GV9jRvWKv69Jt3tQ=
+	t=1738768667; cv=none; b=ltXg/C7s0SVOUwzmnH3ckSN6UPjosIJFIBgearpwN1Z1+1RYMZ8kE7zc0UNEvVBLhzq0eqIj0bCzBjNgpt9DOxTTOcwvOlxOcKpYfLmcHthE1lE2tuo0kSzxx+IwuhOjGVi0qdUufEeNAb7dNntoOamoGJ4zW+haGwojAoq4e2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768664; c=relaxed/simple;
-	bh=k/XyO6itLjIKqRsnKTRPe5LLWbHhGz57HSgUZfqaZwo=;
+	s=arc-20240116; t=1738768667; c=relaxed/simple;
+	bh=VnBsYUSxQn7kZKnX3bEXVsyNmfXC+ZkrOgT0Ke2KVNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDUxmNUMdQbuaAK9SWduqsxynhw0/AonxpU1w0iF6Aqgw0jOyJZ7JMoWBl7i2Ux34Ek82meA55drVLsLtBK6TnTLg8BKE21tMfJFDoIC9PgnSp2PkbHROJSuYJEgp5Bt7f09GVax9MqiwA8NAuzQ/oep5cLyYaUAzdkKu9+70Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZpGmRxP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WQMsQWOp1KxuV5UBwtKzVSlWFxQ+7n1bRwhaL8fXLmAdxPCEox0OH1C10Ih/oB1KN0CPtR8MzSCcB/juDm2NtHz+IeZOKVRKnz6up2/Ylkn1JrXYlguyx6Tob0NtkFZRAKcB7l9mzzv4laXH/fFQnLcWiquNPfPtTak/NaNlaG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFnvJBrz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZpGmRxP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9E2C4CED1;
-	Wed,  5 Feb 2025 15:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFnvJBrz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C89CC4CED1;
+	Wed,  5 Feb 2025 15:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768663;
-	bh=k/XyO6itLjIKqRsnKTRPe5LLWbHhGz57HSgUZfqaZwo=;
+	s=korg; t=1738768667;
+	bh=VnBsYUSxQn7kZKnX3bEXVsyNmfXC+ZkrOgT0Ke2KVNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZpGmRxPyX5SWmIGyTLWxfiCV8inJm+mDlxPXTcoiymR2Rrntm5NPjJByfEnEcAgi
-	 +ziUPX/c8Outk9nV2TSXkA25c+Idcltyds7wbTgwTsrgpCZCvFO9MimaKSUKIXVXLV
-	 q95F+y4h46UCxSnYZYPVmCM0XUYz/QGs/Y0CxkpQ=
+	b=PFnvJBrz9xwZavfFPs8zSev7rLavHExOiHTTb0ZB7nNte0bHcJYiiSZdb3BK3nN91
+	 LBiCXKAqoXirNfOxU6v1fiNX5JYOh+o6FfZkvHusl5qQRQNoTDhGCtGM+TZIZC7rh3
+	 qI54Z6OKrjYB6VBXXEZRvFQODXTNb+Ohba32NLcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.13 590/623] usb: xhci: Fix NULL pointer dereference on certain command aborts
-Date: Wed,  5 Feb 2025 14:45:32 +0100
-Message-ID: <20250205134518.797616145@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.13 581/623] selftests/ftrace: Fix to use remount when testing mount GID option
+Date: Wed,  5 Feb 2025 14:45:23 +0100
+Message-ID: <20250205134518.447881693@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -50,51 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 1e0a19912adb68a4b2b74fd77001c96cd83eb073 upstream.
+commit 159ca65c42d90d5ab98fc31b708b12c0be2c26e0 upstream.
 
-If a command is queued to the final usable TRB of a ring segment, the
-enqueue pointer is advanced to the subsequent link TRB and no further.
-If the command is later aborted, when the abort completion is handled
-the dequeue pointer is advanced to the first TRB of the next segment.
+Fix mount_options.tc to use remount option to mount the tracefs.
+Since the current implementation does not umount the tracefs,
+this test always fails because of -EBUSY error.
+Using remount option will allow us to change the mount option.
 
-If no further commands are queued, xhci_handle_stopped_cmd_ring() sees
-the ring pointers unequal and assumes that there is a pending command,
-so it calls xhci_mod_cmd_timer() which crashes if cur_cmd was NULL.
-
-Don't attempt timer setup if cur_cmd is NULL. The subsequent doorbell
-ring likely is unnecessary too, but it's harmless. Leave it alone.
-
-This is probably Bug 219532, but no confirmation has been received.
-
-The issue has been independently reproduced and confirmed fixed using
-a USB MCU programmed to NAK the Status stage of SET_ADDRESS forever.
-Everything continued working normally after several prevented crashes.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219532
-Fixes: c311e391a7ef ("xhci: rework command timeout and cancellation,")
-CC: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20241227120142.1035206-4-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/173625186741.1383744.16707876180798573039.stgit@devnote2
+Fixes: 8b55572e5180 ("tracing/selftests: Add tracefs mount options test")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/ftrace/test.d/00basic/mount_options.tc |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -422,7 +422,8 @@ static void xhci_handle_stopped_cmd_ring
- 	if ((xhci->cmd_ring->dequeue != xhci->cmd_ring->enqueue) &&
- 	    !(xhci->xhc_state & XHCI_STATE_DYING)) {
- 		xhci->current_cmd = cur_cmd;
--		xhci_mod_cmd_timer(xhci);
-+		if (cur_cmd)
-+			xhci_mod_cmd_timer(xhci);
- 		xhci_ring_cmd_db(xhci);
- 	}
+--- a/tools/testing/selftests/ftrace/test.d/00basic/mount_options.tc
++++ b/tools/testing/selftests/ftrace/test.d/00basic/mount_options.tc
+@@ -15,11 +15,11 @@ find_alternate_gid() {
+ 	tac /etc/group | grep -v ":$original_gid:" | head -1 | cut -d: -f3
  }
+ 
+-mount_tracefs_with_options() {
++remount_tracefs_with_options() {
+ 	local mount_point="$1"
+ 	local options="$2"
+ 
+-	mount -t tracefs -o "$options" nodev "$mount_point"
++	mount -t tracefs -o "remount,$options" nodev "$mount_point"
+ 
+ 	setup
+ }
+@@ -81,7 +81,7 @@ test_gid_mount_option() {
+ 
+ 	# Unmount existing tracefs instance and mount with new GID
+ 	unmount_tracefs "$mount_point"
+-	mount_tracefs_with_options "$mount_point" "$new_options"
++	remount_tracefs_with_options "$mount_point" "$new_options"
+ 
+ 	check_gid "$mount_point" "$other_group"
+ 
+@@ -92,7 +92,7 @@ test_gid_mount_option() {
+ 
+ 	# Unmount and remount with the original GID
+ 	unmount_tracefs "$mount_point"
+-	mount_tracefs_with_options "$mount_point" "$mount_options"
++	remount_tracefs_with_options "$mount_point" "$mount_options"
+ 	check_gid "$mount_point" "$original_group"
+ }
+ 
 
 
