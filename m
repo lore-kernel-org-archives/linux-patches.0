@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6D01519BF;
-	Wed,  5 Feb 2025 14:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC061519BF;
+	Wed,  5 Feb 2025 14:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767359; cv=none; b=L6+O05ATcrdjV3wCDYCoHT6ijcKEXPjmJD6eymsuSxl/U6lFwNhPv2CceHCz9/EvQ2PbXxLKNn2F2JLQLfS0hhPHX82WfnaGxseIJbOTM8xhLhjElf/sLdCOHpL88Q2dX8az8U7lHNtTKEZqgSV4Z9/LAHcEc5sP8FubcQk9ml4=
+	t=1738767362; cv=none; b=u8LaYnVfp+DrCYPzdIcxOueujr4xGCc7AjZ/uLRhXwz39nvNvYSPqqNQeX451LvuABRQX6U+8o2uJ6oTO41zsN4yN1l7c0cM467sNMlwFFwrW+0sB0yyJrHlRh2/+bA1FscwQvZe9qNaBpKBir3yUafJwbRPJ0B2d59kbCZX/Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767359; c=relaxed/simple;
-	bh=8O2BGOf+sz8ABVWIfTYVTfc6aMNSQj0KgN7IiJItq4k=;
+	s=arc-20240116; t=1738767362; c=relaxed/simple;
+	bh=07W2mj19XQ/DiBaAc3Kn08hn+ctglGM9q+IDXuB+Eds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9x/tTV7+NJjdWfNwLGYs9gIjNBKNpUBPnNNQvvdl4nloIpopkfbbMQzYQc1XR3GuJssZ1MlUIOL4yUHcVnBEbNpGPWZa0j2sgH+3H6gvf/4DlfBMsmFCwFY78cAEsbo7oVGduLvhs1fc1yKOVrEBhXIdaZsBgYxFJV5TtZw6yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6NONmxr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FdX0/f5FbfIQE1FFUZx9LiWU46hlJKpkxbOWydIW7+xlcjddJqYpVxc0Y4nrFS5owASHX378RK5GUdH95IvWKOqqUId6fb1sp+ASxe30EGc9muBKxzLtG2Md6nHIsrXNVPtGbXXfcodWedWUfhJBkZJ6ED9xl6qrn2/3AB3sk8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+COEuKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6NONmxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F0AC4CED1;
-	Wed,  5 Feb 2025 14:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+COEuKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC30DC4CED1;
+	Wed,  5 Feb 2025 14:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767359;
-	bh=8O2BGOf+sz8ABVWIfTYVTfc6aMNSQj0KgN7IiJItq4k=;
+	s=korg; t=1738767362;
+	bh=07W2mj19XQ/DiBaAc3Kn08hn+ctglGM9q+IDXuB+Eds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d6NONmxrUS9Bx3PUomx43bzfwRYF/28gbxWG5Xekx8V01jJxmYrUhPfOz2yeX8aXE
-	 EX9/NTT94rLajpG3FrahZ9jyfVnHzAD+ZKUTN4Yr5frYse/gNSESuXNyGR+lyZ1gBg
-	 Vi9AbLJsrWXd21L/LyjHo0PxtFLtc4AygsCLv/XU=
+	b=s+COEuKYYzyfFOsvhxuy5UpiVCPXtgkYlIw9fHVjpXMK2eNTlaVVc/K1XrF5i29OM
+	 CaCMiFF+IDwtaPF2CtbOjKPQJrRIDiKQmgdEIfhzM3bMiMZL1csDh0S77OlIVAZ0kW
+	 1lG7Y81A7gV2AW+LDFPNw20Po4wtny/O+ggWcTA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Maulik Shah <quic_mkshah@quicinc.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 421/590] watchdog: rti_wdt: Fix an OF node leak in rti_wdt_probe()
-Date: Wed,  5 Feb 2025 14:42:56 +0100
-Message-ID: <20250205134511.373722070@linuxfoundation.org>
+Subject: [PATCH 6.13 370/623] arm64: dts: qcom: sa8775p: Add CPUs to psci power domain
+Date: Wed,  5 Feb 2025 14:41:52 +0100
+Message-ID: <20250205134510.375963801@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +48,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Maulik Shah <quic_mkshah@quicinc.com>
 
-[ Upstream commit 143981aa63f33d469a55a55fd9fb81cd90109672 ]
+[ Upstream commit 736f50489e08ba7329a9e828c35a2358968dacf0 ]
 
-rti_wdt_probe() does not release the OF node reference obtained by
-of_parse_phandle(). Add a of_node_put() call.
+Commit 4f79d0deae37 ("arm64: dts: qcom: sa8775p: add CPU idle states")
+already added cpu and cluster idle-states but have not added CPU devices
+to psci power domain without which idle states do not get detected.
 
-This was found by an experimental verification tool that I am
-developing. Due to the lack of the actual device, no runtime test was
-able to be performed.
+Add CPUs to psci power domain.
 
-Fixes: f20ca595ae23 ("watchdog:rit_wdt: Add support for WDIOF_CARDRESET")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250105111718.4184192-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 4f79d0deae37 ("arm64: dts: qcom: sa8775p: add CPU idle states")
+Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20241112-sa8775p_cpuidle-v1-1-66ff3ba72464@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/rti_wdt.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/watchdog/rti_wdt.c b/drivers/watchdog/rti_wdt.c
-index 563d842014dfb..cc239251e1938 100644
---- a/drivers/watchdog/rti_wdt.c
-+++ b/drivers/watchdog/rti_wdt.c
-@@ -301,6 +301,7 @@ static int rti_wdt_probe(struct platform_device *pdev)
- 	node = of_parse_phandle(pdev->dev.of_node, "memory-region", 0);
- 	if (node) {
- 		ret = of_address_to_resource(node, 0, &res);
-+		of_node_put(node);
- 		if (ret) {
- 			dev_err(dev, "No memory address assigned to the region.\n");
- 			goto err_iomap;
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index d9482124f0d3b..97c85a3db3019 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -44,6 +44,8 @@
+ 			compatible = "qcom,kryo";
+ 			reg = <0x0 0x0>;
+ 			enable-method = "psci";
++			power-domains = <&cpu_pd0>;
++			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			next-level-cache = <&l2_0>;
+ 			capacity-dmips-mhz = <1024>;
+@@ -66,6 +68,8 @@
+ 			compatible = "qcom,kryo";
+ 			reg = <0x0 0x100>;
+ 			enable-method = "psci";
++			power-domains = <&cpu_pd1>;
++			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			next-level-cache = <&l2_1>;
+ 			capacity-dmips-mhz = <1024>;
+@@ -83,6 +87,8 @@
+ 			compatible = "qcom,kryo";
+ 			reg = <0x0 0x200>;
+ 			enable-method = "psci";
++			power-domains = <&cpu_pd2>;
++			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			next-level-cache = <&l2_2>;
+ 			capacity-dmips-mhz = <1024>;
+@@ -100,6 +106,8 @@
+ 			compatible = "qcom,kryo";
+ 			reg = <0x0 0x300>;
+ 			enable-method = "psci";
++			power-domains = <&cpu_pd3>;
++			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			next-level-cache = <&l2_3>;
+ 			capacity-dmips-mhz = <1024>;
+@@ -117,6 +125,8 @@
+ 			compatible = "qcom,kryo";
+ 			reg = <0x0 0x10000>;
+ 			enable-method = "psci";
++			power-domains = <&cpu_pd4>;
++			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			next-level-cache = <&l2_4>;
+ 			capacity-dmips-mhz = <1024>;
+@@ -140,6 +150,8 @@
+ 			compatible = "qcom,kryo";
+ 			reg = <0x0 0x10100>;
+ 			enable-method = "psci";
++			power-domains = <&cpu_pd5>;
++			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			next-level-cache = <&l2_5>;
+ 			capacity-dmips-mhz = <1024>;
+@@ -157,6 +169,8 @@
+ 			compatible = "qcom,kryo";
+ 			reg = <0x0 0x10200>;
+ 			enable-method = "psci";
++			power-domains = <&cpu_pd6>;
++			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			next-level-cache = <&l2_6>;
+ 			capacity-dmips-mhz = <1024>;
+@@ -174,6 +188,8 @@
+ 			compatible = "qcom,kryo";
+ 			reg = <0x0 0x10300>;
+ 			enable-method = "psci";
++			power-domains = <&cpu_pd7>;
++			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+ 			next-level-cache = <&l2_7>;
+ 			capacity-dmips-mhz = <1024>;
 -- 
 2.39.5
 
