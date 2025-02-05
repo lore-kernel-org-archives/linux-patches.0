@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60D01519AA;
-	Wed,  5 Feb 2025 14:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964051494DF;
+	Wed,  5 Feb 2025 14:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764836; cv=none; b=HyhKhSX7DZaJ04mEgJ7G4e9Z1Pu6E1PSX3btUYe//r1NoXdf0qHsAAprOcpnfnwi3uqvZnFS1bKexSPPOocz9nFOKjMOi5HG81lTzvovNjIvNie72ch6/kukH9nNur0CEb3W8+x5U1jAMLcXlmNTBwG6RU4B5iyk06hmIp/Kqgc=
+	t=1738764840; cv=none; b=Jzqb0AOwaHL7xrVzFdkt+hrExbsmTMGbLiGZWqN0bcjzEgSGZtSab3xMuz0iWiYM7b39bF6dRQ0bqYasLJyIUTSd28+tIyhz6eGCGAeHqle9tHh4OXaoR6kwChfLNmbA8bh9VHU9kyq23WczqS/7ozBYQhG3i9qRJqB9MCQJvxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764836; c=relaxed/simple;
-	bh=9Fzb4mkkqA8sxwFn3is0IMf8Bv3Ik+u8tyjBWsDOVGE=;
+	s=arc-20240116; t=1738764840; c=relaxed/simple;
+	bh=nh3pyinrxprfYqmpWODL8IDTAh7UsNe0QvEACIyy/BM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=duJ5rGkG1XfPIBIB/1HqHIohlo1YfEqgSTa1K25CkLq9Q4PI29Aryqe4RxxFsmSKF+vTkLQ9pk8sgIUvvvADy4WU6smVr91dbPXjI3Khe38gMctzrIvTzyOG3jpFwwk/wbCJ02LdSnppbgZfr43qgC8X1f50U5ZOJTPE57Tpcy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNoiZXuw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gW3Olb8eNPAsX6GC42Sljce2Zr8ylCcr1eujUaGrxypcyKQYQEidh7gx0p0l0gqYZT4OUbvu1sY3kz7TYh80sozcYlnDAuZ7+SD8lSnOVICZpkg7fctiPwitJ66/HyJC6YOjwA4/Hy88Cfbu1GqvD1PuDxUssOkCnIydn0zmdms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdraiS1J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNoiZXuw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2489FC4CED1;
-	Wed,  5 Feb 2025 14:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdraiS1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FD1C4CED1;
+	Wed,  5 Feb 2025 14:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764836;
-	bh=9Fzb4mkkqA8sxwFn3is0IMf8Bv3Ik+u8tyjBWsDOVGE=;
+	s=korg; t=1738764840;
+	bh=nh3pyinrxprfYqmpWODL8IDTAh7UsNe0QvEACIyy/BM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNoiZXuwoB1cn6vmXnBnCk6quU0nXXsgBJ6BPmQ4JtpcO3aNeuQbERS/6Cw6qqx0P
-	 n2EPmvjsOSB1i9CRs/f+LNNgBFWJJzb1/wnBQbFvPOVvHHj1KDDFtBAmDxzhwh533I
-	 MMdDZJCJsdVO3iRiPx2adPmepRS7XWUPwaWDJcoM=
+	b=fdraiS1JoC3LhS5y3we0GRHwkLucfkG4iW7rXJBNA2Qwc88I3f52rtBvXGQs5j8ZB
+	 FLWU5ZSHZ5t+0OY/RGXbHTnnGf+s5AHtAp9KgUx+3Y45gmgRoG/awpowhVQrM2GgfE
+	 mhHCS/7TlUhK5mgNMriu+pZ4hT39fQisXGzS2UAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Rowley <lkml@johnrowley.me>,
-	Kees Cook <kees@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 162/590] wifi: cfg80211: Move cfg80211_scan_req_add_chan() n_channels increment earlier
-Date: Wed,  5 Feb 2025 14:38:37 +0100
-Message-ID: <20250205134501.482083077@linuxfoundation.org>
+Subject: [PATCH 6.13 118/623] inetpeer: remove create argument of inet_getpeer()
+Date: Wed,  5 Feb 2025 14:37:40 +0100
+Message-ID: <20250205134500.734916718@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,48 +47,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3a0168626c138734490bc52c4105ce8e79d2f923 ]
+[ Upstream commit 7a596a50c4a4eab946aec149171c72321b4934aa ]
 
-Since adding __counted_by(n_channels) to struct cfg80211_scan_request,
-anything adding to the channels array must increment n_channels first.
-Move n_channels increment earlier.
+All callers of inet_getpeer() want to create an inetpeer.
 
-Reported-by: John Rowley <lkml@johnrowley.me>
-Closes: https://lore.kernel.org/stable/1815535c709ba9d9.156c6a5c9cdf6e59.b249b6b6a5ee4634@localhost.localdomain/
-Fixes: aa4ec06c455d ("wifi: cfg80211: use __counted_by where appropriate")
-Signed-off-by: Kees Cook <kees@kernel.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://patch.msgid.link/20241230183610.work.680-kees@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241215175629.1248773-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: a853c609504e ("inetpeer: do not get a refcount in inet_getpeer()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/net/inetpeer.h |  7 +++----
+ net/ipv4/inetpeer.c    | 11 ++---------
+ 2 files changed, 5 insertions(+), 13 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index d0aed41ded2f1..21bc057fd8c29 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -763,12 +763,11 @@ static  void cfg80211_scan_req_add_chan(struct cfg80211_scan_request *request,
- 		}
- 	}
+diff --git a/include/net/inetpeer.h b/include/net/inetpeer.h
+index 6f51f81d6cb19..f475757daafba 100644
+--- a/include/net/inetpeer.h
++++ b/include/net/inetpeer.h
+@@ -96,8 +96,7 @@ static inline struct in6_addr *inetpeer_get_addr_v6(struct inetpeer_addr *iaddr)
  
-+	request->n_channels++;
- 	request->channels[n_channels] = chan;
- 	if (add_to_6ghz)
- 		request->scan_6ghz_params[request->n_6ghz_params].channel_idx =
- 			n_channels;
--
--	request->n_channels++;
+ /* can be called with or without local BH being disabled */
+ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
+-			       const struct inetpeer_addr *daddr,
+-			       int create);
++			       const struct inetpeer_addr *daddr);
+ 
+ static inline struct inet_peer *inet_getpeer_v4(struct inet_peer_base *base,
+ 						__be32 v4daddr,
+@@ -108,7 +107,7 @@ static inline struct inet_peer *inet_getpeer_v4(struct inet_peer_base *base,
+ 	daddr.a4.addr = v4daddr;
+ 	daddr.a4.vif = vif;
+ 	daddr.family = AF_INET;
+-	return inet_getpeer(base, &daddr, 1);
++	return inet_getpeer(base, &daddr);
  }
  
- static bool cfg80211_find_ssid_match(struct cfg80211_colocated_ap *ap,
+ static inline struct inet_peer *inet_getpeer_v6(struct inet_peer_base *base,
+@@ -118,7 +117,7 @@ static inline struct inet_peer *inet_getpeer_v6(struct inet_peer_base *base,
+ 
+ 	daddr.a6 = *v6daddr;
+ 	daddr.family = AF_INET6;
+-	return inet_getpeer(base, &daddr, 1);
++	return inet_getpeer(base, &daddr);
+ }
+ 
+ static inline int inetpeer_addr_cmp(const struct inetpeer_addr *a,
+diff --git a/net/ipv4/inetpeer.c b/net/ipv4/inetpeer.c
+index 5ab56f4cb5297..bc79cc9d13ebb 100644
+--- a/net/ipv4/inetpeer.c
++++ b/net/ipv4/inetpeer.c
+@@ -169,13 +169,11 @@ static void inet_peer_gc(struct inet_peer_base *base,
+ }
+ 
+ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
+-			       const struct inetpeer_addr *daddr,
+-			       int create)
++			       const struct inetpeer_addr *daddr)
+ {
+ 	struct inet_peer *p, *gc_stack[PEER_MAX_GC];
+ 	struct rb_node **pp, *parent;
+ 	unsigned int gc_cnt, seq;
+-	int invalidated;
+ 
+ 	/* Attempt a lockless lookup first.
+ 	 * Because of a concurrent writer, we might not find an existing entry.
+@@ -183,16 +181,11 @@ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
+ 	rcu_read_lock();
+ 	seq = read_seqbegin(&base->lock);
+ 	p = lookup(daddr, base, seq, NULL, &gc_cnt, &parent, &pp);
+-	invalidated = read_seqretry(&base->lock, seq);
+ 	rcu_read_unlock();
+ 
+ 	if (p)
+ 		return p;
+ 
+-	/* If no writer did a change during our lookup, we can return early. */
+-	if (!create && !invalidated)
+-		return NULL;
+-
+ 	/* retry an exact lookup, taking the lock before.
+ 	 * At least, nodes should be hot in our cache.
+ 	 */
+@@ -201,7 +194,7 @@ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
+ 
+ 	gc_cnt = 0;
+ 	p = lookup(daddr, base, seq, gc_stack, &gc_cnt, &parent, &pp);
+-	if (!p && create) {
++	if (!p) {
+ 		p = kmem_cache_alloc(peer_cachep, GFP_ATOMIC);
+ 		if (p) {
+ 			p->daddr = *daddr;
 -- 
 2.39.5
 
