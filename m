@@ -1,53 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A5F522A;
-	Wed,  5 Feb 2025 14:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1760155756;
+	Wed,  5 Feb 2025 14:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765780; cv=none; b=chYhsAorZb6FRS+hdVhw6dC3qS4PFiMJ4dxB/hsgBqY+xOoRck+Vwx02u/jX/H/2fH98dxTUxOuVYzoBhSorF4Ihzfm+EPdvOFqz6FoTYmxKEyWc/HBgo9Ta8evGFVkeRoS82h+SRhSZAs8lCTeDvji95WRz8nlclyLX4SDTu6c=
+	t=1738765783; cv=none; b=m1zw4Ti3j2ZdtFcMUyx4mDJ0h2Hxj8MPA1v6+80PdOyP8ybelhwYm7wM84JrO0NPRNhpfTpWhvx3r1X9frLyI+xOKFIyql6D9zT9ebFW2YyJrvNBJMyVJ/83WZU6lYB+AbohA3gSI8eWepEtOe75UhR3gXx25hFPCbl9WbSE2Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765780; c=relaxed/simple;
-	bh=aioQuW5DixVMV70RL/F82eEKhIW3B3oXjWrhhK4QEBk=;
+	s=arc-20240116; t=1738765783; c=relaxed/simple;
+	bh=eX5MD+e5e5zf7NGsyh7g8JU//yaORqkNHezkuxm6Wao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A/Wdzfj4vTXksr76gpCzmTlsbUISh0OB9NNJiWbyR8cfIPT9rB8IIpU0Lvcp87JK9hts3CQgX3pgeNrdkzcu+zWCDY8Ctjd85pUgB6u8kgWRF/x2aIYFMIVrz5FL47p+l6Ez5x+G/FyNs9QOdeMgDIko2byCymk6F88pshTaLAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCxwROK8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=c/Di/KN+5qQwlTCNSyGeOaXgxN0m5mpwFlb5RkcqJ7VmJHZcASa7F+cnDjUepsiGWsYZbHFwC/KRbtOyWfyZK4CjeVpAPQMkiN6tkKuqHdgqf3AezrDThIsq983EjfVzWtbRb96agXpu+OUfeha/Ggfjlh8SU/oG29bdK3TKjhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ip7jYz9O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCxwROK8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A652C4CED1;
-	Wed,  5 Feb 2025 14:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ip7jYz9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC49C4CED1;
+	Wed,  5 Feb 2025 14:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765780;
-	bh=aioQuW5DixVMV70RL/F82eEKhIW3B3oXjWrhhK4QEBk=;
+	s=korg; t=1738765783;
+	bh=eX5MD+e5e5zf7NGsyh7g8JU//yaORqkNHezkuxm6Wao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCxwROK8dl1Gr6LREcfeUn8y06sa9AAAcrWVva04H07S/XDtAGpBCLgIGASsMr44k
-	 6Hh7bPZZ8Y30Wd3QxoKQBoQD6kiE7oT5zNwfPAqyHa1e3+2yECYjy9bgiKWdJUj86x
-	 q1BWNDYQMj/VbFPJTaPjqJzqsWkinVgpMJFo7DQc=
+	b=ip7jYz9O44vJJqbUBs8CteDnoHwpPiFrr3jwGLgkgT5lKYQQpLTJjLNcLd7/jzGQM
+	 3HbZPctcSX5IQ/69VQJBMZUYryuGdu6tVmiC4PnAKck8rJfvnkHNn1taqk+mVvZMU1
+	 F2f8gftwRu5JhkTo5wGORulstp0Wze72E0+zRWOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Song Liu <song@kernel.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	King Dix <kingdix10@qq.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 251/590] perf header: Fix one memory leakage in process_bpf_prog_info()
-Date: Wed,  5 Feb 2025 14:40:06 +0100
-Message-ID: <20250205134504.883529594@linuxfoundation.org>
+Subject: [PATCH 6.6 298/393] PCI: rcar-ep: Fix incorrect variable used when calling devm_request_mem_region()
+Date: Wed,  5 Feb 2025 14:43:37 +0100
+Message-ID: <20250205134431.713424641@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -57,103 +47,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: King Dix <kingdix10@qq.com>
 
-[ Upstream commit a7da6c7030e1aec32f0a41c7b4fa70ec96042019 ]
+[ Upstream commit 2d2da5a4c1b4509f6f7e5a8db015cd420144beb4 ]
 
-Function __perf_env__insert_bpf_prog_info() will return without inserting
-bpf prog info node into perf env again due to a duplicate bpf prog info
-node insertion, causing the temporary info_linear and info_node memory to
-leak. Modify the return type of this function to bool and add a check to
-ensure the memory is freed if the function returns false.
+The rcar_pcie_parse_outbound_ranges() uses the devm_request_mem_region()
+macro to request a needed resource. A string variable that lives on the
+stack is then used to store a dynamically computed resource name, which
+is then passed on as one of the macro arguments. This can lead to
+undefined behavior.
 
-Fixes: 606f972b1361f477 ("perf bpf: Save bpf_prog_info information as headers to perf.data")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Song Liu <song@kernel.org>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20241205084500.823660-3-quic_zhonhan@quicinc.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Depending on the current contents of the memory, the manifestations of
+errors may vary. One possible output may be as follows:
+
+  $ cat /proc/iomem
+  30000000-37ffffff :
+  38000000-3fffffff :
+
+Sometimes, garbage may appear after the colon.
+
+In very rare cases, if no NULL-terminator is found in memory, the system
+might crash because the string iterator will overrun which can lead to
+access of unmapped memory above the stack.
+
+Thus, fix this by replacing outbound_name with the name of the previously
+requested resource. With the changes applied, the output will be as
+follows:
+
+  $ cat /proc/iomem
+  30000000-37ffffff : memory2
+  38000000-3fffffff : memory3
+
+Fixes: 2a6d0d63d999 ("PCI: rcar: Add endpoint mode support")
+Link: https://lore.kernel.org/r/tencent_DBDCC19D60F361119E76919ADAB25EC13C06@qq.com
+Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: King Dix <kingdix10@qq.com>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/env.c    | 5 +++--
- tools/perf/util/env.h    | 2 +-
- tools/perf/util/header.c | 5 ++++-
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/pci/controller/pcie-rcar-ep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
-index 1edbccfc3281d..3260eaf267387 100644
---- a/tools/perf/util/env.c
-+++ b/tools/perf/util/env.c
-@@ -30,7 +30,7 @@ void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 	up_write(&env->bpf_progs.lock);
- }
- 
--void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
-+bool __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
- {
- 	__u32 prog_id = info_node->info_linear->info.id;
- 	struct bpf_prog_info_node *node;
-@@ -48,13 +48,14 @@ void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info
- 			p = &(*p)->rb_right;
- 		} else {
- 			pr_debug("duplicated bpf prog info %u\n", prog_id);
--			return;
-+			return false;
+diff --git a/drivers/pci/controller/pcie-rcar-ep.c b/drivers/pci/controller/pcie-rcar-ep.c
+index f9682df1da619..209719fb6ddcc 100644
+--- a/drivers/pci/controller/pcie-rcar-ep.c
++++ b/drivers/pci/controller/pcie-rcar-ep.c
+@@ -107,7 +107,7 @@ static int rcar_pcie_parse_outbound_ranges(struct rcar_pcie_endpoint *ep,
  		}
- 	}
- 
- 	rb_link_node(&info_node->rb_node, parent, p);
- 	rb_insert_color(&info_node->rb_node, &env->bpf_progs.infos);
- 	env->bpf_progs.infos_cnt++;
-+	return true;
- }
- 
- struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
-diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
-index 51b36c36019be..f170a1fb0c8c2 100644
---- a/tools/perf/util/env.h
-+++ b/tools/perf/util/env.h
-@@ -176,7 +176,7 @@ const char *perf_env__raw_arch(struct perf_env *env);
- int perf_env__nr_cpus_avail(struct perf_env *env);
- 
- void perf_env__init(struct perf_env *env);
--void __perf_env__insert_bpf_prog_info(struct perf_env *env,
-+bool __perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				      struct bpf_prog_info_node *info_node);
- void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				    struct bpf_prog_info_node *info_node);
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index fd66042ecb030..7b99f58f7bf26 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -3188,7 +3188,10 @@ static int process_bpf_prog_info(struct feat_fd *ff, void *data __maybe_unused)
- 		/* after reading from file, translate offset to address */
- 		bpil_offs_to_addr(info_linear);
- 		info_node->info_linear = info_linear;
--		__perf_env__insert_bpf_prog_info(env, info_node);
-+		if (!__perf_env__insert_bpf_prog_info(env, info_node)) {
-+			free(info_linear);
-+			free(info_node);
-+		}
- 	}
- 
- 	up_write(&env->bpf_progs.lock);
+ 		if (!devm_request_mem_region(&pdev->dev, res->start,
+ 					     resource_size(res),
+-					     outbound_name)) {
++					     res->name)) {
+ 			dev_err(pcie->dev, "Cannot request memory region %s.\n",
+ 				outbound_name);
+ 			return -EIO;
 -- 
 2.39.5
 
