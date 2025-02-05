@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A441684B0;
-	Wed,  5 Feb 2025 14:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE06A1684B0;
+	Wed,  5 Feb 2025 14:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766598; cv=none; b=ZrjDvnROeqTL5rwqGEhOsmNZhh5ipC8xqqxGMNwFBu1QGFCVOMyy/0kdXzAsidl5hzJR0beR4EMGAXSaC+PBx7ALWOmx0YLpLiB28/9ue7kHRM54m6lqp3aLxKrgXKqdWv7HEGl85hPnnuO9NejMQpXnZo57OjIPoX3lRH1BXtQ=
+	t=1738766601; cv=none; b=iQEHoHX3p3SSPcMfvuAartQeH70oMOsYR95Ifb4y0JNp1Kr9gaoQ3G7Q2siy3zOj2yX/vQZ6TKuiiwrTE8WNumzCnH38hpMY0hFhO+RlhokNIS/tU9WyqgbDOf2ZhGIh7YNgyR+kcjLzmhbTmqHxB8yBsDn+RTQ/u6+G5hvtxbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766598; c=relaxed/simple;
-	bh=quOvjSyAGae46+khY1x8eTJ+deuCpeN9f/ZEEFH5N8k=;
+	s=arc-20240116; t=1738766601; c=relaxed/simple;
+	bh=160zjrfayXmEqCnY3VF5WyJOSxMJynbCRsliyksLMl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DZ+tazXVwMxXkP6QVpy44/4dkpc25mA75JMhoJBgDQYtz9IUyM65xZixSeB9gmcLL8c0La6DxsP3ktlLCPEW87FtC29NN8srMAFEPzwdGCE9UqK2o54UPgil6D/GdPsBuoWGi/4lNpbHorUw/oCdvNao2lpcvxhLaWcO9ZDMY38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDIn0Mr2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e3E3nLhePjrbB1rRPkS+SfTJ057GgBqPR78IzxFdl0tWvF5rf4D30qfXg1PMGR3t+3uFsocH8VbHbnUj82gNMFcdTd6AfeNWyOpM2yWj2bsfkgE9zm8cHScjpEidfvFxYd/g0zA5nNC41PT1iz597sCPZJiNzJt0BITHAzbAgBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovxm2hH1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDIn0Mr2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB488C4CED6;
-	Wed,  5 Feb 2025 14:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovxm2hH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5334AC4CEE2;
+	Wed,  5 Feb 2025 14:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766598;
-	bh=quOvjSyAGae46+khY1x8eTJ+deuCpeN9f/ZEEFH5N8k=;
+	s=korg; t=1738766601;
+	bh=160zjrfayXmEqCnY3VF5WyJOSxMJynbCRsliyksLMl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KDIn0Mr2RszZrnKnqpATe6mxXEnj8dHLVm08yT7kcAM/r1FZcplt9SbjqkEwMJNGH
-	 qKfTUm9wCJQIKbQoOX0B+/FMq7Tmf0XSMv4dgm1CyFZ3bX9nyCtUTSzUL6BPCQSoVE
-	 G6i87CHfoDk497jzA89m6xFsUZni849egFdmglTk=
+	b=ovxm2hH1ogueXwHY7Bz5ifjJEWx2MsT1sRQl2OfMxpkG8kncS3pbrKLzuTNzWfvD7
+	 EpaKi2b0131DUDyQqjuamppXRe+yy6BiKDHENt9JXtilOXO1E9QV5g4KjrP0nuwyfc
+	 DH29M9XPyzjKunCEtDfGI+18oQDVaEpCodNUcUIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 323/590] arm64: dts: mediatek: mt8173-evb: Fix MT6397 PMIC sub-node names
-Date: Wed,  5 Feb 2025 14:41:18 +0100
-Message-ID: <20250205134507.632772295@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Sean Rhodes <sean@starlabs.systems>
+Subject: [PATCH 6.6 377/393] drivers/card_reader/rtsx_usb: Restore interrupt based detection
+Date: Wed,  5 Feb 2025 14:44:56 +0100
+Message-ID: <20250205134434.717887616@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +46,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Sean Rhodes <sean@starlabs.systems>
 
-[ Upstream commit 9545ba142865b9099d43c972b9ebcf463606499a ]
+commit 235b630eda072d7e7b102ab346d6b8a2c028a772 upstream.
 
-The MT6397 PMIC bindings specify exact names for its sub-nodes. The
-names used in the current dts don't match, causing a validation error.
+This commit reintroduces interrupt-based card detection previously
+used in the rts5139 driver. This functionality was removed in commit
+00d8521dcd23 ("staging: remove rts5139 driver code").
 
-Fix up the names. Also drop the label for the regulators node, since
-any reference should be against the individual regulator sub-nodes.
+Reintroducing this mechanism fixes presence detection for certain card
+readers, which with the current driver, will taken approximately 20
+seconds to enter S3 as `mmc_rescan` has to be frozen.
 
-Fixes: 16ea61fc5614 ("arm64: dts: mt8173-evb: Add PMIC support")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20241210092614.3951748-2-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 00d8521dcd23 ("staging: remove rts5139 driver code")
+Cc: stable@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sean Rhodes <sean@starlabs.systems>
+Link: https://lore.kernel.org/r/20241119085815.11769-1-sean@starlabs.systems
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8173-evb.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/cardreader/rtsx_usb.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8173-evb.dts b/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
-index 511c16cb1d59c..9fffed0ef4bff 100644
---- a/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
-@@ -307,7 +307,7 @@
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
+--- a/drivers/misc/cardreader/rtsx_usb.c
++++ b/drivers/misc/cardreader/rtsx_usb.c
+@@ -286,6 +286,7 @@ static int rtsx_usb_get_status_with_bulk
+ int rtsx_usb_get_card_status(struct rtsx_ucr *ucr, u16 *status)
+ {
+ 	int ret;
++	u8 interrupt_val = 0;
+ 	u16 *buf;
  
--		mt6397regulator: mt6397regulator {
-+		regulators {
- 			compatible = "mediatek,mt6397-regulator";
+ 	if (!status)
+@@ -308,6 +309,20 @@ int rtsx_usb_get_card_status(struct rtsx
+ 		ret = rtsx_usb_get_status_with_bulk(ucr, status);
+ 	}
  
- 			mt6397_vpca15_reg: buck_vpca15 {
--- 
-2.39.5
-
++	rtsx_usb_read_register(ucr, CARD_INT_PEND, &interrupt_val);
++	/* Cross check presence with interrupts */
++	if (*status & XD_CD)
++		if (!(interrupt_val & XD_INT))
++			*status &= ~XD_CD;
++
++	if (*status & SD_CD)
++		if (!(interrupt_val & SD_INT))
++			*status &= ~SD_CD;
++
++	if (*status & MS_CD)
++		if (!(interrupt_val & MS_INT))
++			*status &= ~MS_CD;
++
+ 	/* usb_control_msg may return positive when success */
+ 	if (ret < 0)
+ 		return ret;
 
 
