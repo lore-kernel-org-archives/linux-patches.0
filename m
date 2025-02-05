@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F081547D8;
-	Wed,  5 Feb 2025 15:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03BE19DF41;
+	Wed,  5 Feb 2025 15:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768449; cv=none; b=kdN1CHqp8YDfSKkf9xxy96ddzB6wShrCf/SBZELpXqMYDXyFdtzJD31VVl9Dn0a7eoYwi+epuYhVxE/xpnEauunBqFwmf/UizJAgIN8kAMPBOlXLrdeQmnndhLwssnPf6lnsq6t6VmjTq2a34KMVGWTG2+63yMQ92ESUSmAstPQ=
+	t=1738768453; cv=none; b=gFmVjRjJEGr0P0xnkKM/B7C1cxWgg1hDg5lUEUzWAuva9haQ9I6wqSPGu04HokgfViiMYYrn691evz1UxR9sXNIHjoST8Lhtr0kU1J+d4hFIyZu/E8w4y2APQ8QFKCDpcdfFDKw4Rko4zuPhTdfcjiMB7rVkXLl4obVXUn7Ke7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768449; c=relaxed/simple;
-	bh=K5KvwvHkPmZfwgLDi3SR3Kj2UTwppy01HjvzeXScF+E=;
+	s=arc-20240116; t=1738768453; c=relaxed/simple;
+	bh=ftkbrEl863TRcoOPlX8Yr1oSiSkwxb22E1S1Zvb0u/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VlFGDacV/27iHZZD78HuyWsJFpXk6TS7uGA2+Nef0sXTs74mGujR6H6RGDe+f5fDdLUimWP927AD1amNJOd3Q/aI+eb9hRqF0xWJt7d4mNSgUwHKrnfGhT898KJPCh1Y1lLfNkPZg1g1kjiHL6Fb98ZqhFywMv0YOFeZXx1cINY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpLDqcMl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SokT7AVqRa1ChA9lLpCzBqe2Qbr9zyNqmfZhIqLoIMWZv2G8/935d9cRGOFmMFH563GA3KPL+2fqOlHXWuZ7wI9zG4rUr5GsdXkA71lZen10zyDRWix8+dCeNpxR/yYB9TQPQA4sadJtul/ShKhWOlNCU7F+w7uPJKoqYVV47YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVALwXDs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpLDqcMl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FE2C4CED1;
-	Wed,  5 Feb 2025 15:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVALwXDs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D9DC4CED1;
+	Wed,  5 Feb 2025 15:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768449;
-	bh=K5KvwvHkPmZfwgLDi3SR3Kj2UTwppy01HjvzeXScF+E=;
+	s=korg; t=1738768453;
+	bh=ftkbrEl863TRcoOPlX8Yr1oSiSkwxb22E1S1Zvb0u/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZpLDqcMlz87D8IkrgzGhqsCHUjbD+Ynloli8SGbBiCgIUkA8NRVgPLqmHbk70KPns
-	 0yHDS+eW8q4dzRi0z0qkZeQzF9zRQ7Y/rKVn9VMcIsV88G7T9vOSfFp79uKm+reslm
-	 fyS/QRQpwdZwKxfLHvEQDr3MWVZ+Vw7Jy38g6qQQ=
+	b=cVALwXDsOkvUmhOAh2kpgq7LfGvCs80A3PywLCKQjEEfcIis35HT9ZYI1RcuoyujX
+	 LOFEFlvf/z6U+IhS7A4MhwOBphHOa8CO0/CQqs9GsonIk9n+Gcspq0rAV7uRkO82c6
+	 Zd+EQYMi39XqonybzDwc14tglNu+clFonazvza08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 561/623] io_uring/register: use atomic_read/write for sq_flags migration
-Date: Wed,  5 Feb 2025 14:45:03 +0100
-Message-ID: <20250205134517.680263165@linuxfoundation.org>
+Subject: [PATCH 6.13 562/623] ASoC: amd: acp: Fix possible deadlock
+Date: Wed,  5 Feb 2025 14:45:04 +0100
+Message-ID: <20250205134517.718523119@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,42 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Daniel Baluta <daniel.baluta@nxp.com>
 
-[ Upstream commit a23ad06bfee5e51cd9e51aebf11401e7b4b5d00a ]
+[ Upstream commit 3ff53862c322aa7bb115d84348d5a641dc905d87 ]
 
-A previous commit changed all of the migration from the old to the new
-ring for resizing to use READ/WRITE_ONCE. However, ->sq_flags is an
-atomic_t, and while most archs won't complain on this, some will indeed
-flag this:
+On error path, function acp_i2s_set_tdm_slot returns without releasing
+the lock and this could result in potential deadlocks in the future.
 
-io_uring/register.c:554:9: sparse: sparse: cast to non-scalar
-io_uring/register.c:554:9: sparse: sparse: cast from non-scalar
+Error reported by sparse:
+sound/soc/amd/acp/acp-i2s.c:95:12: error: context imbalance in
+'acp_i2s_set_tdm_slot' - different lock contexts for basic block
 
-Just use atomic_set/atomic_read for handling this case.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501242000.A2sKqaCL-lkp@intel.com/
-Fixes: 2c5aae129f42 ("io_uring/register: document io_register_resize_rings() shared mem usage")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: cd60dec8994c ("ASoC: amd: acp: Refactor TDM slots selction based on acp revision id")
+Signed-off-by: Daniel Baluta <daniel.baluta@nxp.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20250127083422.20406-1-daniel.baluta@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/register.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/acp/acp-i2s.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/register.c b/io_uring/register.c
-index 371aec87e078c..14ece7754e4ca 100644
---- a/io_uring/register.c
-+++ b/io_uring/register.c
-@@ -553,7 +553,7 @@ static int io_register_resize_rings(struct io_ring_ctx *ctx, void __user *arg)
- 	ctx->cqe_cached = ctx->cqe_sentinel = NULL;
- 
- 	WRITE_ONCE(n.rings->sq_dropped, READ_ONCE(o.rings->sq_dropped));
--	WRITE_ONCE(n.rings->sq_flags, READ_ONCE(o.rings->sq_flags));
-+	atomic_set(&n.rings->sq_flags, atomic_read(&o.rings->sq_flags));
- 	WRITE_ONCE(n.rings->cq_flags, READ_ONCE(o.rings->cq_flags));
- 	WRITE_ONCE(n.rings->cq_overflow, READ_ONCE(o.rings->cq_overflow));
- 
+diff --git a/sound/soc/amd/acp/acp-i2s.c b/sound/soc/amd/acp/acp-i2s.c
+index 1f59ee248771c..89e99ed4275a2 100644
+--- a/sound/soc/amd/acp/acp-i2s.c
++++ b/sound/soc/amd/acp/acp-i2s.c
+@@ -181,6 +181,7 @@ static int acp_i2s_set_tdm_slot(struct snd_soc_dai *dai, u32 tx_mask, u32 rx_mas
+ 			break;
+ 		default:
+ 			dev_err(dev, "Unknown chip revision %d\n", chip->acp_rev);
++			spin_unlock_irq(&adata->acp_lock);
+ 			return -EINVAL;
+ 		}
+ 	}
 -- 
 2.39.5
 
