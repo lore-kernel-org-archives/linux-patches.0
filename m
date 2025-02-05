@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3637113C9C4;
-	Wed,  5 Feb 2025 13:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6001487DC;
+	Wed,  5 Feb 2025 13:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763573; cv=none; b=eB+zwyWmEoVkMZCdEPH/LTMq6sIPXmSfOE1KHOsBaIUsrrEtjfKi2NDWvWt6Y/t9CTLXASJf1IvCN9XwtG/P3J76uxFdv7jOCYRKgVw+MtbKbXP/71sKPYErrX+CYj6MkoIsSVB8+UBfmULMbONw3Z6FYOwOeiDCpWSusjSb8oE=
+	t=1738763576; cv=none; b=aSsyw4GoFAMsBMDxboPcLl9c5HUNdSo1iY/3gVop4XQ0ce3ZoFEsGytYoAqmbjXQ6VvQpUfZNtmnpYpjfnDt6oi4r4BwpSwrU+oezTs2rrrg7hixvvaQ0bd6NIbgrut91ZiMERGT76v32LSLuUTZpEpW2ESHSwwKdjYpTJ19j/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763573; c=relaxed/simple;
-	bh=PR9M1J7d5kBvyD+62HfBZVegOeWpcFrfEzoBHbcEGRU=;
+	s=arc-20240116; t=1738763576; c=relaxed/simple;
+	bh=SEc7ZabdlgZO1n6a7mZAnUtg+LVUP6SP4y0rI2dFbas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=etKJ39hObFpN6skG8tJDWZfIqP8gZ+kaQzUfAYHMmubmB9DnjAc0+zTl/i8r04zp1Y2NMzQ2g3gu7JCQLybS6VSvEuYOcieTog+50YhvFMd4aV4kq1sW7RVnbHOL10db3xoLubr34/bCkjj0f4sg/Zz5l8xohKuZP0HVNVNajZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TelXgU1x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cuYPd4zBQhKzM0O/o2q3UpN0504qqcl5Gpv8GhiL6mH2oS9ItUsCoFICCwh4outWysBnZsB2v57D7dYrvsBCmVELCMMQRDZXqgmWWH35n1sSjeMNdil+qpcXd0LYCO+OucGiwFhl7oIfOvFmrZjogwF8gIf9yCvpaFCst4QklfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KR0OSh+W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TelXgU1x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D23C4CEE2;
-	Wed,  5 Feb 2025 13:52:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KR0OSh+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184AFC4CED6;
+	Wed,  5 Feb 2025 13:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763573;
-	bh=PR9M1J7d5kBvyD+62HfBZVegOeWpcFrfEzoBHbcEGRU=;
+	s=korg; t=1738763576;
+	bh=SEc7ZabdlgZO1n6a7mZAnUtg+LVUP6SP4y0rI2dFbas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TelXgU1xxnzkTHfBvwFjCrDJnN+9duoTesP3YAenaxGdKsbnf8hzvOmwvkWyu91so
-	 q5cWyyq9EUIpvVYlXjOkIARlZakZ92YmsvxYBbU2JtuHyMDEjBLGI+L+hA2xhsi6NK
-	 kAOd7j1xoK9zxhMVRgd1dDiOPPYMnn880OtDo9+0=
+	b=KR0OSh+WAafn0Xa+BkAIIYvYs0fDYaLDPQSw/SYihuIrToh3x4s+CZxUQPZyvm6vf
+	 pc/RumPxhTRHzn8Y5jAQ3Z9rUhFc4HPfS0HT6cE7mCvkDYa2sI3igVdFmx4j5aoDbb
+	 RkQsvXL5DpczLlz6pWwHI/2Lo+SGEELPPP2qvsEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/393] gpio: pca953x: Drop unused fields in struct pca953x_platform_data
-Date: Wed,  5 Feb 2025 14:40:02 +0100
-Message-ID: <20250205134423.469522813@linuxfoundation.org>
+Subject: [PATCH 6.12 032/590] x86/topology: Use x86_sched_itmt_flags for PKG domain unconditionally
+Date: Wed,  5 Feb 2025 14:36:27 +0100
+Message-ID: <20250205134456.479453348@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,172 +48,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-[ Upstream commit 2f4d3e293392571e02b106c8b431b638bd029276 ]
+[ Upstream commit e1bc02646527fc1ed74f00eb599b2b74d49671c7 ]
 
-New code should solely use firmware nodes for the specifics and
-not any callbacks.
+x86_sched_itmt_flags() returns SD_ASYM_PACKING if ITMT support is
+enabled by the system. Without ITMT support being enabled, it returns 0
+similar to current x86_die_flags() on non-Hybrid systems
+(!X86_HYBRID_CPU and !X86_FEATURE_AMD_HETEROGENEOUS_CORES)
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Stable-dep-of: 7cef813a91c4 ("gpio: pca953x: log an error when failing to get the reset GPIO")
+On Intel systems that enable ITMT support, either the MC domain
+coincides with the PKG domain, or in case of multiple MC groups
+within a PKG domain, either Sub-NUMA Cluster (SNC) is enabled or the
+processor features Hybrid core layout (X86_HYBRID_CPU) which leads to
+three distinct possibilities:
+
+o If PKG and MC domains coincide, PKG domain is degenerated by
+  sd_parent_degenerate() when building sched domain topology.
+
+o If SNC is enabled, PKG domain is never added since
+  "x86_has_numa_in_package" is set and the topology will instead contain
+  NODE and NUMA domains.
+
+o On X86_HYBRID_CPU which contains multiple MC groups within the PKG,
+  the PKG domain requires x86_sched_itmt_flags().
+
+Thus, on Intel systems that contains multiple MC groups within the PKG
+and enables ITMT support, the PKG domain requires
+x86_sched_itmt_flags(). In all other cases PKG domain is either never
+added or is degenerated. Thus, returning x86_sched_itmt_flags()
+unconditionally at PKG domain on Intel systems should not lead to any
+functional changes.
+
+On AMD systems with multiple LLCs (MC groups) within a PKG domain,
+enabling ITMT support requires setting SD_ASYM_PACKING to the PKG domain
+since the core rankings are assigned PKG-wide.
+
+Core rankings on AMD processors is currently set by the amd-pstate
+driver when Preferred Core feature is supported. A subset of systems that
+support Preferred Core feature can be detected using
+X86_FEATURE_AMD_HETEROGENEOUS_CORES however, this does not cover all the
+systems that support Preferred Core ranking.
+
+Detecting Preferred Core support on AMD systems requires inspecting CPPC
+Highest Perf on all present CPUs and checking if it differs on at least
+one CPU. Previous suggestion to use a synthetic feature to detect
+Preferred Core support [1] was found to be non-trivial to implement
+since BSP alone cannot detect if Preferred Core is supported and by the
+time AP comes up, alternatives are patched and setting a X86_FEATURE_*
+then is not possible.
+
+Since x86 processors enabling ITMT support that consists multiple
+non-NUMA MC groups within a PKG requires SD_ASYM_PACKING flag set at the
+PKG domain, return x86_sched_itmt_flags unconditionally for the PKG
+domain.
+
+Since x86_die_flags() would have just returned x86_sched_itmt_flags()
+after the change, remove the unnecessary wrapper and pass
+x86_sched_itmt_flags() directly as the flags function.
+
+Fixes: f3a052391822 ("cpufreq: amd-pstate: Enable amd-pstate preferred core support")
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Tim Chen <tim.c.chen@linux.intel.com>
+Link: https://lore.kernel.org/r/20241223043407.1611-6-kprateek.nayak@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pca953x.c           | 37 ++++++---------------------
- include/linux/platform_data/pca953x.h | 13 ----------
- 2 files changed, 8 insertions(+), 42 deletions(-)
+ arch/x86/kernel/smpboot.c | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index ce9a94e332801..b52548822ecc3 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -211,7 +211,6 @@ struct pca953x_chip {
- 
- 	struct i2c_client *client;
- 	struct gpio_chip gpio_chip;
--	const char *const *names;
- 	unsigned long driver_data;
- 	struct regulator *regulator;
- 
-@@ -712,7 +711,6 @@ static void pca953x_setup_gpio(struct pca953x_chip *chip, int gpios)
- 	gc->label = dev_name(&chip->client->dev);
- 	gc->parent = &chip->client->dev;
- 	gc->owner = THIS_MODULE;
--	gc->names = chip->names;
- }
- 
- #ifdef CONFIG_GPIO_PCA953X_IRQ
-@@ -1000,7 +998,7 @@ static int pca953x_irq_setup(struct pca953x_chip *chip,
+diff --git a/arch/x86/kernel/smpboot.c b/arch/x86/kernel/smpboot.c
+index b5a8f0891135b..f1fac08fdef28 100644
+--- a/arch/x86/kernel/smpboot.c
++++ b/arch/x86/kernel/smpboot.c
+@@ -495,15 +495,6 @@ static int x86_cluster_flags(void)
  }
  #endif
  
--static int device_pca95xx_init(struct pca953x_chip *chip, u32 invert)
-+static int device_pca95xx_init(struct pca953x_chip *chip)
- {
- 	DECLARE_BITMAP(val, MAX_LINE);
- 	u8 regaddr;
-@@ -1018,24 +1016,21 @@ static int device_pca95xx_init(struct pca953x_chip *chip, u32 invert)
- 	if (ret)
- 		goto out;
- 
--	/* set platform specific polarity inversion */
--	if (invert)
--		bitmap_fill(val, MAX_LINE);
--	else
--		bitmap_zero(val, MAX_LINE);
-+	/* clear polarity inversion */
-+	bitmap_zero(val, MAX_LINE);
- 
- 	ret = pca953x_write_regs(chip, chip->regs->invert, val);
- out:
- 	return ret;
- }
- 
--static int device_pca957x_init(struct pca953x_chip *chip, u32 invert)
-+static int device_pca957x_init(struct pca953x_chip *chip)
- {
- 	DECLARE_BITMAP(val, MAX_LINE);
- 	unsigned int i;
- 	int ret;
- 
--	ret = device_pca95xx_init(chip, invert);
-+	ret = device_pca95xx_init(chip);
- 	if (ret)
- 		goto out;
- 
-@@ -1056,9 +1051,8 @@ static int pca953x_probe(struct i2c_client *client)
- {
- 	struct pca953x_platform_data *pdata;
- 	struct pca953x_chip *chip;
--	int irq_base = 0;
-+	int irq_base;
- 	int ret;
--	u32 invert = 0;
- 	struct regulator *reg;
- 	const struct regmap_config *regmap_config;
- 
-@@ -1070,8 +1064,6 @@ static int pca953x_probe(struct i2c_client *client)
- 	if (pdata) {
- 		irq_base = pdata->irq_base;
- 		chip->gpio_start = pdata->gpio_base;
--		invert = pdata->invert;
--		chip->names = pdata->names;
- 	} else {
- 		struct gpio_desc *reset_gpio;
- 
-@@ -1160,10 +1152,10 @@ static int pca953x_probe(struct i2c_client *client)
+-static int x86_die_flags(void)
+-{
+-	if (cpu_feature_enabled(X86_FEATURE_HYBRID_CPU) ||
+-	    cpu_feature_enabled(X86_FEATURE_AMD_HETEROGENEOUS_CORES))
+-		return x86_sched_itmt_flags();
+-
+-	return 0;
+-}
+-
+ /*
+  * Set if a package/die has multiple NUMA nodes inside.
+  * AMD Magny-Cours, Intel Cluster-on-Die, and Intel
+@@ -539,7 +530,7 @@ static void __init build_sched_topology(void)
  	 */
- 	if (PCA_CHIP_TYPE(chip->driver_data) == PCA957X_TYPE) {
- 		chip->regs = &pca957x_regs;
--		ret = device_pca957x_init(chip, invert);
-+		ret = device_pca957x_init(chip);
- 	} else {
- 		chip->regs = &pca953x_regs;
--		ret = device_pca95xx_init(chip, invert);
-+		ret = device_pca95xx_init(chip);
+ 	if (!x86_has_numa_in_package) {
+ 		x86_topology[i++] = (struct sched_domain_topology_level){
+-			cpu_cpu_mask, x86_die_flags, SD_INIT_NAME(PKG)
++			cpu_cpu_mask, x86_sched_itmt_flags, SD_INIT_NAME(PKG)
+ 		};
  	}
- 	if (ret)
- 		goto err_exit;
-@@ -1176,13 +1168,6 @@ static int pca953x_probe(struct i2c_client *client)
- 	if (ret)
- 		goto err_exit;
  
--	if (pdata && pdata->setup) {
--		ret = pdata->setup(client, chip->gpio_chip.base,
--				   chip->gpio_chip.ngpio, pdata->context);
--		if (ret < 0)
--			dev_warn(&client->dev, "setup failed, %d\n", ret);
--	}
--
- 	return 0;
- 
- err_exit:
-@@ -1192,14 +1177,8 @@ static int pca953x_probe(struct i2c_client *client)
- 
- static void pca953x_remove(struct i2c_client *client)
- {
--	struct pca953x_platform_data *pdata = dev_get_platdata(&client->dev);
- 	struct pca953x_chip *chip = i2c_get_clientdata(client);
- 
--	if (pdata && pdata->teardown) {
--		pdata->teardown(client, chip->gpio_chip.base,
--				chip->gpio_chip.ngpio, pdata->context);
--	}
--
- 	regulator_disable(chip->regulator);
- }
- 
-diff --git a/include/linux/platform_data/pca953x.h b/include/linux/platform_data/pca953x.h
-index 96c1a14ab3657..3c3787c4d96ca 100644
---- a/include/linux/platform_data/pca953x.h
-+++ b/include/linux/platform_data/pca953x.h
-@@ -11,21 +11,8 @@ struct pca953x_platform_data {
- 	/* number of the first GPIO */
- 	unsigned	gpio_base;
- 
--	/* initial polarity inversion setting */
--	u32		invert;
--
- 	/* interrupt base */
- 	int		irq_base;
--
--	void		*context;	/* param to setup/teardown */
--
--	int		(*setup)(struct i2c_client *client,
--				unsigned gpio, unsigned ngpio,
--				void *context);
--	void		(*teardown)(struct i2c_client *client,
--				unsigned gpio, unsigned ngpio,
--				void *context);
--	const char	*const *names;
- };
- 
- #endif /* _LINUX_PCA953X_H */
 -- 
 2.39.5
 
