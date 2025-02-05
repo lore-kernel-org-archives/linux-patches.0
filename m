@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638941537AC;
-	Wed,  5 Feb 2025 14:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50C71519BE;
+	Wed,  5 Feb 2025 14:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765128; cv=none; b=qGZ1P3HKZm9Nxvqx7OHQWP4jfTLgpa3dQr9qo7PPVWQIr+7+Qurj44dKSdrnKDO8/5q+Zy/+Fm2Ily8q53ir4bQVmCJC/3uIj1/9hwjrYv8WRSxHd+9L1POWrCirFg2i36H7IYCW4Z6WoEixnEoELCLzGubT/c+f/0mdZ5spJhs=
+	t=1738765131; cv=none; b=raeb5EjFZvA59epx1Lchb75vNpKyW6X1s2a4jy+3HmvXmk/+SYTXNwZK7WL2ZF4tvzC9Z842Iy/+yDOFlP+qFRk9DSemq/Q+vVaGINVCIHH300wEUipugCznPOhW46lHVe+esKPLg5hREDYAFB+XrPi+EfmC6TG8Z8qyHJNTY4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765128; c=relaxed/simple;
-	bh=BHzrMhvwpd5TxoWmZLH8G4j0k8YN36xo0K0m3/Z97Rc=;
+	s=arc-20240116; t=1738765131; c=relaxed/simple;
+	bh=9bbhJLKCHdUX/NivN5NcYAMbkEJSCWOItz+xkAvAD/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVgWExLNqexSEaWu0Y9/pq7CaZ6ul8hIEp9eMXuDbRNAzHONAVOhIr9sZUxrR3Uy/UTlcsBmM/6HBNOUJxc4tBnboecdxyom3mjO9mpv7U8iTN1OQwmXe6g1b/FhoBh7GKr8+C/9SJ8GgGTYDkOlNthWUA6z2eo2HEdAgWWe6Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byLRKIXA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BE5gszRTT4htlUscPTUhciYPadGwFzZTQFlTMnyY5Zb139Efgx3+TGukvXcsdjIlVELM4vg8/MzTq6hLWSM7oufnr/L8hrtzdnGWuMphPat9s9Nv4md5k2/E2rXWdMArJDYFPC+egqm3yyglNo2Mu8UkyZOhnwMt1YYOZIssqSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VD1kueKs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byLRKIXA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06EAC4CED1;
-	Wed,  5 Feb 2025 14:18:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VD1kueKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41938C4CED1;
+	Wed,  5 Feb 2025 14:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765128;
-	bh=BHzrMhvwpd5TxoWmZLH8G4j0k8YN36xo0K0m3/Z97Rc=;
+	s=korg; t=1738765131;
+	bh=9bbhJLKCHdUX/NivN5NcYAMbkEJSCWOItz+xkAvAD/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=byLRKIXAJ6OdSkIidXDeQu0XCmekleWWDuuhD+vSQ7lx0T4wiadAruOsDmCh5f/DI
-	 EJFmzk4K9tmdNyx03K7HYk0cxIzFBqzyil/s3nluw/+wn6uc7wXeVIaJ5REnbGGK+M
-	 lZO2q9VCtFmL8/NwcNoDiM7Fwu6PjLu4T+0WYNLI=
+	b=VD1kueKs4Jqiw9sFg4B7+YWil6t4CoVYkRlflOHWA0bf/cxTwsXNZ7FCRPAq3ewyg
+	 uqpfjq1kHQrF8/5s/D90qu1uKRbFlswhBGJ97V7uXTTSB960WRhjMhfBy2xxvMx9AO
+	 O6PerywRIoub4qnTbR4ejUOXxR013WuedoYAgvsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 192/590] wifi: mt76: mt7925: Update secondary link PS flow
-Date: Wed,  5 Feb 2025 14:39:07 +0100
-Message-ID: <20250205134502.625802872@linuxfoundation.org>
+Subject: [PATCH 6.13 127/623] cpufreq: qcom: Fix qcom_cpufreq_hw_recalc_rate() to query LUT if LMh IRQ is not available
+Date: Wed,  5 Feb 2025 14:37:49 +0100
+Message-ID: <20250205134501.085011055@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,136 +47,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 8dafab9c4116a6a4fd870be03a3d9b66771dc5a8 ]
+[ Upstream commit 85d8b11351a8f15d6ec7a5e97909861cb3b6bcec ]
 
-Update the power-saving flow for secondary links.
+Currently, qcom_cpufreq_hw_recalc_rate() returns the LMh throttled
+frequency for the domain even if LMh IRQ is not available. But as per
+qcom_cpufreq_hw_get(), the driver has to query LUT entries to get the
+actual frequency of the domain. So do the same in
+qcom_cpufreq_hw_recalc_rate().
 
-Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/20241211011926.5002-13-sean.wang@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+While doing so, refactor the existing qcom_cpufreq_hw_get() function so
+that qcom_cpufreq_hw_recalc_rate() can make use of the existing code and
+avoid code duplication. This also requires setting the
+qcom_cpufreq_data::policy even if LMh IRQ is not available.
+
+Fixes: 4370232c727b ("cpufreq: qcom-hw: Add CPU clock provider support")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7925/main.c  |  7 ++++++
- .../net/wireless/mediatek/mt76/mt7925/mcu.c   | 25 ++++++-------------
- .../net/wireless/mediatek/mt76/mt7925/mcu.h   |  3 +++
- drivers/net/wireless/mediatek/mt76/mt792x.h   |  7 ++++--
- 4 files changed, 22 insertions(+), 20 deletions(-)
+ drivers/cpufreq/qcom-cpufreq-hw.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index a78aae7d10886..dcdb9bcff3c40 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -1903,6 +1903,13 @@ static void mt7925_link_info_changed(struct ieee80211_hw *hw,
- 	if (changed & (BSS_CHANGED_QOS | BSS_CHANGED_BEACON_ENABLED))
- 		mt7925_mcu_set_tx(dev, info);
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 98129565acb8e..c145ab7b0bb21 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -143,14 +143,12 @@ static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
+ }
  
-+	if (changed & BSS_CHANGED_BSSID) {
-+		if (ieee80211_vif_is_mld(vif) &&
-+		    hweight16(mvif->valid_links) == 2)
-+			/* Indicate the secondary setup done */
-+			mt7925_mcu_uni_bss_bcnft(dev, info, true);
-+	}
+ /* Get the frequency requested by the cpufreq core for the CPU */
+-static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
++static unsigned int qcom_cpufreq_get_freq(struct cpufreq_policy *policy)
+ {
+ 	struct qcom_cpufreq_data *data;
+ 	const struct qcom_cpufreq_soc_data *soc_data;
+-	struct cpufreq_policy *policy;
+ 	unsigned int index;
+ 
+-	policy = cpufreq_cpu_get_raw(cpu);
+ 	if (!policy)
+ 		return 0;
+ 
+@@ -163,12 +161,10 @@ static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
+ 	return policy->freq_table[index].frequency;
+ }
+ 
+-static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
++static unsigned int __qcom_cpufreq_hw_get(struct cpufreq_policy *policy)
+ {
+ 	struct qcom_cpufreq_data *data;
+-	struct cpufreq_policy *policy;
+ 
+-	policy = cpufreq_cpu_get_raw(cpu);
+ 	if (!policy)
+ 		return 0;
+ 
+@@ -177,7 +173,12 @@ static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
+ 	if (data->throttle_irq >= 0)
+ 		return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
+ 
+-	return qcom_cpufreq_get_freq(cpu);
++	return qcom_cpufreq_get_freq(policy);
++}
 +
- 	mt792x_mutex_release(dev);
++static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
++{
++	return __qcom_cpufreq_hw_get(cpufreq_cpu_get_raw(cpu));
  }
  
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index 4577e838f5872..0976f3dffbe46 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -1362,7 +1362,7 @@ int mt7925_mcu_uni_bss_ps(struct mt792x_dev *dev,
- 				 &ps_req, sizeof(ps_req), true);
+ static unsigned int qcom_cpufreq_hw_fast_switch(struct cpufreq_policy *policy,
+@@ -363,7 +364,7 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
+ 	 * If h/w throttled frequency is higher than what cpufreq has requested
+ 	 * for, then stop polling and switch back to interrupt mechanism.
+ 	 */
+-	if (throttled_freq >= qcom_cpufreq_get_freq(cpu))
++	if (throttled_freq >= qcom_cpufreq_get_freq(cpufreq_cpu_get_raw(cpu)))
+ 		enable_irq(data->throttle_irq);
+ 	else
+ 		mod_delayed_work(system_highpri_wq, &data->throttle_work,
+@@ -441,7 +442,6 @@ static int qcom_cpufreq_hw_lmh_init(struct cpufreq_policy *policy, int index)
+ 		return data->throttle_irq;
+ 
+ 	data->cancel_throttle = false;
+-	data->policy = policy;
+ 
+ 	mutex_init(&data->throttle_lock);
+ 	INIT_DEFERRABLE_WORK(&data->throttle_work, qcom_lmh_dcvs_poll);
+@@ -552,6 +552,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+ 
+ 	policy->driver_data = data;
+ 	policy->dvfs_possible_from_any_cpu = true;
++	data->policy = policy;
+ 
+ 	ret = qcom_cpufreq_hw_read_lut(cpu_dev, policy);
+ 	if (ret) {
+@@ -622,7 +623,7 @@ static unsigned long qcom_cpufreq_hw_recalc_rate(struct clk_hw *hw, unsigned lon
+ {
+ 	struct qcom_cpufreq_data *data = container_of(hw, struct qcom_cpufreq_data, cpu_clk);
+ 
+-	return qcom_lmh_get_throttle_freq(data);
++	return __qcom_cpufreq_hw_get(data->policy) * HZ_PER_KHZ;
  }
  
--static int
-+int
- mt7925_mcu_uni_bss_bcnft(struct mt792x_dev *dev,
- 			 struct ieee80211_bss_conf *link_conf, bool enable)
- {
-@@ -1923,32 +1923,21 @@ int mt7925_mcu_set_beacon_filter(struct mt792x_dev *dev,
- {
- #define MT7925_FIF_BIT_CLR		BIT(1)
- #define MT7925_FIF_BIT_SET		BIT(0)
--	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
--	unsigned long valid = ieee80211_vif_is_mld(vif) ?
--				      mvif->valid_links : BIT(0);
--	struct ieee80211_bss_conf *bss_conf;
- 	int err = 0;
--	int i;
- 
- 	if (enable) {
--		for_each_set_bit(i, &valid, IEEE80211_MLD_MAX_NUM_LINKS) {
--			bss_conf = mt792x_vif_to_bss_conf(vif, i);
--			err = mt7925_mcu_uni_bss_bcnft(dev, bss_conf, true);
--			if (err < 0)
--				return err;
--		}
-+		err = mt7925_mcu_uni_bss_bcnft(dev, &vif->bss_conf, true);
-+		if (err < 0)
-+			return err;
- 
- 		return mt7925_mcu_set_rxfilter(dev, 0,
- 					       MT7925_FIF_BIT_SET,
- 					       MT_WF_RFCR_DROP_OTHER_BEACON);
- 	}
- 
--	for_each_set_bit(i, &valid, IEEE80211_MLD_MAX_NUM_LINKS) {
--		bss_conf = mt792x_vif_to_bss_conf(vif, i);
--		err = mt7925_mcu_set_bss_pm(dev, bss_conf, false);
--		if (err)
--			return err;
--	}
-+	err = mt7925_mcu_set_bss_pm(dev, &vif->bss_conf, false);
-+	if (err < 0)
-+		return err;
- 
- 	return mt7925_mcu_set_rxfilter(dev, 0,
- 				       MT7925_FIF_BIT_CLR,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.h
-index ac53bdc993322..31bb8ed2ec513 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.h
-@@ -643,4 +643,7 @@ int mt7925_mcu_set_chctx(struct mt76_phy *phy, struct mt76_vif *mvif,
- int mt7925_mcu_set_rate_txpower(struct mt76_phy *phy);
- int mt7925_mcu_update_arp_filter(struct mt76_dev *dev,
- 				 struct ieee80211_bss_conf *link_conf);
-+int
-+mt7925_mcu_uni_bss_bcnft(struct mt792x_dev *dev,
-+			 struct ieee80211_bss_conf *link_conf, bool enable);
- #endif
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x.h b/drivers/net/wireless/mediatek/mt76/mt792x.h
-index ab12616ec2b87..2b8b9b2977f74 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x.h
-@@ -241,6 +241,7 @@ static inline struct mt792x_bss_conf *
- mt792x_vif_to_link(struct mt792x_vif *mvif, u8 link_id)
- {
- 	struct ieee80211_vif *vif;
-+	struct mt792x_bss_conf *bss_conf;
- 
- 	vif = container_of((void *)mvif, struct ieee80211_vif, drv_priv);
- 
-@@ -248,8 +249,10 @@ mt792x_vif_to_link(struct mt792x_vif *mvif, u8 link_id)
- 	    link_id >= IEEE80211_LINK_UNSPECIFIED)
- 		return &mvif->bss_conf;
- 
--	return rcu_dereference_protected(mvif->link_conf[link_id],
--		lockdep_is_held(&mvif->phy->dev->mt76.mutex));
-+	bss_conf = rcu_dereference_protected(mvif->link_conf[link_id],
-+					     lockdep_is_held(&mvif->phy->dev->mt76.mutex));
-+
-+	return bss_conf ? bss_conf : &mvif->bss_conf;
- }
- 
- static inline struct mt792x_link_sta *
+ static const struct clk_ops qcom_cpufreq_hw_clk_ops = {
 -- 
 2.39.5
 
