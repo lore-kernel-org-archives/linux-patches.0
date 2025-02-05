@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1738A154BE5;
-	Wed,  5 Feb 2025 13:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774961537AC;
+	Wed,  5 Feb 2025 13:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763901; cv=none; b=jd56CI77IToJChF2q14a+nmFkpSyhQMj3uP4d93i8zoORKQZ+C6FvH3nOXxqkTpM7w4lKv7k4bGmNygCDNAoSu66Qej+xyVr1/vbM0LNWerMa6ZRuNm4QIaoD7B7AizzlR3iW/T64KuaG4bvkP17O3C1tEhoGo7WSgDptWVnQaM=
+	t=1738763904; cv=none; b=fuqXpXzTvQSzdc8t/q1WYuDcORYn3zpbXdxXqTaO62xed2r/jpABVATcuexhZPTic9lsBBlECNcHjMDc+G4X4omS42zTPoiMfROhS74zMd2QnP3Ri7yqpzFZ9qewKSTBvhTNVlTIm6JeGlvtRxG2qXIEbDbwkGKnSnPygk66nxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763901; c=relaxed/simple;
-	bh=bmDxquzoLHrKpwVgDsNwBxQ22uhnnHJzYtHalr/QQJs=;
+	s=arc-20240116; t=1738763904; c=relaxed/simple;
+	bh=tSpLGOLlpxN/nXWUUEh93rZ3i2zjHOu0/A9142M49m8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XxGvB4u7s28Zu/0AfVVZfwuW55wwSx/4rekh4kJGwuhsEtCvo6CYFVYmRqgAoDpjJKiZLoFlJP8sCxtHBXmgOkuE9yr4vPnm6rIicY7T6GFfgETlN4/Ls2XMRZjtR7YHgHXl2Z/7GU4EXzWdsp+6X/kvdsnMauAJvEYGYpoNF+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NpQdCAFe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BkHP8eUeLoA/hhZoq0DOR5mnyu0UFeynL7EbkXyOcYKbW2Vvoh68+XGOB7qekMINyXYqezg8b5HRNOm/EQ4A1Ev9+SGrMmclx1KfwdGhEIm2Ue2l5u6LuaRggbhijNScUpOwy1+YnPIh+JVlMw+Ai3cggbJrDFGrifwEaE5V07I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4oD8Uuu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NpQdCAFe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9CCC4CED1;
-	Wed,  5 Feb 2025 13:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4oD8Uuu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D850DC4CED1;
+	Wed,  5 Feb 2025 13:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763901;
-	bh=bmDxquzoLHrKpwVgDsNwBxQ22uhnnHJzYtHalr/QQJs=;
+	s=korg; t=1738763904;
+	bh=tSpLGOLlpxN/nXWUUEh93rZ3i2zjHOu0/A9142M49m8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NpQdCAFeZ/d0dxAbYjtVi6liy6iEBxa4o89hAqjSHYUenbathuMJZPfpv6q9rykMF
-	 W3yMpt+YAocrfdlru3yKJNofZ6TkFudDf116DB92S9hC4+eSp6rSQbIHU192iCS7zD
-	 TIY/zzK5X2QL5tjuKRt5AmnF/xctLV5P8WGq3Eiw=
+	b=h4oD8UuumeOKG9+09D3PKXKZFKXtgyokjRACZwq7436eRns4KrXipuN189386b2xN
+	 KXI83jlC0NmN6SSWNOKOW/jwA305m24qXL2U7X76RkEW3dK02AXMyypn70I4KY9066
+	 TWchVl6MzAV9+p/h0bn5Ono9knWHxVUonuyw+0zA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiadong Zhu <Jiadong.Zhu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jonathan Kim <jonathan.kim@amd.com>,
+	xueqin Luo <luoxueqin@kylinos.cn>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 071/590] Revert "drm/amdgpu/gfx9: put queue resets behind a debug option"
-Date: Wed,  5 Feb 2025 14:37:06 +0100
-Message-ID: <20250205134457.973491285@linuxfoundation.org>
+Subject: [PATCH 6.6 118/393] wifi: mt76: mt7915: fix overflows seen when writing limit attributes
+Date: Wed,  5 Feb 2025 14:40:37 +0100
+Message-ID: <20250205134424.805064406@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,85 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit 32f00289698189b813942f37626218fd473e7302 ]
+[ Upstream commit 64d571742b0ae44eee5efd51e2d4a09d7f6782fc ]
 
-This reverts commit 7c1a2d8aba6cadde0cc542b2d805edc0be667e79.
+DIV_ROUND_CLOSEST() after kstrtoul() results in an overflow if a large
+number such as 18446744073709551615 is provided by the user.
+Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
+This commit was inspired by commit: 57ee12b6c514.
 
-Extended validation has completed successfully, so enable
-these features by default.
-
-Acked-by: Jiadong Zhu <Jiadong.Zhu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Jonathan Kim <jonathan.kim@amd.com>
-Cc: Jiadong Zhu <Jiadong.Zhu@amd.com>
-Stable-dep-of: 86bde64cb795 ("drm/amdgpu: fix gpu recovery disable with per queue reset")
+Fixes: 02ee68b95d81 ("mt76: mt7915: add control knobs for thermal throttling")
+Signed-off-by: xueqin Luo <luoxueqin@kylinos.cn>
+Link: https://patch.msgid.link/20241202031917.23741-3-luoxueqin@kylinos.cn
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v9.c | 4 ----
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c             | 4 ----
- drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c           | 6 ------
- 3 files changed, 14 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v9.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v9.c
-index 3bc0cbf45bc59..353ac458c834b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v9.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gfx_v9.c
-@@ -1133,10 +1133,6 @@ uint64_t kgd_gfx_v9_hqd_get_pq_addr(struct amdgpu_device *adev,
- 	uint32_t low, high;
- 	uint64_t queue_addr = 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+index 5ff260319282c..28f84220d50f0 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+@@ -82,7 +82,7 @@ static ssize_t mt7915_thermal_temp_store(struct device *dev,
+ 		return ret;
  
--	if (!adev->debug_exp_resets &&
--	    !adev->gfx.num_gfx_rings)
--		return 0;
--
- 	kgd_gfx_v9_acquire_queue(adev, pipe_id, queue_id, inst);
- 	amdgpu_gfx_rlc_enter_safe_mode(adev, inst);
+ 	mutex_lock(&phy->dev->mt76.mutex);
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 60, 130);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 60 * 1000, 130 * 1000), 1000);
  
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-index e7cd51c95141e..e2501c98e107d 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -7251,10 +7251,6 @@ static int gfx_v9_0_reset_kcq(struct amdgpu_ring *ring,
- 	unsigned long flags;
- 	int i, r;
- 
--	if (!adev->debug_exp_resets &&
--	    !adev->gfx.num_gfx_rings)
--		return -EINVAL;
--
- 	if (amdgpu_sriov_vf(adev))
- 		return -EINVAL;
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
-index ffdb966c4127e..5dc3454d7d361 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
-@@ -3062,9 +3062,6 @@ static void gfx_v9_4_3_ring_soft_recovery(struct amdgpu_ring *ring,
- 	struct amdgpu_device *adev = ring->adev;
- 	uint32_t value = 0;
- 
--	if (!adev->debug_exp_resets)
--		return;
--
- 	value = REG_SET_FIELD(value, SQ_CMD, CMD, 0x03);
- 	value = REG_SET_FIELD(value, SQ_CMD, MODE, 0x01);
- 	value = REG_SET_FIELD(value, SQ_CMD, CHECK_VMID, 1);
-@@ -3580,9 +3577,6 @@ static int gfx_v9_4_3_reset_kcq(struct amdgpu_ring *ring,
- 	unsigned long flags;
- 	int r;
- 
--	if (!adev->debug_exp_resets)
--		return -EINVAL;
--
- 	if (amdgpu_sriov_vf(adev))
- 		return -EINVAL;
- 
+ 	if ((i - 1 == MT7915_CRIT_TEMP_IDX &&
+ 	     val > phy->throttle_temp[MT7915_MAX_TEMP_IDX]) ||
 -- 
 2.39.5
 
