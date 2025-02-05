@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C941A7DA6A;
-	Wed,  5 Feb 2025 14:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619C9347CC;
+	Wed,  5 Feb 2025 14:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765952; cv=none; b=PhcuWBLzBDb+OnU6jvtY5rzxcfnEXSaz2MPFetVgIPz8bxDDksw+VY2rRTAwyasPb0PyHHKAv5q99Qh/jM3ypMgckwKOrDIJnhh0vLK5KA0MgZYJ3o8b+RyKrmiA5X/mBrd6oohu4YHNZYmyJVbRzrElB3iSmtyLp7N6uxTnk20=
+	t=1738765956; cv=none; b=Db6QAI0AX3oTqhxkmULv6uyu1xUttp5E9zGRS+tFkp6+nYjboafXMfF3p3ROHQUSQCT3sdPLKFfSUyXlvSzUjc4g7idW6/tbsHjQk/smGu0FpkYiBbvIxrdPCoGcwaix1VoBHwA0jEl/YOE1dYqbFveLSqXmFZyDo7pcFHowAsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765952; c=relaxed/simple;
-	bh=2t1KRYrpeRJ8c0Iz/qGe9jFuE74FSkMzeekSJ+QHgJY=;
+	s=arc-20240116; t=1738765956; c=relaxed/simple;
+	bh=OpoPcNxtNv2mM+a2nkT5dqRSd3t6Cfi6/2jG0adbk/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A7nz22AYP8GQHt2OmEtxOt8MhsQsGiadVOj6cQegWtupVDzQlxGJE5Tj0dJik+/66aqHuwoBshTzG68OS7xQMI8Q85xcAhTX5i+zXP3PHbEHThdCE1tDLCTwE2yX91XFwKuDwICwwtd/dZS3EpEUuEB4ey7i8jqGXacl0bzYS8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/4wc3dD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aLq+4rJGGOWlYUkmQiify17bI8aF3bwpQQ1UHPo5rrEIaax0Q3x/zvz9qaYblFJ7u/TCHXFxVpz1HJCXzbghVkJ+ylhYOBPzn7UPz6uUoFJhPbyP+ONFmZiJOxVvD1H1QrHySBGRjt4NABa8GYS+/T/UvqIx3hCMoOZX4jPpta0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4Vd/tDx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/4wc3dD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BD9C4CED1;
-	Wed,  5 Feb 2025 14:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4Vd/tDx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40EDC4CED6;
+	Wed,  5 Feb 2025 14:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765952;
-	bh=2t1KRYrpeRJ8c0Iz/qGe9jFuE74FSkMzeekSJ+QHgJY=;
+	s=korg; t=1738765956;
+	bh=OpoPcNxtNv2mM+a2nkT5dqRSd3t6Cfi6/2jG0adbk/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/4wc3dD6LOVFPW7F/rjwSeTkbb5k4HMqfrwCpwiErUQhBfC0zMuwLWg7UsdjaMUV
-	 AIOQsLcwNio4uZpkhmozacixmz1nhuXmZM0KS84ZOPOjKHk5oZbyx1WCzRcj5smUbj
-	 hg4Q8f62kLrZdwlUgzZdT/rluC/eHRsDrENweWEY=
+	b=m4Vd/tDxm61EYm3DIImelcnO9+C6aweuHYrh17r/IWxVYumNbDv8IS4kJCgDe9TQg
+	 3K1S5vZvoRlH3QGM4AKNnI/BWrg+E55GMK5Et6chG3068serfA550VS9hfWVfeZkBZ
+	 FWbShD3FmBEli6xgkejedMIithgIQUvM/GSfJOOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Frank Li <Frank.Li@nxp.com>,
+	Luo Yifan <luoyifan@cmss.chinamobile.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 300/393] PCI: imx6: Skip controller_id generation logic for i.MX7D
-Date: Wed,  5 Feb 2025 14:43:39 +0100
-Message-ID: <20250205134431.792106521@linuxfoundation.org>
+Subject: [PATCH 6.6 315/393] tools/bootconfig: Fix the wrong format specifier
+Date: Wed,  5 Feb 2025 14:43:54 +0100
+Message-ID: <20250205134432.368851198@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -48,46 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Luo Yifan <luoyifan@cmss.chinamobile.com>
 
-[ Upstream commit f068ffdd034c93f0c768acdc87d4d2d7023c1379 ]
+[ Upstream commit f6ab7384d554ba80ff4793259d75535874b366f5 ]
 
-The i.MX7D only has one PCIe controller, so controller_id should always be
-0. The previous code is incorrect although yielding the correct result.
+Use '%u' instead of '%d' for unsigned int.
 
-Fix by removing "IMX7D" from the switch case branch.
+Link: https://lore.kernel.org/all/20241105011048.201629-1-luoyifan@cmss.chinamobile.com/
 
-Fixes: 2d8ed461dbc9 ("PCI: imx6: Add support for i.MX8MQ")
-Link: https://lore.kernel.org/r/20241126075702.4099164-5-hongxing.zhu@nxp.com
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 973780011106 ("tools/bootconfig: Suppress non-error messages")
+Signed-off-by: Luo Yifan <luoyifan@cmss.chinamobile.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/bootconfig/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 20c8f2cba4536..822a750b064b2 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -1281,7 +1281,6 @@ static int imx6_pcie_probe(struct platform_device *pdev)
- 	switch (imx6_pcie->drvdata->variant) {
- 	case IMX8MQ:
- 	case IMX8MQ_EP:
--	case IMX7D:
- 		if (dbi_base->start == IMX8MQ_PCIE2_BASE_ADDR)
- 			imx6_pcie->controller_id = 1;
+diff --git a/tools/bootconfig/main.c b/tools/bootconfig/main.c
+index 156b62a163c5a..8a48cc2536f56 100644
+--- a/tools/bootconfig/main.c
++++ b/tools/bootconfig/main.c
+@@ -226,7 +226,7 @@ static int load_xbc_from_initrd(int fd, char **buf)
+ 	/* Wrong Checksum */
+ 	rcsum = xbc_calc_checksum(*buf, size);
+ 	if (csum != rcsum) {
+-		pr_err("checksum error: %d != %d\n", csum, rcsum);
++		pr_err("checksum error: %u != %u\n", csum, rcsum);
+ 		return -EINVAL;
+ 	}
  
+@@ -395,7 +395,7 @@ static int apply_xbc(const char *path, const char *xbc_path)
+ 	xbc_get_info(&ret, NULL);
+ 	printf("\tNumber of nodes: %d\n", ret);
+ 	printf("\tSize: %u bytes\n", (unsigned int)size);
+-	printf("\tChecksum: %d\n", (unsigned int)csum);
++	printf("\tChecksum: %u\n", (unsigned int)csum);
+ 
+ 	/* TODO: Check the options by schema */
+ 	xbc_exit();
 -- 
 2.39.5
 
