@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEFF14A088;
-	Wed,  5 Feb 2025 14:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BD01519AA;
+	Wed,  5 Feb 2025 14:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764749; cv=none; b=r8CCyv3M8oWuQ1k1r4VJtGRQAG6VB5ySJow58djwxsdqZRiIMdmXTRTuw2WCLhcwNYYmKa1ydZQeLu1y+llX2vqSwGDf/t+HAY5ckY31ddDOWWXzBR5Sc7mFMcx+NR9iNvLyhMVufDE/v35/h2gl5qYUfQTGGyLI4I+fdsj4cDY=
+	t=1738764751; cv=none; b=GHN3WMHuWehtVwvK71R0jC74ifC7KlxBWieXYV88kJVEwb9W3R5caoK7hsX+/oCcJJuyquhvE98UyTAyFJBHu2FEDVjUngLFzrJUkvWICswP8T3govuB9UU9QhaiAsIba0ZwkDF/jIvUw6fMbSzN05yWR8FxWFdseELpyAcesWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764749; c=relaxed/simple;
-	bh=c8zwyVes9rkRIsoguMk/JD598gizJNzyUfaCfsqEhng=;
+	s=arc-20240116; t=1738764751; c=relaxed/simple;
+	bh=ulzquLmNMBv1jMjzoethRy+JUtM37Ttrj/22EJRsBS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IlKzIrO14sSQ4c3FvKUyTEZ2Ok8Ht8fGRHAQJwUwPOAigZ43CGzKI1CBH4egCwAdegpQWiYwq+tUajKItnNuUZkBMe2PUMdI0MQzyJ/m9cG2DFbJtnbJJrZTPgqOBfcotpOs0sbvzKsZizEehe43wUDwK1Kedj+XdG+0MG3ZHHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ns89Dd3H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hycOS/dMaYL6TMaFqQkEARrMd+Ysr+tTivYL4RBVEqYCmuFGuOTtLjSXfd225A54T4RuzJ+35alXyN5jGfiCaxQrytVB4asoUvljnKh9+Df025Menz/Gx8JySIA3zFYLGzApHRg1BkiWE1qVtDqUVucU14WyIg6zuOX0aNzQD+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ryq3i6yx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ns89Dd3H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0C6C4CED1;
-	Wed,  5 Feb 2025 14:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ryq3i6yx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E12CC4CED1;
+	Wed,  5 Feb 2025 14:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764748;
-	bh=c8zwyVes9rkRIsoguMk/JD598gizJNzyUfaCfsqEhng=;
+	s=korg; t=1738764751;
+	bh=ulzquLmNMBv1jMjzoethRy+JUtM37Ttrj/22EJRsBS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ns89Dd3Hy5U2N6tV3q9w4b0FDKaj2DGnQIUIlv4k3NOWwy0XEKzgFcMz15oGEts20
-	 gWYtN1t4CnMkxUcmFNWecyvBqr1HzhGrLWwoZlJ/B8wwJyvBwqygDwVOuFwMCBwyhJ
-	 Kf3WmqjGuvbQd3gxFnyWq44rzxnMQo5mGj3dsTL4=
+	b=Ryq3i6yxbHXr4DB9w3Ag6zvkhhKjrQHDpcoGo3y/PF3D3HvYSWB2P+e+Bqld9kdeo
+	 zroQ/krq8x9H3iFesy6Ba7P7U9zBhjTyzPL8viYedwANIwolAUReIgXAqzCtXo8z3x
+	 wA6LoHModdgkdgzGG8zZj+8UPzFJYgL1P5rHtiyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Kumar Singh <quic_adisi@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Val Packett <val@packett.cool>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 110/623] wifi: ath12k: fix read pointer after free in ath12k_mac_assign_vif_to_vdev()
-Date: Wed,  5 Feb 2025 14:37:32 +0100
-Message-ID: <20250205134500.423396951@linuxfoundation.org>
+Subject: [PATCH 6.6 201/393] arm64: dts: mediatek: mt8516: reserve 192 KiB for TF-A
+Date: Wed,  5 Feb 2025 14:42:00 +0100
+Message-ID: <20250205134427.992654450@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,61 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aditya Kumar Singh <quic_adisi@quicinc.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 5a10971c7645a95f5d5dc23c26fbac4bf61801d0 ]
+[ Upstream commit 2561c7d5d497b988deccc36fe5eac7fd50b937f8 ]
 
-In ath12k_mac_assign_vif_to_vdev(), if arvif is created on a different
-radio, it gets deleted from that radio through a call to
-ath12k_mac_unassign_link_vif(). This action frees the arvif pointer.
-Subsequently, there is a check involving arvif, which will result in a
-read-after-free scenario.
+The Android DTB for the related MT8167 reserves 0x30000. This is likely
+correct for MT8516 Android devices as well, and there's never any harm
+in reserving 64KiB more.
 
-Fix this by moving this check after arvif is again assigned via call to
-ath12k_mac_assign_link_vif().
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
-
-Closes: https://scan5.scan.coverity.com/#/project-view/63541/10063?selectedIssue=1636423
-Fixes: b5068bc9180d ("wifi: ath12k: Cache vdev configs before vdev create")
-Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
-Acked-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241210-read_after_free-v1-1-969f69c7d66c@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 5236347bde42 ("arm64: dts: mediatek: add dtsi for MT8516")
+Signed-off-by: Val Packett <val@packett.cool>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20241204190524.21862-5-val@packett.cool
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8516.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index d493ec812055f..cf4f4245f6068 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -7173,9 +7173,6 @@ static struct ath12k *ath12k_mac_assign_vif_to_vdev(struct ieee80211_hw *hw,
+diff --git a/arch/arm64/boot/dts/mediatek/mt8516.dtsi b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
+index 1ca1393fcc593..6b89505a64379 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8516.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
+@@ -144,10 +144,10 @@
+ 		#size-cells = <2>;
+ 		ranges;
  
- 	ab = ar->ab;
+-		/* 128 KiB reserved for ARM Trusted Firmware (BL31) */
++		/* 192 KiB reserved for ARM Trusted Firmware (BL31) */
+ 		bl31_secmon_reserved: secmon@43000000 {
+ 			no-map;
+-			reg = <0 0x43000000 0 0x20000>;
++			reg = <0 0x43000000 0 0x30000>;
+ 		};
+ 	};
  
--	if (arvif->is_created)
--		goto flush;
--
- 	/* Assign arvif again here since previous radio switch block
- 	 * would've unassigned and cleared it.
- 	 */
-@@ -7186,6 +7183,9 @@ static struct ath12k *ath12k_mac_assign_vif_to_vdev(struct ieee80211_hw *hw,
- 		goto unlock;
- 	}
- 
-+	if (arvif->is_created)
-+		goto flush;
-+
- 	if (ar->num_created_vdevs > (TARGET_NUM_VDEVS - 1)) {
- 		ath12k_warn(ab, "failed to create vdev, reached max vdev limit %d\n",
- 			    TARGET_NUM_VDEVS);
 -- 
 2.39.5
 
