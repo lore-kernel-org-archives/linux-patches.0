@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5161017C79;
-	Wed,  5 Feb 2025 15:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3209717C79;
+	Wed,  5 Feb 2025 15:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768213; cv=none; b=IHkEUJ1q/zu0ih1r1l9GW5/a1/qKT45rhtt+oFFeCTU2HauWOHjeGy2C1VMffttU7bRoc7FGiteKPEN3TozRNOK8DDb791uQ82yyoXeW6q/JkUrNGHBEZBa/C/aCWOtB45z5IfMc1OwlC3mwAGZxAgxcmhBhEGH7J1nqmKR/K/M=
+	t=1738768216; cv=none; b=LCZoiL7yfAwtTf56WcpeKi5CNFAmd1Iun4QDghi/ldy9u+pPzf5d2bN630Xm9/9n8M4OYd2E4nSbT5lqaadTVz+MM6dUBTqPYDqh3onP/WKd8LANAsuZR+olRyI2R06xmgZ+aKp3mbTVmerw7m/yORUov1C+ltGe7HtDYN3AV/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768213; c=relaxed/simple;
-	bh=QdYUuuSRkQhQwnWgYBuv03isPcVtqRDwPr0fT+s86pQ=;
+	s=arc-20240116; t=1738768216; c=relaxed/simple;
+	bh=Y4leX5e5knHuZYgz8/Eh3F6r+Xs5ghrsGboWIMO/KCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F1ak46zIi8XELsfb607fO23KsX4BYAYv28EBu1USycgWuk4jck50K1QBSglYeqwfYlmDPAaYh0RtuJ1KnLIFoUFCQ5aobjDv7eqUHRMsQ1ZdwTX6OsHAKq5qCfTaaqtJ31Ezev8TrKlzDc/3ZuhrCw+tJep/UnBnYh7kLzl3tSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HlelWn01; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hEHjL52FuJxEAbceOh/XFz1VoMF+OWVaNJLGYFpyD5U63SUOLO+CQWSze44QGaVT8bSI6C/SG/3HNK+oY0D0KgCcJLVT/UDN5jtO13+EItuu4D8hjMypAfvMqKr0Ix5cwvnnJo8plFsptCPbQfpl7elZxyuDsg+e+5Epp/UouE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tvx9kJ1c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HlelWn01"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C83C4CED1;
-	Wed,  5 Feb 2025 15:10:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tvx9kJ1c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AC3C4CED1;
+	Wed,  5 Feb 2025 15:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768212;
-	bh=QdYUuuSRkQhQwnWgYBuv03isPcVtqRDwPr0fT+s86pQ=;
+	s=korg; t=1738768216;
+	bh=Y4leX5e5knHuZYgz8/Eh3F6r+Xs5ghrsGboWIMO/KCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HlelWn01B+cZzcz1RSyNEhuHi3yxfyRpMUXXYn5yAKb9nohceNm9GVS0Cvs3uSMjm
-	 Tc/LbJsu1/HUy5qAO2iAUvfnxYBXHMFz35SJAiLLz3shCFinWInktWQ23kUv1b0zHY
-	 kozKW/fFWd+jHnTuDC0HuNFy3CoIjpy30jFWaEGA=
+	b=Tvx9kJ1cE0Uxe8SmGnXPKzSJzDwzIZ6d0afDOsFsdJf0TaCsOiOuHj5RxpqWJOhrB
+	 xPVSPODfdFAkVgOsgsH5NMOVsflHIWO7NUTUo8MgM7eG5NLMIiBbWF0OsMzkbLbGcp
+	 YcJZpoG/6+5pnMMcGxdPtHnCKQ8DBDGQeVJCpGNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Vinod Koul <vkoul@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	Lance Richardson <rlance@google.com>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
+	Krishneil Singh <krishneil.k.singh@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 495/623] phy: freescale: fsl-samsung-hdmi: Clean up fld_tg_code calculation
-Date: Wed,  5 Feb 2025 14:43:57 +0100
-Message-ID: <20250205134515.154456182@linuxfoundation.org>
+Subject: [PATCH 6.13 513/623] idpf: add read memory barrier when checking descriptor done bit
+Date: Wed,  5 Feb 2025 14:44:15 +0100
+Message-ID: <20250205134515.852458286@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -52,84 +55,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-[ Upstream commit d567679f2b6a8bcea20589bbea6488c0236886cd ]
+[ Upstream commit 396f0165672c6a74d7379027d344b83b5f05948c ]
 
-Currently, the calcuation for fld_tg_code is based on a lookup table,
-but there are gaps in the lookup table, and frequencies in these
-gaps may not properly use the correct divider.  Based on the description
-of FLD_CK_DIV, the internal PLL frequency should be less than 50 MHz,
-so directly calcuate the value of FLD_CK_DIV from pixclk.
-This allow for proper calcuation of any pixel clock and eliminates a
-few gaps in the LUT.
+Add read memory barrier to ensure the order of operations when accessing
+control queue descriptors. Specifically, we want to avoid cases where loads
+can be reordered:
 
-Since the value of the int_pllclk is in Hz, do the fixed-point
-math in Hz to achieve a more accurate value and reduces the complexity
-of the caluation to 24MHz * (256 / int_pllclk).
+1. Load #1 is dispatched to read descriptor flags.
+2. Load #2 is dispatched to read some other field from the descriptor.
+3. Load #2 completes, accessing memory/cache at a point in time when the DD
+   flag is zero.
+4. NIC DMA overwrites the descriptor, now the DD flag is one.
+5. Any fields loaded before step 4 are now inconsistent with the actual
+   descriptor state.
 
-Fixes: 6ad082bee902 ("phy: freescale: add Samsung HDMI PHY")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Link: https://lore.kernel.org/r/20241026132014.73050-3-aford173@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Add read memory barrier between steps 1 and 2, so that load #2 is not
+executed until load #1 has completed.
+
+Fixes: 8077c727561a ("idpf: add controlq init and reset checks")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Suggested-by: Lance Richardson <rlance@google.com>
+Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
+Tested-by: Krishneil Singh <krishneil.k.singh@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/freescale/phy-fsl-samsung-hdmi.c | 32 +++++++-------------
- 1 file changed, 11 insertions(+), 21 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_controlq.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/phy/freescale/phy-fsl-samsung-hdmi.c b/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
-index d3ccf547ba1c2..17c3786c2f667 100644
---- a/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
-+++ b/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
-@@ -331,25 +331,17 @@ fsl_samsung_hdmi_phy_configure_pll_lock_det(struct fsl_samsung_hdmi_phy *phy,
- {
- 	u32 pclk = cfg->pixclk;
- 	u32 fld_tg_code;
--	u32 pclk_khz;
--	u8 div = 1;
--
--	switch (cfg->pixclk) {
--	case  22250000 ...  47500000:
--		div = 1;
--		break;
--	case  50349650 ...  99000000:
--		div = 2;
--		break;
--	case 100699300 ... 198000000:
--		div = 4;
--		break;
--	case 205000000 ... 297000000:
--		div = 8;
--		break;
-+	u32 int_pllclk;
-+	u8 div;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_controlq.c b/drivers/net/ethernet/intel/idpf/idpf_controlq.c
+index 4849590a5591f..b28991dd18703 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_controlq.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_controlq.c
+@@ -376,6 +376,9 @@ int idpf_ctlq_clean_sq(struct idpf_ctlq_info *cq, u16 *clean_count,
+ 		if (!(le16_to_cpu(desc->flags) & IDPF_CTLQ_FLAG_DD))
+ 			break;
+ 
++		/* Ensure no other fields are read until DD flag is checked */
++		dma_rmb();
 +
-+	/* Find int_pllclk speed */
-+	for (div = 0; div < 4; div++) {
-+		int_pllclk = pclk / (1 << div);
-+		if (int_pllclk < (50 * MHZ))
-+			break;
- 	}
+ 		/* strip off FW internal code */
+ 		desc_err = le16_to_cpu(desc->ret_val) & 0xff;
  
--	writeb(FIELD_PREP(REG12_CK_DIV_MASK, ilog2(div)), phy->regs + PHY_REG(12));
-+	writeb(FIELD_PREP(REG12_CK_DIV_MASK, div), phy->regs + PHY_REG(12));
+@@ -563,6 +566,9 @@ int idpf_ctlq_recv(struct idpf_ctlq_info *cq, u16 *num_q_msg,
+ 		if (!(flags & IDPF_CTLQ_FLAG_DD))
+ 			break;
  
- 	/*
- 	 * Calculation for the frequency lock detector target code (fld_tg_code)
-@@ -362,10 +354,8 @@ fsl_samsung_hdmi_phy_configure_pll_lock_det(struct fsl_samsung_hdmi_phy *phy,
- 	 *        settings rounding up always too. TODO: Check if that is
- 	 *        correct.
- 	 */
--	pclk /= div;
--	pclk_khz = pclk / 1000;
--	fld_tg_code = 256 * 1000 * 1000 / pclk_khz * 24;
--	fld_tg_code = DIV_ROUND_UP(fld_tg_code, 1000);
++		/* Ensure no other fields are read until DD flag is checked */
++		dma_rmb();
 +
-+	fld_tg_code =  DIV_ROUND_UP(24 * MHZ * 256, int_pllclk);
- 
- 	/* FLD_TOL and FLD_RP_CODE taken from downstream driver */
- 	writeb(FIELD_PREP(REG13_TG_CODE_LOW_MASK, fld_tg_code),
+ 		q_msg[i].vmvf_type = (flags &
+ 				      (IDPF_CTLQ_FLAG_FTYPE_VM |
+ 				       IDPF_CTLQ_FLAG_FTYPE_PF)) >>
 -- 
 2.39.5
 
