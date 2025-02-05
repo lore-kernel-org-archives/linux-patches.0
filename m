@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A535155751;
-	Wed,  5 Feb 2025 14:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18856155A21;
+	Wed,  5 Feb 2025 14:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765741; cv=none; b=FalRXtVTImcHLBaqX2jJXLrY/4fkbdPTe+f6sm4+fRi1KsS0pOip/9PWOIaPKmDMcDYiKBDLxwXSo6Y7UYrU/KvCOSBJ7gPCHUJr96c158pmjplZWxSXn/g8uE8fzW806eyNZsg13pEeSuOzXkIZbNDwlrWXOFbgX1QgvjxvP9o=
+	t=1738765745; cv=none; b=F2ozADKxpSlhHz1SuR1qdFQM3pRJaBP9TqPGnc4f+r6b876oS5MOaivZ31t5uDsvGrFVWb912MdMq1BfietgEhuLyqjvv2xGx26rRQI8FTuy9h1j6LCcIWnrXfdHijUAk+5U6klyz9jAyrbJySbyeuOpK0Agj1UmLHrsSNE59xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765741; c=relaxed/simple;
-	bh=cfADiCgCHcNQfSQLrr3zH4qNk0VJUULGVU811itAx30=;
+	s=arc-20240116; t=1738765745; c=relaxed/simple;
+	bh=IWEZwvNmtgAqKHTsY+o8WIvJy/YC2KfJL7OAGYCOgW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ozHo9icZEGpf0drmhkxarAGYEnj+Ag/bblh7ic+ZDlu9MCuVYFq1rOa/FOUdYhZceKGnwJ0P6EJcvYmO15RAgsxXZ8n6mlNtYQveBlF3D7U98C2x5mVjsa2IkbHRCzAk9KGqvlhLUgii/X6wJXTls5VyHSyeOunWjGmIXUr2+QI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5otIwxd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ufyg+nw+0pKi2haTuzfs45Ny9R4bs9hlYtYm0bKOyViv+bqggADkx87TL0I0m3vLZ8qg3Naq4GDbJB90H+/TJrd3Lg/buqElIM/W39ubbQatI18n2F3Ox2lr5eTUOJRXx9Qm5yCwYbEPTnCke+2hAwUh/rFrwcuedv1j7swKgyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGffvrw7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5otIwxd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC29C4CED1;
-	Wed,  5 Feb 2025 14:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGffvrw7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9F8C4CED1;
+	Wed,  5 Feb 2025 14:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765741;
-	bh=cfADiCgCHcNQfSQLrr3zH4qNk0VJUULGVU811itAx30=;
+	s=korg; t=1738765744;
+	bh=IWEZwvNmtgAqKHTsY+o8WIvJy/YC2KfJL7OAGYCOgW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G5otIwxddM3D6Vy1rweR+ebnaeMORXEan5P1u2mi4UVVEovEVQUoT5j0DJ7ds7abO
-	 LSzwAwGq741bclO1UNyWX3Okv1YyFAOHrF8QBokD7V7uAR00e757g5QVLGdbsG/Vpj
-	 CF+c8E80y/6/ZYtIy4Rg5NwvAo1aEZGhcb+YLepM=
+	b=uGffvrw7e2orw7Sw9Y6Rxe1zUOso9oQOiCtHCNknuAXWgetjnoJoPpiwhAOzymrhs
+	 JzSekIgel31kW+8sj1egb+n1U4zvoErYUTL9xJn2mEvIUssqoWpL0G3iq1PU3w1sKD
+	 KAnbHg+qoLquJ9o5FYQJc96/hywnUilkpX9vmX7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Herbert Xu <herbert.xu@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 209/623] wifi: mt76: mt7996: add max mpdu len capability
-Date: Wed,  5 Feb 2025 14:39:11 +0100
-Message-ID: <20250205134504.225186236@linuxfoundation.org>
+Subject: [PATCH 6.12 248/590] crypto: api - Fix boot-up self-test race
+Date: Wed,  5 Feb 2025 14:40:03 +0100
+Message-ID: <20250205134504.768262198@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 1816ad9381e0c150e4c44ce6dd6ee2c52008a052 ]
+[ Upstream commit 8dd458cbc5be9ce4427ffce7a9dcdbff4dfc4ac9 ]
 
-Set max mpdu len to 11454 according to hardware capability.
-Without this patch, the max ampdu length would be 3895 and count not get
-expected performance.
+During the boot process self-tests are postponed so that all
+algorithms are registered when the test starts.  In the event
+that algorithms are still being registered during these tests,
+which can occur either because the algorithm is registered at
+late_initcall, or because a self-test itself triggers the creation
+of an instance, some self-tests may never start at all.
 
-Fixes: 348533eb968d ("wifi: mt76: mt7996: add EHT capability init")
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20250114101026.3587702-1-shayne.chen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fix this by setting the flag at the start of crypto_start_tests.
+
+Note that this race is theoretical and has never been observed
+in practice.
+
+Fixes: adad556efcdd ("crypto: api - Fix built-in testing dependency failures")
+Signed-off-by: Herbert Xu <herbert.xu@redhat.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ crypto/algapi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index d5f53abc4dcb4..50ee1e443dfa4 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -1187,7 +1187,9 @@ mt7996_init_eht_caps(struct mt7996_phy *phy, enum nl80211_band band,
+diff --git a/crypto/algapi.c b/crypto/algapi.c
+index 004d27e41315f..c067412d909a1 100644
+--- a/crypto/algapi.c
++++ b/crypto/algapi.c
+@@ -1022,6 +1022,8 @@ static void __init crypto_start_tests(void)
+ 	if (IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS))
+ 		return;
  
- 	eht_cap_elem->mac_cap_info[0] =
- 		IEEE80211_EHT_MAC_CAP0_EPCS_PRIO_ACCESS |
--		IEEE80211_EHT_MAC_CAP0_OM_CONTROL;
-+		IEEE80211_EHT_MAC_CAP0_OM_CONTROL |
-+		u8_encode_bits(IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_11454,
-+			       IEEE80211_EHT_MAC_CAP0_MAX_MPDU_LEN_MASK);
++	set_crypto_boot_test_finished();
++
+ 	for (;;) {
+ 		struct crypto_larval *larval = NULL;
+ 		struct crypto_alg *q;
+@@ -1053,8 +1055,6 @@ static void __init crypto_start_tests(void)
+ 		if (!larval)
+ 			break;
+ 	}
+-
+-	set_crypto_boot_test_finished();
+ }
  
- 	eht_cap_elem->phy_cap_info[0] =
- 		IEEE80211_EHT_PHY_CAP0_NDP_4_EHT_LFT_32_GI |
+ static int __init crypto_algapi_init(void)
 -- 
 2.39.5
 
