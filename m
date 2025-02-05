@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58B11519B4;
-	Wed,  5 Feb 2025 15:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E879F1519BF;
+	Wed,  5 Feb 2025 15:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767997; cv=none; b=UuapjNvPGND1YEJ/Cz4N+DNWZKSZVZZq/OYCABoNcaBItPnwwik4MAr314mgi2MlbbdgNiokqzVg0RMju8+BykTpDoVnkKOlbxQv7C3ogpjO1xfK+w23du2HgXZE+yZzVY9wUyKjCllKFqw1sBhZ9tZgR5aCgU9UXl1xpD0JhPU=
+	t=1738768001; cv=none; b=GUioXNkOElQgZoZl1LZfE9yTMPbNTyoC94qDvXcIL99YjchunN4xWShgxNQRD6w+A7K2raHenzsVmrT6TBaH8DRNM1iyo6ks+SCihqihV7AIJ19QSK96xPSKLSoDhNkYT/ll2ix4dqHWEJlruwZ8MLyL5jWj1mMgyb2UmhXCY0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767997; c=relaxed/simple;
-	bh=GYZ7n37zGUU7VE1AtKQsz+M3Xq9Z1F3C41/1/AuYtEM=;
+	s=arc-20240116; t=1738768001; c=relaxed/simple;
+	bh=bAaNfa2KGDHkN8tc4SpowXDvGr5Xv/6A9v+k2PX3d64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p8YmXd52J94mtaCBUlpSD2ImD2V7W9mjXwWSUuxDpqO2vwKt82BJTzqtIwdPerOYkUcrtZYNsSshlDgWFtdXdbSTvbdRmPNLwmDjQW70rT9dS2qQq4nIF5fFxq8Axxaf74NLIssgvz4gbLbMDep+qPLjwC3oB3eA0nESlLJALf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phPD6bp6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bez8JNaiTRqRnTzAlo7vqo6w1lArvZ+GimgHWUqK+bE9FYywG56yh5HX490Cbi/ub5pW9ACm5Y9PibBy1X4DFzVlLk3DoCszWRHpbSegKGBJDs6c+MwjRPNpvY/bZP1WoAGja5WwWYeQrUvaFapUdLrJjUnvSDFT3aEsuqstC9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cc3KpqjM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phPD6bp6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D7BC4CED6;
-	Wed,  5 Feb 2025 15:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cc3KpqjM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B65C4CED1;
+	Wed,  5 Feb 2025 15:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767997;
-	bh=GYZ7n37zGUU7VE1AtKQsz+M3Xq9Z1F3C41/1/AuYtEM=;
+	s=korg; t=1738768000;
+	bh=bAaNfa2KGDHkN8tc4SpowXDvGr5Xv/6A9v+k2PX3d64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phPD6bp6VtwCBGRBmYDkgeG2YVqlIopnNjzd7eAWE5BlKhRp9XysLwwbJNMt6sJgx
-	 VbUdnR2auPUCv/4ntBqlCnpjj71ZZix/+m+A2s+JSkf3ZOJGYscGH5sbB+IC/FY8aD
-	 vnS5Ykl28Pguh76nnfpO6whf5G/wDsuO8O9mD3Yc=
+	b=Cc3KpqjMNFeWcXBm9UOdfzvWMNfgJkSKC2Odn+hj3zZX+1r6sm+aem8kpWvWxLkdo
+	 7eK7IuUisNvUAhUBfxSDrYzB9SeoxaKpYhq4i8yR6tEiTLQ3wN4B5zsvCGooWpSjfe
+	 I/z9fiHm605etH4UYuMoMssbFlhk+DPnuvPxJ7pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suren Baghdasaryan <surenb@google.com>,
-	David Wang <00107082@163.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Yu Zhao <yuzhao@google.com>,
-	Zhenhua Huang <quic_zhenhuah@quicinc.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 482/623] alloc_tag: avoid current->alloc_tag manipulations when profiling is disabled
-Date: Wed,  5 Feb 2025 14:43:44 +0100
-Message-ID: <20250205134514.657690718@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
+	Yu Kuai <yukuai1@huaweicloud.com>
+Subject: [PATCH 6.12 540/590] md/raid5: implement pers->bitmap_sector()
+Date: Wed,  5 Feb 2025 14:44:55 +0100
+Message-ID: <20250205134515.932763878@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,81 +47,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suren Baghdasaryan <surenb@google.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 07438779313caafe52ac1a1a6958d735a5938988 ]
+commit 9c89f604476cf15c31fbbdb043cff7fbf1dbe0cb upstream.
 
-When memory allocation profiling is disabled there is no need to update
-current->alloc_tag and these manipulations add unnecessary overhead.  Fix
-the overhead by skipping these extra updates.
+Bitmap is used for the whole array for raid1/raid10, hence IO for the
+array can be used directly for bitmap. However, bitmap is used for
+underlying disks for raid5, hence IO for the array can't be used
+directly for bitmap.
 
-I ran comprehensive testing on Pixel 6 on Big, Medium and Little cores:
+Implement pers->bitmap_sector() for raid5 to convert IO ranges from the
+array to the underlying disks.
 
-                 Overhead before fixes            Overhead after fixes
-                 slab alloc      page alloc          slab alloc      page alloc
-Big               6.21%           5.32%                3.31%          4.93%
-Medium            4.51%           5.05%                3.79%          4.39%
-Little            7.62%           1.82%                6.68%          1.02%
-
-This is an allocation microbenchmark doing allocations in a tight loop.
-Not a really realistic scenario and useful only to make performance
-comparisons.
-
-Link: https://lkml.kernel.org/r/20241226211639.1357704-1-surenb@google.com
-Fixes: b951aaff5035 ("mm: enable page allocation tagging")
-Signed-off-by: Suren Baghdasaryan <surenb@google.com>
-Cc: David Wang <00107082@163.com>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: Zhenhua Huang <quic_zhenhuah@quicinc.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20250109015145.158868-5-yukuai1@huaweicloud.com
+Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Yu Kuai <yukuai1@huaweicloud.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/alloc_tag.h | 11 ++++++++---
- lib/alloc_tag.c           |  2 ++
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ drivers/md/raid5.c |   51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
-diff --git a/include/linux/alloc_tag.h b/include/linux/alloc_tag.h
-index 0bbbe537c5f9f..a946e0203e6d6 100644
---- a/include/linux/alloc_tag.h
-+++ b/include/linux/alloc_tag.h
-@@ -224,9 +224,14 @@ static inline void alloc_tag_sub(union codetag_ref *ref, size_t bytes) {}
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -5919,6 +5919,54 @@ static enum reshape_loc get_reshape_loc(
+ 	return LOC_BEHIND_RESHAPE;
+ }
  
- #define alloc_hooks_tag(_tag, _do_alloc)				\
- ({									\
--	struct alloc_tag * __maybe_unused _old = alloc_tag_save(_tag);	\
--	typeof(_do_alloc) _res = _do_alloc;				\
--	alloc_tag_restore(_tag, _old);					\
-+	typeof(_do_alloc) _res;						\
-+	if (mem_alloc_profiling_enabled()) {				\
-+		struct alloc_tag * __maybe_unused _old;			\
-+		_old = alloc_tag_save(_tag);				\
-+		_res = _do_alloc;					\
-+		alloc_tag_restore(_tag, _old);				\
-+	} else								\
-+		_res = _do_alloc;					\
- 	_res;								\
- })
- 
-diff --git a/lib/alloc_tag.c b/lib/alloc_tag.c
-index 65e706e1bc199..4e5d7af3eaa22 100644
---- a/lib/alloc_tag.c
-+++ b/lib/alloc_tag.c
-@@ -29,6 +29,8 @@ EXPORT_SYMBOL(_shared_alloc_tag);
- 
- DEFINE_STATIC_KEY_MAYBE(CONFIG_MEM_ALLOC_PROFILING_ENABLED_BY_DEFAULT,
- 			mem_alloc_profiling_key);
-+EXPORT_SYMBOL(mem_alloc_profiling_key);
++static void raid5_bitmap_sector(struct mddev *mddev, sector_t *offset,
++				unsigned long *sectors)
++{
++	struct r5conf *conf = mddev->private;
++	sector_t start = *offset;
++	sector_t end = start + *sectors;
++	sector_t prev_start = start;
++	sector_t prev_end = end;
++	int sectors_per_chunk;
++	enum reshape_loc loc;
++	int dd_idx;
 +
- DEFINE_STATIC_KEY_FALSE(mem_profiling_compressed);
++	sectors_per_chunk = conf->chunk_sectors *
++		(conf->raid_disks - conf->max_degraded);
++	start = round_down(start, sectors_per_chunk);
++	end = round_up(end, sectors_per_chunk);
++
++	start = raid5_compute_sector(conf, start, 0, &dd_idx, NULL);
++	end = raid5_compute_sector(conf, end, 0, &dd_idx, NULL);
++
++	/*
++	 * For LOC_INSIDE_RESHAPE, this IO will wait for reshape to make
++	 * progress, hence it's the same as LOC_BEHIND_RESHAPE.
++	 */
++	loc = get_reshape_loc(mddev, conf, prev_start);
++	if (likely(loc != LOC_AHEAD_OF_RESHAPE)) {
++		*offset = start;
++		*sectors = end - start;
++		return;
++	}
++
++	sectors_per_chunk = conf->prev_chunk_sectors *
++		(conf->previous_raid_disks - conf->max_degraded);
++	prev_start = round_down(prev_start, sectors_per_chunk);
++	prev_end = round_down(prev_end, sectors_per_chunk);
++
++	prev_start = raid5_compute_sector(conf, prev_start, 1, &dd_idx, NULL);
++	prev_end = raid5_compute_sector(conf, prev_end, 1, &dd_idx, NULL);
++
++	/*
++	 * for LOC_AHEAD_OF_RESHAPE, reshape can make progress before this IO
++	 * is handled in make_stripe_request(), we can't know this here hence
++	 * we set bits for both.
++	 */
++	*offset = min(start, prev_start);
++	*sectors = max(end, prev_end) - *offset;
++}
++
+ static enum stripe_result make_stripe_request(struct mddev *mddev,
+ 		struct r5conf *conf, struct stripe_request_ctx *ctx,
+ 		sector_t logical_sector, struct bio *bi)
+@@ -8967,6 +9015,7 @@ static struct md_personality raid6_perso
+ 	.takeover	= raid6_takeover,
+ 	.change_consistency_policy = raid5_change_consistency_policy,
+ 	.prepare_suspend = raid5_prepare_suspend,
++	.bitmap_sector	= raid5_bitmap_sector,
+ };
+ static struct md_personality raid5_personality =
+ {
+@@ -8992,6 +9041,7 @@ static struct md_personality raid5_perso
+ 	.takeover	= raid5_takeover,
+ 	.change_consistency_policy = raid5_change_consistency_policy,
+ 	.prepare_suspend = raid5_prepare_suspend,
++	.bitmap_sector	= raid5_bitmap_sector,
+ };
  
- struct alloc_tag_kernel_section kernel_tags = { NULL, 0 };
--- 
-2.39.5
-
+ static struct md_personality raid4_personality =
+@@ -9018,6 +9068,7 @@ static struct md_personality raid4_perso
+ 	.takeover	= raid4_takeover,
+ 	.change_consistency_policy = raid5_change_consistency_policy,
+ 	.prepare_suspend = raid5_prepare_suspend,
++	.bitmap_sector	= raid5_bitmap_sector,
+ };
+ 
+ static int __init raid5_init(void)
 
 
