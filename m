@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38912188733;
-	Wed,  5 Feb 2025 14:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169347BAEC;
+	Wed,  5 Feb 2025 14:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766404; cv=none; b=okHfQpbt0WPX6n1PeGp3F4XKFXAEaAGrsw8kEyHHLpVFVOBVj48XWEJ0Kl4yZY02GkELBLReTvYlmUwi/CjFxkULWObDScJlJeIdl3A28gb1BLtWJyK3vNdRaktt0xvD5J9ndtvyKQQdI+hVaG8jzCZ9fXogMLHafVK/4pJxENU=
+	t=1738766408; cv=none; b=DZV0M11RhpXp11jBkm/uPPSYeb1mefkGoQyFyFqX6SxxT+LMxLPPd+heRXuAyKc9SQZ8TdjdYu8UFAxkKbrpjvVdJEXx3R9A8hRVqsNiy4cgb8BsUS/v6KccP5B3sN7JtW5N+oKV3U4H5jzXcfgJ7pWZ+GNQujqq6caIpV5VgkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766404; c=relaxed/simple;
-	bh=QK2gwCmizqchXYYFbeHpMz4+UzgBVlCOiH+9TXzh02E=;
+	s=arc-20240116; t=1738766408; c=relaxed/simple;
+	bh=y2H8aBoe5tTni9d8KjOE6Q6xqz+XwdwlCJirPsyFdl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gKITwOJS2O7G7GXLRuX/6mBOAXJTcpXMPjx37wo84XU9L0Ay+7d3K7pvJYk396O9ijtso9ryCB5ZFVne0FSxB1Gxqae8TLkOHogBM8S4yxL+5X4sZO5a/FhJ7i19kcz+3F+yjCpjhvNfFPsqE4M6VQaZBtdQQeBRAbxufkicLhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUvlHUSG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nd58PQtqfzURquWHRDHX/96JDfGp6qr0FWjpPYhWc5kZO6nZPhN/Gdeqt6QW8/SJ19oexGpwyD6WCTyYLOHTPzDo0Xra5lXwRZbzpXxBed+0E5a67YSpayBilR2ppmf+VPUXKDGyDgYooOIoNEvHwvP5c4rZD2nmbc7jjd3a+mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iikXuVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUvlHUSG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9B5C4CED1;
-	Wed,  5 Feb 2025 14:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iikXuVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D81C4CEE2;
+	Wed,  5 Feb 2025 14:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766404;
-	bh=QK2gwCmizqchXYYFbeHpMz4+UzgBVlCOiH+9TXzh02E=;
+	s=korg; t=1738766407;
+	bh=y2H8aBoe5tTni9d8KjOE6Q6xqz+XwdwlCJirPsyFdl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pUvlHUSGL9OoYGaoCj+5BDRY9n5QjJbciskVfdkaz8p+flODc6JyvHJ+asbHQpj1I
-	 9ntHCslirWwtjWg9f+1fp8pN/LvYwKstJrSOFIqDsO7yWt81PUvqXhKVlfVQ7+JbzJ
-	 V13b7J72HjC/akBtzp7XLJ/DRJyRokbPBa8DtDI0=
+	b=2iikXuVuxgo2prYqTpcGALpBi0/DMXnxIRkbcX36waDzL7dSzxn/oLHfOKy9O42vH
+	 dtacXYjvQhq31OxJLbI66hVrbp2IN5FJ/zEJxVFk23a4WLcKUYYX2P71tJORv2pMe7
+	 yIoGdn3w39jbMm20gDgOm5sAKeFkQ5qPPJPJ5jf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 270/623] ASoC: renesas: rz-ssi: Use only the proper amount of dividers
-Date: Wed,  5 Feb 2025 14:40:12 +0100
-Message-ID: <20250205134506.558680731@linuxfoundation.org>
+Subject: [PATCH 6.12 318/590] arm64: dts: mediatek: mt8195-cherry: Drop regulator-compatible property
+Date: Wed,  5 Feb 2025 14:41:13 +0100
+Message-ID: <20250205134507.441923977@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 55c209cd4318c701e6e88e0b2512a0f12dd02a7d ]
+[ Upstream commit 4dbaa5d5def2c49e44efaa5e796c23d9b904be09 ]
 
-There is no need to populate the ckdv[] with invalid dividers as that
-part will not be indexed anyway. The ssi->audio_mck/bclk_rate should
-always be >= 0. While at it, change the ckdv type as u8, as the divider
-128 was previously using the s8 sign bit.
+The "regulator-compatible" property has been deprecated since 2012 in
+commit 13511def87b9 ("regulator: deprecate regulator-compatible DT
+property"), which is so old it's not even mentioned in the converted
+regulator bindings YAML file. It should not have been used for new
+submissions such as the MT6315.
 
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Fixes: 03e786bd43410fa9 ("ASoC: sh: Add RZ/G2L SSIF-2 driver")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20241210170953.2936724-6-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Drop the "regulator-compatible" property from the board dts. The
+property values are the same as the node name, so everything should
+continue to work.
+
+Fixes: 260c04d425eb ("arm64: dts: mediatek: cherry: Enable MT6315 regulators on SPMI bus")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20241211052427.4178367-6-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/renesas/rz-ssi.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sound/soc/renesas/rz-ssi.c b/sound/soc/renesas/rz-ssi.c
-index 6efd017aaa7fc..6b442b1014155 100644
---- a/sound/soc/renesas/rz-ssi.c
-+++ b/sound/soc/renesas/rz-ssi.c
-@@ -258,8 +258,7 @@ static void rz_ssi_stream_quit(struct rz_ssi_priv *ssi,
- static int rz_ssi_clk_setup(struct rz_ssi_priv *ssi, unsigned int rate,
- 			    unsigned int channels)
- {
--	static s8 ckdv[16] = { 1,  2,  4,  8, 16, 32, 64, 128,
--			       6, 12, 24, 48, 96, -1, -1, -1 };
-+	static u8 ckdv[] = { 1,  2,  4,  8, 16, 32, 64, 128, 6, 12, 24, 48, 96 };
- 	unsigned int channel_bits = 32;	/* System Word Length */
- 	unsigned long bclk_rate = rate * channels * channel_bits;
- 	unsigned int div;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
+index 2c7b2223ee76b..5056e07399e23 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
+@@ -1285,7 +1285,6 @@
+ 
+ 		regulators {
+ 			mt6315_6_vbuck1: vbuck1 {
+-				regulator-compatible = "vbuck1";
+ 				regulator-name = "Vbcpu";
+ 				regulator-min-microvolt = <400000>;
+ 				regulator-max-microvolt = <1193750>;
+@@ -1303,7 +1302,6 @@
+ 
+ 		regulators {
+ 			mt6315_7_vbuck1: vbuck1 {
+-				regulator-compatible = "vbuck1";
+ 				regulator-name = "Vgpu";
+ 				regulator-min-microvolt = <400000>;
+ 				regulator-max-microvolt = <1193750>;
 -- 
 2.39.5
 
