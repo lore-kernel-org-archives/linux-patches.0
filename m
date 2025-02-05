@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A5B1509BD;
-	Wed,  5 Feb 2025 13:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94531509BD;
+	Wed,  5 Feb 2025 13:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763970; cv=none; b=oj/LfWh48/Tkuw2b6QLd/mjqWscN4MdHq/dX65KlhzcCmrC6xAnmCPAKUJCFoZbYFyjsHJDOOAkn0YbdCRmRLPjkkGZgyk63EV15mYv01ZOiYkVdism6FS/hYxCU8of7yenHra/9XsJBLko+Shz6r3AM6vTV5uVWlOqq7T2bIFU=
+	t=1738763974; cv=none; b=aX3htgUrSTo7E3Of8sYUzaanmbF/ppNCmOaHVIln04uIWnjvb4cl/oJm5C4sE80QXSCiACxSgMIHkgJHEFs6LXW/ErazvPhbZRRe5tfUdf+gHaeKdFCmvGw3VsK5M5E1zh8LXOunxVpFH1S7IFgSfiTFl2oKO0lG9PZjrlNwpCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763970; c=relaxed/simple;
-	bh=4KbNhygUBVU/0vABzfWgm9YCNfuDzmV3Hv4yAfLqEDg=;
+	s=arc-20240116; t=1738763974; c=relaxed/simple;
+	bh=8AsglrVY8yEN4c6sdKopl0tWMENWKIWPdgJazZJO0Pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=acBvRP6YxCSJSx8oG2tUO3GwMyaj3NyMal1AGl47yyPTXRlH/rhmkRbrf/KJ3ga0rm3/8XWgaI8Vm1rLcKX/VaTzLNjmPSNUQzbZwE8jeOt3xknAPeQy5YycTGhU38cXzIbHgW/J2TjdZToJdEuHS7FoHkAZmbRFNBhs/VYN9kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4qZktVp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G+Zw40ziv39Cv485Xt0fM9SgKojAOm7Hq+mIYacPhehUR1BGJlC/u2p8KoL1QRuIS0TszsSGBQEdxSyeo6jZizhJ8k2CbNLOsSpGVzHFyzBW73n0frhHuLmC3hJF9DqUk3nkhxFUKkIJW4f/lLsEzMu3hz51AuzGkSzzvFNDO08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxqH9SFP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4qZktVp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F13BC4CED1;
-	Wed,  5 Feb 2025 13:59:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxqH9SFP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024AAC4CED1;
+	Wed,  5 Feb 2025 13:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763970;
-	bh=4KbNhygUBVU/0vABzfWgm9YCNfuDzmV3Hv4yAfLqEDg=;
+	s=korg; t=1738763973;
+	bh=8AsglrVY8yEN4c6sdKopl0tWMENWKIWPdgJazZJO0Pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4qZktVpKI+kSiOSYypjW8yoLYcEtEFoDtKWeg9MiyYgjrfwyJAsmk5ddOG414g/a
-	 Nlm0jR/I5uG3V8+cQNr6NTdR3yX6b7HnPx7dD2kjd4t98/qJeXnath0/w23gA2jzPh
-	 NeAwlE/AHPRFv4SYodMsw9hRLdny+JxBhVvjByVk=
+	b=sxqH9SFPOYGEb+O9en7lTtNUGGItTwZTLLHpXIsiPjSdT084UcdtJx2FEmOm7jz9p
+	 OSEZZ+QD9HSNkIJWi8wGB/IDliqsYbjrsVUKlcObWHZfwU8fdr8xej71baeZ6sKaMY
+	 l4sOedDzqTO7gLamgM5R8VGVjkxanqZNhvoRXA9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
+	Shengyu Qu <wiagn233@outlook.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/590] wifi: rtlwifi: do not complete firmware loading needlessly
-Date: Wed,  5 Feb 2025 14:37:12 +0100
-Message-ID: <20250205134458.200382171@linuxfoundation.org>
+Subject: [PATCH 6.6 124/393] wifi: mt76: mt7915: fix register mapping
+Date: Wed,  5 Feb 2025 14:40:43 +0100
+Message-ID: <20250205134425.037519471@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit e73e11d303940119e41850a0452a0deda2cc4eb5 ]
+[ Upstream commit dd1649ef966bb87053c17385ea2cfd1758f5385b ]
 
-The only code waiting for completion is driver removal, which will not be
-called when probe returns a failure. So this completion is unnecessary.
+Bypass the entry when ofs is equal to dev->reg.map[i].size.
+Without this patch, it would get incorrect register mapping when the CR
+address is located at the boundary of an entry.
 
-Fixes: b0302aba812b ("rtlwifi: Convert to asynchronous firmware load")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241107133322.855112-2-cascardo@igalia.com
+Fixes: cd4c314a65d3 ("mt76: mt7915: refine register definition")
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Signed-off-by: Shengyu Qu <wiagn233@outlook.com>
+Link: https://patch.msgid.link/OSZPR01MB843401EAA1DA6BD7AEF356F298132@OSZPR01MB8434.jpnprd01.prod.outlook.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c | 1 -
- drivers/net/wireless/realtek/rtlwifi/usb.c | 1 -
- 2 files changed, 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mmio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 11709b6c83f1a..40fc3c297a8ac 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -2266,7 +2266,6 @@ int rtl_pci_probe(struct pci_dev *pdev,
- 		pci_iounmap(pdev, (void __iomem *)rtlpriv->io.pci_mem_start);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
+index a306a42777d78..7db436d908a39 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
+@@ -484,7 +484,7 @@ static u32 __mt7915_reg_addr(struct mt7915_dev *dev, u32 addr)
+ 			continue;
  
- 	pci_release_regions(pdev);
--	complete(&rtlpriv->firmware_loading_complete);
+ 		ofs = addr - dev->reg.map[i].phys;
+-		if (ofs > dev->reg.map[i].size)
++		if (ofs >= dev->reg.map[i].size)
+ 			continue;
  
- fail1:
- 	if (hw)
-diff --git a/drivers/net/wireless/realtek/rtlwifi/usb.c b/drivers/net/wireless/realtek/rtlwifi/usb.c
-index d37a017b2b814..c3aa0cd9ff211 100644
---- a/drivers/net/wireless/realtek/rtlwifi/usb.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/usb.c
-@@ -1040,7 +1040,6 @@ int rtl_usb_probe(struct usb_interface *intf,
- error_out2:
- 	_rtl_usb_io_handler_release(hw);
- 	usb_put_dev(udev);
--	complete(&rtlpriv->firmware_loading_complete);
- 	kfree(rtlpriv->usb_data);
- 	ieee80211_free_hw(hw);
- 	return -ENODEV;
+ 		return dev->reg.map[i].maps + ofs;
 -- 
 2.39.5
 
