@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEA7151988;
-	Wed,  5 Feb 2025 14:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F3A151988;
+	Wed,  5 Feb 2025 14:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766207; cv=none; b=Y1O/LDCOgVmvdFd/U+G9rvOZmbQTWJALLCtRPXADt6MEl0b2nWyJMHEQAxRWI5NPzLSD7MD3CDgGg8wjMK27+ozHIQAAIeu82I6N3nAEwO/aGKNlZohowLVxiVnlt8mPrrnUs6gbj0NyH9wJk4lNEYCjnyt0K6vjVpxKNz2cy2A=
+	t=1738766210; cv=none; b=MHMCYvzA/PLadnfvORDMXMF0ceAiyGePhIOL2vhQV2pUH+nrnRJ64AXk9+kTcCUHNViyOweQWPpZRbQW3fbowo92h+p4+QbJirztHkkcaxkSksKihlemM1HqTuyO/Nb6cmNuXVT19c4zPdvUh9K5RQ0pZUEGk5ocTAkP78dLib8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766207; c=relaxed/simple;
-	bh=bbpzJ9JgP5TZLkgcOpePTIkLs3c+90pODV/1I2Cz+qo=;
+	s=arc-20240116; t=1738766210; c=relaxed/simple;
+	bh=R6D7pGiWtKmiFN08p6/wsAVrCrjjxVXIkOB29p7ZLOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TlJx9wj5szweQwxTL7ExFj/a5lNywnDWmcWbAgttNOHyDlUS4ov7hQBn341R5BtaAzT41R/fK9S5mI/UsRql61UrLIOllf7tjuc0z6v7a1C2f9wGCHs7YA9VTXEjs7z7+CLYkHOdbk91ES/wa7J3ngNEtnUSPzPMFgCwmU1975E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Doc6lohx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fhDVOBIGy6Qj3XGzlVLveGDrR3HFffvH229qaUiFKIm06eTgQa9e26Sc/SfgqFPmO003ujPuGaTql2VqIm4GgEGTFo8I4wdJQo4jRQ8tNei5qGtnvisvzRhA+bH2YZMwSjapcoTJiE1wCg1EM5txhw81ntwRe8TgtdFTzXbph4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3AtRnGA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Doc6lohx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BFCAC4CED6;
-	Wed,  5 Feb 2025 14:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3AtRnGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9DEC4CED1;
+	Wed,  5 Feb 2025 14:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766207;
-	bh=bbpzJ9JgP5TZLkgcOpePTIkLs3c+90pODV/1I2Cz+qo=;
+	s=korg; t=1738766210;
+	bh=R6D7pGiWtKmiFN08p6/wsAVrCrjjxVXIkOB29p7ZLOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Doc6lohxVKiXvZgeeePbmeE5/T7yiIqTTNwUlXwbsVpOnvKMtBxvu71amB45HOIJr
-	 8s071tW+6qE3+YzoIyvs16sXhmlYKxA/r4fjNPfYUe+Er6lUV+yiy/bycGzTbkg2nY
-	 X7Qod+OENSlChnwUQwPny4Ob55XnPbGsMC34lGno=
+	b=G3AtRnGANvnKW3zbSZKiQW6RLcziW8hVr5gIU3LIZfxp5Vuh2Of7ryGooXeuuwOS+
+	 QAdJkEp9wbGBoBY1DOrFM/WGRAWfmrJ2JYD5fcZJqS+tlJCRvzxtI4kwQPexii61po
+	 BP7mjhMcjROe1CiiFnmQquTwhj7QtK3FXFUUmey8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Breno Leitao <leitao@debian.org>,
+	Mikhail Zaslonko <zaslonko@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 252/623] ASoC: cs42l84: Use *-y for Makefile
-Date: Wed,  5 Feb 2025 14:39:54 +0100
-Message-ID: <20250205134505.873344384@linuxfoundation.org>
+Subject: [PATCH 6.12 297/590] rhashtable: Fix rhashtable_try_insert test
+Date: Wed,  5 Feb 2025 14:40:52 +0100
+Message-ID: <20250205134506.639138979@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +49,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 7916a8d8782d4e53fe0133c8dace20a925e0204e ]
+[ Upstream commit 9d4f8e54cef2c42e23ef258833dbd06a1eaff89b ]
 
-We should use *-y instead of *-objs in Makefile for the module
-objects.  *-objs is used rather for host programs.
+The test on whether rhashtable_insert_one did an insertion relies
+on the value returned by rhashtable_lookup_one.  Unfortunately that
+value is overwritten after rhashtable_insert_one returns.  Fix this
+by moving the test before data gets overwritten.
 
-Fixes: 250304a0fb34 ("ASoC: cs42l84: Add new codec driver")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20241203141823.22393-5-tiwai@suse.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Simplify the test as only data == NULL matters.
+
+Finally move atomic_inc back within the lock as otherwise it may
+be reordered with the atomic_dec on the removal side, potentially
+leading to an underflow.
+
+Reported-by: Michael Kelley <mhklinux@outlook.com>
+Fixes: e1d3422c95f0 ("rhashtable: Fix potential deadlock by moving schedule_work outside lock")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Tested-by: Mikhail Zaslonko <zaslonko@linux.ibm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/rhashtable.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
-index 57d3aab27d2fe..5a83ee9639661 100644
---- a/sound/soc/codecs/Makefile
-+++ b/sound/soc/codecs/Makefile
-@@ -92,7 +92,7 @@ snd-soc-cs42l52-y := cs42l52.o
- snd-soc-cs42l56-y := cs42l56.o
- snd-soc-cs42l73-y := cs42l73.o
- snd-soc-cs42l83-i2c-y := cs42l83-i2c.o
--snd-soc-cs42l84-objs := cs42l84.o
-+snd-soc-cs42l84-y := cs42l84.o
- snd-soc-cs4234-y := cs4234.o
- snd-soc-cs4265-y := cs4265.o
- snd-soc-cs4270-y := cs4270.o
+diff --git a/lib/rhashtable.c b/lib/rhashtable.c
+index bf956b85455ab..0e9a1d4cf89be 100644
+--- a/lib/rhashtable.c
++++ b/lib/rhashtable.c
+@@ -611,21 +611,23 @@ static void *rhashtable_try_insert(struct rhashtable *ht, const void *key,
+ 			new_tbl = rht_dereference_rcu(tbl->future_tbl, ht);
+ 			data = ERR_PTR(-EAGAIN);
+ 		} else {
++			bool inserted;
++
+ 			flags = rht_lock(tbl, bkt);
+ 			data = rhashtable_lookup_one(ht, bkt, tbl,
+ 						     hash, key, obj);
+ 			new_tbl = rhashtable_insert_one(ht, bkt, tbl,
+ 							hash, obj, data);
++			inserted = data && !new_tbl;
++			if (inserted)
++				atomic_inc(&ht->nelems);
+ 			if (PTR_ERR(new_tbl) != -EEXIST)
+ 				data = ERR_CAST(new_tbl);
+ 
+ 			rht_unlock(tbl, bkt, flags);
+ 
+-			if (PTR_ERR(data) == -ENOENT && !new_tbl) {
+-				atomic_inc(&ht->nelems);
+-				if (rht_grow_above_75(ht, tbl))
+-					schedule_work(&ht->run_work);
+-			}
++			if (inserted && rht_grow_above_75(ht, tbl))
++				schedule_work(&ht->run_work);
+ 		}
+ 	} while (!IS_ERR_OR_NULL(new_tbl));
+ 
 -- 
 2.39.5
 
