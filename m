@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFAD33993;
-	Wed,  5 Feb 2025 15:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FD91519BF;
+	Wed,  5 Feb 2025 15:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767971; cv=none; b=Fz1i7nZv9OWa/BuSd1IdIMnVRNTU9M8BLMeU0bKVh3Q9p4APpBbk12X/NsLzcUxxdRlrigl9+NrRcEpZBN5XFk1+zAU+PCJGY+cYzp4viPACRrstqs/CZWuffFWqULNFraqVw4GvY3HQEABMEHThGTHhWCl1h262Wqimuw1NSkc=
+	t=1738767974; cv=none; b=Qr0u79dEAzkM6gStc4/gCjJba2EA+8Ae51azt5e2BUXDrzWIDh92hSqGCJIwM7gpUZjInQtcrYKkruCXE8Z18lys93NfQIb76c+MoT/C8137w4DUdJONjGEnzorbKMa3/5rxq+pQ5kndzlp5grIRe5eUWCOsi/USdoYxbg6OVcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767971; c=relaxed/simple;
-	bh=klHiIdEDrKQkkiG9axyhequmH1PSFCMMX76IxKFg/8Y=;
+	s=arc-20240116; t=1738767974; c=relaxed/simple;
+	bh=dA4h51W+08lCLL0pW6BRulkvtGvf4SnxPZmKljxhILI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCadNc3aCNcy2YLZyW6KfA1s7BZZyfvXbpB6Ed66v4B2jI4N/mNV//fgiSeh43zfmZpigquMWdfmPXef83LVH/QjDXmFPF7cBR1cvuaRAUKbJcfyGamIuazHawQ4PTt2fgBSnvcdhtR5RuSZvTN6Ut8tyNitK/ZV+XTqivs1Gbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEIwI/8t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AI9h3WZUTOYxMxOzNxMilNpTVRa38iJmMCgbeP2XEh2Q7hZezS37QXYurz6cJiDQosmuSfy1UeYNHH6WcIjnW95h2tVKo3xT9MwWD+fa1NoWcydFusqxlipYPp0mKbh340GXOCmJ2gZnG+LL0bRJPEOf3av/lq2AaF4V0tNjzZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XU1RMEKq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEIwI/8t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CEEC4CED1;
-	Wed,  5 Feb 2025 15:06:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XU1RMEKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFDBC4CED1;
+	Wed,  5 Feb 2025 15:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767971;
-	bh=klHiIdEDrKQkkiG9axyhequmH1PSFCMMX76IxKFg/8Y=;
+	s=korg; t=1738767974;
+	bh=dA4h51W+08lCLL0pW6BRulkvtGvf4SnxPZmKljxhILI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wEIwI/8thsMD+XFBnCEz/ve82GK8vplVho4aHAgJO9pbJOleILYXBqkzaAXdtWwl1
-	 Aul3dPV8YWWMaiSib9YcNO86d8mxswlEmgDRAnIcKv7ef9SZ+JCLMF6c1xis+PaZp/
-	 UauoWIAy3i79GdhVHWUpkHTPG6UvoKqqHHUhG9Js=
+	b=XU1RMEKqNRTugGGLhO5SHhJz9NrC3JwNom/QzqHlcnJbPUG00Xl1Qi9eI53P3gj54
+	 QZDgaW+onVxw+D0Di4A3caDcsIROKJpkR5IUX0qLzlSayZdqEFsIm9hWxBVGbXHgPA
+	 cQlG9aKYakMgTM70VoMSEJn/klPHhBZIWuvGVTe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Lee <chullee@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Daniel Rosenberg <drosen@google.com>
-Subject: [PATCH 6.12 536/590] f2fs: Introduce linear search for dentries
-Date: Wed,  5 Feb 2025 14:44:51 +0100
-Message-ID: <20250205134515.773279827@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+b2b14916b77acf8626d7@syzkaller.appspotmail.com,
+	syzbot+d98fd19acd08b36ff422@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 479/623] nilfs2: do not force clear folio if buffer is referenced
+Date: Wed,  5 Feb 2025 14:43:41 +0100
+Message-ID: <20250205134514.542528872@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,222 +49,159 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Lee <chullee@google.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 91b587ba79e1b68bb718d12b0758dbcdab4e9cb7 upstream.
+[ Upstream commit ca76bb226bf47ff04c782cacbd299f12ddee1ec1 ]
 
-This patch addresses an issue where some files in case-insensitive
-directories become inaccessible due to changes in how the kernel function,
-utf8_casefold(), generates case-folded strings from the commit 5c26d2f1d3f5
-("unicode: Don't special case ignorable code points").
+Patch series "nilfs2: protect busy buffer heads from being force-cleared".
 
-F2FS uses these case-folded names to calculate hash values for locating
-dentries and stores them on disk. Since utf8_casefold() can produce
-different output across kernel versions, stored hash values and newly
-calculated hash values may differ. This results in affected files no
-longer being found via the hash-based lookup.
+This series fixes the buffer head state inconsistency issues reported by
+syzbot that occurs when the filesystem is corrupted and falls back to
+read-only, and the associated buffer head use-after-free issue.
 
-To resolve this, the patch introduces a linear search fallback.
-If the initial hash-based search fails, F2FS will sequentially scan the
-directory entries.
+This patch (of 2):
 
-Fixes: 5c26d2f1d3f5 ("unicode: Don't special case ignorable code points")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219586
-Signed-off-by: Daniel Lee <chullee@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Cc: Daniel Rosenberg <drosen@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Syzbot has reported that after nilfs2 detects filesystem corruption and
+falls back to read-only, inconsistencies in the buffer state may occur.
+
+One of the inconsistencies is that when nilfs2 calls mark_buffer_dirty()
+to set a data or metadata buffer as dirty, but it detects that the buffer
+is not in the uptodate state:
+
+ WARNING: CPU: 0 PID: 6049 at fs/buffer.c:1177 mark_buffer_dirty+0x2e5/0x520
+  fs/buffer.c:1177
+ ...
+ Call Trace:
+  <TASK>
+  nilfs_palloc_commit_alloc_entry+0x4b/0x160 fs/nilfs2/alloc.c:598
+  nilfs_ifile_create_inode+0x1dd/0x3a0 fs/nilfs2/ifile.c:73
+  nilfs_new_inode+0x254/0x830 fs/nilfs2/inode.c:344
+  nilfs_mkdir+0x10d/0x340 fs/nilfs2/namei.c:218
+  vfs_mkdir+0x2f9/0x4f0 fs/namei.c:4257
+  do_mkdirat+0x264/0x3a0 fs/namei.c:4280
+  __do_sys_mkdirat fs/namei.c:4295 [inline]
+  __se_sys_mkdirat fs/namei.c:4293 [inline]
+  __x64_sys_mkdirat+0x87/0xa0 fs/namei.c:4293
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+The other is when nilfs_btree_propagate(), which propagates the dirty
+state to the ancestor nodes of a b-tree that point to a dirty buffer,
+detects that the origin buffer is not dirty, even though it should be:
+
+ WARNING: CPU: 0 PID: 5245 at fs/nilfs2/btree.c:2089
+  nilfs_btree_propagate+0xc79/0xdf0 fs/nilfs2/btree.c:2089
+ ...
+ Call Trace:
+  <TASK>
+  nilfs_bmap_propagate+0x75/0x120 fs/nilfs2/bmap.c:345
+  nilfs_collect_file_data+0x4d/0xd0 fs/nilfs2/segment.c:587
+  nilfs_segctor_apply_buffers+0x184/0x340 fs/nilfs2/segment.c:1006
+  nilfs_segctor_scan_file+0x28c/0xa50 fs/nilfs2/segment.c:1045
+  nilfs_segctor_collect_blocks fs/nilfs2/segment.c:1216 [inline]
+  nilfs_segctor_collect fs/nilfs2/segment.c:1540 [inline]
+  nilfs_segctor_do_construct+0x1c28/0x6b90 fs/nilfs2/segment.c:2115
+  nilfs_segctor_construct+0x181/0x6b0 fs/nilfs2/segment.c:2479
+  nilfs_segctor_thread_construct fs/nilfs2/segment.c:2587 [inline]
+  nilfs_segctor_thread+0x69e/0xe80 fs/nilfs2/segment.c:2701
+  kthread+0x2f0/0x390 kernel/kthread.c:389
+  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+  </TASK>
+
+Both of these issues are caused by the callbacks that handle the
+page/folio write requests, forcibly clear various states, including the
+working state of the buffers they hold, at unexpected times when they
+detect read-only fallback.
+
+Fix these issues by checking if the buffer is referenced before clearing
+the page/folio state, and skipping the clear if it is.
+
+Link: https://lkml.kernel.org/r/20250107200202.6432-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20250107200202.6432-2-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+b2b14916b77acf8626d7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b2b14916b77acf8626d7
+Reported-by: syzbot+d98fd19acd08b36ff422@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=d98fd19acd08b36ff422
+Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
+Tested-by: syzbot+b2b14916b77acf8626d7@syzkaller.appspotmail.com
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/dir.c    |   53 ++++++++++++++++++++++++++++++++++++++---------------
- fs/f2fs/f2fs.h   |    6 ++++--
- fs/f2fs/inline.c |    5 +++--
- 3 files changed, 45 insertions(+), 19 deletions(-)
+ fs/nilfs2/page.c | 31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
---- a/fs/f2fs/dir.c
-+++ b/fs/f2fs/dir.c
-@@ -175,7 +175,8 @@ static unsigned long dir_block_index(uns
- static struct f2fs_dir_entry *find_in_block(struct inode *dir,
- 				struct page *dentry_page,
- 				const struct f2fs_filename *fname,
--				int *max_slots)
-+				int *max_slots,
-+				bool use_hash)
+diff --git a/fs/nilfs2/page.c b/fs/nilfs2/page.c
+index 9de2a494a0694..899686d2e5f71 100644
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -392,6 +392,11 @@ void nilfs_clear_dirty_pages(struct address_space *mapping)
+ /**
+  * nilfs_clear_folio_dirty - discard dirty folio
+  * @folio: dirty folio that will be discarded
++ *
++ * nilfs_clear_folio_dirty() clears working states including dirty state for
++ * the folio and its buffers.  If the folio has buffers, clear only if it is
++ * confirmed that none of the buffer heads are busy (none have valid
++ * references and none are locked).
+  */
+ void nilfs_clear_folio_dirty(struct folio *folio)
  {
- 	struct f2fs_dentry_block *dentry_blk;
- 	struct f2fs_dentry_ptr d;
-@@ -183,7 +184,7 @@ static struct f2fs_dir_entry *find_in_bl
- 	dentry_blk = (struct f2fs_dentry_block *)page_address(dentry_page);
+@@ -399,10 +404,6 @@ void nilfs_clear_folio_dirty(struct folio *folio)
  
- 	make_dentry_ptr_block(dir, &d, dentry_blk);
--	return f2fs_find_target_dentry(&d, fname, max_slots);
-+	return f2fs_find_target_dentry(&d, fname, max_slots, use_hash);
- }
+ 	BUG_ON(!folio_test_locked(folio));
  
- static inline int f2fs_match_name(const struct inode *dir,
-@@ -208,7 +209,8 @@ static inline int f2fs_match_name(const
- }
- 
- struct f2fs_dir_entry *f2fs_find_target_dentry(const struct f2fs_dentry_ptr *d,
--			const struct f2fs_filename *fname, int *max_slots)
-+			const struct f2fs_filename *fname, int *max_slots,
-+			bool use_hash)
- {
- 	struct f2fs_dir_entry *de;
- 	unsigned long bit_pos = 0;
-@@ -231,7 +233,7 @@ struct f2fs_dir_entry *f2fs_find_target_
- 			continue;
- 		}
- 
--		if (de->hash_code == fname->hash) {
-+		if (!use_hash || de->hash_code == fname->hash) {
- 			res = f2fs_match_name(d->inode, fname,
- 					      d->filename[bit_pos],
- 					      le16_to_cpu(de->name_len));
-@@ -258,11 +260,12 @@ found:
- static struct f2fs_dir_entry *find_in_level(struct inode *dir,
- 					unsigned int level,
- 					const struct f2fs_filename *fname,
--					struct page **res_page)
-+					struct page **res_page,
-+					bool use_hash)
- {
- 	int s = GET_DENTRY_SLOTS(fname->disk_name.len);
- 	unsigned int nbucket, nblock;
--	unsigned int bidx, end_block;
-+	unsigned int bidx, end_block, bucket_no;
- 	struct page *dentry_page;
- 	struct f2fs_dir_entry *de = NULL;
- 	pgoff_t next_pgofs;
-@@ -272,8 +275,11 @@ static struct f2fs_dir_entry *find_in_le
- 	nbucket = dir_buckets(level, F2FS_I(dir)->i_dir_level);
- 	nblock = bucket_blocks(level);
- 
-+	bucket_no = use_hash ? le32_to_cpu(fname->hash) % nbucket : 0;
+-	folio_clear_uptodate(folio);
+-	folio_clear_mappedtodisk(folio);
+-	folio_clear_checked(folio);
+-
+ 	head = folio_buffers(folio);
+ 	if (head) {
+ 		const unsigned long clear_bits =
+@@ -410,6 +411,25 @@ void nilfs_clear_folio_dirty(struct folio *folio)
+ 			 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
+ 			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
+ 			 BIT(BH_Delay));
++		bool busy, invalidated = false;
 +
-+start_find_bucket:
- 	bidx = dir_block_index(level, F2FS_I(dir)->i_dir_level,
--			       le32_to_cpu(fname->hash) % nbucket);
-+			       bucket_no);
- 	end_block = bidx + nblock;
- 
- 	while (bidx < end_block) {
-@@ -290,7 +296,7 @@ static struct f2fs_dir_entry *find_in_le
- 			}
- 		}
- 
--		de = find_in_block(dir, dentry_page, fname, &max_slots);
-+		de = find_in_block(dir, dentry_page, fname, &max_slots, use_hash);
- 		if (IS_ERR(de)) {
- 			*res_page = ERR_CAST(de);
- 			de = NULL;
-@@ -307,12 +313,18 @@ static struct f2fs_dir_entry *find_in_le
- 		bidx++;
- 	}
- 
--	if (!de && room && F2FS_I(dir)->chash != fname->hash) {
--		F2FS_I(dir)->chash = fname->hash;
--		F2FS_I(dir)->clevel = level;
--	}
-+	if (de)
-+		return de;
- 
--	return de;
-+	if (likely(use_hash)) {
-+		if (room && F2FS_I(dir)->chash != fname->hash) {
-+			F2FS_I(dir)->chash = fname->hash;
-+			F2FS_I(dir)->clevel = level;
++recheck_buffers:
++		busy = false;
++		bh = head;
++		do {
++			if (atomic_read(&bh->b_count) | buffer_locked(bh)) {
++				busy = true;
++				break;
++			}
++		} while (bh = bh->b_this_page, bh != head);
++
++		if (busy) {
++			if (invalidated)
++				return;
++			invalidate_bh_lrus();
++			invalidated = true;
++			goto recheck_buffers;
 +		}
-+	} else if (++bucket_no < nbucket) {
-+		goto start_find_bucket;
-+	}
-+	return NULL;
+ 
+ 		bh = head;
+ 		do {
+@@ -419,6 +439,9 @@ void nilfs_clear_folio_dirty(struct folio *folio)
+ 		} while (bh = bh->b_this_page, bh != head);
+ 	}
+ 
++	folio_clear_uptodate(folio);
++	folio_clear_mappedtodisk(folio);
++	folio_clear_checked(folio);
+ 	__nilfs_clear_folio_dirty(folio);
  }
  
- struct f2fs_dir_entry *__f2fs_find_entry(struct inode *dir,
-@@ -323,11 +335,15 @@ struct f2fs_dir_entry *__f2fs_find_entry
- 	struct f2fs_dir_entry *de = NULL;
- 	unsigned int max_depth;
- 	unsigned int level;
-+	bool use_hash = true;
- 
- 	*res_page = NULL;
- 
-+#if IS_ENABLED(CONFIG_UNICODE)
-+start_find_entry:
-+#endif
- 	if (f2fs_has_inline_dentry(dir)) {
--		de = f2fs_find_in_inline_dir(dir, fname, res_page);
-+		de = f2fs_find_in_inline_dir(dir, fname, res_page, use_hash);
- 		goto out;
- 	}
- 
-@@ -343,11 +359,18 @@ struct f2fs_dir_entry *__f2fs_find_entry
- 	}
- 
- 	for (level = 0; level < max_depth; level++) {
--		de = find_in_level(dir, level, fname, res_page);
-+		de = find_in_level(dir, level, fname, res_page, use_hash);
- 		if (de || IS_ERR(*res_page))
- 			break;
- 	}
-+
- out:
-+#if IS_ENABLED(CONFIG_UNICODE)
-+	if (IS_CASEFOLDED(dir) && !de && use_hash) {
-+		use_hash = false;
-+		goto start_find_entry;
-+	}
-+#endif
- 	/* This is to increase the speed of f2fs_create */
- 	if (!de)
- 		F2FS_I(dir)->task = current;
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -3579,7 +3579,8 @@ int f2fs_prepare_lookup(struct inode *di
- 			struct f2fs_filename *fname);
- void f2fs_free_filename(struct f2fs_filename *fname);
- struct f2fs_dir_entry *f2fs_find_target_dentry(const struct f2fs_dentry_ptr *d,
--			const struct f2fs_filename *fname, int *max_slots);
-+			const struct f2fs_filename *fname, int *max_slots,
-+			bool use_hash);
- int f2fs_fill_dentries(struct dir_context *ctx, struct f2fs_dentry_ptr *d,
- 			unsigned int start_pos, struct fscrypt_str *fstr);
- void f2fs_do_make_empty_dir(struct inode *inode, struct inode *parent,
-@@ -4199,7 +4200,8 @@ int f2fs_write_inline_data(struct inode
- int f2fs_recover_inline_data(struct inode *inode, struct page *npage);
- struct f2fs_dir_entry *f2fs_find_in_inline_dir(struct inode *dir,
- 					const struct f2fs_filename *fname,
--					struct page **res_page);
-+					struct page **res_page,
-+					bool use_hash);
- int f2fs_make_empty_inline_dir(struct inode *inode, struct inode *parent,
- 			struct page *ipage);
- int f2fs_add_inline_entry(struct inode *dir, const struct f2fs_filename *fname,
---- a/fs/f2fs/inline.c
-+++ b/fs/f2fs/inline.c
-@@ -352,7 +352,8 @@ process_inline:
- 
- struct f2fs_dir_entry *f2fs_find_in_inline_dir(struct inode *dir,
- 					const struct f2fs_filename *fname,
--					struct page **res_page)
-+					struct page **res_page,
-+					bool use_hash)
- {
- 	struct f2fs_sb_info *sbi = F2FS_SB(dir->i_sb);
- 	struct f2fs_dir_entry *de;
-@@ -369,7 +370,7 @@ struct f2fs_dir_entry *f2fs_find_in_inli
- 	inline_dentry = inline_data_addr(dir, ipage);
- 
- 	make_dentry_ptr_inline(dir, &d, inline_dentry);
--	de = f2fs_find_target_dentry(&d, fname, NULL);
-+	de = f2fs_find_target_dentry(&d, fname, NULL, use_hash);
- 	unlock_page(ipage);
- 	if (IS_ERR(de)) {
- 		*res_page = ERR_CAST(de);
+-- 
+2.39.5
+
 
 
