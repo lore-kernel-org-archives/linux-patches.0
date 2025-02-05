@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAF21519BF;
-	Wed,  5 Feb 2025 15:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53014DF59;
+	Wed,  5 Feb 2025 15:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767940; cv=none; b=WMvuGvKUUdh8qftZXMDeaTHGLefNka+UTKbmPymIvbUtn1GxpqDTFepxcZ7Op4PGRpza4nzKiMDJG08jNcBwKLhNE+SIxlzSIrcApFD1+ROTMzzGb+CqYtV9citYfOnpmtlxbexPMDlVUaPRmXvxbjUKbsfhyx12uEJCNsoYJg8=
+	t=1738767945; cv=none; b=J0cbPKdH/QjIuZO7GkboZKkyBoxwszJzcFUjYX8nXVLGdbp85687aL2eqPujwvcD82IR47OmpKqYDF8uS2xbJ7/1Ckh4IOxv2figBnsUyjjSnqdE/HWUkf+1a9Vpc7GXKpcWS17bWIvjLOBxVIqAmfqMa92rxQ8RY84HH/cDkn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767940; c=relaxed/simple;
-	bh=FtsVO4oTvuUf77Y0QQJsu7aH8qMrQYH5fvEuHV0Ri/o=;
+	s=arc-20240116; t=1738767945; c=relaxed/simple;
+	bh=gn/Wyfc2ikI4wwwkrfF/g6zj+3U/1V9C8xYTYRYOfLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rYjFO1MOBA0ZnW4AA9ZkqjxBlCN1nUQfgVsHp/sRKQOJOazleA05Zm/oZTdDD8H54gMZKgPjPzzAgBu9OllgLjtnMcm2RuB4ehStFa/V8jwe0PgH33XUSa6IDn+YByGOww5deAzGHjf0yhEBT7xzY5hUHA06CsnEo89gy8seqxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaIR72M+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hxiJSrrDuOWhXbkQ3gDLbwSHXLb5VP5AsJW2TgBs/cl/9oqGlsRhA27U1VqsCDQmQLfBnp4bwBoRmRxejD4RGpdXvbWqKPMqxjO/SnYIINc6FUoQPw3RfrHL6fmRcy5psCuP40+QvoAJiDYpUgDrhsx2OllqEM1ouLsBp2mQpfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYLP+Akj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaIR72M+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEB9C4CED1;
-	Wed,  5 Feb 2025 15:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYLP+Akj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0FCC4CED1;
+	Wed,  5 Feb 2025 15:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767940;
-	bh=FtsVO4oTvuUf77Y0QQJsu7aH8qMrQYH5fvEuHV0Ri/o=;
+	s=korg; t=1738767943;
+	bh=gn/Wyfc2ikI4wwwkrfF/g6zj+3U/1V9C8xYTYRYOfLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jaIR72M+P/rtJlRVrFQah50vOwnmluyc4fTZlHpcoBfLqK6SywBskabcziozDLxT6
-	 j3J6QrhB0yXVAb0iOYhvIFX5aELXVqfcOMFmC0sTvHwspuNkZwBE6ufnQ3LgreKswH
-	 Hs0ET+pFLlALQrnyT1tND2TMqAVbdgelRoZuVx/A=
+	b=qYLP+AkjCOAnnpmPfleKWqndlZGX09kTLIqH6RBZFuYNiPTnDNY7quNAbXCfW4Vav
+	 aowfw+tub5LCACvjSFDmteqCr0d3wZav7WNttbil+l0NevPWuEmfLEldM2aaKYX04k
+	 9cPQi5p2HoqXIZ5Hl7r35v9fvusIFuaCwlaDHQhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Petr Vorel <pvorel@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 475/623] scsi: mpi3mr: Fix possible crash when setting up bsg fails
-Date: Wed,  5 Feb 2025 14:43:37 +0100
-Message-ID: <20250205134514.389782347@linuxfoundation.org>
+Subject: [PATCH 6.12 533/590] kconfig: fix memory leak in sym_warn_unmet_dep()
+Date: Wed,  5 Feb 2025 14:44:48 +0100
+Message-ID: <20250205134515.658096971@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,75 +47,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 295006f6e8c17212d3098811166e29627d19e05c ]
+[ Upstream commit a409fc1463d664002ea9bf700ae4674df03de111 ]
 
-If bsg_setup_queue() fails, the bsg_queue is assigned a non-NULL value.
-Consequently, in mpi3mr_bsg_exit(), the condition "if(!mrioc->bsg_queue)"
-will not be satisfied, preventing execution from entering
-bsg_remove_queue(), which could lead to the following crash:
+The string allocated in sym_warn_unmet_dep() is never freed, leading
+to a memory leak when an unmet dependency is detected.
 
-BUG: kernel NULL pointer dereference, address: 000000000000041c
-Call Trace:
-  <TASK>
-  mpi3mr_bsg_exit+0x1f/0x50 [mpi3mr]
-  mpi3mr_remove+0x6f/0x340 [mpi3mr]
-  pci_device_remove+0x3f/0xb0
-  device_release_driver_internal+0x19d/0x220
-  unbind_store+0xa4/0xb0
-  kernfs_fop_write_iter+0x11f/0x200
-  vfs_write+0x1fc/0x3e0
-  ksys_write+0x67/0xe0
-  do_syscall_64+0x38/0x80
-  entry_SYSCALL_64_after_hwframe+0x78/0xe2
-
-Fixes: 4268fa751365 ("scsi: mpi3mr: Add bsg device support")
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250107022032.24006-1-kanie@linux.alibaba.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: f8f69dc0b4e0 ("kconfig: make unmet dependency warnings readable")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_app.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ scripts/kconfig/symbol.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
-index 10b8e4dc64f8b..7589f48aebc80 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -2951,6 +2951,7 @@ void mpi3mr_bsg_init(struct mpi3mr_ioc *mrioc)
- 		.max_hw_sectors		= MPI3MR_MAX_APP_XFER_SECTORS,
- 		.max_segments		= MPI3MR_MAX_APP_XFER_SEGMENTS,
- 	};
-+	struct request_queue *q;
+diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
+index a3af93aaaf32a..453721e66c4eb 100644
+--- a/scripts/kconfig/symbol.c
++++ b/scripts/kconfig/symbol.c
+@@ -376,6 +376,7 @@ static void sym_warn_unmet_dep(const struct symbol *sym)
+ 			       "  Selected by [m]:\n");
  
- 	device_initialize(bsg_dev);
- 
-@@ -2966,14 +2967,17 @@ void mpi3mr_bsg_init(struct mpi3mr_ioc *mrioc)
- 		return;
- 	}
- 
--	mrioc->bsg_queue = bsg_setup_queue(bsg_dev, dev_name(bsg_dev), &lim,
-+	q = bsg_setup_queue(bsg_dev, dev_name(bsg_dev), &lim,
- 			mpi3mr_bsg_request, NULL, 0);
--	if (IS_ERR(mrioc->bsg_queue)) {
-+	if (IS_ERR(q)) {
- 		ioc_err(mrioc, "%s: bsg registration failed\n",
- 		    dev_name(bsg_dev));
- 		device_del(bsg_dev);
- 		put_device(bsg_dev);
-+		return;
- 	}
-+
-+	mrioc->bsg_queue = q;
+ 	fputs(str_get(&gs), stderr);
++	str_free(&gs);
+ 	sym_warnings++;
  }
  
- /**
 -- 
 2.39.5
 
