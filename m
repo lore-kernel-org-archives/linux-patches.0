@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399BF149C53;
-	Wed,  5 Feb 2025 14:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE51D1519AA;
+	Wed,  5 Feb 2025 14:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764823; cv=none; b=AWwIhYxrJNBuRAwZ2xO+fMVcStgPuye8AWZkDlQVfWI3uMAMFWPVw2QWgVGxLfbc1+7rP2zheI/M9KaLT8MelT/Bv3FVvvKjch0CjWcLIXd7kmPE/ca5g0TEHgBWtAna4krOOF4xGCjwHGOY8iTZjteNjoVUrzxIXcpQ24qnTS4=
+	t=1738764826; cv=none; b=kelm4+F3PYdIUmEGg6eqHzt/0qs0JknbmirUXl6hYV/mXRVaRuWkkOj/lryeh1Dr0EsPByxoJ2IIcVlwuGtJzKs4FeaMFzf8NQR0Oec4wOnizq8YWKvcw+mgJ0nT0lSsPGk2s8kNcjmaNuiqn8VGf2DJRXMVVKvag2ejjGEYBVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764823; c=relaxed/simple;
-	bh=enOz12LOQi6k7KXCOk7VymQG/HHu9fLZH83YeMbH4j4=;
+	s=arc-20240116; t=1738764826; c=relaxed/simple;
+	bh=LakGgLktnx06rB+3L8v8+NsBwPPTX4WpFAEjqSO2b14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqXx9bD8B6cHyv2YYBGHMuh+FmQkcp/PZzR5Qn8RHWUy/GRYrKtxLny0GY4p3KcSxA02eMAlvJIH5Ve0KtymHiI/rhXQ0PlIrkwYRg2C0oM8bn+OhgRHFuszw0By7b18oOqbn0UhKSq8DUg7fLyiV8Jtu7ZeTiRcT0KgXa3XWFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8pifTxt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SLlSsDH19BsEGn7tDqxL+etFUhPKwxw1vHIe63d+QrHnm2XMrMtfwdC3vanvI22Ej9gADxPMDBcbJ2izfxBQqThXGEuTzD/mfRLPqyhnSdOfbeWAMHUSaDsMBGMzLTh1LN769LbWtwTQ+Rk4Pmt5KOCd4zB1pu2NeIR33P4KtYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b36A3CkX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8pifTxt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C601C4CED1;
-	Wed,  5 Feb 2025 14:13:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b36A3CkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB63C4CED1;
+	Wed,  5 Feb 2025 14:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764823;
-	bh=enOz12LOQi6k7KXCOk7VymQG/HHu9fLZH83YeMbH4j4=;
+	s=korg; t=1738764826;
+	bh=LakGgLktnx06rB+3L8v8+NsBwPPTX4WpFAEjqSO2b14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8pifTxtngimNStfOtlN7AOdp0rastpqM7SYJ3ZAGuODCeXf0iED1LqLkD59vHFHC
-	 cACwkC4ddLPkGASZCocB0da7u2WPTNhmyC3rXkbNm1hiZmb1rFthwNB0eAybSR1FpQ
-	 wJskkfBPxlMDtuQZLC67V20HEoLOeb88Rvo8lYb0=
+	b=b36A3CkXro9c2XCLIJrtKE9VbLtFo0HJOyweMx6RsOIdQAw8DVGeDaiL9JZ/UUv96
+	 bdseltnN5C2pCPjqWquA1x5WfMFAFQ2v/eVeRHikYzGkKDSe5YtG/8uFJiNRTSFdeq
+	 HnK7O+xsALt+I9brfMFTV0rUxhDSSMwhfPWobqSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	syzbot+0c5d8e65f23569a8ffec@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 195/393] ARM: at91: pm: change BU Power Switch to automatic mode
-Date: Wed,  5 Feb 2025 14:41:54 +0100
-Message-ID: <20250205134427.754738783@linuxfoundation.org>
+Subject: [PATCH 6.12 161/590] wifi: mac80211: prohibit deactivating all links
+Date: Wed,  5 Feb 2025 14:38:36 +0100
+Message-ID: <20250205134501.443538256@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,95 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 6fc5bdfa872b7da51b5507a1327a17c3db2fcf95 ]
+[ Upstream commit 7553477cbfd784b128297f9ed43751688415bbaa ]
 
-Change how the Backup Unit Power is configured and force the
-automatic/hardware mode.
-This change eliminates the need for software management of the power
-switch, ensuring it transitions to the backup power source before
-entering low power modes.
+In the internal API this calls this is a WARN_ON, but that
+should remain since internally we want to know about bugs
+that may cause this. Prevent deactivating all links in the
+debugfs write directly.
 
-This is done in the only location where this switch was configured. It's
-usually done in the bootloader.
-
-Previously, the loss of the VDDANA (or VDDIN33) power source was not
-automatically compensated by an alternative power source. This resulted
-in the loss of Backup Unit content, including Backup Self-refresh low
-power mode information, OTP emulation configuration, and boot
-configuration, for instance.
-
-Fixes: ac809e7879b1 ("ARM: at91: pm: switch backup area to vbat in backup mode")
-Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Link: https://lore.kernel.org/r/20241125165648.509162-1-nicolas.ferre@microchip.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Reported-by: syzbot+0c5d8e65f23569a8ffec@syzkaller.appspotmail.com
+Fixes: 3d9011029227 ("wifi: mac80211: implement link switching")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20241230091408.505bd125c35a.Ic3c1f9572b980a952a444cad62b09b9c6721732b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-at91/pm.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ net/mac80211/debugfs_netdev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-at91/pm.c b/arch/arm/mach-at91/pm.c
-index 1a26af0fabc71..22ecaf09d00f9 100644
---- a/arch/arm/mach-at91/pm.c
-+++ b/arch/arm/mach-at91/pm.c
-@@ -591,7 +591,21 @@ static int at91_suspend_finish(unsigned long val)
- 	return 0;
- }
- 
--static void at91_pm_switch_ba_to_vbat(void)
-+/**
-+ * at91_pm_switch_ba_to_auto() - Configure Backup Unit Power Switch
-+ * to automatic/hardware mode.
-+ *
-+ * The Backup Unit Power Switch can be managed either by software or hardware.
-+ * Enabling hardware mode allows the automatic transition of power between
-+ * VDDANA (or VDDIN33) and VDDBU (or VBAT, respectively), based on the
-+ * availability of these power sources.
-+ *
-+ * If the Backup Unit Power Switch is already in automatic mode, no action is
-+ * required. If it is in software-controlled mode, it is switched to automatic
-+ * mode to enhance safety and eliminate the need for toggling between power
-+ * sources.
-+ */
-+static void at91_pm_switch_ba_to_auto(void)
+diff --git a/net/mac80211/debugfs_netdev.c b/net/mac80211/debugfs_netdev.c
+index 68596ef78b15e..d0b145888e139 100644
+--- a/net/mac80211/debugfs_netdev.c
++++ b/net/mac80211/debugfs_netdev.c
+@@ -728,7 +728,7 @@ static ssize_t ieee80211_if_parse_active_links(struct ieee80211_sub_if_data *sda
  {
- 	unsigned int offset = offsetof(struct at91_pm_sfrbu_regs, pswbu);
- 	unsigned int val;
-@@ -602,24 +616,19 @@ static void at91_pm_switch_ba_to_vbat(void)
+ 	u16 active_links;
  
- 	val = readl(soc_pm.data.sfrbu + offset);
+-	if (kstrtou16(buf, 0, &active_links))
++	if (kstrtou16(buf, 0, &active_links) || !active_links)
+ 		return -EINVAL;
  
--	/* Already on VBAT. */
--	if (!(val & soc_pm.sfrbu_regs.pswbu.state))
-+	/* Already on auto/hardware. */
-+	if (!(val & soc_pm.sfrbu_regs.pswbu.ctrl))
- 		return;
- 
--	val &= ~soc_pm.sfrbu_regs.pswbu.softsw;
--	val |= soc_pm.sfrbu_regs.pswbu.key | soc_pm.sfrbu_regs.pswbu.ctrl;
-+	val &= ~soc_pm.sfrbu_regs.pswbu.ctrl;
-+	val |= soc_pm.sfrbu_regs.pswbu.key;
- 	writel(val, soc_pm.data.sfrbu + offset);
--
--	/* Wait for update. */
--	val = readl(soc_pm.data.sfrbu + offset);
--	while (val & soc_pm.sfrbu_regs.pswbu.state)
--		val = readl(soc_pm.data.sfrbu + offset);
- }
- 
- static void at91_pm_suspend(suspend_state_t state)
- {
- 	if (soc_pm.data.mode == AT91_PM_BACKUP) {
--		at91_pm_switch_ba_to_vbat();
-+		at91_pm_switch_ba_to_auto();
- 
- 		cpu_suspend(0, at91_suspend_finish);
- 
+ 	return ieee80211_set_active_links(&sdata->vif, active_links) ?: buflen;
 -- 
 2.39.5
 
