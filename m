@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56161C6BE;
-	Wed,  5 Feb 2025 15:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13EB1519B4;
+	Wed,  5 Feb 2025 15:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768053; cv=none; b=FGdVeO6ectjkofI/PLXwyDEsscBItlYgouasRnJYdMD27C7wemDAjHpJUWWxuHUC+pkE63DSoqa/o69p3KS0HBnNuWQAD+7uuMhaqaTprN2jK21Ho/EBi5xq0+BkkzlfZqSUtCPDvVnawqHdRQtP11Gaby1d+Pk0x9ROICp/NS0=
+	t=1738768057; cv=none; b=TjrFgmuF0BYQeXIwl02cgnwWc13YnMpwuAHp81m2ZdLh7QYPmoCmbOE0xU0suCtkeLoI3I/xhitBbYIFb8KuitDTbD9F0aLtAkcddy7vXa1i3Aq1x65Zfl7ccVBGPlpI5I0NRdpyfrPCvT+fJUSY6YmJfHTvdkcGKk+htmh0t4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768053; c=relaxed/simple;
-	bh=XadcQGSAGFE8/uZjFl9UgzBdOwt2A6OqKqMp85gcPXc=;
+	s=arc-20240116; t=1738768057; c=relaxed/simple;
+	bh=KBfjgZFS7dz+mThgDQOWRODwpJzqOY6+YRNgiUp4W54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1ybyygY6vZEp1+Ill7x4jT2cQh4phIRhtXuRg4W0Mz/721Agd3YxncW0Bewo8rr8nt/13Ugl/67xWTe8330eAsTdO+YGeo+upBao9mCZGoeueRRGaxGBGs8WJ88MKg5Aaua95zOo3oqQ/bChQlJYImnEAt55ig5XiN/MthI3vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9ogjxgp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o67w1FPsuyr+P/AU6M0/YtJK0GXabDTNOsOHHOVhXPzKnjYPtqr8IoNELZiV1pn/kzlLLhGY1iT+9rheSjAm+FRsnJnx/Si0zZJ37090eD3/t5tsOTS7ICjTPfeHgk1KiTIaM5rRQfZf9CPlaH1Daszxfnkv4o4h/bvbDG88HWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nwkw4oH6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9ogjxgp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4901FC4CED1;
-	Wed,  5 Feb 2025 15:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nwkw4oH6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5992C4CED1;
+	Wed,  5 Feb 2025 15:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768053;
-	bh=XadcQGSAGFE8/uZjFl9UgzBdOwt2A6OqKqMp85gcPXc=;
+	s=korg; t=1738768057;
+	bh=KBfjgZFS7dz+mThgDQOWRODwpJzqOY6+YRNgiUp4W54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w9ogjxgpb92Ya/pq3j0oz4YqXKJKuj3ll9OrLJjlxhrLyWDH6UHICY3dDJPVeF0yJ
-	 VpSCPWnOCkATpqrB8KmIRqXnKXI3Ybd9hjnndXl4UrwXo/PPwnB4JTsnFd6sjQArIW
-	 rF5+jrUW8DoyX64hAgWjM8WT8+h/JhV2BmdB0ZDk=
+	b=Nwkw4oH6nPEYDSFK3fMjzXLO+fmw097rKh0HHX07Kh74nnezAyJTkpZUk073JDZvy
+	 DWXS9/b2IhK10LsBv7s/ptjBo0j8OtyoipYIhV68D5/zUYpQ59z+OQEOwuWwmLTGXS
+	 EfCFXnHGELH8g/UudO/4lNgt3k3IWc+bYiBJXh2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 489/623] NFSv4.2: fix COPY_NOTIFY xdr buf size calculation
-Date: Wed,  5 Feb 2025 14:43:51 +0100
-Message-ID: <20250205134514.925055922@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.12 547/590] selftests/ftrace: Fix to use remount when testing mount GID option
+Date: Wed,  5 Feb 2025 14:45:02 +0100
+Message-ID: <20250205134516.198093356@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +46,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit e8380c2d06055665b3df6c03964911375d7f9290 ]
+commit 159ca65c42d90d5ab98fc31b708b12c0be2c26e0 upstream.
 
-We need to include sequence size in the compound.
+Fix mount_options.tc to use remount option to mount the tracefs.
+Since the current implementation does not umount the tracefs,
+this test always fails because of -EBUSY error.
+Using remount option will allow us to change the mount option.
 
-Fixes: 0491567b51ef ("NFS: add COPY_NOTIFY operation")
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/173625186741.1383744.16707876180798573039.stgit@devnote2
+Fixes: 8b55572e5180 ("tracing/selftests: Add tracefs mount options test")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs42xdr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../selftests/ftrace/test.d/00basic/mount_options.tc      | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfs/nfs42xdr.c b/fs/nfs/nfs42xdr.c
-index 9e3ae53e22058..becc3149aa9e5 100644
---- a/fs/nfs/nfs42xdr.c
-+++ b/fs/nfs/nfs42xdr.c
-@@ -144,9 +144,11 @@
- 					 decode_putfh_maxsz + \
- 					 decode_offload_cancel_maxsz)
- #define NFS4_enc_copy_notify_sz		(compound_encode_hdr_maxsz + \
-+					 encode_sequence_maxsz + \
- 					 encode_putfh_maxsz + \
- 					 encode_copy_notify_maxsz)
- #define NFS4_dec_copy_notify_sz		(compound_decode_hdr_maxsz + \
-+					 decode_sequence_maxsz + \
- 					 decode_putfh_maxsz + \
- 					 decode_copy_notify_maxsz)
- #define NFS4_enc_deallocate_sz		(compound_encode_hdr_maxsz + \
+diff --git a/tools/testing/selftests/ftrace/test.d/00basic/mount_options.tc b/tools/testing/selftests/ftrace/test.d/00basic/mount_options.tc
+index 35e8d47d6072..8a7ce647a60d 100644
+--- a/tools/testing/selftests/ftrace/test.d/00basic/mount_options.tc
++++ b/tools/testing/selftests/ftrace/test.d/00basic/mount_options.tc
+@@ -15,11 +15,11 @@ find_alternate_gid() {
+ 	tac /etc/group | grep -v ":$original_gid:" | head -1 | cut -d: -f3
+ }
+ 
+-mount_tracefs_with_options() {
++remount_tracefs_with_options() {
+ 	local mount_point="$1"
+ 	local options="$2"
+ 
+-	mount -t tracefs -o "$options" nodev "$mount_point"
++	mount -t tracefs -o "remount,$options" nodev "$mount_point"
+ 
+ 	setup
+ }
+@@ -81,7 +81,7 @@ test_gid_mount_option() {
+ 
+ 	# Unmount existing tracefs instance and mount with new GID
+ 	unmount_tracefs "$mount_point"
+-	mount_tracefs_with_options "$mount_point" "$new_options"
++	remount_tracefs_with_options "$mount_point" "$new_options"
+ 
+ 	check_gid "$mount_point" "$other_group"
+ 
+@@ -92,7 +92,7 @@ test_gid_mount_option() {
+ 
+ 	# Unmount and remount with the original GID
+ 	unmount_tracefs "$mount_point"
+-	mount_tracefs_with_options "$mount_point" "$mount_options"
++	remount_tracefs_with_options "$mount_point" "$mount_options"
+ 	check_gid "$mount_point" "$original_group"
+ }
+ 
 -- 
-2.39.5
+2.48.1
 
 
 
