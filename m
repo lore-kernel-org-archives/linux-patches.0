@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC19319F121;
-	Wed,  5 Feb 2025 15:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3C418CC15;
+	Wed,  5 Feb 2025 15:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767650; cv=none; b=knKC5M3DtmlmsoHEL/RPMOOozpxdGMQnDRxAcM4z9W4vqO/CgvhQulXoaWAv9IVLeLLOa6u8X+N9dZYlEl0gzr/3VoY/4zcODd3DvLm/83G6uilCX9/Ai5J7uGxVU06y0z8AITnZ4nrpZFsCSPs++yHMEbWhgoMhn/5X86Ec8oQ=
+	t=1738767653; cv=none; b=W2UQrZZ5/QLSTzUGv0eZ+tz8NTDAOQq/w/8q/EA8Wi6Qm/0fbzAgalt/yQPGFwdnBZw9UIjSuUvlU42aK8NOnWPSqvLIUWSVW5jV6+d5Q5dyhPwu4RobYDz3mg+829X4NmZlhNGu52YSRHIBlBrbwIbMIrOTHMbmoHroiCmjfKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767650; c=relaxed/simple;
-	bh=RlmjpRXdkBdEQ2VpmY2Zl2OVS0bjQL5HR6EE1HvJSv4=;
+	s=arc-20240116; t=1738767653; c=relaxed/simple;
+	bh=tbRPfYdV0Vniq4vDDFKOCWGAbEe1hx4fYC/tciAnCuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOsdGDw3azu59VbtZr+2Z1nhyof+GlAksjlxPAQ9TvhaNZXByUTq7cK6+097zE38yzwwr3KOGe5hMB9crjAaOgENW0/2IrF1srzH/USThj0xkdzcHUjnnWDuxIEiarOYaRJDC2fWundQGEEi8M95fu++1Ck+ngzO+iejbwbpY3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZtQfAh9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jmGcASy0ueLFyPC31QcjrNca/Lhqh8ex85pgdcHkDB1zKMo8KoZwcAxq23Ls9t/1tVqjL4c2o0POSASz5mtbvoGfI35Ng/JZFspBg4n8Ed1U8X64khVQGT1fyq75gSYClZ17XvnSDhKYRBYFjb/IEWtgpLDLYxDivgWNSMEkhY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAesfOWv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZtQfAh9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07EC5C4CED6;
-	Wed,  5 Feb 2025 15:00:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAesfOWv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2CCC4CEE2;
+	Wed,  5 Feb 2025 15:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767650;
-	bh=RlmjpRXdkBdEQ2VpmY2Zl2OVS0bjQL5HR6EE1HvJSv4=;
+	s=korg; t=1738767653;
+	bh=tbRPfYdV0Vniq4vDDFKOCWGAbEe1hx4fYC/tciAnCuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yZtQfAh94KnL9f/Q9EdQJBUk2FYEwMosDE3WglM6D4woPCPWVIxwmCtR+4ib1EDhS
-	 jU43SN01TKWTCDOczTBE41tMHc0NT2y+HlhgoWozuq18yMG+ITfqw790Iazdy8z3Iz
-	 f+oaMhlLzVwWsGfJAExshl7u5uw5XxjhxJBXkkXk=
+	b=yAesfOWvAmeKsAasLn3KQ6drHpnxmjK+0d6nVIEzDGdQOVfaFfsnvQ0Q+zi6uIK7x
+	 2QM4NkMc3sliUaRdpH7s2i3usmXVXpquaIPVYddIs3lJki38CvAET8HgIxwIqKwbfE
+	 o0HxiJcyMxJjnY4YaGyhG+sQ2jS1VTUr3ZO92CSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Mateusz Polchlopek <mateusz.polchlopek@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.12 487/590] ice: rework of dump serdes equalizer values feature
-Date: Wed,  5 Feb 2025 14:44:02 +0100
-Message-ID: <20250205134513.892910883@linuxfoundation.org>
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Joe Klein <joe.klein812@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 434/623] RDMA/rxe: Fix the warning "__rxe_cleanup+0x12c/0x170 [rdma_rxe]"
+Date: Wed,  5 Feb 2025 14:42:56 +0100
+Message-ID: <20250205134512.823621883@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,175 +48,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-[ Upstream commit 8ea085937dad2d0b5399bc58722934f562b9abef ]
+[ Upstream commit edc4ef0e0154096d6c0cf5e06af6fc330dbad9d1 ]
 
-Refactor function ice_get_tx_rx_equa() to iterate over new table of
-params instead of multiple calls to ice_aq_get_phy_equalization().
+The Call Trace is as below:
+"
+  <TASK>
+  ? show_regs.cold+0x1a/0x1f
+  ? __rxe_cleanup+0x12c/0x170 [rdma_rxe]
+  ? __warn+0x84/0xd0
+  ? __rxe_cleanup+0x12c/0x170 [rdma_rxe]
+  ? report_bug+0x105/0x180
+  ? handle_bug+0x46/0x80
+  ? exc_invalid_op+0x19/0x70
+  ? asm_exc_invalid_op+0x1b/0x20
+  ? __rxe_cleanup+0x12c/0x170 [rdma_rxe]
+  ? __rxe_cleanup+0x124/0x170 [rdma_rxe]
+  rxe_destroy_qp.cold+0x24/0x29 [rdma_rxe]
+  ib_destroy_qp_user+0x118/0x190 [ib_core]
+  rdma_destroy_qp.cold+0x43/0x5e [rdma_cm]
+  rtrs_cq_qp_destroy.cold+0x1d/0x2b [rtrs_core]
+  rtrs_srv_close_work.cold+0x1b/0x31 [rtrs_server]
+  process_one_work+0x21d/0x3f0
+  worker_thread+0x4a/0x3c0
+  ? process_one_work+0x3f0/0x3f0
+  kthread+0xf0/0x120
+  ? kthread_complete_and_exit+0x20/0x20
+  ret_from_fork+0x22/0x30
+  </TASK>
+"
+When too many rdma resources are allocated, rxe needs more time to
+handle these rdma resources. Sometimes with the current timeout, rxe
+can not release the rdma resources correctly.
 
-Subsequent commit will extend that function by add more serdes equalizer
-values to dump.
+Compared with other rdma drivers, a bigger timeout is used.
 
-Shorten the fields of struct ice_serdes_equalization_to_ethtool for
-readability purposes.
-
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: c5cc2a27e04f ("ice: remove invalid parameter of equalizer")
+Fixes: 215d0a755e1b ("RDMA/rxe: Stop lookup of partially built objects")
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/20250110160927.55014-1-yanjun.zhu@linux.dev
+Tested-by: Joe Klein <joe.klein812@gmail.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool.c | 93 ++++++--------------
- drivers/net/ethernet/intel/ice/ice_ethtool.h | 22 ++---
- 2 files changed, 38 insertions(+), 77 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_pool.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index d5cc934d13594..e011966e94502 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -693,75 +693,36 @@ static int ice_get_port_topology(struct ice_hw *hw, u8 lport,
- static int ice_get_tx_rx_equa(struct ice_hw *hw, u8 serdes_num,
- 			      struct ice_serdes_equalization_to_ethtool *ptr)
+diff --git a/drivers/infiniband/sw/rxe/rxe_pool.c b/drivers/infiniband/sw/rxe/rxe_pool.c
+index 67567d62195e8..d9cb682fd71f8 100644
+--- a/drivers/infiniband/sw/rxe/rxe_pool.c
++++ b/drivers/infiniband/sw/rxe/rxe_pool.c
+@@ -178,7 +178,6 @@ int __rxe_cleanup(struct rxe_pool_elem *elem, bool sleepable)
  {
-+	static const int tx = ICE_AQC_OP_CODE_TX_EQU;
-+	static const int rx = ICE_AQC_OP_CODE_RX_EQU;
-+	struct {
-+		int data_in;
-+		int opcode;
-+		int *out;
-+	} aq_params[] = {
-+		{ ICE_AQC_TX_EQU_PRE1, tx, &ptr->tx_equ_pre1 },
-+		{ ICE_AQC_TX_EQU_PRE3, tx, &ptr->tx_equ_pre3 },
-+		{ ICE_AQC_TX_EQU_ATTEN, tx, &ptr->tx_equ_atten },
-+		{ ICE_AQC_TX_EQU_POST1, tx, &ptr->tx_equ_post1 },
-+		{ ICE_AQC_TX_EQU_PRE2, tx, &ptr->tx_equ_pre2 },
-+		{ ICE_AQC_RX_EQU_PRE2, rx, &ptr->rx_equ_pre2 },
-+		{ ICE_AQC_RX_EQU_PRE1, rx, &ptr->rx_equ_pre1 },
-+		{ ICE_AQC_RX_EQU_POST1, rx, &ptr->rx_equ_post1 },
-+		{ ICE_AQC_RX_EQU_BFLF, rx, &ptr->rx_equ_bflf },
-+		{ ICE_AQC_RX_EQU_BFHF, rx, &ptr->rx_equ_bfhf },
-+		{ ICE_AQC_RX_EQU_DRATE, rx, &ptr->rx_equ_drate },
-+	};
- 	int err;
+ 	struct rxe_pool *pool = elem->pool;
+ 	struct xarray *xa = &pool->xa;
+-	static int timeout = RXE_POOL_TIMEOUT;
+ 	int ret, err = 0;
+ 	void *xa_ret;
  
--	err = ice_aq_get_phy_equalization(hw, ICE_AQC_TX_EQU_PRE1,
--					  ICE_AQC_OP_CODE_TX_EQU, serdes_num,
--					  &ptr->tx_equalization_pre1);
--	if (err)
--		return err;
--
--	err = ice_aq_get_phy_equalization(hw, ICE_AQC_TX_EQU_PRE3,
--					  ICE_AQC_OP_CODE_TX_EQU, serdes_num,
--					  &ptr->tx_equalization_pre3);
--	if (err)
--		return err;
--
--	err = ice_aq_get_phy_equalization(hw, ICE_AQC_TX_EQU_ATTEN,
--					  ICE_AQC_OP_CODE_TX_EQU, serdes_num,
--					  &ptr->tx_equalization_atten);
--	if (err)
--		return err;
--
--	err = ice_aq_get_phy_equalization(hw, ICE_AQC_TX_EQU_POST1,
--					  ICE_AQC_OP_CODE_TX_EQU, serdes_num,
--					  &ptr->tx_equalization_post1);
--	if (err)
--		return err;
--
--	err = ice_aq_get_phy_equalization(hw, ICE_AQC_TX_EQU_PRE2,
--					  ICE_AQC_OP_CODE_TX_EQU, serdes_num,
--					  &ptr->tx_equalization_pre2);
--	if (err)
--		return err;
--
--	err = ice_aq_get_phy_equalization(hw, ICE_AQC_RX_EQU_PRE2,
--					  ICE_AQC_OP_CODE_RX_EQU, serdes_num,
--					  &ptr->rx_equalization_pre2);
--	if (err)
--		return err;
--
--	err = ice_aq_get_phy_equalization(hw, ICE_AQC_RX_EQU_PRE1,
--					  ICE_AQC_OP_CODE_RX_EQU, serdes_num,
--					  &ptr->rx_equalization_pre1);
--	if (err)
--		return err;
--
--	err = ice_aq_get_phy_equalization(hw, ICE_AQC_RX_EQU_POST1,
--					  ICE_AQC_OP_CODE_RX_EQU, serdes_num,
--					  &ptr->rx_equalization_post1);
--	if (err)
--		return err;
--
--	err = ice_aq_get_phy_equalization(hw, ICE_AQC_RX_EQU_BFLF,
--					  ICE_AQC_OP_CODE_RX_EQU, serdes_num,
--					  &ptr->rx_equalization_bflf);
--	if (err)
--		return err;
--
--	err = ice_aq_get_phy_equalization(hw, ICE_AQC_RX_EQU_BFHF,
--					  ICE_AQC_OP_CODE_RX_EQU, serdes_num,
--					  &ptr->rx_equalization_bfhf);
--	if (err)
--		return err;
--
--	err = ice_aq_get_phy_equalization(hw, ICE_AQC_RX_EQU_DRATE,
--					  ICE_AQC_OP_CODE_RX_EQU, serdes_num,
--					  &ptr->rx_equalization_drate);
--	if (err)
--		return err;
-+	for (int i = 0; i < ARRAY_SIZE(aq_params); i++) {
-+		err = ice_aq_get_phy_equalization(hw, aq_params[i].data_in,
-+						  aq_params[i].opcode,
-+						  serdes_num, aq_params[i].out);
-+		if (err)
-+			break;
-+	}
+@@ -202,19 +201,19 @@ int __rxe_cleanup(struct rxe_pool_elem *elem, bool sleepable)
+ 	 * return to rdma-core
+ 	 */
+ 	if (sleepable) {
+-		if (!completion_done(&elem->complete) && timeout) {
++		if (!completion_done(&elem->complete)) {
+ 			ret = wait_for_completion_timeout(&elem->complete,
+-					timeout);
++					msecs_to_jiffies(50000));
  
--	return 0;
-+	return err;
- }
+ 			/* Shouldn't happen. There are still references to
+ 			 * the object but, rather than deadlock, free the
+ 			 * object or pass back to rdma-core.
+ 			 */
+ 			if (WARN_ON(!ret))
+-				err = -EINVAL;
++				err = -ETIMEDOUT;
+ 		}
+ 	} else {
+-		unsigned long until = jiffies + timeout;
++		unsigned long until = jiffies + RXE_POOL_TIMEOUT;
  
- /**
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.h b/drivers/net/ethernet/intel/ice/ice_ethtool.h
-index 9acccae38625a..98eb9c51d687c 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.h
-@@ -10,17 +10,17 @@ struct ice_phy_type_to_ethtool {
- };
+ 		/* AH objects are unique in that the destroy_ah verb
+ 		 * can be called in atomic context. This delay
+@@ -226,7 +225,7 @@ int __rxe_cleanup(struct rxe_pool_elem *elem, bool sleepable)
+ 			mdelay(1);
  
- struct ice_serdes_equalization_to_ethtool {
--	int rx_equalization_pre2;
--	int rx_equalization_pre1;
--	int rx_equalization_post1;
--	int rx_equalization_bflf;
--	int rx_equalization_bfhf;
--	int rx_equalization_drate;
--	int tx_equalization_pre1;
--	int tx_equalization_pre3;
--	int tx_equalization_atten;
--	int tx_equalization_post1;
--	int tx_equalization_pre2;
-+	int rx_equ_pre2;
-+	int rx_equ_pre1;
-+	int rx_equ_post1;
-+	int rx_equ_bflf;
-+	int rx_equ_bfhf;
-+	int rx_equ_drate;
-+	int tx_equ_pre1;
-+	int tx_equ_pre3;
-+	int tx_equ_atten;
-+	int tx_equ_post1;
-+	int tx_equ_pre2;
- };
+ 		if (WARN_ON(!completion_done(&elem->complete)))
+-			err = -EINVAL;
++			err = -ETIMEDOUT;
+ 	}
  
- struct ice_regdump_to_ethtool {
+ 	if (pool->cleanup)
 -- 
 2.39.5
 
