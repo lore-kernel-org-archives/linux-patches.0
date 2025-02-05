@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922581FC0FC;
-	Wed,  5 Feb 2025 14:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7618B18A6D7;
+	Wed,  5 Feb 2025 14:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767235; cv=none; b=Q2JWujqhQ7z9elWuOjds8RMkMVRg0rAAX7Q7is02ky6Dha6Hhev2fKw+2jVLICTjAM1TQuK9A4PI6lROORJVJbLkOFjfO5sEbnkq1WAN5Ti91rycqGWXNzJt8BuI+KBPziwqI1FLaMHFm2OKPntNWJWGW+/yuWtmxcSLoXxoZ1k=
+	t=1738767238; cv=none; b=QMMeO1LCuyoejVocHY6U9iJ69fALyRmOWFp+CTzdD8g1lscrJe+80eUoC7zHIU/iPC61CTibgfUaw72/TZiokJp6stSKyeXYPTmVbcqG2fIFu2S/tU44TR7fpXibNUq93Sd+pFK7EMRjIDIVNVKwdzmFlT5Cb/+vQTmaJpLHhIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767235; c=relaxed/simple;
-	bh=DvZwyeDAd7X377xuCUKXBQxW6u1gL+6i0NnjlhXsLtk=;
+	s=arc-20240116; t=1738767238; c=relaxed/simple;
+	bh=U3ZEWNgyZuQ6AzD1sLG9FP/YA1Y+Fcit5qTBPQiJQkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=umMuE4cLORJAmBZSOEEmcUeRVLTpM4Yv5IeA6ZrGEbvOMjj+bhsbliERy+/qarJUeFwKq8oz5GaKPn0rvxk8D7PZOFau3XWG9yC3bq90uMNDJPQ4WXtO2+mCfbdr4cBRqK2yBv9e3iCtKXW+rG+jfFudSCwk+FB3V6PXzVbi1GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBVr7Qo4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HUm1+YHCNRrXSDH8rtuQGAtXk7Ce6/cMnzlhz6RBHpLZfYux+7SeR7p9L35WWcP9nV9KNUSmwOP63YnIoraLdDpcWnttakOoeYcK+KC9E7kyDdIXd5CL+GlYEki0ZGkvhRPeQShNNdaZOAtOCvLWRBr66I+E4ELJCpMmve1H4AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YbvZT/JU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBVr7Qo4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B23AC4CED1;
-	Wed,  5 Feb 2025 14:53:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbvZT/JU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E15C4CED1;
+	Wed,  5 Feb 2025 14:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767235;
-	bh=DvZwyeDAd7X377xuCUKXBQxW6u1gL+6i0NnjlhXsLtk=;
+	s=korg; t=1738767238;
+	bh=U3ZEWNgyZuQ6AzD1sLG9FP/YA1Y+Fcit5qTBPQiJQkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBVr7Qo4wNifVM818yLtKu7yKoMm/Ht7M3MBHigjvi2jhuL6yBArrteyNTOxJZytM
-	 HzD1nHHS1vr4mwdflacE8NykmqWSi24HwC2TsZHCjHSFuFw6ps7ZpvH+VzlkemDo3A
-	 AGsPfmYb3Eb9yHZHNndptV319cur2dsKAz0oT+kA=
+	b=YbvZT/JU9/8un58ntV7NpuP34aNYPW+haeMKuM9Yw6DFsQZTEKLnmNtHVQgRJkO10
+	 SIvhkNdEgQY4GMWRp4SZDKnmPqDbZFzKHlC9iokfgU5/H4ARWP+e4XcLCf2TuKESoN
+	 v0/KnnO2T1uHuVArVe+3Wr+4z9HkkTaTQDiMCu7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 376/623] arm64: dts: qcom: msm8916: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:41:58 +0100
-Message-ID: <20250205134510.604587624@linuxfoundation.org>
+Subject: [PATCH 6.12 419/590] mtd: hyperbus: hbmc-am654: fix an OF node reference leak
+Date: Wed,  5 Feb 2025 14:42:54 +0100
+Message-ID: <20250205134511.296701127@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit f088b921890cef28862913e5627bb2e2b5f82125 ]
+[ Upstream commit bf5821909eb9c7f5d07d5c6e852ead2c373c94a0 ]
 
-The MSM8916 platform uses PM8916 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+In am654_hbmc_platform_driver, .remove() and the error path of .probe()
+do not decrement the refcount of an OF node obtained by
+  of_get_next_child(). Fix this by adding of_node_put() calls.
 
-Fixes: f4fb6aeafaaa ("arm64: dts: qcom: msm8916: Add fixed rate on-board oscillators")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-1-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: aca31ce96814 ("mtd: hyperbus: hbmc-am654: Fix direct mapping setup flash access")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/hyperbus/hbmc-am654.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 5e558bcc9d878..8f35c9af18782 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -125,7 +125,7 @@
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
--			clock-frequency = <32768>;
-+			clock-frequency = <32764>;
- 		};
- 	};
+diff --git a/drivers/mtd/hyperbus/hbmc-am654.c b/drivers/mtd/hyperbus/hbmc-am654.c
+index dbe3eb361cca2..4b6cbee23fe89 100644
+--- a/drivers/mtd/hyperbus/hbmc-am654.c
++++ b/drivers/mtd/hyperbus/hbmc-am654.c
+@@ -174,26 +174,30 @@ static int am654_hbmc_probe(struct platform_device *pdev)
+ 	priv->hbdev.np = of_get_next_child(np, NULL);
+ 	ret = of_address_to_resource(priv->hbdev.np, 0, &res);
+ 	if (ret)
+-		return ret;
++		goto put_node;
  
+ 	if (of_property_read_bool(dev->of_node, "mux-controls")) {
+ 		struct mux_control *control = devm_mux_control_get(dev, NULL);
+ 
+-		if (IS_ERR(control))
+-			return PTR_ERR(control);
++		if (IS_ERR(control)) {
++			ret = PTR_ERR(control);
++			goto put_node;
++		}
+ 
+ 		ret = mux_control_select(control, 1);
+ 		if (ret) {
+ 			dev_err(dev, "Failed to select HBMC mux\n");
+-			return ret;
++			goto put_node;
+ 		}
+ 		priv->mux_ctrl = control;
+ 	}
+ 
+ 	priv->hbdev.map.size = resource_size(&res);
+ 	priv->hbdev.map.virt = devm_ioremap_resource(dev, &res);
+-	if (IS_ERR(priv->hbdev.map.virt))
+-		return PTR_ERR(priv->hbdev.map.virt);
++	if (IS_ERR(priv->hbdev.map.virt)) {
++		ret = PTR_ERR(priv->hbdev.map.virt);
++		goto disable_mux;
++	}
+ 
+ 	priv->ctlr.dev = dev;
+ 	priv->ctlr.ops = &am654_hbmc_ops;
+@@ -226,6 +230,8 @@ static int am654_hbmc_probe(struct platform_device *pdev)
+ disable_mux:
+ 	if (priv->mux_ctrl)
+ 		mux_control_deselect(priv->mux_ctrl);
++put_node:
++	of_node_put(priv->hbdev.np);
+ 	return ret;
+ }
+ 
+@@ -241,6 +247,7 @@ static void am654_hbmc_remove(struct platform_device *pdev)
+ 
+ 	if (dev_priv->rx_chan)
+ 		dma_release_channel(dev_priv->rx_chan);
++	of_node_put(priv->hbdev.np);
+ }
+ 
+ static const struct of_device_id am654_hbmc_dt_ids[] = {
 -- 
 2.39.5
 
