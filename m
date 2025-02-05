@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF3C1519AA;
-	Wed,  5 Feb 2025 14:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01511494DF;
+	Wed,  5 Feb 2025 14:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764710; cv=none; b=FA3PM2HA0drWfMo4Y2jUjBCyaqH2FUacfjoYB5lueAngdUWeYmA8J9/GCDMsbzKJ6Lf26qMk6UQnuUQrmhBMZynYVg2wkgBif6uTKSBDEdOobASRmvgeqOAAo5xlG+lOlDoiQKyOKp4I7oNu0AMoVsG0uhY+7x80ubD9vY3vLHQ=
+	t=1738764714; cv=none; b=EBpluFAEXxcF4Xe5yit06aeFgFYXn7yZ5fvcBWm2qL+UagdJXcq4MbjwjqagZIegWbUHQluWME4vJELABDxU0kJOlRcPoV9KYMGLizrQxLbVDFmYxNOXHywU6S2umgq2ofGiYdkO28q2GNt9/r7OADbrLT/mcqLT4UO8wFtjY5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764710; c=relaxed/simple;
-	bh=IX+56iVeUssAT9d0ytNJ5cA85HRxWn+5p9B9iX3egVA=;
+	s=arc-20240116; t=1738764714; c=relaxed/simple;
+	bh=LFFFPFqrQtSWOfpUdXnIz/DZOePiBqjIuSGSTTTyFRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GnFASp482h3xGMK3+LT61vApAZNjatbpXhzmp5dBffhLJONVWBd/kywj0+sI4qEJmhtQ6aJ/syZeaO2bLqhJLrPpWf+z9dVetlZRy9ke695RnOs04H82T54LQa2b1XDbNht0OKK85E2LJqFvHpR5SBCQES5JqRhf6+S9pe4zVeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5g2KXWc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WsBbVfV4vxBlPgtLq5w6HuhU9XMjDWUo/wWM/pRuuJ77ykUVjDAmsASo6QSRglol+YZFjb/qug1fJEaSD2y2TOzXhbLXwQrP0lq6xx3fwOGaTwGAA6f3ZHjnfvWxLilqXCP8opzJZs+Css4ErPajXK0u74g5gqnFe5xOwwolz2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFVcapgx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5g2KXWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9E6C4CED1;
-	Wed,  5 Feb 2025 14:11:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFVcapgx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A31EC4CED1;
+	Wed,  5 Feb 2025 14:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764710;
-	bh=IX+56iVeUssAT9d0ytNJ5cA85HRxWn+5p9B9iX3egVA=;
+	s=korg; t=1738764713;
+	bh=LFFFPFqrQtSWOfpUdXnIz/DZOePiBqjIuSGSTTTyFRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5g2KXWcluI/xZJML38pZi3bbojjX1QZKhX8FGVmxmP19k6zhna6GNwoRWlfR33If
-	 TJEoIS84D0fDMDQapkzNWTlZTdKe63g9NBmDGxNGDGHKf6aVnrBtnElD4VQj46E7P3
-	 G+hOeAmy7iGX509QaLrLWRp3t+rkHOlHlGV83ArE=
+	b=QFVcapgxAuR+cyKYSrJfr6NKcZbYrjptNYd8LGncltsGKDkJ7RhAJ2v9EfhB9vgrv
+	 Reu+ykeavTWrT3Lw/1gok9TMCDK5wP0q4EJtPbmcd6ZvtDEis/WAYtX7bHF+6x+O7k
+	 uWAUvdFTGnfwID2y3xrBtOT/TLDCLmd5KAa5dPMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 151/590] wifi: rtw89: chan: fix soft lockup in rtw89_entity_recalc_mgnt_roles()
-Date: Wed,  5 Feb 2025 14:38:26 +0100
-Message-ID: <20250205134501.054840228@linuxfoundation.org>
+Subject: [PATCH 6.13 107/623] wifi: rtlwifi: pci: wait for firmware loading before releasing memory
+Date: Wed,  5 Feb 2025 14:37:29 +0100
+Message-ID: <20250205134500.310754628@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,58 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zong-Zhe Yang <kevin_yang@realtek.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit e4790b3e314a4814f1680a5dc552031fb199b878 ]
+[ Upstream commit b59b86c5d08be7d761c04affcbcec8184738c200 ]
 
-During rtw89_entity_recalc_mgnt_roles(), there is a normalizing process
-which will re-order the list if an entry with target pattern is found.
-And once one is found, should have aborted the list_for_each_entry. But,
-`break` just aborted the inner for-loop. The outer list_for_each_entry
-still continues. Normally, only the first entry will match the target
-pattern, and the re-ordering will change nothing, so there won't be
-soft lockup. However, in some special cases, soft lockup would happen.
+At probe error path, the firmware loading work may have already been
+queued. In such a case, it will try to access memory allocated by the probe
+function, which is about to be released. In such paths, wait for the
+firmware worker to finish before releasing memory.
 
-Fix it by `goto fill` to break from the list_for_each_entry.
-
-The following is a sample of kernel log for this problem.
-
-watchdog: BUG: soft lockup - CPU#1 stuck for 26s! [wpa_supplicant:2055]
-[...]
-RIP: 0010:rtw89_entity_recalc ([...] chan.c:392 chan.c:479) rtw89_core
-[...]
-
-Fixes: 68ec751b2881 ("wifi: rtw89: chan: manage active interfaces")
-Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Fixes: 3d86b93064c7 ("rtlwifi: Fix PCI probe error path orphaned memory")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241231004811.8646-3-pkshih@realtek.com
+Link: https://patch.msgid.link/20241206173713.3222187-5-cascardo@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/chan.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/chan.c b/drivers/net/wireless/realtek/rtw89/chan.c
-index abc78716596d0..c06d305519df4 100644
---- a/drivers/net/wireless/realtek/rtw89/chan.c
-+++ b/drivers/net/wireless/realtek/rtw89/chan.c
-@@ -391,11 +391,12 @@ static void rtw89_entity_recalc_mgnt_roles(struct rtw89_dev *rtwdev)
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index a870117cf12af..0eafc4d125f91 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -2218,6 +2218,7 @@ int rtl_pci_probe(struct pci_dev *pdev,
+ fail4:
+ 	rtl_deinit_core(hw);
+ fail3:
++	wait_for_completion(&rtlpriv->firmware_loading_complete);
+ 	rtlpriv->cfg->ops->deinit_sw_vars(hw);
  
- 				list_del(&role->mgnt_entry);
- 				list_add(&role->mgnt_entry, &mgnt->active_list);
--				break;
-+				goto fill;
- 			}
- 		}
- 	}
- 
-+fill:
- 	list_for_each_entry(role, &mgnt->active_list, mgnt_entry) {
- 		if (unlikely(pos >= RTW89_MAX_INTERFACE_NUM)) {
- 			rtw89_warn(rtwdev,
+ fail2:
 -- 
 2.39.5
 
