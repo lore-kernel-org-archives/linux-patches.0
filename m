@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CD413C9C4;
-	Wed,  5 Feb 2025 14:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60D01519AA;
+	Wed,  5 Feb 2025 14:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764833; cv=none; b=P00Mb47CXQWnxMafwIGHtf2UVXbBXsEeneKTgwAUFXb415ll293hXNjl2NmVGiWSd1U1NT3zeTFlu9aQZ8ykLJ1Lg4viynJ8PnRE+yjYzzrXh7g5ulafe+Er/Uo/55jG/rIUl3l3VNjSsXRBjrpqMDKphtoJZ8/ZygVROGDk/4Q=
+	t=1738764836; cv=none; b=HyhKhSX7DZaJ04mEgJ7G4e9Z1Pu6E1PSX3btUYe//r1NoXdf0qHsAAprOcpnfnwi3uqvZnFS1bKexSPPOocz9nFOKjMOi5HG81lTzvovNjIvNie72ch6/kukH9nNur0CEb3W8+x5U1jAMLcXlmNTBwG6RU4B5iyk06hmIp/Kqgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764833; c=relaxed/simple;
-	bh=LHIqRIIcl6uyaBH24IGa7u+WLNQcfGZUU2wWJspicsU=;
+	s=arc-20240116; t=1738764836; c=relaxed/simple;
+	bh=9Fzb4mkkqA8sxwFn3is0IMf8Bv3Ik+u8tyjBWsDOVGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRIZ/QNe+3nLoVh5WNdEiTYdwaFiP+LMgwE+BvlrJmdRJFIKF/k7MbgW+EonuBmDrPYb17plMFjqi76HmvGn2exS0WShN84sGUJ56Q+HoD0oZr5xmLfTDYOVkrrfcUCX7RqCjr9m1Fc8DBP9n59SQdt9AI7s48EqdLUgZ//CyvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5c8Dd+I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=duJ5rGkG1XfPIBIB/1HqHIohlo1YfEqgSTa1K25CkLq9Q4PI29Aryqe4RxxFsmSKF+vTkLQ9pk8sgIUvvvADy4WU6smVr91dbPXjI3Khe38gMctzrIvTzyOG3jpFwwk/wbCJ02LdSnppbgZfr43qgC8X1f50U5ZOJTPE57Tpcy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNoiZXuw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5c8Dd+I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DAEC4CED1;
-	Wed,  5 Feb 2025 14:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNoiZXuw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2489FC4CED1;
+	Wed,  5 Feb 2025 14:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764833;
-	bh=LHIqRIIcl6uyaBH24IGa7u+WLNQcfGZUU2wWJspicsU=;
+	s=korg; t=1738764836;
+	bh=9Fzb4mkkqA8sxwFn3is0IMf8Bv3Ik+u8tyjBWsDOVGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o5c8Dd+IlMOEyVj6RoJ0Qwxj6uJ07VbLhNT7dFHu+ZhjIVFTXAJVglyQb4Hbk2ZZt
-	 nc9/WkxN5AwA7rIQBUJNtePtb1YYgiEFx75jEFREwYIxUwN0yRFVBa5dC9H69T6Kcu
-	 9ryr7nrG5j7X9eW1AKAw0OiOOcdtpoQ6XNxZV9KQ=
+	b=mNoiZXuwoB1cn6vmXnBnCk6quU0nXXsgBJ6BPmQ4JtpcO3aNeuQbERS/6Cw6qqx0P
+	 n2EPmvjsOSB1i9CRs/f+LNNgBFWJJzb1/wnBQbFvPOVvHHj1KDDFtBAmDxzhwh533I
+	 MMdDZJCJsdVO3iRiPx2adPmepRS7XWUPwaWDJcoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	John Rowley <lkml@johnrowley.me>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 208/393] arm64: dts: mediatek: mt8195-cherry: Drop regulator-compatible property
-Date: Wed,  5 Feb 2025 14:42:07 +0100
-Message-ID: <20250205134428.260085530@linuxfoundation.org>
+Subject: [PATCH 6.12 162/590] wifi: cfg80211: Move cfg80211_scan_req_add_chan() n_channels increment earlier
+Date: Wed,  5 Feb 2025 14:38:37 +0100
+Message-ID: <20250205134501.482083077@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +49,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 4dbaa5d5def2c49e44efaa5e796c23d9b904be09 ]
+[ Upstream commit 3a0168626c138734490bc52c4105ce8e79d2f923 ]
 
-The "regulator-compatible" property has been deprecated since 2012 in
-commit 13511def87b9 ("regulator: deprecate regulator-compatible DT
-property"), which is so old it's not even mentioned in the converted
-regulator bindings YAML file. It should not have been used for new
-submissions such as the MT6315.
+Since adding __counted_by(n_channels) to struct cfg80211_scan_request,
+anything adding to the channels array must increment n_channels first.
+Move n_channels increment earlier.
 
-Drop the "regulator-compatible" property from the board dts. The
-property values are the same as the node name, so everything should
-continue to work.
-
-Fixes: 260c04d425eb ("arm64: dts: mediatek: cherry: Enable MT6315 regulators on SPMI bus")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241211052427.4178367-6-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reported-by: John Rowley <lkml@johnrowley.me>
+Closes: https://lore.kernel.org/stable/1815535c709ba9d9.156c6a5c9cdf6e59.b249b6b6a5ee4634@localhost.localdomain/
+Fixes: aa4ec06c455d ("wifi: cfg80211: use __counted_by where appropriate")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://patch.msgid.link/20241230183610.work.680-kees@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ net/wireless/scan.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-index b21663b46b519..e3b30543c2c64 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-@@ -1203,7 +1203,6 @@
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index d0aed41ded2f1..21bc057fd8c29 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -763,12 +763,11 @@ static  void cfg80211_scan_req_add_chan(struct cfg80211_scan_request *request,
+ 		}
+ 	}
  
- 		regulators {
- 			mt6315_6_vbuck1: vbuck1 {
--				regulator-compatible = "vbuck1";
- 				regulator-name = "Vbcpu";
- 				regulator-min-microvolt = <400000>;
- 				regulator-max-microvolt = <1193750>;
-@@ -1221,7 +1220,6 @@
++	request->n_channels++;
+ 	request->channels[n_channels] = chan;
+ 	if (add_to_6ghz)
+ 		request->scan_6ghz_params[request->n_6ghz_params].channel_idx =
+ 			n_channels;
+-
+-	request->n_channels++;
+ }
  
- 		regulators {
- 			mt6315_7_vbuck1: vbuck1 {
--				regulator-compatible = "vbuck1";
- 				regulator-name = "Vgpu";
- 				regulator-min-microvolt = <400000>;
- 				regulator-max-microvolt = <1193750>;
+ static bool cfg80211_find_ssid_match(struct cfg80211_colocated_ap *ap,
 -- 
 2.39.5
 
