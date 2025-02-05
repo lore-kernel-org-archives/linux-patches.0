@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814AE156C5E;
-	Wed,  5 Feb 2025 14:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8601607B7;
+	Wed,  5 Feb 2025 14:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765773; cv=none; b=VQRel78Eug5SYcE3NDCp9Y6JadxdS5eXcxdJd5XB9QMwYnWTewBtkaH1xQz6A3KJSD1BqofGK3M9C1woSiWGi6bhMoJ0On/qpclyXxMELT5YGh/oV3C6JMRXf2LulL8hjMr8Kvggj+dpaeaKDcJEx+1eEJCVSdg/UDjJ5PdHu84=
+	t=1738765777; cv=none; b=a8kVR++fIYQ2NtTLtwbSanEvD71vrifJjJ8C/0Fu6rOtOcvVAHkk6qHBnw5yNMfWbArRH46Ukwgz+3ecehp8jDj0iMY/20xo5Q+nAfTbsxStdH6Zn/Y/Pg4wkRCDoY+6KJmW3YKeaRKsEa0g+htoPbvTBAsioh2gCKnrGUEH1LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765773; c=relaxed/simple;
-	bh=FcIRQ40uWOKLaxlrx/mNOyAB97/G/C2EQjZU3sqKfVM=;
+	s=arc-20240116; t=1738765777; c=relaxed/simple;
+	bh=miDwXgMiEzEYqwNwKBkD5YGRVKfIqNZADGT38BXYlNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5XUAEbsCZgbgRqHIADzvqHasWREejAzEuV2yNuXYRQsHRYrCvxZkM19NnLzszFJe/Lkd8Kzph6N7zS4ymXfG42zSiRnFWv+2zOVBUnSFSGUTojvsbl2w52CUAMbv0KOLRDLDFHnaCO6n7g7HNMbwPmlXCD1rV1agkKRZ+3o3NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfgMB93Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BhIKnjuy4iSm9XUaAAwrApfa9pNeI2dAQoB2TGgqri+sVmEfz+gZHWQx+MgcvtpZuh4+DoJTfGV1n4PwTDPSw/G5Hkb9vDTUA8ASnM5Jjur+YA93w+NQsSObBzPQT5eoYcAEsl0WEV82+1P1Au8+UHaG07f0sEQvx7ptX0x4CyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLbbOlvz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfgMB93Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3429C4CED6;
-	Wed,  5 Feb 2025 14:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLbbOlvz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61618C4CED6;
+	Wed,  5 Feb 2025 14:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765773;
-	bh=FcIRQ40uWOKLaxlrx/mNOyAB97/G/C2EQjZU3sqKfVM=;
+	s=korg; t=1738765776;
+	bh=miDwXgMiEzEYqwNwKBkD5YGRVKfIqNZADGT38BXYlNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfgMB93ZxubVphyerJ0jDWfI843FBBcFl44+Fm2XFMgwwKEi+5FFOIk6+rNiMkPCp
-	 mmKbNgKuE8PKRI9H9Phh4/9kueed5N6MG/IyaYfHTsBOnx7hg5tNInbKIdXzfBfvDi
-	 YTYVpQz/VF4AWtAPdKe/0e6pOUfLZ7+2lwk56mlk=
+	b=JLbbOlvz7Vx0OOYnO6/LPQmFg0k5TuZT1F9JkZovKj7FfaHu51cpyORvG5i2jXwd3
+	 +cZzB8eSYvNodjYi/Yfst+aK9QH6N600SgQEb/jsRWnDnabwfy3TnhO0au/onZgkgN
+	 vu5tCLzIxg8gPcuf8lC3BI5l9/AHPYfw0s65b8cU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 212/623] wifi: mt76: mt7996: fix incorrect indexing of MIB FW event
-Date: Wed,  5 Feb 2025 14:39:14 +0100
-Message-ID: <20250205134504.338912892@linuxfoundation.org>
+Subject: [PATCH 6.12 233/590] net/rose: prevent integer overflows in rose_setsockopt()
+Date: Wed,  5 Feb 2025 14:39:48 +0100
+Message-ID: <20250205134504.195682084@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,110 +47,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 5c2a25a1ab76a2976dddc5ffd58498866f3ef7c2 ]
+[ Upstream commit d640627663bfe7d8963c7615316d7d4ef60f3b0b ]
 
-Fix wrong calculation of the channel times due to incorrect
-interpretation from the FW event.
+In case of possible unpredictably large arguments passed to
+rose_setsockopt() and multiplied by extra values on top of that,
+integer overflows may occur.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20250114101026.3587702-4-shayne.chen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Do the safest minimum and fix these issues by checking the
+contents of 'opt' and returning -EINVAL if they are too large. Also,
+switch to unsigned int and remove useless check for negative 'opt'
+in ROSE_IDLE case.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://patch.msgid.link/20250115164220.19954-1-n.zhandarovich@fintech.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/mcu.c   | 45 ++++++++++++-------
- 1 file changed, 29 insertions(+), 16 deletions(-)
+ net/rose/af_rose.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 6c445a9dbc03d..d6d80b1b2d697 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -3666,6 +3666,13 @@ int mt7996_mcu_get_chip_config(struct mt7996_dev *dev, u32 *cap)
- 
- int mt7996_mcu_get_chan_mib_info(struct mt7996_phy *phy, bool chan_switch)
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 59050caab65c8..72c65d938a150 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -397,15 +397,15 @@ static int rose_setsockopt(struct socket *sock, int level, int optname,
  {
-+	enum {
-+		IDX_TX_TIME,
-+		IDX_RX_TIME,
-+		IDX_OBSS_AIRTIME,
-+		IDX_NON_WIFI_TIME,
-+		IDX_NUM
-+	};
- 	struct {
- 		struct {
- 			u8 band;
-@@ -3675,16 +3682,15 @@ int mt7996_mcu_get_chan_mib_info(struct mt7996_phy *phy, bool chan_switch)
- 			__le16 tag;
- 			__le16 len;
- 			__le32 offs;
--		} data[4];
-+		} data[IDX_NUM];
- 	} __packed req = {
- 		.hdr.band = phy->mt76->band_idx,
- 	};
--	/* strict order */
- 	static const u32 offs[] = {
--		UNI_MIB_TX_TIME,
--		UNI_MIB_RX_TIME,
--		UNI_MIB_OBSS_AIRTIME,
--		UNI_MIB_NON_WIFI_TIME,
-+		[IDX_TX_TIME] = UNI_MIB_TX_TIME,
-+		[IDX_RX_TIME] = UNI_MIB_RX_TIME,
-+		[IDX_OBSS_AIRTIME] = UNI_MIB_OBSS_AIRTIME,
-+		[IDX_NON_WIFI_TIME] = UNI_MIB_NON_WIFI_TIME,
- 	};
- 	struct mt76_channel_state *state = phy->mt76->chan_state;
- 	struct mt76_channel_state *state_ts = &phy->state_ts;
-@@ -3693,7 +3699,7 @@ int mt7996_mcu_get_chan_mib_info(struct mt7996_phy *phy, bool chan_switch)
- 	struct sk_buff *skb;
- 	int i, ret;
+ 	struct sock *sk = sock->sk;
+ 	struct rose_sock *rose = rose_sk(sk);
+-	int opt;
++	unsigned int opt;
  
--	for (i = 0; i < 4; i++) {
-+	for (i = 0; i < IDX_NUM; i++) {
- 		req.data[i].tag = cpu_to_le16(UNI_CMD_MIB_DATA);
- 		req.data[i].len = cpu_to_le16(sizeof(req.data[i]));
- 		req.data[i].offs = cpu_to_le32(offs[i]);
-@@ -3712,17 +3718,24 @@ int mt7996_mcu_get_chan_mib_info(struct mt7996_phy *phy, bool chan_switch)
- 		goto out;
+ 	if (level != SOL_ROSE)
+ 		return -ENOPROTOOPT;
  
- #define __res_u64(s) le64_to_cpu(res[s].data)
--	state->cc_tx += __res_u64(1) - state_ts->cc_tx;
--	state->cc_bss_rx += __res_u64(2) - state_ts->cc_bss_rx;
--	state->cc_rx += __res_u64(2) + __res_u64(3) - state_ts->cc_rx;
--	state->cc_busy += __res_u64(0) + __res_u64(1) + __res_u64(2) + __res_u64(3) -
-+	state->cc_tx += __res_u64(IDX_TX_TIME) - state_ts->cc_tx;
-+	state->cc_bss_rx += __res_u64(IDX_RX_TIME) - state_ts->cc_bss_rx;
-+	state->cc_rx += __res_u64(IDX_RX_TIME) +
-+			__res_u64(IDX_OBSS_AIRTIME) -
-+			state_ts->cc_rx;
-+	state->cc_busy += __res_u64(IDX_TX_TIME) +
-+			  __res_u64(IDX_RX_TIME) +
-+			  __res_u64(IDX_OBSS_AIRTIME) +
-+			  __res_u64(IDX_NON_WIFI_TIME) -
- 			  state_ts->cc_busy;
--
- out:
--	state_ts->cc_tx = __res_u64(1);
--	state_ts->cc_bss_rx = __res_u64(2);
--	state_ts->cc_rx = __res_u64(2) + __res_u64(3);
--	state_ts->cc_busy = __res_u64(0) + __res_u64(1) + __res_u64(2) + __res_u64(3);
-+	state_ts->cc_tx = __res_u64(IDX_TX_TIME);
-+	state_ts->cc_bss_rx = __res_u64(IDX_RX_TIME);
-+	state_ts->cc_rx = __res_u64(IDX_RX_TIME) + __res_u64(IDX_OBSS_AIRTIME);
-+	state_ts->cc_busy = __res_u64(IDX_TX_TIME) +
-+			    __res_u64(IDX_RX_TIME) +
-+			    __res_u64(IDX_OBSS_AIRTIME) +
-+			    __res_u64(IDX_NON_WIFI_TIME);
- #undef __res_u64
+-	if (optlen < sizeof(int))
++	if (optlen < sizeof(unsigned int))
+ 		return -EINVAL;
  
- 	dev_kfree_skb(skb);
+-	if (copy_from_sockptr(&opt, optval, sizeof(int)))
++	if (copy_from_sockptr(&opt, optval, sizeof(unsigned int)))
+ 		return -EFAULT;
+ 
+ 	switch (optname) {
+@@ -414,31 +414,31 @@ static int rose_setsockopt(struct socket *sock, int level, int optname,
+ 		return 0;
+ 
+ 	case ROSE_T1:
+-		if (opt < 1)
++		if (opt < 1 || opt > UINT_MAX / HZ)
+ 			return -EINVAL;
+ 		rose->t1 = opt * HZ;
+ 		return 0;
+ 
+ 	case ROSE_T2:
+-		if (opt < 1)
++		if (opt < 1 || opt > UINT_MAX / HZ)
+ 			return -EINVAL;
+ 		rose->t2 = opt * HZ;
+ 		return 0;
+ 
+ 	case ROSE_T3:
+-		if (opt < 1)
++		if (opt < 1 || opt > UINT_MAX / HZ)
+ 			return -EINVAL;
+ 		rose->t3 = opt * HZ;
+ 		return 0;
+ 
+ 	case ROSE_HOLDBACK:
+-		if (opt < 1)
++		if (opt < 1 || opt > UINT_MAX / HZ)
+ 			return -EINVAL;
+ 		rose->hb = opt * HZ;
+ 		return 0;
+ 
+ 	case ROSE_IDLE:
+-		if (opt < 0)
++		if (opt > UINT_MAX / (60 * HZ))
+ 			return -EINVAL;
+ 		rose->idle = opt * 60 * HZ;
+ 		return 0;
 -- 
 2.39.5
 
