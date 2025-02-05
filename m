@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9D915198D;
-	Wed,  5 Feb 2025 14:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A9DF510;
+	Wed,  5 Feb 2025 14:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764220; cv=none; b=O9yY392Xtxy9atcOMlnitlZSOugBx/iKVSvoT5SAlOg/1qPRTXsCowOORvfRLwjIqoY3wFcuX62bRAN0g0Z83vxqTAYO+QCmSev6WDgrSGTx+R5yeAx/QZK+tcpeRwuFBwJyCuCac4XoXFkhcKDjLQl3s3TY6K6kuBI5MoOsJl4=
+	t=1738764224; cv=none; b=NyVQGu8w8VUVUEKsim2OIDvm4e4g7SUF/Hpfu+o3X/dLhqtNjuqCoZv47BB1wLVx+klPY4bBqnszkUsiwUN9uT3gpQZL8I4flR03lqjiezOUaQatbtXfwcLldNMT6LYevy9TeUSP98A+milBedWpyl0vrzieDqN3X5qmudxfLsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764220; c=relaxed/simple;
-	bh=NlER7QQQFkLtxSZ/DvnQYsG0lnZHPUbcRz8X9eI6fiw=;
+	s=arc-20240116; t=1738764224; c=relaxed/simple;
+	bh=0QwJ+vTsI/rsaw25tDXaaomUW6tF2oKmv0nr9jAa6uI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TTrSl/AsPwLmOLNhFwDHs5RcEUbTgKFgziNfF7j7XbyiGkvyfNryo2ZRf6Grm7aga0N3Pt64c2Z/JcxtwMGsociA+jUtwTptN9OOeUnUbTe9cBOY4MgwnjqXakdwaSQL4NjHwv0QcTyY/7w34wiCBdi2wa4aoNS91MISFCsXuYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQbRlzgA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P6s2BxCoYfx40//yDfL1xDrVTX4zhPR5SIiLd47yIjlRICQoDWjRAktJpkV+gJI2uZE+bRiUS75V8/E4RI5lBp5wtfGku1YCNjuEAJ98kwvxqfMPIxBO7FWV9k307Z2tFNAE8yi9xO2dfBQqap4Xc6VmyfUuotUQpYN4qq4og/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0IsvgEb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQbRlzgA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142FAC4CED1;
-	Wed,  5 Feb 2025 14:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0IsvgEb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E434C4CED1;
+	Wed,  5 Feb 2025 14:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764220;
-	bh=NlER7QQQFkLtxSZ/DvnQYsG0lnZHPUbcRz8X9eI6fiw=;
+	s=korg; t=1738764223;
+	bh=0QwJ+vTsI/rsaw25tDXaaomUW6tF2oKmv0nr9jAa6uI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQbRlzgA8KhAyEaCqQALPPzGOqRMzUGIcW7+kfnNCwHWT19nn/4DAXnJMyZ4tzo67
-	 g84aa/OebB/roRwXs56t1YDiBOlXqE2Prrvsomz9TBSUgxeZz3xnpzZTvNlPwamHO5
-	 ygV1s/PoQaG5u417pjhXixSH4cbpx5NhTIHN2kI8=
+	b=O0IsvgEbWeTbtbuWjBbPts6dRS1Q931TCtzl5sZEKWVl6xbgDNL0EZOnlSqwy5BA/
+	 FdqZGWmpHzj+iVv7CQtF9FXPpmjoOHBMzz61ZSf10RhJsCVVb+/DsJWidQgrqxaO7+
+	 alFQRQOnmvC5oKk8MmSWJbOAukKm8NwBUUWSqCVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Derek Foreman <derek.foreman@collabora.com>,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 058/623] drm/rockchip: vop2: Set AXI id for rk3588
-Date: Wed,  5 Feb 2025 14:36:40 +0100
-Message-ID: <20250205134458.447349841@linuxfoundation.org>
+Subject: [PATCH 6.12 100/590] module: Convert default symbol namespace to string literal
+Date: Wed,  5 Feb 2025 14:37:35 +0100
+Message-ID: <20250205134459.083284716@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,208 +46,307 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 7b256880fdb2d7f23393b87bb557090f049e686a ]
+[ Upstream commit ceb8bf2ceaa77fe222fe8fe32cb7789c9099ddf1 ]
 
-There are two AXI bus in vop2, windows attached on the same bus must
-have a unique channel YUV and RGB channel ID.
+Commit cdd30ebb1b9f ("module: Convert symbol namespace to string
+literal") only converted MODULE_IMPORT_NS() and EXPORT_SYMBOL_NS(),
+leaving DEFAULT_SYMBOL_NAMESPACE as a macro expansion.
 
-The default IDs will conflict with each other on the rk3588, so they
-need to be reassigned.
+This commit converts DEFAULT_SYMBOL_NAMESPACE in the same way to avoid
+annoyance for the default namespace as well.
 
-Fixes: 5a028e8f062f ("drm/rockchip: vop2: Add support for rk3588")
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Tested-by: Derek Foreman <derek.foreman@collabora.com>
-Tested-by: Detlev Casanova <detlev.casanova@collabora.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241214081719.3330518-4-andyshrk@163.com
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 2505f87eb3af ("hwmon: (nct6775): Actually make use of the HWMON_NCT6775 symbol namespace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 14 +++++++++++
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.h |  9 +++++++
- drivers/gpu/drm/rockchip/rockchip_vop2_reg.c | 26 +++++++++++++++++++-
- 3 files changed, 48 insertions(+), 1 deletion(-)
+ Documentation/core-api/symbol-namespaces.rst                  | 4 ++--
+ .../translations/it_IT/core-api/symbol-namespaces.rst         | 4 ++--
+ .../translations/zh_CN/core-api/symbol-namespaces.rst         | 4 ++--
+ drivers/cdx/Makefile                                          | 2 +-
+ drivers/crypto/intel/iaa/Makefile                             | 2 +-
+ drivers/crypto/intel/qat/qat_common/Makefile                  | 2 +-
+ drivers/dma/idxd/Makefile                                     | 2 +-
+ drivers/gpio/gpio-idio-16.c                                   | 2 +-
+ drivers/hwmon/nct6775-core.c                                  | 2 +-
+ drivers/i2c/busses/i2c-designware-common.c                    | 2 +-
+ drivers/i2c/busses/i2c-designware-master.c                    | 2 +-
+ drivers/i2c/busses/i2c-designware-slave.c                     | 2 +-
+ drivers/pwm/core.c                                            | 2 +-
+ drivers/pwm/pwm-dwc-core.c                                    | 2 +-
+ drivers/pwm/pwm-lpss.c                                        | 2 +-
+ drivers/tty/serial/sc16is7xx.c                                | 2 +-
+ drivers/usb/storage/Makefile                                  | 2 +-
+ include/linux/export.h                                        | 2 +-
+ 18 files changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index 60b498ffd41aa..cd3fb906d0089 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -1320,6 +1320,12 @@ static void vop2_plane_atomic_update(struct drm_plane *plane,
- 		&fb->format->format,
- 		afbc_en ? "AFBC" : "", &yrgb_mst);
+diff --git a/Documentation/core-api/symbol-namespaces.rst b/Documentation/core-api/symbol-namespaces.rst
+index 12e4aecdae945..d1154eb438101 100644
+--- a/Documentation/core-api/symbol-namespaces.rst
++++ b/Documentation/core-api/symbol-namespaces.rst
+@@ -68,7 +68,7 @@ is to define the default namespace in the ``Makefile`` of the subsystem. E.g. to
+ export all symbols defined in usb-common into the namespace USB_COMMON, add a
+ line like this to drivers/usb/common/Makefile::
  
-+	if (vop2->data->soc_id > 3568) {
-+		vop2_win_write(win, VOP2_WIN_AXI_BUS_ID, win->data->axi_bus_id);
-+		vop2_win_write(win, VOP2_WIN_AXI_YRGB_R_ID, win->data->axi_yrgb_r_id);
-+		vop2_win_write(win, VOP2_WIN_AXI_UV_R_ID, win->data->axi_uv_r_id);
-+	}
-+
- 	if (vop2_cluster_window(win))
- 		vop2_win_write(win, VOP2_WIN_AFBC_HALF_BLOCK_EN, half_block_en);
+-	ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE=USB_COMMON
++	ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE='"USB_COMMON"'
  
-@@ -2908,6 +2914,10 @@ static struct reg_field vop2_cluster_regs[VOP2_WIN_MAX_REG] = {
- 	[VOP2_WIN_Y2R_EN] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL0, 8, 8),
- 	[VOP2_WIN_R2Y_EN] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL0, 9, 9),
- 	[VOP2_WIN_CSC_MODE] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL0, 10, 11),
-+	[VOP2_WIN_AXI_YRGB_R_ID] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL2, 0, 3),
-+	[VOP2_WIN_AXI_UV_R_ID] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL2, 5, 8),
-+	/* RK3588 only, reserved bit on rk3568*/
-+	[VOP2_WIN_AXI_BUS_ID] = REG_FIELD(RK3568_CLUSTER_CTRL, 13, 13),
+ That will affect all EXPORT_SYMBOL() and EXPORT_SYMBOL_GPL() statements. A
+ symbol exported with EXPORT_SYMBOL_NS() while this definition is present, will
+@@ -79,7 +79,7 @@ A second option to define the default namespace is directly in the compilation
+ unit as preprocessor statement. The above example would then read::
  
- 	/* Scale */
- 	[VOP2_WIN_SCALE_YRGB_X] = REG_FIELD(RK3568_CLUSTER_WIN_SCL_FACTOR_YRGB, 0, 15),
-@@ -3000,6 +3010,10 @@ static struct reg_field vop2_esmart_regs[VOP2_WIN_MAX_REG] = {
- 	[VOP2_WIN_YMIRROR] = REG_FIELD(RK3568_SMART_CTRL1, 31, 31),
- 	[VOP2_WIN_COLOR_KEY] = REG_FIELD(RK3568_SMART_COLOR_KEY_CTRL, 0, 29),
- 	[VOP2_WIN_COLOR_KEY_EN] = REG_FIELD(RK3568_SMART_COLOR_KEY_CTRL, 31, 31),
-+	[VOP2_WIN_AXI_YRGB_R_ID] = REG_FIELD(RK3568_SMART_CTRL1, 4, 8),
-+	[VOP2_WIN_AXI_UV_R_ID] = REG_FIELD(RK3568_SMART_CTRL1, 12, 16),
-+	/* RK3588 only, reserved register on rk3568 */
-+	[VOP2_WIN_AXI_BUS_ID] = REG_FIELD(RK3588_SMART_AXI_CTRL, 1, 1),
+ 	#undef  DEFAULT_SYMBOL_NAMESPACE
+-	#define DEFAULT_SYMBOL_NAMESPACE USB_COMMON
++	#define DEFAULT_SYMBOL_NAMESPACE "USB_COMMON"
  
- 	/* Scale */
- 	[VOP2_WIN_SCALE_YRGB_X] = REG_FIELD(RK3568_SMART_REGION0_SCL_FACTOR_YRGB, 0, 15),
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-index 615a16196aff6..1c4204324f9f5 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-@@ -78,6 +78,9 @@ enum vop2_win_regs {
- 	VOP2_WIN_COLOR_KEY,
- 	VOP2_WIN_COLOR_KEY_EN,
- 	VOP2_WIN_DITHER_UP,
-+	VOP2_WIN_AXI_BUS_ID,
-+	VOP2_WIN_AXI_YRGB_R_ID,
-+	VOP2_WIN_AXI_UV_R_ID,
+ within the corresponding compilation unit before any EXPORT_SYMBOL macro is
+ used.
+diff --git a/Documentation/translations/it_IT/core-api/symbol-namespaces.rst b/Documentation/translations/it_IT/core-api/symbol-namespaces.rst
+index 17abc25ee4c1e..6657f82c0101f 100644
+--- a/Documentation/translations/it_IT/core-api/symbol-namespaces.rst
++++ b/Documentation/translations/it_IT/core-api/symbol-namespaces.rst
+@@ -69,7 +69,7 @@ Per esempio per esportare tutti i simboli definiti in usb-common nello spazio
+ dei nomi USB_COMMON, si può aggiungere la seguente linea in
+ drivers/usb/common/Makefile::
  
- 	/* scale regs */
- 	VOP2_WIN_SCALE_YRGB_X,
-@@ -140,6 +143,10 @@ struct vop2_win_data {
- 	unsigned int layer_sel_id;
- 	uint64_t feature;
+-	ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE=USB_COMMON
++	ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE='"USB_COMMON"'
  
-+	uint8_t axi_bus_id;
-+	uint8_t axi_yrgb_r_id;
-+	uint8_t axi_uv_r_id;
-+
- 	unsigned int max_upscale_factor;
- 	unsigned int max_downscale_factor;
- 	const u8 dly[VOP2_DLY_MODE_MAX];
-@@ -308,6 +315,7 @@ enum dst_factor_mode {
+ Questo cambierà tutte le macro EXPORT_SYMBOL() ed EXPORT_SYMBOL_GPL(). Invece,
+ un simbolo esportato con EXPORT_SYMBOL_NS() non verrà cambiato e il simbolo
+@@ -79,7 +79,7 @@ Una seconda possibilità è quella di definire il simbolo di preprocessore
+ direttamente nei file da compilare. L'esempio precedente diventerebbe::
  
- #define RK3568_CLUSTER_WIN_CTRL0		0x00
- #define RK3568_CLUSTER_WIN_CTRL1		0x04
-+#define RK3568_CLUSTER_WIN_CTRL2		0x08
- #define RK3568_CLUSTER_WIN_YRGB_MST		0x10
- #define RK3568_CLUSTER_WIN_CBR_MST		0x14
- #define RK3568_CLUSTER_WIN_VIR			0x18
-@@ -330,6 +338,7 @@ enum dst_factor_mode {
- /* (E)smart register definition, offset relative to window base */
- #define RK3568_SMART_CTRL0			0x00
- #define RK3568_SMART_CTRL1			0x04
-+#define RK3588_SMART_AXI_CTRL			0x08
- #define RK3568_SMART_REGION0_CTRL		0x10
- #define RK3568_SMART_REGION0_YRGB_MST		0x14
- #define RK3568_SMART_REGION0_CBR_MST		0x18
-diff --git a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-index f9d87a0abc8b0..6a6c15f2c9cc7 100644
---- a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-@@ -313,7 +313,7 @@ static const struct vop2_video_port_data rk3588_vop_video_ports[] = {
-  * AXI1 is a read only bus.
-  *
-  * Every window on a AXI bus must assigned two unique
-- * read id(yrgb_id/uv_id, valid id are 0x1~0xe).
-+ * read id(yrgb_r_id/uv_r_id, valid id are 0x1~0xe).
-  *
-  * AXI0:
-  * Cluster0/1, Esmart0/1, WriteBack
-@@ -333,6 +333,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.layer_sel_id = 0,
- 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
- 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
-+		.axi_bus_id = 0,
-+		.axi_yrgb_r_id = 2,
-+		.axi_uv_r_id = 3,
- 		.max_upscale_factor = 4,
- 		.max_downscale_factor = 4,
- 		.dly = { 4, 26, 29 },
-@@ -349,6 +352,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
- 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_PRIMARY,
-+		.axi_bus_id = 0,
-+		.axi_yrgb_r_id = 6,
-+		.axi_uv_r_id = 7,
- 		.max_upscale_factor = 4,
- 		.max_downscale_factor = 4,
- 		.dly = { 4, 26, 29 },
-@@ -364,6 +370,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
- 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_PRIMARY,
-+		.axi_bus_id = 1,
-+		.axi_yrgb_r_id = 2,
-+		.axi_uv_r_id = 3,
- 		.max_upscale_factor = 4,
- 		.max_downscale_factor = 4,
- 		.dly = { 4, 26, 29 },
-@@ -379,6 +388,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
- 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_PRIMARY,
-+		.axi_bus_id = 1,
-+		.axi_yrgb_r_id = 6,
-+		.axi_uv_r_id = 7,
- 		.max_upscale_factor = 4,
- 		.max_downscale_factor = 4,
- 		.dly = { 4, 26, 29 },
-@@ -393,6 +405,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.layer_sel_id = 2,
- 		.supported_rotations = DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_OVERLAY,
-+		.axi_bus_id = 0,
-+		.axi_yrgb_r_id = 0x0a,
-+		.axi_uv_r_id = 0x0b,
- 		.max_upscale_factor = 8,
- 		.max_downscale_factor = 8,
- 		.dly = { 23, 45, 48 },
-@@ -406,6 +421,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.layer_sel_id = 3,
- 		.supported_rotations = DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_OVERLAY,
-+		.axi_bus_id = 0,
-+		.axi_yrgb_r_id = 0x0c,
-+		.axi_uv_r_id = 0x01,
- 		.max_upscale_factor = 8,
- 		.max_downscale_factor = 8,
- 		.dly = { 23, 45, 48 },
-@@ -419,6 +437,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.layer_sel_id = 6,
- 		.supported_rotations = DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_OVERLAY,
-+		.axi_bus_id = 1,
-+		.axi_yrgb_r_id = 0x0a,
-+		.axi_uv_r_id = 0x0b,
- 		.max_upscale_factor = 8,
- 		.max_downscale_factor = 8,
- 		.dly = { 23, 45, 48 },
-@@ -432,6 +453,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.layer_sel_id = 7,
- 		.supported_rotations = DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_OVERLAY,
-+		.axi_bus_id = 1,
-+		.axi_yrgb_r_id = 0x0c,
-+		.axi_uv_r_id = 0x0d,
- 		.max_upscale_factor = 8,
- 		.max_downscale_factor = 8,
- 		.dly = { 23, 45, 48 },
+ 	#undef  DEFAULT_SYMBOL_NAMESPACE
+-	#define DEFAULT_SYMBOL_NAMESPACE USB_COMMON
++	#define DEFAULT_SYMBOL_NAMESPACE "USB_COMMON"
+ 
+ Questo va messo prima di un qualsiasi uso di EXPORT_SYMBOL.
+ 
+diff --git a/Documentation/translations/zh_CN/core-api/symbol-namespaces.rst b/Documentation/translations/zh_CN/core-api/symbol-namespaces.rst
+index bb16f0611046d..f3e73834f7d7d 100644
+--- a/Documentation/translations/zh_CN/core-api/symbol-namespaces.rst
++++ b/Documentation/translations/zh_CN/core-api/symbol-namespaces.rst
+@@ -66,7 +66,7 @@
+ 子系统的 ``Makefile`` 中定义默认命名空间。例如，如果要将usb-common中定义的所有符号导
+ 出到USB_COMMON命名空间，可以在drivers/usb/common/Makefile中添加这样一行::
+ 
+-       ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE=USB_COMMON
++       ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE='"USB_COMMON"'
+ 
+ 这将影响所有 EXPORT_SYMBOL() 和 EXPORT_SYMBOL_GPL() 语句。当这个定义存在时，
+ 用EXPORT_SYMBOL_NS()导出的符号仍然会被导出到作为命名空间参数传递的命名空间中，
+@@ -76,7 +76,7 @@
+ 成::
+ 
+        #undef  DEFAULT_SYMBOL_NAMESPACE
+-       #define DEFAULT_SYMBOL_NAMESPACE USB_COMMON
++       #define DEFAULT_SYMBOL_NAMESPACE "USB_COMMON"
+ 
+ 应置于相关编译单元中任何 EXPORT_SYMBOL 宏之前
+ 
+diff --git a/drivers/cdx/Makefile b/drivers/cdx/Makefile
+index 749a3295c2bdc..3ca7068a30525 100644
+--- a/drivers/cdx/Makefile
++++ b/drivers/cdx/Makefile
+@@ -5,7 +5,7 @@
+ # Copyright (C) 2022-2023, Advanced Micro Devices, Inc.
+ #
+ 
+-ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE=CDX_BUS
++ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE='"CDX_BUS"'
+ 
+ obj-$(CONFIG_CDX_BUS) += cdx.o controller/
+ 
+diff --git a/drivers/crypto/intel/iaa/Makefile b/drivers/crypto/intel/iaa/Makefile
+index b64b208d23440..55bda7770fac7 100644
+--- a/drivers/crypto/intel/iaa/Makefile
++++ b/drivers/crypto/intel/iaa/Makefile
+@@ -3,7 +3,7 @@
+ # Makefile for IAA crypto device drivers
+ #
+ 
+-ccflags-y += -I $(srctree)/drivers/dma/idxd -DDEFAULT_SYMBOL_NAMESPACE=IDXD
++ccflags-y += -I $(srctree)/drivers/dma/idxd -DDEFAULT_SYMBOL_NAMESPACE='"IDXD"'
+ 
+ obj-$(CONFIG_CRYPTO_DEV_IAA_CRYPTO) := iaa_crypto.o
+ 
+diff --git a/drivers/crypto/intel/qat/qat_common/Makefile b/drivers/crypto/intel/qat/qat_common/Makefile
+index eac73cbfdd38e..7acf9c576149b 100644
+--- a/drivers/crypto/intel/qat/qat_common/Makefile
++++ b/drivers/crypto/intel/qat/qat_common/Makefile
+@@ -1,6 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
+ obj-$(CONFIG_CRYPTO_DEV_QAT) += intel_qat.o
+-ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE=CRYPTO_QAT
++ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE='"CRYPTO_QAT"'
+ intel_qat-objs := adf_cfg.o \
+ 	adf_isr.o \
+ 	adf_ctl_drv.o \
+diff --git a/drivers/dma/idxd/Makefile b/drivers/dma/idxd/Makefile
+index 2b4a0d406e1e7..9ff9d7b87b649 100644
+--- a/drivers/dma/idxd/Makefile
++++ b/drivers/dma/idxd/Makefile
+@@ -1,4 +1,4 @@
+-ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE=IDXD
++ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE='"IDXD"'
+ 
+ obj-$(CONFIG_INTEL_IDXD_BUS) += idxd_bus.o
+ idxd_bus-y := bus.o
+diff --git a/drivers/gpio/gpio-idio-16.c b/drivers/gpio/gpio-idio-16.c
+index 53b1eb876a125..2c95125892972 100644
+--- a/drivers/gpio/gpio-idio-16.c
++++ b/drivers/gpio/gpio-idio-16.c
+@@ -14,7 +14,7 @@
+ 
+ #include "gpio-idio-16.h"
+ 
+-#define DEFAULT_SYMBOL_NAMESPACE GPIO_IDIO_16
++#define DEFAULT_SYMBOL_NAMESPACE "GPIO_IDIO_16"
+ 
+ #define IDIO_16_DAT_BASE 0x0
+ #define IDIO_16_OUT_BASE IDIO_16_DAT_BASE
+diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
+index ee04795b98aab..c243b51837d2f 100644
+--- a/drivers/hwmon/nct6775-core.c
++++ b/drivers/hwmon/nct6775-core.c
+@@ -57,7 +57,7 @@
+ #include "nct6775.h"
+ 
+ #undef DEFAULT_SYMBOL_NAMESPACE
+-#define DEFAULT_SYMBOL_NAMESPACE HWMON_NCT6775
++#define DEFAULT_SYMBOL_NAMESPACE "HWMON_NCT6775"
+ 
+ #define USE_ALTERNATE
+ 
+diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
+index 9d88b4fa03e42..0e7771d21469d 100644
+--- a/drivers/i2c/busses/i2c-designware-common.c
++++ b/drivers/i2c/busses/i2c-designware-common.c
+@@ -29,7 +29,7 @@
+ #include <linux/types.h>
+ #include <linux/units.h>
+ 
+-#define DEFAULT_SYMBOL_NAMESPACE	I2C_DW_COMMON
++#define DEFAULT_SYMBOL_NAMESPACE	"I2C_DW_COMMON"
+ 
+ #include "i2c-designware-core.h"
+ 
+diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
+index e8ac9a7bf0b3d..e23f93b8974e4 100644
+--- a/drivers/i2c/busses/i2c-designware-master.c
++++ b/drivers/i2c/busses/i2c-designware-master.c
+@@ -22,7 +22,7 @@
+ #include <linux/regmap.h>
+ #include <linux/reset.h>
+ 
+-#define DEFAULT_SYMBOL_NAMESPACE	I2C_DW
++#define DEFAULT_SYMBOL_NAMESPACE	"I2C_DW"
+ 
+ #include "i2c-designware-core.h"
+ 
+diff --git a/drivers/i2c/busses/i2c-designware-slave.c b/drivers/i2c/busses/i2c-designware-slave.c
+index 7035296aa24ce..0a76e10f77a2b 100644
+--- a/drivers/i2c/busses/i2c-designware-slave.c
++++ b/drivers/i2c/busses/i2c-designware-slave.c
+@@ -16,7 +16,7 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
+ 
+-#define DEFAULT_SYMBOL_NAMESPACE	I2C_DW
++#define DEFAULT_SYMBOL_NAMESPACE	"I2C_DW"
+ 
+ #include "i2c-designware-core.h"
+ 
+diff --git a/drivers/pwm/core.c b/drivers/pwm/core.c
+index 210368099a064..174939359ae3e 100644
+--- a/drivers/pwm/core.c
++++ b/drivers/pwm/core.c
+@@ -6,7 +6,7 @@
+  * Copyright (C) 2011-2012 Avionic Design GmbH
+  */
+ 
+-#define DEFAULT_SYMBOL_NAMESPACE PWM
++#define DEFAULT_SYMBOL_NAMESPACE "PWM"
+ 
+ #include <linux/acpi.h>
+ #include <linux/module.h>
+diff --git a/drivers/pwm/pwm-dwc-core.c b/drivers/pwm/pwm-dwc-core.c
+index c8425493b95d8..6dabec93a3c64 100644
+--- a/drivers/pwm/pwm-dwc-core.c
++++ b/drivers/pwm/pwm-dwc-core.c
+@@ -9,7 +9,7 @@
+  * Author: Raymond Tan <raymond.tan@intel.com>
+  */
+ 
+-#define DEFAULT_SYMBOL_NAMESPACE dwc_pwm
++#define DEFAULT_SYMBOL_NAMESPACE "dwc_pwm"
+ 
+ #include <linux/bitops.h>
+ #include <linux/export.h>
+diff --git a/drivers/pwm/pwm-lpss.c b/drivers/pwm/pwm-lpss.c
+index 867e2bc8c601c..3b99feb3bb491 100644
+--- a/drivers/pwm/pwm-lpss.c
++++ b/drivers/pwm/pwm-lpss.c
+@@ -19,7 +19,7 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/time.h>
+ 
+-#define DEFAULT_SYMBOL_NAMESPACE PWM_LPSS
++#define DEFAULT_SYMBOL_NAMESPACE "PWM_LPSS"
+ 
+ #include "pwm-lpss.h"
+ 
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index ad88a33a504f5..6a0a1cce3a897 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -8,7 +8,7 @@
+  */
+ 
+ #undef DEFAULT_SYMBOL_NAMESPACE
+-#define DEFAULT_SYMBOL_NAMESPACE SERIAL_NXP_SC16IS7XX
++#define DEFAULT_SYMBOL_NAMESPACE "SERIAL_NXP_SC16IS7XX"
+ 
+ #include <linux/bits.h>
+ #include <linux/clk.h>
+diff --git a/drivers/usb/storage/Makefile b/drivers/usb/storage/Makefile
+index 46635fa4a3405..28db337f190bf 100644
+--- a/drivers/usb/storage/Makefile
++++ b/drivers/usb/storage/Makefile
+@@ -8,7 +8,7 @@
+ 
+ ccflags-y := -I $(srctree)/drivers/scsi
+ 
+-ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE=USB_STORAGE
++ccflags-y += -DDEFAULT_SYMBOL_NAMESPACE='"USB_STORAGE"'
+ 
+ obj-$(CONFIG_USB_UAS)		+= uas.o
+ obj-$(CONFIG_USB_STORAGE)	+= usb-storage.o
+diff --git a/include/linux/export.h b/include/linux/export.h
+index 0bbd02fd351db..1e04dbc675c2f 100644
+--- a/include/linux/export.h
++++ b/include/linux/export.h
+@@ -60,7 +60,7 @@
+ #endif
+ 
+ #ifdef DEFAULT_SYMBOL_NAMESPACE
+-#define _EXPORT_SYMBOL(sym, license)	__EXPORT_SYMBOL(sym, license, __stringify(DEFAULT_SYMBOL_NAMESPACE))
++#define _EXPORT_SYMBOL(sym, license)	__EXPORT_SYMBOL(sym, license, DEFAULT_SYMBOL_NAMESPACE)
+ #else
+ #define _EXPORT_SYMBOL(sym, license)	__EXPORT_SYMBOL(sym, license, "")
+ #endif
 -- 
 2.39.5
 
