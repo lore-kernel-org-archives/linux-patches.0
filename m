@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29AFFC0B;
-	Wed,  5 Feb 2025 14:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E911519AA;
+	Wed,  5 Feb 2025 14:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764388; cv=none; b=YiKSZ/k/tIZvSFMZg7FlJbYmBHnx4SWTeYuUV9tK2ulkqsJvDTCNmS1lgQwxCTp0Yg92Ng/ASnkdCyPo9ahX8ipnXqh2vDG3+S44qSmCFDNLCbeZ0vd14z3vjOzXZMQGSd4/E80JpkQ4zTNReO99ANf17aQZAlExC8spqbUZOnA=
+	t=1738764392; cv=none; b=b5I3Ji8QfkopYQ+srEFO9OX4cEF56ug7c10D6icpYlwR008BmM5h4QxR7kHgzELgMGvJGnQh0OXPBjHpXaQuLwYEdENuoCUXr9YvWoWs4e8XpfMY+qY0sQymk67RWn7zXB8xxvakeRNNtxGDfknhl2xcK5FG0IOKJEfbMxfROYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764388; c=relaxed/simple;
-	bh=yG/3XdV98V+x4i/A8gOJgI3HSNReSp3N6XHvIQmltp0=;
+	s=arc-20240116; t=1738764392; c=relaxed/simple;
+	bh=Oc7uaMrXrxPGhaA+RYIJJvaKmnH1Xo9dBMfw0zn5Q3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ccCTfem+YsnFGuKyofLXjTEZoGLAkFPfdeBWYXBl+LmsP7ZeGcG5mdLGvZVWgqdlXL7PaDNini9RG7IOLUmvXbI4A51couqFLpZgtI/a2r3lZni1hELM5b6Xvolv7ntX5C9H1Vm/e6aO4U9Llq8of03G6QdBr87RUe8sIH7M4B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z55010vK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cv0YsuUZt1eOjY8DJcsABYF6hEOgmJWZp66Gsb21ocJnG+kvLGMZ0CtLrn9HR1dJwLqjloVr/7DmkQteVKdMkbjfyVVsDiLvoZKhNM+wSkLt2PZahvgeZQ2Pxr78tZVFXBQolx8hi7we5bQSpN9vGU0jgqTbS7bFc7nifSjYXbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAyY0pmO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z55010vK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474E7C4CED1;
-	Wed,  5 Feb 2025 14:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAyY0pmO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58416C4CED6;
+	Wed,  5 Feb 2025 14:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764388;
-	bh=yG/3XdV98V+x4i/A8gOJgI3HSNReSp3N6XHvIQmltp0=;
+	s=korg; t=1738764391;
+	bh=Oc7uaMrXrxPGhaA+RYIJJvaKmnH1Xo9dBMfw0zn5Q3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z55010vKIhRHKnkrg2k7OG39TVDt2Wm8/80Tkwo+mMoVsZmOGwd+r9MOVEuxNbBbu
-	 142xIFKI55i+284FACbsrqh3p10sTWkJsUlqoJSFCYpzz6u5SbSCEOwpRZSDQ39OnP
-	 ufpFnIP+S6roq2TUSEn1GabB1CTMAyUx0OFuwitQ=
+	b=DAyY0pmOUfBPXPz9fyKQz4j/z4waVUVY6eJbyEtwEpc7vxXX1sei9c2BzkFNTzbFS
+	 BfZdtoqOVFcmkgPESezh26naSE1zscnmz5qk9RtZhO1G1Zbbd1vvZpPS3F/W6x79wY
+	 lM3cvpAZiDh/rpLjPGH40T3fK0A68zknnAHCg6uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/590] clk: imx8mp: Fix clkout1/2 support
-Date: Wed,  5 Feb 2025 14:37:54 +0100
-Message-ID: <20250205134459.812707406@linuxfoundation.org>
+Subject: [PATCH 6.13 074/623] drm/msm/dpu: link DSPP_2/_3 blocks on X1E80100
+Date: Wed,  5 Feb 2025 14:36:56 +0100
+Message-ID: <20250205134459.058337634@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit a9b7c84d22fb1687d63ca2a386773015cf59436b ]
+[ Upstream commit 3a7a4bebe0dbe22686da7de573f183e0c842883a ]
 
-The CLKOUTn may be fed from PLL1/2/3, but the PLL1/2/3 has to be enabled
-first by setting PLL_CLKE bit 11 in CCM_ANALOG_SYS_PLLn_GEN_CTRL register.
-The CCM_ANALOG_SYS_PLLn_GEN_CTRL bit 11 is modeled by plln_out clock. Fix
-the clock tree and place the clkout1/2 under plln_sel instead of plain plln
-to let the clock subsystem correctly control the bit 11 and enable the PLL
-in case the CLKOUTn is supplied by PLL1/2/3.
+Link DSPP_2 to the LM_2 and DSPP_3 to the LM_3 mixer blocks. This allows
+using colour transformation matrix (aka night mode) with more outputs at
+the same time.
 
-Fixes: 43896f56b59e ("clk: imx8mp: add clkout1/2 support")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20241112013718.333771-1-marex@denx.de
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: e3b1f369db5a ("drm/msm/dpu: Add X1E80100 support")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/629966/
+Link: https://lore.kernel.org/r/20241220-dpu-fix-catalog-v2-8-38fa961ea992@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
-index 516dbd170c8a3..fb18f507f1213 100644
---- a/drivers/clk/imx/clk-imx8mp.c
-+++ b/drivers/clk/imx/clk-imx8mp.c
-@@ -399,8 +399,9 @@ static const char * const imx8mp_dram_core_sels[] = {"dram_pll_out", "dram_alt_r
- 
- static const char * const imx8mp_clkout_sels[] = {"audio_pll1_out", "audio_pll2_out", "video_pll1_out",
- 						  "dummy", "dummy", "gpu_pll_out", "vpu_pll_out",
--						  "arm_pll_out", "sys_pll1", "sys_pll2", "sys_pll3",
--						  "dummy", "dummy", "osc_24m", "dummy", "osc_32k"};
-+						  "arm_pll_out", "sys_pll1_out", "sys_pll2_out",
-+						  "sys_pll3_out", "dummy", "dummy", "osc_24m",
-+						  "dummy", "osc_32k"};
- 
- static struct clk_hw **hws;
- static struct clk_hw_onecell_data *clk_hw_data;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
+index a3e60ac70689e..e084406ebb071 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h
+@@ -159,6 +159,7 @@ static const struct dpu_lm_cfg x1e80100_lm[] = {
+ 		.sblk = &sdm845_lm_sblk,
+ 		.lm_pair = LM_3,
+ 		.pingpong = PINGPONG_2,
++		.dspp = DSPP_2,
+ 	}, {
+ 		.name = "lm_3", .id = LM_3,
+ 		.base = 0x47000, .len = 0x320,
+@@ -166,6 +167,7 @@ static const struct dpu_lm_cfg x1e80100_lm[] = {
+ 		.sblk = &sdm845_lm_sblk,
+ 		.lm_pair = LM_2,
+ 		.pingpong = PINGPONG_3,
++		.dspp = DSPP_3,
+ 	}, {
+ 		.name = "lm_4", .id = LM_4,
+ 		.base = 0x48000, .len = 0x320,
 -- 
 2.39.5
 
