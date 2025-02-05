@@ -1,41 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D899F510;
-	Wed,  5 Feb 2025 14:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42A1F510;
+	Wed,  5 Feb 2025 14:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764481; cv=none; b=pBCEUyS9sDH/PBOjOIfXl8Iy+4rtAc6WNpv0R49wX+Pj6pTg2Ytz1V1GrEiLpWKfsGUY46FwcKkK+m4FJKbUmMeky/8eQ8Io1qwJyNV2fcJLS/tEYRIGeaH5L+7mgeNm694zuH5HwC8zDD3mxa3OSJEhm6yuYb2DAs4a9pFAhuU=
+	t=1738764484; cv=none; b=MiOSqlXIYYfsC+/6BxhxKwiF9DgMOchoSoRF2SMwppB5JCESJE4WO4OVCPFWzlWpYVpv0WCEh7J9nOkzswNZzoa70Lboyr/Jm3g2o2TQt+UFAjHzx4R44EKS/ueuTBi/gVoBKy7Yomn4C2fgWwHzrZ0Ca3lbvLgJ5GOAAWPOxfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764481; c=relaxed/simple;
-	bh=J3csZ8qkVNNS5lnTx2Lvfx69y15ulFx9zmA9ToD/mtw=;
+	s=arc-20240116; t=1738764484; c=relaxed/simple;
+	bh=V63YR6PRRweZHZAAfqxiYTJNPncQmeOO7cueggdUpzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LgDTa5UP59iFW/MUVYgGFGjQYrv/G+zGic76juJxPOHPPto9SeNcETxbrVA30U+FQKFTb1TDcbp9k13x3bg+yuhl7Yo82rErCsdojn5AZbtNFnEmsG/JRLzOdglLGpNV+Em2UWTNBn7nrOrU5bVP9gEvbQwNQWtLe3P0ej1o29U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCZNs9lc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J6h3y4dJDGAWjau0bMvKOVaYwcN79dQZeiSMPwqbccnSAudowPAV+Pr3XqR2igpP6j4TLoO43Mmsi1BtSW7OleYvYns8NtM0NaSBjTFVh/4iYYYi0adkAGvzQOGxyJ0SyPH2XaKQaofa5Nh39jI4ex0NG7Y5TVOhGWS1043fbDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXpz/a64; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCZNs9lc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE822C4CED1;
-	Wed,  5 Feb 2025 14:08:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXpz/a64"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA51C4CED1;
+	Wed,  5 Feb 2025 14:08:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764481;
-	bh=J3csZ8qkVNNS5lnTx2Lvfx69y15ulFx9zmA9ToD/mtw=;
+	s=korg; t=1738764484;
+	bh=V63YR6PRRweZHZAAfqxiYTJNPncQmeOO7cueggdUpzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCZNs9lcF5hKWcQaW2MB6Knj/he0mv/oDTx4H/yf2wGpI/ul81WmQcAcpYipEzlXH
-	 5BQT3aFIDJSxA2EJq7p5KYE9gPXgLzbVMjHNbwgDppNlD/Z2VoHLo39O1YsmvCLvyL
-	 UuQaMd7XsRFvF/lfFEajbh0oAbzw+mlC3Yn/rq9M=
+	b=AXpz/a641IiGccSSBLTM7ZK/umRrZKJPiEF6f+04Jxq8ewsq2CAuYMRV9oW6JJVbN
+	 8L99nJiPQQiw/fGDvmKpC8KdK7RbalrvA260vtFjHfYoTyNgmkM1Y5hzJyyWOSqyqk
+	 9S++7qvpZouxgQfovdUeb7XUccPJZlhJwTZSD+ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Francesco Nigro <fnigro@redhat.com>,
+	Ilan Green <igreen@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Clark Williams <williams@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Stephane Eranian <eranian@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 127/590] clk: imx: Apply some clks only for i.MX93
-Date: Wed,  5 Feb 2025 14:38:02 +0100
-Message-ID: <20250205134500.119896920@linuxfoundation.org>
+Subject: [PATCH 6.6 176/393] perf namespaces: Introduce nsinfo__set_in_pidns()
+Date: Wed,  5 Feb 2025 14:41:35 +0100
+Message-ID: <20250205134427.030360721@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,95 +59,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 48806be086360846bb308c5ee21fcab8405a3da7 ]
+[ Upstream commit 9c6a585d257f6845731f4e36b45fe42b5c3162f5 ]
 
-Enable the LVDS gate, MIPI DSI, PXP, FLEXIO and MU only for i.MX93,
-because i.MX91 does not support them.
+When we're processing a perf.data file we will, for every thread in that
+file do a machine__findnew_thread(machine, pid, tid) that when that pid
+is seen for the first time will create a 'struct thread' representing
+it.
 
-Update enet clk entry format to align with others.
+That in turn will call nsinfo__new() -> nsinfo__init() and there it will
+assume we're running live, which is wrong and will need to be addressed
+in a followup patch.
 
-Fixes: a27bfff88dd2 ("clk: imx: add i.MX91 clk")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20241225001443.883131-1-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+The nsinfo__new() assumes that if we can't access that thread it has
+already finished and will ignore the -1 return from nsinfo__init(), just
+taking notes to avoid trying to enter in that namespace, since it isn't
+there anymore, a race.
+
+When doing this from 'perf inject', tho, we can fill in parts of that
+nsinfo from what we get from the PERF_RECORD_MMAP2 (pid, tid) and in the
+jitdump file name, that has the form of jit-<PID>.dump.
+
+So if the pid in the jitdump file name is not the one in the
+PERF_RECORD_MMAP2, we can assume that its the pid of the process
+_inside_ the namespace, and that perf was runing outside that namespace.
+
+This will be done in the following patch.
+
+Reported-by: Francesco Nigro <fnigro@redhat.com>
+Reported-by: Ilan Green <igreen@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Clark Williams <williams@redhat.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Stephane Eranian <eranian@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>
+Link: https://lore.kernel.org/r/20241206204828.507527-4-acme@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 64a7617efd5a ("perf namespaces: Fixup the nsinfo__in_pidns() return type, its bool")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx93.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ tools/perf/util/namespaces.c | 5 +++++
+ tools/perf/util/namespaces.h | 1 +
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/clk/imx/clk-imx93.c b/drivers/clk/imx/clk-imx93.c
-index eb818db008fb6..c5f358a75f307 100644
---- a/drivers/clk/imx/clk-imx93.c
-+++ b/drivers/clk/imx/clk-imx93.c
-@@ -71,8 +71,8 @@ static const struct imx93_clk_root {
- 	{ IMX93_CLK_WAKEUP_AXI,		"wakeup_axi_root",	0x0380,	FAST_SEL, CLK_IS_CRITICAL },
- 	{ IMX93_CLK_SWO_TRACE,		"swo_trace_root",	0x0400,	LOW_SPEED_IO_SEL, },
- 	{ IMX93_CLK_M33_SYSTICK,	"m33_systick_root",	0x0480,	LOW_SPEED_IO_SEL, 0, PLAT_IMX93, },
--	{ IMX93_CLK_FLEXIO1,		"flexio1_root",		0x0500,	LOW_SPEED_IO_SEL, },
--	{ IMX93_CLK_FLEXIO2,		"flexio2_root",		0x0580,	LOW_SPEED_IO_SEL, },
-+	{ IMX93_CLK_FLEXIO1,		"flexio1_root",		0x0500,	LOW_SPEED_IO_SEL, 0, PLAT_IMX93, },
-+	{ IMX93_CLK_FLEXIO2,		"flexio2_root",		0x0580,	LOW_SPEED_IO_SEL, 0, PLAT_IMX93, },
- 	{ IMX93_CLK_LPTMR1,		"lptmr1_root",		0x0700,	LOW_SPEED_IO_SEL, },
- 	{ IMX93_CLK_LPTMR2,		"lptmr2_root",		0x0780,	LOW_SPEED_IO_SEL, },
- 	{ IMX93_CLK_TPM2,		"tpm2_root",		0x0880,	TPM_SEL, },
-@@ -178,10 +178,10 @@ static const struct imx93_clk_ccgr {
- 	{ IMX93_CLK_WDOG5_GATE,		"wdog5",	"osc_24m",		0x8400, },
- 	{ IMX93_CLK_SEMA1_GATE,		"sema1",	"bus_aon_root",		0x8440, },
- 	{ IMX93_CLK_SEMA2_GATE,		"sema2",	"bus_wakeup_root",	0x8480, },
--	{ IMX93_CLK_MU1_A_GATE,		"mu1_a",	"bus_aon_root",		0x84c0, CLK_IGNORE_UNUSED },
--	{ IMX93_CLK_MU2_A_GATE,		"mu2_a",	"bus_wakeup_root",	0x84c0, CLK_IGNORE_UNUSED },
--	{ IMX93_CLK_MU1_B_GATE,		"mu1_b",	"bus_aon_root",		0x8500, 0, &share_count_mub },
--	{ IMX93_CLK_MU2_B_GATE,		"mu2_b",	"bus_wakeup_root",	0x8500, 0, &share_count_mub },
-+	{ IMX93_CLK_MU1_A_GATE,		"mu1_a",	"bus_aon_root",		0x84c0, CLK_IGNORE_UNUSED, NULL, PLAT_IMX93 },
-+	{ IMX93_CLK_MU2_A_GATE,		"mu2_a",	"bus_wakeup_root",	0x84c0, CLK_IGNORE_UNUSED, NULL, PLAT_IMX93 },
-+	{ IMX93_CLK_MU1_B_GATE,		"mu1_b",	"bus_aon_root",		0x8500, 0, &share_count_mub, PLAT_IMX93 },
-+	{ IMX93_CLK_MU2_B_GATE,		"mu2_b",	"bus_wakeup_root",	0x8500, 0, &share_count_mub, PLAT_IMX93 },
- 	{ IMX93_CLK_EDMA1_GATE,		"edma1",	"m33_root",		0x8540, },
- 	{ IMX93_CLK_EDMA2_GATE,		"edma2",	"wakeup_axi_root",	0x8580, },
- 	{ IMX93_CLK_FLEXSPI1_GATE,	"flexspi1",	"flexspi1_root",	0x8640, },
-@@ -189,8 +189,8 @@ static const struct imx93_clk_ccgr {
- 	{ IMX93_CLK_GPIO2_GATE,		"gpio2",	"bus_wakeup_root",	0x88c0, },
- 	{ IMX93_CLK_GPIO3_GATE,		"gpio3",	"bus_wakeup_root",	0x8900, },
- 	{ IMX93_CLK_GPIO4_GATE,		"gpio4",	"bus_wakeup_root",	0x8940, },
--	{ IMX93_CLK_FLEXIO1_GATE,	"flexio1",	"flexio1_root",		0x8980, },
--	{ IMX93_CLK_FLEXIO2_GATE,	"flexio2",	"flexio2_root",		0x89c0, },
-+	{ IMX93_CLK_FLEXIO1_GATE,	"flexio1",	"flexio1_root",		0x8980, 0, NULL, PLAT_IMX93},
-+	{ IMX93_CLK_FLEXIO2_GATE,	"flexio2",	"flexio2_root",		0x89c0, 0, NULL, PLAT_IMX93},
- 	{ IMX93_CLK_LPIT1_GATE,		"lpit1",	"bus_aon_root",		0x8a00, },
- 	{ IMX93_CLK_LPIT2_GATE,		"lpit2",	"bus_wakeup_root",	0x8a40, },
- 	{ IMX93_CLK_LPTMR1_GATE,	"lptmr1",	"lptmr1_root",		0x8a80, },
-@@ -239,10 +239,10 @@ static const struct imx93_clk_ccgr {
- 	{ IMX93_CLK_SAI3_GATE,          "sai3",         "sai3_root",            0x94c0, 0, &share_count_sai3},
- 	{ IMX93_CLK_SAI3_IPG,		"sai3_ipg_clk", "bus_wakeup_root",	0x94c0, 0, &share_count_sai3},
- 	{ IMX93_CLK_MIPI_CSI_GATE,	"mipi_csi",	"media_apb_root",	0x9580, },
--	{ IMX93_CLK_MIPI_DSI_GATE,	"mipi_dsi",	"media_apb_root",	0x95c0, },
--	{ IMX93_CLK_LVDS_GATE,		"lvds",		"media_ldb_root",	0x9600, },
-+	{ IMX93_CLK_MIPI_DSI_GATE,	"mipi_dsi",	"media_apb_root",	0x95c0, 0, NULL, PLAT_IMX93 },
-+	{ IMX93_CLK_LVDS_GATE,		"lvds",		"media_ldb_root",	0x9600, 0, NULL, PLAT_IMX93 },
- 	{ IMX93_CLK_LCDIF_GATE,		"lcdif",	"media_apb_root",	0x9640, },
--	{ IMX93_CLK_PXP_GATE,		"pxp",		"media_apb_root",	0x9680, },
-+	{ IMX93_CLK_PXP_GATE,		"pxp",		"media_apb_root",	0x9680, 0, NULL, PLAT_IMX93 },
- 	{ IMX93_CLK_ISI_GATE,		"isi",		"media_apb_root",	0x96c0, },
- 	{ IMX93_CLK_NIC_MEDIA_GATE,	"nic_media",	"media_axi_root",	0x9700, },
- 	{ IMX93_CLK_USB_CONTROLLER_GATE, "usb_controller", "hsio_root",		0x9a00, },
-@@ -258,8 +258,8 @@ static const struct imx93_clk_ccgr {
- 	{ IMX93_CLK_HSIO_32K_GATE,	"hsio_32k",	"osc_32k",		0x9dc0, },
- 	{ IMX93_CLK_ENET1_GATE,		"enet1",	"wakeup_axi_root",	0x9e00, 0, NULL, PLAT_IMX93, },
- 	{ IMX93_CLK_ENET_QOS_GATE,	"enet_qos",	"wakeup_axi_root",	0x9e40, 0, NULL, PLAT_IMX93, },
--	{ IMX91_CLK_ENET2_REGULAR_GATE, "enet2_regular",        "wakeup_axi_root",      0x9e00, 0, NULL, PLAT_IMX91, },
--	{ IMX91_CLK_ENET1_QOS_TSN_GATE,     "enet1_qos_tsn",        "wakeup_axi_root",      0x9e40, 0, NULL, PLAT_IMX91, },
-+	{ IMX91_CLK_ENET2_REGULAR_GATE, "enet2_regular", "wakeup_axi_root",	0x9e00, 0, NULL, PLAT_IMX91, },
-+	{ IMX91_CLK_ENET1_QOS_TSN_GATE, "enet1_qos_tsn", "wakeup_axi_root",	0x9e40, 0, NULL, PLAT_IMX91, },
- 	/* Critical because clk accessed during CPU idle */
- 	{ IMX93_CLK_SYS_CNT_GATE,	"sys_cnt",	"osc_24m",		0x9e80, CLK_IS_CRITICAL},
- 	{ IMX93_CLK_TSTMR1_GATE,	"tstmr1",	"bus_aon_root",		0x9ec0, },
+diff --git a/tools/perf/util/namespaces.c b/tools/perf/util/namespaces.c
+index cb185c5659d6b..36047184d76e2 100644
+--- a/tools/perf/util/namespaces.c
++++ b/tools/perf/util/namespaces.c
+@@ -271,6 +271,11 @@ pid_t nsinfo__in_pidns(const struct nsinfo  *nsi)
+ 	return RC_CHK_ACCESS(nsi)->in_pidns;
+ }
+ 
++void nsinfo__set_in_pidns(struct nsinfo *nsi)
++{
++	RC_CHK_ACCESS(nsi)->in_pidns = true;
++}
++
+ void nsinfo__mountns_enter(struct nsinfo *nsi,
+ 				  struct nscookie *nc)
+ {
+diff --git a/tools/perf/util/namespaces.h b/tools/perf/util/namespaces.h
+index 8c0731c6cbb7e..e014becb9cd8e 100644
+--- a/tools/perf/util/namespaces.h
++++ b/tools/perf/util/namespaces.h
+@@ -59,6 +59,7 @@ pid_t nsinfo__tgid(const struct nsinfo  *nsi);
+ pid_t nsinfo__nstgid(const struct nsinfo  *nsi);
+ pid_t nsinfo__pid(const struct nsinfo  *nsi);
+ pid_t nsinfo__in_pidns(const struct nsinfo  *nsi);
++void nsinfo__set_in_pidns(struct nsinfo *nsi);
+ 
+ void nsinfo__mountns_enter(struct nsinfo *nsi, struct nscookie *nc);
+ void nsinfo__mountns_exit(struct nscookie *nc);
 -- 
 2.39.5
 
