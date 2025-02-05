@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E59FC0B;
-	Wed,  5 Feb 2025 13:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE2D149C64;
+	Wed,  5 Feb 2025 13:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763711; cv=none; b=a0ae0vyBYPxL1JZWAl34gc4IDV5kyQ322cUIzmnrvxzYElS9uwD9nOdIi2XFrlG+fOy01oaWlrcwV6qqEne6O8bdOOsqugAWcIMMApTGMis7l1csxOnFy2b2Orcg66Opal5UrLbEjgBxvsWTuu6WMqvL5e2p8jUHEObv97ycbVk=
+	t=1738763715; cv=none; b=JrjSnwTuHYPdkPTE8qP7wDHgfDTltH81w9fNg80Zp1BOBMn/1ZzDuFzbQJa0nfg+OGMJeqohFUIMF6Zo4oovyRUR3VyGvfKn6Nyf9HOqU5BJXj0tb2v7+aaVUVkTVVZyUH7lz/uBPHBu7oXltp5kDY/FG98OBRwB9m9r6/Ksgzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763711; c=relaxed/simple;
-	bh=RDaeWqD/gfJiL4pvJSYhMnXfPysZ85Jv+fI9EE87nIM=;
+	s=arc-20240116; t=1738763715; c=relaxed/simple;
+	bh=pTWYoEkmAN6M+EifTOTjUATXShKe6tF4UYVvXpfAy0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQmthqNeJnEkXoTWFPfpjBIPbs9UN0O0nrVFeGkmTjGazge+mfSLmXw5icZnXZIZtoq7qwkqv04OdSAMNRds4OD7YAIieGQfpRUWj/6d1WCXxyUi9ZOvFZWPq5udSCB5jKJ9FmU5WqeKQTBmdn+rSDajUuyG0Vr25JkmnZftYpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqLszvmF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o1yrJBzlDx7ndnBpsYRtu0s3+8+jTgyX7lB3cTgZdpu2WleSb7hx0nmph+NXGXif2ALBOlgUDTtvU351eWG5Td7KPN/k6x96fIU+DJy69a7nsRogQ+PRO8yU4tAmFoR6JVhZ5EWpZspFes1bVnW/4EmKziwZdfWks6gN1RmM+4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lm1i8LlL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqLszvmF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C0AC4CED1;
-	Wed,  5 Feb 2025 13:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lm1i8LlL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C90C4CEDD;
+	Wed,  5 Feb 2025 13:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763711;
-	bh=RDaeWqD/gfJiL4pvJSYhMnXfPysZ85Jv+fI9EE87nIM=;
+	s=korg; t=1738763714;
+	bh=pTWYoEkmAN6M+EifTOTjUATXShKe6tF4UYVvXpfAy0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqLszvmFoVbp3qji6FL7gn0+WjfNEUDpORnCjTxBG3M/osRAWokZyzykZcPGQgV51
-	 fhSOR4QuFImRGT6Vh4iF9yc7JcVDn6ds0duKlVspLZKWRFfU51DMCyKU0COrHMqCTy
-	 kU1fXJaRvFncSrFDJUOO2qs6V/ETYOKU7mh3VCk4=
+	b=Lm1i8LlL7wfQf+Lb5gMlekYAhfzhK2JQj/Kq8yDIh4L3vrNNFGzRhmyl1/0o050ne
+	 NI0NKb32dSLBANwZUeNO9xSI7NVEUnnzzqbbNQ+KTWo++MOUAPBPz8ebHFNpkkmc+L
+	 zbQGFo3RVXdRrztz8Qx8DrUVrRb3R9CdOXldX+MY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Yang Erkun <yangerkun@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Derek Foreman <derek.foreman@collabora.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 011/623] block: retry call probe after request_module in blk_request_module
-Date: Wed,  5 Feb 2025 14:35:53 +0100
-Message-ID: <20250205134456.661714143@linuxfoundation.org>
+Subject: [PATCH 6.12 050/590] drm/rockchip: vop2: Set AXI id for rk3588
+Date: Wed,  5 Feb 2025 14:36:45 +0100
+Message-ID: <20250205134457.170525402@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,87 +49,206 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit 457ef47c08d2979f3e59ce66267485c3faed70c8 ]
+[ Upstream commit 7b256880fdb2d7f23393b87bb557090f049e686a ]
 
-Set kernel config:
+There are two AXI bus in vop2, windows attached on the same bus must
+have a unique channel YUV and RGB channel ID.
 
- CONFIG_BLK_DEV_LOOP=m
- CONFIG_BLK_DEV_LOOP_MIN_COUNT=0
+The default IDs will conflict with each other on the rk3588, so they
+need to be reassigned.
 
-Do latter:
-
- mknod loop0 b 7 0
- exec 4<> loop0
-
-Before commit e418de3abcda ("block: switch gendisk lookup to a simple
-xarray"), lookup_gendisk will first use base_probe to load module loop,
-and then the retry will call loop_probe to prepare the loop disk. Finally
-open for this disk will success. However, after this commit, we lose the
-retry logic, and open will fail with ENXIO. Block device autoloading is
-deprecated and will be removed soon, but maybe we should keep open success
-until we really remove it. So, give a retry to fix it.
-
-Fixes: e418de3abcda ("block: switch gendisk lookup to a simple xarray")
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20241209110435.3670985-1-yangerkun@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 5a028e8f062f ("drm/rockchip: vop2: Add support for rk3588")
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Tested-by: Derek Foreman <derek.foreman@collabora.com>
+Tested-by: Detlev Casanova <detlev.casanova@collabora.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241214081719.3330518-4-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 14 +++++++++++
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.h |  9 +++++++
+ drivers/gpu/drm/rockchip/rockchip_vop2_reg.c | 26 +++++++++++++++++++-
+ 3 files changed, 48 insertions(+), 1 deletion(-)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 79230c109fca0..8a63be374220c 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -798,7 +798,7 @@ static ssize_t disk_badblocks_store(struct device *dev,
- }
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 60b498ffd41aa..cd3fb906d0089 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -1320,6 +1320,12 @@ static void vop2_plane_atomic_update(struct drm_plane *plane,
+ 		&fb->format->format,
+ 		afbc_en ? "AFBC" : "", &yrgb_mst);
  
- #ifdef CONFIG_BLOCK_LEGACY_AUTOLOAD
--void blk_request_module(dev_t devt)
-+static bool blk_probe_dev(dev_t devt)
- {
- 	unsigned int major = MAJOR(devt);
- 	struct blk_major_name **n;
-@@ -808,14 +808,26 @@ void blk_request_module(dev_t devt)
- 		if ((*n)->major == major && (*n)->probe) {
- 			(*n)->probe(devt);
- 			mutex_unlock(&major_names_lock);
--			return;
-+			return true;
- 		}
- 	}
- 	mutex_unlock(&major_names_lock);
-+	return false;
-+}
++	if (vop2->data->soc_id > 3568) {
++		vop2_win_write(win, VOP2_WIN_AXI_BUS_ID, win->data->axi_bus_id);
++		vop2_win_write(win, VOP2_WIN_AXI_YRGB_R_ID, win->data->axi_yrgb_r_id);
++		vop2_win_write(win, VOP2_WIN_AXI_UV_R_ID, win->data->axi_uv_r_id);
++	}
 +
-+void blk_request_module(dev_t devt)
-+{
-+	int error;
+ 	if (vop2_cluster_window(win))
+ 		vop2_win_write(win, VOP2_WIN_AFBC_HALF_BLOCK_EN, half_block_en);
+ 
+@@ -2908,6 +2914,10 @@ static struct reg_field vop2_cluster_regs[VOP2_WIN_MAX_REG] = {
+ 	[VOP2_WIN_Y2R_EN] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL0, 8, 8),
+ 	[VOP2_WIN_R2Y_EN] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL0, 9, 9),
+ 	[VOP2_WIN_CSC_MODE] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL0, 10, 11),
++	[VOP2_WIN_AXI_YRGB_R_ID] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL2, 0, 3),
++	[VOP2_WIN_AXI_UV_R_ID] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL2, 5, 8),
++	/* RK3588 only, reserved bit on rk3568*/
++	[VOP2_WIN_AXI_BUS_ID] = REG_FIELD(RK3568_CLUSTER_CTRL, 13, 13),
+ 
+ 	/* Scale */
+ 	[VOP2_WIN_SCALE_YRGB_X] = REG_FIELD(RK3568_CLUSTER_WIN_SCL_FACTOR_YRGB, 0, 15),
+@@ -3000,6 +3010,10 @@ static struct reg_field vop2_esmart_regs[VOP2_WIN_MAX_REG] = {
+ 	[VOP2_WIN_YMIRROR] = REG_FIELD(RK3568_SMART_CTRL1, 31, 31),
+ 	[VOP2_WIN_COLOR_KEY] = REG_FIELD(RK3568_SMART_COLOR_KEY_CTRL, 0, 29),
+ 	[VOP2_WIN_COLOR_KEY_EN] = REG_FIELD(RK3568_SMART_COLOR_KEY_CTRL, 31, 31),
++	[VOP2_WIN_AXI_YRGB_R_ID] = REG_FIELD(RK3568_SMART_CTRL1, 4, 8),
++	[VOP2_WIN_AXI_UV_R_ID] = REG_FIELD(RK3568_SMART_CTRL1, 12, 16),
++	/* RK3588 only, reserved register on rk3568 */
++	[VOP2_WIN_AXI_BUS_ID] = REG_FIELD(RK3588_SMART_AXI_CTRL, 1, 1),
+ 
+ 	/* Scale */
+ 	[VOP2_WIN_SCALE_YRGB_X] = REG_FIELD(RK3568_SMART_REGION0_SCL_FACTOR_YRGB, 0, 15),
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
+index 615a16196aff6..1c4204324f9f5 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
+@@ -78,6 +78,9 @@ enum vop2_win_regs {
+ 	VOP2_WIN_COLOR_KEY,
+ 	VOP2_WIN_COLOR_KEY_EN,
+ 	VOP2_WIN_DITHER_UP,
++	VOP2_WIN_AXI_BUS_ID,
++	VOP2_WIN_AXI_YRGB_R_ID,
++	VOP2_WIN_AXI_UV_R_ID,
+ 
+ 	/* scale regs */
+ 	VOP2_WIN_SCALE_YRGB_X,
+@@ -140,6 +143,10 @@ struct vop2_win_data {
+ 	unsigned int layer_sel_id;
+ 	uint64_t feature;
+ 
++	uint8_t axi_bus_id;
++	uint8_t axi_yrgb_r_id;
++	uint8_t axi_uv_r_id;
 +
-+	if (blk_probe_dev(devt))
-+		return;
+ 	unsigned int max_upscale_factor;
+ 	unsigned int max_downscale_factor;
+ 	const u8 dly[VOP2_DLY_MODE_MAX];
+@@ -308,6 +315,7 @@ enum dst_factor_mode {
  
--	if (request_module("block-major-%d-%d", MAJOR(devt), MINOR(devt)) > 0)
--		/* Make old-style 2.4 aliases work */
--		request_module("block-major-%d", MAJOR(devt));
-+	error = request_module("block-major-%d-%d", MAJOR(devt), MINOR(devt));
-+	/* Make old-style 2.4 aliases work */
-+	if (error > 0)
-+		error = request_module("block-major-%d", MAJOR(devt));
-+	if (!error)
-+		blk_probe_dev(devt);
- }
- #endif /* CONFIG_BLOCK_LEGACY_AUTOLOAD */
- 
+ #define RK3568_CLUSTER_WIN_CTRL0		0x00
+ #define RK3568_CLUSTER_WIN_CTRL1		0x04
++#define RK3568_CLUSTER_WIN_CTRL2		0x08
+ #define RK3568_CLUSTER_WIN_YRGB_MST		0x10
+ #define RK3568_CLUSTER_WIN_CBR_MST		0x14
+ #define RK3568_CLUSTER_WIN_VIR			0x18
+@@ -330,6 +338,7 @@ enum dst_factor_mode {
+ /* (E)smart register definition, offset relative to window base */
+ #define RK3568_SMART_CTRL0			0x00
+ #define RK3568_SMART_CTRL1			0x04
++#define RK3588_SMART_AXI_CTRL			0x08
+ #define RK3568_SMART_REGION0_CTRL		0x10
+ #define RK3568_SMART_REGION0_YRGB_MST		0x14
+ #define RK3568_SMART_REGION0_CBR_MST		0x18
+diff --git a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
+index 18efb3fe1c000..e473a8f8fd32d 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
++++ b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
+@@ -313,7 +313,7 @@ static const struct vop2_video_port_data rk3588_vop_video_ports[] = {
+  * AXI1 is a read only bus.
+  *
+  * Every window on a AXI bus must assigned two unique
+- * read id(yrgb_id/uv_id, valid id are 0x1~0xe).
++ * read id(yrgb_r_id/uv_r_id, valid id are 0x1~0xe).
+  *
+  * AXI0:
+  * Cluster0/1, Esmart0/1, WriteBack
+@@ -333,6 +333,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.layer_sel_id = 0,
+ 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
+ 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
++		.axi_bus_id = 0,
++		.axi_yrgb_r_id = 2,
++		.axi_uv_r_id = 3,
+ 		.max_upscale_factor = 4,
+ 		.max_downscale_factor = 4,
+ 		.dly = { 4, 26, 29 },
+@@ -349,6 +352,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
+ 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_PRIMARY,
++		.axi_bus_id = 0,
++		.axi_yrgb_r_id = 6,
++		.axi_uv_r_id = 7,
+ 		.max_upscale_factor = 4,
+ 		.max_downscale_factor = 4,
+ 		.dly = { 4, 26, 29 },
+@@ -364,6 +370,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
+ 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_PRIMARY,
++		.axi_bus_id = 1,
++		.axi_yrgb_r_id = 2,
++		.axi_uv_r_id = 3,
+ 		.max_upscale_factor = 4,
+ 		.max_downscale_factor = 4,
+ 		.dly = { 4, 26, 29 },
+@@ -379,6 +388,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
+ 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_PRIMARY,
++		.axi_bus_id = 1,
++		.axi_yrgb_r_id = 6,
++		.axi_uv_r_id = 7,
+ 		.max_upscale_factor = 4,
+ 		.max_downscale_factor = 4,
+ 		.dly = { 4, 26, 29 },
+@@ -393,6 +405,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.layer_sel_id = 2,
+ 		.supported_rotations = DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_OVERLAY,
++		.axi_bus_id = 0,
++		.axi_yrgb_r_id = 0x0a,
++		.axi_uv_r_id = 0x0b,
+ 		.max_upscale_factor = 8,
+ 		.max_downscale_factor = 8,
+ 		.dly = { 23, 45, 48 },
+@@ -406,6 +421,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.layer_sel_id = 3,
+ 		.supported_rotations = DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_OVERLAY,
++		.axi_bus_id = 0,
++		.axi_yrgb_r_id = 0x0c,
++		.axi_uv_r_id = 0x01,
+ 		.max_upscale_factor = 8,
+ 		.max_downscale_factor = 8,
+ 		.dly = { 23, 45, 48 },
+@@ -419,6 +437,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.layer_sel_id = 6,
+ 		.supported_rotations = DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_OVERLAY,
++		.axi_bus_id = 1,
++		.axi_yrgb_r_id = 0x0a,
++		.axi_uv_r_id = 0x0b,
+ 		.max_upscale_factor = 8,
+ 		.max_downscale_factor = 8,
+ 		.dly = { 23, 45, 48 },
+@@ -432,6 +453,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.layer_sel_id = 7,
+ 		.supported_rotations = DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_OVERLAY,
++		.axi_bus_id = 1,
++		.axi_yrgb_r_id = 0x0c,
++		.axi_uv_r_id = 0x0d,
+ 		.max_upscale_factor = 8,
+ 		.max_downscale_factor = 8,
+ 		.dly = { 23, 45, 48 },
 -- 
 2.39.5
 
