@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F59DF71;
-	Wed,  5 Feb 2025 14:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC9C156C5E;
+	Wed,  5 Feb 2025 14:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767141; cv=none; b=oGBEcb/dx7I5cdrmGXyiBvBftroXt1rUVFy+RBtl//WM1VB0VJ4ZDzL4n37TZlDWYYmS+/MS4w6vMUikZkpzH5mhkCibrbYkAbW5KMMNZGwF9OvAKsCy+Tm1GigN9KXzlga78/vqvm6QHGp1TMVxPKEL+LO+Dmw+YjCfCK9BsnY=
+	t=1738767144; cv=none; b=CPbmR2LcYGEy6PZoLXnwYT827T0R0TTAD4L+pU3LtgoVQQI3UATxOnhT9cNfEupS9Uj19/VGv+YEu88kbiaFWdBl5sGZxvlMo7gfuq2NTwO5yJLk0/nNWerv3YextvXyBafXO6YYW1tr527Q0IiPo6Vz3xCLxwwgEInBTjUANFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767141; c=relaxed/simple;
-	bh=fof3NXma/IDYEnxVkeCFyM4SCb89SBpWXzO2nEd2jfI=;
+	s=arc-20240116; t=1738767144; c=relaxed/simple;
+	bh=8BLc7QBJuO5JvxN1FlvLEhQEjbomY+X0/ZslvqqIoqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ChsBty5dhWeWNeUmf9ggLG1siRdsFPqKMJvRKQP2a0B7hOgu27xBt+SqoEU33A2FQrHOGgPfg+3VO+s9yoU9v4v+watkSaPbnVJDMH66ASGHIWlLFkd9ahXYlus8cWuP7vgdSATaO3gf77OzoJlFNSuHBB8uSBufeAKox4gEfkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jPv0UhKu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Q/FGqZf5mYnLvUjWZy1iYx6G6bbxZ9yKRs0gH80crbyxGCGOBEYtiZNHPho1MYMf0+wEap14NuirUM93bWSYdHb9NIuG+D6tmK/disqyNqAhkspl9VxPJJgxNTwAv8A+5vh5s5dekySI5I9Nk+YwmWQ7vDqI7yD5qI8oL6/BeIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G1bq14e7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jPv0UhKu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EAEC4CED1;
-	Wed,  5 Feb 2025 14:52:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G1bq14e7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A31AC4CED1;
+	Wed,  5 Feb 2025 14:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767140;
-	bh=fof3NXma/IDYEnxVkeCFyM4SCb89SBpWXzO2nEd2jfI=;
+	s=korg; t=1738767144;
+	bh=8BLc7QBJuO5JvxN1FlvLEhQEjbomY+X0/ZslvqqIoqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jPv0UhKuzFPQYAL3b7mYaL3hcpVM+8YITpBXVwvHMTAofWSQReK5mwX8YfEGKFGjk
-	 GParsDLRcNhhkrveYf9pGMk50PO8cpVxLA+H6bOGOIjAC9FO2kJkCjTO9b5k76498q
-	 5gs49cL+iVs0uXSZrbXkmThxiIhxvORBbch+miKQ=
+	b=G1bq14e7GwBtCPFyo7WqjCc93ZQk/YqfC/K3uss9B/knxkfZWvyPURXMXTVDBJ+tT
+	 Ks62EeuUoFLmYGGCKXsTZdgt2WM4Iy4ZFg0967k4yYzMKcFwPQmeatB898wBW3KyTh
+	 GZsNJmup/ljyFYQWqzD/kxtdMQuDJBbjY4WtKa+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 344/623] rdma/cxgb4: Prevent potential integer overflow on 32bit
-Date: Wed,  5 Feb 2025 14:41:26 +0100
-Message-ID: <20250205134509.387430370@linuxfoundation.org>
+Subject: [PATCH 6.13 362/623] arm64: dts: mediatek: mt8195: Remove suspend-breaking reset from pcie1
+Date: Wed,  5 Feb 2025 14:41:44 +0100
+Message-ID: <20250205134510.071401975@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -45,47 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit bd96a3935e89486304461a21752f824fc25e0f0b ]
+[ Upstream commit 3d7fdd8e38aafd4858935df2392762c1ab8fb40f ]
 
-The "gl->tot_len" variable is controlled by the user.  It comes from
-process_responses().  On 32bit systems, the "gl->tot_len + sizeof(struct
-cpl_pass_accept_req) + sizeof(struct rss_header)" addition could have an
-integer wrapping bug.  Use size_add() to prevent this.
+The MAC reset for PCIe port 1 on MT8195 when asserted during suspend
+causes the system to hang during resume with the following error (with
+no_console_suspend enabled):
 
-Fixes: 1cab775c3e75 ("RDMA/cxgb4: Fix LE hash collision bug for passive open connection")
-Link: https://patch.msgid.link/r/86b404e1-4a75-4a35-a34e-e3054fa554c7@stanley.mountain
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+  mtk-pcie-gen3 112f8000.pcie: PCIe link down, current LTSSM state: detect.quiet (0x0)
+  mtk-pcie-gen3 112f8000.pcie: PM: dpm_run_callback(): genpd_resume_noirq+0x0/0x24 returns -110
+  mtk-pcie-gen3 112f8000.pcie: PM: failed to resume noirq: error -110
+
+This issue is specific to MT8195. On MT8192 with the PCIe reset,
+MT8192_INFRA_RST4_PCIE_TOP_SWRST, added to the DT node, the issue is not
+observed.
+
+Since without the reset, the PCIe controller and WiFi card connected to
+it, work just as well, remove the reset to allow the system to suspend
+and resume properly.
+
+Fixes: ecc0af6a3fe6 ("arm64: dts: mt8195: Add pcie and pcie phy nodes")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Link: https://lore.kernel.org/r/20241218-mt8195-pcie1-reset-suspend-fix-v1-1-1c021dda42a6@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/cxgb4/device.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/cxgb4/device.c b/drivers/infiniband/hw/cxgb4/device.c
-index 80970a1738f8a..034b85c422555 100644
---- a/drivers/infiniband/hw/cxgb4/device.c
-+++ b/drivers/infiniband/hw/cxgb4/device.c
-@@ -1114,8 +1114,10 @@ static inline struct sk_buff *copy_gl_to_skb_pkt(const struct pkt_gl *gl,
- 	 * The math here assumes sizeof cpl_pass_accept_req >= sizeof
- 	 * cpl_rx_pkt.
- 	 */
--	skb = alloc_skb(gl->tot_len + sizeof(struct cpl_pass_accept_req) +
--			sizeof(struct rss_header) - pktshift, GFP_ATOMIC);
-+	skb = alloc_skb(size_add(gl->tot_len,
-+				 sizeof(struct cpl_pass_accept_req) +
-+				 sizeof(struct rss_header)) - pktshift,
-+			GFP_ATOMIC);
- 	if (unlikely(!skb))
- 		return NULL;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index ade685ed2190b..04e41b557d448 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -1611,9 +1611,6 @@
+ 			phy-names = "pcie-phy";
+ 			power-domains = <&spm MT8195_POWER_DOMAIN_PCIE_MAC_P1>;
  
+-			resets = <&infracfg_ao MT8195_INFRA_RST2_PCIE_P1_SWRST>;
+-			reset-names = "mac";
+-
+ 			#interrupt-cells = <1>;
+ 			interrupt-map-mask = <0 0 0 7>;
+ 			interrupt-map = <0 0 0 1 &pcie_intc1 0>,
 -- 
 2.39.5
 
