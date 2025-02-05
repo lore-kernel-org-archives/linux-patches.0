@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2B61519AF;
-	Wed,  5 Feb 2025 14:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21498522A;
+	Wed,  5 Feb 2025 14:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765817; cv=none; b=smPzbGAEm/DYGymRr2f9ghS9NmlTQelJGP44nDDu4B1ir0Z+Wizp6D8U7uW8TjmRolVVhS9Z8FMSNvTIl/u05pR019TUk1rN9RuRozAV1eArXNzFacEeCqa9UEwZ8an012AWu33aq6fXPv7vEvSR/whcTVNUYgakvIPlnOQoT/g=
+	t=1738765821; cv=none; b=pT9lz8kl6mgTltVy/lkRWAGP2pxBgy5Mh+eoHYqVns0nSkL40JhFJ+2W1Jww/aZrUyiVxtERj501xgLNuDX4KUdZulJi9Rz05gTQNsAu5IkbY4R77E+9ENQ5GsvO0f8h2yedR5jouliWBUO0yezLk50vzXWtMxvqYfkBtDkqjjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765817; c=relaxed/simple;
-	bh=1j6mDns2GoaBzU4vCJOmYgZh3AInNrWQxXJDPqjRaP0=;
+	s=arc-20240116; t=1738765821; c=relaxed/simple;
+	bh=vZsbIRAmu6yMqgJbxxJxnPgwXoeE+3hMH1O+tQ9DlQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M6c5HPojNvveXN132/eSwLwv2T6bbpjqjPGRl1u06LXk/Zoy1rarr5KwjKqJ/DPSzkJP4gBGkOiOUhEN7HXm1nbHk9SkbiWdW4l+FlN/fti5o404php270V/HCGMNyiMh7xsSq4pA9r7sB9dcqbNRmqRnrf/3a0M0xCMPm01eRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/l58/pQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GhYctd9YuLLFHqRwIjUg3qsl+k9x9/BG5fQHZZwa2Yl45VEd3q0+06TybeKkO8BJASWXYrjSvBBYF4Qm4p65D/RvOHpfh0oPwmbcRe5qXO+9MJgJUIW9zmQUHEKOleT7wPTKT3TVto/kTqVFjK33Cz32Zb9BTFZ8mDKZ30JwLeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yS2zX+lR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/l58/pQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF532C4CED1;
-	Wed,  5 Feb 2025 14:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yS2zX+lR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8493FC4CED1;
+	Wed,  5 Feb 2025 14:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765817;
-	bh=1j6mDns2GoaBzU4vCJOmYgZh3AInNrWQxXJDPqjRaP0=;
+	s=korg; t=1738765821;
+	bh=vZsbIRAmu6yMqgJbxxJxnPgwXoeE+3hMH1O+tQ9DlQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b/l58/pQFOc4dWgENSDmAz1cR7TnbeGepS2dkEN690I2HpEHmEgQssm+ZFMJSr0SE
-	 d5gHn3WKYRe3PiSsWxEZH4wfoxdMPYiHElgObaG6STrm8ZfLI969DiN4kgYKlJvNtE
-	 l5RRN63z8WXKZHZmJ778sPlDaK2ZqaCvqdeMmEcA=
+	b=yS2zX+lRXbJuBv0DXxGBBHHraj7fPZjIO5f63nmsthSf/5a+e7IA06vaGCNqP8v+v
+	 2y8XuFwFUSUOCuQPoAhIp5q+pi7XronE0OGunUrx29rv+hJvho/6w43DYQpKZLh2c5
+	 VKk25lHbgdJM3IkFotX2NbCe1/rpG3Ok2dZQwMCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 258/590] rhashtable: Fix potential deadlock by moving schedule_work outside lock
-Date: Wed,  5 Feb 2025 14:40:13 +0100
-Message-ID: <20250205134505.149929023@linuxfoundation.org>
+Subject: [PATCH 6.6 303/393] scsi: mpt3sas: Set ioc->manu_pg11.EEDPTagMode directly to 1
+Date: Wed,  5 Feb 2025 14:43:42 +0100
+Message-ID: <20250205134431.904931771@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
 
-[ Upstream commit e1d3422c95f003eba241c176adfe593c33e8a8f6 ]
+[ Upstream commit ad7c3c0cb8f61d6d5a48b83e62ca4a9fd2f26153 ]
 
-Move the hash table growth check and work scheduling outside the
-rht lock to prevent a possible circular locking dependency.
+Currently, the code does:
 
-The original implementation could trigger a lockdep warning due to
-a potential deadlock scenario involving nested locks between
-rhashtable bucket, rq lock, and dsq lock. By relocating the
-growth check and work scheduling after releasing the rth lock, we break
-this potential deadlock chain.
+    if (x == 0) {
+    	x &= ~0x3;
+	x |= 0x1;
+    }
 
-This change expands the flexibility of rhashtable by removing
-restrictive locking that previously limited its use in scheduler
-and workqueue contexts.
+Zeroing bits 0 and 1 of a variable that is 0 is not necessary. So directly
+set the variable to 1.
 
-Import to say that this calls rht_grow_above_75(), which reads from
-struct rhashtable without holding the lock, if this is a problem, we can
-move the check to the lock, and schedule the workqueue after the lock.
-
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-
-Modified so that atomic_inc is also moved outside of the bucket
-lock along with the growth above 75% check.
-
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
+Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Link: https://lore.kernel.org/r/20241212221817.78940-2-pmenzel@molgen.mpg.de
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/rhashtable.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_base.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/lib/rhashtable.c b/lib/rhashtable.c
-index 6c902639728b7..bf956b85455ab 100644
---- a/lib/rhashtable.c
-+++ b/lib/rhashtable.c
-@@ -584,10 +584,6 @@ static struct bucket_table *rhashtable_insert_one(
- 	 */
- 	rht_assign_locked(bkt, obj);
- 
--	atomic_inc(&ht->nelems);
--	if (rht_grow_above_75(ht, tbl))
--		schedule_work(&ht->run_work);
--
- 	return NULL;
- }
- 
-@@ -624,6 +620,12 @@ static void *rhashtable_try_insert(struct rhashtable *ht, const void *key,
- 				data = ERR_CAST(new_tbl);
- 
- 			rht_unlock(tbl, bkt, flags);
-+
-+			if (PTR_ERR(data) == -ENOENT && !new_tbl) {
-+				atomic_inc(&ht->nelems);
-+				if (rht_grow_above_75(ht, tbl))
-+					schedule_work(&ht->run_work);
-+			}
- 		}
- 	} while (!IS_ERR_OR_NULL(new_tbl));
- 
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
+index a5d12b95fbd09..cd00f19670355 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -5638,8 +5638,7 @@ _base_static_config_pages(struct MPT3SAS_ADAPTER *ioc)
+ 	if (!ioc->is_gen35_ioc && ioc->manu_pg11.EEDPTagMode == 0) {
+ 		pr_err("%s: overriding NVDATA EEDPTagMode setting\n",
+ 		    ioc->name);
+-		ioc->manu_pg11.EEDPTagMode &= ~0x3;
+-		ioc->manu_pg11.EEDPTagMode |= 0x1;
++		ioc->manu_pg11.EEDPTagMode = 0x1;
+ 		mpt3sas_config_set_manufacturing_pg11(ioc, &mpi_reply,
+ 		    &ioc->manu_pg11);
+ 	}
 -- 
 2.39.5
 
