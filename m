@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF4218DF73;
-	Wed,  5 Feb 2025 15:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1CF1DA617;
+	Wed,  5 Feb 2025 15:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767676; cv=none; b=KRERO5bwXroCuHS8n6xZuyriVaecuIuht7h54evdaf2mn5ZOZ7JhY5M5rpMokBbNzcVqZtUdjSJOQympINRZQ64tC8cgaSK9VenOoEXLVWFYVvkQpl4phQh/O6R7deoL1B3GvdJOF2WYeV9AmbJUj6vYvsoJNo8Kpzd64oevVz0=
+	t=1738767680; cv=none; b=Cj1DvvBFqz4e4vNNiBOcEv4jJPfx1rCiqhNI828s10A560gHL7mWYWhP0YuHAACTM+V5r5O0113siiwJ0Bx4ZOj8GDcqVpC1wfozBqYE3ZnGumwLwTmONdPACPuEnJIhFA+fgQZjSEFId65hIVBlFJf4tBhl6bHI467ZVlzY1Qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767676; c=relaxed/simple;
-	bh=CG06z7MZT10t5mQc268j1MiNbkDaFt875PlF2FenQrI=;
+	s=arc-20240116; t=1738767680; c=relaxed/simple;
+	bh=PEK5DiB1Cm6kNLipXGXArlaCmIpCXUC/kxJDRGp6bWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PslM976SZVpof73pVQ2P+YjELUNqA5NO2KbMFfG3tHHsLGtYoSHwABNaxWkTTbwQ7TP2wNCg7NlLGLW3spSa1eLMrtfH+MvF12NHzZ27wZaZTw0EScb2qu7806lcW4Piyrsvxt+9WkuXTDpgXBH11yOw4cF/daXoFPn80j+B/P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNvV3wxD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TVU8KuMrLMpa9VogD/slqZhu9/jptrmMBcn5qb/wPD0NM7QlzstO0kTg2B2UlCP9GTWgS6hc745ge652QdW+SohkTNGKO7+uTTUFIfVuLfyDpRgG6iMKrUrLxNrKEb8S+BPcP8MvOtqygu6v/lEu0qFHBfo3J4g+eHJxrwCEy1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBJkUbH8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNvV3wxD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D59C4CED6;
-	Wed,  5 Feb 2025 15:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBJkUbH8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80394C4CEE2;
+	Wed,  5 Feb 2025 15:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767676;
-	bh=CG06z7MZT10t5mQc268j1MiNbkDaFt875PlF2FenQrI=;
+	s=korg; t=1738767679;
+	bh=PEK5DiB1Cm6kNLipXGXArlaCmIpCXUC/kxJDRGp6bWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hNvV3wxDxcPaqifNThs54iCewZBLaHJ/g8D8V3eIjl0HZlpV99q0ConCeTRFvgHWW
-	 BY+PACTOUE/XF41A/4cILYIDi2stIKIy0Sd366AUm0OIzE1JrRlXiRuKxc5kpQtdM9
-	 4fd2BCnZiCLTZbA2f2MUD06kZft+1VbU8wFaClQQ=
+	b=yBJkUbH8pa0caS7u/9AcUSihBQBC1J65DglxPOBfZrGhC0oqxS8rbTK8faOWIEk1H
+	 uf1+seDezSQS9JPaGkdiIJkrkP904wkgLpA+Zk+jpBG90luZtYOqkt+dUjuNn8AhlC
+	 HX9LONsIewwhL0RHZHjRViPN3Wv+rcyAendp16o8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Michal Wilczynski <m.wilczynski@samsung.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 437/623] mailbox: th1520: Fix a NULL vs IS_ERR() bug
-Date: Wed,  5 Feb 2025 14:42:59 +0100
-Message-ID: <20250205134512.935871690@linuxfoundation.org>
+Subject: [PATCH 6.12 491/590] s390/mm: Allow large pages for KASAN shadow mapping
+Date: Wed,  5 Feb 2025 14:44:06 +0100
+Message-ID: <20250205134514.054482919@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit d0f98e14c010bcf27898b635a54c1994ac4110a8 ]
+[ Upstream commit ff123eb7741638d55abf82fac090bb3a543c1e74 ]
 
-The devm_ioremap() function doesn't return error pointers, it returns
-NULL.  Update the error checking to match.
+Commit c98d2ecae08f ("s390/mm: Uncouple physical vs virtual address
+spaces") introduced a large_allowed() helper that restricts which mapping
+modes can use large pages. This change unintentionally prevented KASAN
+shadow mappings from using large pages, despite there being no reason
+to avoid them. In fact, large pages are preferred for performance.
 
-Fixes: 5d4d263e1c6b ("mailbox: Introduce support for T-head TH1520 Mailbox driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Michal Wilczynski <m.wilczynski@samsung.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Add POPULATE_KASAN_MAP_SHADOW to the allowed list in large_allowed()
+to restore large page mappings for KASAN shadows.
+
+While large_allowed() isn't strictly necessary with current mapping
+modes since disallowed modes either don't map anything or fail alignment
+and size checks, keep it for clarity.
+
+Fixes: c98d2ecae08f ("s390/mm: Uncouple physical vs virtual address spaces")
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-th1520.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/s390/boot/vmem.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/mailbox-th1520.c b/drivers/mailbox/mailbox-th1520.c
-index 4e84640ac3b87..e16e7c85ee3cd 100644
---- a/drivers/mailbox/mailbox-th1520.c
-+++ b/drivers/mailbox/mailbox-th1520.c
-@@ -387,8 +387,10 @@ static void __iomem *th1520_map_mmio(struct platform_device *pdev,
+diff --git a/arch/s390/boot/vmem.c b/arch/s390/boot/vmem.c
+index 3fa28db2fe59f..824690427b61a 100644
+--- a/arch/s390/boot/vmem.c
++++ b/arch/s390/boot/vmem.c
+@@ -264,7 +264,17 @@ static unsigned long _pa(unsigned long addr, unsigned long size, enum populate_m
  
- 	mapped = devm_ioremap(&pdev->dev, res->start + offset,
- 			      resource_size(res) - offset);
--	if (IS_ERR(mapped))
-+	if (!mapped) {
- 		dev_err(&pdev->dev, "Failed to map resource: %s\n", res_name);
-+		return ERR_PTR(-ENOMEM);
+ static bool large_allowed(enum populate_mode mode)
+ {
+-	return (mode == POPULATE_DIRECT) || (mode == POPULATE_IDENTITY) || (mode == POPULATE_KERNEL);
++	switch (mode) {
++	case POPULATE_DIRECT:
++	case POPULATE_IDENTITY:
++	case POPULATE_KERNEL:
++#ifdef CONFIG_KASAN
++	case POPULATE_KASAN_MAP_SHADOW:
++#endif
++		return true;
++	default:
++		return false;
 +	}
- 
- 	return mapped;
  }
+ 
+ static bool can_large_pud(pud_t *pu_dir, unsigned long addr, unsigned long end,
 -- 
 2.39.5
 
