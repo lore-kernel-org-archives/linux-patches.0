@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC08F1519A9;
-	Wed,  5 Feb 2025 15:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED3A15EFA1;
+	Wed,  5 Feb 2025 15:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767616; cv=none; b=rQgkm3yeWkuzuAmEdUlBV6uWq/E6/zViJAtzmHlZS8AgH+QqmSsvIm8CsgC8hMjVF2VyXF8zDulaKcufYYz8BbpqlS4wWv4sYEk1nXTgq3q+C1gKVyWqHBwRvXu3FLkFhXSHuZsY+OLPrZGD6wOzKc5r5CLebngA2ABx2uAzdv0=
+	t=1738767620; cv=none; b=aszNRIMMLgM3l3+8fZYTzdofKHr3MDghKPIYVRPy3L9SgUmt3ABMv0vNzMSFuQ9A4tM7TZPmcWRkJlkm3dqcSOdN2aDUhgoG097EufPwe6gKjsV9YkUHBTglupwhW8WsS4QfW2fPfSRQC2utDPbpcW5m0nlC78NP9IuNf43d2mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767616; c=relaxed/simple;
-	bh=d8Su/k7jS+F5wqJELmLDsHVy9+mfegHLJ9fdu53Fpi0=;
+	s=arc-20240116; t=1738767620; c=relaxed/simple;
+	bh=Rl3rzVkGtbAHOcf/4fezL1kIuBq03u9riR94VDtw6Go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Emk3YE6pfDPS+VxsfsL7yTIWnWYrU1WX2VYmcvwg+2CIeB+5sg2TclWWlVXOg8Zw7TEpM5uNko5L1loWOyX/6ljIJKn62hrZuH0ouqi/qP3qCUz8+UYrL85xaCq/HVnyfVDpFqMtdWenAjeAOOhLeuB62K287rJe+L8T5pXP//c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjUKvxgm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CapYOt7CToZjRKnIZT9W6Ze3cbKTPVd9g4DsqUyqnZ2YoN7QZFJv0XOQllN+1fwWLpBz0K36wgM0tP49xNrMV1x029bIgauabfTX2LhrbUKZvYbeB6NyxPCe2EYWQqWyodT5+34Rxggw/VW6Fyrkpam5KTWRTJ+uBoi/vNTcLSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avZ2pV0H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjUKvxgm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526AAC4CED1;
-	Wed,  5 Feb 2025 15:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avZ2pV0H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17CCC4CED1;
+	Wed,  5 Feb 2025 15:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767616;
-	bh=d8Su/k7jS+F5wqJELmLDsHVy9+mfegHLJ9fdu53Fpi0=;
+	s=korg; t=1738767620;
+	bh=Rl3rzVkGtbAHOcf/4fezL1kIuBq03u9riR94VDtw6Go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vjUKvxgmjgW8wtt4Non8Sra3yo8E0/XGtoAfU2YjyGr6jag9VXYGABH/2czxeb54l
-	 YqjoH9niE3mkEqlk+fvGifcLhgG45eXeL4MkWQFo9DvD6QB+ELUjfuf4EL7IYnYho9
-	 FrMGohb6XN5GC82dW0ww7maFa3n8FTvQWHKpCL4g=
+	b=avZ2pV0H+ShUdJ4Uq0bFehVcl9/TEMJVamZoMjpdLWdelb26AEeqdhWJ/ASOJdhgL
+	 lo29P5C88q6arNoETryLGjlcN78r3AsVEWXdiW24/XBBCmjF4V+EqE27SZUG4vE64N
+	 P9By94otXE4Inbp1LxWlQU9NDFpo4c3m2EQkSAx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Artemy Kovalyov <artemyko@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Krishneil Singh <krishneil.k.singh@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 429/623] RDMA/mlx5: Fix indirect mkey ODP page count
-Date: Wed,  5 Feb 2025 14:42:51 +0100
-Message-ID: <20250205134512.635331577@linuxfoundation.org>
+Subject: [PATCH 6.12 483/590] idpf: fix transaction timeouts on reset
+Date: Wed,  5 Feb 2025 14:43:58 +0100
+Message-ID: <20250205134513.741031263@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,150 +50,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Guralnik <michaelgur@nvidia.com>
+From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-[ Upstream commit 235f238402194a78ac5fb882a46717eac817e5d1 ]
+[ Upstream commit 137da75ba72593598898a4e79da34f4b2da5d151 ]
 
-Restrict the check for the number of pages handled during an ODP page
-fault to direct mkeys.
-Perform the check right after handling the page fault and don't
-propagate the number of handled pages to callers.
+Restore the call to idpf_vc_xn_shutdown() at the beginning of
+idpf_vc_core_deinit() provided the function is not called on remove.
+In the reset path the mailbox is destroyed, leading to all transactions
+timing out.
 
-Indirect mkeys and their associated direct mkeys can have different
-start addresses. As a result, the calculation of the number of pages to
-handle for an indirect mkey may not match the actual page fault
-handling done on the direct mkey.
-
-For example:
-A 4K sized page fault on a KSM mkey that has a start address that is not
-aligned to a page will result a calculation that assumes the number of
-pages required to handle are 2.
-While the underlying MTT might be aligned will require fetching only a
-single page.
-Thus, do the calculation and compare number of pages handled only per
-direct mkey.
-
-Fixes: db570d7deafb ("IB/mlx5: Add ODP support to MW")
-Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
-Reviewed-by: Artemy Kovalyov <artemyko@nvidia.com>
-Link: https://patch.msgid.link/86c483d9e75ce8fe14e9ff85b62df72b779f8ab1.1736187990.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 09d0fb5cb30e ("idpf: deinit virtchnl transaction manager after vport and vectors")
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Krishneil Singh <krishneil.k.singh@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/odp.c | 32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
-index 4b37446758fd4..69ca2de33a80e 100644
---- a/drivers/infiniband/hw/mlx5/odp.c
-+++ b/drivers/infiniband/hw/mlx5/odp.c
-@@ -944,8 +944,7 @@ static struct mlx5_ib_mkey *find_odp_mkey(struct mlx5_ib_dev *dev, u32 key)
- /*
-  * Handle a single data segment in a page-fault WQE or RDMA region.
-  *
-- * Returns number of OS pages retrieved on success. The caller may continue to
-- * the next data segment.
-+ * Returns zero on success. The caller may continue to the next data segment.
-  * Can return the following error codes:
-  * -EAGAIN to designate a temporary error. The caller will abort handling the
-  *  page fault and resolve it.
-@@ -958,7 +957,7 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
- 					 u32 *bytes_committed,
- 					 u32 *bytes_mapped)
- {
--	int npages = 0, ret, i, outlen, cur_outlen = 0, depth = 0;
-+	int ret, i, outlen, cur_outlen = 0, depth = 0, pages_in_range;
- 	struct pf_frame *head = NULL, *frame;
- 	struct mlx5_ib_mkey *mmkey;
- 	struct mlx5_ib_mr *mr;
-@@ -993,13 +992,20 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
- 	case MLX5_MKEY_MR:
- 		mr = container_of(mmkey, struct mlx5_ib_mr, mmkey);
- 
-+		pages_in_range = (ALIGN(io_virt + bcnt, PAGE_SIZE) -
-+				  (io_virt & PAGE_MASK)) >>
-+				 PAGE_SHIFT;
- 		ret = pagefault_mr(mr, io_virt, bcnt, bytes_mapped, 0, false);
- 		if (ret < 0)
- 			goto end;
- 
- 		mlx5_update_odp_stats(mr, faults, ret);
- 
--		npages += ret;
-+		if (ret < pages_in_range) {
-+			ret = -EFAULT;
-+			goto end;
-+		}
-+
- 		ret = 0;
- 		break;
- 
-@@ -1090,7 +1096,7 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
- 	kfree(out);
- 
- 	*bytes_committed = 0;
--	return ret ? ret : npages;
-+	return ret;
- }
- 
- /*
-@@ -1109,8 +1115,7 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
-  *                   the committed bytes).
-  * @receive_queue: receive WQE end of sg list
-  *
-- * Returns the number of pages loaded if positive, zero for an empty WQE, or a
-- * negative error code.
-+ * Returns zero for success or a negative error code.
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+index d46c95f91b0d8..7639d520b8063 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+@@ -3077,12 +3077,21 @@ int idpf_vc_core_init(struct idpf_adapter *adapter)
   */
- static int pagefault_data_segments(struct mlx5_ib_dev *dev,
- 				   struct mlx5_pagefault *pfault,
-@@ -1118,7 +1123,7 @@ static int pagefault_data_segments(struct mlx5_ib_dev *dev,
- 				   void *wqe_end, u32 *bytes_mapped,
- 				   u32 *total_wqe_bytes, bool receive_queue)
+ void idpf_vc_core_deinit(struct idpf_adapter *adapter)
  {
--	int ret = 0, npages = 0;
-+	int ret = 0;
- 	u64 io_virt;
- 	__be32 key;
- 	u32 byte_count;
-@@ -1175,10 +1180,9 @@ static int pagefault_data_segments(struct mlx5_ib_dev *dev,
- 						    bytes_mapped);
- 		if (ret < 0)
- 			break;
--		npages += ret;
- 	}
++	bool remove_in_prog;
++
+ 	if (!test_bit(IDPF_VC_CORE_INIT, adapter->flags))
+ 		return;
  
--	return ret < 0 ? ret : npages;
-+	return ret;
- }
++	/* Avoid transaction timeouts when called during reset */
++	remove_in_prog = test_bit(IDPF_REMOVE_IN_PROG, adapter->flags);
++	if (!remove_in_prog)
++		idpf_vc_xn_shutdown(adapter->vcxn_mngr);
++
+ 	idpf_deinit_task(adapter);
+ 	idpf_intr_rel(adapter);
+-	idpf_vc_xn_shutdown(adapter->vcxn_mngr);
++
++	if (remove_in_prog)
++		idpf_vc_xn_shutdown(adapter->vcxn_mngr);
  
- /*
-@@ -1414,12 +1418,6 @@ static void mlx5_ib_mr_wqe_pfault_handler(struct mlx5_ib_dev *dev,
- 	free_page((unsigned long)wqe_start);
- }
- 
--static int pages_in_range(u64 address, u32 length)
--{
--	return (ALIGN(address + length, PAGE_SIZE) -
--		(address & PAGE_MASK)) >> PAGE_SHIFT;
--}
--
- static void mlx5_ib_mr_rdma_pfault_handler(struct mlx5_ib_dev *dev,
- 					   struct mlx5_pagefault *pfault)
- {
-@@ -1458,7 +1456,7 @@ static void mlx5_ib_mr_rdma_pfault_handler(struct mlx5_ib_dev *dev,
- 	if (ret == -EAGAIN) {
- 		/* We're racing with an invalidation, don't prefetch */
- 		prefetch_activated = 0;
--	} else if (ret < 0 || pages_in_range(address, length) > ret) {
-+	} else if (ret < 0) {
- 		mlx5_ib_page_fault_resume(dev, pfault, 1);
- 		if (ret != -ENOENT)
- 			mlx5_ib_dbg(dev, "PAGE FAULT error %d. QP 0x%llx, type: 0x%x\n",
+ 	cancel_delayed_work_sync(&adapter->serv_task);
+ 	cancel_delayed_work_sync(&adapter->mbx_task);
 -- 
 2.39.5
 
