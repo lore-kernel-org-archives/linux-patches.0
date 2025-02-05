@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4B38634E;
-	Wed,  5 Feb 2025 14:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9348F14A088;
+	Wed,  5 Feb 2025 14:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765590; cv=none; b=olm3uN4hsV1OObQaG4JuG92RRM0XzjcZHQbSgm9YxpKBroTMM5fTVVX5SzEMUH6NnT6kd+vLTKH3LYmKOBRyRO55R3G0A84AOy3g5cDncrae9oAOCdBrmif1cnaVLIagXYyfEnR6yDtfVAgILxgwL56RJFEqn3EcddjAPdu6JGU=
+	t=1738765593; cv=none; b=M2pdEQRwwvDECdTnc1PFs3Nrz06BWG8eGVRTGZGNPCELq7vBiDSKdgbUJf2qyD8Me0vJuxNmt4zOVsXKpZveSxzwvd2spwsuUw04DqYkLNcEbPaUeRcldo9wN5pEDix7jSxF8kUPnaNhP47YVp4X5OpWKrc0F2qfHR61ykmlZio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765590; c=relaxed/simple;
-	bh=vLeS9xZcLfPcfYEJomkDME8vIFD8Zjlo/nOlm93+2l8=;
+	s=arc-20240116; t=1738765593; c=relaxed/simple;
+	bh=41meWPEb3gazLUKh0/Ymaizl3H8HvI1FDLhM6Rq8zbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eV5a4Rzt6DYSrHZaEqV4eVytYjEVW16QZLH+TA6H4iSwbOgvav/HIECJGTnk59ORQeF59Zr1hofGdhWq39O+SUmALa+VbjfWCpyuHQilFd2L9EludrfRoIfQp76BpcvzmtjmayBxckQyGGUqbavdNV0b+cJozB3JXFDDlJxETA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEa6XDnC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OAXBJvoLLHwxvrndzvhMFY5E5NPskaArlmGaA31GbwJp22UccCU6pL1hxu8Yh73WuFjR+hHm6y1OY38piRy2z6SSH6PHGhSbJtca/7Lsxwy9GJYWgT0I2M68npGwL0+GYzfNLlAWljADTCuzX8DwUNh1/AAdBDJcwUhTtYhOPoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpYgbDIO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEa6XDnC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 053FEC4CED1;
-	Wed,  5 Feb 2025 14:26:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpYgbDIO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F02C4CED1;
+	Wed,  5 Feb 2025 14:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765590;
-	bh=vLeS9xZcLfPcfYEJomkDME8vIFD8Zjlo/nOlm93+2l8=;
+	s=korg; t=1738765593;
+	bh=41meWPEb3gazLUKh0/Ymaizl3H8HvI1FDLhM6Rq8zbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JEa6XDnC3h2SgSTcA0oF3kQiTwzfZuMSTJOMIrzFZoJNcTwIP79EI55zsNuf7dvfN
-	 P0i9dRMfC+Ifnc3EVqUNQv3Qd+Qwd1oGrzi6+EhaPPkSXY3Zr3dpGTTwDfegWn8bre
-	 e4OjRBDdhLJg2XGknN1YQxOt7Z649rsSwGnOCSeg=
+	b=TpYgbDIOYO4ft+66pPgJ4SNrOGwUSdjrxKqG9TnYf3/HfWJsb/qBlic/M588FsfEO
+	 shdbk93E04VmRdqvUSWA90DJPDNYqk72oiPLwgy3+hxiISMh2+MpKwW+3PEiKgT1v8
+	 5ON2YqCRCQ98gd/h4hgtYfFosMvAgaROy3mGtXLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	syzbot+ffba8e636870dac0e0c0@syzkaller.appspotmail.com,
-	Sean Young <sean@mess.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 281/393] media: rc: iguanair: handle timeouts
-Date: Wed,  5 Feb 2025 14:43:20 +0100
-Message-ID: <20250205134431.060478165@linuxfoundation.org>
+Subject: [PATCH 6.13 196/623] wifi: mt76: mt7925: Update mt792x_rx_get_wcid for per-link STA
+Date: Wed,  5 Feb 2025 14:38:58 +0100
+Message-ID: <20250205134503.732744744@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,50 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-[ Upstream commit b98d5000c50544f14bacb248c34e5219fbe81287 ]
+[ Upstream commit 90c10286b176421068b136da51ed83059a68e322 ]
 
-In case of a timeout the IO must be cancelled or
-the next IO using the URB will fail and/or overwrite
-an operational URB.
+Update mt792x_rx_get_wcid to support per-link STA.
 
-The automatic bisection fails because it arrives
-at a commit that correctly lets the test case run
-without an error.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Fixes: e99a7cfe93fd ("[media] iguanair: reuse existing urb callback for command responses")
-Reported-by: syzbot+ffba8e636870dac0e0c0@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/66f5cc9a.050a0220.46d20.0004.GAE@google.com/
-Tested-by: syzbot+ffba8e636870dac0e0c0@syzkaller.appspotmail.com
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20241211011926.5002-11-sean.wang@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/iguanair.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt792x_mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/iguanair.c b/drivers/media/rc/iguanair.c
-index 276bf3c8a8cb4..8af94246e5916 100644
---- a/drivers/media/rc/iguanair.c
-+++ b/drivers/media/rc/iguanair.c
-@@ -194,8 +194,10 @@ static int iguanair_send(struct iguanair *ir, unsigned size)
- 	if (rc)
- 		return rc;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
+index 106273935b267..05978d9c7b916 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
+@@ -153,7 +153,7 @@ struct mt76_wcid *mt792x_rx_get_wcid(struct mt792x_dev *dev, u16 idx,
+ 		return NULL;
  
--	if (wait_for_completion_timeout(&ir->completion, TIMEOUT) == 0)
-+	if (wait_for_completion_timeout(&ir->completion, TIMEOUT) == 0) {
-+		usb_kill_urb(ir->urb_out);
- 		return -ETIMEDOUT;
-+	}
+ 	link = container_of(wcid, struct mt792x_link_sta, wcid);
+-	sta = container_of(link, struct mt792x_sta, deflink);
++	sta = link->sta;
+ 	if (!sta->vif)
+ 		return NULL;
  
- 	return rc;
- }
 -- 
 2.39.5
 
