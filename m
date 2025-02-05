@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B371A8F63;
-	Wed,  5 Feb 2025 15:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1510F1607B7;
+	Wed,  5 Feb 2025 15:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767666; cv=none; b=bw8MdBTkjUVFaTT0lMNne9QvjKXYIxHEZ225EVYZ8ua72JJprOa42F0tCvFRdRuSuZJAOXitKZg7w2e9uodwlRzdKlBxzQpvX7unFNDSX4jzHlJsDdkktBCbWdGMByU8N4qsVfsbOMnyK40XRVijhOTsnGatVA/xvAMRgFs/WcI=
+	t=1738767670; cv=none; b=a4/LfzNHtdsNAvw1KojroeCMZGEx6uKnkBNIMlKqOwDdVkai3RSaf2++vYyWgsqzwz6/yLK2UT5a5IjMM/D43cSYHYT6U6VwX5MEDs6xBLyhB2/K/llRB4k7ulcDI8wS2Vd3jdg5P8BxtufVntfU9aKZ87MYUsYvX7j3wIbtjFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767666; c=relaxed/simple;
-	bh=j3aOCCOhhjcgtXUZmJWa+DDKluWnIR7dDaFzE+W/0oc=;
+	s=arc-20240116; t=1738767670; c=relaxed/simple;
+	bh=FXXfF7HB3iF+5cvdEmhl+dqXmPmUENDPwFtNfziW6kw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vuf1277zgvL1Z16ymjEIq12GN/p48GSrH2dKaDV4s/jkHadb2BZA2+ua5H0M3eguvt2YgeoFNkqpt6T1jV12+9jfw6iK55JeVBJ+6emN1Uda1Dml2wZTsQTjU7B5RMokOf50xI+7c8H5OlYuhUFN+UK8PwtOujGtDPHgmUsbWkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYCNrrx0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i1F7o8o+LYCUiBIsI1MoYvYXT7QC+yAbDKAEImcb0l7cdey9G03TQkVlWOcQ9W9b9rkv1v6f1SCRmCumW1/XRAgCmDczLhA6GlvU6uSPh1TaGWlSt3ZbUzz148KfRbs5BK2Pxi5Tu3pfBYj8ZFXpxpC92qQCzlQTvjJupwKWdXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvAd6qdd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYCNrrx0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DECC4CED6;
-	Wed,  5 Feb 2025 15:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvAd6qdd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AEF8C4CED1;
+	Wed,  5 Feb 2025 15:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767666;
-	bh=j3aOCCOhhjcgtXUZmJWa+DDKluWnIR7dDaFzE+W/0oc=;
+	s=korg; t=1738767670;
+	bh=FXXfF7HB3iF+5cvdEmhl+dqXmPmUENDPwFtNfziW6kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oYCNrrx0xRWYvLlTlM4Y/ZRKUiNUnlcCjy8Z5lwcj9S3KD1UUqFFw1Ta8avT34jtI
-	 dky7MJJhjvV0RbljYVHcrH5J5qj1qKqdGG4V005K0kfPAFfmFyB4csePQ0lwQIjyAk
-	 ZHTxv2OkgJj+XusB/Jucd4saEIAg9iZmHDJsAnSU=
+	b=LvAd6qddrXy5p+nxPE9PobPkBDhuS9bEeTSliiXBLD84mGEtUaqMLtTIqfE0KK5/x
+	 FMJGKOMLeEgVsYv6H1+qoZNBXEyCQkEUhxDl4tE4BZaKlAAbUrojkqpT6GUybjR/Qk
+	 pAmfCH2lvsZ9LQhzLQasPilh5lXSoOK2VKAPhKHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+85992ace37d5b7b51635@syzkaller.appspotmail.com>,
-	Qasim Ijaz <qasdev00@gmail.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 436/623] iommufd/iova_bitmap: Fix shift-out-of-bounds in iova_bitmap_offset_to_index()
-Date: Wed,  5 Feb 2025 14:42:58 +0100
-Message-ID: <20250205134512.898181182@linuxfoundation.org>
+Subject: [PATCH 6.12 490/590] iavf: allow changing VLAN state without calling PF
+Date: Wed,  5 Feb 2025 14:44:05 +0100
+Message-ID: <20250205134514.016638132@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,50 +49,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qasim Ijaz <qasdev00@gmail.com>
+From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 
-[ Upstream commit e24c1551059268b37f6f40639883eafb281b8b9c ]
+[ Upstream commit ee7d79433d783346430ee32f28c9df44a88b3bb6 ]
 
-Resolve a UBSAN shift-out-of-bounds issue in iova_bitmap_offset_to_index()
-where shifting the constant "1" (of type int) by bitmap->mapped.pgshift
-(an unsigned long value) could result in undefined behavior.
+First case:
+> ip l a l $VF name vlanx type vlan id 100
+> ip l d vlanx
+> ip l a l $VF name vlanx type vlan id 100
 
-The constant "1" defaults to a 32-bit "int", and when "pgshift" exceeds
-31 (e.g., pgshift = 63) the shift operation overflows, as the result
-cannot be represented in a 32-bit type.
+As workqueue can be execute after sometime, there is a window to have
+call trace like that:
+- iavf_del_vlan
+- iavf_add_vlan
+- iavf_del_vlans (wq)
 
-To resolve this, the constant is updated to "1UL", promoting it to an
-unsigned long type to match the operand's type.
+It means that our VLAN 100 will change the state from IAVF_VLAN_ACTIVE
+to IAVF_VLAN_REMOVE (iavf_del_vlan). After that in iavf_add_vlan state
+won't be changed because VLAN 100 is on the filter list. The final
+result is that the VLAN 100 filter isn't added in hardware (no
+iavf_add_vlans call).
 
-Fixes: 58ccf0190d19 ("vfio: Add an IOVA bitmap support")
-Link: https://patch.msgid.link/r/20250113223820.10713-1-qasdev00@gmail.com
-Reported-by: syzbot <syzbot+85992ace37d5b7b51635@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=85992ace37d5b7b51635
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+To fix that change the state if the filter wasn't removed yet directly
+to active. It is save as IAVF_VLAN_REMOVE means that virtchnl message
+wasn't sent yet.
+
+Second case:
+> ip l a l $VF name vlanx type vlan id 100
+Any type of VF reset ex. change trust
+> ip l s $PF vf $VF_NUM trust on
+> ip l d vlanx
+> ip l a l $VF name vlanx type vlan id 100
+
+In case of reset iavf driver is responsible for readding all filters
+that are being used. To do that all VLAN filters state are changed to
+IAVF_VLAN_ADD. Here is even longer window for changing VLAN state from
+kernel side, as workqueue isn't called immediately. We can have call
+trace like that:
+
+- changing to IAVF_VLAN_ADD (after reset)
+- iavf_del_vlan (called from kernel ops)
+- iavf_del_vlans (wq)
+
+Not exsisitng VLAN filters will be removed from hardware. It isn't a
+bug, ice driver will handle it fine. However, we can have call trace
+like that:
+
+- changing to IAVF_VLAN_ADD (after reset)
+- iavf_del_vlan (called from kernel ops)
+- iavf_add_vlan (called from kernel ops)
+- iavf_del_vlans (wq)
+
+With fix for previous case we end up with no VLAN filters in hardware.
+We have to remove VLAN filters if the state is IAVF_VLAN_ADD and delete
+VLAN was called. It is save as IAVF_VLAN_ADD means that virtchnl message
+wasn't sent yet.
+
+Fixes: 0c0da0e95105 ("iavf: refactor VLAN filter states")
+Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/iova_bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/iova_bitmap.c b/drivers/iommu/iommufd/iova_bitmap.c
-index ab665cf38ef4a..39a86a4a1d3af 100644
---- a/drivers/iommu/iommufd/iova_bitmap.c
-+++ b/drivers/iommu/iommufd/iova_bitmap.c
-@@ -130,7 +130,7 @@ struct iova_bitmap {
- static unsigned long iova_bitmap_offset_to_index(struct iova_bitmap *bitmap,
- 						 unsigned long iova)
- {
--	unsigned long pgsize = 1 << bitmap->mapped.pgshift;
-+	unsigned long pgsize = 1UL << bitmap->mapped.pgshift;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index f782402cd7898..5516795cc250a 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -773,6 +773,11 @@ iavf_vlan_filter *iavf_add_vlan(struct iavf_adapter *adapter,
+ 		f->state = IAVF_VLAN_ADD;
+ 		adapter->num_vlan_filters++;
+ 		iavf_schedule_aq_request(adapter, IAVF_FLAG_AQ_ADD_VLAN_FILTER);
++	} else if (f->state == IAVF_VLAN_REMOVE) {
++		/* IAVF_VLAN_REMOVE means that VLAN wasn't yet removed.
++		 * We can safely only change the state here.
++		 */
++		f->state = IAVF_VLAN_ACTIVE;
+ 	}
  
- 	return iova / (BITS_PER_TYPE(*bitmap->bitmap) * pgsize);
- }
+ clearout:
+@@ -793,8 +798,18 @@ static void iavf_del_vlan(struct iavf_adapter *adapter, struct iavf_vlan vlan)
+ 
+ 	f = iavf_find_vlan(adapter, vlan);
+ 	if (f) {
+-		f->state = IAVF_VLAN_REMOVE;
+-		iavf_schedule_aq_request(adapter, IAVF_FLAG_AQ_DEL_VLAN_FILTER);
++		/* IAVF_ADD_VLAN means that VLAN wasn't even added yet.
++		 * Remove it from the list.
++		 */
++		if (f->state == IAVF_VLAN_ADD) {
++			list_del(&f->list);
++			kfree(f);
++			adapter->num_vlan_filters--;
++		} else {
++			f->state = IAVF_VLAN_REMOVE;
++			iavf_schedule_aq_request(adapter,
++						 IAVF_FLAG_AQ_DEL_VLAN_FILTER);
++		}
+ 	}
+ 
+ 	spin_unlock_bh(&adapter->mac_vlan_list_lock);
 -- 
 2.39.5
 
