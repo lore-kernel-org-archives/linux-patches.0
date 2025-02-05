@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D38118952C;
-	Wed,  5 Feb 2025 14:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8965D1891AA;
+	Wed,  5 Feb 2025 14:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767401; cv=none; b=MmvJD+lRDgkLZagoLwjBwbo2oinowJxqAVHAdS7pJTZ1n5olE07TAkH4pLNdR20d3oqit2NO1g7Q2Os+ZapT6pqFSYUMLrKy4OptWLSAE2vIgsYYRit+x89RCTxHgfKImBj3/1SUqU8FbzPqHrQlHScDgsIo55I4+ca2LzAuf6k=
+	t=1738767404; cv=none; b=IH9tcyLEPke1alewZjgDMeDLLQhBbDhnBolEIgcm2g2bjz65lseSpTokdHbIUNTb5a4p5PTwhXbKlrU/mTecZRuacroDEqTLmFU1OkixpYj304eGTec1I9G/pCDZXHW+AlAaRYB1B4Y8bHSuHzZQAH4jnzr5RWZYax5Vuum7N0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767401; c=relaxed/simple;
-	bh=RMdDh5FgUuS+EtpqtLjvpEqpyKVsd9MKkdQgIelj7Gc=;
+	s=arc-20240116; t=1738767404; c=relaxed/simple;
+	bh=Cq5tJb+9GA1wNIKdi1g7JjvjRAQ29Rh1kYhn4fFf7ZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TlnYh3stPfCIQysvv+DkcSQ78iobn72BN5sPme8xKBuk269Npnx02KaoKNQ9Xa1IdGX/e23FN25T1TnKdjE/F/htoh3lTsaHJ0uLUlcVIi3qLRNRn/keO5h/9fMw3uIlSQjwPSMGybp4XVFxK39jm385EzMrduqQyjHg1LLXC7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzagkJQA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jlkBIf0kW2ieO6fdJvs4iPmsXayqRIQqPrbkWPKfzkKrffUdhKi9u15fwRTe/61CJnOKWbeOHlCdma2QO/KxCoGpG/vihOs1QuX6hmf9+qMaAu/V47c2T1kImmC1AeL+jPAQ5MunnhkLdj+L9qyjo+b4mbBAEXq0yCCwB/YK55M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8lxk18D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzagkJQA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908F8C4CED1;
-	Wed,  5 Feb 2025 14:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8lxk18D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB198C4CED1;
+	Wed,  5 Feb 2025 14:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767401;
-	bh=RMdDh5FgUuS+EtpqtLjvpEqpyKVsd9MKkdQgIelj7Gc=;
+	s=korg; t=1738767404;
+	bh=Cq5tJb+9GA1wNIKdi1g7JjvjRAQ29Rh1kYhn4fFf7ZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FzagkJQAxa1SeosyzyIq9ULPvz4Wm1NKh6WCCmIV5bPmADeBP3be5VcIpbhzwKvH+
-	 DjO53cdQK2th9NEd7W9ojHeBjGp+pGwIIuHWOl0z4eQl/MlTrHRUiusZjh3jM7u8MG
-	 7oddADKjQFjv9dYGzf8vhNGcVgy3wwbH1peCVAk0=
+	b=U8lxk18D8HCHyYg1hI5dwPguknU4nMcBlu15Lrbr0eAFz+iR5fo4WY252EQsoJ5qL
+	 7QggoHxGuKHemtBDRCxqT1HMVL9ZJNXgnPRLAirtdfUd2XPib4meoN8Ir7mHImoh/n
+	 qza0KudwQHgQ6t5Pxpa8v4ghPg8S02dFst6UUGp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Jinpu Wang <jinpu.wang@ionos.com>,
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 452/590] nfs: fix incorrect error handling in LOCALIO
-Date: Wed,  5 Feb 2025 14:43:27 +0100
-Message-ID: <20250205134512.558375734@linuxfoundation.org>
+Subject: [PATCH 6.13 400/623] RDMA/rtrs: Add missing deinit() call
+Date: Wed,  5 Feb 2025 14:42:22 +0100
+Message-ID: <20250205134511.524788735@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,245 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-[ Upstream commit ead11ac50ad4b8ef1b64806e962ea984862d96ad ]
+[ Upstream commit 81468c4058a62e84e475433b83b3edc613294f5e ]
 
-nfs4_stat_to_errno() expects a NFSv4 error code as an argument and
-returns a POSIX errno.
+A warning is triggered when repeatedly connecting and disconnecting the
+rnbd:
+ list_add corruption. prev->next should be next (ffff88800b13e480), but was ffff88801ecd1338. (prev=ffff88801ecd1340).
+ WARNING: CPU: 1 PID: 36562 at lib/list_debug.c:32 __list_add_valid_or_report+0x7f/0xa0
+ Workqueue: ib_cm cm_work_handler [ib_cm]
+ RIP: 0010:__list_add_valid_or_report+0x7f/0xa0
+  ? __list_add_valid_or_report+0x7f/0xa0
+  ib_register_event_handler+0x65/0x93 [ib_core]
+  rtrs_srv_ib_dev_init+0x29/0x30 [rtrs_server]
+  rtrs_ib_dev_find_or_add+0x124/0x1d0 [rtrs_core]
+  __alloc_path+0x46c/0x680 [rtrs_server]
+  ? rtrs_rdma_connect+0xa6/0x2d0 [rtrs_server]
+  ? rcu_is_watching+0xd/0x40
+  ? __mutex_lock+0x312/0xcf0
+  ? get_or_create_srv+0xad/0x310 [rtrs_server]
+  ? rtrs_rdma_connect+0xa6/0x2d0 [rtrs_server]
+  rtrs_rdma_connect+0x23c/0x2d0 [rtrs_server]
+  ? __lock_release+0x1b1/0x2d0
+  cma_cm_event_handler+0x4a/0x1a0 [rdma_cm]
+  cma_ib_req_handler+0x3a0/0x7e0 [rdma_cm]
+  cm_process_work+0x28/0x1a0 [ib_cm]
+  ? _raw_spin_unlock_irq+0x2f/0x50
+  cm_req_handler+0x618/0xa60 [ib_cm]
+  cm_work_handler+0x71/0x520 [ib_cm]
 
-The problem is LOCALIO is passing nfs4_stat_to_errno() the POSIX errno
-return values from filp->f_op->read_iter(), filp->f_op->write_iter()
-and vfs_fsync_range().
+Commit 667db86bcbe8 ("RDMA/rtrs: Register ib event handler") introduced a
+new element .deinit but never used it at all. Fix it by invoking the
+`deinit()` to appropriately unregister the IB event handler.
 
-So the POSIX errno that nfs_local_pgio_done() and
-nfs_local_commit_done() are passing to nfs4_stat_to_errno() are
-failing to match any NFSv4 error code, which results in
-nfs4_stat_to_errno() defaulting to returning -EREMOTEIO. This causes
-assertions in upper layers due to -EREMOTEIO not being a valid NFSv4
-error code.
-
-Fix this by updating nfs_local_pgio_done() and nfs_local_commit_done()
-to use the new nfs_localio_errno_to_nfs4_stat() to map a POSIX errno
-to an NFSv4 error code.
-
-Care was taken to factor out nfs4_errtbl_common[] to avoid duplicating
-the same NFS error to errno table. nfs4_errtbl_common[] is checked
-first by both nfs4_stat_to_errno and nfs_localio_errno_to_nfs4_stat
-before they check their own more specialized tables (nfs4_errtbl[] and
-nfs4_errtbl_localio[] respectively).
-
-While auditing the associated error mapping tables, the (ab)use of -1
-for the last table entry was removed in favor of using ARRAY_SIZE to
-iterate the nfs_errtbl[] and nfs4_errtbl[]. And 'errno_NFSERR_IO' was
-removed because it caused needless obfuscation.
-
-Fixes: 70ba381e1a431 ("nfs: add LOCALIO support")
-Reported-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Cc: Jinpu Wang <jinpu.wang@ionos.com>
+Fixes: 667db86bcbe8 ("RDMA/rtrs: Register ib event handler")
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Link: https://patch.msgid.link/20250106004516.16611-1-lizhijian@fujitsu.com
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/localio.c           |  4 +-
- fs/nfs_common/common.c     | 89 +++++++++++++++++++++++++++++++++-----
- include/linux/nfs_common.h |  3 +-
- 3 files changed, 82 insertions(+), 14 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index 637528e6368ef..21b2b38fae9f3 100644
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -331,7 +331,7 @@ nfs_local_pgio_done(struct nfs_pgio_header *hdr, long status)
- 		hdr->res.op_status = NFS4_OK;
- 		hdr->task.tk_status = 0;
- 	} else {
--		hdr->res.op_status = nfs4_stat_to_errno(status);
-+		hdr->res.op_status = nfs_localio_errno_to_nfs4_stat(status);
- 		hdr->task.tk_status = status;
- 	}
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs.c b/drivers/infiniband/ulp/rtrs/rtrs.c
+index 4e17d546d4ccf..bf38ac6f87c47 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs.c
+@@ -584,6 +584,9 @@ static void dev_free(struct kref *ref)
+ 	list_del(&dev->entry);
+ 	mutex_unlock(&pool->mutex);
+ 
++	if (pool->ops && pool->ops->deinit)
++		pool->ops->deinit(dev);
++
+ 	ib_dealloc_pd(dev->ib_pd);
+ 	kfree(dev);
  }
-@@ -669,7 +669,7 @@ nfs_local_commit_done(struct nfs_commit_data *data, int status)
- 		data->task.tk_status = 0;
- 	} else {
- 		nfs_reset_boot_verifier(data->inode);
--		data->res.op_status = nfs4_stat_to_errno(status);
-+		data->res.op_status = nfs_localio_errno_to_nfs4_stat(status);
- 		data->task.tk_status = status;
- 	}
- }
-diff --git a/fs/nfs_common/common.c b/fs/nfs_common/common.c
-index 34a115176f97e..af09aed09fd27 100644
---- a/fs/nfs_common/common.c
-+++ b/fs/nfs_common/common.c
-@@ -15,7 +15,7 @@ static const struct {
- 	{ NFS_OK,		0		},
- 	{ NFSERR_PERM,		-EPERM		},
- 	{ NFSERR_NOENT,		-ENOENT		},
--	{ NFSERR_IO,		-errno_NFSERR_IO},
-+	{ NFSERR_IO,		-EIO		},
- 	{ NFSERR_NXIO,		-ENXIO		},
- /*	{ NFSERR_EAGAIN,	-EAGAIN		}, */
- 	{ NFSERR_ACCES,		-EACCES		},
-@@ -45,7 +45,6 @@ static const struct {
- 	{ NFSERR_SERVERFAULT,	-EREMOTEIO	},
- 	{ NFSERR_BADTYPE,	-EBADTYPE	},
- 	{ NFSERR_JUKEBOX,	-EJUKEBOX	},
--	{ -1,			-EIO		}
- };
- 
- /**
-@@ -59,26 +58,29 @@ int nfs_stat_to_errno(enum nfs_stat status)
- {
- 	int i;
- 
--	for (i = 0; nfs_errtbl[i].stat != -1; i++) {
-+	for (i = 0; i < ARRAY_SIZE(nfs_errtbl); i++) {
- 		if (nfs_errtbl[i].stat == (int)status)
- 			return nfs_errtbl[i].errno;
- 	}
--	return nfs_errtbl[i].errno;
-+	return -EIO;
- }
- EXPORT_SYMBOL_GPL(nfs_stat_to_errno);
- 
- /*
-  * We need to translate between nfs v4 status return values and
-  * the local errno values which may not be the same.
-+ *
-+ * nfs4_errtbl_common[] is used before more specialized mappings
-+ * available in nfs4_errtbl[] or nfs4_errtbl_localio[].
-  */
- static const struct {
- 	int stat;
- 	int errno;
--} nfs4_errtbl[] = {
-+} nfs4_errtbl_common[] = {
- 	{ NFS4_OK,		0		},
- 	{ NFS4ERR_PERM,		-EPERM		},
- 	{ NFS4ERR_NOENT,	-ENOENT		},
--	{ NFS4ERR_IO,		-errno_NFSERR_IO},
-+	{ NFS4ERR_IO,		-EIO		},
- 	{ NFS4ERR_NXIO,		-ENXIO		},
- 	{ NFS4ERR_ACCESS,	-EACCES		},
- 	{ NFS4ERR_EXIST,	-EEXIST		},
-@@ -98,15 +100,20 @@ static const struct {
- 	{ NFS4ERR_BAD_COOKIE,	-EBADCOOKIE	},
- 	{ NFS4ERR_NOTSUPP,	-ENOTSUPP	},
- 	{ NFS4ERR_TOOSMALL,	-ETOOSMALL	},
--	{ NFS4ERR_SERVERFAULT,	-EREMOTEIO	},
- 	{ NFS4ERR_BADTYPE,	-EBADTYPE	},
--	{ NFS4ERR_LOCKED,	-EAGAIN		},
- 	{ NFS4ERR_SYMLINK,	-ELOOP		},
--	{ NFS4ERR_OP_ILLEGAL,	-EOPNOTSUPP	},
- 	{ NFS4ERR_DEADLOCK,	-EDEADLK	},
-+};
-+
-+static const struct {
-+	int stat;
-+	int errno;
-+} nfs4_errtbl[] = {
-+	{ NFS4ERR_SERVERFAULT,	-EREMOTEIO	},
-+	{ NFS4ERR_LOCKED,	-EAGAIN		},
-+	{ NFS4ERR_OP_ILLEGAL,	-EOPNOTSUPP	},
- 	{ NFS4ERR_NOXATTR,	-ENODATA	},
- 	{ NFS4ERR_XATTR2BIG,	-E2BIG		},
--	{ -1,			-EIO		}
- };
- 
- /*
-@@ -116,7 +123,14 @@ static const struct {
- int nfs4_stat_to_errno(int stat)
- {
- 	int i;
--	for (i = 0; nfs4_errtbl[i].stat != -1; i++) {
-+
-+	/* First check nfs4_errtbl_common */
-+	for (i = 0; i < ARRAY_SIZE(nfs4_errtbl_common); i++) {
-+		if (nfs4_errtbl_common[i].stat == stat)
-+			return nfs4_errtbl_common[i].errno;
-+	}
-+	/* Then check nfs4_errtbl */
-+	for (i = 0; i < ARRAY_SIZE(nfs4_errtbl); i++) {
- 		if (nfs4_errtbl[i].stat == stat)
- 			return nfs4_errtbl[i].errno;
- 	}
-@@ -132,3 +146,56 @@ int nfs4_stat_to_errno(int stat)
- 	return -stat;
- }
- EXPORT_SYMBOL_GPL(nfs4_stat_to_errno);
-+
-+/*
-+ * This table is useful for conversion from local errno to NFS error.
-+ * It provides more logically correct mappings for use with LOCALIO
-+ * (which is focused on converting from errno to NFS status).
-+ */
-+static const struct {
-+	int stat;
-+	int errno;
-+} nfs4_errtbl_localio[] = {
-+	/* Map errors differently than nfs4_errtbl */
-+	{ NFS4ERR_IO,		-EREMOTEIO	},
-+	{ NFS4ERR_DELAY,	-EAGAIN		},
-+	{ NFS4ERR_FBIG,		-E2BIG		},
-+	/* Map errors not handled by nfs4_errtbl */
-+	{ NFS4ERR_STALE,	-EBADF		},
-+	{ NFS4ERR_STALE,	-EOPENSTALE	},
-+	{ NFS4ERR_DELAY,	-ETIMEDOUT	},
-+	{ NFS4ERR_DELAY,	-ERESTARTSYS	},
-+	{ NFS4ERR_DELAY,	-ENOMEM		},
-+	{ NFS4ERR_IO,		-ETXTBSY	},
-+	{ NFS4ERR_IO,		-EBUSY		},
-+	{ NFS4ERR_SERVERFAULT,	-ESERVERFAULT	},
-+	{ NFS4ERR_SERVERFAULT,	-ENFILE		},
-+	{ NFS4ERR_IO,		-EUCLEAN	},
-+	{ NFS4ERR_PERM,		-ENOKEY		},
-+};
-+
-+/*
-+ * Convert an errno to an NFS error code for LOCALIO.
-+ */
-+__u32 nfs_localio_errno_to_nfs4_stat(int errno)
-+{
-+	int i;
-+
-+	/* First check nfs4_errtbl_common */
-+	for (i = 0; i < ARRAY_SIZE(nfs4_errtbl_common); i++) {
-+		if (nfs4_errtbl_common[i].errno == errno)
-+			return nfs4_errtbl_common[i].stat;
-+	}
-+	/* Then check nfs4_errtbl_localio */
-+	for (i = 0; i < ARRAY_SIZE(nfs4_errtbl_localio); i++) {
-+		if (nfs4_errtbl_localio[i].errno == errno)
-+			return nfs4_errtbl_localio[i].stat;
-+	}
-+	/* If we cannot translate the error, the recovery routines should
-+	 * handle it.
-+	 * Note: remaining NFSv4 error codes have values > 10000, so should
-+	 * not conflict with native Linux error codes.
-+	 */
-+	return NFS4ERR_SERVERFAULT;
-+}
-+EXPORT_SYMBOL_GPL(nfs_localio_errno_to_nfs4_stat);
-diff --git a/include/linux/nfs_common.h b/include/linux/nfs_common.h
-index 5fc02df882521..a541c3a028875 100644
---- a/include/linux/nfs_common.h
-+++ b/include/linux/nfs_common.h
-@@ -9,9 +9,10 @@
- #include <uapi/linux/nfs.h>
- 
- /* Mapping from NFS error code to "errno" error code. */
--#define errno_NFSERR_IO EIO
- 
- int nfs_stat_to_errno(enum nfs_stat status);
- int nfs4_stat_to_errno(int stat);
- 
-+__u32 nfs_localio_errno_to_nfs4_stat(int errno);
-+
- #endif /* _LINUX_NFS_COMMON_H */
 -- 
 2.39.5
 
