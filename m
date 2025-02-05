@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388F1B640;
-	Wed,  5 Feb 2025 13:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AAF14A4E9;
+	Wed,  5 Feb 2025 13:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763741; cv=none; b=CTPGaPbtydkKI7JUESnlRa/GTvxRXw4caRohyoRnLkoc9OtIDz57UFrDWRrkMHdeHudMyTEsqtQtK2c9f8yuBFo8pt7512W35fIe3SIv19PXFsekht8uYo/Bd5gJKw/PMS779w5kcbdDLH7h3B+ba3XGIrokwdged2fPUue0D3U=
+	t=1738763744; cv=none; b=OusRB5aFl+RBXIiP9hVLe6QXR1oA9SOHH3TvL9JBQ6/C1Eh9hOMz6TYW+kNW1EPT5+4BeCaUxAPJxOw/Moat/he1asn+cOeNNTpGYA1QXabkzMmCc13Ay+3Gq3fxVC/0dqI3ru172o+VgQfw0JOGtZiN5RESZIrwguwd32T9Rdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763741; c=relaxed/simple;
-	bh=gYDq5J/S/k/HMtRQM0ejszb0XN4hzMLG8UIMSWp/erg=;
+	s=arc-20240116; t=1738763744; c=relaxed/simple;
+	bh=MKMB5Q7L14StdL2Bj9EO3r9CcVA3cczFQE48XvceKOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gH2WNvsg5bzXxkGjMRxsMYzrWNK4rK87goc+8bEeNaOjvAeIxUUhBR1QxBbB5fGETTMv2/fWN88yWgF+NokQ891onNCCCHLeCWAS/VoD4PDyF+rBvZrJ1XKdPBNTHihtwtjgprgAaRMzFY4M0ONeamMvxRlanVrwKHhCT8cP2Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjTfoIZq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hV44WiOinWfRRiD8FnxoEXajciB223rWgnv/lqm6FFBhZrgi/EQQ2bxAVJunKirJUgSlBqdgJR3lCTWW+wBtPiHGMcB7GFY9nP2VHN+syPDBZmyMnbjND7XlCDjWV+pZY3Df8q9GgRWw1iK0nDVybJqIzkmsS2TRLurIFT6Gk1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Up5Yw41n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjTfoIZq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C3AAC4CED1;
-	Wed,  5 Feb 2025 13:55:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Up5Yw41n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD4AC4CED1;
+	Wed,  5 Feb 2025 13:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763740;
-	bh=gYDq5J/S/k/HMtRQM0ejszb0XN4hzMLG8UIMSWp/erg=;
+	s=korg; t=1738763744;
+	bh=MKMB5Q7L14StdL2Bj9EO3r9CcVA3cczFQE48XvceKOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SjTfoIZqlsRtuj0x7tiySil6ZrfYn6VEcvdaCIJFO2MQReo1aR7/CVIyp/XbrfKFu
-	 r1WhjAIbnsxEt9AYM4E7sCmSqwxg01MXlM0BM4xV4dRmu3OfmvLYquARJ8gHVq6PpD
-	 8E6el1V/VP02IvGiQp19eyW4tTWoAJz1CE5tJuKA=
+	b=Up5Yw41nsgX5hbqFVXlu+eTvcDoyvzAXjOQYi29R7/yVmRcQwUSvq7ovA6l5lb2gg
+	 KOKL7Q9VemaB83zXwWgm5XY0c3kS/8iLQ0EIL6EHI0uVAGrLZldZX1xwfePl5d3YzM
+	 LW2PB13zkuFBQ4K5IpgAawbfKR8q0VMKCzHWo4bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Lee Jones <lee@kernel.org>,
+	Eugen Hristev <eugen.hristev@linaro.org>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/393] leds: cht-wcove: Use devm_led_classdev_register() to avoid memory leak
-Date: Wed,  5 Feb 2025 14:40:20 +0100
-Message-ID: <20250205134424.157395988@linuxfoundation.org>
+Subject: [PATCH 6.13 014/623] pstore/blk: trivial typo fixes
+Date: Wed,  5 Feb 2025 14:35:56 +0100
+Message-ID: <20250205134456.774987611@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Eugen Hristev <eugen.hristev@linaro.org>
 
-[ Upstream commit 417cad5dc782096350e6a967ee5dd3417a19a24e ]
+[ Upstream commit 542243af7182efaeaf6d0f4643f7de437541a9af ]
 
-cht_wc_leds_probe() leaks memory when the second led_classdev_register()
-call in the for-loop fails as it does not call the cleanup function
-led_classdev_unregister() on the first device. Avoid this leak by
-calling devm_led_classdev_register().
+Fix trivial typos in comments.
 
-Fixes: 047da762b9a9 ("leds: Add Intel Cherry Trail Whiskey Cove PMIC LED driver")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Link: https://lore.kernel.org/r/20241220085346.533675-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 2a03ddbde1e1 ("pstore/blk: Move verify_size() macro out of function")
+Fixes: 17639f67c1d6 ("pstore/blk: Introduce backend for block devices")
+Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
+Link: https://lore.kernel.org/r/20250101111921.850406-1-eugen.hristev@linaro.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-cht-wcove.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ fs/pstore/blk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/leds-cht-wcove.c b/drivers/leds/leds-cht-wcove.c
-index b4998402b8c6f..711ac4bd60580 100644
---- a/drivers/leds/leds-cht-wcove.c
-+++ b/drivers/leds/leds-cht-wcove.c
-@@ -394,7 +394,7 @@ static int cht_wc_leds_probe(struct platform_device *pdev)
- 		led->cdev.pattern_clear = cht_wc_leds_pattern_clear;
- 		led->cdev.max_brightness = 255;
+diff --git a/fs/pstore/blk.c b/fs/pstore/blk.c
+index 65b2473e22ff9..fa6b8cb788a1f 100644
+--- a/fs/pstore/blk.c
++++ b/fs/pstore/blk.c
+@@ -89,7 +89,7 @@ static struct pstore_device_info *pstore_device_info;
+ 		_##name_ = check_size(name, alignsize);		\
+ 	else							\
+ 		_##name_ = 0;					\
+-	/* Synchronize module parameters with resuls. */	\
++	/* Synchronize module parameters with results. */	\
+ 	name = _##name_ / 1024;					\
+ 	dev->zone.name = _##name_;				\
+ }
+@@ -121,7 +121,7 @@ static int __register_pstore_device(struct pstore_device_info *dev)
+ 	if (pstore_device_info)
+ 		return -EBUSY;
  
--		ret = led_classdev_register(&pdev->dev, &led->cdev);
-+		ret = devm_led_classdev_register(&pdev->dev, &led->cdev);
- 		if (ret < 0)
- 			return ret;
- 	}
-@@ -406,10 +406,6 @@ static int cht_wc_leds_probe(struct platform_device *pdev)
- static void cht_wc_leds_remove(struct platform_device *pdev)
- {
- 	struct cht_wc_leds *leds = platform_get_drvdata(pdev);
--	int i;
--
--	for (i = 0; i < CHT_WC_LED_COUNT; i++)
--		led_classdev_unregister(&leds->leds[i].cdev);
+-	/* zero means not limit on which backends to attempt to store. */
++	/* zero means no limit on which backends attempt to store. */
+ 	if (!dev->flags)
+ 		dev->flags = UINT_MAX;
  
- 	/* Restore LED1 regs if hw-control was active else leave LED1 off */
- 	if (!(leds->led1_initial_regs.ctrl & CHT_WC_LED1_SWCTL))
 -- 
 2.39.5
 
