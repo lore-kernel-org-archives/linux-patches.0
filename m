@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE44618DF6B;
-	Wed,  5 Feb 2025 15:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3958718E02A;
+	Wed,  5 Feb 2025 15:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767825; cv=none; b=iVbzkYOH1fmiDWstqCoHyit0F88JUIajsNDngykhaYfUbYfMDPIIUFjU7zwWpO/1Ucid925EPo5HQXQaY1CoXLYkop5rxDaYvfHiA17oh96DYqv3U0ig15KPQ76KpeDsJvG0u8KG+KVQmd4ghvC+lriEU+T2uFJvKGKGX4m1nfE=
+	t=1738767829; cv=none; b=h+uIvOHNmC9+DnMSD5dIXvWcKNjVmuMUJrvItEnpI9OpamVZDVATG57UP2UYohWNVkwA52dk3FP1N7MaUDTmaWZ+4+5BVIDEn+t8gr5KTnWnIgIeYSKNS9ivtLF8KgRDlVdVdyYpdDo2GvnFUCtLz4pxo/pIzsEKL+nhuA9/8k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767825; c=relaxed/simple;
-	bh=AumU0/Z1edGf5bHCxwOKQZkeyJ8oMpMeV8qcBS2nbFg=;
+	s=arc-20240116; t=1738767829; c=relaxed/simple;
+	bh=Gc2R6DUgFAmDKCb4tHH7wgGpdDzMxkf75Cc81mzPmi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qw2pVf38xrqR09Y0WL810lBCjpEsZkvx/G0h1R2KigDdIu4aViL3YUEOYL3gnPlH+hD+ZouqpXwuy7/PKR1bgHLWAoXq4RGIjUQbZE/bPlrVXx+rRbBy2SpEJpyhIwGAKobhPpx6VkJdqDEnBBc7fDorEaSv8gW89aiN+yKtPxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8p+Dq7t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GWjICxGZjO9CrDMHn6ygwhYam0qDFfTwdHjArqJqUWpIvZl0pc0r+7wmw0ddb8I8BI0gFFno859LS+xLfjgkG1Of94tYrMSw5lM8ljjEMJ9xdtdxQohl9S1V8teIMZTTvJeirK/qI8wpkWd6nwXk3VsmDbMXtcFteMGgkfxwY6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yo0xTyAI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8p+Dq7t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A927C4CED6;
-	Wed,  5 Feb 2025 15:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yo0xTyAI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973A7C4CED1;
+	Wed,  5 Feb 2025 15:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767825;
-	bh=AumU0/Z1edGf5bHCxwOKQZkeyJ8oMpMeV8qcBS2nbFg=;
+	s=korg; t=1738767829;
+	bh=Gc2R6DUgFAmDKCb4tHH7wgGpdDzMxkf75Cc81mzPmi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t8p+Dq7to2Ar3ZrNfoSl95FKDinH3CjDwVVhb7x060afgZuZVI3l6S6Q3wmlwF3Qe
-	 idY837dbtAdSrsWmy0wrrakXjeuWXGV4lM6HnZyxQ60ADDepAsb4/PR74iFPJkBqj7
-	 kOxLH5THZpSqteZF34gpzCMFQe4nrNIaqLCAt5i8=
+	b=Yo0xTyAIbiuYAMPbg9TafPGAiqt9aRKysqwllBcuCSY4ELNcCWvVT1eTxH18dzmM4
+	 QkaoMqdOHCTeejkMqReiakKnwVi4pBGf7OZWAkDzpRVRfNkwjcs6wYO3SWO/Jacdy6
+	 mJL14hByJyw3duYhFUUZguGbFWWMNQifQQPNMuJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Simon Horman <horms@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 514/590] bgmac: reduce max frame size to support just MTU 1500
-Date: Wed,  5 Feb 2025 14:44:29 +0100
-Message-ID: <20250205134514.930989104@linuxfoundation.org>
+Subject: [PATCH 6.13 459/623] staging: media: imx: fix OF node leak in imx_media_add_of_subdevs()
+Date: Wed,  5 Feb 2025 14:43:21 +0100
+Message-ID: <20250205134513.774503788@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +47,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 752e5fcc2e77358936d36ef8e522d6439372e201 ]
+[ Upstream commit 094f5c315f756b19198e6c401aa821ac0e868750 ]
 
-bgmac allocates new replacement buffer before handling each received
-frame. Allocating & DMA-preparing 9724 B each time consumes a lot of CPU
-time. Ideally bgmac should just respect currently set MTU but it isn't
-the case right now. For now just revert back to the old limited frame
-size.
+imx_media_add_of_subdevs() calls of_parse_phandle() and passes the
+obtained node to imx_media_of_add_csi(). The passed node is used in
+v4l2_async_nf_add_fwnode(), which increments the refcount of the node.
+Therefore, while the current implementation only releases the node when
+imx_media_of_add_csi() fails, but should always release it. Call
+of_node_put() right after imx_media_of_add_csi().
 
-This change bumps NAT masquerade speed by ~95%.
-
-Since commit 8218f62c9c9b ("mm: page_frag: use initial zero offset for
-page_frag_alloc_align()"), the bgmac driver fails to open its network
-interface successfully and runs out of memory in the following call
-stack:
-
-bgmac_open
-  -> bgmac_dma_init
-    -> bgmac_dma_rx_skb_for_slot
-      -> netdev_alloc_frag
-
-BGMAC_RX_ALLOC_SIZE = 10048 and PAGE_FRAG_CACHE_MAX_SIZE = 32768.
-
-Eventually we land into __page_frag_alloc_align() with the following
-parameters across multiple successive calls:
-
-__page_frag_alloc_align: fragsz=10048, align_mask=-1, size=32768, offset=0
-__page_frag_alloc_align: fragsz=10048, align_mask=-1, size=32768, offset=10048
-__page_frag_alloc_align: fragsz=10048, align_mask=-1, size=32768, offset=20096
-__page_frag_alloc_align: fragsz=10048, align_mask=-1, size=32768, offset=30144
-
-So in that case we do indeed have offset + fragsz (40192) > size (32768)
-and so we would eventually return NULL. Reverting to the older 1500
-bytes MTU allows the network driver to be usable again.
-
-Fixes: 8c7da63978f1 ("bgmac: configure MTU and add support for frames beyond 8192 byte size")
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-[florian: expand commit message about recent commits]
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250127175159.1788246-1-florian.fainelli@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: dee747f88167 ("media: imx: Don't register IPU subdevs/links if CSI port missing")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bgmac.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/staging/media/imx/imx-media-of.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac.h b/drivers/net/ethernet/broadcom/bgmac.h
-index d73ef262991d6..6fee9a41839c0 100644
---- a/drivers/net/ethernet/broadcom/bgmac.h
-+++ b/drivers/net/ethernet/broadcom/bgmac.h
-@@ -328,8 +328,7 @@
- #define BGMAC_RX_FRAME_OFFSET			30		/* There are 2 unused bytes between header and real data */
- #define BGMAC_RX_BUF_OFFSET			(NET_SKB_PAD + NET_IP_ALIGN - \
- 						 BGMAC_RX_FRAME_OFFSET)
--/* Jumbo frame size with FCS */
--#define BGMAC_RX_MAX_FRAME_SIZE			9724
-+#define BGMAC_RX_MAX_FRAME_SIZE			1536
- #define BGMAC_RX_BUF_SIZE			(BGMAC_RX_FRAME_OFFSET + BGMAC_RX_MAX_FRAME_SIZE)
- #define BGMAC_RX_ALLOC_SIZE			(SKB_DATA_ALIGN(BGMAC_RX_BUF_SIZE + BGMAC_RX_BUF_OFFSET) + \
- 						 SKB_DATA_ALIGN(sizeof(struct skb_shared_info)))
+diff --git a/drivers/staging/media/imx/imx-media-of.c b/drivers/staging/media/imx/imx-media-of.c
+index 118bff988bc7e..bb28daa4d7133 100644
+--- a/drivers/staging/media/imx/imx-media-of.c
++++ b/drivers/staging/media/imx/imx-media-of.c
+@@ -54,22 +54,18 @@ int imx_media_add_of_subdevs(struct imx_media_dev *imxmd,
+ 			break;
+ 
+ 		ret = imx_media_of_add_csi(imxmd, csi_np);
++		of_node_put(csi_np);
+ 		if (ret) {
+ 			/* unavailable or already added is not an error */
+ 			if (ret == -ENODEV || ret == -EEXIST) {
+-				of_node_put(csi_np);
+ 				continue;
+ 			}
+ 
+ 			/* other error, can't continue */
+-			goto err_out;
++			return ret;
+ 		}
+ 	}
+ 
+ 	return 0;
+-
+-err_out:
+-	of_node_put(csi_np);
+-	return ret;
+ }
+ EXPORT_SYMBOL_GPL(imx_media_add_of_subdevs);
 -- 
 2.39.5
 
