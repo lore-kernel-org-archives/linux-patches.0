@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3F7151988;
-	Wed,  5 Feb 2025 14:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A194151988;
+	Wed,  5 Feb 2025 14:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766096; cv=none; b=UcxIreamVQMH6svh6Frz187KvGphBaOQxElQ+b3dFOKV6Sf61vCnONCYCY7C4w9/EUsSn36xMNFsnPmJko9J4b+gPMCCWOpPQYxTlVvm+qZvx8DT8R5LWRyz2JQfxMu8j9qSiBYes1Jn9g6yG8qyUnZYLnQRK8U2tPlD3DbC7ek=
+	t=1738766100; cv=none; b=HngdU6nXbpceCRg50Z+Pj74XHF2teiuX6aCs0bAzbBmZI0zGtGG7KQ78ZEWNCliXNR6YP71enHhgh6LauaZxFfxDGQBDUx0SVWH/tiMh1ooHe1tmc0ug9JTcrjgiOcqNSho4y/3a8DgJ2vYvyF2COWKLHogYPbysol6b2nGbR/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766096; c=relaxed/simple;
-	bh=/9gzDdojiXlcbQrdNsX/B6eE2wucsU3kad/5RRb4ea8=;
+	s=arc-20240116; t=1738766100; c=relaxed/simple;
+	bh=PmEf8udLIl8pwyjcrYoP0osiN6mwlTOzKRONBpLoa8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h6lyHjNEW94SnxM/QAqDzSwicd3yYs1ThNcX0GNrR95ugXjqqMVR00Mo9HrjmtZ5pv2VyrRlhcMu0wj23ogMcmOU2hUrshzRWN/9c3YYI7s84B+lIjgJmaDUNUeRR/XZa73IAkQG9AVe0GXsaiRNId2aB7ksfm9kzOGnV5To9Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxVeKsVG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DO7mCHqLiPEoq29iIUMPV8T9eUB7VGU7N1oJUuOdYj9Wu0ZmYLqYrNdLlYQVbUTSnszOGZyQZyx912KU+dfKA6u+y5N6pyN5Z40hPacv/xVC6yCUz+7IwNz1LBv6d/4t9dmHlE3Zr8SsUsnrK9ALsujW8M/zcrjJU7vT81PC5pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTeF5BJ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxVeKsVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BFF8C4CEDD;
-	Wed,  5 Feb 2025 14:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTeF5BJ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D115C4CED1;
+	Wed,  5 Feb 2025 14:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766096;
-	bh=/9gzDdojiXlcbQrdNsX/B6eE2wucsU3kad/5RRb4ea8=;
+	s=korg; t=1738766100;
+	bh=PmEf8udLIl8pwyjcrYoP0osiN6mwlTOzKRONBpLoa8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vxVeKsVGfBCaM6dzt9dktHsOduJXffCkr/Yps5nov7Ik80wCmIfeZP2YQjewKbKT4
-	 ZPupyC0UYmzU9pjv14nZqhQFj52BCJ5yn0AhPO+JIgXuLateqZqbodDVm1iTiLNDDb
-	 X4pYWbFERcrJqoLHlECxs4F6a+dP8UIWwCSkMTi8=
+	b=gTeF5BJ2pDUzjpnv3QEdt1hPAMQ9pTY2tyAkfIMkEt+1W4DUrptgTtvc91OAaBgGq
+	 UeDd0wKALbrOVUdpUg+DR86Zc2uHn+fFRhbDbcr5RKc7BcEDH01nPiKTnydyJoLjWd
+	 bd6heJVENQln9YAOO46KdQaQFepq8SB4czkowPRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Wang <wangming01@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 320/393] rtc: loongson: clear TOY_MATCH0_REG in loongson_rtc_isr()
-Date: Wed,  5 Feb 2025 14:43:59 +0100
-Message-ID: <20250205134432.558354142@linuxfoundation.org>
+Subject: [PATCH 6.13 242/623] net: ethernet: ti: am65-cpsw: fix freeing IRQ in am65_cpsw_nuss_remove_tx_chns()
+Date: Wed,  5 Feb 2025 14:39:44 +0100
+Message-ID: <20250205134505.485887927@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,68 +50,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Wang <wangming01@loongson.cn>
+From: Roger Quadros <rogerq@kernel.org>
 
-[ Upstream commit 09471d8f5b390883eaf21b917c4bf3ced1b8a1df ]
+[ Upstream commit 4395a44acb15850e492dd1de9ec4b6479d96bc80 ]
 
-The TOY_MATCH0_REG should be cleared to 0 in the RTC interrupt handler,
-otherwise the interrupt cannot be cleared, which will cause the
-loongson_rtc_isr() to be triggered multiple times.
+When getting the IRQ we use k3_udma_glue_tx_get_irq() which returns
+negative error value on error. So not NULL check is not sufficient
+to deteremine if IRQ is valid. Check that IRQ is greater then zero
+to ensure it is valid.
 
-The previous code cleared TOY_MATCH0_REG in the loongson_rtc_handler(),
-which is an ACPI interrupt. This did not prevent loongson_rtc_isr()
-from being triggered multiple times.
+There is no issue at probe time but at runtime user can invoke
+.set_channels which results in the following call chain.
+am65_cpsw_set_channels()
+ am65_cpsw_nuss_update_tx_rx_chns()
+  am65_cpsw_nuss_remove_tx_chns()
+  am65_cpsw_nuss_init_tx_chns()
 
-This commit moves the clearing of TOY_MATCH0_REG to the
-loongson_rtc_isr() to ensure that the interrupt is properly cleared.
+At this point if am65_cpsw_nuss_init_tx_chns() fails due to
+k3_udma_glue_tx_get_irq() then tx_chn->irq will be set to a
+negative value.
 
-Fixes: 1b733a9ebc3d ("rtc: Add rtc driver for the Loongson family chips")
-Signed-off-by: Ming Wang <wangming01@loongson.cn>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Keguang Zhang <keguang.zhang@gmail.com> # on LS1B
-Tested-by: Keguang Zhang <keguang.zhang@gmail.com>
-Link: https://lore.kernel.org/r/20241205114307.1891418-1-wangming01@loongson.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Then, at subsequent .set_channels with higher channel count we
+will attempt to free an invalid IRQ in am65_cpsw_nuss_remove_tx_chns()
+leading to a kernel warning.
+
+The issue is present in the original commit that introduced this driver,
+although there, am65_cpsw_nuss_update_tx_rx_chns() existed as
+am65_cpsw_nuss_update_tx_chns().
+
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-loongson.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-loongson.c b/drivers/rtc/rtc-loongson.c
-index e8ffc1ab90b02..90e9d97a86b48 100644
---- a/drivers/rtc/rtc-loongson.c
-+++ b/drivers/rtc/rtc-loongson.c
-@@ -114,6 +114,13 @@ static irqreturn_t loongson_rtc_isr(int irq, void *id)
- 	struct loongson_rtc_priv *priv = (struct loongson_rtc_priv *)id;
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 5465bf872734a..e1de45fb18aee 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2248,7 +2248,7 @@ static void am65_cpsw_nuss_remove_tx_chns(struct am65_cpsw_common *common)
+ 	for (i = 0; i < common->tx_ch_num; i++) {
+ 		struct am65_cpsw_tx_chn *tx_chn = &common->tx_chns[i];
  
- 	rtc_update_irq(priv->rtcdev, 1, RTC_AF | RTC_IRQF);
-+
-+	/*
-+	 * The TOY_MATCH0_REG should be cleared 0 here,
-+	 * otherwise the interrupt cannot be cleared.
-+	 */
-+	regmap_write(priv->regmap, TOY_MATCH0_REG, 0);
-+
- 	return IRQ_HANDLED;
- }
+-		if (tx_chn->irq)
++		if (tx_chn->irq > 0)
+ 			devm_free_irq(dev, tx_chn->irq, tx_chn);
  
-@@ -131,11 +138,7 @@ static u32 loongson_rtc_handler(void *id)
- 	writel(RTC_STS, priv->pm_base + PM1_STS_REG);
- 	spin_unlock(&priv->lock);
- 
--	/*
--	 * The TOY_MATCH0_REG should be cleared 0 here,
--	 * otherwise the interrupt cannot be cleared.
--	 */
--	return regmap_write(priv->regmap, TOY_MATCH0_REG, 0);
-+	return ACPI_INTERRUPT_HANDLED;
- }
- 
- static int loongson_rtc_set_enabled(struct device *dev)
+ 		netif_napi_del(&tx_chn->napi_tx);
 -- 
 2.39.5
 
