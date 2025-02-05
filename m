@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBE11553AB;
-	Wed,  5 Feb 2025 14:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8F315198D;
+	Wed,  5 Feb 2025 14:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764636; cv=none; b=uxCjF/TxEC0X8hMv5Sx0CM1Vcl7kNGU74H41OcbvWW7wAn1zMbdea2ZcDmiMCM8Hp7KfNWwVRH3dAYwS3MxVruhd0tX99gjJhu/bQtVTQSpIp5wiBiFEE7qQ400eOkl3ggvufhZctPUi+GaqjdMgY7vV52azSOw6tpyXdLWL4lw=
+	t=1738764639; cv=none; b=iY20awfhntEUvdAJJt2mhTxCVBYgMMj7K0p38x73uKPlVA8BQLbUqaukA1vfcDk63UN6bTSeaKj9zSoAl0VwNDtKTUF0LE2gyUycL0FP17vkSt2nPSUgFxYEuaHuF8QmoYgmt0vf/hJ7wrUc5Lol/gq+rVSVE/sDzQq6m/FrOuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764636; c=relaxed/simple;
-	bh=tt+tuTojqaXoY60uWCusBZDD6RP51vZTl6zroAL11UQ=;
+	s=arc-20240116; t=1738764639; c=relaxed/simple;
+	bh=0ruY57Vp3/M9FWMlcLb19TElEVAsPqrk836sKtjR0Hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NYnJNDfkS2Y2ASTIYJIMxnE0IG1RunHHOJvrtS8HLAGlmUqfbF7CDBndcHM4zQwlzHHW7pZ+VeaUgpgYsibIolHx76+f/ubEZSltI5D5WDchAXseTTEXO4oDS6qE+ApBw5xhr1MVnCyt7Zld79UQwUsboaKRmGkMvqoB2k5K6lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEchbN5/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ki3pr4DMLM9BVu56sCK/HdZQeHqmr2vnbKQ0O9FzbrWok6RL6EZ5POCGu6QqyaTFN3iHq2XfJZ3ef4JPYRknet9dsIWCQpYPlovQQyHouVf+yqlsA6RgX6f8LDuIeZt3SrtQgBuLE+ANxvXk5P7BvyPmBr1pHY2tl5tHcEP6mOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0TV/p2w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEchbN5/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CB2C4CED1;
-	Wed,  5 Feb 2025 14:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0TV/p2w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3DFC4CED1;
+	Wed,  5 Feb 2025 14:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764635;
-	bh=tt+tuTojqaXoY60uWCusBZDD6RP51vZTl6zroAL11UQ=;
+	s=korg; t=1738764639;
+	bh=0ruY57Vp3/M9FWMlcLb19TElEVAsPqrk836sKtjR0Hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kEchbN5/VHIuBCC0FTI5TpE/wMZN3zky1pi2rXUHxv/rIJ38SeUjcfr+9BL8eap19
-	 fBuTSrJMSKofAZKQuFhb/GPHnmUH1hUWI2jzqOJ5DLrl02W5EQjAjdOJyPDEpftn84
-	 E5147H5iCSAS3mU7G6pQamSZFrzHlN7Pm+TVB8L8=
+	b=R0TV/p2wislam75SNASRvQ9CZowIeVA3TnXD59WbX3mAA8fWKWaBLqaYM9+/mbxdz
+	 l6FYIK659vmJrJL+2lzbrhWvCeP/hlOMoKW7YN/YZBJ7TdcuKkEVgOPnEcc3WVNE5R
+	 4LDEJXgx3CFdTng0l38kOuGJD1KY85ak9pwywD1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Chen Ridong <chenridong@huawei.com>,
+	Qu Zicheng <quzicheng@huawei.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 082/623] genirq: Make handle_enforce_irqctx() unconditionally available
-Date: Wed,  5 Feb 2025 14:37:04 +0100
-Message-ID: <20250205134459.361145150@linuxfoundation.org>
+Subject: [PATCH 6.6 189/393] padata: fix UAF in padata_reorder
+Date: Wed,  5 Feb 2025 14:41:48 +0100
+Message-ID: <20250205134427.528324198@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,62 +49,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit 8d187a77f04c14fb459a5301d69f733a5a1396bc ]
+[ Upstream commit e01780ea4661172734118d2a5f41bc9720765668 ]
 
-Commit 1b57d91b969c ("irqchip/gic-v2, v3: Prevent SW resends entirely")
-sett the flag which enforces interrupt handling in interrupt context and
-prevents software base resends for ARM GIC v2/v3.
+A bug was found when run ltp test:
 
-But it missed that the helper function which checks the flag was hidden
-behind CONFIG_GENERIC_PENDING_IRQ, which is not set by ARM[64].
+BUG: KASAN: slab-use-after-free in padata_find_next+0x29/0x1a0
+Read of size 4 at addr ffff88bbfe003524 by task kworker/u113:2/3039206
 
-Make the helper unconditionally available so that the enforcement actually
-works.
+CPU: 0 PID: 3039206 Comm: kworker/u113:2 Kdump: loaded Not tainted 6.6.0+
+Workqueue: pdecrypt_parallel padata_parallel_worker
+Call Trace:
+<TASK>
+dump_stack_lvl+0x32/0x50
+print_address_description.constprop.0+0x6b/0x3d0
+print_report+0xdd/0x2c0
+kasan_report+0xa5/0xd0
+padata_find_next+0x29/0x1a0
+padata_reorder+0x131/0x220
+padata_parallel_worker+0x3d/0xc0
+process_one_work+0x2ec/0x5a0
 
-Fixes: 1b57d91b969c ("irqchip/gic-v2, v3: Prevent SW resends entirely")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20241210101811.497716609@linutronix.de
+If 'mdelay(10)' is added before calling 'padata_find_next' in the
+'padata_reorder' function, this issue could be reproduced easily with
+ltp test (pcrypt_aead01).
+
+This can be explained as bellow:
+
+pcrypt_aead_encrypt
+...
+padata_do_parallel
+refcount_inc(&pd->refcnt); // add refcnt
+...
+padata_do_serial
+padata_reorder // pd
+while (1) {
+padata_find_next(pd, true); // using pd
+queue_work_on
+...
+padata_serial_worker				crypto_del_alg
+padata_put_pd_cnt // sub refcnt
+						padata_free_shell
+						padata_put_pd(ps->pd);
+						// pd is freed
+// loop again, but pd is freed
+// call padata_find_next, UAF
+}
+
+In the padata_reorder function, when it loops in 'while', if the alg is
+deleted, the refcnt may be decreased to 0 before entering
+'padata_find_next', which leads to UAF.
+
+As mentioned in [1], do_serial is supposed to be called with BHs disabled
+and always happen under RCU protection, to address this issue, add
+synchronize_rcu() in 'padata_free_shell' wait for all _do_serial calls
+to finish.
+
+[1] https://lore.kernel.org/all/20221028160401.cccypv4euxikusiq@parnassus.localdomain/
+[2] https://lore.kernel.org/linux-kernel/jfjz5d7zwbytztackem7ibzalm5lnxldi2eofeiczqmqs2m7o6@fq426cwnjtkm/
+Fixes: b128a3040935 ("padata: allocate workqueue internally")
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Signed-off-by: Qu Zicheng <quzicheng@huawei.com>
+Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/internals.h | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ kernel/padata.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
-index fe0272cd84a51..a29df4b02a2ed 100644
---- a/kernel/irq/internals.h
-+++ b/kernel/irq/internals.h
-@@ -441,10 +441,6 @@ static inline struct cpumask *irq_desc_get_pending_mask(struct irq_desc *desc)
- {
- 	return desc->pending_mask;
- }
--static inline bool handle_enforce_irqctx(struct irq_data *data)
--{
--	return irqd_is_handle_enforce_irqctx(data);
--}
- bool irq_fixup_move_pending(struct irq_desc *desc, bool force_clear);
- #else /* CONFIG_GENERIC_PENDING_IRQ */
- static inline bool irq_can_move_pcntxt(struct irq_data *data)
-@@ -471,11 +467,12 @@ static inline bool irq_fixup_move_pending(struct irq_desc *desc, bool fclear)
- {
- 	return false;
- }
-+#endif /* !CONFIG_GENERIC_PENDING_IRQ */
-+
- static inline bool handle_enforce_irqctx(struct irq_data *data)
- {
--	return false;
-+	return irqd_is_handle_enforce_irqctx(data);
- }
--#endif /* !CONFIG_GENERIC_PENDING_IRQ */
+diff --git a/kernel/padata.c b/kernel/padata.c
+index 427f28db6b259..85ac7cfe87446 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -1118,6 +1118,12 @@ void padata_free_shell(struct padata_shell *ps)
+ 	if (!ps)
+ 		return;
  
- #if !defined(CONFIG_IRQ_DOMAIN) || !defined(CONFIG_IRQ_DOMAIN_HIERARCHY)
- static inline int irq_domain_activate_irq(struct irq_data *data, bool reserve)
++	/*
++	 * Wait for all _do_serial calls to finish to avoid touching
++	 * freed pd's and ps's.
++	 */
++	synchronize_rcu();
++
+ 	mutex_lock(&ps->pinst->lock);
+ 	list_del(&ps->list);
+ 	pd = rcu_dereference_protected(ps->pd, 1);
 -- 
 2.39.5
 
