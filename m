@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0DF5228;
-	Wed,  5 Feb 2025 14:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BCCB15198D;
+	Wed,  5 Feb 2025 14:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764144; cv=none; b=Pb8fSWAZ/5N306EWpeaup9UFbHLphL8yTwNm8w4LFxt6nsAorMtEV2pLxIdB+8lSW2rK9phAePubFmu+Q5LZXUW7lZR54jHa5Smjo+YiRM7BFoxYm1SHAOPPxMCzN8uPtMOGpNumf/ZXcaClpPS1nN45ANqKI/4zdjXi/ytt/PE=
+	t=1738764148; cv=none; b=C6Rk5/uWaVqe2dQSd+iBTBGT31E/u8OA7K0smWDHJVerGJ8mnj5RY47pDcMTxJ+FuNFj6IEVnL/4EylyiuxOOn7kpytQWlwDQVfU0mzQU4qkjvQFTWd6MrqhWYnF7VqWU6quljhiuSoxkHAFadAhVH/CWOFCe3BgklRNxpvYcow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764144; c=relaxed/simple;
-	bh=NKXZlCc7pFgU0icFY7UN/sjQCLQvdlfLMGN//O3bZ80=;
+	s=arc-20240116; t=1738764148; c=relaxed/simple;
+	bh=5DfxxpGdoIChal6SN6Dt2xbozRF+XdSNtFQwrauVHqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MnG7Do801SdqaHQFOXG028PEunpS28BpNrrtAvcM/o0QMPP+gVZ3S6tcH8h0LJ/vDoaH0KP2wv10ghnVfuzJlEa06Hwj9B5Qr2g20fbNYW9T76g/pIisErEDWmjrkmQD+KvcATJ2KCrThcXAZ9extCPsqYdC3Zzlzc8dMD7laW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tG3f4YuU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XPvSJM3MJ7e/qOuSJep324qKNCmY0rlshzye8nMDdHmjSOZKqMK45xBcjHzMjlmfmaxuLnyNcNw0YZDsQ49dZX7J9spIQRF+53BsH2S7mqq7LK0hdrIMRBDXVTOgpdVCdcuXvpDN62ZJ5j/c1aG4/mhn0BGIslztqzGu+hraD/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZgTF+/Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tG3f4YuU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068D5C4CED6;
-	Wed,  5 Feb 2025 14:02:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZgTF+/Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795C0C4CED6;
+	Wed,  5 Feb 2025 14:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764144;
-	bh=NKXZlCc7pFgU0icFY7UN/sjQCLQvdlfLMGN//O3bZ80=;
+	s=korg; t=1738764148;
+	bh=5DfxxpGdoIChal6SN6Dt2xbozRF+XdSNtFQwrauVHqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tG3f4YuUdVppwsLfrbjmBwq+ZY+Cp6+GFaC+SWSBC0ib2xgIvcwnuH2jQ1x57qSPV
-	 EsidfDoptSEvN3mGFtjiMazOERS5ZpE04dtOpAMsnl1rO5g59AG60pbhfn0BOZJldS
-	 VevvI5bp18Ep9ksSYKkiYv76U8d5QaCWW4D7bYsE=
+	b=NZgTF+/YRWdSTQm8DP0T29YU5xj/SboYZnjPVqjCQBVix4jc2lTjD+2YUae/gB30z
+	 z5c+mj2J+qjLyHu3Ru1mwa2OO3CoeZdppw4yCYFxe7896jYEPdga//o8YPUBhH/fpW
+	 WDfg82DIMFadSZWoKNpk2kZYDJDgcFONBrTpMb70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 093/590] wifi: rtlwifi: remove unused check_buddy_priv
-Date: Wed,  5 Feb 2025 14:37:28 +0100
-Message-ID: <20250205134458.814434224@linuxfoundation.org>
+Subject: [PATCH 6.6 144/393] net: sched: Disallow replacing of child qdisc from one parent to another
+Date: Wed,  5 Feb 2025 14:41:03 +0100
+Message-ID: <20250205134425.814891356@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,202 +48,116 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 2fdac64c3c35858aa8ac5caa70b232e03456e120 ]
+[ Upstream commit bc50835e83f60f56e9bec2b392fb5544f250fb6f ]
 
-Commit 2461c7d60f9f ("rtlwifi: Update header file") introduced a global
-list of private data structures.
+Lion Ackermann was able to create a UAF which can be abused for privilege
+escalation with the following script
 
-Later on, commit 26634c4b1868 ("rtlwifi Modify existing bits to match
-vendor version 2013.02.07") started adding the private data to that list at
-probe time and added a hook, check_buddy_priv to find the private data from
-a similar device.
+Step 1. create root qdisc
+tc qdisc add dev lo root handle 1:0 drr
 
-However, that function was never used.
+step2. a class for packet aggregation do demonstrate uaf
+tc class add dev lo classid 1:1 drr
 
-Besides, though there is a lock for that list, it is never used. And when
-the probe fails, the private data is never removed from the list. This
-would cause a second probe to access freed memory.
+step3. a class for nesting
+tc class add dev lo classid 1:2 drr
 
-Remove the unused hook, structures and members, which will prevent the
-potential race condition on the list and its corruption during a second
-probe when probe fails.
+step4. a class to graft qdisc to
+tc class add dev lo classid 1:3 drr
 
-Fixes: 26634c4b1868 ("rtlwifi Modify existing bits to match vendor version 2013.02.07")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241206173713.3222187-2-cascardo@igalia.com
+step5.
+tc qdisc add dev lo parent 1:1 handle 2:0 plug limit 1024
+
+step6.
+tc qdisc add dev lo parent 1:2 handle 3:0 drr
+
+step7.
+tc class add dev lo classid 3:1 drr
+
+step 8.
+tc qdisc add dev lo parent 3:1 handle 4:0 pfifo
+
+step 9. Display the class/qdisc layout
+
+tc class ls dev lo
+ class drr 1:1 root leaf 2: quantum 64Kb
+ class drr 1:2 root leaf 3: quantum 64Kb
+ class drr 3:1 root leaf 4: quantum 64Kb
+
+tc qdisc ls
+ qdisc drr 1: dev lo root refcnt 2
+ qdisc plug 2: dev lo parent 1:1
+ qdisc pfifo 4: dev lo parent 3:1 limit 1000p
+ qdisc drr 3: dev lo parent 1:2
+
+step10. trigger the bug <=== prevented by this patch
+tc qdisc replace dev lo parent 1:3 handle 4:0
+
+step 11. Redisplay again the qdiscs/classes
+
+tc class ls dev lo
+ class drr 1:1 root leaf 2: quantum 64Kb
+ class drr 1:2 root leaf 3: quantum 64Kb
+ class drr 1:3 root leaf 4: quantum 64Kb
+ class drr 3:1 root leaf 4: quantum 64Kb
+
+tc qdisc ls
+ qdisc drr 1: dev lo root refcnt 2
+ qdisc plug 2: dev lo parent 1:1
+ qdisc pfifo 4: dev lo parent 3:1 refcnt 2 limit 1000p
+ qdisc drr 3: dev lo parent 1:2
+
+Observe that a) parent for 4:0 does not change despite the replace request.
+There can only be one parent.  b) refcount has gone up by two for 4:0 and
+c) both class 1:3 and 3:1 are pointing to it.
+
+Step 12.  send one packet to plug
+echo "" | socat -u STDIN UDP4-DATAGRAM:127.0.0.1:8888,priority=$((0x10001))
+step13.  send one packet to the grafted fifo
+echo "" | socat -u STDIN UDP4-DATAGRAM:127.0.0.1:8888,priority=$((0x10003))
+
+step14. lets trigger the uaf
+tc class delete dev lo classid 1:3
+tc class delete dev lo classid 1:1
+
+The semantics of "replace" is for a del/add _on the same node_ and not
+a delete from one node(3:1) and add to another node (1:3) as in step10.
+While we could "fix" with a more complex approach there could be
+consequences to expectations so the patch takes the preventive approach of
+"disallow such config".
+
+Joint work with Lion Ackermann <nnamrec@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250116013713.900000-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/base.c |  7 ----
- drivers/net/wireless/realtek/rtlwifi/base.h |  1 -
- drivers/net/wireless/realtek/rtlwifi/pci.c  | 44 ---------------------
- drivers/net/wireless/realtek/rtlwifi/wifi.h | 12 ------
- 4 files changed, 64 deletions(-)
+ net/sched/sch_api.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/base.c b/drivers/net/wireless/realtek/rtlwifi/base.c
-index aab4605de9c47..fd28c7a722d89 100644
---- a/drivers/net/wireless/realtek/rtlwifi/base.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/base.c
-@@ -2696,9 +2696,6 @@ MODULE_AUTHOR("Larry Finger	<Larry.FInger@lwfinger.net>");
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("Realtek 802.11n PCI wireless core");
- 
--struct rtl_global_var rtl_global_var = {};
--EXPORT_SYMBOL_GPL(rtl_global_var);
--
- static int __init rtl_core_module_init(void)
- {
- 	BUILD_BUG_ON(TX_PWR_BY_RATE_NUM_RATE < TX_PWR_BY_RATE_NUM_SECTION);
-@@ -2712,10 +2709,6 @@ static int __init rtl_core_module_init(void)
- 	/* add debugfs */
- 	rtl_debugfs_add_topdir();
- 
--	/* init some global vars */
--	INIT_LIST_HEAD(&rtl_global_var.glb_priv_list);
--	spin_lock_init(&rtl_global_var.glb_list_lock);
--
- 	return 0;
- }
- 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/base.h b/drivers/net/wireless/realtek/rtlwifi/base.h
-index f081a9a90563f..f3a6a43a42eca 100644
---- a/drivers/net/wireless/realtek/rtlwifi/base.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/base.h
-@@ -124,7 +124,6 @@ int rtl_send_smps_action(struct ieee80211_hw *hw,
- u8 *rtl_find_ie(u8 *data, unsigned int len, u8 ie);
- void rtl_recognize_peer(struct ieee80211_hw *hw, u8 *data, unsigned int len);
- u8 rtl_tid_to_ac(u8 tid);
--extern struct rtl_global_var rtl_global_var;
- void rtl_phy_scan_operation_backup(struct ieee80211_hw *hw, u8 operation);
- 
- #endif
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 40fc3c297a8ac..4388066eb9e27 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -295,46 +295,6 @@ static bool rtl_pci_get_amd_l1_patch(struct ieee80211_hw *hw)
- 	return status;
- }
- 
--static bool rtl_pci_check_buddy_priv(struct ieee80211_hw *hw,
--				     struct rtl_priv **buddy_priv)
--{
--	struct rtl_priv *rtlpriv = rtl_priv(hw);
--	struct rtl_pci_priv *pcipriv = rtl_pcipriv(hw);
--	struct rtl_priv *tpriv = NULL, *iter;
--	struct rtl_pci_priv *tpcipriv = NULL;
--
--	if (!list_empty(&rtlpriv->glb_var->glb_priv_list)) {
--		list_for_each_entry(iter, &rtlpriv->glb_var->glb_priv_list,
--				    list) {
--			tpcipriv = (struct rtl_pci_priv *)iter->priv;
--			rtl_dbg(rtlpriv, COMP_INIT, DBG_LOUD,
--				"pcipriv->ndis_adapter.funcnumber %x\n",
--				pcipriv->ndis_adapter.funcnumber);
--			rtl_dbg(rtlpriv, COMP_INIT, DBG_LOUD,
--				"tpcipriv->ndis_adapter.funcnumber %x\n",
--				tpcipriv->ndis_adapter.funcnumber);
--
--			if (pcipriv->ndis_adapter.busnumber ==
--			    tpcipriv->ndis_adapter.busnumber &&
--			    pcipriv->ndis_adapter.devnumber ==
--			    tpcipriv->ndis_adapter.devnumber &&
--			    pcipriv->ndis_adapter.funcnumber !=
--			    tpcipriv->ndis_adapter.funcnumber) {
--				tpriv = iter;
--				break;
--			}
--		}
--	}
--
--	rtl_dbg(rtlpriv, COMP_INIT, DBG_LOUD,
--		"find_buddy_priv %d\n", tpriv != NULL);
--
--	if (tpriv)
--		*buddy_priv = tpriv;
--
--	return tpriv != NULL;
--}
--
- static void rtl_pci_parse_configuration(struct pci_dev *pdev,
- 					struct ieee80211_hw *hw)
- {
-@@ -2011,7 +1971,6 @@ static bool _rtl_pci_find_adapter(struct pci_dev *pdev,
- 		pcipriv->ndis_adapter.amd_l1_patch);
- 
- 	rtl_pci_parse_configuration(pdev, hw);
--	list_add_tail(&rtlpriv->list, &rtlpriv->glb_var->glb_priv_list);
- 
- 	return true;
- }
-@@ -2158,7 +2117,6 @@ int rtl_pci_probe(struct pci_dev *pdev,
- 	rtlpriv->rtlhal.interface = INTF_PCI;
- 	rtlpriv->cfg = (struct rtl_hal_cfg *)(id->driver_data);
- 	rtlpriv->intf_ops = &rtl_pci_ops;
--	rtlpriv->glb_var = &rtl_global_var;
- 	rtl_efuse_ops_init(hw);
- 
- 	/* MEM map */
-@@ -2316,7 +2274,6 @@ void rtl_pci_disconnect(struct pci_dev *pdev)
- 	if (rtlpci->using_msi)
- 		pci_disable_msi(rtlpci->pdev);
- 
--	list_del(&rtlpriv->list);
- 	if (rtlpriv->io.pci_mem_start != 0) {
- 		pci_iounmap(pdev, (void __iomem *)rtlpriv->io.pci_mem_start);
- 		pci_release_regions(pdev);
-@@ -2375,7 +2332,6 @@ EXPORT_SYMBOL(rtl_pci_resume);
- const struct rtl_intf_ops rtl_pci_ops = {
- 	.adapter_start = rtl_pci_start,
- 	.adapter_stop = rtl_pci_stop,
--	.check_buddy_priv = rtl_pci_check_buddy_priv,
- 	.adapter_tx = rtl_pci_tx,
- 	.flush = rtl_pci_flush,
- 	.reset_trx_ring = rtl_pci_reset_trx_ring,
-diff --git a/drivers/net/wireless/realtek/rtlwifi/wifi.h b/drivers/net/wireless/realtek/rtlwifi/wifi.h
-index ae6e351bc83c9..f1830ddcdd8c1 100644
---- a/drivers/net/wireless/realtek/rtlwifi/wifi.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/wifi.h
-@@ -2270,8 +2270,6 @@ struct rtl_intf_ops {
- 	/*com */
- 	int (*adapter_start)(struct ieee80211_hw *hw);
- 	void (*adapter_stop)(struct ieee80211_hw *hw);
--	bool (*check_buddy_priv)(struct ieee80211_hw *hw,
--				 struct rtl_priv **buddy_priv);
- 
- 	int (*adapter_tx)(struct ieee80211_hw *hw,
- 			  struct ieee80211_sta *sta,
-@@ -2514,14 +2512,6 @@ struct dig_t {
- 	u32 rssi_max;
- };
- 
--struct rtl_global_var {
--	/* from this list we can get
--	 * other adapter's rtl_priv
--	 */
--	struct list_head glb_priv_list;
--	spinlock_t glb_list_lock;
--};
--
- #define IN_4WAY_TIMEOUT_TIME	(30 * MSEC_PER_SEC)	/* 30 seconds */
- 
- struct rtl_btc_info {
-@@ -2667,9 +2657,7 @@ struct rtl_scan_list {
- struct rtl_priv {
- 	struct ieee80211_hw *hw;
- 	struct completion firmware_loading_complete;
--	struct list_head list;
- 	struct rtl_priv *buddy_priv;
--	struct rtl_global_var *glb_var;
- 	struct rtl_dmsp_ctl dmsp_ctl;
- 	struct rtl_locks locks;
- 	struct rtl_works works;
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index 00f95e7d1b911..7cddaa6321c7c 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -1635,6 +1635,10 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
+ 				q = qdisc_lookup(dev, tcm->tcm_handle);
+ 				if (!q)
+ 					goto create_n_graft;
++				if (q->parent != tcm->tcm_parent) {
++					NL_SET_ERR_MSG(extack, "Cannot move an existing qdisc to a different parent");
++					return -EINVAL;
++				}
+ 				if (n->nlmsg_flags & NLM_F_EXCL) {
+ 					NL_SET_ERR_MSG(extack, "Exclusivity flag on, cannot override");
+ 					return -EEXIST;
 -- 
 2.39.5
 
