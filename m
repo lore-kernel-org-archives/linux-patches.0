@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB9218D621;
-	Wed,  5 Feb 2025 15:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E3918D621;
+	Wed,  5 Feb 2025 15:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768301; cv=none; b=kJChtriXVrkpGoh3FOHqzVWwGMjlq8l4vfkVwC8yQj3MgCmFoHEXiAlesdXYbDZe4d32QNl/7dLQQ2dXAGx3esqRJBajRhCHDn6+cKda4GtX+MolI+44V/i0ThWle4IOIAQKdCVOwbKvZXFit15N0p+iOt0xAqtDpXvd5jkxTCA=
+	t=1738768304; cv=none; b=OoLD/emttPQcyvoPhh6aXfVXnCCJe9teAk1G2anCihEESJ0c5lyat4NuLnqKT0ArRzPn+Tj6SgUhqw+B17FyCXwJh6arnZbjSKXk8Wj0ws3gobQ+KZjJtUsRqcV0VbyGkMgaUFhlkdyJzz2rRA4cnR2QW94yMAtYz4/z7B0/t90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768301; c=relaxed/simple;
-	bh=UnUitE+wq+O4muRtjKnH0PO19ioY1tXmW1ZEEY1isdY=;
+	s=arc-20240116; t=1738768304; c=relaxed/simple;
+	bh=MYeVt+XObSgD8XUcKAN6mrM0tTY2qe38xx/jAsCKkAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uuMTFHW8oRuQi4YRZehd9EaKKkxyR+4tkNSd2eB1cYm48WNYiJfMslwnKB8G4gIzK5XOP8IZt6Pi+ncVg/Pp6Tt+fWv0ANL5np+/4jAoyjD2l/nQQsUc2XJqrTrFfbCYmuXL2X2yL+5tFUsEHtXsfWZwrN0ydvADWNxDhB+YHCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T21xexfC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dcOoDy1A3HH9gawTvk3EOhzz/OYVyBN17iwCt1decd0xDWcaPrOLkt6x2J4dSoZvZXs+zDz9URyxg58GmWNFjuLeYAAvOS2hc6bXQjft5PaDAQWrSywiof+RusFMbYLoAS1vc9dl2XYq4r6aFm7LIXuvgnGpxT4IJUXJ0SEmxUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEz0acnl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T21xexfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E4FC4CED1;
-	Wed,  5 Feb 2025 15:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEz0acnl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A952C4CEE2;
+	Wed,  5 Feb 2025 15:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768301;
-	bh=UnUitE+wq+O4muRtjKnH0PO19ioY1tXmW1ZEEY1isdY=;
+	s=korg; t=1738768304;
+	bh=MYeVt+XObSgD8XUcKAN6mrM0tTY2qe38xx/jAsCKkAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T21xexfCnX0QWhVEBnb8GllKpRspB9ylwsKjr2JSWqypKd10Ud00LmTwdMz12BhXv
-	 fqgkif6iguGIwzeD9oBwSRYhnL2i4Yehtj8oW+BgYunsKvikx7L9JnRyGXQl2Yyhcs
-	 OUp+2voem9xuuH43skEHKteBm7ebanjE1KVZUSWk=
+	b=LEz0acnlXPWZolhoL+Q8a8fmrGRMR1B5ePI25q6cyon5S/+bIX22OJGqOxbeXyLIt
+	 t3WX5W8712iFrWblBnoVPfqyxlhDfdBq02qGTOUk72rBA+4XMfi9SNU9XWt0E/IOFV
+	 leA5aI4h+EZ2YD1EmlUFX/Mbdysm/BEJdB39yvBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	kernel test robot <lkp@intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 581/590] phy: freescale: fsl-samsung-hdmi: Fix 64-by-32 division cocci warnings
-Date: Wed,  5 Feb 2025 14:45:36 +0100
-Message-ID: <20250205134517.492276038@linuxfoundation.org>
+	Jan Stancek <jstancek@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 528/623] selftests: net/{lib,openvswitch}: extend CFLAGS to keep options from environment
+Date: Wed,  5 Feb 2025 14:44:30 +0100
+Message-ID: <20250205134516.425342520@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +49,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Jan Stancek <jstancek@redhat.com>
 
-commit 739214dd1c209e34323814fb815fb17cccb9f95b upstream.
+[ Upstream commit 9b06d5b956131bde535f5c045cf8c1ff6bfba76c ]
 
-The Kernel test robot returns the following warning:
- do_div() does a 64-by-32 division, please consider using div64_ul instead.
+Package build environments like Fedora rpmbuild introduced hardening
+options (e.g. -pie -Wl,-z,now) by passing a -spec option to CFLAGS
+and LDFLAGS.
 
-To prevent the 64-by-32 divsion, consolidate both the multiplication
-and the do_div into one line which explicitly uses u64 sizes.
+Some Makefiles currently override CFLAGS but not LDFLAGS, which leads
+to a mismatch and build failure, for example:
+  /usr/bin/ld: /tmp/ccd2apay.o: relocation R_X86_64_32 against
+    `.rodata.str1.1' can not be used when making a PIE object; recompile with -fPIE
+  /usr/bin/ld: failed to set dynamic section sizes: bad value
+  collect2: error: ld returned 1 exit status
+  make[1]: *** [../../lib.mk:222: tools/testing/selftests/net/lib/csum] Error 1
 
-Fixes: 1951dbb41d1d ("phy: freescale: fsl-samsung-hdmi: Support dynamic integer")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202412091243.fSObwwPi-lkp@intel.com/
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+openvswitch/Makefile CFLAGS currently do not appear to be used, but
+fix it anyway for the case when new tests are introduced in future.
 
-Link: https://lore.kernel.org/r/20241215220555.99113-1-aford173@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 1d0dc857b5d8 ("selftests: drv-net: add checksum tests")
+Signed-off-by: Jan Stancek <jstancek@redhat.com>
+Acked-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/3d173603ee258f419d0403363765c9f9494ff79a.1737635092.git.jstancek@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/freescale/phy-fsl-samsung-hdmi.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/selftests/net/lib/Makefile         | 2 +-
+ tools/testing/selftests/net/openvswitch/Makefile | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
-+++ b/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
-@@ -471,8 +471,7 @@ static unsigned long fsl_samsung_hdmi_ph
- 			 * Fvco = (M * f_ref) / P,
- 			 * where f_ref is 24MHz.
- 			 */
--			tmp = (u64)_m * 24 * MHZ;
--			do_div(tmp, _p);
-+			tmp = div64_ul((u64)_m * 24 * MHZ, _p);
- 			if (tmp < 750 * MHZ ||
- 			    tmp > 3000 * MHZ)
- 				continue;
+diff --git a/tools/testing/selftests/net/lib/Makefile b/tools/testing/selftests/net/lib/Makefile
+index 18b9443454a9e..bc6b6762baf3e 100644
+--- a/tools/testing/selftests/net/lib/Makefile
++++ b/tools/testing/selftests/net/lib/Makefile
+@@ -1,6 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
+ 
+-CFLAGS =  -Wall -Wl,--no-as-needed -O2 -g
++CFLAGS += -Wall -Wl,--no-as-needed -O2 -g
+ CFLAGS += -I../../../../../usr/include/ $(KHDR_INCLUDES)
+ # Additional include paths needed by kselftest.h
+ CFLAGS += -I../../
+diff --git a/tools/testing/selftests/net/openvswitch/Makefile b/tools/testing/selftests/net/openvswitch/Makefile
+index 2f1508abc826b..3fd1da2ec07d5 100644
+--- a/tools/testing/selftests/net/openvswitch/Makefile
++++ b/tools/testing/selftests/net/openvswitch/Makefile
+@@ -2,7 +2,7 @@
+ 
+ top_srcdir = ../../../../..
+ 
+-CFLAGS =  -Wall -Wl,--no-as-needed -O2 -g -I$(top_srcdir)/usr/include $(KHDR_INCLUDES)
++CFLAGS += -Wall -Wl,--no-as-needed -O2 -g -I$(top_srcdir)/usr/include $(KHDR_INCLUDES)
+ 
+ TEST_PROGS := openvswitch.sh
+ 
+-- 
+2.39.5
+
 
 
