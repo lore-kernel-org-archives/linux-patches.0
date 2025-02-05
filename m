@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D0114D28C;
-	Wed,  5 Feb 2025 13:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C9014EC77;
+	Wed,  5 Feb 2025 13:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763846; cv=none; b=owq1BtLW/T8IDMQfwX2Eh0q57VlgHUeadPyv04tHVRwtA3r8tCHRPNiLTGWa7xM2eaH6JgktG2aFDD0lcl9zPzHQ2jgJytJ0dSdCxbwQvHF5/iB+SlXsOnt+Gr+yqQQizsMHSh2jjOmrF6CJDF345KxCGjKBvQcQ+kISfLG9TAY=
+	t=1738763849; cv=none; b=AL9UcfHmh+In+cM29R4YtGehA7Ld70/9WqXwjDkwjn0Hai06a29URCPStikdNtncchFOkpBQgS/zghgGOJTt7KkVZKS8HEOt6lTZa6sGSTc5jQ9qTyJPhckxulbVpHP7tmg4nVKrsWkFcGFsKJ7pPu2QOpHV6gnybKORIQI6q3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763846; c=relaxed/simple;
-	bh=xsZ7UqPuKGByM0oa2NHaD1Cv3dxz4Jw62g9JSnOBdk8=;
+	s=arc-20240116; t=1738763849; c=relaxed/simple;
+	bh=J+h/7B90OWCYmcrcllyq9BAwaEf90ajkO0INP3P+Ds0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rf9yrVXJMw8d0mp416Cf8Y7m8bg8Xt1C/6oMHFPaLjIb+qTDlYrOnGXLyGMuQXGyP1vVONMpSummUhNnfOXY3hCpslHaW6LgeDwp2G/hD99aEwUyw/VvBuMfE+UbeR9VSQ3FkGYM6rFrjuNj+2cmrhtGYgD3WDk22zLSpkyRryQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNDwv0W3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dpSwoIQwvW+RAglqrjiWpGmH79JJVZxOX4xF+a3A2eo1ijGPLU3pmdKd7GxgJMAxv05sm/8y6QA4dc9I4Bcfx8aWRXLjJiwQy3MgfICrQG7LDHJFH+x65onqM/k3MUyy9lYwuifUGd1GXmpxoj9bXvN5krDpmbnZyNUXV/L0nJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mb75YXPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNDwv0W3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C972AC4CED1;
-	Wed,  5 Feb 2025 13:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mb75YXPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31FB3C4CED6;
+	Wed,  5 Feb 2025 13:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763846;
-	bh=xsZ7UqPuKGByM0oa2NHaD1Cv3dxz4Jw62g9JSnOBdk8=;
+	s=korg; t=1738763849;
+	bh=J+h/7B90OWCYmcrcllyq9BAwaEf90ajkO0INP3P+Ds0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LNDwv0W3cjQouJuZzlg9uzOShxvXCFLwt+8rm5N7FTwh/bODTHY6uGZA578jch/U+
-	 frZaCzfqPdMLZc/xhMNhyLkRFlke/k4YPQBzLXKr2zASLtwO7k6Ptiomls57hhC8mO
-	 /bkziMrKTHollFdjz4aJ8JESUGYG+dpSd1Otnfpo=
+	b=mb75YXPSLymoSmQx57jB1vpEZBLwNgqjtjAY+a9UPdL4f/vGMSzhCGZJGUXkIF5AF
+	 riwQ9lvblq4SCI8ZxbUDDFJ0ksuy3gQHaogTT4WdFd3GfVrRiTO+L1ftAurBrzQGHR
+	 rsHhjhd2PefkP4P9zTFIoj0f3bq6oAAlTQ1WdXWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sui Jingfeng <sui.jingfeng@linux.dev>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/590] drm/msm: Check return value of of_dma_configure()
-Date: Wed,  5 Feb 2025 14:37:01 +0100
-Message-ID: <20250205134457.782293401@linuxfoundation.org>
+Subject: [PATCH 6.6 113/393] clk: ralink: mtmips: remove duplicated xtal clock for Ralink SoC RT3883
+Date: Wed,  5 Feb 2025 14:40:32 +0100
+Message-ID: <20250205134424.617232942@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sui Jingfeng <sui.jingfeng@linux.dev>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-[ Upstream commit b34a7401ffaee45354e81b38a4d072794079cfd6 ]
+[ Upstream commit 830d8062d25581cf0beaa334486eea06834044da ]
 
-Because the of_dma_configure() will returns '-EPROBE_DEFER' if the probe
-procedure of the specific platform IOMMU driver is not finished yet. It
-can also return other error code for various reasons.
+Ralink SoC RT3883 has already 'xtal' defined as a base clock so there is no
+need to redefine it again in fixed clocks section. Hence, remove the duplicate
+one from there.
 
-Stop pretending that it will always suceess, quit if it fail.
-
-Signed-off-by: Sui Jingfeng <sui.jingfeng@linux.dev>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Fixes: 29ac8979cdf7 ("drm/msm/a6xx: use msm_gem for GMU memory objects")
-Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/622782/
-Link: https://lore.kernel.org/r/20241104090738.529848-1-sui.jingfeng@linux.dev
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: d34db686a3d7 ("clk: ralink: mtmips: fix clocks probe order in oldest ralink SoCs")
+Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Link: https://lore.kernel.org/r/20250108093636.265033-1-sergio.paracuellos@gmail.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/clk/ralink/clk-mtmips.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 14db7376c712d..e386b059187ac 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1603,7 +1603,9 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
+index 76285fbbdeaa2..4b5d8b741e4e1 100644
+--- a/drivers/clk/ralink/clk-mtmips.c
++++ b/drivers/clk/ralink/clk-mtmips.c
+@@ -264,7 +264,6 @@ static int mtmips_register_pherip_clocks(struct device_node *np,
+ 	}
  
- 	gmu->dev = &pdev->dev;
+ static struct mtmips_clk_fixed rt3883_fixed_clocks[] = {
+-	CLK_FIXED("xtal", NULL, 40000000),
+ 	CLK_FIXED("periph", "xtal", 40000000)
+ };
  
--	of_dma_configure(gmu->dev, node, true);
-+	ret = of_dma_configure(gmu->dev, node, true);
-+	if (ret)
-+		return ret;
- 
- 	pm_runtime_enable(gmu->dev);
- 
-@@ -1668,7 +1670,9 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 
- 	gmu->dev = &pdev->dev;
- 
--	of_dma_configure(gmu->dev, node, true);
-+	ret = of_dma_configure(gmu->dev, node, true);
-+	if (ret)
-+		return ret;
- 
- 	/* Fow now, don't do anything fancy until we get our feet under us */
- 	gmu->idle_level = GMU_IDLE_STATE_ACTIVE;
 -- 
 2.39.5
 
