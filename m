@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F7F1898F8;
-	Wed,  5 Feb 2025 15:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BCC1519A9;
+	Wed,  5 Feb 2025 15:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767610; cv=none; b=c8J8T1rY0FiMDeQeBv28LOG2qs5vg9IAbaKEm4Iv60IJNARJtks5fOTdP7cFxZCK13R3wMLI1aC6lEKz9Ipajw1DNe3XrXqaJRdBIRpuoPByeEVDZPyAtdUBFyaLKSTmi7hOrkbfF1dYwQoLDEQdRSVFTeUGUNOpJWjD9DSIOrU=
+	t=1738767613; cv=none; b=WIBuzWhK1708Da7vcWh45V6f8S3+7qtd7mg+O0cSeg1e+WUPIJDJ1U345ls1X6d8F/N2CV2AQ7+vomcjoiEtPk+Iu5zmcQnDW0tGGlQ3dnnl22zhix8XhKk7/zdBq6D8EEYLL0JSqUic1CFPyp7n3OFdajwIkLGD9OqN3kCK3Yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767610; c=relaxed/simple;
-	bh=aPISWEpci008E8jDwPYx62m/pUVVb+yqrduiUHoi8YE=;
+	s=arc-20240116; t=1738767613; c=relaxed/simple;
+	bh=vs43NCl8e1XSi7UXAvaPCsIXbYPiptmhEy8ogMUGLak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+sMr5b3J0eAwS2SYbfQcHsL/ob3brv5j2I+UrKRSBT+BqsGoulxsyntViqzD/8M1Oy/A7vKju19omKH3UdVotF8+ZHME59dmW4XKYxyrlwBmbSbhEhU2j9Jizja4RfaZKtME3Ueas8O/i7EL4J0VUpArETZzzG3DvHF6mPKTKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gn96qDUc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kXvvv+nSXoqGDV3EaI5m0A8AY5f5561mmsosjrn4VTr4E1FAjYuzEKmUOySf5F6T3o0KIDZrxO92CvGuKmVdqcDWJQ3eCmAQlKGbAieoZPCgQ7wwQkFV8rqyqv6gffWDiQbNB1lyQ1w8sUuRdRJ5MWB3RpeQVN/YiyTqrcJCWog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtFTnHQn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gn96qDUc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7561DC4CED1;
-	Wed,  5 Feb 2025 15:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtFTnHQn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED993C4CED1;
+	Wed,  5 Feb 2025 15:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767609;
-	bh=aPISWEpci008E8jDwPYx62m/pUVVb+yqrduiUHoi8YE=;
+	s=korg; t=1738767613;
+	bh=vs43NCl8e1XSi7UXAvaPCsIXbYPiptmhEy8ogMUGLak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gn96qDUcKdGKMJ70Tn7bNPqJsUQr3gI4EfOAvV3ioNEDWtfRyvc5jwJnssRn9abM5
-	 8aKEfXo4d6Bbnu5TegE9i6p/QRuzWrFjLltu0eHfzJFuVZgqaSyZzzQtP5yhBanxjN
-	 QOxdPe7m5hFJx8+a1yvlaKlerj8cStiugxMQa89w=
+	b=FtFTnHQnioNUCIYZK+Yb9/bAD71HJOAcB5Gf03TgjBWw1e64sAKx0euI8g8LJj/l1
+	 pimCDC5n6g0uvPuWD66UClaDTSxn4jZJKOf5h7ztKolGct90jpAeXv6R7dLKgjFWDP
+	 c0GPqD4VohAx23tYBQ4GwGoICX++CdgrAxZFfOcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	Lance Richardson <rlance@google.com>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
+	Krishneil Singh <krishneil.k.singh@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 428/623] i3c: dw: Fix use-after-free in dw_i3c_master driver due to race condition
-Date: Wed,  5 Feb 2025 14:42:50 +0100
-Message-ID: <20250205134512.597374933@linuxfoundation.org>
+Subject: [PATCH 6.12 482/590] idpf: add read memory barrier when checking descriptor done bit
+Date: Wed,  5 Feb 2025 14:43:57 +0100
+Message-ID: <20250205134513.702332122@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +51,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-[ Upstream commit b75439c945b94dd8a2b645355bdb56f948052601 ]
+[ Upstream commit 396f0165672c6a74d7379027d344b83b5f05948c ]
 
-In dw_i3c_common_probe, &master->hj_work is bound with
-dw_i3c_hj_work. And dw_i3c_master_irq_handler can call
-dw_i3c_master_irq_handle_ibis function to start the work.
+Add read memory barrier to ensure the order of operations when accessing
+control queue descriptors. Specifically, we want to avoid cases where loads
+can be reordered:
 
-If we remove the module which will call dw_i3c_common_remove to
-make cleanup, it will free master->base through i3c_master_unregister
-while the work mentioned above will be used. The sequence of operations
-that may lead to a UAF bug is as follows:
+1. Load #1 is dispatched to read descriptor flags.
+2. Load #2 is dispatched to read some other field from the descriptor.
+3. Load #2 completes, accessing memory/cache at a point in time when the DD
+   flag is zero.
+4. NIC DMA overwrites the descriptor, now the DD flag is one.
+5. Any fields loaded before step 4 are now inconsistent with the actual
+   descriptor state.
 
-CPU0                                      CPU1
+Add read memory barrier between steps 1 and 2, so that load #2 is not
+executed until load #1 has completed.
 
-                                     | dw_i3c_hj_work
-dw_i3c_common_remove                 |
-i3c_master_unregister(&master->base) |
-device_unregister(&master->dev)      |
-device_release                       |
-//free master->base                  |
-                                     | i3c_master_do_daa(&master->base)
-                                     | //use master->base
-
-Fix it by ensuring that the work is canceled before proceeding with
-the cleanup in dw_i3c_common_remove.
-
-Fixes: 1dd728f5d4d4 ("i3c: master: Add driver for Synopsys DesignWare IP")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Acked-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Link: https://lore.kernel.org/r/bfc49c9527be5b513e7ceafeba314ca40a5be4bc.1732703537.git.xiaopei01@kylinos.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 8077c727561a ("idpf: add controlq init and reset checks")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Suggested-by: Lance Richardson <rlance@google.com>
+Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
+Tested-by: Krishneil Singh <krishneil.k.singh@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/dw-i3c-master.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/idpf/idpf_controlq.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
-index d4b80eb8cecdf..343b2f9ca63c3 100644
---- a/drivers/i3c/master/dw-i3c-master.c
-+++ b/drivers/i3c/master/dw-i3c-master.c
-@@ -1647,6 +1647,7 @@ EXPORT_SYMBOL_GPL(dw_i3c_common_probe);
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_controlq.c b/drivers/net/ethernet/intel/idpf/idpf_controlq.c
+index 4849590a5591f..b28991dd18703 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_controlq.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_controlq.c
+@@ -376,6 +376,9 @@ int idpf_ctlq_clean_sq(struct idpf_ctlq_info *cq, u16 *clean_count,
+ 		if (!(le16_to_cpu(desc->flags) & IDPF_CTLQ_FLAG_DD))
+ 			break;
  
- void dw_i3c_common_remove(struct dw_i3c_master *master)
- {
-+	cancel_work_sync(&master->hj_work);
- 	i3c_master_unregister(&master->base);
++		/* Ensure no other fields are read until DD flag is checked */
++		dma_rmb();
++
+ 		/* strip off FW internal code */
+ 		desc_err = le16_to_cpu(desc->ret_val) & 0xff;
  
- 	pm_runtime_disable(master->dev);
+@@ -563,6 +566,9 @@ int idpf_ctlq_recv(struct idpf_ctlq_info *cq, u16 *num_q_msg,
+ 		if (!(flags & IDPF_CTLQ_FLAG_DD))
+ 			break;
+ 
++		/* Ensure no other fields are read until DD flag is checked */
++		dma_rmb();
++
+ 		q_msg[i].vmvf_type = (flags &
+ 				      (IDPF_CTLQ_FLAG_FTYPE_VM |
+ 				       IDPF_CTLQ_FLAG_FTYPE_PF)) >>
 -- 
 2.39.5
 
