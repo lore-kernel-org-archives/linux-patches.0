@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECAF18A6A9;
-	Wed,  5 Feb 2025 15:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9031DC9AA;
+	Wed,  5 Feb 2025 15:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768514; cv=none; b=TxdfpvwlBrMeviN/Ewwkkf3huwKJMlpSc9cGA4pOwZvl1YzSxhDWnrfOyowTT4+9GebHtNaOHPcSDWl0eRQtHRS539XrLnX9VyTclUWwKsPk+EoMZQjYPcPELLiyPVgHSXXjCfK5P2lXsCpIGoi1AYc27FM0oqIAVvjzDem9zxs=
+	t=1738768517; cv=none; b=BYdaqv8UumnzbmGm/tlARoCJFAk5QGFUM7r73rG0IrCjbzyxUkAw4V2BMpYXbkHoL+AmHNAB2UsU59kU79NAcnYGjQWeAnHTwBx8RmGRNazIzObibI1EazJ7hiWxDVI3ummCCEHdiJmcARuhivmfU7P69TF39rZl4drpP3TkEP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768514; c=relaxed/simple;
-	bh=hXyIybBsp44Yd+hWGVVDNxu+dJR+0bA7B6dOzUmd4bU=;
+	s=arc-20240116; t=1738768517; c=relaxed/simple;
+	bh=EABrEYW2OdubtjOjaqYjaIE1/13bCgWw3eBKLBc4az0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ozNNJxtlOHYWSbUOZPl0cuykDvOWR7NwzwCYHEagpsNK2HwO4d/VbECYQJxR7bU0I1oi59ke/9uJCilSYZ5gT8ZbGMIPlX7aO1FYyNiLZvSZOI+JWyB+TUjcN8DmxxbdutTAl/UaOPZdvU5hfg6I7uXkcDE0F3zGSJ3VOuDRO6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLT5Wo2h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lpvm9rW9baDJw5CRbzdwTX4QD/rf5tEs64zyE8JQQ2fpkjemgbo5v99jglGKKfdsOyiJzqPsNp1weWJejHkmtSgyz2cv/HtJj//+sQUSADzaedYm3juAsMktXQri1pYHgd2Sbbkb6gUsjk2eb2QIrQzA2j/1xmkf9KnJ9oKogjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=St/oIxml; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLT5Wo2h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D7BC4CEDD;
-	Wed,  5 Feb 2025 15:15:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="St/oIxml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B581C4CED6;
+	Wed,  5 Feb 2025 15:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768514;
-	bh=hXyIybBsp44Yd+hWGVVDNxu+dJR+0bA7B6dOzUmd4bU=;
+	s=korg; t=1738768517;
+	bh=EABrEYW2OdubtjOjaqYjaIE1/13bCgWw3eBKLBc4az0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLT5Wo2hSrTzKzTAKoivi2igNqBOmeVVAHnYNFMkPxYYD3WCmbpyUKUT0/HudF2HF
-	 0Avma4GllxyHObrJkBh8Kk+ukp8H6z2VdIU42myLHKS0ZERvNocreAjP4eenj5Ml36
-	 2VxVR515nJ5kkt/QD0fcohI1S0xoSW1ZQn17XdyU=
+	b=St/oIxmlWZ1Df2ZqoP4v+Y4n81J5lWTk+c37nhaTPcEByKJg74uAbDNotJ2CDZsEZ
+	 Xdg2H/Blkacen1ky1xW5kSp7ZQrq0ylwSnjZV1gAbUb/nfo0xUX4RXi517Ge3wq3Il
+	 NDdVrdzVFnCYT2in1l8tGDgJnM57AG3OVuCcqvCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.13 578/623] Revert "SUNRPC: Reduce thread wake-up rate when receiving large RPC messages"
-Date: Wed,  5 Feb 2025 14:45:20 +0100
-Message-ID: <20250205134518.334644783@linuxfoundation.org>
+	Noam Rathaus <noamr@ssd-disclosure.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.13 579/623] netfilter: nf_tables: reject mismatching sum of field_len with set key length
+Date: Wed,  5 Feb 2025 14:45:21 +0100
+Message-ID: <20250205134518.372770857@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,67 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 966a675da844f1a764bb44557c21561cc3d09840 upstream.
+commit 1b9335a8000fb70742f7db10af314104b6ace220 upstream.
 
-I noticed that a handful of NFSv3 fstests were taking an
-unexpectedly long time to run. Troubleshooting showed that the
-server's TCP window closed and never re-opened, which caused the
-client to trigger an RPC retransmit timeout after 180 seconds.
+The field length description provides the length of each separated key
+field in the concatenation, each field gets rounded up to 32-bits to
+calculate the pipapo rule width from pipapo_init(). The set key length
+provides the total size of the key aligned to 32-bits.
 
-The client's recovery action was to establish a fresh connection
-and retransmit the timed-out requests. This worked, but it adds a
-long delay.
+Register-based arithmetics still allows for combining mismatching set
+key length and field length description, eg. set key length 10 and field
+description [ 5, 4 ] leading to pipapo width of 12.
 
-I tracked the problem to the commit that attempted to reduce the
-rate at which the network layer delivers TCP socket data_ready
-callbacks. Under most circumstances this change worked as expected,
-but for NFSv3, which has no session or other type of throttling, it
-can overwhelm the receiver on occasion.
-
-I'm sure I could tweak the lowat settings, but the small benefit
-doesn't seem worth the bother. Just revert it.
-
-Fixes: 2b877fc53e97 ("SUNRPC: Reduce thread wake-up rate when receiving large RPC messages")
-Cc: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: stable@vger.kernel.org
+Fixes: 3ce67e3793f4 ("netfilter: nf_tables: do not allow mismatch field size and set key length")
+Reported-by: Noam Rathaus <noamr@ssd-disclosure.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcsock.c |   12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ net/netfilter/nf_tables_api.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -1083,9 +1083,6 @@ static void svc_tcp_fragment_received(st
- 	/* If we have more data, signal svc_xprt_enqueue() to try again */
- 	svsk->sk_tcplen = 0;
- 	svsk->sk_marker = xdr_zero;
--
--	smp_wmb();
--	tcp_set_rcvlowat(svsk->sk_sk, 1);
- }
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -5074,7 +5074,7 @@ static int nft_set_desc_concat_parse(con
+ static int nft_set_desc_concat(struct nft_set_desc *desc,
+ 			       const struct nlattr *nla)
+ {
+-	u32 num_regs = 0, key_num_regs = 0;
++	u32 len = 0, num_regs;
+ 	struct nlattr *attr;
+ 	int rem, err, i;
  
- /**
-@@ -1175,17 +1172,10 @@ err_incomplete:
- 		goto err_delete;
- 	if (len == want)
- 		svc_tcp_fragment_received(svsk);
--	else {
--		/* Avoid more ->sk_data_ready() calls until the rest
--		 * of the message has arrived. This reduces service
--		 * thread wake-ups on large incoming messages. */
--		tcp_set_rcvlowat(svsk->sk_sk,
--				 svc_sock_reclen(svsk) - svsk->sk_tcplen);
--
-+	else
- 		trace_svcsock_tcp_recv_short(&svsk->sk_xprt,
- 				svc_sock_reclen(svsk),
- 				svsk->sk_tcplen - sizeof(rpc_fraghdr));
--	}
- 	goto err_noclose;
- error:
- 	if (len != -EAGAIN)
+@@ -5088,12 +5088,12 @@ static int nft_set_desc_concat(struct nf
+ 	}
+ 
+ 	for (i = 0; i < desc->field_count; i++)
+-		num_regs += DIV_ROUND_UP(desc->field_len[i], sizeof(u32));
++		len += round_up(desc->field_len[i], sizeof(u32));
+ 
+-	key_num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
+-	if (key_num_regs != num_regs)
++	if (len != desc->klen)
+ 		return -EINVAL;
+ 
++	num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
+ 	if (num_regs > NFT_REG32_COUNT)
+ 		return -E2BIG;
+ 
 
 
