@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7325418CBFB;
-	Wed,  5 Feb 2025 14:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100CB18C93C;
+	Wed,  5 Feb 2025 14:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766897; cv=none; b=OLFPcR6SZwSvk8s5pozvmgCsOHP8OZuhpcbukyWKoyTJpczZc1l0xPnp/SKxe9GeezHYBIBE3ChbvpWDXN4K6nkiKMRd8ztS9bnKMsh+w7G0mMntj4MEraRslyz0qvTK41tTRhucdXQVKAKbn80qJUj2fpyM08ZAJ6l8ZgN8SO4=
+	t=1738766901; cv=none; b=qCaqPvjtrXTdWpYCiCEayDQCBB9kqydJPYmQHAytcBk21bpLOcaDanYeK42g2uL2+ONKm0u6NIisLun8TEp9lBE1v2Plq+L7xm+Yq6P0k6XvU39L9N5JdF/TxxFx+sol68V7c+G8bYq1yJguKTx9f8e+mlrSoB/LktSZdRoSRiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766897; c=relaxed/simple;
-	bh=h+c0267ULn9KYdFwyC5j4V0LIMw/eV1cQMNaxYu6QrM=;
+	s=arc-20240116; t=1738766901; c=relaxed/simple;
+	bh=OIsrpz956PQeG8+CsPMbm3+OArnI4oclnT3K5DsRw/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RTo3Tz9yvjEQxBGkCLdvBy29pxj/34AlqITpvHb+mG2txqVGsZDc6XZnDlFtmDtwMUDKP4JI+fw/ULhPoFBxzeVNYr3YUnrTFcCOaexua71o6t1IDAeL5n+U2KMII+ParmaJ/nPDaPDQXKXrOJc9+gndbHB2zGwuDIYk/wb2ns0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VT51l23v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XbBlN0fRLNhLSiI6GzMs68/R9Vpdlib22hRYz0GQ8KJTy/szlYO1Jz6eklSiSvD8hQsCFjMev1IH8X1cL0noSlwv/TAhJdqNxjru5rM4XtmlCOTzBwQijOWn7mUhJ5pRgdesjsMLJLPcpgB7usqUXSHSAGbS8sJSvr4nIoZ9LqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03Pibu8w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VT51l23v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DE1C4CED1;
-	Wed,  5 Feb 2025 14:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03Pibu8w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B98C4CED1;
+	Wed,  5 Feb 2025 14:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766897;
-	bh=h+c0267ULn9KYdFwyC5j4V0LIMw/eV1cQMNaxYu6QrM=;
+	s=korg; t=1738766900;
+	bh=OIsrpz956PQeG8+CsPMbm3+OArnI4oclnT3K5DsRw/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VT51l23v3GELXvVKk0njcf0Ysx/LhpBXOHvWTTjDKEqPQ7ECg/qdcUoi9HbAIRcQk
-	 NGhm4f56UjqDHrAwk3US49Z/xDWfV0+XZnW1X0ECoruSGOn2tPS1TI/X+QPx7ZURxA
-	 OH8pm26Bfvg4JkRfzJBMQ7qWhA5M5vPkmZr1fAVw=
+	b=03Pibu8whMo11vn/pJHN2bZ+AaKDKUNyqoSb0A4DhJARxUOQL1LZgUBPy6kQc+e18
+	 eEFt7dKTekpDUFhRIvnHMA+NGSjUoWiPCY1nSlPBAVIIpAmIsG9bmB5oJPE1UKJpBv
+	 26bOw78lNm9FmTIrOu9vjEvyW93jbdkO+gQ1wvEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Breno Leitao <leitao@debian.org>,
+	Mikhail Zaslonko <zaslonko@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 377/590] arm64: dts: qcom: sc7180: fix psci power domain node names
-Date: Wed,  5 Feb 2025 14:42:12 +0100
-Message-ID: <20250205134509.694709185@linuxfoundation.org>
+Subject: [PATCH 6.13 326/623] rhashtable: Fix rhashtable_try_insert test
+Date: Wed,  5 Feb 2025 14:41:08 +0100
+Message-ID: <20250205134508.696221382@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,98 +49,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 092febd32a99800902f865ed86b83314faa9c7e4 ]
+[ Upstream commit 9d4f8e54cef2c42e23ef258833dbd06a1eaff89b ]
 
-Rename the psci power domain node names to match the bindings.
+The test on whether rhashtable_insert_one did an insertion relies
+on the value returned by rhashtable_lookup_one.  Unfortunately that
+value is overwritten after rhashtable_insert_one returns.  Fix this
+by moving the test before data gets overwritten.
 
-This Fixes:
-sc7180-acer-aspire1.dts: psci: 'cpu-cluster0', 'cpu0', 'cpu1', 'cpu2', 'cpu3', 'cpu4', 'cpu5', 'cpu6', 'cpu7' do not match any of the regexes: '^power-domain-', 'pinctrl-[0-9]+'
+Simplify the test as only data == NULL matters.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241230-topic-misc-dt-fixes-v4-5-1e6880e9dda3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Finally move atomic_inc back within the lock as otherwise it may
+be reordered with the atomic_dec on the removal side, potentially
+leading to an underflow.
+
+Reported-by: Michael Kelley <mhklinux@outlook.com>
+Fixes: e1d3422c95f0 ("rhashtable: Fix potential deadlock by moving schedule_work outside lock")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Tested-by: Mikhail Zaslonko <zaslonko@linux.ibm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ lib/rhashtable.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 19df1c8f7891b..249b257fc6a74 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -583,55 +583,55 @@
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
+diff --git a/lib/rhashtable.c b/lib/rhashtable.c
+index bf956b85455ab..0e9a1d4cf89be 100644
+--- a/lib/rhashtable.c
++++ b/lib/rhashtable.c
+@@ -611,21 +611,23 @@ static void *rhashtable_try_insert(struct rhashtable *ht, const void *key,
+ 			new_tbl = rht_dereference_rcu(tbl->future_tbl, ht);
+ 			data = ERR_PTR(-EAGAIN);
+ 		} else {
++			bool inserted;
++
+ 			flags = rht_lock(tbl, bkt);
+ 			data = rhashtable_lookup_one(ht, bkt, tbl,
+ 						     hash, key, obj);
+ 			new_tbl = rhashtable_insert_one(ht, bkt, tbl,
+ 							hash, obj, data);
++			inserted = data && !new_tbl;
++			if (inserted)
++				atomic_inc(&ht->nelems);
+ 			if (PTR_ERR(new_tbl) != -EEXIST)
+ 				data = ERR_CAST(new_tbl);
  
--		cpu_pd0: cpu0 {
-+		cpu_pd0: power-domain-cpu0 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
+ 			rht_unlock(tbl, bkt, flags);
  
--		cpu_pd1: cpu1 {
-+		cpu_pd1: power-domain-cpu1 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
+-			if (PTR_ERR(data) == -ENOENT && !new_tbl) {
+-				atomic_inc(&ht->nelems);
+-				if (rht_grow_above_75(ht, tbl))
+-					schedule_work(&ht->run_work);
+-			}
++			if (inserted && rht_grow_above_75(ht, tbl))
++				schedule_work(&ht->run_work);
+ 		}
+ 	} while (!IS_ERR_OR_NULL(new_tbl));
  
--		cpu_pd2: cpu2 {
-+		cpu_pd2: power-domain-cpu2 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd3: cpu3 {
-+		cpu_pd3: power-domain-cpu3 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd4: cpu4 {
-+		cpu_pd4: power-domain-cpu4 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd5: cpu5 {
-+		cpu_pd5: power-domain-cpu5 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd6: cpu6 {
-+		cpu_pd6: power-domain-cpu6 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
- 		};
- 
--		cpu_pd7: cpu7 {
-+		cpu_pd7: power-domain-cpu7 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
- 		};
- 
--		cluster_pd: cpu-cluster0 {
-+		cluster_pd: power-domain-cluster {
- 			#power-domain-cells = <0>;
- 			domain-idle-states = <&cluster_sleep_pc
- 					      &cluster_sleep_cx_ret
 -- 
 2.39.5
 
