@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC72149DE8;
-	Wed,  5 Feb 2025 13:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7B114A4E9;
+	Wed,  5 Feb 2025 13:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763815; cv=none; b=kB19JwPCPBgJY0OyApe8nYT5vaf+cN/U0Ba/cR73wR1eYqiGm9uEzmQzGm19rux5s8yHRjhsL5VkQI4H5axfWelOyzg6co/mLDTK22fIczo0NuyOw/q8gwYDLOUeQNYMgcE6WKemXdSDlCkMu6hZN1MWNBWu+JiYF2+1oEZIEhY=
+	t=1738763819; cv=none; b=KNuc6LBLm4MDS2YCnqDRJJlmyMyYJ3Xy2Hdsnade2TT2m4Tbn0uBEX0mYfL/HgNF+baNpjxNdy0Z2w9VAxEwozdz/tnF+6ZfG4mRYDz1QiiuZeXyO6yorpAm8YmRCKcGYB5NMVO6NOhlIwxjCo8Ia9NFzb+v5JAKGXtm2JuUIyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763815; c=relaxed/simple;
-	bh=qM8FfnsHoF6xKrPMiXs9E9H8nWL3IzV/NcR6O5hQXuw=;
+	s=arc-20240116; t=1738763819; c=relaxed/simple;
+	bh=92j3FbzGWaSMCBS2WYE13ze11pJx4f3w9MkmfFQ4/fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UFJlESrp4SVJmK10TzGW2OcMzhl+WBD2Z06QyZ9KpYrgDlfpvBHe7Y/50hbZHb5bvlDF1mr/8TCDfWfv4IgE/HtU1ds+cbDq+GrAS5uHY4dX4oVStgo3w4DeAK8F2/71gDRqytpKDZ+HdESzBKxSD1CMKbVTmVD0DupWi4/IFXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnIZlSke; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jXQM/Q1I6jTLh6byD5M0Z+UC+wEM3bIwdfHiUmNKpPf0rdVyW8E0Z5HdVIkiKAisHALHkr5IhIwDrlNR74dD/ftIlm2+MwrOL3Lm0G0+mYHkTDpt8xXSYMVrRMkDrpc5W5cR5Dc4AstQkMGhcNtK+cqoHEB+ZkWSA742Z6VfQhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4Cv77h4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnIZlSke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F33C4CED1;
-	Wed,  5 Feb 2025 13:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4Cv77h4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8E2C4CED1;
+	Wed,  5 Feb 2025 13:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763815;
-	bh=qM8FfnsHoF6xKrPMiXs9E9H8nWL3IzV/NcR6O5hQXuw=;
+	s=korg; t=1738763819;
+	bh=92j3FbzGWaSMCBS2WYE13ze11pJx4f3w9MkmfFQ4/fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GnIZlSkehegPNMQ73ViCLW9C3Vcyn/NLPbAPg76OIEMas/L6G3ZUn5jUm6UUdIu2F
-	 OTgjY0nmlNvy3AS99fAyhRTJHU4fSIFQjSey49dmC9OtINmo+HaX8jjP6xU8YY2YgH
-	 Ok4dRsZV7pNxiKLNP5VRtmyNhpJ8LeTQGCK8lkEo=
+	b=o4Cv77h4rNj1eehGUH2oMNYOSs9dbTgZraQE9AhnIKjkqtJOO74XkZFS/JV5T0XPs
+	 s8pU5NEju6wtBWTeh7nT0fAaTQXLa06wcj56ujtInOCfpItnlusvLQBAXQOxiwqnlS
+	 +F4BmJVimbarh81D/B6UqPZ3qqKnDnxdDZ6489P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Cavallari <nicolas.cavallari@green-communications.fr>,
-	Felix Fietkau <nbd@nbd.name>,
+	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 108/393] wifi: mt76: mt7915: Fix mesh scan on MT7916 DBDC
-Date: Wed,  5 Feb 2025 14:40:27 +0100
-Message-ID: <20250205134424.429879254@linuxfoundation.org>
+Subject: [PATCH 6.13 021/623] nvme: Add error check for xa_store in nvme_get_effects_log
+Date: Wed,  5 Feb 2025 14:36:03 +0100
+Message-ID: <20250205134457.039126755@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +49,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
+From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
 
-[ Upstream commit f21b77cb556296116b1cce1d62295d13e35da574 ]
+[ Upstream commit ac32057acc7f3d7a238dafaa9b2aa2bc9750080e ]
 
-commit c4f075582304 ("wifi: mt76: mt7915: fix command timeout in AP stop
-period") changes the behavior of mt7915_bss_info_changed() in mesh mode
-when enable_beacon becomes false: it calls mt7915_mcu_add_bss_info(...,
-false) and mt7915_mcu_add_sta(..., false) while the previous code
-didn't.  These sends mcu commands that apparently confuse the firmware.
+The xa_store() may fail due to memory allocation failure because there
+is no guarantee that the index csi is already used. This fix adds an
+error check of the return value of xa_store() in nvme_get_effects_log().
 
-This breaks scanning while in mesh mode on AsiaRF MT7916 DBDC-based cards:
-scanning works but no mesh frames get sent afterwards and the firmware
-seems to be hosed.  It breaks on MT7916 DBDC but not on MT7915 DBDC.
-
-Fixes: c4f075582304 ("wifi: mt76: mt7915: fix command timeout in AP stop period")
-Signed-off-by: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
-Link: https://patch.msgid.link/20240927085350.4594-1-nicolas.cavallari@green-communications.fr
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 1cf7a12e09aa ("nvme: use an xarray to lookup the Commands Supported and Effects log")
+Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index 4fd5fd555191a..d2429247c3b66 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -614,8 +614,9 @@ static void mt7915_bss_info_changed(struct ieee80211_hw *hw,
- 	if (changed & BSS_CHANGED_ASSOC)
- 		set_bss_info = vif->cfg.assoc;
- 	if (changed & BSS_CHANGED_BEACON_ENABLED &&
-+	    info->enable_beacon &&
- 	    vif->type != NL80211_IFTYPE_AP)
--		set_bss_info = set_sta = info->enable_beacon;
-+		set_bss_info = set_sta = 1;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index a970168a3014e..315692cb2e614 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3092,7 +3092,7 @@ int nvme_get_log(struct nvme_ctrl *ctrl, u32 nsid, u8 log_page, u8 lsp, u8 csi,
+ static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
+ 				struct nvme_effects_log **log)
+ {
+-	struct nvme_effects_log	*cel = xa_load(&ctrl->cels, csi);
++	struct nvme_effects_log *old, *cel = xa_load(&ctrl->cels, csi);
+ 	int ret;
  
- 	if (set_bss_info == 1)
- 		mt7915_mcu_add_bss_info(phy, vif, true);
+ 	if (cel)
+@@ -3109,7 +3109,11 @@ static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
+ 		return ret;
+ 	}
+ 
+-	xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
++	old = xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
++	if (xa_is_err(old)) {
++		kfree(cel);
++		return xa_err(old);
++	}
+ out:
+ 	*log = cel;
+ 	return 0;
 -- 
 2.39.5
 
