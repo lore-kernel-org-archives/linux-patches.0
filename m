@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9391B149C64;
-	Wed,  5 Feb 2025 13:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB1E1459F6;
+	Wed,  5 Feb 2025 13:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763653; cv=none; b=EItcx68DogzpakM3LiPpk8nUr289U24MXQZfUo/We2i/LgpJCbu/CB8gwY3tXVBSjkWR7PP8uWP/Yo+dDtVALAa7G6EleP/i/+0tshGVHGikEM1oQQ/PMw+HhOyuq2Idfj8qMK+AuOtU6zc4FYChMBh7tY10U12tQDF6l33AJXc=
+	t=1738763657; cv=none; b=iSkauyvJI6xIR1d//Ln7WhauFchwYcGzgVh4VlxUrrUrZHwNJTyX+P1SZMx+vKyS6YXcp/UNHwI8Yl+LWxMUvtdUvZK6gteOUd9JaeKi/4tbBTnF4pbn/ZStJs4aALP4t9z0iu/TvCx2dhfbQh5EgA7egaPcuo1TXKofZ/jk2qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763653; c=relaxed/simple;
-	bh=P7fnTOI3MHdGB2nTnQAQMABLegmTJqn0wxdd1q1ioOw=;
+	s=arc-20240116; t=1738763657; c=relaxed/simple;
+	bh=ErCHignTEg5SXds5lSPyB2P1oF9yRVT/1Bk6v1qbTP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wu2a7+m71tBlVq2Qb4Bwq9qYJ2FkX4fFfsa7wmUmV4+0wCXtZXRJ/mndkuqCszYtPfUn7ZmlwKIhK9IY6S/MQXqvx1gqkaO3qLUo7oe+v4ux7NdOvgLNIVWVjcTBYfG7LBfmFcBaDnxcuLXK8H0fQL1IA9IoK2mfjOlp36BGguo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VKeyRQby; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qBeiiDwc111prVl/KH2qMowhtQJZ93P8DRILor4uDohvDHQmZpJ9sDub+gjzCgIgM1wnBve+gEkP6qNDqhfIcNjHsrtR/VlFjdq1Grg7874eLkfuj3nTxrDQkTRL+m8Wy3KxlcvYXbRE9HTAuh6iFj5HsZK5PRRd028TeuO5wTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/LMFZ83; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VKeyRQby"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010A5C4CED1;
-	Wed,  5 Feb 2025 13:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/LMFZ83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776BFC4CEDD;
+	Wed,  5 Feb 2025 13:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763653;
-	bh=P7fnTOI3MHdGB2nTnQAQMABLegmTJqn0wxdd1q1ioOw=;
+	s=korg; t=1738763656;
+	bh=ErCHignTEg5SXds5lSPyB2P1oF9yRVT/1Bk6v1qbTP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VKeyRQbyVS5/q/IWXV/c20v67JvpwBZDX6qNiZ0EnaItBlsil9MaN3bF4u4Z8PTlk
-	 YjPE2kHod9Kdnqu9P5Pl6ZD+FFzZYPx2X8ewIDRTNBbFeZ4ssM8ims5nlGdIb5KenL
-	 ziYyz7K6XrHua7i7d6ys9ndzqJwYcECacBsSlnB8=
+	b=s/LMFZ83d7xm7XU0aQhyW+M9jksXtztDlA5ockbyiAo76iQiN6RcxJNALvk1XNgC0
+	 grduAZdekayZLTQjcUVtDM/7w1MyU2FO56MVMse713VfIZV0sc6n8rSJskXErgURvq
+	 AkB+sZ3Z9+KPx6OhJqvmntQJw31Z5zaWh5OlebbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>,
+	Derek Foreman <derek.foreman@collabora.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 006/623] afs: Fix directory format encoding struct
-Date: Wed,  5 Feb 2025 14:35:48 +0100
-Message-ID: <20250205134456.473326258@linuxfoundation.org>
+Subject: [PATCH 6.12 045/590] drm/rockchip: vop2: Fix the mixer alpha setup for layer 0
+Date: Wed,  5 Feb 2025 14:36:40 +0100
+Message-ID: <20250205134456.980122282@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,47 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit 07a10767853adcbdbf436dc91393b729b52c4e81 ]
+[ Upstream commit 6b4dfdcde3573a12b72d2869dabd4ca37ad7e9c7 ]
 
-The AFS directory format structure, union afs_xdr_dir_block::meta, has too
-many alloc counter slots declared and so pushes the hash table along and
-over the data.  This doesn't cause a problem at the moment because I'm
-currently ignoring the hash table and only using the correct number of
-alloc_ctrs in the code anyway.  In future, however, I should start using
-the hash table to try and speed up afs_lookup().
+The alpha setup should start from the second layer, the current calculation
+starts incorrectly from the first layer, a negative offset will be obtained
+in the following formula:
 
-Fix this by using the correct constant to declare the counter array.
+offset = (mixer_id + zpos - 1) * 0x10
 
-Fixes: 4ea219a839bf ("afs: Split the directory content defs into a header")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20241216204124.3752367-14-dhowells@redhat.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Tested-by: Derek Foreman <derek.foreman@collabora.com>
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241209122943.2781431-7-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/xdr_fs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/afs/xdr_fs.h b/fs/afs/xdr_fs.h
-index 8ca8681645077..cc5f143d21a34 100644
---- a/fs/afs/xdr_fs.h
-+++ b/fs/afs/xdr_fs.h
-@@ -88,7 +88,7 @@ union afs_xdr_dir_block {
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 594923303a850..630a204440ba8 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -2248,6 +2248,12 @@ static void vop2_setup_alpha(struct vop2_video_port *vp)
+ 		struct vop2_win *win = to_vop2_win(plane);
+ 		int zpos = plane->state->normalized_zpos;
  
- 	struct {
- 		struct afs_xdr_dir_hdr	hdr;
--		u8			alloc_ctrs[AFS_DIR_MAX_BLOCKS];
-+		u8			alloc_ctrs[AFS_DIR_BLOCKS_WITH_CTR];
- 		__be16			hashtable[AFS_DIR_HASHTBL_SIZE];
- 	} meta;
- 
++		/*
++		 * Need to configure alpha from second layer.
++		 */
++		if (zpos == 0)
++			continue;
++
+ 		if (plane->state->pixel_blend_mode == DRM_MODE_BLEND_PREMULTI)
+ 			premulti_en = 1;
+ 		else
 -- 
 2.39.5
 
