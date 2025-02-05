@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2CF126C18;
-	Wed,  5 Feb 2025 13:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A4C13AD22;
+	Wed,  5 Feb 2025 13:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763466; cv=none; b=aIATTYNPIvjrhx1auZ5IB2w8YSyUE+iwGboeDyEMuKDJj61SGydeoFEMyiAMjcIQc7azbZuO76PMNPUoczR/zo2/q+P2g+GnuugEyL4cCuhuncnRnKOPaJabGBIBI0g/CILbcB78fSzcCc5naI0F+frrPB0+671kyvFVzRPEVYo=
+	t=1738763469; cv=none; b=UUw/gQ7e8SuUKjT8a6bMrutZ/2ghGXzq++orkMtwHTUvkay42/0e0tSoD0+3q4q2PAEP4eoZmTdYceQ92voNhuqrlKAFPu4bSvHGmFe6oNQ3WiykrW5JOeSZhuJy8mq41FogvtcIIkUbyz1M1UE2xIuKAd4OEctQfIA84nYYXTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763466; c=relaxed/simple;
-	bh=Fz+I96vPbsMNsGwo3tWIZ7oqDt2zOS5d0lALahflZjg=;
+	s=arc-20240116; t=1738763469; c=relaxed/simple;
+	bh=Bqo1HTA2X4rlffYP+HKBD3xx7/dcdHMChOiTUufORcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FhJ/BnnlYJSemSE9hNUPKrYSb3h8gU+7EcPow7gA3LYsoBC95l6zB0OXAdKLDn+kEHVk7bD87Yi8Xyc/lDy2c4LDT4Uumia6aCnePWzhFE+/vYXTXgYH/C3St2zI5Jkc/dtNx8mDedinjzn94+2taob0McJaPcEDMeuBBv5TeQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FayKSgoo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CTdjOB1xCxhwDHdHJPV05Ja4SdwPTXzuDWmDLCeEnonyCzYQKsBVKvKdBl+4wRKaUtMr0OOXoxFOHL8d48ghCtUDCEmZ3+LW0+o7eoQpO45TzCHx57ddUybEM1GhwTz1htWA2jCzZTM5dcOXrGg8l0NxTpBT+/cWSUz93qyYSbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qbe7GnK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FayKSgoo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63955C4CED1;
-	Wed,  5 Feb 2025 13:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qbe7GnK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BB4C4CED1;
+	Wed,  5 Feb 2025 13:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763466;
-	bh=Fz+I96vPbsMNsGwo3tWIZ7oqDt2zOS5d0lALahflZjg=;
+	s=korg; t=1738763469;
+	bh=Bqo1HTA2X4rlffYP+HKBD3xx7/dcdHMChOiTUufORcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FayKSgooycH5n1TPiCfsLssg2/I53akRalCztha/8ydUSekjXpP/EPYl5sRppWrZV
-	 ySeKkPN5cZuICo519WCAd8lvbqE5Wn2fmXNSrsMB/EOjCaapGZKT3JGwDEURuaoD+9
-	 b8DpT8PO7GE3sdlv5dOqZgXADYeNtlUwhuCIyaow=
+	b=1qbe7GnKhLewRjV6sHVZ3gfh6sjpkIfllGR0Ly7zWzBdz9VmQEQmJTtPdu+l12dQ4
+	 mXjAL+aSUC3kXVqv3oCBylaVSi3X8e4Ng5P6Zp9MBX6CwfiofUh4BlhzjpshfgtDqm
+	 u16lBffaKA9IEGcWWuRQu/GuocD0meQcaBHAXLTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Gaurav Batra <gbatra@linux.ibm.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 069/393] wifi: rtlwifi: pci: wait for firmware loading before releasing memory
-Date: Wed,  5 Feb 2025 14:39:48 +0100
-Message-ID: <20250205134422.933655022@linuxfoundation.org>
+Subject: [PATCH 6.12 018/590] powerpc/pseries/iommu: IOMMU incorrectly marks MMIO range in DDW
+Date: Wed,  5 Feb 2025 14:36:13 +0100
+Message-ID: <20250205134455.938020306@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +48,127 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Gaurav Batra <gbatra@linux.ibm.com>
 
-[ Upstream commit b59b86c5d08be7d761c04affcbcec8184738c200 ]
+[ Upstream commit 8f70caad82e9c088ed93b4fea48d941ab6441886 ]
 
-At probe error path, the firmware loading work may have already been
-queued. In such a case, it will try to access memory allocated by the probe
-function, which is about to be released. In such paths, wait for the
-firmware worker to finish before releasing memory.
+Power Hypervisor can possibily allocate MMIO window intersecting with
+Dynamic DMA Window (DDW) range, which is over 32-bit addressing.
 
-Fixes: 3d86b93064c7 ("rtlwifi: Fix PCI probe error path orphaned memory")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241206173713.3222187-5-cascardo@igalia.com
+These MMIO pages needs to be marked as reserved so that IOMMU doesn't map
+DMA buffers in this range.
+
+The current code is not marking these pages correctly which is resulting
+in LPAR to OOPS while booting. The stack is at below
+
+BUG: Unable to handle kernel data access on read at 0xc00800005cd40000
+Faulting instruction address: 0xc00000000005cdac
+Oops: Kernel access of bad area, sig: 11 [#1]
+LE PAGE_SIZE=64K MMU=Hash SMP NR_CPUS=2048 NUMA pSeries
+Modules linked in: af_packet rfkill ibmveth(X) lpfc(+) nvmet_fc nvmet nvme_keyring crct10dif_vpmsum nvme_fc nvme_fabrics nvme_core be2net(+) nvme_auth rtc_generic nfsd auth_rpcgss nfs_acl lockd grace sunrpc fuse configfs ip_tables x_tables xfs libcrc32c dm_service_time ibmvfc(X) scsi_transport_fc vmx_crypto gf128mul crc32c_vpmsum dm_mirror dm_region_hash dm_log dm_multipath dm_mod sd_mod scsi_dh_emc scsi_dh_rdac scsi_dh_alua t10_pi crc64_rocksoft_generic crc64_rocksoft sg crc64 scsi_mod
+Supported: Yes, External
+CPU: 8 PID: 241 Comm: kworker/8:1 Kdump: loaded Not tainted 6.4.0-150600.23.14-default #1 SLE15-SP6 b44ee71c81261b9e4bab5e0cde1f2ed891d5359b
+Hardware name: IBM,9080-M9S POWER9 (raw) 0x4e2103 0xf000005 of:IBM,FW950.B0 (VH950_149) hv:phyp pSeries
+Workqueue: events work_for_cpu_fn
+NIP:  c00000000005cdac LR: c00000000005e830 CTR: 0000000000000000
+REGS: c00001400c9ff770 TRAP: 0300   Not tainted  (6.4.0-150600.23.14-default)
+MSR:  800000000280b033 <SF,VEC,VSX,EE,FP,ME,IR,DR,RI,LE>  CR: 24228448  XER: 00000001
+CFAR: c00000000005cdd4 DAR: c00800005cd40000 DSISR: 40000000 IRQMASK: 0
+GPR00: c00000000005e830 c00001400c9ffa10 c000000001987d00 c00001400c4fe800
+GPR04: 0000080000000000 0000000000000001 0000000004000000 0000000000800000
+GPR08: 0000000004000000 0000000000000001 c00800005cd40000 ffffffffffffffff
+GPR12: 0000000084228882 c00000000a4c4f00 0000000000000010 0000080000000000
+GPR16: c00001400c4fe800 0000000004000000 0800000000000000 c00000006088b800
+GPR20: c00001401a7be980 c00001400eff3800 c000000002a2da68 000000000000002b
+GPR24: c0000000026793a8 c000000002679368 000000000000002a c0000000026793c8
+GPR28: 000008007effffff 0000080000000000 0000000000800000 c00001400c4fe800
+NIP [c00000000005cdac] iommu_table_reserve_pages+0xac/0x100
+LR [c00000000005e830] iommu_init_table+0x80/0x1e0
+Call Trace:
+[c00001400c9ffa10] [c00000000005e810] iommu_init_table+0x60/0x1e0 (unreliable)
+[c00001400c9ffa90] [c00000000010356c] iommu_bypass_supported_pSeriesLP+0x9cc/0xe40
+[c00001400c9ffc30] [c00000000005c300] dma_iommu_dma_supported+0xf0/0x230
+[c00001400c9ffcb0] [c00000000024b0c4] dma_supported+0x44/0x90
+[c00001400c9ffcd0] [c00000000024b14c] dma_set_mask+0x3c/0x80
+[c00001400c9ffd00] [c0080000555b715c] be_probe+0xc4/0xb90 [be2net]
+[c00001400c9ffdc0] [c000000000986f3c] local_pci_probe+0x6c/0x110
+[c00001400c9ffe40] [c000000000188f28] work_for_cpu_fn+0x38/0x60
+[c00001400c9ffe70] [c00000000018e454] process_one_work+0x314/0x620
+[c00001400c9fff10] [c00000000018f280] worker_thread+0x2b0/0x620
+[c00001400c9fff90] [c00000000019bb18] kthread+0x148/0x150
+[c00001400c9fffe0] [c00000000000ded8] start_kernel_thread+0x14/0x18
+
+There are 2 issues in the code
+
+1. The index is "int" while the address is "unsigned long". This results in
+   negative value when setting the bitmap.
+
+2. The DMA offset is page shifted but the MMIO range is used as-is (64-bit
+   address). MMIO address needs to be page shifted as well.
+
+Fixes: 3c33066a2190 ("powerpc/kernel/iommu: Add new iommu_table_in_use() helper")
+
+Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20241206210039.93172-1-gbatra@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/kernel/iommu.c            | 2 +-
+ arch/powerpc/platforms/pseries/iommu.c | 9 ++++++---
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 711f75ce7690a..3abd0c4c954bc 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -2220,6 +2220,7 @@ int rtl_pci_probe(struct pci_dev *pdev,
- fail4:
- 	rtl_deinit_core(hw);
- fail3:
-+	wait_for_completion(&rtlpriv->firmware_loading_complete);
- 	rtlpriv->cfg->ops->deinit_sw_vars(hw);
+diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
+index 76381e14e800c..0ebae6e4c19dd 100644
+--- a/arch/powerpc/kernel/iommu.c
++++ b/arch/powerpc/kernel/iommu.c
+@@ -687,7 +687,7 @@ void iommu_table_clear(struct iommu_table *tbl)
+ void iommu_table_reserve_pages(struct iommu_table *tbl,
+ 		unsigned long res_start, unsigned long res_end)
+ {
+-	int i;
++	unsigned long i;
  
- fail2:
+ 	WARN_ON_ONCE(res_end < res_start);
+ 	/*
+diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
+index 534cd159e9ab4..29f1a0cc59cd5 100644
+--- a/arch/powerpc/platforms/pseries/iommu.c
++++ b/arch/powerpc/platforms/pseries/iommu.c
+@@ -1650,7 +1650,8 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 		iommu_table_setparms_common(newtbl, pci->phb->bus->number, create.liobn,
+ 					    dynamic_addr, dynamic_len, page_shift, NULL,
+ 					    &iommu_table_lpar_multi_ops);
+-		iommu_init_table(newtbl, pci->phb->node, start, end);
++		iommu_init_table(newtbl, pci->phb->node,
++				 start >> page_shift, end >> page_shift);
+ 
+ 		pci->table_group->tables[default_win_removed ? 0 : 1] = newtbl;
+ 
+@@ -2065,7 +2066,9 @@ static long spapr_tce_create_table(struct iommu_table_group *table_group, int nu
+ 							    offset, 1UL << window_shift,
+ 							    IOMMU_PAGE_SHIFT_4K, NULL,
+ 							    &iommu_table_lpar_multi_ops);
+-				iommu_init_table(tbl, pci->phb->node, start, end);
++				iommu_init_table(tbl, pci->phb->node,
++						 start >> IOMMU_PAGE_SHIFT_4K,
++						 end >> IOMMU_PAGE_SHIFT_4K);
+ 
+ 				table_group->tables[0] = tbl;
+ 
+@@ -2136,7 +2139,7 @@ static long spapr_tce_create_table(struct iommu_table_group *table_group, int nu
+ 	/* New table for using DDW instead of the default DMA window */
+ 	iommu_table_setparms_common(tbl, pci->phb->bus->number, create.liobn, win_addr,
+ 				    1UL << len, page_shift, NULL, &iommu_table_lpar_multi_ops);
+-	iommu_init_table(tbl, pci->phb->node, start, end);
++	iommu_init_table(tbl, pci->phb->node, start >> page_shift, end >> page_shift);
+ 
+ 	pci->table_group->tables[num] = tbl;
+ 	set_iommu_table_base(&pdev->dev, tbl);
 -- 
 2.39.5
 
