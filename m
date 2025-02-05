@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E1E188736;
-	Wed,  5 Feb 2025 15:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D459188CD8;
+	Wed,  5 Feb 2025 15:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768597; cv=none; b=UXqYV6zJDj9ISf3bu84j/PHTYsTzK39r9V1oN63szmVlEdXLQTu0QfAPZ9q2kYLH0gSJ0JG4lxbKrMSxKPCQ1oxiYHCZHgwH8bT5P8m/A2iW+eKYGtJhuy6LrwMN9zBkQxqAvgf15TYMk/q918ldetvJ0OQX1Ot+EzbdOaRvGFc=
+	t=1738768600; cv=none; b=GaLwv7NlBf/dA2+9coPxZ6GfpwIa7rCo0kgrkYO8344BG/yxtQ6Hxj7WXXlmrMV41SNA5Q80qsUgazrtSHcplnccX74rPFI6CNgQe+01q1ro8CBd+NbQWmZWA7ngyFCj0Y4lsDDCXoMOTW0Qkbv5ybBdqCe9d6eJ3JMxvqMDJR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768597; c=relaxed/simple;
-	bh=oc/RrMbKNvi1UBsEVWKbklY7STYdmYc1M/MNlBHV4qk=;
+	s=arc-20240116; t=1738768600; c=relaxed/simple;
+	bh=HDgfLj+WsYICB/30AKc9vitQgGQ5Lpq653WdUePvOMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WVq8Ir9sIob2Uay20tPrxfC85uH5NHIzIFmQ48G5DFSgppWzdJaXDGtn1jxcTWFZjcGO3MEjuTkxHJoFIwkfpbS7PRKux/Xtw8jOJiN6xulRlycIaSYigHrLmIA0bl8ceKfsIuwOpcrkb4hw8wHV9hrdANnuf4G/+a9uH00Q2D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgi2rCis; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nm/WkTHd35BuflxL0oJ8Fvwd0Kvu71LU9p5HzovcE2rgGLB7+h022XV5U4iP4zcxdaS2fVglMhkicQgcoFSjme9rxwYC3q2ZRxD4v9aeCT3s7Mciw+emXiLl9Hl0g5ULyWMFs41AuQ9L958r2x68nGsEvJUxdIDi5TEDFiwaLts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/gzk1Pj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgi2rCis"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19600C4CED1;
-	Wed,  5 Feb 2025 15:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/gzk1Pj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FFCC4CED1;
+	Wed,  5 Feb 2025 15:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768596;
-	bh=oc/RrMbKNvi1UBsEVWKbklY7STYdmYc1M/MNlBHV4qk=;
+	s=korg; t=1738768600;
+	bh=HDgfLj+WsYICB/30AKc9vitQgGQ5Lpq653WdUePvOMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fgi2rCisww935tt8i/0nvP5qpIwrN81DHwplSXWYO0BxtnOvPv0M3184lcAXh3KVy
-	 RR7/aBtlfjKLGG3K2fqsO3n2EpIIR4XQo4kUFGRFzDn+KyrK34OdSm4E2KcbYWXZn0
-	 GMONdl7nInREk9++/oT5mBso+pNJFeRR+vo27izc=
+	b=f/gzk1Pj461WXissXOT3Xa3PYaXSPdXroRf3QzhNMHWubFSeDYOBKWjrrmKNaMFUb
+	 fCuTMQQeQAaoo4evTw4IsR32A5MwUkXhP7gUK2AQ4R1iNcP6doStlHayffMN6bmxp2
+	 lRqH7HkiOUAJaiAyykmdDaiXdeu0dU7Lt7nMvCPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.13 602/623] mptcp: blackhole only if 1st SYN retrans w/o MPC is accepted
-Date: Wed,  5 Feb 2025 14:45:44 +0100
-Message-ID: <20250205134519.252926829@linuxfoundation.org>
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.13 603/623] RDMA/mlx5: Fix implicit ODP use after free
+Date: Wed,  5 Feb 2025 14:45:45 +0100
+Message-ID: <20250205134519.291208331@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,49 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-commit e598d8981fd34470b78a1ae777dbf131b15d5bf2 upstream.
+commit d3d930411ce390e532470194296658a960887773 upstream.
 
-The Fixes commit mentioned this:
+Prevent double queueing of implicit ODP mr destroy work by using
+__xa_cmpxchg() to make sure this is the only time we are destroying this
+specific mr.
 
-> An MPTCP firewall blackhole can be detected if the following SYN
-> retransmission after a fallback to "plain" TCP is accepted.
+Without this change, we could try to invalidate this mr twice, which in
+turn could result in queuing a MR work destroy twice, and eventually the
+second work could execute after the MR was freed due to the first work,
+causing a user after free and trace below.
 
-But in fact, this blackhole was detected if any following SYN
-retransmissions after a fallback to TCP was accepted.
+   refcount_t: underflow; use-after-free.
+   WARNING: CPU: 2 PID: 12178 at lib/refcount.c:28 refcount_warn_saturate+0x12b/0x130
+   Modules linked in: bonding ib_ipoib vfio_pci ip_gre geneve nf_tables ip6_gre gre ip6_tunnel tunnel6 ipip tunnel4 ib_umad rdma_ucm mlx5_vfio_pci vfio_pci_core vfio_iommu_type1 mlx5_ib vfio ib_uverbs mlx5_core iptable_raw openvswitch nsh rpcrdma ib_iser libiscsi scsi_transport_iscsi rdma_cm iw_cm ib_cm ib_core xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry overlay zram zsmalloc fuse [last unloaded: ib_uverbs]
+   CPU: 2 PID: 12178 Comm: kworker/u20:5 Not tainted 6.5.0-rc1_net_next_mlx5_58c644e #1
+   Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+   Workqueue: events_unbound free_implicit_child_mr_work [mlx5_ib]
+   RIP: 0010:refcount_warn_saturate+0x12b/0x130
+   Code: 48 c7 c7 38 95 2a 82 c6 05 bc c6 fe 00 01 e8 0c 66 aa ff 0f 0b 5b c3 48 c7 c7 e0 94 2a 82 c6 05 a7 c6 fe 00 01 e8 f5 65 aa ff <0f> 0b 5b c3 90 8b 07 3d 00 00 00 c0 74 12 83 f8 01 74 13 8d 50 ff
+   RSP: 0018:ffff8881008e3e40 EFLAGS: 00010286
+   RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000027
+   RDX: ffff88852c91b5c8 RSI: 0000000000000001 RDI: ffff88852c91b5c0
+   RBP: ffff8881dacd4e00 R08: 00000000ffffffff R09: 0000000000000019
+   R10: 000000000000072e R11: 0000000063666572 R12: ffff88812bfd9e00
+   R13: ffff8881c792d200 R14: ffff88810011c005 R15: ffff8881002099c0
+   FS:  0000000000000000(0000) GS:ffff88852c900000(0000) knlGS:0000000000000000
+   CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+   CR2: 00007f5694b5e000 CR3: 00000001153f6003 CR4: 0000000000370ea0
+   DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+   DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+   Call Trace:
+    <TASK>
+    ? refcount_warn_saturate+0x12b/0x130
+    free_implicit_child_mr_work+0x180/0x1b0 [mlx5_ib]
+    process_one_work+0x1cc/0x3c0
+    worker_thread+0x218/0x3c0
+    kthread+0xc6/0xf0
+    ret_from_fork+0x1f/0x30
+    </TASK>
 
-That's because 'mptcp_subflow_early_fallback()' will set 'request_mptcp'
-to 0, and 'mpc_drop' will never be reset to 0 after.
-
-This is an issue, because some not so unusual situations might cause the
-kernel to detect a false-positive blackhole, e.g. a client trying to
-connect to a server while the network is not ready yet, causing a few
-SYN retransmissions, before reaching the end server.
-
-Fixes: 27069e7cb3d1 ("mptcp: disable active MPTCP in case of blackhole")
+Fixes: 5256edcb98a1 ("RDMA/mlx5: Rework implicit ODP destroy")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/r/c96b8645a81085abff739e6b06e286a350d1283d.1737274283.git.leon@kernel.org
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/ctrl.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx5/odp.c |   30 ++++++++++++++++++++++--------
+ 1 file changed, 22 insertions(+), 8 deletions(-)
 
---- a/net/mptcp/ctrl.c
-+++ b/net/mptcp/ctrl.c
-@@ -405,9 +405,9 @@ void mptcp_active_detect_blackhole(struc
- 			MPTCP_INC_STATS(sock_net(ssk), MPTCP_MIB_MPCAPABLEACTIVEDROP);
- 			subflow->mpc_drop = 1;
- 			mptcp_subflow_early_fallback(mptcp_sk(subflow->conn), subflow);
--		} else {
--			subflow->mpc_drop = 0;
- 		}
-+	} else if (ssk->sk_state == TCP_SYN_SENT) {
-+		subflow->mpc_drop = 0;
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -228,13 +228,27 @@ static void destroy_unused_implicit_chil
+ 	unsigned long idx = ib_umem_start(odp) >> MLX5_IMR_MTT_SHIFT;
+ 	struct mlx5_ib_mr *imr = mr->parent;
+ 
++	/*
++	 * If userspace is racing freeing the parent implicit ODP MR then we can
++	 * loose the race with parent destruction. In this case
++	 * mlx5_ib_free_odp_mr() will free everything in the implicit_children
++	 * xarray so NOP is fine. This child MR cannot be destroyed here because
++	 * we are under its umem_mutex.
++	 */
+ 	if (!refcount_inc_not_zero(&imr->mmkey.usecount))
+ 		return;
+ 
+-	xa_erase(&imr->implicit_children, idx);
++	xa_lock(&imr->implicit_children);
++	if (__xa_cmpxchg(&imr->implicit_children, idx, mr, NULL, GFP_KERNEL) !=
++	    mr) {
++		xa_unlock(&imr->implicit_children);
++		return;
++	}
++
+ 	if (MLX5_CAP_ODP(mr_to_mdev(mr)->mdev, mem_page_fault))
+-		xa_erase(&mr_to_mdev(mr)->odp_mkeys,
+-			 mlx5_base_mkey(mr->mmkey.key));
++		__xa_erase(&mr_to_mdev(mr)->odp_mkeys,
++			   mlx5_base_mkey(mr->mmkey.key));
++	xa_unlock(&imr->implicit_children);
+ 
+ 	/* Freeing a MR is a sleeping operation, so bounce to a work queue */
+ 	INIT_WORK(&mr->odp_destroy.work, free_implicit_child_mr_work);
+@@ -500,18 +514,18 @@ static struct mlx5_ib_mr *implicit_get_c
+ 		refcount_inc(&ret->mmkey.usecount);
+ 		goto out_lock;
  	}
- }
+-	xa_unlock(&imr->implicit_children);
+ 
+ 	if (MLX5_CAP_ODP(dev->mdev, mem_page_fault)) {
+-		ret = xa_store(&dev->odp_mkeys, mlx5_base_mkey(mr->mmkey.key),
+-			       &mr->mmkey, GFP_KERNEL);
++		ret = __xa_store(&dev->odp_mkeys, mlx5_base_mkey(mr->mmkey.key),
++				 &mr->mmkey, GFP_KERNEL);
+ 		if (xa_is_err(ret)) {
+ 			ret = ERR_PTR(xa_err(ret));
+-			xa_erase(&imr->implicit_children, idx);
+-			goto out_mr;
++			__xa_erase(&imr->implicit_children, idx);
++			goto out_lock;
+ 		}
+ 		mr->mmkey.type = MLX5_MKEY_IMPLICIT_CHILD;
+ 	}
++	xa_unlock(&imr->implicit_children);
+ 	mlx5_ib_dbg(mr_to_mdev(imr), "key %x mr %p\n", mr->mmkey.key, mr);
+ 	return mr;
  
 
 
