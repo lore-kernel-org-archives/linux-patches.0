@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F65522A;
-	Wed,  5 Feb 2025 14:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16B414B959;
+	Wed,  5 Feb 2025 14:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765086; cv=none; b=MPTjaT952hlci3nxGqnEKuOmNKUsxjP4mAXX3Lm3fcAEE+DRqOaGVypmJK5HiVC1CmKrraPmZPTeWkkVj+2pT/9Hvc52C3qsrMsiWZExAQgWMkxUI3pFEwnw4yW5+bsmcRWTp27E4JBea8ayFQyfTNX+ARCVTZunXwDkoVpz+wI=
+	t=1738765089; cv=none; b=uYFmR82eFgQEanALYuV7lziRaS4zZbQwc4a3NiirLTVCsNDgR1dZW2BYNYzXiJB+iVCVXs/grZeAVsEhVxaAAaW8YecqkfxJdjWnuCRuftxHY4XnqfONF+Y0hrCZGgcV1hdodLIprHp4+3WEJEJYFaqye6R6V+psRES7hfeN1Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765086; c=relaxed/simple;
-	bh=1Ql/qXH+e4jvTjVOSQUKuaMZCPfeXebpj06HS7+PPqQ=;
+	s=arc-20240116; t=1738765089; c=relaxed/simple;
+	bh=uFlFu/AJVpX6x6H4Ca+RogLXDHfb6Hp7EX8t++gVsPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ftb04o9M2fg6YvLEwsAyhpcjQXuGFKdn0jW3MzBhHz1I8VJZnitjJeb47rVstVE13f0GQnnk4vqzb1/NgInXet/MSxM+4ZQqLanF0r9n4NTpG8AHrWNzRaSojXLrOkwWDIyzJORl09JzX2o+9tgVGJwB9lsNcnopAre+AlsUVDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/nXwZ+/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qKczyYPTbtifFTgXTB7WZQ/uG1H/eU+QgjgPrkPHjonThsFc3UxfeFLg6SEJLOC6V89xYoicboqLXE77HVzzlEaDOOxrWXI8t6KmN6chdKYz34HYjLLfL/DaHaPQIBhdQz5/2ssZbsDaC080mS3OQX4e2FfNRkEMPptzFN71yKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYDeUy8/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/nXwZ+/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7900C4CED6;
-	Wed,  5 Feb 2025 14:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYDeUy8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4872AC4CED1;
+	Wed,  5 Feb 2025 14:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765086;
-	bh=1Ql/qXH+e4jvTjVOSQUKuaMZCPfeXebpj06HS7+PPqQ=;
+	s=korg; t=1738765089;
+	bh=uFlFu/AJVpX6x6H4Ca+RogLXDHfb6Hp7EX8t++gVsPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/nXwZ+/jDruFivMf2KPbUG+548PRC1a0T67vY3abW00aNz0Ocd7E2pJAgY5vETW1
-	 CmN/M5HRF30Vallonve066zgX0nhkrqUQdMHnEJHCX8BiVl405Q26rFOY8EeuvRy9F
-	 Ienv+5ZRdSTbsZOJJLP6HfKTdtmuA10G3r7oZFXk=
+	b=OYDeUy8/ZeHhM9MyDDooZg/egjO3ZuNK/RGYCQf3jHEVlpQzQ4KxTNx6TyvCxb4LK
+	 1qHEXD00MmthJwq5a/hprxQuAudwrb9AiVqJsCaUMOGt3zPB6snHXaWuvqoYpuGX7f
+	 +l8d6lKY2wVXr1pSB5SO4ClX7v9oRa+FZ3kqWBHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 142/623] OPP: OF: Fix an OF node leak in _opp_add_static_v2()
-Date: Wed,  5 Feb 2025 14:38:04 +0100
-Message-ID: <20250205134501.666597737@linuxfoundation.org>
+Subject: [PATCH 6.6 231/393] arm64: dts: qcom: sa8775p: Update sleep_clk frequency
+Date: Wed,  5 Feb 2025 14:42:30 +0100
+Message-ID: <20250205134429.144008289@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Taniya Das <quic_tdas@quicinc.com>
 
-[ Upstream commit 1d38eb7f7b26261a0b642f6e0923269c7c000a97 ]
+[ Upstream commit 30f7dfd2c4899630becf477447e8bbe92683d2c6 ]
 
-_opp_add_static_v2() leaks the obtained OF node reference when
-_of_opp_alloc_required_opps() fails. Add an of_node_put() call in the
-error path.
+Fix the sleep_clk frequency is 32000 on SA8775P.
 
-Fixes: 3466ea2cd6b6 ("OPP: Don't drop opp->np reference while it is still in use")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 603f96d4c9d0 ("arm64: dts: qcom: add initial support for qcom sa8775p-ride")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Link: https://lore.kernel.org/r/20241025-sa8775p-mm-v4-resend-patches-v6-1-329a2cac09ae@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/opp/of.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/opp/of.c b/drivers/opp/of.c
-index fd5ed28582588..a24f76f5fd017 100644
---- a/drivers/opp/of.c
-+++ b/drivers/opp/of.c
-@@ -926,7 +926,7 @@ static struct dev_pm_opp *_opp_add_static_v2(struct opp_table *opp_table,
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+index 2a6170623ea95..864ad109371ca 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+@@ -517,7 +517,7 @@
+ };
  
- 	ret = _of_opp_alloc_required_opps(opp_table, new_opp);
- 	if (ret)
--		goto free_opp;
-+		goto put_node;
+ &sleep_clk {
+-	clock-frequency = <32764>;
++	clock-frequency = <32000>;
+ };
  
- 	if (!of_property_read_u32(np, "clock-latency-ns", &val))
- 		new_opp->clock_latency_ns = val;
-@@ -976,6 +976,8 @@ static struct dev_pm_opp *_opp_add_static_v2(struct opp_table *opp_table,
- 
- free_required_opps:
- 	_of_opp_free_required_opps(opp_table, new_opp);
-+put_node:
-+	of_node_put(np);
- free_opp:
- 	_opp_free(new_opp);
- 
+ &spi16 {
 -- 
 2.39.5
 
