@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78581DF59;
-	Wed,  5 Feb 2025 15:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72321E89C;
+	Wed,  5 Feb 2025 15:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768185; cv=none; b=mwAjbJCR12dgLlhkk63oS8nqmtXWD+V0VWJee3h/3yCI93nsi+GtsgV37uc3oQsBJgDxvBm9ftTN7241aKSyddWFEp+iwUx+jFeaAJJaOC48/SOUps7O2Zjel3WDPQhUqFyP/3eebmk5kbbpzDexs/5qMf1aBSYXge3VRSqrKuU=
+	t=1738768188; cv=none; b=AP9o5+qYwxQBMT7rXI+WFSqdZZ7nPB+SfiO8Uuj1IyVxgzeVaxWlJkPOsgSxw8FAjeZG1GdWReXesW5iyBsgqdPyz3CcSmfpFNwpSfUgVFOofnfFjxV7wjqjKaVqnocrA6ijBw0ZKsts8y4PF5il4gWa2KrT2Ei6m/86g32CT2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768185; c=relaxed/simple;
-	bh=NDb0ASaZf2osiZf13ECG54/sBnxkRGPtdd1VD8QF67s=;
+	s=arc-20240116; t=1738768188; c=relaxed/simple;
+	bh=4HOGczX4n7l0SqUMM3Wxqbi21GrRLlNvACqxYKTFokU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r5yOO1BO+QgQRCFmqTmEIC+73Hify2xFHZ2qTaunVeVQzzPqzX4GlO83EpbS2NeaX8CRDJN0tCq9sPgYUYFPX4qOUteZjODY7dpcmWYAFyCwJKTsRemopuS8B7BtTJu8DjRHE6kRVN/ZiTat9k5FCUahUwqsMn4LoPFcYS0XLdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pcc26zaV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mu/d1HCRRhEr5T2ZkMjobGKz5Enz0IET3KdivLokNbIf0gnJmMMSpRbDsMw5UUmW2KCTsZTmY/PyQCL9xHYEpjcm9uVIMNARGPBwZ1Dn2tDXWcV+VeDwJj8dJir/2VnSvvCgZfc+zMDyI1uaxj2nBFzHTpcUd+pL91Uv3fbkXRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XiC5eZYZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pcc26zaV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D729EC4CED1;
-	Wed,  5 Feb 2025 15:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XiC5eZYZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256BEC4CED1;
+	Wed,  5 Feb 2025 15:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768185;
-	bh=NDb0ASaZf2osiZf13ECG54/sBnxkRGPtdd1VD8QF67s=;
+	s=korg; t=1738768188;
+	bh=4HOGczX4n7l0SqUMM3Wxqbi21GrRLlNvACqxYKTFokU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pcc26zaVDo07S/xWTCZ4v1bp4RK3o5nsFJD1KpdRRc2tQDYbPFAlaHWrCx6H5vxLs
-	 eLnmVDgyDzoq+7e+76yq5dldQfEMFWgE/SkFZXFTFgVJ0tspfp+Q5r7ABQHOHEgUBk
-	 oms7JkqfKLoSeE8+en2BIillLJCbT3YkrePfm2uk=
+	b=XiC5eZYZe0IvUvxsF4ieW8rsDe9nI4zE7DNvMAmISDgyIWwFqOLSkq4/xhtTDwWwY
+	 Zy68dlfQHZba14yFXq/rjua71sAO+e0IlL9LgYWlPNUy2yiSyOoRE6E5D8QQDMq9/y
+	 yNuhPekkr7MmoRLrmUJTahd+Dhk0ZSxc6hzny84g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5cfae50c0e5f2c500013@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 509/623] ipmr: do not call mr_mfc_uses_dev() for unres entries
-Date: Wed,  5 Feb 2025 14:44:11 +0100
-Message-ID: <20250205134515.691326628@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 565/590] mptcp: blackhole only if 1st SYN retrans w/o MPC is accepted
+Date: Wed,  5 Feb 2025 14:45:20 +0100
+Message-ID: <20250205134516.881826226@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,75 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 15a901361ec3fb1c393f91880e1cbf24ec0a88bd ]
+commit e598d8981fd34470b78a1ae777dbf131b15d5bf2 upstream.
 
-syzbot found that calling mr_mfc_uses_dev() for unres entries
-would crash [1], because c->mfc_un.res.minvif / c->mfc_un.res.maxvif
-alias to "struct sk_buff_head unresolved", which contain two pointers.
+The Fixes commit mentioned this:
 
-This code never worked, lets remove it.
+> An MPTCP firewall blackhole can be detected if the following SYN
+> retransmission after a fallback to "plain" TCP is accepted.
 
-[1]
-Unable to handle kernel paging request at virtual address ffff5fff2d536613
-KASAN: maybe wild-memory-access in range [0xfffefff96a9b3098-0xfffefff96a9b309f]
-Modules linked in:
-CPU: 1 UID: 0 PID: 7321 Comm: syz.0.16 Not tainted 6.13.0-rc7-syzkaller-g1950a0af2d55 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : mr_mfc_uses_dev net/ipv4/ipmr_base.c:290 [inline]
- pc : mr_table_dump+0x5a4/0x8b0 net/ipv4/ipmr_base.c:334
- lr : mr_mfc_uses_dev net/ipv4/ipmr_base.c:289 [inline]
- lr : mr_table_dump+0x694/0x8b0 net/ipv4/ipmr_base.c:334
-Call trace:
-  mr_mfc_uses_dev net/ipv4/ipmr_base.c:290 [inline] (P)
-  mr_table_dump+0x5a4/0x8b0 net/ipv4/ipmr_base.c:334 (P)
-  mr_rtm_dumproute+0x254/0x454 net/ipv4/ipmr_base.c:382
-  ipmr_rtm_dumproute+0x248/0x4b4 net/ipv4/ipmr.c:2648
-  rtnl_dump_all+0x2e4/0x4e8 net/core/rtnetlink.c:4327
-  rtnl_dumpit+0x98/0x1d0 net/core/rtnetlink.c:6791
-  netlink_dump+0x4f0/0xbc0 net/netlink/af_netlink.c:2317
-  netlink_recvmsg+0x56c/0xe64 net/netlink/af_netlink.c:1973
-  sock_recvmsg_nosec net/socket.c:1033 [inline]
-  sock_recvmsg net/socket.c:1055 [inline]
-  sock_read_iter+0x2d8/0x40c net/socket.c:1125
-  new_sync_read fs/read_write.c:484 [inline]
-  vfs_read+0x740/0x970 fs/read_write.c:565
-  ksys_read+0x15c/0x26c fs/read_write.c:708
+But in fact, this blackhole was detected if any following SYN
+retransmissions after a fallback to TCP was accepted.
 
-Fixes: cb167893f41e ("net: Plumb support for filtering ipv4 and ipv6 multicast route dumps")
-Reported-by: syzbot+5cfae50c0e5f2c500013@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/678fe2d1.050a0220.15cac.00b3.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250121181241.841212-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+That's because 'mptcp_subflow_early_fallback()' will set 'request_mptcp'
+to 0, and 'mpc_drop' will never be reset to 0 after.
+
+This is an issue, because some not so unusual situations might cause the
+kernel to detect a false-positive blackhole, e.g. a client trying to
+connect to a server while the network is not ready yet, causing a few
+SYN retransmissions, before reaching the end server.
+
+Fixes: 27069e7cb3d1 ("mptcp: disable active MPTCP in case of blackhole")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ipmr_base.c | 3 ---
- 1 file changed, 3 deletions(-)
+ net/mptcp/ctrl.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
-index 03b6eee407a24..28d77d454d442 100644
---- a/net/ipv4/ipmr_base.c
-+++ b/net/ipv4/ipmr_base.c
-@@ -330,9 +330,6 @@ int mr_table_dump(struct mr_table *mrt, struct sk_buff *skb,
- 	list_for_each_entry(mfc, &mrt->mfc_unres_queue, list) {
- 		if (e < s_e)
- 			goto next_entry2;
--		if (filter->dev &&
--		    !mr_mfc_uses_dev(mrt, mfc, filter->dev))
--			goto next_entry2;
+--- a/net/mptcp/ctrl.c
++++ b/net/mptcp/ctrl.c
+@@ -405,9 +405,9 @@ void mptcp_active_detect_blackhole(struc
+ 			MPTCP_INC_STATS(sock_net(ssk), MPTCP_MIB_MPCAPABLEACTIVEDROP);
+ 			subflow->mpc_drop = 1;
+ 			mptcp_subflow_early_fallback(mptcp_sk(subflow->conn), subflow);
+-		} else {
+-			subflow->mpc_drop = 0;
+ 		}
++	} else if (ssk->sk_state == TCP_SYN_SENT) {
++		subflow->mpc_drop = 0;
+ 	}
+ }
  
- 		err = fill(mrt, skb, NETLINK_CB(cb->skb).portid,
- 			   cb->nlh->nlmsg_seq, mfc, RTM_NEWROUTE, flags);
--- 
-2.39.5
-
 
 
