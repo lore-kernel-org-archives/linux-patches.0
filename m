@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5A61519BF;
-	Wed,  5 Feb 2025 15:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BD11519BF;
+	Wed,  5 Feb 2025 15:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768047; cv=none; b=WH/daJPyYCAtpHhT1T7hjLjFuhk6Dj6m+TIPsD3xFqpDv0HzHanZaKBJ4m97h/iIiAgKcBB60evldyuDdgPg69wc7lSSKL6BeP41vT9gUG87bRbxRaskJvps8kZeWBOdkjQm36VYo3NFm5f6JPAIP7G69ummjNC0Z2zHnEcuExo=
+	t=1738768050; cv=none; b=JKb8LApsd2f9LGHQiVHJtu1WN2uneGh+dVuIxDPPW70bzKJIE/d7fP2JbYY5Vr27B1Js15sCngvA2M6xwQN5mEQGZpde/TPNvPH2JnO72b16HBGyx/v6F0BSsT+VjGGWG/C5+hSzy1N7h5n5ijb4eGGDJ/fKqE1Ns8LbxluJfnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768047; c=relaxed/simple;
-	bh=OskZoL7fKUyRfv6qC6heEV520CKrLNPDO1FPojNwSUE=;
+	s=arc-20240116; t=1738768050; c=relaxed/simple;
+	bh=SKYl9ovbwvQOQg7dSysQRrAU4fkMD45oHcfHrlnMGQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JRarIRpw1k779gQnddj+uUhfkdUzMTS0KzYlvrT9m/MlFcqqlTW08lkSvcvQeoJ99NkbDwLZtNX3TJD1u/3cB9rj7jsnSast4/7CsJdtnAB3VZSyqU8dDpY5FSPlEuc+fbr98mn8GQtArJSnMFrCL2XTWqekWorI5YV8y7X8IJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYqTuNzR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=csgBQRkj/rhwq0YJrSjpeGxDdf4k0Gmls6zkBfE+8x3WLk4oFmHwPovxuB2i/KATCykXw8F4rZjQcCrIhtlA5UoZ6G2fCB4c2YpBoOSgx8DVLdjMQsDUvniTK5KbZL0Bn9K4UZEpXUu9EyqaIa+4UDdNPyCTnu5pynecCr+sCUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wL8YHWfN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYqTuNzR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7F5C4CED1;
-	Wed,  5 Feb 2025 15:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wL8YHWfN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95369C4CED1;
+	Wed,  5 Feb 2025 15:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768046;
-	bh=OskZoL7fKUyRfv6qC6heEV520CKrLNPDO1FPojNwSUE=;
+	s=korg; t=1738768050;
+	bh=SKYl9ovbwvQOQg7dSysQRrAU4fkMD45oHcfHrlnMGQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYqTuNzRS2x5uIL/lCIRyZN3yupYsAVmoDNDA+WRRgezemS+sgGtNrnWo/oBW/wp/
-	 fzMAszuQFgpzEYu9GMCeeOic+AK3iSJEGUvHosMC/WEc/fq4MrbH9sg6DWvMc8pZHV
-	 RGOC0NylJEJQQLHAubNcuOBUiGQFgp4EdiioVcR4=
+	b=wL8YHWfNJ2pfqHfBZkk7SKd0uysVK+zbY1UGCUqgLD5nJzsr7yn3NHC+nS7OrSGnk
+	 GJlmg9u6w4LcDm8bmBHzo+3KXX2Lmu4EXYtCjsLjewBgI9Pd12OC7pdzDptU1mRzDl
+	 x0eSsEYUOUsZ/5zIpEwBSO2BWRG2J85JWU68LgxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 488/623] nfs: fix incorrect error handling in LOCALIO
-Date: Wed,  5 Feb 2025 14:43:50 +0100
-Message-ID: <20250205134514.887550745@linuxfoundation.org>
+	Raghavendra Rao Ananta <rananta@google.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Carlos ODonell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>,
+	Michael Jeanson <mjeanson@efficios.com>,
+	linux-kselftest@vger.kernel.org
+Subject: [PATCH 6.12 546/590] selftests/rseq: Fix handling of glibc without rseq support
+Date: Wed,  5 Feb 2025 14:45:01 +0100
+Message-ID: <20250205134516.160256480@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,247 +54,142 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-[ Upstream commit ead11ac50ad4b8ef1b64806e962ea984862d96ad ]
+commit 336d02bc4c6bec5c3d933e5d470a94970f830957 upstream.
 
-nfs4_stat_to_errno() expects a NFSv4 error code as an argument and
-returns a POSIX errno.
+When porting librseq commit:
 
-The problem is LOCALIO is passing nfs4_stat_to_errno() the POSIX errno
-return values from filp->f_op->read_iter(), filp->f_op->write_iter()
-and vfs_fsync_range().
+commit c7b45750fa85 ("Adapt to glibc __rseq_size feature detection")
 
-So the POSIX errno that nfs_local_pgio_done() and
-nfs_local_commit_done() are passing to nfs4_stat_to_errno() are
-failing to match any NFSv4 error code, which results in
-nfs4_stat_to_errno() defaulting to returning -EREMOTEIO. This causes
-assertions in upper layers due to -EREMOTEIO not being a valid NFSv4
-error code.
+from librseq to the kernel selftests, the following line was missed
+at the end of rseq_init():
 
-Fix this by updating nfs_local_pgio_done() and nfs_local_commit_done()
-to use the new nfs_localio_errno_to_nfs4_stat() to map a POSIX errno
-to an NFSv4 error code.
+  rseq_size = get_rseq_kernel_feature_size();
 
-Care was taken to factor out nfs4_errtbl_common[] to avoid duplicating
-the same NFS error to errno table. nfs4_errtbl_common[] is checked
-first by both nfs4_stat_to_errno and nfs_localio_errno_to_nfs4_stat
-before they check their own more specialized tables (nfs4_errtbl[] and
-nfs4_errtbl_localio[] respectively).
+which effectively leaves rseq_size initialized to -1U when glibc does not
+have rseq support. glibc supports rseq from version 2.35 onwards.
 
-While auditing the associated error mapping tables, the (ab)use of -1
-for the last table entry was removed in favor of using ARRAY_SIZE to
-iterate the nfs_errtbl[] and nfs4_errtbl[]. And 'errno_NFSERR_IO' was
-removed because it caused needless obfuscation.
+In a following librseq commit
 
-Fixes: 70ba381e1a431 ("nfs: add LOCALIO support")
-Reported-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit c67d198627c2 ("Only set 'rseq_size' on first thread registration")
+
+to mimic the libc behavior, a new approach is taken: don't set the
+feature size in 'rseq_size' until at least one thread has successfully
+registered. This allows using 'rseq_size' in fast-paths to test for both
+registration status and available features. The caveat is that on libc
+either all threads are registered or none are, while with bare librseq
+it is the responsability of the user to register all threads using rseq.
+
+This combines the changes from the following librseq git commits:
+
+commit c7b45750fa85 ("Adapt to glibc __rseq_size feature detection")
+commit c67d198627c2 ("Only set 'rseq_size' on first thread registration")
+
+Fixes: a0cc649353bb ("selftests/rseq: Fix mm_cid test failure")
+Reported-by: Raghavendra Rao Ananta <rananta@google.com>
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Raghavendra Rao Ananta <rananta@google.com>
+Cc: Shuah Khan <skhan@linuxfoundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Carlos O'Donell <carlos@redhat.com>
+Cc: Florian Weimer <fweimer@redhat.com>
+Cc: Michael Jeanson <mjeanson@efficios.com>
+Cc: linux-kselftest@vger.kernel.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/localio.c           |  4 +-
- fs/nfs_common/common.c     | 89 +++++++++++++++++++++++++++++++++-----
- include/linux/nfs_common.h |  3 +-
- 3 files changed, 82 insertions(+), 14 deletions(-)
+ tools/testing/selftests/rseq/rseq.c |   32 +++++++++++++++++++++++++-------
+ tools/testing/selftests/rseq/rseq.h |    9 ++++++++-
+ 2 files changed, 33 insertions(+), 8 deletions(-)
 
-diff --git a/fs/nfs/localio.c b/fs/nfs/localio.c
-index 4b8618cf114ca..17b0ae5cb2efd 100644
---- a/fs/nfs/localio.c
-+++ b/fs/nfs/localio.c
-@@ -328,7 +328,7 @@ nfs_local_pgio_done(struct nfs_pgio_header *hdr, long status)
- 		hdr->res.op_status = NFS4_OK;
- 		hdr->task.tk_status = 0;
- 	} else {
--		hdr->res.op_status = nfs4_stat_to_errno(status);
-+		hdr->res.op_status = nfs_localio_errno_to_nfs4_stat(status);
- 		hdr->task.tk_status = status;
- 	}
- }
-@@ -668,7 +668,7 @@ nfs_local_commit_done(struct nfs_commit_data *data, int status)
- 		data->task.tk_status = 0;
- 	} else {
- 		nfs_reset_boot_verifier(data->inode);
--		data->res.op_status = nfs4_stat_to_errno(status);
-+		data->res.op_status = nfs_localio_errno_to_nfs4_stat(status);
- 		data->task.tk_status = status;
- 	}
- }
-diff --git a/fs/nfs_common/common.c b/fs/nfs_common/common.c
-index 34a115176f97e..af09aed09fd27 100644
---- a/fs/nfs_common/common.c
-+++ b/fs/nfs_common/common.c
-@@ -15,7 +15,7 @@ static const struct {
- 	{ NFS_OK,		0		},
- 	{ NFSERR_PERM,		-EPERM		},
- 	{ NFSERR_NOENT,		-ENOENT		},
--	{ NFSERR_IO,		-errno_NFSERR_IO},
-+	{ NFSERR_IO,		-EIO		},
- 	{ NFSERR_NXIO,		-ENXIO		},
- /*	{ NFSERR_EAGAIN,	-EAGAIN		}, */
- 	{ NFSERR_ACCES,		-EACCES		},
-@@ -45,7 +45,6 @@ static const struct {
- 	{ NFSERR_SERVERFAULT,	-EREMOTEIO	},
- 	{ NFSERR_BADTYPE,	-EBADTYPE	},
- 	{ NFSERR_JUKEBOX,	-EJUKEBOX	},
--	{ -1,			-EIO		}
- };
+--- a/tools/testing/selftests/rseq/rseq.c
++++ b/tools/testing/selftests/rseq/rseq.c
+@@ -61,7 +61,6 @@ unsigned int rseq_size = -1U;
+ unsigned int rseq_flags;
  
- /**
-@@ -59,26 +58,29 @@ int nfs_stat_to_errno(enum nfs_stat status)
- {
- 	int i;
+ static int rseq_ownership;
+-static int rseq_reg_success;	/* At least one rseq registration has succeded. */
  
--	for (i = 0; nfs_errtbl[i].stat != -1; i++) {
-+	for (i = 0; i < ARRAY_SIZE(nfs_errtbl); i++) {
- 		if (nfs_errtbl[i].stat == (int)status)
- 			return nfs_errtbl[i].errno;
+ /* Allocate a large area for the TLS. */
+ #define RSEQ_THREAD_AREA_ALLOC_SIZE	1024
+@@ -152,14 +151,27 @@ int rseq_register_current_thread(void)
  	}
--	return nfs_errtbl[i].errno;
-+	return -EIO;
- }
- EXPORT_SYMBOL_GPL(nfs_stat_to_errno);
- 
- /*
-  * We need to translate between nfs v4 status return values and
-  * the local errno values which may not be the same.
-+ *
-+ * nfs4_errtbl_common[] is used before more specialized mappings
-+ * available in nfs4_errtbl[] or nfs4_errtbl_localio[].
-  */
- static const struct {
- 	int stat;
- 	int errno;
--} nfs4_errtbl[] = {
-+} nfs4_errtbl_common[] = {
- 	{ NFS4_OK,		0		},
- 	{ NFS4ERR_PERM,		-EPERM		},
- 	{ NFS4ERR_NOENT,	-ENOENT		},
--	{ NFS4ERR_IO,		-errno_NFSERR_IO},
-+	{ NFS4ERR_IO,		-EIO		},
- 	{ NFS4ERR_NXIO,		-ENXIO		},
- 	{ NFS4ERR_ACCESS,	-EACCES		},
- 	{ NFS4ERR_EXIST,	-EEXIST		},
-@@ -98,15 +100,20 @@ static const struct {
- 	{ NFS4ERR_BAD_COOKIE,	-EBADCOOKIE	},
- 	{ NFS4ERR_NOTSUPP,	-ENOTSUPP	},
- 	{ NFS4ERR_TOOSMALL,	-ETOOSMALL	},
--	{ NFS4ERR_SERVERFAULT,	-EREMOTEIO	},
- 	{ NFS4ERR_BADTYPE,	-EBADTYPE	},
--	{ NFS4ERR_LOCKED,	-EAGAIN		},
- 	{ NFS4ERR_SYMLINK,	-ELOOP		},
--	{ NFS4ERR_OP_ILLEGAL,	-EOPNOTSUPP	},
- 	{ NFS4ERR_DEADLOCK,	-EDEADLK	},
-+};
-+
-+static const struct {
-+	int stat;
-+	int errno;
-+} nfs4_errtbl[] = {
-+	{ NFS4ERR_SERVERFAULT,	-EREMOTEIO	},
-+	{ NFS4ERR_LOCKED,	-EAGAIN		},
-+	{ NFS4ERR_OP_ILLEGAL,	-EOPNOTSUPP	},
- 	{ NFS4ERR_NOXATTR,	-ENODATA	},
- 	{ NFS4ERR_XATTR2BIG,	-E2BIG		},
--	{ -1,			-EIO		}
- };
- 
- /*
-@@ -116,7 +123,14 @@ static const struct {
- int nfs4_stat_to_errno(int stat)
- {
- 	int i;
--	for (i = 0; nfs4_errtbl[i].stat != -1; i++) {
-+
-+	/* First check nfs4_errtbl_common */
-+	for (i = 0; i < ARRAY_SIZE(nfs4_errtbl_common); i++) {
-+		if (nfs4_errtbl_common[i].stat == stat)
-+			return nfs4_errtbl_common[i].errno;
-+	}
-+	/* Then check nfs4_errtbl */
-+	for (i = 0; i < ARRAY_SIZE(nfs4_errtbl); i++) {
- 		if (nfs4_errtbl[i].stat == stat)
- 			return nfs4_errtbl[i].errno;
+ 	rc = sys_rseq(&__rseq_abi, get_rseq_min_alloc_size(), 0, RSEQ_SIG);
+ 	if (rc) {
+-		if (RSEQ_READ_ONCE(rseq_reg_success)) {
++		/*
++		 * After at least one thread has registered successfully
++		 * (rseq_size > 0), the registration of other threads should
++		 * never fail.
++		 */
++		if (RSEQ_READ_ONCE(rseq_size) > 0) {
+ 			/* Incoherent success/failure within process. */
+ 			abort();
+ 		}
+ 		return -1;
  	}
-@@ -132,3 +146,56 @@ int nfs4_stat_to_errno(int stat)
- 	return -stat;
- }
- EXPORT_SYMBOL_GPL(nfs4_stat_to_errno);
+ 	assert(rseq_current_cpu_raw() >= 0);
+-	RSEQ_WRITE_ONCE(rseq_reg_success, 1);
 +
-+/*
-+ * This table is useful for conversion from local errno to NFS error.
-+ * It provides more logically correct mappings for use with LOCALIO
-+ * (which is focused on converting from errno to NFS status).
-+ */
-+static const struct {
-+	int stat;
-+	int errno;
-+} nfs4_errtbl_localio[] = {
-+	/* Map errors differently than nfs4_errtbl */
-+	{ NFS4ERR_IO,		-EREMOTEIO	},
-+	{ NFS4ERR_DELAY,	-EAGAIN		},
-+	{ NFS4ERR_FBIG,		-E2BIG		},
-+	/* Map errors not handled by nfs4_errtbl */
-+	{ NFS4ERR_STALE,	-EBADF		},
-+	{ NFS4ERR_STALE,	-EOPENSTALE	},
-+	{ NFS4ERR_DELAY,	-ETIMEDOUT	},
-+	{ NFS4ERR_DELAY,	-ERESTARTSYS	},
-+	{ NFS4ERR_DELAY,	-ENOMEM		},
-+	{ NFS4ERR_IO,		-ETXTBSY	},
-+	{ NFS4ERR_IO,		-EBUSY		},
-+	{ NFS4ERR_SERVERFAULT,	-ESERVERFAULT	},
-+	{ NFS4ERR_SERVERFAULT,	-ENFILE		},
-+	{ NFS4ERR_IO,		-EUCLEAN	},
-+	{ NFS4ERR_PERM,		-ENOKEY		},
-+};
-+
-+/*
-+ * Convert an errno to an NFS error code for LOCALIO.
-+ */
-+__u32 nfs_localio_errno_to_nfs4_stat(int errno)
-+{
-+	int i;
-+
-+	/* First check nfs4_errtbl_common */
-+	for (i = 0; i < ARRAY_SIZE(nfs4_errtbl_common); i++) {
-+		if (nfs4_errtbl_common[i].errno == errno)
-+			return nfs4_errtbl_common[i].stat;
-+	}
-+	/* Then check nfs4_errtbl_localio */
-+	for (i = 0; i < ARRAY_SIZE(nfs4_errtbl_localio); i++) {
-+		if (nfs4_errtbl_localio[i].errno == errno)
-+			return nfs4_errtbl_localio[i].stat;
-+	}
-+	/* If we cannot translate the error, the recovery routines should
-+	 * handle it.
-+	 * Note: remaining NFSv4 error codes have values > 10000, so should
-+	 * not conflict with native Linux error codes.
++	/*
++	 * The first thread to register sets the rseq_size to mimic the libc
++	 * behavior.
 +	 */
-+	return NFS4ERR_SERVERFAULT;
-+}
-+EXPORT_SYMBOL_GPL(nfs_localio_errno_to_nfs4_stat);
-diff --git a/include/linux/nfs_common.h b/include/linux/nfs_common.h
-index 5fc02df882521..a541c3a028875 100644
---- a/include/linux/nfs_common.h
-+++ b/include/linux/nfs_common.h
-@@ -9,9 +9,10 @@
- #include <uapi/linux/nfs.h>
- 
- /* Mapping from NFS error code to "errno" error code. */
--#define errno_NFSERR_IO EIO
- 
- int nfs_stat_to_errno(enum nfs_stat status);
- int nfs4_stat_to_errno(int stat);
- 
-+__u32 nfs_localio_errno_to_nfs4_stat(int errno);
++	if (RSEQ_READ_ONCE(rseq_size) == 0) {
++		RSEQ_WRITE_ONCE(rseq_size, get_rseq_kernel_feature_size());
++	}
 +
- #endif /* _LINUX_NFS_COMMON_H */
--- 
-2.39.5
-
+ 	return 0;
+ }
+ 
+@@ -235,12 +247,18 @@ void rseq_init(void)
+ 		return;
+ 	}
+ 	rseq_ownership = 1;
+-	if (!rseq_available()) {
+-		rseq_size = 0;
+-		return;
+-	}
++
++	/* Calculate the offset of the rseq area from the thread pointer. */
+ 	rseq_offset = (void *)&__rseq_abi - rseq_thread_pointer();
++
++	/* rseq flags are deprecated, always set to 0. */
+ 	rseq_flags = 0;
++
++	/*
++	 * Set the size to 0 until at least one thread registers to mimic the
++	 * libc behavior.
++	 */
++	rseq_size = 0;
+ }
+ 
+ static __attribute__((destructor))
+--- a/tools/testing/selftests/rseq/rseq.h
++++ b/tools/testing/selftests/rseq/rseq.h
+@@ -60,7 +60,14 @@
+ extern ptrdiff_t rseq_offset;
+ 
+ /*
+- * Size of the registered rseq area. 0 if the registration was
++ * The rseq ABI is composed of extensible feature fields. The extensions
++ * are done by appending additional fields at the end of the structure.
++ * The rseq_size defines the size of the active feature set which can be
++ * used by the application for the current rseq registration. Features
++ * starting at offset >= rseq_size are inactive and should not be used.
++ *
++ * The rseq_size is the intersection between the available allocation
++ * size for the rseq area and the feature size supported by the kernel.
+  * unsuccessful.
+  */
+ extern unsigned int rseq_size;
 
 
