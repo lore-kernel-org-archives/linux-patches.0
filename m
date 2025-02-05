@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B561519BE;
-	Wed,  5 Feb 2025 14:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242B213C3F6;
+	Wed,  5 Feb 2025 14:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765174; cv=none; b=maXmZaPLNmtEZ4Zdlg6TEt0gcLEbuetjeGE31MNhyuomfSifvnafqdwVwZH1m8tK7RVAPAu1Rq9Wknl5YhU4S4b9LoURWU6Xgv61TztDTfwW9nTxCoH16+CMH7Qwm9DUdYi6u68Q7u9bV89zHzmvnn+aAH8MFodrZFzz4PtfEnY=
+	t=1738765178; cv=none; b=GuV8zAKiZza4luIxDg+8goNZ7e74XqiWxLgEnMuNjOP626qqJRMrt0OdzgZ+XBZiCZtB7mgXdOSWtfiILSR11cDFrrqveobzwsOjQ5XuKbOMyZ7tLv86m6TODG4r7fENnrYQXutEICDCG/73DtS/Jllau2blGrVCyUvBYsltcBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765174; c=relaxed/simple;
-	bh=3k4DkMRATySXrr+rJCjb0tyiFi08whe24TXWOe6pLDI=;
+	s=arc-20240116; t=1738765178; c=relaxed/simple;
+	bh=jWLYp06lBvZVeS35R/pojlY9TqMeBYJS7J3b+kLGDvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=guuaYWIkObixc+C68vGx/a008rlojyPvl9XSPMJ4WTLBrg4XdjaskpU2qn5ODfuwT5F9Jyaq/RyPh6JvFWx3wZFwBRelLpyFhMEKnFMhoQ2tzbNvvLb/l6mmAE6YMcCNvNWOHR30L2g2cf1tY8pV9WLF4ssmfIaueTbuVQEDoKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIHVc95p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mUWnvDeiteAqQl8YE8CD3tKRzMXMxyIwFE6CBPJuaGgBwlAsdRFtYQXlHitww+YVjy0+AJn7zj4Gp0pG8QfM4BhcApAjqXJL1NdpshrkAOXakSkyCICJFqMT6i0nfC+8gtkOYTMmvZV2C4KinDYIncks1IKI+obf9+OTGXET6PM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLDYrtnh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIHVc95p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A129CC4CED1;
-	Wed,  5 Feb 2025 14:19:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLDYrtnh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24566C4CEDD;
+	Wed,  5 Feb 2025 14:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765174;
-	bh=3k4DkMRATySXrr+rJCjb0tyiFi08whe24TXWOe6pLDI=;
+	s=korg; t=1738765177;
+	bh=jWLYp06lBvZVeS35R/pojlY9TqMeBYJS7J3b+kLGDvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yIHVc95pPgBl88WYGZpX5IUiAmflSLboEe2GQ3kBBgTIoA7X/mwY5YBuGCKhUhXsd
-	 5YFQVeDqaqfLO9DbB4wG2IlvS9VrtFw7BPBiHNswl+beukinIqAP29pYxYjwxBTImT
-	 KLRB6PH5nO6V3RlydmeiagYFw0OrJHeqlXUCj0Uk=
+	b=QLDYrtnhRzH6ZDTvCbRhDHJ8cVpMEabqyCvSbkpisudKrpSGVJseoIASE+1cHeudy
+	 BlvgtYRmxLsCX6y2l4ERQd0FDq3MhVksJT9+GLobhQufnGEfqlhxw96Vmo/l1911iJ
+	 12A9mnbEU6j1I61FI/Hn0yPqbiPEyF2ix/OHrxaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Michael Nemanov <michael.nemanov@ti.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 153/623] wifi: wlcore: fix unbalanced pm_runtime calls
-Date: Wed,  5 Feb 2025 14:38:15 +0100
-Message-ID: <20250205134502.089232877@linuxfoundation.org>
+Subject: [PATCH 6.12 197/590] wifi: mt76: mt7996: fix rx filter setting for bfee functionality
+Date: Wed,  5 Feb 2025 14:39:12 +0100
+Message-ID: <20250205134502.816330772@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 996c934c8c196144af386c4385f61fcd5349af28 ]
+[ Upstream commit 858fd2a53877b2e8b1d991a5a861ac34a0f55ef8 ]
 
-If firmware boot failes, runtime pm is put too often:
-[12092.708099] wlcore: ERROR firmware boot failed despite 3 retries
-[12092.708099] wl18xx_driver wl18xx.1.auto: Runtime PM usage count underflow!
-Fix that by redirecting all error gotos before runtime_get so that runtime is
-not put.
+Fix rx filter setting to prevent dropping NDPA frames. Without this
+change, bfee functionality may behave abnormally.
 
-Fixes: c40aad28a3cf ("wlcore: Make sure firmware is initialized in wl1271_op_add_interface()")
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Reviewed-by: Michael Nemanov <michael.nemanov@ti.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20250104195507.402673-1-akemnade@kernel.org
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Link: https://patch.msgid.link/20241230194202.95065-5-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ti/wlcore/main.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ti/wlcore/main.c b/drivers/net/wireless/ti/wlcore/main.c
-index 986b07bfa0ee8..8fb58a5d911cb 100644
---- a/drivers/net/wireless/ti/wlcore/main.c
-+++ b/drivers/net/wireless/ti/wlcore/main.c
-@@ -2612,24 +2612,24 @@ static int wl1271_op_add_interface(struct ieee80211_hw *hw,
- 	if (test_bit(WL1271_FLAG_RECOVERY_IN_PROGRESS, &wl->flags) ||
- 	    test_bit(WLVIF_FLAG_INITIALIZED, &wlvif->flags)) {
- 		ret = -EBUSY;
--		goto out;
-+		goto out_unlock;
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index 39f071ece35e6..4d11083b86c09 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -496,8 +496,7 @@ static void mt7996_configure_filter(struct ieee80211_hw *hw,
  
+ 	MT76_FILTER(CONTROL, MT_WF_RFCR_DROP_CTS |
+ 			     MT_WF_RFCR_DROP_RTS |
+-			     MT_WF_RFCR_DROP_CTL_RSV |
+-			     MT_WF_RFCR_DROP_NDPA);
++			     MT_WF_RFCR_DROP_CTL_RSV);
  
- 	ret = wl12xx_init_vif_data(wl, vif);
- 	if (ret < 0)
--		goto out;
-+		goto out_unlock;
- 
- 	wlvif->wl = wl;
- 	role_type = wl12xx_get_role_type(wl, wlvif);
- 	if (role_type == WL12XX_INVALID_ROLE_TYPE) {
- 		ret = -EINVAL;
--		goto out;
-+		goto out_unlock;
- 	}
- 
- 	ret = wlcore_allocate_hw_queue_base(wl, wlvif);
- 	if (ret < 0)
--		goto out;
-+		goto out_unlock;
- 
- 	/*
- 	 * TODO: after the nvs issue will be solved, move this block
-@@ -2644,7 +2644,7 @@ static int wl1271_op_add_interface(struct ieee80211_hw *hw,
- 
- 		ret = wl12xx_init_fw(wl);
- 		if (ret < 0)
--			goto out;
-+			goto out_unlock;
- 	}
- 
- 	/*
+ 	*total_flags = flags;
+ 	mt76_wr(dev, MT_WF_RFCR(phy->mt76->band_idx), phy->rxfilter);
 -- 
 2.39.5
 
