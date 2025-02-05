@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC99E13C9C4;
-	Wed,  5 Feb 2025 13:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9162813C9C4;
+	Wed,  5 Feb 2025 13:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763483; cv=none; b=psZ7s9gOwCbHCYGRjwvASvLWbl6tUVLIOCVT+iYBqmQw2gekRhy4ryo33U8J8D5yMO6NpWL8i//qBSi12mJa6SePHyLfkGSUYBiyu4qzUSRmHHO5vR5UKgSR5toVtpaKpzc3UhrdSQn51LYQd4uomjq+E3T7Mjj2HzqJGc7u1uE=
+	t=1738763486; cv=none; b=KsIt07cn8OAWaXIuuKW0ZD1b4EDCplhFk4HYK09z4kf6OJL25RzvB42cKB7hCIgnY8aZcSZeed7a7vpPF/tcqWClUYBjDOwy0eatnKlZGW2yDoLWU58HPtuwi9iYBpwqDc+C9NEH+hllT/wiJZN/FHUR4BckJzsFFcNUQqloznc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763483; c=relaxed/simple;
-	bh=mfo0u0H9AaTeuUNwq5HAe0FD4UeiDCZGzoyrZKZg1Ok=;
+	s=arc-20240116; t=1738763486; c=relaxed/simple;
+	bh=013J7+HmBCk2CHJ7qV3Ula25Iq1ltbJfGUzKRmojUAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YN4rM89J1CWnxlrN0Tdk+FDa21B6kzC2lv8wOmAi0UrJhA1XgIfw0PYeDbhPRxjCQwUAhxZvLw4AHumzm1aWpkUI21VadjXppKuFSbBs6wRT5TG2WeeOaFFaf4AppE8GGr6UnopJHlmRu32CW6NIxLCzigK78s7MAYMSaCgKFDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkXIzCLY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cXl8mZkm6fSeXR4oSUjIXOK3y3fA+AN5aRsciGudJQjjCGqRYrYOtfd+EcpxwaL7v8ukhap90wzjPpGqyb+5HovIo9q5AWAMk5mBYBqHOSwBB5yIC2ClM+hvNC+ifUMs4kKn8NfATrkK8iMv51M1rBdBaY0M1d0TdmT4g6cgEQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoExasnM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkXIzCLY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A874C4CED1;
-	Wed,  5 Feb 2025 13:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoExasnM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83C5C4CED6;
+	Wed,  5 Feb 2025 13:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763482;
-	bh=mfo0u0H9AaTeuUNwq5HAe0FD4UeiDCZGzoyrZKZg1Ok=;
+	s=korg; t=1738763486;
+	bh=013J7+HmBCk2CHJ7qV3Ula25Iq1ltbJfGUzKRmojUAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkXIzCLY4dz7zhol09adQdhvBdX2AEz9PfIV7x6CT81vhYu7wKPo3oue6i5+Ef4eg
-	 Ry27T3sTppX8e4Qw5om71bup6fHWwh+NZa+JB489iTRs164Fbh0U+hJhCT7qtJ8b9+
-	 oQmUw0RRoKR8utGIYIxdufXLCNLpQbhYH9/RYtBA=
+	b=DoExasnM9LHIq/SB/H7K2zI9cM7pbPTEGkVs4dAenrdvMgDP8yb9D8PXW9lD/UnD9
+	 e2vocMcOyYs9K2Al+ztH6onv21kCnMlSrxpIa0kLzNgyQHmKr4jyFNWoFcYSWras+5
+	 o8vxj7Cq/VcuEGGykM3RKD2ATxH+FYsGyOujdNhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Rabeeh Khoury <rabeeh@solid-run.com>,
-	Jacob Siverskog <jacob@teenage.engineering>,
-	Sergej Sawazki <sergej@taudac.com>,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/393] clk: si5351: allow PLLs to be adjusted without reset
-Date: Wed,  5 Feb 2025 14:39:41 +0100
-Message-ID: <20250205134422.667209566@linuxfoundation.org>
+Subject: [PATCH 6.12 020/590] nvme: Add error path for xa_store in nvme_init_effects
+Date: Wed,  5 Feb 2025 14:36:15 +0100
+Message-ID: <20250205134456.015004369@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,152 +47,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alvin Šipraga <alsi@bang-olufsen.dk>
+From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
 
-[ Upstream commit b2adbc9cea752539f6421e9d4642408f666c1251 ]
+[ Upstream commit d4a95adeabc6b5a39405e49c6d5ed14dd83682c4 ]
 
-Introduce a new PLL reset mode flag which controls whether or not to
-reset a PLL after adjusting its rate. The mode can be configured through
-platform data or device tree.
+The xa_store() may fail due to memory allocation failure because there
+is no guarantee that the index NVME_CSI_NVM is already used. This fix
+introduces a new function to handle the error path.
 
-Since commit 6dc669a22c77 ("clk: si5351: Add PLL soft reset"), the
-driver unconditionally resets a PLL whenever its rate is adjusted.
-The rationale was that a PLL reset was required to get three outputs
-working at the same time. Before this change, the driver never reset the
-PLLs.
-
-Commit b26ff127c52c ("clk: si5351: Apply PLL soft reset before enabling
-the outputs") subsequently introduced an option to reset the PLL when
-enabling a clock output that sourced it. Here, the rationale was that
-this is required to get a deterministic phase relationship between
-multiple output clocks.
-
-This clearly shows that it is useful to reset the PLLs in applications
-where multiple clock outputs are used. However, the Si5351 also allows
-for glitch-free rate adjustment of its PLLs if one avoids resetting the
-PLL. In our audio application where a single Si5351 clock output is used
-to supply a runtime adjustable bit clock, this unconditional PLL reset
-behaviour introduces unwanted glitches in the clock output.
-
-It would appear that the problem being solved in the former commit
-may be solved by using the optional device tree property introduced in
-the latter commit, obviating the need for an unconditional PLL reset
-after rate adjustment. But it's not OK to break the default behaviour of
-the driver, and it cannot be assumed that all device trees are using the
-property introduced in the latter commit. Hence, the new behaviour is
-made opt-in.
-
-Cc: Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
-Cc: Rabeeh Khoury <rabeeh@solid-run.com>
-Cc: Jacob Siverskog <jacob@teenage.engineering>
-Cc: Sergej Sawazki <sergej@taudac.com>
-Signed-off-by: Alvin Šipraga <alsi@bang-olufsen.dk>
-Acked-by: Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
-Link: https://lore.kernel.org/r/20231124-alvin-clk-si5351-no-pll-reset-v6-3-69b82311cb90@bang-olufsen.dk
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: 28fa3291cad1 ("clk: fix an OF node reference leak in of_clk_get_parent_name()")
+Fixes: cc115cbe12d9 ("nvme: always initialize known command effects")
+Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-si5351.c             | 47 ++++++++++++++++++++++++++--
- include/linux/platform_data/si5351.h |  2 ++
- 2 files changed, 46 insertions(+), 3 deletions(-)
+ drivers/nvme/host/core.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/clk-si5351.c b/drivers/clk/clk-si5351.c
-index 00fb9b09e030c..95d7afb8cfc6a 100644
---- a/drivers/clk/clk-si5351.c
-+++ b/drivers/clk/clk-si5351.c
-@@ -506,6 +506,8 @@ static int si5351_pll_set_rate(struct clk_hw *hw, unsigned long rate,
- {
- 	struct si5351_hw_data *hwdata =
- 		container_of(hw, struct si5351_hw_data, hw);
-+	struct si5351_platform_data *pdata =
-+		hwdata->drvdata->client->dev.platform_data;
- 	u8 reg = (hwdata->num == 0) ? SI5351_PLLA_PARAMETERS :
- 		SI5351_PLLB_PARAMETERS;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index f5ea15bfe6feb..23137fcd335b0 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3168,6 +3168,25 @@ static int nvme_init_non_mdts_limits(struct nvme_ctrl *ctrl)
+ 	return ret;
+ }
  
-@@ -518,9 +520,10 @@ static int si5351_pll_set_rate(struct clk_hw *hw, unsigned long rate,
- 		(hwdata->params.p2 == 0) ? SI5351_CLK_INTEGER_MODE : 0);
- 
- 	/* Do a pll soft reset on the affected pll */
--	si5351_reg_write(hwdata->drvdata, SI5351_PLL_RESET,
--			 hwdata->num == 0 ? SI5351_PLL_RESET_A :
--					    SI5351_PLL_RESET_B);
-+	if (pdata->pll_reset[hwdata->num])
-+		si5351_reg_write(hwdata->drvdata, SI5351_PLL_RESET,
-+				 hwdata->num == 0 ? SI5351_PLL_RESET_A :
-+						    SI5351_PLL_RESET_B);
- 
- 	dev_dbg(&hwdata->drvdata->client->dev,
- 		"%s - %s: p1 = %lu, p2 = %lu, p3 = %lu, parent_rate = %lu, rate = %lu\n",
-@@ -1222,6 +1225,44 @@ static int si5351_dt_parse(struct i2c_client *client,
- 		}
- 	}
- 
-+	/*
-+	 * Parse PLL reset mode. For compatibility with older device trees, the
-+	 * default is to always reset a PLL after setting its rate.
-+	 */
-+	pdata->pll_reset[0] = true;
-+	pdata->pll_reset[1] = true;
++static int nvme_init_effects_log(struct nvme_ctrl *ctrl,
++		u8 csi, struct nvme_effects_log **log)
++{
++	struct nvme_effects_log *effects, *old;
 +
-+	of_property_for_each_u32(np, "silabs,pll-reset-mode", prop, p, num) {
-+		if (num >= 2) {
-+			dev_err(&client->dev,
-+				"invalid pll %d on pll-reset-mode prop\n", num);
-+			return -EINVAL;
-+		}
++	effects = kzalloc(sizeof(*effects), GFP_KERNEL);
++	if (effects)
++		return -ENOMEM;
 +
-+		p = of_prop_next_u32(prop, p, &val);
-+		if (!p) {
-+			dev_err(&client->dev,
-+				"missing pll-reset-mode for pll %d\n", num);
-+			return -EINVAL;
-+		}
-+
-+		switch (val) {
-+		case 0:
-+			/* Reset PLL whenever its rate is adjusted */
-+			pdata->pll_reset[num] = true;
-+			break;
-+		case 1:
-+			/* Don't reset PLL whenever its rate is adjusted */
-+			pdata->pll_reset[num] = false;
-+			break;
-+		default:
-+			dev_err(&client->dev,
-+				"invalid pll-reset-mode %d for pll %d\n", val,
-+				num);
-+			return -EINVAL;
-+		}
++	old = xa_store(&ctrl->cels, csi, effects, GFP_KERNEL);
++	if (xa_is_err(old)) {
++		kfree(effects);
++		return xa_err(old);
 +	}
 +
- 	/* per clkout properties */
- 	for_each_child_of_node(np, child) {
- 		if (of_property_read_u32(child, "reg", &num)) {
-diff --git a/include/linux/platform_data/si5351.h b/include/linux/platform_data/si5351.h
-index c71a2dd661437..5f412a615532b 100644
---- a/include/linux/platform_data/si5351.h
-+++ b/include/linux/platform_data/si5351.h
-@@ -105,10 +105,12 @@ struct si5351_clkout_config {
-  * @clk_xtal: xtal input clock
-  * @clk_clkin: clkin input clock
-  * @pll_src: array of pll source clock setting
-+ * @pll_reset: array indicating if plls should be reset after setting the rate
-  * @clkout: array of clkout configuration
-  */
- struct si5351_platform_data {
- 	enum si5351_pll_src pll_src[2];
-+	bool pll_reset[2];
- 	struct si5351_clkout_config clkout[8];
- };
++	*log = effects;
++	return 0;
++}
++
+ static void nvme_init_known_nvm_effects(struct nvme_ctrl *ctrl)
+ {
+ 	struct nvme_effects_log	*log = ctrl->effects;
+@@ -3214,10 +3233,9 @@ static int nvme_init_effects(struct nvme_ctrl *ctrl, struct nvme_id_ctrl *id)
+ 	}
  
+ 	if (!ctrl->effects) {
+-		ctrl->effects = kzalloc(sizeof(*ctrl->effects), GFP_KERNEL);
+-		if (!ctrl->effects)
+-			return -ENOMEM;
+-		xa_store(&ctrl->cels, NVME_CSI_NVM, ctrl->effects, GFP_KERNEL);
++		ret = nvme_init_effects_log(ctrl, NVME_CSI_NVM, &ctrl->effects);
++		if (ret < 0)
++			return ret;
+ 	}
+ 
+ 	nvme_init_known_nvm_effects(ctrl);
 -- 
 2.39.5
 
