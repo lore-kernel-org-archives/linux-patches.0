@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91878156F39;
-	Wed,  5 Feb 2025 14:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3717D155A30;
+	Wed,  5 Feb 2025 14:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766275; cv=none; b=G9jieaceIdY5RznK43xJC/ibEPUn2+gHE1vHzOz7A1dv7y8RJJ+cs8IdYtPY7eV1KAVPQCRR92AF8PR/2Hwzw0oVuaebk7jXOXnNFGU8I7y3wl2Qoa/XwcNi/+ffDl8iu+nCoNr6tc7QaliB2mVdlMiE0TWNsrO0vyOpSlKZxEw=
+	t=1738766279; cv=none; b=gzFfpzGLm6/R/px+h/Ku4lCWv+n4QEgHeEmlYeovhhMgKqMZ0ksgPubX32n8JkHJH+rJAYYB2Pf4dZ2NqB4onVOM+ainVLrztkSky1PnWSzvKpfBlK76gv7CW0nzMNeZ/3P077x2fPiVwNqWhINuaT/k2w6awpah3YhXe1TwNSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766275; c=relaxed/simple;
-	bh=ByqjAqvZ0PR8kF5DtjYArFdikaeP+2t7REjH3a2lFlo=;
+	s=arc-20240116; t=1738766279; c=relaxed/simple;
+	bh=KFsuubk2zhtju8qYFH4fRdxd4bh3YRPKXP7N59oH2hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AKQYAHHlYU+ncAFDcdrBghZBM9U7FG0du3I1PVB51/yPmMGB4+3jggagJnmFDWYkkH4BCa1gV/2tehNSZhClnq0GgIoUeVhMYx74kl/fLh0fSFWKU0r1OsMjCJvQvUb2lUWlKts0apvKPlpHx+f6/NtktYbk4nw44FzULqmisrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gD76B3Up; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pneRpqcKZcPePFXs68Zc6ThDIMVT41fCIRB72f0wi6XFNCqGOva6QTsdQRIdtVo8T4HEh8NWLfvgV8zUjKsr5/558+3hqC3XRGQ/E+jvm+6yKjVYocZ5+AfawQO4l6uhOLwGTUIjyMCg06z7QPWd+ARvmVHqToAIL6i9saCi2tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsxcCHkq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gD76B3Up"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DADC4CED1;
-	Wed,  5 Feb 2025 14:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsxcCHkq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EE6C4CED1;
+	Wed,  5 Feb 2025 14:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766275;
-	bh=ByqjAqvZ0PR8kF5DtjYArFdikaeP+2t7REjH3a2lFlo=;
+	s=korg; t=1738766278;
+	bh=KFsuubk2zhtju8qYFH4fRdxd4bh3YRPKXP7N59oH2hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gD76B3UprvCzdKD5foeU4peqzhRKnvJXZ05pvtqwsKHCDH+1l9ZS2JMw5LtUcthy5
-	 sptt8b7RwD5P2L8MKOaauOtWrfwW3OZIIRkEQ03PuKH6HkJHvjyL3p+gHrakTjAbZ4
-	 7yq+nqf/IYrIUrTr4QxhwbrfNUurIUWMMT5IgmZY=
+	b=EsxcCHkq+MKnZEJcsUwjP2uHnx4qnCGVdP1Jcin9woqcUjDhX4unRX81AWjsGF5Mz
+	 pH5zDFrEkLlyR3GmrIXsGYK/PhYkRh9mHDSn4NOhm0WoZabO37gY1/O6z23wQQPG+7
+	 v8DVV7/q51+4L8D7GwYyPae63gxyAin3B9VoyXSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 306/590] arm64: dts: mediatek: mt8516: fix GICv2 range
-Date: Wed,  5 Feb 2025 14:41:01 +0100
-Message-ID: <20250205134506.983828764@linuxfoundation.org>
+Subject: [PATCH 6.6 348/393] genksyms: fix memory leak when the same symbol is added from source
+Date: Wed,  5 Feb 2025 14:44:27 +0100
+Message-ID: <20250205134433.622554039@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +46,151 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit e3ee31e4409f051c021a30122f3c470f093a7386 ]
+[ Upstream commit 45c9c4101d3d2fdfa00852274bbebba65fcc3cf2 ]
 
-On the MT8167 which is based on the MT8516 DTS, the following error
-was appearing on boot, breaking interrupt operation:
+When a symbol that is already registered is added again, __add_symbol()
+returns without freeing the symbol definition, making it unreachable.
 
-GICv2 detected, but range too small and irqchip.gicv2_force_probe not set
+The following test cases demonstrate different memory leak points.
 
-Similar to what's been proposed for MT7622 which has the same issue,
-fix by using the range reported by force_probe.
+[Test Case 1]
 
-Link: https://lore.kernel.org/all/YmhNSLgp%2Fyg8Vr1F@makrotopia.org/
-Fixes: 5236347bde42 ("arm64: dts: mediatek: add dtsi for MT8516")
-Signed-off-by: Val Packett <val@packett.cool>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241204190524.21862-2-val@packett.cool
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Forward declaration with exactly the same definition
+
+  $ cat foo.c
+  #include <linux/export.h>
+  void foo(void);
+  void foo(void) {}
+  EXPORT_SYMBOL(foo);
+
+[Test Case 2]
+
+Forward declaration with a different definition (e.g. attribute)
+
+  $ cat foo.c
+  #include <linux/export.h>
+  void foo(void);
+  __attribute__((__section__(".ref.text"))) void foo(void) {}
+  EXPORT_SYMBOL(foo);
+
+[Test Case 3]
+
+Preserving an overridden symbol (compile with KBUILD_PRESERVE=1)
+
+  $ cat foo.c
+  #include <linux/export.h>
+  void foo(void);
+  void foo(void) { }
+  EXPORT_SYMBOL(foo);
+
+  $ cat foo.symref
+  override foo void foo ( int )
+
+The memory leaks in Test Case 1 and 2 have existed since the introduction
+of genksyms into the kernel tree. [1]
+
+The memory leak in Test Case 3 was introduced by commit 5dae9a550a74
+("genksyms: allow to ignore symbol checksum changes").
+
+When multiple init_declarators are reduced to an init_declarator_list,
+the decl_spec must be duplicated. Otherwise, the following Test Case 4
+would result in a double-free bug.
+
+[Test Case 4]
+
+  $ cat foo.c
+  #include <linux/export.h>
+
+  extern int foo, bar;
+
+  int foo, bar;
+  EXPORT_SYMBOL(foo);
+
+In this case, 'foo' and 'bar' share the same decl_spec, 'int'. It must
+be unshared before being passed to add_symbol().
+
+[1]: https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git/commit/?id=46bd1da672d66ccd8a639d3c1f8a166048cca608
+
+Fixes: 5dae9a550a74 ("genksyms: allow to ignore symbol checksum changes")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8516.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/genksyms/genksyms.c |  3 +++
+ scripts/genksyms/parse.y    | 14 ++++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8516.dtsi b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
-index d0b03dc4d3f43..4444293413023 100644
---- a/arch/arm64/boot/dts/mediatek/mt8516.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
-@@ -268,7 +268,7 @@
- 			interrupt-parent = <&gic>;
- 			interrupt-controller;
- 			reg = <0 0x10310000 0 0x1000>,
--			      <0 0x10320000 0 0x1000>,
-+			      <0 0x1032f000 0 0x2000>,
- 			      <0 0x10340000 0 0x2000>,
- 			      <0 0x10360000 0 0x2000>;
- 			interrupts = <GIC_PPI 9
+diff --git a/scripts/genksyms/genksyms.c b/scripts/genksyms/genksyms.c
+index f5dfdb9d80e9d..6ddc8f406c75f 100644
+--- a/scripts/genksyms/genksyms.c
++++ b/scripts/genksyms/genksyms.c
+@@ -241,6 +241,7 @@ static struct symbol *__add_symbol(const char *name, enum symbol_type type,
+ 						"unchanged\n");
+ 				}
+ 				sym->is_declared = 1;
++				free_list(defn, NULL);
+ 				return sym;
+ 			} else if (!sym->is_declared) {
+ 				if (sym->is_override && flag_preserve) {
+@@ -249,6 +250,7 @@ static struct symbol *__add_symbol(const char *name, enum symbol_type type,
+ 					print_type_name(type, name);
+ 					fprintf(stderr, " modversion change\n");
+ 					sym->is_declared = 1;
++					free_list(defn, NULL);
+ 					return sym;
+ 				} else {
+ 					status = is_unknown_symbol(sym) ?
+@@ -256,6 +258,7 @@ static struct symbol *__add_symbol(const char *name, enum symbol_type type,
+ 				}
+ 			} else {
+ 				error_with_pos("redefinition of %s", name);
++				free_list(defn, NULL);
+ 				return sym;
+ 			}
+ 			break;
+diff --git a/scripts/genksyms/parse.y b/scripts/genksyms/parse.y
+index 8e9b5e69e8f01..840371d01bf48 100644
+--- a/scripts/genksyms/parse.y
++++ b/scripts/genksyms/parse.y
+@@ -152,14 +152,19 @@ simple_declaration:
+ 	;
+ 
+ init_declarator_list_opt:
+-	/* empty */				{ $$ = NULL; }
+-	| init_declarator_list
++	/* empty */			{ $$ = NULL; }
++	| init_declarator_list		{ free_list(decl_spec, NULL); $$ = $1; }
+ 	;
+ 
+ init_declarator_list:
+ 	init_declarator
+ 		{ struct string_list *decl = *$1;
+ 		  *$1 = NULL;
++
++		  /* avoid sharing among multiple init_declarators */
++		  if (decl_spec)
++		    decl_spec = copy_list_range(decl_spec, NULL);
++
+ 		  add_symbol(current_name,
+ 			     is_typedef ? SYM_TYPEDEF : SYM_NORMAL, decl, is_extern);
+ 		  current_name = NULL;
+@@ -170,6 +175,11 @@ init_declarator_list:
+ 		  *$3 = NULL;
+ 		  free_list(*$2, NULL);
+ 		  *$2 = decl_spec;
++
++		  /* avoid sharing among multiple init_declarators */
++		  if (decl_spec)
++		    decl_spec = copy_list_range(decl_spec, NULL);
++
+ 		  add_symbol(current_name,
+ 			     is_typedef ? SYM_TYPEDEF : SYM_NORMAL, decl, is_extern);
+ 		  current_name = NULL;
 -- 
 2.39.5
 
