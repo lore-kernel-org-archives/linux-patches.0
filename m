@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BC718C93C;
-	Wed,  5 Feb 2025 14:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8AA18C93C;
+	Wed,  5 Feb 2025 14:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766904; cv=none; b=TO1Y6vjd+YEQ+reI4f354xnaYLclZ6PZGeSxVsCK7jEc8DbFRya3yJ3KVWnZk32XST3m2wS15TYOMHB8pPg3oHjS683TDF5i0SThTIDqpfeTX0Gm+vQCs2r4vMg6Z7W8slrLxSRx0YNvhpV5LGgO41pDnfy+iUbpxd6/pMeninA=
+	t=1738766908; cv=none; b=IyTlI079OvBAk7eOWcdXPqJh2Q1dSMRXTpfUQrIPuRgPl+NwrbMEqvD4BzTi4msbtlBIhDuOgNFgCuS7Bjju1hm1gBix0ofDCklEW0K0vzBpn9XuZhiMkPc/sXXEnhAqUG+tYVnHJuWbDDMx52MPTx5/ra+B5xqGWmox2x+1QOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766904; c=relaxed/simple;
-	bh=cXMC1IJ9POuQh7QFU/Px355ZxqY1WdE0MXA48S17qPE=;
+	s=arc-20240116; t=1738766908; c=relaxed/simple;
+	bh=ovjDkOZNuoXu4QFCXnbtn89wUzjQpHWYNGFmv7kYAYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M+lz0p1D30ODHUHuk9bwXyL++pMWcyIW29YOohooHwez3/coAGS9oLRKYDcXa7m6WAaz9xkwzIdS4jOxSvNrOdeOkjyVOIAsBj9w4/tF/igCrmkX7CXOMy/9k/e5YMFOPDkNjBfBhmH1/LuW8/veEJuX+PUBqhZPSM96Md0eNyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dd0xxDdM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MLVr1NBK97mNQYPouFdIToAKX/oVcmIXYfcan7C4dv+YypBDZep/enA5Uew7LCK0TlVyxo/nwrAZYQ4hR4itZ50ymb+YqKaX+knV2s3nPKNnRlvIwRYFW1KYOeEso1gKIpxgubYpRNkTRd90nR+Bdi0xTu8IM9z4v8PU+xkI6ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lbYkogE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dd0xxDdM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58DBC4CED1;
-	Wed,  5 Feb 2025 14:48:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lbYkogE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B971C4CED1;
+	Wed,  5 Feb 2025 14:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766904;
-	bh=cXMC1IJ9POuQh7QFU/Px355ZxqY1WdE0MXA48S17qPE=;
+	s=korg; t=1738766907;
+	bh=ovjDkOZNuoXu4QFCXnbtn89wUzjQpHWYNGFmv7kYAYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dd0xxDdM9TmPkvIrcOtXu1Br4uTHSx9QiKQoSxAttjexWqqr54aYphi3YhlIaobeG
-	 CfgFvXMjBucMPaYuQS6Wh8jM2cWVQhh6Adg/nmPtTd6TlyHldUGPKmnTW3ixqAh8QL
-	 HQT4cfI93r9nQL+LDZgFUvBMnR87fs2cu6BS28XI=
+	b=0lbYkogE+0Ja2rAavZrz1tsSHv2gZoR39MnaPerbcX3DXZFtNlttETBvWU4VTS/cx
+	 xj0P8H87nRK5NF8E++STaI2DDEEo6EoT9YXhI4itRza0a/SFz6hZhsF1728SZNtvOp
+	 IJ0zL2rgyNneW7eWOynAflc1cP/t9Hw7zT0U1bj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Shyam Prasad N <nspmangalore@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Jay Shin <jaeshin@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 378/590] arm64: dts: qcom: sm8150-microsoft-surface-duo: fix typos in da7280 properties
-Date: Wed,  5 Feb 2025 14:42:13 +0100
-Message-ID: <20250205134509.731903516@linuxfoundation.org>
+Subject: [PATCH 6.13 327/623] smb: client: fix oops due to unset link speed
+Date: Wed,  5 Feb 2025 14:41:09 +0100
+Message-ID: <20250205134508.734723354@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +51,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 9875adffb87da5c40f4013e55104f5e2fc071c2a ]
+[ Upstream commit be7a6a77669588bfa5022a470989702bbbb11e7f ]
 
-The dlg,const-op-mode & dlg,periodic-op-mode were mis-names with twice
-the "dlg," prefix, drop one to match the bindings.
+It isn't guaranteed that NETWORK_INTERFACE_INFO::LinkSpeed will always
+be set by the server, so the client must handle any values and then
+prevent oopses like below from happening:
 
-This fixes:
-sm8150-microsoft-surface-duo.dtb: da7280@4a: 'dlg,const-op-mode' is a required property
-	from schema $id: http://devicetree.org/schemas/input/dlg,da7280.yaml#
-m8150-microsoft-surface-duo.dtb: da7280@4a: 'dlg,periodic-op-mode' is a required property
-	from schema $id: http://devicetree.org/schemas/input/dlg,da7280.yaml#
-sm8150-microsoft-surface-duo.dtb: da7280@4a: 'dlg,dlg,const-op-mode', 'dlg,dlg,periodic-op-mode' do not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/input/dlg,da7280.yaml#
+Oops: divide error: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 0 UID: 0 PID: 1323 Comm: cat Not tainted 6.13.0-rc7 #2
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
+04/01/2014
+RIP: 0010:cifs_debug_data_proc_show+0xa45/0x1460 [cifs] Code: 00 00 48
+89 df e8 3b cd 1b c1 41 f6 44 24 2c 04 0f 84 50 01 00 00 48 89 ef e8
+e7 d0 1b c1 49 8b 44 24 18 31 d2 49 8d 7c 24 28 <48> f7 74 24 18 48 89
+c3 e8 6e cf 1b c1 41 8b 6c 24 28 49 8d 7c 24
+RSP: 0018:ffffc90001817be0 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff88811230022c RCX: ffffffffc041bd99
+RDX: 0000000000000000 RSI: 0000000000000567 RDI: ffff888112300228
+RBP: ffff888112300218 R08: fffff52000302f5f R09: ffffed1022fa58ac
+R10: ffff888117d2c566 R11: 00000000fffffffe R12: ffff888112300200
+R13: 000000012a15343f R14: 0000000000000001 R15: ffff888113f2db58
+FS: 00007fe27119e740(0000) GS:ffff888148600000(0000)
+knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fe2633c5000 CR3: 0000000124da0000 CR4: 0000000000750ef0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __die_body.cold+0x19/0x27
+ ? die+0x2e/0x50
+ ? do_trap+0x159/0x1b0
+ ? cifs_debug_data_proc_show+0xa45/0x1460 [cifs]
+ ? do_error_trap+0x90/0x130
+ ? cifs_debug_data_proc_show+0xa45/0x1460 [cifs]
+ ? exc_divide_error+0x39/0x50
+ ? cifs_debug_data_proc_show+0xa45/0x1460 [cifs]
+ ? asm_exc_divide_error+0x1a/0x20
+ ? cifs_debug_data_proc_show+0xa39/0x1460 [cifs]
+ ? cifs_debug_data_proc_show+0xa45/0x1460 [cifs]
+ ? seq_read_iter+0x42e/0x790
+ seq_read_iter+0x19a/0x790
+ proc_reg_read_iter+0xbe/0x110
+ ? __pfx_proc_reg_read_iter+0x10/0x10
+ vfs_read+0x469/0x570
+ ? do_user_addr_fault+0x398/0x760
+ ? __pfx_vfs_read+0x10/0x10
+ ? find_held_lock+0x8a/0xa0
+ ? __pfx_lock_release+0x10/0x10
+ ksys_read+0xd3/0x170
+ ? __pfx_ksys_read+0x10/0x10
+ ? __rcu_read_unlock+0x50/0x270
+ ? mark_held_locks+0x1a/0x90
+ do_syscall_64+0xbb/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fe271288911
+Code: 00 48 8b 15 01 25 10 00 f7 d8 64 89 02 b8 ff ff ff ff eb bd e8
+20 ad 01 00 f3 0f 1e fa 80 3d b5 a7 10 00 00 74 13 31 c0 0f 05 <48> 3d
+00 f0 ff ff 77 4f c3 66 0f 1f 44 00 00 55 48 89 e5 48 83 ec
+RSP: 002b:00007ffe87c079d8 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+RAX: ffffffffffffffda RBX: 0000000000040000 RCX: 00007fe271288911
+RDX: 0000000000040000 RSI: 00007fe2633c6000 RDI: 0000000000000003
+RBP: 00007ffe87c07a00 R08: 0000000000000000 R09: 00007fe2713e6380
+R10: 0000000000000022 R11: 0000000000000246 R12: 0000000000040000
+R13: 00007fe2633c6000 R14: 0000000000000003 R15: 0000000000000000
+ </TASK>
 
-With the dlg,da7280.yaml converted from dlg,da7280.txt at [1].
+Fix this by setting cifs_server_iface::speed to a sane value (1Gbps)
+by default when link speed is unset.
 
-[1] https://lore.kernel.org/all/20241206-topic-misc-da7280-convert-v2-1-1c3539f75604@linaro.org/
-
-Fixes: d1f781db47a8 ("arm64: dts: qcom: add initial device-tree for Microsoft Surface Duo")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241230-topic-misc-dt-fixes-v4-6-1e6880e9dda3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: Shyam Prasad N <nspmangalore@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Fixes: a6d8fb54a515 ("cifs: distribute channels across interfaces based on speed")
+Reported-by: Frank Sorenson <sorenson@redhat.com>
+Reported-by: Jay Shin <jaeshin@redhat.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2ops.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-index b039773c44653..a1323a8b8e6bf 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-@@ -376,8 +376,8 @@
- 		pinctrl-0 = <&da7280_intr_default>;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 87cb1872db28b..9790ff2cc5b32 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -658,7 +658,8 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
  
- 		dlg,actuator-type = "LRA";
--		dlg,dlg,const-op-mode = <1>;
--		dlg,dlg,periodic-op-mode = <1>;
-+		dlg,const-op-mode = <1>;
-+		dlg,periodic-op-mode = <1>;
- 		dlg,nom-microvolt = <2000000>;
- 		dlg,abs-max-microvolt = <2000000>;
- 		dlg,imax-microamp = <129000>;
+ 	while (bytes_left >= (ssize_t)sizeof(*p)) {
+ 		memset(&tmp_iface, 0, sizeof(tmp_iface));
+-		tmp_iface.speed = le64_to_cpu(p->LinkSpeed);
++		/* default to 1Gbps when link speed is unset */
++		tmp_iface.speed = le64_to_cpu(p->LinkSpeed) ?: 1000000000;
+ 		tmp_iface.rdma_capable = le32_to_cpu(p->Capability & RDMA_CAPABLE) ? 1 : 0;
+ 		tmp_iface.rss_capable = le32_to_cpu(p->Capability & RSS_CAPABLE) ? 1 : 0;
+ 
 -- 
 2.39.5
 
