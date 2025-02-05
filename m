@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA18146A7A;
-	Wed,  5 Feb 2025 14:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83681E89C;
+	Wed,  5 Feb 2025 14:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767515; cv=none; b=kPIrt3juOXxs9v9MRh6a9s7+7lUwU4+jdjcJL0x8WGA++XWBXoVyXUfjJ4LyL40r2fA3TaD0XblbIT5T2M82ExvBsTn970843FnPjKv4CkDQOz+asfyMIXfjtP8HpJqmFimzpRFgr/U6oDeAwtq/wsmZtS6jgEkGJaLB/EoEkrs=
+	t=1738767518; cv=none; b=YF4V9nsNQqK8FqgQ2OGchTehXzp9V5Zn+ESiTub6lNFvlPjoqli0PqVxynDHQgwWtSU9fg/iyp/gQi7OM1xvn+5j26R0bcL275BJn5zOJTnJtcrg0La0AT2kfc/BqxFEuJibcE2Z1LO8TXNW40g+wu41Oo69n4bgM+R9T19Fabc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767515; c=relaxed/simple;
-	bh=64G6+lMAme2dNOhJyh+ZnfsrKozpjbCTJYckTddqp8A=;
+	s=arc-20240116; t=1738767518; c=relaxed/simple;
+	bh=5ryCB8tSQcEjFfKRKsWpuM5eT/5qozylZc2/uCXcUgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QE0ivFhWfytdJMM7OlCXbdyl0Cbq/+HUsbdjmnPNcPtdNqGxdgLmxQNGb23xEc3LPd28EvbBzLReWqL7dXbZEFYZXST0qFtpu+NexXOrtVSU+cS2YZ9zx1x+zXIftfquQHUNUGULSI/ZcCQYuiM66uEYDNLe5ce5rDbch0W8IRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSABDvCf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jnNZkF070Xhp/nm/HFewcVOi+P7lM9yAtdzndtB/U9agTnC9XwQ8+IWHHnT28Vv/HDy2umZwUoEnLlfdp0w2QduebOuiXIMuUQFF9jADTm2CZo474fToJb2UbawN2zef996JQB4O+ryWPsnkm6PTk+Tk5htut+a8W5XbshOXIw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1QVittg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSABDvCf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5722BC4CED1;
-	Wed,  5 Feb 2025 14:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1QVittg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2574C4CED1;
+	Wed,  5 Feb 2025 14:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767514;
-	bh=64G6+lMAme2dNOhJyh+ZnfsrKozpjbCTJYckTddqp8A=;
+	s=korg; t=1738767518;
+	bh=5ryCB8tSQcEjFfKRKsWpuM5eT/5qozylZc2/uCXcUgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sSABDvCfslNSPAdf4IwbQ0ajWSl+F9uIfLvFCbUTzI6BLEHnGRtSgbPeu2GQk0MG3
-	 YOPxZpJybu/HNLo43gLpyIabrwudz4LwN6JWZERSL+gE1KZoEXkHJIo2hqJEW2Szzw
-	 Op1jZhTwySK/cpzkqfxxEUcomWYtXhcTcK1fGOcE=
+	b=V1QVittgInoGtaFXJ/qNhHkeDLLASsCHLdL38zZHly5jF0JUNkVPuUM9TUahA8Oeo
+	 Woq9XHjZ9HFsS8m8JRSHnF5k+26u1eWH6zYpWT5pj7dPkQPH3rSFVFaOCIoZNCtVwE
+	 7RrFovwRELDkjt3DLdkDO5tImXntUGkR9jcntNoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Cassen <acassen@corp.free.fr>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Val Packett <val@packett.cool>,
+	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 467/590] xfrm: delete intermediate secpath entry in packet offload mode
-Date: Wed,  5 Feb 2025 14:43:42 +0100
-Message-ID: <20250205134513.127406933@linuxfoundation.org>
+Subject: [PATCH 6.13 415/623] arm64: dts: mediatek: add per-SoC compatibles for keypad nodes
+Date: Wed,  5 Feb 2025 14:42:37 +0100
+Message-ID: <20250205134512.100741077@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,171 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Cassen <acassen@corp.free.fr>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 600258d555f0710b9c47fb78d2d80a4aecd608cc ]
+[ Upstream commit 6139d9e9e397dc9711cf10f8f548a8f9da3b5323 ]
 
-Packets handled by hardware have added secpath as a way to inform XFRM
-core code that this path was already handled. That secpath is not needed
-at all after policy is checked and it is removed later in the stack.
+The mt6779-keypad binding specifies using a compatible for the
+actual SoC before the generic MT6779 one.
 
-However, in the case of IP forwarding is enabled (/proc/sys/net/ipv4/ip_forward),
-that secpath is not removed and packets which already were handled are reentered
-to the driver TX path with xfrm_offload set.
-
-The following kernel panic is observed in mlx5 in such case:
-
- mlx5_core 0000:04:00.0 enp4s0f0np0: Link up
- mlx5_core 0000:04:00.1 enp4s0f1np1: Link up
- Initializing XFRM netlink socket
- IPsec XFRM device driver
- BUG: kernel NULL pointer dereference, address: 0000000000000000
- #PF: supervisor instruction fetch in kernel mode
- #PF: error_code(0x0010) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0010 [#1] PREEMPT SMP
- CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.13.0-rc1-alex #3
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.13.0-1ubuntu1.1 04/01/2014
- RIP: 0010:0x0
- Code: Unable to access opcode bytes at 0xffffffffffffffd6.
- RSP: 0018:ffffb87380003800 EFLAGS: 00010206
- RAX: ffff8df004e02600 RBX: ffffb873800038d8 RCX: 00000000ffff98cf
- RDX: ffff8df00733e108 RSI: ffff8df00521fb80 RDI: ffff8df001661f00
- RBP: ffffb87380003850 R08: ffff8df013980000 R09: 0000000000000010
- R10: 0000000000000002 R11: 0000000000000002 R12: ffff8df001661f00
- R13: ffff8df00521fb80 R14: ffff8df00733e108 R15: ffff8df011faf04e
- FS:  0000000000000000(0000) GS:ffff8df46b800000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: ffffffffffffffd6 CR3: 0000000106384000 CR4: 0000000000350ef0
- Call Trace:
-  <IRQ>
-  ? show_regs+0x63/0x70
-  ? __die_body+0x20/0x60
-  ? __die+0x2b/0x40
-  ? page_fault_oops+0x15c/0x550
-  ? do_user_addr_fault+0x3ed/0x870
-  ? exc_page_fault+0x7f/0x190
-  ? asm_exc_page_fault+0x27/0x30
-  mlx5e_ipsec_handle_tx_skb+0xe7/0x2f0 [mlx5_core]
-  mlx5e_xmit+0x58e/0x1980 [mlx5_core]
-  ? __fib_lookup+0x6a/0xb0
-  dev_hard_start_xmit+0x82/0x1d0
-  sch_direct_xmit+0xfe/0x390
-  __dev_queue_xmit+0x6d8/0xee0
-  ? __fib_lookup+0x6a/0xb0
-  ? internal_add_timer+0x48/0x70
-  ? mod_timer+0xe2/0x2b0
-  neigh_resolve_output+0x115/0x1b0
-  __neigh_update+0x26a/0xc50
-  neigh_update+0x14/0x20
-  arp_process+0x2cb/0x8e0
-  ? __napi_build_skb+0x5e/0x70
-  arp_rcv+0x11e/0x1c0
-  ? dev_gro_receive+0x574/0x820
-  __netif_receive_skb_list_core+0x1cf/0x1f0
-  netif_receive_skb_list_internal+0x183/0x2a0
-  napi_complete_done+0x76/0x1c0
-  mlx5e_napi_poll+0x234/0x7a0 [mlx5_core]
-  __napi_poll+0x2d/0x1f0
-  net_rx_action+0x1a6/0x370
-  ? atomic_notifier_call_chain+0x3b/0x50
-  ? irq_int_handler+0x15/0x20 [mlx5_core]
-  handle_softirqs+0xb9/0x2f0
-  ? handle_irq_event+0x44/0x60
-  irq_exit_rcu+0xdb/0x100
-  common_interrupt+0x98/0xc0
-  </IRQ>
-  <TASK>
-  asm_common_interrupt+0x27/0x40
- RIP: 0010:pv_native_safe_halt+0xb/0x10
- Code: 09 c3 66 66 2e 0f 1f 84 00 00 00 00 00 66 90 0f 22
- 0f 1f 84 00 00 00 00 00 90 eb 07 0f 00 2d 7f e9 36 00 fb
-40 00 83 ff 07 77 21 89 ff ff 24 fd 88 3d a1 bd 0f 21 f8
- RSP: 0018:ffffffffbe603de8 EFLAGS: 00000202
- RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000f92f46680
- RDX: 0000000000000037 RSI: 00000000ffffffff RDI: 00000000000518d4
- RBP: ffffffffbe603df0 R08: 000000cd42e4dffb R09: ffffffffbe603d70
- R10: 0000004d80d62680 R11: 0000000000000001 R12: ffffffffbe60bf40
- R13: 0000000000000000 R14: 0000000000000000 R15: ffffffffbe60aff8
-  ? default_idle+0x9/0x20
-  arch_cpu_idle+0x9/0x10
-  default_idle_call+0x29/0xf0
-  do_idle+0x1f2/0x240
-  cpu_startup_entry+0x2c/0x30
-  rest_init+0xe7/0x100
-  start_kernel+0x76b/0xb90
-  x86_64_start_reservations+0x18/0x30
-  x86_64_start_kernel+0xc0/0x110
-  ? setup_ghcb+0xe/0x130
-  common_startup_64+0x13e/0x141
-  </TASK>
- Modules linked in: esp4_offload esp4 xfrm_interface
-xfrm6_tunnel tunnel4 tunnel6 xfrm_user xfrm_algo binfmt_misc
-intel_rapl_msr intel_rapl_common kvm_amd ccp kvm input_leds serio_raw
-qemu_fw_cfg sch_fq_codel dm_multipath scsi_dh_rdac scsi_dh_emc
-scsi_dh_alua efi_pstore ip_tables x_tables autofs4 raid10 raid456
-async_raid6_recov async_memcpy async_pq raid6_pq async_xor xor async_tx
-libcrc32c raid1 raid0 mlx5_core crct10dif_pclmul crc32_pclmul
-polyval_clmulni polyval_generic ghash_clmulni_intel sha256_ssse3
-sha1_ssse3 ahci mlxfw i2c_i801 libahci i2c_mux i2c_smbus psample
-virtio_rng pci_hyperv_intf aesni_intel crypto_simd cryptd
- CR2: 0000000000000000
- ---[ end trace 0000000000000000 ]---
- RIP: 0010:0x0
- Code: Unable to access opcode bytes at 0xffffffffffffffd6.
- RSP: 0018:ffffb87380003800 EFLAGS: 00010206
- RAX: ffff8df004e02600 RBX: ffffb873800038d8 RCX: 00000000ffff98cf
- RDX: ffff8df00733e108 RSI: ffff8df00521fb80 RDI: ffff8df001661f00
- RBP: ffffb87380003850 R08: ffff8df013980000 R09: 0000000000000010
- R10: 0000000000000002 R11: 0000000000000002 R12: ffff8df001661f00
- R13: ffff8df00521fb80 R14: ffff8df00733e108 R15: ffff8df011faf04e
- FS:  0000000000000000(0000) GS:ffff8df46b800000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: ffffffffffffffd6 CR3: 0000000106384000 CR4: 0000000000350ef0
- Kernel panic - not syncing: Fatal exception in interrupt
- Kernel Offset: 0x3b800000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
- ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
-
-Fixes: 5958372ddf62 ("xfrm: add RX datapath protection for IPsec packet offload mode")
-Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: a8013418d35c ("arm64: dts: mediatek: mt8183: add keyboard node")
+Fixes: 6ff945376556 ("arm64: dts: mediatek: Initial mt8365-evk support")
+Signed-off-by: Val Packett <val@packett.cool>
+Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20241225192631.25017-3-val@packett.cool
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xfrm.h | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183.dtsi | 3 ++-
+ arch/arm64/boot/dts/mediatek/mt8365.dtsi | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index 2b87999bd5aae..83e9ef25b8d0d 100644
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -1223,9 +1223,19 @@ static inline int __xfrm_policy_check2(struct sock *sk, int dir,
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+index 1afeeb1155f57..9af6349dbfcf1 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+@@ -1024,7 +1024,8 @@
+ 		};
  
- 	if (xo) {
- 		x = xfrm_input_state(skb);
--		if (x->xso.type == XFRM_DEV_OFFLOAD_PACKET)
--			return (xo->flags & CRYPTO_DONE) &&
--			       (xo->status & CRYPTO_SUCCESS);
-+		if (x->xso.type == XFRM_DEV_OFFLOAD_PACKET) {
-+			bool check = (xo->flags & CRYPTO_DONE) &&
-+				     (xo->status & CRYPTO_SUCCESS);
-+
-+			/* The packets here are plain ones and secpath was
-+			 * needed to indicate that hardware already handled
-+			 * them and there is no need to do nothing in addition.
-+			 *
-+			 * Consume secpath which was set by drivers.
-+			 */
-+			secpath_reset(skb);
-+			return check;
-+		}
- 	}
+ 		keyboard: keyboard@10010000 {
+-			compatible = "mediatek,mt6779-keypad";
++			compatible = "mediatek,mt8183-keypad",
++				     "mediatek,mt6779-keypad";
+ 			reg = <0 0x10010000 0 0x1000>;
+ 			interrupts = <GIC_SPI 186 IRQ_TYPE_EDGE_FALLING>;
+ 			clocks = <&clk26m>;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8365.dtsi b/arch/arm64/boot/dts/mediatek/mt8365.dtsi
+index 9c91fe8ea0f96..2bf8c9d02b6ee 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8365.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8365.dtsi
+@@ -449,7 +449,8 @@
+ 		};
  
- 	return __xfrm_check_nopolicy(net, skb, dir) ||
+ 		keypad: keypad@10010000 {
+-			compatible = "mediatek,mt6779-keypad";
++			compatible = "mediatek,mt8365-keypad",
++				     "mediatek,mt6779-keypad";
+ 			reg = <0 0x10010000 0 0x1000>;
+ 			wakeup-source;
+ 			interrupts = <GIC_SPI 124 IRQ_TYPE_EDGE_FALLING>;
 -- 
 2.39.5
 
