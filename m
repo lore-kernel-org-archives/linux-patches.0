@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD0714F9FD;
-	Wed,  5 Feb 2025 13:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271DFFC0B;
+	Wed,  5 Feb 2025 13:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763640; cv=none; b=ffO3QkIJNbcFz35ULIfzd0AIXr8EpQe6zhfQlpqj0j/xDTPpXLnoGD1DODoztUOBvGgtoCOMl2AHIDC31LlS7kPWpX96m6zJhjECz9FIwLUP/p9Mvcit2R4/a/+NF6Gw0PiH0Rn1VTWXH12z9dDtmEbfXFnq1sfI+a96eghWDBQ=
+	t=1738763643; cv=none; b=tPNHbRpexgVmbGYVPGhFum3Q15qk78QzAZse59tCA4QeNaknjBKOG2HQJZwRVFhKlFwtKdRCk7wFcaSv+ymO9mspF7NJCY3D+/yk7NaGyLmvbWtdhMDY/LTV/H3xNtqCKlzmCMBtzrDokg2ZhLNxT37Rwh13TIo5VxTV4hqxzjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763640; c=relaxed/simple;
-	bh=MS5PohMXpk5gN+YXnC+fyTl3ckRN+1BYAEl2WR8FqYQ=;
+	s=arc-20240116; t=1738763643; c=relaxed/simple;
+	bh=DDXDRDk/O7rp9GLkzuiKIvD1e52WosGtwGNLJxG2x/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F5y16v0QEFdwDiNSRtTWUBzAxQuyZRQhK4kM2S7SrZa5IPK0LtMhfLaVt3TmmbeRIH000ZxyI577ZIR1L0VSzWpmofYQzfv5SJviISlpfXGpngBohYm4RF+jLYiHQ6a66/anMoogdI5ldEXcn4YT8x8nLxMwy6QkYz0vhGtTLqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBZoDFGY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fxu5Osd8w+n6OGazKFn7HZD558Q1mtZnt2xGLpeFhdFiQeYZRYpbY3P1DUjb08i1eV7DgVyoU5AkPC7mjcL1cSoENCT2R5+YGVBvXE57zGZmo9vPoxVj55s3mfZ28PYV0OJhJLGwixlEBniAj5xSIonh2St1Vr32s2gL2qtFKtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQBWcgfn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBZoDFGY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1B9C4CED1;
-	Wed,  5 Feb 2025 13:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQBWcgfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894DEC4CED1;
+	Wed,  5 Feb 2025 13:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763639;
-	bh=MS5PohMXpk5gN+YXnC+fyTl3ckRN+1BYAEl2WR8FqYQ=;
+	s=korg; t=1738763643;
+	bh=DDXDRDk/O7rp9GLkzuiKIvD1e52WosGtwGNLJxG2x/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sBZoDFGYx0dBW5hNGoNGf1gWLG6QsIf7vox/V+l33aGuuhKDBRueKnXkUSWxmvIvw
-	 2kjXdrZTo222gWjUc4eSHyOsRtp9UfGVSKNiNb3tgazzMqdtCfr7005HsW1Ife/tf5
-	 VERDXAtwVyi04kvhGh8SzaRG6f+PmH2wNp93ZbsU=
+	b=hQBWcgfnVsqS7TJkEgw+NBEPdh7zDYUB7TPvQJHcKKX4NPdtvcW+HuXcXK0qB3zvX
+	 QD9yQZWSPOg06pe/Wv0AAzN5scROWp+7OT4cpVx/q1z/3L+c5f8yNk1m3xxT8XVA+A
+	 KtZRiqS9IYvB0a500V5HVS/1Ka3DtKRfhmtldKc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragan Simic <dsimic@manjaro.org>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Vasily Khoruzhick <anarsoul@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Frank Oltmanns <frank@oltmanns.dev>,
-	Stuart Gathman <stuart@gathman.org>
-Subject: [PATCH 6.6 092/393] clk: sunxi-ng: a64: stop force-selecting PLL-MIPI as TCON0 parent
-Date: Wed,  5 Feb 2025 14:40:11 +0100
-Message-ID: <20250205134423.814832556@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 005/623] afs: Fix EEXIST error returned from afs_rmdir() to be ENOTEMPTY
+Date: Wed,  5 Feb 2025 14:35:47 +0100
+Message-ID: <20250205134456.435612122@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,78 +49,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vasily Khoruzhick <anarsoul@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 383ca7bee8a93be9ff5a072936981c2710d2856b ]
+[ Upstream commit b49194da2aff2c879dec9c59ef8dec0f2b0809ef ]
 
-Stop force-selecting PLL-MIPI as TCON0 parent, since it breaks video
-output on Pinebook that uses RGB to eDP bridge.
+AFS servers pass back a code indicating EEXIST when they're asked to remove
+a directory that is not empty rather than ENOTEMPTY because not all the
+systems that an AFS server can run on have the latter error available and
+AFS preexisted the addition of that error in general.
 
-Partially revert commit ca1170b69968 ("clk: sunxi-ng: a64: force
-select PLL_MIPI in TCON0 mux"), while still leaving
-CLK_SET_RATE_NO_REPARENT flag set, since we do not want the clock to
-be reparented.
+Fix afs_rmdir() to translate EEXIST to ENOTEMPTY.
 
-The issue is that apparently different TCON0 outputs require a different
-clock, or the mux might be selecting the output type.
-
-I did an experiment: I manually configured PLL_MIPI and PLL_VIDEO0_2X
-to the same clock rate and flipped the switch with devmem. Experiment
-clearly showed that whenever PLL_MIPI is selected as TCON0 clock parent,
-the video output stops working.
-
-Therefore, TCON0 clock parent corresponding to the output type must be
-assigned in the device tree.
-
-Fixes: ca1170b69968 ("clk: sunxi-ng: a64: force select PLL_MIPI in TCON0 mux")
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Tested-by: Frank Oltmanns <frank@oltmanns.dev> # on PinePhone
-Tested-by: Stuart Gathman <stuart@gathman.org> # on OG Pinebook
-Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
-Link: https://patch.msgid.link/20250104074035.1611136-5-anarsoul@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Fixes: 260a980317da ("[AFS]: Add "directory write" support.")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20241216204124.3752367-13-dhowells@redhat.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun50i-a64.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ fs/afs/dir.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun50i-a64.c b/drivers/clk/sunxi-ng/ccu-sun50i-a64.c
-index 6a4b2b9ef30a8..aee1a2f14c951 100644
---- a/drivers/clk/sunxi-ng/ccu-sun50i-a64.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun50i-a64.c
-@@ -533,11 +533,11 @@ static SUNXI_CCU_M_WITH_MUX_GATE(de_clk, "de", de_parents,
- 				 CLK_SET_RATE_PARENT);
+diff --git a/fs/afs/dir.c b/fs/afs/dir.c
+index ada363af5aab8..50edd1cae28ac 100644
+--- a/fs/afs/dir.c
++++ b/fs/afs/dir.c
+@@ -1472,7 +1472,12 @@ static int afs_rmdir(struct inode *dir, struct dentry *dentry)
+ 		op->file[1].vnode = vnode;
+ 	}
  
- /*
-- * DSI output seems to work only when PLL_MIPI selected. Set it and prevent
-- * the mux from reparenting.
-+ * Experiments showed that RGB output requires pll-video0-2x, while DSI
-+ * requires pll-mipi. It will not work with incorrect clock, the screen will
-+ * be blank.
-+ * sun50i-a64.dtsi assigns pll-mipi as TCON0 parent by default
-  */
--#define SUN50I_A64_TCON0_CLK_REG	0x118
--
- static const char * const tcon0_parents[] = { "pll-mipi", "pll-video0-2x" };
- static const u8 tcon0_table[] = { 0, 2, };
- static SUNXI_CCU_MUX_TABLE_WITH_GATE_CLOSEST(tcon0_clk, "tcon0", tcon0_parents,
-@@ -957,11 +957,6 @@ static int sun50i_a64_ccu_probe(struct platform_device *pdev)
+-	return afs_do_sync_operation(op);
++	ret = afs_do_sync_operation(op);
++
++	/* Not all systems that can host afs servers have ENOTEMPTY. */
++	if (ret == -EEXIST)
++		ret = -ENOTEMPTY;
++	return ret;
  
- 	writel(0x515, reg + SUN50I_A64_PLL_MIPI_REG);
- 
--	/* Set PLL MIPI as parent for TCON0 */
--	val = readl(reg + SUN50I_A64_TCON0_CLK_REG);
--	val &= ~GENMASK(26, 24);
--	writel(val | (0 << 24), reg + SUN50I_A64_TCON0_CLK_REG);
--
- 	ret = devm_sunxi_ccu_probe(&pdev->dev, reg, &sun50i_a64_ccu_desc);
- 	if (ret)
- 		return ret;
+ error:
+ 	return afs_put_operation(op);
 -- 
 2.39.5
 
