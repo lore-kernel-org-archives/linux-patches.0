@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A408915CD74;
-	Wed,  5 Feb 2025 14:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F02146A7A;
+	Wed,  5 Feb 2025 14:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766948; cv=none; b=Z7fa8lrdzO5cvvdJQnnHIgyRNpDc9rk4RmxF4lw2LDppbquLfT5eY/6Hlj1IgWUvhpv0OlD+XV1aQ3wxOcLjmn2mltzZhiprh5n2G5EhuSXYA4HYUXSHxGv94SshWeSKvA/KgLTaWJcVvSC4fM8KlS2oc5MRphAUPneKDQx5g2Q=
+	t=1738766952; cv=none; b=Jl4+bEZg0dwFXw9RhEx49RFifUpJeAofM6Ct8vnVM799cUScbVmnDBC9Hx7PLdqsjcvEeTaIf8GkiLVEiaX6Zx65zi9a4aK1tunHQ3Mjz2VhpDMmZp4d7aFhKtgrc/5Vrhs69kLcbYZu3cjk6X+Hri83a+ywCKndG6/wzjXYVNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766948; c=relaxed/simple;
-	bh=wbksHn0OOymS4v24xbjNcpERSE2CSU7Mq4azHieYeQg=;
+	s=arc-20240116; t=1738766952; c=relaxed/simple;
+	bh=MEdLpnUQu+2Rn/djpj9uP98G8P6dKjwIsGF12yU9NQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qh1ewBgxz2uSNsLPwLGHoOb6BFOqV/0iFWD3Sn2kxcfXIMMAbTnjU2Mv8nZlHuPO5nquwXIxxOLfTMCi04td0dPFpyEB8RGYkWQcs60IaSGRwcsMohZmYZbk+gY6VpWs4c8sUZwwbBcxdshlTVYgvASYQJVmHrmjorkzWei/vn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdfkJQko; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mW0gFzL76Cyx26PrNRdrkZkDL1XgwK+SACbkoPc99snn16BpLiksVKNmttTE6ycgwEaJvmZ/KWewD3kMUe+APlDHl8cFdgdIJ67oDlmG6vt2Nyl6+nsJfn2lJn1LX+Z7ZO5vTyemvP/RoGui7tmtfstVyH/RJrYAougZ7q86JFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptdyZKFi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdfkJQko"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127A7C4CED1;
-	Wed,  5 Feb 2025 14:49:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptdyZKFi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87539C4CED1;
+	Wed,  5 Feb 2025 14:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766948;
-	bh=wbksHn0OOymS4v24xbjNcpERSE2CSU7Mq4azHieYeQg=;
+	s=korg; t=1738766952;
+	bh=MEdLpnUQu+2Rn/djpj9uP98G8P6dKjwIsGF12yU9NQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KdfkJQko1NZlm6UxycTZdV9QsZ+crgUSvxSQWc1JBqGu0byMHCpsbI21QcF/pB6RK
-	 LOea0OTL0a+UH6g94k/4aD7wHTkmmE3M7Yp9MPfFiweVKTPHLMrtpIrrnMzWl7u0/P
-	 /Kjx+wDOy1JFBjNUMUM8LIcB0eNwK83sntXSgRwA=
+	b=ptdyZKFibl4uTZg6m3EJ0cjl1xSUjSSTXVhwkbK1FLV06jf3uvdkzJATndi6bnOpj
+	 x+XpqMxeX/EbCmtams0OU9qTmFc2t9Jr5TwCs2nPqTxifVBTOZgiCgzQGldQb/pOwQ
+	 W2CypA+ZbbPX6EgcgqhdQbMDWfcRK4cajV6dQrAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Wojciech Macek <wmacek@google.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 384/590] arm64: dts: qcom: sc8280xp: Fix interrupt type of camss interrupts
-Date: Wed,  5 Feb 2025 14:42:19 +0100
-Message-ID: <20250205134509.960631019@linuxfoundation.org>
+Subject: [PATCH 6.13 333/623] arm64: dts: mediatek: mt8186: Move wakeup to MTU3 to get working suspend
+Date: Wed,  5 Feb 2025 14:41:15 +0100
+Message-ID: <20250205134508.962465424@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,81 +46,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit b08535cd41c27b4f32319b5bff754c9da6dc2205 ]
+[ Upstream commit 253b4e96f5783fddede1b82274a7b4e0aa57d761 ]
 
-Qualcomm IP catalog says that all CAMSS interrupts are edge rising,
-fix it in the CAMSS device tree node for sc8280xp SoC.
+The current DT has the wakeup-source and mediatek,syscon-wakeup
+properties in the XHCI nodes, which configures USB wakeup after powering
+down the XHCI hardware block. However, since the XHCI controller is
+behind an MTU3 (USB3 DRD controller), the MTU3 only gets powered down
+after USB wakeup has been configured, causing the system to detect a
+wakeup, and results in broken suspend support as the system resumes
+immediately.
 
-Fixes: 5994dd60753e ("arm64: dts: qcom: sc8280xp: camss: Add CAMSS block definition")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20241127122950.885982-5-vladimir.zapolskiy@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Move the wakeup properties to the MTU3 nodes so that USB wakeup is only
+enabled after the MTU3 has powered down.
+
+With this change in place, it is possible to suspend and resume, and
+also to wakeup through USB, as tested on the Google Steelix (Lenovo 300e
+Yoga Chromebook Gen 4).
+
+Fixes: f6c3e61c5486 ("arm64: dts: mediatek: mt8186: Add MTU3 nodes")
+Reported-by: Wojciech Macek <wmacek@google.com>
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20241106-mt8186-suspend-with-usb-wakeup-v1-1-07734a4c8236@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 40 +++++++++++++-------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8186.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 4debb4edaf3d1..b1e0e51a55829 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -3882,26 +3882,26 @@
- 				    "vfe3",
- 				    "csid3";
+diff --git a/arch/arm64/boot/dts/mediatek/mt8186.dtsi b/arch/arm64/boot/dts/mediatek/mt8186.dtsi
+index d3c3c2a40adcd..b91f88ffae0e8 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8186.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8186.dtsi
+@@ -1577,6 +1577,8 @@
+ 			#address-cells = <2>;
+ 			#size-cells = <2>;
+ 			ranges;
++			wakeup-source;
++			mediatek,syscon-wakeup = <&pericfg 0x420 2>;
+ 			status = "disabled";
  
--			interrupts = <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 640 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 758 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 759 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 760 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 761 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 762 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 764 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 640 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 641 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 758 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 759 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 760 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 761 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 762 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 764 IRQ_TYPE_EDGE_RISING>;
- 			interrupt-names = "csid1_lite",
- 					  "vfe_lite1",
- 					  "csiphy3",
+ 			usb_host0: usb@11200000 {
+@@ -1590,8 +1592,6 @@
+ 					 <&infracfg_ao CLK_INFRA_AO_SSUSB_TOP_XHCI>;
+ 				clock-names = "sys_ck", "ref_ck", "mcu_ck", "dma_ck", "xhci_ck";
+ 				interrupts = <GIC_SPI 294 IRQ_TYPE_LEVEL_HIGH 0>;
+-				mediatek,syscon-wakeup = <&pericfg 0x420 2>;
+-				wakeup-source;
+ 				status = "disabled";
+ 			};
+ 		};
+@@ -1643,6 +1643,8 @@
+ 			#address-cells = <2>;
+ 			#size-cells = <2>;
+ 			ranges;
++			wakeup-source;
++			mediatek,syscon-wakeup = <&pericfg 0x424 2>;
+ 			status = "disabled";
+ 
+ 			usb_host1: usb@11280000 {
+@@ -1656,8 +1658,6 @@
+ 					 <&infracfg_ao CLK_INFRA_AO_SSUSB_TOP_P1_XHCI>;
+ 				clock-names = "sys_ck", "ref_ck", "mcu_ck", "dma_ck","xhci_ck";
+ 				interrupts = <GIC_SPI 324 IRQ_TYPE_LEVEL_HIGH 0>;
+-				mediatek,syscon-wakeup = <&pericfg 0x424 2>;
+-				wakeup-source;
+ 				status = "disabled";
+ 			};
+ 		};
 -- 
 2.39.5
 
