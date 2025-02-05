@@ -1,102 +1,134 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B76F21CA12
-	for <patches@lists.linux.dev>; Wed,  5 Feb 2025 23:16:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089CB151997
+	for <patches@lists.linux.dev>; Wed,  5 Feb 2025 23:30:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738797414; cv=none; b=GhxNvCxyPCLmuQC6ZeO4fCykNnjYrtT0oRM9EwJxoi32DY4j4ZM6nuHUGmvUVXeNyABeyWZ2DurWyNPfLAfYHD58O1E/vbxmBK+hu4Wq5Lkwwd5U8eUgcUyK6aY6OxDQJSmsOTgO5VWlQ8BlJIvWIKktPGhXtGJETJWV90LlWDM=
+	t=1738798223; cv=none; b=WuzUfpbwB3nygEgXhawM6HLS0yiYbAfFQNfydClawohFftG3jKHzIvpbVPzypGbcxF+7m6rYFO0P6ifZznpaM09NNuDxW/rvvkpYK2uCnxwnXAkXrVLQmFkkFH+s3kmIvyQsCcaySBNOS2UBdrSyyEmCTEKIyZJnSoQaVKBnKqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738797414; c=relaxed/simple;
-	bh=8aEVXKUAiX3jl+3diE6Q0vk3pLPdXXP6PT+//H2Bps0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oZscP2K8IdtSiY+jkFFNbF2DusGkP2UsIzx3H/fNX17U2jN5w5XpWMXMTpNYWoCaeYu3AVSYxWslQcuvKxMOjxE3vbsnX7FqZnaMlKEs6XmbAoh+kd/HwspKWQUT9Xqaw1CjhXVTJrmQAw7VbiviYFbFaMPKW5zQiv5jwNBw80I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PJc0SWfF; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738798223; c=relaxed/simple;
+	bh=w0KqSvz4LKHnh40uBElw2aDPtTJnsxo3kIyaKh2DPsc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Dx+t7lFlxKJ9UD4hRlYxDl757Hto1dC6MeCI/iCrl2yAtgBee03ra3ZHxPqeWd87EHUMW9JtRJ0K4OekHh+xc5nQKHemTsJXHy3AtAeGQvh7v9Qs7p4EPY8p6VLlJL97AKyii5iFzs9VmPNk7tlJOpWWlJ0e2O6UVZweKgdZyaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=mBx7DZ1I; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PJc0SWfF"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2f9d1e44bcbso58727a91.0
-        for <patches@lists.linux.dev>; Wed, 05 Feb 2025 15:16:52 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="mBx7DZ1I"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-21661be2c2dso6987665ad.1
+        for <patches@lists.linux.dev>; Wed, 05 Feb 2025 15:30:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738797412; x=1739402212; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0rHjeh69SCDv8DGOvORSauZlHYEzWBvt+ziip+sBEbg=;
-        b=PJc0SWfFz3Y+62Dirr2KhAMONMTeNe10LYtnVCi1aqyTRECd6ynU63UygOMBMgLJO1
-         n3wFYLZs3WNrqxtnS5xX7WlomNegW53ZfATx5cDfniong+qZqpKJWAqE4a0yDcGdAlB5
-         3SyG7Nck4JcvfIsB9UJC3o7Kbgcp9zycPk47TPopYKXnTJvu79I+JAcoVl9TDTPFCsLj
-         erY4g9Jlc9mfqPZ3bRGJtTMyLQPqgYeZ8H93PFGbtvP+cD39fLYGvRpZiJHwq5rksaHD
-         /LQ2zGXm+GGJky56hcMMNEXJ57TN5wIl/R0cRez+0Jgdf+Pz9+swSmt0RlWmE6a+halS
-         vtSA==
+        d=chromium.org; s=google; t=1738798221; x=1739403021; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LfrhKTgFStXH2HCRNCmE3wFhveRGNarb8z2r9ekUmYk=;
+        b=mBx7DZ1Iixq1innxTTH4teUeFZlfNGWzail5F2c7hQZreiqnuBlGKmGZ3px/6/9u0C
+         Nhnr/Nfzsgbzg18lL16K491tI3lc3PCvYHSnDi9Q0O0hpzub0+xwMQtuacR8v/5o6pjW
+         zZhhSrDJq5a4mQY1Oy7cjk4SyJAt/Zk0d5+lw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738797412; x=1739402212;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0rHjeh69SCDv8DGOvORSauZlHYEzWBvt+ziip+sBEbg=;
-        b=MEY27/RExavj0TQI33JyxAPybhJTopkDa+JAS5/rVlhfHnxio4c24K4WOsZ2guJ6EB
-         ubV4bBF8d8Es46WSMGtTgRfKaZJEXxDOKQAjf0zoecnRqrgxHQDAr8cKb7hu7jPoFv3F
-         pfDBqassLl2M5ow5/VsmfBQPaKCVMc9lp8J8Di9W3JHnqiFN2iX6rf1/2MHPW2tCyLYR
-         yEgruFpvdiL6/GxzzinSoBGhXwzn0ochQOdwh3eh7ccCSz+ZoujFa6lt9iQwM+ONR41B
-         T8JaEvypj8Zevg3Gauq7T27l/lbdcmf69YwYURbLrTaagpkSkKES4dypFhQnT0s05Wuf
-         WTDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWX07jXA85xlj0y8pE3iaL+PqwL1YbtrOoWaULHgOjiAfzrIxt6ZEeZlwbUt+qs4ScnXRylPqvV@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy8jXP/3sfdqLkiZenpZP6ecc6ncv6L1DhSzJoX4HstAZQ2QqUf
-	we2no2VmoYfv9AfcuVbqTFboToE4lLrE8o/0bqCOYQjUYcRr7p7rl3wLVkxQQQhxvJXZJm7WOgk
-	vSGyWAuIAlmogzdUgkkKPiwTgvNI=
-X-Gm-Gg: ASbGnctMFVCPkEV2cL4YjJHiDt/QO6ae3RhcQ4tDD4qbRn5Sg+nHFgcHlgvneGxdK5F
-	dYSFqfIroWsSXc7olW6UPAXVsahNSKpJiHCYAuxiQiCMxM/n3HMuhM+kyVd82vt41VQ7C5lLR
-X-Google-Smtp-Source: AGHT+IGZoNZSpEbGizDvWVQqh2XixWLkNh3RqvbaonWI9OERbfVObNviSaPkChrUY9WhqbQKZZAZBpwhNYPXAsOuMEs=
-X-Received: by 2002:a17:90b:3a88:b0:2ef:93:154e with SMTP id
- 98e67ed59e1d1-2f9e08349d7mr2914333a91.5.1738797412290; Wed, 05 Feb 2025
- 15:16:52 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738798221; x=1739403021;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LfrhKTgFStXH2HCRNCmE3wFhveRGNarb8z2r9ekUmYk=;
+        b=bXLv+ubUoiLmOK8dvd7Bx/Rp7n1RYM+1+YKUTiakLRH1iOReGIM0b6fVmyrMk3xnY0
+         lH3GweFuQB1fttJUzvRsDl1VBYseNrFbUZMijiSFyjzOvjxu9tqWeKSATXdIqrFRb/4p
+         gTHoSc2lGfsNcBZwSKDF9gcpK43OEGIDa0GyHkDBWcoCN+ew0q3xziSELrw+RgA5c729
+         U6OJ4TvyzVY/Yx475pkFdgRO3SUeL9QiFcBcg+rKhy0+luTlLK07Fh83boelB4Mn8ACt
+         c+sJqjmIgL4qGgj5435POiSvzecLwTUpgNl3C7RregCm72aXQhi9jfeQV6/5WrVqEpM5
+         /4Og==
+X-Forwarded-Encrypted: i=1; AJvYcCXowxRnsu3183EcYExkF30pD9+4aTjDUfgE/vy43XeumpNQ4BG36r5OnuXCE4JKzClae+0S8ix9@lists.linux.dev
+X-Gm-Message-State: AOJu0YykjHS21cmB2kXAOFfK68zhg6uW8HMAd1B8YmnuyXNNJtPi0tdb
+	uokfISsqHXRDAzxGcBoIFFzZHHhMxgfCOV83AZtjqqlHhoxUA8MFqfFX4oBBTw==
+X-Gm-Gg: ASbGnct1H6dUzImzfVwe98oSNGFIy6UpsZVo8mGGgL+IG+scA2K2nmzzeo9fHE4kTPf
+	YjModrd0efIVCZs1IC9bf81L0l9K5evyzL/Q2GYv7ea8rt3I8NnT7y09gF+5dFUTP0Dr6EKKv+t
+	K5T6W+fdGEXrvHpQEqU4U9lKwdDY+5wlEM40Ag6LRWk6ix8jXeQipkvkTTXlldDEp1UblHELgWm
+	Tacr30kqs3/CS8K7Fw78O1eOiVsFThxo9s3ztf4qnbFYba2cJmztOdMV52s/vno7RGr1BjdZgtK
+	0+W18YO/zVgBuNKyLovyJKIGTopG/CiNSuQaRj9+trpZOqtnDJzAI2I=
+X-Google-Smtp-Source: AGHT+IHUo+FqElUk1sltTHIWznB6GdIP99OTajELLS9rXgQ0/Ee3VmZ7ONPYnmSuxZTKWCv2pLwwGg==
+X-Received: by 2002:a05:6a20:3d93:b0:1eb:3661:da3b with SMTP id adf61e73a8af0-1ede88ad4a8mr7472061637.33.1738798219826;
+        Wed, 05 Feb 2025 15:30:19 -0800 (PST)
+Received: from localhost (129.135.125.34.bc.googleusercontent.com. [34.125.135.129])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-73048ae7f79sm15435b3a.77.2025.02.05.15.30.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Feb 2025 15:30:19 -0800 (PST)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	patches@lists.linux.dev,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Benson Leung <bleung@chromium.org>,
+	devicetree@vger.kernel.org,
+	chrome-platform@lists.linux.dev,
+	Pin-yen Lin <treapking@chromium.org>,
+	cros-qcom-dts-watchers@chromium.org
+Subject: [PATCH v2 0/2] arm64: dts: qcom: sc7180-trogdor: Wire up USB
+Date: Wed,  5 Feb 2025 15:30:13 -0800
+Message-ID: <20250205233016.1600517-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.48.1.362.g079036d154-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250121200934.222075-1-ojeda@kernel.org>
-In-Reply-To: <20250121200934.222075-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 6 Feb 2025 00:16:40 +0100
-X-Gm-Features: AWEUYZk0hKQpZ6bO4ChD_-_7c2CWiyRib0WSoFJb76HCurgVXjbYBh--z0xP-So
-Message-ID: <CANiq72kJu9Gxqg5MHUPW-RQaMj7Rz=3HAT1Kbc_d=aQx3QOSqw@mail.gmail.com>
-Subject: Re: [PATCH] rust: init: use explicit ABI to clean warning in future compilers
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jan 21, 2025 at 9:10=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> Starting with Rust 1.86.0 (currently in nightly, to be released on
-> 2025-04-03), the `missing_abi` lint is warn-by-default [1]:
->
->     error: extern declarations without an explicit ABI are deprecated
->         --> rust/doctests_kernel_generated.rs:3158:1
->          |
->     3158 | extern {
->          | ^^^^^^ help: explicitly specify the C ABI: `extern "C"`
->          |
->          =3D note: `-D missing-abi` implied by `-D warnings`
->          =3D help: to override `-D warnings` add `#[allow(missing_abi)]`
->
-> Thus clean it up.
->
-> Link: https://github.com/rust-lang/rust/pull/132397 [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Wiring up the USB hub to the connectors allows us to gain the proper
+'connect_type' and 'removable' values in sysfs for the USB devices on
+sc7180 trogdor devices. These two patches are split off of a larger
+series[1] so they can land faster and because we've come to the
+conclusion that the DisplayPort path is going to connect to the
+cros-ec-typec node.
 
-Applied to `rust-fixes` -- thanks everyone!
+The first patch adds the pogo pin binding to describe the detachable
+keyboards found on some trogdor devices (actually strongbad). The second
+patch is the dts changes required to wire up all the USB stuff. This is
+sufficient to set the connect_type and removable sysfs properties of USB
+devices.
 
-[ Added 6.13.y to Cc: stable tag. - Miguel ]
+Changes from v1 https://lore.kernel.org/r/20240210070934.2549994-1-swboyd@chromium.org
+ * Split out of larger series
+ * Added description to DT binding
+ * Removed DP part of dts changes
 
-Cheers,
-Miguel
+[1] https://lore.kernel.org/r/20240210070934.2549994-1-swboyd@chromium.org
+
+Cc: Rob Herring <robh@kernel.org>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: Conor Dooley <conor+dt@kernel.org>
+Cc: Benson Leung <bleung@chromium.org>
+Cc: <devicetree@vger.kernel.org>
+Cc: <chrome-platform@lists.linux.dev>
+Cc: Pin-yen Lin <treapking@chromium.org>
+Cc: <cros-qcom-dts-watchers@chromium.org>
+
+Stephen Boyd (2):
+  dt-bindings: chrome: Add binding for ChromeOS Pogo pin connector
+  arm64: dts: qcom: sc7180-trogdor: Wire up USB to usb-c-connectors
+
+ .../chrome/google,pogo-pin-connector.yaml     |  68 +++++++++++
+ .../dts/qcom/sc7180-trogdor-clamshell.dtsi    |  21 ++++
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  47 ++++++++
+ .../dts/qcom/sc7180-trogdor-detachable.dtsi   |  15 +++
+ .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  47 ++++++++
+ .../dts/qcom/sc7180-trogdor-kingoftown.dts    |  55 +++++++++
+ .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  55 +++++++++
+ .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi |  55 +++++++++
+ .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  44 +++++++
+ .../qcom/sc7180-trogdor-quackingstick.dtsi    |  31 +++++
+ .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  56 ++++++++-
+ .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |  47 ++++++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 109 ++++++++++++++++++
+ 13 files changed, 648 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
+
+
+base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
+-- 
+https://chromeos.dev
+
