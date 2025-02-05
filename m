@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AC3DF59;
-	Wed,  5 Feb 2025 15:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813EF35946;
+	Wed,  5 Feb 2025 15:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767915; cv=none; b=Ccbv2maWvL1UMPJG1xUKkWrUN1zvf2xta0OgTt/JKCuM17w6JIa+XsC2R/4ALl90wVpE/0pLww0qX34fCqb+DKDMuuH0ATP1imD7qdtR3hPaQkPp61VuuwsD+lrpTlc5Y0cmQKcSz96uGNUsJkVMGrcc8/k+5syvtBJLMUquEZE=
+	t=1738767918; cv=none; b=XKy/zY1eEcisHrj8yHdez968ehkMDGwgO/D9f/EZq+WaEa6cNoRw9DO0UTCvmC0Tm+8ztR1MoQ4poHQc02MerQqa7dFs/uZa9qsIu91i6liCUEWHGexzycRH2XLDj6Eww7yOtKNnwPoNZ+Q33dv9iRTWiDa+NF46t9JIVF+uCo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767915; c=relaxed/simple;
-	bh=8jfAjbbVl2F7Rw0gP+vHU0I888uTjIT46dCcVRHRD28=;
+	s=arc-20240116; t=1738767918; c=relaxed/simple;
+	bh=YgNNHJDcNsxZSASMSAu3aiYi0oiWQ93CFfjjmyTL6hU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fwltjMN3F6+ANxs78MmePO+qnUDVSzhgKz6A8GEZqiK2P9bwnXbPSZdL9iHTgvFH+lvfYfhR8L1H1yke6MuLOvhUEB7PwE65kejNTTSjlfZFAg2RUsK1ZKbYtI26AHa+kV6b32aGDhcOq3JSk1ADm+Cl+GbjevQKkSIWfRS0Kuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ec2zYekV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DdUXb1y6cNd1/BkNKdy2AT0R0jvESJqn8tzeYFiU9A+ytNc3OnxHJGSuCOzY86dlGHZfYNElDLvw0gLphUu3mLyl3ylr0EZUO6Q09WnB5JgnhvkZpacF6NJDUxly7bdwIzvUMwjyS43Fy9mX4RPGFkLM1MpwNv514vbbyqLxZgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scnv3me4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ec2zYekV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CECFC4CED1;
-	Wed,  5 Feb 2025 15:05:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scnv3me4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE716C4CED1;
+	Wed,  5 Feb 2025 15:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767915;
-	bh=8jfAjbbVl2F7Rw0gP+vHU0I888uTjIT46dCcVRHRD28=;
+	s=korg; t=1738767918;
+	bh=YgNNHJDcNsxZSASMSAu3aiYi0oiWQ93CFfjjmyTL6hU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ec2zYekVIHZVqA+9NwRuavk9d7LfNwJQaDjD9REGEIWjTnyWnhNBDgKQfyaWDpA/O
-	 7Jn/KomtTl/pndIkJSMStDyIlhyRhRWApoK59EW/AAvL8jhQBvTb/onolsXapld+S8
-	 d9S4x2OdazZSv+Zk6btvdGP2GyeiQvy4jJP0BgJ8=
+	b=scnv3me4/8Qkah3Xsp/fBLTyuz/AIFgq0yhDL1kE9IekLn7FFpJvynwV23qlhhpi5
+	 RZUQNlngrHtIqX4fvuHQgGQ9LrpTLFcKoHBjGAJfafO4uNRGPmDH6+48Kf6HBOzmQx
+	 t1YyiOwmyUyxXRHVCf+GC6VA5BHBTJSMjcblhasI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Len Brown <len.brown@intel.com>,
+	Daire McNamara <daire.mcnamara@microchip.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 529/590] tools/power turbostat: Fix forked child affinity regression
-Date: Wed,  5 Feb 2025 14:44:44 +0100
-Message-ID: <20250205134515.506246531@linuxfoundation.org>
+Subject: [PATCH 6.13 472/623] PCI: microchip: Set inbound address translation for coherent or non-coherent mode
+Date: Wed,  5 Feb 2025 14:43:34 +0100
+Message-ID: <20250205134514.275635023@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,131 +48,264 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Len Brown <len.brown@intel.com>
+From: Daire McNamara <daire.mcnamara@microchip.com>
 
-[ Upstream commit b32c36975da48afc9089f8b61f7b2dcc40e479d2 ]
+[ Upstream commit 1390a33b3d04fdf6ba4e3e7082107a12027fc188 ]
 
-In "one-shot" mode, turbostat
-1. takes a counter snapshot
-2. forks and waits for a child
-3. takes the end counter snapshot and prints the result.
+On Microchip PolarFire SoC the PCIe Root Port can be behind one of three
+general purpose Fabric Interface Controller (FIC) buses that encapsulates
+an AXI-S bus. Depending on which FIC(s) the Root Port is connected through
+to CPU space, and what address translation is done by that FIC, the Root
+Port driver's inbound address translation may vary.
 
-But turbostat counter snapshots currently use affinity to travel
-around the system so that counter reads are "local", and this
-affinity must be cleared between #1 and #2 above.
+For all current supported designs and all future expected designs, inbound
+address translation done by a FIC on PolarFire SoC varies depending on
+whether PolarFire SoC is operating in coherent DMA mode or noncoherent DMA
+mode.
 
-The offending commit removed that reset that allowed the child
-to run on cpu_present_set.
+The setup of the outbound address translation tables in the Root Port
+driver only needs to handle these two cases.
 
-Fix that issue, and improve upon the original by using
-cpu_possible_set for the child.  This allows the child
-to also run on CPUs that hotplug online during its runtime.
+Setup the inbound address translation tables to one of two address
+translations, depending on whether the Root Port is being used with
+coherent DMA or noncoherent DMA.
 
-Reported-by: Zhang Rui <rui.zhang@intel.com>
-Fixes: 7bb3fe27ad4f ("tools/power/turbostat: Obey allowed CPUs during startup")
-Signed-off-by: Len Brown <len.brown@intel.com>
+Link: https://lore.kernel.org/r/20241011140043.1250030-3-daire.mcnamara@microchip.com
+Fixes: 6f15a9c9f941 ("PCI: microchip: Add Microchip PolarFire PCIe controller driver")
+Signed-off-by: Daire McNamara <daire.mcnamara@microchip.com>
+[bhelgaas: adapt for ac7f53b7e728 ("PCI: microchip: Add support for using
+either Root Port 1 or 2")]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 54 ++++++++++++++++++++++++++-
- 1 file changed, 52 insertions(+), 2 deletions(-)
+ .../pci/controller/plda/pcie-microchip-host.c | 96 +++++++++++++++++++
+ drivers/pci/controller/plda/pcie-plda-host.c  | 17 +++-
+ drivers/pci/controller/plda/pcie-plda.h       |  6 +-
+ 3 files changed, 114 insertions(+), 5 deletions(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index da97f4327650b..235e82fe7d0a5 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -1087,8 +1087,8 @@ int backwards_count;
- char *progname;
+diff --git a/drivers/pci/controller/plda/pcie-microchip-host.c b/drivers/pci/controller/plda/pcie-microchip-host.c
+index 6630cacef3010..3fdfffdf02700 100644
+--- a/drivers/pci/controller/plda/pcie-microchip-host.c
++++ b/drivers/pci/controller/plda/pcie-microchip-host.c
+@@ -7,20 +7,27 @@
+  * Author: Daire McNamara <daire.mcnamara@microchip.com>
+  */
  
- #define CPU_SUBSET_MAXCPUS	1024	/* need to use before probe... */
--cpu_set_t *cpu_present_set, *cpu_effective_set, *cpu_allowed_set, *cpu_affinity_set, *cpu_subset;
--size_t cpu_present_setsize, cpu_effective_setsize, cpu_allowed_setsize, cpu_affinity_setsize, cpu_subset_size;
-+cpu_set_t *cpu_present_set, *cpu_possible_set, *cpu_effective_set, *cpu_allowed_set, *cpu_affinity_set, *cpu_subset;
-+size_t cpu_present_setsize, cpu_possible_setsize, cpu_effective_setsize, cpu_allowed_setsize, cpu_affinity_setsize, cpu_subset_size;
- #define MAX_ADDED_THREAD_COUNTERS 24
- #define MAX_ADDED_CORE_COUNTERS 8
- #define MAX_ADDED_PACKAGE_COUNTERS 16
-@@ -8223,6 +8223,33 @@ int dir_filter(const struct dirent *dirp)
- 		return 0;
++#include <linux/align.h>
++#include <linux/bits.h>
+ #include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/irqchip/chained_irq.h>
+ #include <linux/irqdomain.h>
++#include <linux/log2.h>
+ #include <linux/module.h>
+ #include <linux/msi.h>
+ #include <linux/of_address.h>
+ #include <linux/of_pci.h>
+ #include <linux/pci-ecam.h>
+ #include <linux/platform_device.h>
++#include <linux/wordpart.h>
+ 
+ #include "../../pci.h"
+ #include "pcie-plda.h"
+ 
++#define MC_MAX_NUM_INBOUND_WINDOWS		8
++#define MPFS_NC_BOUNCE_ADDR			0x80000000
++
+ /* PCIe Bridge Phy and Controller Phy offsets */
+ #define MC_PCIE1_BRIDGE_ADDR			0x00008000u
+ #define MC_PCIE1_CTRL_ADDR			0x0000a000u
+@@ -607,6 +614,91 @@ static void mc_disable_interrupts(struct mc_pcie *port)
+ 	writel_relaxed(GENMASK(31, 0), port->bridge_base_addr + ISTATUS_HOST);
  }
  
-+char *possible_file = "/sys/devices/system/cpu/possible";
-+char possible_buf[1024];
-+
-+int initialize_cpu_possible_set(void)
++static void mc_pcie_setup_inbound_atr(struct mc_pcie *port, int window_index,
++				      u64 axi_addr, u64 pcie_addr, u64 size)
 +{
-+	FILE *fp;
++	u32 table_offset = window_index * ATR_ENTRY_SIZE;
++	void __iomem *table_addr = port->bridge_base_addr + table_offset;
++	u32 atr_sz;
++	u32 val;
 +
-+	fp = fopen(possible_file, "r");
-+	if (!fp) {
-+		warn("open %s", possible_file);
-+		return -1;
-+	}
-+	if (fread(possible_buf, sizeof(char), 1024, fp) == 0) {
-+		warn("read %s", possible_file);
-+		goto err;
-+	}
-+	if (parse_cpu_str(possible_buf, cpu_possible_set, cpu_possible_setsize)) {
-+		warnx("%s: cpu str malformat %s\n", possible_file, cpu_effective_str);
-+		goto err;
-+	}
-+	return 0;
++	atr_sz = ilog2(size) - 1;
 +
-+err:
-+	fclose(fp);
-+	return -1;
++	val = ALIGN_DOWN(lower_32_bits(pcie_addr), SZ_4K);
++	val |= FIELD_PREP(ATR_SIZE_MASK, atr_sz);
++	val |= ATR_IMPL_ENABLE;
++
++	writel(val, table_addr + ATR0_PCIE_WIN0_SRCADDR_PARAM);
++
++	writel(upper_32_bits(pcie_addr), table_addr + ATR0_PCIE_WIN0_SRC_ADDR);
++
++	writel(lower_32_bits(axi_addr), table_addr + ATR0_PCIE_WIN0_TRSL_ADDR_LSB);
++	writel(upper_32_bits(axi_addr), table_addr + ATR0_PCIE_WIN0_TRSL_ADDR_UDW);
++
++	writel(TRSL_ID_AXI4_MASTER_0, table_addr + ATR0_PCIE_WIN0_TRSL_PARAM);
 +}
 +
- void topology_probe(bool startup)
- {
- 	int i;
-@@ -8254,6 +8281,16 @@ void topology_probe(bool startup)
- 	CPU_ZERO_S(cpu_present_setsize, cpu_present_set);
- 	for_all_proc_cpus(mark_cpu_present);
- 
++static int mc_pcie_setup_inbound_ranges(struct platform_device *pdev,
++					struct mc_pcie *port)
++{
++	struct device *dev = &pdev->dev;
++	struct device_node *dn = dev->of_node;
++	struct of_range_parser parser;
++	struct of_range range;
++	int atr_index = 0;
++
 +	/*
-+	 * Allocate and initialize cpu_possible_set
++	 * MPFS PCIe Root Port is 32-bit only, behind a Fabric Interface
++	 * Controller FPGA logic block which contains the AXI-S interface.
++	 *
++	 * From the point of view of the PCIe Root Port, there are only two
++	 * supported Root Port configurations:
++	 *
++	 * Configuration 1: for use with fully coherent designs; supports a
++	 * window from 0x0 (CPU space) to specified PCIe space.
++	 *
++	 * Configuration 2: for use with non-coherent designs; supports two
++	 * 1 GB windows to CPU space; one mapping CPU space 0 to PCIe space
++	 * 0x80000000 and a second mapping CPU space 0x40000000 to PCIe
++	 * space 0xc0000000. This cfg needs two windows because of how the
++	 * MSI space is allocated in the AXI-S range on MPFS.
++	 *
++	 * The FIC interface outside the PCIe block *must* complete the
++	 * inbound address translation as per MCHP MPFS FPGA design
++	 * guidelines.
 +	 */
-+	cpu_possible_set = CPU_ALLOC((topo.max_cpu_num + 1));
-+	if (cpu_possible_set == NULL)
-+		err(3, "CPU_ALLOC");
-+	cpu_possible_setsize = CPU_ALLOC_SIZE((topo.max_cpu_num + 1));
-+	CPU_ZERO_S(cpu_possible_setsize, cpu_possible_set);
-+	initialize_cpu_possible_set();
++	if (device_property_read_bool(dev, "dma-noncoherent")) {
++		/*
++		 * Always need same two tables in this case.  Need two tables
++		 * due to hardware interactions between address and size.
++		 */
++		mc_pcie_setup_inbound_atr(port, 0, 0,
++					  MPFS_NC_BOUNCE_ADDR, SZ_1G);
++		mc_pcie_setup_inbound_atr(port, 1, SZ_1G,
++					  MPFS_NC_BOUNCE_ADDR + SZ_1G, SZ_1G);
++	} else {
++		/* Find any DMA ranges */
++		if (of_pci_dma_range_parser_init(&parser, dn)) {
++			/* No DMA range property - setup default */
++			mc_pcie_setup_inbound_atr(port, 0, 0, 0, SZ_4G);
++			return 0;
++		}
 +
- 	/*
- 	 * Allocate and initialize cpu_effective_set
- 	 */
-@@ -9094,6 +9131,18 @@ void turbostat_init()
- 	}
- }
- 
-+void affinitize_child(void)
-+{
-+	/* Prefer cpu_possible_set, if available */
-+	if (sched_setaffinity(0, cpu_possible_setsize, cpu_possible_set)) {
-+		warn("sched_setaffinity cpu_possible_set");
-+
-+		/* Otherwise, allow child to run on same cpu set as turbostat */
-+		if (sched_setaffinity(0, cpu_allowed_setsize, cpu_allowed_set))
-+			warn("sched_setaffinity cpu_allowed_set");
++		for_each_of_range(&parser, &range) {
++			if (atr_index >= MC_MAX_NUM_INBOUND_WINDOWS) {
++				dev_err(dev, "too many inbound ranges; %d available tables\n",
++					MC_MAX_NUM_INBOUND_WINDOWS);
++				return -EINVAL;
++			}
++			mc_pcie_setup_inbound_atr(port, atr_index, 0,
++						  range.pci_addr, range.size);
++			atr_index++;
++		}
 +	}
++
++	return 0;
 +}
 +
- int fork_it(char **argv)
+ static int mc_platform_init(struct pci_config_window *cfg)
  {
- 	pid_t child_pid;
-@@ -9109,6 +9158,7 @@ int fork_it(char **argv)
- 	child_pid = fork();
- 	if (!child_pid) {
- 		/* child */
-+		affinitize_child();
- 		execvp(argv[0], argv);
- 		err(errno, "exec %s", argv[0]);
- 	} else {
+ 	struct device *dev = cfg->parent;
+@@ -627,6 +719,10 @@ static int mc_platform_init(struct pci_config_window *cfg)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = mc_pcie_setup_inbound_ranges(pdev, port);
++	if (ret)
++		return ret;
++
+ 	port->plda.event_ops = &mc_event_ops;
+ 	port->plda.event_irq_chip = &mc_event_irq_chip;
+ 	port->plda.events_bitmap = GENMASK(NUM_EVENTS - 1, 0);
+diff --git a/drivers/pci/controller/plda/pcie-plda-host.c b/drivers/pci/controller/plda/pcie-plda-host.c
+index 8533dc618d45f..4153214ca4103 100644
+--- a/drivers/pci/controller/plda/pcie-plda-host.c
++++ b/drivers/pci/controller/plda/pcie-plda-host.c
+@@ -8,11 +8,14 @@
+  * Author: Daire McNamara <daire.mcnamara@microchip.com>
+  */
+ 
++#include <linux/align.h>
++#include <linux/bitfield.h>
+ #include <linux/irqchip/chained_irq.h>
+ #include <linux/irqdomain.h>
+ #include <linux/msi.h>
+ #include <linux/pci_regs.h>
+ #include <linux/pci-ecam.h>
++#include <linux/wordpart.h>
+ 
+ #include "pcie-plda.h"
+ 
+@@ -502,8 +505,9 @@ void plda_pcie_setup_window(void __iomem *bridge_base_addr, u32 index,
+ 	writel(val, bridge_base_addr + (index * ATR_ENTRY_SIZE) +
+ 	       ATR0_AXI4_SLV0_TRSL_PARAM);
+ 
+-	val = lower_32_bits(axi_addr) | (atr_sz << ATR_SIZE_SHIFT) |
+-			    ATR_IMPL_ENABLE;
++	val = ALIGN_DOWN(lower_32_bits(axi_addr), SZ_4K);
++	val |= FIELD_PREP(ATR_SIZE_MASK, atr_sz);
++	val |= ATR_IMPL_ENABLE;
+ 	writel(val, bridge_base_addr + (index * ATR_ENTRY_SIZE) +
+ 	       ATR0_AXI4_SLV0_SRCADDR_PARAM);
+ 
+@@ -518,13 +522,20 @@ void plda_pcie_setup_window(void __iomem *bridge_base_addr, u32 index,
+ 	val = upper_32_bits(pci_addr);
+ 	writel(val, bridge_base_addr + (index * ATR_ENTRY_SIZE) +
+ 	       ATR0_AXI4_SLV0_TRSL_ADDR_UDW);
++}
++EXPORT_SYMBOL_GPL(plda_pcie_setup_window);
++
++void plda_pcie_setup_inbound_address_translation(struct plda_pcie_rp *port)
++{
++	void __iomem *bridge_base_addr = port->bridge_addr;
++	u32 val;
+ 
+ 	val = readl(bridge_base_addr + ATR0_PCIE_WIN0_SRCADDR_PARAM);
+ 	val |= (ATR0_PCIE_ATR_SIZE << ATR0_PCIE_ATR_SIZE_SHIFT);
+ 	writel(val, bridge_base_addr + ATR0_PCIE_WIN0_SRCADDR_PARAM);
+ 	writel(0, bridge_base_addr + ATR0_PCIE_WIN0_SRC_ADDR);
+ }
+-EXPORT_SYMBOL_GPL(plda_pcie_setup_window);
++EXPORT_SYMBOL_GPL(plda_pcie_setup_inbound_address_translation);
+ 
+ int plda_pcie_setup_iomems(struct pci_host_bridge *bridge,
+ 			   struct plda_pcie_rp *port)
+diff --git a/drivers/pci/controller/plda/pcie-plda.h b/drivers/pci/controller/plda/pcie-plda.h
+index 0e7dc0d8e5ba1..61ece26065ea0 100644
+--- a/drivers/pci/controller/plda/pcie-plda.h
++++ b/drivers/pci/controller/plda/pcie-plda.h
+@@ -89,14 +89,15 @@
+ 
+ /* PCIe AXI slave table init defines */
+ #define ATR0_AXI4_SLV0_SRCADDR_PARAM		0x800u
+-#define  ATR_SIZE_SHIFT				1
+-#define  ATR_IMPL_ENABLE			1
++#define  ATR_SIZE_MASK				GENMASK(6, 1)
++#define  ATR_IMPL_ENABLE			BIT(0)
+ #define ATR0_AXI4_SLV0_SRC_ADDR			0x804u
+ #define ATR0_AXI4_SLV0_TRSL_ADDR_LSB		0x808u
+ #define ATR0_AXI4_SLV0_TRSL_ADDR_UDW		0x80cu
+ #define ATR0_AXI4_SLV0_TRSL_PARAM		0x810u
+ #define  PCIE_TX_RX_INTERFACE			0x00000000u
+ #define  PCIE_CONFIG_INTERFACE			0x00000001u
++#define  TRSL_ID_AXI4_MASTER_0			0x00000004u
+ 
+ #define CONFIG_SPACE_ADDR_OFFSET		0x1000u
+ 
+@@ -204,6 +205,7 @@ int plda_init_interrupts(struct platform_device *pdev,
+ void plda_pcie_setup_window(void __iomem *bridge_base_addr, u32 index,
+ 			    phys_addr_t axi_addr, phys_addr_t pci_addr,
+ 			    size_t size);
++void plda_pcie_setup_inbound_address_translation(struct plda_pcie_rp *port);
+ int plda_pcie_setup_iomems(struct pci_host_bridge *bridge,
+ 			   struct plda_pcie_rp *port);
+ int plda_pcie_host_init(struct plda_pcie_rp *port, struct pci_ops *ops,
 -- 
 2.39.5
 
