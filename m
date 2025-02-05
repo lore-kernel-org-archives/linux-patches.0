@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2161802AB;
-	Wed,  5 Feb 2025 14:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9F31DC19F;
+	Wed,  5 Feb 2025 14:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766678; cv=none; b=HCDJwpyVJoRZKJg5hPYlGsKum0KpewP00OA5HFrzQyIzY6FzLbrLmrPhw8vuBXPHg6wAPFCXxn/GKZUGjCItjKbzbFSCfSciKOp2x1UEOTuW4JopLAFGGakdHNW43Iz88tnbvT5K0zRHeefuVcFdRRBThIpc13Tbl7FkKKg0JYE=
+	t=1738766682; cv=none; b=uCT66vA+1FuszJoIESFHMDaliseSe9ogd4+E1QkhNtVlzrQyDIO2+8YzJ+Zj7aV7uJv6cLHD/hig7ug+E87yMJcKxRflqSy3TOVTJ+dafWi5wpQENOJuaaVU67AKfizTTsYCIvNlcL6IDEHGMC6vPdSxu+9av7D39c0UZcghsHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766678; c=relaxed/simple;
-	bh=ny5PBOklDAjrvF0lVhJyDBsQ49rCv+Oybk/gIuqRBgc=;
+	s=arc-20240116; t=1738766682; c=relaxed/simple;
+	bh=MeuSkcSyf7KeKFPuVf9qjXrwIW7XthFguqqhSjO+N1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvb8yb6xuQjU1+KP3+4daUNzZliMkeAMH5C3iGB0sKuF8htsbMY6f9OKO9kxBLgy7wKY82UmBe9KUF46cKPm09MKtGCzHLkuK7BiN15EI4/g6kLi+mF2f8tx5NOXj8j8lvxpzsB3bALtTsTLNwB8jSicH0xjIBs/v+YF0ruf5pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDgzLwqo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ulMjubQJabgiGusxPY57H6CPFCaUNzEog/WCIEKwuQ9wi/XgXYAJHJt46OAT4hoyiCH+v90/RlIIDSKZURY1UtCaf54jf+QCym5FzgDyr7+jfCqTRktGySiNhEzSxiZshnhCRp2367XLhAZI79swMjmXmQKf1eDQIh4dKYhTtIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cnGISxgj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDgzLwqo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08981C4CED6;
-	Wed,  5 Feb 2025 14:44:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cnGISxgj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365AAC4CED6;
+	Wed,  5 Feb 2025 14:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766678;
-	bh=ny5PBOklDAjrvF0lVhJyDBsQ49rCv+Oybk/gIuqRBgc=;
+	s=korg; t=1738766681;
+	bh=MeuSkcSyf7KeKFPuVf9qjXrwIW7XthFguqqhSjO+N1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YDgzLwqofqWXZnrLr+KiCcG+ZYa6HkCE81h05QCE8QuKkozUwsJDaUvbMTy78b25d
-	 GqBrekIvI7RChHlEimeB23CfCMzx+SSGacA3hY2FRsdHWgtaAvEa9D1eLkWMMD3bPo
-	 RnZF3Jt024TBiPk4nQN+PTQ1o9wh87iLWv7uXGPM=
+	b=cnGISxgj6Lbs1c8Ymmu69GvTlRr/IFidAec9UhE29iTqtzL0IwVv7f62UKIiazQhc
+	 jr1nvTzpxQ1zlBJ84HrT8jWzJebPqMPtO/djU0Vi/YkpTUNIZbViQ3brbcrm+cKt/M
+	 zC9Nq0gCoj4/XNUgqw8/WpNFxI+vCbSfhUnDNI4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 297/623] perf symbol: Prefer non-label symbols with same address
-Date: Wed,  5 Feb 2025 14:40:39 +0100
-Message-ID: <20250205134507.591365762@linuxfoundation.org>
+Subject: [PATCH 6.12 350/590] arm64: dts: qcom: sdx75: correct sleep clock frequency
+Date: Wed,  5 Feb 2025 14:41:45 +0100
+Message-ID: <20250205134508.662781287@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,74 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 8c2eafbbfd782d6ad270ca2de21b529ac57de0f4 ]
+[ Upstream commit b8021da9ddc65fa041e12ea1e0ff2dfce5c926eb ]
 
-When there are more than one symbols at the same address, it needs to
-choose which one is better.  In choose_best_symbol() it didn't check the
-type of symbols.  It's possible to have labels in other symbols and in
-that case, it would be better to pick the actual symbol over the labels.
-To minimize the possible impact on other symbols, I only check NOTYPE
-symbols specifically.
+The SDX75 platform uses PMK8550 to provide sleep clock. According to the
+documentation, that clock has 32.7645 kHz frequency. Correct the sleep
+clock definition.
 
-  $ readelf -sW vmlinux | grep -e __do_softirq -e __softirqentry_text_start
-  105089: ffffffff82000000   814 FUNC    GLOBAL DEFAULT    1 __do_softirq
-  111954: ffffffff82000000     0 NOTYPE  GLOBAL DEFAULT    1 __softirqentry_text_start
-
-The commit 77b004f4c5c3c90b tried to do the same by not giving the size
-to the label symbols but it seems there's some label-only symbols in asm
-code.  Let's restore the original code and choose the right symbol using
-type of the symbols.
-
-Fixes: 77b004f4c5c3c90b ("perf symbol: Do not fixup end address of labels")
-Reported-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Ian Rogers <irogers@google.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Link: http://lore.kernel.org/lkml/Z3b-DqBMnNb4ucEm@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 9181bb939984 ("arm64: dts: qcom: Add SDX75 platform and IDP board support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-9-e9b08fbeadd3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdx75.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index 0037f11639195..49b08adc6ee34 100644
---- a/tools/perf/util/symbol.c
-+++ b/tools/perf/util/symbol.c
-@@ -154,6 +154,13 @@ static int choose_best_symbol(struct symbol *syma, struct symbol *symb)
- 	else if ((a == 0) && (b > 0))
- 		return SYMBOL_B;
+diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+index 7cf3fcb469a86..dcb925348e3f3 100644
+--- a/arch/arm64/boot/dts/qcom/sdx75.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+@@ -34,7 +34,7 @@
  
-+	if (syma->type != symb->type) {
-+		if (syma->type == STT_NOTYPE)
-+			return SYMBOL_B;
-+		if (symb->type == STT_NOTYPE)
-+			return SYMBOL_A;
-+	}
-+
- 	/* Prefer a non weak symbol over a weak one */
- 	a = syma->binding == STB_WEAK;
- 	b = symb->binding == STB_WEAK;
-@@ -257,7 +264,7 @@ void symbols__fixup_end(struct rb_root_cached *symbols, bool is_kallsyms)
- 		 * like in:
- 		 *   ffffffffc1937000 T hdmi_driver_init  [snd_hda_codec_hdmi]
- 		 */
--		if (prev->end == prev->start && prev->type != STT_NOTYPE) {
-+		if (prev->end == prev->start) {
- 			const char *prev_mod;
- 			const char *curr_mod;
- 
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+-			clock-frequency = <32000>;
++			clock-frequency = <32764>;
+ 			#clock-cells = <0>;
+ 		};
+ 	};
 -- 
 2.39.5
 
