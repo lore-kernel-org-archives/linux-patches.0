@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035751519AA;
-	Wed,  5 Feb 2025 14:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1110415198D;
+	Wed,  5 Feb 2025 14:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764080; cv=none; b=RaXhBbve4QyHpdGfZrFD3vL5dukYb0I78tMT/z8iCphnZgnVSB5LygVZ9fm7sCj35N6hL3kxfCusPLczQ1mFpDv1y1G3gnfWqKJIuKgHLUalOcwKbAtI+IsvLsDB14YVTG0UJw3Kocf8IuiUjKoqB1Gii1XCv8dBbcs2Etd3HJ0=
+	t=1738764083; cv=none; b=YQirD7UueK7G5GlN4w3V+8t+Jeab+5X7TdQd1HF4/yMiQMe2meRYNZ7VjnkZvn3bSkXhITmvnrgA/DFCtkt4zJ1I+Ft9m7kncwGZACkH25EItfj6TCrpZUldax+BUxw6iRjsf/fTWR0CY9NcCnVYSwxuva9ktxqyiM2H1QRHTLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764080; c=relaxed/simple;
-	bh=958lKAmpgfeWPYfDai4mxhAE1AoxwXNXYBE5RhnSHME=;
+	s=arc-20240116; t=1738764083; c=relaxed/simple;
+	bh=BtGUvI063dh9EgidxylBKzaAFgdbKG22z0meNwxPUPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uvmJ1hyvWbI1QbA32CA6o2UWI3PRs2XJgIy9/ZeeBldK5EQa5/nNQUwau7hxBG/G7kOUHLkxsA0YfKy0+4ahaf1crw5xeWeQiWnAWwUbBxgxMhP7X0/VH8fReEn6w+roxBCDWx/8BnP2RZTd2xFVjQac/P6C5NdcAKJeBdp637Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nuoT2P9V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mYIAmyMv0Ra0WfnqB7JLKFMeDukQ+/kOm+6KyZece/tcBcMw3kEaKi6iB9ilXzIHkIGaj/G4qx1sjZyuuQLUy7ihoFOQGpghMZCIf7d+CTw8P5cVtPvvOqFjGP/keAvgC5RY9NDFjDEgHXQ0KrC52wvqtVtj5aNLz4fmbY1SjXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+sdpUhA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nuoT2P9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C00C4CEDD;
-	Wed,  5 Feb 2025 14:01:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+sdpUhA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D73C4CED1;
+	Wed,  5 Feb 2025 14:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764079;
-	bh=958lKAmpgfeWPYfDai4mxhAE1AoxwXNXYBE5RhnSHME=;
+	s=korg; t=1738764082;
+	bh=BtGUvI063dh9EgidxylBKzaAFgdbKG22z0meNwxPUPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nuoT2P9VeM8UhgfuI9vnnkvWXeGSTv/RIXSS5H/EZw2/Z84N0R07IkCQNzH1s5lNQ
-	 /Pr/l9Cfa4fWJ1aIT4r0S3F1DsmLyCL+4RwJkmgxw6t30G73vo0P+UmZs5/Da1gaEq
-	 bT0FL4eJcBUWA6yf6/D83kA4SPyafAXnXfnht+EE=
+	b=i+sdpUhADS1YsqNPpwAlUOIE8JA+DpXYloua/GhIqofW0YVwXsxcg4oQb3+TzJkpA
+	 TsiPfR/qHy9EacoX0dwnWVZFgCLQza516BraE+H+xyg/vR916aLSwvUmeBGz+N2iW1
+	 AYQATqs8lNv4W1O3HX401jfzs7vvfJEpel2CcjL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingwei Zheng <zmw12306@gmail.com>,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 138/393] pwm: stm32: Add check for clk_enable()
-Date: Wed,  5 Feb 2025 14:40:57 +0100
-Message-ID: <20250205134425.581997894@linuxfoundation.org>
+Subject: [PATCH 6.13 046/623] drm/amd/pm: Fix an error handling path in vega10_enable_se_edc_force_stall_config()
+Date: Wed,  5 Feb 2025 14:36:28 +0100
+Message-ID: <20250205134457.992332269@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingwei Zheng <zmw12306@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit e8c59791ebb60790c74b2c3ab520f04a8a57219a ]
+[ Upstream commit a3300782d5375e280ba7040f323d01960bfe3396 ]
 
-Add check for the return value of clk_enable() to catch the potential
-error.
+In case of error after a amdgpu_gfx_rlc_enter_safe_mode() call, it is not
+balanced by a corresponding amdgpu_gfx_rlc_exit_safe_mode() call.
 
-Fixes: 19f1016ea960 ("pwm: stm32: Fix enable count for clk in .probe()")
-Signed-off-by: Mingwei Zheng <zmw12306@gmail.com>
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://lore.kernel.org/r/20241215224752.220318-1-zmw12306@gmail.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Add the missing call.
+
+Fixes: 9b7b8154cdb8 ("drm/amd/powerplay: added didt support for vega10")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index b91a14c895bea..67414b97ef4d2 100644
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -635,8 +635,11 @@ static int stm32_pwm_probe(struct platform_device *pdev)
- 	priv->chip.npwm = stm32_pwm_detect_channels(priv, &num_enabled);
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c
+index 3007b054c873c..776d58ea63ae9 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c
+@@ -1120,13 +1120,14 @@ static int vega10_enable_se_edc_force_stall_config(struct pp_hwmgr *hwmgr)
+ 	result = vega10_program_didt_config_registers(hwmgr, SEEDCForceStallPatternConfig_Vega10, VEGA10_CONFIGREG_DIDT);
+ 	result |= vega10_program_didt_config_registers(hwmgr, SEEDCCtrlForceStallConfig_Vega10, VEGA10_CONFIGREG_DIDT);
+ 	if (0 != result)
+-		return result;
++		goto exit_safe_mode;
  
- 	/* Initialize clock refcount to number of enabled PWM channels. */
--	for (i = 0; i < num_enabled; i++)
--		clk_enable(priv->clk);
-+	for (i = 0; i < num_enabled; i++) {
-+		ret = clk_enable(priv->clk);
-+		if (ret)
-+			return ret;
-+	}
+ 	vega10_didt_set_mask(hwmgr, false);
  
- 	ret = devm_pwmchip_add(dev, &priv->chip);
- 	if (ret < 0)
++exit_safe_mode:
+ 	amdgpu_gfx_rlc_exit_safe_mode(adev, 0);
+ 
+-	return 0;
++	return result;
+ }
+ 
+ static int vega10_disable_se_edc_force_stall_config(struct pp_hwmgr *hwmgr)
 -- 
 2.39.5
 
