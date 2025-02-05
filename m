@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C0013C3F6;
-	Wed,  5 Feb 2025 14:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1B7522A;
+	Wed,  5 Feb 2025 14:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765215; cv=none; b=cdlijt2KkLHhfvpJ+5kDFGTw5nRJrTr0XqQ2UnfIAmyx2WkRT/Pzaec26EDMi093aAOVi4tNYVbxJrr/BjtDEKBJdAZGgB0GKG+r0q65UUi/4+YLLkjnxZJAJpOGcoOWKfSRdInZADCBL9/td/e6BDfdsnVA8mA/lY+RsEtZ7xk=
+	t=1738765218; cv=none; b=QNgHYOs4yL9Hzys+9wxnXuf/QPbWEn8ys1/upndI7+HVeF6FYrVLODLJeJE/WEV3rBTTF+mtEKmGOTLY4hNg54j0QjqHFjaXAtPzAPBmyn5PplM6kCEn8xdJnadkTtneQg9juXgs5Fw0nCAAcH3Opa+GzqS7dXID/LNK0KqDMsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765215; c=relaxed/simple;
-	bh=2+ho2Pwyo7u6Y4hq4LRSo/f3S3f09DJIVuxumLuvA+Q=;
+	s=arc-20240116; t=1738765218; c=relaxed/simple;
+	bh=N7E8uz50GLPq8F5z97Cot/ksjlHpBMtGk8JRljACN1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uIjNzb+D4abfFVlmV3mte6V4iaE4MkdEhbnevzyn6onxT85QmOt/cviPAngaHsUnP2ku6GiMUrKlYZW2xjmRfNrlv9JZvBEO54Ki1yWBc4P9TBbrhysZDYNY5sOy07n8W/TU12kIV0U36tFlhwccM3AkkejDR6JOT822IeLWWyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCnTs04h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NhDhN2RSAKB6UD4Sb+WcUyt7LqG4+EW4hYgijINFn/egXNWz+icmKLHvjqnSGeizv8s0qtMqiR3LODqjuosrih+R517n+YpeQLFy371t5tBBG3LAH8USCkPq4OYO0FOfvgx5h17f/aFc//v18QWIemdJaqt4x+R8fFnHXmINtgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9EKyxeq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCnTs04h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC399C4CED1;
-	Wed,  5 Feb 2025 14:20:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9EKyxeq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B67EC4CED1;
+	Wed,  5 Feb 2025 14:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765215;
-	bh=2+ho2Pwyo7u6Y4hq4LRSo/f3S3f09DJIVuxumLuvA+Q=;
+	s=korg; t=1738765218;
+	bh=N7E8uz50GLPq8F5z97Cot/ksjlHpBMtGk8JRljACN1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VCnTs04hbwrHTN3cdnicCdEJ+16kpwjCBMMe5C9vRQfeAxWBW5C93s2mU1o/h8Ts6
-	 PCbED4wwe5WHlMkOjM1UlGcvHpVmtF/Tc1FjeRVEAqOvU4MYY5uFIXeuUaij3bq5Av
-	 ws6Etdth1Xzm2+GbCwTvWj81wbWgmNwJhIn/FeMc=
+	b=w9EKyxeqP2u7CkQ3zmBFjqpxNaRG3DUWnMdwEzzyRBmcVT/eBoQT9I3Rg+L5WXCG3
+	 a1jQ/KFFs/Sy04Uqxv58bPtu7Q3qM/5AEFHpRtBh4TV8Gulsi+r3H80m+AplS4kzCU
+	 xGWMJTusq8q7Wxl54BFvVN31r4r1c3biyEjiFyMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Chih-Kang Chang <gary.chang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 244/393] arm64: dts: qcom: sm6125: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:42:43 +0100
-Message-ID: <20250205134429.639420533@linuxfoundation.org>
+Subject: [PATCH 6.13 157/623] wifi: rtw89: avoid to init mgnt_entry list twice when WoWLAN failed
+Date: Wed,  5 Feb 2025 14:38:19 +0100
+Message-ID: <20250205134502.243004475@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Chih-Kang Chang <gary.chang@realtek.com>
 
-[ Upstream commit b3c547e1507862f0e4d46432b665c5c6e61e14d6 ]
+[ Upstream commit 2f7667675df1b40b73ecc53b4b8c3189b1e5f2c1 ]
 
-The SM6125 platform uses PM6125 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+If WoWLAN failed in resume flow, the rtw89_ops_add_interface() triggered
+without removing the interface first. Then the mgnt_entry list init again,
+causing the list_empty() check in rtw89_chanctx_ops_assign_vif()
+useless, and list_add_tail() again. Therefore, we have added a check to
+prevent double adding of the list.
 
-Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-11-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+rtw89_8852ce 0000:01:00.0: failed to check wow status disabled
+rtw89_8852ce 0000:01:00.0: wow: failed to check disable fw ready
+rtw89_8852ce 0000:01:00.0: wow: failed to swap to normal fw
+rtw89_8852ce 0000:01:00.0: failed to disable wow
+rtw89_8852ce 0000:01:00.0: failed to resume for wow -110
+rtw89_8852ce 0000:01:00.0: MAC has already powered on
+i2c_hid_acpi i2c-ILTK0001:00: PM: acpi_subsys_resume+0x0/0x60 returned 0 after 284705 usecs
+list_add corruption. prev->next should be next (ffff9d9719d82228), but was ffff9d9719f96030. (prev=ffff9d9719f96030).
+------------[ cut here ]------------
+kernel BUG at lib/list_debug.c:34!
+invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+CPU: 2 PID: 6918 Comm: kworker/u8:19 Tainted: G     U     O
+Hardware name: Google Anraggar/Anraggar, BIOS Google_Anraggar.15217.514.0 03/25/2024
+Workqueue: events_unbound async_run_entry_fn
+RIP: 0010:__list_add_valid_or_report+0x9f/0xb0
+Code: e8 56 89 ff ff 0f 0b 48 c7 c7 3e fc e0 96 48 89 c6 e8 45 89 ff ...
+RSP: 0018:ffffa51b42bbbaf0 EFLAGS: 00010246
+RAX: 0000000000000075 RBX: ffff9d9719d82ab0 RCX: 13acb86e047a4400
+RDX: 3fffffffffffffff RSI: 0000000000000000 RDI: 00000000ffffdfff
+RBP: ffffa51b42bbbb28 R08: ffffffff9768e250 R09: 0000000000001fff
+R10: ffffffff9765e250 R11: 0000000000005ffd R12: ffff9d9719f95c40
+R13: ffff9d9719f95be8 R14: ffff9d97081bfd78 R15: ffff9d9719d82060
+FS:  0000000000000000(0000) GS:ffff9d9a6fb00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007e7d029a4060 CR3: 0000000345e38000 CR4: 0000000000750ee0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __die_body+0x68/0xb0
+ ? die+0xaa/0xd0
+ ? do_trap+0x9f/0x170
+ ? __list_add_valid_or_report+0x9f/0xb0
+ ? __list_add_valid_or_report+0x9f/0xb0
+ ? handle_invalid_op+0x69/0x90
+ ? __list_add_valid_or_report+0x9f/0xb0
+ ? exc_invalid_op+0x3c/0x50
+ ? asm_exc_invalid_op+0x16/0x20
+ ? __list_add_valid_or_report+0x9f/0xb0
+ rtw89_chanctx_ops_assign_vif+0x1f9/0x210 [rtw89_core cbb375c44bf28564ce479002bff66617a25d9ac1]
+ ? __mutex_unlock_slowpath+0xa0/0xf0
+ rtw89_ops_assign_vif_chanctx+0x4b/0x90 [rtw89_core cbb375c44bf28564ce479002bff66617a25d9ac1]
+ drv_assign_vif_chanctx+0xa7/0x1f0 [mac80211 6efaad16237edaaea0868b132d4f93ecf918a8b6]
+ ieee80211_reconfig+0x9cb/0x17b0 [mac80211 6efaad16237edaaea0868b132d4f93ecf918a8b6]
+ ? __pfx_wiphy_resume+0x10/0x10 [cfg80211 572d03acaaa933fe38251be7fce3b3675284b8ed]
+ ? dev_printk_emit+0x51/0x70
+ ? _dev_info+0x6e/0x90
+ wiphy_resume+0x89/0x180 [cfg80211 572d03acaaa933fe38251be7fce3b3675284b8ed]
+ ? __pfx_wiphy_resume+0x10/0x10 [cfg80211 572d03acaaa933fe38251be7fce3b3675284b8ed]
+ dpm_run_callback+0x37/0x1e0
+ device_resume+0x26d/0x4b0
+ ? __pfx_dpm_watchdog_handler+0x10/0x10
+ async_resume+0x1d/0x30
+ async_run_entry_fn+0x29/0xd0
+ worker_thread+0x397/0x970
+ kthread+0xed/0x110
+ ? __pfx_worker_thread+0x10/0x10
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x38/0x50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1b/0x30
+ </TASK>
+
+Fixes: 68ec751b2881 ("wifi: rtw89: chan: manage active interfaces")
+Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250103024500.14990-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/mac80211.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index 07081088ba146..2b2c55132f673 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -28,7 +28,7 @@
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
--			clock-frequency = <32000>;
-+			clock-frequency = <32764>;
- 			clock-output-names = "sleep_clk";
- 		};
- 	};
+diff --git a/drivers/net/wireless/realtek/rtw89/mac80211.c b/drivers/net/wireless/realtek/rtw89/mac80211.c
+index 619d2d3771d52..78d846e4667e7 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
+@@ -189,10 +189,10 @@ static int rtw89_ops_add_interface(struct ieee80211_hw *hw,
+ 
+ 	rtw89_core_txq_init(rtwdev, vif->txq);
+ 
+-	if (!rtw89_rtwvif_in_list(rtwdev, rtwvif))
++	if (!rtw89_rtwvif_in_list(rtwdev, rtwvif)) {
+ 		list_add_tail(&rtwvif->list, &rtwdev->rtwvifs_list);
+-
+-	INIT_LIST_HEAD(&rtwvif->mgnt_entry);
++		INIT_LIST_HEAD(&rtwvif->mgnt_entry);
++	}
+ 
+ 	ether_addr_copy(rtwvif->mac_addr, vif->addr);
+ 
 -- 
 2.39.5
 
