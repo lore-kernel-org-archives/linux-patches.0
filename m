@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704C9DF59;
-	Wed,  5 Feb 2025 15:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A17A1E89C;
+	Wed,  5 Feb 2025 15:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768571; cv=none; b=smKTfp6LgH6+/WNWCmk290DxjieeSe+cO6XWK6H97lfk4RmciCp/fx7gTRPsVJlUZF2qNrODR3sLMaQZDifft3K9DUQOmVO0ORXA7Nq39p4Va2IObBdx5bNfxxrFkZNXq/aE/QakaecImC5gTalA+sWGD+gz1AX11lrKtfDprc8=
+	t=1738768574; cv=none; b=Z7mjAqPmCMfheOPEp4WEaOo+MfHdG7QcukxJhUJDM1ejnQxfc+BlRZ7DOwOFuK+Wbr3/LDl5pA82z0G05sYBmYdJJGY2YhU/KRnFirEmoWHnps2/OzQQpIV/rDaaws0JkDEnhq04hwf62Lz9IjesMfCB1VO/Tfkzsh8qESPoF0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768571; c=relaxed/simple;
-	bh=/EM4gDgD5ZPnxkS8sO3H6WWyUJbc61sWtOBQXdNjGi0=;
+	s=arc-20240116; t=1738768574; c=relaxed/simple;
+	bh=jS484aciodcVnfooH83w1klhZfCKVDBR+SY0lWexCtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mr6bgUpZ0cwJTxswCogAUCDVetTnaguj9rqeLYsJtO4iamuniKpJV5Q1mM+IuArU8SND/ZuPpjL8aTvvvM+liKGUSM+2RQse+fvXOtBhD8+/YOaMbWX2LfkSG3qC/sYlY9+KreLPnqrWA9IhWFhfaGy/DjasUtasYIdtJg8M46o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QluKZE1x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bf9vZw+4YvQGMqrn0UgnTa7zobRfCE56GqIXWoMcGfSkrz+oYw8azb3wqcZkDE+FX/LNrvh651YrNkKpyI1Fzvk8nYKbJLAzXgexzcL5JIwUCiYKrh2GNlZ6ZaEWl5eTNYsT8mlitDpgEus1Nikrd28umB4FeKlrVpfkbKJyGBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQw8TE8m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QluKZE1x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2B8C4CED6;
-	Wed,  5 Feb 2025 15:16:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQw8TE8m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C8DC4CED1;
+	Wed,  5 Feb 2025 15:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768571;
-	bh=/EM4gDgD5ZPnxkS8sO3H6WWyUJbc61sWtOBQXdNjGi0=;
+	s=korg; t=1738768573;
+	bh=jS484aciodcVnfooH83w1klhZfCKVDBR+SY0lWexCtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QluKZE1xLscmmB/XvFc5h/MpNaWC0qOPk1n6P4j//JvXDcUgYEUTSV15YbwgmFAbx
-	 a6SN3VMxZtO9UAzuuuZ5Pi5ez7AJL9yLIakZy6jPq7ZHyM2K3A5H2cQtNXxu5aHpq3
-	 hrsTcPIvOTcHFT3Lbm/unHC3Hb2VmDgKJF0hue/E=
+	b=FQw8TE8m+ke2F2js6RJQrwvFpN4QcX2OeWXxs4OZ7r6ZBHG8GrulVlJ240OXLx/pB
+	 qWNWi4E/eNXFo79U67bwGHAT2qJlNbP7MciHT6i1GCYgz+VMq8NqCrtA6/HxYZkFYY
+	 PIH7r9eoI4OEsbBWE36Uo4QCFkmEI7sH/NmNIVZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ray Chi <raychi@google.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.13 595/623] usb: dwc3: Skip resume if pm_runtime_set_active() fails
-Date: Wed,  5 Feb 2025 14:45:37 +0100
-Message-ID: <20250205134518.987197042@linuxfoundation.org>
+	Jos Wang <joswang@lenovo.com>,
+	Badhri Jagan Sridharan <badhri@google.com>
+Subject: [PATCH 6.13 596/623] usb: typec: tcpm: set SRC_SEND_CAPABILITIES timeout to PD_T_SENDER_RESPONSE
+Date: Wed,  5 Feb 2025 14:45:38 +0100
+Message-ID: <20250205134519.024415333@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,61 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ray Chi <raychi@google.com>
+From: Jos Wang <joswang@lenovo.com>
 
-commit e3a9bd247cddfb6fa0c29c2361f70b76c359eaa0 upstream.
+commit 2eb3da037c2c20fa30bc502bc092479b2a1aaae2 upstream.
 
-When the system begins to enter suspend mode, dwc3_suspend() is called
-by PM suspend. There is a problem that if someone interrupt the system
-suspend process between dwc3_suspend() and pm_suspend() of its parent
-device, PM suspend will be canceled and attempt to resume suspended
-devices so that dwc3_resume() will be called. However, dwc3 and its
-parent device (like the power domain or glue driver) may already be
-suspended by runtime PM in fact. If this sutiation happened, the
-pm_runtime_set_active() in dwc3_resume() will return an error since
-parent device was suspended. This can lead to unexpected behavior if
-DWC3 proceeds to execute dwc3_resume_common().
+As PD2.0 spec ("8.3.3.2.3 PE_SRC_Send_Capabilities state"), after the
+Source receives the GoodCRC Message from the Sink in response to the
+Source_Capabilities message, it should start the SenderResponseTimer,
+after the timer times out, the state machine transitions to the
+HARD_RESET state.
 
-EX.
-RPM suspend: ... -> dwc3_runtime_suspend()
-                      -> rpm_suspend() of parent device
-...
-PM suspend: ... -> dwc3_suspend() -> pm_suspend of parent device
-                                 ^ interrupt, so resume suspended device
-          ...  <-  dwc3_resume()  <-/
-                      ^ pm_runtime_set_active() returns error
-
-To prevent the problem, this commit will skip dwc3_resume_common() and
-return the error if pm_runtime_set_active() fails.
-
-Fixes: 68c26fe58182 ("usb: dwc3: set pm runtime active before resume common")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ray Chi <raychi@google.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20250106082240.3822059-1-raychi@google.com
+Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jos Wang <joswang@lenovo.com>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://lore.kernel.org/r/20250105135245.7493-1-joswang1221@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/typec/tcpm/tcpm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -2601,12 +2601,15 @@ static int dwc3_resume(struct device *de
- 	pinctrl_pm_select_default_state(dev);
- 
- 	pm_runtime_disable(dev);
--	pm_runtime_set_active(dev);
-+	ret = pm_runtime_set_active(dev);
-+	if (ret)
-+		goto out;
- 
- 	ret = dwc3_resume_common(dwc, PMSG_RESUME);
- 	if (ret)
- 		pm_runtime_set_suspended(dev);
- 
-+out:
- 	pm_runtime_enable(dev);
- 
- 	return ret;
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -4772,7 +4772,7 @@ static void run_state_machine(struct tcp
+ 			port->caps_count = 0;
+ 			port->pd_capable = true;
+ 			tcpm_set_state_cond(port, SRC_SEND_CAPABILITIES_TIMEOUT,
+-					    PD_T_SEND_SOURCE_CAP);
++					    PD_T_SENDER_RESPONSE);
+ 		}
+ 		break;
+ 	case SRC_SEND_CAPABILITIES_TIMEOUT:
 
 
