@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C701553AB;
-	Wed,  5 Feb 2025 14:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8447713C3F6;
+	Wed,  5 Feb 2025 14:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765323; cv=none; b=sxdYo7fzvXHk66H2Ziht44s/pUjZhBHO75avhkzG34VUW+iI9IGQKV9rJhKZLc3ryjyPGWsjH8hJvnLDhJOCP/zU1sM/gzVfQnf3lwq+t35u3lq5Bai0+5x0BUa7nOF2BboCC0IYLJBVMgRjeDkVI3NkFkahrChfExFbcAAXkYQ=
+	t=1738765326; cv=none; b=I5MJZtmmVE1LMQ69fgKjDu6BQvGC2Ls3/fJ2w54P0f6F1MKc+pIA2drf/nfd3UPDBeVhZu2XM0PPrmHDPYP1tdjkAkXPAMWQgkrPvU4EbX/rnj9H6O/1D7FCVXWyc3SU10n/pfn4uMczwgOsX9ML4qXniq28JNxjSWR4WPGojk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765323; c=relaxed/simple;
-	bh=tB2Y71mNDMhlw606gRW0LD/dHYro95GOchVmF6t4/aI=;
+	s=arc-20240116; t=1738765326; c=relaxed/simple;
+	bh=v0jVJ/WB+fNfPWRc3BnmVoFmtSzxkSKdnYovfMCdEjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mQIYw6v28rrI5dEsqZE5FOLHdZ9ddBu11aTq3QtcH3zxqFbs+mhcfK7PNcWCCyCz7w6AyYtqVNN4kbLYl+hjYva2MeYTxjG1nhqi5wNxo8XWK/BaTnctpuhkRmsYEcafx3dqwK3ajzrWRSd7Ief6LS+3dEn3IGyaluAyeFWONrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIf+iE9+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DlpvkydbZjmaFWXMm+n+2g92sFLICkuUyllh8fgMTMTfOkNOHqebuyUyqp2JKJhyWlk6sS0ODNXxvxkvL90vBlXNcFPMY9aELmH1uqPwA5Yx2up20CPeq938LoJ/uHyJ48/g1dinrcqQ+TcnCqcCkshru5KwaQs97X0Qv6knVO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBkxB7wG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIf+iE9+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702FCC4CED1;
-	Wed,  5 Feb 2025 14:22:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBkxB7wG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5336C4CED1;
+	Wed,  5 Feb 2025 14:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765322;
-	bh=tB2Y71mNDMhlw606gRW0LD/dHYro95GOchVmF6t4/aI=;
+	s=korg; t=1738765326;
+	bh=v0jVJ/WB+fNfPWRc3BnmVoFmtSzxkSKdnYovfMCdEjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIf+iE9+Np44Ogc9JdwouZhEC1hcuTmZZqPEfkZrqw+d9qZ77i4xlDb77ZeVNnO5q
-	 YnvJ/0ileJcQF3S3x0hRnIMCV5kjs5bCZQqxZeMgN3IupiwmxE5OOnwqiC3+d42kSn
-	 h/re6N8+gvwM5Xlt+/zaXCImqx0k8ZqlgMjk7SaA=
+	b=zBkxB7wG7dxSkkyeSPtan4WGFta49f5n4HlC70JKqZD5RI9P4CYU3HwIE4x4EJRmY
+	 w5JRjpLdQ4hTaeZ0SdwWTx1fFMUOOVdVWbiUbyhwaBeq+B7xvn9Inea2qRKU78Jg9C
+	 oj+yvQv1VlW5niYll7BmlI6br2I7XsYy6FX6aIu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 166/623] wifi: iwlwifi: mvm: remove unneeded NULL pointer checks
-Date: Wed,  5 Feb 2025 14:38:28 +0100
-Message-ID: <20250205134502.585932490@linuxfoundation.org>
+Subject: [PATCH 6.12 210/590] cpufreq: ACPI: Fix max-frequency computation
+Date: Wed,  5 Feb 2025 14:39:25 +0100
+Message-ID: <20250205134503.319568101@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,90 +49,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-[ Upstream commit 79f4b6934dbd7dd6741726ba004a15e25380b8cc ]
+[ Upstream commit 0834667545962ef1c5e8684ed32b45d9c574acd3 ]
 
-Smatch reported that we dereference the data pointer to calculate the
-expected length before we check it's not NULL. While this is true (and
-hence needs to be fixed), this will never happen because the data
-pointer comes from struct iwl_rx_packet object which has the following
-layout:
+Commit 3c55e94c0ade ("cpufreq: ACPI: Extend frequency tables to cover
+boost frequencies") introduced an assumption in acpi_cpufreq_cpu_init()
+that the first entry in the P-state table was the nominal frequency.
+This assumption is incorrect. The frequency corresponding to the P0
+P-State need not be the same as the nominal frequency advertised via
+CPPC.
 
-struct iwl_rx_packet {
-        __le32 len_n_flags;
-        struct iwl_cmd_header hdr;
-        u8 data[];
-} __packed;
+Since the driver is using the CPPC.highest_perf and CPPC.nominal_perf
+to compute the boost-ratio, it makes sense to use CPPC.nominal_freq to
+compute the max-frequency. CPPC.nominal_freq is advertised on
+platforms supporting CPPC revisions 3 or higher.
 
-So, if the pointer to iwl_rx_packet is valid, data will be valid as
-well.
+Hence, fallback to using the first entry in the P-State table only on
+platforms that do not advertise CPPC.nominal_freq.
 
-Remove the NULL pointer check on 'data' to avoid confusing smatch.
-Also remove the check from similar functions in the same flow that were
-cargo cult copy-pasted.
-
-Fixes: 4635e6eaa0fe ("wifi: iwlwifi: mvm: support new versions of the wowlan APIs")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202411210812.0eLaonw3-lkp@intel.com/
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20241229164246.c8ce6e041e4b.I4dc19289e3f3807386768c846e08be3ea322cd15@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 3c55e94c0ade ("cpufreq: ACPI: Extend frequency tables to cover boost frequencies")
+Tested-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20250113044107.566-1-gautham.shenoy@amd.com
+[ rjw: Retain reverse X-mas tree ordering of local variable declarations ]
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 18 ------------------
- 1 file changed, 18 deletions(-)
+ drivers/cpufreq/acpi-cpufreq.c | 36 +++++++++++++++++++++++++---------
+ 1 file changed, 27 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-index 7d973546c9fb8..4d1daff1e070d 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -2498,12 +2498,6 @@ static void iwl_mvm_parse_wowlan_info_notif(struct iwl_mvm *mvm,
- 	u32 expected_len = sizeof(*data) +
- 		data->num_mlo_link_keys * sizeof(status->mlo_keys[0]);
+diff --git a/drivers/cpufreq/acpi-cpufreq.c b/drivers/cpufreq/acpi-cpufreq.c
+index 0f04feb6cafaf..47e910c22a80b 100644
+--- a/drivers/cpufreq/acpi-cpufreq.c
++++ b/drivers/cpufreq/acpi-cpufreq.c
+@@ -626,7 +626,14 @@ static int acpi_cpufreq_blacklist(struct cpuinfo_x86 *c)
+ #endif
  
--	if (!data) {
--		IWL_ERR(mvm, "iwl_wowlan_info_notif data is NULL\n");
--		status = NULL;
--		return;
--	}
--
- 	if (len < expected_len) {
- 		IWL_ERR(mvm, "Invalid WoWLAN info notification!\n");
- 		status = NULL;
-@@ -2555,12 +2549,6 @@ iwl_mvm_parse_wowlan_info_notif_v4(struct iwl_mvm *mvm,
- 	u32 i;
- 	u32 expected_len = sizeof(*data);
- 
--	if (!data) {
--		IWL_ERR(mvm, "iwl_wowlan_info_notif data is NULL\n");
--		status = NULL;
--		return;
--	}
--
- 	if (has_mlo_keys)
- 		expected_len += (data->num_mlo_link_keys *
- 				 sizeof(status->mlo_keys[0]));
-@@ -2609,12 +2597,6 @@ iwl_mvm_parse_wowlan_info_notif_v2(struct iwl_mvm *mvm,
+ #ifdef CONFIG_ACPI_CPPC_LIB
+-static u64 get_max_boost_ratio(unsigned int cpu)
++/*
++ * get_max_boost_ratio: Computes the max_boost_ratio as the ratio
++ * between the highest_perf and the nominal_perf.
++ *
++ * Returns the max_boost_ratio for @cpu. Returns the CPPC nominal
++ * frequency via @nominal_freq if it is non-NULL pointer.
++ */
++static u64 get_max_boost_ratio(unsigned int cpu, u64 *nominal_freq)
  {
- 	u32 i;
+ 	struct cppc_perf_caps perf_caps;
+ 	u64 highest_perf, nominal_perf;
+@@ -655,6 +662,9 @@ static u64 get_max_boost_ratio(unsigned int cpu)
  
--	if (!data) {
--		IWL_ERR(mvm, "iwl_wowlan_info_notif data is NULL\n");
--		status = NULL;
--		return;
--	}
--
- 	if (len < sizeof(*data)) {
- 		IWL_ERR(mvm, "Invalid WoWLAN info notification!\n");
- 		status = NULL;
+ 	nominal_perf = perf_caps.nominal_perf;
+ 
++	if (nominal_freq)
++		*nominal_freq = perf_caps.nominal_freq;
++
+ 	if (!highest_perf || !nominal_perf) {
+ 		pr_debug("CPU%d: highest or nominal performance missing\n", cpu);
+ 		return 0;
+@@ -667,8 +677,12 @@ static u64 get_max_boost_ratio(unsigned int cpu)
+ 
+ 	return div_u64(highest_perf << SCHED_CAPACITY_SHIFT, nominal_perf);
+ }
++
+ #else
+-static inline u64 get_max_boost_ratio(unsigned int cpu) { return 0; }
++static inline u64 get_max_boost_ratio(unsigned int cpu, u64 *nominal_freq)
++{
++	return 0;
++}
+ #endif
+ 
+ static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
+@@ -678,9 +692,9 @@ static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 	struct acpi_cpufreq_data *data;
+ 	unsigned int cpu = policy->cpu;
+ 	struct cpuinfo_x86 *c = &cpu_data(cpu);
++	u64 max_boost_ratio, nominal_freq = 0;
+ 	unsigned int valid_states = 0;
+ 	unsigned int result = 0;
+-	u64 max_boost_ratio;
+ 	unsigned int i;
+ #ifdef CONFIG_SMP
+ 	static int blacklisted;
+@@ -830,16 +844,20 @@ static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 	}
+ 	freq_table[valid_states].frequency = CPUFREQ_TABLE_END;
+ 
+-	max_boost_ratio = get_max_boost_ratio(cpu);
++	max_boost_ratio = get_max_boost_ratio(cpu, &nominal_freq);
+ 	if (max_boost_ratio) {
+-		unsigned int freq = freq_table[0].frequency;
++		unsigned int freq = nominal_freq;
+ 
+ 		/*
+-		 * Because the loop above sorts the freq_table entries in the
+-		 * descending order, freq is the maximum frequency in the table.
+-		 * Assume that it corresponds to the CPPC nominal frequency and
+-		 * use it to set cpuinfo.max_freq.
++		 * The loop above sorts the freq_table entries in the
++		 * descending order. If ACPI CPPC has not advertised
++		 * the nominal frequency (this is possible in CPPC
++		 * revisions prior to 3), then use the first entry in
++		 * the pstate table as a proxy for nominal frequency.
+ 		 */
++		if (!freq)
++			freq = freq_table[0].frequency;
++
+ 		policy->cpuinfo.max_freq = freq * max_boost_ratio >> SCHED_CAPACITY_SHIFT;
+ 	} else {
+ 		/*
 -- 
 2.39.5
 
