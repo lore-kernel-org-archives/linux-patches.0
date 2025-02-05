@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF38618A6B5;
-	Wed,  5 Feb 2025 14:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7EC70825;
+	Wed,  5 Feb 2025 14:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766759; cv=none; b=rd3RkpBdltP9qaWpmJicyJsxnNBMNneIS4Q1mmhj9RDVMI6X8yC1kMlLIBe/Gr2/jMVkIF6rALTFP5SSg2onhEHtyDzY30fzsqCNnHc1rOh1LZ0udmX9l1yhSwIhEnJNd9jsha1JW9ThWaJcwE/dA6Y2viGrJnrmeA5yB0vVlmU=
+	t=1738766763; cv=none; b=fM6VZWJOR4PuGAckIcxeXPMRjJNmOdtkt0cMD4A3yfp9yXX0muObtVRb8sw+KRdf00c6CM0NzWgVmaXQ7ghSVZpv3wiCBZ9J82NUCDMY/yOoDy6W5wq02oK8NO/RSzkGAUE83hSeZQ+U2lrEnyBIiqCaAuimZpj/rUsEPujHsOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766759; c=relaxed/simple;
-	bh=PEP6iBQBvjKdi4LB1LyxbqV7HQ/iwk8oqAQ5tFaU+1w=;
+	s=arc-20240116; t=1738766763; c=relaxed/simple;
+	bh=VLY6TjEwuPB8cIPrPa/5Xi1X9ERGC4V7LniTb7AP78o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfhAZQwUyHVPTPJUQrUBZQ1kc/tIT1b3bFzO+RLjO1zHT4aEVHMLHovUG9hFfl+RyJoG+SKseBk2cYm/IOK2/4kPuQk8dYqBg9Cg91ltS6o5JA9ZqSzCvHlQSLAhjLl+Ds2uerZI5ME1VZvPx5xsXBT7WXTUnSm1Bp4foEpHZJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkHsxTT6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fe9xFQ609j/tdF6GUPNr/ZRzpN3buLIOhxsO+3T/siFN1xMkYfBFZ17sBPGoSRGIDczJLO6g3mTWMO0LdOynA5RGmp8lHbeJMxRWXsZF1GicSsxQr9wW9Z20U0r0NadwR+zNRcLGBV/Yii6OWvR1xaEO0HJuw5BgbtboVubS1fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9fGjyXb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkHsxTT6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8E8C4CED1;
-	Wed,  5 Feb 2025 14:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9fGjyXb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D60C4CED1;
+	Wed,  5 Feb 2025 14:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766759;
-	bh=PEP6iBQBvjKdi4LB1LyxbqV7HQ/iwk8oqAQ5tFaU+1w=;
+	s=korg; t=1738766763;
+	bh=VLY6TjEwuPB8cIPrPa/5Xi1X9ERGC4V7LniTb7AP78o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LkHsxTT6jYuoN/n1MWbzwu+OlWTRgCniVhxv+54bqX311iVpSAIYkF5/47l3KOOuJ
-	 5wjPEtM7f7jEbrzU2il1+NlD/0sdGXqcH8gFIpPdHa2CDF27mOe0ET/H7fHbFLujmj
-	 mQJoy7hJAL+kKZm4FXpRGgU3myXmziUoA1RDG/qw=
+	b=s9fGjyXbxwBE3ukWBFxpDd9OaNCr8y0aCJtQrNZbA09i3iYZIoajY1zfSd6zKxg7K
+	 45JFHisymcEH73Vu13KX2j+A7ZcpTlYgVZLQNjSPN9pzU11bSb6vp95MDr66O7iR1V
+	 vJFvohAdC+JDVM1WwxpDclnjhvxn6YkNX8O9F8vU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 357/590] arm64: dts: qcom: sm8550: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:41:52 +0100
-Message-ID: <20250205134508.926573055@linuxfoundation.org>
+Subject: [PATCH 6.13 305/623] ASoC: Intel: sof_sdw: Fix DMI match for Lenovo 83LC
+Date: Wed,  5 Feb 2025 14:40:47 +0100
+Message-ID: <20250205134507.895278302@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,115 +50,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Simon Trimmer <simont@opensource.cirrus.com>
 
-[ Upstream commit e59334a088c3e722c0a287d4616af997f46c985e ]
+[ Upstream commit c9e05763f334845ba69494dd71d7cbfd05fd0e6e ]
 
-The SM8550 platform uses PMK8550 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+Update the DMI match for a Lenovo laptop to the new DMI identifier.
 
-Fixes: 0b12da4e28d8 ("arm64: dts: qcom: add base AIM300 dtsi")
-Fixes: b5e25ded2721 ("arm64: dts: qcom: sm8550: add support for the SM8550-HDK board")
-Fixes: 71342fb91eae ("arm64: dts: qcom: Add base SM8550 MTP dts")
-Fixes: d228efe88469 ("arm64: dts: qcom: sm8550-qrd: add QRD8550")
-Fixes: ba2c082a401f ("arm64: dts: qcom: sm8550: Add support for Samsung Galaxy Z Fold5")
-Fixes: 39c596304e44 ("arm64: dts: qcom: Add SM8550 Xperia 1 V")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-16-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This laptop ships with a different DMI identifier to what was expected,
+and also has the DMICs connected to the host rather than the cs42l43
+codec.
+
+Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
+Fixes: 83c062ae81e8 ("ASoC: Intel: sof_sdw: Add quirks for some new Lenovo laptops")
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20250102123335.256698-2-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi                | 2 +-
- arch/arm64/boot/dts/qcom/sm8550-hdk.dts                     | 2 +-
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts                     | 2 +-
- arch/arm64/boot/dts/qcom/sm8550-qrd.dts                     | 2 +-
- arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts             | 2 +-
- arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts | 2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
+ sound/soc/intel/boards/sof_sdw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi b/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
-index f6960e2d466a2..e6ac529e6b721 100644
---- a/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs8550-aim300.dtsi
-@@ -367,7 +367,7 @@
- };
- 
- &sleep_clk {
--	clock-frequency = <32000>;
-+	clock-frequency = <32764>;
- };
- 
- &ufs_mem_hc {
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
-index 01c9216026057..29bc1ddfc7b25 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
-@@ -1172,7 +1172,7 @@
- };
- 
- &sleep_clk {
--	clock-frequency = <32000>;
-+	clock-frequency = <32764>;
- };
- 
- &swr0 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index ab447fc252f7d..5648ab60ba4c4 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -825,7 +825,7 @@
- };
- 
- &sleep_clk {
--	clock-frequency = <32000>;
-+	clock-frequency = <32764>;
- };
- 
- &swr0 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-index 6052dd922ec55..3a6cb27913048 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-@@ -1005,7 +1005,7 @@
- };
- 
- &sleep_clk {
--	clock-frequency = <32000>;
-+	clock-frequency = <32764>;
- };
- 
- &swr0 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
-index 3d351e90bb398..62a6b90697b06 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-samsung-q5q.dts
-@@ -565,7 +565,7 @@
- };
- 
- &sleep_clk {
--	clock-frequency = <32000>;
-+	clock-frequency = <32764>;
- };
- 
- &tlmm {
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts b/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
-index 85d487ef80a0b..d90dc7b37c4a7 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts
-@@ -722,7 +722,7 @@
- };
- 
- &sleep_clk {
--	clock-frequency = <32000>;
-+	clock-frequency = <32764>;
- };
- 
- &tlmm {
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index 46f1c2d368dee..d42b012a6bb9d 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -618,9 +618,9 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 		.callback = sof_sdw_quirk_cb,
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+-			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "3832")
++			DMI_MATCH(DMI_PRODUCT_NAME, "83LC")
+ 		},
+-		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS),
++		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS | SOC_SDW_CODEC_MIC),
+ 	},
+ 	{
+ 		.callback = sof_sdw_quirk_cb,
 -- 
 2.39.5
 
