@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FA7151988;
-	Wed,  5 Feb 2025 14:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0B2487BF;
+	Wed,  5 Feb 2025 14:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765925; cv=none; b=vEsOtYkO62dy6E6k43rsju9+MFcfSNDF3ZzaJAPLl2eZruNtRDh3niUN/fRnLJ+nEO7n4XwOnU1H8QV/uFZa2gfHtH4ddr6aOAOOH8zEAe+rhIhvowhzJNuKQIawkMQkDPAZ+pdhPP3aG8aHFlsIurTyPEmSKzrKh/Ua3gaycm0=
+	t=1738765929; cv=none; b=pq+Zgm3dnBdH8GkhRw28i+1pLdaK29cY6eiFBx9fk5sBDroNFRz4GEXGLBXWCflC0OR+LW7QkbYAT2jdfmClcGcJheskImpk8SFvSdRb7GlliH/JSJD3vezQulol/SgsFCvkvqr9DAmjh5+RzKWkq+dkSrUpAJWwGdA1qU0UXj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765925; c=relaxed/simple;
-	bh=uZfcU1VOIuiddUQeOhoqxcgVKEdT1MO0S9czkR1WNY0=;
+	s=arc-20240116; t=1738765929; c=relaxed/simple;
+	bh=bEQlQnZeCGybdHrWxr40hLZnQ9EfGW0UA40iVN3ofyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SBFtCgjwmLyO21t468NBhQRFohffYPfk57xWPuS2mWDT5xjKbulCNsKq/gw+LqFyTRJJt0HdpJdfTNFOkvmCxE+OIvMpaASI9R+Zhwl014eh9S2d1v8igPXJPx+ftyn0EXjpAq7FFj9ECCRqTqIqilA/+GCfrrSFn0tNhuKrbR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDIJ70uz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bjos+d5OCrkf1KGyUlLXrfR5ORSpHnlATct+5mvCPMqhGJx55bc6W/qMH1+rRYOOuGnVcsE3GqqW2L4lmgqmXyK8smiLXst1GzwyjhBxSdNwQ+O1NXjFA/ivF1OFE7oZ3cfmrUxStqusRT0YtmFqnUwZTjdX3i7ax3EDJdIn8i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avhk+v+A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDIJ70uz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A53C4CED6;
-	Wed,  5 Feb 2025 14:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avhk+v+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2635EC4CED1;
+	Wed,  5 Feb 2025 14:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765925;
-	bh=uZfcU1VOIuiddUQeOhoqxcgVKEdT1MO0S9czkR1WNY0=;
+	s=korg; t=1738765928;
+	bh=bEQlQnZeCGybdHrWxr40hLZnQ9EfGW0UA40iVN3ofyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jDIJ70uzDsSpUo9aEMfg73O0QvIAmNwFHXYEPYTi8e41EzIMG8mSmAJNc+r2ZSjmC
-	 u5GIWLQh6VQDJQoKRwhgadIVZJd3sXL7s9HlUc5z1x1zk4leg36An149feCEUQQyv8
-	 zET71zycMsAFsXiPFXxOaGvU4aU7jcfTsbX0mEmQ=
+	b=avhk+v+AiCUMzixr1aqGYlfhRz9jRLIbELBASvReZgXEVTwzIMDV9lu7a/JRJHmVs
+	 pGWxLWuqTKbw5VR/XcI75g6JOeFDQpkadb48+nwFp/b55uI76LktALDsNdur/gx0ZE
+	 MPXnG5FJ879tX5/h7kvlGEIzaOLVxcw9O2pVyqx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 226/623] dev: Acquire netdev_rename_lock before restoring dev->name in dev_change_name().
-Date: Wed,  5 Feb 2025 14:39:28 +0100
-Message-ID: <20250205134504.870327761@linuxfoundation.org>
+Subject: [PATCH 6.12 268/590] perf top: Dont complain about lack of vmlinux when not resolving some kernel samples
+Date: Wed,  5 Feb 2025 14:40:23 +0100
+Message-ID: <20250205134505.527447357@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +53,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit e361560a7912958ba3059f51e7dd21612d119169 ]
+[ Upstream commit 058b38ccd2af9e5c95590b018e8425fa148d7aca ]
 
-The cited commit forgot to add netdev_rename_lock in one of the
-error paths in dev_change_name().
+Recently we got a case where a kernel sample wasn't being resolved due
+to a bug that was not setting the end address on kernel functions
+implemented in assembly (see Link: tag), and then those were not being
+found by machine__resolve() -> map__find_symbol().
 
-Let's hold netdev_rename_lock before restoring the old dev->name.
+So we ended up with:
 
-Fixes: 0840556e5a3a ("net: Protect dev->name by seqlock.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250115095545.52709-2-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  # perf top --stdio
+  PerfTop: 0 irqs/s  kernel: 0%  exact: 0% lost: 0/0 drop: 0/0 [cycles/P]
+  -----------------------------------------------------------------------
+
+  Warning:
+  A vmlinux file was not found.
+  Kernel samples will not be resolved.
+  ^Z
+  [1]+  Stopped                 perf top --stdio
+  #
+
+But then resolving all other kernel symbols.
+
+So just fixup the logic to only print that warning when there are no
+symbols in the kernel map.
+
+Fixes: d88205db9caa0e9d ("perf dso: Add dso__has_symbols() method")
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/lkml/Z3buKhcCsZi3_aGb@x1
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/perf/builtin-top.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index a9f62f5aeb840..7600820bed6bd 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -1279,7 +1279,9 @@ int dev_change_name(struct net_device *dev, const char *newname)
- rollback:
- 	ret = device_rename(&dev->dev, dev->name);
- 	if (ret) {
-+		write_seqlock_bh(&netdev_rename_lock);
- 		memcpy(dev->name, oldname, IFNAMSIZ);
-+		write_sequnlock_bh(&netdev_rename_lock);
- 		WRITE_ONCE(dev->name_assign_type, old_assign_type);
- 		up_write(&devnet_rename_sem);
- 		return ret;
+diff --git a/tools/perf/builtin-top.c b/tools/perf/builtin-top.c
+index 724a793863212..ca3e8eca6610e 100644
+--- a/tools/perf/builtin-top.c
++++ b/tools/perf/builtin-top.c
+@@ -809,7 +809,7 @@ static void perf_event__process_sample(const struct perf_tool *tool,
+ 		 * invalid --vmlinux ;-)
+ 		 */
+ 		if (!machine->kptr_restrict_warned && !top->vmlinux_warned &&
+-		    __map__is_kernel(al.map) && map__has_symbols(al.map)) {
++		    __map__is_kernel(al.map) && !map__has_symbols(al.map)) {
+ 			if (symbol_conf.vmlinux_name) {
+ 				char serr[256];
+ 
 -- 
 2.39.5
 
