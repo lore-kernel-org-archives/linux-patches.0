@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A04B1FCCE9;
-	Wed,  5 Feb 2025 14:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CCE1FC7C2;
+	Wed,  5 Feb 2025 14:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766834; cv=none; b=mChpvqxINaiI1en8qmR4jQ2BSilFQzPmtsI40Y8Swv1aeQ3QfH8AdUkt6o3vPZihb538ii//lNI01IzO/qrUziPRIT2CRI3HWxUpnXfsUeiWHhY35YEF4d95Yn/KvxJQivNqK9c7Gzxu8xJY+ZkWt+H0XAg1vXqa1znOw59BOi4=
+	t=1738766837; cv=none; b=H4lFWdk2OMi2xpuk7bWYlLk7A2WInu19f2lneWBkTHBEFtVB+FDWYHufT9ppwfYR2xZv8fi6bdN721/LOjKaNm0y+8QVgcf3dSq2EVm7ggJYcVDJctRwvMV7f1uy02RPfYTkiSeSNH3d4ho02s95Bmy+1qyMxHuSti8U6/DVNik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766834; c=relaxed/simple;
-	bh=bj9MdxXqE8O9OBujwZ0qNja43FhUc5m5oRaGP81uG2Y=;
+	s=arc-20240116; t=1738766837; c=relaxed/simple;
+	bh=CVOyGpTWt3qHXDh5PYFOKfoKCVbRKOp/jthwZrKHjBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mrfc2IFeMbUDUJ+/afPSp2WX06ldtKtO2v721VZdIqxVKy+LQx2EfR2O3orzMhdVaCwNxz+E6kg4AyESuChvRdFLcmGRUOnBr4o3S17wHfnLMQqT8hxEXlmnMGz6vG1joHkISzN7r4n/fgaP0k08JPWZsfwrOEOMQuY0VOYEfCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZouVz6t8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bj6WAMtf9qC1KjYqak0pwHNXa/q4Havltwms0ZNb11+DO7/JUFwZVoPhUEX3+3JfqusLYQScENMwjpkN/QcoDwzzMYe/fcZ3+g0QZLFVdJRv/iSpI12+zNIQGD3axcpjlmwsL8vZI0go0hTcQIxhlUf2SwlTpFi1eMu3Gyn3O8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gaIOwS3L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZouVz6t8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21ABC4CED1;
-	Wed,  5 Feb 2025 14:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gaIOwS3L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429D3C4CED1;
+	Wed,  5 Feb 2025 14:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766834;
-	bh=bj9MdxXqE8O9OBujwZ0qNja43FhUc5m5oRaGP81uG2Y=;
+	s=korg; t=1738766837;
+	bh=CVOyGpTWt3qHXDh5PYFOKfoKCVbRKOp/jthwZrKHjBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZouVz6t8oGMTN4zUGpE6tr2kR4B5Y5CXYM0qA4elbh68+U9eQehVjphwKNL6JpcTP
-	 CkXWAcfQUjpKJhyFY9amkWlXEWwp59BGaN9Hza+pnkiSTlhhszv0Z36rdeuAiknXQX
-	 OGRFy4deybM/8Fm9RgzhTXIeWA9EY+Uqp7XE2dIQ=
+	b=gaIOwS3LqDKTHCJv6lAZ8nUMlQVMm0wSk+lhouZ2ID6G9N/Yb39mHd+sngRK9i+jk
+	 JpIl0kHu1MsnYylzqxM5uPc7XTCY7QLDAf9EAyGDTb8NGTzDK5u6lceYe60fIVKBLP
+	 9ArnNDDzEGb/Z0WFCt+MCyQnmAFtPA48B+glHQVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 367/590] RDMA/bnxt_re: Fix to drop reference to the mmap entry in case of error
-Date: Wed,  5 Feb 2025 14:42:02 +0100
-Message-ID: <20250205134509.312901760@linuxfoundation.org>
+Subject: [PATCH 6.12 347/590] arm64: dts: qcom: q[dr]u1000: correct sleep clock frequency
+Date: Wed,  5 Feb 2025 14:41:42 +0100
+Message-ID: <20250205134508.548151777@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -54,44 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit c84f0f4f49d81645f49c3269fdcc3b84ce61e795 ]
+[ Upstream commit 5546604e034b6c383b65676ff8615b346897eccd ]
 
-In the error handling path of bnxt_re_mmap(), driver should invoke
-rdma_user_mmap_entry_put() to free the reference of mmap entry in case
-the error happens after rdma_user_mmap_entry_get was called.
+The Q[DR]U1000 platforms use PM8150 to provide sleep clock. According to
+the documentation, that clock has 32.7645 kHz frequency. Correct the
+sleep clock definition.
 
-Fixes: ea2224857882 ("RDMA/bnxt_re: Update alloc_page uapi for pacing")
-Reviewed-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Reviewed-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/20250104061519.2540178-1-kalesh-anakkur.purayil@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: d1f2cfe2f669 ("arm64: dts: qcom: Add base QDU1000/QRU1000 IDP DTs")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-5-e9b08fbeadd3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 2 +-
+ arch/arm64/boot/dts/qcom/qru1000-idp.dts | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 14e434ff51ede..a7067c3c06797 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -4395,9 +4395,10 @@ int bnxt_re_mmap(struct ib_ucontext *ib_uctx, struct vm_area_struct *vma)
- 	case BNXT_RE_MMAP_TOGGLE_PAGE:
- 		/* Driver doesn't expect write access for user space */
- 		if (vma->vm_flags & VM_WRITE)
--			return -EFAULT;
--		ret = vm_insert_page(vma, vma->vm_start,
--				     virt_to_page((void *)bnxt_entry->mem_offset));
-+			ret = -EFAULT;
-+		else
-+			ret = vm_insert_page(vma, vma->vm_start,
-+					     virt_to_page((void *)bnxt_entry->mem_offset));
- 		break;
- 	default:
- 		ret = -EINVAL;
+diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+index e65305f8136c8..c73eda75faf82 100644
+--- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
++++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+@@ -31,7 +31,7 @@
+ 
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+-			clock-frequency = <32000>;
++			clock-frequency = <32764>;
+ 			#clock-cells = <0>;
+ 		};
+ 	};
+diff --git a/arch/arm64/boot/dts/qcom/qru1000-idp.dts b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
+index 1c781d9e24cf4..52ce51e56e2fd 100644
+--- a/arch/arm64/boot/dts/qcom/qru1000-idp.dts
++++ b/arch/arm64/boot/dts/qcom/qru1000-idp.dts
+@@ -31,7 +31,7 @@
+ 
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+-			clock-frequency = <32000>;
++			clock-frequency = <32764>;
+ 			#clock-cells = <0>;
+ 		};
+ 	};
 -- 
 2.39.5
 
