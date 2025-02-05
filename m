@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FE71519AA;
-	Wed,  5 Feb 2025 14:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5695C1519AA;
+	Wed,  5 Feb 2025 14:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764578; cv=none; b=eYztnWbsTMrpMhF8LbXul6beDtGcWj1WksHpfArRi0lJLLq0fmphWzRbQTDGSxsKiS0YC0JH+nuaqWm+RtyGwEex7o44WQBAGDYi0CKvqcXlJvipMWSDxizUKbtJlmBpud8J+Nabs+bLxjRuWhOTkvPBNBgu63GayVBF9u0CS+k=
+	t=1738764582; cv=none; b=DhdQ6K+RhXEjfy3NIJqvbLzDo1vzN3s5VYK+1slQ+ITj4d8VEA1OO7uvDjvz6UWtKvF3sKt0+r2HrDZxoDcgyNAat9+aPbhURx5v9AyfnM/w4alUkJ6kwq+SVgsN/3il6NEw9pCJDPBmbNENTHwh7YPBNGWgqlTxF6oiGjRDnNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764578; c=relaxed/simple;
-	bh=IOj4mtUSvrjRVZC6hO5gS3bN1wlpPNI6EXBXCG4TVSg=;
+	s=arc-20240116; t=1738764582; c=relaxed/simple;
+	bh=BsH27xuthpLY7uTcgxE2nr8H1JJYogcfieJxrzEaMbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dwY16BGFWqS4BFEi2+7Ya+yqKK/r8xm5LNYYmLmMebz5qZgVDNwlbS6uc4162hPeaVtPuMz0AY1eLQkrS1HVDsp8ax8A994zaCWEtEeUOdzkQxqiF2I/KKNZ6b6c4MgwiQcY5VXolgf1Zo4/rRtxRtIXy8Etlp3bfcSlfbMqQ14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uv+0Pxh2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3pXq6AXIjROo0tDIZmwElj9gfqxMaz/L32Vs/+tVhU05lmeQdwppPISpCr3LpcJBb1n+acPTU6oM4Z38aQuzvIUdRy1gkeo9Hh/hNXJUBcfY+rOp7j/Ncv83cpJ85h1WWINdc852sy+UsM+w96YL3FB9RFExUzf6Z3MwzTnXBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmwiZGpg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uv+0Pxh2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B64C4CED1;
-	Wed,  5 Feb 2025 14:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmwiZGpg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE14C4CED1;
+	Wed,  5 Feb 2025 14:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764578;
-	bh=IOj4mtUSvrjRVZC6hO5gS3bN1wlpPNI6EXBXCG4TVSg=;
+	s=korg; t=1738764581;
+	bh=BsH27xuthpLY7uTcgxE2nr8H1JJYogcfieJxrzEaMbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uv+0Pxh20koWv3JYTXmplECh1D8zN0uPLFMsikcDT9phAek2yjt8wJ1wZEobhTAJF
-	 kwIRY6koWcKYFDP+9sDJpalfwN7SCdNu446ytq3gYQxIymu1l0KUKSmtKUPUW4FZuy
-	 pcrm1dsC6GWMhj+X4OVohcJCwMLA2GTARE6efr6M=
+	b=dmwiZGpg6MqfvkNw543DjiIgUeZQNOab3lNaJer6IFv5gnVXH88vxOYcEZoCda0oI
+	 vYaTNr1oEaui7GsS0pSw1EJuFoCA0OEUkxwv/xTrz2G8Gqer4v0/WJM7xCUzhrVH/7
+	 9hucDryLkAEhJ/Z3USTuItFPtE/fy1ufz0o0GA3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 092/623] clk: renesas: cpg-mssr: Fix soc node handling in cpg_mssr_reserved_init()
-Date: Wed,  5 Feb 2025 14:37:14 +0100
-Message-ID: <20250205134459.746045493@linuxfoundation.org>
+Subject: [PATCH 6.6 184/393] pinctrl: amd: Take suspend type into consideration which pins are non-wake
+Date: Wed,  5 Feb 2025 14:41:43 +0100
+Message-ID: <20250205134427.339668348@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +48,127 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
 
-[ Upstream commit a6ca7e6240f0651412da6a17d0e7a8f66d3455a6 ]
+[ Upstream commit f31f33dbb3bab572bad9fe7b849ab0dcbe6fd279 ]
 
-A device_node reference obtained via of_find_node_by_path() requires
-explicit calls to of_node_put() after it is no longer required to avoid
-leaking the resource.
+Some laptops have pins which are a wake source for S0i3/S3 but which
+aren't a wake source for S4/S5 and which cause issues when left unmasked
+during hibernation (S4).
 
-Instead of adding the missing calls to of_node_put() in all execution
-paths, use the cleanup attribute for 'soc' by means of the __free()
-macro, which automatically calls of_node_put() when the variable goes
-out of scope.
+For example HP EliteBook 855 G7 has pin #24 that causes instant wakeup
+(hibernation failure) if left unmasked (it is a wake source only for
+S0i3/S3).
+GPIO pin #24 on this platform is likely dedicated to WWAN XMM7360
+modem since this pin triggers wake notify to WWAN modem's parent PCIe
+port.
 
-Fixes: 6aa175476490 ("clk: renesas: cpg-mssr: Ignore all clocks assigned to non-Linux system")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20241031-clk-renesas-cpg-mssr-cleanup-v2-1-0010936d1154@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fix this by considering a pin a wake source only if it is marked as one
+for the current suspend type (S0i3/S3 vs S4/S5).
+
+Since Z-wake pins only make sense at runtime these were excluded from
+both of suspend categories, so pins with only the Z-wake flag set are
+effectively treated as non-wake pins.
+
+Fixes: 2fff0b5e1a6b ("pinctrl: amd: Mask non-wake source pins with interrupt enabled at suspend")
+Signed-off-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/d4b2d076366fdd08a0c1cd9b7ecd91dc95e07269.1736184752.git.mail@maciej.szmigiero.name
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/renesas-cpg-mssr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-amd.c | 27 +++++++++++++++++++++------
+ drivers/pinctrl/pinctrl-amd.h |  7 +++----
+ 2 files changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
-index 79e7a90c3b1be..bf85501709f03 100644
---- a/drivers/clk/renesas/renesas-cpg-mssr.c
-+++ b/drivers/clk/renesas/renesas-cpg-mssr.c
-@@ -979,7 +979,7 @@ static void __init cpg_mssr_reserved_exit(struct cpg_mssr_priv *priv)
- static int __init cpg_mssr_reserved_init(struct cpg_mssr_priv *priv,
- 					 const struct cpg_mssr_info *info)
+diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
+index 86034c457c043..75bff325a4251 100644
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -908,12 +908,13 @@ static bool amd_gpio_should_save(struct amd_gpio *gpio_dev, unsigned int pin)
+ 	return false;
+ }
+ 
+-static int amd_gpio_suspend(struct device *dev)
++static int amd_gpio_suspend_hibernate_common(struct device *dev, bool is_suspend)
  {
--	struct device_node *soc = of_find_node_by_path("/soc");
-+	struct device_node *soc __free(device_node) = of_find_node_by_path("/soc");
- 	struct device_node *node;
- 	uint32_t args[MAX_PHANDLE_ARGS];
- 	unsigned int *ids = NULL;
+ 	struct amd_gpio *gpio_dev = dev_get_drvdata(dev);
+ 	struct pinctrl_desc *desc = gpio_dev->pctrl->desc;
+ 	unsigned long flags;
+ 	int i;
++	u32 wake_mask = is_suspend ? WAKE_SOURCE_SUSPEND : WAKE_SOURCE_HIBERNATE;
+ 
+ 	for (i = 0; i < desc->npins; i++) {
+ 		int pin = desc->pins[i].number;
+@@ -925,11 +926,11 @@ static int amd_gpio_suspend(struct device *dev)
+ 		gpio_dev->saved_regs[i] = readl(gpio_dev->base + pin * 4) & ~PIN_IRQ_PENDING;
+ 
+ 		/* mask any interrupts not intended to be a wake source */
+-		if (!(gpio_dev->saved_regs[i] & WAKE_SOURCE)) {
++		if (!(gpio_dev->saved_regs[i] & wake_mask)) {
+ 			writel(gpio_dev->saved_regs[i] & ~BIT(INTERRUPT_MASK_OFF),
+ 			       gpio_dev->base + pin * 4);
+-			pm_pr_dbg("Disabling GPIO #%d interrupt for suspend.\n",
+-				  pin);
++			pm_pr_dbg("Disabling GPIO #%d interrupt for %s.\n",
++				  pin, is_suspend ? "suspend" : "hibernate");
+ 		}
+ 
+ 		raw_spin_unlock_irqrestore(&gpio_dev->lock, flags);
+@@ -938,6 +939,16 @@ static int amd_gpio_suspend(struct device *dev)
+ 	return 0;
+ }
+ 
++static int amd_gpio_suspend(struct device *dev)
++{
++	return amd_gpio_suspend_hibernate_common(dev, true);
++}
++
++static int amd_gpio_hibernate(struct device *dev)
++{
++	return amd_gpio_suspend_hibernate_common(dev, false);
++}
++
+ static int amd_gpio_resume(struct device *dev)
+ {
+ 	struct amd_gpio *gpio_dev = dev_get_drvdata(dev);
+@@ -961,8 +972,12 @@ static int amd_gpio_resume(struct device *dev)
+ }
+ 
+ static const struct dev_pm_ops amd_gpio_pm_ops = {
+-	SET_LATE_SYSTEM_SLEEP_PM_OPS(amd_gpio_suspend,
+-				     amd_gpio_resume)
++	.suspend_late = amd_gpio_suspend,
++	.resume_early = amd_gpio_resume,
++	.freeze_late = amd_gpio_hibernate,
++	.thaw_early = amd_gpio_resume,
++	.poweroff_late = amd_gpio_hibernate,
++	.restore_early = amd_gpio_resume,
+ };
+ #endif
+ 
+diff --git a/drivers/pinctrl/pinctrl-amd.h b/drivers/pinctrl/pinctrl-amd.h
+index cf59089f27763..c9522c62d7910 100644
+--- a/drivers/pinctrl/pinctrl-amd.h
++++ b/drivers/pinctrl/pinctrl-amd.h
+@@ -80,10 +80,9 @@
+ #define FUNCTION_MASK		GENMASK(1, 0)
+ #define FUNCTION_INVALID	GENMASK(7, 0)
+ 
+-#define WAKE_SOURCE	(BIT(WAKE_CNTRL_OFF_S0I3) | \
+-			 BIT(WAKE_CNTRL_OFF_S3)   | \
+-			 BIT(WAKE_CNTRL_OFF_S4)   | \
+-			 BIT(WAKECNTRL_Z_OFF))
++#define WAKE_SOURCE_SUSPEND  (BIT(WAKE_CNTRL_OFF_S0I3) | \
++			      BIT(WAKE_CNTRL_OFF_S3))
++#define WAKE_SOURCE_HIBERNATE BIT(WAKE_CNTRL_OFF_S4)
+ 
+ struct amd_function {
+ 	const char *name;
 -- 
 2.39.5
 
