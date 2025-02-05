@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E84C1519BE;
-	Wed,  5 Feb 2025 14:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92831519BE;
+	Wed,  5 Feb 2025 14:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765010; cv=none; b=r4e0UXCgeoUvTwbBLmXWUyuA7h3Pv4TB2ZZqEydm/JgNVSIo7kd+mNM7xIStp8HYcYyhtPYt5lsXTBIEk5Yhd82OCqykGn3R79yCoLTw5VYx/qDnaro97/CrSyUc19QrDfL7UwoO6GLwXAjZllui1SJRBDJvhooiwZHu39DKhz4=
+	t=1738765013; cv=none; b=W3+nVcmFx9bTUpDOb8xdFJ2pHJHAjhRzX1/OjJmEkAJAQke3Qx5a/qe1wZtIuSlaNya1SC3DUgo3xt8o0RPtxW06UsbXk1ItUdtVmr7JLLNSclWN5jlL54V1My1K9WEDO0TyEV4WmJ5T9NFBPU87iUaH6MtXGTl2pAKtDXhf3sI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765010; c=relaxed/simple;
-	bh=Z5MXwyJeQy573ZasXyes7+ozz1dVjqixwZBgXyUdJQg=;
+	s=arc-20240116; t=1738765013; c=relaxed/simple;
+	bh=cqmtTFVTDuhEE6K0q+KVMLTlvWd4bZ4XL8nCItF7lVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4XrEE6AuxdcdALUF5UIwdkK8ElwW1Fw2FOlcpgWt2x9DYOFAsEKNf6/mZMnfG7p7UnUnuPw2fijGkN4NT951syjwjd32+PPewQ4TGJjMRtOpOyGvxenUtMhmLhf+UmPMrfxI5hzxu+skgqCNCwNCPT8Z4WjDV1i7l4uQac04Rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ffhy0hwi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aL1Q+UmsDa1j8ze6QhlfKLEUY3OGn7KSZYmwPzpyTK1V7N/EXoTLzdI4lK4uifu3oW+n+GQvup8piw+itqXaT8nQ5TjETqbDq4d6MyR37Q26DD3e+Y5bPpCSwl8R+WZ6IYtEfnbAk5qFtSoM3TrRxjFs4FJlPx0zi3GIEcI1ucE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZFI4qse; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ffhy0hwi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA848C4CED1;
-	Wed,  5 Feb 2025 14:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZFI4qse"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EC0C4CED1;
+	Wed,  5 Feb 2025 14:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765010;
-	bh=Z5MXwyJeQy573ZasXyes7+ozz1dVjqixwZBgXyUdJQg=;
+	s=korg; t=1738765013;
+	bh=cqmtTFVTDuhEE6K0q+KVMLTlvWd4bZ4XL8nCItF7lVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ffhy0hwiWm2woiALQ0U1DwPW73ozjU51EUaVcdu520kP/qCiN0C+cDtW2OkZLFvTq
-	 DuYCj+HJ/xFUXuUWvs4eveT1Yi75HTXbhwIYZhJFqqhFcQ9sFrkWhclXdVAc71Wb1t
-	 BQgKkGlWlu5mhKdHrdkA4I+4OoO89gjcteETVIVo=
+	b=RZFI4qsecqB9YEOee7HM1XEbDMsuZ6+p3IcSb/VscGWAezQ2HFmHalAUfxuGc6Yc/
+	 C/fdqAiS/v+vzrRceTdJQqJlnpoSnfsgstYfyxMIrlOViIcJTLsnBmDNIRsR2okYpz
+	 6/CpQkt3fJsMv6KfjKNu87oh+gzCll3ES+1ZNTdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 135/623] clk: qcom: camcc-x1e80100: Set titan_top_gdsc as the parent GDSC of subordinate GDSCs
-Date: Wed,  5 Feb 2025 14:37:57 +0100
-Message-ID: <20250205134501.397757364@linuxfoundation.org>
+Subject: [PATCH 6.6 224/393] memory: tegra20-emc: fix an OF node reference bug in tegra_emc_find_node_by_ram_code()
+Date: Wed,  5 Feb 2025 14:42:23 +0100
+Message-ID: <20250205134428.875376777@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,83 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit d9377941f2732d2f6f53ec9520321a19c687717a ]
+[ Upstream commit b9784e5cde1f9fb83661a70e580e381ae1264d12 ]
 
-The Titan TOP GDSC is the parent GDSC for all other GDSCs in the CAMCC
-block. None of the subordinate blocks will switch on without the parent
-GDSC switched on.
+As of_find_node_by_name() release the reference of the argument device
+node, tegra_emc_find_node_by_ram_code() releases some device nodes while
+still in use, resulting in possible UAFs. According to the bindings and
+the in-tree DTS files, the "emc-tables" node is always device's child
+node with the property "nvidia,use-ram-code", and the "lpddr2" node is a
+child of the "emc-tables" node. Thus utilize the
+for_each_child_of_node() macro and of_get_child_by_name() instead of
+of_find_node_by_name() to simplify the code.
 
-Fixes: 76126a5129b5 ("clk: qcom: Add camcc clock driver for x1e80100")
-Acked-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Link: https://lore.kernel.org/r/20241227-b4-linux-next-24-12-16-titan-top-gdsc-v1-1-c96ef62fc307@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This bug was found by an experimental verification tool that I am
+developing.
+
+Fixes: 96e5da7c8424 ("memory: tegra: Introduce Tegra20 EMC driver")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Link: https://lore.kernel.org/r/20241217091434.1993597-1-joe@pf.is.s.u-tokyo.ac.jp
+Link: https://lore.kernel.org/r/20241218024415.2494267-3-joe@pf.is.s.u-tokyo.ac.jp
+[krzysztof: applied v1, adjust the commit msg to incorporate v2 parts]
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-x1e80100.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/memory/tegra/tegra20-emc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/camcc-x1e80100.c b/drivers/clk/qcom/camcc-x1e80100.c
-index 85e76c7712ad8..b73524ae64b1b 100644
---- a/drivers/clk/qcom/camcc-x1e80100.c
-+++ b/drivers/clk/qcom/camcc-x1e80100.c
-@@ -2212,6 +2212,8 @@ static struct clk_branch cam_cc_sfe_0_fast_ahb_clk = {
- 	},
- };
+diff --git a/drivers/memory/tegra/tegra20-emc.c b/drivers/memory/tegra/tegra20-emc.c
+index fd595c851a278..eb2813b51d770 100644
+--- a/drivers/memory/tegra/tegra20-emc.c
++++ b/drivers/memory/tegra/tegra20-emc.c
+@@ -477,14 +477,15 @@ tegra_emc_find_node_by_ram_code(struct tegra_emc *emc)
  
-+static struct gdsc cam_cc_titan_top_gdsc;
-+
- static struct gdsc cam_cc_bps_gdsc = {
- 	.gdscr = 0x10004,
- 	.en_rest_wait_val = 0x2,
-@@ -2221,6 +2223,7 @@ static struct gdsc cam_cc_bps_gdsc = {
- 		.name = "cam_cc_bps_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
+ 	ram_code = tegra_read_ram_code();
  
-@@ -2233,6 +2236,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
- 		.name = "cam_cc_ife_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
+-	for (np = of_find_node_by_name(dev->of_node, "emc-tables"); np;
+-	     np = of_find_node_by_name(np, "emc-tables")) {
++	for_each_child_of_node(dev->of_node, np) {
++		if (!of_node_name_eq(np, "emc-tables"))
++			continue;
+ 		err = of_property_read_u32(np, "nvidia,ram-code", &value);
+ 		if (err || value != ram_code) {
+ 			struct device_node *lpddr2_np;
+ 			bool cfg_mismatches = false;
  
-@@ -2245,6 +2249,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
- 		.name = "cam_cc_ife_1_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
+-			lpddr2_np = of_find_node_by_name(np, "lpddr2");
++			lpddr2_np = of_get_child_by_name(np, "lpddr2");
+ 			if (lpddr2_np) {
+ 				const struct lpddr2_info *info;
  
-@@ -2257,6 +2262,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
- 		.name = "cam_cc_ipe_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
+@@ -521,7 +522,6 @@ tegra_emc_find_node_by_ram_code(struct tegra_emc *emc)
+ 			}
  
-@@ -2269,6 +2275,7 @@ static struct gdsc cam_cc_sfe_0_gdsc = {
- 		.name = "cam_cc_sfe_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
+ 			if (cfg_mismatches) {
+-				of_node_put(np);
+ 				continue;
+ 			}
+ 		}
 -- 
 2.39.5
 
