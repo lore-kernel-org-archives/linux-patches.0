@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAF2376;
-	Wed,  5 Feb 2025 14:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E5818B460;
+	Wed,  5 Feb 2025 14:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766787; cv=none; b=nyM7bVNuH9fOFsO0sDmeaFh+kR7HFpzD5P4FS6h+Wvsp3FhDscbi6ytmD3iZOJ5NdYpmv1bGjtYuugZvLZ9LUkoPynziM9pbOkVbFZ+pnUpoHO6iRZk66yHZ4ZlcGV8uIDP5qEItQSAhOE4FHLbHy1bOvpsATEB6clFStTPmw0M=
+	t=1738766790; cv=none; b=ApZkbr4q2MhaDSTMGvVaGZU7DCGcgjoVrS/79aN9lhF83PECZeyfJudgzGlC3h86iHO9fq5AnpMt32pQKJ6XRPKPo4XYfVcs3TbPX1HOQkGjPVHAvExuTBg53vx76bTcRwEEU6mUV67OzHi9uXmPpJRUm2EpS8kd5Yq0usJftwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766787; c=relaxed/simple;
-	bh=XEWG0sLqoXr7D4BDMtLvv5neATqzFVNiZGIIKduHlzQ=;
+	s=arc-20240116; t=1738766790; c=relaxed/simple;
+	bh=ctZKat2qf0gZzoSpb4eypkaDIq6mWQmxjDrqvDKdpnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPo3oUuVAMUVJ7z8sk1dehjD9WKI6Zl9spUwoank6bACULbjcQEeTHEo0Q8ny8CFvouC4yDP8K//UYxxoQw7ClNHCVoI7XMYHxj/kLGDxQtcTDEgjwQ3cA/EwJPDqIWdE7xbqij2VTjY29B4HFkcQUiVELf+C6nIIcikHHSKw88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1URCQoh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ACCGg7DObQ8OdZs9Z10ntvAzkYeT/SBkmKOt3/szQwUKXBHUM1u+DfOn1mKNld8UZI5nhg3+77+mrIRjMOutXQ7VhBXQn4vPdFIKSNgyWKRhsTEwFBsmgUYpuvPzO9Zy/EULUD8U4UQu7PEznaeklGQ4kLJ2jZXkGCTOTfEYVWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pK2NwO6S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1URCQoh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E280C4CED1;
-	Wed,  5 Feb 2025 14:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pK2NwO6S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87558C4CED1;
+	Wed,  5 Feb 2025 14:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766786;
-	bh=XEWG0sLqoXr7D4BDMtLvv5neATqzFVNiZGIIKduHlzQ=;
+	s=korg; t=1738766790;
+	bh=ctZKat2qf0gZzoSpb4eypkaDIq6mWQmxjDrqvDKdpnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p1URCQohncJ+63CAxTuggZwEwzU9+3k/RWaIcBVS+9rqG2+plnBAr3/bYHoWz0v4G
-	 6UtE0n1EIeVX1KOBKGvp/mTt8dXBa94K8x8fB9sxl8kAXVavTDq3uAs7x0N1WWDTwe
-	 sZkjmIVj3dAQBSrSj9bdskgcJsHnX9FMSjrxz9dA=
+	b=pK2NwO6SPiinnFApBR1gjY/JlIEqsvd/icNZ47GJXmbSOaHjVut9IUj3J+oZ2g2DP
+	 5uFGMbtqgN750DIil3RLM2aT9K+dhEZ2IP5ISdiEpcT2qCCJEFZUc1+9qXJK/eZHIU
+	 LN6i1+qvrnIUC+KCBBAyQ2A+++xhH2csNcn2U6R0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Mihai Sain <mihai.sain@microchip.com>,
+	Cristian Birsan <cristian.birsan@microchip.com>,
+	Andrei Simion <andrei.simion@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 308/623] selftests/bpf: Fix undefined UINT_MAX in veristat.c
-Date: Wed,  5 Feb 2025 14:40:50 +0100
-Message-ID: <20250205134508.010346619@linuxfoundation.org>
+Subject: [PATCH 6.12 361/590] ARM: dts: microchip: sama5d29_curiosity: Add no-1-8-v property to sdmmc0 node
+Date: Wed,  5 Feb 2025 14:41:56 +0100
+Message-ID: <20250205134509.081321236@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +49,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Cristian Birsan <cristian.birsan@microchip.com>
 
-[ Upstream commit a8d1c48d0720140b53063ff23507845bb2078e92 ]
+[ Upstream commit c21c23a0f2e9869676eff0d53fb89e151e14c873 ]
 
-Include <limits.h> in 'veristat.c' to provide a UINT_MAX definition and
-avoid multiple compile errors against mips64el/musl-libc:
+Add no-1-8-v property to sdmmc0 node to keep VDDSDMMC power rail at 3.3V.
+This property will stop the LDO regulator from switching to 1.8V when the
+MMC core detects an UHS SD Card. VDDSDMMC power rail is used by all the
+SDMMC interface pins in GPIO mode (PA0 - PA13).
 
-veristat.c: In function 'max_verifier_log_size':
-veristat.c:1135:36: error: 'UINT_MAX' undeclared (first use in this function)
- 1135 |         const int SMALL_LOG_SIZE = UINT_MAX >> 8;
-      |                                    ^~~~~~~~
-veristat.c:24:1: note: 'UINT_MAX' is defined in header '<limits.h>'; did you forget to '#include <limits.h>'?
-   23 | #include <math.h>
-  +++ |+#include <limits.h>
-   24 |
+On this board, PA6 is used as GPIO to enable the power switch controlling
+USB Vbus for the USB Host. The change is needed to fix the PA6 voltage
+level to 3.3V instead of 1.8V.
 
-Fixes: 1f7c33630724 ("selftests/bpf: Increase verifier log limit in veristat")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250116075036.3459898-1-tony.ambardar@gmail.com
+Fixes: d85c4229e925 ("ARM: dts: at91: sama5d29_curiosity: Add device tree for sama5d29_curiosity board")
+Suggested-by: Mihai Sain <mihai.sain@microchip.com>
+Signed-off-by: Cristian Birsan <cristian.birsan@microchip.com>
+Tested-by: Andrei Simion <andrei.simion@microchip.com>
+Link: https://lore.kernel.org/r/20241119160107.598411-2-cristian.birsan@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/veristat.c | 1 +
+ arch/arm/boot/dts/microchip/at91-sama5d29_curiosity.dts | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/veristat.c b/tools/testing/selftests/bpf/veristat.c
-index e12ef953fba85..b174c013485cd 100644
---- a/tools/testing/selftests/bpf/veristat.c
-+++ b/tools/testing/selftests/bpf/veristat.c
-@@ -21,6 +21,7 @@
- #include <gelf.h>
- #include <float.h>
- #include <math.h>
-+#include <limits.h>
+diff --git a/arch/arm/boot/dts/microchip/at91-sama5d29_curiosity.dts b/arch/arm/boot/dts/microchip/at91-sama5d29_curiosity.dts
+index 951a0c97d3c6b..5933840bb8f7e 100644
+--- a/arch/arm/boot/dts/microchip/at91-sama5d29_curiosity.dts
++++ b/arch/arm/boot/dts/microchip/at91-sama5d29_curiosity.dts
+@@ -514,6 +514,7 @@
  
- #ifndef ARRAY_SIZE
- #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
+ &sdmmc0 {
+ 	bus-width = <4>;
++	no-1-8-v;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_sdmmc0_default>;
+ 	disable-wp;
 -- 
 2.39.5
 
