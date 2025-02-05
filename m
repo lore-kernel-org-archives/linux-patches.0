@@ -1,51 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7F9151988;
-	Wed,  5 Feb 2025 14:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361B0151988;
+	Wed,  5 Feb 2025 14:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766220; cv=none; b=udbOfs0sWpJZoVuOGolNHrNkW+9MasUQp0UeZv0S/CFUBaZArhL505KFxiG+qfFM6fOOZZj/GwZrG/p4kM8k92co1+yhEkD/1+thoEHv+zrVJI2liMRVy/H5Z7JnRHKF5IkAAolTe/hGG1xRjAXvjLJZ+Pry7DvAnTtTqrZBQbk=
+	t=1738766224; cv=none; b=GGHCnQcXe/FV5V5ZrXADNSZHkgnkzH0HwA0JSprO2XGT+I2xIVQLx0wCPIBxFFgFL4R3QUEf6JdJnqjd9pUPcxvDM3cr4WeC6eNBsmJH8otQ4v4X0nEoQGzxnnIkvmpH1CZpDRgKJB0eVmVOajsxsaxcHjnuygstiRgvvjk4JA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766220; c=relaxed/simple;
-	bh=qGFjyhotWqOE1Uzf8Bwt7m734i009cyEBG2br9+rDX8=;
+	s=arc-20240116; t=1738766224; c=relaxed/simple;
+	bh=RkOVEreQ+2gd2fJBJ81Suq00epC2NZNVYq3km6bVzus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ghslq1jiBJvtbh3d6cS0BrPgVQkG3/lPJ/bfkks0hLT8Qp1+qQ1bgoAns6WXbypQMbZYW5SLsMIg8F83rxUis/LYRGTtSoZDv7zO2DGOBeKWlkUMkM/chmaH6XVNNlDSCxP0rUv5zRBmHVBn8OncLz1mjh8eFFD3vMF42h7waTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvibNuDb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i9RumsM74KKfsogy1Zh251Y1yQljPiEFHbFY0sDzv/maioV9NMqj2nSNdYtQXem1g+mUj7bSHzjm0Y5GRWlkLgOeBvDx8nZcBC12OuycBDBNpf2RT6L6hbwz9pamUPvlTG4WraDoBBjcHoSxjd+hbfA3ZAmcvbFjTmGLoUyMQd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDoqw0A4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvibNuDb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C8EC4CED1;
-	Wed,  5 Feb 2025 14:36:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDoqw0A4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E340C4CED1;
+	Wed,  5 Feb 2025 14:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766220;
-	bh=qGFjyhotWqOE1Uzf8Bwt7m734i009cyEBG2br9+rDX8=;
+	s=korg; t=1738766224;
+	bh=RkOVEreQ+2gd2fJBJ81Suq00epC2NZNVYq3km6bVzus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lvibNuDbIf0MRRS7YCINiLtEx1eVBACLvyNI5DoSglNkhbKlH6U9Lm9n7M0JV5OaE
-	 mGeGXWdWMC94XSW5miScaF7kohd8zzcDbwQvx+4waLg81bJ/EoW0lgmrCP/ZylDfrP
-	 x5GATqRCn4aBkUr2kxu1iZukrNuLWY/VGUp23xf8=
+	b=qDoqw0A4XCCoS6KmExrH0QPh9cSnwRngdE7au8XhzrHy4+5pOWLrIloLhZMWVVkvi
+	 wEZyRFxVSrKTziGcRJu088RQrc4REGgwq81i4Mrzwvu4KTZfrRxWXNhw07nUCVIksK
+	 BMx2eEbr6YaocEQBq/fIA8feY+Gqt0cQpJPoGAag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Jiachen Zhang <me@jcix.top>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung.kim@lge.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 279/590] perf report: Fix misleading help message about --demangle
-Date: Wed,  5 Feb 2025 14:40:34 +0100
-Message-ID: <20250205134505.953831933@linuxfoundation.org>
+Subject: [PATCH 6.6 322/393] regulator: core: Add missing newline character
+Date: Wed,  5 Feb 2025 14:44:01 +0100
+Message-ID: <20250205134432.633563596@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -57,48 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiachen Zhang <me@jcix.top>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit ac0ac75189a4d6a29a2765a7adbb62bc6cc650c7 ]
+[ Upstream commit 155c569fa4c3b340fbf8571a0e42dd415c025377 ]
 
-The wrong help message may mislead users. This commit fixes it.
+dev_err_probe() error messages need newline character.
 
-Fixes: 328ccdace8855289 ("perf report: Add --no-demangle option")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Jiachen Zhang <me@jcix.top>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung.kim@lge.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250109152220.1869581-1-me@jcix.top
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 6eabfc018e8d ("regulator: core: Allow specifying an initial load w/ the bulk API")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://patch.msgid.link/20250122072019.1926093-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-report.c | 2 +-
+ drivers/regulator/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-report.c b/tools/perf/builtin-report.c
-index 5dc17ffee27a2..645deec294c84 100644
---- a/tools/perf/builtin-report.c
-+++ b/tools/perf/builtin-report.c
-@@ -1418,7 +1418,7 @@ int cmd_report(int argc, const char **argv)
- 	OPT_STRING(0, "addr2line", &addr2line_path, "path",
- 		   "addr2line binary to use for line numbers"),
- 	OPT_BOOLEAN(0, "demangle", &symbol_conf.demangle,
--		    "Disable symbol demangling"),
-+		    "Symbol demangling. Enabled by default, use --no-demangle to disable."),
- 	OPT_BOOLEAN(0, "demangle-kernel", &symbol_conf.demangle_kernel,
- 		    "Enable kernel symbol demangling"),
- 	OPT_BOOLEAN(0, "mem-mode", &report.mem_mode, "mem access profile"),
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index c96bf095695fd..352131d2df4ca 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -4876,7 +4876,7 @@ int _regulator_bulk_get(struct device *dev, int num_consumers,
+ 						       consumers[i].supply, get_type);
+ 		if (IS_ERR(consumers[i].consumer)) {
+ 			ret = dev_err_probe(dev, PTR_ERR(consumers[i].consumer),
+-					    "Failed to get supply '%s'",
++					    "Failed to get supply '%s'\n",
+ 					    consumers[i].supply);
+ 			consumers[i].consumer = NULL;
+ 			goto err;
 -- 
 2.39.5
 
