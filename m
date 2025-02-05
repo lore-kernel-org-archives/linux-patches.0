@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E972F17B505;
-	Wed,  5 Feb 2025 15:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85E417B505;
+	Wed,  5 Feb 2025 15:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768415; cv=none; b=MyD5fETOxvraZyf3bfbVHHtg5HypqL/wwYlhSov4n1fSM0vI5L2hvG6PSLtl9eD1MgF+mHze7lF8OnknTm5PS1BbYEwu4HV84oNznUdx1NOy57MpOxBnx75Ncp03bYehjhMdIevt3KMJXhVUFNjznQKqjg012HTq9KAgfLXkVRk=
+	t=1738768419; cv=none; b=OTP8wWRy+Qmjv1TqXb3exB8V8o1nr/OGYTEHSEP103h11ltJWDhhqbeVXCBSdZUIbDJBTR57Fm0utC8WV4+ngvPrzvG8ha0agY37TbKmPrBRZAsIadmJMK8RHewMH/fPdfL+HH5cyuplbVR7MUtXzdKIEKneQGQxMFNRqI0dBB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768415; c=relaxed/simple;
-	bh=WkM+0DPCsYnKq3I9ydY5mUChYxGUKAl+k1eHaGIlm5A=;
+	s=arc-20240116; t=1738768419; c=relaxed/simple;
+	bh=PJ4pd5GuNCzt8+zyn9VKfuwaFnZagALatr99q5zF5Hk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Or/8d8EO1KE/yrPMrM+RlUK08Ow1V8Zyl4OeodOLW+ahqd1YBNBw1q6/CY7/gaFNIJpe8Vqfp/Ce38sVOuaTOak4r7oXZjLFGUrrxYi6SFqQhVAp2q3OngLV/Tj+TSlbk42gaAA7aBSudbRlgVnX3DKptv18LMmzea2VhK7lYBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMjJX/lZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Os+Gv0ahyPTdtNgYEAwWkoSC6iG4YrPUu/aFNhAsMVeMSLwIkj/HlKbDmEOuXWhS/qIIJ7eqqq2rlR3SY2R7SQJ7oj4jcjxifCLsWFsPuGbJGdSkMNw4mtftboU5ArVhFOcgz+dtu7olO1tKy4eaMKTO75OzS8Ob6GXe3Q88Li0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gY4OII6r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMjJX/lZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D46C4CED1;
-	Wed,  5 Feb 2025 15:13:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gY4OII6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9B3C4CED1;
+	Wed,  5 Feb 2025 15:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768414;
-	bh=WkM+0DPCsYnKq3I9ydY5mUChYxGUKAl+k1eHaGIlm5A=;
+	s=korg; t=1738768418;
+	bh=PJ4pd5GuNCzt8+zyn9VKfuwaFnZagALatr99q5zF5Hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMjJX/lZCgclKOX5qAUWdZZttZNYZsBNvKY/qfCEh4KrZVrqT0R7cDGc9lSlh/yVc
-	 xuRNxXv/KNNUqD4hEjKIWmNhSMGinsKI00VJoTQgr1uy5M7kOt0CPXSbURy1w3e+yG
-	 Vpm76OM/ti+uYSLm0j3CGHlVyShH2pbVh4HqGF1U=
+	b=gY4OII6rMdLl8k6oDeHEWJQnC7id6ITeiCP+WBNsEInb5Kr2+pkNHStw1Tkvaiv11
+	 PWJHQnW0Yhe1Rsz9m4dKoHmmukn9f+D5gQjFe0wNBuWv8N/0fcxqnlVRix1NczDvAR
+	 1wALUcDqLA31XSrNT+NasG6Q7ge6TmNGQMNb9dzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2e5de9e3ab986b71d2bf@syzkaller.appspotmail.com,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 523/623] net: netdevsim: try to close UDP port harness races
-Date: Wed,  5 Feb 2025 14:44:25 +0100
-Message-ID: <20250205134516.233781186@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Oreoluwa Babatunde <quic_obabatun@quicinc.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.12 577/590] dma-mapping: save base/size instead of pointer to shared DMA pool
+Date: Wed,  5 Feb 2025 14:45:32 +0100
+Message-ID: <20250205134517.341036113@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,179 +48,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 50bf398e1ceacb9a7f85bd3bdca065ebe5cb6159 ]
+commit 22293c33738c14bb84b9d3e771bc37150e7cf8e7 upstream.
 
-syzbot discovered that we remove the debugfs files after we free
-the netdev. Try to clean up the relevant dir while the device
-is still around.
+On RZ/Five, which is non-coherent, and uses CONFIG_DMA_GLOBAL_POOL=y:
 
-Reported-by: syzbot+2e5de9e3ab986b71d2bf@syzkaller.appspotmail.com
-Fixes: 424be63ad831 ("netdevsim: add UDP tunnel port offload support")
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250122224503.762705-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    Oops - store (or AMO) access fault [#1]
+    CPU: 0 UID: 0 PID: 1 Comm: swapper Not tainted 6.12.0-rc1-00015-g8a6e02d0c00e #201
+    Hardware name: Renesas SMARC EVK based on r9a07g043f01 (DT)
+    epc : __memset+0x60/0x100
+     ra : __dma_alloc_from_coherent+0x150/0x17a
+    epc : ffffffff8062d2bc ra : ffffffff80053a94 sp : ffffffc60000ba20
+     gp : ffffffff812e9938 tp : ffffffd601920000 t0 : ffffffc6000d0000
+     t1 : 0000000000000000 t2 : ffffffffe9600000 s0 : ffffffc60000baa0
+     s1 : ffffffc6000d0000 a0 : ffffffc6000d0000 a1 : 0000000000000000
+     a2 : 0000000000001000 a3 : ffffffc6000d1000 a4 : 0000000000000000
+     a5 : 0000000000000000 a6 : ffffffd601adacc0 a7 : ffffffd601a841a8
+     s2 : ffffffd6018573c0 s3 : 0000000000001000 s4 : ffffffd6019541e0
+     s5 : 0000000200000022 s6 : ffffffd6018f8410 s7 : ffffffd6018573e8
+     s8 : 0000000000000001 s9 : 0000000000000001 s10: 0000000000000010
+     s11: 0000000000000000 t3 : 0000000000000000 t4 : ffffffffdefe62d1
+     t5 : 000000001cd6a3a9 t6 : ffffffd601b2aad6
+    status: 0000000200000120 badaddr: ffffffc6000d0000 cause: 0000000000000007
+    [<ffffffff8062d2bc>] __memset+0x60/0x100
+    [<ffffffff80053e1a>] dma_alloc_from_global_coherent+0x1c/0x28
+    [<ffffffff80053056>] dma_direct_alloc+0x98/0x112
+    [<ffffffff8005238c>] dma_alloc_attrs+0x78/0x86
+    [<ffffffff8035fdb4>] rz_dmac_probe+0x3f6/0x50a
+    [<ffffffff803a0694>] platform_probe+0x4c/0x8a
+
+If CONFIG_DMA_GLOBAL_POOL=y, the reserved_mem structure passed to
+rmem_dma_setup() is saved for later use, by saving the passed pointer.
+However, when dma_init_reserved_memory() is called later, the pointer
+has become stale, causing a crash.
+
+E.g. in the RZ/Five case, the referenced memory now contains the
+reserved_mem structure for the "mmode_resv0@30000" node (with base
+0x30000 and size 0x10000), instead of the correct "pma_resv0@58000000"
+node (with base 0x58000000 and size 0x8000000).
+
+Fix this by saving the needed reserved_mem structure's contents instead.
+
+Fixes: 8a6e02d0c00e7b62 ("of: reserved_mem: Restructure how the reserved memory regions are processed")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/netdevsim/netdevsim.h             |  1 +
- drivers/net/netdevsim/udp_tunnels.c           | 23 +++++++++++--------
- .../drivers/net/netdevsim/udp_tunnel_nic.sh   | 16 ++++++-------
- 3 files changed, 23 insertions(+), 17 deletions(-)
+ kernel/dma/coherent.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/netdevsim/netdevsim.h b/drivers/net/netdevsim/netdevsim.h
-index bf02efa10956a..84181dcb98831 100644
---- a/drivers/net/netdevsim/netdevsim.h
-+++ b/drivers/net/netdevsim/netdevsim.h
-@@ -129,6 +129,7 @@ struct netdevsim {
- 		u32 sleep;
- 		u32 __ports[2][NSIM_UDP_TUNNEL_N_PORTS];
- 		u32 (*ports)[NSIM_UDP_TUNNEL_N_PORTS];
-+		struct dentry *ddir;
- 		struct debugfs_u32_array dfs_ports[2];
- 	} udp_ports;
+--- a/kernel/dma/coherent.c
++++ b/kernel/dma/coherent.c
+@@ -330,7 +330,8 @@ int dma_init_global_coherent(phys_addr_t
+ #include <linux/of_reserved_mem.h>
  
-diff --git a/drivers/net/netdevsim/udp_tunnels.c b/drivers/net/netdevsim/udp_tunnels.c
-index 02dc3123eb6c1..640b4983a9a0d 100644
---- a/drivers/net/netdevsim/udp_tunnels.c
-+++ b/drivers/net/netdevsim/udp_tunnels.c
-@@ -112,9 +112,11 @@ nsim_udp_tunnels_info_reset_write(struct file *file, const char __user *data,
- 	struct net_device *dev = file->private_data;
- 	struct netdevsim *ns = netdev_priv(dev);
+ #ifdef CONFIG_DMA_GLOBAL_POOL
+-static struct reserved_mem *dma_reserved_default_memory __initdata;
++static phys_addr_t dma_reserved_default_memory_base __initdata;
++static phys_addr_t dma_reserved_default_memory_size __initdata;
+ #endif
  
--	memset(ns->udp_ports.ports, 0, sizeof(ns->udp_ports.__ports));
- 	rtnl_lock();
--	udp_tunnel_nic_reset_ntf(dev);
-+	if (dev->reg_state == NETREG_REGISTERED) {
-+		memset(ns->udp_ports.ports, 0, sizeof(ns->udp_ports.__ports));
-+		udp_tunnel_nic_reset_ntf(dev);
-+	}
- 	rtnl_unlock();
+ static int rmem_dma_device_init(struct reserved_mem *rmem, struct device *dev)
+@@ -376,9 +377,10 @@ static int __init rmem_dma_setup(struct
  
- 	return count;
-@@ -144,23 +146,23 @@ int nsim_udp_tunnels_info_create(struct nsim_dev *nsim_dev,
- 	else
- 		ns->udp_ports.ports = nsim_dev->udp_ports.__ports;
+ #ifdef CONFIG_DMA_GLOBAL_POOL
+ 	if (of_get_flat_dt_prop(node, "linux,dma-default", NULL)) {
+-		WARN(dma_reserved_default_memory,
++		WARN(dma_reserved_default_memory_size,
+ 		     "Reserved memory: region for default DMA coherent area is redefined\n");
+-		dma_reserved_default_memory = rmem;
++		dma_reserved_default_memory_base = rmem->base;
++		dma_reserved_default_memory_size = rmem->size;
+ 	}
+ #endif
  
--	debugfs_create_u32("udp_ports_inject_error", 0600,
--			   ns->nsim_dev_port->ddir,
-+	ns->udp_ports.ddir = debugfs_create_dir("udp_ports",
-+						ns->nsim_dev_port->ddir);
-+
-+	debugfs_create_u32("inject_error", 0600, ns->udp_ports.ddir,
- 			   &ns->udp_ports.inject_error);
- 
- 	ns->udp_ports.dfs_ports[0].array = ns->udp_ports.ports[0];
- 	ns->udp_ports.dfs_ports[0].n_elements = NSIM_UDP_TUNNEL_N_PORTS;
--	debugfs_create_u32_array("udp_ports_table0", 0400,
--				 ns->nsim_dev_port->ddir,
-+	debugfs_create_u32_array("table0", 0400, ns->udp_ports.ddir,
- 				 &ns->udp_ports.dfs_ports[0]);
- 
- 	ns->udp_ports.dfs_ports[1].array = ns->udp_ports.ports[1];
- 	ns->udp_ports.dfs_ports[1].n_elements = NSIM_UDP_TUNNEL_N_PORTS;
--	debugfs_create_u32_array("udp_ports_table1", 0400,
--				 ns->nsim_dev_port->ddir,
-+	debugfs_create_u32_array("table1", 0400, ns->udp_ports.ddir,
- 				 &ns->udp_ports.dfs_ports[1]);
- 
--	debugfs_create_file("udp_ports_reset", 0200, ns->nsim_dev_port->ddir,
-+	debugfs_create_file("reset", 0200, ns->udp_ports.ddir,
- 			    dev, &nsim_udp_tunnels_info_reset_fops);
- 
- 	/* Note: it's not normal to allocate the info struct like this!
-@@ -196,6 +198,9 @@ int nsim_udp_tunnels_info_create(struct nsim_dev *nsim_dev,
- 
- void nsim_udp_tunnels_info_destroy(struct net_device *dev)
+@@ -391,10 +393,10 @@ static int __init rmem_dma_setup(struct
+ #ifdef CONFIG_DMA_GLOBAL_POOL
+ static int __init dma_init_reserved_memory(void)
  {
-+	struct netdevsim *ns = netdev_priv(dev);
-+
-+	debugfs_remove_recursive(ns->udp_ports.ddir);
- 	kfree(dev->udp_tunnel_nic_info);
- 	dev->udp_tunnel_nic_info = NULL;
+-	if (!dma_reserved_default_memory)
++	if (!dma_reserved_default_memory_size)
+ 		return -ENOMEM;
+-	return dma_init_global_coherent(dma_reserved_default_memory->base,
+-					dma_reserved_default_memory->size);
++	return dma_init_global_coherent(dma_reserved_default_memory_base,
++					dma_reserved_default_memory_size);
  }
-diff --git a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-index 384cfa3d38a6c..92c2f0376c081 100755
---- a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-+++ b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-@@ -142,7 +142,7 @@ function pre_ethtool {
- }
- 
- function check_table {
--    local path=$NSIM_DEV_DFS/ports/$port/udp_ports_table$1
-+    local path=$NSIM_DEV_DFS/ports/$port/udp_ports/table$1
-     local -n expected=$2
-     local last=$3
- 
-@@ -212,7 +212,7 @@ function check_tables {
- }
- 
- function print_table {
--    local path=$NSIM_DEV_DFS/ports/$port/udp_ports_table$1
-+    local path=$NSIM_DEV_DFS/ports/$port/udp_ports/table$1
-     read -a have < $path
- 
-     tree $NSIM_DEV_DFS/
-@@ -641,7 +641,7 @@ for port in 0 1; do
-     NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ip link set dev $NSIM_NETDEV up
- 
--    echo 110 > $NSIM_DEV_DFS/ports/$port/udp_ports_inject_error
-+    echo 110 > $NSIM_DEV_DFS/ports/$port/udp_ports/inject_error
- 
-     msg="1 - create VxLANs v6"
-     exp0=( 0 0 0 0 )
-@@ -663,7 +663,7 @@ for port in 0 1; do
-     new_geneve gnv0 20000
- 
-     msg="2 - destroy GENEVE"
--    echo 2 > $NSIM_DEV_DFS/ports/$port/udp_ports_inject_error
-+    echo 2 > $NSIM_DEV_DFS/ports/$port/udp_ports/inject_error
-     exp1=( `mke 20000 2` 0 0 0 )
-     del_dev gnv0
- 
-@@ -764,7 +764,7 @@ for port in 0 1; do
-     msg="create VxLANs v4"
-     new_vxlan vxlan0 10000 $NSIM_NETDEV
- 
--    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
-     check_tables
- 
-     msg="NIC device goes down"
-@@ -775,7 +775,7 @@ for port in 0 1; do
-     fi
-     check_tables
- 
--    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
-     check_tables
- 
-     msg="NIC device goes up again"
-@@ -789,7 +789,7 @@ for port in 0 1; do
-     del_dev vxlan0
-     check_tables
- 
--    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
-     check_tables
- 
-     msg="destroy NIC"
-@@ -896,7 +896,7 @@ msg="vacate VxLAN in overflow table"
- exp0=( `mke 10000 1` `mke 10004 1` 0 `mke 10003 1` )
- del_dev vxlan2
- 
--echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
- check_tables
- 
- msg="tunnels destroyed 2"
--- 
-2.39.5
-
+ core_initcall(dma_init_reserved_memory);
+ #endif /* CONFIG_DMA_GLOBAL_POOL */
 
 
