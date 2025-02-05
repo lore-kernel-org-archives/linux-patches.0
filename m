@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC9914F136;
-	Wed,  5 Feb 2025 13:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B150F14A4E9;
+	Wed,  5 Feb 2025 13:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763867; cv=none; b=GrCRujXI/MdYHNFpocPI9OqOtMUTNnd6q6+jHQ65uI7+g2wDzON6r9vH4R3MDZVGOtdGYVYU140+2GzhR40BYizm5XHg+zmH4GXw2yJ7q3kT1I8IrpbU+ZW9o7wudXp1nytiGdpnfy+KdzLqlqBEgTzISQi+ADBOKNBBRAk2gdY=
+	t=1738763870; cv=none; b=Uo2mYxgBSzL7MLnfQU6QSNPJQUMcRvOpBvr+CAdjOyDelgyxRawDUbMqz1QtzGDtQ7FgauJyWfCfUtwZmSdTVDEW1Bq9Eg/YKcpAIlzc6MX/vcubyzhVHras2hK3PJ1HcUdnFVVVLv1i8Stdwcn9pQgUPBQ7K8b1XfC1HjUFOEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763867; c=relaxed/simple;
-	bh=P5p1/kczvvFzKxAEWvC5ofEOI4UQS03Gd7FlF9i2AKI=;
+	s=arc-20240116; t=1738763870; c=relaxed/simple;
+	bh=rP7J5jgS4SnvPQdAQIgjfTTCiTz7jI/aC/JxtA1tSW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D7yh9Uq0bWz0iDKP28GNMQTJ/dE/KXLxUdPIhQzNcdqgM5kZOBJzGJqC9LIou5LDC5iWEHJTgg8vtVk78SPFPD2vlgMOpv4BcybNo7akbcB/iqBGmgQYzAHuUE35w3Zq9t65OKDAloAE9Xfkfqv58LGFKzRBCRLF4sWbrm8uDt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=llRIgz7t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Fs5g7WHp1bAztjolgHR3AzT98qGu+l1Cy3LkwyrW06MO/2xm9y5BQ1k4RwgjH3IQGK+dRJ1n8c0W6eX3PGpqeJrNgt4QQRJ9Wkim224JQM5Wafo836k1OOE7sgESZBOXbqySk4SLmJ/JK1+a7f1NfMYTFjtHIcMN75wl1sUWNn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQxPiw/g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="llRIgz7t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF73CC4CED1;
-	Wed,  5 Feb 2025 13:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQxPiw/g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02786C4CED1;
+	Wed,  5 Feb 2025 13:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763867;
-	bh=P5p1/kczvvFzKxAEWvC5ofEOI4UQS03Gd7FlF9i2AKI=;
+	s=korg; t=1738763870;
+	bh=rP7J5jgS4SnvPQdAQIgjfTTCiTz7jI/aC/JxtA1tSW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=llRIgz7tqWei0Frao3B5CC/6VIOSWc2OfxkhqRSKTqC/xn0Rp7k/oekfK+qfJpjGS
-	 yCFGBMHLGQhoLhSGp1Yf5kp+JPz0I7WRrmDM6MyWj5A1csTDLhSRD6XPihPfJS+Oow
-	 zyNNIu4H37upuNjA1Tr0N/nhzFHPffw5dBfLCGws=
+	b=SQxPiw/gDGsGvU15gSB3vQrsZlIEC2f1zIDc3Kkw1G4SkBtWORGLFUwtcVOEQkyCj
+	 VJ/oCopYyP3T2EdrfkGjFUm9/pyM62TkU9rJdscUalFWHV6Hmk0935+Xq065Xzj/qZ
+	 xNg86oaj+NmREh5WTVSIxAku30h6Mo5RPnXVYjcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dave Chinner <david@fromorbit.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Paul Moore <paul@paul-moore.com>,
+	syzbot+34b68f850391452207df@syzkaller.appspotmail.com,
+	syzbot+360866a59e3c80510a62@syzkaller.appspotmail.com,
+	Ubisectech Sirius <bugreport@ubisectech.com>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 068/590] drm/msm/mdp4: correct LCDC regulator name
-Date: Wed,  5 Feb 2025 14:37:03 +0100
-Message-ID: <20250205134457.859801019@linuxfoundation.org>
+Subject: [PATCH 6.6 115/393] landlock: Handle weird files
+Date: Wed,  5 Feb 2025 14:40:34 +0100
+Message-ID: <20250205134424.692953452@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,42 +51,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit 8aa337cbe7a61a5a98a4d3f446fc968b3bac914a ]
+[ Upstream commit 49440290a0935f428a1e43a5ac8dc275a647ff80 ]
 
-Correct c&p error from the conversion of LCDC regulators to the bulk
-API.
+A corrupted filesystem (e.g. bcachefs) might return weird files.
+Instead of throwing a warning and allowing access to such file, treat
+them as regular files.
 
-Fixes: 54f1fbcb47d4 ("drm/msm/mdp4: use bulk regulators API for LCDC encoder")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/590412/
-Link: https://lore.kernel.org/r/20240420-mdp4-fixes-v1-3-96a70f64fa85@linaro.org
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: Paul Moore <paul@paul-moore.com>
+Reported-by: syzbot+34b68f850391452207df@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/000000000000a65b35061cffca61@google.com
+Reported-by: syzbot+360866a59e3c80510a62@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/67379b3f.050a0220.85a0.0001.GAE@google.com
+Reported-by: Ubisectech Sirius <bugreport@ubisectech.com>
+Closes: https://lore.kernel.org/r/c426821d-8380-46c4-a494-7008bbd7dd13.bugreport@ubisectech.com
+Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
+Reviewed-by: Günther Noack <gnoack3000@gmail.com>
+Link: https://lore.kernel.org/r/20250110153918.241810-1-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/landlock/fs.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-index 576995ddce37e..8bbc7fb881d59 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-@@ -389,7 +389,7 @@ struct drm_encoder *mdp4_lcdc_encoder_init(struct drm_device *dev,
+diff --git a/security/landlock/fs.c b/security/landlock/fs.c
+index 1bdd049e3d636..fe4622d88eb15 100644
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -664,10 +664,6 @@ static inline access_mask_t get_mode_access(const umode_t mode)
+ 	switch (mode & S_IFMT) {
+ 	case S_IFLNK:
+ 		return LANDLOCK_ACCESS_FS_MAKE_SYM;
+-	case 0:
+-		/* A zero mode translates to S_IFREG. */
+-	case S_IFREG:
+-		return LANDLOCK_ACCESS_FS_MAKE_REG;
+ 	case S_IFDIR:
+ 		return LANDLOCK_ACCESS_FS_MAKE_DIR;
+ 	case S_IFCHR:
+@@ -678,9 +674,12 @@ static inline access_mask_t get_mode_access(const umode_t mode)
+ 		return LANDLOCK_ACCESS_FS_MAKE_FIFO;
+ 	case S_IFSOCK:
+ 		return LANDLOCK_ACCESS_FS_MAKE_SOCK;
++	case S_IFREG:
++	case 0:
++		/* A zero mode translates to S_IFREG. */
+ 	default:
+-		WARN_ON_ONCE(1);
+-		return 0;
++		/* Treats weird files as regular files. */
++		return LANDLOCK_ACCESS_FS_MAKE_REG;
+ 	}
+ }
  
- 	/* TODO: different regulators in other cases? */
- 	mdp4_lcdc_encoder->regs[0].supply = "lvds-vccs-3p3v";
--	mdp4_lcdc_encoder->regs[1].supply = "lvds-vccs-3p3v";
-+	mdp4_lcdc_encoder->regs[1].supply = "lvds-pll-vdda";
- 	mdp4_lcdc_encoder->regs[2].supply = "lvds-vdda";
- 
- 	ret = devm_regulator_bulk_get(dev->dev,
 -- 
 2.39.5
 
