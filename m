@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8447713C3F6;
-	Wed,  5 Feb 2025 14:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33E8155CBD;
+	Wed,  5 Feb 2025 14:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765326; cv=none; b=I5MJZtmmVE1LMQ69fgKjDu6BQvGC2Ls3/fJ2w54P0f6F1MKc+pIA2drf/nfd3UPDBeVhZu2XM0PPrmHDPYP1tdjkAkXPAMWQgkrPvU4EbX/rnj9H6O/1D7FCVXWyc3SU10n/pfn4uMczwgOsX9ML4qXniq28JNxjSWR4WPGojk4=
+	t=1738765330; cv=none; b=b/lXjYrAE47dOCIDptVtlGNuDpn+JjlzdWJVQx9tJ/QsSTeXE/cah1nAQhHf7OxMQZ2Lci9Cy80VuiKJoYI1bcO0bZ8O+EyXMmivJtUbdjkFMnOA+6B6mp55TS2V7l4q39nHhGpNykWFEpG0ZHM7c+InOU1PSUq9H9ORUSFL4QU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765326; c=relaxed/simple;
-	bh=v0jVJ/WB+fNfPWRc3BnmVoFmtSzxkSKdnYovfMCdEjA=;
+	s=arc-20240116; t=1738765330; c=relaxed/simple;
+	bh=ulqMjpW1uus8raRmV/cH61PHd7HhSOtb220PFR0tjg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DlpvkydbZjmaFWXMm+n+2g92sFLICkuUyllh8fgMTMTfOkNOHqebuyUyqp2JKJhyWlk6sS0ODNXxvxkvL90vBlXNcFPMY9aELmH1uqPwA5Yx2up20CPeq938LoJ/uHyJ48/g1dinrcqQ+TcnCqcCkshru5KwaQs97X0Qv6knVO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBkxB7wG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pf2RRvvdwG0FQOl5wb+6wsL3de7/NXNJgSxHMPoOit+pC0Kpc8r4v6B1Nbh1NcmyOw3wIpSVWyvylW3oE/AornbPFzhq2/AOMMKsx0DrSgJ0b79OoJMX2L6GKtw83KJBEnZP/KSGg54CW5Jqv9OctUKokdEWua3NPWXgLBBQHrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MsiLgVQ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBkxB7wG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5336C4CED1;
-	Wed,  5 Feb 2025 14:22:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MsiLgVQ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636B6C4CED1;
+	Wed,  5 Feb 2025 14:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765326;
-	bh=v0jVJ/WB+fNfPWRc3BnmVoFmtSzxkSKdnYovfMCdEjA=;
+	s=korg; t=1738765329;
+	bh=ulqMjpW1uus8raRmV/cH61PHd7HhSOtb220PFR0tjg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zBkxB7wG7dxSkkyeSPtan4WGFta49f5n4HlC70JKqZD5RI9P4CYU3HwIE4x4EJRmY
-	 w5JRjpLdQ4hTaeZ0SdwWTx1fFMUOOVdVWbiUbyhwaBeq+B7xvn9Inea2qRKU78Jg9C
-	 oj+yvQv1VlW5niYll7BmlI6br2I7XsYy6FX6aIu8=
+	b=MsiLgVQ1J+/D4MHHpEzzarg9y2cqcnGzJIdTUGvR9uuRip9BEmRyBX9tcl2PfIyJy
+	 L3Bo7+m0z/f1pA62bPjLc/MnkdGZVOp1KMdsShT3+6pI2nyFG+YQUCR4xdkOzyK3cO
+	 CKVWs5Zr8cIOCu4r7W8kLGINwI/PT+sRYk3DfQgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 210/590] cpufreq: ACPI: Fix max-frequency computation
-Date: Wed,  5 Feb 2025 14:39:25 +0100
-Message-ID: <20250205134503.319568101@linuxfoundation.org>
+Subject: [PATCH 6.6 254/393] RDMA/bnxt_re: Fix to drop reference to the mmap entry in case of error
+Date: Wed,  5 Feb 2025 14:42:53 +0100
+Message-ID: <20250205134430.026275858@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,124 +50,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gautham R. Shenoy <gautham.shenoy@amd.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 0834667545962ef1c5e8684ed32b45d9c574acd3 ]
+[ Upstream commit c84f0f4f49d81645f49c3269fdcc3b84ce61e795 ]
 
-Commit 3c55e94c0ade ("cpufreq: ACPI: Extend frequency tables to cover
-boost frequencies") introduced an assumption in acpi_cpufreq_cpu_init()
-that the first entry in the P-state table was the nominal frequency.
-This assumption is incorrect. The frequency corresponding to the P0
-P-State need not be the same as the nominal frequency advertised via
-CPPC.
+In the error handling path of bnxt_re_mmap(), driver should invoke
+rdma_user_mmap_entry_put() to free the reference of mmap entry in case
+the error happens after rdma_user_mmap_entry_get was called.
 
-Since the driver is using the CPPC.highest_perf and CPPC.nominal_perf
-to compute the boost-ratio, it makes sense to use CPPC.nominal_freq to
-compute the max-frequency. CPPC.nominal_freq is advertised on
-platforms supporting CPPC revisions 3 or higher.
-
-Hence, fallback to using the first entry in the P-State table only on
-platforms that do not advertise CPPC.nominal_freq.
-
-Fixes: 3c55e94c0ade ("cpufreq: ACPI: Extend frequency tables to cover boost frequencies")
-Tested-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20250113044107.566-1-gautham.shenoy@amd.com
-[ rjw: Retain reverse X-mas tree ordering of local variable declarations ]
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: ea2224857882 ("RDMA/bnxt_re: Update alloc_page uapi for pacing")
+Reviewed-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Reviewed-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/20250104061519.2540178-1-kalesh-anakkur.purayil@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/acpi-cpufreq.c | 36 +++++++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 9 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cpufreq/acpi-cpufreq.c b/drivers/cpufreq/acpi-cpufreq.c
-index 0f04feb6cafaf..47e910c22a80b 100644
---- a/drivers/cpufreq/acpi-cpufreq.c
-+++ b/drivers/cpufreq/acpi-cpufreq.c
-@@ -626,7 +626,14 @@ static int acpi_cpufreq_blacklist(struct cpuinfo_x86 *c)
- #endif
- 
- #ifdef CONFIG_ACPI_CPPC_LIB
--static u64 get_max_boost_ratio(unsigned int cpu)
-+/*
-+ * get_max_boost_ratio: Computes the max_boost_ratio as the ratio
-+ * between the highest_perf and the nominal_perf.
-+ *
-+ * Returns the max_boost_ratio for @cpu. Returns the CPPC nominal
-+ * frequency via @nominal_freq if it is non-NULL pointer.
-+ */
-+static u64 get_max_boost_ratio(unsigned int cpu, u64 *nominal_freq)
- {
- 	struct cppc_perf_caps perf_caps;
- 	u64 highest_perf, nominal_perf;
-@@ -655,6 +662,9 @@ static u64 get_max_boost_ratio(unsigned int cpu)
- 
- 	nominal_perf = perf_caps.nominal_perf;
- 
-+	if (nominal_freq)
-+		*nominal_freq = perf_caps.nominal_freq;
-+
- 	if (!highest_perf || !nominal_perf) {
- 		pr_debug("CPU%d: highest or nominal performance missing\n", cpu);
- 		return 0;
-@@ -667,8 +677,12 @@ static u64 get_max_boost_ratio(unsigned int cpu)
- 
- 	return div_u64(highest_perf << SCHED_CAPACITY_SHIFT, nominal_perf);
- }
-+
- #else
--static inline u64 get_max_boost_ratio(unsigned int cpu) { return 0; }
-+static inline u64 get_max_boost_ratio(unsigned int cpu, u64 *nominal_freq)
-+{
-+	return 0;
-+}
- #endif
- 
- static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
-@@ -678,9 +692,9 @@ static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
- 	struct acpi_cpufreq_data *data;
- 	unsigned int cpu = policy->cpu;
- 	struct cpuinfo_x86 *c = &cpu_data(cpu);
-+	u64 max_boost_ratio, nominal_freq = 0;
- 	unsigned int valid_states = 0;
- 	unsigned int result = 0;
--	u64 max_boost_ratio;
- 	unsigned int i;
- #ifdef CONFIG_SMP
- 	static int blacklisted;
-@@ -830,16 +844,20 @@ static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
- 	}
- 	freq_table[valid_states].frequency = CPUFREQ_TABLE_END;
- 
--	max_boost_ratio = get_max_boost_ratio(cpu);
-+	max_boost_ratio = get_max_boost_ratio(cpu, &nominal_freq);
- 	if (max_boost_ratio) {
--		unsigned int freq = freq_table[0].frequency;
-+		unsigned int freq = nominal_freq;
- 
- 		/*
--		 * Because the loop above sorts the freq_table entries in the
--		 * descending order, freq is the maximum frequency in the table.
--		 * Assume that it corresponds to the CPPC nominal frequency and
--		 * use it to set cpuinfo.max_freq.
-+		 * The loop above sorts the freq_table entries in the
-+		 * descending order. If ACPI CPPC has not advertised
-+		 * the nominal frequency (this is possible in CPPC
-+		 * revisions prior to 3), then use the first entry in
-+		 * the pstate table as a proxy for nominal frequency.
- 		 */
-+		if (!freq)
-+			freq = freq_table[0].frequency;
-+
- 		policy->cpuinfo.max_freq = freq * max_boost_ratio >> SCHED_CAPACITY_SHIFT;
- 	} else {
- 		/*
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 08da793969ee5..f7345e4890a14 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -4278,9 +4278,10 @@ int bnxt_re_mmap(struct ib_ucontext *ib_uctx, struct vm_area_struct *vma)
+ 	case BNXT_RE_MMAP_DBR_PAGE:
+ 		/* Driver doesn't expect write access for user space */
+ 		if (vma->vm_flags & VM_WRITE)
+-			return -EFAULT;
+-		ret = vm_insert_page(vma, vma->vm_start,
+-				     virt_to_page((void *)bnxt_entry->mem_offset));
++			ret = -EFAULT;
++		else
++			ret = vm_insert_page(vma, vma->vm_start,
++					     virt_to_page((void *)bnxt_entry->mem_offset));
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
 -- 
 2.39.5
 
