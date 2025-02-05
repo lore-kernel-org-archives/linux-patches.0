@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A97A1DA628;
-	Wed,  5 Feb 2025 14:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EF77E792;
+	Wed,  5 Feb 2025 14:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766645; cv=none; b=PR8usEghIERlH4O7ZwFUGNuCI9T6Ij/q8MDr8C/8ziK2xMM0x6fXurCODDYwTCCjp63royFxgsJn26LBiFKVJ4gw+DChs+B8FcWApQOjcRUiJ9mCrujJ087/QsI+QNgWd+J9D0HbZKPa5p6kz1GksA7KUp/MyroSuuaIfYNpsM0=
+	t=1738766649; cv=none; b=lHONQ1IKZUuUUzYLUTGDocePZwsvhdDQwcRJ+yV4ZvvU981VP2EPjsLlwPsTMzIbduLLw4tAtDBUeTgu4a6R4oqlg9VO7+pNVRS2Ab8gn7F7gtohQMkfoDX7MIf8XkqBa79Wm/fWGP/UktTM2RQecnxwmBUikDVfxHeEv2VSkJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766645; c=relaxed/simple;
-	bh=U8hPxhDM5m2w0uxY11QUi8N2VoJT1nfn//iYvRmxd9w=;
+	s=arc-20240116; t=1738766649; c=relaxed/simple;
+	bh=tfH5GPb1HRpwV56pLwRgQbSQGqAEBXD3jdpMX+edlpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfUNAKqHJCY3JTiX6tDbnM8U2rWx0sZAsLbYGqQY1S4o7M4mG+HN9ta8jqf4c9ac3Nc29LOw2RsWzO2f1qsseUiaecGhacGgHIo/6P3/uedW2XihL2C8i3IT6AyG9ouAyPR7FuPQAkcALRsYtCd+UCMQzc2NR6LUUR7JWU4jGJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXefhxIZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NGs1NDUylTd/W7VrEWSj98UP1eQL5K2uHy1Pg0aOYpHbKRNjPPRDPDWo9a+e6Pb+RRlB0zHbA6gnMsFLkN5eDaqrtJcXZGMFRfnsFvDoWSfQSv+9GJJ5NUevZbMMz7DD0fxexzSimgODF4ddsfBKQ7FpvvVK65BXdvkv2eObg3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1IYuZl6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXefhxIZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1C8C4CED1;
-	Wed,  5 Feb 2025 14:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1IYuZl6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B70C4CED1;
+	Wed,  5 Feb 2025 14:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766645;
-	bh=U8hPxhDM5m2w0uxY11QUi8N2VoJT1nfn//iYvRmxd9w=;
+	s=korg; t=1738766648;
+	bh=tfH5GPb1HRpwV56pLwRgQbSQGqAEBXD3jdpMX+edlpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xXefhxIZwF/oUWCkoXJGnaC9JCAxxujEWsjoLJ2GPNjF29IA1g4VtKqgp6UP/yI32
-	 nMQNnzMoGcCMBkSerYqpxh/k2I2ldgbwoKJ7kAs822Ab2KB7WZPxj7aPDWO2M2dq4V
-	 7mNfT486Rvy+arsxto4gmDfl+BfZJpI91GF4IrPk=
+	b=B1IYuZl6TpPxHHupP4NMpiEFXnNdXpoeg77EaeaDZkmSyj1HPVswxdCMHOByaZwRm
+	 fTJMapsWtc/qMnd2e8X88qK0Si3FGLKr2QkBCo7ha6LgmRxyF+3ZRfAmBPhar87E1N
+	 bOWiCaHRp2NuE7j+IxOk+2UcLf9oXbKnWsAWopC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jos Wang <joswang@lenovo.com>,
-	Badhri Jagan Sridharan <badhri@google.com>
-Subject: [PATCH 6.6 381/393] usb: typec: tcpm: set SRC_SEND_CAPABILITIES timeout to PD_T_SENDER_RESPONSE
-Date: Wed,  5 Feb 2025 14:45:00 +0100
-Message-ID: <20250205134434.872773954@linuxfoundation.org>
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 295/623] ASoC: Intel: avs: Fix theoretical infinite loop
+Date: Wed,  5 Feb 2025 14:40:37 +0100
+Message-ID: <20250205134507.516841044@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,40 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jos Wang <joswang@lenovo.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-commit 2eb3da037c2c20fa30bc502bc092479b2a1aaae2 upstream.
+[ Upstream commit cf4d74256fe103ece7b2647550e6c063048e5682 ]
 
-As PD2.0 spec ("8.3.3.2.3 PE_SRC_Send_Capabilities state"), after the
-Source receives the GoodCRC Message from the Sink in response to the
-Source_Capabilities message, it should start the SenderResponseTimer,
-after the timer times out, the state machine transitions to the
-HARD_RESET state.
+While 'stack_dump_size' is a u32 bitfield of 16 bits, u32 has a bigger
+upper bound than the type u16 of loop counter 'offset' what in theory
+may lead to infinite loop condition.
 
-Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jos Wang <joswang@lenovo.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Link: https://lore.kernel.org/r/20250105135245.7493-1-joswang1221@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found out by Coverity static analyzer.
+
+Fixes: c8c960c10971 ("ASoC: Intel: avs: APL-based platforms support")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250109122216.3667847-4-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    2 +-
+ sound/soc/intel/avs/apl.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -4065,7 +4065,7 @@ static void run_state_machine(struct tcp
- 			port->caps_count = 0;
- 			port->pd_capable = true;
- 			tcpm_set_state_cond(port, SRC_SEND_CAPABILITIES_TIMEOUT,
--					    PD_T_SEND_SOURCE_CAP);
-+					    PD_T_SENDER_RESPONSE);
- 		}
- 		break;
- 	case SRC_SEND_CAPABILITIES_TIMEOUT:
+diff --git a/sound/soc/intel/avs/apl.c b/sound/soc/intel/avs/apl.c
+index 27516ef571859..d443fe8d51aee 100644
+--- a/sound/soc/intel/avs/apl.c
++++ b/sound/soc/intel/avs/apl.c
+@@ -125,7 +125,7 @@ int avs_apl_coredump(struct avs_dev *adev, union avs_notify_msg *msg)
+ 	struct avs_apl_log_buffer_layout layout;
+ 	void __iomem *addr, *buf;
+ 	size_t dump_size;
+-	u16 offset = 0;
++	u32 offset = 0;
+ 	u8 *dump, *pos;
+ 
+ 	dump_size = AVS_FW_REGS_SIZE + msg->ext.coredump.stack_dump_size;
+-- 
+2.39.5
+
 
 
