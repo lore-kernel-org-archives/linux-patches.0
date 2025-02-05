@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6ED01519BE;
-	Wed,  5 Feb 2025 14:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B9F1519BE;
+	Wed,  5 Feb 2025 14:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765285; cv=none; b=oCODzmQlrPICf5vbXAL4NQKkfPNTHtgJdKRbnU6H9O+YOa59UOWqCF2+hE093TtJnKAip+zETxJ6vOqUMe2Y0Pvs+b9SnFXHwSphAH4wkRKukAgS+9OIgbfaYPXbsIH/2w9TMbfJA/TY5Q+ZvFE6lm/aM3Wq991dftfDUOKXNts=
+	t=1738765289; cv=none; b=px4HmmiXf7mPT7pMHd7h3AERL8BXMmlmLZyN/e0C6zcOfKIYDQ788Dy77XOaJ5aU2UmDNpadWH9VLxX4VbmuwVjSKzUK26mCVcU+kbEZss9iZYgTHqhIU0QBv379EkbqLLLrCrrGf9mHokmYy+IpgLjlsLbB3sZH40w6HOx6SS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765285; c=relaxed/simple;
-	bh=fANy96USdNhBoxC0JaaHN1A5j6+R2Nc7BsCKA8uV4f8=;
+	s=arc-20240116; t=1738765289; c=relaxed/simple;
+	bh=GGLh/SXP7ZpxKP+b7uqdAe/M0zj1QVaFQxzkSJ/hop8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NmpLHUCGJNtbFN4ckm95/1D3sO1cBgNrRPh4SSRoj/9TneiOnOHl4ha5ZnIYP87QvVQSpiYAxJ8CJwUNYuYzvI3oRQcFB1KgO3H83b5tq3yOH5c45xzWHjHhoJyE+GhXcuz1W6T3uz+I0sff2ujXJmiAm88XYj6nV/ugIXyfKPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9ksUhhs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gi7AhjHA6+Oepy9DmETKSwloBToEk7V3rxIL45k1J50vdpSo5fJApPKUaAq8rguwJAJFZlm2M6+LFjvFcXirA7IP8c97YwaXI/Nz6+9LGHSlF56GIFRykYFQ9YbSCpwZkQ83LdA7ipc8mBpqTu6NPM1DqpI3+T/k3Qo01lytyfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDLXY/qC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9ksUhhs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1314BC4CED1;
-	Wed,  5 Feb 2025 14:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDLXY/qC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F3FC4CED1;
+	Wed,  5 Feb 2025 14:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765285;
-	bh=fANy96USdNhBoxC0JaaHN1A5j6+R2Nc7BsCKA8uV4f8=;
+	s=korg; t=1738765288;
+	bh=GGLh/SXP7ZpxKP+b7uqdAe/M0zj1QVaFQxzkSJ/hop8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9ksUhhsrtnbXYlBNVrm+Mzk95aw/HlpN8hHpq6vbHUnsqNx6tLaJjPilJLZfkcFO
-	 O2q1y7/JZoJxev3e9RxV0NhjNsqmXtW2AayWoWRTTA2DsqVKnqIBXNLZpUdK2DmGty
-	 e+Lpb+5XoMTO7a5PB/lkywUhUZUZMG+Oj313EF6U=
+	b=sDLXY/qCEWW0HuM8xGEWUnrKMz5DgVG0Y51GjzMqJ54IQbWdEyZ1pyS4aNgpKwgg4
+	 JUxZCO5nHPQwQur1P28GKYY1z6eLkVNkme9ZSN9NYvplQ/snnFq65WrrZ0EKsWk12Y
+	 1UxMighFzKZKge8koDA0OFSrRwD39R0moW3VBVXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mihai Sain <mihai.sain@microchip.com>,
-	Cristian Birsan <cristian.birsan@microchip.com>,
-	Andrei Simion <andrei.simion@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Daniel Gabay <daniel.gabay@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 250/393] ARM: dts: microchip: sama5d27_wlsom1_ek: Add no-1-8-v property to sdmmc0 node
-Date: Wed,  5 Feb 2025 14:42:49 +0100
-Message-ID: <20250205134429.872567153@linuxfoundation.org>
+Subject: [PATCH 6.13 163/623] wifi: iwlwifi: fw: read STEP table from correct UEFI var
+Date: Wed,  5 Feb 2025 14:38:25 +0100
+Message-ID: <20250205134502.469088526@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +48,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Birsan <cristian.birsan@microchip.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 4d9e5965df04c0adf260c3009c55d5fe240f7286 ]
+[ Upstream commit 80c2b651fe7fc82e1d1b3e4f9651095896a095f0 ]
 
-Add no-1-8-v property to sdmmc0 node to keep VDDSDMMC power rail at 3.3V.
-This property will stop the LDO regulator from switching to 1.8V when the
-MMC core detects an UHS SD Card. VDDSDMMC power rail is used by all the
-SDMMC interface pins in GPIO mode (PA0 - PA13).
+This variable exists for the "common" (WiFi/BT) GUID, not the
+WiFi-only GUID. Fix that by passing the GUID to the function.
+A short-cut for the wifi-only version remains so not all code
+must be updated.
 
-On this board, PA10 is used as GPIO to enable the power switch controlling
-USB Vbus for the USB Host. The change is needed to fix the PA10 voltage
-level to 3.3V instead of 1.8V.
+However, rename the GUID defines to be clearer.
 
-Fixes: 5d4c3cfb63fe ("ARM: dts: at91: sama5d27_wlsom1: add SAMA5D27 wlsom1 and wlsom1-ek")
-Suggested-by: Mihai Sain <mihai.sain@microchip.com>
-Signed-off-by: Cristian Birsan <cristian.birsan@microchip.com>
-Tested-by: Andrei Simion <andrei.simion@microchip.com>
-Link: https://lore.kernel.org/r/20241119160107.598411-3-cristian.birsan@microchip.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Fixes: 09b4c35d73a5 ("wifi: iwlwifi: mvm: Support STEP equalizer settings from BIOS.")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Daniel Gabay <daniel.gabay@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20241227095718.89a5ad921b6d.Idae95a70ff69d2ba1b610e8eced826961ce7de98@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intel/iwlwifi/fw/uefi.c | 44 +++++++++++++-------
+ 1 file changed, 30 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts b/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts
-index 15239834d886e..35a933eec5738 100644
---- a/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts
-+++ b/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts
-@@ -197,6 +197,7 @@
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/uefi.c b/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
+index 091fb6fd7c787..834f7c9bb9e92 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/uefi.c
+@@ -13,9 +13,12 @@
+ #include <linux/efi.h>
+ #include "fw/runtime.h"
  
- &sdmmc0 {
- 	bus-width = <4>;
-+	no-1-8-v;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_sdmmc0_default>;
- 	status = "okay";
+-#define IWL_EFI_VAR_GUID EFI_GUID(0x92daaf2f, 0xc02b, 0x455b,	\
+-				  0xb2, 0xec, 0xf5, 0xa3,	\
+-				  0x59, 0x4f, 0x4a, 0xea)
++#define IWL_EFI_WIFI_GUID	EFI_GUID(0x92daaf2f, 0xc02b, 0x455b,	\
++					 0xb2, 0xec, 0xf5, 0xa3,	\
++					 0x59, 0x4f, 0x4a, 0xea)
++#define IWL_EFI_WIFI_BT_GUID	EFI_GUID(0xe65d8884, 0xd4af, 0x4b20,	\
++					 0x8d, 0x03, 0x77, 0x2e,	\
++					 0xcc, 0x3d, 0xa5, 0x31)
+ 
+ struct iwl_uefi_pnvm_mem_desc {
+ 	__le32 addr;
+@@ -61,7 +64,7 @@ void *iwl_uefi_get_pnvm(struct iwl_trans *trans, size_t *len)
+ 
+ 	*len = 0;
+ 
+-	data = iwl_uefi_get_variable(IWL_UEFI_OEM_PNVM_NAME, &IWL_EFI_VAR_GUID,
++	data = iwl_uefi_get_variable(IWL_UEFI_OEM_PNVM_NAME, &IWL_EFI_WIFI_GUID,
+ 				     &package_size);
+ 	if (IS_ERR(data)) {
+ 		IWL_DEBUG_FW(trans,
+@@ -76,18 +79,18 @@ void *iwl_uefi_get_pnvm(struct iwl_trans *trans, size_t *len)
+ 	return data;
+ }
+ 
+-static
+-void *iwl_uefi_get_verified_variable(struct iwl_trans *trans,
+-				     efi_char16_t *uefi_var_name,
+-				     char *var_name,
+-				     unsigned int expected_size,
+-				     unsigned long *size)
++static void *
++iwl_uefi_get_verified_variable_guid(struct iwl_trans *trans,
++				    efi_guid_t *guid,
++				    efi_char16_t *uefi_var_name,
++				    char *var_name,
++				    unsigned int expected_size,
++				    unsigned long *size)
+ {
+ 	void *var;
+ 	unsigned long var_size;
+ 
+-	var = iwl_uefi_get_variable(uefi_var_name, &IWL_EFI_VAR_GUID,
+-				    &var_size);
++	var = iwl_uefi_get_variable(uefi_var_name, guid, &var_size);
+ 
+ 	if (IS_ERR(var)) {
+ 		IWL_DEBUG_RADIO(trans,
+@@ -112,6 +115,18 @@ void *iwl_uefi_get_verified_variable(struct iwl_trans *trans,
+ 	return var;
+ }
+ 
++static void *
++iwl_uefi_get_verified_variable(struct iwl_trans *trans,
++			       efi_char16_t *uefi_var_name,
++			       char *var_name,
++			       unsigned int expected_size,
++			       unsigned long *size)
++{
++	return iwl_uefi_get_verified_variable_guid(trans, &IWL_EFI_WIFI_GUID,
++						   uefi_var_name, var_name,
++						   expected_size, size);
++}
++
+ int iwl_uefi_handle_tlv_mem_desc(struct iwl_trans *trans, const u8 *data,
+ 				 u32 tlv_len, struct iwl_pnvm_image *pnvm_data)
+ {
+@@ -311,8 +326,9 @@ void iwl_uefi_get_step_table(struct iwl_trans *trans)
+ 	if (trans->trans_cfg->device_family < IWL_DEVICE_FAMILY_AX210)
+ 		return;
+ 
+-	data = iwl_uefi_get_verified_variable(trans, IWL_UEFI_STEP_NAME,
+-					      "STEP", sizeof(*data), NULL);
++	data = iwl_uefi_get_verified_variable_guid(trans, &IWL_EFI_WIFI_BT_GUID,
++						   IWL_UEFI_STEP_NAME,
++						   "STEP", sizeof(*data), NULL);
+ 	if (IS_ERR(data))
+ 		return;
+ 
 -- 
 2.39.5
 
