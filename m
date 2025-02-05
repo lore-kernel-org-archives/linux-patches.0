@@ -1,50 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CB18634E;
-	Wed,  5 Feb 2025 14:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AE9151988;
+	Wed,  5 Feb 2025 14:33:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766018; cv=none; b=TaZfBwVFZtv+DitW5mlVWqZdkxdNecKnOvZ3oXcvWbA5HvNxaEum9His4QHQBy301Ax86nIjgGweGJErI9kTKJtlHF8ViwMUtZr8YQ4aROwNFCcQKA0DZxyKHgH5VH0Sd8d9Xn5aFVVy84UhxCgeqIxL+gZFxg0rTXGX4g0LTQs=
+	t=1738766021; cv=none; b=BMvUfhsSTBfOahWGJ+n55b5P0vv1oPg4hNtj7w2TzUUyUEKDNdFscdLsbJIiw4L3Y2TdDKoyo1qwtGloOuUEBpZVgwgyxX8vc8D5ApLhHGngqRFjlWc6y9Tr6deiAl3xEZ6y2XWLLYE89TloVVlP/QXWAiHriB1w9VPl9trMLRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766018; c=relaxed/simple;
-	bh=UMW5dmpCsIW3vMZPVbyP+L7aMlPEfiZxZG3a44uBe9c=;
+	s=arc-20240116; t=1738766021; c=relaxed/simple;
+	bh=egme6ltK9AP4V+Jnbe3NOX/K2Prf7K486ET8/sp74pE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LtDBUgyNvwrT5Iaugyo5OvHPLxk+IptO5xEkwLt0PKqPiaK/l/KSsVmzPVHhSCj7ErCFHjEAzD9tVd9WGYskjMxoY1gWPbd8E7+cq+CJrNnskA9HZbWUnj8zwqoR0R8ELnfFAZyxI6RFqyVetPs1TMapObd4iBqBxUp1c63Uoaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjroLQ4x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bKN0RoZgJMVnuINTACo+DLU8bOV/Qi0z/v5TQ4qhRfqHMCKdtROYKUyxlaBzG+jbswVqV+zKGKf1QyOtNnA8SY8O2OK1iyVIhaJdXYDnacM1jJoQMWFEYmrJhy45vZMtN0JU07ptGLUbHGBgk92xh8HLlaptbEbfcfWsgKto8DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cT1g5SsL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjroLQ4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25399C4CED1;
-	Wed,  5 Feb 2025 14:33:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cT1g5SsL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC590C4CED1;
+	Wed,  5 Feb 2025 14:33:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766017;
-	bh=UMW5dmpCsIW3vMZPVbyP+L7aMlPEfiZxZG3a44uBe9c=;
+	s=korg; t=1738766021;
+	bh=egme6ltK9AP4V+Jnbe3NOX/K2Prf7K486ET8/sp74pE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zjroLQ4xP3rC40RRcxz/ZmsgVEcmJESR8ghg/PLao68GtgKbLLjtXfxJXr4gQdIp/
-	 LYnE2FDzp1PyWdDahm6qNnWN5z0RwJ2Btj07dUkpTT5eGrm8zi5Kg4qmEo/ZCLe0Wq
-	 yYUTMa3FgXLMAYa8YSfXN5l1qAEZA1MfP5QIWxLM=
+	b=cT1g5SsLmUyzlZU2CnBIRQwa9RoxzLvEN1sIvgYfQcsFUUyFSQ2ugq3U1LmFFNJEn
+	 IftS3Bsqn33Ke50vW6jAaAxUZrJE1tnPv5i10LT3ByEAmliX4qGZZpw7fcfUJrfV2g
+	 9TBBc1dapZNZ2UcBEL3nhBdun1DZvUBDzSBwXFZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Song Liu <song@kernel.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 252/590] perf bpf: Fix two memory leakages when calling perf_env__insert_bpf_prog_info()
-Date: Wed,  5 Feb 2025 14:40:07 +0100
-Message-ID: <20250205134504.920781613@linuxfoundation.org>
+Subject: [PATCH 6.12 276/590] ASoC: Intel: avs: Fix init-config parsing
+Date: Wed,  5 Feb 2025 14:40:31 +0100
+Message-ID: <20250205134505.835211970@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -57,108 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-[ Upstream commit 03edb7020bb920f1935c3f30acad0bb27fdb99af ]
+[ Upstream commit e9ca3db9f01a7ce91ceab35cd5fa52f0c5aca174 ]
 
-If perf_env__insert_bpf_prog_info() returns false due to a duplicate bpf
-prog info node insertion, the temporary info_node and info_linear memory
-will leak. Add a check to ensure the memory is freed if the function
-returns false.
+When parsing init configs correct token should be looked up.
 
-Fixes: d56354dc49091e33 ("perf tools: Save bpf_prog_info and BTF of new BPF programs")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Song Liu <song@kernel.org>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20241205084500.823660-4-quic_zhonhan@quicinc.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 1b4217ebbb3e ("ASoC: Intel: avs: Add topology parsing support for initial config")
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250109122216.3667847-5-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf-event.c | 10 ++++++++--
- tools/perf/util/env.c       |  8 ++++++--
- tools/perf/util/env.h       |  2 +-
- 3 files changed, 15 insertions(+), 5 deletions(-)
+ sound/soc/intel/avs/topology.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
-index 13608237c50e0..c81444059ad07 100644
---- a/tools/perf/util/bpf-event.c
-+++ b/tools/perf/util/bpf-event.c
-@@ -289,7 +289,10 @@ static int perf_event__synthesize_one_bpf_prog(struct perf_session *session,
- 		}
+diff --git a/sound/soc/intel/avs/topology.c b/sound/soc/intel/avs/topology.c
+index 5cda527020c7b..d612f20ed9893 100644
+--- a/sound/soc/intel/avs/topology.c
++++ b/sound/soc/intel/avs/topology.c
+@@ -1466,7 +1466,7 @@ avs_tplg_path_template_create(struct snd_soc_component *comp, struct avs_tplg *o
  
- 		info_node->info_linear = info_linear;
--		perf_env__insert_bpf_prog_info(env, info_node);
-+		if (!perf_env__insert_bpf_prog_info(env, info_node)) {
-+			free(info_linear);
-+			free(info_node);
-+		}
- 		info_linear = NULL;
+ static const struct avs_tplg_token_parser mod_init_config_parsers[] = {
+ 	{
+-		.token = AVS_TKN_MOD_INIT_CONFIG_ID_U32,
++		.token = AVS_TKN_INIT_CONFIG_ID_U32,
+ 		.type = SND_SOC_TPLG_TUPLE_TYPE_WORD,
+ 		.offset = offsetof(struct avs_tplg_init_config, id),
+ 		.parse = avs_parse_word_token,
+@@ -1519,7 +1519,7 @@ static int avs_tplg_parse_initial_configs(struct snd_soc_component *comp,
+ 		esize = le32_to_cpu(tuples->size) + le32_to_cpu(tmp->size);
  
- 		/*
-@@ -480,7 +483,10 @@ static void perf_env__add_bpf_info(struct perf_env *env, u32 id)
- 	info_node = malloc(sizeof(struct bpf_prog_info_node));
- 	if (info_node) {
- 		info_node->info_linear = info_linear;
--		perf_env__insert_bpf_prog_info(env, info_node);
-+		if (!perf_env__insert_bpf_prog_info(env, info_node)) {
-+			free(info_linear);
-+			free(info_node);
-+		}
- 	} else
- 		free(info_linear);
+ 		ret = parse_dictionary_entries(comp, tuples, esize, config, 1, sizeof(*config),
+-					       AVS_TKN_MOD_INIT_CONFIG_ID_U32,
++					       AVS_TKN_INIT_CONFIG_ID_U32,
+ 					       mod_init_config_parsers,
+ 					       ARRAY_SIZE(mod_init_config_parsers));
  
-diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
-index 3260eaf267387..d981b6f4bc5ea 100644
---- a/tools/perf/util/env.c
-+++ b/tools/perf/util/env.c
-@@ -22,12 +22,16 @@ struct perf_env perf_env;
- #include "bpf-utils.h"
- #include <bpf/libbpf.h>
- 
--void perf_env__insert_bpf_prog_info(struct perf_env *env,
-+bool perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				    struct bpf_prog_info_node *info_node)
- {
-+	bool ret;
-+
- 	down_write(&env->bpf_progs.lock);
--	__perf_env__insert_bpf_prog_info(env, info_node);
-+	ret = __perf_env__insert_bpf_prog_info(env, info_node);
- 	up_write(&env->bpf_progs.lock);
-+
-+	return ret;
- }
- 
- bool __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
-diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
-index f170a1fb0c8c2..38de0af2a6808 100644
---- a/tools/perf/util/env.h
-+++ b/tools/perf/util/env.h
-@@ -178,7 +178,7 @@ int perf_env__nr_cpus_avail(struct perf_env *env);
- void perf_env__init(struct perf_env *env);
- bool __perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				      struct bpf_prog_info_node *info_node);
--void perf_env__insert_bpf_prog_info(struct perf_env *env,
-+bool perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				    struct bpf_prog_info_node *info_node);
- struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
- 							__u32 prog_id);
 -- 
 2.39.5
 
