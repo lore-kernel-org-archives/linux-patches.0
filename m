@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2091519B4;
-	Wed,  5 Feb 2025 15:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C71C1519B4;
+	Wed,  5 Feb 2025 15:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768353; cv=none; b=Xy8O4ojfZ5JZoLEwXcJ6gPHQ5O4nkLGfNq/qeSxMZz9/e459SBiLFK0R8dO9IIlibSghUlCSytMjd9eqREj45DoTKsAhFqyVukDK7lfL/fJ7BLTCQCx7bOVRbStOyY6fShSWUcOtmQlFQoAZo0za9/eyAHv+4C9EkIVb+n929Fg=
+	t=1738768356; cv=none; b=orF2AkgfwRgaYk9Kfy1rcPqjG7COwEnS6X+0Z4Wmhcxp63W3kEY+0Zw5RgDwUHQm2dCV2iIJOlIptWrd7VfY/CUhdM/ZVpByERhZaX6HjpskG/5jx4yKlDoYJYvi6K+Jj5/9+w0bv37wkFLthAQuQlXOktyhH63a63YM1lLstbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768353; c=relaxed/simple;
-	bh=80rq5VqsQV4NK5LIp4qEgOaVjyr2xJBS6qpRbRATbzw=;
+	s=arc-20240116; t=1738768356; c=relaxed/simple;
+	bh=UKLDgKiCt1j+jt6bawfSQNgUGXqucer2Ja6S4pxXppU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WHNXb7FI6bopxABd66Ex9iY7M4Qo3fWDK+4fWCNBG1lyeKLEgsAdmUTceSHDIN7h0ctR6dRWX2fnJtBo88UzDUCLprEYpIQn89vH9R0QhEkayKrnzBE8C6M3OfSeR0svq9/emnhZHN/lVrg/SvqgcpwretImRhFqvmsqXr2yGwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Or8GorRx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AFbMrfBj9d4zSIkOHbgj4CrZQtWOZ2NDzfUkATYDW2B9pJ2dwGKEkKOmDfSUF49wFdtzPCT3fHTXMElE24P9zIEnUXcEi2KCQen2qbHocjtJWnFehHVhtvfRub9SmeVOo+BuB+BOWcM/M7F3Stc2HtZS5eb9+EwmqqQb0xMYgqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwW8dttf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Or8GorRx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E0CC4CED1;
-	Wed,  5 Feb 2025 15:12:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwW8dttf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF4A6C4CED6;
+	Wed,  5 Feb 2025 15:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768352;
-	bh=80rq5VqsQV4NK5LIp4qEgOaVjyr2xJBS6qpRbRATbzw=;
+	s=korg; t=1738768356;
+	bh=UKLDgKiCt1j+jt6bawfSQNgUGXqucer2Ja6S4pxXppU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Or8GorRxwKQraPc68tRM15fDz8Hw8CiZVG2Kk7ynMsRnezsw5eLacHo0VU1XqOp/w
-	 PLfcA7ib/hfk4jMdn6n47UvinYKPqREdtgyZ29ADdfKQDXLG+My3i6D96ZEMd2HKMI
-	 yS5+UTlSLNzm3JPpwGHMMZMTuOQIw2C3gii3VBrc=
+	b=RwW8dttfjvJ3YDF7f+bdZdjAJ30aYhvGADu1HV3ELWq4aHIC2nF5P5Jgq7jybYPFM
+	 HGpAHgAvJ1OA5A6l5nA6HlP7ILGP02DC/RUdpnADPj8rAC+GjJaMI3bVRyodlbzEXf
+	 N1ZcrIy07cASN+EVbEDmMMF9W5qCvF4s2zI0WdiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Shakeel Butt <shakeelb@google.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 588/590] memcg: fix soft lockup in the OOM process
-Date: Wed,  5 Feb 2025 14:45:43 +0100
-Message-ID: <20250205134517.757237328@linuxfoundation.org>
+	Christoph Anton Mitterer <calestyo@scientia.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.12 575/590] btrfs: output the reason for open_ctree() failure
+Date: Wed,  5 Feb 2025 14:45:30 +0100
+Message-ID: <20250205134517.265867628@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -50,125 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit ade81479c7dda1ce3eedb215c78bc615bbd04f06 upstream.
+commit d0f038104fa37380e2a725e669508e43d0c503e9 upstream.
 
-A soft lockup issue was found in the product with about 56,000 tasks were
-in the OOM cgroup, it was traversing them when the soft lockup was
-triggered.
+There is a recent ML report that mounting a large fs backed by hardware
+RAID56 controller (with one device missing) took too much time, and
+systemd seems to kill the mount attempt.
 
-watchdog: BUG: soft lockup - CPU#2 stuck for 23s! [VM Thread:1503066]
-CPU: 2 PID: 1503066 Comm: VM Thread Kdump: loaded Tainted: G
-Hardware name: Huawei Cloud OpenStack Nova, BIOS
-RIP: 0010:console_unlock+0x343/0x540
-RSP: 0000:ffffb751447db9a0 EFLAGS: 00000247 ORIG_RAX: ffffffffffffff13
-RAX: 0000000000000001 RBX: 0000000000000000 RCX: 00000000ffffffff
-RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000247
-RBP: ffffffffafc71f90 R08: 0000000000000000 R09: 0000000000000040
-R10: 0000000000000080 R11: 0000000000000000 R12: ffffffffafc74bd0
-R13: ffffffffaf60a220 R14: 0000000000000247 R15: 0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f2fe6ad91f0 CR3: 00000004b2076003 CR4: 0000000000360ee0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- vprintk_emit+0x193/0x280
- printk+0x52/0x6e
- dump_task+0x114/0x130
- mem_cgroup_scan_tasks+0x76/0x100
- dump_header+0x1fe/0x210
- oom_kill_process+0xd1/0x100
- out_of_memory+0x125/0x570
- mem_cgroup_out_of_memory+0xb5/0xd0
- try_charge+0x720/0x770
- mem_cgroup_try_charge+0x86/0x180
- mem_cgroup_try_charge_delay+0x1c/0x40
- do_anonymous_page+0xb5/0x390
- handle_mm_fault+0xc4/0x1f0
+In that case, the only error message is:
 
-This is because thousands of processes are in the OOM cgroup, it takes a
-long time to traverse all of them.  As a result, this lead to soft lockup
-in the OOM process.
+  BTRFS error (device sdj): open_ctree failed
 
-To fix this issue, call 'cond_resched' in the 'mem_cgroup_scan_tasks'
-function per 1000 iterations.  For global OOM, call
-'touch_softlockup_watchdog' per 1000 iterations to avoid this issue.
+There is no reason on why the failure happened, making it very hard to
+understand the reason.
 
-Link: https://lkml.kernel.org/r/20241224025238.3768787-1-chenridong@huaweicloud.com
-Fixes: 9cbb78bb3143 ("mm, memcg: introduce own oom handler to iterate only over its own threads")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Shakeel Butt <shakeelb@google.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Michal Koutný <mkoutny@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+At least output the error number (in the particular case it should be
+-EINTR) to provide some clue.
+
+Link: https://lore.kernel.org/linux-btrfs/9b9c4d2810abcca2f9f76e32220ed9a90febb235.camel@scientia.org/
+Reported-by: Christoph Anton Mitterer <calestyo@scientia.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    7 ++++++-
- mm/oom_kill.c   |    8 +++++++-
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ fs/btrfs/super.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -1139,6 +1139,7 @@ void mem_cgroup_scan_tasks(struct mem_cg
- {
- 	struct mem_cgroup *iter;
- 	int ret = 0;
-+	int i = 0;
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -972,7 +972,7 @@ static int btrfs_fill_super(struct super
  
- 	BUG_ON(mem_cgroup_is_root(memcg));
- 
-@@ -1147,8 +1148,12 @@ void mem_cgroup_scan_tasks(struct mem_cg
- 		struct task_struct *task;
- 
- 		css_task_iter_start(&iter->css, CSS_TASK_ITER_PROCS, &it);
--		while (!ret && (task = css_task_iter_next(&it)))
-+		while (!ret && (task = css_task_iter_next(&it))) {
-+			/* Avoid potential softlockup warning */
-+			if ((++i & 1023) == 0)
-+				cond_resched();
- 			ret = fn(task, arg);
-+		}
- 		css_task_iter_end(&it);
- 		if (ret) {
- 			mem_cgroup_iter_break(memcg, iter);
---- a/mm/oom_kill.c
-+++ b/mm/oom_kill.c
-@@ -45,6 +45,7 @@
- #include <linux/init.h>
- #include <linux/mmu_notifier.h>
- #include <linux/cred.h>
-+#include <linux/nmi.h>
- 
- #include <asm/tlb.h>
- #include "internal.h"
-@@ -431,10 +432,15 @@ static void dump_tasks(struct oom_contro
- 		mem_cgroup_scan_tasks(oc->memcg, dump_task, oc);
- 	else {
- 		struct task_struct *p;
-+		int i = 0;
- 
- 		rcu_read_lock();
--		for_each_process(p)
-+		for_each_process(p) {
-+			/* Avoid potential softlockup warning */
-+			if ((++i & 1023) == 0)
-+				touch_softlockup_watchdog();
- 			dump_task(p, oc);
-+		}
- 		rcu_read_unlock();
+ 	err = open_ctree(sb, fs_devices);
+ 	if (err) {
+-		btrfs_err(fs_info, "open_ctree failed");
++		btrfs_err(fs_info, "open_ctree failed: %d", err);
+ 		return err;
  	}
- }
+ 
 
 
