@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1C71553AB;
-	Wed,  5 Feb 2025 14:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD27158D96;
+	Wed,  5 Feb 2025 14:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765731; cv=none; b=bfrL13kypgNDl2DWLN/1fVo3WaQRXN+HFffvHdshPux7U5bxgT00coNI9vQOR786Ht9IxXxv8zfpmzNv4XDtbDsS1OZQXsR+D11BefL/RBTIdsSHHr+RkjwoxpJTh0NaDYOFafwYvhRL56qkayeB1YyomHAaD7anck6XOnBs0js=
+	t=1738765734; cv=none; b=cvYYwOJobHh9CHNWaNrew9ZnWbkAj7tpifBaoAaeg42eRl1lZ0Ytfw0YnlGp9m4IZQbzTR3AWllPND21vI3dnaYZ4RDKfvI3kAAayCsdtlvcBCG4RqVjvJ0glQ8CveY+KT9qPphMBBozuqHgjVq5MwpoHKD3tNb+bfYPyyHr4eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765731; c=relaxed/simple;
-	bh=UGKCsNWX5ootJjCOiX8vpugdK+5OZsm5FtG+Xy6TyrE=;
+	s=arc-20240116; t=1738765734; c=relaxed/simple;
+	bh=9KsoTer+z4PtAd66NSDPJo1tqs33o60fve+27smN2yg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sw3aNfM07f3e02D/ONYwKhnWcn0CsHltcRoW/5WciIvGZwc2EZ8H9gI4UdbhnXIXgFMu1gFj2mRinhqeGmy9i0pzyqSZYci6a5dxOUeNErD3w2Kv53eA+VKv2r4mX2VFzL0T9XeB6ff/faVY+JNxxJKOf2XkbEtbbSmFLJ+7sHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDqDQjoG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tEWXZLLbdgXuZxpCU53dw0YWhvKiXEgCvQQicfQuURuJC6+X48O/IxTGqgFZfkauQW1g7nwKFT095yRMdavL8LMC6Rmusv3fm3h9DT61nJHzIbQ3BUh88UxekpxBxK3qXfj8FcJ1mULTk4MSopZ5nUx0GnAcvsIfvC9gaSaFj1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jinQMgd1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDqDQjoG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818A6C4CED1;
-	Wed,  5 Feb 2025 14:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jinQMgd1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D4CC4CEE8;
+	Wed,  5 Feb 2025 14:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765731;
-	bh=UGKCsNWX5ootJjCOiX8vpugdK+5OZsm5FtG+Xy6TyrE=;
+	s=korg; t=1738765734;
+	bh=9KsoTer+z4PtAd66NSDPJo1tqs33o60fve+27smN2yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xDqDQjoG5ZKgMCKYMYAuFkHFwGXiwMXxvm2y8a0Q1RHAuLYztn5ZEgCCuuTpWqf4f
-	 1etH+qHwsRohP7KRFQqlGREPrsp5KgdzVz04rjtL8cPTI/Spty/V1xJ8FxmP1SBFUY
-	 BgnTgxjvsURzlMU9IjDtAc1AHiiLOfeXZD4YNhhE=
+	b=jinQMgd10oqbpTSWdAKWG8wqYzsl3ZB3j5Gq/zECytwiR1tUWhi8C08TSwxG1Atq1
+	 2s4Q2BhuGNQ1KdoBWN7gIvV9Jr9EJb3TqJRS2QlrltcgGvhMF9RspdNZIoOZFGhXzj
+	 RPjgu1m3G9tTae06hXOfPsKkB1rvYxyUr/JsJhtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Akhil R <akhilrajeev@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 247/590] crypto: tegra - do not transfer req when tegra init fails
-Date: Wed,  5 Feb 2025 14:40:02 +0100
-Message-ID: <20250205134504.730274142@linuxfoundation.org>
+Subject: [PATCH 6.6 294/393] media: nxp: imx8-isi: fix v4l2-compliance test errors
+Date: Wed,  5 Feb 2025 14:43:33 +0100
+Message-ID: <20250205134431.563171752@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,70 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
 
-[ Upstream commit 15589bda46830695a3261518bb7627afac61f519 ]
+[ Upstream commit 7b12ab055edef2f51733d155617a401a05237bcc ]
 
-The tegra_cmac_init or tegra_sha_init function may return an error when
-memory is exhausted. It should not transfer the request when they return
-an error.
+Running the v4l2-compliance (1.27.0-5208, SHA: af114250d48d) on the m2m
+device fails on the MMAP streaming tests, with the following messages:
 
-Fixes: 0880bb3b00c8 ("crypto: tegra - Add Tegra Security Engine driver")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Acked-by: Akhil R <akhilrajeev@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+fail: v4l2-test-buffers.cpp(240): g_field() == V4L2_FIELD_ANY
+fail: v4l2-test-buffers.cpp(1508): buf.qbuf(node)
+
+Apparently, the driver does not properly set the field member of
+vb2_v4l2_buffer struct, returning the default V4L2_FIELD_ANY value which
+is against the guidelines.
+
+Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
+Signed-off-by: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240924103304.124085-1-laurentiu.palcu@oss.nxp.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/tegra/tegra-se-aes.c  | 7 +++++--
- drivers/crypto/tegra/tegra-se-hash.c | 7 +++++--
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/crypto/tegra/tegra-se-aes.c b/drivers/crypto/tegra/tegra-se-aes.c
-index ae7a0f8435fc6..3106fd1e84b91 100644
---- a/drivers/crypto/tegra/tegra-se-aes.c
-+++ b/drivers/crypto/tegra/tegra-se-aes.c
-@@ -1752,10 +1752,13 @@ static int tegra_cmac_digest(struct ahash_request *req)
- 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
- 	struct tegra_cmac_ctx *ctx = crypto_ahash_ctx(tfm);
- 	struct tegra_cmac_reqctx *rctx = ahash_request_ctx(req);
-+	int ret;
+diff --git a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
+index 10840c9a0912b..111be77eca1ca 100644
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
+@@ -861,6 +861,7 @@ int mxc_isi_video_buffer_prepare(struct mxc_isi_dev *isi, struct vb2_buffer *vb2
+ 				 const struct mxc_isi_format_info *info,
+ 				 const struct v4l2_pix_format_mplane *pix)
+ {
++	struct vb2_v4l2_buffer *v4l2_buf = to_vb2_v4l2_buffer(vb2);
+ 	unsigned int i;
  
--	tegra_cmac_init(req);
--	rctx->task |= SHA_UPDATE | SHA_FINAL;
-+	ret = tegra_cmac_init(req);
-+	if (ret)
-+		return ret;
+ 	for (i = 0; i < info->mem_planes; i++) {
+@@ -875,6 +876,8 @@ int mxc_isi_video_buffer_prepare(struct mxc_isi_dev *isi, struct vb2_buffer *vb2
+ 		vb2_set_plane_payload(vb2, i, size);
+ 	}
  
-+	rctx->task |= SHA_UPDATE | SHA_FINAL;
- 	return crypto_transfer_hash_request_to_engine(ctx->se->engine, req);
- }
- 
-diff --git a/drivers/crypto/tegra/tegra-se-hash.c b/drivers/crypto/tegra/tegra-se-hash.c
-index 4d4bd727f4986..0b5cdd5676b17 100644
---- a/drivers/crypto/tegra/tegra-se-hash.c
-+++ b/drivers/crypto/tegra/tegra-se-hash.c
-@@ -615,13 +615,16 @@ static int tegra_sha_digest(struct ahash_request *req)
- 	struct tegra_sha_reqctx *rctx = ahash_request_ctx(req);
- 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
- 	struct tegra_sha_ctx *ctx = crypto_ahash_ctx(tfm);
-+	int ret;
- 
- 	if (ctx->fallback)
- 		return tegra_sha_fallback_digest(req);
- 
--	tegra_sha_init(req);
--	rctx->task |= SHA_UPDATE | SHA_FINAL;
-+	ret = tegra_sha_init(req);
-+	if (ret)
-+		return ret;
- 
-+	rctx->task |= SHA_UPDATE | SHA_FINAL;
- 	return crypto_transfer_hash_request_to_engine(ctx->se->engine, req);
++	v4l2_buf->field = pix->field;
++
+ 	return 0;
  }
  
 -- 
