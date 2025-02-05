@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B1C7E792;
-	Wed,  5 Feb 2025 14:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186F67DA6A;
+	Wed,  5 Feb 2025 14:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766007; cv=none; b=FFlioillIGXvvCKATgynvdSp1zJpgcCFazrfyMAXUKhl6rjlhD/Q7kYyPeJCM/gliC6ECMLKWIE5nZ1x2CFLzUBBZQpG+0ugmytv8jFFJcm50KFMihhHH3ebi+FCjEzrYZSjA/bRt3hsDT741W5Xu67jNMz3YRBYeme0nVFCfNA=
+	t=1738766011; cv=none; b=jskQsdAXCtL2kkYNmlpLkEnG+GCbEFhaK/YskRQ1RroyIgwx35Mac8gj1YlNubGPdtiUoDvwDto9LmQBF2KcxMeHLZKF71inbDSsTVhLfOZVXzP8DcTQ0v0dSkSvYOjfp+EugPlD8s9O88H1olOIapulVr/WX8/DhS+T7HKAUN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766007; c=relaxed/simple;
-	bh=JvUBMSn2o0SBm+nqXyNHksTcOVcnUnxCx0t1Kl/n7UY=;
+	s=arc-20240116; t=1738766011; c=relaxed/simple;
+	bh=lsbON/a0+6Utj6DfBV4DTu70DqLY3m7qJzdqnkHyHws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfXTmz/MSqFt32GsWirccveI0AE51mY275ukWbZKxwk9bui01b8Q1eg4KFKYOr42DXmJzgfUkE8Pi5kvwrXhkURt7S4RVxPou4wegrUSZ2fQ6XYtglgGjP5ejtYPdfUhuBDjIukHo0GASK8P/1R45LmN5Fyv9RvQGTS9iRYvJYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmo3qxEm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dIwwmNUjHl1KqxWotGqUcxrNXrXWd0kITCrBxUR7XFkmG78HaOgMlyOHy1N4XDYK3hTf4mJzq0r4CZe5zJJZAqZVJ699afONoF0M9Nt0HFxqiBw4uvnUKP9irFz8kgngA1PvhlyrQqu26vbYMI7twiVaGWmF9AOOZf1uy0EP85o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvOZxrF/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmo3qxEm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF56C4CED1;
-	Wed,  5 Feb 2025 14:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvOZxrF/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7719AC4CED1;
+	Wed,  5 Feb 2025 14:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766007;
-	bh=JvUBMSn2o0SBm+nqXyNHksTcOVcnUnxCx0t1Kl/n7UY=;
+	s=korg; t=1738766010;
+	bh=lsbON/a0+6Utj6DfBV4DTu70DqLY3m7qJzdqnkHyHws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kmo3qxEmja17hgpTDxn6na9SqmvZxxLQgWZXpj41hAElNfx+c76phE1rFGrzYTNc6
-	 49axYvfiYn9lSqXkZ2wvNRuI6tQi4UZ0+phYEULBtJXF9eIPQcF1Ok2iKiaOjVcVZ3
-	 4kPhX9vsnksY8I2n2mTA+W/evCzob1OprOf2xHyE=
+	b=CvOZxrF/BUGQRKM9/YXlZDUzPQMNXgV8fI024kDxWQgauqc94ZxlEHN65QlIjnEUY
+	 FCEuVmeaIluMMyVpcOw7vljcjeJhh+fY6Se9A/ZrRYfxtotHni1L9hhoGqEGZKmkW5
+	 aPTP/SJAQ5gLUmwzZL7JROTzo64boPngBWjf8epc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ba Jing <bajing@cmss.chinamobile.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Mohamed Khalfella <khalfella@gmail.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 256/590] ktest.pl: Remove unused declarations in run_bisect_test function
-Date: Wed,  5 Feb 2025 14:40:11 +0100
-Message-ID: <20250205134505.073660176@linuxfoundation.org>
+Subject: [PATCH 6.6 301/393] PCI: endpoint: pci-epf-test: Set dma_chan_rx pointer to NULL on error
+Date: Wed,  5 Feb 2025 14:43:40 +0100
+Message-ID: <20250205134431.829679238@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,41 +48,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ba Jing <bajing@cmss.chinamobile.com>
+From: Mohamed Khalfella <khalfella@gmail.com>
 
-[ Upstream commit 776735b954f49f85fd19e1198efa421fae2ad77c ]
+[ Upstream commit b1b1f4b12969130c0a6ec0cf0299460cb01e799c ]
 
-Since $output and $ret are not used in the subsequent code, the declarations
-should be removed.
+If dma_chan_tx allocation fails, set dma_chan_rx to NULL after it is
+freed.
 
-Fixes: a75fececff3c ("ktest: Added sample.conf, new %default option format")
-Link: https://lore.kernel.org/20240902130735.6034-1-bajing@cmss.chinamobile.com
-Signed-off-by: Ba Jing <bajing@cmss.chinamobile.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/20241227160841.92382-1-khalfella@gmail.com
+Fixes: 8353813c88ef ("PCI: endpoint: Enable DMA tests for endpoints with DMA capabilities")
+Signed-off-by: Mohamed Khalfella <khalfella@gmail.com>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index dacad94e2be42..ecb22626805d5 100755
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -2960,8 +2960,6 @@ sub run_bisect_test {
+diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+index 1f0d2b84296a3..fa7ae8cedb676 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-test.c
++++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+@@ -251,7 +251,7 @@ static int pci_epf_test_init_dma_chan(struct pci_epf_test *epf_test)
  
-     my $failed = 0;
-     my $result;
--    my $output;
--    my $ret;
+ fail_back_rx:
+ 	dma_release_channel(epf_test->dma_chan_rx);
+-	epf_test->dma_chan_tx = NULL;
++	epf_test->dma_chan_rx = NULL;
  
-     $in_bisect = 1;
- 
+ fail_back_tx:
+ 	dma_cap_zero(mask);
 -- 
 2.39.5
 
