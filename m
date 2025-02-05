@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E189139D1B;
-	Wed,  5 Feb 2025 13:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE46126C18;
+	Wed,  5 Feb 2025 13:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763368; cv=none; b=mrDVNMXRLqdcGVOmVW4klyPHhnxGuKIdDpPhPPfTFEYKPnvXL+eHkyjloySXzE9jD5Fsv08hcWP/K3drktkul3yOWJn838SC4nuO0BOXFrZI371QPtwm28A7aeCP7rNM/P/FE5yUSTpMfaoDAmEAG9f2m8Iig1sD9Zs9l8NB7Ng=
+	t=1738763372; cv=none; b=qwUmwWoweAtBQylI9/bjog9GvKK8ShYzjaSr1eVEEdb+YPuJNvecBbNKsVs+qvHF/cDyCiVgKCMoQxI597xthgPmsG24yKPkoY3V41ao8Rn2Z7hvX/3WJuUqTMtEyUoZCRi33Sh0v5LnCai5ZcNLaRwGwrbhtpM/haJys2JSAGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763368; c=relaxed/simple;
-	bh=DnX5RO9OwZ20Gr10pSKcO9oO4gvEmbF3vMO9AHKt20g=;
+	s=arc-20240116; t=1738763372; c=relaxed/simple;
+	bh=YjV96UURJi4zuACjwe2SxzIkk4YMM9snizfdbxraK9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QVv2ckLQtnzNBk/ClaD7Y/zFTknYvAJypek4vCi5H0mJDFQoIAE7X2+tj35ID+SywmvWjuus0hq6uTzDQggwYBCi2sFxb31tR+HIkjCX5MCYWnFuYOqiRyzwAnUmUL788LSbN2JivbtXj1gkID+kiE6dH8PTvm/P/XngOBjr9+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIY50Kuw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uQxJrkzBClm/T/+EXkB8cmNt2HiETdefHhE0DRY3aNoKI+poEmceKAejFypXLTwZX2j+REyPuOxfgtqM849KbNiHZrRjXajxxVaBlSJ/rOXfJx4Tgx0sBfzrUSJMFajxJIZFKFTFt6QJpeN9/Vfb78bhSX2vyO65n+YW/DFDpWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UvVd/Gv2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIY50Kuw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA876C4CED1;
-	Wed,  5 Feb 2025 13:49:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvVd/Gv2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493B6C4CED6;
+	Wed,  5 Feb 2025 13:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763368;
-	bh=DnX5RO9OwZ20Gr10pSKcO9oO4gvEmbF3vMO9AHKt20g=;
+	s=korg; t=1738763371;
+	bh=YjV96UURJi4zuACjwe2SxzIkk4YMM9snizfdbxraK9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CIY50KuwdKVlKkGBLC4ZU+RuV7QzrIQkn2MyOx/k6HRRZvtdYyFa9W7iLfk+pGELW
-	 y3S3lOU991y6B8fGpNoDtAqUyEiugpK96VMj7wo1GP3qiB0dHi98uyskP8n78g9OGI
-	 q1tnJ4ckQLgcAuqL0e7AKjTOhELkJfRTNlogPKHw=
+	b=UvVd/Gv2keXuaRu5qa+Q1ggbggfBd3Fn+VDoCtpRK4O5QAr6EPUlxQqLBS0ZUer0K
+	 q3684iqnNmvsJadNRM5NNXEB0Zj+yWl6RR4SDGW9K8nZPgbJYO2Xr1zk0/thc5K2Jt
+	 7gb19PCNpwNbOI/+AwnncQe6TbyomJ0bxO2f2Rk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 004/590] dlm: fix srcu_read_lock() return type to int
-Date: Wed,  5 Feb 2025 14:35:59 +0100
-Message-ID: <20250205134455.398648812@linuxfoundation.org>
+Subject: [PATCH 6.6 053/393] wifi: rtlwifi: usb: fix workqueue leak when probe fails
+Date: Wed,  5 Feb 2025 14:39:32 +0100
+Message-ID: <20250205134422.327899631@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit 57cdd1a1cf1464199678f9338049b63fb5d5b41c ]
+[ Upstream commit f79bc5c67867c19ce2762e7934c20dbb835ed82c ]
 
-The return type of srcu_read_lock() is int and not bool. Whereas we
-using the ret variable only to evaluate a bool type of
-dlm_lowcomms_con_has_addr() to check if an address is already being set.
+rtl_init_core creates a workqueue that is then assigned to rtl_wq.
+rtl_deinit_core does not destroy it. It is left to rtl_usb_deinit, which
+must be called in the probe error path.
 
-Fixes: 6f0b0b5d7ae7 ("fs: dlm: remove dlm_node_addrs lookup list")
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Fixes: 2ca20f79e0d8 ("rtlwifi: Add usb driver")
+Fixes: 851639fdaeac ("rtlwifi: Modify some USB de-initialize code.")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241107133322.855112-6-cascardo@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/lowcomms.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/usb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/dlm/lowcomms.c b/fs/dlm/lowcomms.c
-index cb3a10b041c27..f2d88a3581695 100644
---- a/fs/dlm/lowcomms.c
-+++ b/fs/dlm/lowcomms.c
-@@ -462,7 +462,8 @@ static bool dlm_lowcomms_con_has_addr(const struct connection *con,
- int dlm_lowcomms_addr(int nodeid, struct sockaddr_storage *addr)
- {
- 	struct connection *con;
--	bool ret, idx;
-+	bool ret;
-+	int idx;
- 
- 	idx = srcu_read_lock(&connections_srcu);
- 	con = nodeid2con(nodeid, GFP_NOFS);
+diff --git a/drivers/net/wireless/realtek/rtlwifi/usb.c b/drivers/net/wireless/realtek/rtlwifi/usb.c
+index 0a934adcef012..cf70793b1e905 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/usb.c
++++ b/drivers/net/wireless/realtek/rtlwifi/usb.c
+@@ -1065,6 +1065,7 @@ int rtl_usb_probe(struct usb_interface *intf,
+ 	wait_for_completion(&rtlpriv->firmware_loading_complete);
+ 	rtlpriv->cfg->ops->deinit_sw_vars(hw);
+ error_out:
++	rtl_usb_deinit(hw);
+ 	rtl_deinit_core(hw);
+ error_out2:
+ 	_rtl_usb_io_handler_release(hw);
 -- 
 2.39.5
 
