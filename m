@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0425818E377;
-	Wed,  5 Feb 2025 14:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B56518E377;
+	Wed,  5 Feb 2025 14:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767027; cv=none; b=CBJAtHdcMEv/vMarbKsf53j4Rf8ouXzClnIelLeDYfvXC/19/G1xkFUsBzJ+wZ/JArnJhsmmsnr38CyAGo+XR/1e8S9aA7EkL5HhJeNAtN++jcmKHaK9yuJmLvudeIqyMoNMt1Z8GvjUqcjU4StK8G37g20p7GknbM5Q82cFUrc=
+	t=1738767030; cv=none; b=VAB01w4co4ZB0C+DcBrGYad/WD4FJ8oz0FDkV4EXPGlBvIX+fGWwteF9pItAgyYbzxrg8cFvqqj2rXMvodAE5++u44L5bwAtK+uKBbrA70eZJx9uOg9hh4cFa8DD6BILjTYNAGwt6DOiMSV6A/0Yk3aP+6rwkTHIWpe2ydKFE9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767027; c=relaxed/simple;
-	bh=7st6haTkXdW/YMMY2xolQbnx80c5i2eoqAYxZd2BXqQ=;
+	s=arc-20240116; t=1738767030; c=relaxed/simple;
+	bh=Majpy2VhXsZxLAEIWBS8EXyuyv9RhR3u8Xd8NVu1sDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rbUezwM7mUsyFSfNgWnKaeFYZJn3M+UZLcqsHAKmo7JMMPxqWF8r8Sm5LPhTHrIiEW/cDBOr2yEJ1UjesDdAK3BEBIjcWiaVh1pn5/fStcgoBxC4uAGSNFI75fumlh1Jz2F5n9yoiuwh8CLh0EoFr09itpKt/OgeRevVnuZABwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVTf525G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gtRmAHPC9Jkb4AnFR5EaQ0a/pz1Ak+HB3znJr8eZqNFcsye/XaBFk3TB7HgLzcU8JXr0mlWoTcvgYmrudVImfIcqh2+/hTG95BzIveSFvdFcpNpfkU52SiIABGG58ZXB1GidjGOuys6JmPFrtZHqF9LlNlIzLZLlutGBnIle4cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGccKLBk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVTf525G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76960C4CED1;
-	Wed,  5 Feb 2025 14:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGccKLBk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85184C4CED1;
+	Wed,  5 Feb 2025 14:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767026;
-	bh=7st6haTkXdW/YMMY2xolQbnx80c5i2eoqAYxZd2BXqQ=;
+	s=korg; t=1738767030;
+	bh=Majpy2VhXsZxLAEIWBS8EXyuyv9RhR3u8Xd8NVu1sDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RVTf525G01oqOtcmBG/vVBFCwPbepMadrLOuijfW3D1aI30ne4Fv/CX64lrMVo8Q4
-	 TGampONn6xhEQ9ve6bKNofloOgPdNrJ6E1KJJjqop5VL+Kjp8utecks33uZOX542Nq
-	 D+9RAaU4lrrc/eugnFm8byjBlgEPF+oow9VGKVlA=
+	b=sGccKLBkNcuBTldWbJmwyJ2lDNYmeGADAb826AExQBF59yzXOVlivvYKHzSRK/y/Q
+	 DtvSG4p23aAjUGVlDIQ331Sx2YJQtJoBkJdZjtIjazFFxnH1anaUc6P3ZiXwa4dQy9
+	 K0VlL1c0BqXSJo2C1U+/GfCTCHrKIh29qyGgqkF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 315/623] iommu/amd: Remove domain_alloc()
-Date: Wed,  5 Feb 2025 14:40:57 +0100
-Message-ID: <20250205134508.273837220@linuxfoundation.org>
+Subject: [PATCH 6.13 342/623] RDMA/mlx4: Avoid false error about access to uninitialized gids array
+Date: Wed,  5 Feb 2025 14:41:24 +0100
+Message-ID: <20250205134509.311307811@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -52,74 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit f9b80f941e0e68c3347c5d22a17a0f636a064e2c ]
+[ Upstream commit 1f53d88cbb0dcc7df235bf6611ae632b254fccd8 ]
 
-IOMMU drivers should not be sensitive to the domain type, a paging domain
-should be created based only on the flags passed in, the same for all
-callers.
+Smatch generates the following false error report:
+drivers/infiniband/hw/mlx4/main.c:393 mlx4_ib_del_gid() error: uninitialized symbol 'gids'.
 
-AMD was using the domain_alloc() path to force VFIO into a v1 domain type,
-because v1 gives higher performance. However now that
-IOMMU_HWPT_ALLOC_PASID is present, and a NULL device is not possible,
-domain_alloc_paging_flags() will do the right thing for VFIO.
+Traditionally, we are not changing kernel code and asking people to fix
+the tools. However in this case, the fix can be done by simply rearranging
+the code to be more clear.
 
-When invoked from VFIO flags will be 0 and the amd_iommu_pgtable type of
-domain will be selected. This is v1 by default unless the kernel command
-line has overridden it to v2.
-
-If the admin is forcing v2 assume they know what they are doing so force
-it everywhere, including for VFIO.
-
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/2-v2-9776c53c2966+1c7-amd_paging_flags_jgg@nvidia.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Stable-dep-of: 082f1bcae8d1 ("iommu/amd: Fully decode all combinations of alloc_paging_flags")
+Fixes: e26be1bfef81 ("IB/mlx4: Implement ib_device callbacks")
+Link: https://patch.msgid.link/6a3a1577463da16962463fcf62883a87506e9b62.1733233426.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu.c | 20 --------------------
- 1 file changed, 20 deletions(-)
+ drivers/infiniband/hw/mlx4/main.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 7e7246c49006a..96d87406f8946 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -2386,25 +2386,6 @@ static struct iommu_domain *do_iommu_domain_alloc(unsigned int type,
- 	return &domain->domain;
+diff --git a/drivers/infiniband/hw/mlx4/main.c b/drivers/infiniband/hw/mlx4/main.c
+index 529db874d67c6..b1bbdcff631d5 100644
+--- a/drivers/infiniband/hw/mlx4/main.c
++++ b/drivers/infiniband/hw/mlx4/main.c
+@@ -351,7 +351,7 @@ static int mlx4_ib_del_gid(const struct ib_gid_attr *attr, void **context)
+ 	struct mlx4_port_gid_table   *port_gid_table;
+ 	int ret = 0;
+ 	int hw_update = 0;
+-	struct gid_entry *gids;
++	struct gid_entry *gids = NULL;
+ 
+ 	if (!rdma_cap_roce_gid_table(attr->device, attr->port_num))
+ 		return -EINVAL;
+@@ -389,10 +389,10 @@ static int mlx4_ib_del_gid(const struct ib_gid_attr *attr, void **context)
+ 	}
+ 	spin_unlock_bh(&iboe->lock);
+ 
+-	if (!ret && hw_update) {
++	if (gids)
+ 		ret = mlx4_ib_update_gids(gids, ibdev, attr->port_num);
+-		kfree(gids);
+-	}
++
++	kfree(gids);
+ 	return ret;
  }
  
--static struct iommu_domain *amd_iommu_domain_alloc(unsigned int type)
--{
--	struct iommu_domain *domain;
--	int pgtable = amd_iommu_pgtable;
--
--	/*
--	 * Force IOMMU v1 page table when allocating
--	 * domain for pass-through devices.
--	 */
--	if (type == IOMMU_DOMAIN_UNMANAGED)
--		pgtable = AMD_IOMMU_V1;
--
--	domain = do_iommu_domain_alloc(type, NULL, 0, pgtable);
--	if (IS_ERR(domain))
--		return NULL;
--
--	return domain;
--}
--
- static struct iommu_domain *
- amd_iommu_domain_alloc_paging_flags(struct device *dev, u32 flags,
- 				    const struct iommu_user_data *user_data)
-@@ -2881,7 +2862,6 @@ const struct iommu_ops amd_iommu_ops = {
- 	.blocked_domain = &blocked_domain,
- 	.release_domain = &release_domain,
- 	.identity_domain = &identity_domain.domain,
--	.domain_alloc = amd_iommu_domain_alloc,
- 	.domain_alloc_paging_flags = amd_iommu_domain_alloc_paging_flags,
- 	.domain_alloc_sva = amd_iommu_domain_alloc_sva,
- 	.probe_device = amd_iommu_probe_device,
 -- 
 2.39.5
 
