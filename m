@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262BA1C6BE;
-	Wed,  5 Feb 2025 14:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246B91C6BE;
+	Wed,  5 Feb 2025 14:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766727; cv=none; b=aPV7giCBDjpuiie7ZvsD/nuGSv6OZ74rljn7WSlf52sfUqsbBdg2wyOiypxBQ2247EOZdX36AqXndpxFzhPnHu2LNP/5n529XGarpQcCUwuEqIOH+1zAG3WfUaSWIgt+TCWFryXBEsJDRTlxdFMY2+ZIR4b1y81FY8PRqtNL4gA=
+	t=1738766730; cv=none; b=m/LeTnTUEj6vbmx7CQlPcXIvTLyWySFFPhPcNutWgsGX3Z/zntex9GAWxQnP5zZFd9V5En2aqsYC0S2tryC0Kad5ncj7irt2V8pdkxLE3xYy08zQvhAFUyiZ38n2F4qAv4hdcDWAA9a2fAarW4PnL+rStWctke0ILfIXC8IxTJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766727; c=relaxed/simple;
-	bh=u2nhCYlGVJjFbRUOtG1syu5bUmMZDVuKCjGBurX16eY=;
+	s=arc-20240116; t=1738766730; c=relaxed/simple;
+	bh=17UT+OddHlcRbaidDBrjqfWED6otH3vvBUDpGRz7n5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dJnh1MvxgVRwxxnfJXjktO3T68Dhpf/T/1SDOyVcqsUIcc3XStgJiSGnWBrHNfojhp4ICc+TDsvSFg0Uqwo8e0xpzm39N7OyhVv7zycLC4Yg9n9qa3P88J5sGydbetN2yBLKmDkXx1TxUsAIwxhLFn8rN9fm5erUwInqBXC7fAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dP1bf806; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GEIeFvhPYFQPvZ+hYX2yVgt1BTyKNvQe6sktk+GJ5ID5A8ALzTT2uGbHziT5Ps18LCTp0y5ojb707mur7101mhvAhwIzMX2tN7LxLQqkf3iKkxyz0ZOmPNwdhorPO/zndMQmqL3yzxnft/o8cC7BwP2lO2BoCG7EIPRPzeYo6K0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CHG+2Fq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dP1bf806"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C504C4CED1;
-	Wed,  5 Feb 2025 14:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CHG+2Fq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97576C4CED1;
+	Wed,  5 Feb 2025 14:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766727;
-	bh=u2nhCYlGVJjFbRUOtG1syu5bUmMZDVuKCjGBurX16eY=;
+	s=korg; t=1738766730;
+	bh=17UT+OddHlcRbaidDBrjqfWED6otH3vvBUDpGRz7n5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dP1bf806B02FEh+UV53MkRPXm8VnqXmWBzlD4JoehX1vsBXrSBb/o72JwxZ2r4Bw9
-	 boRROaO3K+f86ucnYWvAUAItlz7kRtwKMhmGVVibt42HRmulkTkWE/YvwpYTJBj1Dd
-	 9y4jCK+v+vDaLJZ8TZvU70nmvrmlwAizf907B0mc=
+	b=1CHG+2FqX6jPIJ07JGiErkYfEAUzcCSWBSBCohAsiaoF6Oxut0cVcwym3w2jfGotG
+	 XXujdnj1Q10HIJcN4Y8VMPWV9/8V9YQMTIDd+uwHIAwp4UlZLZKVpsXxrGfkKuxE2z
+	 9zEHtJaKpWiZRkaye87yyNqwrFEk+pC8hbLFvBrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 354/590] arm64: dts: qcom: sm8250: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:41:49 +0100
-Message-ID: <20250205134508.812755519@linuxfoundation.org>
+	Christoph Anton Mitterer <calestyo@scientia.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 391/393] btrfs: output the reason for open_ctree() failure
+Date: Wed,  5 Feb 2025 14:45:10 +0100
+Message-ID: <20250205134435.255099051@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 75420e437eed69fa95d1d7c339dad86dea35319a ]
+commit d0f038104fa37380e2a725e669508e43d0c503e9 upstream.
 
-The SM8250 platform uses PM8150 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+There is a recent ML report that mounting a large fs backed by hardware
+RAID56 controller (with one device missing) took too much time, and
+systemd seems to kill the mount attempt.
 
-Fixes: 9ff8b0591fcf ("arm64: dts: qcom: sm8250: use the right clock-freqency for sleep-clk")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-13-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In that case, the only error message is:
+
+  BTRFS error (device sdj): open_ctree failed
+
+There is no reason on why the failure happened, making it very hard to
+understand the reason.
+
+At least output the error number (in the particular case it should be
+-EINTR) to provide some clue.
+
+Link: https://lore.kernel.org/linux-btrfs/9b9c4d2810abcca2f9f76e32220ed9a90febb235.camel@scientia.org/
+Reported-by: Christoph Anton Mitterer <calestyo@scientia.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
+ fs/btrfs/super.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 630f4eff20bf8..22d99e4cf96d2 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -84,7 +84,7 @@
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1162,7 +1162,7 @@ static int btrfs_fill_super(struct super
  
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
--			clock-frequency = <32768>;
-+			clock-frequency = <32764>;
- 			#clock-cells = <0>;
- 		};
- 	};
--- 
-2.39.5
-
+ 	err = open_ctree(sb, fs_devices, (char *)data);
+ 	if (err) {
+-		btrfs_err(fs_info, "open_ctree failed");
++		btrfs_err(fs_info, "open_ctree failed: %d", err);
+ 		return err;
+ 	}
+ 
 
 
