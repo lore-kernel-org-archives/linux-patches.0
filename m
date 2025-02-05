@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852E0DF59;
-	Wed,  5 Feb 2025 14:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262BA1C6BE;
+	Wed,  5 Feb 2025 14:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766724; cv=none; b=FelIuMh7Icg1sme03+QTFWg3cNaAk+5dSe7ouO0o8garNX7ukip3RnrXumZqyde8OcIk7Rjpn4JYBr/iVID2dnyiDi/u9rxa91l/3scFNsVhmX/v0RD7vlfMqL4mH+c49g5MV/O1WB11lffJol3oz3/yrToFZp5+a9aOH60Cs9g=
+	t=1738766727; cv=none; b=aPV7giCBDjpuiie7ZvsD/nuGSv6OZ74rljn7WSlf52sfUqsbBdg2wyOiypxBQ2247EOZdX36AqXndpxFzhPnHu2LNP/5n529XGarpQcCUwuEqIOH+1zAG3WfUaSWIgt+TCWFryXBEsJDRTlxdFMY2+ZIR4b1y81FY8PRqtNL4gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766724; c=relaxed/simple;
-	bh=TCApuUUKO7ZkpbouQruSv8S0SvKM6Eb2tNqBO2fE9jw=;
+	s=arc-20240116; t=1738766727; c=relaxed/simple;
+	bh=u2nhCYlGVJjFbRUOtG1syu5bUmMZDVuKCjGBurX16eY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JyeXQWNEk54k0CxuwJBXPtwmvxp0AmoReuQ3k+ilFsnzr1gdOVKGlamuHjUyQUyXpPho9r1RP31cpi6vPLvOgaHmYAmUkgo/N0ucEOTcjgsyG+3cjrxQprLtpmJw2LX896qebn7LmOJpV9YN39gOTp09rrfa8IpDzZeOq1RPzwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOPM9hy9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dJnh1MvxgVRwxxnfJXjktO3T68Dhpf/T/1SDOyVcqsUIcc3XStgJiSGnWBrHNfojhp4ICc+TDsvSFg0Uqwo8e0xpzm39N7OyhVv7zycLC4Yg9n9qa3P88J5sGydbetN2yBLKmDkXx1TxUsAIwxhLFn8rN9fm5erUwInqBXC7fAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dP1bf806; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOPM9hy9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7757BC4CED1;
-	Wed,  5 Feb 2025 14:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dP1bf806"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C504C4CED1;
+	Wed,  5 Feb 2025 14:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766724;
-	bh=TCApuUUKO7ZkpbouQruSv8S0SvKM6Eb2tNqBO2fE9jw=;
+	s=korg; t=1738766727;
+	bh=u2nhCYlGVJjFbRUOtG1syu5bUmMZDVuKCjGBurX16eY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fOPM9hy9YwAe0q/K6OMnN6DvcBgL3TvI3AeEJclO1rlax7gnBb+U9MRhDVRbRAaQt
-	 cxnnQoh/7GdBV622RaCOvy0IExq6YBvo0GtrB6gu4OT5x53FrLsBHOTjgMbJ/jXoXj
-	 gYcLLMgN1RyA0NZh12HzGG7awPMyNS0Ud6CSjtP0=
+	b=dP1bf806B02FEh+UV53MkRPXm8VnqXmWBzlD4JoehX1vsBXrSBb/o72JwxZ2r4Bw9
+	 boRROaO3K+f86ucnYWvAUAItlz7kRtwKMhmGVVibt42HRmulkTkWE/YvwpYTJBj1Dd
+	 9y4jCK+v+vDaLJZ8TZvU70nmvrmlwAizf907B0mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingwei Zheng <zmw12306@gmail.com>,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 301/623] pinctrl: stm32: Add check for clk_enable()
-Date: Wed,  5 Feb 2025 14:40:43 +0100
-Message-ID: <20250205134507.743376692@linuxfoundation.org>
+Subject: [PATCH 6.12 354/590] arm64: dts: qcom: sm8250: correct sleep clock frequency
+Date: Wed,  5 Feb 2025 14:41:49 +0100
+Message-ID: <20250205134508.812755519@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,203 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingwei Zheng <zmw12306@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 451bc9aea9a1a6fe53969e81a5cb1bd785c0d989 ]
+[ Upstream commit 75420e437eed69fa95d1d7c339dad86dea35319a ]
 
-Convert the driver to clk_bulk*() API.
-Add check for the return value of clk_bulk_enable() to catch
-the potential error.
+The SM8250 platform uses PM8150 to provide sleep clock. According to the
+documentation, that clock has 32.7645 kHz frequency. Correct the sleep
+clock definition.
 
-Fixes: 05d8af449d93 ("pinctrl: stm32: Keep pinctrl block clock enabled when LEVEL IRQ requested")
-Signed-off-by: Mingwei Zheng <zmw12306@gmail.com>
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
-Link: https://lore.kernel.org/20250106220659.2640365-1-zmw12306@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 9ff8b0591fcf ("arm64: dts: qcom: sm8250: use the right clock-freqency for sleep-clk")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-13-e9b08fbeadd3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 76 +++++++++++++--------------
- 1 file changed, 38 insertions(+), 38 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index 5b7fa77c11843..03f3f707d2755 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -86,7 +86,6 @@ struct stm32_pinctrl_group {
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 630f4eff20bf8..22d99e4cf96d2 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -84,7 +84,7 @@
  
- struct stm32_gpio_bank {
- 	void __iomem *base;
--	struct clk *clk;
- 	struct reset_control *rstc;
- 	spinlock_t lock;
- 	struct gpio_chip gpio_chip;
-@@ -108,6 +107,7 @@ struct stm32_pinctrl {
- 	unsigned ngroups;
- 	const char **grp_names;
- 	struct stm32_gpio_bank *banks;
-+	struct clk_bulk_data *clks;
- 	unsigned nbanks;
- 	const struct stm32_pinctrl_match_data *match_data;
- 	struct irq_domain	*domain;
-@@ -1308,12 +1308,6 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
- 	if (IS_ERR(bank->base))
- 		return PTR_ERR(bank->base);
- 
--	err = clk_prepare_enable(bank->clk);
--	if (err) {
--		dev_err(dev, "failed to prepare_enable clk (%d)\n", err);
--		return err;
--	}
--
- 	bank->gpio_chip = stm32_gpio_template;
- 
- 	fwnode_property_read_string(fwnode, "st,bank-name", &bank->gpio_chip.label);
-@@ -1360,26 +1354,20 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
- 							   bank->fwnode, &stm32_gpio_domain_ops,
- 							   bank);
- 
--		if (!bank->domain) {
--			err = -ENODEV;
--			goto err_clk;
--		}
-+		if (!bank->domain)
-+			return -ENODEV;
- 	}
- 
- 	names = devm_kcalloc(dev, npins, sizeof(char *), GFP_KERNEL);
--	if (!names) {
--		err = -ENOMEM;
--		goto err_clk;
--	}
-+	if (!names)
-+		return -ENOMEM;
- 
- 	for (i = 0; i < npins; i++) {
- 		stm32_pin = stm32_pctrl_get_desc_pin_from_gpio(pctl, bank, i);
- 		if (stm32_pin && stm32_pin->pin.name) {
- 			names[i] = devm_kasprintf(dev, GFP_KERNEL, "%s", stm32_pin->pin.name);
--			if (!names[i]) {
--				err = -ENOMEM;
--				goto err_clk;
--			}
-+			if (!names[i])
-+				return -ENOMEM;
- 		} else {
- 			names[i] = NULL;
- 		}
-@@ -1390,15 +1378,11 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
- 	err = gpiochip_add_data(&bank->gpio_chip, bank);
- 	if (err) {
- 		dev_err(dev, "Failed to add gpiochip(%d)!\n", bank_nr);
--		goto err_clk;
-+		return err;
- 	}
- 
- 	dev_info(dev, "%s bank added\n", bank->gpio_chip.label);
- 	return 0;
--
--err_clk:
--	clk_disable_unprepare(bank->clk);
--	return err;
- }
- 
- static struct irq_domain *stm32_pctrl_get_irq_domain(struct platform_device *pdev)
-@@ -1621,6 +1605,11 @@ int stm32_pctl_probe(struct platform_device *pdev)
- 	if (!pctl->banks)
- 		return -ENOMEM;
- 
-+	pctl->clks = devm_kcalloc(dev, banks, sizeof(*pctl->clks),
-+				  GFP_KERNEL);
-+	if (!pctl->clks)
-+		return -ENOMEM;
-+
- 	i = 0;
- 	for_each_gpiochip_node(dev, child) {
- 		struct stm32_gpio_bank *bank = &pctl->banks[i];
-@@ -1632,24 +1621,27 @@ int stm32_pctl_probe(struct platform_device *pdev)
- 			return -EPROBE_DEFER;
- 		}
- 
--		bank->clk = of_clk_get_by_name(np, NULL);
--		if (IS_ERR(bank->clk)) {
-+		pctl->clks[i].clk = of_clk_get_by_name(np, NULL);
-+		if (IS_ERR(pctl->clks[i].clk)) {
- 			fwnode_handle_put(child);
--			return dev_err_probe(dev, PTR_ERR(bank->clk),
-+			return dev_err_probe(dev, PTR_ERR(pctl->clks[i].clk),
- 					     "failed to get clk\n");
- 		}
-+		pctl->clks[i].id = "pctl";
- 		i++;
- 	}
- 
-+	ret = clk_bulk_prepare_enable(banks, pctl->clks);
-+	if (ret) {
-+		dev_err(dev, "failed to prepare_enable clk (%d)\n", ret);
-+		return ret;
-+	}
-+
- 	for_each_gpiochip_node(dev, child) {
- 		ret = stm32_gpiolib_register_bank(pctl, child);
- 		if (ret) {
- 			fwnode_handle_put(child);
--
--			for (i = 0; i < pctl->nbanks; i++)
--				clk_disable_unprepare(pctl->banks[i].clk);
--
--			return ret;
-+			goto err_register;
- 		}
- 
- 		pctl->nbanks++;
-@@ -1658,6 +1650,15 @@ int stm32_pctl_probe(struct platform_device *pdev)
- 	dev_info(dev, "Pinctrl STM32 initialized\n");
- 
- 	return 0;
-+err_register:
-+	for (i = 0; i < pctl->nbanks; i++) {
-+		struct stm32_gpio_bank *bank = &pctl->banks[i];
-+
-+		gpiochip_remove(&bank->gpio_chip);
-+	}
-+
-+	clk_bulk_disable_unprepare(banks, pctl->clks);
-+	return ret;
- }
- 
- static int __maybe_unused stm32_pinctrl_restore_gpio_regs(
-@@ -1726,10 +1727,8 @@ static int __maybe_unused stm32_pinctrl_restore_gpio_regs(
- int __maybe_unused stm32_pinctrl_suspend(struct device *dev)
- {
- 	struct stm32_pinctrl *pctl = dev_get_drvdata(dev);
--	int i;
- 
--	for (i = 0; i < pctl->nbanks; i++)
--		clk_disable(pctl->banks[i].clk);
-+	clk_bulk_disable(pctl->nbanks, pctl->clks);
- 
- 	return 0;
- }
-@@ -1738,10 +1737,11 @@ int __maybe_unused stm32_pinctrl_resume(struct device *dev)
- {
- 	struct stm32_pinctrl *pctl = dev_get_drvdata(dev);
- 	struct stm32_pinctrl_group *g = pctl->groups;
--	int i;
-+	int i, ret;
- 
--	for (i = 0; i < pctl->nbanks; i++)
--		clk_enable(pctl->banks[i].clk);
-+	ret = clk_bulk_enable(pctl->nbanks, pctl->clks);
-+	if (ret)
-+		return ret;
- 
- 	for (i = 0; i < pctl->ngroups; i++, g++)
- 		stm32_pinctrl_restore_gpio_regs(pctl, g->pin);
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+-			clock-frequency = <32768>;
++			clock-frequency = <32764>;
+ 			#clock-cells = <0>;
+ 		};
+ 	};
 -- 
 2.39.5
 
