@@ -1,50 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201C21FECDE;
-	Wed,  5 Feb 2025 14:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745AA1FECDE;
+	Wed,  5 Feb 2025 14:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767043; cv=none; b=dytpzuRAU0ifRGFP4qbe53isG0yDVsEQ28RAZV/N7wU+x12424T/HptZlB2AKMsQbkRssSipfM22oAmFR5a6zYmATEmuxAtwhPe/GAamUnRrGA7UOwmLKbVEQUM3n+hsxxR4/dWUMmt/SnxM31/GM1A+Mn9G58jmZjnZOoZrFJE=
+	t=1738767046; cv=none; b=L9xNP0cZxaG0gnqZJ/i6oMkr0uecNqrERhKbvjddVNkSSx65RwfYGXSEufC/G/tI79bmpdsvtGOflSLopQCk+c3YZCIU8/HHxxnv7UbZVyfMo+JsYYX4PjnLb74eFwl2m/IBoBOeOZCN+J3j/dDLNyzru1nFD6iYDcHh8QUyGH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767043; c=relaxed/simple;
-	bh=EiDiHVKGVKihCLw/ynfiI+HRdO0MjsopBlOybUIb9xY=;
+	s=arc-20240116; t=1738767046; c=relaxed/simple;
+	bh=GqCh1+SoWDwJJ7JckmdnqjTefvBXQxo8sdbl9KxSAKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FNfAQQ4aTSBzveSus6S0ZhLrgRiHNq9Ji0iJme2giXflbOvyX9MdIgFWS55lNCVNmQge0VD4hu1Ht/K6zyQr74J4+h8QTjKLDWr4jpMtPv4EzUmPFgEgWBmyuTX+aHoENvC9VN6Bu7ITbSy6mshlHaFzF95SYiohz5tuL1eNDA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AewFRTd0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JmnxlzDUGnRkN+ne7dmzOgZw/x9ujLql/YI62NpP6vfHTIhcwBS6hE1slGAoyfdFDz1G+3F1jVYx5GZ6xwjr9nQDDokdxdP6YumtrQxiJsZM/q24M33ZP4TOGRnUWZBtck0bBOXjOqE1DjCWkdaoWIhF05MBvq5cZXu9Rw8QZkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+JVL31I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AewFRTd0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD3CC4CED1;
-	Wed,  5 Feb 2025 14:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+JVL31I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3B4C4CED1;
+	Wed,  5 Feb 2025 14:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767043;
-	bh=EiDiHVKGVKihCLw/ynfiI+HRdO0MjsopBlOybUIb9xY=;
+	s=korg; t=1738767046;
+	bh=GqCh1+SoWDwJJ7JckmdnqjTefvBXQxo8sdbl9KxSAKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AewFRTd09E3uDRuVwHvHGjfFy3xEtB1n5yJNnkz5hbIm5Opq37p7BwocngsVZM7rT
-	 aFONYvJjcR8mLgDcXQuagKjPuwyrWei+feVWiedr1mdLaIU3cZPttSMyLrMSoi/Q+u
-	 DavowmQCpPkJiZWgxAdR199KcgtUOTDfcj5/Ppyg=
+	b=L+JVL31ImS7E9GKPCJA1BWwzI+nYY+zN9r5K8f40VMZp8HyQD1+Siffo98YwfsmDc
+	 bIq6vZ8TBrBPe4DwILmlJrMnch3PPznTBSNtbj0aFgeTTgfTxXuk/GjJO11yzeGXGg
+	 v4+AxLD4Fdf+/Upk1DDyppq1l3NWw+MS4DBESMGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	David Rheinsberg <david@readahead.eu>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Peter Jones <pjones@redhat.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	linux-fbdev@vger.kernel.org,
-	Ard Biesheuvel <ardb@kernel.org>,
-	linux-efi@vger.kernel.org,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 398/590] efi: sysfb_efi: fix W=1 warnings when EFI is not set
-Date: Wed,  5 Feb 2025 14:42:33 +0100
-Message-ID: <20250205134510.491722943@linuxfoundation.org>
+Subject: [PATCH 6.13 349/623] arm64: dts: mediatek: mt8195-demo: Drop regulator-compatible property
+Date: Wed,  5 Feb 2025 14:41:31 +0100
+Message-ID: <20250205134509.577495773@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,72 +45,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 19fdc68aa7b90b1d3d600e873a3e050a39e7663d ]
+[ Upstream commit 2a8af9b95f504260a6d8200a11f0ae5c90e9f787 ]
 
-A build with W=1 fails because there are code and data that are not
-needed or used when CONFIG_EFI is not set. Move the "#ifdef CONFIG_EFI"
-block to earlier in the source file so that the unused code/data are
-not built.
+The "regulator-compatible" property has been deprecated since 2012 in
+commit 13511def87b9 ("regulator: deprecate regulator-compatible DT
+property"), which is so old it's not even mentioned in the converted
+regulator bindings YAML file. It is also not listed in the MT6360
+regulator and charger bindings.
 
-drivers/firmware/efi/sysfb_efi.c:345:39: warning: ‘efifb_fwnode_ops’ defined but not used [-Wunused-const-variable=]
-  345 | static const struct fwnode_operations efifb_fwnode_ops = {
-      |                                       ^~~~~~~~~~~~~~~~
-drivers/firmware/efi/sysfb_efi.c:238:35: warning: ‘efifb_dmi_swap_width_height’ defined but not used [-Wunused-const-variable=]
-  238 | static const struct dmi_system_id efifb_dmi_swap_width_height[] __initconst = {
-      |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/firmware/efi/sysfb_efi.c:188:35: warning: ‘efifb_dmi_system_table’ defined but not used [-Wunused-const-variable=]
-  188 | static const struct dmi_system_id efifb_dmi_system_table[] __initconst = {
-      |                                   ^~~~~~~~~~~~~~~~~~~~~~
+Drop the "regulator-compatible" property from the board dts. The MT6360
+bindings actually require the lowercase name, so with the property
+present the regulators were likely not actually working.
 
-Fixes: 15d27b15de96 ("efi: sysfb_efi: fix build when EFI is not set")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501071933.20nlmJJt-lkp@intel.com/
-Cc: David Rheinsberg <david@readahead.eu>
-Cc: Hans de Goede <hdegoede@redhat.com>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Peter Jones <pjones@redhat.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: linux-fbdev@vger.kernel.org
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: linux-efi@vger.kernel.org
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 6147314aeedc ("arm64: dts: mediatek: Add device-tree for MT8195 Demo board")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20241211052427.4178367-7-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/sysfb_efi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8195-demo.dts | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/drivers/firmware/efi/sysfb_efi.c b/drivers/firmware/efi/sysfb_efi.c
-index cc807ed35aedf..1e509595ac034 100644
---- a/drivers/firmware/efi/sysfb_efi.c
-+++ b/drivers/firmware/efi/sysfb_efi.c
-@@ -91,6 +91,7 @@ void efifb_setup_from_dmi(struct screen_info *si, const char *opt)
- 		_ret_;						\
- 	})
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195-demo.dts b/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
+index 31d424b8fc7ce..bfb75296795c3 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
+@@ -137,7 +137,6 @@
+ 			richtek,vinovp-microvolt = <14500000>;
  
-+#ifdef CONFIG_EFI
- static int __init efifb_set_system(const struct dmi_system_id *id)
- {
- 	struct efifb_dmi_info *info = id->driver_data;
-@@ -346,7 +347,6 @@ static const struct fwnode_operations efifb_fwnode_ops = {
- 	.add_links = efifb_add_links,
- };
+ 			otg_vbus_regulator: usb-otg-vbus-regulator {
+-				regulator-compatible = "usb-otg-vbus";
+ 				regulator-name = "usb-otg-vbus";
+ 				regulator-min-microvolt = <4425000>;
+ 				regulator-max-microvolt = <5825000>;
+@@ -149,7 +148,6 @@
+ 			LDO_VIN3-supply = <&mt6360_buck2>;
  
--#ifdef CONFIG_EFI
- static struct fwnode_handle efifb_fwnode;
+ 			mt6360_buck1: buck1 {
+-				regulator-compatible = "BUCK1";
+ 				regulator-name = "mt6360,buck1";
+ 				regulator-min-microvolt = <300000>;
+ 				regulator-max-microvolt = <1300000>;
+@@ -160,7 +158,6 @@
+ 			};
  
- __init void sysfb_apply_efi_quirks(void)
+ 			mt6360_buck2: buck2 {
+-				regulator-compatible = "BUCK2";
+ 				regulator-name = "mt6360,buck2";
+ 				regulator-min-microvolt = <300000>;
+ 				regulator-max-microvolt = <1300000>;
+@@ -171,7 +168,6 @@
+ 			};
+ 
+ 			mt6360_ldo1: ldo1 {
+-				regulator-compatible = "LDO1";
+ 				regulator-name = "mt6360,ldo1";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <3600000>;
+@@ -180,7 +176,6 @@
+ 			};
+ 
+ 			mt6360_ldo2: ldo2 {
+-				regulator-compatible = "LDO2";
+ 				regulator-name = "mt6360,ldo2";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <3600000>;
+@@ -189,7 +184,6 @@
+ 			};
+ 
+ 			mt6360_ldo3: ldo3 {
+-				regulator-compatible = "LDO3";
+ 				regulator-name = "mt6360,ldo3";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <3600000>;
+@@ -198,7 +192,6 @@
+ 			};
+ 
+ 			mt6360_ldo5: ldo5 {
+-				regulator-compatible = "LDO5";
+ 				regulator-name = "mt6360,ldo5";
+ 				regulator-min-microvolt = <2700000>;
+ 				regulator-max-microvolt = <3600000>;
+@@ -207,7 +200,6 @@
+ 			};
+ 
+ 			mt6360_ldo6: ldo6 {
+-				regulator-compatible = "LDO6";
+ 				regulator-name = "mt6360,ldo6";
+ 				regulator-min-microvolt = <500000>;
+ 				regulator-max-microvolt = <2100000>;
+@@ -216,7 +208,6 @@
+ 			};
+ 
+ 			mt6360_ldo7: ldo7 {
+-				regulator-compatible = "LDO7";
+ 				regulator-name = "mt6360,ldo7";
+ 				regulator-min-microvolt = <500000>;
+ 				regulator-max-microvolt = <2100000>;
 -- 
 2.39.5
 
