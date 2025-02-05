@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD83916DEB1;
-	Wed,  5 Feb 2025 14:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D6C16DEB1;
+	Wed,  5 Feb 2025 14:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767346; cv=none; b=axo7hpZKG49EcaT1kjB+qxw0Ghg4JbaofHXvGiuibMY3ch4eBElIMIEYS6akX8qBNXKo6+8awW74+ZrhoFAWDWvjFa817F9warTdJbbYR6uY0WCld/PdTHshHAvE0vT6UhwU984zWarIlWpe4QEgTZJD0pHcwg64DqWgzan8ZeU=
+	t=1738767350; cv=none; b=fukmQAKUQaOVosrfAmwXUofoxijU22c4BP9vpgs8YIxObkIS+M94emGDchvvY7X0cJdIGb/m/8ekdExBBYPByljzZSSIxUvIMryd1uQ3U3j/bMr1SHSuJQI3UYq1Og3+2WL7p+IyDTc6BupYtjGVQsxhGih4gDUlC69v+mXyRHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767346; c=relaxed/simple;
-	bh=6GaKGWKdenWQsyWjMYkmzQJcXq7HuGJ4Jyr5+NZQJMw=;
+	s=arc-20240116; t=1738767350; c=relaxed/simple;
+	bh=9bjGI3HxAsAV39WIMD4S/mHPXRFdvFHYcBgGEzKbmZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gf2eWd0VqeA3zi6Vt38nrRSB6Rc+/E62v23uNF6un5hvvIBy1MtBKHs+Y2HllRfC6FsXYL/h5ErtEwMhrzAnTGei6SWjDQL/8mj3WlY0KcPxSL/VN33O9xNkg1OiYlxn1XAl6H9R45BBnDLjds/Hr3Xq39Cnxz43aN2xuW955Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUOvTMsv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V0WVfIknZ2l43ODXg3fF8wInOEiQoZ3V8hkIb4n/uUxRjZOyQt3n2Bozpt/psdM/8SRQq7WwvVtOZvD+P1YJtBjjzq5bNuD3lUJ3Wicch1KQb5rOOb09n+zDaO5uF+xHvaSNKXGe+xrKzFOzSIugoGlW+rsRKqWM7AS9LnI1PCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7a3Udr8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUOvTMsv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC208C4CED1;
-	Wed,  5 Feb 2025 14:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7a3Udr8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE52C4CED1;
+	Wed,  5 Feb 2025 14:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767346;
-	bh=6GaKGWKdenWQsyWjMYkmzQJcXq7HuGJ4Jyr5+NZQJMw=;
+	s=korg; t=1738767349;
+	bh=9bjGI3HxAsAV39WIMD4S/mHPXRFdvFHYcBgGEzKbmZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OUOvTMsvzf3PQBUaVIH7WOSSZr8Vd0bJsM/3017LvEX5309xELUn4dLKmfUuGGmru
-	 X11NCl+Q0geVWTuI0dpvyVtYh7JRZ1BDEXRPS32Fad//ujblxwvXDHrTJWjZqq0cVk
-	 FDA2D+HlVhMcYAUImqi15vncDWCbLZL5yHMYXphQ=
+	b=u7a3Udr89tycrniPdGwM0pn0c0wpmZPQ4Pwj3U2S/E0NN/uLPsVhFupdZW6VpBctU
+	 7G8Rgw1ZxQFI9BE+0CGoLhLIFhRYHbQlzLYPp89XHv35RqgbEXNpEDMssTDGtmxYHs
+	 LTAJcAK59wzouEdwblnqJRYzh5pIgMtL7byVHfW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 391/623] arm64: dts: qcom: sm8650: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:42:13 +0100
-Message-ID: <20250205134511.180581866@linuxfoundation.org>
+Subject: [PATCH 6.13 369/623] arm64: dts: qcom: sa8775p: Use a SoC-specific compatible for GPI DMA
+Date: Wed,  5 Feb 2025 14:41:51 +0100
+Message-ID: <20250205134510.337299509@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,66 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 448db0ba6ad2aafee2cbd91b491246749f6a6abc ]
+[ Upstream commit a8d18df5a5a114f948a3526537de2de276c9fa7d ]
 
-The SM8650 platform uses PMK8550 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+The commit adding these nodes did not use a SoC-specific node, fix that
+to comply with bindings guidelines.
 
-Fixes: 6fbdb3c1fac7 ("arm64: dts: qcom: sm8650: add initial SM8650 MTP dts")
-Fixes: a834911d50c1 ("arm64: dts: qcom: sm8650: add initial SM8650 QRD dts")
-Fixes: 01061441029e ("arm64: dts: qcom: sm8650: add support for the SM8650-HDK board")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-17-e9b08fbeadd3@linaro.org
+Fixes: 34d17ccb5db8 ("arm64: dts: qcom: sa8775p: Add GPI configuration")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241108-topic-sa8775_dma2-v1-2-1d3b0d08d153@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8650-hdk.dts | 2 +-
- arch/arm64/boot/dts/qcom/sm8650-mtp.dts | 2 +-
- arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-index f00bdff4280af..d0912735b54e5 100644
---- a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-@@ -1113,7 +1113,7 @@
- };
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index 9da62d7c4d27f..d9482124f0d3b 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -855,7 +855,7 @@
+ 		};
  
- &sleep_clk {
--	clock-frequency = <32000>;
-+	clock-frequency = <32764>;
- };
+ 		gpi_dma2: qcom,gpi-dma@800000  {
+-			compatible = "qcom,sm6350-gpi-dma";
++			compatible = "qcom,sa8775p-gpi-dma", "qcom,sm6350-gpi-dma";
+ 			reg = <0x0 0x00800000 0x0 0x60000>;
+ 			#dma-cells = <3>;
+ 			interrupts = <GIC_SPI 588 IRQ_TYPE_LEVEL_HIGH>,
+@@ -1346,7 +1346,7 @@
+ 		};
  
- &swr0 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
-index 0db2cb03f252d..76ef43c10f77d 100644
---- a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
-@@ -730,7 +730,7 @@
- };
+ 		gpi_dma0: qcom,gpi-dma@900000  {
+-			compatible = "qcom,sm6350-gpi-dma";
++			compatible = "qcom,sa8775p-gpi-dma", "qcom,sm6350-gpi-dma";
+ 			reg = <0x0 0x00900000 0x0 0x60000>;
+ 			#dma-cells = <3>;
+ 			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
+@@ -1771,7 +1771,7 @@
+ 		};
  
- &sleep_clk {
--	clock-frequency = <32000>;
-+	clock-frequency = <32764>;
- };
+ 		gpi_dma1: qcom,gpi-dma@a00000  {
+-			compatible = "qcom,sm6350-gpi-dma";
++			compatible = "qcom,sa8775p-gpi-dma", "qcom,sm6350-gpi-dma";
+ 			reg = <0x0 0x00a00000 0x0 0x60000>;
+ 			#dma-cells = <3>;
+ 			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
+@@ -2226,7 +2226,7 @@
+ 		};
  
- &swr0 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-index c5e8c3c2df91a..71033fba21b56 100644
---- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-@@ -1041,7 +1041,7 @@
- };
- 
- &sleep_clk {
--	clock-frequency = <32000>;
-+	clock-frequency = <32764>;
- };
- 
- &spi4 {
+ 		gpi_dma3: qcom,gpi-dma@b00000  {
+-			compatible = "qcom,sm6350-gpi-dma";
++			compatible = "qcom,sa8775p-gpi-dma", "qcom,sm6350-gpi-dma";
+ 			reg = <0x0 0x00b00000 0x0 0x58000>;
+ 			#dma-cells = <3>;
+ 			interrupts = <GIC_SPI 368 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.39.5
 
