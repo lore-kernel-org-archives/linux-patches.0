@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F171519AA;
-	Wed,  5 Feb 2025 13:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BCC149DE8;
+	Wed,  5 Feb 2025 13:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763727; cv=none; b=SM44NJbrlb9eTjqVBP0dWZf4uXavUVMnG9cF418w/hZpV3wfpmbSQq5tG6sGCfQrj9mWFSHUxqVN770NyOJLpP+B6MsxFNdvnaQ/ogZbXPIKkpDsM74FXlONsC6CykeQQQqF+rH2yAnPhjr69v8L+C2JTjfAPKfyqcqe+flNFnA=
+	t=1738763731; cv=none; b=oN/Lk3XvzQBWHKLpn3NFDNCHmd+ukY3kuXE2VKpzL2081WSS1saCmIWToEt3t67mraJHLPr8qLnzj9+Fz1XiVV0Kerd9+5ZJBywlpe5uDomatiOfZkQ3bFMhpvnAJlgwL4/qkdv1U2h29NWLgCw0jNhDV2MbA/obhXLhaXYaeNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763727; c=relaxed/simple;
-	bh=AAy9Tz6yq+by6criQkW4neTnm+5mJ6+A03S0SzOo2qI=;
+	s=arc-20240116; t=1738763731; c=relaxed/simple;
+	bh=RzRV+MqLwuwEmu7ykTnW7McPtqrozOToc+BeBVmq15U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iy4Y445knSb8NRdPvhTwmzt8RpHWboCri0o4jLcqwxiizRWvsOAApGSf59YTThI7hxb5FsGSuBR+G6s2G1U5cKx6c88YSG432Km/Fh3fA0YfgZ9ri3gsn9ixrXZkuLUH3t9KZWEOyzMbyzlsIW8vhC0VzOZXFxWQ5YxcrUOKMmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqJkWiW1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L9oyMWN7PpP8QkICmabzdLXC/TAaO2OMOnQ4FJU0JCSLlmCEZABzvzbjmI93piKoBZIieZIsTRSF1udgRVyG9Cj52q7HEhAMIfLifxpq+i2leVwVYkCFlzflkY2OAuoaRrFa39Jxl3qoGfQjia9bygqt11uGu2lgB72xkEHW03M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9b2IZgF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqJkWiW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25888C4CED1;
-	Wed,  5 Feb 2025 13:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9b2IZgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668EFC4CED1;
+	Wed,  5 Feb 2025 13:55:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763727;
-	bh=AAy9Tz6yq+by6criQkW4neTnm+5mJ6+A03S0SzOo2qI=;
+	s=korg; t=1738763730;
+	bh=RzRV+MqLwuwEmu7ykTnW7McPtqrozOToc+BeBVmq15U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wqJkWiW1Y90mAYAqO0QItJedA/SpaH6JxUVxilwRoAlS5XpXfDI9viUIMVc5lGhVd
-	 nmysQf+DcVZHKCwH9VR2gRgvR4T9opNKZqHbjCQUoRzBYVF7mINFnDFRHJUf1G7kTV
-	 F7V00syOFnjmysoU57kXPKHTF+t8JqAC7LyYi07U=
+	b=a9b2IZgFh6e8nb5QjEELuTCppQ+qPa92PvMfd/8DjCLb293MWH2Lzylmhvmg5W6Lu
+	 RL0gfzsC+dRmjKM44yc2yoSPyie0FelO0VTruS5AlnBIqOJdzpCvqQ3pZ7HapW1l7m
+	 1ZPJ+dUaEzWU4KN7UtL7h5PcyabjvcDELK6Ya12o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Tritton <terry.tritton@linaro.org>,
-	Aseda Aboagye <aaboagye@chromium.org>,
-	Carlos Llamas <cmllamas@google.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	syzbot+6b0df248918b92c33e6a@syzkaller.appspotmail.com,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 100/393] HID: fix generic desktop D-Pad controls
-Date: Wed,  5 Feb 2025 14:40:19 +0100
-Message-ID: <20250205134424.120351548@linuxfoundation.org>
+Subject: [PATCH 6.13 013/623] nbd: dont allow reconnect after disconnect
+Date: Wed,  5 Feb 2025 14:35:55 +0100
+Message-ID: <20250205134456.737834080@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,96 +49,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Terry Tritton <terry.tritton@linaro.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 80818fdc068eaab729bb793d790ae9fd053f7053 ]
+[ Upstream commit 844b8cdc681612ff24df62cdefddeab5772fadf1 ]
 
-The addition of the "System Do Not Disturb" event code caused the Generic
-Desktop D-Pad configuration to be skipped. This commit allows both to be
-configured without conflicting with each other.
+Following process can cause nbd_config UAF:
 
-Fixes: 22d6d060ac77 ("input: Add support for "Do Not Disturb"")
-Signed-off-by: Terry Tritton <terry.tritton@linaro.org>
-Reviewed-by: Aseda Aboagye <aaboagye@chromium.org>
-Reviewed-by: Carlos Llamas <cmllamas@google.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+1) grab nbd_config temporarily;
+
+2) nbd_genl_disconnect() flush all recv_work() and release the
+initial reference:
+
+  nbd_genl_disconnect
+   nbd_disconnect_and_put
+    nbd_disconnect
+     flush_workqueue(nbd->recv_workq)
+    if (test_and_clear_bit(NBD_RT_HAS_CONFIG_REF, ...))
+     nbd_config_put
+     -> due to step 1), reference is still not zero
+
+3) nbd_genl_reconfigure() queue recv_work() again;
+
+  nbd_genl_reconfigure
+   config = nbd_get_config_unlocked(nbd)
+   if (!config)
+   -> succeed
+   if (!test_bit(NBD_RT_BOUND, ...))
+   -> succeed
+   nbd_reconnect_socket
+    queue_work(nbd->recv_workq, &args->work)
+
+4) step 1) release the reference;
+
+5) Finially, recv_work() will trigger UAF:
+
+  recv_work
+   nbd_config_put(nbd)
+   -> nbd_config is freed
+   atomic_dec(&config->recv_threads)
+   -> UAF
+
+Fix the problem by clearing NBD_RT_BOUND in nbd_genl_disconnect(), so
+that nbd_genl_reconfigure() will fail.
+
+Fixes: b7aa3d39385d ("nbd: add a reconfigure netlink command")
+Reported-by: syzbot+6b0df248918b92c33e6a@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/675bfb65.050a0220.1a2d0d.0006.GAE@google.com/
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250103092859.3574648-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-input.c | 37 +++++++++++++++++--------------------
- include/linux/hid.h     |  1 +
- 2 files changed, 18 insertions(+), 20 deletions(-)
+ drivers/block/nbd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index fda9dce3da998..9d80635a91ebd 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -810,10 +810,23 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
- 			break;
- 		}
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index b852050d8a966..450458267e6e6 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -2180,6 +2180,7 @@ static void nbd_disconnect_and_put(struct nbd_device *nbd)
+ 	flush_workqueue(nbd->recv_workq);
+ 	nbd_clear_que(nbd);
+ 	nbd->task_setup = NULL;
++	clear_bit(NBD_RT_BOUND, &nbd->config->runtime_flags);
+ 	mutex_unlock(&nbd->config_lock);
  
--		if ((usage->hid & 0xf0) == 0x90) { /* SystemControl*/
--			switch (usage->hid & 0xf) {
--			case 0xb: map_key_clear(KEY_DO_NOT_DISTURB); break;
--			default: goto ignore;
-+		if ((usage->hid & 0xf0) == 0x90) { /* SystemControl & D-pad */
-+			switch (usage->hid) {
-+			case HID_GD_UP:	   usage->hat_dir = 1; break;
-+			case HID_GD_DOWN:  usage->hat_dir = 5; break;
-+			case HID_GD_RIGHT: usage->hat_dir = 3; break;
-+			case HID_GD_LEFT:  usage->hat_dir = 7; break;
-+			case HID_GD_DO_NOT_DISTURB:
-+				map_key_clear(KEY_DO_NOT_DISTURB); break;
-+			default: goto unknown;
-+			}
-+
-+			if (usage->hid <= HID_GD_LEFT) {
-+				if (field->dpad) {
-+					map_abs(field->dpad);
-+					goto ignore;
-+				}
-+				map_abs(ABS_HAT0X);
- 			}
- 			break;
- 		}
-@@ -844,22 +857,6 @@ static void hidinput_configure_usage(struct hid_input *hidinput, struct hid_fiel
- 		if (field->application == HID_GD_SYSTEM_CONTROL)
- 			goto ignore;
- 
--		if ((usage->hid & 0xf0) == 0x90) {	/* D-pad */
--			switch (usage->hid) {
--			case HID_GD_UP:	   usage->hat_dir = 1; break;
--			case HID_GD_DOWN:  usage->hat_dir = 5; break;
--			case HID_GD_RIGHT: usage->hat_dir = 3; break;
--			case HID_GD_LEFT:  usage->hat_dir = 7; break;
--			default: goto unknown;
--			}
--			if (field->dpad) {
--				map_abs(field->dpad);
--				goto ignore;
--			}
--			map_abs(ABS_HAT0X);
--			break;
--		}
--
- 		switch (usage->hid) {
- 		/* These usage IDs map directly to the usage codes. */
- 		case HID_GD_X: case HID_GD_Y: case HID_GD_Z:
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index af55a25db91b0..774cb25dec34c 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -218,6 +218,7 @@ struct hid_item {
- #define HID_GD_DOWN		0x00010091
- #define HID_GD_RIGHT		0x00010092
- #define HID_GD_LEFT		0x00010093
-+#define HID_GD_DO_NOT_DISTURB	0x0001009b
- /* Microsoft Win8 Wireless Radio Controls CA usage codes */
- #define HID_GD_RFKILL_BTN	0x000100c6
- #define HID_GD_RFKILL_LED	0x000100c7
+ 	if (test_and_clear_bit(NBD_RT_HAS_CONFIG_REF,
 -- 
 2.39.5
 
