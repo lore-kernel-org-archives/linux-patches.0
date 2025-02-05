@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304B413C9C4;
-	Wed,  5 Feb 2025 13:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEA8FC0B;
+	Wed,  5 Feb 2025 13:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763619; cv=none; b=JTutJmh+9qfimqYSEWuxLdx/WXyTYkIuabkjEkIdYbfjNsGzjxI77PkMSC4A10G6/ODqN7RBI6Do3Os8lffxB9R4ueUzLEoXb4yWWl1Hbv88vA8ZE0wo+xEUlaEc3d1+RMBeo3kfP5h/gow0XdiBS77FyyT4ZBIWu11Fo5rAGek=
+	t=1738763622; cv=none; b=drf4unqSNHGRWA1uSrRTfp7glhB8rGgEBicR54uK9uIUYyWOBRgwwZFysJEvZJRU1/YAvcH/p6vpLJ40pKATvhZtXsbc0GjjOYT5xjQ6W6UQyNnhdqFEsKk+j8RsEUWLKvzL8l2XCgdSaVk68E9lgEfFWtV9xjUAA91KbqsrChY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763619; c=relaxed/simple;
-	bh=R54hvtfzc3w+cmPv7a5fRUIxA+iDkI9QQS3Knz20wsE=;
+	s=arc-20240116; t=1738763622; c=relaxed/simple;
+	bh=NaUzkvJb19fGHoflLuFmWk+SHRJuK4nqmyg8tFPu/FU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XCCbHS0iGDNnJW5q3gJHmR+3MRDuQIJnm6bfXDIbNA5o4gt3sqtFaeYSmrslmgqYa6nlueRwt0paQ1MKfgeaec8YLdkyZmRjMJcLHQ885rq5vASu2JpcWa4pElG6BQB/pe0i72m99n2+3dHUqPWaxsWePfzZMnMq1f5WhCOuo8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RC4qA9Om; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HpH9+sS9/bb+gZ2C56q4FjpROpS8Kc/wh7CdC2urAv6tage8wetci8jBvROMAK0YgtNHrmuvAxADXQIrksPMm1oiXa+NWrKvyHdP5ZjhIgYhL9o3ILC+odd3WG1yybwjh+CBwXOaRll4GhBkFQX9+6VgXm7YTUfsc30HEkfYia8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+FLcwkO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RC4qA9Om"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F74C4CED1;
-	Wed,  5 Feb 2025 13:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+FLcwkO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11508C4CED1;
+	Wed,  5 Feb 2025 13:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763619;
-	bh=R54hvtfzc3w+cmPv7a5fRUIxA+iDkI9QQS3Knz20wsE=;
+	s=korg; t=1738763622;
+	bh=NaUzkvJb19fGHoflLuFmWk+SHRJuK4nqmyg8tFPu/FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RC4qA9OmHDSDUaFmTsjm1xy+Yvrk5s54InZOe9a0Es+axgu1txvFt8GQE5+sCyutc
-	 Z8YYEoFFPNCbC6DbstmMcfWis23ou8lqP36EslGgmr9tD2LleNJ2VX7Zz8ofFRCRy2
-	 gMvwTmvVEvPeqU+gIMRSQuQ7H+cp1NaH2TTROTmw=
+	b=0+FLcwkOcUBgANMfGMlJYA/sHm2uxgmIvyPFTH0lXb7GlNRa/fQLccNYlQsbQFM4I
+	 7XsRleoZEP9VcRarboyfFd/e35l2d5OnIbTPWIt9dftdCmnuM83sV4QiheX9dv0fOS
+	 1YN3N+3mfZNmWuRj7V8ilq10gYB2N0L0fE8Iv4iE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 066/393] wifi: rtlwifi: remove unused check_buddy_priv
-Date: Wed,  5 Feb 2025 14:39:45 +0100
-Message-ID: <20250205134422.820654833@linuxfoundation.org>
+Subject: [PATCH 6.6 060/393] dt-bindings: mmc: controller: clarify the address-cells description
+Date: Wed,  5 Feb 2025 14:39:39 +0100
+Message-ID: <20250205134422.591994862@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -51,198 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 2fdac64c3c35858aa8ac5caa70b232e03456e120 ]
+[ Upstream commit b2b8e93ec00b8110cb37cbde5400d5abfdaed6a7 ]
 
-Commit 2461c7d60f9f ("rtlwifi: Update header file") introduced a global
-list of private data structures.
+The term "slot ID" has nothing to do with the SDIO function number
+which is specified in the reg property of the subnodes, rephrase
+the description to be more accurate.
 
-Later on, commit 26634c4b1868 ("rtlwifi Modify existing bits to match
-vendor version 2013.02.07") started adding the private data to that list at
-probe time and added a hook, check_buddy_priv to find the private data from
-a similar device.
-
-However, that function was never used.
-
-Besides, though there is a lock for that list, it is never used. And when
-the probe fails, the private data is never removed from the list. This
-would cause a second probe to access freed memory.
-
-Remove the unused hook, structures and members, which will prevent the
-potential race condition on the list and its corruption during a second
-probe when probe fails.
-
-Fixes: 26634c4b1868 ("rtlwifi Modify existing bits to match vendor version 2013.02.07")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241206173713.3222187-2-cascardo@igalia.com
+Fixes: f9b7989859dd ("dt-bindings: mmc: Add YAML schemas for the generic MMC options")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Message-ID: <20241128-topic-amlogic-arm32-upstream-bindings-fixes-convert-meson-mx-sdio-v4-1-11d9f9200a59@linaro.org>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/base.c |  7 ----
- drivers/net/wireless/realtek/rtlwifi/base.h |  1 -
- drivers/net/wireless/realtek/rtlwifi/pci.c  | 44 ---------------------
- drivers/net/wireless/realtek/rtlwifi/wifi.h | 12 ------
- 4 files changed, 64 deletions(-)
+ Documentation/devicetree/bindings/mmc/mmc-controller.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/base.c b/drivers/net/wireless/realtek/rtlwifi/base.c
-index 807a53a97325b..c7d5b20039ca0 100644
---- a/drivers/net/wireless/realtek/rtlwifi/base.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/base.c
-@@ -2710,9 +2710,6 @@ MODULE_AUTHOR("Larry Finger	<Larry.FInger@lwfinger.net>");
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("Realtek 802.11n PCI wireless core");
+diff --git a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
+index 58ae298cd2fcf..23884b8184a9d 100644
+--- a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
++++ b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
+@@ -25,7 +25,7 @@ properties:
+   "#address-cells":
+     const: 1
+     description: |
+-      The cell is the slot ID if a function subnode is used.
++      The cell is the SDIO function number if a function subnode is used.
  
--struct rtl_global_var rtl_global_var = {};
--EXPORT_SYMBOL_GPL(rtl_global_var);
--
- static int __init rtl_core_module_init(void)
- {
- 	BUILD_BUG_ON(TX_PWR_BY_RATE_NUM_RATE < TX_PWR_BY_RATE_NUM_SECTION);
-@@ -2726,10 +2723,6 @@ static int __init rtl_core_module_init(void)
- 	/* add debugfs */
- 	rtl_debugfs_add_topdir();
- 
--	/* init some global vars */
--	INIT_LIST_HEAD(&rtl_global_var.glb_priv_list);
--	spin_lock_init(&rtl_global_var.glb_list_lock);
--
- 	return 0;
- }
- 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/base.h b/drivers/net/wireless/realtek/rtlwifi/base.h
-index f081a9a90563f..f3a6a43a42eca 100644
---- a/drivers/net/wireless/realtek/rtlwifi/base.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/base.h
-@@ -124,7 +124,6 @@ int rtl_send_smps_action(struct ieee80211_hw *hw,
- u8 *rtl_find_ie(u8 *data, unsigned int len, u8 ie);
- void rtl_recognize_peer(struct ieee80211_hw *hw, u8 *data, unsigned int len);
- u8 rtl_tid_to_ac(u8 tid);
--extern struct rtl_global_var rtl_global_var;
- void rtl_phy_scan_operation_backup(struct ieee80211_hw *hw, u8 operation);
- 
- #endif
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 766e43f13d3f5..8ee3a11e8dc73 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -295,46 +295,6 @@ static bool rtl_pci_get_amd_l1_patch(struct ieee80211_hw *hw)
- 	return status;
- }
- 
--static bool rtl_pci_check_buddy_priv(struct ieee80211_hw *hw,
--				     struct rtl_priv **buddy_priv)
--{
--	struct rtl_priv *rtlpriv = rtl_priv(hw);
--	struct rtl_pci_priv *pcipriv = rtl_pcipriv(hw);
--	struct rtl_priv *tpriv = NULL, *iter;
--	struct rtl_pci_priv *tpcipriv = NULL;
--
--	if (!list_empty(&rtlpriv->glb_var->glb_priv_list)) {
--		list_for_each_entry(iter, &rtlpriv->glb_var->glb_priv_list,
--				    list) {
--			tpcipriv = (struct rtl_pci_priv *)iter->priv;
--			rtl_dbg(rtlpriv, COMP_INIT, DBG_LOUD,
--				"pcipriv->ndis_adapter.funcnumber %x\n",
--				pcipriv->ndis_adapter.funcnumber);
--			rtl_dbg(rtlpriv, COMP_INIT, DBG_LOUD,
--				"tpcipriv->ndis_adapter.funcnumber %x\n",
--				tpcipriv->ndis_adapter.funcnumber);
--
--			if (pcipriv->ndis_adapter.busnumber ==
--			    tpcipriv->ndis_adapter.busnumber &&
--			    pcipriv->ndis_adapter.devnumber ==
--			    tpcipriv->ndis_adapter.devnumber &&
--			    pcipriv->ndis_adapter.funcnumber !=
--			    tpcipriv->ndis_adapter.funcnumber) {
--				tpriv = iter;
--				break;
--			}
--		}
--	}
--
--	rtl_dbg(rtlpriv, COMP_INIT, DBG_LOUD,
--		"find_buddy_priv %d\n", tpriv != NULL);
--
--	if (tpriv)
--		*buddy_priv = tpriv;
--
--	return tpriv != NULL;
--}
--
- static void rtl_pci_parse_configuration(struct pci_dev *pdev,
- 					struct ieee80211_hw *hw)
- {
-@@ -2013,7 +1973,6 @@ static bool _rtl_pci_find_adapter(struct pci_dev *pdev,
- 		pcipriv->ndis_adapter.amd_l1_patch);
- 
- 	rtl_pci_parse_configuration(pdev, hw);
--	list_add_tail(&rtlpriv->list, &rtlpriv->glb_var->glb_priv_list);
- 
- 	return true;
- }
-@@ -2160,7 +2119,6 @@ int rtl_pci_probe(struct pci_dev *pdev,
- 	rtlpriv->rtlhal.interface = INTF_PCI;
- 	rtlpriv->cfg = (struct rtl_hal_cfg *)(id->driver_data);
- 	rtlpriv->intf_ops = &rtl_pci_ops;
--	rtlpriv->glb_var = &rtl_global_var;
- 	rtl_efuse_ops_init(hw);
- 
- 	/* MEM map */
-@@ -2318,7 +2276,6 @@ void rtl_pci_disconnect(struct pci_dev *pdev)
- 	if (rtlpci->using_msi)
- 		pci_disable_msi(rtlpci->pdev);
- 
--	list_del(&rtlpriv->list);
- 	if (rtlpriv->io.pci_mem_start != 0) {
- 		pci_iounmap(pdev, (void __iomem *)rtlpriv->io.pci_mem_start);
- 		pci_release_regions(pdev);
-@@ -2378,7 +2335,6 @@ const struct rtl_intf_ops rtl_pci_ops = {
- 	.read_efuse_byte = read_efuse_byte,
- 	.adapter_start = rtl_pci_start,
- 	.adapter_stop = rtl_pci_stop,
--	.check_buddy_priv = rtl_pci_check_buddy_priv,
- 	.adapter_tx = rtl_pci_tx,
- 	.flush = rtl_pci_flush,
- 	.reset_trx_ring = rtl_pci_reset_trx_ring,
-diff --git a/drivers/net/wireless/realtek/rtlwifi/wifi.h b/drivers/net/wireless/realtek/rtlwifi/wifi.h
-index 8cbf3fb388539..2106d7763bada 100644
---- a/drivers/net/wireless/realtek/rtlwifi/wifi.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/wifi.h
-@@ -2321,8 +2321,6 @@ struct rtl_intf_ops {
- 	void (*read_efuse_byte)(struct ieee80211_hw *hw, u16 _offset, u8 *pbuf);
- 	int (*adapter_start)(struct ieee80211_hw *hw);
- 	void (*adapter_stop)(struct ieee80211_hw *hw);
--	bool (*check_buddy_priv)(struct ieee80211_hw *hw,
--				 struct rtl_priv **buddy_priv);
- 
- 	int (*adapter_tx)(struct ieee80211_hw *hw,
- 			  struct ieee80211_sta *sta,
-@@ -2566,14 +2564,6 @@ struct dig_t {
- 	u32 rssi_max;
- };
- 
--struct rtl_global_var {
--	/* from this list we can get
--	 * other adapter's rtl_priv
--	 */
--	struct list_head glb_priv_list;
--	spinlock_t glb_list_lock;
--};
--
- #define IN_4WAY_TIMEOUT_TIME	(30 * MSEC_PER_SEC)	/* 30 seconds */
- 
- struct rtl_btc_info {
-@@ -2719,9 +2709,7 @@ struct rtl_scan_list {
- struct rtl_priv {
- 	struct ieee80211_hw *hw;
- 	struct completion firmware_loading_complete;
--	struct list_head list;
- 	struct rtl_priv *buddy_priv;
--	struct rtl_global_var *glb_var;
- 	struct rtl_dmsp_ctl dmsp_ctl;
- 	struct rtl_locks locks;
- 	struct rtl_works works;
+   "#size-cells":
+     const: 0
 -- 
 2.39.5
 
