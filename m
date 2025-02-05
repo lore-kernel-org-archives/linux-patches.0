@@ -1,53 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E56315B984;
-	Wed,  5 Feb 2025 14:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A958151988;
+	Wed,  5 Feb 2025 14:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765963; cv=none; b=WIi0jeN6N5dbmljMiw/q8J2ofspegSCaDaOERvXH+VeelDT90IzSS+qczLyt04wCcZu+B+uQJk7YgWoP/tQJ+B7XJlPJZr5pVY6c55rAAhCQ7fenRbTKlSJL+URowKt8o2arWV8bLV2HwbLgaQS8O2N2QER0s5QjmnBHkZpWtWI=
+	t=1738765966; cv=none; b=OO0w18AVWbvPuJuzuRrEABD/+0mrkZZSBgSMLN08Dr1uI4K17DGVH2Z3S8e/gPYz/WsyNilCiVTLZ0fLH/AUM3Um03UpquLdznDRicwXgVVM7q68+Hn2BjgKyM2I5gVVHYbPx410OC8v0526OzPZV7E84E6ujvlRgJu8IMu/Fj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765963; c=relaxed/simple;
-	bh=sixcV7Vk03lWC+ORimDN6l1rMBbCrs8k1bcGVXbN1SU=;
+	s=arc-20240116; t=1738765966; c=relaxed/simple;
+	bh=YtlqvZondOfJln95ATmeHOu+gsMoBiU+QAT9tJUq/+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cs3N4gZVuVRZ9eqj7Pk8Yy5VyjQr5j7lZdumBgYhF+Wu7YHRfT2D8m69Tq4jdUB1H+j4AJQoqTN16KGOvtAYwvOptRn8HcmP2dcQKa4J8aEppoaRbOqOIWSF0gyzZxwF0qcAMHNBNnbkzkZe/hLHXokN6fm+7BBEZRyF5kYlkeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjskQFll; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a1MRjWQ4FXmZPB+Sx6ZBy2uFJUG5cR7fLvX9pdyB925Jpppn2tlc9O7vvyV5mThZhjv6tW2+DOCnxcuPLg75UEeFIP6GfIWJ49tZyEBNi6LqXBnq/ltI5rKT1gGQ4zLvkRSlypQT8/4UwX3aUf5qyqpycFKPEo264S660qguXC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGlJyo+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjskQFll"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC82C4CED1;
-	Wed,  5 Feb 2025 14:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGlJyo+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF683C4CED6;
+	Wed,  5 Feb 2025 14:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765962;
-	bh=sixcV7Vk03lWC+ORimDN6l1rMBbCrs8k1bcGVXbN1SU=;
+	s=korg; t=1738765966;
+	bh=YtlqvZondOfJln95ATmeHOu+gsMoBiU+QAT9tJUq/+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NjskQFllJOIGgxlJpIkSFbQZ4w0qdGvTNL5JgubNNVro3ShE3C1U64+W8zV0YCK+8
-	 FWyq5TKKNT+bBA+EnPN6WWRYeS9OhmuzreqMcdQHgt54ROfuTFHk3DTtmRgELEfsF+
-	 /FG6lDIVnQwS5XjPK6ushRexq7/JdnVZ9IUTvi+w=
+	b=UGlJyo+PJciOnk5g1JiUAR+vK+BHND3YYucIyqSnqc+59gALr3X87y7TXj9KvFA5W
+	 Mdv+jhScWg0PiIufKk3CxsleNTcsCiFcJ3lf4d/MyFYRIXO1Lp+VfAPXFVurmxSW1N
+	 gkJFQxR6iddfXZxSF5XqM5d5OcGZ6l2tdYNAlGnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Nigro <fnigro@redhat.com>,
-	Ilan Green <igreen@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Clark Williams <williams@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Stephane Eranian <eranian@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 271/590] perf namespaces: Introduce nsinfo__set_in_pidns()
-Date: Wed,  5 Feb 2025 14:40:26 +0100
-Message-ID: <20250205134505.641334132@linuxfoundation.org>
+Subject: [PATCH 6.6 316/393] xfrm: replay: Fix the update of replay_esn->oseq_hi for GSO
+Date: Wed,  5 Feb 2025 14:43:55 +0100
+Message-ID: <20250205134432.406090947@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -59,88 +49,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit 9c6a585d257f6845731f4e36b45fe42b5c3162f5 ]
+[ Upstream commit c05c5e5aa163f4682ca97a2f0536575fc7dbdecb ]
 
-When we're processing a perf.data file we will, for every thread in that
-file do a machine__findnew_thread(machine, pid, tid) that when that pid
-is seen for the first time will create a 'struct thread' representing
-it.
+When skb needs GSO and wrap around happens, if xo->seq.low (seqno of
+the first skb segment) is before the last seq number but oseq (seqno
+of the last segment) is after it, xo->seq.low is still bigger than
+replay_esn->oseq while oseq is smaller than it, so the update of
+replay_esn->oseq_hi is missed for this case wrap around because of
+the change in the cited commit.
 
-That in turn will call nsinfo__new() -> nsinfo__init() and there it will
-assume we're running live, which is wrong and will need to be addressed
-in a followup patch.
+For example, if sending a packet with gso_segs=3 while old
+replay_esn->oseq=0xfffffffe, we calculate:
+    xo->seq.low = 0xfffffffe + 1 = 0x0xffffffff
+    oseq = 0xfffffffe + 3 = 0x1
+(oseq < replay_esn->oseq) is true, but (xo->seq.low <
+replay_esn->oseq) is false, so replay_esn->oseq_hi is not incremented.
 
-The nsinfo__new() assumes that if we can't access that thread it has
-already finished and will ignore the -1 return from nsinfo__init(), just
-taking notes to avoid trying to enter in that namespace, since it isn't
-there anymore, a race.
+To fix this issue, change the outer checking back for the update of
+replay_esn->oseq_hi. And add new checking inside for the update of
+packet's oseq_hi.
 
-When doing this from 'perf inject', tho, we can fill in parts of that
-nsinfo from what we get from the PERF_RECORD_MMAP2 (pid, tid) and in the
-jitdump file name, that has the form of jit-<PID>.dump.
-
-So if the pid in the jitdump file name is not the one in the
-PERF_RECORD_MMAP2, we can assume that its the pid of the process
-_inside_ the namespace, and that perf was runing outside that namespace.
-
-This will be done in the following patch.
-
-Reported-by: Francesco Nigro <fnigro@redhat.com>
-Reported-by: Ilan Green <igreen@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Clark Williams <williams@redhat.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Stephane Eranian <eranian@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>
-Link: https://lore.kernel.org/r/20241206204828.507527-4-acme@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 64a7617efd5a ("perf namespaces: Fixup the nsinfo__in_pidns() return type, its bool")
+Fixes: 4b549ccce941 ("xfrm: replay: Fix ESN wrap around for GSO")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/namespaces.c | 5 +++++
- tools/perf/util/namespaces.h | 1 +
- 2 files changed, 6 insertions(+)
+ net/xfrm/xfrm_replay.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/namespaces.c b/tools/perf/util/namespaces.c
-index cb185c5659d6b..36047184d76e2 100644
---- a/tools/perf/util/namespaces.c
-+++ b/tools/perf/util/namespaces.c
-@@ -271,6 +271,11 @@ pid_t nsinfo__in_pidns(const struct nsinfo  *nsi)
- 	return RC_CHK_ACCESS(nsi)->in_pidns;
- }
+diff --git a/net/xfrm/xfrm_replay.c b/net/xfrm/xfrm_replay.c
+index ce56d659c55a6..7f52bb2e14c13 100644
+--- a/net/xfrm/xfrm_replay.c
++++ b/net/xfrm/xfrm_replay.c
+@@ -714,10 +714,12 @@ static int xfrm_replay_overflow_offload_esn(struct xfrm_state *x, struct sk_buff
+ 			oseq += skb_shinfo(skb)->gso_segs;
+ 		}
  
-+void nsinfo__set_in_pidns(struct nsinfo *nsi)
-+{
-+	RC_CHK_ACCESS(nsi)->in_pidns = true;
-+}
-+
- void nsinfo__mountns_enter(struct nsinfo *nsi,
- 				  struct nscookie *nc)
- {
-diff --git a/tools/perf/util/namespaces.h b/tools/perf/util/namespaces.h
-index 8c0731c6cbb7e..e014becb9cd8e 100644
---- a/tools/perf/util/namespaces.h
-+++ b/tools/perf/util/namespaces.h
-@@ -59,6 +59,7 @@ pid_t nsinfo__tgid(const struct nsinfo  *nsi);
- pid_t nsinfo__nstgid(const struct nsinfo  *nsi);
- pid_t nsinfo__pid(const struct nsinfo  *nsi);
- pid_t nsinfo__in_pidns(const struct nsinfo  *nsi);
-+void nsinfo__set_in_pidns(struct nsinfo *nsi);
- 
- void nsinfo__mountns_enter(struct nsinfo *nsi, struct nscookie *nc);
- void nsinfo__mountns_exit(struct nscookie *nc);
+-		if (unlikely(xo->seq.low < replay_esn->oseq)) {
+-			XFRM_SKB_CB(skb)->seq.output.hi = ++oseq_hi;
+-			xo->seq.hi = oseq_hi;
+-			replay_esn->oseq_hi = oseq_hi;
++		if (unlikely(oseq < replay_esn->oseq)) {
++			replay_esn->oseq_hi = ++oseq_hi;
++			if (xo->seq.low < replay_esn->oseq) {
++				XFRM_SKB_CB(skb)->seq.output.hi = oseq_hi;
++				xo->seq.hi = oseq_hi;
++			}
+ 			if (replay_esn->oseq_hi == 0) {
+ 				replay_esn->oseq--;
+ 				replay_esn->oseq_hi--;
 -- 
 2.39.5
 
