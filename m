@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D981E89C;
-	Wed,  5 Feb 2025 15:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF591E89C;
+	Wed,  5 Feb 2025 15:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768148; cv=none; b=IOqJRlY4Xi6wEm5UnsRa92tIm4FF8d87q0IwprJx5NG5Aad8haTGZ7RYLrJBjQyZMUlhBo8XsBNhtcjQtK2n9rVNpLCnstn9YslYnWnEy9+vGLer/QUfNdwqbbP/iQbQvpPhyXah++mfqtehyirCkTIQ2tWDHFcG++YSd/0tG+w=
+	t=1738768151; cv=none; b=klB6xYYkIuy52sgZiU8fwlsdRysO1KKBlkageICF3WwBkr+b6db2v5ZeGxYDXL2qoudFDR5XJ/bKwKZDPzIRZ2+igBz1bV3WsywcGGAbN3oZpaoMq11ympUt95q6knAehGF2RyVWzXOlIvgveKFdqvW0OPWrYjBRgns6J0hzb5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768148; c=relaxed/simple;
-	bh=WzPghb5qosyu8oon1XRDdt895ySa/HXzNw2ow6QaP5c=;
+	s=arc-20240116; t=1738768151; c=relaxed/simple;
+	bh=8YBSzS94112J9SMfttDXF4OIMrMuz2t4+1HVPLl9fUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mF4aP128IwXc5DPDuYT0m37b4etz8May5StU4XleDvtl5ZDNVCZJEWtQPEe2QFmod2aJ+MQpsy5eySb3IRI32Np7mkGYNzkV1Yq5oao5TYIGgKvmz33DHlJpRyAXudp2k2UFgBk7ymiPXn3KrPY4iJXQxyIc8tl0otbAlXlIfdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvQzX7P/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GznwjqM0L/LSpzLBVqc+Lt1Sjs8HymOVIa8FsNrmjuTPEL3mKVzhYDcpdxFfQYmxu0SPbV3/BepuuTr9aW8Hy1drnL/3XsnZTAQTvHaMxZltmorkzOHhut8ZYbHS50bDw+PPX6IcvRJ7Mo16O6SNMUgUybTNoEitzxoqu4jcXI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2nW/VJK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvQzX7P/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49057C4CED6;
-	Wed,  5 Feb 2025 15:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2nW/VJK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD87BC4CED1;
+	Wed,  5 Feb 2025 15:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768147;
-	bh=WzPghb5qosyu8oon1XRDdt895ySa/HXzNw2ow6QaP5c=;
+	s=korg; t=1738768151;
+	bh=8YBSzS94112J9SMfttDXF4OIMrMuz2t4+1HVPLl9fUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kvQzX7P/P+7btocTDFocQcMFIBtTKFlLW9DfHs4ajs28zeDJYE0ZsmnTziaYBHEeU
-	 n8gGQQNpOvXFTVJt1vNCJ+Zwp981CXx+nrZzI4xtI/BFtQl6AwuomDCH72xMVTMyQK
-	 rmqZ6tvdwCblUyfoboJkuA0QvLilDgEZ7qBlhhZI=
+	b=D2nW/VJK2YI9+u7Ip7uqTXr436jDoYPDSdiiaQDtWWRKswC/mJ5iJv+4K7ta0/XdZ
+	 wfFmHZdl3BheTRh55EcRjYf9wxLE3Avi0+graziun2zzNszwntty3S6y+miVI3RWv5
+	 4NClyujWBRzNwEAfINR7RQ6h4oY3ISkigOsOJYGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 504/623] net: airoha: Fix wrong GDM4 register definition
-Date: Wed,  5 Feb 2025 14:44:06 +0100
-Message-ID: <20250205134515.500983086@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Kyle Tso <kyletso@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Badhri Jagan Sridharan <badhri@google.com>
+Subject: [PATCH 6.12 560/590] usb: typec: tcpci: Prevent Sink disconnection before vPpsShutdown in SPR PPS
+Date: Wed,  5 Feb 2025 14:45:15 +0100
+Message-ID: <20250205134516.692264298@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,55 +48,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Kyle Tso <kyletso@google.com>
 
-[ Upstream commit d31a49d37cb132b31cc6683eef2122f8609d6229 ]
+commit 4d27afbf256028a1f54363367f30efc8854433c3 upstream.
 
-Fix wrong GDM4 register definition, in Airoha SDK GDM4 is defined at
-offset 0x2400 but this doesn't make sense as it does conflict with the
-CDM4 that is in the same location.
+The Source can drop its output voltage to the minimum of the requested
+PPS APDO voltage range when it is in Current Limit Mode. If this voltage
+falls within the range of vPpsShutdown, the Source initiates a Hard
+Reset and discharges Vbus. However, currently the Sink may disconnect
+before the voltage reaches vPpsShutdown, leading to unexpected behavior.
 
-Following the pattern where each GDM base is at the FWD_CFG, currently
-GDM4 base offset is set to 0x2500. This is correct but REG_GDM4_FWD_CFG
-and REG_GDM4_SRC_PORT_SET are still using the SDK reference with the
-0x2400 offset. Fix these 2 define by subtracting 0x100 to each register
-to reflect the real address location.
+Prevent premature disconnection by setting the Sink's disconnect
+threshold to the minimum vPpsShutdown value. Additionally, consider the
+voltage drop due to IR drop when calculating the appropriate threshold.
+This ensures a robust and reliable interaction between the Source and
+Sink during SPR PPS Current Limit Mode operation.
 
-Fixes: 23020f049327 ("net: airoha: Introduce ethernet support for EN7581 SoC")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250120154148.13424-1-ansuelsmth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4288debeaa4e ("usb: typec: tcpci: Fix up sink disconnect thresholds for PD")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Kyle Tso <kyletso@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://lore.kernel.org/r/20250114142435.2093857-1-kyletso@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mediatek/airoha_eth.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/typec/tcpm/tcpci.c |   13 +++++++++----
+ drivers/usb/typec/tcpm/tcpm.c  |    8 +++++---
+ include/linux/usb/tcpm.h       |    3 ++-
+ 3 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/airoha_eth.c b/drivers/net/ethernet/mediatek/airoha_eth.c
-index d8bfc21a5b194..00b80fb9d87ac 100644
---- a/drivers/net/ethernet/mediatek/airoha_eth.c
-+++ b/drivers/net/ethernet/mediatek/airoha_eth.c
-@@ -258,11 +258,11 @@
- #define REG_GDM3_FWD_CFG		GDM3_BASE
- #define GDM3_PAD_EN_MASK		BIT(28)
+--- a/drivers/usb/typec/tcpm/tcpci.c
++++ b/drivers/usb/typec/tcpm/tcpci.c
+@@ -27,6 +27,7 @@
+ #define	VPPS_NEW_MIN_PERCENT			95
+ #define	VPPS_VALID_MIN_MV			100
+ #define	VSINKDISCONNECT_PD_MIN_PERCENT		90
++#define	VPPS_SHUTDOWN_MIN_PERCENT		85
  
--#define REG_GDM4_FWD_CFG		(GDM4_BASE + 0x100)
-+#define REG_GDM4_FWD_CFG		GDM4_BASE
- #define GDM4_PAD_EN_MASK		BIT(28)
- #define GDM4_SPORT_OFFSET0_MASK		GENMASK(11, 8)
+ struct tcpci {
+ 	struct device *dev;
+@@ -366,7 +367,8 @@ static int tcpci_enable_auto_vbus_discha
+ }
  
--#define REG_GDM4_SRC_PORT_SET		(GDM4_BASE + 0x33c)
-+#define REG_GDM4_SRC_PORT_SET		(GDM4_BASE + 0x23c)
- #define GDM4_SPORT_OFF2_MASK		GENMASK(19, 16)
- #define GDM4_SPORT_OFF1_MASK		GENMASK(15, 12)
- #define GDM4_SPORT_OFF0_MASK		GENMASK(11, 8)
--- 
-2.39.5
-
+ static int tcpci_set_auto_vbus_discharge_threshold(struct tcpc_dev *dev, enum typec_pwr_opmode mode,
+-						   bool pps_active, u32 requested_vbus_voltage_mv)
++						   bool pps_active, u32 requested_vbus_voltage_mv,
++						   u32 apdo_min_voltage_mv)
+ {
+ 	struct tcpci *tcpci = tcpc_to_tcpci(dev);
+ 	unsigned int pwr_ctrl, threshold = 0;
+@@ -388,9 +390,12 @@ static int tcpci_set_auto_vbus_discharge
+ 		threshold = AUTO_DISCHARGE_DEFAULT_THRESHOLD_MV;
+ 	} else if (mode == TYPEC_PWR_MODE_PD) {
+ 		if (pps_active)
+-			threshold = ((VPPS_NEW_MIN_PERCENT * requested_vbus_voltage_mv / 100) -
+-				     VSINKPD_MIN_IR_DROP_MV - VPPS_VALID_MIN_MV) *
+-				     VSINKDISCONNECT_PD_MIN_PERCENT / 100;
++			/*
++			 * To prevent disconnect when the source is in Current Limit Mode.
++			 * Set the threshold to the lowest possible voltage vPpsShutdown (min)
++			 */
++			threshold = VPPS_SHUTDOWN_MIN_PERCENT * apdo_min_voltage_mv / 100 -
++				    VSINKPD_MIN_IR_DROP_MV;
+ 		else
+ 			threshold = ((VSRC_NEW_MIN_PERCENT * requested_vbus_voltage_mv / 100) -
+ 				     VSINKPD_MIN_IR_DROP_MV - VSRC_VALID_MIN_MV) *
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -2928,10 +2928,12 @@ static int tcpm_set_auto_vbus_discharge_
+ 		return 0;
+ 
+ 	ret = port->tcpc->set_auto_vbus_discharge_threshold(port->tcpc, mode, pps_active,
+-							    requested_vbus_voltage);
++							    requested_vbus_voltage,
++							    port->pps_data.min_volt);
+ 	tcpm_log_force(port,
+-		       "set_auto_vbus_discharge_threshold mode:%d pps_active:%c vbus:%u ret:%d",
+-		       mode, pps_active ? 'y' : 'n', requested_vbus_voltage, ret);
++		       "set_auto_vbus_discharge_threshold mode:%d pps_active:%c vbus:%u pps_apdo_min_volt:%u ret:%d",
++		       mode, pps_active ? 'y' : 'n', requested_vbus_voltage,
++		       port->pps_data.min_volt, ret);
+ 
+ 	return ret;
+ }
+--- a/include/linux/usb/tcpm.h
++++ b/include/linux/usb/tcpm.h
+@@ -163,7 +163,8 @@ struct tcpc_dev {
+ 	void (*frs_sourcing_vbus)(struct tcpc_dev *dev);
+ 	int (*enable_auto_vbus_discharge)(struct tcpc_dev *dev, bool enable);
+ 	int (*set_auto_vbus_discharge_threshold)(struct tcpc_dev *dev, enum typec_pwr_opmode mode,
+-						 bool pps_active, u32 requested_vbus_voltage);
++						 bool pps_active, u32 requested_vbus_voltage,
++						 u32 pps_apdo_min_voltage);
+ 	bool (*is_vbus_vsafe0v)(struct tcpc_dev *dev);
+ 	void (*set_partner_usb_comm_capable)(struct tcpc_dev *dev, bool enable);
+ 	void (*check_contaminant)(struct tcpc_dev *dev);
 
 
