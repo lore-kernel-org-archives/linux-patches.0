@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C47142E86;
-	Wed,  5 Feb 2025 13:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C82142E86;
+	Wed,  5 Feb 2025 13:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763429; cv=none; b=YWjTwZ4smVxXDzijj51cJLO7AsrdyfxeOW2KkG1ngU4jWZverAE82FmbvXG6JWvMv3JmEquRsItohHGoGZTnRux6BfHJ0oPnpfKdnQdJAcur594UCmYUJdboTUPY8l7MvgXEr305pN45AmKc5oRTIH3WBq+48L+yygpFifKrHag=
+	t=1738763433; cv=none; b=M/D173n1xAdalmORndAnO18Dlactzto2820tU4rU2pgPEf+9nevKYcqKWv2kuQv1BwWEPCHJIBDbwV/V/Zw/RXD+7vVdkTcUmFYqg7s7kJzRgbA80jcEFTkmK58eHGlILjmIH3Po5fwMVfiz9hRDPEcjbDyVwRgl0+E997+YkzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763429; c=relaxed/simple;
-	bh=q7t51iha14ddgDxUacYiWE3oE784cQYstbVb8pWx4K8=;
+	s=arc-20240116; t=1738763433; c=relaxed/simple;
+	bh=rF3YskUOcGQrpPNw+GHRlbLfqc6hJr7Ww1NDyAC0+E4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJvfpFtSgSP4+vi2/k1EL4fwMhRBsoTbCCTH5adKCbMci1FRLuZwpBxWl78ONRJGDML+RlVaq4xBWdUdnQt9+5ToeLX1GkAG04lZZQ0+hzoaWYUgTz8Dujxxbhpro4B54UfYESHuTjXQ/u7XALDtaHOuyuM6MQ9MO4eai8+/x3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdo80Wk9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0zjm6Yj5aNmcwKffwLe3LQhq+hn9r9raNvdfflUM7ejYceoSLOpJVH5KBx2tkd210yJzi21iqFuOm717iVrncGtvsxRB9aVptjUMGn+M7GTUX4DDwNsXUns5WSRbs30ryyxhSw/8jqgHsNuifaJLHCgbneKW12C0y6XtMqshyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYERELUC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdo80Wk9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21949C4CED6;
-	Wed,  5 Feb 2025 13:50:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYERELUC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C61DC4CED1;
+	Wed,  5 Feb 2025 13:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763429;
-	bh=q7t51iha14ddgDxUacYiWE3oE784cQYstbVb8pWx4K8=;
+	s=korg; t=1738763433;
+	bh=rF3YskUOcGQrpPNw+GHRlbLfqc6hJr7Ww1NDyAC0+E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cdo80Wk9YSlc6hTfxAwuggIvPaQ2CbapOv3BN05xHJkhQgTrQeHsS+nAswC8poWHm
-	 KtN5xC4KiinQ/sV1dh/vT0zF30uk2Cv1O2CUx14aM0ybtoDHZ/+W8ZfAImJmw/VRpm
-	 vBO9TWrnY/jV42KKkxBHEwJA5sYA5P6cDeta8mGM=
+	b=UYERELUC6gO9jcg3GcGjeajrHeKUbv8tkpk09MJcmvLI8FVBgL3RCNZPnLvn76qfZ
+	 yCyf4+sNHhtfwUguIZNaXbz5/Q1UCHN0h1NPxym6enwcdl56uChdRw+xoY73AqinJq
+	 8l1glqBZibQfaf+wtDFI2Jg/OdEM9uAKgnNXPh70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andy Yan <andy.yan@rock-chips.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/393] drm/rockchip: vop2: Check linear format for Cluster windows on rk3566/8
-Date: Wed,  5 Feb 2025 14:39:11 +0100
-Message-ID: <20250205134421.531425157@linuxfoundation.org>
+Subject: [PATCH 6.6 033/393] drm/rockchip: move output interface related definition to rockchip_drm_drv.h
+Date: Wed,  5 Feb 2025 14:39:12 +0100
+Message-ID: <20250205134421.569541530@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -53,40 +54,215 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit df063c0b8ffbdca486ab2f802e716973985d8f86 ]
+[ Upstream commit 8c8546546f256f834e9c7cab48e5946df340d1a8 ]
 
-The Cluster windows on rk3566/8 only support afbc mode.
+The output interface related definition can shared between
+vop and vop2, move them to rockchip_drm_drv.h can avoid duplicated
+definition.
 
-Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
 Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241214081719.3330518-6-andyshrk@163.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20231211115627.1784735-1-andyshrk@163.com
+Stable-dep-of: 77b1ccb2a27c ("drm/rockchip: vop2: include rockchip_drm_drv.h")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/rockchip/analogix_dp-rockchip.c |  1 -
+ drivers/gpu/drm/rockchip/cdn-dp-core.c          |  1 -
+ drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c |  1 -
+ drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c     |  1 -
+ drivers/gpu/drm/rockchip/inno_hdmi.c            |  1 -
+ drivers/gpu/drm/rockchip/rk3066_hdmi.c          |  1 -
+ drivers/gpu/drm/rockchip/rockchip_drm_drv.h     | 17 +++++++++++++++++
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.h     | 12 ------------
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.h    | 16 +---------------
+ drivers/gpu/drm/rockchip/rockchip_lvds.c        |  1 -
+ drivers/gpu/drm/rockchip/rockchip_rgb.c         |  1 -
+ 11 files changed, 18 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index 724b75cfb6b5b..abd88d2d7cabb 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -465,6 +465,16 @@ static bool rockchip_vop2_mod_supported(struct drm_plane *plane, u32 format,
- 	if (modifier == DRM_FORMAT_MOD_INVALID)
- 		return false;
+diff --git a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
+index 84aa811ca1e9c..bd08d57486fef 100644
+--- a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
++++ b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
+@@ -30,7 +30,6 @@
+ #include <drm/drm_simple_kms_helper.h>
  
-+	if (vop2->data->soc_id == 3568 || vop2->data->soc_id == 3566) {
-+		if (vop2_cluster_window(win)) {
-+			if (modifier == DRM_FORMAT_MOD_LINEAR) {
-+				drm_dbg_kms(vop2->drm,
-+					    "Cluster window only supports format with afbc\n");
-+				return false;
-+			}
-+		}
-+	}
+ #include "rockchip_drm_drv.h"
+-#include "rockchip_drm_vop.h"
+ 
+ #define RK3288_GRF_SOC_CON6		0x25c
+ #define RK3288_EDP_LCDC_SEL		BIT(5)
+diff --git a/drivers/gpu/drm/rockchip/cdn-dp-core.c b/drivers/gpu/drm/rockchip/cdn-dp-core.c
+index 3793863c210eb..fca403ccce47e 100644
+--- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
++++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
+@@ -24,7 +24,6 @@
+ 
+ #include "cdn-dp-core.h"
+ #include "cdn-dp-reg.h"
+-#include "rockchip_drm_vop.h"
+ 
+ static inline struct cdn_dp_device *connector_to_dp(struct drm_connector *connector)
+ {
+diff --git a/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c b/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c
+index 0100162a73b29..002486741aec2 100644
+--- a/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c
++++ b/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c
+@@ -26,7 +26,6 @@
+ #include <drm/drm_simple_kms_helper.h>
+ 
+ #include "rockchip_drm_drv.h"
+-#include "rockchip_drm_vop.h"
+ 
+ #define DSI_PHY_RSTZ			0xa0
+ #define PHY_DISFORCEPLL			0
+diff --git a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+index 89bc86d620146..aae48e906af11 100644
+--- a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
++++ b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+@@ -18,7 +18,6 @@
+ #include <drm/drm_simple_kms_helper.h>
+ 
+ #include "rockchip_drm_drv.h"
+-#include "rockchip_drm_vop.h"
+ 
+ #define RK3228_GRF_SOC_CON2		0x0408
+ #define RK3228_HDMI_SDAIN_MSK		BIT(14)
+diff --git a/drivers/gpu/drm/rockchip/inno_hdmi.c b/drivers/gpu/drm/rockchip/inno_hdmi.c
+index 345253e033c53..50c984ac107d6 100644
+--- a/drivers/gpu/drm/rockchip/inno_hdmi.c
++++ b/drivers/gpu/drm/rockchip/inno_hdmi.c
+@@ -23,7 +23,6 @@
+ #include <drm/drm_simple_kms_helper.h>
+ 
+ #include "rockchip_drm_drv.h"
+-#include "rockchip_drm_vop.h"
+ 
+ #include "inno_hdmi.h"
+ 
+diff --git a/drivers/gpu/drm/rockchip/rk3066_hdmi.c b/drivers/gpu/drm/rockchip/rk3066_hdmi.c
+index fa6e592e0276c..78136d0c5a659 100644
+--- a/drivers/gpu/drm/rockchip/rk3066_hdmi.c
++++ b/drivers/gpu/drm/rockchip/rk3066_hdmi.c
+@@ -17,7 +17,6 @@
+ #include "rk3066_hdmi.h"
+ 
+ #include "rockchip_drm_drv.h"
+-#include "rockchip_drm_vop.h"
+ 
+ #define DEFAULT_PLLA_RATE 30000000
+ 
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_drv.h b/drivers/gpu/drm/rockchip/rockchip_drm_drv.h
+index 9ef98968a83aa..bbb9e0bf68048 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_drv.h
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_drv.h
+@@ -20,6 +20,23 @@
+ #define ROCKCHIP_MAX_CONNECTOR	2
+ #define ROCKCHIP_MAX_CRTC	4
+ 
++/*
++ * display output interface supported by rockchip lcdc
++ */
++#define ROCKCHIP_OUT_MODE_P888		0
++#define ROCKCHIP_OUT_MODE_BT1120	0
++#define ROCKCHIP_OUT_MODE_P666		1
++#define ROCKCHIP_OUT_MODE_P565		2
++#define ROCKCHIP_OUT_MODE_BT656		5
++#define ROCKCHIP_OUT_MODE_S888		8
++#define ROCKCHIP_OUT_MODE_S888_DUMMY	12
++#define ROCKCHIP_OUT_MODE_YUV420	14
++/* for use special outface */
++#define ROCKCHIP_OUT_MODE_AAAA		15
 +
- 	if (modifier == DRM_FORMAT_MOD_LINEAR)
- 		return true;
++/* output flags */
++#define ROCKCHIP_OUTPUT_DSI_DUAL	BIT(0)
++
+ struct drm_device;
+ struct drm_connector;
+ struct iommu_domain;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
+index c5c716a69171a..4ea369e004a91 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
+@@ -277,18 +277,6 @@ struct vop_data {
+ /* dst alpha ctrl define */
+ #define DST_FACTOR_M0(x)		(((x) & 0x7) << 6)
  
+-/*
+- * display output interface supported by rockchip lcdc
+- */
+-#define ROCKCHIP_OUT_MODE_P888	0
+-#define ROCKCHIP_OUT_MODE_P666	1
+-#define ROCKCHIP_OUT_MODE_P565	2
+-/* for use special outface */
+-#define ROCKCHIP_OUT_MODE_AAAA	15
+-
+-/* output flags */
+-#define ROCKCHIP_OUTPUT_DSI_DUAL	BIT(0)
+-
+ enum alpha_mode {
+ 	ALPHA_STRAIGHT,
+ 	ALPHA_INVERSE,
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
+index 18f0573b20002..5672df5de90be 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
+@@ -7,10 +7,9 @@
+ #ifndef _ROCKCHIP_DRM_VOP2_H
+ #define _ROCKCHIP_DRM_VOP2_H
+ 
+-#include "rockchip_drm_vop.h"
+-
+ #include <linux/regmap.h>
+ #include <drm/drm_modes.h>
++#include "rockchip_drm_vop.h"
+ 
+ #define VOP_FEATURE_OUTPUT_10BIT        BIT(0)
+ 
+@@ -169,19 +168,6 @@ struct vop2_data {
+ #define WB_YRGB_FIFO_FULL_INTR		BIT(18)
+ #define WB_COMPLETE_INTR		BIT(19)
+ 
+-/*
+- * display output interface supported by rockchip lcdc
+- */
+-#define ROCKCHIP_OUT_MODE_P888		0
+-#define ROCKCHIP_OUT_MODE_BT1120	0
+-#define ROCKCHIP_OUT_MODE_P666		1
+-#define ROCKCHIP_OUT_MODE_P565		2
+-#define ROCKCHIP_OUT_MODE_BT656		5
+-#define ROCKCHIP_OUT_MODE_S888		8
+-#define ROCKCHIP_OUT_MODE_S888_DUMMY	12
+-#define ROCKCHIP_OUT_MODE_YUV420	14
+-/* for use special outface */
+-#define ROCKCHIP_OUT_MODE_AAAA		15
+ 
+ enum vop_csc_format {
+ 	CSC_BT601L,
+diff --git a/drivers/gpu/drm/rockchip/rockchip_lvds.c b/drivers/gpu/drm/rockchip/rockchip_lvds.c
+index 1b6e0b210aa53..107959530c220 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_lvds.c
++++ b/drivers/gpu/drm/rockchip/rockchip_lvds.c
+@@ -27,7 +27,6 @@
+ #include <drm/drm_simple_kms_helper.h>
+ 
+ #include "rockchip_drm_drv.h"
+-#include "rockchip_drm_vop.h"
+ #include "rockchip_lvds.h"
+ 
+ #define DISPLAY_OUTPUT_RGB		0
+diff --git a/drivers/gpu/drm/rockchip/rockchip_rgb.c b/drivers/gpu/drm/rockchip/rockchip_rgb.c
+index c677b71ae516b..dbfbde24698ef 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_rgb.c
++++ b/drivers/gpu/drm/rockchip/rockchip_rgb.c
+@@ -19,7 +19,6 @@
+ #include <drm/drm_simple_kms_helper.h>
+ 
+ #include "rockchip_drm_drv.h"
+-#include "rockchip_drm_vop.h"
+ #include "rockchip_rgb.h"
+ 
+ struct rockchip_rgb {
 -- 
 2.39.5
 
