@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771631FCF66;
-	Wed,  5 Feb 2025 14:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7325418CBFB;
+	Wed,  5 Feb 2025 14:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766895; cv=none; b=OWkjd8+B0EnV+z9ZF++Pif/zn/g0YUUTcdBUk2X73mW+mfIO85mu4AntQD/ird2cGkJrH4qEw/isS97p8TxcahHQuQdnH1yzoMiDbVWvZUsI0rN6HScVk08i6+c3wTXgT8MfeiUtWYt0QWn8W8Y/N65l2TcatFfsmbWe1p99ei4=
+	t=1738766897; cv=none; b=OLFPcR6SZwSvk8s5pozvmgCsOHP8OZuhpcbukyWKoyTJpczZc1l0xPnp/SKxe9GeezHYBIBE3ChbvpWDXN4K6nkiKMRd8ztS9bnKMsh+w7G0mMntj4MEraRslyz0qvTK41tTRhucdXQVKAKbn80qJUj2fpyM08ZAJ6l8ZgN8SO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766895; c=relaxed/simple;
-	bh=dNMWNQZnxB+R0IqxhXPgKxsVYCG6R5aadGWleveu6rM=;
+	s=arc-20240116; t=1738766897; c=relaxed/simple;
+	bh=h+c0267ULn9KYdFwyC5j4V0LIMw/eV1cQMNaxYu6QrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BCNDmLnViXum3SI47gKG95pXHrBvYrPDdVL2SbT7JdPd1A8PcnbLUiLX+DWG47LR1azjfKPh8FrrB9qkas2sUWPu/1+evPxNTsjQDxbxKC4TZSm7ymdhHtPe8DxEN1n0IzBmF3OdWr4H7XB3te1z8Mp4Q7LnX7s0RiczXrQjZ9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R75MB3DO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RTo3Tz9yvjEQxBGkCLdvBy29pxj/34AlqITpvHb+mG2txqVGsZDc6XZnDlFtmDtwMUDKP4JI+fw/ULhPoFBxzeVNYr3YUnrTFcCOaexua71o6t1IDAeL5n+U2KMII+ParmaJ/nPDaPDQXKXrOJc9+gndbHB2zGwuDIYk/wb2ns0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VT51l23v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R75MB3DO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FADAC4CED1;
-	Wed,  5 Feb 2025 14:48:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VT51l23v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DE1C4CED1;
+	Wed,  5 Feb 2025 14:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766893;
-	bh=dNMWNQZnxB+R0IqxhXPgKxsVYCG6R5aadGWleveu6rM=;
+	s=korg; t=1738766897;
+	bh=h+c0267ULn9KYdFwyC5j4V0LIMw/eV1cQMNaxYu6QrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R75MB3DO/SeO3L8BgHseFPtJ1mvn4iI9w6z+cS1uvIwC9fXxWx/8Gm1HXD3iUz6xe
-	 fqLyyfGTDEC9SOM+KzVAbPUhCD/2LSpGgDKd1nPA6GVHNm4SXtbaDyAelbHmwNf05R
-	 /MWfktoYUlu3/d+Gi08L0Z2phE/3bPspJouzlEwQ=
+	b=VT51l23v3GELXvVKk0njcf0Ysx/LhpBXOHvWTTjDKEqPQ7ECg/qdcUoi9HbAIRcQk
+	 NGhm4f56UjqDHrAwk3US49Z/xDWfV0+XZnW1X0ECoruSGOn2tPS1TI/X+QPx7ZURxA
+	 OH8pm26Bfvg4JkRfzJBMQ7qWhA5M5vPkmZr1fAVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinpu Wang <jinpu.wang@ionos.com>,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 368/590] RDMA/rtrs: Add missing deinit() call
-Date: Wed,  5 Feb 2025 14:42:03 +0100
-Message-ID: <20250205134509.350309349@linuxfoundation.org>
+Subject: [PATCH 6.12 377/590] arm64: dts: qcom: sc7180: fix psci power domain node names
+Date: Wed,  5 Feb 2025 14:42:12 +0100
+Message-ID: <20250205134509.694709185@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -52,64 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 81468c4058a62e84e475433b83b3edc613294f5e ]
+[ Upstream commit 092febd32a99800902f865ed86b83314faa9c7e4 ]
 
-A warning is triggered when repeatedly connecting and disconnecting the
-rnbd:
- list_add corruption. prev->next should be next (ffff88800b13e480), but was ffff88801ecd1338. (prev=ffff88801ecd1340).
- WARNING: CPU: 1 PID: 36562 at lib/list_debug.c:32 __list_add_valid_or_report+0x7f/0xa0
- Workqueue: ib_cm cm_work_handler [ib_cm]
- RIP: 0010:__list_add_valid_or_report+0x7f/0xa0
-  ? __list_add_valid_or_report+0x7f/0xa0
-  ib_register_event_handler+0x65/0x93 [ib_core]
-  rtrs_srv_ib_dev_init+0x29/0x30 [rtrs_server]
-  rtrs_ib_dev_find_or_add+0x124/0x1d0 [rtrs_core]
-  __alloc_path+0x46c/0x680 [rtrs_server]
-  ? rtrs_rdma_connect+0xa6/0x2d0 [rtrs_server]
-  ? rcu_is_watching+0xd/0x40
-  ? __mutex_lock+0x312/0xcf0
-  ? get_or_create_srv+0xad/0x310 [rtrs_server]
-  ? rtrs_rdma_connect+0xa6/0x2d0 [rtrs_server]
-  rtrs_rdma_connect+0x23c/0x2d0 [rtrs_server]
-  ? __lock_release+0x1b1/0x2d0
-  cma_cm_event_handler+0x4a/0x1a0 [rdma_cm]
-  cma_ib_req_handler+0x3a0/0x7e0 [rdma_cm]
-  cm_process_work+0x28/0x1a0 [ib_cm]
-  ? _raw_spin_unlock_irq+0x2f/0x50
-  cm_req_handler+0x618/0xa60 [ib_cm]
-  cm_work_handler+0x71/0x520 [ib_cm]
+Rename the psci power domain node names to match the bindings.
 
-Commit 667db86bcbe8 ("RDMA/rtrs: Register ib event handler") introduced a
-new element .deinit but never used it at all. Fix it by invoking the
-`deinit()` to appropriately unregister the IB event handler.
+This Fixes:
+sc7180-acer-aspire1.dts: psci: 'cpu-cluster0', 'cpu0', 'cpu1', 'cpu2', 'cpu3', 'cpu4', 'cpu5', 'cpu6', 'cpu7' do not match any of the regexes: '^power-domain-', 'pinctrl-[0-9]+'
 
-Cc: Jinpu Wang <jinpu.wang@ionos.com>
-Fixes: 667db86bcbe8 ("RDMA/rtrs: Register ib event handler")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Link: https://patch.msgid.link/20250106004516.16611-1-lizhijian@fujitsu.com
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241230-topic-misc-dt-fixes-v4-5-1e6880e9dda3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs.c b/drivers/infiniband/ulp/rtrs/rtrs.c
-index 4e17d546d4ccf..bf38ac6f87c47 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs.c
-@@ -584,6 +584,9 @@ static void dev_free(struct kref *ref)
- 	list_del(&dev->entry);
- 	mutex_unlock(&pool->mutex);
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 19df1c8f7891b..249b257fc6a74 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -583,55 +583,55 @@
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
  
-+	if (pool->ops && pool->ops->deinit)
-+		pool->ops->deinit(dev);
-+
- 	ib_dealloc_pd(dev->ib_pd);
- 	kfree(dev);
- }
+-		cpu_pd0: cpu0 {
++		cpu_pd0: power-domain-cpu0 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd1: cpu1 {
++		cpu_pd1: power-domain-cpu1 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd2: cpu2 {
++		cpu_pd2: power-domain-cpu2 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd3: cpu3 {
++		cpu_pd3: power-domain-cpu3 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd4: cpu4 {
++		cpu_pd4: power-domain-cpu4 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd5: cpu5 {
++		cpu_pd5: power-domain-cpu5 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd6: cpu6 {
++		cpu_pd6: power-domain-cpu6 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
+ 		};
+ 
+-		cpu_pd7: cpu7 {
++		cpu_pd7: power-domain-cpu7 {
+ 			#power-domain-cells = <0>;
+ 			power-domains = <&cluster_pd>;
+ 			domain-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
+ 		};
+ 
+-		cluster_pd: cpu-cluster0 {
++		cluster_pd: power-domain-cluster {
+ 			#power-domain-cells = <0>;
+ 			domain-idle-states = <&cluster_sleep_pc
+ 					      &cluster_sleep_cx_ret
 -- 
 2.39.5
 
