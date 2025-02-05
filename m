@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23ED0126C18;
-	Wed,  5 Feb 2025 13:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34AD1459EA;
+	Wed,  5 Feb 2025 13:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763254; cv=none; b=o8/wbecgPxyCEBjmxPC2OrBHQfchIPHucOsY5Nqo5ORNS2IM/hyEcUg4Oc2P1Ab+xwnhPMXxSn2z4pHSupV8oGuBSQL95NBVtOkhNDtC1KSoig9s9Le24tWiZCM9/3DjPKebXTCg2pzQ41B6k1kKZ8ArWOLw8Y5gy4wFf8xdqIM=
+	t=1738763258; cv=none; b=XDp5p1RTihG048SoUyNCFv3d/dEcrcrCx2z6SfE/dxKj+BCkCgxn5bPCScDIiYzZ4WYDL1QIfhYzzF/Grb1zgita5EJjS/1Dg3fbpXddCnEgnaBEN7+iEtD1u0u7S/VR1xZEq0qyvD30nqE8l8Iyxkl/j12CvL+qizYZSaI/vlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763254; c=relaxed/simple;
-	bh=Tqg4WOLgHKgUymTbzvcf3oJdFaU9ofgFT7MnRGmSPSY=;
+	s=arc-20240116; t=1738763258; c=relaxed/simple;
+	bh=Q+OvS9KjrAHqPQCTjEKLLYwm4/rZEdf1iB6rnAKeqsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FdO1t2sSIc+3O2KnLfHG/QN6CVZhiTwvgtWQE9/BrE1WfW1L4nAb6P1ZZNnH5Qy30arS/aTz97LJa3R5Dt4ZXZDhIMFBhOfdij44zjJ8civH0GyD9Z93iWH/I4mvZn+f0sTor+pGCJ7kZOT4L/D5qqy6bEkEWLe+0CBSxxknivc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i2LdURO2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IkMpRDeMq6OeXJx6eCjFNzu/kZgp+tvcu0ugFyOqZVBEqZcYHPRrTXcQIeJXdWGFGtfQRmPlZhvoLHcBGP9oE8hZgbbjLh1UyOGr4iS5It9iiTxOTS3CH+JdmT9u+1mMprnRB/wrEuiAdvDaiftGQ4EWDUxZiIfZ9D+3KlGA7Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Anyw56tI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2LdURO2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83794C4CED1;
-	Wed,  5 Feb 2025 13:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Anyw56tI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF834C4CED1;
+	Wed,  5 Feb 2025 13:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763254;
-	bh=Tqg4WOLgHKgUymTbzvcf3oJdFaU9ofgFT7MnRGmSPSY=;
+	s=korg; t=1738763257;
+	bh=Q+OvS9KjrAHqPQCTjEKLLYwm4/rZEdf1iB6rnAKeqsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i2LdURO2bpYu1Smz+BSRTkY8qCPcRulTF9udtEmnSVm8aQwR4QTrp+cR7nmqlxZMJ
-	 I8iSqlPUiRU281GTrNEWS3LD4W9UEWnfPJn0lnX+oW4mm+QTBHjxJSNIoRslCIYukQ
-	 ks8gVFr0Ik90p4snBa1868uJK88WqL5Tl1IWGA/o=
+	b=Anyw56tI6gI2Oihbat9HSkl1NuLSll6eECRSfOSPY5wuMaKBIMmR3StksxBaRdU5o
+	 C5FU7VeM8H+zZoaCLmBUVo/7cCYVDh0rQHfLqcr01rfJow8zj2Tqn2rEem7fd6H8Wn
+	 ys9mxuzpx0UWKoYyvx2NVErS5Jb4UNoQ0WrRsJRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/393] x86/topology: Use x86_sched_itmt_flags for PKG domain unconditionally
-Date: Wed,  5 Feb 2025 14:39:00 +0100
-Message-ID: <20250205134421.112726447@linuxfoundation.org>
+Subject: [PATCH 6.6 022/393] drm/msm/dp: set safe_to_exit_level before printing it
+Date: Wed,  5 Feb 2025 14:39:01 +0100
+Message-ID: <20250205134421.150515632@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -52,102 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit e1bc02646527fc1ed74f00eb599b2b74d49671c7 ]
+[ Upstream commit 7dee35d79bb046bfd425aa9e58a82414f67c1cec ]
 
-x86_sched_itmt_flags() returns SD_ASYM_PACKING if ITMT support is
-enabled by the system. Without ITMT support being enabled, it returns 0
-similar to current x86_die_flags() on non-Hybrid systems
-(!X86_HYBRID_CPU and !X86_FEATURE_AMD_HETEROGENEOUS_CORES)
+Rather than printing random garbage from stack and pretending that it is
+the default safe_to_exit_level, set the variable beforehand.
 
-On Intel systems that enable ITMT support, either the MC domain
-coincides with the PKG domain, or in case of multiple MC groups
-within a PKG domain, either Sub-NUMA Cluster (SNC) is enabled or the
-processor features Hybrid core layout (X86_HYBRID_CPU) which leads to
-three distinct possibilities:
-
-o If PKG and MC domains coincide, PKG domain is degenerated by
-  sd_parent_degenerate() when building sched domain topology.
-
-o If SNC is enabled, PKG domain is never added since
-  "x86_has_numa_in_package" is set and the topology will instead contain
-  NODE and NUMA domains.
-
-o On X86_HYBRID_CPU which contains multiple MC groups within the PKG,
-  the PKG domain requires x86_sched_itmt_flags().
-
-Thus, on Intel systems that contains multiple MC groups within the PKG
-and enables ITMT support, the PKG domain requires
-x86_sched_itmt_flags(). In all other cases PKG domain is either never
-added or is degenerated. Thus, returning x86_sched_itmt_flags()
-unconditionally at PKG domain on Intel systems should not lead to any
-functional changes.
-
-On AMD systems with multiple LLCs (MC groups) within a PKG domain,
-enabling ITMT support requires setting SD_ASYM_PACKING to the PKG domain
-since the core rankings are assigned PKG-wide.
-
-Core rankings on AMD processors is currently set by the amd-pstate
-driver when Preferred Core feature is supported. A subset of systems that
-support Preferred Core feature can be detected using
-X86_FEATURE_AMD_HETEROGENEOUS_CORES however, this does not cover all the
-systems that support Preferred Core ranking.
-
-Detecting Preferred Core support on AMD systems requires inspecting CPPC
-Highest Perf on all present CPUs and checking if it differs on at least
-one CPU. Previous suggestion to use a synthetic feature to detect
-Preferred Core support [1] was found to be non-trivial to implement
-since BSP alone cannot detect if Preferred Core is supported and by the
-time AP comes up, alternatives are patched and setting a X86_FEATURE_*
-then is not possible.
-
-Since x86 processors enabling ITMT support that consists multiple
-non-NUMA MC groups within a PKG requires SD_ASYM_PACKING flag set at the
-PKG domain, return x86_sched_itmt_flags unconditionally for the PKG
-domain.
-
-Since x86_die_flags() would have just returned x86_sched_itmt_flags()
-after the change, remove the unnecessary wrapper and pass
-x86_sched_itmt_flags() directly as the flags function.
-
-Fixes: f3a052391822 ("cpufreq: amd-pstate: Enable amd-pstate preferred core support")
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Tim Chen <tim.c.chen@linux.intel.com>
-Link: https://lore.kernel.org/r/20241223043407.1611-6-kprateek.nayak@amd.com
+Fixes: d13e36d7d222 ("drm/msm/dp: add audio support for Display Port on MSM")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202411081748.0PPL9MIj-lkp@intel.com/
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/626804/
+Link: https://lore.kernel.org/r/20241202-fd-dp-audio-fixup-v2-1-d9187ea96dad@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/smpboot.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_audio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/smpboot.c b/arch/x86/kernel/smpboot.c
-index 9150bd5147d01..a8f2ab816d5ae 100644
---- a/arch/x86/kernel/smpboot.c
-+++ b/arch/x86/kernel/smpboot.c
-@@ -604,15 +604,6 @@ static int x86_cluster_flags(void)
- }
- #endif
- 
--static int x86_die_flags(void)
--{
--	if (cpu_feature_enabled(X86_FEATURE_HYBRID_CPU) ||
--	    cpu_feature_enabled(X86_FEATURE_AMD_HETEROGENEOUS_CORES))
--		return x86_sched_itmt_flags();
--
--	return 0;
--}
--
- /*
-  * Set if a package/die has multiple NUMA nodes inside.
-  * AMD Magny-Cours, Intel Cluster-on-Die, and Intel
-@@ -648,7 +639,7 @@ static void __init build_sched_topology(void)
- 	 */
- 	if (!x86_has_numa_in_package) {
- 		x86_topology[i++] = (struct sched_domain_topology_level){
--			cpu_cpu_mask, x86_die_flags, SD_INIT_NAME(PKG)
-+			cpu_cpu_mask, x86_sched_itmt_flags, SD_INIT_NAME(PKG)
- 		};
+diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c b/drivers/gpu/drm/msm/dp/dp_audio.c
+index 4a2e479723a85..610cbe23aa839 100644
+--- a/drivers/gpu/drm/msm/dp/dp_audio.c
++++ b/drivers/gpu/drm/msm/dp/dp_audio.c
+@@ -410,10 +410,10 @@ static void dp_audio_safe_to_exit_level(struct dp_audio_private *audio)
+ 		safe_to_exit_level = 5;
+ 		break;
+ 	default:
++		safe_to_exit_level = 14;
+ 		drm_dbg_dp(audio->drm_dev,
+ 				"setting the default safe_to_exit_level = %u\n",
+ 				safe_to_exit_level);
+-		safe_to_exit_level = 14;
+ 		break;
  	}
  
 -- 
