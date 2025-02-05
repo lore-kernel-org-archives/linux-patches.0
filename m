@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6421A522A;
-	Wed,  5 Feb 2025 14:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE67E522A;
+	Wed,  5 Feb 2025 14:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765231; cv=none; b=RMNZ/jF3QgunqbrRu5gH0rmrJ+DitEY3qefCcKDsg/14u1eIk0zWn/ujGaosZHlTEj30hlHNUreocFdYPqv0PE02UD779tq2P2JNIGGHK3f7XIapq3dARDgFSKOgnu91mGBxmdd4CS4TLVmsaA+RcbOQ3/JrMniuOXmjkVlTbAY=
+	t=1738765234; cv=none; b=I1I7/3t8PRmMb4BLNIiZqxjKmZF2ZGAIcB4/bElj+W28S8IzgHmeDJI1t+SXbxDeiO6tERvP2ZhOwN9+5JfCJG9p2bVNDY2yW/XVd5Ijbu67+l5yMLOPAvwGThpaOOUUSy6qCepIGl3awdSd4/iLka+VRjBtllTWcigN2qFhNSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765231; c=relaxed/simple;
-	bh=HtiwUiXUnZRofw33dAgctjsUBkws9m3hr5Rm3Yng6oE=;
+	s=arc-20240116; t=1738765234; c=relaxed/simple;
+	bh=rB1QPDrlkaVBHuxwtWTAJSaA80tp8epqO+6XB8vCon0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BkaZ7W0Lr1Q9m9wg29kNpYLVX5+geTF8kY4NC5BnrG9KkTr9mqKxBm29MdInoBxMp2qynK76q/b3VR6g+WOIPlDmM+A5ev+M43JBenags7iTYQn67Fpvqz0Kdxcio5PNCNrllNQwDtmNSR11ygyK3TC2eFd7+j6BNGnKSeO6ERA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3Hsh7mH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mrhnGvasZsqeTgX2ucGlPC9zNMJUZ0csGDSewLjLBPNCGusYMQ0oY4DXsilRZJmjYK5eJxD6IWgk+3WMmp8KMFah8n8V+8N8GO+yDYiCI9kR+1jM/kGHusyDELiPTG+nLyeW5NQDGN+tfLXTd7aKK8FTHXYOHla75lyIgGWxaf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAvbkAl4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3Hsh7mH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39E8C4CED1;
-	Wed,  5 Feb 2025 14:20:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAvbkAl4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B26C4CED1;
+	Wed,  5 Feb 2025 14:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765231;
-	bh=HtiwUiXUnZRofw33dAgctjsUBkws9m3hr5Rm3Yng6oE=;
+	s=korg; t=1738765234;
+	bh=rB1QPDrlkaVBHuxwtWTAJSaA80tp8epqO+6XB8vCon0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3Hsh7mHP7Im7RfIsIgKNGHMDGrrlUaYhqjx7Us50boKyeGGO0gH1Fcsnwqv9KM9c
-	 AdEoIYmX/wCZQ4LFmzlb4AioWSLh2zcgIRUHDtdqiC/YFX/96SZe7YC5OrSTBGK3in
-	 kr/Rcy28XpsYWumsjMaAwA5dGUo7w59887E8MZVY=
+	b=OAvbkAl44CZqI3iBjZ6KjiXW+mXzJOid3SbRB2NG26/Pd9KBtVjghySJtJWRMGrhT
+	 cwSm6h9kTJaf2MqTAx9RpecvhiFEPutsJVPU4LQMDgNrRjMgECuolgDfycRMsyb/sw
+	 fmMBvQBXZ5rAyiLVsM1R/5nfZclyTIOyQ4GMGDyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong-Zhe Yang <kevin_yang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
+	Shengyu Qu <wiagn233@outlook.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 158/623] wifi: rtw89: mcc: consider time limits not divisible by 1024
-Date: Wed,  5 Feb 2025 14:38:20 +0100
-Message-ID: <20250205134502.280516122@linuxfoundation.org>
+Subject: [PATCH 6.12 202/590] wifi: mt76: mt7996: fix register mapping
+Date: Wed,  5 Feb 2025 14:39:17 +0100
+Message-ID: <20250205134503.009659113@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zong-Zhe Yang <kevin_yang@realtek.com>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit 35642ba31dc4a1816a20191e90156a9e329beb10 ]
+[ Upstream commit d07ecb4f7070e84de49e8fa4e5a83dd52716d805 ]
 
-For each MCC role, time limits, including max_tob_us, max_toa_us, and
-mac_dur_us, are calculated if there are NoA attributes. The relation
-between these time limits is "max_dur_us = max_tob_us + max_toa_us".
-Then, the unit is converted from us to TU. However, originally, each
-time limit was divided by 1024 independently. It missed to consider
-the cases that max_tob_us or max_toa_us is not divisible by 1024. It
-causes the result breaks "max_dur (TU) = max_tob (TU) + max_toa (TU)".
-Finally, when MCC calculates pattern parameters based on these kinds
-of time limits, it might not perform well.
+Bypass the entry when ofs is equal to dev->reg.map[i].size.
+Without this patch, it would get incorrect register mapping when the CR
+address is located at the boundary of an entry.
 
-Fixes: b09df09b55fb ("wifi: rtw89: mcc: initialize start flow")
-Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250103074412.124066-1-pkshih@realtek.com
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Signed-off-by: Shengyu Qu <wiagn233@outlook.com>
+Link: https://patch.msgid.link/OSZPR01MB84344FEFF53004B5CF40BCC198132@OSZPR01MB8434.jpnprd01.prod.outlook.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/chan.c | 2 +-
+ drivers/net/wireless/mediatek/mt76/mt7996/mmio.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/chan.c b/drivers/net/wireless/realtek/rtw89/chan.c
-index c06d305519df4..4df4e04c3e67d 100644
---- a/drivers/net/wireless/realtek/rtw89/chan.c
-+++ b/drivers/net/wireless/realtek/rtw89/chan.c
-@@ -802,7 +802,7 @@ static void rtw89_mcc_fill_role_limit(struct rtw89_dev *rtwdev,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+index 40e45fb2b6260..442f72450352b 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
+@@ -177,7 +177,7 @@ static u32 __mt7996_reg_addr(struct mt7996_dev *dev, u32 addr)
+ 			continue;
  
- 	mcc_role->limit.max_toa = max_toa_us / 1024;
- 	mcc_role->limit.max_tob = max_tob_us / 1024;
--	mcc_role->limit.max_dur = max_dur_us / 1024;
-+	mcc_role->limit.max_dur = mcc_role->limit.max_toa + mcc_role->limit.max_tob;
- 	mcc_role->limit.enable = true;
+ 		ofs = addr - dev->reg.map[i].phys;
+-		if (ofs > dev->reg.map[i].size)
++		if (ofs >= dev->reg.map[i].size)
+ 			continue;
  
- 	rtw89_debug(rtwdev, RTW89_DBG_CHAN,
+ 		return dev->reg.map[i].mapped + ofs;
 -- 
 2.39.5
 
