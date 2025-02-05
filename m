@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69738155A30;
-	Wed,  5 Feb 2025 15:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E7C186E40;
+	Wed,  5 Feb 2025 15:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768021; cv=none; b=AbJx5bV/uY8PVu2vmxM14l0xSpDUaz5wyW4BhuJLMWxOxcCL4Dmmv0fJofwUj128uFq+59DG2H+Etb7qFQBzwr+4JT6wN75EegIwwR4XFabSKbw30kp0PuEw3GTPuaCwzSRKKHaG63PHEFLc60b4fd+Up59iqI49hoAjhago6aE=
+	t=1738768030; cv=none; b=VSHZC3dbb5CJP6ZpBu0okr/7c/NTzXMc4FkxsJ6wTxBcUVNQUMmfutQLY+fOI337r9Hz7B8QZ+IRckEHAUZuX0rrARgDcjSV+ATWO48/MXd3tM1EmfDQxXQ4nAF00Y5kA7Q/cAn6rtR/HuuArwxRjIZ03+t4AagmxTrlqwSDbv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768021; c=relaxed/simple;
-	bh=YSc3EH6FYmTe9/rZ1wLyjpgmXysfSP5DPKzQb915pKI=;
+	s=arc-20240116; t=1738768030; c=relaxed/simple;
+	bh=TUJm2RecckECFCyFOx0OXDZostHE/Ec2bGzCTg12QEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i6Nr9hST5D9k1H0niQKDMTWvnZ9wDticCfIiOmG+O5I2J05fmHM9BnTODg02ml/0iZBFqu35MQO275vvqYTy5g0zQ87h78zRHkzAog1qYHmrXc/EPde2bYt9kptinsxEn3/KGl6l91Yj4y7CKz9rXm3Zph4ls00/kmHPES5rPME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kht/Gml7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ErA7mbAuweD0RrcNND1kvZXrBjj4NaWpE3rRC47lQqjDP8aPTy02kStcOMZdjFQawp63dhdP/CW8xTxFJnPBE6VBkCYxPHES50fb4i+5qUJ/jrA4dSqpvxcOtSKp6X0CP9ZaQt5Dtp47Tk9P44aUUtyPQbB+2UxyEkiAGxmlUN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxW1hxMz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kht/Gml7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5D7C4CEE2;
-	Wed,  5 Feb 2025 15:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxW1hxMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53CFEC4CEDD;
+	Wed,  5 Feb 2025 15:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768021;
-	bh=YSc3EH6FYmTe9/rZ1wLyjpgmXysfSP5DPKzQb915pKI=;
+	s=korg; t=1738768030;
+	bh=TUJm2RecckECFCyFOx0OXDZostHE/Ec2bGzCTg12QEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kht/Gml7Oku53FT1aizI6fy8tMnitbD0Lic6b64HhqAQJ9R/CNgQe5bEj/mx3irPV
-	 h+CEpQdPdRVoUy0DLI/LB9PWTKbRnZnjKjtyIAO1M2ScCWfqDJO0J0XqexNaew1kqf
-	 MOnwEOmay0CwBGBx1NagAgb0wKoEITCTD5P7wUlw=
+	b=MxW1hxMzkxKyp9QyV4B8jieKWuq1vfBefwKQuVSDj8sY68AtJsO/KWWzpltMGKEht
+	 qu9fpTD9vxG+LLJMsqI+QeLwumD87Z0IXzTWqk7wULe5/lYs3+nkwgHmNK6Pe2Pd79
+	 W/E0D0+E6/RH/s5zvI/CWqESd2YP+dIS228YFVp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Parth Pancholi <parth.pancholi@toradex.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Salvatore Bonaccorso <carnil@debian.org>
-Subject: [PATCH 6.12 543/590] kbuild: switch from lz4c to lz4 for compression
-Date: Wed,  5 Feb 2025 14:44:58 +0100
-Message-ID: <20250205134516.045962397@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 486/623] tty: mips_ejtag_fdc: fix one more u8 warning
+Date: Wed,  5 Feb 2025 14:43:48 +0100
+Message-ID: <20250205134514.811386306@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,76 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Parth Pancholi <parth.pancholi@toradex.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit e397a603e49cc7c7c113fad9f55a09637f290c34 upstream.
+[ Upstream commit 6dd1de91e7a62bfd3878992c1db6e1d443022c76 ]
 
-Replace lz4c with lz4 for kernel image compression.
-Although lz4 and lz4c are functionally similar, lz4c has been deprecated
-upstream since 2018. Since as early as Ubuntu 16.04 and Fedora 25, lz4
-and lz4c have been packaged together, making it safe to update the
-requirement from lz4c to lz4.
+The LKP robot complains about:
+   drivers/tty/mips_ejtag_fdc.c:1224:31: error: incompatible pointer types passing 'const char *[1]' to parameter of type 'const u8 **' (aka 'const unsigned char **')
 
-Consequently, some distributions and build systems, such as OpenEmbedded,
-have fully transitioned to using lz4. OpenEmbedded core adopted this
-change in commit fe167e082cbd ("bitbake.conf: require lz4 instead of
-lz4c"), causing compatibility issues when building the mainline kernel
-in the latest OpenEmbedded environment, as seen in the errors below.
+Fix this by turning the missing pieces (fetch from kgdbfdc_wbuf) to u8
+too. Note the filling part (kgdbfdc_write_char()) already receives and
+stores u8 to kgdbfdc_wbuf.
 
-This change also updates the LZ4 compression commands to make it backward
-compatible by replacing stdin and stdout with the '-' option, due to some
-unclear reason, the stdout keyword does not work for lz4 and '-' works for
-both. In addition, this modifies the legacy '-c1' with '-9' which is also
-compatible with both. This fixes the mainline kernel build failures with
-the latest master OpenEmbedded builds associated with the mentioned
-compatibility issues.
-
-LZ4     arch/arm/boot/compressed/piggy_data
-/bin/sh: 1: lz4c: not found
-...
-...
-ERROR: oe_runmake failed
-
-Link: https://github.com/lz4/lz4/pull/553
-Suggested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Signed-off-by: Parth Pancholi <parth.pancholi@toradex.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Salvatore Bonaccorso <carnil@debian.org>
+Fixes: ce7cbd9a6c81 ("tty: mips_ejtag_fdc: use u8 for character pointers")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501101327.oGdWbmuk-lkp@intel.com/
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20250110115228.603980-1-jirislaby@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Makefile             |    2 +-
- scripts/Makefile.lib |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/tty/mips_ejtag_fdc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -509,7 +509,7 @@ KGZIP		= gzip
- KBZIP2		= bzip2
- KLZOP		= lzop
- LZMA		= lzma
--LZ4		= lz4c
-+LZ4		= lz4
- XZ		= xz
- ZSTD		= zstd
+diff --git a/drivers/tty/mips_ejtag_fdc.c b/drivers/tty/mips_ejtag_fdc.c
+index afbf7738c7c47..58b28be63c79b 100644
+--- a/drivers/tty/mips_ejtag_fdc.c
++++ b/drivers/tty/mips_ejtag_fdc.c
+@@ -1154,7 +1154,7 @@ static char kgdbfdc_rbuf[4];
  
---- a/scripts/Makefile.lib
-+++ b/scripts/Makefile.lib
-@@ -371,10 +371,10 @@ quiet_cmd_lzo_with_size = LZO     $@
-       cmd_lzo_with_size = { cat $(real-prereqs) | $(KLZOP) -9; $(size_append); } > $@
+ /* write buffer to allow compaction */
+ static unsigned int kgdbfdc_wbuflen;
+-static char kgdbfdc_wbuf[4];
++static u8 kgdbfdc_wbuf[4];
  
- quiet_cmd_lz4 = LZ4     $@
--      cmd_lz4 = cat $(real-prereqs) | $(LZ4) -l -c1 stdin stdout > $@
-+      cmd_lz4 = cat $(real-prereqs) | $(LZ4) -l -9 - - > $@
- 
- quiet_cmd_lz4_with_size = LZ4     $@
--      cmd_lz4_with_size = { cat $(real-prereqs) | $(LZ4) -l -c1 stdin stdout; \
-+      cmd_lz4_with_size = { cat $(real-prereqs) | $(LZ4) -l -9 - -; \
-                   $(size_append); } > $@
- 
- # U-Boot mkimage
+ static void __iomem *kgdbfdc_setup(void)
+ {
+@@ -1215,7 +1215,7 @@ static int kgdbfdc_read_char(void)
+ /* push an FDC word from write buffer to TX FIFO */
+ static void kgdbfdc_push_one(void)
+ {
+-	const char *bufs[1] = { kgdbfdc_wbuf };
++	const u8 *bufs[1] = { kgdbfdc_wbuf };
+ 	struct fdc_word word;
+ 	void __iomem *regs;
+ 	unsigned int i;
+-- 
+2.39.5
+
 
 
