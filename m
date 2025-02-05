@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB151E89C;
-	Wed,  5 Feb 2025 14:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151A41E89C;
+	Wed,  5 Feb 2025 14:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767538; cv=none; b=gs46zVIVpSuEu8fSAR6pOWp3aPIpEOkGSxPUi9VeAcuMzPg9vuH4mE9DTZQRNdqt4ioMZTLvYohCyHBvd2PsclkpuBIBDsEPKsAb8q3ArpT6TYDY6Nh2+ZPEqs+P37UmO8zFXsouVf6YNGHO+wj5EJ0y76aKi0FFmDfpNDRsUjc=
+	t=1738767542; cv=none; b=SUNrgLpI1X7Xw9xoq/WJ3PbilwSdzvhVhH/dIa/V0MyKbifP6vLL3OLE9xNrpvOxYFaSFRnoazhcKMnPEulEIINnpM+XDsmrl/C3gFChOTQcb1qeOFqyZ+aGAFqDHeEYUF6d6IpaK9+FEMBm6lF4lmAc51mxvPTJyOgay88kUj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767538; c=relaxed/simple;
-	bh=FepK3vKzOdy0dNG/RFpTRI5Y0XabN8kpA+sHsTnw24A=;
+	s=arc-20240116; t=1738767542; c=relaxed/simple;
+	bh=M3yrc+OgBg9sHSBgXj+Jm5H7sqd7bgWci6HeAUz4WTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fODLxQ1GE/Xbl4p75dHbHvj94w+G4hKCssDtHRc3DPAKTEA+zKlzy3P2pPxMZe0YZtryFvefvTP+6Wu8nz9qE7POpA9eQ35UNZ4/TmpxYJ8pH/IiWcmor0bmzpJpQKntHjym1Md0C0nKAGasNDiesvvlGCru9j4+ABito7TLs5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJecbg4y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qbidc0+VMkINEJqqXUeitrQe/fh7iYK6dJ/qCwj6Vo97EYrVGkSi6DWpc1c9ZlA13xZV5fuCH4pzdh9KkReHGQ2HLxI1HaJJRw1ip7nKdHLFf5A/mvD0lwKhlYL0v5gmod/kdkkrTVl3ZNj3+6ZgnISFicevu93VV0Yo0S0MlGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaWxZDP0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJecbg4y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F35C4CED1;
-	Wed,  5 Feb 2025 14:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaWxZDP0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7898BC4CED1;
+	Wed,  5 Feb 2025 14:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767538;
-	bh=FepK3vKzOdy0dNG/RFpTRI5Y0XabN8kpA+sHsTnw24A=;
+	s=korg; t=1738767541;
+	bh=M3yrc+OgBg9sHSBgXj+Jm5H7sqd7bgWci6HeAUz4WTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JJecbg4yy3KPNEK+giYxZYGNHWbcUj23vsJ5GsfFUFhRA1miSs5D6G8jGf/JeStDT
-	 S0MJrKv+pVEP8O3nEpY7BFRTG2DZYWEobf+l/AbvhrotUcbW4vLpUtN6oDIvVwtq4i
-	 PzrVrUnjr3uR2wMWMH9Q8BKZkEWJjoJqgLfyZUu0=
+	b=iaWxZDP0Xj5hchcTmyzDXugTzj/dDODBFdu+7chPMSo5UCfSWR+4RJmTB5gxl5aEP
+	 7EW9rhY9Gr+FU7ZzdfmK6CiWWpTMLuYqUeHVME5zl09BGSdkYUt5+uUcW7sY4fXE1T
+	 cUXmIRoMDwdKqioRa453bjRpxZdI8vnEy99JvxIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mihai Sain <mihai.sain@microchip.com>,
-	Cristian Birsan <cristian.birsan@microchip.com>,
-	Andrei Simion <andrei.simion@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 395/623] ARM: dts: microchip: sama5d27_wlsom1_ek: Add no-1-8-v property to sdmmc0 node
-Date: Wed,  5 Feb 2025 14:42:17 +0100
-Message-ID: <20250205134511.333674399@linuxfoundation.org>
+Subject: [PATCH 6.12 448/590] module: Dont fail module loading when setting ro_after_init section RO failed
+Date: Wed,  5 Feb 2025 14:43:23 +0100
+Message-ID: <20250205134512.408255343@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +49,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Birsan <cristian.birsan@microchip.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 4d9e5965df04c0adf260c3009c55d5fe240f7286 ]
+[ Upstream commit 110b1e070f1d50f5217bd2c758db094998bb7b77 ]
 
-Add no-1-8-v property to sdmmc0 node to keep VDDSDMMC power rail at 3.3V.
-This property will stop the LDO regulator from switching to 1.8V when the
-MMC core detects an UHS SD Card. VDDSDMMC power rail is used by all the
-SDMMC interface pins in GPIO mode (PA0 - PA13).
+Once module init has succeded it is too late to cancel loading.
+If setting ro_after_init data section to read-only fails, all we
+can do is to inform the user through a warning.
 
-On this board, PA10 is used as GPIO to enable the power switch controlling
-USB Vbus for the USB Host. The change is needed to fix the PA10 voltage
-level to 3.3V instead of 1.8V.
-
-Fixes: 5d4c3cfb63fe ("ARM: dts: at91: sama5d27_wlsom1: add SAMA5D27 wlsom1 and wlsom1-ek")
-Suggested-by: Mihai Sain <mihai.sain@microchip.com>
-Signed-off-by: Cristian Birsan <cristian.birsan@microchip.com>
-Tested-by: Andrei Simion <andrei.simion@microchip.com>
-Link: https://lore.kernel.org/r/20241119160107.598411-3-cristian.birsan@microchip.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Reported-by: Thomas Gleixner <tglx@linutronix.de>
+Closes: https://lore.kernel.org/all/20230915082126.4187913-1-ruanjinjie@huawei.com/
+Fixes: d1909c022173 ("module: Don't ignore errors from set_memory_XX()")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/d6c81f38da76092de8aacc8c93c4c65cb0fe48b8.1733427536.git.christophe.leroy@csgroup.eu
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/module/main.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts b/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts
-index 15239834d886e..35a933eec5738 100644
---- a/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts
-+++ b/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts
-@@ -197,6 +197,7 @@
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index 49b9bca9de12f..93a07387af3b7 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -2583,7 +2583,10 @@ static noinline int do_init_module(struct module *mod)
+ #endif
+ 	ret = module_enable_rodata_ro(mod, true);
+ 	if (ret)
+-		goto fail_mutex_unlock;
++		pr_warn("%s: module_enable_rodata_ro_after_init() returned %d, "
++			"ro_after_init data might still be writable\n",
++			mod->name, ret);
++
+ 	mod_tree_remove_init(mod);
+ 	module_arch_freeing_init(mod);
+ 	for_class_mod_mem_type(type, init) {
+@@ -2622,8 +2625,6 @@ static noinline int do_init_module(struct module *mod)
  
- &sdmmc0 {
- 	bus-width = <4>;
-+	no-1-8-v;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_sdmmc0_default>;
- 	status = "okay";
+ 	return 0;
+ 
+-fail_mutex_unlock:
+-	mutex_unlock(&module_mutex);
+ fail_free_freeinit:
+ 	kfree(freeinit);
+ fail:
 -- 
 2.39.5
 
