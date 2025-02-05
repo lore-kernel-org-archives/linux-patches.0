@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3241817C79;
-	Wed,  5 Feb 2025 15:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78581DF59;
+	Wed,  5 Feb 2025 15:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768182; cv=none; b=u/pAMc/loRROHFUuJCxd5B84LV3bqLjc9dp7yX+Y/5P34fVw83/Z7baCW29ar6r+fj5mjQ8bANZV0XpFs4XKGhl0SnaEs8WEOn5h7hhm2KCJe5yUcuvCjoMptDwp+XIwGuxaWyaU/p0kGQCYrgKkdj8/eV5oIMxdMmmHQDMJl8E=
+	t=1738768185; cv=none; b=mwAjbJCR12dgLlhkk63oS8nqmtXWD+V0VWJee3h/3yCI93nsi+GtsgV37uc3oQsBJgDxvBm9ftTN7241aKSyddWFEp+iwUx+jFeaAJJaOC48/SOUps7O2Zjel3WDPQhUqFyP/3eebmk5kbbpzDexs/5qMf1aBSYXge3VRSqrKuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768182; c=relaxed/simple;
-	bh=e2jWzy7H/snKEGR7ZHj6PR23gZOiwkLjx/XxnxvLICA=;
+	s=arc-20240116; t=1738768185; c=relaxed/simple;
+	bh=NDb0ASaZf2osiZf13ECG54/sBnxkRGPtdd1VD8QF67s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aegIUwVmMBHzmPdP6NuVFT+soY+vC5YfPFWNRB91Zp3q0YbpKw04TFWUAznjByl/9yyF/Dhmn2m7M/QIcDT52S9VxbvxArYYAG9YgKjYkPhn0kCFKNfZlcsCSyiYfvr3LPG/Jdq8BSHpoqPEkX7csQFEsz+vT1rkKWbT12KtP9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQYeogRd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r5yOO1BO+QgQRCFmqTmEIC+73Hify2xFHZ2qTaunVeVQzzPqzX4GlO83EpbS2NeaX8CRDJN0tCq9sPgYUYFPX4qOUteZjODY7dpcmWYAFyCwJKTsRemopuS8B7BtTJu8DjRHE6kRVN/ZiTat9k5FCUahUwqsMn4LoPFcYS0XLdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pcc26zaV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQYeogRd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92072C4CED1;
-	Wed,  5 Feb 2025 15:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pcc26zaV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D729EC4CED1;
+	Wed,  5 Feb 2025 15:09:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768182;
-	bh=e2jWzy7H/snKEGR7ZHj6PR23gZOiwkLjx/XxnxvLICA=;
+	s=korg; t=1738768185;
+	bh=NDb0ASaZf2osiZf13ECG54/sBnxkRGPtdd1VD8QF67s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gQYeogRdHIZpc4cve/w7ckpE+jLNtDNkmPTp/aWChU7oulqP9sW32BOeuS/DM7ZLW
-	 xW0tyY5SJzFNM1Yt8g5Wzp6EBvwPMtaTWReYw0dxQ40gI949Cy9wfdIva+X35Y2Igy
-	 rBXft7cjZ6fGPXP6QnEQ1uq9karaN1hAAzv9Ow1g=
+	b=Pcc26zaVDo07S/xWTCZ4v1bp4RK3o5nsFJD1KpdRRc2tQDYbPFAlaHWrCx6H5vxLs
+	 eLnmVDgyDzoq+7e+76yq5dldQfEMFWgE/SkFZXFTFgVJ0tspfp+Q5r7ABQHOHEgUBk
+	 oms7JkqfKLoSeE8+en2BIillLJCbT3YkrePfm2uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ebc0b8ae5d3590b2c074@syzkaller.appspotmail.com,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 564/590] mptcp: handle fastopen disconnect correctly
-Date: Wed,  5 Feb 2025 14:45:19 +0100
-Message-ID: <20250205134516.844402976@linuxfoundation.org>
+	syzbot+5cfae50c0e5f2c500013@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 509/623] ipmr: do not call mr_mfc_uses_dev() for unres entries
+Date: Wed,  5 Feb 2025 14:44:11 +0100
+Message-ID: <20250205134515.691326628@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,96 +49,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 619af16b3b57a3a4ee50b9a30add9ff155541e71 upstream.
+[ Upstream commit 15a901361ec3fb1c393f91880e1cbf24ec0a88bd ]
 
-Syzbot was able to trigger a data stream corruption:
+syzbot found that calling mr_mfc_uses_dev() for unres entries
+would crash [1], because c->mfc_un.res.minvif / c->mfc_un.res.maxvif
+alias to "struct sk_buff_head unresolved", which contain two pointers.
 
-  WARNING: CPU: 0 PID: 9846 at net/mptcp/protocol.c:1024 __mptcp_clean_una+0xddb/0xff0 net/mptcp/protocol.c:1024
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 9846 Comm: syz-executor351 Not tainted 6.13.0-rc2-syzkaller-00059-g00a5acdbf398 #0
-  Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 11/25/2024
-  RIP: 0010:__mptcp_clean_una+0xddb/0xff0 net/mptcp/protocol.c:1024
-  Code: fa ff ff 48 8b 4c 24 18 80 e1 07 fe c1 38 c1 0f 8c 8e fa ff ff 48 8b 7c 24 18 e8 e0 db 54 f6 e9 7f fa ff ff e8 e6 80 ee f5 90 <0f> 0b 90 4c 8b 6c 24 40 4d 89 f4 e9 04 f5 ff ff 44 89 f1 80 e1 07
-  RSP: 0018:ffffc9000c0cf400 EFLAGS: 00010293
-  RAX: ffffffff8bb0dd5a RBX: ffff888033f5d230 RCX: ffff888059ce8000
-  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-  RBP: ffffc9000c0cf518 R08: ffffffff8bb0d1dd R09: 1ffff110170c8928
-  R10: dffffc0000000000 R11: ffffed10170c8929 R12: 0000000000000000
-  R13: ffff888033f5d220 R14: dffffc0000000000 R15: ffff8880592b8000
-  FS:  00007f6e866496c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007f6e86f491a0 CR3: 00000000310e6000 CR4: 00000000003526f0
-  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  Call Trace:
-   <TASK>
-   __mptcp_clean_una_wakeup+0x7f/0x2d0 net/mptcp/protocol.c:1074
-   mptcp_release_cb+0x7cb/0xb30 net/mptcp/protocol.c:3493
-   release_sock+0x1aa/0x1f0 net/core/sock.c:3640
-   inet_wait_for_connect net/ipv4/af_inet.c:609 [inline]
-   __inet_stream_connect+0x8bd/0xf30 net/ipv4/af_inet.c:703
-   mptcp_sendmsg_fastopen+0x2a2/0x530 net/mptcp/protocol.c:1755
-   mptcp_sendmsg+0x1884/0x1b10 net/mptcp/protocol.c:1830
-   sock_sendmsg_nosec net/socket.c:711 [inline]
-   __sock_sendmsg+0x1a6/0x270 net/socket.c:726
-   ____sys_sendmsg+0x52a/0x7e0 net/socket.c:2583
-   ___sys_sendmsg net/socket.c:2637 [inline]
-   __sys_sendmsg+0x269/0x350 net/socket.c:2669
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7f6e86ebfe69
-  Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 b1 1f 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-  RSP: 002b:00007f6e86649168 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-  RAX: ffffffffffffffda RBX: 00007f6e86f491b8 RCX: 00007f6e86ebfe69
-  RDX: 0000000030004001 RSI: 0000000020000080 RDI: 0000000000000003
-  RBP: 00007f6e86f491b0 R08: 00007f6e866496c0 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 00007f6e86f491bc
-  R13: 000000000000006e R14: 00007ffe445d9420 R15: 00007ffe445d9508
-   </TASK>
+This code never worked, lets remove it.
 
-The root cause is the bad handling of disconnect() generated internally
-by the MPTCP protocol in case of connect FASTOPEN errors.
+[1]
+Unable to handle kernel paging request at virtual address ffff5fff2d536613
+KASAN: maybe wild-memory-access in range [0xfffefff96a9b3098-0xfffefff96a9b309f]
+Modules linked in:
+CPU: 1 UID: 0 PID: 7321 Comm: syz.0.16 Not tainted 6.13.0-rc7-syzkaller-g1950a0af2d55 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : mr_mfc_uses_dev net/ipv4/ipmr_base.c:290 [inline]
+ pc : mr_table_dump+0x5a4/0x8b0 net/ipv4/ipmr_base.c:334
+ lr : mr_mfc_uses_dev net/ipv4/ipmr_base.c:289 [inline]
+ lr : mr_table_dump+0x694/0x8b0 net/ipv4/ipmr_base.c:334
+Call trace:
+  mr_mfc_uses_dev net/ipv4/ipmr_base.c:290 [inline] (P)
+  mr_table_dump+0x5a4/0x8b0 net/ipv4/ipmr_base.c:334 (P)
+  mr_rtm_dumproute+0x254/0x454 net/ipv4/ipmr_base.c:382
+  ipmr_rtm_dumproute+0x248/0x4b4 net/ipv4/ipmr.c:2648
+  rtnl_dump_all+0x2e4/0x4e8 net/core/rtnetlink.c:4327
+  rtnl_dumpit+0x98/0x1d0 net/core/rtnetlink.c:6791
+  netlink_dump+0x4f0/0xbc0 net/netlink/af_netlink.c:2317
+  netlink_recvmsg+0x56c/0xe64 net/netlink/af_netlink.c:1973
+  sock_recvmsg_nosec net/socket.c:1033 [inline]
+  sock_recvmsg net/socket.c:1055 [inline]
+  sock_read_iter+0x2d8/0x40c net/socket.c:1125
+  new_sync_read fs/read_write.c:484 [inline]
+  vfs_read+0x740/0x970 fs/read_write.c:565
+  ksys_read+0x15c/0x26c fs/read_write.c:708
 
-Address the issue increasing the socket disconnect counter even on such
-a case, to allow other threads waiting on the same socket lock to
-properly error out.
-
-Fixes: c2b2ae3925b6 ("mptcp: handle correctly disconnect() failures")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+ebc0b8ae5d3590b2c074@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/67605870.050a0220.37aaf.0137.GAE@google.com
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/537
-Tested-by: syzbot+ebc0b8ae5d3590b2c074@syzkaller.appspotmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250123-net-mptcp-syzbot-issues-v1-3-af73258a726f@kernel.org
+Fixes: cb167893f41e ("net: Plumb support for filtering ipv4 and ipv6 multicast route dumps")
+Reported-by: syzbot+5cfae50c0e5f2c500013@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/678fe2d1.050a0220.15cac.00b3.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250121181241.841212-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv4/ipmr_base.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1766,8 +1766,10 @@ static int mptcp_sendmsg_fastopen(struct
- 		 * see mptcp_disconnect().
- 		 * Attempt it again outside the problematic scope.
- 		 */
--		if (!mptcp_disconnect(sk, 0))
-+		if (!mptcp_disconnect(sk, 0)) {
-+			sk->sk_disconnects++;
- 			sk->sk_socket->state = SS_UNCONNECTED;
-+		}
- 	}
- 	inet_clear_bit(DEFER_CONNECT, sk);
+diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
+index 03b6eee407a24..28d77d454d442 100644
+--- a/net/ipv4/ipmr_base.c
++++ b/net/ipv4/ipmr_base.c
+@@ -330,9 +330,6 @@ int mr_table_dump(struct mr_table *mrt, struct sk_buff *skb,
+ 	list_for_each_entry(mfc, &mrt->mfc_unres_queue, list) {
+ 		if (e < s_e)
+ 			goto next_entry2;
+-		if (filter->dev &&
+-		    !mr_mfc_uses_dev(mrt, mfc, filter->dev))
+-			goto next_entry2;
  
+ 		err = fill(mrt, skb, NETLINK_CB(cb->skb).portid,
+ 			   cb->nlh->nlmsg_seq, mfc, RTM_NEWROUTE, flags);
+-- 
+2.39.5
+
 
 
