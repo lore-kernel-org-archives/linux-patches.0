@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C9014EC77;
-	Wed,  5 Feb 2025 13:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468141519AA;
+	Wed,  5 Feb 2025 13:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763849; cv=none; b=AL9UcfHmh+In+cM29R4YtGehA7Ld70/9WqXwjDkwjn0Hai06a29URCPStikdNtncchFOkpBQgS/zghgGOJTt7KkVZKS8HEOt6lTZa6sGSTc5jQ9qTyJPhckxulbVpHP7tmg4nVKrsWkFcGFsKJ7pPu2QOpHV6gnybKORIQI6q3g=
+	t=1738763853; cv=none; b=bXil1IpTOs4wMAOqKTpaXRx9grPBNfZ+UJDggspMUjuO8muYwLJ++nFLVTzFnU/YBCRcojktF26DRp5R1NZRpZqeqzH/LVekj3oV5UssQbw+oSJHbsLEN43D5eijfItHEIIpSMgu5jCY4X/A+/GCa+qlH8Y7ux3pn2hvYGiehpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763849; c=relaxed/simple;
-	bh=J+h/7B90OWCYmcrcllyq9BAwaEf90ajkO0INP3P+Ds0=;
+	s=arc-20240116; t=1738763853; c=relaxed/simple;
+	bh=3i/jnRrzr/h8bXW5YYTDlCiMhOB8rxS3c0vElHXCMQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dpSwoIQwvW+RAglqrjiWpGmH79JJVZxOX4xF+a3A2eo1ijGPLU3pmdKd7GxgJMAxv05sm/8y6QA4dc9I4Bcfx8aWRXLjJiwQy3MgfICrQG7LDHJFH+x65onqM/k3MUyy9lYwuifUGd1GXmpxoj9bXvN5krDpmbnZyNUXV/L0nJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mb75YXPS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BovyKoktZzHJC/nCyxQLNz71boRmYSOkoldiexS6fZLHBXMwObngadPQRFk/jUWDgGGV4ES/dGREvhscemD9eOw3UVpLaNtM2scMu6qLb2Hcm0xwZJEUwwwla8pUMdfEDV3yQlvVZB9aktAgG3aSD36uIX7ipxfWsek8iLt/Ny4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbpplG8j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mb75YXPS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31FB3C4CED6;
-	Wed,  5 Feb 2025 13:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbpplG8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8266C4CEDD;
+	Wed,  5 Feb 2025 13:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763849;
-	bh=J+h/7B90OWCYmcrcllyq9BAwaEf90ajkO0INP3P+Ds0=;
+	s=korg; t=1738763853;
+	bh=3i/jnRrzr/h8bXW5YYTDlCiMhOB8rxS3c0vElHXCMQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mb75YXPSLymoSmQx57jB1vpEZBLwNgqjtjAY+a9UPdL4f/vGMSzhCGZJGUXkIF5AF
-	 riwQ9lvblq4SCI8ZxbUDDFJ0ksuy3gQHaogTT4WdFd3GfVrRiTO+L1ftAurBrzQGHR
-	 rsHhjhd2PefkP4P9zTFIoj0f3bq6oAAlTQ1WdXWI=
+	b=rbpplG8jZhyIm82kzIJI+Dc4NL8bz6+V6+slSBJ1QyWzwuBY2nC4eglZ/hoGx89Db
+	 cUJ9qZaG+vSxnbFpWMOe2WwinJqlQlXYEwclzrIQj5YnCInqgHrhEipnHjKHzfAr99
+	 qCiE3guEh5HdhsXaJeC8zd4xXnhQa6AXceyVzJWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 113/393] clk: ralink: mtmips: remove duplicated xtal clock for Ralink SoC RT3883
-Date: Wed,  5 Feb 2025 14:40:32 +0100
-Message-ID: <20250205134424.617232942@linuxfoundation.org>
+Subject: [PATCH 6.13 024/623] nvme: Add error path for xa_store in nvme_init_effects
+Date: Wed,  5 Feb 2025 14:36:06 +0100
+Message-ID: <20250205134457.153166328@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +49,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
 
-[ Upstream commit 830d8062d25581cf0beaa334486eea06834044da ]
+[ Upstream commit d4a95adeabc6b5a39405e49c6d5ed14dd83682c4 ]
 
-Ralink SoC RT3883 has already 'xtal' defined as a base clock so there is no
-need to redefine it again in fixed clocks section. Hence, remove the duplicate
-one from there.
+The xa_store() may fail due to memory allocation failure because there
+is no guarantee that the index NVME_CSI_NVM is already used. This fix
+introduces a new function to handle the error path.
 
-Fixes: d34db686a3d7 ("clk: ralink: mtmips: fix clocks probe order in oldest ralink SoCs")
-Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Link: https://lore.kernel.org/r/20250108093636.265033-1-sergio.paracuellos@gmail.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: cc115cbe12d9 ("nvme: always initialize known command effects")
+Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ralink/clk-mtmips.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/nvme/host/core.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
-index 76285fbbdeaa2..4b5d8b741e4e1 100644
---- a/drivers/clk/ralink/clk-mtmips.c
-+++ b/drivers/clk/ralink/clk-mtmips.c
-@@ -264,7 +264,6 @@ static int mtmips_register_pherip_clocks(struct device_node *np,
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 315692cb2e614..7c4a19f5c951a 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3175,6 +3175,25 @@ static int nvme_init_non_mdts_limits(struct nvme_ctrl *ctrl)
+ 	return ret;
+ }
+ 
++static int nvme_init_effects_log(struct nvme_ctrl *ctrl,
++		u8 csi, struct nvme_effects_log **log)
++{
++	struct nvme_effects_log *effects, *old;
++
++	effects = kzalloc(sizeof(*effects), GFP_KERNEL);
++	if (effects)
++		return -ENOMEM;
++
++	old = xa_store(&ctrl->cels, csi, effects, GFP_KERNEL);
++	if (xa_is_err(old)) {
++		kfree(effects);
++		return xa_err(old);
++	}
++
++	*log = effects;
++	return 0;
++}
++
+ static void nvme_init_known_nvm_effects(struct nvme_ctrl *ctrl)
+ {
+ 	struct nvme_effects_log	*log = ctrl->effects;
+@@ -3221,10 +3240,9 @@ static int nvme_init_effects(struct nvme_ctrl *ctrl, struct nvme_id_ctrl *id)
  	}
  
- static struct mtmips_clk_fixed rt3883_fixed_clocks[] = {
--	CLK_FIXED("xtal", NULL, 40000000),
- 	CLK_FIXED("periph", "xtal", 40000000)
- };
+ 	if (!ctrl->effects) {
+-		ctrl->effects = kzalloc(sizeof(*ctrl->effects), GFP_KERNEL);
+-		if (!ctrl->effects)
+-			return -ENOMEM;
+-		xa_store(&ctrl->cels, NVME_CSI_NVM, ctrl->effects, GFP_KERNEL);
++		ret = nvme_init_effects_log(ctrl, NVME_CSI_NVM, &ctrl->effects);
++		if (ret < 0)
++			return ret;
+ 	}
  
+ 	nvme_init_known_nvm_effects(ctrl);
 -- 
 2.39.5
 
