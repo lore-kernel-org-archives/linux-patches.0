@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4D0155335;
-	Wed,  5 Feb 2025 14:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E83F1519AA;
+	Wed,  5 Feb 2025 14:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764360; cv=none; b=mDPVCR79MQmq8QS5MVILmSKZP0jeXDs3X8glt8CHfx5+jAYU+r15tsqZcu5emTztjbUFAERwp/zD4XkwG4TlLOxz93hUOWSebHLyFIGSu+PPrnFzzZeXlAFg11QyZnPWrylUHKYOAXeFld2TmDZjHmJOpYGiOWjn4DinzRQ+9DY=
+	t=1738764363; cv=none; b=l+dOGJuNjPmUyS2KM8GYEhpGV6XXDQkxOAruEyf8fjldwPnZOBEkkIIs08LcXHsl2btj3uJkL/w+VladpU3SMP9MoTRvRlM+IEr6zL7A7LKlNASFkZWbTubrN7hYG22OpZlycEbHvJPR+IDa2MBKhm3IQgE6SSh4nWptb+TfCbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764360; c=relaxed/simple;
-	bh=OzkhrP4e3uqsUrg3bRZSnZYS238JWFZ69/GuUxekMmQ=;
+	s=arc-20240116; t=1738764363; c=relaxed/simple;
+	bh=aeyyR/BS0bAmyLeUaPCpvkMUXUb9NCTXeRS4qBxbMY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KWvW8wCy11mCEAxdKuNw+tRfenAusicg9wvBoFuk8FX3ts4SDCbNBFkAbtSPiE40Uj5Wzf4tWwsgO3JWQVbne5eiLI/ZbEfZhCutZLA0qgYHGGgPkgyAqhAVmWdXCcIA2GjcM6KjhmicaZBsalHDcQPQzBypIj/a2l/VKXsdTE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IstP9vvI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FT9nBPxInsORKoLjgf8vRtt5b8gwlhRD44s8QPBYewrLV3iZC2Lp0De/CfGNodOCouM+V8MwrmujN7/EaHPNECIpXN+iAfQ0fJmbLfBjhn5Ug0x2Qso0qjfuy1F77eCTCzCloAba/Hz9y3M5MFAiejhmGUnsUxtQqQy1Ktue704=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQV/1PHt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IstP9vvI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C69FC4CED1;
-	Wed,  5 Feb 2025 14:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQV/1PHt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC0DC4CED1;
+	Wed,  5 Feb 2025 14:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764360;
-	bh=OzkhrP4e3uqsUrg3bRZSnZYS238JWFZ69/GuUxekMmQ=;
+	s=korg; t=1738764363;
+	bh=aeyyR/BS0bAmyLeUaPCpvkMUXUb9NCTXeRS4qBxbMY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IstP9vvI9rR2hF3ejHFc87a6xOqWXL+omIG56b4u1TuNCrPg7XraBpCfLVXxt8P3R
-	 nc+I9caeC14jrK/i2hqhbZ9UxzihVrVsUMJcgs7PqqZziFGmxeh7hKlA5/HsRxC+Jl
-	 G4uLmPSU6RFB8h65RrpwL3aVcapa4jTqGvx8Qp2o=
+	b=jQV/1PHth5APJKFp4mLlIGDCIxqSjzGFoMrsXwCUN57QtIpENY5Il687YwUAi6RXg
+	 BngqmrkH+eWURnVHk0X8n7+PXperdPpEPSBcinKArwuXEIjEHeixVHNgG9cosi2bhv
+	 fzDgVuw+lNL/T1ndyed0gZX+w+r7GOdOehoLnwWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Ba Jing <bajing@cmss.chinamobile.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 071/623] drm/msm/dpu: link DSPP_2/_3 blocks on SM8350
-Date: Wed,  5 Feb 2025 14:36:53 +0100
-Message-ID: <20250205134458.943164078@linuxfoundation.org>
+Subject: [PATCH 6.6 165/393] ktest.pl: Remove unused declarations in run_bisect_test function
+Date: Wed,  5 Feb 2025 14:41:24 +0100
+Message-ID: <20250205134426.610150480@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Ba Jing <bajing@cmss.chinamobile.com>
 
-[ Upstream commit 42323d3c9e04c725d27606c31663b80a7cc30218 ]
+[ Upstream commit 776735b954f49f85fd19e1198efa421fae2ad77c ]
 
-Link DSPP_2 to the LM_2 and DSPP_3 to the LM_3 mixer blocks. This allows
-using colour transformation matrix (aka night mode) with more outputs at
-the same time.
+Since $output and $ret are not used in the subsequent code, the declarations
+should be removed.
 
-Fixes: 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/629959/
-Link: https://lore.kernel.org/r/20241220-dpu-fix-catalog-v2-5-38fa961ea992@linaro.org
+Fixes: a75fececff3c ("ktest: Added sample.conf, new %default option format")
+Link: https://lore.kernel.org/20240902130735.6034-1-bajing@cmss.chinamobile.com
+Signed-off-by: Ba Jing <bajing@cmss.chinamobile.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/ktest/ktest.pl | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-index aced16e350daa..f7c08e89c8820 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-@@ -162,6 +162,7 @@ static const struct dpu_lm_cfg sm8350_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.lm_pair = LM_3,
- 		.pingpong = PINGPONG_2,
-+		.dspp = DSPP_2,
- 	}, {
- 		.name = "lm_3", .id = LM_3,
- 		.base = 0x47000, .len = 0x320,
-@@ -169,6 +170,7 @@ static const struct dpu_lm_cfg sm8350_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.lm_pair = LM_2,
- 		.pingpong = PINGPONG_3,
-+		.dspp = DSPP_3,
- 	}, {
- 		.name = "lm_4", .id = LM_4,
- 		.base = 0x48000, .len = 0x320,
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index 045090085ac5b..e84464d80e183 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -2946,8 +2946,6 @@ sub run_bisect_test {
+ 
+     my $failed = 0;
+     my $result;
+-    my $output;
+-    my $ret;
+ 
+     $in_bisect = 1;
+ 
 -- 
 2.39.5
 
