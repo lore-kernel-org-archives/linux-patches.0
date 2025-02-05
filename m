@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F4B1632DA;
-	Wed,  5 Feb 2025 14:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F26119006B;
+	Wed,  5 Feb 2025 14:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766533; cv=none; b=nDJ7o7CShfxLgwBWWfhO7d4VYxY2UpvM+tSe6OMm+qqLcTU+sYoP0tQvRrPhRfbNm5ipsCUFO7ma1B6Mxy4GRMCG/zndsVqgwRkVPAeGb0b0nMjqTmRCYXUOjEDq5YkJ3aGtkDg0wGJk16Gn3lD5pTtDimcnJm8yj54nc/1LTPQ=
+	t=1738766537; cv=none; b=s9D/lSbsiSDuNXSvqKjDxeAZFdEYX+4qm7VLCUuyulzTKLmnqmeQY+KXJ0xeJZSe5Wb5o1wjKd9Hk1UuQLOAJFxu513iTiTPHrQ7P7pHGnX2nJrhB4sel10BojWo0K6aR8wsHl6OOXnEw5p0cjs/uRzZ4z+uaNnQ5Z5ljF4Y2/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766533; c=relaxed/simple;
-	bh=qrjxr/XRl+TMG34k1gVer+29MJ8GjPruEJWDR03pCw4=;
+	s=arc-20240116; t=1738766537; c=relaxed/simple;
+	bh=KzDya19lkhBgG4WLjsynJEcvNtB5/we+zegJWMe9b0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5rolpTs6UzyAPVhYW0Hd6F7aR6wfPrQgMYB5+YJfcRyOyiMubomn9Fm9czG/iFRFyIVG5GJswRIRjrpou4UOcCQN9QoFSqFvpimOjLWUBR4/s0ws8uh2SUbFctLpX+ZQ+0idPBb0g+JM+b9vQrtfjXJgFa9lnfg+2cexkfLmKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kr3r6z8k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Nln3M4LvPbhQX51jnK/Hdfa7eL8zzwuXIIvdmdmH7sKL36Sk6rAbmAkjmequPSEVLzpRAjhK1hcP1baE89K6B3nDr7vMgQd5n6Z07PP6Y7QFJ6Ih02rTsh3BIf8f9rG9pFVkCJz0B0d1D6TNXdcut44+2Bihg1SkM1xyvJXHRWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fv3/VDvE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kr3r6z8k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CD5C4CEE3;
-	Wed,  5 Feb 2025 14:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fv3/VDvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B420C4CED6;
+	Wed,  5 Feb 2025 14:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766533;
-	bh=qrjxr/XRl+TMG34k1gVer+29MJ8GjPruEJWDR03pCw4=;
+	s=korg; t=1738766536;
+	bh=KzDya19lkhBgG4WLjsynJEcvNtB5/we+zegJWMe9b0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kr3r6z8koL6JOFeH3s0jwd76toN03T4tdLvcQYAEh/zNVkyIENZZFdflxzoVLy/vq
-	 oZ/Qeyt1/c8LnNpfwPnsXsl7QZD744aN8/rzP8yqemBJrx9VUflkqHNvlyFw5ddeWJ
-	 ZN6i4UubcFMJvJEJi36bc7UKoCnaXokukZQ4FPSY=
+	b=Fv3/VDvEwzO8oL/3pXttP+z5jKUnq2unx4zoJZpYBugVSa+nNJmRADVgifN1CrnSm
+	 IdD31bdOSTNdgJiblQt1zwX+kaeLFsFaQrBid4+wvyYOXPa/XWBwzrUYJXfskkkjMk
+	 y4HVkkQsYFzTPRVkm5WOCvS59+lT41DHtb5bqLas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Noam Rathaus <noamr@ssd-disclosure.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.6 371/393] netfilter: nf_tables: reject mismatching sum of field_len with set key length
-Date: Wed,  5 Feb 2025 14:44:50 +0100
-Message-ID: <20250205134434.492086366@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 285/623] padata: fix sysfs store callback check
+Date: Wed,  5 Feb 2025 14:40:27 +0100
+Message-ID: <20250205134507.134122755@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,61 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit 1b9335a8000fb70742f7db10af314104b6ace220 upstream.
+[ Upstream commit 9ff6e943bce67d125781fe4780a5d6f072dc44c0 ]
 
-The field length description provides the length of each separated key
-field in the concatenation, each field gets rounded up to 32-bits to
-calculate the pipapo rule width from pipapo_init(). The set key length
-provides the total size of the key aligned to 32-bits.
+padata_sysfs_store() was copied from padata_sysfs_show() but this check
+was not adapted. Today there is no attribute which can fail this
+check, but if there is one it may as well be correct.
 
-Register-based arithmetics still allows for combining mismatching set
-key length and field length description, eg. set key length 10 and field
-description [ 5, 4 ] leading to pipapo width of 12.
-
-Cc: stable@vger.kernel.org
-Fixes: 3ce67e3793f4 ("netfilter: nf_tables: do not allow mismatch field size and set key length")
-Reported-by: Noam Rathaus <noamr@ssd-disclosure.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5e017dc3f8bc ("padata: Added sysfs primitives to padata subsystem")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/padata.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4875,7 +4875,7 @@ static int nft_set_desc_concat_parse(con
- static int nft_set_desc_concat(struct nft_set_desc *desc,
- 			       const struct nlattr *nla)
- {
--	u32 num_regs = 0, key_num_regs = 0;
-+	u32 len = 0, num_regs;
- 	struct nlattr *attr;
- 	int rem, err, i;
+diff --git a/kernel/padata.c b/kernel/padata.c
+index d51bbc76b2279..cf63d9bcf4822 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -970,7 +970,7 @@ static ssize_t padata_sysfs_store(struct kobject *kobj, struct attribute *attr,
  
-@@ -4889,12 +4889,12 @@ static int nft_set_desc_concat(struct nf
- 	}
+ 	pinst = kobj2pinst(kobj);
+ 	pentry = attr2pentry(attr);
+-	if (pentry->show)
++	if (pentry->store)
+ 		ret = pentry->store(pinst, attr, buf, count);
  
- 	for (i = 0; i < desc->field_count; i++)
--		num_regs += DIV_ROUND_UP(desc->field_len[i], sizeof(u32));
-+		len += round_up(desc->field_len[i], sizeof(u32));
- 
--	key_num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
--	if (key_num_regs != num_regs)
-+	if (len != desc->klen)
- 		return -EINVAL;
- 
-+	num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
- 	if (num_regs > NFT_REG32_COUNT)
- 		return -E2BIG;
- 
+ 	return ret;
+-- 
+2.39.5
+
 
 
