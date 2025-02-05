@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAB84A28;
-	Wed,  5 Feb 2025 14:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE971EED7;
+	Wed,  5 Feb 2025 14:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764956; cv=none; b=D4tNsI862BTkdw56XoEkLgL4NSHvXqE2eJZ/IbegPcsIwQXyWRcOwnc3i2A4mUtN/+2e64YfFAxGNXSi6gLsjp7BI9p/QWTzPksKMwE4lgc4chkbvfW+e83FpAqUTGo5DNpYL91aJNPx0aalNsY8MZkquI9zVH6LoZ+EeW/JfXo=
+	t=1738764959; cv=none; b=AM3pHZtY9jdVemwucKU+inaoptIMwn6ZcGLYaeJjoMPBnNDjp63cj2PNJKZ/f2WQFtQc65jbO9iyjOxB8Lb3BVBG+XguFr+RtABfdx6QuSg6KP/8H9i3VcL/ldTKI6JWp0vMc5kQOzwb+iHmyjySpinj20mVUMNMrIIKw30XZiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764956; c=relaxed/simple;
-	bh=Qrf7GcsoCH0KiFZWxdf04mkMg6NTmITpfcUdB2ToeO0=;
+	s=arc-20240116; t=1738764959; c=relaxed/simple;
+	bh=x71wErcU0Vw2WMOfFsJGmrpJgZlft+Oe1GGVk3eGWgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXjOmFkDx8kpjSYzFvnm2yiovpmZ0np2HIuWEfBRj04pah4SWWHIktAxFrH+gLHm4FhuAL3AP6GQH30JpWUkvLwnRE2gblZozIVA+ESI7p5HVUYKAVnZ8o/9NEbZuv6RReDHBQ4mJ1FqMXHPXK2LYepGQtXhJcGJc/x8nMZKV4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXPgqDQ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ez8LLYusU4gdFMj9yQlE9K3oVTuHnyZIRyvp9CgCrrFH2yfVK84c0gFqRDGoY2QguHEnwUcZEnaTmNMo3aSYq8AvOuupe0mjQqxIvgq8EZXm067DcSOMbkFTBvQr8n/jUFg28R+eltpvLFEr+rzTv0sSjTqLXvcI3CMr3iuviVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6X+38/0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXPgqDQ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224C0C4CED1;
-	Wed,  5 Feb 2025 14:15:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6X+38/0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C620C4CED1;
+	Wed,  5 Feb 2025 14:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764955;
-	bh=Qrf7GcsoCH0KiFZWxdf04mkMg6NTmITpfcUdB2ToeO0=;
+	s=korg; t=1738764958;
+	bh=x71wErcU0Vw2WMOfFsJGmrpJgZlft+Oe1GGVk3eGWgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXPgqDQ5UTqiLpbjEl+Ufx3StVywBoMogmUKojHGoRheevYEV1UfW6cPAD+Dx8eiL
-	 QkCLWXZ4US8Sv742BVFSeRigkiimzLvTfVXgX8qKWcTV6Zg+I2xXhNNNtsyZf48kHB
-	 8UNXcYvt6ISp3UJNaqwt9cXaF2hYtbGEKYuGbikE=
+	b=J6X+38/0IqxpdXN4JOJtni7y7IywqCChH8BkhuSj7SM4Te/2rfEIUWrwiGUww0V7J
+	 /oB/ISMlnCRAcSE7rwslBOn94AjzrU1IE0TtAVPNGyQcqRJ2E0xnx5rIy3yTN6Qzyi
+	 UIPc6ZY2ZLE0lqLtUOA9a871F3npFHmM7XX/p3WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 130/623] clk: imx8mp: Fix clkout1/2 support
-Date: Wed,  5 Feb 2025 14:37:52 +0100
-Message-ID: <20250205134501.202508746@linuxfoundation.org>
+Subject: [PATCH 6.6 219/393] arm64: dts: mediatek: mt8183: willow: Support second source touchscreen
+Date: Wed,  5 Feb 2025 14:42:18 +0100
+Message-ID: <20250205134428.682811374@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Hsin-Te Yuan <yuanhsinte@chromium.org>
 
-[ Upstream commit a9b7c84d22fb1687d63ca2a386773015cf59436b ]
+[ Upstream commit 9594935260d76bffe200bea6cfab6ba0752e70d9 ]
 
-The CLKOUTn may be fed from PLL1/2/3, but the PLL1/2/3 has to be enabled
-first by setting PLL_CLKE bit 11 in CCM_ANALOG_SYS_PLLn_GEN_CTRL register.
-The CCM_ANALOG_SYS_PLLn_GEN_CTRL bit 11 is modeled by plln_out clock. Fix
-the clock tree and place the clkout1/2 under plln_sel instead of plain plln
-to let the clock subsystem correctly control the bit 11 and enable the PLL
-in case the CLKOUTn is supplied by PLL1/2/3.
+Some willow devices use second source touchscreen.
 
-Fixes: 43896f56b59e ("clk: imx8mp: add clkout1/2 support")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20241112013718.333771-1-marex@denx.de
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: f006bcf1c972 ("arm64: dts: mt8183: Add kukui-jacuzzi-willow board")
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Link: https://lore.kernel.org/r/20241213-touchscreen-v3-2-7c1f670913f9@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ .../dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
-index 516dbd170c8a3..fb18f507f1213 100644
---- a/drivers/clk/imx/clk-imx8mp.c
-+++ b/drivers/clk/imx/clk-imx8mp.c
-@@ -399,8 +399,9 @@ static const char * const imx8mp_dram_core_sels[] = {"dram_pll_out", "dram_alt_r
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi
+index 76d33540166f9..c942e461a177e 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi
+@@ -6,6 +6,21 @@
+ /dts-v1/;
+ #include "mt8183-kukui-jacuzzi.dtsi"
  
- static const char * const imx8mp_clkout_sels[] = {"audio_pll1_out", "audio_pll2_out", "video_pll1_out",
- 						  "dummy", "dummy", "gpu_pll_out", "vpu_pll_out",
--						  "arm_pll_out", "sys_pll1", "sys_pll2", "sys_pll3",
--						  "dummy", "dummy", "osc_24m", "dummy", "osc_32k"};
-+						  "arm_pll_out", "sys_pll1_out", "sys_pll2_out",
-+						  "sys_pll3_out", "dummy", "dummy", "osc_24m",
-+						  "dummy", "osc_32k"};
- 
- static struct clk_hw **hws;
- static struct clk_hw_onecell_data *clk_hw_data;
++&i2c0 {
++	touchscreen@40 {
++		compatible = "hid-over-i2c";
++		reg = <0x40>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&touchscreen_pins>;
++
++		interrupts-extended = <&pio 155 IRQ_TYPE_LEVEL_LOW>;
++
++		post-power-on-delay-ms = <70>;
++		hid-descr-addr = <0x0001>;
++	};
++};
++
+ &i2c2 {
+ 	trackpad@2c {
+ 		compatible = "hid-over-i2c";
 -- 
 2.39.5
 
