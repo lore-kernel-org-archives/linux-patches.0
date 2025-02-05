@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3221F191F66;
-	Wed,  5 Feb 2025 14:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1814613C8E2;
+	Wed,  5 Feb 2025 14:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767589; cv=none; b=Q4Uv/Fo8xXMrdy2YuGNSN6W1lPlZoJC6+b8bBtr/W7L3A6GPBDfUSv/QbUogLrYSx96qBOFHWnAQ+gOZkwZV8GEn2n1nLXvKx+uX589zXc+l/4fCPWCqPC6SX2qY4FR+QiBW76I1QYmAtpVtAj2XSWoj/L9R7a8Q2apuPm9+PdM=
+	t=1738767593; cv=none; b=efEA8FRY+oXTEVcV1dgQ5u6YC5QLLjSYQtmbVkdDg5x0AE2k49IDIQ46rU4HREtcafrR910oUPac5J8Cms7o7uLhy/01G6P7GqToliW0rADI6hw6aFHkNR6kpj6fSF6tHLEEZ60vQmCZzqj+hxviJPGSlv12pZ/T+hjHzdOFiUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767589; c=relaxed/simple;
-	bh=rwTevFGTziIZ5tEzfTDcBHfGOK3HMfxoqh8k1vzhvfY=;
+	s=arc-20240116; t=1738767593; c=relaxed/simple;
+	bh=L6s2lrkHsQT8DdOHMDePAwj+H6SF4xAO8uEeXAeq0G0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bIL9/1+KIouaE+QdXt5uPSHJJR3MdGbRGOIUyCQp9mqjDEg2WOLyMqBZyb36o1RekXcu3G+kpkqE5LXqkdFWWT+SjC47AHOeoj28jKeycUz9AZt1Z6ZLaqTuDOMvnUBaaEwVJqHAEQdpUp4oXigJumT50ecRfmYUcIi1W9O5VBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A0R0quER; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NxyfDO6zHb2U08VZkTz9BzMg+qCEoZ8rRN58YzNwBk4I226FqdL5Dfc4JIwZrIHd5yiDVNSit+P5z6mSBkcpkc+Gtph2LJsTNv9VH8RjJ3hJFw2kcwyu355fGCpsmyymOGbxBmtWNpdk/N5veDkkhhZfjT/XgXcHG/FKPEOWakI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKpi5oH7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0R0quER"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 916D3C4CED1;
-	Wed,  5 Feb 2025 14:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKpi5oH7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11774C4CED1;
+	Wed,  5 Feb 2025 14:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767589;
-	bh=rwTevFGTziIZ5tEzfTDcBHfGOK3HMfxoqh8k1vzhvfY=;
+	s=korg; t=1738767592;
+	bh=L6s2lrkHsQT8DdOHMDePAwj+H6SF4xAO8uEeXAeq0G0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A0R0quERZ3eP6VLqTLX4jVxqn+/uEbUhiicRhhKsflmKCDikRi3qkouqJkAToRFUO
-	 5gU3pUCGodRNoFkdBl9goFgf1SN4f0RgnK8l7HhFFl+uHvDCkm+LNmXCsv4UJPJcam
-	 W1Pin65IvTlJIOIldP9uVFb9NhjP+yXhOSunoxCI=
+	b=EKpi5oH7bTqEou6h9YnwHM2RTLdFjS4EyWxtPV5mVTP5KxDTn0tpCe/Tzkkh9bAdn
+	 uwltArW69p44QxBe6mt+ViMjxWzTPj9X6ro0Pwvb8TV09eknCLO5w5vH6nDqCcpc4v
+	 9yRBJ9CHX8M8Om4Xlmg+TcaVFF3cjybZ/0i/iWWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 479/590] PM: hibernate: Add error handling for syscore_suspend()
-Date: Wed,  5 Feb 2025 14:43:54 +0100
-Message-ID: <20250205134513.587698373@linuxfoundation.org>
+Subject: [PATCH 6.13 426/623] arm64: tegra: Fix DMA ID for SPI2
+Date: Wed,  5 Feb 2025 14:42:48 +0100
+Message-ID: <20250205134512.520507109@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Akhil R <akhilrajeev@nvidia.com>
 
-[ Upstream commit e20a70c572539a486dbd91b225fa6a194a5e2122 ]
+[ Upstream commit 346bf459db26325c09ed841fdfd6678de1b1cb3a ]
 
-In hibernation_platform_enter(), the code did not check the
-return value of syscore_suspend(), potentially leading to a
-situation where syscore_resume() would be called even if
-syscore_suspend() failed. This could cause unpredictable
-behavior or system instability.
+DMA ID for SPI2 is '16'. Update the incorrect value in the devicetree.
 
-Modify the code sequence in question to properly handle errors returned
-by syscore_suspend(). If an error occurs in the suspend path, the code
-now jumps to label 'Enable_irqs' skipping the syscore_resume() call and
-only enabling interrupts after setting the system state to SYSTEM_RUNNING.
-
-Fixes: 40dc166cb5dd ("PM / Core: Introduce struct syscore_ops for core subsystems PM")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20250119143205.2103-1-vulab@iscas.ac.cn
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: bb9667d8187b ("arm64: tegra: Add SPI device tree nodes for Tegra234")
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Link: https://lore.kernel.org/r/20241206105201.53596-1-akhilrajeev@nvidia.com
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/hibernate.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/power/hibernate.c b/kernel/power/hibernate.c
-index e35829d360390..b483fcea811b1 100644
---- a/kernel/power/hibernate.c
-+++ b/kernel/power/hibernate.c
-@@ -608,7 +608,11 @@ int hibernation_platform_enter(void)
- 
- 	local_irq_disable();
- 	system_state = SYSTEM_SUSPEND;
--	syscore_suspend();
-+
-+	error = syscore_suspend();
-+	if (error)
-+		goto Enable_irqs;
-+
- 	if (pm_wakeup_pending()) {
- 		error = -EAGAIN;
- 		goto Power_up;
-@@ -620,6 +624,7 @@ int hibernation_platform_enter(void)
- 
-  Power_up:
- 	syscore_resume();
-+ Enable_irqs:
- 	system_state = SYSTEM_RUNNING;
- 	local_irq_enable();
- 
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+index 984c85eab41af..570331baa09ee 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+@@ -3900,7 +3900,7 @@
+ 			assigned-clock-parents = <&bpmp TEGRA234_CLK_PLLP_OUT0>;
+ 			resets = <&bpmp TEGRA234_RESET_SPI2>;
+ 			reset-names = "spi";
+-			dmas = <&gpcdma 19>, <&gpcdma 19>;
++			dmas = <&gpcdma 16>, <&gpcdma 16>;
+ 			dma-names = "rx", "tx";
+ 			dma-coherent;
+ 			status = "disabled";
 -- 
 2.39.5
 
