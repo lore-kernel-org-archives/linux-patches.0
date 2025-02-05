@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B68C1FECA4;
-	Wed,  5 Feb 2025 14:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C721FECA4;
+	Wed,  5 Feb 2025 14:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767004; cv=none; b=Uk2hNDOXrBH1mPzaHLx09tCJASpnT1r6wKSPtfwuKRdkedyIrE91dgrLItqPqonQIGW1xpUdEKMBI6IahM+8xBuq6E1+2s3t1jHYV6geRQrmEG3FcZxmRV1nx1ZssNaMR3KWDd7Z7/zoWYkNqQgUdTA+iL2mopdqKnrwgac+hQ8=
+	t=1738767008; cv=none; b=UATzRb0d6u1A5bfy/ztIGr+nqVk1PrGR7v+QKexar/Kk7YWPOo7lrV5tZcLe+Lndgx/OUlAZ7GIP7Eeol6appu5JU4tATQVX967dZUEJAJJfNTdQC+c25h6Yqp2iezG4KSV2CPMjUzwfXD2OdUO2pPAoL3fprGhu6TXyhNKhvH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767004; c=relaxed/simple;
-	bh=aNX0fuDF746VP4IBKhSJXeUxfxi7wsWLod5QY5YLB60=;
+	s=arc-20240116; t=1738767008; c=relaxed/simple;
+	bh=5gvcdQ+7BlYOmfN65pyw5l5zr1T2ERyuFByKdTa48Jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YuZ9gYee0+fj7W2JWbw83uS3ZuSMi+QVfDuEffFviSb7170cfn1i00CQzfi4j670nCWI2wzq8GuDUi24K85h9a77pL8IgR7Rlk+E47YViF4iig3FrI36YvXUCWabUERxeMZO1ky73YZyH/+lgKUeKg1PaO5vN5klU2hrTAxLaKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkiJFUeO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B/QUHe//4BsmP8QKJaLX86+D+VILHVgO7imt3ibY3IlWTZDAVaZJQ7SOLd+ynMYY6EDLBv88eszuTb0MXhI6S5yzhjWYFUztosf0efQo2XxAONfBzVXB4ESmOgfzD8k6wAh2x46spFlNRUJzkJwt3zPpwS22mV78eddRZhEPutw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kk1bxx6J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkiJFUeO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4E5C4CED1;
-	Wed,  5 Feb 2025 14:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kk1bxx6J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0A7C4CED1;
+	Wed,  5 Feb 2025 14:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767004;
-	bh=aNX0fuDF746VP4IBKhSJXeUxfxi7wsWLod5QY5YLB60=;
+	s=korg; t=1738767007;
+	bh=5gvcdQ+7BlYOmfN65pyw5l5zr1T2ERyuFByKdTa48Jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZkiJFUeO65TKoEI/rGC3RAysA0Ke5c/i4SH77uimbNmr1LbYZEzplq/UnxApN/NYv
-	 Z8C8byv/ibRt+maZDQSCbhgA5feAbRDfvIKlTB/jBBE6J63R+WEVHIJmISF/uMY/R3
-	 1HUlANJYVBtIs1cP1Gq9PLZEvtalMd9HHRG2L8rs=
+	b=kk1bxx6JGnJx5wK3cdf1/MYEoZEQZiYqS8vc8Gwb8crm/AfnTjRrfZX/UlNX4l+gV
+	 hQv78bql40RxXw8DpBYs3gOXS7ul0HI0AQT4wAhAtSeFoCIzNg5jQ/k0TIFlC9OWDi
+	 AUALANl4ylvYXUYMoROkV8+zGxEL0bdZOqeXrgXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 340/623] ARM: dts: stm32: Sort M24256E write-lockable page in DH STM32MP13xx DHCOR SoM DT
-Date: Wed,  5 Feb 2025 14:41:22 +0100
-Message-ID: <20250205134509.235858827@linuxfoundation.org>
+Subject: [PATCH 6.13 318/623] iommu/amd: Change amd_iommu_pgtable to use enum protection_domain_mode
+Date: Wed,  5 Feb 2025 14:41:00 +0100
+Message-ID: <20250205134508.387323977@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,50 +52,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 41e12cebd9c39c9ef7b6686f2c4e8bc451a386fc ]
+[ Upstream commit 13b4ec749163710e3d188d2fed7405308b1b1e73 ]
 
-Move the M24256E write-lockable page subnode after RTC subnode in
-DH STM32MP13xx DHCOR SoM DT to keep the list of nodes sorted by I2C
-address. No functional change.
+Currently it uses enum io_pgtable_fmt which is from the io pagetable code
+and most of the enum values are invalid. protection_domain_mode is
+internal the driver and has the only two valid values.
 
-Fixes: 3f2e7d167307 ("ARM: dts: stm32: Describe M24256E write-lockable page in DH STM32MP13xx DHCOR SoM DT")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fix some signatures and variables to use the right type as well.
+
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/5-v2-9776c53c2966+1c7-amd_paging_flags_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: 082f1bcae8d1 ("iommu/amd: Fully decode all combinations of alloc_paging_flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/st/stm32mp13xx-dhcor-som.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/iommu/amd/amd_iommu.h |  2 +-
+ drivers/iommu/amd/init.c      | 14 +++++++-------
+ drivers/iommu/amd/iommu.c     | 34 +++++++++++++++++-----------------
+ 3 files changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/arch/arm/boot/dts/st/stm32mp13xx-dhcor-som.dtsi b/arch/arm/boot/dts/st/stm32mp13xx-dhcor-som.dtsi
-index 34a7ebfcef0ee..6236ce2a69684 100644
---- a/arch/arm/boot/dts/st/stm32mp13xx-dhcor-som.dtsi
-+++ b/arch/arm/boot/dts/st/stm32mp13xx-dhcor-som.dtsi
-@@ -201,17 +201,17 @@
- 		pagesize = <64>;
- 	};
+diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
+index 1d384b2c6e28e..6eb0af2e03390 100644
+--- a/drivers/iommu/amd/amd_iommu.h
++++ b/drivers/iommu/amd/amd_iommu.h
+@@ -41,7 +41,7 @@ void amd_iommu_disable(void);
+ int amd_iommu_reenable(int mode);
+ int amd_iommu_enable_faulting(unsigned int cpu);
+ extern int amd_iommu_guest_ir;
+-extern enum io_pgtable_fmt amd_iommu_pgtable;
++extern enum protection_domain_mode amd_iommu_pgtable;
+ extern int amd_iommu_gpt_level;
+ extern unsigned long amd_iommu_pgsize_bitmap;
  
--	eeprom0wl: eeprom@58 {
--		compatible = "st,24256e-wl";	/* ST M24256E WL page of 0x50 */
--		pagesize = <64>;
--		reg = <0x58>;
--	};
--
- 	rv3032: rtc@51 {
- 		compatible = "microcrystal,rv3032";
- 		reg = <0x51>;
- 		interrupts-extended = <&gpioi 0 IRQ_TYPE_EDGE_FALLING>;
- 	};
-+
-+	eeprom0wl: eeprom@58 {
-+		compatible = "st,24256e-wl";	/* ST M24256E WL page of 0x50 */
-+		pagesize = <64>;
-+		reg = <0x58>;
-+	};
- };
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 0e0a531042acb..db4b52aae1fcf 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -152,7 +152,7 @@ struct ivmd_header {
+ bool amd_iommu_dump;
+ bool amd_iommu_irq_remap __read_mostly;
  
- &iwdg2 {
+-enum io_pgtable_fmt amd_iommu_pgtable = AMD_IOMMU_V1;
++enum protection_domain_mode amd_iommu_pgtable = PD_MODE_V1;
+ /* Guest page table level */
+ int amd_iommu_gpt_level = PAGE_MODE_4_LEVEL;
+ 
+@@ -2145,7 +2145,7 @@ static void print_iommu_info(void)
+ 		if (amd_iommu_xt_mode == IRQ_REMAP_X2APIC_MODE)
+ 			pr_info("X2APIC enabled\n");
+ 	}
+-	if (amd_iommu_pgtable == AMD_IOMMU_V2) {
++	if (amd_iommu_pgtable == PD_MODE_V2) {
+ 		pr_info("V2 page table enabled (Paging mode : %d level)\n",
+ 			amd_iommu_gpt_level);
+ 	}
+@@ -3059,10 +3059,10 @@ static int __init early_amd_iommu_init(void)
+ 	    FIELD_GET(FEATURE_GATS, amd_iommu_efr) == GUEST_PGTABLE_5_LEVEL)
+ 		amd_iommu_gpt_level = PAGE_MODE_5_LEVEL;
+ 
+-	if (amd_iommu_pgtable == AMD_IOMMU_V2) {
++	if (amd_iommu_pgtable == PD_MODE_V2) {
+ 		if (!amd_iommu_v2_pgtbl_supported()) {
+ 			pr_warn("Cannot enable v2 page table for DMA-API. Fallback to v1.\n");
+-			amd_iommu_pgtable = AMD_IOMMU_V1;
++			amd_iommu_pgtable = PD_MODE_V1;
+ 		}
+ 	}
+ 
+@@ -3185,7 +3185,7 @@ static void iommu_snp_enable(void)
+ 		goto disable_snp;
+ 	}
+ 
+-	if (amd_iommu_pgtable != AMD_IOMMU_V1) {
++	if (amd_iommu_pgtable != PD_MODE_V1) {
+ 		pr_warn("SNP: IOMMU is configured with V2 page table mode, SNP cannot be supported.\n");
+ 		goto disable_snp;
+ 	}
+@@ -3464,9 +3464,9 @@ static int __init parse_amd_iommu_options(char *str)
+ 		} else if (strncmp(str, "force_isolation", 15) == 0) {
+ 			amd_iommu_force_isolation = true;
+ 		} else if (strncmp(str, "pgtbl_v1", 8) == 0) {
+-			amd_iommu_pgtable = AMD_IOMMU_V1;
++			amd_iommu_pgtable = PD_MODE_V1;
+ 		} else if (strncmp(str, "pgtbl_v2", 8) == 0) {
+-			amd_iommu_pgtable = AMD_IOMMU_V2;
++			amd_iommu_pgtable = PD_MODE_V2;
+ 		} else if (strncmp(str, "irtcachedis", 11) == 0) {
+ 			amd_iommu_irtcachedis = true;
+ 		} else if (strncmp(str, "nohugepages", 11) == 0) {
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 081a5dbe7ba7b..e0c12dc44340c 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -2297,32 +2297,30 @@ struct protection_domain *protection_domain_alloc(int nid)
+ 	return domain;
+ }
+ 
+-static int pdom_setup_pgtable(struct protection_domain *domain, int pgtable)
++static int pdom_setup_pgtable(struct protection_domain *domain)
+ {
+ 	struct io_pgtable_ops *pgtbl_ops;
++	enum io_pgtable_fmt fmt;
+ 
+-	switch (pgtable) {
+-	case AMD_IOMMU_V1:
+-		domain->pd_mode = PD_MODE_V1;
++	switch (domain->pd_mode) {
++	case PD_MODE_V1:
++		fmt = AMD_IOMMU_V1;
+ 		break;
+-	case AMD_IOMMU_V2:
+-		domain->pd_mode = PD_MODE_V2;
++	case PD_MODE_V2:
++		fmt = AMD_IOMMU_V2;
+ 		break;
+-	default:
+-		return -EINVAL;
+ 	}
+ 
+-	pgtbl_ops =
+-		alloc_io_pgtable_ops(pgtable, &domain->iop.pgtbl.cfg, domain);
++	pgtbl_ops = alloc_io_pgtable_ops(fmt, &domain->iop.pgtbl.cfg, domain);
+ 	if (!pgtbl_ops)
+ 		return -ENOMEM;
+ 
+ 	return 0;
+ }
+ 
+-static inline u64 dma_max_address(int pgtable)
++static inline u64 dma_max_address(enum protection_domain_mode pgtable)
+ {
+-	if (pgtable == AMD_IOMMU_V1)
++	if (pgtable == PD_MODE_V1)
+ 		return ~0ULL;
+ 
+ 	/* V2 with 4/5 level page table */
+@@ -2334,8 +2332,9 @@ static bool amd_iommu_hd_support(struct amd_iommu *iommu)
+ 	return iommu && (iommu->features & FEATURE_HDSUP);
+ }
+ 
+-static struct iommu_domain *do_iommu_domain_alloc(struct device *dev, u32 flags,
+-						  int pgtable)
++static struct iommu_domain *
++do_iommu_domain_alloc(struct device *dev, u32 flags,
++		      enum protection_domain_mode pgtable)
+ {
+ 	bool dirty_tracking = flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+ 	struct amd_iommu *iommu = get_amd_iommu_from_dev(dev);
+@@ -2346,7 +2345,8 @@ static struct iommu_domain *do_iommu_domain_alloc(struct device *dev, u32 flags,
+ 	if (!domain)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	ret = pdom_setup_pgtable(domain, pgtable);
++	domain->pd_mode = pgtable;
++	ret = pdom_setup_pgtable(domain);
+ 	if (ret) {
+ 		pdom_id_free(domain->id);
+ 		kfree(domain);
+@@ -2384,13 +2384,13 @@ amd_iommu_domain_alloc_paging_flags(struct device *dev, u32 flags,
+ 		if (!amd_iommu_pasid_supported())
+ 			return ERR_PTR(-EOPNOTSUPP);
+ 
+-		return do_iommu_domain_alloc(dev, flags, AMD_IOMMU_V2);
++		return do_iommu_domain_alloc(dev, flags, PD_MODE_V2);
+ 	}
+ 
+ 	/* Allocate domain with v1 page table for dirty tracking */
+ 	if (flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING) {
+ 		if (amd_iommu_hd_support(iommu))
+-			return do_iommu_domain_alloc(dev, flags, AMD_IOMMU_V1);
++			return do_iommu_domain_alloc(dev, flags, PD_MODE_V1);
+ 
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 	}
 -- 
 2.39.5
 
