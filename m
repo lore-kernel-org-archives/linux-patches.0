@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53508155747;
-	Wed,  5 Feb 2025 14:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A101FCCEA;
+	Wed,  5 Feb 2025 14:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767313; cv=none; b=hchVhySljHOV1AydG/5cUc/aGpyy6AL2xTw1J3zCGTh7xJniZvakLTsHd5TTSWviaRbi4Hn1GeFjnQnMoZeTSjggU7O+3L2iT9PwSdm1JOOCOTp1eV6GqepP2fbP3gNhmStAc/pj5+b/BGCV3QrNpSUWGgvcEFGawDyZwZlpSBA=
+	t=1738767317; cv=none; b=lS/dWRQVO+pMiZB4twwFruzsj9vA6QuuXNFQLUZ6c47GAtFU0wSKK++w9gWBL8EY+ni3jub++ue1RjZ2ivaMuw/yjkJWsOrknQzjWDF/eN3xe/9jS+i0CslsMXllZ2erTlGddx5V5Wkre6ynwWiDmol3Q6QdgUtkaCH4beCVjN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767313; c=relaxed/simple;
-	bh=zdjufYvF+M96yn8xRcsvm5XYc1Iflg/daaJi4ixZMrU=;
+	s=arc-20240116; t=1738767317; c=relaxed/simple;
+	bh=TbMUCxTID7qo0UZ9hktS/x6g0XfWS/1xVtJb86Qggt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I42hjTJQ1Xz4q7c0YpKhkIfWCDWe6ZVgOEbGxsEHrgoA4ixnHynjzWfD8dL2aZtyFiYwvmPjfRQKUbEYdVBUhKAL1qP32Josx6CAzc7Ng4qeLViIny3uvJw0bsichfvX8eQUO5iGizXZIWhyNSWvOCPH5pb795NxIaXsnu6EZc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRTWJAXN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u3vDn6DqzrQC4SgKpPB31LnBrw6PreqlMVu3KRkAPxYwxGLAxjMRj6NomOi2d+Gc6IXUNO06vzpinWVTm8nB61CxGjeBJymmr8LGxkpVLcLJTbQO7ARyohf7Wua7OwQiJEvFMRYLQq1F4PwWSHYqOsyC2LpmhVaLE/DIHhtnEgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNK+JgXF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRTWJAXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CB2C4CEDD;
-	Wed,  5 Feb 2025 14:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNK+JgXF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9016EC4CED1;
+	Wed,  5 Feb 2025 14:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767312;
-	bh=zdjufYvF+M96yn8xRcsvm5XYc1Iflg/daaJi4ixZMrU=;
+	s=korg; t=1738767316;
+	bh=TbMUCxTID7qo0UZ9hktS/x6g0XfWS/1xVtJb86Qggt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hRTWJAXNroTY0wEq/xSiasFzrHB1VL7Invw9vsv6Zy2nVwB0LLTXy3thyJkNWT617
-	 1IexczBAIOz8r2HQ/j7uqOT4IlPzSRhahkXkYCfTH7E+oMDfv2AfNsR3kNDGKaxE05
-	 vNOksBmWrBDqObnTHHboyFY75B+C2wY9LNsY7Onc=
+	b=MNK+JgXFyruTbY7AQJx74+ecXv5wYi7fLamxItcBeinhQ1vPPW5QrixDfUNYEFboa
+	 rWgEPCiPiQVDHug/Yy9pfdVq+pPrFECFzBQZqbo11+ynKd2R/HkB8vslqU9vYE3CTB
+	 ++/r+ogI7lipL97GSWrnapbS++JeUiubCBKf9DhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Charles Han <hanchunchao@inspur.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 420/590] media: nxp: imx8-isi: fix v4l2-compliance test errors
-Date: Wed,  5 Feb 2025 14:42:55 +0100
-Message-ID: <20250205134511.334673512@linuxfoundation.org>
+Subject: [PATCH 6.12 438/590] firewire: test: Fix potential null dereference in firewire kunit test
+Date: Wed,  5 Feb 2025 14:43:13 +0100
+Message-ID: <20250205134512.025094995@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -52,52 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit 7b12ab055edef2f51733d155617a401a05237bcc ]
+[ Upstream commit 352fafe97784e81a10a7c74bd508f71a19b53c2a ]
 
-Running the v4l2-compliance (1.27.0-5208, SHA: af114250d48d) on the m2m
-device fails on the MMAP streaming tests, with the following messages:
+kunit_kzalloc() may return a NULL pointer, dereferencing it without
+NULL check may lead to NULL dereference.
+Add a NULL check for test_state.
 
-fail: v4l2-test-buffers.cpp(240): g_field() == V4L2_FIELD_ANY
-fail: v4l2-test-buffers.cpp(1508): buf.qbuf(node)
-
-Apparently, the driver does not properly set the field member of
-vb2_v4l2_buffer struct, returning the default V4L2_FIELD_ANY value which
-is against the guidelines.
-
-Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
-Signed-off-by: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240924103304.124085-1-laurentiu.palcu@oss.nxp.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: 1c8506d62624 ("firewire: test: add test of device attributes for simple AV/C device")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Link: https://lore.kernel.org/r/20250110084237.8877-1-hanchunchao@inspur.com
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/firewire/device-attribute-test.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-index 4091f1c0e78bd..a71eb30323c8d 100644
---- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-+++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-@@ -861,6 +861,7 @@ int mxc_isi_video_buffer_prepare(struct mxc_isi_dev *isi, struct vb2_buffer *vb2
- 				 const struct mxc_isi_format_info *info,
- 				 const struct v4l2_pix_format_mplane *pix)
- {
-+	struct vb2_v4l2_buffer *v4l2_buf = to_vb2_v4l2_buffer(vb2);
- 	unsigned int i;
+diff --git a/drivers/firewire/device-attribute-test.c b/drivers/firewire/device-attribute-test.c
+index 2f123c6b0a165..97478a96d1c96 100644
+--- a/drivers/firewire/device-attribute-test.c
++++ b/drivers/firewire/device-attribute-test.c
+@@ -99,6 +99,7 @@ static void device_attr_simple_avc(struct kunit *test)
+ 	struct device *unit0_dev = (struct device *)&unit0.device;
+ 	static const int unit0_expected_ids[] = {0x00ffffff, 0x00ffffff, 0x0000a02d, 0x00010001};
+ 	char *buf = kunit_kzalloc(test, PAGE_SIZE, GFP_KERNEL);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, buf);
+ 	int ids[4] = {0, 0, 0, 0};
  
- 	for (i = 0; i < info->mem_planes; i++) {
-@@ -875,6 +876,8 @@ int mxc_isi_video_buffer_prepare(struct mxc_isi_dev *isi, struct vb2_buffer *vb2
- 		vb2_set_plane_payload(vb2, i, size);
- 	}
+ 	// Ensure associations for node and unit devices.
+@@ -180,6 +181,7 @@ static void device_attr_legacy_avc(struct kunit *test)
+ 	struct device *unit0_dev = (struct device *)&unit0.device;
+ 	static const int unit0_expected_ids[] = {0x00012345, 0x00fedcba, 0x00abcdef, 0x00543210};
+ 	char *buf = kunit_kzalloc(test, PAGE_SIZE, GFP_KERNEL);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, buf);
+ 	int ids[4] = {0, 0, 0, 0};
  
-+	v4l2_buf->field = pix->field;
-+
- 	return 0;
- }
- 
+ 	// Ensure associations for node and unit devices.
 -- 
 2.39.5
 
