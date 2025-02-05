@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA881519AA;
-	Wed,  5 Feb 2025 14:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEABE1519AA;
+	Wed,  5 Feb 2025 14:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764398; cv=none; b=D2l1Pw+NE/GLS9uKFZy+WfdKRDXLwLerdDkuV7DffVZ/w3HEQOlBhCi3I2OVLyC3ENFjy33nq4fjbNFmQuXTZeIGWW89MslSkJvpgHb5foHF9reiqWLfcuv+t0d2K8tJOQU4QQwi5eNGp/KWEtyrTXMxaIKTqtfhX8D2uoXTdaA=
+	t=1738764401; cv=none; b=evdb5erle8sjMiQS6vIYIu+Sh1hFyU+G41F/cUhM0l5Q0Iq9e/mZ3/Y6jZ2AKVb8OGDrVdvFIAfSBqvagc4DU8HN3C9mLjaUzjEXioFSzYQ2dGvfzknkSS0aMo037bNfyLwRcWt2sU2byrO0WY/FLBKeKoqjt96bhYPOPh0gJDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764398; c=relaxed/simple;
-	bh=wMmaRZ1bz3cgfQY9emMIl4tkTmOtakjqyFyG76oQBj8=;
+	s=arc-20240116; t=1738764401; c=relaxed/simple;
+	bh=oOahCVCsc333TuG0vS2dSnKN8BMQYlqy/rfzOtwRFTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lX5CNCC4VLk/BIUeMLegQV8l+bdkD8AGiQoMkRWvFAgSgsM9HyeYA062rvJRAmC3nlORJkm+Uzz2jKaYL2iOF1juWevWjM29XAAC4I6cWs8qgYrjE2eOKDWUdqD7Ve12cpMAPhJfTL1aiX/H0kvrcJlB1fS3pZWHVZ4mjwr4Xv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWdZGEme; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aiWPfsV0v666Yw0UpH6dP8dy0lgCUnXXV4Mn9WQQbdFl32Yw4pvkmok+GUfvDJ16T8kK5TJt9pj6QUW+9ojvIbyS1sPM5pqQ16U1w5Sor9L+MkjrC9f/4PXQ3sJMtJI0B7r/UYri09vxQLf2SwwPBhpn+xfFqnDRGWtpe19YEhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vAL11fu7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWdZGEme"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4BC1C4CED6;
-	Wed,  5 Feb 2025 14:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vAL11fu7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253E2C4CED1;
+	Wed,  5 Feb 2025 14:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764398;
-	bh=wMmaRZ1bz3cgfQY9emMIl4tkTmOtakjqyFyG76oQBj8=;
+	s=korg; t=1738764401;
+	bh=oOahCVCsc333TuG0vS2dSnKN8BMQYlqy/rfzOtwRFTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWdZGEmeOlL8NPDrUMtG3081OaGQk6ZoUx32hO9iUHpU8cIj7fbdmSNgTW63WRsjs
-	 SAuDgxji21A26IY1bZMTBnf2/97NUfNq68KloUAPQk01Qza4mXSBV0msvobLOALkFJ
-	 E9EKTmg87kERsX2hrLgSNkdYB0eDpH7eRufcnh/A=
+	b=vAL11fu7GdFN7NMhBgIaIIdo9M0owYTN77bGhMJtQphMoGETYWsLhrYKwEdj9uubr
+	 v8GZ85JNoBZX3laWXit1rTl4h0jGFRBcPhgSBNd5ym1PEmc4glUhsQ9WSrs1GaLMzn
+	 JL8SQZfA82Y/i3LWr/+aiqk1rajMNxG9HhYZ9cc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Li <pengfei.li_1@nxp.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Peng Fan <peng.fan@nxp.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Sui Jingfeng <sui.jingfeng@linux.dev>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 120/590] dt-bindings: clock: imx93: Drop IMX93_CLK_END macro definition
-Date: Wed,  5 Feb 2025 14:37:55 +0100
-Message-ID: <20250205134459.851058967@linuxfoundation.org>
+Subject: [PATCH 6.13 075/623] drm/msm: Check return value of of_dma_configure()
+Date: Wed,  5 Feb 2025 14:36:57 +0100
+Message-ID: <20250205134459.096077291@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,39 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengfei Li <pengfei.li_1@nxp.com>
+From: Sui Jingfeng <sui.jingfeng@linux.dev>
 
-[ Upstream commit c0813ce2e5b0d1174782aff30d366509377abc7b ]
+[ Upstream commit b34a7401ffaee45354e81b38a4d072794079cfd6 ]
 
-IMX93_CLK_END should be dropped as it is not part of the ABI.
+Because the of_dma_configure() will returns '-EPROBE_DEFER' if the probe
+procedure of the specific platform IOMMU driver is not finished yet. It
+can also return other error code for various reasons.
 
-Signed-off-by: Pengfei Li <pengfei.li_1@nxp.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Peng Fan <peng.fan@nxp.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20241023184651.381265-3-pengfei.li_1@nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Stable-dep-of: 32e9dea2645f ("dt-bindings: clock: imx93: Add SPDIF IPG clk")
+Stop pretending that it will always suceess, quit if it fail.
+
+Signed-off-by: Sui Jingfeng <sui.jingfeng@linux.dev>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: 29ac8979cdf7 ("drm/msm/a6xx: use msm_gem for GMU memory objects")
+Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/622782/
+Link: https://lore.kernel.org/r/20241104090738.529848-1-sui.jingfeng@linux.dev
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/dt-bindings/clock/imx93-clock.h | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/include/dt-bindings/clock/imx93-clock.h b/include/dt-bindings/clock/imx93-clock.h
-index 787c9e74dc96d..a1d0b326bb6bf 100644
---- a/include/dt-bindings/clock/imx93-clock.h
-+++ b/include/dt-bindings/clock/imx93-clock.h
-@@ -204,6 +204,5 @@
- #define IMX93_CLK_A55_SEL		199
- #define IMX93_CLK_A55_CORE		200
- #define IMX93_CLK_PDM_IPG		201
--#define IMX93_CLK_END			202
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 14db7376c712d..e386b059187ac 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -1603,7 +1603,9 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
  
- #endif
+ 	gmu->dev = &pdev->dev;
+ 
+-	of_dma_configure(gmu->dev, node, true);
++	ret = of_dma_configure(gmu->dev, node, true);
++	if (ret)
++		return ret;
+ 
+ 	pm_runtime_enable(gmu->dev);
+ 
+@@ -1668,7 +1670,9 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 
+ 	gmu->dev = &pdev->dev;
+ 
+-	of_dma_configure(gmu->dev, node, true);
++	ret = of_dma_configure(gmu->dev, node, true);
++	if (ret)
++		return ret;
+ 
+ 	/* Fow now, don't do anything fancy until we get our feet under us */
+ 	gmu->idle_level = GMU_IDLE_STATE_ACTIVE;
 -- 
 2.39.5
 
