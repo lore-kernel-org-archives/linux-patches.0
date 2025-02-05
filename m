@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DF6142E86;
-	Wed,  5 Feb 2025 13:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24CB142E86;
+	Wed,  5 Feb 2025 13:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763500; cv=none; b=nd6jxQF6gLYroYg/ZMhk0SjNyppSGwvUYNglUfnzQtW8N7SVdW//GMtgx8r1eL5cRgyGcxaCUkH9uLn/miD3iP0M7DIOwUsX6Oc+hxFloMRL3q3EkbIqxAo8aTBMiA+/VSEgSe6d+b7hGMUN6r45vIAd/Irw5MsH1vsEzunAW3o=
+	t=1738763504; cv=none; b=d6ks+RmJ5btNCpoz5cF6htYexmZK2itdSo8BieRUJbCp6ANc8x339KUf/Ozo1zn7Y236LrI0ts4JSx9hqixmxgSql2sdux4yH40PW1RCjS4aTseWHlZ2mhcYgXrIBwT+OtQEcrT165m/B6/JFAppim8sGNHAVV91km+Dk8FLw3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763500; c=relaxed/simple;
-	bh=ZY+o/l9iStL2e+pEG9C4K0KNV3F+E1KDem2EuVoHUA4=;
+	s=arc-20240116; t=1738763504; c=relaxed/simple;
+	bh=Ky4CApXQhAiLwMIF1Yft5ndO0gr84RtC4sCyQLpMp10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GqTVwDiAD7Xa9yjWtjTGniOCPyu9gPH429WymKnYyoDpMPhrJBtQcbcSlULcmzTua7D1YoO2Mff3qzyoHTEispiM5HwK/5EqpbMBjMSW1Svw1vaygqtDbahgEd/TKAToFvTosVSpBQucaDjxd8yhmXY/PClfa0Zv36nt04eMGVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZjBbiUR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nKOEy0IYVqUV+TuDd6DfgvGjFALF+EntcR2Tk85w71q7T0qYioU/JQr8Z/XSHA9lK0AkTJvhqAZ6sqJ6I7aB1he9j+NPigacu1BuIu3Uf7o4VBD1GOzuxNC1X7qdwDHZ7KkygEclbGktvaiLnCZSZ4CsLR6W6FLiIrIhlEm8Zvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFopKk62; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZjBbiUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84D1C4CED1;
-	Wed,  5 Feb 2025 13:51:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFopKk62"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48213C4CED1;
+	Wed,  5 Feb 2025 13:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763500;
-	bh=ZY+o/l9iStL2e+pEG9C4K0KNV3F+E1KDem2EuVoHUA4=;
+	s=korg; t=1738763503;
+	bh=Ky4CApXQhAiLwMIF1Yft5ndO0gr84RtC4sCyQLpMp10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qZjBbiURcYagExgS09aQeDvprwz36KTN+JYiPHXhe+dkGPuijdLpWdK3Jdx1bRUvF
-	 YTeCWRVJ+e7+dti6MG1K910N0QG5gWWsa/eSmpuziyGOckcEuvlMDOudXPZA7Xtv8I
-	 dVQ4JPSOYJyBCBVlbCdJsa7I8DBf6OmYZ0zWoryQ=
+	b=OFopKk62D5W2ZVqQqs/zcOvBm5RDr/HiotcHMN63hOGwSd/7gZaJvkzUSfJHfOTIu
+	 okuieOYNa/AHZqW73YKGkt8x/niZfVS/9YRPPbBVdWA1SRS8APD0pMTYnAnlnVYpDD
+	 ZDrAh7xy+bTKDCw6cejUC/v5KOKmB/nwE+iwTB3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Richard Russon (FlatCap)" <ldm@flatcap.org>,
-	linux-ntfs-dev@lists.sourceforge.net,
-	Jens Axboe <axboe@kernel.dk>,
+	He Rongguang <herongguang@linux.alibaba.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/590] partitions: ldm: remove the initial kernel-doc notation
-Date: Wed,  5 Feb 2025 14:36:17 +0100
-Message-ID: <20250205134456.092775427@linuxfoundation.org>
+Subject: [PATCH 6.6 074/393] cpupower: fix TSC MHz calculation
+Date: Wed,  5 Feb 2025 14:39:53 +0100
+Message-ID: <20250205134423.123955329@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,43 +47,116 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: He Rongguang <herongguang@linux.alibaba.com>
 
-[ Upstream commit e494e451611a3de6ae95f99e8339210c157d70fb ]
+[ Upstream commit 9d6c0e58514f8b57cd9c2c755e41623d6a966025 ]
 
-Remove the file's first comment describing what the file is.
-This comment is not in kernel-doc format so it causes a kernel-doc
-warning.
+Commit 'cpupower: Make TSC read per CPU for Mperf monitor' (c2adb1877b7)
+changes TSC counter reads per cpu, but left time diff global (from start
+of all cpus to end of all cpus), thus diff(time) is too large for a
+cpu's tsc counting, resulting in far less than acutal TSC_Mhz and thus
+`cpupower monitor` showing far less than actual cpu realtime frequency.
 
-ldm.h:13: warning: expecting prototype for ldm(). Prototype was for _FS_PT_LDM_H_() instead
+/proc/cpuinfo shows frequency:
+cat /proc/cpuinfo | egrep -e 'processor' -e 'MHz'
+...
+processor : 171
+cpu MHz   : 4108.498
+...
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Richard Russon (FlatCap) <ldm@flatcap.org>
-Cc: linux-ntfs-dev@lists.sourceforge.net
-Cc: Jens Axboe <axboe@kernel.dk>
-Link: https://lore.kernel.org/r/20250111062758.910458-1-rdunlap@infradead.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+before fix (System 100% busy):
+    | Mperf              || Idle_Stats
+ CPU| C0   | Cx   | Freq  || POLL | C1   | C2
+ 171|  0.77| 99.23|  2279||  0.00|  0.00|  0.00
+
+after fix (System 100% busy):
+    | Mperf              || Idle_Stats
+ CPU| C0   | Cx   | Freq  || POLL | C1   | C2
+ 171|  0.46| 99.54|  4095||  0.00|  0.00|  0.00
+
+Fixes: c2adb1877b76 ("cpupower: Make TSC read per CPU for Mperf monitor")
+Signed-off-by: He Rongguang <herongguang@linux.alibaba.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/partitions/ldm.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../cpupower/utils/idle_monitor/mperf_monitor.c   | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/block/partitions/ldm.h b/block/partitions/ldm.h
-index e259180c89148..aa3bd050d8cdd 100644
---- a/block/partitions/ldm.h
-+++ b/block/partitions/ldm.h
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
--/**
-+/*
-  * ldm - Part of the Linux-NTFS project.
-  *
-  * Copyright (C) 2001,2002 Richard Russon <ldm@flatcap.org>
+diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+index ae6af354a81db..08a399b0be286 100644
+--- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
++++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+@@ -33,7 +33,7 @@ static int mperf_get_count_percent(unsigned int self_id, double *percent,
+ 				   unsigned int cpu);
+ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
+ 				unsigned int cpu);
+-static struct timespec time_start, time_end;
++static struct timespec *time_start, *time_end;
+ 
+ static cstate_t mperf_cstates[MPERF_CSTATE_COUNT] = {
+ 	{
+@@ -174,7 +174,7 @@ static int mperf_get_count_percent(unsigned int id, double *percent,
+ 		dprint("%s: TSC Ref - mperf_diff: %llu, tsc_diff: %llu\n",
+ 		       mperf_cstates[id].name, mperf_diff, tsc_diff);
+ 	} else if (max_freq_mode == MAX_FREQ_SYSFS) {
+-		timediff = max_frequency * timespec_diff_us(time_start, time_end);
++		timediff = max_frequency * timespec_diff_us(time_start[cpu], time_end[cpu]);
+ 		*percent = 100.0 * mperf_diff / timediff;
+ 		dprint("%s: MAXFREQ - mperf_diff: %llu, time_diff: %llu\n",
+ 		       mperf_cstates[id].name, mperf_diff, timediff);
+@@ -207,7 +207,7 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
+ 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
+ 		/* Calculate max_freq from TSC count */
+ 		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
+-		time_diff = timespec_diff_us(time_start, time_end);
++		time_diff = timespec_diff_us(time_start[cpu], time_end[cpu]);
+ 		max_frequency = tsc_diff / time_diff;
+ 	}
+ 
+@@ -226,9 +226,8 @@ static int mperf_start(void)
+ {
+ 	int cpu;
+ 
+-	clock_gettime(CLOCK_REALTIME, &time_start);
+-
+ 	for (cpu = 0; cpu < cpu_count; cpu++) {
++		clock_gettime(CLOCK_REALTIME, &time_start[cpu]);
+ 		mperf_get_tsc(&tsc_at_measure_start[cpu]);
+ 		mperf_init_stats(cpu);
+ 	}
+@@ -243,9 +242,9 @@ static int mperf_stop(void)
+ 	for (cpu = 0; cpu < cpu_count; cpu++) {
+ 		mperf_measure_stats(cpu);
+ 		mperf_get_tsc(&tsc_at_measure_end[cpu]);
++		clock_gettime(CLOCK_REALTIME, &time_end[cpu]);
+ 	}
+ 
+-	clock_gettime(CLOCK_REALTIME, &time_end);
+ 	return 0;
+ }
+ 
+@@ -349,6 +348,8 @@ struct cpuidle_monitor *mperf_register(void)
+ 	aperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
+ 	tsc_at_measure_start = calloc(cpu_count, sizeof(unsigned long long));
+ 	tsc_at_measure_end = calloc(cpu_count, sizeof(unsigned long long));
++	time_start = calloc(cpu_count, sizeof(struct timespec));
++	time_end = calloc(cpu_count, sizeof(struct timespec));
+ 	mperf_monitor.name_len = strlen(mperf_monitor.name);
+ 	return &mperf_monitor;
+ }
+@@ -361,6 +362,8 @@ void mperf_unregister(void)
+ 	free(aperf_current_count);
+ 	free(tsc_at_measure_start);
+ 	free(tsc_at_measure_end);
++	free(time_start);
++	free(time_end);
+ 	free(is_valid);
+ }
+ 
 -- 
 2.39.5
 
