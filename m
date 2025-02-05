@@ -1,43 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F83151988;
-	Wed,  5 Feb 2025 14:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76313151988;
+	Wed,  5 Feb 2025 14:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766042; cv=none; b=P5Ocix3D7zj0bkQw76v/1/d+SZoD7gmVgCRdDdcIyDaaPq1m6gTPnR4ZYffeNf0JGeWyasxsuB/RFz6yCS7fNdtKmh5qtBe4Y3zxnKu24/t936PaoTZZlZvIjqbtbVHz5kcj/RqvjL/UoNkIN/UVZQd5TkA2qfTAkEnrK62JBYA=
+	t=1738766045; cv=none; b=k3e+yZ096YIb3FKBnU39paNUgYRR/6hJ/FHNPhLUnjkJwcVzVSev0xuszxBFYaGEEoyKYS8D7FRZN2T2KthTmVreViAQXFpRGDXRq6762XypcIExGLqhHV6giLy2QAPsRhlgvlPH90oiW552vFwMp0qdcCIaKSU+n9ri9x3SxKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766042; c=relaxed/simple;
-	bh=kJ2Kg5PX/np29ztHwrhqkkpI5TSMa/RRceo7lMHaJdY=;
+	s=arc-20240116; t=1738766045; c=relaxed/simple;
+	bh=B806445Yvdd2e7MnvVffvuqJHW1/ERT1bP3QKPDgIVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uRmJs8w0iVyl0GZTtEDEImRCCNYDyjH+dBXPixOFXUOBInAcsOP7h3mLcskc3fxyGdChGrwlXSWd1ZwKwfuMAUioFFIEIX25RpkA1DevSBIvn5i6IPWoVZqZQ7pAbC0nNj7jkLgHz1QZNcAIXpIxLOrAx74BK/tnqBVb9TVYVjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUmZ0y+y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i1ryQN3m+Y1BCu5oLxdTKPwU4ZIxGSBo15/fKt8+MoZ2IggdeXPF/+2Bp8vQMnpOMuaVk2Htl5B8KJPVwLbodl1HyYNi8JN6Zu3Y4730i2WvwTtGIoH3I1rM8n1PlOJQJhupTDcuwmWqCyRnAAQFOpS38GXqVPD/8+8vZfu5DKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7YWwSo/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUmZ0y+y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9877CC4CED1;
-	Wed,  5 Feb 2025 14:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7YWwSo/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1C2C4CED1;
+	Wed,  5 Feb 2025 14:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766042;
-	bh=kJ2Kg5PX/np29ztHwrhqkkpI5TSMa/RRceo7lMHaJdY=;
+	s=korg; t=1738766045;
+	bh=B806445Yvdd2e7MnvVffvuqJHW1/ERT1bP3QKPDgIVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DUmZ0y+yn2F69ha/UIU0Xcu1Ucd4e0AEh5QdLtSVqfSM2mFJnkxHpTNRoiQkhwg/R
-	 qBHN/s30ZbMz/JGNYEcQ17mMbsGTzvZvUpCMiGS55xTdW8fvoB9qG+ZUeDuTdMxwR9
-	 0LqqGQJuUuxFFw6bj/rrs/cbs3pmFhRLHdlvUhX8=
+	b=O7YWwSo/sRPxvttCyNNl6Spp0OKbRlGfD/JTMnIEXAinFjCfYKXgzQiYvbc1iud0e
+	 cS9YASOUrhAgCw0eFFmy/vtSg+USAYtYaRZw1QOKEeuv12k1Qxy8c63Fh3Lmr6OAK5
+	 benYY3Y3dfsquOOXkeyi+U3+YL3sf1kxyw3HPoNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 237/623] net: avoid race between device unregistration and ethnl ops
-Date: Wed,  5 Feb 2025 14:39:39 +0100
-Message-ID: <20250205134505.296589199@linuxfoundation.org>
+Subject: [PATCH 6.12 282/590] perf inject: Fix use without initialization of local variables
+Date: Wed,  5 Feb 2025 14:40:37 +0100
+Message-ID: <20250205134506.067431390@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,75 +56,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 12e070eb6964b341b41677fd260af5a305316a1f ]
+[ Upstream commit 8e246a1b2a75e187c7d22c9aec4299057f87d19e ]
 
-The following trace can be seen if a device is being unregistered while
-its number of channels are being modified.
+Local variables were missing initialization and command line
+processing didn't provide default values.
 
-  DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-  WARNING: CPU: 3 PID: 3754 at kernel/locking/mutex.c:564 __mutex_lock+0xc8a/0x1120
-  CPU: 3 UID: 0 PID: 3754 Comm: ethtool Not tainted 6.13.0-rc6+ #771
-  RIP: 0010:__mutex_lock+0xc8a/0x1120
-  Call Trace:
-   <TASK>
-   ethtool_check_max_channel+0x1ea/0x880
-   ethnl_set_channels+0x3c3/0xb10
-   ethnl_default_set_doit+0x306/0x650
-   genl_family_rcv_msg_doit+0x1e3/0x2c0
-   genl_rcv_msg+0x432/0x6f0
-   netlink_rcv_skb+0x13d/0x3b0
-   genl_rcv+0x28/0x40
-   netlink_unicast+0x42e/0x720
-   netlink_sendmsg+0x765/0xc20
-   __sys_sendto+0x3ac/0x420
-   __x64_sys_sendto+0xe0/0x1c0
-   do_syscall_64+0x95/0x180
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-This is because unregister_netdevice_many_notify might run before the
-rtnl lock section of ethnl operations, eg. set_channels in the above
-example. In this example the rss lock would be destroyed by the device
-unregistration path before being used again, but in general running
-ethnl operations while dismantle has started is not a good idea.
-
-Fix this by denying any operation on devices being unregistered. A check
-was already there in ethnl_ops_begin, but not wide enough.
-
-Note that the same issue cannot be seen on the ioctl version
-(__dev_ethtool) because the device reference is retrieved from within
-the rtnl lock section there. Once dismantle started, the net device is
-unlisted and no reference will be found.
-
-Fixes: dde91ccfa25f ("ethtool: do not perform operations on net devices being unregistered")
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Edward Cree <ecree.xilinx@gmail.com>
-Link: https://patch.msgid.link/20250116092159.50890-1-atenart@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 64eed019f3fce124 ("perf inject: Lazy build-id mmap2 event insertion")
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20241211060831.806539-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/builtin-inject.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ethtool/netlink.c b/net/ethtool/netlink.c
-index e3f0ef6b851bb..4d18dc29b3043 100644
---- a/net/ethtool/netlink.c
-+++ b/net/ethtool/netlink.c
-@@ -90,7 +90,7 @@ int ethnl_ops_begin(struct net_device *dev)
- 		pm_runtime_get_sync(dev->dev.parent);
+diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
+index d6989195a061f..11e49cafa3af9 100644
+--- a/tools/perf/builtin-inject.c
++++ b/tools/perf/builtin-inject.c
+@@ -2367,10 +2367,10 @@ int cmd_inject(int argc, const char **argv)
+ 	};
+ 	int ret;
+ 	const char *known_build_ids = NULL;
+-	bool build_ids;
+-	bool build_id_all;
+-	bool mmap2_build_ids;
+-	bool mmap2_build_id_all;
++	bool build_ids = false;
++	bool build_id_all = false;
++	bool mmap2_build_ids = false;
++	bool mmap2_build_id_all = false;
  
- 	if (!netif_device_present(dev) ||
--	    dev->reg_state == NETREG_UNREGISTERING) {
-+	    dev->reg_state >= NETREG_UNREGISTERING) {
- 		ret = -ENODEV;
- 		goto err;
- 	}
+ 	struct option options[] = {
+ 		OPT_BOOLEAN('b', "build-ids", &build_ids,
 -- 
 2.39.5
 
