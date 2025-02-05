@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25711519AA;
-	Wed,  5 Feb 2025 14:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBE11553AB;
+	Wed,  5 Feb 2025 14:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764632; cv=none; b=ddyfqhezg7vzEpDp2TuIYnqvBN9/11JPQ1XLGTZQH8tFRyh1FQ/Toys8hkLhT1e8yIdfhUCiOpcvgLi3S0q0rJ1FNG+HU835TRsYfXl1UH788GHN46vckmvWhXZIL237Sse72MtvrNKaM8HlGBEwuFxill8d1jNOs1qzzUHj/m4=
+	t=1738764636; cv=none; b=uxCjF/TxEC0X8hMv5Sx0CM1Vcl7kNGU74H41OcbvWW7wAn1zMbdea2ZcDmiMCM8Hp7KfNWwVRH3dAYwS3MxVruhd0tX99gjJhu/bQtVTQSpIp5wiBiFEE7qQ400eOkl3ggvufhZctPUi+GaqjdMgY7vV52azSOw6tpyXdLWL4lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764632; c=relaxed/simple;
-	bh=xv3hibQNXYlRKBseXG5oc6tZOPLty0eTyA1HPpnZbj0=;
+	s=arc-20240116; t=1738764636; c=relaxed/simple;
+	bh=tt+tuTojqaXoY60uWCusBZDD6RP51vZTl6zroAL11UQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RHfTai7WOKlAQL2euRQqbfAhGIVNLVd0Yq/EfYzCaBfBZMRX1xaer+r4x6Cac+LqeST74zeaulgPPgmuE71lFGLnvVmlGy/O9R1fUMhbSttFZz8uekx26S4W9DFLWMIJIe1elcs+Nbmv0oDETR9dsLPDnHBk2uKs6b1uLQ1NR/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jP9zs9HH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NYnJNDfkS2Y2ASTIYJIMxnE0IG1RunHHOJvrtS8HLAGlmUqfbF7CDBndcHM4zQwlzHHW7pZ+VeaUgpgYsibIolHx76+f/ubEZSltI5D5WDchAXseTTEXO4oDS6qE+ApBw5xhr1MVnCyt7Zld79UQwUsboaKRmGkMvqoB2k5K6lM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEchbN5/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jP9zs9HH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21786C4CED1;
-	Wed,  5 Feb 2025 14:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEchbN5/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CB2C4CED1;
+	Wed,  5 Feb 2025 14:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764632;
-	bh=xv3hibQNXYlRKBseXG5oc6tZOPLty0eTyA1HPpnZbj0=;
+	s=korg; t=1738764635;
+	bh=tt+tuTojqaXoY60uWCusBZDD6RP51vZTl6zroAL11UQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jP9zs9HHZ6R+cMVKxjLfjmOyS8DkulZYKfIQVdNz1o7vppvvd4jtSIh823wtNhGo6
-	 6Wq28hizO1UHTx7yI4L6XWVzlQ5ZyHW/ho4N20IWTf7ltLvCSlG3lajzc4EylU6tEh
-	 hNXZ5VU5KId7TeCVbq5aXVVBF7wDLxDqCwc872no=
+	b=kEchbN5/VHIuBCC0FTI5TpE/wMZN3zky1pi2rXUHxv/rIJ38SeUjcfr+9BL8eap19
+	 fBuTSrJMSKofAZKQuFhb/GPHnmUH1hUWI2jzqOJ5DLrl02W5EQjAjdOJyPDEpftn84
+	 E5147H5iCSAS3mU7G6pQamSZFrzHlN7Pm+TVB8L8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 097/623] selftests/bpf: Actuate tx_metadata_len in xdp_hw_metadata
-Date: Wed,  5 Feb 2025 14:37:19 +0100
-Message-ID: <20250205134459.932996277@linuxfoundation.org>
+Subject: [PATCH 6.13 082/623] genirq: Make handle_enforce_irqctx() unconditionally available
+Date: Wed,  5 Feb 2025 14:37:04 +0100
+Message-ID: <20250205134459.361145150@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -52,36 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Yoong Siang <yoong.siang.song@intel.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 0bee36d1a51366fa57b731f8975f26f92943b43e ]
+[ Upstream commit 8d187a77f04c14fb459a5301d69f733a5a1396bc ]
 
-set XDP_UMEM_TX_METADATA_LEN flag to reserve tx_metadata_len bytes of
-per-chunk metadata.
+Commit 1b57d91b969c ("irqchip/gic-v2, v3: Prevent SW resends entirely")
+sett the flag which enforces interrupt handling in interrupt context and
+prevents software base resends for ARM GIC v2/v3.
 
-Fixes: d5e726d9143c ("xsk: Require XDP_UMEM_TX_METADATA_LEN to actuate tx_metadata_len")
-Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20241205044258.3155799-1-yoong.siang.song@intel.com
+But it missed that the helper function which checks the flag was hidden
+behind CONFIG_GENERIC_PENDING_IRQ, which is not set by ARM[64].
+
+Make the helper unconditionally available so that the enforcement actually
+works.
+
+Fixes: 1b57d91b969c ("irqchip/gic-v2, v3: Prevent SW resends entirely")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20241210101811.497716609@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/xdp_hw_metadata.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/irq/internals.h | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/xdp_hw_metadata.c b/tools/testing/selftests/bpf/xdp_hw_metadata.c
-index 6f9956eed797f..ad6c08dfd6c8c 100644
---- a/tools/testing/selftests/bpf/xdp_hw_metadata.c
-+++ b/tools/testing/selftests/bpf/xdp_hw_metadata.c
-@@ -79,7 +79,7 @@ static int open_xsk(int ifindex, struct xsk *xsk, __u32 queue_id)
- 		.fill_size = XSK_RING_PROD__DEFAULT_NUM_DESCS,
- 		.comp_size = XSK_RING_CONS__DEFAULT_NUM_DESCS,
- 		.frame_size = XSK_UMEM__DEFAULT_FRAME_SIZE,
--		.flags = XSK_UMEM__DEFAULT_FLAGS,
-+		.flags = XDP_UMEM_TX_METADATA_LEN,
- 		.tx_metadata_len = sizeof(struct xsk_tx_metadata),
- 	};
- 	__u32 idx = 0;
+diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
+index fe0272cd84a51..a29df4b02a2ed 100644
+--- a/kernel/irq/internals.h
++++ b/kernel/irq/internals.h
+@@ -441,10 +441,6 @@ static inline struct cpumask *irq_desc_get_pending_mask(struct irq_desc *desc)
+ {
+ 	return desc->pending_mask;
+ }
+-static inline bool handle_enforce_irqctx(struct irq_data *data)
+-{
+-	return irqd_is_handle_enforce_irqctx(data);
+-}
+ bool irq_fixup_move_pending(struct irq_desc *desc, bool force_clear);
+ #else /* CONFIG_GENERIC_PENDING_IRQ */
+ static inline bool irq_can_move_pcntxt(struct irq_data *data)
+@@ -471,11 +467,12 @@ static inline bool irq_fixup_move_pending(struct irq_desc *desc, bool fclear)
+ {
+ 	return false;
+ }
++#endif /* !CONFIG_GENERIC_PENDING_IRQ */
++
+ static inline bool handle_enforce_irqctx(struct irq_data *data)
+ {
+-	return false;
++	return irqd_is_handle_enforce_irqctx(data);
+ }
+-#endif /* !CONFIG_GENERIC_PENDING_IRQ */
+ 
+ #if !defined(CONFIG_IRQ_DOMAIN) || !defined(CONFIG_IRQ_DOMAIN_HIERARCHY)
+ static inline int irq_domain_activate_irq(struct irq_data *data, bool reserve)
 -- 
 2.39.5
 
