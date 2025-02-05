@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DE71C1F12;
-	Wed,  5 Feb 2025 14:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B603D17BEC5;
+	Wed,  5 Feb 2025 14:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766622; cv=none; b=g5+/m8SNPhYdYZZg4KENnw2uB3ZIPJUakJvyKrVD1op8I9JRV9oQ74zDiyzB7cqwMpGti3Xn2a8yPS6otBi8TRYbarOsaF6UEyP4tAdQN3Cy0reQv08ZNsI65zbvYaFSanBXoIEo0WVh2N9pfmdROQr6HZVewlAzUWY5t+xBjzw=
+	t=1738766625; cv=none; b=cgER4Pai7Dc9pFMrHSwqY9U1Y/0ippbkpo2VpeDcBlUy17dH2NCZLnfpWZSql/gad4uYsonH+YxdqcabVQFDVt7C7WbcFNC2aV0jqlZdUQgqKRfhcK8YjjiA3+f/NgddqIe5s899vMxL70WscIix1S5N0P055eBTp6K98DcG/fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766622; c=relaxed/simple;
-	bh=vKY7DELQDJ5DWCxE5Rvqo2wrU6X8Nmhyras3akPAMqM=;
+	s=arc-20240116; t=1738766625; c=relaxed/simple;
+	bh=NfLB/sSwpbSkpsaWMs4IUwMcprpSyUo+C+2XIxl9iX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=raBs5k9LEKzxdjPmOhRKBF2Oc0yJ48Da7A4JfJjX9Q9nk20PWCE1Vj9GTyl/lIYyolQ4eavGgkDVUUZBOaY+Z/3VHHtXG8+Zur1gMlg3gf0ZfSEbqEyADlV0eBi63D+pzemvYxiJPpLej+EqjkBks19T6ssJEVeCCiZ4w+zX04k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDHv7e1A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=krCRfs9hO8PAtB3b+GDI613d08XGMvTeB5+QhxgCqofALxs13f/omv0bJFcXbNc+aEJCxZvTs3vuBLOiLRIOG16XxH7CwYsCtknqx8yo9kjXkRz7mU8i3SWsOEAcGoGs//UBSK63JV+E7Dn0ANC6gZdon7fQ98oNGJ/lgBhTcjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXzhdEbE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDHv7e1A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F12EC4CED1;
-	Wed,  5 Feb 2025 14:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXzhdEbE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6C7C4CED1;
+	Wed,  5 Feb 2025 14:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766622;
-	bh=vKY7DELQDJ5DWCxE5Rvqo2wrU6X8Nmhyras3akPAMqM=;
+	s=korg; t=1738766625;
+	bh=NfLB/sSwpbSkpsaWMs4IUwMcprpSyUo+C+2XIxl9iX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kDHv7e1Ao1hJzL7DxwfKxUEnFNu1yGki8wa/MqJORRcCc3oYBsMNRbr/iDqJApKZS
-	 eRe+c6hWoM9fK8cWwt/5GoLGsEptHNpwca4CIbOXhlowHo1ZGjpGypCK6fh0839ZRW
-	 /2tt3tUevjTizOXGXZTQp5HbcI7BOf3D7T7IVyps=
+	b=mXzhdEbEAtmBNYFEE5rpD4iGLhbO1ENQqGtc9zeppmphAuNd30jD/o7FYniJF2bMk
+	 xZAGuehbGFhb7JlaMk754ouTjTJY0B55aznPLhY8OlODGxFhpjFpVxnQKDYXLwoXf2
+	 3XiT5orImAdFdDfBtY5/qRKFtm0qi270fjI1Q7GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.6 379/393] usb: dwc3-am62: Fix an OF node leak in phy_syscon_pll_refclk()
-Date: Wed,  5 Feb 2025 14:44:58 +0100
-Message-ID: <20250205134434.796347028@linuxfoundation.org>
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 293/623] ASoC: Intel: avs: Do not readq() u32 registers
+Date: Wed,  5 Feb 2025 14:40:35 +0100
+Message-ID: <20250205134507.440630296@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,36 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-commit a266462b937beba065e934a563efe13dd246a164 upstream.
+[ Upstream commit bca0fa5f6b5e96c03daac1ed62b1e5c5057a2048 ]
 
-phy_syscon_pll_refclk() leaks an OF node obtained by
-of_parse_phandle_with_fixed_args(), thus add an of_node_put() call.
+Register reporting ROM status is 4-bytes wide.
 
-Cc: stable <stable@kernel.org>
-Fixes: e8784c0aec03 ("drivers: usb: dwc3: Add AM62 USB wrapper driver")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20250109001638.70033-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 092cf7b26a48 ("ASoC: Intel: avs: Code loading over HDA")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250109122216.3667847-2-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-am62.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/intel/avs/loader.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/dwc3-am62.c
-+++ b/drivers/usb/dwc3/dwc3-am62.c
-@@ -160,6 +160,7 @@ static int phy_syscon_pll_refclk(struct
- 	if (ret)
- 		return ret;
+diff --git a/sound/soc/intel/avs/loader.c b/sound/soc/intel/avs/loader.c
+index 890efd2f1feab..37de077a99838 100644
+--- a/sound/soc/intel/avs/loader.c
++++ b/sound/soc/intel/avs/loader.c
+@@ -308,7 +308,7 @@ avs_hda_init_rom(struct avs_dev *adev, unsigned int dma_id, bool purge)
+ 	}
  
-+	of_node_put(args.np);
- 	am62->offset = args.args[0];
- 
- 	ret = regmap_update_bits(am62->syscon, am62->offset, PHY_PLL_REFCLK_MASK, am62->rate_code);
+ 	/* await ROM init */
+-	ret = snd_hdac_adsp_readq_poll(adev, spec->sram->rom_status_offset, reg,
++	ret = snd_hdac_adsp_readl_poll(adev, spec->sram->rom_status_offset, reg,
+ 				       (reg & 0xF) == AVS_ROM_INIT_DONE ||
+ 				       (reg & 0xF) == APL_ROM_FW_ENTERED,
+ 				       AVS_ROM_INIT_POLLING_US, APL_ROM_INIT_TIMEOUT_US);
+-- 
+2.39.5
+
 
 
