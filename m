@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B861547D8;
-	Wed,  5 Feb 2025 15:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BB32A1BB;
+	Wed,  5 Feb 2025 15:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767699; cv=none; b=N3knfKaDzQMx0a6+XdmGS7t/FAJMseZmQz6NgVfqzmDt6UHbkAoioCKqqru77ZkK32jnI7IkzCKkrkjEYfxw5SUTSKV28p+3HHQ3ZAc36D9MMSdm5M+J6vF35jBppz3AVXUapDKH7LBGjXoEeBkm2IYcEPvXBG4rWO13CTmg0Rg=
+	t=1738767703; cv=none; b=qVjwfN6/Rbc9U+75DFLhyyqGg2/8JEARm1x8QTAgnXaYqzL3sBmHzZ37RVtRSAtCWJw1Mv15tbH6wCOuqZClmSzjnSNBH/UhMmhBINPM/o/tVQ+8E5oRyIASdh2LZ3cyuXajqo7lRTwPEQC0PMQhPfV+1id23ShTWwccvViG7ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767699; c=relaxed/simple;
-	bh=rAWQyKQ7KOHoQ09ikxs+ZbbaQoWfUb8hZYosQ4YoSv8=;
+	s=arc-20240116; t=1738767703; c=relaxed/simple;
+	bh=QD+8+FMx8ThcM9ERzs/ubhDZ9OOmy4Dwj4j+vrpGTlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qf/6T5hUH3FdxLs/7NX21el5RkjWvMNPrsgFN5ZMbfuggWueKhl9lt94NQ4b1ymgRsvp1/y2JoMXqAut2VlVXEGwmBHHBNZmtfds50qgjFF0ah+ibI7wh5W+27M8DgvV+BJT9nNiirwXSchWFItHUr6hfjjQqnpm2zSer2qC5HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGfZRKyO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iPHzvtPKeiNdq66Vu3TLV/PDmkRjRNaGaOF8WFRjotbtpti7povNHjZURTiUN9GYW7dXU4gO7JVNOVjUZbQPp/P5IWaRuI9/5dqtNYyoAZwzVCM+hWNiSwBmv3GNLHmGJrPcu8vR15OmZBGEw81qc7At30eJz+cI1kCgSdt/nkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSlZZsJ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGfZRKyO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB88C4CED1;
-	Wed,  5 Feb 2025 15:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSlZZsJ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C1AC4CED1;
+	Wed,  5 Feb 2025 15:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767699;
-	bh=rAWQyKQ7KOHoQ09ikxs+ZbbaQoWfUb8hZYosQ4YoSv8=;
+	s=korg; t=1738767702;
+	bh=QD+8+FMx8ThcM9ERzs/ubhDZ9OOmy4Dwj4j+vrpGTlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGfZRKyOrj36CCrjunlzNte4Hv1qfWLs6ErtNL5Y+lVGf8eaxCItBYad2oIrYICnE
-	 CUkHnjHdBEORpsnv1aRaW1PiLMGe49MHd0rEHNNPSVkX3mbIz9AN8cEBipUCCfWRwO
-	 9CaJIQRTyyB8sM/6yOLqFCgLjwssrkRLUBUMl5e8=
+	b=JSlZZsJ3jSKUUkpasoy08rXHUg9jkhjJ75QM8Imv/LKVQ9SbyUuaelMarkBnshSFa
+	 tYFysyBS5iVD/aLlumJvkY548ZcWFNqMcAj21I2R8WuGPmuo7q7EO6T1A7taVYgnaH
+	 zpnUTWSfBxdvfHBISKN8Ujaed4e66DZcCYWPy73M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2e5de9e3ab986b71d2bf@syzkaller.appspotmail.com,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmytro Maluka <dmaluka@chromium.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 494/590] net: netdevsim: try to close UDP port harness races
-Date: Wed,  5 Feb 2025 14:44:09 +0100
-Message-ID: <20250205134514.170341290@linuxfoundation.org>
+Subject: [PATCH 6.13 441/623] of/fdt: Restore possibility to use both ACPI and FDT from bootloader
+Date: Wed,  5 Feb 2025 14:43:03 +0100
+Message-ID: <20250205134513.088560115@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,177 +47,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Dmytro Maluka <dmaluka@chromium.org>
 
-[ Upstream commit 50bf398e1ceacb9a7f85bd3bdca065ebe5cb6159 ]
+[ Upstream commit 14bce187d1600710623d81888da3501bbc470ba2 ]
 
-syzbot discovered that we remove the debugfs files after we free
-the netdev. Try to clean up the relevant dir while the device
-is still around.
+There are cases when the bootloader provides information to the kernel
+in both ACPI and DTB, not interchangeably. One such use case is virtual
+machines in Android. When running on x86, the Android Virtualization
+Framework (AVF) boots VMs with ACPI like it is usually done on x86 (i.e.
+the virtual LAPIC, IOAPIC, HPET, PCI MMCONFIG etc are described in ACPI)
+but also passes various AVF-specific boot parameters in DTB. This allows
+reusing the same implementations of various AVF components on both
+arm64 and x86.
 
-Reported-by: syzbot+2e5de9e3ab986b71d2bf@syzkaller.appspotmail.com
-Fixes: 424be63ad831 ("netdevsim: add UDP tunnel port offload support")
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250122224503.762705-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Commit 7b937cc243e5 ("of: Create of_root if no dtb provided by firmware")
+removed the possibility to do that, since among other things
+it introduced forcing emptying the bootloader-provided DTB if ACPI is
+enabled (probably assuming that if ACPI is available, a DTB can only be
+useful for applying overlays to it afterwards, for testing purposes).
+
+So restore this possibility. Instead of completely preventing using ACPI
+and DT together, rely on arch-specific setup code to prevent using both
+to set up the same things (see various acpi_disabled checks under arch/).
+
+Fixes: 7b937cc243e5 ("of: Create of_root if no dtb provided by firmware")
+Signed-off-by: Dmytro Maluka <dmaluka@chromium.org>
+Link: https://lore.kernel.org/r/20250105172741.3476758-3-dmaluka@chromium.org
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/netdevsim.h             |  1 +
- drivers/net/netdevsim/udp_tunnels.c           | 23 +++++++++++--------
- .../drivers/net/netdevsim/udp_tunnel_nic.sh   | 16 ++++++-------
- 3 files changed, 23 insertions(+), 17 deletions(-)
+ drivers/of/fdt.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/drivers/net/netdevsim/netdevsim.h b/drivers/net/netdevsim/netdevsim.h
-index bf02efa10956a..84181dcb98831 100644
---- a/drivers/net/netdevsim/netdevsim.h
-+++ b/drivers/net/netdevsim/netdevsim.h
-@@ -129,6 +129,7 @@ struct netdevsim {
- 		u32 sleep;
- 		u32 __ports[2][NSIM_UDP_TUNNEL_N_PORTS];
- 		u32 (*ports)[NSIM_UDP_TUNNEL_N_PORTS];
-+		struct dentry *ddir;
- 		struct debugfs_u32_array dfs_ports[2];
- 	} udp_ports;
+diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
+index 0121100372b41..3b29a5c50e2e5 100644
+--- a/drivers/of/fdt.c
++++ b/drivers/of/fdt.c
+@@ -8,7 +8,6 @@
  
-diff --git a/drivers/net/netdevsim/udp_tunnels.c b/drivers/net/netdevsim/udp_tunnels.c
-index 02dc3123eb6c1..640b4983a9a0d 100644
---- a/drivers/net/netdevsim/udp_tunnels.c
-+++ b/drivers/net/netdevsim/udp_tunnels.c
-@@ -112,9 +112,11 @@ nsim_udp_tunnels_info_reset_write(struct file *file, const char __user *data,
- 	struct net_device *dev = file->private_data;
- 	struct netdevsim *ns = netdev_priv(dev);
+ #define pr_fmt(fmt)	"OF: fdt: " fmt
  
--	memset(ns->udp_ports.ports, 0, sizeof(ns->udp_ports.__ports));
- 	rtnl_lock();
--	udp_tunnel_nic_reset_ntf(dev);
-+	if (dev->reg_state == NETREG_REGISTERED) {
-+		memset(ns->udp_ports.ports, 0, sizeof(ns->udp_ports.__ports));
-+		udp_tunnel_nic_reset_ntf(dev);
-+	}
- 	rtnl_unlock();
+-#include <linux/acpi.h>
+ #include <linux/crash_dump.h>
+ #include <linux/crc32.h>
+ #include <linux/kernel.h>
+@@ -1215,14 +1214,7 @@ void __init unflatten_device_tree(void)
+ 	/* Save the statically-placed regions in the reserved_mem array */
+ 	fdt_scan_reserved_mem_reg_nodes();
  
- 	return count;
-@@ -144,23 +146,23 @@ int nsim_udp_tunnels_info_create(struct nsim_dev *nsim_dev,
- 	else
- 		ns->udp_ports.ports = nsim_dev->udp_ports.__ports;
- 
--	debugfs_create_u32("udp_ports_inject_error", 0600,
--			   ns->nsim_dev_port->ddir,
-+	ns->udp_ports.ddir = debugfs_create_dir("udp_ports",
-+						ns->nsim_dev_port->ddir);
-+
-+	debugfs_create_u32("inject_error", 0600, ns->udp_ports.ddir,
- 			   &ns->udp_ports.inject_error);
- 
- 	ns->udp_ports.dfs_ports[0].array = ns->udp_ports.ports[0];
- 	ns->udp_ports.dfs_ports[0].n_elements = NSIM_UDP_TUNNEL_N_PORTS;
--	debugfs_create_u32_array("udp_ports_table0", 0400,
--				 ns->nsim_dev_port->ddir,
-+	debugfs_create_u32_array("table0", 0400, ns->udp_ports.ddir,
- 				 &ns->udp_ports.dfs_ports[0]);
- 
- 	ns->udp_ports.dfs_ports[1].array = ns->udp_ports.ports[1];
- 	ns->udp_ports.dfs_ports[1].n_elements = NSIM_UDP_TUNNEL_N_PORTS;
--	debugfs_create_u32_array("udp_ports_table1", 0400,
--				 ns->nsim_dev_port->ddir,
-+	debugfs_create_u32_array("table1", 0400, ns->udp_ports.ddir,
- 				 &ns->udp_ports.dfs_ports[1]);
- 
--	debugfs_create_file("udp_ports_reset", 0200, ns->nsim_dev_port->ddir,
-+	debugfs_create_file("reset", 0200, ns->udp_ports.ddir,
- 			    dev, &nsim_udp_tunnels_info_reset_fops);
- 
- 	/* Note: it's not normal to allocate the info struct like this!
-@@ -196,6 +198,9 @@ int nsim_udp_tunnels_info_create(struct nsim_dev *nsim_dev,
- 
- void nsim_udp_tunnels_info_destroy(struct net_device *dev)
- {
-+	struct netdevsim *ns = netdev_priv(dev);
-+
-+	debugfs_remove_recursive(ns->udp_ports.ddir);
- 	kfree(dev->udp_tunnel_nic_info);
- 	dev->udp_tunnel_nic_info = NULL;
- }
-diff --git a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-index 384cfa3d38a6c..92c2f0376c081 100755
---- a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-+++ b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-@@ -142,7 +142,7 @@ function pre_ethtool {
- }
- 
- function check_table {
--    local path=$NSIM_DEV_DFS/ports/$port/udp_ports_table$1
-+    local path=$NSIM_DEV_DFS/ports/$port/udp_ports/table$1
-     local -n expected=$2
-     local last=$3
- 
-@@ -212,7 +212,7 @@ function check_tables {
- }
- 
- function print_table {
--    local path=$NSIM_DEV_DFS/ports/$port/udp_ports_table$1
-+    local path=$NSIM_DEV_DFS/ports/$port/udp_ports/table$1
-     read -a have < $path
- 
-     tree $NSIM_DEV_DFS/
-@@ -641,7 +641,7 @@ for port in 0 1; do
-     NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ip link set dev $NSIM_NETDEV up
- 
--    echo 110 > $NSIM_DEV_DFS/ports/$port/udp_ports_inject_error
-+    echo 110 > $NSIM_DEV_DFS/ports/$port/udp_ports/inject_error
- 
-     msg="1 - create VxLANs v6"
-     exp0=( 0 0 0 0 )
-@@ -663,7 +663,7 @@ for port in 0 1; do
-     new_geneve gnv0 20000
- 
-     msg="2 - destroy GENEVE"
--    echo 2 > $NSIM_DEV_DFS/ports/$port/udp_ports_inject_error
-+    echo 2 > $NSIM_DEV_DFS/ports/$port/udp_ports/inject_error
-     exp1=( `mke 20000 2` 0 0 0 )
-     del_dev gnv0
- 
-@@ -764,7 +764,7 @@ for port in 0 1; do
-     msg="create VxLANs v4"
-     new_vxlan vxlan0 10000 $NSIM_NETDEV
- 
--    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
-     check_tables
- 
-     msg="NIC device goes down"
-@@ -775,7 +775,7 @@ for port in 0 1; do
-     fi
-     check_tables
- 
--    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
-     check_tables
- 
-     msg="NIC device goes up again"
-@@ -789,7 +789,7 @@ for port in 0 1; do
-     del_dev vxlan0
-     check_tables
- 
--    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
-     check_tables
- 
-     msg="destroy NIC"
-@@ -896,7 +896,7 @@ msg="vacate VxLAN in overflow table"
- exp0=( `mke 10000 1` `mke 10004 1` 0 `mke 10003 1` )
- del_dev vxlan2
- 
--echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
- check_tables
- 
- msg="tunnels destroyed 2"
+-	/* Don't use the bootloader provided DTB if ACPI is enabled */
+-	if (!acpi_disabled)
+-		fdt = NULL;
+-
+-	/*
+-	 * Populate an empty root node when ACPI is enabled or bootloader
+-	 * doesn't provide one.
+-	 */
++	/* Populate an empty root node when bootloader doesn't provide one */
+ 	if (!fdt) {
+ 		fdt = (void *) __dtb_empty_root_begin;
+ 		/* fdt_totalsize() will be used for copy size */
 -- 
 2.39.5
 
