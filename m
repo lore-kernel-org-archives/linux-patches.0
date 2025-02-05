@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D3521345;
-	Wed,  5 Feb 2025 15:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE8F21345;
+	Wed,  5 Feb 2025 15:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768084; cv=none; b=J9kLLnw45BimDJZuhhSQShQtvZqtlqY3D6nEDstp0m5JGGf2k7JrIHWUMwZj+dqmZGoVdpmlZejArXt3LHdwFfR6i+XSrgNcwqpjZ88uobsHUt3rXSQK609vQNlhlium7wFZ6IDFsbzDPpQCf7o9TRpQygXPKXupoksctWHMUGE=
+	t=1738768088; cv=none; b=FOG/YKs4O0gbKuwl3WfLViJT5IAXvWp0nx4Ctq6jRy4P71Ws1c7BncL5CCB1kO7tIainnE9R4HYMHrlPIbO2EifDnPfl8CgP0NYR4/82eSx1rVQ4wV1tR3ymuRF4Ww2WBtKhM/veKMnEWtbMBE6kp+F1P+eJ9pwPGICdObVRRjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768084; c=relaxed/simple;
-	bh=nBhzGBVgS3kUiQnawUsGCUUdlr1C2utj2qJCrVfbtLY=;
+	s=arc-20240116; t=1738768088; c=relaxed/simple;
+	bh=rvHGMpk1xMx4u/7e4CeSdKe+W2iVTGhs6mznBlK3BAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dOIHn12dNFG7CleZHK9lvqa5CEGfszG/NJKxq7912vRqKUC42Pb7otwU9EBwHTX0eBjwA0Ljv7H7jnw7piw1/n65nAmTAFBTFB/7TsLAlYNDKZxKReJFGBt9Lk6RkVyFsrj/pGEfgVKj/aHUuGliG7CsT0ENoGVlp3Db32ISXQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xR2xqEN1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hd/nIEfSVXwuRovS0sRLUnp+ycH6LZyZEQJXizLVs5BlJBV4piGNvCNIW/SSaIHZuaDPJhEyChj6oPur7PHEJ2f2MFjx4G36AEe/4/R4Mx8mAnAFtii3tkUls+ZDFl1mfBhF3N1HUlwPV7COJ8rmZT2sSefzttQ4rIwbfek1HBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ivl7jx17; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xR2xqEN1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD233C4CED1;
-	Wed,  5 Feb 2025 15:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ivl7jx17"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA0EC4CED1;
+	Wed,  5 Feb 2025 15:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768084;
-	bh=nBhzGBVgS3kUiQnawUsGCUUdlr1C2utj2qJCrVfbtLY=;
+	s=korg; t=1738768087;
+	bh=rvHGMpk1xMx4u/7e4CeSdKe+W2iVTGhs6mznBlK3BAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xR2xqEN1udz5QILrR+rxcmtuWIMut9CVeIh+p/9ju13h0VWy+jsVZBVA0Hri8iih5
-	 KorJ/ndBlLT0h7Z6Cml/2vocb5Uy2YKEXVG20ZOBUPPVt+ype+ksIR61LVRSOlAb6l
-	 mbmRHrJmSt9ga8TgBixS+j2/LegzYJ64CO+EeIXA=
+	b=ivl7jx17EHTXIyZaVHb+6q0TXyURC8r6vZB0qBFDGDqiLy6bpJYlhCFe4iA5O6xWh
+	 nEtwwHTcLN04Y1qBxfqwbOAr8jtRwN3Xj5pwJbNzLxY9VVNwyid3a8cqWA7y7Yd7Y2
+	 pfYLQiybrqQTHcdsCfQflOmq3MFz2g/hU6B+YwYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 528/590] ASoC: amd: acp: Fix possible deadlock
-Date: Wed,  5 Feb 2025 14:44:43 +0100
-Message-ID: <20250205134515.464825228@linuxfoundation.org>
+Subject: [PATCH 6.13 471/623] PCI: endpoint: pci-epf-test: Fix check for DMA MEMCPY test
+Date: Wed,  5 Feb 2025 14:43:33 +0100
+Message-ID: <20250205134514.237349061@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,45 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Baluta <daniel.baluta@nxp.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 3ff53862c322aa7bb115d84348d5a641dc905d87 ]
+[ Upstream commit 235c2b197a8de2887f13990094a3343d2392155b ]
 
-On error path, function acp_i2s_set_tdm_slot returns without releasing
-the lock and this could result in potential deadlocks in the future.
+Currently, if DMA MEMCPY test is requested by the host, and if the endpoint
+DMA controller supports DMA_PRIVATE, the test will fail. This is not
+correct since there is no check for DMA_MEMCPY capability and the DMA
+controller can support both DMA_PRIVATE and DMA_MEMCPY.
 
-Error reported by sparse:
-sound/soc/amd/acp/acp-i2s.c:95:12: error: context imbalance in
-'acp_i2s_set_tdm_slot' - different lock contexts for basic block
+Fix the check and also reword the error message.
 
-Fixes: cd60dec8994c ("ASoC: amd: acp: Refactor TDM slots selction based on acp revision id")
-Signed-off-by: Daniel Baluta <daniel.baluta@nxp.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20250127083422.20406-1-daniel.baluta@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250116171650.33585-2-manivannan.sadhasivam@linaro.org
+Fixes: 8353813c88ef ("PCI: endpoint: Enable DMA tests for endpoints with DMA capabilities")
+Reported-by: Niklas Cassel <cassel@kernel.org>
+Closes: https://lore.kernel.org/linux-pci/Z3QtEihbiKIGogWA@ryzen
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-i2s.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/endpoint/functions/pci-epf-test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-i2s.c b/sound/soc/amd/acp/acp-i2s.c
-index 56ce9e4b6accc..92c5ff0deea2c 100644
---- a/sound/soc/amd/acp/acp-i2s.c
-+++ b/sound/soc/amd/acp/acp-i2s.c
-@@ -181,6 +181,7 @@ static int acp_i2s_set_tdm_slot(struct snd_soc_dai *dai, u32 tx_mask, u32 rx_mas
- 			break;
- 		default:
- 			dev_err(dev, "Unknown chip revision %d\n", chip->acp_rev);
-+			spin_unlock_irq(&adata->acp_lock);
- 			return -EINVAL;
+diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+index d90c8be7371e0..b2fdd8c82c438 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-test.c
++++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+@@ -328,8 +328,8 @@ static void pci_epf_test_copy(struct pci_epf_test *epf_test,
+ 	void *copy_buf = NULL, *buf;
+ 
+ 	if (reg->flags & FLAG_USE_DMA) {
+-		if (epf_test->dma_private) {
+-			dev_err(dev, "Cannot transfer data using DMA\n");
++		if (!dma_has_cap(DMA_MEMCPY, epf_test->dma_chan_tx->device->cap_mask)) {
++			dev_err(dev, "DMA controller doesn't support MEMCPY\n");
+ 			ret = -EINVAL;
+ 			goto set_status;
  		}
- 	}
 -- 
 2.39.5
 
