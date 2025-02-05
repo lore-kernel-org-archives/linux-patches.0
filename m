@@ -1,41 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C265E1591E3;
-	Wed,  5 Feb 2025 14:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69784376;
+	Wed,  5 Feb 2025 14:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766390; cv=none; b=EjOWjjymKIByPBdqxQ5mHfIXZsotwEgeHg/93udTMhSaFEEY7tM3jLDPMkmv5kZ+rQohoBLOnKicAMWDCZXNlCgdlIUFnVPWp/9cuG/lh1h6cGv3M18c/2xrFjbVMmKQC3vXloddVzm9AMxSMivWiq1Gc6Rz7oRld5bhSkibnrc=
+	t=1738766394; cv=none; b=aAErMHAq9ZZtjR++KfiZBr8oCXTutydsNJ3+CfsHmILZ8bf1O6B0uQK6NjpA1z9yBFELkf4L2ITt0nO2BK1JzORidCAVYWioaAjA1AeZCm/Hi89lheqvoczNZVIao0/rDBcitUcpVdjJBh3ACYpedTrjGiW6avriEFb+WwqXshw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766390; c=relaxed/simple;
-	bh=Pwgdk2OhCrKuNnxxM2j3yrLKC+Ymv+XWpCQindmfw/8=;
+	s=arc-20240116; t=1738766394; c=relaxed/simple;
+	bh=2zfd/wYuQjAnQGu89Jbb+9g5KEF62BsJs6q82TD4480=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L5ptSDaSpO+onakOFNbGEcGBdAjliNG2g/EQ3Vc8JiyqTfYulgbuPrCTuaeOOp8CW5EXwenSMcbRtrtkMleAqMPFufW+c0YOVYJ62SK09aSDHr5hGV7Y4X74wqHUj6WirzI0tiZPk8KOk96S9nyODit0Y43TEoi2ud0bh3U0lLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGQHBXfP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oxp264U6Xb4SmFJN9skw2rCeDX0UlJSFWCFBlRS7ZRG0DgFk2uhVaf7rTaQdSaqTuqvE5lcQylvy6mvAaPjoORbdAxIfs3Xjdvz4zIApvjx6aP7eLThLwkPbmSf6qHBVG/jnC5bICIoSg1nARK4hYgllofhGnfmm4Km+Vdud/b0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nMZ+fAor; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGQHBXfP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4857AC4CEE2;
-	Wed,  5 Feb 2025 14:39:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nMZ+fAor"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425D0C4CED1;
+	Wed,  5 Feb 2025 14:39:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766390;
-	bh=Pwgdk2OhCrKuNnxxM2j3yrLKC+Ymv+XWpCQindmfw/8=;
+	s=korg; t=1738766393;
+	bh=2zfd/wYuQjAnQGu89Jbb+9g5KEF62BsJs6q82TD4480=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pGQHBXfPHz9oQ6Jwm7fze3tACnO1FXq97tplV1SuAsEqrL7O6D95tKxK7E/gkVmSd
-	 LbzBqqoJxFuCVaWmsJww592ZLsuJbp3jtvfVx5ouEYbMtl4GCnXGWQpki/d29DBG0F
-	 ZER9/FT4mx80OISsRJYiOMD2xFiDAii70pBjOG8A=
+	b=nMZ+fAor5BccRkSmbWUs0fX0KqXH50Xtz2oNPdCI2wZ0mz3jE96YBIxumgKlVuvrr
+	 zCTVT4T3Zx+ehMkgSEzHbCpgN8/PT70CMZDNWcrD7OVELey1zPfOEoEqQ6sqeHPuIz
+	 HNqy5sBj78w1RveFePGE/wQsLXHt5ALu3FS1DFOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Zhongqiu Han <quic_zhonhan@quicinc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Song Liu <song@kernel.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 358/393] cifs: Fix getting and setting SACLs over SMB1
-Date: Wed,  5 Feb 2025 14:44:37 +0100
-Message-ID: <20250205134433.999158333@linuxfoundation.org>
+Subject: [PATCH 6.13 269/623] perf bpf: Fix two memory leakages when calling perf_env__insert_bpf_prog_info()
+Date: Wed,  5 Feb 2025 14:40:11 +0100
+Message-ID: <20250205134506.520317517@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,156 +57,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Zhongqiu Han <quic_zhonhan@quicinc.com>
 
-[ Upstream commit 8b19dfb34d17e77a0809d433cc128b779282131b ]
+[ Upstream commit 03edb7020bb920f1935c3f30acad0bb27fdb99af ]
 
-SMB1 callback get_cifs_acl_by_fid() currently ignores its last argument and
-therefore ignores request for SACL_SECINFO. Fix this issue by correctly
-propagating info argument from get_cifs_acl() and get_cifs_acl_by_fid() to
-CIFSSMBGetCIFSACL() function and pass SACL_SECINFO when requested.
+If perf_env__insert_bpf_prog_info() returns false due to a duplicate bpf
+prog info node insertion, the temporary info_node and info_linear memory
+will leak. Add a check to ensure the memory is freed if the function
+returns false.
 
-For accessing SACLs it is needed to open object with SYSTEM_SECURITY
-access. Pass this flag when trying to get or set SACLs.
-
-Same logic is in the SMB2+ code path.
-
-This change fixes getting and setting of "system.cifs_ntsd_full" and
-"system.smb3_ntsd_full" xattrs over SMB1 as currently it silentely ignored
-SACL part of passed xattr buffer.
-
-Fixes: 3970acf7ddb9 ("SMB3: Add support for getting and setting SACLs")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: d56354dc49091e33 ("perf tools: Save bpf_prog_info and BTF of new BPF programs")
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Song Liu <song@kernel.org>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Link: https://lore.kernel.org/r/20241205084500.823660-4-quic_zhonhan@quicinc.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsacl.c   | 25 +++++++++++++++----------
- fs/smb/client/cifsproto.h |  2 +-
- fs/smb/client/cifssmb.c   |  4 ++--
- 3 files changed, 18 insertions(+), 13 deletions(-)
+ tools/perf/util/bpf-event.c | 10 ++++++++--
+ tools/perf/util/env.c       |  8 ++++++--
+ tools/perf/util/env.h       |  2 +-
+ 3 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
-index bff8d0dd74fe7..1fc1683b15bd8 100644
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -1395,7 +1395,7 @@ static int build_sec_desc(struct smb_ntsd *pntsd, struct smb_ntsd *pnntsd,
- #ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
- struct smb_ntsd *get_cifs_acl_by_fid(struct cifs_sb_info *cifs_sb,
- 				      const struct cifs_fid *cifsfid, u32 *pacllen,
--				      u32 __maybe_unused unused)
-+				      u32 info)
+diff --git a/tools/perf/util/bpf-event.c b/tools/perf/util/bpf-event.c
+index 13608237c50e0..c81444059ad07 100644
+--- a/tools/perf/util/bpf-event.c
++++ b/tools/perf/util/bpf-event.c
+@@ -289,7 +289,10 @@ static int perf_event__synthesize_one_bpf_prog(struct perf_session *session,
+ 		}
+ 
+ 		info_node->info_linear = info_linear;
+-		perf_env__insert_bpf_prog_info(env, info_node);
++		if (!perf_env__insert_bpf_prog_info(env, info_node)) {
++			free(info_linear);
++			free(info_node);
++		}
+ 		info_linear = NULL;
+ 
+ 		/*
+@@ -480,7 +483,10 @@ static void perf_env__add_bpf_info(struct perf_env *env, u32 id)
+ 	info_node = malloc(sizeof(struct bpf_prog_info_node));
+ 	if (info_node) {
+ 		info_node->info_linear = info_linear;
+-		perf_env__insert_bpf_prog_info(env, info_node);
++		if (!perf_env__insert_bpf_prog_info(env, info_node)) {
++			free(info_linear);
++			free(info_node);
++		}
+ 	} else
+ 		free(info_linear);
+ 
+diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
+index d7865ae5f8f55..a6321e7f06330 100644
+--- a/tools/perf/util/env.c
++++ b/tools/perf/util/env.c
+@@ -24,12 +24,16 @@ struct perf_env perf_env;
+ #include "bpf-utils.h"
+ #include <bpf/libbpf.h>
+ 
+-void perf_env__insert_bpf_prog_info(struct perf_env *env,
++bool perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				    struct bpf_prog_info_node *info_node)
  {
- 	struct smb_ntsd *pntsd = NULL;
- 	unsigned int xid;
-@@ -1407,7 +1407,7 @@ struct smb_ntsd *get_cifs_acl_by_fid(struct cifs_sb_info *cifs_sb,
- 
- 	xid = get_xid();
- 	rc = CIFSSMBGetCIFSACL(xid, tlink_tcon(tlink), cifsfid->netfid, &pntsd,
--				pacllen);
-+				pacllen, info);
- 	free_xid(xid);
- 
- 	cifs_put_tlink(tlink);
-@@ -1419,7 +1419,7 @@ struct smb_ntsd *get_cifs_acl_by_fid(struct cifs_sb_info *cifs_sb,
++	bool ret;
++
+ 	down_write(&env->bpf_progs.lock);
+-	__perf_env__insert_bpf_prog_info(env, info_node);
++	ret = __perf_env__insert_bpf_prog_info(env, info_node);
+ 	up_write(&env->bpf_progs.lock);
++
++	return ret;
  }
  
- static struct smb_ntsd *get_cifs_acl_by_path(struct cifs_sb_info *cifs_sb,
--		const char *path, u32 *pacllen)
-+		const char *path, u32 *pacllen, u32 info)
- {
- 	struct smb_ntsd *pntsd = NULL;
- 	int oplock = 0;
-@@ -1446,9 +1446,12 @@ static struct smb_ntsd *get_cifs_acl_by_path(struct cifs_sb_info *cifs_sb,
- 		.fid = &fid,
- 	};
- 
-+	if (info & SACL_SECINFO)
-+		oparms.desired_access |= SYSTEM_SECURITY;
-+
- 	rc = CIFS_open(xid, &oparms, &oplock, NULL);
- 	if (!rc) {
--		rc = CIFSSMBGetCIFSACL(xid, tcon, fid.netfid, &pntsd, pacllen);
-+		rc = CIFSSMBGetCIFSACL(xid, tcon, fid.netfid, &pntsd, pacllen, info);
- 		CIFSSMBClose(xid, tcon, fid.netfid);
- 	}
- 
-@@ -1472,7 +1475,7 @@ struct smb_ntsd *get_cifs_acl(struct cifs_sb_info *cifs_sb,
- 	if (inode)
- 		open_file = find_readable_file(CIFS_I(inode), true);
- 	if (!open_file)
--		return get_cifs_acl_by_path(cifs_sb, path, pacllen);
-+		return get_cifs_acl_by_path(cifs_sb, path, pacllen, info);
- 
- 	pntsd = get_cifs_acl_by_fid(cifs_sb, &open_file->fid, pacllen, info);
- 	cifsFileInfo_put(open_file);
-@@ -1485,7 +1488,7 @@ int set_cifs_acl(struct smb_ntsd *pnntsd, __u32 acllen,
- {
- 	int oplock = 0;
- 	unsigned int xid;
--	int rc, access_flags;
-+	int rc, access_flags = 0;
- 	struct cifs_tcon *tcon;
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
- 	struct tcon_link *tlink = cifs_sb_tlink(cifs_sb);
-@@ -1498,10 +1501,12 @@ int set_cifs_acl(struct smb_ntsd *pnntsd, __u32 acllen,
- 	tcon = tlink_tcon(tlink);
- 	xid = get_xid();
- 
--	if (aclflag == CIFS_ACL_OWNER || aclflag == CIFS_ACL_GROUP)
--		access_flags = WRITE_OWNER;
--	else
--		access_flags = WRITE_DAC;
-+	if (aclflag & CIFS_ACL_OWNER || aclflag & CIFS_ACL_GROUP)
-+		access_flags |= WRITE_OWNER;
-+	if (aclflag & CIFS_ACL_SACL)
-+		access_flags |= SYSTEM_SECURITY;
-+	if (aclflag & CIFS_ACL_DACL)
-+		access_flags |= WRITE_DAC;
- 
- 	oparms = (struct cifs_open_parms) {
- 		.tcon = tcon,
-diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
-index a151ffffc6f38..85b0a30493a63 100644
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -570,7 +570,7 @@ extern int CIFSSMBSetEA(const unsigned int xid, struct cifs_tcon *tcon,
- 		const struct nls_table *nls_codepage,
- 		struct cifs_sb_info *cifs_sb);
- extern int CIFSSMBGetCIFSACL(const unsigned int xid, struct cifs_tcon *tcon,
--			__u16 fid, struct smb_ntsd **acl_inf, __u32 *buflen);
-+			__u16 fid, struct smb_ntsd **acl_inf, __u32 *buflen, __u32 info);
- extern int CIFSSMBSetCIFSACL(const unsigned int, struct cifs_tcon *, __u16,
- 			struct smb_ntsd *pntsd, __u32 len, int aclflag);
- extern int cifs_do_get_acl(const unsigned int xid, struct cifs_tcon *tcon,
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 2f8745736dbb0..769950adb7763 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -3385,7 +3385,7 @@ validate_ntransact(char *buf, char **ppparm, char **ppdata,
- /* Get Security Descriptor (by handle) from remote server for a file or dir */
- int
- CIFSSMBGetCIFSACL(const unsigned int xid, struct cifs_tcon *tcon, __u16 fid,
--		  struct smb_ntsd **acl_inf, __u32 *pbuflen)
-+		  struct smb_ntsd **acl_inf, __u32 *pbuflen, __u32 info)
- {
- 	int rc = 0;
- 	int buf_type = 0;
-@@ -3408,7 +3408,7 @@ CIFSSMBGetCIFSACL(const unsigned int xid, struct cifs_tcon *tcon, __u16 fid,
- 	pSMB->MaxSetupCount = 0;
- 	pSMB->Fid = fid; /* file handle always le */
- 	pSMB->AclFlags = cpu_to_le32(CIFS_ACL_OWNER | CIFS_ACL_GROUP |
--				     CIFS_ACL_DACL);
-+				     CIFS_ACL_DACL | info);
- 	pSMB->ByteCount = cpu_to_le16(11); /* 3 bytes pad + 8 bytes parm */
- 	inc_rfc1001_len(pSMB, 11);
- 	iov[0].iov_base = (char *)pSMB;
+ bool __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
+diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
+index 9db2e5a625ede..da11add761d0c 100644
+--- a/tools/perf/util/env.h
++++ b/tools/perf/util/env.h
+@@ -178,7 +178,7 @@ int perf_env__nr_cpus_avail(struct perf_env *env);
+ void perf_env__init(struct perf_env *env);
+ bool __perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				      struct bpf_prog_info_node *info_node);
+-void perf_env__insert_bpf_prog_info(struct perf_env *env,
++bool perf_env__insert_bpf_prog_info(struct perf_env *env,
+ 				    struct bpf_prog_info_node *info_node);
+ struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
+ 							__u32 prog_id);
 -- 
 2.39.5
 
