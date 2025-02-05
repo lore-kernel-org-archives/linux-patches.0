@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7A01519AA;
-	Wed,  5 Feb 2025 14:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EAF15198D;
+	Wed,  5 Feb 2025 14:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764854; cv=none; b=G+yTZZ5KWVc/VANuYNoam04JzYrQGPqM6P3wb8+jPWqwqKxDW5TfdQyPoInMze80IH9v4zjROP5SgxMNtO/ddMm6cwnIEa1R4UYWECb2OYLidun52qK+y7VFaKzSnrfYIvu/znwFfV04JrKQBAHgZJVijXCi+gQ4qQi2sABk7L4=
+	t=1738764857; cv=none; b=A6wcgfio2zKjL3phD7uVNJpVKl9tKXzlam8eEyQUGK9fdlpX6OeS98T6BPcbRHeIzPbwiEN4KmE4/Q0TkcLqvrpT0GFOz9zt0UW1+cunqkOJwZkbALQ9ueSYbJitxhL0Yos+XOQ1RCz+9yvZHi3xdaxN625FjRwpqHvkI1mmfYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764854; c=relaxed/simple;
-	bh=MDwUTO2MLSnCoVTiw+DXu8Vw5qY1SKOZ5nfZGSX2Ekg=;
+	s=arc-20240116; t=1738764857; c=relaxed/simple;
+	bh=pPbBeooxBQTyq+LzszIWA/qEvmTUOd35VwCFxbM9Ry0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xvzwm+lkMl8DicTUkEV7eb/LmQuT1seEjh3D6I7fBDrK2lnBxQfklN8Ttv/WtooSr1YL8yYZYogDrdlWq6uBuSt7mP3/qGouUbd2Glv7z9OyimJR3J1S/WWVdCoqjq8AkouHXRJGaoAug5d3f67ALrOLExyqvA7XWdjWV6hnIXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crPdnwXl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jNv+6MEalhW41Fd6AZLQZ4pGeUXDtehDMAeAl1RC1rBPqtJYJ/7XPcZj5lWffdz1TC/+R/Xfl5KRdB71J6nl1pRjfE3GpXMlypocqrvNfsIPavt5at6BxWzc5hZqMcokzIcN/uGNwQZqGdVfJ6k4JAp9sSRogGln1K5Ej9Rhyho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1VtKg5L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crPdnwXl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5621BC4CED1;
-	Wed,  5 Feb 2025 14:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1VtKg5L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BCBC4CED1;
+	Wed,  5 Feb 2025 14:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764853;
-	bh=MDwUTO2MLSnCoVTiw+DXu8Vw5qY1SKOZ5nfZGSX2Ekg=;
+	s=korg; t=1738764857;
+	bh=pPbBeooxBQTyq+LzszIWA/qEvmTUOd35VwCFxbM9Ry0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crPdnwXlNBoUcMkVjnLC68QWLaLQfno7y3moua3+dLptT68PdMCwUsTEpYynbfcn5
-	 m5UqGgJonevBlsaVkQJsp/ZLdKoaBRK3KHh55rcMIJITAtTsfq2m6N3qwoc0K6u67t
-	 5ALqZzh3nEuS5Ngz7EafLmPthsb+j9N6/40fRzTA=
+	b=n1VtKg5LyfgdFtsWFBtyPsDTBsAwvZOKrmu+l18zonVJoYB5C7ozlNE2C1cDz7bx0
+	 HboXkRLDx+AzBDGIAcnQyILs9RmtpBFidhfgGAJbmQEi+xexGX+SqiHtSunLTWhAbO
+	 UoWvyq3f0FZ70SULqxRmQ+F+f1J8KWL2pyMiw+b4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 210/393] arm64: dts: mediatek: mt8173-elm: Fix MT6397 PMIC sub-node names
-Date: Wed,  5 Feb 2025 14:42:09 +0100
-Message-ID: <20250205134428.333610625@linuxfoundation.org>
+Subject: [PATCH 6.12 164/590] wifi: mac80211: Fix common size calculation for ML element
+Date: Wed,  5 Feb 2025 14:38:39 +0100
+Message-ID: <20250205134501.556782634@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +48,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit beb06b727194f68b0a4b5183e50c88265ce185af ]
+[ Upstream commit 19aa842dcbb5860509b7e1b7745dbae0b791f6c4 ]
 
-The MT6397 PMIC bindings specify exact names for its sub-nodes. The
-names used in the current dts don't match, causing a validation error.
+When the ML type is EPCS the control bitmap is reserved, the length
+is always 7 and is captured by the 1st octet after the control.
 
-Fix up the names. Also drop the label for the regulators node, since
-any reference should be against the individual regulator sub-nodes.
-
-Fixes: 689b937bedde ("arm64: dts: mediatek: add mt8173 elm and hana board")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20241210092614.3951748-1-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 0f48b8b88aa9 ("wifi: ieee80211: add definitions for multi-link element")
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20250102161730.5790376754a7.I381208cbb72b1be2a88239509294099e9337e254@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/ieee80211.h | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi b/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
-index 855babfdd8f0e..8df919d39e5ba 100644
---- a/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
-@@ -938,7 +938,7 @@
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index 456bca45ff052..3750e56bfcbb3 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -5053,28 +5053,24 @@ static inline u8 ieee80211_mle_common_size(const u8 *data)
+ {
+ 	const struct ieee80211_multi_link_elem *mle = (const void *)data;
+ 	u16 control = le16_to_cpu(mle->control);
+-	u8 common = 0;
  
--		clock: mt6397clock {
-+		clock: clocks {
- 			compatible = "mediatek,mt6397-clk";
- 			#clock-cells = <1>;
- 		};
-@@ -949,7 +949,7 @@
- 			#gpio-cells = <2>;
- 		};
+ 	switch (u16_get_bits(control, IEEE80211_ML_CONTROL_TYPE)) {
+ 	case IEEE80211_ML_CONTROL_TYPE_BASIC:
+ 	case IEEE80211_ML_CONTROL_TYPE_PREQ:
+ 	case IEEE80211_ML_CONTROL_TYPE_TDLS:
+ 	case IEEE80211_ML_CONTROL_TYPE_RECONF:
++	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+ 		/*
+ 		 * The length is the first octet pointed by mle->variable so no
+ 		 * need to add anything
+ 		 */
+ 		break;
+-	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+-		if (control & IEEE80211_MLC_PRIO_ACCESS_PRES_AP_MLD_MAC_ADDR)
+-			common += ETH_ALEN;
+-		return common;
+ 	default:
+ 		WARN_ON(1);
+ 		return 0;
+ 	}
  
--		regulator: mt6397regulator {
-+		regulators {
- 			compatible = "mediatek,mt6397-regulator";
+-	return sizeof(*mle) + common + mle->variable[0];
++	return sizeof(*mle) + mle->variable[0];
+ }
  
- 			mt6397_vpca15_reg: buck_vpca15 {
-@@ -1115,7 +1115,7 @@
- 			};
- 		};
- 
--		rtc: mt6397rtc {
-+		rtc: rtc {
- 			compatible = "mediatek,mt6397-rtc";
- 		};
- 
+ /**
+@@ -5312,8 +5308,7 @@ static inline bool ieee80211_mle_size_ok(const u8 *data, size_t len)
+ 		check_common_len = true;
+ 		break;
+ 	case IEEE80211_ML_CONTROL_TYPE_PRIO_ACCESS:
+-		if (control & IEEE80211_MLC_PRIO_ACCESS_PRES_AP_MLD_MAC_ADDR)
+-			common += ETH_ALEN;
++		common = ETH_ALEN + 1;
+ 		break;
+ 	default:
+ 		/* we don't know this type */
 -- 
 2.39.5
 
