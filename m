@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574C1DF59;
-	Wed,  5 Feb 2025 15:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A9ADF59;
+	Wed,  5 Feb 2025 15:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767805; cv=none; b=c5XnNuHZExGu1wl4zLf1r7TLlziluNS+uEbSYshin1B/VUut74uiNIv1JAOawby1xlEhHCwBgnsYXDrIdkdqZ432HIo+cz3q53ONoiEfrzj3dQQzP9o4iST4j2IVFwT3pI+jjNr7oGpzw3z8VyVwXhXX/QYr/ZrXiNB8zUmCKVo=
+	t=1738767808; cv=none; b=jX8rZNwlIkeiWprp17/Yg39vZSY9DNM7JcOr9BEFEjhgdZIg+TPp/FtEPI7q0Y5l3WgUw/KRlUfP9A/Ck9RnLXNdEg3N9r5XveJRsovxlHnDi0uPhSatl5R0pVDqoDzi5Qq5RsZGtmwn0nyuEw7p9kn238KvqAwXEuag4xMeSsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767805; c=relaxed/simple;
-	bh=J8D+nPgOdoi+Evi5da/wSxDkiUD09zp+9bgr2gsRobI=;
+	s=arc-20240116; t=1738767808; c=relaxed/simple;
+	bh=4BtwoWh7Tis1yDNxVL9dAsjCmUeL/69vgbiMLeGhUzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z9FezycHcN/fGHTUXvHHRgTFL6B3boZrxQ5QQaXtTDHxP3EB9xxnd5Uncx8JgCn7K8kTOd8f0hHcUXXn55rgvnGAf2oOSRvcQG5p9rVvQL0dwZm3H8vaa/+VRtDGN9qyLNDbPYKrgYvwJKYPCoVLKNkJE3eLRMQ/btEByWamKxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=koiPUd5u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ji29TGzwEkIgeu8fCAhCLxEfwOgcjOlSx2bipCl8IDA60jLsNV4Vp9cdzOswO2G7rsCyX4cpi7X8hbpt46UM4sOC1xoED4fd4FubFtekU8yLomxq91EzRRLse3VWBXE7u/gxvZlVJatE0fz08J81lXYPZBK2W3XIjcJITMj9Y20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfRHyU5c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="koiPUd5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD0AC4CED1;
-	Wed,  5 Feb 2025 15:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfRHyU5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B16C4CED1;
+	Wed,  5 Feb 2025 15:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767805;
-	bh=J8D+nPgOdoi+Evi5da/wSxDkiUD09zp+9bgr2gsRobI=;
+	s=korg; t=1738767808;
+	bh=4BtwoWh7Tis1yDNxVL9dAsjCmUeL/69vgbiMLeGhUzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=koiPUd5uxNGsgPUvYFWsLlwcgBn28nkWkTWdZ16v0kXpS00Q14XGtE/3gUxVGWcyx
-	 hzxXBBDtwtCiFroM9YEJ5W/fTXyKLt/F+TC3ihVp3eGl3pGQ/bcjFna/HTEQwHAvKm
-	 02eGf7bDwOprof4+h62swl/ryNA/BMnTnB4LGD5w=
+	b=nfRHyU5cvYFGEXjJwTjTAiU0zOOZ015sChKRi/onmc0ORU0FeHm/364Dtd7dzlnWO
+	 GixB0wJG9zY/h/cxgNKvj37vrxoCQkyyKmP3z2kzU+31aYH1D6NR83DA+GmK860Q7J
+	 3gFue6CsWjligWbId2mzCUCcfmWs0db8vVNj67wI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 456/623] mtd: hyperbus: hbmc-am654: fix an OF node reference leak
-Date: Wed,  5 Feb 2025 14:43:18 +0100
-Message-ID: <20250205134513.661573127@linuxfoundation.org>
+Subject: [PATCH 6.13 443/623] media: lmedm04: Handle errors for lme2510_int_read
+Date: Wed,  5 Feb 2025 14:43:05 +0100
+Message-ID: <20250205134513.166210873@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,80 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit bf5821909eb9c7f5d07d5c6e852ead2c373c94a0 ]
+[ Upstream commit a2836d3fe220220ff8c495ca9722f89cea8a67e7 ]
 
-In am654_hbmc_platform_driver, .remove() and the error path of .probe()
-do not decrement the refcount of an OF node obtained by
-  of_get_next_child(). Fix this by adding of_node_put() calls.
+Add check for the return value of usb_pipe_endpoint() and
+usb_submit_urb() in order to catch the errors.
 
-Fixes: aca31ce96814 ("mtd: hyperbus: hbmc-am654: Fix direct mapping setup flash access")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 15e1ce33182d ("[media] lmedm04: Fix usb_submit_urb BOGUS urb xfer, pipe 1 != type 3 in interrupt urb")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20240521091042.1769684-1-nichen@iscas.ac.cn
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/hyperbus/hbmc-am654.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/media/usb/dvb-usb-v2/lmedm04.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/hyperbus/hbmc-am654.c b/drivers/mtd/hyperbus/hbmc-am654.c
-index 217f4e69233fb..edad2ab0f2fa9 100644
---- a/drivers/mtd/hyperbus/hbmc-am654.c
-+++ b/drivers/mtd/hyperbus/hbmc-am654.c
-@@ -174,26 +174,30 @@ static int am654_hbmc_probe(struct platform_device *pdev)
- 	priv->hbdev.np = of_get_next_child(np, NULL);
- 	ret = of_address_to_resource(priv->hbdev.np, 0, &res);
- 	if (ret)
--		return ret;
-+		goto put_node;
+diff --git a/drivers/media/usb/dvb-usb-v2/lmedm04.c b/drivers/media/usb/dvb-usb-v2/lmedm04.c
+index 8a34e6c0d6a6d..f0537b741d135 100644
+--- a/drivers/media/usb/dvb-usb-v2/lmedm04.c
++++ b/drivers/media/usb/dvb-usb-v2/lmedm04.c
+@@ -373,6 +373,7 @@ static int lme2510_int_read(struct dvb_usb_adapter *adap)
+ 	struct dvb_usb_device *d = adap_to_d(adap);
+ 	struct lme2510_state *lme_int = adap_to_priv(adap);
+ 	struct usb_host_endpoint *ep;
++	int ret;
  
- 	if (of_property_read_bool(dev->of_node, "mux-controls")) {
- 		struct mux_control *control = devm_mux_control_get(dev, NULL);
+ 	lme_int->lme_urb = usb_alloc_urb(0, GFP_KERNEL);
  
--		if (IS_ERR(control))
--			return PTR_ERR(control);
-+		if (IS_ERR(control)) {
-+			ret = PTR_ERR(control);
-+			goto put_node;
-+		}
+@@ -390,11 +391,20 @@ static int lme2510_int_read(struct dvb_usb_adapter *adap)
  
- 		ret = mux_control_select(control, 1);
- 		if (ret) {
- 			dev_err(dev, "Failed to select HBMC mux\n");
--			return ret;
-+			goto put_node;
- 		}
- 		priv->mux_ctrl = control;
- 	}
- 
- 	priv->hbdev.map.size = resource_size(&res);
- 	priv->hbdev.map.virt = devm_ioremap_resource(dev, &res);
--	if (IS_ERR(priv->hbdev.map.virt))
--		return PTR_ERR(priv->hbdev.map.virt);
-+	if (IS_ERR(priv->hbdev.map.virt)) {
-+		ret = PTR_ERR(priv->hbdev.map.virt);
-+		goto disable_mux;
+ 	/* Quirk of pipe reporting PIPE_BULK but behaves as interrupt */
+ 	ep = usb_pipe_endpoint(d->udev, lme_int->lme_urb->pipe);
++	if (!ep) {
++		usb_free_urb(lme_int->lme_urb);
++		return -ENODEV;
 +	}
  
- 	priv->ctlr.dev = dev;
- 	priv->ctlr.ops = &am654_hbmc_ops;
-@@ -226,6 +230,8 @@ static int am654_hbmc_probe(struct platform_device *pdev)
- disable_mux:
- 	if (priv->mux_ctrl)
- 		mux_control_deselect(priv->mux_ctrl);
-+put_node:
-+	of_node_put(priv->hbdev.np);
- 	return ret;
- }
+ 	if (usb_endpoint_type(&ep->desc) == USB_ENDPOINT_XFER_BULK)
+ 		lme_int->lme_urb->pipe = usb_rcvbulkpipe(d->udev, 0xa);
  
-@@ -241,6 +247,7 @@ static void am654_hbmc_remove(struct platform_device *pdev)
+-	usb_submit_urb(lme_int->lme_urb, GFP_KERNEL);
++	ret = usb_submit_urb(lme_int->lme_urb, GFP_KERNEL);
++	if (ret) {
++		usb_free_urb(lme_int->lme_urb);
++		return ret;
++	}
++
+ 	info("INT Interrupt Service Started");
  
- 	if (dev_priv->rx_chan)
- 		dma_release_channel(dev_priv->rx_chan);
-+	of_node_put(priv->hbdev.np);
- }
- 
- static const struct of_device_id am654_hbmc_dt_ids[] = {
+ 	return 0;
 -- 
 2.39.5
 
