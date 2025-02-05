@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7823A19DF41;
-	Wed,  5 Feb 2025 15:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F081547D8;
+	Wed,  5 Feb 2025 15:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768446; cv=none; b=ErZ7eb1+a5kBfqLJRXJYxeH243FaA4b34fEYa6uZ1KhcJs4cV96KeB9OMIjqvYW499zFuCH+BPDbVcpxsj2aS9pZ7PP1Zw17I7EQdOf87Qs5rBY9De/GqANIMoYux/3R+LmUckZNSrtXkgUbFHpkg5H4wlyH2OqdjQ5REruJ2UM=
+	t=1738768449; cv=none; b=kdN1CHqp8YDfSKkf9xxy96ddzB6wShrCf/SBZELpXqMYDXyFdtzJD31VVl9Dn0a7eoYwi+epuYhVxE/xpnEauunBqFwmf/UizJAgIN8kAMPBOlXLrdeQmnndhLwssnPf6lnsq6t6VmjTq2a34KMVGWTG2+63yMQ92ESUSmAstPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768446; c=relaxed/simple;
-	bh=AZCmEN1LrnJcO7+tWskRfc4lJuygSYv2yOM1cRPDjq0=;
+	s=arc-20240116; t=1738768449; c=relaxed/simple;
+	bh=K5KvwvHkPmZfwgLDi3SR3Kj2UTwppy01HjvzeXScF+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vsjw5nta+bdqx/qjXwU5LPE0L2nF+qxpT+wSjmywmOMIpiBZezIEOKI6HJntCrc+AFoo57Jv/QYXX5wrQh5dyEOL6tKYLxMJ89ipL2NoMvkAdThfBbl66UiTGwBC5KRelr5eaoS+/BfiFRMgSpX1sjXuhOWS16uUm+itM60C0UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNrF/BqZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VlFGDacV/27iHZZD78HuyWsJFpXk6TS7uGA2+Nef0sXTs74mGujR6H6RGDe+f5fDdLUimWP927AD1amNJOd3Q/aI+eb9hRqF0xWJt7d4mNSgUwHKrnfGhT898KJPCh1Y1lLfNkPZg1g1kjiHL6Fb98ZqhFywMv0YOFeZXx1cINY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpLDqcMl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNrF/BqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC337C4CED1;
-	Wed,  5 Feb 2025 15:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpLDqcMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FE2C4CED1;
+	Wed,  5 Feb 2025 15:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768446;
-	bh=AZCmEN1LrnJcO7+tWskRfc4lJuygSYv2yOM1cRPDjq0=;
+	s=korg; t=1738768449;
+	bh=K5KvwvHkPmZfwgLDi3SR3Kj2UTwppy01HjvzeXScF+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNrF/BqZjD7H2irHGebPtQMLXKIiV8dqS4+GaFTKmij59gzDQmhbg+b3S9lPSNniV
-	 IF9HZ4O5yulyv2ar5rdFaFaviezveM3JihGOGrQ0WJcExzRUmMcLNB2rr1W2bymzob
-	 7ONG2WLj98q+FWq4j4ar0Z3y9BlRZlXGac5GOapM=
+	b=ZpLDqcMlz87D8IkrgzGhqsCHUjbD+Ynloli8SGbBiCgIUkA8NRVgPLqmHbk70KPns
+	 0yHDS+eW8q4dzRi0z0qkZeQzF9zRQ7Y/rKVn9VMcIsV88G7T9vOSfFp79uKm+reslm
+	 fyS/QRQpwdZwKxfLHvEQDr3MWVZ+Vw7Jy38g6qQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 560/623] io_uring/uring_cmd: use cached cmd_op in io_uring_cmd_sock()
-Date: Wed,  5 Feb 2025 14:45:02 +0100
-Message-ID: <20250205134517.642598819@linuxfoundation.org>
+Subject: [PATCH 6.13 561/623] io_uring/register: use atomic_read/write for sq_flags migration
+Date: Wed,  5 Feb 2025 14:45:03 +0100
+Message-ID: <20250205134517.680263165@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -52,34 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit d58d82bd0efd6c8edd452fc2f6c6dd052ec57cb2 ]
+[ Upstream commit a23ad06bfee5e51cd9e51aebf11401e7b4b5d00a ]
 
-io_uring_cmd_sock() does a normal read of cmd->sqe->cmd_op, where it
-really should be using a READ_ONCE() as ->sqe may still be pointing to
-the original SQE. Since the prep side already does this READ_ONCE() and
-stores it locally, use that value rather than re-read it.
+A previous commit changed all of the migration from the old to the new
+ring for resizing to use READ/WRITE_ONCE. However, ->sq_flags is an
+atomic_t, and while most archs won't complain on this, some will indeed
+flag this:
 
-Fixes: 8e9fad0e70b7b ("io_uring: Add io_uring command support for sockets")
-Link: https://lore.kernel.org/r/20250121-uring-sockcmd-fix-v1-1-add742802a29@google.com
+io_uring/register.c:554:9: sparse: sparse: cast to non-scalar
+io_uring/register.c:554:9: sparse: sparse: cast from non-scalar
+
+Just use atomic_set/atomic_read for handling this case.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501242000.A2sKqaCL-lkp@intel.com/
+Fixes: 2c5aae129f42 ("io_uring/register: document io_register_resize_rings() shared mem usage")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/uring_cmd.c | 2 +-
+ io_uring/register.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/uring_cmd.c b/io_uring/uring_cmd.c
-index ce7726a048834..25cae9f5575be 100644
---- a/io_uring/uring_cmd.c
-+++ b/io_uring/uring_cmd.c
-@@ -362,7 +362,7 @@ int io_uring_cmd_sock(struct io_uring_cmd *cmd, unsigned int issue_flags)
- 	if (!prot || !prot->ioctl)
- 		return -EOPNOTSUPP;
+diff --git a/io_uring/register.c b/io_uring/register.c
+index 371aec87e078c..14ece7754e4ca 100644
+--- a/io_uring/register.c
++++ b/io_uring/register.c
+@@ -553,7 +553,7 @@ static int io_register_resize_rings(struct io_ring_ctx *ctx, void __user *arg)
+ 	ctx->cqe_cached = ctx->cqe_sentinel = NULL;
  
--	switch (cmd->sqe->cmd_op) {
-+	switch (cmd->cmd_op) {
- 	case SOCKET_URING_OP_SIOCINQ:
- 		ret = prot->ioctl(sk, SIOCINQ, &arg);
- 		if (ret)
+ 	WRITE_ONCE(n.rings->sq_dropped, READ_ONCE(o.rings->sq_dropped));
+-	WRITE_ONCE(n.rings->sq_flags, READ_ONCE(o.rings->sq_flags));
++	atomic_set(&n.rings->sq_flags, atomic_read(&o.rings->sq_flags));
+ 	WRITE_ONCE(n.rings->cq_flags, READ_ONCE(o.rings->cq_flags));
+ 	WRITE_ONCE(n.rings->cq_overflow, READ_ONCE(o.rings->cq_overflow));
+ 
 -- 
 2.39.5
 
