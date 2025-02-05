@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE6833993;
-	Wed,  5 Feb 2025 14:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01E133993;
+	Wed,  5 Feb 2025 14:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767255; cv=none; b=LbmiEIX7GEWgZ/gGZ9htvoXn8iaUL3koPT5r8UaC5ldkBraAhu5iGL9+t2HWqT1G3vwoabzlvoUu4yXe6o09eewvvUGhBULoiBQy2t9rlt56p/rvzUDd7JSkbSPR9371ya7gK7RmNWmZaY4eHQKsJGroCw7hctIk2Ku1Gp+6C3M=
+	t=1738767258; cv=none; b=p6edz1OtZcS7JzoBIGXKR9UfzEK0041lQ9/LNVhwIrUijPTWGygsi2HSoFvT1lLXKid9v3xxYgOUM8SSylqtgRv7JDojeYG7WhKeJcLAYMqBkJQ6EpIHb3+gHjGEtZe3fSkTQh8hPdtqV4BfC2h5FXUldu3LHQH+zVBFhEBfpBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767255; c=relaxed/simple;
-	bh=tp8/uE9aD5ZQkTmDypwnz/TsG+5K4L5SMSH2cThoH2k=;
+	s=arc-20240116; t=1738767258; c=relaxed/simple;
+	bh=6D2hJoBvLvUYh0v4QSAHbkRgxFMYpKCw/JYPX/lvn1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rfFbZ7FrK/CZ2M5KfRdvkUBA/DIWKMypPJakf52WEbMUoY0t3lrnFwTtn45D7cMW7TeNX0wqyHCncT5czMmEcspomXjfnV3HLJKTKBCm+qu6oX5gvNeOUzFNYDZvkGvSF7Fx2wQBFJRLdWTH2gE2mgmoluTTza+gNZXuw5BE37c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKI6H4ZB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tVBzzHszqNlUP5sjR0E5q7cf13U4bCIFpBJzIwBgjBeVrGzhlc3o6cb5TQkyGkZgIo1yDMRbjWt0vc/9NHy6oUqhaTzxwYjXdVlmHwyY1ccrJVQUNWX4msP9vrWpM1/zeMJLVw01h5PHDFQvEKvg/cXaZhKGNsYEHFXx6fOg3C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuVniH3Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKI6H4ZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6481C4CEDD;
-	Wed,  5 Feb 2025 14:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuVniH3Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DCBAC4CEDD;
+	Wed,  5 Feb 2025 14:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767255;
-	bh=tp8/uE9aD5ZQkTmDypwnz/TsG+5K4L5SMSH2cThoH2k=;
+	s=korg; t=1738767258;
+	bh=6D2hJoBvLvUYh0v4QSAHbkRgxFMYpKCw/JYPX/lvn1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZKI6H4ZB3NsYwpZyQ4P2BfnbzMcZMkQ4+Hlc1pf7RlD8WVAPVQDYNYM+CITcqSHyn
-	 npyFBqPYSISVhNi1HhNVKy2iZEE89LstlUe82QPAnlW9rowXVUYlxuO+ENy6ZzN6Kw
-	 foawsv37cb23DVpgybrboYygq3zMOiUWMW89kC64=
+	b=cuVniH3YvrGrj3GU5AenGI6xfcSpYB6TrKI+85w7QPUT2T1PuMC3hJyXDsoaZwjAl
+	 LJoPVi0ztHliq/hgJIaph/qQZ+1VhJLu9IBJr9yc9KZe1gaBuvF00tuxF/08N6jPho
+	 QWn+J42bzwlvVF5Nw4xcME2uUBk+KmE6NZfWr01E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 430/590] PCI: dwc: Always stop link in the dw_pcie_suspend_noirq
-Date: Wed,  5 Feb 2025 14:43:05 +0100
-Message-ID: <20250205134511.717150674@linuxfoundation.org>
+Subject: [PATCH 6.13 379/623] arm64: dts: qcom: qcs404: correct sleep clock frequency
+Date: Wed,  5 Feb 2025 14:42:01 +0100
+Message-ID: <20250205134510.716921821@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 86a016e278b78cc2281edd4ffaddbc011c87a593 ]
+[ Upstream commit 1473ff0b69de68b23ce9874548cdabc64d72725e ]
 
-On the i.MX8QM, PCIe link can't be re-established again in
-dw_pcie_resume_noirq(), if the LTSSM_EN bit is not cleared
-properly in dw_pcie_suspend_noirq().
+The QCS40x platforms use PMS405 to provide sleep clock. According to the
+documentation, that clock has 32.7645 kHz frequency. Correct the sleep
+clock definition.
 
-So, add dw_pcie_stop_link() to dw_pcie_suspend_noirq() to fix
-this issue and to align the suspend/resume functions since there
-is dw_pcie_start_link() in dw_pcie_resume_noirq() already.
-
-Fixes: 4774faf854f5 ("PCI: dwc: Implement generic suspend/resume functionality")
-Link: https://lore.kernel.org/r/20241210081557.163555-2-hongxing.zhu@nxp.com
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Fixes: 9181bb939984 ("arm64: dts: qcom: Add SDX75 platform and IDP board support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-4-e9b08fbeadd3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-host.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/qcs404.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 3e41865c72904..120e2aca5164a 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -946,6 +946,7 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
- 		return ret;
- 	}
- 
-+	dw_pcie_stop_link(pci);
- 	if (pci->pp.ops->deinit)
- 		pci->pp.ops->deinit(&pci->pp);
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index 215ba146207af..2862474f33b0e 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -28,7 +28,7 @@
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+ 			#clock-cells = <0>;
+-			clock-frequency = <32768>;
++			clock-frequency = <32764>;
+ 		};
+ 	};
  
 -- 
 2.39.5
