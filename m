@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B1218D65C;
-	Wed,  5 Feb 2025 14:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DA71FC100;
+	Wed,  5 Feb 2025 14:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766935; cv=none; b=GrMiY6zkb8alDAVBuFQ3mvPhKIFGwXdhq0u5Sg16d7kWi7xA46Uv/5BQWdDljtKdn0RaTOGU3c0yys0rESFzquC2tKPaEMbYBOPrTA5k511VFllzqEnxioZnUouMkhr3GajP7zrvBHfe+qCpbF9Zr1o9D9VT2JVuKapR+ZKiDN8=
+	t=1738766939; cv=none; b=seqtHKR6n5AZHpuueLM1m6ZESh88ya5560nwX9TwAahL9BKEYq3SIuAjAF4FxDqmdn/94TTM9lhhbODWLPdvP63AMcziAIkt1ghfH+cUn3rxZNg7hYt9UGDQKYDK/MOJb+Ke1ILqrGFSl5H2+3NvhDLyWRFhY3SRPQoi8JwU78c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766935; c=relaxed/simple;
-	bh=k790IJ/DZ5IDEdtcyIHAWAcoAkHw/yKozuRr2iXbEgY=;
+	s=arc-20240116; t=1738766939; c=relaxed/simple;
+	bh=yAKCj0MhBVkT6mzSt6COoBNFepHUB9l/aZROav9VYN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SyqfzMmz2rRTGsZ6CyTwpRwZrH3oEx1Ds0IcfmjtIJCpx6sRs/ptqLgoXm0t/VocnNVCcr/A0vPboJTaS+yDvOPdjFWp4BA2EW7QHSKblWXORXHBXMIPfItJ2c+i90o4MHSIapEMd0G611reA1/HLDJc9HIQAPb8bHZoPlhCI5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ac4o4YTK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RxXFZtu0vs6w8I9yXPBDNwwOSVemIsjPEzP8xbeIYQoxO94bg+zLGt6KbeWzA/GMfoC8iZsd/jGdikT4Z4wOrE9ezwrdTzQt2cB8gDP+Y00ZUanYz7CBK+McmQq85mNwrFr5qaEezjd44Qtu0kCxZOVmFkC8FrCzFP40djh/iDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQYO0Btn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ac4o4YTK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A0CC4CED1;
-	Wed,  5 Feb 2025 14:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQYO0Btn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF85CC4CED1;
+	Wed,  5 Feb 2025 14:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766935;
-	bh=k790IJ/DZ5IDEdtcyIHAWAcoAkHw/yKozuRr2iXbEgY=;
+	s=korg; t=1738766938;
+	bh=yAKCj0MhBVkT6mzSt6COoBNFepHUB9l/aZROav9VYN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ac4o4YTKN3PSmtVyJK3OPlyZFjrtNbQzwSM2vCTxEwPdUdPsFb9mAhAiQE059arNn
-	 t+tFRENmHnqYbcmFaWu2V2dUu2sf7P+5zyl+j8ePYCRpiXlHLQHo4K8003JbXrDEWY
-	 eAj8aJgN7rA1WS8FnwkSQrCvwVTET1Ll152+YXxE=
+	b=yQYO0Btn1PqWV2ZYZNw0T3hCDXQDvWN/1TVjzGvTMeZsXOUo35Zqw6aLu0ZDx8g0Y
+	 fvJleIiNY6Rk3dT4g6Ac1SJpgVUxD/UjHIk/CE5L9OthbPtNoNgTzhYpMnJh0b7o1N
+	 18PJyRAfHraFxlr4IMpid8fu51op5dt+9xYDmAME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 382/590] dts: arm64: mediatek: mt8195: Remove MT8183 compatible for OVL
-Date: Wed,  5 Feb 2025 14:42:17 +0100
-Message-ID: <20250205134509.882426814@linuxfoundation.org>
+Subject: [PATCH 6.13 331/623] ARM: at91: pm: change BU Power Switch to automatic mode
+Date: Wed,  5 Feb 2025 14:41:13 +0100
+Message-ID: <20250205134508.886363144@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +47,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-[ Upstream commit ce3dbc46d7e30a84b8e99c730e3172dd5efbf094 ]
+[ Upstream commit 6fc5bdfa872b7da51b5507a1327a17c3db2fcf95 ]
 
-The OVL hardware capabilities have changed starting from MT8195,
-making the MT8183 compatible no longer applicable.
-Therefore, it is necessary to remove the MT8183 compatible for OVL.
+Change how the Backup Unit Power is configured and force the
+automatic/hardware mode.
+This change eliminates the need for software management of the power
+switch, ensuring it transitions to the backup power source before
+entering low power modes.
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Fixes: b852ee68fd72 ("arm64: dts: mt8195: Add display node for vdosys0")
-Link: https://lore.kernel.org/r/20241219181531.4282-5-jason-jh.lin@mediatek.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+This is done in the only location where this switch was configured. It's
+usually done in the bootloader.
+
+Previously, the loss of the VDDANA (or VDDIN33) power source was not
+automatically compensated by an alternative power source. This resulted
+in the loss of Backup Unit content, including Backup Self-refresh low
+power mode information, OTP emulation configuration, and boot
+configuration, for instance.
+
+Fixes: ac809e7879b1 ("ARM: at91: pm: switch backup area to vbat in backup mode")
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20241125165648.509162-1-nicolas.ferre@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mach-at91/pm.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index 04e41b557d448..f013dbad9dc4e 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -3135,7 +3135,7 @@
- 		};
+diff --git a/arch/arm/mach-at91/pm.c b/arch/arm/mach-at91/pm.c
+index b9b995f8a36e1..05a1547642b60 100644
+--- a/arch/arm/mach-at91/pm.c
++++ b/arch/arm/mach-at91/pm.c
+@@ -598,7 +598,21 @@ static int at91_suspend_finish(unsigned long val)
+ 	return 0;
+ }
  
- 		ovl0: ovl@1c000000 {
--			compatible = "mediatek,mt8195-disp-ovl", "mediatek,mt8183-disp-ovl";
-+			compatible = "mediatek,mt8195-disp-ovl";
- 			reg = <0 0x1c000000 0 0x1000>;
- 			interrupts = <GIC_SPI 636 IRQ_TYPE_LEVEL_HIGH 0>;
- 			power-domains = <&spm MT8195_POWER_DOMAIN_VDOSYS0>;
+-static void at91_pm_switch_ba_to_vbat(void)
++/**
++ * at91_pm_switch_ba_to_auto() - Configure Backup Unit Power Switch
++ * to automatic/hardware mode.
++ *
++ * The Backup Unit Power Switch can be managed either by software or hardware.
++ * Enabling hardware mode allows the automatic transition of power between
++ * VDDANA (or VDDIN33) and VDDBU (or VBAT, respectively), based on the
++ * availability of these power sources.
++ *
++ * If the Backup Unit Power Switch is already in automatic mode, no action is
++ * required. If it is in software-controlled mode, it is switched to automatic
++ * mode to enhance safety and eliminate the need for toggling between power
++ * sources.
++ */
++static void at91_pm_switch_ba_to_auto(void)
+ {
+ 	unsigned int offset = offsetof(struct at91_pm_sfrbu_regs, pswbu);
+ 	unsigned int val;
+@@ -609,24 +623,19 @@ static void at91_pm_switch_ba_to_vbat(void)
+ 
+ 	val = readl(soc_pm.data.sfrbu + offset);
+ 
+-	/* Already on VBAT. */
+-	if (!(val & soc_pm.sfrbu_regs.pswbu.state))
++	/* Already on auto/hardware. */
++	if (!(val & soc_pm.sfrbu_regs.pswbu.ctrl))
+ 		return;
+ 
+-	val &= ~soc_pm.sfrbu_regs.pswbu.softsw;
+-	val |= soc_pm.sfrbu_regs.pswbu.key | soc_pm.sfrbu_regs.pswbu.ctrl;
++	val &= ~soc_pm.sfrbu_regs.pswbu.ctrl;
++	val |= soc_pm.sfrbu_regs.pswbu.key;
+ 	writel(val, soc_pm.data.sfrbu + offset);
+-
+-	/* Wait for update. */
+-	val = readl(soc_pm.data.sfrbu + offset);
+-	while (val & soc_pm.sfrbu_regs.pswbu.state)
+-		val = readl(soc_pm.data.sfrbu + offset);
+ }
+ 
+ static void at91_pm_suspend(suspend_state_t state)
+ {
+ 	if (soc_pm.data.mode == AT91_PM_BACKUP) {
+-		at91_pm_switch_ba_to_vbat();
++		at91_pm_switch_ba_to_auto();
+ 
+ 		cpu_suspend(0, at91_suspend_finish);
+ 
 -- 
 2.39.5
 
