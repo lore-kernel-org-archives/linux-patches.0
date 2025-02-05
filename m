@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E331519BE;
-	Wed,  5 Feb 2025 14:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D0413C3F6;
+	Wed,  5 Feb 2025 14:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765295; cv=none; b=d4tCLkjps2o2rUiKnVY+atICKE2LvZiVop+++LPzzhPKosEw0iqRRImwi8M0wP4GKoI+RjG0d5taGwvnUqiut5TjWVySPTXYExOzoXlHD/LrwF06dacz6w/xF6Xce75oyA/Mfr0gKog858697srGDXwKUMtco3qCTyZ++gXuw5w=
+	t=1738765299; cv=none; b=a9Zgd/cyAzZsudm0cNdEftT+3ZJVm9o7vp8XusfG9CySJ8yVAr4+5RUsOK+LZ71l1Sto1V6FJOZKB/3vFz3t48b0BETvA+Jd6J240lRXVey7rxz47laV8fDWRFmqta0I3pJGyFgTf/uBgd/tZjlLUmv5ZWHVZcelgPBfRASwFTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765295; c=relaxed/simple;
-	bh=ro0x+kjc90rOVUNwaRsdSSpu/mSNE4mR+OGiFfjz7h4=;
+	s=arc-20240116; t=1738765299; c=relaxed/simple;
+	bh=JRQJCi0r+G9T3B9J+VGYjJhZ7rPeKedrxmpfkV4H7Lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iF0sxTYByIiVTXs01ZxQneNC8ITuKmcskfTvxO2Jx2pPovrO5vZGcV94ZGJULdsmqmjO1jpBWuyjzYVtAWLkVwpeArkhW9sY/3CBnCR5B9/IQIt2k1T4IHEutMfHCP3CXmls9ON4hfaSvyUOVpQIR5qVylUS8omReovcKudWYSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qb7yvprC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OUSbhnaQcO38tidl5zYwfGA5HaORZxLQ4jzJm7vKjQR29U35BIgCGSbCiiDKcIHklXCHP8mx/cmg+mClLX+4UZ38D0PzKJo5yqReAbt5WeYgL8UjCih2v3sdpXG6QQKHnBc46nIICgRHdbl7ZwpyRUjygAIDHMxVEITPaFx5n2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVzDrdbO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qb7yvprC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71BEC4CED1;
-	Wed,  5 Feb 2025 14:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVzDrdbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D4BC4CED1;
+	Wed,  5 Feb 2025 14:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765295;
-	bh=ro0x+kjc90rOVUNwaRsdSSpu/mSNE4mR+OGiFfjz7h4=;
+	s=korg; t=1738765298;
+	bh=JRQJCi0r+G9T3B9J+VGYjJhZ7rPeKedrxmpfkV4H7Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qb7yvprC5u/j06EO9DIbYt2QfAoK2lsC3VJuznhicmdwRr34I85TdiBpjyeUqIF6b
-	 zwhnStVcE8KpOmae8gUtgvrfDZDA2eRBZaiWkkTrPxruFmdu+qG1OaXD6Y1vn/p6pA
-	 Qd0HjC86tJgEol92llvSkieXRjVP2JODpitjDCHw=
+	b=qVzDrdbOlHJP5tui3S25gXZW2FWb5J9AngEnV2nHHekkwI+ozz5umo1UcFwd+oaUC
+	 5LdgV7ovAYy/X5LhZWz28+BFPsNDR/6bAKDjWnEK35O9IClkx/gEwfl3KkTk3OVZ+w
+	 daIol+lMFoSoHuXP8knJJ1fnzfrNt3bO5jzDc+mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Liu <b-liu@ti.com>,
-	Bryan Brattlof <bb@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Will McVicker <willmcvicker@google.com>,
+	Pankaj Dubey <pankaj.dubey@samsung.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 251/393] arm64: dts: ti: k3-am62: Remove duplicate GICR reg
-Date: Wed,  5 Feb 2025 14:42:50 +0100
-Message-ID: <20250205134429.909930812@linuxfoundation.org>
+Subject: [PATCH 6.13 149/623] mfd: syscon: Fix race in device_node_get_regmap()
+Date: Wed,  5 Feb 2025 14:38:11 +0100
+Message-ID: <20250205134501.935750459@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,39 +50,127 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bryan Brattlof <bb@ti.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit 72c691d77ea5d0c4636fd3e9f0ad80d813c7d1a7 ]
+[ Upstream commit 805f7aaf7fee14a57b56af01d270edf6c10765e8 ]
 
-The GIC Redistributor control register range is mapped twice. Remove
-the extra entry from the reg range.
+It is possible for multiple, simultaneous callers calling
+device_node_get_regmap() with the same node to fail to find an entry in
+the syscon_list. There is a period of time while the first caller is
+calling of_syscon_register() that subsequent callers also fail to find
+an entry in the syscon_list and then call of_syscon_register() a second
+time.
 
-Fixes: f1d17330a5be ("arm64: dts: ti: Introduce base support for AM62x SoC")
-Reported-by: Bin Liu <b-liu@ti.com>
-Signed-off-by: Bryan Brattlof <bb@ti.com>
-Link: https://lore.kernel.org/r/20241210-am62-gic-fixup-v1-1-758b4d5b4a0a@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fix this by keeping the lock held until after of_syscon_register()
+completes and adds the node to syscon_list. Convert the spinlock to a
+mutex as many of the functions called in of_syscon_register() such as
+kzalloc() and of_clk_get() may sleep.
+
+Fixes: bdb0066df96e ("mfd: syscon: Decouple syscon interface from platform devices")
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Will McVicker <willmcvicker@google.com>
+Tested-by: Pankaj Dubey <pankaj.dubey@samsung.com>
+Reviewed-by: Pankaj Dubey <pankaj.dubey@samsung.com>
+Link: https://lore.kernel.org/r/20241217-syscon-fixes-v2-1-4f56d750541d@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62-main.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/mfd/syscon.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62-main.dtsi b/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
-index a9b47ab92a02c..f156167b4e8a7 100644
---- a/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
-@@ -23,7 +23,6 @@
- 		interrupt-controller;
- 		reg = <0x00 0x01800000 0x00 0x10000>,	/* GICD */
- 		      <0x00 0x01880000 0x00 0xc0000>,	/* GICR */
--		      <0x00 0x01880000 0x00 0xc0000>,   /* GICR */
- 		      <0x01 0x00000000 0x00 0x2000>,    /* GICC */
- 		      <0x01 0x00010000 0x00 0x1000>,    /* GICH */
- 		      <0x01 0x00020000 0x00 0x2000>;    /* GICV */
+diff --git a/drivers/mfd/syscon.c b/drivers/mfd/syscon.c
+index 3e1d699ba9340..72f20de9652da 100644
+--- a/drivers/mfd/syscon.c
++++ b/drivers/mfd/syscon.c
+@@ -15,6 +15,7 @@
+ #include <linux/io.h>
+ #include <linux/init.h>
+ #include <linux/list.h>
++#include <linux/mutex.h>
+ #include <linux/of.h>
+ #include <linux/of_address.h>
+ #include <linux/of_platform.h>
+@@ -27,7 +28,7 @@
+ 
+ static struct platform_driver syscon_driver;
+ 
+-static DEFINE_SPINLOCK(syscon_list_slock);
++static DEFINE_MUTEX(syscon_list_lock);
+ static LIST_HEAD(syscon_list);
+ 
+ struct syscon {
+@@ -54,6 +55,8 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_res)
+ 	struct resource res;
+ 	struct reset_control *reset;
+ 
++	WARN_ON(!mutex_is_locked(&syscon_list_lock));
++
+ 	struct syscon *syscon __free(kfree) = kzalloc(sizeof(*syscon), GFP_KERNEL);
+ 	if (!syscon)
+ 		return ERR_PTR(-ENOMEM);
+@@ -146,9 +149,7 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_res)
+ 	syscon->regmap = regmap;
+ 	syscon->np = np;
+ 
+-	spin_lock(&syscon_list_slock);
+ 	list_add_tail(&syscon->list, &syscon_list);
+-	spin_unlock(&syscon_list_slock);
+ 
+ 	return_ptr(syscon);
+ 
+@@ -169,7 +170,7 @@ static struct regmap *device_node_get_regmap(struct device_node *np,
+ {
+ 	struct syscon *entry, *syscon = NULL;
+ 
+-	spin_lock(&syscon_list_slock);
++	mutex_lock(&syscon_list_lock);
+ 
+ 	list_for_each_entry(entry, &syscon_list, list)
+ 		if (entry->np == np) {
+@@ -177,11 +178,11 @@ static struct regmap *device_node_get_regmap(struct device_node *np,
+ 			break;
+ 		}
+ 
+-	spin_unlock(&syscon_list_slock);
+-
+ 	if (!syscon)
+ 		syscon = of_syscon_register(np, check_res);
+ 
++	mutex_unlock(&syscon_list_lock);
++
+ 	if (IS_ERR(syscon))
+ 		return ERR_CAST(syscon);
+ 
+@@ -212,7 +213,7 @@ int of_syscon_register_regmap(struct device_node *np, struct regmap *regmap)
+ 		return -ENOMEM;
+ 
+ 	/* check if syscon entry already exists */
+-	spin_lock(&syscon_list_slock);
++	mutex_lock(&syscon_list_lock);
+ 
+ 	list_for_each_entry(entry, &syscon_list, list)
+ 		if (entry->np == np) {
+@@ -225,12 +226,12 @@ int of_syscon_register_regmap(struct device_node *np, struct regmap *regmap)
+ 
+ 	/* register the regmap in syscon list */
+ 	list_add_tail(&syscon->list, &syscon_list);
+-	spin_unlock(&syscon_list_slock);
++	mutex_unlock(&syscon_list_lock);
+ 
+ 	return 0;
+ 
+ err_unlock:
+-	spin_unlock(&syscon_list_slock);
++	mutex_unlock(&syscon_list_lock);
+ 	kfree(syscon);
+ 	return ret;
+ }
 -- 
 2.39.5
 
