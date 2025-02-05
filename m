@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964051494DF;
-	Wed,  5 Feb 2025 14:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC651494DF;
+	Wed,  5 Feb 2025 14:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764840; cv=none; b=Jzqb0AOwaHL7xrVzFdkt+hrExbsmTMGbLiGZWqN0bcjzEgSGZtSab3xMuz0iWiYM7b39bF6dRQ0bqYasLJyIUTSd28+tIyhz6eGCGAeHqle9tHh4OXaoR6kwChfLNmbA8bh9VHU9kyq23WczqS/7ozBYQhG3i9qRJqB9MCQJvxo=
+	t=1738764843; cv=none; b=m2nCCITfW1upwHd3NIPeR5q7aUtFFC2fKYcabejtQsbMk/JLseziU5NeTY5rVshgKCPyX6sy5+INrUKZNsA3fif+zZpAj036FfBAg0ZRBl6SrT6Y1HmSBLmS84gIbFwLwxWbeTqOR8iwHVdztcdWi5kTQ27Sb7g7sy/1wCQuLgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764840; c=relaxed/simple;
-	bh=nh3pyinrxprfYqmpWODL8IDTAh7UsNe0QvEACIyy/BM=;
+	s=arc-20240116; t=1738764843; c=relaxed/simple;
+	bh=Ah1VmECaN5qXLQFRglKSwaO7YnUrPjNJq/jGfGC73EM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gW3Olb8eNPAsX6GC42Sljce2Zr8ylCcr1eujUaGrxypcyKQYQEidh7gx0p0l0gqYZT4OUbvu1sY3kz7TYh80sozcYlnDAuZ7+SD8lSnOVICZpkg7fctiPwitJ66/HyJC6YOjwA4/Hy88Cfbu1GqvD1PuDxUssOkCnIydn0zmdms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdraiS1J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sFHXZEbBaKbf7CkOWX5MIBaiJg1ZykzH+w8oX+MgAmrZRs6g0I1HJX2Tn5OEgluaTdA244FJdmQQ/sI9+ETNxeh48MHVjPFeULGhcjg6qQwo1pTCmjIWw801sx6UQ5ncqWM1lDsqRGDQvEehYMWUG7SmY1K4P+2Ltrzqkj+p9Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fR6BqSi3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdraiS1J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FD1C4CED1;
-	Wed,  5 Feb 2025 14:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fR6BqSi3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C1DC4CED1;
+	Wed,  5 Feb 2025 14:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764840;
-	bh=nh3pyinrxprfYqmpWODL8IDTAh7UsNe0QvEACIyy/BM=;
+	s=korg; t=1738764843;
+	bh=Ah1VmECaN5qXLQFRglKSwaO7YnUrPjNJq/jGfGC73EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdraiS1JoC3LhS5y3we0GRHwkLucfkG4iW7rXJBNA2Qwc88I3f52rtBvXGQs5j8ZB
-	 FLWU5ZSHZ5t+0OY/RGXbHTnnGf+s5AHtAp9KgUx+3Y45gmgRoG/awpowhVQrM2GgfE
-	 mhHCS/7TlUhK5mgNMriu+pZ4hT39fQisXGzS2UAw=
+	b=fR6BqSi3kqZ+r6Dm5qNi+1ep74cB6fehevZm4/TysDSfqJ6XIqrIn+HK2/oH55px9
+	 NIynt1sFwVW4oxfuvo+vF8TjMTRoDzmXLW3fxcPwmtEf4evgX3Bw/dULdQFRGeY3+x
+	 BBEdFqc2HnLkSsWHgremXQOA38e6/Sv4bojO9C+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 118/623] inetpeer: remove create argument of inet_getpeer()
-Date: Wed,  5 Feb 2025 14:37:40 +0100
-Message-ID: <20250205134500.734916718@linuxfoundation.org>
+Subject: [PATCH 6.6 209/393] arm64: dts: mediatek: mt8195-demo: Drop regulator-compatible property
+Date: Wed,  5 Feb 2025 14:42:08 +0100
+Message-ID: <20250205134428.297045661@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,103 +47,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 7a596a50c4a4eab946aec149171c72321b4934aa ]
+[ Upstream commit 2a8af9b95f504260a6d8200a11f0ae5c90e9f787 ]
 
-All callers of inet_getpeer() want to create an inetpeer.
+The "regulator-compatible" property has been deprecated since 2012 in
+commit 13511def87b9 ("regulator: deprecate regulator-compatible DT
+property"), which is so old it's not even mentioned in the converted
+regulator bindings YAML file. It is also not listed in the MT6360
+regulator and charger bindings.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241215175629.1248773-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a853c609504e ("inetpeer: do not get a refcount in inet_getpeer()")
+Drop the "regulator-compatible" property from the board dts. The MT6360
+bindings actually require the lowercase name, so with the property
+present the regulators were likely not actually working.
+
+Fixes: 6147314aeedc ("arm64: dts: mediatek: Add device-tree for MT8195 Demo board")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20241211052427.4178367-7-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inetpeer.h |  7 +++----
- net/ipv4/inetpeer.c    | 11 ++---------
- 2 files changed, 5 insertions(+), 13 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195-demo.dts | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/include/net/inetpeer.h b/include/net/inetpeer.h
-index 6f51f81d6cb19..f475757daafba 100644
---- a/include/net/inetpeer.h
-+++ b/include/net/inetpeer.h
-@@ -96,8 +96,7 @@ static inline struct in6_addr *inetpeer_get_addr_v6(struct inetpeer_addr *iaddr)
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195-demo.dts b/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
+index 9079e48aea23e..f56aeb81c4168 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
+@@ -137,7 +137,6 @@
+ 			richtek,vinovp-microvolt = <14500000>;
  
- /* can be called with or without local BH being disabled */
- struct inet_peer *inet_getpeer(struct inet_peer_base *base,
--			       const struct inetpeer_addr *daddr,
--			       int create);
-+			       const struct inetpeer_addr *daddr);
+ 			otg_vbus_regulator: usb-otg-vbus-regulator {
+-				regulator-compatible = "usb-otg-vbus";
+ 				regulator-name = "usb-otg-vbus";
+ 				regulator-min-microvolt = <4425000>;
+ 				regulator-max-microvolt = <5825000>;
+@@ -149,7 +148,6 @@
+ 			LDO_VIN3-supply = <&mt6360_buck2>;
  
- static inline struct inet_peer *inet_getpeer_v4(struct inet_peer_base *base,
- 						__be32 v4daddr,
-@@ -108,7 +107,7 @@ static inline struct inet_peer *inet_getpeer_v4(struct inet_peer_base *base,
- 	daddr.a4.addr = v4daddr;
- 	daddr.a4.vif = vif;
- 	daddr.family = AF_INET;
--	return inet_getpeer(base, &daddr, 1);
-+	return inet_getpeer(base, &daddr);
- }
+ 			mt6360_buck1: buck1 {
+-				regulator-compatible = "BUCK1";
+ 				regulator-name = "mt6360,buck1";
+ 				regulator-min-microvolt = <300000>;
+ 				regulator-max-microvolt = <1300000>;
+@@ -160,7 +158,6 @@
+ 			};
  
- static inline struct inet_peer *inet_getpeer_v6(struct inet_peer_base *base,
-@@ -118,7 +117,7 @@ static inline struct inet_peer *inet_getpeer_v6(struct inet_peer_base *base,
+ 			mt6360_buck2: buck2 {
+-				regulator-compatible = "BUCK2";
+ 				regulator-name = "mt6360,buck2";
+ 				regulator-min-microvolt = <300000>;
+ 				regulator-max-microvolt = <1300000>;
+@@ -171,7 +168,6 @@
+ 			};
  
- 	daddr.a6 = *v6daddr;
- 	daddr.family = AF_INET6;
--	return inet_getpeer(base, &daddr, 1);
-+	return inet_getpeer(base, &daddr);
- }
+ 			mt6360_ldo1: ldo1 {
+-				regulator-compatible = "LDO1";
+ 				regulator-name = "mt6360,ldo1";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <3600000>;
+@@ -180,7 +176,6 @@
+ 			};
  
- static inline int inetpeer_addr_cmp(const struct inetpeer_addr *a,
-diff --git a/net/ipv4/inetpeer.c b/net/ipv4/inetpeer.c
-index 5ab56f4cb5297..bc79cc9d13ebb 100644
---- a/net/ipv4/inetpeer.c
-+++ b/net/ipv4/inetpeer.c
-@@ -169,13 +169,11 @@ static void inet_peer_gc(struct inet_peer_base *base,
- }
+ 			mt6360_ldo2: ldo2 {
+-				regulator-compatible = "LDO2";
+ 				regulator-name = "mt6360,ldo2";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <3600000>;
+@@ -189,7 +184,6 @@
+ 			};
  
- struct inet_peer *inet_getpeer(struct inet_peer_base *base,
--			       const struct inetpeer_addr *daddr,
--			       int create)
-+			       const struct inetpeer_addr *daddr)
- {
- 	struct inet_peer *p, *gc_stack[PEER_MAX_GC];
- 	struct rb_node **pp, *parent;
- 	unsigned int gc_cnt, seq;
--	int invalidated;
+ 			mt6360_ldo3: ldo3 {
+-				regulator-compatible = "LDO3";
+ 				regulator-name = "mt6360,ldo3";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <3600000>;
+@@ -198,7 +192,6 @@
+ 			};
  
- 	/* Attempt a lockless lookup first.
- 	 * Because of a concurrent writer, we might not find an existing entry.
-@@ -183,16 +181,11 @@ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
- 	rcu_read_lock();
- 	seq = read_seqbegin(&base->lock);
- 	p = lookup(daddr, base, seq, NULL, &gc_cnt, &parent, &pp);
--	invalidated = read_seqretry(&base->lock, seq);
- 	rcu_read_unlock();
+ 			mt6360_ldo5: ldo5 {
+-				regulator-compatible = "LDO5";
+ 				regulator-name = "mt6360,ldo5";
+ 				regulator-min-microvolt = <2700000>;
+ 				regulator-max-microvolt = <3600000>;
+@@ -207,7 +200,6 @@
+ 			};
  
- 	if (p)
- 		return p;
+ 			mt6360_ldo6: ldo6 {
+-				regulator-compatible = "LDO6";
+ 				regulator-name = "mt6360,ldo6";
+ 				regulator-min-microvolt = <500000>;
+ 				regulator-max-microvolt = <2100000>;
+@@ -216,7 +208,6 @@
+ 			};
  
--	/* If no writer did a change during our lookup, we can return early. */
--	if (!create && !invalidated)
--		return NULL;
--
- 	/* retry an exact lookup, taking the lock before.
- 	 * At least, nodes should be hot in our cache.
- 	 */
-@@ -201,7 +194,7 @@ struct inet_peer *inet_getpeer(struct inet_peer_base *base,
- 
- 	gc_cnt = 0;
- 	p = lookup(daddr, base, seq, gc_stack, &gc_cnt, &parent, &pp);
--	if (!p && create) {
-+	if (!p) {
- 		p = kmem_cache_alloc(peer_cachep, GFP_ATOMIC);
- 		if (p) {
- 			p->daddr = *daddr;
+ 			mt6360_ldo7: ldo7 {
+-				regulator-compatible = "LDO7";
+ 				regulator-name = "mt6360,ldo7";
+ 				regulator-min-microvolt = <500000>;
+ 				regulator-max-microvolt = <2100000>;
 -- 
 2.39.5
 
