@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A1C376;
-	Wed,  5 Feb 2025 15:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4093376;
+	Wed,  5 Feb 2025 15:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767633; cv=none; b=XgDkGvOvTyIeefkMaAegTOubdtiQKfQMkkCfIpAvfw4NXMhVNTTjV36g71WWEb8Q0e9hmgE8kXqWQxZYpeY6DWY/udja81dYP86hswMjPK+uahMJTGPHuxrfn3o6naUhV8I3poevUNhYiqB6X91cviPyfr4bzo72eQHepP+ZYQs=
+	t=1738767636; cv=none; b=ck6QtxyAAriPHvc7CerLr6O5VHUtzvhgpadYVikMv1HTNockYhQu8/DkCmmnyMGb6KNmFIi/IxyCaVHugIMAXJodmQ6hVqSLWORqguErCYxxAVgvene9nkR7MLKJPyLiFRj59bFcZGJUFvow7gb+UT6/zK84OdE9URKp/oW5t5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767633; c=relaxed/simple;
-	bh=2mxkKCO7YhmsNsSWGfVlHTGJPm7BKX4mRSgJJdq3PgQ=;
+	s=arc-20240116; t=1738767636; c=relaxed/simple;
+	bh=fulMXRiDDmi8cymfBuuHx5ioiXYKfha53havaGY5TnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFgT/MCQCv6cvBvJxRMvr/WU0rr3df+gLm8skhR9m6mkL5QavFV3BQSq++ohp2qpCGD0rEFpTewpa5VoKkY5GggGb0L7jPCgjus3N/G3dXNbdxMGwAIJY5oaW2P0W41TN9VknRsmGww84QB7P22yFhgOmgCxWAsdgMYKFMCAemI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m14Zf2Ck; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s56xPqbjrO59RWl4Kc+1MXKIbRaTj7Xj1oek8uV0A+GtXBSq3JZirPAcovOvm07vuei8K1K4ETT0yhAn78v5eMRxUKXfD5zgEiYYM8sSsNYqL7ASDuYaMJoR/F9MD8ECoZQruYaSir+5i5TDG71JNLFeMopUfILaUTJ/qmr9pcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DBgphIk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m14Zf2Ck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F520C4CED1;
-	Wed,  5 Feb 2025 15:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DBgphIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01349C4CED1;
+	Wed,  5 Feb 2025 15:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767633;
-	bh=2mxkKCO7YhmsNsSWGfVlHTGJPm7BKX4mRSgJJdq3PgQ=;
+	s=korg; t=1738767636;
+	bh=fulMXRiDDmi8cymfBuuHx5ioiXYKfha53havaGY5TnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m14Zf2CkomfRe+HnrlZOGfaqLmxHLVBU2Wb4MN8YQ5FkCUgahJosSQjCkmcI/OXcK
-	 2bZaKQnsUYH6E9U1uuZ9wxqTUVh11mFxEXev9ZMCwJgprb0iKsgGzW2em4a8YKSjmw
-	 +QaRbI1DV+9R23Cn/x/lpCZ5ZStQLGh6da0iORfI=
+	b=0DBgphIkNFNP97QiAAWynROz4MtQmTO8+bBoDy0pOa3jr2uMl0NmSXZpm8rGWmn3p
+	 Qt1LDyto/gJI7JOjOHLwyRXkR8IkvM43gOdDfW01wY9bASjWa87rMBX9BvBrhatrA3
+	 11UvsMBKzKJXgdRNkYs20qfDb4kvjL/V3vkbKQ60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Leogrande <leogrande@google.com>,
-	Manoj Vishwanathan <manojvishy@google.com>,
-	Brian Vazquez <brianvv@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Pavan Kumar Linga <pavan.kumar.linga@intel.com>,
-	Krishneil Singh <krishneil.k.singh@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 485/590] idpf: convert workqueues to unbound
-Date: Wed,  5 Feb 2025 14:44:00 +0100
-Message-ID: <20250205134513.816226329@linuxfoundation.org>
+Subject: [PATCH 6.12 472/590] regulator: core: Add missing newline character
+Date: Wed,  5 Feb 2025 14:43:47 +0100
+Message-ID: <20250205134513.318014743@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -56,115 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Leogrande <leogrande@google.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 9a5b021cb8186f1854bac2812bd4f396bb1e881c ]
+[ Upstream commit 155c569fa4c3b340fbf8571a0e42dd415c025377 ]
 
-When a workqueue is created with `WQ_UNBOUND`, its work items are
-served by special worker-pools, whose host workers are not bound to
-any specific CPU. In the default configuration (i.e. when
-`queue_delayed_work` and friends do not specify which CPU to run the
-work item on), `WQ_UNBOUND` allows the work item to be executed on any
-CPU in the same node of the CPU it was enqueued on. While this
-solution potentially sacrifices locality, it avoids contention with
-other processes that might dominate the CPU time of the processor the
-work item was scheduled on.
+dev_err_probe() error messages need newline character.
 
-This is not just a theoretical problem: in a particular scenario
-misconfigured process was hogging most of the time from CPU0, leaving
-less than 0.5% of its CPU time to the kworker. The IDPF workqueues
-that were using the kworker on CPU0 suffered large completion delays
-as a result, causing performance degradation, timeouts and eventual
-system crash.
-
-Tested:
-
-* I have also run a manual test to gauge the performance
-  improvement. The test consists of an antagonist process
-  (`./stress --cpu 2`) consuming as much of CPU 0 as possible. This
-  process is run under `taskset 01` to bind it to CPU0, and its
-  priority is changed with `chrt -pQ 9900 10000 ${pid}` and
-  `renice -n -20 ${pid}` after start.
-
-  Then, the IDPF driver is forced to prefer CPU0 by editing all calls
-  to `queue_delayed_work`, `mod_delayed_work`, etc... to use CPU 0.
-
-  Finally, `ktraces` for the workqueue events are collected.
-
-  Without the current patch, the antagonist process can force
-  arbitrary delays between `workqueue_queue_work` and
-  `workqueue_execute_start`, that in my tests were as high as
-  `30ms`. With the current patch applied, the workqueue can be
-  migrated to another unloaded CPU in the same node, and, keeping
-  everything else equal, the maximum delay I could see was `6us`.
-
-Fixes: 0fe45467a104 ("idpf: add create vport and netdev configuration")
-Signed-off-by: Marco Leogrande <leogrande@google.com>
-Signed-off-by: Manoj Vishwanathan <manojvishy@google.com>
-Signed-off-by: Brian Vazquez <brianvv@google.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
-Tested-by: Krishneil Singh <krishneil.k.singh@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 6eabfc018e8d ("regulator: core: Allow specifying an initial load w/ the bulk API")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://patch.msgid.link/20250122072019.1926093-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_main.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/regulator/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_main.c b/drivers/net/ethernet/intel/idpf/idpf_main.c
-index db476b3314c8a..dfd56fc5ff655 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_main.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_main.c
-@@ -174,7 +174,8 @@ static int idpf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	pci_set_master(pdev);
- 	pci_set_drvdata(pdev, adapter);
- 
--	adapter->init_wq = alloc_workqueue("%s-%s-init", 0, 0,
-+	adapter->init_wq = alloc_workqueue("%s-%s-init",
-+					   WQ_UNBOUND | WQ_MEM_RECLAIM, 0,
- 					   dev_driver_string(dev),
- 					   dev_name(dev));
- 	if (!adapter->init_wq) {
-@@ -183,7 +184,8 @@ static int idpf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		goto err_free;
- 	}
- 
--	adapter->serv_wq = alloc_workqueue("%s-%s-service", 0, 0,
-+	adapter->serv_wq = alloc_workqueue("%s-%s-service",
-+					   WQ_UNBOUND | WQ_MEM_RECLAIM, 0,
- 					   dev_driver_string(dev),
- 					   dev_name(dev));
- 	if (!adapter->serv_wq) {
-@@ -192,7 +194,8 @@ static int idpf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		goto err_serv_wq_alloc;
- 	}
- 
--	adapter->mbx_wq = alloc_workqueue("%s-%s-mbx", 0, 0,
-+	adapter->mbx_wq = alloc_workqueue("%s-%s-mbx",
-+					  WQ_UNBOUND | WQ_MEM_RECLAIM, 0,
- 					  dev_driver_string(dev),
- 					  dev_name(dev));
- 	if (!adapter->mbx_wq) {
-@@ -201,7 +204,8 @@ static int idpf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		goto err_mbx_wq_alloc;
- 	}
- 
--	adapter->stats_wq = alloc_workqueue("%s-%s-stats", 0, 0,
-+	adapter->stats_wq = alloc_workqueue("%s-%s-stats",
-+					    WQ_UNBOUND | WQ_MEM_RECLAIM, 0,
- 					    dev_driver_string(dev),
- 					    dev_name(dev));
- 	if (!adapter->stats_wq) {
-@@ -210,7 +214,8 @@ static int idpf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		goto err_stats_wq_alloc;
- 	}
- 
--	adapter->vc_event_wq = alloc_workqueue("%s-%s-vc_event", 0, 0,
-+	adapter->vc_event_wq = alloc_workqueue("%s-%s-vc_event",
-+					       WQ_UNBOUND | WQ_MEM_RECLAIM, 0,
- 					       dev_driver_string(dev),
- 					       dev_name(dev));
- 	if (!adapter->vc_event_wq) {
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 1179766811f58..4bb2652740d00 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -4946,7 +4946,7 @@ int _regulator_bulk_get(struct device *dev, int num_consumers,
+ 						       consumers[i].supply, get_type);
+ 		if (IS_ERR(consumers[i].consumer)) {
+ 			ret = dev_err_probe(dev, PTR_ERR(consumers[i].consumer),
+-					    "Failed to get supply '%s'",
++					    "Failed to get supply '%s'\n",
+ 					    consumers[i].supply);
+ 			consumers[i].consumer = NULL;
+ 			goto err;
 -- 
 2.39.5
 
