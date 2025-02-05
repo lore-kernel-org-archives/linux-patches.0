@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB26FC0B;
-	Wed,  5 Feb 2025 14:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FB02E634;
+	Wed,  5 Feb 2025 14:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764426; cv=none; b=dfNUWYp7VyUtqErUeMQofOQVj3+mLi3uH/cb4cEejwyJGe/tZ3f3dnRbUPL37pnYETZ55bYFEN6cwvBthZMXZhzAsUhKN5bJiFdCMF1TI2iBKECiLmF3AUvuSOicVlhaWVdStqAGPKPUTTSchXv5rCvSxjOnXMADGxEylIVJ/Zs=
+	t=1738764429; cv=none; b=iGfuKgv50i6vmOScvYcGxW4wq9Dg0CzRjd2n7b9NDKCENGLyQ0fEBD7H5spE4LtMqdq1WPmEOeE2SAaLR0KM/FDJUo+dyrmCxbzJ/YD+mRQ1ZEq4ms8bpvUIS/dzuWPDXnFJTFYGnPUAGlQBXLOgAH1X4PZFkauR8Ac9uHnlWfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764426; c=relaxed/simple;
-	bh=h6HNJbIXx0B5ivdGiARFdlpeUdjBn/NmNsJ/Hu5cMMM=;
+	s=arc-20240116; t=1738764429; c=relaxed/simple;
+	bh=Jo5R8emoLK/aVjUoMCS+1EdS+puDkAgrsLfgQegyDfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1/zg7nT8Ne73NnHtfArqucQ5ygrWTfErZHN1SYwSlt0CkwoqimIgSrU7yGFzL7/fpCGQtZVJSLGZ8F6M3cszze9saRR3eXrYP+TcaL256QwX396AkVZX0rO2P+6xQczVJXXwPIKxdqNuTTjuhyQXvlFmFTBjVQjdaCu/6F9xLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBpghUOQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQEHp/cO+nG3eTu7APpluY6jliOjRSx3WhxNw6E+fMK8nnuOtYjtuOtEXz5H1Uf+BjHAc6Bnx1Wfxqm0yE0V/kZU/ho0CQxrL9j5LNMZddG5zS3UCgW74dDjwaiYff51SyZg5kxebqnw9d55pMneJJycj3P+5VkaI92bt8sTdcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXyRZiJ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBpghUOQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A85C4CED1;
-	Wed,  5 Feb 2025 14:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXyRZiJ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41DAC4CED6;
+	Wed,  5 Feb 2025 14:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764425;
-	bh=h6HNJbIXx0B5ivdGiARFdlpeUdjBn/NmNsJ/Hu5cMMM=;
+	s=korg; t=1738764429;
+	bh=Jo5R8emoLK/aVjUoMCS+1EdS+puDkAgrsLfgQegyDfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBpghUOQSVg58gFdC1OAv8YphGDBE/yylSqt5v+pkHK+lLgMA1Yl1x/WZ78crC19W
-	 0eFFKWkxUoOp2WA8VzxrJYYXXvPVdb9yRjf7mSdHkZD1X5flZJJj/MUk8+HLLQg3tQ
-	 X0EKEe045nvOljGf/yjGIehDEIzGNr0btibcubV4=
+	b=hXyRZiJ6OVsv2GDsgQAt9FiJdhh/6Ga701vwVdjzOiX2LRTNQm95V1vRgUQdQtnEl
+	 7+49vjgeT0Mcy4xCR5ZXGjMRuPCKK/5HPy4nlI6eclt0aNIqxwmRYpf6QLSUzR2ouW
+	 wOPUSqw5IwdrCpNKjoJh0vrbLNAMRYthRwnCZ23c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 077/623] drm/msm/mdp4: correct LCDC regulator name
-Date: Wed,  5 Feb 2025 14:36:59 +0100
-Message-ID: <20250205134459.171746252@linuxfoundation.org>
+Subject: [PATCH 6.6 171/393] ALSA: seq: remove redundant tristate for SND_SEQ_UMP_CLIENT
+Date: Wed,  5 Feb 2025 14:41:30 +0100
+Message-ID: <20250205134426.838025236@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 8aa337cbe7a61a5a98a4d3f446fc968b3bac914a ]
+[ Upstream commit 8e8bc5000328a1ba8f93d43faf427e8ac31fb416 ]
 
-Correct c&p error from the conversion of LCDC regulators to the bulk
-API.
+'def_tristate' is a shorthand for 'default' + 'tristate'.
 
-Fixes: 54f1fbcb47d4 ("drm/msm/mdp4: use bulk regulators API for LCDC encoder")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/590412/
-Link: https://lore.kernel.org/r/20240420-mdp4-fixes-v1-3-96a70f64fa85@linaro.org
+Another 'tristate' is redundant.
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Link: https://lore.kernel.org/r/20240215135304.1909431-1-masahiroy@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 9001d5154435 ("ALSA: seq: Make dependency on UMP clearer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/seq/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-index 576995ddce37e..8bbc7fb881d59 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-@@ -389,7 +389,7 @@ struct drm_encoder *mdp4_lcdc_encoder_init(struct drm_device *dev,
+diff --git a/sound/core/seq/Kconfig b/sound/core/seq/Kconfig
+index c14981daf9432..0374bbf51cd4d 100644
+--- a/sound/core/seq/Kconfig
++++ b/sound/core/seq/Kconfig
+@@ -71,7 +71,6 @@ config SND_SEQ_UMP
+ 	  among legacy and UMP clients.
  
- 	/* TODO: different regulators in other cases? */
- 	mdp4_lcdc_encoder->regs[0].supply = "lvds-vccs-3p3v";
--	mdp4_lcdc_encoder->regs[1].supply = "lvds-vccs-3p3v";
-+	mdp4_lcdc_encoder->regs[1].supply = "lvds-pll-vdda";
- 	mdp4_lcdc_encoder->regs[2].supply = "lvds-vdda";
+ config SND_SEQ_UMP_CLIENT
+-	tristate
+ 	def_tristate SND_UMP
  
- 	ret = devm_regulator_bulk_get(dev->dev,
+ endif # SND_SEQUENCER
 -- 
 2.39.5
 
