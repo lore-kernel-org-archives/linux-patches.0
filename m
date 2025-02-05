@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3F68634E;
-	Wed,  5 Feb 2025 14:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD451459F6;
+	Wed,  5 Feb 2025 14:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765515; cv=none; b=FNbSS7FUyBR9ZaMisMJWk7E6flcp3lqR33a0Z3Q+FkBcLAkBL7wFlqcAfTWRUZRy5FUnKx7JySV/+gw5bq8nIoFddPZErikoQ5Eb+ymBmEatLtJRHlu7IKbJc6PssktkO0i+uUiCf27/qFGP5NIbXmkpBkh2e/7idfJm64xaWTc=
+	t=1738765518; cv=none; b=V+MYXmP49DWk7XO5peiNS3FECyi10KFHN7scJd5x6FR5xgHQU80quHGIwfYooRwcOQ2rMp7hqm8eoWIpZ+NQsqJFikR72pcEtjZDJUI+j/XVt8ciKId/J30XYVHv/oW88KtHyVovhn3Qlp+ZriuOKycoqjmKE9t4tm1rw3WYkkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765515; c=relaxed/simple;
-	bh=603tDoYVH353fN5BLMdgAq4So19565ePcSAQWeMZLeQ=;
+	s=arc-20240116; t=1738765518; c=relaxed/simple;
+	bh=QdvqxqjowOnyStB6Qhb9JeTy9pFEh4JZ3D8g/Wrz/wU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kfnGTkL/jQpzXaTSVfdJoFC+Gq/P0ycwnOK8v+ht7Bv6bXlLe5XZFcvpQo6Opwb0i7ikJJnRws9aHbUA1ksAlc5MTGHlIif7LmpjzrVM+tPbOSpKMiDd9kT1G30GVoX80j53JX05+YjkJLsa5S19/2+jaTMInOZnJoQUPmud02M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IT2dfAwJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RPMtWcshwlxNPcQtGn4+9Saj+l4XF0lUi3ZhryJbAvKdi1rh5RJ1j7AWqQ5LtKmxdLOLCZRTqvhuk5yLWrE01tx62BF2Jo3SZK5Psylrh5tMMoecLc5ipkeusE5wbDtJRC5KlBWXGcfkjNFxOoZfx3b+6sdyKLEXJh+Qj5aeZcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVSQe7er; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IT2dfAwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5774CC4CED6;
-	Wed,  5 Feb 2025 14:25:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVSQe7er"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2097C4CED1;
+	Wed,  5 Feb 2025 14:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765514;
-	bh=603tDoYVH353fN5BLMdgAq4So19565ePcSAQWeMZLeQ=;
+	s=korg; t=1738765518;
+	bh=QdvqxqjowOnyStB6Qhb9JeTy9pFEh4JZ3D8g/Wrz/wU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IT2dfAwJfCvGg6ZW4moyUi5AyIxeGEb5Ob1n/H7i5+o9btm6mqEOAm9KF55C0BiGD
-	 IR+SNJG46BJcJJRNKIEPbaSIEc/1r71b5YdQd5Cd8vlRpebrgj4Ebj9SOdTTcP3XCY
-	 dp3Eb7Ws9WGMrwl7WH7kaPr0gZ3bnN96HATZ3/DI=
+	b=wVSQe7erpJ/jJLpBX8FW7GwgCdajEel3T0oQF8rsjs2K8CHn7dAPZMiA1i+muHAZC
+	 lloCl7BszK1dR9lLOqd27t5XZzWpYL/B9q+xtBautQsuks51NXyjZOYtRRbfT/UWM2
+	 u1sWo/qiWBiYrZuZoC3dJ/Eu7z3aVOhDsm7SJeg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	xueqin Luo <luoxueqin@kylinos.cn>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 274/393] i3c: dw: Fix use-after-free in dw_i3c_master driver due to race condition
-Date: Wed,  5 Feb 2025 14:43:13 +0100
-Message-ID: <20250205134430.794663005@linuxfoundation.org>
+Subject: [PATCH 6.13 185/623] wifi: mt76: mt7996: fix overflows seen when writing limit attributes
+Date: Wed,  5 Feb 2025 14:38:47 +0100
+Message-ID: <20250205134503.314657014@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit b75439c945b94dd8a2b645355bdb56f948052601 ]
+[ Upstream commit 5adbc8ce5bbe7e311e2600b7d7d998a958873e98 ]
 
-In dw_i3c_common_probe, &master->hj_work is bound with
-dw_i3c_hj_work. And dw_i3c_master_irq_handler can call
-dw_i3c_master_irq_handle_ibis function to start the work.
+DIV_ROUND_CLOSEST() after kstrtoul() results in an overflow if a large
+number such as 18446744073709551615 is provided by the user.
+Fix it by reordering clamp_val() and DIV_ROUND_CLOSEST() operations.
+This commit was inspired by commit: 57ee12b6c514.
 
-If we remove the module which will call dw_i3c_common_remove to
-make cleanup, it will free master->base through i3c_master_unregister
-while the work mentioned above will be used. The sequence of operations
-that may lead to a UAF bug is as follows:
-
-CPU0                                      CPU1
-
-                                     | dw_i3c_hj_work
-dw_i3c_common_remove                 |
-i3c_master_unregister(&master->base) |
-device_unregister(&master->dev)      |
-device_release                       |
-//free master->base                  |
-                                     | i3c_master_do_daa(&master->base)
-                                     | //use master->base
-
-Fix it by ensuring that the work is canceled before proceeding with
-the cleanup in dw_i3c_common_remove.
-
-Fixes: 1dd728f5d4d4 ("i3c: master: Add driver for Synopsys DesignWare IP")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Acked-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Link: https://lore.kernel.org/r/bfc49c9527be5b513e7ceafeba314ca40a5be4bc.1732703537.git.xiaopei01@kylinos.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 6879b2e94172 ("wifi: mt76: mt7996: add thermal sensor device support")
+Signed-off-by: xueqin Luo <luoxueqin@kylinos.cn>
+Link: https://patch.msgid.link/20241202031917.23741-2-luoxueqin@kylinos.cn
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/dw-i3c-master.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/mt7996/init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
-index 93e9d307e40ef..030127525672e 100644
---- a/drivers/i3c/master/dw-i3c-master.c
-+++ b/drivers/i3c/master/dw-i3c-master.c
-@@ -1528,6 +1528,7 @@ EXPORT_SYMBOL_GPL(dw_i3c_common_probe);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+index efa7b0697a406..d5f53abc4dcb4 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+@@ -82,7 +82,7 @@ static ssize_t mt7996_thermal_temp_store(struct device *dev,
+ 		return ret;
  
- void dw_i3c_common_remove(struct dw_i3c_master *master)
- {
-+	cancel_work_sync(&master->hj_work);
- 	i3c_master_unregister(&master->base);
+ 	mutex_lock(&phy->dev->mt76.mutex);
+-	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 40, 130);
++	val = DIV_ROUND_CLOSEST(clamp_val(val, 40 * 1000, 130 * 1000), 1000);
  
- 	reset_control_assert(master->core_rst);
+ 	/* add a safety margin ~10 */
+ 	if ((i - 1 == MT7996_CRIT_TEMP_IDX &&
 -- 
 2.39.5
 
