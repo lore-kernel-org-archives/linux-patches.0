@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0D61547D8;
-	Wed,  5 Feb 2025 15:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0BB1A83ED;
+	Wed,  5 Feb 2025 15:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768463; cv=none; b=CE4wkArOVjQTs4zhJ9KZerEF6q3iloM35cIEwlDpAga5a+TZ3IGK9/zaoJTDP/qrL7fscIqSL41Om/jZfD423avFxEpCOoZkaMTq0jAhaaSy0Dt4dv4XFHj/3CUaoFNGcaqcYdUGNAlVnl0zGyre8h8S6Oc2mP0S0asDv7QHlIs=
+	t=1738768466; cv=none; b=GzM0dinP/5IBCi7YRUMWxO7q1R5yXC3Zx8K47M0jm61vIDpZQWuumNs+rZtgammigAVxopyPWePhKUmSBw6uEMhd+8tNdWfneDwmOW7R4i6vVvTTzRuuYiJP7Y+srx9SR3hKOHiAS/Y7kKqvCBMp0upFR/7oFPFx8hRAr5jG8U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768463; c=relaxed/simple;
-	bh=2Af98qBmmMSl3eDWZWZOojZdjSG0LXhZBqVRfNKNPAM=;
+	s=arc-20240116; t=1738768466; c=relaxed/simple;
+	bh=ny448OW3qZm7FLB5sKTWKgEE0jb0kSZMFzaoe5ZHmho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=njChkpTl7dPvobpg0KNqsTyQStDLzoMxpxyKTBiohTS0q8OCMn41kCHUusj7O3D0nN+6ATFJB6NyjyOim+j1tz4xWPaa4m6HzVXo4E6sZ1QxPKVrVg1vIGehJ1TIiAGxwDvqbSa00DfOsMeLHw0P3LdFiAJXylK5eyXEMhhNn5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdgW09hJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hWfSALe3WfVUtGIekxl5d5LH0ImRlDE7SABe0r1QGbnuj9IUqeSLbplE1Ex/0u1qNfXt+KHbW3pSIY+e6KnoD61mWjmq4VDTOts3ZG2AoVRReYCfHkYJ8LExNa5jKMEDuKU1GP1jTSrXOGdoUn5YLI9zZN7kyQ08dvnBmQS3r2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMP/xZAc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdgW09hJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E8DC4CED1;
-	Wed,  5 Feb 2025 15:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMP/xZAc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF2DC4CED1;
+	Wed,  5 Feb 2025 15:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768463;
-	bh=2Af98qBmmMSl3eDWZWZOojZdjSG0LXhZBqVRfNKNPAM=;
+	s=korg; t=1738768466;
+	bh=ny448OW3qZm7FLB5sKTWKgEE0jb0kSZMFzaoe5ZHmho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdgW09hJtZ+S8FHzY979l4LOD6bu8snvU7acKjoWdzctD6xu9P8cJ8eeyoozVp9sn
-	 qea6Lhzswk1MmFgxHcf/fUAUA19GufAFuATzJiQz66vT92aGo8XNV/GeoLIM2AmVQo
-	 WytVCQW4kWbe+tLwPXURqil1EYrbsPbI8q4EBPFw=
+	b=yMP/xZAcYJSxLLEeCGC87oq5w4uyRwvMNKB8y/9BJYQFLS9U2GO8fTnlpmAiOI0G+
+	 Zh5QNV4V3sguwnIkfm7M9dh4fNBbeOQmVuQl9Io1xAdSRrUqpzUhze+jdD9XoaJ9+o
+	 H9quSzSvOCNrZtOdr027JKLaT7QWQApxAcwZpjIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 565/623] cifs: Fix getting and setting SACLs over SMB1
-Date: Wed,  5 Feb 2025 14:45:07 +0100
-Message-ID: <20250205134517.833495567@linuxfoundation.org>
+Subject: [PATCH 6.13 566/623] kconfig: fix file name in warnings when loading KCONFIG_DEFCONFIG_LIST
+Date: Wed,  5 Feb 2025 14:45:08 +0100
+Message-ID: <20250205134517.871221884@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -45,156 +44,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 8b19dfb34d17e77a0809d433cc128b779282131b ]
+[ Upstream commit a314f52a0210730d0d556de76bb7388e76d4597d ]
 
-SMB1 callback get_cifs_acl_by_fid() currently ignores its last argument and
-therefore ignores request for SACL_SECINFO. Fix this issue by correctly
-propagating info argument from get_cifs_acl() and get_cifs_acl_by_fid() to
-CIFSSMBGetCIFSACL() function and pass SACL_SECINFO when requested.
+Most 'make *config' commands use .config as the base configuration file.
 
-For accessing SACLs it is needed to open object with SYSTEM_SECURITY
-access. Pass this flag when trying to get or set SACLs.
+When .config does not exist, Kconfig tries to load a file listed in
+KCONFIG_DEFCONFIG_LIST instead.
 
-Same logic is in the SMB2+ code path.
+However, since commit b75b0a819af9 ("kconfig: change defconfig_list
+option to environment variable"), warning messages have displayed an
+incorrect file name in such cases.
 
-This change fixes getting and setting of "system.cifs_ntsd_full" and
-"system.smb3_ntsd_full" xattrs over SMB1 as currently it silentely ignored
-SACL part of passed xattr buffer.
+Below is a demonstration using Debian Trixie. While loading
+/boot/config-6.12.9-amd64, the warning messages incorrectly show .config
+as the file name.
 
-Fixes: 3970acf7ddb9 ("SMB3: Add support for getting and setting SACLs")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+With this commit, the correct file name is displayed in warnings.
+
+[Before]
+
+  $ rm -f .config
+  $ make config
+  #
+  # using defaults found in /boot/config-6.12.9-amd64
+  #
+  .config:6804:warning: symbol value 'm' invalid for FB_BACKLIGHT
+  .config:9895:warning: symbol value 'm' invalid for ANDROID_BINDER_IPC
+
+[After]
+
+  $ rm -f .config
+  $ make config
+  #
+  # using defaults found in /boot/config-6.12.9-amd64
+  #
+  /boot/config-6.12.9-amd64:6804:warning: symbol value 'm' invalid for FB_BACKLIGHT
+  /boot/config-6.12.9-amd64:9895:warning: symbol value 'm' invalid for ANDROID_BINDER_IPC
+
+Fixes: b75b0a819af9 ("kconfig: change defconfig_list option to environment variable")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsacl.c   | 25 +++++++++++++++----------
- fs/smb/client/cifsproto.h |  2 +-
- fs/smb/client/cifssmb.c   |  4 ++--
- 3 files changed, 18 insertions(+), 13 deletions(-)
+ scripts/kconfig/confdata.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
-index ba79aa2107cc9..699a3f76d0834 100644
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -1395,7 +1395,7 @@ static int build_sec_desc(struct smb_ntsd *pntsd, struct smb_ntsd *pnntsd,
- #ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
- struct smb_ntsd *get_cifs_acl_by_fid(struct cifs_sb_info *cifs_sb,
- 				      const struct cifs_fid *cifsfid, u32 *pacllen,
--				      u32 __maybe_unused unused)
-+				      u32 info)
- {
- 	struct smb_ntsd *pntsd = NULL;
- 	unsigned int xid;
-@@ -1407,7 +1407,7 @@ struct smb_ntsd *get_cifs_acl_by_fid(struct cifs_sb_info *cifs_sb,
+diff --git a/scripts/kconfig/confdata.c b/scripts/kconfig/confdata.c
+index 4286d5e7f95dc..3b55e7a4131d9 100644
+--- a/scripts/kconfig/confdata.c
++++ b/scripts/kconfig/confdata.c
+@@ -360,10 +360,12 @@ int conf_read_simple(const char *name, int def)
  
- 	xid = get_xid();
- 	rc = CIFSSMBGetCIFSACL(xid, tlink_tcon(tlink), cifsfid->netfid, &pntsd,
--				pacllen);
-+				pacllen, info);
- 	free_xid(xid);
+ 			*p = '\0';
  
- 	cifs_put_tlink(tlink);
-@@ -1419,7 +1419,7 @@ struct smb_ntsd *get_cifs_acl_by_fid(struct cifs_sb_info *cifs_sb,
- }
- 
- static struct smb_ntsd *get_cifs_acl_by_path(struct cifs_sb_info *cifs_sb,
--		const char *path, u32 *pacllen)
-+		const char *path, u32 *pacllen, u32 info)
- {
- 	struct smb_ntsd *pntsd = NULL;
- 	int oplock = 0;
-@@ -1446,9 +1446,12 @@ static struct smb_ntsd *get_cifs_acl_by_path(struct cifs_sb_info *cifs_sb,
- 		.fid = &fid,
- 	};
- 
-+	if (info & SACL_SECINFO)
-+		oparms.desired_access |= SYSTEM_SECURITY;
+-			in = zconf_fopen(env);
++			name = env;
 +
- 	rc = CIFS_open(xid, &oparms, &oplock, NULL);
- 	if (!rc) {
--		rc = CIFSSMBGetCIFSACL(xid, tcon, fid.netfid, &pntsd, pacllen);
-+		rc = CIFSSMBGetCIFSACL(xid, tcon, fid.netfid, &pntsd, pacllen, info);
- 		CIFSSMBClose(xid, tcon, fid.netfid);
- 	}
++			in = zconf_fopen(name);
+ 			if (in) {
+ 				conf_message("using defaults found in %s",
+-					     env);
++					     name);
+ 				goto load;
+ 			}
  
-@@ -1472,7 +1475,7 @@ struct smb_ntsd *get_cifs_acl(struct cifs_sb_info *cifs_sb,
- 	if (inode)
- 		open_file = find_readable_file(CIFS_I(inode), true);
- 	if (!open_file)
--		return get_cifs_acl_by_path(cifs_sb, path, pacllen);
-+		return get_cifs_acl_by_path(cifs_sb, path, pacllen, info);
- 
- 	pntsd = get_cifs_acl_by_fid(cifs_sb, &open_file->fid, pacllen, info);
- 	cifsFileInfo_put(open_file);
-@@ -1485,7 +1488,7 @@ int set_cifs_acl(struct smb_ntsd *pnntsd, __u32 acllen,
- {
- 	int oplock = 0;
- 	unsigned int xid;
--	int rc, access_flags;
-+	int rc, access_flags = 0;
- 	struct cifs_tcon *tcon;
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
- 	struct tcon_link *tlink = cifs_sb_tlink(cifs_sb);
-@@ -1498,10 +1501,12 @@ int set_cifs_acl(struct smb_ntsd *pnntsd, __u32 acllen,
- 	tcon = tlink_tcon(tlink);
- 	xid = get_xid();
- 
--	if (aclflag == CIFS_ACL_OWNER || aclflag == CIFS_ACL_GROUP)
--		access_flags = WRITE_OWNER;
--	else
--		access_flags = WRITE_DAC;
-+	if (aclflag & CIFS_ACL_OWNER || aclflag & CIFS_ACL_GROUP)
-+		access_flags |= WRITE_OWNER;
-+	if (aclflag & CIFS_ACL_SACL)
-+		access_flags |= SYSTEM_SECURITY;
-+	if (aclflag & CIFS_ACL_DACL)
-+		access_flags |= WRITE_DAC;
- 
- 	oparms = (struct cifs_open_parms) {
- 		.tcon = tcon,
-diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
-index d26f9bbb53829..2d3b7b68f7360 100644
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -560,7 +560,7 @@ extern int CIFSSMBSetEA(const unsigned int xid, struct cifs_tcon *tcon,
- 		const struct nls_table *nls_codepage,
- 		struct cifs_sb_info *cifs_sb);
- extern int CIFSSMBGetCIFSACL(const unsigned int xid, struct cifs_tcon *tcon,
--			__u16 fid, struct smb_ntsd **acl_inf, __u32 *buflen);
-+			__u16 fid, struct smb_ntsd **acl_inf, __u32 *buflen, __u32 info);
- extern int CIFSSMBSetCIFSACL(const unsigned int, struct cifs_tcon *, __u16,
- 			struct smb_ntsd *pntsd, __u32 len, int aclflag);
- extern int cifs_do_get_acl(const unsigned int xid, struct cifs_tcon *tcon,
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index ab0b949924d77..a993d4ac58411 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -3375,7 +3375,7 @@ validate_ntransact(char *buf, char **ppparm, char **ppdata,
- /* Get Security Descriptor (by handle) from remote server for a file or dir */
- int
- CIFSSMBGetCIFSACL(const unsigned int xid, struct cifs_tcon *tcon, __u16 fid,
--		  struct smb_ntsd **acl_inf, __u32 *pbuflen)
-+		  struct smb_ntsd **acl_inf, __u32 *pbuflen, __u32 info)
- {
- 	int rc = 0;
- 	int buf_type = 0;
-@@ -3398,7 +3398,7 @@ CIFSSMBGetCIFSACL(const unsigned int xid, struct cifs_tcon *tcon, __u16 fid,
- 	pSMB->MaxSetupCount = 0;
- 	pSMB->Fid = fid; /* file handle always le */
- 	pSMB->AclFlags = cpu_to_le32(CIFS_ACL_OWNER | CIFS_ACL_GROUP |
--				     CIFS_ACL_DACL);
-+				     CIFS_ACL_DACL | info);
- 	pSMB->ByteCount = cpu_to_le16(11); /* 3 bytes pad + 8 bytes parm */
- 	inc_rfc1001_len(pSMB, 11);
- 	iov[0].iov_base = (char *)pSMB;
 -- 
 2.39.5
 
