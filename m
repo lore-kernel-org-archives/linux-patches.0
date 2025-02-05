@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280781DAC81;
-	Wed,  5 Feb 2025 15:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99BF1DC19F;
+	Wed,  5 Feb 2025 15:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768253; cv=none; b=QeTmsI5FTUcg22FQlcAk6Szs9Tq5OYky4cVlDsk6KuUsugcLPd+GODiYZMsdeaeqH5i+nD6wjqI6TkeWBoc24m7nF/rfwZ6nAkwive+WLxUPayr+Mhyp1aDhY8RPO+eqwv5o9Qd3p9AIsQGAso2NaW+CCisFnWg4tIz4WsNGvtE=
+	t=1738768257; cv=none; b=KjqasOu9HdaLZ5ug6qVB99vHcxxVaRYxJWRwyrxfDKeXFXdJUqudaCOGOyversEan4nHL/r0apgq8fkq5dx152Xu1YISWU3+Rc8S046igEPwtb8+Du8jb0s2s9/CnN0mzBzL1h3YR1Xi9HYQ/XCh4PUym6lrRg6d/KB0Gu38CUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768253; c=relaxed/simple;
-	bh=PlwlgF2CusFyonWBsc1YGZxxrAFtu1qR5Ec8dvcirtk=;
+	s=arc-20240116; t=1738768257; c=relaxed/simple;
+	bh=dWtOlbqt6mx2TVlh/vqNomMFE1dCKAe9fpHyAhdKQIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kSWUM/DAmSFf5fBWuo9ESyynEQPDYSTNwE7QgRMODnSpKg0Z+oWabVbVYS+OE/Rtl956PvIYaw9mMQgfRKFD1ws7xVDqqwhOnNf3eU9SmC4xKRu+bI67eS6Sd8UKSvSN7YvS9r/Qr920r9lX/Z6hu8wQMfkOanvEr/jYBj4gv8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7htMFPK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ji2yHQ0ET1FtaUP+ZB7F1q5rg2KOrleZVSYF8Ftad9Cs0GRK8qEfDrm6RhP1nO8i4vRkdrmRlhaFnDDfjgeo1RbV10+RZUb/nrfBzfJ4OSOS+8za1TuebamVDgUyW/BWiNiz4RGNYaPoc7WEfyR+6gMe4Y88vG5hVglMITlkf60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/bWg8B0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7htMFPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4A0C4CEE4;
-	Wed,  5 Feb 2025 15:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/bWg8B0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6842C4CED6;
+	Wed,  5 Feb 2025 15:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768253;
-	bh=PlwlgF2CusFyonWBsc1YGZxxrAFtu1qR5Ec8dvcirtk=;
+	s=korg; t=1738768256;
+	bh=dWtOlbqt6mx2TVlh/vqNomMFE1dCKAe9fpHyAhdKQIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7htMFPKP0aXiQ1Dfi3LJMeFTIy0mh72RP/ucvsQIs7YH0CBXUuKVaz3Pv6TRYvUY
-	 3R7Mb9V4EnvxdAS3Ma2mY26Q+By1ZZs0QyHyTOzqOjmMw7RgbXxWgvLvCJTmBfbHqm
-	 iaAQsH5rX6IP9qcZrKjY/Soe0Q4/Vl4Mfb1uGdJU=
+	b=T/bWg8B0cohW1vlZifsDjvr1nlZeDnMgpmDLB2TuB6qxC5YROM8Ma05eoNrJKkKPY
+	 RBs6oY1uMo09a+F4HdtlwRNW6NpXy0llZliCENcjXC5jGTwpl4AjOkienici4jB4F+
+	 1x8zvYALpYRxPqOewerL4Rh49ve7HIEdce7v13s0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Polchlopek <mateusz.polchlopek@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.13 518/623] ice: remove invalid parameter of equalizer
-Date: Wed,  5 Feb 2025 14:44:20 +0100
-Message-ID: <20250205134516.044987044@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 6.12 574/590] md/md-bitmap: Synchronize bitmap_get_stats() with bitmap lifetime
+Date: Wed,  5 Feb 2025 14:45:29 +0100
+Message-ID: <20250205134517.226476671@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,76 +47,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit c5cc2a27e04f2fcd77c74ada9aef76a758a24697 ]
+commit 8d28d0ddb986f56920ac97ae704cc3340a699a30 upstream.
 
-It occurred that in the commit 70838938e89c ("ice: Implement driver
-functionality to dump serdes equalizer values") the invalid DRATE parameter
-for reading has been added. The output of the command:
+After commit ec6bb299c7c3 ("md/md-bitmap: add 'sync_size' into struct
+md_bitmap_stats"), following panic is reported:
 
-  $ ethtool -d <ethX>
+Oops: general protection fault, probably for non-canonical address
+RIP: 0010:bitmap_get_stats+0x2b/0xa0
+Call Trace:
+ <TASK>
+ md_seq_show+0x2d2/0x5b0
+ seq_read_iter+0x2b9/0x470
+ seq_read+0x12f/0x180
+ proc_reg_read+0x57/0xb0
+ vfs_read+0xf6/0x380
+ ksys_read+0x6c/0xf0
+ do_syscall_64+0x82/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-returns the garbage value in the place where DRATE value should be
-stored.
+Root cause is that bitmap_get_stats() can be called at anytime if mddev
+is still there, even if bitmap is destroyed, or not fully initialized.
+Deferenceing bitmap in this case can crash the kernel. Meanwhile, the
+above commit start to deferencing bitmap->storage, make the problem
+easier to trigger.
 
-Remove mentioned parameter to prevent return of corrupted data to
-userspace.
+Fix the problem by protecting bitmap_get_stats() with bitmap_info.mutex.
 
-Fixes: 70838938e89c ("ice: Implement driver functionality to dump serdes equalizer values")
-Signed-off-by: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v6.12+
+Fixes: 32a7627cf3a3 ("[PATCH] md: optimised resync using Bitmap based intent logging")
+Reported-and-tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Closes: https://lore.kernel.org/linux-raid/ca3a91a2-50ae-4f68-b317-abd9889f3907@oracle.com/T/#m6e5086c95201135e4941fe38f9efa76daf9666c5
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20250124092055.4050195-1-yukuai1@huaweicloud.com
+Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_adminq_cmd.h | 1 -
- drivers/net/ethernet/intel/ice/ice_ethtool.c    | 1 -
- drivers/net/ethernet/intel/ice/ice_ethtool.h    | 1 -
- 3 files changed, 3 deletions(-)
+ drivers/md/md-bitmap.c |    5 ++++-
+ drivers/md/md.c        |    5 +++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
-index 46f9726d9a8a8..f5858e89dadd7 100644
---- a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
-+++ b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
-@@ -1491,7 +1491,6 @@ struct ice_aqc_dnl_equa_param {
- #define ICE_AQC_RX_EQU_POST1 (0x12 << ICE_AQC_RX_EQU_SHIFT)
- #define ICE_AQC_RX_EQU_BFLF (0x13 << ICE_AQC_RX_EQU_SHIFT)
- #define ICE_AQC_RX_EQU_BFHF (0x14 << ICE_AQC_RX_EQU_SHIFT)
--#define ICE_AQC_RX_EQU_DRATE (0x15 << ICE_AQC_RX_EQU_SHIFT)
- #define ICE_AQC_RX_EQU_CTLE_GAINHF (0x20 << ICE_AQC_RX_EQU_SHIFT)
- #define ICE_AQC_RX_EQU_CTLE_GAINLF (0x21 << ICE_AQC_RX_EQU_SHIFT)
- #define ICE_AQC_RX_EQU_CTLE_GAINDC (0x22 << ICE_AQC_RX_EQU_SHIFT)
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-index 3072634bf049c..f241493a6ac88 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -710,7 +710,6 @@ static int ice_get_tx_rx_equa(struct ice_hw *hw, u8 serdes_num,
- 		{ ICE_AQC_RX_EQU_POST1, rx, &ptr->rx_equ_post1 },
- 		{ ICE_AQC_RX_EQU_BFLF, rx, &ptr->rx_equ_bflf },
- 		{ ICE_AQC_RX_EQU_BFHF, rx, &ptr->rx_equ_bfhf },
--		{ ICE_AQC_RX_EQU_DRATE, rx, &ptr->rx_equ_drate },
- 		{ ICE_AQC_RX_EQU_CTLE_GAINHF, rx, &ptr->rx_equ_ctle_gainhf },
- 		{ ICE_AQC_RX_EQU_CTLE_GAINLF, rx, &ptr->rx_equ_ctle_gainlf },
- 		{ ICE_AQC_RX_EQU_CTLE_GAINDC, rx, &ptr->rx_equ_ctle_gaindc },
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.h b/drivers/net/ethernet/intel/ice/ice_ethtool.h
-index 8f2ad1c172c06..23b2cfbc9684c 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.h
-@@ -15,7 +15,6 @@ struct ice_serdes_equalization_to_ethtool {
- 	int rx_equ_post1;
- 	int rx_equ_bflf;
- 	int rx_equ_bfhf;
--	int rx_equ_drate;
- 	int rx_equ_ctle_gainhf;
- 	int rx_equ_ctle_gainlf;
- 	int rx_equ_ctle_gaindc;
--- 
-2.39.5
-
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -2355,7 +2355,10 @@ static int bitmap_get_stats(void *data,
+ 
+ 	if (!bitmap)
+ 		return -ENOENT;
+-
++	if (bitmap->mddev->bitmap_info.external)
++		return -ENOENT;
++	if (!bitmap->storage.sb_page) /* no superblock */
++		return -EINVAL;
+ 	sb = kmap_local_page(bitmap->storage.sb_page);
+ 	stats->sync_size = le64_to_cpu(sb->sync_size);
+ 	kunmap_local(sb);
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -8376,6 +8376,10 @@ static int md_seq_show(struct seq_file *
+ 		return 0;
+ 
+ 	spin_unlock(&all_mddevs_lock);
++
++	/* prevent bitmap to be freed after checking */
++	mutex_lock(&mddev->bitmap_info.mutex);
++
+ 	spin_lock(&mddev->lock);
+ 	if (mddev->pers || mddev->raid_disks || !list_empty(&mddev->disks)) {
+ 		seq_printf(seq, "%s : ", mdname(mddev));
+@@ -8451,6 +8455,7 @@ static int md_seq_show(struct seq_file *
+ 		seq_printf(seq, "\n");
+ 	}
+ 	spin_unlock(&mddev->lock);
++	mutex_unlock(&mddev->bitmap_info.mutex);
+ 	spin_lock(&all_mddevs_lock);
+ 
+ 	if (mddev == list_last_entry(&all_mddevs, struct mddev, all_mddevs))
 
 
