@@ -1,75 +1,79 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089CB151997
-	for <patches@lists.linux.dev>; Wed,  5 Feb 2025 23:30:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33F02144A7
+	for <patches@lists.linux.dev>; Wed,  5 Feb 2025 23:30:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738798223; cv=none; b=WuzUfpbwB3nygEgXhawM6HLS0yiYbAfFQNfydClawohFftG3jKHzIvpbVPzypGbcxF+7m6rYFO0P6ifZznpaM09NNuDxW/rvvkpYK2uCnxwnXAkXrVLQmFkkFH+s3kmIvyQsCcaySBNOS2UBdrSyyEmCTEKIyZJnSoQaVKBnKqU=
+	t=1738798224; cv=none; b=OekUX14xP7J/T6HRiUOcsS5P9JZs6rS00r1w7gA7DXsFeyo/9+xv/GIoSPD3mjiPcKuxhzFyM0son7xOu93Gmj2AHykQlQXihNFklAB3/3KbF6JhcnO0SF4dHQjp2IbI/yvHEkEyYDjjOQUEVl9l+3oZyxVNwh0QQR9MelWrjxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738798223; c=relaxed/simple;
-	bh=w0KqSvz4LKHnh40uBElw2aDPtTJnsxo3kIyaKh2DPsc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Dx+t7lFlxKJ9UD4hRlYxDl757Hto1dC6MeCI/iCrl2yAtgBee03ra3ZHxPqeWd87EHUMW9JtRJ0K4OekHh+xc5nQKHemTsJXHy3AtAeGQvh7v9Qs7p4EPY8p6VLlJL97AKyii5iFzs9VmPNk7tlJOpWWlJ0e2O6UVZweKgdZyaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=mBx7DZ1I; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1738798224; c=relaxed/simple;
+	bh=/4MVACIsm4mxXNiJSYO9O9WP/zDnD65LIiLgfNT+Jv4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NZAzhwjr0TkcHGz/K0lmxfHeVa6YGwpg7sWzGYm6KOqeqk24bkrnH/3/v1WkbY6psk1u6g6TZQLuwTan/qY0dYew8x6rNW40k4i8rZgNUxJ8mZ37kM5sx/2u/zz6m6zwqu5uiJAtc8IXDBU4Isu9Lo7AeKZYs0oWiSAUeT5w3No=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=e/vIKn49; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="mBx7DZ1I"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-21661be2c2dso6987665ad.1
-        for <patches@lists.linux.dev>; Wed, 05 Feb 2025 15:30:21 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="e/vIKn49"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2166360285dso6582445ad.1
+        for <patches@lists.linux.dev>; Wed, 05 Feb 2025 15:30:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1738798221; x=1739403021; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LfrhKTgFStXH2HCRNCmE3wFhveRGNarb8z2r9ekUmYk=;
-        b=mBx7DZ1Iixq1innxTTH4teUeFZlfNGWzail5F2c7hQZreiqnuBlGKmGZ3px/6/9u0C
-         Nhnr/Nfzsgbzg18lL16K491tI3lc3PCvYHSnDi9Q0O0hpzub0+xwMQtuacR8v/5o6pjW
-         zZhhSrDJq5a4mQY1Oy7cjk4SyJAt/Zk0d5+lw=
+        d=chromium.org; s=google; t=1738798222; x=1739403022; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ENYD7Jqf2Ry9h9YG/MAy2Qwl7UQB5Doq6yEYLu32Qi0=;
+        b=e/vIKn49gNHtH/Z2jGGHujbGSnxH35V53wCiTg0xaKIjIV6HJMfksUT22xt3xWCwaI
+         qJCpHh2aBRYQ5VOMNCgIu/7jNUcnT3w0cKlK9KmIkrjU9obdx6XJOzm9JC/OdKUnQd/p
+         YD5Zgn6c+bywsOWQ1biJ3Uj8fxeIltvj8r61o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738798221; x=1739403021;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LfrhKTgFStXH2HCRNCmE3wFhveRGNarb8z2r9ekUmYk=;
-        b=bXLv+ubUoiLmOK8dvd7Bx/Rp7n1RYM+1+YKUTiakLRH1iOReGIM0b6fVmyrMk3xnY0
-         lH3GweFuQB1fttJUzvRsDl1VBYseNrFbUZMijiSFyjzOvjxu9tqWeKSATXdIqrFRb/4p
-         gTHoSc2lGfsNcBZwSKDF9gcpK43OEGIDa0GyHkDBWcoCN+ew0q3xziSELrw+RgA5c729
-         U6OJ4TvyzVY/Yx475pkFdgRO3SUeL9QiFcBcg+rKhy0+luTlLK07Fh83boelB4Mn8ACt
-         c+sJqjmIgL4qGgj5435POiSvzecLwTUpgNl3C7RregCm72aXQhi9jfeQV6/5WrVqEpM5
-         /4Og==
-X-Forwarded-Encrypted: i=1; AJvYcCXowxRnsu3183EcYExkF30pD9+4aTjDUfgE/vy43XeumpNQ4BG36r5OnuXCE4JKzClae+0S8ix9@lists.linux.dev
-X-Gm-Message-State: AOJu0YykjHS21cmB2kXAOFfK68zhg6uW8HMAd1B8YmnuyXNNJtPi0tdb
-	uokfISsqHXRDAzxGcBoIFFzZHHhMxgfCOV83AZtjqqlHhoxUA8MFqfFX4oBBTw==
-X-Gm-Gg: ASbGnct1H6dUzImzfVwe98oSNGFIy6UpsZVo8mGGgL+IG+scA2K2nmzzeo9fHE4kTPf
-	YjModrd0efIVCZs1IC9bf81L0l9K5evyzL/Q2GYv7ea8rt3I8NnT7y09gF+5dFUTP0Dr6EKKv+t
-	K5T6W+fdGEXrvHpQEqU4U9lKwdDY+5wlEM40Ag6LRWk6ix8jXeQipkvkTTXlldDEp1UblHELgWm
-	Tacr30kqs3/CS8K7Fw78O1eOiVsFThxo9s3ztf4qnbFYba2cJmztOdMV52s/vno7RGr1BjdZgtK
-	0+W18YO/zVgBuNKyLovyJKIGTopG/CiNSuQaRj9+trpZOqtnDJzAI2I=
-X-Google-Smtp-Source: AGHT+IHUo+FqElUk1sltTHIWznB6GdIP99OTajELLS9rXgQ0/Ee3VmZ7ONPYnmSuxZTKWCv2pLwwGg==
-X-Received: by 2002:a05:6a20:3d93:b0:1eb:3661:da3b with SMTP id adf61e73a8af0-1ede88ad4a8mr7472061637.33.1738798219826;
-        Wed, 05 Feb 2025 15:30:19 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738798222; x=1739403022;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ENYD7Jqf2Ry9h9YG/MAy2Qwl7UQB5Doq6yEYLu32Qi0=;
+        b=B40mEniqco2D+GTH+K8IbkL/QwRwEwkEz+n+F4wBrRYhrBMmEV+AbNAGVNTGDfq51e
+         PBcshG1njYa58M7vKO8Jlsfyt9B/C2fAf2l2n9yqui03okPRGuYtW/liKhmRLFghr2m5
+         mr8MkwjDKgMpYXRu046UJNlXwL5im9XFf++pIU+m6uTdmlthA2dKTs2dt0IgLzhVORFl
+         w+7jQZf5/u1dtI4C43S4oZuwxeR3w545pJy5kIM0f7pAQmoLcwNXdMkyJO7yBjefKt/0
+         rzBmApai26bmr1Y2kFiH9dN6f47mV88R24U+oeKQxVhPSmFsifWbtmpIpa3+n6NM4GtD
+         xGQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUswdB+kqV05EscZIL/R2OEie2hRP7fib54ZTAqlTexwgy3BF7TvGwtGj+uaE6sQG5He0F6Y9S7@lists.linux.dev
+X-Gm-Message-State: AOJu0YwCtyh2Jm7J4IIPjnJUfGwTk38A+kT9rHzYE/gV6owiUrM2fHNA
+	qtSkLFUS8S/viSep4me5tywG+ZKu2L6SBEmzFOrpadi/aUdY1lXgjvZVB1qbUg==
+X-Gm-Gg: ASbGnctx1EXkt4s9N9zP/ypyB6O412eP1Zn22G+Zjf3trEDA5fOZydoH3xIBs9v5kmz
+	6v6HJVXHWOVtJhCsF4SGigCDK38Ko1tyHDCy+fCzOXg2o1HYaoMRb5dLIWicHFAqvqAh9L5YP5m
+	XDSztPWnnu7T2yMIIa6DGrFLgpcGYjSBRkq4ndGl6U+1bcDe/vUJUPJa0RNSeZQwMvYpcLj6znj
+	MxRkJaht+PnC8V6k6Gi0mgRMFjW0BF+OujqUMT/CiCY9qQ1W5MGa6tUIKm8wF0dG5dJo46zYWjb
+	sYCDPvcVjDGOb5rS7oIOCvYiCpYdaaie6l0KBYb3PgT4Ps+WPQzzuG0=
+X-Google-Smtp-Source: AGHT+IEZ4n+Jd53BNMcbz3qeJy5aLqWtFVqnGwoigd8TEJYu9DWYm8+Vg9ly6TVuMdEWwx88axmwQQ==
+X-Received: by 2002:a17:902:cf12:b0:216:48f4:4f1a with SMTP id d9443c01a7336-21f17e4ca85mr82422235ad.16.1738798222190;
+        Wed, 05 Feb 2025 15:30:22 -0800 (PST)
 Received: from localhost (129.135.125.34.bc.googleusercontent.com. [34.125.135.129])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-73048ae7f79sm15435b3a.77.2025.02.05.15.30.18
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-acec0a69b3bsm12388570a12.71.2025.02.05.15.30.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Feb 2025 15:30:19 -0800 (PST)
+        Wed, 05 Feb 2025 15:30:21 -0800 (PST)
 From: Stephen Boyd <swboyd@chromium.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>
 Cc: linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	patches@lists.linux.dev,
+	cros-qcom-dts-watchers@chromium.org,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Benson Leung <bleung@chromium.org>,
 	devicetree@vger.kernel.org,
 	chrome-platform@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	cros-qcom-dts-watchers@chromium.org
-Subject: [PATCH v2 0/2] arm64: dts: qcom: sc7180-trogdor: Wire up USB
-Date: Wed,  5 Feb 2025 15:30:13 -0800
-Message-ID: <20250205233016.1600517-1-swboyd@chromium.org>
+	Pin-yen Lin <treapking@chromium.org>
+Subject: [PATCH v2 1/2] dt-bindings: chrome: Add binding for ChromeOS Pogo pin connector
+Date: Wed,  5 Feb 2025 15:30:14 -0800
+Message-ID: <20250205233016.1600517-2-swboyd@chromium.org>
 X-Mailer: git-send-email 2.48.1.362.g079036d154-goog
+In-Reply-To: <20250205233016.1600517-1-swboyd@chromium.org>
+References: <20250205233016.1600517-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -78,25 +82,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Wiring up the USB hub to the connectors allows us to gain the proper
-'connect_type' and 'removable' values in sysfs for the USB devices on
-sc7180 trogdor devices. These two patches are split off of a larger
-series[1] so they can land faster and because we've come to the
-conclusion that the DisplayPort path is going to connect to the
-cros-ec-typec node.
-
-The first patch adds the pogo pin binding to describe the detachable
-keyboards found on some trogdor devices (actually strongbad). The second
-patch is the dts changes required to wire up all the USB stuff. This is
-sufficient to set the connect_type and removable sysfs properties of USB
-devices.
-
-Changes from v1 https://lore.kernel.org/r/20240210070934.2549994-1-swboyd@chromium.org
- * Split out of larger series
- * Added description to DT binding
- * Removed DP part of dts changes
-
-[1] https://lore.kernel.org/r/20240210070934.2549994-1-swboyd@chromium.org
+Describe the set of pins used to connect the detachable keyboard on
+detachable ChromeOS devices. The set of pins is called the "pogo pins".
+It's basically USB 2.0 with an extra pin for base detection. We expect
+to find a keyboard on the other side of this connector with a specific
+vid/pid, so describe that as a child device at the port of the usb
+device connected upstream.
 
 Cc: Rob Herring <robh@kernel.org>
 Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
@@ -105,30 +96,86 @@ Cc: Benson Leung <bleung@chromium.org>
 Cc: <devicetree@vger.kernel.org>
 Cc: <chrome-platform@lists.linux.dev>
 Cc: Pin-yen Lin <treapking@chromium.org>
-Cc: <cros-qcom-dts-watchers@chromium.org>
-
-Stephen Boyd (2):
-  dt-bindings: chrome: Add binding for ChromeOS Pogo pin connector
-  arm64: dts: qcom: sc7180-trogdor: Wire up USB to usb-c-connectors
-
- .../chrome/google,pogo-pin-connector.yaml     |  68 +++++++++++
- .../dts/qcom/sc7180-trogdor-clamshell.dtsi    |  21 ++++
- .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  47 ++++++++
- .../dts/qcom/sc7180-trogdor-detachable.dtsi   |  15 +++
- .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  47 ++++++++
- .../dts/qcom/sc7180-trogdor-kingoftown.dts    |  55 +++++++++
- .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  55 +++++++++
- .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi |  55 +++++++++
- .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  44 +++++++
- .../qcom/sc7180-trogdor-quackingstick.dtsi    |  31 +++++
- .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  56 ++++++++-
- .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |  47 ++++++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 109 ++++++++++++++++++
- 13 files changed, 648 insertions(+), 2 deletions(-)
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ .../chrome/google,pogo-pin-connector.yaml     | 68 +++++++++++++++++++
+ 1 file changed, 68 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
 
-
-base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
+diff --git a/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
+new file mode 100644
+index 000000000000..622e171b6b08
+--- /dev/null
++++ b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
+@@ -0,0 +1,68 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/chrome/google,pogo-pin-connector.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Google Pogo Pin Connector
++
++maintainers:
++  - Stephen Boyd <swboyd@chromium.org>
++
++description:
++  ChromeOS devices with a detachable keyboard have a set of five pins called
++  pogo pins that are the typical four pins for USB (D+/D-, vbus, ground) and an
++  extra pin for base detection. The detachable keyboard is a USB device that
++  connects to the pogo pins.
++
++properties:
++  compatible:
++    const: google,pogo-pin-connector
++
++  '#address-cells':
++    const: 1
++
++  '#size-cells':
++    const: 0
++
++  port:
++    $ref: /schemas/graph.yaml#/properties/port
++    description: Connection to USB2 port providing USB signals
++    required:
++      - endpoint
++
++patternProperties:
++  "^keyboard@[0-9a-f]{1,2}$":
++    description: The detachable keyboard
++    type: object
++    $ref: /schemas/usb/usb-device.yaml
++    unevaluatedProperties: false
++
++required:
++  - compatible
++  - '#address-cells'
++  - '#size-cells'
++  - port
++
++additionalProperties: false
++
++examples:
++  - |
++    connector {
++      compatible = "google,pogo-pin-connector";
++      #address-cells = <1>;
++      #size-cells = <0>;
++
++      keyboard@2 {
++        compatible = "usb18d1,504c";
++        reg = <2>;
++      };
++
++      port {
++        pogo_connector_in: endpoint {
++          remote-endpoint = <&usb_hub_dsp3_hs>;
++        };
++      };
++    };
++
++...
 -- 
 https://chromeos.dev
 
