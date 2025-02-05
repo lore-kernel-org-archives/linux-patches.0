@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A24B1519AA;
-	Wed,  5 Feb 2025 14:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF10C13C3F6;
+	Wed,  5 Feb 2025 14:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764939; cv=none; b=q5/LUFnKuurVcWWF/f2MaIdE8dNugHiA6ATBjgKb//ifQ6zfay2CN9zTORgOg4yLFDvU0eB79W9y5y9SayNIw/O+iva9Ja7y/KRWxCAseTGi0yEmEytmc8FLzRaW6zdufmi8Db/4T1AM1Y0U2f/S7tgM+OtAgGwRzagECTpjAMk=
+	t=1738764942; cv=none; b=mx1NvIpu4C6YDvXWRBWfFOxaSWNqhoqHsphktCkspI2dP7cOGfc0KS22IJO89vm2NuwZKXogk7+KmjUIbUx657Zj+xBPMh81Dxizt1kDm86eMF4o4YiYC6IRSf4z0C+OK6z3jr5q1vJvneaUiI0Fz87MciAG1wweRGxNtRxnquk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764939; c=relaxed/simple;
-	bh=zeL7aHKWv0TdM8bSECDDuRRQt/Lbtbq5LE7dI4zAZeQ=;
+	s=arc-20240116; t=1738764942; c=relaxed/simple;
+	bh=UUDIcGQ4qsj8A3QiNPOCxVKZu+PxCNKHXtUkgoYeziw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FoN/cjVUE4XzcuYn96xS7JcRDK4cidVXjcpPsndmRDJwp4AZ83lzGN3G4D5M4WBdD8VglHsdg7miG2CORtaTHWULg04d93UJ8D5e0pqcqgDR9iNRGG6NC9jUtJhTSvtNXx/JSnkBwjZWozea2tL3C0wQ3Nj0RT8HMnzmwoiqoxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vjc/Wv8t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J5EZgiRwTJKClLTCKb9AXhYuZUHbgkgMtGB/fXw76Ffg4HRZU4wgu+tamBnGXgvY9c0sG8j7qb3mkW+xTInBkhV6n2kXOFiab7I72EF178RDH6EcY804v4PCR6wDKSsC9vWOFr5+JUS/iaxRdYxkJElyQt7SVsfG/8GOogjn0L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sAUuqpoL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vjc/Wv8t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04361C4CED1;
-	Wed,  5 Feb 2025 14:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sAUuqpoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F75C4CED1;
+	Wed,  5 Feb 2025 14:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764939;
-	bh=zeL7aHKWv0TdM8bSECDDuRRQt/Lbtbq5LE7dI4zAZeQ=;
+	s=korg; t=1738764942;
+	bh=UUDIcGQ4qsj8A3QiNPOCxVKZu+PxCNKHXtUkgoYeziw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vjc/Wv8twp5zjcd221zsfiLH0HOALgg0iYaVpeygxHz3h/xPZpN4bnvx99CRGbE3E
-	 HPS2VPT89CPbDk3GIeqCrdL8AGV6op/p3ohFVUpsZnNauDlm1OhOOycPRUC6s6q1V0
-	 yYoBnzqXotLTn5O+Pr3mitG4IExhY1+9vnhSbjec=
+	b=sAUuqpoL0+5kBNlLvtSoLFXKSyxLAaqfRBpVoS2791Qk4PgShpB/+JU8NJYBvG+Pp
+	 Pn76SSBBQ3UWY4ByHd4OeSQWgxFw2HJRyA8UQPjDtiSq3jpGNZB+AFkjt+oP32nNkc
+	 YM4A6ywvoZmVCahNbBwWsG4q/auuGXtR2WiVh2dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhenwei pi <pizhenwei@bytedance.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>
-Subject: [PATCH 6.6 217/393] RDMA/rxe: Fix mismatched max_msg_sz
-Date: Wed,  5 Feb 2025 14:42:16 +0100
-Message-ID: <20250205134428.606383808@linuxfoundation.org>
+	Charles Han <hanchunchao@inspur.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 175/590] wifi: mt76: mt7925: fix NULL deref check in mt7925_change_vif_links
+Date: Wed,  5 Feb 2025 14:38:50 +0100
+Message-ID: <20250205134501.976784983@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,66 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: zhenwei pi <pizhenwei@bytedance.com>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit db03b70969aab4ef111a3369cfd90ea4da3a6aa0 ]
+[ Upstream commit 5cd0bd815c8a48862a296df9b30e0ea0da14acd3 ]
 
-User mode queries max_msg_sz as 0x800000 by command 'ibv_devinfo -v',
-however ibv_post_send/ibv_post_recv has a limit of 2^31. Fix this
-mismatched information.
+In mt7925_change_vif_links() devm_kzalloc() may return NULL but this
+returned value is not checked.
 
-Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-Fixes: f605f26ea196 ("RDMA/rxe: Protect QP state with qp->state_lock")
-Fixes: 5bf944f24129 ("RDMA/rxe: Add error messages")
-Link: https://patch.msgid.link/20241216121953.765331-1-pizhenwei@bytedance.com
-Review-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 69acd6d910b0 ("wifi: mt76: mt7925: add mt7925_change_vif_links")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Link: https://patch.msgid.link/20241025075554.181572-1-hanchunchao@inspur.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_param.h | 2 +-
- drivers/infiniband/sw/rxe/rxe_verbs.c | 5 ++---
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_param.h b/drivers/infiniband/sw/rxe/rxe_param.h
-index d2f57ead78ad1..003f681e5dc02 100644
---- a/drivers/infiniband/sw/rxe/rxe_param.h
-+++ b/drivers/infiniband/sw/rxe/rxe_param.h
-@@ -129,7 +129,7 @@ enum rxe_device_param {
- enum rxe_port_param {
- 	RXE_PORT_GID_TBL_LEN		= 1024,
- 	RXE_PORT_PORT_CAP_FLAGS		= IB_PORT_CM_SUP,
--	RXE_PORT_MAX_MSG_SZ		= 0x800000,
-+	RXE_PORT_MAX_MSG_SZ		= (1UL << 31),
- 	RXE_PORT_BAD_PKEY_CNTR		= 0,
- 	RXE_PORT_QKEY_VIOL_CNTR		= 0,
- 	RXE_PORT_LID			= 0,
-diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
-index b00d611857e0f..dbb9baa4ffd00 100644
---- a/drivers/infiniband/sw/rxe/rxe_verbs.c
-+++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
-@@ -688,7 +688,7 @@ static int validate_send_wr(struct rxe_qp *qp, const struct ib_send_wr *ibwr,
- 		for (i = 0; i < ibwr->num_sge; i++)
- 			length += ibwr->sg_list[i].length;
- 
--		if (length > (1UL << 31)) {
-+		if (length > RXE_PORT_MAX_MSG_SZ) {
- 			rxe_err_qp(qp, "message length too long\n");
- 			break;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index 791c8b00e1126..a5110f8485e52 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -1946,6 +1946,8 @@ mt7925_change_vif_links(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 					     GFP_KERNEL);
+ 			mlink = devm_kzalloc(dev->mt76.dev, sizeof(*mlink),
+ 					     GFP_KERNEL);
++			if (!mconf || !mlink)
++				return -ENOMEM;
  		}
-@@ -977,8 +977,7 @@ static int post_one_recv(struct rxe_rq *rq, const struct ib_recv_wr *ibwr)
- 	for (i = 0; i < num_sge; i++)
- 		length += ibwr->sg_list[i].length;
  
--	/* IBA max message size is 2^31 */
--	if (length >= (1UL<<31)) {
-+	if (length > RXE_PORT_MAX_MSG_SZ) {
- 		err = -EINVAL;
- 		rxe_dbg("message length too long\n");
- 		goto err_out;
+ 		mconfs[link_id] = mconf;
 -- 
 2.39.5
 
