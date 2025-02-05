@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5662C7E792;
-	Wed,  5 Feb 2025 14:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE5D7DA6A;
+	Wed,  5 Feb 2025 14:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766052; cv=none; b=P4MrETJOcKfcvJOwrIz0K+Mun+hLSwjH/46KNrzLVtyeRL/m3yjJQEoI82yXD2XcI00Vh1awU4I0mjJqR6DEmdeTb8S/E/SrQvXt6b8gl7EQ+5DmjI8yhbxbb/IqzWWIj2jQt7I89F2Y7KjnK5hYss7yONZ3ZLiPLEvEXBc9i+g=
+	t=1738766058; cv=none; b=I4s6hU7sw9ZkP8LlBW7wNDjyJsEXcTFhv6mdnhsD7EflWo/QXjh9oQkvDPIr9+AHQtfcvRhRK+7orZ8Pb++3eunutKQfmaIyI7H6BoVp15kGmEjZ8zR/E7Tydr15XXdSYYyKHq6foji0Kl6hWWbDmyL9NXWUmvyfDrWAmVdCY78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766052; c=relaxed/simple;
-	bh=843MH68/L4pDuJNBkKNrP/qHMj/xMn9Y1x2yQG02fKY=;
+	s=arc-20240116; t=1738766058; c=relaxed/simple;
+	bh=VmXnRXC4T+qg2YljcbXNMYLa0edyjt+sYOGBtuGrkPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R9+RcMqQ9yp+hm1zLIMxQAZnsq9TK5UPhfFiprcRet+xFU59KiJcBCJ6pMqg2lX5vPaL94Mjuac1DtkulYFEk+KvzOXRCxoWHsAMW9MWuSD9v2nn7J0f8fdZWe6FxXqzDfbr9+nQeOr1IC0YnO3cNxMn3yyFTnBQoM8uBYSomUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j44L4D3M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XkgVIvjKcq8CpooNRbZuMasxx9bdjf8t7yRYjkB/S6W+orUdq22B947hGu5F9Yq6CMphU6rk+EIjfmsE3LmiqM5DuIv0cZNChSHdcjSG+okudHgzXhgdSkL5QLh14VajAag495LhMrLxFUaiZkzRNB5nrxVW8aur7UKU4HjPm8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1tSQkg/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j44L4D3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5862C4CED1;
-	Wed,  5 Feb 2025 14:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1tSQkg/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215D4C4CED1;
+	Wed,  5 Feb 2025 14:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766052;
-	bh=843MH68/L4pDuJNBkKNrP/qHMj/xMn9Y1x2yQG02fKY=;
+	s=korg; t=1738766055;
+	bh=VmXnRXC4T+qg2YljcbXNMYLa0edyjt+sYOGBtuGrkPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j44L4D3MP9Q2qNGl+3O/ot8riRmeRy1kz4jgixfpdj8/moz+mi8qBRxoW99eUofxJ
-	 fsmfVay3IKuO119L2VsZRKSRg4KTrSryzFhxc7QHxLiCQY/boE89SXrTiapUMqfFPc
-	 BrT3s/AVSjwLnPAa0EGhgrecnh5PQHBn4lieAgHE=
+	b=l1tSQkg/Jxjar0tc/6ZnZl4OIk6bPbI+IrvgV3JNcjKqa++xigO5WH1JYjJaOBeKU
+	 sMBq5By9AeVAT1iE3RKNqmeRMCImCMOXrSEErs0A5j8ojd9QB0ozlnTxUMORdqR3/L
+	 YA+4Mq8T7pq4OvFQfaL2tMx02T70O5VbrK/oM1Tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 238/623] net: sched: Disallow replacing of child qdisc from one parent to another
-Date: Wed,  5 Feb 2025 14:39:40 +0100
-Message-ID: <20250205134505.334214185@linuxfoundation.org>
+Subject: [PATCH 6.12 283/590] ASoC: Intel: sof_sdw: Fix DMI match for Lenovo 83LC
+Date: Wed,  5 Feb 2025 14:40:38 +0100
+Message-ID: <20250205134506.105892591@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,116 +50,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Simon Trimmer <simont@opensource.cirrus.com>
 
-[ Upstream commit bc50835e83f60f56e9bec2b392fb5544f250fb6f ]
+[ Upstream commit c9e05763f334845ba69494dd71d7cbfd05fd0e6e ]
 
-Lion Ackermann was able to create a UAF which can be abused for privilege
-escalation with the following script
+Update the DMI match for a Lenovo laptop to the new DMI identifier.
 
-Step 1. create root qdisc
-tc qdisc add dev lo root handle 1:0 drr
+This laptop ships with a different DMI identifier to what was expected,
+and also has the DMICs connected to the host rather than the cs42l43
+codec.
 
-step2. a class for packet aggregation do demonstrate uaf
-tc class add dev lo classid 1:1 drr
-
-step3. a class for nesting
-tc class add dev lo classid 1:2 drr
-
-step4. a class to graft qdisc to
-tc class add dev lo classid 1:3 drr
-
-step5.
-tc qdisc add dev lo parent 1:1 handle 2:0 plug limit 1024
-
-step6.
-tc qdisc add dev lo parent 1:2 handle 3:0 drr
-
-step7.
-tc class add dev lo classid 3:1 drr
-
-step 8.
-tc qdisc add dev lo parent 3:1 handle 4:0 pfifo
-
-step 9. Display the class/qdisc layout
-
-tc class ls dev lo
- class drr 1:1 root leaf 2: quantum 64Kb
- class drr 1:2 root leaf 3: quantum 64Kb
- class drr 3:1 root leaf 4: quantum 64Kb
-
-tc qdisc ls
- qdisc drr 1: dev lo root refcnt 2
- qdisc plug 2: dev lo parent 1:1
- qdisc pfifo 4: dev lo parent 3:1 limit 1000p
- qdisc drr 3: dev lo parent 1:2
-
-step10. trigger the bug <=== prevented by this patch
-tc qdisc replace dev lo parent 1:3 handle 4:0
-
-step 11. Redisplay again the qdiscs/classes
-
-tc class ls dev lo
- class drr 1:1 root leaf 2: quantum 64Kb
- class drr 1:2 root leaf 3: quantum 64Kb
- class drr 1:3 root leaf 4: quantum 64Kb
- class drr 3:1 root leaf 4: quantum 64Kb
-
-tc qdisc ls
- qdisc drr 1: dev lo root refcnt 2
- qdisc plug 2: dev lo parent 1:1
- qdisc pfifo 4: dev lo parent 3:1 refcnt 2 limit 1000p
- qdisc drr 3: dev lo parent 1:2
-
-Observe that a) parent for 4:0 does not change despite the replace request.
-There can only be one parent.  b) refcount has gone up by two for 4:0 and
-c) both class 1:3 and 3:1 are pointing to it.
-
-Step 12.  send one packet to plug
-echo "" | socat -u STDIN UDP4-DATAGRAM:127.0.0.1:8888,priority=$((0x10001))
-step13.  send one packet to the grafted fifo
-echo "" | socat -u STDIN UDP4-DATAGRAM:127.0.0.1:8888,priority=$((0x10003))
-
-step14. lets trigger the uaf
-tc class delete dev lo classid 1:3
-tc class delete dev lo classid 1:1
-
-The semantics of "replace" is for a del/add _on the same node_ and not
-a delete from one node(3:1) and add to another node (1:3) as in step10.
-While we could "fix" with a more complex approach there could be
-consequences to expectations so the patch takes the preventive approach of
-"disallow such config".
-
-Joint work with Lion Ackermann <nnamrec@gmail.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250116013713.900000-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
+Fixes: 83c062ae81e8 ("ASoC: Intel: sof_sdw: Add quirks for some new Lenovo laptops")
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20250102123335.256698-2-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/intel/boards/sof_sdw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index 300430b8c4d22..fac9c946a4c75 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1664,6 +1664,10 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 				q = qdisc_lookup(dev, tcm->tcm_handle);
- 				if (!q)
- 					goto create_n_graft;
-+				if (q->parent != tcm->tcm_parent) {
-+					NL_SET_ERR_MSG(extack, "Cannot move an existing qdisc to a different parent");
-+					return -EINVAL;
-+				}
- 				if (n->nlmsg_flags & NLM_F_EXCL) {
- 					NL_SET_ERR_MSG(extack, "Exclusivity flag on, cannot override");
- 					return -EEXIST;
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index b6f9e5ee7e347..9350a1ea146b0 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -594,9 +594,9 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 		.callback = sof_sdw_quirk_cb,
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+-			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "3832")
++			DMI_MATCH(DMI_PRODUCT_NAME, "83LC")
+ 		},
+-		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS),
++		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS | SOC_SDW_CODEC_MIC),
+ 	},
+ 	{
+ 		.callback = sof_sdw_quirk_cb,
 -- 
 2.39.5
 
