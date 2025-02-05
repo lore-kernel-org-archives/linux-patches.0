@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9A213C3F6;
-	Wed,  5 Feb 2025 14:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247FF157465;
+	Wed,  5 Feb 2025 14:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765336; cv=none; b=Nrx+olEhAbfL63L04s0fojakLdRLI31kJfxgn0Nxyc0ICOsQc7DO+zbd8/2fO0uztxXIf2JoEmIHBnWPKqbAk5gT4kSZPwvoIIObNdWqsT3vmS90lrKvsde8vaVhwW6iYuC1qUderQyQBlQZj4jsCbL0zyNYYzgqY8giHccFCqM=
+	t=1738765340; cv=none; b=eXB8FREN0FKlERc80Gd5kafXHkNWprs/CnXoGmUvBXU+2o47a93U0ef37LBO6orTYeUxYJKLkbUZpHzUoUb9rGHkAvkMxslTJSk0QXIivisTKW87mu0Cbc7ijX+b6jJrzjw9F2IrLziYVNgpHxeu3KmF4z/5ZyeUY3diGg07wNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765336; c=relaxed/simple;
-	bh=uv4b6EFox4E3aeVhDCjh3NpkIhTHLyGJMfbCE3CfCLo=;
+	s=arc-20240116; t=1738765340; c=relaxed/simple;
+	bh=aZ/hbv3PAzUe9NeBFFiQ60UhdgTGOyMYgODwpA03v10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mHOyLdbS7ohG1v+uE2ml2MgQMiaATd1IphnlqHvN/dSWgZ/kLe/6+ykxcjSdsvHQ3KVf8Py1W/KjlE7/f/ETB/AiKnWLTRQ5SF+FZ390SnJHZbXXCrv06yXLXa2nHMceclI+DyVGF1RfC/BXW46UzOgeDdX8QrSPqiD6WVTuAuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBTp5I0i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ntRZfHpytsO8ybSgNt174GJTAehnByXO4aHihUHQKzW5OnCfTLsgCI2nzdsrkqIWP+uN0fSbxAzxP/kyU7VkofQi1t7m/HEjwW7BSt/B6lGtARISL3w08CNtDtMNQMkpIJAv+BMvqvu3pir40eONozTxxVvHgMQFXhF84K5WfDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sA4Jt47k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBTp5I0i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292B0C4CED1;
-	Wed,  5 Feb 2025 14:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sA4Jt47k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA72C4CED1;
+	Wed,  5 Feb 2025 14:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765336;
-	bh=uv4b6EFox4E3aeVhDCjh3NpkIhTHLyGJMfbCE3CfCLo=;
+	s=korg; t=1738765339;
+	bh=aZ/hbv3PAzUe9NeBFFiQ60UhdgTGOyMYgODwpA03v10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBTp5I0ioFM3u1To8nw4bp1xlvvqui35oyUZy9eqVnBNLMl9pCHUZqtn7SGYMwQIQ
-	 Ag8suG6+ztINskiRrs+VyNk0Z4cfX1YGoMHhA4nqOGpHIvBTXCMvBSDUh0kxgzw111
-	 wNuBp2RleNjz73Sv9KxxxT9ECGuKOVd2KzuSIg8A=
+	b=sA4Jt47k4ikgcfgFcseYxvgV0BaDeDO3ERDjUDXv1g2CEGTObNG1w6mtkjtfssjhD
+	 VUpi+1SteHJSevbjzjSg2wOslsYfF73dKo9b3mAd2GU/XZawky/UbuBzaooETyh4q4
+	 js7+eDIz2L7BwcVORQfyT4vYReXYwolMQhYcR+gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 193/590] wifi: mt76: mt7925: Init secondary link PM state
-Date: Wed,  5 Feb 2025 14:39:08 +0100
-Message-ID: <20250205134502.663015502@linuxfoundation.org>
+Subject: [PATCH 6.12 211/590] selftests: timers: clocksource-switch: Adapt progress to kselftest framework
+Date: Wed,  5 Feb 2025 14:39:26 +0100
+Message-ID: <20250205134503.359201374@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -52,35 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 28045ef2bc5bbeec4717da98bf31aca0faaccf02 ]
+[ Upstream commit 8694e6a7f7dba23d3abd9f5a96f64d161704c7b1 ]
 
-Initialize secondary link PM state.
+When adapting the test to the kselftest framework, a few printf() calls
+indicating test progress were not updated.
 
-Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/20241211011926.5002-14-sean.wang@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fix this by replacing these printf() calls by ksft_print_msg() calls.
+
+Link: https://lore.kernel.org/r/7dd4b9ab6e43268846e250878ebf25ae6d3d01ce.1733994134.git.geert+renesas@glider.be
+Fixes: ce7d101750ff ("selftests: timers: clocksource-switch: adapt to kselftest framework")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/timers/clocksource-switch.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index dcdb9bcff3c40..a2d1c43098d3c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -1991,6 +1991,8 @@ mt7925_change_vif_links(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 			goto free;
+diff --git a/tools/testing/selftests/timers/clocksource-switch.c b/tools/testing/selftests/timers/clocksource-switch.c
+index c5264594064c8..83faa4e354e38 100644
+--- a/tools/testing/selftests/timers/clocksource-switch.c
++++ b/tools/testing/selftests/timers/clocksource-switch.c
+@@ -156,8 +156,8 @@ int main(int argc, char **argv)
+ 	/* Check everything is sane before we start switching asynchronously */
+ 	if (do_sanity_check) {
+ 		for (i = 0; i < count; i++) {
+-			printf("Validating clocksource %s\n",
+-				clocksource_list[i]);
++			ksft_print_msg("Validating clocksource %s\n",
++					clocksource_list[i]);
+ 			if (change_clocksource(clocksource_list[i])) {
+ 				status = -1;
+ 				goto out;
+@@ -169,7 +169,7 @@ int main(int argc, char **argv)
+ 		}
+ 	}
  
- 		if (mconf != &mvif->bss_conf) {
-+			mt7925_mcu_set_bss_pm(dev, link_conf, true);
-+
- 			err = mt7925_set_mlo_roc(phy, &mvif->bss_conf,
- 						 vif->active_links);
- 			if (err < 0)
+-	printf("Running Asynchronous Switching Tests...\n");
++	ksft_print_msg("Running Asynchronous Switching Tests...\n");
+ 	pid = fork();
+ 	if (!pid)
+ 		return run_tests(runtime);
 -- 
 2.39.5
 
