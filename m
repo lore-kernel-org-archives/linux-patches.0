@@ -1,42 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7DE347CC;
-	Wed,  5 Feb 2025 14:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E56315B984;
+	Wed,  5 Feb 2025 14:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765960; cv=none; b=ExEU0XXJcSzdEZuHZ+6he8SoM7wjsOuz4rHNWkfjXFiucywFfI7C0n2esWUCMCAagylbqapjWhF+OjFX2WriTiDlF0iYtSHl/Xd7Q5kg8tyeU29wcXv5QLw6/UPMtDiShXmVqcCX/rBSfFlR5SL9f29RE9VgLzwmabA7LkNFYss=
+	t=1738765963; cv=none; b=WIi0jeN6N5dbmljMiw/q8J2ofspegSCaDaOERvXH+VeelDT90IzSS+qczLyt04wCcZu+B+uQJk7YgWoP/tQJ+B7XJlPJZr5pVY6c55rAAhCQ7fenRbTKlSJL+URowKt8o2arWV8bLV2HwbLgaQS8O2N2QER0s5QjmnBHkZpWtWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765960; c=relaxed/simple;
-	bh=7lvHNEABLXscASu+bPpNKzkSHGxs3JQa3+6s5t/MUDs=;
+	s=arc-20240116; t=1738765963; c=relaxed/simple;
+	bh=sixcV7Vk03lWC+ORimDN6l1rMBbCrs8k1bcGVXbN1SU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BihuIhMlpNMNnXS+tFCXaLXCq2mRe5dUUk2q36ZcExUAmBk/8tQGP2Z6lGjJ7Qp32nF2FIuD0dmymTewxmDlXth18PdzQA1HpDg3G+KJ9ZPt3phEdH1bHC69sMgM/v6ssFcA7qBb7nxaY+Kn3wSbTzevGNsKAlMSmY9SCj2/BFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=od7OHMbP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cs3N4gZVuVRZ9eqj7Pk8Yy5VyjQr5j7lZdumBgYhF+Wu7YHRfT2D8m69Tq4jdUB1H+j4AJQoqTN16KGOvtAYwvOptRn8HcmP2dcQKa4J8aEppoaRbOqOIWSF0gyzZxwF0qcAMHNBNnbkzkZe/hLHXokN6fm+7BBEZRyF5kYlkeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjskQFll; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="od7OHMbP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 159C0C4CED1;
-	Wed,  5 Feb 2025 14:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjskQFll"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC82C4CED1;
+	Wed,  5 Feb 2025 14:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765959;
-	bh=7lvHNEABLXscASu+bPpNKzkSHGxs3JQa3+6s5t/MUDs=;
+	s=korg; t=1738765962;
+	bh=sixcV7Vk03lWC+ORimDN6l1rMBbCrs8k1bcGVXbN1SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=od7OHMbP3jbRhJFsHsKNnZlxb5XsRw5qG6wZuzVKFwJGHRI0JL+Doxv/OKUKsXa+l
-	 qMtXl14EXZO6PZX+VNQ4PPkqz4tG0hxP5DXDAAExPKY2r1EX9Kqa6KJhwGddTvA0TE
-	 7tMfoJH0vk5Q6DQnN4jt7MZ4xY1GFFmqAL1tmEgg=
+	b=NjskQFllJOIGgxlJpIkSFbQZ4w0qdGvTNL5JgubNNVro3ShE3C1U64+W8zV0YCK+8
+	 FWyq5TKKNT+bBA+EnPN6WWRYeS9OhmuzreqMcdQHgt54ROfuTFHk3DTtmRgELEfsF+
+	 /FG6lDIVnQwS5XjPK6ushRexq7/JdnVZ9IUTvi+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Francesco Nigro <fnigro@redhat.com>,
+	Ilan Green <igreen@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Clark Williams <williams@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Stephane Eranian <eranian@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 229/623] net: phy: realtek: clear master_slave_state if link is down
-Date: Wed,  5 Feb 2025 14:39:31 +0100
-Message-ID: <20250205134504.983645780@linuxfoundation.org>
+Subject: [PATCH 6.12 271/590] perf namespaces: Introduce nsinfo__set_in_pidns()
+Date: Wed,  5 Feb 2025 14:40:26 +0100
+Message-ID: <20250205134505.641334132@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +59,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit ea8318cb33e593bbfc59d637eae45a69732c5387 ]
+[ Upstream commit 9c6a585d257f6845731f4e36b45fe42b5c3162f5 ]
 
-rtlgen_decode_physr() which sets master_slave_state isn't called in case
-the link is down and other than rtlgen_read_status(),
-rtl822x_c45_read_status() doesn't implicitely clear master_slave_state.
+When we're processing a perf.data file we will, for every thread in that
+file do a machine__findnew_thread(machine, pid, tid) that when that pid
+is seen for the first time will create a 'struct thread' representing
+it.
 
-Avoid stale master_slave_state by always setting it to
-MASTER_SLAVE_STATE_UNKNOWN in rtl822x_c45_read_status() in case the link
-is down.
+That in turn will call nsinfo__new() -> nsinfo__init() and there it will
+assume we're running live, which is wrong and will need to be addressed
+in a followup patch.
 
-Fixes: 081c9c0265c9 ("net: phy: realtek: read duplex and gbit master from PHYSR register")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The nsinfo__new() assumes that if we can't access that thread it has
+already finished and will ignore the -1 return from nsinfo__init(), just
+taking notes to avoid trying to enter in that namespace, since it isn't
+there anymore, a race.
+
+When doing this from 'perf inject', tho, we can fill in parts of that
+nsinfo from what we get from the PERF_RECORD_MMAP2 (pid, tid) and in the
+jitdump file name, that has the form of jit-<PID>.dump.
+
+So if the pid in the jitdump file name is not the one in the
+PERF_RECORD_MMAP2, we can assume that its the pid of the process
+_inside_ the namespace, and that perf was runing outside that namespace.
+
+This will be done in the following patch.
+
+Reported-by: Francesco Nigro <fnigro@redhat.com>
+Reported-by: Ilan Green <igreen@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Clark Williams <williams@redhat.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Stephane Eranian <eranian@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>
+Link: https://lore.kernel.org/r/20241206204828.507527-4-acme@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 64a7617efd5a ("perf namespaces: Fixup the nsinfo__in_pidns() return type, its bool")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/realtek.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/util/namespaces.c | 5 +++++
+ tools/perf/util/namespaces.h | 1 +
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/net/phy/realtek.c b/drivers/net/phy/realtek.c
-index 26b324ab0f90f..93704abb67878 100644
---- a/drivers/net/phy/realtek.c
-+++ b/drivers/net/phy/realtek.c
-@@ -1038,8 +1038,10 @@ static int rtl822x_c45_read_status(struct phy_device *phydev)
- 	if (ret < 0)
- 		return ret;
+diff --git a/tools/perf/util/namespaces.c b/tools/perf/util/namespaces.c
+index cb185c5659d6b..36047184d76e2 100644
+--- a/tools/perf/util/namespaces.c
++++ b/tools/perf/util/namespaces.c
+@@ -271,6 +271,11 @@ pid_t nsinfo__in_pidns(const struct nsinfo  *nsi)
+ 	return RC_CHK_ACCESS(nsi)->in_pidns;
+ }
  
--	if (!phydev->link)
-+	if (!phydev->link) {
-+		phydev->master_slave_state = MASTER_SLAVE_STATE_UNKNOWN;
- 		return 0;
-+	}
++void nsinfo__set_in_pidns(struct nsinfo *nsi)
++{
++	RC_CHK_ACCESS(nsi)->in_pidns = true;
++}
++
+ void nsinfo__mountns_enter(struct nsinfo *nsi,
+ 				  struct nscookie *nc)
+ {
+diff --git a/tools/perf/util/namespaces.h b/tools/perf/util/namespaces.h
+index 8c0731c6cbb7e..e014becb9cd8e 100644
+--- a/tools/perf/util/namespaces.h
++++ b/tools/perf/util/namespaces.h
+@@ -59,6 +59,7 @@ pid_t nsinfo__tgid(const struct nsinfo  *nsi);
+ pid_t nsinfo__nstgid(const struct nsinfo  *nsi);
+ pid_t nsinfo__pid(const struct nsinfo  *nsi);
+ pid_t nsinfo__in_pidns(const struct nsinfo  *nsi);
++void nsinfo__set_in_pidns(struct nsinfo *nsi);
  
- 	/* Read actual speed from vendor register. */
- 	val = phy_read_mmd(phydev, MDIO_MMD_VEND2, RTL_VND2_PHYSR);
+ void nsinfo__mountns_enter(struct nsinfo *nsi, struct nscookie *nc);
+ void nsinfo__mountns_exit(struct nscookie *nc);
 -- 
 2.39.5
 
