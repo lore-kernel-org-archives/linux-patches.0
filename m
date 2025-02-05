@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7F17DA6A;
-	Wed,  5 Feb 2025 14:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34338151988;
+	Wed,  5 Feb 2025 14:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766072; cv=none; b=NLW/KI3JwUPiLCEJw3YOimX6p9ONzPdd5LMo1xOrn8D2RpbI+It9pKaElkQ+FbaBHEhb8iWFYOjMEHe56GXFYwpVmXL7cwJZXl8PsNgMpJ9Vs9lgAXENxQBewEad6Feo+wqFVdQxdNWJFZTdd7AyqxKyrXVB2XCI25kH3G6NCD4=
+	t=1738766076; cv=none; b=RadCnXRI3y1/f75T1xHUOreGzdNf8r6pKjrP0aCFIDDrBFoIowNll5ERNLa14nQ41b9rfATvJHxWNfu9BWcCDXklFdphtEXCJxXznYO3h/EykfZkYWAqFDSza2D90Ut7KTbz5D/XsKxRxIHQ/9xgMJK1L4Lnt4gIcJpKIOGtyEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766072; c=relaxed/simple;
-	bh=lpTbS+BSlGIv4YnKYQHA2wVWg6xvCSNkshtq+SvbCo0=;
+	s=arc-20240116; t=1738766076; c=relaxed/simple;
+	bh=pPW+tbKh2xoz8OK9Hqw46dG1YOL8rzgXJJTHpXHw1aU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMaPar4VEmLjrw/KrkIG07BQDjlcUwBmMaZKcI8P+ya9belUadDkA7dXq1QpmjnRRuvBT4thhb+dBwPLcNHOt+kKnIsma+/rGsMFChCTRNSihNCTBkr6CRKC9EOyAO497FuBeZdBuO0Kv8D5WpalC0DchcAmyFKcSP/FjSOTF2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kp2Azpla; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CK0ZIzqE7rL84SkNsm84im+Dt07q7M4VQiJA3SDtZ/RCkngM57E3czQz4L5PbP2Vtojxe3EuwLAfcSCMoY7AlbJfCAZ+TSgp/gv++uIkzBtDw/hf9BG7IhJcFY2wzVY1obfu+YcwjwTDtGB30gJKL0tUAX+Mgk+wbXdjnCPYrXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtHSiNNP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kp2Azpla"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E82C4CED1;
-	Wed,  5 Feb 2025 14:34:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtHSiNNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95522C4CED1;
+	Wed,  5 Feb 2025 14:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766072;
-	bh=lpTbS+BSlGIv4YnKYQHA2wVWg6xvCSNkshtq+SvbCo0=;
+	s=korg; t=1738766076;
+	bh=pPW+tbKh2xoz8OK9Hqw46dG1YOL8rzgXJJTHpXHw1aU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kp2Azplahjyel/S/1oR8z031e5VtOBBUrToDFU3Jq+oU9SsIZuONBWjpvOhw1AIDH
-	 oEmGHKd2+QgOXXPspecUdB6JrFZdS9sogoynyTzIJore9d4C6i/pxSMYAqPvPIitVO
-	 /WewRGnKqh4UcKSRZgxAwRjo+pIWaIp/4lHbd1CQ=
+	b=JtHSiNNPEe2592bk4saUMSpgRTmKytiKaIlPf/rhfc0JQ6CruqltOo7IprKPDnYZG
+	 D5VJdgHcjjc3IDnYy24kOFWLXe0pzxOcYBgHLdzSi60F4gBBNf9O0eFexr35sJ4Kxm
+	 qPcwtGbVVRS91aWzi2aIfvEzB8QR58YLsFjJ2GeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 327/393] PM: hibernate: Add error handling for syscore_suspend()
-Date: Wed,  5 Feb 2025 14:44:06 +0100
-Message-ID: <20250205134432.824921009@linuxfoundation.org>
+Subject: [PATCH 6.13 240/623] netfilter: nft_flow_offload: update tcp state flags under lock
+Date: Wed,  5 Feb 2025 14:39:42 +0100
+Message-ID: <20250205134505.410221665@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +47,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit e20a70c572539a486dbd91b225fa6a194a5e2122 ]
+[ Upstream commit 7a4b61406395291ffb7220a10e8951a9a8684819 ]
 
-In hibernation_platform_enter(), the code did not check the
-return value of syscore_suspend(), potentially leading to a
-situation where syscore_resume() would be called even if
-syscore_suspend() failed. This could cause unpredictable
-behavior or system instability.
+The conntrack entry is already public, there is a small chance that another
+CPU is handling a packet in reply direction and racing with the tcp state
+update.
 
-Modify the code sequence in question to properly handle errors returned
-by syscore_suspend(). If an error occurs in the suspend path, the code
-now jumps to label 'Enable_irqs' skipping the syscore_resume() call and
-only enabling interrupts after setting the system state to SYSTEM_RUNNING.
+Move this under ct spinlock.
 
-Fixes: 40dc166cb5dd ("PM / Core: Introduce struct syscore_ops for core subsystems PM")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20250119143205.2103-1-vulab@iscas.ac.cn
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This is done once, when ct is about to be offloaded, so this should
+not result in a noticeable performance hit.
+
+Fixes: 8437a6209f76 ("netfilter: nft_flow_offload: set liberal tracking mode for tcp")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/hibernate.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/netfilter/nft_flow_offload.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/power/hibernate.c b/kernel/power/hibernate.c
-index 8d35b9f9aaa3f..c2fc58938dee5 100644
---- a/kernel/power/hibernate.c
-+++ b/kernel/power/hibernate.c
-@@ -599,7 +599,11 @@ int hibernation_platform_enter(void)
+diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
+index 3b474d2356638..221d502230181 100644
+--- a/net/netfilter/nft_flow_offload.c
++++ b/net/netfilter/nft_flow_offload.c
+@@ -289,6 +289,15 @@ static bool nft_flow_offload_skip(struct sk_buff *skb, int family)
+ 	return false;
+ }
  
- 	local_irq_disable();
- 	system_state = SYSTEM_SUSPEND;
--	syscore_suspend();
++static void flow_offload_ct_tcp(struct nf_conn *ct)
++{
++	/* conntrack will not see all packets, disable tcp window validation. */
++	spin_lock_bh(&ct->lock);
++	ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
++	ct->proto.tcp.seen[1].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
++	spin_unlock_bh(&ct->lock);
++}
 +
-+	error = syscore_suspend();
-+	if (error)
-+		goto Enable_irqs;
-+
- 	if (pm_wakeup_pending()) {
- 		error = -EAGAIN;
- 		goto Power_up;
-@@ -611,6 +615,7 @@ int hibernation_platform_enter(void)
+ static void nft_flow_offload_eval(const struct nft_expr *expr,
+ 				  struct nft_regs *regs,
+ 				  const struct nft_pktinfo *pkt)
+@@ -356,11 +365,8 @@ static void nft_flow_offload_eval(const struct nft_expr *expr,
+ 		goto err_flow_alloc;
  
-  Power_up:
- 	syscore_resume();
-+ Enable_irqs:
- 	system_state = SYSTEM_RUNNING;
- 	local_irq_enable();
+ 	flow_offload_route_init(flow, &route);
+-
+-	if (tcph) {
+-		ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
+-		ct->proto.tcp.seen[1].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
+-	}
++	if (tcph)
++		flow_offload_ct_tcp(ct);
  
+ 	__set_bit(NF_FLOW_HW_BIDIRECTIONAL, &flow->flags);
+ 	ret = flow_offload_add(flowtable, flow);
 -- 
 2.39.5
 
