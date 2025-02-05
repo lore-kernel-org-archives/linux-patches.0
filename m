@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15848155751;
-	Wed,  5 Feb 2025 14:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C471494DF;
+	Wed,  5 Feb 2025 14:08:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764534; cv=none; b=e39+CIj/pxov/7cpISt4BFAoh3M5drN78P+VpC+N++ZiQZ5dKsyhcHj7TQl+VNMMUsnNJ6dDfnSRHBc7TzFIANERD+QgW6MDawjhge1jukLCptSnItUBd55gx2HELBQdHjk4JZW9qJmdU3OT09cXeI/DXO9Y7h98AiQKJwDkBpk=
+	t=1738764536; cv=none; b=V+taNtGpOAQ5jKjVsDBH+0jBjFlEyHKFdPEfpNnfe98DliwaorokcANeLLwUbKtfpztZX5/UPMVK8hu6WBRxOQ3+M5KOOeJzAFLiAXb7l0cOd89Z9/J3UJcHLOj7hEljfFaGouZaChHEZN1BM92mRMYNl3CSF1EKYXE0NijLZBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764534; c=relaxed/simple;
-	bh=szj79unMALy0fGAiJIskT0PkfGUSif06t84ci7Kjtr0=;
+	s=arc-20240116; t=1738764536; c=relaxed/simple;
+	bh=vn6HUnyUANZcYbPGi5nK0TN/k38nzMhtDoR6ansR8lU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXSw4WcucqAH/PV0SPf6WLGpVNRHE2sFDLMVIf2TDW2PaMIC03C+iiq/XFaLqHKfdwcKch5k/TDAzY32joPd7zBHU7CfShWRlAFHOBziSKzzAU04aeJSNExyhDpD7V7ercJmdQWk1G/R+ec0FwKElEH3kofvHQGbSxQc7pE57iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdOjlwux; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vu9ekxANUB0ucWdcApVWpAZkNvjLroNffYgSlW1kW7xu2svB40OcB0IAaeLX9KCQ4SJ3J9+du4ZaOaabwYQtTB8TQyTl+lLasOSRXw1ZwO5M2ZG6SuSmC8FkOJCUR+gzzdNC0NT8BOq5QMP3Stb9n38TFzKxwOO3PMA/rrBW7U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4W1dKtZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdOjlwux"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C088C4CED1;
-	Wed,  5 Feb 2025 14:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4W1dKtZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24830C4CED1;
+	Wed,  5 Feb 2025 14:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764532;
-	bh=szj79unMALy0fGAiJIskT0PkfGUSif06t84ci7Kjtr0=;
+	s=korg; t=1738764535;
+	bh=vn6HUnyUANZcYbPGi5nK0TN/k38nzMhtDoR6ansR8lU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tdOjlwuxE1Rq2Li8NAgD35/1PqQhBtvmshcsLF4VJIo6yeLavg577/l1FBmKF9rNr
-	 jpJzmuEJ3UTRYIV67uHGLssnPvrhgLIxf8AYaTGa58zrAv842UWdSiK/DeEVbge6pf
-	 SC62iupes3QSYWgbKXEh+vi4B3UqT4GxI1Nmu3uM=
+	b=N4W1dKtZeVg8YwYuCNQUR2zSUSeKXKJeGQNVBiz3H/agWWC06nMfWWEnIkeE5DdfU
+	 PPKMKQBWFp/6EP+WD2IlzU4suSokGy819R0wAzPJbzQZRSA1nZ1RWdAFMd3Yl8a8K+
+	 fRo+SUqxE9OUQL26kfT8lvJL5zia349wN/GdDOQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 088/623] wifi: rtlwifi: wait for firmware loading before releasing memory
-Date: Wed,  5 Feb 2025 14:37:10 +0100
-Message-ID: <20250205134459.591611501@linuxfoundation.org>
+Subject: [PATCH 6.6 180/393] ASoC: Intel: avs: Do not readq() u32 registers
+Date: Wed,  5 Feb 2025 14:41:39 +0100
+Message-ID: <20250205134427.188064189@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit b4b26642b31ef282df6ff7ea8531985edfdef12a ]
+[ Upstream commit bca0fa5f6b5e96c03daac1ed62b1e5c5057a2048 ]
 
-At probe error path, the firmware loading work may have already been
-queued. In such a case, it will try to access memory allocated by the probe
-function, which is about to be released. In such paths, wait for the
-firmware worker to finish before releasing memory.
+Register reporting ROM status is 4-bytes wide.
 
-Fixes: a7f7c15e945a ("rtlwifi: rtl8192cu: Free ieee80211_hw if probing fails")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241107133322.855112-4-cascardo@igalia.com
+Fixes: 092cf7b26a48 ("ASoC: Intel: avs: Code loading over HDA")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250109122216.3667847-2-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/usb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/intel/avs/loader.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/usb.c b/drivers/net/wireless/realtek/rtlwifi/usb.c
-index c3aa0cd9ff211..c27b116ccdff5 100644
---- a/drivers/net/wireless/realtek/rtlwifi/usb.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/usb.c
-@@ -1028,13 +1028,15 @@ int rtl_usb_probe(struct usb_interface *intf,
- 	err = ieee80211_register_hw(hw);
- 	if (err) {
- 		pr_err("Can't register mac80211 hw.\n");
--		goto error_out;
-+		goto error_init_vars;
+diff --git a/sound/soc/intel/avs/loader.c b/sound/soc/intel/avs/loader.c
+index fe0340c798efe..5c4ae3927ed24 100644
+--- a/sound/soc/intel/avs/loader.c
++++ b/sound/soc/intel/avs/loader.c
+@@ -306,7 +306,7 @@ avs_hda_init_rom(struct avs_dev *adev, unsigned int dma_id, bool purge)
  	}
- 	rtlpriv->mac80211.mac80211_registered = 1;
  
- 	set_bit(RTL_STATUS_INTERFACE_START, &rtlpriv->status);
- 	return 0;
- 
-+error_init_vars:
-+	wait_for_completion(&rtlpriv->firmware_loading_complete);
- error_out:
- 	rtl_deinit_core(hw);
- error_out2:
+ 	/* await ROM init */
+-	ret = snd_hdac_adsp_readq_poll(adev, spec->sram->rom_status_offset, reg,
++	ret = snd_hdac_adsp_readl_poll(adev, spec->sram->rom_status_offset, reg,
+ 				       (reg & 0xF) == AVS_ROM_INIT_DONE ||
+ 				       (reg & 0xF) == APL_ROM_FW_ENTERED,
+ 				       AVS_ROM_INIT_POLLING_US, APL_ROM_INIT_TIMEOUT_US);
 -- 
 2.39.5
 
