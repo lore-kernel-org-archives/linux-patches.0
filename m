@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD2715198D;
-	Wed,  5 Feb 2025 14:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AFF15198D;
+	Wed,  5 Feb 2025 14:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764193; cv=none; b=c2hInSsN0eHOYQ+F0Dg+sLo0qeaNF4pV4E6j9ZcG5mQuXRXYlc3Kmc/uVQ9vpUHz7eaCrQrnPZ//pSwcnZfTjkXYqrxT+8NXL85ZEQCD7FZbvay8rZ/R7NDWcOfVK+v8uFtpCT5zAozp0lAKjqGgN9E+3hNgHbPQ21XVQxlfcpk=
+	t=1738764197; cv=none; b=T/sywCDKdRsSr5tSER5L6d2PtZs1oGIFv6s0AEF3oPrgnxQQK58SjmKjQ9AW3yk1PxvxArLmSujHGk4Thwr2eY4CcQVHZ1AFKDG2+OiooVB/5W9gLH/sc8IUMdlQMn0Lqv826NYkEwSXYvbYrjkHS7iGgiWpjH1vkXfha7ruigo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764193; c=relaxed/simple;
-	bh=iuR3QCZTi3fFpfjSFIcvowfYntp9YZZo3kLs6DpqD3g=;
+	s=arc-20240116; t=1738764197; c=relaxed/simple;
+	bh=CMeZxRgzpjGg/xvlbJkqq4SQEiiHR0K3dAd9u9atmuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o66GC+s9E1FsYihsvFBHdxnQnGxtwJNS8SGCtLrMwlSa40Oj1qvl7stH2hWW1InPJ83XLvcMNjeEZXn4Z1z5rhqnElvLX1sWv5xK9+UmpAfUb++GZVkzv5Jhx55T8B3NuDixn1sVNKrUqXLK3q4tiwHSK34JH7OiBLWo3flK3Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKKaReId; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KsQ34MrvS5aiAwlh9/EkiRDqSZvj5bND1WXWH0p3Q0kz5efwnJ2htEKy/YCLabmHWoHNA7sEnmAxMm8hLvK7imUQ8fFk9CfO1gPQueThcJnQbL+YKTG0EvY12yhW7151x9qNuVZtsCU9AUoiYRs8LTJ2fG+3M4KpjNrm/IWibgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OoD9GENp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKKaReId"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A0FC4CED6;
-	Wed,  5 Feb 2025 14:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OoD9GENp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DD9C4CED6;
+	Wed,  5 Feb 2025 14:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764193;
-	bh=iuR3QCZTi3fFpfjSFIcvowfYntp9YZZo3kLs6DpqD3g=;
+	s=korg; t=1738764196;
+	bh=CMeZxRgzpjGg/xvlbJkqq4SQEiiHR0K3dAd9u9atmuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dKKaReIdlt8MSZYF0SBMyVyfNoHhi8156k2uOR2X3LaPTtiZ3fmlzSKVHERXkoKsL
-	 9DVxDevFHQ9tlH6d0YPdZEzP5OiSpqJYPJLiQsLKyicOa4LU9V2sroSSRYrYyJFgwK
-	 YN5sZpENInXIh1GlyvozlbBmUAuUx9RkB4UkyKAE=
+	b=OoD9GENpmldk/zd4QF0XgJjUdM5xdauaYqNaGWYbZL8dtEmT1uNkRFxoOl1DgKT1M
+	 I0odUwuC8GOcS03yoyqbix7h43IStvFAxP+KQWIEbjkjpxqduHsJbJbE0HB4HB/X3+
+	 tqZbHxrJgzgVt1L54P9o3LogzJ+OfP9tXSqCMEw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Rik van Riel <riel@surriel.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 148/393] netfilter: nf_tables: fix set size with rbtree backend
-Date: Wed,  5 Feb 2025 14:41:07 +0100
-Message-ID: <20250205134425.965890789@linuxfoundation.org>
+Subject: [PATCH 6.13 056/623] printk: Defer legacy printing when holding printk_cpu_sync
+Date: Wed,  5 Feb 2025 14:36:38 +0100
+Message-ID: <20250205134458.372188486@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,219 +48,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: John Ogness <john.ogness@linutronix.de>
 
-[ Upstream commit 8d738c1869f611955d91d8d0fd0012d9ef207201 ]
+[ Upstream commit 0161e2d6950fe66cf6ac1c10d945bae971f33667 ]
 
-The existing rbtree implementation uses singleton elements to represent
-ranges, however, userspace provides a set size according to the number
-of ranges in the set.
+The documentation of printk_cpu_sync_get() clearly states
+that the owner must never perform any activities where it waits
+for a CPU. For legacy printing there can be spinning on the
+console_lock and on the port lock. Therefore legacy printing
+must be deferred when holding the printk_cpu_sync.
 
-Adjust provided userspace set size to the number of singleton elements
-in the kernel by multiplying the range by two.
+Note that in the case of emergency states, atomic consoles
+are not prevented from printing when printk is deferred. This
+is appropriate because they do not spin-wait indefinitely for
+other CPUs.
 
-Check if the no-match all-zero element is already in the set, in such
-case release one slot in the set size.
-
-Fixes: 0ed6389c483d ("netfilter: nf_tables: rename set implementations")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Rik van Riel <riel@surriel.com>
+Closes: https://lore.kernel.org/r/20240715232052.73eb7fb1@imladris.surriel.com
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Fixes: 55d6af1d6688 ("lib/nmi_backtrace: explicitly serialize banner and regs")
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20241209111746.192559-3-john.ogness@linutronix.de
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  6 ++++
- net/netfilter/nf_tables_api.c     | 49 +++++++++++++++++++++++++++++--
- net/netfilter/nft_set_rbtree.c    | 43 +++++++++++++++++++++++++++
- 3 files changed, 96 insertions(+), 2 deletions(-)
+ kernel/printk/internal.h    | 6 ++++++
+ kernel/printk/printk.c      | 5 +++++
+ kernel/printk/printk_safe.c | 7 ++++++-
+ 3 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 12a30d8e7efe0..dcbf3f299548f 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -429,6 +429,9 @@ struct nft_set_ext;
-  *	@remove: remove element from set
-  *	@walk: iterate over all set elements
-  *	@get: get set elements
-+ *	@ksize: kernel set size
-+ * 	@usize: userspace set size
-+ *	@adjust_maxsize: delta to adjust maximum set size
-  *	@commit: commit set elements
-  *	@abort: abort set elements
-  *	@privsize: function to return size of set private data
-@@ -481,6 +484,9 @@ struct nft_set_ops {
- 					       const struct nft_set *set,
- 					       const struct nft_set_elem *elem,
- 					       unsigned int flags);
-+	u32				(*ksize)(u32 size);
-+	u32				(*usize)(u32 size);
-+	u32				(*adjust_maxsize)(const struct nft_set *set);
- 	void				(*commit)(struct nft_set *set);
- 	void				(*abort)(const struct nft_set *set);
- 	u64				(*privsize)(const struct nlattr * const nla[],
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 1d1e998acd675..42dac335074fb 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4552,6 +4552,14 @@ static int nf_tables_fill_set_concat(struct sk_buff *skb,
- 	return 0;
+diff --git a/kernel/printk/internal.h b/kernel/printk/internal.h
+index c6bb47666aef6..a91bdf8029671 100644
+--- a/kernel/printk/internal.h
++++ b/kernel/printk/internal.h
+@@ -338,3 +338,9 @@ bool printk_get_next_message(struct printk_message *pmsg, u64 seq,
+ void console_prepend_dropped(struct printk_message *pmsg, unsigned long dropped);
+ void console_prepend_replay(struct printk_message *pmsg);
+ #endif
++
++#ifdef CONFIG_SMP
++bool is_printk_cpu_sync_owner(void);
++#else
++static inline bool is_printk_cpu_sync_owner(void) { return false; }
++#endif
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index 80910bc3470c2..f446a06b4da8c 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -4922,6 +4922,11 @@ void console_try_replay_all(void)
+ static atomic_t printk_cpu_sync_owner = ATOMIC_INIT(-1);
+ static atomic_t printk_cpu_sync_nested = ATOMIC_INIT(0);
+ 
++bool is_printk_cpu_sync_owner(void)
++{
++	return (atomic_read(&printk_cpu_sync_owner) == raw_smp_processor_id());
++}
++
+ /**
+  * __printk_cpu_sync_wait() - Busy wait until the printk cpu-reentrant
+  *                            spinning lock is not owned by any CPU.
+diff --git a/kernel/printk/printk_safe.c b/kernel/printk/printk_safe.c
+index 6f94418d53ffb..6bc40ac8847b5 100644
+--- a/kernel/printk/printk_safe.c
++++ b/kernel/printk/printk_safe.c
+@@ -61,10 +61,15 @@ bool is_printk_legacy_deferred(void)
+ 	/*
+ 	 * The per-CPU variable @printk_context can be read safely in any
+ 	 * context. CPU migration is always disabled when set.
++	 *
++	 * A context holding the printk_cpu_sync must not spin waiting for
++	 * another CPU. For legacy printing, it could be the console_lock
++	 * or the port lock.
+ 	 */
+ 	return (force_legacy_kthread() ||
+ 		this_cpu_read(printk_context) ||
+-		in_nmi());
++		in_nmi() ||
++		is_printk_cpu_sync_owner());
  }
  
-+static u32 nft_set_userspace_size(const struct nft_set_ops *ops, u32 size)
-+{
-+	if (ops->usize)
-+		return ops->usize(size);
-+
-+	return size;
-+}
-+
- static int nf_tables_fill_set(struct sk_buff *skb, const struct nft_ctx *ctx,
- 			      const struct nft_set *set, u16 event, u16 flags)
- {
-@@ -4622,7 +4630,8 @@ static int nf_tables_fill_set(struct sk_buff *skb, const struct nft_ctx *ctx,
- 	if (!nest)
- 		goto nla_put_failure;
- 	if (set->size &&
--	    nla_put_be32(skb, NFTA_SET_DESC_SIZE, htonl(set->size)))
-+	    nla_put_be32(skb, NFTA_SET_DESC_SIZE,
-+			 htonl(nft_set_userspace_size(set->ops, set->size))))
- 		goto nla_put_failure;
- 
- 	if (set->field_count > 1 &&
-@@ -4992,6 +5001,15 @@ static bool nft_set_is_same(const struct nft_set *set,
- 	return true;
- }
- 
-+static u32 nft_set_kernel_size(const struct nft_set_ops *ops,
-+			       const struct nft_set_desc *desc)
-+{
-+	if (ops->ksize)
-+		return ops->ksize(desc->size);
-+
-+	return desc->size;
-+}
-+
- static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 			    const struct nlattr * const nla[])
- {
-@@ -5174,6 +5192,9 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 		if (err < 0)
- 			return err;
- 
-+		if (desc.size)
-+			desc.size = nft_set_kernel_size(set->ops, &desc);
-+
- 		err = 0;
- 		if (!nft_set_is_same(set, &desc, exprs, num_exprs, flags)) {
- 			NL_SET_BAD_ATTR(extack, nla[NFTA_SET_NAME]);
-@@ -5196,6 +5217,9 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 	if (IS_ERR(ops))
- 		return PTR_ERR(ops);
- 
-+	if (desc.size)
-+		desc.size = nft_set_kernel_size(ops, &desc);
-+
- 	udlen = 0;
- 	if (nla[NFTA_SET_USERDATA])
- 		udlen = nla_len(nla[NFTA_SET_USERDATA]);
-@@ -6679,6 +6703,27 @@ static bool nft_setelem_valid_key_end(const struct nft_set *set,
- 	return true;
- }
- 
-+static u32 nft_set_maxsize(const struct nft_set *set)
-+{
-+	u32 maxsize, delta;
-+
-+	if (!set->size)
-+		return UINT_MAX;
-+
-+	if (set->ops->adjust_maxsize)
-+		delta = set->ops->adjust_maxsize(set);
-+	else
-+		delta = 0;
-+
-+	if (check_add_overflow(set->size, set->ndeact, &maxsize))
-+		return UINT_MAX;
-+
-+	if (check_add_overflow(maxsize, delta, &maxsize))
-+		return UINT_MAX;
-+
-+	return maxsize;
-+}
-+
- static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 			    const struct nlattr *attr, u32 nlmsg_flags)
- {
-@@ -7023,7 +7068,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	}
- 
- 	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
--		unsigned int max = set->size ? set->size + set->ndeact : UINT_MAX;
-+		unsigned int max = nft_set_maxsize(set);
- 
- 		if (!atomic_add_unless(&set->nelems, 1, max)) {
- 			err = -ENFILE;
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index 26af6008861a6..8ad1e008d12b5 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -756,6 +756,46 @@ static void nft_rbtree_gc_init(const struct nft_set *set)
- 	priv->last_gc = jiffies;
- }
- 
-+/* rbtree stores ranges as singleton elements, each range is composed of two
-+ * elements ...
-+ */
-+static u32 nft_rbtree_ksize(u32 size)
-+{
-+	return size * 2;
-+}
-+
-+/* ... hide this detail to userspace. */
-+static u32 nft_rbtree_usize(u32 size)
-+{
-+	if (!size)
-+		return 0;
-+
-+	return size / 2;
-+}
-+
-+static u32 nft_rbtree_adjust_maxsize(const struct nft_set *set)
-+{
-+	struct nft_rbtree *priv = nft_set_priv(set);
-+	struct nft_rbtree_elem *rbe;
-+	struct rb_node *node;
-+	const void *key;
-+
-+	node = rb_last(&priv->root);
-+	if (!node)
-+		return 0;
-+
-+	rbe = rb_entry(node, struct nft_rbtree_elem, node);
-+	if (!nft_rbtree_interval_end(rbe))
-+		return 0;
-+
-+	key = nft_set_ext_key(&rbe->ext);
-+	if (memchr(key, 1, set->klen))
-+		return 0;
-+
-+	/* this is the all-zero no-match element. */
-+	return 1;
-+}
-+
- const struct nft_set_type nft_set_rbtree_type = {
- 	.features	= NFT_SET_INTERVAL | NFT_SET_MAP | NFT_SET_OBJECT | NFT_SET_TIMEOUT,
- 	.ops		= {
-@@ -774,5 +814,8 @@ const struct nft_set_type nft_set_rbtree_type = {
- 		.lookup		= nft_rbtree_lookup,
- 		.walk		= nft_rbtree_walk,
- 		.get		= nft_rbtree_get,
-+		.ksize		= nft_rbtree_ksize,
-+		.usize		= nft_rbtree_usize,
-+		.adjust_maxsize = nft_rbtree_adjust_maxsize,
- 	},
- };
+ asmlinkage int vprintk(const char *fmt, va_list args)
 -- 
 2.39.5
 
