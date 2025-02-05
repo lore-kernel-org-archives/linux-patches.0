@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3001519BE;
-	Wed,  5 Feb 2025 14:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D4B1519BE;
+	Wed,  5 Feb 2025 14:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765050; cv=none; b=QHHYJyyWNYVUv3TGdZ3w7QwPeEO9RtEMlZUKO0SwCRRM94UlIArS/Llm078eFfikUymDEsoh+9CgKpQHKZt4RBuBvNBn5N6e3jl6cdvFhPzVBb5tMf+On0gle/XJ5f5Ala80wakHLqKmOudoju4fmsFXC2WGjV2KwCLnCDdMaZk=
+	t=1738765053; cv=none; b=WGvLcLocOJb+M2st0ZwyImCzZmwSDqUvgRhTLTj9w0+IE5Ig/oN2Mc8Yxm4HkGUSxkwf9BPyvxJWHMKyLi6ixtvyXIhHza8r9ztB3AreG+mQOZ9FoG1/JwJ2Wtx8LAEiDK5oQbhGaShzfdUElLtVRs6BQPMzI5CuZ7jHdB1o8Bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765050; c=relaxed/simple;
-	bh=JYCRcn7b+bsDS5PFaqYPGtoNB02Eg/m3Z8xhp1xol3I=;
+	s=arc-20240116; t=1738765053; c=relaxed/simple;
+	bh=CzGHGsPIDjicm7GIDRwR5WhOO1YgDToGoFRnPnX5NdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFociIbH25L4BKPzyLewK8xk1H29p92NzngC6H200nIb8Ug8p7doYYxf9/sPzbxt/vLiNDK2hqhVzrAez17hpAnbLKkGrk3syPet2UjeZxGYMwHdG4iJP42WDJD4JEpKoWWCH+GD7HQgDBcQl96dvO5i9K8bsK4WIxZPiWQS9IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOue9SKq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LCcDM6CMeUqZmfmwYczPjvBs8kJlR0r8N4t9gnT07aun1/5MyZ2sU36XUukKE3B60wr7vbltd2l5QWgJ+7gXpbbmasnxYaJfpm8wPk5Dj7J+ACQUAUAcwo6xtP5JSmg2L2mSXfg8rRBtrtFohmcdqD58d+9h3fGBO9fi2fMAS6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bnw1iFjk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOue9SKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01E5C4CED1;
-	Wed,  5 Feb 2025 14:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bnw1iFjk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC20DC4CED1;
+	Wed,  5 Feb 2025 14:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765050;
-	bh=JYCRcn7b+bsDS5PFaqYPGtoNB02Eg/m3Z8xhp1xol3I=;
+	s=korg; t=1738765053;
+	bh=CzGHGsPIDjicm7GIDRwR5WhOO1YgDToGoFRnPnX5NdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SOue9SKqcSZEndqJ8yeBRcKvHO4575Dha73elou0/pFVbD0LCaa/xAagxY8Snh0Bj
-	 32ufWSEZ5zOJzd76P/MY3NP40zWyhYx5POvNS85xbFSiRfSd1zrFGfoqw0dS72ih3G
-	 wJnOlcYG6DEoeMwRRviKs3PggSNKMdKJH1rGysYI=
+	b=Bnw1iFjkId8zmf3GkQK3ao7oQi6H1yYZKa12c59Q87HZN6lLAzSrA5SjHiMACTkiu
+	 hmyPg9LXP5mBM3LGvC34kUyuX0Bw2SasziPCb7/KcYqUC6L95OjycJ1CjdFUr5fhkk
+	 lNXOAvCZork7h3EzrBM+TpZW/KaXtzQEpohj75mA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 185/590] wifi: mt76: mt7925: fix wrong parameter for related cmd of chan info
-Date: Wed,  5 Feb 2025 14:39:00 +0100
-Message-ID: <20250205134502.358184671@linuxfoundation.org>
+Subject: [PATCH 6.13 139/623] regulator: of: Implement the unwind path of of_regulator_match()
+Date: Wed,  5 Feb 2025 14:38:01 +0100
+Message-ID: <20250205134501.551483090@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,77 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 3f0d2178aaf1ed1c017e61cde9ce8a4432c804d1 ]
+[ Upstream commit dddca3b2fc676113c58b04aaefe84bfb958ac83e ]
 
-Fix incorrect parameters for the related channel information command.
+of_regulator_match() does not release the OF node reference in the error
+path, resulting in an OF node leak. Therefore, call of_node_put() on the
+obtained nodes before returning the EINVAL error.
 
-Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/20241211011926.5002-6-sean.wang@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Since it is possible that some drivers call this function and do not
+exit on failure, such as s2mps11_pmic_driver, clear the init_data and
+of_node in the error path.
+
+This was reported by an experimental verification tool that I am
+developing. As I do not have access to actual devices nor the QEMU board
+configuration to test drivers that call this function, no runtime test
+was able to be performed.
+
+Fixes: 1c8fa58f4750 ("regulator: Add generic DT parsing for regulators")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Link: https://patch.msgid.link/20250104080453.2153592-1-joe@pf.is.s.u-tokyo.ac.jp
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7925/mcu.c   | 23 +++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/regulator/of_regulator.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index 7105705113baa..23d0b1d97956e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -1198,6 +1198,8 @@ int mt7925_mcu_set_mlo_roc(struct mt792x_bss_conf *mconf, u16 sel_links,
- 		req.roc[i].bw_from_ap = CMD_CBW_20MHZ;
- 		req.roc[i].center_chan = center_ch;
- 		req.roc[i].center_chan_from_ap = center_ch;
-+		req.roc[i].center_chan2 = 0;
-+		req.roc[i].center_chan2_from_ap = 0;
+diff --git a/drivers/regulator/of_regulator.c b/drivers/regulator/of_regulator.c
+index e5b4b93c07e3f..6af8411679c76 100644
+--- a/drivers/regulator/of_regulator.c
++++ b/drivers/regulator/of_regulator.c
+@@ -446,7 +446,7 @@ int of_regulator_match(struct device *dev, struct device_node *node,
+ 					"failed to parse DT for regulator %pOFn\n",
+ 					child);
+ 				of_node_put(child);
+-				return -EINVAL;
++				goto err_put;
+ 			}
+ 			match->of_node = of_node_get(child);
+ 			count++;
+@@ -455,6 +455,18 @@ int of_regulator_match(struct device *dev, struct device_node *node,
+ 	}
  
- 		/* STR : 0xfe indicates BAND_ALL with enabling DBDC
- 		 * EMLSR : 0xff indicates (BAND_AUTO) without DBDC
-@@ -2175,11 +2177,27 @@ void mt7925_mcu_bss_rlm_tlv(struct sk_buff *skb, struct mt76_phy *phy,
- 	req = (struct bss_rlm_tlv *)tlv;
- 	req->control_channel = chandef->chan->hw_value;
- 	req->center_chan = ieee80211_frequency_to_channel(freq1);
--	req->center_chan2 = ieee80211_frequency_to_channel(freq2);
-+	req->center_chan2 = 0;
- 	req->tx_streams = hweight8(phy->antenna_mask);
- 	req->ht_op_info = 4; /* set HT 40M allowed */
- 	req->rx_streams = hweight8(phy->antenna_mask);
--	req->band = band;
-+	req->center_chan2 = 0;
-+	req->sco = 0;
-+	req->band = 1;
+ 	return count;
 +
-+	switch (band) {
-+	case NL80211_BAND_2GHZ:
-+		req->band = 1;
-+		break;
-+	case NL80211_BAND_5GHZ:
-+		req->band = 2;
-+		break;
-+	case NL80211_BAND_6GHZ:
-+		req->band = 3;
-+		break;
-+	default:
-+		break;
++err_put:
++	for (i = 0; i < num_matches; i++) {
++		struct of_regulator_match *match = &matches[i];
++
++		match->init_data = NULL;
++		if (match->of_node) {
++			of_node_put(match->of_node);
++			match->of_node = NULL;
++		}
 +	}
++	return -EINVAL;
+ }
+ EXPORT_SYMBOL_GPL(of_regulator_match);
  
- 	switch (chandef->width) {
- 	case NL80211_CHAN_WIDTH_40:
-@@ -2190,6 +2208,7 @@ void mt7925_mcu_bss_rlm_tlv(struct sk_buff *skb, struct mt76_phy *phy,
- 		break;
- 	case NL80211_CHAN_WIDTH_80P80:
- 		req->bw = CMD_CBW_8080MHZ;
-+		req->center_chan2 = ieee80211_frequency_to_channel(freq2);
- 		break;
- 	case NL80211_CHAN_WIDTH_160:
- 		req->bw = CMD_CBW_160MHZ;
 -- 
 2.39.5
 
