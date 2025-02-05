@@ -1,41 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5000B1519AA;
-	Wed,  5 Feb 2025 14:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB46A15198D;
+	Wed,  5 Feb 2025 14:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764690; cv=none; b=Vr04vs05vdT1TDekxelHzxzwWakeAqI0nn0GnQ1UixdXlujQHKkP+CgRl6mzqtzH8jhaF8tRknuXJar+F+zYpiz+ia7rYHei9o3V0BpQQurabK1G3TCZdlTtVz9DwmgCrAGlIsM6EMnU5macMCqXLKQQaYFOPO9CNj6OLxWDJ3I=
+	t=1738764693; cv=none; b=STTL4ibnWaCXmhmhU+7FXBc5W99lXUfpCYUZZ00n3M1uuGZEtqaxGnWxApvyt+MY5wQjPLHyl5bvxIBOgeRhQJOHQPeqnLUhCg7XpUsVNuMV+YFyVztF/5VorhBcVXRrszMWS4DscJ12CMcJh5v/+LLWhcxEriyK7CrFCQDyWLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764690; c=relaxed/simple;
-	bh=KTW0WgwEANsrXgwu+GrcBBJEXKeMF+kx71bwSrcnsug=;
+	s=arc-20240116; t=1738764693; c=relaxed/simple;
+	bh=FyH55BMYbGrv8HcLmuHvOdnASara61BhkuyQEwsCI7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H/VQvJR5KEIqYNY0vIDF/PMAd2gFRRTj04TBbozP1xlIbxd+cIeGs2Ec9EFHdx+j4Lh/hMZ53WllFiZzFi3mCAVT3/Rh68I5z3VphBL24c6TjURRC9YOXaabWrtbgf6JHSW+kyPPgORQ2fuudDXqUvCc9q7tSr4pJDXfLhE1HQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJi6Meii; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LN3piB8/pUiFDyYPgBi9qPfXuf/c757qhw4Rcd8JddoCTbB2aAwbbmbd02Dq5TG2ZJ/hL1GImD7e1dQruMkSiEGosp2Dw7VK3DvmygQQ7oZpPfipVEc00efN2xpW5GBtkCxNrMRh1OL54Z1MAutmWalzefyKLcMfiPLrG4qZqmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSEI9Az5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJi6Meii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBA9C4CEDD;
-	Wed,  5 Feb 2025 14:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSEI9Az5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5DDC4CED1;
+	Wed,  5 Feb 2025 14:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764690;
-	bh=KTW0WgwEANsrXgwu+GrcBBJEXKeMF+kx71bwSrcnsug=;
+	s=korg; t=1738764693;
+	bh=FyH55BMYbGrv8HcLmuHvOdnASara61BhkuyQEwsCI7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kJi6MeiiezkSDWEX4w6+JGpCtIMsX+8c1BPgsm7bVmH11xgCFiYAIn47SOZSkDIxM
-	 4igE8cDxUMTgB3ZJv1CxlIb7DqvCOVDeU8NEPtJLiI5+WO9/+/iQMGnDz6mxliaqyt
-	 uLyyQvc5PmQaOMVEMAxVlNEXH2msvEAJjaeJT/80=
+	b=tSEI9Az59mH6oVv6oCXN+7+HyrQqvG9C2IBrv7TNdEQ12dz89agDz61aEZ13v+T7w
+	 YMK1jIvEbgeg2ITAHbHLZIhzVicW0q+VjNFPYn4FQhKKHXWgfy/LjVzXgpKeMSN0jE
+	 KQ2IMbtQtaUiXkqNU4xY4gGornw3S5iA9fSSyAvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zong-Zhe Yang <kevin_yang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	linuxppc-dev@lists.ozlabs.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Song Liu <songliubraving@fb.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 149/590] wifi: rtw89: tweak setting of channel and TX power for MLO
-Date: Wed,  5 Feb 2025 14:38:24 +0100
-Message-ID: <20250205134500.977133690@linuxfoundation.org>
+Subject: [PATCH 6.6 175/393] perf machine: Dont ignore _etext when not a text symbol
+Date: Wed,  5 Feb 2025 14:41:34 +0100
+Message-ID: <20250205134426.990638038@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,385 +58,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zong-Zhe Yang <kevin_yang@realtek.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 2305ebc1835b1ca921045b4f0941e82edde3249b ]
+[ Upstream commit 7a93786c306296f15e728b1dbd949a319e4e3d19 ]
 
-Setting of channel and TX power depend on channel contexts, but original
-code cannot handle combination of MCC (multi-channel concurrency) and MLO
-well. So according to active interfaces, we generate a table for current
-channel contexts. And then based on entity mode, we get the corresponding
-channel context to apply during channel or TX power setting. When MLO is
-supported, there will be dual-PHY and we will apply the channel context of
-the 2nd link to the 2nd PHY.
+Depending on how vmlinux.lds is written, _etext might be the very first
+data symbol instead of the very last text symbol.
 
-Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241022083106.149252-5-pkshih@realtek.com
-Stable-dep-of: e47f0a589854 ("wifi: rtw89: fix proceeding MCC with wrong scanning state after sequence changes")
+Don't require it to be a text symbol, accept any symbol type.
+
+Comitter notes:
+
+See the first Link for further discussion, but it all boils down to
+this:
+
+ ---
+  # grep -e _stext -e _etext -e _edata /proc/kallsyms
+  c0000000 T _stext
+  c08b8000 D _etext
+
+  So there is no _edata and _etext is not text
+
+  $ ppc-linux-objdump -x vmlinux | grep -e _stext -e _etext -e _edata
+  c0000000 g       .head.text	00000000 _stext
+  c08b8000 g       .rodata	00000000 _etext
+  c1378000 g       .sbss	00000000 _edata
+ ---
+
+Fixes: ed9adb2035b5be58 ("perf machine: Read also the end of the kernel")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: linuxppc-dev@lists.ozlabs.org
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Song Liu <songliubraving@fb.com>
+Link: https://lore.kernel.org/r/b3ee1994d95257cb7f2de037c5030ba7d1bed404.1736327613.git.christophe.leroy@csgroup.eu
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/chan.c |  80 +++++++++++++++-
- drivers/net/wireless/realtek/rtw89/chan.h |   8 ++
- drivers/net/wireless/realtek/rtw89/core.c | 111 ++++++++++------------
- drivers/net/wireless/realtek/rtw89/core.h |  15 ++-
- 4 files changed, 149 insertions(+), 65 deletions(-)
+ tools/perf/util/machine.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/chan.c b/drivers/net/wireless/realtek/rtw89/chan.c
-index 2b7e6921ff9c6..fb9449930c40a 100644
---- a/drivers/net/wireless/realtek/rtw89/chan.c
-+++ b/drivers/net/wireless/realtek/rtw89/chan.c
-@@ -299,6 +299,64 @@ static void rtw89_normalize_link_chanctx(struct rtw89_dev *rtwdev,
- 	rtw89_swap_chanctx(rtwdev, rtwvif_link->chanctx_idx, cur->chanctx_idx);
- }
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index 7c6874804660e..e2a6facd1c4e2 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -1217,7 +1217,7 @@ static int machine__get_running_kernel_start(struct machine *machine,
  
-+const struct rtw89_chan *__rtw89_mgnt_chan_get(struct rtw89_dev *rtwdev,
-+					       const char *caller_message,
-+					       u8 link_index)
-+{
-+	struct rtw89_hal *hal = &rtwdev->hal;
-+	struct rtw89_entity_mgnt *mgnt = &hal->entity_mgnt;
-+	enum rtw89_chanctx_idx chanctx_idx;
-+	enum rtw89_chanctx_idx roc_idx;
-+	enum rtw89_entity_mode mode;
-+	u8 role_index;
-+
-+	lockdep_assert_held(&rtwdev->mutex);
-+
-+	if (unlikely(link_index >= __RTW89_MLD_MAX_LINK_NUM)) {
-+		WARN(1, "link index %u is invalid (max link inst num: %d)\n",
-+		     link_index, __RTW89_MLD_MAX_LINK_NUM);
-+		goto dflt;
-+	}
-+
-+	mode = rtw89_get_entity_mode(rtwdev);
-+	switch (mode) {
-+	case RTW89_ENTITY_MODE_SCC_OR_SMLD:
-+	case RTW89_ENTITY_MODE_MCC:
-+		role_index = 0;
-+		break;
-+	case RTW89_ENTITY_MODE_MCC_PREPARE:
-+		role_index = 1;
-+		break;
-+	default:
-+		WARN(1, "Invalid ent mode: %d\n", mode);
-+		goto dflt;
-+	}
-+
-+	chanctx_idx = mgnt->chanctx_tbl[role_index][link_index];
-+	if (chanctx_idx == RTW89_CHANCTX_IDLE)
-+		goto dflt;
-+
-+	roc_idx = atomic_read(&hal->roc_chanctx_idx);
-+	if (roc_idx != RTW89_CHANCTX_IDLE) {
-+		/* ROC is ongoing (given ROC runs on RTW89_ROC_BY_LINK_INDEX).
-+		 * If @link_index is the same as RTW89_ROC_BY_LINK_INDEX, get
-+		 * the ongoing ROC chanctx.
-+		 */
-+		if (link_index == RTW89_ROC_BY_LINK_INDEX)
-+			chanctx_idx = roc_idx;
-+	}
-+
-+	return rtw89_chan_get(rtwdev, chanctx_idx);
-+
-+dflt:
-+	rtw89_debug(rtwdev, RTW89_DBG_CHAN,
-+		    "%s (%s): prefetch NULL on link index %u\n",
-+		    __func__, caller_message ?: "", link_index);
-+
-+	return rtw89_chan_get(rtwdev, RTW89_CHANCTX_0);
-+}
-+EXPORT_SYMBOL(__rtw89_mgnt_chan_get);
-+
- static void rtw89_entity_recalc_mgnt_roles(struct rtw89_dev *rtwdev)
- {
- 	struct rtw89_hal *hal = &rtwdev->hal;
-@@ -306,13 +364,18 @@ static void rtw89_entity_recalc_mgnt_roles(struct rtw89_dev *rtwdev)
- 	struct rtw89_vif_link *link;
- 	struct rtw89_vif *role;
- 	u8 pos = 0;
--	int i;
-+	int i, j;
+ 	err = kallsyms__get_symbol_start(filename, "_edata", &addr);
+ 	if (err)
+-		err = kallsyms__get_function_start(filename, "_etext", &addr);
++		err = kallsyms__get_symbol_start(filename, "_etext", &addr);
+ 	if (!err)
+ 		*end = addr;
  
- 	lockdep_assert_held(&rtwdev->mutex);
- 
- 	for (i = 0; i < RTW89_MAX_INTERFACE_NUM; i++)
- 		mgnt->active_roles[i] = NULL;
- 
-+	for (i = 0; i < RTW89_MAX_INTERFACE_NUM; i++) {
-+		for (j = 0; j < __RTW89_MLD_MAX_LINK_NUM; j++)
-+			mgnt->chanctx_tbl[i][j] = RTW89_CHANCTX_IDLE;
-+	}
-+
- 	/* To be consistent with legacy behavior, expect the first active role
- 	 * which uses RTW89_CHANCTX_0 to put at position 0, and make its first
- 	 * link instance take RTW89_CHANCTX_0. (normalizing)
-@@ -341,6 +404,14 @@ static void rtw89_entity_recalc_mgnt_roles(struct rtw89_dev *rtwdev)
- 			break;
- 		}
- 
-+		for (i = 0; i < role->links_inst_valid_num; i++) {
-+			link = rtw89_vif_get_link_inst(role, i);
-+			if (!link || !link->chanctx_assigned)
-+				continue;
-+
-+			mgnt->chanctx_tbl[pos][i] = link->chanctx_idx;
-+		}
-+
- 		mgnt->active_roles[pos++] = role;
- 	}
- }
-@@ -371,9 +442,14 @@ enum rtw89_entity_mode rtw89_entity_recalc(struct rtw89_dev *rtwdev)
- 		set_bit(RTW89_CHANCTX_0, recalc_map);
- 		fallthrough;
- 	case 1:
--		mode = RTW89_ENTITY_MODE_SCC;
-+		mode = RTW89_ENTITY_MODE_SCC_OR_SMLD;
- 		break;
- 	case 2 ... NUM_OF_RTW89_CHANCTX:
-+		if (w.active_roles == 1) {
-+			mode = RTW89_ENTITY_MODE_SCC_OR_SMLD;
-+			break;
-+		}
-+
- 		if (w.active_roles != NUM_OF_RTW89_MCC_ROLES) {
- 			rtw89_debug(rtwdev, RTW89_DBG_CHAN,
- 				    "unhandled ent: %d chanctxs %d roles\n",
-diff --git a/drivers/net/wireless/realtek/rtw89/chan.h b/drivers/net/wireless/realtek/rtw89/chan.h
-index 74de13a2e7da9..2eb31dff20831 100644
---- a/drivers/net/wireless/realtek/rtw89/chan.h
-+++ b/drivers/net/wireless/realtek/rtw89/chan.h
-@@ -101,6 +101,14 @@ void rtw89_chanctx_track(struct rtw89_dev *rtwdev);
- void rtw89_chanctx_pause(struct rtw89_dev *rtwdev,
- 			 enum rtw89_chanctx_pause_reasons rsn);
- void rtw89_chanctx_proceed(struct rtw89_dev *rtwdev);
-+
-+const struct rtw89_chan *__rtw89_mgnt_chan_get(struct rtw89_dev *rtwdev,
-+					       const char *caller_message,
-+					       u8 link_index);
-+
-+#define rtw89_mgnt_chan_get(rtwdev, link_index) \
-+	__rtw89_mgnt_chan_get(rtwdev, __func__, link_index)
-+
- int rtw89_chanctx_ops_add(struct rtw89_dev *rtwdev,
- 			  struct ieee80211_chanctx_conf *ctx);
- void rtw89_chanctx_ops_remove(struct rtw89_dev *rtwdev,
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index e864da4d37519..d35d066c0b123 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -341,84 +341,47 @@ void rtw89_get_channel_params(const struct cfg80211_chan_def *chandef,
- 	rtw89_chan_create(chan, center_chan, channel->hw_value, band, bandwidth);
- }
- 
--void rtw89_core_set_chip_txpwr(struct rtw89_dev *rtwdev)
-+static void __rtw89_core_set_chip_txpwr(struct rtw89_dev *rtwdev,
-+					const struct rtw89_chan *chan,
-+					enum rtw89_phy_idx phy_idx)
- {
--	struct rtw89_hal *hal = &rtwdev->hal;
- 	const struct rtw89_chip_info *chip = rtwdev->chip;
--	const struct rtw89_chan *chan;
--	enum rtw89_chanctx_idx chanctx_idx;
--	enum rtw89_chanctx_idx roc_idx;
--	enum rtw89_phy_idx phy_idx;
--	enum rtw89_entity_mode mode;
- 	bool entity_active;
- 
--	mode = rtw89_get_entity_mode(rtwdev);
--	switch (mode) {
--	case RTW89_ENTITY_MODE_SCC:
--	case RTW89_ENTITY_MODE_MCC:
--		chanctx_idx = RTW89_CHANCTX_0;
--		break;
--	case RTW89_ENTITY_MODE_MCC_PREPARE:
--		chanctx_idx = RTW89_CHANCTX_1;
--		break;
--	default:
--		WARN(1, "Invalid ent mode: %d\n", mode);
-+	entity_active = rtw89_get_entity_state(rtwdev, phy_idx);
-+	if (!entity_active)
- 		return;
--	}
- 
--	roc_idx = atomic_read(&hal->roc_chanctx_idx);
--	if (roc_idx != RTW89_CHANCTX_IDLE)
--		chanctx_idx = roc_idx;
-+	chip->ops->set_txpwr(rtwdev, chan, phy_idx);
-+}
- 
--	phy_idx = RTW89_PHY_0;
-+void rtw89_core_set_chip_txpwr(struct rtw89_dev *rtwdev)
-+{
-+	const struct rtw89_chan *chan;
- 
--	entity_active = rtw89_get_entity_state(rtwdev, phy_idx);
--	if (!entity_active)
-+	chan = rtw89_mgnt_chan_get(rtwdev, 0);
-+	__rtw89_core_set_chip_txpwr(rtwdev, chan, RTW89_PHY_0);
-+
-+	if (!rtwdev->support_mlo)
- 		return;
- 
--	chan = rtw89_chan_get(rtwdev, chanctx_idx);
--	chip->ops->set_txpwr(rtwdev, chan, phy_idx);
-+	chan = rtw89_mgnt_chan_get(rtwdev, 1);
-+	__rtw89_core_set_chip_txpwr(rtwdev, chan, RTW89_PHY_1);
- }
- 
--int rtw89_set_channel(struct rtw89_dev *rtwdev)
-+static void __rtw89_set_channel(struct rtw89_dev *rtwdev,
-+				const struct rtw89_chan *chan,
-+				enum rtw89_mac_idx mac_idx,
-+				enum rtw89_phy_idx phy_idx)
- {
--	struct rtw89_hal *hal = &rtwdev->hal;
- 	const struct rtw89_chip_info *chip = rtwdev->chip;
- 	const struct rtw89_chan_rcd *chan_rcd;
--	const struct rtw89_chan *chan;
--	enum rtw89_chanctx_idx chanctx_idx;
--	enum rtw89_chanctx_idx roc_idx;
--	enum rtw89_mac_idx mac_idx;
--	enum rtw89_phy_idx phy_idx;
- 	struct rtw89_channel_help_params bak;
--	enum rtw89_entity_mode mode;
- 	bool entity_active;
- 
--	mode = rtw89_entity_recalc(rtwdev);
--	switch (mode) {
--	case RTW89_ENTITY_MODE_SCC:
--	case RTW89_ENTITY_MODE_MCC:
--		chanctx_idx = RTW89_CHANCTX_0;
--		break;
--	case RTW89_ENTITY_MODE_MCC_PREPARE:
--		chanctx_idx = RTW89_CHANCTX_1;
--		break;
--	default:
--		WARN(1, "Invalid ent mode: %d\n", mode);
--		return -EINVAL;
--	}
--
--	roc_idx = atomic_read(&hal->roc_chanctx_idx);
--	if (roc_idx != RTW89_CHANCTX_IDLE)
--		chanctx_idx = roc_idx;
--
--	mac_idx = RTW89_MAC_0;
--	phy_idx = RTW89_PHY_0;
--
- 	entity_active = rtw89_get_entity_state(rtwdev, phy_idx);
- 
--	chan = rtw89_chan_get(rtwdev, chanctx_idx);
--	chan_rcd = rtw89_chan_rcd_get(rtwdev, chanctx_idx);
-+	chan_rcd = rtw89_chan_rcd_get_by_chan(chan);
- 
- 	rtw89_chip_set_channel_prepare(rtwdev, &bak, chan, mac_idx, phy_idx);
- 
-@@ -434,6 +397,28 @@ int rtw89_set_channel(struct rtw89_dev *rtwdev)
- 	}
- 
- 	rtw89_set_entity_state(rtwdev, phy_idx, true);
-+}
-+
-+int rtw89_set_channel(struct rtw89_dev *rtwdev)
-+{
-+	const struct rtw89_chan *chan;
-+	enum rtw89_entity_mode mode;
-+
-+	mode = rtw89_entity_recalc(rtwdev);
-+	if (mode < 0 || mode >= NUM_OF_RTW89_ENTITY_MODE) {
-+		WARN(1, "Invalid ent mode: %d\n", mode);
-+		return -EINVAL;
-+	}
-+
-+	chan = rtw89_mgnt_chan_get(rtwdev, 0);
-+	__rtw89_set_channel(rtwdev, chan, RTW89_MAC_0, RTW89_PHY_0);
-+
-+	if (!rtwdev->support_mlo)
-+		return 0;
-+
-+	chan = rtw89_mgnt_chan_get(rtwdev, 1);
-+	__rtw89_set_channel(rtwdev, chan, RTW89_MAC_1, RTW89_PHY_1);
-+
- 	return 0;
- }
- 
-@@ -3158,9 +3143,10 @@ void rtw89_roc_start(struct rtw89_dev *rtwdev, struct rtw89_vif *rtwvif)
- 	rtw89_leave_ips_by_hwflags(rtwdev);
- 	rtw89_leave_lps(rtwdev);
- 
--	rtwvif_link = rtw89_vif_get_link_inst(rtwvif, 0);
-+	rtwvif_link = rtw89_vif_get_link_inst(rtwvif, RTW89_ROC_BY_LINK_INDEX);
- 	if (unlikely(!rtwvif_link)) {
--		rtw89_err(rtwdev, "roc start: find no link on HW-0\n");
-+		rtw89_err(rtwdev, "roc start: find no link on HW-%u\n",
-+			  RTW89_ROC_BY_LINK_INDEX);
- 		return;
- 	}
- 
-@@ -3212,9 +3198,10 @@ void rtw89_roc_end(struct rtw89_dev *rtwdev, struct rtw89_vif *rtwvif)
- 	rtw89_leave_ips_by_hwflags(rtwdev);
- 	rtw89_leave_lps(rtwdev);
- 
--	rtwvif_link = rtw89_vif_get_link_inst(rtwvif, 0);
-+	rtwvif_link = rtw89_vif_get_link_inst(rtwvif, RTW89_ROC_BY_LINK_INDEX);
- 	if (unlikely(!rtwvif_link)) {
--		rtw89_err(rtwdev, "roc end: find no link on HW-0\n");
-+		rtw89_err(rtwdev, "roc end: find no link on HW-%u\n",
-+			  RTW89_ROC_BY_LINK_INDEX);
- 		return;
- 	}
- 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
-index 65ad3d03d0530..ff3048d2489f1 100644
---- a/drivers/net/wireless/realtek/rtw89/core.h
-+++ b/drivers/net/wireless/realtek/rtw89/core.h
-@@ -3424,6 +3424,8 @@ enum rtw89_roc_state {
- 	RTW89_ROC_MGMT,
- };
- 
-+#define RTW89_ROC_BY_LINK_INDEX 0
-+
- struct rtw89_roc {
- 	struct ieee80211_channel chan;
- 	struct delayed_work roc_work;
-@@ -4619,7 +4621,7 @@ enum rtw89_chanctx_changes {
- };
- 
- enum rtw89_entity_mode {
--	RTW89_ENTITY_MODE_SCC,
-+	RTW89_ENTITY_MODE_SCC_OR_SMLD,
- 	RTW89_ENTITY_MODE_MCC_PREPARE,
- 	RTW89_ENTITY_MODE_MCC,
- 
-@@ -4634,6 +4636,8 @@ enum rtw89_entity_mode {
- struct rtw89_entity_mgnt {
- 	struct list_head active_list;
- 	struct rtw89_vif *active_roles[RTW89_MAX_INTERFACE_NUM];
-+	enum rtw89_chanctx_idx chanctx_tbl[RTW89_MAX_INTERFACE_NUM]
-+					  [__RTW89_MLD_MAX_LINK_NUM];
- };
- 
- struct rtw89_chanctx {
-@@ -6371,6 +6375,15 @@ const struct rtw89_chan_rcd *rtw89_chan_rcd_get(struct rtw89_dev *rtwdev,
- 	return &hal->chanctx[idx].rcd;
- }
- 
-+static inline
-+const struct rtw89_chan_rcd *rtw89_chan_rcd_get_by_chan(const struct rtw89_chan *chan)
-+{
-+	const struct rtw89_chanctx *chanctx =
-+		container_of_const(chan, struct rtw89_chanctx, chan);
-+
-+	return &chanctx->rcd;
-+}
-+
- static inline
- const struct rtw89_chan *rtw89_scan_chan_get(struct rtw89_dev *rtwdev)
- {
 -- 
 2.39.5
 
