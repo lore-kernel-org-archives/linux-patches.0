@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C42B18E368;
-	Wed,  5 Feb 2025 15:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BC118E368;
+	Wed,  5 Feb 2025 15:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767836; cv=none; b=Xbukc5GR+GDYhCM0fO+11Ga33S+fOD/bkZEMsMGiYhO8dicDPP8LVcxFa8t69e1TWJxFLxk79nsRfH5vRcirgDoQSZFVlj0FRbinNGK5V98cMNVbL30zjMyW7Ac/Xrf5j7NnygFj+EzaT7gg4f4dozdhez2fF7XBEfdwyBBF50Q=
+	t=1738767839; cv=none; b=eeDLXV89LJBabAcNzcIQZPCAe2MfEhm4gRS9Gr5aDOgnCT0dbZ72IospJlh3ERFmNwB2aLWBb+EbOlNI8KSmXK71ZHs89NzwJMDFcJ6bIkL6xPMgA3TnqqlzpG4sz0YkwNphTNCYLYTfjXMnhb+F7945sipz0BJMkHTVfrgro3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767836; c=relaxed/simple;
-	bh=8dk0DNbLq07hgDL2MHLA4RhNurvyFVwVwCOA0mDieD4=;
+	s=arc-20240116; t=1738767839; c=relaxed/simple;
+	bh=YNvH35D7KuM0SQPHksmQWtuwtvodKrkyToF3wWwJUpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g0f+k8mkhrA5AVJmec2GEIxLcxYRzNOLIPjm0Fg7bJ8FmvzidJJgOD2tiuhyab53B0phhIJzVlzX/WJp2Qg+sH+R3RJDLVPIuhBuSR0a8QbEpMTGwVGcU96+aolO7rOC8zIvTcufQamv11fz3UJqixg/vyKSe+xtq3zcDDDdzfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fr2LwDIL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ueHktW/PBAhcypELoythCy1tSrZAuhVg0vkHIh//j2ylrNw5QlfTe4uDbaSNo4Fo7d37IujZq9DgMOH04pKwoY93X9DZabuktFrPUDlO3Z/SrZx8u5125IpqHFoIVRdfHQHO8fD477nfk50nQudHfyh+e0stm0Wb3o5TtT9HH7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=naZhONY/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fr2LwDIL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D8B1C4CED6;
-	Wed,  5 Feb 2025 15:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="naZhONY/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BA6C4CED1;
+	Wed,  5 Feb 2025 15:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767836;
-	bh=8dk0DNbLq07hgDL2MHLA4RhNurvyFVwVwCOA0mDieD4=;
+	s=korg; t=1738767839;
+	bh=YNvH35D7KuM0SQPHksmQWtuwtvodKrkyToF3wWwJUpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fr2LwDILnTVYaDxwCoynwykfBk2jIxDlZ6dj4EZrgrc6JSye0e5TvGlE8JwZqRsK6
-	 n0BBlahLa20i5z6fwQS+RwHKHNEvIT0YEOhboif6usytHRKyn16ucPsuMaSASYkY8k
-	 WDo9n20VVTOAqdTd+9rSSfkp8uuAHJHWy4pdkfbc=
+	b=naZhONY/6bhMHis0mDG/TsJ/eAaLj8IjEkjcj4cJKunamHjcFt3Vcw1qT60akWANk
+	 fAUb8A4WAxxepXfocqhOR70ZC5EsVXXGKp9EnFTb9SihTGZGH1YQL5on59mgNtmwRQ
+	 scHuqLlsIDIZEmBaOmAIv5+5sPo87Y+UxyrTGXDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Desnes Nunes <desnesn@redhat.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 460/623] media: dvb-usb-v2: af9035: fix ISO C90 compilation error on af9035_i2c_master_xfer
-Date: Wed,  5 Feb 2025 14:43:22 +0100
-Message-ID: <20250205134513.812268914@linuxfoundation.org>
+Subject: [PATCH 6.12 516/590] net: xdp: Disallow attaching device-bound programs in generic mode
+Date: Wed,  5 Feb 2025 14:44:31 +0100
+Message-ID: <20250205134515.006858224@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,73 +49,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Desnes Nunes <desnesn@redhat.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-[ Upstream commit c36b9ad1a8add3c114e25fe167efa217a813b0c7 ]
+[ Upstream commit 3595599fa8360bb3c7afa7ee50c810b4a64106ea ]
 
-This fixes a 'ISO C90 forbids mixed declarations and code' compilation
-error on af9035_i2c_master_xfer, which is caused by the sanity check added
-on user controlled msg[i], before declaring the demodulator register.
+Device-bound programs are used to support RX metadata kfuncs. These
+kfuncs are driver-specific and rely on the driver context to read the
+metadata. This means they can't work in generic XDP mode. However, there
+is no check to disallow such programs from being attached in generic
+mode, in which case the metadata kfuncs will be called in an invalid
+context, leading to crashes.
 
-Fixes: 7bf744f2de0a ("media: dvb-usb-v2: af9035: Fix null-ptr-deref in af9035_i2c_master_xfer")
-Signed-off-by: Desnes Nunes <desnesn@redhat.com>
-Link: https://lore.kernel.org/r/20240919172755.196907-1-desnesn@redhat.com
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fix this by adding a check to disallow attaching device-bound programs
+in generic mode.
+
+Fixes: 2b3486bc2d23 ("bpf: Introduce device-bound XDP programs")
+Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
+Closes: https://lore.kernel.org/r/dae862ec-43b5-41a0-8edf-46c59071cdda@hetzner-cloud.de
+Tested-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20250127131344.238147-1-toke@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/af9035.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ net/core/dev.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/af9035.c b/drivers/media/usb/dvb-usb-v2/af9035.c
-index 0d2c42819d390..218f712f56b17 100644
---- a/drivers/media/usb/dvb-usb-v2/af9035.c
-+++ b/drivers/media/usb/dvb-usb-v2/af9035.c
-@@ -322,13 +322,16 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
- 			ret = -EOPNOTSUPP;
- 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
- 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
-+			/* demod access via firmware interface */
-+			u32 reg;
-+
- 			if (msg[0].len < 3 || msg[1].len < 1) {
- 				ret = -EOPNOTSUPP;
- 				goto unlock;
- 			}
--			/* demod access via firmware interface */
--			u32 reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
--					msg[0].buf[2];
-+
-+			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
-+				msg[0].buf[2];
- 
- 			if (msg[0].addr == state->af9033_i2c_addr[1])
- 				reg |= 0x100000;
-@@ -385,13 +388,16 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
- 			ret = -EOPNOTSUPP;
- 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
- 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
-+			/* demod access via firmware interface */
-+			u32 reg;
-+
- 			if (msg[0].len < 3) {
- 				ret = -EOPNOTSUPP;
- 				goto unlock;
- 			}
--			/* demod access via firmware interface */
--			u32 reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
--					msg[0].buf[2];
-+
-+			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
-+				msg[0].buf[2];
- 
- 			if (msg[0].addr == state->af9033_i2c_addr[1])
- 				reg |= 0x100000;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 7c3e2a448e5c6..2e0fe38d0e877 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -9595,6 +9595,10 @@ static int dev_xdp_attach(struct net_device *dev, struct netlink_ext_ack *extack
+ 			NL_SET_ERR_MSG(extack, "Program bound to different device");
+ 			return -EINVAL;
+ 		}
++		if (bpf_prog_is_dev_bound(new_prog->aux) && mode == XDP_MODE_SKB) {
++			NL_SET_ERR_MSG(extack, "Can't attach device-bound programs in generic mode");
++			return -EINVAL;
++		}
+ 		if (new_prog->expected_attach_type == BPF_XDP_DEVMAP) {
+ 			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
+ 			return -EINVAL;
 -- 
 2.39.5
 
