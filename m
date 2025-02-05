@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C336170A13;
-	Wed,  5 Feb 2025 15:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A301519BF;
+	Wed,  5 Feb 2025 15:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767719; cv=none; b=uZ2vmhX0Dfl5pEfafUi89u8xEsYkcQsSSUb+iI8RFRFwpdf5UJpXr3jvPaxECim/YimS+Lc5j7n18GYRU++xptUIe25UfrE8KXcc0g76VLV/NomEw1cuTyQODvhugaT5A9gR4nP6GphChQfsc4AhjZD6KXxn8Aax7dui+6ddLMk=
+	t=1738767722; cv=none; b=pRe+4wZxoYXTPlRemGoZMHocwDHyBIZywiLvpGPxcAyRQM/AhVRktRfTtjnaJXUxF+67VTVm0Bs1GcQfFn6Egh8UAbzOwXmEFyROsgfcLrmYYxVdC8HJmMzsie3lpcGVrlSGed5FAjZTk5t2xvTi9Gujq5idIPQMasmH4bYIclk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767719; c=relaxed/simple;
-	bh=nNm2Jdq9xuQbGV4NJPN4fy/03/1+WZUhu7QhjmmVwlc=;
+	s=arc-20240116; t=1738767722; c=relaxed/simple;
+	bh=eEa7cnAFX7zRWy4bo2uyX8GwhcKl2481kLdJCDFahBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMPiyo+YXXZDtnpAQmh1gy5sG8Hrcci3g/JFQ5TZnoxZvrPKH44yN/n9uY9wK+hUmrNdfHN6ijnOelIajR4i9Sq9HXsk1ZOj54fAAeA6la2qmwmkpKT+2ypz0kwY4IIRUgbe3noIs07KKfLT+TkPM0578LwkwaISAL4JE9IwNL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L27g1PdK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XOZNhZAjWFnfHtLTuaK0DQs5WVB/Gd6avEPm8AUELeIvNqr9HJns8DNzvJ81+KpCN5rvvvHUvKlRAlYnbrMhqyOYMkvTybvlRA1qsScKWEaUXSel7ecb6G6IE2NEJbc748SUcSWyATMoypWtCafIwKpg7gnly+oQqcokqUjyXu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SGb9jwL9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L27g1PdK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7DF1C4CED1;
-	Wed,  5 Feb 2025 15:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SGb9jwL9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BDDC4CED1;
+	Wed,  5 Feb 2025 15:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767719;
-	bh=nNm2Jdq9xuQbGV4NJPN4fy/03/1+WZUhu7QhjmmVwlc=;
+	s=korg; t=1738767722;
+	bh=eEa7cnAFX7zRWy4bo2uyX8GwhcKl2481kLdJCDFahBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L27g1PdKv8HQF8/zryg33/vFKPm7diIsxusB/BXmtMVZ4MTPjniHxZrz/sm70CabX
-	 MTKqa203bfNijDLZkttPnEpIjpXxYzEq2+5rbBaWLzj105cWWYjeQ7GiG//hY0W4X8
-	 MEgjJIHYpWh6d8qr8HaRSQJ8RHf/7TkpwODxf3ws=
+	b=SGb9jwL9OGnvK4LXVp9LOpXIErlDqP3bgUIbgmjGBkDAMoRRw/RtzV0sV6INonsNH
+	 VyXyq9DH+R1BfYqKc8SPZwm0SF4naHLUthnVySZAhJpm0irr5fIMba93qI7Ex0tHQG
+	 bnrLCP4Q2/9Z1H5JvM2ntv6gNOavBcAtcRLIpnFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mitchell Ma <machuang@radxa.com>,
+	Jagan Teki <jagan@edgeble.ai>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 474/590] net: hns3: fix oops when unload drivers paralleling
-Date: Wed,  5 Feb 2025 14:43:49 +0100
-Message-ID: <20250205134513.394179921@linuxfoundation.org>
+Subject: [PATCH 6.13 421/623] arm64: dts: rockchip: Fix PCIe3 handling for Edgeble-6TOPS Modules
+Date: Wed,  5 Feb 2025 14:42:43 +0100
+Message-ID: <20250205134512.332533321@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,123 +48,188 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Jagan Teki <jagan@edgeble.ai>
 
-[ Upstream commit 92e5995773774a3e70257e9c95ea03518268bea5 ]
+[ Upstream commit e2ee8a440869281620fbcacdca6e13cbeebcc1be ]
 
-When unload hclge driver, it tries to disable sriov first for each
-ae_dev node from hnae3_ae_dev_list. If user unloads hns3 driver at
-the time, because it removes all the ae_dev nodes, and it may cause
-oops.
+The Edgeble 6TOPS modules has configured the PCIe3.0 with
+- 2 lanes on Port1 of pcie3x2 controller for M.2 M-Key
+- 2 lanes on Port0 of pcie3x4 controller for B and E-Key
 
-But we can't simply use hnae3_common_lock for this. Because in the
-process flow of pci_disable_sriov(), it will trigger the remove flow
-of VF, which will also take hnae3_common_lock.
+The, current DT uses opposite controller nodes that indeed uses
+incorrect reset, regulator nodes.
 
-To fixes it, introduce a new mutex to protect the unload process.
+The configuration also uses refclk oscillator that need to enable
+explicitly in DT to avoid the probe hang on while reading DBI.
 
-Fixes: 0dd8a25f355b ("net: hns3: disable sriov before unload hclge layer")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20250118094741.3046663-1-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+So, this patch fixes all these essential issues and make this PCIe work
+properly.
+
+Issues fixed are,
+- Fix the associate controller nodes for M and B, E-Key
+- Fix the reset gpio handlings
+- Fix the regulator handlings and naming convensions
+- Support pcie_refclk oscillator
+
+Fixes: 92eaee21abbd ("arm64: dts: rockchip: Add Edgeble NCM6A-IO M.2 B-Key, E-Key")
+Fixes: 5d85d4c7e03b ("arm64: dts: rockchip: Add Edgeble NCM6A-IO M.2 M-Key")
+Reported-by: Mitchell Ma <machuang@radxa.com>
+Co-developed-by: Mitchell Ma <machuang@radxa.com>
+Signed-off-by: Jagan Teki <jagan@edgeble.ai>
+Link: https://lore.kernel.org/r/20241221151758.345257-1-jagan@edgeble.ai
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hnae3.c       | 15 +++++++++++++++
- drivers/net/ethernet/hisilicon/hns3/hnae3.h       |  2 ++
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c   |  2 ++
- .../ethernet/hisilicon/hns3/hns3pf/hclge_main.c   |  2 ++
- .../ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c |  2 ++
- 5 files changed, 23 insertions(+)
+ .../dts/rockchip/rk3588-edgeble-neu6a-io.dtsi | 81 ++++++++++++++-----
+ 1 file changed, 59 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hnae3.c b/drivers/net/ethernet/hisilicon/hns3/hnae3.c
-index 9a63fbc694083..b25fb400f4767 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hnae3.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hnae3.c
-@@ -40,6 +40,21 @@ EXPORT_SYMBOL(hnae3_unregister_ae_algo_prepare);
-  */
- static DEFINE_MUTEX(hnae3_common_lock);
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-edgeble-neu6a-io.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-edgeble-neu6a-io.dtsi
+index 05ae9bdcfbbde..7125790bbed22 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-edgeble-neu6a-io.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588-edgeble-neu6a-io.dtsi
+@@ -10,6 +10,15 @@
+ 		stdout-path = "serial2:1500000n8";
+ 	};
  
-+/* ensure the drivers being unloaded one by one */
-+static DEFINE_MUTEX(hnae3_unload_lock);
++	/* Unnamed gated oscillator: 100MHz,3.3V,3225 */
++	pcie30_port0_refclk: pcie30_port1_refclk: pcie-oscillator {
++		compatible = "gated-fixed-clock";
++		#clock-cells = <0>;
++		clock-frequency = <100000000>;
++		clock-output-names = "pcie30_refclk";
++		vdd-supply = <&vcc3v3_pi6c_05>;
++	};
 +
-+void hnae3_acquire_unload_lock(void)
-+{
-+	mutex_lock(&hnae3_unload_lock);
-+}
-+EXPORT_SYMBOL(hnae3_acquire_unload_lock);
-+
-+void hnae3_release_unload_lock(void)
-+{
-+	mutex_unlock(&hnae3_unload_lock);
-+}
-+EXPORT_SYMBOL(hnae3_release_unload_lock);
-+
- static bool hnae3_client_match(enum hnae3_client_type client_type)
- {
- 	if (client_type == HNAE3_CLIENT_KNIC ||
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hnae3.h b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-index d873523e84f27..388c70331a55b 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hnae3.h
-@@ -963,4 +963,6 @@ int hnae3_register_client(struct hnae3_client *client);
- void hnae3_set_client_init_flag(struct hnae3_client *client,
- 				struct hnae3_ae_dev *ae_dev,
- 				unsigned int inited);
-+void hnae3_acquire_unload_lock(void);
-+void hnae3_release_unload_lock(void);
- #endif
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 73825b6bd485d..dc60ac3bde7f2 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -6002,9 +6002,11 @@ module_init(hns3_init_module);
-  */
- static void __exit hns3_exit_module(void)
- {
-+	hnae3_acquire_unload_lock();
- 	pci_unregister_driver(&hns3_driver);
- 	hnae3_unregister_client(&client);
- 	hns3_dbg_unregister_debugfs();
-+	hnae3_release_unload_lock();
- }
- module_exit(hns3_exit_module);
+ 	vcc3v3_pcie2x1l0: regulator-vcc3v3-pcie2x1l0 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vcc3v3_pcie2x1l0";
+@@ -19,26 +28,26 @@
+ 		vin-supply = <&vcc_3v3_s3>;
+ 	};
  
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 9a67fe0554a52..06eedf80cfac4 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -12929,9 +12929,11 @@ static int __init hclge_init(void)
+-	vcc3v3_pcie3x2: regulator-vcc3v3-pcie3x2 {
++	vcc3v3_bkey: regulator-vcc3v3-bkey {
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
+ 		gpios = <&gpio2 RK_PC4 GPIO_ACTIVE_HIGH>; /* PCIE_4G_PWEN */
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&pcie3x2_vcc3v3_en>;
+-		regulator-name = "vcc3v3_pcie3x2";
++		pinctrl-0 = <&pcie_4g_pwen>;
++		regulator-name = "vcc3v3_bkey";
+ 		regulator-min-microvolt = <3300000>;
+ 		regulator-max-microvolt = <3300000>;
+ 		startup-delay-us = <5000>;
+ 		vin-supply = <&vcc5v0_sys>;
+ 	};
  
- static void __exit hclge_exit(void)
- {
-+	hnae3_acquire_unload_lock();
- 	hnae3_unregister_ae_algo_prepare(&ae_algo);
- 	hnae3_unregister_ae_algo(&ae_algo);
- 	destroy_workqueue(hclge_wq);
-+	hnae3_release_unload_lock();
- }
- module_init(hclge_init);
- module_exit(hclge_exit);
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index d47bd8d6145f9..fd5992164846b 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -3412,8 +3412,10 @@ static int __init hclgevf_init(void)
+-	vcc3v3_pcie3x4: regulator-vcc3v3-pcie3x4 {
++	vcc3v3_pcie30: vcc3v3_pi6c_05: regulator-vcc3v3-pi6c-05 {
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
+ 		gpios = <&gpio2 RK_PC5 GPIO_ACTIVE_HIGH>; /* PCIE30x4_PWREN_H */
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&pcie3x4_vcc3v3_en>;
+-		regulator-name = "vcc3v3_pcie3x4";
++		pinctrl-0 = <&pcie30x4_pwren_h>;
++		regulator-name = "vcc3v3_pcie30";
+ 		regulator-min-microvolt = <3300000>;
+ 		regulator-max-microvolt = <3300000>;
+ 		startup-delay-us = <5000>;
+@@ -98,24 +107,52 @@
+ };
  
- static void __exit hclgevf_exit(void)
- {
-+	hnae3_acquire_unload_lock();
- 	hnae3_unregister_ae_algo(&ae_algovf);
- 	destroy_workqueue(hclgevf_wq);
-+	hnae3_release_unload_lock();
- }
- module_init(hclgevf_init);
- module_exit(hclgevf_exit);
+ &pcie30phy {
++	data-lanes = <1 1 2 2>;
++	/* separate clock lines from the clock generator to phy and devices */
++	rockchip,rx-common-refclk-mode = <0 0 0 0>;
+ 	status = "okay";
+ };
+ 
+-/* B-Key and E-Key */
++/* M-Key */
+ &pcie3x2 {
++	/*
++	 * The board has a "pcie_refclk" oscillator that needs enabling,
++	 * so add it to the list of clocks.
++	 */
++	clocks = <&cru ACLK_PCIE_2L_MSTR>, <&cru ACLK_PCIE_2L_SLV>,
++		 <&cru ACLK_PCIE_2L_DBI>, <&cru PCLK_PCIE_2L>,
++		 <&cru CLK_PCIE_AUX1>, <&cru CLK_PCIE2L_PIPE>,
++		 <&pcie30_port1_refclk>;
++	clock-names = "aclk_mst", "aclk_slv",
++		      "aclk_dbi", "pclk",
++		      "aux", "pipe",
++		      "ref";
++	num-lanes = <2>;
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&pcie3x2_rst>;
+-	reset-gpios = <&gpio4 RK_PB6 GPIO_ACTIVE_HIGH>; /* PCIE30X4_PERSTn_M1_L */
+-	vpcie3v3-supply = <&vcc3v3_pcie3x2>;
++	pinctrl-0 = <&pcie30x2_perstn_m1_l>;
++	reset-gpios = <&gpio4 RK_PB0 GPIO_ACTIVE_HIGH>; /* PCIE30X2_PERSTn_M1_L */
++	vpcie3v3-supply = <&vcc3v3_pcie30>;
+ 	status = "okay";
+ };
+ 
+-/* M-Key */
++/* B-Key and E-Key */
+ &pcie3x4 {
++	/*
++	 * The board has a "pcie_refclk" oscillator that needs enabling,
++	 * so add it to the list of clocks.
++	 */
++	clocks = <&cru ACLK_PCIE_4L_MSTR>, <&cru ACLK_PCIE_4L_SLV>,
++		 <&cru ACLK_PCIE_4L_DBI>, <&cru PCLK_PCIE_4L>,
++		 <&cru CLK_PCIE_AUX0>, <&cru CLK_PCIE4L_PIPE>,
++		 <&pcie30_port0_refclk>;
++	clock-names = "aclk_mst", "aclk_slv",
++		      "aclk_dbi", "pclk",
++		      "aux", "pipe",
++		      "ref";
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&pcie3x4_rst>;
+-	reset-gpios = <&gpio4 RK_PB0 GPIO_ACTIVE_HIGH>; /* PCIE30X2_PERSTn_M1_L */
+-	vpcie3v3-supply = <&vcc3v3_pcie3x4>;
++	pinctrl-0 = <&pcie30x4_perstn_m1_l>;
++	reset-gpios = <&gpio4 RK_PB6 GPIO_ACTIVE_HIGH>; /* PCIE30X4_PERSTn_M1_L */
++	vpcie3v3-supply = <&vcc3v3_bkey>;
+ 	status = "okay";
+ };
+ 
+@@ -127,20 +164,20 @@
+ 	};
+ 
+ 	pcie3 {
+-		pcie3x2_rst: pcie3x2-rst {
+-			rockchip,pins = <4 RK_PB6 RK_FUNC_GPIO &pcfg_pull_none>;
++		pcie30x2_perstn_m1_l: pcie30x2-perstn-m1-l {
++			rockchip,pins = <4 RK_PB0 RK_FUNC_GPIO &pcfg_pull_none>;
+ 		};
+ 
+-		pcie3x2_vcc3v3_en: pcie3x2-vcc3v3-en {
+-			rockchip,pins = <2 RK_PC4 RK_FUNC_GPIO &pcfg_pull_none>;
++		pcie_4g_pwen: pcie-4g-pwen {
++			rockchip,pins = <2 RK_PC4 RK_FUNC_GPIO &pcfg_pull_down>;
+ 		};
+ 
+-		pcie3x4_rst: pcie3x4-rst {
+-			rockchip,pins = <4 RK_PB0 RK_FUNC_GPIO &pcfg_pull_none>;
++		pcie30x4_perstn_m1_l: pcie30x4-perstn-m1-l {
++			rockchip,pins = <4 RK_PB6 RK_FUNC_GPIO &pcfg_pull_none>;
+ 		};
+ 
+-		pcie3x4_vcc3v3_en: pcie3x4-vcc3v3-en {
+-			rockchip,pins = <2 RK_PC5 RK_FUNC_GPIO &pcfg_pull_none>;
++		pcie30x4_pwren_h: pcie30x4-pwren-h {
++			rockchip,pins = <2 RK_PC5 RK_FUNC_GPIO &pcfg_pull_down>;
+ 		};
+ 	};
+ 
 -- 
 2.39.5
 
