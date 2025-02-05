@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A521591E3;
-	Wed,  5 Feb 2025 15:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC0401591E3;
+	Wed,  5 Feb 2025 15:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767781; cv=none; b=aDD2PO3pI4iOqHSJn2ZnXtTCp3HbH3TxpdxnkWMk0655vrgUA1rq9mlW74U6RSgLWUo4aHQqTq5KdXxLX0pmjKPoky8gcQtJ9AsUlDOVyxPPrcleTLUHNFPuBQbf87kAPr+xhDksDMbj1mQc24eL68TO6uIVwwHIF7pSn/0thR0=
+	t=1738767784; cv=none; b=F9iQPRT/Spqw7RK20kJ+vuVJGGp1akU3lVCi0dQOnQ7a7lmIpDJsL7EiqlzTO3+g96xzzh0Xf/rBR77d5jenzc21CmjglRqyOdt6ll7ab5LNnZmuRSYpcAkX0ppvVXd2FEF5gD3KYW9Ls4WBNl7dR/wGKx/cDUsxc4xtII6nkkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767781; c=relaxed/simple;
-	bh=ivqrBA5lrO8fGBp/rNpe06isTwXjmUacTZ9sdVsAgDw=;
+	s=arc-20240116; t=1738767784; c=relaxed/simple;
+	bh=CuVGHUNyvajH4AYNQm8nOUfeSXKxoDKy3O4g8iMaIaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KksztnlSLpRKFyPpT2ZA75SmaKxhrvg156+7VmIu1hiRUOIHWTIgT3FcjF/h8c+Qjt+pjea5/UDEP4ZjpKwZ5if8m/bjSMRWbL/XAGvfoGlnkQbeLw+qrjgd13p5X8bXgkA/Thn4qk/rBpnZmpQh2RwkgjBQQzU9pyJQwWian/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iui0XF0b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k4E8IX567gfMkI/KaivAHwn/MR4sxOUaV0MKyBYJg6V0egQxs/F2MVPPutKZsBaTWd+lQH7y5DW9pa/yTkFIdTdCcgyBBpzLggBHNobesMpqTTR0kilNNrlygvoKd7WLZUDmYzHYmtjbEeLCyFecIu+dJu7xRKgDuQH+CCg7e2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmDjELdp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iui0XF0b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB1BC4CED1;
-	Wed,  5 Feb 2025 15:03:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmDjELdp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0BDC4CED1;
+	Wed,  5 Feb 2025 15:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767781;
-	bh=ivqrBA5lrO8fGBp/rNpe06isTwXjmUacTZ9sdVsAgDw=;
+	s=korg; t=1738767784;
+	bh=CuVGHUNyvajH4AYNQm8nOUfeSXKxoDKy3O4g8iMaIaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iui0XF0bVbRTueUDgGXvi7h4KRDfYwEtWLhwZOc3O2UZOqBHwpfFcXyjars5eGF3o
-	 uqPcw4wv/TyOHK9186rihb7l1LuSTr6VoKYdB6Mo7z3aGSkOrdFm7S/ivBv9wbf1cD
-	 1Rgbta0KZf94Ncpg9AofpHr12Ye0yOddnhlNOPnk=
+	b=CmDjELdpp3HXTIQQy0TCqaMztRK51Lxm1DFzUp3udJDsJS/t4JMnAdzD9x9Wj6wl2
+	 f/OodeCO+8gt5QDUlXFfx3lIXJLz4lTQxykBWBrr9fYRJWSPkngUfdLCxNqbdyJjXT
+	 BoeW7gaUCeSjWqJ1ApSKeALqbbq8pwGO3fTAzUuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Chu <howardchu95@gmail.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	syzbot+9446d5e0d25571e6a212@syzkaller.appspotmail.com,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 508/590] perf test: Skip syscall enum test if no landlock syscall
-Date: Wed,  5 Feb 2025 14:44:23 +0100
-Message-ID: <20250205134514.702835585@linuxfoundation.org>
+Subject: [PATCH 6.13 453/623] media: uvcvideo: Fix deadlock during uvc_probe
+Date: Wed,  5 Feb 2025 14:43:15 +0100
+Message-ID: <20250205134513.545681124@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 72d81e10628be6a948463259cbb6d3b670b20054 ]
+[ Upstream commit a67f75c2b5ecf534eab416ce16c11fe780c4f8f6 ]
 
-The perf trace enum augmentation test specifically targets landlock_
-add_rule syscall but IIUC it's an optional and can be opt-out by a
-kernel config.
+If uvc_probe() fails, it can end up calling uvc_status_unregister() before
+uvc_status_init() is called.
 
-Currently trace_landlock() runs `perf test -w landlock` before the
-actual testing to check the availability but it's not enough since the
-workload always returns 0.  Instead it could check if perf trace output
-has 'landlock' string.
+Fix this by checking if dev->status is NULL or not in
+uvc_status_unregister().
 
-Fixes: d66763fed30f0bd8c ("perf test trace_btf_enum: Add regression test for the BTF augmentation of enums in 'perf trace'")
-Reviewed-by: Howard Chu <howardchu95@gmail.com>
-Link: https://lore.kernel.org/r/20250128170629.1251574-1-namhyung@kernel.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Reported-by: syzbot+9446d5e0d25571e6a212@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-media/20241020160249.GD7770@pendragon.ideasonboard.com/T/#m506744621d72a2ace5dd2ab64055be9898112dbd
+Fixes: c5fe3ed618f9 ("media: uvcvideo: Avoid race condition during unregister")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20241022-race-unreg-v1-1-2212f364d9de@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/trace_btf_enum.sh | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_status.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/perf/tests/shell/trace_btf_enum.sh b/tools/perf/tests/shell/trace_btf_enum.sh
-index 5a3b8a5a9b5cf..8d1e6bbeac906 100755
---- a/tools/perf/tests/shell/trace_btf_enum.sh
-+++ b/tools/perf/tests/shell/trace_btf_enum.sh
-@@ -26,8 +26,12 @@ check_vmlinux() {
- trace_landlock() {
-   echo "Tracing syscall ${syscall}"
+diff --git a/drivers/media/usb/uvc/uvc_status.c b/drivers/media/usb/uvc/uvc_status.c
+index 06c867510c8fe..f37417634ee94 100644
+--- a/drivers/media/usb/uvc/uvc_status.c
++++ b/drivers/media/usb/uvc/uvc_status.c
+@@ -294,6 +294,9 @@ int uvc_status_init(struct uvc_device *dev)
  
--  # test flight just to see if landlock_add_rule and libbpf are available
--  $TESTPROG
-+  # test flight just to see if landlock_add_rule is available
-+  if ! perf trace $TESTPROG 2>&1 | grep -q landlock
-+  then
-+    echo "No landlock system call found, skipping to non-syscall tracing."
-+    return
-+  fi
- 
-   if perf trace -e $syscall $TESTPROG 2>&1 | \
-      grep -q -E ".*landlock_add_rule\(ruleset_fd: 11, rule_type: (LANDLOCK_RULE_PATH_BENEATH|LANDLOCK_RULE_NET_PORT), rule_attr: 0x[a-f0-9]+, flags: 45\) = -1.*"
+ void uvc_status_unregister(struct uvc_device *dev)
+ {
++	if (!dev->status)
++		return;
++
+ 	uvc_status_suspend(dev);
+ 	uvc_input_unregister(dev);
+ }
 -- 
 2.39.5
 
