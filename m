@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD911519A4;
-	Wed,  5 Feb 2025 14:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079001519A4;
+	Wed,  5 Feb 2025 14:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764970; cv=none; b=ACM/Vhyd0aILi4igGJ5AG9mQy8pgXb6MhKy9up3+/ecKnnHkNywDzjnJx3nYDgx7/BWerJVhldjpVym00Bp/Jbtjxe32oNzufBpRJfhM2qdocFUXlDfxyjpkbR9OIUzxA3I4RjzzzQmHVi+LouReFPNtGRYSbcJRvP8IqmxmTpY=
+	t=1738764973; cv=none; b=bQMc6Inm2kNqOsXN8YMEOqQOTJSeybKDy4bQnvf0mLVUY/0j0/icm0oGd7fNjHlx2h05XvX0r3Md/b/NWz1bn634HBNVuELZ5J8c+F7VR0tm32eSvovgI5sWyBV/cNCpzv/e4YAQXNRH9HE26SwmYVHVfDdoVOU2/lIDHMrq+es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764970; c=relaxed/simple;
-	bh=CfOfuULQHzs78EZ5ncm/Wl5MddPEKawHo0EGnxFw3uw=;
+	s=arc-20240116; t=1738764973; c=relaxed/simple;
+	bh=B2P2I5y7uit9LRNy8/alEIH+QiRX9kVVGB9O1ImkuEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LiIWzwFTFRDzjpP7M6eWqaDTxYlzk0DhI+jNBmG33iXYMRiZlQvyBvCBtxt0RaIi4NKi4RaP7DSodH6xLHogEjzQyr2W7RIo4EScYyleRmLDnYFesevurcex4xNW5o0AsF0xeKgmica+rakYBbfGeGT92L/tYMla1n9y88Bafl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OP5qiAh2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IIwfHCo7GvWHEV3DYBPCpTnsZ6ctPtkaqcTUMEBFNov/0Z1BDkuGy4pcsRg9GXTDhVujHvCcex/cQgNldQContJdev9ChtOsHKXIw0BV4JWOIRb7sauYOX/adQxjOjcacgkrSRwb3FVnEmQuFJgtbtvT+t61rwKeLZc8tVbvj6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cn/Hpwno; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OP5qiAh2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79C0C4CEDD;
-	Wed,  5 Feb 2025 14:16:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cn/Hpwno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078BFC4CED6;
+	Wed,  5 Feb 2025 14:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764969;
-	bh=CfOfuULQHzs78EZ5ncm/Wl5MddPEKawHo0EGnxFw3uw=;
+	s=korg; t=1738764972;
+	bh=B2P2I5y7uit9LRNy8/alEIH+QiRX9kVVGB9O1ImkuEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OP5qiAh2sgfJLEoAI6uGKAXVZFLKLXdQ0twmjQzzhFlXpGnEYgNgYyy5bnxfhXE3h
-	 lGk4H+K6qA7v+T/7QMgqw3vI+qyXExiul1/OsYjdviVXZyr1Qm+b/FigALAbI95AtF
-	 F4oHNqzhHB5II6oaw3c158CA5VdWgutIYvwjI/2s=
+	b=cn/HpwnoUh6UuARMtxj//wwFveyBH3HaYycNCQAzXXpPb/+a6tUx/BueGj5hMKhgh
+	 cYSF6LhSx6YzQoXOMmZw38moIyoSxa+BZTmQE1xn3+IKHZYQsm86MyENOhHNfC+sQH
+	 qwJo5jHLiZMT8StBms8Mdb2mZGH936F46KxFhI6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <david@fromorbit.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Paul Moore <paul@paul-moore.com>,
-	syzbot+34b68f850391452207df@syzkaller.appspotmail.com,
-	syzbot+360866a59e3c80510a62@syzkaller.appspotmail.com,
-	Ubisectech Sirius <bugreport@ubisectech.com>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Ma Ke <make_ruc2021@163.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 171/590] landlock: Handle weird files
-Date: Wed,  5 Feb 2025 14:38:46 +0100
-Message-ID: <20250205134501.825008323@linuxfoundation.org>
+Subject: [PATCH 6.6 220/393] RDMA/srp: Fix error handling in srp_add_port
+Date: Wed,  5 Feb 2025 14:42:19 +0100
+Message-ID: <20250205134428.721038116@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,69 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit 49440290a0935f428a1e43a5ac8dc275a647ff80 ]
+[ Upstream commit a3cbf68c69611188cd304229e346bffdabfd4277 ]
 
-A corrupted filesystem (e.g. bcachefs) might return weird files.
-Instead of throwing a warning and allowing access to such file, treat
-them as regular files.
+As comment of device_add() says, if device_add() succeeds, you should
+call device_del() when you want to get rid of it. If device_add() has
+not succeeded, use only put_device() to drop the reference count.
 
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: Paul Moore <paul@paul-moore.com>
-Reported-by: syzbot+34b68f850391452207df@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/000000000000a65b35061cffca61@google.com
-Reported-by: syzbot+360866a59e3c80510a62@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/67379b3f.050a0220.85a0.0001.GAE@google.com
-Reported-by: Ubisectech Sirius <bugreport@ubisectech.com>
-Closes: https://lore.kernel.org/r/c426821d-8380-46c4-a494-7008bbd7dd13.bugreport@ubisectech.com
-Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
-Reviewed-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://lore.kernel.org/r/20250110153918.241810-1-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Add a put_device() call before returning from the function to decrement
+reference count for cleanup.
+
+Found by code review.
+
+Fixes: c8e4c2397655 ("RDMA/srp: Rework the srp_add_port() error path")
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Link: https://patch.msgid.link/20241217075538.2909996-1-make_ruc2021@163.com
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/landlock/fs.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/infiniband/ulp/srp/ib_srp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/security/landlock/fs.c b/security/landlock/fs.c
-index e31b97a9f175a..7adb25150488f 100644
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -937,10 +937,6 @@ static access_mask_t get_mode_access(const umode_t mode)
- 	switch (mode & S_IFMT) {
- 	case S_IFLNK:
- 		return LANDLOCK_ACCESS_FS_MAKE_SYM;
--	case 0:
--		/* A zero mode translates to S_IFREG. */
--	case S_IFREG:
--		return LANDLOCK_ACCESS_FS_MAKE_REG;
- 	case S_IFDIR:
- 		return LANDLOCK_ACCESS_FS_MAKE_DIR;
- 	case S_IFCHR:
-@@ -951,9 +947,12 @@ static access_mask_t get_mode_access(const umode_t mode)
- 		return LANDLOCK_ACCESS_FS_MAKE_FIFO;
- 	case S_IFSOCK:
- 		return LANDLOCK_ACCESS_FS_MAKE_SOCK;
-+	case S_IFREG:
-+	case 0:
-+		/* A zero mode translates to S_IFREG. */
- 	default:
--		WARN_ON_ONCE(1);
--		return 0;
-+		/* Treats weird files as regular files. */
-+		return LANDLOCK_ACCESS_FS_MAKE_REG;
- 	}
- }
+diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
+index 2916e77f589b8..7289ae0b83ace 100644
+--- a/drivers/infiniband/ulp/srp/ib_srp.c
++++ b/drivers/infiniband/ulp/srp/ib_srp.c
+@@ -3978,7 +3978,6 @@ static struct srp_host *srp_add_port(struct srp_device *device, u32 port)
+ 	return host;
  
+ put_host:
+-	device_del(&host->dev);
+ 	put_device(&host->dev);
+ 	return NULL;
+ }
 -- 
 2.39.5
 
