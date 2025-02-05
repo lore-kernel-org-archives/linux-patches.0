@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6A51519B4;
-	Wed,  5 Feb 2025 15:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C991C6BE;
+	Wed,  5 Feb 2025 15:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768127; cv=none; b=BYqN52mJOVMYJ6tsIYDTkta3nX9Y6NOBLYGqkcqMLopwZFSlr1fpZGivsl9VY9W5KedlP9NuNBo1iGLMXncwUiBrISHpUHmqFzq3B5kF+dz0kUaTVnZhB4yL4XYmihrvgJgrM95PT+2ieeya01FIoncRb4xRoyw1BHF3+gcjvUw=
+	t=1738768130; cv=none; b=dIXcqIX/wdTeRcHqA6jX/lwh3gUw9a3LmXX+X4/NDd7vuTigcXbJpRfxXDd+6L0mROSThHRCq3D/N7MPhZFrgQXim4Pj9PeQtCB7cddYYZXtnkJ4TIveP8tkEvu9NRhPw5vn2eMUBtN8PwXUGgIisFTBavwhLpldNhGsN4HqhVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768127; c=relaxed/simple;
-	bh=jsN8NzJnh8MHkXA3lc+7LAMYZbb1DuBcDPEEpsFJrX4=;
+	s=arc-20240116; t=1738768130; c=relaxed/simple;
+	bh=zcdP1xKJTSLUrKfS8hZ2Ab9WVidYhW7zzvvl2VARslM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FoKTwXbIMpbQw+iSXZ8AMM6RuAOROcWU4in2t044rNcy9Z051i1e8rAvpAzLybzF2g7z3Clq6xK7b0y9z0j/wF8/pf1Y+Jhy4Tx5EA33xJy83ec7dKmlTptMyFvEsieRDnfHKZv5tHB0kbwMSJAErdm/YydL0BbaJowybEZwDFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXJbBzHz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PWv49fTSMCjQ32CemqHN4/2+EoasAWwIwJM0F5M22Oq2HZb5/Y+P15NMToKgj82mWBf/CHuBCG36QLGWUslvQsW/lfZUOM2Y2riKeBcMvu+IpANUn5ozisP2/rTljBBkYxJk24ESgZEY8Dcc+81OYGXxvR1EJ/U6YgdZErN+ri8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMLiftAt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXJbBzHz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0138C4CED1;
-	Wed,  5 Feb 2025 15:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMLiftAt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167E8C4CED1;
+	Wed,  5 Feb 2025 15:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768127;
-	bh=jsN8NzJnh8MHkXA3lc+7LAMYZbb1DuBcDPEEpsFJrX4=;
+	s=korg; t=1738768130;
+	bh=zcdP1xKJTSLUrKfS8hZ2Ab9WVidYhW7zzvvl2VARslM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PXJbBzHznmpSve1YF02ShhnQAUFyMbk3Tcd6fn3iNrURZyFT/Y3KjrIlz0GVsGS+t
-	 j5/9A78htdIaYStF9Y9lClucVWB1a6Tg/8KETf+E8Gn5DfRwauP3ra1CGjAosyNMeE
-	 WCaE/aWOY0rzKct54oAex0eqW5fEITrBLTWsnn0Y=
+	b=qMLiftAtRB02UlqqlBZXmXx67todZYfjXzyqMHg+YDqDixfmmpG7e60zEQQk7H6lQ
+	 jddzrpV4VQQpQjxQLO2fNPrT+W1UnooTMK5fyTwYlIS0TcooF3CX6B4BoqGY0u4Fbw
+	 fAeKcyRtfJ2Wvda62Bd5qEbOBbxdNDrCgWR2bZ+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Kyle Tso <kyletso@google.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.12 557/590] usb: dwc3: core: Defer the probe until USB power supply ready
-Date: Wed,  5 Feb 2025 14:45:12 +0100
-Message-ID: <20250205134516.579400576@linuxfoundation.org>
+	pangliyuan <pangliyuan1@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 502/623] ubifs: skip dumping tnc tree when zroot is null
+Date: Wed,  5 Feb 2025 14:44:04 +0100
+Message-ID: <20250205134515.424834658@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,91 +48,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kyle Tso <kyletso@google.com>
+From: pangliyuan <pangliyuan1@huawei.com>
 
-commit 66e0ea341a2a78d14336117f19763bd9be26d45d upstream.
+[ Upstream commit bdb0ca39e0acccf6771db49c3f94ed787d05f2d7 ]
 
-Currently, DWC3 driver attempts to acquire the USB power supply only
-once during the probe. If the USB power supply is not ready at that
-time, the driver simply ignores the failure and continues the probe,
-leading to permanent non-functioning of the gadget vbus_draw callback.
+Clearing slab cache will free all znode in memory and make
+c->zroot.znode = NULL, then dumping tnc tree will access
+c->zroot.znode which cause null pointer dereference.
 
-Address this problem by delaying the dwc3 driver initialization until
-the USB power supply is registered.
-
-Fixes: 6f0764b5adea ("usb: dwc3: add a power supply for current control")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Kyle Tso <kyletso@google.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20250115044548.2701138-1-kyletso@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219624#c0
+Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
+Signed-off-by: pangliyuan <pangliyuan1@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c |   30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ fs/ubifs/debug.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1660,8 +1660,6 @@ static void dwc3_get_properties(struct d
- 	u8			tx_thr_num_pkt_prd = 0;
- 	u8			tx_max_burst_prd = 0;
- 	u8			tx_fifo_resize_max_num;
--	const char		*usb_psy_name;
--	int			ret;
+diff --git a/fs/ubifs/debug.c b/fs/ubifs/debug.c
+index 5cc69beaa62ec..10a86c02a8b32 100644
+--- a/fs/ubifs/debug.c
++++ b/fs/ubifs/debug.c
+@@ -946,16 +946,20 @@ void ubifs_dump_tnc(struct ubifs_info *c)
  
- 	/* default to highest possible threshold */
- 	lpm_nyet_threshold = 0xf;
-@@ -1696,13 +1694,6 @@ static void dwc3_get_properties(struct d
- 
- 	dwc->sys_wakeup = device_may_wakeup(dwc->sysdev);
- 
--	ret = device_property_read_string(dev, "usb-psy-name", &usb_psy_name);
--	if (ret >= 0) {
--		dwc->usb_psy = power_supply_get_by_name(usb_psy_name);
--		if (!dwc->usb_psy)
--			dev_err(dev, "couldn't get usb power supply\n");
--	}
--
- 	dwc->has_lpm_erratum = device_property_read_bool(dev,
- 				"snps,has-lpm-erratum");
- 	device_property_read_u8(dev, "snps,lpm-nyet-threshold",
-@@ -2105,6 +2096,23 @@ static int dwc3_get_num_ports(struct dwc
- 	return 0;
+ 	pr_err("\n");
+ 	pr_err("(pid %d) start dumping TNC tree\n", current->pid);
+-	znode = ubifs_tnc_levelorder_next(c, c->zroot.znode, NULL);
+-	level = znode->level;
+-	pr_err("== Level %d ==\n", level);
+-	while (znode) {
+-		if (level != znode->level) {
+-			level = znode->level;
+-			pr_err("== Level %d ==\n", level);
++	if (c->zroot.znode) {
++		znode = ubifs_tnc_levelorder_next(c, c->zroot.znode, NULL);
++		level = znode->level;
++		pr_err("== Level %d ==\n", level);
++		while (znode) {
++			if (level != znode->level) {
++				level = znode->level;
++				pr_err("== Level %d ==\n", level);
++			}
++			ubifs_dump_znode(c, znode);
++			znode = ubifs_tnc_levelorder_next(c, c->zroot.znode, znode);
+ 		}
+-		ubifs_dump_znode(c, znode);
+-		znode = ubifs_tnc_levelorder_next(c, c->zroot.znode, znode);
++	} else {
++		pr_err("empty TNC tree in memory\n");
+ 	}
+ 	pr_err("(pid %d) finish dumping TNC tree\n", current->pid);
  }
- 
-+static struct power_supply *dwc3_get_usb_power_supply(struct dwc3 *dwc)
-+{
-+	struct power_supply *usb_psy;
-+	const char *usb_psy_name;
-+	int ret;
-+
-+	ret = device_property_read_string(dwc->dev, "usb-psy-name", &usb_psy_name);
-+	if (ret < 0)
-+		return NULL;
-+
-+	usb_psy = power_supply_get_by_name(usb_psy_name);
-+	if (!usb_psy)
-+		return ERR_PTR(-EPROBE_DEFER);
-+
-+	return usb_psy;
-+}
-+
- static int dwc3_probe(struct platform_device *pdev)
- {
- 	struct device		*dev = &pdev->dev;
-@@ -2161,6 +2169,10 @@ static int dwc3_probe(struct platform_de
- 
- 	dwc3_get_software_properties(dwc);
- 
-+	dwc->usb_psy = dwc3_get_usb_power_supply(dwc);
-+	if (IS_ERR(dwc->usb_psy))
-+		return dev_err_probe(dev, PTR_ERR(dwc->usb_psy), "couldn't get usb power supply\n");
-+
- 	dwc->reset = devm_reset_control_array_get_optional_shared(dev);
- 	if (IS_ERR(dwc->reset)) {
- 		ret = PTR_ERR(dwc->reset);
+-- 
+2.39.5
+
 
 
