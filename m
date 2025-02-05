@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7DB15CD74;
-	Wed,  5 Feb 2025 14:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8876615CD74;
+	Wed,  5 Feb 2025 14:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766969; cv=none; b=MqDinIYgAGCvDUaut9dhZ0fH0HOD3L6TJhRsY/rrS9ukhmPZ4YLvGxzCqVMdHp3Yta3c8XtmyLf2zkozuST/t0xsA139Jhb55cdDaTP/9Sutyc2JEn0j4TmQinr75GhBSBeyZMNCU7SBQJRcB0kkprh2/2YSZfM6w+/sPYstzcQ=
+	t=1738766973; cv=none; b=czuD+DKgKL1FN81j/6bA3H4EXQLzVtAYQlJq7GDt0og1nxX2cwj+gwXcc836cbT//XSRoIAw1VUHg6H9658+gnsgY0iac6rBdV8YCmCdwUGwikgDWA7OprgB3pQxTVDp6AFkKsuljjtlsDZ0Ec0v703b3++nZziwSVHPrJjQD50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766969; c=relaxed/simple;
-	bh=ShT6SaJKFEyD8UmZkDfbHnHEDuyytSgXH6ziMKzw2mA=;
+	s=arc-20240116; t=1738766973; c=relaxed/simple;
+	bh=g1VnNn/qaYjRa69Q533HQW2vxegevvVWQJowxex/8Rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gh+6/80i0a6godnr0pGRfxs1uPDMYg4cmnopwtWZH54JJB1sE0crbdxyrKkVl12br2wsyK6ucsau63DJQKT7oQNVhQYxYTmTuIZ6TYqybMJHgdTSPcucUnkI/mbwrSGWUOu4jPL7JJ7OBA8g0f6r3GpnbjGNKAa/28tChKtesTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtECIihJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bp0XpMpROAA8dnzPdt9xbVPwBB55W+eGM8D4rkH/QsSanHdtV1VGL+UnSUyL1Q6IMBYTl4fOnIJAy7roXCayFunUmXMs8Mt5nrdYm3k8iTM8HLKVjtEJSrxvOIF2QBiLbh4EUqXRxU5MEpLLSRAz1q7L6CN273nlnPpRXRCtCC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UuXBoCGJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtECIihJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434DAC4CED1;
-	Wed,  5 Feb 2025 14:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UuXBoCGJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93C1C4CED1;
+	Wed,  5 Feb 2025 14:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766969;
-	bh=ShT6SaJKFEyD8UmZkDfbHnHEDuyytSgXH6ziMKzw2mA=;
+	s=korg; t=1738766973;
+	bh=g1VnNn/qaYjRa69Q533HQW2vxegevvVWQJowxex/8Rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtECIihJYRYl1cEZ281ITiA7JvZVw1x/KdYpBsvcLtrBoQh3P/SrtvHf3vFWkXjT3
-	 PQSU38mKs1gACqGULKeblZ4hX/lzIVHyHgg2vy03TMN6ZdQMrThlGfAvxc05Qktf6H
-	 TIblQM+Us95uTjQzBM/MoD9EpG1INmXSlS6wUqYA=
+	b=UuXBoCGJ6A5J1R9KYy5IzWjz5X8XL4on9Jmjn+WfSY0Y58nyMiRjKI6ix3hpBojpF
+	 W8TI9ogzOxS0lO5A0g+F3U1qT6JUJJ1JeansvkhE/RsgbLymbogJc+j084L6mRryXI
+	 h/NO81bWQJtc1LiOTM0sDlJaJUVD/BUEOhRDxoEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Josua Mayer <josua@solid-run.com>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 369/590] RDMA/hns: Clean up the legacy CONFIG_INFINIBAND_HNS
-Date: Wed,  5 Feb 2025 14:42:04 +0100
-Message-ID: <20250205134509.387389210@linuxfoundation.org>
+Subject: [PATCH 6.12 387/590] arm64: dts: marvell: cn9131-cf-solidwan: fix cp1 comphy links
+Date: Wed,  5 Feb 2025 14:42:22 +0100
+Message-ID: <20250205134510.074268297@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -51,94 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Josua Mayer <josua@solid-run.com>
 
-[ Upstream commit 8977b561216c7e693d61c6442657e33f134bfeb5 ]
+[ Upstream commit 09cdb973afa7a18ce8e66807daff94609cc4b8a4 ]
 
-hns driver used to support hip06 and hip08 devices with
-CONFIG_INFINIBAND_HNS_HIP06 and CONFIG_INFINIBAND_HNS_HIP08
-respectively, which both depended on CONFIG_INFINIBAND_HNS.
+Marvell CN913x platforms use common phy framework for configuring and
+linking serdes lanes according to their usage.
+Each CP (X) features 5 serdes lanes (Y) represented by cpX_comphyY
+nodes.
 
-But we no longer provide support for hip06 and only support
-hip08 and higher since the commit in fixes line, so there is
-no need to have CONFIG_INFINIBAND_HNS any more. Remove it and
-only keep CONFIG_INFINIBAND_HNS_HIP08.
+CN9131 SolidWAN uses CP1 serdes lanes 3 and 5 for eth1 and eth2 of CP1
+respectively. Devicetree however wrongly links from these ports to the
+comphy of CP0.
 
-Fixes: 38d220882426 ("RDMA/hns: Remove support for HIP06")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250106111211.3945051-1-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Replace the wrong links to cp0_comphy with cp1_comphy inside cp1_eth1,
+cp1_eth2.
+
+Fixes: 1280840d2030 ("arm64: dts: add description for solidrun cn9131 solidwan board")
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/Makefile     |  2 +-
- drivers/infiniband/hw/hns/Kconfig  | 20 +++++---------------
- drivers/infiniband/hw/hns/Makefile |  9 +++------
- 3 files changed, 9 insertions(+), 22 deletions(-)
+ arch/arm64/boot/dts/marvell/cn9131-cf-solidwan.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/Makefile b/drivers/infiniband/hw/Makefile
-index 1211f4317a9f4..aba96ca9bce5d 100644
---- a/drivers/infiniband/hw/Makefile
-+++ b/drivers/infiniband/hw/Makefile
-@@ -11,7 +11,7 @@ obj-$(CONFIG_INFINIBAND_OCRDMA)		+= ocrdma/
- obj-$(CONFIG_INFINIBAND_VMWARE_PVRDMA)	+= vmw_pvrdma/
- obj-$(CONFIG_INFINIBAND_USNIC)		+= usnic/
- obj-$(CONFIG_INFINIBAND_HFI1)		+= hfi1/
--obj-$(CONFIG_INFINIBAND_HNS)		+= hns/
-+obj-$(CONFIG_INFINIBAND_HNS_HIP08)	+= hns/
- obj-$(CONFIG_INFINIBAND_QEDR)		+= qedr/
- obj-$(CONFIG_INFINIBAND_BNXT_RE)	+= bnxt_re/
- obj-$(CONFIG_INFINIBAND_ERDMA)		+= erdma/
-diff --git a/drivers/infiniband/hw/hns/Kconfig b/drivers/infiniband/hw/hns/Kconfig
-index ab3fbba70789c..44cdb706fe276 100644
---- a/drivers/infiniband/hw/hns/Kconfig
-+++ b/drivers/infiniband/hw/hns/Kconfig
-@@ -1,21 +1,11 @@
- # SPDX-License-Identifier: GPL-2.0-only
--config INFINIBAND_HNS
--	tristate "HNS RoCE Driver"
--	depends on NET_VENDOR_HISILICON
--	depends on ARM64 || (COMPILE_TEST && 64BIT)
--	depends on (HNS_DSAF && HNS_ENET) || HNS3
--	help
--	  This is a RoCE/RDMA driver for the Hisilicon RoCE engine.
--
--	  To compile HIP08 driver as module, choose M here.
--
- config INFINIBAND_HNS_HIP08
--	bool "Hisilicon Hip08 Family RoCE support"
--	depends on INFINIBAND_HNS && PCI && HNS3
--	depends on INFINIBAND_HNS=m || HNS3=y
-+	tristate "Hisilicon Hip08 Family RoCE support"
-+	depends on ARM64 || (COMPILE_TEST && 64BIT)
-+	depends on PCI && HNS3
- 	help
- 	  RoCE driver support for Hisilicon RoCE engine in Hisilicon Hip08 SoC.
- 	  The RoCE engine is a PCI device.
+diff --git a/arch/arm64/boot/dts/marvell/cn9131-cf-solidwan.dts b/arch/arm64/boot/dts/marvell/cn9131-cf-solidwan.dts
+index b1ea7dcaed17d..47234d0858dd2 100644
+--- a/arch/arm64/boot/dts/marvell/cn9131-cf-solidwan.dts
++++ b/arch/arm64/boot/dts/marvell/cn9131-cf-solidwan.dts
+@@ -435,7 +435,7 @@
+ 	managed = "in-band-status";
+ 	phy-mode = "sgmii";
+ 	phy = <&cp1_phy0>;
+-	phys = <&cp0_comphy3 1>;
++	phys = <&cp1_comphy3 1>;
+ 	status = "okay";
+ };
  
--	  To compile this driver, choose Y here: if INFINIBAND_HNS is m, this
--	  module will be called hns-roce-hw-v2.
-+	  To compile this driver, choose M here. This module will be called
-+	  hns-roce-hw-v2.
-diff --git a/drivers/infiniband/hw/hns/Makefile b/drivers/infiniband/hw/hns/Makefile
-index be1e1cdbcfa8a..7917af8e6380e 100644
---- a/drivers/infiniband/hw/hns/Makefile
-+++ b/drivers/infiniband/hw/hns/Makefile
-@@ -5,12 +5,9 @@
+@@ -444,7 +444,7 @@
+ 	managed = "in-band-status";
+ 	phy-mode = "sgmii";
+ 	phy = <&cp1_phy1>;
+-	phys = <&cp0_comphy5 2>;
++	phys = <&cp1_comphy5 2>;
+ 	status = "okay";
+ };
  
- ccflags-y :=  -I $(srctree)/drivers/net/ethernet/hisilicon/hns3
- 
--hns-roce-objs := hns_roce_main.o hns_roce_cmd.o hns_roce_pd.o \
-+hns-roce-hw-v2-objs := hns_roce_main.o hns_roce_cmd.o hns_roce_pd.o \
- 	hns_roce_ah.o hns_roce_hem.o hns_roce_mr.o hns_roce_qp.o \
- 	hns_roce_cq.o hns_roce_alloc.o hns_roce_db.o hns_roce_srq.o hns_roce_restrack.o \
--	hns_roce_debugfs.o
-+	hns_roce_debugfs.o hns_roce_hw_v2.o
- 
--ifdef CONFIG_INFINIBAND_HNS_HIP08
--hns-roce-hw-v2-objs := hns_roce_hw_v2.o $(hns-roce-objs)
--obj-$(CONFIG_INFINIBAND_HNS) += hns-roce-hw-v2.o
--endif
-+obj-$(CONFIG_INFINIBAND_HNS_HIP08) += hns-roce-hw-v2.o
 -- 
 2.39.5
 
