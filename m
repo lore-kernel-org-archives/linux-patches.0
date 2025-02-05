@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5DF1519BF;
-	Wed,  5 Feb 2025 15:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFD01C6BE;
+	Wed,  5 Feb 2025 15:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767891; cv=none; b=d9BVqqdb45kgHr5UqqrFnkcPm4qT53HI2ayZKqzhGCCrrxyYBx5t1XkMlEZbTxTxWzkmKDNZOTF8XVtJe2aTGZVngUEvMCe8mrjfLxSU6SrKZNPQhkKEpP+2z+oIErmUvdzMOrkTu28hh5nC/rJL3wQTImY7hMgOr9wh/nyXY/Y=
+	t=1738767894; cv=none; b=atdSqrhcDrzdoB4jQ6f9hjcVMgUhvE5j/TVJQwYOZvao5jIuL56HLgLitrPuTgSVlhksehiL9YmTqLtSHpFBl/ZKOrrZ9Tt+F6uFf+v+MmpXLkTgCFCGi7eEucYqta317vEkROfoenXr3F1cTvQ/VFKiCkaTb0CSFOhKL3upIfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767891; c=relaxed/simple;
-	bh=grWjjj+s8Q1JCP9bvUeuCpdNyBqKh1ESSNaYvqbS1zw=;
+	s=arc-20240116; t=1738767894; c=relaxed/simple;
+	bh=2tMODamF9+hS/qXUiGkhC/wa2G32Du19ojB1+pQL66U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UFkSJf10Bbs0rqxPUwXrx2vE/OUp+R5/1ILbWhqp9V5MGdwmxzaq18F4+kZWXazCboSr+1i9T2yP+acZPAcxWlRClJt50PX9upataTkRXd64RnLa2gHeJZrdplt4yCgUxuWl9D4H3vYhJkZaIU6+gc02kDnbY43J0KSH7SHbV2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNMw8gqg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qSiZBEWE/IDW0UUkw5kOXu/R/WGJE5bgqP1vwjvrNl4MqwaNDMCOtSkeQJbrXQ+5OeV/bU2Vqjs66WiMENRVNmYPKY5B+cpWYsw7vWZNy4LzJYpNOLp6ZWC0Pdu+vC+k0hCoZ5iUvArd5LB5oZxUtKiTcCEkQidlBHuUiDklixo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pcoeVu6R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNMw8gqg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6CBC4CED1;
-	Wed,  5 Feb 2025 15:04:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcoeVu6R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D98EC4CEE2;
+	Wed,  5 Feb 2025 15:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767891;
-	bh=grWjjj+s8Q1JCP9bvUeuCpdNyBqKh1ESSNaYvqbS1zw=;
+	s=korg; t=1738767894;
+	bh=2tMODamF9+hS/qXUiGkhC/wa2G32Du19ojB1+pQL66U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNMw8gqgj5Al7KnQDutPzui8aTmMOIj0EmTmubF23YMWEJlYTiL9j+wZVLJlxaU3O
-	 fkafnpmoIGYpNRc9OuxdWZZt4FZ3uQwLQAWNtd0nbrApEByiYD65wTYbqqX8wJgLFZ
-	 gyuhX0k2jJwQ6t43nB9ETwZSICbfwPl+6FRw+Fcs=
+	b=pcoeVu6RyyMQJbiM604ZkMrTz74MqUFtZnzeGrBkVAYXGO8dYw2XC8SAqfSBKjs1Q
+	 5RTz6uwYTDZ8/E6BQI6KsMszIPm184DsusCG1pP0WEaTLCgI6nnKOVVNGIdF1J/NrD
+	 vvlqev5ZuoMqTog+Jf4KcY3vfrJA6wZDQZl5vW1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Frank Li <Frank.Li@nxp.com>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 467/623] PCI: imx6: Add missing reference clock disable logic
-Date: Wed,  5 Feb 2025 14:43:29 +0100
-Message-ID: <20250205134514.083451604@linuxfoundation.org>
+Subject: [PATCH 6.12 500/590] net: davicom: fix UAF in dm9000_drv_remove
+Date: Wed,  5 Feb 2025 14:44:15 +0100
+Message-ID: <20250205134514.397109558@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,74 +49,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit 93d883f89063744a92006fc356b1c767eb62d950 ]
+[ Upstream commit 19e65c45a1507a1a2926649d2db3583ed9d55fd9 ]
 
-Ensure the *_enable_ref_clk() function is symmetric by addressing missing
-disable parts on some platforms.
+dm is netdev private data and it cannot be
+used after free_netdev() call. Using dm after free_netdev()
+can cause UAF bug. Fix it by moving free_netdev() at the end of the
+function.
 
-Fixes: d0a75c791f98 ("PCI: imx6: Factor out ref clock disable to match enable")
-Link: https://lore.kernel.org/r/20241126075702.4099164-7-hongxing.zhu@nxp.com
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+This is similar to the issue fixed in commit
+ad297cd2db89 ("net: qcom/emac: fix UAF in emac_remove").
+
+This bug is detected by our static analysis tool.
+
+Fixes: cf9e60aa69ae ("net: davicom: Fix regulator not turned off on driver removal")
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+CC: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/20250123214213.623518-1-chenyuan0y@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/davicom/dm9000.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 94f5246b3a720..ad3028b755d16 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -598,10 +598,9 @@ static int imx_pcie_attach_pd(struct device *dev)
+diff --git a/drivers/net/ethernet/davicom/dm9000.c b/drivers/net/ethernet/davicom/dm9000.c
+index 150cc94ae9f88..25a604379b2f4 100644
+--- a/drivers/net/ethernet/davicom/dm9000.c
++++ b/drivers/net/ethernet/davicom/dm9000.c
+@@ -1777,10 +1777,11 @@ static void dm9000_drv_remove(struct platform_device *pdev)
  
- static int imx6sx_pcie_enable_ref_clk(struct imx_pcie *imx_pcie, bool enable)
- {
--	if (enable)
--		regmap_clear_bits(imx_pcie->iomuxc_gpr, IOMUXC_GPR12,
--				  IMX6SX_GPR12_PCIE_TEST_POWERDOWN);
--
-+	regmap_update_bits(imx_pcie->iomuxc_gpr, IOMUXC_GPR12,
-+			   IMX6SX_GPR12_PCIE_TEST_POWERDOWN,
-+			   enable ? 0 : IMX6SX_GPR12_PCIE_TEST_POWERDOWN);
- 	return 0;
- }
+ 	unregister_netdev(ndev);
+ 	dm9000_release_board(pdev, dm);
+-	free_netdev(ndev);		/* free device structure */
+ 	if (dm->power_supply)
+ 		regulator_disable(dm->power_supply);
  
-@@ -630,19 +629,20 @@ static int imx8mm_pcie_enable_ref_clk(struct imx_pcie *imx_pcie, bool enable)
- {
- 	int offset = imx_pcie_grp_offset(imx_pcie);
- 
--	if (enable) {
--		regmap_clear_bits(imx_pcie->iomuxc_gpr, offset, IMX8MQ_GPR_PCIE_CLK_REQ_OVERRIDE);
--		regmap_set_bits(imx_pcie->iomuxc_gpr, offset, IMX8MQ_GPR_PCIE_CLK_REQ_OVERRIDE_EN);
--	}
--
-+	regmap_update_bits(imx_pcie->iomuxc_gpr, offset,
-+			   IMX8MQ_GPR_PCIE_CLK_REQ_OVERRIDE,
-+			   enable ? 0 : IMX8MQ_GPR_PCIE_CLK_REQ_OVERRIDE);
-+	regmap_update_bits(imx_pcie->iomuxc_gpr, offset,
-+			   IMX8MQ_GPR_PCIE_CLK_REQ_OVERRIDE_EN,
-+			   enable ? IMX8MQ_GPR_PCIE_CLK_REQ_OVERRIDE_EN : 0);
- 	return 0;
- }
- 
- static int imx7d_pcie_enable_ref_clk(struct imx_pcie *imx_pcie, bool enable)
- {
--	if (!enable)
--		regmap_set_bits(imx_pcie->iomuxc_gpr, IOMUXC_GPR12,
--				IMX7D_GPR12_PCIE_PHY_REFCLK_SEL);
-+	regmap_update_bits(imx_pcie->iomuxc_gpr, IOMUXC_GPR12,
-+			   IMX7D_GPR12_PCIE_PHY_REFCLK_SEL,
-+			   enable ? 0 : IMX7D_GPR12_PCIE_PHY_REFCLK_SEL);
- 	return 0;
++	free_netdev(ndev);		/* free device structure */
++
+ 	dev_dbg(&pdev->dev, "released and freed device\n");
  }
  
 -- 
