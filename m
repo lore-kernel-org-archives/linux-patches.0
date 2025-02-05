@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C69B198845;
-	Wed,  5 Feb 2025 14:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6920E18F2CF;
+	Wed,  5 Feb 2025 14:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767306; cv=none; b=AJ9iFmtFwYHAzYJgiBfZflAMnieYfDx+9iPqwrdrHvWoS2429GXPGXCeApIKfEpQUvZd5qBPOZY72gpRQjjHosHaXXpfV1BfMI5ekoxg3HIpa1/0kH58RACJH4p/c/HbSPzxx6aqQabgS3gztZsf2j2SYNQn35q6u4SuaJVDVo8=
+	t=1738767309; cv=none; b=OS01nbZKx/POujgwPqbgfNFJ5PwFU1FTJ3jEUJ6b/vYIm9cZ5Hkb+CLozwbGZUTI/MLhcK35ZJVAiOrbdeIKpgOehNJHqJVA2y9QhM7re+BqVcgM3X854QX4kp3bv5gAY3VYtzBQ2y9lWzYfeXi6SEG9H6zH00gqg52nv28x6qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767306; c=relaxed/simple;
-	bh=YLZOeYxpyOK+bIUZVcLOM5PK7zqnv2nz13cVATviMgI=;
+	s=arc-20240116; t=1738767309; c=relaxed/simple;
+	bh=TR4gmKzBG1s6PaCQMo0LP8NJQQ6IZUtI7TbGkGGZr1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJZE6LHX32lGMB9aTHIapsYYf68fYOYfwOYL9D1CQZgdxkgpxvZvtThU9xSARcZmhqG07aJ7OCyLIiHW2IagnSOGt5ikhisvL3FcRuhhuaaEZ26O/kYzWQXoCpNl4lQUYwbQqNMEU4V/Q/lrzkvIFy9jpOH6adXRcYihVK0KMpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRl/dTmk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZcAFUArrCxgzu/z4cLmALJB7t88PV3xuzcQJPS5XajpK/wT9DdoUBrwuCDzild5RVPPH3yqeyNwEF/9Zy444ebx6hHjy75KBK1zgUCbPjo1snTAXEx+Vn+207nd5I9meZY9o6xrFntAlbakMLz07QjcSoq4wVInYlmCCcUCkmWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fc5Bv96D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRl/dTmk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0F2C4CED1;
-	Wed,  5 Feb 2025 14:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fc5Bv96D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB063C4CED1;
+	Wed,  5 Feb 2025 14:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767305;
-	bh=YLZOeYxpyOK+bIUZVcLOM5PK7zqnv2nz13cVATviMgI=;
+	s=korg; t=1738767309;
+	bh=TR4gmKzBG1s6PaCQMo0LP8NJQQ6IZUtI7TbGkGGZr1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRl/dTmkMs8aFbQvbtbI5T0EOext1dw93QHpfTZgdDwHkM4komitEAyog9daYE83k
-	 xk3eTlwkGLM2HgS3poHeZ97k1hISOWNMf0Op3Kk++wpazgUABh1f72OxfaGYYwLPrh
-	 /+seiVXu/moqMQM9wj67MAItpO/hcSSGNpTmz15k=
+	b=Fc5Bv96DSTyyqnzXNzHlD1rJi/rWnOhQhMi1lqC0Rzbc+aqT15CbGv83RP/KKwsDu
+	 L9SwEXZgBt/Jr63m1pUmvW/jGT+pgXNBPFilQGCCJzuB6JSzm9MdK3LIcULZdgsUmL
+	 03Kr4vfu8HWjDE+SDx4ykEakKSOnFg4xNghPZyh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 437/590] scsi: mpi3mr: Fix possible crash when setting up bsg fails
-Date: Wed,  5 Feb 2025 14:43:12 +0100
-Message-ID: <20250205134511.986299556@linuxfoundation.org>
+Subject: [PATCH 6.13 386/623] arm64: dts: qcom: sm6375: correct sleep clock frequency
+Date: Wed,  5 Feb 2025 14:42:08 +0100
+Message-ID: <20250205134510.990772101@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,75 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 295006f6e8c17212d3098811166e29627d19e05c ]
+[ Upstream commit 223382c94f1f07c475d39713e4c058401480b441 ]
 
-If bsg_setup_queue() fails, the bsg_queue is assigned a non-NULL value.
-Consequently, in mpi3mr_bsg_exit(), the condition "if(!mrioc->bsg_queue)"
-will not be satisfied, preventing execution from entering
-bsg_remove_queue(), which could lead to the following crash:
+The SM6375 platform uses PM6125 to provide sleep clock. According to the
+documentation, that clock has 32.7645 kHz frequency. Correct the sleep
+clock definition.
 
-BUG: kernel NULL pointer dereference, address: 000000000000041c
-Call Trace:
-  <TASK>
-  mpi3mr_bsg_exit+0x1f/0x50 [mpi3mr]
-  mpi3mr_remove+0x6f/0x340 [mpi3mr]
-  pci_device_remove+0x3f/0xb0
-  device_release_driver_internal+0x19d/0x220
-  unbind_store+0xa4/0xb0
-  kernfs_fop_write_iter+0x11f/0x200
-  vfs_write+0x1fc/0x3e0
-  ksys_write+0x67/0xe0
-  do_syscall_64+0x38/0x80
-  entry_SYSCALL_64_after_hwframe+0x78/0xe2
-
-Fixes: 4268fa751365 ("scsi: mpi3mr: Add bsg device support")
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250107022032.24006-1-kanie@linux.alibaba.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 59d34ca97f91 ("arm64: dts: qcom: Add initial device tree for SM6375")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-12-e9b08fbeadd3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_app.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6375.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
-index 10b8e4dc64f8b..7589f48aebc80 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -2951,6 +2951,7 @@ void mpi3mr_bsg_init(struct mpi3mr_ioc *mrioc)
- 		.max_hw_sectors		= MPI3MR_MAX_APP_XFER_SECTORS,
- 		.max_segments		= MPI3MR_MAX_APP_XFER_SEGMENTS,
+diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+index e0b1c54e98c0e..7c929168ed080 100644
+--- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
+@@ -29,7 +29,7 @@
+ 
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+-			clock-frequency = <32000>;
++			clock-frequency = <32764>;
+ 			#clock-cells = <0>;
+ 		};
  	};
-+	struct request_queue *q;
- 
- 	device_initialize(bsg_dev);
- 
-@@ -2966,14 +2967,17 @@ void mpi3mr_bsg_init(struct mpi3mr_ioc *mrioc)
- 		return;
- 	}
- 
--	mrioc->bsg_queue = bsg_setup_queue(bsg_dev, dev_name(bsg_dev), &lim,
-+	q = bsg_setup_queue(bsg_dev, dev_name(bsg_dev), &lim,
- 			mpi3mr_bsg_request, NULL, 0);
--	if (IS_ERR(mrioc->bsg_queue)) {
-+	if (IS_ERR(q)) {
- 		ioc_err(mrioc, "%s: bsg registration failed\n",
- 		    dev_name(bsg_dev));
- 		device_del(bsg_dev);
- 		put_device(bsg_dev);
-+		return;
- 	}
-+
-+	mrioc->bsg_queue = q;
- }
- 
- /**
 -- 
 2.39.5
 
