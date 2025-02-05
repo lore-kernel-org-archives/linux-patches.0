@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE2D149C64;
-	Wed,  5 Feb 2025 13:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02ECEFC0B;
+	Wed,  5 Feb 2025 13:55:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763715; cv=none; b=JrjSnwTuHYPdkPTE8qP7wDHgfDTltH81w9fNg80Zp1BOBMn/1ZzDuFzbQJa0nfg+OGMJeqohFUIMF6Zo4oovyRUR3VyGvfKn6Nyf9HOqU5BJXj0tb2v7+aaVUVkTVVZyUH7lz/uBPHBu7oXltp5kDY/FG98OBRwB9m9r6/Ksgzs=
+	t=1738763718; cv=none; b=TQdIK7zmTwpagbj7pzFZHQIP73YEYhMI4HQNxfjPibQFLArtv5FEGjc8dpAcL4acgywNTzwcsKAyMsz1lIbDQEnp73IW8nGxvccgQwB6UxhxEv7sKQ014ipVRD9TNmBL05MHM9j2KJMHlQgNiZ2E14QSsMM+teuuF3WaNiqCj3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763715; c=relaxed/simple;
-	bh=pTWYoEkmAN6M+EifTOTjUATXShKe6tF4UYVvXpfAy0I=;
+	s=arc-20240116; t=1738763718; c=relaxed/simple;
+	bh=xyi4Ly8C9KUDGfm8LxC0HMfu5AJbpHuSdmqEokxWuy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o1yrJBzlDx7ndnBpsYRtu0s3+8+jTgyX7lB3cTgZdpu2WleSb7hx0nmph+NXGXif2ALBOlgUDTtvU351eWG5Td7KPN/k6x96fIU+DJy69a7nsRogQ+PRO8yU4tAmFoR6JVhZ5EWpZspFes1bVnW/4EmKziwZdfWks6gN1RmM+4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lm1i8LlL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MA4A0fcDa9wxqvPZw3pgb4P0miruzHEsaMEvxHk0kRu+umlAvchcQyyB/lrMJN5J2njbdXf1leDlnM5ohwSQdF6kuYInQDKZJ/RgLFXaPKzSmNQNEGuuKyZzBRDfJWYoQ2Nr+B9fzTNq8i7t2hCV9LBxWS0/couL4K0I0X64Fzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NyQ3Ap7l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lm1i8LlL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C90C4CEDD;
-	Wed,  5 Feb 2025 13:55:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NyQ3Ap7l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F4ACC4CED6;
+	Wed,  5 Feb 2025 13:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763714;
-	bh=pTWYoEkmAN6M+EifTOTjUATXShKe6tF4UYVvXpfAy0I=;
+	s=korg; t=1738763717;
+	bh=xyi4Ly8C9KUDGfm8LxC0HMfu5AJbpHuSdmqEokxWuy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lm1i8LlL7wfQf+Lb5gMlekYAhfzhK2JQj/Kq8yDIh4L3vrNNFGzRhmyl1/0o050ne
-	 NI0NKb32dSLBANwZUeNO9xSI7NVEUnnzzqbbNQ+KTWo++MOUAPBPz8ebHFNpkkmc+L
-	 zbQGFo3RVXdRrztz8Qx8DrUVrRb3R9CdOXldX+MY=
+	b=NyQ3Ap7lVBPTFnCENM9tR0rQ0O73fZ/fcK55UJiIZuOgxfILo7jqmVzS9KvyEcNqv
+	 rGhRn+GbxNCPIZVMJg0hCa38F7454QnaW2ZRDhAhj0xkmjBsQ0UR4biH0h08gtCE4v
+	 4Gl7C7p+0MCg3nbQqbNBLXQUfGQ/g4W1sNKlqsxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Derek Foreman <derek.foreman@collabora.com>,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	syzbot+040e8b3db6a96908d470@syzkaller.appspotmail.com,
+	Karol Przybylski <karprzy7@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/590] drm/rockchip: vop2: Set AXI id for rk3588
-Date: Wed,  5 Feb 2025 14:36:45 +0100
-Message-ID: <20250205134457.170525402@linuxfoundation.org>
+Subject: [PATCH 6.6 099/393] HID: hid-thrustmaster: Fix warning in thrustmaster_probe by adding endpoint check
+Date: Wed,  5 Feb 2025 14:40:18 +0100
+Message-ID: <20250205134424.082577592@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,206 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Karol Przybylski <karprzy7@gmail.com>
 
-[ Upstream commit 7b256880fdb2d7f23393b87bb557090f049e686a ]
+[ Upstream commit 50420d7c79c37a3efe4010ff9b1bb14bc61ebccf ]
 
-There are two AXI bus in vop2, windows attached on the same bus must
-have a unique channel YUV and RGB channel ID.
+syzbot has found a type mismatch between a USB pipe and the transfer
+endpoint, which is triggered by the hid-thrustmaster driver[1].
+There is a number of similar, already fixed issues [2].
+In this case as in others, implementing check for endpoint type fixes the issue.
 
-The default IDs will conflict with each other on the rk3588, so they
-need to be reassigned.
+[1] https://syzkaller.appspot.com/bug?extid=040e8b3db6a96908d470
+[2] https://syzkaller.appspot.com/bug?extid=348331f63b034f89b622
 
-Fixes: 5a028e8f062f ("drm/rockchip: vop2: Add support for rk3588")
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Tested-by: Derek Foreman <derek.foreman@collabora.com>
-Tested-by: Detlev Casanova <detlev.casanova@collabora.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241214081719.3330518-4-andyshrk@163.com
+Fixes: c49c33637802 ("HID: support for initialization of some Thrustmaster wheels")
+Reported-by: syzbot+040e8b3db6a96908d470@syzkaller.appspotmail.com
+Tested-by: syzbot+040e8b3db6a96908d470@syzkaller.appspotmail.com
+Signed-off-by: Karol Przybylski <karprzy7@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 14 +++++++++++
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.h |  9 +++++++
- drivers/gpu/drm/rockchip/rockchip_vop2_reg.c | 26 +++++++++++++++++++-
- 3 files changed, 48 insertions(+), 1 deletion(-)
+ drivers/hid/hid-thrustmaster.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index 60b498ffd41aa..cd3fb906d0089 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -1320,6 +1320,12 @@ static void vop2_plane_atomic_update(struct drm_plane *plane,
- 		&fb->format->format,
- 		afbc_en ? "AFBC" : "", &yrgb_mst);
+diff --git a/drivers/hid/hid-thrustmaster.c b/drivers/hid/hid-thrustmaster.c
+index cf1679b0d4fbb..6c3e758bbb09e 100644
+--- a/drivers/hid/hid-thrustmaster.c
++++ b/drivers/hid/hid-thrustmaster.c
+@@ -170,6 +170,14 @@ static void thrustmaster_interrupts(struct hid_device *hdev)
+ 	ep = &usbif->cur_altsetting->endpoint[1];
+ 	b_ep = ep->desc.bEndpointAddress;
  
-+	if (vop2->data->soc_id > 3568) {
-+		vop2_win_write(win, VOP2_WIN_AXI_BUS_ID, win->data->axi_bus_id);
-+		vop2_win_write(win, VOP2_WIN_AXI_YRGB_R_ID, win->data->axi_yrgb_r_id);
-+		vop2_win_write(win, VOP2_WIN_AXI_UV_R_ID, win->data->axi_uv_r_id);
++	/* Are the expected endpoints present? */
++	u8 ep_addr[1] = {b_ep};
++
++	if (!usb_check_int_endpoints(usbif, ep_addr)) {
++		hid_err(hdev, "Unexpected non-int endpoint\n");
++		return;
 +	}
 +
- 	if (vop2_cluster_window(win))
- 		vop2_win_write(win, VOP2_WIN_AFBC_HALF_BLOCK_EN, half_block_en);
+ 	for (i = 0; i < ARRAY_SIZE(setup_arr); ++i) {
+ 		memcpy(send_buf, setup_arr[i], setup_arr_sizes[i]);
  
-@@ -2908,6 +2914,10 @@ static struct reg_field vop2_cluster_regs[VOP2_WIN_MAX_REG] = {
- 	[VOP2_WIN_Y2R_EN] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL0, 8, 8),
- 	[VOP2_WIN_R2Y_EN] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL0, 9, 9),
- 	[VOP2_WIN_CSC_MODE] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL0, 10, 11),
-+	[VOP2_WIN_AXI_YRGB_R_ID] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL2, 0, 3),
-+	[VOP2_WIN_AXI_UV_R_ID] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL2, 5, 8),
-+	/* RK3588 only, reserved bit on rk3568*/
-+	[VOP2_WIN_AXI_BUS_ID] = REG_FIELD(RK3568_CLUSTER_CTRL, 13, 13),
- 
- 	/* Scale */
- 	[VOP2_WIN_SCALE_YRGB_X] = REG_FIELD(RK3568_CLUSTER_WIN_SCL_FACTOR_YRGB, 0, 15),
-@@ -3000,6 +3010,10 @@ static struct reg_field vop2_esmart_regs[VOP2_WIN_MAX_REG] = {
- 	[VOP2_WIN_YMIRROR] = REG_FIELD(RK3568_SMART_CTRL1, 31, 31),
- 	[VOP2_WIN_COLOR_KEY] = REG_FIELD(RK3568_SMART_COLOR_KEY_CTRL, 0, 29),
- 	[VOP2_WIN_COLOR_KEY_EN] = REG_FIELD(RK3568_SMART_COLOR_KEY_CTRL, 31, 31),
-+	[VOP2_WIN_AXI_YRGB_R_ID] = REG_FIELD(RK3568_SMART_CTRL1, 4, 8),
-+	[VOP2_WIN_AXI_UV_R_ID] = REG_FIELD(RK3568_SMART_CTRL1, 12, 16),
-+	/* RK3588 only, reserved register on rk3568 */
-+	[VOP2_WIN_AXI_BUS_ID] = REG_FIELD(RK3588_SMART_AXI_CTRL, 1, 1),
- 
- 	/* Scale */
- 	[VOP2_WIN_SCALE_YRGB_X] = REG_FIELD(RK3568_SMART_REGION0_SCL_FACTOR_YRGB, 0, 15),
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-index 615a16196aff6..1c4204324f9f5 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
-@@ -78,6 +78,9 @@ enum vop2_win_regs {
- 	VOP2_WIN_COLOR_KEY,
- 	VOP2_WIN_COLOR_KEY_EN,
- 	VOP2_WIN_DITHER_UP,
-+	VOP2_WIN_AXI_BUS_ID,
-+	VOP2_WIN_AXI_YRGB_R_ID,
-+	VOP2_WIN_AXI_UV_R_ID,
- 
- 	/* scale regs */
- 	VOP2_WIN_SCALE_YRGB_X,
-@@ -140,6 +143,10 @@ struct vop2_win_data {
- 	unsigned int layer_sel_id;
- 	uint64_t feature;
- 
-+	uint8_t axi_bus_id;
-+	uint8_t axi_yrgb_r_id;
-+	uint8_t axi_uv_r_id;
-+
- 	unsigned int max_upscale_factor;
- 	unsigned int max_downscale_factor;
- 	const u8 dly[VOP2_DLY_MODE_MAX];
-@@ -308,6 +315,7 @@ enum dst_factor_mode {
- 
- #define RK3568_CLUSTER_WIN_CTRL0		0x00
- #define RK3568_CLUSTER_WIN_CTRL1		0x04
-+#define RK3568_CLUSTER_WIN_CTRL2		0x08
- #define RK3568_CLUSTER_WIN_YRGB_MST		0x10
- #define RK3568_CLUSTER_WIN_CBR_MST		0x14
- #define RK3568_CLUSTER_WIN_VIR			0x18
-@@ -330,6 +338,7 @@ enum dst_factor_mode {
- /* (E)smart register definition, offset relative to window base */
- #define RK3568_SMART_CTRL0			0x00
- #define RK3568_SMART_CTRL1			0x04
-+#define RK3588_SMART_AXI_CTRL			0x08
- #define RK3568_SMART_REGION0_CTRL		0x10
- #define RK3568_SMART_REGION0_YRGB_MST		0x14
- #define RK3568_SMART_REGION0_CBR_MST		0x18
-diff --git a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-index 18efb3fe1c000..e473a8f8fd32d 100644
---- a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
-@@ -313,7 +313,7 @@ static const struct vop2_video_port_data rk3588_vop_video_ports[] = {
-  * AXI1 is a read only bus.
-  *
-  * Every window on a AXI bus must assigned two unique
-- * read id(yrgb_id/uv_id, valid id are 0x1~0xe).
-+ * read id(yrgb_r_id/uv_r_id, valid id are 0x1~0xe).
-  *
-  * AXI0:
-  * Cluster0/1, Esmart0/1, WriteBack
-@@ -333,6 +333,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.layer_sel_id = 0,
- 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
- 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
-+		.axi_bus_id = 0,
-+		.axi_yrgb_r_id = 2,
-+		.axi_uv_r_id = 3,
- 		.max_upscale_factor = 4,
- 		.max_downscale_factor = 4,
- 		.dly = { 4, 26, 29 },
-@@ -349,6 +352,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
- 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_PRIMARY,
-+		.axi_bus_id = 0,
-+		.axi_yrgb_r_id = 6,
-+		.axi_uv_r_id = 7,
- 		.max_upscale_factor = 4,
- 		.max_downscale_factor = 4,
- 		.dly = { 4, 26, 29 },
-@@ -364,6 +370,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
- 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_PRIMARY,
-+		.axi_bus_id = 1,
-+		.axi_yrgb_r_id = 2,
-+		.axi_uv_r_id = 3,
- 		.max_upscale_factor = 4,
- 		.max_downscale_factor = 4,
- 		.dly = { 4, 26, 29 },
-@@ -379,6 +388,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
- 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_PRIMARY,
-+		.axi_bus_id = 1,
-+		.axi_yrgb_r_id = 6,
-+		.axi_uv_r_id = 7,
- 		.max_upscale_factor = 4,
- 		.max_downscale_factor = 4,
- 		.dly = { 4, 26, 29 },
-@@ -393,6 +405,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.layer_sel_id = 2,
- 		.supported_rotations = DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_OVERLAY,
-+		.axi_bus_id = 0,
-+		.axi_yrgb_r_id = 0x0a,
-+		.axi_uv_r_id = 0x0b,
- 		.max_upscale_factor = 8,
- 		.max_downscale_factor = 8,
- 		.dly = { 23, 45, 48 },
-@@ -406,6 +421,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.layer_sel_id = 3,
- 		.supported_rotations = DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_OVERLAY,
-+		.axi_bus_id = 0,
-+		.axi_yrgb_r_id = 0x0c,
-+		.axi_uv_r_id = 0x01,
- 		.max_upscale_factor = 8,
- 		.max_downscale_factor = 8,
- 		.dly = { 23, 45, 48 },
-@@ -419,6 +437,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.layer_sel_id = 6,
- 		.supported_rotations = DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_OVERLAY,
-+		.axi_bus_id = 1,
-+		.axi_yrgb_r_id = 0x0a,
-+		.axi_uv_r_id = 0x0b,
- 		.max_upscale_factor = 8,
- 		.max_downscale_factor = 8,
- 		.dly = { 23, 45, 48 },
-@@ -432,6 +453,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
- 		.layer_sel_id = 7,
- 		.supported_rotations = DRM_MODE_REFLECT_Y,
- 		.type = DRM_PLANE_TYPE_OVERLAY,
-+		.axi_bus_id = 1,
-+		.axi_yrgb_r_id = 0x0c,
-+		.axi_uv_r_id = 0x0d,
- 		.max_upscale_factor = 8,
- 		.max_downscale_factor = 8,
- 		.dly = { 23, 45, 48 },
 -- 
 2.39.5
 
