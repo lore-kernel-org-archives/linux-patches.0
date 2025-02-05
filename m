@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5121519B4;
-	Wed,  5 Feb 2025 15:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E65217C79;
+	Wed,  5 Feb 2025 15:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768206; cv=none; b=ZO7W9MM8GqgCnZGe1IIyn7059hJ8nRdi4YFt2Fx4eRW1kKVNvFapjJtw1TrC7mju206edYpYsUfLiJ9EuYovw+XjFJb56atxQ9BxhwGbLhmKTPpIfKLyshWRGQErJGJCYUQg+PaExv2OMsk7rNvLzTvCcipXPcwTJJOCPKMiyZ8=
+	t=1738768209; cv=none; b=lnvTmgq1UegTn/R9hew3rLoJ2nhXNkoPV/cA4BMN8oiIVuDCw1u5bn6mnIXcj44fM0upzUIhSUiY7gZODr89+sBX5kzCh3zLvMwla+Vh7Hu2vn6SaA05yQXQPHQoZteOQHEz3xy9GH9jo9PiVTtFtf5jHH2ObpvwiOq0dRwFkgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768206; c=relaxed/simple;
-	bh=5zZaRcu3xMSYCGMJ+9U1bx0oFEndWEHFxGo11arrTgk=;
+	s=arc-20240116; t=1738768209; c=relaxed/simple;
+	bh=+1MrDgLSRRXr97S9U0X3GvvgsFJvDxdpRa0/5ZYaMn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KUZkPJoVMBainsHmxhJORJLQu7jrYhP5ChWHyaP02Akf+KOQgwvq2q4rgDmmJf41sYf2Bmy58PkDftdvcMFe4KznMb3/+HW9srKAwllKaWS55a7UtS6RQJv6wuaupW6QCz4Wo5joKRi2kEfF6okUHObKOr9NXtSwVDOkllsWo/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqrAIxR3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sd1iOsFiJFop3fyvu06054b/Khu0mfEfFScudKzChxAD5PDx00LuIgsFA1X60LXy1hfm1kcd67B4nOnPrBVQjbXn6VVL3G+6ChDJuLYihaLqa9rS557vw7KHJeXNNlgOuM9EhsYARGURcsqmCI/Ut914vNeMUct/62SzfUwFJfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEo1vuY2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqrAIxR3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59EAEC4CED1;
-	Wed,  5 Feb 2025 15:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEo1vuY2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9ACC4CED1;
+	Wed,  5 Feb 2025 15:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768205;
-	bh=5zZaRcu3xMSYCGMJ+9U1bx0oFEndWEHFxGo11arrTgk=;
+	s=korg; t=1738768209;
+	bh=+1MrDgLSRRXr97S9U0X3GvvgsFJvDxdpRa0/5ZYaMn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqrAIxR3o6JEmD+aJIm4526DzpnP9/NkYodHMvz2gZhQ+XRYPKO2fDa8O1Sr/wwNE
-	 Dve6kKnHMoV+g9ZdWuZTPAJVnKdHM0jmlV6k/suQS3eMuqR5evrpsSGRTPDGv//7Ju
-	 bivj2oi8jMmq0ars8m0xn6Xd7pQIu5J3xmd78yZQ=
+	b=qEo1vuY2GZJLzRbwoZJXk24FnPzgI5JIRQ7MsLLHT64mW0NmbkiQUB3s5dPw+Zbhd
+	 bN7Y8+TB7LWcmJ0ZjzIaG8pbqzssmR/XrbVMKiAVMMfRj6JZMUedKAclRepD5go6X1
+	 2k+QRP1bFKS0XhY1RjHbpyDvi4+LYxRp/1oUCykc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 512/623] xfrm: Dont disable preemption while looking up cache state.
-Date: Wed,  5 Feb 2025 14:44:14 +0100
-Message-ID: <20250205134515.814613931@linuxfoundation.org>
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.12 568/590] media: uvcvideo: Fix double free in error path
+Date: Wed,  5 Feb 2025 14:45:23 +0100
+Message-ID: <20250205134516.998213014@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Sewior <bigeasy@linutronix.de>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 6c9b7db96db62ee9ad8d359d90ff468d462518c4 ]
+commit c6ef3a7fa97ec823a1e1af9085cf13db9f7b3bac upstream.
 
-For the state cache lookup xfrm_input_state_lookup() first disables
-preemption, to remain on the CPU and then retrieves a per-CPU pointer.
-Within the preempt-disable section it also acquires
-netns_xfrm::xfrm_state_lock, a spinlock_t. This lock must not be
-acquired with explicit disabled preemption (such as by get_cpu())
-because this lock becomes a sleeping lock on PREEMPT_RT.
+If the uvc_status_init() function fails to allocate the int_urb, it will
+free the dev->status pointer but doesn't reset the pointer to NULL. This
+results in the kfree() call in uvc_status_cleanup() trying to
+double-free the memory. Fix it by resetting the dev->status pointer to
+NULL after freeing it.
 
-To remain on the same CPU is just an optimisation for the CPU local
-lookup. The actual modification of the per-CPU variable happens with
-netns_xfrm::xfrm_state_lock acquired.
-
-Remove get_cpu() and use the state_cache_input on the current CPU.
-
-Reported-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Closes: https://lore.kernel.org/all/CAADnVQKkCLaj=roayH=Mjiiqz_svdf1tsC3OE4EC0E=mAD+L1A@mail.gmail.com/
-Fixes: 81a331a0e72dd ("xfrm: Add an inbound percpu state cache.")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a31a4055473b ("V4L/DVB:usbvideo:don't use part of buffer for USB transfer #4")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20241107235130.31372-1-laurent.pinchart@ideasonboard.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_state.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/media/usb/uvc/uvc_status.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 1781728ca4285..711e816fc4041 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -1150,9 +1150,8 @@ struct xfrm_state *xfrm_input_state_lookup(struct net *net, u32 mark,
- 	struct xfrm_hash_state_ptrs state_ptrs;
- 	struct hlist_head *state_cache_input;
- 	struct xfrm_state *x = NULL;
--	int cpu = get_cpu();
+--- a/drivers/media/usb/uvc/uvc_status.c
++++ b/drivers/media/usb/uvc/uvc_status.c
+@@ -269,6 +269,7 @@ int uvc_status_init(struct uvc_device *d
+ 	dev->int_urb = usb_alloc_urb(0, GFP_KERNEL);
+ 	if (!dev->int_urb) {
+ 		kfree(dev->status);
++		dev->status = NULL;
+ 		return -ENOMEM;
+ 	}
  
--	state_cache_input =  per_cpu_ptr(net->xfrm.state_cache_input, cpu);
-+	state_cache_input = raw_cpu_ptr(net->xfrm.state_cache_input);
- 
- 	rcu_read_lock();
- 	hlist_for_each_entry_rcu(x, state_cache_input, state_cache_input) {
-@@ -1186,7 +1185,6 @@ struct xfrm_state *xfrm_input_state_lookup(struct net *net, u32 mark,
- 
- out:
- 	rcu_read_unlock();
--	put_cpu();
- 	return x;
- }
- EXPORT_SYMBOL(xfrm_input_state_lookup);
--- 
-2.39.5
-
 
 
