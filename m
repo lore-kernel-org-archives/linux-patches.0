@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B82E13C3F6;
-	Wed,  5 Feb 2025 14:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C824A28;
+	Wed,  5 Feb 2025 14:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764949; cv=none; b=U3m77hOZ0xp7Sx9zlbmUEqzHf8DFfZOZZ1fsUALuT4L86DwPbv7dVI9H0sPtYLrv+NY6NuP10E+FKdrfMkx95T1ej5e2QtZ/iFWFfaKouxHXwdC05eWLyd/PPQmyNHT2Juu8aBOaHN+jJFTq1za0Jn77MtjAjwBDSWDxiTAhQ5k=
+	t=1738764952; cv=none; b=RdDL3Gk+SanGMjxzQiSf1BRHI29VbQX9ECz3l095XMQvzOPGJMXp0MMmGsqjaicPRmuH9Gfo+RDDe5eNIVdPLVC9Enjl+bMMFEJz+hXrKJvRLmrCjIl21vK4nMl6Ox3KCAyyLPFHAvfmiuA7ZL0Yts/ymb1lODHVj+IKBHlhDqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764949; c=relaxed/simple;
-	bh=0LI4yy37iskR/n8a1DnLQWGsuN9TS5oEOHb32/8ABOo=;
+	s=arc-20240116; t=1738764952; c=relaxed/simple;
+	bh=WqE3o7djqdkxUu0acwbdZ8nc8nTX/E/OG+MOSumW5Go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N/SoWIYJdfeP1nfFiKsEqvAh7B71VinVUlWi8Z1w5p7TVZ+RSKfn0KpOM6QCTMdtq10HIKdrlkb3r9ZY2OmUGwJ7RgV71oFAKhODEYozgAppq7AVR8irOhd6ekC+yaUj92PAm76dp3lqwg8LndSET/+SKm/5WrgbGGd41THzL9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCFrRUxX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=roeW6grKpZGl6VpJcZFGdoQ5s+OQ7GG0LcA4WUtACxyEe/qQdk7F91WYAVYSZVjay0jxIAfHSx+rxDYdE8FyMj2aNWeyoBlg3o6ALL73YM+Mm1+uvs2y1cg1WOZggpi7ETN1UbDxLTPhdVd0faZtj5laJ3qUUB+4DXlE+UnaVJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOUNvHQx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCFrRUxX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A856EC4CED6;
-	Wed,  5 Feb 2025 14:15:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOUNvHQx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27B2C4CEDD;
+	Wed,  5 Feb 2025 14:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764949;
-	bh=0LI4yy37iskR/n8a1DnLQWGsuN9TS5oEOHb32/8ABOo=;
+	s=korg; t=1738764952;
+	bh=WqE3o7djqdkxUu0acwbdZ8nc8nTX/E/OG+MOSumW5Go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCFrRUxXbbP4iPFZZY7uhejuYiqo9veFKMEIJmwX4+7ffMljUUIbKM52XIrzDcHoF
-	 LqN+gMPjSqy4wVbIRc6Vz0RhB1njtPQVJmDYkkpeKR37P9QEceS942NdHZTiiNdkY8
-	 Y8eWVoGv1a9e5B7B8BxCthpVwzK3XzGd3cDnxx6k=
+	b=MOUNvHQxCEv8xqgvhcN1eh73RHfCybh2aIVJj9Ge2r7zHpaH9nMmZx7yMoiPGWmxr
+	 xkZF/JcVr62R/8UbaeBVgpiCZ0Z6MVb0Sy4nyt4QnT6vbruBx42hXLZ2zJVXmlcZeu
+	 2OwgeWyIjBeyTwRV1cQj4aZuq7kksMQeqXxKwlaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Eric-SY Chang <eric-sy.chang@mediatek.com>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 218/393] arm64: dts: mediatek: mt8183: kenzo: Support second source touchscreen
-Date: Wed,  5 Feb 2025 14:42:17 +0100
-Message-ID: <20250205134428.644420542@linuxfoundation.org>
+Subject: [PATCH 6.12 176/590] wifi: mt76: mt7925: fix wrong band_idx setting when enable sniffer mode
+Date: Wed,  5 Feb 2025 14:38:51 +0100
+Message-ID: <20250205134502.015528993@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hsin-Te Yuan <yuanhsinte@chromium.org>
+From: Eric-SY Chang <eric-sy.chang@mediatek.com>
 
-[ Upstream commit 5ec5dc73c5ac0c6e06803dc3b5aea4493e856568 ]
+[ Upstream commit 85bb7c10c1a013ab29d4be07559105dd843c6f7d ]
 
-Some kenzo devices use second source touchscreen.
+Currently, sniffer mode does not support band auto,
+so set band_idx to the default 0.
 
-Fixes: 0a9cefe21aec ("arm64: dts: mt8183: Add kukui-jacuzzi-kenzo board")
-Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Link: https://lore.kernel.org/r/20241213-touchscreen-v3-1-7c1f670913f9@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 0cb349d742d1 ("wifi: mt76: mt7925: update mt7925_mac_link_bss_add for MLO")
+Signed-off-by: Eric-SY Chang <eric-sy.chang@mediatek.com>
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Link: https://patch.msgid.link/20241101074340.26176-1-mingyen.hsieh@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts   | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts
-index 8fa89db03e639..328294245a79d 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-kenzo.dts
-@@ -11,3 +11,18 @@
- 	model = "Google kenzo sku17 board";
- 	compatible = "google,juniper-sku17", "google,juniper", "mediatek,mt8183";
- };
-+
-+&i2c0 {
-+	touchscreen@40 {
-+		compatible = "hid-over-i2c";
-+		reg = <0x40>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&touchscreen_pins>;
-+
-+		interrupts-extended = <&pio 155 IRQ_TYPE_LEVEL_LOW>;
-+
-+		post-power-on-delay-ms = <70>;
-+		hid-descr-addr = <0x0001>;
-+	};
-+};
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+index 0c2a2337c313d..a78883d4d6df0 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -1976,8 +1976,6 @@ int mt7925_get_txpwr_info(struct mt792x_dev *dev, u8 band_idx, struct mt7925_txp
+ int mt7925_mcu_set_sniffer(struct mt792x_dev *dev, struct ieee80211_vif *vif,
+ 			   bool enable)
+ {
+-	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
+-
+ 	struct {
+ 		struct {
+ 			u8 band_idx;
+@@ -1991,7 +1989,7 @@ int mt7925_mcu_set_sniffer(struct mt792x_dev *dev, struct ieee80211_vif *vif,
+ 		} __packed enable;
+ 	} __packed req = {
+ 		.hdr = {
+-			.band_idx = mvif->bss_conf.mt76.band_idx,
++			.band_idx = 0,
+ 		},
+ 		.enable = {
+ 			.tag = cpu_to_le16(UNI_SNIFFER_ENABLE),
+@@ -2050,7 +2048,7 @@ int mt7925_mcu_config_sniffer(struct mt792x_vif *vif,
+ 		} __packed tlv;
+ 	} __packed req = {
+ 		.hdr = {
+-			.band_idx = vif->bss_conf.mt76.band_idx,
++			.band_idx = 0,
+ 		},
+ 		.tlv = {
+ 			.tag = cpu_to_le16(UNI_SNIFFER_CONFIG),
 -- 
 2.39.5
 
