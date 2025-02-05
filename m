@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFD635946;
-	Wed,  5 Feb 2025 15:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076111519BF;
+	Wed,  5 Feb 2025 15:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768040; cv=none; b=fYxp3LOipXwB5en94FOdOnmAD3WB+kEZjHXu9vhVK8tt0eot9oZrVCV23Z044FZy1Do2zjxD1ilQCbu5X5gvNVIviIG/EsN2HTqLtBfLR610MPurdqXazkB1g3bkVNdbWDmpoDun8olD0kybFgdmY/HHmpnCA5x3K4kcmAccU78=
+	t=1738768044; cv=none; b=Q8gd6QFTrNOP45LxQt4ZGervaZEf3iXrc/6UAMFA9gTnKPkY7SFHtsbclyIbQ1DH+KyCzmZGzsIZH/9RlTCKR75fEkE2yLjOUbX0//MSfq+7cibFI7LMc5ShSUKGKwd8ya2Cj+kt+HTluHH5ZUp42HBVc6hdz6nfb6LgknHL91c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768040; c=relaxed/simple;
-	bh=PaSw4c/Y4kmiCLrDfBdxBE7q6SJ4ndmMnIxPQ6XsJu8=;
+	s=arc-20240116; t=1738768044; c=relaxed/simple;
+	bh=AG+vnkaTa4yJNMPlNKpcGv7fy8qVP1SujnPnH/fbcaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CUFsiCXKn5opvkS4ZLSqCO5iK4f8thP+v+/CTtgOENHLlIfZqa5I1ABnkUvzRNupiCYpE56MFxGQHHHJtDteTnadXSyPKQZN5wY1dvGmuj6d978CpvFkTBtH1a8CnBHQNlgjqE7x86GXLoM2IF9kTyukpWeYCUvWF6HKrxDNXoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXfG31Da; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BBj5mPq55efZ8E9JdGZzMGFITBB5teAA1h4Hy/HP7ncQB5iesU8jfP+bnF082V5x+xyZPcny3b4hf33++WLixIm26t5NvmDX2RVpXyxkg/1TnDKXJYMCIV61+OJOoI5xivzO4huO1qG9I7OteysJiKoowv9Gz38WVObrBmiPHkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrHxOXRu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXfG31Da"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F8AC4CED1;
-	Wed,  5 Feb 2025 15:07:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrHxOXRu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B96BC4CED1;
+	Wed,  5 Feb 2025 15:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768040;
-	bh=PaSw4c/Y4kmiCLrDfBdxBE7q6SJ4ndmMnIxPQ6XsJu8=;
+	s=korg; t=1738768043;
+	bh=AG+vnkaTa4yJNMPlNKpcGv7fy8qVP1SujnPnH/fbcaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXfG31DaBeUq3DT9HmnUihRdYJez68eOUaD92FsQAQQPKmyaR1opXWz/d44P0ENg/
-	 LN16HSXuFHfI3bEyXUHTZItJmK6f2rRGXlPGbOw+yg5EODuXVlpTzi/rNQVMg+8LQB
-	 OS+/YVYSNbKx0uzJmqp6YdbWx9t9NC/J2LFqrbjY=
+	b=CrHxOXRu6TPY7w5VR/SCpKYevvwK+IgUMZtJeBSPWNiyCrbj7ePm1dFdyOVTHzZl3
+	 mnCxgFcqBmiol9m2BqPyjhpXW/v9GeAfsUDY9ASiALf6putwciJcYYJggWDmLuHur2
+	 88USrkq6thkhKd9h3A8BUp5F8z5n1XKs5N8qI0MY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Wander Lairson Costa <wander@redhat.com>,
-	Petr Mladek <pmladek@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 487/623] serial: 8250: Adjust the timeout for FIFO mode
-Date: Wed,  5 Feb 2025 14:43:49 +0100
-Message-ID: <20250205134514.849481640@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.12 545/590] drm/amd/display: Reduce accessing remote DPCD overhead
+Date: Wed,  5 Feb 2025 14:45:00 +0100
+Message-ID: <20250205134516.122457854@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,126 +50,121 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-[ Upstream commit d91f98be26510f5f81ec66425bb0306d1ccd571a ]
+commit adb4998f4928a17d91be054218a902ba9f8c1f93 upstream.
 
-After a console has written a record into UART_TX, it uses
-wait_for_xmitr() to wait until the data has been sent out before
-returning. However, wait_for_xmitr() will timeout after 10ms,
-regardless if the data has been transmitted or not.
+[Why]
+Observed frame rate get dropped by tool like glxgear. Even though the
+output to monitor is 60Hz, the rendered frame rate drops to 30Hz lower.
 
-For single bytes, this timeout is sufficient even at very slow
-baud rates, such as 1200bps. However, when FIFO mode is used,
-there may be 64 bytes pushed into the FIFO at once. At a baud
-rate of 115200bps, the 10ms timeout is still sufficient. But
-when using lower baud rates (such as 57600bps), the timeout
-is _not_ sufficient. This causes longer lines to be cut off,
-resulting in lost and horribly misformatted output on the
-console.
+It's due to code path in some cases will trigger
+dm_dp_mst_is_port_support_mode() to read out remote Link status to
+assess the available bandwidth for dsc maniplation. Overhead of keep
+reading remote DPCD is considerable.
 
-When using FIFO mode, take the number of bytes into account to
-determine an appropriate maximum timeout. Increasing the timeout
-does not affect performance since ideally the timeout never
-occurs.
+[How]
+Store the remote link BW in mst_local_bw and use end-to-end full_pbn
+as an indicator to decide whether update the remote link bw or not.
 
-Fixes: 8f3631f0f6eb ("serial/8250: Use fifo in 8250 console driver")
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Wander Lairson Costa <wander@redhat.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20250107212702.169493-2-john.ogness@linutronix.de
+Whenever we need the info to assess the BW, visit the stored one first.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3720
+Fixes: fa57924c76d9 ("drm/amd/display: Refactor function dm_dp_mst_is_port_support_mode()")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 4a9a918545455a5979c6232fcf61ed3d8f0db3ae)
+Cc: stable@vger.kernel.org
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 32 +++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h           |    2 
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |   34 ++++++++----
+ 2 files changed, 27 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index 649e74e9b52f6..b8babbdec8f3f 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -2079,7 +2079,8 @@ static void serial8250_break_ctl(struct uart_port *port, int break_state)
- 	serial8250_rpm_put(up);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -697,6 +697,8 @@ struct amdgpu_dm_connector {
+ 	struct drm_dp_mst_port *mst_output_port;
+ 	struct amdgpu_dm_connector *mst_root;
+ 	struct drm_dp_aux *dsc_aux;
++	uint32_t mst_local_bw;
++	uint16_t vc_full_pbn;
+ 	struct mutex handle_mst_msg_ready;
+ 
+ 	/* TODO see if we can merge with ddc_bus or make a dm_connector */
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -155,6 +155,17 @@ amdgpu_dm_mst_connector_late_register(st
+ 	return 0;
  }
  
--static void wait_for_lsr(struct uart_8250_port *up, int bits)
-+/* Returns true if @bits were set, false on timeout */
-+static bool wait_for_lsr(struct uart_8250_port *up, int bits)
- {
- 	unsigned int status, tmout = 10000;
- 
-@@ -2094,11 +2095,11 @@ static void wait_for_lsr(struct uart_8250_port *up, int bits)
- 		udelay(1);
- 		touch_nmi_watchdog();
- 	}
 +
-+	return (tmout != 0);
- }
- 
--/*
-- *	Wait for transmitter & holding register to empty
-- */
-+/* Wait for transmitter and holding register to empty with timeout */
- static void wait_for_xmitr(struct uart_8250_port *up, int bits)
- {
- 	unsigned int tmout;
-@@ -3317,6 +3318,16 @@ static void serial8250_console_restore(struct uart_8250_port *up)
- 	serial8250_out_MCR(up, up->mcr | UART_MCR_DTR | UART_MCR_RTS);
- }
- 
-+static void fifo_wait_for_lsr(struct uart_8250_port *up, unsigned int count)
++static inline void
++amdgpu_dm_mst_reset_mst_connector_setting(struct amdgpu_dm_connector *aconnector)
 +{
-+	unsigned int i;
-+
-+	for (i = 0; i < count; i++) {
-+		if (wait_for_lsr(up, UART_LSR_THRE))
-+			return;
-+	}
++	aconnector->edid = NULL;
++	aconnector->dsc_aux = NULL;
++	aconnector->mst_output_port->passthrough_aux = NULL;
++	aconnector->mst_local_bw = 0;
++	aconnector->vc_full_pbn = 0;
 +}
 +
- /*
-  * Print a string to the serial port using the device FIFO
-  *
-@@ -3326,13 +3337,15 @@ static void serial8250_console_restore(struct uart_8250_port *up)
- static void serial8250_console_fifo_write(struct uart_8250_port *up,
- 					  const char *s, unsigned int count)
+ static void
+ amdgpu_dm_mst_connector_early_unregister(struct drm_connector *connector)
  {
--	int i;
- 	const char *end = s + count;
- 	unsigned int fifosize = up->tx_loadsz;
-+	unsigned int tx_count = 0;
- 	bool cr_sent = false;
-+	unsigned int i;
+@@ -182,9 +193,7 @@ amdgpu_dm_mst_connector_early_unregister
  
- 	while (s != end) {
--		wait_for_lsr(up, UART_LSR_THRE);
-+		/* Allow timeout for each byte of a possibly full FIFO */
-+		fifo_wait_for_lsr(up, fifosize);
- 
- 		for (i = 0; i < fifosize && s != end; ++i) {
- 			if (*s == '\n' && !cr_sent) {
-@@ -3343,7 +3356,14 @@ static void serial8250_console_fifo_write(struct uart_8250_port *up,
- 				cr_sent = false;
- 			}
- 		}
-+		tx_count = i;
+ 		dc_sink_release(dc_sink);
+ 		aconnector->dc_sink = NULL;
+-		aconnector->edid = NULL;
+-		aconnector->dsc_aux = NULL;
+-		port->passthrough_aux = NULL;
++		amdgpu_dm_mst_reset_mst_connector_setting(aconnector);
  	}
-+
-+	/*
-+	 * Allow timeout for each byte written since the caller will only wait
-+	 * for UART_LSR_BOTH_EMPTY using the timeout of a single character
-+	 */
-+	fifo_wait_for_lsr(up, tx_count);
- }
  
- /*
--- 
-2.39.5
-
+ 	aconnector->mst_status = MST_STATUS_DEFAULT;
+@@ -500,9 +509,7 @@ dm_dp_mst_detect(struct drm_connector *c
+ 
+ 		dc_sink_release(aconnector->dc_sink);
+ 		aconnector->dc_sink = NULL;
+-		aconnector->edid = NULL;
+-		aconnector->dsc_aux = NULL;
+-		port->passthrough_aux = NULL;
++		amdgpu_dm_mst_reset_mst_connector_setting(aconnector);
+ 
+ 		amdgpu_dm_set_mst_status(&aconnector->mst_status,
+ 			MST_REMOTE_EDID | MST_ALLOCATE_NEW_PAYLOAD | MST_CLEAR_ALLOCATED_PAYLOAD,
+@@ -1815,9 +1822,18 @@ enum dc_status dm_dp_mst_is_port_support
+ 			struct drm_dp_mst_port *immediate_upstream_port = NULL;
+ 			uint32_t end_link_bw = 0;
+ 
+-			/*Get last DP link BW capability*/
+-			if (dp_get_link_current_set_bw(&aconnector->mst_output_port->aux, &end_link_bw)) {
+-				if (stream_kbps > end_link_bw) {
++			/*Get last DP link BW capability. Mode shall be supported by Legacy peer*/
++			if (aconnector->mst_output_port->pdt != DP_PEER_DEVICE_DP_LEGACY_CONV &&
++				aconnector->mst_output_port->pdt != DP_PEER_DEVICE_NONE) {
++				if (aconnector->vc_full_pbn != aconnector->mst_output_port->full_pbn) {
++					dp_get_link_current_set_bw(&aconnector->mst_output_port->aux, &end_link_bw);
++					aconnector->vc_full_pbn = aconnector->mst_output_port->full_pbn;
++					aconnector->mst_local_bw = end_link_bw;
++				} else {
++					end_link_bw = aconnector->mst_local_bw;
++				}
++
++				if (end_link_bw > 0 && stream_kbps > end_link_bw) {
+ 					DRM_DEBUG_DRIVER("MST_DSC dsc decode at last link."
+ 							 "Mode required bw can't fit into last link\n");
+ 					return DC_FAIL_BANDWIDTH_VALIDATE;
 
 
