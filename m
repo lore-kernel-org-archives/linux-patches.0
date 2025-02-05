@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C260E15198D;
-	Wed,  5 Feb 2025 14:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3A215198D;
+	Wed,  5 Feb 2025 14:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764796; cv=none; b=dgmUnKXIjFc6wzSZqQycfwZn2ecVqHsFJGkWKh/TU5cKeLU6FI3WcSVuE/y1YRDGt5EnrB7mPD3/831QucPpEI4AA3i1rBnOyh6kKDv8UXLeF8iIiSfeKvo58MPf2b/yN3Ywdrpw5O01qDAldhbcTgkqptScJZLmuMqCpuDZQkw=
+	t=1738764799; cv=none; b=kHjiphoq6HA/5N0bO07EmZwlCC17h0WzmPFZdcpXedAt9ZJwNVaJqh/RMLpPJZGumnbZqyc6UHQFHwcXIgtnUx8Ua8ikXcS4ae0yR5TU6oMVTEA4wzXZbYxj5feK0OYcNaLJGCMY1JdCBwGZ+CKRUE4Nw+TI0OJg+LOgCa1epls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764796; c=relaxed/simple;
-	bh=GeTTERc9pZwrEzyJ3sKq+ibSYl4vINVUPhilorx1Sxc=;
+	s=arc-20240116; t=1738764799; c=relaxed/simple;
+	bh=xgDtIFlOsKv3VxFIELqFHqb3dsCkj6SnSBKoCRgpoG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+/tNj5L0Of03bKohBMlLFkzgNb682HaB8YrlvQeynpBfyeR83a1IIQo6Ob0TlwmuInWjddBXQYYWh7aX/cA89ncbON5ghkPtKaAl4cEuV5qmOpfWMEixyNqVrlWcqAXXB///kLFHBJanF2adUlXdAksKa649Nvk0TR/us1YAZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBG8gJ4v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kjMd5rA8sNLTB0oPZpzcst5jTeDfoqFlqCQ5Y/a7bIZZZO877F4FdhMR88ZVo0XHyaYDt0L4iME5IzdJILCq1Nu1w9YA1K4p9LGyjORA1pbcrilAKleb4pJDm1veQUmXBVCbpqED2MzoHG2Au2s5cX/18YziiWLBcdcyUcaVYMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ga3avG1m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBG8gJ4v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8805C4CED1;
-	Wed,  5 Feb 2025 14:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ga3avG1m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED0EC4CED1;
+	Wed,  5 Feb 2025 14:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764795;
-	bh=GeTTERc9pZwrEzyJ3sKq+ibSYl4vINVUPhilorx1Sxc=;
+	s=korg; t=1738764798;
+	bh=xgDtIFlOsKv3VxFIELqFHqb3dsCkj6SnSBKoCRgpoG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBG8gJ4vJxOgvlN/0wUv8neXJh8Nf+Y87STmxVc/74jsv/1AZupqJBZOhftpjpVeM
-	 RU77+/ZHLRB4dXvAdN8voH+G4MO3RTkMmeibCwICildMSrOBI7qMd255ZptG5aS9rx
-	 J5+HCJGjPXzJYTpgRIWt/jJ0TxdeZmXPBJwpccgk=
+	b=Ga3avG1mIlIkPkHDqpVblxyF1GrlF5tHfODzhkyjOHFzHR0QCY5Xv3PQT+VZbLEl5
+	 SCVHCKArSJcgZxM/Wf0xLK7F63JkUvrgvB+1EmciR+IyQ+mtAbAP29AHnwaIeF3tUp
+	 aNYR6dKBE/zeOp7kzoEmOsYnKgTrH8chdJPUdsv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	He Rongguang <herongguang@linux.alibaba.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 114/623] cpupower: fix TSC MHz calculation
-Date: Wed,  5 Feb 2025 14:37:36 +0100
-Message-ID: <20250205134500.580818373@linuxfoundation.org>
+Subject: [PATCH 6.6 205/393] arm64: dts: mediatek: mt8173-evb: Drop regulator-compatible property
+Date: Wed,  5 Feb 2025 14:42:04 +0100
+Message-ID: <20250205134428.147554377@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,116 +47,216 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: He Rongguang <herongguang@linux.alibaba.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 9d6c0e58514f8b57cd9c2c755e41623d6a966025 ]
+[ Upstream commit a6d5983e40f5d5b219337569cdd269727f5a3e2e ]
 
-Commit 'cpupower: Make TSC read per CPU for Mperf monitor' (c2adb1877b7)
-changes TSC counter reads per cpu, but left time diff global (from start
-of all cpus to end of all cpus), thus diff(time) is too large for a
-cpu's tsc counting, resulting in far less than acutal TSC_Mhz and thus
-`cpupower monitor` showing far less than actual cpu realtime frequency.
+The "regulator-compatible" property has been deprecated since 2012 in
+commit 13511def87b9 ("regulator: deprecate regulator-compatible DT
+property"), which is so old it's not even mentioned in the converted
+regulator bindings YAML file. It is also not listed in the MT6397
+regulator bindings. Having them present produces a whole bunch of
+validation errors:
 
-/proc/cpuinfo shows frequency:
-cat /proc/cpuinfo | egrep -e 'processor' -e 'MHz'
-...
-processor : 171
-cpu MHz   : 4108.498
-...
+    Unevaluated properties are not allowed ('regulator-compatible' was unexpected)
 
-before fix (System 100% busy):
-    | Mperf              || Idle_Stats
- CPU| C0   | Cx   | Freq  || POLL | C1   | C2
- 171|  0.77| 99.23|  2279||  0.00|  0.00|  0.00
+Drop the "regulator-compatible" property from the board dts. The
+property values are the same as the node name, so everything should
+continue to work.
 
-after fix (System 100% busy):
-    | Mperf              || Idle_Stats
- CPU| C0   | Cx   | Freq  || POLL | C1   | C2
- 171|  0.46| 99.54|  4095||  0.00|  0.00|  0.00
-
-Fixes: c2adb1877b76 ("cpupower: Make TSC read per CPU for Mperf monitor")
-Signed-off-by: He Rongguang <herongguang@linux.alibaba.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 16ea61fc5614 ("arm64: dts: mt8173-evb: Add PMIC support")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20241211052427.4178367-3-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../cpupower/utils/idle_monitor/mperf_monitor.c   | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8173-evb.dts | 23 ---------------------
+ 1 file changed, 23 deletions(-)
 
-diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-index ae6af354a81db..08a399b0be286 100644
---- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-+++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-@@ -33,7 +33,7 @@ static int mperf_get_count_percent(unsigned int self_id, double *percent,
- 				   unsigned int cpu);
- static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
- 				unsigned int cpu);
--static struct timespec time_start, time_end;
-+static struct timespec *time_start, *time_end;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8173-evb.dts b/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
+index d258c80213b26..f9a84825b5cad 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
+@@ -312,7 +312,6 @@
+ 			compatible = "mediatek,mt6397-regulator";
  
- static cstate_t mperf_cstates[MPERF_CSTATE_COUNT] = {
- 	{
-@@ -174,7 +174,7 @@ static int mperf_get_count_percent(unsigned int id, double *percent,
- 		dprint("%s: TSC Ref - mperf_diff: %llu, tsc_diff: %llu\n",
- 		       mperf_cstates[id].name, mperf_diff, tsc_diff);
- 	} else if (max_freq_mode == MAX_FREQ_SYSFS) {
--		timediff = max_frequency * timespec_diff_us(time_start, time_end);
-+		timediff = max_frequency * timespec_diff_us(time_start[cpu], time_end[cpu]);
- 		*percent = 100.0 * mperf_diff / timediff;
- 		dprint("%s: MAXFREQ - mperf_diff: %llu, time_diff: %llu\n",
- 		       mperf_cstates[id].name, mperf_diff, timediff);
-@@ -207,7 +207,7 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
- 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
- 		/* Calculate max_freq from TSC count */
- 		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
--		time_diff = timespec_diff_us(time_start, time_end);
-+		time_diff = timespec_diff_us(time_start[cpu], time_end[cpu]);
- 		max_frequency = tsc_diff / time_diff;
- 	}
+ 			mt6397_vpca15_reg: buck_vpca15 {
+-				regulator-compatible = "buck_vpca15";
+ 				regulator-name = "vpca15";
+ 				regulator-min-microvolt = < 700000>;
+ 				regulator-max-microvolt = <1350000>;
+@@ -321,7 +320,6 @@
+ 			};
  
-@@ -226,9 +226,8 @@ static int mperf_start(void)
- {
- 	int cpu;
+ 			mt6397_vpca7_reg: buck_vpca7 {
+-				regulator-compatible = "buck_vpca7";
+ 				regulator-name = "vpca7";
+ 				regulator-min-microvolt = < 700000>;
+ 				regulator-max-microvolt = <1350000>;
+@@ -330,7 +328,6 @@
+ 			};
  
--	clock_gettime(CLOCK_REALTIME, &time_start);
--
- 	for (cpu = 0; cpu < cpu_count; cpu++) {
-+		clock_gettime(CLOCK_REALTIME, &time_start[cpu]);
- 		mperf_get_tsc(&tsc_at_measure_start[cpu]);
- 		mperf_init_stats(cpu);
- 	}
-@@ -243,9 +242,9 @@ static int mperf_stop(void)
- 	for (cpu = 0; cpu < cpu_count; cpu++) {
- 		mperf_measure_stats(cpu);
- 		mperf_get_tsc(&tsc_at_measure_end[cpu]);
-+		clock_gettime(CLOCK_REALTIME, &time_end[cpu]);
- 	}
+ 			mt6397_vsramca15_reg: buck_vsramca15 {
+-				regulator-compatible = "buck_vsramca15";
+ 				regulator-name = "vsramca15";
+ 				regulator-min-microvolt = < 700000>;
+ 				regulator-max-microvolt = <1350000>;
+@@ -339,7 +336,6 @@
+ 			};
  
--	clock_gettime(CLOCK_REALTIME, &time_end);
- 	return 0;
- }
+ 			mt6397_vsramca7_reg: buck_vsramca7 {
+-				regulator-compatible = "buck_vsramca7";
+ 				regulator-name = "vsramca7";
+ 				regulator-min-microvolt = < 700000>;
+ 				regulator-max-microvolt = <1350000>;
+@@ -348,7 +344,6 @@
+ 			};
  
-@@ -349,6 +348,8 @@ struct cpuidle_monitor *mperf_register(void)
- 	aperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
- 	tsc_at_measure_start = calloc(cpu_count, sizeof(unsigned long long));
- 	tsc_at_measure_end = calloc(cpu_count, sizeof(unsigned long long));
-+	time_start = calloc(cpu_count, sizeof(struct timespec));
-+	time_end = calloc(cpu_count, sizeof(struct timespec));
- 	mperf_monitor.name_len = strlen(mperf_monitor.name);
- 	return &mperf_monitor;
- }
-@@ -361,6 +362,8 @@ void mperf_unregister(void)
- 	free(aperf_current_count);
- 	free(tsc_at_measure_start);
- 	free(tsc_at_measure_end);
-+	free(time_start);
-+	free(time_end);
- 	free(is_valid);
- }
+ 			mt6397_vcore_reg: buck_vcore {
+-				regulator-compatible = "buck_vcore";
+ 				regulator-name = "vcore";
+ 				regulator-min-microvolt = < 700000>;
+ 				regulator-max-microvolt = <1350000>;
+@@ -357,7 +352,6 @@
+ 			};
  
+ 			mt6397_vgpu_reg: buck_vgpu {
+-				regulator-compatible = "buck_vgpu";
+ 				regulator-name = "vgpu";
+ 				regulator-min-microvolt = < 700000>;
+ 				regulator-max-microvolt = <1350000>;
+@@ -366,7 +360,6 @@
+ 			};
+ 
+ 			mt6397_vdrm_reg: buck_vdrm {
+-				regulator-compatible = "buck_vdrm";
+ 				regulator-name = "vdrm";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <1400000>;
+@@ -375,7 +368,6 @@
+ 			};
+ 
+ 			mt6397_vio18_reg: buck_vio18 {
+-				regulator-compatible = "buck_vio18";
+ 				regulator-name = "vio18";
+ 				regulator-min-microvolt = <1620000>;
+ 				regulator-max-microvolt = <1980000>;
+@@ -384,19 +376,16 @@
+ 			};
+ 
+ 			mt6397_vtcxo_reg: ldo_vtcxo {
+-				regulator-compatible = "ldo_vtcxo";
+ 				regulator-name = "vtcxo";
+ 				regulator-always-on;
+ 			};
+ 
+ 			mt6397_va28_reg: ldo_va28 {
+-				regulator-compatible = "ldo_va28";
+ 				regulator-name = "va28";
+ 				regulator-always-on;
+ 			};
+ 
+ 			mt6397_vcama_reg: ldo_vcama {
+-				regulator-compatible = "ldo_vcama";
+ 				regulator-name = "vcama";
+ 				regulator-min-microvolt = <1500000>;
+ 				regulator-max-microvolt = <2800000>;
+@@ -404,18 +393,15 @@
+ 			};
+ 
+ 			mt6397_vio28_reg: ldo_vio28 {
+-				regulator-compatible = "ldo_vio28";
+ 				regulator-name = "vio28";
+ 				regulator-always-on;
+ 			};
+ 
+ 			mt6397_vusb_reg: ldo_vusb {
+-				regulator-compatible = "ldo_vusb";
+ 				regulator-name = "vusb";
+ 			};
+ 
+ 			mt6397_vmc_reg: ldo_vmc {
+-				regulator-compatible = "ldo_vmc";
+ 				regulator-name = "vmc";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -423,7 +409,6 @@
+ 			};
+ 
+ 			mt6397_vmch_reg: ldo_vmch {
+-				regulator-compatible = "ldo_vmch";
+ 				regulator-name = "vmch";
+ 				regulator-min-microvolt = <3000000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -431,7 +416,6 @@
+ 			};
+ 
+ 			mt6397_vemc_3v3_reg: ldo_vemc3v3 {
+-				regulator-compatible = "ldo_vemc3v3";
+ 				regulator-name = "vemc_3v3";
+ 				regulator-min-microvolt = <3000000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -439,7 +423,6 @@
+ 			};
+ 
+ 			mt6397_vgp1_reg: ldo_vgp1 {
+-				regulator-compatible = "ldo_vgp1";
+ 				regulator-name = "vcamd";
+ 				regulator-min-microvolt = <1220000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -447,7 +430,6 @@
+ 			};
+ 
+ 			mt6397_vgp2_reg: ldo_vgp2 {
+-				regulator-compatible = "ldo_vgp2";
+ 				regulator-name = "vcamio";
+ 				regulator-min-microvolt = <1000000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -455,7 +437,6 @@
+ 			};
+ 
+ 			mt6397_vgp3_reg: ldo_vgp3 {
+-				regulator-compatible = "ldo_vgp3";
+ 				regulator-name = "vcamaf";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -463,7 +444,6 @@
+ 			};
+ 
+ 			mt6397_vgp4_reg: ldo_vgp4 {
+-				regulator-compatible = "ldo_vgp4";
+ 				regulator-name = "vgp4";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -471,7 +451,6 @@
+ 			};
+ 
+ 			mt6397_vgp5_reg: ldo_vgp5 {
+-				regulator-compatible = "ldo_vgp5";
+ 				regulator-name = "vgp5";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <3000000>;
+@@ -479,7 +458,6 @@
+ 			};
+ 
+ 			mt6397_vgp6_reg: ldo_vgp6 {
+-				regulator-compatible = "ldo_vgp6";
+ 				regulator-name = "vgp6";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -487,7 +465,6 @@
+ 			};
+ 
+ 			mt6397_vibr_reg: ldo_vibr {
+-				regulator-compatible = "ldo_vibr";
+ 				regulator-name = "vibr";
+ 				regulator-min-microvolt = <1300000>;
+ 				regulator-max-microvolt = <3300000>;
 -- 
 2.39.5
 
