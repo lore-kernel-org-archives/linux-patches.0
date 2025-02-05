@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43F31519AA;
-	Wed,  5 Feb 2025 14:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E461FC0B;
+	Wed,  5 Feb 2025 14:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764415; cv=none; b=NoT224Rta4d+t8yzQS4IE1GNeZsmV1s7ucb7UGHRBd+BNZ/c0aIRkqxy7mEEboWDokd/UiLU0xPvLnDxd2OKaPZeHbTJHVDU5f2v/EmbrO9IvjwVV2Wk4n5wkiFhO5bKnUAFhotz6ToAMfzn6wDk5t1Xg+Xq6aG0O33U/nw/MhU=
+	t=1738764419; cv=none; b=g7287vMndQ3gVItoUlSB6kh8yRGRVJ4wAxaQi/eiZaRSDUfneRsJcM+Y46h+IVRZTxPZgOaoHV0foJUQWQvKjzosI0VGqJI/dtBBRomTiUq58/h8970qE6OIHJ1bGjfSDad0wmtsHWL/RJgSd8A5IzD2mkOu5oUTcuV40kpYAQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764415; c=relaxed/simple;
-	bh=+ehALnKpRq0QEDcEnmDaq3ra8MGcwjfnGMV4kx4YQKA=;
+	s=arc-20240116; t=1738764419; c=relaxed/simple;
+	bh=SPsmRfSTxsahfL4yfPb+BO4H3AtFArHlxTZFk0r3Dhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Koupfis/plGIKMfZuFe/V8+21Txs4ycDP9VDNShcjhqYA0WGH5VlScdPgTert1LdESB/R83yTI2Dm7hrRHNcOyJDsI3lH5EL6NS488e9NlMTUJE8hNY2LNdWm1k6BsE0JYFLh8IBLYenk0c0h8k8+ncoozOQppVWW09ZxLgzHQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIoQWJfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uIP9qN2kMnUcecJferDs49LzofNttXsT6rfp4ZTSvFVc/JmWWxugU5fa8KG/RVspLdZ6+7dtEE9Utzf1t19ffmyDs99kvcZg54/QZW2AXWmr9CPlYFj9Hf3rv17cHOVgGLPq2HruqpdVYxcoFouJZs/CzBoBF1+sUwuM6MFR3us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+V8UoZV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIoQWJfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 121AEC4CED1;
-	Wed,  5 Feb 2025 14:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+V8UoZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7072AC4CED1;
+	Wed,  5 Feb 2025 14:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764415;
-	bh=+ehALnKpRq0QEDcEnmDaq3ra8MGcwjfnGMV4kx4YQKA=;
+	s=korg; t=1738764418;
+	bh=SPsmRfSTxsahfL4yfPb+BO4H3AtFArHlxTZFk0r3Dhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uIoQWJfmgt9SFbG4MNhLLwVSLsBjewvGc9kRsW/z0aMVdGjvINbw/uy3RRuDmJQqG
-	 tGfQnmJ3rM6JJqeonFEhONC9fGcGkovULKsSAzzFTB5N4iIZ61yysmE/7BQ+3u/Q2k
-	 1xz1AeoARUZ0TvTlS6MBZmBD305kOCRwWgLh4zxI=
+	b=N+V8UoZV/HnYvFa84nf+S+jPL6lByxdXUYlPhX0vrb8soumtp/1ELOMc0pKYOVufR
+	 EOPq8UrdxN4ICJlNM42oByShruTNu9W4mOtZWRrqPLIzc7QK73bZkG+/Y0qo03eE2S
+	 AVUjNs82ZnTMC5IoHciJZPvM1KOXxMck2FPwEE/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Monnet <qmo@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 155/393] libbpf: Fix segfault due to libelf functions not setting errno
-Date: Wed,  5 Feb 2025 14:41:14 +0100
-Message-ID: <20250205134426.231970118@linuxfoundation.org>
+Subject: [PATCH 6.6 170/393] crypto: ixp4xx - fix OF node reference leaks in init_ixp_crypto()
+Date: Wed,  5 Feb 2025 14:41:29 +0100
+Message-ID: <20250205134426.799862593@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -51,138 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quentin Monnet <qmo@kernel.org>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit e10500b69c3f3378f3dcfc8c2fe4cdb74fc844f5 ]
+[ Upstream commit 472a989029aac2b78ef2f0b18b27c568bf76d104 ]
 
-Libelf functions do not set errno on failure. Instead, it relies on its
-internal _elf_errno value, that can be retrieved via elf_errno (or the
-corresponding message via elf_errmsg()). From "man libelf":
+init_ixp_crypto() calls of_parse_phandle_with_fixed_args() multiple
+times, but does not release all the obtained refcounts. Fix it by adding
+of_node_put() calls.
 
-    If a libelf function encounters an error it will set an internal
-    error code that can be retrieved with elf_errno. Each thread
-    maintains its own separate error code. The meaning of each error
-    code can be determined with elf_errmsg, which returns a string
-    describing the error.
+This bug was found by an experimental static analysis tool that I am
+developing.
 
-As a consequence, libbpf should not return -errno when a function from
-libelf fails, because an empty value will not be interpreted as an error
-and won't prevent the program to stop. This is visible in
-bpf_linker__add_file(), for example, where we call a succession of
-functions that rely on libelf:
-
-    err = err ?: linker_load_obj_file(linker, filename, opts, &obj);
-    err = err ?: linker_append_sec_data(linker, &obj);
-    err = err ?: linker_append_elf_syms(linker, &obj);
-    err = err ?: linker_append_elf_relos(linker, &obj);
-    err = err ?: linker_append_btf(linker, &obj);
-    err = err ?: linker_append_btf_ext(linker, &obj);
-
-If the object file that we try to process is not, in fact, a correct
-object file, linker_load_obj_file() may fail with errno not being set,
-and return 0. In this case we attempt to run linker_append_elf_sysms()
-and may segfault.
-
-This can happen (and was discovered) with bpftool:
-
-    $ bpftool gen object output.o sample_ret0.bpf.c
-    libbpf: failed to get ELF header for sample_ret0.bpf.c: invalid `Elf' handle
-    zsh: segmentation fault (core dumped)  bpftool gen object output.o sample_ret0.bpf.c
-
-Fix the issue by returning a non-null error code (-EINVAL) when libelf
-functions fail.
-
-Fixes: faf6ed321cf6 ("libbpf: Add BPF static linker APIs")
-Signed-off-by: Quentin Monnet <qmo@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241205135942.65262-1-qmo@kernel.org
+Fixes: 76f24b4f46b8 ("crypto: ixp4xx - Add device tree support")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/linker.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
-index 88cc7236f1220..736ebceea233f 100644
---- a/tools/lib/bpf/linker.c
-+++ b/tools/lib/bpf/linker.c
-@@ -567,17 +567,15 @@ static int linker_load_obj_file(struct bpf_linker *linker, const char *filename,
- 	}
- 	obj->elf = elf_begin(obj->fd, ELF_C_READ_MMAP, NULL);
- 	if (!obj->elf) {
--		err = -errno;
- 		pr_warn_elf("failed to parse ELF file '%s'", filename);
--		return err;
-+		return -EINVAL;
- 	}
- 
- 	/* Sanity check ELF file high-level properties */
- 	ehdr = elf64_getehdr(obj->elf);
- 	if (!ehdr) {
--		err = -errno;
- 		pr_warn_elf("failed to get ELF header for %s", filename);
--		return err;
-+		return -EINVAL;
- 	}
- 	if (ehdr->e_ident[EI_DATA] != host_endianness) {
- 		err = -EOPNOTSUPP;
-@@ -593,9 +591,8 @@ static int linker_load_obj_file(struct bpf_linker *linker, const char *filename,
- 	}
- 
- 	if (elf_getshdrstrndx(obj->elf, &obj->shstrs_sec_idx)) {
--		err = -errno;
- 		pr_warn_elf("failed to get SHSTRTAB section index for %s", filename);
--		return err;
-+		return -EINVAL;
- 	}
- 
- 	scn = NULL;
-@@ -605,26 +602,23 @@ static int linker_load_obj_file(struct bpf_linker *linker, const char *filename,
- 
- 		shdr = elf64_getshdr(scn);
- 		if (!shdr) {
--			err = -errno;
- 			pr_warn_elf("failed to get section #%zu header for %s",
- 				    sec_idx, filename);
--			return err;
-+			return -EINVAL;
+diff --git a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
+index 4a18095ae5d80..662aac9ea186d 100644
+--- a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
++++ b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
+@@ -471,6 +471,7 @@ static int init_ixp_crypto(struct device *dev)
+ 			return -ENODEV;
  		}
+ 		npe_id = npe_spec.args[0];
++		of_node_put(npe_spec.np);
  
- 		sec_name = elf_strptr(obj->elf, obj->shstrs_sec_idx, shdr->sh_name);
- 		if (!sec_name) {
--			err = -errno;
- 			pr_warn_elf("failed to get section #%zu name for %s",
- 				    sec_idx, filename);
--			return err;
-+			return -EINVAL;
+ 		ret = of_parse_phandle_with_fixed_args(np, "queue-rx", 1, 0,
+ 						       &queue_spec);
+@@ -479,6 +480,7 @@ static int init_ixp_crypto(struct device *dev)
+ 			return -ENODEV;
  		}
+ 		recv_qid = queue_spec.args[0];
++		of_node_put(queue_spec.np);
  
- 		data = elf_getdata(scn, 0);
- 		if (!data) {
--			err = -errno;
- 			pr_warn_elf("failed to get section #%zu (%s) data from %s",
- 				    sec_idx, sec_name, filename);
--			return err;
-+			return -EINVAL;
+ 		ret = of_parse_phandle_with_fixed_args(np, "queue-txready", 1, 0,
+ 						       &queue_spec);
+@@ -487,6 +489,7 @@ static int init_ixp_crypto(struct device *dev)
+ 			return -ENODEV;
  		}
- 
- 		sec = add_src_sec(obj, sec_name);
-@@ -2602,14 +2596,14 @@ int bpf_linker__finalize(struct bpf_linker *linker)
- 
- 	/* Finalize ELF layout */
- 	if (elf_update(linker->elf, ELF_C_NULL) < 0) {
--		err = -errno;
-+		err = -EINVAL;
- 		pr_warn_elf("failed to finalize ELF layout");
- 		return libbpf_err(err);
- 	}
- 
- 	/* Write out final ELF contents */
- 	if (elf_update(linker->elf, ELF_C_WRITE) < 0) {
--		err = -errno;
-+		err = -EINVAL;
- 		pr_warn_elf("failed to write ELF contents");
- 		return libbpf_err(err);
- 	}
+ 		send_qid = queue_spec.args[0];
++		of_node_put(queue_spec.np);
+ 	} else {
+ 		/*
+ 		 * Hardcoded engine when using platform data, this goes away
 -- 
 2.39.5
 
