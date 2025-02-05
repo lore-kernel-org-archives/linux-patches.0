@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F213413AD22;
-	Wed,  5 Feb 2025 13:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81BC126C18;
+	Wed,  5 Feb 2025 13:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763423; cv=none; b=i8eC+OaOR78LEAqXciGB4qfz7m1tBt9JJoGQPnyt4uU/vNO0chEo2rdjDnggua8PINjmypmL+7f+Lld4L0+Qt1n0WNzXDWPK1rJoajWPD0YJ5pD6Zmij6OUk13r4Gq4bz/FdOTLyg50T2UkFVH5sf9KFBP+HGsH/6UXExAAR0cg=
+	t=1738763426; cv=none; b=QT/1ldAe60eU1in42ASCkm+g9Sk6PMep/vN7SW5bMAuxGOBK8vPd20cmgE0+058dmuI4KpMRVNRPai41oZhoLj7aPwSMQJ9HktUTsdQkCqXhhfyyO8Crc0T9n5c8+rQ/LODGEpDMIzXT8seS1JHFB2kCzRJL/IpWkrKg5ctNwl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763423; c=relaxed/simple;
-	bh=3Iuegy77MXwS5si7LozJWKm5NQ4MGiYQR6OBdWmWAiI=;
+	s=arc-20240116; t=1738763426; c=relaxed/simple;
+	bh=YE2wwlQVo9WNszqb7MnDd8HBXe2iAA32Wobv7D5qb84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRvWn9Fn6L+J7F+2uCwBIdDFhgNVCoxWjdpJmRlJ+/WKidySPoutWoUsdlOUJqHS12Aj81SHJPmqFR3P/OiDkYmyr3nW9vwLidaK2mRY87/CiWhEkxvpV/vYwzCX/D2ctilBJ05FjiLNomvXOv4j0In5qjTf5D1Zml3h0COssR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WqUPSvYW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K11XTl8UmQrdILglMifDUUgzlkYAUs11WCQVELvF0UjeUcCUdcvbJcEisngFXrsq/iMOPNPGQ4S+qBRwKj0SKk/gpqb22Y8mZM++tzctYNLZWM076pQ1FVXfmb78QffuWNMtp9imXHU6bqpf5k7CbNhXmK2mB8UZJ6Q+mrPNWeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZ1vKkcY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqUPSvYW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 608F6C4CED1;
-	Wed,  5 Feb 2025 13:50:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZ1vKkcY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FB5C4CED6;
+	Wed,  5 Feb 2025 13:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763422;
-	bh=3Iuegy77MXwS5si7LozJWKm5NQ4MGiYQR6OBdWmWAiI=;
+	s=korg; t=1738763426;
+	bh=YE2wwlQVo9WNszqb7MnDd8HBXe2iAA32Wobv7D5qb84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WqUPSvYWCTWpwj7iTcMHMS26flglSXTKIs207sZgHcRGm21n6Sa2GNKZMG4UsVKTX
-	 tEsOjxReHpCOMwQIFRTT/aaHMNQ8EOgfyWHEf0kJldXYDRkkzqhk/QhI/8MAkEci7K
-	 jHTGGEbscLdNJqkVElgT16e2T8Q74rogyIwO/0ww=
+	b=gZ1vKkcYbyrYb/lanL2/2gGOunnaa0gXVsz3v2uLb0Z7OyMBzLY7nZ8p9fF8OpON7
+	 2sk3OEU7zkmYVCdO3zurMleeTactG+xpw5BcymHw9KRGw5p6Z8UsmKSjeRHPvBNoJw
+	 uNY7uDNKO2zvh2MWnoQpNcAFaD3fNuaEIttJCvwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Hortmann <philipp.g.hortmann@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Derek Foreman <derek.foreman@collabora.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 011/590] ps3disk: Do not use dev->bounce_size before it is set
-Date: Wed,  5 Feb 2025 14:36:06 +0100
-Message-ID: <20250205134455.665495238@linuxfoundation.org>
+Subject: [PATCH 6.6 031/393] drm/rockchip: vop2: Fix the windows switch between different layers
+Date: Wed,  5 Feb 2025 14:39:10 +0100
+Message-ID: <20250205134421.494507685@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +48,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit c2398e6d5f16e15598d3a37e17107fea477e3f91 ]
+[ Upstream commit 0ca953ac226eaffbe1a795f5e517095a8d494921 ]
 
-dev->bounce_size is only initialized after it is used to set the queue
-limits.  Fix this by using BOUNCE_SIZE instead.
+Every layer of vop2 should bind a window, and we also need to make
+sure that this window is not used by other layer.
 
-Fixes: a7f18b74dbe17162 ("ps3disk: pass queue_limits to blk_mq_alloc_disk")
-Reported-by: Philipp Hortmann <philipp.g.hortmann@gmail.com>
-Closes: https://lore.kernel.org/39256db9-3d73-4e86-a49b-300dfd670212@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/06988f959ea6885b8bd7fb3b9059dd54bc6bbad7.1735894216.git.geert+renesas@glider.be
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+0x5 is a reserved layer sel value on rk3568, but it will select
+Cluster3 on rk3588, configure unused layers to 0x5  will lead
+alpha blending error on rk3588.
+
+When we bind a window from layerM to layerN, we move the old window
+on layerN to layerM.
+
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Tested-by: Derek Foreman <derek.foreman@collabora.com>
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241214081719.3330518-3-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ps3disk.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 47 ++++++++++++++------
+ 1 file changed, 34 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/block/ps3disk.c b/drivers/block/ps3disk.c
-index ff45ed7664695..226ffc743238e 100644
---- a/drivers/block/ps3disk.c
-+++ b/drivers/block/ps3disk.c
-@@ -384,9 +384,9 @@ static int ps3disk_probe(struct ps3_system_bus_device *_dev)
- 	unsigned int devidx;
- 	struct queue_limits lim = {
- 		.logical_block_size	= dev->blk_size,
--		.max_hw_sectors		= dev->bounce_size >> 9,
-+		.max_hw_sectors		= BOUNCE_SIZE >> 9,
- 		.max_segments		= -1,
--		.max_segment_size	= dev->bounce_size,
-+		.max_segment_size	= BOUNCE_SIZE,
- 		.dma_alignment		= dev->blk_size - 1,
- 		.features		= BLK_FEAT_WRITE_CACHE |
- 					  BLK_FEAT_ROTATIONAL,
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 1295aaffe868a..724b75cfb6b5b 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -1924,7 +1924,10 @@ static void vop2_setup_layer_mixer(struct vop2_video_port *vp)
+ 	struct drm_plane *plane;
+ 	u32 layer_sel = 0;
+ 	u32 port_sel;
+-	unsigned int nlayer, ofs;
++	u8 layer_id;
++	u8 old_layer_id;
++	u8 layer_sel_id;
++	unsigned int ofs;
+ 	u32 ovl_ctrl;
+ 	int i;
+ 	struct vop2_video_port *vp0 = &vop2->vps[0];
+@@ -1968,9 +1971,30 @@ static void vop2_setup_layer_mixer(struct vop2_video_port *vp)
+ 	for (i = 0; i < vp->id; i++)
+ 		ofs += vop2->vps[i].nlayers;
+ 
+-	nlayer = 0;
+ 	drm_atomic_crtc_for_each_plane(plane, &vp->crtc) {
+ 		struct vop2_win *win = to_vop2_win(plane);
++		struct vop2_win *old_win;
++
++		layer_id = (u8)(plane->state->normalized_zpos + ofs);
++
++		/*
++		 * Find the layer this win bind in old state.
++		 */
++		for (old_layer_id = 0; old_layer_id < vop2->data->win_size; old_layer_id++) {
++			layer_sel_id = (layer_sel >> (4 * old_layer_id)) & 0xf;
++			if (layer_sel_id == win->data->layer_sel_id)
++				break;
++		}
++
++		/*
++		 * Find the win bind to this layer in old state
++		 */
++		for (i = 0; i < vop2->data->win_size; i++) {
++			old_win = &vop2->win[i];
++			layer_sel_id = (layer_sel >> (4 * layer_id)) & 0xf;
++			if (layer_sel_id == old_win->data->layer_sel_id)
++				break;
++		}
+ 
+ 		switch (win->data->phys_id) {
+ 		case ROCKCHIP_VOP2_CLUSTER0:
+@@ -1999,17 +2023,14 @@ static void vop2_setup_layer_mixer(struct vop2_video_port *vp)
+ 			break;
+ 		}
+ 
+-		layer_sel &= ~RK3568_OVL_LAYER_SEL__LAYER(plane->state->normalized_zpos + ofs,
+-							  0x7);
+-		layer_sel |= RK3568_OVL_LAYER_SEL__LAYER(plane->state->normalized_zpos + ofs,
+-							 win->data->layer_sel_id);
+-		nlayer++;
+-	}
+-
+-	/* configure unused layers to 0x5 (reserved) */
+-	for (; nlayer < vp->nlayers; nlayer++) {
+-		layer_sel &= ~RK3568_OVL_LAYER_SEL__LAYER(nlayer + ofs, 0x7);
+-		layer_sel |= RK3568_OVL_LAYER_SEL__LAYER(nlayer + ofs, 5);
++		layer_sel &= ~RK3568_OVL_LAYER_SEL__LAYER(layer_id, 0x7);
++		layer_sel |= RK3568_OVL_LAYER_SEL__LAYER(layer_id, win->data->layer_sel_id);
++		/*
++		 * When we bind a window from layerM to layerN, we also need to move the old
++		 * window on layerN to layerM to avoid one window selected by two or more layers.
++		 */
++		layer_sel &= ~RK3568_OVL_LAYER_SEL__LAYER(old_layer_id, 0x7);
++		layer_sel |= RK3568_OVL_LAYER_SEL__LAYER(old_layer_id, old_win->data->layer_sel_id);
+ 	}
+ 
+ 	vop2_writel(vop2, RK3568_OVL_LAYER_SEL, layer_sel);
 -- 
 2.39.5
 
