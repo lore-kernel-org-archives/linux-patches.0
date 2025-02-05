@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431EC1FC7C4;
-	Wed,  5 Feb 2025 14:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1ECC1FC7FE;
+	Wed,  5 Feb 2025 14:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766824; cv=none; b=oXXMC2e5j5HZy7RaUMbuLhVdwBYhigym1CvI9EYpLMMCtOCieb/6NMmaU/a5KSLkFPGoJjxCnZrwrg1+h/yX5zqUw2AIPs1i+RofggPNM1ewcHWnbuKosbEy8IffNTe0eLzw5QZIiLuHABQFRKC3SevaZeI24SRvzEDsY/XV20I=
+	t=1738766827; cv=none; b=BEGfHq/y4h9MgeJL9SxIIXnC45LeJrQvJX8t8N6WjYimTrWMdiaSqXxWGiArWsmLhgzNqvE7E2QBMyeKiq8GToL9xaEvBCMTyV6L83D4QHDnlUnbllYkdwLPp+mtNszu/rztutLMyVr4IWbuOIlIZJ2eqf/2BPiSmvCr2+l3GVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766824; c=relaxed/simple;
-	bh=G28laikxOylY1kCG6fb8bKeb0Su6trUQ7a65Y3imjhA=;
+	s=arc-20240116; t=1738766827; c=relaxed/simple;
+	bh=lLGOfprXQ5hUFpA4Fr/fFPCDx7CDmSIU0XewCQggqnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pjLp4dCEmiiGYrSNz0RNMoFaybAxL6dwB3/nxwMc7i9djCT+JdPrtgMyuWmzLA3zH/GWk/5kkg4Hj/r6Ica+ev4+hjGcYHs12gUIK//lJMrgkrzc1yJQ9YaWVcC0HZcDMiLZttqGIK6PPBhsaEnfmgTGmhSxPN9lxZKVZ8vzisY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYXfclUm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kfgx7iLi8AavjK20QO1OTfDd8+OwkXSDd/s4AxObY3bBNpVvGR0t2hY9TcxR2zjfNzVr2lIshpAYOeSjkJXxrC8cUKs5Am64UNFOzf7XuP41ZkDPVnituRPXpDG03e2DTFbASuKjHrALvBV6b3YQKdYotAtbrVHvTsgW9ce+ynI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLoogwO5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYXfclUm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9C4C4CED1;
-	Wed,  5 Feb 2025 14:47:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLoogwO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1677C4CED1;
+	Wed,  5 Feb 2025 14:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766823;
-	bh=G28laikxOylY1kCG6fb8bKeb0Su6trUQ7a65Y3imjhA=;
+	s=korg; t=1738766827;
+	bh=lLGOfprXQ5hUFpA4Fr/fFPCDx7CDmSIU0XewCQggqnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cYXfclUm+vgLZEfkIzRzI4OO6agPYJORu6W30lVQGwQhPx1tffdOsrXUiWM73jHIF
-	 u/KKE6j1gH4QCKcuYQnbMsEJcUIIOkz1bFoyM5XbU9p2/YFFM2qfEmYs2xr/sBYSTz
-	 zUBG4h05b9nWDMTZmRqK24M175gIKq4kV6eJAMxY=
+	b=fLoogwO5/xFLqjXeTFyJsXrek+MuGzkgQQoVJz3dIDxHmk8kcIPiuOtcAPv8+BX9N
+	 X+eg669BwnXmiSMVlrUamSOD5jt60vkvQ3/StfJ43rvngi8b8HW6IJtgxz9uGfucJs
+	 JGo6OigZktsYQGhJxBjhfoBuwCDGsMVRMc3oP2DQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@linux.alibaba.com>,
-	Guo Ren <guoren@kernel.org>,
-	Tomasz Jeznach <tjeznach@rivosinc.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 313/623] iommu/riscv: Fixup compile warning
-Date: Wed,  5 Feb 2025 14:40:55 +0100
-Message-ID: <20250205134508.198692514@linuxfoundation.org>
+	Dragan Simic <dsimic@manjaro.org>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Vasily Khoruzhick <anarsoul@gmail.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Frank Oltmanns <frank@oltmanns.dev>,
+	Stuart Gathman <stuart@gathman.org>
+Subject: [PATCH 6.12 366/590] arm64: dts: allwinner: a64: explicitly assign clock parent for TCON0
+Date: Wed,  5 Feb 2025 14:42:01 +0100
+Message-ID: <20250205134509.273591845@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,44 +50,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guo Ren <guoren@linux.alibaba.com>
+From: Vasily Khoruzhick <anarsoul@gmail.com>
 
-[ Upstream commit 10c62c38b073ecea775b7e23fa7c7a3995a84ff3 ]
+[ Upstream commit 8715c91a836502929c637c76a26335ede8818acf ]
 
-When __BITS_PER_LONG == 32, size_t is defined as unsigned int rather
-than unsigned long. Therefore, we should use size_t to avoid
-type-checking errors.
+TCON0 seems to need a different clock parent depending on output type.
+For RGB it has to be PLL-VIDEO0-2X, while for DSI it has to be PLL-MIPI,
+so select it explicitly.
 
-Fixes: 488ffbf18171 ("iommu/riscv: Paging domain support")
-Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
-Cc: Tomasz Jeznach <tjeznach@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Link: https://lore.kernel.org/r/20250103024616.3359159-1-guoren@kernel.org
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Video output doesn't work if incorrect clock is assigned.
+
+On my Pinebook I manually configured PLL-VIDEO0-2X and PLL-MIPI to the same
+rate, and while video output works fine with PLL-VIDEO0-2X, it doesn't
+work at all (as in no picture) with PLL-MIPI.
+
+Fixes: ca1170b69968 ("clk: sunxi-ng: a64: force select PLL_MIPI in TCON0 mux")
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Tested-by: Frank Oltmanns <frank@oltmanns.dev> # on PinePhone
+Tested-by: Stuart Gathman <stuart@gathman.org> # on OG Pinebook
+Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Link: https://patch.msgid.link/20250104074035.1611136-4-anarsoul@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/riscv/iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts | 2 ++
+ arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts  | 2 ++
+ arch/arm64/boot/dts/allwinner/sun50i-a64.dtsi         | 2 ++
+ 3 files changed, 6 insertions(+)
 
-diff --git a/drivers/iommu/riscv/iommu.c b/drivers/iommu/riscv/iommu.c
-index 8a05def774bdb..38d381164385a 100644
---- a/drivers/iommu/riscv/iommu.c
-+++ b/drivers/iommu/riscv/iommu.c
-@@ -1270,7 +1270,7 @@ static phys_addr_t riscv_iommu_iova_to_phys(struct iommu_domain *iommu_domain,
- 					    dma_addr_t iova)
- {
- 	struct riscv_iommu_domain *domain = iommu_domain_to_riscv(iommu_domain);
--	unsigned long pte_size;
-+	size_t pte_size;
- 	unsigned long *ptr;
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts
+index 379c2c8466f50..86d44349e0951 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts
+@@ -390,6 +390,8 @@
+ &tcon0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&lcd_rgb666_pins>;
++	assigned-clocks = <&ccu CLK_TCON0>;
++	assigned-clock-parents = <&ccu CLK_PLL_VIDEO0_2X>;
  
- 	ptr = riscv_iommu_pte_fetch(domain, iova, &pte_size);
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts b/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts
+index b407e1dd08a73..ec055510af8b6 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts
+@@ -369,6 +369,8 @@
+ &tcon0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&lcd_rgb666_pins>;
++	assigned-clocks = <&ccu CLK_TCON0>;
++	assigned-clock-parents = <&ccu CLK_PLL_VIDEO0_2X>;
+ 
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-a64.dtsi
+index a5c3920e0f048..0fecf0abb204c 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-a64.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-a64.dtsi
+@@ -445,6 +445,8 @@
+ 			clock-names = "ahb", "tcon-ch0";
+ 			clock-output-names = "tcon-data-clock";
+ 			#clock-cells = <0>;
++			assigned-clocks = <&ccu CLK_TCON0>;
++			assigned-clock-parents = <&ccu CLK_PLL_MIPI>;
+ 			resets = <&ccu RST_BUS_TCON0>, <&ccu RST_BUS_LVDS>;
+ 			reset-names = "lcd", "lvds";
+ 
 -- 
 2.39.5
 
