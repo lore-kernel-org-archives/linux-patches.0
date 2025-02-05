@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727091494DF;
-	Wed,  5 Feb 2025 14:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650E4FC0B;
+	Wed,  5 Feb 2025 14:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764474; cv=none; b=TdWjpT47uxhC0n7WlywitKOvmL9nbRfeX1cIeWZLUuYkGQZh4F66H4G0hLPv3i84ALBdVBhUaPayI7oyPJTkVR+OG9fY141oIY9bLKHey96+CdkAX9ujBrc52DfzAS5LdFRXsUoh/4luN1dUwwGaGqjUyltvsYmbCF1sb7nsdU0=
+	t=1738764478; cv=none; b=L11CVUEJImfvnSP/MLPG2DuSvCrpoAjWSazjZ1tYdIjjlkL6pjxPJA78XgIW5jqj/ATAfEQO7nDUb56zL8fDmeuPeJwfh1bnIUvQZiSBBE9Ou7j8dNQwOXMhWGxdCIR81XTLBWTeKE34LmvyIqFz8XDLW3A1eNCjzwM0IGeJLGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764474; c=relaxed/simple;
-	bh=2u7GhkIRR3LSWZfQfSonk1IaNElBz/iaCBsOKxyO2xY=;
+	s=arc-20240116; t=1738764478; c=relaxed/simple;
+	bh=N6n1ddx0Yya0e5CINZLTFz0SbJUHEfGWq8BDtyEObwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ODK/fU+E/Nvsyl4T6qojXsUVKaL30oFRVvLN18ukjijHmX8+be9iZXalWhERIATHqHwP1sGpK60HOkv7ijac+NTOTZ6S8ws0MUhVAniionvs32WXY1XovGahJ4bXsCOWJrNad1RBcTvzhDGew77h+4/gRngczow+WLb0iBf3UD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzhZklGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sQre5M00mVbnxAEoBgDkDn9yOTPS0j4ldtyeQHXNvwyPbKMx+ZOCRbzpLf5yJcriUGbX9lnnJYvxOmHrVR3x5TvgDR48pmwRZYt8uFrYbwIkBfBNclklIHSMrhntleqAP6fxmN/qKYKJ75l6OXnJpDBJr173lwmzanJtu5Jl4ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0ga2s9e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzhZklGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7051C4CED1;
-	Wed,  5 Feb 2025 14:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0ga2s9e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521BFC4CED1;
+	Wed,  5 Feb 2025 14:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764474;
-	bh=2u7GhkIRR3LSWZfQfSonk1IaNElBz/iaCBsOKxyO2xY=;
+	s=korg; t=1738764477;
+	bh=N6n1ddx0Yya0e5CINZLTFz0SbJUHEfGWq8BDtyEObwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nzhZklGMCtz6Uv+vcXdyxmvx3aRZCOaer5t4/aH8p4X6W0VV0gFoujUyo00XZS9lF
-	 kqbQoWSwUpA5eQqNJg7mwqAoeOhYtXkuxTZNLD9KQQZbp27Rcq8oHzDSxKv0mmCAx0
-	 BrTJW30l20zxnpUinSudAQ7rVlFBvcL9l6u80H9Q=
+	b=Z0ga2s9eJIuxs4Ij2szKfwIvp97FQQOkSWBtMnpmG+irRB0kHlB2DKcMhmLI2Nj2Z
+	 NHgyVdaeW1yyf+K43GC21OLtbLDbqSIplogG7d6IU6roJgAtX+i81HxHbBYm6x/7yd
+	 YgvUFZJq/v0BAb1zMHedscKxgJOo20nt4QXUNPe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	He Rongguang <herongguang@linux.alibaba.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 108/590] inetpeer: update inetpeer timestamp in inet_getpeer()
-Date: Wed,  5 Feb 2025 14:37:43 +0100
-Message-ID: <20250205134459.388995303@linuxfoundation.org>
+Subject: [PATCH 6.12 103/590] cpupower: fix TSC MHz calculation
+Date: Wed,  5 Feb 2025 14:37:38 +0100
+Message-ID: <20250205134459.199297137@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -51,68 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: He Rongguang <herongguang@linux.alibaba.com>
 
-[ Upstream commit 50b362f21d6c10b0f7939c1482c6a1b43da82f1a ]
+[ Upstream commit 9d6c0e58514f8b57cd9c2c755e41623d6a966025 ]
 
-inet_putpeer() will be removed in the following patch,
-because we will no longer use refcounts.
+Commit 'cpupower: Make TSC read per CPU for Mperf monitor' (c2adb1877b7)
+changes TSC counter reads per cpu, but left time diff global (from start
+of all cpus to end of all cpus), thus diff(time) is too large for a
+cpu's tsc counting, resulting in far less than acutal TSC_Mhz and thus
+`cpupower monitor` showing far less than actual cpu realtime frequency.
 
-Update inetpeer timestamp (p->dtime) at lookup time.
+/proc/cpuinfo shows frequency:
+cat /proc/cpuinfo | egrep -e 'processor' -e 'MHz'
+...
+processor : 171
+cpu MHz   : 4108.498
+...
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241215175629.1248773-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a853c609504e ("inetpeer: do not get a refcount in inet_getpeer()")
+before fix (System 100% busy):
+    | Mperf              || Idle_Stats
+ CPU| C0   | Cx   | Freq  || POLL | C1   | C2
+ 171|  0.77| 99.23|  2279||  0.00|  0.00|  0.00
+
+after fix (System 100% busy):
+    | Mperf              || Idle_Stats
+ CPU| C0   | Cx   | Freq  || POLL | C1   | C2
+ 171|  0.46| 99.54|  4095||  0.00|  0.00|  0.00
+
+Fixes: c2adb1877b76 ("cpupower: Make TSC read per CPU for Mperf monitor")
+Signed-off-by: He Rongguang <herongguang@linux.alibaba.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inetpeer.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ .../cpupower/utils/idle_monitor/mperf_monitor.c   | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/inetpeer.c b/net/ipv4/inetpeer.c
-index 411a194f9c999..f4cfc10293b85 100644
---- a/net/ipv4/inetpeer.c
-+++ b/net/ipv4/inetpeer.c
-@@ -95,6 +95,7 @@ static struct inet_peer *lookup(const struct inetpeer_addr *daddr,
+diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+index ae6af354a81db..08a399b0be286 100644
+--- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
++++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+@@ -33,7 +33,7 @@ static int mperf_get_count_percent(unsigned int self_id, double *percent,
+ 				   unsigned int cpu);
+ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
+ 				unsigned int cpu);
+-static struct timespec time_start, time_end;
++static struct timespec *time_start, *time_end;
+ 
+ static cstate_t mperf_cstates[MPERF_CSTATE_COUNT] = {
+ 	{
+@@ -174,7 +174,7 @@ static int mperf_get_count_percent(unsigned int id, double *percent,
+ 		dprint("%s: TSC Ref - mperf_diff: %llu, tsc_diff: %llu\n",
+ 		       mperf_cstates[id].name, mperf_diff, tsc_diff);
+ 	} else if (max_freq_mode == MAX_FREQ_SYSFS) {
+-		timediff = max_frequency * timespec_diff_us(time_start, time_end);
++		timediff = max_frequency * timespec_diff_us(time_start[cpu], time_end[cpu]);
+ 		*percent = 100.0 * mperf_diff / timediff;
+ 		dprint("%s: MAXFREQ - mperf_diff: %llu, time_diff: %llu\n",
+ 		       mperf_cstates[id].name, mperf_diff, timediff);
+@@ -207,7 +207,7 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
+ 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
+ 		/* Calculate max_freq from TSC count */
+ 		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
+-		time_diff = timespec_diff_us(time_start, time_end);
++		time_diff = timespec_diff_us(time_start[cpu], time_end[cpu]);
+ 		max_frequency = tsc_diff / time_diff;
+ 	}
+ 
+@@ -226,9 +226,8 @@ static int mperf_start(void)
  {
- 	struct rb_node **pp, *parent, *next;
- 	struct inet_peer *p;
-+	u32 now;
+ 	int cpu;
  
- 	pp = &base->rb_root.rb_node;
- 	parent = NULL;
-@@ -110,6 +111,9 @@ static struct inet_peer *lookup(const struct inetpeer_addr *daddr,
- 		if (cmp == 0) {
- 			if (!refcount_inc_not_zero(&p->refcnt))
- 				break;
-+			now = jiffies;
-+			if (READ_ONCE(p->dtime) != now)
-+				WRITE_ONCE(p->dtime, now);
- 			return p;
- 		}
- 		if (gc_stack) {
-@@ -155,9 +159,6 @@ static void inet_peer_gc(struct inet_peer_base *base,
- 	for (i = 0; i < gc_cnt; i++) {
- 		p = gc_stack[i];
- 
--		/* The READ_ONCE() pairs with the WRITE_ONCE()
--		 * in inet_putpeer()
--		 */
- 		delta = (__u32)jiffies - READ_ONCE(p->dtime);
- 
- 		if (delta < ttl || !refcount_dec_if_one(&p->refcnt))
-@@ -229,11 +230,6 @@ EXPORT_SYMBOL_GPL(inet_getpeer);
- 
- void inet_putpeer(struct inet_peer *p)
- {
--	/* The WRITE_ONCE() pairs with itself (we run lockless)
--	 * and the READ_ONCE() in inet_peer_gc()
--	 */
--	WRITE_ONCE(p->dtime, (__u32)jiffies);
+-	clock_gettime(CLOCK_REALTIME, &time_start);
 -
- 	if (refcount_dec_and_test(&p->refcnt))
- 		call_rcu(&p->rcu, inetpeer_free_rcu);
+ 	for (cpu = 0; cpu < cpu_count; cpu++) {
++		clock_gettime(CLOCK_REALTIME, &time_start[cpu]);
+ 		mperf_get_tsc(&tsc_at_measure_start[cpu]);
+ 		mperf_init_stats(cpu);
+ 	}
+@@ -243,9 +242,9 @@ static int mperf_stop(void)
+ 	for (cpu = 0; cpu < cpu_count; cpu++) {
+ 		mperf_measure_stats(cpu);
+ 		mperf_get_tsc(&tsc_at_measure_end[cpu]);
++		clock_gettime(CLOCK_REALTIME, &time_end[cpu]);
+ 	}
+ 
+-	clock_gettime(CLOCK_REALTIME, &time_end);
+ 	return 0;
  }
+ 
+@@ -349,6 +348,8 @@ struct cpuidle_monitor *mperf_register(void)
+ 	aperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
+ 	tsc_at_measure_start = calloc(cpu_count, sizeof(unsigned long long));
+ 	tsc_at_measure_end = calloc(cpu_count, sizeof(unsigned long long));
++	time_start = calloc(cpu_count, sizeof(struct timespec));
++	time_end = calloc(cpu_count, sizeof(struct timespec));
+ 	mperf_monitor.name_len = strlen(mperf_monitor.name);
+ 	return &mperf_monitor;
+ }
+@@ -361,6 +362,8 @@ void mperf_unregister(void)
+ 	free(aperf_current_count);
+ 	free(tsc_at_measure_start);
+ 	free(tsc_at_measure_end);
++	free(time_start);
++	free(time_end);
+ 	free(is_valid);
+ }
+ 
 -- 
 2.39.5
 
