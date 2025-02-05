@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F0E376;
-	Wed,  5 Feb 2025 14:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531C218B460;
+	Wed,  5 Feb 2025 14:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767459; cv=none; b=RcJAQv/9y9CAJLXiN/k6ieQH45tBSRh+5SVVpasmc8bQbrRsPqzYoZkxgVSMQKwRxJrUBLboFsgAIJN5gEyzokwOztZgHcDvSixgyZM0WLFMlLYNVg723EAwy9q16laoxqS7vJbj5ZIcfNxDxBNTIwks0mzBAN7CB042e4Te3mU=
+	t=1738767463; cv=none; b=rJwrZX+H/fTsb61cYjkXFwpVUV75Tzv0e1b8MpAjWrVI6D2+Lrcz1cxHCncvnVxosWmSgWE8933+H3H+Fs8sh2Hs+tyWaMGrx+usx41oZbfwMEJcoxjau2OKtlCBmu72xgh5VwodcP67s/U1SOMnv/sqc01wr7nREnYMYUv1EJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767459; c=relaxed/simple;
-	bh=3g92yF1Ur6Zt/95n5eSdohWhZ87iog+MgSOrmCqtdYg=;
+	s=arc-20240116; t=1738767463; c=relaxed/simple;
+	bh=lvqNBH/EjZVKKL/sZ7xOy5I/EosQDA9tioqmfHDVm7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0mGjrYmzVCZNfyBkwknia/KgWWtzhENdCkIJAbFbzl95pLlP04Qu0Sdnxlob/AwfvHzL6HaeL4Ia2Hag0zMu4tmnwgq7H/vRSWqEsakapDn/6w7b4aAEJIpUiPts5/rgKQBGNIhaskAoeyjpMZ5ZKFWZTqRsyPzcLrdXVbatQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgE2UFMv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dlm7ObvEvU5DnyTZSEN5Ma3rCOgoPjX6d81eFuohKGixIpQzzKlC0IW1W45m+RB4+31/if6U9iPEbuITnF91NyXuVxLZ95B30jYTrqY0z1O168JGOacDMXPJbgDrCRWDmjnVudByLPGNjTrxsczb0X1Nc0YoPBRzh54NxBYbQh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10I4uhyD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgE2UFMv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3BFC4CED1;
-	Wed,  5 Feb 2025 14:57:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10I4uhyD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B577BC4CED1;
+	Wed,  5 Feb 2025 14:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767459;
-	bh=3g92yF1Ur6Zt/95n5eSdohWhZ87iog+MgSOrmCqtdYg=;
+	s=korg; t=1738767463;
+	bh=lvqNBH/EjZVKKL/sZ7xOy5I/EosQDA9tioqmfHDVm7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XgE2UFMv7JgI3blTgAEk1ONeB+Qczhz8kV5ciXjeCosojCRPg1wEQIIdGpsLJeqWR
-	 Tqr02zKU6A/k4K5GuQz6PpVi05h4BcQrHxgGPcvhKEN7HHkhGM8TC2LgxEmf0QKy0h
-	 8kq+JObna9Y/tFXcyq/SKUVsBARzeS0Rusex8HD0=
+	b=10I4uhyDaYgA7uuyXVzO/tOCDVl8vzIfEf0wupY2KD2z132Mr4e7FCVNN/9fxwWYR
+	 EPF0hg8RGrcWR67z+WsM4ernSlnNdqB+Q7ECgoXxDft3k0j65K92O0OPlECndsIz7P
+	 V1C4jniJ90PvHh9XIaOo8iYb0N5HNKoUsRwqVuyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ec5f884c4a135aa0dbb9@syzkaller.appspotmail.com,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Peter Hutterer <peter.hutterer@who-t.net>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.13 407/623] HID: core: Fix assumption that Resolution Multipliers must be in Logical Collections
-Date: Wed,  5 Feb 2025 14:42:29 +0100
-Message-ID: <20250205134511.793573090@linuxfoundation.org>
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Antony Antony <antony.antony@secunet.com>,
+	Tobias Brunner <tobias@strongswan.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 460/590] xfrm: Add an inbound percpu state cache.
+Date: Wed,  5 Feb 2025 14:43:35 +0100
+Message-ID: <20250205134512.860877343@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,69 +48,212 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Steffen Klassert <steffen.klassert@secunet.com>
 
-commit 64f2657b579343cf923aa933f08074e6258eb07b upstream.
+[ Upstream commit 81a331a0e72ddc2f75092603d9577bd1a0ca23ad ]
 
-A report in 2019 by the syzbot fuzzer was found to be connected to two
-errors in the HID core associated with Resolution Multipliers.  One of
-the errors was fixed by commit ea427a222d8b ("HID: core: Fix deadloop
-in hid_apply_multiplier."), but the other has not been fixed.
+Now that we can have percpu xfrm states, the number of active
+states might increase. To get a better lookup performance,
+we add a percpu cache to cache the used inbound xfrm states.
 
-This error arises because hid_apply_multipler() assumes that every
-Resolution Multiplier control is contained in a Logical Collection,
-i.e., there's no way the routine can ever set multiplier_collection to
-NULL.  This is in spite of the fact that the function starts with a
-big comment saying:
-
-	 * "The Resolution Multiplier control must be contained in the same
-	 * Logical Collection as the control(s) to which it is to be applied.
-	   ...
-	 *  If no Logical Collection is
-	 * defined, the Resolution Multiplier is associated with all
-	 * controls in the report."
-	 * HID Usage Table, v1.12, Section 4.3.1, p30
-	 *
-	 * Thus, search from the current collection upwards until we find a
-	 * logical collection...
-
-The comment and the code overlook the possibility that none of the
-collections found may be a Logical Collection.
-
-The fix is to set the multiplier_collection pointer to NULL if the
-collection found isn't a Logical Collection.
-
-Reported-by: syzbot+ec5f884c4a135aa0dbb9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000109c040597dc5843@google.com/
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: Peter Hutterer <peter.hutterer@who-t.net>
-Fixes: 5a4abb36f312 ("HID: core: process the Resolution Multiplier")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Tested-by: Antony Antony <antony.antony@secunet.com>
+Tested-by: Tobias Brunner <tobias@strongswan.org>
+Stable-dep-of: e952837f3ddb ("xfrm: state: fix out-of-bounds read during lookup")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/net/netns/xfrm.h |  1 +
+ include/net/xfrm.h       |  5 ++++
+ net/ipv4/esp4_offload.c  |  6 ++---
+ net/ipv6/esp6_offload.c  |  6 ++---
+ net/xfrm/xfrm_input.c    |  2 +-
+ net/xfrm/xfrm_state.c    | 57 ++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 70 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 33a191973324..5ab8e10bbd76 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1163,6 +1163,8 @@ static void hid_apply_multiplier(struct hid_device *hid,
- 	while (multiplier_collection->parent_idx != -1 &&
- 	       multiplier_collection->type != HID_COLLECTION_LOGICAL)
- 		multiplier_collection = &hid->collection[multiplier_collection->parent_idx];
-+	if (multiplier_collection->type != HID_COLLECTION_LOGICAL)
-+		multiplier_collection = NULL;
+diff --git a/include/net/netns/xfrm.h b/include/net/netns/xfrm.h
+index ae60d66640954..23dd647fe0248 100644
+--- a/include/net/netns/xfrm.h
++++ b/include/net/netns/xfrm.h
+@@ -43,6 +43,7 @@ struct netns_xfrm {
+ 	struct hlist_head	__rcu *state_bysrc;
+ 	struct hlist_head	__rcu *state_byspi;
+ 	struct hlist_head	__rcu *state_byseq;
++	struct hlist_head	 __percpu *state_cache_input;
+ 	unsigned int		state_hmask;
+ 	unsigned int		state_num;
+ 	struct work_struct	state_hash_work;
+diff --git a/include/net/xfrm.h b/include/net/xfrm.h
+index 0b394c5fb5f3a..2b87999bd5aae 100644
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -185,6 +185,7 @@ struct xfrm_state {
+ 	struct hlist_node	byspi;
+ 	struct hlist_node	byseq;
+ 	struct hlist_node	state_cache;
++	struct hlist_node	state_cache_input;
  
- 	effective_multiplier = hid_calculate_multiplier(hid, multiplier);
+ 	refcount_t		refcnt;
+ 	spinlock_t		lock;
+@@ -1650,6 +1651,10 @@ int xfrm_state_update(struct xfrm_state *x);
+ struct xfrm_state *xfrm_state_lookup(struct net *net, u32 mark,
+ 				     const xfrm_address_t *daddr, __be32 spi,
+ 				     u8 proto, unsigned short family);
++struct xfrm_state *xfrm_input_state_lookup(struct net *net, u32 mark,
++					   const xfrm_address_t *daddr,
++					   __be32 spi, u8 proto,
++					   unsigned short family);
+ struct xfrm_state *xfrm_state_lookup_byaddr(struct net *net, u32 mark,
+ 					    const xfrm_address_t *daddr,
+ 					    const xfrm_address_t *saddr,
+diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
+index 80c4ea0e12f48..e0d94270da28a 100644
+--- a/net/ipv4/esp4_offload.c
++++ b/net/ipv4/esp4_offload.c
+@@ -53,9 +53,9 @@ static struct sk_buff *esp4_gro_receive(struct list_head *head,
+ 		if (sp->len == XFRM_MAX_DEPTH)
+ 			goto out_reset;
  
+-		x = xfrm_state_lookup(dev_net(skb->dev), skb->mark,
+-				      (xfrm_address_t *)&ip_hdr(skb)->daddr,
+-				      spi, IPPROTO_ESP, AF_INET);
++		x = xfrm_input_state_lookup(dev_net(skb->dev), skb->mark,
++					    (xfrm_address_t *)&ip_hdr(skb)->daddr,
++					    spi, IPPROTO_ESP, AF_INET);
+ 
+ 		if (unlikely(x && x->dir && x->dir != XFRM_SA_DIR_IN)) {
+ 			/* non-offload path will record the error and audit log */
+diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
+index 919ebfabbe4ee..7b41fb4f00b58 100644
+--- a/net/ipv6/esp6_offload.c
++++ b/net/ipv6/esp6_offload.c
+@@ -80,9 +80,9 @@ static struct sk_buff *esp6_gro_receive(struct list_head *head,
+ 		if (sp->len == XFRM_MAX_DEPTH)
+ 			goto out_reset;
+ 
+-		x = xfrm_state_lookup(dev_net(skb->dev), skb->mark,
+-				      (xfrm_address_t *)&ipv6_hdr(skb)->daddr,
+-				      spi, IPPROTO_ESP, AF_INET6);
++		x = xfrm_input_state_lookup(dev_net(skb->dev), skb->mark,
++					    (xfrm_address_t *)&ipv6_hdr(skb)->daddr,
++					    spi, IPPROTO_ESP, AF_INET6);
+ 
+ 		if (unlikely(x && x->dir && x->dir != XFRM_SA_DIR_IN)) {
+ 			/* non-offload path will record the error and audit log */
+diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
+index 749e7eea99e46..841a60a6fbfea 100644
+--- a/net/xfrm/xfrm_input.c
++++ b/net/xfrm/xfrm_input.c
+@@ -572,7 +572,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 			goto drop;
+ 		}
+ 
+-		x = xfrm_state_lookup(net, mark, daddr, spi, nexthdr, family);
++		x = xfrm_input_state_lookup(net, mark, daddr, spi, nexthdr, family);
+ 		if (x == NULL) {
+ 			secpath_reset(skb);
+ 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINNOSTATES);
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index a2047825f6c88..e3266a5d4f90d 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -754,6 +754,9 @@ int __xfrm_state_delete(struct xfrm_state *x)
+ 			hlist_del_rcu(&x->byseq);
+ 		if (!hlist_unhashed(&x->state_cache))
+ 			hlist_del_rcu(&x->state_cache);
++		if (!hlist_unhashed(&x->state_cache_input))
++			hlist_del_rcu(&x->state_cache_input);
++
+ 		if (x->id.spi)
+ 			hlist_del_rcu(&x->byspi);
+ 		net->xfrm.state_num--;
+@@ -1106,6 +1109,52 @@ static struct xfrm_state *__xfrm_state_lookup(struct net *net, u32 mark,
+ 	return NULL;
+ }
+ 
++struct xfrm_state *xfrm_input_state_lookup(struct net *net, u32 mark,
++					   const xfrm_address_t *daddr,
++					   __be32 spi, u8 proto,
++					   unsigned short family)
++{
++	struct hlist_head *state_cache_input;
++	struct xfrm_state *x = NULL;
++	int cpu = get_cpu();
++
++	state_cache_input =  per_cpu_ptr(net->xfrm.state_cache_input, cpu);
++
++	rcu_read_lock();
++	hlist_for_each_entry_rcu(x, state_cache_input, state_cache_input) {
++		if (x->props.family != family ||
++		    x->id.spi       != spi ||
++		    x->id.proto     != proto ||
++		    !xfrm_addr_equal(&x->id.daddr, daddr, family))
++			continue;
++
++		if ((mark & x->mark.m) != x->mark.v)
++			continue;
++		if (!xfrm_state_hold_rcu(x))
++			continue;
++		goto out;
++	}
++
++	x = __xfrm_state_lookup(net, mark, daddr, spi, proto, family);
++
++	if (x && x->km.state == XFRM_STATE_VALID) {
++		spin_lock_bh(&net->xfrm.xfrm_state_lock);
++		if (hlist_unhashed(&x->state_cache_input)) {
++			hlist_add_head_rcu(&x->state_cache_input, state_cache_input);
++		} else {
++			hlist_del_rcu(&x->state_cache_input);
++			hlist_add_head_rcu(&x->state_cache_input, state_cache_input);
++		}
++		spin_unlock_bh(&net->xfrm.xfrm_state_lock);
++	}
++
++out:
++	rcu_read_unlock();
++	put_cpu();
++	return x;
++}
++EXPORT_SYMBOL(xfrm_input_state_lookup);
++
+ static struct xfrm_state *__xfrm_state_lookup_byaddr(struct net *net, u32 mark,
+ 						     const xfrm_address_t *daddr,
+ 						     const xfrm_address_t *saddr,
+@@ -3079,6 +3128,11 @@ int __net_init xfrm_state_init(struct net *net)
+ 	net->xfrm.state_byseq = xfrm_hash_alloc(sz);
+ 	if (!net->xfrm.state_byseq)
+ 		goto out_byseq;
++
++	net->xfrm.state_cache_input = alloc_percpu(struct hlist_head);
++	if (!net->xfrm.state_cache_input)
++		goto out_state_cache_input;
++
+ 	net->xfrm.state_hmask = ((sz / sizeof(struct hlist_head)) - 1);
+ 
+ 	net->xfrm.state_num = 0;
+@@ -3088,6 +3142,8 @@ int __net_init xfrm_state_init(struct net *net)
+ 			       &net->xfrm.xfrm_state_lock);
+ 	return 0;
+ 
++out_state_cache_input:
++	xfrm_hash_free(net->xfrm.state_byseq, sz);
+ out_byseq:
+ 	xfrm_hash_free(net->xfrm.state_byspi, sz);
+ out_byspi:
+@@ -3117,6 +3173,7 @@ void xfrm_state_fini(struct net *net)
+ 	xfrm_hash_free(net->xfrm.state_bysrc, sz);
+ 	WARN_ON(!hlist_empty(net->xfrm.state_bydst));
+ 	xfrm_hash_free(net->xfrm.state_bydst, sz);
++	free_percpu(net->xfrm.state_cache_input);
+ }
+ 
+ #ifdef CONFIG_AUDITSYSCALL
 -- 
-2.48.1
+2.39.5
 
 
 
