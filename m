@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233F71E89C;
-	Wed,  5 Feb 2025 14:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834571519A9;
+	Wed,  5 Feb 2025 14:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767596; cv=none; b=M26+ALSK964VbSuWoiOV4AM6BfUjX7ldm5xGyqDl6A4o6tvlKbWEV12VkoYGhdpEpJHaHOOF0/IZNqxdPkunFtF3AhBiUCIJ/oXsFSg027aJ2wiQD9WySilk0VQB5kyRynhfWGQ470YCFY3pOzl93SlI2mGNc4PcScL5gLLrg5Q=
+	t=1738767599; cv=none; b=mZXDbLjIN9b4cBiZIAj2mf50vlxmCV3YPtlRYiHWC3P8W1c3mDyAKs9zeVEgZDQHaiREyp7l7u2ei/M1DMqFyaGIqGX6wA2oRS2Cchh4ApvZ99s86F2AG+8bpoTot/X1edLkdjf5WIa43CHKwWc8AiP3/bae4+h+FzX1AxEuYEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767596; c=relaxed/simple;
-	bh=H1F6lS5O+nJLNNQusQprM5QEq+DBiWx3XZ6j5KOyJ8g=;
+	s=arc-20240116; t=1738767599; c=relaxed/simple;
+	bh=haWlZ/pc9mjpFyMeOwZdULvu29wCOutJJCdhrRxJcKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DuzBjKZAdtMwZjhjQVeADbEzA2AbvrcWy+c11qxj/yJLJ+XOsoFNi9pqWJSQ/bmHe0SFo4PTCl694h/+8QuTB3oRkpEvYsYTzGSE67kvnEuWbO7e8U4YdxO11TWmI6rYy+8NppvgDJAinfLtCTTdJfOmNLbkA3LC2oevRbK3kc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xms/jozO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f9STxP+qPEytXgOyT9mPCJEThDK++i41eqOjtLbrqr7huXwpWvxAAV+z/3ZMYCkX6ZMkAWkQkrolRDkyC8JR/sU8OBGUQyW+qOKjLnUbSJRRsk8Oi0pJn3oWcgDojKtZwbOO2uhkGyrPgvU3wG5aMrN9X15FILGSQMsDMrhz2pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WmH71Jp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xms/jozO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88458C4CED1;
-	Wed,  5 Feb 2025 14:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WmH71Jp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E724EC4CED1;
+	Wed,  5 Feb 2025 14:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767596;
-	bh=H1F6lS5O+nJLNNQusQprM5QEq+DBiWx3XZ6j5KOyJ8g=;
+	s=korg; t=1738767599;
+	bh=haWlZ/pc9mjpFyMeOwZdULvu29wCOutJJCdhrRxJcKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xms/jozOY4mv5c/jZlNA6MmLO5qGfQQAY5xF+ahcCgPzvUGnB6Z3sjJXZC2hqGOZC
-	 VhnJMEKEUgC9HLBSgF1yPqrL4LlibJ3pgVhYw63YuptiEsCecd2QL8NswWTazJsmjP
-	 zuFK94ONCAzfbQbdOs/Z+8jSbtW2D4Pxzha1Beys=
+	b=1WmH71JpJxOqIA/0qi3/PH43WBtAbfZPr2/noRDjyD3e/OmewtFPcyuQ4jE4N3dn7
+	 UDNra5fFPfaBPxLBE5fZqxGL/jaMgi4cjhkcfUlKdbH+UDRlOq9dfIyDtgg10wpLJm
+	 WfDldUN35wadE1ghn5tV5h647myx8OUX4YqHP9jA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Howard Chu <howardchu95@gmail.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 480/590] perf trace: Fix BPF loading failure (-E2BIG)
-Date: Wed,  5 Feb 2025 14:43:55 +0100
-Message-ID: <20250205134513.626210554@linuxfoundation.org>
+Subject: [PATCH 6.13 418/623] arm64: dts: qcom: sm8250: Fix interrupt types of camss interrupts
+Date: Wed,  5 Feb 2025 14:42:40 +0100
+Message-ID: <20250205134512.217136195@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,94 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Howard Chu <howardchu95@gmail.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 013eb043f37bd87c4d60d51034401a5a6d105bcf ]
+[ Upstream commit 6c7bba42ebc3da56e64d4aec4c4a31dd454e05fd ]
 
-As reported by Namhyung Kim and acknowledged by Qiao Zhao (link:
-https://lore.kernel.org/linux-perf-users/20241206001436.1947528-1-namhyung@kernel.org/),
-on certain machines, perf trace failed to load the BPF program into the
-kernel. The verifier runs perf trace's BPF program for up to 1 million
-instructions, returning an E2BIG error, whereas the perf trace BPF
-program should be much less complex than that. This patch aims to fix
-the issue described above.
+Qualcomm IP catalog says that all CAMSS interrupts is edge rising,
+fix it in the CAMSS device tree node for sm8250 SoC.
 
-The E2BIG problem from clang-15 to clang-16 is cause by this line:
- } else if (size < 0 && size >= -6) { /* buffer */
-
-Specifically this check: size < 0. seems like clang generates a cool
-optimization to this sign check that breaks things.
-
-Making 'size' s64, and use
- } else if ((int)size < 0 && size >= -6) { /* buffer */
-
-Solves the problem. This is some Hogwarts magic.
-
-And the unbounded access of clang-12 and clang-14 (clang-13 works this
-time) is fixed by making variable 'aug_size' s64.
-
-As for this:
--if (aug_size > TRACE_AUG_MAX_BUF)
--	aug_size = TRACE_AUG_MAX_BUF;
-+aug_size = args->args[index] > TRACE_AUG_MAX_BUF ? TRACE_AUG_MAX_BUF : args->args[index];
-
-This makes the BPF skel generated by clang-18 work. Yes, new clangs
-introduce problems too.
-
-Sorry, I only know that it works, but I don't know how it works. I'm not
-an expert in the BPF verifier. I really hope this is not a kernel
-version issue, as that would make the test case (kernel_nr) *
-(clang_nr), a true horror story. I will test it on more kernel versions
-in the future.
-
-Fixes: 395d38419f18: ("perf trace augmented_raw_syscalls: Add more check s to pass the verifier")
-Reported-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Howard Chu <howardchu95@gmail.com>
-Tested-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20241213023047.541218-1-howardchu95@gmail.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 30325603b910 ("arm64: dts: qcom: sm8250: camss: Add CAMSS block definition")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20241127122950.885982-7-vladimir.zapolskiy@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
-index 4a62ed593e84e..e4352881e3faa 100644
---- a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
-+++ b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
-@@ -431,9 +431,9 @@ static bool pid_filter__has(struct pids_filtered *pids, pid_t pid)
- static int augment_sys_enter(void *ctx, struct syscall_enter_args *args)
- {
- 	bool augmented, do_output = false;
--	int zero = 0, size, aug_size, index,
--	    value_size = sizeof(struct augmented_arg) - offsetof(struct augmented_arg, value);
-+	int zero = 0, index, value_size = sizeof(struct augmented_arg) - offsetof(struct augmented_arg, value);
- 	u64 output = 0; /* has to be u64, otherwise it won't pass the verifier */
-+	s64 aug_size, size;
- 	unsigned int nr, *beauty_map;
- 	struct beauty_payload_enter *payload;
- 	void *arg, *payload_offset;
-@@ -484,14 +484,11 @@ static int augment_sys_enter(void *ctx, struct syscall_enter_args *args)
- 		} else if (size > 0 && size <= value_size) { /* struct */
- 			if (!bpf_probe_read_user(((struct augmented_arg *)payload_offset)->value, size, arg))
- 				augmented = true;
--		} else if (size < 0 && size >= -6) { /* buffer */
-+		} else if ((int)size < 0 && size >= -6) { /* buffer */
- 			index = -(size + 1);
- 			barrier_var(index); // Prevent clang (noticed with v18) from removing the &= 7 trick.
- 			index &= 7;	    // Satisfy the bounds checking with the verifier in some kernels.
--			aug_size = args->args[index];
--
--			if (aug_size > TRACE_AUG_MAX_BUF)
--				aug_size = TRACE_AUG_MAX_BUF;
-+			aug_size = args->args[index] > TRACE_AUG_MAX_BUF ? TRACE_AUG_MAX_BUF : args->args[index];
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index f39318304da8d..9d317ae7dc98a 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -4481,20 +4481,20 @@
+ 				    "vfe_lite0",
+ 				    "vfe_lite1";
  
- 			if (aug_size > 0) {
- 				if (!bpf_probe_read_user(((struct augmented_arg *)payload_offset)->value, aug_size, arg))
+-			interrupts = <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>;
++			interrupts = <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 86 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 89 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "csiphy0",
+ 					  "csiphy1",
+ 					  "csiphy2",
 -- 
 2.39.5
 
