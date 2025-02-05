@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4879C18D656;
-	Wed,  5 Feb 2025 14:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A408915CD74;
+	Wed,  5 Feb 2025 14:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766945; cv=none; b=apMWOqjcQT1+1IPR3DQhem4gj8RCAkJFsRb2owXe2Ktb5a6z+sxUjbHysM5td0usEYLeVFCSDKU2qLcl9/0mms7bLsYeg6ZwOIn+GPSny9PzcETSHCGx2AMKmEWNC84ibu+ZHqdWDMOxqsRgO8Q/+EAmnlcLP8gidpLulO/xIMA=
+	t=1738766948; cv=none; b=Z7fa8lrdzO5cvvdJQnnHIgyRNpDc9rk4RmxF4lw2LDppbquLfT5eY/6Hlj1IgWUvhpv0OlD+XV1aQ3wxOcLjmn2mltzZhiprh5n2G5EhuSXYA4HYUXSHxGv94SshWeSKvA/KgLTaWJcVvSC4fM8KlS2oc5MRphAUPneKDQx5g2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766945; c=relaxed/simple;
-	bh=rqNB9L9Vy/JXDfEmUsdu/c/KdTgq9K7/HQAb1UK/xx0=;
+	s=arc-20240116; t=1738766948; c=relaxed/simple;
+	bh=wbksHn0OOymS4v24xbjNcpERSE2CSU7Mq4azHieYeQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYWB6EDZy89g4TqFCxPuL8tgltaxU6WLdi1eOAhgvWVadHXMoamwpAzTo3Jc9nBWi5B3OmSBHJRpT0rUZbRoXZXk6JSWhEAIlnCs5VhaVkVlemSIqGpWBUwOgBTzZ8W2zCgUaLXQ+V1QzvH4ZWgvfa1+6P9CP8yGC5BsCMD2IqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=es0EODdb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qh1ewBgxz2uSNsLPwLGHoOb6BFOqV/0iFWD3Sn2kxcfXIMMAbTnjU2Mv8nZlHuPO5nquwXIxxOLfTMCi04td0dPFpyEB8RGYkWQcs60IaSGRwcsMohZmYZbk+gY6VpWs4c8sUZwwbBcxdshlTVYgvASYQJVmHrmjorkzWei/vn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdfkJQko; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="es0EODdb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0177C4CED1;
-	Wed,  5 Feb 2025 14:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdfkJQko"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127A7C4CED1;
+	Wed,  5 Feb 2025 14:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766945;
-	bh=rqNB9L9Vy/JXDfEmUsdu/c/KdTgq9K7/HQAb1UK/xx0=;
+	s=korg; t=1738766948;
+	bh=wbksHn0OOymS4v24xbjNcpERSE2CSU7Mq4azHieYeQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=es0EODdb+7LKbO3xNARx19bbvo9xZlIyaLWZ0QRj8pbZSEtdT4la9a9X2lP/91GwL
-	 Ij+7TVI0xPNIb6oVVV+Mo04E6J3NRmW3bDeuFdB0jTwpzo3xfWGaZpZU6Y/G3Qvxa3
-	 YLDAxzFogDplYwUzhfKhsVRLclJMbHdeaqPibOKg=
+	b=KdfkJQko1NZlm6UxycTZdV9QsZ+crgUSvxSQWc1JBqGu0byMHCpsbI21QcF/pB6RK
+	 LOea0OTL0a+UH6g94k/4aD7wHTkmmE3M7Yp9MPfFiweVKTPHLMrtpIrrnMzWl7u0/P
+	 /Kjx+wDOy1JFBjNUMUM8LIcB0eNwK83sntXSgRwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Markus Niebel <markus.niebel@ew.tq-group.com>,
-	Bruno Thomsen <bruno.thomsen@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 332/623] ARM: dts: imx7-tqma7: add missing vs-supply for LM75A (rev. 01xxx)
-Date: Wed,  5 Feb 2025 14:41:14 +0100
-Message-ID: <20250205134508.924848237@linuxfoundation.org>
+Subject: [PATCH 6.12 384/590] arm64: dts: qcom: sc8280xp: Fix interrupt type of camss interrupts
+Date: Wed,  5 Feb 2025 14:42:19 +0100
+Message-ID: <20250205134509.960631019@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,39 +49,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 78e08cebfe41a99d12a3a79d3e3be913559182e2 ]
+[ Upstream commit b08535cd41c27b4f32319b5bff754c9da6dc2205 ]
 
-Add missing supply for LM75. Fixes the kernel warning:
-  lm75 0-0048: supply vs not found, using dummy regulator
+Qualcomm IP catalog says that all CAMSS interrupts are edge rising,
+fix it in the CAMSS device tree node for sc8280xp SoC.
 
-Fixes: c9d4affbe60a ("ARM: dts: imx: tqma7: add lm75a sensor (rev. 01xxx)")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Markus Niebel <markus.niebel@ew.tq-group.com>
-Reviewed-by: Bruno Thomsen <bruno.thomsen@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 5994dd60753e ("arm64: dts: qcom: sc8280xp: camss: Add CAMSS block definition")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20241127122950.885982-5-vladimir.zapolskiy@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 40 +++++++++++++-------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi b/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
-index 028961eb71089..91ca23a66bf3c 100644
---- a/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx7-tqma7.dtsi
-@@ -135,6 +135,7 @@
- 	lm75a: temperature-sensor@48 {
- 		compatible = "national,lm75a";
- 		reg = <0x48>;
-+		vs-supply = <&vgen4_reg>;
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index 4debb4edaf3d1..b1e0e51a55829 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -3882,26 +3882,26 @@
+ 				    "vfe3",
+ 				    "csid3";
  
- 	/* NXP SE97BTP with temperature sensor + eeprom, TQMa7x 02xx */
+-			interrupts = <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 640 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 758 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 759 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 760 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 761 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 762 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 764 IRQ_TYPE_LEVEL_HIGH>;
++			interrupts = <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 640 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 641 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 758 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 759 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 760 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 761 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 762 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 764 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "csid1_lite",
+ 					  "vfe_lite1",
+ 					  "csiphy3",
 -- 
 2.39.5
 
