@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C308151988;
-	Wed,  5 Feb 2025 14:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8350F151988;
+	Wed,  5 Feb 2025 14:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766214; cv=none; b=mvDpQpKZou12Ai9C7DCVIAZBA2A7FhW+cT3MxXNnjStdAxnA1uK58lVgOh1YBfF24RvEBchsGI9Ex+40mB5N98fDYCA36a8jVJtn6gDPMVzCtAHjYSbLvU3+q90wnoT5qgqS/UK8Itu+fdlcFbPi1wWhu363o3mKJ+EHxJ1rabo=
+	t=1738766217; cv=none; b=tuANso+/HhAqX9kGVnWzspdU6o1jtoChfZw6QAVYDW2896KfD2u8rE4DjUPvStIqXtMr1LU/ae0vr3u0FvgaRFRyrV7qH6cTD6K5UOIP1dXHxxhgxShgr7W/QtSc3tKIHVfwCuSYhQFMLjpkJA16yr3dqJAoJVJTYmd+iwOjhRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766214; c=relaxed/simple;
-	bh=eU3ZvbkVE2Hd51EQmz+pdqPnxsxUFaoWsDl6hAzZebg=;
+	s=arc-20240116; t=1738766217; c=relaxed/simple;
+	bh=WXWJjc0tQ2hw4QsvZaHD2uPbPEeTdGRvEy0TK65MfAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QceHO7MV4VD2lsysDiUtIijtEJ9luVGkaQCSW7lExAi9bzkukoHEAI72XDW0ngia3kONbI59HTfRCeFr4lcXNTY5lR+ZZPv4xp1aZYZcLm2OQjcFvaPSsLg+UzxNOk5PF4uKwrFpNtNU/FyQjXfMC1c8oIGlrcOzdEi03OGsIeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7TJwIBq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qZzHtAkczj7h68eZlM2iqmAAF0ZmOMG0WEI2p/ef7kckJ+wEmf5kpABIYqubmkTzJVTrH3tslImnubhTcfsU8mLvlrzQzenN26FxvD28aAeIJZk9GOOYclLFGZpWJgI7e9s4nQ3rgE8qmkpvUpeYQW6H+4MOTAGhftQPz5dtPGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXqNayId; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7TJwIBq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D911C4CED1;
-	Wed,  5 Feb 2025 14:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXqNayId"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E27E9C4CEDD;
+	Wed,  5 Feb 2025 14:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766213;
-	bh=eU3ZvbkVE2Hd51EQmz+pdqPnxsxUFaoWsDl6hAzZebg=;
+	s=korg; t=1738766217;
+	bh=WXWJjc0tQ2hw4QsvZaHD2uPbPEeTdGRvEy0TK65MfAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t7TJwIBqLziA2OTGbBJbF9FA2EFErQ84eqk6Nxf6QP7s8ni1LUwR6rE6B4dxH/4wF
-	 IFL9tPEEKj4Eh4LfX54pDZ5PDS8ny7umDBAvSByoVVgu6bfVSYv5vZ/eBnCoRcY1Ly
-	 zjCAyyiM7uovCkvPq5btF9j5SWxZQA1sfvtPCye0=
+	b=RXqNayIdxKQdlgY9oKGOsHFws4rOycNOR/LSjLrYQm/eHmDUNjmVTcKe4+XcljWOS
+	 xO/QS6a/QspY+0B1vkWqRDH2lU1vikktgrLZxM33gPV/ypsV7mQ3aJ3J5YOhHOiL9S
+	 sAQ5m8LEYEqvYKHhX6daXBnMyFKA2OiQjiItSan4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 340/393] Bluetooth: btnxpuart: Fix glitches seen in dual A2DP streaming
-Date: Wed,  5 Feb 2025 14:44:19 +0100
-Message-ID: <20250205134433.320181044@linuxfoundation.org>
+Subject: [PATCH 6.13 253/623] ASoC: wcd937x: Use *-y for Makefile
+Date: Wed,  5 Feb 2025 14:39:55 +0100
+Message-ID: <20250205134505.910622713@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 7de119bb79a63f6a1959b83117a98734914fb0b0 ]
+[ Upstream commit 582057d2233a5a38e1aec3f4a6d66b362b42076c ]
 
-This fixes a regression caused by previous commit for fixing truncated
-ACL data, which is causing some intermittent glitches when running two
-A2DP streams.
+We should use *-y instead of *-objs in Makefile for the module
+objects.  *-objs is used rather for host programs.
 
-serdev_device_write_buf() is the root cause of the glitch, which is
-reverted, and the TX work will continue to write until the queue is empty.
-
-This change fixes both issues. No A2DP streaming glitches or truncated
-ACL data issue observed.
-
-Fixes: 8023dd220425 ("Bluetooth: btnxpuart: Fix driver sending truncated data")
-Fixes: 689ca16e5232 ("Bluetooth: NXP: Add protocol support for NXP Bluetooth chipsets")
-Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 313e978df7fc ("ASoC: codecs: wcd937x: add audio routing and Kconfig")
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20241203141823.22393-6-tiwai@suse.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btnxpuart.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/codecs/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index e809bb2dbe5e0..a4274d8c7faaf 100644
---- a/drivers/bluetooth/btnxpuart.c
-+++ b/drivers/bluetooth/btnxpuart.c
-@@ -1280,13 +1280,12 @@ static void btnxpuart_tx_work(struct work_struct *work)
- 
- 	while ((skb = nxp_dequeue(nxpdev))) {
- 		len = serdev_device_write_buf(serdev, skb->data, skb->len);
--		serdev_device_wait_until_sent(serdev, 0);
- 		hdev->stat.byte_tx += len;
- 
- 		skb_pull(skb, len);
- 		if (skb->len > 0) {
- 			skb_queue_head(&nxpdev->txq, skb);
--			break;
-+			continue;
- 		}
- 
- 		switch (hci_skb_pkt_type(skb)) {
+diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
+index 5a83ee9639661..d7ad795603c17 100644
+--- a/sound/soc/codecs/Makefile
++++ b/sound/soc/codecs/Makefile
+@@ -334,8 +334,8 @@ snd-soc-wcd-classh-y := wcd-clsh-v2.o
+ snd-soc-wcd-mbhc-y := wcd-mbhc-v2.o
+ snd-soc-wcd9335-y := wcd9335.o
+ snd-soc-wcd934x-y := wcd934x.o
+-snd-soc-wcd937x-objs := wcd937x.o
+-snd-soc-wcd937x-sdw-objs := wcd937x-sdw.o
++snd-soc-wcd937x-y := wcd937x.o
++snd-soc-wcd937x-sdw-y := wcd937x-sdw.o
+ snd-soc-wcd938x-y := wcd938x.o
+ snd-soc-wcd938x-sdw-y := wcd938x-sdw.o
+ snd-soc-wcd939x-y := wcd939x.o
 -- 
 2.39.5
 
