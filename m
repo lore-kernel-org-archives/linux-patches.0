@@ -1,50 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9485F376;
-	Wed,  5 Feb 2025 15:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A307ADF59;
+	Wed,  5 Feb 2025 15:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767640; cv=none; b=PFxug31mVWtI8RoE2b1EwRj+1p+LI8recql8TixJqoPNKDHHWmkEcHYJxplgZ2fFoV5gs5XLZCK6Qyt8eYEw2Jfq9EuuYqOqZu1mYXJWbaIuZ3QxzlrHqZuF87Oe6xgBLNkXPcVx5kai/pCsC5pyL8NiOb/ZcCjiYmbEHKKyz4g=
+	t=1738767643; cv=none; b=FvheiwN3/QgvDnNlZK9MsOsybQy7FDOAnv2+LiSNCvnXjVaM0NoZiwyYAkGGl5ee3eTSfZZ+Prs41R+FSbgeJUaerwBVHmI7xvMAqnSCXFGTO2bXKqn33o9f2zIPJHIdUfug2wzxohYglSs43L0WPqvZMS3saAHt2MuH8ZgRQ/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767640; c=relaxed/simple;
-	bh=SSxV7Twdz4JEXudo3L1T7WHvOJsEzhKZmXm3KNFOwjA=;
+	s=arc-20240116; t=1738767643; c=relaxed/simple;
+	bh=ZGmAC7mACaf2KRMHyXOYS4KyhwW9jvpn6IqpI7GwXaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OW4tXpnTVd1kFPuzoAyTGfSiRrPB8DljvuR4Ci9FIrE9bt9kb00MERxFHAwkGg7ur38WyJ7XgREFKDUA+Mzb/TB38GvUso72O8J6r1nm1kjOMRoZplJGsQK9iW6/oDOMywjGxtuG4UrpLoI3k+1npmDBEpqbMhuMqQFbBPNIMHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwvmshoX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cTNOhvf777QFUZzsYBoHWWEMEG/r468heMJBoMh1P6Dd5zuxUPvJ0Uw8wZtfiwLB92icNOXIJQEaxMdryzWUJqcprklVwxPd7qhXAJ2ZCb+nqLmyo0C9m3RAwmQIXfEaQ7JM3IetgJ5F9j90ujeDMKsjjign1YlNqRRGNs3dGGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5LLBwTM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwvmshoX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCDAC4CED1;
-	Wed,  5 Feb 2025 15:00:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5LLBwTM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C05C4CED1;
+	Wed,  5 Feb 2025 15:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767640;
-	bh=SSxV7Twdz4JEXudo3L1T7WHvOJsEzhKZmXm3KNFOwjA=;
+	s=korg; t=1738767643;
+	bh=ZGmAC7mACaf2KRMHyXOYS4KyhwW9jvpn6IqpI7GwXaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DwvmshoX1NeWKSyAXdMAcRLhoT3piakurE5gYnNuUgHxS5aHmtWEUwrEoPtK+R8kn
-	 Dkcqk3OiN/UhkGONLzacgkL3YxGVEAtkE2GSxH9P7KzN1rNOK8YVpP5fXzPEGtDtzm
-	 Lptotf5OscH9+20PUhvHOQmj0YaGst5dct3VDyCU=
+	b=K5LLBwTMmqSOvXW6p4XAUV8JZOPCnXWmEbMe49QwZZuN4F+XPuPPAqc2VEoKEOJRk
+	 P14860Jx3rM6dhCXkOvH02eULDwQGnkQLtJC0ZywA6FfO7W3+GaE4G0H9kXa83wCwk
+	 dhDQ8DET1PspCfrutkRUer/l5A5AYRCyX4C4BdAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	David Rheinsberg <david@readahead.eu>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Peter Jones <pjones@redhat.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	linux-fbdev@vger.kernel.org,
-	Ard Biesheuvel <ardb@kernel.org>,
-	linux-efi@vger.kernel.org,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ahmed Zaki <ahmed.zaki@intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 432/623] efi: sysfb_efi: fix W=1 warnings when EFI is not set
-Date: Wed,  5 Feb 2025 14:42:54 +0100
-Message-ID: <20250205134512.748971645@linuxfoundation.org>
+Subject: [PATCH 6.12 486/590] ice: fix ice_parser_rt::bst_key array size
+Date: Wed,  5 Feb 2025 14:44:01 +0100
+Message-ID: <20250205134513.854345982@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,72 +50,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit 19fdc68aa7b90b1d3d600e873a3e050a39e7663d ]
+[ Upstream commit 18625e26fefced78f2ae28b25e80a07079821e04 ]
 
-A build with W=1 fails because there are code and data that are not
-needed or used when CONFIG_EFI is not set. Move the "#ifdef CONFIG_EFI"
-block to earlier in the source file so that the unused code/data are
-not built.
+Fix &ice_parser_rt::bst_key size. It was wrongly set to 10 instead of 20
+in the initial impl commit (see Fixes tag). All usage code assumed it was
+of size 20. That was also the initial size present up to v2 of the intro
+series [2], but halved by v3 [3] refactor described as "Replace magic
+hardcoded values with macros." The introducing series was so big that
+some ugliness was unnoticed, same for bugs :/
 
-drivers/firmware/efi/sysfb_efi.c:345:39: warning: ‘efifb_fwnode_ops’ defined but not used [-Wunused-const-variable=]
-  345 | static const struct fwnode_operations efifb_fwnode_ops = {
-      |                                       ^~~~~~~~~~~~~~~~
-drivers/firmware/efi/sysfb_efi.c:238:35: warning: ‘efifb_dmi_swap_width_height’ defined but not used [-Wunused-const-variable=]
-  238 | static const struct dmi_system_id efifb_dmi_swap_width_height[] __initconst = {
-      |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/firmware/efi/sysfb_efi.c:188:35: warning: ‘efifb_dmi_system_table’ defined but not used [-Wunused-const-variable=]
-  188 | static const struct dmi_system_id efifb_dmi_system_table[] __initconst = {
-      |                                   ^~~~~~~~~~~~~~~~~~~~~~
+ICE_BST_KEY_TCAM_SIZE and ICE_BST_TCAM_KEY_SIZE were differing by one.
+There was tmp variable @j in the scope of edited function, but was not
+used in all places. This ugliness is now gone.
+I'm moving ice_parser_rt::pg_prio a few positions up, to fill up one of
+the holes in order to compensate for the added 10 bytes to the ::bst_key,
+resulting in the same size of the whole as prior to the fix, and minimal
+changes in the offsets of the fields.
 
-Fixes: 15d27b15de96 ("efi: sysfb_efi: fix build when EFI is not set")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501071933.20nlmJJt-lkp@intel.com/
-Cc: David Rheinsberg <david@readahead.eu>
-Cc: Hans de Goede <hdegoede@redhat.com>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Peter Jones <pjones@redhat.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: linux-fbdev@vger.kernel.org
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: linux-efi@vger.kernel.org
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Extend also the debug dump print of the key to cover all bytes. To not
+have string with 20 "%02x" and 20 params, switch to
+ice_debug_array_w_prefix().
+
+This fix obsoletes Ahmed's attempt at [1].
+
+[1] https://lore.kernel.org/intel-wired-lan/20240823230847.172295-1-ahmed.zaki@intel.com
+[2] https://lore.kernel.org/intel-wired-lan/20230605054641.2865142-13-junfeng.guo@intel.com
+[3] https://lore.kernel.org/intel-wired-lan/20230817093442.2576997-13-junfeng.guo@intel.com
+
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/intel-wired-lan/b1fb6ff9-b69e-4026-9988-3c783d86c2e0@stanley.mountain
+Fixes: 9a4c07aaa0f5 ("ice: add parser execution main loop")
+CC: Ahmed Zaki <ahmed.zaki@intel.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/sysfb_efi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_parser.h    |  6 ++----
+ drivers/net/ethernet/intel/ice/ice_parser_rt.c | 12 +++++-------
+ 2 files changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/firmware/efi/sysfb_efi.c b/drivers/firmware/efi/sysfb_efi.c
-index cc807ed35aedf..1e509595ac034 100644
---- a/drivers/firmware/efi/sysfb_efi.c
-+++ b/drivers/firmware/efi/sysfb_efi.c
-@@ -91,6 +91,7 @@ void efifb_setup_from_dmi(struct screen_info *si, const char *opt)
- 		_ret_;						\
- 	})
+diff --git a/drivers/net/ethernet/intel/ice/ice_parser.h b/drivers/net/ethernet/intel/ice/ice_parser.h
+index 6509d807627ce..4f56d53d56b9a 100644
+--- a/drivers/net/ethernet/intel/ice/ice_parser.h
++++ b/drivers/net/ethernet/intel/ice/ice_parser.h
+@@ -257,7 +257,6 @@ ice_pg_nm_cam_match(struct ice_pg_nm_cam_item *table, int size,
+ /*** ICE_SID_RXPARSER_BOOST_TCAM and ICE_SID_LBL_RXPARSER_TMEM sections ***/
+ #define ICE_BST_TCAM_TABLE_SIZE		256
+ #define ICE_BST_TCAM_KEY_SIZE		20
+-#define ICE_BST_KEY_TCAM_SIZE		19
  
-+#ifdef CONFIG_EFI
- static int __init efifb_set_system(const struct dmi_system_id *id)
- {
- 	struct efifb_dmi_info *info = id->driver_data;
-@@ -346,7 +347,6 @@ static const struct fwnode_operations efifb_fwnode_ops = {
- 	.add_links = efifb_add_links,
- };
+ /* Boost TCAM item */
+ struct ice_bst_tcam_item {
+@@ -401,7 +400,6 @@ u16 ice_xlt_kb_flag_get(struct ice_xlt_kb *kb, u64 pkt_flag);
+ #define ICE_PARSER_GPR_NUM	128
+ #define ICE_PARSER_FLG_NUM	64
+ #define ICE_PARSER_ERR_NUM	16
+-#define ICE_BST_KEY_SIZE	10
+ #define ICE_MARKER_ID_SIZE	9
+ #define ICE_MARKER_MAX_SIZE	\
+ 		(ICE_MARKER_ID_SIZE * BITS_PER_BYTE - 1)
+@@ -431,13 +429,13 @@ struct ice_parser_rt {
+ 	u8 pkt_buf[ICE_PARSER_MAX_PKT_LEN + ICE_PARSER_PKT_REV];
+ 	u16 pkt_len;
+ 	u16 po;
+-	u8 bst_key[ICE_BST_KEY_SIZE];
++	u8 bst_key[ICE_BST_TCAM_KEY_SIZE];
+ 	struct ice_pg_cam_key pg_key;
++	u8 pg_prio;
+ 	struct ice_alu *alu0;
+ 	struct ice_alu *alu1;
+ 	struct ice_alu *alu2;
+ 	struct ice_pg_cam_action *action;
+-	u8 pg_prio;
+ 	struct ice_gpr_pu pu;
+ 	u8 markers[ICE_MARKER_ID_SIZE];
+ 	bool protocols[ICE_PO_PAIR_SIZE];
+diff --git a/drivers/net/ethernet/intel/ice/ice_parser_rt.c b/drivers/net/ethernet/intel/ice/ice_parser_rt.c
+index dedf5e854e4b7..3995d662e0509 100644
+--- a/drivers/net/ethernet/intel/ice/ice_parser_rt.c
++++ b/drivers/net/ethernet/intel/ice/ice_parser_rt.c
+@@ -125,22 +125,20 @@ static void ice_bst_key_init(struct ice_parser_rt *rt,
+ 	else
+ 		key[idd] = imem->b_kb.prio;
  
--#ifdef CONFIG_EFI
- static struct fwnode_handle efifb_fwnode;
+-	idd = ICE_BST_KEY_TCAM_SIZE - 1;
++	idd = ICE_BST_TCAM_KEY_SIZE - 2;
+ 	for (i = idd; i >= 0; i--) {
+ 		int j;
  
- __init void sysfb_apply_efi_quirks(void)
+ 		j = ho + idd - i;
+ 		if (j < ICE_PARSER_MAX_PKT_LEN)
+-			key[i] = rt->pkt_buf[ho + idd - i];
++			key[i] = rt->pkt_buf[j];
+ 		else
+ 			key[i] = 0;
+ 	}
+ 
+-	ice_debug(rt->psr->hw, ICE_DBG_PARSER, "Generated Boost TCAM Key:\n");
+-	ice_debug(rt->psr->hw, ICE_DBG_PARSER, "%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n",
+-		  key[0], key[1], key[2], key[3], key[4],
+-		  key[5], key[6], key[7], key[8], key[9]);
+-	ice_debug(rt->psr->hw, ICE_DBG_PARSER, "\n");
++	ice_debug_array_w_prefix(rt->psr->hw, ICE_DBG_PARSER,
++				 KBUILD_MODNAME ": Generated Boost TCAM Key",
++				 key, ICE_BST_TCAM_KEY_SIZE);
+ }
+ 
+ static u16 ice_bit_rev_u16(u16 v, int len)
 -- 
 2.39.5
 
