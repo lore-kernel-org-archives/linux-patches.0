@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1760155756;
-	Wed,  5 Feb 2025 14:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D3A155CBD;
+	Wed,  5 Feb 2025 14:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765783; cv=none; b=m1zw4Ti3j2ZdtFcMUyx4mDJ0h2Hxj8MPA1v6+80PdOyP8ybelhwYm7wM84JrO0NPRNhpfTpWhvx3r1X9frLyI+xOKFIyql6D9zT9ebFW2YyJrvNBJMyVJ/83WZU6lYB+AbohA3gSI8eWepEtOe75UhR3gXx25hFPCbl9WbSE2Vs=
+	t=1738765787; cv=none; b=OFdu6S+rxroiBk5Cutelj1V4MPB98bvnMCGJnKwjpXf4L5rOOfRgXxlLkJqzhUaMu4m++48wBsnbU6FNUfOO1dx22M5izJyTKFJuoAX5jXCl73MAi1XXlnnSMN2BzXn9EwU4Gf0l6lv5ZpY173y4Fl5S4i+zIG1KgyLOxDaeMKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765783; c=relaxed/simple;
-	bh=eX5MD+e5e5zf7NGsyh7g8JU//yaORqkNHezkuxm6Wao=;
+	s=arc-20240116; t=1738765787; c=relaxed/simple;
+	bh=tGQHNy/anzwCWYclpploCr0N5mMhDsoIHXmiaf5MGus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c/Di/KN+5qQwlTCNSyGeOaXgxN0m5mpwFlb5RkcqJ7VmJHZcASa7F+cnDjUepsiGWsYZbHFwC/KRbtOyWfyZK4CjeVpAPQMkiN6tkKuqHdgqf3AezrDThIsq983EjfVzWtbRb96agXpu+OUfeha/Ggfjlh8SU/oG29bdK3TKjhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ip7jYz9O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cwjRA3uOviM0Fb7WhBndFK8Chw6YutweMCjgw2OG/+2ZajAW8ibkM0jcTrz0fnhcVN4ZGlER7o3pWxClWjg3e3A1rP8iL+0Hy1bFEC+qd0RcER/oZ6+cSP/MgYXSyt0IpunjcKujPTMHa2H2VLhvsB+i37V97xeIctzBMYTq1o4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtfvjAJH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ip7jYz9O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC49C4CED1;
-	Wed,  5 Feb 2025 14:29:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtfvjAJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D51C4CED1;
+	Wed,  5 Feb 2025 14:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765783;
-	bh=eX5MD+e5e5zf7NGsyh7g8JU//yaORqkNHezkuxm6Wao=;
+	s=korg; t=1738765787;
+	bh=tGQHNy/anzwCWYclpploCr0N5mMhDsoIHXmiaf5MGus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ip7jYz9O44vJJqbUBs8CteDnoHwpPiFrr3jwGLgkgT5lKYQQpLTJjLNcLd7/jzGQM
-	 3HbZPctcSX5IQ/69VQJBMZUYryuGdu6tVmiC4PnAKck8rJfvnkHNn1taqk+mVvZMU1
-	 F2f8gftwRu5JhkTo5wGORulstp0Wze72E0+zRWOY=
+	b=TtfvjAJH8CB048HynCtGe9QQLJTGd8tHVR+yRvES44++Gc3P0LyJrGtNn3nx0PrMN
+	 GIL+UXzpNAuYwNfT7Zin1W2OtuX/GBBE1roY72Qzd3x3HdQhLh2B39wiWz0BKcQU8J
+	 ZXkb7yNv0wKusuBYcDvWMhVwBunUPzM5JRdVF2/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	King Dix <kingdix10@qq.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 298/393] PCI: rcar-ep: Fix incorrect variable used when calling devm_request_mem_region()
-Date: Wed,  5 Feb 2025 14:43:37 +0100
-Message-ID: <20250205134431.713424641@linuxfoundation.org>
+Subject: [PATCH 6.13 213/623] wifi: mt76: mt7996: fix definition of tx descriptor
+Date: Wed,  5 Feb 2025 14:39:15 +0100
+Message-ID: <20250205134504.377284055@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: King Dix <kingdix10@qq.com>
+From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
 
-[ Upstream commit 2d2da5a4c1b4509f6f7e5a8db015cd420144beb4 ]
+[ Upstream commit 14749fe2ed360c92c1a2a76dac0b77f759234981 ]
 
-The rcar_pcie_parse_outbound_ranges() uses the devm_request_mem_region()
-macro to request a needed resource. A string variable that lives on the
-stack is then used to store a dynamically computed resource name, which
-is then passed on as one of the macro arguments. This can lead to
-undefined behavior.
+For mt7992 chipsets, the definition of TXD.DW6.BIT10~15 has different
+interpretations on different frame types. Driver only needs to fill
+MSDU_CNT for non-management frames.
 
-Depending on the current contents of the memory, the manifestations of
-errors may vary. One possible output may be as follows:
-
-  $ cat /proc/iomem
-  30000000-37ffffff :
-  38000000-3fffffff :
-
-Sometimes, garbage may appear after the colon.
-
-In very rare cases, if no NULL-terminator is found in memory, the system
-might crash because the string iterator will overrun which can lead to
-access of unmapped memory above the stack.
-
-Thus, fix this by replacing outbound_name with the name of the previously
-requested resource. With the changes applied, the output will be as
-follows:
-
-  $ cat /proc/iomem
-  30000000-37ffffff : memory2
-  38000000-3fffffff : memory3
-
-Fixes: 2a6d0d63d999 ("PCI: rcar: Add endpoint mode support")
-Link: https://lore.kernel.org/r/tencent_DBDCC19D60F361119E76919ADAB25EC13C06@qq.com
-Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: King Dix <kingdix10@qq.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Fixes: 408566db8cad ("wifi: mt76: connac: add new definition of tx descriptor")
+Co-developed-by: Shayne Chen <shayne.chen@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+Link: https://patch.msgid.link/20250114101026.3587702-6-shayne.chen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rcar-ep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-rcar-ep.c b/drivers/pci/controller/pcie-rcar-ep.c
-index f9682df1da619..209719fb6ddcc 100644
---- a/drivers/pci/controller/pcie-rcar-ep.c
-+++ b/drivers/pci/controller/pcie-rcar-ep.c
-@@ -107,7 +107,7 @@ static int rcar_pcie_parse_outbound_ranges(struct rcar_pcie_endpoint *ep,
- 		}
- 		if (!devm_request_mem_region(&pdev->dev, res->start,
- 					     resource_size(res),
--					     outbound_name)) {
-+					     res->name)) {
- 			dev_err(pcie->dev, "Cannot request memory region %s.\n",
- 				outbound_name);
- 			return -EIO;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 0d21414e2c884..f590902fdeea3 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -819,6 +819,7 @@ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 			   struct ieee80211_key_conf *key, int pid,
+ 			   enum mt76_txq_id qid, u32 changed)
+ {
++	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+ 	struct ieee80211_vif *vif = info->control.vif;
+ 	u8 band_idx = (info->hw_queue & MT_TX_HW_QUEUE_PHY) >> 2;
+@@ -886,8 +887,9 @@ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 	val = MT_TXD6_DIS_MAT | MT_TXD6_DAS;
+ 	if (is_mt7996(&dev->mt76))
+ 		val |= FIELD_PREP(MT_TXD6_MSDU_CNT, 1);
+-	else
++	else if (is_8023 || !ieee80211_is_mgmt(hdr->frame_control))
+ 		val |= FIELD_PREP(MT_TXD6_MSDU_CNT_V2, 1);
++
+ 	txwi[6] = cpu_to_le32(val);
+ 	txwi[7] = 0;
+ 
+@@ -897,7 +899,6 @@ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 		mt7996_mac_write_txwi_80211(dev, txwi, skb, key);
+ 
+ 	if (txwi[1] & cpu_to_le32(MT_TXD1_FIXED_RATE)) {
+-		struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
+ 		bool mcast = ieee80211_is_data(hdr->frame_control) &&
+ 			     is_multicast_ether_addr(hdr->addr1);
+ 		u8 idx = MT7996_BASIC_RATES_TBL;
 -- 
 2.39.5
 
