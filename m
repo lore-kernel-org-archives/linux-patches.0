@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE85B1519BE;
-	Wed,  5 Feb 2025 14:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1DF1553AB;
+	Wed,  5 Feb 2025 14:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765237; cv=none; b=R6s+JiTfJr2yoF4+uphDXZIzy1rYEsuYHtV8F7UX+5m1p2oHP7xJa640rluO8ss3OKZwxev0nuWUCneuSCVQtEDsrvTaU9Xkk4gL5S54WGum90MEtlJahlhZ2iDb3QERyPTFgBx+n4626TtZ1JWo5D76S+egeE7SxijQwt1DrVM=
+	t=1738765241; cv=none; b=R36Xdd8s4kl90l8juE9fcC27ud+uGgliiaP4vonyXDIHuHhE/4CdlYOnvb1neW+5Sa5oFph8zjskgm6D+2qWjiOEfWs0UaFCsOEjtwrUxXkfh3ZSxegBHlzB/zsC/sWhgGDUxLSPVclqdE8C8CM3wc1DI1RKCVIhnhNe0SFqezk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765237; c=relaxed/simple;
-	bh=NyXTl0VOoOrQrtnaFBxqUxOa7uNb0JFVwJSBHYHQnCk=;
+	s=arc-20240116; t=1738765241; c=relaxed/simple;
+	bh=7SMGtTDQnFPdg26W67gcTz5wsyzAiwtndQuHTuGGyAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vC3VLlCnX8mbU0bs2kpt+bIzj0fjTipTDwuJOFJd4ykAdX+6k6S4yWu5h9MJnoeiP6P21fMPQwMQYntpv9eOF2laIIEqlPdHQhAREji6WyOOb37PC9RAT3xzy1jh6/pd94OH+iB+4t5p92mlkIKXX7/QWHQ30pwVbgB5e7gn6ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPz9JhSA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I3NyV9hsj6j0qBoZWVlde5scD/cwC9BUttJDuVNZUzJbIjJYqWv4DCXKkNaZIFYnkv/ZfF4a2xDwRyVgaUYN5Mskr39tUqlVb8fp+ttOz4vUiLs3cvgwKBSd6u1OCrKpTf8orxVcId1IkROE/mLZWDdJdiv6TaFVOa9rvxpI3Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAPSXHis; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPz9JhSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F242C4CED1;
-	Wed,  5 Feb 2025 14:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAPSXHis"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816FFC4CED6;
+	Wed,  5 Feb 2025 14:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765237;
-	bh=NyXTl0VOoOrQrtnaFBxqUxOa7uNb0JFVwJSBHYHQnCk=;
+	s=korg; t=1738765241;
+	bh=7SMGtTDQnFPdg26W67gcTz5wsyzAiwtndQuHTuGGyAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPz9JhSAyzlPm4KpavCQ1qNqFRIwEtcN4EhXBZLDXLMQ4Zwqrzwxz0s16e6c+y6r7
-	 0YuV3MSNovhAwKjRMJ43smyY34nIy8kbIV+J/C7P8FrloMraLsFWPzQWEYh5XUWfQU
-	 T5uEvFc0iw1TiWezWpG9dY9MUy1vEmYgn9FFAp60=
+	b=VAPSXHis3T7f7Mo8LDKXa0kO34q/MzQFguqvLecWRoUIjn2boQG7/TCNS+zIAf0aE
+	 6jzpc2otgOwl05LsevYczZb5bAD35kHomo35E76bIJIz0DQa+RmYK4e9KjoFSLdi8U
+	 385uutidM5X7SZ6L7uuRtet+mPcdMNCES/lmMqkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 246/393] arm64: dts: qcom: sm8250: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:42:45 +0100
-Message-ID: <20250205134429.719859701@linuxfoundation.org>
+Subject: [PATCH 6.13 159/623] wifi: rtw89: fix race between cancel_hw_scan and hw_scan completion
+Date: Wed,  5 Feb 2025 14:38:21 +0100
+Message-ID: <20250205134502.318837524@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +46,130 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 75420e437eed69fa95d1d7c339dad86dea35319a ]
+[ Upstream commit ba4bb0402c60e945c4c396c51f0acac3c3e3ea5c ]
 
-The SM8250 platform uses PM8150 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+The rtwdev->scanning flag isn't protected by mutex originally, so
+cancel_hw_scan can pass the condition, but suddenly hw_scan completion
+unset the flag and calls ieee80211_scan_completed() that will free
+local->hw_scan_req. Then, cancel_hw_scan raises null-ptr-deref and
+use-after-free. Fix it by moving the check condition to where
+protected by mutex.
 
-Fixes: 9ff8b0591fcf ("arm64: dts: qcom: sm8250: use the right clock-freqency for sleep-clk")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-13-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+ KASAN: null-ptr-deref in range [0x0000000000000088-0x000000000000008f]
+ CPU: 2 PID: 6922 Comm: kworker/2:2 Tainted: G           OE
+ Hardware name: LENOVO 2356AD1/2356AD1, BIOS G7ETB6WW (2.76 ) 09/10/2019
+ Workqueue: events cfg80211_conn_work [cfg80211]
+ RIP: 0010:rtw89_fw_h2c_scan_offload_be+0xc33/0x13c3 [rtw89_core]
+ Code: 00 45 89 6c 24 1c 0f 85 23 01 00 00 48 8b 85 20 ff ff ff 48 8d
+ RSP: 0018:ffff88811fd9f068 EFLAGS: 00010206
+ RAX: dffffc0000000000 RBX: ffff88811fd9f258 RCX: 0000000000000001
+ RDX: 0000000000000011 RSI: 0000000000000001 RDI: 0000000000000089
+ RBP: ffff88811fd9f170 R08: 0000000000000000 R09: 0000000000000000
+ R10: ffff88811fd9f108 R11: 0000000000000000 R12: ffff88810e47f960
+ R13: 0000000000000000 R14: 000000000000ffff R15: 0000000000000000
+ FS:  0000000000000000(0000) GS:ffff8881d6f00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007531dfca55b0 CR3: 00000001be296004 CR4: 00000000001706e0
+ Call Trace:
+  <TASK>
+  ? show_regs+0x61/0x73
+  ? __die_body+0x20/0x73
+  ? die_addr+0x4f/0x7b
+  ? exc_general_protection+0x191/0x1db
+  ? asm_exc_general_protection+0x27/0x30
+  ? rtw89_fw_h2c_scan_offload_be+0xc33/0x13c3 [rtw89_core]
+  ? rtw89_fw_h2c_scan_offload_be+0x458/0x13c3 [rtw89_core]
+  ? __pfx_rtw89_fw_h2c_scan_offload_be+0x10/0x10 [rtw89_core]
+  ? do_raw_spin_lock+0x75/0xdb
+  ? __pfx_do_raw_spin_lock+0x10/0x10
+  rtw89_hw_scan_offload+0xb5e/0xbf7 [rtw89_core]
+  ? _raw_spin_unlock+0xe/0x24
+  ? __mutex_lock.constprop.0+0x40c/0x471
+  ? __pfx_rtw89_hw_scan_offload+0x10/0x10 [rtw89_core]
+  ? __mutex_lock_slowpath+0x13/0x1f
+  ? mutex_lock+0xa2/0xdc
+  ? __pfx_mutex_lock+0x10/0x10
+  rtw89_hw_scan_abort+0x58/0xb7 [rtw89_core]
+  rtw89_ops_cancel_hw_scan+0x120/0x13b [rtw89_core]
+  ieee80211_scan_cancel+0x468/0x4d0 [mac80211]
+  ieee80211_prep_connection+0x858/0x899 [mac80211]
+  ieee80211_mgd_auth+0xbea/0xdde [mac80211]
+  ? __pfx_ieee80211_mgd_auth+0x10/0x10 [mac80211]
+  ? cfg80211_find_elem+0x15/0x29 [cfg80211]
+  ? is_bss+0x1b7/0x1d7 [cfg80211]
+  ieee80211_auth+0x18/0x27 [mac80211]
+  cfg80211_mlme_auth+0x3bb/0x3e7 [cfg80211]
+  cfg80211_conn_do_work+0x410/0xb81 [cfg80211]
+  ? __pfx_cfg80211_conn_do_work+0x10/0x10 [cfg80211]
+  ? __kasan_check_read+0x11/0x1f
+  ? psi_group_change+0x8bc/0x944
+  ? __kasan_check_write+0x14/0x22
+  ? mutex_lock+0x8e/0xdc
+  ? __pfx_mutex_lock+0x10/0x10
+  ? __pfx___radix_tree_lookup+0x10/0x10
+  cfg80211_conn_work+0x245/0x34d [cfg80211]
+  ? __pfx_cfg80211_conn_work+0x10/0x10 [cfg80211]
+  ? update_cfs_rq_load_avg+0x3bc/0x3d7
+  ? sched_clock_noinstr+0x9/0x1a
+  ? sched_clock+0x10/0x24
+  ? sched_clock_cpu+0x7e/0x42e
+  ? newidle_balance+0x796/0x937
+  ? __pfx_sched_clock_cpu+0x10/0x10
+  ? __pfx_newidle_balance+0x10/0x10
+  ? __kasan_check_read+0x11/0x1f
+  ? psi_group_change+0x8bc/0x944
+  ? _raw_spin_unlock+0xe/0x24
+  ? raw_spin_rq_unlock+0x47/0x54
+  ? raw_spin_rq_unlock_irq+0x9/0x1f
+  ? finish_task_switch.isra.0+0x347/0x586
+  ? __schedule+0x27bf/0x2892
+  ? mutex_unlock+0x80/0xd0
+  ? do_raw_spin_lock+0x75/0xdb
+  ? __pfx___schedule+0x10/0x10
+  process_scheduled_works+0x58c/0x821
+  worker_thread+0x4c7/0x586
+  ? __kasan_check_read+0x11/0x1f
+  kthread+0x285/0x294
+  ? __pfx_worker_thread+0x10/0x10
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x29/0x6f
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1b/0x30
+  </TASK>
+
+Fixes: 895907779752 ("rtw89: 8852a: add ieee80211_ops::hw_scan")
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250107114254.6769-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/mac80211.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index b522d19f3a132..88e8f0437e938 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -85,7 +85,7 @@
+diff --git a/drivers/net/wireless/realtek/rtw89/mac80211.c b/drivers/net/wireless/realtek/rtw89/mac80211.c
+index 78d846e4667e7..03fb076e8c954 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
+@@ -1273,11 +1273,11 @@ static void rtw89_ops_cancel_hw_scan(struct ieee80211_hw *hw,
+ 	if (!RTW89_CHK_FW_FEATURE(SCAN_OFFLOAD, &rtwdev->fw))
+ 		return;
  
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
--			clock-frequency = <32768>;
-+			clock-frequency = <32764>;
- 			#clock-cells = <0>;
- 		};
- 	};
+-	if (!rtwdev->scanning)
+-		return;
+-
+ 	mutex_lock(&rtwdev->mutex);
+ 
++	if (!rtwdev->scanning)
++		goto out;
++
+ 	rtwvif_link = rtw89_vif_get_link_inst(rtwvif, 0);
+ 	if (unlikely(!rtwvif_link)) {
+ 		rtw89_err(rtwdev, "cancel hw scan: find no link on HW-0\n");
 -- 
 2.39.5
 
