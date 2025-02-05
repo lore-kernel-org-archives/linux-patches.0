@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA565228;
-	Wed,  5 Feb 2025 14:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18B415198D;
+	Wed,  5 Feb 2025 14:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764167; cv=none; b=f2wRukB58KSR3jCrOiTSkAwyJarrkJnIhnRb0X2sstgXu8SX2dXG+/gqT+bUXS2hicVofGvawAC6SlsYouI1Rm3whIEj3m2zaazMFFr1G53I0c1SMnCSCxo6fIm5u7sy8ChF6gXtRWMjyNXgchsIrJnB+iEPri78nCtmZF8naHk=
+	t=1738764170; cv=none; b=QUa4ARlj45mOYs0uTGQXmZNLkaWYcyKa9iy+LSJiQui1gDc2DcIrRLsNLR96f0GmVzyXxzd9i8CWpo1nwwFKPascqqlKy55gYmKsDH56xDr+d99lEcZ+ogJaeV8qxEtGEOZkTAwwgSXRugxiUr5jygnqrA8f9oh/Hpkvoy3Ce6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764167; c=relaxed/simple;
-	bh=DKtbY6APvzB9r9nuzSPs3mO5ZT7mhM8cYyPL4LtgE4k=;
+	s=arc-20240116; t=1738764170; c=relaxed/simple;
+	bh=C4hut6YpNaVdWjqa1mgsgJVkCdSXTAA0QkAXp3gq5hk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZV7Kwcg+Gc+w+Gi5TeeNlCC0qHiK79QXX3l4YTXErVVA3Trj+sdS7sIhUo5cbBT1AB13ihG7zHEu4/r5jtBOeHnoctQkm/oKdR7WXT5vZykbsXk1RcPvzKUiUETL/Z2njEhUWZLmZNyYCojapd+dKaZ2rKQnqnaJWuMmcZeTDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7leT0W6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H7M4JRCOFkWg7lA49rtHpOqvFHUSjIIP7PcctKnybHeMQPAeZ8zQmOuxzThi/UQP4btQbHe563LgbZJDGorkGE7vk6nN19W7DNCSO4vv93COEvAi8dPcR+vii564k3kdOABHI+rm4PCoUqc6Qh4E0rpMqM+PEr3kxn9NLSwHuBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+/jaQvo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7leT0W6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597E3C4CEDD;
-	Wed,  5 Feb 2025 14:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+/jaQvo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7380AC4CED6;
+	Wed,  5 Feb 2025 14:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764166;
-	bh=DKtbY6APvzB9r9nuzSPs3mO5ZT7mhM8cYyPL4LtgE4k=;
+	s=korg; t=1738764169;
+	bh=C4hut6YpNaVdWjqa1mgsgJVkCdSXTAA0QkAXp3gq5hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7leT0W6RRFNt467H107MAKaPiDUlne/XxNQEgyfGqeAoPMQjOmnnrBztHhZxOemN
-	 TKYaK0rwzEK3zEYXoBSKIMSBdzp1ORpOAN3CzQ0PcODlV85PeK9W5bsdmPg6GHghTj
-	 HqYAq8KDBfk/Q7roKwbiW+TmdGRioxnQhDh5AmDI=
+	b=l+/jaQvoAq7CAUDfXw+7/EdfQntBFdZpS/i4DDZJe+8+BKV/sPfaXyp+TVwLgpX/j
+	 cUvk5Ca5KF/zRED/+TlxOMSR/IyKfSelyhZuQiW6V39AgSgb436AqqzN9bKizb4nXp
+	 YoE7rRyNAUoElNDlqt4WRHJ8cz/r5vrPcRN0Tuxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 041/623] drm/msm/dp: set safe_to_exit_level before printing it
-Date: Wed,  5 Feb 2025 14:36:23 +0100
-Message-ID: <20250205134457.800362809@linuxfoundation.org>
+Subject: [PATCH 6.12 095/590] wifi: rtlwifi: fix memory leaks and invalid access at probe error path
+Date: Wed,  5 Feb 2025 14:37:30 +0100
+Message-ID: <20250205134458.891286658@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +47,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit 7dee35d79bb046bfd425aa9e58a82414f67c1cec ]
+[ Upstream commit e7ceefbfd8d447abc8aca8ab993a942803522c06 ]
 
-Rather than printing random garbage from stack and pretending that it is
-the default safe_to_exit_level, set the variable beforehand.
+Deinitialize at reverse order when probe fails.
 
-Fixes: d13e36d7d222 ("drm/msm/dp: add audio support for Display Port on MSM")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202411081748.0PPL9MIj-lkp@intel.com/
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/626804/
-Link: https://lore.kernel.org/r/20241202-fd-dp-audio-fixup-v2-1-d9187ea96dad@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+When init_sw_vars fails, rtl_deinit_core should not be called, specially
+now that it destroys the rtl_wq workqueue.
+
+And call rtl_pci_deinit and deinit_sw_vars, otherwise, memory will be
+leaked.
+
+Remove pci_set_drvdata call as it will already be cleaned up by the core
+driver code and could lead to memory leaks too. cf. commit 8d450935ae7f
+("wireless: rtlwifi: remove unnecessary pci_set_drvdata()") and
+commit 3d86b93064c7 ("rtlwifi: Fix PCI probe error path orphaned memory").
+
+Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241206173713.3222187-4-cascardo@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_audio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c b/drivers/gpu/drm/msm/dp/dp_audio.c
-index 74e01a5dd4195..5cbb11986460d 100644
---- a/drivers/gpu/drm/msm/dp/dp_audio.c
-+++ b/drivers/gpu/drm/msm/dp/dp_audio.c
-@@ -329,10 +329,10 @@ static void msm_dp_audio_safe_to_exit_level(struct msm_dp_audio_private *audio)
- 		safe_to_exit_level = 5;
- 		break;
- 	default:
-+		safe_to_exit_level = 14;
- 		drm_dbg_dp(audio->drm_dev,
- 				"setting the default safe_to_exit_level = %u\n",
- 				safe_to_exit_level);
--		safe_to_exit_level = 14;
- 		break;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index e60ac910e750b..a870117cf12af 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -2165,7 +2165,7 @@ int rtl_pci_probe(struct pci_dev *pdev,
+ 	if (rtlpriv->cfg->ops->init_sw_vars(hw)) {
+ 		pr_err("Can't init_sw_vars\n");
+ 		err = -ENODEV;
+-		goto fail3;
++		goto fail2;
+ 	}
+ 	rtl_init_sw_leds(hw);
+ 
+@@ -2183,14 +2183,14 @@ int rtl_pci_probe(struct pci_dev *pdev,
+ 	err = rtl_pci_init(hw, pdev);
+ 	if (err) {
+ 		pr_err("Failed to init PCI\n");
+-		goto fail3;
++		goto fail4;
  	}
  
+ 	err = ieee80211_register_hw(hw);
+ 	if (err) {
+ 		pr_err("Can't register mac80211 hw.\n");
+ 		err = -ENODEV;
+-		goto fail3;
++		goto fail5;
+ 	}
+ 	rtlpriv->mac80211.mac80211_registered = 1;
+ 
+@@ -2213,9 +2213,12 @@ int rtl_pci_probe(struct pci_dev *pdev,
+ 	set_bit(RTL_STATUS_INTERFACE_START, &rtlpriv->status);
+ 	return 0;
+ 
+-fail3:
+-	pci_set_drvdata(pdev, NULL);
++fail5:
++	rtl_pci_deinit(hw);
++fail4:
+ 	rtl_deinit_core(hw);
++fail3:
++	rtlpriv->cfg->ops->deinit_sw_vars(hw);
+ 
+ fail2:
+ 	if (rtlpriv->io.pci_mem_start != 0)
 -- 
 2.39.5
 
