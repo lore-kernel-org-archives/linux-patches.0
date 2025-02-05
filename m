@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA4915CD74;
-	Wed,  5 Feb 2025 15:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6D015CD74;
+	Wed,  5 Feb 2025 15:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768490; cv=none; b=Fj6kPyO7Xg9z458DSDW/c4PrsnokpV18nd4ar5ybTbqP5Vi6IOLtNI/RIJBGgpP3Em79QHVJBMicjM+jIedJ891ovAxMMAdA0/TXWtP4svKHNO0bUdiiF5bxswqz9zyRtYVGNsvueoKoi9s7CM9SscC7nAYFMUxDYbEY2tjIv+Y=
+	t=1738768493; cv=none; b=qkdhk/0dQCBWgiB5KFQS0LkI1/6YcMm4NT06iIU0fmeoqDsS491O5UKjS63+wjkijLPmopwDzrFxi0bYe99jTpS5Rz82I3texyuiI7j5LnNV96eWdGmLl6SAtHRcwxentYOtwhvGqyzWAeD5utBKJjOW2c6GkUpFabPs2RMRneM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768490; c=relaxed/simple;
-	bh=V1nzU/c8rYJ58nGZRLtt+wd1UgdarmX0wo2yTcCLiRs=;
+	s=arc-20240116; t=1738768493; c=relaxed/simple;
+	bh=WcuAJ3Xj/+rXnIFk6WeA4Iq+AQXHNEUCXhL0Mco98rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oITv+qQRjEjhBuaGjxlR5vjU3JYjQ96S042lRxMyZn5tRM2AOrri3DoOO1P73Jv65YR9i4Y483+joO5BesjRwkzMsUjOFaSMfaGbSyqkXmL9bnB+9p21p+zgOvJHpnXvkevI22fBOXV6vmXiTuz9knbfHqYT63viy7Ob55gzCM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/sSxiKH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zmo7BnQd7HK/H71VM+pCfnfrMjifr5MvrmGxBuTBuVmBiAkGjK+J3shEthw3+x+xCJYAZ8xpKKmyWoBiTuraR0SHP8cVE4vybf1Bh0JbWghc0/ZZ11Ay0R4VnzahYXRrQ1WJmK8KjjBv84lklEVYOiyHdM+nY7p4vaIwlWX386A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ou8DcA4W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/sSxiKH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C82C4CED1;
-	Wed,  5 Feb 2025 15:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ou8DcA4W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F07EC4CED1;
+	Wed,  5 Feb 2025 15:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768490;
-	bh=V1nzU/c8rYJ58nGZRLtt+wd1UgdarmX0wo2yTcCLiRs=;
+	s=korg; t=1738768493;
+	bh=WcuAJ3Xj/+rXnIFk6WeA4Iq+AQXHNEUCXhL0Mco98rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H/sSxiKHTR2ugPcWiA8AlzHQns1H8R1ijLow8VdbRQZIsUDu6k3j9ThKyyAdigEu9
-	 e3LJN5ZIMY1LmRV81yhiy0ET7ok2XKynQjAnai9lqGZ7OrE9ydniaf6/KMEV2y9XTe
-	 bYT6WB3t/JfgoW13dOBAkt4DN0s60Rknj9Iuzg2Q=
+	b=ou8DcA4W/pgOi4KSTVlLo/MgOcMJqcMtjG9X0QJIxH3DDhQCV4ir5+DQxgFv38+LH
+	 TstXKPA2JcT7vP57e4KN0iyX8NDjx6Vqb/+rWow/h0UZHUc/fcC8LXEZGn7tzrisIj
+	 UzlcwX3qq71/Fai8YUjvi2Ff8R73L3FpRWfu9hgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Lee <chullee@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Daniel Rosenberg <drosen@google.com>
-Subject: [PATCH 6.13 572/623] f2fs: Introduce linear search for dentries
-Date: Wed,  5 Feb 2025 14:45:14 +0100
-Message-ID: <20250205134518.104777286@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Xiao Ni <xni@redhat.com>,
+	Song Liu <song@kernel.org>,
+	Yu Kuai <yukuai1@huaweicloud.com>
+Subject: [PATCH 6.13 573/623] md/md-bitmap: factor behind write counters out from bitmap_{start/end}write()
+Date: Wed,  5 Feb 2025 14:45:15 +0100
+Message-ID: <20250205134518.143040329@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -52,218 +52,258 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Lee <chullee@google.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit 91b587ba79e1b68bb718d12b0758dbcdab4e9cb7 upstream.
+commit 08c50142a128dcb2d7060aa3b4c5db8837f7a46a upstream.
 
-This patch addresses an issue where some files in case-insensitive
-directories become inaccessible due to changes in how the kernel function,
-utf8_casefold(), generates case-folded strings from the commit 5c26d2f1d3f5
-("unicode: Don't special case ignorable code points").
+behind_write is only used in raid1, prepare to refactor
+bitmap_{start/end}write(), there are no functional changes.
 
-F2FS uses these case-folded names to calculate hash values for locating
-dentries and stores them on disk. Since utf8_casefold() can produce
-different output across kernel versions, stored hash values and newly
-calculated hash values may differ. This results in affected files no
-longer being found via the hash-based lookup.
-
-To resolve this, the patch introduces a linear search fallback.
-If the initial hash-based search fails, F2FS will sequentially scan the
-directory entries.
-
-Fixes: 5c26d2f1d3f5 ("unicode: Don't special case ignorable code points")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219586
-Signed-off-by: Daniel Lee <chullee@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Cc: Daniel Rosenberg <drosen@google.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Xiao Ni <xni@redhat.com>
+Link: https://lore.kernel.org/r/20250109015145.158868-2-yukuai1@huaweicloud.com
+Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Yu Kuai <yukuai1@huaweicloud.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/dir.c    |   53 ++++++++++++++++++++++++++++++++++++++---------------
- fs/f2fs/f2fs.h   |    6 ++++--
- fs/f2fs/inline.c |    5 +++--
- 3 files changed, 45 insertions(+), 19 deletions(-)
+ drivers/md/md-bitmap.c   |   57 +++++++++++++++++++++++++++++------------------
+ drivers/md/md-bitmap.h   |    7 ++++-
+ drivers/md/raid1.c       |   12 +++++----
+ drivers/md/raid10.c      |    6 +---
+ drivers/md/raid5-cache.c |    3 --
+ drivers/md/raid5.c       |   11 ++++-----
+ 6 files changed, 56 insertions(+), 40 deletions(-)
 
---- a/fs/f2fs/dir.c
-+++ b/fs/f2fs/dir.c
-@@ -175,7 +175,8 @@ static unsigned long dir_block_index(uns
- static struct f2fs_dir_entry *find_in_block(struct inode *dir,
- 				struct page *dentry_page,
- 				const struct f2fs_filename *fname,
--				int *max_slots)
-+				int *max_slots,
-+				bool use_hash)
- {
- 	struct f2fs_dentry_block *dentry_blk;
- 	struct f2fs_dentry_ptr d;
-@@ -183,7 +184,7 @@ static struct f2fs_dir_entry *find_in_bl
- 	dentry_blk = (struct f2fs_dentry_block *)page_address(dentry_page);
- 
- 	make_dentry_ptr_block(dir, &d, dentry_blk);
--	return f2fs_find_target_dentry(&d, fname, max_slots);
-+	return f2fs_find_target_dentry(&d, fname, max_slots, use_hash);
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -1671,24 +1671,13 @@ __acquires(bitmap->lock)
  }
  
- static inline int f2fs_match_name(const struct inode *dir,
-@@ -208,7 +209,8 @@ static inline int f2fs_match_name(const
- }
- 
- struct f2fs_dir_entry *f2fs_find_target_dentry(const struct f2fs_dentry_ptr *d,
--			const struct f2fs_filename *fname, int *max_slots)
-+			const struct f2fs_filename *fname, int *max_slots,
-+			bool use_hash)
+ static int bitmap_startwrite(struct mddev *mddev, sector_t offset,
+-			     unsigned long sectors, bool behind)
++			     unsigned long sectors)
  {
- 	struct f2fs_dir_entry *de;
- 	unsigned long bit_pos = 0;
-@@ -231,7 +233,7 @@ struct f2fs_dir_entry *f2fs_find_target_
- 			continue;
- 		}
+ 	struct bitmap *bitmap = mddev->bitmap;
  
--		if (de->hash_code == fname->hash) {
-+		if (!use_hash || de->hash_code == fname->hash) {
- 			res = f2fs_match_name(d->inode, fname,
- 					      d->filename[bit_pos],
- 					      le16_to_cpu(de->name_len));
-@@ -258,11 +260,12 @@ found:
- static struct f2fs_dir_entry *find_in_level(struct inode *dir,
- 					unsigned int level,
- 					const struct f2fs_filename *fname,
--					struct page **res_page)
-+					struct page **res_page,
-+					bool use_hash)
- {
- 	int s = GET_DENTRY_SLOTS(fname->disk_name.len);
- 	unsigned int nbucket, nblock;
--	unsigned int bidx, end_block;
-+	unsigned int bidx, end_block, bucket_no;
- 	struct page *dentry_page;
- 	struct f2fs_dir_entry *de = NULL;
- 	pgoff_t next_pgofs;
-@@ -272,8 +275,11 @@ static struct f2fs_dir_entry *find_in_le
- 	nbucket = dir_buckets(level, F2FS_I(dir)->i_dir_level);
- 	nblock = bucket_blocks(level);
+ 	if (!bitmap)
+ 		return 0;
  
-+	bucket_no = use_hash ? le32_to_cpu(fname->hash) % nbucket : 0;
-+
-+start_find_bucket:
- 	bidx = dir_block_index(level, F2FS_I(dir)->i_dir_level,
--			       le32_to_cpu(fname->hash) % nbucket);
-+			       bucket_no);
- 	end_block = bidx + nblock;
- 
- 	while (bidx < end_block) {
-@@ -290,7 +296,7 @@ static struct f2fs_dir_entry *find_in_le
- 			}
- 		}
- 
--		de = find_in_block(dir, dentry_page, fname, &max_slots);
-+		de = find_in_block(dir, dentry_page, fname, &max_slots, use_hash);
- 		if (IS_ERR(de)) {
- 			*res_page = ERR_CAST(de);
- 			de = NULL;
-@@ -307,12 +313,18 @@ static struct f2fs_dir_entry *find_in_le
- 		bidx++;
- 	}
- 
--	if (!de && room && F2FS_I(dir)->chash != fname->hash) {
--		F2FS_I(dir)->chash = fname->hash;
--		F2FS_I(dir)->clevel = level;
+-	if (behind) {
+-		int bw;
+-		atomic_inc(&bitmap->behind_writes);
+-		bw = atomic_read(&bitmap->behind_writes);
+-		if (bw > bitmap->behind_writes_used)
+-			bitmap->behind_writes_used = bw;
+-
+-		pr_debug("inc write-behind count %d/%lu\n",
+-			 bw, bitmap->mddev->bitmap_info.max_write_behind);
 -	}
-+	if (de)
-+		return de;
- 
--	return de;
-+	if (likely(use_hash)) {
-+		if (room && F2FS_I(dir)->chash != fname->hash) {
-+			F2FS_I(dir)->chash = fname->hash;
-+			F2FS_I(dir)->clevel = level;
-+		}
-+	} else if (++bucket_no < nbucket) {
-+		goto start_find_bucket;
-+	}
-+	return NULL;
+-
+ 	while (sectors) {
+ 		sector_t blocks;
+ 		bitmap_counter_t *bmc;
+@@ -1737,21 +1726,13 @@ static int bitmap_startwrite(struct mdde
  }
  
- struct f2fs_dir_entry *__f2fs_find_entry(struct inode *dir,
-@@ -323,11 +335,15 @@ struct f2fs_dir_entry *__f2fs_find_entry
- 	struct f2fs_dir_entry *de = NULL;
- 	unsigned int max_depth;
- 	unsigned int level;
-+	bool use_hash = true;
- 
- 	*res_page = NULL;
- 
-+#if IS_ENABLED(CONFIG_UNICODE)
-+start_find_entry:
-+#endif
- 	if (f2fs_has_inline_dentry(dir)) {
--		de = f2fs_find_in_inline_dir(dir, fname, res_page);
-+		de = f2fs_find_in_inline_dir(dir, fname, res_page, use_hash);
- 		goto out;
- 	}
- 
-@@ -343,11 +359,18 @@ struct f2fs_dir_entry *__f2fs_find_entry
- 	}
- 
- 	for (level = 0; level < max_depth; level++) {
--		de = find_in_level(dir, level, fname, res_page);
-+		de = find_in_level(dir, level, fname, res_page, use_hash);
- 		if (de || IS_ERR(*res_page))
- 			break;
- 	}
-+
- out:
-+#if IS_ENABLED(CONFIG_UNICODE)
-+	if (IS_CASEFOLDED(dir) && !de && use_hash) {
-+		use_hash = false;
-+		goto start_find_entry;
-+	}
-+#endif
- 	/* This is to increase the speed of f2fs_create */
- 	if (!de)
- 		F2FS_I(dir)->task = current;
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -3583,7 +3583,8 @@ int f2fs_prepare_lookup(struct inode *di
- 			struct f2fs_filename *fname);
- void f2fs_free_filename(struct f2fs_filename *fname);
- struct f2fs_dir_entry *f2fs_find_target_dentry(const struct f2fs_dentry_ptr *d,
--			const struct f2fs_filename *fname, int *max_slots);
-+			const struct f2fs_filename *fname, int *max_slots,
-+			bool use_hash);
- int f2fs_fill_dentries(struct dir_context *ctx, struct f2fs_dentry_ptr *d,
- 			unsigned int start_pos, struct fscrypt_str *fstr);
- void f2fs_do_make_empty_dir(struct inode *inode, struct inode *parent,
-@@ -4219,7 +4220,8 @@ int f2fs_write_inline_data(struct inode
- int f2fs_recover_inline_data(struct inode *inode, struct page *npage);
- struct f2fs_dir_entry *f2fs_find_in_inline_dir(struct inode *dir,
- 					const struct f2fs_filename *fname,
--					struct page **res_page);
-+					struct page **res_page,
-+					bool use_hash);
- int f2fs_make_empty_inline_dir(struct inode *inode, struct inode *parent,
- 			struct page *ipage);
- int f2fs_add_inline_entry(struct inode *dir, const struct f2fs_filename *fname,
---- a/fs/f2fs/inline.c
-+++ b/fs/f2fs/inline.c
-@@ -352,7 +352,8 @@ process_inline:
- 
- struct f2fs_dir_entry *f2fs_find_in_inline_dir(struct inode *dir,
- 					const struct f2fs_filename *fname,
--					struct page **res_page)
-+					struct page **res_page,
-+					bool use_hash)
+ static void bitmap_endwrite(struct mddev *mddev, sector_t offset,
+-			    unsigned long sectors, bool success, bool behind)
++			    unsigned long sectors, bool success)
  {
- 	struct f2fs_sb_info *sbi = F2FS_SB(dir->i_sb);
- 	struct f2fs_dir_entry *de;
-@@ -369,7 +370,7 @@ struct f2fs_dir_entry *f2fs_find_in_inli
- 	inline_dentry = inline_data_addr(dir, ipage);
+ 	struct bitmap *bitmap = mddev->bitmap;
  
- 	make_dentry_ptr_inline(dir, &d, inline_dentry);
--	de = f2fs_find_target_dentry(&d, fname, NULL);
-+	de = f2fs_find_target_dentry(&d, fname, NULL, use_hash);
- 	unlock_page(ipage);
- 	if (IS_ERR(de)) {
- 		*res_page = ERR_CAST(de);
+ 	if (!bitmap)
+ 		return;
+ 
+-	if (behind) {
+-		if (atomic_dec_and_test(&bitmap->behind_writes))
+-			wake_up(&bitmap->behind_wait);
+-		pr_debug("dec write-behind count %d/%lu\n",
+-			 atomic_read(&bitmap->behind_writes),
+-			 bitmap->mddev->bitmap_info.max_write_behind);
+-	}
+-
+ 	while (sectors) {
+ 		sector_t blocks;
+ 		unsigned long flags;
+@@ -2062,6 +2043,37 @@ static void md_bitmap_free(void *data)
+ 	kfree(bitmap);
+ }
+ 
++static void bitmap_start_behind_write(struct mddev *mddev)
++{
++	struct bitmap *bitmap = mddev->bitmap;
++	int bw;
++
++	if (!bitmap)
++		return;
++
++	atomic_inc(&bitmap->behind_writes);
++	bw = atomic_read(&bitmap->behind_writes);
++	if (bw > bitmap->behind_writes_used)
++		bitmap->behind_writes_used = bw;
++
++	pr_debug("inc write-behind count %d/%lu\n",
++		 bw, bitmap->mddev->bitmap_info.max_write_behind);
++}
++
++static void bitmap_end_behind_write(struct mddev *mddev)
++{
++	struct bitmap *bitmap = mddev->bitmap;
++
++	if (!bitmap)
++		return;
++
++	if (atomic_dec_and_test(&bitmap->behind_writes))
++		wake_up(&bitmap->behind_wait);
++	pr_debug("dec write-behind count %d/%lu\n",
++		 atomic_read(&bitmap->behind_writes),
++		 bitmap->mddev->bitmap_info.max_write_behind);
++}
++
+ static void bitmap_wait_behind_writes(struct mddev *mddev)
+ {
+ 	struct bitmap *bitmap = mddev->bitmap;
+@@ -2981,6 +2993,9 @@ static struct bitmap_operations bitmap_o
+ 	.dirty_bits		= bitmap_dirty_bits,
+ 	.unplug			= bitmap_unplug,
+ 	.daemon_work		= bitmap_daemon_work,
++
++	.start_behind_write	= bitmap_start_behind_write,
++	.end_behind_write	= bitmap_end_behind_write,
+ 	.wait_behind_writes	= bitmap_wait_behind_writes,
+ 
+ 	.startwrite		= bitmap_startwrite,
+--- a/drivers/md/md-bitmap.h
++++ b/drivers/md/md-bitmap.h
+@@ -84,12 +84,15 @@ struct bitmap_operations {
+ 			   unsigned long e);
+ 	void (*unplug)(struct mddev *mddev, bool sync);
+ 	void (*daemon_work)(struct mddev *mddev);
++
++	void (*start_behind_write)(struct mddev *mddev);
++	void (*end_behind_write)(struct mddev *mddev);
+ 	void (*wait_behind_writes)(struct mddev *mddev);
+ 
+ 	int (*startwrite)(struct mddev *mddev, sector_t offset,
+-			  unsigned long sectors, bool behind);
++			  unsigned long sectors);
+ 	void (*endwrite)(struct mddev *mddev, sector_t offset,
+-			 unsigned long sectors, bool success, bool behind);
++			 unsigned long sectors, bool success);
+ 	bool (*start_sync)(struct mddev *mddev, sector_t offset,
+ 			   sector_t *blocks, bool degraded);
+ 	void (*end_sync)(struct mddev *mddev, sector_t offset, sector_t *blocks);
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -420,10 +420,11 @@ static void close_write(struct r1bio *r1
+ 		r1_bio->behind_master_bio = NULL;
+ 	}
+ 
++	if (test_bit(R1BIO_BehindIO, &r1_bio->state))
++		mddev->bitmap_ops->end_behind_write(mddev);
+ 	/* clear the bitmap if all writes complete successfully */
+ 	mddev->bitmap_ops->endwrite(mddev, r1_bio->sector, r1_bio->sectors,
+-				    !test_bit(R1BIO_Degraded, &r1_bio->state),
+-				    test_bit(R1BIO_BehindIO, &r1_bio->state));
++				    !test_bit(R1BIO_Degraded, &r1_bio->state));
+ 	md_write_end(mddev);
+ }
+ 
+@@ -1645,9 +1646,10 @@ static void raid1_write_request(struct m
+ 			    stats.behind_writes < max_write_behind)
+ 				alloc_behind_master_bio(r1_bio, bio);
+ 
+-			mddev->bitmap_ops->startwrite(
+-				mddev, r1_bio->sector, r1_bio->sectors,
+-				test_bit(R1BIO_BehindIO, &r1_bio->state));
++			if (test_bit(R1BIO_BehindIO, &r1_bio->state))
++				mddev->bitmap_ops->start_behind_write(mddev);
++			mddev->bitmap_ops->startwrite(mddev, r1_bio->sector,
++						      r1_bio->sectors);
+ 			first_clone = 0;
+ 		}
+ 
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -430,8 +430,7 @@ static void close_write(struct r10bio *r
+ 
+ 	/* clear the bitmap if all writes complete successfully */
+ 	mddev->bitmap_ops->endwrite(mddev, r10_bio->sector, r10_bio->sectors,
+-				    !test_bit(R10BIO_Degraded, &r10_bio->state),
+-				    false);
++				    !test_bit(R10BIO_Degraded, &r10_bio->state));
+ 	md_write_end(mddev);
+ }
+ 
+@@ -1519,8 +1518,7 @@ static void raid10_write_request(struct
+ 	md_account_bio(mddev, &bio);
+ 	r10_bio->master_bio = bio;
+ 	atomic_set(&r10_bio->remaining, 1);
+-	mddev->bitmap_ops->startwrite(mddev, r10_bio->sector, r10_bio->sectors,
+-				      false);
++	mddev->bitmap_ops->startwrite(mddev, r10_bio->sector, r10_bio->sectors);
+ 
+ 	for (i = 0; i < conf->copies; i++) {
+ 		if (r10_bio->devs[i].bio)
+--- a/drivers/md/raid5-cache.c
++++ b/drivers/md/raid5-cache.c
+@@ -315,8 +315,7 @@ void r5c_handle_cached_data_endio(struct
+ 			r5c_return_dev_pending_writes(conf, &sh->dev[i]);
+ 			conf->mddev->bitmap_ops->endwrite(conf->mddev,
+ 					sh->sector, RAID5_STRIPE_SECTORS(conf),
+-					!test_bit(STRIPE_DEGRADED, &sh->state),
+-					false);
++					!test_bit(STRIPE_DEGRADED, &sh->state));
+ 		}
+ 	}
+ }
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -3564,7 +3564,7 @@ static void __add_stripe_bio(struct stri
+ 		set_bit(STRIPE_BITMAP_PENDING, &sh->state);
+ 		spin_unlock_irq(&sh->stripe_lock);
+ 		conf->mddev->bitmap_ops->startwrite(conf->mddev, sh->sector,
+-					RAID5_STRIPE_SECTORS(conf), false);
++					RAID5_STRIPE_SECTORS(conf));
+ 		spin_lock_irq(&sh->stripe_lock);
+ 		clear_bit(STRIPE_BITMAP_PENDING, &sh->state);
+ 		if (!sh->batch_head) {
+@@ -3665,7 +3665,7 @@ handle_failed_stripe(struct r5conf *conf
+ 		if (bitmap_end)
+ 			conf->mddev->bitmap_ops->endwrite(conf->mddev,
+ 					sh->sector, RAID5_STRIPE_SECTORS(conf),
+-					false, false);
++					false);
+ 		bitmap_end = 0;
+ 		/* and fail all 'written' */
+ 		bi = sh->dev[i].written;
+@@ -3712,7 +3712,7 @@ handle_failed_stripe(struct r5conf *conf
+ 		if (bitmap_end)
+ 			conf->mddev->bitmap_ops->endwrite(conf->mddev,
+ 					sh->sector, RAID5_STRIPE_SECTORS(conf),
+-					false, false);
++					false);
+ 		/* If we were in the middle of a write the parity block might
+ 		 * still be locked - so just clear all R5_LOCKED flags
+ 		 */
+@@ -4063,8 +4063,7 @@ returnbi:
+ 				}
+ 				conf->mddev->bitmap_ops->endwrite(conf->mddev,
+ 					sh->sector, RAID5_STRIPE_SECTORS(conf),
+-					!test_bit(STRIPE_DEGRADED, &sh->state),
+-					false);
++					!test_bit(STRIPE_DEGRADED, &sh->state));
+ 				if (head_sh->batch_head) {
+ 					sh = list_first_entry(&sh->batch_list,
+ 							      struct stripe_head,
+@@ -5787,7 +5786,7 @@ static void make_discard_request(struct
+ 			for (d = 0; d < conf->raid_disks - conf->max_degraded;
+ 			     d++)
+ 				mddev->bitmap_ops->startwrite(mddev, sh->sector,
+-					RAID5_STRIPE_SECTORS(conf), false);
++					RAID5_STRIPE_SECTORS(conf));
+ 			sh->bm_seq = conf->seq_flush + 1;
+ 			set_bit(STRIPE_BIT_DELAY, &sh->state);
+ 		}
 
 
