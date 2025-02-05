@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA47149C7B;
-	Wed,  5 Feb 2025 13:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4057F142E86;
+	Wed,  5 Feb 2025 13:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763695; cv=none; b=coPRSutRMt55nWfJ6J1yTBut2Gz52sdTfMGn+UUm/SDNgMseqyPHGAkxeFHbQtHxa/AWxVmPk/Gpe1yCmUOYO0Kxo47eWZkAzAoti5O6+67i3sc98C/Na6+s3SSNIb40KVUmW7DB4SvPg9zlwaWxc80liYJG7lfz7yVgahACYQU=
+	t=1738763698; cv=none; b=NjdYTtNIMPiXbKEp6k8LPjHVRsYkqgx9OzavTaq9AIMJThV3wbpVnZYbkHo5lam8A0rQF1n/nf3BDTQhPDsTgEwlJTnci+Lz26v/FtKH9R3fR1MR+z2N7b/4pagMw+JJDy2PxZVuUeQ59cBDEPh9Ezz9eoPqS2BPUaekfP7WI8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763695; c=relaxed/simple;
-	bh=YcTEizN4KUVmkBE0iTtBlDlzn6bHL7mIb3jsMR34Wgc=;
+	s=arc-20240116; t=1738763698; c=relaxed/simple;
+	bh=UG2vyZwI2YroaGwwp5GNzpT1R8V9kZ1MPV3umKRAzGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ga5DEQm6FrB27+8+ycJwLsavla//+ru48QsGk3fWCFG6P3ogWq/aIO2Cqx8OfnY2JwfCrJ93//jrXbO2dxwLjI6NDHLAw8FHetlY+OZwRGisuiSCvi86dxrYgFfyuSlWV734hXX99z8hneBTqHxhZenBp52DiRHl0qjHWNGubkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwFjqBJf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GU62CaQiHvtPOhsMlHkJIEB65/gJTYvygDTSpKSKlM5R8mY4r8bvauMPF6HWtVU/mlbiG8BbGqtOSy4IWPpVTpsCSIxyPeAVN9FuVLQhzA3g0dHE5E2V2Tl4vuqy7zlbg5R8m7uyvtvTxPTRijPGkqtmXMGm/uLoNHDw2+ma3GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hoBoiQyf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwFjqBJf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C01C4CED1;
-	Wed,  5 Feb 2025 13:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hoBoiQyf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5680EC4CED1;
+	Wed,  5 Feb 2025 13:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763694;
-	bh=YcTEizN4KUVmkBE0iTtBlDlzn6bHL7mIb3jsMR34Wgc=;
+	s=korg; t=1738763697;
+	bh=UG2vyZwI2YroaGwwp5GNzpT1R8V9kZ1MPV3umKRAzGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwFjqBJfZSv6bCkepNqufdxjpt89sBaFP1ZMAABy2oDOTbu6TlxI/WvLQsSPY/rKq
-	 2kmJUgsglq2bddfY6WB5nN7mCPbdfL5QtFRwc5Bww+SUTWRkRA4go4AUyyZvRNmxVJ
-	 awN8rrT01EuwpN9imP2TRQAPRifSwIFIoUjZ8wXo=
+	b=hoBoiQyfb0J6Wb5qHtUQ5bsAMBXSJFRSF3WwYlBCjbkt1Lc1LgGNVZITz4t4/929D
+	 MwsbQrGdts4p/77IIT6vKHPo6HcTsuzNGzSsJKXkpqg35UJXnE9LDol/WZvvm8ugkB
+	 HWWCyDNu14BXEpwWb0peCsE80g1N0BP2O0PRUteg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sathishkumar Muruganandam <quic_murugana@quicinc.com>,
-	Santhosh Ramesh <quic_santrame@quicinc.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/393] wifi: ath12k: fix tx power, max reg power update to firmware
-Date: Wed,  5 Feb 2025 14:40:16 +0100
-Message-ID: <20250205134424.006079049@linuxfoundation.org>
+Subject: [PATCH 6.13 010/623] io_uring: prevent reg-wait speculations
+Date: Wed,  5 Feb 2025 14:35:52 +0100
+Message-ID: <20250205134456.623977036@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sathishkumar Muruganandam <quic_murugana@quicinc.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 3540bba855b4b422e8b977d11aa8173ccb4f089d ]
+[ Upstream commit 29b95ac917927ce9f95bf38797e16333ecb489b1 ]
 
-Currently, when the vdev start WMI cmd is sent from host, vdev related
-parameters such as max_reg_power, max_power, and max_antenna_gain are
-multiplied by 2 before being sent to the firmware. This is incorrect
-because the firmware uses 1 dBm steps for power calculations.
+With *ENTER_EXT_ARG_REG instead of passing a user pointer with arguments
+for the waiting loop the user can specify an offset into a pre-mapped
+region of memory, in which case the
+[offset, offset + sizeof(io_uring_reg_wait)) will be intepreted as the
+argument.
 
-This leads to incorrect power values being used in the firmware and
-radio, potentially causing incorrect behavior.
+As we address a kernel array using a user given index, it'd be a subject
+to speculation type of exploits. Use array_index_nospec() to prevent
+that. Make sure to pass not the full region size but truncate by the
+maximum offset allowed considering the structure size.
 
-Fix the update of max_reg_power, max_power, and max_antenna_gain values
-in the ath12k_mac_vdev_start_restart function, ensuring accurate
-power settings in the firmware by sending these values as-is,
-without multiplication.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00214-QCAHKSWPL_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Signed-off-by: Sathishkumar Muruganandam <quic_murugana@quicinc.com>
-Signed-off-by: Santhosh Ramesh <quic_santrame@quicinc.com>
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Acked-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20240909073049.3423035-1-quic_santrame@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: d617b3147d54c ("io_uring: restore back registered wait arguments")
+Fixes: aa00f67adc2c0 ("io_uring: add support for fixed wait regions")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/1e3d9da7c43d619de7bcf41d1cd277ab2688c443.1733694126.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ io_uring/io_uring.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 713899735ccc5..e1db6e69d2207 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -5823,9 +5823,9 @@ ath12k_mac_vdev_start_restart(struct ath12k_vif *arvif,
- 	arg.mode = ath12k_phymodes[chandef->chan->band][chandef->width];
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 4758f1ba902b9..d062c5c69211b 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3233,6 +3233,7 @@ static struct io_uring_reg_wait *io_get_ext_arg_reg(struct io_ring_ctx *ctx,
+ 		     end > ctx->cq_wait_size))
+ 		return ERR_PTR(-EFAULT);
  
- 	arg.min_power = 0;
--	arg.max_power = chandef->chan->max_power * 2;
--	arg.max_reg_power = chandef->chan->max_reg_power * 2;
--	arg.max_antenna_gain = chandef->chan->max_antenna_gain * 2;
-+	arg.max_power = chandef->chan->max_power;
-+	arg.max_reg_power = chandef->chan->max_reg_power;
-+	arg.max_antenna_gain = chandef->chan->max_antenna_gain;
++	offset = array_index_nospec(offset, ctx->cq_wait_size - size);
+ 	return ctx->cq_wait_arg + offset;
+ }
  
- 	arg.pref_tx_streams = ar->num_tx_chains;
- 	arg.pref_rx_streams = ar->num_rx_chains;
 -- 
 2.39.5
 
