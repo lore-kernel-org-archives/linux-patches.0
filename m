@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D49B146A63;
-	Wed,  5 Feb 2025 13:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B6713D52B;
+	Wed,  5 Feb 2025 13:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763444; cv=none; b=FvwCm4dwPNSZQqURF0VvCpUkq7FjcT/k7W/+GVFuYpv6LGa8Z+Xy1VrxN+1CYOAaqzcsk+XQFQgrlb6vxcPuzyIZqjSh+3dK1JmLU2I3J71Pt1d+gPCXLVWueEx9IshIRhTvoDWGGlMiDwJ/KpbIka7PFTpMFwet2SkzW9eBoWw=
+	t=1738763446; cv=none; b=Az0WOnUtZOcswNa5IJG7SFs2KGYq5JKhu8gwyxH4q656TscQYy86591PuNKyulEFof9nsRqLasjOa3ZgfmLsWxz1SiUEuFsigo78v+CQE+MRqvFtg6Wark5kHPecBjhWCM7f/7gTPefCfRv/9AxKGKiLYxp4lGlEGeShzAyJpV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763444; c=relaxed/simple;
-	bh=RMk/oFScoXX337VGNpBgNiPlbN7v1DqoGWDyIK8qEdU=;
+	s=arc-20240116; t=1738763446; c=relaxed/simple;
+	bh=Wa58cmcTuP2zdgPyJAZNtN4K/yH0qxZIRCGEjX0gMNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LcuU8XhA2KMS1jowOjqZz9FQPpjU971Phn+2ykn7Q0nb/pSw6BKmAK5EP+uS9+o0YFgmATZ0qIoErR6cqT8kbnign6X0mnEEDOlhiixCNQYbcNtckmaZNk+eSKiIsT3fIzfvIIBudKtB5MQ/LR9qyI9R3vJsBdqJGjBGM6NU8+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u3bxYfPB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nNsld/LOUAujjQW8620pKuQMe2dxJUAprhItx/iEI49l2igdgOZlf7AUfQuPPQ5RVpVPcgAFOoVd1oYQnzkgaaEUjxBIkKOG9MF6Rta7q0f+a+UXAe8Lgb4saEmJwc1DB4yykFca2VM8nzfAZwQrEFRjIoOd0LocL5/IRq6nkEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XIDmPIAK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u3bxYfPB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA0BC4CED1;
-	Wed,  5 Feb 2025 13:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XIDmPIAK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF03EC4CED1;
+	Wed,  5 Feb 2025 13:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763442;
-	bh=RMk/oFScoXX337VGNpBgNiPlbN7v1DqoGWDyIK8qEdU=;
+	s=korg; t=1738763446;
+	bh=Wa58cmcTuP2zdgPyJAZNtN4K/yH0qxZIRCGEjX0gMNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u3bxYfPBozl5zTTXX5LyeXNQEWgxV/iIZzbn2qaM3je/dqKMu/CyITawXHSjtKYce
-	 Ilvdca8FWZpiAMWJGGpIQeII4Bu4pWJ6rQowuAMYVaK3lbILwsUe8t2lgqzN/WD+ye
-	 tXDX9EUtmQeJf+5xa3ut/4e3rO62vM5mLRnIth+Y=
+	b=XIDmPIAKUi3Xg7NjuoMCfN/3wCT/yA/Cov2Nsg5o+h7nDSZGopAz8GcM4o98p9Tbl
+	 OxlhQaS66v0s5SqMIcBLK5QCpTWY1j5ddXwMQayQqAzY69gij8eXfSJPwGuOlL+6eB
+	 clw4/O+OlTLf6MgtDVrm/+sdozvj0QfF/aNrTcAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Stepchenko <sid@itb.spb.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/393] drm/amdgpu: Fix potential NULL pointer dereference in atomctrl_get_smc_sclk_range_table
-Date: Wed,  5 Feb 2025 14:39:05 +0100
-Message-ID: <20250205134421.301643375@linuxfoundation.org>
+Subject: [PATCH 6.6 061/393] serial: sc16is7xx: use device_property APIs when configuring irda mode
+Date: Wed,  5 Feb 2025 14:39:40 +0100
+Message-ID: <20250205134422.629587859@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -51,41 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Stepchenko <sid@itb.spb.ru>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 357445e28ff004d7f10967aa93ddb4bffa5c3688 ]
+[ Upstream commit 1a0a2a1e57aa8dcdae25229f6e95cf6bd4817faf ]
 
-The function atomctrl_get_smc_sclk_range_table() does not check the return
-value of smu_atom_get_data_table(). If smu_atom_get_data_table() fails to
-retrieve SMU_Info table, it returns NULL which is later dereferenced.
+Convert driver to be property provider agnostic and allow it to be
+used on non-OF platforms.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-In practice this should never happen as this code only gets called
-on polaris chips and the vbios data table will always be present on
-those chips.
-
-Fixes: a23eefa2f461 ("drm/amd/powerplay: enable dpm for baffin.")
-Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20230927160153.2717788-2-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 28fa3291cad1 ("clk: fix an OF node reference leak in of_clk_get_parent_name()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/sc16is7xx.c | 34 ++++++++++++++++++++++++----------
+ 1 file changed, 24 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-index cc3b62f733941..1fbd23922082a 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/ppatomctrl.c
-@@ -1420,6 +1420,8 @@ int atomctrl_get_smc_sclk_range_table(struct pp_hwmgr *hwmgr, struct pp_atom_ctr
- 			GetIndexIntoMasterTable(DATA, SMU_Info),
- 			&size, &frev, &crev);
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index f290fbe21d633..8a2ce2ca6b394 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1410,6 +1410,29 @@ static int sc16is7xx_setup_gpio_chip(struct sc16is7xx_port *s)
+ }
+ #endif
  
-+	if (!psmu_info)
-+		return -EINVAL;
++static void sc16is7xx_setup_irda_ports(struct sc16is7xx_port *s)
++{
++	int i;
++	int ret;
++	int count;
++	u32 irda_port[2];
++	struct device *dev = s->p[0].port.dev;
++
++	count = device_property_count_u32(dev, "irda-mode-ports");
++	if (count < 0 || count > ARRAY_SIZE(irda_port))
++		return;
++
++	ret = device_property_read_u32_array(dev, "irda-mode-ports",
++					     irda_port, count);
++	if (ret)
++		return;
++
++	for (i = 0; i < count; i++) {
++		if (irda_port[i] < s->devtype->nr_uart)
++			s->p[irda_port[i]].irda_mode = true;
++	}
++}
++
+ /*
+  * Configure ports designated to operate as modem control lines.
+  */
+@@ -1603,16 +1626,7 @@ static int sc16is7xx_probe(struct device *dev,
+ 		sc16is7xx_power(&s->p[i].port, 0);
+ 	}
  
- 	for (i = 0; i < psmu_info->ucSclkEntryNum; i++) {
- 		table->entry[i].ucVco_setting = psmu_info->asSclkFcwRangeEntry[i].ucVco_setting;
+-	if (dev->of_node) {
+-		struct property *prop;
+-		const __be32 *p;
+-		u32 u;
+-
+-		of_property_for_each_u32(dev->of_node, "irda-mode-ports",
+-					 prop, p, u)
+-			if (u < devtype->nr_uart)
+-				s->p[u].irda_mode = true;
+-	}
++	sc16is7xx_setup_irda_ports(s);
+ 
+ 	ret = sc16is7xx_setup_mctrl_ports(s, regmaps[0]);
+ 	if (ret)
 -- 
 2.39.5
 
