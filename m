@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941A31FBEAF;
-	Wed,  5 Feb 2025 14:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D770918A922;
+	Wed,  5 Feb 2025 14:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766766; cv=none; b=YAP4k/3Tr2GztnqX9pm4w1gR+g3NWffdfoSSIELBMTe5nTVzS53yWF8p/0mxI3kBiRqy++uBsZY4daRzAsjj1HVKLwnqC52b3KUjTtWESEobnX+Bjprh4cD1kYXi/x6KquT2HWRUhwCXzVIMAgc3ZXGkNyTwx58LmhGiPL80K+k=
+	t=1738766769; cv=none; b=pBw5w3RtMb2XyT+tyhNLRc9tWfQQqHI9GeRy5uiBmu+/N+jM91MivjaxFUe7ohjL837QGChPLliHKRUCg8ed8w7uns5f1waDQGnfNcrRSwmSV1XJEtPQ9hINd+R6n0KGU8itjLLC1Qd3Z0el3dPr2B2Rezaz8KcbusDHjdY1E3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766766; c=relaxed/simple;
-	bh=PXn1fvyj326SKCEOWIXgA+5/EWtQ4D/Y/3K1lSwdkfk=;
+	s=arc-20240116; t=1738766769; c=relaxed/simple;
+	bh=YCopvq9DtyvfLvp1g6hp3vik7uNVbnpkwgDrEImL1io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qTxtN2VwPH+pndhEaDuyAsxN0A21QpzHjOL13/PW5Ew6YVceM0JUNfoa9PRY6hMjp+G/ExPFU2xn/QY9nyyDn5vh/koAhNabX4GdgDh1hpiT0PNm/4fLdymebCxuktS7Z1ODN3FrJTPNrw8hlhXmxdR3n8gY7kUskOdTYz5giv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xhYOc6w6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=We1iJ6ITONKUmkfd9A24yjo9Iva5PJZ3Jf/5SghN2WzmDoQR57IOTzCpIf5/JFymAtiIriZfwTj61qGrTLR7dlV0jKmD7ciUa6In9k/cjIW1i8RS76hQKrYv+iV7cydgM/em2ZyhKEFr2t5BC+mhCD8lwUTsGAei0Wom4KJh9B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZ4RMC0G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xhYOc6w6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123A7C4CED6;
-	Wed,  5 Feb 2025 14:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZ4RMC0G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA58C4CED6;
+	Wed,  5 Feb 2025 14:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766766;
-	bh=PXn1fvyj326SKCEOWIXgA+5/EWtQ4D/Y/3K1lSwdkfk=;
+	s=korg; t=1738766769;
+	bh=YCopvq9DtyvfLvp1g6hp3vik7uNVbnpkwgDrEImL1io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xhYOc6w656HAU8nEj6dSTZMBT90RCjrhmEQEUaBYwl5+85CFWhPJDXmPnFCqOqeiC
-	 l0FiPRLOFVOBpj9actyyWBvZpZhSF5lHNTrngNj03hiiGiBE5lGDf6Ds79mBgPAF8A
-	 KTAG9A8eqN/20rf+OC6Cp8pia1BbqPzbWNTVBFJY=
+	b=DZ4RMC0GQltiuDXna8e1tBbm6ObfqeDymfIFo5GkJaUOY/kXe/4ksKAJKaTcgBuLY
+	 ogSqWQhK8tl/r9nu7J4Ec/NlC5pOYuG2axntqNW7QztkywXu6PYwnr3b7OxTYRoeWh
+	 6uMWQT2wDDpEsy+kR+r4FjLf+Bid4dvUR9iuKowc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 358/590] arm64: dts: qcom: sm8650: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:41:53 +0100
-Message-ID: <20250205134508.964552469@linuxfoundation.org>
+Subject: [PATCH 6.13 306/623] ASoC: Intel: sof_sdw: Fix DMI match for Lenovo 83JX, 83MC and 83NM
+Date: Wed,  5 Feb 2025 14:40:48 +0100
+Message-ID: <20250205134507.933625354@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +50,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Simon Trimmer <simont@opensource.cirrus.com>
 
-[ Upstream commit 448db0ba6ad2aafee2cbd91b491246749f6a6abc ]
+[ Upstream commit 17615e4216115a0454e0f2007267a006231dcb7d ]
 
-The SM8650 platform uses PMK8550 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+Update the DMI match for a Lenovo laptop to a new DMI identifier.
 
-Fixes: 6fbdb3c1fac7 ("arm64: dts: qcom: sm8650: add initial SM8650 MTP dts")
-Fixes: a834911d50c1 ("arm64: dts: qcom: sm8650: add initial SM8650 QRD dts")
-Fixes: 01061441029e ("arm64: dts: qcom: sm8650: add support for the SM8650-HDK board")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-17-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This laptop ships with a different DMI identifier to what was expected
+and now has three match entries. It also has the DMICs connected to the
+host rather than the cs42l43 codec.
+
+Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
+Fixes: 83c062ae81e8 ("ASoC: Intel: sof_sdw: Add quirks for some new Lenovo laptops")
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20250102123335.256698-3-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8650-hdk.dts | 2 +-
- arch/arm64/boot/dts/qcom/sm8650-mtp.dts | 2 +-
- arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/intel/boards/sof_sdw.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-index 127c7aacd4fc3..59363267d2e0a 100644
---- a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
-@@ -1117,7 +1117,7 @@
- };
- 
- &sleep_clk {
--	clock-frequency = <32000>;
-+	clock-frequency = <32764>;
- };
- 
- &swr0 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
-index c63822f5b1278..74275ca668c76 100644
---- a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
-@@ -734,7 +734,7 @@
- };
- 
- &sleep_clk {
--	clock-frequency = <32000>;
-+	clock-frequency = <32764>;
- };
- 
- &swr0 {
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-index 8ca0d28eba9bd..1689699d6de71 100644
---- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-@@ -1045,7 +1045,7 @@
- };
- 
- &sleep_clk {
--	clock-frequency = <32000>;
-+	clock-frequency = <32764>;
- };
- 
- &spi4 {
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index d42b012a6bb9d..5554ad4e7c787 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -610,9 +610,9 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 		.callback = sof_sdw_quirk_cb,
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+-			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "3838")
++			DMI_MATCH(DMI_PRODUCT_NAME, "83JX")
+ 		},
+-		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS),
++		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS | SOC_SDW_CODEC_MIC),
+ 	},
+ 	{
+ 		.callback = sof_sdw_quirk_cb,
+@@ -622,6 +622,21 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS | SOC_SDW_CODEC_MIC),
+ 	},
++	{
++		.callback = sof_sdw_quirk_cb,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83MC")
++		},
++		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS | SOC_SDW_CODEC_MIC),
++	},	{
++		.callback = sof_sdw_quirk_cb,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83NM")
++		},
++		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS | SOC_SDW_CODEC_MIC),
++	},
+ 	{
+ 		.callback = sof_sdw_quirk_cb,
+ 		.matches = {
 -- 
 2.39.5
 
