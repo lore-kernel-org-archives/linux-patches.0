@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F69F33993;
-	Wed,  5 Feb 2025 14:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE6833993;
+	Wed,  5 Feb 2025 14:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767252; cv=none; b=aqm4w9FyC1zpWqU776rF44E+AvXOiFEq9td/DP63LWSOwjdI2yQ+JN3uaHCypR+CaxLHGyfKp3NtomM4bbA2Vr6PkTExjWDQSQKlm1LNy1e5IFpIDaDW1zDR7M/SBUlHbv1W6rVftoDiOZYNVDgtYPY0XWIa0F0+bIv/AJy7OSI=
+	t=1738767255; cv=none; b=LbmiEIX7GEWgZ/gGZ9htvoXn8iaUL3koPT5r8UaC5ldkBraAhu5iGL9+t2HWqT1G3vwoabzlvoUu4yXe6o09eewvvUGhBULoiBQy2t9rlt56p/rvzUDd7JSkbSPR9371ya7gK7RmNWmZaY4eHQKsJGroCw7hctIk2Ku1Gp+6C3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767252; c=relaxed/simple;
-	bh=S2oKUbDr8Rn2W4H62mCRbREoWbVe9M3KSb6znvApeQ0=;
+	s=arc-20240116; t=1738767255; c=relaxed/simple;
+	bh=tp8/uE9aD5ZQkTmDypwnz/TsG+5K4L5SMSH2cThoH2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sVpZFm9bZUlsZKkRe8Xw3BMptQD+Een0NxjAIhApJ1EBmWwBV9adjFAApkYBVN89VpJVKFfzPLbYpGzpWL/sIwUhSz9pPqucOpGLKwZS/3FLJsmFseTDvZNr5xlFaU+Qo9NTgEUhdsXLP3uus0XxaGHUwC1AiF6OJiKvUVALA0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtgxBM1+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rfFbZ7FrK/CZ2M5KfRdvkUBA/DIWKMypPJakf52WEbMUoY0t3lrnFwTtn45D7cMW7TeNX0wqyHCncT5czMmEcspomXjfnV3HLJKTKBCm+qu6oX5gvNeOUzFNYDZvkGvSF7Fx2wQBFJRLdWTH2gE2mgmoluTTza+gNZXuw5BE37c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKI6H4ZB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtgxBM1+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C57C4CED1;
-	Wed,  5 Feb 2025 14:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKI6H4ZB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6481C4CEDD;
+	Wed,  5 Feb 2025 14:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767252;
-	bh=S2oKUbDr8Rn2W4H62mCRbREoWbVe9M3KSb6znvApeQ0=;
+	s=korg; t=1738767255;
+	bh=tp8/uE9aD5ZQkTmDypwnz/TsG+5K4L5SMSH2cThoH2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtgxBM1+kYZY/Fzu8+HR6XlGr1rUvNuokkLqF1eTosEJs5lehE3qNXNVYcEGPf5PO
-	 qVujCzu92NIQTRvDeeKubGxNZu5klAvrBPYpbGcXrZ0+lc4twNem18NEm2U27DBcW6
-	 +hZwkBDZDzAeCxQr8Rhg0IHiElY+7qb6kP9BZGkY=
+	b=ZKI6H4ZB3NsYwpZyQ4P2BfnbzMcZMkQ4+Hlc1pf7RlD8WVAPVQDYNYM+CITcqSHyn
+	 npyFBqPYSISVhNi1HhNVKy2iZEE89LstlUe82QPAnlW9rowXVUYlxuO+ENy6ZzN6Kw
+	 foawsv37cb23DVpgybrboYygq3zMOiUWMW89kC64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 378/623] arm64: dts: qcom: msm8994: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:42:00 +0100
-Message-ID: <20250205134510.679486951@linuxfoundation.org>
+Subject: [PATCH 6.12 430/590] PCI: dwc: Always stop link in the dw_pcie_suspend_noirq
+Date: Wed,  5 Feb 2025 14:43:05 +0100
+Message-ID: <20250205134511.717150674@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,42 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Richard Zhu <hongxing.zhu@nxp.com>
 
-[ Upstream commit a4148d869d47d8c86da0291dd95d411a5ebe90c8 ]
+[ Upstream commit 86a016e278b78cc2281edd4ffaddbc011c87a593 ]
 
-The MSM8994 platform uses PM8994/6 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+On the i.MX8QM, PCIe link can't be re-established again in
+dw_pcie_resume_noirq(), if the LTSSM_EN bit is not cleared
+properly in dw_pcie_suspend_noirq().
 
-Fixes: feeaf56ac78d ("arm64: dts: msm8994 SoC and Huawei Angler (Nexus 6P) support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-3-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+So, add dw_pcie_stop_link() to dw_pcie_suspend_noirq() to fix
+this issue and to align the suspend/resume functions since there
+is dw_pcie_start_link() in dw_pcie_resume_noirq() already.
+
+Fixes: 4774faf854f5 ("PCI: dwc: Implement generic suspend/resume functionality")
+Link: https://lore.kernel.org/r/20241210081557.163555-2-hongxing.zhu@nxp.com
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8994.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-designware-host.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index 8c0b1e3a99a76..b5cbdd620bb9e 100644
---- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -34,7 +34,7 @@
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
--			clock-frequency = <32768>;
-+			clock-frequency = <32764>;
- 			clock-output-names = "sleep_clk";
- 		};
- 	};
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 3e41865c72904..120e2aca5164a 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -946,6 +946,7 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
+ 		return ret;
+ 	}
+ 
++	dw_pcie_stop_link(pci);
+ 	if (pci->pp.ops->deinit)
+ 		pci->pp.ops->deinit(&pci->pp);
+ 
 -- 
 2.39.5
 
