@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72321E89C;
-	Wed,  5 Feb 2025 15:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA2A1519B4;
+	Wed,  5 Feb 2025 15:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768188; cv=none; b=AP9o5+qYwxQBMT7rXI+WFSqdZZ7nPB+SfiO8Uuj1IyVxgzeVaxWlJkPOsgSxw8FAjeZG1GdWReXesW5iyBsgqdPyz3CcSmfpFNwpSfUgVFOofnfFjxV7wjqjKaVqnocrA6ijBw0ZKsts8y4PF5il4gWa2KrT2Ei6m/86g32CT2g=
+	t=1738768192; cv=none; b=Sr3fLjDwavpROyCtFCGOak9SubI/U4JfgcC+IzSeoBwqgEaXmuIsdMtNG8fTvuRqmaest3a+qe6kL9v+CLgck1W+/Vk+xANzyYWggHCAtcf0wZTgrH8m8d0UgjVEVcDgHFnGTqUR6IwLNbZ7AO1TtMQOgAMgKFnGpODHYOHeQus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768188; c=relaxed/simple;
-	bh=4HOGczX4n7l0SqUMM3Wxqbi21GrRLlNvACqxYKTFokU=;
+	s=arc-20240116; t=1738768192; c=relaxed/simple;
+	bh=Wmn4HasTM0+YutRiicjEH4E4mSU9eWPNqN7mrTUu2oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mu/d1HCRRhEr5T2ZkMjobGKz5Enz0IET3KdivLokNbIf0gnJmMMSpRbDsMw5UUmW2KCTsZTmY/PyQCL9xHYEpjcm9uVIMNARGPBwZ1Dn2tDXWcV+VeDwJj8dJir/2VnSvvCgZfc+zMDyI1uaxj2nBFzHTpcUd+pL91Uv3fbkXRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XiC5eZYZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OBxtXqC0v+LhEyajEiv1GF+NfLK1CrJ/nt4Qc4L/oklUXfFPOPvLlVltK4Ulyko95Zswee5IZwgwH6/TdgcnssQSd/ryXX3PJZJLBYVv1rZgWk0NP0OK0HzzxHrbihWQYNBi9u7vVfInmkxaPotE0wR6MnpDE6bR7L/wXUJBRQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7aOdYq9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XiC5eZYZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256BEC4CED1;
-	Wed,  5 Feb 2025 15:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7aOdYq9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D1AC4CED1;
+	Wed,  5 Feb 2025 15:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768188;
-	bh=4HOGczX4n7l0SqUMM3Wxqbi21GrRLlNvACqxYKTFokU=;
+	s=korg; t=1738768192;
+	bh=Wmn4HasTM0+YutRiicjEH4E4mSU9eWPNqN7mrTUu2oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XiC5eZYZe0IvUvxsF4ieW8rsDe9nI4zE7DNvMAmISDgyIWwFqOLSkq4/xhtTDwWwY
-	 Zy68dlfQHZba14yFXq/rjua71sAO+e0IlL9LgYWlPNUy2yiSyOoRE6E5D8QQDMq9/y
-	 yNuhPekkr7MmoRLrmUJTahd+Dhk0ZSxc6hzny84g=
+	b=I7aOdYq9bCVZQXbJKvbmOb5TUQo6CE3I497nWhrk3Gco2rAbBonXfylvyyW+s4BCc
+	 UkQ84THfndXM5Tf2EH+KIFa5yi0sNSLdNRqlr7trjtoIB2TEpu/ZgXThMkFu966mXa
+	 KnU0oLmp/HrI+EN9ZwE627E/aBVGjD/+0GlL4du4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 565/590] mptcp: blackhole only if 1st SYN retrans w/o MPC is accepted
-Date: Wed,  5 Feb 2025 14:45:20 +0100
-Message-ID: <20250205134516.881826226@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 510/623] PM: hibernate: Add error handling for syscore_suspend()
+Date: Wed,  5 Feb 2025 14:44:12 +0100
+Message-ID: <20250205134515.730331887@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +47,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit e598d8981fd34470b78a1ae777dbf131b15d5bf2 upstream.
+[ Upstream commit e20a70c572539a486dbd91b225fa6a194a5e2122 ]
 
-The Fixes commit mentioned this:
+In hibernation_platform_enter(), the code did not check the
+return value of syscore_suspend(), potentially leading to a
+situation where syscore_resume() would be called even if
+syscore_suspend() failed. This could cause unpredictable
+behavior or system instability.
 
-> An MPTCP firewall blackhole can be detected if the following SYN
-> retransmission after a fallback to "plain" TCP is accepted.
+Modify the code sequence in question to properly handle errors returned
+by syscore_suspend(). If an error occurs in the suspend path, the code
+now jumps to label 'Enable_irqs' skipping the syscore_resume() call and
+only enabling interrupts after setting the system state to SYSTEM_RUNNING.
 
-But in fact, this blackhole was detected if any following SYN
-retransmissions after a fallback to TCP was accepted.
-
-That's because 'mptcp_subflow_early_fallback()' will set 'request_mptcp'
-to 0, and 'mpc_drop' will never be reset to 0 after.
-
-This is an issue, because some not so unusual situations might cause the
-kernel to detect a false-positive blackhole, e.g. a client trying to
-connect to a server while the network is not ready yet, causing a few
-SYN retransmissions, before reaching the end server.
-
-Fixes: 27069e7cb3d1 ("mptcp: disable active MPTCP in case of blackhole")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 40dc166cb5dd ("PM / Core: Introduce struct syscore_ops for core subsystems PM")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20250119143205.2103-1-vulab@iscas.ac.cn
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/ctrl.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/power/hibernate.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/ctrl.c
-+++ b/net/mptcp/ctrl.c
-@@ -405,9 +405,9 @@ void mptcp_active_detect_blackhole(struc
- 			MPTCP_INC_STATS(sock_net(ssk), MPTCP_MIB_MPCAPABLEACTIVEDROP);
- 			subflow->mpc_drop = 1;
- 			mptcp_subflow_early_fallback(mptcp_sk(subflow->conn), subflow);
--		} else {
--			subflow->mpc_drop = 0;
- 		}
-+	} else if (ssk->sk_state == TCP_SYN_SENT) {
-+		subflow->mpc_drop = 0;
- 	}
- }
+diff --git a/kernel/power/hibernate.c b/kernel/power/hibernate.c
+index 1f87aa01ba44f..10a01af63a807 100644
+--- a/kernel/power/hibernate.c
++++ b/kernel/power/hibernate.c
+@@ -608,7 +608,11 @@ int hibernation_platform_enter(void)
  
+ 	local_irq_disable();
+ 	system_state = SYSTEM_SUSPEND;
+-	syscore_suspend();
++
++	error = syscore_suspend();
++	if (error)
++		goto Enable_irqs;
++
+ 	if (pm_wakeup_pending()) {
+ 		error = -EAGAIN;
+ 		goto Power_up;
+@@ -620,6 +624,7 @@ int hibernation_platform_enter(void)
+ 
+  Power_up:
+ 	syscore_resume();
++ Enable_irqs:
+ 	system_state = SYSTEM_RUNNING;
+ 	local_irq_enable();
+ 
+-- 
+2.39.5
+
 
 
