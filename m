@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24CB142E86;
-	Wed,  5 Feb 2025 13:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5943013C9C4;
+	Wed,  5 Feb 2025 13:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763504; cv=none; b=d6ks+RmJ5btNCpoz5cF6htYexmZK2itdSo8BieRUJbCp6ANc8x339KUf/Ozo1zn7Y236LrI0ts4JSx9hqixmxgSql2sdux4yH40PW1RCjS4aTseWHlZ2mhcYgXrIBwT+OtQEcrT165m/B6/JFAppim8sGNHAVV91km+Dk8FLw3k=
+	t=1738763507; cv=none; b=rThHwqTb7gtPZeXLxYU8tU32qn+bBwcpVSad595K7nuWQDBSv0BLJ64NzUKAkbkyncO+uGi6h3QyKb9Br0WPfcDGNMM4ymK07pqoWAdCQOBcflnVVDHcWFAx3mXaASYT0HainrbicejbUbwhNJnGM4yeHxyS0ddNvOQpM1cmX+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763504; c=relaxed/simple;
-	bh=Ky4CApXQhAiLwMIF1Yft5ndO0gr84RtC4sCyQLpMp10=;
+	s=arc-20240116; t=1738763507; c=relaxed/simple;
+	bh=ikUO73TSeC4+FWPN+iGBhb0QZjUjKkGrrnlJmYn9Za4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nKOEy0IYVqUV+TuDd6DfgvGjFALF+EntcR2Tk85w71q7T0qYioU/JQr8Z/XSHA9lK0AkTJvhqAZ6sqJ6I7aB1he9j+NPigacu1BuIu3Uf7o4VBD1GOzuxNC1X7qdwDHZ7KkygEclbGktvaiLnCZSZ4CsLR6W6FLiIrIhlEm8Zvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFopKk62; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e+9K18JhGnTatmQ94viwW62/46ePC83hunQetpeZyD3BM4+P+UKa0UbZ5pTpO7b6pcgzIP0HCShV73PFStgriq2b/8MS8Y3tSvBvHwEdTtUzggvjSvR2qmEFp/XOUsgjbqYoyCmrGxpVPx4Qi/Wvyc+YoaF+/hZ6p4kBtt1ZjXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAmwwpkL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFopKk62"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48213C4CED1;
-	Wed,  5 Feb 2025 13:51:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAmwwpkL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD34DC4CED1;
+	Wed,  5 Feb 2025 13:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763503;
-	bh=Ky4CApXQhAiLwMIF1Yft5ndO0gr84RtC4sCyQLpMp10=;
+	s=korg; t=1738763507;
+	bh=ikUO73TSeC4+FWPN+iGBhb0QZjUjKkGrrnlJmYn9Za4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFopKk62D5W2ZVqQqs/zcOvBm5RDr/HiotcHMN63hOGwSd/7gZaJvkzUSfJHfOTIu
-	 okuieOYNa/AHZqW73YKGkt8x/niZfVS/9YRPPbBVdWA1SRS8APD0pMTYnAnlnVYpDD
-	 ZDrAh7xy+bTKDCw6cejUC/v5KOKmB/nwE+iwTB3c=
+	b=XAmwwpkLH/JXirq7vY1EDRVd8whWILTgQpVE4SUPJNuUMUmS54dxXSI+rx97zMSlG
+	 h+gE8VzhDg7GDlam01prxClWEY7K0GJEityUeyEcer36f6duW/T6K3h++cR+5jkvsl
+	 iGc6DlQgAUa5gtkwTpFOh1JB/4vTG873EzUH6J4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	He Rongguang <herongguang@linux.alibaba.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 074/393] cpupower: fix TSC MHz calculation
-Date: Wed,  5 Feb 2025 14:39:53 +0100
-Message-ID: <20250205134423.123955329@linuxfoundation.org>
+Subject: [PATCH 6.12 023/590] btrfs: subpage: fix the bitmap dump of the locked flags
+Date: Wed,  5 Feb 2025 14:36:18 +0100
+Message-ID: <20250205134456.131567836@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,116 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: He Rongguang <herongguang@linux.alibaba.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 9d6c0e58514f8b57cd9c2c755e41623d6a966025 ]
+[ Upstream commit 396294d1afee65a203d6cabd843d0782e5d7388e ]
 
-Commit 'cpupower: Make TSC read per CPU for Mperf monitor' (c2adb1877b7)
-changes TSC counter reads per cpu, but left time diff global (from start
-of all cpus to end of all cpus), thus diff(time) is too large for a
-cpu's tsc counting, resulting in far less than acutal TSC_Mhz and thus
-`cpupower monitor` showing far less than actual cpu realtime frequency.
+We're dumping the locked bitmap into the @checked_bitmap variable,
+printing incorrect values during debug.
 
-/proc/cpuinfo shows frequency:
-cat /proc/cpuinfo | egrep -e 'processor' -e 'MHz'
-...
-processor : 171
-cpu MHz   : 4108.498
-...
+Thankfully even during my development I haven't hit a case where I need
+to dump the locked bitmap.  But for the sake of consistency, fix it by
+dupping the locked bitmap into @locked_bitmap variable for output.
 
-before fix (System 100% busy):
-    | Mperf              || Idle_Stats
- CPU| C0   | Cx   | Freq  || POLL | C1   | C2
- 171|  0.77| 99.23|  2279||  0.00|  0.00|  0.00
-
-after fix (System 100% busy):
-    | Mperf              || Idle_Stats
- CPU| C0   | Cx   | Freq  || POLL | C1   | C2
- 171|  0.46| 99.54|  4095||  0.00|  0.00|  0.00
-
-Fixes: c2adb1877b76 ("cpupower: Make TSC read per CPU for Mperf monitor")
-Signed-off-by: He Rongguang <herongguang@linux.alibaba.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 75258f20fb70 ("btrfs: subpage: dump extra subpage bitmaps for debug")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../cpupower/utils/idle_monitor/mperf_monitor.c   | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ fs/btrfs/subpage.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-index ae6af354a81db..08a399b0be286 100644
---- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-+++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-@@ -33,7 +33,7 @@ static int mperf_get_count_percent(unsigned int self_id, double *percent,
- 				   unsigned int cpu);
- static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
- 				unsigned int cpu);
--static struct timespec time_start, time_end;
-+static struct timespec *time_start, *time_end;
+diff --git a/fs/btrfs/subpage.c b/fs/btrfs/subpage.c
+index fe4d719d506bf..ec7328a6bfd75 100644
+--- a/fs/btrfs/subpage.c
++++ b/fs/btrfs/subpage.c
+@@ -868,6 +868,7 @@ void __cold btrfs_subpage_dump_bitmap(const struct btrfs_fs_info *fs_info,
+ 	unsigned long writeback_bitmap;
+ 	unsigned long ordered_bitmap;
+ 	unsigned long checked_bitmap;
++	unsigned long locked_bitmap;
+ 	unsigned long flags;
  
- static cstate_t mperf_cstates[MPERF_CSTATE_COUNT] = {
- 	{
-@@ -174,7 +174,7 @@ static int mperf_get_count_percent(unsigned int id, double *percent,
- 		dprint("%s: TSC Ref - mperf_diff: %llu, tsc_diff: %llu\n",
- 		       mperf_cstates[id].name, mperf_diff, tsc_diff);
- 	} else if (max_freq_mode == MAX_FREQ_SYSFS) {
--		timediff = max_frequency * timespec_diff_us(time_start, time_end);
-+		timediff = max_frequency * timespec_diff_us(time_start[cpu], time_end[cpu]);
- 		*percent = 100.0 * mperf_diff / timediff;
- 		dprint("%s: MAXFREQ - mperf_diff: %llu, time_diff: %llu\n",
- 		       mperf_cstates[id].name, mperf_diff, timediff);
-@@ -207,7 +207,7 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
- 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
- 		/* Calculate max_freq from TSC count */
- 		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
--		time_diff = timespec_diff_us(time_start, time_end);
-+		time_diff = timespec_diff_us(time_start[cpu], time_end[cpu]);
- 		max_frequency = tsc_diff / time_diff;
- 	}
+ 	ASSERT(folio_test_private(folio) && folio_get_private(folio));
+@@ -880,15 +881,16 @@ void __cold btrfs_subpage_dump_bitmap(const struct btrfs_fs_info *fs_info,
+ 	GET_SUBPAGE_BITMAP(subpage, fs_info, writeback, &writeback_bitmap);
+ 	GET_SUBPAGE_BITMAP(subpage, fs_info, ordered, &ordered_bitmap);
+ 	GET_SUBPAGE_BITMAP(subpage, fs_info, checked, &checked_bitmap);
+-	GET_SUBPAGE_BITMAP(subpage, fs_info, locked, &checked_bitmap);
++	GET_SUBPAGE_BITMAP(subpage, fs_info, locked, &locked_bitmap);
+ 	spin_unlock_irqrestore(&subpage->lock, flags);
  
-@@ -226,9 +226,8 @@ static int mperf_start(void)
- {
- 	int cpu;
- 
--	clock_gettime(CLOCK_REALTIME, &time_start);
--
- 	for (cpu = 0; cpu < cpu_count; cpu++) {
-+		clock_gettime(CLOCK_REALTIME, &time_start[cpu]);
- 		mperf_get_tsc(&tsc_at_measure_start[cpu]);
- 		mperf_init_stats(cpu);
- 	}
-@@ -243,9 +242,9 @@ static int mperf_stop(void)
- 	for (cpu = 0; cpu < cpu_count; cpu++) {
- 		mperf_measure_stats(cpu);
- 		mperf_get_tsc(&tsc_at_measure_end[cpu]);
-+		clock_gettime(CLOCK_REALTIME, &time_end[cpu]);
- 	}
- 
--	clock_gettime(CLOCK_REALTIME, &time_end);
- 	return 0;
- }
- 
-@@ -349,6 +348,8 @@ struct cpuidle_monitor *mperf_register(void)
- 	aperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
- 	tsc_at_measure_start = calloc(cpu_count, sizeof(unsigned long long));
- 	tsc_at_measure_end = calloc(cpu_count, sizeof(unsigned long long));
-+	time_start = calloc(cpu_count, sizeof(struct timespec));
-+	time_end = calloc(cpu_count, sizeof(struct timespec));
- 	mperf_monitor.name_len = strlen(mperf_monitor.name);
- 	return &mperf_monitor;
- }
-@@ -361,6 +362,8 @@ void mperf_unregister(void)
- 	free(aperf_current_count);
- 	free(tsc_at_measure_start);
- 	free(tsc_at_measure_end);
-+	free(time_start);
-+	free(time_end);
- 	free(is_valid);
- }
- 
+ 	dump_page(folio_page(folio, 0), "btrfs subpage dump");
+ 	btrfs_warn(fs_info,
+-"start=%llu len=%u page=%llu, bitmaps uptodate=%*pbl dirty=%*pbl writeback=%*pbl ordered=%*pbl checked=%*pbl",
++"start=%llu len=%u page=%llu, bitmaps uptodate=%*pbl dirty=%*pbl locked=%*pbl writeback=%*pbl ordered=%*pbl checked=%*pbl",
+ 		    start, len, folio_pos(folio),
+ 		    sectors_per_page, &uptodate_bitmap,
+ 		    sectors_per_page, &dirty_bitmap,
++		    sectors_per_page, &locked_bitmap,
+ 		    sectors_per_page, &writeback_bitmap,
+ 		    sectors_per_page, &ordered_bitmap,
+ 		    sectors_per_page, &checked_bitmap);
 -- 
 2.39.5
 
