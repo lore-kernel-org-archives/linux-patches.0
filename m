@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4891F151988;
-	Wed,  5 Feb 2025 14:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CCC151988;
+	Wed,  5 Feb 2025 14:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766245; cv=none; b=j74GhA9n0XDMYs0bAwgu/Kkoe+zpNuoxlJxrUr2kpkMYBcdmNpXhYESIN/QVPHrcqYIuxIZ5Vu3XHaiiVJS6cvDNxtayNIp9hYp7aqMUH4uN9jKLn4bX6GH1FsJBO7cLx9UqynrJ2dY9tSkbfmxxYfcwZQJ5m73BtcX75aM00Fw=
+	t=1738766248; cv=none; b=j+CBtY6ikHuosscAOOLhMSUGaeyUyLXbIPZDXfVQUe7dH9eT4A+Jpn+rqB+A1nbGOcaR9G/07hT6obZzO3x5n6en7cFbeb4gWoPo+bqdWkQehAm+R/uwsBNvqdCN4GAek+zMydI7HKZGMN/Vguhna3H8AMMvxirVXvSM5ZtaJBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766245; c=relaxed/simple;
-	bh=VVn75q8Wr2My5PhFazpIsHRPa1Tr30usfvmAp2nIoBQ=;
+	s=arc-20240116; t=1738766248; c=relaxed/simple;
+	bh=1dGhHwqr7BMQIixNVwg66GffDIiV0jX2ci7alnltxlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I3lVG68YORIx5p4C5iMSTUXbo0V/IMJXgIUgqcFEaHqrMmBf4OOsp295XtgXQr4VZwVpGZ+Of0hUdCGAvXTbT38AfI2mgYJ6pPt6ADipFZ4kWoz9AYuLF5Vfaod0JaxdnWBE9/LyZj7J7SzrgwxAfwC1wOFjwqRk8ZK+Jd3x+j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGahFT6q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f6FfOhF3c2AfiBMIDNky4W6g/rtiiLD9HJqwBVkNTWDSr60+ZbyK3/a7SkL9P/M9AnPwsXQTs6DaXL+dCaD6m/9oCfMgF5zWIuYlSl6efgjGT64gHhWtA7zt1D+TNBbb8rHqXyy8DKCsy3NDNsab9MgeXOIbvNvvwhuKVoQdYZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cWjllTyw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGahFT6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F871C4CED1;
-	Wed,  5 Feb 2025 14:37:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cWjllTyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE99C4CED1;
+	Wed,  5 Feb 2025 14:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766244;
-	bh=VVn75q8Wr2My5PhFazpIsHRPa1Tr30usfvmAp2nIoBQ=;
+	s=korg; t=1738766248;
+	bh=1dGhHwqr7BMQIixNVwg66GffDIiV0jX2ci7alnltxlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGahFT6qCF6Wc11a9ejpE5wCoMv7nBYt8lgbZiIiKQjCY6bP3RtzxFXa8lShNe7YX
-	 rTUfiHvqJEJQZrxTeFygkD160TmabzcItISBn7CKwdzhyPcCp2nEXhkHgT1eqrsbkY
-	 /kw7BeAHL/jnFU9dqTnBxlFzPZ9X4UxmZD+zdhfI=
+	b=cWjllTywfwE+dimzRfrYew9INpl3GLQ1r34quLzQOlRc6nAv8dcFeYPW6QOrTyWnr
+	 Ox7qoAJATRVsbSlF7TY2dajUiTWQo+318FEWElB3K2IQvR2CpsTC4WJpmfC54HRfwY
+	 CZnC74dcf9brd1Kos7dp1jYIX/sCo4iajiBHY9PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 345/393] net: xdp: Disallow attaching device-bound programs in generic mode
-Date: Wed,  5 Feb 2025 14:44:24 +0100
-Message-ID: <20250205134433.509516020@linuxfoundation.org>
+Subject: [PATCH 6.13 256/623] libbpf: Fix segfault due to libelf functions not setting errno
+Date: Wed,  5 Feb 2025 14:39:58 +0100
+Message-ID: <20250205134506.025190593@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,57 +45,144 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Quentin Monnet <qmo@kernel.org>
 
-[ Upstream commit 3595599fa8360bb3c7afa7ee50c810b4a64106ea ]
+[ Upstream commit e10500b69c3f3378f3dcfc8c2fe4cdb74fc844f5 ]
 
-Device-bound programs are used to support RX metadata kfuncs. These
-kfuncs are driver-specific and rely on the driver context to read the
-metadata. This means they can't work in generic XDP mode. However, there
-is no check to disallow such programs from being attached in generic
-mode, in which case the metadata kfuncs will be called in an invalid
-context, leading to crashes.
+Libelf functions do not set errno on failure. Instead, it relies on its
+internal _elf_errno value, that can be retrieved via elf_errno (or the
+corresponding message via elf_errmsg()). From "man libelf":
 
-Fix this by adding a check to disallow attaching device-bound programs
-in generic mode.
+    If a libelf function encounters an error it will set an internal
+    error code that can be retrieved with elf_errno. Each thread
+    maintains its own separate error code. The meaning of each error
+    code can be determined with elf_errmsg, which returns a string
+    describing the error.
 
-Fixes: 2b3486bc2d23 ("bpf: Introduce device-bound XDP programs")
-Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
-Closes: https://lore.kernel.org/r/dae862ec-43b5-41a0-8edf-46c59071cdda@hetzner-cloud.de
-Tested-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20250127131344.238147-1-toke@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+As a consequence, libbpf should not return -errno when a function from
+libelf fails, because an empty value will not be interpreted as an error
+and won't prevent the program to stop. This is visible in
+bpf_linker__add_file(), for example, where we call a succession of
+functions that rely on libelf:
+
+    err = err ?: linker_load_obj_file(linker, filename, opts, &obj);
+    err = err ?: linker_append_sec_data(linker, &obj);
+    err = err ?: linker_append_elf_syms(linker, &obj);
+    err = err ?: linker_append_elf_relos(linker, &obj);
+    err = err ?: linker_append_btf(linker, &obj);
+    err = err ?: linker_append_btf_ext(linker, &obj);
+
+If the object file that we try to process is not, in fact, a correct
+object file, linker_load_obj_file() may fail with errno not being set,
+and return 0. In this case we attempt to run linker_append_elf_sysms()
+and may segfault.
+
+This can happen (and was discovered) with bpftool:
+
+    $ bpftool gen object output.o sample_ret0.bpf.c
+    libbpf: failed to get ELF header for sample_ret0.bpf.c: invalid `Elf' handle
+    zsh: segmentation fault (core dumped)  bpftool gen object output.o sample_ret0.bpf.c
+
+Fix the issue by returning a non-null error code (-EINVAL) when libelf
+functions fail.
+
+Fixes: faf6ed321cf6 ("libbpf: Add BPF static linker APIs")
+Signed-off-by: Quentin Monnet <qmo@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241205135942.65262-1-qmo@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/lib/bpf/linker.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 69da7b009f8b9..479a3892f98c3 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -9346,6 +9346,10 @@ static int dev_xdp_attach(struct net_device *dev, struct netlink_ext_ack *extack
- 			NL_SET_ERR_MSG(extack, "Program bound to different device");
- 			return -EINVAL;
- 		}
-+		if (bpf_prog_is_dev_bound(new_prog->aux) && mode == XDP_MODE_SKB) {
-+			NL_SET_ERR_MSG(extack, "Can't attach device-bound programs in generic mode");
+diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
+index cf71d149fe26a..e56ba6e67451d 100644
+--- a/tools/lib/bpf/linker.c
++++ b/tools/lib/bpf/linker.c
+@@ -566,17 +566,15 @@ static int linker_load_obj_file(struct bpf_linker *linker, const char *filename,
+ 	}
+ 	obj->elf = elf_begin(obj->fd, ELF_C_READ_MMAP, NULL);
+ 	if (!obj->elf) {
+-		err = -errno;
+ 		pr_warn_elf("failed to parse ELF file '%s'", filename);
+-		return err;
++		return -EINVAL;
+ 	}
+ 
+ 	/* Sanity check ELF file high-level properties */
+ 	ehdr = elf64_getehdr(obj->elf);
+ 	if (!ehdr) {
+-		err = -errno;
+ 		pr_warn_elf("failed to get ELF header for %s", filename);
+-		return err;
++		return -EINVAL;
+ 	}
+ 
+ 	/* Linker output endianness set by first input object */
+@@ -606,9 +604,8 @@ static int linker_load_obj_file(struct bpf_linker *linker, const char *filename,
+ 	}
+ 
+ 	if (elf_getshdrstrndx(obj->elf, &obj->shstrs_sec_idx)) {
+-		err = -errno;
+ 		pr_warn_elf("failed to get SHSTRTAB section index for %s", filename);
+-		return err;
++		return -EINVAL;
+ 	}
+ 
+ 	scn = NULL;
+@@ -618,26 +615,23 @@ static int linker_load_obj_file(struct bpf_linker *linker, const char *filename,
+ 
+ 		shdr = elf64_getshdr(scn);
+ 		if (!shdr) {
+-			err = -errno;
+ 			pr_warn_elf("failed to get section #%zu header for %s",
+ 				    sec_idx, filename);
+-			return err;
 +			return -EINVAL;
-+		}
- 		if (new_prog->expected_attach_type == BPF_XDP_DEVMAP) {
- 			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
- 			return -EINVAL;
+ 		}
+ 
+ 		sec_name = elf_strptr(obj->elf, obj->shstrs_sec_idx, shdr->sh_name);
+ 		if (!sec_name) {
+-			err = -errno;
+ 			pr_warn_elf("failed to get section #%zu name for %s",
+ 				    sec_idx, filename);
+-			return err;
++			return -EINVAL;
+ 		}
+ 
+ 		data = elf_getdata(scn, 0);
+ 		if (!data) {
+-			err = -errno;
+ 			pr_warn_elf("failed to get section #%zu (%s) data from %s",
+ 				    sec_idx, sec_name, filename);
+-			return err;
++			return -EINVAL;
+ 		}
+ 
+ 		sec = add_src_sec(obj, sec_name);
+@@ -2680,14 +2674,14 @@ int bpf_linker__finalize(struct bpf_linker *linker)
+ 
+ 	/* Finalize ELF layout */
+ 	if (elf_update(linker->elf, ELF_C_NULL) < 0) {
+-		err = -errno;
++		err = -EINVAL;
+ 		pr_warn_elf("failed to finalize ELF layout");
+ 		return libbpf_err(err);
+ 	}
+ 
+ 	/* Write out final ELF contents */
+ 	if (elf_update(linker->elf, ELF_C_WRITE) < 0) {
+-		err = -errno;
++		err = -EINVAL;
+ 		pr_warn_elf("failed to write ELF contents");
+ 		return libbpf_err(err);
+ 	}
 -- 
 2.39.5
 
