@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5046C1519AA;
-	Wed,  5 Feb 2025 14:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E1FFC0B;
+	Wed,  5 Feb 2025 14:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764665; cv=none; b=hxDneDH9idAMLS1MpZ79dn63wFMAv2/REI6EIMu2IT4psJ1Gl5nlcTiLQijlNSvjdZywQp3zXdiKRKfC5m1emlZpt8zZJQBJR1YKrTcNd0zxOynY5VgLnf2HJGB/fgSWZcbLO+KmcZD/X7SW7WG0lwIPc0ho4MBfWp57HdUrvGM=
+	t=1738764668; cv=none; b=ZprdODgW4sMj9K+zcRZuIQOUf0RwB/sMdZ9MKWiaT4qEEEoc2JcSXHtwZ6L4EY4/cymuATVT6FIw4WMx7e0DYpVER6CYcJdjq7Py2RdHVTJZucLR3TKgv9RAJAeUJNtp26gWQZn8YoiVzhVtrtB+zLBnu513k5WIA0hQ5Fspo0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764665; c=relaxed/simple;
-	bh=RB3HunUFE2FVNlmNZkrTfSoZy9Tysmuow0HYmUlwtSU=;
+	s=arc-20240116; t=1738764668; c=relaxed/simple;
+	bh=IRUuKxwsPFxXAULW7vrrOztMdr0r3DhcEgvjfQ/pomM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UaXtt3R57qx3zeWhKSszdTWOOGAEuifqf7f1JMTi1ypbHBFTu2J0VMRNG9jnzg7KxYCEF1kEPQRCDJ/mTDR+lTMZ7af5K2iFE+sTqa0Bb+nWDNzWoUyM48otqDCTgHQhUMBneZrxa0DnXSOB5V0ELyjxHtkJJlxnvQtWOTBc0+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGninG4k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tihT+NS6p0o3Tb3sb2JVmIJTyLyELnWhmWa1Ekc+0qBC8lyXx4tQKOggRbv0X+rOW4UZkXOQ0/Q5H5LpoUcCZ7Erx0Jp5jlV6tSDzNZePgV/QtHGTpipS0UcFzp4FSkDrjp7Lfc0xRxbtFMRVfCTp4Y32K5DfF1K9fxu2/bRz6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zozq9Wkr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGninG4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4EF4C4CED1;
-	Wed,  5 Feb 2025 14:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zozq9Wkr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00DDCC4CED1;
+	Wed,  5 Feb 2025 14:11:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764665;
-	bh=RB3HunUFE2FVNlmNZkrTfSoZy9Tysmuow0HYmUlwtSU=;
+	s=korg; t=1738764668;
+	bh=IRUuKxwsPFxXAULW7vrrOztMdr0r3DhcEgvjfQ/pomM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGninG4kw1U+b2xwWPJiLEAc173F9FTmiXIktJVqLbRJa+l+/URToN7XiVrKO7RBQ
-	 pGFHR4I525H91ISZ8EwrE5Szcoi/5X1kKml3OojdFouzbz2M9r4LUGKGz+FCfkmKqb
-	 jAYNNIYD2i34fJXx0QFPLAerp4VV2TsLuvnlvm2c=
+	b=Zozq9WkreDKyA7Fj02Y5/4d6en63ynpD/UOr8N6J60TiwX62HC8Yvgyg6sRIxlbpL
+	 kZH0FLIQNKyvuBUZIX2s7IyRXJZphN1q3kAUZ1pQtXvo0o3MzPBZmDkd9ZyZWSf7sk
+	 VqqpyKu2cep0hgn71DD/yVzpQ30B71voa7alWETg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shyam Prasad N <nspmangalore@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Jay Shin <jaeshin@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 100/623] rxrpc: Fix handling of received connection abort
-Date: Wed,  5 Feb 2025 14:37:22 +0100
-Message-ID: <20250205134500.043751823@linuxfoundation.org>
+Subject: [PATCH 6.6 192/393] smb: client: fix oops due to unset link speed
+Date: Wed,  5 Feb 2025 14:41:51 +0100
+Message-ID: <20250205134427.642676217@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,120 +51,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 0e56ebde245e4799ce74d38419426f2a80d39950 ]
+[ Upstream commit be7a6a77669588bfa5022a470989702bbbb11e7f ]
 
-Fix the handling of a connection abort that we've received.  Though the
-abort is at the connection level, it needs propagating to the calls on that
-connection.  Whilst the propagation bit is performed, the calls aren't then
-woken up to go and process their termination, and as no further input is
-forthcoming, they just hang.
+It isn't guaranteed that NETWORK_INTERFACE_INFO::LinkSpeed will always
+be set by the server, so the client must handle any values and then
+prevent oopses like below from happening:
 
-Also add some tracing for the logging of connection aborts.
+Oops: divide error: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 0 UID: 0 PID: 1323 Comm: cat Not tainted 6.13.0-rc7 #2
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
+04/01/2014
+RIP: 0010:cifs_debug_data_proc_show+0xa45/0x1460 [cifs] Code: 00 00 48
+89 df e8 3b cd 1b c1 41 f6 44 24 2c 04 0f 84 50 01 00 00 48 89 ef e8
+e7 d0 1b c1 49 8b 44 24 18 31 d2 49 8d 7c 24 28 <48> f7 74 24 18 48 89
+c3 e8 6e cf 1b c1 41 8b 6c 24 28 49 8d 7c 24
+RSP: 0018:ffffc90001817be0 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff88811230022c RCX: ffffffffc041bd99
+RDX: 0000000000000000 RSI: 0000000000000567 RDI: ffff888112300228
+RBP: ffff888112300218 R08: fffff52000302f5f R09: ffffed1022fa58ac
+R10: ffff888117d2c566 R11: 00000000fffffffe R12: ffff888112300200
+R13: 000000012a15343f R14: 0000000000000001 R15: ffff888113f2db58
+FS: 00007fe27119e740(0000) GS:ffff888148600000(0000)
+knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fe2633c5000 CR3: 0000000124da0000 CR4: 0000000000750ef0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? __die_body.cold+0x19/0x27
+ ? die+0x2e/0x50
+ ? do_trap+0x159/0x1b0
+ ? cifs_debug_data_proc_show+0xa45/0x1460 [cifs]
+ ? do_error_trap+0x90/0x130
+ ? cifs_debug_data_proc_show+0xa45/0x1460 [cifs]
+ ? exc_divide_error+0x39/0x50
+ ? cifs_debug_data_proc_show+0xa45/0x1460 [cifs]
+ ? asm_exc_divide_error+0x1a/0x20
+ ? cifs_debug_data_proc_show+0xa39/0x1460 [cifs]
+ ? cifs_debug_data_proc_show+0xa45/0x1460 [cifs]
+ ? seq_read_iter+0x42e/0x790
+ seq_read_iter+0x19a/0x790
+ proc_reg_read_iter+0xbe/0x110
+ ? __pfx_proc_reg_read_iter+0x10/0x10
+ vfs_read+0x469/0x570
+ ? do_user_addr_fault+0x398/0x760
+ ? __pfx_vfs_read+0x10/0x10
+ ? find_held_lock+0x8a/0xa0
+ ? __pfx_lock_release+0x10/0x10
+ ksys_read+0xd3/0x170
+ ? __pfx_ksys_read+0x10/0x10
+ ? __rcu_read_unlock+0x50/0x270
+ ? mark_held_locks+0x1a/0x90
+ do_syscall_64+0xbb/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fe271288911
+Code: 00 48 8b 15 01 25 10 00 f7 d8 64 89 02 b8 ff ff ff ff eb bd e8
+20 ad 01 00 f3 0f 1e fa 80 3d b5 a7 10 00 00 74 13 31 c0 0f 05 <48> 3d
+00 f0 ff ff 77 4f c3 66 0f 1f 44 00 00 55 48 89 e5 48 83 ec
+RSP: 002b:00007ffe87c079d8 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+RAX: ffffffffffffffda RBX: 0000000000040000 RCX: 00007fe271288911
+RDX: 0000000000040000 RSI: 00007fe2633c6000 RDI: 0000000000000003
+RBP: 00007ffe87c07a00 R08: 0000000000000000 R09: 00007fe2713e6380
+R10: 0000000000000022 R11: 0000000000000246 R12: 0000000000040000
+R13: 00007fe2633c6000 R14: 0000000000000003 R15: 0000000000000000
+ </TASK>
 
-Fixes: 248f219cb8bc ("rxrpc: Rewrite the data and ack handling code")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20241204074710.990092-3-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by setting cifs_server_iface::speed to a sane value (1Gbps)
+by default when link speed is unset.
+
+Cc: Shyam Prasad N <nspmangalore@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Fixes: a6d8fb54a515 ("cifs: distribute channels across interfaces based on speed")
+Reported-by: Frank Sorenson <sorenson@redhat.com>
+Reported-by: Jay Shin <jaeshin@redhat.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/rxrpc.h | 25 +++++++++++++++++++++++++
- net/rxrpc/conn_event.c       | 12 ++++++++----
- 2 files changed, 33 insertions(+), 4 deletions(-)
+ fs/smb/client/smb2ops.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
-index d03e0bd8c028b..27c23873c8811 100644
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -117,6 +117,7 @@
- #define rxrpc_call_poke_traces \
- 	EM(rxrpc_call_poke_abort,		"Abort")	\
- 	EM(rxrpc_call_poke_complete,		"Compl")	\
-+	EM(rxrpc_call_poke_conn_abort,		"Conn-abort")	\
- 	EM(rxrpc_call_poke_error,		"Error")	\
- 	EM(rxrpc_call_poke_idle,		"Idle")		\
- 	EM(rxrpc_call_poke_set_timeout,		"Set-timo")	\
-@@ -282,6 +283,7 @@
- 	EM(rxrpc_call_see_activate_client,	"SEE act-clnt") \
- 	EM(rxrpc_call_see_connect_failed,	"SEE con-fail") \
- 	EM(rxrpc_call_see_connected,		"SEE connect ") \
-+	EM(rxrpc_call_see_conn_abort,		"SEE conn-abt") \
- 	EM(rxrpc_call_see_disconnected,		"SEE disconn ") \
- 	EM(rxrpc_call_see_distribute_error,	"SEE dist-err") \
- 	EM(rxrpc_call_see_input,		"SEE input   ") \
-@@ -981,6 +983,29 @@ TRACE_EVENT(rxrpc_rx_abort,
- 		      __entry->abort_code)
- 	    );
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index fc6d00344c50e..d4be915bcb70c 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -622,7 +622,8 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
  
-+TRACE_EVENT(rxrpc_rx_conn_abort,
-+	    TP_PROTO(const struct rxrpc_connection *conn, const struct sk_buff *skb),
-+
-+	    TP_ARGS(conn, skb),
-+
-+	    TP_STRUCT__entry(
-+		    __field(unsigned int,	conn)
-+		    __field(rxrpc_serial_t,	serial)
-+		    __field(u32,		abort_code)
-+			     ),
-+
-+	    TP_fast_assign(
-+		    __entry->conn = conn->debug_id;
-+		    __entry->serial = rxrpc_skb(skb)->hdr.serial;
-+		    __entry->abort_code = skb->priority;
-+			   ),
-+
-+	    TP_printk("C=%08x ABORT %08x ac=%d",
-+		      __entry->conn,
-+		      __entry->serial,
-+		      __entry->abort_code)
-+	    );
-+
- TRACE_EVENT(rxrpc_rx_challenge,
- 	    TP_PROTO(struct rxrpc_connection *conn, rxrpc_serial_t serial,
- 		     u32 version, u32 nonce, u32 min_level),
-diff --git a/net/rxrpc/conn_event.c b/net/rxrpc/conn_event.c
-index 598b4ee389fc1..2a1396cd892f3 100644
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -63,11 +63,12 @@ int rxrpc_abort_conn(struct rxrpc_connection *conn, struct sk_buff *skb,
- /*
-  * Mark a connection as being remotely aborted.
-  */
--static bool rxrpc_input_conn_abort(struct rxrpc_connection *conn,
-+static void rxrpc_input_conn_abort(struct rxrpc_connection *conn,
- 				   struct sk_buff *skb)
- {
--	return rxrpc_set_conn_aborted(conn, skb, skb->priority, -ECONNABORTED,
--				      RXRPC_CALL_REMOTELY_ABORTED);
-+	trace_rxrpc_rx_conn_abort(conn, skb);
-+	rxrpc_set_conn_aborted(conn, skb, skb->priority, -ECONNABORTED,
-+			       RXRPC_CALL_REMOTELY_ABORTED);
- }
+ 	while (bytes_left >= (ssize_t)sizeof(*p)) {
+ 		memset(&tmp_iface, 0, sizeof(tmp_iface));
+-		tmp_iface.speed = le64_to_cpu(p->LinkSpeed);
++		/* default to 1Gbps when link speed is unset */
++		tmp_iface.speed = le64_to_cpu(p->LinkSpeed) ?: 1000000000;
+ 		tmp_iface.rdma_capable = le32_to_cpu(p->Capability & RDMA_CAPABLE) ? 1 : 0;
+ 		tmp_iface.rss_capable = le32_to_cpu(p->Capability & RSS_CAPABLE) ? 1 : 0;
  
- /*
-@@ -202,11 +203,14 @@ static void rxrpc_abort_calls(struct rxrpc_connection *conn)
- 
- 	for (i = 0; i < RXRPC_MAXCALLS; i++) {
- 		call = conn->channels[i].call;
--		if (call)
-+		if (call) {
-+			rxrpc_see_call(call, rxrpc_call_see_conn_abort);
- 			rxrpc_set_call_completion(call,
- 						  conn->completion,
- 						  conn->abort_code,
- 						  conn->error);
-+			rxrpc_poke_call(call, rxrpc_call_poke_conn_abort);
-+		}
- 	}
- 
- 	_leave("");
 -- 
 2.39.5
 
