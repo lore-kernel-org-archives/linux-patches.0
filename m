@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD6D80BFF;
-	Wed,  5 Feb 2025 14:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F197E1632DA;
+	Wed,  5 Feb 2025 14:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766340; cv=none; b=aIy5WuEIoBXE1VLbz6nXvuAciVGPvx2sCcjh0OKlJAAx0Br/0QzjDV1tj9nlenpo6kUIF4VfsO4vNdsdPxpXg/EK81hlDpnODrizdQy3goTFnTIZHoc3ve2bJXeuLNrLIJFiBe0EHBTzn8I1jIWiaUrMyA77eCSeWx7Sn14drIg=
+	t=1738766344; cv=none; b=k2LAYt/vHEFVhM3PttimOpjgf5SRgerjLb7SepIWSYwt4YHd+9dpWKsLGGDpHEdLUszW9DBs8iu70vdLoHP+mjllQS4LErXo4sbAd9TJBrCffLQ724qMuw1/8RrPWQa6bLbjGjUpMJEA1SXAy6yfiuLoywybbbzVu66SZYhu1Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766340; c=relaxed/simple;
-	bh=BwvSjlSWARJPaChgEvriJEeXSvFVL5VCF/t9qi4aciI=;
+	s=arc-20240116; t=1738766344; c=relaxed/simple;
+	bh=LqP2VUzPkhKs6zFsAdYQq3kIXmq8jrY1KKjt065LMLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K0/O/Q1htBjcDHnEWoTm9Nc1BLgAE/oQhtuHg60KIFDgxGT+Dwejj8UwtQ6Hsk2FLLyQjE+AxNx81D+7qBs9qudFKgMBw0L+uUacXbia1T3y96EXOdhN0tZAhtA95QW8TQ5f94RqKDnopfzLuC7r8ErjLJAbc3ek/fRHXN/+PTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITrwa4xK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YDzfMbq9kmtw1MVixq+i36slE9eMGCZYNqq6ldrnOMUHTW4Cib+D5cyeU6aYpRmh/k7H2MDn2L8RQCY/PJdhbr06psB7GO5ffMsWyDY8lALeS7kYp5RSLxxUhzTzuuMzJT0pIP0xL1INDfxXFeNtMwJnnyY1keUbh5yBueM3cVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIJwabXC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITrwa4xK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE96CC4CED1;
-	Wed,  5 Feb 2025 14:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIJwabXC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F35C4CED1;
+	Wed,  5 Feb 2025 14:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766340;
-	bh=BwvSjlSWARJPaChgEvriJEeXSvFVL5VCF/t9qi4aciI=;
+	s=korg; t=1738766343;
+	bh=LqP2VUzPkhKs6zFsAdYQq3kIXmq8jrY1KKjt065LMLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ITrwa4xKxAeLDGRRxEG63nHAHvRpHSuioN4oo9KChmfdQPhtLNRomkARzSXpD04Xx
-	 MLyttJyOjkAY+QsKSM/QPs0xq+JNvj7KDD19alDlK+0rX6NmK3FnghaiLPc6Mb1Q07
-	 1oDpnUGOQRNlmpDTYblSdfKNJYArdhGrjmhBXaV4=
+	b=iIJwabXC6lDUDiHWc+I7VtPw8PXPV4+jKePMqJjvzYULtghCG6bKlkDa0JWIHpH1T
+	 X5NDGpFgAbyulWzu4KGoaze+nZt6MuZBwD5x+eZxSLAGqK+GdFH+ALfVNPPl+adwrr
+	 30I09Zv1lNCDCEyiPm9IZ68VJDONlH4DUbiLYC7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 312/590] RDMA/mlx4: Avoid false error about access to uninitialized gids array
-Date: Wed,  5 Feb 2025 14:41:07 +0100
-Message-ID: <20250205134507.210802979@linuxfoundation.org>
+Subject: [PATCH 6.6 354/393] RISC-V: Mark riscv_v_init() as __init
+Date: Wed,  5 Feb 2025 14:44:33 +0100
+Message-ID: <20250205134433.847588404@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,56 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Palmer Dabbelt <palmer@rivosinc.com>
 
-[ Upstream commit 1f53d88cbb0dcc7df235bf6611ae632b254fccd8 ]
+[ Upstream commit 9d87cf525fd2e1a5fcbbb40ee3df216d1d266c88 ]
 
-Smatch generates the following false error report:
-drivers/infiniband/hw/mlx4/main.c:393 mlx4_ib_del_gid() error: uninitialized symbol 'gids'.
+This trips up with Xtheadvector enabled, but as far as I can tell it's
+just been an issue since the original patchset.
 
-Traditionally, we are not changing kernel code and asking people to fix
-the tools. However in this case, the fix can be done by simply rearranging
-the code to be more clear.
-
-Fixes: e26be1bfef81 ("IB/mlx4: Implement ib_device callbacks")
-Link: https://patch.msgid.link/6a3a1577463da16962463fcf62883a87506e9b62.1733233426.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 7ca7a7b9b635 ("riscv: Add sysctl to set the default vector rule for new processes")
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Tested-by: Charlie Jenkins <charlie@rivosinc.com>
+Link: https://lore.kernel.org/r/20250115180251.31444-1-palmer@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/main.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/riscv/kernel/vector.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/main.c b/drivers/infiniband/hw/mlx4/main.c
-index 529db874d67c6..b1bbdcff631d5 100644
---- a/drivers/infiniband/hw/mlx4/main.c
-+++ b/drivers/infiniband/hw/mlx4/main.c
-@@ -351,7 +351,7 @@ static int mlx4_ib_del_gid(const struct ib_gid_attr *attr, void **context)
- 	struct mlx4_port_gid_table   *port_gid_table;
- 	int ret = 0;
- 	int hw_update = 0;
--	struct gid_entry *gids;
-+	struct gid_entry *gids = NULL;
+diff --git a/arch/riscv/kernel/vector.c b/arch/riscv/kernel/vector.c
+index 8d92fb6c522cc..81886fc36ed6a 100644
+--- a/arch/riscv/kernel/vector.c
++++ b/arch/riscv/kernel/vector.c
+@@ -270,7 +270,7 @@ static int __init riscv_v_sysctl_init(void)
+ static int __init riscv_v_sysctl_init(void) { return 0; }
+ #endif /* ! CONFIG_SYSCTL */
  
- 	if (!rdma_cap_roce_gid_table(attr->device, attr->port_num))
- 		return -EINVAL;
-@@ -389,10 +389,10 @@ static int mlx4_ib_del_gid(const struct ib_gid_attr *attr, void **context)
- 	}
- 	spin_unlock_bh(&iboe->lock);
- 
--	if (!ret && hw_update) {
-+	if (gids)
- 		ret = mlx4_ib_update_gids(gids, ibdev, attr->port_num);
--		kfree(gids);
--	}
-+
-+	kfree(gids);
- 	return ret;
+-static int riscv_v_init(void)
++static int __init riscv_v_init(void)
+ {
+ 	return riscv_v_sysctl_init();
  }
- 
 -- 
 2.39.5
 
