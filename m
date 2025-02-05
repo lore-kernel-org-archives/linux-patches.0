@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29F715198D;
-	Wed,  5 Feb 2025 14:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAC41519AA;
+	Wed,  5 Feb 2025 14:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764137; cv=none; b=Z9q72QYuaBlX8pBok7bYGO2/Vc2VCLHTE62YF6g9q1wws7AVhh+WlcdgpORgMSet8+aeH2D/mVzsC7s6iHkDaE8OVb3B5VHtLh04KfBUK2cx20mUrpfw0B1y48idCjL+NlGvNk2J/ksjVwkgeVFED7KHCFYJrUT5+EFLbhNGIFk=
+	t=1738764141; cv=none; b=brWyntos4TIlURXcKqmx5/2vP1Z5OOmN6I9CvF/m/Yj07AYnaw0GyeygTkd/8soYwZCRRUYrCd7pHydFWxvPFugFq6dhBtQoTcJjsS6EZ7ZfMSxCE9BdLke55RTKn/d5U4PvPX9HNbeOlCHy2cxk9cYreo7BIFQVTGFhUuvt3cA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764137; c=relaxed/simple;
-	bh=ONCJITFDUyb3PfkfJRbl9TfGCwTd3XzCn39fpcMeDwc=;
+	s=arc-20240116; t=1738764141; c=relaxed/simple;
+	bh=gb26pmD4sLbI9roPfeQFCPLejU3Nz/ZJrUYz2wq8R1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HwIHiTr/HLfE8nCEt8llgOf7lDIA1Qcms64YUp9CbHu1+G+SR8oueUlXCuLBZO6KgW66e4KnVA7X1i6IEfqdoQLPIDaoiFwSnDSjq9VUjaWqLU9jEkUB+sMmnANDG3VMWg8hliz1L+jBgADlVKXl1SckopDOcY5xtIjBaJXlODQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+cA4ljo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a5AqiyagV79LFJAmisnG1Hj9LMGqDW0yEWLUQAXvX2ladoylBZovALPK5lOB4fXpEnxEHqj7w4zKfopxsAbfeUWLtbb6E5pFeM8JJY1m/ykFNbytt0arHAfxHtA/MK1j3ORDDbAyVsRhAHmztre4TkQbv93B1mS5GARGPyHV24A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kD7+RBoB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+cA4ljo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D339C4CED1;
-	Wed,  5 Feb 2025 14:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kD7+RBoB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F95C4CED6;
+	Wed,  5 Feb 2025 14:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764137;
-	bh=ONCJITFDUyb3PfkfJRbl9TfGCwTd3XzCn39fpcMeDwc=;
+	s=korg; t=1738764141;
+	bh=gb26pmD4sLbI9roPfeQFCPLejU3Nz/ZJrUYz2wq8R1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P+cA4ljo7pbwTuGENlaLvb5pP7DMUMxncMvaHQ8ToaDd0NeAHn0hCbd8gfDyUovVo
-	 R0xX47c7C67EJdQD7fx0hvK9sQ+SghX5vHKqj/CR+97kzsVAKQCMzRGdlw2ihHvyU7
-	 mSldehsfmy5KxMWngvAAbtHk7mO1sLWO78+lctuk=
+	b=kD7+RBoBgqsGzIS7lYG7aT8XT0mIjnHLTYi8N6fCNVH4d+xhCBEBBdm1eVfofLSRY
+	 cSDKJvWntINbVRKYSu9hwtdc8OMtZeBn/Wuhx9v5gnU6tr/9HulMVg1mVjlswRM7HP
+	 nmT7poUXWBLQXXDH1c0uFQT1VZKMH3gMzoWZHwOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 143/393] net: avoid race between device unregistration and ethnl ops
-Date: Wed,  5 Feb 2025 14:41:02 +0100
-Message-ID: <20250205134425.777046910@linuxfoundation.org>
+Subject: [PATCH 6.13 051/623] drm/msm/dp: do not touch the MMSS_DP_INTF_CONFIG for tpg
+Date: Wed,  5 Feb 2025 14:36:33 +0100
+Message-ID: <20250205134458.182539920@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,75 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-[ Upstream commit 12e070eb6964b341b41677fd260af5a305316a1f ]
+[ Upstream commit 9ffbf5ef0e8d6e1b76440a6d77311d0c5d6e3979 ]
 
-The following trace can be seen if a device is being unregistered while
-its number of channels are being modified.
+MMSS_DP_INTF_CONFIG has already been setup by the main datapath
+for DP to account for widebus to be used/unused etc.
 
-  DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-  WARNING: CPU: 3 PID: 3754 at kernel/locking/mutex.c:564 __mutex_lock+0xc8a/0x1120
-  CPU: 3 UID: 0 PID: 3754 Comm: ethtool Not tainted 6.13.0-rc6+ #771
-  RIP: 0010:__mutex_lock+0xc8a/0x1120
-  Call Trace:
-   <TASK>
-   ethtool_check_max_channel+0x1ea/0x880
-   ethnl_set_channels+0x3c3/0xb10
-   ethnl_default_set_doit+0x306/0x650
-   genl_family_rcv_msg_doit+0x1e3/0x2c0
-   genl_rcv_msg+0x432/0x6f0
-   netlink_rcv_skb+0x13d/0x3b0
-   genl_rcv+0x28/0x40
-   netlink_unicast+0x42e/0x720
-   netlink_sendmsg+0x765/0xc20
-   __sys_sendto+0x3ac/0x420
-   __x64_sys_sendto+0xe0/0x1c0
-   do_syscall_64+0x95/0x180
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+In current implementation, TPG only switches the DP controller
+to use the main datapath stream OR use the test pattern but expects
+the rest of the controller to be already setup.
 
-This is because unregister_netdevice_many_notify might run before the
-rtnl lock section of ethnl operations, eg. set_channels in the above
-example. In this example the rss lock would be destroyed by the device
-unregistration path before being used again, but in general running
-ethnl operations while dismantle has started is not a good idea.
+Keeping the same behavior intact, drop the clearing of MMSS_DP_INTF_CONFIG
+from the msm_dp_catalog_panel_tpg_enable() API.
 
-Fix this by denying any operation on devices being unregistered. A check
-was already there in ethnl_ops_begin, but not wide enough.
-
-Note that the same issue cannot be seen on the ioctl version
-(__dev_ethtool) because the device reference is retrieved from within
-the rtnl lock section there. Once dismantle started, the net device is
-unlisted and no reference will be found.
-
-Fixes: dde91ccfa25f ("ethtool: do not perform operations on net devices being unregistered")
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Edward Cree <ecree.xilinx@gmail.com>
-Link: https://patch.msgid.link/20250116092159.50890-1-atenart@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 757a2f36ab09 ("drm/msm/dp: enable widebus feature for display port")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/626888/
+Link: https://lore.kernel.org/r/20241202-tpg-v1-2-0fd6b518b914@quicinc.com
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dp/dp_catalog.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/ethtool/netlink.c b/net/ethtool/netlink.c
-index fe3553f60bf39..c1ad63bee8ead 100644
---- a/net/ethtool/netlink.c
-+++ b/net/ethtool/netlink.c
-@@ -41,7 +41,7 @@ int ethnl_ops_begin(struct net_device *dev)
- 		pm_runtime_get_sync(dev->dev.parent);
+diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
+index b4c8856fb25d0..2a755a06ac490 100644
+--- a/drivers/gpu/drm/msm/dp/dp_catalog.c
++++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+@@ -1036,7 +1036,6 @@ void msm_dp_catalog_panel_tpg_enable(struct msm_dp_catalog *msm_dp_catalog,
+ 	display_hctl = (hsync_end_x << 16) | hsync_start_x;
  
- 	if (!netif_device_present(dev) ||
--	    dev->reg_state == NETREG_UNREGISTERING) {
-+	    dev->reg_state >= NETREG_UNREGISTERING) {
- 		ret = -ENODEV;
- 		goto err;
- 	}
+ 
+-	msm_dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, 0x0);
+ 	msm_dp_write_p0(catalog, MMSS_DP_INTF_HSYNC_CTL, hsync_ctl);
+ 	msm_dp_write_p0(catalog, MMSS_DP_INTF_VSYNC_PERIOD_F0, vsync_period *
+ 			hsync_period);
 -- 
 2.39.5
 
