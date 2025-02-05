@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4093376;
-	Wed,  5 Feb 2025 15:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9485F376;
+	Wed,  5 Feb 2025 15:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767636; cv=none; b=ck6QtxyAAriPHvc7CerLr6O5VHUtzvhgpadYVikMv1HTNockYhQu8/DkCmmnyMGb6KNmFIi/IxyCaVHugIMAXJodmQ6hVqSLWORqguErCYxxAVgvene9nkR7MLKJPyLiFRj59bFcZGJUFvow7gb+UT6/zK84OdE9URKp/oW5t5s=
+	t=1738767640; cv=none; b=PFxug31mVWtI8RoE2b1EwRj+1p+LI8recql8TixJqoPNKDHHWmkEcHYJxplgZ2fFoV5gs5XLZCK6Qyt8eYEw2Jfq9EuuYqOqZu1mYXJWbaIuZ3QxzlrHqZuF87Oe6xgBLNkXPcVx5kai/pCsC5pyL8NiOb/ZcCjiYmbEHKKyz4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767636; c=relaxed/simple;
-	bh=fulMXRiDDmi8cymfBuuHx5ioiXYKfha53havaGY5TnI=;
+	s=arc-20240116; t=1738767640; c=relaxed/simple;
+	bh=SSxV7Twdz4JEXudo3L1T7WHvOJsEzhKZmXm3KNFOwjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s56xPqbjrO59RWl4Kc+1MXKIbRaTj7Xj1oek8uV0A+GtXBSq3JZirPAcovOvm07vuei8K1K4ETT0yhAn78v5eMRxUKXfD5zgEiYYM8sSsNYqL7ASDuYaMJoR/F9MD8ECoZQruYaSir+5i5TDG71JNLFeMopUfILaUTJ/qmr9pcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DBgphIk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OW4tXpnTVd1kFPuzoAyTGfSiRrPB8DljvuR4Ci9FIrE9bt9kb00MERxFHAwkGg7ur38WyJ7XgREFKDUA+Mzb/TB38GvUso72O8J6r1nm1kjOMRoZplJGsQK9iW6/oDOMywjGxtuG4UrpLoI3k+1npmDBEpqbMhuMqQFbBPNIMHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwvmshoX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DBgphIk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01349C4CED1;
-	Wed,  5 Feb 2025 15:00:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwvmshoX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCDAC4CED1;
+	Wed,  5 Feb 2025 15:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767636;
-	bh=fulMXRiDDmi8cymfBuuHx5ioiXYKfha53havaGY5TnI=;
+	s=korg; t=1738767640;
+	bh=SSxV7Twdz4JEXudo3L1T7WHvOJsEzhKZmXm3KNFOwjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0DBgphIkNFNP97QiAAWynROz4MtQmTO8+bBoDy0pOa3jr2uMl0NmSXZpm8rGWmn3p
-	 Qt1LDyto/gJI7JOjOHLwyRXkR8IkvM43gOdDfW01wY9bASjWa87rMBX9BvBrhatrA3
-	 11UvsMBKzKJXgdRNkYs20qfDb4kvjL/V3vkbKQ60=
+	b=DwvmshoX1NeWKSyAXdMAcRLhoT3piakurE5gYnNuUgHxS5aHmtWEUwrEoPtK+R8kn
+	 Dkcqk3OiN/UhkGONLzacgkL3YxGVEAtkE2GSxH9P7KzN1rNOK8YVpP5fXzPEGtDtzm
+	 Lptotf5OscH9+20PUhvHOQmj0YaGst5dct3VDyCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Mark Brown <broonie@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	David Rheinsberg <david@readahead.eu>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Peter Jones <pjones@redhat.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	linux-fbdev@vger.kernel.org,
+	Ard Biesheuvel <ardb@kernel.org>,
+	linux-efi@vger.kernel.org,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 472/590] regulator: core: Add missing newline character
-Date: Wed,  5 Feb 2025 14:43:47 +0100
-Message-ID: <20250205134513.318014743@linuxfoundation.org>
+Subject: [PATCH 6.13 432/623] efi: sysfb_efi: fix W=1 warnings when EFI is not set
+Date: Wed,  5 Feb 2025 14:42:54 +0100
+Message-ID: <20250205134512.748971645@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,40 +54,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 155c569fa4c3b340fbf8571a0e42dd415c025377 ]
+[ Upstream commit 19fdc68aa7b90b1d3d600e873a3e050a39e7663d ]
 
-dev_err_probe() error messages need newline character.
+A build with W=1 fails because there are code and data that are not
+needed or used when CONFIG_EFI is not set. Move the "#ifdef CONFIG_EFI"
+block to earlier in the source file so that the unused code/data are
+not built.
 
-Fixes: 6eabfc018e8d ("regulator: core: Allow specifying an initial load w/ the bulk API")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://patch.msgid.link/20250122072019.1926093-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+drivers/firmware/efi/sysfb_efi.c:345:39: warning: ‘efifb_fwnode_ops’ defined but not used [-Wunused-const-variable=]
+  345 | static const struct fwnode_operations efifb_fwnode_ops = {
+      |                                       ^~~~~~~~~~~~~~~~
+drivers/firmware/efi/sysfb_efi.c:238:35: warning: ‘efifb_dmi_swap_width_height’ defined but not used [-Wunused-const-variable=]
+  238 | static const struct dmi_system_id efifb_dmi_swap_width_height[] __initconst = {
+      |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/firmware/efi/sysfb_efi.c:188:35: warning: ‘efifb_dmi_system_table’ defined but not used [-Wunused-const-variable=]
+  188 | static const struct dmi_system_id efifb_dmi_system_table[] __initconst = {
+      |                                   ^~~~~~~~~~~~~~~~~~~~~~
+
+Fixes: 15d27b15de96 ("efi: sysfb_efi: fix build when EFI is not set")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501071933.20nlmJJt-lkp@intel.com/
+Cc: David Rheinsberg <david@readahead.eu>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Peter Jones <pjones@redhat.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: linux-fbdev@vger.kernel.org
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: linux-efi@vger.kernel.org
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 2 +-
+ drivers/firmware/efi/sysfb_efi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 1179766811f58..4bb2652740d00 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -4946,7 +4946,7 @@ int _regulator_bulk_get(struct device *dev, int num_consumers,
- 						       consumers[i].supply, get_type);
- 		if (IS_ERR(consumers[i].consumer)) {
- 			ret = dev_err_probe(dev, PTR_ERR(consumers[i].consumer),
--					    "Failed to get supply '%s'",
-+					    "Failed to get supply '%s'\n",
- 					    consumers[i].supply);
- 			consumers[i].consumer = NULL;
- 			goto err;
+diff --git a/drivers/firmware/efi/sysfb_efi.c b/drivers/firmware/efi/sysfb_efi.c
+index cc807ed35aedf..1e509595ac034 100644
+--- a/drivers/firmware/efi/sysfb_efi.c
++++ b/drivers/firmware/efi/sysfb_efi.c
+@@ -91,6 +91,7 @@ void efifb_setup_from_dmi(struct screen_info *si, const char *opt)
+ 		_ret_;						\
+ 	})
+ 
++#ifdef CONFIG_EFI
+ static int __init efifb_set_system(const struct dmi_system_id *id)
+ {
+ 	struct efifb_dmi_info *info = id->driver_data;
+@@ -346,7 +347,6 @@ static const struct fwnode_operations efifb_fwnode_ops = {
+ 	.add_links = efifb_add_links,
+ };
+ 
+-#ifdef CONFIG_EFI
+ static struct fwnode_handle efifb_fwnode;
+ 
+ __init void sysfb_apply_efi_quirks(void)
 -- 
 2.39.5
 
