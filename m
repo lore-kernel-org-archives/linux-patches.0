@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698A41993B2;
-	Wed,  5 Feb 2025 15:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1D51B3F3D;
+	Wed,  5 Feb 2025 15:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768247; cv=none; b=Ql8hDiIMf54cMWIu5zEXDsP7MZB7kL5hGj9Qt7JMaiYm+SIH9PXPBbPtXDRsxruAvH3kHhHHvFbX0UQEwbfzYCGyuupGlDJZ8u6tSHYd1ydnKPpSL+VFDZRx8qKfaceEPWaagmtdAienfqdHjSaJmrm56E1ub/BIyLRdCD8HhfQ=
+	t=1738768250; cv=none; b=sZcG8W9rhAnE7gYDTbrYELrKQApz9v3SHCTNyCy8hNcc99N2G78ihyjRYhfHqdkzIX9zN/06ZzM3rkhfM8TAZGzJHnpCL0r8fDbY3jzbaCbsXU12Y173QJ7nWjK92EHgeLjrOjmk6zqilzYKyzmN2u0c5/p8AvSsCuh+HmmWzis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768247; c=relaxed/simple;
-	bh=gTEqlYK9F/JjPUSom/A3F3D/w49OEhLEqejCjBN6R/8=;
+	s=arc-20240116; t=1738768250; c=relaxed/simple;
+	bh=8lj0flWFsNCi/U3LE7bZVR5eGUdOoOHAf+wjZsPT5Ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iXn4KOTz+Cs+n8WsHdP2iJ/KHZ9ykYudiR7R9F6qTlhm0epfc9ukicclCXs0m7oe/Ew45pUsVwODQf0rvOE2K3ZpikA9UL9TXgzRkT1UBU9aqHR5MFSD+EDiwAcKXTgZ83wzZ9aRDAenUHYCeG2C+5ykAFaN+zpoUpSPBU6M65U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NC0wsI8o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rCI02tnfYYWRpGy2ytPQih+wG2a9/S2EXr1LyQSslNSrshCSJLYhJufRKqi9xfeZBHuex6wo+0X3fdSjTH7G3k3S9WdL30QLa9Ulkv9UEj3wM2pPUdbdyEVWyXfjOMV9+WjxJodSHAMjyaWLj0oPf67a1j47AbTPA4q8vnx5h3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n625f1Re; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NC0wsI8o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E10AC4CEE3;
-	Wed,  5 Feb 2025 15:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n625f1Re"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC42C4CED1;
+	Wed,  5 Feb 2025 15:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768246;
-	bh=gTEqlYK9F/JjPUSom/A3F3D/w49OEhLEqejCjBN6R/8=;
+	s=korg; t=1738768249;
+	bh=8lj0flWFsNCi/U3LE7bZVR5eGUdOoOHAf+wjZsPT5Ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NC0wsI8oGunZJVVHZyYxQWrBA4T4mrSPD9MVFjKo08SFXXek8PpEb9f3AI76mqZ1l
-	 cRp83zkIN4sX2XIZphP2kqmVtLOC2FR9cQIcdUYie1A+AECWGi2UO7ablerNpRhn0K
-	 oetQdd8XQbdzzfZ6xc0y3sywg9qhgj1ixLjQDHpY=
+	b=n625f1Re3xpk2qEqI4UOjwsdLl4/Dz4Ael8huG37SICEHSiy/GEFKjBV2vzHkTUug
+	 mh+n1BJF2PkEuMghQcYPSmTSzaUwATcQduxBzIOi/6Yva6mljxrmatsLgqC6klx+8B
+	 VIlosGa3rLoRjIrLSy/8Kq3XDiOnydSR6lX4jx4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vaishnavi Bhat <vaish123@in.ibm.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.12 573/590] powerpc/pseries/iommu: Dont unset window if it was never set
-Date: Wed,  5 Feb 2025 14:45:28 +0100
-Message-ID: <20250205134517.188795415@linuxfoundation.org>
+	Lianqin Hu <hulianqin@vivo.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 551/590] ALSA: usb-audio: Add delay quirk for iBasso DC07 Pro
+Date: Wed,  5 Feb 2025 14:45:06 +0100
+Message-ID: <20250205134516.352830637@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -51,63 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-commit 17391cb2613b82f8c405570fea605af3255ff8d2 upstream.
+commit d85fc52cbb9a719c8335d93a28d6a79d7acd419f upstream.
 
-On pSeries, when user attempts to use the same vfio container used by
-different iommu group, the spapr_tce_set_window() returns -EPERM
-and the subsequent cleanup leads to the below crash.
+Audio control requests that sets sampling frequency sometimes fail on
+this card. Adding delay between control messages eliminates that problem.
 
-   Kernel attempted to read user page (308) - exploit attempt?
-   BUG: Kernel NULL pointer dereference on read at 0x00000308
-   Faulting instruction address: 0xc0000000001ce358
-   Oops: Kernel access of bad area, sig: 11 [#1]
-   NIP:  c0000000001ce358 LR: c0000000001ce05c CTR: c00000000005add0
-   <snip>
-   NIP [c0000000001ce358] spapr_tce_unset_window+0x3b8/0x510
-   LR [c0000000001ce05c] spapr_tce_unset_window+0xbc/0x510
-   Call Trace:
-     spapr_tce_unset_window+0xbc/0x510 (unreliable)
-     tce_iommu_attach_group+0x24c/0x340 [vfio_iommu_spapr_tce]
-     vfio_container_attach_group+0xec/0x240 [vfio]
-     vfio_group_fops_unl_ioctl+0x548/0xb00 [vfio]
-     sys_ioctl+0x754/0x1580
-     system_call_exception+0x13c/0x330
-     system_call_vectored_common+0x15c/0x2ec
-   <snip>
-   --- interrupt: 3000
+usb 1-1: New USB device found, idVendor=2fc6, idProduct=f0b7
+usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+usb 1-1: Product: iBasso DC07 Pro
+usb 1-1: Manufacturer: iBasso
+usb 1-1: SerialNumber: CTUA171130B
 
-Fix this by having null check for the tbl passed to the
-spapr_tce_unset_window().
-
-Fixes: f431a8cde7f1 ("powerpc/iommu: Reimplement the iommu_table_group_ops for pSeries")
-Cc: stable@vger.kernel.org
-Reported-by: Vaishnavi Bhat <vaish123@in.ibm.com>
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/173674009556.1559.12487885286848752833.stgit@linux.ibm.com
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/TYUPR06MB62174A48D04E09A37996DF84D2ED2@TYUPR06MB6217.apcprd06.prod.outlook.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/iommu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/usb/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
-index 29f1a0cc59cd..ae6f7a235d8b 100644
---- a/arch/powerpc/platforms/pseries/iommu.c
-+++ b/arch/powerpc/platforms/pseries/iommu.c
-@@ -2208,6 +2208,9 @@ static long spapr_tce_unset_window(struct iommu_table_group *table_group, int nu
- 	const char *win_name;
- 	int ret = -ENODEV;
- 
-+	if (!tbl) /* The table was never created OR window was never opened */
-+		return 0;
-+
- 	mutex_lock(&dma_win_init_mutex);
- 
- 	if ((num == 0) && is_default_window_table(table_group, tbl))
--- 
-2.48.1
-
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2343,6 +2343,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x2d95, 0x8021, /* VIVO USB-C-XE710 HEADSET */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
++	DEVICE_FLG(0x2fc6, 0xf0b7, /* iBasso DC07 Pro */
++		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x413c, 0xa506, /* Dell AE515 sound bar */
 
 
