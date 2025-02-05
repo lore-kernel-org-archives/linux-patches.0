@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E997F510;
-	Wed,  5 Feb 2025 14:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43F31519AA;
+	Wed,  5 Feb 2025 14:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764412; cv=none; b=u2HdpeEWDWfQ7E5HlTo65Ur3CYGXNBL49+AZzsoJMHa+IeYhlFMxnp+R5K6B6ejySnQIkGudXQI7jnovTkwbVH9m0TAIZchtRyH0s2TPg0etIj+b0FASiAjqe+F4vBvMbLPFHRojk+LiKxv2sHsGtZcD9OL9SK9g73i7VYGC7c4=
+	t=1738764415; cv=none; b=NoT224Rta4d+t8yzQS4IE1GNeZsmV1s7ucb7UGHRBd+BNZ/c0aIRkqxy7mEEboWDokd/UiLU0xPvLnDxd2OKaPZeHbTJHVDU5f2v/EmbrO9IvjwVV2Wk4n5wkiFhO5bKnUAFhotz6ToAMfzn6wDk5t1Xg+Xq6aG0O33U/nw/MhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764412; c=relaxed/simple;
-	bh=oAXfLkoWBJTMOKmWDG6h+9yuURUrLdDO3i4pMlMyv3c=;
+	s=arc-20240116; t=1738764415; c=relaxed/simple;
+	bh=+ehALnKpRq0QEDcEnmDaq3ra8MGcwjfnGMV4kx4YQKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m1DHyT1cd+FMwP8EYNYNjX8Jj0eBtxBYBVmaAiuxXJQXDRuI3GHPfPDvs49D7BEtaLUeXfvyCi0VFk/YuUFkuw5X/ljOl7r8PARU8aTwSqGGeuP5/7D6xrsaQ0mUfI6dne8wuRmOD6jIE6qfmhiwSbvsxLyGHSKLOLxvY+uL+2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEGBx0Lj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Koupfis/plGIKMfZuFe/V8+21Txs4ycDP9VDNShcjhqYA0WGH5VlScdPgTert1LdESB/R83yTI2Dm7hrRHNcOyJDsI3lH5EL6NS488e9NlMTUJE8hNY2LNdWm1k6BsE0JYFLh8IBLYenk0c0h8k8+ncoozOQppVWW09ZxLgzHQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIoQWJfm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEGBx0Lj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78330C4CED1;
-	Wed,  5 Feb 2025 14:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIoQWJfm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 121AEC4CED1;
+	Wed,  5 Feb 2025 14:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764412;
-	bh=oAXfLkoWBJTMOKmWDG6h+9yuURUrLdDO3i4pMlMyv3c=;
+	s=korg; t=1738764415;
+	bh=+ehALnKpRq0QEDcEnmDaq3ra8MGcwjfnGMV4kx4YQKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UEGBx0Ljm2YUnFR9eQvMc7lC83Wpq7+niQQZvF9aze218PBkmskWd2EaoP/2Is3QS
-	 1D/6q8Z8t0WlfOXfLU5OTEj9tG4zOHieqNSULkByE6ler/FWGLL6qHeioZ69LkkFOv
-	 kqYf3ooQZcWOnLVX3PFzuhr+uXo72VQXMwvDnA0U=
+	b=uIoQWJfmgt9SFbG4MNhLLwVSLsBjewvGc9kRsW/z0aMVdGjvINbw/uy3RRuDmJQqG
+	 tGfQnmJ3rM6JJqeonFEhONC9fGcGkovULKsSAzzFTB5N4iIZ61yysmE/7BQ+3u/Q2k
+	 1xz1AeoARUZ0TvTlS6MBZmBD305kOCRwWgLh4zxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Quentin Monnet <qmo@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 076/623] drm/msm: dont clean up priv->kms prematurely
-Date: Wed,  5 Feb 2025 14:36:58 +0100
-Message-ID: <20250205134459.134206435@linuxfoundation.org>
+Subject: [PATCH 6.6 155/393] libbpf: Fix segfault due to libelf functions not setting errno
+Date: Wed,  5 Feb 2025 14:41:14 +0100
+Message-ID: <20250205134426.231970118@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +47,142 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Quentin Monnet <qmo@kernel.org>
 
-[ Upstream commit ebc0deda3c2948d40419677d388b4e6081688a06 ]
+[ Upstream commit e10500b69c3f3378f3dcfc8c2fe4cdb74fc844f5 ]
 
-MSM display drivers provide kms structure allocated during probe().
-Don't clean up priv->kms field in case of an error. Otherwise probe
-functions might fail after KMS probe deferral.
+Libelf functions do not set errno on failure. Instead, it relies on its
+internal _elf_errno value, that can be retrieved via elf_errno (or the
+corresponding message via elf_errmsg()). From "man libelf":
 
-Fixes: a2ab5d5bb6b1 ("drm/msm: allow passing struct msm_kms to msm_drv_probe()")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Fixes: 506efcba3129 ("drm/msm: carve out KMS code from msm_drv.c")
-Patchwork: https://patchwork.freedesktop.org/patch/590411/
-Link: https://lore.kernel.org/r/20240420-mdp4-fixes-v1-1-96a70f64fa85@linaro.org
+    If a libelf function encounters an error it will set an internal
+    error code that can be retrieved with elf_errno. Each thread
+    maintains its own separate error code. The meaning of each error
+    code can be determined with elf_errmsg, which returns a string
+    describing the error.
+
+As a consequence, libbpf should not return -errno when a function from
+libelf fails, because an empty value will not be interpreted as an error
+and won't prevent the program to stop. This is visible in
+bpf_linker__add_file(), for example, where we call a succession of
+functions that rely on libelf:
+
+    err = err ?: linker_load_obj_file(linker, filename, opts, &obj);
+    err = err ?: linker_append_sec_data(linker, &obj);
+    err = err ?: linker_append_elf_syms(linker, &obj);
+    err = err ?: linker_append_elf_relos(linker, &obj);
+    err = err ?: linker_append_btf(linker, &obj);
+    err = err ?: linker_append_btf_ext(linker, &obj);
+
+If the object file that we try to process is not, in fact, a correct
+object file, linker_load_obj_file() may fail with errno not being set,
+and return 0. In this case we attempt to run linker_append_elf_sysms()
+and may segfault.
+
+This can happen (and was discovered) with bpftool:
+
+    $ bpftool gen object output.o sample_ret0.bpf.c
+    libbpf: failed to get ELF header for sample_ret0.bpf.c: invalid `Elf' handle
+    zsh: segmentation fault (core dumped)  bpftool gen object output.o sample_ret0.bpf.c
+
+Fix the issue by returning a non-null error code (-EINVAL) when libelf
+functions fail.
+
+Fixes: faf6ed321cf6 ("libbpf: Add BPF static linker APIs")
+Signed-off-by: Quentin Monnet <qmo@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241205135942.65262-1-qmo@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_kms.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/lib/bpf/linker.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
-index f3326d09bdbce..4cfad12f4dc1f 100644
---- a/drivers/gpu/drm/msm/msm_kms.c
-+++ b/drivers/gpu/drm/msm/msm_kms.c
-@@ -244,7 +244,6 @@ int msm_drm_kms_init(struct device *dev, const struct drm_driver *drv)
- 	ret = priv->kms_init(ddev);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "failed to load kms\n");
--		priv->kms = NULL;
- 		return ret;
+diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
+index 88cc7236f1220..736ebceea233f 100644
+--- a/tools/lib/bpf/linker.c
++++ b/tools/lib/bpf/linker.c
+@@ -567,17 +567,15 @@ static int linker_load_obj_file(struct bpf_linker *linker, const char *filename,
+ 	}
+ 	obj->elf = elf_begin(obj->fd, ELF_C_READ_MMAP, NULL);
+ 	if (!obj->elf) {
+-		err = -errno;
+ 		pr_warn_elf("failed to parse ELF file '%s'", filename);
+-		return err;
++		return -EINVAL;
  	}
  
+ 	/* Sanity check ELF file high-level properties */
+ 	ehdr = elf64_getehdr(obj->elf);
+ 	if (!ehdr) {
+-		err = -errno;
+ 		pr_warn_elf("failed to get ELF header for %s", filename);
+-		return err;
++		return -EINVAL;
+ 	}
+ 	if (ehdr->e_ident[EI_DATA] != host_endianness) {
+ 		err = -EOPNOTSUPP;
+@@ -593,9 +591,8 @@ static int linker_load_obj_file(struct bpf_linker *linker, const char *filename,
+ 	}
+ 
+ 	if (elf_getshdrstrndx(obj->elf, &obj->shstrs_sec_idx)) {
+-		err = -errno;
+ 		pr_warn_elf("failed to get SHSTRTAB section index for %s", filename);
+-		return err;
++		return -EINVAL;
+ 	}
+ 
+ 	scn = NULL;
+@@ -605,26 +602,23 @@ static int linker_load_obj_file(struct bpf_linker *linker, const char *filename,
+ 
+ 		shdr = elf64_getshdr(scn);
+ 		if (!shdr) {
+-			err = -errno;
+ 			pr_warn_elf("failed to get section #%zu header for %s",
+ 				    sec_idx, filename);
+-			return err;
++			return -EINVAL;
+ 		}
+ 
+ 		sec_name = elf_strptr(obj->elf, obj->shstrs_sec_idx, shdr->sh_name);
+ 		if (!sec_name) {
+-			err = -errno;
+ 			pr_warn_elf("failed to get section #%zu name for %s",
+ 				    sec_idx, filename);
+-			return err;
++			return -EINVAL;
+ 		}
+ 
+ 		data = elf_getdata(scn, 0);
+ 		if (!data) {
+-			err = -errno;
+ 			pr_warn_elf("failed to get section #%zu (%s) data from %s",
+ 				    sec_idx, sec_name, filename);
+-			return err;
++			return -EINVAL;
+ 		}
+ 
+ 		sec = add_src_sec(obj, sec_name);
+@@ -2602,14 +2596,14 @@ int bpf_linker__finalize(struct bpf_linker *linker)
+ 
+ 	/* Finalize ELF layout */
+ 	if (elf_update(linker->elf, ELF_C_NULL) < 0) {
+-		err = -errno;
++		err = -EINVAL;
+ 		pr_warn_elf("failed to finalize ELF layout");
+ 		return libbpf_err(err);
+ 	}
+ 
+ 	/* Write out final ELF contents */
+ 	if (elf_update(linker->elf, ELF_C_WRITE) < 0) {
+-		err = -errno;
++		err = -EINVAL;
+ 		pr_warn_elf("failed to write ELF contents");
+ 		return libbpf_err(err);
+ 	}
 -- 
 2.39.5
 
