@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B150F14A4E9;
-	Wed,  5 Feb 2025 13:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E13614D28C;
+	Wed,  5 Feb 2025 13:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763870; cv=none; b=Uo2mYxgBSzL7MLnfQU6QSNPJQUMcRvOpBvr+CAdjOyDelgyxRawDUbMqz1QtzGDtQ7FgauJyWfCfUtwZmSdTVDEW1Bq9Eg/YKcpAIlzc6MX/vcubyzhVHras2hK3PJ1HcUdnFVVVLv1i8Stdwcn9pQgUPBQ7K8b1XfC1HjUFOEE=
+	t=1738763874; cv=none; b=HA8p4CGDupYVkBeyLSNpkwQuUwC/fMUQGUhsAy3GIbac8OgyWT3ewEH7bbVuDP9dI56TBpWEd+47zFPzecDh/8HUvV0o+B3clXEBEC9Fp4TXAzLH+ls35fjAHE2PDTW/Fv75NsmkmbV4Zx+NqtRmna9C31xzkAwJBOAlfEFN2Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763870; c=relaxed/simple;
-	bh=rP7J5jgS4SnvPQdAQIgjfTTCiTz7jI/aC/JxtA1tSW8=;
+	s=arc-20240116; t=1738763874; c=relaxed/simple;
+	bh=zZDfu6Zj0/ojkkhk+zeekD9cwqYKUQluwNKbUyrpr60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fs5g7WHp1bAztjolgHR3AzT98qGu+l1Cy3LkwyrW06MO/2xm9y5BQ1k4RwgjH3IQGK+dRJ1n8c0W6eX3PGpqeJrNgt4QQRJ9Wkim224JQM5Wafo836k1OOE7sgESZBOXbqySk4SLmJ/JK1+a7f1NfMYTFjtHIcMN75wl1sUWNn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQxPiw/g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zl1S3MX42d9HbXlWhb4nHV1tEK7pKk7rIX+gKQZQw2K8vyIwE5wSWN3vDHjQqRu1w1vAafwqKSODjvMbDiZxwziAwghgJjMCMhurPQdzxIkbw48tVu1wsFaqRhpVCJ9pqeLVOaw5S1MOyPbxZgIBSEwJIDzSps1zRmWhPwJLjEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bURrGW/J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQxPiw/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02786C4CED1;
-	Wed,  5 Feb 2025 13:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bURrGW/J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D234C4CED6;
+	Wed,  5 Feb 2025 13:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763870;
-	bh=rP7J5jgS4SnvPQdAQIgjfTTCiTz7jI/aC/JxtA1tSW8=;
+	s=korg; t=1738763874;
+	bh=zZDfu6Zj0/ojkkhk+zeekD9cwqYKUQluwNKbUyrpr60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SQxPiw/gDGsGvU15gSB3vQrsZlIEC2f1zIDc3Kkw1G4SkBtWORGLFUwtcVOEQkyCj
-	 VJ/oCopYyP3T2EdrfkGjFUm9/pyM62TkU9rJdscUalFWHV6Hmk0935+Xq065Xzj/qZ
-	 xNg86oaj+NmREh5WTVSIxAku30h6Mo5RPnXVYjcQ=
+	b=bURrGW/J8C55s24fwJix3CBFnrUMBhOXb1LOMmQc6e/JoFY9qymQvIyXyCgh0mqco
+	 xxN/HdervnDpGvnRTTu2wTVeoLdv1TpkbPapmUiyCDvhOWWxUYaqEXKuMpB8MWm0gk
+	 w/twRACfZi4+vr9uviVKMROVah6TVWEmC0lLNP8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <david@fromorbit.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Paul Moore <paul@paul-moore.com>,
-	syzbot+34b68f850391452207df@syzkaller.appspotmail.com,
-	syzbot+360866a59e3c80510a62@syzkaller.appspotmail.com,
-	Ubisectech Sirius <bugreport@ubisectech.com>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 115/393] landlock: Handle weird files
-Date: Wed,  5 Feb 2025 14:40:34 +0100
-Message-ID: <20250205134424.692953452@linuxfoundation.org>
+Subject: [PATCH 6.12 062/590] drm/msm/dpu: link DSPP_2/_3 blocks on SM8350
+Date: Wed,  5 Feb 2025 14:36:57 +0100
+Message-ID: <20250205134457.630144484@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,69 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 49440290a0935f428a1e43a5ac8dc275a647ff80 ]
+[ Upstream commit 42323d3c9e04c725d27606c31663b80a7cc30218 ]
 
-A corrupted filesystem (e.g. bcachefs) might return weird files.
-Instead of throwing a warning and allowing access to such file, treat
-them as regular files.
+Link DSPP_2 to the LM_2 and DSPP_3 to the LM_3 mixer blocks. This allows
+using colour transformation matrix (aka night mode) with more outputs at
+the same time.
 
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: Paul Moore <paul@paul-moore.com>
-Reported-by: syzbot+34b68f850391452207df@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/000000000000a65b35061cffca61@google.com
-Reported-by: syzbot+360866a59e3c80510a62@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/67379b3f.050a0220.85a0.0001.GAE@google.com
-Reported-by: Ubisectech Sirius <bugreport@ubisectech.com>
-Closes: https://lore.kernel.org/r/c426821d-8380-46c4-a494-7008bbd7dd13.bugreport@ubisectech.com
-Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
-Reviewed-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://lore.kernel.org/r/20250110153918.241810-1-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Fixes: 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/629959/
+Link: https://lore.kernel.org/r/20241220-dpu-fix-catalog-v2-5-38fa961ea992@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/landlock/fs.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/security/landlock/fs.c b/security/landlock/fs.c
-index 1bdd049e3d636..fe4622d88eb15 100644
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -664,10 +664,6 @@ static inline access_mask_t get_mode_access(const umode_t mode)
- 	switch (mode & S_IFMT) {
- 	case S_IFLNK:
- 		return LANDLOCK_ACCESS_FS_MAKE_SYM;
--	case 0:
--		/* A zero mode translates to S_IFREG. */
--	case S_IFREG:
--		return LANDLOCK_ACCESS_FS_MAKE_REG;
- 	case S_IFDIR:
- 		return LANDLOCK_ACCESS_FS_MAKE_DIR;
- 	case S_IFCHR:
-@@ -678,9 +674,12 @@ static inline access_mask_t get_mode_access(const umode_t mode)
- 		return LANDLOCK_ACCESS_FS_MAKE_FIFO;
- 	case S_IFSOCK:
- 		return LANDLOCK_ACCESS_FS_MAKE_SOCK;
-+	case S_IFREG:
-+	case 0:
-+		/* A zero mode translates to S_IFREG. */
- 	default:
--		WARN_ON_ONCE(1);
--		return 0;
-+		/* Treats weird files as regular files. */
-+		return LANDLOCK_ACCESS_FS_MAKE_REG;
- 	}
- }
- 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+index aced16e350daa..f7c08e89c8820 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+@@ -162,6 +162,7 @@ static const struct dpu_lm_cfg sm8350_lm[] = {
+ 		.sblk = &sdm845_lm_sblk,
+ 		.lm_pair = LM_3,
+ 		.pingpong = PINGPONG_2,
++		.dspp = DSPP_2,
+ 	}, {
+ 		.name = "lm_3", .id = LM_3,
+ 		.base = 0x47000, .len = 0x320,
+@@ -169,6 +170,7 @@ static const struct dpu_lm_cfg sm8350_lm[] = {
+ 		.sblk = &sdm845_lm_sblk,
+ 		.lm_pair = LM_2,
+ 		.pingpong = PINGPONG_3,
++		.dspp = DSPP_3,
+ 	}, {
+ 		.name = "lm_4", .id = LM_4,
+ 		.base = 0x48000, .len = 0x320,
 -- 
 2.39.5
 
