@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E574DFC0B;
-	Wed,  5 Feb 2025 14:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CD2149C53;
+	Wed,  5 Feb 2025 14:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764610; cv=none; b=J9zk1yJDCoQ4KFsXrkL2thDp3aMzbXnNq2N+kFIlWYaFTUuAnkyLMHZePA3x7ydLz4Cf32oLI4+tCN74Sev6Tqm0Ho0rZ7xyAWAqVvkVvsZ/NRJzgzOQ5NznIvroqgcE9diMTsQ5CBthTr8KjYzL6dzl38MeBl/ewjIBtq0vdNA=
+	t=1738764613; cv=none; b=f72Qh3TZKdtSD+GGjdQrXhLTO1/x2ZAh7uFRcYQfAooo7Yb96DXrZ+uSwVV8WnaBy4Q8/S6WBDmkjMSXjUB3EqbAjlSAFLNthq1S5nrPcGbiI649KfykJVQ+KZl8ZlEQM1SejF4xLs4ojwepSaHnS7THGVVXstFRaWEEI9X4OxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764610; c=relaxed/simple;
-	bh=VmpiPjwupaaNBwzjo4NljZ87Z8GxLzBwfpd5IOI7oNY=;
+	s=arc-20240116; t=1738764613; c=relaxed/simple;
+	bh=vkXsnzlrZlNaobZhFq57aZZFuZcNkzim3MXhWOF8BQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bx7YXzrqpUC8Vs4zfuzaXF+IRvY1V3rrKwww/OqUKC83x7xDtMT9J7JN3OUo153rBFN3ekIqoJwsVyW1YKTmGes0zGnX3VSMFCfUoJI53m+Pscrs4Ig8jYiJtXKWWy6E8Bmp3z4SDv+OWUYF9t0v99LaL5b8lJp4o9kW5T7L6+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LulIBExB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Aakm7wc0r4m+ck5d5T5zHaQbyoibMw4kIpyT8Cdxig1pCpVdohI19ESEtW3Zf3RNKBW92scMqql1QoVPhJy4VlXN7TpRBj7pjv8Xoou7LH9IVzabRXRVmP2EQ9gXjkZCcDEOZ03Ohftdue02sero17/V/FOQO4dkbsPHILP3tuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0BrOq4q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LulIBExB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521B5C4CED1;
-	Wed,  5 Feb 2025 14:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0BrOq4q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED61C4CED1;
+	Wed,  5 Feb 2025 14:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764609;
-	bh=VmpiPjwupaaNBwzjo4NljZ87Z8GxLzBwfpd5IOI7oNY=;
+	s=korg; t=1738764613;
+	bh=vkXsnzlrZlNaobZhFq57aZZFuZcNkzim3MXhWOF8BQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LulIBExByhQyXXqKKB1nLme9RCvhqVuHWek6dWvRm4R5uQF5h4Cms/QNcjE5qSmSX
-	 1BZfdtExXvCTHvpAZXbYRMQDXelAEn2+9wuSwIWxszliNPO7H1sPX0eJ5A2evP8xcR
-	 8i2csg5ty3RZABDY7kdiNJqdlloZWgpW7eCGA9AI=
+	b=r0BrOq4qo2yHH9R2qgeCwZcmxhPCkx91Whe8iQQerTwx+Bhabnt+NU9HA8RuYH0FP
+	 IsqSbDSm4a3S50lRRAaYfeNSO9B8vSpiPOAHJdf62XGC4CXcDxWrmVzegEhS1gq3i8
+	 mQZwMW8ZEKfNfxbbrIKf3OS+7XdvhAvu3Et7gtx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Lee Jones <lee@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Duje=20Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 142/590] leds: cht-wcove: Use devm_led_classdev_register() to avoid memory leak
-Date: Wed,  5 Feb 2025 14:38:17 +0100
-Message-ID: <20250205134500.703458839@linuxfoundation.org>
+Subject: [PATCH 6.13 095/623] clk: mmp: pxa1908-apbc: Fix NULL vs IS_ERR() check
+Date: Wed,  5 Feb 2025 14:37:17 +0100
+Message-ID: <20250205134459.858725645@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,54 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 417cad5dc782096350e6a967ee5dd3417a19a24e ]
+[ Upstream commit e5ca5d7b4d7c29246d957dc45d63610584ae3a54 ]
 
-cht_wc_leds_probe() leaks memory when the second led_classdev_register()
-call in the for-loop fails as it does not call the cleanup function
-led_classdev_unregister() on the first device. Avoid this leak by
-calling devm_led_classdev_register().
+The devm_kzalloc() function returns NULL on error, not error pointers.
+Fix the check.
 
-Fixes: 047da762b9a9 ("leds: Add Intel Cherry Trail Whiskey Cove PMIC LED driver")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Link: https://lore.kernel.org/r/20241220085346.533675-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 51ce55919273 ("clk: mmp: Add Marvell PXA1908 APBC driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/d7078eb7-a7d6-4753-b453-8fce15245c34@stanley.mountain
+Acked-by: Duje Mihanović <duje.mihanovic@skole.hr>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-cht-wcove.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/clk/mmp/clk-pxa1908-apbc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/leds-cht-wcove.c b/drivers/leds/leds-cht-wcove.c
-index b4998402b8c6f..711ac4bd60580 100644
---- a/drivers/leds/leds-cht-wcove.c
-+++ b/drivers/leds/leds-cht-wcove.c
-@@ -394,7 +394,7 @@ static int cht_wc_leds_probe(struct platform_device *pdev)
- 		led->cdev.pattern_clear = cht_wc_leds_pattern_clear;
- 		led->cdev.max_brightness = 255;
+diff --git a/drivers/clk/mmp/clk-pxa1908-apbc.c b/drivers/clk/mmp/clk-pxa1908-apbc.c
+index b93d084661985..3fd7b5e644f3b 100644
+--- a/drivers/clk/mmp/clk-pxa1908-apbc.c
++++ b/drivers/clk/mmp/clk-pxa1908-apbc.c
+@@ -96,8 +96,8 @@ static int pxa1908_apbc_probe(struct platform_device *pdev)
+ 	struct pxa1908_clk_unit *pxa_unit;
  
--		ret = led_classdev_register(&pdev->dev, &led->cdev);
-+		ret = devm_led_classdev_register(&pdev->dev, &led->cdev);
- 		if (ret < 0)
- 			return ret;
- 	}
-@@ -406,10 +406,6 @@ static int cht_wc_leds_probe(struct platform_device *pdev)
- static void cht_wc_leds_remove(struct platform_device *pdev)
- {
- 	struct cht_wc_leds *leds = platform_get_drvdata(pdev);
--	int i;
--
--	for (i = 0; i < CHT_WC_LED_COUNT; i++)
--		led_classdev_unregister(&leds->leds[i].cdev);
+ 	pxa_unit = devm_kzalloc(&pdev->dev, sizeof(*pxa_unit), GFP_KERNEL);
+-	if (IS_ERR(pxa_unit))
+-		return PTR_ERR(pxa_unit);
++	if (!pxa_unit)
++		return -ENOMEM;
  
- 	/* Restore LED1 regs if hw-control was active else leave LED1 off */
- 	if (!(leds->led1_initial_regs.ctrl & CHT_WC_LED1_SWCTL))
+ 	pxa_unit->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(pxa_unit->base))
 -- 
 2.39.5
 
