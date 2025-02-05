@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C175A155A21;
-	Wed,  5 Feb 2025 13:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B415113C9C4;
+	Wed,  5 Feb 2025 13:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763917; cv=none; b=K/IpXC0eT3qbkaWFcfsDT6ZenUqPwmrfVuv77InZH0y22UyT9rayQFh28HklM3zoWKO+gKU8dZG6EybXkuDuB2ckVsQstz+kkHppNB4bQcA36fVxMEsLQDTuTrxVP9x+iadOg9+mB0wsNrmMt2j1V6895eFqCCLFIKRBVvDoXq0=
+	t=1738763921; cv=none; b=TIvoIlE6mHGYcqng6Cm5t08Cri/ggOzAfJ4wwcaJS7nz57jjm7sAtvqwCgcy1jGVu+TsoZUj8QSEtIBZSLlwoSHF78XuPh9Rb3Z3G27IHpfaMr+/9gb4WHzIxbEK4M8cUMWDHiujjgNxNHGgvyGiqg6Cyt8GtTxeEvpSFqsiMXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763917; c=relaxed/simple;
-	bh=VPg50kikS5cqYe4IPYZlXW49QcmtsG2B/h4Cp8j/SUg=;
+	s=arc-20240116; t=1738763921; c=relaxed/simple;
+	bh=GuQYsNOibIXK6+TPxFiBjsTwRIE+OWsCMANWTf8yHsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DxUfn5Ah02M1J2zjbIrSSS//sms9Z+jmYpH7edsOqBoyJd9m9N01w3SSk+3HuVPUXY1xCYssI3B5jgNYq/GWQoMvbGKizDxcsL6tZlzdYGpiVX4EpxGq9R75cIrN7+q/VDHkMnIVYuoNg63FsitPdp2n+M/89FkhqTDMhhMbD88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PepvMHAv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mySiIHdOQpvkJRz/X7oNwbhYE4nVoeYkCIiC219cy+vm9qdO1nD6rHpG+7NDvyciqrW9yOtr3Pdukuoyu1zwSJSh+TZcBwG5eGGMHQVN5kWTP8ETQQKRhyj2jmiLRaYDtX/HyQXNabykjBENVPFjnS4WwIUoooqbk9q7ZBxwJTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTKs9X4u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PepvMHAv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3108CC4CEE2;
-	Wed,  5 Feb 2025 13:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTKs9X4u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0A5C4CED1;
+	Wed,  5 Feb 2025 13:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763917;
-	bh=VPg50kikS5cqYe4IPYZlXW49QcmtsG2B/h4Cp8j/SUg=;
+	s=korg; t=1738763921;
+	bh=GuQYsNOibIXK6+TPxFiBjsTwRIE+OWsCMANWTf8yHsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PepvMHAv1Z4tPfUU5L8WuWiyUoafGpEQuEFwG9HfTRz2AzkBQMzHnX+aoHvw5+AWw
-	 PXxrwhBndljK/S5RkV0pRtUvmCfJDSnCtSN+uvml9DBD61GmtL8X5AKa4zXt4SoFBm
-	 QlctMF8lHypRkitikoZhsYp/lvNpY8N1Xl5BPzxw=
+	b=FTKs9X4uAClhNvB4Kd3T19gEmatD5wQYcovtGPUWUzFbu/Qg98aPLs2gOeYPkONO1
+	 ztfgFmY/sqRiGbr7cP8y0dI6rsKGZGTqUtlRnQQ3kD+NyLi8CLqbgperlyRRoMPKFG
+	 x4Tsr+sNiNnoVuPtoCFUixJw1rcEQ3IixU0B4nZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 119/393] wifi: mt76: mt7996: fix rx filter setting for bfee functionality
-Date: Wed,  5 Feb 2025 14:40:38 +0100
-Message-ID: <20250205134424.846260669@linuxfoundation.org>
+Subject: [PATCH 6.13 030/623] afs: Fix the fallback handling for the YFS.RemoveFile2 RPC call
+Date: Wed,  5 Feb 2025 14:36:12 +0100
+Message-ID: <20250205134457.380599490@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,39 +49,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 858fd2a53877b2e8b1d991a5a861ac34a0f55ef8 ]
+[ Upstream commit e30458d690f35abb01de8b3cbc09285deb725d00 ]
 
-Fix rx filter setting to prevent dropping NDPA frames. Without this
-change, bfee functionality may behave abnormally.
+Fix a pair of bugs in the fallback handling for the YFS.RemoveFile2 RPC
+call:
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Link: https://patch.msgid.link/20241230194202.95065-5-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+ (1) Fix the abort code check to also look for RXGEN_OPCODE.  The lack of
+     this masks the second bug.
+
+ (2) call->server is now not used for ordinary filesystem RPC calls that
+     have an operation descriptor.  Fix to use call->op->server instead.
+
+Fixes: e49c7b2f6de7 ("afs: Build an abstraction around an "operation" concept")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/109541.1736865963@warthog.procyon.org.uk
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/afs/yfsclient.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 0e69f0a508616..c559212ea86a7 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -474,8 +474,7 @@ static void mt7996_configure_filter(struct ieee80211_hw *hw,
- 
- 	MT76_FILTER(CONTROL, MT_WF_RFCR_DROP_CTS |
- 			     MT_WF_RFCR_DROP_RTS |
--			     MT_WF_RFCR_DROP_CTL_RSV |
--			     MT_WF_RFCR_DROP_NDPA);
-+			     MT_WF_RFCR_DROP_CTL_RSV);
- 
- 	*total_flags = flags;
- 	mt76_wr(dev, MT_WF_RFCR(phy->mt76->band_idx), phy->rxfilter);
+diff --git a/fs/afs/yfsclient.c b/fs/afs/yfsclient.c
+index 024227aba4cd5..362845f9aaaef 100644
+--- a/fs/afs/yfsclient.c
++++ b/fs/afs/yfsclient.c
+@@ -666,8 +666,9 @@ static int yfs_deliver_fs_remove_file2(struct afs_call *call)
+ static void yfs_done_fs_remove_file2(struct afs_call *call)
+ {
+ 	if (call->error == -ECONNABORTED &&
+-	    call->abort_code == RX_INVALID_OPERATION) {
+-		set_bit(AFS_SERVER_FL_NO_RM2, &call->server->flags);
++	    (call->abort_code == RX_INVALID_OPERATION ||
++	     call->abort_code == RXGEN_OPCODE)) {
++		set_bit(AFS_SERVER_FL_NO_RM2, &call->op->server->flags);
+ 		call->op->flags |= AFS_OPERATION_DOWNGRADE;
+ 	}
+ }
 -- 
 2.39.5
 
