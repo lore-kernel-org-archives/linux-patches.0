@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70A6156225;
-	Wed,  5 Feb 2025 14:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696B81459F6;
+	Wed,  5 Feb 2025 14:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765411; cv=none; b=KWmy9Kyl2Dc+3pl9Uog6lxkEbRvlwxz8FW23xF9zNzqzHpgiIjh1pBFdCPEVesZiKbVYSpojf3O7XIGcW2dgjCvN2K9b7JvK7zNsbs/H3atleHEY9SGWd106N+kqbkkFQQybb5cIFn14G5Mug0tuHE4rYdZIAXnw87/Q272B5Ug=
+	t=1738765415; cv=none; b=V5RUXuUqDX3BitYcJOugrh0UNGgI/MnJ57m59aYM1agrvOYufAT1QjYt5VlAROiScj/GlUGCC/YdcYTotRXXEGU2VlP82ktogdzurXSNk9RrV1Eb1l/4LFSqd5l5t4yFWFfJCi3xkkUmYvY+5ZR8csZZgowoLskyN2AL0CT7UlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765411; c=relaxed/simple;
-	bh=ZbthPkR9aLcM2Ahs7oDANN32V4KRQOoG7T5Ub2ephO8=;
+	s=arc-20240116; t=1738765415; c=relaxed/simple;
+	bh=brA4J9+bpKxCYktEv5MDrnC4WRoso+1D95J9C+CnG2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tysgPfnXEpTLZzAX160sLtbSTBJnuyDQQrJWHaRVt09TdafrrquwfWcACMI+/I+el+wyg6a6NQe/yYiTek0reS7l9gtbMqnn8kyMmT9tR7J/sIZDvUwtJpOvJd0z0ovUdbut03V4Ti1Fo/TnQX1W6nsEi4w3XcWeFfzJvZy8Ctk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBwBLejE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aze6zgKtkT36VZqXo++Wi+eGmRRIh7rjuMD0834KWLP7m6i6eaJXv3aukIufCFOVz1+1z56iIrIY8Y5rmAK6zWhGTuQQxkbWkzyATzc359IGHdFKrHuLn5EsuvY4gJCQ9RjQB9SO1d18U8+EtssuMlqzFiFgXnB13jjirncDeBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YxvovEBW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBwBLejE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA1AC4CED1;
-	Wed,  5 Feb 2025 14:23:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YxvovEBW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D765C4CED1;
+	Wed,  5 Feb 2025 14:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765411;
-	bh=ZbthPkR9aLcM2Ahs7oDANN32V4KRQOoG7T5Ub2ephO8=;
+	s=korg; t=1738765415;
+	bh=brA4J9+bpKxCYktEv5MDrnC4WRoso+1D95J9C+CnG2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vBwBLejELojK4n56uCbLkEY9aDGR9HrAFBMPQOQWVPuVar945SnoI6we34Eie4XLy
-	 nXauNk9FvMe5JeGCXwn5Y+piJ4PJy89LHrTK9GKBO2FJ+8eBW7A6Y1VeRFRX7TtB35
-	 hEbIYtNpp3mvAZxt/zzzOvceWDRax3PYsLQzfFP8=
+	b=YxvovEBWb6sszpCvd2pGMB9MzixnYoL1+BI+C9S6WusWs7BOwKPVyUdnmUzusDrTe
+	 EtVMfUqcOz+zbGNUPrrVfOBuV3iOsf313bNnd6KmaETqRR2ReJW/l+bP7MSD3c0klQ
+	 o3TF8r/bcojNJBO0QoEbaSBlpAh7L9YDP3THNtdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 265/393] arm64: dts: qcom: sc8280xp: Fix up remoteproc register space sizes
-Date: Wed,  5 Feb 2025 14:43:04 +0100
-Message-ID: <20250205134430.450846590@linuxfoundation.org>
+Subject: [PATCH 6.13 176/623] net/smc: fix data error when recvmsg with MSG_PEEK flag
+Date: Wed,  5 Feb 2025 14:38:38 +0100
+Message-ID: <20250205134502.968027352@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,60 +48,246 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-[ Upstream commit 7ec7e327286182c65d0b5b81dff498d620fe9e8c ]
+[ Upstream commit a4b6539038c1aa1ae871aacf6e41b566c3613993 ]
 
-Make sure the remoteproc reg ranges reflect the entire register space
-they refer to.
+When recvmsg with MSG_PEEK flag, the data will be copied to
+user's buffer without advancing consume cursor and without
+reducing the length of rx available data. Once the expected
+peek length is larger than the value of bytes_to_rcv, in the
+loop of do while in smc_rx_recvmsg, the first loop will copy
+bytes_to_rcv bytes of data from the position local_tx_ctrl.cons,
+the second loop will copy the min(bytes_to_rcv, read_remaining)
+bytes from the position local_tx_ctrl.cons again because of the
+lacking of process with advancing consume cursor and reducing
+the length of available data. So do the subsequent loops. The
+data copied in the second loop and the subsequent loops will
+result in data error, as it should not be copied if no more data
+arrives and it should be copied from the position advancing
+bytes_to_rcv bytes from the local_tx_ctrl.cons if more data arrives.
 
-Since they're unused by the driver, there's no functional change.
+This issue can be reproduce by the following python script:
+server.py:
+import socket
+import time
+server_ip = '0.0.0.0'
+server_port = 12346
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.bind((server_ip, server_port))
+server_socket.listen(1)
+print('Server is running and listening for connections...')
+conn, addr = server_socket.accept()
+print('Connected by', addr)
+while True:
+    data = conn.recv(1024)
+    if not data:
+        break
+    print('Received request:', data.decode())
+    conn.sendall(b'Hello, client!\n')
+    time.sleep(5)
+    conn.sendall(b'Hello, again!\n')
+conn.close()
 
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20241212-topic-8280_rproc_reg-v1-1-bd1c696e91b0@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+client.py:
+import socket
+server_ip = '<server ip>'
+server_port = 12346
+resp=b'Hello, client!\nHello, again!\n'
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client_socket.connect((server_ip, server_port))
+request = 'Hello, server!'
+client_socket.sendall(request.encode())
+peek_data = client_socket.recv(len(resp),
+    socket.MSG_PEEK | socket.MSG_WAITALL)
+print('Peeked data:', peek_data.decode())
+client_socket.close()
+
+Fixes: 952310ccf2d8 ("smc: receive data from RMBE")
+Reported-by: D. Wythe <alibuda@linux.alibaba.com>
+Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Link: https://patch.msgid.link/20250104143201.35529-1-guangguan.wang@linux.alibaba.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/smc/af_smc.c |  2 +-
+ net/smc/smc_rx.c | 37 +++++++++++++++++++++----------------
+ net/smc/smc_rx.h |  8 ++++----
+ 3 files changed, 26 insertions(+), 21 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 6425c74edd60c..3e70e79ce24b0 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -2642,7 +2642,7 @@
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 6cc7b846cff1b..ebc41a7b13dbe 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -2738,7 +2738,7 @@ int smc_accept(struct socket *sock, struct socket *new_sock,
+ 			release_sock(clcsk);
+ 		} else if (!atomic_read(&smc_sk(nsk)->conn.bytes_to_rcv)) {
+ 			lock_sock(nsk);
+-			smc_rx_wait(smc_sk(nsk), &timeo, smc_rx_data_available);
++			smc_rx_wait(smc_sk(nsk), &timeo, 0, smc_rx_data_available);
+ 			release_sock(nsk);
+ 		}
+ 	}
+diff --git a/net/smc/smc_rx.c b/net/smc/smc_rx.c
+index f0cbe77a80b44..79047721df511 100644
+--- a/net/smc/smc_rx.c
++++ b/net/smc/smc_rx.c
+@@ -238,22 +238,23 @@ static int smc_rx_splice(struct pipe_inode_info *pipe, char *src, size_t len,
+ 	return -ENOMEM;
+ }
  
- 		remoteproc_adsp: remoteproc@3000000 {
- 			compatible = "qcom,sc8280xp-adsp-pas";
--			reg = <0 0x03000000 0 0x100>;
-+			reg = <0 0x03000000 0 0x10000>;
+-static int smc_rx_data_available_and_no_splice_pend(struct smc_connection *conn)
++static int smc_rx_data_available_and_no_splice_pend(struct smc_connection *conn, size_t peeked)
+ {
+-	return atomic_read(&conn->bytes_to_rcv) &&
++	return smc_rx_data_available(conn, peeked) &&
+ 	       !atomic_read(&conn->splice_pending);
+ }
  
- 			interrupts-extended = <&intc GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
-@@ -4399,7 +4399,7 @@
+ /* blocks rcvbuf consumer until >=len bytes available or timeout or interrupted
+  *   @smc    smc socket
+  *   @timeo  pointer to max seconds to wait, pointer to value 0 for no timeout
++ *   @peeked  number of bytes already peeked
+  *   @fcrit  add'l criterion to evaluate as function pointer
+  * Returns:
+  * 1 if at least 1 byte available in rcvbuf or if socket error/shutdown.
+  * 0 otherwise (nothing in rcvbuf nor timeout, e.g. interrupted).
+  */
+-int smc_rx_wait(struct smc_sock *smc, long *timeo,
+-		int (*fcrit)(struct smc_connection *conn))
++int smc_rx_wait(struct smc_sock *smc, long *timeo, size_t peeked,
++		int (*fcrit)(struct smc_connection *conn, size_t baseline))
+ {
+ 	DEFINE_WAIT_FUNC(wait, woken_wake_function);
+ 	struct smc_connection *conn = &smc->conn;
+@@ -262,7 +263,7 @@ int smc_rx_wait(struct smc_sock *smc, long *timeo,
+ 	struct sock *sk = &smc->sk;
+ 	int rc;
  
- 		remoteproc_nsp0: remoteproc@1b300000 {
- 			compatible = "qcom,sc8280xp-nsp0-pas";
--			reg = <0 0x1b300000 0 0x100>;
-+			reg = <0 0x1b300000 0 0x10000>;
+-	if (fcrit(conn))
++	if (fcrit(conn, peeked))
+ 		return 1;
+ 	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
+ 	add_wait_queue(sk_sleep(sk), &wait);
+@@ -271,7 +272,7 @@ int smc_rx_wait(struct smc_sock *smc, long *timeo,
+ 			   cflags->peer_conn_abort ||
+ 			   READ_ONCE(sk->sk_shutdown) & RCV_SHUTDOWN ||
+ 			   conn->killed ||
+-			   fcrit(conn),
++			   fcrit(conn, peeked),
+ 			   &wait);
+ 	remove_wait_queue(sk_sleep(sk), &wait);
+ 	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
+@@ -322,11 +323,11 @@ static int smc_rx_recv_urg(struct smc_sock *smc, struct msghdr *msg, int len,
+ 	return -EAGAIN;
+ }
  
- 			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&smp2p_nsp0_in 0 IRQ_TYPE_EDGE_RISING>,
-@@ -4530,7 +4530,7 @@
+-static bool smc_rx_recvmsg_data_available(struct smc_sock *smc)
++static bool smc_rx_recvmsg_data_available(struct smc_sock *smc, size_t peeked)
+ {
+ 	struct smc_connection *conn = &smc->conn;
  
- 		remoteproc_nsp1: remoteproc@21300000 {
- 			compatible = "qcom,sc8280xp-nsp1-pas";
--			reg = <0 0x21300000 0 0x100>;
-+			reg = <0 0x21300000 0 0x10000>;
+-	if (smc_rx_data_available(conn))
++	if (smc_rx_data_available(conn, peeked))
+ 		return true;
+ 	else if (conn->urg_state == SMC_URG_VALID)
+ 		/* we received a single urgent Byte - skip */
+@@ -344,10 +345,10 @@ static bool smc_rx_recvmsg_data_available(struct smc_sock *smc)
+ int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
+ 		   struct pipe_inode_info *pipe, size_t len, int flags)
+ {
+-	size_t copylen, read_done = 0, read_remaining = len;
++	size_t copylen, read_done = 0, read_remaining = len, peeked_bytes = 0;
+ 	size_t chunk_len, chunk_off, chunk_len_sum;
+ 	struct smc_connection *conn = &smc->conn;
+-	int (*func)(struct smc_connection *conn);
++	int (*func)(struct smc_connection *conn, size_t baseline);
+ 	union smc_host_cursor cons;
+ 	int readable, chunk;
+ 	char *rcvbuf_base;
+@@ -384,14 +385,14 @@ int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
+ 		if (conn->killed)
+ 			break;
  
- 			interrupts-extended = <&intc GIC_SPI 887 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&smp2p_nsp1_in 0 IRQ_TYPE_EDGE_RISING>,
+-		if (smc_rx_recvmsg_data_available(smc))
++		if (smc_rx_recvmsg_data_available(smc, peeked_bytes))
+ 			goto copy;
+ 
+ 		if (sk->sk_shutdown & RCV_SHUTDOWN) {
+ 			/* smc_cdc_msg_recv_action() could have run after
+ 			 * above smc_rx_recvmsg_data_available()
+ 			 */
+-			if (smc_rx_recvmsg_data_available(smc))
++			if (smc_rx_recvmsg_data_available(smc, peeked_bytes))
+ 				goto copy;
+ 			break;
+ 		}
+@@ -425,26 +426,28 @@ int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
+ 			}
+ 		}
+ 
+-		if (!smc_rx_data_available(conn)) {
+-			smc_rx_wait(smc, &timeo, smc_rx_data_available);
++		if (!smc_rx_data_available(conn, peeked_bytes)) {
++			smc_rx_wait(smc, &timeo, peeked_bytes, smc_rx_data_available);
+ 			continue;
+ 		}
+ 
+ copy:
+ 		/* initialize variables for 1st iteration of subsequent loop */
+ 		/* could be just 1 byte, even after waiting on data above */
+-		readable = atomic_read(&conn->bytes_to_rcv);
++		readable = smc_rx_data_available(conn, peeked_bytes);
+ 		splbytes = atomic_read(&conn->splice_pending);
+ 		if (!readable || (msg && splbytes)) {
+ 			if (splbytes)
+ 				func = smc_rx_data_available_and_no_splice_pend;
+ 			else
+ 				func = smc_rx_data_available;
+-			smc_rx_wait(smc, &timeo, func);
++			smc_rx_wait(smc, &timeo, peeked_bytes, func);
+ 			continue;
+ 		}
+ 
+ 		smc_curs_copy(&cons, &conn->local_tx_ctrl.cons, conn);
++		if ((flags & MSG_PEEK) && peeked_bytes)
++			smc_curs_add(conn->rmb_desc->len, &cons, peeked_bytes);
+ 		/* subsequent splice() calls pick up where previous left */
+ 		if (splbytes)
+ 			smc_curs_add(conn->rmb_desc->len, &cons, splbytes);
+@@ -480,6 +483,8 @@ int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
+ 			}
+ 			read_remaining -= chunk_len;
+ 			read_done += chunk_len;
++			if (flags & MSG_PEEK)
++				peeked_bytes += chunk_len;
+ 
+ 			if (chunk_len_sum == copylen)
+ 				break; /* either on 1st or 2nd iteration */
+diff --git a/net/smc/smc_rx.h b/net/smc/smc_rx.h
+index db823c97d824e..994f5e42d1ba2 100644
+--- a/net/smc/smc_rx.h
++++ b/net/smc/smc_rx.h
+@@ -21,11 +21,11 @@ void smc_rx_init(struct smc_sock *smc);
+ 
+ int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
+ 		   struct pipe_inode_info *pipe, size_t len, int flags);
+-int smc_rx_wait(struct smc_sock *smc, long *timeo,
+-		int (*fcrit)(struct smc_connection *conn));
+-static inline int smc_rx_data_available(struct smc_connection *conn)
++int smc_rx_wait(struct smc_sock *smc, long *timeo, size_t peeked,
++		int (*fcrit)(struct smc_connection *conn, size_t baseline));
++static inline int smc_rx_data_available(struct smc_connection *conn, size_t peeked)
+ {
+-	return atomic_read(&conn->bytes_to_rcv);
++	return atomic_read(&conn->bytes_to_rcv) - peeked;
+ }
+ 
+ #endif /* SMC_RX_H */
 -- 
 2.39.5
 
