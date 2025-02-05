@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053AF151988;
-	Wed,  5 Feb 2025 14:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F5F151988;
+	Wed,  5 Feb 2025 14:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766178; cv=none; b=E6MPdlP/w4Za1GimaLM5dwrn/CyHAqeMJFdi0/zt2bp02Rn0OEtlYxH4rO6rx8oVyITw4K23sl7SXvVuPsJKoGbGOGdAbqUFz18tIpx9PclGP06d7T63YG5vDxMPgL589DPcUmSJSpqO+ZX5QbdwAKIjUkKgLAxjc8cboYd5iaE=
+	t=1738766181; cv=none; b=YlerOSU0SUOq7+zIiMsKnWJhUYTdbLKLNh0V1SwClLiRf8C2USc1GLj37su0nkScTl81oML+lTR1dqYPimCajZIyzUTCRdRDh3hpzA22hTHc64mJ0pyw/j9TUwFZgQiDCfLt7XoDV1WXrT+svGzHWb2Yim5edKNs3CgXVONMavY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766178; c=relaxed/simple;
-	bh=52r+JlhetmPg0ghRr438q+qVBYYUlcYvQ0d8+3ih9NI=;
+	s=arc-20240116; t=1738766181; c=relaxed/simple;
+	bh=936TuQTZHEz8tsVTZ3mo4sqWzXffcnasqg8Vo86P+oQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GtcgfIREJ1v6aYIq5o8yufEDluNKDoOHO8hKfg3jp1D6VGGw+/ziK/6oTqRSTdsvCuc68oyszlOipRwa9aYBtB3Z+6BMf3bZbi1bpXmAlZDyfJH9pSxR07UV6MgiscWTIIMOsG3e0ppaiGPfdBwtRw+Zl/I1lj9beXnVdkr7JJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvXil6e5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bUxrSRuNqj7avKiRVnMw1WoL4P9bBc8yDSJT3ygrlfACsMH0WvEFzvsBDaPXLFmMXPqJwyOtgm7D5skh+w7seXbbSGsdbUmQrBx0kikgfWIjRQZaP8Pd2gq27I1bYs0Xe9i+u8Pq8MxZgIoJnoOvYq7Z1+t+1szgx6QRuW1IQTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMQMWZQt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvXil6e5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760B4C4CED1;
-	Wed,  5 Feb 2025 14:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMQMWZQt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73254C4CED1;
+	Wed,  5 Feb 2025 14:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766177;
-	bh=52r+JlhetmPg0ghRr438q+qVBYYUlcYvQ0d8+3ih9NI=;
+	s=korg; t=1738766180;
+	bh=936TuQTZHEz8tsVTZ3mo4sqWzXffcnasqg8Vo86P+oQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FvXil6e5eg1FCBHPYn1rZI4VppmCnkmAO8ap3zxfsolwJpe5dvH6Dl6DQRVtpSdFm
-	 MQh7OLEB/IlqZjRZGdtlP5IPJ56ykiH/5Krc9jiCVUiyp6MuHIyqeZEY1hsJX1/Fhe
-	 DuhqXpLpkTza/2B1fhZudQzorLSOuF74OCJXVX7s=
+	b=sMQMWZQtvaD3AeTEZXVmrG8T+xIAbellMNoYi3LqQwsiwzHzaH40JSi5+DfFIJia/
+	 fcgK3VYZheA0GG7hKO3czmFTLq8GGfO5QWEnkHWi8vqKH/7nKxP86gtUdgrejF2mhg
+	 dfYZfs2drlnxEHyXKb3iVndL+xorLAcjXrMkTMGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Qu Zicheng <quzicheng@huawei.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 294/590] padata: fix UAF in padata_reorder
-Date: Wed,  5 Feb 2025 14:40:49 +0100
-Message-ID: <20250205134506.525099255@linuxfoundation.org>
+Subject: [PATCH 6.6 337/393] PM: sleep: Restore asynchronous device resume optimization
+Date: Wed,  5 Feb 2025 14:44:16 +0100
+Message-ID: <20250205134433.204322904@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,96 +47,286 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit e01780ea4661172734118d2a5f41bc9720765668 ]
+[ Upstream commit 3e999770ac1c7c31a70685dd5b88e89473509e9c ]
 
-A bug was found when run ltp test:
+Before commit 7839d0078e0d ("PM: sleep: Fix possible deadlocks in core
+system-wide PM code"), the resume of devices that were allowed to resume
+asynchronously was scheduled before starting the resume of the other
+devices, so the former did not have to wait for the latter unless
+functional dependencies were present.
 
-BUG: KASAN: slab-use-after-free in padata_find_next+0x29/0x1a0
-Read of size 4 at addr ffff88bbfe003524 by task kworker/u113:2/3039206
+Commit 7839d0078e0d removed that optimization in order to address a
+correctness issue, but it can be restored with the help of a new device
+power management flag, so do that now.
 
-CPU: 0 PID: 3039206 Comm: kworker/u113:2 Kdump: loaded Not tainted 6.6.0+
-Workqueue: pdecrypt_parallel padata_parallel_worker
-Call Trace:
-<TASK>
-dump_stack_lvl+0x32/0x50
-print_address_description.constprop.0+0x6b/0x3d0
-print_report+0xdd/0x2c0
-kasan_report+0xa5/0xd0
-padata_find_next+0x29/0x1a0
-padata_reorder+0x131/0x220
-padata_parallel_worker+0x3d/0xc0
-process_one_work+0x2ec/0x5a0
-
-If 'mdelay(10)' is added before calling 'padata_find_next' in the
-'padata_reorder' function, this issue could be reproduced easily with
-ltp test (pcrypt_aead01).
-
-This can be explained as bellow:
-
-pcrypt_aead_encrypt
-...
-padata_do_parallel
-refcount_inc(&pd->refcnt); // add refcnt
-...
-padata_do_serial
-padata_reorder // pd
-while (1) {
-padata_find_next(pd, true); // using pd
-queue_work_on
-...
-padata_serial_worker				crypto_del_alg
-padata_put_pd_cnt // sub refcnt
-						padata_free_shell
-						padata_put_pd(ps->pd);
-						// pd is freed
-// loop again, but pd is freed
-// call padata_find_next, UAF
-}
-
-In the padata_reorder function, when it loops in 'while', if the alg is
-deleted, the refcnt may be decreased to 0 before entering
-'padata_find_next', which leads to UAF.
-
-As mentioned in [1], do_serial is supposed to be called with BHs disabled
-and always happen under RCU protection, to address this issue, add
-synchronize_rcu() in 'padata_free_shell' wait for all _do_serial calls
-to finish.
-
-[1] https://lore.kernel.org/all/20221028160401.cccypv4euxikusiq@parnassus.localdomain/
-[2] https://lore.kernel.org/linux-kernel/jfjz5d7zwbytztackem7ibzalm5lnxldi2eofeiczqmqs2m7o6@fq426cwnjtkm/
-Fixes: b128a3040935 ("padata: allocate workqueue internally")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Signed-off-by: Qu Zicheng <quzicheng@huawei.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Stable-dep-of: 3775fc538f53 ("PM: sleep: core: Synchronize runtime PM status of parents and children")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/base/power/main.c | 117 +++++++++++++++++++++-----------------
+ include/linux/pm.h        |   1 +
+ 2 files changed, 65 insertions(+), 53 deletions(-)
 
-diff --git a/kernel/padata.c b/kernel/padata.c
-index ada4a0d137d9b..e2ae2c3747a85 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -1128,6 +1128,12 @@ void padata_free_shell(struct padata_shell *ps)
- 	if (!ps)
- 		return;
+diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
+index 9c5a5f4dba5a6..fadcd0379dc2d 100644
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -579,7 +579,7 @@ bool dev_pm_skip_resume(struct device *dev)
+ }
+ 
+ /**
+- * __device_resume_noirq - Execute a "noirq resume" callback for given device.
++ * device_resume_noirq - Execute a "noirq resume" callback for given device.
+  * @dev: Device to handle.
+  * @state: PM transition of the system being carried out.
+  * @async: If true, the device is being resumed asynchronously.
+@@ -587,7 +587,7 @@ bool dev_pm_skip_resume(struct device *dev)
+  * The driver of @dev will not receive interrupts while this function is being
+  * executed.
+  */
+-static void __device_resume_noirq(struct device *dev, pm_message_t state, bool async)
++static void device_resume_noirq(struct device *dev, pm_message_t state, bool async)
+ {
+ 	pm_callback_t callback = NULL;
+ 	const char *info = NULL;
+@@ -674,16 +674,22 @@ static bool dpm_async_fn(struct device *dev, async_func_t func)
+ {
+ 	reinit_completion(&dev->power.completion);
+ 
+-	if (!is_async(dev))
+-		return false;
+-
+-	get_device(dev);
++	if (is_async(dev)) {
++		dev->power.async_in_progress = true;
+ 
+-	if (async_schedule_dev_nocall(func, dev))
+-		return true;
++		get_device(dev);
+ 
+-	put_device(dev);
++		if (async_schedule_dev_nocall(func, dev))
++			return true;
+ 
++		put_device(dev);
++	}
++	/*
++	 * Because async_schedule_dev_nocall() above has returned false or it
++	 * has not been called at all, func() is not running and it is safe to
++	 * update the async_in_progress flag without extra synchronization.
++	 */
++	dev->power.async_in_progress = false;
+ 	return false;
+ }
+ 
+@@ -691,18 +697,10 @@ static void async_resume_noirq(void *data, async_cookie_t cookie)
+ {
+ 	struct device *dev = data;
+ 
+-	__device_resume_noirq(dev, pm_transition, true);
++	device_resume_noirq(dev, pm_transition, true);
+ 	put_device(dev);
+ }
+ 
+-static void device_resume_noirq(struct device *dev)
+-{
+-	if (dpm_async_fn(dev, async_resume_noirq))
+-		return;
+-
+-	__device_resume_noirq(dev, pm_transition, false);
+-}
+-
+ static void dpm_noirq_resume_devices(pm_message_t state)
+ {
+ 	struct device *dev;
+@@ -712,18 +710,28 @@ static void dpm_noirq_resume_devices(pm_message_t state)
+ 	mutex_lock(&dpm_list_mtx);
+ 	pm_transition = state;
  
 +	/*
-+	 * Wait for all _do_serial calls to finish to avoid touching
-+	 * freed pd's and ps's.
++	 * Trigger the resume of "async" devices upfront so they don't have to
++	 * wait for the "non-async" ones they don't depend on.
 +	 */
-+	synchronize_rcu();
++	list_for_each_entry(dev, &dpm_noirq_list, power.entry)
++		dpm_async_fn(dev, async_resume_noirq);
 +
- 	mutex_lock(&ps->pinst->lock);
- 	list_del(&ps->list);
- 	pd = rcu_dereference_protected(ps->pd, 1);
+ 	while (!list_empty(&dpm_noirq_list)) {
+ 		dev = to_device(dpm_noirq_list.next);
+-		get_device(dev);
+ 		list_move_tail(&dev->power.entry, &dpm_late_early_list);
+ 
+-		mutex_unlock(&dpm_list_mtx);
++		if (!dev->power.async_in_progress) {
++			get_device(dev);
+ 
+-		device_resume_noirq(dev);
++			mutex_unlock(&dpm_list_mtx);
+ 
+-		put_device(dev);
++			device_resume_noirq(dev, state, false);
+ 
+-		mutex_lock(&dpm_list_mtx);
++			put_device(dev);
++
++			mutex_lock(&dpm_list_mtx);
++		}
+ 	}
+ 	mutex_unlock(&dpm_list_mtx);
+ 	async_synchronize_full();
+@@ -747,14 +755,14 @@ void dpm_resume_noirq(pm_message_t state)
+ }
+ 
+ /**
+- * __device_resume_early - Execute an "early resume" callback for given device.
++ * device_resume_early - Execute an "early resume" callback for given device.
+  * @dev: Device to handle.
+  * @state: PM transition of the system being carried out.
+  * @async: If true, the device is being resumed asynchronously.
+  *
+  * Runtime PM is disabled for @dev while this function is being executed.
+  */
+-static void __device_resume_early(struct device *dev, pm_message_t state, bool async)
++static void device_resume_early(struct device *dev, pm_message_t state, bool async)
+ {
+ 	pm_callback_t callback = NULL;
+ 	const char *info = NULL;
+@@ -820,18 +828,10 @@ static void async_resume_early(void *data, async_cookie_t cookie)
+ {
+ 	struct device *dev = data;
+ 
+-	__device_resume_early(dev, pm_transition, true);
++	device_resume_early(dev, pm_transition, true);
+ 	put_device(dev);
+ }
+ 
+-static void device_resume_early(struct device *dev)
+-{
+-	if (dpm_async_fn(dev, async_resume_early))
+-		return;
+-
+-	__device_resume_early(dev, pm_transition, false);
+-}
+-
+ /**
+  * dpm_resume_early - Execute "early resume" callbacks for all devices.
+  * @state: PM transition of the system being carried out.
+@@ -845,18 +845,28 @@ void dpm_resume_early(pm_message_t state)
+ 	mutex_lock(&dpm_list_mtx);
+ 	pm_transition = state;
+ 
++	/*
++	 * Trigger the resume of "async" devices upfront so they don't have to
++	 * wait for the "non-async" ones they don't depend on.
++	 */
++	list_for_each_entry(dev, &dpm_late_early_list, power.entry)
++		dpm_async_fn(dev, async_resume_early);
++
+ 	while (!list_empty(&dpm_late_early_list)) {
+ 		dev = to_device(dpm_late_early_list.next);
+-		get_device(dev);
+ 		list_move_tail(&dev->power.entry, &dpm_suspended_list);
+ 
+-		mutex_unlock(&dpm_list_mtx);
++		if (!dev->power.async_in_progress) {
++			get_device(dev);
+ 
+-		device_resume_early(dev);
++			mutex_unlock(&dpm_list_mtx);
+ 
+-		put_device(dev);
++			device_resume_early(dev, state, false);
+ 
+-		mutex_lock(&dpm_list_mtx);
++			put_device(dev);
++
++			mutex_lock(&dpm_list_mtx);
++		}
+ 	}
+ 	mutex_unlock(&dpm_list_mtx);
+ 	async_synchronize_full();
+@@ -876,12 +886,12 @@ void dpm_resume_start(pm_message_t state)
+ EXPORT_SYMBOL_GPL(dpm_resume_start);
+ 
+ /**
+- * __device_resume - Execute "resume" callbacks for given device.
++ * device_resume - Execute "resume" callbacks for given device.
+  * @dev: Device to handle.
+  * @state: PM transition of the system being carried out.
+  * @async: If true, the device is being resumed asynchronously.
+  */
+-static void __device_resume(struct device *dev, pm_message_t state, bool async)
++static void device_resume(struct device *dev, pm_message_t state, bool async)
+ {
+ 	pm_callback_t callback = NULL;
+ 	const char *info = NULL;
+@@ -975,18 +985,10 @@ static void async_resume(void *data, async_cookie_t cookie)
+ {
+ 	struct device *dev = data;
+ 
+-	__device_resume(dev, pm_transition, true);
++	device_resume(dev, pm_transition, true);
+ 	put_device(dev);
+ }
+ 
+-static void device_resume(struct device *dev)
+-{
+-	if (dpm_async_fn(dev, async_resume))
+-		return;
+-
+-	__device_resume(dev, pm_transition, false);
+-}
+-
+ /**
+  * dpm_resume - Execute "resume" callbacks for non-sysdev devices.
+  * @state: PM transition of the system being carried out.
+@@ -1006,16 +1008,25 @@ void dpm_resume(pm_message_t state)
+ 	pm_transition = state;
+ 	async_error = 0;
+ 
++	/*
++	 * Trigger the resume of "async" devices upfront so they don't have to
++	 * wait for the "non-async" ones they don't depend on.
++	 */
++	list_for_each_entry(dev, &dpm_suspended_list, power.entry)
++		dpm_async_fn(dev, async_resume);
++
+ 	while (!list_empty(&dpm_suspended_list)) {
+ 		dev = to_device(dpm_suspended_list.next);
+ 
+ 		get_device(dev);
+ 
+-		mutex_unlock(&dpm_list_mtx);
++		if (!dev->power.async_in_progress) {
++			mutex_unlock(&dpm_list_mtx);
+ 
+-		device_resume(dev);
++			device_resume(dev, state, false);
+ 
+-		mutex_lock(&dpm_list_mtx);
++			mutex_lock(&dpm_list_mtx);
++		}
+ 
+ 		if (!list_empty(&dev->power.entry))
+ 			list_move_tail(&dev->power.entry, &dpm_prepared_list);
+diff --git a/include/linux/pm.h b/include/linux/pm.h
+index 629c1633bbd00..943b553720f82 100644
+--- a/include/linux/pm.h
++++ b/include/linux/pm.h
+@@ -681,6 +681,7 @@ struct dev_pm_info {
+ 	bool			wakeup_path:1;
+ 	bool			syscore:1;
+ 	bool			no_pm_callbacks:1;	/* Owned by the PM core */
++	bool			async_in_progress:1;	/* Owned by the PM core */
+ 	unsigned int		must_resume:1;	/* Owned by the PM core */
+ 	unsigned int		may_skip_resume:1;	/* Set by subsystems */
+ #else
 -- 
 2.39.5
 
