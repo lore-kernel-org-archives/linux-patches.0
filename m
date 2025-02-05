@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3805121345;
-	Wed,  5 Feb 2025 15:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12371519B4;
+	Wed,  5 Feb 2025 15:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768158; cv=none; b=iCvqdq853vrTer2WoR2Vzw8AvRpI8jhNR8HyeqbmvQsgUe00mqcSOzjlposi2OemNe6e8j8nXeD/IrWmbY8sX6BgQ6gwVogXIzQ2imTMnZFTFqpRQfGToqizComE/nNjAXMSWhrjVJTYF8wPT1LpCSSG3yCF/NiRtd6elsr1U80=
+	t=1738768161; cv=none; b=aVzrAJV7/rq6/KF5ecFyKo/Z8bZI6DNkggvEfPHsT5UTORlzywDh7faSLwz3B8k9fOi1Dej3j3vnUMnbZd7IzEHgdFvrQBLiytgeoehOGrUL35P4+MzT2amgpKos8uSLBGqcxl+kmSRZTJVbtN3QzbPXZ12iUowCKT6b+mB1QXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768158; c=relaxed/simple;
-	bh=HZ7ccEuinhhQoFEigxlJ+b+PKjrcr9X6tUGb2aiqqmk=;
+	s=arc-20240116; t=1738768161; c=relaxed/simple;
+	bh=egsBEBi9krzIiVtl5fd+k1suYfEPm5mvC0bQF79Z1bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zdy4U3qViU2zYMidJ8Rg4ozF1cIX+GY6x3vxO7mHM3IOnzDVvbO79G1W+DL9DwNdDmpO/E8yzTuCEEa86drMT4Sf/XWGgmsGYdT19t9uVYo0qZRAJRuaCySpk1wzXpfbqz5kBNZnUnDFLXk64xqiWotOhw8l7TfnRs8g4+itKRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IXzfr/rN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NdcJFU8Lh3akepEVrbhb+sSXlwsPs7Dq4ucoVfVKVfBWJVRM/Tq0sCbCiebkFtiO0OQz6RP44Cerz7IQnBu9Lv7Yc3XEjRObNqD9q7zlsORNmchhX2JlL6kfK7fkf4QCjN5YvY/DyQTYifHYRRgnFN36hckPeGkLy4nGbsPanfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkw9uNLf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXzfr/rN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AE9C4CED1;
-	Wed,  5 Feb 2025 15:09:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkw9uNLf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209DDC4CED1;
+	Wed,  5 Feb 2025 15:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768158;
-	bh=HZ7ccEuinhhQoFEigxlJ+b+PKjrcr9X6tUGb2aiqqmk=;
+	s=korg; t=1738768161;
+	bh=egsBEBi9krzIiVtl5fd+k1suYfEPm5mvC0bQF79Z1bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IXzfr/rNMVEOP+0W2FM0GBfnLrv5qgbwAFxp20Xmr6YG3L7HShF4nOvhtCMSkbv0P
-	 PAQhgQ07XVux3mHkfzMD9RjiO41zcaWKCrBxc6yDvO8R+RZmc9rUDwHZcM0jTiFHV1
-	 64A1GxtM3mwkjP7LNGRcsPObTuzpwuvin2SVDHZg=
+	b=mkw9uNLfPOm2UQnbKdc5WZ0gQqvg2NXRoH73UIdNco0+JUsiZk4Gffg9s2oIwQI4U
+	 tgK+y5KpJq5OA44eYLIqz1yU+NMH91VcZnJvTgV2Yu+6vEn/iJxlCanxlphyqxeGP8
+	 PWtX9sABzETPGHf9JfSdUQh2GxsazUPDC+wgGpTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 561/590] clk: qcom: gcc-x1e80100: Do not turn off usb_2 controller GDSC
-Date: Wed,  5 Feb 2025 14:45:16 +0100
-Message-ID: <20250205134516.730078505@linuxfoundation.org>
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Andy Shevchenko <andy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 506/623] gpio: mxc: remove dead code after switch to DT-only
+Date: Wed,  5 Feb 2025 14:44:08 +0100
+Message-ID: <20250205134515.577438233@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-commit d26c4ad3fa53e76a602a9974ade171c8399f2a29 upstream.
+[ Upstream commit b049e7abe9001a780d58e78e3833dcceee22f396 ]
 
-Allowing the usb_2 controller GDSC to be turned off during system suspend
-renders the controller unable to resume.
+struct platform_device::id was only set by board code, but since i.MX
+became a devicetree-only platform, this will always be -1
+(PLATFORM_DEVID_NONE).
 
-So use PWRSTS_RET_ON instead in order to make sure this the GDSC doesn't
-go down.
+Note: of_alias_get_id() returns a negative number on error and base
+treats all negative errors the same, so we need not add any additional
+error handling.
 
-Fixes: 161b7c401f4b ("clk: qcom: Add Global Clock controller (GCC) driver for X1E80100")
-Cc: stable@vger.kernel.org      # 6.8
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20250107-x1e80100-clk-gcc-fix-usb2-gdsc-pwrsts-v1-1-e15d1a5e7d80@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0f2c7af45d7e ("gpio: mxc: Convert the driver to DT-only")
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://lore.kernel.org/r/20250113-b4-imx-gpio-base-warning-v1-3-0a28731a5cf6@pengutronix.de
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-x1e80100.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-mxc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/clk/qcom/gcc-x1e80100.c
-+++ b/drivers/clk/qcom/gcc-x1e80100.c
-@@ -6083,7 +6083,7 @@ static struct gdsc gcc_usb20_prim_gdsc =
- 	.pd = {
- 		.name = "gcc_usb20_prim_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
+diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
+index 4cb455b2bdee7..619b6fb9d833a 100644
+--- a/drivers/gpio/gpio-mxc.c
++++ b/drivers/gpio/gpio-mxc.c
+@@ -490,8 +490,7 @@ static int mxc_gpio_probe(struct platform_device *pdev)
+ 	port->gc.request = mxc_gpio_request;
+ 	port->gc.free = mxc_gpio_free;
+ 	port->gc.to_irq = mxc_gpio_to_irq;
+-	port->gc.base = (pdev->id < 0) ? of_alias_get_id(np, "gpio") * 32 :
+-					     pdev->id * 32;
++	port->gc.base = of_alias_get_id(np, "gpio") * 32;
  
+ 	err = devm_gpiochip_add_data(&pdev->dev, &port->gc, port);
+ 	if (err)
+-- 
+2.39.5
+
 
 
