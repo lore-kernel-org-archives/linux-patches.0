@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB7114B959;
-	Wed,  5 Feb 2025 14:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F331459F6;
+	Wed,  5 Feb 2025 14:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765360; cv=none; b=DRx1l6+nKWQhzxFTg7R4CDE4OkdnkRgpOSYcy0lRLmF9a4TiE5gn0aCXEB5dNrbK8fIk35XrHOVE8ZecYlHBIM6XatYhYZl8WJGWrs2FeQWifCdAQ5BVY4J2cvlsNYs7pA2r9Wo3eSHg0DvbhOVXquzgf3mW/G1wSXCH5LswstY=
+	t=1738765363; cv=none; b=rfl7LTJANHFznkcLgHcKrvLrhYT4OnBiWOWdunUiwyRoO8kkEXc3ZA/98563gYRWysh+2zduwZ9N4aew+m1jDMdflOv1kOFpbqNxmcMU2U9mSfjZZ7sU9Q5HA7C1j0BeMEGxWS+awcPHuXtZgzY/gcdD5oYBej5swa3eXUkWAmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765360; c=relaxed/simple;
-	bh=smCUGx7abtBUVrW6QL575mRgbtpmTmC/qhqnMQyWjZo=;
+	s=arc-20240116; t=1738765363; c=relaxed/simple;
+	bh=xYE9CAWgpNg5k2gbf9peWZHa+atz664j424j2AF3qVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aftnus1tu+oO3MRSXabkdFEZOQZYHJeyZxInIQDCIzso+LhtmGaoHeOgOnBxRg5evno62Mv91o4lH+hKonQlS9GdklPnliM5HcKk+GgKkPTXUU1pidrXmFIbtTdY5b1HdkQfawhpy7HksByiKSDT5mMQWrCGPGy87SWWWCGy7/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSxiN9UU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W1J6MronkhbkFc+R0pFbJq8jqzbBq7yI6X6OZg4/Aswx23AfKtAhYlSotdcGrEoZ8MzQyzN/0kheRG9aF5ym68wTG8/habJP4ZSkp/kaGY51uFaxVugtvmcdA+srOJywRFKBsHvpVbkEuaiRNh5gRfuKbpZP/SJhvupyt4vyL4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVzZBAcg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSxiN9UU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80DBBC4CED1;
-	Wed,  5 Feb 2025 14:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVzZBAcg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C237BC4CED1;
+	Wed,  5 Feb 2025 14:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765359;
-	bh=smCUGx7abtBUVrW6QL575mRgbtpmTmC/qhqnMQyWjZo=;
+	s=korg; t=1738765363;
+	bh=xYE9CAWgpNg5k2gbf9peWZHa+atz664j424j2AF3qVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TSxiN9UU5pm0jDjJCd5lMXT3mkyEvKS1jmDwLCBzy4ak9rIIq705zb2Dj9YN8nIXR
-	 BBdx727RYFIEPW7sBSjgvZFLrzwEB3+bc/glFm1h8Fwq4Lbi7aSuPfIgSCuPowRaYE
-	 R98Bozbpt3odebaCinDkMclu8jIJSq77r+sD5ilc=
+	b=oVzZBAcg/nM+1fUyI1ZtuujPsonRMfeAHQICkyIDkCEEklAoP8hREzfIRKS+6wZ2z
+	 VwPbuvjzdwrFn3e1rrepZHHtD0RwBnHpJTL3iN2ZO4ca6ipA7leky6PKW0SAHPbTBF
+	 i+7IUTuPiJQ/KjY8Vr1kUKQtEOM5X46d9hX1+o7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	syzbot+040e8b3db6a96908d470@syzkaller.appspotmail.com,
+	Karol Przybylski <karprzy7@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 194/590] wifi: mt76: mt7925: Update mt7925_mcu_uni_[tx,rx]_ba for MLO
-Date: Wed,  5 Feb 2025 14:39:09 +0100
-Message-ID: <20250205134502.700679089@linuxfoundation.org>
+Subject: [PATCH 6.13 146/623] HID: hid-thrustmaster: Fix warning in thrustmaster_probe by adding endpoint check
+Date: Wed,  5 Feb 2025 14:38:08 +0100
+Message-ID: <20250205134501.819891868@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,169 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Karol Przybylski <karprzy7@gmail.com>
 
-[ Upstream commit eb2a9a12c6092a26f632468d6610497d4f0e40da ]
+[ Upstream commit 50420d7c79c37a3efe4010ff9b1bb14bc61ebccf ]
 
-Update mt7925_mcu_uni_[tx,rx]_ba for MLO support in firmware.
+syzbot has found a type mismatch between a USB pipe and the transfer
+endpoint, which is triggered by the hid-thrustmaster driver[1].
+There is a number of similar, already fixed issues [2].
+In this case as in others, implementing check for endpoint type fixes the issue.
 
-Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/20241211011926.5002-15-sean.wang@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[1] https://syzkaller.appspot.com/bug?extid=040e8b3db6a96908d470
+[2] https://syzkaller.appspot.com/bug?extid=348331f63b034f89b622
+
+Fixes: c49c33637802 ("HID: support for initialization of some Thrustmaster wheels")
+Reported-by: syzbot+040e8b3db6a96908d470@syzkaller.appspotmail.com
+Tested-by: syzbot+040e8b3db6a96908d470@syzkaller.appspotmail.com
+Signed-off-by: Karol Przybylski <karprzy7@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7925/main.c  | 10 ++--
- .../net/wireless/mediatek/mt76/mt7925/mcu.c   | 50 +++++++++++++++----
- .../wireless/mediatek/mt76/mt7925/mt7925.h    |  2 +
- 3 files changed, 48 insertions(+), 14 deletions(-)
+ drivers/hid/hid-thrustmaster.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index a2d1c43098d3c..a4ffa34d58a41 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -1258,22 +1258,22 @@ mt7925_ampdu_action(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 	case IEEE80211_AMPDU_RX_START:
- 		mt76_rx_aggr_start(&dev->mt76, &msta->deflink.wcid, tid, ssn,
- 				   params->buf_size);
--		mt7925_mcu_uni_rx_ba(dev, params, true);
-+		mt7925_mcu_uni_rx_ba(dev, vif, params, true);
- 		break;
- 	case IEEE80211_AMPDU_RX_STOP:
- 		mt76_rx_aggr_stop(&dev->mt76, &msta->deflink.wcid, tid);
--		mt7925_mcu_uni_rx_ba(dev, params, false);
-+		mt7925_mcu_uni_rx_ba(dev, vif, params, false);
- 		break;
- 	case IEEE80211_AMPDU_TX_OPERATIONAL:
- 		mtxq->aggr = true;
- 		mtxq->send_bar = false;
--		mt7925_mcu_uni_tx_ba(dev, params, true);
-+		mt7925_mcu_uni_tx_ba(dev, vif, params, true);
- 		break;
- 	case IEEE80211_AMPDU_TX_STOP_FLUSH:
- 	case IEEE80211_AMPDU_TX_STOP_FLUSH_CONT:
- 		mtxq->aggr = false;
- 		clear_bit(tid, &msta->deflink.wcid.ampdu_state);
--		mt7925_mcu_uni_tx_ba(dev, params, false);
-+		mt7925_mcu_uni_tx_ba(dev, vif, params, false);
- 		break;
- 	case IEEE80211_AMPDU_TX_START:
- 		set_bit(tid, &msta->deflink.wcid.ampdu_state);
-@@ -1282,7 +1282,7 @@ mt7925_ampdu_action(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 	case IEEE80211_AMPDU_TX_STOP_CONT:
- 		mtxq->aggr = false;
- 		clear_bit(tid, &msta->deflink.wcid.ampdu_state);
--		mt7925_mcu_uni_tx_ba(dev, params, false);
-+		mt7925_mcu_uni_tx_ba(dev, vif, params, false);
- 		ieee80211_stop_tx_ba_cb_irqsafe(vif, sta->addr, tid);
- 		break;
- 	}
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index 0976f3dffbe46..e4c0f234aeed2 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -529,10 +529,10 @@ void mt7925_mcu_rx_event(struct mt792x_dev *dev, struct sk_buff *skb)
+diff --git a/drivers/hid/hid-thrustmaster.c b/drivers/hid/hid-thrustmaster.c
+index cf1679b0d4fbb..6c3e758bbb09e 100644
+--- a/drivers/hid/hid-thrustmaster.c
++++ b/drivers/hid/hid-thrustmaster.c
+@@ -170,6 +170,14 @@ static void thrustmaster_interrupts(struct hid_device *hdev)
+ 	ep = &usbif->cur_altsetting->endpoint[1];
+ 	b_ep = ep->desc.bEndpointAddress;
  
- static int
- mt7925_mcu_sta_ba(struct mt76_dev *dev, struct mt76_vif *mvif,
-+		  struct mt76_wcid *wcid,
- 		  struct ieee80211_ampdu_params *params,
- 		  bool enable, bool tx)
- {
--	struct mt76_wcid *wcid = (struct mt76_wcid *)params->sta->drv_priv;
- 	struct sta_rec_ba_uni *ba;
- 	struct sk_buff *skb;
- 	struct tlv *tlv;
-@@ -560,28 +560,60 @@ mt7925_mcu_sta_ba(struct mt76_dev *dev, struct mt76_vif *mvif,
- 
- /** starec & wtbl **/
- int mt7925_mcu_uni_tx_ba(struct mt792x_dev *dev,
-+			 struct ieee80211_vif *vif,
- 			 struct ieee80211_ampdu_params *params,
- 			 bool enable)
- {
- 	struct mt792x_sta *msta = (struct mt792x_sta *)params->sta->drv_priv;
--	struct mt792x_vif *mvif = msta->vif;
-+	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
-+	struct mt792x_link_sta *mlink;
-+	struct mt792x_bss_conf *mconf;
-+	unsigned long usable_links = ieee80211_vif_usable_links(vif);
-+	struct mt76_wcid *wcid;
-+	u8 link_id, ret;
- 
--	if (enable && !params->amsdu)
--		msta->deflink.wcid.amsdu = false;
-+	for_each_set_bit(link_id, &usable_links, IEEE80211_MLD_MAX_NUM_LINKS) {
-+		mconf = mt792x_vif_to_link(mvif, link_id);
-+		mlink = mt792x_sta_to_link(msta, link_id);
-+		wcid = &mlink->wcid;
- 
--	return mt7925_mcu_sta_ba(&dev->mt76, &mvif->bss_conf.mt76, params,
--				 enable, true);
-+		if (enable && !params->amsdu)
-+			mlink->wcid.amsdu = false;
++	/* Are the expected endpoints present? */
++	u8 ep_addr[1] = {b_ep};
 +
-+		ret = mt7925_mcu_sta_ba(&dev->mt76, &mconf->mt76, wcid, params,
-+					enable, true);
-+		if (ret < 0)
-+			break;
++	if (!usb_check_int_endpoints(usbif, ep_addr)) {
++		hid_err(hdev, "Unexpected non-int endpoint\n");
++		return;
 +	}
 +
-+	return ret;
- }
+ 	for (i = 0; i < ARRAY_SIZE(setup_arr); ++i) {
+ 		memcpy(send_buf, setup_arr[i], setup_arr_sizes[i]);
  
- int mt7925_mcu_uni_rx_ba(struct mt792x_dev *dev,
-+			 struct ieee80211_vif *vif,
- 			 struct ieee80211_ampdu_params *params,
- 			 bool enable)
- {
- 	struct mt792x_sta *msta = (struct mt792x_sta *)params->sta->drv_priv;
--	struct mt792x_vif *mvif = msta->vif;
-+	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
-+	struct mt792x_link_sta *mlink;
-+	struct mt792x_bss_conf *mconf;
-+	unsigned long usable_links = ieee80211_vif_usable_links(vif);
-+	struct mt76_wcid *wcid;
-+	u8 link_id, ret;
- 
--	return mt7925_mcu_sta_ba(&dev->mt76, &mvif->bss_conf.mt76, params,
--				 enable, false);
-+	for_each_set_bit(link_id, &usable_links, IEEE80211_MLD_MAX_NUM_LINKS) {
-+		mconf = mt792x_vif_to_link(mvif, link_id);
-+		mlink = mt792x_sta_to_link(msta, link_id);
-+		wcid = &mlink->wcid;
-+
-+		ret = mt7925_mcu_sta_ba(&dev->mt76, &mconf->mt76, wcid, params,
-+					enable, false);
-+		if (ret < 0)
-+			break;
-+	}
-+
-+	return ret;
- }
- 
- static int mt7925_load_clc(struct mt792x_dev *dev, const char *fw_name)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h b/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-index f5c02e5f50663..df3c705d1cb3f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-@@ -242,9 +242,11 @@ int mt7925_mcu_set_beacon_filter(struct mt792x_dev *dev,
- 				 struct ieee80211_vif *vif,
- 				 bool enable);
- int mt7925_mcu_uni_tx_ba(struct mt792x_dev *dev,
-+			 struct ieee80211_vif *vif,
- 			 struct ieee80211_ampdu_params *params,
- 			 bool enable);
- int mt7925_mcu_uni_rx_ba(struct mt792x_dev *dev,
-+			 struct ieee80211_vif *vif,
- 			 struct ieee80211_ampdu_params *params,
- 			 bool enable);
- void mt7925_scan_work(struct work_struct *work);
 -- 
 2.39.5
 
