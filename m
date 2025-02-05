@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6933156C5E;
-	Wed,  5 Feb 2025 14:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100BD487BF;
+	Wed,  5 Feb 2025 14:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765810; cv=none; b=Ak6xjk+hfaJBtX5Uy83QuD/v2PQyYBNDZf5z3XkaIOuBCa7WBeeTZssVMhoRWquQ1kl8+K4kntWI351pDdSfZwc2MXMGRyAH/3SWQuKpUUQrFFzO4LtYINpgCzxeGsLIrfLiQsFXUr0hFAl4Dw1BQqI1opbb3GVmHH7I3pxg+8Q=
+	t=1738765814; cv=none; b=jeyEoqt2PtdfoCYG1gz52488YVOUs0zV04LaP/WPNpELKalo+ySUBAD6nADxGWvYHoySCQi+9Lvbgyk3OLmp74Mwihq9ajOW+nzzeMHlXKvvvqjXH+3T9XRBuw34g71MvWtwfkmzibtblS6V9EVLvfcoRfeFANoX5pZUT5ZuT3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765810; c=relaxed/simple;
-	bh=HAJb84Vn4MtEkZc/RtH9DYOUdi2qgITu1RwWMCYCJDo=;
+	s=arc-20240116; t=1738765814; c=relaxed/simple;
+	bh=3nzlP/4gr6tiuVD4pwyPW0W33g5CWV6wzYqOLQEqDEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMi+G4ncfNHiITNtCLCP4T9z0T3yB6IOvNE6/btwK5BfTRin+CPKjOOz7scPHyYva9zszFrsLuBYGHrI/c84K+hy+0W6tdMwgtrUGQvPZB//yFjdKkkqQgWZNhahsf9dZLXLhQYCmlK2e+6sUYfPP36qmSe1jZpkoDLPEVrrBRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ktQ1wNhX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hn8/zV8N0EOaHeLHg2qGgcMvAjmIjOS2E+Nl7yD1Mn7kPv+4lz1NAdrsXqEyxqrHSohnmx16kva+LvxLLmQ0bHSTDen+2uMTWSUp5Se+mFcSwEwDO8II0kLS4RdsLIruNieK1Zi5PLh1I/kmpqp1ifaaNioQ56ok4dfl7X9tSJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBHinnsZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktQ1wNhX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E7AC4CED1;
-	Wed,  5 Feb 2025 14:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBHinnsZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A1BC4CED1;
+	Wed,  5 Feb 2025 14:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765810;
-	bh=HAJb84Vn4MtEkZc/RtH9DYOUdi2qgITu1RwWMCYCJDo=;
+	s=korg; t=1738765813;
+	bh=3nzlP/4gr6tiuVD4pwyPW0W33g5CWV6wzYqOLQEqDEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ktQ1wNhXZ/Cdu1SXqFXPJrxdcPTCPCkRsW1HKRm8Wq1WLIQ2kW7mTrD+rmABx7f7D
-	 ubNR5f+PT5RawGWMjPw+ZKRlbEtJ/kHmnAYuYuXKR32SY+vI6yYDaYbDvQw1Ln/Gk9
-	 CmhEJSkTx1AuBQjcncjFFFWfV8NrekPWdj9CM2u4=
+	b=uBHinnsZxf2Gc9/JMsMBbdQlEOb9NaJcCmjXFQ6+++8v04Z3hZ8pNwrysdyEXlLvB
+	 rFLYnjRv5svodU3ZN7PkwIDiM8vIJf916FtTVSv9Oy0+Xc9cQawVMWbXni65y9PfHu
+	 ZvxHTeqmVa8ylaxbutS+UPnBRabxvMY5dhmGMZQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 302/393] PCI: endpoint: pci-epf-test: Fix check for DMA MEMCPY test
-Date: Wed,  5 Feb 2025 14:43:41 +0100
-Message-ID: <20250205134431.867567583@linuxfoundation.org>
+Subject: [PATCH 6.13 216/623] cpufreq: ACPI: Fix max-frequency computation
+Date: Wed,  5 Feb 2025 14:39:18 +0100
+Message-ID: <20250205134504.489887178@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,49 +49,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-[ Upstream commit 235c2b197a8de2887f13990094a3343d2392155b ]
+[ Upstream commit 0834667545962ef1c5e8684ed32b45d9c574acd3 ]
 
-Currently, if DMA MEMCPY test is requested by the host, and if the endpoint
-DMA controller supports DMA_PRIVATE, the test will fail. This is not
-correct since there is no check for DMA_MEMCPY capability and the DMA
-controller can support both DMA_PRIVATE and DMA_MEMCPY.
+Commit 3c55e94c0ade ("cpufreq: ACPI: Extend frequency tables to cover
+boost frequencies") introduced an assumption in acpi_cpufreq_cpu_init()
+that the first entry in the P-state table was the nominal frequency.
+This assumption is incorrect. The frequency corresponding to the P0
+P-State need not be the same as the nominal frequency advertised via
+CPPC.
 
-Fix the check and also reword the error message.
+Since the driver is using the CPPC.highest_perf and CPPC.nominal_perf
+to compute the boost-ratio, it makes sense to use CPPC.nominal_freq to
+compute the max-frequency. CPPC.nominal_freq is advertised on
+platforms supporting CPPC revisions 3 or higher.
 
-Link: https://lore.kernel.org/r/20250116171650.33585-2-manivannan.sadhasivam@linaro.org
-Fixes: 8353813c88ef ("PCI: endpoint: Enable DMA tests for endpoints with DMA capabilities")
-Reported-by: Niklas Cassel <cassel@kernel.org>
-Closes: https://lore.kernel.org/linux-pci/Z3QtEihbiKIGogWA@ryzen
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Hence, fallback to using the first entry in the P-State table only on
+platforms that do not advertise CPPC.nominal_freq.
+
+Fixes: 3c55e94c0ade ("cpufreq: ACPI: Extend frequency tables to cover boost frequencies")
+Tested-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20250113044107.566-1-gautham.shenoy@amd.com
+[ rjw: Retain reverse X-mas tree ordering of local variable declarations ]
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cpufreq/acpi-cpufreq.c | 36 +++++++++++++++++++++++++---------
+ 1 file changed, 27 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index fa7ae8cedb676..ac1dae113f2d9 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -361,8 +361,8 @@ static void pci_epf_test_copy(struct pci_epf_test *epf_test,
+diff --git a/drivers/cpufreq/acpi-cpufreq.c b/drivers/cpufreq/acpi-cpufreq.c
+index c9ebacf5c88e2..302df42d68875 100644
+--- a/drivers/cpufreq/acpi-cpufreq.c
++++ b/drivers/cpufreq/acpi-cpufreq.c
+@@ -623,7 +623,14 @@ static int acpi_cpufreq_blacklist(struct cpuinfo_x86 *c)
+ #endif
  
- 	ktime_get_ts64(&start);
- 	if (reg->flags & FLAG_USE_DMA) {
--		if (epf_test->dma_private) {
--			dev_err(dev, "Cannot transfer data using DMA\n");
-+		if (!dma_has_cap(DMA_MEMCPY, epf_test->dma_chan_tx->device->cap_mask)) {
-+			dev_err(dev, "DMA controller doesn't support MEMCPY\n");
- 			ret = -EINVAL;
- 			goto err_map_addr;
- 		}
+ #ifdef CONFIG_ACPI_CPPC_LIB
+-static u64 get_max_boost_ratio(unsigned int cpu)
++/*
++ * get_max_boost_ratio: Computes the max_boost_ratio as the ratio
++ * between the highest_perf and the nominal_perf.
++ *
++ * Returns the max_boost_ratio for @cpu. Returns the CPPC nominal
++ * frequency via @nominal_freq if it is non-NULL pointer.
++ */
++static u64 get_max_boost_ratio(unsigned int cpu, u64 *nominal_freq)
+ {
+ 	struct cppc_perf_caps perf_caps;
+ 	u64 highest_perf, nominal_perf;
+@@ -652,6 +659,9 @@ static u64 get_max_boost_ratio(unsigned int cpu)
+ 
+ 	nominal_perf = perf_caps.nominal_perf;
+ 
++	if (nominal_freq)
++		*nominal_freq = perf_caps.nominal_freq;
++
+ 	if (!highest_perf || !nominal_perf) {
+ 		pr_debug("CPU%d: highest or nominal performance missing\n", cpu);
+ 		return 0;
+@@ -664,8 +674,12 @@ static u64 get_max_boost_ratio(unsigned int cpu)
+ 
+ 	return div_u64(highest_perf << SCHED_CAPACITY_SHIFT, nominal_perf);
+ }
++
+ #else
+-static inline u64 get_max_boost_ratio(unsigned int cpu) { return 0; }
++static inline u64 get_max_boost_ratio(unsigned int cpu, u64 *nominal_freq)
++{
++	return 0;
++}
+ #endif
+ 
+ static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
+@@ -675,9 +689,9 @@ static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 	struct acpi_cpufreq_data *data;
+ 	unsigned int cpu = policy->cpu;
+ 	struct cpuinfo_x86 *c = &cpu_data(cpu);
++	u64 max_boost_ratio, nominal_freq = 0;
+ 	unsigned int valid_states = 0;
+ 	unsigned int result = 0;
+-	u64 max_boost_ratio;
+ 	unsigned int i;
+ #ifdef CONFIG_SMP
+ 	static int blacklisted;
+@@ -827,16 +841,20 @@ static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 	}
+ 	freq_table[valid_states].frequency = CPUFREQ_TABLE_END;
+ 
+-	max_boost_ratio = get_max_boost_ratio(cpu);
++	max_boost_ratio = get_max_boost_ratio(cpu, &nominal_freq);
+ 	if (max_boost_ratio) {
+-		unsigned int freq = freq_table[0].frequency;
++		unsigned int freq = nominal_freq;
+ 
+ 		/*
+-		 * Because the loop above sorts the freq_table entries in the
+-		 * descending order, freq is the maximum frequency in the table.
+-		 * Assume that it corresponds to the CPPC nominal frequency and
+-		 * use it to set cpuinfo.max_freq.
++		 * The loop above sorts the freq_table entries in the
++		 * descending order. If ACPI CPPC has not advertised
++		 * the nominal frequency (this is possible in CPPC
++		 * revisions prior to 3), then use the first entry in
++		 * the pstate table as a proxy for nominal frequency.
+ 		 */
++		if (!freq)
++			freq = freq_table[0].frequency;
++
+ 		policy->cpuinfo.max_freq = freq * max_boost_ratio >> SCHED_CAPACITY_SHIFT;
+ 	} else {
+ 		/*
 -- 
 2.39.5
 
