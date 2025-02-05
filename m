@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133EDFC0B;
-	Wed,  5 Feb 2025 13:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E54FC0B;
+	Wed,  5 Feb 2025 13:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763602; cv=none; b=MWb4j9OuPi82I9tyxUpHMcQ4VDtD2iia4iXxcKE6OTuB1NO4Vxqni6zL+Rej3o8zTrS96dPGWKAeCYPrPVlWtmVSkhLo98YbgaIQXZnTyhZTkj9j/u8oAyltLCL1tqDZrnQdQH/Zbi9+ZFdcbiPsSQH/d+pYnDubDTfGZIIWntc=
+	t=1738763605; cv=none; b=LJdwAfSRRio2hF6dNiwVyl4DS3ftjPYJmohH4XzCISyxBIonv9wpemD5XHl/vNbZluPw1Sn6JOMtZ5AM/dxTIt1lmln3maYfW69Ary8+A5XnVn5uYEdwus0v0iT0hEJpXlwhQTLYEgToK2/a+5jpv93j0ICh5XbI85GPLg8SY2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763602; c=relaxed/simple;
-	bh=VPCbIpUmtL3QKczp8VDyrEc9FkyBUftb5CW+DBG995o=;
+	s=arc-20240116; t=1738763605; c=relaxed/simple;
+	bh=28bxwGJlQvrMecuj7N/fsL2oOA1qg41qm8rB+J1JuPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nosVNgwLQ0yqkQnfycJPVP/4D0vX9Rfyx8OoEy0YAQluAP8QydtBhiT8GTAyQ2jyjr2ZGe44N/q3UFTsgZ1bgn/3oZ1xzBVLb4+gXN/xeywpnUMRDUuZwaHIo+kEzzbDrw3DPGJIOcckkZGqBuQFfqFJnQcdO11a64RNLvhd/4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRqcc0ix; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CUot41hjDE4n4OWA5kungpe/YtkmhshJdKHsLckOcH75jUrQmDqfJ5kFKfIELmUhM0tOVRj2HI2+gzJYLIW3LkxFf2YcWNuDS/wOz+CcrAxr3n0fcTE8zFQDmc7z3ivym4UZpp2y20AK58lHfHWwpBINwJM1+2RnPPJoyG8Wc9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iev0efQY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRqcc0ix"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2EDC4CED1;
-	Wed,  5 Feb 2025 13:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iev0efQY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D766DC4CED1;
+	Wed,  5 Feb 2025 13:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763601;
-	bh=VPCbIpUmtL3QKczp8VDyrEc9FkyBUftb5CW+DBG995o=;
+	s=korg; t=1738763605;
+	bh=28bxwGJlQvrMecuj7N/fsL2oOA1qg41qm8rB+J1JuPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iRqcc0ixvcFS/XzO0BSVfEofpWPjBm3MLrrkNZHKm5/y9xpkjOdCrm4BVEtMoahSe
-	 ujaLTWSS0kxC1t0hsoSsANTwGUPIc+VZhESbhhxb+yYxgUUTAorCZ60Gplo5FCU3l0
-	 t4txtXLP++3viWDYGpvLuSPW1LlLW4nSX3h3H/SU=
+	b=Iev0efQY1X1mbWB6Fs/AEzMrs9vVstvLQZV971pe+NnJHosajb8UZnO1Y8eOIfnih
+	 jizJ262zrzyvAcPtsxF8amrXu15zvVun0R8ywQVP+UTLMmsPuRB9cVwVwdUpAaysW7
+	 cN1SC0sJVecshfaA8yIbwj3iU+Tq0WxKxsildWA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengming Zhou <chengming.zhou@linux.dev>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 035/590] psi: Fix race when task wakes up before psi_sched_switch() adjusts flags
-Date: Wed,  5 Feb 2025 14:36:30 +0100
-Message-ID: <20250205134456.594634664@linuxfoundation.org>
+Subject: [PATCH 6.6 087/393] cpufreq: qcom: Implement clk_ops::determine_rate() for qcom_cpufreq* clocks
+Date: Wed,  5 Feb 2025 14:40:06 +0100
+Message-ID: <20250205134423.621301279@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,108 +49,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengming Zhou <chengming.zhou@linux.dev>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 7d9da040575b343085287686fa902a5b2d43c7ca ]
+[ Upstream commit a9ba290d0b829012574b6821ba08815046e60c94 ]
 
-When running hackbench in a cgroup with bandwidth throttling enabled,
-following PSI splat was observed:
+determine_rate() callback is used by the clk_set_rate() API to get the
+closest rate of the target rate supported by the clock. If this callback
+is not implemented (nor round_rate() callback), then the API will assume
+that the clock cannot set the requested rate. And since there is no parent,
+it will return -EINVAL.
 
-    psi: inconsistent task state! task=1831:hackbench cpu=8 psi_flags=14 clear=0 set=4
+This is not an issue right now as clk_set_rate() mistakenly compares the
+target rate with cached rate and bails out early. But once that is fixed
+to compare the target rate with the actual rate of the clock (returned by
+recalc_rate()), then clk_set_rate() for this clock will start to fail as
+below:
 
-When investigating the series of events leading up to the splat,
-following sequence was observed:
+cpu cpu0: _opp_config_clk_single: failed to set clock rate: -22
 
-    [008] d..2.: sched_switch: ... ==> next_comm=hackbench next_pid=1831 next_prio=120
-        ...
-    [008] dN.2.: dequeue_entity(task delayed): task=hackbench pid=1831 cfs_rq->throttled=0
-    [008] dN.2.: pick_task_fair: check_cfs_rq_runtime() throttled cfs_rq on CPU8
-    # CPU8 goes into newidle balance and releases the rq lock
-        ...
-    # CPU15 on same LLC Domain is trying to wakeup hackbench(pid=1831)
-    [015] d..4.: psi_flags_change: psi: task state: task=1831:hackbench cpu=8 psi_flags=14 clear=0 set=4 final=14 # Splat (cfs_rq->throttled=1)
-    [015] d..4.: sched_wakeup: comm=hackbench pid=1831 prio=120 target_cpu=008 # Task has woken on a throttled hierarchy
-    [008] d..2.: sched_switch: prev_comm=hackbench prev_pid=1831 prev_prio=120 prev_state=S ==> ...
+So implement the determine_rate() callback that just returns the actual
+rate at which the clock is passed to the CPUs in a domain.
 
-psi_dequeue() relies on psi_sched_switch() to set the correct PSI flags
-for the blocked entity, however, with the introduction of DELAY_DEQUEUE,
-the block task can wakeup when newidle balance drops the runqueue lock
-during __schedule().
-
-If a task wakes before psi_sched_switch() adjusts the PSI flags, skip
-any modifications in psi_enqueue() which would still see the flags of a
-running task and not a blocked one. Instead, rely on psi_sched_switch()
-to do the right thing.
-
-Since the status returned by try_to_block_task() may no longer be true
-by the time schedule reaches psi_sched_switch(), check if the task is
-blocked or not using a combination of task_on_rq_queued() and
-p->se.sched_delayed checks.
-
-[ prateek: Commit message, testing, early bailout in psi_enqueue() ]
-
-Fixes: 152e11f6df29 ("sched/fair: Implement delayed dequeue") # 1a6151017ee5
-Signed-off-by: Chengming Zhou <chengming.zhou@linux.dev>
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Chengming Zhou <chengming.zhou@linux.dev>
-Link: https://lore.kernel.org/r/20241227061941.2315-1-kprateek.nayak@amd.com
+Fixes: 4370232c727b ("cpufreq: qcom-hw: Add CPU clock provider support")
+Reported-by: Johan Hovold <johan+linaro@kernel.org>
+Suggested-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c  | 6 +++---
- kernel/sched/stats.h | 4 ++++
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/cpufreq/qcom-cpufreq-hw.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index c1d2d46feec50..aba41c69f09c4 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -6593,7 +6593,6 @@ static void __sched notrace __schedule(int sched_mode)
- 	 * as a preemption by schedule_debug() and RCU.
- 	 */
- 	bool preempt = sched_mode > SM_NONE;
--	bool block = false;
- 	unsigned long *switch_count;
- 	unsigned long prev_state;
- 	struct rq_flags rf;
-@@ -6654,7 +6653,7 @@ static void __sched notrace __schedule(int sched_mode)
- 			goto picked;
- 		}
- 	} else if (!preempt && prev_state) {
--		block = try_to_block_task(rq, prev, prev_state);
-+		try_to_block_task(rq, prev, prev_state);
- 		switch_count = &prev->nvcsw;
- 	}
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 3a4305df5c119..92c0fc4a3cf60 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -627,8 +627,21 @@ static unsigned long qcom_cpufreq_hw_recalc_rate(struct clk_hw *hw, unsigned lon
+ 	return __qcom_cpufreq_hw_get(data->policy) * HZ_PER_KHZ;
+ }
  
-@@ -6699,7 +6698,8 @@ static void __sched notrace __schedule(int sched_mode)
- 
- 		migrate_disable_switch(rq, prev);
- 		psi_account_irqtime(rq, prev, next);
--		psi_sched_switch(prev, next, block);
-+		psi_sched_switch(prev, next, !task_on_rq_queued(prev) ||
-+					     prev->se.sched_delayed);
- 
- 		trace_sched_switch(preempt, prev, next, prev_state);
- 
-diff --git a/kernel/sched/stats.h b/kernel/sched/stats.h
-index 8ee0add5a48a8..6ade91bce63ee 100644
---- a/kernel/sched/stats.h
-+++ b/kernel/sched/stats.h
-@@ -138,6 +138,10 @@ static inline void psi_enqueue(struct task_struct *p, int flags)
- 	if (flags & ENQUEUE_RESTORE)
- 		return;
- 
-+	/* psi_sched_switch() will handle the flags */
-+	if (task_on_cpu(task_rq(p), p))
-+		return;
++/*
++ * Since we cannot determine the closest rate of the target rate, let's just
++ * return the actual rate at which the clock is running at. This is needed to
++ * make clk_set_rate() API work properly.
++ */
++static int qcom_cpufreq_hw_determine_rate(struct clk_hw *hw, struct clk_rate_request *req)
++{
++	req->rate = qcom_cpufreq_hw_recalc_rate(hw, 0);
 +
- 	if (p->se.sched_delayed) {
- 		/* CPU migration of "sleeping" task */
- 		SCHED_WARN_ON(!(flags & ENQUEUE_MIGRATED));
++	return 0;
++}
++
+ static const struct clk_ops qcom_cpufreq_hw_clk_ops = {
+ 	.recalc_rate = qcom_cpufreq_hw_recalc_rate,
++	.determine_rate = qcom_cpufreq_hw_determine_rate,
+ };
+ 
+ static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
 -- 
 2.39.5
 
