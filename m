@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745AA1FECDE;
-	Wed,  5 Feb 2025 14:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80651632D3;
+	Wed,  5 Feb 2025 14:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767046; cv=none; b=L9xNP0cZxaG0gnqZJ/i6oMkr0uecNqrERhKbvjddVNkSSx65RwfYGXSEufC/G/tI79bmpdsvtGOflSLopQCk+c3YZCIU8/HHxxnv7UbZVyfMo+JsYYX4PjnLb74eFwl2m/IBoBOeOZCN+J3j/dDLNyzru1nFD6iYDcHh8QUyGH0=
+	t=1738767049; cv=none; b=FB1qHRq+yZ1vZleENZ/TGNKcVqvFrxcpTTpIZ1YpxTa7GNqnKnAbzSlNgwHnKdXYloGoPTr7Znk32Y/8JCAI0nq/FEBCCkhUKwHRTXPMj7EOAf19ZR9eSDURFQwzsOz8cf6uY+J/Y9yB1Vom7H9iSmVqFIhZQQ5zkHBKDqwKAfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767046; c=relaxed/simple;
-	bh=GqCh1+SoWDwJJ7JckmdnqjTefvBXQxo8sdbl9KxSAKM=;
+	s=arc-20240116; t=1738767049; c=relaxed/simple;
+	bh=1ehSU790AnDCAtsfCPyAudhyk234ZaYlTFhVEX+XWhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JmnxlzDUGnRkN+ne7dmzOgZw/x9ujLql/YI62NpP6vfHTIhcwBS6hE1slGAoyfdFDz1G+3F1jVYx5GZ6xwjr9nQDDokdxdP6YumtrQxiJsZM/q24M33ZP4TOGRnUWZBtck0bBOXjOqE1DjCWkdaoWIhF05MBvq5cZXu9Rw8QZkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+JVL31I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WdD6gHj8i85LKFfkc1nDiQ9oHSRw58t8rv74z5DXa6fybknmDUoGJKC4bslpqXAkvYrZgtjE2vBhrgqQsrqSfZJiqV7bPzXaIFv/C3Kf1WtE14GU/T64m2Hwqap9uuiDgbbaJSII3J8kD/4r7N8bxZTigWEAgMzKt/dWSipwHsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wP7HqSvt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+JVL31I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3B4C4CED1;
-	Wed,  5 Feb 2025 14:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wP7HqSvt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F45C4CED1;
+	Wed,  5 Feb 2025 14:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767046;
-	bh=GqCh1+SoWDwJJ7JckmdnqjTefvBXQxo8sdbl9KxSAKM=;
+	s=korg; t=1738767049;
+	bh=1ehSU790AnDCAtsfCPyAudhyk234ZaYlTFhVEX+XWhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L+JVL31ImS7E9GKPCJA1BWwzI+nYY+zN9r5K8f40VMZp8HyQD1+Siffo98YwfsmDc
-	 bIq6vZ8TBrBPe4DwILmlJrMnch3PPznTBSNtbj0aFgeTTgfTxXuk/GjJO11yzeGXGg
-	 v4+AxLD4Fdf+/Upk1DDyppq1l3NWw+MS4DBESMGw=
+	b=wP7HqSvtBlknIHyNm9YKFGkL1ABFtFN6yQBm50nT5WXB/yTBscIjMT02qOaNgIqQo
+	 NLSFwXXqxBwT7yDAk0w5vtR9ZpIkh4MpkUY6Z1jOA4m1ooFpT3Zo+Rxs1N+DBP57a+
+	 2x2blEE6UfCCdTosCx28JArS4+j4GhcC6hR0u3tE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Anumula Murali Mohan Reddy <anumula@chelsio.com>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 349/623] arm64: dts: mediatek: mt8195-demo: Drop regulator-compatible property
-Date: Wed,  5 Feb 2025 14:41:31 +0100
-Message-ID: <20250205134509.577495773@linuxfoundation.org>
+Subject: [PATCH 6.12 399/590] RDMA/cxgb4: Notify rdma stack for IB_EVENT_QP_LAST_WQE_REACHED event
+Date: Wed,  5 Feb 2025 14:42:34 +0100
+Message-ID: <20250205134510.529135322@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,110 +48,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Anumula Murali Mohan Reddy <anumula@chelsio.com>
 
-[ Upstream commit 2a8af9b95f504260a6d8200a11f0ae5c90e9f787 ]
+[ Upstream commit 42e6ddda4c17fa0d5120e3723d522649f8fc62fa ]
 
-The "regulator-compatible" property has been deprecated since 2012 in
-commit 13511def87b9 ("regulator: deprecate regulator-compatible DT
-property"), which is so old it's not even mentioned in the converted
-regulator bindings YAML file. It is also not listed in the MT6360
-regulator and charger bindings.
+This patch sends IB_EVENT_QP_LAST_WQE_REACHED event on a QP that is in
+error state and associated with an SRQ. This behaviour is incorporated
+in flush_qp() which is called when QP transitions to error state.
+Supports SRQ drain functionality added by commit 844bc12e6da3 ("IB/core:
+add support for draining Shared receive queues")
 
-Drop the "regulator-compatible" property from the board dts. The MT6360
-bindings actually require the lowercase name, so with the property
-present the regulators were likely not actually working.
-
-Fixes: 6147314aeedc ("arm64: dts: mediatek: Add device-tree for MT8195 Demo board")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241211052427.4178367-7-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 844bc12e6da3 ("IB/core: add support for draining Shared receive queues")
+Signed-off-by: Anumula Murali Mohan Reddy <anumula@chelsio.com>
+Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
+Link: https://patch.msgid.link/20250107095053.81007-1-anumula@chelsio.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195-demo.dts | 9 ---------
- 1 file changed, 9 deletions(-)
+ drivers/infiniband/hw/cxgb4/qp.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195-demo.dts b/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
-index 31d424b8fc7ce..bfb75296795c3 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
-@@ -137,7 +137,6 @@
- 			richtek,vinovp-microvolt = <14500000>;
+diff --git a/drivers/infiniband/hw/cxgb4/qp.c b/drivers/infiniband/hw/cxgb4/qp.c
+index 7b5c4522b426a..955f061a55e9a 100644
+--- a/drivers/infiniband/hw/cxgb4/qp.c
++++ b/drivers/infiniband/hw/cxgb4/qp.c
+@@ -1599,6 +1599,7 @@ static void __flush_qp(struct c4iw_qp *qhp, struct c4iw_cq *rchp,
+ 	int count;
+ 	int rq_flushed = 0, sq_flushed;
+ 	unsigned long flag;
++	struct ib_event ev;
  
- 			otg_vbus_regulator: usb-otg-vbus-regulator {
--				regulator-compatible = "usb-otg-vbus";
- 				regulator-name = "usb-otg-vbus";
- 				regulator-min-microvolt = <4425000>;
- 				regulator-max-microvolt = <5825000>;
-@@ -149,7 +148,6 @@
- 			LDO_VIN3-supply = <&mt6360_buck2>;
+ 	pr_debug("qhp %p rchp %p schp %p\n", qhp, rchp, schp);
  
- 			mt6360_buck1: buck1 {
--				regulator-compatible = "BUCK1";
- 				regulator-name = "mt6360,buck1";
- 				regulator-min-microvolt = <300000>;
- 				regulator-max-microvolt = <1300000>;
-@@ -160,7 +158,6 @@
- 			};
+@@ -1607,6 +1608,13 @@ static void __flush_qp(struct c4iw_qp *qhp, struct c4iw_cq *rchp,
+ 	if (schp != rchp)
+ 		spin_lock(&schp->lock);
+ 	spin_lock(&qhp->lock);
++	if (qhp->srq && qhp->attr.state == C4IW_QP_STATE_ERROR &&
++	    qhp->ibqp.event_handler) {
++		ev.device = qhp->ibqp.device;
++		ev.element.qp = &qhp->ibqp;
++		ev.event = IB_EVENT_QP_LAST_WQE_REACHED;
++		qhp->ibqp.event_handler(&ev, qhp->ibqp.qp_context);
++	}
  
- 			mt6360_buck2: buck2 {
--				regulator-compatible = "BUCK2";
- 				regulator-name = "mt6360,buck2";
- 				regulator-min-microvolt = <300000>;
- 				regulator-max-microvolt = <1300000>;
-@@ -171,7 +168,6 @@
- 			};
- 
- 			mt6360_ldo1: ldo1 {
--				regulator-compatible = "LDO1";
- 				regulator-name = "mt6360,ldo1";
- 				regulator-min-microvolt = <1200000>;
- 				regulator-max-microvolt = <3600000>;
-@@ -180,7 +176,6 @@
- 			};
- 
- 			mt6360_ldo2: ldo2 {
--				regulator-compatible = "LDO2";
- 				regulator-name = "mt6360,ldo2";
- 				regulator-min-microvolt = <1200000>;
- 				regulator-max-microvolt = <3600000>;
-@@ -189,7 +184,6 @@
- 			};
- 
- 			mt6360_ldo3: ldo3 {
--				regulator-compatible = "LDO3";
- 				regulator-name = "mt6360,ldo3";
- 				regulator-min-microvolt = <1200000>;
- 				regulator-max-microvolt = <3600000>;
-@@ -198,7 +192,6 @@
- 			};
- 
- 			mt6360_ldo5: ldo5 {
--				regulator-compatible = "LDO5";
- 				regulator-name = "mt6360,ldo5";
- 				regulator-min-microvolt = <2700000>;
- 				regulator-max-microvolt = <3600000>;
-@@ -207,7 +200,6 @@
- 			};
- 
- 			mt6360_ldo6: ldo6 {
--				regulator-compatible = "LDO6";
- 				regulator-name = "mt6360,ldo6";
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <2100000>;
-@@ -216,7 +208,6 @@
- 			};
- 
- 			mt6360_ldo7: ldo7 {
--				regulator-compatible = "LDO7";
- 				regulator-name = "mt6360,ldo7";
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <2100000>;
+ 	if (qhp->wq.flushed) {
+ 		spin_unlock(&qhp->lock);
 -- 
 2.39.5
 
