@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5943013C9C4;
-	Wed,  5 Feb 2025 13:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC48142E86;
+	Wed,  5 Feb 2025 13:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763507; cv=none; b=rThHwqTb7gtPZeXLxYU8tU32qn+bBwcpVSad595K7nuWQDBSv0BLJ64NzUKAkbkyncO+uGi6h3QyKb9Br0WPfcDGNMM4ymK07pqoWAdCQOBcflnVVDHcWFAx3mXaASYT0HainrbicejbUbwhNJnGM4yeHxyS0ddNvOQpM1cmX+c=
+	t=1738763510; cv=none; b=M1YhFf+ZsiD19NjrZuREj85+1zULhaWJLni40GEocmSk/qXbif0knhm+l7wQRm8CTT61iww0BLbqBUJPzG6Z8feeokIM5lPOSo8muqJeTKS6GgnXq17lWCtSIfcEx/FfYCVhsAbTbSuJX8VFoiOyR4uHm/A0BxMurZJBLW/bVTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763507; c=relaxed/simple;
-	bh=ikUO73TSeC4+FWPN+iGBhb0QZjUjKkGrrnlJmYn9Za4=;
+	s=arc-20240116; t=1738763510; c=relaxed/simple;
+	bh=qz3h06YDCywDp48nd09K6Jcy3vXuPMS7b4Q+gzWxbo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+9K18JhGnTatmQ94viwW62/46ePC83hunQetpeZyD3BM4+P+UKa0UbZ5pTpO7b6pcgzIP0HCShV73PFStgriq2b/8MS8Y3tSvBvHwEdTtUzggvjSvR2qmEFp/XOUsgjbqYoyCmrGxpVPx4Qi/Wvyc+YoaF+/hZ6p4kBtt1ZjXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAmwwpkL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i1BeTupRWvSiWdXfKieJAHH6J2GMVid8IJp0Ba8Hog8shXAY3LtxwwThPp0qUC1FHYGlcpeK+C29B10swE5SDqqEqu7+OpD/cZ6b2gZKMFgMEdqKHWPeAh/uy9gz/3rTWcaZ5drQa+m1UNC5VcXQIBayzcJfgKYBovl3MoOKwvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ey2IDIyP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAmwwpkL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD34DC4CED1;
-	Wed,  5 Feb 2025 13:51:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ey2IDIyP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DA9C4CED1;
+	Wed,  5 Feb 2025 13:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763507;
-	bh=ikUO73TSeC4+FWPN+iGBhb0QZjUjKkGrrnlJmYn9Za4=;
+	s=korg; t=1738763510;
+	bh=qz3h06YDCywDp48nd09K6Jcy3vXuPMS7b4Q+gzWxbo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XAmwwpkLH/JXirq7vY1EDRVd8whWILTgQpVE4SUPJNuUMUmS54dxXSI+rx97zMSlG
-	 h+gE8VzhDg7GDlam01prxClWEY7K0GJEityUeyEcer36f6duW/T6K3h++cR+5jkvsl
-	 iGc6DlQgAUa5gtkwTpFOh1JB/4vTG873EzUH6J4Y=
+	b=Ey2IDIyPv55xNaGqO2XIqWEtQ2qgwfZg7X4HV55//DQVJhMi23UKTBwGkemh8tIHs
+	 9umlmpR7PtKhIgCucNEvdYwWjqXwQ+82jzmhvqkq0OxxZnZD3w+90K2CKRiSPNU2I+
+	 Pdb/vszljzUJ+KW2YfGLuoGp7wtv/+bh8V07SUig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/590] btrfs: subpage: fix the bitmap dump of the locked flags
-Date: Wed,  5 Feb 2025 14:36:18 +0100
-Message-ID: <20250205134456.131567836@linuxfoundation.org>
+Subject: [PATCH 6.6 075/393] dt-bindings: mfd: bd71815: Fix rsense and typos
+Date: Wed,  5 Feb 2025 14:39:54 +0100
+Message-ID: <20250205134423.162542329@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +48,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 396294d1afee65a203d6cabd843d0782e5d7388e ]
+[ Upstream commit 6856edf7ead8c54803216a38a7b227bcb3dadff7 ]
 
-We're dumping the locked bitmap into the @checked_bitmap variable,
-printing incorrect values during debug.
+The sense resistor used for measuring currents is typically some tens of
+milli Ohms. It has accidentally been documented to be tens of mega Ohms.
+Fix the size of this resistor and a few copy-paste errors while at it.
 
-Thankfully even during my development I haven't hit a case where I need
-to dump the locked bitmap.  But for the sake of consistency, fix it by
-dupping the locked bitmap into @locked_bitmap variable for output.
+Drop the unsuitable 'rohm,charger-sense-resistor-ohms' property (which
+can't represent resistors smaller than one Ohm), and introduce a new
+'rohm,charger-sense-resistor-micro-ohms' property with appropriate
+minimum, maximum and default values instead.
 
-Fixes: 75258f20fb70 ("btrfs: subpage: dump extra subpage bitmaps for debug")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 4238dc1e6490 ("dt_bindings: mfd: Add ROHM BD71815 PMIC")
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/0efd8e9de0ae8d62ee4c6b78cc565b04007a245d.1731430700.git.mazziesaccount@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/subpage.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ .../bindings/mfd/rohm,bd71815-pmic.yaml       | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/fs/btrfs/subpage.c b/fs/btrfs/subpage.c
-index fe4d719d506bf..ec7328a6bfd75 100644
---- a/fs/btrfs/subpage.c
-+++ b/fs/btrfs/subpage.c
-@@ -868,6 +868,7 @@ void __cold btrfs_subpage_dump_bitmap(const struct btrfs_fs_info *fs_info,
- 	unsigned long writeback_bitmap;
- 	unsigned long ordered_bitmap;
- 	unsigned long checked_bitmap;
-+	unsigned long locked_bitmap;
- 	unsigned long flags;
+diff --git a/Documentation/devicetree/bindings/mfd/rohm,bd71815-pmic.yaml b/Documentation/devicetree/bindings/mfd/rohm,bd71815-pmic.yaml
+index 05747e012516e..ab26b1bd567fd 100644
+--- a/Documentation/devicetree/bindings/mfd/rohm,bd71815-pmic.yaml
++++ b/Documentation/devicetree/bindings/mfd/rohm,bd71815-pmic.yaml
+@@ -50,15 +50,15 @@ properties:
+     minimum: 0
+     maximum: 1
  
- 	ASSERT(folio_test_private(folio) && folio_get_private(folio));
-@@ -880,15 +881,16 @@ void __cold btrfs_subpage_dump_bitmap(const struct btrfs_fs_info *fs_info,
- 	GET_SUBPAGE_BITMAP(subpage, fs_info, writeback, &writeback_bitmap);
- 	GET_SUBPAGE_BITMAP(subpage, fs_info, ordered, &ordered_bitmap);
- 	GET_SUBPAGE_BITMAP(subpage, fs_info, checked, &checked_bitmap);
--	GET_SUBPAGE_BITMAP(subpage, fs_info, locked, &checked_bitmap);
-+	GET_SUBPAGE_BITMAP(subpage, fs_info, locked, &locked_bitmap);
- 	spin_unlock_irqrestore(&subpage->lock, flags);
+-  rohm,charger-sense-resistor-ohms:
+-    minimum: 10000000
+-    maximum: 50000000
++  rohm,charger-sense-resistor-micro-ohms:
++    minimum: 10000
++    maximum: 50000
+     description: |
+-      BD71827 and BD71828 have SAR ADC for measuring charging currents.
+-      External sense resistor (RSENSE in data sheet) should be used. If
+-      something other but 30MOhm resistor is used the resistance value
+-      should be given here in Ohms.
+-    default: 30000000
++      BD71815 has SAR ADC for measuring charging currents. External sense
++      resistor (RSENSE in data sheet) should be used. If something other
++      but a 30 mOhm resistor is used the resistance value should be given
++      here in micro Ohms.
++    default: 30000
  
- 	dump_page(folio_page(folio, 0), "btrfs subpage dump");
- 	btrfs_warn(fs_info,
--"start=%llu len=%u page=%llu, bitmaps uptodate=%*pbl dirty=%*pbl writeback=%*pbl ordered=%*pbl checked=%*pbl",
-+"start=%llu len=%u page=%llu, bitmaps uptodate=%*pbl dirty=%*pbl locked=%*pbl writeback=%*pbl ordered=%*pbl checked=%*pbl",
- 		    start, len, folio_pos(folio),
- 		    sectors_per_page, &uptodate_bitmap,
- 		    sectors_per_page, &dirty_bitmap,
-+		    sectors_per_page, &locked_bitmap,
- 		    sectors_per_page, &writeback_bitmap,
- 		    sectors_per_page, &ordered_bitmap,
- 		    sectors_per_page, &checked_bitmap);
+   regulators:
+     $ref: ../regulator/rohm,bd71815-regulator.yaml
+@@ -67,7 +67,7 @@ properties:
+ 
+   gpio-reserved-ranges:
+     description: |
+-      Usage of BD71828 GPIO pins can be changed via OTP. This property can be
++      Usage of BD71815 GPIO pins can be changed via OTP. This property can be
+       used to mark the pins which should not be configured for GPIO. Please see
+       the ../gpio/gpio.txt for more information.
+ 
+@@ -113,7 +113,7 @@ examples:
+             gpio-controller;
+             #gpio-cells = <2>;
+ 
+-            rohm,charger-sense-resistor-ohms = <10000000>;
++            rohm,charger-sense-resistor-micro-ohms = <10000>;
+ 
+             regulators {
+                 buck1: buck1 {
 -- 
 2.39.5
 
