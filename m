@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E4C1519AA;
-	Wed,  5 Feb 2025 14:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC85CF510;
+	Wed,  5 Feb 2025 14:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764210; cv=none; b=XH3gomwIn5vkpchgZUP9fv0pFa+s6u9nFUPzjrpFL19GXOBvXOyOsfAf886Z+q525RTksNVV9LcVbSV1+IEgv21v3ZT4D7TT6znznABsxgLFuDIIgGtyR+/b9BpWzEd/1Y2hVsVoATQy5MetGT+PsqT8TuAvdb1KVsXpIhQjpug=
+	t=1738764213; cv=none; b=kApLJwGyIH1Kz2afXFBvvSSpxV1qzoGVtIR1qQpEkXkc4l+r5iNgtpZwb5EZRxXSNZx7T7/7zQon4cNU6RrNxwCJp+3Noaq6CRqrJ85G819P1FmxB/GPXL1l7bOWBVU6dDiqYNm6z/e37TklgN8I+mVy6OQG1qyuQrRBWoTFcm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764210; c=relaxed/simple;
-	bh=NCieyCbgnnyl00XLHYqkmE43fuMQ42EU/oM9PDURWNg=;
+	s=arc-20240116; t=1738764213; c=relaxed/simple;
+	bh=NcPiZSAr/xEVqoEFFG2zoltGPlKbTGkr76Fd+chfIoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LIH1dKQhelViVECaMkROvtnHO0wg/X9cf9PXshUCd+bcN0id+wHF+3md7C39jrwLtAov5THRbcQYEfJhR7lP5kqBHVWhHyvoL9gb77hHd91Y8WPS4akaFdJgPp7TO+cjvQgkB5ucrJqJYgj9XqsVL4aoRKONVgXJLDcP78+kods=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mJIRBey; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=U+8/M5pWQG0Q+H0B+XloV+qvR3p2J3QTQ//uIHO91pM90yvoH8uVVOTjo6TNRzvx8596B9qZhSHIE7gxa+p8tMTgo0M/voa1/gxhkz+yNm2T0E7K7L/i6NQjlP4RL4Gr3DPG2sMwu0X8ZaqiGGQ9ynFRfJQm3KNx2ykRg2bSl5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YgeTWzzn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mJIRBey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF35C4CED1;
-	Wed,  5 Feb 2025 14:03:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YgeTWzzn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B589C4CED1;
+	Wed,  5 Feb 2025 14:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764210;
-	bh=NCieyCbgnnyl00XLHYqkmE43fuMQ42EU/oM9PDURWNg=;
+	s=korg; t=1738764213;
+	bh=NcPiZSAr/xEVqoEFFG2zoltGPlKbTGkr76Fd+chfIoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2mJIRBeym7HoRQILcfI+sq3zGg99UJFfcJ69pyEUhrmSOnnKwDKCE9VvgK7psmOGI
-	 xTbDTnWsQB9GWTeTlDljERGO5BHz3E//3rpWfsUfLyJaVgWByi2FU1vk6tTjmuNkYJ
-	 PFYCNDGde2tGkiM4ke0wloPHvrgYkpSzUxcK0k6g=
+	b=YgeTWzzn7eVfqmVfNvYghUnY5Vtz2hA1vovi+RO4VVlOm5NTtFdiTIVYsKVQ05Hcv
+	 3mx7MHN71tWV5iUDu19VGqIh/sgNdeYV2I+0GW0NkExd2fddd36zr25AtziR1wFrir
+	 N2hPeo5NGLaJ/CcCF7yx+s+7r7f+829TEEu1Uapg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Foreman <derek.foreman@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Maxime Ripard <mripard@kernel.org>,
+	Marcel Hamer <marcel.hamer@windriver.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 057/623] drm/connector: Allow clearing HDMI infoframes
-Date: Wed,  5 Feb 2025 14:36:39 +0100
-Message-ID: <20250205134458.409584734@linuxfoundation.org>
+Subject: [PATCH 6.12 099/590] wifi: brcmfmac: add missing header include for brcmf_dbg
+Date: Wed,  5 Feb 2025 14:37:34 +0100
+Message-ID: <20250205134459.045186413@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,80 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Derek Foreman <derek.foreman@collabora.com>
+From: Marcel Hamer <marcel.hamer@windriver.com>
 
-[ Upstream commit d34357743b360c99903b5a59daab08f55b2f41a1 ]
+[ Upstream commit b05d30c2b6df7e2172b18bf1baee9b202f9c6b53 ]
 
-Our infoframe setting code currently lacks the ability to clear
-infoframes. For some of the infoframes, we only need to replace them,
-so if an error occurred when generating a new infoframe we would leave
-a stale frame instead of clearing the frame.
+Including the fwil.h header file can lead to a build error:
 
-However, the Dynamic Range and Mastering (DRM) infoframe should only
-be present when displaying HDR content (ie: the HDR_OUTPUT_METADATA blob
-is set). If we can't clear infoframes, the stale DRM infoframe will
-remain and we can never set the display back to SDR mode.
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.h: \
+	In function ‘brcmf_fil_cmd_int_set’:
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.h:90:9: error: implicit \
+	declaration of function ‘brcmf_dbg’ [-Werror=implicit-function-declaration]
+   90 |         brcmf_dbg(FIL, "ifidx=%d, cmd=%d, value=%d\n", ifp->ifidx, cmd, data);
+      |         ^~~~~~~~~
 
-With this change, we clear infoframes when they can not, or should not,
-be generated. This fixes switching to an SDR mode from an HDR one.
+The error is often avoided because the debug.h header file is included
+before the fwil.h header file.
 
-Fixes: f378b77227bc ("drm/connector: hdmi: Add Infoframes generation")
-Signed-off-by: Derek Foreman <derek.foreman@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241202181939.724011-1-derek.foreman@collabora.com
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+This makes sure the header include order is irrelevant by explicitly adding the
+debug.h header.
+
+Fixes: 31343230abb1 ("wifi: brcmfmac: export firmware interface functions")
+Signed-off-by: Marcel Hamer <marcel.hamer@windriver.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20241211133618.2014083-1-marcel.hamer@windriver.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_hdmi_state_helper.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/display/drm_hdmi_state_helper.c b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-index feb7a3a759811..936a8f95d80f7 100644
---- a/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-+++ b/drivers/gpu/drm/display/drm_hdmi_state_helper.c
-@@ -347,6 +347,8 @@ static int hdmi_generate_avi_infoframe(const struct drm_connector *connector,
- 		is_limited_range ? HDMI_QUANTIZATION_RANGE_LIMITED : HDMI_QUANTIZATION_RANGE_FULL;
- 	int ret;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.h
+index 31e080e4da669..ab3d6cfcb02bd 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/fwil.h
+@@ -6,6 +6,8 @@
+ #ifndef _fwil_h_
+ #define _fwil_h_
  
-+	infoframe->set = false;
++#include "debug.h"
 +
- 	ret = drm_hdmi_avi_infoframe_from_display_mode(frame, connector, mode);
- 	if (ret)
- 		return ret;
-@@ -376,6 +378,8 @@ static int hdmi_generate_spd_infoframe(const struct drm_connector *connector,
- 		&infoframe->data.spd;
- 	int ret;
- 
-+	infoframe->set = false;
-+
- 	ret = hdmi_spd_infoframe_init(frame,
- 				      connector->hdmi.vendor,
- 				      connector->hdmi.product);
-@@ -398,6 +402,8 @@ static int hdmi_generate_hdr_infoframe(const struct drm_connector *connector,
- 		&infoframe->data.drm;
- 	int ret;
- 
-+	infoframe->set = false;
-+
- 	if (connector->max_bpc < 10)
- 		return 0;
- 
-@@ -425,6 +431,8 @@ static int hdmi_generate_hdmi_vendor_infoframe(const struct drm_connector *conne
- 		&infoframe->data.vendor.hdmi;
- 	int ret;
- 
-+	infoframe->set = false;
-+
- 	if (!info->has_hdmi_infoframe)
- 		return 0;
- 
+ /*******************************************************************************
+  * Dongle command codes that are interpreted by firmware
+  ******************************************************************************/
 -- 
 2.39.5
 
