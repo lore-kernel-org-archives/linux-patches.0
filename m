@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59476282EE;
-	Wed,  5 Feb 2025 14:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8B41519BE;
+	Wed,  5 Feb 2025 14:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765272; cv=none; b=Hla0RsxMq3kXI766b3acvPpDGkYIwx5p+sp94S62MNZf0G6IG2b1oOzZ0A8lEQAozuwiMrGYMZq635gsbdOvhPColr7JC5484vwcROK6GLKu9kvXVZHdV+b+budDLM5CLS9g+WJpGSYqQcFCAAP1qQcNfU4GdHsongak4qXPw4U=
+	t=1738765275; cv=none; b=nUYxCiO6wHP/vVl3r3nEdX51uSquq8KYZ+CUWs0+QjWMLuGzvjjQydZ/X8ywk6WvzR7NwZwRFsk0XxWOK9JrliSCyjKP1PT2A7HsaktRcOuJkffnes42aHIfjPJUSDTsRuLfpzVKjj/O+VbMdML9PZr0oDLlhT3z+wL4ay90lvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765272; c=relaxed/simple;
-	bh=GgPYopS0OLQHZAoAEoyd8jdMHSHSrF7IsBjlforztL8=;
+	s=arc-20240116; t=1738765275; c=relaxed/simple;
+	bh=a/pXn9UsVwUjdjfjX4TSk0G77Wm3Z5Pjuvn42nhodLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=URxXwenja3u73pkx7noNMv11MCOm3Fo8BZAZbaNHiP6ZEvz/s2bXQVnFMZ3zaaZgp9wMbQpCsqbD7aMKOrwd9wyrwMkqT629jf423VDCtKz0/PwRs7uFdxwV+P8N0LhPVatS8rd/uQm7r2rQZ5SSCNPp9jJBuTECDl2VVBo1oUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNvNuqXa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TggP31E9t4Wr0Mjf3PRLIZeCPxBVYUbnNgHcMAzNfzA2Aiop78diuKXATlmVEP2PkT9V1Z7xrjTwi9s0t6rlYRTLh77TGCIt4J/QvAuaPA8ohlqt8OmfYZin9wBvuPmf7OJ3AsogYi+kbNf9IgzxADT0i9yWXSdHwt4pDocj/ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQt1ZVKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNvNuqXa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC018C4CED1;
-	Wed,  5 Feb 2025 14:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQt1ZVKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C699C4CED1;
+	Wed,  5 Feb 2025 14:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765272;
-	bh=GgPYopS0OLQHZAoAEoyd8jdMHSHSrF7IsBjlforztL8=;
+	s=korg; t=1738765275;
+	bh=a/pXn9UsVwUjdjfjX4TSk0G77Wm3Z5Pjuvn42nhodLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bNvNuqXaw0/5isE3YIC4cgGEpe4Dfwvt+XlnPEiqLm39yNFWE379egnr6BEpZuuyy
-	 lMTwsQO1iRvwZDnmUvTscdVS4sXNA+PByh4yj4VyLQOJhVO7L8o7LQt0spbkbWqyPO
-	 +trl/8WY3mKkxKFKJn9Qb79rmz2Y4xGjRDbAQ9Mc=
+	b=eQt1ZVKYB0ZI8ghYnK5bRl7uGu627TDYcMnxmT9Y6NzJk2qnHKaDakjN0kbpuQYU9
+	 a0T5HJPNvKR/2WXzJvoW4/8yRzhLIdwzq3mH6YUd6DQZECPLjFOCpNqCRKLoTbC2C9
+	 qOkPSmTTAx3jgX5hjJDD2Mk2sTiMwQwXQcrW0W/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Hsu <howard-yh.hsu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Mihai Sain <mihai.sain@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 205/590] wifi: mt76: mt7996: fix HE Phy capability
-Date: Wed,  5 Feb 2025 14:39:20 +0100
-Message-ID: <20250205134503.125532845@linuxfoundation.org>
+Subject: [PATCH 6.6 249/393] ARM: dts: microchip: sama5d27_wlsom1_ek: Remove mmc-ddr-3_3v property from sdmmc0 node
+Date: Wed,  5 Feb 2025 14:42:48 +0100
+Message-ID: <20250205134429.834582579@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Howard Hsu <howard-yh.hsu@mediatek.com>
+From: Mihai Sain <mihai.sain@microchip.com>
 
-[ Upstream commit 7e3aef59a403ade5dd4ea02edc2d7138a66d74b6 ]
+[ Upstream commit 2a7f1848d9d65a4deb366726ff8f33c9c64ac43b ]
 
-Set HE SU PPDU And HE MU PPDU With 4x HE-LTF And 0.8 us GI within HE PHY
-Capabilities element as 1 since hardware can support.
+On board the sdmmc0 interface is wired to a SD Card socket.
+According with mmc-controller bindings, the mmc-ddr-3_3v property
+is used for eMMC devices to enable high-speed DDR mode (3.3V I/O).
+Remove the mmc-ddr-3_3v property from sdmmc0 node.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Howard Hsu <howard-yh.hsu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20250114101026.3587702-3-shayne.chen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Mihai Sain <mihai.sain@microchip.com>
+Link: https://lore.kernel.org/r/20231204072537.2991-1-mihai.sain@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Stable-dep-of: 4d9e5965df04 ("ARM: dts: microchip: sama5d27_wlsom1_ek: Add no-1-8-v property to sdmmc0 node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index e04abd57b3b3a..d8a013812d1e3 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -1077,6 +1077,9 @@ mt7996_init_he_caps(struct mt7996_phy *phy, enum nl80211_band band,
- 	he_cap_elem->phy_cap_info[2] = IEEE80211_HE_PHY_CAP2_STBC_TX_UNDER_80MHZ |
- 				       IEEE80211_HE_PHY_CAP2_STBC_RX_UNDER_80MHZ;
+diff --git a/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts b/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts
+index e055b9e2fe344..15239834d886e 100644
+--- a/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts
++++ b/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts
+@@ -197,7 +197,6 @@
  
-+	he_cap_elem->phy_cap_info[7] =
-+			IEEE80211_HE_PHY_CAP7_HE_SU_MU_PPDU_4XLTF_AND_08_US_GI;
-+
- 	switch (iftype) {
- 	case NL80211_IFTYPE_AP:
- 		he_cap_elem->mac_cap_info[0] |= IEEE80211_HE_MAC_CAP0_TWT_RES;
-@@ -1116,8 +1119,7 @@ mt7996_init_he_caps(struct mt7996_phy *phy, enum nl80211_band band,
- 			IEEE80211_HE_PHY_CAP6_PARTIAL_BW_EXT_RANGE |
- 			IEEE80211_HE_PHY_CAP6_PPE_THRESHOLD_PRESENT;
- 		he_cap_elem->phy_cap_info[7] |=
--			IEEE80211_HE_PHY_CAP7_POWER_BOOST_FACTOR_SUPP |
--			IEEE80211_HE_PHY_CAP7_HE_SU_MU_PPDU_4XLTF_AND_08_US_GI;
-+			IEEE80211_HE_PHY_CAP7_POWER_BOOST_FACTOR_SUPP;
- 		he_cap_elem->phy_cap_info[8] |=
- 			IEEE80211_HE_PHY_CAP8_20MHZ_IN_40MHZ_HE_PPDU_IN_2G |
- 			IEEE80211_HE_PHY_CAP8_20MHZ_IN_160MHZ_HE_PPDU |
+ &sdmmc0 {
+ 	bus-width = <4>;
+-	mmc-ddr-3_3v;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_sdmmc0_default>;
+ 	status = "okay";
 -- 
 2.39.5
 
