@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8AA18C93C;
-	Wed,  5 Feb 2025 14:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA15518C93C;
+	Wed,  5 Feb 2025 14:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766908; cv=none; b=IyTlI079OvBAk7eOWcdXPqJh2Q1dSMRXTpfUQrIPuRgPl+NwrbMEqvD4BzTi4msbtlBIhDuOgNFgCuS7Bjju1hm1gBix0ofDCklEW0K0vzBpn9XuZhiMkPc/sXXEnhAqUG+tYVnHJuWbDDMx52MPTx5/ra+B5xqGWmox2x+1QOk=
+	t=1738766911; cv=none; b=svoPS9lYK9bHJ4y6hal81B5gpUHRlgQQZV0rZk6+mgNlCMkYbi3L7YIylNNWpjbMtCRHsgj1xGdQzQJBukSGgohvS+tuEW/Uam1aNhn3ep+fFavJmxA9SnB8W1s6jbRNiyE6AySigoRAxv+xUz1zk77p9e1KuIQhpMNA8EYwvb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766908; c=relaxed/simple;
-	bh=ovjDkOZNuoXu4QFCXnbtn89wUzjQpHWYNGFmv7kYAYE=;
+	s=arc-20240116; t=1738766911; c=relaxed/simple;
+	bh=rPFr/NvE2jwENRTIUVfYiFo/OSh+aJaR7Xd5UBpUK+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLVr1NBK97mNQYPouFdIToAKX/oVcmIXYfcan7C4dv+YypBDZep/enA5Uew7LCK0TlVyxo/nwrAZYQ4hR4itZ50ymb+YqKaX+knV2s3nPKNnRlvIwRYFW1KYOeEso1gKIpxgubYpRNkTRd90nR+Bdi0xTu8IM9z4v8PU+xkI6ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lbYkogE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tlU41t4+lPmQZ+P8XiTAUGIZxEAaRGaRYc6kKg66k4u2i4YsrZXSE+Xeu96kzVECw1cvj/IpeHqcmgnpL2qjtFhMt6AP06yVYurbepam69Y+6PzWDi1RN0Jc4yowyf8L3qhmLaTmNshVZlMNuloPul1dvu7Hvygt6Ku0/KENT0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVFC5/T6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lbYkogE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B971C4CED1;
-	Wed,  5 Feb 2025 14:48:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVFC5/T6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E395C4CED1;
+	Wed,  5 Feb 2025 14:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766907;
-	bh=ovjDkOZNuoXu4QFCXnbtn89wUzjQpHWYNGFmv7kYAYE=;
+	s=korg; t=1738766910;
+	bh=rPFr/NvE2jwENRTIUVfYiFo/OSh+aJaR7Xd5UBpUK+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0lbYkogE+0Ja2rAavZrz1tsSHv2gZoR39MnaPerbcX3DXZFtNlttETBvWU4VTS/cx
-	 xj0P8H87nRK5NF8E++STaI2DDEEo6EoT9YXhI4itRza0a/SFz6hZhsF1728SZNtvOp
-	 IJ0zL2rgyNneW7eWOynAflc1cP/t9Hw7zT0U1bj0=
+	b=GVFC5/T6xRP2/Xr/mlxN2xLawEGTKR/pa03rfo2gVdKjMDdF9F/XQ7BSwTVwDKuYx
+	 4c4vilBZuHrj2n4rK0Wwzwjg+1nofvVrkkycrYUisWsxmFcDtHbU/nBohUZ5ykQSM+
+	 1KBOEEIZtAoFOMasoJS2LASXqIwUZv4kz2vYSsWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Jay Shin <jaeshin@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 327/623] smb: client: fix oops due to unset link speed
-Date: Wed,  5 Feb 2025 14:41:09 +0100
-Message-ID: <20250205134508.734723354@linuxfoundation.org>
+Subject: [PATCH 6.12 379/590] arm64: dts: qcom: sc8280xp: Fix up remoteproc register space sizes
+Date: Wed,  5 Feb 2025 14:42:14 +0100
+Message-ID: <20250205134509.770078349@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,106 +48,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit be7a6a77669588bfa5022a470989702bbbb11e7f ]
+[ Upstream commit 7ec7e327286182c65d0b5b81dff498d620fe9e8c ]
 
-It isn't guaranteed that NETWORK_INTERFACE_INFO::LinkSpeed will always
-be set by the server, so the client must handle any values and then
-prevent oopses like below from happening:
+Make sure the remoteproc reg ranges reflect the entire register space
+they refer to.
 
-Oops: divide error: 0000 [#1] PREEMPT SMP KASAN NOPTI
-CPU: 0 UID: 0 PID: 1323 Comm: cat Not tainted 6.13.0-rc7 #2
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
-04/01/2014
-RIP: 0010:cifs_debug_data_proc_show+0xa45/0x1460 [cifs] Code: 00 00 48
-89 df e8 3b cd 1b c1 41 f6 44 24 2c 04 0f 84 50 01 00 00 48 89 ef e8
-e7 d0 1b c1 49 8b 44 24 18 31 d2 49 8d 7c 24 28 <48> f7 74 24 18 48 89
-c3 e8 6e cf 1b c1 41 8b 6c 24 28 49 8d 7c 24
-RSP: 0018:ffffc90001817be0 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: ffff88811230022c RCX: ffffffffc041bd99
-RDX: 0000000000000000 RSI: 0000000000000567 RDI: ffff888112300228
-RBP: ffff888112300218 R08: fffff52000302f5f R09: ffffed1022fa58ac
-R10: ffff888117d2c566 R11: 00000000fffffffe R12: ffff888112300200
-R13: 000000012a15343f R14: 0000000000000001 R15: ffff888113f2db58
-FS: 00007fe27119e740(0000) GS:ffff888148600000(0000)
-knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fe2633c5000 CR3: 0000000124da0000 CR4: 0000000000750ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- ? __die_body.cold+0x19/0x27
- ? die+0x2e/0x50
- ? do_trap+0x159/0x1b0
- ? cifs_debug_data_proc_show+0xa45/0x1460 [cifs]
- ? do_error_trap+0x90/0x130
- ? cifs_debug_data_proc_show+0xa45/0x1460 [cifs]
- ? exc_divide_error+0x39/0x50
- ? cifs_debug_data_proc_show+0xa45/0x1460 [cifs]
- ? asm_exc_divide_error+0x1a/0x20
- ? cifs_debug_data_proc_show+0xa39/0x1460 [cifs]
- ? cifs_debug_data_proc_show+0xa45/0x1460 [cifs]
- ? seq_read_iter+0x42e/0x790
- seq_read_iter+0x19a/0x790
- proc_reg_read_iter+0xbe/0x110
- ? __pfx_proc_reg_read_iter+0x10/0x10
- vfs_read+0x469/0x570
- ? do_user_addr_fault+0x398/0x760
- ? __pfx_vfs_read+0x10/0x10
- ? find_held_lock+0x8a/0xa0
- ? __pfx_lock_release+0x10/0x10
- ksys_read+0xd3/0x170
- ? __pfx_ksys_read+0x10/0x10
- ? __rcu_read_unlock+0x50/0x270
- ? mark_held_locks+0x1a/0x90
- do_syscall_64+0xbb/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fe271288911
-Code: 00 48 8b 15 01 25 10 00 f7 d8 64 89 02 b8 ff ff ff ff eb bd e8
-20 ad 01 00 f3 0f 1e fa 80 3d b5 a7 10 00 00 74 13 31 c0 0f 05 <48> 3d
-00 f0 ff ff 77 4f c3 66 0f 1f 44 00 00 55 48 89 e5 48 83 ec
-RSP: 002b:00007ffe87c079d8 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
-RAX: ffffffffffffffda RBX: 0000000000040000 RCX: 00007fe271288911
-RDX: 0000000000040000 RSI: 00007fe2633c6000 RDI: 0000000000000003
-RBP: 00007ffe87c07a00 R08: 0000000000000000 R09: 00007fe2713e6380
-R10: 0000000000000022 R11: 0000000000000246 R12: 0000000000040000
-R13: 00007fe2633c6000 R14: 0000000000000003 R15: 0000000000000000
- </TASK>
+Since they're unused by the driver, there's no functional change.
 
-Fix this by setting cifs_server_iface::speed to a sane value (1Gbps)
-by default when link speed is unset.
-
-Cc: Shyam Prasad N <nspmangalore@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Fixes: a6d8fb54a515 ("cifs: distribute channels across interfaces based on speed")
-Reported-by: Frank Sorenson <sorenson@redhat.com>
-Reported-by: Jay Shin <jaeshin@redhat.com>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20241212-topic-8280_rproc_reg-v1-1-bd1c696e91b0@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 87cb1872db28b..9790ff2cc5b32 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -658,7 +658,8 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index 80a57aa228397..4debb4edaf3d1 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -2725,7 +2725,7 @@
  
- 	while (bytes_left >= (ssize_t)sizeof(*p)) {
- 		memset(&tmp_iface, 0, sizeof(tmp_iface));
--		tmp_iface.speed = le64_to_cpu(p->LinkSpeed);
-+		/* default to 1Gbps when link speed is unset */
-+		tmp_iface.speed = le64_to_cpu(p->LinkSpeed) ?: 1000000000;
- 		tmp_iface.rdma_capable = le32_to_cpu(p->Capability & RDMA_CAPABLE) ? 1 : 0;
- 		tmp_iface.rss_capable = le32_to_cpu(p->Capability & RSS_CAPABLE) ? 1 : 0;
+ 		remoteproc_adsp: remoteproc@3000000 {
+ 			compatible = "qcom,sc8280xp-adsp-pas";
+-			reg = <0 0x03000000 0 0x100>;
++			reg = <0 0x03000000 0 0x10000>;
  
+ 			interrupts-extended = <&intc GIC_SPI 162 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+@@ -5205,7 +5205,7 @@
+ 
+ 		remoteproc_nsp0: remoteproc@1b300000 {
+ 			compatible = "qcom,sc8280xp-nsp0-pas";
+-			reg = <0 0x1b300000 0 0x100>;
++			reg = <0 0x1b300000 0 0x10000>;
+ 
+ 			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_nsp0_in 0 IRQ_TYPE_EDGE_RISING>,
+@@ -5336,7 +5336,7 @@
+ 
+ 		remoteproc_nsp1: remoteproc@21300000 {
+ 			compatible = "qcom,sc8280xp-nsp1-pas";
+-			reg = <0 0x21300000 0 0x100>;
++			reg = <0 0x21300000 0 0x10000>;
+ 
+ 			interrupts-extended = <&intc GIC_SPI 887 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_nsp1_in 0 IRQ_TYPE_EDGE_RISING>,
 -- 
 2.39.5
 
