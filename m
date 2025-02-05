@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCBB18D65F;
-	Wed,  5 Feb 2025 14:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201C21FECDE;
+	Wed,  5 Feb 2025 14:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767040; cv=none; b=O+G2NNCSiHosAFtZZ+1pVudzXCWPC8m90FakxGNXNmyVY7Lm8Z+PvWhk3az4wi3AJGJFWHlqDmp2MVFEAfCIqw8iz4K0YhwRypDAgisSBO2m4kbOKrMvNPjpDyxr4rOlsN+68OYt6vMgjGfA6WH5E5c1pXiGaf769LYzGcqcnfo=
+	t=1738767043; cv=none; b=dytpzuRAU0ifRGFP4qbe53isG0yDVsEQ28RAZV/N7wU+x12424T/HptZlB2AKMsQbkRssSipfM22oAmFR5a6zYmATEmuxAtwhPe/GAamUnRrGA7UOwmLKbVEQUM3n+hsxxR4/dWUMmt/SnxM31/GM1A+Mn9G58jmZjnZOoZrFJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767040; c=relaxed/simple;
-	bh=+QYvefDN345C6wRU6BmBw/7Eb2Z713lqbG5JgOr6K1w=;
+	s=arc-20240116; t=1738767043; c=relaxed/simple;
+	bh=EiDiHVKGVKihCLw/ynfiI+HRdO0MjsopBlOybUIb9xY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y3Z3Z5upq+8f0NHPsLBqLbAAkooLfQRXq8ovyPDnLfUWNHRE4tzrIc1SpDxGwiF2YIP66ignrR0wF+mGSZWRUgy0abES0sy9FUAz9v/QlQqiBV2mBNolIMtf+dqhxbNYPFpCE3CKTr1ji1AOcuu14U8oi08zNMaf0HXjO8upaLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8EDDVW6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FNfAQQ4aTSBzveSus6S0ZhLrgRiHNq9Ji0iJme2giXflbOvyX9MdIgFWS55lNCVNmQge0VD4hu1Ht/K6zyQr74J4+h8QTjKLDWr4jpMtPv4EzUmPFgEgWBmyuTX+aHoENvC9VN6Bu7ITbSy6mshlHaFzF95SYiohz5tuL1eNDA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AewFRTd0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8EDDVW6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAD9C4CED1;
-	Wed,  5 Feb 2025 14:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AewFRTd0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD3CC4CED1;
+	Wed,  5 Feb 2025 14:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767039;
-	bh=+QYvefDN345C6wRU6BmBw/7Eb2Z713lqbG5JgOr6K1w=;
+	s=korg; t=1738767043;
+	bh=EiDiHVKGVKihCLw/ynfiI+HRdO0MjsopBlOybUIb9xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p8EDDVW6RDzfE/Wxb8Fp1MyCh0yuifAJuBoGc8w9qKRZ9UwCye4pDs4w81aFFQnP8
-	 1Fo0cXWDfQlLm2YOlCs0K/qA6LwEVocLL+XFsLB8L0W/JMuOYN2HCzez2ukL8enSW6
-	 h8G+VPq4LTxoVRQdaimcsnuvhY87u4Rog1iiNtPQ=
+	b=AewFRTd09E3uDRuVwHvHGjfFy3xEtB1n5yJNnkz5hbIm5Opq37p7BwocngsVZM7rT
+	 aFONYvJjcR8mLgDcXQuagKjPuwyrWei+feVWiedr1mdLaIU3cZPttSMyLrMSoi/Q+u
+	 DavowmQCpPkJiZWgxAdR199KcgtUOTDfcj5/Ppyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	David Rheinsberg <david@readahead.eu>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Peter Jones <pjones@redhat.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	linux-fbdev@vger.kernel.org,
+	Ard Biesheuvel <ardb@kernel.org>,
+	linux-efi@vger.kernel.org,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 348/623] arm64: dts: mediatek: mt8195-cherry: Drop regulator-compatible property
-Date: Wed,  5 Feb 2025 14:41:30 +0100
-Message-ID: <20250205134509.539670278@linuxfoundation.org>
+Subject: [PATCH 6.12 398/590] efi: sysfb_efi: fix W=1 warnings when EFI is not set
+Date: Wed,  5 Feb 2025 14:42:33 +0100
+Message-ID: <20250205134510.491722943@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,56 +54,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 4dbaa5d5def2c49e44efaa5e796c23d9b904be09 ]
+[ Upstream commit 19fdc68aa7b90b1d3d600e873a3e050a39e7663d ]
 
-The "regulator-compatible" property has been deprecated since 2012 in
-commit 13511def87b9 ("regulator: deprecate regulator-compatible DT
-property"), which is so old it's not even mentioned in the converted
-regulator bindings YAML file. It should not have been used for new
-submissions such as the MT6315.
+A build with W=1 fails because there are code and data that are not
+needed or used when CONFIG_EFI is not set. Move the "#ifdef CONFIG_EFI"
+block to earlier in the source file so that the unused code/data are
+not built.
 
-Drop the "regulator-compatible" property from the board dts. The
-property values are the same as the node name, so everything should
-continue to work.
+drivers/firmware/efi/sysfb_efi.c:345:39: warning: ‘efifb_fwnode_ops’ defined but not used [-Wunused-const-variable=]
+  345 | static const struct fwnode_operations efifb_fwnode_ops = {
+      |                                       ^~~~~~~~~~~~~~~~
+drivers/firmware/efi/sysfb_efi.c:238:35: warning: ‘efifb_dmi_swap_width_height’ defined but not used [-Wunused-const-variable=]
+  238 | static const struct dmi_system_id efifb_dmi_swap_width_height[] __initconst = {
+      |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/firmware/efi/sysfb_efi.c:188:35: warning: ‘efifb_dmi_system_table’ defined but not used [-Wunused-const-variable=]
+  188 | static const struct dmi_system_id efifb_dmi_system_table[] __initconst = {
+      |                                   ^~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: 260c04d425eb ("arm64: dts: mediatek: cherry: Enable MT6315 regulators on SPMI bus")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241211052427.4178367-6-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 15d27b15de96 ("efi: sysfb_efi: fix build when EFI is not set")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501071933.20nlmJJt-lkp@intel.com/
+Cc: David Rheinsberg <david@readahead.eu>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Peter Jones <pjones@redhat.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: linux-fbdev@vger.kernel.org
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: linux-efi@vger.kernel.org
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/firmware/efi/sysfb_efi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-index 2c7b2223ee76b..5056e07399e23 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-@@ -1285,7 +1285,6 @@
+diff --git a/drivers/firmware/efi/sysfb_efi.c b/drivers/firmware/efi/sysfb_efi.c
+index cc807ed35aedf..1e509595ac034 100644
+--- a/drivers/firmware/efi/sysfb_efi.c
++++ b/drivers/firmware/efi/sysfb_efi.c
+@@ -91,6 +91,7 @@ void efifb_setup_from_dmi(struct screen_info *si, const char *opt)
+ 		_ret_;						\
+ 	})
  
- 		regulators {
- 			mt6315_6_vbuck1: vbuck1 {
--				regulator-compatible = "vbuck1";
- 				regulator-name = "Vbcpu";
- 				regulator-min-microvolt = <400000>;
- 				regulator-max-microvolt = <1193750>;
-@@ -1303,7 +1302,6 @@
++#ifdef CONFIG_EFI
+ static int __init efifb_set_system(const struct dmi_system_id *id)
+ {
+ 	struct efifb_dmi_info *info = id->driver_data;
+@@ -346,7 +347,6 @@ static const struct fwnode_operations efifb_fwnode_ops = {
+ 	.add_links = efifb_add_links,
+ };
  
- 		regulators {
- 			mt6315_7_vbuck1: vbuck1 {
--				regulator-compatible = "vbuck1";
- 				regulator-name = "Vgpu";
- 				regulator-min-microvolt = <400000>;
- 				regulator-max-microvolt = <1193750>;
+-#ifdef CONFIG_EFI
+ static struct fwnode_handle efifb_fwnode;
+ 
+ __init void sysfb_apply_efi_quirks(void)
 -- 
 2.39.5
 
