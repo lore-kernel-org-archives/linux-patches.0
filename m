@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E871519BE;
-	Wed,  5 Feb 2025 14:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6421A522A;
+	Wed,  5 Feb 2025 14:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765228; cv=none; b=oPJD2WDQ7Qbbz25pL592fGgAtUYlwCWuF4QhOAksMjjdJr0uNlaxGiMLkVWBG4PPcdm8kRvFdIbF57YKYMRxXeDjETSM9OmbDs6KMCHX5pmAUMeArn8KtXZQeK+uqqn82j4weDakv9iAOfYhhghNSgdBU5/+SDUpmQvV31H2vFE=
+	t=1738765231; cv=none; b=RMNZ/jF3QgunqbrRu5gH0rmrJ+DitEY3qefCcKDsg/14u1eIk0zWn/ujGaosZHlTEj30hlHNUreocFdYPqv0PE02UD779tq2P2JNIGGHK3f7XIapq3dARDgFSKOgnu91mGBxmdd4CS4TLVmsaA+RcbOQ3/JrMniuOXmjkVlTbAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765228; c=relaxed/simple;
-	bh=SvHFcQGMP9effPxut+NnCgetKmMDpxgdVsqa7bXrXac=;
+	s=arc-20240116; t=1738765231; c=relaxed/simple;
+	bh=HtiwUiXUnZRofw33dAgctjsUBkws9m3hr5Rm3Yng6oE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBllrSprsvpZ03X4mhN3pDm9bhNbzOGApI9wwd7HoOsGCZT60ZbqYOf5zwJEP+YRnhFG7nH7v+zeF4CRx9L6n5GV9TPLlFO5wh0mo4s957GDxq10VXzG/8midbO878RGMXhBJJf7RzyPakNXYNp3Ev0JpDOp8Co9IxT6dOzBWU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4fU+2Ps; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BkaZ7W0Lr1Q9m9wg29kNpYLVX5+geTF8kY4NC5BnrG9KkTr9mqKxBm29MdInoBxMp2qynK76q/b3VR6g+WOIPlDmM+A5ev+M43JBenags7iTYQn67Fpvqz0Kdxcio5PNCNrllNQwDtmNSR11ygyK3TC2eFd7+j6BNGnKSeO6ERA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3Hsh7mH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4fU+2Ps"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2FF4C4CED1;
-	Wed,  5 Feb 2025 14:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3Hsh7mH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39E8C4CED1;
+	Wed,  5 Feb 2025 14:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765228;
-	bh=SvHFcQGMP9effPxut+NnCgetKmMDpxgdVsqa7bXrXac=;
+	s=korg; t=1738765231;
+	bh=HtiwUiXUnZRofw33dAgctjsUBkws9m3hr5Rm3Yng6oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4fU+2Pss9oeb9rJleQntwEBAnPYeONhIQItOfMuyeym52Aq1AzUiTRXDizm9Wy/n
-	 XoSBvH3PcLCpwnytQPwWT0fg/myuAphWEal7Svh/TSASGjMCSvvCCqQLUYTshRxvce
-	 J8XcmrOvt0iJJ2FLsVh9QugnkjK6mxVMQ6kxzNiU=
+	b=z3Hsh7mHP7Im7RfIsIgKNGHMDGrrlUaYhqjx7Us50boKyeGGO0gH1Fcsnwqv9KM9c
+	 AdEoIYmX/wCZQ4LFmzlb4AioWSLh2zcgIRUHDtdqiC/YFX/96SZe7YC5OrSTBGK3in
+	 kr/Rcy28XpsYWumsjMaAwA5dGUo7w59887E8MZVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 245/393] arm64: dts: qcom: sm6375: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:42:44 +0100
-Message-ID: <20250205134429.680790635@linuxfoundation.org>
+Subject: [PATCH 6.13 158/623] wifi: rtw89: mcc: consider time limits not divisible by 1024
+Date: Wed,  5 Feb 2025 14:38:20 +0100
+Message-ID: <20250205134502.280516122@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Zong-Zhe Yang <kevin_yang@realtek.com>
 
-[ Upstream commit 223382c94f1f07c475d39713e4c058401480b441 ]
+[ Upstream commit 35642ba31dc4a1816a20191e90156a9e329beb10 ]
 
-The SM6375 platform uses PM6125 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+For each MCC role, time limits, including max_tob_us, max_toa_us, and
+mac_dur_us, are calculated if there are NoA attributes. The relation
+between these time limits is "max_dur_us = max_tob_us + max_toa_us".
+Then, the unit is converted from us to TU. However, originally, each
+time limit was divided by 1024 independently. It missed to consider
+the cases that max_tob_us or max_toa_us is not divisible by 1024. It
+causes the result breaks "max_dur (TU) = max_tob (TU) + max_toa (TU)".
+Finally, when MCC calculates pattern parameters based on these kinds
+of time limits, it might not perform well.
 
-Fixes: 59d34ca97f91 ("arm64: dts: qcom: Add initial device tree for SM6375")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-12-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: b09df09b55fb ("wifi: rtw89: mcc: initialize start flow")
+Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250103074412.124066-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6375.dtsi | 2 +-
+ drivers/net/wireless/realtek/rtw89/chan.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-index e56f7ea4ebc6a..c5f7715626a09 100644
---- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-@@ -29,7 +29,7 @@
+diff --git a/drivers/net/wireless/realtek/rtw89/chan.c b/drivers/net/wireless/realtek/rtw89/chan.c
+index c06d305519df4..4df4e04c3e67d 100644
+--- a/drivers/net/wireless/realtek/rtw89/chan.c
++++ b/drivers/net/wireless/realtek/rtw89/chan.c
+@@ -802,7 +802,7 @@ static void rtw89_mcc_fill_role_limit(struct rtw89_dev *rtwdev,
  
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
--			clock-frequency = <32000>;
-+			clock-frequency = <32764>;
- 			#clock-cells = <0>;
- 		};
- 	};
+ 	mcc_role->limit.max_toa = max_toa_us / 1024;
+ 	mcc_role->limit.max_tob = max_tob_us / 1024;
+-	mcc_role->limit.max_dur = max_dur_us / 1024;
++	mcc_role->limit.max_dur = mcc_role->limit.max_toa + mcc_role->limit.max_tob;
+ 	mcc_role->limit.enable = true;
+ 
+ 	rtw89_debug(rtwdev, RTW89_DBG_CHAN,
 -- 
 2.39.5
 
