@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D008634E;
-	Wed,  5 Feb 2025 14:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1066214A088;
+	Wed,  5 Feb 2025 14:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765568; cv=none; b=ISouSmO9OsFKWvN2HsmIz55eTC3BRR6IbtLb645k42pU9NKC9b8+nv0kTmVYzJbRT45zTgocIdlCFUfW5glBOh19bsgBm/iow5I1yMEMxWFw+91ibASSxnQj1mga7xk+31bbD8jWM5xfY/pBA8ZDXa2YvE9T+VWfTvAOOCf8jjw=
+	t=1738765571; cv=none; b=Vs6DDxav2ouRi9tJteyv+idHldapjUbfGsHWtYBR2MEgNz0XyjIBM24cdG6Mo3JIN9e4hGsIN0wuzkNOell8fmReQnK0ofvOmiRoNbkhC1NqH/XF4QhWexOYPisQUeMoVZTMH4fZotlVSydBBVafE9lYwJHsM2FQ9MFBQHQosuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765568; c=relaxed/simple;
-	bh=G0FBo35xLbiXRKZZl9eTnp1Xn5tARDAMhv+Xcs/go2Y=;
+	s=arc-20240116; t=1738765571; c=relaxed/simple;
+	bh=PcWiF1XxYcFA1mh/pDCL/twUSLKFmLhknxU1Zizxi48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WoIz0zwcz8qmUQrsSxsUPzRNIN5CcVpOmP5eBU40mggw5iiuDP/qIXlM2RqUrZ+89BGP5I5M7e+WGti3lfmd8ovG8fZnsE8kTVxEsrTEtL/Hwhc4K2+5MEH2NGVa+xXLV5VY6ebPaAt+untEyg47G0s4UNIHdMIVul2JgzRdhnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/h4Th5s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XcJh3VFKwJzRVFzxLOvjkkuI6gnrLvIPHmsY0K4vvx5933cmloeWqxdDZEcqMWHqTQ/O+mC3WnDnDGabMQXnybem/rJ4Phv1GlAsEqd70ZU31r1dsI54UrRmokdcJ812xJfQee3Te4MGZMqjCu5QIVPSpZeD89aooTBzeYkPSlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6qxpZIr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/h4Th5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6335CC4CED1;
-	Wed,  5 Feb 2025 14:26:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6qxpZIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC78C4CED6;
+	Wed,  5 Feb 2025 14:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765567;
-	bh=G0FBo35xLbiXRKZZl9eTnp1Xn5tARDAMhv+Xcs/go2Y=;
+	s=korg; t=1738765570;
+	bh=PcWiF1XxYcFA1mh/pDCL/twUSLKFmLhknxU1Zizxi48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/h4Th5saBc4/deM0cWL+dAhvijafWfGh5SQrIOOwVUrIGcPYpjgba3dKd5a3SzwJ
-	 Ac5ZwGmiPPHDZ6H7CWf7vyGovcLZQw8/+WcnZXiUVIA2LC9VYFjfH/Yx4F9aVdxeJf
-	 jGt3oevSt6QgAxUodG7uYly+0UIvLedKW3cuYC9M=
+	b=b6qxpZIrsdQIRCm3/Od1KWzQsf+jaolLluSMaLUMymMkjCmZpa2MNHJ5Qt/Ne9Cs0
+	 7hRtdoHlTcCVbt/ljtGlu+abdhU5mveSeYRz0JdJAWG7tVyEnwGfcH7a+sSL7IsZSn
+	 1mPcJ3iArgptNpLNb+bUF7nzT2+E5Ki8iyaRR5Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Quadros <rogerq@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot <syzbot+85992ace37d5b7b51635@syzkaller.appspotmail.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 231/590] net: ethernet: ti: am65-cpsw: fix freeing IRQ in am65_cpsw_nuss_remove_tx_chns()
-Date: Wed,  5 Feb 2025 14:39:46 +0100
-Message-ID: <20250205134504.117815467@linuxfoundation.org>
+Subject: [PATCH 6.6 279/393] iommufd/iova_bitmap: Fix shift-out-of-bounds in iova_bitmap_offset_to_index()
+Date: Wed,  5 Feb 2025 14:43:18 +0100
+Message-ID: <20250205134430.983226376@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,62 +49,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roger Quadros <rogerq@kernel.org>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-[ Upstream commit 4395a44acb15850e492dd1de9ec4b6479d96bc80 ]
+[ Upstream commit e24c1551059268b37f6f40639883eafb281b8b9c ]
 
-When getting the IRQ we use k3_udma_glue_tx_get_irq() which returns
-negative error value on error. So not NULL check is not sufficient
-to deteremine if IRQ is valid. Check that IRQ is greater then zero
-to ensure it is valid.
+Resolve a UBSAN shift-out-of-bounds issue in iova_bitmap_offset_to_index()
+where shifting the constant "1" (of type int) by bitmap->mapped.pgshift
+(an unsigned long value) could result in undefined behavior.
 
-There is no issue at probe time but at runtime user can invoke
-.set_channels which results in the following call chain.
-am65_cpsw_set_channels()
- am65_cpsw_nuss_update_tx_rx_chns()
-  am65_cpsw_nuss_remove_tx_chns()
-  am65_cpsw_nuss_init_tx_chns()
+The constant "1" defaults to a 32-bit "int", and when "pgshift" exceeds
+31 (e.g., pgshift = 63) the shift operation overflows, as the result
+cannot be represented in a 32-bit type.
 
-At this point if am65_cpsw_nuss_init_tx_chns() fails due to
-k3_udma_glue_tx_get_irq() then tx_chn->irq will be set to a
-negative value.
+To resolve this, the constant is updated to "1UL", promoting it to an
+unsigned long type to match the operand's type.
 
-Then, at subsequent .set_channels with higher channel count we
-will attempt to free an invalid IRQ in am65_cpsw_nuss_remove_tx_chns()
-leading to a kernel warning.
-
-The issue is present in the original commit that introduced this driver,
-although there, am65_cpsw_nuss_update_tx_rx_chns() existed as
-am65_cpsw_nuss_update_tx_chns().
-
-Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 58ccf0190d19 ("vfio: Add an IOVA bitmap support")
+Link: https://patch.msgid.link/r/20250113223820.10713-1-qasdev00@gmail.com
+Reported-by: syzbot <syzbot+85992ace37d5b7b51635@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=85992ace37d5b7b51635
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
+ drivers/vfio/iova_bitmap.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index dfca13b82bdce..b13c7e958e6b4 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -2207,7 +2207,7 @@ static void am65_cpsw_nuss_remove_tx_chns(struct am65_cpsw_common *common)
- 	for (i = 0; i < common->tx_ch_num; i++) {
- 		struct am65_cpsw_tx_chn *tx_chn = &common->tx_chns[i];
+diff --git a/drivers/vfio/iova_bitmap.c b/drivers/vfio/iova_bitmap.c
+index 7af5b204990bb..38b51613ecca9 100644
+--- a/drivers/vfio/iova_bitmap.c
++++ b/drivers/vfio/iova_bitmap.c
+@@ -127,7 +127,7 @@ struct iova_bitmap {
+ static unsigned long iova_bitmap_offset_to_index(struct iova_bitmap *bitmap,
+ 						 unsigned long iova)
+ {
+-	unsigned long pgsize = 1 << bitmap->mapped.pgshift;
++	unsigned long pgsize = 1UL << bitmap->mapped.pgshift;
  
--		if (tx_chn->irq)
-+		if (tx_chn->irq > 0)
- 			devm_free_irq(dev, tx_chn->irq, tx_chn);
- 
- 		netif_napi_del(&tx_chn->napi_tx);
+ 	return iova / (BITS_PER_TYPE(*bitmap->bitmap) * pgsize);
+ }
 -- 
 2.39.5
 
