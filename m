@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AEA192D97;
-	Wed,  5 Feb 2025 15:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF7A16EB42;
+	Wed,  5 Feb 2025 15:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768363; cv=none; b=tBswq/5e7fsvre5cIFi5rmPdqLwQrDLjPLZ+BAKIvnFpHFLnLdwoARg5f6onibC8LGH56KBmqIXUUwKhOBwrGyDz1r/wQcJYHgB/95YtacO43ldTf86nk1/Apdril4qgxoVebiYuunpoUqe5OSsaDVk5alHshqbM8upyninDNk8=
+	t=1738768367; cv=none; b=qW1+ucwzorLVk1QmSgCRPDwBwV3dnbWWvQOzaze/Zqv/62nI4nN2FDz2p16sNak13tYxzimOU+7pMROQBWWcD4rgZ8XycWTz/KCT4fSnR59AXRGl6Z4ka2BEwFANugERCTA7qYoBBbQwX9MEihGNchD8naMthRITZ8N0tMto3DA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768363; c=relaxed/simple;
-	bh=52z+rjEejEeUJlw30pQ3e5pBPKcxB2xhnP8dPT/Jwo4=;
+	s=arc-20240116; t=1738768367; c=relaxed/simple;
+	bh=FQczMoDCk5yZjYBJKdYiG4YLY7ldWxmIREp36DVeegg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWPsCv515rtg7ZAtVXZ6fXhWcO3UlxsdtaMcrj0Ns49TY0q4DZ8cRZ+nP0J9mWNOkMEY2dbn66AwBL0gvbSKHi1cQ8Lsn0rZZCEkRElynBtw8cS0lhrsJETQtZSvTpPm5WLzIsFzUKZgnmTe5cQ3zW4oCp0MRyS2zjLu5H4oPBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNB8CRFf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rC42rjKHiO2ch+PpUivYeCH6ZuTJ76GuVQKUEpYjnZO3OZqsh33eH46ru5PkFT4zbn9m7MbVf4txBliLq4Jjp8XNFQ+54rz8lXxspa4nSQfuKkJVwSIdVK8zhg7ouPD3VSJEoXwSeYiMBul9RGGsgjn+hAz1FkIhjZqa9COGKeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ajo7zJTK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNB8CRFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB9BC4CED1;
-	Wed,  5 Feb 2025 15:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ajo7zJTK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A084C4CED6;
+	Wed,  5 Feb 2025 15:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768363;
-	bh=52z+rjEejEeUJlw30pQ3e5pBPKcxB2xhnP8dPT/Jwo4=;
+	s=korg; t=1738768366;
+	bh=FQczMoDCk5yZjYBJKdYiG4YLY7ldWxmIREp36DVeegg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rNB8CRFfSKX6VoAKlOJgAp/KM2gc34OwOzwKZpp0w1FQ+L+m243pMjGQNzlRhqePO
-	 ljmZ3FQLrIDF/MBpxOWmcv0LUcYVt+eQxbrMkFyIge004eDE8ZvX6VHbwsLRpA8jgS
-	 A2v5o25heicOieWVNUARfQqVLXfAwWKaBq7M3Clo=
+	b=Ajo7zJTKtDpIO+NShmMrvB91qrvHlkoK/+HSpjmaWpkp4qT1V83UtvSdQAVgxBGJq
+	 P7pq2T9XAoTorzjfQcxfOFTlhQXiOQzM2m0c9rP6V24cphpfNrO/8ltaydsd2o5fwf
+	 Ii3xCtC5fTm04NUtGacvmuDiHDTIUkRsm15PRwmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WANG Xuerui <git@xen0n.name>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 589/590] LoongArch: Change 8 to 14 for LOONGARCH_MAX_{BRP,WRP}
-Date: Wed,  5 Feb 2025 14:45:44 +0100
-Message-ID: <20250205134517.796830393@linuxfoundation.org>
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Yanteng Si <si.yanteng@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 536/623] net: stmmac: Limit FIFO size by hardware capability
+Date: Wed,  5 Feb 2025 14:44:38 +0100
+Message-ID: <20250205134516.729977655@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,151 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-commit f502ea618bf16d615d7dc6138c8988d3118fe750 upstream.
+[ Upstream commit 044f2fbaa2725696ecbf1f02ba7ab0a8ccb7e1ae ]
 
-The maximum number of load/store watchpoints and fetch instruction
-watchpoints is 14 each according to LoongArch Reference Manual, so
-change 8 to 14 for the related code.
+Tx/Rx FIFO size is specified by the parameter "{tx,rx}-fifo-depth" from
+stmmac_platform layer.
 
-Link: https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.html#control-and-status-registers-related-to-watchpoints
-Cc: stable@vger.kernel.org
-Fixes: edffa33c7bb5 ("LoongArch: Add hardware breakpoints/watchpoints support")
-Reviewed-by: WANG Xuerui <git@xen0n.name>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+However, these values are constrained by upper limits determined by the
+capabilities of each hardware feature. There is a risk that the upper
+bits will be truncated due to the calculation, so it's appropriate to
+limit them to the upper limit values and display a warning message.
+
+This only works if the hardware capability has the upper limit values.
+
+Fixes: e7877f52fd4a ("stmmac: Read tx-fifo-depth and rx-fifo-depth from the devicetree")
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/hw_breakpoint.h |    4 -
- arch/loongarch/include/asm/loongarch.h     |   60 +++++++++++++++++++++++++++++
- arch/loongarch/kernel/hw_breakpoint.c      |   16 ++++++-
- 3 files changed, 76 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/arch/loongarch/include/asm/hw_breakpoint.h
-+++ b/arch/loongarch/include/asm/hw_breakpoint.h
-@@ -38,8 +38,8 @@ struct arch_hw_breakpoint {
-  * Limits.
-  * Changing these will require modifications to the register accessors.
-  */
--#define LOONGARCH_MAX_BRP		8
--#define LOONGARCH_MAX_WRP		8
-+#define LOONGARCH_MAX_BRP		14
-+#define LOONGARCH_MAX_WRP		14
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 17a5be4f57c8d..1bed3e7629faa 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -7190,6 +7190,21 @@ static int stmmac_hw_init(struct stmmac_priv *priv)
+ 		priv->plat->tx_queues_to_use = priv->dma_cap.number_tx_queues;
+ 	}
  
- /* Virtual debug register bases. */
- #define CSR_CFG_ADDR	0
---- a/arch/loongarch/include/asm/loongarch.h
-+++ b/arch/loongarch/include/asm/loongarch.h
-@@ -959,6 +959,36 @@
- #define LOONGARCH_CSR_DB7CTRL		0x34a	/* data breakpoint 7 control */
- #define LOONGARCH_CSR_DB7ASID		0x34b	/* data breakpoint 7 asid */
- 
-+#define LOONGARCH_CSR_DB8ADDR		0x350	/* data breakpoint 8 address */
-+#define LOONGARCH_CSR_DB8MASK		0x351	/* data breakpoint 8 mask */
-+#define LOONGARCH_CSR_DB8CTRL		0x352	/* data breakpoint 8 control */
-+#define LOONGARCH_CSR_DB8ASID		0x353	/* data breakpoint 8 asid */
++	if (priv->dma_cap.rx_fifo_size &&
++	    priv->plat->rx_fifo_size > priv->dma_cap.rx_fifo_size) {
++		dev_warn(priv->device,
++			 "Rx FIFO size (%u) exceeds dma capability\n",
++			 priv->plat->rx_fifo_size);
++		priv->plat->rx_fifo_size = priv->dma_cap.rx_fifo_size;
++	}
++	if (priv->dma_cap.tx_fifo_size &&
++	    priv->plat->tx_fifo_size > priv->dma_cap.tx_fifo_size) {
++		dev_warn(priv->device,
++			 "Tx FIFO size (%u) exceeds dma capability\n",
++			 priv->plat->tx_fifo_size);
++		priv->plat->tx_fifo_size = priv->dma_cap.tx_fifo_size;
++	}
 +
-+#define LOONGARCH_CSR_DB9ADDR		0x358	/* data breakpoint 9 address */
-+#define LOONGARCH_CSR_DB9MASK		0x359	/* data breakpoint 9 mask */
-+#define LOONGARCH_CSR_DB9CTRL		0x35a	/* data breakpoint 9 control */
-+#define LOONGARCH_CSR_DB9ASID		0x35b	/* data breakpoint 9 asid */
-+
-+#define LOONGARCH_CSR_DB10ADDR		0x360	/* data breakpoint 10 address */
-+#define LOONGARCH_CSR_DB10MASK		0x361	/* data breakpoint 10 mask */
-+#define LOONGARCH_CSR_DB10CTRL		0x362	/* data breakpoint 10 control */
-+#define LOONGARCH_CSR_DB10ASID		0x363	/* data breakpoint 10 asid */
-+
-+#define LOONGARCH_CSR_DB11ADDR		0x368	/* data breakpoint 11 address */
-+#define LOONGARCH_CSR_DB11MASK		0x369	/* data breakpoint 11 mask */
-+#define LOONGARCH_CSR_DB11CTRL		0x36a	/* data breakpoint 11 control */
-+#define LOONGARCH_CSR_DB11ASID		0x36b	/* data breakpoint 11 asid */
-+
-+#define LOONGARCH_CSR_DB12ADDR		0x370	/* data breakpoint 12 address */
-+#define LOONGARCH_CSR_DB12MASK		0x371	/* data breakpoint 12 mask */
-+#define LOONGARCH_CSR_DB12CTRL		0x372	/* data breakpoint 12 control */
-+#define LOONGARCH_CSR_DB12ASID		0x373	/* data breakpoint 12 asid */
-+
-+#define LOONGARCH_CSR_DB13ADDR		0x378	/* data breakpoint 13 address */
-+#define LOONGARCH_CSR_DB13MASK		0x379	/* data breakpoint 13 mask */
-+#define LOONGARCH_CSR_DB13CTRL		0x37a	/* data breakpoint 13 control */
-+#define LOONGARCH_CSR_DB13ASID		0x37b	/* data breakpoint 13 asid */
-+
- #define LOONGARCH_CSR_FWPC		0x380	/* instruction breakpoint config */
- #define LOONGARCH_CSR_FWPS		0x381	/* instruction breakpoint status */
- 
-@@ -1002,6 +1032,36 @@
- #define LOONGARCH_CSR_IB7CTRL		0x3ca	/* inst breakpoint 7 control */
- #define LOONGARCH_CSR_IB7ASID		0x3cb	/* inst breakpoint 7 asid */
- 
-+#define LOONGARCH_CSR_IB8ADDR		0x3d0	/* inst breakpoint 8 address */
-+#define LOONGARCH_CSR_IB8MASK		0x3d1	/* inst breakpoint 8 mask */
-+#define LOONGARCH_CSR_IB8CTRL		0x3d2	/* inst breakpoint 8 control */
-+#define LOONGARCH_CSR_IB8ASID		0x3d3	/* inst breakpoint 8 asid */
-+
-+#define LOONGARCH_CSR_IB9ADDR		0x3d8	/* inst breakpoint 9 address */
-+#define LOONGARCH_CSR_IB9MASK		0x3d9	/* inst breakpoint 9 mask */
-+#define LOONGARCH_CSR_IB9CTRL		0x3da	/* inst breakpoint 9 control */
-+#define LOONGARCH_CSR_IB9ASID		0x3db	/* inst breakpoint 9 asid */
-+
-+#define LOONGARCH_CSR_IB10ADDR		0x3e0	/* inst breakpoint 10 address */
-+#define LOONGARCH_CSR_IB10MASK		0x3e1	/* inst breakpoint 10 mask */
-+#define LOONGARCH_CSR_IB10CTRL		0x3e2	/* inst breakpoint 10 control */
-+#define LOONGARCH_CSR_IB10ASID		0x3e3	/* inst breakpoint 10 asid */
-+
-+#define LOONGARCH_CSR_IB11ADDR		0x3e8	/* inst breakpoint 11 address */
-+#define LOONGARCH_CSR_IB11MASK		0x3e9	/* inst breakpoint 11 mask */
-+#define LOONGARCH_CSR_IB11CTRL		0x3ea	/* inst breakpoint 11 control */
-+#define LOONGARCH_CSR_IB11ASID		0x3eb	/* inst breakpoint 11 asid */
-+
-+#define LOONGARCH_CSR_IB12ADDR		0x3f0	/* inst breakpoint 12 address */
-+#define LOONGARCH_CSR_IB12MASK		0x3f1	/* inst breakpoint 12 mask */
-+#define LOONGARCH_CSR_IB12CTRL		0x3f2	/* inst breakpoint 12 control */
-+#define LOONGARCH_CSR_IB12ASID		0x3f3	/* inst breakpoint 12 asid */
-+
-+#define LOONGARCH_CSR_IB13ADDR		0x3f8	/* inst breakpoint 13 address */
-+#define LOONGARCH_CSR_IB13MASK		0x3f9	/* inst breakpoint 13 mask */
-+#define LOONGARCH_CSR_IB13CTRL		0x3fa	/* inst breakpoint 13 control */
-+#define LOONGARCH_CSR_IB13ASID		0x3fb	/* inst breakpoint 13 asid */
-+
- #define LOONGARCH_CSR_DEBUG		0x500	/* debug config */
- #define LOONGARCH_CSR_DERA		0x501	/* debug era */
- #define LOONGARCH_CSR_DESAVE		0x502	/* debug save */
---- a/arch/loongarch/kernel/hw_breakpoint.c
-+++ b/arch/loongarch/kernel/hw_breakpoint.c
-@@ -51,7 +51,13 @@ int hw_breakpoint_slots(int type)
- 	READ_WB_REG_CASE(OFF, 4, REG, T, VAL);		\
- 	READ_WB_REG_CASE(OFF, 5, REG, T, VAL);		\
- 	READ_WB_REG_CASE(OFF, 6, REG, T, VAL);		\
--	READ_WB_REG_CASE(OFF, 7, REG, T, VAL);
-+	READ_WB_REG_CASE(OFF, 7, REG, T, VAL);		\
-+	READ_WB_REG_CASE(OFF, 8, REG, T, VAL);		\
-+	READ_WB_REG_CASE(OFF, 9, REG, T, VAL);		\
-+	READ_WB_REG_CASE(OFF, 10, REG, T, VAL);		\
-+	READ_WB_REG_CASE(OFF, 11, REG, T, VAL);		\
-+	READ_WB_REG_CASE(OFF, 12, REG, T, VAL);		\
-+	READ_WB_REG_CASE(OFF, 13, REG, T, VAL);
- 
- #define GEN_WRITE_WB_REG_CASES(OFF, REG, T, VAL)	\
- 	WRITE_WB_REG_CASE(OFF, 0, REG, T, VAL);		\
-@@ -61,7 +67,13 @@ int hw_breakpoint_slots(int type)
- 	WRITE_WB_REG_CASE(OFF, 4, REG, T, VAL);		\
- 	WRITE_WB_REG_CASE(OFF, 5, REG, T, VAL);		\
- 	WRITE_WB_REG_CASE(OFF, 6, REG, T, VAL);		\
--	WRITE_WB_REG_CASE(OFF, 7, REG, T, VAL);
-+	WRITE_WB_REG_CASE(OFF, 7, REG, T, VAL);		\
-+	WRITE_WB_REG_CASE(OFF, 8, REG, T, VAL);		\
-+	WRITE_WB_REG_CASE(OFF, 9, REG, T, VAL);		\
-+	WRITE_WB_REG_CASE(OFF, 10, REG, T, VAL);	\
-+	WRITE_WB_REG_CASE(OFF, 11, REG, T, VAL);	\
-+	WRITE_WB_REG_CASE(OFF, 12, REG, T, VAL);	\
-+	WRITE_WB_REG_CASE(OFF, 13, REG, T, VAL);
- 
- static u64 read_wb_reg(int reg, int n, int t)
- {
+ 	priv->hw->vlan_fail_q_en =
+ 		(priv->plat->flags & STMMAC_FLAG_VLAN_FAIL_Q_EN);
+ 	priv->hw->vlan_fail_q = priv->plat->vlan_fail_q;
+-- 
+2.39.5
+
 
 
