@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E801494DF;
-	Wed,  5 Feb 2025 14:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833F21519AA;
+	Wed,  5 Feb 2025 14:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764702; cv=none; b=OUP28oiYtQknFcSJpKdogEgxsAN3eI3YcASaH5p8eF/T1lPxYhYIkaYw/6rqse5VgLgjjr+3HegAfVqg/7BFggJ16jaVt9E2J0CiCGIYrcZfdblGVyJbgjtyGDB8Sv67QhJIxhPkLTAz3JCeAHbIsQGwL+sc0LjuG8CjLC0PoS8=
+	t=1738764703; cv=none; b=CW9Aoba4r7dN+Ce9F1J0HsVYiCf2JBJlEfHA3veI0x6theXjjV2XrJs1Oqv86eAzl/fFd1cSutrwi4Xc4w7vuvPfB+ECi6laWYnrgm6C2ZyCdq3Zqdq9SxWz0czGDFeVyf0znRFEVB8W6/4kCnVG3Tt/fDeszT2GrWlsUZLxYic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764702; c=relaxed/simple;
-	bh=5S5lL0Sx1x+NzaP6ELQVjxlcVr/rVjF+fVgra/2sG/U=;
+	s=arc-20240116; t=1738764703; c=relaxed/simple;
+	bh=uNq1XKsjfjF2fj4UUR4zg/HD7/ZLAJo4nbyvpe/kqLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qkqkHNhUAXFX+YnKJ7WHqL1obb+7NWk9aiMqX3ByfhJqRxtbMpOPVmT3oLaPF0wJhLN+eVJIxNMTd+DaXvzvmPD6ab+hFo6Jtgp3Eq9yB9PBtqIT+ODG97cwsn8eI6wpcxqqbB317XmGwXOYYfTfDJ7E0qPa54XwwFl1Ox3kOxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSNxa9CH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hkjyt4Ce8OHovtklQbeWpwKiLk7jRge4BE48EenT4WsgkTZbUnImrOQsVaczKgwgKu8ioLwqZCdPRR5LNsQ30HxY8N/RwpNoYxu+pSoBFaYZ4MDuwYCPbPLu4G0oJDQhgK/PHOgrjosoTHJM2+3coNuPohi1gulT8v8BNYVPQoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uikNXRD7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSNxa9CH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85391C4CED1;
-	Wed,  5 Feb 2025 14:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uikNXRD7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1AA8C4CEDD;
+	Wed,  5 Feb 2025 14:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764699;
-	bh=5S5lL0Sx1x+NzaP6ELQVjxlcVr/rVjF+fVgra/2sG/U=;
+	s=korg; t=1738764703;
+	bh=uNq1XKsjfjF2fj4UUR4zg/HD7/ZLAJo4nbyvpe/kqLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSNxa9CHWwvlrHUHGowYj4e57BLT4bb7ivFfVVVqL/7ji4gI4or0yh1cEulNjc06Y
-	 rbc2h7xcIl87MZwFAalY/rIXLOcEJnDVu2diY32P+eun3xP0+fBc3ddfT9sWbF1kce
-	 ZYuvkPXJ6Pd9o9xlbY6o1ig7sTw2IVwbd5HS8SwQ=
+	b=uikNXRD7FChCqTS0PlVSCQEa0QHeZNJZRJLb38DrQ6SnEDJuCfFK8Fv2Oe1Q8gmc5
+	 nRHbJ5aoTM8ML5yQIZWHq71Uuq6JakW4V0PcHAqZoDdhIK88t1dbIabpageP+Qg3Re
+	 VJDGtL64FJqognyTqDAF8KtXnuVsu8izO7ytSIb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragan Simic <dsimic@manjaro.org>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Vasily Khoruzhick <anarsoul@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Frank Oltmanns <frank@oltmanns.dev>,
-	Stuart Gathman <stuart@gathman.org>
-Subject: [PATCH 6.12 131/590] clk: sunxi-ng: a64: drop redundant CLK_PLL_VIDEO0_2X and CLK_PLL_MIPI
-Date: Wed,  5 Feb 2025 14:38:06 +0100
-Message-ID: <20250205134500.276764477@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 126/590] arm64: dts: imx93: Use IMX93_CLK_SPDIF_IPG as SPDIF IPG clock
+Date: Wed,  5 Feb 2025 14:38:01 +0100
+Message-ID: <20250205134500.081433739@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -54,46 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Khoruzhick <anarsoul@gmail.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 0f368cb7ef103f284f75e962c4c89da5aa8ccec7 ]
+[ Upstream commit 570b890e66334f283710af36feb2115f16c7a27c ]
 
-Drop redundant CLK_PLL_VIDEO0_2X and CLK_PLL.MIPI. These are now
-defined in dt-bindings/clock/sun50i-a64-ccu.h
+IMX93_CLK_BUS_WAKEUP is not accurate IPG clock, which
+missed the clock gate part.
 
-Fixes: ca1170b69968 ("clk: sunxi-ng: a64: force select PLL_MIPI in TCON0 mux")
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Tested-by: Frank Oltmanns <frank@oltmanns.dev> # on pinephone
-Tested-by: Stuart Gathman <stuart@gathman.org> # on OG pinebook
-Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
-Link: https://patch.msgid.link/20250104074035.1611136-3-anarsoul@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+IMX93_CLK_SPDIF_IPG is the correct clock.
+
+Fixes: 1c4a4f7362fd ("arm64: dts: imx93: Add audio device nodes")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Acked-by: Shawn Guo <shawnguo@kernel.org>
+Link: https://lore.kernel.org/r/20241119015805.3840606-4-shengjiu.wang@nxp.com
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun50i-a64.h | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx93.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun50i-a64.h b/drivers/clk/sunxi-ng/ccu-sun50i-a64.h
-index a8c11c0b4e067..dfba88a5ad0f7 100644
---- a/drivers/clk/sunxi-ng/ccu-sun50i-a64.h
-+++ b/drivers/clk/sunxi-ng/ccu-sun50i-a64.h
-@@ -21,7 +21,6 @@
- 
- /* PLL_VIDEO0 exported for HDMI PHY */
- 
--#define CLK_PLL_VIDEO0_2X		8
- #define CLK_PLL_VE			9
- #define CLK_PLL_DDR0			10
- 
-@@ -32,7 +31,6 @@
- #define CLK_PLL_PERIPH1_2X		14
- #define CLK_PLL_VIDEO1			15
- #define CLK_PLL_GPU			16
--#define CLK_PLL_MIPI			17
- #define CLK_PLL_HSIC			18
- #define CLK_PLL_DE			19
- #define CLK_PLL_DDR1			20
+diff --git a/arch/arm64/boot/dts/freescale/imx93.dtsi b/arch/arm64/boot/dts/freescale/imx93.dtsi
+index 04b9b3d31f4fa..7bc3852c6ef8f 100644
+--- a/arch/arm64/boot/dts/freescale/imx93.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx93.dtsi
+@@ -917,7 +917,7 @@
+ 				reg-names = "ram", "regs", "rxfifo", "txfifo";
+ 				interrupts = <GIC_SPI 203 IRQ_TYPE_LEVEL_HIGH>,
+ 					     <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>;
+-				clocks = <&clk IMX93_CLK_BUS_WAKEUP>,
++				clocks = <&clk IMX93_CLK_SPDIF_IPG>,
+ 					 <&clk IMX93_CLK_SPDIF_GATE>,
+ 					 <&clk IMX93_CLK_DUMMY>,
+ 					 <&clk IMX93_CLK_AUD_XCVR_GATE>;
 -- 
 2.39.5
 
