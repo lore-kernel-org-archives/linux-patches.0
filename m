@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB66376;
-	Wed,  5 Feb 2025 15:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232BADF59;
+	Wed,  5 Feb 2025 15:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767791; cv=none; b=sik5ssqtNw+PJa7wYY1FdMV+I4ihFShD+FCgWMhHJL3VnPOM0Em/C69yUQgxEbu+y8ObygD4IGY1e0YqEM6fpsjtX4lyUkvVEKcBYN2l2hNP15NrsrQAbdSZMJHoZhNm4xhsIVAZoVNSLdP7uGjsobzHinAFOMNFKGa06HYTQsU=
+	t=1738767795; cv=none; b=N//yqNhZmT43Ql3gXY7o2DOSu8MxAu2GUTHVUgrXWyflWXmRYfCfjfoMJDTAcs7hfwZozHNJlSm8OfAaJIHN3Pce9gcN3GzhxSpMSxeIcK2pfmyvPbNAXTlzE759B1FT1Vumu/rxLKZE0j209csBsPo/GeBV3Dd5I86vIOvZVRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767791; c=relaxed/simple;
-	bh=/fwqXBvoU/d5kDh5KrUpOFqIJMB1xsYX0zYTXbKzLdw=;
+	s=arc-20240116; t=1738767795; c=relaxed/simple;
+	bh=GViLDs6d5Njm/u1K2NuzxBQmnv/JOncR9bHnej6zmKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHxl8uA19fvQ5IZrnslFzVE1y9ifDxNx7pX14tIizarRPJn3KRFvXNtH9xMv1iFFfUTkGyZfbDDjB/FxahAwWloNW/jU3mWrkQGQhnzHU0Ac2/WfGpYZbNXqvKBshPo17YJwuyoLY/n4aBhpSjjcjQuvDghnve1S8mDR6Jexga8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cElzK5l4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GjetsQi7VIwAJMHgj6A/DrtcyCS7ys+yt2h68tsQrGd4M00E7KQodvDWm5DYa9+WXF3Oe1B2Ufe7FnqkzylPfJNQCWbzmEHdRbbg7DOfV7wlHqG86/RSCwew5ui07nyyMkqHaiRHBRZ3K8WRrgHpf7X1xTwl4xDA5i+/Pu9BCDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Loo73Akv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cElzK5l4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E85C4CED1;
-	Wed,  5 Feb 2025 15:03:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Loo73Akv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ECFEC4CED1;
+	Wed,  5 Feb 2025 15:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767791;
-	bh=/fwqXBvoU/d5kDh5KrUpOFqIJMB1xsYX0zYTXbKzLdw=;
+	s=korg; t=1738767795;
+	bh=GViLDs6d5Njm/u1K2NuzxBQmnv/JOncR9bHnej6zmKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cElzK5l4K3pumqOEyZXFoqeehjNjZhKpeuKF4yF+PFHRlSAXM2qQQyAel2MhwRxSw
-	 A/83YdQPsZEnaX83003xg3pN8DfxiF2C8l7W1h2LiRIfu5zNr7NIWUmQFY+fqwV2l0
-	 WSJku+BxTmgr2mRyCoVkEjbqN9eIi52osKHOrYB0=
+	b=Loo73AkvkwwzQ/GA0jh3g0YZu0x8WW3JX2pEbFbGxzVItxJNWb4HxCIGOQCh97Kql
+	 9avfnNRs7VQDcd1Ihwsz6CldaE9MQgiPoiDrNBTDBKT6J//FOUSoidaH41gNVwNYhW
+	 2w6QmJPQWj/PQtc2cEbYaK4cHriWnHsmp2Ib2atw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 454/623] media: uvcvideo: Propagate buf->error to userspace
-Date: Wed,  5 Feb 2025 14:43:16 +0100
-Message-ID: <20250205134513.583746760@linuxfoundation.org>
+Subject: [PATCH 6.12 510/590] Bluetooth: btusb: mediatek: Add locks for usb_driver_claim_interface()
+Date: Wed,  5 Feb 2025 14:44:25 +0100
+Message-ID: <20250205134514.778810155@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +47,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 87ce177654e388451850905a1d376658aebe8699 ]
+[ Upstream commit e9087e828827e5a5c85e124ce77503f2b81c3491 ]
 
-Now we return VB2_BUF_STATE_DONE for valid and invalid frames. Propagate
-the correct value, so the user can know if the frame is valid or not via
-struct v4l2_buffer->flags.
+The documentation for usb_driver_claim_interface() says that "the
+device lock" is needed when the function is called from places other
+than probe(). This appears to be the lock for the USB interface
+device. The Mediatek btusb code gets called via this path:
 
-Reported-by: Hans de Goede <hdegoede@redhat.com>
-Closes: https://lore.kernel.org/linux-media/84b0f212-cd88-46bb-8e6f-b94ec3eccba6@redhat.com
-Fixes: 6998b6fb4b1c ("[media] uvcvideo: Use videobuf2-vmalloc")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20241218-uvc-deprecate-v2-1-ab814139e983@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+  Workqueue: hci0 hci_power_on [bluetooth]
+  Call trace:
+   usb_driver_claim_interface
+   btusb_mtk_claim_iso_intf
+   btusb_mtk_setup
+   hci_dev_open_sync
+   hci_power_on
+   process_scheduled_works
+   worker_thread
+   kthread
+
+With the above call trace the device lock hasn't been claimed. Claim
+it.
+
+Without this fix, we'd sometimes see the error "Failed to claim iso
+interface". Sometimes we'd even see worse errors, like a NULL pointer
+dereference (where `intf->dev.driver` was NULL) with a trace like:
+
+  Call trace:
+   usb_suspend_both
+   usb_runtime_suspend
+   __rpm_callback
+   rpm_suspend
+   pm_runtime_work
+   process_scheduled_works
+
+Both errors appear to be fixed with the proper locking.
+
+Fixes: ceac1cb0259d ("Bluetooth: btusb: mediatek: add ISO data transmission functions")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_queue.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/media/usb/uvc/uvc_queue.c b/drivers/media/usb/uvc/uvc_queue.c
-index 26ee85657fc89..f8464f0aae1b8 100644
---- a/drivers/media/usb/uvc/uvc_queue.c
-+++ b/drivers/media/usb/uvc/uvc_queue.c
-@@ -479,7 +479,8 @@ static void uvc_queue_buffer_complete(struct kref *ref)
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 0c85c981a8334..258a5cb6f27af 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2632,8 +2632,15 @@ static void btusb_mtk_claim_iso_intf(struct btusb_data *data)
+ 	struct btmtk_data *btmtk_data = hci_get_priv(data->hdev);
+ 	int err;
  
- 	buf->state = buf->error ? UVC_BUF_STATE_ERROR : UVC_BUF_STATE_DONE;
- 	vb2_set_plane_payload(&buf->buf.vb2_buf, 0, buf->bytesused);
--	vb2_buffer_done(&buf->buf.vb2_buf, VB2_BUF_STATE_DONE);
-+	vb2_buffer_done(&buf->buf.vb2_buf, buf->error ? VB2_BUF_STATE_ERROR :
-+							VB2_BUF_STATE_DONE);
- }
- 
- /*
++	/*
++	 * The function usb_driver_claim_interface() is documented to need
++	 * locks held if it's not called from a probe routine. The code here
++	 * is called from the hci_power_on workqueue, so grab the lock.
++	 */
++	device_lock(&btmtk_data->isopkt_intf->dev);
+ 	err = usb_driver_claim_interface(&btusb_driver,
+ 					 btmtk_data->isopkt_intf, data);
++	device_unlock(&btmtk_data->isopkt_intf->dev);
+ 	if (err < 0) {
+ 		btmtk_data->isopkt_intf = NULL;
+ 		bt_dev_err(data->hdev, "Failed to claim iso interface");
 -- 
 2.39.5
 
