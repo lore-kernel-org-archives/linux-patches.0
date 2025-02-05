@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A28158D96;
-	Wed,  5 Feb 2025 14:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4159F156C76;
+	Wed,  5 Feb 2025 14:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765710; cv=none; b=Enb7602eJKiCtbGKZl1/889j4mz46OYSxt7dAwQHZDBld/omacFhAMYm7gZQmHGUxo8dy7ZS9fcrV9wojgmzUSCIylpq52K72c7XhpwVyQD7Zl0OlfFJ1DvzOWZyBYWGzUl3DgQFWq58p1YziAF3JkyTFYtN6ZX2ngEFF31fT1U=
+	t=1738765714; cv=none; b=qhySeFsbfBbpbNTbie6PwO9W2jRYhKTEKOT+YsPKEonVEVBFW+vC4SE2BnfZFnSeEXABzCwXg8kUPAHIp7YR94ZQB1wEqjwrY+A25k6eKUIrnlfDk3PR6BlpIEkXz/RALqlWgWTEBcUAPF5QVqGky5/nBS38apqTFKJ6binhJcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765710; c=relaxed/simple;
-	bh=fRR2D4UYg+u22yROjoe9xvnaPvmCZnLfDzkDY7+a7p4=;
+	s=arc-20240116; t=1738765714; c=relaxed/simple;
+	bh=P4bqZLSvZrfmvwjRexe1l61wq1vLZFB8KqxxDEcieLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rkzIFnvQzlvTN0FrTZjQR4gqNKnszDjAQwSnF9vSJztPW1SX+HxpgZNDoMzAJRoBMPLU8dtHOf6G3X+2qA7ZX4d9D1CxirnIH4+3G601K1k7kRRIL7cCSGHD/Nv8Yr4gONX77QuXPplfEvQ4mzArv49X7r8wTg6IxDkHA5yeGrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LHhrgzQ9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BCyci2BCzpw4Ty2emEa20R6XAIcBaZ9xXGiqRrLUymvl3seEecnd2goq1k7qpZvkIADq2cWylHl62f8UhdjtR98WNSDDkmc2E5P9MMXKd4zpWg0oxwMfZL9wMlR0XMc+QdGOgV9I5kTfXrdipDB6zFLt8qUI6c0pXhuvTMyB720=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJ8T0rrx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LHhrgzQ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87FDDC4CEE9;
-	Wed,  5 Feb 2025 14:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJ8T0rrx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350CCC4CED1;
+	Wed,  5 Feb 2025 14:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765710;
-	bh=fRR2D4UYg+u22yROjoe9xvnaPvmCZnLfDzkDY7+a7p4=;
+	s=korg; t=1738765713;
+	bh=P4bqZLSvZrfmvwjRexe1l61wq1vLZFB8KqxxDEcieLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LHhrgzQ9tbdDVlUlPStBEN86Tagd5CBPdfogz2qRCU8enTy0X3WrGEBfQGlkZbwiE
-	 AO9W4Thtx1uSfIUGWuZAu5AFSsE/B/0yqbMhoQ9SOYH/Yu+Qeuhchx/JLI6zvMCAWn
-	 h9BZwbOwJpiik3TUjaZERtafUMZy9gJtjLpjrnbk=
+	b=pJ8T0rrxLPp5diRKgifd30CToD2copLXYS7NtJVNXN+dLyFT9jt4c8Eeqn5GDP8vO
+	 Tq0h5+g4aHB0J0r/pkuhjpFCwNZh15XMdYAVviCj/DpY2dqezIv7IG6pFmRkpCm6r/
+	 UtK3yz5MHDDtmH6HtvjsX6bhwOIEGIzv4ZH+QzxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 245/590] selftests/bpf: Fix fill_link_info selftest on powerpc
-Date: Wed,  5 Feb 2025 14:40:00 +0100
-Message-ID: <20250205134504.654644161@linuxfoundation.org>
+Subject: [PATCH 6.6 292/393] mtd: hyperbus: hbmc-am654: Convert to platform remove callback returning void
+Date: Wed,  5 Feb 2025 14:43:31 +0100
+Message-ID: <20250205134431.485341156@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,102 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 4d33dc1bc31df80356c49e40dbd3ddff19500bcb ]
+[ Upstream commit 59bd56760df17506bc2f828f19b40a2243edd0d0 ]
 
-With CONFIG_KPROBES_ON_FTRACE enabled on powerpc, ftrace_location_range
-returns ftrace location for bpf_fentry_test1 at offset of 4 bytes from
-function entry. This is because branch to _mcount function is at offset
-of 4 bytes in function profile sequence.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-To fix this, add entry_offset of 4 bytes while verifying the address for
-kprobe entry address of bpf_fentry_test1 in verify_perf_link_info in
-selftest, when CONFIG_KPROBES_ON_FTRACE is enabled.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Disassemble of bpf_fentry_test1:
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-c000000000e4b080 <bpf_fentry_test1>:
-c000000000e4b080:       a6 02 08 7c     mflr    r0
-c000000000e4b084:       b9 e2 22 4b     bl      c00000000007933c <_mcount>
-c000000000e4b088:       01 00 63 38     addi    r3,r3,1
-c000000000e4b08c:       b4 07 63 7c     extsw   r3,r3
-c000000000e4b090:       20 00 80 4e     blr
-
-When CONFIG_PPC_FTRACE_OUT_OF_LINE [1] is enabled, these function profile
-sequence is moved out of line with an unconditional branch at offset 0.
-So, the test works without altering the offset for
-'CONFIG_KPROBES_ON_FTRACE && CONFIG_PPC_FTRACE_OUT_OF_LINE' case.
-
-Disassemble of bpf_fentry_test1:
-
-c000000000f95190 <bpf_fentry_test1>:
-c000000000f95190:       00 00 00 60     nop
-c000000000f95194:       01 00 63 38     addi    r3,r3,1
-c000000000f95198:       b4 07 63 7c     extsw   r3,r3
-c000000000f9519c:       20 00 80 4e     blr
-
-[1] https://lore.kernel.org/all/20241030070850.1361304-13-hbathini@linux.ibm.com/
-
-Fixes: 23cf7aa539dc ("selftests/bpf: Add selftest for fill_link_info")
-Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241209065720.234344-1-skb99@linux.ibm.com
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Acked-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/linux-mtd/20231008200143.196369-10-u.kleine-koenig@pengutronix.de
+Stable-dep-of: bf5821909eb9 ("mtd: hyperbus: hbmc-am654: fix an OF node reference leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/fill_link_info.c       |  4 ++++
- .../selftests/bpf/progs/test_fill_link_info.c       | 13 ++++++++++---
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ drivers/mtd/hyperbus/hbmc-am654.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-index d50cbd8040d45..e59af2aa66016 100644
---- a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-+++ b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-@@ -171,6 +171,10 @@ static void test_kprobe_fill_link_info(struct test_fill_link_info *skel,
- 		/* See also arch_adjust_kprobe_addr(). */
- 		if (skel->kconfig->CONFIG_X86_KERNEL_IBT)
- 			entry_offset = 4;
-+		if (skel->kconfig->CONFIG_PPC64 &&
-+		    skel->kconfig->CONFIG_KPROBES_ON_FTRACE &&
-+		    !skel->kconfig->CONFIG_PPC_FTRACE_OUT_OF_LINE)
-+			entry_offset = 4;
- 		err = verify_perf_link_info(link_fd, type, kprobe_addr, 0, entry_offset);
- 		ASSERT_OK(err, "verify_perf_link_info");
- 	} else {
-diff --git a/tools/testing/selftests/bpf/progs/test_fill_link_info.c b/tools/testing/selftests/bpf/progs/test_fill_link_info.c
-index 6afa834756e9f..fac33a14f2009 100644
---- a/tools/testing/selftests/bpf/progs/test_fill_link_info.c
-+++ b/tools/testing/selftests/bpf/progs/test_fill_link_info.c
-@@ -6,13 +6,20 @@
- #include <stdbool.h>
- 
- extern bool CONFIG_X86_KERNEL_IBT __kconfig __weak;
-+extern bool CONFIG_PPC_FTRACE_OUT_OF_LINE __kconfig __weak;
-+extern bool CONFIG_KPROBES_ON_FTRACE __kconfig __weak;
-+extern bool CONFIG_PPC64 __kconfig __weak;
- 
--/* This function is here to have CONFIG_X86_KERNEL_IBT
-- * used and added to object BTF.
-+/* This function is here to have CONFIG_X86_KERNEL_IBT,
-+ * CONFIG_PPC_FTRACE_OUT_OF_LINE, CONFIG_KPROBES_ON_FTRACE,
-+ * CONFIG_PPC6 used and added to object BTF.
-  */
- int unused(void)
- {
--	return CONFIG_X86_KERNEL_IBT ? 0 : 1;
-+	return CONFIG_X86_KERNEL_IBT ||
-+			CONFIG_PPC_FTRACE_OUT_OF_LINE ||
-+			CONFIG_KPROBES_ON_FTRACE ||
-+			CONFIG_PPC64 ? 0 : 1;
+diff --git a/drivers/mtd/hyperbus/hbmc-am654.c b/drivers/mtd/hyperbus/hbmc-am654.c
+index a6161ce340d4e..dbe3eb361cca2 100644
+--- a/drivers/mtd/hyperbus/hbmc-am654.c
++++ b/drivers/mtd/hyperbus/hbmc-am654.c
+@@ -229,7 +229,7 @@ static int am654_hbmc_probe(struct platform_device *pdev)
+ 	return ret;
  }
  
- SEC("kprobe")
+-static int am654_hbmc_remove(struct platform_device *pdev)
++static void am654_hbmc_remove(struct platform_device *pdev)
+ {
+ 	struct am654_hbmc_priv *priv = platform_get_drvdata(pdev);
+ 	struct am654_hbmc_device_priv *dev_priv = priv->hbdev.priv;
+@@ -241,8 +241,6 @@ static int am654_hbmc_remove(struct platform_device *pdev)
+ 
+ 	if (dev_priv->rx_chan)
+ 		dma_release_channel(dev_priv->rx_chan);
+-
+-	return 0;
+ }
+ 
+ static const struct of_device_id am654_hbmc_dt_ids[] = {
+@@ -256,7 +254,7 @@ MODULE_DEVICE_TABLE(of, am654_hbmc_dt_ids);
+ 
+ static struct platform_driver am654_hbmc_platform_driver = {
+ 	.probe = am654_hbmc_probe,
+-	.remove = am654_hbmc_remove,
++	.remove_new = am654_hbmc_remove,
+ 	.driver = {
+ 		.name = "hbmc-am654",
+ 		.of_match_table = am654_hbmc_dt_ids,
 -- 
 2.39.5
 
