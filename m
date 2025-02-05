@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D363770825;
-	Wed,  5 Feb 2025 14:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7658634E;
+	Wed,  5 Feb 2025 14:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765976; cv=none; b=TafV6tODDvFEFaFnnp1nIT1dvfM4sXnpJpVLcqh3+TG0K80e7J97Dqczp+44JZp8a6VG8nmisFPlnuFqAy8ACOBr66u73MT2i7qHieMnPZR4gSz6L2P1AK+sy89yqtmOwDgLdfbFCnxtSVaY1cmd2WZeWQyPKeE6JXTusyDBkI4=
+	t=1738765980; cv=none; b=AsM0voSiEaorkDZ1+hDue90KmmtIV/jmFQo0RfG7KI43TB+PYO6D7tgMBEeOZSSkXB/ypAlxBmTQ7oXd0P6gJeUHfUwRZtZybk5Q6MUZesipi+2fanqQtVXg/UwtCzOAop5bqgirubP+7YBBhrli7sZil8FeCF3WN6tZQYhdufU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765976; c=relaxed/simple;
-	bh=uqfDunJxGxYzxh0fKejcCg4IFFEnKUm8CxMZQ63JFwM=;
+	s=arc-20240116; t=1738765980; c=relaxed/simple;
+	bh=IJPAZNs/6yFg6UhXJKOq2+9Dl3gaiNiDKrnrxSgAHso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FUpkA90+uqYQCFTmUplAeyL8TDDY90kzRstp/xAU5eAy25tfR/2Ipvj3pXgHAZ3628AJWXDgJ0ZQ2YucADZwtnON22U48DpJOS/i3Hu+z++trsVKv39oQdrOad45SrX5xe9ski3VLLTjfpOGCJNuW2eaXk1eqxq305qBp9+3aw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wfyk58Tf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=vAs/suvuc5A6gvnSaJB/UUQrX/UGHW0uG2SSXqkoaAnVv18qd27VrNiQNejWwanCsGa/Vzc4LQppi2/3BvLCByUQpiD7WKjgEPtapHaopb6dTUR4eUILL782qnQCzg1sjDRyvw1THy8IirGwtSilhc5/kE3sOhuDiwbRFEMiwz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saEuWwmV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wfyk58Tf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475D0C4CED1;
-	Wed,  5 Feb 2025 14:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saEuWwmV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893D7C4CED1;
+	Wed,  5 Feb 2025 14:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765976;
-	bh=uqfDunJxGxYzxh0fKejcCg4IFFEnKUm8CxMZQ63JFwM=;
+	s=korg; t=1738765980;
+	bh=IJPAZNs/6yFg6UhXJKOq2+9Dl3gaiNiDKrnrxSgAHso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wfyk58TfcT+YwElKxB4RFV1Ja07oFa5/MwfJQ6geZDI0oFn9HUIX51v3bYEkGcFwg
-	 bXiDds+48wAV0HFMbk75970CVqeycLY9BGAD2EDOASyODxkNckk4sDQmqdiv4InNJg
-	 j2i5aCswGvHrBU2TnKaNSj9oEgdJZ3zFMNUH3vF8=
+	b=saEuWwmV1ykX3GgKdGKVxjCkw7OxLrNsM9oc5jN0qUBBg4JxFz+5tHqKIfzQ2J/sp
+	 n0KZHEJKJH8UqZcbSZENEQi7Q1G4Yjoyi7MDcX1EeM2gIvLstOOrbxvu71IzuU4Fg9
+	 J8jWc5MBpmrF1yk+/q7iiPLLpGMbnTpjbvyVcOBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Tahera Fahimi <fahimitahera@gmail.com>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 317/393] dmaengine: ti: edma: fix OF node reference leaks in edma_driver
-Date: Wed,  5 Feb 2025 14:43:56 +0100
-Message-ID: <20250205134432.443937792@linuxfoundation.org>
+Subject: [PATCH 6.13 231/623] selftests/landlock: Fix build with non-default pthread linking
+Date: Wed,  5 Feb 2025 14:39:33 +0100
+Message-ID: <20250205134505.063302935@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,59 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit e883c64778e5a9905fce955681f8ee38c7197e0f ]
+[ Upstream commit 0e4db4f843c2c0115b5981bd6f6b75dea62e7d60 ]
 
-The .probe() of edma_driver calls of_parse_phandle_with_fixed_args() but
-does not release the obtained OF nodes. Thus add a of_node_put() call.
+Old toolchains require explicit -lpthread (e.g. on Debian 11).
 
-This bug was found by an experimental verification tool that I am
-developing.
-
-Fixes: 1be5336bc7ba ("dmaengine: edma: New device tree binding")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20241219020507.1983124-3-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Tahera Fahimi <fahimitahera@gmail.com>
+Fixes: c8994965013e ("selftests/landlock: Test signal scoping for threads")
+Reviewed-by: Günther Noack <gnoack3000@gmail.com>
+Link: https://lore.kernel.org/r/20250115145409.312226-1-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/edma.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/selftests/landlock/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index 155c409d2b434..c0fa541324675 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -208,7 +208,6 @@ struct edma_desc {
- struct edma_cc;
+diff --git a/tools/testing/selftests/landlock/Makefile b/tools/testing/selftests/landlock/Makefile
+index 348e2dbdb4e0b..480f13e77fcc4 100644
+--- a/tools/testing/selftests/landlock/Makefile
++++ b/tools/testing/selftests/landlock/Makefile
+@@ -13,11 +13,11 @@ TEST_GEN_PROGS := $(src_test:.c=)
+ TEST_GEN_PROGS_EXTENDED := true
  
- struct edma_tc {
--	struct device_node		*node;
- 	u16				id;
- };
+ # Short targets:
+-$(TEST_GEN_PROGS): LDLIBS += -lcap
++$(TEST_GEN_PROGS): LDLIBS += -lcap -lpthread
+ $(TEST_GEN_PROGS_EXTENDED): LDFLAGS += -static
  
-@@ -2466,13 +2465,13 @@ static int edma_probe(struct platform_device *pdev)
- 			if (ret || i == ecc->num_tc)
- 				break;
+ include ../lib.mk
  
--			ecc->tc_list[i].node = tc_args.np;
- 			ecc->tc_list[i].id = i;
- 			queue_priority_mapping[i][1] = tc_args.args[0];
- 			if (queue_priority_mapping[i][1] > lowest_priority) {
- 				lowest_priority = queue_priority_mapping[i][1];
- 				info->default_queue = i;
- 			}
-+			of_node_put(tc_args.np);
- 		}
- 
- 		/* See if we have optional dma-channel-mask array */
+ # Targets with $(OUTPUT)/ prefix:
+-$(TEST_GEN_PROGS): LDLIBS += -lcap
++$(TEST_GEN_PROGS): LDLIBS += -lcap -lpthread
+ $(TEST_GEN_PROGS_EXTENDED): LDFLAGS += -static
 -- 
 2.39.5
 
