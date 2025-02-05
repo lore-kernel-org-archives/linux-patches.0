@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD03A2E634;
-	Wed,  5 Feb 2025 14:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105181519AA;
+	Wed,  5 Feb 2025 14:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764241; cv=none; b=c1uObmWlYW2gW8fnlt7A6Zrm6nP2p0HA720shnjoEsDuiizgEiCPXgrUeGqmmBYjW7DMSEYsYHTQQwZ4Zh3bThzD3mKjid50iYl8K0n9Y4GJP+1K4e6DtK7LMqNK2gQ1ZMfiLkAZRfpwo8bRHo2Ql7OxWKT/uAfzbFfO0jx0GJY=
+	t=1738764245; cv=none; b=d2IfLVnzqG4HkRHZyltKarV9Wvo7NWtNOkITQ8hoZEqK+LcjFpJ+fku8pIn2xKkZU3WgPyG6FvioUcg8/J/SrwMw4zam++ZzbkO7CCz/KgTCxsrjb1EU+AouHZJJbPDSzWWeCJfVSeSUG4qS0U8FZCMd/jt2s47wOdEeaTfrWek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764241; c=relaxed/simple;
-	bh=Uy3M7yz5S500eXqHE4+ERsQcM0NRfIAGysxTUIUlYRU=;
+	s=arc-20240116; t=1738764245; c=relaxed/simple;
+	bh=irSJUiisFWwi/TrKrl8B0gWM1ygxrACN2IW2KbmgF4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHarKwI1yywOF4EFwJmvGls/ycih/7s/5i56S2eMXA1FpuEeX6vWOOuDpUBlE2DS/xSBywD0nbH5Db3vi16mkOR+jPLkfNh/wq28ZHOc1sGTOqPDbk+9WTARNhoau7Y6y4b7DeGiwYfYjDqyex2kmYsLukKbx/qUWzscV8aAeS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1G6AtjQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KyqrmEwUmkOnslbysUuv2Ku8S23jLU9gHCV61KLKqng+gyJ4JzmPQ+BpWCCGsYKbcYTjLnSuDs+YHfABwwoVcfni3DSMVFHDIw/nuSh2XJPhL2/KWNLVynYTMqjL44G5XmlKtqbMjWEBFANvhmCrkZtMEK2hRcA2wfsUmskm7y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMlx+bY5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1G6AtjQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C266AC4CED1;
-	Wed,  5 Feb 2025 14:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMlx+bY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA35C4CED1;
+	Wed,  5 Feb 2025 14:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764241;
-	bh=Uy3M7yz5S500eXqHE4+ERsQcM0NRfIAGysxTUIUlYRU=;
+	s=korg; t=1738764244;
+	bh=irSJUiisFWwi/TrKrl8B0gWM1ygxrACN2IW2KbmgF4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q1G6AtjQkqq1B21Uk3gOVHe8bxANJjJNkDIl06E9BiuhTsxWLwZNf1hbbhRw88H8R
-	 nqiGG6PBrYIOZ7DfgJm58giqAPbTDTaytlZCHUbreFg9Bma/Cj3bjmP9kzq9G5MOJK
-	 Y2v5r/3MI0ska4Crjd+OUtTmdn68HNKOhdXh8wXE=
+	b=XMlx+bY5DVTs36ErR4yWpQIaB8Gqi0GjkSg4ZEphRhbZH7oQjt1s6WOziTVh1si/u
+	 tjaNOBmOD2UMH+GBq8HeNdnzD8Q5M2jP0TtKeTEAlXzy8OK7IwkZ4n/jlqZxrlQDP0
+	 hcAAKP4ODB52SHKCIEtZ1xc7iE0B84pEOrNx9IeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 042/623] drm/msm/dp: fix msm_dp_utils_pack_sdp_header interface
-Date: Wed,  5 Feb 2025 14:36:24 +0100
-Message-ID: <20250205134457.838857971@linuxfoundation.org>
+Subject: [PATCH 6.13 060/623] drm/rockchip: vop2: Check linear format for Cluster windows on rk3566/8
+Date: Wed,  5 Feb 2025 14:36:42 +0100
+Message-ID: <20250205134458.522475516@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,71 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit b047cbe5e54b632042941b90b808223e63742690 ]
+[ Upstream commit df063c0b8ffbdca486ab2f802e716973985d8f86 ]
 
-The msm_dp_utils_pack_sdp_header() accepts an unlimited-size u32 pointer
-for the header output, while it expects a two-element array. It performs
-a sizeof check which is always true on 64-bit platforms (since
-sizeof(u32*) is 8) and is always false on 32-bit platforms. It returns
-an error code which nobody actually checks.
+The Cluster windows on rk3566/8 only support afbc mode.
 
-Fix the function interface to accept u32[2] and return void, skipping
-all the checks.
-
-Fixes: 55fb8ffc1802 ("drm/msm/dp: add VSC SDP support for YUV420 over DP")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/626806/
-Link: https://lore.kernel.org/r/20241202-fd-dp-audio-fixup-v2-2-d9187ea96dad@linaro.org
-[quic_abhinavk@quicinc.com: minor fix in the commit message]
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241214081719.3330518-6-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_utils.c | 10 +---------
- drivers/gpu/drm/msm/dp/dp_utils.h |  2 +-
- 2 files changed, 2 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_utils.c b/drivers/gpu/drm/msm/dp/dp_utils.c
-index 2a40f07fe2d5e..4a5ebb0c33b85 100644
---- a/drivers/gpu/drm/msm/dp/dp_utils.c
-+++ b/drivers/gpu/drm/msm/dp/dp_utils.c
-@@ -74,14 +74,8 @@ u8 msm_dp_utils_calculate_parity(u32 data)
- 	return parity_byte;
- }
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 68b5c438cdaba..2abc68fe2d1ff 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -550,6 +550,16 @@ static bool rockchip_vop2_mod_supported(struct drm_plane *plane, u32 format,
+ 	if (modifier == DRM_FORMAT_MOD_INVALID)
+ 		return false;
  
--ssize_t msm_dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 *header_buff)
-+void msm_dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 header_buff[2])
- {
--	size_t length;
--
--	length = sizeof(header_buff);
--	if (length < DP_SDP_HEADER_SIZE)
--		return -ENOSPC;
--
- 	header_buff[0] = FIELD_PREP(HEADER_0_MASK, sdp_header->HB0) |
- 		FIELD_PREP(PARITY_0_MASK, msm_dp_utils_calculate_parity(sdp_header->HB0)) |
- 		FIELD_PREP(HEADER_1_MASK, sdp_header->HB1) |
-@@ -91,6 +85,4 @@ ssize_t msm_dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 *head
- 		FIELD_PREP(PARITY_2_MASK, msm_dp_utils_calculate_parity(sdp_header->HB2)) |
- 		FIELD_PREP(HEADER_3_MASK, sdp_header->HB3) |
- 		FIELD_PREP(PARITY_3_MASK, msm_dp_utils_calculate_parity(sdp_header->HB3));
--
--	return length;
- }
-diff --git a/drivers/gpu/drm/msm/dp/dp_utils.h b/drivers/gpu/drm/msm/dp/dp_utils.h
-index 88d53157f5b59..2e4f98a863c4c 100644
---- a/drivers/gpu/drm/msm/dp/dp_utils.h
-+++ b/drivers/gpu/drm/msm/dp/dp_utils.h
-@@ -31,6 +31,6 @@
- u8 msm_dp_utils_get_g0_value(u8 data);
- u8 msm_dp_utils_get_g1_value(u8 data);
- u8 msm_dp_utils_calculate_parity(u32 data);
--ssize_t msm_dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 *header_buff);
-+void msm_dp_utils_pack_sdp_header(struct dp_sdp_header *sdp_header, u32 header_buff[2]);
++	if (vop2->data->soc_id == 3568 || vop2->data->soc_id == 3566) {
++		if (vop2_cluster_window(win)) {
++			if (modifier == DRM_FORMAT_MOD_LINEAR) {
++				drm_dbg_kms(vop2->drm,
++					    "Cluster window only supports format with afbc\n");
++				return false;
++			}
++		}
++	}
++
+ 	if (modifier == DRM_FORMAT_MOD_LINEAR)
+ 		return true;
  
- #endif /* _DP_UTILS_H_ */
 -- 
 2.39.5
 
