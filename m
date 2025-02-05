@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120DC1519A9;
-	Wed,  5 Feb 2025 15:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1817D1519A9;
+	Wed,  5 Feb 2025 15:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768684; cv=none; b=ER1Xf2HBK5LJXzpqqdSHLfHXe0D6aH2Ha3vd1QoNcwQaJv8hoQ0F+t0jlEB9n26N0lAm2J5MQAJn0apsQPxrG+rWfJEq5c74ykb9ze60n/nfjWiziDrxg8v7eXAatlvuOnW1OavlQxIX4SXnezen8cjEdy3AJ4YM9WcZLdneX5w=
+	t=1738768688; cv=none; b=YAjAvcM0+jLH9SxKV7gDoWt4daqDls9h8wNo4db+vF9P2Ki1b0ox5RXMilVdfv0et/bE9oaiQAiok4e6kdHTe7kJZMy5Afe1S6GJ0XA0wlZB3G/SN4OzbS6irtwVT3eH/yMUlrc/3VMkm4FWYDUyxWPe4YSIJVp9j3NQTrr72FA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768684; c=relaxed/simple;
-	bh=vvSk0YxVy6B7VK9ceN30CsSfKYaD4QnPwNNRs3DsvP0=;
+	s=arc-20240116; t=1738768688; c=relaxed/simple;
+	bh=VZlmLbt5d2THPvbTq81nKto6dF/kgw6r1FqShL8I9EI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AVSadIPM+8SJHShzO/IsWtMUwtBdc5VdWgbWaNVYHR62CL1OIB0tF5q+RP/wtmmVO5Pckrl0Xuwx/jG0Q8CPB3h116TceT6ibUJ089FEMC2/nm1OVbgUe6UYO2S+M3OyIjn9SbMwBKbor/tDoTMq754vbkiW/+/S+CC3urwsA80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzlAUUQ2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H91ABeftwR1mNO6a88l8W2mi+VXJXTg158XSHhj4P172J1+w9UKtMJzcQ8F0phDbzrie2EbyHzWTtGIi2r7i3iLamzLximcL/1n8B+hwt/iToSH5cEwGHHMsecucjCL+vuu6v0FC/rOV0I3U/E8tAhvEgxMxFQQ46nGddIOSgfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v42byryk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzlAUUQ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73031C4CED1;
-	Wed,  5 Feb 2025 15:18:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v42byryk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4CDC4CED1;
+	Wed,  5 Feb 2025 15:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768683;
-	bh=vvSk0YxVy6B7VK9ceN30CsSfKYaD4QnPwNNRs3DsvP0=;
+	s=korg; t=1738768687;
+	bh=VZlmLbt5d2THPvbTq81nKto6dF/kgw6r1FqShL8I9EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xzlAUUQ2G56WTg2KX7Wxp0uyiPREzHlui8IOoIf7uAkw/yqtf588ebyUos3uL6SJ5
-	 m9Ut6M8uZ2zm8DI/HH9nsxampXe2Dt80wKhusOMvESL6qp+jLB7l3D1b2q8hWxF7/m
-	 ajQESWkK78Z24JVyPE3ON4L2FZqIzeF2rqc4fSqg=
+	b=v42byrykOTMlBEbh7FEx3A4qeglgYN5Mc91XhAqly/cpJP+Z/4YNc4tSzNqt26t3Q
+	 2iUzUA2KqeiyXDyIihlBLkHYoaYlrVEaJyFwNSjl/SmhbTKrjuzZA0eWrU2EEzZND1
+	 aVUH1xRA8Ofyf84O1gEOmXPVDlhtXbK1mj4+ydtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WANG Xuerui <git@xen0n.name>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.13 621/623] LoongArch: Change 8 to 14 for LOONGARCH_MAX_{BRP,WRP}
-Date: Wed,  5 Feb 2025 14:46:03 +0100
-Message-ID: <20250205134519.968230627@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.13 622/623] btrfs: do proper folio cleanup when cow_file_range() failed
+Date: Wed,  5 Feb 2025 14:46:04 +0100
+Message-ID: <20250205134520.006170983@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,147 +51,251 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Qu Wenruo <wqu@suse.com>
 
-commit f502ea618bf16d615d7dc6138c8988d3118fe750 upstream.
+commit 06f364284794f149d2abc167c11d556cf20c954b upstream.
 
-The maximum number of load/store watchpoints and fetch instruction
-watchpoints is 14 each according to LoongArch Reference Manual, so
-change 8 to 14 for the related code.
+[BUG]
+When testing with COW fixup marked as BUG_ON() (this is involved with the
+new pin_user_pages*() change, which should not result new out-of-band
+dirty pages), I hit a crash triggered by the BUG_ON() from hitting COW
+fixup path.
 
-Link: https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.html#control-and-status-registers-related-to-watchpoints
-Cc: stable@vger.kernel.org
-Fixes: edffa33c7bb5 ("LoongArch: Add hardware breakpoints/watchpoints support")
-Reviewed-by: WANG Xuerui <git@xen0n.name>
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+This BUG_ON() happens just after a failed btrfs_run_delalloc_range():
+
+  BTRFS error (device dm-2): failed to run delalloc range, root 348 ino 405 folio 65536 submit_bitmap 6-15 start 90112 len 106496: -28
+  ------------[ cut here ]------------
+  kernel BUG at fs/btrfs/extent_io.c:1444!
+  Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
+  CPU: 0 UID: 0 PID: 434621 Comm: kworker/u24:8 Tainted: G           OE      6.12.0-rc7-custom+ #86
+  Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
+  Workqueue: events_unbound btrfs_async_reclaim_data_space [btrfs]
+  pc : extent_writepage_io+0x2d4/0x308 [btrfs]
+  lr : extent_writepage_io+0x2d4/0x308 [btrfs]
+  Call trace:
+   extent_writepage_io+0x2d4/0x308 [btrfs]
+   extent_writepage+0x218/0x330 [btrfs]
+   extent_write_cache_pages+0x1d4/0x4b0 [btrfs]
+   btrfs_writepages+0x94/0x150 [btrfs]
+   do_writepages+0x74/0x190
+   filemap_fdatawrite_wbc+0x88/0xc8
+   start_delalloc_inodes+0x180/0x3b0 [btrfs]
+   btrfs_start_delalloc_roots+0x174/0x280 [btrfs]
+   shrink_delalloc+0x114/0x280 [btrfs]
+   flush_space+0x250/0x2f8 [btrfs]
+   btrfs_async_reclaim_data_space+0x180/0x228 [btrfs]
+   process_one_work+0x164/0x408
+   worker_thread+0x25c/0x388
+   kthread+0x100/0x118
+   ret_from_fork+0x10/0x20
+  Code: aa1403e1 9402f3ef aa1403e0 9402f36f (d4210000)
+  ---[ end trace 0000000000000000 ]---
+
+[CAUSE]
+That failure is mostly from cow_file_range(), where we can hit -ENOSPC.
+
+Although the -ENOSPC is already a bug related to our space reservation
+code, let's just focus on the error handling.
+
+For example, we have the following dirty range [0, 64K) of an inode,
+with 4K sector size and 4K page size:
+
+   0        16K        32K       48K       64K
+   |///////////////////////////////////////|
+   |#######################################|
+
+Where |///| means page are still dirty, and |###| means the extent io
+tree has EXTENT_DELALLOC flag.
+
+- Enter extent_writepage() for page 0
+
+- Enter btrfs_run_delalloc_range() for range [0, 64K)
+
+- Enter cow_file_range() for range [0, 64K)
+
+- Function btrfs_reserve_extent() only reserved one 16K extent
+  So we created extent map and ordered extent for range [0, 16K)
+
+   0        16K        32K       48K       64K
+   |////////|//////////////////////////////|
+   |<- OE ->|##############################|
+
+   And range [0, 16K) has its delalloc flag cleared.
+   But since we haven't yet submit any bio, involved 4 pages are still
+   dirty.
+
+- Function btrfs_reserve_extent() returns with -ENOSPC
+  Now we have to run error cleanup, which will clear all
+  EXTENT_DELALLOC* flags and clear the dirty flags for the remaining
+  ranges:
+
+   0        16K        32K       48K       64K
+   |////////|                              |
+   |        |                              |
+
+  Note that range [0, 16K) still has its pages dirty.
+
+- Some time later, writeback is triggered again for the range [0, 16K)
+  since the page range still has dirty flags.
+
+- btrfs_run_delalloc_range() will do nothing because there is no
+  EXTENT_DELALLOC flag.
+
+- extent_writepage_io() finds page 0 has no ordered flag
+  Which falls into the COW fixup path, triggering the BUG_ON().
+
+Unfortunately this error handling bug dates back to the introduction of
+btrfs.  Thankfully with the abuse of COW fixup, at least it won't crash
+the kernel.
+
+[FIX]
+Instead of immediately unlocking the extent and folios, we keep the extent
+and folios locked until either erroring out or the whole delalloc range
+finished.
+
+When the whole delalloc range finished without error, we just unlock the
+whole range with PAGE_SET_ORDERED (and PAGE_UNLOCK for !keep_locked
+cases), with EXTENT_DELALLOC and EXTENT_LOCKED cleared.
+And the involved folios will be properly submitted, with their dirty
+flags cleared during submission.
+
+For the error path, it will be a little more complex:
+
+- The range with ordered extent allocated (range (1))
+  We only clear the EXTENT_DELALLOC and EXTENT_LOCKED, as the remaining
+  flags are cleaned up by
+  btrfs_mark_ordered_io_finished()->btrfs_finish_one_ordered().
+
+  For folios we finish the IO (clear dirty, start writeback and
+  immediately finish the writeback) and unlock the folios.
+
+- The range with reserved extent but no ordered extent (range(2))
+- The range we never touched (range(3))
+  For both range (2) and range(3) the behavior is not changed.
+
+Now even if cow_file_range() failed halfway with some successfully
+reserved extents/ordered extents, we will keep all folios clean, so
+there will be no future writeback triggered on them.
+
+CC: stable@vger.kernel.org
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/hw_breakpoint.h |    4 -
- arch/loongarch/include/asm/loongarch.h     |   60 +++++++++++++++++++++++++++++
- arch/loongarch/kernel/hw_breakpoint.c      |   16 ++++++-
- 3 files changed, 76 insertions(+), 4 deletions(-)
+ fs/btrfs/inode.c |   63 ++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 30 insertions(+), 33 deletions(-)
 
---- a/arch/loongarch/include/asm/hw_breakpoint.h
-+++ b/arch/loongarch/include/asm/hw_breakpoint.h
-@@ -38,8 +38,8 @@ struct arch_hw_breakpoint {
-  * Limits.
-  * Changing these will require modifications to the register accessors.
-  */
--#define LOONGARCH_MAX_BRP		8
--#define LOONGARCH_MAX_WRP		8
-+#define LOONGARCH_MAX_BRP		14
-+#define LOONGARCH_MAX_WRP		14
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -1373,6 +1373,17 @@ static noinline int cow_file_range(struc
+ 	alloc_hint = btrfs_get_extent_allocation_hint(inode, start, num_bytes);
  
- /* Virtual debug register bases. */
- #define CSR_CFG_ADDR	0
---- a/arch/loongarch/include/asm/loongarch.h
-+++ b/arch/loongarch/include/asm/loongarch.h
-@@ -959,6 +959,36 @@
- #define LOONGARCH_CSR_DB7CTRL		0x34a	/* data breakpoint 7 control */
- #define LOONGARCH_CSR_DB7ASID		0x34b	/* data breakpoint 7 asid */
+ 	/*
++	 * We're not doing compressed IO, don't unlock the first page (which
++	 * the caller expects to stay locked), don't clear any dirty bits and
++	 * don't set any writeback bits.
++	 *
++	 * Do set the Ordered (Private2) bit so we know this page was properly
++	 * setup for writepage.
++	 */
++	page_ops = (keep_locked ? 0 : PAGE_UNLOCK);
++	page_ops |= PAGE_SET_ORDERED;
++
++	/*
+ 	 * Relocation relies on the relocated extents to have exactly the same
+ 	 * size as the original extents. Normally writeback for relocation data
+ 	 * extents follows a NOCOW path because relocation preallocates the
+@@ -1431,6 +1442,10 @@ static noinline int cow_file_range(struc
+ 		file_extent.offset = 0;
+ 		file_extent.compression = BTRFS_COMPRESS_NONE;
  
-+#define LOONGARCH_CSR_DB8ADDR		0x350	/* data breakpoint 8 address */
-+#define LOONGARCH_CSR_DB8MASK		0x351	/* data breakpoint 8 mask */
-+#define LOONGARCH_CSR_DB8CTRL		0x352	/* data breakpoint 8 control */
-+#define LOONGARCH_CSR_DB8ASID		0x353	/* data breakpoint 8 asid */
-+
-+#define LOONGARCH_CSR_DB9ADDR		0x358	/* data breakpoint 9 address */
-+#define LOONGARCH_CSR_DB9MASK		0x359	/* data breakpoint 9 mask */
-+#define LOONGARCH_CSR_DB9CTRL		0x35a	/* data breakpoint 9 control */
-+#define LOONGARCH_CSR_DB9ASID		0x35b	/* data breakpoint 9 asid */
-+
-+#define LOONGARCH_CSR_DB10ADDR		0x360	/* data breakpoint 10 address */
-+#define LOONGARCH_CSR_DB10MASK		0x361	/* data breakpoint 10 mask */
-+#define LOONGARCH_CSR_DB10CTRL		0x362	/* data breakpoint 10 control */
-+#define LOONGARCH_CSR_DB10ASID		0x363	/* data breakpoint 10 asid */
-+
-+#define LOONGARCH_CSR_DB11ADDR		0x368	/* data breakpoint 11 address */
-+#define LOONGARCH_CSR_DB11MASK		0x369	/* data breakpoint 11 mask */
-+#define LOONGARCH_CSR_DB11CTRL		0x36a	/* data breakpoint 11 control */
-+#define LOONGARCH_CSR_DB11ASID		0x36b	/* data breakpoint 11 asid */
-+
-+#define LOONGARCH_CSR_DB12ADDR		0x370	/* data breakpoint 12 address */
-+#define LOONGARCH_CSR_DB12MASK		0x371	/* data breakpoint 12 mask */
-+#define LOONGARCH_CSR_DB12CTRL		0x372	/* data breakpoint 12 control */
-+#define LOONGARCH_CSR_DB12ASID		0x373	/* data breakpoint 12 asid */
-+
-+#define LOONGARCH_CSR_DB13ADDR		0x378	/* data breakpoint 13 address */
-+#define LOONGARCH_CSR_DB13MASK		0x379	/* data breakpoint 13 mask */
-+#define LOONGARCH_CSR_DB13CTRL		0x37a	/* data breakpoint 13 control */
-+#define LOONGARCH_CSR_DB13ASID		0x37b	/* data breakpoint 13 asid */
-+
- #define LOONGARCH_CSR_FWPC		0x380	/* instruction breakpoint config */
- #define LOONGARCH_CSR_FWPS		0x381	/* instruction breakpoint status */
++		/*
++		 * Locked range will be released either during error clean up or
++		 * after the whole range is finished.
++		 */
+ 		lock_extent(&inode->io_tree, start, start + cur_alloc_size - 1,
+ 			    &cached);
  
-@@ -1002,6 +1032,36 @@
- #define LOONGARCH_CSR_IB7CTRL		0x3ca	/* inst breakpoint 7 control */
- #define LOONGARCH_CSR_IB7ASID		0x3cb	/* inst breakpoint 7 asid */
+@@ -1476,21 +1491,6 @@ static noinline int cow_file_range(struc
  
-+#define LOONGARCH_CSR_IB8ADDR		0x3d0	/* inst breakpoint 8 address */
-+#define LOONGARCH_CSR_IB8MASK		0x3d1	/* inst breakpoint 8 mask */
-+#define LOONGARCH_CSR_IB8CTRL		0x3d2	/* inst breakpoint 8 control */
-+#define LOONGARCH_CSR_IB8ASID		0x3d3	/* inst breakpoint 8 asid */
-+
-+#define LOONGARCH_CSR_IB9ADDR		0x3d8	/* inst breakpoint 9 address */
-+#define LOONGARCH_CSR_IB9MASK		0x3d9	/* inst breakpoint 9 mask */
-+#define LOONGARCH_CSR_IB9CTRL		0x3da	/* inst breakpoint 9 control */
-+#define LOONGARCH_CSR_IB9ASID		0x3db	/* inst breakpoint 9 asid */
-+
-+#define LOONGARCH_CSR_IB10ADDR		0x3e0	/* inst breakpoint 10 address */
-+#define LOONGARCH_CSR_IB10MASK		0x3e1	/* inst breakpoint 10 mask */
-+#define LOONGARCH_CSR_IB10CTRL		0x3e2	/* inst breakpoint 10 control */
-+#define LOONGARCH_CSR_IB10ASID		0x3e3	/* inst breakpoint 10 asid */
-+
-+#define LOONGARCH_CSR_IB11ADDR		0x3e8	/* inst breakpoint 11 address */
-+#define LOONGARCH_CSR_IB11MASK		0x3e9	/* inst breakpoint 11 mask */
-+#define LOONGARCH_CSR_IB11CTRL		0x3ea	/* inst breakpoint 11 control */
-+#define LOONGARCH_CSR_IB11ASID		0x3eb	/* inst breakpoint 11 asid */
-+
-+#define LOONGARCH_CSR_IB12ADDR		0x3f0	/* inst breakpoint 12 address */
-+#define LOONGARCH_CSR_IB12MASK		0x3f1	/* inst breakpoint 12 mask */
-+#define LOONGARCH_CSR_IB12CTRL		0x3f2	/* inst breakpoint 12 control */
-+#define LOONGARCH_CSR_IB12ASID		0x3f3	/* inst breakpoint 12 asid */
-+
-+#define LOONGARCH_CSR_IB13ADDR		0x3f8	/* inst breakpoint 13 address */
-+#define LOONGARCH_CSR_IB13MASK		0x3f9	/* inst breakpoint 13 mask */
-+#define LOONGARCH_CSR_IB13CTRL		0x3fa	/* inst breakpoint 13 control */
-+#define LOONGARCH_CSR_IB13ASID		0x3fb	/* inst breakpoint 13 asid */
-+
- #define LOONGARCH_CSR_DEBUG		0x500	/* debug config */
- #define LOONGARCH_CSR_DERA		0x501	/* debug era */
- #define LOONGARCH_CSR_DESAVE		0x502	/* debug save */
---- a/arch/loongarch/kernel/hw_breakpoint.c
-+++ b/arch/loongarch/kernel/hw_breakpoint.c
-@@ -51,7 +51,13 @@ int hw_breakpoint_slots(int type)
- 	READ_WB_REG_CASE(OFF, 4, REG, T, VAL);		\
- 	READ_WB_REG_CASE(OFF, 5, REG, T, VAL);		\
- 	READ_WB_REG_CASE(OFF, 6, REG, T, VAL);		\
--	READ_WB_REG_CASE(OFF, 7, REG, T, VAL);
-+	READ_WB_REG_CASE(OFF, 7, REG, T, VAL);		\
-+	READ_WB_REG_CASE(OFF, 8, REG, T, VAL);		\
-+	READ_WB_REG_CASE(OFF, 9, REG, T, VAL);		\
-+	READ_WB_REG_CASE(OFF, 10, REG, T, VAL);		\
-+	READ_WB_REG_CASE(OFF, 11, REG, T, VAL);		\
-+	READ_WB_REG_CASE(OFF, 12, REG, T, VAL);		\
-+	READ_WB_REG_CASE(OFF, 13, REG, T, VAL);
+ 		btrfs_dec_block_group_reservations(fs_info, ins.objectid);
  
- #define GEN_WRITE_WB_REG_CASES(OFF, REG, T, VAL)	\
- 	WRITE_WB_REG_CASE(OFF, 0, REG, T, VAL);		\
-@@ -61,7 +67,13 @@ int hw_breakpoint_slots(int type)
- 	WRITE_WB_REG_CASE(OFF, 4, REG, T, VAL);		\
- 	WRITE_WB_REG_CASE(OFF, 5, REG, T, VAL);		\
- 	WRITE_WB_REG_CASE(OFF, 6, REG, T, VAL);		\
--	WRITE_WB_REG_CASE(OFF, 7, REG, T, VAL);
-+	WRITE_WB_REG_CASE(OFF, 7, REG, T, VAL);		\
-+	WRITE_WB_REG_CASE(OFF, 8, REG, T, VAL);		\
-+	WRITE_WB_REG_CASE(OFF, 9, REG, T, VAL);		\
-+	WRITE_WB_REG_CASE(OFF, 10, REG, T, VAL);	\
-+	WRITE_WB_REG_CASE(OFF, 11, REG, T, VAL);	\
-+	WRITE_WB_REG_CASE(OFF, 12, REG, T, VAL);	\
-+	WRITE_WB_REG_CASE(OFF, 13, REG, T, VAL);
+-		/*
+-		 * We're not doing compressed IO, don't unlock the first page
+-		 * (which the caller expects to stay locked), don't clear any
+-		 * dirty bits and don't set any writeback bits
+-		 *
+-		 * Do set the Ordered flag so we know this page was
+-		 * properly setup for writepage.
+-		 */
+-		page_ops = (keep_locked ? 0 : PAGE_UNLOCK);
+-		page_ops |= PAGE_SET_ORDERED;
+-
+-		extent_clear_unlock_delalloc(inode, start, start + cur_alloc_size - 1,
+-					     locked_folio, &cached,
+-					     EXTENT_LOCKED | EXTENT_DELALLOC,
+-					     page_ops);
+ 		if (num_bytes < cur_alloc_size)
+ 			num_bytes = 0;
+ 		else
+@@ -1507,6 +1507,8 @@ static noinline int cow_file_range(struc
+ 		if (ret)
+ 			goto out_unlock;
+ 	}
++	extent_clear_unlock_delalloc(inode, orig_start, end, locked_folio, &cached,
++				     EXTENT_LOCKED | EXTENT_DELALLOC, page_ops);
+ done:
+ 	if (done_offset)
+ 		*done_offset = end;
+@@ -1527,35 +1529,30 @@ out_unlock:
+ 	 * We process each region below.
+ 	 */
  
- static u64 read_wb_reg(int reg, int n, int t)
- {
+-	clear_bits = EXTENT_LOCKED | EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
+-		EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV;
+-	page_ops = PAGE_UNLOCK | PAGE_START_WRITEBACK | PAGE_END_WRITEBACK;
+-
+ 	/*
+ 	 * For the range (1). We have already instantiated the ordered extents
+ 	 * for this region. They are cleaned up by
+ 	 * btrfs_cleanup_ordered_extents() in e.g,
+-	 * btrfs_run_delalloc_range(). EXTENT_LOCKED | EXTENT_DELALLOC are
+-	 * already cleared in the above loop. And, EXTENT_DELALLOC_NEW |
+-	 * EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV are handled by the cleanup
+-	 * function.
++	 * btrfs_run_delalloc_range().
++	 * EXTENT_DELALLOC_NEW | EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV
++	 * are also handled by the cleanup function.
+ 	 *
+-	 * However, in case of @keep_locked, we still need to unlock the pages
+-	 * (except @locked_folio) to ensure all the pages are unlocked.
++	 * So here we only clear EXTENT_LOCKED and EXTENT_DELALLOC flag, and
++	 * finish the writeback of the involved folios, which will be never submitted.
+ 	 */
+-	if (keep_locked && orig_start < start) {
++	if (orig_start < start) {
++		clear_bits = EXTENT_LOCKED | EXTENT_DELALLOC;
++		page_ops = PAGE_UNLOCK | PAGE_START_WRITEBACK | PAGE_END_WRITEBACK;
++
+ 		if (!locked_folio)
+ 			mapping_set_error(inode->vfs_inode.i_mapping, ret);
+ 		extent_clear_unlock_delalloc(inode, orig_start, start - 1,
+-					     locked_folio, NULL, 0, page_ops);
++					     locked_folio, NULL, clear_bits, page_ops);
+ 	}
+ 
+-	/*
+-	 * At this point we're unlocked, we want to make sure we're only
+-	 * clearing these flags under the extent lock, so lock the rest of the
+-	 * range and clear everything up.
+-	 */
+-	lock_extent(&inode->io_tree, start, end, NULL);
++	clear_bits = EXTENT_LOCKED | EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
++		     EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV;
++	page_ops = PAGE_UNLOCK | PAGE_START_WRITEBACK | PAGE_END_WRITEBACK;
+ 
+ 	/*
+ 	 * For the range (2). If we reserved an extent for our delalloc range
 
 
