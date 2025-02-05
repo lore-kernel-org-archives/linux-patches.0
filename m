@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5986EB640;
-	Wed,  5 Feb 2025 13:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B158D1519AA;
+	Wed,  5 Feb 2025 13:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763753; cv=none; b=LPCRGWGfCzGid+J2C/aHzHhT4oq36wQvFDJsOGbZkgjzruXx/hYcmbxU5I+WWx0Ufq4r3AdPZSjrweIm1FLFAfj4BEE008Q8F0Qca59eEzAdGVgPoWEHUYWmMWNqRl931tZcu6ekjGgNCJQzyeIHj383gOWhV3cm4xmAJgVOxsY=
+	t=1738763756; cv=none; b=g4sidvuONfk/73QeFnTiaw4WuzlqjCpsgm+mNhFLQyyk2Q6K49bhBXo5npNHQu4iQsl3Rafcg/pSj/EaPMJ8er9r/LXI2LxqAJhYdONgSc5UvBKzwQzPb9koPQEFw/JHGX+seKExocDrYe/to4EKwoy4HBwzr1jwLYIQSq2X3yY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763753; c=relaxed/simple;
-	bh=/p5oVRmduSQdLHBegrko2boh435dnqIXVszUKaztRz8=;
+	s=arc-20240116; t=1738763756; c=relaxed/simple;
+	bh=dlTy+ktMGSYROdNZXlZNeCGqyhH/nbVr2J5tzbpdhl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LntgQbiniKNndwa+TKHGE25fAoVpMcTfX3OTUEa4qax54fU7e60Kvfa/HuhawVEKQFlwnE9XAILq4IvgYtsmblr6ol/MKrmyB2SF/7HmExhKxAKBTDez0pykeW7KwKwqdt5KG46bqGmF6zvWfc73vSEwejvMSvhTc+iTrJsPRgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/X2nLyu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DSlayGgARdztL+ViO13eZLrg6S9naAuJK2CxoVyf8wHT4qBNZ2pKr+28FKuvBHIOVtR84PfNg9QxEvZH4zRU8Wnl9W29IsP7UOOtR2vM0S6twswBTexzqf8NkUDJPw6iW5w9T3Qf4oY+nVXs6LjUZgScvMbP9Yo6GtBgeay6vH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPlffucy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/X2nLyu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63F6C4CED6;
-	Wed,  5 Feb 2025 13:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPlffucy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382E2C4CED1;
+	Wed,  5 Feb 2025 13:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763753;
-	bh=/p5oVRmduSQdLHBegrko2boh435dnqIXVszUKaztRz8=;
+	s=korg; t=1738763756;
+	bh=dlTy+ktMGSYROdNZXlZNeCGqyhH/nbVr2J5tzbpdhl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/X2nLyuv/snTxt1aLQ6SR1bcYBnVLJ8jkaTG4Z/6syruWN2alhx2unhQ7OgGrK2t
-	 R3xGTrD+jLGmwYvfSFpsJdVmMY6eB9NsCgcOt34x6GmlZif1QS0MYU5tbBC8pgBdiG
-	 hZbe4A/T+iuQBc2XCbnweVNcP879RBagvpuqOEoI=
+	b=BPlffucyXU5s3hTqnFxyKUkyUPSc8Fuo0tsLu8UVNxuY+onMnFwYO+VUHUDERxV0G
+	 xyZupeLETvNUPhfYlJbcKdjjc9Evug5zHNN8A3DvvtxFn80zfnzhVVzOCVBbmKGTzl
+	 eYA1SXl6K3Nh194SP61ypym8ieW5TStDqdK2Bb/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 015/623] block: check BLK_FEAT_POLL under q_usage_count
-Date: Wed,  5 Feb 2025 14:35:57 +0100
-Message-ID: <20250205134456.812813087@linuxfoundation.org>
+	Min-Hua Chen <minhuadotchen@gmail.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Michael Riesch <michael.riesch@wolfvision.net>
+Subject: [PATCH 6.12 054/590] drm/rockchip: vop2: include rockchip_drm_drv.h
+Date: Wed,  5 Feb 2025 14:36:49 +0100
+Message-ID: <20250205134457.324142000@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,116 +50,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Min-Hua Chen <minhuadotchen@gmail.com>
 
-[ Upstream commit 958148a6ac061a9a80a184ea678a5fa872d0c56f ]
+[ Upstream commit 77b1ccb2a27c7b3b118a03bf1730def92070d31b ]
 
-Otherwise feature reconfiguration can race with I/O submission.
+Move rockchip_drm_drv.h in rockchip_drm_vop2.h to fix the follow
+sparse warning:
 
-Also drop the bio_clear_polled in the error path, as the flag does not
-matter for instant error completions, it is a left over from when we
-allowed polled I/O to proceed unpolled in this case.
+ARCH=arm64 LLVM=1 make C=1 CF='-fdiagnostic-prefix -D__CHECK_ENDIAN__'
+mrproper defconfig all  -j12
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Link: https://lore.kernel.org/r/20250110054726.1499538-4-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: d432c817c21a ("block: don't update BLK_FEAT_POLL in __blk_mq_update_nr_hw_queues")
+drivers/gpu/drm/rockchip/rockchip_vop2_reg.c:502:24: sparse:
+warning: symbol 'vop2_platform_driver' was not declared. Should it
+be static?
+
+It is also beneficial for the upcoming support for rk3576.
+
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Signed-off-by: Min-Hua Chen <minhuadotchen@gmail.com>
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Reviewed-by: Min-Hua Chen <minhuadotchen@gmail.com>
+Tested-by: Detlev Casanova <detlev.casanova@collabora.com>
+Tested-by: Michael Riesch <michael.riesch@wolfvision.net> # on RK3568
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241214081719.3330518-8-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-core.c | 22 ++++++++++++----------
- block/blk-mq.c   | 12 ++++++++++--
- 2 files changed, 22 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 1 -
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.h | 1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index 666efe8fa2020..6309b3f5a89dc 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -629,8 +629,14 @@ static void __submit_bio(struct bio *bio)
- 		blk_mq_submit_bio(bio);
- 	} else if (likely(bio_queue_enter(bio) == 0)) {
- 		struct gendisk *disk = bio->bi_bdev->bd_disk;
--
--		disk->fops->submit_bio(bio);
-+	
-+		if ((bio->bi_opf & REQ_POLLED) &&
-+		    !(disk->queue->limits.features & BLK_FEAT_POLL)) {
-+			bio->bi_status = BLK_STS_NOTSUPP;
-+			bio_endio(bio);
-+		} else {
-+			disk->fops->submit_bio(bio);
-+		}
- 		blk_queue_exit(disk->queue);
- 	}
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 6082b1c179aeb..5880d87fe6b3a 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -33,7 +33,6 @@
+ #include <uapi/linux/videodev2.h>
+ #include <dt-bindings/soc/rockchip,vop2.h>
  
-@@ -805,12 +811,6 @@ void submit_bio_noacct(struct bio *bio)
- 		}
- 	}
+-#include "rockchip_drm_drv.h"
+ #include "rockchip_drm_gem.h"
+ #include "rockchip_drm_vop2.h"
+ #include "rockchip_rgb.h"
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
+index 1c4204324f9f5..130aaa40316d1 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
+@@ -9,6 +9,7 @@
  
--	if (!(q->limits.features & BLK_FEAT_POLL) &&
--			(bio->bi_opf & REQ_POLLED)) {
--		bio_clear_polled(bio);
--		goto not_supported;
--	}
--
- 	switch (bio_op(bio)) {
- 	case REQ_OP_READ:
- 		break;
-@@ -935,7 +935,7 @@ int bio_poll(struct bio *bio, struct io_comp_batch *iob, unsigned int flags)
- 		return 0;
+ #include <linux/regmap.h>
+ #include <drm/drm_modes.h>
++#include "rockchip_drm_drv.h"
+ #include "rockchip_drm_vop.h"
  
- 	q = bdev_get_queue(bdev);
--	if (cookie == BLK_QC_T_NONE || !(q->limits.features & BLK_FEAT_POLL))
-+	if (cookie == BLK_QC_T_NONE)
- 		return 0;
- 
- 	blk_flush_plug(current->plug, false);
-@@ -951,7 +951,9 @@ int bio_poll(struct bio *bio, struct io_comp_batch *iob, unsigned int flags)
- 	 */
- 	if (!percpu_ref_tryget(&q->q_usage_counter))
- 		return 0;
--	if (queue_is_mq(q)) {
-+	if (!(q->limits.features & BLK_FEAT_POLL)) {
-+		ret = 0;
-+	} else if (queue_is_mq(q)) {
- 		ret = blk_mq_poll(q, cookie, iob, flags);
- 	} else {
- 		struct gendisk *disk = q->disk;
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 8ac19d4ae3c0a..0137a995b9f37 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3092,14 +3092,22 @@ void blk_mq_submit_bio(struct bio *bio)
- 	}
- 
- 	/*
--	 * Device reconfiguration may change logical block size, so alignment
--	 * check has to be done with queue usage counter held
-+	 * Device reconfiguration may change logical block size or reduce the
-+	 * number of poll queues, so the checks for alignment and poll support
-+	 * have to be done with queue usage counter held.
- 	 */
- 	if (unlikely(bio_unaligned(bio, q))) {
- 		bio_io_error(bio);
- 		goto queue_exit;
- 	}
- 
-+	if ((bio->bi_opf & REQ_POLLED) &&
-+	    !(q->limits.features & BLK_FEAT_POLL)) {
-+		bio->bi_status = BLK_STS_NOTSUPP;
-+		bio_endio(bio);
-+		goto queue_exit;
-+	}
-+
- 	bio = __bio_split_to_limits(bio, &q->limits, &nr_segs);
- 	if (!bio)
- 		goto queue_exit;
+ #define VOP2_VP_FEATURE_OUTPUT_10BIT        BIT(0)
 -- 
 2.39.5
 
