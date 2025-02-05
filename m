@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136D5DF59;
-	Wed,  5 Feb 2025 15:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06810DF59;
+	Wed,  5 Feb 2025 15:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767988; cv=none; b=jdu90fIUIVrAGr6JcT2rRdl3Mta1MzhI9unESDEO8GmrxI/60veIwqU+bcmpKXNXa0yp8cxxPzxDUBe9u/9iTSrOUwNkAXoLI9p1+8tBGOTiLnAIXSJSBiCLb2MtYAa+gek0XmLAFqFF/vVVpv3UHW1k+JIXnktnWIxU3b9XJTA=
+	t=1738767991; cv=none; b=NIn2WD28CFOo+e9403UCitxNCFwfQlwrDdACLYPe7n7NsHRxLH7Ol6hxyr+BdHcmneJvh4cjuURHoBkz93UEIGMp+oeXJkqfxThfhG3+QLYbzXhMyleOHhQ6HZZMDt/IUBUk8UXYyHzGSrry+pRK1nIPoa6/oyk+Sk9sZGX0qXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767988; c=relaxed/simple;
-	bh=vCNfNz2z3zl8UkxlX3ua/tPyMSKbz/+FUNJ9c8CbXYU=;
+	s=arc-20240116; t=1738767991; c=relaxed/simple;
+	bh=78clmqIj4ljUzyAFGeeSoXMAQt1PrwoV/3O7V2gsZFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jfKpbVXk9/sAK88JsRe26BDe8HFsiUrRhH8SWTORZQZ3bUN2gAV66hGP/njX/g4vsQ3TwqjYQmZRYGbFbR5o/5sPAjtH7MCL6LAleXhNMfHwle5VFj+3OiYwq2enXyY5hj9xeHDr6yHE2MzJtYIoHzfOgkjIev3rOH/TY6JX9/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j74lbD3t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I27wFepM3NeAyBRjbrO+0icxTHRQ55P3JABsq/cFegzAaw8K13M3dNrWNZ9r1YqASeCSnku6GeBRUrOVJOsW8j5hpMBy6NdwW1irX9I39Y7Yt1qVa6EHc668c+7A9HGUEhZAdquYZ0b/lYV1BXwA1Kpb0glrtty3V1Hb8JYx1tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0sSDPmhl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j74lbD3t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D446C4CED1;
-	Wed,  5 Feb 2025 15:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sSDPmhl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83EEDC4CED6;
+	Wed,  5 Feb 2025 15:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767987;
-	bh=vCNfNz2z3zl8UkxlX3ua/tPyMSKbz/+FUNJ9c8CbXYU=;
+	s=korg; t=1738767990;
+	bh=78clmqIj4ljUzyAFGeeSoXMAQt1PrwoV/3O7V2gsZFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j74lbD3tL4o9QCgqNkJ0sTq6q/KPnvsuBiBp66n8+VN80uqNiUtiQKsySdo2dzgnU
-	 nT2BLAk/w6+v18+NoYEpKj3DrIZhBYv44B2PecO+7w5UT2VNHqgTygvHKSgfaG8aAC
-	 p8YJOOKg4R9QVbTguCs5KRgbfQ4pVYl9LRddCYbc=
+	b=0sSDPmhlUDtzUN2xMuBqcb6uVficjpb1uBi1iiAbULHQEc1EqBQ8BEz81ExmPQFxq
+	 DUFkiWazP3LSKSskRCcgdhHOmR6ARYzJLtxJmEdKiCfzG2RkA3YS5OzNfeSDd5mNUa
+	 2e86zpZ1TOxDSM114gMKsMGb4J1GCravye1f1Rnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+32c3706ebf5d95046ea1@syzkaller.appspotmail.com,
-	syzbot+1097e95f134f37d9395c@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 481/623] nilfs2: handle errors that nilfs_prepare_chunk() may return
-Date: Wed,  5 Feb 2025 14:43:43 +0100
-Message-ID: <20250205134514.619170477@linuxfoundation.org>
+Subject: [PATCH 6.13 468/623] PCI: qcom: Update ICC and OPP values after Link Up event
+Date: Wed,  5 Feb 2025 14:43:30 +0100
+Message-ID: <20250205134514.123414075@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -47,170 +48,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
-[ Upstream commit ee70999a988b8abc3490609142f50ebaa8344432 ]
+[ Upstream commit f0639013d340580b72df95d012a93f35eeb0da64 ]
 
-Patch series "nilfs2: fix issues with rename operations".
+4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up event in
+'global_irq' interrupt") added the Link Up-based enumeration support, but
+did not update the ICC/OPP vote once link is up. Before that, the update
+happened during probe and the endpoints may or may not be enumerated at
+that time, so the ICC/OPP vote was not guaranteed to be accurate.
 
-This series fixes BUG_ON check failures reported by syzbot around rename
-operations, and a minor behavioral issue where the mtime of a child
-directory changes when it is renamed instead of moved.
+With Link Up-based enumeration support, the driver can request the accurate
+vote based on the PCIe link.
 
-This patch (of 2):
+Call qcom_pcie_icc_opp_update() in qcom_pcie_global_irq_thread() after
+enumerating the endpoints.
 
-The directory manipulation routines nilfs_set_link() and
-nilfs_delete_entry() rewrite the directory entry in the folio/page
-previously read by nilfs_find_entry(), so error handling is omitted on the
-assumption that nilfs_prepare_chunk(), which prepares the buffer for
-rewriting, will always succeed for these.  And if an error is returned, it
-triggers the legacy BUG_ON() checks in each routine.
-
-This assumption is wrong, as proven by syzbot: the buffer layer called by
-nilfs_prepare_chunk() may call nilfs_get_block() if necessary, which may
-fail due to metadata corruption or other reasons.  This has been there all
-along, but improved sanity checks and error handling may have made it more
-reproducible in fuzzing tests.
-
-Fix this issue by adding missing error paths in nilfs_set_link(),
-nilfs_delete_entry(), and their caller nilfs_rename().
-
-Link: https://lkml.kernel.org/r/20250111143518.7901-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20250111143518.7901-2-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+32c3706ebf5d95046ea1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=32c3706ebf5d95046ea1
-Reported-by: syzbot+1097e95f134f37d9395c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1097e95f134f37d9395c
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt")
+Link: https://lore.kernel.org/r/20241123-remove_wait2-v5-3-b5f9e6b794c2@quicinc.com
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/dir.c   | 13 ++++++++++---
- fs/nilfs2/namei.c | 29 +++++++++++++++--------------
- fs/nilfs2/nilfs.h |  4 ++--
- 3 files changed, 27 insertions(+), 19 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nilfs2/dir.c b/fs/nilfs2/dir.c
-index 0a3aea6c416bc..9b7f8e9655a27 100644
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -400,7 +400,7 @@ int nilfs_inode_by_name(struct inode *dir, const struct qstr *qstr, ino_t *ino)
- 	return 0;
- }
- 
--void nilfs_set_link(struct inode *dir, struct nilfs_dir_entry *de,
-+int nilfs_set_link(struct inode *dir, struct nilfs_dir_entry *de,
- 		    struct folio *folio, struct inode *inode)
- {
- 	size_t from = offset_in_folio(folio, de);
-@@ -410,11 +410,15 @@ void nilfs_set_link(struct inode *dir, struct nilfs_dir_entry *de,
- 
- 	folio_lock(folio);
- 	err = nilfs_prepare_chunk(folio, from, to);
--	BUG_ON(err);
-+	if (unlikely(err)) {
-+		folio_unlock(folio);
-+		return err;
-+	}
- 	de->inode = cpu_to_le64(inode->i_ino);
- 	de->file_type = fs_umode_to_ftype(inode->i_mode);
- 	nilfs_commit_chunk(folio, mapping, from, to);
- 	inode_set_mtime_to_ts(dir, inode_set_ctime_current(dir));
-+	return 0;
- }
- 
- /*
-@@ -543,7 +547,10 @@ int nilfs_delete_entry(struct nilfs_dir_entry *dir, struct folio *folio)
- 		from = (char *)pde - kaddr;
- 	folio_lock(folio);
- 	err = nilfs_prepare_chunk(folio, from, to);
--	BUG_ON(err);
-+	if (unlikely(err)) {
-+		folio_unlock(folio);
-+		goto out;
-+	}
- 	if (pde)
- 		pde->rec_len = nilfs_rec_len_to_disk(to - from);
- 	dir->inode = 0;
-diff --git a/fs/nilfs2/namei.c b/fs/nilfs2/namei.c
-index 1d836a5540f3b..e02fae6757f12 100644
---- a/fs/nilfs2/namei.c
-+++ b/fs/nilfs2/namei.c
-@@ -406,8 +406,10 @@ static int nilfs_rename(struct mnt_idmap *idmap,
- 			err = PTR_ERR(new_de);
- 			goto out_dir;
- 		}
--		nilfs_set_link(new_dir, new_de, new_folio, old_inode);
-+		err = nilfs_set_link(new_dir, new_de, new_folio, old_inode);
- 		folio_release_kmap(new_folio, new_de);
-+		if (unlikely(err))
-+			goto out_dir;
- 		nilfs_mark_inode_dirty(new_dir);
- 		inode_set_ctime_current(new_inode);
- 		if (dir_de)
-@@ -430,28 +432,27 @@ static int nilfs_rename(struct mnt_idmap *idmap,
- 	 */
- 	inode_set_ctime_current(old_inode);
- 
--	nilfs_delete_entry(old_de, old_folio);
--
--	if (dir_de) {
--		nilfs_set_link(old_inode, dir_de, dir_folio, new_dir);
--		folio_release_kmap(dir_folio, dir_de);
--		drop_nlink(old_dir);
-+	err = nilfs_delete_entry(old_de, old_folio);
-+	if (likely(!err)) {
-+		if (dir_de) {
-+			err = nilfs_set_link(old_inode, dir_de, dir_folio,
-+					     new_dir);
-+			drop_nlink(old_dir);
-+		}
-+		nilfs_mark_inode_dirty(old_dir);
- 	}
--	folio_release_kmap(old_folio, old_de);
--
--	nilfs_mark_inode_dirty(old_dir);
- 	nilfs_mark_inode_dirty(old_inode);
- 
--	err = nilfs_transaction_commit(old_dir->i_sb);
--	return err;
--
- out_dir:
- 	if (dir_de)
- 		folio_release_kmap(dir_folio, dir_de);
- out_old:
- 	folio_release_kmap(old_folio, old_de);
- out:
--	nilfs_transaction_abort(old_dir->i_sb);
-+	if (likely(!err))
-+		err = nilfs_transaction_commit(old_dir->i_sb);
-+	else
-+		nilfs_transaction_abort(old_dir->i_sb);
- 	return err;
- }
- 
-diff --git a/fs/nilfs2/nilfs.h b/fs/nilfs2/nilfs.h
-index dff241c53fc58..cb6ed54accd7b 100644
---- a/fs/nilfs2/nilfs.h
-+++ b/fs/nilfs2/nilfs.h
-@@ -261,8 +261,8 @@ struct nilfs_dir_entry *nilfs_find_entry(struct inode *, const struct qstr *,
- int nilfs_delete_entry(struct nilfs_dir_entry *, struct folio *);
- int nilfs_empty_dir(struct inode *);
- struct nilfs_dir_entry *nilfs_dotdot(struct inode *, struct folio **);
--void nilfs_set_link(struct inode *, struct nilfs_dir_entry *,
--			   struct folio *, struct inode *);
-+int nilfs_set_link(struct inode *dir, struct nilfs_dir_entry *de,
-+		   struct folio *folio, struct inode *inode);
- 
- /* file.c */
- extern int nilfs_sync_file(struct file *, loff_t, loff_t, int);
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index dc102d8bd58c6..91b7f9ec78bcc 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1569,6 +1569,8 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
+ 		pci_lock_rescan_remove();
+ 		pci_rescan_bus(pp->bridge->bus);
+ 		pci_unlock_rescan_remove();
++
++		qcom_pcie_icc_opp_update(pcie);
+ 	} else {
+ 		dev_WARN_ONCE(dev, 1, "Received unknown event. INT_STATUS: 0x%08x\n",
+ 			      status);
 -- 
 2.39.5
 
