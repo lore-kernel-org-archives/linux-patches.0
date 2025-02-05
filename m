@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501861FBEBC;
-	Wed,  5 Feb 2025 14:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C617A18A6D7;
+	Wed,  5 Feb 2025 14:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767215; cv=none; b=fTeuizeaKaNDmf7XIg13vRPtKdQ9KhDqDWtkKtT0pe97njiPZtXhb8OyhD61nlQK6odvuoRuAFTmlIV14zMTsXOQE/IG4MWsNkdrO8GWd+2UoEiljRUH8gH8wVWfGyPZin7ObB6skNpxlPc52Nny4Labf0lKUzVq7LBtRQLAdH8=
+	t=1738767218; cv=none; b=t+A0QKDvnQtknNg5NJRN8wFtTip3qdMxZdr7n5DHdkZQ4Br/XnoM8aKSSnFpNmisOaT8pqwSU9W3w44ZmpBoabeBdAmeol/MdwEJ5qcIcV3l40oGeJ+PA1ieH15tW8k2q7MJ5vLPOWelEu17F2jNOmE017+vvXOgP9PKDhp3GLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767215; c=relaxed/simple;
-	bh=/rkWRLw0yB0phPepySA4gDKmta099bMOIhAA3u82f9Y=;
+	s=arc-20240116; t=1738767218; c=relaxed/simple;
+	bh=YsXC8HeBKoCSW2sFQRZLbVgrrERjFQXk2WA+4CitRAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cm4+zr4/wNcLa8UJfQQ4Zqk/2ua+ZXYzOlFLAP20C8flaQn/jX2TjTPEs8YpmWtA9jbhjuQchm3tEU7auXCbMQImv0k/gGK+MQA39KBtPxDfSZ6ZpYP1M7Uzf81nPYTfZD1z5fAKi4SKrKtUGH9fmvUwPkCporvFkAdGtqKBQw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6fDwWsa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=V/BbuI3KH0Yy2MW7r/hREnaOPOxIND1Nw5i6ksRwQ75YlirmOP3JGWHGcuR3a6MU1ELMP1BedvQ0m1GY5PAog3x/dco08JtJq7/gPo0a0FJUhFyA6QYztBHDAZ9pQXfeB0CR8Ayhjd+WW9CxHrDtyUEq5R0jLvM0fhNl70dy+H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTzAvdYZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6fDwWsa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0860C4CED1;
-	Wed,  5 Feb 2025 14:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTzAvdYZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354B4C4CED1;
+	Wed,  5 Feb 2025 14:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767215;
-	bh=/rkWRLw0yB0phPepySA4gDKmta099bMOIhAA3u82f9Y=;
+	s=korg; t=1738767218;
+	bh=YsXC8HeBKoCSW2sFQRZLbVgrrERjFQXk2WA+4CitRAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K6fDwWsaj6CZf48ZsdqqjhoVnRzgaXPWgnyC3dbBS16VzbHBH9ScHrYv7FDd8Iu9A
-	 N57c+Y9c0KfW+rKdNZeVK2v08ClwROgyO4gB+ewVSKcbUBKL6BphBL/By8MWdq3dRP
-	 oPGASJVvLLEIDH67ufLAmfak77wyzk/RCNxJOflY=
+	b=CTzAvdYZt63kqgUgeVY9QiCZ/jaXJVnyMyxWUHiKYv4h5c6qEz5XQKYzz8WW95DoE
+	 zmkEz/aYCLUSiATp6BgHAcboBgwHdpgcpxotFsopLzEik4O+qeJiPw886jtNJYSv1m
+	 LLeSRX6C63ML8bmcLP3/LLtz9c62tfe5cz3GDvxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 373/623] arm64: dts: qcom: msm8996: Fix up USB3 interrupts
-Date: Wed,  5 Feb 2025 14:41:55 +0100
-Message-ID: <20250205134510.490997327@linuxfoundation.org>
+Subject: [PATCH 6.12 425/590] PCI: imx6: Configure PHY based on Root Complex or Endpoint mode
+Date: Wed,  5 Feb 2025 14:43:00 +0100
+Message-ID: <20250205134511.525570410@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,53 +48,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 9cb9c9f4e1380da317a056afd26d66a835c5796c ]
+[ Upstream commit de22e20589b79f35f92543119c33051f8179dba0 ]
 
-Add the missing interrupt lines and fix qusb2_phy being an impostor
-of hs_phy_irq.
+Pass PHY_MODE_PCIE_EP if the PCI controller operates in Endpoint (EP) mode,
+and fix the Root Complex (RC) mode being hardcoded using a drvdata mode
+check.
 
-This happens to also fix warnings such as:
-
-usb@6af8800: interrupt-names: ['hs_phy_irq', 'ss_phy_irq'] is too short
-
-Fixes: 4753492de9df ("arm64: dts: qcom: msm8996: Add usb3 interrupts")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20241129-topic-qcom_usb_dtb_fixup-v1-3-cba24120c058@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 8026f2d8e8a9 ("PCI: imx6: Call common PHY API to set mode, speed, and submode")
+Link: https://lore.kernel.org/r/20241119-pci_fixup_addr-v8-6-c4bfa5193288@nxp.com
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Richard Zhu <hongxing.zhu@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pci-imx6.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index b379623c1b8a0..4719e1fc70d2c 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -3065,9 +3065,14 @@
- 			#size-cells = <1>;
- 			ranges;
+diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+index c8d5c90aa4d45..9d61e7c472082 100644
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -966,7 +966,9 @@ static int imx_pcie_host_init(struct dw_pcie_rp *pp)
+ 			goto err_clk_disable;
+ 		}
  
--			interrupts = <GIC_SPI 347 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts = <GIC_SPI 180 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 347 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 243 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "hs_phy_irq", "ss_phy_irq";
-+			interrupt-names = "pwr_event",
-+					  "qusb2_phy",
-+					  "hs_phy_irq",
-+					  "ss_phy_irq";
- 
- 			clocks = <&gcc GCC_SYS_NOC_USB3_AXI_CLK>,
- 				 <&gcc GCC_USB30_MASTER_CLK>,
+-		ret = phy_set_mode_ext(imx_pcie->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
++		ret = phy_set_mode_ext(imx_pcie->phy, PHY_MODE_PCIE,
++				       imx_pcie->drvdata->mode == DW_PCIE_EP_TYPE ?
++						PHY_MODE_PCIE_EP : PHY_MODE_PCIE_RC);
+ 		if (ret) {
+ 			dev_err(dev, "unable to set PCIe PHY mode\n");
+ 			goto err_phy_exit;
 -- 
 2.39.5
 
