@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF0E146A7A;
-	Wed,  5 Feb 2025 14:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7DB15CD74;
+	Wed,  5 Feb 2025 14:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766966; cv=none; b=fycJLQy5Hp+T9tYJnZ2X19z0xrw/qCmW8PSs55/EurEX7emkZv2EMoFDmMTAawyB8G0UNp0CPAzLArHlShIs6v46gD1Yh2U5Uq0YZkjyOvHx+fnBe6ySbCfx3X4rZgbXWOiWwm8RDiGg2zWMsCmT5BpeskSlFZpsg7+6MUQCHsA=
+	t=1738766969; cv=none; b=MqDinIYgAGCvDUaut9dhZ0fH0HOD3L6TJhRsY/rrS9ukhmPZ4YLvGxzCqVMdHp3Yta3c8XtmyLf2zkozuST/t0xsA139Jhb55cdDaTP/9Sutyc2JEn0j4TmQinr75GhBSBeyZMNCU7SBQJRcB0kkprh2/2YSZfM6w+/sPYstzcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766966; c=relaxed/simple;
-	bh=ZBuZJSCJiZiGFqAuCyxIv3GN6mzeFijBDhmjRRZkcwg=;
+	s=arc-20240116; t=1738766969; c=relaxed/simple;
+	bh=ShT6SaJKFEyD8UmZkDfbHnHEDuyytSgXH6ziMKzw2mA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=obUwfVS0GBmjz+1lQzQgk9L9fuhpG5DanYVNanLgJz1PBrdqeuDLV9oFt5hwT6INA9jNo+6SeYAvK/jfR9iBJEB2jPzrRG2MjqPG6kcsYlIeFo27oXUHhcEKyp+A2e+2DNge8wSYi/RYKuWxJ+kPFe7JSpx/YhIuNUSZ4nLGt7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+xqqzHu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gh+6/80i0a6godnr0pGRfxs1uPDMYg4cmnopwtWZH54JJB1sE0crbdxyrKkVl12br2wsyK6ucsau63DJQKT7oQNVhQYxYTmTuIZ6TYqybMJHgdTSPcucUnkI/mbwrSGWUOu4jPL7JJ7OBA8g0f6r3GpnbjGNKAa/28tChKtesTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtECIihJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+xqqzHu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3256C4CED6;
-	Wed,  5 Feb 2025 14:49:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtECIihJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434DAC4CED1;
+	Wed,  5 Feb 2025 14:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766966;
-	bh=ZBuZJSCJiZiGFqAuCyxIv3GN6mzeFijBDhmjRRZkcwg=;
+	s=korg; t=1738766969;
+	bh=ShT6SaJKFEyD8UmZkDfbHnHEDuyytSgXH6ziMKzw2mA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y+xqqzHubAR5eqdmf+bt/oZn0i+2zd7k5gIFQe8xiomQ971fMYzhd3xQSyL5oLfHA
-	 yqc/BeNFclCE1ux5S8GuWhvDK5+bm29Dn2FCLhgq6/SPIR1yvSOQXgHwMcZ4pvzPoU
-	 Vs57BUqwV175JTDcufmTHskPvARv5I2OYn5197V8=
+	b=OtECIihJYRYl1cEZ281ITiA7JvZVw1x/KdYpBsvcLtrBoQh3P/SrtvHf3vFWkXjT3
+	 PQSU38mKs1gACqGULKeblZ4hX/lzIVHyHgg2vy03TMN6ZdQMrThlGfAvxc05Qktf6H
+	 TIblQM+Us95uTjQzBM/MoD9EpG1INmXSlS6wUqYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 335/623] arm64: dts: mediatek: mt8516: fix GICv2 range
-Date: Wed,  5 Feb 2025 14:41:17 +0100
-Message-ID: <20250205134509.042680605@linuxfoundation.org>
+Subject: [PATCH 6.12 369/590] RDMA/hns: Clean up the legacy CONFIG_INFINIBAND_HNS
+Date: Wed,  5 Feb 2025 14:42:04 +0100
+Message-ID: <20250205134509.387389210@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +47,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit e3ee31e4409f051c021a30122f3c470f093a7386 ]
+[ Upstream commit 8977b561216c7e693d61c6442657e33f134bfeb5 ]
 
-On the MT8167 which is based on the MT8516 DTS, the following error
-was appearing on boot, breaking interrupt operation:
+hns driver used to support hip06 and hip08 devices with
+CONFIG_INFINIBAND_HNS_HIP06 and CONFIG_INFINIBAND_HNS_HIP08
+respectively, which both depended on CONFIG_INFINIBAND_HNS.
 
-GICv2 detected, but range too small and irqchip.gicv2_force_probe not set
+But we no longer provide support for hip06 and only support
+hip08 and higher since the commit in fixes line, so there is
+no need to have CONFIG_INFINIBAND_HNS any more. Remove it and
+only keep CONFIG_INFINIBAND_HNS_HIP08.
 
-Similar to what's been proposed for MT7622 which has the same issue,
-fix by using the range reported by force_probe.
-
-Link: https://lore.kernel.org/all/YmhNSLgp%2Fyg8Vr1F@makrotopia.org/
-Fixes: 5236347bde42 ("arm64: dts: mediatek: add dtsi for MT8516")
-Signed-off-by: Val Packett <val@packett.cool>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241204190524.21862-2-val@packett.cool
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 38d220882426 ("RDMA/hns: Remove support for HIP06")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20250106111211.3945051-1-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8516.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/Makefile     |  2 +-
+ drivers/infiniband/hw/hns/Kconfig  | 20 +++++---------------
+ drivers/infiniband/hw/hns/Makefile |  9 +++------
+ 3 files changed, 9 insertions(+), 22 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8516.dtsi b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
-index d0b03dc4d3f43..4444293413023 100644
---- a/arch/arm64/boot/dts/mediatek/mt8516.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
-@@ -268,7 +268,7 @@
- 			interrupt-parent = <&gic>;
- 			interrupt-controller;
- 			reg = <0 0x10310000 0 0x1000>,
--			      <0 0x10320000 0 0x1000>,
-+			      <0 0x1032f000 0 0x2000>,
- 			      <0 0x10340000 0 0x2000>,
- 			      <0 0x10360000 0 0x2000>;
- 			interrupts = <GIC_PPI 9
+diff --git a/drivers/infiniband/hw/Makefile b/drivers/infiniband/hw/Makefile
+index 1211f4317a9f4..aba96ca9bce5d 100644
+--- a/drivers/infiniband/hw/Makefile
++++ b/drivers/infiniband/hw/Makefile
+@@ -11,7 +11,7 @@ obj-$(CONFIG_INFINIBAND_OCRDMA)		+= ocrdma/
+ obj-$(CONFIG_INFINIBAND_VMWARE_PVRDMA)	+= vmw_pvrdma/
+ obj-$(CONFIG_INFINIBAND_USNIC)		+= usnic/
+ obj-$(CONFIG_INFINIBAND_HFI1)		+= hfi1/
+-obj-$(CONFIG_INFINIBAND_HNS)		+= hns/
++obj-$(CONFIG_INFINIBAND_HNS_HIP08)	+= hns/
+ obj-$(CONFIG_INFINIBAND_QEDR)		+= qedr/
+ obj-$(CONFIG_INFINIBAND_BNXT_RE)	+= bnxt_re/
+ obj-$(CONFIG_INFINIBAND_ERDMA)		+= erdma/
+diff --git a/drivers/infiniband/hw/hns/Kconfig b/drivers/infiniband/hw/hns/Kconfig
+index ab3fbba70789c..44cdb706fe276 100644
+--- a/drivers/infiniband/hw/hns/Kconfig
++++ b/drivers/infiniband/hw/hns/Kconfig
+@@ -1,21 +1,11 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+-config INFINIBAND_HNS
+-	tristate "HNS RoCE Driver"
+-	depends on NET_VENDOR_HISILICON
+-	depends on ARM64 || (COMPILE_TEST && 64BIT)
+-	depends on (HNS_DSAF && HNS_ENET) || HNS3
+-	help
+-	  This is a RoCE/RDMA driver for the Hisilicon RoCE engine.
+-
+-	  To compile HIP08 driver as module, choose M here.
+-
+ config INFINIBAND_HNS_HIP08
+-	bool "Hisilicon Hip08 Family RoCE support"
+-	depends on INFINIBAND_HNS && PCI && HNS3
+-	depends on INFINIBAND_HNS=m || HNS3=y
++	tristate "Hisilicon Hip08 Family RoCE support"
++	depends on ARM64 || (COMPILE_TEST && 64BIT)
++	depends on PCI && HNS3
+ 	help
+ 	  RoCE driver support for Hisilicon RoCE engine in Hisilicon Hip08 SoC.
+ 	  The RoCE engine is a PCI device.
+ 
+-	  To compile this driver, choose Y here: if INFINIBAND_HNS is m, this
+-	  module will be called hns-roce-hw-v2.
++	  To compile this driver, choose M here. This module will be called
++	  hns-roce-hw-v2.
+diff --git a/drivers/infiniband/hw/hns/Makefile b/drivers/infiniband/hw/hns/Makefile
+index be1e1cdbcfa8a..7917af8e6380e 100644
+--- a/drivers/infiniband/hw/hns/Makefile
++++ b/drivers/infiniband/hw/hns/Makefile
+@@ -5,12 +5,9 @@
+ 
+ ccflags-y :=  -I $(srctree)/drivers/net/ethernet/hisilicon/hns3
+ 
+-hns-roce-objs := hns_roce_main.o hns_roce_cmd.o hns_roce_pd.o \
++hns-roce-hw-v2-objs := hns_roce_main.o hns_roce_cmd.o hns_roce_pd.o \
+ 	hns_roce_ah.o hns_roce_hem.o hns_roce_mr.o hns_roce_qp.o \
+ 	hns_roce_cq.o hns_roce_alloc.o hns_roce_db.o hns_roce_srq.o hns_roce_restrack.o \
+-	hns_roce_debugfs.o
++	hns_roce_debugfs.o hns_roce_hw_v2.o
+ 
+-ifdef CONFIG_INFINIBAND_HNS_HIP08
+-hns-roce-hw-v2-objs := hns_roce_hw_v2.o $(hns-roce-objs)
+-obj-$(CONFIG_INFINIBAND_HNS) += hns-roce-hw-v2.o
+-endif
++obj-$(CONFIG_INFINIBAND_HNS_HIP08) += hns-roce-hw-v2.o
 -- 
 2.39.5
 
