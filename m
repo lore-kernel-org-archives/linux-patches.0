@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6243914EC77;
-	Wed,  5 Feb 2025 14:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4B915C13A;
+	Wed,  5 Feb 2025 14:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764350; cv=none; b=RsG6dlLKZqNqZ2HalF6VMpm+DfvbcOrCSGCLX+uhb6FEs+mu5ch4yVrKwIDd2R1qwulXhKe4fydXd0twd5W2nYHX8oLJjGBRr8ZC2UjCGsD2vKEVFykowdnwNEZbQVvBJ7TD/7OuNo+RKaLyfVdJW4uxQsCYaHLA8cQZQICADak=
+	t=1738764353; cv=none; b=Le4EsVIQDZMG6C3yqfDsWdh4IqzVUS10y3srmlMl0rbat/133fR69DJSHf6/bzd3+WhZyqCDn8ZxIMxJFEGiA6DAisiOz8ioLh2sHTu0ClIT5Y7LUXTtiOF9jvEMLb89FifabYEe0fUr261nUsPFzMsWLCEVIPurpdUsFMqECoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764350; c=relaxed/simple;
-	bh=7Knvhry74IJS7ZlZyYhQTmLrL/2v/aN4YyxgKTyAhDE=;
+	s=arc-20240116; t=1738764353; c=relaxed/simple;
+	bh=hffu0T+CYp80z4SkjL3oKgsP7d126LAXPwySP/S0csg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BgbfrByld4N34twAnAUEPAATq+y+sCsm0Qf8YGRyr6OX8vgOjj4y1wS4Q5I7uRf3Wyd9LwzlvVwQdY+Uc0L7qeD4fWB5NKYpFrZwKNONvOWq0OFHPEb912evyDEaVN6NMLSczLWerawp4qHQd3k9HAeUkSVB/IczELakE3dUZuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywiWEJZg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mFoQrojQ83fKqG6x5e2h5dS7cbFhBW/9QbiE9cto870Ox276a6FfXPajj8Wz3MYQRw6V3AsDh0PnfuZ21quVpJS/0ZIHXN67gjHSOcSH09Xnn/5jof2Vh7fF1MUJTJhEYOPumdsW6byWvI5O1Kg0MGyoqj11RWB8BasHzy7bOdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3WsVm4p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywiWEJZg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49FAC4CEE2;
-	Wed,  5 Feb 2025 14:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3WsVm4p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05083C4CEDD;
+	Wed,  5 Feb 2025 14:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764350;
-	bh=7Knvhry74IJS7ZlZyYhQTmLrL/2v/aN4YyxgKTyAhDE=;
+	s=korg; t=1738764353;
+	bh=hffu0T+CYp80z4SkjL3oKgsP7d126LAXPwySP/S0csg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ywiWEJZgMFHnAF4K0HD5x6+vV+vd10Qcxjbsk63HNkmpCDVK41KB+no/wn0vQ1Z4L
-	 RbGlF1yOMrLlwK23itF6w4LLi4MaN6WaF2iiXdALxkIAhqRWsoQ6VfGlyU4Aco3IYp
-	 SIUPkME7iz6cl/T49VQZ6fs1B5xh+ep1fdw0Xn1w=
+	b=v3WsVm4pJVMaPjKWQfv9T7PPNGG86jbqK1ysT4KWcgIcmabAV09O4vqj4co648nm0
+	 Oc+20+M82v7AFfAI/xN5vgGI65MM1Vdr4suehwckhwPO4fbmESP/mWzb4mpJl4Y+s1
+	 nHzYYzK0ECY8zXvZYqZIvtU/dH2OKR34KpLgqrGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@linaro.org>,
+	Levi Yun <yeoreum.yun@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 070/623] drm/msm/dpu: link DSPP_2/_3 blocks on SM8250
-Date: Wed,  5 Feb 2025 14:36:52 +0100
-Message-ID: <20250205134458.905542371@linuxfoundation.org>
+Subject: [PATCH 6.6 164/393] perf expr: Initialize is_test value in expr__ctx_new()
+Date: Wed,  5 Feb 2025 14:41:23 +0100
+Message-ID: <20250205134426.571976167@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +51,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Levi Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 8252028092f86d413b3a83e5e76a9615073a0c7f ]
+[ Upstream commit 1d18ebcfd302a2005b83ae5f13df223894d19902 ]
 
-Link DSPP_2 to the LM_2 and DSPP_3 to the LM_3 mixer blocks. This allows
-using colour transformation matrix (aka night mode) with more outputs at
-the same time.
+When expr_parse_ctx is allocated by expr_ctx_new(),
+expr_scanner_ctx->is_test isn't initialize, so it has garbage value.
+this can affects the result of expr__parse() return when it parses
+non-exist event literal according to garbage value.
 
-Fixes: 05ae91d960fd ("drm/msm/dpu: enable DSPP support on SM8[12]50")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/629956/
-Link: https://lore.kernel.org/r/20241220-dpu-fix-catalog-v2-4-38fa961ea992@linaro.org
+Use calloc instead of malloc in expr_ctx_new() to fix this.
+
+Fixes: 3340a08354ac286e ("perf pmu-events: Fix testing with JEVENTS_ARCH=all")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Levi Yun <yeoreum.yun@arm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20241108143424.819126-1-yeoreum.yun@arm.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/perf/util/expr.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-index a57d50b1f0280..e8916ae826a6d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
-@@ -162,6 +162,7 @@ static const struct dpu_lm_cfg sm8250_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.lm_pair = LM_3,
- 		.pingpong = PINGPONG_2,
-+		.dspp = DSPP_2,
- 	}, {
- 		.name = "lm_3", .id = LM_3,
- 		.base = 0x47000, .len = 0x320,
-@@ -169,6 +170,7 @@ static const struct dpu_lm_cfg sm8250_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.lm_pair = LM_2,
- 		.pingpong = PINGPONG_3,
-+		.dspp = DSPP_3,
- 	}, {
- 		.name = "lm_4", .id = LM_4,
- 		.base = 0x48000, .len = 0x320,
+diff --git a/tools/perf/util/expr.c b/tools/perf/util/expr.c
+index b8875aac8f870..fa0473f7a4ff4 100644
+--- a/tools/perf/util/expr.c
++++ b/tools/perf/util/expr.c
+@@ -292,7 +292,7 @@ struct expr_parse_ctx *expr__ctx_new(void)
+ {
+ 	struct expr_parse_ctx *ctx;
+ 
+-	ctx = malloc(sizeof(struct expr_parse_ctx));
++	ctx = calloc(1, sizeof(struct expr_parse_ctx));
+ 	if (!ctx)
+ 		return NULL;
+ 
+@@ -301,9 +301,6 @@ struct expr_parse_ctx *expr__ctx_new(void)
+ 		free(ctx);
+ 		return NULL;
+ 	}
+-	ctx->sctx.user_requested_cpu_list = NULL;
+-	ctx->sctx.runtime = 0;
+-	ctx->sctx.system_wide = false;
+ 
+ 	return ctx;
+ }
 -- 
 2.39.5
 
