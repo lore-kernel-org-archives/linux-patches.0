@@ -1,50 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664EC14A088;
-	Wed,  5 Feb 2025 14:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB858634E;
+	Wed,  5 Feb 2025 14:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765548; cv=none; b=Vle5LTFt/LilEEDSX1UoDG9Qa01bSTUZ0EHopbFfU/xKZkeQswVEwGY1byEqstDarK/aE6XG0AbimBQa4Gs+wTkrE2PYEUdQVtc87Youj7czuPqyYfKcWUV5aRydpjo4RYy80vGxjrk8S7hopAPWEIHPALYIY7XpjGJvQmSqoE4=
+	t=1738765551; cv=none; b=Ksx9SegKjHdpSV2O/+4skK4B8C+wzQQsf2CCKAZvOnOiIozwAJeyLdZM1gpqOZJaklMhOSfSdCDuw0fK37GNvqpUvo3zA5L4RBZXPDHiHPaFzWZbWClsFwodeM0BQnEf5pEc0mY4MsgvRIvEKEAcSEtt1ps5AaxNLdMrhiavsx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765548; c=relaxed/simple;
-	bh=rdBayyIqClqn3YDOp73mHJxCK+7YHwhsrxLB5hBfjvY=;
+	s=arc-20240116; t=1738765551; c=relaxed/simple;
+	bh=ItoF3bCKXiymyAh+fOZoG+eWk5IFl9ua0919NLFYvp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PEPD2I0WgLL5aUN3tA+zAZcDpwkf6x2SR7hSWOpALys2nMyXXA/U5nnvV1195mnnPqIygTiF39mU7hH2b2f6o9KX4wx9aGrUKwIbW2pdqVd3RM+7PpvKdjJNixkMXKRGXnxQbP4phR4kSLJxpND9AfVPIhu9a1vLwy6LdYGZdwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pN/jtu/i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1o4zOQZT1ELw4jrPqsyWaBR4UhPNYi2Fpv+/dArz+Mh2PNUKs/SX2ZdkGz+ebIKBe0zvAXxkrp11PbCz8Omp2iAgkHQKPFTwIzUi7jtucketIPRyNF2CsOuEhSmR7g0Migfdww2wsG2ic6TGLdAjESYY6ht8L50+Y4geP/gJF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+UmwJHQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pN/jtu/i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E8FC4CED1;
-	Wed,  5 Feb 2025 14:25:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+UmwJHQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE2EC4CED1;
+	Wed,  5 Feb 2025 14:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765548;
-	bh=rdBayyIqClqn3YDOp73mHJxCK+7YHwhsrxLB5hBfjvY=;
+	s=korg; t=1738765551;
+	bh=ItoF3bCKXiymyAh+fOZoG+eWk5IFl9ua0919NLFYvp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pN/jtu/iReUKZyiqTbiu+JRJDzGgnbO70J7P3ABgGNgq6wHZmeYoiEbzQC0h2+kUk
-	 WosCq+1UxFXD2clFpruKpjpNYxeXXHsqW20fzjWZxch6FL7jOcMdSmk9dZvT2kJoxo
-	 D3YX8oKMF+8fG4wy6Gc2RCGm+MMZszLq64J6+okg=
+	b=I+UmwJHQEeleMFWz6q2V1LtwKLwWcEiQLVuCBnwZQyL/xK+bcyRfrGfII1TkRZozg
+	 e0F+YALRiZG4ceCmwuBioJsWzBjE/pFQ++Bd/gB2QBI4YxtoL4jEFfeVwjDAJHWM5E
+	 FQ2N65y3QKhDAXbrPfOC+uQClqHaOrUc4zb9EWj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	David Rheinsberg <david@readahead.eu>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Peter Jones <pjones@redhat.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	linux-fbdev@vger.kernel.org,
-	Ard Biesheuvel <ardb@kernel.org>,
-	linux-efi@vger.kernel.org,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 277/393] efi: sysfb_efi: fix W=1 warnings when EFI is not set
-Date: Wed,  5 Feb 2025 14:43:16 +0100
-Message-ID: <20250205134430.908148811@linuxfoundation.org>
+Subject: [PATCH 6.13 188/623] wifi: mt76: mt7925: Fix incorrect MLD address in bss_mld_tlv for MLO support
+Date: Wed,  5 Feb 2025 14:38:50 +0100
+Message-ID: <20250205134503.431323610@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,72 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-[ Upstream commit 19fdc68aa7b90b1d3d600e873a3e050a39e7663d ]
+[ Upstream commit 4d5427443595439c6cf5edfd9fb7224589f65b27 ]
 
-A build with W=1 fails because there are code and data that are not
-needed or used when CONFIG_EFI is not set. Move the "#ifdef CONFIG_EFI"
-block to earlier in the source file so that the unused code/data are
-not built.
+For this TLV, the address should be set to the MLD address rather than
+the link address.
 
-drivers/firmware/efi/sysfb_efi.c:345:39: warning: ‘efifb_fwnode_ops’ defined but not used [-Wunused-const-variable=]
-  345 | static const struct fwnode_operations efifb_fwnode_ops = {
-      |                                       ^~~~~~~~~~~~~~~~
-drivers/firmware/efi/sysfb_efi.c:238:35: warning: ‘efifb_dmi_swap_width_height’ defined but not used [-Wunused-const-variable=]
-  238 | static const struct dmi_system_id efifb_dmi_swap_width_height[] __initconst = {
-      |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/firmware/efi/sysfb_efi.c:188:35: warning: ‘efifb_dmi_system_table’ defined but not used [-Wunused-const-variable=]
-  188 | static const struct dmi_system_id efifb_dmi_system_table[] __initconst = {
-      |                                   ^~~~~~~~~~~~~~~~~~~~~~
-
-Fixes: 15d27b15de96 ("efi: sysfb_efi: fix build when EFI is not set")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501071933.20nlmJJt-lkp@intel.com/
-Cc: David Rheinsberg <david@readahead.eu>
-Cc: Hans de Goede <hdegoede@redhat.com>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Peter Jones <pjones@redhat.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: linux-fbdev@vger.kernel.org
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: linux-efi@vger.kernel.org
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20241211011926.5002-2-sean.wang@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/sysfb_efi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/sysfb_efi.c b/drivers/firmware/efi/sysfb_efi.c
-index 456d0e5eaf78b..f479680299838 100644
---- a/drivers/firmware/efi/sysfb_efi.c
-+++ b/drivers/firmware/efi/sysfb_efi.c
-@@ -91,6 +91,7 @@ void efifb_setup_from_dmi(struct screen_info *si, const char *opt)
- 		_ret_;						\
- 	})
- 
-+#ifdef CONFIG_EFI
- static int __init efifb_set_system(const struct dmi_system_id *id)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+index 123a585098e3b..7105705113baa 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -2459,6 +2459,7 @@ static void
+ mt7925_mcu_bss_mld_tlv(struct sk_buff *skb,
+ 		       struct ieee80211_bss_conf *link_conf)
  {
- 	struct efifb_dmi_info *info = id->driver_data;
-@@ -346,7 +347,6 @@ static const struct fwnode_operations efifb_fwnode_ops = {
- 	.add_links = efifb_add_links,
- };
++	struct ieee80211_vif *vif = link_conf->vif;
+ 	struct mt792x_bss_conf *mconf = mt792x_link_conf_to_mconf(link_conf);
+ 	struct mt792x_vif *mvif = (struct mt792x_vif *)link_conf->vif->drv_priv;
+ 	struct bss_mld_tlv *mld;
+@@ -2479,7 +2480,7 @@ mt7925_mcu_bss_mld_tlv(struct sk_buff *skb,
+ 	mld->eml_enable = !!(link_conf->vif->cfg.eml_cap &
+ 			     IEEE80211_EML_CAP_EMLSR_SUPP);
  
--#ifdef CONFIG_EFI
- static struct fwnode_handle efifb_fwnode;
+-	memcpy(mld->mac_addr, link_conf->addr, ETH_ALEN);
++	memcpy(mld->mac_addr, vif->addr, ETH_ALEN);
+ }
  
- __init void sysfb_apply_efi_quirks(void)
+ static void
 -- 
 2.39.5
 
