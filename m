@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC9F15854F;
-	Wed,  5 Feb 2025 15:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E1717C79;
+	Wed,  5 Feb 2025 15:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768117; cv=none; b=gPW4JBRGfim1PICMf4MCKe55NlWN9Wp8UzDxQKGKUiUx33Bo8QDnVONECj6EQCMkrrse/GXO5R2rLt0lsW1uyLXIdiR4VEV4rDGWn5WzN5MDknk/1hvs+F84SYukZFAj4e6x2dzPeSDzmKyoT/mbm6hXCZNrPDpmhyhqdTLGGjY=
+	t=1738768120; cv=none; b=gA/PhIRa6Zq5bmdPt41cKgeXVatSN9FvkluZKWa8m/DJGrlFfTQdlnVw+kzyNZFkAbCPxkwSI4HJuz6CywrLyTTQGi1F/d3tWEOhbzS7xTmAYbhzncRPIw5hu1rTEjhYWxNKPLWtoXf5MH/D6f3PQ6m8HRf1cNtRUg0s9mWxTeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768117; c=relaxed/simple;
-	bh=zJF/HRc2fHNyoZ1+nWx1sJa1k/RtmdnOXBo4pjdku8M=;
+	s=arc-20240116; t=1738768120; c=relaxed/simple;
+	bh=IMsqBtmAIh4Hhl6VA4OL9h43O9zOg0Sct6KUjCRXDwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n3FaA5t/eHI+xsyeK46i1nwTGAOc2i5eByB8q3f7KZdHQ+OK6nwD/vUd1rUtOKxS3v+VVHIG7nm6WlFIFV5HVRyYappLnZNbxSX4Q1/Sk3ch0GAAJJa5lg8hVh+muXQV/rNrIOzf0qqLmJ5VbLfQplmOwQljByMpVxgru5PzeK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RfWL49nC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FXlY7V+vNBEQjtO6NSU36z/sMKVniF2yMXjHgdYIIbQhQDh8RSq7+217sKAG/WztGdEXJmI5C/RNigwBALBJslT57Qm2+R3e2coyARxVNP0ijARpE054mlSZIXOU0QB3mU5jswlUm3lPc0NKqL1RL8aBYDt40U45rRAfPbSe74A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WerBd2fB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RfWL49nC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C7EC4CED1;
-	Wed,  5 Feb 2025 15:08:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WerBd2fB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E8DC4CED1;
+	Wed,  5 Feb 2025 15:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768116;
-	bh=zJF/HRc2fHNyoZ1+nWx1sJa1k/RtmdnOXBo4pjdku8M=;
+	s=korg; t=1738768120;
+	bh=IMsqBtmAIh4Hhl6VA4OL9h43O9zOg0Sct6KUjCRXDwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RfWL49nCW2x16Npw46vqghaoIvBusind6gkOG2bQ/0FjbmBjeeQDaD3qR1A8T1MNn
-	 cusSEUZzkBEmHzycw/7K6kMt+7at+iUyEavsRq05CgCQPxH4oYggCZywX8Y0fz0OWY
-	 Q0Vw5d79Nvu9nFmMlRWzwUlvq5Lx/9H25ZADv6aU=
+	b=WerBd2fB3j6+c8I7blopyOLdILWV4PUrNKoxhAg1So4j4Ok9R6UXoRbHpvZ/+m2qf
+	 QWOButVeGnCLgeCdGis6awNbP0WJLJZPnEYQRcGYPQqbLSlUn8Q67HLxUmjpj14oIy
+	 CTPl4RI5f1a3zhUDlWc1wiADafuZqmE3Mb9T3o8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Wang <wangming01@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 500/623] rtc: loongson: clear TOY_MATCH0_REG in loongson_rtc_isr()
-Date: Wed,  5 Feb 2025 14:44:02 +0100
-Message-ID: <20250205134515.347110010@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.12 556/590] usb: dwc3-am62: Fix an OF node leak in phy_syscon_pll_refclk()
+Date: Wed,  5 Feb 2025 14:45:11 +0100
+Message-ID: <20250205134516.541651659@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,70 +47,36 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Wang <wangming01@loongson.cn>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 09471d8f5b390883eaf21b917c4bf3ced1b8a1df ]
+commit a266462b937beba065e934a563efe13dd246a164 upstream.
 
-The TOY_MATCH0_REG should be cleared to 0 in the RTC interrupt handler,
-otherwise the interrupt cannot be cleared, which will cause the
-loongson_rtc_isr() to be triggered multiple times.
+phy_syscon_pll_refclk() leaks an OF node obtained by
+of_parse_phandle_with_fixed_args(), thus add an of_node_put() call.
 
-The previous code cleared TOY_MATCH0_REG in the loongson_rtc_handler(),
-which is an ACPI interrupt. This did not prevent loongson_rtc_isr()
-from being triggered multiple times.
-
-This commit moves the clearing of TOY_MATCH0_REG to the
-loongson_rtc_isr() to ensure that the interrupt is properly cleared.
-
-Fixes: 1b733a9ebc3d ("rtc: Add rtc driver for the Loongson family chips")
-Signed-off-by: Ming Wang <wangming01@loongson.cn>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Keguang Zhang <keguang.zhang@gmail.com> # on LS1B
-Tested-by: Keguang Zhang <keguang.zhang@gmail.com>
-Link: https://lore.kernel.org/r/20241205114307.1891418-1-wangming01@loongson.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: e8784c0aec03 ("drivers: usb: dwc3: Add AM62 USB wrapper driver")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20250109001638.70033-1-joe@pf.is.s.u-tokyo.ac.jp
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-loongson.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/usb/dwc3/dwc3-am62.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-loongson.c b/drivers/rtc/rtc-loongson.c
-index 8d713e563d7c0..a0f7974e6a570 100644
---- a/drivers/rtc/rtc-loongson.c
-+++ b/drivers/rtc/rtc-loongson.c
-@@ -114,6 +114,13 @@ static irqreturn_t loongson_rtc_isr(int irq, void *id)
- 	struct loongson_rtc_priv *priv = (struct loongson_rtc_priv *)id;
+--- a/drivers/usb/dwc3/dwc3-am62.c
++++ b/drivers/usb/dwc3/dwc3-am62.c
+@@ -166,6 +166,7 @@ static int phy_syscon_pll_refclk(struct
+ 	if (ret)
+ 		return ret;
  
- 	rtc_update_irq(priv->rtcdev, 1, RTC_AF | RTC_IRQF);
-+
-+	/*
-+	 * The TOY_MATCH0_REG should be cleared 0 here,
-+	 * otherwise the interrupt cannot be cleared.
-+	 */
-+	regmap_write(priv->regmap, TOY_MATCH0_REG, 0);
-+
- 	return IRQ_HANDLED;
- }
++	of_node_put(args.np);
+ 	am62->offset = args.args[0];
  
-@@ -131,11 +138,7 @@ static u32 loongson_rtc_handler(void *id)
- 	writel(RTC_STS, priv->pm_base + PM1_STS_REG);
- 	spin_unlock(&priv->lock);
- 
--	/*
--	 * The TOY_MATCH0_REG should be cleared 0 here,
--	 * otherwise the interrupt cannot be cleared.
--	 */
--	return regmap_write(priv->regmap, TOY_MATCH0_REG, 0);
-+	return ACPI_INTERRUPT_HANDLED;
- }
- 
- static int loongson_rtc_set_enabled(struct device *dev)
--- 
-2.39.5
-
+ 	/* Core voltage. PHY_CORE_VOLTAGE bit Recommended to be 0 always */
 
 
