@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2071591E3;
-	Wed,  5 Feb 2025 13:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3963152E12;
+	Wed,  5 Feb 2025 13:59:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763938; cv=none; b=mGkdvUyCJVOUB8Ty7ymUPA1+gHe3KlI/TK0KIVJR2+TwAFAn4HqHLV3HyJa/i1IenxDCcCEiiZB10d5AmsAfuiyOIV+KDJb6Sn4qhE4fvmWEqgaOPLdtjC/srZurIHdivfKMCN10zjy+VwZwhNGp8sH6dKF/jSGxb/q/8ejLyPQ=
+	t=1738763941; cv=none; b=M58R3eBqkpqsHpV2IKDDUwxQUi+1KGWbqpzxxFv1AFcBMPdTXp/CLpEakJ/gbL9kkrJWEgF4R5//PyXnlvskijHg8XOAx/TFqrU0vbEcn0egWKaJax0uf0VuqOLPkvmf1MR5Y08al1+jpMqizxLdI0EfRXsF4/qV7wV7l0hhXcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763938; c=relaxed/simple;
-	bh=0re4m+KD77G0jDjk1+pNEjEwIlaGttovquFDPs6wCtw=;
+	s=arc-20240116; t=1738763941; c=relaxed/simple;
+	bh=Iv6/Z+wddhhStGYQaZoBKC1U29+EiOpYMln+u6Zoqbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1RyQkth4oeKc5Eeq9t44mghEsfjVbkLQBzsRb40MONj4kN8tdGNwmNvb4B+H1iFjRWhhtaOZV08AjqTOrQp5x6tN2sO84qJaWyurwg5rP0AH3ZiSkU0QDP+IAwX7+UNOb8mlhqUkUb1Vik4NhyeZh7odR3h5iG443ni1f1uEWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgzLKAjP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i4bZCtNxrShnP1NJqyGSvfNcfzX7rDqAxAkKJ8uJzgoqzjeD/anmxfvWGo+wF5BNtnM/bY22EcQ+q5aVUDBDNNx2GbvkjooQQCIlXgyk27DMVB04Yfm6MCp0PB9tgG2nE4DSIgbwigCPHrN1lf5OFx5NjMfHkmI8ccGRxelHqQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xVqL1+y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgzLKAjP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0CBC4CEE4;
-	Wed,  5 Feb 2025 13:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xVqL1+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42683C4CED6;
+	Wed,  5 Feb 2025 13:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763938;
-	bh=0re4m+KD77G0jDjk1+pNEjEwIlaGttovquFDPs6wCtw=;
+	s=korg; t=1738763941;
+	bh=Iv6/Z+wddhhStGYQaZoBKC1U29+EiOpYMln+u6Zoqbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VgzLKAjPlOuWYWQyQBK8BYTjo1je61q63rZt4ZPsLBO+P6Kl+nIG8sA4UCueSRBFY
-	 eZLnHM2Wu7JQMhyUTXf9p0vZ/SdVx/aQbupbvVGrqOX46+AuPUUrM2va4ZPxAr3wD+
-	 5aY+Fo+NGdwJd1IKA3supnljEjg+q5kQV6hWNPdY=
+	b=1xVqL1+yrWiAyq7GAnSNkFN6aeeSwZ42J7kf1opieSU7UtZx/uUOzMEKMBjyB6itz
+	 EVsU2yDhx/5L3bjBJ+mbTCMwwAevKgzckxAMMrGbUduGApnQ5VqFDx8M2wXP8+rH+6
+	 erNDGg0i5OeCrz2Cs1FW0/u/rGj7DYLoPqGGXOkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Yabin Cui <yabinc@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 121/393] wifi: mt76: connac: move mt7615_mcu_del_wtbl_all to connac
-Date: Wed,  5 Feb 2025 14:40:40 +0100
-Message-ID: <20250205134424.925722924@linuxfoundation.org>
+Subject: [PATCH 6.13 032/623] perf/core: Save raw sample data conditionally based on sample type
+Date: Wed,  5 Feb 2025 14:36:14 +0100
+Message-ID: <20250205134457.456423481@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,108 +49,276 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Yabin Cui <yabinc@google.com>
 
-[ Upstream commit b2141eadf8be6285ff8980cab153079231cab4fd ]
+[ Upstream commit b9c44b91476b67327a521568a854babecc4070ab ]
 
-Preparation for reusing it in mt7915
+Currently, space for raw sample data is always allocated within sample
+records for both BPF output and tracepoint events. This leads to unused
+space in sample records when raw sample data is not requested.
 
-Link: https://patch.msgid.link/20240827093011.18621-18-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Stable-dep-of: cd043bbba6f9 ("wifi: mt76: mt7915: fix omac index assignment after hardware reset")
+This patch enforces checking sample type of an event in
+perf_sample_save_raw_data(). So raw sample data will only be saved if
+explicitly requested, reducing overhead when it is not needed.
+
+Fixes: 0a9081cf0a11 ("perf/core: Add perf_sample_save_raw_data() helper")
+Signed-off-by: Yabin Cui <yabinc@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240515193610.2350456-2-yabinc@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/init.c     |  2 +-
- drivers/net/wireless/mediatek/mt76/mt7615/mcu.c      | 10 ----------
- drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h   |  1 -
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c | 11 +++++++++++
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h |  1 +
- 5 files changed, 13 insertions(+), 12 deletions(-)
+ arch/s390/kernel/perf_cpum_cf.c    |  2 +-
+ arch/s390/kernel/perf_pai_crypto.c |  2 +-
+ arch/s390/kernel/perf_pai_ext.c    |  2 +-
+ arch/x86/events/amd/ibs.c          |  2 +-
+ include/linux/perf_event.h         |  6 +++++
+ kernel/events/core.c               | 35 +++++++++++++++---------------
+ kernel/trace/bpf_trace.c           | 11 +++++-----
+ 7 files changed, 34 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/init.c b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-index f22a1aa885052..129350186d5d5 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-@@ -325,7 +325,7 @@ void mt7615_init_work(struct mt7615_dev *dev)
- 	mt7615_mcu_set_eeprom(dev);
- 	mt7615_mac_init(dev);
- 	mt7615_phy_init(dev);
--	mt7615_mcu_del_wtbl_all(dev);
-+	mt76_connac_mcu_del_wtbl_all(&dev->mt76);
- 	mt7615_check_offload_capability(dev);
- }
- EXPORT_SYMBOL_GPL(mt7615_init_work);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-index 955974a82180f..e92040616a1f3 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-@@ -1876,16 +1876,6 @@ int mt7615_mcu_set_dbdc(struct mt7615_dev *dev)
- 				 sizeof(req), true);
+diff --git a/arch/s390/kernel/perf_cpum_cf.c b/arch/s390/kernel/perf_cpum_cf.c
+index b0bc68da6a116..33205dd410e47 100644
+--- a/arch/s390/kernel/perf_cpum_cf.c
++++ b/arch/s390/kernel/perf_cpum_cf.c
+@@ -981,7 +981,7 @@ static int cfdiag_push_sample(struct perf_event *event,
+ 	if (event->attr.sample_type & PERF_SAMPLE_RAW) {
+ 		raw.frag.size = cpuhw->usedss;
+ 		raw.frag.data = cpuhw->stop;
+-		perf_sample_save_raw_data(&data, &raw);
++		perf_sample_save_raw_data(&data, event, &raw);
+ 	}
+ 
+ 	overflow = perf_event_overflow(event, &data, &regs);
+diff --git a/arch/s390/kernel/perf_pai_crypto.c b/arch/s390/kernel/perf_pai_crypto.c
+index fa73254542661..10725f5a6f0fd 100644
+--- a/arch/s390/kernel/perf_pai_crypto.c
++++ b/arch/s390/kernel/perf_pai_crypto.c
+@@ -478,7 +478,7 @@ static int paicrypt_push_sample(size_t rawsize, struct paicrypt_map *cpump,
+ 	if (event->attr.sample_type & PERF_SAMPLE_RAW) {
+ 		raw.frag.size = rawsize;
+ 		raw.frag.data = cpump->save;
+-		perf_sample_save_raw_data(&data, &raw);
++		perf_sample_save_raw_data(&data, event, &raw);
+ 	}
+ 
+ 	overflow = perf_event_overflow(event, &data, &regs);
+diff --git a/arch/s390/kernel/perf_pai_ext.c b/arch/s390/kernel/perf_pai_ext.c
+index 7f462bef1fc07..a8f0bad99cf04 100644
+--- a/arch/s390/kernel/perf_pai_ext.c
++++ b/arch/s390/kernel/perf_pai_ext.c
+@@ -503,7 +503,7 @@ static int paiext_push_sample(size_t rawsize, struct paiext_map *cpump,
+ 	if (event->attr.sample_type & PERF_SAMPLE_RAW) {
+ 		raw.frag.size = rawsize;
+ 		raw.frag.data = cpump->save;
+-		perf_sample_save_raw_data(&data, &raw);
++		perf_sample_save_raw_data(&data, event, &raw);
+ 	}
+ 
+ 	overflow = perf_event_overflow(event, &data, &regs);
+diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
+index e91970b01d624..c3a2f6f57770a 100644
+--- a/arch/x86/events/amd/ibs.c
++++ b/arch/x86/events/amd/ibs.c
+@@ -1118,7 +1118,7 @@ static int perf_ibs_handle_irq(struct perf_ibs *perf_ibs, struct pt_regs *iregs)
+ 				.data = ibs_data.data,
+ 			},
+ 		};
+-		perf_sample_save_raw_data(&data, &raw);
++		perf_sample_save_raw_data(&data, event, &raw);
+ 	}
+ 
+ 	if (perf_ibs == &perf_ibs_op)
+diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
+index cb99ec8c9e96f..f7c0a3f2f502d 100644
+--- a/include/linux/perf_event.h
++++ b/include/linux/perf_event.h
+@@ -1287,12 +1287,18 @@ static inline void perf_sample_save_callchain(struct perf_sample_data *data,
  }
  
--int mt7615_mcu_del_wtbl_all(struct mt7615_dev *dev)
--{
--	struct wtbl_req_hdr req = {
--		.operation = WTBL_RESET_ALL,
--	};
--
--	return mt76_mcu_send_msg(&dev->mt76, MCU_EXT_CMD(WTBL_UPDATE),
--				 &req, sizeof(req), true);
--}
--
- int mt7615_mcu_set_fcc5_lpn(struct mt7615_dev *dev, int val)
+ static inline void perf_sample_save_raw_data(struct perf_sample_data *data,
++					     struct perf_event *event,
+ 					     struct perf_raw_record *raw)
  {
- 	struct {
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h b/drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h
-index a20322aae9672..fa83b255e180c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h
-@@ -399,7 +399,6 @@ void mt7615_mac_set_rates(struct mt7615_phy *phy, struct mt7615_sta *sta,
- 			  struct ieee80211_tx_rate *rates);
- void mt7615_pm_wake_work(struct work_struct *work);
- void mt7615_pm_power_save_work(struct work_struct *work);
--int mt7615_mcu_del_wtbl_all(struct mt7615_dev *dev);
- int mt7615_mcu_set_chan_info(struct mt7615_phy *phy, int cmd);
- int mt7615_mcu_set_wmm(struct mt7615_dev *dev, u8 queue,
- 		       const struct ieee80211_tx_queue_params *params);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-index 998cfd73764a9..7420d91bef0de 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -2926,6 +2926,17 @@ int mt76_connac_mcu_restart(struct mt76_dev *dev)
- }
- EXPORT_SYMBOL_GPL(mt76_connac_mcu_restart);
+ 	struct perf_raw_frag *frag = &raw->frag;
+ 	u32 sum = 0;
+ 	int size;
  
-+int mt76_connac_mcu_del_wtbl_all(struct mt76_dev *dev)
-+{
-+	struct wtbl_req_hdr req = {
-+		.operation = WTBL_RESET_ALL,
-+	};
++	if (!(event->attr.sample_type & PERF_SAMPLE_RAW))
++		return;
++	if (WARN_ON_ONCE(data->sample_flags & PERF_SAMPLE_RAW))
++		return;
 +
-+	return mt76_mcu_send_msg(dev, MCU_EXT_CMD(WTBL_UPDATE),
-+				 &req, sizeof(req), true);
-+}
-+EXPORT_SYMBOL_GPL(mt76_connac_mcu_del_wtbl_all);
-+
- int mt76_connac_mcu_rdd_cmd(struct mt76_dev *dev, int cmd, u8 index,
- 			    u8 rx_sel, u8 val)
+ 	do {
+ 		sum += frag->size;
+ 		if (perf_raw_frag_last(frag))
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 065f9188b44a0..e9f698c08dc17 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -10425,9 +10425,9 @@ static struct pmu perf_tracepoint = {
+ };
+ 
+ static int perf_tp_filter_match(struct perf_event *event,
+-				struct perf_sample_data *data)
++				struct perf_raw_record *raw)
  {
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
-index 4543e5bf0482d..27391ee3564a1 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
-@@ -1914,6 +1914,7 @@ void mt76_connac_mcu_wtbl_smps_tlv(struct sk_buff *skb,
- 				   void *sta_wtbl, void *wtbl_tlv);
- int mt76_connac_mcu_set_pm(struct mt76_dev *dev, int band, int enter);
- int mt76_connac_mcu_restart(struct mt76_dev *dev);
-+int mt76_connac_mcu_del_wtbl_all(struct mt76_dev *dev);
- int mt76_connac_mcu_rdd_cmd(struct mt76_dev *dev, int cmd, u8 index,
- 			    u8 rx_sel, u8 val);
- int mt76_connac_mcu_sta_wed_update(struct mt76_dev *dev, struct sk_buff *skb);
+-	void *record = data->raw->frag.data;
++	void *record = raw->frag.data;
+ 
+ 	/* only top level events have filters set */
+ 	if (event->parent)
+@@ -10439,7 +10439,7 @@ static int perf_tp_filter_match(struct perf_event *event,
+ }
+ 
+ static int perf_tp_event_match(struct perf_event *event,
+-				struct perf_sample_data *data,
++				struct perf_raw_record *raw,
+ 				struct pt_regs *regs)
+ {
+ 	if (event->hw.state & PERF_HES_STOPPED)
+@@ -10450,7 +10450,7 @@ static int perf_tp_event_match(struct perf_event *event,
+ 	if (event->attr.exclude_kernel && !user_mode(regs))
+ 		return 0;
+ 
+-	if (!perf_tp_filter_match(event, data))
++	if (!perf_tp_filter_match(event, raw))
+ 		return 0;
+ 
+ 	return 1;
+@@ -10476,6 +10476,7 @@ EXPORT_SYMBOL_GPL(perf_trace_run_bpf_submit);
+ static void __perf_tp_event_target_task(u64 count, void *record,
+ 					struct pt_regs *regs,
+ 					struct perf_sample_data *data,
++					struct perf_raw_record *raw,
+ 					struct perf_event *event)
+ {
+ 	struct trace_entry *entry = record;
+@@ -10485,13 +10486,17 @@ static void __perf_tp_event_target_task(u64 count, void *record,
+ 	/* Cannot deliver synchronous signal to other task. */
+ 	if (event->attr.sigtrap)
+ 		return;
+-	if (perf_tp_event_match(event, data, regs))
++	if (perf_tp_event_match(event, raw, regs)) {
++		perf_sample_data_init(data, 0, 0);
++		perf_sample_save_raw_data(data, event, raw);
+ 		perf_swevent_event(event, count, data, regs);
++	}
+ }
+ 
+ static void perf_tp_event_target_task(u64 count, void *record,
+ 				      struct pt_regs *regs,
+ 				      struct perf_sample_data *data,
++				      struct perf_raw_record *raw,
+ 				      struct perf_event_context *ctx)
+ {
+ 	unsigned int cpu = smp_processor_id();
+@@ -10499,15 +10504,15 @@ static void perf_tp_event_target_task(u64 count, void *record,
+ 	struct perf_event *event, *sibling;
+ 
+ 	perf_event_groups_for_cpu_pmu(event, &ctx->pinned_groups, cpu, pmu) {
+-		__perf_tp_event_target_task(count, record, regs, data, event);
++		__perf_tp_event_target_task(count, record, regs, data, raw, event);
+ 		for_each_sibling_event(sibling, event)
+-			__perf_tp_event_target_task(count, record, regs, data, sibling);
++			__perf_tp_event_target_task(count, record, regs, data, raw, sibling);
+ 	}
+ 
+ 	perf_event_groups_for_cpu_pmu(event, &ctx->flexible_groups, cpu, pmu) {
+-		__perf_tp_event_target_task(count, record, regs, data, event);
++		__perf_tp_event_target_task(count, record, regs, data, raw, event);
+ 		for_each_sibling_event(sibling, event)
+-			__perf_tp_event_target_task(count, record, regs, data, sibling);
++			__perf_tp_event_target_task(count, record, regs, data, raw, sibling);
+ 	}
+ }
+ 
+@@ -10525,15 +10530,10 @@ void perf_tp_event(u16 event_type, u64 count, void *record, int entry_size,
+ 		},
+ 	};
+ 
+-	perf_sample_data_init(&data, 0, 0);
+-	perf_sample_save_raw_data(&data, &raw);
+-
+ 	perf_trace_buf_update(record, event_type);
+ 
+ 	hlist_for_each_entry_rcu(event, head, hlist_entry) {
+-		if (perf_tp_event_match(event, &data, regs)) {
+-			perf_swevent_event(event, count, &data, regs);
+-
++		if (perf_tp_event_match(event, &raw, regs)) {
+ 			/*
+ 			 * Here use the same on-stack perf_sample_data,
+ 			 * some members in data are event-specific and
+@@ -10543,7 +10543,8 @@ void perf_tp_event(u16 event_type, u64 count, void *record, int entry_size,
+ 			 * because data->sample_flags is set.
+ 			 */
+ 			perf_sample_data_init(&data, 0, 0);
+-			perf_sample_save_raw_data(&data, &raw);
++			perf_sample_save_raw_data(&data, event, &raw);
++			perf_swevent_event(event, count, &data, regs);
+ 		}
+ 	}
+ 
+@@ -10560,7 +10561,7 @@ void perf_tp_event(u16 event_type, u64 count, void *record, int entry_size,
+ 			goto unlock;
+ 
+ 		raw_spin_lock(&ctx->lock);
+-		perf_tp_event_target_task(count, record, regs, &data, ctx);
++		perf_tp_event_target_task(count, record, regs, &data, &raw, ctx);
+ 		raw_spin_unlock(&ctx->lock);
+ unlock:
+ 		rcu_read_unlock();
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 1b8db5aee9d38..9f2f65767639d 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -619,7 +619,8 @@ static const struct bpf_func_proto bpf_perf_event_read_value_proto = {
+ 
+ static __always_inline u64
+ __bpf_perf_event_output(struct pt_regs *regs, struct bpf_map *map,
+-			u64 flags, struct perf_sample_data *sd)
++			u64 flags, struct perf_raw_record *raw,
++			struct perf_sample_data *sd)
+ {
+ 	struct bpf_array *array = container_of(map, struct bpf_array, map);
+ 	unsigned int cpu = smp_processor_id();
+@@ -644,6 +645,8 @@ __bpf_perf_event_output(struct pt_regs *regs, struct bpf_map *map,
+ 	if (unlikely(event->oncpu != cpu))
+ 		return -EOPNOTSUPP;
+ 
++	perf_sample_save_raw_data(sd, event, raw);
++
+ 	return perf_event_output(event, sd, regs);
+ }
+ 
+@@ -687,9 +690,8 @@ BPF_CALL_5(bpf_perf_event_output, struct pt_regs *, regs, struct bpf_map *, map,
+ 	}
+ 
+ 	perf_sample_data_init(sd, 0, 0);
+-	perf_sample_save_raw_data(sd, &raw);
+ 
+-	err = __bpf_perf_event_output(regs, map, flags, sd);
++	err = __bpf_perf_event_output(regs, map, flags, &raw, sd);
+ out:
+ 	this_cpu_dec(bpf_trace_nest_level);
+ 	preempt_enable();
+@@ -748,9 +750,8 @@ u64 bpf_event_output(struct bpf_map *map, u64 flags, void *meta, u64 meta_size,
+ 
+ 	perf_fetch_caller_regs(regs);
+ 	perf_sample_data_init(sd, 0, 0);
+-	perf_sample_save_raw_data(sd, &raw);
+ 
+-	ret = __bpf_perf_event_output(regs, map, flags, sd);
++	ret = __bpf_perf_event_output(regs, map, flags, &raw, sd);
+ out:
+ 	this_cpu_dec(bpf_event_output_nest_level);
+ 	preempt_enable();
 -- 
 2.39.5
 
