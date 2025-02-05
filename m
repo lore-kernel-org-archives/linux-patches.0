@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BBD1E89C;
-	Wed,  5 Feb 2025 15:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED69A35946;
+	Wed,  5 Feb 2025 15:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767922; cv=none; b=VIt92wMOIzp/Sj0B2PV7yu2twSM7DZaw8caYllBj/p8cWC34RJcqyQUnaHjWLUAWC4r1Kov3w5c7neULgjn1WFubWAkkPzaLFuU3M06VeIGNgyClh/iJODeJUku2leVGQtTOGeCcFTEZiMMTg4hGh+8cjJ7n+phQNSwMXdRYrfY=
+	t=1738767928; cv=none; b=e5QR7MdXBHNG2bWNmQJvu5TCqv/fNBxIv1jOCZGjcKwsknCXNslzbiMubPIf2PMaliyBUU9rWMy5N/pen7WmhYhT2fBdwSBX4GL77hB8OB/w9+FMbkymfHBOmG4MbI3o+Zzh8DJiUrBmhIACIse7mgzWzj0g6qTmmvLnu62p3gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767922; c=relaxed/simple;
-	bh=pfJd/Ot7HHIeQlTV5pZ2DG4g2b+vMKwV03tW6dFGieA=;
+	s=arc-20240116; t=1738767928; c=relaxed/simple;
+	bh=fLqYKHyBSGose0Vts4ruPCswdq03Gqs2NO2fHqBFY0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rfvuEFXLzilGSPxae0xDpmfo3JUoTPq97p4cdlHzd8N2Xx24/quzEOrxUnVQMgypYlO1qj3lda307XrkYgdo6EhAhRs4n4YxxBy/J+oG65SAiK859WFl8cZwMjcqgNBoxg/xpUkBY585//nSVlHeRlGxXE2XwLudXuyq1prEq3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvgGs1jD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jXIDFk2PXLdSBS5pmqVHBPRxVcwqSZtkUssUqsNmgh9jVw0/N+pGB2SXBdWKTsEKimkJoIKusOvtaFHARM5g5u4VEewPJZOxSpGrCzZ60U7Ex81AFZDG999vy6QFopjab0d6FyMKkOIuT1y6967pDA8oSsmgq6d5rrhmEOO5IvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkpjalvI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvgGs1jD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4E7C4CED1;
-	Wed,  5 Feb 2025 15:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkpjalvI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F3FC4CEDD;
+	Wed,  5 Feb 2025 15:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767922;
-	bh=pfJd/Ot7HHIeQlTV5pZ2DG4g2b+vMKwV03tW6dFGieA=;
+	s=korg; t=1738767927;
+	bh=fLqYKHyBSGose0Vts4ruPCswdq03Gqs2NO2fHqBFY0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZvgGs1jDH9/QlezM9Ka7XopFVPgNrRm+hF21WqkNrkbauD+7HGIprnTarQSpXNcnH
-	 7hEx9K30x1g4ee8WdERZ/hAiXo4ljSpHJ6FQJX5gOBnvt2Q0YbM1hCTPC3VNCMkET3
-	 tKJYhfif0oxfECGQF+F1A1CSzBZpMFwymlIH7Tlo=
+	b=RkpjalvIbPHRsdViPHyTJK+JazyE69uTGDPHMe7alUKcy593A/4XgHt9ENtrUZn25
+	 HbK7xO6wa9Q4Cr2YCrPJGNLL/jQAYTEnY5vgXz5q/QPdedVc863BRh0GLZL85JvQkb
+	 16SPSIrInEdVUV50xhIQr/TjLPGmcmCOPD6BpVtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 530/590] cifs: Validate EAs for WSL reparse points
-Date: Wed,  5 Feb 2025 14:44:45 +0100
-Message-ID: <20250205134515.544254155@linuxfoundation.org>
+Subject: [PATCH 6.13 473/623] scsi: mpt3sas: Set ioc->manu_pg11.EEDPTagMode directly to 1
+Date: Wed,  5 Feb 2025 14:43:35 +0100
+Message-ID: <20250205134514.313531219@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,88 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
 
-[ Upstream commit ef201e8759d20bf82b5943101147072de12bc524 ]
+[ Upstream commit ad7c3c0cb8f61d6d5a48b83e62ca4a9fd2f26153 ]
 
-Major and minor numbers for char and block devices are mandatory for stat.
-So check that the WSL EA $LXDEV is present for WSL CHR and BLK reparse
-points.
+Currently, the code does:
 
-WSL reparse point tag determinate type of the file. But file type is
-present also in the WSL EA $LXMOD. So check that both file types are same.
+    if (x == 0) {
+    	x &= ~0x3;
+	x |= 0x1;
+    }
 
-Fixes: 78e26bec4d6d ("smb: client: parse uid, gid, mode and dev from WSL reparse points")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Zeroing bits 0 and 1 of a variable that is 0 is not necessary. So directly
+set the variable to 1.
+
+Cc: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
+Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Link: https://lore.kernel.org/r/20241212221817.78940-2-pmenzel@molgen.mpg.de
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_base.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index d3abb99cc9909..e56a8df23fec9 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -674,11 +674,12 @@ int smb2_parse_reparse_point(struct cifs_sb_info *cifs_sb,
- 	return parse_reparse_point(buf, plen, cifs_sb, full_path, true, data);
- }
- 
--static void wsl_to_fattr(struct cifs_open_info_data *data,
-+static bool wsl_to_fattr(struct cifs_open_info_data *data,
- 			 struct cifs_sb_info *cifs_sb,
- 			 u32 tag, struct cifs_fattr *fattr)
- {
- 	struct smb2_file_full_ea_info *ea;
-+	bool have_xattr_dev = false;
- 	u32 next = 0;
- 
- 	switch (tag) {
-@@ -721,13 +722,24 @@ static void wsl_to_fattr(struct cifs_open_info_data *data,
- 			fattr->cf_uid = wsl_make_kuid(cifs_sb, v);
- 		else if (!strncmp(name, SMB2_WSL_XATTR_GID, nlen))
- 			fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
--		else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen))
-+		else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
-+			/* File type in reparse point tag and in xattr mode must match. */
-+			if (S_DT(fattr->cf_mode) != S_DT(le32_to_cpu(*(__le32 *)v)))
-+				return false;
- 			fattr->cf_mode = (umode_t)le32_to_cpu(*(__le32 *)v);
--		else if (!strncmp(name, SMB2_WSL_XATTR_DEV, nlen))
-+		} else if (!strncmp(name, SMB2_WSL_XATTR_DEV, nlen)) {
- 			fattr->cf_rdev = reparse_mkdev(v);
-+			have_xattr_dev = true;
-+		}
- 	} while (next);
- out:
-+
-+	/* Major and minor numbers for char and block devices are mandatory. */
-+	if (!have_xattr_dev && (tag == IO_REPARSE_TAG_LX_CHR || tag == IO_REPARSE_TAG_LX_BLK))
-+		return false;
-+
- 	fattr->cf_dtype = S_DT(fattr->cf_mode);
-+	return true;
- }
- 
- static bool posix_reparse_to_fattr(struct cifs_sb_info *cifs_sb,
-@@ -801,7 +813,9 @@ bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
- 	case IO_REPARSE_TAG_AF_UNIX:
- 	case IO_REPARSE_TAG_LX_CHR:
- 	case IO_REPARSE_TAG_LX_BLK:
--		wsl_to_fattr(data, cifs_sb, tag, fattr);
-+		ok = wsl_to_fattr(data, cifs_sb, tag, fattr);
-+		if (!ok)
-+			return false;
- 		break;
- 	case IO_REPARSE_TAG_NFS:
- 		ok = posix_reparse_to_fattr(cifs_sb, fattr, data);
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
+index 16ac2267c71e1..c1d8f2c91a5e5 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -5629,8 +5629,7 @@ _base_static_config_pages(struct MPT3SAS_ADAPTER *ioc)
+ 	if (!ioc->is_gen35_ioc && ioc->manu_pg11.EEDPTagMode == 0) {
+ 		pr_err("%s: overriding NVDATA EEDPTagMode setting\n",
+ 		    ioc->name);
+-		ioc->manu_pg11.EEDPTagMode &= ~0x3;
+-		ioc->manu_pg11.EEDPTagMode |= 0x1;
++		ioc->manu_pg11.EEDPTagMode = 0x1;
+ 		mpt3sas_config_set_manufacturing_pg11(ioc, &mpi_reply,
+ 		    &ioc->manu_pg11);
+ 	}
 -- 
 2.39.5
 
