@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F281632C8;
-	Wed,  5 Feb 2025 14:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13D2197A8B;
+	Wed,  5 Feb 2025 14:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767130; cv=none; b=Uf3AlXj2i3FXm8gJcy+/j6z0dshJkkQsMR4VlpygQ23odwoLsdDuzF3jUE5mrxTHCgWDJvzcFf7hzMnRmGputBq8GALEXlSiHrtJkE/9mh8dF41cEc4Cf4/dqQYovvsIizJDY4u8Dx8dxmUfv5mp5aAPP7IUpGi6F4agtwgnYC4=
+	t=1738767133; cv=none; b=qTm5bzlMBgWdcKx7sG4t/BWzxd7v2DfMEUjpIl0rRVbNDJ6DNyorNcFPSNI8mo+5FB706ytUgBXrMUAcLJJSCLHrxWYO1SSm4Ll6/ANyTumjW6S+LytZ9uN98q9jdZf6DLKs02RszjkGejuuEX0nBjaM2EWd2x/uCP2iSk12soM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767130; c=relaxed/simple;
-	bh=U/nD9DftISFG85QxFmYTPhX5E4DqD1871l4iy9OaLmo=;
+	s=arc-20240116; t=1738767133; c=relaxed/simple;
+	bh=QhQ+eEXMwR7EV5aF8SxvBHJpoBNKlyISa0Kt2GNhn3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hzUPnTI19syQ1EBCZkIvcVTJl/AS77z7tEpdO8H2foemiklPH9wQSP5fFZLeAiaodu0P6X2NMbFR3RrfzNlot07YrX2gR/sppkV3WCuNvSrO+1LXp7vYGT8Em43U0VYWPCfOobksfNqMOpDDHYEAX2gaB3u8vKChi4d2lAf1qoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAwxV6BD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BZxsGHCgo1E0jzNboBBkSUp/Hlp7aOjYbGM+sjP9Kh1Ux6xFZlUqpNzJot9dhJ8eaw8kSQXw+2OR7tddMEjA7fNUwZJhzq4c9GXPd9VikxApI8n3w1HOiRw3FhBvL9JBDUhJJyMrSoge5fjjsWgRKKWuMf2XZgzGVlAQGdssw0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPbY9zo7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAwxV6BD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38D7C4CED1;
-	Wed,  5 Feb 2025 14:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPbY9zo7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34978C4CED1;
+	Wed,  5 Feb 2025 14:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767130;
-	bh=U/nD9DftISFG85QxFmYTPhX5E4DqD1871l4iy9OaLmo=;
+	s=korg; t=1738767133;
+	bh=QhQ+eEXMwR7EV5aF8SxvBHJpoBNKlyISa0Kt2GNhn3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bAwxV6BD7Sh2iUqF/Hn/3b1ps4l3A/h6Rh6i/SuQRJqH3sEoK3MBSTWhuYlgIqj4F
-	 w+pcew3DjT1MXDcAaGkdJm+daqJ9B/vx63Ha+ucYNJQd0BQpGkwwBqa+SHRUuF6p8V
-	 OKj9SPgSVl5Z2GH1DaNa5ZSxLrCsgtaP/ac5XncQ=
+	b=cPbY9zo7AHlcH8bLkM0sa47JUkmRFd5RJ3J3rP7jXSBi9JqBV1eg36KU2ksLy/uJ6
+	 cSdh2I8HjUpR4jg9TGyTOHlt1oJq9BqLMoyEuVUG8CYzxgHRToCJW2Q2mePoVJCJgZ
+	 E8/qSzgAfDmmzZNFQ0o9axhAlKK9Gg+jsUurt/AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tinghan Shen <tinghan.shen@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Ma Ke <make_ruc2021@163.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 410/590] remoteproc: mtk_scp: Only populate devices for SCP cores
-Date: Wed,  5 Feb 2025 14:42:45 +0100
-Message-ID: <20250205134510.953981669@linuxfoundation.org>
+Subject: [PATCH 6.13 361/623] RDMA/srp: Fix error handling in srp_add_port
+Date: Wed,  5 Feb 2025 14:41:43 +0100
+Message-ID: <20250205134510.033350581@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,74 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit dbb9c372555c0b2a5a9264418bfba6d017752808 ]
+[ Upstream commit a3cbf68c69611188cd304229e346bffdabfd4277 ]
 
-When multi-core SCP support was added, the driver was made to populate
-platform devices for all the sub-nodes. This ended up adding platform
-devices for the rpmsg sub-nodes as well, which never actually get used,
-since rpmsg devices are registered through the rpmsg interface.
+As comment of device_add() says, if device_add() succeeds, you should
+call device_del() when you want to get rid of it. If device_add() has
+not succeeded, use only put_device() to drop the reference count.
 
-Limit of_platform_populate() to just populating the SCP cores with a
-compatible string match list.
+Add a put_device() call before returning from the function to decrement
+reference count for cleanup.
 
-Fixes: 1fdbf0cdde98 ("remoteproc: mediatek: Probe SCP cluster on multi-core SCP")
-Cc: Tinghan Shen <tinghan.shen@mediatek.com>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20241211072009.120511-1-wenst@chromium.org
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Found by code review.
+
+Fixes: c8e4c2397655 ("RDMA/srp: Rework the srp_add_port() error path")
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Link: https://patch.msgid.link/20241217075538.2909996-1-make_ruc2021@163.com
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/mtk_scp.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/infiniband/ulp/srp/ib_srp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/remoteproc/mtk_scp.c b/drivers/remoteproc/mtk_scp.c
-index e744c07507eed..f98a11d4cf292 100644
---- a/drivers/remoteproc/mtk_scp.c
-+++ b/drivers/remoteproc/mtk_scp.c
-@@ -1326,6 +1326,11 @@ static int scp_cluster_init(struct platform_device *pdev, struct mtk_scp_of_clus
- 	return ret;
+diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
+index 2916e77f589b8..7289ae0b83ace 100644
+--- a/drivers/infiniband/ulp/srp/ib_srp.c
++++ b/drivers/infiniband/ulp/srp/ib_srp.c
+@@ -3978,7 +3978,6 @@ static struct srp_host *srp_add_port(struct srp_device *device, u32 port)
+ 	return host;
+ 
+ put_host:
+-	device_del(&host->dev);
+ 	put_device(&host->dev);
+ 	return NULL;
  }
- 
-+static const struct of_device_id scp_core_match[] = {
-+	{ .compatible = "mediatek,scp-core" },
-+	{}
-+};
-+
- static int scp_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -1357,13 +1362,15 @@ static int scp_probe(struct platform_device *pdev)
- 	INIT_LIST_HEAD(&scp_cluster->mtk_scp_list);
- 	mutex_init(&scp_cluster->cluster_lock);
- 
--	ret = devm_of_platform_populate(dev);
-+	ret = of_platform_populate(dev_of_node(dev), scp_core_match, NULL, dev);
- 	if (ret)
- 		return dev_err_probe(dev, ret, "Failed to populate platform devices\n");
- 
- 	ret = scp_cluster_init(pdev, scp_cluster);
--	if (ret)
-+	if (ret) {
-+		of_platform_depopulate(dev);
- 		return ret;
-+	}
- 
- 	return 0;
- }
-@@ -1379,6 +1386,7 @@ static void scp_remove(struct platform_device *pdev)
- 		rproc_del(scp->rproc);
- 		scp_free(scp);
- 	}
-+	of_platform_depopulate(&pdev->dev);
- 	mutex_destroy(&scp_cluster->cluster_lock);
- }
- 
 -- 
 2.39.5
 
