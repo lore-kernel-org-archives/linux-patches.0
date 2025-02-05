@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F9A151988;
-	Wed,  5 Feb 2025 14:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA1D7DA6A;
+	Wed,  5 Feb 2025 14:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766110; cv=none; b=SvypNwmeKGuwBSwsdReGqzAt7DWktQ3pZd5bMIfoIFA+r0CYftmF1yh/ps9L8oESXSArt0o7/QZOq/n09BE29agplH84HT3EwO9T3D0uCKoDTY0yrVj+53vZsEyPAOa6iHychpCmlN+JSB+faWwhqV9tLONIn+zwf1aQcbrB0AE=
+	t=1738766113; cv=none; b=E+NcCGtsCvV2lz2KhhK5AZHCKvRWiWa5QWil2RFqG3l4SNJWFUmgck/xnf7V4QeFbJ8tgaPBoofGLdyJFdrSPM5sexlTadwY0bEnuhjmKA/zECj6W8Vy0/9/YDB1R9orYFRRdbucED4OM2FAciNlnzlYiEgMIsgdQ1U4L9Y09DM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766110; c=relaxed/simple;
-	bh=cLyOOQ4Og5kJsKCJoBtvriCG7tpqp+l9bv/w1qRflb0=;
+	s=arc-20240116; t=1738766113; c=relaxed/simple;
+	bh=LS4NY1S2N1BFK7Lwn0kRRiMgoiuiZ6jcvTgIMaILVvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sdwh4Rk7K9EKmEXOXjwqG51yLISveFnzuzVYwVkymWSU5xO1p7GgJG/EFLN0pD+czhH/AYxnBHAlvWa0Gm647f8TiEfC6EU9DTNokr8wfFzJ1FLjirnbKnNomWYkgU8raI0dwhzzqHoWnFIdl49zyR7TliawPiV0NlmEYjXEWFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wS5NooGw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CXYvvSdrrJn0BBjJ0pnBSSBMk1m22nRbVBxfyF6qiD+LlcTS2NSQOrpsaiY0L9M65zHu7aoQVENQQ2z0W7RciiBnYlfyT8X26eoW0MFW6V+j0gY29bk7XEHoZNFSZycWahGgN79QNoKiaJ5cbiYutJj59LA+kYgOuqXt38a95g0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/lD+1Dm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wS5NooGw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05ACCC4CEE4;
-	Wed,  5 Feb 2025 14:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/lD+1Dm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC14C4CED1;
+	Wed,  5 Feb 2025 14:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766110;
-	bh=cLyOOQ4Og5kJsKCJoBtvriCG7tpqp+l9bv/w1qRflb0=;
+	s=korg; t=1738766113;
+	bh=LS4NY1S2N1BFK7Lwn0kRRiMgoiuiZ6jcvTgIMaILVvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wS5NooGwXhyZJx4QmXec+M9rxPpFZ5Ldr6iok61ZJy38sc6jbCqKeZBWJsuIZ7/ua
-	 2swxCXp9DJ2eHqezM+RtPjtjuaQCMgzebJMA6te2uDCLhdhlNzGcU83IxNvTet3Wud
-	 o8zxd1zNtBVGzuALq6ZoM+T5DIWkPDZdxpW6S5sA=
+	b=C/lD+1Dmxp5POHA14marnF9xt0xM+5pIFeqNZJoxd+20OqdT40UfwF8mVAuvIrjch
+	 7FbZI9ZoCHmbaeluLxzJr1YgGJkv1cUCryR0G/clwxZGl8Hd7H7lLlIfbzI4pfHlO9
+	 o+njKnytu7fm2DoqDNF3NGuXJq36ZfW+RUmbSQaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahdi Arghavani <ma.arghavani@yahoo.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Haibo Zhang <haibo.zhang@otago.ac.nz>,
-	David Eyers <david.eyers@otago.ac.nz>,
-	Abbas Arghavani <abbas.arghavani@mdu.se>,
-	"David S. Miller" <davem@davemloft.net>,
+	Pu Lehui <pulehui@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 243/623] tcp_cubic: fix incorrect HyStart round start detection
-Date: Wed,  5 Feb 2025 14:39:45 +0100
-Message-ID: <20250205134505.522971658@linuxfoundation.org>
+Subject: [PATCH 6.12 288/590] libbpf: Fix incorrect traversal end type ID when marking BTF_IS_EMBEDDED
+Date: Wed,  5 Feb 2025 14:40:43 +0100
+Message-ID: <20250205134506.295161580@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,85 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mahdi Arghavani <ma.arghavani@yahoo.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 25c1a9ca53db5780757e7f53e688b8f916821baa ]
+[ Upstream commit 5ca681a86ef93369685cb63f71994f4cf7303e7c ]
 
-I noticed that HyStart incorrectly marks the start of rounds,
-leading to inaccurate measurements of ACK train lengths and
-resetting the `ca->sample_cnt` variable. This inaccuracy can impact
-HyStart's functionality in terminating exponential cwnd growth during
-Slow-Start, potentially degrading TCP performance.
+When redirecting the split BTF to the vmlinux base BTF, we need to mark
+the distilled base struct/union members of split BTF structs/unions in
+id_map with BTF_IS_EMBEDDED. This indicates that these types must match
+both name and size later. Therefore, we need to traverse the entire
+split BTF, which involves traversing type IDs from nr_dist_base_types to
+nr_types. However, the current implementation uses an incorrect
+traversal end type ID, so let's correct it.
 
-The issue arises because the changes introduced in commit 4e1fddc98d25
-("tcp_cubic: fix spurious Hystart ACK train detections for not-cwnd-limited flows")
-moved the caller of the `bictcp_hystart_reset` function inside the `hystart_update` function.
-This modification added an additional condition for triggering the caller,
-requiring that (tcp_snd_cwnd(tp) >= hystart_low_window) must also
-be satisfied before invoking `bictcp_hystart_reset`.
-
-This fix ensures that `bictcp_hystart_reset` is correctly called
-at the start of a new round, regardless of the congestion window size.
-This is achieved by moving the condition
-(tcp_snd_cwnd(tp) >= hystart_low_window)
-from before calling `bictcp_hystart_reset` to after it.
-
-I tested with a client and a server connected through two Linux software routers.
-In this setup, the minimum RTT was 150 ms, the bottleneck bandwidth was 50 Mbps,
-and the bottleneck buffer size was 1 BDP, calculated as (50M / 1514 / 8) * 0.150 = 619 packets.
-I conducted the test twice, transferring data from the server to the client for 1.5 seconds.
-Before the patch was applied, HYSTART-DELAY stopped the exponential growth of cwnd when
-cwnd = 516, and the bottleneck link was not yet saturated (516 < 619).
-After the patch was applied, HYSTART-ACK-TRAIN stopped the exponential growth of cwnd when
-cwnd = 632, and the bottleneck link was saturated (632 > 619).
-In this test, applying the patch resulted in 300 KB more data delivered.
-
-Fixes: 4e1fddc98d25 ("tcp_cubic: fix spurious Hystart ACK train detections for not-cwnd-limited flows")
-Signed-off-by: Mahdi Arghavani <ma.arghavani@yahoo.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Cc: Neal Cardwell <ncardwell@google.com>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Haibo Zhang <haibo.zhang@otago.ac.nz>
-Cc: David Eyers <david.eyers@otago.ac.nz>
-Cc: Abbas Arghavani <abbas.arghavani@mdu.se>
-Reviewed-by: Neal Cardwell <ncardwell@google.com>
-Tested-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 19e00c897d50 ("libbpf: Split BTF relocation")
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20250115100241.4171581-3-pulehui@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_cubic.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tools/lib/bpf/btf_relocate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_cubic.c b/net/ipv4/tcp_cubic.c
-index 5dbed91c61782..76c23675ae50a 100644
---- a/net/ipv4/tcp_cubic.c
-+++ b/net/ipv4/tcp_cubic.c
-@@ -392,6 +392,10 @@ static void hystart_update(struct sock *sk, u32 delay)
- 	if (after(tp->snd_una, ca->end_seq))
- 		bictcp_hystart_reset(sk);
- 
-+	/* hystart triggers when cwnd is larger than some threshold */
-+	if (tcp_snd_cwnd(tp) < hystart_low_window)
-+		return;
-+
- 	if (hystart_detect & HYSTART_ACK_TRAIN) {
- 		u32 now = bictcp_clock_us(sk);
- 
-@@ -467,9 +471,7 @@ __bpf_kfunc static void cubictcp_acked(struct sock *sk, const struct ack_sample
- 	if (ca->delay_min == 0 || ca->delay_min > delay)
- 		ca->delay_min = delay;
- 
--	/* hystart triggers when cwnd is larger than some threshold */
--	if (!ca->found && tcp_in_slow_start(tp) && hystart &&
--	    tcp_snd_cwnd(tp) >= hystart_low_window)
-+	if (!ca->found && tcp_in_slow_start(tp) && hystart)
- 		hystart_update(sk, delay);
- }
- 
+diff --git a/tools/lib/bpf/btf_relocate.c b/tools/lib/bpf/btf_relocate.c
+index 4f7399d85eab3..8ef8003480dac 100644
+--- a/tools/lib/bpf/btf_relocate.c
++++ b/tools/lib/bpf/btf_relocate.c
+@@ -212,7 +212,7 @@ static int btf_relocate_map_distilled_base(struct btf_relocate *r)
+ 	 * need to match both name and size, otherwise embedding the base
+ 	 * struct/union in the split type is invalid.
+ 	 */
+-	for (id = r->nr_dist_base_types; id < r->nr_split_types; id++) {
++	for (id = r->nr_dist_base_types; id < r->nr_dist_base_types + r->nr_split_types; id++) {
+ 		err = btf_mark_embedded_composite_type_ids(r, id);
+ 		if (err)
+ 			goto done;
 -- 
 2.39.5
 
