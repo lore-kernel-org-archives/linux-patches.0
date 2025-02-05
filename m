@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA648634E;
-	Wed,  5 Feb 2025 14:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D008634E;
+	Wed,  5 Feb 2025 14:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765564; cv=none; b=lqy7thYlXTEK1AHO0/QNMGue9kw7r+9XUl34bXQkL0CBxx3PiZYTp77roZ1xzG8SJ0cuP8W31FsfBmikJnliYAipogSed/j2Auyuf4k6sK0+QuEz/Ke9we4k/4mqef5cRoYfbGPhA7ngH8wxIS+slaoSZIfxhWRulquJulEBCm8=
+	t=1738765568; cv=none; b=ISouSmO9OsFKWvN2HsmIz55eTC3BRR6IbtLb645k42pU9NKC9b8+nv0kTmVYzJbRT45zTgocIdlCFUfW5glBOh19bsgBm/iow5I1yMEMxWFw+91ibASSxnQj1mga7xk+31bbD8jWM5xfY/pBA8ZDXa2YvE9T+VWfTvAOOCf8jjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765564; c=relaxed/simple;
-	bh=DgpNqQjjYPMvi+MRQgsPwDuTi+QI0dzxTnMS4v7vrIg=;
+	s=arc-20240116; t=1738765568; c=relaxed/simple;
+	bh=G0FBo35xLbiXRKZZl9eTnp1Xn5tARDAMhv+Xcs/go2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4zNXuKQQuwIQwfltBeM7s/Kh2dTsGcMYNAEne8WJ8pFgCN1AR3FdDxLCbSyWKjIVQjfN6qIG3RTlDflN/WXhlnO+9gIIhsqh8mvXRQw8YrOVgGdsUBOKdleDhodrzHsrsQhSq3CRl35cEQPj2PGPx84geQw+JgST7JvSEWbbk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJqX6NCB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WoIz0zwcz8qmUQrsSxsUPzRNIN5CcVpOmP5eBU40mggw5iiuDP/qIXlM2RqUrZ+89BGP5I5M7e+WGti3lfmd8ovG8fZnsE8kTVxEsrTEtL/Hwhc4K2+5MEH2NGVa+xXLV5VY6ebPaAt+untEyg47G0s4UNIHdMIVul2JgzRdhnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/h4Th5s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJqX6NCB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A467C4CED1;
-	Wed,  5 Feb 2025 14:26:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/h4Th5s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6335CC4CED1;
+	Wed,  5 Feb 2025 14:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765564;
-	bh=DgpNqQjjYPMvi+MRQgsPwDuTi+QI0dzxTnMS4v7vrIg=;
+	s=korg; t=1738765567;
+	bh=G0FBo35xLbiXRKZZl9eTnp1Xn5tARDAMhv+Xcs/go2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJqX6NCBVCD8WX7+etBinDXswqZA0kpcOn/s9FJRzzkhwRXVpZSWGif4LdgVpSC7Y
-	 d1zr5RqJUyoHWfW0OCifIpgwxtHarqh2zholueYkbpgQLpvCbnVJzGEWroVatBMrTA
-	 NVri/pNurlBgHEmYc+GX8eVeqh52W52X2FQfhOLs=
+	b=I/h4Th5saBc4/deM0cWL+dAhvijafWfGh5SQrIOOwVUrIGcPYpjgba3dKd5a3SzwJ
+	 Ac5ZwGmiPPHDZ6H7CWf7vyGovcLZQw8/+WcnZXiUVIA2LC9VYFjfH/Yx4F9aVdxeJf
+	 jGt3oevSt6QgAxUodG7uYly+0UIvLedKW3cuYC9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Roger Quadros <rogerq@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 189/623] wifi: mt76: mt7925: Fix incorrect WCID assignment for MLO
-Date: Wed,  5 Feb 2025 14:38:51 +0100
-Message-ID: <20250205134503.468627749@linuxfoundation.org>
+Subject: [PATCH 6.12 231/590] net: ethernet: ti: am65-cpsw: fix freeing IRQ in am65_cpsw_nuss_remove_tx_chns()
+Date: Wed,  5 Feb 2025 14:39:46 +0100
+Message-ID: <20250205134504.117815467@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,91 +50,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Roger Quadros <rogerq@kernel.org>
 
-[ Upstream commit 4911e4cb157cf87d5bdb3fa8e0c200032443371e ]
+[ Upstream commit 4395a44acb15850e492dd1de9ec4b6479d96bc80 ]
 
-For MLO, each link must have a corresponding WCID.
+When getting the IRQ we use k3_udma_glue_tx_get_irq() which returns
+negative error value on error. So not NULL check is not sufficient
+to deteremine if IRQ is valid. Check that IRQ is greater then zero
+to ensure it is valid.
 
-Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/20241211011926.5002-3-sean.wang@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+There is no issue at probe time but at runtime user can invoke
+.set_channels which results in the following call chain.
+am65_cpsw_set_channels()
+ am65_cpsw_nuss_update_tx_rx_chns()
+  am65_cpsw_nuss_remove_tx_chns()
+  am65_cpsw_nuss_init_tx_chns()
+
+At this point if am65_cpsw_nuss_init_tx_chns() fails due to
+k3_udma_glue_tx_get_irq() then tx_chn->irq will be set to a
+negative value.
+
+Then, at subsequent .set_channels with higher channel count we
+will attempt to free an invalid IRQ in am65_cpsw_nuss_remove_tx_chns()
+leading to a kernel warning.
+
+The issue is present in the original commit that introduced this driver,
+although there, am65_cpsw_nuss_update_tx_rx_chns() existed as
+am65_cpsw_nuss_update_tx_chns().
+
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7925/mac.c   |  2 +-
- .../net/wireless/mediatek/mt76/mt7925/main.c  | 19 ++++++++++---------
- 2 files changed, 11 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-index ddd406969061e..a095fb31e391a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -49,7 +49,7 @@ static void mt7925_mac_sta_poll(struct mt792x_dev *dev)
- 			break;
- 		mlink = list_first_entry(&sta_poll_list,
- 					 struct mt792x_link_sta, wcid.poll_list);
--		msta = container_of(mlink, struct mt792x_sta, deflink);
-+		msta = mlink->sta;
- 		spin_lock_bh(&dev->mt76.sta_poll_lock);
- 		list_del_init(&mlink->wcid.poll_list);
- 		spin_unlock_bh(&dev->mt76.sta_poll_lock);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index c45396b17a8af..cbc7a50810256 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -837,6 +837,7 @@ static int mt7925_mac_link_sta_add(struct mt76_dev *mdev,
- 	u8 link_id = link_sta->link_id;
- 	struct mt792x_link_sta *mlink;
- 	struct mt792x_sta *msta;
-+	struct mt76_wcid *wcid;
- 	int ret, idx;
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index dfca13b82bdce..b13c7e958e6b4 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -2207,7 +2207,7 @@ static void am65_cpsw_nuss_remove_tx_chns(struct am65_cpsw_common *common)
+ 	for (i = 0; i < common->tx_ch_num; i++) {
+ 		struct am65_cpsw_tx_chn *tx_chn = &common->tx_chns[i];
  
- 	msta = (struct mt792x_sta *)link_sta->sta->drv_priv;
-@@ -855,6 +856,15 @@ static int mt7925_mac_link_sta_add(struct mt76_dev *mdev,
- 	mlink->last_txs = jiffies;
- 	mlink->wcid.link_id = link_sta->link_id;
- 	mlink->wcid.link_valid = !!link_sta->sta->valid_links;
-+	mlink->sta = msta;
-+
-+	wcid = &mlink->wcid;
-+	ewma_signal_init(&wcid->rssi);
-+	rcu_assign_pointer(dev->mt76.wcid[wcid->idx], wcid);
-+	mt76_wcid_init(wcid);
-+	ewma_avg_signal_init(&mlink->avg_ack_signal);
-+	memset(mlink->airtime_ac, 0,
-+	       sizeof(msta->deflink.airtime_ac));
+-		if (tx_chn->irq)
++		if (tx_chn->irq > 0)
+ 			devm_free_irq(dev, tx_chn->irq, tx_chn);
  
- 	ret = mt76_connac_pm_wake(&dev->mphy, &dev->pm);
- 	if (ret)
-@@ -904,7 +914,6 @@ mt7925_mac_sta_add_links(struct mt792x_dev *dev, struct ieee80211_vif *vif,
- 			 struct ieee80211_sta *sta, unsigned long new_links)
- {
- 	struct mt792x_sta *msta = (struct mt792x_sta *)sta->drv_priv;
--	struct mt76_wcid *wcid;
- 	unsigned int link_id;
- 	int err = 0;
- 
-@@ -921,14 +930,6 @@ mt7925_mac_sta_add_links(struct mt792x_dev *dev, struct ieee80211_vif *vif,
- 				err = -ENOMEM;
- 				break;
- 			}
--
--			wcid = &mlink->wcid;
--			ewma_signal_init(&wcid->rssi);
--			rcu_assign_pointer(dev->mt76.wcid[wcid->idx], wcid);
--			mt76_wcid_init(wcid);
--			ewma_avg_signal_init(&mlink->avg_ack_signal);
--			memset(mlink->airtime_ac, 0,
--			       sizeof(msta->deflink.airtime_ac));
- 		}
- 
- 		msta->valid_links |= BIT(link_id);
+ 		netif_napi_del(&tx_chn->napi_tx);
 -- 
 2.39.5
 
