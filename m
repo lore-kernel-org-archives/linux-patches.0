@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0F5DF59;
-	Wed,  5 Feb 2025 15:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F01DF59;
+	Wed,  5 Feb 2025 15:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767799; cv=none; b=Wm36OSIBJMq0OwHY16CSiuMWcldEl0bxn2t3G/ZV1B637T3q35KbY6btnQ8IXdM5tBzj4hPSROozSp5mx13suJUV3eYc2LBNiM6jE3Ng+YLEwxkweVMdsSlgp0oR69zMA/0JxfsfduG428imxtXBs0HzxXyeENIwA2gVBYlGbLo=
+	t=1738767802; cv=none; b=qELV85E5q2xwVgR8vLtNKR8G2lOIrOp5VUab3zCeJEUcFj70pex91glbEmmVZqyNM6azwtZWGgMbTeHhtUm9FK4auOYmTb7LXRd04aVkz2JATbgwVv7y0ESoGxSNmUpYfHWozQ9MXIaMQzOgogMol/BBBOj7hHEgbFkchnbMgnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767799; c=relaxed/simple;
-	bh=vZF0gbK35GVxrkkQ9u2B7gU0Yp4JVcxTWp7NKdHsTw8=;
+	s=arc-20240116; t=1738767802; c=relaxed/simple;
+	bh=qgwZbc7uvK0MukDj52mvVMk72MWtfu4MGhYEq9KlokY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfM7pQdmANnD+B+sn0kdPcrsNNXxoR6czSisscQnYPc0dbqkndu3V7ZZyWmIA4xPBPeJHSyN0IimLtu19hzmsn+7wm7Mq5aaJJRDlZvK8BORwGiPkN1ax1B1iKqupfc7HGZBbv1rC2zSv1t8Xv4cZzltG+138wCUzKG8UneE5Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0idiXOYk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CgjFk8UturP8x3aUVdTHahlPiqVx9WNROgQkEljT/7uuHV0hI85S6uPnsI7Ww7d3K6o4SIRAe5gaW0C+8XwCLLnFO51EkWEl3HEtnmsFYsHo3SdtOdrstf+P5Wdd18MZhGkdH+r904JmPRQovVzalGetuA6I6dyQcJg8y5yHYdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgGF1JI/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0idiXOYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AADAC4CED1;
-	Wed,  5 Feb 2025 15:03:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgGF1JI/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76871C4CED1;
+	Wed,  5 Feb 2025 15:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767798;
-	bh=vZF0gbK35GVxrkkQ9u2B7gU0Yp4JVcxTWp7NKdHsTw8=;
+	s=korg; t=1738767802;
+	bh=qgwZbc7uvK0MukDj52mvVMk72MWtfu4MGhYEq9KlokY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0idiXOYka2/bsqcWgDklzxq7Fu7sFCxFmLCCcgmLUlI37iTTfHdZjIYvuB9W/xkZO
-	 lPzbVoKHFYgwNx2gxdkpAydP4tSnBuTRP8/2QRngOIm20ragPZMJfEwYndFm6HBAet
-	 EeIADodfbg964f9xAtr00dK+h8CKmos5heiuyv/g=
+	b=SgGF1JI/yc5YKVeSjSGgV1nkPc+Z/HwBgcRvpgfpYTfbVVWxeErcUCvp9GAZaAZ/y
+	 2bnGdv1F1KcjwJtKNcCpN1shXGIPoq7O83wc2X35Ut73NijbhYLP1xQwfDcCcNWgjT
+	 R2PtHnhVnKu0yLH3o8F2FlvivYBDEBcbFQaiTPos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	david regan <dregan@broadcom.com>,
-	William Zhang <william.zhang@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 455/623] mtd: rawnand: brcmnand: fix status read of brcmnand_waitfunc
-Date: Wed,  5 Feb 2025 14:43:17 +0100
-Message-ID: <20250205134513.623369563@linuxfoundation.org>
+Subject: [PATCH 6.12 511/590] Bluetooth: btnxpuart: Fix glitches seen in dual A2DP streaming
+Date: Wed,  5 Feb 2025 14:44:26 +0100
+Message-ID: <20250205134514.817827293@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: david regan <dregan@broadcom.com>
+From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
 
-[ Upstream commit 03271ea36ea7a58d30a4bde182eb2a0d46220467 ]
+[ Upstream commit 7de119bb79a63f6a1959b83117a98734914fb0b0 ]
 
-This change fixes an issue where an error return value may be mistakenly
-used as NAND status.
+This fixes a regression caused by previous commit for fixing truncated
+ACL data, which is causing some intermittent glitches when running two
+A2DP streams.
 
-Fixes: f504551b7f15 ("mtd: rawnand: Propagate error and simplify ternary operators for brcmstb_nand_wait_for_completion()")
-Signed-off-by: david regan <dregan@broadcom.com>
-Reviewed-by: William Zhang <william.zhang@broadcom.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+serdev_device_write_buf() is the root cause of the glitch, which is
+reverted, and the TX work will continue to write until the queue is empty.
+
+This change fixes both issues. No A2DP streaming glitches or truncated
+ACL data issue observed.
+
+Fixes: 8023dd220425 ("Bluetooth: btnxpuart: Fix driver sending truncated data")
+Fixes: 689ca16e5232 ("Bluetooth: NXP: Add protocol support for NXP Bluetooth chipsets")
+Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/bluetooth/btnxpuart.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/brcmnand/brcmnand.c b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-index 9c253a511e45a..fea5b61199563 100644
---- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -2342,6 +2342,11 @@ static int brcmnand_write(struct mtd_info *mtd, struct nand_chip *chip,
- 		brcmnand_send_cmd(host, CMD_PROGRAM_PAGE);
- 		status = brcmnand_waitfunc(chip);
+diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
+index a028984f27829..84a1ad61c4ad5 100644
+--- a/drivers/bluetooth/btnxpuart.c
++++ b/drivers/bluetooth/btnxpuart.c
+@@ -1336,13 +1336,12 @@ static void btnxpuart_tx_work(struct work_struct *work)
  
-+		if (status < 0) {
-+			ret = status;
-+			goto out;
-+		}
-+
- 		if (status & NAND_STATUS_FAIL) {
- 			dev_info(ctrl->dev, "program failed at %llx\n",
- 				(unsigned long long)addr);
+ 	while ((skb = nxp_dequeue(nxpdev))) {
+ 		len = serdev_device_write_buf(serdev, skb->data, skb->len);
+-		serdev_device_wait_until_sent(serdev, 0);
+ 		hdev->stat.byte_tx += len;
+ 
+ 		skb_pull(skb, len);
+ 		if (skb->len > 0) {
+ 			skb_queue_head(&nxpdev->txq, skb);
+-			break;
++			continue;
+ 		}
+ 
+ 		switch (hci_skb_pkt_type(skb)) {
 -- 
 2.39.5
 
