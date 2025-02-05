@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C4F15198D;
-	Wed,  5 Feb 2025 14:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8F6F510;
+	Wed,  5 Feb 2025 14:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764204; cv=none; b=GYxvStUe/NdnbWcRNBEwYAuM2lfjac3yTIPriJo3zCFwnvTN2gufjW8cH3ET2l1vV+Q+BtqQ2VW/ooi+faTSdKymekYgvssF4R/koZdrJIuospjRp2s+IQWgLQHXZHgTLbJKwWW4d+If5Z/cOJt+K0SQ4kvcpX5LbpSX8mP19Vc=
+	t=1738764207; cv=none; b=ohtUXZ+Z7otWkS678J10nyYjh/sqE1/tCGe262tZFUdLmH81gz4enxjWSbZG1wx2xbrd18D4/t0peHrAIX1l+Dg8dxT0VZC6NI7JcjLMD/IX0RdEt6PyhxAivtHwsucFxtlkBc2bcWhOccua2ANNB1vYZkm4NEtf59W8lXQf02o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764204; c=relaxed/simple;
-	bh=BK0asVENmBEi0OVNJYM0Hl5/vQ6yntgBwwt+Z6YXXog=;
+	s=arc-20240116; t=1738764207; c=relaxed/simple;
+	bh=EecEOO7JDUG0i326G63NVdgJGRJ2kj+TirL3azTdglQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ci2v0xIw4U+EIyiO3RkzJoGwNj41nToNgkiigRWY9qag/1wL4Ogay74aCUbnIQVOOgHpVOv7zi0ghchW8CX0DqKFQNYW4HD2qG7FM8VGNiv6kqiANJzXjXfzt3OmnVPavxVfpK+EOWpO3KgSrluTiy56vCCxcpURhtXWUbk04JA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eo6NQVmW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e1qG30fdXj6nqNQ/woSdKWPaDRt1YdgWafru05iWGm5l3UHuWOUHqxjjanHN0ArtmmH5GycTWj7UuvF7JCXVDE/ihy1n7T2AKyyLlg3Bcay4UUzsqFQsR8zD3J6I+s+bIWijDG/HCxVVgBXoUGSiZ3U4WpJrKA3b8g0DR3BRXdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TwJ6dVrM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eo6NQVmW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02701C4CED6;
-	Wed,  5 Feb 2025 14:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TwJ6dVrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFB6C4CED6;
+	Wed,  5 Feb 2025 14:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764203;
-	bh=BK0asVENmBEi0OVNJYM0Hl5/vQ6yntgBwwt+Z6YXXog=;
+	s=korg; t=1738764206;
+	bh=EecEOO7JDUG0i326G63NVdgJGRJ2kj+TirL3azTdglQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eo6NQVmWbIRXmPcXbavTKpfEetSTgLzQaf42fp9OaxYCPBuzZe83mMyR/VcShFXyO
-	 jXs1caj22sUS0xGfjP7ZBlIeyWtrdrKRsHOXWJ0fyBgNympTABvV+Jql6U55SCogEC
-	 zXecRBcsIsOQF8o9Y9OdCOya9hTRmbVTp4AxRcko=
+	b=TwJ6dVrMKgg/WzjQ35deqklHtzIYgZ6iL11kq5JZTgqmhWih4gdphUMCrVb8kr9rN
+	 pysXV8gmM7J0CCJz//7/U6sq50z2OariVh2h+sqgw07kboSdqy+nnFRGv/UkaLam28
+	 FZl8RHUpnpakpQTYhpMyw7cJYNNeVXRIIl9/j3O8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 134/393] wifi: cfg80211: Handle specific BSSID in 6GHz scanning
-Date: Wed,  5 Feb 2025 14:40:53 +0100
-Message-ID: <20250205134425.424608815@linuxfoundation.org>
+Subject: [PATCH 6.6 149/393] netfilter: nft_flow_offload: update tcp state flags under lock
+Date: Wed,  5 Feb 2025 14:41:08 +0100
+Message-ID: <20250205134426.004088712@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -52,82 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 0fca7784b7a14d4ede64f479662afb98876ec7f8 ]
+[ Upstream commit 7a4b61406395291ffb7220a10e8951a9a8684819 ]
 
-When the scan parameters for a 6GHz scan specify a unicast
-BSSID address, and the corresponding AP is found in the scan
-list, add a corresponding entry in the collocated AP list,
-so this AP would be directly probed even if it was not
-advertised as a collocated AP.
+The conntrack entry is already public, there is a small chance that another
+CPU is handling a packet in reply direction and racing with the tcp state
+update.
 
-This is needed for handling a scan request that is intended
-for a ML probe flow, where user space can requests a scan
-to retrieve information for other links in the AP MLD.
+Move this under ct spinlock.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230928172905.54b954bc02ad.I1c072793d3d77a4c8fbbc64b4db5cce1bbb00382@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 1a0d24775cde ("wifi: cfg80211: adjust allocation of colocated AP data")
+This is done once, when ct is about to be offloaded, so this should
+not result in a noticeable performance hit.
+
+Fixes: 8437a6209f76 ("netfilter: nft_flow_offload: set liberal tracking mode for tcp")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ net/netfilter/nft_flow_offload.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 4fc6279750ea1..c76ac1959fe8d 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -831,10 +831,47 @@ static int cfg80211_scan_6ghz(struct cfg80211_registered_device *rdev)
- 		list_for_each_entry(intbss, &rdev->bss_list, list) {
- 			struct cfg80211_bss *res = &intbss->pub;
- 			const struct cfg80211_bss_ies *ies;
-+			const struct element *ssid_elem;
-+			struct cfg80211_colocated_ap *entry;
-+			u32 s_ssid_tmp;
-+			int ret;
+diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
+index 397351fa4d5f8..5a3d685420420 100644
+--- a/net/netfilter/nft_flow_offload.c
++++ b/net/netfilter/nft_flow_offload.c
+@@ -288,6 +288,15 @@ static bool nft_flow_offload_skip(struct sk_buff *skb, int family)
+ 	return false;
+ }
  
- 			ies = rcu_access_pointer(res->ies);
- 			count += cfg80211_parse_colocated_ap(ies,
- 							     &coloc_ap_list);
++static void flow_offload_ct_tcp(struct nf_conn *ct)
++{
++	/* conntrack will not see all packets, disable tcp window validation. */
++	spin_lock_bh(&ct->lock);
++	ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
++	ct->proto.tcp.seen[1].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
++	spin_unlock_bh(&ct->lock);
++}
 +
-+			/* In case the scan request specified a specific BSSID
-+			 * and the BSS is found and operating on 6GHz band then
-+			 * add this AP to the collocated APs list.
-+			 * This is relevant for ML probe requests when the lower
-+			 * band APs have not been discovered.
-+			 */
-+			if (is_broadcast_ether_addr(rdev_req->bssid) ||
-+			    !ether_addr_equal(rdev_req->bssid, res->bssid) ||
-+			    res->channel->band != NL80211_BAND_6GHZ)
-+				continue;
-+
-+			ret = cfg80211_calc_short_ssid(ies, &ssid_elem,
-+						       &s_ssid_tmp);
-+			if (ret)
-+				continue;
-+
-+			entry = kzalloc(sizeof(*entry) + IEEE80211_MAX_SSID_LEN,
-+					GFP_ATOMIC);
-+
-+			if (!entry)
-+				continue;
-+
-+			memcpy(entry->bssid, res->bssid, ETH_ALEN);
-+			entry->short_ssid = s_ssid_tmp;
-+			memcpy(entry->ssid, ssid_elem->data,
-+			       ssid_elem->datalen);
-+			entry->ssid_len = ssid_elem->datalen;
-+			entry->short_ssid_valid = true;
-+			entry->center_freq = res->channel->center_freq;
-+
-+			list_add_tail(&entry->list, &coloc_ap_list);
-+			count++;
- 		}
- 		spin_unlock_bh(&rdev->bss_lock);
- 	}
+ static void nft_flow_offload_eval(const struct nft_expr *expr,
+ 				  struct nft_regs *regs,
+ 				  const struct nft_pktinfo *pkt)
+@@ -355,11 +364,8 @@ static void nft_flow_offload_eval(const struct nft_expr *expr,
+ 		goto err_flow_alloc;
+ 
+ 	flow_offload_route_init(flow, &route);
+-
+-	if (tcph) {
+-		ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
+-		ct->proto.tcp.seen[1].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
+-	}
++	if (tcph)
++		flow_offload_ct_tcp(ct);
+ 
+ 	ret = flow_offload_add(flowtable, flow);
+ 	if (ret < 0)
 -- 
 2.39.5
 
