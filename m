@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE72D14A088;
-	Wed,  5 Feb 2025 13:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D443C127E18;
+	Wed,  5 Feb 2025 13:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763243; cv=none; b=qHF/sjiKow/JHYZ0Q+aIoUIifJ/4i7+GeX9Howrzu0rfwK1hJA1YO3A1x8mjDepgyo0V2FYPe6QxTLCcj9aocWVsBD2Btj4cwU+1k4NIA2AqXMyrvyahFsjkXh1iuwO3ZmrYAQQ+tbMD/Tr+3Fr9sJ2fDu6GHQAV2v0YICFhyWY=
+	t=1738763246; cv=none; b=H52gil/wiqK3YSgCne6AJ4vm+3yehTsRjClzPDhsCPH91RMWCdHoQWNUcEKgzhFD0ibIjOqxwy3ORbU+Mo1m2wb3jcNoJbY5Axh6x/HhSxChoAkpb6AVH6puEX0KNIPyncA0Z8PQQSQJps6CfDdQl2X3o9ZTUtG/a3SCCq8JRDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763243; c=relaxed/simple;
-	bh=qM2HUZ3uVi8YAuUP1i6s27fEc4FUxBwLphn/++hWH1Q=;
+	s=arc-20240116; t=1738763246; c=relaxed/simple;
+	bh=RoCYumhay88xy+XIRxGLvRC8x+lzZbuKFXj37k5UBfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=og5I0XWdh6kt5zdyXKbkWvffJczjH9PDsswmvegpfSrGPGxH884crZsdWqA1ViGHuzuQVFkOgEBlE1lg+7GO9RxBmh6mSQPW+f9WGjUOOeupxWn/u4onXZYzW24bf9CAs3oTLVV6K+2hfqkMGUeXNLLqjTX/X3wGOVyhz7gyvuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fq8UobOo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eVqiGRNpyjel77opUqLXS0EmDpiNBxW/telOnF3OLU7KnCyfHQV+u21xLW1BfPmMN80IcAD8A6OaowkURkOWa2CEaMDWAfTF4/AdC9LHzH5aX74Uu5TUWjYf80C6Yi/eCbgI6Ip2dgBQYI2HMj6A9hcRdSjWwTWFA+hUPIjfusI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XIQy3oy8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fq8UobOo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E26C4CEE2;
-	Wed,  5 Feb 2025 13:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XIQy3oy8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42CE9C4CEDD;
+	Wed,  5 Feb 2025 13:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763243;
-	bh=qM2HUZ3uVi8YAuUP1i6s27fEc4FUxBwLphn/++hWH1Q=;
+	s=korg; t=1738763246;
+	bh=RoCYumhay88xy+XIRxGLvRC8x+lzZbuKFXj37k5UBfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fq8UobOo76o6j6JsfZL2x90eaxORuZPfYi5vIvbneTiDQZcZi9S+9XVSu8FM3rBtC
-	 a/1S9LV/do4si+YnrgXNfbsZr03MdS1ZF32DhCoHHB1pRkQSR+u8BgeN5JRoZ03k3B
-	 1FxLvgtyVJeSKQbk1S4rrM6/M6EsUFhuvbsonw6A=
+	b=XIQy3oy892Wi0Im8PMqNziRg/eG2zJaAkDoolbLwTzTbkuPm07zpl4VawijTtE4Nn
+	 967RyRboRPUq/c/tjwqnRKTyyY/NZgJdWFcRmw+VDYN+Mvle9LZoyFksGmKE/5kPId
+	 E1siixUiXoJQXyTLe+zoH7jq298Cb8qFfr/W2mkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Thomas Gleixner <tglx@linutronix.de>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Swapnil Sapkal <swapnil.sapkal@amd.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 018/393] sched/fair: Fix value reported by hot tasks pulled in /proc/schedstat
-Date: Wed,  5 Feb 2025 14:38:57 +0100
-Message-ID: <20250205134420.995382377@linuxfoundation.org>
+Subject: [PATCH 6.6 019/393] sched/topology: Rename DIE domain to PKG
+Date: Wed,  5 Feb 2025 14:38:58 +0100
+Message-ID: <20250205134421.033475781@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -54,92 +59,142 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit a430d99e349026d53e2557b7b22bd2ebd61fe12a ]
+[ Upstream commit f577cd57bfaa889cf0718e30e92c08c7f78c9d85 ]
 
-In /proc/schedstat, lb_hot_gained reports the number hot tasks pulled
-during load balance. This value is incremented in can_migrate_task()
-if the task is migratable and hot. After incrementing the value,
-load balancer can still decide not to migrate this task leading to wrong
-accounting. Fix this by incrementing stats when hot tasks are detached.
-This issue only exists in detach_tasks() where we can decide to not
-migrate hot task even if it is migratable. However, in detach_one_task(),
-we migrate it unconditionally.
+While reworking the x86 topology code Thomas tripped over creating a 'DIE' domain
+for the package mask. :-)
 
-[Swapnil: Handled the case where nr_failed_migrations_hot was not accounted properly and wrote commit log]
+Since these names are CONFIG_SCHED_DEBUG=y only, rename them to make the
+name less ambiguous.
 
-Fixes: d31980846f96 ("sched: Move up affinity check to mitigate useless redoing overhead")
+[ Shrikanth Hegde: rename on s390 as well. ]
+[ Valentin Schneider: also rename it in the comments. ]
+[ mingo: port to recent kernels & find all remaining occurances. ]
+
+Reported-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reported-by: "Gautham R. Shenoy" <gautham.shenoy@amd.com>
-Not-yet-signed-off-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Swapnil Sapkal <swapnil.sapkal@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241220063224.17767-2-swapnil.sapkal@amd.com
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Valentin Schneider <vschneid@redhat.com>
+Acked-by: Mel Gorman <mgorman@suse.de>
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Acked-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Acked-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lore.kernel.org/r/20230712141056.GI3100107@hirez.programming.kicks-ass.net
+Stable-dep-of: e1bc02646527 ("x86/topology: Use x86_sched_itmt_flags for PKG domain unconditionally")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched.h |  1 +
- kernel/sched/fair.c   | 17 +++++++++++++----
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ arch/powerpc/kernel/smp.c   | 4 ++--
+ arch/s390/kernel/topology.c | 2 +-
+ arch/x86/kernel/smpboot.c   | 4 ++--
+ kernel/sched/fair.c         | 2 +-
+ kernel/sched/topology.c     | 8 ++++----
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index d4f9d82c69e0b..2af0a8859d647 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -896,6 +896,7 @@ struct task_struct {
- 	unsigned			sched_reset_on_fork:1;
- 	unsigned			sched_contributes_to_load:1;
- 	unsigned			sched_migrated:1;
-+	unsigned			sched_task_hot:1;
+diff --git a/arch/powerpc/kernel/smp.c b/arch/powerpc/kernel/smp.c
+index 5826f5108a124..4e4870031265c 100644
+--- a/arch/powerpc/kernel/smp.c
++++ b/arch/powerpc/kernel/smp.c
+@@ -1051,7 +1051,7 @@ static struct sched_domain_topology_level powerpc_topology[] = {
+ #endif
+ 	{ shared_cache_mask, powerpc_shared_cache_flags, SD_INIT_NAME(CACHE) },
+ 	{ cpu_mc_mask, SD_INIT_NAME(MC) },
+-	{ cpu_cpu_mask, SD_INIT_NAME(DIE) },
++	{ cpu_cpu_mask, SD_INIT_NAME(PKG) },
+ 	{ NULL, },
+ };
  
- 	/* Force alignment to the next boundary: */
- 	unsigned			:0;
+@@ -1595,7 +1595,7 @@ static void add_cpu_to_masks(int cpu)
+ 	/* Skip all CPUs already part of current CPU core mask */
+ 	cpumask_andnot(mask, cpu_online_mask, cpu_core_mask(cpu));
+ 
+-	/* If chip_id is -1; limit the cpu_core_mask to within DIE*/
++	/* If chip_id is -1; limit the cpu_core_mask to within PKG */
+ 	if (chip_id == -1)
+ 		cpumask_and(mask, mask, cpu_cpu_mask(cpu));
+ 
+diff --git a/arch/s390/kernel/topology.c b/arch/s390/kernel/topology.c
+index 68adf1de8888b..66bda6a8f918c 100644
+--- a/arch/s390/kernel/topology.c
++++ b/arch/s390/kernel/topology.c
+@@ -522,7 +522,7 @@ static struct sched_domain_topology_level s390_topology[] = {
+ 	{ cpu_coregroup_mask, cpu_core_flags, SD_INIT_NAME(MC) },
+ 	{ cpu_book_mask, SD_INIT_NAME(BOOK) },
+ 	{ cpu_drawer_mask, SD_INIT_NAME(DRAWER) },
+-	{ cpu_cpu_mask, SD_INIT_NAME(DIE) },
++	{ cpu_cpu_mask, SD_INIT_NAME(PKG) },
+ 	{ NULL, },
+ };
+ 
+diff --git a/arch/x86/kernel/smpboot.c b/arch/x86/kernel/smpboot.c
+index ce77dac9a0202..e4781e7496f6f 100644
+--- a/arch/x86/kernel/smpboot.c
++++ b/arch/x86/kernel/smpboot.c
+@@ -641,13 +641,13 @@ static void __init build_sched_topology(void)
+ 	};
+ #endif
+ 	/*
+-	 * When there is NUMA topology inside the package skip the DIE domain
++	 * When there is NUMA topology inside the package skip the PKG domain
+ 	 * since the NUMA domains will auto-magically create the right spanning
+ 	 * domains based on the SLIT.
+ 	 */
+ 	if (!x86_has_numa_in_package) {
+ 		x86_topology[i++] = (struct sched_domain_topology_level){
+-			cpu_cpu_mask, x86_die_flags, SD_INIT_NAME(DIE)
++			cpu_cpu_mask, x86_die_flags, SD_INIT_NAME(PKG)
+ 		};
+ 	}
+ 
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 3b2cfdb8d788d..cd9b411706b52 100644
+index cd9b411706b52..726fa69c4d88b 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -8921,6 +8921,8 @@ int can_migrate_task(struct task_struct *p, struct lb_env *env)
- 	int tsk_cache_hot;
- 
- 	lockdep_assert_rq_held(env->src_rq);
-+	if (p->sched_task_hot)
-+		p->sched_task_hot = 0;
- 
- 	/*
- 	 * We do not migrate tasks that are:
-@@ -8993,10 +8995,8 @@ int can_migrate_task(struct task_struct *p, struct lb_env *env)
- 
- 	if (tsk_cache_hot <= 0 ||
- 	    env->sd->nr_balance_failed > env->sd->cache_nice_tries) {
--		if (tsk_cache_hot == 1) {
--			schedstat_inc(env->sd->lb_hot_gained[env->idle]);
--			schedstat_inc(p->stats.nr_forced_migrations);
--		}
-+		if (tsk_cache_hot == 1)
-+			p->sched_task_hot = 1;
- 		return 1;
- 	}
- 
-@@ -9011,6 +9011,12 @@ static void detach_task(struct task_struct *p, struct lb_env *env)
- {
- 	lockdep_assert_rq_held(env->src_rq);
- 
-+	if (p->sched_task_hot) {
-+		p->sched_task_hot = 0;
-+		schedstat_inc(env->sd->lb_hot_gained[env->idle]);
-+		schedstat_inc(p->stats.nr_forced_migrations);
-+	}
-+
- 	deactivate_task(env->src_rq, p, DEQUEUE_NOCLOCK);
- 	set_task_cpu(p, env->dst_cpu);
- }
-@@ -9171,6 +9177,9 @@ static int detach_tasks(struct lb_env *env)
- 
- 		continue;
- next:
-+		if (p->sched_task_hot)
-+			schedstat_inc(p->stats.nr_failed_migrations_hot);
-+
- 		list_move(&p->se.group_node, tasks);
- 	}
+@@ -9782,7 +9782,7 @@ static bool sched_use_asym_prio(struct sched_domain *sd, int cpu)
+  * can only do it if @group is an SMT group and has exactly on busy CPU. Larger
+  * imbalances in the number of CPUS are dealt with in find_busiest_group().
+  *
+- * If we are balancing load within an SMT core, or at DIE domain level, always
++ * If we are balancing load within an SMT core, or at PKG domain level, always
+  * proceed.
+  *
+  * Return: true if @env::dst_cpu can do with asym_packing load balance. False
+diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
+index 3a13cecf17740..2ed884bb36213 100644
+--- a/kernel/sched/topology.c
++++ b/kernel/sched/topology.c
+@@ -1117,7 +1117,7 @@ build_overlap_sched_groups(struct sched_domain *sd, int cpu)
+  *
+  *  - Simultaneous multithreading (SMT)
+  *  - Multi-Core Cache (MC)
+- *  - Package (DIE)
++ *  - Package (PKG)
+  *
+  * Where the last one more or less denotes everything up to a NUMA node.
+  *
+@@ -1139,13 +1139,13 @@ build_overlap_sched_groups(struct sched_domain *sd, int cpu)
+  *
+  * CPU   0   1   2   3   4   5   6   7
+  *
+- * DIE  [                             ]
++ * PKG  [                             ]
+  * MC   [             ] [             ]
+  * SMT  [     ] [     ] [     ] [     ]
+  *
+  *  - or -
+  *
+- * DIE  0-7 0-7 0-7 0-7 0-7 0-7 0-7 0-7
++ * PKG  0-7 0-7 0-7 0-7 0-7 0-7 0-7 0-7
+  * MC	0-3 0-3 0-3 0-3 4-7 4-7 4-7 4-7
+  * SMT  0-1 0-1 2-3 2-3 4-5 4-5 6-7 6-7
+  *
+@@ -1679,7 +1679,7 @@ static struct sched_domain_topology_level default_topology[] = {
+ #ifdef CONFIG_SCHED_MC
+ 	{ cpu_coregroup_mask, cpu_core_flags, SD_INIT_NAME(MC) },
+ #endif
+-	{ cpu_cpu_mask, SD_INIT_NAME(DIE) },
++	{ cpu_cpu_mask, SD_INIT_NAME(PKG) },
+ 	{ NULL, },
+ };
  
 -- 
 2.39.5
