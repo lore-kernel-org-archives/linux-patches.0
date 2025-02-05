@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13D2197A8B;
-	Wed,  5 Feb 2025 14:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF3117BEC5;
+	Wed,  5 Feb 2025 14:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767133; cv=none; b=qTm5bzlMBgWdcKx7sG4t/BWzxd7v2DfMEUjpIl0rRVbNDJ6DNyorNcFPSNI8mo+5FB706ytUgBXrMUAcLJJSCLHrxWYO1SSm4Ll6/ANyTumjW6S+LytZ9uN98q9jdZf6DLKs02RszjkGejuuEX0nBjaM2EWd2x/uCP2iSk12soM=
+	t=1738767137; cv=none; b=sSjBbcPvBaBIOK9n96Z01w0rH16QIHpeg4TlspYxuu4doGQZbNLnfMjZL52suHyk41VPE9b+rPA+JIeObnbQb4AK1KJMp0IJgYeUdxqh7+JOh8/HTlOCxjJSYMyXLwBtUY8FZnjiSSAHWrM1f2EDpUK3OTEd/83JNC2XeeZVK7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767133; c=relaxed/simple;
-	bh=QhQ+eEXMwR7EV5aF8SxvBHJpoBNKlyISa0Kt2GNhn3k=;
+	s=arc-20240116; t=1738767137; c=relaxed/simple;
+	bh=T57sr4pV1tPnGoRWa4VLHE3fbTiFyF31UhwTsUz7Hcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZxsGHCgo1E0jzNboBBkSUp/Hlp7aOjYbGM+sjP9Kh1Ux6xFZlUqpNzJot9dhJ8eaw8kSQXw+2OR7tddMEjA7fNUwZJhzq4c9GXPd9VikxApI8n3w1HOiRw3FhBvL9JBDUhJJyMrSoge5fjjsWgRKKWuMf2XZgzGVlAQGdssw0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPbY9zo7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aZU1Hg8AwvuXAzrWVDe1IftF4uZiTsVOKxyF8rZTivZr+1fDwuMzOD5lWcZkyfqHIPzErIn286LTRbAenZY/VUPuObH8SXOoSMvWFy9VryxC3QHRI+WXRKyYD+zN3xiryrPLvjQBnWV8EQq1tqweEyLpqWhbaLCQWGy9m1UMFuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bh+J/e82; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPbY9zo7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34978C4CED1;
-	Wed,  5 Feb 2025 14:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bh+J/e82"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7317C4CED1;
+	Wed,  5 Feb 2025 14:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767133;
-	bh=QhQ+eEXMwR7EV5aF8SxvBHJpoBNKlyISa0Kt2GNhn3k=;
+	s=korg; t=1738767137;
+	bh=T57sr4pV1tPnGoRWa4VLHE3fbTiFyF31UhwTsUz7Hcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cPbY9zo7AHlcH8bLkM0sa47JUkmRFd5RJ3J3rP7jXSBi9JqBV1eg36KU2ksLy/uJ6
-	 cSdh2I8HjUpR4jg9TGyTOHlt1oJq9BqLMoyEuVUG8CYzxgHRToCJW2Q2mePoVJCJgZ
-	 E8/qSzgAfDmmzZNFQ0o9axhAlKK9Gg+jsUurt/AA=
+	b=bh+J/e82e9d7s9/mM4IBKTDYbUVXoBgwCmp9G2EOE9p863kH/dDXT796O7Kf0oB2C
+	 G95vt9agfLA1CAFoZDgLQFBi08XBn/0A1vVFFGiLh4bxi2zmYq7Oap9b8aU66NFdh4
+	 q54ZsTboEG/hClRWJ8nOX0MYuqI2241UTWcq8D1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 361/623] RDMA/srp: Fix error handling in srp_add_port
-Date: Wed,  5 Feb 2025 14:41:43 +0100
-Message-ID: <20250205134510.033350581@linuxfoundation.org>
+Subject: [PATCH 6.12 411/590] media: marvell: Add check for clk_enable()
+Date: Wed,  5 Feb 2025 14:42:46 +0100
+Message-ID: <20250205134510.991630426@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit a3cbf68c69611188cd304229e346bffdabfd4277 ]
+[ Upstream commit 11f68d2ba2e1521a608af773bf788e8cfa260f68 ]
 
-As comment of device_add() says, if device_add() succeeds, you should
-call device_del() when you want to get rid of it. If device_add() has
-not succeeded, use only put_device() to drop the reference count.
+Add check for the return value of clk_enable() to guarantee the success.
 
-Add a put_device() call before returning from the function to decrement
-reference count for cleanup.
-
-Found by code review.
-
-Fixes: c8e4c2397655 ("RDMA/srp: Rework the srp_add_port() error path")
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Link: https://patch.msgid.link/20241217075538.2909996-1-make_ruc2021@163.com
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 81a409bfd551 ("media: marvell-ccic: provide a clock for the sensor")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+[Sakari Ailus: Fix spelling in commit message.]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srp/ib_srp.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/platform/marvell/mcam-core.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
-index 2916e77f589b8..7289ae0b83ace 100644
---- a/drivers/infiniband/ulp/srp/ib_srp.c
-+++ b/drivers/infiniband/ulp/srp/ib_srp.c
-@@ -3978,7 +3978,6 @@ static struct srp_host *srp_add_port(struct srp_device *device, u32 port)
- 	return host;
+diff --git a/drivers/media/platform/marvell/mcam-core.c b/drivers/media/platform/marvell/mcam-core.c
+index c81593c969e05..a62c3a484cb3f 100644
+--- a/drivers/media/platform/marvell/mcam-core.c
++++ b/drivers/media/platform/marvell/mcam-core.c
+@@ -935,7 +935,12 @@ static int mclk_enable(struct clk_hw *hw)
+ 	ret = pm_runtime_resume_and_get(cam->dev);
+ 	if (ret < 0)
+ 		return ret;
+-	clk_enable(cam->clk[0]);
++	ret = clk_enable(cam->clk[0]);
++	if (ret) {
++		pm_runtime_put(cam->dev);
++		return ret;
++	}
++
+ 	mcam_reg_write(cam, REG_CLKCTRL, (mclk_src << 29) | mclk_div);
+ 	mcam_ctlr_power_up(cam);
  
- put_host:
--	device_del(&host->dev);
- 	put_device(&host->dev);
- 	return NULL;
- }
 -- 
 2.39.5
 
