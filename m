@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C24522A;
-	Wed,  5 Feb 2025 14:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110A9522A;
+	Wed,  5 Feb 2025 14:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765666; cv=none; b=XszOiHUzN8ZEhc9n07W/BGCNMzZM2jEqkT29dkAHF62aN9zgx4F5F4H4sf9s0l92xNCNZyz95DEbMGKozTGoGyJNkIXO+LyaFgbMNQr/CpzA1x37sixoWbLcVqOxNFVlBPu+aNiKvtja6jpHRh2rgjdMPhniverMi3ZMKq/l7sw=
+	t=1738765669; cv=none; b=dMQQHVRLJA6wLcKhQHoOnEVKCjsryGM/k+p49ZnKJzO/kScY7KykzdpE8WovPPbZSOCbMTYdE8sOZ3JO6zOnTzIPAQ847w6+SrZ7uEg1Kp35NTPmn4YrzxBYpziuShOfgYIVC761cNCXmdBZSowVMxqKV5j9PLTwyRYYveMBLXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765666; c=relaxed/simple;
-	bh=36PrKp+gUZ14vbqybkYa5G2pAmzxon3VnViepLb04BU=;
+	s=arc-20240116; t=1738765669; c=relaxed/simple;
+	bh=xYZUICL9PfYkA30X2LLJKsc7Fs3Wyg79TjgXwfUldjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B9aeESLX7IrV/mJ3edR3V5M0VebhW+omzhwjcxTUVxGo99EtFoCAKXG+0WoKSFAb2YO6Wgs/0IFcIzeLmQzeJh839HOly1abZB4ajjGDPWL1EQuQAFpeLWad7e3kjciRNvSx3B4UdBvXkVbonZ7Dc3NxjldBj4ZaLwNenRCCMzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bT64XF9e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RfmrJdYsy8ETnLzJHD9ZUfwDVj3xBjPOucxEscfQBKBtsEm5sy62Djl4m+WDaByoU1AhjhpYY/ayECLv6XD9lI3Heni9/0mzbSKtBwLvQcDXtCXK/lMQDqQUJzxmNELF2rfMgz3C+X73ah31mI83L8x8arPz0md8KuMAJDc8CUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xv6L+xUP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bT64XF9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D6FC4CED1;
-	Wed,  5 Feb 2025 14:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xv6L+xUP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C85C4CED1;
+	Wed,  5 Feb 2025 14:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765665;
-	bh=36PrKp+gUZ14vbqybkYa5G2pAmzxon3VnViepLb04BU=;
+	s=korg; t=1738765668;
+	bh=xYZUICL9PfYkA30X2LLJKsc7Fs3Wyg79TjgXwfUldjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bT64XF9e3qY6UdWz5Fra8O3rl+ajqzRICfpxC/Bl7Eve9dLOIZRvkYOl9e1D8VF6F
-	 WHVprRazYHYM6PDFZW9m9g8evKAHxio8LB8A2jKj8oRMuWJpO1gbZaVYN05lB9hv1R
-	 U7y0nwGsi8qDFyLFobBhlZOF/pyyLnWI7wX01BQ8=
+	b=Xv6L+xUPXtCZMnFEyMCTzuYH+C08lADPncGVo1AGmMYIYXCacMDyLtGvMuUKYemAr
+	 fR0NOftcjJpal7Il55/6YGosE/GznSKVcZuUlz65tA+BYFe7OSzcbNuLVfJG+CwD05
+	 iGL9SsiUJJl6uJH166XAePvLe4pIt1kHxKemxXFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Leogrande <leogrande@google.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 241/590] tools/testing/selftests/bpf/test_tc_tunnel.sh: Fix wait for server bind
-Date: Wed,  5 Feb 2025 14:39:56 +0100
-Message-ID: <20250205134504.503690125@linuxfoundation.org>
+Subject: [PATCH 6.6 288/393] media: mipi-csis: Add check for clk_enable()
+Date: Wed,  5 Feb 2025 14:43:27 +0100
+Message-ID: <20250205134431.331736479@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marco Leogrande <leogrande@google.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit e2f0791124a1b6ca8d570110cbd487969d9d41ef ]
+[ Upstream commit 125ad1aeec77eb55273b420be6894b284a01e4b6 ]
 
-Commit f803bcf9208a ("selftests/bpf: Prevent client connect before
-server bind in test_tc_tunnel.sh") added code that waits for the
-netcat server to start before the netcat client attempts to connect to
-it. However, not all calls to 'server_listen' were guarded.
+Add check for the return value of clk_enable() to gurantee the success.
 
-This patch adds the existing 'wait_for_port' guard after the remaining
-call to 'server_listen'.
-
-Fixes: f803bcf9208a ("selftests/bpf: Prevent client connect before server bind in test_tc_tunnel.sh")
-Signed-off-by: Marco Leogrande <leogrande@google.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://lore.kernel.org/r/20241202204530.1143448-1-leogrande@google.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: b5f1220d587d ("[media] v4l: Add v4l2 subdev driver for S5P/EXYNOS4 MIPI-CSI receivers")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_tc_tunnel.sh | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/samsung/exynos4-is/mipi-csis.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_tc_tunnel.sh b/tools/testing/selftests/bpf/test_tc_tunnel.sh
-index 7989ec6084545..cb55a908bb0d7 100755
---- a/tools/testing/selftests/bpf/test_tc_tunnel.sh
-+++ b/tools/testing/selftests/bpf/test_tc_tunnel.sh
-@@ -305,6 +305,7 @@ else
- 	client_connect
- 	verify_data
- 	server_listen
-+	wait_for_port ${port} ${netcat_opt}
- fi
+diff --git a/drivers/media/platform/samsung/exynos4-is/mipi-csis.c b/drivers/media/platform/samsung/exynos4-is/mipi-csis.c
+index 686ca8753ba22..87c6fb88ab920 100644
+--- a/drivers/media/platform/samsung/exynos4-is/mipi-csis.c
++++ b/drivers/media/platform/samsung/exynos4-is/mipi-csis.c
+@@ -940,13 +940,19 @@ static int s5pcsis_pm_resume(struct device *dev, bool runtime)
+ 					       state->supplies);
+ 			goto unlock;
+ 		}
+-		clk_enable(state->clock[CSIS_CLK_GATE]);
++		ret = clk_enable(state->clock[CSIS_CLK_GATE]);
++		if (ret) {
++			phy_power_off(state->phy);
++			regulator_bulk_disable(CSIS_NUM_SUPPLIES,
++					       state->supplies);
++			goto unlock;
++		}
+ 	}
+ 	if (state->flags & ST_STREAMING)
+ 		s5pcsis_start_stream(state);
  
- # serverside, use BPF for decap
+ 	state->flags &= ~ST_SUSPENDED;
+- unlock:
++unlock:
+ 	mutex_unlock(&state->lock);
+ 	return ret ? -EAGAIN : 0;
+ }
 -- 
 2.39.5
 
