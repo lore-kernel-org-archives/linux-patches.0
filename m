@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4617318FC9D;
-	Wed,  5 Feb 2025 14:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F4B1632DA;
+	Wed,  5 Feb 2025 14:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766530; cv=none; b=JKg/rjkirzffxNfFK5SF98MKzL5dDs1RIaZJydWUx+hse8mm/nrx56s0n5dWe56jkYz4swtfEpdcFmNqNxyFpDsDS7OqllRMuFn0Hb0s5Am5iaURtM8dtqn0T8sZxmsRRlWRBhzO4TLfevxSmWzyilQ+s85mIooM/7lapiGBdnA=
+	t=1738766533; cv=none; b=nDJ7o7CShfxLgwBWWfhO7d4VYxY2UpvM+tSe6OMm+qqLcTU+sYoP0tQvRrPhRfbNm5ipsCUFO7ma1B6Mxy4GRMCG/zndsVqgwRkVPAeGb0b0nMjqTmRCYXUOjEDq5YkJ3aGtkDg0wGJk16Gn3lD5pTtDimcnJm8yj54nc/1LTPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766530; c=relaxed/simple;
-	bh=hicJiGn3MjPq/y8xAtS5Lt5Oxn3MSisgWoxXGNn49iU=;
+	s=arc-20240116; t=1738766533; c=relaxed/simple;
+	bh=qrjxr/XRl+TMG34k1gVer+29MJ8GjPruEJWDR03pCw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aovcK4IaBmfhPUnKtHEXFb7n/YgOfhVM03wUDcGrr4RPaEyaaTPVMWLEdv2TdLzW/wxJZeFiXjSl1n/xrrahQxWGcUIP0vkpuo8Li0Nkmw45KXthQeOPPjbsp+ohcJCrgKzrkvU6Pw6xpnIeEgr6B0/pVIgspOWIMExF7MTE4sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XSMxcBb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J5rolpTs6UzyAPVhYW0Hd6F7aR6wfPrQgMYB5+YJfcRyOyiMubomn9Fm9czG/iFRFyIVG5GJswRIRjrpou4UOcCQN9QoFSqFvpimOjLWUBR4/s0ws8uh2SUbFctLpX+ZQ+0idPBb0g+JM+b9vQrtfjXJgFa9lnfg+2cexkfLmKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kr3r6z8k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XSMxcBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B98C4CEDD;
-	Wed,  5 Feb 2025 14:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kr3r6z8k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CD5C4CEE3;
+	Wed,  5 Feb 2025 14:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766530;
-	bh=hicJiGn3MjPq/y8xAtS5Lt5Oxn3MSisgWoxXGNn49iU=;
+	s=korg; t=1738766533;
+	bh=qrjxr/XRl+TMG34k1gVer+29MJ8GjPruEJWDR03pCw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2XSMxcBbkbd4AW3F56UZaICmeM+AWO6pkgWjH0SFLnQ9DkD2HFO+6wGS02q2QMKFk
-	 RF0LYUjsreU8FOXhq8CxlBD6cfJbNzz7DQsBbwYel7NnqJ6fxOMiVpemo9dJV5qW0t
-	 Ke65hxxsPErLUHbJQ7oVdPF6q1gbOACaUKlG79fk=
+	b=kr3r6z8koL6JOFeH3s0jwd76toN03T4tdLvcQYAEh/zNVkyIENZZFdflxzoVLy/vq
+	 oZ/Qeyt1/c8LnNpfwPnsXsl7QZD744aN8/rzP8yqemBJrx9VUflkqHNvlyFw5ddeWJ
+	 ZN6i4UubcFMJvJEJi36bc7UKoCnaXokukZQ4FPSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 332/590] arm64: dts: mediatek: mt8195: Remove suspend-breaking reset from pcie1
-Date: Wed,  5 Feb 2025 14:41:27 +0100
-Message-ID: <20250205134507.978057236@linuxfoundation.org>
+	Noam Rathaus <noamr@ssd-disclosure.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.6 371/393] netfilter: nf_tables: reject mismatching sum of field_len with set key length
+Date: Wed,  5 Feb 2025 14:44:50 +0100
+Message-ID: <20250205134434.492086366@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,58 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 3d7fdd8e38aafd4858935df2392762c1ab8fb40f ]
+commit 1b9335a8000fb70742f7db10af314104b6ace220 upstream.
 
-The MAC reset for PCIe port 1 on MT8195 when asserted during suspend
-causes the system to hang during resume with the following error (with
-no_console_suspend enabled):
+The field length description provides the length of each separated key
+field in the concatenation, each field gets rounded up to 32-bits to
+calculate the pipapo rule width from pipapo_init(). The set key length
+provides the total size of the key aligned to 32-bits.
 
-  mtk-pcie-gen3 112f8000.pcie: PCIe link down, current LTSSM state: detect.quiet (0x0)
-  mtk-pcie-gen3 112f8000.pcie: PM: dpm_run_callback(): genpd_resume_noirq+0x0/0x24 returns -110
-  mtk-pcie-gen3 112f8000.pcie: PM: failed to resume noirq: error -110
+Register-based arithmetics still allows for combining mismatching set
+key length and field length description, eg. set key length 10 and field
+description [ 5, 4 ] leading to pipapo width of 12.
 
-This issue is specific to MT8195. On MT8192 with the PCIe reset,
-MT8192_INFRA_RST4_PCIE_TOP_SWRST, added to the DT node, the issue is not
-observed.
-
-Since without the reset, the PCIe controller and WiFi card connected to
-it, work just as well, remove the reset to allow the system to suspend
-and resume properly.
-
-Fixes: ecc0af6a3fe6 ("arm64: dts: mt8195: Add pcie and pcie phy nodes")
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/r/20241218-mt8195-pcie1-reset-suspend-fix-v1-1-1c021dda42a6@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 3ce67e3793f4 ("netfilter: nf_tables: do not allow mismatch field size and set key length")
+Reported-by: Noam Rathaus <noamr@ssd-disclosure.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 3 ---
- 1 file changed, 3 deletions(-)
+ net/netfilter/nf_tables_api.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index ade685ed2190b..04e41b557d448 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -1611,9 +1611,6 @@
- 			phy-names = "pcie-phy";
- 			power-domains = <&spm MT8195_POWER_DOMAIN_PCIE_MAC_P1>;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4875,7 +4875,7 @@ static int nft_set_desc_concat_parse(con
+ static int nft_set_desc_concat(struct nft_set_desc *desc,
+ 			       const struct nlattr *nla)
+ {
+-	u32 num_regs = 0, key_num_regs = 0;
++	u32 len = 0, num_regs;
+ 	struct nlattr *attr;
+ 	int rem, err, i;
  
--			resets = <&infracfg_ao MT8195_INFRA_RST2_PCIE_P1_SWRST>;
--			reset-names = "mac";
--
- 			#interrupt-cells = <1>;
- 			interrupt-map-mask = <0 0 0 7>;
- 			interrupt-map = <0 0 0 1 &pcie_intc1 0>,
--- 
-2.39.5
-
+@@ -4889,12 +4889,12 @@ static int nft_set_desc_concat(struct nf
+ 	}
+ 
+ 	for (i = 0; i < desc->field_count; i++)
+-		num_regs += DIV_ROUND_UP(desc->field_len[i], sizeof(u32));
++		len += round_up(desc->field_len[i], sizeof(u32));
+ 
+-	key_num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
+-	if (key_num_regs != num_regs)
++	if (len != desc->klen)
+ 		return -EINVAL;
+ 
++	num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
+ 	if (num_regs > NFT_REG32_COUNT)
+ 		return -E2BIG;
+ 
 
 
