@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AFB376;
-	Wed,  5 Feb 2025 15:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE44618DF6B;
+	Wed,  5 Feb 2025 15:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767822; cv=none; b=GvjQA2/VkpqxiVthVyajemd6jaVdXL49KrOpdKF9Y/ZS17hEPpXJH2w/heTiUIRnyG9UhvLnMFr58PTagFNZhv64hbtAFiZD1iWPxFvOc2ta5mUS7hvas6I/X8a4Xw4Nl2UAuMUD9/qIXIErGDj81HAfzBvRzMQMpIzCWPCpKrI=
+	t=1738767825; cv=none; b=iVbzkYOH1fmiDWstqCoHyit0F88JUIajsNDngykhaYfUbYfMDPIIUFjU7zwWpO/1Ucid925EPo5HQXQaY1CoXLYkop5rxDaYvfHiA17oh96DYqv3U0ig15KPQ76KpeDsJvG0u8KG+KVQmd4ghvC+lriEU+T2uFJvKGKGX4m1nfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767822; c=relaxed/simple;
-	bh=L58wPtmvvMhySqaO9ghqMYaC7jSvcH25HLCccPkX7Rs=;
+	s=arc-20240116; t=1738767825; c=relaxed/simple;
+	bh=AumU0/Z1edGf5bHCxwOKQZkeyJ8oMpMeV8qcBS2nbFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dn+qGCsSQTAqCpbnG+GJba9xV+ld8JQu26Yf8vlemInIbS+LwogsBuTPKNxmt2HprHbuFdbga6e/7gPqfyWWeLuUZ5k7bK+WbV/e4ObHrlgzNbOCoqwRc/EqK/MzJ3ssbWObYc6x3g/asQCdmB9+YgWZ/cTRbHomALTGoWnVSg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPDXxveA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qw2pVf38xrqR09Y0WL810lBCjpEsZkvx/G0h1R2KigDdIu4aViL3YUEOYL3gnPlH+hD+ZouqpXwuy7/PKR1bgHLWAoXq4RGIjUQbZE/bPlrVXx+rRbBy2SpEJpyhIwGAKobhPpx6VkJdqDEnBBc7fDorEaSv8gW89aiN+yKtPxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8p+Dq7t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPDXxveA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D38C4CED1;
-	Wed,  5 Feb 2025 15:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8p+Dq7t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A927C4CED6;
+	Wed,  5 Feb 2025 15:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767822;
-	bh=L58wPtmvvMhySqaO9ghqMYaC7jSvcH25HLCccPkX7Rs=;
+	s=korg; t=1738767825;
+	bh=AumU0/Z1edGf5bHCxwOKQZkeyJ8oMpMeV8qcBS2nbFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CPDXxveAyaZeArZZYV2YLS6T4aVHHG/4XVESfMOLUBs9V//AjzKIVjGO7+Q6UfKlg
-	 lps5Z2BU/Zd8ivlVQt+wkmFKFnJLpOobRF/joP6vxIV8dh1TWHuf8DdE5Wu1K5ihes
-	 lTX7ypBi1h/X1pRzDKyieNm3ohYNHHcWhtTkPNWQ=
+	b=t8p+Dq7to2Ar3ZrNfoSl95FKDinH3CjDwVVhb7x060afgZuZVI3l6S6Q3wmlwF3Qe
+	 idY837dbtAdSrsWmy0wrrakXjeuWXGV4lM6HnZyxQ60ADDepAsb4/PR74iFPJkBqj7
+	 kOxLH5THZpSqteZF34gpzCMFQe4nrNIaqLCAt5i8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Simon Horman <horms@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 458/623] watchdog: rti_wdt: Fix an OF node leak in rti_wdt_probe()
-Date: Wed,  5 Feb 2025 14:43:20 +0100
-Message-ID: <20250205134513.736218035@linuxfoundation.org>
+Subject: [PATCH 6.12 514/590] bgmac: reduce max frame size to support just MTU 1500
+Date: Wed,  5 Feb 2025 14:44:29 +0100
+Message-ID: <20250205134514.930989104@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,46 +47,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 143981aa63f33d469a55a55fd9fb81cd90109672 ]
+[ Upstream commit 752e5fcc2e77358936d36ef8e522d6439372e201 ]
 
-rti_wdt_probe() does not release the OF node reference obtained by
-of_parse_phandle(). Add a of_node_put() call.
+bgmac allocates new replacement buffer before handling each received
+frame. Allocating & DMA-preparing 9724 B each time consumes a lot of CPU
+time. Ideally bgmac should just respect currently set MTU but it isn't
+the case right now. For now just revert back to the old limited frame
+size.
 
-This was found by an experimental verification tool that I am
-developing. Due to the lack of the actual device, no runtime test was
-able to be performed.
+This change bumps NAT masquerade speed by ~95%.
 
-Fixes: f20ca595ae23 ("watchdog:rit_wdt: Add support for WDIOF_CARDRESET")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20250105111718.4184192-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Since commit 8218f62c9c9b ("mm: page_frag: use initial zero offset for
+page_frag_alloc_align()"), the bgmac driver fails to open its network
+interface successfully and runs out of memory in the following call
+stack:
+
+bgmac_open
+  -> bgmac_dma_init
+    -> bgmac_dma_rx_skb_for_slot
+      -> netdev_alloc_frag
+
+BGMAC_RX_ALLOC_SIZE = 10048 and PAGE_FRAG_CACHE_MAX_SIZE = 32768.
+
+Eventually we land into __page_frag_alloc_align() with the following
+parameters across multiple successive calls:
+
+__page_frag_alloc_align: fragsz=10048, align_mask=-1, size=32768, offset=0
+__page_frag_alloc_align: fragsz=10048, align_mask=-1, size=32768, offset=10048
+__page_frag_alloc_align: fragsz=10048, align_mask=-1, size=32768, offset=20096
+__page_frag_alloc_align: fragsz=10048, align_mask=-1, size=32768, offset=30144
+
+So in that case we do indeed have offset + fragsz (40192) > size (32768)
+and so we would eventually return NULL. Reverting to the older 1500
+bytes MTU allows the network driver to be usable again.
+
+Fixes: 8c7da63978f1 ("bgmac: configure MTU and add support for frames beyond 8192 byte size")
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+[florian: expand commit message about recent commits]
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20250127175159.1788246-1-florian.fainelli@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/rti_wdt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/broadcom/bgmac.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/watchdog/rti_wdt.c b/drivers/watchdog/rti_wdt.c
-index 58c9445c0f885..255ece133576b 100644
---- a/drivers/watchdog/rti_wdt.c
-+++ b/drivers/watchdog/rti_wdt.c
-@@ -301,6 +301,7 @@ static int rti_wdt_probe(struct platform_device *pdev)
- 	node = of_parse_phandle(pdev->dev.of_node, "memory-region", 0);
- 	if (node) {
- 		ret = of_address_to_resource(node, 0, &res);
-+		of_node_put(node);
- 		if (ret) {
- 			dev_err(dev, "No memory address assigned to the region.\n");
- 			goto err_iomap;
+diff --git a/drivers/net/ethernet/broadcom/bgmac.h b/drivers/net/ethernet/broadcom/bgmac.h
+index d73ef262991d6..6fee9a41839c0 100644
+--- a/drivers/net/ethernet/broadcom/bgmac.h
++++ b/drivers/net/ethernet/broadcom/bgmac.h
+@@ -328,8 +328,7 @@
+ #define BGMAC_RX_FRAME_OFFSET			30		/* There are 2 unused bytes between header and real data */
+ #define BGMAC_RX_BUF_OFFSET			(NET_SKB_PAD + NET_IP_ALIGN - \
+ 						 BGMAC_RX_FRAME_OFFSET)
+-/* Jumbo frame size with FCS */
+-#define BGMAC_RX_MAX_FRAME_SIZE			9724
++#define BGMAC_RX_MAX_FRAME_SIZE			1536
+ #define BGMAC_RX_BUF_SIZE			(BGMAC_RX_FRAME_OFFSET + BGMAC_RX_MAX_FRAME_SIZE)
+ #define BGMAC_RX_ALLOC_SIZE			(SKB_DATA_ALIGN(BGMAC_RX_BUF_SIZE + BGMAC_RX_BUF_OFFSET) + \
+ 						 SKB_DATA_ALIGN(sizeof(struct skb_shared_info)))
 -- 
 2.39.5
 
