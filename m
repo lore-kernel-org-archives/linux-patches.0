@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69B615854F;
-	Wed,  5 Feb 2025 14:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D22157465;
+	Wed,  5 Feb 2025 14:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765388; cv=none; b=lbfyjAoBIDkvHFzqwYpIR4Tj37UHPmEIulXMoIP6crTR7TdepUJXrnIra8JKj8aEEB1oj9nGmzQZ3lokwa4y6mNNSA9tBb3SBNpVE/6a7x7UnplW8/J3koGAmelbwiEp9Zn4JtS8V5ktocn3PzGAgIQlHgbnAxvsEEbDA8NXSCU=
+	t=1738765391; cv=none; b=NdXXHw/5YdGfleIXxVFwfl0o8hSRfDYJGdCsSpAI6pgncdVORlmlaPo6I6qlUxOba18/sB+AKELZOCK/AkgiU+DQ+xEPD1eVmikjVuWZ5Vg9PDuJC9eQwj14SMHQ7qMnaNKYcIN0/YcKggd83bFhn/VJir4dqoa3c2tTItuTf14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765388; c=relaxed/simple;
-	bh=UVlInEnrdqm80bLsYXMhS8LyQTIqsFIO+6sP+OLQTAM=;
+	s=arc-20240116; t=1738765391; c=relaxed/simple;
+	bh=k8jtNXA7H2SFWG/ZDPjM5nO3Axkk58yBlVQN1VTA1ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uP0xOt8kp/bePFRsUqd0/ovPfh3+sxZgJiozVlD3J+v2xCkVyP4qpeq+GNRaNCkDGQXgYGDud/RvqELrGPYwdGdW3wj6Z9VSQ5i//O0mfdC/XFLY5ZoPBHv3sc/wAD1L61HmhJd1sTiqrTvvFE5THc+qW6dtjKYhgmqg7QC/7ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpUQGDh3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t1cWGuuKj6PwVskb4pSZ/WFafcykIWbJ8SH/Vw2pdpqfOwZ/g6kuUrSd6Z4tNMThmlLrul48EnYQ745AQYMgKwzlCqSqNeD/V3bxRHdyKtr3xLiBSCozrns2MmB+OrKRzRDL7vkZZX4l44IGgliOxZJVC4FzIRP6F/W0QX44lZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LG/0yymO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpUQGDh3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED01DC4CED6;
-	Wed,  5 Feb 2025 14:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LG/0yymO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA22C4CED1;
+	Wed,  5 Feb 2025 14:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765387;
-	bh=UVlInEnrdqm80bLsYXMhS8LyQTIqsFIO+6sP+OLQTAM=;
+	s=korg; t=1738765390;
+	bh=k8jtNXA7H2SFWG/ZDPjM5nO3Axkk58yBlVQN1VTA1ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XpUQGDh3jPtdE1Opw4sXt4o3JyUsK66u8LZCkArN0qWoPKL4AJLOwNaZDUoN8F16Z
-	 w0xcve7ckxZ1icUm8X8cqxOulJ2yFasDVwdM4RJeY48rUWFy0WGJRC6VrhKNRTMAyi
-	 1Kgtk7yqXJHq4eS9FDeEgLQob59drwWZVimgU3nM=
+	b=LG/0yymOd1OAG4kFe4jgM18AxSwsBSaYVOWmfe9xonMsSESgZYYOXOVVzhfRDdmRu
+	 K9aCl5xzRyAMoOUtZFKr10IdCx69GfZzPEg9OY/WW1OGNTWkmSvNxBv2GQxT7KrQ9f
+	 gcGxpWNHaJDofDJmGx71uN4oe9TR7uRAn0tArkZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Drew Fustini <dfustini@tenstorrent.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 263/393] arm64: dts: qcom: sc7180: fix psci power domain node names
-Date: Wed,  5 Feb 2025 14:43:02 +0100
-Message-ID: <20250205134430.375699426@linuxfoundation.org>
+Subject: [PATCH 6.13 174/623] clk: thead: Add CLK_IGNORE_UNUSED to fix TH1520 boot
+Date: Wed,  5 Feb 2025 14:38:36 +0100
+Message-ID: <20250205134502.892095063@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,98 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Drew Fustini <dfustini@tenstorrent.com>
 
-[ Upstream commit 092febd32a99800902f865ed86b83314faa9c7e4 ]
+[ Upstream commit 037705e94bf6e1810b7f9dc077d0e23292229e74 ]
 
-Rename the psci power domain node names to match the bindings.
+Add the CLK_IGNORE_UNUSED flag to apb_pclk, cpu2peri_x2h_clk,
+perisys_apb2_hclk and perisys_apb3_hclk.
 
-This Fixes:
-sc7180-acer-aspire1.dts: psci: 'cpu-cluster0', 'cpu0', 'cpu1', 'cpu2', 'cpu3', 'cpu4', 'cpu5', 'cpu6', 'cpu7' do not match any of the regexes: '^power-domain-', 'pinctrl-[0-9]+'
+Without this flag, the boot hangs after "clk: Disabling unused clocks"
+unless clk_ignore_unused is in the kernel cmdline.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241230-topic-misc-dt-fixes-v4-5-1e6880e9dda3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: ae81b69fd2b1 ("clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks")
+Signed-off-by: Drew Fustini <dfustini@tenstorrent.com>
+Link: https://lore.kernel.org/r/20250113-th1520-clk_ignore_unused-v1-2-0b08fb813438@tenstorrent.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/clk/thead/clk-th1520-ap.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 5db7b3bce368b..7758136d71d64 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -580,55 +580,55 @@
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
+diff --git a/drivers/clk/thead/clk-th1520-ap.c b/drivers/clk/thead/clk-th1520-ap.c
+index c95b6e26ca531..d02a18fed8a85 100644
+--- a/drivers/clk/thead/clk-th1520-ap.c
++++ b/drivers/clk/thead/clk-th1520-ap.c
+@@ -657,7 +657,7 @@ static struct ccu_div apb_pclk = {
+ 		.hw.init	= CLK_HW_INIT_PARENTS_DATA("apb-pclk",
+ 						      apb_parents,
+ 						      &ccu_div_ops,
+-						      0),
++						      CLK_IGNORE_UNUSED),
+ 	},
+ };
  
--		cpu_pd0: cpu0 {
-+		cpu_pd0: power-domain-cpu0 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd1: cpu1 {
-+		cpu_pd1: power-domain-cpu1 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd2: cpu2 {
-+		cpu_pd2: power-domain-cpu2 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd3: cpu3 {
-+		cpu_pd3: power-domain-cpu3 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd4: cpu4 {
-+		cpu_pd4: power-domain-cpu4 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd5: cpu5 {
-+		cpu_pd5: power-domain-cpu5 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&little_cpu_sleep_0 &little_cpu_sleep_1>;
- 		};
- 
--		cpu_pd6: cpu6 {
-+		cpu_pd6: power-domain-cpu6 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
- 		};
- 
--		cpu_pd7: cpu7 {
-+		cpu_pd7: power-domain-cpu7 {
- 			#power-domain-cells = <0>;
- 			power-domains = <&cluster_pd>;
- 			domain-idle-states = <&big_cpu_sleep_0 &big_cpu_sleep_1>;
- 		};
- 
--		cluster_pd: cpu-cluster0 {
-+		cluster_pd: power-domain-cluster {
- 			#power-domain-cells = <0>;
- 			domain-idle-states = <&cluster_sleep_pc
- 					      &cluster_sleep_cx_ret
+@@ -794,13 +794,13 @@ static CCU_GATE(CLK_X2X_CPUSYS, x2x_cpusys_clk, "x2x-cpusys", axi4_cpusys2_aclk_
+ 		0x134, BIT(7), 0);
+ static CCU_GATE(CLK_CPU2AON_X2H, cpu2aon_x2h_clk, "cpu2aon-x2h", axi_aclk_pd, 0x138, BIT(8), 0);
+ static CCU_GATE(CLK_CPU2PERI_X2H, cpu2peri_x2h_clk, "cpu2peri-x2h", axi4_cpusys2_aclk_pd,
+-		0x140, BIT(9), 0);
++		0x140, BIT(9), CLK_IGNORE_UNUSED);
+ static CCU_GATE(CLK_PERISYS_APB1_HCLK, perisys_apb1_hclk, "perisys-apb1-hclk", perisys_ahb_hclk_pd,
+ 		0x150, BIT(9), 0);
+ static CCU_GATE(CLK_PERISYS_APB2_HCLK, perisys_apb2_hclk, "perisys-apb2-hclk", perisys_ahb_hclk_pd,
+-		0x150, BIT(10), 0);
++		0x150, BIT(10), CLK_IGNORE_UNUSED);
+ static CCU_GATE(CLK_PERISYS_APB3_HCLK, perisys_apb3_hclk, "perisys-apb3-hclk", perisys_ahb_hclk_pd,
+-		0x150, BIT(11), 0);
++		0x150, BIT(11), CLK_IGNORE_UNUSED);
+ static CCU_GATE(CLK_PERISYS_APB4_HCLK, perisys_apb4_hclk, "perisys-apb4-hclk", perisys_ahb_hclk_pd,
+ 		0x150, BIT(12), 0);
+ static CCU_GATE(CLK_NPU_AXI, npu_axi_clk, "npu-axi", axi_aclk_pd, 0x1c8, BIT(5), 0);
 -- 
 2.39.5
 
