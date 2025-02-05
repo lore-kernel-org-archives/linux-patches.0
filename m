@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC419F510;
-	Wed,  5 Feb 2025 14:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AEBF510;
+	Wed,  5 Feb 2025 14:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764259; cv=none; b=A7dUhYnSnLDOmXmWFwEmKSFQBVaX+eh27eQD5TrmgQD/4s6nKcSEp0wPDvpezyRCmgFLFFtwjn6mrCEG1s5nIJLTiHBmSo1PdCLeeL2yt4ocUvRbG004bQETX99zdcMQDeaRE7DQdNYsxvuIZX0nEJU46A9iUYNmSkVRp1G+82U=
+	t=1738764262; cv=none; b=dUpLyFgV+8PdY0WI2C7xfHT2s3HMesarrkjMgpbSTdDleU6ld8F7g1LCDrMCQEXpnOevoAalnn1NT+O3jfp2WFOyuY3CtixY31qZHBq4AwwqgUHMJEWcziWvdBu5ffynXF2ycsFj/Ehe66ZaaDyMdbxwsYRBMwRH7oAWvmkh8XM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764259; c=relaxed/simple;
-	bh=ZWlnPNPBhGhgQmd4ZnrB1snKeFppyRIo6dLBkAX56Hg=;
+	s=arc-20240116; t=1738764262; c=relaxed/simple;
+	bh=GWh3eWiKRkxW6EPiKWq1pkpvnf0Pu9i5C/03uhAXgI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mUCYjGd9tkddXHO0tW73AtzdBy2Ogkt1l8H3vq/EmTaduFpJU9LYY5bwt5NoIOJJ09z+qJn+rKnB6Ji0NIsLNhVWLzMLNzKFhRugQSjDyAY0VLQO9hLjyqGBXeF+Z4o4N+eTU3RySGNRCMMOxh4e6PMIuIMjDlEFUckuoSyZsuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2jcWUth; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HM5HgCYckOPl3+jga3Srmo0Y660aueMTosnAFADxEWZK1mBG+JGX8ZVQp3RrkgV31993cE4S9k7qGmTy/7utyLpJg173b+8N89cUAGgxJxvnnip9N4sr9r8USbzaGVevZzs9H4somkj147OQ/r8VffnMmQOSO+dSvq2OwWUTcZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIvEZuNJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2jcWUth"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C59DC4CED1;
-	Wed,  5 Feb 2025 14:04:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIvEZuNJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD71DC4CED1;
+	Wed,  5 Feb 2025 14:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764258;
-	bh=ZWlnPNPBhGhgQmd4ZnrB1snKeFppyRIo6dLBkAX56Hg=;
+	s=korg; t=1738764262;
+	bh=GWh3eWiKRkxW6EPiKWq1pkpvnf0Pu9i5C/03uhAXgI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L2jcWUthSkQJgp56xlZi2/O2wuQ72Tp21By8b8ly58MqHmzrQ+yIVoMPDpu575vz5
-	 BGFCBB8VrZlJhsZpvzuzjZOWuezyO4JETuY92srcwfiMYUk1sEOd1PAlonWBxMz1dB
-	 Owr+K9x9QzKNGDlF1CAKn2ufllGQNCFpCWj62jXE=
+	b=qIvEZuNJ1c2tZMfRulljKcA0qfFAbEMYeR+FOe31gH6yzEUXyJSYnnIA4KkJKGwik
+	 cKHjHcFRbjjNqf7CcWfRkcgyTMa7ODDhsBQtpBvdPSbX7OSEnv5aixpdIXGuh0xyi3
+	 Nl7POzAPd41RL0hvEjCRTTJE8RmdJ+XoMHRGTNLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zichen Xie <zichenxie0106@gmail.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/590] wifi: cfg80211: tests: Fix potential NULL dereference in test_cfg80211_parse_colocated_ap()
-Date: Wed,  5 Feb 2025 14:37:19 +0100
-Message-ID: <20250205134458.466166514@linuxfoundation.org>
+Subject: [PATCH 6.6 135/393] wifi: cfg80211: adjust allocation of colocated AP data
+Date: Wed,  5 Feb 2025 14:40:54 +0100
+Message-ID: <20250205134425.464079599@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zichen Xie <zichenxie0106@gmail.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 13c4f7714c6a1ecf748a2f22099447c14fe6ed8c ]
+[ Upstream commit 1a0d24775cdee2b8dc14bfa4f4418c930ab1ac57 ]
 
-kunit_kzalloc() may return NULL, dereferencing it without NULL check may
-lead to NULL dereference.
-Add a NULL check for ies.
+In 'cfg80211_scan_6ghz()', an instances of 'struct cfg80211_colocated_ap'
+are allocated as if they would have 'ssid' as trailing VLA member. Since
+this is not so, extra IEEE80211_MAX_SSID_LEN bytes are not needed.
+Briefly tested with KUnit.
 
-Fixes: 45d43937a44c ("wifi: cfg80211: add a kunit test for 6 GHz colocated AP parsing")
-Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
-Link: https://patch.msgid.link/20241115063835.5888-1-zichenxie0106@gmail.com
+Fixes: c8cb5b854b40 ("nl80211/cfg80211: support 6 GHz scanning")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://patch.msgid.link/20250113155417.552587-1-dmantipov@yandex.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/tests/scan.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/wireless/scan.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/wireless/tests/scan.c b/net/wireless/tests/scan.c
-index 9f458be716595..79a99cf5e8922 100644
---- a/net/wireless/tests/scan.c
-+++ b/net/wireless/tests/scan.c
-@@ -810,6 +810,8 @@ static void test_cfg80211_parse_colocated_ap(struct kunit *test)
- 		skb_put_data(input, "123", 3);
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index c76ac1959fe8d..ce622a287abc6 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -856,9 +856,7 @@ static int cfg80211_scan_6ghz(struct cfg80211_registered_device *rdev)
+ 			if (ret)
+ 				continue;
  
- 	ies = kunit_kzalloc(test, struct_size(ies, data, input->len), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_NULL(test, ies);
-+
- 	ies->len = input->len;
- 	memcpy(ies->data, input->data, input->len);
+-			entry = kzalloc(sizeof(*entry) + IEEE80211_MAX_SSID_LEN,
+-					GFP_ATOMIC);
+-
++			entry = kzalloc(sizeof(*entry), GFP_ATOMIC);
+ 			if (!entry)
+ 				continue;
  
 -- 
 2.39.5
