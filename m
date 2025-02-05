@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF3C155725;
-	Wed,  5 Feb 2025 14:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708B7155725;
+	Wed,  5 Feb 2025 14:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767205; cv=none; b=CpbdstnD9lUB14WexuQbOAc/P3AruQk0/hMeZKojXe3xyKLM2do7+ZPM0PxeDpJKLv6/5/MKgF7rMHowTevEKq1MZ1HBtG4wXUYUiCfMNaPV4sFJWJV71V0qwKUpdENspyOMy7SDBD4uny8bFTBzaC6BvcYfV6qDVDNMwWoWh7k=
+	t=1738767208; cv=none; b=IXUeSJg2CdgMYVtq2KL+NfNdzbgt9R5CB4l0NQ8CX2XiNWRC7b9CGKzwIZGKn0i4JSKMCdXbsbOyxWICF0GE/cxT1QF45YXcUxR93D66aQlcm+ufJoqc7p0+mb76dC7csH6DMBnPRHJ4EaLqvJBdB0x4gI2CuZ++yhQjivJ17Bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767205; c=relaxed/simple;
-	bh=dFsj5OZnsqLwzKSrFGKoG1AFXkMsNuhaCJ5jm+RycpY=;
+	s=arc-20240116; t=1738767208; c=relaxed/simple;
+	bh=t27KmhzJMaQs1M80wqTHgBWKQT5ambGQtkR3X9812IE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tv/Mqb3Vz4KVUdmo0jlYVkh/Nxkf4m3//7u9/CeiGmmkmAVYsdtohl1xAUQsoQCiJa48FD1sUWUoMsXchjfXZUCjylV0+cKtXvMXWtGYzbff8CK/jJzk9lIx9lVj+LmjH3p5UbT6I2yf7ZVkBOZhU3lxICFMX7qJ6E6+iBpmdEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSY38P1L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZVE0votXxEj/IO+aAapFLZmNKwfGcdz5xnHsj6kTlH49Ks3cCpEoP4eXfpgIsDULt+eoHHCg06e6fjX7WdckLrNrU1ffJdRHukcCo/zHxXBmaARlzOFRwQweIFErNEjlKAHEaEb24chR+Nlsuurqrhbfv9xtzAU11VMTZoVJ8aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWLJfk/s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSY38P1L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD16C4CED1;
-	Wed,  5 Feb 2025 14:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWLJfk/s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0927C4CED1;
+	Wed,  5 Feb 2025 14:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767205;
-	bh=dFsj5OZnsqLwzKSrFGKoG1AFXkMsNuhaCJ5jm+RycpY=;
+	s=korg; t=1738767208;
+	bh=t27KmhzJMaQs1M80wqTHgBWKQT5ambGQtkR3X9812IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSY38P1LoocqHBO75Ex/whTYbd65n5EuaQhLGwhGpDG1zfVhZZLd0DqHrKSwzo79e
-	 yWUmBWMD8UE80exKVmSUdMv3I78m093xZEVuqeN57DqCItlYs9nrQscssN/Xa4v7k2
-	 GM+p7aUtXGLIP0DMrzopPA+wlMnOk5Y0yCvT1WXc=
+	b=bWLJfk/s10gDFcZ8aNzXZw4oBhe7UQp5kse949TrViunmUnIj51gMSFqH9RKd1eVQ
+	 xyIkxcK/jrsMknYPIfwcbVucp6A24hh14PyaXStVJoCa6XK/VsOptcMzWMeBCJHcwS
+	 +eDmxOl0+8opIU9aSKYbW3VVzKUayeRDcNHbLWew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Desnes Nunes <desnesn@redhat.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Ross Burton <ross.burton@arm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 423/590] media: dvb-usb-v2: af9035: fix ISO C90 compilation error on af9035_i2c_master_xfer
-Date: Wed,  5 Feb 2025 14:42:58 +0100
-Message-ID: <20250205134511.449522210@linuxfoundation.org>
+Subject: [PATCH 6.13 372/623] arm64: defconfig: remove obsolete CONFIG_SM_DISPCC_8650
+Date: Wed,  5 Feb 2025 14:41:54 +0100
+Message-ID: <20250205134510.452017520@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +49,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Desnes Nunes <desnesn@redhat.com>
+From: Ross Burton <ross.burton@arm.com>
 
-[ Upstream commit c36b9ad1a8add3c114e25fe167efa217a813b0c7 ]
+[ Upstream commit 9be2923ff9641d6491b8ea43791382966505435f ]
 
-This fixes a 'ISO C90 forbids mixed declarations and code' compilation
-error on af9035_i2c_master_xfer, which is caused by the sanity check added
-on user controlled msg[i], before declaring the demodulator register.
+This option was removed from the Kconfig in commit 802b83205519 ("clk:
+qcom: fold dispcc-sm8650 info dispcc-sm8550") but it was not removed
+from the defconfig.
 
-Fixes: 7bf744f2de0a ("media: dvb-usb-v2: af9035: Fix null-ptr-deref in af9035_i2c_master_xfer")
-Signed-off-by: Desnes Nunes <desnesn@redhat.com>
-Link: https://lore.kernel.org/r/20240919172755.196907-1-desnesn@redhat.com
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: 802b83205519 ("clk: qcom: fold dispcc-sm8650 info dispcc-sm8550")
+Signed-off-by: Ross Burton <ross.burton@arm.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241213-clkmaster-v1-1-dcbf7fad37b1@arm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb-v2/af9035.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ arch/arm64/configs/defconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb-v2/af9035.c b/drivers/media/usb/dvb-usb-v2/af9035.c
-index 0d2c42819d390..218f712f56b17 100644
---- a/drivers/media/usb/dvb-usb-v2/af9035.c
-+++ b/drivers/media/usb/dvb-usb-v2/af9035.c
-@@ -322,13 +322,16 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
- 			ret = -EOPNOTSUPP;
- 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
- 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
-+			/* demod access via firmware interface */
-+			u32 reg;
-+
- 			if (msg[0].len < 3 || msg[1].len < 1) {
- 				ret = -EOPNOTSUPP;
- 				goto unlock;
- 			}
--			/* demod access via firmware interface */
--			u32 reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
--					msg[0].buf[2];
-+
-+			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
-+				msg[0].buf[2];
- 
- 			if (msg[0].addr == state->af9033_i2c_addr[1])
- 				reg |= 0x100000;
-@@ -385,13 +388,16 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
- 			ret = -EOPNOTSUPP;
- 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
- 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
-+			/* demod access via firmware interface */
-+			u32 reg;
-+
- 			if (msg[0].len < 3) {
- 				ret = -EOPNOTSUPP;
- 				goto unlock;
- 			}
--			/* demod access via firmware interface */
--			u32 reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
--					msg[0].buf[2];
-+
-+			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
-+				msg[0].buf[2];
- 
- 			if (msg[0].addr == state->af9033_i2c_addr[1])
- 				reg |= 0x100000;
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index c62831e615863..c6d6a31a8f48c 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1352,7 +1352,6 @@ CONFIG_SM_DISPCC_6115=m
+ CONFIG_SM_DISPCC_8250=y
+ CONFIG_SM_DISPCC_8450=m
+ CONFIG_SM_DISPCC_8550=m
+-CONFIG_SM_DISPCC_8650=m
+ CONFIG_SM_GCC_4450=y
+ CONFIG_SM_GCC_6115=y
+ CONFIG_SM_GCC_8350=y
 -- 
 2.39.5
 
