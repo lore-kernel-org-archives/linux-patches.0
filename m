@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B767DA6A;
-	Wed,  5 Feb 2025 14:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362FB347CC;
+	Wed,  5 Feb 2025 14:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765878; cv=none; b=R7Y/twY/RmAXYmJsdR5z2U9uSp02GCqsPkwsxReECBtAuJvgeu7vaup4ouWgM4ww8ly+61YWwWgkcgQmtFfE8iiXF/DyVXZyeMoer0xOC+t4fSK5sia9qa2Pl4Lt4BqCfUSoyPFeSo7AosvUR+Fn1fHb56Baq4/lEOOPFKOdbAU=
+	t=1738765881; cv=none; b=As5IYRJ1YOvi6Rx1+0nMsGP/Q0GsNs3SaE+1bGckFPXgErvdvX69xpxesWDWvRHi0us9MqscDZWaH3cbq7CsACqStWJzSmJeAWXSu1JCV8NzjRJD0DsaJNaGlc8oshC2o/2tbnmvjetOCktCfARIU3ESpktdGGfs1z8snhswAaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765878; c=relaxed/simple;
-	bh=OpssvzJwgnYabC5apuGJbrkO8avgqQSp9tPemRHHiHo=;
+	s=arc-20240116; t=1738765881; c=relaxed/simple;
+	bh=xd/lO6GcNjtF8lk0UJn/rbgU6Lp2xDg7Xkylrs0isIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WU7S7XEN6iqSWCK1WhGA/of2QgXk5NkTVsjEb7A27W6LR284oFaoOk6LVJHCGwc9BSFPLtRz8+HrcuP2Vznajx5SPSar20nvz7HfsOuo91HxNj9bG12xKVg57HbsHhGOGxxJoFBe9K72H0y5iQlGCxhBLtqxgzUPAY1WGOykia4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQ0Wxnh3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FXo1JumZP/hsLGsRXJrzZBzAzUtdH5gkZn3DerlLXcBtK2yfKScZHt1sFsYTfn62/7Xodruh3skeAsg81tNGB7UpqkL4NsME49l7c3AMxJ9T1KhKuqcneVjRhy6l/EuRIMXc4/uDEENOzoAGrMN/5Xg60dA92e+Felh3LjctWJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oTtgrA9S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQ0Wxnh3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADFCC4CED1;
-	Wed,  5 Feb 2025 14:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oTtgrA9S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D422C4CEE2;
+	Wed,  5 Feb 2025 14:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765877;
-	bh=OpssvzJwgnYabC5apuGJbrkO8avgqQSp9tPemRHHiHo=;
+	s=korg; t=1738765881;
+	bh=xd/lO6GcNjtF8lk0UJn/rbgU6Lp2xDg7Xkylrs0isIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lQ0Wxnh360QZsYstYxc4ctQnAObKP4z/jJE+Ck2XD0RGo+UMlWMXmr9a7OyPvAPoV
-	 t19abVx4X1FnHm+nfnT0cw0vXsGNwCR9fHHovkCQAK2NGylHi8BlbTafD8NlZADKNC
-	 HPxFbegHbLjMn6sFh+8se2NNYzRM1vSSstKYduO8=
+	b=oTtgrA9SxAmW3DDU1XjVZrtrhjOywPherbOWdUTGsC/FimimVvvwRZoSolxDEt6R2
+	 CapPNNu8Blhub4utMrGvQL6hKA9lQ12aSZafgt6J+uQwyCEspbyzVTbZWoAmrHykxU
+	 OwD7TldKqrUzZnpsuBhSVQlw43qsa0lt2es1THJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Alex Lu <alex_lu@realsil.com.cn>,
+	Max Chou <max.chou@realtek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 299/393] PCI: imx6: Simplify clock handling by using clk_bulk*() function
-Date: Wed,  5 Feb 2025 14:43:38 +0100
-Message-ID: <20250205134431.750819279@linuxfoundation.org>
+Subject: [PATCH 6.13 222/623] Bluetooth: btrtl: check for NULL in btrtl_setup_realtek()
+Date: Wed,  5 Feb 2025 14:39:24 +0100
+Message-ID: <20250205134504.718971959@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,352 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Max Chou <max.chou@realtek.com>
 
-[ Upstream commit 6a40185838759cdae728ed79738680d798863ce7 ]
+[ Upstream commit 3c15082f3567032d196e8760753373332508c2ca ]
 
-Refactor the clock handling logic. Add 'clk_names' define in drvdata.
-Use clk_bulk*() API to simplify the code.
+If insert an USB dongle which chip is not maintained in ic_id_table, it
+will hit the NULL point accessed. Add a null point check to avoid the
+Kernel Oops.
 
-Link: https://lore.kernel.org/r/20240220161924.3871774-2-Frank.Li@nxp.com
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Stable-dep-of: f068ffdd034c ("PCI: imx6: Skip controller_id generation logic for i.MX7D")
+Fixes: b39910bb54d9 ("Bluetooth: Populate hci_set_hw_info for Intel and Realtek")
+Reviewed-by: Alex Lu <alex_lu@realsil.com.cn>
+Signed-off-by: Max Chou <max.chou@realtek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c | 138 ++++++++++----------------
- 1 file changed, 50 insertions(+), 88 deletions(-)
+ drivers/bluetooth/btrtl.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 86b09b5d7f249..20c8f2cba4536 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -61,12 +61,16 @@ enum imx6_pcie_variants {
- #define IMX6_PCIE_FLAG_IMX6_SPEED_CHANGE	BIT(1)
- #define IMX6_PCIE_FLAG_SUPPORTS_SUSPEND		BIT(2)
+diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
+index 83025f457ca04..d3eba0d4a57d3 100644
+--- a/drivers/bluetooth/btrtl.c
++++ b/drivers/bluetooth/btrtl.c
+@@ -1351,12 +1351,14 @@ int btrtl_setup_realtek(struct hci_dev *hdev)
  
-+#define IMX6_PCIE_MAX_CLKS       6
-+
- struct imx6_pcie_drvdata {
- 	enum imx6_pcie_variants variant;
- 	enum dw_pcie_device_mode mode;
- 	u32 flags;
- 	int dbi_length;
- 	const char *gpr;
-+	const char * const *clk_names;
-+	const u32 clks_cnt;
- };
+ 	btrtl_set_quirks(hdev, btrtl_dev);
  
- struct imx6_pcie {
-@@ -74,11 +78,7 @@ struct imx6_pcie {
- 	int			reset_gpio;
- 	bool			gpio_active_high;
- 	bool			link_is_up;
--	struct clk		*pcie_bus;
--	struct clk		*pcie_phy;
--	struct clk		*pcie_inbound_axi;
--	struct clk		*pcie;
--	struct clk		*pcie_aux;
-+	struct clk_bulk_data	clks[IMX6_PCIE_MAX_CLKS];
- 	struct regmap		*iomuxc_gpr;
- 	u16			msi_ctrl;
- 	u32			controller_id;
-@@ -407,13 +407,18 @@ static void imx7d_pcie_wait_for_phy_pll_lock(struct imx6_pcie *imx6_pcie)
+-	hci_set_hw_info(hdev,
++	if (btrtl_dev->ic_info) {
++		hci_set_hw_info(hdev,
+ 			"RTL lmp_subver=%u hci_rev=%u hci_ver=%u hci_bus=%u",
+ 			btrtl_dev->ic_info->lmp_subver,
+ 			btrtl_dev->ic_info->hci_rev,
+ 			btrtl_dev->ic_info->hci_ver,
+ 			btrtl_dev->ic_info->hci_bus);
++	}
  
- static int imx6_setup_phy_mpll(struct imx6_pcie *imx6_pcie)
- {
--	unsigned long phy_rate = clk_get_rate(imx6_pcie->pcie_phy);
-+	unsigned long phy_rate = 0;
- 	int mult, div;
- 	u16 val;
-+	int i;
- 
- 	if (!(imx6_pcie->drvdata->flags & IMX6_PCIE_FLAG_IMX6_PHY))
- 		return 0;
- 
-+	for (i = 0; i < imx6_pcie->drvdata->clks_cnt; i++)
-+		if (strncmp(imx6_pcie->clks[i].id, "pcie_phy", 8) == 0)
-+			phy_rate = clk_get_rate(imx6_pcie->clks[i].clk);
-+
- 	switch (phy_rate) {
- 	case 125000000:
- 		/*
-@@ -550,19 +555,11 @@ static int imx6_pcie_attach_pd(struct device *dev)
- 
- static int imx6_pcie_enable_ref_clk(struct imx6_pcie *imx6_pcie)
- {
--	struct dw_pcie *pci = imx6_pcie->pci;
--	struct device *dev = pci->dev;
- 	unsigned int offset;
- 	int ret = 0;
- 
- 	switch (imx6_pcie->drvdata->variant) {
- 	case IMX6SX:
--		ret = clk_prepare_enable(imx6_pcie->pcie_inbound_axi);
--		if (ret) {
--			dev_err(dev, "unable to enable pcie_axi clock\n");
--			break;
--		}
--
- 		regmap_update_bits(imx6_pcie->iomuxc_gpr, IOMUXC_GPR12,
- 				   IMX6SX_GPR12_PCIE_TEST_POWERDOWN, 0);
- 		break;
-@@ -589,12 +586,6 @@ static int imx6_pcie_enable_ref_clk(struct imx6_pcie *imx6_pcie)
- 	case IMX8MQ_EP:
- 	case IMX8MP:
- 	case IMX8MP_EP:
--		ret = clk_prepare_enable(imx6_pcie->pcie_aux);
--		if (ret) {
--			dev_err(dev, "unable to enable pcie_aux clock\n");
--			break;
--		}
--
- 		offset = imx6_pcie_grp_offset(imx6_pcie);
- 		/*
- 		 * Set the over ride low and enabled
-@@ -615,9 +606,6 @@ static int imx6_pcie_enable_ref_clk(struct imx6_pcie *imx6_pcie)
- static void imx6_pcie_disable_ref_clk(struct imx6_pcie *imx6_pcie)
- {
- 	switch (imx6_pcie->drvdata->variant) {
--	case IMX6SX:
--		clk_disable_unprepare(imx6_pcie->pcie_inbound_axi);
--		break;
- 	case IMX6QP:
- 	case IMX6Q:
- 		regmap_update_bits(imx6_pcie->iomuxc_gpr, IOMUXC_GPR1,
-@@ -631,14 +619,6 @@ static void imx6_pcie_disable_ref_clk(struct imx6_pcie *imx6_pcie)
- 				   IMX7D_GPR12_PCIE_PHY_REFCLK_SEL,
- 				   IMX7D_GPR12_PCIE_PHY_REFCLK_SEL);
- 		break;
--	case IMX8MM:
--	case IMX8MM_EP:
--	case IMX8MQ:
--	case IMX8MQ_EP:
--	case IMX8MP:
--	case IMX8MP_EP:
--		clk_disable_unprepare(imx6_pcie->pcie_aux);
--		break;
- 	default:
- 		break;
- 	}
-@@ -650,23 +630,9 @@ static int imx6_pcie_clk_enable(struct imx6_pcie *imx6_pcie)
- 	struct device *dev = pci->dev;
- 	int ret;
- 
--	ret = clk_prepare_enable(imx6_pcie->pcie_phy);
--	if (ret) {
--		dev_err(dev, "unable to enable pcie_phy clock\n");
-+	ret = clk_bulk_prepare_enable(imx6_pcie->drvdata->clks_cnt, imx6_pcie->clks);
-+	if (ret)
- 		return ret;
--	}
--
--	ret = clk_prepare_enable(imx6_pcie->pcie_bus);
--	if (ret) {
--		dev_err(dev, "unable to enable pcie_bus clock\n");
--		goto err_pcie_bus;
--	}
--
--	ret = clk_prepare_enable(imx6_pcie->pcie);
--	if (ret) {
--		dev_err(dev, "unable to enable pcie clock\n");
--		goto err_pcie;
--	}
- 
- 	ret = imx6_pcie_enable_ref_clk(imx6_pcie);
- 	if (ret) {
-@@ -679,11 +645,7 @@ static int imx6_pcie_clk_enable(struct imx6_pcie *imx6_pcie)
- 	return 0;
- 
- err_ref_clk:
--	clk_disable_unprepare(imx6_pcie->pcie);
--err_pcie:
--	clk_disable_unprepare(imx6_pcie->pcie_bus);
--err_pcie_bus:
--	clk_disable_unprepare(imx6_pcie->pcie_phy);
-+	clk_bulk_disable_unprepare(imx6_pcie->drvdata->clks_cnt, imx6_pcie->clks);
- 
+ 	btrtl_free(btrtl_dev);
  	return ret;
- }
-@@ -691,9 +653,7 @@ static int imx6_pcie_clk_enable(struct imx6_pcie *imx6_pcie)
- static void imx6_pcie_clk_disable(struct imx6_pcie *imx6_pcie)
- {
- 	imx6_pcie_disable_ref_clk(imx6_pcie);
--	clk_disable_unprepare(imx6_pcie->pcie);
--	clk_disable_unprepare(imx6_pcie->pcie_bus);
--	clk_disable_unprepare(imx6_pcie->pcie_phy);
-+	clk_bulk_disable_unprepare(imx6_pcie->drvdata->clks_cnt, imx6_pcie->clks);
- }
- 
- static void imx6_pcie_assert_core_reset(struct imx6_pcie *imx6_pcie)
-@@ -1253,6 +1213,7 @@ static int imx6_pcie_probe(struct platform_device *pdev)
- 	struct device_node *node = dev->of_node;
- 	int ret;
- 	u16 val;
-+	int i;
- 
- 	imx6_pcie = devm_kzalloc(dev, sizeof(*imx6_pcie), GFP_KERNEL);
- 	if (!imx6_pcie)
-@@ -1306,32 +1267,20 @@ static int imx6_pcie_probe(struct platform_device *pdev)
- 		return imx6_pcie->reset_gpio;
- 	}
- 
--	/* Fetch clocks */
--	imx6_pcie->pcie_bus = devm_clk_get(dev, "pcie_bus");
--	if (IS_ERR(imx6_pcie->pcie_bus))
--		return dev_err_probe(dev, PTR_ERR(imx6_pcie->pcie_bus),
--				     "pcie_bus clock source missing or invalid\n");
-+	if (imx6_pcie->drvdata->clks_cnt >= IMX6_PCIE_MAX_CLKS)
-+		return dev_err_probe(dev, -ENOMEM, "clks_cnt is too big\n");
- 
--	imx6_pcie->pcie = devm_clk_get(dev, "pcie");
--	if (IS_ERR(imx6_pcie->pcie))
--		return dev_err_probe(dev, PTR_ERR(imx6_pcie->pcie),
--				     "pcie clock source missing or invalid\n");
-+	for (i = 0; i < imx6_pcie->drvdata->clks_cnt; i++)
-+		imx6_pcie->clks[i].id = imx6_pcie->drvdata->clk_names[i];
-+
-+	/* Fetch clocks */
-+	ret = devm_clk_bulk_get(dev, imx6_pcie->drvdata->clks_cnt, imx6_pcie->clks);
-+	if (ret)
-+		return ret;
- 
- 	switch (imx6_pcie->drvdata->variant) {
--	case IMX6SX:
--		imx6_pcie->pcie_inbound_axi = devm_clk_get(dev,
--							   "pcie_inbound_axi");
--		if (IS_ERR(imx6_pcie->pcie_inbound_axi))
--			return dev_err_probe(dev, PTR_ERR(imx6_pcie->pcie_inbound_axi),
--					     "pcie_inbound_axi clock missing or invalid\n");
--		break;
- 	case IMX8MQ:
- 	case IMX8MQ_EP:
--		imx6_pcie->pcie_aux = devm_clk_get(dev, "pcie_aux");
--		if (IS_ERR(imx6_pcie->pcie_aux))
--			return dev_err_probe(dev, PTR_ERR(imx6_pcie->pcie_aux),
--					     "pcie_aux clock source missing or invalid\n");
--		fallthrough;
- 	case IMX7D:
- 		if (dbi_base->start == IMX8MQ_PCIE2_BASE_ADDR)
- 			imx6_pcie->controller_id = 1;
-@@ -1354,10 +1303,6 @@ static int imx6_pcie_probe(struct platform_device *pdev)
- 	case IMX8MM_EP:
- 	case IMX8MP:
- 	case IMX8MP_EP:
--		imx6_pcie->pcie_aux = devm_clk_get(dev, "pcie_aux");
--		if (IS_ERR(imx6_pcie->pcie_aux))
--			return dev_err_probe(dev, PTR_ERR(imx6_pcie->pcie_aux),
--					     "pcie_aux clock source missing or invalid\n");
- 		imx6_pcie->apps_reset = devm_reset_control_get_exclusive(dev,
- 									 "apps");
- 		if (IS_ERR(imx6_pcie->apps_reset))
-@@ -1373,14 +1318,6 @@ static int imx6_pcie_probe(struct platform_device *pdev)
- 	default:
- 		break;
- 	}
--	/* Don't fetch the pcie_phy clock, if it has abstract PHY driver */
--	if (imx6_pcie->phy == NULL) {
--		imx6_pcie->pcie_phy = devm_clk_get(dev, "pcie_phy");
--		if (IS_ERR(imx6_pcie->pcie_phy))
--			return dev_err_probe(dev, PTR_ERR(imx6_pcie->pcie_phy),
--					     "pcie_phy clock source missing or invalid\n");
--	}
--
- 
- 	/* Grab turnoff reset */
- 	imx6_pcie->turnoff_reset = devm_reset_control_get_optional_exclusive(dev, "turnoff");
-@@ -1471,6 +1408,11 @@ static void imx6_pcie_shutdown(struct platform_device *pdev)
- 	imx6_pcie_assert_core_reset(imx6_pcie);
- }
- 
-+static const char * const imx6q_clks[] = {"pcie_bus", "pcie", "pcie_phy"};
-+static const char * const imx8mm_clks[] = {"pcie_bus", "pcie", "pcie_aux"};
-+static const char * const imx8mq_clks[] = {"pcie_bus", "pcie", "pcie_phy", "pcie_aux"};
-+static const char * const imx6sx_clks[] = {"pcie_bus", "pcie", "pcie_phy", "pcie_inbound_axi"};
-+
- static const struct imx6_pcie_drvdata drvdata[] = {
- 	[IMX6Q] = {
- 		.variant = IMX6Q,
-@@ -1478,6 +1420,8 @@ static const struct imx6_pcie_drvdata drvdata[] = {
- 			 IMX6_PCIE_FLAG_IMX6_SPEED_CHANGE,
- 		.dbi_length = 0x200,
- 		.gpr = "fsl,imx6q-iomuxc-gpr",
-+		.clk_names = imx6q_clks,
-+		.clks_cnt = ARRAY_SIZE(imx6q_clks),
- 	},
- 	[IMX6SX] = {
- 		.variant = IMX6SX,
-@@ -1485,6 +1429,8 @@ static const struct imx6_pcie_drvdata drvdata[] = {
- 			 IMX6_PCIE_FLAG_IMX6_SPEED_CHANGE |
- 			 IMX6_PCIE_FLAG_SUPPORTS_SUSPEND,
- 		.gpr = "fsl,imx6q-iomuxc-gpr",
-+		.clk_names = imx6sx_clks,
-+		.clks_cnt = ARRAY_SIZE(imx6sx_clks),
- 	},
- 	[IMX6QP] = {
- 		.variant = IMX6QP,
-@@ -1493,40 +1439,56 @@ static const struct imx6_pcie_drvdata drvdata[] = {
- 			 IMX6_PCIE_FLAG_SUPPORTS_SUSPEND,
- 		.dbi_length = 0x200,
- 		.gpr = "fsl,imx6q-iomuxc-gpr",
-+		.clk_names = imx6q_clks,
-+		.clks_cnt = ARRAY_SIZE(imx6q_clks),
- 	},
- 	[IMX7D] = {
- 		.variant = IMX7D,
- 		.flags = IMX6_PCIE_FLAG_SUPPORTS_SUSPEND,
- 		.gpr = "fsl,imx7d-iomuxc-gpr",
-+		.clk_names = imx6q_clks,
-+		.clks_cnt = ARRAY_SIZE(imx6q_clks),
- 	},
- 	[IMX8MQ] = {
- 		.variant = IMX8MQ,
- 		.gpr = "fsl,imx8mq-iomuxc-gpr",
-+		.clk_names = imx8mq_clks,
-+		.clks_cnt = ARRAY_SIZE(imx8mq_clks),
- 	},
- 	[IMX8MM] = {
- 		.variant = IMX8MM,
- 		.flags = IMX6_PCIE_FLAG_SUPPORTS_SUSPEND,
- 		.gpr = "fsl,imx8mm-iomuxc-gpr",
-+		.clk_names = imx8mm_clks,
-+		.clks_cnt = ARRAY_SIZE(imx8mm_clks),
- 	},
- 	[IMX8MP] = {
- 		.variant = IMX8MP,
- 		.flags = IMX6_PCIE_FLAG_SUPPORTS_SUSPEND,
- 		.gpr = "fsl,imx8mp-iomuxc-gpr",
-+		.clk_names = imx8mm_clks,
-+		.clks_cnt = ARRAY_SIZE(imx8mm_clks),
- 	},
- 	[IMX8MQ_EP] = {
- 		.variant = IMX8MQ_EP,
- 		.mode = DW_PCIE_EP_TYPE,
- 		.gpr = "fsl,imx8mq-iomuxc-gpr",
-+		.clk_names = imx8mq_clks,
-+		.clks_cnt = ARRAY_SIZE(imx8mq_clks),
- 	},
- 	[IMX8MM_EP] = {
- 		.variant = IMX8MM_EP,
- 		.mode = DW_PCIE_EP_TYPE,
- 		.gpr = "fsl,imx8mm-iomuxc-gpr",
-+		.clk_names = imx8mm_clks,
-+		.clks_cnt = ARRAY_SIZE(imx8mm_clks),
- 	},
- 	[IMX8MP_EP] = {
- 		.variant = IMX8MP_EP,
- 		.mode = DW_PCIE_EP_TYPE,
- 		.gpr = "fsl,imx8mp-iomuxc-gpr",
-+		.clk_names = imx8mm_clks,
-+		.clks_cnt = ARRAY_SIZE(imx8mm_clks),
- 	},
- };
- 
 -- 
 2.39.5
 
