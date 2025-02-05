@@ -1,39 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A381A76BC;
-	Wed,  5 Feb 2025 14:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80731D86C6;
+	Wed,  5 Feb 2025 14:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766612; cv=none; b=YI2J6YvMozIoDRorebae2vZF+ic+KqF2oA6dX7PuCOZwCwPl2bmjOA3BVkVnFXY0PmR+YUy/CgG2lNXSwjyZad8zzkZGO/JgGnQ+sokGDtcRMEMcm35SZwIu411/Y3cmJQEZLc/5wlg2RoyNqzNgW3SpXdfDmTugCldjr2ZZZA8=
+	t=1738766615; cv=none; b=MI335eV1HQaIPp82xYz6RGz2ZQ8T1v632EHPC/7nw2IvC6W5SdzOlhYajOW2WAInbYtLMaz/CmGsnvvbFNxB5umxmnaf1l5iHohypdhUIXLneciEpgOdOfKDWVenKSQRXoWYMEMX+kQrzyqYewhMWzkbjbTLcoEgsdrNvHym8bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766612; c=relaxed/simple;
-	bh=I1NnVbG8wwNWt/y6p1CtWdMSyohWy1GmjUAkLQfSWC0=;
+	s=arc-20240116; t=1738766615; c=relaxed/simple;
+	bh=M2Y0vKT1kVR8q8Q1FD5Q7PeaEjRvTo7L2ZeWQUFRx8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gF1wIGRB7ZF0ApWBT3++ys5VD7LZmNs9iCjTDkTuo4Iad4TDPQBhKV/nhkO5AjRQ6dhfT+yLKDMoVupvd/7qbX61Oa4RK1CFrBJFLOSxuJqccaSzb1SRg6tcJfq513UuIlRzktMNS82tMJYPjo7XI4iBy1/Zqd8EMhdcL0it7lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7/LwM2v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YK9xrkpyVV2UyoKgQ2a+RKldXx/27ZWhex/SeqztePBMqcl1dP5kZkHKQviwwcofOyrnvlrNvZarBdkvMDrytDUAAFZ0uiHrJnLU5kXhyilgrUm376cRhxbwLj/ctJBb/xUcyZOpbMmzTAuMAE7Qh6jPJzQAiMCNOiBaA3/XZRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gefcqrl6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7/LwM2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D7FC4CEE7;
-	Wed,  5 Feb 2025 14:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gefcqrl6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6C4C4CED6;
+	Wed,  5 Feb 2025 14:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766612;
-	bh=I1NnVbG8wwNWt/y6p1CtWdMSyohWy1GmjUAkLQfSWC0=;
+	s=korg; t=1738766615;
+	bh=M2Y0vKT1kVR8q8Q1FD5Q7PeaEjRvTo7L2ZeWQUFRx8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V7/LwM2vH2Jn3IcOIahc8v7WjNE9ISWwKwSHseqjpWJWEjgAsVgIBbsSUfYlPBx0M
-	 6KKtrZsA+6v0tYqm/pq0mFO5JkzDjanEyiLvmegPpkt5zO9XF6uf01aQqEnXV3IyQA
-	 H73OyseZD32P0zdTuoRRGxadxuzT+3NKn8JuGRCQ=
+	b=gefcqrl6N1rTJjCGbadeiEQmNGslzDaF3UDuOFxhAE3cjKnKL3zxefTeDiK5c0I97
+	 cwRqkO9pvn1Fm3/pbufCG6EhyvYK/kLybXq9HiYKbfQSSHf7fFhEoDb8ncKEWZRJZg
+	 LJBF6nyUyNUzrTFde1FMNn9lHBQrmeM0MgsYv3l4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.6 378/393] usb: gadget: f_tcm: Fix Get/SetInterface return value
-Date: Wed,  5 Feb 2025 14:44:57 +0100
-Message-ID: <20250205134434.756233018@linuxfoundation.org>
+	Francesco Nigro <fnigro@redhat.com>,
+	Ilan Green <igreen@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Clark Williams <williams@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Stephane Eranian <eranian@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 292/623] perf namespaces: Fixup the nsinfo__in_pidns() return type, its bool
+Date: Wed,  5 Feb 2025 14:40:34 +0100
+Message-ID: <20250205134507.402456772@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,54 +59,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-commit 3b997089903b909684114aca6f79d683e5c64a0e upstream.
+[ Upstream commit 64a7617efd5ae1d57a75e464d7134eec947c3fe3 ]
 
-Check to make sure that the GetInterface and SetInterface are for valid
-interface. Return proper alternate setting number on GetInterface.
+When adding support for refconunt checking a cut'n'paste made this
+function, that is just an accessor to a bool member of 'struct nsinfo',
+return a pid_t, when that member is a boolean, fix it.
 
-Fixes: 0b8b1a1fede0 ("usb: gadget: f_tcm: Provide support to get alternate setting in tcm function")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/ffd91b4640945ea4d3b4f4091cf1abbdbd9cf4fc.1733876548.git.Thinh.Nguyen@synopsys.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bcaf0a97858de7ab ("perf namespaces: Add functions to access nsinfo")
+Reported-by: Francesco Nigro <fnigro@redhat.com>
+Reported-by: Ilan Green <igreen@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Clark Williams <williams@redhat.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Stephane Eranian <eranian@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>
+Link: https://lore.kernel.org/r/20241206204828.507527-6-acme@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_tcm.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ tools/perf/util/namespaces.c | 2 +-
+ tools/perf/util/namespaces.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -2048,9 +2048,14 @@ static void tcm_delayed_set_alt(struct w
+diff --git a/tools/perf/util/namespaces.c b/tools/perf/util/namespaces.c
+index 36047184d76e2..68f5de2d79c72 100644
+--- a/tools/perf/util/namespaces.c
++++ b/tools/perf/util/namespaces.c
+@@ -266,7 +266,7 @@ pid_t nsinfo__pid(const struct nsinfo  *nsi)
+ 	return RC_CHK_ACCESS(nsi)->pid;
+ }
  
- static int tcm_get_alt(struct usb_function *f, unsigned intf)
+-pid_t nsinfo__in_pidns(const struct nsinfo  *nsi)
++bool nsinfo__in_pidns(const struct nsinfo *nsi)
  {
--	if (intf == bot_intf_desc.bInterfaceNumber)
-+	struct f_uas *fu = to_f_uas(f);
-+
-+	if (fu->iface != intf)
-+		return -EOPNOTSUPP;
-+
-+	if (fu->flags & USBG_IS_BOT)
- 		return USB_G_ALT_INT_BBB;
--	if (intf == uasp_intf_desc.bInterfaceNumber)
-+	else if (fu->flags & USBG_IS_UAS)
- 		return USB_G_ALT_INT_UAS;
+ 	return RC_CHK_ACCESS(nsi)->in_pidns;
+ }
+diff --git a/tools/perf/util/namespaces.h b/tools/perf/util/namespaces.h
+index e014becb9cd8e..e95c79b80e27c 100644
+--- a/tools/perf/util/namespaces.h
++++ b/tools/perf/util/namespaces.h
+@@ -58,7 +58,7 @@ void nsinfo__clear_need_setns(struct nsinfo *nsi);
+ pid_t nsinfo__tgid(const struct nsinfo  *nsi);
+ pid_t nsinfo__nstgid(const struct nsinfo  *nsi);
+ pid_t nsinfo__pid(const struct nsinfo  *nsi);
+-pid_t nsinfo__in_pidns(const struct nsinfo  *nsi);
++bool nsinfo__in_pidns(const struct nsinfo  *nsi);
+ void nsinfo__set_in_pidns(struct nsinfo *nsi);
  
- 	return -EOPNOTSUPP;
-@@ -2060,6 +2065,9 @@ static int tcm_set_alt(struct usb_functi
- {
- 	struct f_uas *fu = to_f_uas(f);
- 
-+	if (fu->iface != intf)
-+		return -EOPNOTSUPP;
-+
- 	if ((alt == USB_G_ALT_INT_BBB) || (alt == USB_G_ALT_INT_UAS)) {
- 		struct guas_setup_wq *work;
- 
+ void nsinfo__mountns_enter(struct nsinfo *nsi, struct nscookie *nc);
+-- 
+2.39.5
+
 
 
