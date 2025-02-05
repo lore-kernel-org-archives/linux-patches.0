@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C384514A4E9;
-	Wed,  5 Feb 2025 13:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249D614A4E9;
+	Wed,  5 Feb 2025 13:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763924; cv=none; b=eqlepvlR79q86VRNpuFXnYooyLKr8xZopaERKQxKD4fiG6X8Z60LTkRtbDYECeCRuQNdV9hNDRX9UDZSAMylNqyyVk6P0tA/X/EAnFglYC1ZAVqaFaq35iTu5eaSFS63feJhAlTfWUJN65tNow1zrx5BUgh9dlMzwXsqfkPQDvA=
+	t=1738763928; cv=none; b=i0FMW6RaKFsMz24lgvwFfMJyDaKn8ovn+nuMefKPzskwyMtAgh43VXsXJq2ViXtTiFrLnHfVr6HhX/55ZagY9YFh1bmHKUHUdA9GtXAx9sCAqlH44pmc30XVDi1XAhHVaABYD48Jw5T6nU4F9PHlrVdwITiwn7mY9HHsnr7sfZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763924; c=relaxed/simple;
-	bh=HlX7V+l75mg2Z6el+exEN5fKxAn/Snprud2kfOUgYjk=;
+	s=arc-20240116; t=1738763928; c=relaxed/simple;
+	bh=WOMRNF2y3fWhZSxiFchSRDFKAXdZikKmEFhU6wt+A44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hr60y23TCtSDPdDqujHkWS+dB8n6gslzY505zZXtYQ+OwRairiquIEKEiQL0xuKCW7ftF+XtnYxiUizxG+jToe9XcnOtywSioTp4GhSsU9eQq1sBr867FI1boMISA5WeLY3D/D584f9rGwiMCHpzzoVEaTiBFLhettOky58pL/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IoVmx/PC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DDGLoRJ6yAApfdLpTFw0Xe8Ue05AMmgQI9vEdki+6mzBh8P80xGGzGL53dntTKLKjzLCDdQZmoeFu6of29w7+VhLPHHyC4WAAqvfxkpNX8t8p41lpbFYEzxEspr5MPKGfSM4c+MUTqoS2D4UD916kNvJ0IBx04y/5p0fVQ81B0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EawQVdlZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IoVmx/PC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255A6C4CED1;
-	Wed,  5 Feb 2025 13:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EawQVdlZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857B3C4CEDD;
+	Wed,  5 Feb 2025 13:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763924;
-	bh=HlX7V+l75mg2Z6el+exEN5fKxAn/Snprud2kfOUgYjk=;
+	s=korg; t=1738763928;
+	bh=WOMRNF2y3fWhZSxiFchSRDFKAXdZikKmEFhU6wt+A44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IoVmx/PCqK+LXeyKNgKy1GNMnCc3JY7iD0qcq8gKMP13CmZsmElrLj69a7g174Eu1
-	 ZkPImZh7RYwR6ukBW6eyY81g/GhDbNyvrH86G9shIfTUMJOEDfqkurEi8Rbg/Et1+c
-	 sUxuCcA7ooXV/jVgzOBkM+8tF4fmgVGy4hC8MsCE=
+	b=EawQVdlZp8JY7aldU7is7AmnP0kxEgzs+rK4Sshs3+Rnhx/qXotvG7KvgMV01zDrV
+	 4O5rUhGmrIJp5p9JOsmg1zlv+cXnsvak/aYlk9ukQcui3NXveWdB8j02eXRBRc+nE8
+	 Gdib1ZytfO5LDvXkYZgTsv7hUD8aDSGSS5wgDRm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/590] genirq: Make handle_enforce_irqctx() unconditionally available
-Date: Wed,  5 Feb 2025 14:37:08 +0100
-Message-ID: <20250205134458.049147487@linuxfoundation.org>
+Subject: [PATCH 6.6 120/393] wifi: mt76: mt7915: firmware restart on devices with a second pcie link
+Date: Wed,  5 Feb 2025 14:40:39 +0100
+Message-ID: <20250205134424.886770716@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,62 +46,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 8d187a77f04c14fb459a5301d69f733a5a1396bc ]
+[ Upstream commit 9b60e2ae511c959024ecf6578b3fbe85cd06d7cc ]
 
-Commit 1b57d91b969c ("irqchip/gic-v2, v3: Prevent SW resends entirely")
-sett the flag which enforces interrupt handling in interrupt context and
-prevents software base resends for ARM GIC v2/v3.
+It seems that the firmware checks the register used for detecting matching
+PCIe links in order to figure out if a secondary PCIe link is enabled.
+Write the register again just before starting the firmware on hw reset,
+in order to fix an issue that left the second band unusable after restart.
 
-But it missed that the helper function which checks the flag was hidden
-behind CONFIG_GENERIC_PENDING_IRQ, which is not set by ARM[64].
-
-Make the helper unconditionally available so that the enforcement actually
-works.
-
-Fixes: 1b57d91b969c ("irqchip/gic-v2, v3: Prevent SW resends entirely")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20241210101811.497716609@linutronix.de
+Fixes: 9093cfff72e3 ("mt76: mt7915: add support for using a secondary PCIe link for gen1")
+Link: https://patch.msgid.link/20241230194202.95065-11-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/internals.h | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mac.c    | 2 ++
+ drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h | 1 +
+ drivers/net/wireless/mediatek/mt76/mt7915/pci.c    | 1 +
+ 3 files changed, 4 insertions(+)
 
-diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
-index fe0272cd84a51..a29df4b02a2ed 100644
---- a/kernel/irq/internals.h
-+++ b/kernel/irq/internals.h
-@@ -441,10 +441,6 @@ static inline struct cpumask *irq_desc_get_pending_mask(struct irq_desc *desc)
- {
- 	return desc->pending_mask;
- }
--static inline bool handle_enforce_irqctx(struct irq_data *data)
--{
--	return irqd_is_handle_enforce_irqctx(data);
--}
- bool irq_fixup_move_pending(struct irq_desc *desc, bool force_clear);
- #else /* CONFIG_GENERIC_PENDING_IRQ */
- static inline bool irq_can_move_pcntxt(struct irq_data *data)
-@@ -471,11 +467,12 @@ static inline bool irq_fixup_move_pending(struct irq_desc *desc, bool fclear)
- {
- 	return false;
- }
-+#endif /* !CONFIG_GENERIC_PENDING_IRQ */
-+
- static inline bool handle_enforce_irqctx(struct irq_data *data)
- {
--	return false;
-+	return irqd_is_handle_enforce_irqctx(data);
- }
--#endif /* !CONFIG_GENERIC_PENDING_IRQ */
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index 38d27f8721733..675fbf40ecf75 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -1383,6 +1383,8 @@ mt7915_mac_restart(struct mt7915_dev *dev)
+ 	if (dev_is_pci(mdev->dev)) {
+ 		mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0xff);
+ 		if (dev->hif2) {
++			mt76_wr(dev, MT_PCIE_RECOG_ID,
++				dev->hif2->index | MT_PCIE_RECOG_ID_SEM);
+ 			if (is_mt7915(mdev))
+ 				mt76_wr(dev, MT_PCIE1_MAC_INT_ENABLE, 0xff);
+ 			else
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+index e192211d4b23e..14d4bbeae9d63 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+@@ -191,6 +191,7 @@ struct mt7915_hif {
+ 	struct device *dev;
+ 	void __iomem *regs;
+ 	int irq;
++	u32 index;
+ };
  
- #if !defined(CONFIG_IRQ_DOMAIN) || !defined(CONFIG_IRQ_DOMAIN_HIERARCHY)
- static inline int irq_domain_activate_irq(struct irq_data *data, bool reserve)
+ struct mt7915_phy {
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
+index 39132894e8ea2..07b0a5766eab7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
+@@ -42,6 +42,7 @@ static struct mt7915_hif *mt7915_pci_get_hif2(u32 idx)
+ 			continue;
+ 
+ 		get_device(hif->dev);
++		hif->index = idx;
+ 		goto out;
+ 	}
+ 	hif = NULL;
 -- 
 2.39.5
 
