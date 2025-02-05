@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151A41E89C;
-	Wed,  5 Feb 2025 14:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1AA175D5D;
+	Wed,  5 Feb 2025 14:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767542; cv=none; b=SUNrgLpI1X7Xw9xoq/WJ3PbilwSdzvhVhH/dIa/V0MyKbifP6vLL3OLE9xNrpvOxYFaSFRnoazhcKMnPEulEIINnpM+XDsmrl/C3gFChOTQcb1qeOFqyZ+aGAFqDHeEYUF6d6IpaK9+FEMBm6lF4lmAc51mxvPTJyOgay88kUj4=
+	t=1738767545; cv=none; b=bdP2ku4tEgAkt2P+HodCg8+Ze9spdnOF6o46YPvcM8xcys0NSFFYhl/Hiz8KNN6XPqZs2e20Y2ST5PNWtKE5pOs7oImzzTZ8r+vDMho6FPzTQ2U+SkUWcWwlXnlRm/bOwynH3cDFzMW2YXMIeiWeSF9CldRk8l87LKPSp03km9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767542; c=relaxed/simple;
-	bh=M3yrc+OgBg9sHSBgXj+Jm5H7sqd7bgWci6HeAUz4WTU=;
+	s=arc-20240116; t=1738767545; c=relaxed/simple;
+	bh=9/EBPWXmzwzmnyj27mA/bWNyRtjTlmNdYDFknIoj93w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qbidc0+VMkINEJqqXUeitrQe/fh7iYK6dJ/qCwj6Vo97EYrVGkSi6DWpc1c9ZlA13xZV5fuCH4pzdh9KkReHGQ2HLxI1HaJJRw1ip7nKdHLFf5A/mvD0lwKhlYL0v5gmod/kdkkrTVl3ZNj3+6ZgnISFicevu93VV0Yo0S0MlGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaWxZDP0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q8Fu8Cnety3W94gNi4BxboS2xjtu/by1r/kfKPb1A4JJ6eWP5sY9W6olyHPHiMiM07AndWAGQ3ILoE/Nxj2RE8zS0mUCyPyGYXJOVOtBPjhGieoaa5Xluz+DRxKDWFvyJDdvwKbcj+Mc7I5L8JeS3CLJM6qcvlTcTE8lww9X/P4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmOehnpi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaWxZDP0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7898BC4CED1;
-	Wed,  5 Feb 2025 14:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmOehnpi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBA6C4CED1;
+	Wed,  5 Feb 2025 14:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767541;
-	bh=M3yrc+OgBg9sHSBgXj+Jm5H7sqd7bgWci6HeAUz4WTU=;
+	s=korg; t=1738767545;
+	bh=9/EBPWXmzwzmnyj27mA/bWNyRtjTlmNdYDFknIoj93w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iaWxZDP0Xj5hchcTmyzDXugTzj/dDODBFdu+7chPMSo5UCfSWR+4RJmTB5gxl5aEP
-	 7EW9rhY9Gr+FU7ZzdfmK6CiWWpTMLuYqUeHVME5zl09BGSdkYUt5+uUcW7sY4fXE1T
-	 cUXmIRoMDwdKqioRa453bjRpxZdI8vnEy99JvxIc=
+	b=dmOehnpiQL2dbgxP+0IGPV27znIoTifdQm+qS7YsZpRSTjm9MjQnr5v9pV5a0Tb1G
+	 JF7KwC0QvEXiAFdD2TGxT92p+T9mRl3yXS2+rNONg8HXuGZ/oNcI2ig1T8zTIXB3Aq
+	 5JDYg4qduZx92t4Xhg8822nqPoRAmHRXvd/bDOpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
+	Bin Liu <b-liu@ti.com>,
+	Bryan Brattlof <bb@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 448/590] module: Dont fail module loading when setting ro_after_init section RO failed
-Date: Wed,  5 Feb 2025 14:43:23 +0100
-Message-ID: <20250205134512.408255343@linuxfoundation.org>
+Subject: [PATCH 6.13 396/623] arm64: dts: ti: k3-am62: Remove duplicate GICR reg
+Date: Wed,  5 Feb 2025 14:42:18 +0100
+Message-ID: <20250205134511.371935351@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,55 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Bryan Brattlof <bb@ti.com>
 
-[ Upstream commit 110b1e070f1d50f5217bd2c758db094998bb7b77 ]
+[ Upstream commit 72c691d77ea5d0c4636fd3e9f0ad80d813c7d1a7 ]
 
-Once module init has succeded it is too late to cancel loading.
-If setting ro_after_init data section to read-only fails, all we
-can do is to inform the user through a warning.
+The GIC Redistributor control register range is mapped twice. Remove
+the extra entry from the reg range.
 
-Reported-by: Thomas Gleixner <tglx@linutronix.de>
-Closes: https://lore.kernel.org/all/20230915082126.4187913-1-ruanjinjie@huawei.com/
-Fixes: d1909c022173 ("module: Don't ignore errors from set_memory_XX()")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/d6c81f38da76092de8aacc8c93c4c65cb0fe48b8.1733427536.git.christophe.leroy@csgroup.eu
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Fixes: f1d17330a5be ("arm64: dts: ti: Introduce base support for AM62x SoC")
+Reported-by: Bin Liu <b-liu@ti.com>
+Signed-off-by: Bryan Brattlof <bb@ti.com>
+Link: https://lore.kernel.org/r/20241210-am62-gic-fixup-v1-1-758b4d5b4a0a@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/main.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62-main.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 49b9bca9de12f..93a07387af3b7 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -2583,7 +2583,10 @@ static noinline int do_init_module(struct module *mod)
- #endif
- 	ret = module_enable_rodata_ro(mod, true);
- 	if (ret)
--		goto fail_mutex_unlock;
-+		pr_warn("%s: module_enable_rodata_ro_after_init() returned %d, "
-+			"ro_after_init data might still be writable\n",
-+			mod->name, ret);
-+
- 	mod_tree_remove_init(mod);
- 	module_arch_freeing_init(mod);
- 	for_class_mod_mem_type(type, init) {
-@@ -2622,8 +2625,6 @@ static noinline int do_init_module(struct module *mod)
- 
- 	return 0;
- 
--fail_mutex_unlock:
--	mutex_unlock(&module_mutex);
- fail_free_freeinit:
- 	kfree(freeinit);
- fail:
+diff --git a/arch/arm64/boot/dts/ti/k3-am62-main.dtsi b/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
+index 7cd727d10a5f2..7d355aa73ea21 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
+@@ -23,7 +23,6 @@
+ 		interrupt-controller;
+ 		reg = <0x00 0x01800000 0x00 0x10000>,	/* GICD */
+ 		      <0x00 0x01880000 0x00 0xc0000>,	/* GICR */
+-		      <0x00 0x01880000 0x00 0xc0000>,   /* GICR */
+ 		      <0x01 0x00000000 0x00 0x2000>,    /* GICC */
+ 		      <0x01 0x00010000 0x00 0x1000>,    /* GICH */
+ 		      <0x01 0x00020000 0x00 0x2000>;    /* GICV */
 -- 
 2.39.5
 
