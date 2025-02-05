@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232BADF59;
-	Wed,  5 Feb 2025 15:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0F5DF59;
+	Wed,  5 Feb 2025 15:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767795; cv=none; b=N//yqNhZmT43Ql3gXY7o2DOSu8MxAu2GUTHVUgrXWyflWXmRYfCfjfoMJDTAcs7hfwZozHNJlSm8OfAaJIHN3Pce9gcN3GzhxSpMSxeIcK2pfmyvPbNAXTlzE759B1FT1Vumu/rxLKZE0j209csBsPo/GeBV3Dd5I86vIOvZVRo=
+	t=1738767799; cv=none; b=Wm36OSIBJMq0OwHY16CSiuMWcldEl0bxn2t3G/ZV1B637T3q35KbY6btnQ8IXdM5tBzj4hPSROozSp5mx13suJUV3eYc2LBNiM6jE3Ng+YLEwxkweVMdsSlgp0oR69zMA/0JxfsfduG428imxtXBs0HzxXyeENIwA2gVBYlGbLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767795; c=relaxed/simple;
-	bh=GViLDs6d5Njm/u1K2NuzxBQmnv/JOncR9bHnej6zmKM=;
+	s=arc-20240116; t=1738767799; c=relaxed/simple;
+	bh=vZF0gbK35GVxrkkQ9u2B7gU0Yp4JVcxTWp7NKdHsTw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GjetsQi7VIwAJMHgj6A/DrtcyCS7ys+yt2h68tsQrGd4M00E7KQodvDWm5DYa9+WXF3Oe1B2Ufe7FnqkzylPfJNQCWbzmEHdRbbg7DOfV7wlHqG86/RSCwew5ui07nyyMkqHaiRHBRZ3K8WRrgHpf7X1xTwl4xDA5i+/Pu9BCDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Loo73Akv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gfM7pQdmANnD+B+sn0kdPcrsNNXxoR6czSisscQnYPc0dbqkndu3V7ZZyWmIA4xPBPeJHSyN0IimLtu19hzmsn+7wm7Mq5aaJJRDlZvK8BORwGiPkN1ax1B1iKqupfc7HGZBbv1rC2zSv1t8Xv4cZzltG+138wCUzKG8UneE5Ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0idiXOYk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Loo73Akv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ECFEC4CED1;
-	Wed,  5 Feb 2025 15:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0idiXOYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AADAC4CED1;
+	Wed,  5 Feb 2025 15:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767795;
-	bh=GViLDs6d5Njm/u1K2NuzxBQmnv/JOncR9bHnej6zmKM=;
+	s=korg; t=1738767798;
+	bh=vZF0gbK35GVxrkkQ9u2B7gU0Yp4JVcxTWp7NKdHsTw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Loo73AkvkwwzQ/GA0jh3g0YZu0x8WW3JX2pEbFbGxzVItxJNWb4HxCIGOQCh97Kql
-	 9avfnNRs7VQDcd1Ihwsz6CldaE9MQgiPoiDrNBTDBKT6J//FOUSoidaH41gNVwNYhW
-	 2w6QmJPQWj/PQtc2cEbYaK4cHriWnHsmp2Ib2atw=
+	b=0idiXOYka2/bsqcWgDklzxq7Fu7sFCxFmLCCcgmLUlI37iTTfHdZjIYvuB9W/xkZO
+	 lPzbVoKHFYgwNx2gxdkpAydP4tSnBuTRP8/2QRngOIm20ragPZMJfEwYndFm6HBAet
+	 EeIADodfbg964f9xAtr00dK+h8CKmos5heiuyv/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	david regan <dregan@broadcom.com>,
+	William Zhang <william.zhang@broadcom.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 510/590] Bluetooth: btusb: mediatek: Add locks for usb_driver_claim_interface()
-Date: Wed,  5 Feb 2025 14:44:25 +0100
-Message-ID: <20250205134514.778810155@linuxfoundation.org>
+Subject: [PATCH 6.13 455/623] mtd: rawnand: brcmnand: fix status read of brcmnand_waitfunc
+Date: Wed,  5 Feb 2025 14:43:17 +0100
+Message-ID: <20250205134513.623369563@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: david regan <dregan@broadcom.com>
 
-[ Upstream commit e9087e828827e5a5c85e124ce77503f2b81c3491 ]
+[ Upstream commit 03271ea36ea7a58d30a4bde182eb2a0d46220467 ]
 
-The documentation for usb_driver_claim_interface() says that "the
-device lock" is needed when the function is called from places other
-than probe(). This appears to be the lock for the USB interface
-device. The Mediatek btusb code gets called via this path:
+This change fixes an issue where an error return value may be mistakenly
+used as NAND status.
 
-  Workqueue: hci0 hci_power_on [bluetooth]
-  Call trace:
-   usb_driver_claim_interface
-   btusb_mtk_claim_iso_intf
-   btusb_mtk_setup
-   hci_dev_open_sync
-   hci_power_on
-   process_scheduled_works
-   worker_thread
-   kthread
-
-With the above call trace the device lock hasn't been claimed. Claim
-it.
-
-Without this fix, we'd sometimes see the error "Failed to claim iso
-interface". Sometimes we'd even see worse errors, like a NULL pointer
-dereference (where `intf->dev.driver` was NULL) with a trace like:
-
-  Call trace:
-   usb_suspend_both
-   usb_runtime_suspend
-   __rpm_callback
-   rpm_suspend
-   pm_runtime_work
-   process_scheduled_works
-
-Both errors appear to be fixed with the proper locking.
-
-Fixes: ceac1cb0259d ("Bluetooth: btusb: mediatek: add ISO data transmission functions")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: f504551b7f15 ("mtd: rawnand: Propagate error and simplify ternary operators for brcmstb_nand_wait_for_completion()")
+Signed-off-by: david regan <dregan@broadcom.com>
+Reviewed-by: William Zhang <william.zhang@broadcom.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/mtd/nand/raw/brcmnand/brcmnand.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 0c85c981a8334..258a5cb6f27af 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2632,8 +2632,15 @@ static void btusb_mtk_claim_iso_intf(struct btusb_data *data)
- 	struct btmtk_data *btmtk_data = hci_get_priv(data->hdev);
- 	int err;
+diff --git a/drivers/mtd/nand/raw/brcmnand/brcmnand.c b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
+index 9c253a511e45a..fea5b61199563 100644
+--- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
++++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
+@@ -2342,6 +2342,11 @@ static int brcmnand_write(struct mtd_info *mtd, struct nand_chip *chip,
+ 		brcmnand_send_cmd(host, CMD_PROGRAM_PAGE);
+ 		status = brcmnand_waitfunc(chip);
  
-+	/*
-+	 * The function usb_driver_claim_interface() is documented to need
-+	 * locks held if it's not called from a probe routine. The code here
-+	 * is called from the hci_power_on workqueue, so grab the lock.
-+	 */
-+	device_lock(&btmtk_data->isopkt_intf->dev);
- 	err = usb_driver_claim_interface(&btusb_driver,
- 					 btmtk_data->isopkt_intf, data);
-+	device_unlock(&btmtk_data->isopkt_intf->dev);
- 	if (err < 0) {
- 		btmtk_data->isopkt_intf = NULL;
- 		bt_dev_err(data->hdev, "Failed to claim iso interface");
++		if (status < 0) {
++			ret = status;
++			goto out;
++		}
++
+ 		if (status & NAND_STATUS_FAIL) {
+ 			dev_info(ctrl->dev, "program failed at %llx\n",
+ 				(unsigned long long)addr);
 -- 
 2.39.5
 
