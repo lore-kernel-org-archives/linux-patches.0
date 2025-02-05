@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B2113AD22;
-	Wed,  5 Feb 2025 13:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4578013AD22;
+	Wed,  5 Feb 2025 13:50:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763453; cv=none; b=Ta6mMr4+9c/LbQl2WnPU0/gCxhPnQQENSzdDo8aN7JXC0sbRPCvOkh598cLRJj+cIkDj0R0IdoXtMamDpmlUFABbyNW6NZV7qgTyX4nrmgSFbfsFA7E5gytohHmHHqUSXVh0ae63PUVUnRSGTTUqCyO8JB6F5Fp1pwD2mUyOaHU=
+	t=1738763456; cv=none; b=NbxLO1O4hRo5Mkr3D8sSuRXGMyDqfplBWFfWUFgPuQf4LAgXK1Qopyg7wkEkwxvmGu+qrXnsDDujPjZl9isU/rr3SHGZI6BWZwB1Zq9yqcQyzGtA+aCH0Ih8MLMgZD9JvW5g8wZbeLlVDehjNEwljbDaqhaa8F9KS6ZWcRSP3jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763453; c=relaxed/simple;
-	bh=k3i1n3JIeNZTMZC+7g0y5bCdeBJruPDY/dmow1qfxfE=;
+	s=arc-20240116; t=1738763456; c=relaxed/simple;
+	bh=a1llCpKMjnSZOBEb9j543BSW+KOJHFJZYrY6OrxL58c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gGDNWD+txly6L6PjoStiEgPExBIiQu+mGCbsqYqiaS+SWazlyPrlJtsCv1B267BUW+NPNnuaU/Lv9/fD6ZUjjw4v2b+Pq2RVjcPkWAE3BbGyd2rTWsaJCP+9nHUcju3yUhQoKMvd2LFAgP+5joLNEAsWQhCHiM3X/9JBK0me99Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nS7qaUXF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pmwgO/WTjWl4m/GhejT889L3tJ+L0neQurBjyyL932YLCIW4k+t4oh5e4r4pdQnHvMdqpMYVHJNPNNwFgoxzs9xaoqjRh9rtGi0uTcj17qd2rS1rKI7JjUyuU1Uy9RNHNG6wTx2Wsxs/Oyu3eIDUGTuNK+xdL+Bx00q+HGjv9As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1izYzmYX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nS7qaUXF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48FDAC4CED1;
-	Wed,  5 Feb 2025 13:50:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1izYzmYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52C6C4CED1;
+	Wed,  5 Feb 2025 13:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763452;
-	bh=k3i1n3JIeNZTMZC+7g0y5bCdeBJruPDY/dmow1qfxfE=;
+	s=korg; t=1738763456;
+	bh=a1llCpKMjnSZOBEb9j543BSW+KOJHFJZYrY6OrxL58c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nS7qaUXF0PWaGaoZFvD+lDPfD/lJCV76kuDFN7h1fXchpjW5SWap9k57VPUnP4Y9V
-	 pTfxc2CmxO1x7Q7j4JRks6x6IUEPrYCpdW4b3D61WxYqjMbvHs4stHlYdL5+Ez0ETO
-	 MkaZ7q/+1KJuq5Nycieh2SrNEI9dErb/9/vNAa1s=
+	b=1izYzmYXII7mEDCPIpQOsm4gTrYK/6HJWZqABcIeHTiZp1f1WmtWmKLmWnV2gciI9
+	 ZvhrQpC0MCEesbjHjUDAWG/8w6nCakR/jOUCvsLDiE7Yz+aUI97IJW22SzN7YmJWTr
+	 qFdm49rgqsAN2Yhut7OHSb3ECC7RArZSdk3P/Z2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/393] wifi: rtlwifi: destroy workqueue at rtl_deinit_core
-Date: Wed,  5 Feb 2025 14:39:46 +0100
-Message-ID: <20250205134422.858377419@linuxfoundation.org>
+Subject: [PATCH 6.12 016/590] nvme-tcp: Fix I/O queue cpu spreading for multiple controllers
+Date: Wed,  5 Feb 2025 14:36:11 +0100
+Message-ID: <20250205134455.861347812@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,90 +50,218 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit d8ece6fc3694657e4886191b32ca1690af11adda ]
+[ Upstream commit 32193789878c259e39b97bd0c0f2f0ccbe5cb8a8 ]
 
-rtl_wq is allocated at rtl_init_core, so it makes more sense to destroy it
-at rtl_deinit_core. In the case of USB, where _rtl_usb_init does not
-require anything to be undone, that is fine. But for PCI, rtl_pci_init,
-which is called after rtl_init_core, needs to deallocate data, but only if
-it has been called.
+Since day-1 we are assigning the queue io_cpu very naively. We always
+base the queue id (controller scope) and assign it its matching cpu
+from the online mask. This works fine when the number of queues match
+the number of cpu cores.
 
-That means that destroying the workqueue needs to be done whether
-rtl_pci_init has been called or not. And since rtl_pci_deinit was doing it,
-it has to be moved out of there.
+The problem starts when we have less queues than cpu cores. First, we
+should take into account the mq_map and select a cpu within the cpus
+that are assigned to this queue by the mq_map in order to minimize cross
+numa cpu bouncing.
 
-It makes more sense to move it to rtl_deinit_core and have it done in both
-cases, USB and PCI.
+Second, even worse is that we don't take into account multiple
+controllers may have assigned queues to a given cpu. As a result we may
+simply compund more and more queues on the same set of cpus, which is
+suboptimal.
 
-Since this is a requirement for a followup memory leak fix, mark this as
-fixing such memory leak.
+We fix this by introducing global per-cpu counters that tracks the
+number of queues assigned to each cpu, and we select the least used cpu
+based on the mq_map and the per-cpu counters, and assign it as the queue
+io_cpu.
 
-Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241206173713.3222187-3-cascardo@igalia.com
+The behavior for a single controller is slightly optimized by selecting
+better cpu candidates by consulting with the mq_map, and multiple
+controllers are spreading queues among cpu cores much better, resulting
+in lower average cpu load, and less likelihood to hit hotspots.
+
+Note that the accounting is not 100% perfect, but we don't need to be,
+we're simply putting our best effort to select the best candidate cpu
+core that we find at any given point.
+
+Another byproduct is that every controller reset/reconnect may change
+the queues io_cpu mapping, based on the current LRU accounting scheme.
+
+Here is the baseline queue io_cpu assignment for 4 controllers, 2 queues
+per controller, and 4 cpus on the host:
+nvme1: queue 0: using cpu 0
+nvme1: queue 1: using cpu 1
+nvme2: queue 0: using cpu 0
+nvme2: queue 1: using cpu 1
+nvme3: queue 0: using cpu 0
+nvme3: queue 1: using cpu 1
+nvme4: queue 0: using cpu 0
+nvme4: queue 1: using cpu 1
+
+And this is the fixed io_cpu assignment:
+nvme1: queue 0: using cpu 0
+nvme1: queue 1: using cpu 2
+nvme2: queue 0: using cpu 1
+nvme2: queue 1: using cpu 3
+nvme3: queue 0: using cpu 0
+nvme3: queue 1: using cpu 2
+nvme4: queue 0: using cpu 1
+nvme4: queue 1: using cpu 3
+
+Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
+Suggested-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+[fixed kbuild reported errors]
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/base.c | 6 ++++++
- drivers/net/wireless/realtek/rtlwifi/pci.c  | 2 --
- drivers/net/wireless/realtek/rtlwifi/usb.c  | 5 -----
- 3 files changed, 6 insertions(+), 7 deletions(-)
+ drivers/nvme/host/tcp.c | 70 +++++++++++++++++++++++++++++++++--------
+ 1 file changed, 57 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/base.c b/drivers/net/wireless/realtek/rtlwifi/base.c
-index c7d5b20039ca0..c981739f70773 100644
---- a/drivers/net/wireless/realtek/rtlwifi/base.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/base.c
-@@ -575,9 +575,15 @@ static void rtl_free_entries_from_ack_queue(struct ieee80211_hw *hw,
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 55abfe5e1d254..8305d3c128074 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -54,6 +54,8 @@ MODULE_PARM_DESC(tls_handshake_timeout,
+ 		 "nvme TLS handshake timeout in seconds (default 10)");
+ #endif
  
- void rtl_deinit_core(struct ieee80211_hw *hw)
- {
-+	struct rtl_priv *rtlpriv = rtl_priv(hw);
++static atomic_t nvme_tcp_cpu_queues[NR_CPUS];
 +
- 	rtl_c2hcmd_launcher(hw, 0);
- 	rtl_free_entries_from_scan_list(hw);
- 	rtl_free_entries_from_ack_queue(hw, false);
-+	if (rtlpriv->works.rtl_wq) {
-+		destroy_workqueue(rtlpriv->works.rtl_wq);
-+		rtlpriv->works.rtl_wq = NULL;
+ #ifdef CONFIG_DEBUG_LOCK_ALLOC
+ /* lockdep can detect a circular dependency of the form
+  *   sk_lock -> mmap_lock (page fault) -> fs locks -> sk_lock
+@@ -127,6 +129,7 @@ enum nvme_tcp_queue_flags {
+ 	NVME_TCP_Q_ALLOCATED	= 0,
+ 	NVME_TCP_Q_LIVE		= 1,
+ 	NVME_TCP_Q_POLLING	= 2,
++	NVME_TCP_Q_IO_CPU_SET	= 3,
+ };
+ 
+ enum nvme_tcp_recv_state {
+@@ -1562,23 +1565,56 @@ static bool nvme_tcp_poll_queue(struct nvme_tcp_queue *queue)
+ 			  ctrl->io_queues[HCTX_TYPE_POLL];
+ }
+ 
++/**
++ * Track the number of queues assigned to each cpu using a global per-cpu
++ * counter and select the least used cpu from the mq_map. Our goal is to spread
++ * different controllers I/O threads across different cpu cores.
++ *
++ * Note that the accounting is not 100% perfect, but we don't need to be, we're
++ * simply putting our best effort to select the best candidate cpu core that we
++ * find at any given point.
++ */
+ static void nvme_tcp_set_queue_io_cpu(struct nvme_tcp_queue *queue)
+ {
+ 	struct nvme_tcp_ctrl *ctrl = queue->ctrl;
+-	int qid = nvme_tcp_queue_id(queue);
+-	int n = 0;
++	struct blk_mq_tag_set *set = &ctrl->tag_set;
++	int qid = nvme_tcp_queue_id(queue) - 1;
++	unsigned int *mq_map = NULL;
++	int cpu, min_queues = INT_MAX, io_cpu;
++
++	if (wq_unbound)
++		goto out;
+ 
+ 	if (nvme_tcp_default_queue(queue))
+-		n = qid - 1;
++		mq_map = set->map[HCTX_TYPE_DEFAULT].mq_map;
+ 	else if (nvme_tcp_read_queue(queue))
+-		n = qid - ctrl->io_queues[HCTX_TYPE_DEFAULT] - 1;
++		mq_map = set->map[HCTX_TYPE_READ].mq_map;
+ 	else if (nvme_tcp_poll_queue(queue))
+-		n = qid - ctrl->io_queues[HCTX_TYPE_DEFAULT] -
+-				ctrl->io_queues[HCTX_TYPE_READ] - 1;
+-	if (wq_unbound)
+-		queue->io_cpu = WORK_CPU_UNBOUND;
+-	else
+-		queue->io_cpu = cpumask_next_wrap(n - 1, cpu_online_mask, -1, false);
++		mq_map = set->map[HCTX_TYPE_POLL].mq_map;
++
++	if (WARN_ON(!mq_map))
++		goto out;
++
++	/* Search for the least used cpu from the mq_map */
++	io_cpu = WORK_CPU_UNBOUND;
++	for_each_online_cpu(cpu) {
++		int num_queues = atomic_read(&nvme_tcp_cpu_queues[cpu]);
++
++		if (mq_map[cpu] != qid)
++			continue;
++		if (num_queues < min_queues) {
++			io_cpu = cpu;
++			min_queues = num_queues;
++		}
 +	}
- }
- EXPORT_SYMBOL_GPL(rtl_deinit_core);
- 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index 8ee3a11e8dc73..67004ce2f6d9c 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -1657,8 +1657,6 @@ static void rtl_pci_deinit(struct ieee80211_hw *hw)
- 	synchronize_irq(rtlpci->pdev->irq);
- 	tasklet_kill(&rtlpriv->works.irq_tasklet);
- 	cancel_work_sync(&rtlpriv->works.lps_change_work);
--
--	destroy_workqueue(rtlpriv->works.rtl_wq);
++	if (io_cpu != WORK_CPU_UNBOUND) {
++		queue->io_cpu = io_cpu;
++		atomic_inc(&nvme_tcp_cpu_queues[io_cpu]);
++		set_bit(NVME_TCP_Q_IO_CPU_SET, &queue->flags);
++	}
++out:
++	dev_dbg(ctrl->ctrl.device, "queue %d: using cpu %d\n",
++		qid, queue->io_cpu);
  }
  
- static int rtl_pci_init(struct ieee80211_hw *hw, struct pci_dev *pdev)
-diff --git a/drivers/net/wireless/realtek/rtlwifi/usb.c b/drivers/net/wireless/realtek/rtlwifi/usb.c
-index cf70793b1e905..e2e1e568bdb36 100644
---- a/drivers/net/wireless/realtek/rtlwifi/usb.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/usb.c
-@@ -660,11 +660,6 @@ static void _rtl_usb_cleanup_rx(struct ieee80211_hw *hw)
- 	tasklet_kill(&rtlusb->rx_work_tasklet);
- 	cancel_work_sync(&rtlpriv->works.lps_change_work);
+ static void nvme_tcp_tls_done(void *data, int status, key_serial_t pskid)
+@@ -1722,7 +1758,7 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl, int qid,
  
--	if (rtlpriv->works.rtl_wq) {
--		destroy_workqueue(rtlpriv->works.rtl_wq);
--		rtlpriv->works.rtl_wq = NULL;
--	}
--
- 	skb_queue_purge(&rtlusb->rx_queue);
+ 	queue->sock->sk->sk_allocation = GFP_ATOMIC;
+ 	queue->sock->sk->sk_use_task_frag = false;
+-	nvme_tcp_set_queue_io_cpu(queue);
++	queue->io_cpu = WORK_CPU_UNBOUND;
+ 	queue->request = NULL;
+ 	queue->data_remaining = 0;
+ 	queue->ddgst_remaining = 0;
+@@ -1844,6 +1880,9 @@ static void nvme_tcp_stop_queue(struct nvme_ctrl *nctrl, int qid)
+ 	if (!test_bit(NVME_TCP_Q_ALLOCATED, &queue->flags))
+ 		return;
  
- 	while ((urb = usb_get_from_anchor(&rtlusb->rx_cleanup_urbs))) {
++	if (test_and_clear_bit(NVME_TCP_Q_IO_CPU_SET, &queue->flags))
++		atomic_dec(&nvme_tcp_cpu_queues[queue->io_cpu]);
++
+ 	mutex_lock(&queue->queue_lock);
+ 	if (test_and_clear_bit(NVME_TCP_Q_LIVE, &queue->flags))
+ 		__nvme_tcp_stop_queue(queue);
+@@ -1878,9 +1917,10 @@ static int nvme_tcp_start_queue(struct nvme_ctrl *nctrl, int idx)
+ 	nvme_tcp_init_recv_ctx(queue);
+ 	nvme_tcp_setup_sock_ops(queue);
+ 
+-	if (idx)
++	if (idx) {
++		nvme_tcp_set_queue_io_cpu(queue);
+ 		ret = nvmf_connect_io_queue(nctrl, idx);
+-	else
++	} else
+ 		ret = nvmf_connect_admin_queue(nctrl);
+ 
+ 	if (!ret) {
+@@ -2856,6 +2896,7 @@ static struct nvmf_transport_ops nvme_tcp_transport = {
+ static int __init nvme_tcp_init_module(void)
+ {
+ 	unsigned int wq_flags = WQ_MEM_RECLAIM | WQ_HIGHPRI | WQ_SYSFS;
++	int cpu;
+ 
+ 	BUILD_BUG_ON(sizeof(struct nvme_tcp_hdr) != 8);
+ 	BUILD_BUG_ON(sizeof(struct nvme_tcp_cmd_pdu) != 72);
+@@ -2873,6 +2914,9 @@ static int __init nvme_tcp_init_module(void)
+ 	if (!nvme_tcp_wq)
+ 		return -ENOMEM;
+ 
++	for_each_possible_cpu(cpu)
++		atomic_set(&nvme_tcp_cpu_queues[cpu], 0);
++
+ 	nvmf_register_transport(&nvme_tcp_transport);
+ 	return 0;
+ }
 -- 
 2.39.5
 
