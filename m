@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6FC15198D;
-	Wed,  5 Feb 2025 14:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326C8149C53;
+	Wed,  5 Feb 2025 14:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764882; cv=none; b=hh2oAnel7jg2fYVE28NdFsGpLpRMHPBZdeTYRxH148rvMC2fRoO9y1tZaSJ3z2f2Fv63HDLG7VvMjb7lYGPCsQeF48LuA9GluM6oeyt5enAr5DyH4SlFZK/V+aeJokWkDQ1xjli/KdLJGCJTgGLQPNuBp26hu8XCLZvfPtXlTb4=
+	t=1738764886; cv=none; b=uk7yofZe69FA6YttQiG+R9+Os1SA86tpdr3WR+kQxEOXIp7UkYp3Fx3EAHWWx0EIjFT2IILNXV6l7+TmY3AzXAauFCBvFjb80459/EFDsjCdO5+k65/6C2hmJg42LtPZ2GdgJBOZjMq72ZxoNcCYOWPeambM2DE/jIAUvf2l1Eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764882; c=relaxed/simple;
-	bh=gnEmQbnR/XZaMvjABwhBr5TRBsace5RFmZA8pojcCP4=;
+	s=arc-20240116; t=1738764886; c=relaxed/simple;
+	bh=qQYyA0rvYavuxddvyRrIM5UVXCFmH8x7bEtXnru7s8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emWyWT1xcn8D/nJ4QY1RYguu2T1r78NkXD6CHGLZjYWfpj/2VJMHLsqlBTHVSvYET6qKi6zaWXGi9vu2qHQ83R6zl/K6R7O9zdBGXun80b5x3VzLxlPav7MQbImWqdgHq3xrK3cSgPrYZA9Y07gnjhOWowekv+75EuG3uiJbfmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLpQzcBb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NNFv75o/4GnzoAUTxiXICdifqVqKZPfX8j1M0rqyc1/9MrODZwk438Ongi21Smojfm9bcC2vAflidhi21YOJnLwlD9v8hyZJhYW4mgfx9MdA36WHHAY7o6suPMVUWbr+U0sXLi9txgx6+G8qLJ2e0M+KeGxr7Mg987yEbib2EO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0VhaJUA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLpQzcBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381C7C4CED1;
-	Wed,  5 Feb 2025 14:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0VhaJUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9777CC4CED1;
+	Wed,  5 Feb 2025 14:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764882;
-	bh=gnEmQbnR/XZaMvjABwhBr5TRBsace5RFmZA8pojcCP4=;
+	s=korg; t=1738764886;
+	bh=qQYyA0rvYavuxddvyRrIM5UVXCFmH8x7bEtXnru7s8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kLpQzcBb749de717TtiBLxQLoU2Z9JYE2zwef5gv31+uyTquO2lh8IT7MYJdXR/Pr
-	 bxhnP5rRC8XIlqomN0x2TLq4Gb+mgFwlqsxOkuoLFfd6ZQ4l/yCOJBqcc0+HBDNuJc
-	 Y63rn6z3yyrdp8QXnm6cU4Qd8GhUT9BNG9kq0GdY=
+	b=Y0VhaJUANS7wVuy4mihPakIhFH0QQqVS4bJh9IOp7BKhQUL6QSV7MW6qsdPODfCov
+	 HzxRE4m4+x/8UvUoJCTKHBkETxlt1ZH+bL2ww6B0teqzJgDjW8Ey6GaIJT9VYPC0Xg
+	 u2pC7c2S+uHIejKw9MTWDL/XD8ALpfhoa8jDUYo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricky CX Wu <ricky.cx.wu.wiwynn@gmail.com>,
-	Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 212/393] ARM: dts: aspeed: yosemite4: correct the compatible string of adm1272
-Date: Wed,  5 Feb 2025 14:42:11 +0100
-Message-ID: <20250205134428.411196383@linuxfoundation.org>
+Subject: [PATCH 6.12 166/590] clk: ralink: mtmips: remove duplicated xtal clock for Ralink SoC RT3883
+Date: Wed,  5 Feb 2025 14:38:41 +0100
+Message-ID: <20250205134501.633659808@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricky CX Wu <ricky.cx.wu.wiwynn@gmail.com>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-[ Upstream commit ece3e20e3389ec8a32944ad44746ee379bf1d3eb ]
+[ Upstream commit 830d8062d25581cf0beaa334486eea06834044da ]
 
-Remove the space in the compatible string of adm1272 to match the
-pattern of compatible.
+Ralink SoC RT3883 has already 'xtal' defined as a base clock so there is no
+need to redefine it again in fixed clocks section. Hence, remove the duplicate
+one from there.
 
-Fixes: 2b8d94f4b4a4 ("ARM: dts: aspeed: yosemite4: add Facebook Yosemite 4 BMC")
-Signed-off-by: Ricky CX Wu <ricky.cx.wu.wiwynn@gmail.com>
-Signed-off-by: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
-Fixes: 2b8d94f4b4a4765d ("ARM: dts: aspeed: yosemite4: add Facebook Yosemite 4 BMC")
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Link: https://patch.msgid.link/20240927085213.331127-1-Delphine_CC_Chiu@wiwynn.com
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Fixes: d34db686a3d7 ("clk: ralink: mtmips: fix clocks probe order in oldest ralink SoCs")
+Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Link: https://lore.kernel.org/r/20250108093636.265033-1-sergio.paracuellos@gmail.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/ralink/clk-mtmips.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
-index 64075cc41d927..ac15fee7245a1 100644
---- a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
-+++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
-@@ -284,12 +284,12 @@
- &i2c11 {
- 	status = "okay";
- 	power-sensor@10 {
--		compatible = "adi, adm1272";
-+		compatible = "adi,adm1272";
- 		reg = <0x10>;
- 	};
+diff --git a/drivers/clk/ralink/clk-mtmips.c b/drivers/clk/ralink/clk-mtmips.c
+index 76285fbbdeaa2..4b5d8b741e4e1 100644
+--- a/drivers/clk/ralink/clk-mtmips.c
++++ b/drivers/clk/ralink/clk-mtmips.c
+@@ -264,7 +264,6 @@ static int mtmips_register_pherip_clocks(struct device_node *np,
+ 	}
  
- 	power-sensor@12 {
--		compatible = "adi, adm1272";
-+		compatible = "adi,adm1272";
- 		reg = <0x12>;
- 	};
+ static struct mtmips_clk_fixed rt3883_fixed_clocks[] = {
+-	CLK_FIXED("xtal", NULL, 40000000),
+ 	CLK_FIXED("periph", "xtal", 40000000)
+ };
  
 -- 
 2.39.5
