@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E461514EE;
-	Wed,  5 Feb 2025 13:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE8513C9C4;
+	Wed,  5 Feb 2025 13:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763945; cv=none; b=TVQoehCbRwjA22uoEL9uge4AudCE7Tl5Sfm2GEx+V/b2j1Ue7i5qV0tJoLfwqKLxtg0Yi+I7bEu8wm8hE7EcgdCVoSHQByGVI08Ur9wY9MrfRPTgK8BGg9xsJbY/D/hl8gf5H4HedXMEIC8WaEpLz9Cp/ABTD2+F5kW4nCq/QRw=
+	t=1738763949; cv=none; b=Eqz41yhCDDibN6RAzYuUBLjsbmANw2cqPQmqeus7YfVfKn5+hYFzEr7NZx0hvLPi3G3vfOgfcbQwW2AJz3LvnE2kRvyO9WW8fwKeYQae9/XE6hP44casak1XjLfcqp+Ho2k/pUTYbDtbWuoTlOEcgri/xr45/h4gzGbZI6Cat+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763945; c=relaxed/simple;
-	bh=pnl2BotOIfYAkUQxG7pMHx3eAS3+iqs/ZUI37zTy8zI=;
+	s=arc-20240116; t=1738763949; c=relaxed/simple;
+	bh=NZXp70OzpNF6MP8oisAvF2c5YgiN26Szkt2gg5KSAik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=odRVHljfWYxot/MZe+6dVrnST0nATVADQcX0RGQ3JL2dSK5G6swGthyUQZ8mJxD8549Kxn5rFY1AHH4Q/J0NINAZUqSIi2mjbdtaWpQQ1EpTvN3YFPVsLBpNj3p8Qa5XkUeLWdI0Zr8lQxgXXAr1pRNT8B36rDtHzrA4SS6qS3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7Sol9r1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g93s+vWA1zE95IQvLi3+r3Nz0k4ge8Sm8ckSigyKJGsqswHkJGiPqLC07Q4y/CYOs7DOC3Ub+JMP1VCdkMFCmpaG7ShO75KoBixH6ui6BjbRjoPnrAWJf0IBdasmRqvB+wflVgrGNm8/riipLHaxkBXf9bXK78qGrl7hGGTV5Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMdKh2qc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7Sol9r1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F44EC4CED1;
-	Wed,  5 Feb 2025 13:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMdKh2qc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8490FC4CED1;
+	Wed,  5 Feb 2025 13:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763945;
-	bh=pnl2BotOIfYAkUQxG7pMHx3eAS3+iqs/ZUI37zTy8zI=;
+	s=korg; t=1738763949;
+	bh=NZXp70OzpNF6MP8oisAvF2c5YgiN26Szkt2gg5KSAik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j7Sol9r1gF+Y1FSOqjzfKyPX2asSwu7KKFlqBzVU9yAHNhf9ZasTCUQA595PVXq4m
-	 hUzISjUFBMFssHbVKKcU3EF6OSu8HXXSf40I8q3VkrchFr742Y8OCecq5chMdC/bam
-	 saTkmA4i5CGmABy7JPFT6nyNgyF1bMw2Ga3AhGnY=
+	b=NMdKh2qcY8jJwXBiJFONVBygQv644I7L4LiADlVx6A9mlUuKhx9zc1CrL65FSBW5z
+	 +AMf4/jCbENQUbRxOUa/gxjTjbJe2BLwnCKhUuFxZGuwhV7qtHe3xzjzI9CBD42i2b
+	 wAz/USSNDQ6uMYSyFxCw7pBoAdNCcE0yNjjN231s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balaji Pothunoori <quic_bpothuno@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 075/590] wifi: ath11k: Fix unexpected return buffer manager error for WCN6750/WCN6855
-Date: Wed,  5 Feb 2025 14:37:10 +0100
-Message-ID: <20250205134458.124573939@linuxfoundation.org>
+Subject: [PATCH 6.12 063/590] drm/msm/dpu: link DSPP_2/_3 blocks on SM8550
+Date: Wed,  5 Feb 2025 14:36:58 +0100
+Message-ID: <20250205134457.667404503@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -52,66 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balaji Pothunoori <quic_bpothuno@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 78e154d42f2c72905fe66a400847e1b2b101b7b2 ]
+[ Upstream commit e21f9d85b05361bc343b11ecf84ac12c9cccbc3e ]
 
-The following error messages were encountered while parsing fragmented RX
-packets for WCN6750/WCN6855:
+Link DSPP_2 to the LM_2 and DSPP_3 to the LM_3 mixer blocks. This allows
+using colour transformation matrix (aka night mode) with more outputs at
+the same time.
 
-ath11k 17a10040.wifi: invalid return buffer manager 4
-
-This issue arose due to a hardcoded check for HAL_RX_BUF_RBM_SW3_BM
-introduced in 'commit 71c748b5e01e ("ath11k: Fix unexpected return buffer
-manager error for QCA6390")'
-
-For WCN6750 and WCN6855, the return buffer manager ID should be
-HAL_RX_BUF_RBM_SW1_BM. The incorrect conditional check caused fragmented
-packets to be dropped, resulting in the above error log.
-
-Fix this by adding a check for HAL_RX_BUF_RBM_SW1_BM.
-
-Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.2.0.c2-00258-QCAMSLSWPL-1
-Tested-on: WCN6855 hw2.1 WLAN.HSP.1.1-04479-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
-
-Fixes: 71c748b5e01e ("ath11k: Fix unexpected return buffer manager error for QCA6390")
-Signed-off-by: Balaji Pothunoori <quic_bpothuno@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241030114625.2416942-1-quic_bpothuno@quicinc.com
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Fixes: efcd0107727c ("drm/msm/dpu: add support for SM8550")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/629961/
+Link: https://lore.kernel.org/r/20241220-dpu-fix-catalog-v2-6-38fa961ea992@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c  | 1 +
- drivers/net/wireless/ath/ath11k/hal_rx.c | 3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 40088e62572e1..40b52d12b4323 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -3872,6 +3872,7 @@ int ath11k_dp_process_rx_err(struct ath11k_base *ab, struct napi_struct *napi,
- 		ath11k_hal_rx_msdu_link_info_get(link_desc_va, &num_msdus, msdu_cookies,
- 						 &rbm);
- 		if (rbm != HAL_RX_BUF_RBM_WBM_IDLE_DESC_LIST &&
-+		    rbm != HAL_RX_BUF_RBM_SW1_BM &&
- 		    rbm != HAL_RX_BUF_RBM_SW3_BM) {
- 			ab->soc_stats.invalid_rbm++;
- 			ath11k_warn(ab, "invalid return buffer manager %d\n", rbm);
-diff --git a/drivers/net/wireless/ath/ath11k/hal_rx.c b/drivers/net/wireless/ath/ath11k/hal_rx.c
-index 8f7dd43dc1bd8..753bd93f02123 100644
---- a/drivers/net/wireless/ath/ath11k/hal_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/hal_rx.c
-@@ -372,7 +372,8 @@ int ath11k_hal_wbm_desc_parse_err(struct ath11k_base *ab, void *desc,
- 
- 	ret_buf_mgr = FIELD_GET(BUFFER_ADDR_INFO1_RET_BUF_MGR,
- 				wbm_desc->buf_addr_info.info1);
--	if (ret_buf_mgr != HAL_RX_BUF_RBM_SW3_BM) {
-+	if (ret_buf_mgr != HAL_RX_BUF_RBM_SW1_BM &&
-+	    ret_buf_mgr != HAL_RX_BUF_RBM_SW3_BM) {
- 		ab->soc_stats.invalid_rbm++;
- 		return -EINVAL;
- 	}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+index ad48defa154f7..a1dbbf5c652ff 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+@@ -160,6 +160,7 @@ static const struct dpu_lm_cfg sm8550_lm[] = {
+ 		.sblk = &sdm845_lm_sblk,
+ 		.lm_pair = LM_3,
+ 		.pingpong = PINGPONG_2,
++		.dspp = DSPP_2,
+ 	}, {
+ 		.name = "lm_3", .id = LM_3,
+ 		.base = 0x47000, .len = 0x320,
+@@ -167,6 +168,7 @@ static const struct dpu_lm_cfg sm8550_lm[] = {
+ 		.sblk = &sdm845_lm_sblk,
+ 		.lm_pair = LM_2,
+ 		.pingpong = PINGPONG_3,
++		.dspp = DSPP_3,
+ 	}, {
+ 		.name = "lm_4", .id = LM_4,
+ 		.base = 0x48000, .len = 0x320,
 -- 
 2.39.5
 
