@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEA61519AA;
-	Wed,  5 Feb 2025 14:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE58BF510;
+	Wed,  5 Feb 2025 14:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764337; cv=none; b=f14qUjC2sRvaYou9886vJj83bIdQ7EnM10aPtvod8+rpPQZrW76R6HahnV0+r/CbKoS6H/T4N+16c+T/vGX2ilMYWi6icUSwxjTtsaQX+I9DY+nOqfO1+QXt0U3fJJoB1dnYRQV4tMH8fG6RL+yDcIT2MSqi3NP23OCudK0g1bQ=
+	t=1738764340; cv=none; b=b+2O/sDHgmeerX3YJ1A5TUijB5mtp0/i3idHMJYdRkTIxpn9vaS+S+F0+LO7lX2aWabixOfAglhqkdAaQx+5x25/rDB+Ljog7sBr3j6JhPUQrE4Mi3+GKTLXBqgY9jRTh0k19VdDjg443L8swti9zsYPy64/bcsuyg1lpWrKbxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764337; c=relaxed/simple;
-	bh=wgPqjUKi/vbc4oHyPAGUAvWhJnrDvX5sLuCxEq5i4IE=;
+	s=arc-20240116; t=1738764340; c=relaxed/simple;
+	bh=2GhGc52CwLJAuavqlSCXLBMjSCGzEz4nxHNuf/7CD0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G89g753QK0vE4v0R12uUK0KWiJ/e7/uQ1AjxAvMYM+oiraNh/peX5CWOFTFDBLozsSQQQnkLAj3/NQOcHAuqpgI3zH6hvOhfZWjQewvpbFCHNVKReKn90LxQKPcWSbnEd2WuPEo5Tvh9dow0fVBhFkNp4/LxIjr4qBkKiq7CnCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8o+ePoO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UdvP6bgIJvpln/OxEcupttyyNj54/eJXTUhOrV2tRZVor5VeN5COMvImsp+Mb9WgJiu+1+gEAjbkcoIxoKcxVdgmavmNErYhQa2EniQU9tD4cvm7THrSCmsnEELYC0j3YOhftf0O0c9fgaNCN+lpOfpLuJWlnPExiCdw+KbpDAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGV2SVBU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8o+ePoO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2034C4CED1;
-	Wed,  5 Feb 2025 14:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGV2SVBU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17486C4CED1;
+	Wed,  5 Feb 2025 14:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764337;
-	bh=wgPqjUKi/vbc4oHyPAGUAvWhJnrDvX5sLuCxEq5i4IE=;
+	s=korg; t=1738764340;
+	bh=2GhGc52CwLJAuavqlSCXLBMjSCGzEz4nxHNuf/7CD0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P8o+ePoOI2SANJx/h2HSB7BZWW3iIDFvnBl/h3HoXz5Wy2R44Peen2AJRdJeYjAQ4
-	 iupWV5oIWZ02mgEOEUsFiqHJZi3r5632EdAxy8huJ3SZnrkYH394TdfItAla7Rc/iG
-	 NClDB1PT+AOh8NXmSXp89VdI/UL1sjCJRG4edOz0=
+	b=TGV2SVBUJ4CGiVdarg6lnEyZFX3jahD7RwRGoOfDY3ixwWzRsP7PonHboOdyv3h1a
+	 1+HutlkGjY+E3RDAMB/ML6BvCdAllzR5x/GLXCaF7DbMg3XL+GJocQVxkntbFr2XZR
+	 pT3LTXDvNYuHY82VmNjSQqXCM5i3wqWXZThOyHto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 069/623] drm/msm/dpu: link DSPP_2/_3 blocks on SC8180X
-Date: Wed,  5 Feb 2025 14:36:51 +0100
-Message-ID: <20250205134458.867017100@linuxfoundation.org>
+Subject: [PATCH 6.6 163/393] ASoC: renesas: rz-ssi: Use only the proper amount of dividers
+Date: Wed,  5 Feb 2025 14:41:22 +0100
+Message-ID: <20250205134426.535278444@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 0986163245df6bece47113e506143a7e87b0097d ]
+[ Upstream commit 55c209cd4318c701e6e88e0b2512a0f12dd02a7d ]
 
-Link DSPP_2 to the LM_2 and DSPP_3 to the LM_3 mixer blocks. This allows
-using colour transformation matrix (aka night mode) with more outputs at
-the same time.
+There is no need to populate the ckdv[] with invalid dividers as that
+part will not be indexed anyway. The ssi->audio_mck/bclk_rate should
+always be >= 0. While at it, change the ckdv type as u8, as the divider
+128 was previously using the s8 sign bit.
 
-Fixes: f5abecfe339e ("drm/msm/dpu: enable DSPP and DSC on sc8180x")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/629954/
-Link: https://lore.kernel.org/r/20241220-dpu-fix-catalog-v2-3-38fa961ea992@linaro.org
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Fixes: 03e786bd43410fa9 ("ASoC: sh: Add RZ/G2L SSIF-2 driver")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20241210170953.2936724-6-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/sh/rz-ssi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-index bab19ddd1d4f9..641023b102bf5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-@@ -163,6 +163,7 @@ static const struct dpu_lm_cfg sc8180x_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.lm_pair = LM_3,
- 		.pingpong = PINGPONG_2,
-+		.dspp = DSPP_2,
- 	}, {
- 		.name = "lm_3", .id = LM_3,
- 		.base = 0x47000, .len = 0x320,
-@@ -170,6 +171,7 @@ static const struct dpu_lm_cfg sc8180x_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.lm_pair = LM_2,
- 		.pingpong = PINGPONG_3,
-+		.dspp = DSPP_3,
- 	}, {
- 		.name = "lm_4", .id = LM_4,
- 		.base = 0x48000, .len = 0x320,
+diff --git a/sound/soc/sh/rz-ssi.c b/sound/soc/sh/rz-ssi.c
+index 1588b93cc35d0..353863f49b313 100644
+--- a/sound/soc/sh/rz-ssi.c
++++ b/sound/soc/sh/rz-ssi.c
+@@ -245,8 +245,7 @@ static void rz_ssi_stream_quit(struct rz_ssi_priv *ssi,
+ static int rz_ssi_clk_setup(struct rz_ssi_priv *ssi, unsigned int rate,
+ 			    unsigned int channels)
+ {
+-	static s8 ckdv[16] = { 1,  2,  4,  8, 16, 32, 64, 128,
+-			       6, 12, 24, 48, 96, -1, -1, -1 };
++	static u8 ckdv[] = { 1,  2,  4,  8, 16, 32, 64, 128, 6, 12, 24, 48, 96 };
+ 	unsigned int channel_bits = 32;	/* System Word Length */
+ 	unsigned long bclk_rate = rate * channels * channel_bits;
+ 	unsigned int div;
 -- 
 2.39.5
 
