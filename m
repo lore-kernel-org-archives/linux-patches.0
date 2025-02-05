@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C29918D656;
-	Wed,  5 Feb 2025 15:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08BB1891AA;
+	Wed,  5 Feb 2025 15:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768677; cv=none; b=YJCJApPdPAtROGwk5uSjmkQXqaMmbDS0tV1YwnDL0TiZBrsceMaJuFjDwmA99475SyNC+GJgMFY9rEy/rm97hBiERWChyOkdoZLaTZAuCYqI5WtKyGoaJ5TL8R8qSnXO23zl5qjAW0cTeaudwnfzUrErJnLuI3SbvfVwzGoyWjo=
+	t=1738768681; cv=none; b=ta+4nsdqfIpocaek3nB5MotyJyGbXoCWzGXfaAL5/znxB5ISlTFkZ3pL4q7zPHheH6socc+vTyqaRNJjjh0LBJI3ASLL337Bu9w66VQR31bYlLxfKJ4GpFtBrzIxmLtMG0+2568JCcMnQDbF8dS8Jcz7hdIlMrpAhXQmrZ0Ivb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768677; c=relaxed/simple;
-	bh=sPxu/k/e5/5oej5jEralDtIGs+bOcrRKAUUn5CmiWu0=;
+	s=arc-20240116; t=1738768681; c=relaxed/simple;
+	bh=udKYhnY2Lk1w+uAr2dl5buHkxa9fLAEtvtVjHtMN8vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NBvunmrd047Qyb9JdUxYB+YnPgS+uO6XsGAB4lEjO3r9C0164lwJBdvKy4wI1/aJWl7hdicjeHW/c6U/abJpBQKukPxWQ0agjEVHeuIcHl9Eq7IloObS0g9KU7jTlp/jBBj1t431hY8ykBDXtNY4Ne7UeTZ+doTQ5IJuPUO20to=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThPU6qwm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=D9ZDkSKql0G5PoPNgIooGfidX0aDBh78aJrKM4EBydKLI+54Zp87ULiTpiJeNnWosS+AVAY5hD8JnwS2FRAmt+BNJ2c/V8hOGxDTadBUiftrJa0gLiKHKDeqyp7A+YOgZ/5c/c88pAMaXL/nfImJNbB1sL/PZOVoMp0NpHgqoao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiCRO/xg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThPU6qwm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94686C4CED1;
-	Wed,  5 Feb 2025 15:17:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiCRO/xg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AB9C4CED6;
+	Wed,  5 Feb 2025 15:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768677;
-	bh=sPxu/k/e5/5oej5jEralDtIGs+bOcrRKAUUn5CmiWu0=;
+	s=korg; t=1738768680;
+	bh=udKYhnY2Lk1w+uAr2dl5buHkxa9fLAEtvtVjHtMN8vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ThPU6qwmOmslbdCKpupVRFEoeIa0xCQYi34BONo/GGhSeqWkO7nWm4Ua3HYR+FOm0
-	 weB0ABhggE+zgKUVA/kivMh4qMZIuH48GlKbc3OvqgQTRTlnb90x/0TuWIPP1bwZJB
-	 7cz+IgBx8sPQa/87CY+VKYO8JYkx91L6TPkLVbjs=
+	b=qiCRO/xgzIknGta/JfIuMVA4AuRluRecju0ghCnvtwSf2edyPcqretwr6WdA7s5VK
+	 i5lIrE0dNk4+74oxPoABuWbI24HaZfO4ph6Bc043P2HUIs1I0sF/LOFVEYf3VW2oVE
+	 oT38MF6MtWzqBIe5Go/KSYG499P/npqz0QCvrOlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Shakeel Butt <shakeelb@google.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 619/623] memcg: fix soft lockup in the OOM process
-Date: Wed,  5 Feb 2025 14:46:01 +0100
-Message-ID: <20250205134519.894445132@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Trevor Gamblin <tgamblin@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Subject: [PATCH 6.13 620/623] pwm: Ensure callbacks exist before calling them
+Date: Wed,  5 Feb 2025 14:46:02 +0100
+Message-ID: <20250205134519.931296906@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -57,118 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-commit ade81479c7dda1ce3eedb215c78bc615bbd04f06 upstream.
+commit da6b353786997c0ffa67127355ad1d54ed3324c2 upstream.
 
-A soft lockup issue was found in the product with about 56,000 tasks were
-in the OOM cgroup, it was traversing them when the soft lockup was
-triggered.
+If one of the waveform functions is called for a chip that only supports
+.apply(), we want that an error code is returned and not a NULL pointer
+exception.
 
-watchdog: BUG: soft lockup - CPU#2 stuck for 23s! [VM Thread:1503066]
-CPU: 2 PID: 1503066 Comm: VM Thread Kdump: loaded Tainted: G
-Hardware name: Huawei Cloud OpenStack Nova, BIOS
-RIP: 0010:console_unlock+0x343/0x540
-RSP: 0000:ffffb751447db9a0 EFLAGS: 00000247 ORIG_RAX: ffffffffffffff13
-RAX: 0000000000000001 RBX: 0000000000000000 RCX: 00000000ffffffff
-RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000247
-RBP: ffffffffafc71f90 R08: 0000000000000000 R09: 0000000000000040
-R10: 0000000000000080 R11: 0000000000000000 R12: ffffffffafc74bd0
-R13: ffffffffaf60a220 R14: 0000000000000247 R15: 0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f2fe6ad91f0 CR3: 00000004b2076003 CR4: 0000000000360ee0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- vprintk_emit+0x193/0x280
- printk+0x52/0x6e
- dump_task+0x114/0x130
- mem_cgroup_scan_tasks+0x76/0x100
- dump_header+0x1fe/0x210
- oom_kill_process+0xd1/0x100
- out_of_memory+0x125/0x570
- mem_cgroup_out_of_memory+0xb5/0xd0
- try_charge+0x720/0x770
- mem_cgroup_try_charge+0x86/0x180
- mem_cgroup_try_charge_delay+0x1c/0x40
- do_anonymous_page+0xb5/0x390
- handle_mm_fault+0xc4/0x1f0
-
-This is because thousands of processes are in the OOM cgroup, it takes a
-long time to traverse all of them.  As a result, this lead to soft lockup
-in the OOM process.
-
-To fix this issue, call 'cond_resched' in the 'mem_cgroup_scan_tasks'
-function per 1000 iterations.  For global OOM, call
-'touch_softlockup_watchdog' per 1000 iterations to avoid this issue.
-
-Link: https://lkml.kernel.org/r/20241224025238.3768787-1-chenridong@huaweicloud.com
-Fixes: 9cbb78bb3143 ("mm, memcg: introduce own oom handler to iterate only over its own threads")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Shakeel Butt <shakeelb@google.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Michal Koutný <mkoutny@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 6c5126c6406d ("pwm: Provide new consumer API functions for waveforms")
+Cc: stable@vger.kernel.org
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Tested-by: Trevor Gamblin <tgamblin@baylibre.com>
+Link: https://lore.kernel.org/r/20250123172709.391349-2-u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    7 ++++++-
- mm/oom_kill.c   |    8 +++++++-
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/pwm/core.c  | 13 +++++++++++--
+ include/linux/pwm.h | 17 +++++++++++++++++
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -1161,6 +1161,7 @@ void mem_cgroup_scan_tasks(struct mem_cg
+diff --git a/drivers/pwm/core.c b/drivers/pwm/core.c
+index 9c733877e98e..1a36ee3cab91 100644
+--- a/drivers/pwm/core.c
++++ b/drivers/pwm/core.c
+@@ -242,6 +242,9 @@ int pwm_round_waveform_might_sleep(struct pwm_device *pwm, struct pwm_waveform *
+ 
+ 	BUG_ON(WFHWSIZE < ops->sizeof_wfhw);
+ 
++	if (!pwmchip_supports_waveform(chip))
++		return -EOPNOTSUPP;
++
+ 	if (!pwm_wf_valid(wf))
+ 		return -EINVAL;
+ 
+@@ -294,6 +297,9 @@ int pwm_get_waveform_might_sleep(struct pwm_device *pwm, struct pwm_waveform *wf
+ 
+ 	BUG_ON(WFHWSIZE < ops->sizeof_wfhw);
+ 
++	if (!pwmchip_supports_waveform(chip) || !ops->read_waveform)
++		return -EOPNOTSUPP;
++
+ 	guard(pwmchip)(chip);
+ 
+ 	if (!chip->operational)
+@@ -320,6 +326,9 @@ static int __pwm_set_waveform(struct pwm_device *pwm,
+ 
+ 	BUG_ON(WFHWSIZE < ops->sizeof_wfhw);
+ 
++	if (!pwmchip_supports_waveform(chip))
++		return -EOPNOTSUPP;
++
+ 	if (!pwm_wf_valid(wf))
+ 		return -EINVAL;
+ 
+@@ -592,7 +601,7 @@ static int __pwm_apply(struct pwm_device *pwm, const struct pwm_state *state)
+ 	    state->usage_power == pwm->state.usage_power)
+ 		return 0;
+ 
+-	if (ops->write_waveform) {
++	if (pwmchip_supports_waveform(chip)) {
+ 		struct pwm_waveform wf;
+ 		char wfhw[WFHWSIZE];
+ 
+@@ -746,7 +755,7 @@ int pwm_get_state_hw(struct pwm_device *pwm, struct pwm_state *state)
+ 	if (!chip->operational)
+ 		return -ENODEV;
+ 
+-	if (ops->read_waveform) {
++	if (pwmchip_supports_waveform(chip) && ops->read_waveform) {
+ 		char wfhw[WFHWSIZE];
+ 		struct pwm_waveform wf;
+ 
+diff --git a/include/linux/pwm.h b/include/linux/pwm.h
+index 78827f312407..b8d78009e779 100644
+--- a/include/linux/pwm.h
++++ b/include/linux/pwm.h
+@@ -347,6 +347,23 @@ struct pwm_chip {
+ 	struct pwm_device pwms[] __counted_by(npwm);
+ };
+ 
++/**
++ * pwmchip_supports_waveform() - checks if the given chip supports waveform callbacks
++ * @chip: The pwm_chip to test
++ *
++ * Returns true iff the pwm chip support the waveform functions like
++ * pwm_set_waveform_might_sleep() and pwm_round_waveform_might_sleep()
++ */
++static inline bool pwmchip_supports_waveform(struct pwm_chip *chip)
++{
++	/*
++	 * only check for .write_waveform(). If that is available,
++	 * .round_waveform_tohw() and .round_waveform_fromhw() asserted to be
++	 * available, too, in pwmchip_add().
++	 */
++	return chip->ops->write_waveform != NULL;
++}
++
+ static inline struct device *pwmchip_parent(const struct pwm_chip *chip)
  {
- 	struct mem_cgroup *iter;
- 	int ret = 0;
-+	int i = 0;
- 
- 	BUG_ON(mem_cgroup_is_root(memcg));
- 
-@@ -1169,8 +1170,12 @@ void mem_cgroup_scan_tasks(struct mem_cg
- 		struct task_struct *task;
- 
- 		css_task_iter_start(&iter->css, CSS_TASK_ITER_PROCS, &it);
--		while (!ret && (task = css_task_iter_next(&it)))
-+		while (!ret && (task = css_task_iter_next(&it))) {
-+			/* Avoid potential softlockup warning */
-+			if ((++i & 1023) == 0)
-+				cond_resched();
- 			ret = fn(task, arg);
-+		}
- 		css_task_iter_end(&it);
- 		if (ret) {
- 			mem_cgroup_iter_break(memcg, iter);
---- a/mm/oom_kill.c
-+++ b/mm/oom_kill.c
-@@ -44,6 +44,7 @@
- #include <linux/init.h>
- #include <linux/mmu_notifier.h>
- #include <linux/cred.h>
-+#include <linux/nmi.h>
- 
- #include <asm/tlb.h>
- #include "internal.h"
-@@ -430,10 +431,15 @@ static void dump_tasks(struct oom_contro
- 		mem_cgroup_scan_tasks(oc->memcg, dump_task, oc);
- 	else {
- 		struct task_struct *p;
-+		int i = 0;
- 
- 		rcu_read_lock();
--		for_each_process(p)
-+		for_each_process(p) {
-+			/* Avoid potential softlockup warning */
-+			if ((++i & 1023) == 0)
-+				touch_softlockup_watchdog();
- 			dump_task(p, oc);
-+		}
- 		rcu_read_unlock();
- 	}
- }
+ 	return chip->dev.parent;
+-- 
+2.48.1
+
 
 
