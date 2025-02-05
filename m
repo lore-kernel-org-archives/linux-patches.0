@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FC71519AA;
-	Wed,  5 Feb 2025 14:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BF21519AA;
+	Wed,  5 Feb 2025 14:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764503; cv=none; b=t84nBENP9soWSQGiUrlypWyj5xfgeocIsKbcf9V7exhE+pGit3WOuY/YaLE2WhsG6h7c/deXIYT4hQHvAx4SVoG2s8Fdjn3iblVrTBtIQesqYxSkXjqZtzJs3/mOTV7sdFu4IYcggdbC3gJrcpOd43f+ugnX4tkfHP6Ky8qrxYg=
+	t=1738764507; cv=none; b=So+OYqjZ9UmS8Om1VQAHTPEbLPoKluk3Wlvt9ZBh/Lba7om6kvavB/p812cuzwtQ5X8uE66IKN5hfOo7lSneW7sK7qU+sOkVtb0oN0kGMxKUKYMUT94eZlN8UmoOyi6bo3ALKbc1gnhBcNa3mzn/3fbGu3qkxpkvSWRt2mTVEOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764503; c=relaxed/simple;
-	bh=y2zmzusKzEOXtXxpNeyVhflbYCoz8nMqQ/h4hxgHolM=;
+	s=arc-20240116; t=1738764507; c=relaxed/simple;
+	bh=4d/S4Ngc9Ij27qDP6NtkdpK9ChT8rg5W/4Fpt8vZuJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TuPTFslvRt+gZEMo+UjyLx4snc/yUZ4ExHrPZmuXZxRaq37rHRTg3biYpCi4f7nw1Q33QgoJiHEjyH+4uYU1SzyEntbE812agLKx9rN6A8vSmapzVcgObnFWiOoXjBJ6Q3vA9E/bT3Prg501+SrIh4n1GVAc5/jFiVv2guLNBnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6jUIF61; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pLVQNqZMyK6E7Hg8WDu+zo9R7O9Dk3hBDOfmTxAwVtB0EgKf0DzyuI0GLN+Y12e0unfAtX3YTzjtDC6fZkBJWmtONyepIw9xWg7BS4aEqq2abQzd4W4LeOSFIZ2cjKt/d/I+hlZvJ8Vl3NSxOPWjDMnmQeUZGj++qFy+gEY5PMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRBUT5zc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6jUIF61"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E106BC4CED1;
-	Wed,  5 Feb 2025 14:08:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRBUT5zc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9928EC4CED1;
+	Wed,  5 Feb 2025 14:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764502;
-	bh=y2zmzusKzEOXtXxpNeyVhflbYCoz8nMqQ/h4hxgHolM=;
+	s=korg; t=1738764507;
+	bh=4d/S4Ngc9Ij27qDP6NtkdpK9ChT8rg5W/4Fpt8vZuJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M6jUIF61wpST13Efqu56Kr3VUB7xDfkqgJvPyc5xTektd0ks69aNJrU3g5WsP7ymn
-	 Zs8EeUi0OeEoWsz+SxbqkKpHAiMyEMyLf7sdFLuJTnOKftaueCf3AO4+Cqfw7J5j2A
-	 iq5LbTz2TubPnS03Sjai11yQtrZPl9eEkARFRIt4=
+	b=CRBUT5zcCtDEx/q9eznGsENU+b4afIxFzzhtCZI+CgnaPoKnNjnaygQEaA+V1KtgQ
+	 ZtwxN7+3eyEYd5NYzfrpS1kJC4EAhgGMEKg+2j8N/AtccKp0a9GE79ggzBvGxBC5U7
+	 nyt+aZYCX7ABBEU1adXtGcLM68Vfyc8FSxzs/Pwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Mark Brown <broonie@kernel.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 133/590] regulator: of: Implement the unwind path of of_regulator_match()
-Date: Wed,  5 Feb 2025 14:38:08 +0100
-Message-ID: <20250205134500.355502917@linuxfoundation.org>
+Subject: [PATCH 6.13 086/623] wifi: rtlwifi: do not complete firmware loading needlessly
+Date: Wed,  5 Feb 2025 14:37:08 +0100
+Message-ID: <20250205134459.514468499@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,68 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit dddca3b2fc676113c58b04aaefe84bfb958ac83e ]
+[ Upstream commit e73e11d303940119e41850a0452a0deda2cc4eb5 ]
 
-of_regulator_match() does not release the OF node reference in the error
-path, resulting in an OF node leak. Therefore, call of_node_put() on the
-obtained nodes before returning the EINVAL error.
+The only code waiting for completion is driver removal, which will not be
+called when probe returns a failure. So this completion is unnecessary.
 
-Since it is possible that some drivers call this function and do not
-exit on failure, such as s2mps11_pmic_driver, clear the init_data and
-of_node in the error path.
-
-This was reported by an experimental verification tool that I am
-developing. As I do not have access to actual devices nor the QEMU board
-configuration to test drivers that call this function, no runtime test
-was able to be performed.
-
-Fixes: 1c8fa58f4750 ("regulator: Add generic DT parsing for regulators")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Link: https://patch.msgid.link/20250104080453.2153592-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b0302aba812b ("rtlwifi: Convert to asynchronous firmware load")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241107133322.855112-2-cascardo@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/of_regulator.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 1 -
+ drivers/net/wireless/realtek/rtlwifi/usb.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/drivers/regulator/of_regulator.c b/drivers/regulator/of_regulator.c
-index 3f490d81abc28..deab0b95b6637 100644
---- a/drivers/regulator/of_regulator.c
-+++ b/drivers/regulator/of_regulator.c
-@@ -446,7 +446,7 @@ int of_regulator_match(struct device *dev, struct device_node *node,
- 					"failed to parse DT for regulator %pOFn\n",
- 					child);
- 				of_node_put(child);
--				return -EINVAL;
-+				goto err_put;
- 			}
- 			match->of_node = of_node_get(child);
- 			count++;
-@@ -455,6 +455,18 @@ int of_regulator_match(struct device *dev, struct device_node *node,
- 	}
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index 11709b6c83f1a..40fc3c297a8ac 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -2266,7 +2266,6 @@ int rtl_pci_probe(struct pci_dev *pdev,
+ 		pci_iounmap(pdev, (void __iomem *)rtlpriv->io.pci_mem_start);
  
- 	return count;
-+
-+err_put:
-+	for (i = 0; i < num_matches; i++) {
-+		struct of_regulator_match *match = &matches[i];
-+
-+		match->init_data = NULL;
-+		if (match->of_node) {
-+			of_node_put(match->of_node);
-+			match->of_node = NULL;
-+		}
-+	}
-+	return -EINVAL;
- }
- EXPORT_SYMBOL_GPL(of_regulator_match);
+ 	pci_release_regions(pdev);
+-	complete(&rtlpriv->firmware_loading_complete);
  
+ fail1:
+ 	if (hw)
+diff --git a/drivers/net/wireless/realtek/rtlwifi/usb.c b/drivers/net/wireless/realtek/rtlwifi/usb.c
+index d37a017b2b814..c3aa0cd9ff211 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/usb.c
++++ b/drivers/net/wireless/realtek/rtlwifi/usb.c
+@@ -1040,7 +1040,6 @@ int rtl_usb_probe(struct usb_interface *intf,
+ error_out2:
+ 	_rtl_usb_io_handler_release(hw);
+ 	usb_put_dev(udev);
+-	complete(&rtlpriv->firmware_loading_complete);
+ 	kfree(rtlpriv->usb_data);
+ 	ieee80211_free_hw(hw);
+ 	return -ENODEV;
 -- 
 2.39.5
 
