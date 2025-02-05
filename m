@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA82190052;
-	Wed,  5 Feb 2025 14:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D0E190052;
+	Wed,  5 Feb 2025 14:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767066; cv=none; b=odr/S6DPXFSgz5Ak4VB3X77nnpnrT8LfYNu7lXwRSp6GLByuzpanOfpQWQ7gSyBrVwsjTz7VMDnoyL+J51W4alk4NdabwQDit/Kk04yB6LSo55ux0IqnAWeBK60pIcVQPm9+w49FLgK5Vzcuvdqcutz7BH2dAVR4hnP//BFEJhE=
+	t=1738767069; cv=none; b=kx64bIzZGKblSOqO2NrvftQ0qo9aZF+RnEF5b41E2aMTsM1MRk3i8G40GIDVaF0n7kTCRhmPvyjHm01zqmLWtXH53Vqnk1y/g2Q6az7XW6szkuZtj2a9B5ZTOBZhQZPQk9nmHFVbAmVQy5/tqA9dV3QrUlrsul5FWxXSvN63ewc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767066; c=relaxed/simple;
-	bh=K3tptoHByeKnCeXlMJLprwvgUZLWyIhjlHuhikYYCcw=;
+	s=arc-20240116; t=1738767069; c=relaxed/simple;
+	bh=xIoOOUzQmQLriB7KHMNpzUqYlKjqpPZF5i4Q5J+s0qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iXMa3S6+wmzhWwvsqmByLNBTxs8Zjth58I7D+IbfliT+wlYWVDwVOrnJuTOeLlno+Yt5M1FjOm+HA88fUHZ0v5L19GR7D4y8MmTqPl/ne89iUrQEysQj7s3dXfmXzBoXjHt2rUz/6uBgBNBAvLcahrhs9k2XmW+OQALsCGH1AQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3e85XbS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uIE3lQ5l2D2AFVzZ3dFYAst/AkzpaWzXpvu0U1UhPEhVFRlqsymY1f9kF1lJq2Brd+h034Ce9sZoKWs2hElQUEIbo/lB1qWDPE3W9UNs2GBfFrY4vmcHQUlN/kryaq1xv0sCI42XRoLEj92X6ykNWVFz3vgOjxcU49jzeK4tCog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwam1esI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3e85XbS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDC9C4CED1;
-	Wed,  5 Feb 2025 14:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwam1esI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06E6C4CED1;
+	Wed,  5 Feb 2025 14:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767066;
-	bh=K3tptoHByeKnCeXlMJLprwvgUZLWyIhjlHuhikYYCcw=;
+	s=korg; t=1738767069;
+	bh=xIoOOUzQmQLriB7KHMNpzUqYlKjqpPZF5i4Q5J+s0qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3e85XbStUCiB/FDTVMYCOgex8XoK7OobJRdnXfM+7vyopAX3+nu6dExl6tF60cT1
-	 GP1r6TtpdatkFuBJZR5HERKME5EmLE3b7p9em5WMAXg+lbt/jFrGvYJKaPIb8NeWBQ
-	 ibWl3Nl03NF1xPCmCwFlAP8QMeOG2f8DEuIGVVnU=
+	b=xwam1esIA8sP/TpuU/bzoErHoN+alq2HjKSgJH72bxSWYNpYXp+hgvrJQ4dvMAH3F
+	 0OAdnlzgdLOl0mgOHzt1If2RyODjpkhbDMqawgyOn8yrk34PaFr5jZLz4PFc7bL/X0
+	 U1VSLSBgoQn3sWH/K80nM+1RwTuDl98iQzFidm28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 343/623] arm64: dts: renesas: rzg3s-smarc: Fix the debug serial alias
-Date: Wed,  5 Feb 2025 14:41:25 +0100
-Message-ID: <20250205134509.349546704@linuxfoundation.org>
+Subject: [PATCH 6.13 352/623] arm64: dts: mediatek: mt8173-elm: Fix MT6397 PMIC sub-node names
+Date: Wed,  5 Feb 2025 14:41:34 +0100
+Message-ID: <20250205134509.691614316@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,64 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 08811b984f5af8eeda4fb157894fe9bf230ec1e1 ]
+[ Upstream commit beb06b727194f68b0a4b5183e50c88265ce185af ]
 
-The debug serial of the RZ/G3S is SCIF0 which is routed on the Renesas
-RZ SMARC Carrier II board on the SER3_UART. Use serial3 alias for it for
-better hardware description. Along with it, the chosen properties were
-moved to the device tree corresponding to the RZ SMARC Carrier II board.
+The MT6397 PMIC bindings specify exact names for its sub-nodes. The
+names used in the current dts don't match, causing a validation error.
 
-Fixes: adb4f0c5699c ("arm64: dts: renesas: Add initial support for RZ/G3S SMARC SoM")
-Fixes: d1ae4200bb26 ("arm64: dts: renesas: Add initial device tree for RZ SMARC Carrier-II Board")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/20241115134401.3893008-6-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fix up the names. Also drop the label for the regulators node, since
+any reference should be against the individual regulator sub-nodes.
+
+Fixes: 689b937bedde ("arm64: dts: mediatek: add mt8173 elm and hana board")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20241210092614.3951748-1-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi | 5 -----
- arch/arm64/boot/dts/renesas/rzg3s-smarc.dtsi     | 7 ++++++-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi b/arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi
-index 2ed01d391554b..55c72c8a07350 100644
---- a/arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi
-+++ b/arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi
-@@ -43,11 +43,6 @@
- #endif
+diff --git a/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi b/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
+index b91072f4723f3..b5d4b5baf4785 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
+@@ -931,7 +931,7 @@
+ 		interrupt-controller;
+ 		#interrupt-cells = <2>;
+ 
+-		clock: mt6397clock {
++		clock: clocks {
+ 			compatible = "mediatek,mt6397-clk";
+ 			#clock-cells = <1>;
+ 		};
+@@ -942,7 +942,7 @@
+ 			#gpio-cells = <2>;
+ 		};
+ 
+-		regulator: mt6397regulator {
++		regulators {
+ 			compatible = "mediatek,mt6397-regulator";
+ 
+ 			mt6397_vpca15_reg: buck_vpca15 {
+@@ -1108,7 +1108,7 @@
+ 			};
+ 		};
+ 
+-		rtc: mt6397rtc {
++		rtc: rtc {
+ 			compatible = "mediatek,mt6397-rtc";
+ 		};
  	};
- 
--	chosen {
--		bootargs = "ignore_loglevel";
--		stdout-path = "serial0:115200n8";
--	};
--
- 	memory@48000000 {
- 		device_type = "memory";
- 		/* First 128MB is reserved for secure area. */
-diff --git a/arch/arm64/boot/dts/renesas/rzg3s-smarc.dtsi b/arch/arm64/boot/dts/renesas/rzg3s-smarc.dtsi
-index 4509151344c43..33b9873b225a8 100644
---- a/arch/arm64/boot/dts/renesas/rzg3s-smarc.dtsi
-+++ b/arch/arm64/boot/dts/renesas/rzg3s-smarc.dtsi
-@@ -12,10 +12,15 @@
- / {
- 	aliases {
- 		i2c0 = &i2c0;
--		serial0 = &scif0;
-+		serial3 = &scif0;
- 		mmc1 = &sdhi1;
- 	};
- 
-+	chosen {
-+		bootargs = "ignore_loglevel";
-+		stdout-path = "serial3:115200n8";
-+	};
-+
- 	keys {
- 		compatible = "gpio-keys";
- 
 -- 
 2.39.5
 
