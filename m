@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B85F1459F6;
-	Wed,  5 Feb 2025 14:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F23913C3F6;
+	Wed,  5 Feb 2025 14:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765305; cv=none; b=LYHgYVbV5Xxhbh71EZLgH1IH1majEeb/loeoOg35E2iwwV/eAJVUJzjIP3TK+kbhL60hAblKiGc14/nx9Cvkvd5WR2q+VK+pFLY5sdhi+yqYIlMjyvZNqaIApKHrSlSvEjiDVVrJes9qengSVQu61vBshpfTWdxLpnKUhYpZtvw=
+	t=1738765309; cv=none; b=MetIrMb59Joc8GAYHVLrxx6iUGWLKnV9cFZ9OVp+d+2KT8Uk1QS7zmXMEYTK14hCZdllFYl8t0IpE59GXCuAIqIlyzXG4/heilPR89nbwMZGZtoOWvZwv+Udw70PSyocGzxk1COg3N8f5rLEmiMIsZGfpQ2s+7bQivIh8gF62qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765305; c=relaxed/simple;
-	bh=NY7TNak3BcL689FgxuikWxDpjuVmlR7wWKJTgP/xQEo=;
+	s=arc-20240116; t=1738765309; c=relaxed/simple;
+	bh=OHrrl9wMpa6m6v3cfDRJ46ZZS+BDusO149XBCejwy0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GTZAjcziU66aM+3rpTU4d9vTyUSfuuoxv76niLGCyEjp9w8oqmR2zgUVA42zRuKH1kYzTkRsjmx3qD0U1x2nnHuvsTTuKYAE7VkkUo6/202JBKRDiz4Sn50V2ANBOZZvJHBQy1mE9ygOfXmVsVz90tfGaM0ZfQxDGOpYda+P+b4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQY5hfZs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QhpOK81duG/wh52HnhLknca6Z2JGNL4uwyoBYYrP3avteuXn23leO0+5tG5mWCI/zthKzg1oFTDPumDiqvoUoxdV+Qx41HlECoGr3LW9QNmx/v/nJwbHfPLsmuiZsUWa8icBtGIGP2pyRe3XnsytggMYYQKM+xl52vFN4EMyKlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7YtVONK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQY5hfZs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A758C4CED1;
-	Wed,  5 Feb 2025 14:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7YtVONK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80872C4CED1;
+	Wed,  5 Feb 2025 14:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765305;
-	bh=NY7TNak3BcL689FgxuikWxDpjuVmlR7wWKJTgP/xQEo=;
+	s=korg; t=1738765309;
+	bh=OHrrl9wMpa6m6v3cfDRJ46ZZS+BDusO149XBCejwy0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQY5hfZslIk/9MxKnhUrcvtRGUtZPvD1O6wEeumdiK0xt+5mkq7IpKbhUrBbladeh
-	 K5DtR1gCd8h2iVn/CRAZf4gf9EtSYNFZY7VYbwBR2E82B2F7rzDiY0GmMOQ47W3GRf
-	 Ibjpduvl3BnZZkeMPlKkTyFfwZkynvVi2FGD/cho=
+	b=Y7YtVONKdiAW+eSg01cCQYMDjmOoWJqExp/LDH9FxTPXK/NWqz62l/eSQczPT/uIM
+	 OXnCw2yiSaLczSxMLKiVg149my30mfSsKJHvgrg3dr3KKai3anr4W96St4JCarPb9t
+	 HVzmk4S04uwYutEjs8H7zUsricTAWGyX//Eieeq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Bin Liu <b-liu@ti.com>,
+	Bryan Brattlof <bb@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 208/590] wifi: mt76: mt7996: fix ldpc setting
-Date: Wed,  5 Feb 2025 14:39:23 +0100
-Message-ID: <20250205134503.240773700@linuxfoundation.org>
+Subject: [PATCH 6.6 252/393] arm64: dts: ti: k3-am62a: Remove duplicate GICR reg
+Date: Wed,  5 Feb 2025 14:42:51 +0100
+Message-ID: <20250205134429.948356723@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Bryan Brattlof <bb@ti.com>
 
-[ Upstream commit da8352da1e4f476fdbf549a4efce4f3c618fde3b ]
+[ Upstream commit 6f0232577e260cdbc25508e27bb0b75ade7e7ebc ]
 
-The non-AP interfaces would not use conf->vht_ldpc so they never set
-STA_CAP_VHT_LDPC even if peer-station support LDPC.
-Check conf->vht_ldpc only for AP interface.
+The GIC Redistributor control range is mapped twice. Remove the extra
+entry from the reg range.
 
-Without this patch, station only uses BCC to transmit packet in VHT mode.
-
-Fixes: dda423dd65c3 ("wifi: mt76: mt7996: remove mt7996_mcu_beacon_check_caps()")
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20250114101026.3587702-7-shayne.chen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 5fc6b1b62639 ("arm64: dts: ti: Introduce AM62A7 family of SoCs")
+Reported-by: Bin Liu <b-liu@ti.com>
+Signed-off-by: Bryan Brattlof <bb@ti.com>
+Link: https://lore.kernel.org/r/20241210-am62-gic-fixup-v1-2-758b4d5b4a0a@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am62a-main.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index d6d80b1b2d697..265958f7b7871 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -2070,7 +2070,7 @@ mt7996_mcu_sta_rate_ctrl_tlv(struct sk_buff *skb, struct mt7996_dev *dev,
- 			cap |= STA_CAP_VHT_TX_STBC;
- 		if (sta->deflink.vht_cap.cap & IEEE80211_VHT_CAP_RXSTBC_1)
- 			cap |= STA_CAP_VHT_RX_STBC;
--		if (vif->bss_conf.vht_ldpc &&
-+		if ((vif->type != NL80211_IFTYPE_AP || vif->bss_conf.vht_ldpc) &&
- 		    (sta->deflink.vht_cap.cap & IEEE80211_VHT_CAP_RXLDPC))
- 			cap |= STA_CAP_VHT_LDPC;
- 
+diff --git a/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi b/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
+index de36abb243f10..1497f7c8adfaf 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
+@@ -18,7 +18,6 @@
+ 		compatible = "arm,gic-v3";
+ 		reg = <0x00 0x01800000 0x00 0x10000>,	/* GICD */
+ 		      <0x00 0x01880000 0x00 0xc0000>,	/* GICR */
+-		      <0x00 0x01880000 0x00 0xc0000>,   /* GICR */
+ 		      <0x01 0x00000000 0x00 0x2000>,    /* GICC */
+ 		      <0x01 0x00010000 0x00 0x1000>,    /* GICH */
+ 		      <0x01 0x00020000 0x00 0x2000>;    /* GICV */
 -- 
 2.39.5
 
