@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89E313AD22;
-	Wed,  5 Feb 2025 13:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A740126C18;
+	Wed,  5 Feb 2025 13:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763265; cv=none; b=gVHul4iyqZh443acXCX/BorROGPV+h7bRS1/BZMTE0R6wtmIDqBbB6I6KLF4fN6ceLj6WY3qsL3HCtBXVm9u22iypWqVDQQ2wrX2OmmfJJtAPO4RzoCQhDTIrCrhG72/jwipzybZU9rI+1XMZgPyl1bs196rOcEcIddQpvolrFc=
+	t=1738763268; cv=none; b=OoZSjIXpf1KlsHKQkpUnCnfYNFKrIqske47/M6cbUY7TGW4dvV4AheSg1QgBHgx1A1ARU2wt+3oJbrWvMtdN1uQuKPtHw3Bz/FGpXNagZ9h8X37PXaA64IPOUuwuF02KHoQkp8FfzIq8Cn6QDUdmPmlV06PYOEF/4rDKnAvcYtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763265; c=relaxed/simple;
-	bh=AYSpeRrB/3zCnX7ZI7AKQX+JRPa8B5fRHotOirce01g=;
+	s=arc-20240116; t=1738763268; c=relaxed/simple;
+	bh=fq6UoVuQ+1yt4uQAIdLlDCVHRwgYSF8qxCUx8ivqFBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uOFOMnyevPuqkqSZbez/4GQn4sWjijeGQKfp8fx0dxGwdrylNB23Jw7/LX8TZtq4lqTjQ4tNVLNOP+23Yb1gkyAqSIuvuKqch4ERo1XpbSpJMCk8bz78AdRHYuVZgTHlBztl+LkTlfYvlkIMvUNnn7eK+DKLaIwHPGQ3as+UjmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YySPEn77; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kHPcAnLBS9GMsUzSUzzQ22O0M2p09ZFQ60Tgs3MChAbYxAYvDzYIDN18ap9V+s7Koc/kvzC0gBvupT7lqY8zjqgMp3h7rHs4NF28eyTYTYtMGRPMbxCKL5e7dH9aGhUDwsdEvFylqqvnMbwOgo8Iw1kro0Tyz1lwkJsBrDxw5Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMWbWN+s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YySPEn77"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BA1C4CED1;
-	Wed,  5 Feb 2025 13:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMWbWN+s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A2EC4CED1;
+	Wed,  5 Feb 2025 13:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763264;
-	bh=AYSpeRrB/3zCnX7ZI7AKQX+JRPa8B5fRHotOirce01g=;
+	s=korg; t=1738763267;
+	bh=fq6UoVuQ+1yt4uQAIdLlDCVHRwgYSF8qxCUx8ivqFBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YySPEn77h/UD8eg8ovxF3rHG3E0PA69L9g6PrVPTXdpdq9SBt63B51xkYq3nY9xI5
-	 mMgZuVc8FJbm37rfbKQqQYBcbQvGBzp82tWvxXHskk6cafLIF8fQlsIJYC/Hfqnq0y
-	 prfARCgJBlfb2UJ3Mh5oddmkV/oBxNex+ccYg+jI=
+	b=dMWbWN+sNtBcTuJ1OlEuBnvfAUvmRaKHrara7yoVtXCayXl5JTS8QcznV9Dj0Sjwb
+	 Ysvp1tO2Zr4hQ4dw4xkZ6FX+Y3wD+fkJ1i2oW57JEaVjqUiIViZBLgsOuTCTbURZuX
+	 aTJcol2BJ3Fkh1UVazhW9M7MQQQhe07qQLNXgYLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ec5f884c4a135aa0dbb9@syzkaller.appspotmail.com,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Peter Hutterer <peter.hutterer@who-t.net>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 024/393] HID: core: Fix assumption that Resolution Multipliers must be in Logical Collections
-Date: Wed,  5 Feb 2025 14:39:03 +0100
-Message-ID: <20250205134421.225633127@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 025/393] drm/amd/pm: Fix an error handling path in vega10_enable_se_edc_force_stall_config()
+Date: Wed,  5 Feb 2025 14:39:04 +0100
+Message-ID: <20250205134421.263972719@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -52,60 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 64f2657b579343cf923aa933f08074e6258eb07b upstream.
+[ Upstream commit a3300782d5375e280ba7040f323d01960bfe3396 ]
 
-A report in 2019 by the syzbot fuzzer was found to be connected to two
-errors in the HID core associated with Resolution Multipliers.  One of
-the errors was fixed by commit ea427a222d8b ("HID: core: Fix deadloop
-in hid_apply_multiplier."), but the other has not been fixed.
+In case of error after a amdgpu_gfx_rlc_enter_safe_mode() call, it is not
+balanced by a corresponding amdgpu_gfx_rlc_exit_safe_mode() call.
 
-This error arises because hid_apply_multipler() assumes that every
-Resolution Multiplier control is contained in a Logical Collection,
-i.e., there's no way the routine can ever set multiplier_collection to
-NULL.  This is in spite of the fact that the function starts with a
-big comment saying:
+Add the missing call.
 
-	 * "The Resolution Multiplier control must be contained in the same
-	 * Logical Collection as the control(s) to which it is to be applied.
-	   ...
-	 *  If no Logical Collection is
-	 * defined, the Resolution Multiplier is associated with all
-	 * controls in the report."
-	 * HID Usage Table, v1.12, Section 4.3.1, p30
-	 *
-	 * Thus, search from the current collection upwards until we find a
-	 * logical collection...
-
-The comment and the code overlook the possibility that none of the
-collections found may be a Logical Collection.
-
-The fix is to set the multiplier_collection pointer to NULL if the
-collection found isn't a Logical Collection.
-
-Reported-by: syzbot+ec5f884c4a135aa0dbb9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000109c040597dc5843@google.com/
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: Peter Hutterer <peter.hutterer@who-t.net>
-Fixes: 5a4abb36f312 ("HID: core: process the Resolution Multiplier")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9b7b8154cdb8 ("drm/amd/powerplay: added didt support for vega10")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1125,6 +1125,8 @@ static void hid_apply_multiplier(struct
- 	while (multiplier_collection->parent_idx != -1 &&
- 	       multiplier_collection->type != HID_COLLECTION_LOGICAL)
- 		multiplier_collection = &hid->collection[multiplier_collection->parent_idx];
-+	if (multiplier_collection->type != HID_COLLECTION_LOGICAL)
-+		multiplier_collection = NULL;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c
+index 3007b054c873c..776d58ea63ae9 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c
+@@ -1120,13 +1120,14 @@ static int vega10_enable_se_edc_force_stall_config(struct pp_hwmgr *hwmgr)
+ 	result = vega10_program_didt_config_registers(hwmgr, SEEDCForceStallPatternConfig_Vega10, VEGA10_CONFIGREG_DIDT);
+ 	result |= vega10_program_didt_config_registers(hwmgr, SEEDCCtrlForceStallConfig_Vega10, VEGA10_CONFIGREG_DIDT);
+ 	if (0 != result)
+-		return result;
++		goto exit_safe_mode;
  
- 	effective_multiplier = hid_calculate_multiplier(hid, multiplier);
+ 	vega10_didt_set_mask(hwmgr, false);
  
++exit_safe_mode:
+ 	amdgpu_gfx_rlc_exit_safe_mode(adev, 0);
+ 
+-	return 0;
++	return result;
+ }
+ 
+ static int vega10_disable_se_edc_force_stall_config(struct pp_hwmgr *hwmgr)
+-- 
+2.39.5
+
 
 
