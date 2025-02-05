@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185CE1459F6;
-	Wed,  5 Feb 2025 14:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4385C14A088;
+	Wed,  5 Feb 2025 14:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765525; cv=none; b=mPcjRuk5BFO+ZB4SnR4XJ/RXFbg2f8XhHirMgJ6b2DK3vh7UPKgqWquI1q6LhAFzG9EwVKGMW+pB46mHMKShByf80C8oBIS+Cjlrr77EL4JSYatanoCeSsCVnYH1SIw/y4Zu7QSsXMi5+Zan2TfIjhzadG04HhSUwruezmoTlyU=
+	t=1738765528; cv=none; b=oIB2ZynypFa7oyC49n6W/I/2FeosKFNg+t5Fd4b411a5Q/C8D9NVfjelAxN0d8+mNA9VIvbab3S8HDLK7cmDUx5U1LjrtzWCRkKEwsIptKngsq5sJPmbpXkTcKgNaegtEBzKE8ZpDUmXeBaSlVRhhumu7uy8LRJWQDpWtXG8mS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765525; c=relaxed/simple;
-	bh=Ljx+2+o3cbWVmnLkOJKp9010kU6blWrEDQ373pr+/o4=;
+	s=arc-20240116; t=1738765528; c=relaxed/simple;
+	bh=RubxrETl4kStXJOjDa2+hhevoYeeR3DQIfxsOFy2GS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOl6r0Yl1IKe9MptIqQtVjampjV7TgOFWwoy2prWKd4GToHEGmelba7jInAMEPknEhZ8SpdIO6Twr7ZDqH1cMPufa+kkaN03gG1AixshlmAW/OB4sozW21QpWLUHld4cImFsughX8j3DodcA7xNKPOC1FsVlrSL+r9La1B8KS2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pY07dCQh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gXw14trD+VCrMQIY8TTHUyhwovvHC3oA3w3UArQikeLkWcPAkiX7K/XXUTDnDM08I9zo1+3egFfcfwO81MpQ1NmPN5fCGzCg9b5dhdVy3nHpoH0fvidocCLAWv/8BRwqiaWnErsINq2LdhfjGN/r/I6hhW8Y8mkBumSIjewrj60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blv5NgGO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pY07dCQh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891AEC4CED1;
-	Wed,  5 Feb 2025 14:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blv5NgGO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9D0C4CED1;
+	Wed,  5 Feb 2025 14:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765525;
-	bh=Ljx+2+o3cbWVmnLkOJKp9010kU6blWrEDQ373pr+/o4=;
+	s=korg; t=1738765528;
+	bh=RubxrETl4kStXJOjDa2+hhevoYeeR3DQIfxsOFy2GS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pY07dCQhLE9HSytky0sQT4hve8qFseCJjH6hmb/c4c6IgRJk8K7HlSyriVapnR3YI
-	 aN/jjFsQdrlifCrOEtFyhfioq6gEHtChvFiigsHhkmGWtgtC9M4BH4ZsBK7rTpQW76
-	 lkQXi5nPy41vOEH2eBNltpyWAD/p9huNkJs6qt88=
+	b=blv5NgGOVnGFvEhoXedxpM9hKP2nPtgUvE34REoi8RFy+ctrWb3YtdiexLEwrTAXc
+	 m++Cq735Sx000jOzibzEfqelvk7FK7OrrAK8e9fbADNSXDdMX4WjZ4rhQkkQYc9RTZ
+	 ppIrrVyAgkxNxVsgNbQk5tkJa8YOaL3W3X6nWwA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Artemy Kovalyov <artemyko@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 227/590] net: sched: Disallow replacing of child qdisc from one parent to another
-Date: Wed,  5 Feb 2025 14:39:42 +0100
-Message-ID: <20250205134503.968053104@linuxfoundation.org>
+Subject: [PATCH 6.6 275/393] RDMA/mlx5: Fix indirect mkey ODP page count
+Date: Wed,  5 Feb 2025 14:43:14 +0100
+Message-ID: <20250205134430.832376051@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,116 +48,150 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit bc50835e83f60f56e9bec2b392fb5544f250fb6f ]
+[ Upstream commit 235f238402194a78ac5fb882a46717eac817e5d1 ]
 
-Lion Ackermann was able to create a UAF which can be abused for privilege
-escalation with the following script
+Restrict the check for the number of pages handled during an ODP page
+fault to direct mkeys.
+Perform the check right after handling the page fault and don't
+propagate the number of handled pages to callers.
 
-Step 1. create root qdisc
-tc qdisc add dev lo root handle 1:0 drr
+Indirect mkeys and their associated direct mkeys can have different
+start addresses. As a result, the calculation of the number of pages to
+handle for an indirect mkey may not match the actual page fault
+handling done on the direct mkey.
 
-step2. a class for packet aggregation do demonstrate uaf
-tc class add dev lo classid 1:1 drr
+For example:
+A 4K sized page fault on a KSM mkey that has a start address that is not
+aligned to a page will result a calculation that assumes the number of
+pages required to handle are 2.
+While the underlying MTT might be aligned will require fetching only a
+single page.
+Thus, do the calculation and compare number of pages handled only per
+direct mkey.
 
-step3. a class for nesting
-tc class add dev lo classid 1:2 drr
-
-step4. a class to graft qdisc to
-tc class add dev lo classid 1:3 drr
-
-step5.
-tc qdisc add dev lo parent 1:1 handle 2:0 plug limit 1024
-
-step6.
-tc qdisc add dev lo parent 1:2 handle 3:0 drr
-
-step7.
-tc class add dev lo classid 3:1 drr
-
-step 8.
-tc qdisc add dev lo parent 3:1 handle 4:0 pfifo
-
-step 9. Display the class/qdisc layout
-
-tc class ls dev lo
- class drr 1:1 root leaf 2: quantum 64Kb
- class drr 1:2 root leaf 3: quantum 64Kb
- class drr 3:1 root leaf 4: quantum 64Kb
-
-tc qdisc ls
- qdisc drr 1: dev lo root refcnt 2
- qdisc plug 2: dev lo parent 1:1
- qdisc pfifo 4: dev lo parent 3:1 limit 1000p
- qdisc drr 3: dev lo parent 1:2
-
-step10. trigger the bug <=== prevented by this patch
-tc qdisc replace dev lo parent 1:3 handle 4:0
-
-step 11. Redisplay again the qdiscs/classes
-
-tc class ls dev lo
- class drr 1:1 root leaf 2: quantum 64Kb
- class drr 1:2 root leaf 3: quantum 64Kb
- class drr 1:3 root leaf 4: quantum 64Kb
- class drr 3:1 root leaf 4: quantum 64Kb
-
-tc qdisc ls
- qdisc drr 1: dev lo root refcnt 2
- qdisc plug 2: dev lo parent 1:1
- qdisc pfifo 4: dev lo parent 3:1 refcnt 2 limit 1000p
- qdisc drr 3: dev lo parent 1:2
-
-Observe that a) parent for 4:0 does not change despite the replace request.
-There can only be one parent.  b) refcount has gone up by two for 4:0 and
-c) both class 1:3 and 3:1 are pointing to it.
-
-Step 12.  send one packet to plug
-echo "" | socat -u STDIN UDP4-DATAGRAM:127.0.0.1:8888,priority=$((0x10001))
-step13.  send one packet to the grafted fifo
-echo "" | socat -u STDIN UDP4-DATAGRAM:127.0.0.1:8888,priority=$((0x10003))
-
-step14. lets trigger the uaf
-tc class delete dev lo classid 1:3
-tc class delete dev lo classid 1:1
-
-The semantics of "replace" is for a del/add _on the same node_ and not
-a delete from one node(3:1) and add to another node (1:3) as in step10.
-While we could "fix" with a more complex approach there could be
-consequences to expectations so the patch takes the preventive approach of
-"disallow such config".
-
-Joint work with Lion Ackermann <nnamrec@gmail.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250116013713.900000-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: db570d7deafb ("IB/mlx5: Add ODP support to MW")
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Reviewed-by: Artemy Kovalyov <artemyko@nvidia.com>
+Link: https://patch.msgid.link/86c483d9e75ce8fe14e9ff85b62df72b779f8ab1.1736187990.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/infiniband/hw/mlx5/odp.c | 32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index a1d27bc039a36..d26ac6bd9b108 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1664,6 +1664,10 @@ static int tc_modify_qdisc(struct sk_buff *skb, struct nlmsghdr *n,
- 				q = qdisc_lookup(dev, tcm->tcm_handle);
- 				if (!q)
- 					goto create_n_graft;
-+				if (q->parent != tcm->tcm_parent) {
-+					NL_SET_ERR_MSG(extack, "Cannot move an existing qdisc to a different parent");
-+					return -EINVAL;
-+				}
- 				if (n->nlmsg_flags & NLM_F_EXCL) {
- 					NL_SET_ERR_MSG(extack, "Exclusivity flag on, cannot override");
- 					return -EEXIST;
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index 3a4605fda6d57..f1a0a324223c0 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -807,8 +807,7 @@ static bool mkey_is_eq(struct mlx5_ib_mkey *mmkey, u32 key)
+ /*
+  * Handle a single data segment in a page-fault WQE or RDMA region.
+  *
+- * Returns number of OS pages retrieved on success. The caller may continue to
+- * the next data segment.
++ * Returns zero on success. The caller may continue to the next data segment.
+  * Can return the following error codes:
+  * -EAGAIN to designate a temporary error. The caller will abort handling the
+  *  page fault and resolve it.
+@@ -821,7 +820,7 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
+ 					 u32 *bytes_committed,
+ 					 u32 *bytes_mapped)
+ {
+-	int npages = 0, ret, i, outlen, cur_outlen = 0, depth = 0;
++	int ret, i, outlen, cur_outlen = 0, depth = 0, pages_in_range;
+ 	struct pf_frame *head = NULL, *frame;
+ 	struct mlx5_ib_mkey *mmkey;
+ 	struct mlx5_ib_mr *mr;
+@@ -864,13 +863,20 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
+ 	case MLX5_MKEY_MR:
+ 		mr = container_of(mmkey, struct mlx5_ib_mr, mmkey);
+ 
++		pages_in_range = (ALIGN(io_virt + bcnt, PAGE_SIZE) -
++				  (io_virt & PAGE_MASK)) >>
++				 PAGE_SHIFT;
+ 		ret = pagefault_mr(mr, io_virt, bcnt, bytes_mapped, 0, false);
+ 		if (ret < 0)
+ 			goto end;
+ 
+ 		mlx5_update_odp_stats(mr, faults, ret);
+ 
+-		npages += ret;
++		if (ret < pages_in_range) {
++			ret = -EFAULT;
++			goto end;
++		}
++
+ 		ret = 0;
+ 		break;
+ 
+@@ -961,7 +967,7 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
+ 	kfree(out);
+ 
+ 	*bytes_committed = 0;
+-	return ret ? ret : npages;
++	return ret;
+ }
+ 
+ /*
+@@ -980,8 +986,7 @@ static int pagefault_single_data_segment(struct mlx5_ib_dev *dev,
+  *                   the committed bytes).
+  * @receive_queue: receive WQE end of sg list
+  *
+- * Returns the number of pages loaded if positive, zero for an empty WQE, or a
+- * negative error code.
++ * Returns zero for success or a negative error code.
+  */
+ static int pagefault_data_segments(struct mlx5_ib_dev *dev,
+ 				   struct mlx5_pagefault *pfault,
+@@ -989,7 +994,7 @@ static int pagefault_data_segments(struct mlx5_ib_dev *dev,
+ 				   void *wqe_end, u32 *bytes_mapped,
+ 				   u32 *total_wqe_bytes, bool receive_queue)
+ {
+-	int ret = 0, npages = 0;
++	int ret = 0;
+ 	u64 io_virt;
+ 	__be32 key;
+ 	u32 byte_count;
+@@ -1046,10 +1051,9 @@ static int pagefault_data_segments(struct mlx5_ib_dev *dev,
+ 						    bytes_mapped);
+ 		if (ret < 0)
+ 			break;
+-		npages += ret;
+ 	}
+ 
+-	return ret < 0 ? ret : npages;
++	return ret;
+ }
+ 
+ /*
+@@ -1285,12 +1289,6 @@ static void mlx5_ib_mr_wqe_pfault_handler(struct mlx5_ib_dev *dev,
+ 	free_page((unsigned long)wqe_start);
+ }
+ 
+-static int pages_in_range(u64 address, u32 length)
+-{
+-	return (ALIGN(address + length, PAGE_SIZE) -
+-		(address & PAGE_MASK)) >> PAGE_SHIFT;
+-}
+-
+ static void mlx5_ib_mr_rdma_pfault_handler(struct mlx5_ib_dev *dev,
+ 					   struct mlx5_pagefault *pfault)
+ {
+@@ -1329,7 +1327,7 @@ static void mlx5_ib_mr_rdma_pfault_handler(struct mlx5_ib_dev *dev,
+ 	if (ret == -EAGAIN) {
+ 		/* We're racing with an invalidation, don't prefetch */
+ 		prefetch_activated = 0;
+-	} else if (ret < 0 || pages_in_range(address, length) > ret) {
++	} else if (ret < 0) {
+ 		mlx5_ib_page_fault_resume(dev, pfault, 1);
+ 		if (ret != -ENOENT)
+ 			mlx5_ib_dbg(dev, "PAGE FAULT error %d. QP 0x%x, type: 0x%x\n",
 -- 
 2.39.5
 
