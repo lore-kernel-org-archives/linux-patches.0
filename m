@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3CFDF71;
-	Wed,  5 Feb 2025 15:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CB5DF71;
+	Wed,  5 Feb 2025 15:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767774; cv=none; b=C/mGb8WsCu7j61QOEYqQoUR9vHofULFuck8iVVL17n+n6LJ5DyQVXt8VJNyODi+yeGvSTss8QHYdrFc+wW1N9/iFWJQ8uT8cGHARqZt7MlUuGoyqvCl+7pFQF76pRa+qnxTQcy5dVbr3ehUJhICkaicSMQ26TFCfUWgEaJ6Hjzc=
+	t=1738767777; cv=none; b=Fuw9D0K3/72gMFJ7EN79J8vZ5K9QMax36VSsI3irunbJIfsffRWD11j4Uip/mMS2AH9ZnL3OACBip2QTeD+72QI6C64pbqFrHoEMlSfMGl1XruGZ0079ranhxqlKYB6kWs5gqlaoHcaboqh0MBJQY/8ZnjVEzAtQ4mpfGTav1nY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767774; c=relaxed/simple;
-	bh=j94Fs60Vd33Ccg2LXlO2aE8jwL2MkQ6Bsq9VoVkUVoE=;
+	s=arc-20240116; t=1738767777; c=relaxed/simple;
+	bh=0sBno1v49j39QQIOOTWLVUCJ3+HSkwN2QWYWoO+kY5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I8Ufv4N2lluJ26R22wnEkD6hrwDfWqao+zvrBQ7qtoXqRJ/aVDPZcd1JLsHz98uFyCm4AMv2ALQYmrkMMsgbngMkJGaNLQT6rSBT2mYxVIHEdA/idb5GGCmfNl2MJXbNxMerMHXHM4J+X8n1P+pbpqiy3X3UYWJBYORWxjePmJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdphURcT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jKboH2AH5Z5MEsv1hXfy2uT6+mCr/PLLvHqMmGL/DUcUlSlyh5gnJ0T6sdokWtMrCjcboZgZPzU8wnttJW+vYLqDBHhiU7qg47TKLOBHVahAX6ZUpeXanVSBljXGBI/fU+UfAqPnTm360Ku3YukX1bJRjLZA2rsBbKRoMwPl0wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+qNavFK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdphURcT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC30DC4CED1;
-	Wed,  5 Feb 2025 15:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+qNavFK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346D0C4CED1;
+	Wed,  5 Feb 2025 15:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767774;
-	bh=j94Fs60Vd33Ccg2LXlO2aE8jwL2MkQ6Bsq9VoVkUVoE=;
+	s=korg; t=1738767777;
+	bh=0sBno1v49j39QQIOOTWLVUCJ3+HSkwN2QWYWoO+kY5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CdphURcTQo8uCknd865nIcyAJThnMJFABX6ZTDd1xLoTYZbGm68i8Nt/NUMqj/i5Z
-	 KToBAArDrvkHRmntk20VwDnxQileBwIbJTtf5wH4F7xcoaIA7/LsIgDZZHQ+DwkUgu
-	 XUeUV0TNnUv97yWPKyGTevhhd6/vSGSf92/P2Wyc=
+	b=i+qNavFKJ386nY9OMNslTbs79Qy9JYw0ogcZ/Y0Rbmeie/OVoDVM/07FdqQJpKnRd
+	 mZc5gL9lXZj7dFBrHPfbHjMDgxu21ekNEt3/Qo3RshW+afsEo8314E0yLTmfbtNu9e
+	 ArQGsAfk0ez3lfNQPnedQTSGC9GQNRb9S4mbn9hQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Chu <howardchu95@gmail.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 507/590] perf trace: Fix runtime error of index out of bounds
-Date: Wed,  5 Feb 2025 14:44:22 +0100
-Message-ID: <20250205134514.665206427@linuxfoundation.org>
+Subject: [PATCH 6.13 452/623] media: camif-core: Add check for clk_enable()
+Date: Wed,  5 Feb 2025 14:43:14 +0100
+Message-ID: <20250205134513.508410965@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +49,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Howard Chu <howardchu95@gmail.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit c7b87ce0dd10b64b68a0b22cb83bbd556e28fe81 ]
+[ Upstream commit 77ed2470ac09c2b0a33cf3f98cc51d18ba9ed976 ]
 
-libtraceevent parses and returns an array of argument fields, sometimes
-larger than RAW_SYSCALL_ARGS_NUM (6) because it includes "__syscall_nr",
-idx will traverse to index 6 (7th element) whereas sc->fmt->arg holds 6
-elements max, creating an out-of-bounds access. This runtime error is
-found by UBsan. The error message:
+Add check for the return value of clk_enable() to gurantee the success.
 
-  $ sudo UBSAN_OPTIONS=print_stacktrace=1 ./perf trace -a --max-events=1
-  builtin-trace.c:1966:35: runtime error: index 6 out of bounds for type 'syscall_arg_fmt [6]'
-    #0 0x5c04956be5fe in syscall__alloc_arg_fmts /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:1966
-    #1 0x5c04956c0510 in trace__read_syscall_info /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:2110
-    #2 0x5c04956c372b in trace__syscall_info /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:2436
-    #3 0x5c04956d2f39 in trace__init_syscalls_bpf_prog_array_maps /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:3897
-    #4 0x5c04956d6d25 in trace__run /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:4335
-    #5 0x5c04956e112e in cmd_trace /home/howard/hw/linux-perf/tools/perf/builtin-trace.c:5502
-    #6 0x5c04956eda7d in run_builtin /home/howard/hw/linux-perf/tools/perf/perf.c:351
-    #7 0x5c04956ee0a8 in handle_internal_command /home/howard/hw/linux-perf/tools/perf/perf.c:404
-    #8 0x5c04956ee37f in run_argv /home/howard/hw/linux-perf/tools/perf/perf.c:448
-    #9 0x5c04956ee8e9 in main /home/howard/hw/linux-perf/tools/perf/perf.c:556
-    #10 0x79eb3622a3b7 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
-    #11 0x79eb3622a47a in __libc_start_main_impl ../csu/libc-start.c:360
-    #12 0x5c04955422d4 in _start (/home/howard/hw/linux-perf/tools/perf/perf+0x4e02d4) (BuildId: 5b6cab2d59e96a4341741765ad6914a4d784dbc6)
-
-     0.000 ( 0.014 ms): Chrome_ChildIO/117244 write(fd: 238, buf: !, count: 1)                                      = 1
-
-Fixes: 5e58fcfaf4c6 ("perf trace: Allow allocating sc->arg_fmt even without the syscall tracepoint")
-Signed-off-by: Howard Chu <howardchu95@gmail.com>
-Link: https://lore.kernel.org/r/20250122025519.361873-1-howardchu95@gmail.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: babde1c243b2 ("[media] V4L: Add driver for S3C24XX/S3C64XX SoC series camera interface")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ .../media/platform/samsung/s3c-camif/camif-core.c   | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index ffa1295273099..ecd26e058baf6 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -2122,8 +2122,12 @@ static int trace__read_syscall_info(struct trace *trace, int id)
- 		return PTR_ERR(sc->tp_format);
- 	}
+diff --git a/drivers/media/platform/samsung/s3c-camif/camif-core.c b/drivers/media/platform/samsung/s3c-camif/camif-core.c
+index de6e8f1518496..221e3c447f361 100644
+--- a/drivers/media/platform/samsung/s3c-camif/camif-core.c
++++ b/drivers/media/platform/samsung/s3c-camif/camif-core.c
+@@ -527,10 +527,19 @@ static void s3c_camif_remove(struct platform_device *pdev)
+ static int s3c_camif_runtime_resume(struct device *dev)
+ {
+ 	struct camif_dev *camif = dev_get_drvdata(dev);
++	int ret;
++
++	ret = clk_enable(camif->clock[CLK_GATE]);
++	if (ret)
++		return ret;
  
-+	/*
-+	 * The tracepoint format contains __syscall_nr field, so it's one more
-+	 * than the actual number of syscall arguments.
-+	 */
- 	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ?
--					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields))
-+					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields - 1))
- 		return -ENOMEM;
+-	clk_enable(camif->clock[CLK_GATE]);
+ 	/* null op on s3c244x */
+-	clk_enable(camif->clock[CLK_CAM]);
++	ret = clk_enable(camif->clock[CLK_CAM]);
++	if (ret) {
++		clk_disable(camif->clock[CLK_GATE]);
++		return ret;
++	}
++
+ 	return 0;
+ }
  
- 	sc->args = sc->tp_format->format.fields;
 -- 
 2.39.5
 
