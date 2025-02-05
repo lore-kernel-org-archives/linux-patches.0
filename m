@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242B213C3F6;
-	Wed,  5 Feb 2025 14:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06236282EE;
+	Wed,  5 Feb 2025 14:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765178; cv=none; b=GuV8zAKiZza4luIxDg+8goNZ7e74XqiWxLgEnMuNjOP626qqJRMrt0OdzgZ+XBZiCZtB7mgXdOSWtfiILSR11cDFrrqveobzwsOjQ5XuKbOMyZ7tLv86m6TODG4r7fENnrYQXutEICDCG/73DtS/Jllau2blGrVCyUvBYsltcBI=
+	t=1738765181; cv=none; b=Bk2jDZ2dA4Cg2vh1yqpuqOOoXAmXzXjC9UGqd1p3mVa8mBQPQwhNqUR6K6+fsA/A5td7Qyjip/fXWhCQeRzv//NT3W89Dz6bwoqFppdRGiTM+CfbhgO/CnJ313+RO8hHBjoYO0hDPXC/joCD7YCruWy3p0PDiNRWPCWd4y0fBhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765178; c=relaxed/simple;
-	bh=jWLYp06lBvZVeS35R/pojlY9TqMeBYJS7J3b+kLGDvI=;
+	s=arc-20240116; t=1738765181; c=relaxed/simple;
+	bh=FusrwCuNfhjYnpZ3DqSvTStRdLVoDKWGiV4tTDsrN2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mUWnvDeiteAqQl8YE8CD3tKRzMXMxyIwFE6CBPJuaGgBwlAsdRFtYQXlHitww+YVjy0+AJn7zj4Gp0pG8QfM4BhcApAjqXJL1NdpshrkAOXakSkyCICJFqMT6i0nfC+8gtkOYTMmvZV2C4KinDYIncks1IKI+obf9+OTGXET6PM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLDYrtnh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hoq3G456D3EpPwWz8KSoZqR/iwkH6T5q1JWakQMUh8O+/VRUYnRlKR9OV7rk9k8YimmddE0JAYryu65RRT2VOxoUsPXx45XmSTIg/ip0We9eq1z1JNc4LFB6bCIwqGm0GQ3ytb8sILRoUbDgTj6JxbfeJAWR/qA7gIiUHpkcyHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAtL0Hjv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLDYrtnh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24566C4CEDD;
-	Wed,  5 Feb 2025 14:19:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAtL0Hjv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BC9C4CED1;
+	Wed,  5 Feb 2025 14:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765177;
-	bh=jWLYp06lBvZVeS35R/pojlY9TqMeBYJS7J3b+kLGDvI=;
+	s=korg; t=1738765180;
+	bh=FusrwCuNfhjYnpZ3DqSvTStRdLVoDKWGiV4tTDsrN2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QLDYrtnhRzH6ZDTvCbRhDHJ8cVpMEabqyCvSbkpisudKrpSGVJseoIASE+1cHeudy
-	 BlvgtYRmxLsCX6y2l4ERQd0FDq3MhVksJT9+GLobhQufnGEfqlhxw96Vmo/l1911iJ
-	 12A9mnbEU6j1I61FI/Hn0yPqbiPEyF2ix/OHrxaU=
+	b=bAtL0HjvklThHULkszOadppCfKAGmdjV7vEh6YSMrAxtB4cqt9JUTfurvEbJ8n5In
+	 uHokrxrFTYi1u7gQ7UVBbNR0zIVXvOXBL9DRTPT8UCwI/NjvaeqLZXRwfqEes99d6q
+	 qCwi2LTq2zB5sRREHgXxzVsEMFt+ertVBpHJREVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 197/590] wifi: mt76: mt7996: fix rx filter setting for bfee functionality
-Date: Wed,  5 Feb 2025 14:39:12 +0100
-Message-ID: <20250205134502.816330772@linuxfoundation.org>
+Subject: [PATCH 6.6 241/393] arm64: dts: qcom: sc7280: correct sleep clock frequency
+Date: Wed,  5 Feb 2025 14:42:40 +0100
+Message-ID: <20250205134429.525899457@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,39 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 858fd2a53877b2e8b1d991a5a861ac34a0f55ef8 ]
+[ Upstream commit f6ccdca14eac545320ab03d6ca91ca343e7372e5 ]
 
-Fix rx filter setting to prevent dropping NDPA frames. Without this
-change, bfee functionality may behave abnormally.
+The SC7280 platform uses PMK8350 to provide sleep clock. According to the
+documentation, that clock has 32.7645 kHz frequency. Correct the sleep
+clock definition.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Link: https://patch.msgid.link/20241230194202.95065-5-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 7a1f4e7f740d ("arm64: dts: qcom: sc7280: Add basic dts/dtsi files for sc7280 soc")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-8-e9b08fbeadd3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 39f071ece35e6..4d11083b86c09 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -496,8 +496,7 @@ static void mt7996_configure_filter(struct ieee80211_hw *hw,
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 149c7962f2cbb..81e95604ef987 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -80,7 +80,7 @@
  
- 	MT76_FILTER(CONTROL, MT_WF_RFCR_DROP_CTS |
- 			     MT_WF_RFCR_DROP_RTS |
--			     MT_WF_RFCR_DROP_CTL_RSV |
--			     MT_WF_RFCR_DROP_NDPA);
-+			     MT_WF_RFCR_DROP_CTL_RSV);
- 
- 	*total_flags = flags;
- 	mt76_wr(dev, MT_WF_RFCR(phy->mt76->band_idx), phy->rxfilter);
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+-			clock-frequency = <32000>;
++			clock-frequency = <32764>;
+ 			#clock-cells = <0>;
+ 		};
+ 	};
 -- 
 2.39.5
 
