@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F89156C76;
-	Wed,  5 Feb 2025 13:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25ED914F9F3;
+	Wed,  5 Feb 2025 13:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763770; cv=none; b=OmUdPK0zoWfhEoHVPHeON3a/tgdGnGeA5ohv/jXK85seeVQcf+4V5Ev0j8YAeMAqvd1QNWXOcimq6apXhiOr9+VFdr4PfrZi3WtCDmYpJGbln55EAtk8LVMq5CVdIYB7mispd2oI6gd3oUytdI6cnRMsHvjAvlDmQqwbOzTgNtA=
+	t=1738763773; cv=none; b=ZgbxTDJI59OWsEKR/c64PdWUWq3y2ystkzks9IfiXs4Ish36Sv/E9rM2ahBabbfzd96DUGte7MzMP6LyovAOoXpprP9178H8Jp9fartnl5IsNJiLDjM7qlF667PQxkpWdXtZK0DERD4E4/Bb1nFIoQJyK2znMdY4QBw0bPLNy/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763770; c=relaxed/simple;
-	bh=KrnaoHvIRyuyYuot4uZ2jKvnYjCfcAu3Vr7puKxYbcU=;
+	s=arc-20240116; t=1738763773; c=relaxed/simple;
+	bh=lAQecMW8+UU8zdUt/Kin9RLfXMKyGPVUNz/+h41BSgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EnAF9Gf9+ePatm02EApPlcxvn2cMkByIoVmYhoys0p2WyDY9HNts/9WfF/RyItX0APuSTaKRJShPwyWUeGx8tWUYmOAU1uHOb3QDJX92XZ1Ug66iUf1ymP+BWygaY3ilj/vCIfk4XzkSjtM4x0/7Yiz5oz7cM0wR7K5xreb9Nxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IECghdFW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i9lz560MFAP3PNdvy4beX271HnQadaYzY7FTfIVpv6ESMpV0k9EF4dxCN2Ur+0pTPErf4/TkFUpMCyNLTG8Jq5qLWJCA+Us+ebAdjbUGhR1Sol/nRN8IwmE7ATZdd/GYHm0Uq1Ue62nMPsQrnkvwp7rmZ8x/Fauk3ONRi1SXRLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gG7sCMwy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IECghdFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A52C4CED1;
-	Wed,  5 Feb 2025 13:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gG7sCMwy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3298AC4CED1;
+	Wed,  5 Feb 2025 13:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763769;
-	bh=KrnaoHvIRyuyYuot4uZ2jKvnYjCfcAu3Vr7puKxYbcU=;
+	s=korg; t=1738763772;
+	bh=lAQecMW8+UU8zdUt/Kin9RLfXMKyGPVUNz/+h41BSgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IECghdFWFVnUqqnilMfBn5u0Y/B2QMG2gv3WOzzBYaEeAhmviFRydRJWZ/q9iF0+a
-	 DAT+PxO8gJzt6JWvln1ITfm5vsRWFzWgpMfdmXotgUz6VRL8BLIOr0h8MCAu2y952c
-	 m+yNvNs2rMXhpjdzjHwGlEMeXEt8vsu7zg4xOCBc=
+	b=gG7sCMwyjbU9Z473TA7qurRBOCf2JyBzVvxWVyZ1Ihamq7hBmlg+0TJfMN5oFQis0
+	 D+xRvOEbbKyGhnOb5KG/UVRVTitPcsYwipibSTLMmZ4WVhJgqmIZyxDq8b9UHYYUTP
+	 ujnMw49yPY+Shn6CGH27cVsrmNvhqw64J6/qu11c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Lee Jones <lee@kernel.org>,
+	syzbot+3c47b5843403a45aef57@syzkaller.appspotmail.com,
+	Octavian Purdila <tavip@google.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/393] mfd: syscon: Use scoped variables with memory allocators to simplify error paths
-Date: Wed,  5 Feb 2025 14:40:23 +0100
-Message-ID: <20250205134424.271780708@linuxfoundation.org>
+Subject: [PATCH 6.6 089/393] team: prevent adding a device which is already a team device lower
+Date: Wed,  5 Feb 2025 14:40:08 +0100
+Message-ID: <20250205134423.699601912@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -51,86 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Octavian Purdila <tavip@google.com>
 
-[ Upstream commit 82f898f47112bc7b787cb9ce8803c4e2f9f60c89 ]
+[ Upstream commit 3fff5da4ca2164bb4d0f1e6cd33f6eb8a0e73e50 ]
 
-Allocate the memory with scoped/cleanup.h to reduce error handling and
-make the code a bit simpler.
+Prevent adding a device which is already a team device lower,
+e.g. adding veth0 if vlan1 was already added and veth0 is a lower of
+vlan1.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240707114823.9175-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Stable-dep-of: 805f7aaf7fee ("mfd: syscon: Fix race in device_node_get_regmap()")
+This is not useful in practice and can lead to recursive locking:
+
+$ ip link add veth0 type veth peer name veth1
+$ ip link set veth0 up
+$ ip link set veth1 up
+$ ip link add link veth0 name veth0.1 type vlan protocol 802.1Q id 1
+$ ip link add team0 type team
+$ ip link set veth0.1 down
+$ ip link set veth0.1 master team0
+team0: Port device veth0.1 added
+$ ip link set veth0 down
+$ ip link set veth0 master team0
+
+============================================
+WARNING: possible recursive locking detected
+6.13.0-rc2-virtme-00441-ga14a429069bb #46 Not tainted
+--------------------------------------------
+ip/7684 is trying to acquire lock:
+ffff888016848e00 (team->team_lock_key){+.+.}-{4:4}, at: team_device_event (drivers/net/team/team_core.c:2928 drivers/net/team/team_core.c:2951 drivers/net/team/team_core.c:2973)
+
+but task is already holding lock:
+ffff888016848e00 (team->team_lock_key){+.+.}-{4:4}, at: team_add_slave (drivers/net/team/team_core.c:1147 drivers/net/team/team_core.c:1977)
+
+other info that might help us debug this:
+Possible unsafe locking scenario:
+
+CPU0
+----
+lock(team->team_lock_key);
+lock(team->team_lock_key);
+
+*** DEADLOCK ***
+
+May be due to missing lock nesting notation
+
+2 locks held by ip/7684:
+
+stack backtrace:
+CPU: 3 UID: 0 PID: 7684 Comm: ip Not tainted 6.13.0-rc2-virtme-00441-ga14a429069bb #46
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Call Trace:
+<TASK>
+dump_stack_lvl (lib/dump_stack.c:122)
+print_deadlock_bug.cold (kernel/locking/lockdep.c:3040)
+__lock_acquire (kernel/locking/lockdep.c:3893 kernel/locking/lockdep.c:5226)
+? netlink_broadcast_filtered (net/netlink/af_netlink.c:1548)
+lock_acquire.part.0 (kernel/locking/lockdep.c:467 kernel/locking/lockdep.c:5851)
+? team_device_event (drivers/net/team/team_core.c:2928 drivers/net/team/team_core.c:2951 drivers/net/team/team_core.c:2973)
+? trace_lock_acquire (./include/trace/events/lock.h:24 (discriminator 2))
+? team_device_event (drivers/net/team/team_core.c:2928 drivers/net/team/team_core.c:2951 drivers/net/team/team_core.c:2973)
+? lock_acquire (kernel/locking/lockdep.c:5822)
+? team_device_event (drivers/net/team/team_core.c:2928 drivers/net/team/team_core.c:2951 drivers/net/team/team_core.c:2973)
+__mutex_lock (kernel/locking/mutex.c:587 kernel/locking/mutex.c:735)
+? team_device_event (drivers/net/team/team_core.c:2928 drivers/net/team/team_core.c:2951 drivers/net/team/team_core.c:2973)
+? team_device_event (drivers/net/team/team_core.c:2928 drivers/net/team/team_core.c:2951 drivers/net/team/team_core.c:2973)
+? fib_sync_up (net/ipv4/fib_semantics.c:2167)
+? team_device_event (drivers/net/team/team_core.c:2928 drivers/net/team/team_core.c:2951 drivers/net/team/team_core.c:2973)
+team_device_event (drivers/net/team/team_core.c:2928 drivers/net/team/team_core.c:2951 drivers/net/team/team_core.c:2973)
+notifier_call_chain (kernel/notifier.c:85)
+call_netdevice_notifiers_info (net/core/dev.c:1996)
+__dev_notify_flags (net/core/dev.c:8993)
+? __dev_change_flags (net/core/dev.c:8975)
+dev_change_flags (net/core/dev.c:9027)
+vlan_device_event (net/8021q/vlan.c:85 net/8021q/vlan.c:470)
+? br_device_event (net/bridge/br.c:143)
+notifier_call_chain (kernel/notifier.c:85)
+call_netdevice_notifiers_info (net/core/dev.c:1996)
+dev_open (net/core/dev.c:1519 net/core/dev.c:1505)
+team_add_slave (drivers/net/team/team_core.c:1219 drivers/net/team/team_core.c:1977)
+? __pfx_team_add_slave (drivers/net/team/team_core.c:1972)
+do_set_master (net/core/rtnetlink.c:2917)
+do_setlink.isra.0 (net/core/rtnetlink.c:3117)
+
+Reported-by: syzbot+3c47b5843403a45aef57@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3c47b5843403a45aef57
+Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
+Signed-off-by: Octavian Purdila <tavip@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/syscon.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ drivers/net/team/team.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/mfd/syscon.c b/drivers/mfd/syscon.c
-index 33f1e07ab24dc..2ce15f60eb107 100644
---- a/drivers/mfd/syscon.c
-+++ b/drivers/mfd/syscon.c
-@@ -8,6 +8,7 @@
-  * Author: Dong Aisheng <dong.aisheng@linaro.org>
-  */
+diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
+index ae257fa43d87a..46a7c9fb6300e 100644
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -1169,6 +1169,13 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 		return -EBUSY;
+ 	}
  
-+#include <linux/cleanup.h>
- #include <linux/clk.h>
- #include <linux/err.h>
- #include <linux/hwspinlock.h>
-@@ -45,7 +46,6 @@ static const struct regmap_config syscon_regmap_config = {
- static struct syscon *of_syscon_register(struct device_node *np, bool check_res)
- {
- 	struct clk *clk;
--	struct syscon *syscon;
- 	struct regmap *regmap;
- 	void __iomem *base;
- 	u32 reg_io_width;
-@@ -54,20 +54,16 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_res)
- 	struct resource res;
- 	struct reset_control *reset;
- 
--	syscon = kzalloc(sizeof(*syscon), GFP_KERNEL);
-+	struct syscon *syscon __free(kfree) = kzalloc(sizeof(*syscon), GFP_KERNEL);
- 	if (!syscon)
- 		return ERR_PTR(-ENOMEM);
- 
--	if (of_address_to_resource(np, 0, &res)) {
--		ret = -ENOMEM;
--		goto err_map;
--	}
-+	if (of_address_to_resource(np, 0, &res))
-+		return ERR_PTR(-ENOMEM);
- 
- 	base = of_iomap(np, 0);
--	if (!base) {
--		ret = -ENOMEM;
--		goto err_map;
--	}
-+	if (!base)
-+		return ERR_PTR(-ENOMEM);
- 
- 	/* Parse the device's DT node for an endianness specification */
- 	if (of_property_read_bool(np, "big-endian"))
-@@ -152,7 +148,7 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_res)
- 	list_add_tail(&syscon->list, &syscon_list);
- 	spin_unlock(&syscon_list_slock);
- 
--	return syscon;
-+	return_ptr(syscon);
- 
- err_reset:
- 	reset_control_put(reset);
-@@ -163,8 +159,6 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_res)
- 	regmap_exit(regmap);
- err_regmap:
- 	iounmap(base);
--err_map:
--	kfree(syscon);
- 	return ERR_PTR(ret);
- }
- 
++	if (netdev_has_upper_dev(port_dev, dev)) {
++		NL_SET_ERR_MSG(extack, "Device is already a lower device of the team interface");
++		netdev_err(dev, "Device %s is already a lower device of the team interface\n",
++			   portname);
++		return -EBUSY;
++	}
++
+ 	if (port_dev->features & NETIF_F_VLAN_CHALLENGED &&
+ 	    vlan_uses_dev(dev)) {
+ 		NL_SET_ERR_MSG(extack, "Device is VLAN challenged and team device has VLAN set up");
 -- 
 2.39.5
 
