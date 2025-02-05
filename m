@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA9F16DC12;
-	Wed,  5 Feb 2025 14:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2ABD1898ED;
+	Wed,  5 Feb 2025 14:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765316; cv=none; b=UbvNQOz/AP3fc37nDr4x5tKTbXX87WeCKbslhEsoxAXXT6OWP1sYUB3CQbMqPfBK0d3WzYunIRZR+MtTooHIXWeOsIXQwAzuO3ea8SDsNWS8bu0YQmVfuaZIchLpGQRfpyeTwJ12uuRLqEKz+2F/tENzOdjqqDrXoXAdV2uZUzM=
+	t=1738765320; cv=none; b=hVQNA2yGGtjEo048p7pwQYMfGsMQrfefOCWRYFTcer1WkIgcjSETKlbwZdchWMvz49GTvrZv8aZdtf6q8TfrjBBUXSVxIDUbMiIXdw3R8+/E0bGu+HjYEHSbSopvmJ4fcgLyxBCxee4jDY8gD/J4Z2ytDdwQRBf8vyNe53yvspI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765316; c=relaxed/simple;
-	bh=J28K5M2QXwE5tl6PcmY/Is99H6jIn4veHRlHj1+AeGk=;
+	s=arc-20240116; t=1738765320; c=relaxed/simple;
+	bh=/Tw+wCWWIVamwB+NkoHqdcFoEJsGaMRgAp35S9xtjYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pgamr+mS56BN9/aa4Tnr2hlHa2L4s/QbSJ3qDWTUcIlYqi2kme/SRWgvCm6m9Til8Mtlb6jSGsD+QhjaEcqD5c8KNma5QXJux5XRU5S2SWReaxy66Xy+43I0Re3oBEv7xnEu23zQiA0UI1NejFgXfiHTBsgGFcoxgD7konVpbdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcE8/YxC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kxdEGU7L3pLVBKdU1utiVdUQ3qb8Px0hwolobl9STkxQyWSxm+SAjHsZb20SGnFhaO4GEIufmMst2ppidsqThD1UsuJE9lZVAqDNw9BNZDqoXVEJxiHiezALxWhJx+CrnqRtoeGSngzpL0OGAwGruOm9Ej9AYGVJwKFCFt+O50s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KVqqTPF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcE8/YxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776B1C4CED1;
-	Wed,  5 Feb 2025 14:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KVqqTPF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE15C4CEDD;
+	Wed,  5 Feb 2025 14:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765316;
-	bh=J28K5M2QXwE5tl6PcmY/Is99H6jIn4veHRlHj1+AeGk=;
+	s=korg; t=1738765319;
+	bh=/Tw+wCWWIVamwB+NkoHqdcFoEJsGaMRgAp35S9xtjYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DcE8/YxCFOQMEB9R1pDQPA9kgo5NQ8z/FKjmrsSyNCXtb2sMtINPC9McI4Pf0eF9K
-	 xNZ5DSoGPb1w/RAjNajXBU4fw2b62YZo/9H1e5L8qNPWTPoq0nRo19epZnw6a4EfsE
-	 x0vrtekra5xnEllPK6j39jfGvFI4J80SkUF6Z0lY=
+	b=1KVqqTPF5zybxRfvWcEYOY5/3D9kJ2/jjVVBktfvbFS50kOU3DN2VNeenruNuwvKm
+	 TqLWKETBVrcjhzy/t7+2iaQQhL45URgKcFyuvoWabb1vwbO6y4ZdRf2vUc/9/CptH8
+	 SqWGUqsBaebmOEH1NYS+eo78T5U1iIJ7z6ImNrlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 209/590] i2c: designware: Actually make use of the I2C_DW_COMMON and I2C_DW symbol namespaces
-Date: Wed,  5 Feb 2025 14:39:24 +0100
-Message-ID: <20250205134503.280098105@linuxfoundation.org>
+	Dragan Simic <dsimic@manjaro.org>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Vasily Khoruzhick <anarsoul@gmail.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Frank Oltmanns <frank@oltmanns.dev>,
+	Stuart Gathman <stuart@gathman.org>
+Subject: [PATCH 6.6 253/393] arm64: dts: allwinner: a64: explicitly assign clock parent for TCON0
+Date: Wed,  5 Feb 2025 14:42:52 +0100
+Message-ID: <20250205134429.986444437@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,101 +48,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Vasily Khoruzhick <anarsoul@gmail.com>
 
-[ Upstream commit f0a4e9fa656ceb3b2e4c296cf6226798d804fa22 ]
+[ Upstream commit 8715c91a836502929c637c76a26335ede8818acf ]
 
-DEFAULT_SYMBOL_NAMESPACE must already be defined when <linux/export.h>
-is included. So move the define above the include block.
+TCON0 seems to need a different clock parent depending on output type.
+For RGB it has to be PLL-VIDEO0-2X, while for DSI it has to be PLL-MIPI,
+so select it explicitly.
 
-Fixes: fd57a3325a77 ("i2c: designware: Move exports to I2C_DW namespaces")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Video output doesn't work if incorrect clock is assigned.
+
+On my Pinebook I manually configured PLL-VIDEO0-2X and PLL-MIPI to the same
+rate, and while video output works fine with PLL-VIDEO0-2X, it doesn't
+work at all (as in no picture) with PLL-MIPI.
+
+Fixes: ca1170b69968 ("clk: sunxi-ng: a64: force select PLL_MIPI in TCON0 mux")
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Tested-by: Frank Oltmanns <frank@oltmanns.dev> # on PinePhone
+Tested-by: Stuart Gathman <stuart@gathman.org> # on OG Pinebook
+Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Link: https://patch.msgid.link/20250104074035.1611136-4-anarsoul@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-common.c | 5 +++--
- drivers/i2c/busses/i2c-designware-master.c | 5 +++--
- drivers/i2c/busses/i2c-designware-slave.c  | 5 +++--
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts | 2 ++
+ arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts  | 2 ++
+ arch/arm64/boot/dts/allwinner/sun50i-a64.dtsi         | 2 ++
+ 3 files changed, 6 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
-index 0e7771d21469d..b3282785523d4 100644
---- a/drivers/i2c/busses/i2c-designware-common.c
-+++ b/drivers/i2c/busses/i2c-designware-common.c
-@@ -8,6 +8,9 @@
-  * Copyright (C) 2007 MontaVista Software Inc.
-  * Copyright (C) 2009 Provigent Ltd.
-  */
-+
-+#define DEFAULT_SYMBOL_NAMESPACE	"I2C_DW_COMMON"
-+
- #include <linux/acpi.h>
- #include <linux/clk.h>
- #include <linux/delay.h>
-@@ -29,8 +32,6 @@
- #include <linux/types.h>
- #include <linux/units.h>
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts
+index 50ed2e9f10ed0..6a69d00524944 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinebook.dts
+@@ -390,6 +390,8 @@
+ &tcon0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&lcd_rgb666_pins>;
++	assigned-clocks = <&ccu CLK_TCON0>;
++	assigned-clock-parents = <&ccu CLK_PLL_VIDEO0_2X>;
  
--#define DEFAULT_SYMBOL_NAMESPACE	"I2C_DW_COMMON"
--
- #include "i2c-designware-core.h"
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts b/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts
+index 1128030e4c25b..d3e5eed84f364 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-teres-i.dts
+@@ -369,6 +369,8 @@
+ &tcon0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&lcd_rgb666_pins>;
++	assigned-clocks = <&ccu CLK_TCON0>;
++	assigned-clock-parents = <&ccu CLK_PLL_VIDEO0_2X>;
  
- static char *abort_sources[] = {
-diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-index e23f93b8974e4..28188c6d0555e 100644
---- a/drivers/i2c/busses/i2c-designware-master.c
-+++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -8,6 +8,9 @@
-  * Copyright (C) 2007 MontaVista Software Inc.
-  * Copyright (C) 2009 Provigent Ltd.
-  */
-+
-+#define DEFAULT_SYMBOL_NAMESPACE	"I2C_DW"
-+
- #include <linux/delay.h>
- #include <linux/err.h>
- #include <linux/errno.h>
-@@ -22,8 +25,6 @@
- #include <linux/regmap.h>
- #include <linux/reset.h>
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-a64.dtsi
+index 57ac18738c995..7103298f6a1c2 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-a64.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-a64.dtsi
+@@ -410,6 +410,8 @@
+ 			clock-names = "ahb", "tcon-ch0";
+ 			clock-output-names = "tcon-data-clock";
+ 			#clock-cells = <0>;
++			assigned-clocks = <&ccu CLK_TCON0>;
++			assigned-clock-parents = <&ccu CLK_PLL_MIPI>;
+ 			resets = <&ccu RST_BUS_TCON0>, <&ccu RST_BUS_LVDS>;
+ 			reset-names = "lcd", "lvds";
  
--#define DEFAULT_SYMBOL_NAMESPACE	"I2C_DW"
--
- #include "i2c-designware-core.h"
- 
- #define AMD_TIMEOUT_MIN_US	25
-diff --git a/drivers/i2c/busses/i2c-designware-slave.c b/drivers/i2c/busses/i2c-designware-slave.c
-index 0a76e10f77a2b..f0f0f1f2131d0 100644
---- a/drivers/i2c/busses/i2c-designware-slave.c
-+++ b/drivers/i2c/busses/i2c-designware-slave.c
-@@ -6,6 +6,9 @@
-  *
-  * Copyright (C) 2016 Synopsys Inc.
-  */
-+
-+#define DEFAULT_SYMBOL_NAMESPACE	"I2C_DW"
-+
- #include <linux/delay.h>
- #include <linux/err.h>
- #include <linux/errno.h>
-@@ -16,8 +19,6 @@
- #include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- 
--#define DEFAULT_SYMBOL_NAMESPACE	"I2C_DW"
--
- #include "i2c-designware-core.h"
- 
- static void i2c_dw_configure_fifo_slave(struct dw_i2c_dev *dev)
 -- 
 2.39.5
 
