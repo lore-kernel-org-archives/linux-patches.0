@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D7513C9C4;
-	Wed,  5 Feb 2025 13:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304B413C9C4;
+	Wed,  5 Feb 2025 13:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763615; cv=none; b=ssOtmKaz98QTAn2yrC0EIb6IUSOkpN8BxF0uTrB9LLrMQ5q6+LiDRSyJD7X9lDfWOIngkISbLe3RAgIFrxHVBF0PFn+SYxEZm2rCbv4+yYEqxXOewpF7a520/uWbX3oD+g2EY8yn5GWwhQ+HNFB2t3fR/kIXyZk90IvtgQamQuQ=
+	t=1738763619; cv=none; b=JTutJmh+9qfimqYSEWuxLdx/WXyTYkIuabkjEkIdYbfjNsGzjxI77PkMSC4A10G6/ODqN7RBI6Do3Os8lffxB9R4ueUzLEoXb4yWWl1Hbv88vA8ZE0wo+xEUlaEc3d1+RMBeo3kfP5h/gow0XdiBS77FyyT4ZBIWu11Fo5rAGek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763615; c=relaxed/simple;
-	bh=M/SIpb9qqTq/ygcshybkd9iD+WiZDNc4NOEKxRnPPLc=;
+	s=arc-20240116; t=1738763619; c=relaxed/simple;
+	bh=R54hvtfzc3w+cmPv7a5fRUIxA+iDkI9QQS3Knz20wsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AieEWK6bWrNibhAb3OktwCgJeBKmJHBO0N0yxF1Que84VecZSfwHDkknaNlbUhPJAJwZMLpcYjIFe+cZ/PP7hXo9MRE8aEP7gsrBe8cIrS70CfTjZGDb3ZBqGZXuTYOpxrXtsQz0zwbPSFrnIRFAxbg6MjPS7htFfaw41075CN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5N/JDHB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XCCbHS0iGDNnJW5q3gJHmR+3MRDuQIJnm6bfXDIbNA5o4gt3sqtFaeYSmrslmgqYa6nlueRwt0paQ1MKfgeaec8YLdkyZmRjMJcLHQ885rq5vASu2JpcWa4pElG6BQB/pe0i72m99n2+3dHUqPWaxsWePfzZMnMq1f5WhCOuo8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RC4qA9Om; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5N/JDHB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5E7C4CED1;
-	Wed,  5 Feb 2025 13:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RC4qA9Om"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F74C4CED1;
+	Wed,  5 Feb 2025 13:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763615;
-	bh=M/SIpb9qqTq/ygcshybkd9iD+WiZDNc4NOEKxRnPPLc=;
+	s=korg; t=1738763619;
+	bh=R54hvtfzc3w+cmPv7a5fRUIxA+iDkI9QQS3Knz20wsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V5N/JDHBbYHygWGDQhBXo54O2u9FNMhb9Z59WLkrJ4IYuGQHsdMrBF7/qPoxYAY09
-	 GR/vUFwldWYYQ9W2/XdVVCzCUy6aDbb+eIDOzlTxsuvR/9hBzlm/kqWHDBKMuwQFyb
-	 WXj8B62KLhQkUPqvzz1vYcqEO22xvQvycDtfDURo=
+	b=RC4qA9OmHDSDUaFmTsjm1xy+Yvrk5s54InZOe9a0Es+axgu1txvFt8GQE5+sCyutc
+	 Z8YYEoFFPNCbC6DbstmMcfWis23ou8lqP36EslGgmr9tD2LleNJ2VX7Zz8ofFRCRy2
+	 gMvwTmvVEvPeqU+gIMRSQuQ7H+cp1NaH2TTROTmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/590] block: check BLK_FEAT_POLL under q_usage_count
-Date: Wed,  5 Feb 2025 14:36:09 +0100
-Message-ID: <20250205134455.784746337@linuxfoundation.org>
+Subject: [PATCH 6.6 066/393] wifi: rtlwifi: remove unused check_buddy_priv
+Date: Wed,  5 Feb 2025 14:39:45 +0100
+Message-ID: <20250205134422.820654833@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,116 +47,202 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit 958148a6ac061a9a80a184ea678a5fa872d0c56f ]
+[ Upstream commit 2fdac64c3c35858aa8ac5caa70b232e03456e120 ]
 
-Otherwise feature reconfiguration can race with I/O submission.
+Commit 2461c7d60f9f ("rtlwifi: Update header file") introduced a global
+list of private data structures.
 
-Also drop the bio_clear_polled in the error path, as the flag does not
-matter for instant error completions, it is a left over from when we
-allowed polled I/O to proceed unpolled in this case.
+Later on, commit 26634c4b1868 ("rtlwifi Modify existing bits to match
+vendor version 2013.02.07") started adding the private data to that list at
+probe time and added a hook, check_buddy_priv to find the private data from
+a similar device.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Link: https://lore.kernel.org/r/20250110054726.1499538-4-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: d432c817c21a ("block: don't update BLK_FEAT_POLL in __blk_mq_update_nr_hw_queues")
+However, that function was never used.
+
+Besides, though there is a lock for that list, it is never used. And when
+the probe fails, the private data is never removed from the list. This
+would cause a second probe to access freed memory.
+
+Remove the unused hook, structures and members, which will prevent the
+potential race condition on the list and its corruption during a second
+probe when probe fails.
+
+Fixes: 26634c4b1868 ("rtlwifi Modify existing bits to match vendor version 2013.02.07")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241206173713.3222187-2-cascardo@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-core.c | 22 ++++++++++++----------
- block/blk-mq.c   | 12 ++++++++++--
- 2 files changed, 22 insertions(+), 12 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/base.c |  7 ----
+ drivers/net/wireless/realtek/rtlwifi/base.h |  1 -
+ drivers/net/wireless/realtek/rtlwifi/pci.c  | 44 ---------------------
+ drivers/net/wireless/realtek/rtlwifi/wifi.h | 12 ------
+ 4 files changed, 64 deletions(-)
 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index 4f791a3114a12..487e8cafccc55 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -629,8 +629,14 @@ static void __submit_bio(struct bio *bio)
- 		blk_mq_submit_bio(bio);
- 	} else if (likely(bio_queue_enter(bio) == 0)) {
- 		struct gendisk *disk = bio->bi_bdev->bd_disk;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/base.c b/drivers/net/wireless/realtek/rtlwifi/base.c
+index 807a53a97325b..c7d5b20039ca0 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/base.c
++++ b/drivers/net/wireless/realtek/rtlwifi/base.c
+@@ -2710,9 +2710,6 @@ MODULE_AUTHOR("Larry Finger	<Larry.FInger@lwfinger.net>");
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("Realtek 802.11n PCI wireless core");
+ 
+-struct rtl_global_var rtl_global_var = {};
+-EXPORT_SYMBOL_GPL(rtl_global_var);
 -
--		disk->fops->submit_bio(bio);
-+	
-+		if ((bio->bi_opf & REQ_POLLED) &&
-+		    !(disk->queue->limits.features & BLK_FEAT_POLL)) {
-+			bio->bi_status = BLK_STS_NOTSUPP;
-+			bio_endio(bio);
-+		} else {
-+			disk->fops->submit_bio(bio);
-+		}
- 		blk_queue_exit(disk->queue);
- 	}
+ static int __init rtl_core_module_init(void)
+ {
+ 	BUILD_BUG_ON(TX_PWR_BY_RATE_NUM_RATE < TX_PWR_BY_RATE_NUM_SECTION);
+@@ -2726,10 +2723,6 @@ static int __init rtl_core_module_init(void)
+ 	/* add debugfs */
+ 	rtl_debugfs_add_topdir();
  
-@@ -805,12 +811,6 @@ void submit_bio_noacct(struct bio *bio)
- 		}
- 	}
+-	/* init some global vars */
+-	INIT_LIST_HEAD(&rtl_global_var.glb_priv_list);
+-	spin_lock_init(&rtl_global_var.glb_list_lock);
+-
+ 	return 0;
+ }
  
--	if (!(q->limits.features & BLK_FEAT_POLL) &&
--			(bio->bi_opf & REQ_POLLED)) {
--		bio_clear_polled(bio);
--		goto not_supported;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/base.h b/drivers/net/wireless/realtek/rtlwifi/base.h
+index f081a9a90563f..f3a6a43a42eca 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/base.h
++++ b/drivers/net/wireless/realtek/rtlwifi/base.h
+@@ -124,7 +124,6 @@ int rtl_send_smps_action(struct ieee80211_hw *hw,
+ u8 *rtl_find_ie(u8 *data, unsigned int len, u8 ie);
+ void rtl_recognize_peer(struct ieee80211_hw *hw, u8 *data, unsigned int len);
+ u8 rtl_tid_to_ac(u8 tid);
+-extern struct rtl_global_var rtl_global_var;
+ void rtl_phy_scan_operation_backup(struct ieee80211_hw *hw, u8 operation);
+ 
+ #endif
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index 766e43f13d3f5..8ee3a11e8dc73 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -295,46 +295,6 @@ static bool rtl_pci_get_amd_l1_patch(struct ieee80211_hw *hw)
+ 	return status;
+ }
+ 
+-static bool rtl_pci_check_buddy_priv(struct ieee80211_hw *hw,
+-				     struct rtl_priv **buddy_priv)
+-{
+-	struct rtl_priv *rtlpriv = rtl_priv(hw);
+-	struct rtl_pci_priv *pcipriv = rtl_pcipriv(hw);
+-	struct rtl_priv *tpriv = NULL, *iter;
+-	struct rtl_pci_priv *tpcipriv = NULL;
+-
+-	if (!list_empty(&rtlpriv->glb_var->glb_priv_list)) {
+-		list_for_each_entry(iter, &rtlpriv->glb_var->glb_priv_list,
+-				    list) {
+-			tpcipriv = (struct rtl_pci_priv *)iter->priv;
+-			rtl_dbg(rtlpriv, COMP_INIT, DBG_LOUD,
+-				"pcipriv->ndis_adapter.funcnumber %x\n",
+-				pcipriv->ndis_adapter.funcnumber);
+-			rtl_dbg(rtlpriv, COMP_INIT, DBG_LOUD,
+-				"tpcipriv->ndis_adapter.funcnumber %x\n",
+-				tpcipriv->ndis_adapter.funcnumber);
+-
+-			if (pcipriv->ndis_adapter.busnumber ==
+-			    tpcipriv->ndis_adapter.busnumber &&
+-			    pcipriv->ndis_adapter.devnumber ==
+-			    tpcipriv->ndis_adapter.devnumber &&
+-			    pcipriv->ndis_adapter.funcnumber !=
+-			    tpcipriv->ndis_adapter.funcnumber) {
+-				tpriv = iter;
+-				break;
+-			}
+-		}
 -	}
 -
- 	switch (bio_op(bio)) {
- 	case REQ_OP_READ:
- 		break;
-@@ -935,7 +935,7 @@ int bio_poll(struct bio *bio, struct io_comp_batch *iob, unsigned int flags)
- 		return 0;
+-	rtl_dbg(rtlpriv, COMP_INIT, DBG_LOUD,
+-		"find_buddy_priv %d\n", tpriv != NULL);
+-
+-	if (tpriv)
+-		*buddy_priv = tpriv;
+-
+-	return tpriv != NULL;
+-}
+-
+ static void rtl_pci_parse_configuration(struct pci_dev *pdev,
+ 					struct ieee80211_hw *hw)
+ {
+@@ -2013,7 +1973,6 @@ static bool _rtl_pci_find_adapter(struct pci_dev *pdev,
+ 		pcipriv->ndis_adapter.amd_l1_patch);
  
- 	q = bdev_get_queue(bdev);
--	if (cookie == BLK_QC_T_NONE || !(q->limits.features & BLK_FEAT_POLL))
-+	if (cookie == BLK_QC_T_NONE)
- 		return 0;
+ 	rtl_pci_parse_configuration(pdev, hw);
+-	list_add_tail(&rtlpriv->list, &rtlpriv->glb_var->glb_priv_list);
  
- 	blk_flush_plug(current->plug, false);
-@@ -951,7 +951,9 @@ int bio_poll(struct bio *bio, struct io_comp_batch *iob, unsigned int flags)
- 	 */
- 	if (!percpu_ref_tryget(&q->q_usage_counter))
- 		return 0;
--	if (queue_is_mq(q)) {
-+	if (!(q->limits.features & BLK_FEAT_POLL)) {
-+		ret = 0;
-+	} else if (queue_is_mq(q)) {
- 		ret = blk_mq_poll(q, cookie, iob, flags);
- 	} else {
- 		struct gendisk *disk = q->disk;
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 4e76651e786d1..784d41eb0abba 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3092,14 +3092,22 @@ void blk_mq_submit_bio(struct bio *bio)
- 	}
+ 	return true;
+ }
+@@ -2160,7 +2119,6 @@ int rtl_pci_probe(struct pci_dev *pdev,
+ 	rtlpriv->rtlhal.interface = INTF_PCI;
+ 	rtlpriv->cfg = (struct rtl_hal_cfg *)(id->driver_data);
+ 	rtlpriv->intf_ops = &rtl_pci_ops;
+-	rtlpriv->glb_var = &rtl_global_var;
+ 	rtl_efuse_ops_init(hw);
  
- 	/*
--	 * Device reconfiguration may change logical block size, so alignment
--	 * check has to be done with queue usage counter held
-+	 * Device reconfiguration may change logical block size or reduce the
-+	 * number of poll queues, so the checks for alignment and poll support
-+	 * have to be done with queue usage counter held.
- 	 */
- 	if (unlikely(bio_unaligned(bio, q))) {
- 		bio_io_error(bio);
- 		goto queue_exit;
- 	}
+ 	/* MEM map */
+@@ -2318,7 +2276,6 @@ void rtl_pci_disconnect(struct pci_dev *pdev)
+ 	if (rtlpci->using_msi)
+ 		pci_disable_msi(rtlpci->pdev);
  
-+	if ((bio->bi_opf & REQ_POLLED) &&
-+	    !(q->limits.features & BLK_FEAT_POLL)) {
-+		bio->bi_status = BLK_STS_NOTSUPP;
-+		bio_endio(bio);
-+		goto queue_exit;
-+	}
-+
- 	bio = __bio_split_to_limits(bio, &q->limits, &nr_segs);
- 	if (!bio)
- 		goto queue_exit;
+-	list_del(&rtlpriv->list);
+ 	if (rtlpriv->io.pci_mem_start != 0) {
+ 		pci_iounmap(pdev, (void __iomem *)rtlpriv->io.pci_mem_start);
+ 		pci_release_regions(pdev);
+@@ -2378,7 +2335,6 @@ const struct rtl_intf_ops rtl_pci_ops = {
+ 	.read_efuse_byte = read_efuse_byte,
+ 	.adapter_start = rtl_pci_start,
+ 	.adapter_stop = rtl_pci_stop,
+-	.check_buddy_priv = rtl_pci_check_buddy_priv,
+ 	.adapter_tx = rtl_pci_tx,
+ 	.flush = rtl_pci_flush,
+ 	.reset_trx_ring = rtl_pci_reset_trx_ring,
+diff --git a/drivers/net/wireless/realtek/rtlwifi/wifi.h b/drivers/net/wireless/realtek/rtlwifi/wifi.h
+index 8cbf3fb388539..2106d7763bada 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/wifi.h
++++ b/drivers/net/wireless/realtek/rtlwifi/wifi.h
+@@ -2321,8 +2321,6 @@ struct rtl_intf_ops {
+ 	void (*read_efuse_byte)(struct ieee80211_hw *hw, u16 _offset, u8 *pbuf);
+ 	int (*adapter_start)(struct ieee80211_hw *hw);
+ 	void (*adapter_stop)(struct ieee80211_hw *hw);
+-	bool (*check_buddy_priv)(struct ieee80211_hw *hw,
+-				 struct rtl_priv **buddy_priv);
+ 
+ 	int (*adapter_tx)(struct ieee80211_hw *hw,
+ 			  struct ieee80211_sta *sta,
+@@ -2566,14 +2564,6 @@ struct dig_t {
+ 	u32 rssi_max;
+ };
+ 
+-struct rtl_global_var {
+-	/* from this list we can get
+-	 * other adapter's rtl_priv
+-	 */
+-	struct list_head glb_priv_list;
+-	spinlock_t glb_list_lock;
+-};
+-
+ #define IN_4WAY_TIMEOUT_TIME	(30 * MSEC_PER_SEC)	/* 30 seconds */
+ 
+ struct rtl_btc_info {
+@@ -2719,9 +2709,7 @@ struct rtl_scan_list {
+ struct rtl_priv {
+ 	struct ieee80211_hw *hw;
+ 	struct completion firmware_loading_complete;
+-	struct list_head list;
+ 	struct rtl_priv *buddy_priv;
+-	struct rtl_global_var *glb_var;
+ 	struct rtl_dmsp_ctl dmsp_ctl;
+ 	struct rtl_locks locks;
+ 	struct rtl_works works;
 -- 
 2.39.5
 
