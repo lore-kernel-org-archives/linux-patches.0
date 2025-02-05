@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E45E155A30;
-	Wed,  5 Feb 2025 15:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0921155A30;
+	Wed,  5 Feb 2025 15:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767846; cv=none; b=W+x0YWK3WdOExabZfgvEZ1f7myhJJI9fAuUiZILGJ2Qh66QHpU6qnpiHFRnvkJ7tOxx1zS6BG3Nj6RM1xOy8bOX4C56xvQ42siB9eNOcAKaI0zb4BUMPM1DtmQVj0ONrjOBfbdfCLcfg1M/n6lOYe0CurBAmP06w0zUwiKPND4g=
+	t=1738767849; cv=none; b=gRtpIJQ0Q10tqe1ZJ1tEtDqqaTZD3+y3zOvZ+HwYFELxLFVENm/P1NLiMOVm6+DkY0uEBRB89/PkDRzurAhz5aeaAB2HySzW/j+7Khkpjgyl+L+vKdGWcDTvLmrz2Vgh+oSvnP1TSTu1QbYkDUkGSscjHAnc2UDsDUbs9ZK2yuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767846; c=relaxed/simple;
-	bh=C+YzDqPPJPB41DiuyN8DTzmvJgDTLB7258Bl1YStjNo=;
+	s=arc-20240116; t=1738767849; c=relaxed/simple;
+	bh=VqROhE1My5MQ50maj/HO82KZlg6vn8F9MRwqj9DOkCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kro3yrNXRgxfx8HUjvmXibpBA6+r+N5W0i9IWcAIMpMaodorFVC4FKAof+m3mzaUzx3YjUCmeQxMazkTJB7XTn0CsJAHEjx2qpZHok13MJdSdqc/Z4vuLYy6jvNYV26C57tEF3JGvIxhknw91y6nvu+ihmNQzWXVGbIu8UsP8vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2twXkT69; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Yk2GBF7yPR97Yw1enTFaSIZ4Kz2RZ3nbJqttBwd2Rq1vzpBNwyZxt0BKfTJ2+3/lk5y/7fh11CjgvyRNYelzBHGlO+ddX5DEk5p0CZl+8vmYBk2bjelIxOf3SiPWoW6CrurFmmTraZ5zKl6he2/zPJpunmx0z4G8YMMgH+BLCs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFHwOT8I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2twXkT69"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07F1C4CED1;
-	Wed,  5 Feb 2025 15:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFHwOT8I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F776C4CED1;
+	Wed,  5 Feb 2025 15:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767846;
-	bh=C+YzDqPPJPB41DiuyN8DTzmvJgDTLB7258Bl1YStjNo=;
+	s=korg; t=1738767849;
+	bh=VqROhE1My5MQ50maj/HO82KZlg6vn8F9MRwqj9DOkCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2twXkT69iZUMNbCKAOvmriScsYYX5LJtKjMB1EJfv4cII1UwETT0/y9b/PY09R4Hd
-	 NEDap/fmKZl19vHa9DkWVhKJxBa89RoGzp6M7tHU2UQpNxgKw3vBZMNVAHLfYnpGH3
-	 houAHJtSurJuOJ8wO1S0BF8hf7O+FjQtez7HC7pc=
+	b=jFHwOT8I+ILNOhew1lmErNHe99mw9AFwnTMh+uWctpwI8aX2smTAw3kiHp5Cm2d6k
+	 VuPEb2jcOX4LFT0Fs5+JAWy7FZOTMV5BXfn59t1IPR79JHu3zvn7G2eCHu3BnGBtUv
+	 gsksJgAUt8n8FI2RJkU9sxnfZ/wEnoQKDpbzsjs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 499/590] vxlan: Fix uninit-value in vxlan_vnifilter_dump()
-Date: Wed,  5 Feb 2025 14:44:14 +0100
-Message-ID: <20250205134514.359984997@linuxfoundation.org>
+Subject: [PATCH 6.12 517/590] net: ravb: Fix missing rtnl lock in suspend/resume path
+Date: Wed,  5 Feb 2025 14:44:32 +0100
+Message-ID: <20250205134515.044555421@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -47,102 +47,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Kory Maincent <kory.maincent@bootlin.com>
 
-[ Upstream commit 5066293b9b7046a906eff60e3949a887ae185a43 ]
+[ Upstream commit 2c2ebb2b49573e5f8726112ad06b1dffc3c9ea03 ]
 
-KMSAN reported an uninit-value access in vxlan_vnifilter_dump() [1].
+Fix the suspend/resume path by ensuring the rtnl lock is held where
+required. Calls to ravb_open, ravb_close and wol operations must be
+performed under the rtnl lock to prevent conflicts with ongoing ndo
+operations.
 
-If the length of the netlink message payload is less than
-sizeof(struct tunnel_msg), vxlan_vnifilter_dump() accesses bytes
-beyond the message. This can lead to uninit-value access. Fix this by
-returning an error in such situations.
+Without this fix, the following warning is triggered:
+[   39.032969] =============================
+[   39.032983] WARNING: suspicious RCU usage
+[   39.033019] -----------------------------
+[   39.033033] drivers/net/phy/phy_device.c:2004 suspicious
+rcu_dereference_protected() usage!
+...
+[   39.033597] stack backtrace:
+[   39.033613] CPU: 0 UID: 0 PID: 174 Comm: python3 Not tainted
+6.13.0-rc7-next-20250116-arm64-renesas-00002-g35245dfdc62c #7
+[   39.033623] Hardware name: Renesas SMARC EVK version 2 based on
+r9a08g045s33 (DT)
+[   39.033628] Call trace:
+[   39.033633]  show_stack+0x14/0x1c (C)
+[   39.033652]  dump_stack_lvl+0xb4/0xc4
+[   39.033664]  dump_stack+0x14/0x1c
+[   39.033671]  lockdep_rcu_suspicious+0x16c/0x22c
+[   39.033682]  phy_detach+0x160/0x190
+[   39.033694]  phy_disconnect+0x40/0x54
+[   39.033703]  ravb_close+0x6c/0x1cc
+[   39.033714]  ravb_suspend+0x48/0x120
+[   39.033721]  dpm_run_callback+0x4c/0x14c
+[   39.033731]  device_suspend+0x11c/0x4dc
+[   39.033740]  dpm_suspend+0xdc/0x214
+[   39.033748]  dpm_suspend_start+0x48/0x60
+[   39.033758]  suspend_devices_and_enter+0x124/0x574
+[   39.033769]  pm_suspend+0x1ac/0x274
+[   39.033778]  state_store+0x88/0x124
+[   39.033788]  kobj_attr_store+0x14/0x24
+[   39.033798]  sysfs_kf_write+0x48/0x6c
+[   39.033808]  kernfs_fop_write_iter+0x118/0x1a8
+[   39.033817]  vfs_write+0x27c/0x378
+[   39.033825]  ksys_write+0x64/0xf4
+[   39.033833]  __arm64_sys_write+0x18/0x20
+[   39.033841]  invoke_syscall+0x44/0x104
+[   39.033852]  el0_svc_common.constprop.0+0xb4/0xd4
+[   39.033862]  do_el0_svc+0x18/0x20
+[   39.033870]  el0_svc+0x3c/0xf0
+[   39.033880]  el0t_64_sync_handler+0xc0/0xc4
+[   39.033888]  el0t_64_sync+0x154/0x158
+[   39.041274] ravb 11c30000.ethernet eth0: Link is Down
 
-[1]
-BUG: KMSAN: uninit-value in vxlan_vnifilter_dump+0x328/0x920 drivers/net/vxlan/vxlan_vnifilter.c:422
- vxlan_vnifilter_dump+0x328/0x920 drivers/net/vxlan/vxlan_vnifilter.c:422
- rtnl_dumpit+0xd5/0x2f0 net/core/rtnetlink.c:6786
- netlink_dump+0x93e/0x15f0 net/netlink/af_netlink.c:2317
- __netlink_dump_start+0x716/0xd60 net/netlink/af_netlink.c:2432
- netlink_dump_start include/linux/netlink.h:340 [inline]
- rtnetlink_dump_start net/core/rtnetlink.c:6815 [inline]
- rtnetlink_rcv_msg+0x1256/0x14a0 net/core/rtnetlink.c:6882
- netlink_rcv_skb+0x467/0x660 net/netlink/af_netlink.c:2542
- rtnetlink_rcv+0x35/0x40 net/core/rtnetlink.c:6944
- netlink_unicast_kernel net/netlink/af_netlink.c:1321 [inline]
- netlink_unicast+0xed6/0x1290 net/netlink/af_netlink.c:1347
- netlink_sendmsg+0x1092/0x1230 net/netlink/af_netlink.c:1891
- sock_sendmsg_nosec net/socket.c:711 [inline]
- __sock_sendmsg+0x330/0x3d0 net/socket.c:726
- ____sys_sendmsg+0x7f4/0xb50 net/socket.c:2583
- ___sys_sendmsg+0x271/0x3b0 net/socket.c:2637
- __sys_sendmsg net/socket.c:2669 [inline]
- __do_sys_sendmsg net/socket.c:2674 [inline]
- __se_sys_sendmsg net/socket.c:2672 [inline]
- __x64_sys_sendmsg+0x211/0x3e0 net/socket.c:2672
- x64_sys_call+0x3878/0x3d90 arch/x86/include/generated/asm/syscalls_64.h:47
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xd9/0x1d0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:4110 [inline]
- slab_alloc_node mm/slub.c:4153 [inline]
- kmem_cache_alloc_node_noprof+0x800/0xe80 mm/slub.c:4205
- kmalloc_reserve+0x13b/0x4b0 net/core/skbuff.c:587
- __alloc_skb+0x347/0x7d0 net/core/skbuff.c:678
- alloc_skb include/linux/skbuff.h:1323 [inline]
- netlink_alloc_large_skb+0xa5/0x280 net/netlink/af_netlink.c:1196
- netlink_sendmsg+0xac9/0x1230 net/netlink/af_netlink.c:1866
- sock_sendmsg_nosec net/socket.c:711 [inline]
- __sock_sendmsg+0x330/0x3d0 net/socket.c:726
- ____sys_sendmsg+0x7f4/0xb50 net/socket.c:2583
- ___sys_sendmsg+0x271/0x3b0 net/socket.c:2637
- __sys_sendmsg net/socket.c:2669 [inline]
- __do_sys_sendmsg net/socket.c:2674 [inline]
- __se_sys_sendmsg net/socket.c:2672 [inline]
- __x64_sys_sendmsg+0x211/0x3e0 net/socket.c:2672
- x64_sys_call+0x3878/0x3d90 arch/x86/include/generated/asm/syscalls_64.h:47
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xd9/0x1d0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-CPU: 0 UID: 0 PID: 30991 Comm: syz.4.10630 Not tainted 6.12.0-10694-gc44daa7e3c73 #29
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
-
-Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250123145746.785768-1-syoshida@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Closes: https://lore.kernel.org/netdev/4c6419d8-c06b-495c-b987-d66c2e1ff848@tuxon.dev/
+Fixes: 0184165b2f42 ("ravb: add sleep PM suspend/resume support")
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
+Tested-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_vnifilter.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/renesas/ravb_main.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_vnifilter.c b/drivers/net/vxlan/vxlan_vnifilter.c
-index d2023e7131bd4..6e6e9f05509ab 100644
---- a/drivers/net/vxlan/vxlan_vnifilter.c
-+++ b/drivers/net/vxlan/vxlan_vnifilter.c
-@@ -411,6 +411,11 @@ static int vxlan_vnifilter_dump(struct sk_buff *skb, struct netlink_callback *cb
- 	struct tunnel_msg *tmsg;
- 	struct net_device *dev;
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index 6f6b0566c65bc..cc4f0d16c7630 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -3208,10 +3208,15 @@ static int ravb_suspend(struct device *dev)
  
-+	if (cb->nlh->nlmsg_len < nlmsg_msg_size(sizeof(struct tunnel_msg))) {
-+		NL_SET_ERR_MSG(cb->extack, "Invalid msg length");
-+		return -EINVAL;
+ 	netif_device_detach(ndev);
+ 
+-	if (priv->wol_enabled)
+-		return ravb_wol_setup(ndev);
++	rtnl_lock();
++	if (priv->wol_enabled) {
++		ret = ravb_wol_setup(ndev);
++		rtnl_unlock();
++		return ret;
 +	}
-+
- 	tmsg = nlmsg_data(cb->nlh);
  
- 	if (tmsg->flags & ~TUNNEL_MSG_VALID_USER_FLAGS) {
+ 	ret = ravb_close(ndev);
++	rtnl_unlock();
+ 	if (ret)
+ 		return ret;
+ 
+@@ -3236,19 +3241,20 @@ static int ravb_resume(struct device *dev)
+ 	if (!netif_running(ndev))
+ 		return 0;
+ 
++	rtnl_lock();
+ 	/* If WoL is enabled restore the interface. */
+-	if (priv->wol_enabled) {
++	if (priv->wol_enabled)
+ 		ret = ravb_wol_restore(ndev);
+-		if (ret)
+-			return ret;
+-	} else {
++	else
+ 		ret = pm_runtime_force_resume(dev);
+-		if (ret)
+-			return ret;
++	if (ret) {
++		rtnl_unlock();
++		return ret;
+ 	}
+ 
+ 	/* Reopening the interface will restore the device to the working state. */
+ 	ret = ravb_open(ndev);
++	rtnl_unlock();
+ 	if (ret < 0)
+ 		goto out_rpm_put;
+ 
 -- 
 2.39.5
 
