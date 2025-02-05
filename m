@@ -1,106 +1,107 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B478E1DD526
-	for <patches@lists.linux.dev>; Wed,  5 Feb 2025 22:48:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3334421772B;
+	Wed,  5 Feb 2025 22:49:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738795727; cv=none; b=Ixy0gHtZCVln5gcMLjNlsORXD9HzSuk22UUAeoNLdX4O+XssLfBvwHytsWLwXL79qD2VAI8euFVle3wG3lmzCww9WidasX/afldeORQNPx+P4tBHzBNM8uoyE6VbWqzVRowq4hGBmFMSqpE312OGIM0KtgK9fDjHIsWZ+BpCdb8=
+	t=1738795749; cv=none; b=lHUhgrOj+HKyUa7v2dLmKzP1BUjsQhIk1EsTKnDDPGnWpA9i68w3YYMuxpYGHQcuPZo1s4CPUvjCPb5QxT5CC5oD+MrH4BUyoPrve7dlE3wWugX/Dz9llpKHR2ohfn9fpnjO+VZZnUQv0MUAXEeWSyO0Lajai04G82k+SGO48C4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738795727; c=relaxed/simple;
-	bh=RE+O/s0Ns8XzQSTV9EwIp/przX/hXIBK6qruLIswKdk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YQKXy5mTT3e1Niyhuyl7O+V9IylsadeO0rmIdZHe1pX4wMXqd8i2x3/RiiBnK+NDhCF295sS60jCduwEPwJsHoEzvQm00hehJU9EzjwSCv+HSt0aJ2nxMc9BM0EkJwXRuPvBTt2p/q2i9yWgNpu7FOWnxMNnUKI+TDfRl9ZYeaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=Ks56LRd8; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1738795749; c=relaxed/simple;
+	bh=dZWWY11R6K2znUjsJgBeNLQ5otlAfqkditnlzHQVDXU=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ZXB+r0uMDqo/7AVQwcsPoFsyzCHiQkE8e9T2Pb8xpUa6n3JJhpH+8webuRfNBK3ctCkINq2IgUK5H1lRHYWQ3vQDYDUebNc1zvdKnfidcP5OVyylIqm7iGf13doY7/LMqTQOLJTTn+/gcIJKS9oSHQVuhDVebL2to/3PVb694/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=Fhtun/HH; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="Ks56LRd8"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-38dae9a0566so107644f8f.3
-        for <patches@lists.linux.dev>; Wed, 05 Feb 2025 14:48:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1738795724; x=1739400524; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FUoT971StPXDa9X9MRqFUXadUeqjdkEOpabHJfRRv4o=;
-        b=Ks56LRd8/K+vcWPOnUXcqO9pTQ25yHUeQ+Pv0kXhESLu5w824jWybSodASejgopqgk
-         /DatdKi5K88tsFbQpo/TZNVF+ejLnYkEh4kk+xwWn78FzHEYXT5bn2rLAJQjy5leErZ3
-         e5EwaLxKeHQz010apwUpWzpeGkLv90kPDsJM1uV5LFtrpMVaR/xdGWp3hmnz8jQ80aoJ
-         2/exM7xIP3MvsA4HtBjJwRC175P5IK1fluz1wYDyvIs12sth1x0K9jwArZyqTFJmgr0Y
-         dXmPJ8h6thP95I+s6aEAyWlT/WG0q/jXPfUfAW3bIPpEQTJ7bhINJBFY7S0acGUo1Ewr
-         LWfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738795724; x=1739400524;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FUoT971StPXDa9X9MRqFUXadUeqjdkEOpabHJfRRv4o=;
-        b=vyOzpmBuqyybTB/WzxYzSXe3Vregxweed5vPfixPJePKChEOXo/EzRp8tnKb6oGeqJ
-         m231VoC95rakivrdwMY18j7cddQc6B8re4xK63UUQRSedtvboL/r9WNPWzOAhP0TRgX3
-         s+fgWRccFaqW/OYnQcTo3/vOVpGNls3q3BcmF2+0luRso79L1ZuYlEGO94qNDSBtf6/y
-         Jddn1iYl84huc5CjnNOi0WoqAVNi8ZuMj3vxQBUwEZ20MTt0CeWkBcZ4I3u+sln+9YIC
-         Wk9RGFWUWpliyYIcroeby4u0wm93tA16xoWBjKwACWJReTb4RzX6i6VHeaAM64BtGVhS
-         9RUA==
-X-Gm-Message-State: AOJu0YwaVaVDPi2wr6SpvHJlu7znOmh+QWfTbazTI386T5Gwx60kFrGd
-	Eo5zGu01MTYE9upKufSiMcZ+LR6yaOwfEbyX8T54nXBHAcQGJpA=
-X-Gm-Gg: ASbGncuuVoYBqshnqth5aRmPVFOi46GOwdFq7dFgUIBek0CO/BJGZLwTv6qM4MzTPsp
-	UjtucmdG/QtFeutiAzqGo9SYwxucQG6O5MWb0eMIp31bYV1t3yW6t8V5PM9b90HYonM3syFjzX5
-	5fVj3SoMAmbpFPYB4PjWYDBK/pe2lVQ0olbPKT6l769G8w5t4GB6kwAESYv26bXHsiWbMXpENmY
-	+bIm5xn/G0J1/oDeDj8pNNoRqf2U+ppcOyMcxga4zOhZmToitH2Sb282Zr9jhSZ3RZhnoowBsYq
-	PKXmN9Foz3zX/RGzQnyiBVjzeYCIskpzAOqNZTG8HMeqdhgJdBOn9przBoMFHhXFKdB3
-X-Google-Smtp-Source: AGHT+IF0au+xnGsaCJy1dVT3VMGmlxCV68Ry0i86RGuJdLPbHXNpecwjnwCEE3cb45RRkXmZeupW0g==
-X-Received: by 2002:a05:6000:1a8b:b0:38c:5d42:1529 with SMTP id ffacd0b85a97d-38db491fa85mr3025509f8f.36.1738795723728;
-        Wed, 05 Feb 2025 14:48:43 -0800 (PST)
-Received: from [192.168.1.3] (p5b2b4bac.dip0.t-ipconnect.de. [91.43.75.172])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dbde2f4c7sm13734f8f.92.2025.02.05.14.48.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Feb 2025 14:48:42 -0800 (PST)
-Message-ID: <4ad1662d-44bc-4284-915c-183aa6736cbc@googlemail.com>
-Date: Wed, 5 Feb 2025 23:48:39 +0100
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="Fhtun/HH"
+Received: from DESKTOP-0403QTC. (unknown [20.236.11.69])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 1107A203F59E;
+	Wed,  5 Feb 2025 14:49:06 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1107A203F59E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1738795747;
+	bh=UKHV/JQ3QffWyh6cdizuTNe5OOYudjWKLtxMFE92V8g=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Reply-To:From;
+	b=Fhtun/HHTs8cKMk/GQjP30TwMFP3lggFolDvN5IWoUQCAavvOTaORuftLmNqt2MEe
+	 wc/5XmAuc4gu++Yp7MgRaQsbFvJaau3iJQF2g8wJ8CizocAJrXFg3A9Iz60Nwuuoqf
+	 Fi8d59U12O6oLOTupv0RXcxCJ3t2T30irlL6Thxo=
+Date: Wed, 5 Feb 2025 14:49:04 -0800
+From: Jacob Pan <jacob.pan@linux.microsoft.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: <will@kernel.org>, <robin.murphy@arm.com>, <jgg@nvidia.com>,
+ <kevin.tian@intel.com>, <tglx@linutronix.de>, <maz@kernel.org>,
+ <alex.williamson@redhat.com>, <joro@8bytes.org>, <shuah@kernel.org>,
+ <reinette.chatre@intel.com>, <eric.auger@redhat.com>, <yebin10@huawei.com>,
+ <apatel@ventanamicro.com>, <shivamurthy.shastri@linutronix.de>,
+ <bhelgaas@google.com>, <anna-maria@linutronix.de>, <yury.norov@gmail.com>,
+ <nipun.gupta@amd.com>, <iommu@lists.linux.dev>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <kvm@vger.kernel.org>, <linux-kselftest@vger.kernel.org>,
+ <patches@lists.linux.dev>, <jean-philippe@linaro.org>, <mdf@kernel.org>,
+ <mshavit@google.com>, <shameerali.kolothum.thodi@huawei.com>,
+ <smostafa@google.com>, <ddutile@redhat.com>, jacob.pan@linux.microsoft.com
+Subject: Re: [PATCH RFCv2 00/13] iommu: Add MSI mapping support with nested
+ SMMU
+Message-ID: <20250205144904.39285de4@DESKTOP-0403QTC.>
+In-Reply-To: <cover.1736550979.git.nicolinc@nvidia.com>
+References: <cover.1736550979.git.nicolinc@nvidia.com>
+Reply-To: jacob.pan@linux.microsoft.com
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.6 000/393] 6.6.76-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250205134420.279368572@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Am 05.02.2025 um 14:38 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.6.76 release.
-> There are 393 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi Nicolin,
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
+On Fri, 10 Jan 2025 19:32:16 -0800
+Nicolin Chen <nicolinc@nvidia.com> wrote:
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+> [ Background ]
+> On ARM GIC systems and others, the target address of the MSI is
+> translated by the IOMMU. For GIC, the MSI address page is called
+> "ITS" page. When the IOMMU is disabled, the MSI address is programmed
+> to the physical location of the GIC ITS page (e.g. 0x20200000). When
+> the IOMMU is enabled, the ITS page is behind the IOMMU, so the MSI
+> address is programmed to an allocated IO virtual address (a.k.a
+> IOVA), e.g. 0xFFFF0000, which must be mapped to the physical ITS
+> page: IOVA (0xFFFF0000) ===> PA (0x20200000). When a 2-stage
+> translation is enabled, IOVA will be still used to program the MSI
+> address, though the mappings will be in two stages: IOVA (0xFFFF0000)
+> ===> IPA (e.g. 0x80900000) ===> PA (0x20200000) (IPA stands for
+> Intermediate Physical Address).
+> 
+> If the device that generates MSI is attached to an IOMMU_DOMAIN_DMA,
+> the IOVA is dynamically allocated from the top of the IOVA space. If
+> attached to an IOMMU_DOMAIN_UNMANAGED (e.g. a VFIO passthrough
+> device), the IOVA is fixed to an MSI window reported by the IOMMU
+> driver via IOMMU_RESV_SW_MSI, which is hardwired to MSI_IOVA_BASE
+> (IOVA==0x8000000) for ARM IOMMUs.
+> 
+> So far, this IOMMU_RESV_SW_MSI works well as kernel is entirely in
+> charge of the IOMMU translation (1-stage translation), since the IOVA
+> for the ITS page is fixed and known by kernel. However, with virtual
+> machine enabling a nested IOMMU translation (2-stage), a guest kernel
+> directly controls the stage-1 translation with an IOMMU_DOMAIN_DMA,
+> mapping a vITS page (at an IPA 0x80900000) onto its own IOVA space
+> (e.g. 0xEEEE0000). Then, the host kernel can't know that guest-level
+> IOVA to program the MSI address.
+> 
+> There have been two approaches to solve this problem:
+> 1. Create an identity mapping in the stage-1. VMM could insert a few
+> RMRs (Reserved Memory Regions) in guest's IORT. Then the guest kernel
+> would fetch these RMR entries from the IORT and create an
+> IOMMU_RESV_DIRECT region per iommu group for a direct mapping.
+> Eventually, the mappings would look like: IOVA (0x8000000) === IPA
+> (0x8000000) ===> 0x20200000 This requires an IOMMUFD ioctl for kernel
+> and VMM to agree on the IPA.
 
-
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+Should this RMR be in a separate range than MSI_IOVA_BASE? The guest
+will have MSI_IOVA_BASE in a reserved region already, no?
+e.g. # cat
+/sys/bus/pci/devices/0015\:01\:00.0/iommu_group/reserved_regions
+0x0000000008000000 0x00000000080fffff msi
