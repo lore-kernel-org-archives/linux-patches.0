@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BC118E368;
-	Wed,  5 Feb 2025 15:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9451714D0;
+	Wed,  5 Feb 2025 15:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767839; cv=none; b=eeDLXV89LJBabAcNzcIQZPCAe2MfEhm4gRS9Gr5aDOgnCT0dbZ72IospJlh3ERFmNwB2aLWBb+EbOlNI8KSmXK71ZHs89NzwJMDFcJ6bIkL6xPMgA3TnqqlzpG4sz0YkwNphTNCYLYTfjXMnhb+F7945sipz0BJMkHTVfrgro3w=
+	t=1738767842; cv=none; b=gSvrh9538eRl1sentfaGyIMgaYX3aUq4Zgbemo49fgwIENVg/StefVGWVFdyLhXnVIqqiDSFWPTmvZecXVatTH3HMlMlEBSKrZGFhSF/ybalzIKckJeog17LgL/+9z83YshWtok0B5/9Whs/o+8zE/m7vbg8j5Sp7ffsCOEYDXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767839; c=relaxed/simple;
-	bh=YNvH35D7KuM0SQPHksmQWtuwtvodKrkyToF3wWwJUpc=;
+	s=arc-20240116; t=1738767842; c=relaxed/simple;
+	bh=gvk5vwgnoPC52tMKpcK+KoquTdMllLBq9Kngwv8DpBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ueHktW/PBAhcypELoythCy1tSrZAuhVg0vkHIh//j2ylrNw5QlfTe4uDbaSNo4Fo7d37IujZq9DgMOH04pKwoY93X9DZabuktFrPUDlO3Z/SrZx8u5125IpqHFoIVRdfHQHO8fD477nfk50nQudHfyh+e0stm0Wb3o5TtT9HH7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=naZhONY/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aJ4CINxYIIsYXWOt5b4N3h6KE/6MI2J14cjxOUY564y+iE1az54zz9cWhvUN8dGOBrs1BH7n2A5aeiOYBdnO9oSXX9xZuI75N5/rTjb5IATqFBajB0TltM3qUty9h7T1wYb4jl4D6MOLw9lJfScGoX3CTsIKg/d+OciauuQmU9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kXr8AxC0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="naZhONY/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BA6C4CED1;
-	Wed,  5 Feb 2025 15:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXr8AxC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D051C4CED1;
+	Wed,  5 Feb 2025 15:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767839;
-	bh=YNvH35D7KuM0SQPHksmQWtuwtvodKrkyToF3wWwJUpc=;
+	s=korg; t=1738767842;
+	bh=gvk5vwgnoPC52tMKpcK+KoquTdMllLBq9Kngwv8DpBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=naZhONY/6bhMHis0mDG/TsJ/eAaLj8IjEkjcj4cJKunamHjcFt3Vcw1qT60akWANk
-	 fAUb8A4WAxxepXfocqhOR70ZC5EsVXXGKp9EnFTb9SihTGZGH1YQL5on59mgNtmwRQ
-	 scHuqLlsIDIZEmBaOmAIv5+5sPo87Y+UxyrTGXDA=
+	b=kXr8AxC0wMy65MVU//ffzMs4nYArfUtGWQPawQPwgLj4cDwsMcbv3WjK/mNcLhrJj
+	 KxDJqiJBmrKtNoYbbMcSK+nIKjhDvqlgkHByYgTDk+m4mJEggMkSy9X8FN9JOFVWZi
+	 K1X2mpAW2AFqO8QxE8/p6CysLy1RfPnDdgvG9DoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	King Dix <kingdix10@qq.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 516/590] net: xdp: Disallow attaching device-bound programs in generic mode
-Date: Wed,  5 Feb 2025 14:44:31 +0100
-Message-ID: <20250205134515.006858224@linuxfoundation.org>
+Subject: [PATCH 6.13 461/623] PCI: rcar-ep: Fix incorrect variable used when calling devm_request_mem_region()
+Date: Wed,  5 Feb 2025 14:43:23 +0100
+Message-ID: <20250205134513.853827646@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,54 +50,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: King Dix <kingdix10@qq.com>
 
-[ Upstream commit 3595599fa8360bb3c7afa7ee50c810b4a64106ea ]
+[ Upstream commit 2d2da5a4c1b4509f6f7e5a8db015cd420144beb4 ]
 
-Device-bound programs are used to support RX metadata kfuncs. These
-kfuncs are driver-specific and rely on the driver context to read the
-metadata. This means they can't work in generic XDP mode. However, there
-is no check to disallow such programs from being attached in generic
-mode, in which case the metadata kfuncs will be called in an invalid
-context, leading to crashes.
+The rcar_pcie_parse_outbound_ranges() uses the devm_request_mem_region()
+macro to request a needed resource. A string variable that lives on the
+stack is then used to store a dynamically computed resource name, which
+is then passed on as one of the macro arguments. This can lead to
+undefined behavior.
 
-Fix this by adding a check to disallow attaching device-bound programs
-in generic mode.
+Depending on the current contents of the memory, the manifestations of
+errors may vary. One possible output may be as follows:
 
-Fixes: 2b3486bc2d23 ("bpf: Introduce device-bound XDP programs")
-Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
-Closes: https://lore.kernel.org/r/dae862ec-43b5-41a0-8edf-46c59071cdda@hetzner-cloud.de
-Tested-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20250127131344.238147-1-toke@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  $ cat /proc/iomem
+  30000000-37ffffff :
+  38000000-3fffffff :
+
+Sometimes, garbage may appear after the colon.
+
+In very rare cases, if no NULL-terminator is found in memory, the system
+might crash because the string iterator will overrun which can lead to
+access of unmapped memory above the stack.
+
+Thus, fix this by replacing outbound_name with the name of the previously
+requested resource. With the changes applied, the output will be as
+follows:
+
+  $ cat /proc/iomem
+  30000000-37ffffff : memory2
+  38000000-3fffffff : memory3
+
+Fixes: 2a6d0d63d999 ("PCI: rcar: Add endpoint mode support")
+Link: https://lore.kernel.org/r/tencent_DBDCC19D60F361119E76919ADAB25EC13C06@qq.com
+Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: King Dix <kingdix10@qq.com>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pci/controller/pcie-rcar-ep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 7c3e2a448e5c6..2e0fe38d0e877 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -9595,6 +9595,10 @@ static int dev_xdp_attach(struct net_device *dev, struct netlink_ext_ack *extack
- 			NL_SET_ERR_MSG(extack, "Program bound to different device");
- 			return -EINVAL;
+diff --git a/drivers/pci/controller/pcie-rcar-ep.c b/drivers/pci/controller/pcie-rcar-ep.c
+index 047e2cef5afcd..c5e0d025bc435 100644
+--- a/drivers/pci/controller/pcie-rcar-ep.c
++++ b/drivers/pci/controller/pcie-rcar-ep.c
+@@ -107,7 +107,7 @@ static int rcar_pcie_parse_outbound_ranges(struct rcar_pcie_endpoint *ep,
  		}
-+		if (bpf_prog_is_dev_bound(new_prog->aux) && mode == XDP_MODE_SKB) {
-+			NL_SET_ERR_MSG(extack, "Can't attach device-bound programs in generic mode");
-+			return -EINVAL;
-+		}
- 		if (new_prog->expected_attach_type == BPF_XDP_DEVMAP) {
- 			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
- 			return -EINVAL;
+ 		if (!devm_request_mem_region(&pdev->dev, res->start,
+ 					     resource_size(res),
+-					     outbound_name)) {
++					     res->name)) {
+ 			dev_err(pcie->dev, "Cannot request memory region %s.\n",
+ 				outbound_name);
+ 			return -EIO;
 -- 
 2.39.5
 
