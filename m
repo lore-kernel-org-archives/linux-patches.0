@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75B62E634;
-	Wed,  5 Feb 2025 14:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5D4F510;
+	Wed,  5 Feb 2025 14:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764275; cv=none; b=OsQmdwRcjr2wUpRIyIhyLsYO8BmqT18fH7RHiSFNAK1wP/vtbmLbvMfnsT3Eke0ugIlbBWTmB3FXGiZxEBAs1+8aqGFbL9y/FHuVlPBrIM++BNUr3BhgCwzkjs/l3uQNN1M6jRMzQ60UNBcg0C1saQ/OwcZzeAMEDUp/2zh/Wik=
+	t=1738764279; cv=none; b=HivrtgTpbBSyYuTloyWR/tc5ZFqRpJGvv8W80KZAvk17KrMUl4AA1US3DP1Cd4tLf8lbPKZi6Mm5vjqDPeN8YVB9HkMHMkIUTrjT3/274n6wb8rVPSO986C+z0ydxsVJOcil0Jw1QmPsg9r/YsbLVF4hT9T+qC46BoZLBBeM0GM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764275; c=relaxed/simple;
-	bh=BTiE9Fv2aS6Cc/5/fQQP8b4dczfBdHBeXN8OSfN+sKQ=;
+	s=arc-20240116; t=1738764279; c=relaxed/simple;
+	bh=+giVa4inJzKJdiCINseYQ5C+3et3+unmC2EmsERKGnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oqHDEpMd5q74L4hceOUwLw6TUB2PibQ0dXh8ar5dhGVWZ7xPM1ft+2Qe7b9fskvUwsbJK07PSNFypGZqrgZIi79fCphwYnDhjhLeHqcCtoj1RXEf+YU55Mu+wUB0McGTvhQmVh4NJKdRqk/bqxDken1XTdiSE5BPlkXCWfM+ONE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7P6uASK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aZE4WsZnvmuWAFxnusXtAOc3IoL9zjWYOqQ5sBMt4UrEY/sXzzHjvAl/lyUhJyaByLvqDxO38YHtZ4Dx1S7F/m8UqKD9Sa2sL7VgqBpNdF1TmCnMZsVdw30eyeaF5sZZsJp4Mu33S+bftNeSrS9t0QfsP56XRvdnTLSy8qlJRQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFS3Wee7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7P6uASK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3A1C4CED1;
-	Wed,  5 Feb 2025 14:04:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFS3Wee7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FD1C4CED1;
+	Wed,  5 Feb 2025 14:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764275;
-	bh=BTiE9Fv2aS6Cc/5/fQQP8b4dczfBdHBeXN8OSfN+sKQ=;
+	s=korg; t=1738764278;
+	bh=+giVa4inJzKJdiCINseYQ5C+3et3+unmC2EmsERKGnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n7P6uASK8P5plS+hIHwSmVnXq/6fAZ10cis8A7BTLCuhqmQ6WKyrDd5ZR6gaMNugN
-	 COvrr7l80OPr0gGsobz+9VZLGAI5BxyDyOT1BtmPRHVhyaeSLG78g/fhYRYywGHGCQ
-	 lNVFyM8OvZki6lTlG25ti9SO8SRH/7hfMUrkVjGs=
+	b=DFS3Wee7++IAR6YdIN18UmmqXYSuWQoyA/nrbkqmhkhtsmWRFLvdoxtm1pWPp8S4T
+	 s7YQnCLwUM+oGTVQy70UUaxGXTVrhgAaJBHvFaTZv1SBpEWJQ/n44J4/62C7Nto8yr
+	 fOfkwxRT116aQiQj7Ev2vMUYexbuf1otZB5b4sU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Bokun Zhang <bokun.zhang@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 157/393] selftests/bpf: Fix fill_link_info selftest on powerpc
-Date: Wed,  5 Feb 2025 14:41:16 +0100
-Message-ID: <20250205134426.308484362@linuxfoundation.org>
+Subject: [PATCH 6.13 063/623] drm/amdgpu/vcn: reset fw_shared under SRIOV
+Date: Wed,  5 Feb 2025 14:36:45 +0100
+Message-ID: <20250205134458.636130422@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,100 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+From: Bokun Zhang <bokun.zhang@amd.com>
 
-[ Upstream commit 4d33dc1bc31df80356c49e40dbd3ddff19500bcb ]
+[ Upstream commit 3676f37a88432132bcff55a17dc48911239b6d98 ]
 
-With CONFIG_KPROBES_ON_FTRACE enabled on powerpc, ftrace_location_range
-returns ftrace location for bpf_fentry_test1 at offset of 4 bytes from
-function entry. This is because branch to _mcount function is at offset
-of 4 bytes in function profile sequence.
+- The previous patch only considered the case for baremetal
+  and is not applicable for SRIOV code path. We also need to
+  init fw_share for SRIOV VF
 
-To fix this, add entry_offset of 4 bytes while verifying the address for
-kprobe entry address of bpf_fentry_test1 in verify_perf_link_info in
-selftest, when CONFIG_KPROBES_ON_FTRACE is enabled.
-
-Disassemble of bpf_fentry_test1:
-
-c000000000e4b080 <bpf_fentry_test1>:
-c000000000e4b080:       a6 02 08 7c     mflr    r0
-c000000000e4b084:       b9 e2 22 4b     bl      c00000000007933c <_mcount>
-c000000000e4b088:       01 00 63 38     addi    r3,r3,1
-c000000000e4b08c:       b4 07 63 7c     extsw   r3,r3
-c000000000e4b090:       20 00 80 4e     blr
-
-When CONFIG_PPC_FTRACE_OUT_OF_LINE [1] is enabled, these function profile
-sequence is moved out of line with an unconditional branch at offset 0.
-So, the test works without altering the offset for
-'CONFIG_KPROBES_ON_FTRACE && CONFIG_PPC_FTRACE_OUT_OF_LINE' case.
-
-Disassemble of bpf_fentry_test1:
-
-c000000000f95190 <bpf_fentry_test1>:
-c000000000f95190:       00 00 00 60     nop
-c000000000f95194:       01 00 63 38     addi    r3,r3,1
-c000000000f95198:       b4 07 63 7c     extsw   r3,r3
-c000000000f9519c:       20 00 80 4e     blr
-
-[1] https://lore.kernel.org/all/20241030070850.1361304-13-hbathini@linux.ibm.com/
-
-Fixes: 23cf7aa539dc ("selftests/bpf: Add selftest for fill_link_info")
-Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241209065720.234344-1-skb99@linux.ibm.com
+Fixes: 928cd772e18f ("drm/amdgpu/vcn: reset fw_shared when VCPU buffers corrupted on vcn v4.0.3")
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Bokun Zhang <bokun.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/fill_link_info.c       |  4 ++++
- .../selftests/bpf/progs/test_fill_link_info.c       | 13 ++++++++++---
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-index 5b0c6a04cdbfe..e0208b0e53f16 100644
---- a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-+++ b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-@@ -164,6 +164,10 @@ static void test_kprobe_fill_link_info(struct test_fill_link_info *skel,
- 		/* See also arch_adjust_kprobe_addr(). */
- 		if (skel->kconfig->CONFIG_X86_KERNEL_IBT)
- 			entry_offset = 4;
-+		if (skel->kconfig->CONFIG_PPC64 &&
-+		    skel->kconfig->CONFIG_KPROBES_ON_FTRACE &&
-+		    !skel->kconfig->CONFIG_PPC_FTRACE_OUT_OF_LINE)
-+			entry_offset = 4;
- 		err = verify_perf_link_info(link_fd, type, kprobe_addr, 0, entry_offset);
- 		ASSERT_OK(err, "verify_perf_link_info");
- 	} else {
-diff --git a/tools/testing/selftests/bpf/progs/test_fill_link_info.c b/tools/testing/selftests/bpf/progs/test_fill_link_info.c
-index 564f402d56fef..54b53ad05339d 100644
---- a/tools/testing/selftests/bpf/progs/test_fill_link_info.c
-+++ b/tools/testing/selftests/bpf/progs/test_fill_link_info.c
-@@ -6,13 +6,20 @@
- #include <stdbool.h>
+diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
+index 3f69b9b2bcd07..18cc1aefb2a2b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
+@@ -957,6 +957,8 @@ static int vcn_v4_0_3_start_sriov(struct amdgpu_device *adev)
+ 	for (i = 0; i < adev->vcn.num_vcn_inst; i++) {
+ 		vcn_inst = GET_INST(VCN, i);
  
- extern bool CONFIG_X86_KERNEL_IBT __kconfig __weak;
-+extern bool CONFIG_PPC_FTRACE_OUT_OF_LINE __kconfig __weak;
-+extern bool CONFIG_KPROBES_ON_FTRACE __kconfig __weak;
-+extern bool CONFIG_PPC64 __kconfig __weak;
- 
--/* This function is here to have CONFIG_X86_KERNEL_IBT
-- * used and added to object BTF.
-+/* This function is here to have CONFIG_X86_KERNEL_IBT,
-+ * CONFIG_PPC_FTRACE_OUT_OF_LINE, CONFIG_KPROBES_ON_FTRACE,
-+ * CONFIG_PPC6 used and added to object BTF.
-  */
- int unused(void)
- {
--	return CONFIG_X86_KERNEL_IBT ? 0 : 1;
-+	return CONFIG_X86_KERNEL_IBT ||
-+			CONFIG_PPC_FTRACE_OUT_OF_LINE ||
-+			CONFIG_KPROBES_ON_FTRACE ||
-+			CONFIG_PPC64 ? 0 : 1;
- }
- 
- SEC("kprobe")
++		vcn_v4_0_3_fw_shared_init(adev, vcn_inst);
++
+ 		memset(&header, 0, sizeof(struct mmsch_v4_0_3_init_header));
+ 		header.version = MMSCH_VERSION;
+ 		header.total_size = sizeof(struct mmsch_v4_0_3_init_header) >> 2;
 -- 
 2.39.5
 
