@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26E618C93C;
-	Wed,  5 Feb 2025 14:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771631FCF66;
+	Wed,  5 Feb 2025 14:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766891; cv=none; b=YqE87BOIw27vic77tqIuPaRXfmWRKLfqaPLl8dvjNKcJxfUkMkS47XnzwXiaOiE54+gKVFW84FVOAlLb31WTrSn1XYpecs6w+KVvtBncRiMXicQUiHPtBwXY/o1OFwyLEqPjD/RihUYSA6oawu/fGo0A4apJfw/WOCthciBOoV4=
+	t=1738766895; cv=none; b=OWkjd8+B0EnV+z9ZF++Pif/zn/g0YUUTcdBUk2X73mW+mfIO85mu4AntQD/ird2cGkJrH4qEw/isS97p8TxcahHQuQdnH1yzoMiDbVWvZUsI0rN6HScVk08i6+c3wTXgT8MfeiUtWYt0QWn8W8Y/N65l2TcatFfsmbWe1p99ei4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766891; c=relaxed/simple;
-	bh=emk6SCh8LaolEEC0Tm+3el0gnCDTw+Po20CtaPfNhDI=;
+	s=arc-20240116; t=1738766895; c=relaxed/simple;
+	bh=dNMWNQZnxB+R0IqxhXPgKxsVYCG6R5aadGWleveu6rM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q7ORVG3/4KYOyiwAJwhJQeM2ULzkugqBPY08zMxTkHq4aDsAFBmVAolQ7EySP/BtZnbA7E1sIILRvwvSSfCWP8T77rucYpwdqSA1SnlJDL6Gt2XRaW3H1cbXsR+oA0udLjq9dX5VYANwkeAFtJAm7aXTDBeHmtQPHh/7j4T+8a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3BLsTKp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BCNDmLnViXum3SI47gKG95pXHrBvYrPDdVL2SbT7JdPd1A8PcnbLUiLX+DWG47LR1azjfKPh8FrrB9qkas2sUWPu/1+evPxNTsjQDxbxKC4TZSm7ymdhHtPe8DxEN1n0IzBmF3OdWr4H7XB3te1z8Mp4Q7LnX7s0RiczXrQjZ9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R75MB3DO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3BLsTKp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D896FC4CED1;
-	Wed,  5 Feb 2025 14:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R75MB3DO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FADAC4CED1;
+	Wed,  5 Feb 2025 14:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766890;
-	bh=emk6SCh8LaolEEC0Tm+3el0gnCDTw+Po20CtaPfNhDI=;
+	s=korg; t=1738766893;
+	bh=dNMWNQZnxB+R0IqxhXPgKxsVYCG6R5aadGWleveu6rM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M3BLsTKpqZJfyRa8xISdB46zRjhTE21Q8YKOjXTfFJyrOMGODyo0XWlYsAsZJHRY0
-	 aNwt5Dq547yBNibd45s01mcmSYC2L1MhmZLqR3wSKILrxp9/uOeKqlPK600GE7EwIq
-	 0krVmjHpDOPVgbZmJ6vh8u02IPrg5Ytl3x6UUp40=
+	b=R75MB3DO/SeO3L8BgHseFPtJ1mvn4iI9w6z+cS1uvIwC9fXxWx/8Gm1HXD3iUz6xe
+	 fqLyyfGTDEC9SOM+KzVAbPUhCD/2LSpGgDKd1nPA6GVHNm4SXtbaDyAelbHmwNf05R
+	 /MWfktoYUlu3/d+Gi08L0Z2phE/3bPspJouzlEwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jinpu Wang <jinpu.wang@ionos.com>,
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 325/623] padata: avoid UAF for reorder_work
-Date: Wed,  5 Feb 2025 14:41:07 +0100
-Message-ID: <20250205134508.657553862@linuxfoundation.org>
+Subject: [PATCH 6.12 368/590] RDMA/rtrs: Add missing deinit() call
+Date: Wed,  5 Feb 2025 14:42:03 +0100
+Message-ID: <20250205134509.350309349@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,93 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-[ Upstream commit dd7d37ccf6b11f3d95e797ebe4e9e886d0332600 ]
+[ Upstream commit 81468c4058a62e84e475433b83b3edc613294f5e ]
 
-Although the previous patch can avoid ps and ps UAF for _do_serial, it
-can not avoid potential UAF issue for reorder_work. This issue can
-happen just as below:
+A warning is triggered when repeatedly connecting and disconnecting the
+rnbd:
+ list_add corruption. prev->next should be next (ffff88800b13e480), but was ffff88801ecd1338. (prev=ffff88801ecd1340).
+ WARNING: CPU: 1 PID: 36562 at lib/list_debug.c:32 __list_add_valid_or_report+0x7f/0xa0
+ Workqueue: ib_cm cm_work_handler [ib_cm]
+ RIP: 0010:__list_add_valid_or_report+0x7f/0xa0
+  ? __list_add_valid_or_report+0x7f/0xa0
+  ib_register_event_handler+0x65/0x93 [ib_core]
+  rtrs_srv_ib_dev_init+0x29/0x30 [rtrs_server]
+  rtrs_ib_dev_find_or_add+0x124/0x1d0 [rtrs_core]
+  __alloc_path+0x46c/0x680 [rtrs_server]
+  ? rtrs_rdma_connect+0xa6/0x2d0 [rtrs_server]
+  ? rcu_is_watching+0xd/0x40
+  ? __mutex_lock+0x312/0xcf0
+  ? get_or_create_srv+0xad/0x310 [rtrs_server]
+  ? rtrs_rdma_connect+0xa6/0x2d0 [rtrs_server]
+  rtrs_rdma_connect+0x23c/0x2d0 [rtrs_server]
+  ? __lock_release+0x1b1/0x2d0
+  cma_cm_event_handler+0x4a/0x1a0 [rdma_cm]
+  cma_ib_req_handler+0x3a0/0x7e0 [rdma_cm]
+  cm_process_work+0x28/0x1a0 [ib_cm]
+  ? _raw_spin_unlock_irq+0x2f/0x50
+  cm_req_handler+0x618/0xa60 [ib_cm]
+  cm_work_handler+0x71/0x520 [ib_cm]
 
-crypto_request			crypto_request		crypto_del_alg
-padata_do_serial
-  ...
-  padata_reorder
-    // processes all remaining
-    // requests then breaks
-    while (1) {
-      if (!padata)
-        break;
-      ...
-    }
+Commit 667db86bcbe8 ("RDMA/rtrs: Register ib event handler") introduced a
+new element .deinit but never used it at all. Fix it by invoking the
+`deinit()` to appropriately unregister the IB event handler.
 
-				padata_do_serial
-				  // new request added
-				  list_add
-    // sees the new request
-    queue_work(reorder_work)
-				  padata_reorder
-				    queue_work_on(squeue->work)
-...
-
-				<kworker context>
-				padata_serial_worker
-				// completes new request,
-				// no more outstanding
-				// requests
-
-							crypto_del_alg
-							  // free pd
-
-<kworker context>
-invoke_padata_reorder
-  // UAF of pd
-
-To avoid UAF for 'reorder_work', get 'pd' ref before put 'reorder_work'
-into the 'serial_wq' and put 'pd' ref until the 'serial_wq' finish.
-
-Fixes: bbefa1dd6a6d ("crypto: pcrypt - Avoid deadlock by using per-instance padata queues")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Jinpu Wang <jinpu.wang@ionos.com>
+Fixes: 667db86bcbe8 ("RDMA/rtrs: Register ib event handler")
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Link: https://patch.msgid.link/20250106004516.16611-1-lizhijian@fujitsu.com
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/infiniband/ulp/rtrs/rtrs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/padata.c b/kernel/padata.c
-index de2c02a81469c..418987056340e 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -352,8 +352,14 @@ static void padata_reorder(struct parallel_data *pd)
- 	smp_mb();
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs.c b/drivers/infiniband/ulp/rtrs/rtrs.c
+index 4e17d546d4ccf..bf38ac6f87c47 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs.c
+@@ -584,6 +584,9 @@ static void dev_free(struct kref *ref)
+ 	list_del(&dev->entry);
+ 	mutex_unlock(&pool->mutex);
  
- 	reorder = per_cpu_ptr(pd->reorder_list, pd->cpu);
--	if (!list_empty(&reorder->list) && padata_find_next(pd, false))
-+	if (!list_empty(&reorder->list) && padata_find_next(pd, false)) {
-+		/*
-+		 * Other context(eg. the padata_serial_worker) can finish the request.
-+		 * To avoid UAF issue, add pd ref here, and put pd ref after reorder_work finish.
-+		 */
-+		padata_get_pd(pd);
- 		queue_work(pinst->serial_wq, &pd->reorder_work);
-+	}
++	if (pool->ops && pool->ops->deinit)
++		pool->ops->deinit(dev);
++
+ 	ib_dealloc_pd(dev->ib_pd);
+ 	kfree(dev);
  }
- 
- static void invoke_padata_reorder(struct work_struct *work)
-@@ -364,6 +370,8 @@ static void invoke_padata_reorder(struct work_struct *work)
- 	pd = container_of(work, struct parallel_data, reorder_work);
- 	padata_reorder(pd);
- 	local_bh_enable();
-+	/* Pairs with putting the reorder_work in the serial_wq */
-+	padata_put_pd(pd);
- }
- 
- static void padata_serial_worker(struct work_struct *serial_work)
 -- 
 2.39.5
 
