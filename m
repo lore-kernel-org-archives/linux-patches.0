@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E13614D28C;
-	Wed,  5 Feb 2025 13:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B4315667B;
+	Wed,  5 Feb 2025 13:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763874; cv=none; b=HA8p4CGDupYVkBeyLSNpkwQuUwC/fMUQGUhsAy3GIbac8OgyWT3ewEH7bbVuDP9dI56TBpWEd+47zFPzecDh/8HUvV0o+B3clXEBEC9Fp4TXAzLH+ls35fjAHE2PDTW/Fv75NsmkmbV4Zx+NqtRmna9C31xzkAwJBOAlfEFN2Sg=
+	t=1738763878; cv=none; b=o/n+3esz8OPUeblJxqkF72NZdBzBtnfk62+fNZ5tEdVByslUjfPr+WMBQ0h3eqHVAWCNxQA9mWWCn8VTp9Z3m0eHCzwGRPAOPXt1M/aElg3Ce7uDi2hZg8zI0DVlPf2ULej4hh493oVnNSYW/EYOKFVK6qcd4XoM864jQGY7SnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763874; c=relaxed/simple;
-	bh=zZDfu6Zj0/ojkkhk+zeekD9cwqYKUQluwNKbUyrpr60=;
+	s=arc-20240116; t=1738763878; c=relaxed/simple;
+	bh=1A3HuEyzr0aAa3F1pTOH/LTUvo4IE5LhpcbfwYHxiTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zl1S3MX42d9HbXlWhb4nHV1tEK7pKk7rIX+gKQZQw2K8vyIwE5wSWN3vDHjQqRu1w1vAafwqKSODjvMbDiZxwziAwghgJjMCMhurPQdzxIkbw48tVu1wsFaqRhpVCJ9pqeLVOaw5S1MOyPbxZgIBSEwJIDzSps1zRmWhPwJLjEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bURrGW/J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6AxcKF8qY3kn9uTzt709gK0eaFvb7EOQEt3QkOFhczFTNWfen17wTGd9ovmCzzMNNJJvmvCgXWvFSe0PaqTDYKRGzp5oqBY2ydi2iukYpWl0J3SsYxZgMN7oyOMni0fwGFE5jtgR5KP5nFGFcD3TAAXtmAS49wXi4Ix9ZMoFuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gySmfcdG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bURrGW/J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D234C4CED6;
-	Wed,  5 Feb 2025 13:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gySmfcdG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B44FC4CED1;
+	Wed,  5 Feb 2025 13:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763874;
-	bh=zZDfu6Zj0/ojkkhk+zeekD9cwqYKUQluwNKbUyrpr60=;
+	s=korg; t=1738763877;
+	bh=1A3HuEyzr0aAa3F1pTOH/LTUvo4IE5LhpcbfwYHxiTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bURrGW/J8C55s24fwJix3CBFnrUMBhOXb1LOMmQc6e/JoFY9qymQvIyXyCgh0mqco
-	 xxN/HdervnDpGvnRTTu2wTVeoLdv1TpkbPapmUiyCDvhOWWxUYaqEXKuMpB8MWm0gk
-	 w/twRACfZi4+vr9uviVKMROVah6TVWEmC0lLNP8o=
+	b=gySmfcdGQ146meH9tP9bPMheDt4zx9eeKkPF+AumsVrLBhXYFsOgVVWrlLhAemSLS
+	 itQMtqpZ7DR+9GcXiKPc+HBzO1ncYeFsNEmMR9kgkYc1SU757vZ5HhGJba9QnJK9l9
+	 aTr1NE8SovjqhDBfX2iHNe4EbwgCGG/X7ox3VLO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Richard Russon (FlatCap)" <ldm@flatcap.org>,
+	linux-ntfs-dev@lists.sourceforge.net,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/590] drm/msm/dpu: link DSPP_2/_3 blocks on SM8350
-Date: Wed,  5 Feb 2025 14:36:57 +0100
-Message-ID: <20250205134457.630144484@linuxfoundation.org>
+Subject: [PATCH 6.13 026/623] partitions: ldm: remove the initial kernel-doc notation
+Date: Wed,  5 Feb 2025 14:36:08 +0100
+Message-ID: <20250205134457.228835790@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +49,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 42323d3c9e04c725d27606c31663b80a7cc30218 ]
+[ Upstream commit e494e451611a3de6ae95f99e8339210c157d70fb ]
 
-Link DSPP_2 to the LM_2 and DSPP_3 to the LM_3 mixer blocks. This allows
-using colour transformation matrix (aka night mode) with more outputs at
-the same time.
+Remove the file's first comment describing what the file is.
+This comment is not in kernel-doc format so it causes a kernel-doc
+warning.
 
-Fixes: 0e91bcbb0016 ("drm/msm/dpu: Add SM8350 to hw catalog")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/629959/
-Link: https://lore.kernel.org/r/20241220-dpu-fix-catalog-v2-5-38fa961ea992@linaro.org
+ldm.h:13: warning: expecting prototype for ldm(). Prototype was for _FS_PT_LDM_H_() instead
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Richard Russon (FlatCap) <ldm@flatcap.org>
+Cc: linux-ntfs-dev@lists.sourceforge.net
+Cc: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/r/20250111062758.910458-1-rdunlap@infradead.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h | 2 ++
- 1 file changed, 2 insertions(+)
+ block/partitions/ldm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-index aced16e350daa..f7c08e89c8820 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-@@ -162,6 +162,7 @@ static const struct dpu_lm_cfg sm8350_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.lm_pair = LM_3,
- 		.pingpong = PINGPONG_2,
-+		.dspp = DSPP_2,
- 	}, {
- 		.name = "lm_3", .id = LM_3,
- 		.base = 0x47000, .len = 0x320,
-@@ -169,6 +170,7 @@ static const struct dpu_lm_cfg sm8350_lm[] = {
- 		.sblk = &sdm845_lm_sblk,
- 		.lm_pair = LM_2,
- 		.pingpong = PINGPONG_3,
-+		.dspp = DSPP_3,
- 	}, {
- 		.name = "lm_4", .id = LM_4,
- 		.base = 0x48000, .len = 0x320,
+diff --git a/block/partitions/ldm.h b/block/partitions/ldm.h
+index e259180c89148..aa3bd050d8cdd 100644
+--- a/block/partitions/ldm.h
++++ b/block/partitions/ldm.h
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+-/**
++/*
+  * ldm - Part of the Linux-NTFS project.
+  *
+  * Copyright (C) 2001,2002 Richard Russon <ldm@flatcap.org>
 -- 
 2.39.5
 
