@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129B71662EF;
-	Wed,  5 Feb 2025 15:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7E31662EF;
+	Wed,  5 Feb 2025 15:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768637; cv=none; b=aGVMp3+1+1beni9G/Ei00TgvvVrOcB9+qIxQS8UE1pRQJrMJ60vUckUyaiLVE00j9d+TdL9LLdeBSk7jMD7KL8QSBmfMfveFTMWizKWwkkpTFBVbnzRJ9t8wpf01HQ6W6hcNQw0pSXxA597B4s4/TUCRgzRM75AI8PhgpzHfXSw=
+	t=1738768640; cv=none; b=qbu7SxRi2sQqUEkq3QNQCnOgk19dGlQonus0Yrz7le+x/sMQi30vcMEqS+iwlNtqYQpDywsFoLoBc3Ye1oaEaLX97uAY1bRYCVJRkDXkocejJTOhj44y11ZJh/SHusA+wbfLeS7wGlJk35QqXJ4wqZJ8giDprPJe7xS5oDXgPBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768637; c=relaxed/simple;
-	bh=8hLZrdEADjJSMlAG43ly2RY0NcnJAdjNSPforRN0TH8=;
+	s=arc-20240116; t=1738768640; c=relaxed/simple;
+	bh=62x/IdeRTvTwFRkKAaMeC+e6cNFGCpqdD2HSr/fQW98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=adgSRMpjmzXg2+hAUAv5aM4vhpqu+hDBDV80knjAbqXULEv3NhjudIC+93NlBT2V8dcoN2MeuVhREB1Kt9PjIhFqqPkng+bEWq1bbHOxuW/TBIhYS/VbwH+4J8a8TzpcqrASlQ7BCu9SdxEI5LRLPTHnoxuY80oBo2o5DyqIk9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKsqGPHh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lx1kmZvU8ok9oVhbNMfKaQ4eBf/WUrRKTL+/rT4vOD5sOfWV3h+j95t1T5q4Dn3lKYKzbd8fPgKTSSmSfqWL0XCw4a9Z85hV3rSkh+LfX0wR+IDNYPWH+p9hlMBccYPZQ6QxTwsqc8ahOI0ZLAPTY7pX1JtJit5+LX46zO4hZ9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dvdw2Shu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKsqGPHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D76EC4CED1;
-	Wed,  5 Feb 2025 15:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dvdw2Shu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A833C4CED1;
+	Wed,  5 Feb 2025 15:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768636;
-	bh=8hLZrdEADjJSMlAG43ly2RY0NcnJAdjNSPforRN0TH8=;
+	s=korg; t=1738768639;
+	bh=62x/IdeRTvTwFRkKAaMeC+e6cNFGCpqdD2HSr/fQW98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKsqGPHhHAXzx25tpPY18FajyNrDFAegb8rmXMdSsJwI8FkPP+z3BFLISLthG0ic3
-	 NhkGZQfbqswDkf6ZOO55nouEeZDbSPLEic/DOPiKBby0GyZzjIgz3Z8uMnW0QCER47
-	 gj3qF3ebCd6Uteltc/M/EaKdSmwtcKf41OOKozZI=
+	b=Dvdw2Shum5QxKveluBmmuQJF5SGV1bhMLODZTblT8Zh66iTEOrHu8V25wVoWKCJ1y
+	 vj9AKUcal/pzaADuBc1CNHHRIfIkUGIBV0RIJNW3bjID8rFpOny+pOSj6X2H+dEakY
+	 ObkKpQTR5Msg5UopPxBaaDfD0jY3IFKjIAOnWuuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Anton Mitterer <calestyo@scientia.org>,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.13 613/623] btrfs: output the reason for open_ctree() failure
-Date: Wed,  5 Feb 2025 14:45:55 +0100
-Message-ID: <20250205134519.669437532@linuxfoundation.org>
+	Kevin Brodsky <kevin.brodsky@arm.com>,
+	Aruna Ramakrishna <aruna.ramakrishna@oracle.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	Keith Lucas <keith.lucas@oracle.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.13 614/623] selftests/mm: build with -O2
+Date: Wed,  5 Feb 2025 14:45:56 +0100
+Message-ID: <20250205134519.706741393@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -52,46 +57,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Kevin Brodsky <kevin.brodsky@arm.com>
 
-commit d0f038104fa37380e2a725e669508e43d0c503e9 upstream.
+commit 46036188ea1f5266df23a6149dea0df1c77cd1c7 upstream.
 
-There is a recent ML report that mounting a large fs backed by hardware
-RAID56 controller (with one device missing) took too much time, and
-systemd seems to kill the mount attempt.
+The mm kselftests are currently built with no optimisation (-O0).  It's
+unclear why, and besides being obviously suboptimal, this also prevents
+the pkeys tests from working as intended.  Let's build all the tests with
+-O2.
 
-In that case, the only error message is:
-
-  BTRFS error (device sdj): open_ctree failed
-
-There is no reason on why the failure happened, making it very hard to
-understand the reason.
-
-At least output the error number (in the particular case it should be
--EINTR) to provide some clue.
-
-Link: https://lore.kernel.org/linux-btrfs/9b9c4d2810abcca2f9f76e32220ed9a90febb235.camel@scientia.org/
-Reported-by: Christoph Anton Mitterer <calestyo@scientia.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+[kevin.brodsky@arm.com: silence unused-result warnings]
+  Link: https://lkml.kernel.org/r/20250107170110.2819685-1-kevin.brodsky@arm.com
+Link: https://lkml.kernel.org/r/20241209095019.1732120-6-kevin.brodsky@arm.com
+Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
+Cc: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Joey Gouly <joey.gouly@arm.com>
+Cc: Keith Lucas <keith.lucas@oracle.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/mm/Makefile |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -971,7 +971,7 @@ static int btrfs_fill_super(struct super
+--- a/tools/testing/selftests/mm/Makefile
++++ b/tools/testing/selftests/mm/Makefile
+@@ -33,9 +33,16 @@ endif
+ # LDLIBS.
+ MAKEFLAGS += --no-builtin-rules
  
- 	err = open_ctree(sb, fs_devices);
- 	if (err) {
--		btrfs_err(fs_info, "open_ctree failed");
-+		btrfs_err(fs_info, "open_ctree failed: %d", err);
- 		return err;
- 	}
+-CFLAGS = -Wall -I $(top_srcdir) $(EXTRA_CFLAGS) $(KHDR_INCLUDES) $(TOOLS_INCLUDES)
++CFLAGS = -Wall -O2 -I $(top_srcdir) $(EXTRA_CFLAGS) $(KHDR_INCLUDES) $(TOOLS_INCLUDES)
+ LDLIBS = -lrt -lpthread -lm
  
++# Some distributions (such as Ubuntu) configure GCC so that _FORTIFY_SOURCE is
++# automatically enabled at -O1 or above. This triggers various unused-result
++# warnings where functions such as read() or write() are called and their
++# return value is not checked. Disable _FORTIFY_SOURCE to silence those
++# warnings.
++CFLAGS += -U_FORTIFY_SOURCE
++
+ KDIR ?= /lib/modules/$(shell uname -r)/build
+ ifneq (,$(wildcard $(KDIR)/Module.symvers))
+ ifneq (,$(wildcard $(KDIR)/include/linux/page_frag_cache.h))
 
 
