@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5621B1D8A12;
-	Wed,  5 Feb 2025 15:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA4915CD74;
+	Wed,  5 Feb 2025 15:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768487; cv=none; b=J6YtNadwYWbIF/Cy2Ix6NuSa7u/xeDllwrkgWvS/lp6ipbx1rl8pA9YHvHLLbO+5cn7Py658QajFdkMvNYkJE4aENrrjXF1NYRALFqgf+1WhbcYQ+fipp0R0BsS1FZMfP3C3LSDEBcmyP+GvWpPYpqDqGH+LD5zr45rtGHrMbik=
+	t=1738768490; cv=none; b=Fj6kPyO7Xg9z458DSDW/c4PrsnokpV18nd4ar5ybTbqP5Vi6IOLtNI/RIJBGgpP3Em79QHVJBMicjM+jIedJ891ovAxMMAdA0/TXWtP4svKHNO0bUdiiF5bxswqz9zyRtYVGNsvueoKoi9s7CM9SscC7nAYFMUxDYbEY2tjIv+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768487; c=relaxed/simple;
-	bh=QBHIHwlPXLbcCzQFFFl1KjXtjU44GpPriVbYXywnPFc=;
+	s=arc-20240116; t=1738768490; c=relaxed/simple;
+	bh=V1nzU/c8rYJ58nGZRLtt+wd1UgdarmX0wo2yTcCLiRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLVlHRPmv/AeZWtISD8LuQIWnmQniGU2v6TRUk6yztzlprmLFpP7qqMzU+cxht18TqG/G4+OptHGXfDtO34P24P8P+PhFIRCzyWvooxfBL/m0yPMgElVaMKPb69OonI8iQVrdoJEr4g5K4Zc79NEN0cWC43fNTOfR1pTYaWhzLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1COiC5CL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oITv+qQRjEjhBuaGjxlR5vjU3JYjQ96S042lRxMyZn5tRM2AOrri3DoOO1P73Jv65YR9i4Y483+joO5BesjRwkzMsUjOFaSMfaGbSyqkXmL9bnB+9p21p+zgOvJHpnXvkevI22fBOXV6vmXiTuz9knbfHqYT63viy7Ob55gzCM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/sSxiKH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1COiC5CL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86FD8C4CEDD;
-	Wed,  5 Feb 2025 15:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/sSxiKH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C82C4CED1;
+	Wed,  5 Feb 2025 15:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768487;
-	bh=QBHIHwlPXLbcCzQFFFl1KjXtjU44GpPriVbYXywnPFc=;
+	s=korg; t=1738768490;
+	bh=V1nzU/c8rYJ58nGZRLtt+wd1UgdarmX0wo2yTcCLiRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1COiC5CLFje+KPltOhc7wf/n4t3kd+/0qM+DIq/bghBu10TZYOv4ZkN9oIfd7WHCV
-	 dB7JVn8pQaMZ3PhWvXHw8acrMZJDp5sr2Hhgd4deC3cmI5Gke841LudN/RlLS+Jlek
-	 YhPE7XmnjFCAtRbZcO6ASuowl+DEXhLkLLr2Zjuo=
+	b=H/sSxiKHTR2ugPcWiA8AlzHQns1H8R1ijLow8VdbRQZIsUDu6k3j9ThKyyAdigEu9
+	 e3LJN5ZIMY1LmRV81yhiy0ET7ok2XKynQjAnai9lqGZ7OrE9ydniaf6/KMEV2y9XTe
+	 bYT6WB3t/JfgoW13dOBAkt4DN0s60Rknj9Iuzg2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Peng Zhang <zhangpeng.00@bytedance.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 571/623] kernel: be more careful about dup_mmap() failures and uprobe registering
-Date: Wed,  5 Feb 2025 14:45:13 +0100
-Message-ID: <20250205134518.063613842@linuxfoundation.org>
+	Daniel Lee <chullee@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Daniel Rosenberg <drosen@google.com>
+Subject: [PATCH 6.13 572/623] f2fs: Introduce linear search for dentries
+Date: Wed,  5 Feb 2025 14:45:14 +0100
+Message-ID: <20250205134518.104777286@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -59,113 +52,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liam R. Howlett <Liam.Howlett@Oracle.com>
+From: Daniel Lee <chullee@google.com>
 
-[ Upstream commit 64c37e134b120fb462fb4a80694bfb8e7be77b14 ]
+commit 91b587ba79e1b68bb718d12b0758dbcdab4e9cb7 upstream.
 
-If a memory allocation fails during dup_mmap(), the maple tree can be left
-in an unsafe state for other iterators besides the exit path.  All the
-locks are dropped before the exit_mmap() call (in mm/mmap.c), but the
-incomplete mm_struct can be reached through (at least) the rmap finding
-the vmas which have a pointer back to the mm_struct.
+This patch addresses an issue where some files in case-insensitive
+directories become inaccessible due to changes in how the kernel function,
+utf8_casefold(), generates case-folded strings from the commit 5c26d2f1d3f5
+("unicode: Don't special case ignorable code points").
 
-Up to this point, there have been no issues with being able to find an
-mm_struct that was only partially initialised.  Syzbot was able to make
-the incomplete mm_struct fail with recent forking changes, so it has been
-proven unsafe to use the mm_struct that hasn't been initialised, as
-referenced in the link below.
+F2FS uses these case-folded names to calculate hash values for locating
+dentries and stores them on disk. Since utf8_casefold() can produce
+different output across kernel versions, stored hash values and newly
+calculated hash values may differ. This results in affected files no
+longer being found via the hash-based lookup.
 
-Although 8ac662f5da19f ("fork: avoid inappropriate uprobe access to
-invalid mm") fixed the uprobe access, it does not completely remove the
-race.
+To resolve this, the patch introduces a linear search fallback.
+If the initial hash-based search fails, F2FS will sequentially scan the
+directory entries.
 
-This patch sets the MMF_OOM_SKIP to avoid the iteration of the vmas on the
-oom side (even though this is extremely unlikely to be selected as an oom
-victim in the race window), and sets MMF_UNSTABLE to avoid other potential
-users from using a partially initialised mm_struct.
-
-When registering vmas for uprobe, skip the vmas in an mm that is marked
-unstable.  Modifying a vma in an unstable mm may cause issues if the mm
-isn't fully initialised.
-
-Link: https://lore.kernel.org/all/6756d273.050a0220.2477f.003d.GAE@google.com/
-Link: https://lkml.kernel.org/r/20250127170221.1761366-1-Liam.Howlett@oracle.com
-Fixes: d24062914837 ("fork: use __mt_dup() to duplicate maple tree in dup_mmap()")
-Signed-off-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Peng Zhang <zhangpeng.00@bytedance.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5c26d2f1d3f5 ("unicode: Don't special case ignorable code points")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219586
+Signed-off-by: Daniel Lee <chullee@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: Daniel Rosenberg <drosen@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/uprobes.c |  4 ++++
- kernel/fork.c           | 17 ++++++++++++++---
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ fs/f2fs/dir.c    |   53 ++++++++++++++++++++++++++++++++++++++---------------
+ fs/f2fs/f2fs.h   |    6 ++++--
+ fs/f2fs/inline.c |    5 +++--
+ 3 files changed, 45 insertions(+), 19 deletions(-)
 
-diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index 5d71ef85420c5..7f1a95b4f14de 100644
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -28,6 +28,7 @@
- #include <linux/rcupdate_trace.h>
- #include <linux/workqueue.h>
- #include <linux/srcu.h>
-+#include <linux/oom.h>          /* check_stable_address_space */
+--- a/fs/f2fs/dir.c
++++ b/fs/f2fs/dir.c
+@@ -175,7 +175,8 @@ static unsigned long dir_block_index(uns
+ static struct f2fs_dir_entry *find_in_block(struct inode *dir,
+ 				struct page *dentry_page,
+ 				const struct f2fs_filename *fname,
+-				int *max_slots)
++				int *max_slots,
++				bool use_hash)
+ {
+ 	struct f2fs_dentry_block *dentry_blk;
+ 	struct f2fs_dentry_ptr d;
+@@ -183,7 +184,7 @@ static struct f2fs_dir_entry *find_in_bl
+ 	dentry_blk = (struct f2fs_dentry_block *)page_address(dentry_page);
  
- #include <linux/uprobes.h>
+ 	make_dentry_ptr_block(dir, &d, dentry_blk);
+-	return f2fs_find_target_dentry(&d, fname, max_slots);
++	return f2fs_find_target_dentry(&d, fname, max_slots, use_hash);
+ }
  
-@@ -1260,6 +1261,9 @@ register_for_each_vma(struct uprobe *uprobe, struct uprobe_consumer *new)
- 		 * returns NULL in find_active_uprobe_rcu().
- 		 */
- 		mmap_write_lock(mm);
-+		if (check_stable_address_space(mm))
-+			goto unlock;
+ static inline int f2fs_match_name(const struct inode *dir,
+@@ -208,7 +209,8 @@ static inline int f2fs_match_name(const
+ }
+ 
+ struct f2fs_dir_entry *f2fs_find_target_dentry(const struct f2fs_dentry_ptr *d,
+-			const struct f2fs_filename *fname, int *max_slots)
++			const struct f2fs_filename *fname, int *max_slots,
++			bool use_hash)
+ {
+ 	struct f2fs_dir_entry *de;
+ 	unsigned long bit_pos = 0;
+@@ -231,7 +233,7 @@ struct f2fs_dir_entry *f2fs_find_target_
+ 			continue;
+ 		}
+ 
+-		if (de->hash_code == fname->hash) {
++		if (!use_hash || de->hash_code == fname->hash) {
+ 			res = f2fs_match_name(d->inode, fname,
+ 					      d->filename[bit_pos],
+ 					      le16_to_cpu(de->name_len));
+@@ -258,11 +260,12 @@ found:
+ static struct f2fs_dir_entry *find_in_level(struct inode *dir,
+ 					unsigned int level,
+ 					const struct f2fs_filename *fname,
+-					struct page **res_page)
++					struct page **res_page,
++					bool use_hash)
+ {
+ 	int s = GET_DENTRY_SLOTS(fname->disk_name.len);
+ 	unsigned int nbucket, nblock;
+-	unsigned int bidx, end_block;
++	unsigned int bidx, end_block, bucket_no;
+ 	struct page *dentry_page;
+ 	struct f2fs_dir_entry *de = NULL;
+ 	pgoff_t next_pgofs;
+@@ -272,8 +275,11 @@ static struct f2fs_dir_entry *find_in_le
+ 	nbucket = dir_buckets(level, F2FS_I(dir)->i_dir_level);
+ 	nblock = bucket_blocks(level);
+ 
++	bucket_no = use_hash ? le32_to_cpu(fname->hash) % nbucket : 0;
 +
- 		vma = find_vma(mm, info->vaddr);
- 		if (!vma || !valid_vma(vma, is_register) ||
- 		    file_inode(vma->vm_file) != uprobe->inode)
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 9b301180fd416..9da032802e347 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -760,7 +760,8 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
- 		mt_set_in_rcu(vmi.mas.tree);
- 		ksm_fork(mm, oldmm);
- 		khugepaged_fork(mm, oldmm);
--	} else if (mpnt) {
-+	} else {
-+
- 		/*
- 		 * The entire maple tree has already been duplicated. If the
- 		 * mmap duplication fails, mark the failure point with
-@@ -768,8 +769,18 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
- 		 * stop releasing VMAs that have not been duplicated after this
- 		 * point.
- 		 */
--		mas_set_range(&vmi.mas, mpnt->vm_start, mpnt->vm_end - 1);
--		mas_store(&vmi.mas, XA_ZERO_ENTRY);
-+		if (mpnt) {
-+			mas_set_range(&vmi.mas, mpnt->vm_start, mpnt->vm_end - 1);
-+			mas_store(&vmi.mas, XA_ZERO_ENTRY);
-+			/* Avoid OOM iterating a broken tree */
-+			set_bit(MMF_OOM_SKIP, &mm->flags);
-+		}
-+		/*
-+		 * The mm_struct is going to exit, but the locks will be dropped
-+		 * first.  Set the mm_struct as unstable is advisable as it is
-+		 * not fully initialised.
-+		 */
-+		set_bit(MMF_UNSTABLE, &mm->flags);
++start_find_bucket:
+ 	bidx = dir_block_index(level, F2FS_I(dir)->i_dir_level,
+-			       le32_to_cpu(fname->hash) % nbucket);
++			       bucket_no);
+ 	end_block = bidx + nblock;
+ 
+ 	while (bidx < end_block) {
+@@ -290,7 +296,7 @@ static struct f2fs_dir_entry *find_in_le
+ 			}
+ 		}
+ 
+-		de = find_in_block(dir, dentry_page, fname, &max_slots);
++		de = find_in_block(dir, dentry_page, fname, &max_slots, use_hash);
+ 		if (IS_ERR(de)) {
+ 			*res_page = ERR_CAST(de);
+ 			de = NULL;
+@@ -307,12 +313,18 @@ static struct f2fs_dir_entry *find_in_le
+ 		bidx++;
  	}
+ 
+-	if (!de && room && F2FS_I(dir)->chash != fname->hash) {
+-		F2FS_I(dir)->chash = fname->hash;
+-		F2FS_I(dir)->clevel = level;
+-	}
++	if (de)
++		return de;
+ 
+-	return de;
++	if (likely(use_hash)) {
++		if (room && F2FS_I(dir)->chash != fname->hash) {
++			F2FS_I(dir)->chash = fname->hash;
++			F2FS_I(dir)->clevel = level;
++		}
++	} else if (++bucket_no < nbucket) {
++		goto start_find_bucket;
++	}
++	return NULL;
+ }
+ 
+ struct f2fs_dir_entry *__f2fs_find_entry(struct inode *dir,
+@@ -323,11 +335,15 @@ struct f2fs_dir_entry *__f2fs_find_entry
+ 	struct f2fs_dir_entry *de = NULL;
+ 	unsigned int max_depth;
+ 	unsigned int level;
++	bool use_hash = true;
+ 
+ 	*res_page = NULL;
+ 
++#if IS_ENABLED(CONFIG_UNICODE)
++start_find_entry:
++#endif
+ 	if (f2fs_has_inline_dentry(dir)) {
+-		de = f2fs_find_in_inline_dir(dir, fname, res_page);
++		de = f2fs_find_in_inline_dir(dir, fname, res_page, use_hash);
+ 		goto out;
+ 	}
+ 
+@@ -343,11 +359,18 @@ struct f2fs_dir_entry *__f2fs_find_entry
+ 	}
+ 
+ 	for (level = 0; level < max_depth; level++) {
+-		de = find_in_level(dir, level, fname, res_page);
++		de = find_in_level(dir, level, fname, res_page, use_hash);
+ 		if (de || IS_ERR(*res_page))
+ 			break;
+ 	}
++
  out:
- 	mmap_write_unlock(mm);
--- 
-2.39.5
-
++#if IS_ENABLED(CONFIG_UNICODE)
++	if (IS_CASEFOLDED(dir) && !de && use_hash) {
++		use_hash = false;
++		goto start_find_entry;
++	}
++#endif
+ 	/* This is to increase the speed of f2fs_create */
+ 	if (!de)
+ 		F2FS_I(dir)->task = current;
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3583,7 +3583,8 @@ int f2fs_prepare_lookup(struct inode *di
+ 			struct f2fs_filename *fname);
+ void f2fs_free_filename(struct f2fs_filename *fname);
+ struct f2fs_dir_entry *f2fs_find_target_dentry(const struct f2fs_dentry_ptr *d,
+-			const struct f2fs_filename *fname, int *max_slots);
++			const struct f2fs_filename *fname, int *max_slots,
++			bool use_hash);
+ int f2fs_fill_dentries(struct dir_context *ctx, struct f2fs_dentry_ptr *d,
+ 			unsigned int start_pos, struct fscrypt_str *fstr);
+ void f2fs_do_make_empty_dir(struct inode *inode, struct inode *parent,
+@@ -4219,7 +4220,8 @@ int f2fs_write_inline_data(struct inode
+ int f2fs_recover_inline_data(struct inode *inode, struct page *npage);
+ struct f2fs_dir_entry *f2fs_find_in_inline_dir(struct inode *dir,
+ 					const struct f2fs_filename *fname,
+-					struct page **res_page);
++					struct page **res_page,
++					bool use_hash);
+ int f2fs_make_empty_inline_dir(struct inode *inode, struct inode *parent,
+ 			struct page *ipage);
+ int f2fs_add_inline_entry(struct inode *dir, const struct f2fs_filename *fname,
+--- a/fs/f2fs/inline.c
++++ b/fs/f2fs/inline.c
+@@ -352,7 +352,8 @@ process_inline:
+ 
+ struct f2fs_dir_entry *f2fs_find_in_inline_dir(struct inode *dir,
+ 					const struct f2fs_filename *fname,
+-					struct page **res_page)
++					struct page **res_page,
++					bool use_hash)
+ {
+ 	struct f2fs_sb_info *sbi = F2FS_SB(dir->i_sb);
+ 	struct f2fs_dir_entry *de;
+@@ -369,7 +370,7 @@ struct f2fs_dir_entry *f2fs_find_in_inli
+ 	inline_dentry = inline_data_addr(dir, ipage);
+ 
+ 	make_dentry_ptr_inline(dir, &d, inline_dentry);
+-	de = f2fs_find_target_dentry(&d, fname, NULL);
++	de = f2fs_find_target_dentry(&d, fname, NULL, use_hash);
+ 	unlock_page(ipage);
+ 	if (IS_ERR(de)) {
+ 		*res_page = ERR_CAST(de);
 
 
