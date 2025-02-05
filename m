@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FE214B959;
-	Wed,  5 Feb 2025 14:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FB214B959;
+	Wed,  5 Feb 2025 14:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765717; cv=none; b=TnrRdHCksS/OBj/M8FB98vD2dOxOb6w0aSqKthDP+4hL6m3y7OM0Xsh8dG9CY00Hq3nJbh8r/LEocjbsMBrGXwLI6J9+cj0oRvnwNkIHaBGpRdTSUBCUI+vJ7DKGOdunB1QKWEbu3FLbf/Ftd8RWYV9Y6X15FAYArx34pudSmSk=
+	t=1738765720; cv=none; b=PtK1q9iOpfSLt8L+YlzCLw7dWN+h/1NdQOkfCCKZsfex+RzGD1l/73HdTvNZTAYqLMGO0fcOb5tn0GuhREMYCrz4xkw83fqDjvrjwPnnmnJ1/sOZ5P9ptbWKM+3vQbOtkfUEdw9WReDQl27y6PLuAUUaIO/XOoiv6Ntp+8BKqQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765717; c=relaxed/simple;
-	bh=oUZSv87kMfzGZY/he1gmFLiHpyl5uj7rczah5zmJ4TE=;
+	s=arc-20240116; t=1738765720; c=relaxed/simple;
+	bh=d67MxIZ7HJIZf1MRstNEnNPoarvQZUuP07wUbSkQCoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E+KMP6FOVMsWnyzXKsyd8oWOnfEM6ZAV//6fPLec1ZukSi6d1RNFmxQpg3kCJUBJy71f3+xMG3dS/vXsOAOO953QpUPdyxJnZjkBEfRC9SPKAxl4yHBaIhKWREFEpU/lrtdw9zBBvI9Fa0mX72nhPQ893zAIEhf0UEdBwe9uRIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UeqO7pg7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHMo+udgYGEZpNHIdaPUICArZX/cIJb9aKChJlMJbI6nMnoSftzqBwB1vfP/2VfH0AvjnOvbpMKQlhALjcdYbzMeRFQSkUXV3vmmjkyiY9m9QqbvaLDRy22RU59GpZv6cKUCxcpDrhQgy6rJeuzXGw4Yg9qbYkoVFZls4+fEykw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OF396nJ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeqO7pg7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21B8C4CED1;
-	Wed,  5 Feb 2025 14:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OF396nJ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCA1C4CED1;
+	Wed,  5 Feb 2025 14:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765717;
-	bh=oUZSv87kMfzGZY/he1gmFLiHpyl5uj7rczah5zmJ4TE=;
+	s=korg; t=1738765720;
+	bh=d67MxIZ7HJIZf1MRstNEnNPoarvQZUuP07wUbSkQCoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UeqO7pg7v2o87pgx7OMc6UyUrA+llEdN1QvtDIU+Sk4L924nHeOk+R2BEvYvDvRUB
-	 ktuTQV69Cvz/wxaXFDlG96LdkYPmX+rbQd8z48tatM6sLM+MJY+Gu3BzKcoqI0Le2n
-	 JB2LyBzq5jGvW3eNLPXgjrzNvfT9qakhmveeLpU8=
+	b=OF396nJ6DWO6yNK8GqWUC5R8qzW1cVlLEc08dX3WuH9vIod44ZPi+NhfoGCqCecZ9
+	 Eirdf5XNpOpe6YC2VWClyYXJYXGWpfmxb/NJ+RFuWWALUn4EWLQM1dqbEmZ8AkEZ/K
+	 95kzSJefCcrWCDN8SaEvJlJfyuBADCruNUSwe2kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Shengyu Qu <wiagn233@outlook.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 207/623] wifi: mt76: mt7915: fix register mapping
-Date: Wed,  5 Feb 2025 14:39:09 +0100
-Message-ID: <20250205134504.148420921@linuxfoundation.org>
+Subject: [PATCH 6.12 246/590] iommu/arm-smmuv3: Update comments about ATS and bypass
+Date: Wed,  5 Feb 2025 14:40:01 +0100
+Message-ID: <20250205134504.693111483@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit dd1649ef966bb87053c17385ea2cfd1758f5385b ]
+[ Upstream commit 9b640ae7fbba13d45a8b9712dff2911a0c2b5ff4 ]
 
-Bypass the entry when ofs is equal to dev->reg.map[i].size.
-Without this patch, it would get incorrect register mapping when the CR
-address is located at the boundary of an entry.
+The SMMUv3 spec has a note that BYPASS and ATS don't work together under
+the STE EATS field definition. However there is another section "13.6.4
+Full ATS skipping stage 1" that explains under certain conditions BYPASS
+and ATS do work together if the STE is using S1DSS to select BYPASS and
+the CD table has the possibility for a substream.
 
-Fixes: cd4c314a65d3 ("mt76: mt7915: refine register definition")
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shengyu Qu <wiagn233@outlook.com>
-Link: https://patch.msgid.link/OSZPR01MB843401EAA1DA6BD7AEF356F298132@OSZPR01MB8434.jpnprd01.prod.outlook.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+When these comments were written the understanding was that all forms of
+BYPASS just didn't work and this was to be a future problem to solve.
+
+It turns out that ATS and IDENTITY will always work just fine:
+
+ - If STE.Config = BYPASS then the PCI ATS is disabled
+
+ - If a PASID domain is attached then S1DSS = BYPASS and ATS will be
+   enabled. This meets the requirements of 13.6.4 to automatically
+   generate 1:1 ATS replies on the RID.
+
+Update the comments to reflect this.
+
+Fixes: 7497f4211f4f ("iommu/arm-smmu-v3: Make changing domains be hitless for ATS")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/0-v1-f27174f44f39+27a33-smmuv3_ats_note_jgg@nvidia.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/mmio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
-index 44e112b8b5b36..2e7604eed27b0 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
-@@ -484,7 +484,7 @@ static u32 __mt7915_reg_addr(struct mt7915_dev *dev, u32 addr)
- 			continue;
- 
- 		ofs = addr - dev->reg.map[i].phys;
--		if (ofs > dev->reg.map[i].size)
-+		if (ofs >= dev->reg.map[i].size)
- 			continue;
- 
- 		return dev->reg.map[i].maps + ofs;
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 353fea58cd318..f1a8f8c75cb0e 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -2702,9 +2702,14 @@ static int arm_smmu_attach_prepare(struct arm_smmu_attach_state *state,
+ 		 * Translation Requests and Translated transactions are denied
+ 		 * as though ATS is disabled for the stream (STE.EATS == 0b00),
+ 		 * causing F_BAD_ATS_TREQ and F_TRANSL_FORBIDDEN events
+-		 * (IHI0070Ea 5.2 Stream Table Entry). Thus ATS can only be
+-		 * enabled if we have arm_smmu_domain, those always have page
+-		 * tables.
++		 * (IHI0070Ea 5.2 Stream Table Entry).
++		 *
++		 * However, if we have installed a CD table and are using S1DSS
++		 * then ATS will work in S1DSS bypass. See "13.6.4 Full ATS
++		 * skipping stage 1".
++		 *
++		 * Disable ATS if we are going to create a normal 0b100 bypass
++		 * STE.
+ 		 */
+ 		state->ats_enabled = arm_smmu_ats_supported(master);
+ 	}
+@@ -3017,8 +3022,10 @@ static void arm_smmu_attach_dev_ste(struct iommu_domain *domain,
+ 	if (arm_smmu_ssids_in_use(&master->cd_table)) {
+ 		/*
+ 		 * If a CD table has to be present then we need to run with ATS
+-		 * on even though the RID will fail ATS queries with UR. This is
+-		 * because we have no idea what the PASID's need.
++		 * on because we have to assume a PASID is using ATS. For
++		 * IDENTITY this will setup things so that S1DSS=bypass which
++		 * follows the explanation in "13.6.4 Full ATS skipping stage 1"
++		 * and allows for ATS on the RID to work.
+ 		 */
+ 		state.cd_needs_ats = true;
+ 		arm_smmu_attach_prepare(&state, domain);
 -- 
 2.39.5
 
