@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0022B5228;
-	Wed,  5 Feb 2025 14:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DE815198D;
+	Wed,  5 Feb 2025 14:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764114; cv=none; b=cldIPoF+QDxNSLjzF4GXmVbX9PKe5+UafYz5XT9nFYv+wWoEbwFBmO9uGrUksIWErV8YEY/+iwA33NXBpeBeCRT83xRs0zzuIvjTDAXOz3hfwPcbFxUfEydvspUGdm35qVhHkmOrOnK7bge12gYyOwgrNq3soAjoZtj5jUxZrOU=
+	t=1738764117; cv=none; b=BFHBjxSSfI1E0zNpxgmrfxx+9yZx5qzk8SZgyQ9qdvgD4c+yUCKC3NTIgon4cBY00/o8an32EELj2Z2HGQngSfch/EveQfP3FpRYuaerU9hOIu4wPqJgA+8RmJtSj+UW716LD7AAr8e80bwvBtHDJF7YiGENUwTtQwV/aoVV4T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764114; c=relaxed/simple;
-	bh=GCTCYVPFgy948LrSuP4XjFuWDftgkvCWWsjBydEnWnk=;
+	s=arc-20240116; t=1738764117; c=relaxed/simple;
+	bh=v9Plnu6OOzIG8ZNV/AJPE36Q9XrmrKw1tmRNDphhZoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MYKzmoFFyGW0jsodIz7eROEX5Kp6GP+44AWlg/WKVmOOQhYzmF1zBc2KfICd22rxC+b3nXBKN0CRGJDcDi2EEclN0x9h+BxcCYS7aWhv3eY/OG/FOKNZHqxXEmqG+6WsaTIg5gzwnQ3im4w68hi5o6r2ehCEhNUddiDLV8rxLjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcNRkQ9g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmx05vYR7aKSCYieesP5Q8g/YcRvsr0dXfvw7mdBbZRW/YuXehEnFpLg10NI0rcwGtHrmpMPihWH8vlingjafe1NmOApLpVit6CCEZA2GX2vYzi32kB0gLpdaaQJtjfLxhpx/lqiwwWPjW5oMYm3IbcdzLEVgRSOIXCLaPJgrpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t2u8sWlD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcNRkQ9g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66034C4CEDD;
-	Wed,  5 Feb 2025 14:01:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t2u8sWlD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D734CC4CED1;
+	Wed,  5 Feb 2025 14:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764113;
-	bh=GCTCYVPFgy948LrSuP4XjFuWDftgkvCWWsjBydEnWnk=;
+	s=korg; t=1738764117;
+	bh=v9Plnu6OOzIG8ZNV/AJPE36Q9XrmrKw1tmRNDphhZoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TcNRkQ9gd4ZcHd+wSE034A3oRz0gw6q8NkU8RwoBLqWuGmjZkAJbb8jJjCy+yfb8k
-	 GvWVvJLWrejZhBzEm8jJkqfp64IsExWAUGZzMu0TDRTUvpdyR7eVln+UgE0YzWX9//
-	 bDS5O7Yh9q16xbIMs74ci1pQLwMM5RK4pT4/BQAE=
+	b=t2u8sWlDD9lxwWxdkZGxamHjwzOvaKqdiz0H2yIREBDZjT/qq7sRWJk9LvAqTf/HF
+	 RhzFbAyKmq07w4ipkZm5UKwlFVU44Il1gXu1jvLCpCmnsCS7e2FbIN3FfPYY7vaODv
+	 UPdaqQdjaI2M3K23Q4NlraVM3fswMWcQ/5+TR2nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Derek Foreman <derek.foreman@collabora.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 141/393] net/mlxfw: Drop hard coded max FW flash image size
-Date: Wed,  5 Feb 2025 14:41:00 +0100
-Message-ID: <20250205134425.701584778@linuxfoundation.org>
+Subject: [PATCH 6.13 049/623] drm/rockchip: vop2: Fix the mixer alpha setup for layer 0
+Date: Wed,  5 Feb 2025 14:36:31 +0100
+Message-ID: <20250205134458.106425182@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,55 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit 70d81f25cc92cc4e914516c9935ae752f27d78ad ]
+[ Upstream commit 6b4dfdcde3573a12b72d2869dabd4ca37ad7e9c7 ]
 
-Currently, mlxfw kernel module limits FW flash image size to be
-10MB at most, preventing the ability to burn recent BlueField-3
-FW that exceeds the said size limit.
+The alpha setup should start from the second layer, the current calculation
+starts incorrectly from the first layer, a negative offset will be obtained
+in the following formula:
 
-Thus, drop the hard coded limit. Instead, rely on FW's
-max_component_size threshold that is reported in MCQI register
-as the size limit for FW image.
+offset = (mixer_id + zpos - 1) * 0x10
 
-Fixes: 410ed13cae39 ("Add the mlxfw module for Mellanox firmware flash process")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/1737030796-1441634-1-git-send-email-moshe@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Tested-by: Derek Foreman <derek.foreman@collabora.com>
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241209122943.2781431-7-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c
-index 46245e0b24623..43c84900369a3 100644
---- a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c
-+++ b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c
-@@ -14,7 +14,6 @@
- #define MLXFW_FSM_STATE_WAIT_TIMEOUT_MS 30000
- #define MLXFW_FSM_STATE_WAIT_ROUNDS \
- 	(MLXFW_FSM_STATE_WAIT_TIMEOUT_MS / MLXFW_FSM_STATE_WAIT_CYCLE_MS)
--#define MLXFW_FSM_MAX_COMPONENT_SIZE (10 * (1 << 20))
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 594923303a850..630a204440ba8 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -2248,6 +2248,12 @@ static void vop2_setup_alpha(struct vop2_video_port *vp)
+ 		struct vop2_win *win = to_vop2_win(plane);
+ 		int zpos = plane->state->normalized_zpos;
  
- static const int mlxfw_fsm_state_errno[] = {
- 	[MLXFW_FSM_STATE_ERR_ERROR] = -EIO,
-@@ -229,7 +228,6 @@ static int mlxfw_flash_component(struct mlxfw_dev *mlxfw_dev,
- 		return err;
- 	}
- 
--	comp_max_size = min_t(u32, comp_max_size, MLXFW_FSM_MAX_COMPONENT_SIZE);
- 	if (comp->data_size > comp_max_size) {
- 		MLXFW_ERR_MSG(mlxfw_dev, extack,
- 			      "Component size is bigger than limit", -EINVAL);
++		/*
++		 * Need to configure alpha from second layer.
++		 */
++		if (zpos == 0)
++			continue;
++
+ 		if (plane->state->pixel_blend_mode == DRM_MODE_BLEND_PREMULTI)
+ 			premulti_en = 1;
+ 		else
 -- 
 2.39.5
 
