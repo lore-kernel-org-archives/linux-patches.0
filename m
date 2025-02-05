@@ -1,49 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AEFE186E40;
-	Wed,  5 Feb 2025 14:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577E91802AB;
+	Wed,  5 Feb 2025 14:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766688; cv=none; b=XQfHu4qQ7v7gSCGQOk/Ki4SuMLTWxl4q55rR1nZeuamWNHz0Hu0AwF5oiReESH8pDrtswugka94iKPWW/u85Uw/PVjV3lItl7UKN97hClKRtS5nhWlU2TFx+b7d/5qnUnv++8HCRSGEX7V/Bkts593GQPjT9DxAYvQAL4/5f18Q=
+	t=1738766691; cv=none; b=c1MWlNycUUkLmQFUWwBrzgO+KOtztmLnkKICG3TMXd7GifjmBbZzDE/mopSr0ipHvD5zMH1JFr1ExbngsU8FA82qpVSGjAVL5ae2rvOf1OQD059aBLSvHipGcAowviBSDnKeQc63xwiIvrPigbUHggWZYsBkeZkMtqj9B54d7FM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766688; c=relaxed/simple;
-	bh=SqfV34IIM0ITk89oWehtLRRMtPu/Io18UBhq/nDgtI4=;
+	s=arc-20240116; t=1738766691; c=relaxed/simple;
+	bh=ORNGp7/pHSP2QYievUVFg9Tt86A49dJNxFw0b0Hq27U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S9QIOov2mkmk5FFcAU6Gl6Bul8ymIDdEZUfKH/s+5MziUaDhMnP9ce0paXY3MCzGE2uqNJNEZ3dUkB294e6Iilq9u5PTgiDiwtHCZRx6iV34D+CdFafkyUIayd18FgJKRnqwcCSv6zq4BCvdPi/lQ1y/xBiQuB+ZCMyIIQncLt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMVNdp+k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=idLbloCswS5gWFL+rgWE+qC+LTzyOEwyrjmHPCZfkrbdeLhxKuBi6OUckMrT35cZRwbBiWs6l3v3kt4z0DurFZBtGqCSoV8+/5Ccgm4VdEODx68dnoIguRR0BeZNQPxwg1WTMNtmIFvhWdA3QHvEqRu+6sA2jr5YFqVPkIVfqB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FiDpOdhq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMVNdp+k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7003CC4CED1;
-	Wed,  5 Feb 2025 14:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FiDpOdhq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6EBC4CED1;
+	Wed,  5 Feb 2025 14:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766688;
-	bh=SqfV34IIM0ITk89oWehtLRRMtPu/Io18UBhq/nDgtI4=;
+	s=korg; t=1738766691;
+	bh=ORNGp7/pHSP2QYievUVFg9Tt86A49dJNxFw0b0Hq27U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMVNdp+kO00ii1dfq1pLfVcB8gKyErVu3zkVDMinKTvRIkx0f5UtBsmn8F17082X4
-	 yGju9buDZBGHDY6Ybr3yfr7PWlkVdQzcfnhJroDsOSj+svTdSL8vmwdQ9GmicUdnps
-	 /wqefEfWTmkCLvTlsAshj3AaleFrbhLX7DTb0MkE=
+	b=FiDpOdhqojD/R/nOv3AK2JxSsoqExweGdfxclWIJgWY6puVEsmde8+FrXLnLGdw9q
+	 V9jTvxGOKPAA0acoiRO3vtAexglqcUiJyx6xXl5FyN5tudsR+hVhVqxx0wJtB2i1ke
+	 2qkiGX8WIM/MA/hQPPY/n1qIZgvKN0zfXao9UKXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michel Lind <michel@michel-slm.name>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 298/623] perf MANIFEST: Add arch/*/include/uapi/asm/bpf_perf_event.h to the perf tarball
-Date: Wed,  5 Feb 2025 14:40:40 +0100
-Message-ID: <20250205134507.629173069@linuxfoundation.org>
+Subject: [PATCH 6.12 351/590] arm64: dts: qcom: sm4450: correct sleep clock frequency
+Date: Wed,  5 Feb 2025 14:41:46 +0100
+Message-ID: <20250205134508.700430023@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -55,93 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 74c033b6aa650ea7280221a9e57b7318a120978c ]
+[ Upstream commit 158e67cf3619dbb5b9914bb364889041f4b90eea ]
 
-Needed to build tools/lib/bpf/ on various arches other than x86_64,
-notably arm64 when using the perf tarballs generated by:
+The SM4450 platform uses PM4450 to provide sleep clock. According to the
+documentation, that clock has 32.7645 kHz frequency. Correct the sleep
+clock definition.
 
-  $ make help | grep perf-
-    perf-tar-src-pkg    - Build the perf source tarball with no compression
-    perf-targz-src-pkg  - Build the perf source tarball with gzip compression
-    perf-tarbz2-src-pkg - Build the perf source tarball with bz2 compression
-    perf-tarxz-src-pkg  - Build the perf source tarball with xz compression
-    perf-tarzst-src-pkg - Build the perf source tarball with zst compression
-  $
-
-Building with BPF support was opt-in in perf for a long time, and
-testing it via the tarball main kernel Makefile targets in an
-architecture other than x86_64 was an odd case.
-
-I had noticed this at some point earlier this year while cross building
-perf to some arches, including arm64, but it fell thru the cracks, see
-the Link tag below.
-
-Fix it now by adding those arch/*/include/uapi/asm/bpf_perf_event.h
-files to the MANIFEST file used in building the perf source tarball.
-
-Tested with:
-
-  perfbuilder@number:~$ time dm debian:experimental-x-arm64
-     1    21.60 debian:experimental-x-arm64   : Ok   aarch64-linux-gnu-gcc (Debian 14.1.0-5) 14.1.0  flex 2.6.4
-  BUILD_TARBALL_HEAD=d31a974f6edc576f84c35be9526fec549a3b3520
-  $
-  $ git log --oneline -1 d31a974f6edc576f84c35be9526fec549a3b3520
-  d31a974f6edc576f (HEAD -> perf-tools-next) perf MANIFEST: Add arch/*/include/uapi/asm/bpf_perf_event.h to the perf tarball
-  $
-
-That was previously failing:
-
-  perfbuilder@number:~$ grep debian:experimental-x-arm64 dm.log.old/summary
-  19     4.80 debian:experimental-x-arm64   : FAIL gcc version 14.1.0 (Debian 14.1.0-5)
-  $
-  perfbuilder@number:~$ grep -B6 'Error 1' dm.log.old/debian:experimental-x-arm64
-  In file included from /git/perf-6.12.0-rc6/tools/include/uapi/linux/bpf_perf_event.h:11,
-                   from libbpf.c:36:
-  /git/perf-6.12.0-rc6/tools/include/uapi/asm/bpf_perf_event.h:2:10: fatal error: ../../arch/arm64/include/uapi/asm/bpf_perf_event.h: No such file or directory
-      2 | #include "../../arch/arm64/include/uapi/asm/bpf_perf_event.h"
-        |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  compilation terminated.
-  make[4]: *** [/git/perf-6.12.0-rc6/tools/build/Makefile.build:105: /tmp/build/perf/libbpf/staticobjs/libbpf.o] Error 1
-  perfbuilder@number:~$
-
-Closes: https://lore.kernel.org/all/Z0UNRCRYKunbDYxP@hyperscale.parallels
-Fixes: 9eea8fafe33eb708 ("libbpf: fix __arg_ctx type enforcement for perf_event programs")
-Reported-by: Michel Lind <michel@michel-slm.name>
-Tested-by: Michel Lind <michel@michel-slm.name>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Ian Rogers <irogers@google.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: 317c11923cf676437456e44a7f408d4ce589a9c0.camel@michel-slm.name
-Link: https://lore.kernel.org/bpf/ZfyEgoG3JFiOs2Fs@x1/
-Link: https://lore.kernel.org/r/Z0Yy5u42Q1hWoEzz@x1
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 7a1fd03e7410 ("arm64: dts: qcom: Adds base SM4450 DTSI")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-10-e9b08fbeadd3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/MANIFEST | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sm4450.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/MANIFEST b/tools/perf/MANIFEST
-index dc42de1785cee..908165fcec7de 100644
---- a/tools/perf/MANIFEST
-+++ b/tools/perf/MANIFEST
-@@ -1,5 +1,6 @@
- arch/arm64/tools/gen-sysreg.awk
- arch/arm64/tools/sysreg
-+arch/*/include/uapi/asm/bpf_perf_event.h
- tools/perf
- tools/arch
- tools/scripts
+diff --git a/arch/arm64/boot/dts/qcom/sm4450.dtsi b/arch/arm64/boot/dts/qcom/sm4450.dtsi
+index 1e05cd00b635e..0bbacab6842c3 100644
+--- a/arch/arm64/boot/dts/qcom/sm4450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm4450.dtsi
+@@ -29,7 +29,7 @@
+ 
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+-			clock-frequency = <32000>;
++			clock-frequency = <32764>;
+ 			#clock-cells = <0>;
+ 		};
+ 
 -- 
 2.39.5
 
