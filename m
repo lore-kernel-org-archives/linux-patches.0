@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4BCDF59;
-	Wed,  5 Feb 2025 15:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0183CDF59;
+	Wed,  5 Feb 2025 15:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767901; cv=none; b=BBp9f6q2lxXYaUL532InZpEl4Z9wqMXj+bvnuVWqT2BIJioIj4xC2lCGX/7o0s0Z1gXcQsQM/3Kxc7QnOt8H6rpyd5h8oRUMgNk3WVF7xiUID3nO/Uk+HPWhEky3i9xyF3MJ7hZnkJ2+6v++qesTm5oeQcopYlFz3UIXaWCMcUU=
+	t=1738767905; cv=none; b=tMobffLOh2NeqhAbHY45Nv3ccX9djGoBqoq9lOLL+NOJjLgumRmobzOtIbXvtVFR1hJ0zj2wPwThV0IypSvE/cNDl7spLxczeArc9o73U9CFaJ0L99kH7KNaBqP5k8QpiDKILaiHVeP1x/YhXCNVV89D3FMVNuEFLQ5aXhnprbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767901; c=relaxed/simple;
-	bh=3kw+nRjdC/e+V+2dcFlKLNmIxnSddSYZQpCq1lr33ZY=;
+	s=arc-20240116; t=1738767905; c=relaxed/simple;
+	bh=v6menpFq9RjI1i8Cxg8vzwR4OClKczGZsUTaTam1l24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R3ntQ24HtnC+j2pQV+iJuLHshky9dshnrAoR0t3u3KKoYw9xfQUIpBvDu5xvrYpEoi9KM1ft3EmCEKBuaot+4kDbAPyWgpHmRXd5aG+Wk1f2ZxiQb/EiDb7OrukSG8cgHS0x7zvU3E2A0MAOGnB5DGEvlQtFTnVmik6MBwQ8qmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vkzh3Ri3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cwONHtX5/ABQvQ82p60JUwwXWcioquGowddSAPo0PONotxZqst8Q6aMkAb4iPdKOm/h3/Nun73Me0UuOJBFNzDsjxMv0YIRS020dtygcFAYZzIORBWP2/9GpAmQsMXvSnCrH0KqaCCMCgHrGdjia0Bxv1OSftSt2chy22YhQ6tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mk/ej62S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vkzh3Ri3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0545C4CED1;
-	Wed,  5 Feb 2025 15:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mk/ej62S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 608CFC4CED1;
+	Wed,  5 Feb 2025 15:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767901;
-	bh=3kw+nRjdC/e+V+2dcFlKLNmIxnSddSYZQpCq1lr33ZY=;
+	s=korg; t=1738767904;
+	bh=v6menpFq9RjI1i8Cxg8vzwR4OClKczGZsUTaTam1l24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vkzh3Ri3og5PehbabJ7lkDzl9lsiqCXZNUBXdQeHpB5QfwyQMkSvr0W9t8H+hhiH9
-	 KQZFN0euXcXy4oDz4AekgYM+lMvKs5Kd52rnafqmnGPld+e9hWXHYTkceymKdEQe2O
-	 SJnEIIq9MtZqFLXedrdK6xFIUsYpqKn/2H7cCM+c=
+	b=mk/ej62S1dhsD9ZFKOG5oXwTK7Fj8I7g/Lo45hNe3c3UNN8lk3N9wpLCBjAO/axeQ
+	 C6AcLCqmjGqKRljahblwfrU5muu6lPTilTqIOXKZrNsQEPWEiuYZ7XGhYxm51FrFUf
+	 lwxmKAV9aO2IMQCc80cMR5Fj/b+b6D3GGcTB1b/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Cyrill Gorcunov <gorcunov@gmail.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tinghan Shen <tinghan.shen@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 501/590] ptp: Properly handle compat ioctls
-Date: Wed,  5 Feb 2025 14:44:16 +0100
-Message-ID: <20250205134514.436169055@linuxfoundation.org>
+Subject: [PATCH 6.13 446/623] remoteproc: mtk_scp: Only populate devices for SCP cores
+Date: Wed,  5 Feb 2025 14:43:08 +0100
+Message-ID: <20250205134513.280491545@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 19ae40f572a9ce1ade9954990af709a03fd37010 ]
+[ Upstream commit dbb9c372555c0b2a5a9264418bfba6d017752808 ]
 
-Pointer arguments passed to ioctls need to pass through compat_ptr() to
-work correctly on s390; as explained in Documentation/driver-api/ioctl.rst.
-Detect compat mode at runtime and call compat_ptr() for those commands
-which do take pointer arguments.
+When multi-core SCP support was added, the driver was made to populate
+platform devices for all the sub-nodes. This ended up adding platform
+devices for the rpmsg sub-nodes as well, which never actually get used,
+since rpmsg devices are registered through the rpmsg interface.
 
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/lkml/1ba5d3a4-7931-455b-a3ce-85a968a7cb10@app.fastmail.com/
-Fixes: d94ba80ebbea ("ptp: Added a brand new class driver for ptp clocks.")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Link: https://patch.msgid.link/20250125-posix-clock-compat_ioctl-v2-1-11c865c500eb@weissschuh.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Limit of_platform_populate() to just populating the SCP cores with a
+compatible string match list.
+
+Fixes: 1fdbf0cdde98 ("remoteproc: mediatek: Probe SCP cluster on multi-core SCP")
+Cc: Tinghan Shen <tinghan.shen@mediatek.com>
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20241211072009.120511-1-wenst@chromium.org
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_chardev.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/remoteproc/mtk_scp.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
-index ea96a14d72d14..bf6468c56419c 100644
---- a/drivers/ptp/ptp_chardev.c
-+++ b/drivers/ptp/ptp_chardev.c
-@@ -4,6 +4,7 @@
-  *
-  * Copyright (C) 2010 OMICRON electronics GmbH
-  */
-+#include <linux/compat.h>
- #include <linux/module.h>
- #include <linux/posix-clock.h>
- #include <linux/poll.h>
-@@ -176,6 +177,9 @@ long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
- 	struct timespec64 ts;
- 	int enable, err = 0;
+diff --git a/drivers/remoteproc/mtk_scp.c b/drivers/remoteproc/mtk_scp.c
+index 0f4a7065d0bd9..8206a17664818 100644
+--- a/drivers/remoteproc/mtk_scp.c
++++ b/drivers/remoteproc/mtk_scp.c
+@@ -1326,6 +1326,11 @@ static int scp_cluster_init(struct platform_device *pdev, struct mtk_scp_of_clus
+ 	return ret;
+ }
  
-+	if (in_compat_syscall() && cmd != PTP_ENABLE_PPS && cmd != PTP_ENABLE_PPS2)
-+		arg = (unsigned long)compat_ptr(arg);
++static const struct of_device_id scp_core_match[] = {
++	{ .compatible = "mediatek,scp-core" },
++	{}
++};
 +
- 	tsevq = pccontext->private_clkdata;
+ static int scp_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -1357,13 +1362,15 @@ static int scp_probe(struct platform_device *pdev)
+ 	INIT_LIST_HEAD(&scp_cluster->mtk_scp_list);
+ 	mutex_init(&scp_cluster->cluster_lock);
  
- 	switch (cmd) {
+-	ret = devm_of_platform_populate(dev);
++	ret = of_platform_populate(dev_of_node(dev), scp_core_match, NULL, dev);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to populate platform devices\n");
+ 
+ 	ret = scp_cluster_init(pdev, scp_cluster);
+-	if (ret)
++	if (ret) {
++		of_platform_depopulate(dev);
+ 		return ret;
++	}
+ 
+ 	return 0;
+ }
+@@ -1379,6 +1386,7 @@ static void scp_remove(struct platform_device *pdev)
+ 		rproc_del(scp->rproc);
+ 		scp_free(scp);
+ 	}
++	of_platform_depopulate(&pdev->dev);
+ 	mutex_destroy(&scp_cluster->cluster_lock);
+ }
+ 
 -- 
 2.39.5
 
