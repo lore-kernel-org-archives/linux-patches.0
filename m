@@ -1,183 +1,153 @@
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E054246BF
-	for <patches@lists.linux.dev>; Thu,  6 Feb 2025 11:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA63214221
+	for <patches@lists.linux.dev>; Thu,  6 Feb 2025 11:30:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738841313; cv=none; b=Ml2SR+Sa978dEGQ3v1v77J5qiLwm6J1FKBVmso9Xvro+3wtUN5YOsdxs1uzTIvdoNoO8zMvHooon81KlDK6XJkHWNg2DGtlXIFG6nogK8k2EP48CoqMju4K8xMQQOKbgdG3BGuyzhnBCZOxWUOFm/fKZeJ68WsMNzBXGisy0bKc=
+	t=1738841459; cv=none; b=dyXf9wtxOBW+9XkTYfOePPGouPKOJSDUwbKRuehmq16NxilZZxqMQ4JOA8LQqqNBr87UP0pfBQk38ynBxN+onIPP4shBkXkP/wddF1lBCoK8lvFzQsM673AyajBL9iOn4jENjua3byLOch/MSAOFrxL5TrF1tzqPJdqxk3PavCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738841313; c=relaxed/simple;
-	bh=gkvL/tIQOpjbV+IEHUwsroudtsX79+gQy7ra+TBn9ms=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=V2koaeFC0elRnPyaLPiixo/V8W4HvTShaxA2JCmxb+c7f+flLCtk1x4Kh4x7YMJTzZTHSbkq+zA8dhV4fMEcFy8sFr9pqExqH/yrDT4z2ixj5rwKfokAXvcAh7xdTq2JTF6UVPRQOPBq4e8NZdopRmGOVmc5Vj0+YJRc+O2FcHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zjQXfDbZ; arc=none smtp.client-ip=209.85.221.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1738841459; c=relaxed/simple;
+	bh=+kJFybMU29i1ocNVrjOt1XzKDp4dKUhYjmoAXiIMHSg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=si7R94chP3cU9Ayq3Sdi9wLhPeKmT+tFx+pLmaEt2a1kdfugqSEjGh/eauJL2jPJWA93lZ8oZHYYf7dV7vlWx4zz2hJizMzzXWskxFEShHvEcwIGkrTsnaJBavYXnZggnopo4lWD0LOF6NsT1F5w8p1vPa1Rt20bVB8Wct+C6ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HzsM3LvD; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zjQXfDbZ"
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5174d53437eso503629e0c.2
-        for <patches@lists.linux.dev>; Thu, 06 Feb 2025 03:28:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1738841310; x=1739446110; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xdTDdTuLvbbZnRC35I/8pWi+JuCtYdxpx4t0NnXNk6g=;
-        b=zjQXfDbZAZnCQQ+D7sPUlIXeOlWuAYU0HmU/V04JFMXgoYAzmKX+FubyRJ0L6XLcin
-         gYfbDK5yVzya5sIbmLQkyWxKlTETv55z6AOk8X2huBlfhKqhBcfLf6xJrVsbwR989Dvq
-         TlBh4EMoN2sa75I9g2qTFaj1ShuysoUJ7/dFNqCaIuGjbFP/VX/DdzvsZzNu5cjuRPfx
-         2IOUB+mLEkcS9fCGd1wMeYK1BVdoJFNQIZzZunf9JNW8lM3+NnRTxFqIDVG5/Ergo6cd
-         XWYgfQd6UF+CpNG4nAJBWpxRlpsfAVqXCO6gTaA6B+1nutvMLiH1zGVppJ3IygO/IzRy
-         8Egw==
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HzsM3LvD"
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 516A3cKn017662
+	for <patches@lists.linux.dev>; Thu, 6 Feb 2025 11:30:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	cdjlky8vQqWoR/DClvLfxcIIKQztp9TSGwGX4STpaG0=; b=HzsM3LvDlfRhLbwv
+	YT0GiyN1s7fwuW6yK+lAI2PeWbfEcyHUk1GwMuAOnHO8a5du8BUfsZIXB6dPZCXN
+	elZG4t2OnnoUEDCbp9acHMr9veBls2GraxUupra2+M7TTQafdK1y6fbywetrXSbK
+	uOZXHAHjO1tSFstFB7hfo8Q69UR1otyzTyFOntRxxg5Sc1mIeYXiTrPMFtK4mnTg
+	BB4bNjEB63OcpcIeW7WkhCQZQErw0FjG/M/GbVV3+wFCjifaFVOr8AdqhVLOS++h
+	AmCVirRH7ueJp9NW70hoGLoshXa5gohWyRYoj/Y3KxEYpckbin5cYyM3TOjjFOI2
+	26N6tw==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44mu0dr6qv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <patches@lists.linux.dev>; Thu, 06 Feb 2025 11:30:55 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-467975f1b53so2799781cf.3
+        for <patches@lists.linux.dev>; Thu, 06 Feb 2025 03:30:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738841310; x=1739446110;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xdTDdTuLvbbZnRC35I/8pWi+JuCtYdxpx4t0NnXNk6g=;
-        b=TMAfZcdB1/hx+wRYj/dGKtY2MCI/2Up4WHzsYPeHwImmZnTRs6EBK6RfPE+0FrD0Qr
-         3XWwwXXx7cYTfiq1AQh22L56VpNN3yrIWDZ4WSs7lN5dbkfsuHBWJmN1/9z0yhO9cXEp
-         JWZu1SobrE+ihK0IOoZh1QIlf0oDWYU5i8It5XCXWprw9UoAN25WaaehZf7TgZ/p0HTl
-         +bhQ5XaUSyz9NtaR/pTB10sTMTMnr+Xhp8tkJ85XQq8t/ZPh92Oi8LdLLtE0SxYL0fFi
-         6aSWiqFjg7kYU4trcTbZzVeFytJLXMa0ZJzM59iGX/2hDic9+8+K7HGT82YVFKaoboLh
-         h3Jg==
-X-Forwarded-Encrypted: i=1; AJvYcCV2REvwxleuXog26HxPVxKDics7V25saJtvblXXuSG5sis6n6Czj/Y7R4mQZuuuXm7j3NyCHvIf@lists.linux.dev
-X-Gm-Message-State: AOJu0YyYu3TsJPJYPjTsjFyB2ccYlEbZENftLL4IKRfilADU7pbaUCUN
-	/fj0VUFs/i8hFWYpRpY9VGButFUYhPb7mYL356oVKxKZgKKGzpNGkrNUkgpDqQ2DDWqm9kgAZ+d
-	cZOdlfigtGOpeyWwds6lXr5Nsmo5CTTxSCa0GTw==
-X-Gm-Gg: ASbGnctapz9VjPy2hh8+/R6xGiL/Mpw6h0m6ZL+OSLbXeqh6cczG2wgsZTxsb+QNOoH
-	ei1kxjQaGfOPoRxV83fAKjbTSJ6gKuwaWwATfTFCHuXfk7XfWONuwvjO91M4ptpysvHQ6ZdxY1A
-	==
-X-Google-Smtp-Source: AGHT+IFVhSbR4SlXlIdBGR5/DW3hEWOyZBmOavtvcjBArrMJE2u+LJyOt+XjqQ6Rij82LJes4ZkKzTbmgfRma58x7Ns=
-X-Received: by 2002:a05:6122:3409:b0:51e:f800:f7cf with SMTP id
- 71dfb90a1353d-51f0c519723mr4006718e0c.10.1738841309685; Thu, 06 Feb 2025
- 03:28:29 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738841454; x=1739446254;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cdjlky8vQqWoR/DClvLfxcIIKQztp9TSGwGX4STpaG0=;
+        b=DzLoKkv5tUOIRi4djhaUZmO3FqHs/zoeKRV9E4LdU62g7b+NShhZU07QVuMCHa1zMY
+         TAeBWPIRiOJTo+Jx5/qjRmyx7HwCxxVl3Iwsx36zF448UeWcdjXnnWo72+aT/Sz45yOU
+         47LkxszmAP5l3iuEuIDLoNQ3BZguXAfdAmhTymdPSwgwZOa40/3vPk3smldQyCGDXKqL
+         N4UTJa5J2/IPYxoOt3rVsS+kOu+IWgrt4IdTzlSF9JS/gBpcPtRe0R9ABL5fG+sKbVi8
+         +hAtuZZEubjBL2cZRG3nuNBmq668/6+IgV6eScZ0LejwnJ7Md89JrL37SChUO1O1D6aR
+         I5mA==
+X-Forwarded-Encrypted: i=1; AJvYcCVpuVfIRUh1sc/w/IcZ8WQ8yl6XKwGaGrG78XwUHz3mRzJxrmKFjzHl7avOfEJ0+Aqs244in4YT@lists.linux.dev
+X-Gm-Message-State: AOJu0YyrBQyG0J8xH4TB4GeM3KvwFmPgffUGAnuBezfA8f+LUMUvoc0t
+	dy0eyT/K//Oidd1sSQV1/++lNmLiAFxzYZ6Ih4Q1XhowrCzbSGjbInBhLOURF2TABJ0y1qPLwJb
+	W2ITnhxTomZoDKLRZDRrfJjfMj+/hbI9Pxz42bxoTwVQu52xdZ21IrwI0
+X-Gm-Gg: ASbGnct6vXufuNPSuR33e+ayOaySjjUDqxP4NQU0mlpd3Gap5kyc4/seSTAvuvtn3L8
+	NsmieWrmwxQxtlrcXdkmeYtQwSuikmBlLTTPPRt/bXGLEYyOC9zRP7Fk7ohooca+hJ3v7ejw+BV
+	DQGclSMDAcJueDLVhmNA4Y+HXkxKfSulRjeLoCDnKWtATus6SOYrqGXrGPYu8SNmj1mW9mjZC6C
+	FyoOoLJEdQcewEhJ/DqyEUIn0Ld/8qadtcKGxsaDbByB4I3iGHRQF1791rHCbCRjRfYA9F2rDno
+	XecBk0Uq46TZiamx8Kg0Jy6PSWDPwQlbVUyQ7XI2nLKfVI2OtTge5xud6YM=
+X-Received: by 2002:a05:622a:14ce:b0:464:889f:a41e with SMTP id d75a77b69052e-470281879a6mr35208471cf.1.1738841454358;
+        Thu, 06 Feb 2025 03:30:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGkpfa+4IQFCPrfzSK+M4AEnSEY06jPWO2IJilWAzgSn6R+5ZMyekAr2oFw0CAA6OD5gd6Fdg==
+X-Received: by 2002:a05:622a:14ce:b0:464:889f:a41e with SMTP id d75a77b69052e-470281879a6mr35208281cf.1.1738841453750;
+        Thu, 06 Feb 2025 03:30:53 -0800 (PST)
+Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab77365ff55sm84490166b.181.2025.02.06.03.30.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 06 Feb 2025 03:30:53 -0800 (PST)
+Message-ID: <74527323-31ff-4ed0-b19f-e535f26abf2b@oss.qualcomm.com>
+Date: Thu, 6 Feb 2025 12:30:50 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250205134455.220373560@linuxfoundation.org>
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 6 Feb 2025 16:58:18 +0530
-X-Gm-Features: AWEUYZkLyxExF5EDZlJh2dRl_k_H3fRPFlRe5hOC4Smd0GjRAWK4R6ruu_jcYyU
-Message-ID: <CA+G9fYsREyVPJYFeVYK1yu1NxUdcLrLNcNtiP2Drjaczr4LgMg@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/590] 6.12.13-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, Arnd Bergmann <arnd@arndb.de>, 
-	Anders Roxell <anders.roxell@linaro.org>, Dan Carpenter <dan.carpenter@linaro.org>, 
-	David Laight <david.laight.linux@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] dt-bindings: chrome: Add binding for ChromeOS Pogo
+ pin connector
+To: Stephen Boyd <swboyd@chromium.org>,
+        Konrad Dybcio
+ <konradybcio@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        patches@lists.linux.dev, cros-qcom-dts-watchers@chromium.org,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Benson Leung <bleung@chromium.org>,
+        devicetree@vger.kernel.org, chrome-platform@lists.linux.dev,
+        Pin-yen Lin <treapking@chromium.org>
+References: <20250205233016.1600517-1-swboyd@chromium.org>
+ <20250205233016.1600517-2-swboyd@chromium.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250205233016.1600517-2-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: ip88lyPh7TESXxnwG2U_RFLditZU12VS
+X-Proofpoint-ORIG-GUID: ip88lyPh7TESXxnwG2U_RFLditZU12VS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-06_03,2025-02-05_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ impostorscore=0 suspectscore=0 adultscore=0 mlxlogscore=999 phishscore=0
+ mlxscore=0 priorityscore=1501 malwarescore=0 spamscore=0 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2502060095
 
-On Wed, 5 Feb 2025 at 19:16, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.12.13 release.
-> There are 590 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 07 Feb 2025 13:43:01 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.13-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On 6.02.2025 12:30 AM, Stephen Boyd wrote:
+> Describe the set of pins used to connect the detachable keyboard on
+> detachable ChromeOS devices. The set of pins is called the "pogo pins".
+> It's basically USB 2.0 with an extra pin for base detection. We expect
+> to find a keyboard on the other side of this connector with a specific
+> vid/pid, so describe that as a child device at the port of the usb
+> device connected upstream.
+> 
+> Cc: Rob Herring <robh@kernel.org>
+> Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
+> Cc: Conor Dooley <conor+dt@kernel.org>
+> Cc: Benson Leung <bleung@chromium.org>
+> Cc: <devicetree@vger.kernel.org>
+> Cc: <chrome-platform@lists.linux.dev>
+> Cc: Pin-yen Lin <treapking@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  .../chrome/google,pogo-pin-connector.yaml     | 68 +++++++++++++++++++
+>  1 file changed, 68 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
+> new file mode 100644
+> index 000000000000..622e171b6b08
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
+> @@ -0,0 +1,68 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/chrome/google,pogo-pin-connector.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Google Pogo Pin Connector
 
-Regressions on the arm64, builds failed with gcc-8 on Linux stable-rc
-6.12.13-rc1. But the gcc-13 and clang builds pass.
+This looks like a very generic piece of hw.. many boards (esp. convertibles)
+do the same thing, with 4 or 5 pins on the bottom of the device.
 
-This was also reported on Linus tree a few weeks back [1] and also seen on
-the stable-rc 6.13.2-rc1
+But of course hw manufacturers being hw manufacturers, many different kinds
+of signals go through such connectors - if it's not USB then it's perhaps
+I2C or some variation thereof
 
-Build regression: arm64, gcc-8 phy-fsl-samsung-hdmi.c __compiletime_assert_537
+IMO, we could perhaps add this to usb-connector.yaml as "usb-custom-connector"
+or so
 
-Good: v6.12.11
-Bad: 6.12.13-rc1 (v6.12.11-634-g9ca4cdc5e984)
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-* arm64:
-    build:
-     * gcc-8-defconfig
-     * gcc-8-defconfig-40bc7ee5
-     * gcc-8-lkftconfig-hardening
-
-## Build log
-n function 'fsl_samsung_hdmi_phy_configure_pll_lock_det.isra.10',
-    inlined from 'fsl_samsung_hdmi_phy_configure' at
-drivers/phy/freescale/phy-fsl-samsung-hdmi.c:523:2:
-include/linux/compiler_types.h:536:38: error: call to
-'__compiletime_assert_478' declared with attribute error: FIELD_PREP:
-value too large for the field
-  _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-                                      ^
-include/linux/compiler_types.h:517:4: note: in definition of macro
-'__compiletime_assert'
-    prefix ## suffix();    \
-    ^~~~~~
-include/linux/compiler_types.h:536:2: note: in expansion of macro
-'_compiletime_assert'
-  _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-  ^~~~~~~~~~~~~~~~~~~
-include/linux/build_bug.h:39:37: note: in expansion of macro
-'compiletime_assert'
- #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
-                                     ^~~~~~~~~~~~~~~~~~
-include/linux/bitfield.h:68:3: note: in expansion of macro 'BUILD_BUG_ON_MSG'
-   BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?  \
-   ^~~~~~~~~~~~~~~~
-include/linux/bitfield.h:115:3: note: in expansion of macro '__BF_FIELD_CHECK'
-   __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: "); \
-   ^~~~~~~~~~~~~~~~
-drivers/phy/freescale/phy-fsl-samsung-hdmi.c:401:9: note: in expansion
-of macro 'FIELD_PREP'
-  writeb(FIELD_PREP(REG12_CK_DIV_MASK, div), phy->regs + PHY_REG(12));
-         ^~~~~~~~~~
-make[6]: *** [scripts/Makefile.build:229:
-drivers/phy/freescale/phy-fsl-samsung-hdmi.o] Error 1
-
-
-## Source
-* kernel version: 6.12.13-rc1
-* git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* git sha: 9ca4cdc5e9841a39adf2ea1fc8ae45d28b4c85ea
-* git describe: v6.12.11-634-g9ca4cdc5e984
-* project details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.12.y/build/v6.12.11-634-g9ca4cdc5e984
-
-## Build
-* build log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.12.y/build/v6.12.11-634-g9ca4cdc5e984/testrun/27199296/suite/build/test/gcc-8-defconfig/
-* build history:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.12.y/build/v6.12.11-634-g9ca4cdc5e984/testrun/27199296/suite/build/test/gcc-8-defconfig/history/
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.12.y/build/v6.12.11-634-g9ca4cdc5e984/testrun/27199296/suite/build/test/gcc-8-defconfig/
-* kernel config:
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2scp7S3yK4hl95VryTZn5t3cUVh/config
-* architectures: arm64
-* toolchain version: gcc-8
-
-## Steps to reproduce
-tuxmake --runtime podman --target-arch arm64 --toolchain gcc-8
---kconfig defconfig
-
-## Links
- [1] https://lore.kernel.org/all/CA+G9fYsHGrgZsEEVvP0XMcAhLyCYnrCPgZJ1puT6cfQBCGUB9g@mail.gmail.com/
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Konrad
