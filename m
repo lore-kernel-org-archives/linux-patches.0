@@ -1,241 +1,183 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532D518B03
-	for <patches@lists.linux.dev>; Thu,  6 Feb 2025 10:44:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E054246BF
+	for <patches@lists.linux.dev>; Thu,  6 Feb 2025 11:28:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738838670; cv=none; b=eZcnO5mBQbbqW2zpk8TMEk3+1gMCCVCM5DgGdNwfDvDaMUJ4K7NwyJPNXKmKozWtM4TNZU2YK3HDdhiHwIC8TgRjZliutt7MLsdG8V3SZwbLVkogivdEbJF4aExVHuHgLTNkp2juluCwSSd2/VaI2FWVyf6hTjn4X63/mkfh1UI=
+	t=1738841313; cv=none; b=Ml2SR+Sa978dEGQ3v1v77J5qiLwm6J1FKBVmso9Xvro+3wtUN5YOsdxs1uzTIvdoNoO8zMvHooon81KlDK6XJkHWNg2DGtlXIFG6nogK8k2EP48CoqMju4K8xMQQOKbgdG3BGuyzhnBCZOxWUOFm/fKZeJ68WsMNzBXGisy0bKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738838670; c=relaxed/simple;
-	bh=f37BnzEPHuD3q6LNoCsTVykNqjhPkvQh1TItpe9Tlyg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=O+MYroDrArYpPkfue9i9SJFGcIWXpHRt+SDATkSC2xIwmGuWK3NH/paYoC5/qRAjNpKt4U/CDiNJ9/0bVS9nmKXRLf6h+lvDeqGkLgZ51i2QD7RZIZWFS134dC59gETU3RivkiqlZqoz+wLQAJs0hwKNCf9x0gfjDgv/r2dJxB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=He4VA3ps; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1738841313; c=relaxed/simple;
+	bh=gkvL/tIQOpjbV+IEHUwsroudtsX79+gQy7ra+TBn9ms=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=V2koaeFC0elRnPyaLPiixo/V8W4HvTShaxA2JCmxb+c7f+flLCtk1x4Kh4x7YMJTzZTHSbkq+zA8dhV4fMEcFy8sFr9pqExqH/yrDT4z2ixj5rwKfokAXvcAh7xdTq2JTF6UVPRQOPBq4e8NZdopRmGOVmc5Vj0+YJRc+O2FcHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zjQXfDbZ; arc=none smtp.client-ip=209.85.221.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="He4VA3ps"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1738838667;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=HDEhcSzIaU3DG7M8y+7dvBfsTnpuOC4vgxNOj/3w94g=;
-	b=He4VA3pssHzRoxjazWn3lRq+hz+OleB2OG6jVt7FDeYBbZG+SdUlJQ5667RI4qalnNiQxI
-	gW8dzD1U3vrZ/8HxCbLNRPNtMntQ+DcdwGzTILOrwYywblSNxqSZXEOBWvabwax8xu+vSC
-	f/9phQz1yncMNO/pHG6eHdHxLP/gvSU=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-gqUdLLxgMueCMap3PYlnuQ-1; Thu, 06 Feb 2025 05:44:26 -0500
-X-MC-Unique: gqUdLLxgMueCMap3PYlnuQ-1
-X-Mimecast-MFC-AGG-ID: gqUdLLxgMueCMap3PYlnuQ
-Received: by mail-ed1-f70.google.com with SMTP id 4fb4d7f45d1cf-5dcee17a6a5so750050a12.2
-        for <patches@lists.linux.dev>; Thu, 06 Feb 2025 02:44:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zjQXfDbZ"
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5174d53437eso503629e0c.2
+        for <patches@lists.linux.dev>; Thu, 06 Feb 2025 03:28:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738841310; x=1739446110; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=xdTDdTuLvbbZnRC35I/8pWi+JuCtYdxpx4t0NnXNk6g=;
+        b=zjQXfDbZAZnCQQ+D7sPUlIXeOlWuAYU0HmU/V04JFMXgoYAzmKX+FubyRJ0L6XLcin
+         gYfbDK5yVzya5sIbmLQkyWxKlTETv55z6AOk8X2huBlfhKqhBcfLf6xJrVsbwR989Dvq
+         TlBh4EMoN2sa75I9g2qTFaj1ShuysoUJ7/dFNqCaIuGjbFP/VX/DdzvsZzNu5cjuRPfx
+         2IOUB+mLEkcS9fCGd1wMeYK1BVdoJFNQIZzZunf9JNW8lM3+NnRTxFqIDVG5/Ergo6cd
+         XWYgfQd6UF+CpNG4nAJBWpxRlpsfAVqXCO6gTaA6B+1nutvMLiH1zGVppJ3IygO/IzRy
+         8Egw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738838665; x=1739443465;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HDEhcSzIaU3DG7M8y+7dvBfsTnpuOC4vgxNOj/3w94g=;
-        b=bIdvNF01uFfWQCvzUvTnNdAYI7RRUzPC/yv36M1KyxG2mvIAe88qsA2Z6IwETEJTbd
-         2a75SaFzT/LeI4es2GpfpqtRQa1xv6HrRLjZI5VTJax5tQW4WLtYg8M3vPYzQe3tjHCK
-         sq9HgT1961elwOhf7YyycHER9E2H6eoNPFaaK0fYVpcFDVvJjf5Sb249NG8LnClr33E/
-         zb1MNeWSBgr6Nxyi/NrpL8Gj4bHwKquMBi3FDdPUS9cuzQJmKhrTkoCYp3/ZQ0KOdB0r
-         j3BymPYeI9fZje7N8FDZTJqiBAVVmJyPoKjmlkbYcQgStjbAXMaF8MhP/cTko6L+C4so
-         qWvQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVcgHUrERZBTW2pM9s90I4ZvJ3ZAkoOrxxKdsKfta9N7UJ6/RAnPCSDxhimApfx4N/Pl/0H9rhw@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw/B8AIFLy40VKMHcmXJi4zODvStu+1t9EYC2xN8XbwqDZEBtK0
-	s4SDiuYXP6i4SQdcxQNJ4mbgRs0n4RVaLN8X4YTwFeGBV3T6H+9y2Fd7Mrk2o2cIOtB3X+X2OHS
-	B0A+3swx2BtB/F2ni1GRiOmWTqLqi6fWrLSA8gU1iBkpHcBcbVJUTuQM=
-X-Gm-Gg: ASbGncsALsboFdb9ZIr1giRh4/h2Jec149pDJefzHKCavYI8CM+TsIBTKcrjFJVuWrw
-	SYX5xsPM0mLtEvMHLL90Fcr0z3tuKi2eCa9q1RQwDWQNSqbOuQrRgOq0JerAwzFwwjxfXTbTtU+
-	Mc4T2k8N6GTIGPrtPvT1lZN6ZyeF7AzugjA2nP1W9D43iJstlzqNGNvTipdUKJ56uhxUnL6FXT/
-	xLs729IsFhuSlAgJXrp0CkG+h31OPUXRnwxk98uIQhhT13obwkCPhGnkB+znKbDKJlrMxXkTmo0
-	g6l9oyJG
-X-Received: by 2002:a05:6402:321e:b0:5dc:80d5:ff23 with SMTP id 4fb4d7f45d1cf-5dcdb7329famr7048680a12.15.1738838664679;
-        Thu, 06 Feb 2025 02:44:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGsHL4KMLwQD8Ukq7qwErKnsWOkez8Dkt+YWoh8rTcRjdUUJLoqtF/HNoTYY1+JI0vvCRSesA==
-X-Received: by 2002:a05:6402:321e:b0:5dc:80d5:ff23 with SMTP id 4fb4d7f45d1cf-5dcdb7329famr7048661a12.15.1738838664269;
-        Thu, 06 Feb 2025 02:44:24 -0800 (PST)
-Received: from leonardi-redhat ([176.206.32.19])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5de379cedc6sm37086a12.44.2025.02.06.02.44.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Feb 2025 02:44:23 -0800 (PST)
-Date: Thu, 6 Feb 2025 11:44:21 +0100
-From: Luigi Leonardi <leonardi@redhat.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Stefano Garzarella <sgarzare@redhat.com>, Michal Luczaj <mhal@rbox.co>, Jakub Kicinski <kuba@kernel.org>, 
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.13 544/623] vsock: Keep the binding until socket
- destruction
-Message-ID: <xv4vulunzu47uszjgzjhjzf6jetbvzy4c4uotkfh6t3ns74is4@mcpi3jj5iy4z>
-References: <20250205134456.221272033@linuxfoundation.org>
- <20250205134517.034256003@linuxfoundation.org>
+        d=1e100.net; s=20230601; t=1738841310; x=1739446110;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xdTDdTuLvbbZnRC35I/8pWi+JuCtYdxpx4t0NnXNk6g=;
+        b=TMAfZcdB1/hx+wRYj/dGKtY2MCI/2Up4WHzsYPeHwImmZnTRs6EBK6RfPE+0FrD0Qr
+         3XWwwXXx7cYTfiq1AQh22L56VpNN3yrIWDZ4WSs7lN5dbkfsuHBWJmN1/9z0yhO9cXEp
+         JWZu1SobrE+ihK0IOoZh1QIlf0oDWYU5i8It5XCXWprw9UoAN25WaaehZf7TgZ/p0HTl
+         +bhQ5XaUSyz9NtaR/pTB10sTMTMnr+Xhp8tkJ85XQq8t/ZPh92Oi8LdLLtE0SxYL0fFi
+         6aSWiqFjg7kYU4trcTbZzVeFytJLXMa0ZJzM59iGX/2hDic9+8+K7HGT82YVFKaoboLh
+         h3Jg==
+X-Forwarded-Encrypted: i=1; AJvYcCV2REvwxleuXog26HxPVxKDics7V25saJtvblXXuSG5sis6n6Czj/Y7R4mQZuuuXm7j3NyCHvIf@lists.linux.dev
+X-Gm-Message-State: AOJu0YyYu3TsJPJYPjTsjFyB2ccYlEbZENftLL4IKRfilADU7pbaUCUN
+	/fj0VUFs/i8hFWYpRpY9VGButFUYhPb7mYL356oVKxKZgKKGzpNGkrNUkgpDqQ2DDWqm9kgAZ+d
+	cZOdlfigtGOpeyWwds6lXr5Nsmo5CTTxSCa0GTw==
+X-Gm-Gg: ASbGnctapz9VjPy2hh8+/R6xGiL/Mpw6h0m6ZL+OSLbXeqh6cczG2wgsZTxsb+QNOoH
+	ei1kxjQaGfOPoRxV83fAKjbTSJ6gKuwaWwATfTFCHuXfk7XfWONuwvjO91M4ptpysvHQ6ZdxY1A
+	==
+X-Google-Smtp-Source: AGHT+IFVhSbR4SlXlIdBGR5/DW3hEWOyZBmOavtvcjBArrMJE2u+LJyOt+XjqQ6Rij82LJes4ZkKzTbmgfRma58x7Ns=
+X-Received: by 2002:a05:6122:3409:b0:51e:f800:f7cf with SMTP id
+ 71dfb90a1353d-51f0c519723mr4006718e0c.10.1738841309685; Thu, 06 Feb 2025
+ 03:28:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20250205134517.034256003@linuxfoundation.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: _EfXIBlKNPgnMWZs1aS7T07XdQgbcIyBP3UJZYl3dLg_1738838665
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
+References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 6 Feb 2025 16:58:18 +0530
+X-Gm-Features: AWEUYZkLyxExF5EDZlJh2dRl_k_H3fRPFlRe5hOC4Smd0GjRAWK4R6ruu_jcYyU
+Message-ID: <CA+G9fYsREyVPJYFeVYK1yu1NxUdcLrLNcNtiP2Drjaczr4LgMg@mail.gmail.com>
+Subject: Re: [PATCH 6.12 000/590] 6.12.13-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, Arnd Bergmann <arnd@arndb.de>, 
+	Anders Roxell <anders.roxell@linaro.org>, Dan Carpenter <dan.carpenter@linaro.org>, 
+	David Laight <david.laight.linux@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Feb 05, 2025 at 02:44:46PM +0100, Greg Kroah-Hartman wrote:
->6.13-stable review patch.  If anyone has any objections, please let me know.
+On Wed, 5 Feb 2025 at 19:16, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
->------------------
+> This is the start of the stable review cycle for the 6.12.13 release.
+> There are 590 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
->From: Michal Luczaj <mhal@rbox.co>
+> Responses should be made by Fri, 07 Feb 2025 13:43:01 +0000.
+> Anything received after that time might be too late.
 >
->[ Upstream commit fcdd2242c0231032fc84e1404315c245ae56322a ]
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.13-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> and the diffstat can be found below.
 >
-Hi Greg,
+> thanks,
+>
+> greg k-h
 
-This patch introduced a bug[1], Michal has already sent a patch to fix 
-it [2], but has not been merged yet. Should we wait and merge them 
-together? WDYT?
+Regressions on the arm64, builds failed with gcc-8 on Linux stable-rc
+6.12.13-rc1. But the gcc-13 and clang builds pass.
 
-Thanks,
-Luigi
+This was also reported on Linus tree a few weeks back [1] and also seen on
+the stable-rc 6.13.2-rc1
 
-[1]https://lore.kernel.org/all/67a09300.050a0220.d7c5a.008b.GAE@google.com/
-[2]https://lore.kernel.org/all/20250206-vsock-linger-nullderef-v2-0-f8a1f19146f8@rbox.co/
+Build regression: arm64, gcc-8 phy-fsl-samsung-hdmi.c __compiletime_assert_537
 
->Preserve sockets bindings; this includes both resulting from an 
->explicit
->bind() and those implicitly bound through autobind during connect().
->
->Prevents socket unbinding during a transport reassignment, which fixes a
->use-after-free:
->
->    1. vsock_create() (refcnt=1) calls vsock_insert_unbound() (refcnt=2)
->    2. transport->release() calls vsock_remove_bound() without checking if
->       sk was bound and moved to bound list (refcnt=1)
->    3. vsock_bind() assumes sk is in unbound list and before
->       __vsock_insert_bound(vsock_bound_sockets()) calls
->       __vsock_remove_bound() which does:
->           list_del_init(&vsk->bound_table); // nop
->           sock_put(&vsk->sk);               // refcnt=0
->
->BUG: KASAN: slab-use-after-free in __vsock_bind+0x62e/0x730
->Read of size 4 at addr ffff88816b46a74c by task a.out/2057
-> dump_stack_lvl+0x68/0x90
-> print_report+0x174/0x4f6
-> kasan_report+0xb9/0x190
-> __vsock_bind+0x62e/0x730
-> vsock_bind+0x97/0xe0
-> __sys_bind+0x154/0x1f0
-> __x64_sys_bind+0x6e/0xb0
-> do_syscall_64+0x93/0x1b0
-> entry_SYSCALL_64_after_hwframe+0x76/0x7e
->
->Allocated by task 2057:
-> kasan_save_stack+0x1e/0x40
-> kasan_save_track+0x10/0x30
-> __kasan_slab_alloc+0x85/0x90
-> kmem_cache_alloc_noprof+0x131/0x450
-> sk_prot_alloc+0x5b/0x220
-> sk_alloc+0x2c/0x870
-> __vsock_create.constprop.0+0x2e/0xb60
-> vsock_create+0xe4/0x420
-> __sock_create+0x241/0x650
-> __sys_socket+0xf2/0x1a0
-> __x64_sys_socket+0x6e/0xb0
-> do_syscall_64+0x93/0x1b0
-> entry_SYSCALL_64_after_hwframe+0x76/0x7e
->
->Freed by task 2057:
-> kasan_save_stack+0x1e/0x40
-> kasan_save_track+0x10/0x30
-> kasan_save_free_info+0x37/0x60
-> __kasan_slab_free+0x4b/0x70
-> kmem_cache_free+0x1a1/0x590
-> __sk_destruct+0x388/0x5a0
-> __vsock_bind+0x5e1/0x730
-> vsock_bind+0x97/0xe0
-> __sys_bind+0x154/0x1f0
-> __x64_sys_bind+0x6e/0xb0
-> do_syscall_64+0x93/0x1b0
-> entry_SYSCALL_64_after_hwframe+0x76/0x7e
->
->refcount_t: addition on 0; use-after-free.
->WARNING: CPU: 7 PID: 2057 at lib/refcount.c:25 refcount_warn_saturate+0xce/0x150
->RIP: 0010:refcount_warn_saturate+0xce/0x150
-> __vsock_bind+0x66d/0x730
-> vsock_bind+0x97/0xe0
-> __sys_bind+0x154/0x1f0
-> __x64_sys_bind+0x6e/0xb0
-> do_syscall_64+0x93/0x1b0
-> entry_SYSCALL_64_after_hwframe+0x76/0x7e
->
->refcount_t: underflow; use-after-free.
->WARNING: CPU: 7 PID: 2057 at lib/refcount.c:28 refcount_warn_saturate+0xee/0x150
->RIP: 0010:refcount_warn_saturate+0xee/0x150
-> vsock_remove_bound+0x187/0x1e0
-> __vsock_release+0x383/0x4a0
-> vsock_release+0x90/0x120
-> __sock_release+0xa3/0x250
-> sock_close+0x14/0x20
-> __fput+0x359/0xa80
-> task_work_run+0x107/0x1d0
-> do_exit+0x847/0x2560
-> do_group_exit+0xb8/0x250
-> __x64_sys_exit_group+0x3a/0x50
-> x64_sys_call+0xfec/0x14f0
-> do_syscall_64+0x93/0x1b0
-> entry_SYSCALL_64_after_hwframe+0x76/0x7e
->
->Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
->Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
->Signed-off-by: Michal Luczaj <mhal@rbox.co>
->Link: https://patch.msgid.link/20250128-vsock-transport-vs-autobind-v3-1-1cf57065b770@rbox.co
->Signed-off-by: Jakub Kicinski <kuba@kernel.org>
->Signed-off-by: Sasha Levin <sashal@kernel.org>
->---
-> net/vmw_vsock/af_vsock.c | 8 ++++++--
-> 1 file changed, 6 insertions(+), 2 deletions(-)
->
->diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
->index fa9d1b49599bf..cfe18bc8fdbe7 100644
->--- a/net/vmw_vsock/af_vsock.c
->+++ b/net/vmw_vsock/af_vsock.c
->@@ -337,7 +337,10 @@ EXPORT_SYMBOL_GPL(vsock_find_connected_socket);
->
-> void vsock_remove_sock(struct vsock_sock *vsk)
-> {
->-	vsock_remove_bound(vsk);
->+	/* Transport reassignment must not remove the binding. */
->+	if (sock_flag(sk_vsock(vsk), SOCK_DEAD))
->+		vsock_remove_bound(vsk);
->+
-> 	vsock_remove_connected(vsk);
-> }
-> EXPORT_SYMBOL_GPL(vsock_remove_sock);
->@@ -821,12 +824,13 @@ static void __vsock_release(struct sock *sk, int level)
-> 	 */
-> 	lock_sock_nested(sk, level);
->
->+	sock_orphan(sk);
->+
-> 	if (vsk->transport)
-> 		vsk->transport->release(vsk);
-> 	else if (sock_type_connectible(sk->sk_type))
-> 		vsock_remove_sock(vsk);
->
->-	sock_orphan(sk);
-> 	sk->sk_shutdown = SHUTDOWN_MASK;
->
-> 	skb_queue_purge(&sk->sk_receive_queue);
->-- 
->2.39.5
->
->
->
+Good: v6.12.11
+Bad: 6.12.13-rc1 (v6.12.11-634-g9ca4cdc5e984)
 
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+* arm64:
+    build:
+     * gcc-8-defconfig
+     * gcc-8-defconfig-40bc7ee5
+     * gcc-8-lkftconfig-hardening
+
+## Build log
+n function 'fsl_samsung_hdmi_phy_configure_pll_lock_det.isra.10',
+    inlined from 'fsl_samsung_hdmi_phy_configure' at
+drivers/phy/freescale/phy-fsl-samsung-hdmi.c:523:2:
+include/linux/compiler_types.h:536:38: error: call to
+'__compiletime_assert_478' declared with attribute error: FIELD_PREP:
+value too large for the field
+  _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+                                      ^
+include/linux/compiler_types.h:517:4: note: in definition of macro
+'__compiletime_assert'
+    prefix ## suffix();    \
+    ^~~~~~
+include/linux/compiler_types.h:536:2: note: in expansion of macro
+'_compiletime_assert'
+  _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+  ^~~~~~~~~~~~~~~~~~~
+include/linux/build_bug.h:39:37: note: in expansion of macro
+'compiletime_assert'
+ #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+                                     ^~~~~~~~~~~~~~~~~~
+include/linux/bitfield.h:68:3: note: in expansion of macro 'BUILD_BUG_ON_MSG'
+   BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?  \
+   ^~~~~~~~~~~~~~~~
+include/linux/bitfield.h:115:3: note: in expansion of macro '__BF_FIELD_CHECK'
+   __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: "); \
+   ^~~~~~~~~~~~~~~~
+drivers/phy/freescale/phy-fsl-samsung-hdmi.c:401:9: note: in expansion
+of macro 'FIELD_PREP'
+  writeb(FIELD_PREP(REG12_CK_DIV_MASK, div), phy->regs + PHY_REG(12));
+         ^~~~~~~~~~
+make[6]: *** [scripts/Makefile.build:229:
+drivers/phy/freescale/phy-fsl-samsung-hdmi.o] Error 1
+
+
+## Source
+* kernel version: 6.12.13-rc1
+* git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+* git sha: 9ca4cdc5e9841a39adf2ea1fc8ae45d28b4c85ea
+* git describe: v6.12.11-634-g9ca4cdc5e984
+* project details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.12.y/build/v6.12.11-634-g9ca4cdc5e984
+
+## Build
+* build log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.12.y/build/v6.12.11-634-g9ca4cdc5e984/testrun/27199296/suite/build/test/gcc-8-defconfig/
+* build history:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.12.y/build/v6.12.11-634-g9ca4cdc5e984/testrun/27199296/suite/build/test/gcc-8-defconfig/history/
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.12.y/build/v6.12.11-634-g9ca4cdc5e984/testrun/27199296/suite/build/test/gcc-8-defconfig/
+* kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2scp7S3yK4hl95VryTZn5t3cUVh/config
+* architectures: arm64
+* toolchain version: gcc-8
+
+## Steps to reproduce
+tuxmake --runtime podman --target-arch arm64 --toolchain gcc-8
+--kconfig defconfig
+
+## Links
+ [1] https://lore.kernel.org/all/CA+G9fYsHGrgZsEEVvP0XMcAhLyCYnrCPgZJ1puT6cfQBCGUB9g@mail.gmail.com/
+
+--
+Linaro LKFT
+https://lkft.linaro.org
