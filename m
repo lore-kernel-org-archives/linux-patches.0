@@ -1,126 +1,121 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724701D90A9
-	for <patches@lists.linux.dev>; Thu,  6 Feb 2025 20:43:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CDE1DF96E
+	for <patches@lists.linux.dev>; Thu,  6 Feb 2025 22:09:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738874627; cv=none; b=PQkpOKTOewPbYnUpCCvpL1VnhJ0OnC8QpKE8fIaejd3/JiOcsUPD84EuQ2BhZCKNRonRPmElrs7cXTatPtJ3HqSUD6z/EgiaHSleOp8CbZty3xbKJnWHR49nXh/OJ/ud3CeOblf7Cr0/VrUVfCHJKxwVEGiao189q8ooa+dYlJw=
+	t=1738879766; cv=none; b=Ldt0u7WnOMKnO4GbAvMkm5FgvgOBjkYwDNZGiM56W+2QIYiNT7dHbeo/sly8CPkdDCyTUVHfj+clPfkJjNZ6IwFn0K4CZqdIuTsUwIkXU2OWQGhMjR7A5q9wozcDYJwzEFE5TsXL79+1od/0Vo9VAl22btKNbqEktVZeveZFlFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738874627; c=relaxed/simple;
-	bh=ghMXVxcLYuC3amakcAM+2RrFtMQq4/vF5UL/FgqkJjk=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=g3AqjI36P4TYAjH876fh/J2ubUpLMizJy5tcr0uKmJSoY8WckGVqdJVTJv5YKSLML9aC4LnTqObu+DOIQxaPutNFvnXAvS9cUwE6TjVCglk4djwAooDB6nifbEjBwxP8sJKM4HPbIVa48NXikgrb6aQ2uW82fs0u0eP2dYvUndA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=FhxgEPqD; arc=none smtp.client-ip=209.85.222.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1738879766; c=relaxed/simple;
+	bh=v8Cb/I97cbYSHojVbzWOcSDJMzlNFCCIVvXaYBcMZxI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MXBDp0Hjqzj1QCaQ+hUAr/vThx+eE5Ou5l3UDYHLBw8L+a0PpCz+ds/lE8wbFtFXMTkOS+t+sM54giVAxUoVaD5HCCCdDmOZpu3tv69YzVlGGu7DDGkJaNmReEeld1GJDq5LIfZviqHtFmUoBN180++5DedVNN4rs/2IUzrVDhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=iS+Zd650; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="FhxgEPqD"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-7b7041273ddso119945885a.3
-        for <patches@lists.linux.dev>; Thu, 06 Feb 2025 12:43:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="iS+Zd650"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21f49bd087cso10620995ad.0
+        for <patches@lists.linux.dev>; Thu, 06 Feb 2025 14:09:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1738874623; x=1739479423; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ghMXVxcLYuC3amakcAM+2RrFtMQq4/vF5UL/FgqkJjk=;
-        b=FhxgEPqDhRUKUf3NV6Y1QPYxG+d1iRz8NfLnTq0UKmgqNPEjloeswjicWx/rDCiyT0
-         /ThxfPFK5ZlbOuVjjMKf6yctAbY6xmHtWjXzoLQVdkU8OgZ/W3Uf/5QyBjcB3lLEja8L
-         miJJpzxclbAuOUupFd1fUUEooUWLjOUZcQduM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738874623; x=1739479423;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+        d=futuring-girl.com; s=google; t=1738879764; x=1739484564; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ghMXVxcLYuC3amakcAM+2RrFtMQq4/vF5UL/FgqkJjk=;
-        b=oqXnVHqLyseZWA91Q3+l4DuwoXqXmq7NtiJS8QiNzV8n2uq/eHVEIm0xtr35tMYxiT
-         nr1eNTm7q8UhKO6yfvsi9RAo7H05Bb2jxPF5NOwBDFKIUN66oxgARa8poH9dS5mp5yNX
-         wn42dUwv6mdnamiGlgLjB3AlMOTYZ6oO2sEGzl8Wfl8tX9KIkMnsPEKO17wO5u6YUa6h
-         LblAhGNtxKamhvZHzWklxRZ3paSxlvtZeRXaMO1svR/5zyM3ujmqRXuaWk3CIxHtiY+Y
-         NtlxUnnwRBxXdVRChVjRJSAfhrykpsutP6fi6NQ31444PLFi5v4PtrGPW/POiahR1l3s
-         eG5A==
-X-Forwarded-Encrypted: i=1; AJvYcCWe50gKd46sAiGa/C8iPGDHfRd3d7I10zjCACgCHMYz5OUpYxppfaEKD4HXE7TEv4Zuc9dqpW7b@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxv+YRxY9XeT3k6qBNwS0E7hpv4FqJ07iwM9O6hUo8Tlq9+P0Qb
-	ozafdE81d0T2WMbVUnotGcM+G9EMMYITdMmpIOMvlIDst8nfUmd3hZnsX/z7nCEOlpGhxZv2L9Z
-	r84etwvH95CCQT2R+aqBj2fudEAGgqX0+iVPx
-X-Gm-Gg: ASbGncuYLpHLRLOzkavLtg4TkAH1N6Rqe3FqxFr0206FENJCBZYuIrCj3EJr1qv/vBO
-	heeT5RrSRRMOX6Q99dRZet61DPuUuZwHVAWg56G1oNx7K3LYVgQZojjtfJClbKP29hTxPmW6H8i
-	WAqFIMuodEKrt+5bQY+RfXCcAS
-X-Google-Smtp-Source: AGHT+IGIi7KHGakyYrhAS6Nm6sSDzZzym1yivy6eswLvWosFcy/m0lzamEPvxM2Mp6Z9Nh8JG+b4sn+mv4BnqJ62Jhc=
-X-Received: by 2002:a05:620a:f15:b0:7b6:dc74:829f with SMTP id
- af79cd13be357-7c047ba4996mr111088585a.7.1738874623312; Thu, 06 Feb 2025
- 12:43:43 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 6 Feb 2025 12:43:42 -0800
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 6 Feb 2025 12:43:42 -0800
+        bh=YowFV95RzqYpXXncaW4VNnhPzNA0mgUHkVJDlV/Z4no=;
+        b=iS+Zd650gdb5lwODRgUBclnmfHrcQyutmP4tY+0Tc0jsTZOgHzvozLtW75Dmgo6FFE
+         IdZ4WEVC/j5vD9NGOuOWL8JByMBJKZysl8UtzKsJ3L8c2vIrm3GEo7RGTpWCtqs7gYDy
+         FUkjxWgZ2TpXy6otkfA2MB2HT6p4+gbR2ZVI2GDX+WE+zK2Z1wns/I0v1uGPfP4MiBAf
+         ceirXvFwjt48GlwlqLjb/e01ukccgFBjZ3qIz3lxiMu8FF+kD/j0+Dj9OSDBwCpNAimB
+         lV6ZMdNQU4+AvHqcUWs2RviYU1o+mtkomLxo9dg1Luiq1YHHFbvPJkt6vU76lIuv1e2P
+         9xcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738879764; x=1739484564;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YowFV95RzqYpXXncaW4VNnhPzNA0mgUHkVJDlV/Z4no=;
+        b=vYXLL5nlzTejB0plgwygduLyvOh/zZxZMRPA4nRz9bG6BAW0BjWzzL8Bj4uoiX86uI
+         bjCqrPi9+Rpy2Z77dAWP6KIzgxg/yCIMejdnEUD/mOFs9jzPmzTzr6oJS1X/svu2mbrg
+         bhXHWJnBdt9kCXOvaEj7cXhscB8uIF39RTsTaUC68QsYP+9ProwyegnMUBipeePaVmio
+         eVH/FqVcJRbGkxEmmBqZ+doAOgrgAZEaa1dPuG+BEv0TXurS4RDww22XS6mgHbFGlORL
+         +PXGHjeV1xCRwIRhvUtn+7gt0qaRTapFqmVfyoIy7rd9VGREBOmz9UYqLf5eH67Ariel
+         b05A==
+X-Forwarded-Encrypted: i=1; AJvYcCUuzh058n+IOEO/d5strjxhY59HWLLhCgo02fmyqt+5wq+JlL6d5IpR1LExTfDDAYJU2qx5oUdY@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz9X9XJtJlMF7C7rktkc2CaWnsYYwUrH468TYjIJV/+X3nR+8hg
+	JhlrSY1yYssCKqA1Nc53tbQQLlLh2EhO3P4Fls9xLf+lA9CilDRboKaSe7s+r3vMOi4O/TAjrAN
+	FXKDvsnnvGHlFdaPwxH/B+bOWbJL49v4pC8xO3Q==
+X-Gm-Gg: ASbGncsiCV6qKgl7nHQwidwLWTBh5A4Go/mIBQ1GbHGRlWkrF+g08YYqO1wD826qyKN
+	FRca8Myg/jTFHLHO3FCfYsERXU2Q1SxbkAU73L4RUAw1npU/i9Q3aL0KhoZjJ5Q5Z3kvgKg==
+X-Google-Smtp-Source: AGHT+IHVA3aLLUHBjvM7tBiT/JAeRIG715XqkMU23ZlOgaA1/IPqLSTPkVNA5hE3GgpS2Sq6STuEQ8GQr00qCN1MoNE=
+X-Received: by 2002:a17:903:2a86:b0:212:6187:6a76 with SMTP id
+ d9443c01a7336-21f4e6afbccmr15332045ad.14.1738879764518; Thu, 06 Feb 2025
+ 14:09:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <74527323-31ff-4ed0-b19f-e535f26abf2b@oss.qualcomm.com>
-References: <20250205233016.1600517-1-swboyd@chromium.org> <20250205233016.1600517-2-swboyd@chromium.org>
- <74527323-31ff-4ed0-b19f-e535f26abf2b@oss.qualcomm.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.12.dev1+gaa8c22fdeedb
-Date: Thu, 6 Feb 2025 12:43:42 -0800
-X-Gm-Features: AWEUYZk9G69zlKfea1G0cVv2Pso0fG2dCEq5z01lgx0Eou9Uj4laycjO7Oq51wY
-Message-ID: <CAE-0n50DXcAXQMaLtsamvxHjUrkJVBz42G6gtgKgW9Rh=qd31Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: chrome: Add binding for ChromeOS Pogo
- pin connector
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	patches@lists.linux.dev, cros-qcom-dts-watchers@chromium.org, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Benson Leung <bleung@chromium.org>, devicetree@vger.kernel.org, 
-	chrome-platform@lists.linux.dev, Pin-yen Lin <treapking@chromium.org>
+References: <20250206160711.563887287@linuxfoundation.org>
+In-Reply-To: <20250206160711.563887287@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Fri, 7 Feb 2025 07:09:13 +0900
+X-Gm-Features: AWEUYZkqc_QFPDa0cmxptap1fL55qjlShAz2QJJR1zciPi5pSP-77julnD_XuYc
+Message-ID: <CAKL4bV5Ks9OCh8SrgkoF=UrK3KW+POAXOD77L1kD0P9fOiNC4w@mail.gmail.com>
+Subject: Re: [PATCH 6.12 000/583] 6.12.13-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Quoting Konrad Dybcio (2025-02-06 03:30:50)
-> On 6.02.2025 12:30 AM, Stephen Boyd wrote:
-> > diff --git a/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
-> > new file mode 100644
-> > index 000000000000..622e171b6b08
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
-> > @@ -0,0 +1,68 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/chrome/google,pogo-pin-connector.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Google Pogo Pin Connector
+Hi Greg
+
+On Fri, Feb 7, 2025 at 1:11=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> This looks like a very generic piece of hw.. many boards (esp. convertibles)
-> do the same thing, with 4 or 5 pins on the bottom of the device.
-
-Yes, connectors are basically just pins :-)
-
+> This is the start of the stable review cycle for the 6.12.13 release.
+> There are 583 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> But of course hw manufacturers being hw manufacturers, many different kinds
-> of signals go through such connectors - if it's not USB then it's perhaps
-> I2C or some variation thereof
-
-Right, and I doubt they call them "pogo".
-
+> Responses should be made by Sat, 08 Feb 2025 16:05:14 +0000.
+> Anything received after that time might be too late.
 >
-> IMO, we could perhaps add this to usb-connector.yaml as "usb-custom-connector"
-> or so
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.12.13-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.12.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Do you have a device that could use such a generic binding? I can't
-really design something in the abstract without two or more concrete use
-cases. Coming up with something generic looks like a quagmire, because
-as you say the signals going through the pins could be anything: i2c,
-1-wire, etc.
+6.12.13-rc2 tested.
 
-At least this is a vendor prefixed binding, meaning a generic binding
-could supersede this one later. The risk of accepting this binding is
-low because it can be replaced by a more generic one at a later date.
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-I will move the file to usb/ so that it is more likely to be seen, but
-I'm hesitant to sign up to work on any sort of generic binding for USB2
-plus an extra pin used for who knows what.
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+[    0.000000] Linux version 6.12.13-rc2rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.2.1 20250128, GNU ld (GNU
+Binutils) 2.43.1) #1 SMP PREEMPT_DYNAMIC Fri Feb  7 06:24:00 JST 2025
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
