@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1B11E5B87;
-	Thu,  6 Feb 2025 14:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BFCD23644D;
+	Thu,  6 Feb 2025 14:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738852266; cv=none; b=CWhlc9fA1DgQhxoUr+gBFfEXgWWr/mpgWeKZieR8NxZ9qthQd+fdwFxRxBCsuan/eSFaT3x4u+uFD5poUwgRQ8CTdyG1idKxT9XJNdnNBY7TDdzcM/09g7uZU0WSMkQ1+Vm1CrkB+S9glw4NI+UHL1JG93ifJb+uzJAMUkciZiE=
+	t=1738853136; cv=none; b=nqZ/SlC47d6VrytnTFDJErOwiq17AAfKql5W3a1dstZt5vTTsfwVWKoO/lG1nbkmQ1e57fai/tzlocKpK0ozLT/quSMC2mkGL+tSf+TEMvFGJ+6hBEYyUuPzSQV7BjVm9cZpJFtioASaiFal4nBohFKz03DyXgn7bYUD7CTurbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738852266; c=relaxed/simple;
-	bh=XnuDuBDRTFnjXLyL42QAl0W86xsDDJwS1IDugYHTjZg=;
+	s=arc-20240116; t=1738853136; c=relaxed/simple;
+	bh=2FgrKdbnK+b00GWj9omYgHNPOcOcjfa1fv41p2yBFhM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GDDMF5+ccCDE7Y2omy4FaP0w8zzf985jy2DhDSuNwAguu4BhPmCyB5zQSp5ewAxdsle1D9WUCBzYCgJhXMIEVsnNiy3iHPe6MX3wFHkGZSLzKRK8FSCgtbWF0cYmT6XTVKXA7zyGlQiwWcO+sHEzGghY8y+Fiwl6OHM26Hr36Tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFMW6kCx; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=hxVgN58WPz2acSe5K8tCKpORB8yoobyi15TU8BecI3o9Pk8/9z1GG/ikZ2dy5izvfzpzEsEfivJku9cn5v6cEgBwUoMzIyHzojPAxY/CwqD5eMedM4VD7Yg9DxoJJohBY8D5cdegOakXi4OOT5RYJKel9ik5mWoUFDtsGWP1KAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bDL3Obp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFMW6kCx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB9EC4CEE2;
-	Thu,  6 Feb 2025 14:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bDL3Obp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0D2C4CEDD;
+	Thu,  6 Feb 2025 14:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738852265;
-	bh=XnuDuBDRTFnjXLyL42QAl0W86xsDDJwS1IDugYHTjZg=;
+	s=korg; t=1738853135;
+	bh=2FgrKdbnK+b00GWj9omYgHNPOcOcjfa1fv41p2yBFhM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bFMW6kCxctO6i62XX6ea6UMqtG3Bw/yU3iktsuHEdTdNiCwQkGqyyWnHJ39FeW7Mm
-	 HB1Px2jj+YR4zhB3dE3eX+DYcV90B3RU7VNnzV+QQcE9AYzI6fYTGhKe21t8meQGRz
-	 ZdOVhMeKNw8wrGNgjeIg7wZ/jVIY4lqs4URt0cDE=
-Date: Thu, 6 Feb 2025 15:31:02 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Koichiro Den <koichiro.den@canonical.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>, Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: Re: [PATCH 6.12 102/114] btrfs: avoid monopolizing a core when
- activating a swap file
-Message-ID: <2025020634-grid-goldfish-c9ef@gregkh>
-References: <20241230154218.044787220@linuxfoundation.org>
- <20241230154222.045141330@linuxfoundation.org>
- <q6zj7uvssfaqkz5sshi7i6oooschrwlyapb7o47y36ylz4ylf7@dkopww2lfuko>
+	b=2bDL3ObpbSxp60WGZ1BUtIyfyyXueIqkBwCt/q0idERoCOWnFNEO80G/mBK3K05eK
+	 xiBrBJk1v1gHEsgPQvl5Jd9sknws2VJKG7x1VeEW7aBvcpiiS1uu9mMjz025Uv1t13
+	 izq9sB3fiC4vAltDwuMGSELA2awNxYJ5vd26v0Yk=
+Date: Thu, 6 Feb 2025 15:45:32 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Theodore Grey <theodore.grey@linaro.org>
+Cc: akpm@linux-foundation.org, broonie@kernel.org, conor@kernel.org,
+	f.fainelli@gmail.com, hargar@microsoft.com, jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org, linux@roeck-us.net,
+	lkft-triage@lists.linaro.org, patches@kernelci.org,
+	patches@lists.linux.dev, pavel@denx.de, rwarsow@gmx.de,
+	shuah@kernel.org, srw@sladewatkins.net, stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com, torvalds@linux-foundation.org,
+	dan.carpenter@linaro.org, anders.roxell@linaro.org, arnd@linaro.org,
+	david.laight.linux@gmail.com,
+	Linux Kernel Functional Testing <lkft@linaro.org>
+Subject: Re: [PATCH 6.13 000/623] 6.13.2-rc1 review
+Message-ID: <2025020615-nursery-cupcake-20ce@gregkh>
+References: <20250205134456.221272033@linuxfoundation.org>
+ <20250206113721.2428767-1-theodore.grey@linaro.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,81 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <q6zj7uvssfaqkz5sshi7i6oooschrwlyapb7o47y36ylz4ylf7@dkopww2lfuko>
+In-Reply-To: <20250206113721.2428767-1-theodore.grey@linaro.org>
 
-On Thu, Feb 06, 2025 at 08:41:33PM +0900, Koichiro Den wrote:
-> On Mon, Dec 30, 2024 at 04:43:39PM GMT, Greg Kroah-Hartman wrote:
-> > 6.12-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Filipe Manana <fdmanana@suse.com>
-> > 
-> > commit 2c8507c63f5498d4ee4af404a8e44ceae4345056 upstream.
-> > 
-> > During swap activation we iterate over the extents of a file and we can
-> > have many thousands of them, so we can end up in a busy loop monopolizing
-> > a core. Avoid this by doing a voluntary reschedule after processing each
-> > extent.
-> > 
-> > CC: stable@vger.kernel.org # 5.4+
-> > Reviewed-by: Qu Wenruo <wqu@suse.com>
-> > Signed-off-by: Filipe Manana <fdmanana@suse.com>
-> > Signed-off-by: David Sterba <dsterba@suse.com>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> >  fs/btrfs/inode.c |    2 ++
-> >  1 file changed, 2 insertions(+)
-> > 
-> > --- a/fs/btrfs/inode.c
-> > +++ b/fs/btrfs/inode.c
-> > @@ -7117,6 +7117,8 @@ noinline int can_nocow_extent(struct ino
-> >  			ret = -EAGAIN;
-> >  			goto out;
-> >  		}
-> > +
-> > +		cond_resched();
-> >  	}
-> >  
-> >  	if (file_extent)
-> > 
-> > 
+On Thu, Feb 06, 2025 at 12:37:21PM +0100, Theodore Grey wrote:
+> Regressions on the arm64, builds failed with gcc-8 on Linux stable-rc 6.13.2-rc1
+> But the gcc-13 and clang builds pass.
 > 
-> Hi, please let me confirm; is this backport really ok? I mean, should the
-> cond_resched() be added to btrfs_swap_activate() loop? I was able to
-> reproduce the same situation:
+> This was also reported on Linus tree a few weeks back [1] and also seen on
+> the stable-rc 6.12.13-rc1.
 > 
->     $ git rev-parse HEAD
->     319addc2ad901dac4d6cc931d77ef35073e0942f
->     $ b4 mbox --single-message  c37ea7a8de12e996091ba295b2f201fbe680c96c.1733929328.git.fdmanana@suse.com
->     1 messages in the thread
->     Saved ./c37ea7a8de12e996091ba295b2f201fbe680c96c.1733929328.git.fdmanana@suse.com.mbx
->     $ patch -p1 < ./c37ea7a8de12e996091ba295b2f201fbe680c96c.1733929328.git.fdmanana@suse.com.mbx
->     patching file fs/btrfs/inode.c
->     Hunk #1 succeeded at 7117 with fuzz 1 (offset -2961 lines).
->     $ git diff
->     diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
->     index 58ffe78132d9..6fe2ac620464 100644
->     --- a/fs/btrfs/inode.c
->     +++ b/fs/btrfs/inode.c
->     @@ -7117,6 +7117,8 @@ noinline int can_nocow_extent(struct inode *inode, u64 offset, u64 *len,
->                             ret = -EAGAIN;
->                             goto out;
->                     }
->     +
->     +               cond_resched();
->             }
->     
->             if (file_extent)
+> Build regression: arm64, gcc-8 phy-fsl-samsung-hdmi.c __compiletime_assert_537
 > 
-> The same goes for all the other stable branches applied. Sorry if I'm
-> missing something.
+> Good: v6.13 (v6.13-26-g65a3016a79e2)
+> Bad:  6.13.2-rc1 (v6.13-652-g32cbb2e169ed)
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> * arm64:
+>    build:
+>     * gcc-8-defconfig
+>     * gcc-8-defconfig-40bc7ee5
+>     * gcc-8-lkftconfig-hardening
+> 
+> ## Build log
+> In function 'fsl_samsung_hdmi_phy_configure_pll_lock_det.isra.10',
+>     inlined from 'fsl_samsung_hdmi_phy_configure' at
+> drivers/phy/freescale/phy-fsl-samsung-hdmi.c:466:2:
+> include/linux/compiler_types.h:542:38: error: call to
+> '__compiletime_assert_537' declared with attribute error: FIELD_PREP:
+> value too large for the field
+>   _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+>                                       ^
+> include/linux/compiler_types.h:523:4: note: in definition of macro
+> '__compiletime_assert'
+>     prefix ## suffix();    \
+>     ^~~~~~
+> include/linux/compiler_types.h:542:2: note: in expansion of macro
+> '_compiletime_assert'
+>   _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+>   ^~~~~~~~~~~~~~~~~~~
+> include/linux/build_bug.h:39:37: note: in expansion of macro
+> 'compiletime_assert'
+>  #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+>                                      ^~~~~~~~~~~~~~~~~~
+> include/linux/bitfield.h:68:3: note: in expansion of macro 'BUILD_BUG_ON_MSG'
+>    BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?  \
+>    ^~~~~~~~~~~~~~~~
+> include/linux/bitfield.h:115:3: note: in expansion of macro '__BF_FIELD_CHECK'
+>    __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: "); \
+>    ^~~~~~~~~~~~~~~~
+> drivers/phy/freescale/phy-fsl-samsung-hdmi.c:344:9: note: in expansion
+> of macro 'FIELD_PREP'
+>   writeb(FIELD_PREP(REG12_CK_DIV_MASK, div), phy->regs + PHY_REG(12));
+>          ^~~~~~~~~~
+> make[6]: *** [scripts/Makefile.build:196:
+> drivers/phy/freescale/phy-fsl-samsung-hdmi.o] Error 1
 
-Hm, looks like patch messed this up :(
-
-Can you send a revert for the branches that this was wrong on, and then
-the correct fix, and I'll be glad to queue them all up.
-
-thanks,
+Offending commit now dropped from 6.13.y and 6.12.y, thanks.
 
 greg k-h
