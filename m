@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885F522DF8D;
-	Thu,  6 Feb 2025 14:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933D31EDA17;
+	Thu,  6 Feb 2025 14:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738852069; cv=none; b=aABlyh/6ZvSAbhVKgiNG9jSBd7He9rnNgRZ2oCCTvQn0ShMb1sD6hHOOLGYHGMUNS6I5/1IJWzT+uPkmabRkHw8QHeMZRZaUI9UDK/Zz9zUVrUQxhArt0jPQCGft9RMpl4nezLbhx+EFB6LKCJ5NoeUA/GtjrFDYxpsgEmdAsko=
+	t=1738852137; cv=none; b=COJp33GWGLs3EBnUmb/OLu1LUU+NjqC98VDmSP4g+Zw9YsuaDuesllgkYcpM9qMZ1FUmzqVN3Uvumn75j9+qvCxOl4YNWmKm+2Mv/FstgMrwCQxqD3xIqJGN2ZPRDURyTZIz0d5B+oVYO4Vk+qK9ne3ooS9BGYnZbV/uketEAIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738852069; c=relaxed/simple;
-	bh=eu5rYNsFCWJsbIAVYuyIpHxvYuLxXi5RArsfhond16o=;
+	s=arc-20240116; t=1738852137; c=relaxed/simple;
+	bh=ITWUA73jn1cGQ5+PJh765YIaWLrbFifLJIuOPNVC76E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hxRGi0YBQTq92PwrlXI7Pt34H6ySwCDaevoSNy3Xg9YMjqXSTsY23yJ/y9Ce7wYXIFF169NGu3a/1OBgh7+v5RPlyWpouxmAP7Bw1M49o844DEb7TwaM1mXX8ulpwKiPDFBTD6WSRp3dZikLV6DDTkOaYYbPIUQ7n9YbI/2VirY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBlw2U9Z; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fg0Y+Xp7I2MsNtEYVxjYbmqEkDw/rEuDMk6wFIevbIrIlOzFZIHsZ4roZJbPeDncEjsvH8GZi0OMrTbNoo1qwQawTuP93Wb+8Eu8GRJzVUuDGi1TKSejXO1aY7dU4PHyojafaQbaMQJR7T8ARjfEjSV5Db2DuaOjxrU1w7Ekrg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTpD+4Xp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBlw2U9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7165C4CEDD;
-	Thu,  6 Feb 2025 14:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTpD+4Xp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827F3C4CEDD;
+	Thu,  6 Feb 2025 14:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738852069;
-	bh=eu5rYNsFCWJsbIAVYuyIpHxvYuLxXi5RArsfhond16o=;
+	s=korg; t=1738852137;
+	bh=ITWUA73jn1cGQ5+PJh765YIaWLrbFifLJIuOPNVC76E=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TBlw2U9ZF5hAu7/d318TfIPQQSBWGbQHgvhMcQAbVD9uT9ANZ3Yh5C/fZpNypkbXz
-	 wx5a/owvHGqAFEy57ormwB6SNOHHordiVXo5XWITjGcyDhkWEuEI4Cf51/b3lHa4TC
-	 mxAZnqegM8gZLu+URsLh4YyyfIrrALt9M6xDYhqQ=
-Date: Thu, 6 Feb 2025 06:13:19 +0100
+	b=HTpD+4Xpkew6n8Zn7kKMLAFgor4nkUh70KWzPBwJjs0Zvkrmf/Vor+0nXRdTnotUl
+	 WE++QCQZNZuPMh//hO7UsIW/3Ur78P4cIqr2qI6MuYbtcjWBLGtng1usgyYJ38GeOT
+	 Q7OIk6syPdxGd8TH9rBaYvBbXbXwk3huyD/HZN2s=
+Date: Thu, 6 Feb 2025 15:28:05 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Edward Cree <ecree.xilinx@gmail.com>
+To: Luigi Leonardi <leonardi@redhat.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Martin Habets <habetsm.xilinx@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 502/590] net: ethtool: only allow set_rxnfc with rss
- + ring_cookie if driver opts in
-Message-ID: <2025020648-tilt-subtotal-c90c@gregkh>
-References: <20250205134455.220373560@linuxfoundation.org>
- <20250205134514.474132731@linuxfoundation.org>
- <2614b0ce-0b34-03e3-3744-0b91fdd0a32b@gmail.com>
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Michal Luczaj <mhal@rbox.co>, Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.13 544/623] vsock: Keep the binding until socket
+ destruction
+Message-ID: <2025020644-unwitting-scary-3c0d@gregkh>
+References: <20250205134456.221272033@linuxfoundation.org>
+ <20250205134517.034256003@linuxfoundation.org>
+ <xv4vulunzu47uszjgzjhjzf6jetbvzy4c4uotkfh6t3ns74is4@mcpi3jj5iy4z>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,41 +44,27 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2614b0ce-0b34-03e3-3744-0b91fdd0a32b@gmail.com>
+In-Reply-To: <xv4vulunzu47uszjgzjhjzf6jetbvzy4c4uotkfh6t3ns74is4@mcpi3jj5iy4z>
 
-On Wed, Feb 05, 2025 at 10:27:50PM +0000, Edward Cree wrote:
-> On 05/02/2025 13:44, Greg Kroah-Hartman wrote:
-> > 6.12-stable review patch.  If anyone has any objections, please let me know.
+On Thu, Feb 06, 2025 at 11:44:21AM +0100, Luigi Leonardi wrote:
+> On Wed, Feb 05, 2025 at 02:44:46PM +0100, Greg Kroah-Hartman wrote:
+> > 6.13-stable review patch.  If anyone has any objections, please let me know.
 > > 
 > > ------------------
 > > 
-> > From: Edward Cree <ecree.xilinx@gmail.com>
+> > From: Michal Luczaj <mhal@rbox.co>
 > > 
-> > [ Upstream commit 9e43ad7a1edef268acac603e1975c8f50a20d02f ]
+> > [ Upstream commit fcdd2242c0231032fc84e1404315c245ae56322a ]
 > > 
-> > Ethtool ntuple filters with FLOW_RSS were originally defined as adding
-> >  the base queue ID (ring_cookie) to the value from the indirection table,
-> >  so that the same table could distribute over more than one set of queues
-> >  when used by different filters.
-> > However, some drivers / hardware ignore the ring_cookie, and simply use
-> >  the indirection table entries as queue IDs directly.  Thus, for drivers
-> >  which have not opted in by setting ethtool_ops.cap_rss_rxnfc_adds to
-> >  declare that they support the original (addition) semantics, reject in
-> >  ethtool_set_rxnfc any filter which combines FLOW_RSS and a nonzero ring.
-> > (For a ring_cookie of zero, both behaviours are equivalent.)
-> > Set the cap bit in sfc, as it is known to support this feature.
-> > 
-> > Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
-> > Reviewed-by: Martin Habets <habetsm.xilinx@gmail.com>
-> > Link: https://patch.msgid.link/cc3da0844083b0e301a33092a6299e4042b65221.1731499022.git.ecree.xilinx@gmail.com
-> > Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> > Stable-dep-of: 4f5a52adeb1a ("ethtool: Fix set RXNFC command with symmetric RSS hash")
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> Hi Greg,
 > 
-> If you're taking this you probably also want the very recent
-> 2b91cc1214b1 ("ethtool: ntuple: fix rss + ring_cookie check")
-> which fixes a bug in this patch.
+> This patch introduced a bug[1], Michal has already sent a patch to fix it
+> [2], but has not been merged yet. Should we wait and merge them together?
+> WDYT?
 
-Thanks, I'll go queue that up now.
+Yes, please submit both of these to stable@vger when they hit Linus's
+tree.  I'll go drop this now from all queues.
+
+thanks,
 
 greg k-h
