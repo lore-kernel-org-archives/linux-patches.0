@@ -1,109 +1,107 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BFCD23644D;
-	Thu,  6 Feb 2025 14:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CAD23644D;
+	Thu,  6 Feb 2025 14:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738853136; cv=none; b=nqZ/SlC47d6VrytnTFDJErOwiq17AAfKql5W3a1dstZt5vTTsfwVWKoO/lG1nbkmQ1e57fai/tzlocKpK0ozLT/quSMC2mkGL+tSf+TEMvFGJ+6hBEYyUuPzSQV7BjVm9cZpJFtioASaiFal4nBohFKz03DyXgn7bYUD7CTurbM=
+	t=1738853269; cv=none; b=Y4xk+3bqFAumSPhdCNFogfsSQtsrpkRSIVLnFBh9iT0UDw7PHW/dfogmZi5N6x0nJxDsKhhexU3Np/OWf46jgWYFAltrBeeHF+p0N/d5jJrKhmIciCu0aQAViaC29TdjxSWyYYY2L/MfxbQizZ1kbfdywLWYtVkCjG+OAGeoahs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738853136; c=relaxed/simple;
-	bh=2FgrKdbnK+b00GWj9omYgHNPOcOcjfa1fv41p2yBFhM=;
+	s=arc-20240116; t=1738853269; c=relaxed/simple;
+	bh=VTlP4KHV1V4htbOn/9RNsNcO9aW0BjPcmbTnZc/UU3E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hxVgN58WPz2acSe5K8tCKpORB8yoobyi15TU8BecI3o9Pk8/9z1GG/ikZ2dy5izvfzpzEsEfivJku9cn5v6cEgBwUoMzIyHzojPAxY/CwqD5eMedM4VD7Yg9DxoJJohBY8D5cdegOakXi4OOT5RYJKel9ik5mWoUFDtsGWP1KAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bDL3Obp; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lo8jxtQWH5BrwRuVXKS2sQk94Pm5IKK2Zwvc/hZ4d31dwmMUeNlvpXEmEB2N7e5gjUcA8xUVlsus2qsbqBuEuL7p7n3Hodmj/oUKh+vdG+MiJtS6e5XJelVifqc2m/e5xo81H9a36fWdjGVMrLCD54tZe2JnOyVr9ls/do2ZBiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RM0hMjSt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bDL3Obp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0D2C4CEDD;
-	Thu,  6 Feb 2025 14:45:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RM0hMjSt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136C6C4CEDF;
+	Thu,  6 Feb 2025 14:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738853135;
-	bh=2FgrKdbnK+b00GWj9omYgHNPOcOcjfa1fv41p2yBFhM=;
+	s=korg; t=1738853268;
+	bh=VTlP4KHV1V4htbOn/9RNsNcO9aW0BjPcmbTnZc/UU3E=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=2bDL3ObpbSxp60WGZ1BUtIyfyyXueIqkBwCt/q0idERoCOWnFNEO80G/mBK3K05eK
-	 xiBrBJk1v1gHEsgPQvl5Jd9sknws2VJKG7x1VeEW7aBvcpiiS1uu9mMjz025Uv1t13
-	 izq9sB3fiC4vAltDwuMGSELA2awNxYJ5vd26v0Yk=
-Date: Thu, 6 Feb 2025 15:45:32 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Theodore Grey <theodore.grey@linaro.org>
-Cc: akpm@linux-foundation.org, broonie@kernel.org, conor@kernel.org,
-	f.fainelli@gmail.com, hargar@microsoft.com, jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org, linux@roeck-us.net,
-	lkft-triage@lists.linaro.org, patches@kernelci.org,
-	patches@lists.linux.dev, pavel@denx.de, rwarsow@gmx.de,
-	shuah@kernel.org, srw@sladewatkins.net, stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com, torvalds@linux-foundation.org,
-	dan.carpenter@linaro.org, anders.roxell@linaro.org, arnd@linaro.org,
-	david.laight.linux@gmail.com,
-	Linux Kernel Functional Testing <lkft@linaro.org>
-Subject: Re: [PATCH 6.13 000/623] 6.13.2-rc1 review
-Message-ID: <2025020615-nursery-cupcake-20ce@gregkh>
-References: <20250205134456.221272033@linuxfoundation.org>
- <20250206113721.2428767-1-theodore.grey@linaro.org>
+	b=RM0hMjStqvb4Lcd5iQCw7dWfqBReopEwkhgHh/5bBlQz7J8pLnynQZEbTEz7GH9mt
+	 MTbvS+n4IdLqQgr6g9h5xpCnwzL31ai4/9hrCDD811GLG3Xwj7AT6cenow7Hi2Sda1
+	 Jm1+Kv1HJTTOq/OOpd0eoIJa69Qbr79NI8iRrUvc=
+Date: Thu, 6 Feb 2025 15:47:45 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Jon Hunter <jonathanh@nvidia.com>
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+	linux-tegra@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 6.12 000/590] 6.12.13-rc1 review
+Message-ID: <2025020627-mug-sustained-b3fb@gregkh>
+References: <20250205134455.220373560@linuxfoundation.org>
+ <ea698e1c-02a8-47f8-a66c-b7e649dd417f@rnnvmail205.nvidia.com>
+ <b7363e74-2207-4cab-a573-bc552b901f4e@nvidia.com>
+ <8ab5ab07-fb63-4235-bdb1-f4acbe86f8bc@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250206113721.2428767-1-theodore.grey@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8ab5ab07-fb63-4235-bdb1-f4acbe86f8bc@nvidia.com>
 
-On Thu, Feb 06, 2025 at 12:37:21PM +0100, Theodore Grey wrote:
-> Regressions on the arm64, builds failed with gcc-8 on Linux stable-rc 6.13.2-rc1
-> But the gcc-13 and clang builds pass.
+On Thu, Feb 06, 2025 at 12:04:14PM +0000, Jon Hunter wrote:
 > 
-> This was also reported on Linus tree a few weeks back [1] and also seen on
-> the stable-rc 6.12.13-rc1.
+> On 06/02/2025 11:41, Jon Hunter wrote:
+> > Hi Greg,
+> > 
+> > On 06/02/2025 11:37, Jon Hunter wrote:
+> > > On Wed, 05 Feb 2025 14:35:55 +0100, Greg Kroah-Hartman wrote:
+> > > > This is the start of the stable review cycle for the 6.12.13 release.
+> > > > There are 590 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > > 
+> > > > Responses should be made by Fri, 07 Feb 2025 13:43:01 +0000.
+> > > > Anything received after that time might be too late.
+> > > > 
+> > > > The whole patch series can be found in one patch at:
+> > > >     https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/
+> > > > patch-6.12.13-rc1.gz
+> > > > or in the git tree and branch at:
+> > > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-
+> > > > stable-rc.git linux-6.12.y
+> > > > and the diffstat can be found below.
+> > > > 
+> > > > thanks,
+> > > > 
+> > > > greg k-h
+> > > 
+> > > Failures detected for Tegra ...
+> > > 
+> > > Test results for stable-v6.12:
+> > >      10 builds:    10 pass, 0 fail
+> > >      26 boots:    26 pass, 0 fail
+> > >      116 tests:    115 pass, 1 fail
+> > > 
+> > > Linux version:    6.12.13-rc1-g9ca4cdc5e984
+> > > Boards tested:    tegra124-jetson-tk1, tegra186-p2771-0000,
+> > >                  tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+> > >                  tegra20-ventana, tegra210-p2371-2180,
+> > >                  tegra210-p3450-0000, tegra30-cardhu-a04
+> > > 
+> > > Test failures:    tegra194-p2972-0000: pm-system-suspend.sh
+> > 
+> > 
+> > I am seeing a suspend regression on both 6.12.y and 6.13.y and bisect is
+> > pointing to the following commit ...
+> > 
+> > # first bad commit: [ca20473b60926b94fdf58f971ccda43e866c32d1] PM:
+> > sleep: core: Synchronize runtime PM status of parents and children
 > 
-> Build regression: arm64, gcc-8 phy-fsl-samsung-hdmi.c __compiletime_assert_537
-> 
-> Good: v6.13 (v6.13-26-g65a3016a79e2)
-> Bad:  6.13.2-rc1 (v6.13-652-g32cbb2e169ed)
-> 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> * arm64:
->    build:
->     * gcc-8-defconfig
->     * gcc-8-defconfig-40bc7ee5
->     * gcc-8-lkftconfig-hardening
-> 
-> ## Build log
-> In function 'fsl_samsung_hdmi_phy_configure_pll_lock_det.isra.10',
->     inlined from 'fsl_samsung_hdmi_phy_configure' at
-> drivers/phy/freescale/phy-fsl-samsung-hdmi.c:466:2:
-> include/linux/compiler_types.h:542:38: error: call to
-> '__compiletime_assert_537' declared with attribute error: FIELD_PREP:
-> value too large for the field
->   _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
->                                       ^
-> include/linux/compiler_types.h:523:4: note: in definition of macro
-> '__compiletime_assert'
->     prefix ## suffix();    \
->     ^~~~~~
-> include/linux/compiler_types.h:542:2: note: in expansion of macro
-> '_compiletime_assert'
->   _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
->   ^~~~~~~~~~~~~~~~~~~
-> include/linux/build_bug.h:39:37: note: in expansion of macro
-> 'compiletime_assert'
->  #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
->                                      ^~~~~~~~~~~~~~~~~~
-> include/linux/bitfield.h:68:3: note: in expansion of macro 'BUILD_BUG_ON_MSG'
->    BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?  \
->    ^~~~~~~~~~~~~~~~
-> include/linux/bitfield.h:115:3: note: in expansion of macro '__BF_FIELD_CHECK'
->    __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: "); \
->    ^~~~~~~~~~~~~~~~
-> drivers/phy/freescale/phy-fsl-samsung-hdmi.c:344:9: note: in expansion
-> of macro 'FIELD_PREP'
->   writeb(FIELD_PREP(REG12_CK_DIV_MASK, div), phy->regs + PHY_REG(12));
->          ^~~~~~~~~~
-> make[6]: *** [scripts/Makefile.build:196:
-> drivers/phy/freescale/phy-fsl-samsung-hdmi.o] Error 1
+> And 6.6.y too!
 
-Offending commit now dropped from 6.13.y and 6.12.y, thanks.
+Thanks, let me drop it from all stable queues now and I'll push out some
+-rc2 releases.
 
 greg k-h
