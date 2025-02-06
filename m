@@ -1,121 +1,103 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CDE1DF96E
-	for <patches@lists.linux.dev>; Thu,  6 Feb 2025 22:09:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F462417E2;
+	Thu,  6 Feb 2025 23:20:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738879766; cv=none; b=Ldt0u7WnOMKnO4GbAvMkm5FgvgOBjkYwDNZGiM56W+2QIYiNT7dHbeo/sly8CPkdDCyTUVHfj+clPfkJjNZ6IwFn0K4CZqdIuTsUwIkXU2OWQGhMjR7A5q9wozcDYJwzEFE5TsXL79+1od/0Vo9VAl22btKNbqEktVZeveZFlFM=
+	t=1738884041; cv=none; b=O+ayjn3DV8anUexpSWFWP2vfiAzUaTyrET/1mVnTmF/kdGVjTALfSfHHg+/8vttkCPlpP9QpnPM+oNV5rDtSaaxPN5lUDrccx9e2DmL8BTVfPizxwIpUtoSmp43b9YbcRDWvmNuMO+L9xN+NZUNFj62MLd8kcmL88qQ6pOBBqQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738879766; c=relaxed/simple;
-	bh=v8Cb/I97cbYSHojVbzWOcSDJMzlNFCCIVvXaYBcMZxI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MXBDp0Hjqzj1QCaQ+hUAr/vThx+eE5Ou5l3UDYHLBw8L+a0PpCz+ds/lE8wbFtFXMTkOS+t+sM54giVAxUoVaD5HCCCdDmOZpu3tv69YzVlGGu7DDGkJaNmReEeld1GJDq5LIfZviqHtFmUoBN180++5DedVNN4rs/2IUzrVDhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=iS+Zd650; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	s=arc-20240116; t=1738884041; c=relaxed/simple;
+	bh=hVCqKIDkPNn9wFCajGktnwPggu83Hd0xI4FypnD5poU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HAtZ9h9k+Z1/bGpOI92/T9S2tP5OfRHqCv+28+gCcm1RzrFutLav1s9AJ0LFE8d2zRK2fwydYrYbqxfq+kpQje63zblNCY5qIbY9qOcNYeUs/CR1n7RghXCeoxRvKnxA82VVlV38m3D0DswnCAIFyeM3GXbOrFZBqG1WDjiSGiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uuYZuu0B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="iS+Zd650"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21f49bd087cso10620995ad.0
-        for <patches@lists.linux.dev>; Thu, 06 Feb 2025 14:09:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl.com; s=google; t=1738879764; x=1739484564; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YowFV95RzqYpXXncaW4VNnhPzNA0mgUHkVJDlV/Z4no=;
-        b=iS+Zd650gdb5lwODRgUBclnmfHrcQyutmP4tY+0Tc0jsTZOgHzvozLtW75Dmgo6FFE
-         IdZ4WEVC/j5vD9NGOuOWL8JByMBJKZysl8UtzKsJ3L8c2vIrm3GEo7RGTpWCtqs7gYDy
-         FUkjxWgZ2TpXy6otkfA2MB2HT6p4+gbR2ZVI2GDX+WE+zK2Z1wns/I0v1uGPfP4MiBAf
-         ceirXvFwjt48GlwlqLjb/e01ukccgFBjZ3qIz3lxiMu8FF+kD/j0+Dj9OSDBwCpNAimB
-         lV6ZMdNQU4+AvHqcUWs2RviYU1o+mtkomLxo9dg1Luiq1YHHFbvPJkt6vU76lIuv1e2P
-         9xcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738879764; x=1739484564;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YowFV95RzqYpXXncaW4VNnhPzNA0mgUHkVJDlV/Z4no=;
-        b=vYXLL5nlzTejB0plgwygduLyvOh/zZxZMRPA4nRz9bG6BAW0BjWzzL8Bj4uoiX86uI
-         bjCqrPi9+Rpy2Z77dAWP6KIzgxg/yCIMejdnEUD/mOFs9jzPmzTzr6oJS1X/svu2mbrg
-         bhXHWJnBdt9kCXOvaEj7cXhscB8uIF39RTsTaUC68QsYP+9ProwyegnMUBipeePaVmio
-         eVH/FqVcJRbGkxEmmBqZ+doAOgrgAZEaa1dPuG+BEv0TXurS4RDww22XS6mgHbFGlORL
-         +PXGHjeV1xCRwIRhvUtn+7gt0qaRTapFqmVfyoIy7rd9VGREBOmz9UYqLf5eH67Ariel
-         b05A==
-X-Forwarded-Encrypted: i=1; AJvYcCUuzh058n+IOEO/d5strjxhY59HWLLhCgo02fmyqt+5wq+JlL6d5IpR1LExTfDDAYJU2qx5oUdY@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz9X9XJtJlMF7C7rktkc2CaWnsYYwUrH468TYjIJV/+X3nR+8hg
-	JhlrSY1yYssCKqA1Nc53tbQQLlLh2EhO3P4Fls9xLf+lA9CilDRboKaSe7s+r3vMOi4O/TAjrAN
-	FXKDvsnnvGHlFdaPwxH/B+bOWbJL49v4pC8xO3Q==
-X-Gm-Gg: ASbGncsiCV6qKgl7nHQwidwLWTBh5A4Go/mIBQ1GbHGRlWkrF+g08YYqO1wD826qyKN
-	FRca8Myg/jTFHLHO3FCfYsERXU2Q1SxbkAU73L4RUAw1npU/i9Q3aL0KhoZjJ5Q5Z3kvgKg==
-X-Google-Smtp-Source: AGHT+IHVA3aLLUHBjvM7tBiT/JAeRIG715XqkMU23ZlOgaA1/IPqLSTPkVNA5hE3GgpS2Sq6STuEQ8GQr00qCN1MoNE=
-X-Received: by 2002:a17:903:2a86:b0:212:6187:6a76 with SMTP id
- d9443c01a7336-21f4e6afbccmr15332045ad.14.1738879764518; Thu, 06 Feb 2025
- 14:09:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uuYZuu0B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDDCC4CEDF;
+	Thu,  6 Feb 2025 23:20:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1738884039;
+	bh=hVCqKIDkPNn9wFCajGktnwPggu83Hd0xI4FypnD5poU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=uuYZuu0Bjb+THpnDG4ki+arsS5mqxWemPkD4j5kYtNoExQUYkqwbL7bTTCrE9wcUa
+	 fniOZYvdGyl8uh3OSHFzDkt/UVJYFPe0WxModo68/+6eBhYIOyVB3xeKRNEmQg5dK8
+	 qhfe+wEarulaIayG3A4KV0yMNHQHJxy2U2PodOmoNJkouS0Qxgja8+VdGENcaYz4sQ
+	 cewRRmQ3f+bfSBlCVC8l5oZkfPMtCb+28BQNXnr9QRV1NxO1k9rbK6azjFCkEjBk+k
+	 tb1wBGn57d+N/l+SyC2mN4OSiMb7MmV558uMsmF1FYV+57tHZTNSERVNWHUuXlIBdz
+	 M5SdeRa8+FpoA==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Yutaro Ohno <yutaro.ono.418@gmail.com>,
+	stable@vger.kernel.org
+Subject: [PATCH] rust: rbtree: fix overindented list item
+Date: Fri,  7 Feb 2025 00:20:22 +0100
+Message-ID: <20250206232022.599998-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250206160711.563887287@linuxfoundation.org>
-In-Reply-To: <20250206160711.563887287@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Fri, 7 Feb 2025 07:09:13 +0900
-X-Gm-Features: AWEUYZkqc_QFPDa0cmxptap1fL55qjlShAz2QJJR1zciPi5pSP-77julnD_XuYc
-Message-ID: <CAKL4bV5Ks9OCh8SrgkoF=UrK3KW+POAXOD77L1kD0P9fOiNC4w@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/583] 6.12.13-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Greg
+Starting with Rust 1.86.0 (to be released 2025-04-03), Clippy will have
+a new lint, `doc_overindented_list_items` [1], which catches cases of
+overindented list items.
 
-On Fri, Feb 7, 2025 at 1:11=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.12.13 release.
-> There are 583 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 08 Feb 2025 16:05:14 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.12.13-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.12.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+The lint has been added by Yutaro Ohno, based on feedback from the kernel
+[2] on a patch that fixed a similar case -- commit 0c5928deada1 ("rust:
+block: fix formatting in GenDisk doc").
 
-6.12.13-rc2 tested.
+Clippy reports a single case in the kernel, apart from the one already
+fixed in the commit above:
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+    error: doc list item overindented
+        --> rust/kernel/rbtree.rs:1152:5
+         |
+    1152 | ///     null, it is a pointer to the root of the [`RBTree`].
+         |     ^^^^ help: try using `  ` (2 spaces)
+         |
+         = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#doc_overindented_list_items
+         = note: `-D clippy::doc-overindented-list-items` implied by `-D warnings`
+         = help: to override `-D warnings` add `#[allow(clippy::doc_overindented_list_items)]`
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+Thus clean it up.
 
-[    0.000000] Linux version 6.12.13-rc2rv
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.2.1 20250128, GNU ld (GNU
-Binutils) 2.43.1) #1 SMP PREEMPT_DYNAMIC Fri Feb  7 06:24:00 JST 2025
+Cc: Yutaro Ohno <yutaro.ono.418@gmail.com>
+Cc: <stable@vger.kernel.org> # Needed in 6.12.y and 6.13.y only (Rust is pinned in older LTSs).
+Fixes: a335e9591404 ("rust: rbtree: add `RBTree::entry`")
+Link: https://github.com/rust-lang/rust-clippy/pull/13711 [1]
+Link: https://github.com/rust-lang/rust-clippy/issues/13601 [2]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/kernel/rbtree.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks
+diff --git a/rust/kernel/rbtree.rs b/rust/kernel/rbtree.rs
+index ee2731dad72d..0d1e75810664 100644
+--- a/rust/kernel/rbtree.rs
++++ b/rust/kernel/rbtree.rs
+@@ -1149,7 +1149,7 @@ pub struct VacantEntry<'a, K, V> {
+ /// # Invariants
+ /// - `parent` may be null if the new node becomes the root.
+ /// - `child_field_of_parent` is a valid pointer to the left-child or right-child of `parent`. If `parent` is
+-///     null, it is a pointer to the root of the [`RBTree`].
++///   null, it is a pointer to the root of the [`RBTree`].
+ struct RawVacantEntry<'a, K, V> {
+     rbtree: *mut RBTree<K, V>,
+     /// The node that will become the parent of the new node if we insert one.
+-- 
+2.48.1
 
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
