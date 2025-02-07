@@ -1,120 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEA8155321;
-	Fri,  7 Feb 2025 06:35:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48EA8610D
+	for <patches@lists.linux.dev>; Fri,  7 Feb 2025 09:35:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738910129; cv=none; b=W7M3Mpx+0ezKcX32GJ6gEhrsSyTz9Qt7egCv63QCIlFwCqpRoLYEQl+O3hnE6ZvYyu9uEIM9E9ih8Y0W6vNadgqsal7x2oXycsPpF9YCK846cMEt3qt4+jSb1Kia20MU3PeSsWCQXmUbNDY3THTypRgE7ibiZBXmeS+fGUw/8h0=
+	t=1738920907; cv=none; b=XbEzvnzjiTU99V9sUE1vefTheOqfTHCaq1/MGQSM5eEWavspNhdiKR+pXzKsoo1YaUohaf/tSX3YFIbP5pBjzKMkAFEQZHPz+J2JUl8E6xrfv2p6mlCY2zEu7j7D30gF+QR8PHr6fcyq0jwGtCaY7ufPEoBGPyptrhybmots0L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738910129; c=relaxed/simple;
-	bh=Hr2hxBUP9CGFhueHQRLcFX84CfhjO6lfQcRm0YWQzeY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LInrXMWzYWnHsJY5EUb22kmader+qZU5HW931DVQF7ejhqYXgXokgPQZwKhsSu/N2lLj9tp29shMe5JPa1SwBLWP/zGnduRJoZIecaQS9sxqeOnml9mPxIj4X9ot6Em1EcOwWSN/1enhc9ZCoEDIs6f4AD0e8UU9FjBK0MVSWfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XX43kpRB; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1738920907; c=relaxed/simple;
+	bh=WpzvF9szQZoGnzPsK8JGH5qUWtlXbF0BSAjLUqm0mEw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hR9gqFc+c63KT2+G84j9yDcbmwsGIUtCRonXIhZi2mrLXWliLYF27r+e6MFBROsQt9RA/SOcT6j3ShiQzo/rGTdu16fv89hvwT56BG5itBI3P0svIBAJ4q+fdGJQr+TnNxSXD5wP0DTFBLDz6WZ6vJOxtNOR+S7UqkaGetFMZ0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Nx9DNaNX; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XX43kpRB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B27C4CED1;
-	Fri,  7 Feb 2025 06:35:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738910128;
-	bh=Hr2hxBUP9CGFhueHQRLcFX84CfhjO6lfQcRm0YWQzeY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XX43kpRBMAu97OgxVTlJ5XlN6/V5XPTp2L6evYqhvIru7C8nOtzeOC+6RA5iJcYGj
-	 D2hFAOpN3dGBB2zGdopaeEys1Nxuz2oRKZUHIgJDVNKwuSfyBi2L2D9XYTW8T3VkQ/
-	 GGIiA35qqPDt+08oesIqdB5kc7W5L8tLpafd90zvXRrlgMQ/1f2nQNthXTFV45xcz/
-	 tJi/cnY0fpmxchByDFw/t6yu6FUqKx8iEpIZR+7i0FWkiyxCk+I4iQOK4x/mjUC1s9
-	 gHLKuOVKniHdwywh5KbHeW1fs1YOsmFxk4UHIBA5TLjeaV5xVvNwbtC9ONTwX3X3B5
-	 r/e45XUBu6g0g==
-Message-ID: <49b5285c-3d28-444d-b232-b6a8525a9341@kernel.org>
-Date: Fri, 7 Feb 2025 07:35:23 +0100
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Nx9DNaNX"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4362f61757fso17990975e9.2
+        for <patches@lists.linux.dev>; Fri, 07 Feb 2025 01:35:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1738920903; x=1739525703; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2480EBnA/WUX+Abw4NwvBh7SdyU1bom5NZ1qUtPF8aE=;
+        b=Nx9DNaNXOVhv8oELsiqKKwgnFBJJFy5uPQUppyXXynX9bG2ViheC/KqkXAvF5LHQZY
+         nDm6Mg/tyBQrZInlOxOaVu3xxjMJdO1ER0NS+VRKoQIH/n1iC0vNd4jLJ+X2t+J+KvP9
+         GKBrNls/ukz1EHsvgsi7d7cjLJki8V28+eipfinUsOO3n8g/uHAsvByqA5bkGgDwHPkH
+         Rk8H94dpXK/B4/SoPLhRynNfaRVM+3nbJ8JpbbbtfNjCEEnVSjhJ3Hws9yxx9RIuZMRS
+         b6c2cSY0NGzwwt46PXHGL5GZppNLv2xiIOUKIv21h1GHkXgWlfjETuGr2b7iYPTR2GgL
+         JqXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738920903; x=1739525703;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2480EBnA/WUX+Abw4NwvBh7SdyU1bom5NZ1qUtPF8aE=;
+        b=REgtrK32eWe3eQOB4NngxoXH4hFBPLmUBcxXFDerGlrZmUO/aLjIvdaXQXw9Ao31Co
+         M+VFuMW8cUopMixuzE0CV/ICG0+RqYYPWtUks0VACZYwC2UPOmyHe8HlWIL9jO3B1cPX
+         QJLCsjohNCnASk93wgzN7Ad9r6DAd5kdc6H5NOePeHvvE0ObsPtPY8v3n6MR8EMtXH7X
+         AvhLoBKY/leYBnLxqYTFI0XU8VY2Mt6ftNs98hBN+iTWZw24CCu8FzgNV2iBT9YdYMpn
+         Ioowv3Do+9ZVIs7esk3p4k/BaI3GEUllba7loEDhGpT+Q1j6uISwarlHA1NLVUrYsevg
+         e0Cg==
+X-Forwarded-Encrypted: i=1; AJvYcCXM6G0GezlAs4hx/QFhURvqvYQyD5JpULJzeOmGDf9yRxcJFxbrQGJgtznhWGqBHIFPHQ7vknO0@lists.linux.dev
+X-Gm-Message-State: AOJu0YwkbvJReJj8GQy5YXSTQVe2dt5259LwBtb/rqPgDeE7aaFc4LiH
+	6KSACl1j+/vLBlotcKISmpjiLhBQPw1VhKjSbLFWSLAk8bw6vz7TnlPDbJtEvBMJCbb1VE22U6r
+	SlpDP7tdLI8xSP/pgdq4MPBzZMgwlBX72/zQL
+X-Gm-Gg: ASbGncsGoD9DGFNdGnuLOs/oZ4fVLcbycRhEu6IdvZ+veVC7QfLo9xcpJWUMTJPcLNO
+	WQU+pAnITkojQDSVxAjuGfQPFdZsBKdV4r72mKAYWw8EpUDdIDzLh7SzqP/PFTGXptSgjlOmpdY
+	HOrkKoTgJ6QZ5d0eLZeRY4Cp+dKu8=
+X-Google-Smtp-Source: AGHT+IGhUSNu9zvLoiFSofDY0OMxcNSFAl8TddmlA05himP+cOcm5XjI5yjsyVV0T3Kj//6iMl8vsfnlp3YycnJZYfQ=
+X-Received: by 2002:a05:600c:1d96:b0:431:12a8:7f1a with SMTP id
+ 5b1f17b1804b1-43924991035mr24650525e9.16.1738920903421; Fri, 07 Feb 2025
+ 01:35:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.13 000/619] 6.13.2-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250206160718.019272260@linuxfoundation.org>
-Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
-Autocrypt: addr=jirislaby@kernel.org; keydata=
- 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
-In-Reply-To: <20250206160718.019272260@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20250206232022.599998-1-ojeda@kernel.org>
+In-Reply-To: <20250206232022.599998-1-ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Fri, 7 Feb 2025 10:34:51 +0100
+X-Gm-Features: AWEUYZmEX6j_hGQINsn4AjZPTMCvx9Pp7UkxCKUDf-6T5E1oNpjkEWdcnoNHXT4
+Message-ID: <CAH5fLgiJDrNPe4hT4HrpC+bcskWtBcZdcvAfdnqpY1eTHVWk0A@mail.gmail.com>
+Subject: Re: [PATCH] rust: rbtree: fix overindented list item
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Yutaro Ohno <yutaro.ono.418@gmail.com>, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 06. 02. 25, 17:11, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.13.2 release.
-> There are 619 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 08 Feb 2025 16:05:17 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.13.2-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.13.y
-> and the diffstat can be found below.
+On Fri, Feb 7, 2025 at 12:20=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> Starting with Rust 1.86.0 (to be released 2025-04-03), Clippy will have
+> a new lint, `doc_overindented_list_items` [1], which catches cases of
+> overindented list items.
+>
+> The lint has been added by Yutaro Ohno, based on feedback from the kernel
+> [2] on a patch that fixed a similar case -- commit 0c5928deada1 ("rust:
+> block: fix formatting in GenDisk doc").
+>
+> Clippy reports a single case in the kernel, apart from the one already
+> fixed in the commit above:
+>
+>     error: doc list item overindented
+>         --> rust/kernel/rbtree.rs:1152:5
+>          |
+>     1152 | ///     null, it is a pointer to the root of the [`RBTree`].
+>          |     ^^^^ help: try using `  ` (2 spaces)
+>          |
+>          =3D help: for further information visit https://rust-lang.github=
+.io/rust-clippy/master/index.html#doc_overindented_list_items
+>          =3D note: `-D clippy::doc-overindented-list-items` implied by `-=
+D warnings`
+>          =3D help: to override `-D warnings` add `#[allow(clippy::doc_ove=
+rindented_list_items)]`
+>
+> Thus clean it up.
+>
+> Cc: Yutaro Ohno <yutaro.ono.418@gmail.com>
+> Cc: <stable@vger.kernel.org> # Needed in 6.12.y and 6.13.y only (Rust is =
+pinned in older LTSs).
+> Fixes: a335e9591404 ("rust: rbtree: add `RBTree::entry`")
+> Link: https://github.com/rust-lang/rust-clippy/pull/13711 [1]
+> Link: https://github.com/rust-lang/rust-clippy/issues/13601 [2]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-openSUSE configs¹⁾ all green. x86_64 runs fine in qemu.
-
-Tested-by: Jiri Slaby <jirislaby@kernel.org>
-
-¹⁾ armv6hl armv7hl arm64 i386 ppc64 ppc64le riscv64 s390x x86_64
-
-thanks,
--- 
-js
-suse labs
-
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
