@@ -1,303 +1,302 @@
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2071.outbound.protection.outlook.com [40.107.220.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC661D79A5;
-	Sat,  8 Feb 2025 09:03:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.71
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739005425; cv=fail; b=lnPvfkyDNavvJZh9EGKvRkVuh2N8/oMZtEi2rPox/cnBTzqtmXu13qUNJweBrv1LTXiStG7PucuwB6x4SfPSVXJIChsc14OYcvH4dMD1RovuVdBkSv90YcshgKAAfRAyfnJqakmJc0Dgt+yU0dY4xW+iXpwZ91pwv0uTgUtdf6I=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739005425; c=relaxed/simple;
-	bh=tfK4keXP6Utitp47u6p0wIc2KYrP4j4XoE0qhPeKxgw=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rbjE+4WRRs8IzO4Ycuw5R8Cu0R5sdwyxdMNLZEsdyX08djAENYMUwq9rrxG3/rIgs4icjW9TcZXFcvldMnNIZ/BqAl9SaysgFt1Isyr1oQZSN78GIuBm5u0SXfo+dFOR9eePjtIP7HLZfPSWMoc8lJ833U7yD/vguOutoYi0FHo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=YB79Cekl; arc=fail smtp.client-ip=40.107.220.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7073E1B3929
+	for <patches@lists.linux.dev>; Sat,  8 Feb 2025 11:24:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1739013891; cv=none; b=ZOg9aujHY/L96OzJh3i5RNFGNoVvMXicdXF+0cG3oUeFr6Wv7HbM+erc2Y7qc8HjDiwNOUNEdvL4dJaVONXcB+Ts7KZd7vzkVP0U1cvd6J18pySI4wnQUU77pUtUtU9SdY8wguEIx3/ectT0WbcWtnC255QAAt+IJS7O5OQm18E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1739013891; c=relaxed/simple;
+	bh=QxCoR5fINOgaRG/7i/sZBWB8ob4zBL1L6L24kHwv/BM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P7jD/Z0k+FmI7QLYGh3L3IWQmnUaTVmP0NoqgQECv0lI3hahPGmjY+1kduq80Qlku2grapA/4uZbWicxqIm+RRDw+OSNVpb1DLMPYuhrzwGoQ2HeIeaITCBrOgHTm8j3wq+8FYzEZRNn4VOFVcdDSHhNQSjsVVVACqZl8J3E6jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XNGiLAdv; arc=none smtp.client-ip=209.85.222.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="YB79Cekl"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RSARF7Rv+/eyjOOsFYRcq12E89SeHwDJQM0xYfXpuYkEIPfo3b/fjIrfsvfqjCUhq8ZJpdQbHArnMWCjh7fxcEVlUgfIL2XLGOCL2GRJi3wlII/t0EfT3BmpN37QKtmt74kVTDd8EvgOsIwt9Rd6BUjcwnGTVAqsFtk+PHeSWN12UOxYFRVbRFIG1eKCnwhSLoZU+jWCPno/OH5D8BJvA592yOKTJvuhPOMb0c7oz6XFrrBSCthWq3W11UCl68W6AS5x5oZAKjdGtr7+VjJvZxkOX8rJiYpNquA/bFn8WSGMbnV0oJatZepKmtnTM3OIKwJy/PyjwPK2XQU7qtpcGA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=L1wQ1OlxyUNC6t/+EFekUqCIAmqr4wF1LuLBv5UCmok=;
- b=XeSpmntnH4zAQG7IwhZGEGRrQvyP5Jwx2OdDbmem2Q7HdZRpyhCYAVYzBUCiiD54E5xF9OeJNMUeZ4D0BOoieApo3ywmuvt5HqncQSX9mOXrl3AX5i/OdWs5PoQLWc1MoCXOMVOGzp2EkWzzI6wYSLo9h2NMWSidKB/FRjGN4RwOwLmD4o/OcPUCWxJL1/7+mLUsjbSaXMy8ct9dpoSQdTP2nwI3XsPu8Iki4feMCUzYK4SC2SKi73dSpzyaJ9YmddKZdE0J37KBVwJUoOf3u4NH2CLP3odNe/ehmRwwb2dSZWAAaJsXMTny6tSYZposvzdrdGrA90jO68SzBTHJ8A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=L1wQ1OlxyUNC6t/+EFekUqCIAmqr4wF1LuLBv5UCmok=;
- b=YB79CeklMcrzTuDGjDPmiHtNZK4MuUHvEZADu4jVcYgP517V32kXZqGsk3seOlNgev2tWwgV/aGrAl3oP5ul4qKq68OqTPdFViV8vDL8G7Jz23m5pnn83GKut4qTdpr+1+tWdQHei4f9kUtsUMMRuPNwtia8sHvXaqYKcFZzjA/FTBk7d6iRI7fjcY9Tz6DH4kZQqLH/MfggARL7HshAock54OjF93rFNdwFm9wMyUCkrfksO1SBqEJtW3FVHj5uUpkKhi0JFxbEf3dKKcaGYFnFdlNyWV3s4zs686eduol4ZbEHbMSk3vLe70XxkarNCnDPfBhzvvj7Cnf8Tu/GPg==
-Received: from DS7PR07CA0024.namprd07.prod.outlook.com (2603:10b6:5:3af::6) by
- PH7PR12MB7236.namprd12.prod.outlook.com (2603:10b6:510:207::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8422.12; Sat, 8 Feb
- 2025 09:03:38 +0000
-Received: from DS3PEPF000099D5.namprd04.prod.outlook.com
- (2603:10b6:5:3af:cafe::bf) by DS7PR07CA0024.outlook.office365.com
- (2603:10b6:5:3af::6) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8398.24 via Frontend Transport; Sat,
- 8 Feb 2025 09:03:38 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- DS3PEPF000099D5.mail.protection.outlook.com (10.167.17.6) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8398.14 via Frontend Transport; Sat, 8 Feb 2025 09:03:38 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Sat, 8 Feb 2025
- 01:03:22 -0800
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Sat, 8 Feb
- 2025 01:03:22 -0800
-Received: from Asurada-Nvidia.nvidia.com (10.127.8.12) by mail.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
- Transport; Sat, 8 Feb 2025 01:03:21 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: <jgg@nvidia.com>, <kevin.tian@intel.com>, <tglx@linutronix.de>,
-	<maz@kernel.org>
-CC: <joro@8bytes.org>, <will@kernel.org>, <robin.murphy@arm.com>,
-	<shuah@kernel.org>, <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-kselftest@vger.kernel.org>,
-	<eric.auger@redhat.com>, <baolu.lu@linux.intel.com>, <yi.l.liu@intel.com>,
-	<yury.norov@gmail.com>, <jacob.pan@linux.microsoft.com>,
-	<patches@lists.linux.dev>
-Subject: [PATCH v1 13/13] iommufd/selftest: Add coverage for IOMMU_OPTION_SW_MSI_START/SIZE
-Date: Sat, 8 Feb 2025 01:02:46 -0800
-Message-ID: <257ac74e767f29930aa47991224fab96f36c3899.1739005085.git.nicolinc@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1739005085.git.nicolinc@nvidia.com>
-References: <cover.1739005085.git.nicolinc@nvidia.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XNGiLAdv"
+Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-866faa61728so1521667241.2
+        for <patches@lists.linux.dev>; Sat, 08 Feb 2025 03:24:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739013888; x=1739618688; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=UR24c0ybsYSCT638vdO45F5vCET0OjoyBMHeBOmvILQ=;
+        b=XNGiLAdvBUgdS2UP8pI5kauyhURkXgoXafbYSyPiucSw9mxEFwmt3T2L7U9HT8t4uZ
+         RYBpqySqk0tYlwVtn/Mv/oWyItByaq1GIqaJFZhyGhMPBHfNwlGDz9yQ8FISHPv5lMib
+         +ov3t3Wf0NpdjWMfP88aPb63hnhX23EIyWR6NDKngcYTHy3HRkeVcsfySbG9DlBG6bB/
+         tMzeSE1OBFoxyVEZc1jogW0c6HfIiceqLN84Sb+kQdrlidgyEaZP/DQD/geXMKU4EfNU
+         C7Kf/4Ba+N9Dbgw1sQoPT4wMyYFnjDzUz8eRCkXBNkHXsHE8oLLRLmgMtXq89VYqdI0r
+         FgJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739013888; x=1739618688;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UR24c0ybsYSCT638vdO45F5vCET0OjoyBMHeBOmvILQ=;
+        b=fifrbcPyPIivzcxVcpWkmDcTRxHt+WpBT7deEZMdOMsRreFJwdRayJ/yWzGY6Kb0mx
+         zD4fw5RX8HApGqYWTYStqIK7p8AVOeBIFw28P2rwIu0MOZPP+ngUIn5AeHLT7P4rwxsz
+         tpQZXt9EFr7L5SFVqt8fVJHN3QQSCuWQtPtYuE6+PQytM/9uCGsMwbiO+CrsRM5xHrF6
+         TDj/2tZZU2orU+S5/+grjUAVZ7qvfy6SJceUMe6G+zMqW2HfpMXnrdRi/6pjOpnvLOla
+         K0EWcw6j6enzjU8FLy2vbhg8+P9lMhkzbZIRJ8XBQF7RozbVGw3J0AmcxPqD1RCa15Kw
+         cGLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV9uKKMN82rVYcgTLyse9jmoAn+sAgxtqsWq+TJXvUBeu8HeSZgnHMuHNLUSA8Gas/23+wwvUBg@lists.linux.dev
+X-Gm-Message-State: AOJu0YwtP5VY7cj5nuAyW2kD4mJik8LgYkoSyPNIaGCjiqfmHrA5XW30
+	duRNITNmdVAZpbw49kLz4wn+r9Ggi5QxFQB6Ms/0kNfoZqCnMqNJ1ulz15Qq2rQBK28MYTIMRHJ
+	195DprJoV8wTtbIGZjFox8SJoqCSSqx3LXP/2OQ==
+X-Gm-Gg: ASbGncsrHuTB4sENGUlW6RMp3jIBQHRY+nh8RJkyVNL1OkPurbHO7yd4RS/+ZPbSNVv
+	K5721e4Ne33wvVXZzPTbmXSwucueRIW+XLPiozN8hlcQT8qny1tShgV3TgWMpoLLaEcqO3AJ78N
+	+3vBodouIjVegtko9RxdeXH7XP/qqXGg==
+X-Google-Smtp-Source: AGHT+IF1RRMD7eUyWSo4zZ0nuD/PcQtH1/GOoYgWE/A3nO7nDenaKyW1khMDl4HonWSbq2qwn3LipNrUmvEW01Z/m7Y=
+X-Received: by 2002:a05:6102:32c6:b0:4b2:4877:2de4 with SMTP id
+ ada2fe7eead31-4ba85e55589mr5245989137.15.1739013888241; Sat, 08 Feb 2025
+ 03:24:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF000099D5:EE_|PH7PR12MB7236:EE_
-X-MS-Office365-Filtering-Correlation-Id: 68c58570-a574-4a3b-0efa-08dd481f79ea
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|82310400026|36860700013|7416014|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?ZsvpKbGLo0OursV4CLkUkdJL5llEiy/LwZXnOFpvLYzXG8hsYOGXz/9CzgxP?=
- =?us-ascii?Q?3+0yqG7IdoSieCoKb5TB0U3ngCCnBkJ6MHxtBVAE/5tq+D3ceuTNgHXGNkAn?=
- =?us-ascii?Q?gIBnAErdQP3zlla3SgabemgHkwik9XSu/Fdwk50xA+9YqY/Tmz0AGa9yIjkM?=
- =?us-ascii?Q?xaA+vrZu82fOgCyh/Er2CgspH6o3vCpxdyDeHwXaI2ZUNFmF+xi3L4tMaOMH?=
- =?us-ascii?Q?+fCGCDle3yJl838ADe7Zi4Iioj9qTNPYG7tGk8g77VjJQwXRgbTHIvwK7Kuk?=
- =?us-ascii?Q?DekYyBoUzu8Ffg9RSRExh6KQYsBQv51/PwVkzBUNAYAIz+l2NnFOUm2sluMf?=
- =?us-ascii?Q?x82MVkU9rUPhuCX0M3EF8NQxwqLiQl9701CRg3UzKi7v5JIH8pE9p2rZsBAd?=
- =?us-ascii?Q?OVa+VBjnJ1uDRXOj1nuj0ypVopVQni1p6OJ4fh3BLMaMF6ng7YiIBjU7+sTZ?=
- =?us-ascii?Q?/7q36ZBYnXunQhvS3asZLtI+GY1x1a8mJUjTE27UdCdOGrj++CZYpzkq1dax?=
- =?us-ascii?Q?HrnpMO63HCkXVyK/9Nqp7qfgDvtZ7xTzuYzxi6zGo1NNAuZLqVO0tFnH3Byc?=
- =?us-ascii?Q?AeTiMRPS5fhdj1DZVFc2rW4by5Cr7ULrNOA/CqrQ4VeDN02IWfPyDikIixxD?=
- =?us-ascii?Q?e3jJcjtdhP+VYi9YNu7focSKOg3HMflRUuXdfTumInm5RRt1QgujSdrh2N2A?=
- =?us-ascii?Q?TQAy7PGYlunQ8FMxUlc2RhUHMvZ531F3FRPj5i4FuNz2pUDODQz6ofn9W/k2?=
- =?us-ascii?Q?U4OZlS9v3lBBXpccNAq0WdtWeNuqm+c//JLShiT0gCrfQ19WPlpDSRBAls6T?=
- =?us-ascii?Q?oMdb6b4pFYVeUwd0OfAKmXsBps+I6bl5w08+0Bqmg0QMUMUr/tmAow3PDxT0?=
- =?us-ascii?Q?Xqy2Hw2VSY2rOS7x+IdlKDM08IEupfTkn4GNiKlXkj5UtF0MG2prWewAgJSw?=
- =?us-ascii?Q?w+jUjHVvvTO69lwPjGAaUBJXc8kQ7tLlDufkvst1hFAo3mxCQcJKsEeJ+ANG?=
- =?us-ascii?Q?0gb2Ux1hWvpBxbMj2RKY/2hDJpzcDVGWOcYIcloxNwxbUlhuWwdQE0kpS7ol?=
- =?us-ascii?Q?2EGhgklPXNWACSwj+i4LawYi3P5CxFy/dp0wiXSMTK2OnFCMSKFy+BMXH8g3?=
- =?us-ascii?Q?N5K1Zr6f+PnX9o0JUah6KGMcwD6zLElVhlbDGXqzUm6YhXXP1BxGWOhTZBcX?=
- =?us-ascii?Q?DXk5JuAmJjKXZeDVuGotXdjPj/vgW2nwtE4Q6YD0ugtM9DRQ0IQYuqAaNrXN?=
- =?us-ascii?Q?JEIcM1AcHksRgPPHLBGQtP+edLkPn3xdi7oOxBcaDV4DiUQzHhhB5dnQ4JRd?=
- =?us-ascii?Q?Y/3hlffOexyDAOPp6imf3tqfxJmzHcwhKq+9K9QRozizzvQbQNO3AvXdBNRc?=
- =?us-ascii?Q?mm/cliO5jkRqnl3+PRK1UFq/7KKs08OYO7Wx+8OpLNih1x0PNCF2LqL5bKZW?=
- =?us-ascii?Q?7M7lbXXmetgB8SzCHdjKjVRgI5x5bYOuzvQjqV4SzFTp7URwUTHJejSf9PI3?=
- =?us-ascii?Q?/SrKmsi6E0eCZR4=3D?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(376014)(82310400026)(36860700013)(7416014)(1800799024);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Feb 2025 09:03:38.1640
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 68c58570-a574-4a3b-0efa-08dd481f79ea
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DS3PEPF000099D5.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7236
+References: <20250206155234.095034647@linuxfoundation.org>
+In-Reply-To: <20250206155234.095034647@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Sat, 8 Feb 2025 16:54:36 +0530
+X-Gm-Features: AWEUYZkctiuP6MSaer6bJfW68j7DLMOLcCHAn7tCGTVoEJtcXFr3-AbwN1hwwf8
+Message-ID: <CA+G9fYvKzV=jo9AmKH2tJeLr0W8xyjxuVO-P+ZEBdou6C=mKUw@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/389] 6.6.76-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, Linux Crypto Mailing List <linux-crypto@vger.kernel.org>, 
+	linux-fsdevel@vger.kernel.org, linux-mm <linux-mm@kvack.org>, 
+	Anders Roxell <anders.roxell@linaro.org>, Dan Carpenter <dan.carpenter@linaro.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Herbert Xu <herbert@gondor.apana.org.au>, willy@infradead.org, 
+	Pankaj Raghav <p.raghav@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Also add fail_nth coverage too.
+On Thu, 6 Feb 2025 at 21:36, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.76 release.
+> There are 389 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 08 Feb 2025 15:51:12 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.76-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
----
- tools/testing/selftests/iommu/iommufd.c       | 97 +++++++++++++++++++
- .../selftests/iommu/iommufd_fail_nth.c        | 21 ++++
- 2 files changed, 118 insertions(+)
 
-diff --git a/tools/testing/selftests/iommu/iommufd.c b/tools/testing/selftests/iommu/iommufd.c
-index a1b2b657999d..db7dfc5ae56a 100644
---- a/tools/testing/selftests/iommu/iommufd.c
-+++ b/tools/testing/selftests/iommu/iommufd.c
-@@ -334,6 +334,103 @@ TEST_F(change_process, basic)
- 	ASSERT_EQ(child, waitpid(child, NULL, 0));
- }
- 
-+FIXTURE(iommufd_sw_msi)
-+{
-+	int fd;
-+	uint32_t ioas_id;
-+	uint32_t idev_id[2];
-+};
-+
-+FIXTURE_SETUP(iommufd_sw_msi)
-+{
-+	self->fd = open("/dev/iommu", O_RDWR);
-+	ASSERT_NE(-1, self->fd);
-+
-+	test_ioctl_ioas_alloc(&self->ioas_id);
-+	test_cmd_mock_domain(self->ioas_id, NULL, NULL, &self->idev_id[0]);
-+	test_cmd_mock_domain_flags(self->ioas_id, MOCK_FLAGS_DEVICE_NO_ATTACH,
-+				   NULL, NULL, &self->idev_id[1]);
-+}
-+
-+FIXTURE_TEARDOWN(iommufd_sw_msi)
-+{
-+	teardown_iommufd(self->fd, _metadata);
-+}
-+
-+TEST_F(iommufd_sw_msi, basic)
-+{
-+	struct iommu_option cmd = {
-+		.size = sizeof(cmd),
-+		.op = IOMMU_OPTION_OP_SET,
-+	};
-+
-+	/* Negative case: object_id must be a device id */
-+	cmd.object_id = self->ioas_id;
-+	cmd.option_id = IOMMU_OPTION_SW_MSI_START;
-+	cmd.val64 = 0x70000000;
-+	EXPECT_ERRNO(ENOENT, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+	cmd.object_id = 0;
-+	cmd.option_id = IOMMU_OPTION_SW_MSI_SIZE;
-+	cmd.val64 = 2;
-+	EXPECT_ERRNO(ENOENT, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+
-+	/* Negative case: device must not be attached already */
-+	if (self->idev_id[0]) {
-+		cmd.object_id = self->idev_id[0];
-+		cmd.option_id = IOMMU_OPTION_SW_MSI_START;
-+		cmd.val64 = 0x70000000;
-+		EXPECT_ERRNO(EBUSY, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+	}
-+
-+	/* Device attached to nothing */
-+	if (self->idev_id[1]) {
-+		/* Negative case: alignment failures */
-+		cmd.object_id = self->idev_id[1];
-+		cmd.option_id = IOMMU_OPTION_SW_MSI_START;
-+		cmd.val64 = 0x7fffffff;
-+		EXPECT_ERRNO(EINVAL, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+		cmd.val64 = 0x7fffff00;
-+		EXPECT_ERRNO(EINVAL, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+		cmd.val64 = 0x7fff0000;
-+		EXPECT_ERRNO(EINVAL, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+
-+		/* Negative case: overlap against [0x80000000, 0x80ffffff] */
-+		cmd.option_id = IOMMU_OPTION_SW_MSI_START;
-+		cmd.val64 = 0x80000000;
-+		EXPECT_ERRNO(EADDRINUSE, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+		cmd.val64 = 0x80400000;
-+		EXPECT_ERRNO(EADDRINUSE, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+		cmd.val64 = 0x80800000;
-+		EXPECT_ERRNO(EADDRINUSE, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+		cmd.val64 = 0x80c00000;
-+		EXPECT_ERRNO(EADDRINUSE, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+		/* Though an address that starts 1MB below will be okay ... */
-+		cmd.val64 = 0x7ff00000;
-+		ASSERT_EQ(0, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+		/* ... but not with a 2MB size */
-+		cmd.option_id = IOMMU_OPTION_SW_MSI_SIZE;
-+		cmd.val64 = 2;
-+		EXPECT_ERRNO(EADDRINUSE, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+
-+		/* Set a safe 2MB window */
-+		cmd.option_id = IOMMU_OPTION_SW_MSI_START;
-+		cmd.val64 = 0x70000000;
-+		ASSERT_EQ(0, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+		cmd.option_id = IOMMU_OPTION_SW_MSI_SIZE;
-+		cmd.val64 = 2;
-+		ASSERT_EQ(0, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+
-+		/* Read them back to verify */
-+		cmd.op = IOMMU_OPTION_OP_GET;
-+		cmd.option_id = IOMMU_OPTION_SW_MSI_START;
-+		ASSERT_EQ(0, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+		ASSERT_EQ(cmd.val64, 0x70000000);
-+		cmd.option_id = IOMMU_OPTION_SW_MSI_SIZE;
-+		ASSERT_EQ(0, ioctl(self->fd, IOMMU_OPTION, &cmd));
-+		ASSERT_EQ(cmd.val64, 2);
-+	}
-+}
-+
- FIXTURE(iommufd_ioas)
- {
- 	int fd;
-diff --git a/tools/testing/selftests/iommu/iommufd_fail_nth.c b/tools/testing/selftests/iommu/iommufd_fail_nth.c
-index 64b1f8e1b0cf..be0d7735dfeb 100644
---- a/tools/testing/selftests/iommu/iommufd_fail_nth.c
-+++ b/tools/testing/selftests/iommu/iommufd_fail_nth.c
-@@ -615,6 +615,10 @@ TEST_FAIL_NTH(basic_fail_nth, access_pin_domain)
- /* device.c */
- TEST_FAIL_NTH(basic_fail_nth, device)
- {
-+	struct iommu_option cmd = {
-+		.size = sizeof(cmd),
-+		.op = IOMMU_OPTION_OP_SET,
-+	};
- 	struct iommu_hwpt_selftest data = {
- 		.iotlb = IOMMU_TEST_IOTLB_DEFAULT,
- 	};
-@@ -624,6 +628,7 @@ TEST_FAIL_NTH(basic_fail_nth, device)
- 	uint32_t ioas_id;
- 	uint32_t ioas_id2;
- 	uint32_t stdev_id;
-+	uint32_t idev_id2;
- 	uint32_t idev_id;
- 	uint32_t hwpt_id;
- 	uint32_t viommu_id;
-@@ -692,6 +697,22 @@ TEST_FAIL_NTH(basic_fail_nth, device)
- 				 IOMMU_HWPT_DATA_SELFTEST, &data, sizeof(data)))
- 		return -1;
- 
-+	if (_test_cmd_mock_domain_flags(self->fd, ioas_id,
-+					MOCK_FLAGS_DEVICE_NO_ATTACH, NULL, NULL,
-+					&idev_id2))
-+		return -1;
-+
-+	cmd.object_id = idev_id2;
-+	cmd.option_id = IOMMU_OPTION_SW_MSI_START;
-+	cmd.val64 = 0x70000000;
-+	if (ioctl(self->fd, IOMMU_OPTION, &cmd))
-+		return -1;
-+
-+	cmd.option_id = IOMMU_OPTION_SW_MSI_SIZE;
-+	cmd.val64 = 2;
-+	if (ioctl(self->fd, IOMMU_OPTION, &cmd))
-+		return -1;
-+
- 	return 0;
- }
- 
--- 
-2.43.0
+There are three different regressions found and reporting here,
+We are working on bisecting and investigating these issues,
 
+1)
+Regression on qemu-arm64 and FVP noticed this kernel warning running
+selftests: arm64: check_hugetlb_options test case on 6.6.76-rc1 and
+6.6.76-rc2.
+
+Test regression: WARNING-arch-arm64-mm-copypage-copy_highpage
+
+------------[ cut here ]------------
+[   96.920028] WARNING: CPU: 1 PID: 3611 at
+arch/arm64/mm/copypage.c:29 copy_highpage
+(arch/arm64/include/asm/mte.h:87)
+[   96.922100] Modules linked in: crct10dif_ce sm3_ce sm3 sha3_ce
+sha512_ce sha512_arm64 fuse drm backlight ip_tables x_tables
+[   96.925603] CPU: 1 PID: 3611 Comm: check_hugetlb_o Not tainted 6.6.76-rc2 #1
+[   96.926956] Hardware name: linux,dummy-virt (DT)
+[   96.927695] pstate: 43402009 (nZcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[   96.928687] pc : copy_highpage (arch/arm64/include/asm/mte.h:87)
+[   96.929037] lr : copy_highpage
+(arch/arm64/include/asm/alternative-macros.h:232
+arch/arm64/include/asm/cpufeature.h:443
+arch/arm64/include/asm/cpufeature.h:504
+arch/arm64/include/asm/cpufeature.h:814 arch/arm64/mm/copypage.c:27)
+[   96.929399] sp : ffff800088aa3ab0
+[   96.930232] x29: ffff800088aa3ab0 x28: 00000000000001ff x27: 0000000000000000
+[   96.930784] x26: 0000000000000000 x25: 0000ffff9b800000 x24: 0000ffff9b9ff000
+[   96.931402] x23: fffffc0003257fc0 x22: ffff0000c95ff000 x21: ffff0000c93ff000
+[   96.932054] x20: fffffc0003257fc0 x19: fffffc000324ffc0 x18: 0000ffff9b800000
+[   96.933357] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+[   96.934091] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+[   96.935095] x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
+[   96.935982] x8 : 0bfffc0001800000 x7 : 0000000000000000 x6 : 0000000000000000
+[   96.936536] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000000
+[   96.937089] x2 : 0000000000000000 x1 : ffff0000c9600000 x0 : ffff0000c9400080
+[   96.939431] Call trace:
+[   96.939920] copy_highpage (arch/arm64/include/asm/mte.h:87)
+[   96.940443] copy_user_highpage (arch/arm64/mm/copypage.c:40)
+[   96.940963] copy_user_large_folio (mm/memory.c:5977 mm/memory.c:6109)
+[   96.941535] hugetlb_wp (mm/hugetlb.c:5701)
+[   96.941948] hugetlb_fault (mm/hugetlb.c:6237)
+[   96.942344] handle_mm_fault (mm/memory.c:5330)
+[   96.942794] do_page_fault (arch/arm64/mm/fault.c:513
+arch/arm64/mm/fault.c:626)
+[   96.943341] do_mem_abort (arch/arm64/mm/fault.c:846)
+[   96.943797] el0_da (arch/arm64/kernel/entry-common.c:133
+arch/arm64/kernel/entry-common.c:144
+arch/arm64/kernel/entry-common.c:547)
+[   96.944229] el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:0)
+[   96.944765] el0t_64_sync (arch/arm64/kernel/entry.S:599)
+[   96.945383] ---[ end trace 0000000000000000 ]---
+
+2)
+Regression on Gravition-V4 boot has noticed this kernel warning while
+booting the
+6.6.76-rc1 and 6.6.76-rc2.
+
+Boot regression: WARNING-crypto-testmgr-alg_test
+
+[   62.438009] ------------[ cut here ]------------
+[   62.440316] alg: self-tests for stdrng using drbg_nopr_hmac_sha512
+failed (rc=-22)
+[   62.440324] WARNING: CPU: 1 PID: 158 at crypto/testmgr.c:5936
+alg_test (crypto/testmgr.c:5936 (discriminator 1))
+[   62.443128] Modules linked in:
+[   62.443729] CPU: 1 PID: 158 Comm: cryptomgr_test Not tainted 6.6.76-rc2 #1
+[   62.445029] Hardware name: Amazon EC2 r8g.large/, BIOS 1.0 11/1/2018
+[   62.446248] pstate: 63400005 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[   62.447588] pc : alg_test (crypto/testmgr.c:5936 (discriminator 1))
+[   62.448306] lr : alg_test (crypto/testmgr.c:5936 (discriminator 1))
+[   62.449029] sp : ffff8000817c3d40
+[   62.449683] x29: ffff8000817c3d40 x28: ffffcf33cddf6388 x27: 0000000000000059
+[   62.451056] x26: 00000000ffffffea x25: 00000000ffffffff x24: ffffcf33cf699000
+[   62.452417] x23: ffffcf33cddf6388 x22: 000000000000000c x21: ffff0003c4627a80
+[   62.453786] x20: ffff0003c4627a00 x19: 0000000000000058 x18: 00000000fffffffe
+[   62.455163] x17: 72282064656c6961 x16: 6620323135616873 x15: ffff8000817c3950
+[   62.456545] x14: 0000000000000000 x13: 00000000000003f2 x12: 00000000ffffffea
+[   62.457927] x11: 00000000ffffefff x10: ffffcf33cf23d2d8 x9 : ffffcf33cf1e5278
+[   62.459319] x8 : 0000000000017fe8 x7 : c0000000ffffefff x6 : 0000000000057fa8
+[   62.460697] x5 : 0000000000000fff x4 : 0000000000000000 x3 : 0000000000000000
+[   62.462069] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0003c4697000
+[   62.463445] Call trace:
+[   62.463940] alg_test (crypto/testmgr.c:5936 (discriminator 1))
+[   62.464595] cryptomgr_test (crypto/algboss.c:182)
+[   62.465314] kthread (kernel/kthread.c:388)
+[   62.465920] ret_from_fork (arch/arm64/kernel/entry.S:862)
+[   62.466619] ---[ end trace 0000000000000000 ]---
+
+3)
+Regression on qemu-arm64 while running LTP fs fs_fill the following
+kernel warning found this was seen from the last rc round also.
+
+Boot regression: WARNING-fs-buffer-mark_buffer_dirty
+
+<3>[  942.039675] Buffer I/O error on dev loop0, logical block 153753,
+lost async page write
+<3>[  942.040482] I/O error, dev loop0, sector 1222152 op 0x1:(WRITE)
+flags 0x100000 phys_seg 1 prio class 2
+<3>[  942.041273] Buffer I/O error on dev loop0, logical block 152769,
+lost async page write
+<4>[  942.048676] ------------[ cut here ]------------
+<4>[ 942.051768] WARNING: CPU: 1 PID: 6290 at fs/buffer.c:1188
+mark_buffer_dirty (fs/buffer.c:0)
+<4>[  942.057394] Modules linked in: btrfs xor xor_neon raid6_pq
+zstd_compress libcrc32c tun crct10dif_ce sm3_ce sm3 sha3_ce sha512_ce
+sha512_arm64 fuse drm backlight ip_tables x_tables
+<4>[  942.068545] CPU: 1 PID: 6290 Comm: fs_fill Not tainted 6.6.76-rc2 #1
+<4>[  942.071224] Hardware name: linux,dummy-virt (DT)
+<4>[  942.074657] pstate: 83402009 (Nzcv daif +PAN -UAO +TCO +DIT
+-SSBS BTYPE=--)
+<4>[ 942.076823] pc : mark_buffer_dirty (fs/buffer.c:0)
+<4>[ 942.077221] lr : mark_buffer_dirty_inode (fs/buffer.c:682)
+<4>[  942.077523] sp : ffff8000822d3820
+<4>[  942.077766] x29: ffff8000822d3820 x28: 00000000000278f1 x27:
+0000000000000001
+<4>[  942.081352] x26: 0000000000000000 x25: 0000000000001000 x24:
+ffff8000822d38e0
+<4>[  942.081928] x23: ffff8000822d39bc x22: ffff8000822d3920 x21:
+ffff0000ce30d1d0
+<4>[  942.082381] x20: ffff0000c0480b78 x19: ffff0000fabb3a90 x18:
+00000059f17bbe9e
+<4>[  942.082841] x17: 0000000000000000 x16: 0000000000000000 x15:
+00000000c6a2c000
+<4>[  942.084209] x14: 0000000000000001 x13: ffff8000822d0000 x12:
+ffff8000822d4000
+<4>[  942.085009] x11: edcfb2436f68dc00 x10: 000000000000d84f x9 :
+ffffb9036e21ef44
+<4>[  942.085793] x8 : 0000000000000418 x7 : 00000000000275d8 x6 :
+ffff0000e2a98400
+<4>[  942.086706] x5 : ffff0000c77db560 x4 : 00000000ffffffff x3 :
+ffff8000822d3710
+<4>[  942.087819] x2 : ffff0000c29b4200 x1 : ffff0000ce30d058 x0 :
+ffff0000fabb3a90
+<4>[  942.091430] Call trace:
+<4>[ 942.093962] mark_buffer_dirty (fs/buffer.c:0)
+<4>[ 942.095407] ext2_get_blocks (fs/ext2/inode.c:602 fs/ext2/inode.c:765)
+<4>[ 942.097279] ext2_get_block (fs/ext2/inode.c:793)
+<4>[ 942.098201] __block_write_begin_int (fs/buffer.c:2127)
+<4>[ 942.098948] block_write_begin (fs/buffer.c:2235)
+<4>[ 942.099493] ext2_write_begin (fs/ext2/inode.c:924)
+<4>[ 942.099933] generic_perform_write (mm/filemap.c:4006)
+<4>[ 942.102488] __generic_file_write_iter (mm/filemap.c:0)
+<4>[ 942.103176] generic_file_write_iter (mm/filemap.c:4125)
+<4>[ 942.103607] ext2_file_write_iter (fs/ext2/file.c:0)
+<4>[ 942.104071] do_iter_write (fs/read_write.c:736 fs/read_write.c:860)
+<4>[ 942.104499] vfs_writev (fs/read_write.c:933)
+<4>[ 942.104901] do_writev (fs/read_write.c:976)
+<4>[ 942.105307] __arm64_sys_writev (fs/read_write.c:1046)
+<4>[ 942.105565] invoke_syscall (arch/arm64/kernel/syscall.c:52)
+<4>[ 942.106973] el0_svc_common (include/linux/thread_info.h:127
+arch/arm64/kernel/syscall.c:142)
+<4>[ 942.107316] do_el0_svc (arch/arm64/kernel/syscall.c:154)
+<4>[ 942.107639] el0_svc (arch/arm64/kernel/entry-common.c:133
+arch/arm64/kernel/entry-common.c:144
+arch/arm64/kernel/entry-common.c:679)
+<4>[ 942.110407] el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:731)
+<4>[ 942.111160] el0t_64_sync (arch/arm64/kernel/entry.S:599)
+<4>[  942.113215] ---[ end trace 0000000000000000 ]---
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Source
+* kernel version: 6.6.76-rc2
+* git tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+* git sha: e5534ef3ba233d5207312b032b12b1d3788e94ac
+* git describe: v6.6.75-390-ge5534ef3ba23
+* project details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.75-390-ge5534ef3ba23
+
+##Boot log fvp-aemva-qemu-arm64
+qemu-arm64 log:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.75-390-ge5534ef3ba23/testrun/27228347/suite/log-parser-test/test/exception-warning-cpu-pid-at-archarm64mmcopypage-copy_highpage/log
+fvp-aemva log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.75-390-ge5534ef3ba23/testrun/27228386/suite/log-parser-test/test/exception-warning-cpu-pid-at-archarm64mmcopypage-copy_highpage/log
+fvp-aemva details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.75-390-ge5534ef3ba23/testrun/27228386/suite/log-parser-test/test/exception-warning-cpu-pid-at-archarm64mmcopypage-copy_highpage/details/
+fvp-aemva-qemu-arm64 history:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.75-390-ge5534ef3ba23/testrun/27228347/suite/log-parser-test/test/exception-warning-cpu-pid-at-archarm64mmcopypage-copy_highpage/history/
+
+
+##Boot log graviton-v4
+graviton-v4 log:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.75-390-ge5534ef3ba23/testrun/27228382/suite/log-parser-test/test/warning-warning-0m1mcpu-pid-at-cryptotestmgr-alg_test/log
+graviton-v4 details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.75-390-ge5534ef3ba23/testrun/27228382/suite/log-parser-test/test/warning-warning-0m1mcpu-pid-at-cryptotestmgr-alg_test/details/
+gravition-v4 history:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.75-390-ge5534ef3ba23/testrun/27228382/suite/log-parser-test/test/warning-warning-0m1mcpu-pid-at-cryptotestmgr-alg_test/history/
+
+##Boot log qemu-arm64
+* build log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.75-390-ge5534ef3ba23/testrun/27228382/suite/log-parser-test/test/warning-warning-0m1mcpu-pid-at-cryptotestmgr-alg_test/details/
+qemu-arm64 fsbuffer details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.75-390-ge5534ef3ba23/testrun/27229114/suite/log-parser-test/test/exception-warning-cpu-pid-at-fsbuffer-mark_buffer_dirty/details/
+qemu-arm64 fsbuffer history:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.75-390-ge5534ef3ba23/testrun/27229261/suite/log-parser-test/test/exception-warning-cpu-pid-at-fsbuffer-mark_buffer_dirty/history/
+
+
+--
+Linaro LKFT
+https://lkft.linaro.org
