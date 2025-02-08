@@ -1,28 +1,28 @@
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2066.outbound.protection.outlook.com [40.107.100.66])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2085.outbound.protection.outlook.com [40.107.94.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A3A1A5B85;
-	Sat,  8 Feb 2025 09:03:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.100.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56F01AF0D0;
+	Sat,  8 Feb 2025 09:03:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.85
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739005404; cv=fail; b=cyGHT/WCE67N5j0QDJIYeJFL+Vrzu2JflRzZursEVqTGctxuKC5Wusosr34IkzmLxNDkkKPn5CZMkiRtM3CaN0/D3vxpHSNpERrFdq/9mOtn8LshfLelBR1dstRdqtT73XwRhX75atWtt3mVHmiQ12e7OPMWPVxtuL/shQ/GTu0=
+	t=1739005408; cv=fail; b=DkzHDmpRV3nFnNbKQAgxBXqzveMP9BXWzYH/hNIOWvFSyzNxoKhiyqayKnKy0gW14LQG2zvNOiEEuDFdZd6XFfJbKwXfK6AzHu2mynqR4VUjWHZf22bpHhQAcWlIoV+LDd88KnrkkTHvh/CKd87nIROAOoM161r4sYZlqSUo/5U=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739005404; c=relaxed/simple;
-	bh=FheWkBMhjruQgnxgg0RyItMCXEO72CKXmE09MXP65SU=;
+	s=arc-20240116; t=1739005408; c=relaxed/simple;
+	bh=d6+jF2U2ZWbLpVMIPJF+clrCop6SF8Vc8K1g1togajo=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TMDfxoBx5+OK9EkrtNXJ5ha2MYmykDfSrGhDTYeBhhDAkRoB/sO5abPTlaciAIj99akbr69YGZ/431aUP78d5tJd1QObPMksc3hLsQ+kLWM5CJXhjYB+2Nw1tV9F3Jki9y5+tRJ2gwrTn1x3y4FqlHXKVCq6B1QTYgYD1cSLr6o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=VVK+vxx0; arc=fail smtp.client-ip=40.107.100.66
+	 MIME-Version:Content-Type; b=Vhhzlku4V8V+75Cup2VptiTA5+BZFa4DswdJveppT2R9rS+R6/B2BxiW6BLX98HsmCxb0g/xW/dztKcYNZML/gtFOInECizmXwXygHwTfpBr+Bc6fs2VsQZp7cIJS0ftqOvtgZLMSRTDYkIlD6nulIz8ZFLDeUOw1FfkAaB85hQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=m3QosPRP; arc=fail smtp.client-ip=40.107.94.85
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="VVK+vxx0"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="m3QosPRP"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GNo5xzPHbnX7YUZ1A8oLyK/fBSjEqG+v6KR8iQ88T+f2UzXgtCQ/qOhZV6XiwIQezm7z7RMJrMQWTpyX23GRJ4JZBNLqldmCqaUpesGInAOpy2BKTf7on8vO0y1ZHgLk5lzE+G1uQ94tHnM+2LrmzKV+800eTcsaKN+bXtaneJbLo/nLj+0NFZ6xHRk7xa+SM5AevcACpS8kQKOT1lsG/hN8f7wmQ5sDtww9N0upHrUjbeBnHDWfKXCTqSx2KT7t71bnsjMfgUqkLWkgAyQtb+jSMgrpCz7H6H0XIh2169399KXeOD2QMs2ScFkN5647k+rVAZsl0MaI+VRQkr3bPg==
+ b=BGFThbxP2rZOaM4wyOIpiQy0TSxEpu6rJA9FWlaWNvaR05ewzPo2O5YqDgpnddGkarxF32j6aXIQ3L51yyo6+By+U6SYtwFJ4ZYaVYryVll7YXCpnWv6uRF23z2x9DNF7h/9iVzO4yqKwSXeyHj5k9OTuReMTwWXdWl6MmgAWV0JXJk/JFMQgJlKkGoUn3/sPNaSUOH8pz+HDDMXmP4UeYwS83gLkksVv8ePuaRXm+V2NhKbUZ+ruHN2cIeV3UW5BQ9U6ERGiCd8fpNeO82o54wzsDdSBVXnxJi5ub2SBwYeImAR3WFGM4T/WuP/ihGZVjvg0wzb5MMF+RmmOWX0ww==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=U/AmL8qaAGihw4P5IwftJNsywAVlmmaEhofPXsynnuY=;
- b=fWu8tbzl9zxrUkJmsThqQTT9FQI7snMXdlyukXNgJOk2Dhll8hig833ktPPpQcs9WlZTkTzYi1QbmiW/9VwoERGkW8OuMbUyGiY9/cKVCdNHVLMrfDm5wLoJI8g6kOcmwGwVnngA8AN0GeiYqMKPYnWg1AwBVbuWmyRmLdbD4pBQlrN9PTn8dIvZKKblJ9utYCCM6Byl2stOTon3Ygpij1fLyqZUahon2CLVJVzT3HCzTXoYt3QZaIAGq4VYRChw1j7+2fI0gegwocGYwXMLGQY28mcvDBAQ1e/Lobs4IQjeM3lRIgoITftf13relg87z/caAAfRzBeLNSS1XUUm2A==
+ bh=KuAVRcp0auQx3ZZIamlwFrjYBduj4Uc0fmVc7Uo0S8g=;
+ b=WkziUpoLY6Na+cRumz8bKISK4c/WnM7vUPRlf4jsxUuZ0bcGMczXG1CG8Ux5j3pXS+B/HYC5NeuONT0QlNChIYNKh3UB7tJP9Ii0hY3HsUl2Fw5sofZIaA7DsG4cLEsIyxeicf4NIEBujbP1+5y+YleBRhvq2zmNk/7EvFZ9ZZLQcOxdM1PYMuE1mVbeLAw1dNUUbVfG3xKuz+HLtLAFD7Xn2z911FfFs4a2jBdFL+geY5nPsCFSuCRHUeA8SoNHNk964iV7cb7Hp24/Bg5vnNqrriJuP3tYu69KgBwavgvnv0cYgdt9Z5DjWwy5N7zmIJOmPNBlf8q/8JxUCw0RwA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.117.160) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
@@ -30,18 +30,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=U/AmL8qaAGihw4P5IwftJNsywAVlmmaEhofPXsynnuY=;
- b=VVK+vxx0kaWlc+8WcjEQVm0qYXb4js429suBLNT8B1d7DFtIZsngxZmUSb7gaoAMpXXcgMbcFBywjWxCflucvmTSRaD7SCHCo0h6rppXx4FlPPIjNVrqhmFlnWQ1gRbrqFZiu2npj0Bb9wSmi2bsM/4nDYZ2a98PxqWSLbstasuLRpMPw4wdQLD4nL7uwjP/1RLeGghPfSD4SvS1K9ja9cib5s0vgSWZOdS11FEAcBA3LBZGjInKfDPPqDjsoAb8jDLVhw33UvuSY/dLvIjVzgmx0nQOs+Pz13CXKVceJx6X111WiN5fDINmdd7p0nAMj6OFy2aQoMrpXI0Vzl/K9w==
-Received: from DS7PR05CA0021.namprd05.prod.outlook.com (2603:10b6:5:3b9::26)
- by DS0PR12MB8503.namprd12.prod.outlook.com (2603:10b6:8:15a::10) with
+ bh=KuAVRcp0auQx3ZZIamlwFrjYBduj4Uc0fmVc7Uo0S8g=;
+ b=m3QosPRPGTtgoO2zVwQwUrKGmFakb5kLf+mQT+gseKiEifOdqE31CQ11o4IcA3zbxwZ6AweP1M1DFNCL2n6XhsSc7EQgRvS07adczSuc7lHtG+JUld/DS2ln8DX4ZTTWo0xl//CsXjafDufS7BW6qg4ywJk8k2glup4dHNUGTy2ducgZmoyNVFl71N0li6uYVfpFxiF8J3kb1LPJZ+FLK2TNTPVRXJVVTnOnbxUv9Aje7kBFcW43bDDXMGEbT8FM78Lvt67BHuxD+vioj08VOcQiciIHKVj4zwuYZfBjtqpGudimIHR8advTLwtNkjlQlBittWAnncmN/mJqOFD68w==
+Received: from DS7PR05CA0009.namprd05.prod.outlook.com (2603:10b6:5:3b9::14)
+ by IA1PR12MB7496.namprd12.prod.outlook.com (2603:10b6:208:418::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8422.16; Sat, 8 Feb
- 2025 09:03:17 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8422.11; Sat, 8 Feb
+ 2025 09:03:23 +0000
 Received: from DS3PEPF000099D5.namprd04.prod.outlook.com
- (2603:10b6:5:3b9:cafe::f2) by DS7PR05CA0021.outlook.office365.com
- (2603:10b6:5:3b9::26) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8445.6 via Frontend Transport; Sat, 8
- Feb 2025 09:03:17 +0000
+ (2603:10b6:5:3b9:cafe::93) by DS7PR05CA0009.outlook.office365.com
+ (2603:10b6:5:3b9::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8398.24 via Frontend Transport; Sat,
+ 8 Feb 2025 09:03:21 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
  smtp.mailfrom=nvidia.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
@@ -51,18 +51,18 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
 Received: from mail.nvidia.com (216.228.117.160) by
  DS3PEPF000099D5.mail.protection.outlook.com (10.167.17.6) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8398.14 via Frontend Transport; Sat, 8 Feb 2025 09:03:17 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ 15.20.8398.14 via Frontend Transport; Sat, 8 Feb 2025 09:03:21 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
  (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Sat, 8 Feb 2025
- 01:03:08 -0800
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ 01:03:12 -0800
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Sat, 8 Feb
- 2025 01:03:08 -0800
+ 2025 01:03:11 -0800
 Received: from Asurada-Nvidia.nvidia.com (10.127.8.12) by mail.nvidia.com
  (10.129.68.7) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
- Transport; Sat, 8 Feb 2025 01:03:07 -0800
+ Transport; Sat, 8 Feb 2025 01:03:10 -0800
 From: Nicolin Chen <nicolinc@nvidia.com>
 To: <jgg@nvidia.com>, <kevin.tian@intel.com>, <tglx@linutronix.de>,
 	<maz@kernel.org>
@@ -72,9 +72,9 @@ CC: <joro@8bytes.org>, <will@kernel.org>, <robin.murphy@arm.com>,
 	<eric.auger@redhat.com>, <baolu.lu@linux.intel.com>, <yi.l.liu@intel.com>,
 	<yury.norov@gmail.com>, <jacob.pan@linux.microsoft.com>,
 	<patches@lists.linux.dev>
-Subject: [PATCH v1 01/13] genirq/msi: Store the IOMMU IOVA directly in msi_desc instead of iommu_cookie
-Date: Sat, 8 Feb 2025 01:02:34 -0800
-Message-ID: <a580069c5e494ffffa668218b6fe3a207b01efec.1739005085.git.nicolinc@nvidia.com>
+Subject: [PATCH v1 04/13] irqchip: Have CONFIG_IRQ_MSI_IOMMU be selected by the irqchips that need it
+Date: Sat, 8 Feb 2025 01:02:37 -0800
+Message-ID: <ee2eb3c07b47b9ccde345852e2842ebe5b6d5eec.1739005085.git.nicolinc@nvidia.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1739005085.git.nicolinc@nvidia.com>
 References: <cover.1739005085.git.nicolinc@nvidia.com>
@@ -89,241 +89,133 @@ Content-Type: text/plain
 X-NV-OnPremToCloud: AnonymousSubmission
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF000099D5:EE_|DS0PR12MB8503:EE_
-X-MS-Office365-Filtering-Correlation-Id: b7aa029d-703c-446c-ef15-08dd481f6d9e
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099D5:EE_|IA1PR12MB7496:EE_
+X-MS-Office365-Filtering-Correlation-Id: af5c9531-7f21-43c3-0f4c-08dd481f6fe7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|7416014|82310400026|36860700013|1800799024;
+	BCL:0;ARA:13230040|1800799024|376014|7416014|36860700013|82310400026;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?PndUM65KHMprDwWHaCUjOyGs8hSf+37qo7tSlkXItXp0xmPUTYQ61uif+LLk?=
- =?us-ascii?Q?8lgXUc0KN2lCP5M4zkwW33XBgzHd/apv8i8JZqAgSYhSFWq0ffuLPLWxoK37?=
- =?us-ascii?Q?G0B2v/IaKL2zlfEh1uBIg/A0ylPXh+l3TTxje0HlGDJF6qzif42M0wf850Ld?=
- =?us-ascii?Q?3rzHGm/NUjkD+HZP83ujZIsFR5fX2PwuoDbpBFoPYuVJiHk6lFSpg/gtT45J?=
- =?us-ascii?Q?NcVBkzar+h8AeMEXlOHk+rXnlMwmenpjwGXKb6H6+komkfoKl9D8L1WA4Km0?=
- =?us-ascii?Q?mpc+DM28GMoiJdOSiQ2czWUPu9iN52f88FvBjfAhmupxDaS5HdPz12ZfPN/g?=
- =?us-ascii?Q?zuAKiNC/6+QNgvRouzNYPEozuU0HaLVjOi9QiAudbjiXk+0n6AAQca/BthtV?=
- =?us-ascii?Q?Fs89BKxsaqfsZ0arA0VmItgI3xmn+p0uew2IHoGP0C5fTt3tHnbHuZJk5QkB?=
- =?us-ascii?Q?FHjln8v0xmvQ+8nYRrLSq4GeMeHWeKvf0rcX0f71EJiaKIGywxxVE+Son1GZ?=
- =?us-ascii?Q?Ev2BpU/P9jNHZLJyIBaIt3ADBw0LP7YveRHCi3DzV7UVAT0PVuYdn6yCzZBh?=
- =?us-ascii?Q?O8dmWrE4DrXZYLbKz991WDkj/RGl+mGxGYPjU0tvjYyqTA9vX0ynUHm0oq/d?=
- =?us-ascii?Q?Up1pObzgmj+czxwaFlniLYl0SebLsVck4ltUjt0gbY0U7EKKiQK7jtgG7TS9?=
- =?us-ascii?Q?8QYB/xpX58Y+UePR5jiSLxopo5j0WWGGLg9RQBYmEcrhrwxJoAnPfG2cw5NC?=
- =?us-ascii?Q?OSB0F7a0U1BX8KafqLRkEa2cPtqpb49uuySVcHAIF4n/rUG+tEIRRD1Aoo9X?=
- =?us-ascii?Q?lHuBepeSHJaPc70FK36yw523iSMH2LEUP+U9Bu5rc7XBA9m6I3mi2G/b5llj?=
- =?us-ascii?Q?wNxXjGDeHhldXZk7axtl6enamSdqLdY1CiNtBHyfFbEzORU5iRBF0UmaBmUp?=
- =?us-ascii?Q?avEbxMPOQog9tM7bbI2BsMaj4vQeieDWRDFLWHNmLhVDtPc21vBi6dGB01BX?=
- =?us-ascii?Q?Juu0LIk8kYl/Vid64WAxESmDveLfwbUBsCKtr2WnzonYHsW5qjUWVGLgLvET?=
- =?us-ascii?Q?ID4AZ5MYjlQP+rnu0Gs7tQlPb0Ki+GvUvQG/2bz/3cTFNDPt5WxGQhGEUzlg?=
- =?us-ascii?Q?z4u/W25/UL+AucU4SVxpoX0DkqRyxCNNIzSsz8Fa2RkaEcPT4uoQRqK60HCT?=
- =?us-ascii?Q?brzRCr4RJYqyV3+MF/pF2Wb/O5JDO5gIQZsRgGolJ+LlG/hxgNvNi67xFz7v?=
- =?us-ascii?Q?gzXB08jTaX+6hmi+FaHsf6zA/We6SxNmMXDtU7TAo86YMBARbInKALrugsZl?=
- =?us-ascii?Q?18EXITE7Hqj3L5EQfZuslCa/3JQdcRVfmtqVUB1E/CEwnZ933rVLKp9U6hHU?=
- =?us-ascii?Q?bagHBdJjlF5QhEgAVEYzgOGG+ltE5EPdKWWMZEvTg76PalF9Es0lEG3DSDB1?=
- =?us-ascii?Q?OQVJB9UbulgeCGk1D3QfoR5iNzLywPOtDj4kk8K5PWFenclLygrHzTqDXPZs?=
- =?us-ascii?Q?8vmTt0UTASuHP80=3D?=
+	=?us-ascii?Q?qyy3qg75/9Dld3pbdIomKWQUROeeAqWj1oMPRYf+8IHDjubVc46uLRfPo3kg?=
+ =?us-ascii?Q?PrshDI3jm3tpK+HaSzF41igPO6gwF0zctMfwneKMR7VxRrLe0/82mw8o1+rw?=
+ =?us-ascii?Q?oWyeGgktHSsAqn9mXqSLwnaR0xLSGyTnKauo2ZHZVIsvW8EleC1y/2MQk2/5?=
+ =?us-ascii?Q?4n5NX8iN57QpBrq4cesj/Ty466ioWvr5E8VtJe6B8VaBY4M84a55PTzdEDas?=
+ =?us-ascii?Q?1+gtxPPKCPGmJecWLmWe1qq13sulAGLtbYQUV66mAn6vPc0epG14ooLdJaHp?=
+ =?us-ascii?Q?hKmtVLZCAHXobfQ6wpU9fRxmkwZRsV62g/fChP0ryNzi3vcGlAdWfV2xCnJL?=
+ =?us-ascii?Q?wyRMeY8OiBpVTLxYfktjvtFDYYgDEOBP80XT1QOKhjMbXXJ7zgiY3RZV3NhA?=
+ =?us-ascii?Q?qXhhTm5CmgHLdpvaSjPnZZu5cA5S5lualGibdNjx1jhQqeKYmv2t8gaP4L3Q?=
+ =?us-ascii?Q?cbCknaXBZpYBHHTgNxPa+MuIKk9Zg/b2u7ULQD2ZyQY7+np3B01rz8H0gpz6?=
+ =?us-ascii?Q?ZBJvsr0Rr0+nVlkSP5QXTtErJkl5V7bfPkh/J9OReI9bz8hSa70sgZVIugnw?=
+ =?us-ascii?Q?aMxm2sKeLXPUNcuCTeFL+BoFwb3H2vMGDB0AssS2ommrW7fFMvPb1ZYKBurr?=
+ =?us-ascii?Q?ghPiyEEhjIlqdR8XhzQEvwskh8Gb6tcsOZSY4JbUkISvzZaNjlY97w4S5ZrO?=
+ =?us-ascii?Q?OWn9GuTEtx9JhPe1usahGhj/u4wwnDRPF6Ub5xUp33Fi9pBq548zG1aRcgH3?=
+ =?us-ascii?Q?C6pS8/FzzsIipVBkc1OpERv+kZh8K7mGhQCgVx88pt7ASveCSRoaPU/EJjI6?=
+ =?us-ascii?Q?7DOujxadhbTDUbjesHh82ksEWgmQzcSSK9IBgRRjJLL06BAg64oFSHx1+GE8?=
+ =?us-ascii?Q?sNIRHUBbqUSIhaeB69YFuMfle0Eq6SZDZoGaJe6caDZVCJUn+6i1bUt568Qb?=
+ =?us-ascii?Q?BvZDFN+T9Gdbx9IilOshCeB+bjXXzlPCy7QZfltb+zVzyT8uJL5xAowHqybZ?=
+ =?us-ascii?Q?Bhlc0GVcuJ/D6jNUGqd4aSI70dvyBmIvqOdFCWMzv5qzv3YDdbcCdctmIF/y?=
+ =?us-ascii?Q?cbvzfvor6UmmZt2J0V98sFmzkWR1qI6yE6r/a5gpn0h11D5cELIjMGabWXuK?=
+ =?us-ascii?Q?tzxdwSJW7IfzbMqRvB9bkb+v1xAA7suebAivab9Q4AsO+U5QqmxxBjG8t/or?=
+ =?us-ascii?Q?00Dku+ySxz6Rh9hhYQbRTnhOdisp3wzJKq0xU5/z5kU+IU2wyTZHUkgIOwVR?=
+ =?us-ascii?Q?N8c5h2tqWrlZkUlJjVbMH9J/jr8rmj5u7/LVJwUlCUiGuZZP7T04JLH/x/p3?=
+ =?us-ascii?Q?PknKUqVQ+Wej7Kse8vTQj9wQLmxRfjTLHAMbwpboXJLuA78hsGjzrU0M6Nr4?=
+ =?us-ascii?Q?kibvQ/mbqTGW/PNyeOasSw2PPHg92lM+SN886g7a4HogHMhOh1kft84Iq5ul?=
+ =?us-ascii?Q?7CXMH5I6QyCCzwA66le7OeT/fyD9Mqwil8p2ooR/SJMEFbOh/czQUQ=3D=3D?=
 X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(376014)(7416014)(82310400026)(36860700013)(1800799024);DIR:OUT;SFP:1101;
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(36860700013)(82310400026);DIR:OUT;SFP:1101;
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Feb 2025 09:03:17.5390
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Feb 2025 09:03:21.4140
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b7aa029d-703c-446c-ef15-08dd481f6d9e
+X-MS-Exchange-CrossTenant-Network-Message-Id: af5c9531-7f21-43c3-0f4c-08dd481f6fe7
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
 X-MS-Exchange-CrossTenant-AuthSource:
 	DS3PEPF000099D5.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8503
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7496
 
 From: Jason Gunthorpe <jgg@nvidia.com>
 
-All the iommu cases simply want to override the MSI page's address with
-the IOVA that was mapped through the iommu. This doesn't need a cookie
-pointer, we just need to store the IOVA and its page size in the msi_desc.
+Currently IRQ_MSI_IOMMU is selected if DMA_IOMMU is available to provide
+an implementation for iommu_dma_prepare/compose_msi_msg(). However it
+makes more sense for the irqchips that call prepare/compose to select it
+and that will trigger all the additional code and data to be compiled into
+the kernel.
 
-Instead provide msi_desc_set_iommu_msi_iova() which allows the IOMMU side
-to specify the IOVA that the MSI page is placed during
-iommu_dma_prepare_msi(). This is stored in the msi_desc and then
-iommu_dma_compose_msi_msg() is a simple inline that sets address_hi/lo.
+If IRQ_MSI_IOMMU is selected with no IOMMU side implementation then
+prepare/compose will be NOP stubs.
 
-The next patch will correct the naming.
-
-This is done because we cannot correctly lock access to group->domain in
-the atomic context that iommu_dma_compose_msi_msg() is called under. Today
-the locking miss is tolerable because dma_iommu.c operates under an
-assumption that the domain does not change while a driver is probed.
-
-However iommufd now permits the domain to change while the driver is
-probed and VFIO userspace can create races with IRQ changes calling
-iommu_dma_prepare_msi/compose_msi_msg() and changing/freeing the
-iommu_domain.
-
-Removing the pointer, and critically, the call to
-iommu_get_domain_for_dev() during compose resolves this race.
+If IRQ_MSI_IOMMU is not selected by an irqchip then the related code on
+the iommu side is compiled out.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 ---
- include/linux/iommu.h     |  6 -----
- include/linux/msi.h       | 49 +++++++++++++++++++++++++--------------
- drivers/iommu/dma-iommu.c | 30 ++++--------------------
- 3 files changed, 36 insertions(+), 49 deletions(-)
+ drivers/iommu/Kconfig   | 1 -
+ drivers/irqchip/Kconfig | 4 ++++
+ kernel/irq/Kconfig      | 1 +
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 38c65e92ecd0..caee952febd4 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -1508,7 +1508,6 @@ static inline void iommu_debugfs_setup(void) {}
- int iommu_get_msi_cookie(struct iommu_domain *domain, dma_addr_t base);
+diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+index ec1b5e32b972..5124e7431fe3 100644
+--- a/drivers/iommu/Kconfig
++++ b/drivers/iommu/Kconfig
+@@ -154,7 +154,6 @@ config IOMMU_DMA
+ 	select DMA_OPS_HELPERS
+ 	select IOMMU_API
+ 	select IOMMU_IOVA
+-	select IRQ_MSI_IOMMU
+ 	select NEED_SG_DMA_LENGTH
+ 	select NEED_SG_DMA_FLAGS if SWIOTLB
  
- int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr);
--void iommu_dma_compose_msi_msg(struct msi_desc *desc, struct msi_msg *msg);
+diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
+index be063bfb50c4..84015decc3a4 100644
+--- a/drivers/irqchip/Kconfig
++++ b/drivers/irqchip/Kconfig
+@@ -28,6 +28,7 @@ config ARM_GIC_V2M
+ 	select ARM_GIC
+ 	select IRQ_MSI_LIB
+ 	select PCI_MSI
++	select IRQ_MSI_IOMMU
  
- #else /* CONFIG_IOMMU_DMA */
+ config GIC_NON_BANKED
+ 	bool
+@@ -38,12 +39,14 @@ config ARM_GIC_V3
+ 	select PARTITION_PERCPU
+ 	select GENERIC_IRQ_EFFECTIVE_AFF_MASK if SMP
+ 	select HAVE_ARM_SMCCC_DISCOVERY
++	select IRQ_MSI_IOMMU
  
-@@ -1524,11 +1523,6 @@ static inline int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_a
- {
- 	return 0;
- }
--
--static inline void iommu_dma_compose_msi_msg(struct msi_desc *desc, struct msi_msg *msg)
--{
--}
--
- #endif	/* CONFIG_IOMMU_DMA */
+ config ARM_GIC_V3_ITS
+ 	bool
+ 	select GENERIC_MSI_IRQ
+ 	select IRQ_MSI_LIB
+ 	default ARM_GIC_V3
++	select IRQ_MSI_IOMMU
  
- /*
-diff --git a/include/linux/msi.h b/include/linux/msi.h
-index b10093c4d00e..74c6a823f157 100644
---- a/include/linux/msi.h
-+++ b/include/linux/msi.h
-@@ -166,6 +166,10 @@ struct msi_desc_data {
-  * @dev:	Pointer to the device which uses this descriptor
-  * @msg:	The last set MSI message cached for reuse
-  * @affinity:	Optional pointer to a cpu affinity mask for this descriptor
-+ * @iommu_msi_iova: Optional IOVA from the IOMMU to override the msi_addr.
-+ *                  Only used if iommu_msi_page_shift != 0
-+ * @iommu_msi_page_shift: Indicates how many bits of the original address
-+ *                        should be preserved when using iommu_msi_iova.
-  * @sysfs_attr:	Pointer to sysfs device attribute
-  *
-  * @write_msi_msg:	Callback that may be called when the MSI message
-@@ -184,7 +188,8 @@ struct msi_desc {
- 	struct msi_msg			msg;
- 	struct irq_affinity_desc	*affinity;
- #ifdef CONFIG_IRQ_MSI_IOMMU
--	const void			*iommu_cookie;
-+	u64				iommu_msi_iova : 58;
-+	u64				iommu_msi_page_shift : 6;
- #endif
- #ifdef CONFIG_SYSFS
- 	struct device_attribute		*sysfs_attrs;
-@@ -285,28 +290,36 @@ struct msi_desc *msi_next_desc(struct device *dev, unsigned int domid,
+ config ARM_GIC_V3_ITS_FSL_MC
+ 	bool
+@@ -407,6 +410,7 @@ config LS_EXTIRQ
  
- #define msi_desc_to_dev(desc)		((desc)->dev)
+ config LS_SCFG_MSI
+ 	def_bool y if SOC_LS1021A || ARCH_LAYERSCAPE
++	select IRQ_MSI_IOMMU
+ 	depends on PCI_MSI
  
--#ifdef CONFIG_IRQ_MSI_IOMMU
--static inline const void *msi_desc_get_iommu_cookie(struct msi_desc *desc)
--{
--	return desc->iommu_cookie;
--}
--
--static inline void msi_desc_set_iommu_cookie(struct msi_desc *desc,
--					     const void *iommu_cookie)
-+static inline void msi_desc_set_iommu_msi_iova(struct msi_desc *desc,
-+					       u64 msi_iova,
-+					       unsigned int page_shift)
- {
--	desc->iommu_cookie = iommu_cookie;
--}
--#else
--static inline const void *msi_desc_get_iommu_cookie(struct msi_desc *desc)
--{
--	return NULL;
-+#ifdef CONFIG_IRQ_MSI_IOMMU
-+	desc->iommu_msi_iova = msi_iova >> page_shift;
-+	desc->iommu_msi_page_shift = page_shift;
-+#endif
- }
+ config PARTITION_PERCPU
+diff --git a/kernel/irq/Kconfig b/kernel/irq/Kconfig
+index 5432418c0fea..9636aed20401 100644
+--- a/kernel/irq/Kconfig
++++ b/kernel/irq/Kconfig
+@@ -100,6 +100,7 @@ config GENERIC_MSI_IRQ
+ 	bool
+ 	select IRQ_DOMAIN_HIERARCHY
  
--static inline void msi_desc_set_iommu_cookie(struct msi_desc *desc,
--					     const void *iommu_cookie)
-+/**
-+ * iommu_dma_compose_msi_msg() - Apply translation to an MSI message
-+ * @desc: MSI descriptor prepared by iommu_dma_prepare_msi()
-+ * @msg: MSI message containing target physical address
-+ */
-+static inline void iommu_dma_compose_msi_msg(struct msi_desc *desc,
-+					     struct msi_msg *msg)
- {
--}
-+#ifdef CONFIG_IRQ_MSI_IOMMU
-+	if (desc->iommu_msi_page_shift) {
-+		u64 msi_iova = desc->iommu_msi_iova
-+			       << desc->iommu_msi_page_shift;
-+
-+		msg->address_hi = upper_32_bits(msi_iova);
-+		msg->address_lo = lower_32_bits(msi_iova) |
-+				  (msg->address_lo &
-+				   ((1 << desc->iommu_msi_page_shift) - 1));
-+	}
- #endif
-+}
++# irqchip drivers should select this if they call iommu_dma_prepare_msi()
+ config IRQ_MSI_IOMMU
+ 	bool
  
- int msi_domain_insert_msi_desc(struct device *dev, unsigned int domid,
- 			       struct msi_desc *init_desc);
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index 2a9fa0c8cc00..bf91e014d179 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -1815,7 +1815,7 @@ int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
- 	static DEFINE_MUTEX(msi_prepare_lock); /* see below */
- 
- 	if (!domain || !domain->iova_cookie) {
--		desc->iommu_cookie = NULL;
-+		msi_desc_set_iommu_msi_iova(desc, 0, 0);
- 		return 0;
- 	}
- 
-@@ -1827,33 +1827,13 @@ int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
- 	mutex_lock(&msi_prepare_lock);
- 	msi_page = iommu_dma_get_msi_page(dev, msi_addr, domain);
- 	mutex_unlock(&msi_prepare_lock);
--
--	msi_desc_set_iommu_cookie(desc, msi_page);
--
- 	if (!msi_page)
- 		return -ENOMEM;
--	return 0;
--}
- 
--/**
-- * iommu_dma_compose_msi_msg() - Apply translation to an MSI message
-- * @desc: MSI descriptor prepared by iommu_dma_prepare_msi()
-- * @msg: MSI message containing target physical address
-- */
--void iommu_dma_compose_msi_msg(struct msi_desc *desc, struct msi_msg *msg)
--{
--	struct device *dev = msi_desc_to_dev(desc);
--	const struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
--	const struct iommu_dma_msi_page *msi_page;
--
--	msi_page = msi_desc_get_iommu_cookie(desc);
--
--	if (!domain || !domain->iova_cookie || WARN_ON(!msi_page))
--		return;
--
--	msg->address_hi = upper_32_bits(msi_page->iova);
--	msg->address_lo &= cookie_msi_granule(domain->iova_cookie) - 1;
--	msg->address_lo += lower_32_bits(msi_page->iova);
-+	msi_desc_set_iommu_msi_iova(
-+		desc, msi_page->iova,
-+		ilog2(cookie_msi_granule(domain->iova_cookie)));
-+	return 0;
- }
- 
- static int iommu_dma_init(void)
 -- 
 2.43.0
 
