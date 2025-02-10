@@ -1,161 +1,148 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp-fw-80007.amazon.com (smtp-fw-80007.amazon.com [99.78.197.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE431A4E77
-	for <patches@lists.linux.dev>; Mon, 10 Feb 2025 19:10:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2A01C07F6
+	for <patches@lists.linux.dev>; Mon, 10 Feb 2025 19:11:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=99.78.197.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739214605; cv=none; b=JdUkkgeJkn/uStltLHlJSq9u7xdpP1+p2scxNbTDGf2wWm0W8u8BuPvnlS8k//WeTkxTJkvfmyjx30MBr6DrUpOy2wHYof+Wj7lRQukDegCBLqO1eePnb5VUkE3QmY5F+U/lK+sTbHK5EJi0kQs5fOrp6zPBVA2k2wfVE/sjCEs=
+	t=1739214682; cv=none; b=kJouUENiqmFJ0qMdVhgloFqhL0wHf+DOh2M9L8L3FIgu6CQ+YG7RWDycQy0TU/7A9TARQ/l3QdBqRnI8xA7ceq7Kj+EJTzqh6m+ATA1lr8y1zQfylU1Vud8+ahgXPaFlLbGz1hP51NogOVdaHTUVv4SzbwYhgxDD00+poZFCTB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739214605; c=relaxed/simple;
-	bh=WVIefuTmZsO3vnxnW8tGU+cfloC8eJKmUNwKMSIntII=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X1RcL7ryOmOxojjzDUppQc8fNbDADiP0G/1US9nlGjTGAHwWzZWMpInMQOKrTa1nCQHbprecxMW+scc5zskqwIj3Dx0ilFJjyU1/ZuEkJJe2i3KWJxGam5PQ7ejmj490lNFBd2NcXQufpMEZ9SLunAf4v8x9jBZXyEciEjGqmnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WFRBmUVh; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1739214682; c=relaxed/simple;
+	bh=VtPDo7IM1T02mCad0u7MsSJbtDJvlGO622e86WJ/UIY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GrjUwMKiEQatsFwF5YiWGcFAgH0LeBWGp/hcvmL6Gb7/NmF5tZVTgHpuIYS8sUTK1UhFPpyauIojbTGdPn9ZTaXUVL9zW1HseLl8QJ4BBrkONdDoVFJLgylFC7iNYyAE0R5/ChTubHLjUZLH42421PMU7HQNVbaoXFvmBypcIQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.de; spf=pass smtp.mailfrom=amazon.com; dkim=pass (1024-bit key) header.d=amazon.de header.i=@amazon.de header.b=j4PdrqpC; arc=none smtp.client-ip=99.78.197.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WFRBmUVh"
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51A9HxDu001544
-	for <patches@lists.linux.dev>; Mon, 10 Feb 2025 19:10:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	TjMLD9p5F/cttkJ4cOStWe5w8h70dZJC5rq8uWL15pc=; b=WFRBmUVh2jI/FRuS
-	0ZHdDAmBpVta3L4prC9YoNmxxm+sLFrsirDH21c0ywidsJLrVHt5PUuXTc0EGsiI
-	pwrRqykVRDE1cr1I2qkMKVxh4BrPhcvaa+d9r69iTTKT3nTIXLWinuG+zRvUiaxx
-	Yre+vTyiK6xi9iOc+IQledXefACiBkZ437oQTiBCItxP6rh0JYpfA5UFhZmuSCG0
-	ivhp+ndHLCQYYO4UGnjOfjs8zef1T2zYThRzjQeOE9LJWLg+cm9OsRhADXCMdmUZ
-	5L7G9oYb93hrVFRAxZlKBdrfD502M50nCpiL6VMEZOcYG+a+rPnuJxyRmPa0PEJU
-	RFrJGw==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44qepxhjhe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <patches@lists.linux.dev>; Mon, 10 Feb 2025 19:10:02 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6e4521c35c6so7845976d6.1
-        for <patches@lists.linux.dev>; Mon, 10 Feb 2025 11:10:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739214601; x=1739819401;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TjMLD9p5F/cttkJ4cOStWe5w8h70dZJC5rq8uWL15pc=;
-        b=dx4CSv2e1+roUG3mbXtvccAQlMn2k8P52aGiHSHFaYhuu0dZ2MlLzmx/epTgAtKiWu
-         o1D1x2LingXjB667TwF72GQusdfvPQnFRHUwH7T6QCF9fPTPs0GF8D/3o/SceIgIGa7D
-         UD+c/lhA+qchWqmvjtjO+7GOT0Ja8iF7lbxQYsFkllG6sHnDnjNP2iUi4y+wzgOTD343
-         91hsBXKPD4Q5K3dhfidbfeXj6kA4xJqv5GnIYr1qyz5EEO4c2uv1NoP8LzzMJ1PP526A
-         wD9ZOea4ncyM7k4JvS1BOHSs+kJ0WQpLDujlMiWEQ6zTt+Tcdb6LCcedT0CiKwMs4kqu
-         9XeA==
-X-Forwarded-Encrypted: i=1; AJvYcCUsNBjmsLbtdmzdUciwTreT/uG/1Lpns2kfgk5mNpPiPzafd7m2LCUE0+tL5ybcmQ0QpAs4dUlr@lists.linux.dev
-X-Gm-Message-State: AOJu0YwrlM/N85eUeZCZwvshreVLIDUozUNfgd5pXpcVmIitWeh/aIMf
-	Xezl1V6wYtAgb6U17hUnDgtOUQIq5jHZRgTCwIyt908hr2qRyh4+CJ7gP+GmQqYKYfOikSf3vcm
-	Gl/D8EzbVLO2896rEljIhTrxGSn1sROYWbzLch2d9UXh0HIDATCgWO0u6
-X-Gm-Gg: ASbGncvAl6fjf914yDa6aFwZ4cQLPquyPkoxDbGkDaiXUpGiJL6TuZQzQrO3J9gU9S6
-	cO5if1wfwfBw4SKm+qLlzN5rk9t0M5eBRY8Yr3hCHdk9H0yk9hA35NdsWpIdEZWVPBmAZTNbfzM
-	gzS3hBXRVi5N5zY/ifJuTEINWO2it9KdTVyU0hG26bsNReWPwT5NOqeK2UgTxq+wNQlxUt7/q07
-	P6uD4nsVhnwVjuOqoni4mxte8V8jBiTtmGlwVbMgy3uhE20Y0KdSKVLF67u/JDa1A2yk0lTlyGz
-	nqG6lZuJkAcdnETSBj9y1slSDmH1yQBf0/JVR0gSvS1pHRP03JPzBl3l/B0=
-X-Received: by 2002:a05:622a:134a:b0:471:99c5:7fe3 with SMTP id d75a77b69052e-47199c584f5mr14100231cf.13.1739214601409;
-        Mon, 10 Feb 2025 11:10:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEam98rwjeVs9UefoqfCbDligsRwENEcB+iEsgJUMbLpiVYx4zPGFHlFLKn8RelVyRxUGrGHA==
-X-Received: by 2002:a05:622a:134a:b0:471:99c5:7fe3 with SMTP id d75a77b69052e-47199c584f5mr14100061cf.13.1739214600903;
-        Mon, 10 Feb 2025 11:10:00 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab77efe3111sm867153966b.51.2025.02.10.11.09.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Feb 2025 11:10:00 -0800 (PST)
-Message-ID: <87895166-659e-475f-99bf-5791a6e1ac3b@oss.qualcomm.com>
-Date: Mon, 10 Feb 2025 20:09:57 +0100
+	dkim=pass (1024-bit key) header.d=amazon.de header.i=@amazon.de header.b="j4PdrqpC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazon201209;
+  t=1739214682; x=1770750682;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=Jl475qfeV7Dgsnu0TGpEYP0VzEjAfVYauQNa5Bpd2dg=;
+  b=j4PdrqpCNIYJB74BGKPFMbbcCwEK73NTSpRZWN32bFqx3+iPAf8JkZtF
+   qbKteLmsZXLgfojff6CqZAAhjbTNuzc14CHE9N3Xp9MMcqizHr9zBAA/p
+   aBLTtKp5yiteLw1uLxs+c5AYqwalp3O3SrwTehVIeAiV9Pmopo9iDDcab
+   0=;
+X-IronPort-AV: E=Sophos;i="6.13,275,1732579200"; 
+   d="scan'208";a="376136794"
+Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO smtpout.prod.us-east-1.prod.farcaster.email.amazon.dev) ([10.25.36.210])
+  by smtp-border-fw-80007.pdx80.corp.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2025 19:11:17 +0000
+Received: from EX19MTAEUC001.ant.amazon.com [10.0.43.254:16300]
+ by smtpin.naws.eu-west-1.prod.farcaster.email.amazon.dev [10.0.35.229:2525] with esmtp (Farcaster)
+ id eebc1289-a144-4932-9511-459ce49bdd5f; Mon, 10 Feb 2025 19:11:15 +0000 (UTC)
+X-Farcaster-Flow-ID: eebc1289-a144-4932-9511-459ce49bdd5f
+Received: from EX19D028EUB002.ant.amazon.com (10.252.61.43) by
+ EX19MTAEUC001.ant.amazon.com (10.252.51.155) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Mon, 10 Feb 2025 19:11:14 +0000
+Received: from EX19MTAUEA002.ant.amazon.com (10.252.134.9) by
+ EX19D028EUB002.ant.amazon.com (10.252.61.43) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Mon, 10 Feb 2025 19:11:14 +0000
+Received: from email-imr-corp-prod-pdx-all-2b-f5cd2367.us-west-2.amazon.com
+ (10.43.8.2) by mail-relay.amazon.com (10.252.134.34) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id
+ 15.2.1258.39 via Frontend Transport; Mon, 10 Feb 2025 19:11:14 +0000
+Received: from dev-dsk-ptyadav-1c-43206220.eu-west-1.amazon.com (dev-dsk-ptyadav-1c-43206220.eu-west-1.amazon.com [172.19.91.144])
+	by email-imr-corp-prod-pdx-all-2b-f5cd2367.us-west-2.amazon.com (Postfix) with ESMTP id 8DE08C11A2;
+	Mon, 10 Feb 2025 19:11:13 +0000 (UTC)
+Received: by dev-dsk-ptyadav-1c-43206220.eu-west-1.amazon.com (Postfix, from userid 23027615)
+	id 20F246669; Mon, 10 Feb 2025 19:11:13 +0000 (UTC)
+From: Pratyush Yadav <ptyadav@amazon.de>
+To: <stable@vger.kernel.org>
+CC: Shu Han <ebpqwerty472123@gmail.com>, Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>, <patches@lists.linux.dev>, Stephen Smalley
+	<stephen.smalley.work@gmail.com>, Paul Moore <paul@paul-moore.com>, Bin Lan
+	<bin.lan.cn@windriver.com>, Pratyush Yadav <ptyadav@amazon.de>
+Subject: [PATCH 5.10] mm: call the security_mmap_file() LSM hook in remap_file_pages()
+Date: Mon, 10 Feb 2025 19:10:54 +0000
+Message-ID: <20250210191056.58787-1-ptyadav@amazon.de>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: chrome: Add binding for ChromeOS Pogo
- pin connector
-To: Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson
- <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        patches@lists.linux.dev, cros-qcom-dts-watchers@chromium.org,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Benson Leung <bleung@chromium.org>,
-        devicetree@vger.kernel.org, chrome-platform@lists.linux.dev,
-        Pin-yen Lin <treapking@chromium.org>
-References: <20250205233016.1600517-1-swboyd@chromium.org>
- <20250205233016.1600517-2-swboyd@chromium.org>
- <74527323-31ff-4ed0-b19f-e535f26abf2b@oss.qualcomm.com>
- <CAE-0n50DXcAXQMaLtsamvxHjUrkJVBz42G6gtgKgW9Rh=qd31Q@mail.gmail.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <CAE-0n50DXcAXQMaLtsamvxHjUrkJVBz42G6gtgKgW9Rh=qd31Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: wcIY6RY_h1sLN3UVelPx8CTOQipuT99A
-X-Proofpoint-ORIG-GUID: wcIY6RY_h1sLN3UVelPx8CTOQipuT99A
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-10_10,2025-02-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0 impostorscore=0
- mlxlogscore=999 clxscore=1015 lowpriorityscore=0 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2502100154
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 6.02.2025 9:43 PM, Stephen Boyd wrote:
-> Quoting Konrad Dybcio (2025-02-06 03:30:50)
->> On 6.02.2025 12:30 AM, Stephen Boyd wrote:
->>> diff --git a/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
->>> new file mode 100644
->>> index 000000000000..622e171b6b08
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
->>> @@ -0,0 +1,68 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/chrome/google,pogo-pin-connector.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Google Pogo Pin Connector
->>
->> This looks like a very generic piece of hw.. many boards (esp. convertibles)
->> do the same thing, with 4 or 5 pins on the bottom of the device.
-> 
-> Yes, connectors are basically just pins :-)
-> 
->>
->> But of course hw manufacturers being hw manufacturers, many different kinds
->> of signals go through such connectors - if it's not USB then it's perhaps
->> I2C or some variation thereof
-> 
-> Right, and I doubt they call them "pogo".
-> 
->>
->> IMO, we could perhaps add this to usb-connector.yaml as "usb-custom-connector"
->> or so
-> 
-> Do you have a device that could use such a generic binding? I can't
-> really design something in the abstract without two or more concrete use
-> cases. Coming up with something generic looks like a quagmire, because
-> as you say the signals going through the pins could be anything: i2c,
-> 1-wire, etc.
+From: Shu Han <ebpqwerty472123@gmail.com>
 
-Right, we can't be overly generic either. FWIW I'm not standing in the way
-of this patch getting merged.
+commit ea7e2d5e49c05e5db1922387b09ca74aa40f46e2 upstream.
 
-Konrad
+The remap_file_pages syscall handler calls do_mmap() directly, which
+doesn't contain the LSM security check. And if the process has called
+personality(READ_IMPLIES_EXEC) before and remap_file_pages() is called for
+RW pages, this will actually result in remapping the pages to RWX,
+bypassing a W^X policy enforced by SELinux.
 
-> At least this is a vendor prefixed binding, meaning a generic binding
-> could supersede this one later. The risk of accepting this binding is
-> low because it can be replaced by a more generic one at a later date.
-> 
-> I will move the file to usb/ so that it is more likely to be seen, but
-> I'm hesitant to sign up to work on any sort of generic binding for USB2
-> plus an extra pin used for who knows what.
+So we should check prot by security_mmap_file LSM hook in the
+remap_file_pages syscall handler before do_mmap() is called. Otherwise, it
+potentially permits an attacker to bypass a W^X policy enforced by
+SELinux.
+
+The bypass is similar to CVE-2016-10044, which bypass the same thing via
+AIO and can be found in [1].
+
+The PoC:
+
+$ cat > test.c
+
+int main(void) {
+	size_t pagesz = sysconf(_SC_PAGE_SIZE);
+	int mfd = syscall(SYS_memfd_create, "test", 0);
+	const char *buf = mmap(NULL, 4 * pagesz, PROT_READ | PROT_WRITE,
+		MAP_SHARED, mfd, 0);
+	unsigned int old = syscall(SYS_personality, 0xffffffff);
+	syscall(SYS_personality, READ_IMPLIES_EXEC | old);
+	syscall(SYS_remap_file_pages, buf, pagesz, 0, 2, 0);
+	syscall(SYS_personality, old);
+	// show the RWX page exists even if W^X policy is enforced
+	int fd = open("/proc/self/maps", O_RDONLY);
+	unsigned char buf2[1024];
+	while (1) {
+		int ret = read(fd, buf2, 1024);
+		if (ret <= 0) break;
+		write(1, buf2, ret);
+	}
+	close(fd);
+}
+
+$ gcc test.c -o test
+$ ./test | grep rwx
+7f1836c34000-7f1836c35000 rwxs 00002000 00:01 2050 /memfd:test (deleted)
+
+Link: https://project-zero.issues.chromium.org/issues/42452389 [1]
+Cc: stable@vger.kernel.org
+Signed-off-by: Shu Han <ebpqwerty472123@gmail.com>
+Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+[PM: subject line tweaks]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
+---
+ mm/mmap.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/mm/mmap.c b/mm/mmap.c
+index 9f76625a1743..2c17eb840e44 100644
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -3078,8 +3078,12 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
+ 	}
+ 
+ 	file = get_file(vma->vm_file);
++	ret = security_mmap_file(vma->vm_file, prot, flags);
++	if (ret)
++		goto out_fput;
+ 	ret = do_mmap(vma->vm_file, start, size,
+ 			prot, flags, pgoff, &populate, NULL);
++out_fput:
+ 	fput(file);
+ out:
+ 	mmap_write_unlock(mm);
+-- 
+2.47.1
+
