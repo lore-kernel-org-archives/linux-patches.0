@@ -1,895 +1,165 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2056.outbound.protection.outlook.com [40.107.93.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A62F25A2B4
-	for <patches@lists.linux.dev>; Mon, 10 Feb 2025 22:57:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739228241; cv=none; b=kyF4TD4XOflPvsCoFruxEF35sbvx2mip7tjTeOT+4Ruqo2EI9rC4sEaiMlmn58VrSaAWKbhLl0mJgw9MJYVZzkhfRbkPvSdVq5NKtVq+UxwDgar/5APrj5DnoE1Jxr9JhhmyLSu1c1OjNjMsaNOVbM0hAHuCIi/h1JW4+LqXDpc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739228241; c=relaxed/simple;
-	bh=cVBuTyyxHtoHv82ibjHY39xAQ/a7ov6kzLJy9X3iJ1w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qNSXSyUFfEUpHN0hUZRfpC2LzJ6j1hrAoDyYZtBSfzKW48LV/MMozFyLRJIwNuFDUoz84sIL/um50IjDrKHDkktiaE2aQkBjyccj6wI95hMX1ScH3Ko6wM/X6/CnykpBe0CLmN2iL4m2wzs54Yz2wHhU8o9ED2za0NI9SBxYWxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=L4nLVZHL; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BC226136A;
+	Mon, 10 Feb 2025 23:26:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.56
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1739229983; cv=fail; b=j5F4fxJ6wY3KwVpTbAbYXuHik5UKtwrwgDbM9TiMK0ORA1AZitCy1cO31VB9T1B+oUTzS0Fe5PasGrTONAdntkftdEZA7c9QosE3eHIvIz3UuN5taHX8x6OY84pwMOAjsiZ8+oyEwJ7fNiePb3qsfAux8f3b/JPYgkEgdtTrcRo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1739229983; c=relaxed/simple;
+	bh=e/5c/E65ye7ULhAohVmCyvGmXtdKqpEBwHeuxWjJil0=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CWejM8bvxZkStJh4D0jKkYsw8tdJ16qQ2xbA8qEbIfYltORgUlp0+HUNRYalPtD/dndjC483sliuFgb5VGB8Ct9Hr1tXO+tUQCq9qOqS7J1hyAG+xFPyWziYaJhVIh4EjQ+vbL/1zBwx7G4IKSJRN7s0120ORa04a19PKRu9UHM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=tLeQSbCQ; arc=fail smtp.client-ip=40.107.93.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="L4nLVZHL"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-21f818a980cso31603025ad.3
-        for <patches@lists.linux.dev>; Mon, 10 Feb 2025 14:57:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1739228238; x=1739833038; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B2TMWQZOU48p3apEenIg9cWRNKsU3G8uFbxEYjoTKz4=;
-        b=L4nLVZHLd13o+INsyQEaNRBi4u30/1nllFU8cF6jQ9Pm+QNGJzKAo3llZEWdlJzgot
-         VtlRs4JG0TYLSAKs8ZnlS2yQyPPUJxhdJayPYUo+D40mKRmrtkm1Z/MZIQBzkvceMKvp
-         +BeLrV9Ucz6ps7VvCzmdZk3r62KTZtG3U2WTM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739228238; x=1739833038;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=B2TMWQZOU48p3apEenIg9cWRNKsU3G8uFbxEYjoTKz4=;
-        b=gLeIHlf7VLmlyro6Mt18mYgumwYTITnFKHeWcQleO6NTyfvaIyxQ4Gy+zJsZrw9+T+
-         Ag+6hQZWLmB5iMTCL8nRsDB1cEZ1ZdkKhYJOHiW/ZA+EEJRPPH8gx6F2sHGhpHGd0W2E
-         J+10xRHFc2c/PqnD69x8BP2Faq7XQL/7bjmm16Sl267rabzwYs51ngdkuQ2MPrLh5/UE
-         9SQw3rJsJnCgF7BcyXy78oZHELqyZV1/ubbn6Ic4Q1lPoLkIR7dhivwLLb/7HaZkVjSx
-         EulvIPMrp5GGREQ61xUGPiOdNrmW03O/MDrDjEtfowQmX+JLPCr75PBVW9WEgO7DM7/D
-         wX1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCV4yHYBnFw1PxwjZCq8VdaGMe6fxK/hxgHT34EdpCAn5R6qZ3qwhlbGNB9LHQdZBqwxVENVpV1E@lists.linux.dev
-X-Gm-Message-State: AOJu0YwxOfwhbg1MR3JwPfwtgK3aCkjcDwxASNom1DpJOR518q73b1c+
-	grtWakdC990SLfM/j//+9PxaFrYXz44NF3zYO/jTtfd5T1uKY84RGThQkIXSOfPx6ZAS0ODTOkI
-	=
-X-Gm-Gg: ASbGnctJePUmz/GDHny54X7xkMZnSSmtFTWEclJhg+Wfki8s62c87BTzj7RXSC5bYNQ
-	7PjMWq7CN+Qw00/f/b2mGAkscdDCVS4UEn41iz2dbJSNF5klfhDBtZjJWjz39LMH1XAfPEde++a
-	5Fv345/BwmBGOQ4UZbwSpwGLlbVPXHs2CYEYmmXdabmJKRkbzVYI092C9Evfi7hTNE80LbMOp+f
-	AzXjaURNkZTWa7neCZ28Yx0ufKmYAXxvsDqnOH9YKFND4hYsVx9Xd87aXXK4Otc8AdCmGQFcDvT
-	nTvqb9pKfuX3HgmO8z/Fw70aUnzNIhQmNshnH6SyjT1eVTZQJsgeM/U=
-X-Google-Smtp-Source: AGHT+IGdwPxvUX1GWCk8KWoZjeQmrh4Z6x0ZXSTeFhG0SP9E8wT2IvFLk9vTpJ3Y5FNrVgw+cJ1Omw==
-X-Received: by 2002:a17:902:e802:b0:21f:db8:262d with SMTP id d9443c01a7336-21f4e7636c0mr281455855ad.35.1739228238416;
-        Mon, 10 Feb 2025 14:57:18 -0800 (PST)
-Received: from localhost (222.246.125.34.bc.googleusercontent.com. [34.125.246.222])
-        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-ad51af7a22dsm8277473a12.69.2025.02.10.14.57.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Feb 2025 14:57:18 -0800 (PST)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	patches@lists.linux.dev,
-	cros-qcom-dts-watchers@chromium.org,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	devicetree@vger.kernel.org,
-	Pin-yen Lin <treapking@chromium.org>
-Subject: [PATCH v3 2/2] arm64: dts: qcom: sc7180-trogdor: Wire up USB to usb-c-connectors
-Date: Mon, 10 Feb 2025 14:57:12 -0800
-Message-ID: <20250210225714.1073618-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.48.1.502.g6dc24dfdaf-goog
-In-Reply-To: <20250210225714.1073618-1-swboyd@chromium.org>
-References: <20250210225714.1073618-1-swboyd@chromium.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="tLeQSbCQ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Lb84Axc2ep6Kli5I4SthyYKzLV4NJjVd9iby68xvHLvlZoPBQ4Cmx3lwBk3AV1kNYlQ5PVRNUpt8XuILhofAzyLgo4PVE4c8stIvIRp4tfH2E82gW4CHpH/4O0JQqRRh32Pj6jPTojIxYy8zISNplgkLN4SYrwqEVXOgcEIEdgeD6AKgOWgHy5W1L2grBOU6XFpLc7Q4SYjan+Wvo0Bmfkx5S0NGdp95ikZpOjiegKz2/Q121e9jrp2Gqumw4zCeUOejVD319Z5DW+jLATvmxvs2ASJDdzYhDQe6Unh1Fb8WOSIHcITRQji+7kd2lC6jJb9XFUKobc2UQZwIQcllfA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zCSO1NGAhddc4SHqawhZbtlPG5oTPdnntF1TUiwczlg=;
+ b=FaNRgHaF76oPewpMX36wpqAsB6TLjGWbGCr3VNcs8okOBuxT0Nv70yhBv216Aa3WqY0vPfBrH9dC6zRQMJyoE2JstNTHRrD9jMz+bm4UR2pK6Fp2OwTA9nLcUSk5RoTDppCTC84eTtWKK/T71ToiDXnKHOt9Nja3HfBSIVZm62KyH/N7GeE8k2wBy/kq0Rb3kLwORAGNvzACuiK6nmP0ExYYtty0mskZFxh4gI9K17tXJuXoqx4Kpo87nGgwUSFdk3Gr/bbqDrJ2gDiVXFS3xMuwPO/JIqmIur1nQQnUD/6f0DVwm7attfQrVjOneRd2cyqyxxhoVahVvsTr/UJjPg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zCSO1NGAhddc4SHqawhZbtlPG5oTPdnntF1TUiwczlg=;
+ b=tLeQSbCQ4BV2UNx+SrAJ+pJr084ig6v36Y73ooRXGzD5btGpCECFj8I8aSwif1Jf0Ph6fxpcNZhH+mf/onPmz0EPFZbgdAmkdrwF8yscE6uF2PQrOCMD9OJOZhH6q5Cd8K7hE/ZqRuZ9xkrdVINbQMBdYjXBnD/J0tRXroNCmdEUSSWtKRSFMKwIwgOe842wGNrrVaPeOCOq7jaLmOmkUkMtYyaf4oFeRHH1daAsv9kOF89tRSEp0zISvpxDyW2shzx+kOTQHIeWg4yCtE10MHttYcoBqdIaOsrSXL5GTr1aQlIhOAkns9No7YvjRU9pMzdTGJsVbYlZ4uP7EFIKhQ==
+Received: from CH2PR12CA0027.namprd12.prod.outlook.com (2603:10b6:610:57::37)
+ by SA1PR12MB6893.namprd12.prod.outlook.com (2603:10b6:806:24c::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8422.18; Mon, 10 Feb
+ 2025 23:26:18 +0000
+Received: from CH2PEPF0000013C.namprd02.prod.outlook.com
+ (2603:10b6:610:57:cafe::69) by CH2PR12CA0027.outlook.office365.com
+ (2603:10b6:610:57::37) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8398.31 via Frontend Transport; Mon,
+ 10 Feb 2025 23:26:18 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CH2PEPF0000013C.mail.protection.outlook.com (10.167.244.73) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8445.10 via Frontend Transport; Mon, 10 Feb 2025 23:26:17 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 10 Feb
+ 2025 15:26:01 -0800
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Mon, 10 Feb
+ 2025 15:26:01 -0800
+Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Mon, 10 Feb 2025 15:26:00 -0800
+Date: Mon, 10 Feb 2025 15:25:59 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <kevin.tian@intel.com>, <tglx@linutronix.de>, <maz@kernel.org>,
+	<joro@8bytes.org>, <will@kernel.org>, <robin.murphy@arm.com>,
+	<shuah@kernel.org>, <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-kselftest@vger.kernel.org>,
+	<eric.auger@redhat.com>, <baolu.lu@linux.intel.com>, <yi.l.liu@intel.com>,
+	<yury.norov@gmail.com>, <jacob.pan@linux.microsoft.com>,
+	<patches@lists.linux.dev>
+Subject: Re: [PATCH v1 08/13] iommufd/device: Move sw_msi_start from igroup
+ to idev
+Message-ID: <Z6qLB3jV45zxPdZh@Asurada-Nvidia>
+References: <cover.1739005085.git.nicolinc@nvidia.com>
+ <550f103125805461491b87bb6018293ce9b888b7.1739005085.git.nicolinc@nvidia.com>
+ <20250209184152.GM3660748@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20250209184152.GM3660748@nvidia.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF0000013C:EE_|SA1PR12MB6893:EE_
+X-MS-Office365-Filtering-Correlation-Id: 391bcc87-8f28-4dd1-ca6c-08dd4a2a51f7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|36860700013|1800799024|376014|7416014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?/Ok5EREUpYuD4nTXmLZGAdE7S1rewojhhqy210+BmDlfBUkg0uI8Vc/u+yZD?=
+ =?us-ascii?Q?lbF3MLRDFhdmR1cj0JV7kCwkvlyHYXXXpcB921Tex/OPEF2Q7JTvmgPMqLkv?=
+ =?us-ascii?Q?7U5IwB0VKUxclZPt/1WFKz4XsndklW+N5AkQCo8UyI6NpKg5PG+POBzbsg2P?=
+ =?us-ascii?Q?UMp0zAQ+FiiX74L12UysSPZlACcOubBu3imwLQxq/D+jfcLD5pfq9bXwNWtR?=
+ =?us-ascii?Q?3Z+SB3uPtOvDwk7yZVH7D7ivucRAWq6UnTsMN2Ls3UmEmY1hhu9ZNnLVeHRl?=
+ =?us-ascii?Q?aYSpyGM2ada6E+BiIx9MW+nh9iVo1JC3yLwQPgs4h+HliYJ63lpTiIixKGEj?=
+ =?us-ascii?Q?qf4E6QjFwRtnNl3l2Rw6jmZMvWwWpicSVpW3zUT2BzTLmryOq8np73vWYR98?=
+ =?us-ascii?Q?dR1McYKlN4GHyg/n54cpffGq6GC+MxMWzMPY3iX5qaODkXg87Adrf9p7XbrG?=
+ =?us-ascii?Q?DVzhmHFQjjWmCnFZClAgn3M3xufGWFBdWa+7sqzb2+Ksdc2FzGsYn5eISB1j?=
+ =?us-ascii?Q?euQzx5m9YCbQNQ3jmGdGEUxZsSzA97Cz6gjffz4aNfFChkxrgAay/5wdzUpE?=
+ =?us-ascii?Q?gmJmHOvr6wTxiDrSqGLO2gWTfeeVMxoSFrPDBJx5a3N8WVD/eqc5c2ETCUa9?=
+ =?us-ascii?Q?25W2KpCx304LAQSquJk/WIdc7Jj1zXBorsMkFfTvPSOTF/xMaQD3IXvKrTXc?=
+ =?us-ascii?Q?xuydT1CaMw4CYwM9z4et9lKmP8mMb2rLQjEAfHK7usHAi8u65a9PJrmVAt+W?=
+ =?us-ascii?Q?uniCqIn352rKZgHR6a+0qZJJmdc8XU3Yof9L6+68eC/Hl5hTg2s4P6DuCQ1l?=
+ =?us-ascii?Q?dK1YtERIJYC/6vOAox5XXSporpEB48EygTV9bqvr5eC4LF/gWqSVYuzTdBOO?=
+ =?us-ascii?Q?iTHExchJ8B1YDqARDGfJ4R/srU67CijqEghQkoU6toRcUmYU2AlXWpMqWGrq?=
+ =?us-ascii?Q?aKfrfPKnZs/cg2XSVlvcdAc+4ZuvR2jlUoHDHOYbinIcqxAxMMY2JQzeOI1v?=
+ =?us-ascii?Q?bX6L0UAweSVczlyMY5uJbGPhS39xOFrtkrm4AzcE8d+hdB248JyWhKexgdqV?=
+ =?us-ascii?Q?xgjK0s00RNdfeGyEmqHY6xB4T3aJWDp5RnJtmfQ/fzofmKueI7fMYUlyku45?=
+ =?us-ascii?Q?UeBeeKaNO3Hk/G/XYnBC0k0egB/ZN9zq5yqvX7i5X4DqygyrN4IuESc493Fi?=
+ =?us-ascii?Q?fFoAxloa7qlW8+1b0P59iMsK5KfxLPYtjrn3xefpwfAEqxyund//6dgDKiVf?=
+ =?us-ascii?Q?HCbPl5JKz5HtL/5Fk9Lv2c2j6cx8fj7Mzz26kbSyhYJzFZEpGq9fKMfxBCoz?=
+ =?us-ascii?Q?IZOjBDKrr+PrRSY3Hd8alsG7dgCwSKNqpxOXJRo0XbNhxaOblpvFkK+0aDNB?=
+ =?us-ascii?Q?tjVhsuMsM0hs7kaTu2tJCteXkPYctlRszMe0ZfnDKq1eldkF6iRYZr2CDoWb?=
+ =?us-ascii?Q?+j4yi6wtFl2ydAW1pS0oCj7W6g1rQuMyKhATwSL5eIu8NIlRKH5Mmw=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(36860700013)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Feb 2025 23:26:17.9035
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 391bcc87-8f28-4dd1-ca6c-08dd4a2a51f7
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CH2PEPF0000013C.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB6893
 
-Fully describe the USB type-c on sc7180 Trogdor devices. Most Trogdor
-devices have two USB type-c ports (i.e. usb-c-connector nodes), but
-Quackingstick only has one. Also, clamshell devices such as Lazor have a
-USB webcam connected to the USB hub, while detachable devices such as
-Wormdingler don't have a webcam, or a USB type-a connector. Instead they
-have the pogo pins for the detachable keyboard.
+On Sun, Feb 09, 2025 at 02:41:52PM -0400, Jason Gunthorpe wrote:
+> On Sat, Feb 08, 2025 at 01:02:41AM -0800, Nicolin Chen wrote:
+> > @@ -433,8 +433,8 @@ static int iommufd_group_setup_msi(struct iommufd_group *igroup,
+> >  	list_for_each_entry(cur, &ictx->sw_msi_list, sw_msi_item) {
+> >  		int rc;
+> >  
+> > -		if (cur->sw_msi_start != igroup->sw_msi_start ||
+> > -		    !test_bit(cur->id, igroup->required_sw_msi.bitmap))
+> > +		if (cur->sw_msi_start != idev->sw_msi_start ||
+> > +		    !test_bit(cur->id, idev->igroup->required_sw_msi.bitmap))
+> >  			continue;
+> 
+> So we end up creating seperate sw_msi_list items with unique IDs for
+> every sw_msi_start?
+> 
+> That indeed might work well, I will try to check it and think about
+> this harder.
 
-Fully describing the topology like this will let us expose information
-about what devices are connected to which physical USB connector (type-A
-or type-C).
+The sw_msi_list is still per-ictx, so there won't be items/ids
+that overlap with their sw_msi windows, right?
 
-Cc: <cros-qcom-dts-watchers@chromium.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>
-Cc: <linux-arm-msm@vger.kernel.org>
-Cc: <devicetree@vger.kernel.org>
-Cc: Pin-yen Lin <treapking@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- .../dts/qcom/sc7180-trogdor-clamshell.dtsi    |  21 ++++
- .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  47 ++++++++
- .../dts/qcom/sc7180-trogdor-detachable.dtsi   |  15 +++
- .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  47 ++++++++
- .../dts/qcom/sc7180-trogdor-kingoftown.dts    |  55 +++++++++
- .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  55 +++++++++
- .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi |  55 +++++++++
- .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  44 +++++++
- .../qcom/sc7180-trogdor-quackingstick.dtsi    |  31 +++++
- .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  56 ++++++++-
- .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |  47 ++++++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 109 ++++++++++++++++++
- 12 files changed, 580 insertions(+), 2 deletions(-)
+Then, the per-HWPT bitmap could still protect the iommu_map(),
+as the design wanted to? No?
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi
-index d91533b80e76..4e4f0b239f3c 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi
-@@ -7,3 +7,24 @@
- 
- /* This file must be included after sc7180-trogdor.dtsi to modify cros_ec */
- #include <arm/cros-ec-keyboard.dtsi>
-+
-+/ {
-+	usb-a-connector {
-+		compatible = "usb-a-connector";
-+
-+		port {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			usb_a0_hs: endpoint@0 {
-+				reg = <0>;
-+				/* Endpoint filled in by board */
-+			};
-+
-+			usb_a0_ss: endpoint@1 {
-+				reg = <1>;
-+				/* Endpoint filled in by board */
-+			};
-+		};
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index 25b17b0425f2..548d6c1ee050 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -134,6 +134,17 @@ skin-temp-thermistor@1 {
- 	};
- };
- 
-+&pogo_pins {
-+	keyboard@4 {
-+		compatible = "usb18d1,504c";
-+		reg = <4>;
-+	};
-+};
-+
-+&pogo_pins_in {
-+	remote-endpoint = <&usb_hub_dfp4_hs>;
-+};
-+
- &pp1800_uf_cam {
- 	status = "okay";
- };
-@@ -175,6 +186,42 @@ &sound_multimedia0_codec {
- 	sound-dai = <&adau7002>;
- };
- 
-+&usb_c0_hs {
-+	remote-endpoint = <&usb_hub_dfp1_hs>;
-+};
-+
-+&usb_c0_ss {
-+	remote-endpoint = <&usb_hub_dfp1_ss>;
-+};
-+
-+&usb_c1_hs {
-+	remote-endpoint = <&usb_hub_dfp2_hs>;
-+};
-+
-+&usb_c1_ss {
-+	remote-endpoint = <&usb_hub_dfp2_ss>;
-+};
-+
-+&usb_hub_dfp1_hs {
-+	remote-endpoint = <&usb_c0_hs>;
-+};
-+
-+&usb_hub_dfp1_ss {
-+	remote-endpoint = <&usb_c0_ss>;
-+};
-+
-+&usb_hub_dfp2_hs {
-+	remote-endpoint = <&usb_c1_hs>;
-+};
-+
-+&usb_hub_dfp2_ss {
-+	remote-endpoint = <&usb_c1_ss>;
-+};
-+
-+&usb_hub_dfp4_hs {
-+	remote-endpoint = <&pogo_pins_in>;
-+};
-+
- /* PINCTRL - modifications to sc7180-trogdor.dtsi */
- 
- &en_pp3300_dx_edp {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi
-index 7c5d8a57ef7f..d33c73f4bac4 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi
-@@ -6,6 +6,21 @@
-  */
- 
- /* This file must be included after sc7180-trogdor.dtsi to modify cros_ec */
-+
-+/ {
-+	pogo_pins: keyboard-connector {
-+		compatible = "google,usb-pogo-keyboard";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		/* Detachable keyboard filled in by board */
-+		port {
-+			pogo_pins_in: endpoint {
-+				/* Endpoint filled in by board */
-+			};
-+		};
-+	};
-+};
-+
- &cros_ec {
- 	keyboard-controller {
- 		compatible = "google,cros-ec-keyb-switches";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index f57976906d63..09c4a30d96ef 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -159,6 +159,17 @@ skin-temp-thermistor@1 {
- 	};
- };
- 
-+&pogo_pins {
-+	keyboard@3 {
-+		compatible = "usb18d1,5052";
-+		reg = <3>;
-+	};
-+};
-+
-+&pogo_pins_in {
-+	remote-endpoint = <&usb_hub_dfp3_hs>;
-+};
-+
- &pp1800_uf_cam {
- 	status = "okay";
- };
-@@ -187,6 +198,42 @@ &sound_multimedia1_codec {
- 	sound-dai = <&max98360a>, <&max98360a_1>, <&max98360a_2>, <&max98360a_3> ;
- };
- 
-+&usb_c0_hs {
-+	remote-endpoint = <&usb_hub_dfp2_hs>;
-+};
-+
-+&usb_c0_ss {
-+	remote-endpoint = <&usb_hub_dfp2_ss>;
-+};
-+
-+&usb_c1_hs {
-+	remote-endpoint = <&usb_hub_dfp4_hs>;
-+};
-+
-+&usb_c1_ss {
-+	remote-endpoint = <&usb_hub_dfp4_ss>;
-+};
-+
-+&usb_hub_dfp2_hs {
-+	remote-endpoint = <&usb_c0_hs>;
-+};
-+
-+&usb_hub_dfp2_ss {
-+	remote-endpoint = <&usb_c0_ss>;
-+};
-+
-+&usb_hub_dfp3_hs {
-+	remote-endpoint = <&pogo_pins_in>;
-+};
-+
-+&usb_hub_dfp4_hs {
-+	remote-endpoint = <&usb_c1_hs>;
-+};
-+
-+&usb_hub_dfp4_ss {
-+	remote-endpoint = <&usb_c1_ss>;
-+};
-+
- &wifi {
- 	qcom,ath10k-calibration-variant = "GO_HOMESTAR";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts
-index 655bea928e52..d4ff26fba3be 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dts
-@@ -78,6 +78,61 @@ &pp3300_dx_edp {
- 	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
- };
- 
-+&usb_a0_hs {
-+	remote-endpoint = <&usb_hub_dfp3_hs>;
-+};
-+
-+&usb_a0_ss {
-+	remote-endpoint = <&usb_hub_dfp3_ss>;
-+};
-+
-+&usb_c0_hs {
-+	remote-endpoint = <&usb_hub_dfp1_hs>;
-+};
-+
-+&usb_c0_ss {
-+	remote-endpoint = <&usb_hub_dfp1_ss>;
-+};
-+
-+&usb_c1_hs {
-+	remote-endpoint = <&usb_hub_dfp2_hs>;
-+};
-+
-+&usb_c1_ss {
-+	remote-endpoint = <&usb_hub_dfp2_ss>;
-+};
-+
-+&usb_hub_2_x {
-+	camera@4 {
-+		compatible = "usb4f2,b75a";
-+		reg = <4>;
-+	};
-+};
-+
-+&usb_hub_dfp1_hs {
-+	remote-endpoint = <&usb_c0_hs>;
-+};
-+
-+&usb_hub_dfp1_ss {
-+	remote-endpoint = <&usb_c0_ss>;
-+};
-+
-+&usb_hub_dfp2_hs {
-+	remote-endpoint = <&usb_c1_hs>;
-+};
-+
-+&usb_hub_dfp2_ss {
-+	remote-endpoint = <&usb_c1_ss>;
-+};
-+
-+&usb_hub_dfp3_hs {
-+	remote-endpoint = <&usb_a0_hs>;
-+};
-+
-+&usb_hub_dfp3_ss {
-+	remote-endpoint = <&usb_a0_ss>;
-+};
-+
- &wifi {
- 	qcom,ath10k-calibration-variant = "GO_KINGOFTOWN";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index c3fd6760de7a..7b545ae5791b 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -68,6 +68,61 @@ &trackpad {
- 	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
- };
- 
-+&usb_a0_hs {
-+	remote-endpoint = <&usb_hub_dfp3_hs>;
-+};
-+
-+&usb_a0_ss {
-+	remote-endpoint = <&usb_hub_dfp3_ss>;
-+};
-+
-+&usb_c0_hs {
-+	remote-endpoint = <&usb_hub_dfp2_hs>;
-+};
-+
-+&usb_c0_ss {
-+	remote-endpoint = <&usb_hub_dfp2_ss>;
-+};
-+
-+&usb_c1_hs {
-+	remote-endpoint = <&usb_hub_dfp4_hs>;
-+};
-+
-+&usb_c1_ss {
-+	remote-endpoint = <&usb_hub_dfp4_ss>;
-+};
-+
-+&usb_hub_2_x {
-+	camera@1 {
-+		compatible = "usb408,a092";
-+		reg = <1>;
-+	};
-+};
-+
-+&usb_hub_dfp2_hs {
-+	remote-endpoint = <&usb_c0_hs>;
-+};
-+
-+&usb_hub_dfp2_ss {
-+	remote-endpoint = <&usb_c0_ss>;
-+};
-+
-+&usb_hub_dfp3_hs {
-+	remote-endpoint = <&usb_a0_hs>;
-+};
-+
-+&usb_hub_dfp3_ss {
-+	remote-endpoint = <&usb_a0_ss>;
-+};
-+
-+&usb_hub_dfp4_hs {
-+	remote-endpoint = <&usb_c1_hs>;
-+};
-+
-+&usb_hub_dfp4_ss {
-+	remote-endpoint = <&usb_c1_ss>;
-+};
-+
- &wifi {
- 	qcom,ath10k-calibration-variant = "GO_LAZOR";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
-index cc2c5610a279..9523843f06ab 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
-@@ -82,6 +82,61 @@ &pp3300_dx_edp {
- 	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
- };
- 
-+&usb_a0_hs {
-+	remote-endpoint = <&usb_hub_dfp3_hs>;
-+};
-+
-+&usb_a0_ss {
-+	remote-endpoint = <&usb_hub_dfp3_ss>;
-+};
-+
-+&usb_c0_hs {
-+	remote-endpoint = <&usb_hub_dfp1_hs>;
-+};
-+
-+&usb_c0_ss {
-+	remote-endpoint = <&usb_hub_dfp1_ss>;
-+};
-+
-+&usb_c1_hs {
-+	remote-endpoint = <&usb_hub_dfp2_hs>;
-+};
-+
-+&usb_c1_ss {
-+	remote-endpoint = <&usb_hub_dfp2_ss>;
-+};
-+
-+&usb_hub_2_x {
-+	camera@4 {
-+		compatible = "usb5c8,b03";
-+		reg = <4>;
-+	};
-+};
-+
-+&usb_hub_dfp1_hs {
-+	remote-endpoint = <&usb_c0_hs>;
-+};
-+
-+&usb_hub_dfp1_ss {
-+	remote-endpoint = <&usb_c0_ss>;
-+};
-+
-+&usb_hub_dfp2_hs {
-+	remote-endpoint = <&usb_c1_hs>;
-+};
-+
-+&usb_hub_dfp2_ss {
-+	remote-endpoint = <&usb_c1_ss>;
-+};
-+
-+&usb_hub_dfp3_hs {
-+	remote-endpoint = <&usb_a0_hs>;
-+};
-+
-+&usb_hub_dfp3_ss {
-+	remote-endpoint = <&usb_a0_ss>;
-+};
-+
- /* PINCTRL - modifications to sc7180-trogdor.dtsi */
- 
- &en_pp3300_dx_edp {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-index f7300ffbb451..4cc1a155d999 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
-@@ -176,10 +176,54 @@ &sound {
- 	dmic-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>;
- };
- 
-+&usb_a0_hs {
-+	remote-endpoint = <&usb_hub_dfp4_hs>;
-+};
-+
-+&usb_a0_ss {
-+	remote-endpoint = <&usb_hub_dfp4_ss>;
-+};
-+
-+&usb_c0_hs {
-+	remote-endpoint = <&usb_hub_dfp3_hs>;
-+};
-+
-+&usb_c0_ss {
-+	remote-endpoint = <&usb_hub_dfp3_ss>;
-+};
-+
- &usb_c1 {
- 	status = "disabled";
- };
- 
-+&usb_hub_2_x {
-+	camera@1 {
-+		compatible = "usb4f2,b718";
-+		reg = <1>;
-+	};
-+
-+	camera@2 {
-+		compatible = "usb13d3,56e9";
-+		reg = <2>;
-+	};
-+};
-+
-+&usb_hub_dfp3_hs {
-+	remote-endpoint = <&usb_c0_hs>;
-+};
-+
-+&usb_hub_dfp3_ss {
-+	remote-endpoint = <&usb_c0_ss>;
-+};
-+
-+&usb_hub_dfp4_hs {
-+	remote-endpoint = <&usb_a0_hs>;
-+};
-+
-+&usb_hub_dfp4_ss {
-+	remote-endpoint = <&usb_a0_ss>;
-+};
-+
- &wifi {
- 	qcom,ath10k-calibration-variant = "GO_POMPOM";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-index ff8996b4de4e..174efd3abfa5 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-@@ -105,6 +105,17 @@ &sdhc_2 {
- 	status = "okay";
- };
- 
-+&pogo_pins {
-+	keyboard@1 {
-+		compatible = "usb18d1,505b";
-+		reg = <1>;
-+	};
-+};
-+
-+&pogo_pins_in {
-+	remote-endpoint = <&usb_hub_dfp1_hs>;
-+};
-+
- &pp1800_uf_cam {
- 	status = "okay";
- };
-@@ -129,11 +140,31 @@ pp3300_disp_on: &pp3300_dx_edp {
- 	gpio = <&tlmm 67 GPIO_ACTIVE_HIGH>;
- };
- 
-+&usb_c0_hs {
-+	remote-endpoint = <&usb_hub_dfp2_hs>;
-+};
-+
-+&usb_c0_ss {
-+	remote-endpoint = <&usb_hub_dfp2_ss>;
-+};
-+
- /* This board only has 1 USB Type-C port. */
- &usb_c1 {
- 	status = "disabled";
- };
- 
-+&usb_hub_dfp2_hs {
-+	remote-endpoint = <&usb_c0_hs>;
-+};
-+
-+&usb_hub_dfp2_ss {
-+	remote-endpoint = <&usb_c0_ss>;
-+};
-+
-+&usb_hub_dfp1_hs {
-+	remote-endpoint = <&pogo_pins_in>;
-+};
-+
- /* PINCTRL - modifications to sc7180-trogdor.dtsi */
- 
- /*
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index d393a2712ce6..dddf92c04c4d 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -52,12 +52,64 @@ &trackpad {
- 	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
- };
- 
-+&usb_a0_hs {
-+	remote-endpoint = <&usb_hub_dfp3_hs>;
-+};
-+
-+&usb_a0_ss {
-+	remote-endpoint = <&usb_hub_dfp3_ss>;
-+};
-+
-+&usb_c0_hs {
-+	remote-endpoint = <&usb_hub_dfp2_hs>;
-+};
-+
-+&usb_c0_ss {
-+	remote-endpoint = <&usb_hub_dfp2_ss>;
-+};
-+
-+&usb_c1_hs {
-+	remote-endpoint = <&usb_hub_dfp4_hs>;
-+};
-+
-+&usb_c1_ss {
-+	remote-endpoint = <&usb_hub_dfp4_ss>;
-+};
-+
- &usb_hub_2_x {
--	 vdd-supply = <&pp3300_l7c>;
-+	vdd-supply = <&pp3300_l7c>;
-+	camera@1 {
-+		compatible = "usb4f2,b567";
-+		reg = <1>;
-+	};
- };
- 
- &usb_hub_3_x {
--	 vdd-supply = <&pp3300_l7c>;
-+	vdd-supply = <&pp3300_l7c>;
-+};
-+
-+&usb_hub_dfp2_hs {
-+	remote-endpoint = <&usb_c0_hs>;
-+};
-+
-+&usb_hub_dfp2_ss {
-+	remote-endpoint = <&usb_c0_ss>;
-+};
-+
-+&usb_hub_dfp3_hs {
-+	remote-endpoint = <&usb_a0_hs>;
-+};
-+
-+&usb_hub_dfp3_ss {
-+	remote-endpoint = <&usb_a0_ss>;
-+};
-+
-+&usb_hub_dfp4_hs {
-+	remote-endpoint = <&usb_c1_hs>;
-+};
-+
-+&usb_hub_dfp4_ss {
-+	remote-endpoint = <&usb_c1_ss>;
- };
- 
- /* PINCTRL - modifications to sc7180-trogdor.dtsi */
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
-index d4925be3b1fc..59cdf8eea647 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
-@@ -179,6 +179,17 @@ skin-temp-thermistor@1 {
- 	};
- };
- 
-+&pogo_pins {
-+	keyboard@3 {
-+		compatible = "usb18d1,5057";
-+		reg = <3>;
-+	};
-+};
-+
-+&pogo_pins_in {
-+	remote-endpoint = <&usb_hub_dfp3_hs>;
-+};
-+
- &pp1800_uf_cam {
- 	status = "okay";
- };
-@@ -195,6 +206,42 @@ &pp2800_wf_cam {
- 	status = "okay";
- };
- 
-+&usb_c0_hs {
-+	remote-endpoint = <&usb_hub_dfp2_hs>;
-+};
-+
-+&usb_c0_ss {
-+	remote-endpoint = <&usb_hub_dfp2_ss>;
-+};
-+
-+&usb_c1_hs {
-+	remote-endpoint = <&usb_hub_dfp4_hs>;
-+};
-+
-+&usb_c1_ss {
-+	remote-endpoint = <&usb_hub_dfp3_ss>;
-+};
-+
-+&usb_hub_dfp2_hs {
-+	remote-endpoint = <&usb_c0_hs>;
-+};
-+
-+&usb_hub_dfp2_ss {
-+	remote-endpoint = <&usb_c0_ss>;
-+};
-+
-+&usb_hub_dfp4_hs {
-+	remote-endpoint = <&usb_c1_hs>;
-+};
-+
-+&usb_hub_dfp3_ss {
-+	remote-endpoint = <&usb_c1_ss>;
-+};
-+
-+&usb_hub_dfp3_hs {
-+	remote-endpoint = <&pogo_pins_in>;
-+};
-+
- &wifi {
- 	qcom,ath10k-calibration-variant = "GO_WORMDINGLER";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 74ab321d3333..af866cdd4fef 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -673,6 +673,25 @@ usb_c0: connector@0 {
- 				power-role = "dual";
- 				data-role = "host";
- 				try-power-role = "source";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						usb_c0_hs: endpoint {
-+							/* Endpoint filled in by board */
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						usb_c0_ss: endpoint {
-+							/* Endpoint filled in by board */
-+						};
-+					};
-+				};
- 			};
- 
- 			usb_c1: connector@1 {
-@@ -682,6 +701,25 @@ usb_c1: connector@1 {
- 				power-role = "dual";
- 				data-role = "host";
- 				try-power-role = "source";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						usb_c1_hs: endpoint {
-+							/* Endpoint filled in by board */
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						usb_c1_ss: endpoint {
-+							/* Endpoint filled in by board */
-+						};
-+					};
-+				};
- 			};
- 		};
- 	};
-@@ -966,6 +1004,41 @@ usb_hub_2_x: hub@1 {
- 		reg = <1>;
- 		vdd-supply = <&pp3300_hub>;
- 		peer-hub = <&usb_hub_3_x>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		usb_hub_2_x_ports: ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@1 {
-+				reg = <1>;
-+				usb_hub_dfp1_hs: endpoint {
-+					/* Endpoint filled in by board */
-+				};
-+			};
-+			port@2 {
-+				reg = <2>;
-+				usb_hub_dfp2_hs: endpoint {
-+					/* Endpoint filled in by board */
-+				};
-+			};
-+
-+			port@3 {
-+				reg = <3>;
-+				usb_hub_dfp3_hs: endpoint {
-+					/* Endpoint filled in by board */
-+				};
-+			};
-+
-+			port@4 {
-+				reg = <4>;
-+				usb_hub_dfp4_hs: endpoint {
-+					/* Endpoint filled in by board */
-+				};
-+			};
-+		};
- 	};
- 
- 	/* 3.x hub on port 2 */
-@@ -974,6 +1047,42 @@ usb_hub_3_x: hub@2 {
- 		reg = <2>;
- 		vdd-supply = <&pp3300_hub>;
- 		peer-hub = <&usb_hub_2_x>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		usb_hub_3_x_ports: ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@1 {
-+				reg = <1>;
-+				usb_hub_dfp1_ss: endpoint {
-+					/* Endpoint filled in by board */
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+				usb_hub_dfp2_ss: endpoint {
-+					/* Endpoint filled in by board */
-+				};
-+			};
-+
-+			port@3 {
-+				reg = <3>;
-+				usb_hub_dfp3_ss: endpoint {
-+					/* Endpoint filled in by board */
-+				};
-+			};
-+
-+			port@4 {
-+				reg = <4>;
-+				usb_hub_dfp4_ss: endpoint {
-+					/* Endpoint filled in by board */
-+				};
-+			};
-+		};
- 	};
- };
- 
--- 
-https://chromeos.dev
-
+Nicolin
