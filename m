@@ -1,125 +1,258 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7815B1F8921
-	for <patches@lists.linux.dev>; Tue, 11 Feb 2025 11:10:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4EA26BD8C;
+	Tue, 11 Feb 2025 15:05:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739272252; cv=none; b=P4Z8xLg9Vu3/I+ZHTTtmWIv70CBIpqsffnMPDLDqJMe5xSw3M2K6urGz77vUTubGdj/tp4tk9xZjlCopwSmYVDi6tZuVBkpEZtVFMyYGCOuIpShCk0K160FQIm9w5kdfyBzxhj0wuHbSArCseCjHU6h4NVFCwfTJ2U4oIxMaegc=
+	t=1739286344; cv=none; b=GniZyXWWavC9u2KWn3A0UYP28C2++q1EBlRRlLdhPfKAGXAvl0mynjzy/ePMtvfL2qgGqQCHZAboVHHlbUiF4XQNuzaII3qi4kZibovmf4tKOo8Kns1SLT2FI8eH36oXmeyYr4PQpm1zUEZEqLY1AhMYSbGoB7azquOWvdcZYzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739272252; c=relaxed/simple;
-	bh=WPb2ORZc/9ZZ6+gHNdJlvp8bilbLUMvl7JnfNtvGfEQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=G1xvD29p26DcE0j/hG54lggr9tmuW/AHk5BlugpUulhtd4LJXzF5XEp7ShmU3WIWH4w3dlxvrzOOYPa+jWXGpevVKhVSoVlRY6twJrXtA0NWj5SPj2+jIEl24JNJH70YYD5L0gcMkNC0CeMGmA/ZIahbBK/6JnbwNzO+KYx/ybE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu; spf=pass smtp.mailfrom=umich.edu; dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b=HfDdMkLd; arc=none smtp.client-ip=209.85.219.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=umich.edu
+	s=arc-20240116; t=1739286344; c=relaxed/simple;
+	bh=pK7wwx9SVBb/t9cDWPPmU/QNvvDUShUMo8z50n5diB0=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=kG+5p9YqWZXIjX3/ceSgcWYK+O/E1nS2OC5D6sAeJqldPMpE2wCCVg6JDDee3PbDtXqVoCUQvD9YxM9U7KWHaBrqTJK7HzM1RgtkI1a0q6nMf25lvwhWqqWhAr++FS8LrltcdsZ7EPV7PspsBi9FYw6zzMYwWpWGyNBHyOc4HRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=squebb.ca; spf=pass smtp.mailfrom=squebb.ca; dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b=UZXfgyE/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DXx9IwbI; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=squebb.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=squebb.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b="HfDdMkLd"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e5b4d615267so2969073276.1
-        for <patches@lists.linux.dev>; Tue, 11 Feb 2025 03:10:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03; t=1739272249; x=1739877049; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fPNCIgpBAFQQZU10UukFXE6nijs336odSMhelfSJ0j4=;
-        b=HfDdMkLdXqAeeX0+ZVb7/TmKtoI3Rhtj5gnXUH/0ES+X2gzcstDT9TFD4rsn06ibwS
-         dyEpEwwVC16zj6ui/7ukaDt2he0vzkaj/a8rnBMcbwgDQSAS8ksYO8Bf8kJqI0bcGpqR
-         8aeeck9nTszqbGAXjqCDMHyrTUiamhvBhOuIAzp2RV3hNxTAsEObMMO82YUEhs7evDxz
-         D57B44dz+0HP3NWKWIBeTksBCgOxUG4CTjlScGuHBttWI5fcms4tcnd+w7GBX+mw7yDz
-         Ld2hiSUmwqBNoyUYQgKQHVsG5AItdxzOJYaVn4N+t+S6mJWaywA6mWywezG0ilXgLXiI
-         RSWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739272249; x=1739877049;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fPNCIgpBAFQQZU10UukFXE6nijs336odSMhelfSJ0j4=;
-        b=OrQYKk6FM9FwREBE87kU38EpeACKSsXsJ2OG7SCa5m6Cqp7aYAyXowhvL+j4i1aR/K
-         MEkzbJBLl4sQ0jrVQygiz2FRQKXyNKzCRO4AJ/e1+89Lwo0CG/mxxcqbZ8aJ1QEfdp/P
-         DGjhJqSLSzc16Xm2HJG3Osi4QCl3eeGi8gt9p6WKNtYXfOhkWXa/mR5GV3nARpfmrgil
-         aAP26PKyNOMAvbJIdG6XIr2s22Bf2xgYpYLT62RctcgQCX09dr9ed/k2adbnec0OlcbV
-         U0VDAjzNKC8Whif5G7M8iWTtCyoKUQzU8PH8E+xHHLMXvse3GDjYCopC/wXCbgkQklvI
-         LUkg==
-X-Forwarded-Encrypted: i=1; AJvYcCVtoTIkFRPppqIz8gsOv7TyQvD2T+K+fnGTE0vI6iUUOahivGfffPZ3KNJ1VNW/CIm4HwAdMVoI@lists.linux.dev
-X-Gm-Message-State: AOJu0YwHAI15SqVXXc2faB0WekKKJ0bEQdvlBMp1z+PP9kUdw3oRpwGd
-	zkYoJlEiL6TiPflCODszJVvJlVw997MIDmy6jYGjTE2ny/BLs51dkKDxpi8f6CXkD5m5iXJBNmj
-	17gJ+zQYRpkNRlyC5fy4L4t8N7gBgJI0hgl/e1A==
-X-Gm-Gg: ASbGncvoHoiBmFn7nIJekodNsDgJsuvOvx0bNgELk7G2gS+qRMCZx07YqAJdPxXKs3t
-	G0WbFOvCA+HQ1R1VRJCD8OBPZycPtf873BDbaA9n6iMH8dTlmX14pxKcPu+zycgVtS10AyT0Y
-X-Google-Smtp-Source: AGHT+IGwcyBsYc46RWArEeADU77H8bXfVzk3irEgxqL38ZDIwj53ttNaZ+UD3iPTNd+DjLbLMEDFzT6kErsvcr/dhMw=
-X-Received: by 2002:a05:6902:27c8:b0:e58:7aa:7de4 with SMTP id
- 3f1490d57ef6-e5b462c2b38mr14587566276.45.1739272249457; Tue, 11 Feb 2025
- 03:10:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=squebb.ca header.i=@squebb.ca header.b="UZXfgyE/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DXx9IwbI"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 53CFB1140123;
+	Tue, 11 Feb 2025 10:05:39 -0500 (EST)
+Received: from phl-imap-10 ([10.202.2.85])
+  by phl-compute-02.internal (MEProxy); Tue, 11 Feb 2025 10:05:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=squebb.ca; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1739286339;
+	 x=1739372739; bh=/N1ern3xpY1CU833/SifUcUn0BSm+HC+YjRriOA6Ues=; b=
+	UZXfgyE/b53ktvnjWEHDqkkw1zLCJem+7GweMm7e3FJR+8/SjRC/wrZGMgP8M8RA
+	OpuGgZbuCn9Yb28i04Deu5/ptmcOm2saFlWbz419t7+/Ml2ZfD5phIYGRgfb2EAX
+	Ct3vvxYPiUfxu2gYWs0AT3f8EVqWuv/3WOrn2bTy28ufGI/xcDKS6s92oxJEglSV
+	sm3z53k2gxbaryclP4y13PqWHpGCNMYPCtMJQtw9PcStL7QQHiznaZW3qvFrV89q
+	1lsiDnmaEocuQYydHqaxO57Ca8NLPj0R+SDsVkQ9PWiILvNx9rYNhcXGkJ/cjebS
+	pquAFf3aSm9tD8fMxoTMyg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739286339; x=
+	1739372739; bh=/N1ern3xpY1CU833/SifUcUn0BSm+HC+YjRriOA6Ues=; b=D
+	Xx9IwbIfcAE+PEez40DVt9OBrR1sIh35PUVkv/gP3hlxPrsI5Zvy41zpT0WA4qlv
+	h9xebjZ9dvqhjmTemSxvdles5Koi96sNFjHDI1YJjgjokK7vjyLDIefJ1LXPqKC8
+	82oaKXCDbJJPJvjmLx92PcOYWgGyt65ogybrPIqubZD30xsa6cF5zWBJUNvc0AL/
+	6aWfnyBE0yedI3TWM4YquuAqehZ3SOWpuO1iMSB1CjPtd65Nw9hqsjM1tQeUORt5
+	P+yMcx+pOXyXGFbqGDPOrLHP79gZdaKq3g6jH19yk277NtV7UsKPzxojmt9DRkX0
+	F98w5ocMAqb9Ci7cI4T9w==
+X-ME-Sender: <xms:QmerZz8VhyhyZs0O1TuJfffSfk-LsreYXnTRgTGMWZosIBsuaUNgKg>
+    <xme:QmerZ_vBpB4Z00NkBWTP52p58NmHB_qzDlVnqYhgt8ZaJcNsPL07XGlCjGYPO1rwD
+    K-AwfeiE5B3qg9Vfb8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegudefudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtredt
+    tdenucfhrhhomhepfdforghrkhcurfgvrghrshhonhdfuceomhhpvggrrhhsohhnqdhlvg
+    hnohhvohesshhquhgvsggsrdgtrgeqnecuggftrfgrthhtvghrnhepleevvdeihfffgeel
+    ieeugedtiefggeelledtheektdduudeggeefheeuleduvdehnecuffhomhgrihhnpehgih
+    hthhhusgdrtghomhdpkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomhepmhhpvggrrhhsohhnqdhlvghnohhvohesshhquh
+    gvsggsrdgtrgdpnhgspghrtghpthhtohepudefpdhmohguvgepshhmthhpohhuthdprhgt
+    phhtthhopehmrghrihhordhlihhmohhntghivghllhhosegrmhgurdgtohhmpdhrtghpth
+    htohepshgrmhhithholhhvrghnvghnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehl
+    khhmlhesjhhohhhnrhhofihlvgihrdhmvgdprhgtphhtthhopehkvggvsheskhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtoheplhgvnhgssehkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehnrghthhgrnheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhgrfhgrvghlsehkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehllhhvmheslhhishhtshdrlhhinhhugidruggv
+    vhdprhgtphhtthhopehprghttghhvghssehlihhsthhsrdhlihhnuhigrdguvghv
+X-ME-Proxy: <xmx:QmerZxByMocufgxC9mxPdt4-2R6pJI7B9xNKg-z7QEQKMq-X3BOwTg>
+    <xmx:QmerZ_dcmC4GS78T0KJfXIX-Mu08pnVv8m809fRH7p52A_cUenoikw>
+    <xmx:QmerZ4NDXdxsfQGWmXFluPguDiq7P_QyItILiD1THkrLlGeIEA7LZQ>
+    <xmx:QmerZxkNCPbV7l0wWEV3zp943RmBecRqGWAfVs7XgsdW1khtUFyJ2w>
+    <xmx:Q2erZ0m8IDWnvUs4Mpbnfjqjbxj2k-cyaAX1aMlnslynh1WhkD418kf8>
+Feedback-ID: ibe194615:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id BF18A3C0069; Tue, 11 Feb 2025 10:05:38 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250210163732.281786-1-ojeda@kernel.org>
-In-Reply-To: <20250210163732.281786-1-ojeda@kernel.org>
-From: Trevor Gross <tmgross@umich.edu>
-Date: Tue, 11 Feb 2025 05:10:38 -0600
-X-Gm-Features: AWEUYZn351_k4v10MDh5azMViiAdx98NkshCWwsinZSeHh9hCB6x5oVItn12a_Q
-Message-ID: <CALNs47uBcyTmBdTBAPXiBcAkE0-4tih9j=VAv1rRcTcf_c2yTg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: rust: clean Rust 1.85.0 warning using softfloat target
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, 
-	moderated for non-subscribers <linux-arm-kernel@lists.infradead.org>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, 
-	Matthew Maurer <mmaurer@google.com>, Ralf Jung <post@ralfj.de>, 
-	Jubilee Young <workingjubilee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Date: Tue, 11 Feb 2025 10:05:18 -0500
+From: "Mark Pearson" <mpearson-lenovo@squebb.ca>
+To: "Nathan Chancellor" <nathan@kernel.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, "Len Brown" <lenb@kernel.org>
+Cc: "Hans de Goede" <hdegoede@redhat.com>,
+ "Limonciello, Mario" <mario.limonciello@amd.com>,
+ "Kees Cook" <kees@kernel.org>, "Sami Tolvanen" <samitolvanen@google.com>,
+ "linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
+ linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev,
+ stable@vger.kernel.org, "John Rowley" <lkml@johnrowley.me>
+Message-Id: <52c49252-7a81-4d27-a8a9-b2f1e5f837df@app.fastmail.com>
+In-Reply-To: 
+ <20250210-acpi-platform_profile-fix-cfi-violation-v3-1-ed9e9901c33a@kernel.org>
+References: 
+ <20250210-acpi-platform_profile-fix-cfi-violation-v3-1-ed9e9901c33a@kernel.org>
+Subject: Re: [PATCH v3] ACPI: platform-profile: Fix CFI violation when accessing sysfs
+ files
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Mon, Feb 10, 2025 at 10:38=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wr=
-ote:
->
-> Starting with Rust 1.85.0 (to be released 2025-02-20), `rustc` warns
-> [1] about disabling neon in the aarch64 hardfloat target:
->
->     warning: target feature `neon` cannot be toggled with
->              `-Ctarget-feature`: unsound on hard-float targets
->              because it changes float ABI
->       |
->       =3D note: this was previously accepted by the compiler but
->               is being phased out; it will become a hard error
->               in a future release!
->       =3D note: for more information, see issue #116344
->               <https://github.com/rust-lang/rust/issues/116344>
->
-> Thus, instead, use the softfloat target instead.
->
-> While trying it out, I found that the kernel sanitizers were not enabled
-> for that built-in target [2]. Upstream Rust agreed to backport
-> the enablement for the current beta so that it is ready for
-> the 1.85.0 release [3] -- thanks!
->
-> However, that still means that before Rust 1.85.0, we cannot switch
-> since sanitizers could be in use. Thus conditionally do so.
->
-> Cc: <stable@vger.kernel.org> # Needed in 6.12.y and 6.13.y only (Rust is =
-pinned in older LTSs).
-> Cc: Catalin Marinas <catalin.marinas@arm.com>
-> Cc: Will Deacon <will@kernel.org>
-> Cc: Matthew Maurer <mmaurer@google.com>
-> Cc: Alice Ryhl <aliceryhl@google.com>
-> Cc: Ralf Jung <post@ralfj.de>
-> Cc: Jubilee Young <workingjubilee@gmail.com>
-> Link: https://github.com/rust-lang/rust/pull/133417 [1]
-> Link: https://rust-lang.zulipchat.com/#narrow/channel/131828-t-compiler/t=
-opic/arm64.20neon.20.60-Ctarget-feature.60.20warning/near/495358442 [2]
-> Link: https://github.com/rust-lang/rust/pull/135905 [3]
-> Link: https://github.com/rust-lang/rust/issues/116344
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Hi Nathan
 
-This is consistent with what has been discussed for a while on the Rust sid=
-e.
+On Mon, Feb 10, 2025, at 9:28 PM, Nathan Chancellor wrote:
+> When an attribute group is created with sysfs_create_group(), the
+> ->sysfs_ops() callback is set to kobj_sysfs_ops, which sets the ->show()
+> and ->store() callbacks to kobj_attr_show() and kobj_attr_store()
+> respectively. These functions use container_of() to get the respective
+> callback from the passed attribute, meaning that these callbacks need to
+> be the same type as the callbacks in 'struct kobj_attribute'.
+>
+> However, the platform_profile sysfs functions have the type of the
+> ->show() and ->store() callbacks in 'struct device_attribute', which
+> results a CFI violation when accessing platform_profile or
+> platform_profile_choices under /sys/firmware/acpi because the types do
+> not match:
+>
+>   CFI failure at kobj_attr_show+0x19/0x30 (target: 
+> platform_profile_choices_show+0x0/0x140; expected type: 0x7a69590c)
+>
+> There is no functional issue from the type mismatch because the layout
+> of 'struct kobj_attribute' and 'struct device_attribute' are the same,
+> so the container_of() cast does not break anything aside from CFI.
+>
+> Change the type of platform_profile_choices_show() and
+> platform_profile_{show,store}() to match the callbacks in
+> 'struct kobj_attribute' and update the attribute variables to match,
+> which resolves the CFI violation.
+>
+> Cc: stable@vger.kernel.org
+> Fixes: a2ff95e018f1 ("ACPI: platform: Add platform profile support")
+> Reported-by: John Rowley <lkml@johnrowley.me>
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/2047
+> Tested-by: John Rowley <lkml@johnrowley.me>
+> Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> Changes in v3:
+> - Rebase on 6.14-rc1, which includes updates to the driver to address
+>   Greg's previous concerns but this change is still needed for the
+>   legacy sysfs interface. v2 can be used for the stable backport.
+> - Link to v2: 
+> https://lore.kernel.org/r/20241118-acpi-platform_profile-fix-cfi-violation-v2-1-62ff952804de@kernel.org
+>
+> Changes in v2:
+> - Rebase on linux-pm/acpi
+> - Pick up Sami's reviewed-by tag
+> - Adjust wording around why there is no functional issue from the
+>   mismatched types
+> - Link to v1: 
+> https://lore.kernel.org/r/20240819-acpi-platform_profile-fix-cfi-violation-v1-1-479365d848f6@kernel.org
+> ---
+>  drivers/acpi/platform_profile.c | 26 +++++++++++++-------------
+>  1 file changed, 13 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/acpi/platform_profile.c 
+> b/drivers/acpi/platform_profile.c
+> index fc92e43d0fe9..1b6317f759f9 100644
+> --- a/drivers/acpi/platform_profile.c
+> +++ b/drivers/acpi/platform_profile.c
+> @@ -260,14 +260,14 @@ static int _aggregate_choices(struct device *dev, 
+> void *data)
+> 
+>  /**
+>   * platform_profile_choices_show - Show the available profile choices 
+> for legacy sysfs interface
+> - * @dev: The device
+> + * @kobj: The kobject
+>   * @attr: The attribute
+>   * @buf: The buffer to write to
+>   *
+>   * Return: The number of bytes written
+>   */
+> -static ssize_t platform_profile_choices_show(struct device *dev,
+> -					     struct device_attribute *attr,
+> +static ssize_t platform_profile_choices_show(struct kobject *kobj,
+> +					     struct kobj_attribute *attr,
+>  					     char *buf)
+>  {
+>  	unsigned long aggregate[BITS_TO_LONGS(PLATFORM_PROFILE_LAST)];
+> @@ -333,14 +333,14 @@ static int _store_and_notify(struct device *dev, 
+> void *data)
+> 
+>  /**
+>   * platform_profile_show - Show the current profile for legacy sysfs interface
+> - * @dev: The device
+> + * @kobj: The kobject
+>   * @attr: The attribute
+>   * @buf: The buffer to write to
+>   *
+>   * Return: The number of bytes written
+>   */
+> -static ssize_t platform_profile_show(struct device *dev,
+> -				     struct device_attribute *attr,
+> +static ssize_t platform_profile_show(struct kobject *kobj,
+> +				     struct kobj_attribute *attr,
+>  				     char *buf)
+>  {
+>  	enum platform_profile_option profile = PLATFORM_PROFILE_LAST;
+> @@ -362,15 +362,15 @@ static ssize_t platform_profile_show(struct device *dev,
+> 
+>  /**
+>   * platform_profile_store - Set the profile for legacy sysfs interface
+> - * @dev: The device
+> + * @kobj: The kobject
+>   * @attr: The attribute
+>   * @buf: The buffer to read from
+>   * @count: The number of bytes to read
+>   *
+>   * Return: The number of bytes read
+>   */
+> -static ssize_t platform_profile_store(struct device *dev,
+> -				      struct device_attribute *attr,
+> +static ssize_t platform_profile_store(struct kobject *kobj,
+> +				      struct kobj_attribute *attr,
+>  				      const char *buf, size_t count)
+>  {
+>  	unsigned long choices[BITS_TO_LONGS(PLATFORM_PROFILE_LAST)];
+> @@ -401,12 +401,12 @@ static ssize_t platform_profile_store(struct device *dev,
+>  	return count;
+>  }
+> 
+> -static DEVICE_ATTR_RO(platform_profile_choices);
+> -static DEVICE_ATTR_RW(platform_profile);
+> +static struct kobj_attribute attr_platform_profile_choices = 
+> __ATTR_RO(platform_profile_choices);
+> +static struct kobj_attribute attr_platform_profile = 
+> __ATTR_RW(platform_profile);
+> 
+>  static struct attribute *platform_profile_attrs[] = {
+> -	&dev_attr_platform_profile_choices.attr,
+> -	&dev_attr_platform_profile.attr,
+> +	&attr_platform_profile_choices.attr,
+> +	&attr_platform_profile.attr,
+>  	NULL
+>  };
+> 
+>
+> ---
+> base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
+> change-id: 20240819-acpi-platform_profile-fix-cfi-violation-de278753bd5f
+>
+> Best regards,
+> -- 
+> Nathan Chancellor <nathan@kernel.org>
 
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Just a note to say thank you for noticing my email address change - the old lenovo one was awful to use so I dropped it a while back, but it meant I missed your first two patches (my mail filters for the list should have caught it and I'll have to figure out why not...)
+
+From the V1 patch there was a question about why it was done this way: I believe I just copied how it seems to be done everywhere else in the kernel. I can't remember what I used as a reference exactly, but I went and checked a few random drivers and it seems to be everywhere.
+
+Patch looks fine (I'd like to try it out on my system - will aim to do that today). I didn't know what CFI was (and have lightly educated myself now). 
+Is there a better way to fix this so it's common across all drivers somehow? Updating every individual instance is going to be a lot.
+
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+
+Mark
