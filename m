@@ -1,88 +1,100 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from 009.lax.mailroute.net (009.lax.mailroute.net [199.89.1.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89CA201018;
-	Wed, 12 Feb 2025 20:54:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2285202C4A
+	for <patches@lists.linux.dev>; Wed, 12 Feb 2025 20:58:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739393694; cv=none; b=ZCgvaD0PjP/dNxwu5MLRNhRKuuwdkdBVvPF6a467qobSoQu29szreH+SmrOdDMl2roFkFRZ2uFxPdlln1Lm3jkuWmAx55aOCtBQeXfVGzcf06XKAE5090mMV4s99FimAZBR5X7h5Ef2Xmu1PlJtxdpcDYQAboB6Sy8SoDZT1Btw=
+	t=1739393925; cv=none; b=NigFJlIjYM712jDged5KwMqdIUSfiAyZyMeaVAWpMuvnCITuPyhdhifRp/qpZglmPnYrsHO0tm2Z+xeoLQFdz3nePKMYdIsschiCLQ6CHGtBB4od38sd7m6dg+PSDb1q1XUQaAo23/yS6tay/ZjOhEcMsqk7Dj/EGYKwYTOF97o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739393694; c=relaxed/simple;
-	bh=uhsNxdAPKxHM3UCSDS1WcNl9HCUCQ2aGsyZBD15fNpo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZPfXRV0Gcja7XEzP9MhYDHBBn3BDZCznYrC6/neIuV2g8uOpBtfFRItixPd596UOwvC7a+TeVLy5JzQDLnaERR2vHlFEQh+qxaett0eMT+tpNQV66gZ3ENelSRWe9KnHoZbptZ5X/5fxeqH8uyz9Z5kfFoqzRNgOVfO2I+5EGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=PSpeok/e; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1739393925; c=relaxed/simple;
+	bh=fvwn4DcfeuVU3pip0oOfJYQ72oh9YToQYowTNGciXVI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DD9ndfx/+yD9KwUVCDFclVXaXqqtkzo5xol7cbi2aVi1AO1j7WIVshfcAmrsuXoeOP4wUvzcKsva2OFk2x2JC7hIVOgZJx52EGXSL9LKdsaT3j6p+BPLgv6iLdGEYOpPDq0CNI2hBhoOPcwS+KzZSnZQcFw61pWWjeiO4H9oQjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=XWdBCsNe; arc=none smtp.client-ip=199.89.1.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="PSpeok/e"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=1QlAPrdBxVcOCau1Ut5LJRxiWh5btrekG1D4njDcpeM=; b=PSpeok/eqVgLq8bV+wYRftOlSA
-	TKHQsfbF6CtrLy79EAMsLXlHFFJQ+Agv7+poLGsrhdfsOiFAdWfGU+o9/sKBD/V1M4PznBD5EKwJ/
-	n9S6L8OK9VdydlyQMZaJ6BqbpqrAEWM2akccXOTumcYu/nIgMdtjxqf+yPI5DaHdOWgoDucWBhmCr
-	kvSREIXY1OO57itxklB58IBbAr+7NXHS6Gy7ajwr9bEOygeP2gYjXFA3yXEWd47lVx7VfqyOmYZ/g
-	nzFuM7IaLNYGVPv5GW3v5+n32p8SFhi00n8+DVIDULcXMaX405L3PgLbm2CxiYgtp8IpNMu6C0F4z
-	MEiylaUg==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.98 #2 (Red Hat Linux))
-	id 1tiJkw-00000008q8D-3PvR;
-	Wed, 12 Feb 2025 20:54:50 +0000
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: shinichiro.kawasaki@wdc.com
-Cc: linux-block@vger.kernel.org,
-	hare@suse.de,
-	patches@lists.linux.dev,
-	gost.dev@samsung.com,
-	mcgrof@kernel.org
-Subject: [PATCH blktests v3 4/6] common/xfs: use min io for fs blocksize
-Date: Wed, 12 Feb 2025 12:54:46 -0800
-Message-ID: <20250212205448.2107005-5-mcgrof@kernel.org>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250212205448.2107005-1-mcgrof@kernel.org>
-References: <20250212205448.2107005-1-mcgrof@kernel.org>
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="XWdBCsNe"
+Received: from localhost (localhost [127.0.0.1])
+	by 009.lax.mailroute.net (Postfix) with ESMTP id 4YtVz60NYqzlgTxf;
+	Wed, 12 Feb 2025 20:58:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1739393918; x=1741985919; bh=2z6lVmeEQmsJJVxbjmRrfpZw
+	mOOkkfHOmfNeUYVP6qg=; b=XWdBCsNeeFoaStfe/spE1NEm9nN6CARYIQlkaPhh
+	d0IoRjf2RYTL55H4XxuptPkPXgXx8ZpMaSecG4dIKmZoG4QkvwYI9DK3dlxLbWaO
+	xEB6f0fSzOTSBLiZskoF/ivvvEo4BiinfFEd4svD3pOgCev8RigZ16LqXIupkmmr
+	v/cVRo6j7K5wIGLcsoPN6vD3Q5kEvKLxfkICg6oJE2Mq9xBOnFA1tWeBVkviYWUa
+	NdlS4yQFs3QXQhZ3k1wONyHu/9bQdaBrykLFg2OvlpkvM2KCMOgeBubJxvIjvih4
+	GVuyBKPcFtKX+fFKQvPeUi4lCfk3Kf9lTRdFhbvwFFZ7mA==
+X-Virus-Scanned: by MailRoute
+Received: from 009.lax.mailroute.net ([127.0.0.1])
+ by localhost (009.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id nvkabZPpXh8Q; Wed, 12 Feb 2025 20:58:38 +0000 (UTC)
+Received: from [100.66.154.22] (unknown [104.135.204.82])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 009.lax.mailroute.net (Postfix) with ESMTPSA id 4YtVz139pbzlgTwc;
+	Wed, 12 Feb 2025 20:58:37 +0000 (UTC)
+Message-ID: <2e6ea8bc-6e9a-4434-8ffb-ec16ead86df4@acm.org>
+Date: Wed, 12 Feb 2025 12:58:36 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH blktests v3 1/6] common/xfs: ignore first umount error on
+ _xfs_mkfs_and_mount()
+To: Luis Chamberlain <mcgrof@kernel.org>, shinichiro.kawasaki@wdc.com
+Cc: linux-block@vger.kernel.org, hare@suse.de, patches@lists.linux.dev,
+ gost.dev@samsung.com
+References: <20250212205448.2107005-1-mcgrof@kernel.org>
+ <20250212205448.2107005-2-mcgrof@kernel.org>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20250212205448.2107005-2-mcgrof@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Use the min io for the target block size. Likewise we need to increase
-the log size if using a bs > 4096.
+On 2/12/25 12:54 PM, Luis Chamberlain wrote:
+> We want to help capture error messages with _xfs_mkfs_and_mount() on
+> $FULL, to do that we should avoid spamming error messages for things
+> which we know are not fatal. Such is the case of when we try to
+> mkfs a filesystem but before that try to umount the target path.
+> The first umount is just for sanity, so ignore the error messages from
+> it.
+> 
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> ---
+>   common/xfs | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/common/xfs b/common/xfs
+> index 569770fecd53..67a3b8a97391 100644
+> --- a/common/xfs
+> +++ b/common/xfs
+> @@ -15,7 +15,7 @@ _xfs_mkfs_and_mount() {
+>   	local mount_dir=$2
+>   
+>   	mkdir -p "${mount_dir}"
+> -	umount "${mount_dir}"
+> +	umount "${mount_dir}" >/dev/null 2>&1
+>   	mkfs.xfs -l size=64m -f "${bdev}" || return $?
+>   	mount "${bdev}" "${mount_dir}"
+>   }
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- common/xfs | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+Shouldn't ">/dev/null 2>&1" be added to the _xfs_mkfs_and_mount()
+caller rather than inside the _xfs_mkfs_and_mount() implementation?
+The above patch makes it impossible for any caller to capture the
+stdout output of umount.
 
-diff --git a/common/xfs b/common/xfs
-index 67a3b8a97391..226fdbd1c83f 100644
---- a/common/xfs
-+++ b/common/xfs
-@@ -13,10 +13,18 @@ _have_xfs() {
- _xfs_mkfs_and_mount() {
- 	local bdev=$1
- 	local mount_dir=$2
-+	local bs
-+	local xfs_logsize="64m"
-+
-+	bs=$(_min_io "$bdev")
-+
-+	if [[ $bs -gt 4096 ]]; then
-+		xfs_logsize="128m"
-+	fi
- 
- 	mkdir -p "${mount_dir}"
- 	umount "${mount_dir}" >/dev/null 2>&1
--	mkfs.xfs -l size=64m -f "${bdev}" || return $?
-+	mkfs.xfs -l size=$xfs_logsize -f "${bdev}" -b size="$bs" || return $?
- 	mount "${bdev}" "${mount_dir}"
- }
- 
--- 
-2.45.2
+Thanks,
 
+Bart.
