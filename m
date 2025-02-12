@@ -1,157 +1,137 @@
-Received: from hall.aurel32.net (hall.aurel32.net [195.154.113.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E39F267735;
-	Tue, 11 Feb 2025 22:18:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.154.113.88
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96C53271830;
+	Wed, 12 Feb 2025 00:41:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739312320; cv=none; b=dPDnslOAyucarboSgBhFadAkU53+ymbYt+0bn3z6xXyiPZ9iFK2ZhPh/rfF8DGt4/NhSVcuowmeUWFEY4u7k4wjCRrBY6Yjo0OXdixsjs7H7pWL+mGkQfg1OGzIA3GhRsy9CG3/fpnw23tXtG3bkXBXm9NvTUuOikcGuVbVPD8Y=
+	t=1739320916; cv=none; b=JQWHgVqPkKfmJFsiGl8QyqvJkTiUy4kgGu/O19DyOIdTGR/EUkghFV8cbLqYz0R5s+G0CucFZoCyYvAqisH8oog+68twrQ8xVebmLQRB6KBxSOB14jBbor8wCy6UOcFAA1BXs+LhQpkrR3f8nwXniXZpADLbgtovXlPyZKyEih0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739312320; c=relaxed/simple;
-	bh=fg+mdDs/1hxV8xrps0GKi/M2rnTsDoaggfZkwa0Y7Dw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bjuYwr3UNaSZtBj0FMvUEwKQS1yk1y7HE6c6wn5wRfNlWQMPynQQWemMjW1XCmCHq+SrZUevP37Uj+VDa4qbBP6uEz60nHUYt3feMdpneGFXzZD2m19HT/5jDmbwZZJI8GKNuafT0fFtcFZMvipHnn+0zX5vHaUkuVpBtdXl8Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net; spf=pass smtp.mailfrom=aurel32.net; dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b=b+TUNzpp; arc=none smtp.client-ip=195.154.113.88
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aurel32.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aurel32.net
+	s=arc-20240116; t=1739320916; c=relaxed/simple;
+	bh=oF6rafIwSNtUENbnoYqYFZV8ow2l7/+0FQKAEsoAenU=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uQYB6UT7dEDjf8J9Sz6SvsAXuN0/2T72bmrnQeaqunMLQvm9w/7Shq2GymB2yS7E7TPeAkpItQEE1rQg4ZSOE9jSjGTbcyvoLTZcr8oy/U6mGNu0FsHUOac0lOaBL13SI2oWIRiYhd23xzTZmIlrmrBO1eUb/yEWGyqBRmPJ1cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=gP9582rY; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aurel32.net header.i=@aurel32.net header.b="b+TUNzpp"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
-	; s=202004.hall; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:From:Reply-To:
-	Subject:Content-ID:Content-Description:X-Debbugs-Cc;
-	bh=qDrZkc0qPpSqWL5jahZOhNW47jDrNmc5iD9eUvdSGT0=; b=b+TUNzpplgqHMDLrvchwqjOBSP
-	OrVNYOwYvJcZQ4UfJmrtOGlIU796xsh/bOMu1u/hSLbVbgdqYkOar0Vm6/Z6iWV0vJuLBCZI631PV
-	bU6fgHoHV5oiqKcDv8ErJfwYQ+EiBr2YsRo9M0ez/uRNGJdIvYUTaveY7EvHh34uS0nZdfqSEXO4O
-	XP32NYXHPdvbAik+q9w5gH3hQrIHeyjxQ0O75bQKrHqzwE5sd+HEu/wTMep0Jxs5NF5g2C8AFw6bd
-	hCtn4vWuTR3Jj16rwuIuJzpSTIFR7miB/72hnXg1J6adcL5uKOgD5RWaiXNZxNhTVWeOyLPF2XWCy
-	skyJn96Q==;
-Received: from [2a01:e34:ec5d:a741:1ee1:92ff:feb4:5ec0] (helo=ohm.rr44.fr)
-	by hall.aurel32.net with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <aurelien@aurel32.net>)
-	id 1thyaD-00EdMB-2u;
-	Tue, 11 Feb 2025 23:18:21 +0100
-Date: Tue, 11 Feb 2025 23:18:21 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	FUKAUMI Naoki <naoki@radxa.com>,
-	Michael Zimmermann <sigmaepsilon92@gmail.com>,
-	Chukun Pan <amadeus@jmu.edu.cn>, Heiko Stuebner <heiko@sntech.de>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH 6.12 026/114] phy: rockchip: naneng-combphy: fix phy reset
-Message-ID: <Z6vMrX2-rhE1r1E4@aurel32.net>
-References: <20241230154218.044787220@linuxfoundation.org>
- <20241230154219.070199198@linuxfoundation.org>
- <Z6itgi4kAoNWi0y_@aurel32.net>
- <2025021128-untrimmed-city-0ead@gregkh>
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="gP9582rY"
+Received: from DESKTOP-0403QTC. (unknown [20.236.10.163])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 983292107AB2;
+	Tue, 11 Feb 2025 16:41:53 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 983292107AB2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1739320914;
+	bh=te+LgTCfgT6rN9uNEpS9mlNl0cinheDGVI/VHPcuXGs=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Reply-To:From;
+	b=gP9582rYDU7I3/iK7VWsbx8JVwe14EFxzbvhg2QOgWjA20IItZcefMeIRkZfaNwD7
+	 k/7gcqsF9z2TmStzjtwcJsdI5tr2AkfRtIzX509Q5cEJnx7MWl8gmQ09wf64ucuMqP
+	 De9Ow0WFOn/YzEgHz2oAT0Sb0RHsXqrFGHFflHbg=
+Date: Tue, 11 Feb 2025 16:41:51 -0800
+From: Jacob Pan <jacob.pan@linux.microsoft.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
+ virtualization@lists.linux.dev, Will Deacon <will@kernel.org>, Eric Auger
+ <eric.auger@redhat.com>, patches@lists.linux.dev,
+ jacob.pan@linux.microsoft.com
+Subject: Re: [PATCH 0/5] Convert virtio-iommu to domain_alloc_paging()
+Message-ID: <20250211164151.723cfce0@DESKTOP-0403QTC.>
+In-Reply-To: <0-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
+References: <0-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
+Reply-To: jacob.pan@linux.microsoft.com
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="f8+tZLrNsWWEuN1a"
-Content-Disposition: inline
-In-Reply-To: <2025021128-untrimmed-city-0ead@gregkh>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
+Hi Jason,
 
---f8+tZLrNsWWEuN1a
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Fri,  7 Feb 2025 10:46:00 -0400
+Jason Gunthorpe <jgg@nvidia.com> wrote:
 
-Hi Greg,
-
-On 2025-02-11 11:29, Greg Kroah-Hartman wrote:
-> On Sun, Feb 09, 2025 at 02:28:34PM +0100, Aurelien Jarno wrote:
-> > On 2024-12-30 16:42, Greg Kroah-Hartman wrote:
-> > > 6.12-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > It probably comes a bit late, but this patch broke usb and pcie on
-> > rk356x. The other commit from the same series, commit 8b9c12757f91
-> > ("arm64: dts: rockchip: add reset-names for combphy on rk3568"), also
-> > needs to be backported.
+> virtio-iommu and fsl_pamu are the only two drivers left that still
+> rely on ops.domain_alloc()
 > 
-> That commit does not apply, can you please provide a working backport
-> for us to queue up?
+> Update virtio-iommu to have a global static identity domain, implement
+> domain_alloc_paging(), and finalize its domain during allocation
+> instead of on first attach.
+> 
+> As virtio-iommu was the last real iommu driver using domain_alloc()
+> update the core code to isolate the remains to fsl_pamu.
+> 
+> I tested this using qemu x86 7.0.0 and 9.2.0 with a mlx5 VFIO PCI
+> device. The kernel behaves the same after this series.
+> 
+> However, there seem to be some unrelated qemu bugs. 7.0.0 does not
+> have working VIRTIO_IOMMU_F_BYPASS_CONFIG and neither qemu works with
+> an IDENTITY domain using !VIRTIO_IOMMU_F_BYPASS_CONFIG. It prints:
+> 
+>  qemu-system-x86_64: iommu has granularity incompatible with target AS
+>  qemu-system-x86_64: iommu map to non memory area 80000000
+>  qemu-system-x86_64: iommu map to non memory area c0000000
+>  qemu-system-x86_64: iommu map to non memory area e0000000
+>  qemu-system-x86_64: iommu map to non memory area f0000000
+>  qemu-system-x86_64: iommu map to non memory area f8000000
+>  qemu-system-x86_64: iommu map to non memory area fc000000
+>  qemu-system-x86_64: iommu map to non memory area fe000000
+>  qemu-system-x86_64: iommu map to non memory area fe800000
+>  qemu-system-x86_64: iommu map to non memory area 0
+>  qemu-system-x86_64: iommu map to non memory area fef00000
+>  qemu-system-x86_64: iommu map to non memory area ff000000
+>  qemu-system-x86_64: iommu has granularity incompatible with target AS
+>  qemu-system-x86_64: iommu map to non memory area 200000000
+>  qemu-system-x86_64: iommu map to non memory area 400000000
+>  qemu-system-x86_64: iommu map to non memory area 800000000
+>  qemu-system-x86_64: iommu map to non memory area 1000000000
+>  qemu-system-x86_64: iommu map to non memory area 2000000000
+>  qemu-system-x86_64: iommu map to non memory area 4000000000
 
-That sounds strange, it applies fine against v6.12.13 here, and I do not
-see any changes to the two files it modifies in queue-6.12.
+I see the same on arm64 with v9.0, assigned an ixgbe nic via VFIO.
 
-Anyway please find a backport attached, i can also send it directly to
-the list if you prefer.
+qemu-system-aarch64: iommu map to non memory area 0                               
+qemu-system-aarch64: iommu map to non memory area 8100000                         
+qemu-system-aarch64: iommu map to non memory area 8200000                         
+qemu-system-aarch64: iommu map to non memory area 8400000                         
+qemu-system-aarch64: iommu map to non memory area 8800000                         
+qemu-system-aarch64: iommu map to non memory area 0                               
+qemu-system-aarch64: iommu map to non memory area 0                               
+qemu-system-aarch64: iommu map to non memory area c000000                         
+qemu-system-aarch64: iommu map to non memory area 10000000                        
+qemu-system-aarch64: iommu map to non memory area 20000000                        
+qemu-system-aarch64: iommu has granularity incompatible with target AS            
+qemu-system-aarch64: iommu map to non memory area 200000000                       
+qemu-system-aarch64: iommu map to non memory area 400000000                       
+qemu-system-aarch64: iommu map to non memory area 800000000                       
+qemu-system-aarch64: iommu map to non memory area 1000000000                      
+qemu-system-aarch64: iommu map to non memory area 2000000000                      
+qemu-system-aarch64: iommu map to non memory area 4000000000                      
+qemu-system-aarch64: iommu map to non memory area 8000000000                      
+qemu-system-aarch64: iommu map to non memory area 10000000000                     
+qemu-system-aarch64: iommu map to non memory area 20000000000                     
+qemu-system-aarch64: iommu map to non memory area 40000000000                     
+qemu-system-aarch64: iommu map to non memory area 80000000000                     
+qemu-system-aarch64: iommu map to non memory area 100000000000                    
+qemu-system-aarch64: iommu map to non memory area 200000000000                    
+qemu-system-aarch64: iommu map to non memory area 400000000000                    
+qemu-system-aarch64: iommu map to non memory area 800000000000   
 
-Thanks
-Aurelien
+> Jason Gunthorpe (5):
+>   iommu/virtio: Break out bypass identity support into a global static
+>   iommu: Add domain_alloc_identity()
+>   iommu/virtio: Move to domain_alloc_paging()
+>   iommu: Do not call domain_alloc() in iommu_sva_domain_alloc()
+>   iommu: Hide ops.domain_alloc behind CONFIG_FSL_PAMU
+> 
+>  drivers/iommu/iommu-sva.c    |  15 ++-
+>  drivers/iommu/iommu.c        |  16 +--
+>  drivers/iommu/virtio-iommu.c | 200
+> +++++++++++++++++++++-------------- include/linux/iommu.h        |
+> 10 +- 4 files changed, 141 insertions(+), 100 deletions(-)
+> 
+> 
+> base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
 
--- 
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
-
---f8+tZLrNsWWEuN1a
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment;
-	filename="0001-arm64-dts-rockchip-add-reset-names-for-combphy-on-rk.patch"
-Content-Transfer-Encoding: quoted-printable
-
-=46rom e04594d6a86171593ede97987c9f99bfe51a74de Mon Sep 17 00:00:00 2001
-=46rom: Chukun Pan <amadeus@jmu.edu.cn>
-Date: Fri, 22 Nov 2024 15:30:05 +0800
-Subject: [PATCH] arm64: dts: rockchip: add reset-names for combphy on rk3568
-
-commit 8b9c12757f919157752646faf3821abf2b7d2a64 upstream.
-
-The reset-names of combphy are missing, add it.
-
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-Fixes: fd3ac6e80497 ("dt-bindings: phy: rockchip: rk3588 has two reset line=
-s")
-Link: https://lore.kernel.org/r/20241122073006.99309-1-amadeus@jmu.edu.cn
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
----
- arch/arm64/boot/dts/rockchip/rk3568.dtsi | 1 +
- arch/arm64/boot/dts/rockchip/rk356x.dtsi | 2 ++
- 2 files changed, 3 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568.dtsi b/arch/arm64/boot/dts=
-/rockchip/rk3568.dtsi
-index 0946310e8c124..6fd67ae271174 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
-@@ -262,6 +262,7 @@ combphy0: phy@fe820000 {
- 		assigned-clocks =3D <&pmucru CLK_PCIEPHY0_REF>;
- 		assigned-clock-rates =3D <100000000>;
- 		resets =3D <&cru SRST_PIPEPHY0>;
-+		reset-names =3D "phy";
- 		rockchip,pipe-grf =3D <&pipegrf>;
- 		rockchip,pipe-phy-grf =3D <&pipe_phy_grf0>;
- 		#phy-cells =3D <1>;
-diff --git a/arch/arm64/boot/dts/rockchip/rk356x.dtsi b/arch/arm64/boot/dts=
-/rockchip/rk356x.dtsi
-index 0ee0ada6f0ab0..bc0f57a26c2ff 100644
---- a/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-@@ -1762,6 +1762,7 @@ combphy1: phy@fe830000 {
- 		assigned-clocks =3D <&pmucru CLK_PCIEPHY1_REF>;
- 		assigned-clock-rates =3D <100000000>;
- 		resets =3D <&cru SRST_PIPEPHY1>;
-+		reset-names =3D "phy";
- 		rockchip,pipe-grf =3D <&pipegrf>;
- 		rockchip,pipe-phy-grf =3D <&pipe_phy_grf1>;
- 		#phy-cells =3D <1>;
-@@ -1778,6 +1779,7 @@ combphy2: phy@fe840000 {
- 		assigned-clocks =3D <&pmucru CLK_PCIEPHY2_REF>;
- 		assigned-clock-rates =3D <100000000>;
- 		resets =3D <&cru SRST_PIPEPHY2>;
-+		reset-names =3D "phy";
- 		rockchip,pipe-grf =3D <&pipegrf>;
- 		rockchip,pipe-phy-grf =3D <&pipe_phy_grf2>;
- 		#phy-cells =3D <1>;
---=20
-2.45.2
-
-
---f8+tZLrNsWWEuN1a--
