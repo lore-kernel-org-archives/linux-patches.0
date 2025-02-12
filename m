@@ -1,103 +1,81 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCEF01FF7D7;
-	Wed, 12 Feb 2025 20:10:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88E31EEA4A;
+	Wed, 12 Feb 2025 20:54:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739391009; cv=none; b=D8g5zogpVJRitFAR3jyEzNnRtN503stSgIbnZ2YHnrxZr2wipHmYwnW2uG8/aYklh3hsqdKMbN3CD2+qeNKHpfsoM5kVxwYWPBTOw3Sf14XdC5JA7uCkR1Fb54H7pcjGi8+s6BBDtrUjfqmuZNtJGTriKyTJkyqxyf/QwN5RUbU=
+	t=1739393693; cv=none; b=esK6o33jXQnh+WMt6MkUfopH9OFkwTWHFFXThjDRo/Ok0ZTyzjRHxHOa+PnDXbMXB5o0KR87fmsbSMbzLqftWXASSJOW/td9IwYXivMj+Ggr8pphIW0wAvr/VDUdN9izq19r7hVin3dfjWywV7K8pz0mf2GVBDm5E159rPEEi3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739391009; c=relaxed/simple;
-	bh=l5eSBuS2I6fUIdtWwROVq+z2Iausji44DHYc5d9v2jM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VaGT8o8apiDywpaRG3oo81FexiV5DS4tMy8VwJJWWVfBVVllSshVAoG/V0vj9kpAQTUjOoIpK5+LsUBbQBA5GucPCQT+uYGK85yg6Q4GU4xZhq4oJQH+R0iYVQaJiROEwGfahFL9sK+MsEAd+LMVwK2JRFOViYV3JWyYRe5cpF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E5FBF12FC;
-	Wed, 12 Feb 2025 12:10:25 -0800 (PST)
-Received: from [10.57.36.235] (unknown [10.57.36.235])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 78CB23F5A1;
-	Wed, 12 Feb 2025 12:10:03 -0800 (PST)
-Message-ID: <756bf70b-f931-4ab4-bfa9-3621d2394987@arm.com>
-Date: Wed, 12 Feb 2025 20:10:01 +0000
+	s=arc-20240116; t=1739393693; c=relaxed/simple;
+	bh=k8dA5lKb2/vo1cUKP/hBBEJjebZ/4e1cGMp4Wi309JQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fvTpZZBsZTCJ5qSxJG6R/0AF2QkfrPER2a2qB/vjuAMJ68Bi/O4BRdMwLykbQi4USBbYagYYiER1HuG2n34+TSzjz/yr0RA6pQJhPRLfnOLCBfnfiyUXlDpWZS9r5hzZXNNkRXcxIp/xQCKWi7X91nXXToPOpE/ZknKxNDC81tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=OsTi6j38; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="OsTi6j38"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+	Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=LD/vmeHNDlK4DCwLOI57rae7DeHYYbFNDQgh04JcWTA=; b=OsTi6j3878fwSWHjFVZ2AAQJda
+	2YTNoTkf7xJVB9jaLnqMm42k37B9uxKgLaszcEF1w00FlQjPYxW4R0HCIp7zu4HYQX9GvHNkyg+5M
+	uup8+Xt9NvrgtLtE+Q1qGA43aSj6ijXRd7lnDvRZOVbxnZGsxn4/k2a2bgkmHozs1aihk1FRadicP
+	WXz60HP50+Qkm+jKOy31uQiYgHcrRn0azzzkYNJHzyEZyUQzkykuWsnPjuFO1/DMLH3VF7eUdCW/b
+	jWq5a9ggyZHHp+zRwsk5UceBFLVH6uWASv/ffrb9TgiCGrex10Uyvoz+QWY3hLQogUD3Aja01Z+lb
+	HLAO0Zhg==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.98 #2 (Red Hat Linux))
+	id 1tiJkw-00000008q87-33ti;
+	Wed, 12 Feb 2025 20:54:50 +0000
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: shinichiro.kawasaki@wdc.com
+Cc: linux-block@vger.kernel.org,
+	hare@suse.de,
+	patches@lists.linux.dev,
+	gost.dev@samsung.com,
+	mcgrof@kernel.org
+Subject: [PATCH blktests v3 1/6] common/xfs: ignore first umount error on _xfs_mkfs_and_mount()
+Date: Wed, 12 Feb 2025 12:54:43 -0800
+Message-ID: <20250212205448.2107005-2-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250212205448.2107005-1-mcgrof@kernel.org>
+References: <20250212205448.2107005-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] Convert virtio-iommu to domain_alloc_paging()
-To: jacob.pan@linux.microsoft.com, Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Joerg Roedel <joro@8bytes.org>, virtualization@lists.linux.dev,
- Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>,
- patches@lists.linux.dev
-References: <0-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
- <20250211164151.723cfce0@DESKTOP-0403QTC.>
- <20250212125007.GP3754072@nvidia.com>
- <20250212105008.3d35ee43@DESKTOP-0403QTC.>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20250212105008.3d35ee43@DESKTOP-0403QTC.>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On 2025-02-12 6:50 pm, Jacob Pan wrote:
-> Hi Jason,
-> 
-> On Wed, 12 Feb 2025 08:50:07 -0400
-> Jason Gunthorpe <jgg@nvidia.com> wrote:
-> 
->> On Tue, Feb 11, 2025 at 04:41:51PM -0800, Jacob Pan wrote:
->>
->>> I see the same on arm64 with v9.0, assigned an ixgbe nic via VFIO.
->>
->> Huh, I figured it worked on ARM..
->>
->> There is no requirement that an iommu driver implement identity, this
->> is all an optimization. If it doesn't work in alot of cases can we
->> just remove it? It would simplfy a lot..
->>
-> Currently, identity domain type can be set via sysfs. To prevent that,
-> maybe we need this?
-> 
-> +static int viommu_def_domain_type(struct device *dev)
-> +{
-> +  	return IOMMU_DOMAIN_DMA;
+We want to help capture error messages with _xfs_mkfs_and_mount() on
+$FULL, to do that we should avoid spamming error messages for things
+which we know are not fatal. Such is the case of when we try to
+mkfs a filesystem but before that try to umount the target path.
+The first umount is just for sanity, so ignore the error messages from
+it.
 
-Ugh, please no more of that.
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ common/xfs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-Yes, a user can *request* to set an identity domain via sysfs, and if 
-the driver does not support identity domains then:
-
-iommu_group_store_type()
-     iommu_setup_default_domain()
-         iommu_group_alloc_default_domain()
-             __iommu_group_alloc_default_domain()
-                 __iommu_alloc_identity_domain()
-
-will return failure, and everything will remain fine (well, except on 
-apple-dart for now...) Find an s390 system and try it yourself* ;)
-
-Thanks,
-Robin.
-
-
-
-*quickly, before the patches land and that gains identity support too!
-
-> +}
-> +
->   static struct iommu_ops viommu_ops = {
->          .identity_domain        = &viommu_identity_domain.domain,
->          .capable                = viommu_capable,
-> @@ -1096,6 +1106,7 @@ static struct iommu_ops viommu_ops = {
->          .device_group           = viommu_device_group,
->          .get_resv_regions       = viommu_get_resv_regions,
->          .of_xlate               = viommu_of_xlate,
-> +       .def_domain_type = viommu_def_domain_type,
->          .owner                  = THIS_MODULE,
-> 
+diff --git a/common/xfs b/common/xfs
+index 569770fecd53..67a3b8a97391 100644
+--- a/common/xfs
++++ b/common/xfs
+@@ -15,7 +15,7 @@ _xfs_mkfs_and_mount() {
+ 	local mount_dir=$2
+ 
+ 	mkdir -p "${mount_dir}"
+-	umount "${mount_dir}"
++	umount "${mount_dir}" >/dev/null 2>&1
+ 	mkfs.xfs -l size=64m -f "${bdev}" || return $?
+ 	mount "${bdev}" "${mount_dir}"
+ }
+-- 
+2.45.2
 
