@@ -1,288 +1,103 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC8DD262D33;
-	Wed, 12 Feb 2025 19:22:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCEF01FF7D7;
+	Wed, 12 Feb 2025 20:10:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739388159; cv=none; b=o9qs60mzEDAWeQLpRT3Iyla84MKFed7o6UIvQOBFdCJCdWExFraGMurilecFt9+ZnyeAiYpcInP5GxYj8YAopLqVkZzFR1xjGVlrgz7gUBuwIfpfcd7iUz0ujCq0KteW3TjB7ubbZ7m5n9vUfuvvN34HrOgJKGACAveoIohh6ZU=
+	t=1739391009; cv=none; b=D8g5zogpVJRitFAR3jyEzNnRtN503stSgIbnZ2YHnrxZr2wipHmYwnW2uG8/aYklh3hsqdKMbN3CD2+qeNKHpfsoM5kVxwYWPBTOw3Sf14XdC5JA7uCkR1Fb54H7pcjGi8+s6BBDtrUjfqmuZNtJGTriKyTJkyqxyf/QwN5RUbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739388159; c=relaxed/simple;
-	bh=Z2GXWLajfC3wrkFzOHapQxWQinMH3NXa7ktcbqzBvTI=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MRtkiFONX8XQmOBdgO+E4KN3Lf8uIUXus09TkptmaQBb56vxx4FPtT+ZkE/TGf8cUm5+1ZvEvDaglOLcWxb8jg91MamUoZ4meEB83NCRMEXLXm9FAl7QxHu297yU9m1ZnvTwnrvpadXlR1f7KP7OhVbJDeMct2z2WzWyoPlfmUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=TF99BrkW; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="TF99BrkW"
-Received: from DESKTOP-0403QTC. (unknown [20.236.10.120])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 0B07A203F3C3;
-	Wed, 12 Feb 2025 11:22:36 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0B07A203F3C3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1739388157;
-	bh=KQCyiSAgCqDWvrpS9KGoat/0RCvw9JqYBPo2Wxnl7lg=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Reply-To:From;
-	b=TF99BrkWYRcqJuZu395dKYPZ7AVUYq/GWaFsgIeCD6wq1wyhasKH2dPGWfp/ed1p2
-	 5ROnpRYI3LWwsovHJAoV9pCCprEBo0qmMAZjsEKHMpQUc6dFvaCmZRXUmQXnl7V2vY
-	 WZYRQcIRm+3pCYqwfg8CTmbNZPssdMhpP3cfWZLo=
-Date: Wed, 12 Feb 2025 11:22:35 -0800
-From: Jacob Pan <jacob.pan@linux.microsoft.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
- virtualization@lists.linux.dev, Will Deacon <will@kernel.org>, Eric Auger
- <eric.auger@redhat.com>, patches@lists.linux.dev,
- jacob.pan@linux.microsoft.com
-Subject: Re: [PATCH 3/5] iommu/virtio: Move to domain_alloc_paging()
-Message-ID: <20250212112235.714b0a14@DESKTOP-0403QTC.>
-In-Reply-To: <3-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
-References: <0-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
-	<3-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
-Reply-To: jacob.pan@linux.microsoft.com
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1739391009; c=relaxed/simple;
+	bh=l5eSBuS2I6fUIdtWwROVq+z2Iausji44DHYc5d9v2jM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VaGT8o8apiDywpaRG3oo81FexiV5DS4tMy8VwJJWWVfBVVllSshVAoG/V0vj9kpAQTUjOoIpK5+LsUBbQBA5GucPCQT+uYGK85yg6Q4GU4xZhq4oJQH+R0iYVQaJiROEwGfahFL9sK+MsEAd+LMVwK2JRFOViYV3JWyYRe5cpF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E5FBF12FC;
+	Wed, 12 Feb 2025 12:10:25 -0800 (PST)
+Received: from [10.57.36.235] (unknown [10.57.36.235])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 78CB23F5A1;
+	Wed, 12 Feb 2025 12:10:03 -0800 (PST)
+Message-ID: <756bf70b-f931-4ab4-bfa9-3621d2394987@arm.com>
+Date: Wed, 12 Feb 2025 20:10:01 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] Convert virtio-iommu to domain_alloc_paging()
+To: jacob.pan@linux.microsoft.com, Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Joerg Roedel <joro@8bytes.org>, virtualization@lists.linux.dev,
+ Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>,
+ patches@lists.linux.dev
+References: <0-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
+ <20250211164151.723cfce0@DESKTOP-0403QTC.>
+ <20250212125007.GP3754072@nvidia.com>
+ <20250212105008.3d35ee43@DESKTOP-0403QTC.>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <20250212105008.3d35ee43@DESKTOP-0403QTC.>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Jason,
-
-On Fri,  7 Feb 2025 10:46:03 -0400
-Jason Gunthorpe <jgg@nvidia.com> wrote:
-
-> virtio has the complication that it sometimes wants to return a paging
-> domain for IDENTITY which makes this conversion a little different
-> than other drivers.
+On 2025-02-12 6:50 pm, Jacob Pan wrote:
+> Hi Jason,
 > 
-> Add a viommu_domain_alloc_paging() that combines
-> viommu_domain_alloc() and viommu_domain_finalise() to always return a
-> fully initialized and finalized paging domain.
+> On Wed, 12 Feb 2025 08:50:07 -0400
+> Jason Gunthorpe <jgg@nvidia.com> wrote:
 > 
-Slightly off the topic, still related to paging domain.
-
-virtio spec for page table extension was introduced a while ago[1],
-which adds support for guest owned page tables for paging domains.
-
-Do you foresee the implementation can leverage your generic iommu_pt
-work? i.e. for building guest IO page tables. It will add a new flavor
-(page table based in addition to map/unmap) to
-viommu_domain_alloc_paging() i think.
-
-[1]
-https://lore.kernel.org/all/20231006160947.2227396-8-jean-philippe@linaro.org/T/
-
-
-> Use viommu_domain_alloc_identity() to implement the special non-bypass
-> IDENTITY flow by calling viommu_domain_alloc_paging() then
-> viommu_domain_map_identity().
+>> On Tue, Feb 11, 2025 at 04:41:51PM -0800, Jacob Pan wrote:
+>>
+>>> I see the same on arm64 with v9.0, assigned an ixgbe nic via VFIO.
+>>
+>> Huh, I figured it worked on ARM..
+>>
+>> There is no requirement that an iommu driver implement identity, this
+>> is all an optimization. If it doesn't work in alot of cases can we
+>> just remove it? It would simplfy a lot..
+>>
+> Currently, identity domain type can be set via sysfs. To prevent that,
+> maybe we need this?
 > 
-> Remove support for deferred finalize and the vdomain->mutex.
-> 
-> Remove core support for domain_alloc() IDENTITY as virtio was the last
-> driver using it.
-> 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/iommu.c        |   6 --
->  drivers/iommu/virtio-iommu.c | 114
-> ++++++++++++++++------------------- 2 files changed, 53
-> insertions(+), 67 deletions(-)
-> 
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index ee33d26dfcd40d..73a05b34de4768 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -1599,12 +1599,6 @@ static struct iommu_domain
-> *__iommu_alloc_identity_domain(struct device *dev) domain =
-> ops->domain_alloc_identity(dev); if (IS_ERR(domain))
->  			return domain;
-> -	} else if (ops->domain_alloc) {
-> -		domain = ops->domain_alloc(IOMMU_DOMAIN_IDENTITY);
-> -		if (!domain)
-> -			return ERR_PTR(-ENOMEM);
-> -		if (IS_ERR(domain))
-> -			return domain;
->  	} else {
->  		return ERR_PTR(-EOPNOTSUPP);
->  	}
-> diff --git a/drivers/iommu/virtio-iommu.c
-> b/drivers/iommu/virtio-iommu.c index c71a996760bddb..79b471c03b6ee4
-> 100644 --- a/drivers/iommu/virtio-iommu.c
-> +++ b/drivers/iommu/virtio-iommu.c
-> @@ -63,7 +63,6 @@ struct viommu_mapping {
->  struct viommu_domain {
->  	struct iommu_domain		domain;
->  	struct viommu_dev		*viommu;
-> -	struct mutex			mutex; /* protects
-> viommu pointer */ unsigned int			id;
->  	u32				map_flags;
->  
-> @@ -97,6 +96,8 @@ struct viommu_event {
->  	};
->  };
->  
-> +static struct viommu_domain viommu_identity_domain;
-> +
->  #define to_viommu_domain(domain)	\
->  	container_of(domain, struct viommu_domain, domain)
->  
-> @@ -653,65 +654,45 @@ static void viommu_event_handler(struct
-> virtqueue *vq) 
->  /* IOMMU API */
->  
-> -static struct iommu_domain *viommu_domain_alloc(unsigned type)
-> +static struct iommu_domain *viommu_domain_alloc_paging(struct device
-> *dev) {
-> -	struct viommu_domain *vdomain;
-> -
-> -	if (type != IOMMU_DOMAIN_UNMANAGED &&
-> -	    type != IOMMU_DOMAIN_DMA &&
-> -	    type != IOMMU_DOMAIN_IDENTITY)
-> -		return NULL;
-> -
-> -	vdomain = kzalloc(sizeof(*vdomain), GFP_KERNEL);
-> -	if (!vdomain)
-> -		return NULL;
-> -
-> -	mutex_init(&vdomain->mutex);
-> -	spin_lock_init(&vdomain->mappings_lock);
-> -	vdomain->mappings = RB_ROOT_CACHED;
-> -
-> -	return &vdomain->domain;
-> -}
-> -
-> -static int viommu_domain_finalise(struct viommu_endpoint *vdev,
-> -				  struct iommu_domain *domain)
-> -{
-> -	int ret;
-> -	unsigned long viommu_page_size;
-> +	struct viommu_endpoint *vdev = dev_iommu_priv_get(dev);
->  	struct viommu_dev *viommu = vdev->viommu;
-> -	struct viommu_domain *vdomain = to_viommu_domain(domain);
-> +	unsigned long viommu_page_size;
-> +	struct viommu_domain *vdomain;
-> +	int ret;
->  
->  	viommu_page_size = 1UL << __ffs(viommu->pgsize_bitmap);
->  	if (viommu_page_size > PAGE_SIZE) {
->  		dev_err(vdev->dev,
->  			"granule 0x%lx larger than system page size
-> 0x%lx\n", viommu_page_size, PAGE_SIZE);
-> -		return -ENODEV;
-> +		return ERR_PTR(-ENODEV);
->  	}
->  
-> +	vdomain = kzalloc(sizeof(*vdomain), GFP_KERNEL);
-> +	if (!vdomain)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	spin_lock_init(&vdomain->mappings_lock);
-> +	vdomain->mappings = RB_ROOT_CACHED;
-> +
->  	ret = ida_alloc_range(&viommu->domain_ids,
-> viommu->first_domain, viommu->last_domain, GFP_KERNEL);
-> -	if (ret < 0)
-> -		return ret;
-> -
-> -	vdomain->id		= (unsigned int)ret;
-> -
-> -	domain->pgsize_bitmap	= viommu->pgsize_bitmap;
-> -	domain->geometry	= viommu->geometry;
-> -
-> -	vdomain->map_flags	= viommu->map_flags;
-> -	vdomain->viommu		= viommu;
-> -
-> -	if (domain->type == IOMMU_DOMAIN_IDENTITY) {
-> -		ret = viommu_domain_map_identity(vdev, vdomain);
-> -		if (ret) {
-> -			ida_free(&viommu->domain_ids, vdomain->id);
-> -			vdomain->viommu = NULL;
-> -			return ret;
-> -		}
-> +	if (ret < 0) {
-> +		kfree(vdomain);
-> +		return ERR_PTR(ret);
->  	}
->  
-> -	return 0;
-> +	vdomain->id = (unsigned int)ret;
-> +
-> +	vdomain->domain.pgsize_bitmap = viommu->pgsize_bitmap;
-> +	vdomain->domain.geometry = viommu->geometry;
-> +
-> +	vdomain->map_flags = viommu->map_flags;
-> +	vdomain->viommu = viommu;
-> +
-> +	return &vdomain->domain;
->  }
->  
->  static void viommu_domain_free(struct iommu_domain *domain)
-> @@ -727,6 +708,28 @@ static void viommu_domain_free(struct
-> iommu_domain *domain) kfree(vdomain);
->  }
->  
-> +static struct iommu_domain *viommu_domain_alloc_identity(struct
-> device *dev) +{
-> +	struct viommu_endpoint *vdev = dev_iommu_priv_get(dev);
-> +	struct iommu_domain *domain;
-> +	int ret;
-> +
-> +	if (virtio_has_feature(vdev->viommu->vdev,
-> +			       VIRTIO_IOMMU_F_BYPASS_CONFIG))
-> +		return &viommu_identity_domain.domain;
-> +
-> +	domain = viommu_domain_alloc_paging(dev);
-> +	if (IS_ERR(domain))
-> +		return domain;
-> +
-> +	ret = viommu_domain_map_identity(vdev,
-> to_viommu_domain(domain));
-> +	if (ret) {
-> +		viommu_domain_free(domain);
-> +		return ERR_PTR(ret);
-> +	}
-> +	return domain;
+> +static int viommu_def_domain_type(struct device *dev)
+> +{
+> +  	return IOMMU_DOMAIN_DMA;
+
+Ugh, please no more of that.
+
+
+Yes, a user can *request* to set an identity domain via sysfs, and if 
+the driver does not support identity domains then:
+
+iommu_group_store_type()
+     iommu_setup_default_domain()
+         iommu_group_alloc_default_domain()
+             __iommu_group_alloc_default_domain()
+                 __iommu_alloc_identity_domain()
+
+will return failure, and everything will remain fine (well, except on 
+apple-dart for now...) Find an s390 system and try it yourself* ;)
+
+Thanks,
+Robin.
+
+
+
+*quickly, before the patches land and that gains identity support too!
+
 > +}
 > +
->  static int viommu_attach_dev(struct iommu_domain *domain, struct
-> device *dev) {
->  	int ret = 0;
-> @@ -734,20 +737,8 @@ static int viommu_attach_dev(struct iommu_domain
-> *domain, struct device *dev) struct viommu_endpoint *vdev =
-> dev_iommu_priv_get(dev); struct viommu_domain *vdomain =
-> to_viommu_domain(domain); 
-> -	mutex_lock(&vdomain->mutex);
-> -	if (!vdomain->viommu) {
-> -		/*
-> -		 * Properly initialize the domain now that we know
-> which viommu
-> -		 * owns it.
-> -		 */
-> -		ret = viommu_domain_finalise(vdev, domain);
-> -	} else if (vdomain->viommu != vdev->viommu) {
-> -		ret = -EINVAL;
-> -	}
-> -	mutex_unlock(&vdomain->mutex);
-> -
-> -	if (ret)
-> -		return ret;
-> +	if (vdomain->viommu != vdev->viommu)
-> +		return -EINVAL;
->  
->  	/*
->  	 * In the virtio-iommu device, when attaching the endpoint
-> to a new @@ -1098,7 +1089,8 @@ static bool viommu_capable(struct
-> device *dev, enum iommu_cap cap) static struct iommu_ops viommu_ops =
-> { .identity_domain	= &viommu_identity_domain.domain,
->  	.capable		= viommu_capable,
-> -	.domain_alloc		= viommu_domain_alloc,
-> +	.domain_alloc_identity	= viommu_domain_alloc_identity,
-> +	.domain_alloc_paging	= viommu_domain_alloc_paging,
->  	.probe_device		= viommu_probe_device,
->  	.release_device		= viommu_release_device,
->  	.device_group		= viommu_device_group,
+>   static struct iommu_ops viommu_ops = {
+>          .identity_domain        = &viommu_identity_domain.domain,
+>          .capable                = viommu_capable,
+> @@ -1096,6 +1106,7 @@ static struct iommu_ops viommu_ops = {
+>          .device_group           = viommu_device_group,
+>          .get_resv_regions       = viommu_get_resv_regions,
+>          .of_xlate               = viommu_of_xlate,
+> +       .def_domain_type = viommu_def_domain_type,
+>          .owner                  = THIS_MODULE,
+> 
 
