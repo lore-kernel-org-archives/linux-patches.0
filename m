@@ -1,124 +1,75 @@
-Received: from smtp1.tecnico.ulisboa.pt (smtp1.tecnico.ulisboa.pt [193.136.128.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2433328A2AE
-	for <patches@lists.linux.dev>; Thu, 13 Feb 2025 16:51:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.136.128.21
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 768C028A2B7;
+	Thu, 13 Feb 2025 17:03:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739465479; cv=none; b=p2RA3ThVdP9CfdzOb0pvb2lFOsPAERkx0vv+P9cxmSfur7+N+x/7BGny3DVxsfBJoi2EqnYfW9ev5b2ea8LCGTQlEakb/sBg6PLzBis7pORm1QdqDbXsb8nceJ8mN9exnNlvt55nLjGF3/LbpleBfFQMqUO+GSGyS30x3nGQgOU=
+	t=1739466232; cv=none; b=UmQhIFZNa7aTm3dw1kW7LSWN4X1+b4wLQARxofopRiUDBB7Kq6trL7GhNEDogXO9D4pb/RstEnkvCsaucgKToFR72+ooTganMSigVeGxul1R3ted17IvwTWDhuFCxfMK0KOmA5ps5iT+kzraBml+QDrMRwnBxm7m8Z1ziomopLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739465479; c=relaxed/simple;
-	bh=Or++wAxBmTJfTqytxnx0k6YY2ypc0YGiThOE0+0mx8w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bhRIz4hfF48J+PL/UfoHNl443t00j07f2v/aEqWDD5obIN4MHJsCYAH6KfvtVuxM14Uono3647FvBdEsocSbb1uqRBBTrUS/dm9oyLnbDW45/k1FJDTcvONTBedVtZYTL3PwWfxdhJc0MJg7EFwSqhDaZdcz2ajEnNdJHPCj20A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tecnico.ulisboa.pt; spf=pass smtp.mailfrom=tecnico.ulisboa.pt; dkim=pass (1024-bit key) header.d=tecnico.ulisboa.pt header.i=@tecnico.ulisboa.pt header.b=D4jdYieB; arc=none smtp.client-ip=193.136.128.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tecnico.ulisboa.pt
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tecnico.ulisboa.pt
+	s=arc-20240116; t=1739466232; c=relaxed/simple;
+	bh=driKE2zuE93HFLVFfBintq7SezTWpQxGPR2E7DNVQMg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=grXXuj4LxiuT9kduMmsyfsChxwirHL+Kg7VOCVq3jkJcZyWULup5Rs23nqZ3o3Q/ar1bIW54DKZyfKpNTkIcAZaqfuguCYpvBFMdrlzb+8clB7TYWqK8WjUWcXs4Vi2Ov04z66BBrdmeYGdQbHJu1pkDo0IlcQ+W1r5nn6nIrww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=a4ZtBepn; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=tecnico.ulisboa.pt header.i=@tecnico.ulisboa.pt header.b="D4jdYieB"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp1.tecnico.ulisboa.pt (Postfix) with ESMTP id 28C78600022F;
-	Thu, 13 Feb 2025 16:45:14 +0000 (WET)
-X-Virus-Scanned: by amavis-2.13.0 (20230106) (Debian) at tecnico.ulisboa.pt
-Received: from smtp1.tecnico.ulisboa.pt ([127.0.0.1])
- by localhost (smtp1.tecnico.ulisboa.pt [127.0.0.1]) (amavis, port 10025)
- with LMTP id D_X-8oSLhMw0; Thu, 13 Feb 2025 16:45:11 +0000 (WET)
-Received: from mail1.tecnico.ulisboa.pt (mail1.ist.utl.pt [193.136.128.10])
-	by smtp1.tecnico.ulisboa.pt (Postfix) with ESMTPS id CB87E60020DD;
-	Thu, 13 Feb 2025 16:45:10 +0000 (WET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tecnico.ulisboa.pt;
-	s=mail; t=1739465111;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=//D+0qXwv5Gm0YeDVVYXQrXCtiWyh/Qcg6tCR6GBt/s=;
-	b=D4jdYieBlgGj0cdGpUzvaClL8gP/IjGHUNP1odAglnuYitwG8ZtYOd6oMKsnKxq6yXH+Xk
-	VG7X9GbHmY3Z6SAkLpu9IZZzr3GPKZlgkG/vZo50cTCx3qZgFy1dsf1cW8iN1ylxwfFvQd
-	Ut9Vvt19KWCaK1kuYlb9o+GzcxVWEis=
-Received: from [IPV6:2001:8a0:57db:f00:3ee2:38aa:e2c9:7dde] (unknown [IPv6:2001:8a0:57db:f00:3ee2:38aa:e2c9:7dde])
-	(Authenticated sender: ist187313)
-	by mail1.tecnico.ulisboa.pt (Postfix) with ESMTPSA id A77A6360259;
-	Thu, 13 Feb 2025 16:45:09 +0000 (WET)
-Message-ID: <a77768b7-b4f5-47b1-8134-ca7e2bf5660b@tecnico.ulisboa.pt>
-Date: Thu, 13 Feb 2025 16:45:09 +0000
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="a4ZtBepn"
+Received: from localhost (unknown [167.220.232.230])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 0CDC1203D61F;
+	Thu, 13 Feb 2025 09:03:44 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0CDC1203D61F
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1739466225;
+	bh=raGx3ERZ3nkqlnuQgKz41RX1gXr12ZZc1N/Fn0LJYNQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=a4ZtBepnV90+FzDmYPq6USPODlSlerD5ovFsX7aKokI3WGAiQBZPI2JFBy5VN5jSl
+	 4n6xjgRF8lHVZiN4YngFxB9GlN6/WwjkDbmIktIhxAsRXMklgnbM867IFWMPqHsFw7
+	 Fo2jdcI4Mqe9PfIu6j0M4Scla1H6jj2hX32bPGj0=
+Date: Fri, 14 Feb 2025 01:03:43 +0800
+From: Yu Zhang <zhangyu1@linux.microsoft.com>
+To: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Cc: jacob.pan@linux.microsoft.com, 
+	Easwar Hariharan <eahariha@linux.microsoft.com>, "zhangyu1@microsoft.com" <zhangyu1@microsoft.com>, 
+	Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
+	Robin Murphy <robin.murphy@arm.com>, virtualization@lists.linux.dev, Will Deacon <will@kernel.org>, 
+	Eric Auger <eric.auger@redhat.com>, patches@lists.linux.dev, tina.zhang@intel.com
+Subject: Re: [PATCH 3/5] iommu/virtio: Move to domain_alloc_paging()
+Message-ID: <5irmuy6xwrjsrdjy7tmfzlnotxqdoqagjdsdtqjrrit673zaka@r43nyvc5gcyf>
+References: <0-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
+ <3-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
+ <20250212112235.714b0a14@DESKTOP-0403QTC.>
+ <20250212233053.GV3754072@nvidia.com>
+ <67ad876d.170a0220.3c21dc.85ceSMTPIN_ADDED_BROKEN@mx.google.com>
+ <20250213094601.GA243081@myrica>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rc] gpu: host1x: Do not assume that a NULL domain means no
- DMA IOMMU
-To: Jason Gunthorpe <jgg@nvidia.com>, David Airlie <airlied@gmail.com>,
- dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org,
- Mikko Perttunen <mperttunen@nvidia.com>, Simona Vetter <simona@ffwll.ch>,
- Thierry Reding <thierry.reding@gmail.com>
-Cc: Lu Baolu <baolu.lu@linux.intel.com>, Joerg Roedel <jroedel@suse.de>,
- Jerry Snitselaar <jsnitsel@redhat.com>, patches@lists.linux.dev
-References: <0-v1-10dcc8ce3869+3a7-host1x_identity_jgg@nvidia.com>
-Content-Language: en-US
-From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-In-Reply-To: <0-v1-10dcc8ce3869+3a7-host1x_identity_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250213094601.GA243081@myrica>
 
-Hi all,
+On Thu, Feb 13, 2025 at 09:46:01AM +0000, Jean-Philippe Brucker wrote:
+> Hi Jacob,
+> 
+> On Wed, Feb 12, 2025 at 09:47:23PM -0800, Jacob Pan wrote:
+> > Our code and backend support are still in the early stages, that is why
+> > I am attempting to convert virtio-iommu driver to iommu_pt. Not sure if
+> > anyone has done the QEMU part to support VIRTIO_IOMMU_F_ATTACH_TABLE?
+> > @Jean @Eric Do you know?
+> 
+> As far as I know Tina worked on this most recently:
+> https://github.com/TinaZhangZW/qemu/commits/virtio-iommu/vt-d-pgtable/
+> https://lore.kernel.org/all/20231106071226.9656-1-tina.zhang@intel.com/
 
-On 2/4/25 7:18 PM, Jason Gunthorpe wrote:
-> Previously with tegra-smmu, even with CONFIG_IOMMU_DMA, the default domain
-> could have been left as NULL. The NULL domain is specially recognized by
-> host1x_iommu_attach() as meaning it is not the DMA domain and
-> should be replaced with the special shared domain.
-> 
-> This happened prior to the below commit because tegra-smmu was using the
-> NULL domain to mean IDENTITY.
-> 
-> Now that the domain is properly labled the test in DRM doesn't see NULL.
-> Check for IDENTITY as well to enable the special domains.
-> 
-> This is the same issue and basic fix as seen in
-> commit fae6e669cdc5 ("drm/tegra: Do not assume that a NULL domain means no
-> DMA IOMMU").
-> 
-> Fixes: c8cc2655cc6c ("iommu/tegra-smmu: Implement an IDENTITY domain")
-> Reported-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-> Closes: https://lore.kernel.org/all/c6a6f114-3acd-4d56-a13b-b88978e927dc@tecnico.ulisboa.pt/
-> Tested-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->   drivers/gpu/host1x/dev.c | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/drivers/gpu/host1x/dev.c b/drivers/gpu/host1x/dev.c
-> index 7b1d091f3c090c..5d27662019d28b 100644
-> --- a/drivers/gpu/host1x/dev.c
-> +++ b/drivers/gpu/host1x/dev.c
-> @@ -361,6 +361,10 @@ static bool host1x_wants_iommu(struct host1x *host1x)
->   	return true;
->   }
->   
-> +/*
-> + * Returns ERR_PTR on failure, NULL if the translation is IDENTITY, otherwise a
-> + * valid paging domain.
-> + */
->   static struct iommu_domain *host1x_iommu_attach(struct host1x *host)
->   {
->   	struct iommu_domain *domain = iommu_get_domain_for_dev(host->dev);
-> @@ -385,6 +389,8 @@ static struct iommu_domain *host1x_iommu_attach(struct host1x *host)
->   	 * Similarly, if host1x is already attached to an IOMMU (via the DMA
->   	 * API), don't try to attach again.
->   	 */
-> +	if (domain && domain->type == IOMMU_DOMAIN_IDENTITY)
-> +		domain = NULL;
->   	if (!host1x_wants_iommu(host) || domain)
->   		return domain;
->   
-> 
-> base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
+Thanks a lot for this information, Jean.
+IIUC, these patches were trying to add VT-d IO page table support in
+virtio-iommu, but it is not based on Jason's generic PT [1]. Just wondering,
+does anyone have plan to do the incorporation? 
 
-Any updates on the status of this patch?
+[1] https://lore.kernel.org/all/0-v1-01fa10580981+1d-iommu_pt_jgg@nvidia.com/
 
-Thanks,
-Diogo
+B.R.
+Yu
