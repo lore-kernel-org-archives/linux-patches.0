@@ -1,60 +1,45 @@
-Received: from mail.avm.de (mail.avm.de [212.42.244.120])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090D42080EE
-	for <patches@lists.linux.dev>; Thu, 13 Feb 2025 07:20:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.42.244.120
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDACA20AF82;
+	Thu, 13 Feb 2025 08:11:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739431242; cv=none; b=H9inhTSguEZtPhe318Y+n0HQ/R56bmqLBvnPqxpSAELEY1pfGAMf6EjjmNs7+f7xJGXf51dZm/yCkHCOPhXPkXrvN+9gIJ8YjUi7GecT1WVAJz+rCVfMzBsyv6SuzdLCQsGNBpu4l+t9edTDnpMse/pPj3yJqv23iNmKrQ5kxeo=
+	t=1739434289; cv=none; b=XAhw8y95aypt1xdtbctCkxrOOArt7+fGn4qqxeqWr2bt3bBviEtroY/l1Sce6gIJhGUqPaX5ozuprmfo6hWYP6iJDWt+6VFYf5TO2++xO3iP5+KcjEswNJmITRsvnUq9psOVIURuuOdzLhZrqX6c0lhA7ynmAGL8AJjpgTYyaOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739431242; c=relaxed/simple;
-	bh=+UmDyGFYqbRGqxiUXDzk0wYia4DEJ/qtggUagtruh1U=;
+	s=arc-20240116; t=1739434289; c=relaxed/simple;
+	bh=qhnwGyQaoi8IJLlrTunEkZvhO/0CPiOFnmcJQERWVIE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KRbTF9gkR0b5i3UdJWkmCDfqpkKFHHXutVuekoosp2cSfIVhbwiwzJZxplyeGAogvcQIaLL5YE6YrH/yqvxKF1QIAlWsAvNHi34a5/eZC6tDdUIDaxSaji/7PWsKCDE5ejw/XejTp2mUmE22rM7Ej2lyjKFxepehyBlJo3Gy/Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de; spf=pass smtp.mailfrom=avm.de; dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b=OHgeQudZ; arc=none smtp.client-ip=212.42.244.120
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=avm.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=S/yntcidHZhHKYc+8Ke156BT/LjFshX9iGJ/lV+oJGmkdyIAjfKDoPZMHlBkeWOSHbqTdtPHjuIb3xSPGPn+5yvSa1AEzHaDb50J0ML2As7dkVbAJG3gsgYmxV+LCzM9JLcBHjfOe7LBBnZAtiNhf/huJ1Gx6A5izMQb7Nx+xrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FyCJf4vf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b="OHgeQudZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
-	t=1739431188; bh=+UmDyGFYqbRGqxiUXDzk0wYia4DEJ/qtggUagtruh1U=;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FyCJf4vf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861BDC4CED1;
+	Thu, 13 Feb 2025 08:11:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739434289;
+	bh=qhnwGyQaoi8IJLlrTunEkZvhO/0CPiOFnmcJQERWVIE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OHgeQudZxxT0wgi5FGAagv7q2QLFdFIkd0t7eygA7wxw/marKM8WnD45X7azm8HUM
-	 31EnxHXdDNyET2f/Y/k98z4tGVCY2lYF5djVeG+CkfRgpvh9dAeohwS1GgQ4F+LZK3
-	 zzyqrcRmkF8IiVKSYPI8wXg1bR22JFIxo0Lypzwg=
-Received: from [212.42.244.71] (helo=mail.avm.de)
-	by mail.avm.de with ESMTP (eXpurgate 4.52.1)
-	(envelope-from <n.schier@avm.de>)
-	id 67ad9d14-038b-7f0000032729-7f0000018ad4-1
-	for <multiple-recipients>; Thu, 13 Feb 2025 08:19:48 +0100
-Received: from mail-auth.avm.de (dovecot-mx-01.avm.de [212.42.244.71])
-	by mail.avm.de (Postfix) with ESMTPS;
-	Thu, 13 Feb 2025 08:19:48 +0100 (CET)
-Received: from buildd.core.avm.de (buildd-sv-01.avm.de [172.16.0.225])
-	by mail-auth.avm.de (Postfix) with ESMTPA id 39DA480175;
-	Thu, 13 Feb 2025 08:19:49 +0100 (CET)
-Received: by buildd.core.avm.de (Postfix, from userid 1000)
-	id 2A47B182D0A; Thu, 13 Feb 2025 08:19:49 +0100 (CET)
-Date: Thu, 13 Feb 2025 08:19:49 +0100
-From: Nicolas Schier <n.schier@avm.de>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	moderated for non-subscribers <linux-arm-kernel@lists.infradead.org>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?utf-8?B?QmrDtnJu?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] kbuild: rust: add rustc-min-version support function
-Message-ID: <20250213-masked-wombat-of-painting-8afb53@buildd>
-References: <20250210164245.282886-1-ojeda@kernel.org>
+	b=FyCJf4vf8SHTu1ZLyRnOUf9D03imj38LoyNLC9jTU6wEtitmAjg2ffn9K9pgPJEvY
+	 Xx6FbFdlNW6fMjHIe/hMYWPTM1c7j8xkoPpAJN8fDeppnNoi7TfiT/4cAXLzjLkYRZ
+	 jMkno97LtGAv6xvEtT+8p6tL1hJ4aBjkPvHmRqPW+KhsK6YPvPKmRq35tRmipCcdvB
+	 u5Jj/6zOyJ6NiQsnhAo5TzUzHOF7F+xF7QsuPdkotHw3v7tuGatrxyGPnUd8lt3tyQ
+	 xxrGGMiSD4rxgIyZOp4ODrAFptxGYhgl1WeX+VDR18UXXxD7MnYgT8NY9U/jbbCdb9
+	 hvxmzgr2zlC6g==
+Date: Thu, 13 Feb 2025 09:11:25 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	patches@lists.linux.dev, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Benson Leung <bleung@chromium.org>, devicetree@vger.kernel.org, chrome-platform@lists.linux.dev, 
+	Pin-yen Lin <treapking@chromium.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: usb: Add binding for ChromeOS Pogo
+ pin keyboard connector
+Message-ID: <20250213-amigurumi-shrew-of-grandeur-bb1a13@krzk-bin>
+References: <20250210225714.1073618-1-swboyd@chromium.org>
+ <20250210225714.1073618-2-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -63,88 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250210164245.282886-1-ojeda@kernel.org>
-X-purgate-ID: 149429::1739431188-4EA08E17-E08D2BED/0/0
-X-purgate-type: clean
-X-purgate-size: 3033
-X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
-X-purgate: This mail is considered clean (visit https://www.eleven.de for further information)
-X-purgate: clean
+In-Reply-To: <20250210225714.1073618-2-swboyd@chromium.org>
 
-On Mon, Feb 10, 2025 at 05:42:45PM +0100, Miguel Ojeda wrote:
-> Introduce `rustc-min-version` support function that mimics
-> `{gcc,clang}-min-version` ones, following commit 88b61e3bff93
-> ("Makefile.compiler: replace cc-ifversion with compiler-specific macros").
-> 
-> In addition, use it in the first use case we have in the kernel (which
-> was done independently to minimize the changes needed for the fix).
-> 
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> This is based on top of the fix so that the fix remains as simple as
-> possible:
-> 
->     https://lore.kernel.org/rust-for-linux/20250210163732.281786-1-ojeda@kernel.org/
-> 
->  Documentation/kbuild/makefiles.rst | 14 ++++++++++++++
->  arch/arm64/Makefile                |  2 +-
->  scripts/Makefile.compiler          |  4 ++++
->  3 files changed, 19 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/kbuild/makefiles.rst b/Documentation/kbuild/makefiles.rst
-> index d36519f194dc..2608aa32c762 100644
-> --- a/Documentation/kbuild/makefiles.rst
-> +++ b/Documentation/kbuild/makefiles.rst
-> @@ -670,6 +670,20 @@ cc-cross-prefix
->              endif
->      endif
-> 
-> +$(RUSTC) support functions
-> +--------------------------
+On Mon, Feb 10, 2025 at 02:57:11PM -0800, Stephen Boyd wrote:
+> +$id: http://devicetree.org/schemas/usb/google,usb-pogo-keyboard.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +rustc-min-version
-> +  rustc-min-version tests if the value of $(CONFIG_RUSTC_VERSION) is greater
-> +  than or equal to the provided value and evaluates to y if so.
+> +title: Google USB Pogo Pin Keyboard
 > +
-> +  Example::
+> +maintainers:
+> +  - Stephen Boyd <swboyd@chromium.org>
 > +
-> +    rustflags-$(call rustc-min-version, 108500) := -Cfoo
+> +description:
+> +  ChromeOS devices with a detachable keyboard have a set of five pogo pins that
+> +  are the typical four pins for USB (D+/D-, VBUS, GND) and an extra pin for
+> +  base detection. The detachable keyboard is a USB device that connects to the
+> +  four USB pogo pins.
 > +
-> +  In this example, rustflags-y will be assigned the value -Cfoo if
-> +  $(CONFIG_RUSTC_VERSION) is >= 1.85.0.
+> +properties:
+> +  compatible:
+> +    const: google,usb-pogo-keyboard
 > +
->  $(LD) support functions
->  -----------------------
-> 
-> diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
-> index 2b25d671365f..1d5dfcd1c13e 100644
-> --- a/arch/arm64/Makefile
-> +++ b/arch/arm64/Makefile
-> @@ -48,7 +48,7 @@ KBUILD_CFLAGS	+= $(CC_FLAGS_NO_FPU) \
->  KBUILD_CFLAGS	+= $(call cc-disable-warning, psabi)
->  KBUILD_AFLAGS	+= $(compat_vdso)
-> 
-> -ifeq ($(call test-ge, $(CONFIG_RUSTC_VERSION), 108500),y)
-> +ifeq ($(call rustc-min-version, 108500),y)
->  KBUILD_RUSTFLAGS += --target=aarch64-unknown-none-softfloat
->  else
->  KBUILD_RUSTFLAGS += --target=aarch64-unknown-none -Ctarget-feature="-neon"
-> diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
-> index 8c1029687e2e..8956587b8547 100644
-> --- a/scripts/Makefile.compiler
-> +++ b/scripts/Makefile.compiler
-> @@ -67,6 +67,10 @@ gcc-min-version = $(call test-ge, $(CONFIG_GCC_VERSION), $1)
->  # Usage: cflags-$(call clang-min-version, 110000) += -foo
->  clang-min-version = $(call test-ge, $(CONFIG_CLANG_VERSION), $1)
-> 
-> +# rustc-min-version
-> +# Usage: rustc-$(call rustc-min-version, 108500) += -Cfoo
-> +rustc-min-version = $(call test-ge, $(CONFIG_RUSTC_VERSION), $1)
-> +
->  # ld-option
->  # Usage: KBUILD_LDFLAGS += $(call ld-option, -X, -Y)
->  ld-option = $(call try-run, $(LD) $(KBUILD_LDFLAGS) $(1) -v,$(1),$(2),$(3))
-> --
-> 2.48.1
+> +  '#address-cells':
 
-Reviewed-by: Nicolas Schier <n.schier@avm.de>
+If there is going to be any new version: please use consistent quotes,
+either ' or "
+
+> +    const: 1
+> +
+> +  '#size-cells':
+> +    const: 0
+> +
+> +  port:
+> +    $ref: /schemas/graph.yaml#/properties/port
+> +    description: Connection to USB2 port providing USB HS signals
+> +    required:
+> +      - endpoint
+> +
+> +patternProperties:
+> +  "^keyboard@[0-9a-f]{1,2}$":
+
+What does the unit address represent here? Why this isn't just
+"keyboard"? One connector usually has only one keyboard, right?
+
+Maybe it is only to fulfill the usb-device schema? The reg is there to
+represent USB hub or controller port, which is not true here.
+
+I don't have any idea how to solve it. I assume you need the keyboard
+child, right?
+
+Best regards,
+Krzysztof
+
