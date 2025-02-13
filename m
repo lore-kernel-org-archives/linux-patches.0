@@ -1,101 +1,150 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EF27EC4;
-	Thu, 13 Feb 2025 05:47:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from mail.avm.de (mail.avm.de [212.42.244.120])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090D42080EE
+	for <patches@lists.linux.dev>; Thu, 13 Feb 2025 07:20:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.42.244.120
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739425646; cv=none; b=IpcMzINsPbt5cPefIrS/OyKjcc4hXKVbFFo48m4YWBqPqgs+xRrBkyiVtQJ5KlmNJkG8iRX5IYRqQBW8ZvISLIhIVvCbwkrVmRXxcZA+FhPgMpwnDldQ449hHe2THheuZhPsZ+0e/4Q2RHVsSA96pDwvvDof6NRLx4DsLZICbEw=
+	t=1739431242; cv=none; b=H9inhTSguEZtPhe318Y+n0HQ/R56bmqLBvnPqxpSAELEY1pfGAMf6EjjmNs7+f7xJGXf51dZm/yCkHCOPhXPkXrvN+9gIJ8YjUi7GecT1WVAJz+rCVfMzBsyv6SuzdLCQsGNBpu4l+t9edTDnpMse/pPj3yJqv23iNmKrQ5kxeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739425646; c=relaxed/simple;
-	bh=prolQBF6q3UBJQB4VkPy0upy3Xt7W32yLlCxZItHgdI=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OyGriH1TK9P15lnDnPKYMXJubKWv/CNRn0Ql8/t/DRjYT74V9th1IwrcQ7cC64pu5sumX2v2KY5gYyeqfMoYK5eeWxGs+2EdKWSGYYMu23EvcWmfWNwfS+cA5z+FT4te8E5WpfsWR11U8Sd4pBjjxKbbWI8TDsHYwUJkzlJKOL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=Z4TBMtMi; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1739431242; c=relaxed/simple;
+	bh=+UmDyGFYqbRGqxiUXDzk0wYia4DEJ/qtggUagtruh1U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KRbTF9gkR0b5i3UdJWkmCDfqpkKFHHXutVuekoosp2cSfIVhbwiwzJZxplyeGAogvcQIaLL5YE6YrH/yqvxKF1QIAlWsAvNHi34a5/eZC6tDdUIDaxSaji/7PWsKCDE5ejw/XejTp2mUmE22rM7Ej2lyjKFxepehyBlJo3Gy/Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de; spf=pass smtp.mailfrom=avm.de; dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b=OHgeQudZ; arc=none smtp.client-ip=212.42.244.120
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=avm.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=avm.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="Z4TBMtMi"
-Received: from DESKTOP-0403QTC. (unknown [50.53.30.84])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 593C5203F3CF;
-	Wed, 12 Feb 2025 21:47:24 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 593C5203F3CF
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1739425644;
-	bh=s5+xYFUSjRfJypY4kS/R9cuXaiW/u4Res3wzREtZc3g=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Reply-To:From;
-	b=Z4TBMtMiRv2SfnjJRPFski7UW+GdtCHfSpa6uT5M6Y81GgljaAJS+C24wcteOwFoR
-	 fAjoHzLbR3yzXVZ7okgqQd0Ygyle085eUgYsrZl7r9cSI7F94GbnzcwpCgrWbggP07
-	 zL1qaUXtneTr0hUG4SvWqb72eLrXEL1RDVBqqT+E=
-Date: Wed, 12 Feb 2025 21:47:23 -0800
-From: Jacob Pan <jacob.pan@linux.microsoft.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
- virtualization@lists.linux.dev, Will Deacon <will@kernel.org>, Eric Auger
- <eric.auger@redhat.com>, patches@lists.linux.dev,
- jacob.pan@linux.microsoft.com
-Subject: Re: [PATCH 3/5] iommu/virtio: Move to domain_alloc_paging()
-Message-ID: <20250212214723.1ebf173e@DESKTOP-0403QTC.>
-In-Reply-To: <20250212233053.GV3754072@nvidia.com>
-References: <0-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
-	<3-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
-	<20250212112235.714b0a14@DESKTOP-0403QTC.>
-	<20250212233053.GV3754072@nvidia.com>
-Reply-To: jacob.pan@linux.microsoft.com, Easwar Hariharan
- <eahariha@linux.microsoft.com>, "zhangyu1@microsoft.com"
- <zhangyu1@microsoft.com>
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (1024-bit key) header.d=avm.de header.i=@avm.de header.b="OHgeQudZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
+	t=1739431188; bh=+UmDyGFYqbRGqxiUXDzk0wYia4DEJ/qtggUagtruh1U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OHgeQudZxxT0wgi5FGAagv7q2QLFdFIkd0t7eygA7wxw/marKM8WnD45X7azm8HUM
+	 31EnxHXdDNyET2f/Y/k98z4tGVCY2lYF5djVeG+CkfRgpvh9dAeohwS1GgQ4F+LZK3
+	 zzyqrcRmkF8IiVKSYPI8wXg1bR22JFIxo0Lypzwg=
+Received: from [212.42.244.71] (helo=mail.avm.de)
+	by mail.avm.de with ESMTP (eXpurgate 4.52.1)
+	(envelope-from <n.schier@avm.de>)
+	id 67ad9d14-038b-7f0000032729-7f0000018ad4-1
+	for <multiple-recipients>; Thu, 13 Feb 2025 08:19:48 +0100
+Received: from mail-auth.avm.de (dovecot-mx-01.avm.de [212.42.244.71])
+	by mail.avm.de (Postfix) with ESMTPS;
+	Thu, 13 Feb 2025 08:19:48 +0100 (CET)
+Received: from buildd.core.avm.de (buildd-sv-01.avm.de [172.16.0.225])
+	by mail-auth.avm.de (Postfix) with ESMTPA id 39DA480175;
+	Thu, 13 Feb 2025 08:19:49 +0100 (CET)
+Received: by buildd.core.avm.de (Postfix, from userid 1000)
+	id 2A47B182D0A; Thu, 13 Feb 2025 08:19:49 +0100 (CET)
+Date: Thu, 13 Feb 2025 08:19:49 +0100
+From: Nicolas Schier <n.schier@avm.de>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>, linux-kbuild@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	moderated for non-subscribers <linux-arm-kernel@lists.infradead.org>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?utf-8?B?QmrDtnJu?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] kbuild: rust: add rustc-min-version support function
+Message-ID: <20250213-masked-wombat-of-painting-8afb53@buildd>
+References: <20250210164245.282886-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250210164245.282886-1-ojeda@kernel.org>
+X-purgate-ID: 149429::1739431188-4EA08E17-E08D2BED/0/0
+X-purgate-type: clean
+X-purgate-size: 3033
+X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
+X-purgate: This mail is considered clean (visit https://www.eleven.de for further information)
+X-purgate: clean
 
-Hi Jason,
-
-On Wed, 12 Feb 2025 19:30:53 -0400
-Jason Gunthorpe <jgg@nvidia.com> wrote:
-
-> On Wed, Feb 12, 2025 at 11:22:35AM -0800, Jacob Pan wrote:
+On Mon, Feb 10, 2025 at 05:42:45PM +0100, Miguel Ojeda wrote:
+> Introduce `rustc-min-version` support function that mimics
+> `{gcc,clang}-min-version` ones, following commit 88b61e3bff93
+> ("Makefile.compiler: replace cc-ifversion with compiler-specific macros").
 > 
-> > Do you foresee the implementation can leverage your generic iommu_pt
-> > work? i.e. for building guest IO page tables. It will add a new
-> > flavor (page table based in addition to map/unmap) to
-> > viommu_domain_alloc_paging() i think.  
+> In addition, use it in the first use case we have in the kernel (which
+> was done independently to minimize the changes needed for the fix).
 > 
-> Yes I do, I think it should be no problem and it will bring the
-> missing x86 formats that are currently not available in iopgtbl
-> wrappers.
-I guess the missing x86 formats are AMDv2 and VT-d S1?
-
-> I'm working toward getting a cut back AMD only series ready to post,
-> the other series on the iommu-pages should be the last preperation
-> work.
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+> This is based on top of the fix so that the fix remains as simple as
+> possible:
 > 
-> Certainly I would be happy to help you get it implemented if that is
-> your interest.
+>     https://lore.kernel.org/rust-for-linux/20250210163732.281786-1-ojeda@kernel.org/
+> 
+>  Documentation/kbuild/makefiles.rst | 14 ++++++++++++++
+>  arch/arm64/Makefile                |  2 +-
+>  scripts/Makefile.compiler          |  4 ++++
+>  3 files changed, 19 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/kbuild/makefiles.rst b/Documentation/kbuild/makefiles.rst
+> index d36519f194dc..2608aa32c762 100644
+> --- a/Documentation/kbuild/makefiles.rst
+> +++ b/Documentation/kbuild/makefiles.rst
+> @@ -670,6 +670,20 @@ cc-cross-prefix
+>              endif
+>      endif
+> 
+> +$(RUSTC) support functions
+> +--------------------------
+> +
+> +rustc-min-version
+> +  rustc-min-version tests if the value of $(CONFIG_RUSTC_VERSION) is greater
+> +  than or equal to the provided value and evaluates to y if so.
+> +
+> +  Example::
+> +
+> +    rustflags-$(call rustc-min-version, 108500) := -Cfoo
+> +
+> +  In this example, rustflags-y will be assigned the value -Cfoo if
+> +  $(CONFIG_RUSTC_VERSION) is >= 1.85.0.
+> +
+>  $(LD) support functions
+>  -----------------------
+> 
+> diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
+> index 2b25d671365f..1d5dfcd1c13e 100644
+> --- a/arch/arm64/Makefile
+> +++ b/arch/arm64/Makefile
+> @@ -48,7 +48,7 @@ KBUILD_CFLAGS	+= $(CC_FLAGS_NO_FPU) \
+>  KBUILD_CFLAGS	+= $(call cc-disable-warning, psabi)
+>  KBUILD_AFLAGS	+= $(compat_vdso)
+> 
+> -ifeq ($(call test-ge, $(CONFIG_RUSTC_VERSION), 108500),y)
+> +ifeq ($(call rustc-min-version, 108500),y)
+>  KBUILD_RUSTFLAGS += --target=aarch64-unknown-none-softfloat
+>  else
+>  KBUILD_RUSTFLAGS += --target=aarch64-unknown-none -Ctarget-feature="-neon"
+> diff --git a/scripts/Makefile.compiler b/scripts/Makefile.compiler
+> index 8c1029687e2e..8956587b8547 100644
+> --- a/scripts/Makefile.compiler
+> +++ b/scripts/Makefile.compiler
+> @@ -67,6 +67,10 @@ gcc-min-version = $(call test-ge, $(CONFIG_GCC_VERSION), $1)
+>  # Usage: cflags-$(call clang-min-version, 110000) += -foo
+>  clang-min-version = $(call test-ge, $(CONFIG_CLANG_VERSION), $1)
+> 
+> +# rustc-min-version
+> +# Usage: rustc-$(call rustc-min-version, 108500) += -Cfoo
+> +rustc-min-version = $(call test-ge, $(CONFIG_RUSTC_VERSION), $1)
+> +
+>  # ld-option
+>  # Usage: KBUILD_LDFLAGS += $(call ld-option, -X, -Y)
+>  ld-option = $(call try-run, $(LD) $(KBUILD_LDFLAGS) $(1) -v,$(1),$(2),$(3))
+> --
+> 2.48.1
 
-Yes, that is definitely our interest! We are looking at expanding
-hyperv-iommu to include guest DMA remapping support (current code has
-IRQ remapping only). This expansion includes paging and sva domains. In
-terms of the need for paging domain, I believe it is identical to
-virtio-iommu page table extensions.
-
-It would be great if you could help adding/accommodating such usage to
-the generic iommu_pt. I think it will be a subset of features as
-intended for iommufd. I.e. map/unmap operation.
-
-One difference/simplification than virtio-iommu is that Hyperv-iommu
-(backend) does not want to support map/unmap hypercall based paging
-domain. IOW, page table based paging domain only, let the guest own S1.
-
-Our code and backend support are still in the early stages, that is why
-I am attempting to convert virtio-iommu driver to iommu_pt. Not sure if
-anyone has done the QEMU part to support VIRTIO_IOMMU_F_ATTACH_TABLE?
-@Jean @Eric Do you know?
-
-Adding a couple developers from our side. @Yu Zhang @Easwar Hariharan.
-
-
+Reviewed-by: Nicolas Schier <n.schier@avm.de>
