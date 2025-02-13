@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6C270830;
-	Thu, 13 Feb 2025 14:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAA1281379;
+	Thu, 13 Feb 2025 14:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457184; cv=none; b=aW7nA5IcqK9HGZnpHbRzF62IUwfGMpiV7+Y4rETPqs22C41eiIv+/J6uDFJs5E5FDUGdcOvlfKIEoW07b3PwuPbXUjvcRIvBiub+j1svnbeSiW1inSFGUBm011f3pPCFw9hxs2AmiPL3sQCWre9RA0jfNPAN23kR8Twaf6Rp66Y=
+	t=1739457188; cv=none; b=mHJcEYUFct6OZkV22UyzP3rTY59CLjKXKIUUdPuITNcdl9sKCzclJLO/rzuyhIiNNIPBmlsEkq8xsc7HNRgA5/gjBYXGhp6WEZIN3T1W/uFa11/LW4tlNySHt7pofNYixAOsZeUCpF0xcQ0fv69vfF7IdTJcWzhrImgnHMOeTp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457184; c=relaxed/simple;
-	bh=+CClQ4LctIUgUeTd9fbFreKidxY9x5WwJTxTvN1v/LI=;
+	s=arc-20240116; t=1739457188; c=relaxed/simple;
+	bh=2yYyIiP2uuirjA3SfJfuc3r1m2I1hvBudVc8rGJaleM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HgUYWtePG/vCr5+AhpbRhuNf2ejyeTgxqfylvB9HgPd/r77qbQdfHt3sD+jDbTDbTwD33Zg+7h8DtPG4aoGYZcrfLFzr+lIihIi/IW0gqALU139JbPgbk2oQy1ksBT9JPxd+acr303nHaZzcxqGsF0AuU7oYNFUHeC+tjp3QcgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYBfO1YR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tMSrhtPsBNDsDQq29/zRee5UuVrisOozey/lOBSB4R2N9kATKAM92WHmpu+M/TGhhE+EOwnersIC84NXipHExd3mANaZcx2DPFBRjZ6UOj6lxYQATBytjM1kL7rtZAD/HpDDg3mVwqYpkyAxH3gaZ/PaB+Iu4Wah4EBNVcepJVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpS+kZA6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYBfO1YR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFD2C4CED1;
-	Thu, 13 Feb 2025 14:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpS+kZA6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098D0C4CEE4;
+	Thu, 13 Feb 2025 14:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457183;
-	bh=+CClQ4LctIUgUeTd9fbFreKidxY9x5WwJTxTvN1v/LI=;
+	s=korg; t=1739457187;
+	bh=2yYyIiP2uuirjA3SfJfuc3r1m2I1hvBudVc8rGJaleM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYBfO1YRE6Osge+5EkKq52cmiViDopdKJnPEkUsC+dvyaH+e3/25htsebDfaS2ZwP
-	 DThCOp/zQd/SK/ZeVg4+tItq/LONZeHFgwzY4JB3Yb1pfY6lsaeNAGioYYOJYTlcTs
-	 8NHJxQx20PR6YXEK85FU6ntJLnPU+YGgqNHj06A8=
+	b=qpS+kZA6DrUShzDfSEQdInY0LC3yZ58IaDxKE0/dXpjkBgNCKHHssxP88bgMjZovd
+	 av62VD31guhPO33IgkOqmOWjCQB7I1IfMVr8rCVcxIHXpbJ9pvErK432lVTdSRK3IQ
+	 L1oNeEfMTmhPeiNFR0mWC8ZKNr8crw6dDHvo4MQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hermes Wu <hermes.wu@ite.com.tw>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/422] drm/bridge: it6505: Change definition MAX_HDCP_DOWN_STREAM_COUNT
-Date: Thu, 13 Feb 2025 15:23:08 +0100
-Message-ID: <20250213142438.073710774@linuxfoundation.org>
+Subject: [PATCH 6.12 040/422] drm/bridge: it6505: fix HDCP Bstatus check
+Date: Thu, 13 Feb 2025 15:23:09 +0100
+Message-ID: <20250213142438.112267240@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -54,37 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Hermes Wu <hermes.wu@ite.com.tw>
 
-[ Upstream commit 85597bc0d70c287ba41f17d14d3d857a38a3d727 ]
+[ Upstream commit 0fd2ff47d8c207fa3173661de04bb9e8201c0ad2 ]
 
-A HDCP source device shall support max downstream to 127 devices.
-Change definition MAX_HDCP_DOWN_STREAM_COUNT to 127
-
-KSVs shall save for DRM blocked devices check.
-This results in struct it6505 growth by ~0.5 KiB.
+When HDCP is activated,
+a DisplayPort source receiving CP_IRQ from the sink
+shall check Bstatus from DPCD and process the corresponding value
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Hermes Wu <hermes.wu@ite.com.tw>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241230-v7-upstream-v7-4-e0fdd4844703@ite.corp-partner.google.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20241230-v7-upstream-v7-5-e0fdd4844703@ite.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ite-it6505.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/ite-it6505.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
-index cf891e7677c0e..d55d7dad9545f 100644
+index d55d7dad9545f..0f7d50da56835 100644
 --- a/drivers/gpu/drm/bridge/ite-it6505.c
 +++ b/drivers/gpu/drm/bridge/ite-it6505.c
-@@ -296,7 +296,7 @@
- #define MAX_LANE_COUNT 4
- #define MAX_LINK_RATE HBR
- #define AUTO_TRAIN_RETRY 3
--#define MAX_HDCP_DOWN_STREAM_COUNT 10
-+#define MAX_HDCP_DOWN_STREAM_COUNT 127
- #define MAX_CR_LEVEL 0x03
- #define MAX_EQ_LEVEL 0x03
- #define AUX_WAIT_TIMEOUT_MS 15
+@@ -2312,14 +2312,20 @@ static int it6505_process_hpd_irq(struct it6505 *it6505)
+ 	DRM_DEV_DEBUG_DRIVER(dev, "dp_irq_vector = 0x%02x", dp_irq_vector);
+ 
+ 	if (dp_irq_vector & DP_CP_IRQ) {
+-		it6505_set_bits(it6505, REG_HDCP_TRIGGER, HDCP_TRIGGER_CPIRQ,
+-				HDCP_TRIGGER_CPIRQ);
+-
+ 		bstatus = it6505_dpcd_read(it6505, DP_AUX_HDCP_BSTATUS);
+ 		if (bstatus < 0)
+ 			return bstatus;
+ 
+ 		DRM_DEV_DEBUG_DRIVER(dev, "Bstatus = 0x%02x", bstatus);
++
++		/*Check BSTATUS when recive CP_IRQ */
++		if (bstatus & DP_BSTATUS_R0_PRIME_READY &&
++		    it6505->hdcp_status == HDCP_AUTH_GOING)
++			it6505_set_bits(it6505, REG_HDCP_TRIGGER, HDCP_TRIGGER_CPIRQ,
++					HDCP_TRIGGER_CPIRQ);
++		else if (bstatus & (DP_BSTATUS_REAUTH_REQ | DP_BSTATUS_LINK_FAILURE) &&
++			 it6505->hdcp_status == HDCP_AUTH_DONE)
++			it6505_start_hdcp(it6505);
+ 	}
+ 
+ 	ret = drm_dp_dpcd_read_link_status(&it6505->aux, link_status);
 -- 
 2.39.5
 
