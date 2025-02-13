@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152F526B0BC;
-	Thu, 13 Feb 2025 15:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC3F26B0BC;
+	Thu, 13 Feb 2025 15:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460012; cv=none; b=sHfUB2HtBidF7uAcwJeW5kpBCi0JtsdZ9a24oSkN0iwEajL+dT2uDvYfop0delWgR2jFKHcK1ImF7jlM7Ggj1uxh1ol2e0Jh9AztNEtGDk1M+oREPtPaHMFzmRxf6GavBQYGxqOhOceNktf0aoIlU22/aj3O/2PSP2k8WlJ3HuE=
+	t=1739460015; cv=none; b=ia0kIsAJ2HAw+/Wv/Du+QBZKabTnLG4NW3RqAiEblQBT4xCCp3aJqh245pasd4Z0yFTpwzgSXyJCJhR4QL8KjJRD0FzTtBUT0Mg1EZFvY75CPhzNPEuxlawp26rXogcUkL1T77VwfqTpBGxpXYIsGSG78OiVsK8AHLk5sYV7TaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460012; c=relaxed/simple;
-	bh=+IrBRqB0JIGIwiPw0wx9f08DQ3I9dcyqxNzHxMx9zAs=;
+	s=arc-20240116; t=1739460015; c=relaxed/simple;
+	bh=xvSwb7hITc+IQXPakkLvr8RitRbc7YlDkgW67USQcck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lEms0K1hp9H/Cnjij1/QI55bgGde2iV1XCHqYYv8/uVkJycmYITaXS802A6Kr/89AwuuxyHeLVHTrovOcCGEUmj4dPSmdnGQ8B/HOSQS6k7/hS1sHcpQDyJP1SYF5qfntfpdmi0h63mMdn1d8OiytWwn45i8B8jQwKUb+Klkzjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/SjFT0v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rJXnRwGOtr4S5gRvK7wqmwNwjRm5wYz3kzyOmBQPEspzsVgc/CrmeNXbY6Ar18D8bui1fc5UcLyvtiH/7YZJnzxjAXmO1/qss+dfndmCObkJAbnHzCAHQMHpSUTfinIkctZ/p6L/vCKqBeUhuPKgRLRFJ0ytMCKl1dznLIeJCkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQppsanb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/SjFT0v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CE9C4CED1;
-	Thu, 13 Feb 2025 15:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQppsanb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC03C4CED1;
+	Thu, 13 Feb 2025 15:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460011;
-	bh=+IrBRqB0JIGIwiPw0wx9f08DQ3I9dcyqxNzHxMx9zAs=;
+	s=korg; t=1739460015;
+	bh=xvSwb7hITc+IQXPakkLvr8RitRbc7YlDkgW67USQcck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/SjFT0vVNKyiJ6Rudq0XIkpZgym0JcCacpkSNRn8iMarzKCzDvK7XSGosoTN+1XF
-	 EdgT4ndWiUxiZyiraKT3YdKq2cTvXnBRS/tVUKXVRWnrnjsoMAFoeCg3RgITo24mdg
-	 YKVsiJcKcU7GuTLLJp6Nh+YxTc/e+O3dUcV6bxMY=
+	b=bQppsanbU85E00cO2mOlyhxuczVU1JUXWaR/7e1qAmGCeGeSY1E4OMslmPu4mrycB
+	 P/gPrKWQjVKmO8fv0iRNWofuNEdV2WTJig37IOrdQF9DvPd3EdQz7VkO5lGfDhCiEQ
+	 7fFJZVbFDIzG2V8LAw2EnOMLcxOKeBY/6Fn9x/8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.13 431/443] statmount: let unset strings be empty
-Date: Thu, 13 Feb 2025 15:29:56 +0100
-Message-ID: <20250213142457.250661826@linuxfoundation.org>
+	Matt Fleming <mfleming@cloudflare.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.13 432/443] timers/migration: Fix off-by-one root mis-connection
+Date: Thu, 13 Feb 2025 15:29:57 +0100
+Message-ID: <20250213142457.290005058@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,97 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-commit e52e97f09fb66fd868260d05bd6b74a9a3db39ee upstream.
+commit 868c9037df626b3c245ee26a290a03ae1f9f58d3 upstream.
 
-Just like it's normal for unset values to be zero, unset strings should be
-empty instead of containing random values.
+Before attaching a new root to the old root, the children counter of the
+new root is checked to verify that only the upcoming CPU's top group have
+been connected to it. However since the recently added commit b729cc1ec21a
+("timers/migration: Fix another race between hotplug and idle entry/exit")
+this check is not valid anymore because the old root is pre-accounted
+as a child to the new root. Therefore after connecting the upcoming
+CPU's top group to the new root, the children count to be expected must
+be 2 and not 1 anymore.
 
-It seems to be a typical mistake that the mask returned by statmount is not
-checked, which can result in various bugs.
+This omission results in the old root to not be connected to the new
+root. Then eventually the system may run with more than one top level,
+which defeats the purpose of a single idle migrator.
 
-With this fix, these bugs are prevented, since it is highly likely that
-userspace would just want to turn the missing mask case into an empty
-string anyway (most of the recently found cases are of this type).
+Also the old root is pre-accounted but not connected upon the new root
+creation. But it can be connected to the new root later on. Therefore
+the old root may be accounted twice to the new root. The propagation of
+such overcommit can end up creating a double final top-level root with a
+groupmask incorrectly initialized. Although harmless given that the final
+top level roots will never have a parent to walk up to, this oddity
+opportunistically reported the core issue:
 
-Link: https://lore.kernel.org/all/CAJfpegsVCPfCn2DpM8iiYSS5DpMsLB8QBUCHecoj6s0Vxf4jzg@mail.gmail.com/
-Fixes: 68385d77c05b ("statmount: simplify string option retrieval")
-Fixes: 46eae99ef733 ("add statmount(2) syscall")
-Cc: stable@vger.kernel.org # v6.8
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Link: https://lore.kernel.org/r/20250130121500.113446-1-mszeredi@redhat.com
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+  WARNING: CPU: 8 PID: 0 at kernel/time/timer_migration.c:543 tmigr_requires_handle_remote
+  CPU: 8 UID: 0 PID: 0 Comm: swapper/8
+  RIP: 0010:tmigr_requires_handle_remote
+  Call Trace:
+   <IRQ>
+   ? tmigr_requires_handle_remote
+   ? hrtimer_run_queues
+   update_process_times
+   tick_periodic
+   tick_handle_periodic
+   __sysvec_apic_timer_interrupt
+   sysvec_apic_timer_interrupt
+  </IRQ>
+
+Fix the problem by taking the old root into account in the children count
+of the new root so the connection is not omitted.
+
+Also warn when more than one top level group exists to better detect
+similar issues in the future.
+
+Fixes: b729cc1ec21a ("timers/migration: Fix another race between hotplug and idle entry/exit")
+Reported-by: Matt Fleming <mfleming@cloudflare.com>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250205160220.39467-1-frederic@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ kernel/time/timer_migration.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -5137,39 +5137,45 @@ static int statmount_string(struct kstat
- 	size_t kbufsize;
- 	struct seq_file *seq = &s->seq;
- 	struct statmount *sm = &s->sm;
--	u32 start = seq->count;
-+	u32 start, *offp;
+--- a/kernel/time/timer_migration.c
++++ b/kernel/time/timer_migration.c
+@@ -1677,6 +1677,9 @@ static int tmigr_setup_groups(unsigned i
+ 
+ 	} while (i < tmigr_hierarchy_levels);
+ 
++	/* Assert single root */
++	WARN_ON_ONCE(!err && !group->parent && !list_is_singular(&tmigr_level_list[top]));
 +
-+	/* Reserve an empty string at the beginning for any unset offsets */
-+	if (!seq->count)
-+		seq_putc(seq, 0);
+ 	while (i > 0) {
+ 		group = stack[--i];
+ 
+@@ -1718,7 +1721,12 @@ static int tmigr_setup_groups(unsigned i
+ 		WARN_ON_ONCE(top == 0);
+ 
+ 		lvllist = &tmigr_level_list[top];
+-		if (group->num_children == 1 && list_is_singular(lvllist)) {
 +
-+	start = seq->count;
- 
- 	switch (flag) {
- 	case STATMOUNT_FS_TYPE:
--		sm->fs_type = start;
-+		offp = &sm->fs_type;
- 		ret = statmount_fs_type(s, seq);
- 		break;
- 	case STATMOUNT_MNT_ROOT:
--		sm->mnt_root = start;
-+		offp = &sm->mnt_root;
- 		ret = statmount_mnt_root(s, seq);
- 		break;
- 	case STATMOUNT_MNT_POINT:
--		sm->mnt_point = start;
-+		offp = &sm->mnt_point;
- 		ret = statmount_mnt_point(s, seq);
- 		break;
- 	case STATMOUNT_MNT_OPTS:
--		sm->mnt_opts = start;
-+		offp = &sm->mnt_opts;
- 		ret = statmount_mnt_opts(s, seq);
- 		break;
- 	case STATMOUNT_OPT_ARRAY:
--		sm->opt_array = start;
-+		offp = &sm->opt_array;
- 		ret = statmount_opt_array(s, seq);
- 		break;
- 	case STATMOUNT_OPT_SEC_ARRAY:
--		sm->opt_sec_array = start;
-+		offp = &sm->opt_sec_array;
- 		ret = statmount_opt_sec_array(s, seq);
- 		break;
- 	case STATMOUNT_FS_SUBTYPE:
--		sm->fs_subtype = start;
-+		offp = &sm->fs_subtype;
- 		statmount_fs_subtype(s, seq);
- 		break;
- 	case STATMOUNT_SB_SOURCE:
--		sm->sb_source = start;
-+		offp = &sm->sb_source;
- 		ret = statmount_sb_source(s, seq);
- 		break;
- 	default:
-@@ -5197,6 +5203,7 @@ static int statmount_string(struct kstat
- 
- 	seq->buf[seq->count++] = '\0';
- 	sm->mask |= flag;
-+	*offp = start;
- 	return 0;
- }
- 
++		/*
++		 * Newly created root level should have accounted the upcoming
++		 * CPU's child group and pre-accounted the old root.
++		 */
++		if (group->num_children == 2 && list_is_singular(lvllist)) {
+ 			/*
+ 			 * The target CPU must never do the prepare work, except
+ 			 * on early boot when the boot CPU is the target. Otherwise
 
 
