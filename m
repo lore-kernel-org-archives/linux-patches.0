@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CDF26B087;
-	Thu, 13 Feb 2025 15:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B638E26B0B4;
+	Thu, 13 Feb 2025 15:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460501; cv=none; b=rZXYxaO0Dck4aOca87AYXBCfhEKOAMCpU4xT33VBHehPKBZfmGranTc4JTTDLDiEvEy9v5PS4OefhJKMd5AftkInTEB13BeUTphi2tz4pe79LHNxIbF4IGGWe8tOqu8HKisqH8bbc3/U58ZPwFTZM7RPx7sjBPpWgylxExUXvrs=
+	t=1739460504; cv=none; b=YY/gJpbXo0F4xAj3sKg0qPwJqVIR42ebsG+mTAD/O052TbXQJDIk8iffWuQsgmRwYGG83/fbx2xdQPY7a8Yxo+DtmX/N1uzUw2gmKR/B2aueVGcTP0aUN//39brN5h64bwhEmetyFJdF7mOp6rDgTN5hSYlIT2sfRCVi9VIvH4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460501; c=relaxed/simple;
-	bh=NOBKCLRc0GKR2qhHP3rb36Zja+G2YMX0DSYf5PCxfl4=;
+	s=arc-20240116; t=1739460504; c=relaxed/simple;
+	bh=qQq4Irtv85LrPlTXDBmJhm2FVq4kfONdHJ1iSBmvBu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pf3XdUbp781/3tSm6Xw6Uqx2U9blpA0IFcDFBxipMa1OhDYRFleK0YeY6YK5PJUwjNyR9IeXYDhbBiLiia2FscSmFyxbOrSfXcmNSUzPm6022My3j+oKoot7Xy2880VvpzPgYWGMbsFSuxZlBEdnfqR8xQ+AOpigWyCNUmvwB4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbmqFMch; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NusVkaDJM39FImNpsKa1pKXgUg7oOFGyDO2A+wGr+fqYv2UL1h4y4tH7p5tZyWYgUWNIn6w7EMreXvQe81T6vpN0GIX/zKii40Lhcwbj+PuXFqiqeimuqlTuuLJzAYQATsd5bAVj11Q1mxg2lQ1mam3NeoShiFiXe/k6bB8mEiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vdj+SewQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbmqFMch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E90C4CEE5;
-	Thu, 13 Feb 2025 15:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vdj+SewQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2F7C4CED1;
+	Thu, 13 Feb 2025 15:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460501;
-	bh=NOBKCLRc0GKR2qhHP3rb36Zja+G2YMX0DSYf5PCxfl4=;
+	s=korg; t=1739460504;
+	bh=qQq4Irtv85LrPlTXDBmJhm2FVq4kfONdHJ1iSBmvBu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jbmqFMchlIxr8kFNvFOf1yWwpOv4SyhxAJiDnzCIxDymgf2OCz4GcmOvLPYsD6bZz
-	 dFP7ZGa4xEn3goN45oWZB0ntGPrypeoYGjStnlIrLyvcKt92anQ8fY6SrqFf93nNkM
-	 BjOVResQG4MU3OpaiEF0U4Kdg8pKlOTB0r1SOb0g=
+	b=vdj+SewQLeSoEqybFLpbz+MTOTx6pV9wVRHWmGVbkUf2w4F4AhLWvA6qwe5rRW5af
+	 gdZRlal96L1R5pPnEKTFKmwgWSBNmxbRK8NlTvvEo+DAtEmgFwX4PaPV2HDPGeSbA1
+	 KPkMLJD9kHKinSWGgdX1tHZ0CW4Jwf8uwa0RQyrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcel Hamer <marcel.hamer@windriver.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.6 128/273] wifi: brcmfmac: fix NULL pointer dereference in brcmf_txfinalize()
-Date: Thu, 13 Feb 2025 15:28:20 +0100
-Message-ID: <20250213142412.398060822@linuxfoundation.org>
+	Shang Chieh Tseng <shangchieh.tseng@tsengsy.com>,
+	Nick Morrow <usbwifi2024@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.6 129/273] wifi: mt76: mt7921u: Add VID/PID for TP-Link TXE50UH
+Date: Thu, 13 Feb 2025 15:28:21 +0100
+Message-ID: <20250213142412.439825349@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -51,69 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcel Hamer <marcel.hamer@windriver.com>
+From: Nick Morrow <usbwifi2024@gmail.com>
 
-commit 68abd0c4ebf24cd499841a488b97a6873d5efabb upstream.
+commit 47d9a8ba1d7f31c674b6936b3c34ee934aa9b420 upstream.
 
-On removal of the device or unloading of the kernel module a potential NULL
-pointer dereference occurs.
+Add VID/PID 35bc/0107 for recently released TP-Link TXE50UH USB WiFi adapter.
 
-The following sequence deletes the interface:
-
-  brcmf_detach()
-    brcmf_remove_interface()
-      brcmf_del_if()
-
-Inside the brcmf_del_if() function the drvr->if2bss[ifidx] is updated to
-BRCMF_BSSIDX_INVALID (-1) if the bsscfgidx matches.
-
-After brcmf_remove_interface() call the brcmf_proto_detach() function is
-called providing the following sequence:
-
-  brcmf_detach()
-    brcmf_proto_detach()
-      brcmf_proto_msgbuf_detach()
-        brcmf_flowring_detach()
-          brcmf_msgbuf_delete_flowring()
-            brcmf_msgbuf_remove_flowring()
-              brcmf_flowring_delete()
-                brcmf_get_ifp()
-                brcmf_txfinalize()
-
-Since brcmf_get_ip() can and actually will return NULL in this case the
-call to brcmf_txfinalize() will result in a NULL pointer dereference inside
-brcmf_txfinalize() when trying to update ifp->ndev->stats.tx_errors.
-
-This will only happen if a flowring still has an skb.
-
-Although the NULL pointer dereference has only been seen when trying to
-update the tx statistic, all other uses of the ifp pointer have been
-guarded as well with an early return if ifp is NULL.
-
+Tested-by: Shang Chieh Tseng <shangchieh.tseng@tsengsy.com>
+Signed-off-by: Nick Morrow <usbwifi2024@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Marcel Hamer <marcel.hamer@windriver.com>
-Link: https://lore.kernel.org/all/b519e746-ddfd-421f-d897-7620d229e4b2@gmail.com/
-Acked-by: Arend van Spriel  <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20250116132240.731039-1-marcel.hamer@windriver.com
+Link: https://patch.msgid.link/e797f105-9ca8-41e9-96de-7d25dec09943@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/usb.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-@@ -540,6 +540,11 @@ void brcmf_txfinalize(struct brcmf_if *i
- 	struct ethhdr *eh;
- 	u16 type;
- 
-+	if (!ifp) {
-+		brcmu_pkt_buf_free_skb(txp);
-+		return;
-+	}
-+
- 	eh = (struct ethhdr *)(txp->data);
- 	type = ntohs(eh->h_proto);
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
+@@ -21,6 +21,9 @@ static const struct usb_device_id mt7921
+ 	/* Netgear, Inc. [A8000,AXE3000] */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9060, 0xff, 0xff, 0xff),
+ 		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
++	/* TP-Link TXE50UH */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x35bc, 0x0107, 0xff, 0xff, 0xff),
++		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
+ 	{ },
+ };
  
 
 
