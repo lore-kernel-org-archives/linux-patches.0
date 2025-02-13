@@ -1,102 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDACA20AF82;
-	Thu, 13 Feb 2025 08:11:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42E4202C31
+	for <patches@lists.linux.dev>; Thu, 13 Feb 2025 09:45:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739434289; cv=none; b=XAhw8y95aypt1xdtbctCkxrOOArt7+fGn4qqxeqWr2bt3bBviEtroY/l1Sce6gIJhGUqPaX5ozuprmfo6hWYP6iJDWt+6VFYf5TO2++xO3iP5+KcjEswNJmITRsvnUq9psOVIURuuOdzLhZrqX6c0lhA7ynmAGL8AJjpgTYyaOI=
+	t=1739439941; cv=none; b=gX0l89JGuIhENpAGXCLw0Jjee7V4eSbt9pqg+Zim24WxfhiccsZQYrxGi2Ohzv8T3/tHFlEq/Lq2s6QwWQCeoGtYuJyHDaVzFQsEndZAZZ3aSPWFp1g/HCj1E2C5wTlyRhWr9Fp2FDh1hSI25b0shLi9JU5wUvIghOXNd1H9a54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739434289; c=relaxed/simple;
-	bh=qhnwGyQaoi8IJLlrTunEkZvhO/0CPiOFnmcJQERWVIE=;
+	s=arc-20240116; t=1739439941; c=relaxed/simple;
+	bh=3Ilo/X3a30c4xDyqJmeIBjYKRtFgQM1sP1z2Knqi7Q0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S/yntcidHZhHKYc+8Ke156BT/LjFshX9iGJ/lV+oJGmkdyIAjfKDoPZMHlBkeWOSHbqTdtPHjuIb3xSPGPn+5yvSa1AEzHaDb50J0ML2As7dkVbAJG3gsgYmxV+LCzM9JLcBHjfOe7LBBnZAtiNhf/huJ1Gx6A5izMQb7Nx+xrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FyCJf4vf; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=YCe3vOJjfzL3OuaJz75XHo4ZXIo5GJQj8zDW6T0e3U9W3+gQ4tmmJv9GKIoCLmch73l6SNC7Dw+dkikWlKeNxLblV/HhElFes4fyVV43pzzlm74p5ftp7DFkigsJeKGweIdfuSkFtt/tAnI1xxN2WEkUeNdxT5do6gUznQfzlE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pFGrvy+j; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FyCJf4vf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861BDC4CED1;
-	Thu, 13 Feb 2025 08:11:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739434289;
-	bh=qhnwGyQaoi8IJLlrTunEkZvhO/0CPiOFnmcJQERWVIE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FyCJf4vf8SHTu1ZLyRnOUf9D03imj38LoyNLC9jTU6wEtitmAjg2ffn9K9pgPJEvY
-	 Xx6FbFdlNW6fMjHIe/hMYWPTM1c7j8xkoPpAJN8fDeppnNoi7TfiT/4cAXLzjLkYRZ
-	 jMkno97LtGAv6xvEtT+8p6tL1hJ4aBjkPvHmRqPW+KhsK6YPvPKmRq35tRmipCcdvB
-	 u5Jj/6zOyJ6NiQsnhAo5TzUzHOF7F+xF7QsuPdkotHw3v7tuGatrxyGPnUd8lt3tyQ
-	 xxrGGMiSD4rxgIyZOp4ODrAFptxGYhgl1WeX+VDR18UXXxD7MnYgT8NY9U/jbbCdb9
-	 hvxmzgr2zlC6g==
-Date: Thu, 13 Feb 2025 09:11:25 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	patches@lists.linux.dev, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Benson Leung <bleung@chromium.org>, devicetree@vger.kernel.org, chrome-platform@lists.linux.dev, 
-	Pin-yen Lin <treapking@chromium.org>
-Subject: Re: [PATCH v3 1/2] dt-bindings: usb: Add binding for ChromeOS Pogo
- pin keyboard connector
-Message-ID: <20250213-amigurumi-shrew-of-grandeur-bb1a13@krzk-bin>
-References: <20250210225714.1073618-1-swboyd@chromium.org>
- <20250210225714.1073618-2-swboyd@chromium.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pFGrvy+j"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4394829ef0fso11029855e9.0
+        for <patches@lists.linux.dev>; Thu, 13 Feb 2025 01:45:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1739439937; x=1740044737; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3Ilo/X3a30c4xDyqJmeIBjYKRtFgQM1sP1z2Knqi7Q0=;
+        b=pFGrvy+jTedsek6US8JEqYdSvMtIjn67hBUk9mQP0R2T1lWyez5MsNnaKlTimzQqw6
+         F+HcOn9miOYPkbSHvEKUHnPeZSLOVxZqWh0zYagfZKN15E+T4OJMLBEgMAq6Djx+BpbW
+         t32AnBdipXTxDysbH11gx5Q9E1q9mTX8eBs3xjd/BxNWacjuAQTrjig42aESX/pQBmvQ
+         FWXxTGNOuRbEnYtwMDQQ4qd6YJ7mpI+xfjes05MICDCyNswGb8U1oeFUOxejOAMrBM83
+         8DjEZsyxNMmpJIS+jG1em78dfaAf7hoWL4gDwtBH4n+vXHy6uIDfE/6GeyBOU6IgVxju
+         qUww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739439937; x=1740044737;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3Ilo/X3a30c4xDyqJmeIBjYKRtFgQM1sP1z2Knqi7Q0=;
+        b=W/ueECfY2tUyI3qF0P/KFPwLxQwBlnSI22o9xVOvBb+7NGIGDyZHPXhQMD6fWkoIco
+         85cgbjUv6748RxMB71u6fE2wfM26RFNY/TXea4EQzzLXb+Xoww1QE1zBJwJmiZPX6EEU
+         uzS0At29ZdBuzNIbEcnf2dZnv+/zc3/H8k3I0C7O5HUiwy+B0AKOqY1j56UuVU++xIyV
+         xKtVtbaFwt7oGyCebAx5/yiBAPjVvBwwfSmX7asU3GAzb/dJIKNJ/506wAG4x9A43e/u
+         zyeyU2VUdFPhZvamuXMH+M7aslDEvSyy0RIbC540EEVYGCxjRXuYZO/hJkgWSs1KnAdo
+         gkfA==
+X-Forwarded-Encrypted: i=1; AJvYcCX8nOJ8Itcjd6HE8K8mzVsa1USygDuKetIh4ry2/nN4JDVtaRBNw4lhFamHteOHnFc+/jKYmYnw@lists.linux.dev
+X-Gm-Message-State: AOJu0YxkAmrrAB4hFxM6z6EpQTNp7kv5hT+RaSmvMH1SaivRoEKXwy6R
+	Ij7IzUT3ekegcEBiBjR9uO/t0ovvNfQdIa2vZcNKx1reVMhN3klWKsGCguQxFvE=
+X-Gm-Gg: ASbGncvPuRkCo4aYY4kjUe1+G7zF/r5oi3qyeFbH5RGM/W3wcxMcrLM8++rXFKaJikP
+	aUWCmfcy/xsaCLjji9mRXi44UJASDAkvzeyG+ntiRwY8opY5xlqMiPwNmUSMtp/UAW7djkEufve
+	TBl9HXXo/aSnYPEvT1EQNGQHGOHQs+P6O6ZZNPBtbJqE+VJv+dQj7+O1ZQOu6jBVW2gi9nSMQla
+	Jjp/rpgjbjDiQSNen146MAHT4uHfCniRf0wfW3cJfhfvfPUfuDTrd/whCXa0PTOmZyYfDaHzQ6J
+	6/Jp16c/pmNMHA==
+X-Google-Smtp-Source: AGHT+IEIeCgAGFBXoUwvmjdG4kaT43lYwV+Fkp3fDkVeP6qXvOFBGNPRA7BU0T2qf6XHumXXrDCSDQ==
+X-Received: by 2002:a5d:47ca:0:b0:38d:cc9c:630c with SMTP id ffacd0b85a97d-38f24f2c099mr1998761f8f.10.1739439936845;
+        Thu, 13 Feb 2025 01:45:36 -0800 (PST)
+Received: from myrica ([2.221.137.100])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258b41b5sm1396930f8f.14.2025.02.13.01.45.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Feb 2025 01:45:36 -0800 (PST)
+Date: Thu, 13 Feb 2025 09:46:01 +0000
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+To: jacob.pan@linux.microsoft.com,
+	Easwar Hariharan <eahariha@linux.microsoft.com>,
+	"zhangyu1@microsoft.com" <zhangyu1@microsoft.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
+	virtualization@lists.linux.dev, Will Deacon <will@kernel.org>,
+	Eric Auger <eric.auger@redhat.com>, patches@lists.linux.dev,
+	tina.zhang@intel.com
+Subject: Re: [PATCH 3/5] iommu/virtio: Move to domain_alloc_paging()
+Message-ID: <20250213094601.GA243081@myrica>
+References: <0-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
+ <3-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
+ <20250212112235.714b0a14@DESKTOP-0403QTC.>
+ <20250212233053.GV3754072@nvidia.com>
+ <67ad876d.170a0220.3c21dc.85ceSMTPIN_ADDED_BROKEN@mx.google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250210225714.1073618-2-swboyd@chromium.org>
+In-Reply-To: <67ad876d.170a0220.3c21dc.85ceSMTPIN_ADDED_BROKEN@mx.google.com>
 
-On Mon, Feb 10, 2025 at 02:57:11PM -0800, Stephen Boyd wrote:
-> +$id: http://devicetree.org/schemas/usb/google,usb-pogo-keyboard.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Google USB Pogo Pin Keyboard
-> +
-> +maintainers:
-> +  - Stephen Boyd <swboyd@chromium.org>
-> +
-> +description:
-> +  ChromeOS devices with a detachable keyboard have a set of five pogo pins that
-> +  are the typical four pins for USB (D+/D-, VBUS, GND) and an extra pin for
-> +  base detection. The detachable keyboard is a USB device that connects to the
-> +  four USB pogo pins.
-> +
-> +properties:
-> +  compatible:
-> +    const: google,usb-pogo-keyboard
-> +
-> +  '#address-cells':
+Hi Jacob,
 
-If there is going to be any new version: please use consistent quotes,
-either ' or "
+On Wed, Feb 12, 2025 at 09:47:23PM -0800, Jacob Pan wrote:
+> Our code and backend support are still in the early stages, that is why
+> I am attempting to convert virtio-iommu driver to iommu_pt. Not sure if
+> anyone has done the QEMU part to support VIRTIO_IOMMU_F_ATTACH_TABLE?
+> @Jean @Eric Do you know?
 
-> +    const: 1
-> +
-> +  '#size-cells':
-> +    const: 0
-> +
-> +  port:
-> +    $ref: /schemas/graph.yaml#/properties/port
-> +    description: Connection to USB2 port providing USB HS signals
-> +    required:
-> +      - endpoint
-> +
-> +patternProperties:
-> +  "^keyboard@[0-9a-f]{1,2}$":
+As far as I know Tina worked on this most recently:
+https://github.com/TinaZhangZW/qemu/commits/virtio-iommu/vt-d-pgtable/
+https://lore.kernel.org/all/20231106071226.9656-1-tina.zhang@intel.com/
 
-What does the unit address represent here? Why this isn't just
-"keyboard"? One connector usually has only one keyboard, right?
-
-Maybe it is only to fulfill the usb-device schema? The reg is there to
-represent USB hub or controller port, which is not true here.
-
-I don't have any idea how to solve it. I assume you need the keyboard
-child, right?
-
-Best regards,
-Krzysztof
-
+Thanks,
+Jean
