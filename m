@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD32726B097;
-	Thu, 13 Feb 2025 15:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC5E26B094;
+	Thu, 13 Feb 2025 15:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459383; cv=none; b=YuUm7ersWD4hBVzE7oc1vPL43oWiWuprMpaRl9oGyiWQci/mKUIqwG7JuJqXBslEsrkpNzS/UjjHM/gs/L5R9BSFUezwuKqjfghEEqW7cWTnt2wscVflfwd7HGY3b/3yDqWT4ppYrVTsDSQLX7DuX/eyxjqL8MGDAb7l+Rxh58Q=
+	t=1739459387; cv=none; b=S7dveBnEgUAFoXj9SWb6DsjItUhT5LcU2dCcLJ+7Fxjn2QMYOL757BLf5so3fzjJciwUHg/pYMYzZcbLTbrgWmkEmqIqHGoMYOtGKj4LP0dqjJKLgJ+RAhUJp0/6r9cPOayE5GAvLGqUPrJbUelYPj3IrN6dRycHH1Mqjc0OzwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459383; c=relaxed/simple;
-	bh=iAU/0u7R9zqkR0FRlcamCOcyUI0LhETO5fHZOVMQPIA=;
+	s=arc-20240116; t=1739459387; c=relaxed/simple;
+	bh=1Z0S3Bana4ifBDTTjiHrGdslO/fcrYU6VMonpaTeQVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=idCDRBMBOHWERhIf9Rfto8o5W8INU1H2TPVDCdzu9JcvlpA2Gq1Tfz1OPifjzYfnNHBkK+s8DSG2ezJG5My5aIJ3PUTV5v8tHlj9DgAjwbW489CTXpFfoy+GZYU5RKE6Ax+c5Gi3B4dJudixKuJAr7/7CkzO3TTNxRsDekujsZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pobrn07c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LdY708IQXrDQXXa2CbKnB3L0runTewzyHoa2tle5BkgUOBV6oAoEHUUNU/CpHoS9XfCg05yhffbTgUcOxDYfRQD7o2I+8272NBxesMt7KAAOT613gO5GkcrSAImW+8VkG+nA3qdaVmfqQw2eSn0cnSjMLJKK6t4TRNn8JWN2vDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EX2v0BSq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pobrn07c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B84C4CED1;
-	Thu, 13 Feb 2025 15:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EX2v0BSq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09F2C4CED1;
+	Thu, 13 Feb 2025 15:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459383;
-	bh=iAU/0u7R9zqkR0FRlcamCOcyUI0LhETO5fHZOVMQPIA=;
+	s=korg; t=1739459387;
+	bh=1Z0S3Bana4ifBDTTjiHrGdslO/fcrYU6VMonpaTeQVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pobrn07cclkfE/xrLOoBmTM8x1HFMLN1QlhWWyBniJam7jueRW9G62qQNmdenndpq
-	 O8VQkDj315maZ7/WoXfOaLuNaIBIHES5kMG9FGh2MHB1zWUrX/T1rIajuPbx+bZNSt
-	 jKBiKXPPc1scrdTkyFIYef3FJiQrlmjnuycQTX/g=
+	b=EX2v0BSq9d8w4RwVaI1iSLVlrhx+8HvuP0KuF7W1ei/hYl7gO5OvNr/M3wN0RhAx2
+	 X0MkSr1wRPh2Fxn6aO3R7oJb6Qon4S3Hn7/eYthLOj4+eMuQ+Oy8STDcji+pAsaO5Z
+	 CWgxveVotc/hRG+gjp6gKp0nc724XryrMuiOlurg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.13 249/443] ASoC: renesas: rz-ssi: Terminate all the DMA transactions
-Date: Thu, 13 Feb 2025 15:26:54 +0100
-Message-ID: <20250213142450.224205417@linuxfoundation.org>
+Subject: [PATCH 6.13 250/443] ASoC: renesas: rz-ssi: Add a check for negative sample_space
+Date: Thu, 13 Feb 2025 15:26:55 +0100
+Message-ID: <20250213142450.262617955@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,83 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 541011dc2d7c4c82523706f726f422a5e23cc86f upstream.
+commit 82a0a3e6f8c02b3236b55e784a083fa4ee07c321 upstream.
 
-The stop trigger invokes rz_ssi_stop() and rz_ssi_stream_quit().
-- The purpose of rz_ssi_stop() is to disable TX/RX, terminate DMA
-  transactions, and set the controller to idle.
-- The purpose of rz_ssi_stream_quit() is to reset the substream-specific
-  software data by setting strm->running and strm->substream appropriately.
+My static checker rule complains about this code.  The concern is that
+if "sample_space" is negative then the "sample_space >= runtime->channels"
+condition will not work as intended because it will be type promoted to a
+high unsigned int value.
 
-The function rz_ssi_is_stream_running() checks if both strm->substream and
-strm->running are valid and returns true if so. Its implementation is as
-follows:
+strm->fifo_sample_size is SSI_FIFO_DEPTH (32).  The SSIFSR_TDC_MASK is
+0x3f.  Without any further context it does seem like a reasonable warning
+and it can't hurt to add a check for negatives.
 
-static inline bool rz_ssi_is_stream_running(struct rz_ssi_stream *strm)
-{
-    return strm->substream && strm->running;
-}
-
-When the controller is configured in full-duplex mode (with both playback
-and capture active), the rz_ssi_stop() function does not modify the
-controller settings when called for the first substream in the full-duplex
-setup. Instead, it simply sets strm->running = 0 and returns if the
-companion substream is still running. The following code illustrates this:
-
-static int rz_ssi_stop(struct rz_ssi_priv *ssi, struct rz_ssi_stream *strm)
-{
-    strm->running = 0;
-
-    if (rz_ssi_is_stream_running(&ssi->playback) ||
-        rz_ssi_is_stream_running(&ssi->capture))
-        return 0;
-
-    // ...
-}
-
-The controller settings, along with the DMA termination (for the last
-stopped substream), are only applied when the last substream in the
-full-duplex setup is stopped.
-
-While applying the controller settings only when the last substream stops
-is not problematic, terminating the DMA operations for only one substream
-causes failures when starting and stopping full-duplex operations multiple
-times in a loop.
-
-To address this issue, call dmaengine_terminate_async() for both substreams
-involved in the full-duplex setup when the last substream in the setup is
-stopped.
-
-Fixes: 4f8cd05a4305 ("ASoC: sh: rz-ssi: Add full duplex support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Fixes: 03e786bd4341 ("ASoC: sh: Add RZ/G2L SSIF-2 driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20241210170953.2936724-5-claudiu.beznea.uj@bp.renesas.com
+Link: https://patch.msgid.link/e07c3dc5-d885-4b04-a742-71f42243f4fd@stanley.mountain
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/renesas/rz-ssi.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/soc/renesas/rz-ssi.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/sound/soc/renesas/rz-ssi.c
 +++ b/sound/soc/renesas/rz-ssi.c
-@@ -414,8 +414,12 @@ static int rz_ssi_stop(struct rz_ssi_pri
- 	rz_ssi_reg_mask_setl(ssi, SSICR, SSICR_TEN | SSICR_REN, 0);
+@@ -526,6 +526,8 @@ static int rz_ssi_pio_send(struct rz_ssi
+ 	sample_space = strm->fifo_sample_size;
+ 	ssifsr = rz_ssi_reg_readl(ssi, SSIFSR);
+ 	sample_space -= (ssifsr >> SSIFSR_TDC_SHIFT) & SSIFSR_TDC_MASK;
++	if (sample_space < 0)
++		return -EINVAL;
  
- 	/* Cancel all remaining DMA transactions */
--	if (rz_ssi_is_dma_enabled(ssi))
--		dmaengine_terminate_async(strm->dma_ch);
-+	if (rz_ssi_is_dma_enabled(ssi)) {
-+		if (ssi->playback.dma_ch)
-+			dmaengine_terminate_async(ssi->playback.dma_ch);
-+		if (ssi->capture.dma_ch)
-+			dmaengine_terminate_async(ssi->capture.dma_ch);
-+	}
- 
- 	rz_ssi_set_idle(ssi);
- 
+ 	/* Only add full frames at a time */
+ 	while (frames_left && (sample_space >= runtime->channels)) {
 
 
