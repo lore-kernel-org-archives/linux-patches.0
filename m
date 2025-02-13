@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5D95684;
-	Thu, 13 Feb 2025 15:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9122F14A605;
+	Thu, 13 Feb 2025 15:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459707; cv=none; b=RFxrJvue3Fyh8fu6O/XPdRqjoFTgf9ufbe25cA6aWI42NRQ9xX7kCur80M4U7jopYcEE9Rzl50/0M8YE0pl6jbUgI0C3BzZPn91Y0rPT8X7vhsF+YgQ11Ekpq+beAjDln+eydv64qZrDI76zF9k9Un6+BZkzeUXRnv1dgkLplck=
+	t=1739459710; cv=none; b=b3x9cNZUWlUd7pBEiAuXK0PE+FiiBUhFETRtsxipGhYJ5hxswedq87mL0k9UDXw/g1dTKVcAaiuzgml7N2lRMUsRp6tf7S8gGuN6bRZAz8qaHrNYkea+WERZZxdITAErwGYuAjwfQKvpbbnCLGYHhEnXhkdd4epVvmh53fPJe6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459707; c=relaxed/simple;
-	bh=cxFJd/LA8LqPjCdCc7Jq8KnGP48DfnY+g6nS52G1WgE=;
+	s=arc-20240116; t=1739459710; c=relaxed/simple;
+	bh=MtpgyGppXRL3aC0RYWxIc14A3cTfy/KIYyM7LntrWTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XiR46rX4tmv4ljAx8wLyo3AIYD5vqA8eHNK/pnfnQxPYK8g/R8IBEUELrH1EFtWAasib8dqIwrnhr0qWu123naSWIX1mXNjyQK02r0PrEmjxhgvNDXBkLBrqlx1MtmYHKUkDSrfqNM3qraSZygQzi6Pl7+RXui/T1VytBxoSkSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARWEKuGW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjQJte2VKdGpue5nTFULLwbweEm9GtpQD8JPFGaZtNdTyBxSVmnk+OMkRbXznTGM/S9DKzKK02GsQnrB415TRclH0JCfxdGFln4U09ClaOY7Bz9rt8Nw/Zhm1VXF9JPhoDLKQ6nu9mImYotBjGVc5AoZrVLESqCqrXe4tUUHkoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKqGOMJM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARWEKuGW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7D5C4CED1;
-	Thu, 13 Feb 2025 15:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKqGOMJM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023BCC4CEE4;
+	Thu, 13 Feb 2025 15:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459707;
-	bh=cxFJd/LA8LqPjCdCc7Jq8KnGP48DfnY+g6nS52G1WgE=;
+	s=korg; t=1739459710;
+	bh=MtpgyGppXRL3aC0RYWxIc14A3cTfy/KIYyM7LntrWTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ARWEKuGWF46rCO+Ywa0RE4uqzl/39Uaju58Bu7z96NUk7+XPSg2C1BJtJP1Mzhyl7
-	 ryCon30dMx+Nzk09WTl/bPCM70OlpH4gEa98dvWuqWawnTNadW7ZktcRA2hpO86AvV
-	 +Zev2dmRh/IprEZK7Uq3BZRF8tNrAWgSDp+4cbFM=
+	b=xKqGOMJMtG0tdg31rt1wNSbQcvF7edIKEWJqDc7ikC6+Cdw5DLgf7NPkfxdZ1W8+v
+	 ycCNI+BEj6YmkiO5THVy/Gwiavfq2bUpeyC7sKD8JPR1KGdeMucDljnT+mywsaixIu
+	 rHvhCdIRDrPvm8KJnF0lnB3AZi5UdhBaT79pKuT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Easwar Hariharan <eahariha@linux.microsoft.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.13 339/443] jiffies: Cast to unsigned long in secs_to_jiffies() conversion
-Date: Thu, 13 Feb 2025 15:28:24 +0100
-Message-ID: <20250213142453.706531432@linuxfoundation.org>
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>
+Subject: [PATCH 6.13 340/443] iommufd: Fix struct iommu_hwpt_pgfault init and padding
+Date: Thu, 13 Feb 2025 15:28:25 +0100
+Message-ID: <20250213142453.743345320@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,44 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Easwar Hariharan <eahariha@linux.microsoft.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit bb2784d9ab49587ba4fbff37a319fff2924db289 upstream.
+commit e721f619e3ec9bae08bf419c3944cf1e6966c821 upstream.
 
-While converting users of msecs_to_jiffies(), lkp reported that some range
-checks would always be true because of the mismatch between the implied int
-value of secs_to_jiffies() vs the unsigned long return value of the
-msecs_to_jiffies() calls it was replacing.
+The iommu_hwpt_pgfault is used to report IO page fault data to userspace,
+but iommufd_fault_fops_read was never zeroing its padding. This leaks the
+content of the kernel stack memory to userspace.
 
-Fix this by casting the secs_to_jiffies() input value to unsigned long.
+Also, the iommufd uAPI requires explicit padding and use of __aligned_u64
+to ensure ABI compatibility's with 32 bit.
 
-Fixes: b35108a51cf7ba ("jiffies: Define secs_to_jiffies()")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+pahole result, before:
+struct iommu_hwpt_pgfault {
+        __u32     flags;                /*     0     4 */
+        __u32     dev_id;               /*     4     4 */
+        __u32     pasid;                /*     8     4 */
+        __u32     grpid;                /*    12     4 */
+        __u32     perm;                 /*    16     4 */
+
+        /* XXX 4 bytes hole, try to pack */
+
+        __u64     addr;                 /*    24     8 */
+        __u32     length;               /*    32     4 */
+        __u32     cookie;               /*    36     4 */
+
+        /* size: 40, cachelines: 1, members: 8 */
+        /* sum members: 36, holes: 1, sum holes: 4 */
+        /* last cacheline: 40 bytes */
+};
+
+pahole result, after:
+struct iommu_hwpt_pgfault {
+        __u32      flags;                /*     0     4 */
+        __u32      dev_id;               /*     4     4 */
+        __u32      pasid;                /*     8     4 */
+        __u32      grpid;                /*    12     4 */
+        __u32      perm;                 /*    16     4 */
+        __u32      __reserved;           /*    20     4 */
+        __u64      addr __attribute__((__aligned__(8))); /*    24     8 */
+        __u32      length;               /*    32     4 */
+        __u32      cookie;               /*    36     4 */
+
+        /* size: 40, cachelines: 1, members: 9 */
+        /* forced alignments: 1 */
+        /* last cacheline: 40 bytes */
+} __attribute__((__aligned__(8)));
+
+Fixes: c714f15860fc ("iommufd: Add fault and response message definitions")
+Link: https://patch.msgid.link/r/20250120195051.2450-1-nicolinc@nvidia.com
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250130192701.99626-1-eahariha@linux.microsoft.com
-Closes: https://lore.kernel.org/oe-kbuild-all/202501301334.NB6NszQR-lkp@intel.com/
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/jiffies.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/iommufd/fault.c |    2 +-
+ include/uapi/linux/iommufd.h  |    4 +++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/jiffies.h b/include/linux/jiffies.h
-index ed945f42e064..0ea8c9887429 100644
---- a/include/linux/jiffies.h
-+++ b/include/linux/jiffies.h
-@@ -537,7 +537,7 @@ static __always_inline unsigned long msecs_to_jiffies(const unsigned int m)
-  *
-  * Return: jiffies value
-  */
--#define secs_to_jiffies(_secs) ((_secs) * HZ)
-+#define secs_to_jiffies(_secs) (unsigned long)((_secs) * HZ)
- 
- extern unsigned long __usecs_to_jiffies(const unsigned int u);
- #if !(USEC_PER_SEC % HZ)
--- 
-2.48.1
-
+--- a/drivers/iommu/iommufd/fault.c
++++ b/drivers/iommu/iommufd/fault.c
+@@ -247,7 +247,7 @@ static ssize_t iommufd_fault_fops_read(s
+ {
+ 	size_t fault_size = sizeof(struct iommu_hwpt_pgfault);
+ 	struct iommufd_fault *fault = filep->private_data;
+-	struct iommu_hwpt_pgfault data;
++	struct iommu_hwpt_pgfault data = {};
+ 	struct iommufd_device *idev;
+ 	struct iopf_group *group;
+ 	struct iopf_fault *iopf;
+--- a/include/uapi/linux/iommufd.h
++++ b/include/uapi/linux/iommufd.h
+@@ -868,6 +868,7 @@ enum iommu_hwpt_pgfault_perm {
+  * @pasid: Process Address Space ID
+  * @grpid: Page Request Group Index
+  * @perm: Combination of enum iommu_hwpt_pgfault_perm
++ * @__reserved: Must be 0.
+  * @addr: Fault address
+  * @length: a hint of how much data the requestor is expecting to fetch. For
+  *          example, if the PRI initiator knows it is going to do a 10MB
+@@ -883,7 +884,8 @@ struct iommu_hwpt_pgfault {
+ 	__u32 pasid;
+ 	__u32 grpid;
+ 	__u32 perm;
+-	__u64 addr;
++	__u32 __reserved;
++	__aligned_u64 addr;
+ 	__u32 length;
+ 	__u32 cookie;
+ };
 
 
