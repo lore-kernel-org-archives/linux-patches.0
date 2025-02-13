@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958431487FA;
-	Thu, 13 Feb 2025 15:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC9026B09D;
+	Thu, 13 Feb 2025 15:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459109; cv=none; b=Nvg+zNbEqDVMjkkXaiOWasqFEb4nkmIaTNYbmg4/1o/8L3w5lwBw8fUyobFOfqTNWMesZFU2Wph8f3ZMORjqLWUUDFsh/g/IfD3ogMg/jbms8S2agPekdP2ImUrdz8AQM9yxaNVyGluiLFGj9j78z0MgJEt4RWIU1JDjbxFnnqk=
+	t=1739459113; cv=none; b=mNHhlXizKwxyyYmTVqGL4cNM/Zk/FrqHF/fca67Y4bUh9Mb5LbN50ufV+2OuBS6TbSf6QcRtv8gQRjsmWSn9ZgzcjGeKJPb7vaZ/jKqZGzOZFRcmnOF5ybceLMDq3noQbixVdkpwzbfLv2rovmjgOrAmtDNWwc2C1j/E1iBctco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459109; c=relaxed/simple;
-	bh=RqW2aCIabCdVje3s7UK/cunJAZgoLEE7LH/UrxslUm0=;
+	s=arc-20240116; t=1739459113; c=relaxed/simple;
+	bh=sNxI/eJsvevmCjS4mRG3SH4X2kna/IL/2j3V/pipYoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NkQpYazOh2YiI7x/sW41BU3dZ2T/pq085AZewr6fq29ys3Qz5xvPVcyuxO/hGTAcWFpNUtKcz0u43UMqOZ0/uqBs+ADKPzL04nZahMqZAfviEkbOpItmVgC4WgH4nXfBFO59PCW3ZYPQAk4SXyl5rSU30M+pG4RCLoQryC8xLf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwvN0m3S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q9cGGnrdiYVvikFg5SO1z9sHhqURiT7AOVNiQ1fwSRhVFa8087Px58bnkhqxffvuDG0QyiDfB/WZZRD7eg6JCMsHtRHipOyAMtQVWqVJh+anpiRIXl6s1Mr2TNCmUfAyMkNcbRYr2i2sP8bU/n21fwaIydYZCK86BxRkPXB2+VQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kikqbwv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwvN0m3S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E69C4CED1;
-	Thu, 13 Feb 2025 15:05:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kikqbwv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F898C4CED1;
+	Thu, 13 Feb 2025 15:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459109;
-	bh=RqW2aCIabCdVje3s7UK/cunJAZgoLEE7LH/UrxslUm0=;
+	s=korg; t=1739459112;
+	bh=sNxI/eJsvevmCjS4mRG3SH4X2kna/IL/2j3V/pipYoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwvN0m3SVqUt6a9UxBQCnrkdSTFI6u6xnYuWXXFSj7567qNFmsymHeGNTRZpI+0Mo
-	 whjjlerVnehPT+rUQYCRELddynaZow5plQ86KsxFplEyNMkiRBVln3mWqw+MQcahqc
-	 JSWklfXfzByduW6IbsBNzHXaiGY7wpKgheuwAl8I=
+	b=2kikqbwvgJ2YpDuoAoPFNpICKKA40hBxBJngRsM9ArMq02FgTN049dtb0HspFGoXs
+	 EHIiyJoe4KFiCzkMUw995L40TVubqVSsEswnM99fkVg8UxAMdi4D4lI9Cy5lA9Y7mZ
+	 inKZPO5FaPHYt89bBDs5obczCb1rpsiqyG4vdm2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Stas Sergeev <stsp2@yandex.ru>,
+	Joe Botha <joe@atomic.ac>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 138/443] tun: revert fix group permission check
-Date: Thu, 13 Feb 2025 15:25:03 +0100
-Message-ID: <20250213142445.926283539@linuxfoundation.org>
+Subject: [PATCH 6.13 139/443] net: sched: Fix truncation of offloaded action statistics
+Date: Thu, 13 Feb 2025 15:25:04 +0100
+Message-ID: <20250213142445.964700838@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -53,73 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit a70c7b3cbc0688016810bb2e0b9b8a0d6a530045 ]
+[ Upstream commit 811b8f534fd85e17077bd2ac0413bcd16cc8fb9b ]
 
-This reverts commit 3ca459eaba1bf96a8c7878de84fa8872259a01e3.
+In case of tc offload, when user space queries the kernel for tc action
+statistics, tc will query the offloaded statistics from device drivers.
+Among other statistics, drivers are expected to pass the number of
+packets that hit the action since the last query as a 64-bit number.
 
-The blamed commit caused a regression when neither tun->owner nor
-tun->group is set. This is intended to be allowed, but now requires
-CAP_NET_ADMIN.
+Unfortunately, tc treats the number of packets as a 32-bit number,
+leading to truncation and incorrect statistics when the number of
+packets since the last query exceeds 0xffffffff:
 
-Discussion in the referenced thread pointed out that the original
-issue that prompted this patch can be resolved in userspace.
+$ tc -s filter show dev swp2 ingress
+filter protocol all pref 1 flower chain 0
+filter protocol all pref 1 flower chain 0 handle 0x1
+  skip_sw
+  in_hw in_hw_count 1
+        action order 1: mirred (Egress Redirect to device swp1) stolen
+        index 1 ref 1 bind 1 installed 58 sec used 0 sec
+        Action statistics:
+        Sent 1133877034176 bytes 536959475 pkt (dropped 0, overlimits 0 requeues 0)
+[...]
 
-The relaxed access control may also make a device accessible when it
-previously wasn't, while existing users may depend on it to not be.
+According to the above, 2111-byte packets were redirected which is
+impossible as only 64-byte packets were transmitted and the MTU was
+1500.
 
-This is a clean pure git revert, except for fixing the indentation on
-the gid_valid line that checkpatch correctly flagged.
+Fix by treating packets as a 64-bit number:
 
-Fixes: 3ca459eaba1b ("tun: fix group permission check")
-Link: https://lore.kernel.org/netdev/CAFqZXNtkCBT4f+PwyVRmQGoT3p1eVa01fCG_aNtpt6dakXncUg@mail.gmail.com/
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Cc: Ondrej Mosnacek <omosnace@redhat.com>
-Cc: Stas Sergeev <stsp2@yandex.ru>
-Link: https://patch.msgid.link/20250204161015.739430-1-willemdebruijn.kernel@gmail.com
+$ tc -s filter show dev swp2 ingress
+filter protocol all pref 1 flower chain 0
+filter protocol all pref 1 flower chain 0 handle 0x1
+  skip_sw
+  in_hw in_hw_count 1
+        action order 1: mirred (Egress Redirect to device swp1) stolen
+        index 1 ref 1 bind 1 installed 61 sec used 0 sec
+        Action statistics:
+        Sent 1370624380864 bytes 21416005951 pkt (dropped 0, overlimits 0 requeues 0)
+[...]
+
+Which shows that only 64-byte packets were redirected (1370624380864 /
+21416005951 = 64).
+
+Fixes: 380407023526 ("net/sched: Enable netdev drivers to update statistics of offloaded actions")
+Reported-by: Joe Botha <joe@atomic.ac>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250204123839.1151804-1-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ include/net/sch_generic.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 28624cca91f8d..acf96f2624887 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -574,18 +574,14 @@ static u16 tun_select_queue(struct net_device *dev, struct sk_buff *skb,
- 	return ret;
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 1e6324f0d4efd..24e48af7e8f74 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -851,7 +851,7 @@ static inline int qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
  }
  
--static inline bool tun_capable(struct tun_struct *tun)
-+static inline bool tun_not_capable(struct tun_struct *tun)
+ static inline void _bstats_update(struct gnet_stats_basic_sync *bstats,
+-				  __u64 bytes, __u32 packets)
++				  __u64 bytes, __u64 packets)
  {
- 	const struct cred *cred = current_cred();
- 	struct net *net = dev_net(tun->dev);
- 
--	if (ns_capable(net->user_ns, CAP_NET_ADMIN))
--		return 1;
--	if (uid_valid(tun->owner) && uid_eq(cred->euid, tun->owner))
--		return 1;
--	if (gid_valid(tun->group) && in_egroup_p(tun->group))
--		return 1;
--	return 0;
-+	return ((uid_valid(tun->owner) && !uid_eq(cred->euid, tun->owner)) ||
-+		(gid_valid(tun->group) && !in_egroup_p(tun->group))) &&
-+		!ns_capable(net->user_ns, CAP_NET_ADMIN);
- }
- 
- static void tun_set_real_num_queues(struct tun_struct *tun)
-@@ -2782,7 +2778,7 @@ static int tun_set_iff(struct net *net, struct file *file, struct ifreq *ifr)
- 		    !!(tun->flags & IFF_MULTI_QUEUE))
- 			return -EINVAL;
- 
--		if (!tun_capable(tun))
-+		if (tun_not_capable(tun))
- 			return -EPERM;
- 		err = security_tun_dev_open(tun->security);
- 		if (err < 0)
+ 	u64_stats_update_begin(&bstats->syncp);
+ 	u64_stats_add(&bstats->bytes, bytes);
 -- 
 2.39.5
 
