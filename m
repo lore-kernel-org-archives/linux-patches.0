@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756D526B087;
-	Thu, 13 Feb 2025 15:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F7514A605;
+	Thu, 13 Feb 2025 15:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460579; cv=none; b=e479uKdkg1M+6SFMQ8PAolL+kaEkYORLyJDmuZnxYUa2+Hva8QuxpBlzfcf3Zo2Sqsbk8hRnij/kjR6o+ZmO+8NsV1XdJmlGK7HzdDLrG+S+iPOrvf0EHqzon8zayxJqc8k2YXSQrN6BKi/fkpEjnukJEPbIQYI4lCeiKdcfUAE=
+	t=1739460582; cv=none; b=Haed0OmdFYbr5D4FkcgaftJsk8o7HeUGUEMEIp/4aeMdROkvINC7l4juYJludIUnCs3MMNrz70b79mEO5seKBmmRaOxQ9YsTpquKBBC71+DKkaE7+0fgln/GWYNw4v/L32GsPRu6AGmRBpLzXSIraMXjfSw+rzcsV3abvCUxLJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460579; c=relaxed/simple;
-	bh=Bwy+9OZ8v3ErQmb7rQHxioH5U6KGxhBQVI5ieHJBZas=;
+	s=arc-20240116; t=1739460582; c=relaxed/simple;
+	bh=A8TwQ8rCjc+WS4aOGH40voXoYx2EpNF8wSiqyk2uRGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fH8C4tqdAsAm5gjccfrpxtWBedTcHwYX02n/5gutMJuQRsyA+/VyQA33eDf8hWGlTfmiYgfvVVv+kwJoXkCPTwLa8aUrytJGQVie4+rj0EbudU/4GDfdRg+hQgpi/rAYkhtBopvFXJ5T7I30GbCo1iYNEWtOHLvMX+dtv2MZmRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUEqaOuS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CgdGUad8WaYsheMAlNC9Kfj4C6Bmi8lHidxZ3LkoX2MZh9JCIJjcLHK460u8ZT5UtHTAXgDXidFI15drPj8yEkbkGRqtpzW88wy5mkrcaE/DSGUHJm1AVRXT7UUH43IhRWDxKEuROUkWe7EVEhjb5VOl5v50cE36NMfdyNuBC1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XE3S2bIv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUEqaOuS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D963DC4CED1;
-	Thu, 13 Feb 2025 15:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XE3S2bIv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B6FC4CED1;
+	Thu, 13 Feb 2025 15:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460579;
-	bh=Bwy+9OZ8v3ErQmb7rQHxioH5U6KGxhBQVI5ieHJBZas=;
+	s=korg; t=1739460582;
+	bh=A8TwQ8rCjc+WS4aOGH40voXoYx2EpNF8wSiqyk2uRGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oUEqaOuSeptcffyNLICC0TOxqq+q6a2fdLOk++SPL2ieTilsDPYYNsSksrjN7JRl/
-	 qLsp90OLAfhcHpQmDXkSk2xzHrHXQgoU08HWt3gErtzM7+EubPOUzHcbdjOG+DKxgP
-	 xeKLEkJ5rQtJHMj3WdPwN2O/TLOcShnlFky12zUU=
+	b=XE3S2bIvpMmznf4e6ru8Dy+nH97nQg1vvay52h5VZULMyG+bPRfsM7r2DxGGcfLLn
+	 zCnx9gKvJGyWb6yemRrPgtNh9QO6de2K4DhNMdyoMQqJZpK3J5885kCMgAvNhGdsX4
+	 xAparUCvjE6wI9sqg1o31t6Kys0MDlSWT2VAkgnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.6 135/273] usb: gadget: f_tcm: Dont prepare BOT write request twice
-Date: Thu, 13 Feb 2025 15:28:27 +0100
-Message-ID: <20250213142412.671597470@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 153/273] block: dont revert iter for -EIOCBQUEUED
+Date: Thu, 13 Feb 2025 15:28:45 +0100
+Message-ID: <20250213142413.386309560@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -49,55 +49,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 94d9bf671ae314cacc2d7bf96bd233b4abc7cede upstream.
+commit b13ee668e8280ca5b07f8ce2846b9957a8a10853 upstream.
 
-The duplicate kmalloc here is causing memory leak. The request
-preparation in bot_send_write_request is also done in
-usbg_prepare_w_request. Remove the duplicate work.
+blkdev_read_iter() has a few odd checks, like gating the position and
+count adjustment on whether or not the result is bigger-than-or-equal to
+zero (where bigger than makes more sense), and not checking the return
+value of blkdev_direct_IO() before doing an iov_iter_revert(). The
+latter can lead to attempting to revert with a negative value, which
+when passed to iov_iter_revert() as an unsigned value will lead to
+throwing a WARN_ON() because unroll is bigger than MAX_RW_COUNT.
 
-Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Be sane and don't revert for -EIOCBQUEUED, like what is done in other
+spots.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/f4f26c3d586cde0d46f8c3bcb4e8ae32311b650d.1733876548.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_tcm.c |   17 -----------------
- 1 file changed, 17 deletions(-)
+ block/fops.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -245,7 +245,6 @@ static int bot_send_write_request(struct
- {
- 	struct f_uas *fu = cmd->fu;
- 	struct se_cmd *se_cmd = &cmd->se_cmd;
--	struct usb_gadget *gadget = fuas_to_gadget(fu);
- 	int ret;
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -718,11 +718,12 @@ static ssize_t blkdev_read_iter(struct k
+ 		file_accessed(iocb->ki_filp);
  
- 	init_completion(&cmd->write_complete);
-@@ -256,22 +255,6 @@ static int bot_send_write_request(struct
- 		return -EINVAL;
+ 		ret = blkdev_direct_IO(iocb, to);
+-		if (ret >= 0) {
++		if (ret > 0) {
+ 			iocb->ki_pos += ret;
+ 			count -= ret;
+ 		}
+-		iov_iter_revert(to, count - iov_iter_count(to));
++		if (ret != -EIOCBQUEUED)
++			iov_iter_revert(to, count - iov_iter_count(to));
+ 		if (ret < 0 || !count)
+ 			goto reexpand;
  	}
- 
--	if (!gadget->sg_supported) {
--		cmd->data_buf = kmalloc(se_cmd->data_length, GFP_KERNEL);
--		if (!cmd->data_buf)
--			return -ENOMEM;
--
--		fu->bot_req_out->buf = cmd->data_buf;
--	} else {
--		fu->bot_req_out->buf = NULL;
--		fu->bot_req_out->num_sgs = se_cmd->t_data_nents;
--		fu->bot_req_out->sg = se_cmd->t_data_sg;
--	}
--
--	fu->bot_req_out->complete = usbg_data_write_cmpl;
--	fu->bot_req_out->length = se_cmd->data_length;
--	fu->bot_req_out->context = cmd;
--
- 	ret = usbg_prepare_w_request(cmd, fu->bot_req_out);
- 	if (ret)
- 		goto cleanup;
 
 
