@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05ED2222CA;
-	Thu, 13 Feb 2025 14:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C0D2222C0;
+	Thu, 13 Feb 2025 14:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457496; cv=none; b=JJtisBBeLQLE/WVvXAXnNE7bxmorpIq0P2c5wt5/G/CjvTFP6TPerW8tksR0z5p9Moq2k5o93wafVDmpnHhz5Kn4OIfOD0mUp+kXni8iiaaihtKT/tERaqLpRUle/gvwFikFrjn2GdJebn2GZAMfLAswM3teHN9JHEsm8BHdkLE=
+	t=1739457499; cv=none; b=dYvrlOwVgoB2+fdKYCCXEWeD6+C6HjlC30q10HTDqcKWjL78/u0JL1slW2TcFckjHLk8Bhpc4B+VEqPJNaPX9/Tz6JvGL0NH8gP33CTuX4JY2jflrrij/ve7qbpFR+Odfomuro7uzHJfGIlyFFgIcvRY7SxkZw2HgZ2YLJxDfts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457496; c=relaxed/simple;
-	bh=QnsHu11J0CjlTZQS2ksfBzf4Ce8EGUsoCSrfEgzDNbw=;
+	s=arc-20240116; t=1739457499; c=relaxed/simple;
+	bh=UtQKBUMTwoHgZNhBoM/QgFj+omvDywXz319wGUt0ifU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R1wQTttC5d4W/SuVFmF8ljcykTkOOLoMfHySu0dDthBTkzoInJyZpacD3HOqIy7chq6hwRmTlbwy7mbS1LobMZx3g+uEZiYJyNnDYNGj45C+LGGGvbySFxWxdhB4il2iYkeko5x0RbLkWpgaD6VBP3i1NRagq2FHPDZdZhneZr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQJYqlj7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OpPm+JiGlIAVD9vdc8xll1QgWwURIj0/wtoPHlqHBwhUSLxY2f0OuY7R34bJrIvtAegldCJ6m/GmXKQ5bMzrPM7L2ZWLNpaDkGocUr7TMflFKu47aqLOwZ3nR8j5cjpu6yFvbq1gPFPMh4OlojMakwYOLtzrYSTdNFqpn/v/VuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XOtDaG/2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQJYqlj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4F5C4CED1;
-	Thu, 13 Feb 2025 14:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XOtDaG/2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC0EC4CED1;
+	Thu, 13 Feb 2025 14:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457495;
-	bh=QnsHu11J0CjlTZQS2ksfBzf4Ce8EGUsoCSrfEgzDNbw=;
+	s=korg; t=1739457499;
+	bh=UtQKBUMTwoHgZNhBoM/QgFj+omvDywXz319wGUt0ifU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQJYqlj74qQeVr6OL3eJUiIVerOx6ft0BAGtkm9UvkFfD+b824U3jL+b+OIHRTxm6
-	 9/kKlBfaLa0/DmW+XK/VJoKrUpj9qTmLvOJZlR2BJJKKFfKnW4Ms7eJNAGF71C/zhG
-	 BVqlLKeV47z+mR7tu3KUgai5cvGXSHa7Yka06dBY=
+	b=XOtDaG/2KrSmljV/T5ROWGJzNmt0R1A7D1vkt2CEye9U4sRyPgzKhCQEEw90Fyqb7
+	 puDAB1M5bX7n41FB0HFnUiBmkMjKAylJd/aupBsIgZZNVKoK2p6j5DOrk3wfgvqT/P
+	 UvBlcQFzzonP9GRxA1odZMxJVlFzFVERI8LOqtNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Florac <eflorac@intellique.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 095/422] xfs: dont over-report free space or inodes in statvfs
-Date: Thu, 13 Feb 2025 15:24:04 +0100
-Message-ID: <20250213142440.219957732@linuxfoundation.org>
+	Sean Anderson <sean.anderson@linux.dev>,
+	John Ogness <john.ogness@linutronix.de>
+Subject: [PATCH 6.12 096/422] tty: xilinx_uartps: split sysrq handling
+Date: Thu, 13 Feb 2025 15:24:05 +0100
+Message-ID: <20250213142440.260283908@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,85 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 4b8d867ca6e2fc6d152f629fdaf027053b81765a ]
+commit b06f388994500297bb91be60ffaf6825ecfd2afe upstream.
 
-Emmanual Florac reports a strange occurrence when project quota limits
-are enabled, free space is lower than the remaining quota, and someone
-runs statvfs:
+lockdep detects the following circular locking dependency:
 
-  # mkfs.xfs -f /dev/sda
-  # mount /dev/sda /mnt -o prjquota
-  # xfs_quota  -x -c 'limit -p bhard=2G 55' /mnt
-  # mkdir /mnt/dir
-  # xfs_io -c 'chproj 55' -c 'chattr +P' -c 'stat -vvvv' /mnt/dir
-  # fallocate -l 19g /mnt/a
-  # df /mnt /mnt/dir
-  Filesystem      Size  Used Avail Use% Mounted on
-  /dev/sda         20G   20G  345M  99% /mnt
-  /dev/sda        2.0G     0  2.0G   0% /mnt
+CPU 0                      CPU 1
+========================== ============================
+cdns_uart_isr()            printk()
+  uart_port_lock(port)       console_lock()
+			     cdns_uart_console_write()
+                               if (!port->sysrq)
+                                 uart_port_lock(port)
+  uart_handle_break()
+    port->sysrq = ...
+  uart_handle_sysrq_char()
+    printk()
+      console_lock()
 
-I think the bug here is that xfs_fill_statvfs_from_dquot unconditionally
-assigns to f_bfree without checking that the filesystem has enough free
-space to fill the remaining project quota.  However, this is a
-longstanding behavior of xfs so it's unclear what to do here.
+The fixed commit attempts to avoid this situation by only taking the
+port lock in cdns_uart_console_write if port->sysrq unset. However, if
+(as shown above) cdns_uart_console_write runs before port->sysrq is set,
+then it will try to take the port lock anyway. This may result in a
+deadlock.
 
-Cc: <stable@vger.kernel.org> # v2.6.18
-Fixes: 932f2c323196c2 ("[XFS] statvfs component of directory/project quota support, code originally by Glen.")
-Reported-by: Emmanuel Florac <eflorac@intellique.com>
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by splitting sysrq handling into two parts. We use the prepare
+helper under the port lock and defer handling until we release the lock.
+
+Fixes: 74ea66d4ca06 ("tty: xuartps: Improve sysrq handling")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Cc: stable@vger.kernel.org # c980248179d: serial: xilinx_uartps: Use port lock wrappers
+Acked-by: John Ogness <john.ogness@linutronix.de>
+Link: https://lore.kernel.org/r/20250110213822.2107462-1-sean.anderson@linux.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_qm_bhv.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/tty/serial/xilinx_uartps.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/fs/xfs/xfs_qm_bhv.c b/fs/xfs/xfs_qm_bhv.c
-index 262f035b15c99..ed1d597c30ca2 100644
---- a/fs/xfs/xfs_qm_bhv.c
-+++ b/fs/xfs/xfs_qm_bhv.c
-@@ -32,21 +32,28 @@ xfs_fill_statvfs_from_dquot(
- 	limit = blkres->softlimit ?
- 		blkres->softlimit :
- 		blkres->hardlimit;
--	if (limit && statp->f_blocks > limit) {
--		statp->f_blocks = limit;
--		statp->f_bfree = statp->f_bavail =
--			(statp->f_blocks > blkres->reserved) ?
--			 (statp->f_blocks - blkres->reserved) : 0;
-+	if (limit) {
-+		uint64_t	remaining = 0;
-+
-+		if (limit > blkres->reserved)
-+			remaining = limit - blkres->reserved;
-+
-+		statp->f_blocks = min(statp->f_blocks, limit);
-+		statp->f_bfree = min(statp->f_bfree, remaining);
-+		statp->f_bavail = min(statp->f_bavail, remaining);
- 	}
+--- a/drivers/tty/serial/xilinx_uartps.c
++++ b/drivers/tty/serial/xilinx_uartps.c
+@@ -287,7 +287,7 @@ static void cdns_uart_handle_rx(void *de
+ 				continue;
+ 		}
  
- 	limit = dqp->q_ino.softlimit ?
- 		dqp->q_ino.softlimit :
- 		dqp->q_ino.hardlimit;
--	if (limit && statp->f_files > limit) {
--		statp->f_files = limit;
--		statp->f_ffree =
--			(statp->f_files > dqp->q_ino.reserved) ?
--			 (statp->f_files - dqp->q_ino.reserved) : 0;
-+	if (limit) {
-+		uint64_t	remaining = 0;
-+
-+		if (limit > dqp->q_ino.reserved)
-+			remaining = limit - dqp->q_ino.reserved;
-+
-+		statp->f_files = min(statp->f_files, limit);
-+		statp->f_ffree = min(statp->f_ffree, remaining);
- 	}
+-		if (uart_handle_sysrq_char(port, data))
++		if (uart_prepare_sysrq_char(port, data))
+ 			continue;
+ 
+ 		if (is_rxbs_support) {
+@@ -495,7 +495,7 @@ static irqreturn_t cdns_uart_isr(int irq
+ 	    !(readl(port->membase + CDNS_UART_CR) & CDNS_UART_CR_RX_DIS))
+ 		cdns_uart_handle_rx(dev_id, isrstatus);
+ 
+-	uart_port_unlock(port);
++	uart_unlock_and_check_sysrq(port);
+ 	return IRQ_HANDLED;
  }
  
--- 
-2.39.5
-
+@@ -1380,9 +1380,7 @@ static void cdns_uart_console_write(stru
+ 	unsigned int imr, ctrl;
+ 	int locked = 1;
+ 
+-	if (port->sysrq)
+-		locked = 0;
+-	else if (oops_in_progress)
++	if (oops_in_progress)
+ 		locked = uart_port_trylock_irqsave(port, &flags);
+ 	else
+ 		uart_port_lock_irqsave(port, &flags);
 
 
