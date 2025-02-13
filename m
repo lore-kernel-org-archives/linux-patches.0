@@ -1,93 +1,107 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D84A16B3A1;
-	Thu, 13 Feb 2025 15:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E927716B3A1
+	for <patches@lists.linux.dev>; Thu, 13 Feb 2025 15:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460783; cv=none; b=lVUqu1udiHudvVk5+vNhAY/soLmP3hGiAwe9fBAFFe0RmajqrNwLKD+y3KBPNK4z7lTf0/rc9QO6UZu3yoqSLrlsjLSzRzx68R+3N+nSskgdtqtuAO/7E4LRD6ST02xMlGwU3vZkYB5pUCRssLr9o7Qw5liO7pXKlves/UOGYYE=
+	t=1739460784; cv=none; b=ZmUQwT6La6N18cbEnKIHFMfolvOKQ0JEMkbgx1BCo0op1TFByod0MdvHVarnO11ZGE9FQ1OAqlj7rqyNioxmuWEV7hAKicsoueqxJ9jv6lSoXbxbUzY9joC0qrwHHyb1Alc0pXKBmKAgWbZbeDfLNQB+8znaaetWm3w01B5JSWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460783; c=relaxed/simple;
-	bh=XbGh7qG8DnB1Q3tzNf8RsqsbYtsOupeNSkwN/Sd51YE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lir/jQTtRRHdpL3F5yTC6JEhejJ1RWuOEBypttpj73hJ67KhqQob62GB7/pnAnkNabNcbLWUqJrqcbTGblLTeUgA0/KBIwiz+MPfCfAtUITNAZerFX/1mMC9tav6vqTeiF/l+pzBqGc3hIp2FYjzlGeYLr8099v67ewCvoRz9nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kh26isBC; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1739460784; c=relaxed/simple;
+	bh=t8QMv5hVTQ+R0IqU8p9CIOvH1ExAEP3a6Vf8v5IaDu0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nwBFaZkdW1J/PlPyP+BmZFLXz+yWNPvTB71Epa5iLXBk6vBM1m4/G36f5fvZitjFaIzBdzsZxHx0xXdUx2nN95Q3Hp7YGzmxgiPtCYqx0G3I+KGlObbBtUZIAW0+zDKBINKmXS6tKED+dkZbl59ndLde3g/isscwl7mXl/o0A5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zu0rm2RY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kh26isBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0453C4CEE5;
-	Thu, 13 Feb 2025 15:33:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460783;
-	bh=XbGh7qG8DnB1Q3tzNf8RsqsbYtsOupeNSkwN/Sd51YE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kh26isBCfXhzroCEh/pFv6Rin6UihUSElkNvtRxuLSGyYeTVH1poZE7xPgXjo5fOZ
-	 jT5bIiU2RuwPzK8odDQj6jYKvWnbTpCNxIHTly4cDklRbT8LAaFpcYkN7x+yA5iM6y
-	 pS5L/SSvaYzJqrR0JOaJ8K/9Y4+r7/pG7SUj3uRw=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Cosmin Tanislav <demonsingur@gmail.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.6 204/273] media: mc: fix endpoint iteration
-Date: Thu, 13 Feb 2025 15:29:36 +0100
-Message-ID: <20250213142415.382718019@linuxfoundation.org>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
-References: <20250213142407.354217048@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zu0rm2RY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9432CC4CEEE
+	for <patches@lists.linux.dev>; Thu, 13 Feb 2025 15:33:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739460783;
+	bh=t8QMv5hVTQ+R0IqU8p9CIOvH1ExAEP3a6Vf8v5IaDu0=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=Zu0rm2RYHRQAFLzKn4r1HNUMm8YFtDy2MYYtFUpabmqvXs66874sy8GDK5fdm9ZHY
+	 w5QC+it44v0XhZy8u8SLZWzM+Uo8+2eibnrdhjONcomdz+gkA8LKnLBcvxYEa3awEK
+	 4waS3GORPbRaeRFxe5NCxvQ6EoBVx5VNLpueKTNBqvdUV4k8fp5uUc1dCq0vmuQ03H
+	 QuGWQedP5GwbmxOZI29HQuY93RVX6y37ArJWxIhnXpzsKFhWpzXmyLol1k+UYuNb0k
+	 Ggp6cSPIzMlGEwTKeAOmsHe+NmdczDjA7zD9K3RavX3gAEnscHDnItccaRUyQHOAJp
+	 yCkILzAzWDACg==
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-543cc81ddebso1113704e87.1
+        for <patches@lists.linux.dev>; Thu, 13 Feb 2025 07:33:03 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXWqCNG74pVD+tBdnERFgpBcVyJhWSw5gvuFAFRDRRTUt3/vBIO2530LTcaz/VHV0esIyCV2kCe@lists.linux.dev
+X-Gm-Message-State: AOJu0YyRMecS/ywjzzHafXHkfS0lGfSOIdvt8HziiO7qIi9oayIGBRKl
+	gik+CNcUoapS0BTf6b3jrz6exXlTyHkh5axahwVYK/zYlrxHhaK24207utCvh5dvNWehgHHZ0hM
+	EAdnohqULB/Z8eSO63HZ4t+2WoOU=
+X-Google-Smtp-Source: AGHT+IFn/vzxAa1gLojO/0597IUwEJuHjE+ZMbhdN6Wkn18KpSJ16vMq38P8PaQcagI5saZOuyRj6jrZinDRQOOBjFs=
+X-Received: by 2002:a05:6512:1111:b0:545:6cf:6f3e with SMTP id
+ 2adb3069b0e04-5451dde81aemr1356458e87.49.1739460781858; Thu, 13 Feb 2025
+ 07:33:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250210163732.281786-1-ojeda@kernel.org>
+In-Reply-To: <20250210163732.281786-1-ojeda@kernel.org>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Thu, 13 Feb 2025 16:32:50 +0100
+X-Gmail-Original-Message-ID: <CAMj1kXHgjwHkLsJkM3H2pjEPXDvD80V+XhH_Gsjv8N4Cf6Bvkw@mail.gmail.com>
+X-Gm-Features: AWEUYZmhbBgIMQcrZGkDUPbbIKzS9-BDPJ0yLZaCMkeMRCLb0heF4J8bVRc0_r0
+Message-ID: <CAMj1kXHgjwHkLsJkM3H2pjEPXDvD80V+XhH_Gsjv8N4Cf6Bvkw@mail.gmail.com>
+Subject: Re: [PATCH] arm64: rust: clean Rust 1.85.0 warning using softfloat target
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, 
+	moderated for non-subscribers <linux-arm-kernel@lists.infradead.org>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, 
+	Matthew Maurer <mmaurer@google.com>, Ralf Jung <post@ralfj.de>, 
+	Jubilee Young <workingjubilee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+On Mon, 10 Feb 2025 at 17:38, Miguel Ojeda <ojeda@kernel.org> wrote:
+>
+> Starting with Rust 1.85.0 (to be released 2025-02-20), `rustc` warns
+> [1] about disabling neon in the aarch64 hardfloat target:
+>
+>     warning: target feature `neon` cannot be toggled with
+>              `-Ctarget-feature`: unsound on hard-float targets
+>              because it changes float ABI
+>       |
+>       = note: this was previously accepted by the compiler but
+>               is being phased out; it will become a hard error
+>               in a future release!
+>       = note: for more information, see issue #116344
+>               <https://github.com/rust-lang/rust/issues/116344>
+>
+> Thus, instead, use the softfloat target instead.
+>
 
-------------------
+We have to carefully make the distinction here between codegen and ABI.
 
-From: Cosmin Tanislav <demonsingur@gmail.com>
+The arm64 C code in the kernel is built with -mgeneral-regs-only
+because FP/SIMD registers are not preserved/restored like GPRs, and so
+they must be used only in carefully controlled circumstances, i.e., in
+assembler code called under kernel_neon_begin()/kernel_neon_end()
+[modulo some exceptions related to NEON intrinsics]
 
-commit fb2bd86270cd0ad004f4c614ba4f8c63a5720e25 upstream.
+This does not impact the ABI, which remains hard-float [this was the
+only arm64 calling convention that existed until about a year ago].
+Any function that takes or returns floats or doubles (or NEON
+intrinsic types) is simply rejected by the compiler.
 
-When creating links from a subdev to a sink, the current logic tries to
-iterate over the endpoints of dev's fwnode.
+Changing this to softfloat for Rust modifies this calling convention,
+i.e., it will result in floats and doubles being accepted as function
+parameters and return values, but there is no code in the kernel that
+actually supports/implements that. Also, it should be clarified
+whether using a softfloat ABI permits the compiler to use FP/SIMD
+registers in codegen. We might still need -Ctarget-feature="-neon"
+here afaict.
 
-This might not be correct when the subdev uses a different fwnode
-compared to the dev's fwnode.
-
-If, when registering, the subdev's fwnode is not set, the code inside
-v4l2_async_register_subdev will set it to the dev's fwnode.
-
-To fix this, just use the subdev's fwnode.
-
-Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
-Fixes: 0d3c81e82da9 ("media: v4l2-mc: add v4l2_create_fwnode_links helpers")
-Cc: stable@vger.kernel.org
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/media/v4l2-core/v4l2-mc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
---- a/drivers/media/v4l2-core/v4l2-mc.c
-+++ b/drivers/media/v4l2-core/v4l2-mc.c
-@@ -329,7 +329,7 @@ int v4l2_create_fwnode_links_to_pad(stru
- 	if (!(sink->flags & MEDIA_PAD_FL_SINK))
- 		return -EINVAL;
- 
--	fwnode_graph_for_each_endpoint(dev_fwnode(src_sd->dev), endpoint) {
-+	fwnode_graph_for_each_endpoint(src_sd->fwnode, endpoint) {
- 		struct fwnode_handle *remote_ep;
- 		int src_idx, sink_idx, ret;
- 		struct media_pad *src;
-
-
+Ideally, we'd have a target/target-feature combo that makes this more
+explicit: no FP/SIMD codegen at all, without affecting the ABI,
+therefore making float/double types in function prototypes illegal.
+AIUI, this change does something different.
