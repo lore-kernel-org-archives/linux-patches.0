@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924D72222C0;
-	Thu, 13 Feb 2025 14:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05ED2222CA;
+	Thu, 13 Feb 2025 14:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457492; cv=none; b=rkei1JNnhO1JNnp3ewolxq1slcRA6xBYeAwMMSnd+tHtXDYIahldQrpnzRLnLBdYTh1jCwCdYm/cOGYgYo3+Zs0GJbkT/UEnVACHTDXQzb0XJ94zJnPlmnq5fysbtZX+gixVfqJRXgKA/RIH+2qqEkurpA4FVcwBiWW+R3XKmDo=
+	t=1739457496; cv=none; b=JJtisBBeLQLE/WVvXAXnNE7bxmorpIq0P2c5wt5/G/CjvTFP6TPerW8tksR0z5p9Moq2k5o93wafVDmpnHhz5Kn4OIfOD0mUp+kXni8iiaaihtKT/tERaqLpRUle/gvwFikFrjn2GdJebn2GZAMfLAswM3teHN9JHEsm8BHdkLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457492; c=relaxed/simple;
-	bh=n98i+rszUquvqdp0veVLBXzN3qr9eaLduI+7y79F/fk=;
+	s=arc-20240116; t=1739457496; c=relaxed/simple;
+	bh=QnsHu11J0CjlTZQS2ksfBzf4Ce8EGUsoCSrfEgzDNbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u4ClBlFmjEXYIz5ldTcU75TlYrGBP6HIN2ajKnQWk0yysWsBF5Sge2QdePewi9gfiXGe9R5CL/a2917uDr0pflewHETpz/xD6KaEE0gPdv7rkCIZFixHuEd9gOWfy5UoptMV7vojsQmJcGHAEczPqY8vMOHaOKVdhKCOpL0op9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u40t3zgz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R1wQTttC5d4W/SuVFmF8ljcykTkOOLoMfHySu0dDthBTkzoInJyZpacD3HOqIy7chq6hwRmTlbwy7mbS1LobMZx3g+uEZiYJyNnDYNGj45C+LGGGvbySFxWxdhB4il2iYkeko5x0RbLkWpgaD6VBP3i1NRagq2FHPDZdZhneZr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQJYqlj7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u40t3zgz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0018CC4CED1;
-	Thu, 13 Feb 2025 14:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQJYqlj7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4F5C4CED1;
+	Thu, 13 Feb 2025 14:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457492;
-	bh=n98i+rszUquvqdp0veVLBXzN3qr9eaLduI+7y79F/fk=;
+	s=korg; t=1739457495;
+	bh=QnsHu11J0CjlTZQS2ksfBzf4Ce8EGUsoCSrfEgzDNbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u40t3zgzAp19i+bj9JY9PlSwXSEiPP4dZVLZiXLV+BM7FyU+STNvaanQFCav5YGor
-	 t4tShHS9Abc690bzcBduMR7PxyJK7AQRbdkaGySHOKnatgbBwDW/mLSMiOmlJd3DXU
-	 H8ZRO2oy9FLR1UDQF/n7WHtSeBEG2NNeghu9+of0=
+	b=mQJYqlj74qQeVr6OL3eJUiIVerOx6ft0BAGtkm9UvkFfD+b824U3jL+b+OIHRTxm6
+	 9/kKlBfaLa0/DmW+XK/VJoKrUpj9qTmLvOJZlR2BJJKKFfKnW4Ms7eJNAGF71C/zhG
+	 BVqlLKeV47z+mR7tu3KUgai5cvGXSHa7Yka06dBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Emmanuel Florac <eflorac@intellique.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/422] xfs: report realtime block quota limits on realtime directories
-Date: Thu, 13 Feb 2025 15:24:03 +0100
-Message-ID: <20250213142440.181236147@linuxfoundation.org>
+Subject: [PATCH 6.12 095/422] xfs: dont over-report free space or inodes in statvfs
+Date: Thu, 13 Feb 2025 15:24:04 +0100
+Message-ID: <20250213142440.219957732@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -53,92 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 9a17ebfea9d0c7e0bb7409dcf655bf982a5d6e52 ]
+[ Upstream commit 4b8d867ca6e2fc6d152f629fdaf027053b81765a ]
 
-On the data device, calling statvfs on a projinherit directory results
-in the block and avail counts being curtailed to the project quota block
-limits, if any are set.  Do the same for realtime files or directories,
-only use the project quota rt block limits.
+Emmanual Florac reports a strange occurrence when project quota limits
+are enabled, free space is lower than the remaining quota, and someone
+runs statvfs:
 
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+  # mkfs.xfs -f /dev/sda
+  # mount /dev/sda /mnt -o prjquota
+  # xfs_quota  -x -c 'limit -p bhard=2G 55' /mnt
+  # mkdir /mnt/dir
+  # xfs_io -c 'chproj 55' -c 'chattr +P' -c 'stat -vvvv' /mnt/dir
+  # fallocate -l 19g /mnt/a
+  # df /mnt /mnt/dir
+  Filesystem      Size  Used Avail Use% Mounted on
+  /dev/sda         20G   20G  345M  99% /mnt
+  /dev/sda        2.0G     0  2.0G   0% /mnt
+
+I think the bug here is that xfs_fill_statvfs_from_dquot unconditionally
+assigns to f_bfree without checking that the filesystem has enough free
+space to fill the remaining project quota.  However, this is a
+longstanding behavior of xfs so it's unclear what to do here.
+
+Cc: <stable@vger.kernel.org> # v2.6.18
+Fixes: 932f2c323196c2 ("[XFS] statvfs component of directory/project quota support, code originally by Glen.")
+Reported-by: Emmanuel Florac <eflorac@intellique.com>
+Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Stable-dep-of: 4b8d867ca6e2 ("xfs: don't over-report free space or inodes in statvfs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_qm_bhv.c | 18 ++++++++++++------
- fs/xfs/xfs_super.c  | 11 +++++------
- 2 files changed, 17 insertions(+), 12 deletions(-)
+ fs/xfs/xfs_qm_bhv.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
 diff --git a/fs/xfs/xfs_qm_bhv.c b/fs/xfs/xfs_qm_bhv.c
-index a11436579877d..262f035b15c99 100644
+index 262f035b15c99..ed1d597c30ca2 100644
 --- a/fs/xfs/xfs_qm_bhv.c
 +++ b/fs/xfs/xfs_qm_bhv.c
-@@ -19,18 +19,24 @@
- STATIC void
- xfs_fill_statvfs_from_dquot(
- 	struct kstatfs		*statp,
-+	struct xfs_inode	*ip,
- 	struct xfs_dquot	*dqp)
- {
-+	struct xfs_dquot_res	*blkres = &dqp->q_blk;
- 	uint64_t		limit;
- 
--	limit = dqp->q_blk.softlimit ?
--		dqp->q_blk.softlimit :
--		dqp->q_blk.hardlimit;
-+	if (XFS_IS_REALTIME_MOUNT(ip->i_mount) &&
-+	    (ip->i_diflags & (XFS_DIFLAG_RTINHERIT | XFS_DIFLAG_REALTIME)))
-+		blkres = &dqp->q_rtb;
+@@ -32,21 +32,28 @@ xfs_fill_statvfs_from_dquot(
+ 	limit = blkres->softlimit ?
+ 		blkres->softlimit :
+ 		blkres->hardlimit;
+-	if (limit && statp->f_blocks > limit) {
+-		statp->f_blocks = limit;
+-		statp->f_bfree = statp->f_bavail =
+-			(statp->f_blocks > blkres->reserved) ?
+-			 (statp->f_blocks - blkres->reserved) : 0;
++	if (limit) {
++		uint64_t	remaining = 0;
 +
-+	limit = blkres->softlimit ?
-+		blkres->softlimit :
-+		blkres->hardlimit;
- 	if (limit && statp->f_blocks > limit) {
- 		statp->f_blocks = limit;
- 		statp->f_bfree = statp->f_bavail =
--			(statp->f_blocks > dqp->q_blk.reserved) ?
--			 (statp->f_blocks - dqp->q_blk.reserved) : 0;
-+			(statp->f_blocks > blkres->reserved) ?
-+			 (statp->f_blocks - blkres->reserved) : 0;
++		if (limit > blkres->reserved)
++			remaining = limit - blkres->reserved;
++
++		statp->f_blocks = min(statp->f_blocks, limit);
++		statp->f_bfree = min(statp->f_bfree, remaining);
++		statp->f_bavail = min(statp->f_bavail, remaining);
  	}
  
  	limit = dqp->q_ino.softlimit ?
-@@ -61,7 +67,7 @@ xfs_qm_statvfs(
- 	struct xfs_dquot	*dqp;
- 
- 	if (!xfs_qm_dqget(mp, ip->i_projid, XFS_DQTYPE_PROJ, false, &dqp)) {
--		xfs_fill_statvfs_from_dquot(statp, dqp);
-+		xfs_fill_statvfs_from_dquot(statp, ip, dqp);
- 		xfs_qm_dqput(dqp);
- 	}
- }
-diff --git a/fs/xfs/xfs_super.c b/fs/xfs/xfs_super.c
-index fbb3a1594c0dc..8f7c9eaeb3609 100644
---- a/fs/xfs/xfs_super.c
-+++ b/fs/xfs/xfs_super.c
-@@ -873,12 +873,6 @@ xfs_fs_statfs(
- 	ffree = statp->f_files - (icount - ifree);
- 	statp->f_ffree = max_t(int64_t, ffree, 0);
- 
--
--	if ((ip->i_diflags & XFS_DIFLAG_PROJINHERIT) &&
--	    ((mp->m_qflags & (XFS_PQUOTA_ACCT|XFS_PQUOTA_ENFD))) ==
--			      (XFS_PQUOTA_ACCT|XFS_PQUOTA_ENFD))
--		xfs_qm_statvfs(ip, statp);
--
- 	if (XFS_IS_REALTIME_MOUNT(mp) &&
- 	    (ip->i_diflags & (XFS_DIFLAG_RTINHERIT | XFS_DIFLAG_REALTIME))) {
- 		s64	freertx;
-@@ -888,6 +882,11 @@ xfs_fs_statfs(
- 		statp->f_bavail = statp->f_bfree = xfs_rtx_to_rtb(mp, freertx);
- 	}
- 
-+	if ((ip->i_diflags & XFS_DIFLAG_PROJINHERIT) &&
-+	    ((mp->m_qflags & (XFS_PQUOTA_ACCT|XFS_PQUOTA_ENFD))) ==
-+			      (XFS_PQUOTA_ACCT|XFS_PQUOTA_ENFD))
-+		xfs_qm_statvfs(ip, statp);
+ 		dqp->q_ino.softlimit :
+ 		dqp->q_ino.hardlimit;
+-	if (limit && statp->f_files > limit) {
+-		statp->f_files = limit;
+-		statp->f_ffree =
+-			(statp->f_files > dqp->q_ino.reserved) ?
+-			 (statp->f_files - dqp->q_ino.reserved) : 0;
++	if (limit) {
++		uint64_t	remaining = 0;
 +
- 	return 0;
++		if (limit > dqp->q_ino.reserved)
++			remaining = limit - dqp->q_ino.reserved;
++
++		statp->f_files = min(statp->f_files, limit);
++		statp->f_ffree = min(statp->f_ffree, remaining);
+ 	}
  }
  
 -- 
