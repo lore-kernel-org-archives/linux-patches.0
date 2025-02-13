@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7702B335BA;
-	Thu, 13 Feb 2025 14:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF3E28136D;
+	Thu, 13 Feb 2025 14:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457170; cv=none; b=nKpZsmBzF4cHeGHVFLcQhBYnfPb9Lgnq7C7DpNCAvkDSPDHGZhAXnETht4/F8T5PHHr9ctfGgM+C3F0ENL7hxmL5oE7RpMKGu/HWFsk4jdxQqqpq+OPsIVbwM2xAK1/gi8EZzrRCAjPy+7J9mNMEkDnjlMG+QfwhcxEeymGXxYs=
+	t=1739457174; cv=none; b=oW0EjJVPX7k3EwtwaMWV9jGlDwE+7VrXnL69K7SYdBznZy20PTqBhjetE1G+KV1B1rn9xVgYZTyV9MPPn8ZPXhFPu+i2A/Ga1lSOHLkO4aKkxeFzF0bx4YFXEDZO4uR2/y1I0YiVthRIM3mqXPH35cVRCohzAowza4S3vV4K/YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457170; c=relaxed/simple;
-	bh=lr9vFPK9Vjse7u/VJThUiBc24CC2p6MMOepdUBTJXsc=;
+	s=arc-20240116; t=1739457174; c=relaxed/simple;
+	bh=6ZOScTvSUa2wRkRhfJxwSOGcFTbmvGiVBlA4cnKwqp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1FTTxZvxzP+5NT2jSt02sULwc0urnFKTLPYWA6cQjoHKBFyN2ICasq7IbyZZgbQlXulToB1ID3J8NCtY6cbLcBS+EAOeZ/Ib96GDmEv56Sznbd/ZphI5SS2bALwmM0cID6aPjojUcKQre6S1rTd8KIfjetualnGfNy3iw+XbhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AR0T/YKd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A1E2jrm8RZyfJeN0UsymBTLioALy6xSP0wIKyNp5cil84SWUs7/h3e1aux0xaBFk0xRnb5PnXlD8gySRyY7HoJ45nhXqbRkvEDAH9H6t248iqd5EYOJLICDQOFnVrs4APuXAWmvYUi9uhEfEj3VysW9Y1tAVlWtyMaIr/cDirZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFGYjqPi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AR0T/YKd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD37DC4CED1;
-	Thu, 13 Feb 2025 14:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFGYjqPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D808C4CEE2;
+	Thu, 13 Feb 2025 14:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457170;
-	bh=lr9vFPK9Vjse7u/VJThUiBc24CC2p6MMOepdUBTJXsc=;
+	s=korg; t=1739457173;
+	bh=6ZOScTvSUa2wRkRhfJxwSOGcFTbmvGiVBlA4cnKwqp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AR0T/YKdLb/X5R/kvw6IhRLH6Jk2PTKeWV3yoqjqv2ru3nSomtPLKv//Qh40Y5tEw
-	 fwceR3v5W6WEbRtrGJmdI2I50QfML3P/wLtfvsQgzTWpXkwea73vdRbXWtVGjH/fzz
-	 BfQCmb/ztcL51LFN4BqbtWsOCViHoYCgzcGeUabE=
+	b=MFGYjqPiNdPnKrEqFYQWzYt7mtP27eS0OaLwdmqnK3mlIZj55oJT3gvLolqbOvz4w
+	 jYUX6ltBM1GOyOGe/YSNLax9iXq3DlWQLRZFk934x40Mm8FoUlzbG7PrMR9xJyNfeR
+	 luZzC6d/spmX2KxOtewFx26mE9bJ9LMP8VVwTyxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Fangzhi Zuo <Jerry.Zuo@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 036/422] drm/amd/display: Fix Mode Cutoff in DSC Passthrough to DP2.1 Monitor
-Date: Thu, 13 Feb 2025 15:23:05 +0100
-Message-ID: <20250213142437.949496946@linuxfoundation.org>
+Subject: [PATCH 6.12 037/422] drm/amdgpu: Dont enable sdma 4.4.5 CTXEMPTY interrupt
+Date: Thu, 13 Feb 2025 15:23:06 +0100
+Message-ID: <20250213142437.988204413@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -54,59 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangzhi Zuo <Jerry.Zuo@amd.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit e56ad45e991128bf4db160b75a1d9f647a341d8f ]
+[ Upstream commit b4b7271e5ca95b581f2fcc4ae852c4079215e92d ]
 
-Source --> DP2.1 MST hub --> DP1.4/2.1 monitor
+The sdma context empty interrupt is dropped in amdgpu_irq_dispatch
+as unregistered interrupt src_id 243, this interrupt accounts to 1/3 of
+total interrupts and causes IH primary ring overflow when running
+stressful benchmark application. Disable this interrupt has no side
+effect found.
 
-When change from DP1.4 to DP2.1 from monitor manual, modes higher than
-4k120 are all cutoff by mode validation. Switch back to DP1.4 gets all
-the modes up to 4k240 available to be enabled by dsc passthrough.
-
-[why]
-Compared to DP1.4 link from hub to monitor, DP2.1 link has larger
-full_pbn value that causes overflow in the process of doing conversion
-from pbn to kbps.
-
-[how]
-Change the data type accordingly to fit into the data limit during
-conversion calculation.
-
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
-Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index 754dbc544f03a..5bdf44c692180 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -1691,16 +1691,16 @@ int pre_validate_dsc(struct drm_atomic_state *state,
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
+index c77889040760a..4dd86c682ee6a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
+@@ -953,10 +953,12 @@ static int sdma_v4_4_2_inst_start(struct amdgpu_device *adev,
+ 		/* set utc l1 enable flag always to 1 */
+ 		temp = RREG32_SDMA(i, regSDMA_CNTL);
+ 		temp = REG_SET_FIELD(temp, SDMA_CNTL, UTC_L1_ENABLE, 1);
+-		/* enable context empty interrupt during initialization */
+-		temp = REG_SET_FIELD(temp, SDMA_CNTL, CTXEMPTY_INT_ENABLE, 1);
+-		WREG32_SDMA(i, regSDMA_CNTL, temp);
  
--static unsigned int kbps_from_pbn(unsigned int pbn)
-+static uint32_t kbps_from_pbn(unsigned int pbn)
- {
--	unsigned int kbps = pbn;
-+	uint64_t kbps = (uint64_t)pbn;
- 
- 	kbps *= (1000000 / PEAK_FACTOR_X1000);
- 	kbps *= 8;
- 	kbps *= 54;
- 	kbps /= 64;
- 
--	return kbps;
-+	return (uint32_t)kbps;
- }
- 
- static bool is_dsc_common_config_possible(struct dc_stream_state *stream,
++		if (amdgpu_ip_version(adev, SDMA0_HWIP, 0) < IP_VERSION(4, 4, 5)) {
++			/* enable context empty interrupt during initialization */
++			temp = REG_SET_FIELD(temp, SDMA_CNTL, CTXEMPTY_INT_ENABLE, 1);
++			WREG32_SDMA(i, regSDMA_CNTL, temp);
++		}
+ 		if (!amdgpu_sriov_vf(adev)) {
+ 			if (adev->firmware.load_type != AMDGPU_FW_LOAD_PSP) {
+ 				/* unhalt engine */
 -- 
 2.39.5
 
