@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E6926B094;
-	Thu, 13 Feb 2025 14:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F1926B089;
+	Thu, 13 Feb 2025 14:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458402; cv=none; b=rQ9gSHrSZ/OngWY+fzd18e6ebEdYrgX2BQxmAjUO4RIj6P+FfKEa5ahh58H4l3kVnUHA9FgHo/SSOh4n2o6ENpz3PFPB47oFhdsvBEzjx6FZLX1eALGm9J5Rir80tfKMp/4N+TQWa2xi3YUjJE5UV42wNMoVACrq6/ZpIt7ITmo=
+	t=1739458406; cv=none; b=fpAOxZYomBtiE3O+C3n2JHEMkx1s3tmhAt121qUaibFR6XuWI0ki14J4uhIyDyHmWQm2zKguyWgLgreaq7hSiZfwA9SBHz9BHM/88j0SlxSFUfI+/xrS7NH+F32GjHgvBjjsgEHXtgu+qFMzSX0svtna+vJWlFwIfDQyreAWA4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458402; c=relaxed/simple;
-	bh=BibHCe312lSB9tYoz3VBXCy3RLE0gab99xoFoCtUOas=;
+	s=arc-20240116; t=1739458406; c=relaxed/simple;
+	bh=VMmB4nEuJCWKLnrikrozvy3YuQAaLFC4WVnz5XLQl8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDi6Qr/nK758+4myKP804rxqgOkP4A9cpuGZHjtYaQd+7YJalBXWrrD7YDBbSRznqem02+PD9ywJaUN40eTNKr0Nai1PfBeewUZcGXnsZr/4NU5wJJojA4U2bDBM6d3RwdxeP1Cy2dKNpjmld6YxgE6BGRWeqFfjOmbS1x3iEPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpE8SD3u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DoFK3EYHGa99gDZNaFhFbLAVBjzZ3IbSGkwqPv3sHcGSRjnvhb7gcQ6mpNbhxoGQG/AFu7XLBXrUtHUAWnbezz6PgTdTsf4lYrX3nai84Ode9l4TYCGqF1DoxVOAvuiHgMLBIc1PG/8Vm4BjsG0X2M0O3GZcHMpbhcfgyHpEFoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHE1LK5+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpE8SD3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B102C4CED1;
-	Thu, 13 Feb 2025 14:53:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHE1LK5+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C868AC4CEE5;
+	Thu, 13 Feb 2025 14:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458402;
-	bh=BibHCe312lSB9tYoz3VBXCy3RLE0gab99xoFoCtUOas=;
+	s=korg; t=1739458406;
+	bh=VMmB4nEuJCWKLnrikrozvy3YuQAaLFC4WVnz5XLQl8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wpE8SD3ujF4XUKHWboDjOpvdUqnArpou35ESZQJiXIEcDNXKYJ1fzr/y+qM+bsIg0
-	 6aoelGw1GSFrhCWCAo1/bll1tMtG8376pYoDBDy3SgEFTGmq2lQM5CH8qpukKuU5JW
-	 SEsf0kaIzDWQ4cfwcabDg2Pnievexnz5m60uaj2c=
+	b=rHE1LK5+SjSk0ObIYoHZVGsHAH7TAfWRL61KEiWXzIODU+kLSftagqeGKqdvs3DcB
+	 RXVcBMsdFKwNO6IfKzZ19rNPlkne8+Lm6sDvahYES6uxbBBR54mIUMysQi4se5vM5L
+	 15imYi9iqKAZJvoA6QUNNMiVCkCyC5MBYu2YT4PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.12 389/422] pinctrl: samsung: fix fwnode refcount cleanup if platform_get_irq_optional() fails
-Date: Thu, 13 Feb 2025 15:28:58 +0100
-Message-ID: <20250213142451.561298951@linuxfoundation.org>
+	Hien Huynh <hien.huynh.px@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH 6.12 390/422] pinctrl: renesas: rzg2l: Fix PFC_MASK for RZ/V2H and RZ/G3E
+Date: Thu, 13 Feb 2025 15:28:59 +0100
+Message-ID: <20250213142451.598759816@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -50,44 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-commit 459915f55509f4bfd6076daa1428e28490ddee3b upstream.
+commit accabfaae0940f9427c782bfee7340ce4c15151c upstream.
 
-Commit 50ebd19e3585 ("pinctrl: samsung: drop pin banks references on
-error paths") fixed the pin bank references on the error paths of the
-probe function, but there is still an error path where this is not done.
+The PFC_MASK value for the PFC_mx registers is currently hardcoded to
+0x07, which is correct for SoCs in the RZ/G2L family, but insufficient
+for RZ/V2H and RZ/G3E, where the mask value should be 0x0f.  This
+discrepancy causes incorrect PFC register configuration on RZ/V2H and
+RZ/G3E SoCs.
 
-If samsung_pinctrl_get_soc_data() does not fail, the child references
-will have acquired, and they will need to be released in the error path
-of platform_get_irq_optional(), as it is done in the following error
-paths within the probe function.
+On RZ/G2L, the PFC_mx bitfields are also 4 bits wide, with bit 4 marked
+as reserved.  The reserved bits are documented to read as zero and be
+ignored when written.  Updating the PFC_MASK definition from 0x07 to
+0x0f ensures compatibility with both SoC families while maintaining
+correct behavior on RZ/G2L.
 
-Replace the direct return in the error path with a goto instruction to
-the cleanup function.
-
+Fixes: 9bd95ac86e70 ("pinctrl: renesas: rzg2l: Add support for RZ/V2H SoC")
 Cc: stable@vger.kernel.org
-Fixes: a382d568f144 ("pinctrl: samsung: Use platform_get_irq_optional() to get the interrupt")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20241106-samsung-pinctrl-put-v1-1-de854e26dd03@gmail.com
-[krzysztof: change Fixes SHA to point to commit introducing the return
- leading to OF node leak]
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reported-by: Hien Huynh <hien.huynh.px@renesas.com>
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/20250110221045.594596-1-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/samsung/pinctrl-samsung.c |    2 +-
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pinctrl/samsung/pinctrl-samsung.c
-+++ b/drivers/pinctrl/samsung/pinctrl-samsung.c
-@@ -1272,7 +1272,7 @@ static int samsung_pinctrl_probe(struct
+--- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+@@ -155,7 +155,7 @@
+ #define PWPR_REGWE_B		BIT(5)	/* OEN Register Write Enable, known only in RZ/V2H(P) */
  
- 	ret = platform_get_irq_optional(pdev, 0);
- 	if (ret < 0 && ret != -ENXIO)
--		return ret;
-+		goto err_put_banks;
- 	if (ret > 0)
- 		drvdata->irq = ret;
- 
+ #define PM_MASK			0x03
+-#define PFC_MASK		0x07
++#define PFC_MASK		0x0f
+ #define IEN_MASK		0x01
+ #define IOLH_MASK		0x03
+ #define SR_MASK			0x01
 
 
