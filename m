@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E39C24BC19;
-	Thu, 13 Feb 2025 14:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5A5221552;
+	Thu, 13 Feb 2025 14:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457421; cv=none; b=Cr3i7Xt9wJLbS3YdL2Hnzn+jDeHSRnde7mtyn2bke+rVG4amImC2ZWiRBxMAonhNIMbsbsw/fZAqg64V2YDpmu7vp54PE66obYhL2S/PdLPkPELw5QCuVyK6lSzGg7oNsImkjuoz7OzG/HAkJKujoWhDVeB+qHKrq3LRvRB6Lgw=
+	t=1739457424; cv=none; b=WZAooiTg1vb30VdgLjqNMnpVRi7OdYM6gofKnyYDK/gAvIRrtxMwn/yW7t13cQ5/sFqJuohpog8Lm9TUaG5bN4DoczE2vWE7oGeRTd0SIgtCGgwJd00Maev+gglpMLjKkD3ie0XnZOGWGDdOrWqYw8aT2p8YwH/3naPauNBOS6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457421; c=relaxed/simple;
-	bh=W/Gz/WoRelX8KI3S6deyO9xWTRCgkohMOESW+YtUBss=;
+	s=arc-20240116; t=1739457424; c=relaxed/simple;
+	bh=hz/MTAR82wYAQ8isut0HZKbqxNmQIrsIcyVh//nnYWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mc6X3/KsYG5sUzoZNjiN0ffubJf+A+7RzmpH9sEH+D6ByiFrmK5LELWsV6e7jzaruBQJUI6vYGejh6Czdhy2gE24WPvjbAIloZKUr+bFm+Vx5SUV0NkRk+pPBPi9iWJ/IIM09snLepBecobBa1JhRqO8+iTwFfZ/rAoOlXutHX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9RHAVOu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bq6ZczEU41+QdQGt/Pex+pJrlRQ2eTG4BXabclksg8oTGungw5qG+DA+nrTjzZALaGZrPPhBKBu3NTHRLU6exWIeH8hi2UMKo0yf4tl1dxAleuMSy8MLigO1f2Ldq4u7somaGnziGRhWxjt+IM1wsKspVenZYnMYC2O3GYLKAVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mfjYKSZz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9RHAVOu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E361C4CED1;
-	Thu, 13 Feb 2025 14:37:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mfjYKSZz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C778FC4CED1;
+	Thu, 13 Feb 2025 14:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457421;
-	bh=W/Gz/WoRelX8KI3S6deyO9xWTRCgkohMOESW+YtUBss=;
+	s=korg; t=1739457424;
+	bh=hz/MTAR82wYAQ8isut0HZKbqxNmQIrsIcyVh//nnYWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g9RHAVOufhViQkc//H6IkGhvWZ7yeK4H3fWT+WEhV2dyzyz8MIyvuZoCdH+56H0nF
-	 q10uDlDVS43Q9AhtLClXD+EsTWxB4jXQ05UCxKYKpKNL1c2Q+VnepjSmAuizRfN09n
-	 L0Q9wqR/E8F0BfCYYr63vcBF+stuLwVcyL1mR/ms=
+	b=mfjYKSZzfb5tyMtMHkVhMidEvi+9VX541P1nuRPPGI7bcpWMYUDb1CEajx8UmWt1U
+	 p84u0tkp5Yt/DbTTgrUb6VzNxopeH+gOq+lHEpS8YVmd1HlP9vAfNbHH/iTRQSDhR9
+	 bmIOgmteL2qc0DsEsx0ybhJ0pX7ivo2wIs2oAPeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Daniel Wagner <wagi@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Sagi Grimberg <sagi@grimberg.me>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/422] nvme: make nvme_tls_attrs_group static
-Date: Thu, 13 Feb 2025 15:24:15 +0100
-Message-ID: <20250213142440.648267454@linuxfoundation.org>
+Subject: [PATCH 6.12 107/422] nvme-fc: use ctrl state getter
+Date: Thu, 13 Feb 2025 15:24:16 +0100
+Message-ID: <20250213142440.686281455@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,35 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 2d1a2dab95cdc6f2e0c6af3c0514b0bea94af482 ]
+[ Upstream commit c8ed6cb5d37bc09c7e25e49a670e9fd1a3bd1dfa ]
 
-To suppress the compiler "warning: symbol 'nvme_tls_attrs_group' was not
-declared. Should it be static?"
+Do not access the state variable directly, instead use proper
+synchronization so not stale data is read.
 
-Fixes: 1e48b34c9bc79a ("nvme: split off TLS sysfs attributes into a separate group")
+Fixes: e6e7f7ac03e4 ("nvme: ensure reset state check ordering")
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/sysfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/fc.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/sysfs.c b/drivers/nvme/host/sysfs.c
-index b68a9e5f1ea39..3a41b9ab0f13c 100644
---- a/drivers/nvme/host/sysfs.c
-+++ b/drivers/nvme/host/sysfs.c
-@@ -792,7 +792,7 @@ static umode_t nvme_tls_attrs_are_visible(struct kobject *kobj,
- 	return a->mode;
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index b81af7919e94c..682234da2fabe 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -2080,7 +2080,8 @@ nvme_fc_fcpio_done(struct nvmefc_fcp_req *req)
+ 		nvme_fc_complete_rq(rq);
+ 
+ check_error:
+-	if (terminate_assoc && ctrl->ctrl.state != NVME_CTRL_RESETTING)
++	if (terminate_assoc &&
++	    nvme_ctrl_state(&ctrl->ctrl) != NVME_CTRL_RESETTING)
+ 		queue_work(nvme_reset_wq, &ctrl->ioerr_work);
  }
  
--const struct attribute_group nvme_tls_attrs_group = {
-+static const struct attribute_group nvme_tls_attrs_group = {
- 	.attrs		= nvme_tls_attrs,
- 	.is_visible	= nvme_tls_attrs_are_visible,
- };
+@@ -2534,6 +2535,8 @@ __nvme_fc_abort_outstanding_ios(struct nvme_fc_ctrl *ctrl, bool start_queues)
+ static void
+ nvme_fc_error_recovery(struct nvme_fc_ctrl *ctrl, char *errmsg)
+ {
++	enum nvme_ctrl_state state = nvme_ctrl_state(&ctrl->ctrl);
++
+ 	/*
+ 	 * if an error (io timeout, etc) while (re)connecting, the remote
+ 	 * port requested terminating of the association (disconnect_ls)
+@@ -2541,7 +2544,7 @@ nvme_fc_error_recovery(struct nvme_fc_ctrl *ctrl, char *errmsg)
+ 	 * the controller.  Abort any ios on the association and let the
+ 	 * create_association error path resolve things.
+ 	 */
+-	if (ctrl->ctrl.state == NVME_CTRL_CONNECTING) {
++	if (state == NVME_CTRL_CONNECTING) {
+ 		__nvme_fc_abort_outstanding_ios(ctrl, true);
+ 		set_bit(ASSOC_FAILED, &ctrl->flags);
+ 		dev_warn(ctrl->ctrl.device,
+@@ -2551,7 +2554,7 @@ nvme_fc_error_recovery(struct nvme_fc_ctrl *ctrl, char *errmsg)
+ 	}
+ 
+ 	/* Otherwise, only proceed if in LIVE state - e.g. on first error */
+-	if (ctrl->ctrl.state != NVME_CTRL_LIVE)
++	if (state != NVME_CTRL_LIVE)
+ 		return;
+ 
+ 	dev_warn(ctrl->ctrl.device,
 -- 
 2.39.5
 
