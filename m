@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA6615A856;
-	Thu, 13 Feb 2025 15:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3728A15A856;
+	Thu, 13 Feb 2025 15:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739461019; cv=none; b=qEbsIdlQLt/jsbSPOMSPUom532r5/RkF0OvNwULnpQx9KE8NDxrJHLjGYUVCFro94/+mzudICMD1H4kXTxgqzhJoX3ash6RTm3yAI3kc37n/XeQDBHd+MMxeAGVl1qyHiPQ9iZIuKdP3LBXV5vjcn6Q4ur84+mROoyiLPuujydo=
+	t=1739461023; cv=none; b=ae1A4QAKLF2gJrTNN20ckg63pfCx44lcn4VnQ5LSxR67BvnOWujCoEUt9sb7vOXrpvNr7R78jZOkkeoeuxE0FSCMloDHz1Spx9W4C0ErYs9lYOdeaSwJ15VirTI+hdu7VigTEvb9va5vPN+hNdZvRHp922Df74XSb3AjOzEt4f4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739461019; c=relaxed/simple;
-	bh=YjmRhpOpN1Th8fe/4DXRLkjvN0+ozNUvEbfLRbpBe+E=;
+	s=arc-20240116; t=1739461023; c=relaxed/simple;
+	bh=/CXSdpSQOl7Gdc92N2cFxG/o/G19Yb3w15vxUDIfOWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WoYT5xiELKiaNhuJpS+LuSk/rqIHG7aOc8DX3wOUI1PNQiMDLhiRKHcr86kCoXOjeQVtoBH00T9+P5f3ykfgBHOw1xvOs2v5KmToKZ4bzVp0ppfa0EgW35IskGzc4BkljJwnt/gUFphW87fthOnnXf0Z2M24X2t+gUG9NOpXK4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbQe45tf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BpNlnex2xQC6X/R9opYPYetzFS646CP5b+G+GLajp3KKG06VrL16RBuylgoH+HEhql5dtDjawxih9E82lFWrxgkdnRonbhauN0V2yleKOVriSKYddoqWJFxHhEHe2aOSUrh8dvzsP2XTX2t4pw3lDRsm9P9iziEzSj1I+WeXxbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xxD1LyMB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbQe45tf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6799C4CED1;
-	Thu, 13 Feb 2025 15:36:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxD1LyMB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432D2C4CED1;
+	Thu, 13 Feb 2025 15:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739461019;
-	bh=YjmRhpOpN1Th8fe/4DXRLkjvN0+ozNUvEbfLRbpBe+E=;
+	s=korg; t=1739461022;
+	bh=/CXSdpSQOl7Gdc92N2cFxG/o/G19Yb3w15vxUDIfOWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LbQe45tfhEXMO4Ksvy8bJ8BMluDzpkbJfkL0v3MHadee2ug8GR0os9ljrEXXiJofF
-	 NZv2asQzsyM3H8Bg0lbIBYlCp4YDHke8MTN+JIQqb3uwiWb5zGqE7noqAzRjDB84oT
-	 WC3/8u4eLWsFv9mA3XejhPtx35K5/HDHE+qh1/N4=
+	b=xxD1LyMBHUQzs/4lrVskwe9oEsRypi7W/emc247a0Io5iWNqv7RYPxGdLMeszPqGb
+	 V4GUUZaFUGWtsk47DbDSHLnsIMV1+toGULSn6N9jpUQBg53yCIUXwxdwUP+U9zm8K0
+	 KfY79suRpW3OIVZ4sWm0QV1rhAuhvZNLiy3sHCq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <richard.weiyang@gmail.com>,
-	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
-	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 247/273] maple_tree: simplify split calculation
-Date: Thu, 13 Feb 2025 15:30:19 +0100
-Message-ID: <20250213142417.194040594@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.6 238/273] i3c: master: Fix missing ret assignment in set_speed()
+Date: Thu, 13 Feb 2025 15:30:10 +0100
+Message-ID: <20250213142416.840799638@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -53,112 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <richard.weiyang@gmail.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 4f6a6bed0bfef4b966f076f33eb4f5547226056a upstream.
+commit b266e0d4dac00eecdfaf50ec3f708fd0c3b39637 upstream.
 
-Patch series "simplify split calculation", v3.
+Fix a probe failure in the i3c master driver that occurs when no i3c
+devices are connected to the bus.
 
+The issue arises in `i3c_master_bus_init()` where the `ret` value is not
+updated after calling `master->ops->set_speed()`. If no devices are
+present, `ret` remains set to `I3C_ERROR_M2`, causing the code to
+incorrectly proceed to `err_bus_cleanup`.
 
-This patch (of 3):
-
-The current calculation for splitting nodes tries to enforce a minimum
-span on the leaf nodes.  This code is complex and never worked correctly
-to begin with, due to the min value being passed as 0 for all leaves.
-
-The calculation should just split the data as equally as possible
-between the new nodes.  Note that b_end will be one more than the data,
-so the left side is still favoured in the calculation.
-
-The current code may also lead to a deficient node by not leaving enough
-data for the right side of the split. This issue is also addressed with
-the split calculation change.
-
-[Liam.Howlett@Oracle.com: rephrase the change log]
-Link: https://lkml.kernel.org/r/20241113031616.10530-1-richard.weiyang@gmail.com
-Link: https://lkml.kernel.org/r/20241113031616.10530-2-richard.weiyang@gmail.com
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
-Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: aef79e189ba2 ("i3c: master: support to adjust first broadcast address speed")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Acked-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20250108225533.915334-1-Frank.Li@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c |   23 ++++++-----------------
- 1 file changed, 6 insertions(+), 17 deletions(-)
+ drivers/i3c/master.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -1870,11 +1870,11 @@ static inline int mab_no_null_split(stru
-  * Return: The first split location.  The middle split is set in @mid_split.
-  */
- static inline int mab_calc_split(struct ma_state *mas,
--	 struct maple_big_node *bn, unsigned char *mid_split, unsigned long min)
-+	 struct maple_big_node *bn, unsigned char *mid_split)
- {
- 	unsigned char b_end = bn->b_end;
- 	int split = b_end / 2; /* Assume equal split. */
--	unsigned char slot_min, slot_count = mt_slots[bn->type];
-+	unsigned char slot_count = mt_slots[bn->type];
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -1878,7 +1878,7 @@ static int i3c_master_bus_init(struct i3
+ 		goto err_bus_cleanup;
  
- 	/*
- 	 * To support gap tracking, all NULL entries are kept together and a node cannot
-@@ -1907,18 +1907,7 @@ static inline int mab_calc_split(struct
- 		split = b_end / 3;
- 		*mid_split = split * 2;
- 	} else {
--		slot_min = mt_min_slots[bn->type];
--
- 		*mid_split = 0;
--		/*
--		 * Avoid having a range less than the slot count unless it
--		 * causes one node to be deficient.
--		 * NOTE: mt_min_slots is 1 based, b_end and split are zero.
--		 */
--		while ((split < slot_count - 1) &&
--		       ((bn->pivot[split] - min) < slot_count - 1) &&
--		       (b_end - split > slot_min))
--			split++;
+ 	if (master->ops->set_speed) {
+-		master->ops->set_speed(master, I3C_OPEN_DRAIN_NORMAL_SPEED);
++		ret = master->ops->set_speed(master, I3C_OPEN_DRAIN_NORMAL_SPEED);
+ 		if (ret)
+ 			goto err_bus_cleanup;
  	}
- 
- 	/* Avoid ending a node on a NULL entry */
-@@ -2402,7 +2391,7 @@ static inline struct maple_enode
- static inline unsigned char mas_mab_to_node(struct ma_state *mas,
- 	struct maple_big_node *b_node, struct maple_enode **left,
- 	struct maple_enode **right, struct maple_enode **middle,
--	unsigned char *mid_split, unsigned long min)
-+	unsigned char *mid_split)
- {
- 	unsigned char split = 0;
- 	unsigned char slot_count = mt_slots[b_node->type];
-@@ -2415,7 +2404,7 @@ static inline unsigned char mas_mab_to_n
- 	if (b_node->b_end < slot_count) {
- 		split = b_node->b_end;
- 	} else {
--		split = mab_calc_split(mas, b_node, mid_split, min);
-+		split = mab_calc_split(mas, b_node, mid_split);
- 		*right = mas_new_ma_node(mas, b_node);
- 	}
- 
-@@ -2905,7 +2894,7 @@ static int mas_spanning_rebalance(struct
- 		mast->bn->b_end--;
- 		mast->bn->type = mte_node_type(mast->orig_l->node);
- 		split = mas_mab_to_node(mas, mast->bn, &left, &right, &middle,
--					&mid_split, mast->orig_l->min);
-+					&mid_split);
- 		mast_set_split_parents(mast, left, middle, right, split,
- 				       mid_split);
- 		mast_cp_to_nodes(mast, left, middle, right, split, mid_split);
-@@ -3413,7 +3402,7 @@ static int mas_split(struct ma_state *ma
- 		if (mas_push_data(mas, height, &mast, false))
- 			break;
- 
--		split = mab_calc_split(mas, b_node, &mid_split, prev_l_mas.min);
-+		split = mab_calc_split(mas, b_node, &mid_split);
- 		mast_split_data(&mast, mas, split);
- 		/*
- 		 * Usually correct, mab_mas_cp in the above call overwrites
 
 
