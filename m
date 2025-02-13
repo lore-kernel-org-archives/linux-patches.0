@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE3626B088;
-	Thu, 13 Feb 2025 15:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECE526B082;
+	Thu, 13 Feb 2025 15:08:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459280; cv=none; b=F3nd/r2oawQaK0NKeP010fRNbr3T9JE8mxAT3P5SalQX3gURD251DYc5LTtrgq81gdb13FcEEOpCcSSWaVBirqaevc2EwBa9hrfOCHs7Gyy+FHBmjAZG7Mj/WnQd+H8YkB0YSZuhQl48pP5hQXDLlWzIFzM+PLmBRMnPA3Qq43E=
+	t=1739459283; cv=none; b=CBBFKiyxIRemMFkPmo8gmV7LMODTdLYK4f2CVEDoWk6lLrTc945AB5L941pMI02wx0R/iNstHkgI+aRLHRIImpymQRItUOCMfAzFN4wPK5uDU4SAmKvKxP8U8UzSBtmbdJFKeHDvyfQgoXIqyU7PTIbqLD1xoUqFixa4/jeh2q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459280; c=relaxed/simple;
-	bh=1CNVyTvAw4hW76nfnipVBPjPw5OvWI6Dzf0i1r7YyHE=;
+	s=arc-20240116; t=1739459283; c=relaxed/simple;
+	bh=Zy+9KjbU9AvxBXLPgzdgpwU9IMUKwFIzZFsZ/w7eFQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ee9Thx2kaB9QqA+5kHKlk7EzgSGak7Zy+CHoYCJFH99/2QiGv15FCzzp9ZG+V6iuT2XeplrSBUTIaiOeuXw0hxFehZ5vNCq3F6VEL6xaqbB4gbNzk3TS41g/BDfG9CoNCFEE3EQcolUoDxniom1GIn7h9qzJ0vU2O4xUKWMjNQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMGMrTJ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WiuJ2nIX6TM+CKWAPHpT7CbsnRTfSMIQ+j4knm8hBsRGC/VPrncesI8arF7502EwNGUQbWC93vsUOhomOjYS3qoWtxVz1+sjYZiAwPyPVNUmSfMcp5zJZYWpvlBJGqblqlDP8VNPpCL8QekxI6j0dhNiK+x3neV/oBbKFAeNPYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0XPggbK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMGMrTJ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C70FC4CED1;
-	Thu, 13 Feb 2025 15:07:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0XPggbK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3855C4CED1;
+	Thu, 13 Feb 2025 15:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459280;
-	bh=1CNVyTvAw4hW76nfnipVBPjPw5OvWI6Dzf0i1r7YyHE=;
+	s=korg; t=1739459283;
+	bh=Zy+9KjbU9AvxBXLPgzdgpwU9IMUKwFIzZFsZ/w7eFQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DMGMrTJ6Jow3drsVbmqlLrUKJrO0vqOjsk/sjAIvlJNyMpMjVeKP32IAf2OzWuo8j
-	 xNZQrpsWUo8OsfMBdYdoOaaabnPcLsis/QEjApQglmSJcAtmSyRqNPL8DID1qdHgF2
-	 wVSSh8P8MU/tAL5xvKlWuwPaFVPh4oCKRHRXN9Zo=
+	b=v0XPggbKbtLk7R73zKof0EeSCSpjvdf3KYgq2iT80ZA84+ZMU8sDE1AVp63gT4cvS
+	 T/ndwAcs63PhY39kgCANk4MOI6m55BxYBehZWSsCIaKuUdVUgKDb9+59b+5anqHMrC
+	 EBBPjkNftoKQpTdR5F+wo5h3SBfU16vcCwEWKmXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.13 219/443] of: reserved-memory: Warn for missing static reserved memory regions
-Date: Thu, 13 Feb 2025 15:26:24 +0100
-Message-ID: <20250213142449.064406916@linuxfoundation.org>
+	Peng Fan <peng.fan@nxp.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.13 220/443] Input: bbnsm_pwrkey - add remove hook
+Date: Thu, 13 Feb 2025 15:26:25 +0100
+Message-ID: <20250213142449.102658024@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,41 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-commit 81dfedd5234b42df11a473eefe7328ea4a0416ad upstream.
+commit 55b75306c3edf369285ce22ba1ced45e335094c2 upstream.
 
-For child node of /reserved-memory, its property 'reg' may contain
-multiple regions, but fdt_scan_reserved_mem_reg_nodes() only takes
-into account the first region, and miss remaining regions.
+Without remove hook to clear wake irq, there will be kernel dump when
+doing module test.
+"bbnsm_pwrkey 44440000.bbnsm:pwrkey: wake irq already initialized"
 
-But there are no simple approach to fix it, so give user warning
-message when miss remaining regions.
+Add remove hook to clear wake irq and set wakeup to false.
 
-Fixes: 8a6e02d0c00e ("of: reserved_mem: Restructure how the reserved memory regions are processed")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Fixes: 40e40fdfec3f ("Input: bbnsm_pwrkey - add bbnsm power key support")
+Link: https://lore.kernel.org/r/20241212030322.3110017-1-peng.fan@oss.nxp.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
-Link: https://lore.kernel.org/r/20250114-of_core_fix-v5-2-b8bafd00a86f@quicinc.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/of_reserved_mem.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/input/misc/nxp-bbnsm-pwrkey.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/of/of_reserved_mem.c
-+++ b/drivers/of/of_reserved_mem.c
-@@ -263,6 +263,11 @@ void __init fdt_scan_reserved_mem_reg_no
- 			       uname);
- 			continue;
- 		}
+--- a/drivers/input/misc/nxp-bbnsm-pwrkey.c
++++ b/drivers/input/misc/nxp-bbnsm-pwrkey.c
+@@ -187,6 +187,12 @@ static int bbnsm_pwrkey_probe(struct pla
+ 	return 0;
+ }
+ 
++static void bbnsm_pwrkey_remove(struct platform_device *pdev)
++{
++	dev_pm_clear_wake_irq(&pdev->dev);
++	device_init_wakeup(&pdev->dev, false);
++}
 +
-+		if (len > t_len)
-+			pr_warn("%s() ignores %d regions in node '%s'\n",
-+				__func__, len / t_len - 1, uname);
+ static int __maybe_unused bbnsm_pwrkey_suspend(struct device *dev)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev);
+@@ -223,6 +229,8 @@ static struct platform_driver bbnsm_pwrk
+ 		.of_match_table = bbnsm_pwrkey_ids,
+ 	},
+ 	.probe = bbnsm_pwrkey_probe,
++	.remove = bbnsm_pwrkey_remove,
 +
- 		base = dt_mem_next_cell(dt_root_addr_cells, &prop);
- 		size = dt_mem_next_cell(dt_root_size_cells, &prop);
+ };
+ module_platform_driver(bbnsm_pwrkey_driver);
  
 
 
