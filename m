@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F91B14B95A;
-	Thu, 13 Feb 2025 14:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDC114B95A;
+	Thu, 13 Feb 2025 14:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457535; cv=none; b=cvzug2skn9DwDlMle/MHHnMR4b6LvCT0FuOuePmm+aBc4k/2xU0MdEcM+mWjCydbqplngzvEZAN5cC9ixFkIB7OMRmXr82V46ACavGMSouubfKuvvJftoSKdFdNyf1+x3hDGrBXbR4kEpwM3kEbDi+sFt04Ae2+QjheafTLI+3Q=
+	t=1739457539; cv=none; b=c/JoUGsPwa8AQxloud6PloZSI9v5VwjCbEMYTPHU1Qt76UaF7w/idFJ0qHQnAuri66lBWUnWhcmYa4dAK0EdeaDlSDjkFOHC1RYYRBgFukYJDjhFlWAIQTTABGxFgSxBJ2hK3fscEWamFCAFxNP1sB7IWStibFMk/oB0MKqLV+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457535; c=relaxed/simple;
-	bh=WY/i989U0hs/MJB1fntLsREdJlrSX0W6s5TjWclDq1Y=;
+	s=arc-20240116; t=1739457539; c=relaxed/simple;
+	bh=dRPsd0Iu+BKBsIXlFfv9lQO7ioyRnZipBN7RsdDm+5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qc95p6PdXjKNQ7umAKaK4lVH2czbjTCDJAbW9/aAwcMg1T746ITvKXSv35QR9DI0W9C8NakZBhIl4YS5ibyQp1kiLuPoemBmWYT1luHJRVRggx0idfe5/ea9QHyghc9AX/L75oUOQgPkxzzy7NnwYN9YAl7W2OLywkAuIU4uvLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ap6WYbK/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s6/hjx8ubTv9MQNryuyeSHcSqzpLHn7vGdZJKIYYGHXuAJeWOqxcGrqMSlcS8LsEUUz844itlsAIGWFtJr/TqKVTRV3jpq+0P89u/nhgbkmzg0c4r2NVKisMeXUtFyvsrKPCyN5EQ8w7HF6geKFM5Uz/htruqAx6lP88G2GG+jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02ly5yd+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ap6WYbK/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01CAAC4CED1;
-	Thu, 13 Feb 2025 14:38:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02ly5yd+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4168EC4CED1;
+	Thu, 13 Feb 2025 14:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457535;
-	bh=WY/i989U0hs/MJB1fntLsREdJlrSX0W6s5TjWclDq1Y=;
+	s=korg; t=1739457538;
+	bh=dRPsd0Iu+BKBsIXlFfv9lQO7ioyRnZipBN7RsdDm+5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ap6WYbK/TGk6P8RFED3owRPtshnbdMqmZH4KUeLwsh/tv5h/6L0yk753aJNyHsMyN
-	 51AoF+yRzr42pRMOoMjZpA9VPcKt9M1J+sPEixOhTRIprr28sEtnIDx24LcIE/WTo9
-	 ZJd8T0TyzgRQzTbGW1FCJJGstfJ9W4RpC9AqiOmo=
+	b=02ly5yd+zI4lYZcPldkdmxgwYswOJTLChdn04JIiz1BIgpBAki2b13EXLIBYV0fFn
+	 lVIrCymJl+eT7TaFvhjBISqIVlIUWgW7S6RUezoW8LQ+sHxc0QmRpNskXEtJy0AIz9
+	 4oITPOvFfeHy8RG/T7Ykfc97cDw+Yts5HSwuRCoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	kernel test robot <lkp@intel.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 140/422] m68k: vga: Fix I/O defines
-Date: Thu, 13 Feb 2025 15:24:49 +0100
-Message-ID: <20250213142441.949277766@linuxfoundation.org>
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Kees Cook <kees@kernel.org>,
+	Nam Cao <namcao@linutronix.de>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.12 141/422] fs/proc: do_task_stat: Fix ESP not readable during coredump
+Date: Thu, 13 Feb 2025 15:24:50 +0100
+Message-ID: <20250213142441.988206031@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -54,83 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Nam Cao <namcao@linutronix.de>
 
-commit 53036937a101b5faeaf98e7438555fa854a1a844 upstream.
+commit ab251dacfbae28772c897f068a4184f478189ff2 upstream.
 
-Including m68k's <asm/raw_io.h> in vga.h on nommu platforms results
-in conflicting defines with io_no.h for various I/O macros from the
-__raw_read and __raw_write families. An example error is
+The field "eip" (instruction pointer) and "esp" (stack pointer) of a task
+can be read from /proc/PID/stat. These fields can be interesting for
+coredump.
 
-   In file included from arch/m68k/include/asm/vga.h:12,
-                 from include/video/vga.h:22,
-                 from include/linux/vgaarb.h:34,
-		 from drivers/video/aperture.c:12:
->> arch/m68k/include/asm/raw_io.h:39: warning: "__raw_readb" redefined
-      39 | #define __raw_readb in_8
-	 |
-   In file included from arch/m68k/include/asm/io.h:6,
-		    from include/linux/io.h:13,
-		    from include/linux/irq.h:20,
-		    from include/asm-generic/hardirq.h:17,
-		    from ./arch/m68k/include/generated/asm/hardirq.h:1,
-		    from include/linux/hardirq.h:11,
-		    from include/linux/interrupt.h:11,
-                    from include/linux/trace_recursion.h:5,
-		    from include/linux/ftrace.h:10,
-		    from include/linux/kprobes.h:28,
-		    from include/linux/kgdb.h:19,
-		    from include/linux/fb.h:6,
-		    from drivers/video/aperture.c:5:
-   arch/m68k/include/asm/io_no.h:16: note: this is the location of the previous definition
-      16 | #define __raw_readb(addr) \
-	 |
+However, these fields were disabled by commit 0a1eb2d474ed ("fs/proc: Stop
+reporting eip and esp in /proc/PID/stat"), because it is generally unsafe
+to do so. But it is safe for a coredumping process, and therefore
+exceptions were made:
 
-Include <asm/io.h>, which avoids raw_io.h on nommu platforms.
-Also change the defined values of some of the read/write symbols in
-vga.h to __raw_read/__raw_write as the raw_in/raw_out symbols are not
-generally available.
+  - for a coredumping thread by commit fd7d56270b52 ("fs/proc: Report
+    eip/esp in /prod/PID/stat for coredumping").
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501071629.DNEswlm8-lkp@intel.com/
-Fixes: 5c3f968712ce ("m68k/video: Create <asm/vga.h>")
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: linux-fbdev@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v3.5+
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/20250107095912.130530-1-tzimmermann@suse.de
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+  - for all other threads in a coredumping process by commit cb8f381f1613
+    ("fs/proc/array.c: allow reporting eip/esp for all coredumping
+    threads").
+
+The above two commits check the PF_DUMPCORE flag to determine a coredump thread
+and the PF_EXITING flag for the other threads.
+
+Unfortunately, commit 92307383082d ("coredump:  Don't perform any cleanups
+before dumping core") moved coredump to happen earlier and before PF_EXITING is
+set. Thus, checking PF_EXITING is no longer the correct way to determine
+threads in a coredumping process.
+
+Instead of PF_EXITING, use PF_POSTCOREDUMP to determine the other threads.
+
+Checking of PF_EXITING was added for coredumping, so it probably can now be
+removed. But it doesn't hurt to keep.
+
+Fixes: 92307383082d ("coredump:  Don't perform any cleanups before dumping core")
+Cc: stable@vger.kernel.org
+Cc: Eric W. Biederman <ebiederm@xmission.com>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Acked-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Link: https://lore.kernel.org/r/d89af63d478d6c64cc46a01420b46fd6eb147d6f.1735805772.git.namcao@linutronix.de
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/m68k/include/asm/vga.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/proc/array.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/m68k/include/asm/vga.h
-+++ b/arch/m68k/include/asm/vga.h
-@@ -9,7 +9,7 @@
-  */
- #ifndef CONFIG_PCI
- 
--#include <asm/raw_io.h>
-+#include <asm/io.h>
- #include <asm/kmap.h>
- 
- /*
-@@ -29,9 +29,9 @@
- #define inw_p(port)		0
- #define outb_p(port, val)	do { } while (0)
- #define outw(port, val)		do { } while (0)
--#define readb			raw_inb
--#define writeb			raw_outb
--#define writew			raw_outw
-+#define readb			__raw_readb
-+#define writeb			__raw_writeb
-+#define writew			__raw_writew
- 
- #endif /* CONFIG_PCI */
- #endif /* _ASM_M68K_VGA_H */
+--- a/fs/proc/array.c
++++ b/fs/proc/array.c
+@@ -500,7 +500,7 @@ static int do_task_stat(struct seq_file
+ 		 * a program is not able to use ptrace(2) in that case. It is
+ 		 * safe because the task has stopped executing permanently.
+ 		 */
+-		if (permitted && (task->flags & (PF_EXITING|PF_DUMPCORE))) {
++		if (permitted && (task->flags & (PF_EXITING|PF_DUMPCORE|PF_POSTCOREDUMP))) {
+ 			if (try_get_task_stack(task)) {
+ 				eip = KSTK_EIP(task);
+ 				esp = KSTK_ESP(task);
 
 
