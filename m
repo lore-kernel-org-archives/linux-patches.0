@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEECB73176;
-	Thu, 13 Feb 2025 15:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1E73FB3B;
+	Thu, 13 Feb 2025 15:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460045; cv=none; b=bSKjvLJizp2FEfodHeuQQ4lD+cEVcQHTy+HrF8U1o+lJigZ1hE3QFF6csbwo2CKJSS+n5UNOd+6wZHHFXbVO1sRYU/CAfj77uGnLq0lJ8PpsvY8e/V+Lya3OKwY/YCBspx21s13rpXr6Ey+E3WvSbAiY7Auc8bXxac6Hms1029U=
+	t=1739460048; cv=none; b=eA5WZ4HB6P9uDcYYW+w5yAJzRcZxiqXfb3o65FA+VjcGhfZ84SpgDQ5b0X/zw/bPyRqlLSiSsMrSOoKja1w8MT2S4UHRCAuCkM1bX7cDf8dG7Yp2ZvC8KujdIuGFglz++N8lhYbKoQwLDn0L7wE0rMKi6przTGkXZTjllg26ULc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460045; c=relaxed/simple;
-	bh=oQosQRIYk+hXlVPEo/LXcfQeotNPSY8odnU32Q9d1ds=;
+	s=arc-20240116; t=1739460048; c=relaxed/simple;
+	bh=8h10gbFeUh0LIxLngSvuZrv02V9YtXZtxDyWyB4xPjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G8TFIvINuLBRAc2/H2YRXQDsMarV9DLZDmwXWZBXdzpmVVkKwKM+EOJZ6JFiyP+2TRh3G+VdHaVls724BT+9yuq8HGbXGgUARpD9l2I3DBf0TqaQaN9SnECPfuSwaJlhklBxPXBpFbDIyWWFhLkN+urAUbKF1f+yZeEkO9eW1lU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCsXhDeG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bd/6i4/mi/xkvy6Wx0hfXgtU8JwBy0GtnYDkn5j9iuL7yN/fyJEX8Mq+X2AmAfjrbAU5bNozjpTjNsi8KBa0EjqK3vGAzLb6cnVG9ZMeHzYpj6PG0z2nb5uICYLRwdQmlaVzgiWb4Hai8zUqYNaU9ZsKW2NtTaQQbyQ+YA622oY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zC5F/e9W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCsXhDeG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8D9C4CED1;
-	Thu, 13 Feb 2025 15:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zC5F/e9W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49903C4CED1;
+	Thu, 13 Feb 2025 15:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460044;
-	bh=oQosQRIYk+hXlVPEo/LXcfQeotNPSY8odnU32Q9d1ds=;
+	s=korg; t=1739460047;
+	bh=8h10gbFeUh0LIxLngSvuZrv02V9YtXZtxDyWyB4xPjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCsXhDeGmvcJZnzj+JQAh3aHZ3wRxXtMTB1OUWEX8Ho0eXaZaqAbdz2tAAcj2TCWV
-	 jTxsdM6ekcFRtUTlFwpgWQIAJ2MfczQh7z//YEEwTL++Rfrjr4hcLTRFH+iYtQ8W0v
-	 lG6h5yFAI8Ix/kFBUBknXJp4wwygb0sTbOm6iuZI=
+	b=zC5F/e9Wi7+nJ/P0veCybFFO80nWDgFglwkaXpHgC++0Tm0rS/nDD8qDw/MTZ+mNj
+	 FP1hYijmBH1/UcATNJoM6EkTZnd8C4ERASsOlVC3Vp9yDue6+pmu8CFg7zkMORm4+l
+	 Fj5aP71RgXzWd/do6krSYHvkm8JFWAud/uHODVXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.13 440/443] Revert "drm/amd/display: Fix green screen issue after suspend"
-Date: Thu, 13 Feb 2025 15:30:05 +0100
-Message-ID: <20250213142457.592986259@linuxfoundation.org>
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.13 441/443] wifi: rtw89: pci: disable PCIE wake bit when PCIE deinit
+Date: Thu, 13 Feb 2025 15:30:06 +0100
+Message-ID: <20250213142457.632979147@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -54,189 +49,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-commit 04d6273faed083e619fc39a738ab0372b6a4db20 upstream.
+commit 9c1df813e08832c3836c254bc8a2f83ff22dbc06 upstream.
 
-This reverts commit 87b7ebc2e16c14d32a912f18206a4d6cc9abc3e8.
+The PCIE wake bit is to control PCIE wake signal to host. When PCIE is
+going down, clear this bit to prevent waking up host unexpectedly.
 
-A long time ago, we had an issue with the Raven system when it was
-connected to two displays: one with DP and another with HDMI. After the
-system woke up from suspension, we saw a solid green screen caused by an
-underflow generated by bad DCC metadata. To workaround this issue, the
-'commit 87b7ebc2e16c ("drm/amd/display: Fix green screen issue after
-suspend")' was introduced to disable the DCC for a few frames after in
-the resume phase. However, in hindsight, this solution was probably a
-workaround at the kernel level for some issues from another part
-(probably other driver components or user space). After applying this
-patch and trying to reproduce the green issue in a similar hardware
-system but using the latest kernel and userspace, we cannot see the
-issue, which makes this workaround obsolete and creates extra
-unnecessary complexity to the code; for all of this reason, this commit
-reverts the original change.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241111063835.15454-1-pkshih@realtek.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c       |   12 ++------
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c |   22 +++++-----------
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.h |    3 --
- 3 files changed, 13 insertions(+), 24 deletions(-)
+ drivers/net/wireless/realtek/rtw89/pci.c    |   16 +++++++++++++---
+ drivers/net/wireless/realtek/rtw89/pci.h    |    9 +++++++++
+ drivers/net/wireless/realtek/rtw89/pci_be.c |    1 +
+ 3 files changed, 23 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5530,8 +5530,7 @@ fill_dc_plane_info_and_addr(struct amdgp
- 			    const u64 tiling_flags,
- 			    struct dc_plane_info *plane_info,
- 			    struct dc_plane_address *address,
--			    bool tmz_surface,
--			    bool force_disable_dcc)
-+			    bool tmz_surface)
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -2516,7 +2516,7 @@ static int rtw89_pci_dphy_delay(struct r
+ 				       PCIE_DPHY_DLY_25US, PCIE_PHY_GEN1);
+ }
+ 
+-static void rtw89_pci_power_wake(struct rtw89_dev *rtwdev, bool pwr_up)
++static void rtw89_pci_power_wake_ax(struct rtw89_dev *rtwdev, bool pwr_up)
  {
- 	const struct drm_framebuffer *fb = plane_state->fb;
- 	const struct amdgpu_framebuffer *afb =
-@@ -5630,7 +5629,7 @@ fill_dc_plane_info_and_addr(struct amdgp
- 					   &plane_info->tiling_info,
- 					   &plane_info->plane_size,
- 					   &plane_info->dcc, address,
--					   tmz_surface, force_disable_dcc);
-+					   tmz_surface);
- 	if (ret)
+ 	if (pwr_up)
+ 		rtw89_write32_set(rtwdev, R_AX_HCI_OPT_CTRL, BIT_WAKE_CTRL);
+@@ -2825,6 +2825,8 @@ static int rtw89_pci_ops_deinit(struct r
+ {
+ 	const struct rtw89_pci_info *info = rtwdev->pci_info;
+ 
++	rtw89_pci_power_wake(rtwdev, false);
++
+ 	if (rtwdev->chip->chip_id == RTL8852A) {
+ 		/* ltr sw trigger */
+ 		rtw89_write32_set(rtwdev, R_AX_LTR_CTRL_0, B_AX_APP_LTR_IDLE);
+@@ -2867,7 +2869,7 @@ static int rtw89_pci_ops_mac_pre_init_ax
  		return ret;
- 
-@@ -5651,7 +5650,6 @@ static int fill_dc_plane_attributes(stru
- 	struct dc_scaling_info scaling_info;
- 	struct dc_plane_info plane_info;
- 	int ret;
--	bool force_disable_dcc = false;
- 
- 	ret = amdgpu_dm_plane_fill_dc_scaling_info(adev, plane_state, &scaling_info);
- 	if (ret)
-@@ -5662,13 +5660,11 @@ static int fill_dc_plane_attributes(stru
- 	dc_plane_state->clip_rect = scaling_info.clip_rect;
- 	dc_plane_state->scaling_quality = scaling_info.scaling_quality;
- 
--	force_disable_dcc = adev->asic_type == CHIP_RAVEN && adev->in_suspend;
- 	ret = fill_dc_plane_info_and_addr(adev, plane_state,
- 					  afb->tiling_flags,
- 					  &plane_info,
- 					  &dc_plane_state->address,
--					  afb->tmz_surface,
--					  force_disable_dcc);
-+					  afb->tmz_surface);
- 	if (ret)
- 		return ret;
- 
-@@ -9076,7 +9072,7 @@ static void amdgpu_dm_commit_planes(stru
- 			afb->tiling_flags,
- 			&bundle->plane_infos[planes_count],
- 			&bundle->flip_addrs[planes_count].address,
--			afb->tmz_surface, false);
-+			afb->tmz_surface);
- 
- 		drm_dbg_state(state->dev, "plane: id=%d dcc_en=%d\n",
- 				 new_plane_state->plane->index,
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-@@ -309,8 +309,7 @@ static int amdgpu_dm_plane_fill_gfx9_pla
- 								     const struct plane_size *plane_size,
- 								     union dc_tiling_info *tiling_info,
- 								     struct dc_plane_dcc_param *dcc,
--								     struct dc_plane_address *address,
--								     const bool force_disable_dcc)
-+								     struct dc_plane_address *address)
- {
- 	const uint64_t modifier = afb->base.modifier;
- 	int ret = 0;
-@@ -318,7 +317,7 @@ static int amdgpu_dm_plane_fill_gfx9_pla
- 	amdgpu_dm_plane_fill_gfx9_tiling_info_from_modifier(adev, tiling_info, modifier);
- 	tiling_info->gfx9.swizzle = amdgpu_dm_plane_modifier_gfx9_swizzle_mode(modifier);
- 
--	if (amdgpu_dm_plane_modifier_has_dcc(modifier) && !force_disable_dcc) {
-+	if (amdgpu_dm_plane_modifier_has_dcc(modifier)) {
- 		uint64_t dcc_address = afb->address + afb->base.offsets[1];
- 		bool independent_64b_blks = AMD_FMT_MOD_GET(DCC_INDEPENDENT_64B, modifier);
- 		bool independent_128b_blks = AMD_FMT_MOD_GET(DCC_INDEPENDENT_128B, modifier);
-@@ -360,8 +359,7 @@ static int amdgpu_dm_plane_fill_gfx12_pl
- 								      const struct plane_size *plane_size,
- 								      union dc_tiling_info *tiling_info,
- 								      struct dc_plane_dcc_param *dcc,
--								      struct dc_plane_address *address,
--								      const bool force_disable_dcc)
-+								      struct dc_plane_address *address)
- {
- 	const uint64_t modifier = afb->base.modifier;
- 	int ret = 0;
-@@ -371,7 +369,7 @@ static int amdgpu_dm_plane_fill_gfx12_pl
- 
- 	tiling_info->gfx9.swizzle = amdgpu_dm_plane_modifier_gfx9_swizzle_mode(modifier);
- 
--	if (amdgpu_dm_plane_modifier_has_dcc(modifier) && !force_disable_dcc) {
-+	if (amdgpu_dm_plane_modifier_has_dcc(modifier)) {
- 		int max_compressed_block = AMD_FMT_MOD_GET(DCC_MAX_COMPRESSED_BLOCK, modifier);
- 
- 		dcc->enable = 1;
-@@ -839,8 +837,7 @@ int amdgpu_dm_plane_fill_plane_buffer_at
- 			     struct plane_size *plane_size,
- 			     struct dc_plane_dcc_param *dcc,
- 			     struct dc_plane_address *address,
--			     bool tmz_surface,
--			     bool force_disable_dcc)
-+			     bool tmz_surface)
- {
- 	const struct drm_framebuffer *fb = &afb->base;
- 	int ret;
-@@ -900,16 +897,14 @@ int amdgpu_dm_plane_fill_plane_buffer_at
- 		ret = amdgpu_dm_plane_fill_gfx12_plane_attributes_from_modifiers(adev, afb, format,
- 										 rotation, plane_size,
- 										 tiling_info, dcc,
--										 address,
--										 force_disable_dcc);
-+										 address);
- 		if (ret)
- 			return ret;
- 	} else if (adev->family >= AMDGPU_FAMILY_AI) {
- 		ret = amdgpu_dm_plane_fill_gfx9_plane_attributes_from_modifiers(adev, afb, format,
- 										rotation, plane_size,
- 										tiling_info, dcc,
--										address,
--										force_disable_dcc);
-+										address);
- 		if (ret)
- 			return ret;
- 	} else {
-@@ -1000,14 +995,13 @@ static int amdgpu_dm_plane_helper_prepar
- 	    dm_plane_state_old->dc_state != dm_plane_state_new->dc_state) {
- 		struct dc_plane_state *plane_state =
- 			dm_plane_state_new->dc_state;
--		bool force_disable_dcc = !plane_state->dcc.enable;
- 
- 		amdgpu_dm_plane_fill_plane_buffer_attributes(
- 			adev, afb, plane_state->format, plane_state->rotation,
- 			afb->tiling_flags,
- 			&plane_state->tiling_info, &plane_state->plane_size,
- 			&plane_state->dcc, &plane_state->address,
--			afb->tmz_surface, force_disable_dcc);
-+			afb->tmz_surface);
  	}
  
+-	rtw89_pci_power_wake(rtwdev, true);
++	rtw89_pci_power_wake_ax(rtwdev, true);
+ 	rtw89_pci_autoload_hang(rtwdev);
+ 	rtw89_pci_l12_vmain(rtwdev);
+ 	rtw89_pci_gen2_force_ib(rtwdev);
+@@ -2912,6 +2914,13 @@ static int rtw89_pci_ops_mac_pre_init_ax
  	return 0;
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.h
-@@ -51,8 +51,7 @@ int amdgpu_dm_plane_fill_plane_buffer_at
- 				 struct plane_size *plane_size,
- 				 struct dc_plane_dcc_param *dcc,
- 				 struct dc_plane_address *address,
--				 bool tmz_surface,
--				 bool force_disable_dcc);
-+				 bool tmz_surface);
+ }
  
- int amdgpu_dm_plane_init(struct amdgpu_display_manager *dm,
- 			 struct drm_plane *plane,
++static int rtw89_pci_ops_mac_pre_deinit_ax(struct rtw89_dev *rtwdev)
++{
++	rtw89_pci_power_wake_ax(rtwdev, false);
++
++	return 0;
++}
++
+ int rtw89_pci_ltr_set(struct rtw89_dev *rtwdev, bool en)
+ {
+ 	u32 val;
+@@ -4325,7 +4334,7 @@ const struct rtw89_pci_gen_def rtw89_pci
+ 					    B_AX_RDU_INT},
+ 
+ 	.mac_pre_init = rtw89_pci_ops_mac_pre_init_ax,
+-	.mac_pre_deinit = NULL,
++	.mac_pre_deinit = rtw89_pci_ops_mac_pre_deinit_ax,
+ 	.mac_post_init = rtw89_pci_ops_mac_post_init_ax,
+ 
+ 	.clr_idx_all = rtw89_pci_clr_idx_all_ax,
+@@ -4343,6 +4352,7 @@ const struct rtw89_pci_gen_def rtw89_pci
+ 	.l1ss_set = rtw89_pci_l1ss_set_ax,
+ 
+ 	.disable_eq = rtw89_pci_disable_eq_ax,
++	.power_wake = rtw89_pci_power_wake_ax,
+ };
+ EXPORT_SYMBOL(rtw89_pci_gen_ax);
+ 
+--- a/drivers/net/wireless/realtek/rtw89/pci.h
++++ b/drivers/net/wireless/realtek/rtw89/pci.h
+@@ -1290,6 +1290,7 @@ struct rtw89_pci_gen_def {
+ 	void (*l1ss_set)(struct rtw89_dev *rtwdev, bool enable);
+ 
+ 	void (*disable_eq)(struct rtw89_dev *rtwdev);
++	void (*power_wake)(struct rtw89_dev *rtwdev, bool pwr_up);
+ };
+ 
+ #define RTW89_PCI_SSID(v, d, ssv, ssd, cust) \
+@@ -1805,4 +1806,12 @@ static inline void rtw89_pci_disable_eq(
+ 	gen_def->disable_eq(rtwdev);
+ }
+ 
++static inline void rtw89_pci_power_wake(struct rtw89_dev *rtwdev, bool pwr_up)
++{
++	const struct rtw89_pci_info *info = rtwdev->pci_info;
++	const struct rtw89_pci_gen_def *gen_def = info->gen_def;
++
++	gen_def->power_wake(rtwdev, pwr_up);
++}
++
+ #endif
+--- a/drivers/net/wireless/realtek/rtw89/pci_be.c
++++ b/drivers/net/wireless/realtek/rtw89/pci_be.c
+@@ -691,5 +691,6 @@ const struct rtw89_pci_gen_def rtw89_pci
+ 	.l1ss_set = rtw89_pci_l1ss_set_be,
+ 
+ 	.disable_eq = rtw89_pci_disable_eq_be,
++	.power_wake = _patch_pcie_power_wake_be,
+ };
+ EXPORT_SYMBOL(rtw89_pci_gen_be);
 
 
