@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC46F13D8A4;
-	Thu, 13 Feb 2025 15:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25DC335BA;
+	Thu, 13 Feb 2025 15:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460188; cv=none; b=oQD5UPKVo/vxjAz7BLwXnBlLWaZCeihl7IBm6bq6XCIYVYPoXnawsHVrk5BhocxGHsD+6jXtvixQ8ubiFYqRFEPV1kStLU9Mz3XbjGP7mKCtfRBeoBKqkGfT3NhQbEJ0bX/5CIwKE0w+sojIpNMlWP0M4Iy+aH0LQoF+hZ9uoPg=
+	t=1739460191; cv=none; b=uc5oI16g+zNgdQ7KmiaXug3vEf8yhe8tSETYYfNewoK+NT0VqGwY2aPBk2LsLsHhDmmXCo1MJAc6eIuyWENSOM8XS3qWu3yiEJDn+UIRu14KhjXoRI4v4kvW8liq+IZjnX86ql7z4kv2xiLOTjHPKNS9SChv3hFwuQf/NbimjwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460188; c=relaxed/simple;
-	bh=CcllPWfxUDs3teXf1UyMRwTyPIlh+Dja+DLvSg0sCy8=;
+	s=arc-20240116; t=1739460191; c=relaxed/simple;
+	bh=GsufXCY6LMnBAjLg6nSBFnUtwy/ufS6emYISkPFrXtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iK4GNLbAX2ZH5jwxDBUCeit8ioTY3eNK1ZrCM/baIAj8dtmK1ayUaZSMIga7ut/vGt9uvgzsnWIOnTRNQrtxYw+R5Yy2P6LB8Yi7iTGydN7BANsP3GqLM6J0nCigC3NyuokLnj9FRQMBAGso9ri9AJpVlPKqDOLsUMXDSqw+bp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d33CzV0E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lQussTeCkIK00ElvZK4RYY31/xITeJJuwfKhMcWsGoLaWGWMYSq7H62hnjAKkaxU9MeCwanm1JM4LLEBxMQoGiS7b5ycKv0qNtSc/MFCWnCT4mURp1PVRt9sDGz3vE8H/oSXvPp2J444AfbqjPAJwqQt+0IGNHL2bwmSnHNEWjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oULZR8uW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d33CzV0E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A70C4CED1;
-	Thu, 13 Feb 2025 15:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oULZR8uW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44B6C4CED1;
+	Thu, 13 Feb 2025 15:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460187;
-	bh=CcllPWfxUDs3teXf1UyMRwTyPIlh+Dja+DLvSg0sCy8=;
+	s=korg; t=1739460191;
+	bh=GsufXCY6LMnBAjLg6nSBFnUtwy/ufS6emYISkPFrXtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d33CzV0E6WNnBRaVHK1tH5OG2UWAgAPjtLC5Mzygk8JeAKUyj1RkP68hQegrCEsrs
-	 NiNiZlG9g14vixbyx0pgEis4Ui6M/ag941LVuu7m4SjCq7/4VyVkluoXhGI6VXm8in
-	 JeL5RIks8hHOs1PEbklAdvmJgR0pVqwlNGZwERdw=
+	b=oULZR8uWgq7kS5NxqRcnvazXBPcJ8RiVrLssRVEbgITiUt6kdYJRhsHMKorpKKUE4
+	 NSOt5/mq52Adc6u4JkUbqgxOUZW1fQ+SqBKyUJiFlTlEJPhIyi9z+czbLe+WTG8KPt
+	 pf1u3DsGdBipXKR1vTdiNZJL1dLz7bOo6rSXDvLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+479aff51bb361ef5aa18@syzkaller.appspotmail.com,
-	Mazin Al Haddad <mazin@getstate.dev>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+	"Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 041/273] Bluetooth: MGMT: Fix slab-use-after-free Read in mgmt_remove_adv_monitor_sync
-Date: Thu, 13 Feb 2025 15:26:53 +0100
-Message-ID: <20250213142408.976563544@linuxfoundation.org>
+Subject: [PATCH 6.6 042/273] net: wwan: iosm: Fix hibernation by re-binding the driver around it
+Date: Thu, 13 Feb 2025 15:26:54 +0100
+Message-ID: <20250213142409.016168635@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -52,127 +52,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mazin Al Haddad <mazin@getstate.dev>
+From: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
 
-[ Upstream commit 26fbd3494a7dd26269cb0817c289267dbcfdec06 ]
+[ Upstream commit 0b6f6593aa8c3a05f155c12fd0e7ad33a5149c31 ]
 
-This fixes the following crash:
+Currently, the driver is seriously broken with respect to the
+hibernation (S4): after image restore the device is back into
+IPC_MEM_EXEC_STAGE_BOOT (which AFAIK means bootloader stage) and needs
+full re-launch of the rest of its firmware, but the driver restore
+handler treats the device as merely sleeping and just sends it a
+wake-up command.
 
-==================================================================
-BUG: KASAN: slab-use-after-free in mgmt_remove_adv_monitor_sync+0x3a/0xd0 net/bluetooth/mgmt.c:5543
-Read of size 8 at addr ffff88814128f898 by task kworker/u9:4/5961
+This wake-up command times out but device nodes (/dev/wwan*) remain
+accessible.
+However attempting to use them causes the bootloader to crash and
+enter IPC_MEM_EXEC_STAGE_CD_READY stage (which apparently means "a crash
+dump is ready").
 
-CPU: 1 UID: 0 PID: 5961 Comm: kworker/u9:4 Not tainted 6.12.0-syzkaller-10684-gf1cd565ce577 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-Workqueue: hci0 hci_cmd_sync_work
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:489
- kasan_report+0x143/0x180 mm/kasan/report.c:602
- mgmt_remove_adv_monitor_sync+0x3a/0xd0 net/bluetooth/mgmt.c:5543
- hci_cmd_sync_work+0x22b/0x400 net/bluetooth/hci_sync.c:332
- process_one_work kernel/workqueue.c:3229 [inline]
- process_scheduled_works+0xa63/0x1850 kernel/workqueue.c:3310
- worker_thread+0x870/0xd30 kernel/workqueue.c:3391
- kthread+0x2f0/0x390 kernel/kthread.c:389
- ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
- </TASK>
+It seems that the device cannot be re-initialized from this crashed
+stage without toggling some reset pin (on my test platform that's
+apparently what the device _RST ACPI method does).
 
-Allocated by task 16026:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0x98/0xb0 mm/kasan/common.c:394
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __kmalloc_cache_noprof+0x243/0x390 mm/slub.c:4314
- kmalloc_noprof include/linux/slab.h:901 [inline]
- kzalloc_noprof include/linux/slab.h:1037 [inline]
- mgmt_pending_new+0x65/0x250 net/bluetooth/mgmt_util.c:269
- mgmt_pending_add+0x36/0x120 net/bluetooth/mgmt_util.c:296
- remove_adv_monitor+0x102/0x1b0 net/bluetooth/mgmt.c:5568
- hci_mgmt_cmd+0xc47/0x11d0 net/bluetooth/hci_sock.c:1712
- hci_sock_sendmsg+0x7b8/0x11c0 net/bluetooth/hci_sock.c:1832
- sock_sendmsg_nosec net/socket.c:711 [inline]
- __sock_sendmsg+0x221/0x270 net/socket.c:726
- sock_write_iter+0x2d7/0x3f0 net/socket.c:1147
- new_sync_write fs/read_write.c:586 [inline]
- vfs_write+0xaeb/0xd30 fs/read_write.c:679
- ksys_write+0x18f/0x2b0 fs/read_write.c:731
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+While it would theoretically be possible to rewrite the driver to tear
+down the whole MUX / IPC layers on hibernation (so the bootloader does
+not crash from improper access) and then re-launch the device on
+restore this would require significant refactoring of the driver
+(believe me, I've tried), since there are quite a few assumptions
+hard-coded in the driver about the device never being partially
+de-initialized (like channels other than devlink cannot be closed,
+for example).
+Probably this would also need some programming guide for this hardware.
 
-Freed by task 16022:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
- kasan_save_free_info+0x40/0x50 mm/kasan/generic.c:582
- poison_slab_object mm/kasan/common.c:247 [inline]
- __kasan_slab_free+0x59/0x70 mm/kasan/common.c:264
- kasan_slab_free include/linux/kasan.h:233 [inline]
- slab_free_hook mm/slub.c:2338 [inline]
- slab_free mm/slub.c:4598 [inline]
- kfree+0x196/0x420 mm/slub.c:4746
- mgmt_pending_foreach+0xd1/0x130 net/bluetooth/mgmt_util.c:259
- __mgmt_power_off+0x183/0x430 net/bluetooth/mgmt.c:9550
- hci_dev_close_sync+0x6c4/0x11c0 net/bluetooth/hci_sync.c:5208
- hci_dev_do_close net/bluetooth/hci_core.c:483 [inline]
- hci_dev_close+0x112/0x210 net/bluetooth/hci_core.c:508
- sock_do_ioctl+0x158/0x460 net/socket.c:1209
- sock_ioctl+0x626/0x8e0 net/socket.c:1328
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:906 [inline]
- __se_sys_ioctl+0xf5/0x170 fs/ioctl.c:892
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Considering that the driver seems orphaned [1] and other people are
+hitting this issue too [2] fix it by simply unbinding the PCI driver
+before hibernation and re-binding it after restore, much like
+USB_QUIRK_RESET_RESUME does for USB devices that exhibit a similar
+problem.
 
-Reported-by: syzbot+479aff51bb361ef5aa18@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=479aff51bb361ef5aa18
-Tested-by: syzbot+479aff51bb361ef5aa18@syzkaller.appspotmail.com
-Signed-off-by: Mazin Al Haddad <mazin@getstate.dev>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested on XMM7360 in HP EliteBook 855 G7 both with s2idle (which uses
+the existing suspend / resume handlers) and S4 (which uses the new code).
+
+[1]: https://lore.kernel.org/all/c248f0b4-2114-4c61-905f-466a786bdebb@leemhuis.info/
+[2]:
+https://github.com/xmm7360/xmm7360-pci/issues/211#issuecomment-1804139413
+
+Reviewed-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
+Signed-off-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
+Link: https://patch.msgid.link/e60287ebdb0ab54c4075071b72568a40a75d0205.1736372610.git.mail@maciej.szmigiero.name
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/net/wwan/iosm/iosm_ipc_pcie.c | 56 ++++++++++++++++++++++++++-
+ 1 file changed, 55 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index e3440f0d7d9d9..b36254107ef57 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -5453,10 +5453,16 @@ static void mgmt_remove_adv_monitor_complete(struct hci_dev *hdev,
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_pcie.c b/drivers/net/wwan/iosm/iosm_ipc_pcie.c
+index 04517bd3325a2..a066977af0be5 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_pcie.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_pcie.c
+@@ -6,6 +6,7 @@
+ #include <linux/acpi.h>
+ #include <linux/bitfield.h>
+ #include <linux/module.h>
++#include <linux/suspend.h>
+ #include <net/rtnetlink.h>
+ 
+ #include "iosm_ipc_imem.h"
+@@ -18,6 +19,7 @@ MODULE_LICENSE("GPL v2");
+ /* WWAN GUID */
+ static guid_t wwan_acpi_guid = GUID_INIT(0xbad01b75, 0x22a8, 0x4f48, 0x87, 0x92,
+ 				       0xbd, 0xde, 0x94, 0x67, 0x74, 0x7d);
++static bool pci_registered;
+ 
+ static void ipc_pcie_resources_release(struct iosm_pcie *ipc_pcie)
  {
- 	struct mgmt_rp_remove_adv_monitor rp;
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_cp_remove_adv_monitor *cp = cmd->param;
-+	struct mgmt_cp_remove_adv_monitor *cp;
-+
-+	if (status == -ECANCELED ||
-+	    cmd != pending_find(MGMT_OP_REMOVE_ADV_MONITOR, hdev))
-+		return;
+@@ -448,7 +450,6 @@ static struct pci_driver iosm_ipc_driver = {
+ 	},
+ 	.id_table = iosm_ipc_ids,
+ };
+-module_pci_driver(iosm_ipc_driver);
  
- 	hci_dev_lock(hdev);
- 
-+	cp = cmd->param;
+ int ipc_pcie_addr_map(struct iosm_pcie *ipc_pcie, unsigned char *data,
+ 		      size_t size, dma_addr_t *mapping, int direction)
+@@ -530,3 +531,56 @@ void ipc_pcie_kfree_skb(struct iosm_pcie *ipc_pcie, struct sk_buff *skb)
+ 	IPC_CB(skb)->mapping = 0;
+ 	dev_kfree_skb(skb);
+ }
 +
- 	rp.monitor_handle = cp->monitor_handle;
- 
- 	if (!status)
-@@ -5474,6 +5480,10 @@ static void mgmt_remove_adv_monitor_complete(struct hci_dev *hdev,
- static int mgmt_remove_adv_monitor_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
++static int pm_notify(struct notifier_block *nb, unsigned long mode, void *_unused)
++{
++	if (mode == PM_HIBERNATION_PREPARE || mode == PM_RESTORE_PREPARE) {
++		if (pci_registered) {
++			pci_unregister_driver(&iosm_ipc_driver);
++			pci_registered = false;
++		}
++	} else if (mode == PM_POST_HIBERNATION || mode == PM_POST_RESTORE) {
++		if (!pci_registered) {
++			int ret;
 +
-+	if (cmd != pending_find(MGMT_OP_REMOVE_ADV_MONITOR, hdev))
-+		return -ECANCELED;
++			ret = pci_register_driver(&iosm_ipc_driver);
++			if (ret) {
++				pr_err(KBUILD_MODNAME ": unable to re-register PCI driver: %d\n",
++				       ret);
++			} else {
++				pci_registered = true;
++			}
++		}
++	}
 +
- 	struct mgmt_cp_remove_adv_monitor *cp = cmd->param;
- 	u16 handle = __le16_to_cpu(cp->monitor_handle);
- 
++	return 0;
++}
++
++static struct notifier_block pm_notifier = {
++	.notifier_call = pm_notify,
++};
++
++static int __init iosm_ipc_driver_init(void)
++{
++	int ret;
++
++	ret = pci_register_driver(&iosm_ipc_driver);
++	if (ret)
++		return ret;
++
++	pci_registered = true;
++
++	register_pm_notifier(&pm_notifier);
++
++	return 0;
++}
++module_init(iosm_ipc_driver_init);
++
++static void __exit iosm_ipc_driver_exit(void)
++{
++	unregister_pm_notifier(&pm_notifier);
++
++	if (pci_registered)
++		pci_unregister_driver(&iosm_ipc_driver);
++}
++module_exit(iosm_ipc_driver_exit);
 -- 
 2.39.5
 
