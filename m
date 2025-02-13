@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9122F14A605;
-	Thu, 13 Feb 2025 15:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8818538389;
+	Thu, 13 Feb 2025 15:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459710; cv=none; b=b3x9cNZUWlUd7pBEiAuXK0PE+FiiBUhFETRtsxipGhYJ5hxswedq87mL0k9UDXw/g1dTKVcAaiuzgml7N2lRMUsRp6tf7S8gGuN6bRZAz8qaHrNYkea+WERZZxdITAErwGYuAjwfQKvpbbnCLGYHhEnXhkdd4epVvmh53fPJe6Y=
+	t=1739459714; cv=none; b=m076NF2QEwrejhxYDkBSkMwzW+P2z7Kb5ixH609n2n06xim3Zql8frKueeFa4kvnF+r4YFRl41IOdXh2TvROPtJ0TqKbyLzDTKK/zRmgXVj9RHVe85YAn/feAi57CpxWKlewe/LaejVBhY/0RbaXE1XxgskXnvJU08KyXJsHzcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459710; c=relaxed/simple;
-	bh=MtpgyGppXRL3aC0RYWxIc14A3cTfy/KIYyM7LntrWTU=;
+	s=arc-20240116; t=1739459714; c=relaxed/simple;
+	bh=UwIiju2Fr0rLC81XXQkyh7MEKL2ZEZ9n4jdJTSOVY4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OjQJte2VKdGpue5nTFULLwbweEm9GtpQD8JPFGaZtNdTyBxSVmnk+OMkRbXznTGM/S9DKzKK02GsQnrB415TRclH0JCfxdGFln4U09ClaOY7Bz9rt8Nw/Zhm1VXF9JPhoDLKQ6nu9mImYotBjGVc5AoZrVLESqCqrXe4tUUHkoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKqGOMJM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AtY69XAfekA+cZHqFoLsTxtCP6U0J8NSQwZqTi30z7OEmbGuxwPb+HrK6dkZq4y8/1nmm5PM+1uMYJsA9TT4N75NKFr9uXCJdk3NVzOInwwNxM1FHYgttDEzNiwSpYZixZ6wRSxpHo64TN5ZpHUuWufBHTTSbNbgYevsTFizTJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdx0aFQs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKqGOMJM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023BCC4CEE4;
-	Thu, 13 Feb 2025 15:15:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdx0aFQs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C4CC4CEE4;
+	Thu, 13 Feb 2025 15:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459710;
-	bh=MtpgyGppXRL3aC0RYWxIc14A3cTfy/KIYyM7LntrWTU=;
+	s=korg; t=1739459714;
+	bh=UwIiju2Fr0rLC81XXQkyh7MEKL2ZEZ9n4jdJTSOVY4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xKqGOMJMtG0tdg31rt1wNSbQcvF7edIKEWJqDc7ikC6+Cdw5DLgf7NPkfxdZ1W8+v
-	 ycCNI+BEj6YmkiO5THVy/Gwiavfq2bUpeyC7sKD8JPR1KGdeMucDljnT+mywsaixIu
-	 rHvhCdIRDrPvm8KJnF0lnB3AZi5UdhBaT79pKuT8=
+	b=gdx0aFQstTMUTJM7YG390mGEXYEAFBN+YN2RGHtQQGBlbPzeDT8o7fnVUhehZ+jF8
+	 3nv9wARByt+XRa+E7EYTK4o//ONbXVBQDh8lovayz+G+W1EkdcMn+BMfMTabA2hw/l
+	 3nk4j+tYILs4VJMVfElCNDDIUx9UX98Zy2Qmgld8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>
-Subject: [PATCH 6.13 340/443] iommufd: Fix struct iommu_hwpt_pgfault init and padding
-Date: Thu, 13 Feb 2025 15:28:25 +0100
-Message-ID: <20250213142453.743345320@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.13 310/443] arm64: dts: qcom: sm8350: Fix ADSP memory base and length
+Date: Thu, 13 Feb 2025 15:27:55 +0100
+Message-ID: <20250213142452.576751752@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,96 +51,324 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit e721f619e3ec9bae08bf419c3944cf1e6966c821 upstream.
+commit f9ba85566ddd5a3db8fa291aaecd70c4e55a3732 upstream.
 
-The iommu_hwpt_pgfault is used to report IO page fault data to userspace,
-but iommufd_fault_fops_read was never zeroing its padding. This leaks the
-content of the kernel stack memory to userspace.
+The address space in ADSP PAS (Peripheral Authentication Service)
+remoteproc node should point to the QDSP PUB address space
+(QDSP6...SS_PUB): 0x0300_0000 with length of 0x10000.  0x1730_0000,
+value used so far, was copied from downstream DTS, is in the middle of
+unused space and downstream DTS describes the PIL loader, which is a bit
+different interface.
 
-Also, the iommufd uAPI requires explicit padding and use of __aligned_u64
-to ensure ABI compatibility's with 32 bit.
+Assume existing value (thus downstream DTS) is not really describing the
+intended ADSP PAS region.
 
-pahole result, before:
-struct iommu_hwpt_pgfault {
-        __u32     flags;                /*     0     4 */
-        __u32     dev_id;               /*     4     4 */
-        __u32     pasid;                /*     8     4 */
-        __u32     grpid;                /*    12     4 */
-        __u32     perm;                 /*    16     4 */
+Correct the base address and length, which also moves the node to
+different place to keep things sorted by unit address.  The diff looks
+big, but only the unit address and "reg" property were changed.  This
+should have no functional impact on Linux users, because PAS loader does
+not use this address space at all.
 
-        /* XXX 4 bytes hole, try to pack */
-
-        __u64     addr;                 /*    24     8 */
-        __u32     length;               /*    32     4 */
-        __u32     cookie;               /*    36     4 */
-
-        /* size: 40, cachelines: 1, members: 8 */
-        /* sum members: 36, holes: 1, sum holes: 4 */
-        /* last cacheline: 40 bytes */
-};
-
-pahole result, after:
-struct iommu_hwpt_pgfault {
-        __u32      flags;                /*     0     4 */
-        __u32      dev_id;               /*     4     4 */
-        __u32      pasid;                /*     8     4 */
-        __u32      grpid;                /*    12     4 */
-        __u32      perm;                 /*    16     4 */
-        __u32      __reserved;           /*    20     4 */
-        __u64      addr __attribute__((__aligned__(8))); /*    24     8 */
-        __u32      length;               /*    32     4 */
-        __u32      cookie;               /*    36     4 */
-
-        /* size: 40, cachelines: 1, members: 9 */
-        /* forced alignments: 1 */
-        /* last cacheline: 40 bytes */
-} __attribute__((__aligned__(8)));
-
-Fixes: c714f15860fc ("iommufd: Add fault and response message definitions")
-Link: https://patch.msgid.link/r/20250120195051.2450-1-nicolinc@nvidia.com
+Fixes: 177fcf0aeda2 ("arm64: dts: qcom: sm8350: Add remoteprocs")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20241213-dts-qcom-cdsp-mpss-base-address-v3-1-2e0036fccd8d@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/fault.c |    2 +-
- include/uapi/linux/iommufd.h  |    4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi |  272 +++++++++++++++++------------------
+ 1 file changed, 136 insertions(+), 136 deletions(-)
 
---- a/drivers/iommu/iommufd/fault.c
-+++ b/drivers/iommu/iommufd/fault.c
-@@ -247,7 +247,7 @@ static ssize_t iommufd_fault_fops_read(s
- {
- 	size_t fault_size = sizeof(struct iommu_hwpt_pgfault);
- 	struct iommufd_fault *fault = filep->private_data;
--	struct iommu_hwpt_pgfault data;
-+	struct iommu_hwpt_pgfault data = {};
- 	struct iommufd_device *idev;
- 	struct iopf_group *group;
- 	struct iopf_fault *iopf;
---- a/include/uapi/linux/iommufd.h
-+++ b/include/uapi/linux/iommufd.h
-@@ -868,6 +868,7 @@ enum iommu_hwpt_pgfault_perm {
-  * @pasid: Process Address Space ID
-  * @grpid: Page Request Group Index
-  * @perm: Combination of enum iommu_hwpt_pgfault_perm
-+ * @__reserved: Must be 0.
-  * @addr: Fault address
-  * @length: a hint of how much data the requestor is expecting to fetch. For
-  *          example, if the PRI initiator knows it is going to do a 10MB
-@@ -883,7 +884,8 @@ struct iommu_hwpt_pgfault {
- 	__u32 pasid;
- 	__u32 grpid;
- 	__u32 perm;
--	__u64 addr;
-+	__u32 __reserved;
-+	__aligned_u64 addr;
- 	__u32 length;
- 	__u32 cookie;
- };
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1876,6 +1876,142 @@
+ 			reg = <0x0 0x1fc0000 0x0 0x30000>;
+ 		};
+ 
++		adsp: remoteproc@3000000 {
++			compatible = "qcom,sm8350-adsp-pas";
++			reg = <0x0 0x03000000 0x0 0x10000>;
++
++			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
++					      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "wdog", "fatal", "ready",
++					  "handover", "stop-ack";
++
++			clocks = <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "xo";
++
++			power-domains = <&rpmhpd RPMHPD_LCX>,
++					<&rpmhpd RPMHPD_LMX>;
++			power-domain-names = "lcx", "lmx";
++
++			memory-region = <&pil_adsp_mem>;
++
++			qcom,qmp = <&aoss_qmp>;
++
++			qcom,smem-states = <&smp2p_adsp_out 0>;
++			qcom,smem-state-names = "stop";
++
++			status = "disabled";
++
++			glink-edge {
++				interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
++							     IPCC_MPROC_SIGNAL_GLINK_QMP
++							     IRQ_TYPE_EDGE_RISING>;
++				mboxes = <&ipcc IPCC_CLIENT_LPASS
++						IPCC_MPROC_SIGNAL_GLINK_QMP>;
++
++				label = "lpass";
++				qcom,remote-pid = <2>;
++
++				apr {
++					compatible = "qcom,apr-v2";
++					qcom,glink-channels = "apr_audio_svc";
++					qcom,domain = <APR_DOMAIN_ADSP>;
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					service@3 {
++						reg = <APR_SVC_ADSP_CORE>;
++						compatible = "qcom,q6core";
++						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
++					};
++
++					q6afe: service@4 {
++						compatible = "qcom,q6afe";
++						reg = <APR_SVC_AFE>;
++						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
++
++						q6afedai: dais {
++							compatible = "qcom,q6afe-dais";
++							#address-cells = <1>;
++							#size-cells = <0>;
++							#sound-dai-cells = <1>;
++						};
++
++						q6afecc: clock-controller {
++							compatible = "qcom,q6afe-clocks";
++							#clock-cells = <2>;
++						};
++					};
++
++					q6asm: service@7 {
++						compatible = "qcom,q6asm";
++						reg = <APR_SVC_ASM>;
++						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
++
++						q6asmdai: dais {
++							compatible = "qcom,q6asm-dais";
++							#address-cells = <1>;
++							#size-cells = <0>;
++							#sound-dai-cells = <1>;
++							iommus = <&apps_smmu 0x1801 0x0>;
++
++							dai@0 {
++								reg = <0>;
++							};
++
++							dai@1 {
++								reg = <1>;
++							};
++
++							dai@2 {
++								reg = <2>;
++							};
++						};
++					};
++
++					q6adm: service@8 {
++						compatible = "qcom,q6adm";
++						reg = <APR_SVC_ADM>;
++						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
++
++						q6routing: routing {
++							compatible = "qcom,q6adm-routing";
++							#sound-dai-cells = <0>;
++						};
++					};
++				};
++
++				fastrpc {
++					compatible = "qcom,fastrpc";
++					qcom,glink-channels = "fastrpcglink-apps-dsp";
++					label = "adsp";
++					qcom,non-secure-domain;
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					compute-cb@3 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <3>;
++						iommus = <&apps_smmu 0x1803 0x0>;
++					};
++
++					compute-cb@4 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <4>;
++						iommus = <&apps_smmu 0x1804 0x0>;
++					};
++
++					compute-cb@5 {
++						compatible = "qcom,fastrpc-compute-cb";
++						reg = <5>;
++						iommus = <&apps_smmu 0x1805 0x0>;
++					};
++				};
++			};
++		};
++
+ 		lpass_tlmm: pinctrl@33c0000 {
+ 			compatible = "qcom,sm8350-lpass-lpi-pinctrl";
+ 			reg = <0 0x033c0000 0 0x20000>,
+@@ -3285,142 +3421,6 @@
+ 			dma-coherent;
+ 		};
+ 
+-		adsp: remoteproc@17300000 {
+-			compatible = "qcom,sm8350-adsp-pas";
+-			reg = <0 0x17300000 0 0x100>;
+-
+-			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
+-					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+-					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
+-					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+-					      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "wdog", "fatal", "ready",
+-					  "handover", "stop-ack";
+-
+-			clocks = <&rpmhcc RPMH_CXO_CLK>;
+-			clock-names = "xo";
+-
+-			power-domains = <&rpmhpd RPMHPD_LCX>,
+-					<&rpmhpd RPMHPD_LMX>;
+-			power-domain-names = "lcx", "lmx";
+-
+-			memory-region = <&pil_adsp_mem>;
+-
+-			qcom,qmp = <&aoss_qmp>;
+-
+-			qcom,smem-states = <&smp2p_adsp_out 0>;
+-			qcom,smem-state-names = "stop";
+-
+-			status = "disabled";
+-
+-			glink-edge {
+-				interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
+-							     IPCC_MPROC_SIGNAL_GLINK_QMP
+-							     IRQ_TYPE_EDGE_RISING>;
+-				mboxes = <&ipcc IPCC_CLIENT_LPASS
+-						IPCC_MPROC_SIGNAL_GLINK_QMP>;
+-
+-				label = "lpass";
+-				qcom,remote-pid = <2>;
+-
+-				apr {
+-					compatible = "qcom,apr-v2";
+-					qcom,glink-channels = "apr_audio_svc";
+-					qcom,domain = <APR_DOMAIN_ADSP>;
+-					#address-cells = <1>;
+-					#size-cells = <0>;
+-
+-					service@3 {
+-						reg = <APR_SVC_ADSP_CORE>;
+-						compatible = "qcom,q6core";
+-						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+-					};
+-
+-					q6afe: service@4 {
+-						compatible = "qcom,q6afe";
+-						reg = <APR_SVC_AFE>;
+-						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+-
+-						q6afedai: dais {
+-							compatible = "qcom,q6afe-dais";
+-							#address-cells = <1>;
+-							#size-cells = <0>;
+-							#sound-dai-cells = <1>;
+-						};
+-
+-						q6afecc: clock-controller {
+-							compatible = "qcom,q6afe-clocks";
+-							#clock-cells = <2>;
+-						};
+-					};
+-
+-					q6asm: service@7 {
+-						compatible = "qcom,q6asm";
+-						reg = <APR_SVC_ASM>;
+-						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+-
+-						q6asmdai: dais {
+-							compatible = "qcom,q6asm-dais";
+-							#address-cells = <1>;
+-							#size-cells = <0>;
+-							#sound-dai-cells = <1>;
+-							iommus = <&apps_smmu 0x1801 0x0>;
+-
+-							dai@0 {
+-								reg = <0>;
+-							};
+-
+-							dai@1 {
+-								reg = <1>;
+-							};
+-
+-							dai@2 {
+-								reg = <2>;
+-							};
+-						};
+-					};
+-
+-					q6adm: service@8 {
+-						compatible = "qcom,q6adm";
+-						reg = <APR_SVC_ADM>;
+-						qcom,protection-domain = "avs/audio", "msm/adsp/audio_pd";
+-
+-						q6routing: routing {
+-							compatible = "qcom,q6adm-routing";
+-							#sound-dai-cells = <0>;
+-						};
+-					};
+-				};
+-
+-				fastrpc {
+-					compatible = "qcom,fastrpc";
+-					qcom,glink-channels = "fastrpcglink-apps-dsp";
+-					label = "adsp";
+-					qcom,non-secure-domain;
+-					#address-cells = <1>;
+-					#size-cells = <0>;
+-
+-					compute-cb@3 {
+-						compatible = "qcom,fastrpc-compute-cb";
+-						reg = <3>;
+-						iommus = <&apps_smmu 0x1803 0x0>;
+-					};
+-
+-					compute-cb@4 {
+-						compatible = "qcom,fastrpc-compute-cb";
+-						reg = <4>;
+-						iommus = <&apps_smmu 0x1804 0x0>;
+-					};
+-
+-					compute-cb@5 {
+-						compatible = "qcom,fastrpc-compute-cb";
+-						reg = <5>;
+-						iommus = <&apps_smmu 0x1805 0x0>;
+-					};
+-				};
+-			};
+-		};
+-
+ 		intc: interrupt-controller@17a00000 {
+ 			compatible = "arm,gic-v3";
+ 			#interrupt-cells = <3>;
 
 
