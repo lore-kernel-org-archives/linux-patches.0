@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573ED26B0A5;
-	Thu, 13 Feb 2025 15:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947C226B0A5;
+	Thu, 13 Feb 2025 15:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459763; cv=none; b=BjX2apUL+iQrdQ9kcSkwwhjY9WduaYkekEhHq1oi/FlOrny+K6hEucSKUadFn3daP/RhFkDCEOAl65UaWFk4hI9MEZYelI2063NcBr6KWu0F/mElHxgyaHlIsG1y5Bezi3NfaJkOE7YphGrTtFay+xPv3r2nIl3xojLM6ZiigzQ=
+	t=1739459766; cv=none; b=ezPPp3ODKSseatE2P4Mcc1YT5eebndV7JyKOJwlMNkdnQ0iS4y/QtRe51vKbAOJBoXaNmnvrETsT+8oZ0govirJsWk8UjDJ20QtY0BJu+KvakO1R0zufNG9+m3ILlGEUA2Kw+bjQBJLaqh6yES6nd09QxNwRJFR+yZB5UipZVsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459763; c=relaxed/simple;
-	bh=VkW2NkiNgOjVt64zEhR+Yfv4ZkplcLQSsKxQTamCt74=;
+	s=arc-20240116; t=1739459766; c=relaxed/simple;
+	bh=UHLtXM5QxdNkPMveBlNBqHSWMYLf9ljkrDVY95efc+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ghy3ALRQz9RLVKDsxARgl9w5o8BzSn+tSmGuwBMs2ndemUNXYGLEzvlScGfqIaq8yD9XtpOKS0FGRbakIeELtdoegue4Gd6A2/bFcRp83JWD+Lf/b4+YdPV7wy2C6lYK5iK1mUO5SRWktt9dWTNqZ+Dx/kDwMGFBor304ACtAYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMwX9Po+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mr10v4m7wHmmJBPb2ftMrQbt+OOv+7vOQaVNYANbFYfshIq+grdCpfYgwD0YRDKxb3xcVocTNzEYoUHlQfaxHnxdRmARybSQ7bE1KSpUXEk+G8cjreavZGzGnig4Qilb5bo14H+3gnVUzCApv7OMGro2Fp3IVIM8agyKvEms2Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YxNHfPp/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMwX9Po+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8DAC4CED1;
-	Thu, 13 Feb 2025 15:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YxNHfPp/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE7EC4CED1;
+	Thu, 13 Feb 2025 15:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459763;
-	bh=VkW2NkiNgOjVt64zEhR+Yfv4ZkplcLQSsKxQTamCt74=;
+	s=korg; t=1739459766;
+	bh=UHLtXM5QxdNkPMveBlNBqHSWMYLf9ljkrDVY95efc+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vMwX9Po+bVOoStGeZ1Rt7+wSn6kF8MJzWwDmaO7xXD671K/mbr5KZLaMH50B9TZeg
-	 pjgJmmQSQ9SKc1Bs6mI3nnvSiqkSF+HmAb9O4MSsXENANcIPKiN0oL3hQOn4SrEWSx
-	 VgEkK4PMr8XbetXaD8LPGt3QV7bMnuKuxf1xjaHI=
+	b=YxNHfPp/BinxCKbehySHLmHhG593Y8Mz4hIaPuBgfuNMMnImBP80QMrcxPrxXjmCw
+	 XAEXk01n5rl9y+KqNU7r7Hdyq3j4FkiKlLf1ICDVTRpYvJmKyeVuvQogXthTbqWc9P
+	 vzQacGWbKUm32v7I8/a6yV8/m5unZF07UDuOxzhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <demonsingur@gmail.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.13 358/443] media: mc: fix endpoint iteration
-Date: Thu, 13 Feb 2025 15:28:43 +0100
-Message-ID: <20250213142454.430183002@linuxfoundation.org>
+Subject: [PATCH 6.13 359/443] media: nuvoton: Fix an error check in npcm_video_ece_init()
+Date: Thu, 13 Feb 2025 15:28:44 +0100
+Message-ID: <20250213142454.467987704@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,42 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <demonsingur@gmail.com>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-commit fb2bd86270cd0ad004f4c614ba4f8c63a5720e25 upstream.
+commit c4b7779abc6633677e6edb79e2809f4f61fde157 upstream.
 
-When creating links from a subdev to a sink, the current logic tries to
-iterate over the endpoints of dev's fwnode.
+When function of_find_device_by_node() fails, it returns NULL instead of
+an error code. So the corresponding error check logic should be modified
+to check whether the return value is NULL and set the error code to be
+returned as -ENODEV.
 
-This might not be correct when the subdev uses a different fwnode
-compared to the dev's fwnode.
-
-If, when registering, the subdev's fwnode is not set, the code inside
-v4l2_async_register_subdev will set it to the dev's fwnode.
-
-To fix this, just use the subdev's fwnode.
-
-Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
-Fixes: 0d3c81e82da9 ("media: v4l2-mc: add v4l2_create_fwnode_links helpers")
+Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
 Cc: stable@vger.kernel.org
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Link: https://lore.kernel.org/r/20241015014053.669-1-thunder.leizhen@huawei.com
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-mc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/nuvoton/npcm-video.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-mc.c
-+++ b/drivers/media/v4l2-core/v4l2-mc.c
-@@ -329,7 +329,7 @@ int v4l2_create_fwnode_links_to_pad(stru
- 	if (!(sink->flags & MEDIA_PAD_FL_SINK))
- 		return -EINVAL;
+--- a/drivers/media/platform/nuvoton/npcm-video.c
++++ b/drivers/media/platform/nuvoton/npcm-video.c
+@@ -1665,9 +1665,9 @@ static int npcm_video_ece_init(struct np
+ 		dev_info(dev, "Support HEXTILE pixel format\n");
  
--	fwnode_graph_for_each_endpoint(dev_fwnode(src_sd->dev), endpoint) {
-+	fwnode_graph_for_each_endpoint(src_sd->fwnode, endpoint) {
- 		struct fwnode_handle *remote_ep;
- 		int src_idx, sink_idx, ret;
- 		struct media_pad *src;
+ 		ece_pdev = of_find_device_by_node(ece_node);
+-		if (IS_ERR(ece_pdev)) {
++		if (!ece_pdev) {
+ 			dev_err(dev, "Failed to find ECE device\n");
+-			return PTR_ERR(ece_pdev);
++			return -ENODEV;
+ 		}
+ 		of_node_put(ece_node);
+ 
 
 
