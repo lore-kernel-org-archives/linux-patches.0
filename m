@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A79281349;
-	Thu, 13 Feb 2025 14:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102C0281360;
+	Thu, 13 Feb 2025 14:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457289; cv=none; b=bDUac2xJKTk/ygSqA12H6xr7A23yTiUBYljCK/t+U0/P5HBl3qfNT95ty9C2YTdWeA60VKZirQJkFsMkOtkDNV3qevX7AvZZ+OL1Lh3pw8J81u+OxCKAisRJMRiRlO/cEbfFu6o8hhKfrseL3o8GGCS/kKS68cogs+FGHTvQg9A=
+	t=1739457293; cv=none; b=hlSqF6D/88B1bsu5lR2Gnkf0OilbHL1CimSQF53NRXJCWVhDhTrYhl45Q1rk4jif5l4KYmr79xUFcq4ARejeWQVmHolWQciHX37YUtQQQC4vLl0//QxQs6OfUR8I0sOZS3KyHvsfQxgn9TQFr32FmA9+5YYzBZJ0Gv6J1vkmjvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457289; c=relaxed/simple;
-	bh=2kOMjX+ndj6GmPKkeX1coQ2/f7T3ixZj1Ks7sC9Jmw0=;
+	s=arc-20240116; t=1739457293; c=relaxed/simple;
+	bh=PjvYCMOqHo8zAudmtjyuuJOfBuneawCHj9V3WAJar2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FEr0wkhOMAZoV5ayJLXVospN2RWjpP1gbiS44WRv5dCvhJsNycDjsZHTUs6itpEoSsttpY1OA/8hKoWL+BezupzS2Pf2TZsyCQWaqB8m0XYozuOiDfOdD7099jW8DMzCDnwiWuDbJa4mOb1+hUX9Ed2ZanC+0fyp+IlX9hdbj+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yz47Bc5z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rAno7ghLXKaQTWli0Ckl4aVv+qdaGWo8TsAI8nuYcOl7t2TExwCCY+GpFuX9tAEAtzWfWYCJA2o/s7J3oPU6an18h+oTw3dHqGNtYoMQv9fupPd5Eq0w9pRxPCghVmVLfMiLqHQznbZF05p9fpSjr5ydv0lmaQISGT+Fj8MWSkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+Uutxqa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yz47Bc5z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998A0C4CED1;
-	Thu, 13 Feb 2025 14:34:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+Uutxqa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02C11C4CEE9;
+	Thu, 13 Feb 2025 14:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457289;
-	bh=2kOMjX+ndj6GmPKkeX1coQ2/f7T3ixZj1Ks7sC9Jmw0=;
+	s=korg; t=1739457292;
+	bh=PjvYCMOqHo8zAudmtjyuuJOfBuneawCHj9V3WAJar2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yz47Bc5zJvmZq73oC37Bqu1gymBmHaePg/xehhWknn9oofZlw6mduL/W8klhyRlvy
-	 wMKZ17qQjG92pUnCsnno1pSAl66XdSHP0hjKlVMSpGnymTrfDu8z3L6GvkNcfSZvWF
-	 n0tbVZoOFWyox6vhgm1kobu62ln+i176Ed3QgIrI=
+	b=p+Uutxqa7wmY0LO8YRwYVFoQuQZQJEmzvnPK3FBIZn1NuramWIPwXv9nBuckmhZgH
+	 rI0pUANle0kNDUA/j55zwABPYawAESD7MYRHYq+l+fsCV9yyL75UKuaVbXQbGRtyuw
+	 QYRBVYxhvf0lxvaQha8VV3RvyyhtgjJaYOmlJG/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanjie Yang <quic_yuanjiey@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Shinas Rasheed <srasheed@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 070/422] mmc: sdhci-msm: Correctly set the load for the regulator
-Date: Thu, 13 Feb 2025 15:23:39 +0100
-Message-ID: <20250213142439.260318898@linuxfoundation.org>
+Subject: [PATCH 6.12 071/422] octeon_ep: update tx/rx stats locally for persistence
+Date: Thu, 13 Feb 2025 15:23:40 +0100
+Message-ID: <20250213142439.298433909@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,120 +51,268 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+From: Shinas Rasheed <srasheed@marvell.com>
 
-[ Upstream commit 20a0c37e44063997391430c4ae09973e9cbc3911 ]
+[ Upstream commit 10fad79846e49f67ad1a0a05910837125c6ca9ad ]
 
-Qualcomm regulator supports two power supply modes: HPM and LPM.
-Currently, the sdhci-msm.c driver does not set the load to adjust
-the current for eMMC and SD. If the regulator dont't set correct
-load in LPM state, it will lead to the inability to properly
-initialize eMMC and SD.
+Update tx/rx stats locally, so that ndo_get_stats64()
+can use that and not rely on per queue resources to obtain statistics.
+The latter used to cause race conditions when the device stopped.
 
-Set the correct regulator current for eMMC and SD to ensure that the
-device can work normally even when the regulator is in LPM.
-
-Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20250114083514.258379-1-quic_yuanjiey@quicinc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
+Link: https://patch.msgid.link/20250117094653.2588578-3-srasheed@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-msm.c | 53 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 51 insertions(+), 2 deletions(-)
+ .../marvell/octeon_ep/octep_ethtool.c         | 41 ++++++++-----------
+ .../ethernet/marvell/octeon_ep/octep_main.c   | 19 ++++-----
+ .../ethernet/marvell/octeon_ep/octep_main.h   |  6 +++
+ .../net/ethernet/marvell/octeon_ep/octep_rx.c | 11 ++---
+ .../net/ethernet/marvell/octeon_ep/octep_rx.h |  4 +-
+ .../net/ethernet/marvell/octeon_ep/octep_tx.c |  7 ++--
+ .../net/ethernet/marvell/octeon_ep/octep_tx.h |  4 +-
+ 7 files changed, 45 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index 8716004fcf6c9..945d08531de37 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -134,9 +134,18 @@
- /* Timeout value to avoid infinite waiting for pwr_irq */
- #define MSM_PWR_IRQ_TIMEOUT_MS 5000
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_ethtool.c b/drivers/net/ethernet/marvell/octeon_ep/octep_ethtool.c
+index 7d0124b283dac..d7a3465e6a724 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_ethtool.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_ethtool.c
+@@ -157,17 +157,14 @@ octep_get_ethtool_stats(struct net_device *netdev,
+ 				    iface_rx_stats,
+ 				    iface_tx_stats);
  
-+/* Max load for eMMC Vdd supply */
-+#define MMC_VMMC_MAX_LOAD_UA	570000
+-	for (q = 0; q < oct->num_oqs; q++) {
+-		struct octep_iq *iq = oct->iq[q];
+-		struct octep_oq *oq = oct->oq[q];
+-
+-		tx_packets += iq->stats.instr_completed;
+-		tx_bytes += iq->stats.bytes_sent;
+-		tx_busy_errors += iq->stats.tx_busy;
+-
+-		rx_packets += oq->stats.packets;
+-		rx_bytes += oq->stats.bytes;
+-		rx_alloc_errors += oq->stats.alloc_failures;
++	for (q = 0; q < OCTEP_MAX_QUEUES; q++) {
++		tx_packets += oct->stats_iq[q].instr_completed;
++		tx_bytes += oct->stats_iq[q].bytes_sent;
++		tx_busy_errors += oct->stats_iq[q].tx_busy;
 +
- /* Max load for eMMC Vdd-io supply */
- #define MMC_VQMMC_MAX_LOAD_UA	325000
++		rx_packets += oct->stats_oq[q].packets;
++		rx_bytes += oct->stats_oq[q].bytes;
++		rx_alloc_errors += oct->stats_oq[q].alloc_failures;
+ 	}
+ 	i = 0;
+ 	data[i++] = rx_packets;
+@@ -205,22 +202,18 @@ octep_get_ethtool_stats(struct net_device *netdev,
+ 	data[i++] = iface_rx_stats->err_pkts;
  
-+/* Max load for SD Vdd supply */
-+#define SD_VMMC_MAX_LOAD_UA	800000
-+
-+/* Max load for SD Vdd-io supply */
-+#define SD_VQMMC_MAX_LOAD_UA	22000
-+
- #define msm_host_readl(msm_host, host, offset) \
- 	msm_host->var_ops->msm_readl_relaxed(host, offset)
- 
-@@ -1403,11 +1412,48 @@ static int sdhci_msm_set_pincfg(struct sdhci_msm_host *msm_host, bool level)
- 	return ret;
- }
- 
--static int sdhci_msm_set_vmmc(struct mmc_host *mmc)
-+static void msm_config_vmmc_regulator(struct mmc_host *mmc, bool hpm)
-+{
-+	int load;
-+
-+	if (!hpm)
-+		load = 0;
-+	else if (!mmc->card)
-+		load = max(MMC_VMMC_MAX_LOAD_UA, SD_VMMC_MAX_LOAD_UA);
-+	else if (mmc_card_mmc(mmc->card))
-+		load = MMC_VMMC_MAX_LOAD_UA;
-+	else if (mmc_card_sd(mmc->card))
-+		load = SD_VMMC_MAX_LOAD_UA;
-+	else
-+		return;
-+
-+	regulator_set_load(mmc->supply.vmmc, load);
-+}
-+
-+static void msm_config_vqmmc_regulator(struct mmc_host *mmc, bool hpm)
-+{
-+	int load;
-+
-+	if (!hpm)
-+		load = 0;
-+	else if (!mmc->card)
-+		load = max(MMC_VQMMC_MAX_LOAD_UA, SD_VQMMC_MAX_LOAD_UA);
-+	else if (mmc_card_sd(mmc->card))
-+		load = SD_VQMMC_MAX_LOAD_UA;
-+	else
-+		return;
-+
-+	regulator_set_load(mmc->supply.vqmmc, load);
-+}
-+
-+static int sdhci_msm_set_vmmc(struct sdhci_msm_host *msm_host,
-+			      struct mmc_host *mmc, bool hpm)
- {
- 	if (IS_ERR(mmc->supply.vmmc))
- 		return 0;
- 
-+	msm_config_vmmc_regulator(mmc, hpm);
-+
- 	return mmc_regulator_set_ocr(mmc, mmc->supply.vmmc, mmc->ios.vdd);
- }
- 
-@@ -1420,6 +1466,8 @@ static int msm_toggle_vqmmc(struct sdhci_msm_host *msm_host,
- 	if (msm_host->vqmmc_enabled == level)
- 		return 0;
- 
-+	msm_config_vqmmc_regulator(mmc, level);
-+
- 	if (level) {
- 		/* Set the IO voltage regulator to default voltage level */
- 		if (msm_host->caps_0 & CORE_3_0V_SUPPORT)
-@@ -1642,7 +1690,8 @@ static void sdhci_msm_handle_pwr_irq(struct sdhci_host *host, int irq)
+ 	/* Per Tx Queue stats */
+-	for (q = 0; q < oct->num_iqs; q++) {
+-		struct octep_iq *iq = oct->iq[q];
+-
+-		data[i++] = iq->stats.instr_posted;
+-		data[i++] = iq->stats.instr_completed;
+-		data[i++] = iq->stats.bytes_sent;
+-		data[i++] = iq->stats.tx_busy;
++	for (q = 0; q < OCTEP_MAX_QUEUES; q++) {
++		data[i++] = oct->stats_iq[q].instr_posted;
++		data[i++] = oct->stats_iq[q].instr_completed;
++		data[i++] = oct->stats_iq[q].bytes_sent;
++		data[i++] = oct->stats_iq[q].tx_busy;
  	}
  
- 	if (pwr_state) {
--		ret = sdhci_msm_set_vmmc(mmc);
-+		ret = sdhci_msm_set_vmmc(msm_host, mmc,
-+					 pwr_state & REQ_BUS_ON);
- 		if (!ret)
- 			ret = sdhci_msm_set_vqmmc(msm_host, mmc,
- 					pwr_state & REQ_BUS_ON);
+ 	/* Per Rx Queue stats */
+-	for (q = 0; q < oct->num_oqs; q++) {
+-		struct octep_oq *oq = oct->oq[q];
+-
+-		data[i++] = oq->stats.packets;
+-		data[i++] = oq->stats.bytes;
+-		data[i++] = oq->stats.alloc_failures;
++	for (q = 0; q < OCTEP_MAX_QUEUES; q++) {
++		data[i++] = oct->stats_oq[q].packets;
++		data[i++] = oct->stats_oq[q].bytes;
++		data[i++] = oct->stats_oq[q].alloc_failures;
+ 	}
+ }
+ 
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+index 730aa5632ccee..a89f80bac39b8 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+@@ -822,7 +822,7 @@ static inline int octep_iq_full_check(struct octep_iq *iq)
+ 	if (unlikely(IQ_INSTR_SPACE(iq) >
+ 		     OCTEP_WAKE_QUEUE_THRESHOLD)) {
+ 		netif_start_subqueue(iq->netdev, iq->q_no);
+-		iq->stats.restart_cnt++;
++		iq->stats->restart_cnt++;
+ 		return 0;
+ 	}
+ 
+@@ -960,7 +960,7 @@ static netdev_tx_t octep_start_xmit(struct sk_buff *skb,
+ 	wmb();
+ 	/* Ring Doorbell to notify the NIC of new packets */
+ 	writel(iq->fill_cnt, iq->doorbell_reg);
+-	iq->stats.instr_posted += iq->fill_cnt;
++	iq->stats->instr_posted += iq->fill_cnt;
+ 	iq->fill_cnt = 0;
+ 	return NETDEV_TX_OK;
+ 
+@@ -991,22 +991,19 @@ static netdev_tx_t octep_start_xmit(struct sk_buff *skb,
+ static void octep_get_stats64(struct net_device *netdev,
+ 			      struct rtnl_link_stats64 *stats)
+ {
+-	u64 tx_packets, tx_bytes, rx_packets, rx_bytes;
+ 	struct octep_device *oct = netdev_priv(netdev);
++	u64 tx_packets, tx_bytes, rx_packets, rx_bytes;
+ 	int q;
+ 
+ 	tx_packets = 0;
+ 	tx_bytes = 0;
+ 	rx_packets = 0;
+ 	rx_bytes = 0;
+-	for (q = 0; q < oct->num_oqs; q++) {
+-		struct octep_iq *iq = oct->iq[q];
+-		struct octep_oq *oq = oct->oq[q];
+-
+-		tx_packets += iq->stats.instr_completed;
+-		tx_bytes += iq->stats.bytes_sent;
+-		rx_packets += oq->stats.packets;
+-		rx_bytes += oq->stats.bytes;
++	for (q = 0; q < OCTEP_MAX_QUEUES; q++) {
++		tx_packets += oct->stats_iq[q].instr_completed;
++		tx_bytes += oct->stats_iq[q].bytes_sent;
++		rx_packets += oct->stats_oq[q].packets;
++		rx_bytes += oct->stats_oq[q].bytes;
+ 	}
+ 	stats->tx_packets = tx_packets;
+ 	stats->tx_bytes = tx_bytes;
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.h b/drivers/net/ethernet/marvell/octeon_ep/octep_main.h
+index fee59e0e0138f..936b786f42816 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.h
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.h
+@@ -257,11 +257,17 @@ struct octep_device {
+ 	/* Pointers to Octeon Tx queues */
+ 	struct octep_iq *iq[OCTEP_MAX_IQ];
+ 
++	/* Per iq stats */
++	struct octep_iq_stats stats_iq[OCTEP_MAX_IQ];
++
+ 	/* Rx queues (OQ: Output Queue) */
+ 	u16 num_oqs;
+ 	/* Pointers to Octeon Rx queues */
+ 	struct octep_oq *oq[OCTEP_MAX_OQ];
+ 
++	/* Per oq stats */
++	struct octep_oq_stats stats_oq[OCTEP_MAX_OQ];
++
+ 	/* Hardware port number of the PCIe interface */
+ 	u16 pcie_port;
+ 
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
+index 8af75cb37c3ee..82b6b19e76b47 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
+@@ -87,7 +87,7 @@ static int octep_oq_refill(struct octep_device *oct, struct octep_oq *oq)
+ 		page = dev_alloc_page();
+ 		if (unlikely(!page)) {
+ 			dev_err(oq->dev, "refill: rx buffer alloc failed\n");
+-			oq->stats.alloc_failures++;
++			oq->stats->alloc_failures++;
+ 			break;
+ 		}
+ 
+@@ -98,7 +98,7 @@ static int octep_oq_refill(struct octep_device *oct, struct octep_oq *oq)
+ 				"OQ-%d buffer refill: DMA mapping error!\n",
+ 				oq->q_no);
+ 			put_page(page);
+-			oq->stats.alloc_failures++;
++			oq->stats->alloc_failures++;
+ 			break;
+ 		}
+ 		oq->buff_info[refill_idx].page = page;
+@@ -134,6 +134,7 @@ static int octep_setup_oq(struct octep_device *oct, int q_no)
+ 	oq->netdev = oct->netdev;
+ 	oq->dev = &oct->pdev->dev;
+ 	oq->q_no = q_no;
++	oq->stats = &oct->stats_oq[q_no];
+ 	oq->max_count = CFG_GET_OQ_NUM_DESC(oct->conf);
+ 	oq->ring_size_mask = oq->max_count - 1;
+ 	oq->buffer_size = CFG_GET_OQ_BUF_SIZE(oct->conf);
+@@ -443,7 +444,7 @@ static int __octep_oq_process_rx(struct octep_device *oct,
+ 		if (!skb) {
+ 			octep_oq_drop_rx(oq, buff_info,
+ 					 &read_idx, &desc_used);
+-			oq->stats.alloc_failures++;
++			oq->stats->alloc_failures++;
+ 			continue;
+ 		}
+ 		skb_reserve(skb, data_offset);
+@@ -494,8 +495,8 @@ static int __octep_oq_process_rx(struct octep_device *oct,
+ 
+ 	oq->host_read_idx = read_idx;
+ 	oq->refill_count += desc_used;
+-	oq->stats.packets += pkt;
+-	oq->stats.bytes += rx_bytes;
++	oq->stats->packets += pkt;
++	oq->stats->bytes += rx_bytes;
+ 
+ 	return pkt;
+ }
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.h b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.h
+index 3b08e2d560dc3..b4696c93d0e6a 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.h
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.h
+@@ -186,8 +186,8 @@ struct octep_oq {
+ 	 */
+ 	u8 __iomem *pkts_sent_reg;
+ 
+-	/* Statistics for this OQ. */
+-	struct octep_oq_stats stats;
++	/* Pointer to statistics for this OQ. */
++	struct octep_oq_stats *stats;
+ 
+ 	/* Packets pending to be processed */
+ 	u32 pkts_pending;
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_tx.c b/drivers/net/ethernet/marvell/octeon_ep/octep_tx.c
+index 06851b78aa28c..08ee90013fef3 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_tx.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_tx.c
+@@ -81,9 +81,9 @@ int octep_iq_process_completions(struct octep_iq *iq, u16 budget)
+ 	}
+ 
+ 	iq->pkts_processed += compl_pkts;
+-	iq->stats.instr_completed += compl_pkts;
+-	iq->stats.bytes_sent += compl_bytes;
+-	iq->stats.sgentry_sent += compl_sg;
++	iq->stats->instr_completed += compl_pkts;
++	iq->stats->bytes_sent += compl_bytes;
++	iq->stats->sgentry_sent += compl_sg;
+ 	iq->flush_index = fi;
+ 
+ 	netdev_tx_completed_queue(iq->netdev_q, compl_pkts, compl_bytes);
+@@ -187,6 +187,7 @@ static int octep_setup_iq(struct octep_device *oct, int q_no)
+ 	iq->netdev = oct->netdev;
+ 	iq->dev = &oct->pdev->dev;
+ 	iq->q_no = q_no;
++	iq->stats = &oct->stats_iq[q_no];
+ 	iq->max_count = CFG_GET_IQ_NUM_DESC(oct->conf);
+ 	iq->ring_size_mask = iq->max_count - 1;
+ 	iq->fill_threshold = CFG_GET_IQ_DB_MIN(oct->conf);
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_tx.h b/drivers/net/ethernet/marvell/octeon_ep/octep_tx.h
+index 875a2c34091ff..58fb39dda977c 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_tx.h
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_tx.h
+@@ -170,8 +170,8 @@ struct octep_iq {
+ 	 */
+ 	u16 flush_index;
+ 
+-	/* Statistics for this input queue. */
+-	struct octep_iq_stats stats;
++	/* Pointer to statistics for this input queue. */
++	struct octep_iq_stats *stats;
+ 
+ 	/* Pointer to the Virtual Base addr of the input ring. */
+ 	struct octep_tx_desc_hw *desc_ring;
 -- 
 2.39.5
 
