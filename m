@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEDD1C5F37;
-	Thu, 13 Feb 2025 15:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF3F1AAE17;
+	Thu, 13 Feb 2025 15:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459139; cv=none; b=n7iUzna0LTLlNabW6ieop0H5XxzfpxOqeNeeG9Dd5LjCT28Q8Yh06bbB1VgIzZWH/iwj+sn7Yy/rhK97B0ZxPX/edLypNWQVg/n3+ni4P/339+DNxP55S5tEePQagr2rCsxUMcW5x98AxMJKjbdYMCP9SLfzy+CmKJqRJwhDAqE=
+	t=1739459142; cv=none; b=iR92n7VU6Uc5tAK5Ho3PgcqEXZGX05ZFf2V17Ivek4henr+nQBpjCFlr/zsOivKVYmsuL8YeQHoor9akGAZ7XL7+Y55hYgh6F4L10BNU9MbACehbq1lM5jUHdN8SWkJBv5fXPpC1RWJpC9qAAAuCTHTNeJYVMF6hadxMTQWtlTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459139; c=relaxed/simple;
-	bh=avgi+V/Eo9Tsw53Y3edqflW4gFzi/J117O1TjJXxv7k=;
+	s=arc-20240116; t=1739459142; c=relaxed/simple;
+	bh=g8LzZoJekrd9c5VnX6i59jyXHKXQuXWdgXiDLxgD8fI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rmNNjq4QIkOjxrrNhdXXhIRlALv8aRmttSLE95kkHqCoRNSQr8r67x91Xr/wxqPnvR1jDAkfO29wNk3SRG8W+doTu530bMuBs7IPMdR9ipDYtGkNjo2WNLJL37LwRM8vNSdT1oVmiFa6CGYXuSaZkhp70Ccjhz3Kget9QPAHz1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJarRYgC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X/o3y1GJXFA82O41foyl9nKkYdOn7MIDm1x87ZGFebq1zc9i4rgfIZZjF0nZNA4bMQO8Jodcw3u3L45mGi+ttM4X7d6JwI8Mm6KpZecjkH72/jIsdXUtI/BhVXdGfkg8scLk23t712DCeq/4yQSXVw6OgSa5VG4mi2nef+3P7/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nqwa45+c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJarRYgC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5EDC4CED1;
-	Thu, 13 Feb 2025 15:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nqwa45+c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F6CC4CED1;
+	Thu, 13 Feb 2025 15:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459139;
-	bh=avgi+V/Eo9Tsw53Y3edqflW4gFzi/J117O1TjJXxv7k=;
+	s=korg; t=1739459142;
+	bh=g8LzZoJekrd9c5VnX6i59jyXHKXQuXWdgXiDLxgD8fI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HJarRYgCTatxWuXgxAZfptggmhPCh4/qYtGa5RN8Wn7ZLtZW2pu8OW8tSANqGyL7+
-	 KJBH3E5cp7W4M3Lyl//pYKndm7jPPiMy+RIYThSKaj3FquUThk/gUoX1WhTi0/Zprk
-	 d7hMOf/LTUJQ71c4YvV652jFNYMFGoogT5BE6nDw=
+	b=Nqwa45+cLVt67yVqUNOI5CDAHc+fpMeyzP4wy7N5TnM+TEX8kqvSmLQjgV0jbi1iE
+	 XZbKmmV31Bb61pYUhsxQOeVwWg/6I3Pk4XQIb/IS4F4p+wwRZkaRRLo9mlct5vpfdi
+	 ZQLBmdcbQ+JJx14AKzNci/KqBA8Qr+AW9TwfoqbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ville Syrjala <ville.syrjala@linux.intel.com>,
-	Vidya Srinivas <vidya.srinivas@intel.com>,
-	Brian Geffon <bgeffon@google.com>,
-	Tomasz Figa <tfiga@google.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.13 180/443] drm/i915: Fix page cleanup on DMA remap failure
-Date: Thu, 13 Feb 2025 15:25:45 +0100
-Message-ID: <20250213142447.558696533@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Dave Airlie <airlied@redhat.com>,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH 6.13 181/443] drm/ast: astdp: Fix timeout for enabling video signal
+Date: Thu, 13 Feb 2025 15:25:46 +0100
+Message-ID: <20250213142447.600494500@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -48,71 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Geffon <bgeffon@google.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit fa6182c8b13ebfdc70ebdc09161a70dd8131f3b1 upstream.
+commit fd39c41bcd82d5ebaaebadb944eab5598c668a90 upstream.
 
-When converting to folios the cleanup path of shmem_get_pages() was
-missed. When a DMA remap fails and the max segment size is greater than
-PAGE_SIZE it will attempt to retry the remap with a PAGE_SIZEd segment
-size. The cleanup code isn't properly using the folio apis and as a
-result isn't handling compound pages correctly.
+The ASTDP transmitter sometimes takes up to 1 second for enabling the
+video signal, while the timeout is only 200 msec. This results in a
+kernel error message. Increase the timeout to 1 second. An example
+of the error message is shown below.
 
-v2 -> v3:
-(Ville) Just use shmem_sg_free_table() as-is in the failure path of
-shmem_get_pages(). shmem_sg_free_table() will clear mapping unevictable
-but it will be reset when it retries in shmem_sg_alloc_table().
+[  697.084433] ------------[ cut here ]------------
+[  697.091115] ast 0000:02:00.0: [drm] drm_WARN_ON(!__ast_dp_wait_enable(ast, enabled))
+[  697.091233] WARNING: CPU: 1 PID: 160 at drivers/gpu/drm/ast/ast_dp.c:232 ast_dp_set_enable+0x123/0x140 [ast]
+[...]
+[  697.272469] RIP: 0010:ast_dp_set_enable+0x123/0x140 [ast]
+[...]
+[  697.415283] Call Trace:
+[  697.420727]  <TASK>
+[  697.425908]  ? show_trace_log_lvl+0x196/0x2c0
+[  697.433304]  ? show_trace_log_lvl+0x196/0x2c0
+[  697.440693]  ? drm_atomic_helper_commit_modeset_enables+0x30a/0x470
+[  697.450115]  ? ast_dp_set_enable+0x123/0x140 [ast]
+[  697.458059]  ? __warn.cold+0xaf/0xca
+[  697.464713]  ? ast_dp_set_enable+0x123/0x140 [ast]
+[  697.472633]  ? report_bug+0x134/0x1d0
+[  697.479544]  ? handle_bug+0x58/0x90
+[  697.486127]  ? exc_invalid_op+0x13/0x40
+[  697.492975]  ? asm_exc_invalid_op+0x16/0x20
+[  697.500224]  ? preempt_count_sub+0x14/0xc0
+[  697.507473]  ? ast_dp_set_enable+0x123/0x140 [ast]
+[  697.515377]  ? ast_dp_set_enable+0x123/0x140 [ast]
+[  697.523227]  drm_atomic_helper_commit_modeset_enables+0x30a/0x470
+[  697.532388]  drm_atomic_helper_commit_tail+0x58/0x90
+[  697.540400]  ast_mode_config_helper_atomic_commit_tail+0x30/0x40 [ast]
+[  697.550009]  commit_tail+0xfe/0x1d0
+[  697.556547]  drm_atomic_helper_commit+0x198/0x1c0
 
-v1 -> v2:
-(Ville) Fixed locations where we were not clearing mapping unevictable.
+This is a cosmetical problem. Enabling the video signal still works
+even with the error message. The problem has always been present, but
+only recent versions of the ast driver warn about missing the timeout.
 
-Cc: stable@vger.kernel.org
-Cc: Ville Syrjala <ville.syrjala@linux.intel.com>
-Cc: Vidya Srinivas <vidya.srinivas@intel.com>
-Link: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13487
-Link: https://lore.kernel.org/lkml/20250116135636.410164-1-bgeffon@google.com/
-Fixes: 0b62af28f249 ("i915: convert shmem_sg_free_table() to use a folio_batch")
-Signed-off-by: Brian Geffon <bgeffon@google.com>
-Suggested-by: Tomasz Figa <tfiga@google.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250127204332.336665-1-bgeffon@google.com
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Tested-by: Vidya Srinivas <vidya.srinivas@intel.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-(cherry picked from commit 9e304a18630875352636ad52a3d2af47c3bde824)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 4e29cc7c5c67 ("drm/ast: astdp: Replace ast_dp_set_on_off()")
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.13+
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250127134423.84266-1-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_shmem.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/gpu/drm/ast/ast_dp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-@@ -209,8 +209,6 @@ static int shmem_get_pages(struct drm_i9
- 	struct address_space *mapping = obj->base.filp->f_mapping;
- 	unsigned int max_segment = i915_sg_segment_size(i915->drm.dev);
- 	struct sg_table *st;
--	struct sgt_iter sgt_iter;
--	struct page *page;
- 	int ret;
+--- a/drivers/gpu/drm/ast/ast_dp.c
++++ b/drivers/gpu/drm/ast/ast_dp.c
+@@ -195,7 +195,7 @@ static bool __ast_dp_wait_enable(struct
+ 	if (enabled)
+ 		vgacrdf_test |= AST_IO_VGACRDF_DP_VIDEO_ENABLE;
  
- 	/*
-@@ -239,9 +237,7 @@ rebuild_st:
- 		 * for PAGE_SIZE chunks instead may be helpful.
- 		 */
- 		if (max_segment > PAGE_SIZE) {
--			for_each_sgt_page(page, sgt_iter, st)
--				put_page(page);
--			sg_free_table(st);
-+			shmem_sg_free_table(st, mapping, false, false);
- 			kfree(st);
- 
- 			max_segment = PAGE_SIZE;
+-	for (i = 0; i < 200; ++i) {
++	for (i = 0; i < 1000; ++i) {
+ 		if (i)
+ 			mdelay(1);
+ 		vgacrdf = ast_get_index_reg_mask(ast, AST_IO_VGACRI, 0xdf,
 
 
