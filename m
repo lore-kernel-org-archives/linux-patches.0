@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40EA26B087;
-	Thu, 13 Feb 2025 15:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F4719E975;
+	Thu, 13 Feb 2025 15:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460965; cv=none; b=VyFOtRIl+xrjwTsQH1Yc3FAprpR1x0M0I0LaEoRrx9Brui9zTo47EkndVl0r8eqo6jhGsbAL2IWRldmjTpxErSr5BJ1d2Lxwv47g7D7v+cAXxmTPRWL2M7Us9/kR6jHQXoTHdaXJ0S6PhVxBJXnBr404AVbUMh/0YMUUFaFThug=
+	t=1739460969; cv=none; b=APe0l1HYd5PA5pEjgiEqHxjtSUkbXw2UxLF2EZXhoiAww6GukQEH3ddBF9Cw+5+PBBk79MCfoY5La5Mf6KRmxFq7Mzpwu0ypvw1CZ7qYWZ8oi6rvP3hLMF8Wzdp+akp3dnXo74W9roxSl9g05xo4HwkEBo+yA223ZiXPq3zsB4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460965; c=relaxed/simple;
-	bh=b8k09CxqF+nDxO98VD/quayxsuMPSU5L/d+U2mA4Ui4=;
+	s=arc-20240116; t=1739460969; c=relaxed/simple;
+	bh=ZBbpMd2xzA77Gqx8R78OfEnFi/difmn83rHBnb8IVRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hIAMNjFsib/bxR/lTmvehXeBR6a+QaII8XD9Hoqh0wp9b5gRqo8pN86nvJBnXnRucPRAJIBhiIny33XifV9Axoex4ixfhiPy13mFYqfsQiEarwdUMs0gfAZI6FPDn3eiIJwO/LL+83QxFBY63LvAgeeFGEMN6QrelVZgBGV/xHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moXBBfbq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=btLB+JDEJe5qBA+IHvW55NQyy6uH2OX8lx/yLbaNwl4L5Y5cZ24JsVLE92FwhjdK4S3XcqVBBEaFkEUPHidc5odbGH88a/rVaUR/GncMQU0eU8klRLggN/X5sUbjCSy1kzwcHx/s55CXNddhPqQ95AxLsELhJ3jg0hDsL8HP6M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUYULlSY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moXBBfbq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22037C4CED1;
-	Thu, 13 Feb 2025 15:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUYULlSY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4797FC4CED1;
+	Thu, 13 Feb 2025 15:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460965;
-	bh=b8k09CxqF+nDxO98VD/quayxsuMPSU5L/d+U2mA4Ui4=;
+	s=korg; t=1739460969;
+	bh=ZBbpMd2xzA77Gqx8R78OfEnFi/difmn83rHBnb8IVRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=moXBBfbqCr4lTgqcdiyvSsJ+MerahnIvCtnxOZLa3lPLnum8vJg/TitGiKZy3atgc
-	 dv/uuQ0jxLx4bPIuAB0pBILTF/fPXYbifl6RGf54LTtlVxM76ZXG1UgmuaJhk7LCzJ
-	 +l/Pqwjt+hm6u7ue/zQ6GwNM5McwrRsA/lSnT+V8=
+	b=eUYULlSYQ7djivDg7r6UpYlO19MJG6rkddoYrq3j3Xs9tnGqM/hX9J7zqlW2B6rdD
+	 Xh7q3bICHmR3HxVM3ZNI3LHKez2lj8i4bv5f0L//HLia4p2Uz4Oi19Xd05MB5bd1zt
+	 G7sj3yJVTDWLkRkLXPDHT0zrJSIYbBywEsU3TuQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Fertser <fercerpav@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 262/273] net/ncsi: use dev_set_mac_address() for Get MC MAC Address handling
-Date: Thu, 13 Feb 2025 15:30:34 +0100
-Message-ID: <20250213142417.772312512@linuxfoundation.org>
+	Jiacheng Xu <stitch@zju.edu.cn>,
+	syzbot+5a64828fcc4c2ad9b04f@syzkaller.appspotmail.com,
+	Su Yue <glass.su@suse.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 263/273] ocfs2: check dir i_size in ocfs2_find_entry
+Date: Thu, 13 Feb 2025 15:30:35 +0100
+Message-ID: <20250213142417.811161588@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -50,82 +59,217 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Fertser <fercerpav@gmail.com>
+From: Su Yue <glass.su@suse.com>
 
-commit 05d91cdb1f9108426b14975ef4eeddf15875ca05 upstream.
+commit b0fce54b8c0d8e5f2b4c243c803c5996e73baee8 upstream.
 
-Copy of the rationale from 790071347a0a1a89e618eedcd51c687ea783aeb3:
+syz reports an out of bounds read:
 
-Change ndo_set_mac_address to dev_set_mac_address because
-dev_set_mac_address provides a way to notify network layer about MAC
-change. In other case, services may not aware about MAC change and keep
-using old one which set from network adapter driver.
+==================================================================
+BUG: KASAN: slab-out-of-bounds in ocfs2_match fs/ocfs2/dir.c:334
+[inline]
+BUG: KASAN: slab-out-of-bounds in ocfs2_search_dirblock+0x283/0x6e0
+fs/ocfs2/dir.c:367
+Read of size 1 at addr ffff88804d8b9982 by task syz-executor.2/14802
 
-As example, DHCP client from systemd do not update MAC address without
-notification from net subsystem which leads to the problem with acquiring
-the right address from DHCP server.
+CPU: 0 UID: 0 PID: 14802 Comm: syz-executor.2 Not tainted 6.13.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1
+04/01/2014
+Sched_ext: serialise (enabled+all), task: runnable_at=-10ms
+Call Trace:
+<TASK>
+__dump_stack lib/dump_stack.c:94 [inline]
+dump_stack_lvl+0x229/0x350 lib/dump_stack.c:120
+print_address_description mm/kasan/report.c:378 [inline]
+print_report+0x164/0x530 mm/kasan/report.c:489
+kasan_report+0x147/0x180 mm/kasan/report.c:602
+ocfs2_match fs/ocfs2/dir.c:334 [inline]
+ocfs2_search_dirblock+0x283/0x6e0 fs/ocfs2/dir.c:367
+ocfs2_find_entry_id fs/ocfs2/dir.c:414 [inline]
+ocfs2_find_entry+0x1143/0x2db0 fs/ocfs2/dir.c:1078
+ocfs2_find_files_on_disk+0x18e/0x530 fs/ocfs2/dir.c:1981
+ocfs2_lookup_ino_from_name+0xb6/0x110 fs/ocfs2/dir.c:2003
+ocfs2_lookup+0x30a/0xd40 fs/ocfs2/namei.c:122
+lookup_open fs/namei.c:3627 [inline]
+open_last_lookups fs/namei.c:3748 [inline]
+path_openat+0x145a/0x3870 fs/namei.c:3984
+do_filp_open+0xe9/0x1c0 fs/namei.c:4014
+do_sys_openat2+0x135/0x1d0 fs/open.c:1402
+do_sys_open fs/open.c:1417 [inline]
+__do_sys_openat fs/open.c:1433 [inline]
+__se_sys_openat fs/open.c:1428 [inline]
+__x64_sys_openat+0x15d/0x1c0 fs/open.c:1428
+do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+do_syscall_64+0xf6/0x210 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f01076903ad
+Code: c3 e8 a7 2b 00 00 0f 1f 80 00 00 00 00 f3 0f 1e fa 48 89 f8 48 89
+f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01
+f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f01084acfc8 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
+RAX: ffffffffffffffda RBX: 00007f01077cbf80 RCX: 00007f01076903ad
+RDX: 0000000000105042 RSI: 0000000020000080 RDI: ffffffffffffff9c
+RBP: 00007f01077cbf80 R08: 0000000000000000 R09: 0000000000000000
+R10: 00000000000001ff R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f01077cbf80 R14: 00007f010764fc90 R15: 00007f010848d000
+</TASK>
+==================================================================
 
-Since dev_set_mac_address requires RTNL lock the operation can not be
-performed directly in the response handler, see
-9e2bbab94b88295dcc57c7580393c9ee08d7314d.
+And a general protection fault in ocfs2_prepare_dir_for_insert:
 
-The way of selecting the first suitable MAC address from the list is
-changed, instead of having the driver check it this patch just assumes
-any valid MAC should be good.
+==================================================================
+loop0: detected capacity change from 0 to 32768
+JBD2: Ignoring recovery information on journal
+ocfs2: Mounting device (7,0) on (node local, slot 0) with ordered data
+mode.
+Oops: general protection fault, probably for non-canonical address
+0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 0 UID: 0 PID: 5096 Comm: syz-executor792 Not tainted
+6.11.0-rc4-syzkaller-00002-gb0da640826ba #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
+1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+RIP: 0010:ocfs2_find_dir_space_id fs/ocfs2/dir.c:3406 [inline]
+RIP: 0010:ocfs2_prepare_dir_for_insert+0x3309/0x5c70 fs/ocfs2/dir.c:4280
+Code: 00 00 e8 2a 25 13 fe e9 ba 06 00 00 e8 20 25 13 fe e9 4f 01 00 00
+e8 16 25 13 fe 49 8d 7f 08 49 8d 5f 09 48 89 f8 48 c1 e8 03 <42> 0f b6
+04 20 84 c0 0f 85 bd 23 00 00 48 89 d8 48 c1 e8 03 42 0f
+RSP: 0018:ffffc9000af9f020 EFLAGS: 00010202
+RAX: 0000000000000001 RBX: 0000000000000009 RCX: ffff88801e27a440
+RDX: 0000000000000000 RSI: 0000000000000400 RDI: 0000000000000008
+RBP: ffffc9000af9f830 R08: ffffffff8380395b R09: ffffffff838090a7
+R10: 0000000000000002 R11: ffff88801e27a440 R12: dffffc0000000000
+R13: ffff88803c660878 R14: f700000000000088 R15: 0000000000000000
+FS:  000055555a677380(0000) GS:ffff888020800000(0000)
+knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000560bce569178 CR3: 000000001de5a000 CR4: 0000000000350ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+ocfs2_mknod+0xcaf/0x2b40 fs/ocfs2/namei.c:292
+vfs_mknod+0x36d/0x3b0 fs/namei.c:4088
+do_mknodat+0x3ec/0x5b0
+__do_sys_mknodat fs/namei.c:4166 [inline]
+__se_sys_mknodat fs/namei.c:4163 [inline]
+__x64_sys_mknodat+0xa7/0xc0 fs/namei.c:4163
+do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f2dafda3a99
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 17 00 00 90 48 89
+f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08
+0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8
+64 89 01 48
+RSP: 002b:00007ffe336a6658 EFLAGS: 00000246 ORIG_RAX:
+0000000000000103
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX:
+00007f2dafda3a99
+RDX: 00000000000021c0 RSI: 0000000020000040 RDI:
+00000000ffffff9c
+RBP: 00007f2dafe1b5f0 R08: 0000000000004480 R09:
+000055555a6784c0
+R10: 0000000000000103 R11: 0000000000000246 R12:
+00007ffe336a6680
+R13: 00007ffe336a68a8 R14: 431bde82d7b634db R15:
+00007f2dafdec03b
+</TASK>
+==================================================================
 
-Fixes: b8291cf3d118 ("net/ncsi: Add NC-SI 1.2 Get MC MAC Address command")
-Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The two reports are all caused invalid negative i_size of dir inode.  For
+ocfs2, dir_inode can't be negative or zero.
+
+Here add a check in which is called by ocfs2_check_dir_for_entry().  It
+fixes the second report as ocfs2_check_dir_for_entry() must be called
+before ocfs2_prepare_dir_for_insert().  Also set a up limit for dir with
+OCFS2_INLINE_DATA_FL.  The i_size can't be great than blocksize.
+
+Link: https://lkml.kernel.org/r/20250106140640.92260-1-glass.su@suse.com
+Reported-by: Jiacheng Xu <stitch@zju.edu.cn>
+Link: https://lore.kernel.org/ocfs2-devel/17a04f01.1ae74.19436d003fc.Coremail.stitch@zju.edu.cn/T/#u
+Reported-by: syzbot+5a64828fcc4c2ad9b04f@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/0000000000005894f3062018caf1@google.com/T/
+Signed-off-by: Su Yue <glass.su@suse.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ncsi/ncsi-rsp.c |   18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ fs/ocfs2/dir.c |   25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -1089,14 +1089,12 @@ static int ncsi_rsp_handler_netlink(stru
- static int ncsi_rsp_handler_gmcma(struct ncsi_request *nr)
+--- a/fs/ocfs2/dir.c
++++ b/fs/ocfs2/dir.c
+@@ -1065,26 +1065,39 @@ int ocfs2_find_entry(const char *name, i
  {
- 	struct ncsi_dev_priv *ndp = nr->ndp;
-+	struct sockaddr *saddr = &ndp->pending_mac;
- 	struct net_device *ndev = ndp->ndev.dev;
- 	struct ncsi_rsp_gmcma_pkt *rsp;
--	struct sockaddr saddr;
--	int ret = -1;
- 	int i;
+ 	struct buffer_head *bh;
+ 	struct ocfs2_dir_entry *res_dir = NULL;
++	int ret = 0;
  
- 	rsp = (struct ncsi_rsp_gmcma_pkt *)skb_network_header(nr->rsp);
--	saddr.sa_family = ndev->type;
- 	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
+ 	if (ocfs2_dir_indexed(dir))
+ 		return ocfs2_find_entry_dx(name, namelen, dir, lookup);
  
- 	netdev_info(ndev, "NCSI: Received %d provisioned MAC addresses\n",
-@@ -1108,20 +1106,20 @@ static int ncsi_rsp_handler_gmcma(struct
- 			    rsp->addresses[i][4], rsp->addresses[i][5]);
- 	}
++	if (unlikely(i_size_read(dir) <= 0)) {
++		ret = -EFSCORRUPTED;
++		mlog_errno(ret);
++		goto out;
++	}
+ 	/*
+ 	 * The unindexed dir code only uses part of the lookup
+ 	 * structure, so there's no reason to push it down further
+ 	 * than this.
+ 	 */
+-	if (OCFS2_I(dir)->ip_dyn_features & OCFS2_INLINE_DATA_FL)
++	if (OCFS2_I(dir)->ip_dyn_features & OCFS2_INLINE_DATA_FL) {
++		if (unlikely(i_size_read(dir) > dir->i_sb->s_blocksize)) {
++			ret = -EFSCORRUPTED;
++			mlog_errno(ret);
++			goto out;
++		}
+ 		bh = ocfs2_find_entry_id(name, namelen, dir, &res_dir);
+-	else
++	} else {
+ 		bh = ocfs2_find_entry_el(name, namelen, dir, &res_dir);
++	}
  
-+	saddr->sa_family = ndev->type;
- 	for (i = 0; i < rsp->address_count; i++) {
--		memcpy(saddr.sa_data, &rsp->addresses[i], ETH_ALEN);
--		ret = ndev->netdev_ops->ndo_set_mac_address(ndev, &saddr);
--		if (ret < 0) {
-+		if (!is_valid_ether_addr(rsp->addresses[i])) {
- 			netdev_warn(ndev, "NCSI: Unable to assign %pM to device\n",
--				    saddr.sa_data);
-+				    rsp->addresses[i]);
- 			continue;
- 		}
--		netdev_warn(ndev, "NCSI: Set MAC address to %pM\n", saddr.sa_data);
-+		memcpy(saddr->sa_data, rsp->addresses[i], ETH_ALEN);
-+		netdev_warn(ndev, "NCSI: Will set MAC address to %pM\n", saddr->sa_data);
- 		break;
- 	}
+ 	if (bh == NULL)
+ 		return -ENOENT;
  
--	ndp->gma_flag = ret == 0;
--	return ret;
-+	ndp->gma_flag = 1;
-+	return 0;
+ 	lookup->dl_leaf_bh = bh;
+ 	lookup->dl_entry = res_dir;
+-	return 0;
++out:
++	return ret;
  }
  
- static struct ncsi_rsp_handler {
+ /*
+@@ -2012,6 +2025,7 @@ int ocfs2_lookup_ino_from_name(struct in
+  *
+  * Return 0 if the name does not exist
+  * Return -EEXIST if the directory contains the name
++ * Return -EFSCORRUPTED if found corruption
+  *
+  * Callers should have i_rwsem + a cluster lock on dir
+  */
+@@ -2025,9 +2039,12 @@ int ocfs2_check_dir_for_entry(struct ino
+ 	trace_ocfs2_check_dir_for_entry(
+ 		(unsigned long long)OCFS2_I(dir)->ip_blkno, namelen, name);
+ 
+-	if (ocfs2_find_entry(name, namelen, dir, &lookup) == 0) {
++	ret = ocfs2_find_entry(name, namelen, dir, &lookup);
++	if (ret == 0) {
+ 		ret = -EEXIST;
+ 		mlog_errno(ret);
++	} else if (ret == -ENOENT) {
++		ret = 0;
+ 	}
+ 
+ 	ocfs2_free_dir_lookup_result(&lookup);
 
 
