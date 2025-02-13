@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33441DC745;
-	Thu, 13 Feb 2025 14:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630641DC745;
+	Thu, 13 Feb 2025 14:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458772; cv=none; b=qbYMXg9IAsOwjFfbVuKNnEduq1FOfFdumoaX9PYpRTYKrXbK14q8fVLo2mAGEOnheaEP09Bxug8hx26aHlp4+aC/2NGmh0a6v0X2zMRCuulv61QQ0c3MqlYXySXyW9FKKhwaB7zBYs+7xIwUpuKDXm+yi0Gn1Rrnwli6NDdrbgQ=
+	t=1739458775; cv=none; b=ZyrTVg1/HC2ehRccodKqIWsYQeNKpufUskp5SBokijbeduXBpgOkauMT+w+DnML7EDKX7cJGKq6EVNWd+YL8OcnJJbtsn5ORnScb7UDJrH+LoN6DQJDRorMgfLzohJiwOHfpvfCt5JqsCdSD2XbRJ8B0tvecl3YwB97oEA5B7uU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458772; c=relaxed/simple;
-	bh=7XvkBoUpBtFtxoBVKvRAq4dQ3/fbgjQfBbDScnu/FfA=;
+	s=arc-20240116; t=1739458775; c=relaxed/simple;
+	bh=1rSWwY5xhmAC8taBE78OfEd+zSLae1uA/aB8yOZBN58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ClBjnB3cpdn0Fcq57TbVntJ8W94NQDlGCPjtk1gT3tPBKVBnfsi5hQIlM3R26fO6pkwtGmrwuC7hYUpp3IPmfO87PcXuxlCCakSJkr+iYrsyfC4DocvuJCZkfX1K72IkXIKG7wMQHrXT8+C3leGA8IhW6BDnuIn8hI9BLceSQe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxL/bK5r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QD6Qz9IH9lsS+G0wA1sg2UkITmbEXsYAXXP3DV1+7bFMWyJx6Y4FL1+BeN5brlAqIgvHkSspTFz0yMgPaDhcmpP1ii1gG7HhEKnaJZJXGlAh8WafOgVZqcrmTc3ypEzretmKjGB9SP8OpCysBEzNw6AsikFSbWtLcBGsL5RZWyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+5R8a0S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxL/bK5r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63B6C4CED1;
-	Thu, 13 Feb 2025 14:59:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+5R8a0S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE60DC4CED1;
+	Thu, 13 Feb 2025 14:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458772;
-	bh=7XvkBoUpBtFtxoBVKvRAq4dQ3/fbgjQfBbDScnu/FfA=;
+	s=korg; t=1739458775;
+	bh=1rSWwY5xhmAC8taBE78OfEd+zSLae1uA/aB8yOZBN58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hxL/bK5rJyGomN5wwO0pP+wvdfKlYTQPYD/+e+dGkx8K+wFQYDv46z+xgea4XLsFe
-	 0MnZvYB5Dax/d1Zh8Eroa88AmFYKHAIq8KuYf84NAY9Md6BkbdbpnZ+ucrkY6PINya
-	 +OdYlRCqewcv0j9i0/wfeUF5+k2gOT4ls8kI81f0=
+	b=r+5R8a0S29CraPDBi7k4ppit5TJcv67ikFWssfULFC0kXfSzGgvBdi/tO6Mm9Y5o+
+	 VOqsXQIhYv0LCz7+6yyENCFN5G1fKGbAkml69Vj1virUfoOfrkyp2OqkE5VLjwIkzt
+	 FWYHZenQS8i2azBB1rj+lEh67aZRsVyv3kYmnZZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Tang <feng.tang@linux.alibaba.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ira Weiny <ira.weiny@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mark Dietzer <git@doridian.net>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 074/443] APEI: GHES: Have GHES honor the panic= setting
-Date: Thu, 13 Feb 2025 15:23:59 +0100
-Message-ID: <20250213142443.470675041@linuxfoundation.org>
+Subject: [PATCH 6.13 075/443] Bluetooth: btusb: Add ID 0x2c7c:0x0130 for Qualcomm WCN785x
+Date: Thu, 13 Feb 2025 15:24:00 +0100
+Message-ID: <20250213142443.510061584@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -53,70 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov <bp@alien8.de>
+From: Mark Dietzer <git@doridian.net>
 
-[ Upstream commit 5c0e00a391dd0099fe95991bb2f962848d851916 ]
+[ Upstream commit a6587d7ed2cd8341f8a92112ac772f2c44f09824 ]
 
-The GHES driver overrides the panic= setting by force-rebooting the
-system after a fatal hw error has been reported. The intent being that
-such an error would be reported earlier.
+Adds a new entry with VID 0x2c7c and PID 0x0130 to the btusb quirks table as it uses a Qualcomm WCN785x chipset
 
-However, this is not optimal when a hard-to-debug issue requires long
-time to reproduce and when that happens, the box will get rebooted after
-30 seconds and thus destroy the whole hw context of when the error
-happened.
+The device information from /sys/kernel/debug/usb/devices is provided below:
+T:  Bus=01 Lev=01 Prnt=01 Port=04 Cnt=05 Dev#=  7 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=0130 Rev= 0.01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
 
-So rip out the default GHES panic timeout and honor the global one.
-
-In the panic disabled (panic=0) case, the error will still be logged to
-dmesg for later inspection and if panic after a hw error is really
-required, then that can be controlled the usual way - use panic= on the
-cmdline or set it in the kernel .config's CONFIG_PANIC_TIMEOUT.
-
-Reported-by: Feng Tang <feng.tang@linux.alibaba.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Feng Tang <feng.tang@linux.alibaba.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Link: https://patch.msgid.link/20250113125224.GFZ4UMiNtWIJvgpveU@fat_crate.local
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Mark Dietzer <git@doridian.net>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 07789f0b59bcd..b727724946556 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -173,8 +173,6 @@ static struct gen_pool *ghes_estatus_pool;
- static struct ghes_estatus_cache __rcu *ghes_estatus_caches[GHES_ESTATUS_CACHES_SIZE];
- static atomic_t ghes_estatus_cache_alloced;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index f69df515d668b..41132d02fd7d9 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -377,6 +377,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3623), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x2c7c, 0x0130), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
  
--static int ghes_panic_timeout __read_mostly = 30;
--
- static void __iomem *ghes_map(u64 pfn, enum fixed_addresses fixmap_idx)
- {
- 	phys_addr_t paddr;
-@@ -983,14 +981,16 @@ static void __ghes_panic(struct ghes *ghes,
- 			 struct acpi_hest_generic_status *estatus,
- 			 u64 buf_paddr, enum fixed_addresses fixmap_idx)
- {
-+	const char *msg = GHES_PFX "Fatal hardware error";
-+
- 	__ghes_print_estatus(KERN_EMERG, ghes->generic, estatus);
- 
- 	ghes_clear_estatus(ghes, estatus, buf_paddr, fixmap_idx);
- 
--	/* reboot to log the error! */
- 	if (!panic_timeout)
--		panic_timeout = ghes_panic_timeout;
--	panic("Fatal hardware error!");
-+		pr_emerg("%s but panic disabled\n", msg);
-+
-+	panic(msg);
- }
- 
- static int ghes_proc(struct ghes *ghes)
+ 	/* Broadcom BCM2035 */
+ 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
 -- 
 2.39.5
 
