@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE4D70805;
-	Thu, 13 Feb 2025 15:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EFE70805;
+	Thu, 13 Feb 2025 15:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460642; cv=none; b=TBxksTkku0m0yCIYL8bIt3QYXyZsLsGpkzZZXC9F1khlrjA1tBB8+BaY3oANEIUYYcojagVQOdg2eF0bM++cG8v3nnWg0yYfqcJVLOi5Ioj9Icwk8MluPHa43XodVZPgm+iL53U1MhMRlHPs3iGi7rHBGNWISTExS9DB+48CkEA=
+	t=1739460646; cv=none; b=pXWfGoFG5eS1NkDeKJQb2nxNC/TylGnN3KX1MSAQAbsxIqyJoWFklMdoYTHJwwhUi2IR+XKTOAubmUgNcFsu3UgGsY/Hn0ZYAI0OXd91fmc0n8jz4+jYEUGVjnbQyHXh21P3DLMQSsxS2xR0bkfa1ANRj1a9ZHf/9mXTeCznVc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460642; c=relaxed/simple;
-	bh=AdPCh8HsSyEq3DDthl8DL+4hA2NVOYtgPAOAW+xCWts=;
+	s=arc-20240116; t=1739460646; c=relaxed/simple;
+	bh=ne7bMfh14Svh2DHsb6eL5ppGexxFV8PgKKm9Y3cxhso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AeA1T1G3LjcRK7bBcvW3rD62HEegHKeXUS1IBClqrNi2b2Xp+in7O9pQGpjURLFVA7uhQ3Rqhb0V8dCvo5pTl1Y4yz3S5m7LBaYOzSDclfEoz2ayKjpji8kD2dESUn49P6t2Vc+qDnDcvqerVVFkSm/phIgqLyINczw2RkdznYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n0cbi9s2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HJM/lkqoU4eOlgaUwwwrtBce4AiRT/3oqOqunqsvCtQc08F0MBNnv16TgdFbBshInhC0ikiIOsqecapuQRSGG2I7xMyFHmaApq1slIBc7Fdp8higiSxhHKWBevA7UOs1Figj+iUcuR7mWNJFBRwsZYhxiVpN7dF86mPsqchvPk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIqLnoU3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n0cbi9s2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E977CC4CED1;
-	Thu, 13 Feb 2025 15:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIqLnoU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CED4C4CED1;
+	Thu, 13 Feb 2025 15:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460642;
-	bh=AdPCh8HsSyEq3DDthl8DL+4hA2NVOYtgPAOAW+xCWts=;
+	s=korg; t=1739460646;
+	bh=ne7bMfh14Svh2DHsb6eL5ppGexxFV8PgKKm9Y3cxhso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n0cbi9s2JNVViFQrtz9Pb7jcoDGIQULhQpg1uI1Tc/1qv0g3USa2pDjEzslaLms6d
-	 0ojV/L/dFChmHPlDXorFQbLBbmhO/0/h5vzNSEg+7IwSm2X9D+nkTodSc5+YYQzJpI
-	 /HpkPz5ZZ86qlY/1lRvBd1aqVzke2gAGqYnINqh8=
+	b=aIqLnoU3h633QxC+AAB55HUlcwnTorg2uf1Nzo4DQLgHwi69vdGEJnH0rZb5ydP6+
+	 MK87x4JqFxuDeVWCY5rP90csrC2XXSYi4PM3lGqIQbvJX1wLvQl/IfAcdCYNpvVXMK
+	 0aWbsCve1a/Jox8yN6VEGollgFnwDR9ivaKdYbAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Foster Snowhill <forst@pen.gy>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 139/273] usbnet: ipheth: refactor NCM datagram loop
-Date: Thu, 13 Feb 2025 15:28:31 +0100
-Message-ID: <20250213142412.831075866@linuxfoundation.org>
+Subject: [PATCH 6.6 140/273] usbnet: ipheth: break up NCM header size computation
+Date: Thu, 13 Feb 2025 15:28:32 +0100
+Message-ID: <20250213142412.870064410@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -53,20 +53,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Foster Snowhill <forst@pen.gy>
 
-commit 2a9a196429e98fcc64078366c2679bc40aba5466 upstream.
+commit efcbc678a14be268040ffc1fa33c98faf2d55141 upstream.
 
-Introduce an rx_error label to reduce repetitions in the header
-signature checks.
+Originally, the total NCM header size was computed as the sum of two
+vaguely labelled constants. While accurate, it wasn't particularly clear
+where they were coming from.
 
-Store wDatagramIndex and wDatagramLength after endianness conversion to
-avoid repeated le16_to_cpu() calls.
+Use sizes of existing NCM structs where available. Define the total
+NDP16 size based on the maximum amount of DPEs that can fit into the
+iOS-specific fixed-size header.
 
-Rewrite the loop to return on a null trailing DPE, which is required
-by the CDC NCM spec. In case it is missing, fall through to rx_error.
-
-This change does not fix any particular issue. Its purpose is to
-simplify a subsequent commit that fixes a potential OoB read by limiting
-the maximum amount of processed DPEs.
+This change does not fix any particular issue. Rather, it introduces
+intermediate constants that will simplify subsequent commits.
+It should also make it clearer for the reader where the constant values
+come from.
 
 Cc: stable@vger.kernel.org # 6.5.x
 Signed-off-by: Foster Snowhill <forst@pen.gy>
@@ -74,86 +74,33 @@ Reviewed-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/ipheth.c | 42 ++++++++++++++++++++++------------------
- 1 file changed, 23 insertions(+), 19 deletions(-)
+ drivers/net/usb/ipheth.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
-index c385623596d2..069979e2bb6e 100644
+index 069979e2bb6e..03249208612e 100644
 --- a/drivers/net/usb/ipheth.c
 +++ b/drivers/net/usb/ipheth.c
-@@ -213,9 +213,9 @@ static int ipheth_rcvbulk_callback_ncm(struct urb *urb)
- 	struct usb_cdc_ncm_ndp16 *ncm0;
- 	struct usb_cdc_ncm_dpe16 *dpe;
- 	struct ipheth_device *dev;
-+	u16 dg_idx, dg_len;
- 	int retval = -EINVAL;
- 	char *buf;
--	int len;
+@@ -61,7 +61,18 @@
+ #define IPHETH_USBINTF_PROTO    1
  
- 	dev = urb->context;
- 
-@@ -227,39 +227,43 @@ static int ipheth_rcvbulk_callback_ncm(struct urb *urb)
- 	ncmh = urb->transfer_buffer;
- 	if (ncmh->dwSignature != cpu_to_le32(USB_CDC_NCM_NTH16_SIGN) ||
- 	    /* On iOS, NDP16 directly follows NTH16 */
--	    ncmh->wNdpIndex != cpu_to_le16(sizeof(struct usb_cdc_ncm_nth16))) {
--		dev->net->stats.rx_errors++;
--		return retval;
--	}
-+	    ncmh->wNdpIndex != cpu_to_le16(sizeof(struct usb_cdc_ncm_nth16)))
-+		goto rx_error;
- 
- 	ncm0 = urb->transfer_buffer + sizeof(struct usb_cdc_ncm_nth16);
--	if (ncm0->dwSignature != cpu_to_le32(USB_CDC_NCM_NDP16_NOCRC_SIGN)) {
--		dev->net->stats.rx_errors++;
--		return retval;
--	}
-+	if (ncm0->dwSignature != cpu_to_le32(USB_CDC_NCM_NDP16_NOCRC_SIGN))
-+		goto rx_error;
- 
- 	dpe = ncm0->dpe16;
--	while (le16_to_cpu(dpe->wDatagramIndex) != 0 &&
--	       le16_to_cpu(dpe->wDatagramLength) != 0) {
--		if (le16_to_cpu(dpe->wDatagramIndex) < IPHETH_NCM_HEADER_SIZE ||
--		    le16_to_cpu(dpe->wDatagramIndex) >= urb->actual_length ||
--		    le16_to_cpu(dpe->wDatagramLength) > urb->actual_length -
--		    le16_to_cpu(dpe->wDatagramIndex)) {
-+	while (true) {
-+		dg_idx = le16_to_cpu(dpe->wDatagramIndex);
-+		dg_len = le16_to_cpu(dpe->wDatagramLength);
-+
-+		/* Null DPE must be present after last datagram pointer entry
-+		 * (3.3.1 USB CDC NCM spec v1.0)
-+		 */
-+		if (dg_idx == 0 && dg_len == 0)
-+			return 0;
-+
-+		if (dg_idx < IPHETH_NCM_HEADER_SIZE ||
-+		    dg_idx >= urb->actual_length ||
-+		    dg_len > urb->actual_length - dg_idx) {
- 			dev->net->stats.rx_length_errors++;
- 			return retval;
- 		}
- 
--		buf = urb->transfer_buffer + le16_to_cpu(dpe->wDatagramIndex);
--		len = le16_to_cpu(dpe->wDatagramLength);
-+		buf = urb->transfer_buffer + dg_idx;
- 
--		retval = ipheth_consume_skb(buf, len, dev);
-+		retval = ipheth_consume_skb(buf, dg_len, dev);
- 		if (retval != 0)
- 			return retval;
- 
- 		dpe++;
- 	}
- 
--	return 0;
-+rx_error:
-+	dev->net->stats.rx_errors++;
-+	return retval;
- }
- 
- static void ipheth_rcvbulk_callback(struct urb *urb)
+ #define IPHETH_IP_ALIGN		2	/* padding at front of URB */
+-#define IPHETH_NCM_HEADER_SIZE  (12 + 96) /* NCMH + NCM0 */
++/* On iOS devices, NCM headers in RX have a fixed size regardless of DPE count:
++ * - NTH16 (NCMH): 12 bytes, as per CDC NCM 1.0 spec
++ * - NDP16 (NCM0): 96 bytes, of which
++ *    - NDP16 fixed header: 8 bytes
++ *    - maximum of 22 DPEs (21 datagrams + trailer), 4 bytes each
++ */
++#define IPHETH_NDP16_MAX_DPE	22
++#define IPHETH_NDP16_HEADER_SIZE (sizeof(struct usb_cdc_ncm_ndp16) + \
++				  IPHETH_NDP16_MAX_DPE * \
++				  sizeof(struct usb_cdc_ncm_dpe16))
++#define IPHETH_NCM_HEADER_SIZE	(sizeof(struct usb_cdc_ncm_nth16) + \
++				 IPHETH_NDP16_HEADER_SIZE)
+ #define IPHETH_TX_BUF_SIZE      ETH_FRAME_LEN
+ #define IPHETH_RX_BUF_SIZE_LEGACY (IPHETH_IP_ALIGN + ETH_FRAME_LEN)
+ #define IPHETH_RX_BUF_SIZE_NCM	65536
 -- 
 2.48.1
 
