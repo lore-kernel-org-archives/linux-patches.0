@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C1413D8A4;
-	Thu, 13 Feb 2025 14:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDC92222D1;
+	Thu, 13 Feb 2025 14:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457387; cv=none; b=rwtmJPK1KfdbHATn51PFCGnfngfH5UZABsDku9vvWl58YjXPW7TQ2wNSVa2N0tjYHdP7LJcS1nRM1SCtqBr32gPY/oRenkcpZD9BcFkYw3elUJShfm8AfB49PRMR0m8KtNd3HcaUDMhrjMdJ9yjcd5L6LCMNMGtAqDowZ22wUHA=
+	t=1739457390; cv=none; b=ni/UjWO23VoukR66ywP2AdVCIbX/70IbJ06BjRsE8RCjAxxmOb0cXJQMUfKeqHPjHriuUZam6EHiz8YcM9+6Y9gqA3MX7h65z6TfYFUsQmI45hNW14oTWTCRXzlkr08fbvZzg9i8JT3cfBra5yE73C5D0G+UvB7Ce/KeTLG2Jks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457387; c=relaxed/simple;
-	bh=LGk7Maajl+/jCZiE15E5o3IcgIVyWtgV7ndaklg/rKo=;
+	s=arc-20240116; t=1739457390; c=relaxed/simple;
+	bh=5+jzHQYJDri1NzDzCFmrYBduJCokau/YHChxqiye+SE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GAlyWZ9OppJq0H35S8G6RXvuf3gt1s6lGQocqd7IYMg8JA0eh8NEkaQHpDudlyLvGGDFHWXhRMC+zKn0HET4X51F0uzxu4FnGMJy8phXBmwWQeboqKSpmrMBjHhUkMsaQnE7DRh6v8pzxvx0t6bt4wNSJKt/rBw8AYhips8HcWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXZHXKcG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EuaRx5Mb2+wB875xws5PIZQgTnaV+DClU9zLPgAk0qrWTamV9UakfiYwwDzZwN3YfiupZ6vL40rLdXpyX6rA4sfS5QDsaeDQ7dB6JSezvBHkBqIJUtz7dRVIfgFxmtX9IRl7KqfIEEcVCGIWQ7n5/FbfKvVRQ4GFmQDZMqs5pmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxTK8ku/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXZHXKcG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A51C4CED1;
-	Thu, 13 Feb 2025 14:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxTK8ku/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90401C4CEE2;
+	Thu, 13 Feb 2025 14:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457386;
-	bh=LGk7Maajl+/jCZiE15E5o3IcgIVyWtgV7ndaklg/rKo=;
+	s=korg; t=1739457390;
+	bh=5+jzHQYJDri1NzDzCFmrYBduJCokau/YHChxqiye+SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cXZHXKcGRfofK7RZI4ZGvjrfvpmCiYx8+nUDv83wWza/sowjjxlXaRPNVfk+R9iGM
-	 nuzwKzE2CBNELn0PRTU+OeeSpuCKdZ/GnjDz+xS5ZeSgB6i/BwYGH3fyCt5l+23Leo
-	 A12hhswvKsZ/TWQSIN3KgGktdVyaMG2NfU+cQSd0=
+	b=yxTK8ku/u3rVISC8R1KR0GrLdrKBdR8DmPImoLt99aGip5tRGF/HfmznwaNBpVvbG
+	 1oxnThOFX8MRobNGPbK9wncDubJBozlNpl4G4FrxdYoPcCS2AwLnDuNunUyDPNXu0g
+	 S/mPsX+mTvxKGus1C+bTShda1P+17cuiJKoLrxLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7536f77535e5210a5c76@syzkaller.appspotmail.com,
-	Leo Stone <leocstone@gmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Sean Christopherson <seanjc@google.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 053/422] tomoyo: dont emit warning in tomoyo_write_control()
-Date: Thu, 13 Feb 2025 15:23:22 +0100
-Message-ID: <20250213142438.608856943@linuxfoundation.org>
+Subject: [PATCH 6.12 089/422] KVM: PPC: e500: Mark "struct page" dirty in kvmppc_e500_shadow_map()
+Date: Thu, 13 Feb 2025 15:23:58 +0100
+Message-ID: <20250213142439.987782225@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,44 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 3df7546fc03b8f004eee0b9e3256369f7d096685 ]
+[ Upstream commit c9be85dabb376299504e0d391d15662c0edf8273 ]
 
-syzbot is reporting too large allocation warning at tomoyo_write_control(),
-for one can write a very very long line without new line character. To fix
-this warning, I use __GFP_NOWARN rather than checking for KMALLOC_MAX_SIZE,
-for practically a valid line should be always shorter than 32KB where the
-"too small to fail" memory-allocation rule applies.
+Mark the underlying page as dirty in kvmppc_e500_ref_setup()'s sole
+caller, kvmppc_e500_shadow_map(), which will allow converting e500 to
+__kvm_faultin_pfn() + kvm_release_faultin_page() without having to do
+a weird dance between ref_setup() and shadow_map().
 
-One might try to write a valid line that is longer than 32KB, but such
-request will likely fail with -ENOMEM. Therefore, I feel that separately
-returning -EINVAL when a line is longer than KMALLOC_MAX_SIZE is redundant.
-There is no need to distinguish over-32KB and over-KMALLOC_MAX_SIZE.
+Opportunistically drop the redundant kvm_set_pfn_accessed(), as
+shadow_map() puts the page via kvm_release_pfn_clean().
 
-Reported-by: syzbot+7536f77535e5210a5c76@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7536f77535e5210a5c76
-Reported-by: Leo Stone <leocstone@gmail.com>
-Closes: https://lkml.kernel.org/r/20241216021459.178759-2-leocstone@gmail.com
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20241010182427.1434605-53-seanjc@google.com>
+Stable-dep-of: 87ecfdbc699c ("KVM: e500: always restore irqs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/tomoyo/common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kvm/e500_mmu_host.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/security/tomoyo/common.c b/security/tomoyo/common.c
-index 5c7b059a332aa..972664962e8f6 100644
---- a/security/tomoyo/common.c
-+++ b/security/tomoyo/common.c
-@@ -2665,7 +2665,7 @@ ssize_t tomoyo_write_control(struct tomoyo_io_buffer *head,
+diff --git a/arch/powerpc/kvm/e500_mmu_host.c b/arch/powerpc/kvm/e500_mmu_host.c
+index c664fdec75b1a..5c2adfd19e123 100644
+--- a/arch/powerpc/kvm/e500_mmu_host.c
++++ b/arch/powerpc/kvm/e500_mmu_host.c
+@@ -242,7 +242,7 @@ static inline int tlbe_is_writable(struct kvm_book3e_206_tlb_entry *tlbe)
+ 	return tlbe->mas7_3 & (MAS3_SW|MAS3_UW);
+ }
  
- 		if (head->w.avail >= head->writebuf_size - 1) {
- 			const int len = head->writebuf_size * 2;
--			char *cp = kzalloc(len, GFP_NOFS);
-+			char *cp = kzalloc(len, GFP_NOFS | __GFP_NOWARN);
+-static inline void kvmppc_e500_ref_setup(struct tlbe_ref *ref,
++static inline bool kvmppc_e500_ref_setup(struct tlbe_ref *ref,
+ 					 struct kvm_book3e_206_tlb_entry *gtlbe,
+ 					 kvm_pfn_t pfn, unsigned int wimg)
+ {
+@@ -252,11 +252,7 @@ static inline void kvmppc_e500_ref_setup(struct tlbe_ref *ref,
+ 	/* Use guest supplied MAS2_G and MAS2_E */
+ 	ref->flags |= (gtlbe->mas2 & MAS2_ATTRIB_MASK) | wimg;
  
- 			if (!cp) {
- 				error = -ENOMEM;
+-	/* Mark the page accessed */
+-	kvm_set_pfn_accessed(pfn);
+-
+-	if (tlbe_is_writable(gtlbe))
+-		kvm_set_pfn_dirty(pfn);
++	return tlbe_is_writable(gtlbe);
+ }
+ 
+ static inline void kvmppc_e500_ref_release(struct tlbe_ref *ref)
+@@ -337,6 +333,7 @@ static inline int kvmppc_e500_shadow_map(struct kvmppc_vcpu_e500 *vcpu_e500,
+ 	unsigned int wimg = 0;
+ 	pgd_t *pgdir;
+ 	unsigned long flags;
++	bool writable = false;
+ 
+ 	/* used to check for invalidations in progress */
+ 	mmu_seq = kvm->mmu_invalidate_seq;
+@@ -490,7 +487,9 @@ static inline int kvmppc_e500_shadow_map(struct kvmppc_vcpu_e500 *vcpu_e500,
+ 			goto out;
+ 		}
+ 	}
+-	kvmppc_e500_ref_setup(ref, gtlbe, pfn, wimg);
++	writable = kvmppc_e500_ref_setup(ref, gtlbe, pfn, wimg);
++	if (writable)
++		kvm_set_pfn_dirty(pfn);
+ 
+ 	kvmppc_e500_setup_stlbe(&vcpu_e500->vcpu, gtlbe, tsize,
+ 				ref, gvaddr, stlbe);
 -- 
 2.39.5
 
