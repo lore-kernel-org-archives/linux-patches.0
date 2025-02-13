@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF3E28136D;
-	Thu, 13 Feb 2025 14:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44AF21D3F9;
+	Thu, 13 Feb 2025 14:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457174; cv=none; b=oW0EjJVPX7k3EwtwaMWV9jGlDwE+7VrXnL69K7SYdBznZy20PTqBhjetE1G+KV1B1rn9xVgYZTyV9MPPn8ZPXhFPu+i2A/Ga1lSOHLkO4aKkxeFzF0bx4YFXEDZO4uR2/y1I0YiVthRIM3mqXPH35cVRCohzAowza4S3vV4K/YU=
+	t=1739457177; cv=none; b=a+VOVX8VpwJLreuHk1XDMaHyApAL+pljTKn8aZBBh0Csf/ETGSyMXmFFmRlGiWswxxpXtMMg1B48Su6wO1cP+pgjD1w+ODgL3692f71JjBYyNCkFcH0V9n1lWPhHfrH0zA3/wXrO1mu9sN9rZyVAQWCWx6x4OnW/+M7QfYCPm/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457174; c=relaxed/simple;
-	bh=6ZOScTvSUa2wRkRhfJxwSOGcFTbmvGiVBlA4cnKwqp0=;
+	s=arc-20240116; t=1739457177; c=relaxed/simple;
+	bh=txZ9A7CvJJGeR5oAuarkyd0tRHNL5IWUfuR0Zj9urYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1E2jrm8RZyfJeN0UsymBTLioALy6xSP0wIKyNp5cil84SWUs7/h3e1aux0xaBFk0xRnb5PnXlD8gySRyY7HoJ45nhXqbRkvEDAH9H6t248iqd5EYOJLICDQOFnVrs4APuXAWmvYUi9uhEfEj3VysW9Y1tAVlWtyMaIr/cDirZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFGYjqPi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S6rLrWi+6goiG0a541BNq2eum9sIjVS4nlQ2XtqO8VaQWuNs7saLtVOFYKNbEwpT4CGaeUGv04E+cG6wVNJyCc+/R4EQqYr1HRUV2Oqcup1v4INL/hAL06VwZ7iUl/ZDPAEp1QtGS94Y9lt3uLqWf945Ha3ldbR43wCPprcahbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcHFwwSq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFGYjqPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D808C4CEE2;
-	Thu, 13 Feb 2025 14:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcHFwwSq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE11C4CED1;
+	Thu, 13 Feb 2025 14:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457173;
-	bh=6ZOScTvSUa2wRkRhfJxwSOGcFTbmvGiVBlA4cnKwqp0=;
+	s=korg; t=1739457177;
+	bh=txZ9A7CvJJGeR5oAuarkyd0tRHNL5IWUfuR0Zj9urYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MFGYjqPiNdPnKrEqFYQWzYt7mtP27eS0OaLwdmqnK3mlIZj55oJT3gvLolqbOvz4w
-	 jYUX6ltBM1GOyOGe/YSNLax9iXq3DlWQLRZFk934x40Mm8FoUlzbG7PrMR9xJyNfeR
-	 luZzC6d/spmX2KxOtewFx26mE9bJ9LMP8VVwTyxw=
+	b=tcHFwwSqUwY0DoYmvtB3RS2vUl7Kg8f6bErYAdKzloCXin/RLZssvzuto7pGQ9g9s
+	 C9gdJeQ10dsVPBWE42WuEYDIBAAjQwCqULGaTpLhUk2E2HOlp70ZVDKBc1Tw7McUEm
+	 cabQyoWfgM0R2gkykcBVk2k4/u0tiUil39WBuRyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Dustin L. Howett" <dustin@howett.net>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/422] drm/amdgpu: Dont enable sdma 4.4.5 CTXEMPTY interrupt
-Date: Thu, 13 Feb 2025 15:23:06 +0100
-Message-ID: <20250213142437.988204413@linuxfoundation.org>
+Subject: [PATCH 6.12 020/422] drm: panel-backlight-quirks: Add Framework 13 glossy and 2.8k panels
+Date: Thu, 13 Feb 2025 15:22:49 +0100
+Message-ID: <20250213142437.333086899@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -46,50 +47,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Dustin L. Howett <dustin@howett.net>
 
-[ Upstream commit b4b7271e5ca95b581f2fcc4ae852c4079215e92d ]
+[ Upstream commit d80b5c5b9be6b2e1cdeaaeaa8259523b63cae292 ]
 
-The sdma context empty interrupt is dropped in amdgpu_irq_dispatch
-as unregistered interrupt src_id 243, this interrupt accounts to 1/3 of
-total interrupts and causes IH primary ring overflow when running
-stressful benchmark application. Disable this interrupt has no side
-effect found.
+I have tested these panels on the Framework Laptop 13 AMD with firmware
+revision 3.05 (latest at time of submission).
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Dustin L. Howett <dustin@howett.net>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241111-amdgpu-min-backlight-quirk-v7-4-f662851fda69@weissschuh.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_panel_backlight_quirks.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-index c77889040760a..4dd86c682ee6a 100644
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-@@ -953,10 +953,12 @@ static int sdma_v4_4_2_inst_start(struct amdgpu_device *adev,
- 		/* set utc l1 enable flag always to 1 */
- 		temp = RREG32_SDMA(i, regSDMA_CNTL);
- 		temp = REG_SET_FIELD(temp, SDMA_CNTL, UTC_L1_ENABLE, 1);
--		/* enable context empty interrupt during initialization */
--		temp = REG_SET_FIELD(temp, SDMA_CNTL, CTXEMPTY_INT_ENABLE, 1);
--		WREG32_SDMA(i, regSDMA_CNTL, temp);
+diff --git a/drivers/gpu/drm/drm_panel_backlight_quirks.c b/drivers/gpu/drm/drm_panel_backlight_quirks.c
+index f2aefff618ddb..c477d98ade2b4 100644
+--- a/drivers/gpu/drm/drm_panel_backlight_quirks.c
++++ b/drivers/gpu/drm/drm_panel_backlight_quirks.c
+@@ -25,6 +25,22 @@ static const struct drm_panel_min_backlight_quirk drm_panel_min_backlight_quirks
+ 		.ident.name = "NE135FBM-N41",
+ 		.min_brightness = 0,
+ 	},
++	/* 13 inch glossy panel */
++	{
++		.dmi_match.field = DMI_BOARD_VENDOR,
++		.dmi_match.value = "Framework",
++		.ident.panel_id = drm_edid_encode_panel_id('B', 'O', 'E', 0x095f),
++		.ident.name = "NE135FBM-N41",
++		.min_brightness = 0,
++	},
++	/* 13 inch 2.8k panel */
++	{
++		.dmi_match.field = DMI_BOARD_VENDOR,
++		.dmi_match.value = "Framework",
++		.ident.panel_id = drm_edid_encode_panel_id('B', 'O', 'E', 0x0cb4),
++		.ident.name = "NE135A1M-NY1",
++		.min_brightness = 0,
++	},
+ };
  
-+		if (amdgpu_ip_version(adev, SDMA0_HWIP, 0) < IP_VERSION(4, 4, 5)) {
-+			/* enable context empty interrupt during initialization */
-+			temp = REG_SET_FIELD(temp, SDMA_CNTL, CTXEMPTY_INT_ENABLE, 1);
-+			WREG32_SDMA(i, regSDMA_CNTL, temp);
-+		}
- 		if (!amdgpu_sriov_vf(adev)) {
- 			if (adev->firmware.load_type != AMDGPU_FW_LOAD_PSP) {
- 				/* unhalt engine */
+ static bool drm_panel_min_backlight_quirk_matches(const struct drm_panel_min_backlight_quirk *quirk,
 -- 
 2.39.5
 
