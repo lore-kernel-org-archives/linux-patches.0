@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEB71C863C;
-	Thu, 13 Feb 2025 14:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E401E0087;
+	Thu, 13 Feb 2025 14:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458488; cv=none; b=sv3jBQIciozTOOFZsF5CUvG/ckGf2GG8AsWPXhSDpnZcDUNFZJ3GE+YSwcdju+vPSasXm7+zUagcrXd3gEbxvxH23U7eQWgxw4tegkhaEEn8LF4rua4+/2UQmhGBlSruDe2gwSFVH53+CIhwbbEdE4cSDcN+KMgCVD76wKAQQKQ=
+	t=1739458492; cv=none; b=K8FRUaYtuhztCTXAyLdVaUBy4Af+Sr42PBGEzpurCvLL2RUYec/9F89lODB2AR+inMawFZKPaZno10Zln8E5chvHTreikxgldu7lRCNjJ5hruSSlXo4x527fey+IIw8T7ByTWcU2cutVtOZBBdyV24DZ/xXFpkA4a5O9cEDJvRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458488; c=relaxed/simple;
-	bh=0NXWlmckeu8fXqmV3yCVRNMo1MC7kldubx2s43s8oLQ=;
+	s=arc-20240116; t=1739458492; c=relaxed/simple;
+	bh=S6XnTS2W02mq1vmY8K5FRQSx8zPYASva58L9Jo4gfH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hXp8BGVcqzMIMo6lC7X2rRurnyqCnEJWGlrjWnkKQkfKIXYo8m+Oy9ZI3/OkcpYvgJIlgKEitknDof4OJ3CjoDtdmaq4ibngd1BWyXLTyUMZ6+IHEE/wPR0PJyjOeMYJEQpjXbzeNajX7PfD2RwDU3B2pZVlttf4gyqt7BXi7L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMuVnmfN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GuJD3nlv5b1/navy/OzEttM0VY1mfVFWpQZ221CnuCmLxoXFjZyjcM7sD6oDXIADYxFxS1PXvw+jTj9yoslp2a7lXF7nFeSjsk+paMe5/kO1gP9apzh38m5fEDAHftf0iI4CSJHvL2kKTxZnDebw+rrMe2Z4IsYarHyWTBQHDW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFGmjWwM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMuVnmfN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C566C4CED1;
-	Thu, 13 Feb 2025 14:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFGmjWwM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C23C4CED1;
+	Thu, 13 Feb 2025 14:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458488;
-	bh=0NXWlmckeu8fXqmV3yCVRNMo1MC7kldubx2s43s8oLQ=;
+	s=korg; t=1739458491;
+	bh=S6XnTS2W02mq1vmY8K5FRQSx8zPYASva58L9Jo4gfH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yMuVnmfNYjS8cGJff6T6inxnE+BxpArf7ASgM088SRbkPy8DOhBeToblrlFhhnlcq
-	 eELMpK9hk091Y/Uos0uwWYI6u6xrNzh9RhixFBy7CazJUyfvFjtjYTvGuHiBZ6ZsBO
-	 9WaQI6jZ5E3i91RB7y7SpD0u1sxbctDgLuLVfr5g=
+	b=CFGmjWwMCy0K+OQXfxTa1LRpsg+3CU3AV7qTnx/qsODfCeg5n4haq7twk8s0+95Nv
+	 ccCrgCRHDil34GP7cz5PhXHWr6++n6Zg+7abx6vvg/3hORgNDFhmtIjrzDgQXQl3OG
+	 Fj2d2Wq933oDatptDXhYYpZkjKr9ltCtynxRL8AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Libo Chen <libo.chen@oracle.com>
-Subject: [PATCH 6.12 415/422] [PATCH 6.12] Revert "selftests/sched_ext: fix build after renames in sched_ext API"
-Date: Thu, 13 Feb 2025 15:29:24 +0100
-Message-ID: <20250213142452.578076494@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 416/422] Revert "drm/amd/display: Fix green screen issue after suspend"
+Date: Thu, 13 Feb 2025 15:29:25 +0100
+Message-ID: <20250213142452.618117431@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -43,214 +48,195 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Libo Chen <libo.chen@oracle.com>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-This reverts commit fc20e87419e59d86f3bbcee2d4506bcd01c6450a which is
-commit ef7009decc30eb2515a64253791d61b72229c119 upstream.
+commit 04d6273faed083e619fc39a738ab0372b6a4db20 upstream.
 
-Commit "selftests/sched_ext: fix build after renames in sched_ext API”
-was pulled into 6.12.y without the sched_ext API renames it depends on.
-The prereqs can be found in
-https://lore.kernel.org/lkml/20241110200308.103681-1-tj@kernel.org/
-As a result, sched_ext selftests fail to compile.
+This reverts commit 87b7ebc2e16c14d32a912f18206a4d6cc9abc3e8.
 
-Cc: stable@vger.kernel.org
-Fixes: fc20e87419e59 ("selftests/sched_ext: fix build after renames in sched_ext API")
-Signed-off-by: Libo Chen <libo.chen@oracle.com>
+A long time ago, we had an issue with the Raven system when it was
+connected to two displays: one with DP and another with HDMI. After the
+system woke up from suspension, we saw a solid green screen caused by an
+underflow generated by bad DCC metadata. To workaround this issue, the
+'commit 87b7ebc2e16c ("drm/amd/display: Fix green screen issue after
+suspend")' was introduced to disable the DCC for a few frames after in
+the resume phase. However, in hindsight, this solution was probably a
+workaround at the kernel level for some issues from another part
+(probably other driver components or user space). After applying this
+patch and trying to reproduce the green issue in a similar hardware
+system but using the latest kernel and userspace, we cannot see the
+issue, which makes this workaround obsolete and creates extra
+unnecessary complexity to the code; for all of this reason, this commit
+reverts the original change.
+
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c         |    2 +-
- tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c        |    4 ++--
- tools/testing/selftests/sched_ext/dsp_local_on.bpf.c                |    2 +-
- tools/testing/selftests/sched_ext/enq_select_cpu_fails.bpf.c        |    2 +-
- tools/testing/selftests/sched_ext/exit.bpf.c                        |    4 ++--
- tools/testing/selftests/sched_ext/maximal.bpf.c                     |    4 ++--
- tools/testing/selftests/sched_ext/select_cpu_dfl.bpf.c              |    2 +-
- tools/testing/selftests/sched_ext/select_cpu_dfl_nodispatch.bpf.c   |    2 +-
- tools/testing/selftests/sched_ext/select_cpu_dispatch.bpf.c         |    2 +-
- tools/testing/selftests/sched_ext/select_cpu_dispatch_bad_dsq.bpf.c |    2 +-
- tools/testing/selftests/sched_ext/select_cpu_dispatch_dbl_dsp.bpf.c |    4 ++--
- tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c            |    8 ++++----
- 12 files changed, 19 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c       |   12 ++------
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c |   22 +++++-----------
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.h |    3 --
+ 3 files changed, 13 insertions(+), 24 deletions(-)
 
---- a/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
-+++ b/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
-@@ -20,7 +20,7 @@ s32 BPF_STRUCT_OPS(ddsp_bogus_dsq_fail_s
- 		 * If we dispatch to a bogus DSQ that will fall back to the
- 		 * builtin global DSQ, we fail gracefully.
- 		 */
--		scx_bpf_dsq_insert_vtime(p, 0xcafef00d, SCX_SLICE_DFL,
-+		scx_bpf_dispatch_vtime(p, 0xcafef00d, SCX_SLICE_DFL,
- 				       p->scx.dsq_vtime, 0);
- 		return cpu;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5499,8 +5499,7 @@ fill_dc_plane_info_and_addr(struct amdgp
+ 			    const u64 tiling_flags,
+ 			    struct dc_plane_info *plane_info,
+ 			    struct dc_plane_address *address,
+-			    bool tmz_surface,
+-			    bool force_disable_dcc)
++			    bool tmz_surface)
+ {
+ 	const struct drm_framebuffer *fb = plane_state->fb;
+ 	const struct amdgpu_framebuffer *afb =
+@@ -5599,7 +5598,7 @@ fill_dc_plane_info_and_addr(struct amdgp
+ 					   &plane_info->tiling_info,
+ 					   &plane_info->plane_size,
+ 					   &plane_info->dcc, address,
+-					   tmz_surface, force_disable_dcc);
++					   tmz_surface);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -5620,7 +5619,6 @@ static int fill_dc_plane_attributes(stru
+ 	struct dc_scaling_info scaling_info;
+ 	struct dc_plane_info plane_info;
+ 	int ret;
+-	bool force_disable_dcc = false;
+ 
+ 	ret = amdgpu_dm_plane_fill_dc_scaling_info(adev, plane_state, &scaling_info);
+ 	if (ret)
+@@ -5631,13 +5629,11 @@ static int fill_dc_plane_attributes(stru
+ 	dc_plane_state->clip_rect = scaling_info.clip_rect;
+ 	dc_plane_state->scaling_quality = scaling_info.scaling_quality;
+ 
+-	force_disable_dcc = adev->asic_type == CHIP_RAVEN && adev->in_suspend;
+ 	ret = fill_dc_plane_info_and_addr(adev, plane_state,
+ 					  afb->tiling_flags,
+ 					  &plane_info,
+ 					  &dc_plane_state->address,
+-					  afb->tmz_surface,
+-					  force_disable_dcc);
++					  afb->tmz_surface);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -9063,7 +9059,7 @@ static void amdgpu_dm_commit_planes(stru
+ 			afb->tiling_flags,
+ 			&bundle->plane_infos[planes_count],
+ 			&bundle->flip_addrs[planes_count].address,
+-			afb->tmz_surface, false);
++			afb->tmz_surface);
+ 
+ 		drm_dbg_state(state->dev, "plane: id=%d dcc_en=%d\n",
+ 				 new_plane_state->plane->index,
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+@@ -309,8 +309,7 @@ static int amdgpu_dm_plane_fill_gfx9_pla
+ 								     const struct plane_size *plane_size,
+ 								     union dc_tiling_info *tiling_info,
+ 								     struct dc_plane_dcc_param *dcc,
+-								     struct dc_plane_address *address,
+-								     const bool force_disable_dcc)
++								     struct dc_plane_address *address)
+ {
+ 	const uint64_t modifier = afb->base.modifier;
+ 	int ret = 0;
+@@ -318,7 +317,7 @@ static int amdgpu_dm_plane_fill_gfx9_pla
+ 	amdgpu_dm_plane_fill_gfx9_tiling_info_from_modifier(adev, tiling_info, modifier);
+ 	tiling_info->gfx9.swizzle = amdgpu_dm_plane_modifier_gfx9_swizzle_mode(modifier);
+ 
+-	if (amdgpu_dm_plane_modifier_has_dcc(modifier) && !force_disable_dcc) {
++	if (amdgpu_dm_plane_modifier_has_dcc(modifier)) {
+ 		uint64_t dcc_address = afb->address + afb->base.offsets[1];
+ 		bool independent_64b_blks = AMD_FMT_MOD_GET(DCC_INDEPENDENT_64B, modifier);
+ 		bool independent_128b_blks = AMD_FMT_MOD_GET(DCC_INDEPENDENT_128B, modifier);
+@@ -360,8 +359,7 @@ static int amdgpu_dm_plane_fill_gfx12_pl
+ 								      const struct plane_size *plane_size,
+ 								      union dc_tiling_info *tiling_info,
+ 								      struct dc_plane_dcc_param *dcc,
+-								      struct dc_plane_address *address,
+-								      const bool force_disable_dcc)
++								      struct dc_plane_address *address)
+ {
+ 	const uint64_t modifier = afb->base.modifier;
+ 	int ret = 0;
+@@ -371,7 +369,7 @@ static int amdgpu_dm_plane_fill_gfx12_pl
+ 
+ 	tiling_info->gfx9.swizzle = amdgpu_dm_plane_modifier_gfx9_swizzle_mode(modifier);
+ 
+-	if (amdgpu_dm_plane_modifier_has_dcc(modifier) && !force_disable_dcc) {
++	if (amdgpu_dm_plane_modifier_has_dcc(modifier)) {
+ 		int max_compressed_block = AMD_FMT_MOD_GET(DCC_MAX_COMPRESSED_BLOCK, modifier);
+ 
+ 		dcc->enable = 1;
+@@ -839,8 +837,7 @@ int amdgpu_dm_plane_fill_plane_buffer_at
+ 			     struct plane_size *plane_size,
+ 			     struct dc_plane_dcc_param *dcc,
+ 			     struct dc_plane_address *address,
+-			     bool tmz_surface,
+-			     bool force_disable_dcc)
++			     bool tmz_surface)
+ {
+ 	const struct drm_framebuffer *fb = &afb->base;
+ 	int ret;
+@@ -900,16 +897,14 @@ int amdgpu_dm_plane_fill_plane_buffer_at
+ 		ret = amdgpu_dm_plane_fill_gfx12_plane_attributes_from_modifiers(adev, afb, format,
+ 										 rotation, plane_size,
+ 										 tiling_info, dcc,
+-										 address,
+-										 force_disable_dcc);
++										 address);
+ 		if (ret)
+ 			return ret;
+ 	} else if (adev->family >= AMDGPU_FAMILY_AI) {
+ 		ret = amdgpu_dm_plane_fill_gfx9_plane_attributes_from_modifiers(adev, afb, format,
+ 										rotation, plane_size,
+ 										tiling_info, dcc,
+-										address,
+-										force_disable_dcc);
++										address);
+ 		if (ret)
+ 			return ret;
+ 	} else {
+@@ -1000,14 +995,13 @@ static int amdgpu_dm_plane_helper_prepar
+ 	    dm_plane_state_old->dc_state != dm_plane_state_new->dc_state) {
+ 		struct dc_plane_state *plane_state =
+ 			dm_plane_state_new->dc_state;
+-		bool force_disable_dcc = !plane_state->dcc.enable;
+ 
+ 		amdgpu_dm_plane_fill_plane_buffer_attributes(
+ 			adev, afb, plane_state->format, plane_state->rotation,
+ 			afb->tiling_flags,
+ 			&plane_state->tiling_info, &plane_state->plane_size,
+ 			&plane_state->dcc, &plane_state->address,
+-			afb->tmz_surface, force_disable_dcc);
++			afb->tmz_surface);
  	}
---- a/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
-+++ b/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
-@@ -17,8 +17,8 @@ s32 BPF_STRUCT_OPS(ddsp_vtimelocal_fail_
  
- 	if (cpu >= 0) {
- 		/* Shouldn't be allowed to vtime dispatch to a builtin DSQ. */
--		scx_bpf_dsq_insert_vtime(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
--					 p->scx.dsq_vtime, 0);
-+		scx_bpf_dispatch_vtime(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
-+				       p->scx.dsq_vtime, 0);
- 		return cpu;
- 	}
+ 	return 0;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.h
+@@ -51,8 +51,7 @@ int amdgpu_dm_plane_fill_plane_buffer_at
+ 				 struct plane_size *plane_size,
+ 				 struct dc_plane_dcc_param *dcc,
+ 				 struct dc_plane_address *address,
+-				 bool tmz_surface,
+-				 bool force_disable_dcc);
++				 bool tmz_surface);
  
---- a/tools/testing/selftests/sched_ext/dsp_local_on.bpf.c
-+++ b/tools/testing/selftests/sched_ext/dsp_local_on.bpf.c
-@@ -48,7 +48,7 @@ void BPF_STRUCT_OPS(dsp_local_on_dispatc
- 	else
- 		target = scx_bpf_task_cpu(p);
- 
--	scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | target, SCX_SLICE_DFL, 0);
-+	scx_bpf_dispatch(p, SCX_DSQ_LOCAL_ON | target, SCX_SLICE_DFL, 0);
- 	bpf_task_release(p);
- }
- 
---- a/tools/testing/selftests/sched_ext/enq_select_cpu_fails.bpf.c
-+++ b/tools/testing/selftests/sched_ext/enq_select_cpu_fails.bpf.c
-@@ -31,7 +31,7 @@ void BPF_STRUCT_OPS(enq_select_cpu_fails
- 	/* Can only call from ops.select_cpu() */
- 	scx_bpf_select_cpu_dfl(p, 0, 0, &found);
- 
--	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-+	scx_bpf_dispatch(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
- }
- 
- SEC(".struct_ops.link")
---- a/tools/testing/selftests/sched_ext/exit.bpf.c
-+++ b/tools/testing/selftests/sched_ext/exit.bpf.c
-@@ -33,7 +33,7 @@ void BPF_STRUCT_OPS(exit_enqueue, struct
- 	if (exit_point == EXIT_ENQUEUE)
- 		EXIT_CLEANLY();
- 
--	scx_bpf_dsq_insert(p, DSQ_ID, SCX_SLICE_DFL, enq_flags);
-+	scx_bpf_dispatch(p, DSQ_ID, SCX_SLICE_DFL, enq_flags);
- }
- 
- void BPF_STRUCT_OPS(exit_dispatch, s32 cpu, struct task_struct *p)
-@@ -41,7 +41,7 @@ void BPF_STRUCT_OPS(exit_dispatch, s32 c
- 	if (exit_point == EXIT_DISPATCH)
- 		EXIT_CLEANLY();
- 
--	scx_bpf_dsq_move_to_local(DSQ_ID);
-+	scx_bpf_consume(DSQ_ID);
- }
- 
- void BPF_STRUCT_OPS(exit_enable, struct task_struct *p)
---- a/tools/testing/selftests/sched_ext/maximal.bpf.c
-+++ b/tools/testing/selftests/sched_ext/maximal.bpf.c
-@@ -22,7 +22,7 @@ s32 BPF_STRUCT_OPS(maximal_select_cpu, s
- 
- void BPF_STRUCT_OPS(maximal_enqueue, struct task_struct *p, u64 enq_flags)
- {
--	scx_bpf_dsq_insert(p, DSQ_ID, SCX_SLICE_DFL, enq_flags);
-+	scx_bpf_dispatch(p, DSQ_ID, SCX_SLICE_DFL, enq_flags);
- }
- 
- void BPF_STRUCT_OPS(maximal_dequeue, struct task_struct *p, u64 deq_flags)
-@@ -30,7 +30,7 @@ void BPF_STRUCT_OPS(maximal_dequeue, str
- 
- void BPF_STRUCT_OPS(maximal_dispatch, s32 cpu, struct task_struct *prev)
- {
--	scx_bpf_dsq_move_to_local(DSQ_ID);
-+	scx_bpf_consume(DSQ_ID);
- }
- 
- void BPF_STRUCT_OPS(maximal_runnable, struct task_struct *p, u64 enq_flags)
---- a/tools/testing/selftests/sched_ext/select_cpu_dfl.bpf.c
-+++ b/tools/testing/selftests/sched_ext/select_cpu_dfl.bpf.c
-@@ -30,7 +30,7 @@ void BPF_STRUCT_OPS(select_cpu_dfl_enque
- 	}
- 	scx_bpf_put_idle_cpumask(idle_mask);
- 
--	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
-+	scx_bpf_dispatch(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
- }
- 
- SEC(".struct_ops.link")
---- a/tools/testing/selftests/sched_ext/select_cpu_dfl_nodispatch.bpf.c
-+++ b/tools/testing/selftests/sched_ext/select_cpu_dfl_nodispatch.bpf.c
-@@ -67,7 +67,7 @@ void BPF_STRUCT_OPS(select_cpu_dfl_nodis
- 		saw_local = true;
- 	}
- 
--	scx_bpf_dsq_insert(p, dsq_id, SCX_SLICE_DFL, enq_flags);
-+	scx_bpf_dispatch(p, dsq_id, SCX_SLICE_DFL, enq_flags);
- }
- 
- s32 BPF_STRUCT_OPS(select_cpu_dfl_nodispatch_init_task,
---- a/tools/testing/selftests/sched_ext/select_cpu_dispatch.bpf.c
-+++ b/tools/testing/selftests/sched_ext/select_cpu_dispatch.bpf.c
-@@ -29,7 +29,7 @@ s32 BPF_STRUCT_OPS(select_cpu_dispatch_s
- 	cpu = prev_cpu;
- 
- dispatch:
--	scx_bpf_dsq_insert(p, dsq_id, SCX_SLICE_DFL, 0);
-+	scx_bpf_dispatch(p, dsq_id, SCX_SLICE_DFL, 0);
- 	return cpu;
- }
- 
---- a/tools/testing/selftests/sched_ext/select_cpu_dispatch_bad_dsq.bpf.c
-+++ b/tools/testing/selftests/sched_ext/select_cpu_dispatch_bad_dsq.bpf.c
-@@ -18,7 +18,7 @@ s32 BPF_STRUCT_OPS(select_cpu_dispatch_b
- 		   s32 prev_cpu, u64 wake_flags)
- {
- 	/* Dispatching to a random DSQ should fail. */
--	scx_bpf_dsq_insert(p, 0xcafef00d, SCX_SLICE_DFL, 0);
-+	scx_bpf_dispatch(p, 0xcafef00d, SCX_SLICE_DFL, 0);
- 
- 	return prev_cpu;
- }
---- a/tools/testing/selftests/sched_ext/select_cpu_dispatch_dbl_dsp.bpf.c
-+++ b/tools/testing/selftests/sched_ext/select_cpu_dispatch_dbl_dsp.bpf.c
-@@ -18,8 +18,8 @@ s32 BPF_STRUCT_OPS(select_cpu_dispatch_d
- 		   s32 prev_cpu, u64 wake_flags)
- {
- 	/* Dispatching twice in a row is disallowed. */
--	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
--	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
-+	scx_bpf_dispatch(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
-+	scx_bpf_dispatch(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
- 
- 	return prev_cpu;
- }
---- a/tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c
-+++ b/tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c
-@@ -2,8 +2,8 @@
- /*
-  * A scheduler that validates that enqueue flags are properly stored and
-  * applied at dispatch time when a task is directly dispatched from
-- * ops.select_cpu(). We validate this by using scx_bpf_dsq_insert_vtime(),
-- * and making the test a very basic vtime scheduler.
-+ * ops.select_cpu(). We validate this by using scx_bpf_dispatch_vtime(), and
-+ * making the test a very basic vtime scheduler.
-  *
-  * Copyright (c) 2024 Meta Platforms, Inc. and affiliates.
-  * Copyright (c) 2024 David Vernet <dvernet@meta.com>
-@@ -47,13 +47,13 @@ s32 BPF_STRUCT_OPS(select_cpu_vtime_sele
- 	cpu = prev_cpu;
- 	scx_bpf_test_and_clear_cpu_idle(cpu);
- ddsp:
--	scx_bpf_dsq_insert_vtime(p, VTIME_DSQ, SCX_SLICE_DFL, task_vtime(p), 0);
-+	scx_bpf_dispatch_vtime(p, VTIME_DSQ, SCX_SLICE_DFL, task_vtime(p), 0);
- 	return cpu;
- }
- 
- void BPF_STRUCT_OPS(select_cpu_vtime_dispatch, s32 cpu, struct task_struct *p)
- {
--	if (scx_bpf_dsq_move_to_local(VTIME_DSQ))
-+	if (scx_bpf_consume(VTIME_DSQ))
- 		consumed = true;
- }
- 
+ int amdgpu_dm_plane_init(struct amdgpu_display_manager *dm,
+ 			 struct drm_plane *plane,
 
 
