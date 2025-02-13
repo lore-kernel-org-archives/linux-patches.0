@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4ADE245022;
-	Thu, 13 Feb 2025 14:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F3E24BBE3;
+	Thu, 13 Feb 2025 14:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457862; cv=none; b=PpX4oq46HKnFP61BeUEHpU9Y6Rt8QqzhMJgYa3/NGob7CxdipwtFEXtDWFx8Idfz6qPGbTtriQDaJWRHkQVPH1pFsXuadOOkK8LtzmVZO9dMcuv6f8fyE5DQtYOCc3IGgH8ZAARUsmU6kUbXHVle8eF3EnCVyL/k59KuEq0Vy1E=
+	t=1739457866; cv=none; b=TLIa7l29/z0pyH4yoPcI8ms0uDl2YzlCBRZAWvjDoHjZNfqULVyBWsvNxRokAdYebC/3g5up48zWsQudAWLmMbxnoo1D4GQJTITkVPkJn1NKQEVqw+W9F/UqwlyUoZaTC0mp9F6isoDIHlsc+8p3lpjDbbCt/cN+KtMmD+eeZf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457862; c=relaxed/simple;
-	bh=lKxnZaKD0Z710uAW4v5Bpk2EO5DcCr0F5DIkCDpHsF8=;
+	s=arc-20240116; t=1739457866; c=relaxed/simple;
+	bh=3MTesvRcC+4Dqjc7Ac4QaiPGlcuDIlFGQ5PluFV/Kvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHILBqxQPSt2dTKj4fLiMiibiKHzZ/PkqAqvv8LrezILokSSnclFudAlkk1JbAJCuoFniNn4brs81BbaOE0ASyx2GDUABOmcJHW2JwAv+0ZT69DCZG49es+6g912zAMS2zXGy36DG6xhwJqSEd0bkB+0kFgrvY5w4L4b6YjkzVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAOLNshZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L1Eum5IEgU69ozcl6zrdrXpUuFH4RyuNJuJEUwlWlcrDGSzq03TqTnKraToEYIYp0SEYARL6Y6ZvSx5r4AkGdmdFYjSjSGXN4F2spjPZdJuOG9uozgrkBdJrbsFXdccRrJkEfm6fkfP7edhFVbyUQ1qwDKocmvsNHyxzmC6GB4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q6H3nSRA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAOLNshZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43216C4CEE4;
-	Thu, 13 Feb 2025 14:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6H3nSRA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9017C4CED1;
+	Thu, 13 Feb 2025 14:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457862;
-	bh=lKxnZaKD0Z710uAW4v5Bpk2EO5DcCr0F5DIkCDpHsF8=;
+	s=korg; t=1739457866;
+	bh=3MTesvRcC+4Dqjc7Ac4QaiPGlcuDIlFGQ5PluFV/Kvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mAOLNshZl4GtJCGIhO3pyC71Znc4xhdHeUeVw92fbRZ1WAHcRKkVpEZiSd1+DRmnG
-	 R31+MKMsNSUL9+7Mj/0xjCeVgtWVFLXyArawMJKBkYVj9EccVsx9mndZ8HqkG81OR2
-	 qnPJ1iuwynw4cd01WYhg4l72A+dRfKOINWSxrva0=
+	b=q6H3nSRAJ4uAhTWM6Ej3o+FBmPjb3My7SwbKwlDx947Odw7hx1JBoaiBCfWY5qv3N
+	 +7hDYFyfrtUZ2QbkCMAOff8wgIEAjO1UPR3JiCxvNMBwJKb2FDdteyTPRcN0lyla40
+	 46o32ukKERAsm9ljf1bXIfD0JA0W55+iHWEk43co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.12 202/422] wifi: rtlwifi: rtl8821ae: Fix media status report
-Date: Thu, 13 Feb 2025 15:25:51 +0100
-Message-ID: <20250213142444.338979820@linuxfoundation.org>
+	"Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
+	Avri Altman <Avri.Altman@wdc.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 193/422] scsi: ufs: core: Fix the HIGH/LOW_TEMP Bit Definitions
+Date: Thu, 13 Feb 2025 15:25:42 +0100
+Message-ID: <20250213142443.992635612@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -50,59 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Bao D. Nguyen <quic_nguyenb@quicinc.com>
 
-commit 66ef0289ac99e155d206ddaa0fdfad09ae3cd007 upstream.
+commit 1b3e2d4ec0c5848776cc56d2624998aa5b2f0d27 upstream.
 
-RTL8821AE is stuck transmitting at the lowest rate allowed by the rate
-mask. This is because the firmware doesn't know the device is connected
-to a network.
+According to the UFS Device Specification, the dExtendedUFSFeaturesSupport
+defines the support for TOO_HIGH_TEMPERATURE as bit[4] and the
+TOO_LOW_TEMPERATURE as bit[5]. Correct the code to match with
+the UFS device specification definition.
 
-Fix the macros SET_H2CCMD_MSRRPT_PARM_OPMODE and
-SET_H2CCMD_MSRRPT_PARM_MACID_IND to work on the first byte of __cmd,
-not the second. Now the firmware is correctly notified when the device
-is connected to a network and it activates the rate control.
-
-Before (MCS3):
-
-[  5]   0.00-1.00   sec  12.5 MBytes   105 Mbits/sec    0    339 KBytes
-[  5]   1.00-2.00   sec  10.6 MBytes  89.1 Mbits/sec    0    339 KBytes
-[  5]   2.00-3.00   sec  10.6 MBytes  89.1 Mbits/sec    0    386 KBytes
-[  5]   3.00-4.00   sec  10.6 MBytes  89.1 Mbits/sec    0    386 KBytes
-[  5]   4.00-5.00   sec  10.2 MBytes  86.0 Mbits/sec    0    427 KBytes
-
-After (MCS9):
-
-[  5]   0.00-1.00   sec  33.9 MBytes   284 Mbits/sec    0    771 KBytes
-[  5]   1.00-2.00   sec  31.6 MBytes   265 Mbits/sec    0    865 KBytes
-[  5]   2.00-3.00   sec  29.9 MBytes   251 Mbits/sec    0    963 KBytes
-[  5]   3.00-4.00   sec  28.2 MBytes   237 Mbits/sec    0    963 KBytes
-[  5]   4.00-5.00   sec  26.8 MBytes   224 Mbits/sec    0    963 KBytes
-
-Fixes: 39f40710d0b5 ("rtlwifi: rtl88821ae: Remove usage of private bit manipulation macros")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/754785b3-8a78-4554-b80d-de5f603b410b@gmail.com
+Fixes: e88e2d32200a ("scsi: ufs: core: Probe for temperature notification support")
+Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+Link: https://lore.kernel.org/r/69992b3e3e3434a5c7643be5a64de48be892ca46.1736793068.git.quic_nguyenb@quicinc.com
+Reviewed-by: Avri Altman <Avri.Altman@wdc.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8821ae/fw.h |    4 ++--
+ include/ufs/ufs.h |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/fw.h
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/fw.h
-@@ -197,9 +197,9 @@ enum rtl8821a_h2c_cmd {
+--- a/include/ufs/ufs.h
++++ b/include/ufs/ufs.h
+@@ -386,8 +386,8 @@ enum {
  
- /* _MEDIA_STATUS_RPT_PARM_CMD1 */
- #define SET_H2CCMD_MSRRPT_PARM_OPMODE(__cmd, __value)	\
--	u8p_replace_bits(__cmd + 1, __value, BIT(0))
-+	u8p_replace_bits(__cmd, __value, BIT(0))
- #define SET_H2CCMD_MSRRPT_PARM_MACID_IND(__cmd, __value)	\
--	u8p_replace_bits(__cmd + 1, __value, BIT(1))
-+	u8p_replace_bits(__cmd, __value, BIT(1))
- 
- /* AP_OFFLOAD */
- #define SET_H2CCMD_AP_OFFLOAD_ON(__cmd, __value)	\
+ /* Possible values for dExtendedUFSFeaturesSupport */
+ enum {
+-	UFS_DEV_LOW_TEMP_NOTIF		= BIT(4),
+-	UFS_DEV_HIGH_TEMP_NOTIF		= BIT(5),
++	UFS_DEV_HIGH_TEMP_NOTIF		= BIT(4),
++	UFS_DEV_LOW_TEMP_NOTIF		= BIT(5),
+ 	UFS_DEV_EXT_TEMP_NOTIF		= BIT(6),
+ 	UFS_DEV_HPB_SUPPORT		= BIT(7),
+ 	UFS_DEV_WRITE_BOOSTER_SUP	= BIT(8),
 
 
