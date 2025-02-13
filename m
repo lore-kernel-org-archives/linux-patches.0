@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DF726B087;
-	Thu, 13 Feb 2025 15:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A1170805;
+	Thu, 13 Feb 2025 15:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460871; cv=none; b=IiY6En5+PP5Eu11iyADtfpUnhfccAR70svLt5RTgxZ6Nl8Ds8SUvMS23uEpioR/v8nXrM4pOeeu+LqgnC26khwxCtYc8S7K5QE0Gf+277xE44znMDvxVH4avNNImv56LHy+0dca2LwgSSM5ZGNtoEI6AHzxPdVMXY8mP1Z3aQAs=
+	t=1739460875; cv=none; b=cUaNcpVzPReD805cCdslozheoHTdxa3SmyTjh2n2qymZMNmCpIsZodQ56ylN1He/iWSNku+Ke0hZA7XSju5frV5j6YiV+JGwlhrsE1fGKmFWU/8bg9fGn4Jg/bjJHJQJQuRV5htLF25fKCoa4bqfFSWNUcDq3PzBOTVHzhWe2fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460871; c=relaxed/simple;
-	bh=dwQHhRUjl+wF6tS0zGHf3rcy/DWrVuLDW0d/W4IXUC8=;
+	s=arc-20240116; t=1739460875; c=relaxed/simple;
+	bh=cqNToz9zgP99PBtrReylJhQ7A/Q+fOibwGoGo1hJATw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ttlmHJvcaXngMiQP/7//ZLQYlsfqauY/1ATYmLA2nhNsR/AEJ6E9/kehK41idkDOB+gMW4Eh0wzMMU5KS5Rn0di/SGuoaQ14yzQof3aQ9vZCyqO3L8v9iFQUPzlloutM9Vfr3pl2Fywm3aqpKFaIyzEIuJMojzq6WPoAdDfUzHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knl/aRy2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NjJpdArA7e1lVD3sb/IJuWoVnHaKDPI0je35dCri3lYybQMshyxJyCsfebhckbnjMQsQqKh6cJ7F8a89qmuMVl+JKZu5kdzxF8qEtaNa+m4ehClFzaVc8q+iSzIXnTFfmRGA/tb0ODg0XbljyR2EIVNT+lHTNkVO/10o+CAKaqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmFumd8U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knl/aRy2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092F9C4CED1;
-	Thu, 13 Feb 2025 15:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmFumd8U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AF2C4CED1;
+	Thu, 13 Feb 2025 15:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460871;
-	bh=dwQHhRUjl+wF6tS0zGHf3rcy/DWrVuLDW0d/W4IXUC8=;
+	s=korg; t=1739460874;
+	bh=cqNToz9zgP99PBtrReylJhQ7A/Q+fOibwGoGo1hJATw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knl/aRy2g900KPcDMohGO9b6uqTG4vp68WK3L6Z8h2N4EbrhzhyHyLJqfDQMF1HV1
-	 mYI3LvmfNBqVOmHFfuNWOk9DMuIZkqkQQSX00QlGL6dhDOJLeu9FBNNwm5Z7oWIz0K
-	 X96Ate2S2q2lcpgcZiBV4c6LQGtCeSc5Wa4//Vws=
+	b=HmFumd8UlztT415bARNAnA3DkAL7HB1yH5jDpk/CRaw4DhKWH1wUGCvL01BxDIWnH
+	 vQhcAQtNqXAkpUhmksI6NYg76O7StxwlGYpDu05kxzhKE8YBZPJcP6J+trP+sua+eN
+	 mor72FpmrxmyVVdOTtf0XoMW48Y2Cr7YUvh52fR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 235/273] nilfs2: fix possible int overflows in nilfs_fiemap()
-Date: Thu, 13 Feb 2025 15:30:07 +0100
-Message-ID: <20250213142416.720921132@linuxfoundation.org>
+	Pekka Pessi <ppessi@nvidia.com>,
+	Kartik Rajput <kkartik@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>
+Subject: [PATCH 6.6 236/273] mailbox: tegra-hsp: Clear mailbox before using message
+Date: Thu, 13 Feb 2025 15:30:08 +0100
+Message-ID: <20250213142416.759469660@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -51,58 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Pekka Pessi <ppessi@nvidia.com>
 
-commit 6438ef381c183444f7f9d1de18f22661cba1e946 upstream.
+commit 0b7f8328f988178b55ee11d772a6e1238c04d29d upstream.
 
-Since nilfs_bmap_lookup_contig() in nilfs_fiemap() calculates its result
-by being prepared to go through potentially maxblocks == INT_MAX blocks,
-the value in n may experience an overflow caused by left shift of blkbits.
+The Tegra RCE (Camera) driver expects the mailbox to be empty before
+processing the IVC messages. On RT kernel, the threads processing the
+IVC messages (which are invoked after `mbox_chan_received_data()` is
+called) may be on a different CPU or running with a higher priority
+than the HSP interrupt handler thread. This can cause it to act on the
+message before the mailbox gets cleared in the HSP interrupt handler
+resulting in a loss of IVC notification.
 
-While it is extremely unlikely to occur, play it safe and cast right hand
-expression to wider type to mitigate the issue.
+Fix this by clearing the mailbox data register before calling
+`mbox_chan_received_data()`.
 
-Found by Linux Verification Center (linuxtesting.org) with static analysis
-tool SVACE.
-
-Link: https://lkml.kernel.org/r/20250124222133.5323-1-konishi.ryusuke@gmail.com
-Fixes: 622daaff0a89 ("nilfs2: fiemap support")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 8f585d14030d ("mailbox: tegra-hsp: Add tegra_hsp_sm_ops")
+Fixes: 74c20dd0f892 ("mailbox: tegra-hsp: Add 128-bit shared mailbox support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pekka Pessi <ppessi@nvidia.com>
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/inode.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mailbox/tegra-hsp.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -1267,7 +1267,7 @@ int nilfs_fiemap(struct inode *inode, st
- 			if (size) {
- 				if (phys && blkphy << blkbits == phys + size) {
- 					/* The current extent goes on */
--					size += n << blkbits;
-+					size += (u64)n << blkbits;
- 				} else {
- 					/* Terminate the current extent */
- 					ret = fiemap_fill_next_extent(
-@@ -1280,14 +1280,14 @@ int nilfs_fiemap(struct inode *inode, st
- 					flags = FIEMAP_EXTENT_MERGED;
- 					logical = blkoff << blkbits;
- 					phys = blkphy << blkbits;
--					size = n << blkbits;
-+					size = (u64)n << blkbits;
- 				}
- 			} else {
- 				/* Start a new extent */
- 				flags = FIEMAP_EXTENT_MERGED;
- 				logical = blkoff << blkbits;
- 				phys = blkphy << blkbits;
--				size = n << blkbits;
-+				size = (u64)n << blkbits;
- 			}
- 			blkoff += n;
- 		}
+--- a/drivers/mailbox/tegra-hsp.c
++++ b/drivers/mailbox/tegra-hsp.c
+@@ -388,7 +388,6 @@ static void tegra_hsp_sm_recv32(struct t
+ 	value = tegra_hsp_channel_readl(channel, HSP_SM_SHRD_MBOX);
+ 	value &= ~HSP_SM_SHRD_MBOX_FULL;
+ 	msg = (void *)(unsigned long)value;
+-	mbox_chan_received_data(channel->chan, msg);
+ 
+ 	/*
+ 	 * Need to clear all bits here since some producers, such as TCU, depend
+@@ -398,6 +397,8 @@ static void tegra_hsp_sm_recv32(struct t
+ 	 * explicitly, so we have to make sure we cover all possible cases.
+ 	 */
+ 	tegra_hsp_channel_writel(channel, 0x0, HSP_SM_SHRD_MBOX);
++
++	mbox_chan_received_data(channel->chan, msg);
+ }
+ 
+ static const struct tegra_hsp_sm_ops tegra_hsp_sm_32bit_ops = {
+@@ -433,7 +434,6 @@ static void tegra_hsp_sm_recv128(struct
+ 	value[3] = tegra_hsp_channel_readl(channel, HSP_SHRD_MBOX_TYPE1_DATA3);
+ 
+ 	msg = (void *)(unsigned long)value;
+-	mbox_chan_received_data(channel->chan, msg);
+ 
+ 	/*
+ 	 * Clear data registers and tag.
+@@ -443,6 +443,8 @@ static void tegra_hsp_sm_recv128(struct
+ 	tegra_hsp_channel_writel(channel, 0x0, HSP_SHRD_MBOX_TYPE1_DATA2);
+ 	tegra_hsp_channel_writel(channel, 0x0, HSP_SHRD_MBOX_TYPE1_DATA3);
+ 	tegra_hsp_channel_writel(channel, 0x0, HSP_SHRD_MBOX_TYPE1_TAG);
++
++	mbox_chan_received_data(channel->chan, msg);
+ }
+ 
+ static const struct tegra_hsp_sm_ops tegra_hsp_sm_128bit_ops = {
 
 
