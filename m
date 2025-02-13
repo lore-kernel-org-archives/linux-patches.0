@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F31281377;
-	Thu, 13 Feb 2025 14:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56B5206F05;
+	Thu, 13 Feb 2025 14:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457219; cv=none; b=MHZuoYermp5hWQaBbsTawuojcCeJZzexTbM+krSURXhzc+VScZTtMdDuiqGVCZa6+hP1V+muhv3zDHMbbyKxZetuRDHHtOEpwFKSDY+ykm7KYkhe/ztLyAWwhMZAm0VTOA5ebvq5csCLRvm7ZuYyI7QGSf21nM+IDvG8p3aA6Ok=
+	t=1739457222; cv=none; b=qNum6xqV/CLe//jqtVwatlxyf5CwQRwN0jzIVzYmZYgT1HCzdI+DddL1hlcSvVqGxLFG8+TnbC8+sqv5AQOqtnvXu8OrTIv2EVwN0aFGSVa5gJca6+cT5M2An8dHq31ukdMEFLWbdXn2YmPrRxqPAsrOug2nmS0WDyNGUyn2Exg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457219; c=relaxed/simple;
-	bh=rqV35hszPG0wQ8HtZBm7y5/n5bDIEWz91Oy38NvNbF8=;
+	s=arc-20240116; t=1739457222; c=relaxed/simple;
+	bh=FqFf9kpvJma/sKqv++XkblVW3vJWi7YdYeJDit+ZljQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VbPvGjUbe19+eW9DkzrvAULsjvQDr4L7K5VZnGjmPj4qmCzoIFhOw7pAm5XQJtSEfD85bslnXZVK/eOT5LfX7UMm8REVJoCVlKFVNT9FHX1JCuHPTshoB+OfISO7zVnRmYxtqPMG/4mbY/qzH9lC3Tu2Qt1Xp70iYL0dXB3Hlew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHJNoq4c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NzuTJlm4qPMIcdwGH+98A/KN4c+eaJIJRJmMYx8pa/pisuhdDQ6qzrUkeiOHbtvI/xhoy1fbdfJfgYKsZ5+WFp3iZ2S0htddcpDHJcgszHm7ybgjuvPBJFkDBusFjTsTI12f7gH9MHN6cYJOMENQDJxbV5fRzQblxay+8tDpRNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cknrqEHY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHJNoq4c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0612C4CEE4;
-	Thu, 13 Feb 2025 14:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cknrqEHY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421E3C4CEE2;
+	Thu, 13 Feb 2025 14:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457219;
-	bh=rqV35hszPG0wQ8HtZBm7y5/n5bDIEWz91Oy38NvNbF8=;
+	s=korg; t=1739457222;
+	bh=FqFf9kpvJma/sKqv++XkblVW3vJWi7YdYeJDit+ZljQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHJNoq4caob4gmXGD/XwgZav7c7PTxsa8yzWxaQCN3Q20+uqQNSxJ3C+z30zeinyU
-	 8iracHn/OZnOpcI/x5bBFvb3b+sh2nFRTC0QkUrRUSKQotnkf6CTKxRBHOl0mNjdxq
-	 Qk6qyVe2CdvHFVomblY34wn/zOlt0Cyudf9OQJnY=
+	b=cknrqEHYxxY54CJT+XR2XXY38tUh29OJV3JexBxhWRVjnKOfxbaRk0NOrSTQEfS53
+	 t0OSLpgtZGB+ryoJzlPOVXlJU0Ll1p0jbh33tsUBnbj4EIGszlf7z38rIi7incRdsA
+	 rsscEQlkqa6FXZmXNKzRnfnd/61ce8K07t0Bctnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Kang Chang <gary.chang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Stas Sergeev <stsp2@yandex.ru>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/422] wifi: rtw89: add crystal_cap check to avoid setting as overflow value
-Date: Thu, 13 Feb 2025 15:23:17 +0100
-Message-ID: <20250213142438.417265160@linuxfoundation.org>
+Subject: [PATCH 6.12 049/422] tun: fix group permission check
+Date: Thu, 13 Feb 2025 15:23:18 +0100
+Message-ID: <20250213142438.455229760@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,79 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chih-Kang Chang <gary.chang@realtek.com>
+From: Stas Sergeev <stsp2@yandex.ru>
 
-[ Upstream commit 7b98caea39676561f22db58752551161bb36462b ]
+[ Upstream commit 3ca459eaba1bf96a8c7878de84fa8872259a01e3 ]
 
-In the original flow, the crystal_cap might be calculated as a negative
-value and set as an overflow value. Therefore, we added a check to limit
-the calculated crystal_cap value. Additionally, we shrank the crystal_cap
-adjustment according to specific CFO.
+Currently tun checks the group permission even if the user have matched.
+Besides going against the usual permission semantic, this has a
+very interesting implication: if the tun group is not among the
+supplementary groups of the tun user, then effectively no one can
+access the tun device. CAP_SYS_ADMIN still can, but its the same as
+not setting the tun ownership.
 
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241128055433.11851-7-pkshih@realtek.com
+This patch relaxes the group checking so that either the user match
+or the group match is enough. This avoids the situation when no one
+can access the device even though the ownership is properly set.
+
+Also I simplified the logic by removing the redundant inversions:
+tun_not_capable() --> !tun_capable()
+
+Signed-off-by: Stas Sergeev <stsp2@yandex.ru>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://patch.msgid.link/20241205073614.294773-1-stsp2@yandex.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/phy.c | 11 ++++++-----
- drivers/net/wireless/realtek/rtw89/phy.h |  2 +-
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/tun.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
-index 4b47b45f897cb..5c31639b4cade 100644
---- a/drivers/net/wireless/realtek/rtw89/phy.c
-+++ b/drivers/net/wireless/realtek/rtw89/phy.c
-@@ -3892,7 +3892,6 @@ static void rtw89_phy_cfo_set_crystal_cap(struct rtw89_dev *rtwdev,
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 6fc60950100c7..6c24a9ce6c155 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -574,14 +574,18 @@ static u16 tun_select_queue(struct net_device *dev, struct sk_buff *skb,
+ 	return ret;
+ }
  
- 	if (!force && cfo->crystal_cap == crystal_cap)
- 		return;
--	crystal_cap = clamp_t(u8, crystal_cap, 0, 127);
- 	if (chip->chip_id == RTL8852A || chip->chip_id == RTL8851B) {
- 		rtw89_phy_cfo_set_xcap_reg(rtwdev, true, crystal_cap);
- 		rtw89_phy_cfo_set_xcap_reg(rtwdev, false, crystal_cap);
-@@ -4015,7 +4014,7 @@ static void rtw89_phy_cfo_crystal_cap_adjust(struct rtw89_dev *rtwdev,
- 					     s32 curr_cfo)
+-static inline bool tun_not_capable(struct tun_struct *tun)
++static inline bool tun_capable(struct tun_struct *tun)
  {
- 	struct rtw89_cfo_tracking_info *cfo = &rtwdev->cfo_tracking;
--	s8 crystal_cap = cfo->crystal_cap;
-+	int crystal_cap = cfo->crystal_cap;
- 	s32 cfo_abs = abs(curr_cfo);
- 	int sign;
+ 	const struct cred *cred = current_cred();
+ 	struct net *net = dev_net(tun->dev);
  
-@@ -4036,15 +4035,17 @@ static void rtw89_phy_cfo_crystal_cap_adjust(struct rtw89_dev *rtwdev,
- 	}
- 	sign = curr_cfo > 0 ? 1 : -1;
- 	if (cfo_abs > CFO_TRK_STOP_TH_4)
--		crystal_cap += 7 * sign;
-+		crystal_cap += 3 * sign;
- 	else if (cfo_abs > CFO_TRK_STOP_TH_3)
--		crystal_cap += 5 * sign;
--	else if (cfo_abs > CFO_TRK_STOP_TH_2)
- 		crystal_cap += 3 * sign;
-+	else if (cfo_abs > CFO_TRK_STOP_TH_2)
-+		crystal_cap += 1 * sign;
- 	else if (cfo_abs > CFO_TRK_STOP_TH_1)
- 		crystal_cap += 1 * sign;
- 	else
- 		return;
-+
-+	crystal_cap = clamp(crystal_cap, 0, 127);
- 	rtw89_phy_cfo_set_crystal_cap(rtwdev, (u8)crystal_cap, false);
- 	rtw89_debug(rtwdev, RTW89_DBG_CFO,
- 		    "X_cap{Curr,Default}={0x%x,0x%x}\n",
-diff --git a/drivers/net/wireless/realtek/rtw89/phy.h b/drivers/net/wireless/realtek/rtw89/phy.h
-index 7e335c02ee6fb..9bb9c9c8e7a1b 100644
---- a/drivers/net/wireless/realtek/rtw89/phy.h
-+++ b/drivers/net/wireless/realtek/rtw89/phy.h
-@@ -57,7 +57,7 @@
- #define CFO_TRK_STOP_TH_4 (30 << 2)
- #define CFO_TRK_STOP_TH_3 (20 << 2)
- #define CFO_TRK_STOP_TH_2 (10 << 2)
--#define CFO_TRK_STOP_TH_1 (00 << 2)
-+#define CFO_TRK_STOP_TH_1 (03 << 2)
- #define CFO_TRK_STOP_TH (2 << 2)
- #define CFO_SW_COMP_FINE_TUNE (2 << 2)
- #define CFO_PERIOD_CNT 15
+-	return ((uid_valid(tun->owner) && !uid_eq(cred->euid, tun->owner)) ||
+-		  (gid_valid(tun->group) && !in_egroup_p(tun->group))) &&
+-		!ns_capable(net->user_ns, CAP_NET_ADMIN);
++	if (ns_capable(net->user_ns, CAP_NET_ADMIN))
++		return 1;
++	if (uid_valid(tun->owner) && uid_eq(cred->euid, tun->owner))
++		return 1;
++	if (gid_valid(tun->group) && in_egroup_p(tun->group))
++		return 1;
++	return 0;
+ }
+ 
+ static void tun_set_real_num_queues(struct tun_struct *tun)
+@@ -2778,7 +2782,7 @@ static int tun_set_iff(struct net *net, struct file *file, struct ifreq *ifr)
+ 		    !!(tun->flags & IFF_MULTI_QUEUE))
+ 			return -EINVAL;
+ 
+-		if (tun_not_capable(tun))
++		if (!tun_capable(tun))
+ 			return -EPERM;
+ 		err = security_tun_dev_open(tun->security);
+ 		if (err < 0)
 -- 
 2.39.5
 
