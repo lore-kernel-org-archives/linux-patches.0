@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF422281369;
-	Thu, 13 Feb 2025 14:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366DC281369;
+	Thu, 13 Feb 2025 14:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457759; cv=none; b=Jg4MV82Li3Ihtl05Gds1OSNq3rAjgMmi0xniB+QECVk0Tcrclwk/QrtZk0fe00CIXg8ZFAYl6Nj2pqgJ4K0tPsSd0xkq3q/f3jggMSEVjPPGVWuz28fPSsck8x/3STCOhnjVec8celDw3qCTnBvLwJ4ZqswrlVFMXNsFr7PCg6o=
+	t=1739457762; cv=none; b=msDhho3lvNhs9QAbRJc55LbrUQ96paYW1wLfFZ4I9sc1lmwxcHFZ6HwRWucDDx2ehrmaZ+XOD9uGYrxRSH9x0jqkxDF6IOG1CCl4LEmP+UtVd4eaLVuRDakpk3ez0iPEyVug5Z/LNa/ehuTL5y9xfqmZm5Y31QN1AdiDU1o4vGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457759; c=relaxed/simple;
-	bh=39Ga2weunWJpBVD/QDK+l+bvA3lOEAlQXGK8a2+PoW4=;
+	s=arc-20240116; t=1739457762; c=relaxed/simple;
+	bh=RemUqDVAE4pgGFwmWtJzPbt6bIoZ81+nhUE0ujAwi68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K5wgVTciyyixbyjfaFkEu+JGnkcccFdXLTlVWkYHsNRSKzPzW+HxRxpPupbNcHb4Rho5WICfQIYZmgM5mSDqamImhBXd42WwzvaLo50J72Rf9C8qA6OXbJikoEyLPGD82p7chrknLqcz97QEs6JtuXm2/xsojC9ErFctBBZVRHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKQ89lq5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r46g6wvzlbTFL4ltmfTNSkz4zQkxTkRndBeXUQvJUD7eaLHRG6NT176TVlicugjTqaJrljpNIPpHv2plhUjMuL4B0r1iiNdGpX/fogCa67OAn7vV+Eo4e7Ftk1ZICV+KbyOtQPuiBiErsrdWxUV+lC7cKxwjcS3ct0n8Qqa9QZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJ7hREKK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKQ89lq5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68CB7C4CED1;
-	Thu, 13 Feb 2025 14:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJ7hREKK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F7FC4CED1;
+	Thu, 13 Feb 2025 14:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457758;
-	bh=39Ga2weunWJpBVD/QDK+l+bvA3lOEAlQXGK8a2+PoW4=;
+	s=korg; t=1739457762;
+	bh=RemUqDVAE4pgGFwmWtJzPbt6bIoZ81+nhUE0ujAwi68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yKQ89lq5IAv5xNO2qHftmMkg3FGeKmJeFtX748RPaRQj8TwjQApyL5rv0n1NHm4U+
-	 4rAxYucNOXe8zeWmkpxd7PiUpB9FpglEOkDF27rBDk6ryUlDNvLB2ZK2i+fZayu9PQ
-	 IGIQN9+OZw3D+xviPvs90omdJXJLrxJtiqr1s6yM=
+	b=lJ7hREKKn9wLpPWEUQCi0yCu8wlOSEcir+kOd+R9CxqthHDcYB0kLUglWlGZEMi7N
+	 uLKivrrfFvOKj4YOapRyfFktoS4JhtqxP8mkdYOuVE1e2dpV1vboNQWnqXYeIyVaFc
+	 9z1vZlQT9TRupg7PwXlCXseIjNUPdlOSWwwa1Toc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.12 206/422] wifi: mt76: mt7915: add module param to select 5 GHz or 6 GHz on MT7916
-Date: Thu, 13 Feb 2025 15:25:55 +0100
-Message-ID: <20250213142444.491089252@linuxfoundation.org>
+	Vasily Khoruzhick <anarsoul@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Fiona Klute <fiona.klute@gmx.de>,
+	Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Subject: [PATCH 6.12 207/422] wifi: rtw88: 8703b: Fix RX/TX issues
+Date: Thu, 13 Feb 2025 15:25:56 +0100
+Message-ID: <20250213142444.528502816@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -50,92 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shayne Chen <shayne.chen@mediatek.com>
+From: Vasily Khoruzhick <anarsoul@gmail.com>
 
-commit 57af267d2b8f5d88485c6372761386d79c5e6a1a upstream.
+commit a806a8160a0fcaff368bb510c8a52eff37faf727 upstream.
 
-Due to a limitation in available memory, the MT7916 firmware can only
-handle either 5 GHz or 6 GHz at a time. It does not support runtime
-switching without a full restart.
+Fix 3 typos in 8703b driver. 2 typos in calibration routines are not
+fatal and do not seem to have any impact, just fix them to match vendor
+driver.
 
-On older firmware, this accidentally worked to some degree due to missing
-checks, but couldn't be supported properly, because it left the 6 GHz
-channels uncalibrated.
-Newer firmware refuses to start on either band if the passed EEPROM
-data indicates support for both.
+However the last one in rtw8703b_set_channel_bb() clears too many bits
+in REG_OFDM0_TX_PSD_NOISE, causing TX and RX issues (neither rate goes
+above MCS0-MCS1). Vendor driver clears only 2 most significant bits.
 
-Deal with this limitation by using a module parameter to specify the
-preferred band in case both are supported.
+With the last typo fixed, the driver is able to reach MCS7 on Pinebook
 
-Fixes: b4d093e321bd ("mt76: mt7915: add 6 GHz support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20241010083816.51880-1-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 9bb762b3a957 ("wifi: rtw88: Add definitions for 8703b chip")
+Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Tested-by: Fiona Klute <fiona.klute@gmx.de>
+Tested-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250103075107.1337533-1-anarsoul@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c |   21 +++++++++++++++++++--
- drivers/net/wireless/mediatek/mt76/mt7915/init.c   |    4 ++--
- 2 files changed, 21 insertions(+), 4 deletions(-)
+ drivers/net/wireless/realtek/rtw88/rtw8703b.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-@@ -2,9 +2,14 @@
- /* Copyright (C) 2020 MediaTek Inc. */
+--- a/drivers/net/wireless/realtek/rtw88/rtw8703b.c
++++ b/drivers/net/wireless/realtek/rtw88/rtw8703b.c
+@@ -911,7 +911,7 @@ static void rtw8703b_set_channel_bb(stru
+ 		rtw_write32_mask(rtwdev, REG_FPGA0_RFMOD, BIT_MASK_RFMOD, 0x0);
+ 		rtw_write32_mask(rtwdev, REG_FPGA1_RFMOD, BIT_MASK_RFMOD, 0x0);
+ 		rtw_write32_mask(rtwdev, REG_OFDM0_TX_PSD_NOISE,
+-				 GENMASK(31, 20), 0x0);
++				 GENMASK(31, 30), 0x0);
+ 		rtw_write32(rtwdev, REG_BBRX_DFIR, 0x4A880000);
+ 		rtw_write32(rtwdev, REG_OFDM0_A_TX_AFE, 0x19F60000);
+ 		break;
+@@ -1257,9 +1257,9 @@ static u8 rtw8703b_iqk_rx_path(struct rt
+ 	rtw_write32(rtwdev, REG_RXIQK_TONE_A_11N, 0x38008c1c);
+ 	rtw_write32(rtwdev, REG_TX_IQK_TONE_B, 0x38008c1c);
+ 	rtw_write32(rtwdev, REG_RX_IQK_TONE_B, 0x38008c1c);
+-	rtw_write32(rtwdev, REG_TXIQK_PI_A_11N, 0x8216000f);
++	rtw_write32(rtwdev, REG_TXIQK_PI_A_11N, 0x8214030f);
+ 	rtw_write32(rtwdev, REG_RXIQK_PI_A_11N, 0x28110000);
+-	rtw_write32(rtwdev, REG_TXIQK_PI_B, 0x28110000);
++	rtw_write32(rtwdev, REG_TXIQK_PI_B, 0x82110000);
+ 	rtw_write32(rtwdev, REG_RXIQK_PI_B, 0x28110000);
  
- #include <linux/firmware.h>
-+#include <linux/moduleparam.h>
- #include "mt7915.h"
- #include "eeprom.h"
+ 	/* LOK setting */
+@@ -1431,7 +1431,7 @@ void rtw8703b_iqk_fill_a_matrix(struct r
+ 		return;
  
-+static bool enable_6ghz;
-+module_param(enable_6ghz, bool, 0644);
-+MODULE_PARM_DESC(enable_6ghz, "Enable 6 GHz instead of 5 GHz on hardware that supports both");
-+
- static int mt7915_eeprom_load_precal(struct mt7915_dev *dev)
- {
- 	struct mt76_dev *mdev = &dev->mt76;
-@@ -170,8 +175,20 @@ static void mt7915_eeprom_parse_band_con
- 			phy->mt76->cap.has_6ghz = true;
- 			return;
- 		case MT_EE_V2_BAND_SEL_5GHZ_6GHZ:
--			phy->mt76->cap.has_5ghz = true;
--			phy->mt76->cap.has_6ghz = true;
-+			if (enable_6ghz) {
-+				phy->mt76->cap.has_6ghz = true;
-+				u8p_replace_bits(&eeprom[MT_EE_WIFI_CONF + band],
-+						 MT_EE_V2_BAND_SEL_6GHZ,
-+						 MT_EE_WIFI_CONF0_BAND_SEL);
-+			} else {
-+				phy->mt76->cap.has_5ghz = true;
-+				u8p_replace_bits(&eeprom[MT_EE_WIFI_CONF + band],
-+						 MT_EE_V2_BAND_SEL_5GHZ,
-+						 MT_EE_WIFI_CONF0_BAND_SEL);
-+			}
-+			/* force to buffer mode */
-+			dev->flash_mode = true;
-+
- 			return;
- 		default:
- 			phy->mt76->cap.has_2ghz = true;
---- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-@@ -1239,14 +1239,14 @@ int mt7915_register_device(struct mt7915
- 	if (ret)
- 		goto unreg_dev;
- 
--	ieee80211_queue_work(mt76_hw(dev), &dev->init_work);
--
- 	if (phy2) {
- 		ret = mt7915_register_ext_phy(dev, phy2);
- 		if (ret)
- 			goto unreg_thermal;
- 	}
- 
-+	ieee80211_queue_work(mt76_hw(dev), &dev->init_work);
-+
- 	dev->recovery.hw_init_done = true;
- 
- 	ret = mt7915_init_debugfs(&dev->phy);
+ 	tmp_rx_iqi |= FIELD_PREP(BIT_MASK_RXIQ_S1_X, result[IQK_S1_RX_X]);
+-	tmp_rx_iqi |= FIELD_PREP(BIT_MASK_RXIQ_S1_Y1, result[IQK_S1_RX_X]);
++	tmp_rx_iqi |= FIELD_PREP(BIT_MASK_RXIQ_S1_Y1, result[IQK_S1_RX_Y]);
+ 	rtw_write32(rtwdev, REG_A_RXIQI, tmp_rx_iqi);
+ 	rtw_write32_mask(rtwdev, REG_RXIQK_MATRIX_LSB_11N, BIT_MASK_RXIQ_S1_Y2,
+ 			 BIT_SET_RXIQ_S1_Y2(result[IQK_S1_RX_Y]));
 
 
