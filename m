@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB0A26618F;
-	Thu, 13 Feb 2025 14:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506B7241678;
+	Thu, 13 Feb 2025 14:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458113; cv=none; b=D+1Kg1eknk1UtfCsZG2ShjZuObJHm5cFEJc+q2px5Ug4vJhX1XDITCCLPCyv9BGYHiT1dlpcNTpnjpb0kfRtjVyKjsoKnfmgNpHvLzh4PsCFiVNkfMnBpSkchxorJBlpBjUXzT03ZxGxnNoa/uTfAXI/UWvVtgqnxeAIvJNJbpE=
+	t=1739458117; cv=none; b=bdppBszfWl0Tr9zfp4TZAvXiJMnIu3h248YsRPd50HXqc3HIUiAu/TT3OgxsvxFs/usv0qY5PncAcRn/v56VluFEMPpDGL+HkjGzKQNGuvMjsGSeJ8jnAdoRdeowc9bOK5Tv/1/lbsFTZHi6p7R+hk8Ig11sadxwqitgnQrSrKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458113; c=relaxed/simple;
-	bh=TL8/IYP7S5E5MxV0gWsFMDAEoYb0nfXM/71VXbr5Lts=;
+	s=arc-20240116; t=1739458117; c=relaxed/simple;
+	bh=CbKpPraKttw635pDlTHidnfTSL/rMtht+8TpJJpYYaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dmnTS1HUcxiSEk8c7DsnwSQJsj7SpMuBP8cUF2JeQ/4jLpjNjsr2AdMXDzXh7rcJLQqCysg+J7oXg6nkkQvwdVk5TcOx2GsOsMw1aTU4tJJ6tzDcOhk5AHQX015ZrOeLohpQ55SnHsmaaBLBbZ4JuVwpo56wgZTmahm4CBQMLy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UB/Jyacp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OQPyfP7WSSqlg8bFq1G/ATGcY4hdvWDki3nXnTFyhhVnN3zRKG3faJF7tmKj/VLe8f6LJx0uXgWnxOGfhzF9AUMn3fs7rfbmseIu0hq54V+v3L8WRwlof21rzvrGUqA7vwqv3uaRg3QZvuwdP6rNUigy9OsxyBGTiDBHQVziscE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0GoAjl9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UB/Jyacp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEABC4CED1;
-	Thu, 13 Feb 2025 14:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0GoAjl9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5658C4CED1;
+	Thu, 13 Feb 2025 14:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458113;
-	bh=TL8/IYP7S5E5MxV0gWsFMDAEoYb0nfXM/71VXbr5Lts=;
+	s=korg; t=1739458117;
+	bh=CbKpPraKttw635pDlTHidnfTSL/rMtht+8TpJJpYYaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UB/JyacpPAiC28EhhvGEecucV5Uy3DowaTRcC7LxOiaFBmZE85QfbT9aad/QA6hXC
-	 3m27ytefA8IBPs3gRp/8tC6gKGmQDjzBD7exVy+tE/nIhX2cJGtuadRrGQoOka8N8+
-	 SYndSQvml93985Y2SSWnWZCiMdN4wnKwn876WNfE=
+	b=E0GoAjl95mKkQaMQjAvZ+agChtNm2Jl4EiMJ1fgmUgl18TaYpvFEz57spbcJcuzcf
+	 2Rvm683Acbfl94xwYNca5BLpj/8h0V8t+dFqEpQNK0HeOzA1LyjR5UcB5/mL6QG2eN
+	 /xURFDnykC6FyR6N+zME2VyIz0pSas1WDJ946KO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 298/422] parisc: Temporarily disable jump label support
-Date: Thu, 13 Feb 2025 15:27:27 +0100
-Message-ID: <20250213142448.040882076@linuxfoundation.org>
+	Vlad Poenaru <vlad.wing@gmail.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.12 307/422] hrtimers: Force migrate away hrtimers queued after CPUHP_AP_HRTIMERS_DYING
+Date: Thu, 13 Feb 2025 15:27:36 +0100
+Message-ID: <20250213142448.390565951@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -50,93 +53,269 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@kernel.org>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-commit 3599bae489d86fbabe039f9a2ab5472ffb04f7f1 upstream.
+commit 53dac345395c0d2493cbc2f4c85fe38aef5b63f5 upstream.
 
-The 32-bit Debian kernel 6.12 fails to boot and crashes like this:
+hrtimers are migrated away from the dying CPU to any online target at
+the CPUHP_AP_HRTIMERS_DYING stage in order not to delay bandwidth timers
+handling tasks involved in the CPU hotplug forward progress.
 
- init (pid 65): Protection id trap (code 7)
- CPU: 0 UID: 0 PID: 65 Comm: init Not tainted 6.12.9 #2
- Hardware name: 9000/778/B160L
+However wakeups can still be performed by the outgoing CPU after
+CPUHP_AP_HRTIMERS_DYING. Those can result again in bandwidth timers being
+armed. Depending on several considerations (crystal ball power management
+based election, earliest timer already enqueued, timer migration enabled or
+not), the target may eventually be the current CPU even if offline. If that
+happens, the timer is eventually ignored.
 
-      YZrvWESTHLNXBCVMcbcbcbcbOGFRQPDI
- PSW: 00000000000001000000000000001111 Not tainted
- r00-03  0004000f 110d39d0 109a6558 12974400
- r04-07  12a810e0 12a810e0 00000000 12a81144
- r08-11  12a81174 00000007 00000000 00000002
- r12-15  f8c55c08 0000006c 00000001 f8c55c08
- r16-19  00000002 f8c58620 002da3a8 0000004e
- r20-23  00001a46 0000000f 10754f84 00000000
- r24-27  00000000 00000003 12ae6980 1127b9d0
- r28-31  00000000 00000000 12974440 109a6558
- sr00-03  00000000 00000000 00000000 00000010
- sr04-07  00000000 00000000 00000000 00000000
+The most notable example is RCU which had to deal with each and every of
+those wake-ups by deferring them to an online CPU, along with related
+workarounds:
 
- IASQ: 00000000 00000000 IAOQ: 110d39d0 110d39d4
-  IIR: baadf00d    ISR: 00000000  IOR: 110d39d0
-  CPU:        0   CR30: 128740c0 CR31: 00000000
-  ORIG_R28: 000003f3
-  IAOQ[0]: 0x110d39d0
-  IAOQ[1]: 0x110d39d4
-  RP(r2): security_sk_free+0x70/0x1a4
- Backtrace:
-  [<10d8c844>] __sk_destruct+0x2bc/0x378
-  [<10d8e33c>] sk_destruct+0x68/0x8c
-  [<10d8e3dc>] __sk_free+0x7c/0x148
-  [<10d8e560>] sk_free+0xb8/0xf0
-  [<10f6420c>] unix_release_sock+0x3ac/0x50c
-  [<10f643b8>] unix_release+0x4c/0x7c
-  [<10d832f8>] __sock_release+0x5c/0xf8
-  [<10d833b4>] sock_close+0x20/0x44
-  [<107ba52c>] __fput+0xf8/0x468
-  [<107baa08>] __fput_sync+0xb4/0xd4
-  [<107b471c>] sys_close+0x44/0x94
-  [<10405334>] syscall_exit+0x0/0x10
+_ e787644caf76 (rcu: Defer RCU kthreads wakeup when CPU is dying)
+_ 9139f93209d1 (rcu/nocb: Fix RT throttling hrtimer armed from offline CPU)
+_ f7345ccc62a4 (rcu/nocb: Fix rcuog wake-up from offline softirq)
 
-Bisecting points to this commit which triggers the issue:
-	commit  417c5643cd67a55f424b203b492082035d0236c3
-	Author: KP Singh <kpsingh@kernel.org>
-	Date:   Fri Aug 16 17:43:07 2024 +0200
-	        lsm: replace indirect LSM hook calls with static calls
+The problem isn't confined to RCU though as the stop machine kthread
+(which runs CPUHP_AP_HRTIMERS_DYING) reports its completion at the end
+of its work through cpu_stop_signal_done() and performs a wake up that
+eventually arms the deadline server timer:
 
-After more analysis it seems that we don't fully implement the static calls
-and jump tables yet. Additionally the functions which mark kernel memory
-read-only or read-write-executable needs to be further enhanced to be able to
-fully support static calls.
+   WARNING: CPU: 94 PID: 588 at kernel/time/hrtimer.c:1086 hrtimer_start_range_ns+0x289/0x2d0
+   CPU: 94 UID: 0 PID: 588 Comm: migration/94 Not tainted
+   Stopper: multi_cpu_stop+0x0/0x120 <- stop_machine_cpuslocked+0x66/0xc0
+   RIP: 0010:hrtimer_start_range_ns+0x289/0x2d0
+   Call Trace:
+   <TASK>
+     start_dl_timer
+     enqueue_dl_entity
+     dl_server_start
+     enqueue_task_fair
+     enqueue_task
+     ttwu_do_activate
+     try_to_wake_up
+     complete
+     cpu_stopper_thread
 
-Enabling CONFIG_SECURITY_YAMA=y was one possibility to trigger the issue,
-although YAMA isn't the reason for the fault.
+Instead of providing yet another bandaid to work around the situation, fix
+it in the hrtimers infrastructure instead: always migrate away a timer to
+an online target whenever it is enqueued from an offline CPU.
 
-As a temporary solution disable JUMP_LABEL functionality to
-avoid the crashes.
+This will also allow to revert all the above RCU disgraceful hacks.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Cc: <stable@vger.kernel.org> # v6.12+
+Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
+Reported-by: Vlad Poenaru <vlad.wing@gmail.com>
+Reported-by: Usama Arif <usamaarif642@gmail.com>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Tested-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/all/20250117232433.24027-1-frederic@kernel.org
+Closes: 20241213203739.1519801-1-usamaarif642@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/hrtimer_defs.h |    1 
+ kernel/time/hrtimer.c        |  103 ++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 83 insertions(+), 21 deletions(-)
 
-diff --git a/arch/parisc/Kconfig b/arch/parisc/Kconfig
-index aa6a3cad275d..fcc5973f7519 100644
---- a/arch/parisc/Kconfig
-+++ b/arch/parisc/Kconfig
-@@ -60,8 +60,8 @@ config PARISC
- 	select HAVE_ARCH_MMAP_RND_BITS
- 	select HAVE_ARCH_AUDITSYSCALL
- 	select HAVE_ARCH_HASH
--	select HAVE_ARCH_JUMP_LABEL
--	select HAVE_ARCH_JUMP_LABEL_RELATIVE
-+	# select HAVE_ARCH_JUMP_LABEL
-+	# select HAVE_ARCH_JUMP_LABEL_RELATIVE
- 	select HAVE_ARCH_KFENCE
- 	select HAVE_ARCH_SECCOMP_FILTER
- 	select HAVE_ARCH_TRACEHOOK
--- 
-2.48.1
-
+--- a/include/linux/hrtimer_defs.h
++++ b/include/linux/hrtimer_defs.h
+@@ -125,6 +125,7 @@ struct hrtimer_cpu_base {
+ 	ktime_t				softirq_expires_next;
+ 	struct hrtimer			*softirq_next_timer;
+ 	struct hrtimer_clock_base	clock_base[HRTIMER_MAX_CLOCK_BASES];
++	call_single_data_t		csd;
+ } ____cacheline_aligned;
+ 
+ 
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -58,6 +58,8 @@
+ #define HRTIMER_ACTIVE_SOFT	(HRTIMER_ACTIVE_HARD << MASK_SHIFT)
+ #define HRTIMER_ACTIVE_ALL	(HRTIMER_ACTIVE_SOFT | HRTIMER_ACTIVE_HARD)
+ 
++static void retrigger_next_event(void *arg);
++
+ /*
+  * The timer bases:
+  *
+@@ -111,7 +113,8 @@ DEFINE_PER_CPU(struct hrtimer_cpu_base,
+ 			.clockid = CLOCK_TAI,
+ 			.get_time = &ktime_get_clocktai,
+ 		},
+-	}
++	},
++	.csd = CSD_INIT(retrigger_next_event, NULL)
+ };
+ 
+ static const int hrtimer_clock_to_base_table[MAX_CLOCKS] = {
+@@ -124,6 +127,14 @@ static const int hrtimer_clock_to_base_t
+ 	[CLOCK_TAI]		= HRTIMER_BASE_TAI,
+ };
+ 
++static inline bool hrtimer_base_is_online(struct hrtimer_cpu_base *base)
++{
++	if (!IS_ENABLED(CONFIG_HOTPLUG_CPU))
++		return true;
++	else
++		return likely(base->online);
++}
++
+ /*
+  * Functions and macros which are different for UP/SMP systems are kept in a
+  * single place
+@@ -183,27 +194,54 @@ struct hrtimer_clock_base *lock_hrtimer_
+ }
+ 
+ /*
+- * We do not migrate the timer when it is expiring before the next
+- * event on the target cpu. When high resolution is enabled, we cannot
+- * reprogram the target cpu hardware and we would cause it to fire
+- * late. To keep it simple, we handle the high resolution enabled and
+- * disabled case similar.
++ * Check if the elected target is suitable considering its next
++ * event and the hotplug state of the current CPU.
++ *
++ * If the elected target is remote and its next event is after the timer
++ * to queue, then a remote reprogram is necessary. However there is no
++ * guarantee the IPI handling the operation would arrive in time to meet
++ * the high resolution deadline. In this case the local CPU becomes a
++ * preferred target, unless it is offline.
++ *
++ * High and low resolution modes are handled the same way for simplicity.
+  *
+  * Called with cpu_base->lock of target cpu held.
+  */
+-static int
+-hrtimer_check_target(struct hrtimer *timer, struct hrtimer_clock_base *new_base)
++static bool hrtimer_suitable_target(struct hrtimer *timer, struct hrtimer_clock_base *new_base,
++				    struct hrtimer_cpu_base *new_cpu_base,
++				    struct hrtimer_cpu_base *this_cpu_base)
+ {
+ 	ktime_t expires;
+ 
++	/*
++	 * The local CPU clockevent can be reprogrammed. Also get_target_base()
++	 * guarantees it is online.
++	 */
++	if (new_cpu_base == this_cpu_base)
++		return true;
++
++	/*
++	 * The offline local CPU can't be the default target if the
++	 * next remote target event is after this timer. Keep the
++	 * elected new base. An IPI will we issued to reprogram
++	 * it as a last resort.
++	 */
++	if (!hrtimer_base_is_online(this_cpu_base))
++		return true;
++
+ 	expires = ktime_sub(hrtimer_get_expires(timer), new_base->offset);
+-	return expires < new_base->cpu_base->expires_next;
++
++	return expires >= new_base->cpu_base->expires_next;
+ }
+ 
+-static inline
+-struct hrtimer_cpu_base *get_target_base(struct hrtimer_cpu_base *base,
+-					 int pinned)
++static inline struct hrtimer_cpu_base *get_target_base(struct hrtimer_cpu_base *base, int pinned)
+ {
++	if (!hrtimer_base_is_online(base)) {
++		int cpu = cpumask_any_and(cpu_online_mask, housekeeping_cpumask(HK_TYPE_TIMER));
++
++		return &per_cpu(hrtimer_bases, cpu);
++	}
++
+ #if defined(CONFIG_SMP) && defined(CONFIG_NO_HZ_COMMON)
+ 	if (static_branch_likely(&timers_migration_enabled) && !pinned)
+ 		return &per_cpu(hrtimer_bases, get_nohz_timer_target());
+@@ -254,8 +292,8 @@ again:
+ 		raw_spin_unlock(&base->cpu_base->lock);
+ 		raw_spin_lock(&new_base->cpu_base->lock);
+ 
+-		if (new_cpu_base != this_cpu_base &&
+-		    hrtimer_check_target(timer, new_base)) {
++		if (!hrtimer_suitable_target(timer, new_base, new_cpu_base,
++					     this_cpu_base)) {
+ 			raw_spin_unlock(&new_base->cpu_base->lock);
+ 			raw_spin_lock(&base->cpu_base->lock);
+ 			new_cpu_base = this_cpu_base;
+@@ -264,8 +302,7 @@ again:
+ 		}
+ 		WRITE_ONCE(timer->base, new_base);
+ 	} else {
+-		if (new_cpu_base != this_cpu_base &&
+-		    hrtimer_check_target(timer, new_base)) {
++		if (!hrtimer_suitable_target(timer, new_base,  new_cpu_base, this_cpu_base)) {
+ 			new_cpu_base = this_cpu_base;
+ 			goto again;
+ 		}
+@@ -725,8 +762,6 @@ static inline int hrtimer_is_hres_enable
+ 	return hrtimer_hres_enabled;
+ }
+ 
+-static void retrigger_next_event(void *arg);
+-
+ /*
+  * Switch to high resolution mode
+  */
+@@ -1215,6 +1250,7 @@ static int __hrtimer_start_range_ns(stru
+ 				    u64 delta_ns, const enum hrtimer_mode mode,
+ 				    struct hrtimer_clock_base *base)
+ {
++	struct hrtimer_cpu_base *this_cpu_base = this_cpu_ptr(&hrtimer_bases);
+ 	struct hrtimer_clock_base *new_base;
+ 	bool force_local, first;
+ 
+@@ -1226,10 +1262,16 @@ static int __hrtimer_start_range_ns(stru
+ 	 * and enforce reprogramming after it is queued no matter whether
+ 	 * it is the new first expiring timer again or not.
+ 	 */
+-	force_local = base->cpu_base == this_cpu_ptr(&hrtimer_bases);
++	force_local = base->cpu_base == this_cpu_base;
+ 	force_local &= base->cpu_base->next_timer == timer;
+ 
+ 	/*
++	 * Don't force local queuing if this enqueue happens on a unplugged
++	 * CPU after hrtimer_cpu_dying() has been invoked.
++	 */
++	force_local &= this_cpu_base->online;
++
++	/*
+ 	 * Remove an active timer from the queue. In case it is not queued
+ 	 * on the current CPU, make sure that remove_hrtimer() updates the
+ 	 * remote data correctly.
+@@ -1258,8 +1300,27 @@ static int __hrtimer_start_range_ns(stru
+ 	}
+ 
+ 	first = enqueue_hrtimer(timer, new_base, mode);
+-	if (!force_local)
+-		return first;
++	if (!force_local) {
++		/*
++		 * If the current CPU base is online, then the timer is
++		 * never queued on a remote CPU if it would be the first
++		 * expiring timer there.
++		 */
++		if (hrtimer_base_is_online(this_cpu_base))
++			return first;
++
++		/*
++		 * Timer was enqueued remote because the current base is
++		 * already offline. If the timer is the first to expire,
++		 * kick the remote CPU to reprogram the clock event.
++		 */
++		if (first) {
++			struct hrtimer_cpu_base *new_cpu_base = new_base->cpu_base;
++
++			smp_call_function_single_async(new_cpu_base->cpu, &new_cpu_base->csd);
++		}
++		return 0;
++	}
+ 
+ 	/*
+ 	 * Timer was forced to stay on the current CPU to avoid
 
 
