@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF56C221710;
-	Thu, 13 Feb 2025 14:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411E5281379;
+	Thu, 13 Feb 2025 14:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457717; cv=none; b=GSoqOGl5nDAa/k2bELIPkHBNflrYou2guzqJiTDHHKRwOASLcI0evW+Y9N1egVqoq4bRdW2XPzlTbzVuL6yo60KS9VmB6MN2mZqi32UhHV/8ZQieA2w1/lYfGOCi7H23deCNMMhXvufOAAaBhatdCyLUnYigb8zQS0ioCoDB6rw=
+	t=1739457721; cv=none; b=WRojIJj9jaFbc7Kdco/zHdP7M8NxzNA0BGriCh8fGwHUAsLwhC7smncmf1X/9Q/Xam8HDKc77ZhR9Pm97q2xYc0IYKkYFR/dx2/6UlQrgkYSQ/CfBbuEOYlOkwqt9GetVrXR8lqnkEHO8ZlZv3fJD94l+IeE5Tq+jgsdVDjs588=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457717; c=relaxed/simple;
-	bh=wx9L3YmLzo4Lal455142hHk1bAln2Ng1uodDO1D4vK4=;
+	s=arc-20240116; t=1739457721; c=relaxed/simple;
+	bh=yijXTmy5PHwLBQoJ2flTmk4cWfLWdGiHEvK4/4cU7cQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pdrmtID+QpSSKtPej9wrm0FXgUOZOJQnu1CNfQtEkeQGbklwyi40mvW+vSU/hpYMXJIOwRBurq3+E/YAhx3z9PE5Ok14wyOU5z3xYH2GovFMeOzWl+mVPgpMxSYq6A3DzwE8/UiQBNAfs8ilvo8fHOBUDH2IyU9K9ceSNri/+gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oo+eGzl2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P8exn/CWTWsXC8YXHl8uhVkV8xUw6JFaP/HzNePDq35WDGOXIjopLBVlaqWx5glJ/vuYPEq7lZ5dTTL4bgjYKxuEbjIzxYI3qfLdhNLSJt0jLa8DO9pI9bDiVI84Op/r9C5yE29+remeclgMfMdtqSr3dZOCEhiaACCiMDLIxoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XxE+n7jh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oo+eGzl2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF0CC4CED1;
-	Thu, 13 Feb 2025 14:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XxE+n7jh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A051AC4CED1;
+	Thu, 13 Feb 2025 14:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457717;
-	bh=wx9L3YmLzo4Lal455142hHk1bAln2Ng1uodDO1D4vK4=;
+	s=korg; t=1739457721;
+	bh=yijXTmy5PHwLBQoJ2flTmk4cWfLWdGiHEvK4/4cU7cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oo+eGzl21WRJ6Y9oXgBO+KrM+umBf6jZs3Ury2SaGZAA0egtUDJITAfftvJj/OloM
-	 Ks4P/dA7nVdcVuX9/byVh4wqZWaBrtFy49nAPnLMMJoHi6TK4gL7huP3SIOmP4LH9J
-	 58+hWbY0ZG3usOFDAhYjLFSvV+lB0BNgC+uZvlcc=
+	b=XxE+n7jhRTrFvbBi3KPOXGVo2nhUwhQgVfWWQfKUJILuu+oM9LMCqXR7MsbmaNPSd
+	 K046gFIVJNWWxR56CZm0FcFHeCc+/EJRKCzvUESUGVFaEO0Grvc25Si8G6Ilo/ae79
+	 UrGJdFIoIQjwN9yk1FWOJoUK0AfO6YcRn8m4HrfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 6.12 192/422] perf bench: Fix undefined behavior in cmpworker()
-Date: Thu, 13 Feb 2025 15:25:41 +0100
-Message-ID: <20250213142443.954257105@linuxfoundation.org>
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.12 162/422] drm/i915/guc: Debug print LRC state entries only if the context is pinned
+Date: Thu, 13 Feb 2025 15:25:11 +0100
+Message-ID: <20250213142442.796138931@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,52 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
 
-commit 62892e77b8a64b9dc0e1da75980aa145347b6820 upstream.
+commit 57965269896313e1629a518d3971ad55f599b792 upstream.
 
-The comparison function cmpworker() violates the C standard's
-requirements for qsort() comparison functions, which mandate symmetry
-and transitivity:
+After the context is unpinned the backing memory can also be unpinned,
+so any accesses via the lrc_reg_state pointer can end up in unmapped
+memory. To avoid that, make sure to only access that memory if the
+context is pinned when printing its info.
 
-Symmetry: If x < y, then y > x.
-Transitivity: If x < y and y < z, then x < z.
+v2: fix newline alignment
 
-In its current implementation, cmpworker() incorrectly returns 0 when
-w1->tid < w2->tid, which breaks both symmetry and transitivity. This
-violation causes undefined behavior, potentially leading to issues such
-as memory corruption in glibc [1].
-
-Fix the issue by returning -1 when w1->tid < w2->tid, ensuring
-compliance with the C standard and preventing undefined behavior.
-
-Link: https://www.qualys.com/2024/01/30/qsort.txt [1]
-Fixes: 121dd9ea0116 ("perf bench: Add epoll parallel epoll_wait benchmark")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Link: https://lore.kernel.org/r/20250116110842.4087530-1-visitorckw@gmail.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 28ff6520a34d ("drm/i915/guc: Update GuC debugfs to support new GuC")
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v5.15+
+Reviewed-by: John Harrison <John.C.Harrison@Intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250115001334.3875347-1-daniele.ceraolospurio@intel.com
+(cherry picked from commit 5bea40687c5cf2a33bf04e9110eb2e2b80222ef5)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/bench/epoll-wait.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/tools/perf/bench/epoll-wait.c
-+++ b/tools/perf/bench/epoll-wait.c
-@@ -420,7 +420,12 @@ static int cmpworker(const void *p1, con
- 
- 	struct worker *w1 = (struct worker *) p1;
- 	struct worker *w2 = (struct worker *) p2;
--	return w1->tid > w2->tid;
-+
-+	if (w1->tid > w2->tid)
-+		return 1;
-+	if (w1->tid < w2->tid)
-+		return -1;
-+	return 0;
- }
- 
- int bench_epoll_wait(int argc, const char **argv)
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
+@@ -5511,12 +5511,20 @@ static inline void guc_log_context(struc
+ {
+ 	drm_printf(p, "GuC lrc descriptor %u:\n", ce->guc_id.id);
+ 	drm_printf(p, "\tHW Context Desc: 0x%08x\n", ce->lrc.lrca);
+-	drm_printf(p, "\t\tLRC Head: Internal %u, Memory %u\n",
+-		   ce->ring->head,
+-		   ce->lrc_reg_state[CTX_RING_HEAD]);
+-	drm_printf(p, "\t\tLRC Tail: Internal %u, Memory %u\n",
+-		   ce->ring->tail,
+-		   ce->lrc_reg_state[CTX_RING_TAIL]);
++	if (intel_context_pin_if_active(ce)) {
++		drm_printf(p, "\t\tLRC Head: Internal %u, Memory %u\n",
++			   ce->ring->head,
++			   ce->lrc_reg_state[CTX_RING_HEAD]);
++		drm_printf(p, "\t\tLRC Tail: Internal %u, Memory %u\n",
++			   ce->ring->tail,
++			   ce->lrc_reg_state[CTX_RING_TAIL]);
++		intel_context_unpin(ce);
++	} else {
++		drm_printf(p, "\t\tLRC Head: Internal %u, Memory not pinned\n",
++			   ce->ring->head);
++		drm_printf(p, "\t\tLRC Tail: Internal %u, Memory not pinned\n",
++			   ce->ring->tail);
++	}
+ 	drm_printf(p, "\t\tContext Pin Count: %u\n",
+ 		   atomic_read(&ce->pin_count));
+ 	drm_printf(p, "\t\tGuC ID Ref Count: %u\n",
 
 
