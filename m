@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C411662E9;
-	Thu, 13 Feb 2025 14:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD95D1C07C3;
+	Thu, 13 Feb 2025 14:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457914; cv=none; b=uP0a7vaide13gcYknXkyD+odpu7kJgU94C0NdaOntBBEyKAnvt4HyEkhDTiXyt6oNVfw3iMFwq5nYt4uU+ZW92tYzB0b9fSasDFF5ZIMCyZRq3EMWRzE8LtRBfisrExDEU7ttWYreYAmMQKSAXKs2IeZV0OTbFfv7MY+4lf9GkA=
+	t=1739457917; cv=none; b=kVgAXIhljUhgVCEhQR7Pc2fUehryHFS27u9K4Ee3kEleYMQFjTMFaMmsUynab6draYKaKtJxNoPbL/0fa7tX1XanWyC4eJLyG6Ht5y9E5GCJYUOKPeHPRpAyOkN/cJPji9HF/TpvDD6DD+mQbJy1d/wpg1Z/v5dMozeW22KJJVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457914; c=relaxed/simple;
-	bh=45ct/gd5EPjoSmnpZmscWZXYhFZDjVwZtlILCJVeb4w=;
+	s=arc-20240116; t=1739457917; c=relaxed/simple;
+	bh=Il5T577IVA98PyWDzKNey66StXwZef1/PmCIEd+3GsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YPHgqG3kfmclk8Uu8VRsLIPWdD+ODNSJbU8UwNJbz/99696uZr2qOBAlb9bZXDJ2G09G8mRFiRwfJbYy3urvCgcAuyc2BI2mvM/Qjazdxn7iQlvOLHah6i6WTFWoSRd2c+ZyS6YaC9REH+nDOL0YdvHDtlA0dnphw7xfC6iJIuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDW+S9pg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AxQNKhyDRPjcHv0ZNMP8hbdWJ8RkXa+K/LJVdPuK1zJgdsrHivuiEiY+ZWuJrA3N1cxDOcHjidGIxJAuQ5O4fd717BzfJa0QS/UrhXZjzJ7PP/CGaKj7aFIgdiQ8if5HRRcxZYYfcbB3oXcbBuuJABgPW6NWaKubaZl+v8jABUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xfg48jng; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDW+S9pg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F05C4CED1;
-	Thu, 13 Feb 2025 14:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xfg48jng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B957BC4CED1;
+	Thu, 13 Feb 2025 14:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457913;
-	bh=45ct/gd5EPjoSmnpZmscWZXYhFZDjVwZtlILCJVeb4w=;
+	s=korg; t=1739457917;
+	bh=Il5T577IVA98PyWDzKNey66StXwZef1/PmCIEd+3GsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDW+S9pgrkebPWfl7Wom8Wsoo7BPcKwvZi6WrACTuMeg0BpwNO5B8Mh0DbSGGZLnG
-	 vKakGiHt6jkfeF788k0w3xmpUgfcxf8VI4sEyZvO3qXiHHJ+/cU3PwvNVgQyYUjE1O
-	 Sj9kDFd/IzWBievo4foRXfVqFq3a+5bRVPafWECU=
+	b=Xfg48jngnfd0jsC4peSm3U3kRx2zmknTIYhqDVE/C4SQ2ZczPzvyRK9dZnDtI/sRs
+	 zSYfAs5qz+VGSnAbNeeNodNc+J/YX+cQNQ7s36yLUUao25jc9jEMMbM3OpaPTF6OkT
+	 GyzpIdWVx3OCTpFpGSP752+AMwUEx7HmXlmxx5w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Niklas Cassel <cassel@kernel.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.12 249/422] PCI: dwc: ep: Write BAR_MASK before iATU registers in pci_epc_set_bar()
-Date: Thu, 13 Feb 2025 15:26:38 +0100
-Message-ID: <20250213142446.150594515@linuxfoundation.org>
+Subject: [PATCH 6.12 250/422] PCI: dwc: ep: Prevent changing BAR size/flags in pci_epc_set_bar()
+Date: Thu, 13 Feb 2025 15:26:39 +0100
+Message-ID: <20250213142446.188603186@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -54,85 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-commit 33a6938e0c3373f2d11f92d098f337668cd64fdd upstream.
+commit 3708acbd5f169ebafe1faa519cb28adc56295546 upstream.
 
-The "DesignWare Cores PCI Express Controller Register Descriptions,
-Version 4.60a", section "1.21.70 IATU_LWR_TARGET_ADDR_OFF_INBOUND_i",
-fields LWR_TARGET_RW and LWR_TARGET_HW both state that:
-"Field size depends on log2(BAR_MASK+1) in BAR match mode."
+In commit 4284c88fff0e ("PCI: designware-ep: Allow pci_epc_set_bar() update
+inbound map address") set_bar() was modified to support dynamically
+changing the backing physical address of a BAR that was already configured.
 
-I.e. only the upper bits are writable, and the number of writable bits is
-dependent on the configured BAR_MASK.
+This means that set_bar() can be called twice, without ever calling
+clear_bar() (as calling clear_bar() would clear the BAR's PCI address
+assigned by the host).
 
-If we do not write the BAR_MASK before writing the iATU registers, we are
-relying the reset value of the BAR_MASK being larger than the requested
-BAR size (which is supplied in the struct pci_epf_bar which is passed to
-pci_epc_set_bar()). The reset value of the BAR_MASK is SoC dependent.
+This can only be done if the new BAR size/flags does not differ from the
+existing BAR configuration. Add these missing checks.
 
-Thus, if the struct pci_epf_bar requests a BAR size that is larger than the
-reset value of the BAR_MASK, the iATU will try to write to read-only bits,
-which will cause the iATU to end up redirecting to a physical address that
-is different from the address that was intended.
+If we allow set_bar() to set e.g. a new BAR size that differs from the
+existing BAR size, the new address translation range will be smaller than
+the BAR size already determined by the host, which would mean that a read
+past the new BAR size would pass the iATU untranslated, which could allow
+the host to read memory not belonging to the new struct pci_epf_bar.
 
-Thus, we should always write the iATU registers after writing the BAR_MASK.
+While at it, add comments which clarifies the support for dynamically
+changing the physical address of a BAR. (Which was also missing.)
 
-Fixes: f8aed6ec624f ("PCI: dwc: designware: Add EP mode support")
-Link: https://lore.kernel.org/r/20241213143301.4158431-9-cassel@kernel.org
+Fixes: 4284c88fff0e ("PCI: designware-ep: Allow pci_epc_set_bar() update inbound map address")
+Link: https://lore.kernel.org/r/20241213143301.4158431-10-cassel@kernel.org
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c |   28 ++++++++++++------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-ep.c |   22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
 --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
 +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -222,19 +222,10 @@ static int dw_pcie_ep_set_bar(struct pci
+@@ -222,8 +222,28 @@ static int dw_pcie_ep_set_bar(struct pci
  	if ((flags & PCI_BASE_ADDRESS_MEM_TYPE_64) && (bar & 1))
  		return -EINVAL;
  
--	reg = PCI_BASE_ADDRESS_0 + (4 * bar);
--
--	if (!(flags & PCI_BASE_ADDRESS_SPACE))
--		type = PCIE_ATU_TYPE_MEM;
--	else
--		type = PCIE_ATU_TYPE_IO;
--
--	ret = dw_pcie_ep_inbound_atu(ep, func_no, type, epf_bar->phys_addr, bar);
--	if (ret)
--		return ret;
--
- 	if (ep->epf_bar[bar])
--		return 0;
-+		goto config_atu;
+-	if (ep->epf_bar[bar])
++	/*
++	 * Certain EPF drivers dynamically change the physical address of a BAR
++	 * (i.e. they call set_bar() twice, without ever calling clear_bar(), as
++	 * calling clear_bar() would clear the BAR's PCI address assigned by the
++	 * host).
++	 */
++	if (ep->epf_bar[bar]) {
++		/*
++		 * We can only dynamically change a BAR if the new BAR size and
++		 * BAR flags do not differ from the existing configuration.
++		 */
++		if (ep->epf_bar[bar]->barno != bar ||
++		    ep->epf_bar[bar]->size != size ||
++		    ep->epf_bar[bar]->flags != flags)
++			return -EINVAL;
 +
-+	reg = PCI_BASE_ADDRESS_0 + (4 * bar);
++		/*
++		 * When dynamically changing a BAR, skip writing the BAR reg, as
++		 * that would clear the BAR's PCI address assigned by the host.
++		 */
+ 		goto config_atu;
++	}
  
- 	dw_pcie_dbi_ro_wr_en(pci);
- 
-@@ -246,9 +237,20 @@ static int dw_pcie_ep_set_bar(struct pci
- 		dw_pcie_ep_writel_dbi(ep, func_no, reg + 4, 0);
- 	}
- 
--	ep->epf_bar[bar] = epf_bar;
- 	dw_pcie_dbi_ro_wr_dis(pci);
- 
-+config_atu:
-+	if (!(flags & PCI_BASE_ADDRESS_SPACE))
-+		type = PCIE_ATU_TYPE_MEM;
-+	else
-+		type = PCIE_ATU_TYPE_IO;
-+
-+	ret = dw_pcie_ep_inbound_atu(ep, func_no, type, epf_bar->phys_addr, bar);
-+	if (ret)
-+		return ret;
-+
-+	ep->epf_bar[bar] = epf_bar;
-+
- 	return 0;
- }
+ 	reg = PCI_BASE_ADDRESS_0 + (4 * bar);
  
 
 
