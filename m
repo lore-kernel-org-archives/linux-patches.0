@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077EC26B08E;
-	Thu, 13 Feb 2025 15:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357DD3FB3B;
+	Thu, 13 Feb 2025 15:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458859; cv=none; b=HuWFgk6CtlI1stiwobsxKeK9p42fzQz/vq29VLCd2sWSlQV7CuxsTJD55f6FM8QLY6ZcKN0c2HJmswkaXFBecGWme/zw7Sa/nKMsb/JgyxMp77gU8bnmhuIaOXSsybt5DBB4Wh8PehFaM47hzJJM+35cf52PACkyVF7P1rBl1fQ=
+	t=1739458862; cv=none; b=Eu36jEVUO6bnhf81pB/n+V71fQDPJUclDp2uhf/dMhSBPMPsEH/h8rLGkibJIiLV1lWxJCm3GNXKf3muOvpriIhkkc/8pqQiKGgPHNcQZHe3/DHjnFuPRtRsefzJ4p48U9l4Z8U3GHyunT4spwK+Yy/3+Wmuco1ZXArfToqF8+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458859; c=relaxed/simple;
-	bh=24PGGdkytZRchtFZeGNQ1QQ836Z5Q2iHmWNWUsdMn5U=;
+	s=arc-20240116; t=1739458862; c=relaxed/simple;
+	bh=RcgsCUJ/L83KHx6LLKeiMnPlckKX2j5HrVkDo+LplSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a+v1WODjHqTfsRLKq+EZ/5ReeYrd71KPCM2OiLYwavtkYB1E/uilmAuehiNtzXLHXY5v7P/2pu0zA0ooG7DjBBX2vphgwbZfdoIhSv1DpG0SVB9459QobwNp9CSt6kgLajITsOvMRPRT9xBSlyHTlajLkWs/bUAzgo30pdeUdJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdLgRExi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GtjkbpqV2YYPTDORhBMMUkn5dY9V/56f+XVJtET4t+oEA90/ubSq26bfe1xNy1gKwKy+unsNUF3VbZDqhf5TeN0aDGE6GqLsvU0UHf3X/YGVPl8pAbi7JyqrYkpt82sTM4/xZE7YJgesd6mwwVj9AJ5EGvdLi7MUPsnswtnhB4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLjLzs5z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdLgRExi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80579C4CED1;
-	Thu, 13 Feb 2025 15:00:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLjLzs5z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 946D5C4CED1;
+	Thu, 13 Feb 2025 15:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458858;
-	bh=24PGGdkytZRchtFZeGNQ1QQ836Z5Q2iHmWNWUsdMn5U=;
+	s=korg; t=1739458862;
+	bh=RcgsCUJ/L83KHx6LLKeiMnPlckKX2j5HrVkDo+LplSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdLgRExiF/NC1jDlPJvi/7W0EiiI4itvp+Q0fFiPhU2QvusO71YykR3AYQ+cfbUVp
-	 JKfgmyFsEosG/aWluyjM5i4eIkXy69fOc2Sz7qHvzvNzfz5cA/QZzpnXh4ihd3mCbe
-	 fP7FjI/3UGABmSWX0o8dsiYw3rGwqdcRfMOEmGGw=
+	b=aLjLzs5zYxyNduw6Gy5HMo0Yp+OOr4dzF1a4aHx4MQdZpB8Ypk+w1jeHowf4/5lyv
+	 cc8tBkJYhF3rYuv5oXRiGjLau+VUPFlqn3YuTP5aNNljVPDPj68PQZZRyEDE1Fze5P
+	 Wd5VTIUD4KPZsQc86WDWaX4PiZ2jRgandm8E11o8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Bakker <kees@ijzerbout.nl>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Eric Johnsten <ejohnsten@gmail.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 096/443] iommu/vt-d: Avoid use of NULL after WARN_ON_ONCE
-Date: Thu, 13 Feb 2025 15:24:21 +0100
-Message-ID: <20250213142444.312579607@linuxfoundation.org>
+Subject: [PATCH 6.13 097/443] platform/x86: acer-wmi: Add support for Acer Predator PH16-72
+Date: Thu, 13 Feb 2025 15:24:22 +0100
+Message-ID: <20250213142444.352997313@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -46,51 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Bakker <kees@ijzerbout.nl>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 60f030f7418d3f1d94f2fb207fe3080e1844630b ]
+[ Upstream commit c85b516b44d21e9cf751c4f73a6c235ed170d887 ]
 
-There is a WARN_ON_ONCE to catch an unlikely situation when
-domain_remove_dev_pasid can't find the `pasid`. In case it nevertheless
-happens we must avoid using a NULL pointer.
+Add the Acer Predator PT16-72 to acer_quirks to provide support
+for the turbo button and predator_v4 interfaces.
 
-Signed-off-by: Kees Bakker <kees@ijzerbout.nl>
-Link: https://lore.kernel.org/r/20241218201048.E544818E57E@bout3.ijzerbout.nl
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Tested-by: Eric Johnsten <ejohnsten@gmail.com>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20250107175652.3171-1-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/platform/x86/acer-wmi.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 79e0da9eb626c..8f75c11a3ec48 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -4090,13 +4090,14 @@ void domain_remove_dev_pasid(struct iommu_domain *domain,
- 			break;
- 		}
- 	}
--	WARN_ON_ONCE(!dev_pasid);
- 	spin_unlock_irqrestore(&dmar_domain->lock, flags);
+diff --git a/drivers/platform/x86/acer-wmi.c b/drivers/platform/x86/acer-wmi.c
+index 5cff538ee67fa..3c211eee95f42 100644
+--- a/drivers/platform/x86/acer-wmi.c
++++ b/drivers/platform/x86/acer-wmi.c
+@@ -393,6 +393,13 @@ static struct quirk_entry quirk_acer_predator_ph315_53 = {
+ 	.gpu_fans = 1,
+ };
  
- 	cache_tag_unassign_domain(dmar_domain, dev, pasid);
- 	domain_detach_iommu(dmar_domain, iommu);
--	intel_iommu_debugfs_remove_dev_pasid(dev_pasid);
--	kfree(dev_pasid);
-+	if (!WARN_ON_ONCE(!dev_pasid)) {
-+		intel_iommu_debugfs_remove_dev_pasid(dev_pasid);
-+		kfree(dev_pasid);
-+	}
- }
- 
- static void intel_iommu_remove_dev_pasid(struct device *dev, ioasid_t pasid,
++static struct quirk_entry quirk_acer_predator_ph16_72 = {
++	.turbo = 1,
++	.cpu_fans = 1,
++	.gpu_fans = 1,
++	.predator_v4 = 1,
++};
++
+ static struct quirk_entry quirk_acer_predator_pt14_51 = {
+ 	.turbo = 1,
+ 	.cpu_fans = 1,
+@@ -598,6 +605,15 @@ static const struct dmi_system_id acer_quirks[] __initconst = {
+ 		},
+ 		.driver_data = &quirk_acer_predator_v4,
+ 	},
++	{
++		.callback = dmi_matched,
++		.ident = "Acer Predator PH16-72",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Predator PH16-72"),
++		},
++		.driver_data = &quirk_acer_predator_ph16_72,
++	},
+ 	{
+ 		.callback = dmi_matched,
+ 		.ident = "Acer Predator PH18-71",
 -- 
 2.39.5
 
