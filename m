@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC87E3FB3B;
-	Thu, 13 Feb 2025 14:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1B0152532;
+	Thu, 13 Feb 2025 14:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458389; cv=none; b=k5pRLxpvHeoKZZOVHA03QXZw4RYeY08azikcJ08luAWXjiEWs67bFHbnzne+NMJfnD62zEQDpja81dFC0nXuYKOWEq7q5KlfHAX4P38LSs+y7WuoInSXRkmkCDRQTvFzniue2UmkWxval8ZyhdPuPEdg/ljKVlB/Nlf3cJRyBsg=
+	t=1739458392; cv=none; b=mzewxnHTdWAFyc6nXzoTeZju2tooNIUqfLb85TRxoddcA1uIc41kqu/2IQsa9ag1lUC8rBwBpjCkpJTtes+SaRGYppP5MzTAxMw8SwfqxGJcTDsFgvzjNPYzgNk78Jjr0Nz3qSUycWt3lWd3HLZbg+zXSTAqh6qfvEw+tu+Bmx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458389; c=relaxed/simple;
-	bh=hcFLfJhs+f7hmQVLuSTP+LfZiknVs1qQSLolJ+27Fuo=;
+	s=arc-20240116; t=1739458392; c=relaxed/simple;
+	bh=2QAPrzvf8KN3Y/3Yk2Bo1GuVuJ6GWzx841WxokvJTCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbAUBfivVY59aSdBPxQ9UF/fl70savxhIGuosxjY4MUlnsGVb7YqKqIA4BZ/8ouTRVQp7BBvcfkwZRLK1Dj7xo+5XijU6kjlBaHugB9chyoM0vIOeUlPOAfwqrtEX2juEPqel2Z8DOffn68Por9rE+wPMjy3xEP+sbOKvFz/wmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W34dgGtk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NyU830F3OBaFN4vSGVmd7CeCu1GukYjasKv8atod0sGK6SwA2liWUO/P/F5TUD5g0gzZore41nuRoTd3ahkSn8Hf3vRj8uh7LFldBHFsIfQVYFjxMAsZkViKvK5DPneJ2tmDMFWXPChpmsGKyuCckFFgk6DL68QCwf32/pAbxyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGtxg5vK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W34dgGtk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C567C4CED1;
-	Thu, 13 Feb 2025 14:53:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGtxg5vK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C366EC4CED1;
+	Thu, 13 Feb 2025 14:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458388;
-	bh=hcFLfJhs+f7hmQVLuSTP+LfZiknVs1qQSLolJ+27Fuo=;
+	s=korg; t=1739458392;
+	bh=2QAPrzvf8KN3Y/3Yk2Bo1GuVuJ6GWzx841WxokvJTCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W34dgGtkmm7+Bp8E1Qjo0H1r8VBYo8UBuZBnRsS7Auy1aK7oHsgdXX0UNUMLQRgYL
-	 3Zmt4vrDm9Mm8VEOyJXbRLgizITtqD3Q+gShulm7n4Dvg1OPCc5o7w5IS4tf33AfYc
-	 7sGSeF+4d8CvnA9v1MM8xU+A38PtjOVnt/Uo83J4=
+	b=lGtxg5vKegTVrmDj80ToWjZIzIofBoe96J+vdFtJSmB8GFf++9pzD6/+wo0+/GW0w
+	 /WJrC4oUw7YVIKfht90XtkHfzbzw/defUi6+4XtS1yiL/1tphf5Lab1sreaOHND1iN
+	 qBxu4Pqs2xebxgZXPg9yAExxZHteOgyTelipiHKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Tanmay Shah <tanmay.shah@amd.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>
-Subject: [PATCH 6.12 368/422] mailbox: zynqmp: Remove invalid __percpu annotation in zynqmp_ipi_probe()
-Date: Thu, 13 Feb 2025 15:28:37 +0100
-Message-ID: <20250213142450.749529546@linuxfoundation.org>
+	John Kacur <jkacur@redhat.com>,
+	Luis Goncalves <lgoncalv@redhat.com>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 386/422] rtla: Add trace_instance_stop
+Date: Thu, 13 Feb 2025 15:28:55 +0100
+Message-ID: <20250213142451.442627929@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,53 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Tomas Glozar <tglozar@redhat.com>
 
-commit 170a264d2611a0bfa96b7818730473db5e7546fc upstream.
+commit e879b5dcf8d044f3865a32d95cc5b213f314c54f upstream.
 
-struct zynqmp_ipi_pdata __percpu *pdata is not a per-cpu variable,
-so it should not be annotated with __percpu annotation.
+Support not only turning trace on for the timerlat tracer, but also
+turning it off.
 
-Remove invalid __percpu annotation to fix several
-
-zynqmp-ipi-mailbox.c:920:15: warning: incorrect type in assignment (different address spaces)
-zynqmp-ipi-mailbox.c:920:15:    expected struct zynqmp_ipi_pdata [noderef] __percpu *pdata
-zynqmp-ipi-mailbox.c:920:15:    got void *
-zynqmp-ipi-mailbox.c:927:56: warning: incorrect type in argument 3 (different address spaces)
-zynqmp-ipi-mailbox.c:927:56:    expected unsigned int [usertype] *out_value
-zynqmp-ipi-mailbox.c:927:56:    got unsigned int [noderef] __percpu *
-...
-
-and several
-
-drivers/mailbox/zynqmp-ipi-mailbox.c:924:9: warning: dereference of noderef expression
-...
-
-sparse warnings.
-
-There were no changes in the resulting object file.
+This will be used in subsequent patches to stop the timerlat tracer
+without also wiping the trace buffer.
 
 Cc: stable@vger.kernel.org
-Fixes: 6ffb1635341b ("mailbox: zynqmp: handle SGI for shared IPI")
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Reviewed-by: Tanmay Shah <tanmay.shah@amd.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Cc: John Kacur <jkacur@redhat.com>
+Cc: Luis Goncalves <lgoncalv@redhat.com>
+Cc: Gabriele Monaco <gmonaco@redhat.com>
+Link: https://lore.kernel.org/20250116144931.649593-2-tglozar@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/zynqmp-ipi-mailbox.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/tracing/rtla/src/trace.c |    8 ++++++++
+ tools/tracing/rtla/src/trace.h |    1 +
+ 2 files changed, 9 insertions(+)
 
---- a/drivers/mailbox/zynqmp-ipi-mailbox.c
-+++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
-@@ -905,7 +905,7 @@ static int zynqmp_ipi_probe(struct platf
- {
- 	struct device *dev = &pdev->dev;
- 	struct device_node *nc, *np = pdev->dev.of_node;
--	struct zynqmp_ipi_pdata __percpu *pdata;
-+	struct zynqmp_ipi_pdata *pdata;
- 	struct of_phandle_args out_irq;
- 	struct zynqmp_ipi_mbox *mbox;
- 	int num_mboxes, ret = -EINVAL;
+--- a/tools/tracing/rtla/src/trace.c
++++ b/tools/tracing/rtla/src/trace.c
+@@ -197,6 +197,14 @@ int trace_instance_start(struct trace_in
+ }
+ 
+ /*
++ * trace_instance_stop - stop tracing a given rtla instance
++ */
++int trace_instance_stop(struct trace_instance *trace)
++{
++	return tracefs_trace_off(trace->inst);
++}
++
++/*
+  * trace_events_free - free a list of trace events
+  */
+ static void trace_events_free(struct trace_events *events)
+--- a/tools/tracing/rtla/src/trace.h
++++ b/tools/tracing/rtla/src/trace.h
+@@ -21,6 +21,7 @@ struct trace_instance {
+ 
+ int trace_instance_init(struct trace_instance *trace, char *tool_name);
+ int trace_instance_start(struct trace_instance *trace);
++int trace_instance_stop(struct trace_instance *trace);
+ void trace_instance_destroy(struct trace_instance *trace);
+ 
+ struct trace_seq *get_trace_seq(void);
 
 
