@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9412222AC;
-	Thu, 13 Feb 2025 14:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7662222B4;
+	Thu, 13 Feb 2025 14:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457472; cv=none; b=mvAE8WJ75nJ274RcQWeuko1hcmkv6oMlYXrzt+ooCimkuIIN3hLPkcva7oQ/F8cWzuZ2Pl0a5vqAFZSltoR9u/wiinN0jpJN68b4L6qZwFCQpJDALs/D8UFlyQVWGRiMN0I3piY0SI5GBxS4OPeYdywOYnalyRRaLaKP+vimV+w=
+	t=1739457475; cv=none; b=eZI1k9c1saho47lbAHyyQXLHfBGe05XDKFXykU7H2uYnY/xGlUbLmg6rFzSD6dpjaJD54quvy0E5bF46fKtGSfx3DY4/U2jz8Do9S4BPGBUniJFYLQ0fsYxTC41OyvzcVzvi5SYNSb+h23KlOam3yB3otRlzC/obaX4jJIsfpA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457472; c=relaxed/simple;
-	bh=XN/iInvz9uTMJApa2tlsrvcwkrgHnmqRIi98VQ4Cxwo=;
+	s=arc-20240116; t=1739457475; c=relaxed/simple;
+	bh=nRg4TB+gt1Paw/R8iTG2v9VXUyMFQCVkqrirk2fd+WQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdM87tOvw3+w51hAg7sCQ037B9KbA1S/FA0NFO7vz10UUulW2RD9iioFPqS4oybvFhDqq7b8Y5HFT3tRAxEs8gAYnkc0OQ2R19Eukv4mJQgEPKF+yvg/qUnKqbqCrjYn8Mh++XSdoNUKK1mUV5NvM80sgtUXSGNc+aeXK1eACRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgjQ7Q5A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjiHtsU8MSRZvygiVa0fnW0jTSCFAuXuK1mtIbKTma+3DXmRA69fLi9ol3Z94bqCpjR3XWar2eQaT644+jn+AMjkA/shmKR4WbvZudZ+/oUYZWYCWGbfbdPJw+iSYZXi4wf2v2+Dqy9FlniTVlBazu7+j9VPkTNzODC28HUPoYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zk5q/Fm+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgjQ7Q5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B68DC4CED1;
-	Thu, 13 Feb 2025 14:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zk5q/Fm+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1767C4CEEA;
+	Thu, 13 Feb 2025 14:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457471;
-	bh=XN/iInvz9uTMJApa2tlsrvcwkrgHnmqRIi98VQ4Cxwo=;
+	s=korg; t=1739457475;
+	bh=nRg4TB+gt1Paw/R8iTG2v9VXUyMFQCVkqrirk2fd+WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgjQ7Q5Ar3riZkCQCsieG8WsFHwOF9Atn17ypB75Iw3+m3nnNUXvCiVs5QH33sqOK
-	 qsXvk/hR4uqWxiYKdzTdcjKCtwd0j2uR2XdMIkk3hAybYAWzpolbaS0UPE0T1wwdQ9
-	 IbmAzGd+noa12ivdxLhMWIjaKC+23A8q+GfR8DTM=
+	b=Zk5q/Fm+BWm8kwZsoFGc8Rp+53367iEF7sEAGGrweSukSF7rk9ZqsK/WIEJlai964
+	 J4gqnJC8TvqW3RZUd1M5nW1AH9OtDtSXcN3wbb8BFm3+6xrtlh0NsH2wSiFh7YKo3N
+	 YODJEtvZM+Q06SQMtWwSsvTScXKJ8nlBaraOnw2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <koichiro.den@canonical.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Juergen Gross <jgross@suse.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/422] gpio: sim: lock hog configfs items if present
-Date: Thu, 13 Feb 2025 15:24:28 +0100
-Message-ID: <20250213142441.143148466@linuxfoundation.org>
+Subject: [PATCH 6.12 120/422] x86/xen: fix xen_hypercall_hvm() to not clobber %rbx
+Date: Thu, 13 Feb 2025 15:24:29 +0100
+Message-ID: <20250213142441.182066261@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,55 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 015b7dae084fa95465ff89f6cbf15fe49906a370 ]
+[ Upstream commit 98a5cfd2320966f40fe049a9855f8787f0126825 ]
 
-Depending on the user config, the leaf entry may be the hog directory,
-not line. Check it and lock the correct item.
+xen_hypercall_hvm(), which is used when running as a Xen PVH guest at
+most only once during early boot, is clobbering %rbx. Depending on
+whether the caller relies on %rbx to be preserved across the call or
+not, this clobbering might result in an early crash of the system.
 
-Fixes: 8bd76b3d3f3a ("gpio: sim: lock up configfs that an instantiated device depends on")
-Tested-by: Koichiro Den <koichiro.den@canonical.com>
-Link: https://lore.kernel.org/r/20250203110123.87701-1-brgl@bgdev.pl
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+This can be avoided by using an already saved register instead of %rbx.
+
+Fixes: b4845bb63838 ("x86/xen: add central hypercall functions")
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-sim.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ arch/x86/xen/xen-head.S | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpio-sim.c b/drivers/gpio/gpio-sim.c
-index deedacdeb2395..f83a8b5a51d0d 100644
---- a/drivers/gpio/gpio-sim.c
-+++ b/drivers/gpio/gpio-sim.c
-@@ -1036,20 +1036,23 @@ gpio_sim_device_lockup_configfs(struct gpio_sim_device *dev, bool lock)
- 	struct configfs_subsystem *subsys = dev->group.cg_subsys;
- 	struct gpio_sim_bank *bank;
- 	struct gpio_sim_line *line;
-+	struct config_item *item;
- 
- 	/*
--	 * The device only needs to depend on leaf line entries. This is
-+	 * The device only needs to depend on leaf entries. This is
- 	 * sufficient to lock up all the configfs entries that the
- 	 * instantiated, alive device depends on.
- 	 */
- 	list_for_each_entry(bank, &dev->bank_list, siblings) {
- 		list_for_each_entry(line, &bank->line_list, siblings) {
-+			item = line->hog ? &line->hog->item
-+					 : &line->group.cg_item;
-+
- 			if (lock)
--				WARN_ON(configfs_depend_item_unlocked(
--						subsys, &line->group.cg_item));
-+				WARN_ON(configfs_depend_item_unlocked(subsys,
-+								      item));
- 			else
--				configfs_undepend_item_unlocked(
--						&line->group.cg_item);
-+				configfs_undepend_item_unlocked(item);
- 		}
- 	}
- }
+diff --git a/arch/x86/xen/xen-head.S b/arch/x86/xen/xen-head.S
+index 721a57700a3b0..ce96877c3c4fe 100644
+--- a/arch/x86/xen/xen-head.S
++++ b/arch/x86/xen/xen-head.S
+@@ -117,8 +117,8 @@ SYM_FUNC_START(xen_hypercall_hvm)
+ 	pop %ebx
+ 	pop %eax
+ #else
+-	lea xen_hypercall_amd(%rip), %rbx
+-	cmp %rax, %rbx
++	lea xen_hypercall_amd(%rip), %rcx
++	cmp %rax, %rcx
+ #ifdef CONFIG_FRAME_POINTER
+ 	pop %rax	/* Dummy pop. */
+ #endif
 -- 
 2.39.5
 
