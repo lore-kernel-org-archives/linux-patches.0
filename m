@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDBB13D8A4;
-	Thu, 13 Feb 2025 15:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEECB73176;
+	Thu, 13 Feb 2025 15:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460042; cv=none; b=LSCW/QUW0pKVMLcg5YASLqdlzjpl4/inJJQUbATHM2LqUgbNhdnx1X6VkXa3C8NID1ByjLvyEKJHy6jTWDN52QBx1H5jVMsHmOC2LtSnBAvpF8FxELCeIJICeNk0I2eVPaJZhuDEPWCwxxJbNws6RFYR/ua++V3tA3kinV+iLk4=
+	t=1739460045; cv=none; b=bSKjvLJizp2FEfodHeuQQ4lD+cEVcQHTy+HrF8U1o+lJigZ1hE3QFF6csbwo2CKJSS+n5UNOd+6wZHHFXbVO1sRYU/CAfj77uGnLq0lJ8PpsvY8e/V+Lya3OKwY/YCBspx21s13rpXr6Ey+E3WvSbAiY7Auc8bXxac6Hms1029U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460042; c=relaxed/simple;
-	bh=33sL/vl29KtyG/3T0ASbmZexkxMXSrxtUClWCM2+fOk=;
+	s=arc-20240116; t=1739460045; c=relaxed/simple;
+	bh=oQosQRIYk+hXlVPEo/LXcfQeotNPSY8odnU32Q9d1ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6diygCencvfNfFpVStTh7omWP+Llth0rBrcQEDHQX0IhPVwDqc6ArTJlDXIiakbDAPnWSBWjPwRctgU6R4vg1urn7qMHpD/Ek9iKAkGqBdP9fwk4lzmapdiv8hGojbqJgXsMjeWES1B1gmk1oB1utizxCCFXZLesfjFbUxKrlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqPiG3DY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G8TFIvINuLBRAc2/H2YRXQDsMarV9DLZDmwXWZBXdzpmVVkKwKM+EOJZ6JFiyP+2TRh3G+VdHaVls724BT+9yuq8HGbXGgUARpD9l2I3DBf0TqaQaN9SnECPfuSwaJlhklBxPXBpFbDIyWWFhLkN+urAUbKF1f+yZeEkO9eW1lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCsXhDeG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqPiG3DY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7691CC4CEE4;
-	Thu, 13 Feb 2025 15:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCsXhDeG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8D9C4CED1;
+	Thu, 13 Feb 2025 15:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460041;
-	bh=33sL/vl29KtyG/3T0ASbmZexkxMXSrxtUClWCM2+fOk=;
+	s=korg; t=1739460044;
+	bh=oQosQRIYk+hXlVPEo/LXcfQeotNPSY8odnU32Q9d1ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FqPiG3DYw5aVpKFnwUQbqFBaiJHMuCKJjwhMRJEhReGoSLs024vYv5HBuXD2pnje5
-	 3jyRnHMUNKOA/PhQJYMehlwx+uVTS38FJy8dmyEacKooJWOwB4xJ1meSqFlSUykTxG
-	 vmW6dVMFg5YFClDlfAidS2ogoSPz2xWmdGKMDNDM=
+	b=xCsXhDeGmvcJZnzj+JQAh3aHZ3wRxXtMTB1OUWEX8Ho0eXaZaqAbdz2tAAcj2TCWV
+	 jTxsdM6ekcFRtUTlFwpgWQIAJ2MfczQh7z//YEEwTL++Rfrjr4hcLTRFH+iYtQ8W0v
+	 lG6h5yFAI8Ix/kFBUBknXJp4wwygb0sTbOm6iuZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.13 413/443] misc: fastrpc: Fix registered buffer page address
-Date: Thu, 13 Feb 2025 15:29:38 +0100
-Message-ID: <20250213142456.546932692@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.13 440/443] Revert "drm/amd/display: Fix green screen issue after suspend"
+Date: Thu, 13 Feb 2025 15:30:05 +0100
+Message-ID: <20250213142457.592986259@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,48 +54,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-commit 6ca4ea1f88a06a04ed7b2c9c6bf9f00833b68214 upstream.
+commit 04d6273faed083e619fc39a738ab0372b6a4db20 upstream.
 
-For registered  buffers, fastrpc driver sends the buffer information
-to remote subsystem. There is a problem with current implementation
-where the page address is being sent with an offset leading to
-improper buffer address on DSP. This is leads to functional failures
-as DSP expects base address in page information and extracts offset
-information from remote arguments. Mask the offset and pass the base
-page address to DSP.
+This reverts commit 87b7ebc2e16c14d32a912f18206a4d6cc9abc3e8.
 
-This issue is observed is a corner case when some buffer which is registered
-with fastrpc framework is passed with some offset by user and then the DSP
-implementation tried to read the data. As DSP expects base address and takes
-care of offsetting with remote arguments, passing an offsetted address will
-result in some unexpected data read in DSP.
+A long time ago, we had an issue with the Raven system when it was
+connected to two displays: one with DP and another with HDMI. After the
+system woke up from suspension, we saw a solid green screen caused by an
+underflow generated by bad DCC metadata. To workaround this issue, the
+'commit 87b7ebc2e16c ("drm/amd/display: Fix green screen issue after
+suspend")' was introduced to disable the DCC for a few frames after in
+the resume phase. However, in hindsight, this solution was probably a
+workaround at the kernel level for some issues from another part
+(probably other driver components or user space). After applying this
+patch and trying to reproduce the green issue in a similar hardware
+system but using the latest kernel and userspace, we cannot see the
+issue, which makes this workaround obsolete and creates extra
+unnecessary complexity to the code; for all of this reason, this commit
+reverts the original change.
 
-All generic usecases usually pass the buffer as it is hence is problem is
-not usually observed. If someone tries to pass offsetted buffer and then
-tries to compare data at HLOS and DSP end, then the ambiguity will be observed.
-
-Fixes: 80f3afd72bd4 ("misc: fastrpc: consider address offset before sending to DSP")
-Cc: stable@kernel.org
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20250110134239.123603-3-srinivas.kandagatla@linaro.org
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c       |   12 ++------
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c |   22 +++++-----------
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.h |    3 --
+ 3 files changed, 13 insertions(+), 24 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -992,7 +992,7 @@ static int fastrpc_get_args(u32 kernel,
- 			mmap_read_lock(current->mm);
- 			vma = find_vma(current->mm, ctx->args[i].ptr);
- 			if (vma)
--				pages[i].addr += ctx->args[i].ptr -
-+				pages[i].addr += (ctx->args[i].ptr & PAGE_MASK) -
- 						 vma->vm_start;
- 			mmap_read_unlock(current->mm);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5530,8 +5530,7 @@ fill_dc_plane_info_and_addr(struct amdgp
+ 			    const u64 tiling_flags,
+ 			    struct dc_plane_info *plane_info,
+ 			    struct dc_plane_address *address,
+-			    bool tmz_surface,
+-			    bool force_disable_dcc)
++			    bool tmz_surface)
+ {
+ 	const struct drm_framebuffer *fb = plane_state->fb;
+ 	const struct amdgpu_framebuffer *afb =
+@@ -5630,7 +5629,7 @@ fill_dc_plane_info_and_addr(struct amdgp
+ 					   &plane_info->tiling_info,
+ 					   &plane_info->plane_size,
+ 					   &plane_info->dcc, address,
+-					   tmz_surface, force_disable_dcc);
++					   tmz_surface);
+ 	if (ret)
+ 		return ret;
  
+@@ -5651,7 +5650,6 @@ static int fill_dc_plane_attributes(stru
+ 	struct dc_scaling_info scaling_info;
+ 	struct dc_plane_info plane_info;
+ 	int ret;
+-	bool force_disable_dcc = false;
+ 
+ 	ret = amdgpu_dm_plane_fill_dc_scaling_info(adev, plane_state, &scaling_info);
+ 	if (ret)
+@@ -5662,13 +5660,11 @@ static int fill_dc_plane_attributes(stru
+ 	dc_plane_state->clip_rect = scaling_info.clip_rect;
+ 	dc_plane_state->scaling_quality = scaling_info.scaling_quality;
+ 
+-	force_disable_dcc = adev->asic_type == CHIP_RAVEN && adev->in_suspend;
+ 	ret = fill_dc_plane_info_and_addr(adev, plane_state,
+ 					  afb->tiling_flags,
+ 					  &plane_info,
+ 					  &dc_plane_state->address,
+-					  afb->tmz_surface,
+-					  force_disable_dcc);
++					  afb->tmz_surface);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -9076,7 +9072,7 @@ static void amdgpu_dm_commit_planes(stru
+ 			afb->tiling_flags,
+ 			&bundle->plane_infos[planes_count],
+ 			&bundle->flip_addrs[planes_count].address,
+-			afb->tmz_surface, false);
++			afb->tmz_surface);
+ 
+ 		drm_dbg_state(state->dev, "plane: id=%d dcc_en=%d\n",
+ 				 new_plane_state->plane->index,
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+@@ -309,8 +309,7 @@ static int amdgpu_dm_plane_fill_gfx9_pla
+ 								     const struct plane_size *plane_size,
+ 								     union dc_tiling_info *tiling_info,
+ 								     struct dc_plane_dcc_param *dcc,
+-								     struct dc_plane_address *address,
+-								     const bool force_disable_dcc)
++								     struct dc_plane_address *address)
+ {
+ 	const uint64_t modifier = afb->base.modifier;
+ 	int ret = 0;
+@@ -318,7 +317,7 @@ static int amdgpu_dm_plane_fill_gfx9_pla
+ 	amdgpu_dm_plane_fill_gfx9_tiling_info_from_modifier(adev, tiling_info, modifier);
+ 	tiling_info->gfx9.swizzle = amdgpu_dm_plane_modifier_gfx9_swizzle_mode(modifier);
+ 
+-	if (amdgpu_dm_plane_modifier_has_dcc(modifier) && !force_disable_dcc) {
++	if (amdgpu_dm_plane_modifier_has_dcc(modifier)) {
+ 		uint64_t dcc_address = afb->address + afb->base.offsets[1];
+ 		bool independent_64b_blks = AMD_FMT_MOD_GET(DCC_INDEPENDENT_64B, modifier);
+ 		bool independent_128b_blks = AMD_FMT_MOD_GET(DCC_INDEPENDENT_128B, modifier);
+@@ -360,8 +359,7 @@ static int amdgpu_dm_plane_fill_gfx12_pl
+ 								      const struct plane_size *plane_size,
+ 								      union dc_tiling_info *tiling_info,
+ 								      struct dc_plane_dcc_param *dcc,
+-								      struct dc_plane_address *address,
+-								      const bool force_disable_dcc)
++								      struct dc_plane_address *address)
+ {
+ 	const uint64_t modifier = afb->base.modifier;
+ 	int ret = 0;
+@@ -371,7 +369,7 @@ static int amdgpu_dm_plane_fill_gfx12_pl
+ 
+ 	tiling_info->gfx9.swizzle = amdgpu_dm_plane_modifier_gfx9_swizzle_mode(modifier);
+ 
+-	if (amdgpu_dm_plane_modifier_has_dcc(modifier) && !force_disable_dcc) {
++	if (amdgpu_dm_plane_modifier_has_dcc(modifier)) {
+ 		int max_compressed_block = AMD_FMT_MOD_GET(DCC_MAX_COMPRESSED_BLOCK, modifier);
+ 
+ 		dcc->enable = 1;
+@@ -839,8 +837,7 @@ int amdgpu_dm_plane_fill_plane_buffer_at
+ 			     struct plane_size *plane_size,
+ 			     struct dc_plane_dcc_param *dcc,
+ 			     struct dc_plane_address *address,
+-			     bool tmz_surface,
+-			     bool force_disable_dcc)
++			     bool tmz_surface)
+ {
+ 	const struct drm_framebuffer *fb = &afb->base;
+ 	int ret;
+@@ -900,16 +897,14 @@ int amdgpu_dm_plane_fill_plane_buffer_at
+ 		ret = amdgpu_dm_plane_fill_gfx12_plane_attributes_from_modifiers(adev, afb, format,
+ 										 rotation, plane_size,
+ 										 tiling_info, dcc,
+-										 address,
+-										 force_disable_dcc);
++										 address);
+ 		if (ret)
+ 			return ret;
+ 	} else if (adev->family >= AMDGPU_FAMILY_AI) {
+ 		ret = amdgpu_dm_plane_fill_gfx9_plane_attributes_from_modifiers(adev, afb, format,
+ 										rotation, plane_size,
+ 										tiling_info, dcc,
+-										address,
+-										force_disable_dcc);
++										address);
+ 		if (ret)
+ 			return ret;
+ 	} else {
+@@ -1000,14 +995,13 @@ static int amdgpu_dm_plane_helper_prepar
+ 	    dm_plane_state_old->dc_state != dm_plane_state_new->dc_state) {
+ 		struct dc_plane_state *plane_state =
+ 			dm_plane_state_new->dc_state;
+-		bool force_disable_dcc = !plane_state->dcc.enable;
+ 
+ 		amdgpu_dm_plane_fill_plane_buffer_attributes(
+ 			adev, afb, plane_state->format, plane_state->rotation,
+ 			afb->tiling_flags,
+ 			&plane_state->tiling_info, &plane_state->plane_size,
+ 			&plane_state->dcc, &plane_state->address,
+-			afb->tmz_surface, force_disable_dcc);
++			afb->tmz_surface);
+ 	}
+ 
+ 	return 0;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.h
+@@ -51,8 +51,7 @@ int amdgpu_dm_plane_fill_plane_buffer_at
+ 				 struct plane_size *plane_size,
+ 				 struct dc_plane_dcc_param *dcc,
+ 				 struct dc_plane_address *address,
+-				 bool tmz_surface,
+-				 bool force_disable_dcc);
++				 bool tmz_surface);
+ 
+ int amdgpu_dm_plane_init(struct amdgpu_display_manager *dm,
+ 			 struct drm_plane *plane,
 
 
