@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C432115539A;
-	Thu, 13 Feb 2025 14:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9B1149C55;
+	Thu, 13 Feb 2025 14:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458197; cv=none; b=uVOGXX7kyOLS0eSwkjgTdbj0DJf+4dxO0bcUVFx8Ao8pAA12QnycU8eQMWW9ozK8Lg15vqLsaoF69s7MB2ROusWD6ucdgSpSjCN4qfn0n8lhq+/fokfRRNhsqHWQlZ/QzfaXaB3R/dZY4vY9p0jBDHDYr92/Pm8Gf/OkO+9ZALo=
+	t=1739458201; cv=none; b=WuQChrViNNx5RvnRRFrBDrV4PrbvKRi5xbmm3DxMMMyUxZN/mmfko4AvdFe3l8zehrxuLmDdfBlswAtxh9dP+OXSzEC6P0c2QkvaqE5p0gMVqEQlKt/jfc5mW3UziCDH/n7NcMazGrxolmCugcnQnTToFJRgLEED9icfyqkkQSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458197; c=relaxed/simple;
-	bh=X+fchYnzV+VncjeB2vPKYNC57+wuwXQA2+JgpD/It6E=;
+	s=arc-20240116; t=1739458201; c=relaxed/simple;
+	bh=WnPQ/EgIxrbDHUgegHYYz9Xlds5gHoMBOzLQ3V9fCbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJzvTLwCm34Yz1TwUUmSCHdgpC7U2UrfRn13iqMc5xsiXgaw2ErCU1qpi/WdceSGWs117UzOjxVcvpeEz82YZ19pahLpWcyyJrqUF751FDgG4lgY1XrCwNJpKYI2Ra52p+QYtCDQ4YdrIUDfhx63C62HwrKh7Szei5+VRPH6ZCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyahEPXo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MJSmunDtVtwbMuBb8erMRjCTXts988oGyqreJRJqYv0NMxfMZHLswTp1Y9mZh0pz4nqc9i9UKCfzXsFYPtFNaSyyroQsNNQaHHA71DEOGbTGXguQ0UTxw3ffddjkzZ2R8kvSWOZOcnfzRq3GEWwB1swA3YDB89CehzroeWI+7aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QAqLTiyy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyahEPXo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A4BC4CED1;
-	Thu, 13 Feb 2025 14:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAqLTiyy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4B6C4CEE5;
+	Thu, 13 Feb 2025 14:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458197;
-	bh=X+fchYnzV+VncjeB2vPKYNC57+wuwXQA2+JgpD/It6E=;
+	s=korg; t=1739458200;
+	bh=WnPQ/EgIxrbDHUgegHYYz9Xlds5gHoMBOzLQ3V9fCbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XyahEPXoNZ8QxvtOKFs+NBWWtAcUio5VJxkvRqxKUrPzNOnIMgfSGZlrG1WgMKBar
-	 8MiQJR2fm7j1qb8rwHaXBIJJHxACdGY2miERaEf9yRqMvK/NvOTmwm28ADtGhLEd6d
-	 ywh0REE8RK/QzYHgEO0Z07xPMheu1OAoLuzjHAnY=
+	b=QAqLTiyytvGplS+5QqLKAS1zBYo/2buE3fLTk5K+sK2QA306dkk3sVSOxd9wchZpE
+	 DB5TINHJH4PV8fIR4wjhw6vBDVh+Rfb0oIHormxPs7Yw3SZ5RVK0aneVZeClLuczB/
+	 lTOOFg2mZ99adwvEibNThEGERZHV8TxzriLunDOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehdi Djait <mehdi.djait@linux.intel.com>,
+	Jai Luthra <jai.luthra@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.12 329/422] media: ccs: Fix cleanup order in ccs_probe()
-Date: Thu, 13 Feb 2025 15:27:58 +0100
-Message-ID: <20250213142449.251692805@linuxfoundation.org>
+Subject: [PATCH 6.12 330/422] media: i2c: ds90ub9x3: Fix extra fwnode_handle_put()
+Date: Thu, 13 Feb 2025 15:27:59 +0100
+Message-ID: <20250213142449.289218609@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,44 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mehdi Djait <mehdi.djait@linux.intel.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit 6fdbff0f54786e94f0f630ff200ec1d666b1633e upstream.
+commit 60b45ece41c5632a3a3274115a401cb244180646 upstream.
 
-ccs_limits is allocated in ccs_read_all_limits() after the allocation of
-mdata.backing. Ensure that resources are freed in the reverse order of
-their allocation by moving out_free_ccs_limits up.
+The ub913 and ub953 drivers call fwnode_handle_put(priv->sd.fwnode) as
+part of their remove process, and if the driver is removed multiple
+times, eventually leads to put "overflow", possibly causing memory
+corruption or crash.
 
-Fixes: a11d3d6891f0 ("media: ccs: Read CCS static data from firmware binaries")
+The fwnode_handle_put() is a leftover from commit 905f88ccebb1 ("media:
+i2c: ds90ub9x3: Fix sub-device matching"), which changed the code
+related to the sd.fwnode, but missed removing these fwnode_handle_put()
+calls.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Mehdi Djait <mehdi.djait@linux.intel.com>
+Fixes: 905f88ccebb1 ("media: i2c: ds90ub9x3: Fix sub-device matching")
+Reviewed-by: Jai Luthra <jai.luthra@ideasonboard.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ccs/ccs-core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/i2c/ds90ub913.c |    1 -
+ drivers/media/i2c/ds90ub953.c |    1 -
+ 2 files changed, 2 deletions(-)
 
---- a/drivers/media/i2c/ccs/ccs-core.c
-+++ b/drivers/media/i2c/ccs/ccs-core.c
-@@ -3566,15 +3566,15 @@ out_disable_runtime_pm:
- out_cleanup:
- 	ccs_cleanup(sensor);
+--- a/drivers/media/i2c/ds90ub913.c
++++ b/drivers/media/i2c/ds90ub913.c
+@@ -793,7 +793,6 @@ static void ub913_subdev_uninit(struct u
+ 	v4l2_async_unregister_subdev(&priv->sd);
+ 	ub913_v4l2_nf_unregister(priv);
+ 	v4l2_subdev_cleanup(&priv->sd);
+-	fwnode_handle_put(priv->sd.fwnode);
+ 	media_entity_cleanup(&priv->sd.entity);
+ }
  
-+out_free_ccs_limits:
-+	kfree(sensor->ccs_limits);
-+
- out_release_mdata:
- 	kvfree(sensor->mdata.backing);
+--- a/drivers/media/i2c/ds90ub953.c
++++ b/drivers/media/i2c/ds90ub953.c
+@@ -1291,7 +1291,6 @@ static void ub953_subdev_uninit(struct u
+ 	v4l2_async_unregister_subdev(&priv->sd);
+ 	ub953_v4l2_notifier_unregister(priv);
+ 	v4l2_subdev_cleanup(&priv->sd);
+-	fwnode_handle_put(priv->sd.fwnode);
+ 	media_entity_cleanup(&priv->sd.entity);
+ }
  
- out_release_sdata:
- 	kvfree(sensor->sdata.backing);
- 
--out_free_ccs_limits:
--	kfree(sensor->ccs_limits);
--
- out_power_off:
- 	ccs_power_off(&client->dev);
- 	mutex_destroy(&sensor->mutex);
 
 
