@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C6126B086;
-	Thu, 13 Feb 2025 14:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7739C26B084;
+	Thu, 13 Feb 2025 14:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458130; cv=none; b=LBGKGNd2l2yk6C8YNCkjEKIhi6dIP80odzbMWXhzHHlmRBkbRd2V71zvjA2oDrBIagiTE0l98feFbBb7LKRKVY5KYhlSGmTDTp8bebKLWZoYJoMzBHnFULjvUI6/vlG0WV5HQpKa9jx7ciY9msVgqRB/XouRO2t8PGgFfe9oSPU=
+	t=1739458133; cv=none; b=EUovw9/gclRA8ilMWVKD+EOdDq3YTR1HxzYskfcrEkKBtQgeRcaElT9a61Wx3xGiQAxu0MFu4ugWGgJ2J7ZGWL1nKzNOvEvC0JkQWgtJJieAWbY5LH1plH2pa1Hlgn097nCRgGkxjuQkeM5XXeRKgzFRmrIbBYHW9Up5siUKhk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458130; c=relaxed/simple;
-	bh=9DaA05EwwFly+VSAkoma53NWt59znSc0Au1LZ8dv8W0=;
+	s=arc-20240116; t=1739458133; c=relaxed/simple;
+	bh=buXbbmVlgxd4QICiqPCuc2APEuppY/F8YT8T5xycZ30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hqbViZxaUBFxXcgcjQIpNcBkjdw81bQ99z3GpIP3vK6WFAF5yIyIcwwCObTU3ArYMW4fBiHHzyToNncSFcSlLnr/QYNidcMSdhL03Jr1pW+PRekzrZ/5pg8LskL5tphnQLz2ABz8jh91RTuVkUpzNrVK5IFDep6F5YAitpyOG4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cwf30NdY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C2Hrg6eHu//SCC9XmkpZ65w39SH5d2M+8pEpsJKPNNhPj5SlRDy1tKTrWv8bcmPoYhakc2hH8MkQNp0bkQzq1wY9dp6fQEg1F6eahXiOhf1pk+1belShK60t8lwKdjn7vFJOkMdq0uqseQY8C0Bm7VuOkS7jvOAPbHsBDd4Gs5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qouYsZWs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwf30NdY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE877C4CED1;
-	Thu, 13 Feb 2025 14:48:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qouYsZWs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA94C4CED1;
+	Thu, 13 Feb 2025 14:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458130;
-	bh=9DaA05EwwFly+VSAkoma53NWt59znSc0Au1LZ8dv8W0=;
+	s=korg; t=1739458132;
+	bh=buXbbmVlgxd4QICiqPCuc2APEuppY/F8YT8T5xycZ30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cwf30NdYpPEnQmaskX1UTi+oFNPiC0QMtPRWxtV5RROXWdqEAFyWk+fIXaK3y7H/Z
-	 Hhz5Dt6g1ezVr5VYKLl6feYour9nY55MKXE7ZKkJW7yDlczj5Y9A27qTarxVbtDEmq
-	 YFuBNKzWBmJRPjYVsHNgWpla5uw4pr3jIO2g3+qE=
+	b=qouYsZWsrhnPwbwngUkQi7Et6Mi6/s8huIt6wosNGNej9bZ6huEpE3WNImgVy5AlR
+	 LW+BTNx3iUONC2dY2AJC6Cq7Ckegj+PvSW1hD2nZyjQqw/DsJvJDcUEIEpGjKDT1cy
+	 EtZbbBoI8gKZMSWTxAvpOrdg5FuO0bo8ngtTFJMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	Ackerley Tng <ackerleytng@google.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Breno Leitao <leitao@debian.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Rik van Riel <riel@surriel.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 311/422] mm/hugetlb: fix avoid_reserve to allow taking folio from subpool
-Date: Thu, 13 Feb 2025 15:27:40 +0100
-Message-ID: <20250213142448.545752763@linuxfoundation.org>
+	Christian Eggers <ceggers@arri.de>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 312/422] iio: light: as73211: fix channel handling in only-color triggered buffer
+Date: Thu, 13 Feb 2025 15:27:41 +0100
+Message-ID: <20250213142448.585077106@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -57,230 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Xu <peterx@redhat.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 58db7c5fbe7daa42098d4965133a864f98ba90ba upstream.
+commit ab09c6cfe01b317f515bcd944668697241a54b9d upstream.
 
-Patch series "mm/hugetlb: Refactor hugetlb allocation resv accounting",
-v2.
+The channel index is off by one unit if AS73211_SCAN_MASK_ALL is not
+set (optimized path for color channel readings), and it must be shifted
+instead of leaving an empty channel for the temperature when it is off.
 
-This is a follow up on Ackerley's series here as replacement:
+Once the channel index is fixed, the uninitialized channel must be set
+to zero to avoid pushing uninitialized data.
 
-https://lore.kernel.org/r/cover.1728684491.git.ackerleytng@google.com
+Add available_scan_masks for all channels and only-color channels to let
+the IIO core demux and repack the enabled channels.
 
-The goal of this series is to cleanup hugetlb resv accounting, especially
-during folio allocation, to decouple a few things:
-
-  - Hugetlb folios v.s. Hugetlbfs: IOW, the hope is in the future hugetlb
-    folios can be allocated completely without hugetlbfs.
-
-  - Decouple VMA v.s. hugetlb folio allocations: allocating a hugetlb folio
-    should not always require a hugetlbfs VMA.  For example, either it got
-    allocated from the inode level (see hugetlbfs_fallocate() where it used
-    a pesudo VMA for allocation), or it can be allocated by other kernel
-    subsystems.
-
-It paves way for other users to allocate hugetlb folios out of either
-system reservations, or subpools (instead of hugetlbfs, as a file system).
-For longer term, this prepares hugetlb as a separate concept versus
-hugetlbfs, so that hugetlb folios can be allocated by not only hugetlbfs
-and other things.
-
-Tests I've done:
-
-- I had a reproducer in patch 1 for the bug I found, this will start to
-  work after patch 1 or the whole set applied.
-
-- Hugetlb regression tests (on x86_64 2MBs), includes:
-
-  - All vmtests on hugetlbfs
-
-  - libhugetlbfs test suite (which may fail some tests, but no new failures
-    will be introduced by this series, so all such failures happen before
-    this series so shouldn't be relevant).
-
-
-This patch (of 7):
-
-Since commit 04f2cbe35699 ("hugetlb: guarantee that COW faults for a
-process that called mmap(MAP_PRIVATE) on hugetlbfs will succeed"),
-avoid_reserve was introduced for a special case of CoW on hugetlb private
-mappings, and only if the owner VMA is trying to allocate yet another
-hugetlb folio that is not reserved within the private vma reserved map.
-
-Later on, in commit d85f69b0b533 ("mm/hugetlb: alloc_huge_page handle
-areas hole punched by fallocate"), alloc_huge_page() enforced to not
-consume any global reservation as long as avoid_reserve=true.  This
-operation doesn't look correct, because even if it will enforce the
-allocation to not use global reservation at all, it will still try to take
-one reservation from the spool (if the subpool existed).  Then since the
-spool reserved pages take from global reservation, it'll also take one
-reservation globally.
-
-Logically it can cause global reservation to go wrong.
-
-I wrote a reproducer below, trigger this special path, and every run of
-such program will cause global reservation count to increment by one, until
-it hits the number of free pages:
-
-  #define _GNU_SOURCE             /* See feature_test_macros(7) */
-  #include <stdio.h>
-  #include <fcntl.h>
-  #include <errno.h>
-  #include <unistd.h>
-  #include <stdlib.h>
-  #include <sys/mman.h>
-
-  #define  MSIZE  (2UL << 20)
-
-  int main(int argc, char *argv[])
-  {
-      const char *path;
-      int *buf;
-      int fd, ret;
-      pid_t child;
-
-      if (argc < 2) {
-          printf("usage: %s <hugetlb_file>\n", argv[0]);
-          return -1;
-      }
-
-      path = argv[1];
-
-      fd = open(path, O_RDWR | O_CREAT, 0666);
-      if (fd < 0) {
-          perror("open failed");
-          return -1;
-      }
-
-      ret = fallocate(fd, 0, 0, MSIZE);
-      if (ret != 0) {
-          perror("fallocate");
-          return -1;
-      }
-
-      buf = mmap(NULL, MSIZE, PROT_READ|PROT_WRITE,
-                 MAP_PRIVATE, fd, 0);
-
-      if (buf == MAP_FAILED) {
-          perror("mmap() failed");
-          return -1;
-      }
-
-      /* Allocate a page */
-      *buf = 1;
-
-      child = fork();
-      if (child == 0) {
-          /* child doesn't need to do anything */
-          exit(0);
-      }
-
-      /* Trigger CoW from owner */
-      *buf = 2;
-
-      munmap(buf, MSIZE);
-      close(fd);
-      unlink(path);
-
-      return 0;
-  }
-
-It can only reproduce with a sub-mount when there're reserved pages on the
-spool, like:
-
-  # sysctl vm.nr_hugepages=128
-  # mkdir ./hugetlb-pool
-  # mount -t hugetlbfs -o min_size=8M,pagesize=2M none ./hugetlb-pool
-
-Then run the reproducer on the mountpoint:
-
-  # ./reproducer ./hugetlb-pool/test
-
-Fix it by taking the reservation from spool if available.  In general,
-avoid_reserve is IMHO more about "avoid vma resv map", not spool's.
-
-I copied stable, however I have no intention for backporting if it's not a
-clean cherry-pick, because private hugetlb mapping, and then fork() on top
-is too rare to hit.
-
-Link: https://lkml.kernel.org/r/20250107204002.2683356-1-peterx@redhat.com
-Link: https://lkml.kernel.org/r/20250107204002.2683356-2-peterx@redhat.com
-Fixes: d85f69b0b533 ("mm/hugetlb: alloc_huge_page handle areas hole punched by fallocate")
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Ackerley Tng <ackerleytng@google.com>
-Tested-by: Ackerley Tng <ackerleytng@google.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Breno Leitao <leitao@debian.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 403e5586b52e ("iio: light: as73211: New driver")
+Tested-by: Christian Eggers <ceggers@arri.de>
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20241214-iio_memset_scan_holes-v4-1-260b395b8ed5@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |   22 +++-------------------
- 1 file changed, 3 insertions(+), 19 deletions(-)
+ drivers/iio/light/as73211.c |   24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -1394,8 +1394,7 @@ static unsigned long available_huge_page
+--- a/drivers/iio/light/as73211.c
++++ b/drivers/iio/light/as73211.c
+@@ -177,6 +177,12 @@ struct as73211_data {
+ 	BIT(AS73211_SCAN_INDEX_TEMP) | \
+ 	AS73211_SCAN_MASK_COLOR)
  
- static struct folio *dequeue_hugetlb_folio_vma(struct hstate *h,
- 				struct vm_area_struct *vma,
--				unsigned long address, int avoid_reserve,
--				long chg)
-+				unsigned long address, long chg)
- {
- 	struct folio *folio = NULL;
- 	struct mempolicy *mpol;
-@@ -1411,10 +1410,6 @@ static struct folio *dequeue_hugetlb_fol
- 	if (!vma_has_reserves(vma, chg) && !available_huge_pages(h))
- 		goto err;
++static const unsigned long as73211_scan_masks[] = {
++	AS73211_SCAN_MASK_COLOR,
++	AS73211_SCAN_MASK_ALL,
++	0
++};
++
+ static const struct iio_chan_spec as73211_channels[] = {
+ 	{
+ 		.type = IIO_TEMP,
+@@ -672,9 +678,12 @@ static irqreturn_t as73211_trigger_handl
  
--	/* If reserves cannot be used, ensure enough pages are in the pool */
--	if (avoid_reserve && !available_huge_pages(h))
--		goto err;
--
- 	gfp_mask = htlb_alloc_mask(h);
- 	nid = huge_node(vma, address, gfp_mask, &mpol, &nodemask);
- 
-@@ -1430,7 +1425,7 @@ static struct folio *dequeue_hugetlb_fol
- 		folio = dequeue_hugetlb_folio_nodemask(h, gfp_mask,
- 							nid, nodemask);
- 
--	if (folio && !avoid_reserve && vma_has_reserves(vma, chg)) {
-+	if (folio && vma_has_reserves(vma, chg)) {
- 		folio_set_hugetlb_restore_reserve(folio);
- 		h->resv_huge_pages--;
- 	}
-@@ -3006,17 +3001,6 @@ struct folio *alloc_hugetlb_folio(struct
- 		gbl_chg = hugepage_subpool_get_pages(spool, 1);
- 		if (gbl_chg < 0)
- 			goto out_end_reservation;
--
--		/*
--		 * Even though there was no reservation in the region/reserve
--		 * map, there could be reservations associated with the
--		 * subpool that can be used.  This would be indicated if the
--		 * return value of hugepage_subpool_get_pages() is zero.
--		 * However, if avoid_reserve is specified we still avoid even
--		 * the subpool reservations.
--		 */
--		if (avoid_reserve)
--			gbl_chg = 1;
+ 		/* AS73211 starts reading at address 2 */
+ 		ret = i2c_master_recv(data->client,
+-				(char *)&scan.chan[1], 3 * sizeof(scan.chan[1]));
++				(char *)&scan.chan[0], 3 * sizeof(scan.chan[0]));
+ 		if (ret < 0)
+ 			goto done;
++
++		/* Avoid pushing uninitialized data */
++		scan.chan[3] = 0;
  	}
  
- 	/* If this allocation is not consuming a reservation, charge it now.
-@@ -3039,7 +3023,7 @@ struct folio *alloc_hugetlb_folio(struct
- 	 * from the global free pool (global change).  gbl_chg == 0 indicates
- 	 * a reservation exists for the allocation.
- 	 */
--	folio = dequeue_hugetlb_folio_vma(h, vma, addr, avoid_reserve, gbl_chg);
-+	folio = dequeue_hugetlb_folio_vma(h, vma, addr, gbl_chg);
- 	if (!folio) {
- 		spin_unlock_irq(&hugetlb_lock);
- 		folio = alloc_buddy_hugetlb_folio_with_mpol(h, vma, addr);
+ 	if (data_result) {
+@@ -682,9 +691,15 @@ static irqreturn_t as73211_trigger_handl
+ 		 * Saturate all channels (in case of overflows). Temperature channel
+ 		 * is not affected by overflows.
+ 		 */
+-		scan.chan[1] = cpu_to_le16(U16_MAX);
+-		scan.chan[2] = cpu_to_le16(U16_MAX);
+-		scan.chan[3] = cpu_to_le16(U16_MAX);
++		if (*indio_dev->active_scan_mask == AS73211_SCAN_MASK_ALL) {
++			scan.chan[1] = cpu_to_le16(U16_MAX);
++			scan.chan[2] = cpu_to_le16(U16_MAX);
++			scan.chan[3] = cpu_to_le16(U16_MAX);
++		} else {
++			scan.chan[0] = cpu_to_le16(U16_MAX);
++			scan.chan[1] = cpu_to_le16(U16_MAX);
++			scan.chan[2] = cpu_to_le16(U16_MAX);
++		}
+ 	}
+ 
+ 	iio_push_to_buffers_with_timestamp(indio_dev, &scan, iio_get_time_ns(indio_dev));
+@@ -758,6 +773,7 @@ static int as73211_probe(struct i2c_clie
+ 	indio_dev->channels = data->spec_dev->channels;
+ 	indio_dev->num_channels = data->spec_dev->num_channels;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
++	indio_dev->available_scan_masks = as73211_scan_masks;
+ 
+ 	ret = i2c_smbus_read_byte_data(data->client, AS73211_REG_OSR);
+ 	if (ret < 0)
 
 
