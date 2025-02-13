@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33EC92222D8;
-	Thu, 13 Feb 2025 14:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8124326B0B7;
+	Thu, 13 Feb 2025 14:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457900; cv=none; b=L9FHzIyDmr7Bi54mlUUF71YfLrcRSEdHhyTscqyzE0M3OyNXNQnLPCWLSEpv4rN7kmLY30XafYceRoVMo/LcrYO1Q784a+v2sK0R2NgYaaGkxkiCm055oDi32cw+BQk58713A3kPRm/koOcjpXlAfVq7W1+U6FRUjlZo2t+9AAQ=
+	t=1739457903; cv=none; b=GUhAQUZtPhRBUskZekLlbDK5k2VOC5rODlK7W0HR549qeMJOJMp7HiT8OoY4lcZeM95FujmWcg/SVB5CJ7a7lfxOCOvdcWujwLCbGvtP7PGqsn2W66UzsWdXUxrg6kAxbJFyUNibat0PNYQFBtdXbs3LBzqwWibErIkSUFMMlfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457900; c=relaxed/simple;
-	bh=oUMEO4OJkqK54dLwgjzZuGysRCgVBExmYwShOlE0A+I=;
+	s=arc-20240116; t=1739457903; c=relaxed/simple;
+	bh=74vcsuvmSVFjzjlvtV39jWlNXTYXGc3fFyBdDC6IoV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGmDBXTll/54WNZDT8Ncs0zHfmQ7YYvjNUuVXB/qFo7qXPG8KV6uSpfIDchAmt9s95n1yRhfp1XUsQgUHydMFex6LTKP1sqvAE57C8IiYOCHLQDtctPHjjFtV69ZIXesG4uQZSGiEjW3FG9sjPMIkcmcLUMSf2eEYpvKegocQco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8laIHx9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cP/rgiOr+oLzxSRoZV17y9VpEwmwZlClOhU1jdBkdvREOMSCbtp1qi9AJaFmcbh1iNOECwQsxGl4Cw/bJ7A8Mr0pxLxm14RmKWP7Y6oqrD33EdZlHv92LfBIPANVUcQkahHq3dp+YU4805qHpXQFgYcgrs96V2c3Ekkf8QNwdJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+mWvcYM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8laIHx9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BB0C4CED1;
-	Thu, 13 Feb 2025 14:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+mWvcYM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B165DC4CED1;
+	Thu, 13 Feb 2025 14:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457899;
-	bh=oUMEO4OJkqK54dLwgjzZuGysRCgVBExmYwShOlE0A+I=;
+	s=korg; t=1739457903;
+	bh=74vcsuvmSVFjzjlvtV39jWlNXTYXGc3fFyBdDC6IoV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m8laIHx9JvWzc9mTlVRMh8QTRvrYvw8ycLJCV/AYako8jxlG3dvkoqxmT1RKIkwpM
-	 XAhPcUlU/wh4HFYuUxXX6jraRCBAHWVbDE1YBnbXn4YRQvt5XZoPdJuedNwZFoCp/j
-	 CmPpppkagm7coNfbyPjxPAqG3zn0npdoLJzrQm7o=
+	b=M+mWvcYMjaQqZ0nUv8uRkXP5lDsLMkcOV7acF/vKuVtMXPLfKT9W5gOtijalw/X/l
+	 a70i7oX/pDImmVgXPkz5sFTZg9hjRCXyytm3T42yJlKDVL0qKeoE1A2gnd/l4/i5Bw
+	 2Qp1nXGCuErydm+41fUdR079j7jXH62xnsU7Fa3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.12 246/422] s390/pci: Fix SR-IOV for PFs initially in standby
-Date: Thu, 13 Feb 2025 15:26:35 +0100
-Message-ID: <20250213142446.031148329@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Georg Gottleuber <ggo@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.12 247/422] PCI: Avoid putting some root ports into D3 on TUXEDO Sirius Gen1
+Date: Thu, 13 Feb 2025 15:26:36 +0100
+Message-ID: <20250213142446.069912165@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -45,58 +46,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-commit dc287e4c9149ab54a5003b4d4da007818b5fda3d upstream.
+commit b1049f2d68693c80a576c4578d96774a68df2bad upstream.
 
-Since commit 25f39d3dcb48 ("s390/pci: Ignore RID for isolated VFs") PFs
-which are not initially configured but in standby are considered
-isolated. That is they create only a single function PCI domain. Due to
-the PCI domains being created on discovery, this means that even if they
-are configured later on, sibling PFs and their child VFs will not be
-added to their PCI domain breaking SR-IOV expectations.
+commit 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend") sets the
+policy that all PCIe ports are allowed to use D3.  When the system is
+suspended if the port is not power manageable by the platform and won't be
+used for wakeup via a PME this sets up the policy for these ports to go
+into D3hot.
 
-The reason the referenced commit ignored standby PFs for the creation of
-multi-function PCI subhierarchies, was to work around a PCI domain
-renumbering scenario on reboot. The renumbering would occur after
-removing a previously in standby PF, whose domain number is used for its
-configured sibling PFs and their child VFs, but which itself remained in
-standby. When this is followed by a reboot, the sibling PF is used
-instead to determine the PCI domain number of it and its child VFs.
+This policy generally makes sense from an OSPM perspective but it leads to
+problems with wakeup from suspend on the TUXEDO Sirius 16 Gen 1 with a
+specific old BIOS. This manifests as a system hang.
 
-In principle it is not possible to know which standby PFs will be
-configured later and which may be removed. The PCI domain and root bus
-are pre-requisites for hotplug slots so the decision of which functions
-belong to which domain can not be postponed. With the renumbering
-occurring only in rare circumstances and being generally benign, accept
-it as an oddity and fix SR-IOV for initially standby PFs simply by
-allowing them to create PCI domains.
+On the affected Device + BIOS combination, add a quirk for the root port of
+the problematic controller to ensure that these root ports are not put into
+D3hot at suspend.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
-Fixes: 25f39d3dcb48 ("s390/pci: Ignore RID for isolated VFs")
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+This patch is based on
+
+  https://lore.kernel.org/linux-pci/20230708214457.1229-2-mario.limonciello@amd.com
+
+but with the added condition both in the documentation and in the code to
+apply only to the TUXEDO Sirius 16 Gen 1 with a specific old BIOS and only
+the affected root ports.
+
+Fixes: 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend")
+Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20250114222436.1075456-1-wse@tuxedocomputers.com
+Co-developed-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.1+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/pci/pci_bus.c |    1 -
- 1 file changed, 1 deletion(-)
+ arch/x86/pci/fixup.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/arch/s390/pci/pci_bus.c
-+++ b/arch/s390/pci/pci_bus.c
-@@ -171,7 +171,6 @@ void zpci_bus_scan_busses(void)
- static bool zpci_bus_is_multifunction_root(struct zpci_dev *zdev)
- {
- 	return !s390_pci_no_rid && zdev->rid_available &&
--		zpci_is_device_configured(zdev) &&
- 		!zdev->vfn;
- }
- 
+--- a/arch/x86/pci/fixup.c
++++ b/arch/x86/pci/fixup.c
+@@ -1010,4 +1010,34 @@ DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_
+ DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1668, amd_rp_pme_resume);
+ DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_suspend);
+ DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_resume);
++
++/*
++ * Putting PCIe root ports on Ryzen SoCs with USB4 controllers into D3hot
++ * may cause problems when the system attempts wake up from s2idle.
++ *
++ * On the TUXEDO Sirius 16 Gen 1 with a specific old BIOS this manifests as
++ * a system hang.
++ */
++static const struct dmi_system_id quirk_tuxeo_rp_d3_dmi_table[] = {
++	{
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
++			DMI_EXACT_MATCH(DMI_BOARD_NAME, "APX958"),
++			DMI_EXACT_MATCH(DMI_BIOS_VERSION, "V1.00A00_20240108"),
++		},
++	},
++	{}
++};
++
++static void quirk_tuxeo_rp_d3(struct pci_dev *pdev)
++{
++	struct pci_dev *root_pdev;
++
++	if (dmi_check_system(quirk_tuxeo_rp_d3_dmi_table)) {
++		root_pdev = pcie_find_root_port(pdev);
++		if (root_pdev)
++			root_pdev->dev_flags |= PCI_DEV_FLAGS_NO_D3;
++	}
++}
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1502, quirk_tuxeo_rp_d3);
+ #endif /* CONFIG_SUSPEND */
 
 
