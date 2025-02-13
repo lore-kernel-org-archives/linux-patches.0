@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C60A281379;
-	Thu, 13 Feb 2025 14:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88265281349;
+	Thu, 13 Feb 2025 14:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457296; cv=none; b=o0dh1nEua+wK+NN3pdEd8BWx06tatE4vT029+ZafbgivBTL/ns1ljHJKNB2lV340IEviWXUFebvQUiCZxiKDVgdHgnrnrWJ/x6UOscOS4/LTCo7a7Ha63C0D0SvfPCnnY071RwHsnoFpGsOQ5JYW093M0qSw4rOmWSq3Th8+8aI=
+	t=1739457299; cv=none; b=bN7v3exDIGmqYJLAVmrO+f9MYREui9UWMX4R5LjviKjpox439GYvgEc/idyf+BKj1e2oOhoAiQ7R1nikBu888XzQds2pwEgZQhPpeDef7PCTbvhjWzvGYgxyyzZ4ySli8i2/Grkh+9FgYTOGqgKzuDEOvnuT6Tvr44RKS0KnUso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457296; c=relaxed/simple;
-	bh=ly41VLk90zvHSTUsKm+9lou8pOp03OZwB5cQjho1KEs=;
+	s=arc-20240116; t=1739457299; c=relaxed/simple;
+	bh=KpKqJQrEWy/o0iT4dqPpthTAR7ssz0STOn76TWwat7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u7937DshbQ3mH7ih7nKj7Bx9B8Vrkili3enEXeH2hKIJ1w0Ya3yYyGHLOrYY5lnE430ay803rKR47iXFQ3r29LmRzTytSNciaBbsFNfJ6zIt6jsFI++fuv/n5M3TEl4ggJl0h5j2ZF5IA6JRsDw2buvtwc3GYG0iugeQxikwL6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZVcbUZu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i3e7WdFU1S5q9krq48tHhzqBbMO4bANJw/kVtatGvY2t1VlNmo7D93aiRSLwlbfduKZBJ0GT6NkEYuSHBXbD2/dbyYFrfBWh4hwqUfrRW0NjWYZ8c1TUv4c0ZbIvmXOgRw398Zx2I6iSnz85IEUWNJrbRmCN8qF9L/0kpvjHxRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gopPob/v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZVcbUZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77680C4CEE9;
-	Thu, 13 Feb 2025 14:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gopPob/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBBAC4CED1;
+	Thu, 13 Feb 2025 14:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457296;
-	bh=ly41VLk90zvHSTUsKm+9lou8pOp03OZwB5cQjho1KEs=;
+	s=korg; t=1739457299;
+	bh=KpKqJQrEWy/o0iT4dqPpthTAR7ssz0STOn76TWwat7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XZVcbUZucP7YcjKXa+P9YuAFbyRaiO0CpnzvGC1wVar1MU8u+J1vYlJCd09SjOF9c
-	 lCf11NB4+kxJe0NdfzeTvE6lPVjRlxEjyQN40OuW4L02omxFZ3SRIR3jr4O6xRfr6+
-	 51nnK3Q71qnk1SuRtv+E53bMxSa1mao14lBzIwTA=
+	b=gopPob/v86PtelUskzohVLVsEoXh+Old9bObaVWra9HJmoll0ME27n536QKuH+mzA
+	 bbBp19GnRcJewYMHDyEEYw2dFA2CVJgpotWW/LuglGvYFhL+xaMv+QfPyaOWXtVxui
+	 C0YAk43HOHye+reXaOhUNfSo8Kx363fmnYGzG5mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinas Rasheed <srasheed@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/422] octeon_ep_vf: update tx/rx stats locally for persistence
-Date: Thu, 13 Feb 2025 15:23:41 +0100
-Message-ID: <20250213142439.336907795@linuxfoundation.org>
+Subject: [PATCH 6.12 055/422] wifi: rtw88: add __packed attribute to efuse layout struct
+Date: Thu, 13 Feb 2025 15:23:24 +0100
+Message-ID: <20250213142438.685496069@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,235 +51,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shinas Rasheed <srasheed@marvell.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit f84039939512e6d88b0f2f353695530f123be789 ]
+[ Upstream commit 0daa521a1c8c29ffbefe6530f0d276e74e2749d0 ]
 
-Update tx/rx stats locally, so that ndo_get_stats64()
-can use that and not rely on per queue resources to obtain statistics.
-The latter used to cause race conditions when the device stopped.
+The layout struct of efuse should not do address alignment by compiler.
+Otherwise it leads unexpected layout and size for certain arch suc as arm.
+In x86-64, the results are identical before and after this patch.
 
-Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
-Link: https://patch.msgid.link/20250117094653.2588578-5-srasheed@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Also adjust bit-field to prevent over adjacent byte to avoid warning:
+  rtw88/rtw8822b.h:66:1: note: offset of packed bit-field `res2` has changed in GCC 4.4
+   66 | } __packed;
+      | ^
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202412120131.qk0x6OhE-lkp@intel.com/
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241212054203.135046-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeon_ep_vf/octep_vf_ethtool.c   | 29 +++++++------------
- .../marvell/octeon_ep_vf/octep_vf_main.c      | 17 +++++------
- .../marvell/octeon_ep_vf/octep_vf_main.h      |  6 ++++
- .../marvell/octeon_ep_vf/octep_vf_rx.c        |  9 +++---
- .../marvell/octeon_ep_vf/octep_vf_rx.h        |  2 +-
- .../marvell/octeon_ep_vf/octep_vf_tx.c        |  7 +++--
- .../marvell/octeon_ep_vf/octep_vf_tx.h        |  2 +-
- 7 files changed, 35 insertions(+), 37 deletions(-)
+ drivers/net/wireless/realtek/rtw88/main.h     | 4 ++--
+ drivers/net/wireless/realtek/rtw88/rtw8723x.h | 8 ++++----
+ drivers/net/wireless/realtek/rtw88/rtw8821c.h | 9 +++++----
+ drivers/net/wireless/realtek/rtw88/rtw8822b.h | 9 +++++----
+ drivers/net/wireless/realtek/rtw88/rtw8822c.h | 9 +++++----
+ 5 files changed, 21 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_ethtool.c b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_ethtool.c
-index a1979b45e355c..12ddb77141cc3 100644
---- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_ethtool.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_ethtool.c
-@@ -121,12 +121,9 @@ static void octep_vf_get_ethtool_stats(struct net_device *netdev,
- 	iface_tx_stats = &oct->iface_tx_stats;
- 	iface_rx_stats = &oct->iface_rx_stats;
+diff --git a/drivers/net/wireless/realtek/rtw88/main.h b/drivers/net/wireless/realtek/rtw88/main.h
+index 945117afe1438..c808bb271e9d0 100644
+--- a/drivers/net/wireless/realtek/rtw88/main.h
++++ b/drivers/net/wireless/realtek/rtw88/main.h
+@@ -508,12 +508,12 @@ struct rtw_5g_txpwr_idx {
+ 	struct rtw_5g_vht_ns_pwr_idx_diff vht_2s_diff;
+ 	struct rtw_5g_vht_ns_pwr_idx_diff vht_3s_diff;
+ 	struct rtw_5g_vht_ns_pwr_idx_diff vht_4s_diff;
+-};
++} __packed;
  
--	for (q = 0; q < oct->num_oqs; q++) {
--		struct octep_vf_iq *iq = oct->iq[q];
--		struct octep_vf_oq *oq = oct->oq[q];
--
--		tx_busy_errors += iq->stats.tx_busy;
--		rx_alloc_errors += oq->stats.alloc_failures;
-+	for (q = 0; q < OCTEP_VF_MAX_QUEUES; q++) {
-+		tx_busy_errors += oct->stats_iq[q].tx_busy;
-+		rx_alloc_errors += oct->stats_oq[q].alloc_failures;
- 	}
- 	i = 0;
- 	data[i++] = rx_alloc_errors;
-@@ -141,22 +138,18 @@ static void octep_vf_get_ethtool_stats(struct net_device *netdev,
- 	data[i++] = iface_rx_stats->dropped_octets_fifo_full;
+ struct rtw_txpwr_idx {
+ 	struct rtw_2g_txpwr_idx pwr_idx_2g;
+ 	struct rtw_5g_txpwr_idx pwr_idx_5g;
+-};
++} __packed;
  
- 	/* Per Tx Queue stats */
--	for (q = 0; q < oct->num_iqs; q++) {
--		struct octep_vf_iq *iq = oct->iq[q];
--
--		data[i++] = iq->stats.instr_posted;
--		data[i++] = iq->stats.instr_completed;
--		data[i++] = iq->stats.bytes_sent;
--		data[i++] = iq->stats.tx_busy;
-+	for (q = 0; q < OCTEP_VF_MAX_QUEUES; q++) {
-+		data[i++] = oct->stats_iq[q].instr_posted;
-+		data[i++] = oct->stats_iq[q].instr_completed;
-+		data[i++] = oct->stats_iq[q].bytes_sent;
-+		data[i++] = oct->stats_iq[q].tx_busy;
- 	}
+ struct rtw_channel_params {
+ 	u8 center_chan;
+diff --git a/drivers/net/wireless/realtek/rtw88/rtw8723x.h b/drivers/net/wireless/realtek/rtw88/rtw8723x.h
+index e93bfce994bf8..a99af527c92cf 100644
+--- a/drivers/net/wireless/realtek/rtw88/rtw8723x.h
++++ b/drivers/net/wireless/realtek/rtw88/rtw8723x.h
+@@ -47,7 +47,7 @@ struct rtw8723xe_efuse {
+ 	u8 device_id[2];
+ 	u8 sub_vendor_id[2];
+ 	u8 sub_device_id[2];
+-};
++} __packed;
  
- 	/* Per Rx Queue stats */
- 	for (q = 0; q < oct->num_oqs; q++) {
--		struct octep_vf_oq *oq = oct->oq[q];
--
--		data[i++] = oq->stats.packets;
--		data[i++] = oq->stats.bytes;
--		data[i++] = oq->stats.alloc_failures;
-+		data[i++] = oct->stats_oq[q].packets;
-+		data[i++] = oct->stats_oq[q].bytes;
-+		data[i++] = oct->stats_oq[q].alloc_failures;
- 	}
- }
+ struct rtw8723xu_efuse {
+ 	u8 res4[48];                    /* 0xd0 */
+@@ -56,12 +56,12 @@ struct rtw8723xu_efuse {
+ 	u8 usb_option;                  /* 0x104 */
+ 	u8 res5[2];			/* 0x105 */
+ 	u8 mac_addr[ETH_ALEN];          /* 0x107 */
+-};
++} __packed;
  
-diff --git a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
-index 4c699514fd57a..18c922dd5fc64 100644
---- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
-@@ -574,7 +574,7 @@ static int octep_vf_iq_full_check(struct octep_vf_iq *iq)
- 		  * caused queues to get re-enabled after
- 		  * being stopped
- 		  */
--		iq->stats.restart_cnt++;
-+		iq->stats->restart_cnt++;
- 		fallthrough;
- 	case 1: /* Queue left enabled, since IQ is not yet full*/
- 		return 0;
-@@ -731,7 +731,7 @@ static netdev_tx_t octep_vf_start_xmit(struct sk_buff *skb,
- 	/* Flush the hw descriptors before writing to doorbell */
- 	smp_wmb();
- 	writel(iq->fill_cnt, iq->doorbell_reg);
--	iq->stats.instr_posted += iq->fill_cnt;
-+	iq->stats->instr_posted += iq->fill_cnt;
- 	iq->fill_cnt = 0;
- 	return NETDEV_TX_OK;
- }
-@@ -786,14 +786,11 @@ static void octep_vf_get_stats64(struct net_device *netdev,
- 	tx_bytes = 0;
- 	rx_packets = 0;
- 	rx_bytes = 0;
--	for (q = 0; q < oct->num_oqs; q++) {
--		struct octep_vf_iq *iq = oct->iq[q];
--		struct octep_vf_oq *oq = oct->oq[q];
--
--		tx_packets += iq->stats.instr_completed;
--		tx_bytes += iq->stats.bytes_sent;
--		rx_packets += oq->stats.packets;
--		rx_bytes += oq->stats.bytes;
-+	for (q = 0; q < OCTEP_VF_MAX_QUEUES; q++) {
-+		tx_packets += oct->stats_iq[q].instr_completed;
-+		tx_bytes += oct->stats_iq[q].bytes_sent;
-+		rx_packets += oct->stats_oq[q].packets;
-+		rx_bytes += oct->stats_oq[q].bytes;
- 	}
- 	stats->tx_packets = tx_packets;
- 	stats->tx_bytes = tx_bytes;
-diff --git a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.h b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.h
-index 5769f62545cd4..1a352f41f823c 100644
---- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.h
-+++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.h
-@@ -246,11 +246,17 @@ struct octep_vf_device {
- 	/* Pointers to Octeon Tx queues */
- 	struct octep_vf_iq *iq[OCTEP_VF_MAX_IQ];
+ struct rtw8723xs_efuse {
+ 	u8 res4[0x4a];			/* 0xd0 */
+ 	u8 mac_addr[ETH_ALEN];		/* 0x11a */
+-};
++} __packed;
  
-+	/* Per iq stats */
-+	struct octep_vf_iq_stats stats_iq[OCTEP_VF_MAX_IQ];
-+
- 	/* Rx queues (OQ: Output Queue) */
- 	u16 num_oqs;
- 	/* Pointers to Octeon Rx queues */
- 	struct octep_vf_oq *oq[OCTEP_VF_MAX_OQ];
+ struct rtw8723x_efuse {
+ 	__le16 rtl_id;
+@@ -96,7 +96,7 @@ struct rtw8723x_efuse {
+ 		struct rtw8723xu_efuse u;
+ 		struct rtw8723xs_efuse s;
+ 	};
+-};
++} __packed;
  
-+	/* Per oq stats */
-+	struct octep_vf_oq_stats stats_oq[OCTEP_VF_MAX_OQ];
-+
- 	/* Hardware port number of the PCIe interface */
- 	u16 pcie_port;
+ #define RTW8723X_IQK_ADDA_REG_NUM	16
+ #define RTW8723X_IQK_MAC8_REG_NUM	3
+diff --git a/drivers/net/wireless/realtek/rtw88/rtw8821c.h b/drivers/net/wireless/realtek/rtw88/rtw8821c.h
+index 91ed921407bbe..10172f4d74bf2 100644
+--- a/drivers/net/wireless/realtek/rtw88/rtw8821c.h
++++ b/drivers/net/wireless/realtek/rtw88/rtw8821c.h
+@@ -27,7 +27,7 @@ struct rtw8821cu_efuse {
+ 	u8 res11[0xcf];
+ 	u8 package_type;		/* 0x1fb */
+ 	u8 res12[0x4];
+-};
++} __packed;
  
-diff --git a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.c b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.c
-index 82821bc28634b..d70c8be3cfc40 100644
---- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.c
-@@ -87,7 +87,7 @@ static int octep_vf_oq_refill(struct octep_vf_device *oct, struct octep_vf_oq *o
- 		page = dev_alloc_page();
- 		if (unlikely(!page)) {
- 			dev_err(oq->dev, "refill: rx buffer alloc failed\n");
--			oq->stats.alloc_failures++;
-+			oq->stats->alloc_failures++;
- 			break;
- 		}
+ struct rtw8821ce_efuse {
+ 	u8 mac_addr[ETH_ALEN];		/* 0xd0 */
+@@ -47,7 +47,8 @@ struct rtw8821ce_efuse {
+ 	u8 ltr_en:1;
+ 	u8 res1:2;
+ 	u8 obff:2;
+-	u8 res2:3;
++	u8 res2_1:1;
++	u8 res2_2:2;
+ 	u8 obff_cap:2;
+ 	u8 res3:4;
+ 	u8 res4[3];
+@@ -63,7 +64,7 @@ struct rtw8821ce_efuse {
+ 	u8 res6:1;
+ 	u8 port_t_power_on_value:5;
+ 	u8 res7;
+-};
++} __packed;
  
-@@ -98,7 +98,7 @@ static int octep_vf_oq_refill(struct octep_vf_device *oct, struct octep_vf_oq *o
- 				"OQ-%d buffer refill: DMA mapping error!\n",
- 				oq->q_no);
- 			put_page(page);
--			oq->stats.alloc_failures++;
-+			oq->stats->alloc_failures++;
- 			break;
- 		}
- 		oq->buff_info[refill_idx].page = page;
-@@ -134,6 +134,7 @@ static int octep_vf_setup_oq(struct octep_vf_device *oct, int q_no)
- 	oq->netdev = oct->netdev;
- 	oq->dev = &oct->pdev->dev;
- 	oq->q_no = q_no;
-+	oq->stats = &oct->stats_oq[q_no];
- 	oq->max_count = CFG_GET_OQ_NUM_DESC(oct->conf);
- 	oq->ring_size_mask = oq->max_count - 1;
- 	oq->buffer_size = CFG_GET_OQ_BUF_SIZE(oct->conf);
-@@ -458,8 +459,8 @@ static int __octep_vf_oq_process_rx(struct octep_vf_device *oct,
+ struct rtw8821cs_efuse {
+ 	u8 res4[0x4a];			/* 0xd0 */
+@@ -101,7 +102,7 @@ struct rtw8821c_efuse {
+ 		struct rtw8821cu_efuse u;
+ 		struct rtw8821cs_efuse s;
+ 	};
+-};
++} __packed;
  
- 	oq->host_read_idx = read_idx;
- 	oq->refill_count += desc_used;
--	oq->stats.packets += pkt;
--	oq->stats.bytes += rx_bytes;
-+	oq->stats->packets += pkt;
-+	oq->stats->bytes += rx_bytes;
+ static inline void
+ _rtw_write32s_mask(struct rtw_dev *rtwdev, u32 addr, u32 mask, u32 data)
+diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822b.h b/drivers/net/wireless/realtek/rtw88/rtw8822b.h
+index cf85e63966a1c..e815bc97c218a 100644
+--- a/drivers/net/wireless/realtek/rtw88/rtw8822b.h
++++ b/drivers/net/wireless/realtek/rtw88/rtw8822b.h
+@@ -27,7 +27,7 @@ struct rtw8822bu_efuse {
+ 	u8 res11[0xcf];
+ 	u8 package_type;		/* 0x1fb */
+ 	u8 res12[0x4];
+-};
++} __packed;
  
- 	return pkt;
- }
-diff --git a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.h b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.h
-index fe46838b5200f..9e296b7d7e349 100644
---- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.h
-+++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.h
-@@ -187,7 +187,7 @@ struct octep_vf_oq {
- 	u8 __iomem *pkts_sent_reg;
+ struct rtw8822be_efuse {
+ 	u8 mac_addr[ETH_ALEN];		/* 0xd0 */
+@@ -47,7 +47,8 @@ struct rtw8822be_efuse {
+ 	u8 ltr_en:1;
+ 	u8 res1:2;
+ 	u8 obff:2;
+-	u8 res2:3;
++	u8 res2_1:1;
++	u8 res2_2:2;
+ 	u8 obff_cap:2;
+ 	u8 res3:4;
+ 	u8 res4[3];
+@@ -63,7 +64,7 @@ struct rtw8822be_efuse {
+ 	u8 res6:1;
+ 	u8 port_t_power_on_value:5;
+ 	u8 res7;
+-};
++} __packed;
  
- 	/* Statistics for this OQ. */
--	struct octep_vf_oq_stats stats;
-+	struct octep_vf_oq_stats *stats;
+ struct rtw8822bs_efuse {
+ 	u8 res4[0x4a];			/* 0xd0 */
+@@ -103,7 +104,7 @@ struct rtw8822b_efuse {
+ 		struct rtw8822bu_efuse u;
+ 		struct rtw8822bs_efuse s;
+ 	};
+-};
++} __packed;
  
- 	/* Packets pending to be processed */
- 	u32 pkts_pending;
-diff --git a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_tx.c b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_tx.c
-index 47a5c054fdb63..8180e5ce3d7ef 100644
---- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_tx.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_tx.c
-@@ -82,9 +82,9 @@ int octep_vf_iq_process_completions(struct octep_vf_iq *iq, u16 budget)
- 	}
+ static inline void
+ _rtw_write32s_mask(struct rtw_dev *rtwdev, u32 addr, u32 mask, u32 data)
+diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822c.h b/drivers/net/wireless/realtek/rtw88/rtw8822c.h
+index e2b383d633cd2..fc62b67a15f21 100644
+--- a/drivers/net/wireless/realtek/rtw88/rtw8822c.h
++++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.h
+@@ -14,7 +14,7 @@ struct rtw8822cu_efuse {
+ 	u8 res1[3];
+ 	u8 mac_addr[ETH_ALEN];		/* 0x157 */
+ 	u8 res2[0x3d];
+-};
++} __packed;
  
- 	iq->pkts_processed += compl_pkts;
--	iq->stats.instr_completed += compl_pkts;
--	iq->stats.bytes_sent += compl_bytes;
--	iq->stats.sgentry_sent += compl_sg;
-+	iq->stats->instr_completed += compl_pkts;
-+	iq->stats->bytes_sent += compl_bytes;
-+	iq->stats->sgentry_sent += compl_sg;
- 	iq->flush_index = fi;
+ struct rtw8822cs_efuse {
+ 	u8 res0[0x4a];			/* 0x120 */
+@@ -39,7 +39,8 @@ struct rtw8822ce_efuse {
+ 	u8 ltr_en:1;
+ 	u8 res1:2;
+ 	u8 obff:2;
+-	u8 res2:3;
++	u8 res2_1:1;
++	u8 res2_2:2;
+ 	u8 obff_cap:2;
+ 	u8 res3:4;
+ 	u8 class_code[3];
+@@ -55,7 +56,7 @@ struct rtw8822ce_efuse {
+ 	u8 res6:1;
+ 	u8 port_t_power_on_value:5;
+ 	u8 res7;
+-};
++} __packed;
  
- 	netif_subqueue_completed_wake(iq->netdev, iq->q_no, compl_pkts,
-@@ -186,6 +186,7 @@ static int octep_vf_setup_iq(struct octep_vf_device *oct, int q_no)
- 	iq->netdev = oct->netdev;
- 	iq->dev = &oct->pdev->dev;
- 	iq->q_no = q_no;
-+	iq->stats = &oct->stats_iq[q_no];
- 	iq->max_count = CFG_GET_IQ_NUM_DESC(oct->conf);
- 	iq->ring_size_mask = iq->max_count - 1;
- 	iq->fill_threshold = CFG_GET_IQ_DB_MIN(oct->conf);
-diff --git a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_tx.h b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_tx.h
-index f338b975103c3..1cede90e3a5fa 100644
---- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_tx.h
-+++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_tx.h
-@@ -129,7 +129,7 @@ struct octep_vf_iq {
- 	u16 flush_index;
+ struct rtw8822c_efuse {
+ 	__le16 rtl_id;
+@@ -102,7 +103,7 @@ struct rtw8822c_efuse {
+ 		struct rtw8822cu_efuse u;
+ 		struct rtw8822cs_efuse s;
+ 	};
+-};
++} __packed;
  
- 	/* Statistics for this input queue. */
--	struct octep_vf_iq_stats stats;
-+	struct octep_vf_iq_stats *stats;
- 
- 	/* Pointer to the Virtual Base addr of the input ring. */
- 	struct octep_vf_tx_desc_hw *desc_ring;
+ enum rtw8822c_dpk_agc_phase {
+ 	RTW_DPK_GAIN_CHECK,
 -- 
 2.39.5
 
