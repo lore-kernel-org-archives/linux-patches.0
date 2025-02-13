@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27332222D1;
-	Thu, 13 Feb 2025 14:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7052222D1;
+	Thu, 13 Feb 2025 14:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457519; cv=none; b=TLN8a+ZTjUD7Ilj+YOdKeKJLy+yYNLwQ6TQuQoY+K3AcdafTwb325BBPchKm7m9/Q2xRWfILJI5j1YcjBkpS8nAs/zpOYFPjX5w8s4rVGnMNgE709BK1WQdi8/ulUlMcDb4I1OslueU+kYhQKs5SnMn8PBTgKbuPB1Hla/uDwOE=
+	t=1739457522; cv=none; b=CPqff9U5LRDpJiRmF0EFzBJorUzvtK+ELI7sUIo6aKrQNfe1hUyp3BaIVboxXXCoRl5Ai9/2utH0BIM76XTr0ai91UiCT/aIvnS+aj2873GsuWx41g7umqhc5SN9FzQq2U7a+xke2TDArYp+mF8a4mfwlzH4t9Z/qDTeOWH/Fmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457519; c=relaxed/simple;
-	bh=lPVVkNv18frLe87KB8mfWznkoudZIT4sPK6xgb9g6vo=;
+	s=arc-20240116; t=1739457522; c=relaxed/simple;
+	bh=uBsI8QDqPh3jgivXSm1FbeG4V2WkZf/WFkOJV1zgf1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I6iVvV2YTTPQ5sMCOlBozDPIT8L+xofRw9hiHlwJfd+dFhHujTJc+GqSCDrczQ6AsdjnESIppulh/FI8cFxroYXj0NFsjm0QLzOqtpQ40DBLnAIZo6rxL5p90KMUmMZ1K0tGFHj5spqLmqOIh/7iahRcRyMC7et5UdzlIMAQb/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnfMYnEJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Js9W3IP3GurU3LcGPQSmwTtIMFkeMDlb3FIQ4SxdbqNbeZwE+9HouhXKiWSqAoLwk66RIlPiXvvr+e+vdMISjty3wwSTplfdyPwAkJkmFLis5Iy5t7a6/6ONO62s9I7Eum4in/id/Nq/XCCiHznijjNmjc4EI+CcTb9AdRfX4oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADlhC2SW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnfMYnEJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1ABC4CED1;
-	Thu, 13 Feb 2025 14:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADlhC2SW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D412C4CED1;
+	Thu, 13 Feb 2025 14:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457518;
-	bh=lPVVkNv18frLe87KB8mfWznkoudZIT4sPK6xgb9g6vo=;
+	s=korg; t=1739457522;
+	bh=uBsI8QDqPh3jgivXSm1FbeG4V2WkZf/WFkOJV1zgf1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tnfMYnEJkJ9nrY3eDzjBs0qBqauoWJhObb1aW0aSbX2Akt+S7Sl8jayX5OTYXE6U1
-	 x5dghpXEe022MVswotM1pUReZhnXZoPj72uQAreXN9Zy2qVdo3UICAd5QYPEw/GMXO
-	 64mU5cn8n9r/3rYmGpN9YoZ6I9pNlRoIivGAaW2s=
+	b=ADlhC2SWn4cMm+VACCABCXAz/wm12sB9ZV14RF1JrSTpulerWJ9N/Mw1P1IC41l75
+	 wInaq86ehswT38ofyvF5oXaUGLXFHDdCtfa3J2KnWEAH/ibYn3PH4pLDHq3V8bTp0k
+	 81BhrpsH4UUjZfPEhSqy/TFfhbc73b9cAcnQ0Iho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruben Devos <devosruben6@gmail.com>,
+	Meetakshi Setiya <msetiya@microsoft.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 135/422] smb: client: fix order of arguments of tracepoints
-Date: Thu, 13 Feb 2025 15:24:44 +0100
-Message-ID: <20250213142441.758665369@linuxfoundation.org>
+Subject: [PATCH 6.12 136/422] smb: client: change lease epoch type from unsigned int to __u16
+Date: Thu, 13 Feb 2025 15:24:45 +0100
+Message-ID: <20250213142441.796523379@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -50,330 +51,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruben Devos <devosruben6@gmail.com>
+From: Meetakshi Setiya <msetiya@microsoft.com>
 
-commit 11f8b80ab9f99291dc88d09855b9f8f43b772335 upstream.
+commit 57e4a9bd61c308f607bc3e55e8fa02257b06b552 upstream.
 
-The tracepoints based on smb3_inf_compound_*_class have tcon id and
-session id swapped around. This results in incorrect output in
-`trace-cmd report`.
-
-Fix the order of arguments to resolve this issue. The trace-cmd output
-below shows the before and after of the smb3_delete_enter and
-smb3_delete_done events as an example. The smb3_cmd_* events show the
-correct session and tcon id for reference.
-
-Also fix tracepoint set -> get in the SMB2_OP_GET_REPARSE case.
-
-BEFORE:
-rm-2211  [001] .....  1839.550888: smb3_delete_enter:    xid=281 sid=0x5 tid=0x3d path=\hello2.txt
-rm-2211  [001] .....  1839.550894: smb3_cmd_enter:        sid=0x1ac000000003d tid=0x5 cmd=5 mid=61
-rm-2211  [001] .....  1839.550896: smb3_cmd_enter:        sid=0x1ac000000003d tid=0x5 cmd=6 mid=62
-rm-2211  [001] .....  1839.552091: smb3_cmd_done:         sid=0x1ac000000003d tid=0x5 cmd=5 mid=61
-rm-2211  [001] .....  1839.552093: smb3_cmd_done:         sid=0x1ac000000003d tid=0x5 cmd=6 mid=62
-rm-2211  [001] .....  1839.552103: smb3_delete_done:     xid=281 sid=0x5 tid=0x3d
-
-AFTER:
-rm-2501  [001] .....  3237.656110: smb3_delete_enter:    xid=88 sid=0x1ac0000000041 tid=0x5 path=\hello2.txt
-rm-2501  [001] .....  3237.656122: smb3_cmd_enter:        sid=0x1ac0000000041 tid=0x5 cmd=5 mid=84
-rm-2501  [001] .....  3237.656123: smb3_cmd_enter:        sid=0x1ac0000000041 tid=0x5 cmd=6 mid=85
-rm-2501  [001] .....  3237.657909: smb3_cmd_done:         sid=0x1ac0000000041 tid=0x5 cmd=5 mid=84
-rm-2501  [001] .....  3237.657909: smb3_cmd_done:         sid=0x1ac0000000041 tid=0x5 cmd=6 mid=85
-rm-2501  [001] .....  3237.657922: smb3_delete_done:     xid=88 sid=0x1ac0000000041 tid=0x5
+MS-SMB2 section 2.2.13.2.10 specifies that 'epoch' should be a 16-bit
+unsigned integer used to track lease state changes. Change the data
+type of all instances of 'epoch' from unsigned int to __u16. This
+simplifies the epoch change comparisons and makes the code more
+compliant with the protocol spec.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Ruben Devos <devosruben6@gmail.com>
+Signed-off-by: Meetakshi Setiya <msetiya@microsoft.com>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/dir.c       |    6 +-
- fs/smb/client/smb2inode.c |  108 +++++++++++++++++++++++-----------------------
- 2 files changed, 57 insertions(+), 57 deletions(-)
+ fs/smb/client/cifsglob.h  |   14 +++++++-------
+ fs/smb/client/smb1ops.c   |    2 +-
+ fs/smb/client/smb2ops.c   |   18 +++++++++---------
+ fs/smb/client/smb2pdu.c   |    2 +-
+ fs/smb/client/smb2proto.h |    2 +-
+ 5 files changed, 19 insertions(+), 19 deletions(-)
 
---- a/fs/smb/client/dir.c
-+++ b/fs/smb/client/dir.c
-@@ -627,7 +627,7 @@ int cifs_mknod(struct mnt_idmap *idmap,
- 		goto mknod_out;
- 	}
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -320,7 +320,7 @@ struct smb_version_operations {
+ 	int (*handle_cancelled_mid)(struct mid_q_entry *, struct TCP_Server_Info *);
+ 	void (*downgrade_oplock)(struct TCP_Server_Info *server,
+ 				 struct cifsInodeInfo *cinode, __u32 oplock,
+-				 unsigned int epoch, bool *purge_cache);
++				 __u16 epoch, bool *purge_cache);
+ 	/* process transaction2 response */
+ 	bool (*check_trans2)(struct mid_q_entry *, struct TCP_Server_Info *,
+ 			     char *, int);
+@@ -515,12 +515,12 @@ struct smb_version_operations {
+ 	/* if we can do cache read operations */
+ 	bool (*is_read_op)(__u32);
+ 	/* set oplock level for the inode */
+-	void (*set_oplock_level)(struct cifsInodeInfo *, __u32, unsigned int,
+-				 bool *);
++	void (*set_oplock_level)(struct cifsInodeInfo *cinode, __u32 oplock, __u16 epoch,
++				 bool *purge_cache);
+ 	/* create lease context buffer for CREATE request */
+ 	char * (*create_lease_buf)(u8 *lease_key, u8 oplock);
+ 	/* parse lease context buffer and return oplock/epoch info */
+-	__u8 (*parse_lease_buf)(void *buf, unsigned int *epoch, char *lkey);
++	__u8 (*parse_lease_buf)(void *buf, __u16 *epoch, char *lkey);
+ 	ssize_t (*copychunk_range)(const unsigned int,
+ 			struct cifsFileInfo *src_file,
+ 			struct cifsFileInfo *target_file,
+@@ -1415,7 +1415,7 @@ struct cifs_fid {
+ 	__u8 create_guid[16];
+ 	__u32 access;
+ 	struct cifs_pending_open *pending_open;
+-	unsigned int epoch;
++	__u16 epoch;
+ #ifdef CONFIG_CIFS_DEBUG2
+ 	__u64 mid;
+ #endif /* CIFS_DEBUG2 */
+@@ -1448,7 +1448,7 @@ struct cifsFileInfo {
+ 	bool oplock_break_cancelled:1;
+ 	bool status_file_deleted:1; /* file has been deleted */
+ 	bool offload:1; /* offload final part of _put to a wq */
+-	unsigned int oplock_epoch; /* epoch from the lease break */
++	__u16 oplock_epoch; /* epoch from the lease break */
+ 	__u32 oplock_level; /* oplock/lease level from the lease break */
+ 	int count;
+ 	spinlock_t file_info_lock; /* protects four flag/count fields above */
+@@ -1545,7 +1545,7 @@ struct cifsInodeInfo {
+ 	spinlock_t	open_file_lock;	/* protects openFileList */
+ 	__u32 cifsAttrs; /* e.g. DOS archive bit, sparse, compressed, system */
+ 	unsigned int oplock;		/* oplock/lease level we have */
+-	unsigned int epoch;		/* used to track lease state changes */
++	__u16 epoch;		/* used to track lease state changes */
+ #define CIFS_INODE_PENDING_OPLOCK_BREAK   (0) /* oplock break in progress */
+ #define CIFS_INODE_PENDING_WRITERS	  (1) /* Writes in progress */
+ #define CIFS_INODE_FLAG_UNUSED		  (2) /* Unused flag */
+--- a/fs/smb/client/smb1ops.c
++++ b/fs/smb/client/smb1ops.c
+@@ -377,7 +377,7 @@ coalesce_t2(char *second_buf, struct smb
+ static void
+ cifs_downgrade_oplock(struct TCP_Server_Info *server,
+ 		      struct cifsInodeInfo *cinode, __u32 oplock,
+-		      unsigned int epoch, bool *purge_cache)
++		      __u16 epoch, bool *purge_cache)
+ {
+ 	cifs_set_oplock_level(cinode, oplock);
+ }
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3931,22 +3931,22 @@ static long smb3_fallocate(struct file *
+ static void
+ smb2_downgrade_oplock(struct TCP_Server_Info *server,
+ 		      struct cifsInodeInfo *cinode, __u32 oplock,
+-		      unsigned int epoch, bool *purge_cache)
++		      __u16 epoch, bool *purge_cache)
+ {
+ 	server->ops->set_oplock_level(cinode, oplock, 0, NULL);
+ }
  
--	trace_smb3_mknod_enter(xid, tcon->ses->Suid, tcon->tid, full_path);
-+	trace_smb3_mknod_enter(xid, tcon->tid, tcon->ses->Suid, full_path);
+ static void
+ smb21_set_oplock_level(struct cifsInodeInfo *cinode, __u32 oplock,
+-		       unsigned int epoch, bool *purge_cache);
++		       __u16 epoch, bool *purge_cache);
  
- 	rc = tcon->ses->server->ops->make_node(xid, inode, direntry, tcon,
- 					       full_path, mode,
-@@ -635,9 +635,9 @@ int cifs_mknod(struct mnt_idmap *idmap,
+ static void
+ smb3_downgrade_oplock(struct TCP_Server_Info *server,
+ 		       struct cifsInodeInfo *cinode, __u32 oplock,
+-		       unsigned int epoch, bool *purge_cache)
++		       __u16 epoch, bool *purge_cache)
+ {
+ 	unsigned int old_state = cinode->oplock;
+-	unsigned int old_epoch = cinode->epoch;
++	__u16 old_epoch = cinode->epoch;
+ 	unsigned int new_state;
  
- mknod_out:
- 	if (rc)
--		trace_smb3_mknod_err(xid,  tcon->ses->Suid, tcon->tid, rc);
-+		trace_smb3_mknod_err(xid,  tcon->tid, tcon->ses->Suid, rc);
- 	else
--		trace_smb3_mknod_done(xid, tcon->ses->Suid, tcon->tid);
-+		trace_smb3_mknod_done(xid, tcon->tid, tcon->ses->Suid);
+ 	if (epoch > old_epoch) {
+@@ -3966,7 +3966,7 @@ smb3_downgrade_oplock(struct TCP_Server_
  
- 	free_dentry_path(page);
- 	free_xid(xid);
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -298,8 +298,8 @@ replay_again:
- 				goto finished;
- 			}
- 			num_rqst++;
--			trace_smb3_query_info_compound_enter(xid, ses->Suid,
--							     tcon->tid, full_path);
-+			trace_smb3_query_info_compound_enter(xid, tcon->tid,
-+							     ses->Suid, full_path);
- 			break;
- 		case SMB2_OP_POSIX_QUERY_INFO:
- 			rqst[num_rqst].rq_iov = &vars->qi_iov;
-@@ -334,18 +334,18 @@ replay_again:
- 				goto finished;
- 			}
- 			num_rqst++;
--			trace_smb3_posix_query_info_compound_enter(xid, ses->Suid,
--								   tcon->tid, full_path);
-+			trace_smb3_posix_query_info_compound_enter(xid, tcon->tid,
-+								   ses->Suid, full_path);
- 			break;
- 		case SMB2_OP_DELETE:
--			trace_smb3_delete_enter(xid, ses->Suid, tcon->tid, full_path);
-+			trace_smb3_delete_enter(xid, tcon->tid, ses->Suid, full_path);
- 			break;
- 		case SMB2_OP_MKDIR:
- 			/*
- 			 * Directories are created through parameters in the
- 			 * SMB2_open() call.
- 			 */
--			trace_smb3_mkdir_enter(xid, ses->Suid, tcon->tid, full_path);
-+			trace_smb3_mkdir_enter(xid, tcon->tid, ses->Suid, full_path);
- 			break;
- 		case SMB2_OP_RMDIR:
- 			rqst[num_rqst].rq_iov = &vars->si_iov[0];
-@@ -363,7 +363,7 @@ replay_again:
- 				goto finished;
- 			smb2_set_next_command(tcon, &rqst[num_rqst]);
- 			smb2_set_related(&rqst[num_rqst++]);
--			trace_smb3_rmdir_enter(xid, ses->Suid, tcon->tid, full_path);
-+			trace_smb3_rmdir_enter(xid, tcon->tid, ses->Suid, full_path);
- 			break;
- 		case SMB2_OP_SET_EOF:
- 			rqst[num_rqst].rq_iov = &vars->si_iov[0];
-@@ -398,7 +398,7 @@ replay_again:
- 				goto finished;
- 			}
- 			num_rqst++;
--			trace_smb3_set_eof_enter(xid, ses->Suid, tcon->tid, full_path);
-+			trace_smb3_set_eof_enter(xid, tcon->tid, ses->Suid, full_path);
- 			break;
- 		case SMB2_OP_SET_INFO:
- 			rqst[num_rqst].rq_iov = &vars->si_iov[0];
-@@ -429,8 +429,8 @@ replay_again:
- 				goto finished;
- 			}
- 			num_rqst++;
--			trace_smb3_set_info_compound_enter(xid, ses->Suid,
--							   tcon->tid, full_path);
-+			trace_smb3_set_info_compound_enter(xid, tcon->tid,
-+							   ses->Suid, full_path);
- 			break;
- 		case SMB2_OP_RENAME:
- 			rqst[num_rqst].rq_iov = &vars->si_iov[0];
-@@ -469,7 +469,7 @@ replay_again:
- 				goto finished;
- 			}
- 			num_rqst++;
--			trace_smb3_rename_enter(xid, ses->Suid, tcon->tid, full_path);
-+			trace_smb3_rename_enter(xid, tcon->tid, ses->Suid, full_path);
- 			break;
- 		case SMB2_OP_HARDLINK:
- 			rqst[num_rqst].rq_iov = &vars->si_iov[0];
-@@ -496,7 +496,7 @@ replay_again:
- 				goto finished;
- 			smb2_set_next_command(tcon, &rqst[num_rqst]);
- 			smb2_set_related(&rqst[num_rqst++]);
--			trace_smb3_hardlink_enter(xid, ses->Suid, tcon->tid, full_path);
-+			trace_smb3_hardlink_enter(xid, tcon->tid, ses->Suid, full_path);
- 			break;
- 		case SMB2_OP_SET_REPARSE:
- 			rqst[num_rqst].rq_iov = vars->io_iov;
-@@ -523,8 +523,8 @@ replay_again:
- 				goto finished;
- 			}
- 			num_rqst++;
--			trace_smb3_set_reparse_compound_enter(xid, ses->Suid,
--							      tcon->tid, full_path);
-+			trace_smb3_set_reparse_compound_enter(xid, tcon->tid,
-+							      ses->Suid, full_path);
- 			break;
- 		case SMB2_OP_GET_REPARSE:
- 			rqst[num_rqst].rq_iov = vars->io_iov;
-@@ -549,8 +549,8 @@ replay_again:
- 				goto finished;
- 			}
- 			num_rqst++;
--			trace_smb3_get_reparse_compound_enter(xid, ses->Suid,
--							      tcon->tid, full_path);
-+			trace_smb3_get_reparse_compound_enter(xid, tcon->tid,
-+							      ses->Suid, full_path);
- 			break;
- 		case SMB2_OP_QUERY_WSL_EA:
- 			rqst[num_rqst].rq_iov = &vars->ea_iov;
-@@ -663,11 +663,11 @@ finished:
- 			}
- 			SMB2_query_info_free(&rqst[num_rqst++]);
- 			if (rc)
--				trace_smb3_query_info_compound_err(xid,  ses->Suid,
--								   tcon->tid, rc);
-+				trace_smb3_query_info_compound_err(xid,  tcon->tid,
-+								   ses->Suid, rc);
- 			else
--				trace_smb3_query_info_compound_done(xid, ses->Suid,
--								    tcon->tid);
-+				trace_smb3_query_info_compound_done(xid, tcon->tid,
-+								    ses->Suid);
- 			break;
- 		case SMB2_OP_POSIX_QUERY_INFO:
- 			idata = in_iov[i].iov_base;
-@@ -690,15 +690,15 @@ finished:
+ static void
+ smb2_set_oplock_level(struct cifsInodeInfo *cinode, __u32 oplock,
+-		      unsigned int epoch, bool *purge_cache)
++		      __u16 epoch, bool *purge_cache)
+ {
+ 	oplock &= 0xFF;
+ 	cinode->lease_granted = false;
+@@ -3990,7 +3990,7 @@ smb2_set_oplock_level(struct cifsInodeIn
  
- 			SMB2_query_info_free(&rqst[num_rqst++]);
- 			if (rc)
--				trace_smb3_posix_query_info_compound_err(xid,  ses->Suid,
--									 tcon->tid, rc);
-+				trace_smb3_posix_query_info_compound_err(xid,  tcon->tid,
-+									 ses->Suid, rc);
- 			else
--				trace_smb3_posix_query_info_compound_done(xid, ses->Suid,
--									  tcon->tid);
-+				trace_smb3_posix_query_info_compound_done(xid, tcon->tid,
-+									  ses->Suid);
- 			break;
- 		case SMB2_OP_DELETE:
- 			if (rc)
--				trace_smb3_delete_err(xid,  ses->Suid, tcon->tid, rc);
-+				trace_smb3_delete_err(xid, tcon->tid, ses->Suid, rc);
- 			else {
- 				/*
- 				 * If dentry (hence, inode) is NULL, lease break is going to
-@@ -706,59 +706,59 @@ finished:
- 				 */
- 				if (inode)
- 					cifs_mark_open_handles_for_deleted_file(inode, full_path);
--				trace_smb3_delete_done(xid, ses->Suid, tcon->tid);
-+				trace_smb3_delete_done(xid, tcon->tid, ses->Suid);
- 			}
- 			break;
- 		case SMB2_OP_MKDIR:
- 			if (rc)
--				trace_smb3_mkdir_err(xid,  ses->Suid, tcon->tid, rc);
-+				trace_smb3_mkdir_err(xid, tcon->tid, ses->Suid, rc);
- 			else
--				trace_smb3_mkdir_done(xid, ses->Suid, tcon->tid);
-+				trace_smb3_mkdir_done(xid, tcon->tid, ses->Suid);
- 			break;
- 		case SMB2_OP_HARDLINK:
- 			if (rc)
--				trace_smb3_hardlink_err(xid,  ses->Suid, tcon->tid, rc);
-+				trace_smb3_hardlink_err(xid,  tcon->tid, ses->Suid, rc);
- 			else
--				trace_smb3_hardlink_done(xid, ses->Suid, tcon->tid);
-+				trace_smb3_hardlink_done(xid, tcon->tid, ses->Suid);
- 			SMB2_set_info_free(&rqst[num_rqst++]);
- 			break;
- 		case SMB2_OP_RENAME:
- 			if (rc)
--				trace_smb3_rename_err(xid,  ses->Suid, tcon->tid, rc);
-+				trace_smb3_rename_err(xid, tcon->tid, ses->Suid, rc);
- 			else
--				trace_smb3_rename_done(xid, ses->Suid, tcon->tid);
-+				trace_smb3_rename_done(xid, tcon->tid, ses->Suid);
- 			SMB2_set_info_free(&rqst[num_rqst++]);
- 			break;
- 		case SMB2_OP_RMDIR:
- 			if (rc)
--				trace_smb3_rmdir_err(xid,  ses->Suid, tcon->tid, rc);
-+				trace_smb3_rmdir_err(xid, tcon->tid, ses->Suid, rc);
- 			else
--				trace_smb3_rmdir_done(xid, ses->Suid, tcon->tid);
-+				trace_smb3_rmdir_done(xid, tcon->tid, ses->Suid);
- 			SMB2_set_info_free(&rqst[num_rqst++]);
- 			break;
- 		case SMB2_OP_SET_EOF:
- 			if (rc)
--				trace_smb3_set_eof_err(xid,  ses->Suid, tcon->tid, rc);
-+				trace_smb3_set_eof_err(xid, tcon->tid, ses->Suid, rc);
- 			else
--				trace_smb3_set_eof_done(xid, ses->Suid, tcon->tid);
-+				trace_smb3_set_eof_done(xid, tcon->tid, ses->Suid);
- 			SMB2_set_info_free(&rqst[num_rqst++]);
- 			break;
- 		case SMB2_OP_SET_INFO:
- 			if (rc)
--				trace_smb3_set_info_compound_err(xid,  ses->Suid,
--								 tcon->tid, rc);
-+				trace_smb3_set_info_compound_err(xid,  tcon->tid,
-+								 ses->Suid, rc);
- 			else
--				trace_smb3_set_info_compound_done(xid, ses->Suid,
--								  tcon->tid);
-+				trace_smb3_set_info_compound_done(xid, tcon->tid,
-+								  ses->Suid);
- 			SMB2_set_info_free(&rqst[num_rqst++]);
- 			break;
- 		case SMB2_OP_SET_REPARSE:
- 			if (rc) {
--				trace_smb3_set_reparse_compound_err(xid,  ses->Suid,
--								    tcon->tid, rc);
-+				trace_smb3_set_reparse_compound_err(xid, tcon->tid,
-+								    ses->Suid, rc);
- 			} else {
--				trace_smb3_set_reparse_compound_done(xid, ses->Suid,
--								     tcon->tid);
-+				trace_smb3_set_reparse_compound_done(xid, tcon->tid,
-+								     ses->Suid);
- 			}
- 			SMB2_ioctl_free(&rqst[num_rqst++]);
- 			break;
-@@ -771,18 +771,18 @@ finished:
- 				rbuf = reparse_buf_ptr(iov);
- 				if (IS_ERR(rbuf)) {
- 					rc = PTR_ERR(rbuf);
--					trace_smb3_set_reparse_compound_err(xid,  ses->Suid,
--									    tcon->tid, rc);
-+					trace_smb3_get_reparse_compound_err(xid, tcon->tid,
-+									    ses->Suid, rc);
- 				} else {
- 					idata->reparse.tag = le32_to_cpu(rbuf->ReparseTag);
--					trace_smb3_set_reparse_compound_done(xid, ses->Suid,
--									     tcon->tid);
-+					trace_smb3_get_reparse_compound_done(xid, tcon->tid,
-+									     ses->Suid);
- 				}
- 				memset(iov, 0, sizeof(*iov));
- 				resp_buftype[i + 1] = CIFS_NO_BUFFER;
- 			} else {
--				trace_smb3_set_reparse_compound_err(xid, ses->Suid,
--								    tcon->tid, rc);
-+				trace_smb3_get_reparse_compound_err(xid, tcon->tid,
-+								    ses->Suid, rc);
- 			}
- 			SMB2_ioctl_free(&rqst[num_rqst++]);
- 			break;
-@@ -799,11 +799,11 @@ finished:
- 				}
- 			}
- 			if (!rc) {
--				trace_smb3_query_wsl_ea_compound_done(xid, ses->Suid,
--								      tcon->tid);
-+				trace_smb3_query_wsl_ea_compound_done(xid, tcon->tid,
-+								      ses->Suid);
- 			} else {
--				trace_smb3_query_wsl_ea_compound_err(xid, ses->Suid,
--								     tcon->tid, rc);
-+				trace_smb3_query_wsl_ea_compound_err(xid, tcon->tid,
-+								     ses->Suid, rc);
- 			}
- 			SMB2_query_info_free(&rqst[num_rqst++]);
- 			break;
+ static void
+ smb21_set_oplock_level(struct cifsInodeInfo *cinode, __u32 oplock,
+-		       unsigned int epoch, bool *purge_cache)
++		       __u16 epoch, bool *purge_cache)
+ {
+ 	char message[5] = {0};
+ 	unsigned int new_oplock = 0;
+@@ -4027,7 +4027,7 @@ smb21_set_oplock_level(struct cifsInodeI
+ 
+ static void
+ smb3_set_oplock_level(struct cifsInodeInfo *cinode, __u32 oplock,
+-		      unsigned int epoch, bool *purge_cache)
++		      __u16 epoch, bool *purge_cache)
+ {
+ 	unsigned int old_oplock = cinode->oplock;
+ 
+@@ -4141,7 +4141,7 @@ smb3_create_lease_buf(u8 *lease_key, u8
+ }
+ 
+ static __u8
+-smb2_parse_lease_buf(void *buf, unsigned int *epoch, char *lease_key)
++smb2_parse_lease_buf(void *buf, __u16 *epoch, char *lease_key)
+ {
+ 	struct create_lease *lc = (struct create_lease *)buf;
+ 
+@@ -4152,7 +4152,7 @@ smb2_parse_lease_buf(void *buf, unsigned
+ }
+ 
+ static __u8
+-smb3_parse_lease_buf(void *buf, unsigned int *epoch, char *lease_key)
++smb3_parse_lease_buf(void *buf, __u16 *epoch, char *lease_key)
+ {
+ 	struct create_lease_v2 *lc = (struct create_lease_v2 *)buf;
+ 
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2335,7 +2335,7 @@ parse_posix_ctxt(struct create_context *
+ 
+ int smb2_parse_contexts(struct TCP_Server_Info *server,
+ 			struct kvec *rsp_iov,
+-			unsigned int *epoch,
++			__u16 *epoch,
+ 			char *lease_key, __u8 *oplock,
+ 			struct smb2_file_all_info *buf,
+ 			struct create_posix_rsp *posix)
+--- a/fs/smb/client/smb2proto.h
++++ b/fs/smb/client/smb2proto.h
+@@ -282,7 +282,7 @@ extern enum securityEnum smb2_select_sec
+ 					enum securityEnum);
+ int smb2_parse_contexts(struct TCP_Server_Info *server,
+ 			struct kvec *rsp_iov,
+-			unsigned int *epoch,
++			__u16 *epoch,
+ 			char *lease_key, __u8 *oplock,
+ 			struct smb2_file_all_info *buf,
+ 			struct create_posix_rsp *posix);
 
 
