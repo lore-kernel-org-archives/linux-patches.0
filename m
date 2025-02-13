@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068B0281349;
-	Thu, 13 Feb 2025 14:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB60281375;
+	Thu, 13 Feb 2025 14:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457711; cv=none; b=LSsVFWjdLTIu5lHZCno7TZmCk6YGVDGP962T4VUovLxyhW/WQSsfBIW6W8goOk/MrCqqTMBwjuQygJYZMYpmz/BrB0gtAbpMKaWiTx2ojP6wwG6J53Zebf0p3T3IRJXWIndudYAJ0pBGBOTcbrIcu8Qr3y6oYma+nZ77TiSi8ZM=
+	t=1739457714; cv=none; b=Yh9K8zRWO92iKjafvvrmOuPSbETA59TKzY7kXRSQUHlTx6A7h8OBtGFHMtPxmJM1bQwUk1tsQVOvxZDy9fkuwXOnFkUXb8dntvXeF8pHDBvWG2v6MQzNkC9wMZ270bD+ofDesB7C5rsXvmthhBfxBPWlL2HYZ+6fM8pDfQ91lGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457711; c=relaxed/simple;
-	bh=L3sSenT3ie9bNkl3pp+PjmaTN7XesDtdedfuw4Z9pGA=;
+	s=arc-20240116; t=1739457714; c=relaxed/simple;
+	bh=jkEoVhYWGKvFr+H3GZWbUyvFnpYhtsDNJbPTNNvh06k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cJ8MoYA/j72a5oIgicoYOBU/K0hQC61vW1Z6XmFFtjs4wqqP/owBM+dyN474VSjXUsdCmxhMwl3ZdkAh0q0203YCPR8IZ57bgxYTmKyRcQW+Oy3j+G3eI740OR6do8KVBuT5j70MRzkxN/iALjCeWh0nsoKN7pZ/glhyFO2rsNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vdya1WDB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lt2Rkk5YBCAiUxBw75VZFkB7p/MFwJbjUlUcllr3nF4K9yEc1Tlvg+/0cBP5eYofFN/SEeBDiUeVil8nLhYa/H55I4AG+oPsamZbq8iJJFMlvZM1nozpZBvwea4437G5i1UQvUgwelFDUgU0TEVfEhuz35u2CnL85BoDB6xLY+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=drTPLDPI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vdya1WDB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6679DC4CEE2;
-	Thu, 13 Feb 2025 14:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drTPLDPI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37D1C4CED1;
+	Thu, 13 Feb 2025 14:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457710;
-	bh=L3sSenT3ie9bNkl3pp+PjmaTN7XesDtdedfuw4Z9pGA=;
+	s=korg; t=1739457714;
+	bh=jkEoVhYWGKvFr+H3GZWbUyvFnpYhtsDNJbPTNNvh06k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vdya1WDBIbF62diUi4f0pk9GbsfZMViV5R6/goO1TMZSb+TvgYaO1d7Qoext1MLxZ
-	 tJ/1MXKjK4yaIOdTVqVBgS/1aQCfq2sXU6kN3Z+2QIIg2olxOlV9dPB8tyhi2d9Ddm
-	 qGTpTlPxGSDFUCHOeV4AP0AtNIJcAsp5V0eJXsqE=
+	b=drTPLDPIaRrM1cNb7KA1D8phWxPJ4RR/fG6FOLbm4+CPS7KqIjY1Bcd/egO/R8FY3
+	 giP21ttXH/kgh9SAOZ3yYoEkWNbvb6U8RipoxTCsAVd25orMnKp20pW9vlkhMAaD23
+	 gqTqmU/vBXgv9eilZjARdLtBbpZFcTv1CKY9lCZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
-	Zijun Hu <quic_zijuhu@quicinc.com>
-Subject: [PATCH 6.12 190/422] blk-cgroup: Fix class @block_classs subsystem refcount leakage
-Date: Thu, 13 Feb 2025 15:25:39 +0100
-Message-ID: <20250213142443.877884686@linuxfoundation.org>
+	Kostadin Shishmanov <kostadinshishmanov@protonmail.com>,
+	Jakub Jelinek <jakub@redhat.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.12 191/422] efi: libstub: Use -std=gnu11 to fix build with GCC 15
+Date: Thu, 13 Feb 2025 15:25:40 +0100
+Message-ID: <20250213142443.915921476@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,38 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit d1248436cbef1f924c04255367ff4845ccd9025e upstream.
+commit 8ba14d9f490aef9fd535c04e9e62e1169eb7a055 upstream.
 
-blkcg_fill_root_iostats() iterates over @block_class's devices by
-class_dev_iter_(init|next)(), but does not end iterating with
-class_dev_iter_exit(), so causes the class's subsystem refcount leakage.
+GCC 15 changed the default C standard version to C23, which should not
+have impacted the kernel because it requests the gnu11 standard via
+'-std=' in the main Makefile. However, the EFI libstub Makefile uses its
+own set of KBUILD_CFLAGS for x86 without a '-std=' value (i.e., using
+the default), resulting in errors from the kernel's definitions of bool,
+true, and false in stddef.h, which are reserved keywords under C23.
 
-Fix by ending the iterating with class_dev_iter_exit().
+  ./include/linux/stddef.h:11:9: error: expected identifier before ‘false’
+     11 |         false   = 0,
+  ./include/linux/types.h:35:33: error: two or more data types in declaration specifiers
+     35 | typedef _Bool                   bool;
 
-Fixes: ef45fe470e1e ("blk-cgroup: show global disk stats in root cgroup io.stat")
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Set '-std=gnu11' in the x86 cflags to resolve the error and consistently
+use the same C standard version for the entire kernel. All other
+architectures reuse KBUILD_CFLAGS from the rest of the kernel, so this
+issue is not visible for them.
+
 Cc: stable@vger.kernel.org
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20250105-class_fix-v6-2-3a2f1768d4d4@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Kostadin Shishmanov <kostadinshishmanov@protonmail.com>
+Closes: https://lore.kernel.org/4OAhbllK7x4QJGpZjkYjtBYNLd_2whHx9oFiuZcGwtVR4hIzvduultkgfAIRZI3vQpZylu7Gl929HaYFRGeMEalWCpeMzCIIhLxxRhq4U-Y=@protonmail.com/
+Reported-by: Jakub Jelinek <jakub@redhat.com>
+Closes: https://lore.kernel.org/Z4467umXR2PZ0M1H@tucnak/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-cgroup.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/efi/libstub/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -1138,6 +1138,7 @@ static void blkcg_fill_root_iostats(void
- 		blkg_iostat_set(&blkg->iostat.cur, &tmp);
- 		u64_stats_update_end_irqrestore(&blkg->iostat.sync, flags);
- 	}
-+	class_dev_iter_exit(&iter);
- }
+--- a/drivers/firmware/efi/libstub/Makefile
++++ b/drivers/firmware/efi/libstub/Makefile
+@@ -11,7 +11,7 @@ cflags-y			:= $(KBUILD_CFLAGS)
  
- static void blkcg_print_one_stat(struct blkcg_gq *blkg, struct seq_file *s)
+ cflags-$(CONFIG_X86_32)		:= -march=i386
+ cflags-$(CONFIG_X86_64)		:= -mcmodel=small
+-cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ \
++cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ -std=gnu11 \
+ 				   -fPIC -fno-strict-aliasing -mno-red-zone \
+ 				   -mno-mmx -mno-sse -fshort-wchar \
+ 				   -Wno-pointer-sign \
 
 
