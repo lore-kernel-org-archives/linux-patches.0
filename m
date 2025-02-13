@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9299281369;
-	Thu, 13 Feb 2025 14:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF422281369;
+	Thu, 13 Feb 2025 14:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457755; cv=none; b=vGGbWfh8vQypLeHd61tse2KUtU17B8IdomTWa2Mp6h0AKnACATIglMihEkCc7D+Wm8c/Gzb+OH/G1O0M/voGhx14KKE8814+azWwZih2vWIwB2JS1R3+xlopNLkhW5k5jmNdKsSajMZPx/qxnl7vN15uMCMBri8Z/USU8YgNkXU=
+	t=1739457759; cv=none; b=Jg4MV82Li3Ihtl05Gds1OSNq3rAjgMmi0xniB+QECVk0Tcrclwk/QrtZk0fe00CIXg8ZFAYl6Nj2pqgJ4K0tPsSd0xkq3q/f3jggMSEVjPPGVWuz28fPSsck8x/3STCOhnjVec8celDw3qCTnBvLwJ4ZqswrlVFMXNsFr7PCg6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457755; c=relaxed/simple;
-	bh=1yhjZxzfiyjrY25eaf2WQFRFRlVxl7Egg7rFkuVZwVk=;
+	s=arc-20240116; t=1739457759; c=relaxed/simple;
+	bh=39Ga2weunWJpBVD/QDK+l+bvA3lOEAlQXGK8a2+PoW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CH9VqPLHOBe7CzXCDgYTo4yNTkq26x5zVAyqSJxHyOg9EZG5KB4Azx1G97nQ2W6R5reFJwWgBlIrqITwpxeVbpS/+eaBd0of/hEXzgDS0NItZayllCIKAJGNPwrJepJG2s+XOgd81d8Xc39yAMynqAOyYsuyL8NmXy7vQDm4mVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXpLpt/S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K5wgVTciyyixbyjfaFkEu+JGnkcccFdXLTlVWkYHsNRSKzPzW+HxRxpPupbNcHb4Rho5WICfQIYZmgM5mSDqamImhBXd42WwzvaLo50J72Rf9C8qA6OXbJikoEyLPGD82p7chrknLqcz97QEs6JtuXm2/xsojC9ErFctBBZVRHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKQ89lq5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXpLpt/S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F2CC4CED1;
-	Thu, 13 Feb 2025 14:42:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKQ89lq5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68CB7C4CED1;
+	Thu, 13 Feb 2025 14:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457755;
-	bh=1yhjZxzfiyjrY25eaf2WQFRFRlVxl7Egg7rFkuVZwVk=;
+	s=korg; t=1739457758;
+	bh=39Ga2weunWJpBVD/QDK+l+bvA3lOEAlQXGK8a2+PoW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sXpLpt/SiCC09mdq9IsujnAGLi4O8WLS0qVnedZ8MiQYBXboi8uiBRa9v5j5t4qfv
-	 6Bd+ktDGOnlhM3dsFCiahOZxtH+Uu0MpY2EcRvbnqydiz9wfY7tW12Cl8qObNzD/zc
-	 hhvaSVedN05ajkarf36+WnLG5sny/mboX3Agv5h0=
+	b=yKQ89lq5IAv5xNO2qHftmMkg3FGeKmJeFtX748RPaRQj8TwjQApyL5rv0n1NHm4U+
+	 4rAxYucNOXe8zeWmkpxd7PiUpB9FpglEOkDF27rBDk6ryUlDNvLB2ZK2i+fZayu9PQ
+	 IGIQN9+OZw3D+xviPvs90omdJXJLrxJtiqr1s6yM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Klute <fiona.klute@gmx.de>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Vasily Khoruzhick <anarsoul@gmail.com>
-Subject: [PATCH 6.12 205/422] wifi: rtw88: sdio: Fix disconnection after beacon loss
-Date: Thu, 13 Feb 2025 15:25:54 +0100
-Message-ID: <20250213142444.452284567@linuxfoundation.org>
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.12 206/422] wifi: mt76: mt7915: add module param to select 5 GHz or 6 GHz on MT7916
+Date: Thu, 13 Feb 2025 15:25:55 +0100
+Message-ID: <20250213142444.491089252@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,36 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fiona Klute <fiona.klute@gmx.de>
+From: Shayne Chen <shayne.chen@mediatek.com>
 
-commit fb2fcfbe5eef9ae26b0425978435ae1308951e51 upstream.
+commit 57af267d2b8f5d88485c6372761386d79c5e6a1a upstream.
 
-This is the equivalent of commit 28818b4d871b ("wifi: rtw88: usb: Fix
-disconnection after beacon loss") for SDIO chips.
-Tested on Pinephone (RTL8723CS), random disconnections became rare,
-instead of a frequent nuisance.
+Due to a limitation in available memory, the MT7916 firmware can only
+handle either 5 GHz or 6 GHz at a time. It does not support runtime
+switching without a full restart.
 
+On older firmware, this accidentally worked to some degree due to missing
+checks, but couldn't be supported properly, because it left the 6 GHz
+channels uncalibrated.
+Newer firmware refuses to start on either band if the passed EEPROM
+data indicates support for both.
+
+Deal with this limitation by using a module parameter to specify the
+preferred band in case both are supported.
+
+Fixes: b4d093e321bd ("mt76: mt7915: add 6 GHz support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fiona Klute <fiona.klute@gmx.de>
-Tested-by: Vasily Khoruzhick <anarsoul@gmail.com> # Tested on Pinebook
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250106135434.35936-1-fiona.klute@gmx.de
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20241010083816.51880-1-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/sdio.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c |   21 +++++++++++++++++++--
+ drivers/net/wireless/mediatek/mt76/mt7915/init.c   |    4 ++--
+ 2 files changed, 21 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw88/sdio.c
-+++ b/drivers/net/wireless/realtek/rtw88/sdio.c
-@@ -1193,6 +1193,8 @@ static void rtw_sdio_indicate_tx_status(
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
- 	struct ieee80211_hw *hw = rtwdev->hw;
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+@@ -2,9 +2,14 @@
+ /* Copyright (C) 2020 MediaTek Inc. */
  
-+	skb_pull(skb, rtwdev->chip->tx_pkt_desc_sz);
+ #include <linux/firmware.h>
++#include <linux/moduleparam.h>
+ #include "mt7915.h"
+ #include "eeprom.h"
+ 
++static bool enable_6ghz;
++module_param(enable_6ghz, bool, 0644);
++MODULE_PARM_DESC(enable_6ghz, "Enable 6 GHz instead of 5 GHz on hardware that supports both");
 +
- 	/* enqueue to wait for tx report */
- 	if (info->flags & IEEE80211_TX_CTL_REQ_TX_STATUS) {
- 		rtw_tx_report_enqueue(rtwdev, skb, tx_data->sn);
+ static int mt7915_eeprom_load_precal(struct mt7915_dev *dev)
+ {
+ 	struct mt76_dev *mdev = &dev->mt76;
+@@ -170,8 +175,20 @@ static void mt7915_eeprom_parse_band_con
+ 			phy->mt76->cap.has_6ghz = true;
+ 			return;
+ 		case MT_EE_V2_BAND_SEL_5GHZ_6GHZ:
+-			phy->mt76->cap.has_5ghz = true;
+-			phy->mt76->cap.has_6ghz = true;
++			if (enable_6ghz) {
++				phy->mt76->cap.has_6ghz = true;
++				u8p_replace_bits(&eeprom[MT_EE_WIFI_CONF + band],
++						 MT_EE_V2_BAND_SEL_6GHZ,
++						 MT_EE_WIFI_CONF0_BAND_SEL);
++			} else {
++				phy->mt76->cap.has_5ghz = true;
++				u8p_replace_bits(&eeprom[MT_EE_WIFI_CONF + band],
++						 MT_EE_V2_BAND_SEL_5GHZ,
++						 MT_EE_WIFI_CONF0_BAND_SEL);
++			}
++			/* force to buffer mode */
++			dev->flash_mode = true;
++
+ 			return;
+ 		default:
+ 			phy->mt76->cap.has_2ghz = true;
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+@@ -1239,14 +1239,14 @@ int mt7915_register_device(struct mt7915
+ 	if (ret)
+ 		goto unreg_dev;
+ 
+-	ieee80211_queue_work(mt76_hw(dev), &dev->init_work);
+-
+ 	if (phy2) {
+ 		ret = mt7915_register_ext_phy(dev, phy2);
+ 		if (ret)
+ 			goto unreg_thermal;
+ 	}
+ 
++	ieee80211_queue_work(mt76_hw(dev), &dev->init_work);
++
+ 	dev->recovery.hw_init_done = true;
+ 
+ 	ret = mt7915_init_debugfs(&dev->phy);
 
 
