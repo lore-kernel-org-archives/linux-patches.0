@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D331470805;
-	Thu, 13 Feb 2025 15:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CE91547E3;
+	Thu, 13 Feb 2025 15:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460800; cv=none; b=Yy979TYAJK9vs37dJNiUZpRAyybdbvQGLnWb6CPkMAxdf2MIPDM0nJ8mihYhhPOP58CJAJ7oU1rLqFJXu/UD27vnrSr72wNEH6bx8NnSveQKEUgZFzOGHpblc6axGtsuLZYWVKO2iz8n3gbh1tpcXU+GNyjfiDsuOhOrfRGsOWg=
+	t=1739460804; cv=none; b=IkLVSNoHPK9NKMsE9L4aXFuvbSDWPKc6Pbj0IynaZBokuUd4vp8sTzgKb+BCTpgKjnCpBHtvN/B5QuG7pAproaYNYmYRcOUy219bkxW8RGZGDlBw1I1pFm5ANRTSWOo1li5gtXhBlE8Jpjo/wkf9Zjhc7roZCliociGbDftKzLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460800; c=relaxed/simple;
-	bh=VTtmT7dMx5+PiduharcnTVY8QxbstUDVFomF5TvR8TY=;
+	s=arc-20240116; t=1739460804; c=relaxed/simple;
+	bh=h4GZpQs0YfUTRVm+hOaw4Y6AT7RiQUN2rMzkKdh52z0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0luQ7Hyx8SjwdCYJgbkWDM1rTTRaa907JQumXVrU5diaDJipB4G0rlNHPcIbo8eMIdz+bszwX9hUDe1mppFGSbCz8+Swp1UODAAw8YhnUI4aV4Ymv4FQUNo6R6UeWXoyHncmvqU5tKzq44CkI9DZe9z4fl/V62yHoslmZnbA/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=coY+HCNJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PS3c44FyZeGZePwcbmn43Nn3NjVV29gYj7elEKIpBLCC+PqhtZ0gtxvgGoD33mj+PdpV7x0xy10G9ZX/S8VNf4+LVvb9ATubg39CQX0ECWi3s7JIIFn4IDEzpe7VorEZSKzhtlcTnfwX3/p1YuoxDMg6RM7PgHVRLUUpLLy/8ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpKs4iyn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="coY+HCNJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42483C4CED1;
-	Thu, 13 Feb 2025 15:33:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpKs4iyn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D01C4CED1;
+	Thu, 13 Feb 2025 15:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460800;
-	bh=VTtmT7dMx5+PiduharcnTVY8QxbstUDVFomF5TvR8TY=;
+	s=korg; t=1739460804;
+	bh=h4GZpQs0YfUTRVm+hOaw4Y6AT7RiQUN2rMzkKdh52z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=coY+HCNJjbNTxTCg/yziuzdaDwGPoau0QDSv9n71viCsITgFUV3LwF8nYDrSF58zz
-	 c6gtuBq35RY1ZEdbwcuPmOAj8u7aos9MQoftQPVCkWe/AFeB+6jwzF1W+Bcy9aXeJP
-	 aaxSvtz/RLlzOVTzK179gT032DNtSPfv/GYILm7k=
+	b=MpKs4iynX9KlOWowVXlgiAysMtc0zb/mix1VbiW6bu5MGDlGZXjIl98436HtGAjY/
+	 g67c1D3wh/0OrVn9V9bwY/WYpuBHgalJ5mW4fykVBKvLxzHnCmOUP2QYQAWwGSJGvX
+	 m4ChKB60RLt5byHSp8OWEC+JHQ/L8/yW6QPTL/3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Patrick Wang <patrick.wang.shcn@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 217/273] mm: kmemleak: fix upper boundary check for physical address objects
-Date: Thu, 13 Feb 2025 15:29:49 +0100
-Message-ID: <20250213142415.886317669@linuxfoundation.org>
+	reveliofuzzing <reveliofuzzing@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.6 218/273] ata: libata-sff: Ensure that we cannot write outside the allocated buffer
+Date: Thu, 13 Feb 2025 15:29:50 +0100
+Message-ID: <20250213142415.929891414@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -53,51 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 488b5b9eca68497b533ced059be5eff19578bbca upstream.
+commit 6e74e53b34b6dec5a50e1404e2680852ec6768d2 upstream.
 
-Memblock allocations are registered by kmemleak separately, based on their
-physical address.  During the scanning stage, it checks whether an object
-is within the min_low_pfn and max_low_pfn boundaries and ignores it
-otherwise.
+reveliofuzzing reported that a SCSI_IOCTL_SEND_COMMAND ioctl with out_len
+set to 0xd42, SCSI command set to ATA_16 PASS-THROUGH, ATA command set to
+ATA_NOP, and protocol set to ATA_PROT_PIO, can cause ata_pio_sector() to
+write outside the allocated buffer, overwriting random memory.
 
-With the recent addition of __percpu pointer leak detection (commit
-6c99d4eb7c5e ("kmemleak: enable tracking for percpu pointers")), kmemleak
-started reporting leaks in setup_zone_pageset() and
-setup_per_cpu_pageset().  These were caused by the node_data[0] object
-(initialised in alloc_node_data()) ending on the PFN_PHYS(max_low_pfn)
-boundary.  The non-strict upper boundary check introduced by commit
-84c326299191 ("mm: kmemleak: check physical address when scan") causes the
-pg_data_t object to be ignored (not scanned) and the __percpu pointers it
-contains to be reported as leaks.
+While a ATA device is supposed to abort a ATA_NOP command, there does seem
+to be a bug either in libata-sff or QEMU, where either this status is not
+set, or the status is cleared before read by ata_sff_hsm_move().
+Anyway, that is most likely a separate bug.
 
-Make the max_low_pfn upper boundary check strict when deciding whether to
-ignore a physical address object and not scan it.
+Looking at __atapi_pio_bytes(), it already has a safety check to ensure
+that __atapi_pio_bytes() cannot write outside the allocated buffer.
 
-Link: https://lkml.kernel.org/r/20250127184233.2974311-1-catalin.marinas@arm.com
-Fixes: 84c326299191 ("mm: kmemleak: check physical address when scan")
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Tested-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Cc: Patrick Wang <patrick.wang.shcn@gmail.com>
-Cc: <stable@vger.kernel.org>	[6.0.x]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Add a similar check to ata_pio_sector(), such that also ata_pio_sector()
+cannot write outside the allocated buffer.
+
+Cc: stable@vger.kernel.org
+Reported-by: reveliofuzzing <reveliofuzzing@gmail.com>
+Closes: https://lore.kernel.org/linux-ide/CA+-ZZ_jTgxh3bS7m+KX07_EWckSnW3N2adX3KV63y4g7M4CZ2A@mail.gmail.com/
+Link: https://lore.kernel.org/r/20250127154303.15567-2-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kmemleak.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/libata-sff.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/mm/kmemleak.c
-+++ b/mm/kmemleak.c
-@@ -1549,7 +1549,7 @@ static void kmemleak_scan(void)
- 			unsigned long phys = object->pointer;
+--- a/drivers/ata/libata-sff.c
++++ b/drivers/ata/libata-sff.c
+@@ -602,7 +602,7 @@ static void ata_pio_sector(struct ata_qu
+ {
+ 	struct ata_port *ap = qc->ap;
+ 	struct page *page;
+-	unsigned int offset;
++	unsigned int offset, count;
  
- 			if (PHYS_PFN(phys) < min_low_pfn ||
--			    PHYS_PFN(phys + object->size) >= max_low_pfn)
-+			    PHYS_PFN(phys + object->size) > max_low_pfn)
- 				__paint_it(object, KMEMLEAK_BLACK);
- 		}
+ 	if (!qc->cursg) {
+ 		qc->curbytes = qc->nbytes;
+@@ -618,25 +618,27 @@ static void ata_pio_sector(struct ata_qu
+ 	page = nth_page(page, (offset >> PAGE_SHIFT));
+ 	offset %= PAGE_SIZE;
  
+-	trace_ata_sff_pio_transfer_data(qc, offset, qc->sect_size);
++	/* don't overrun current sg */
++	count = min(qc->cursg->length - qc->cursg_ofs, qc->sect_size);
++
++	trace_ata_sff_pio_transfer_data(qc, offset, count);
+ 
+ 	/*
+ 	 * Split the transfer when it splits a page boundary.  Note that the
+ 	 * split still has to be dword aligned like all ATA data transfers.
+ 	 */
+ 	WARN_ON_ONCE(offset % 4);
+-	if (offset + qc->sect_size > PAGE_SIZE) {
++	if (offset + count > PAGE_SIZE) {
+ 		unsigned int split_len = PAGE_SIZE - offset;
+ 
+ 		ata_pio_xfer(qc, page, offset, split_len);
+-		ata_pio_xfer(qc, nth_page(page, 1), 0,
+-			     qc->sect_size - split_len);
++		ata_pio_xfer(qc, nth_page(page, 1), 0, count - split_len);
+ 	} else {
+-		ata_pio_xfer(qc, page, offset, qc->sect_size);
++		ata_pio_xfer(qc, page, offset, count);
+ 	}
+ 
+-	qc->curbytes += qc->sect_size;
+-	qc->cursg_ofs += qc->sect_size;
++	qc->curbytes += count;
++	qc->cursg_ofs += count;
+ 
+ 	if (qc->cursg_ofs == qc->cursg->length) {
+ 		qc->cursg = sg_next(qc->cursg);
 
 
