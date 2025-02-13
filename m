@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A949281360;
-	Thu, 13 Feb 2025 14:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A85E281360;
+	Thu, 13 Feb 2025 14:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457070; cv=none; b=rjKMdNnkmgm236SHtDpBP37myDffAnGt/lHM91Vj0y5PLyqP3iimHMnPSMYPA7fkNHy/eWU7y8DOggExolzOZtPa2CRfloYiXj6qg5LnidDCkQVAF+QdSsMDknufVJQE78oZjWix1MV4GWTxDfWo7gG2hOVbN8z68NDdxgQjzCk=
+	t=1739457073; cv=none; b=a24uSuIbeYsLHWYcQzii62pY1YHhbknJEtgPqGNchstAniWtl8CRTvR3kwel4pCwUGZ1gq8l4p+RMe5hqY2V7F55oTI5Job9ybxZKgptHfZYAwkgQjKxrMmGT0swqt5jAtvCi6GKWJ02iy4lKP0TCLSrM0nyK1BVYMKaF8vkeDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457070; c=relaxed/simple;
-	bh=Chy1+f2YB1i1E9fauegN/2NzDH+rlhxiay3CNQ8Qk/I=;
+	s=arc-20240116; t=1739457073; c=relaxed/simple;
+	bh=34EMIhJnvRKgexGj+aw0NasGOPNb2XJ40ceXnZtE7Is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LrY2newjxQVud4acz3vxUeTng00WV5lWMtXtdld/rJ1KtfZxltdeP5QYN5gVEEGiYEOHP5DyyhgXQpDmgtTDOuS7ikny24KABZ81LhOwRS52RDNzAHRrlWvzNbHC32Y2l8QR7BXiXb8Rqpe9IEpgGkzL6Qm3q2VPiSBZafhZCxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fj9W7Phr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IZKW+2nT9ru+R93MzddMCdzEuzRQYQLFldP19SQfqgbBXeA25dbhH49TUDn4lU+sNTJb9is8zCMqMpINYm58s00zbu4UpGf7mbB84AebxeMeA4DvzZMZY6iE8q2amwQbTXjbfJ85A33m4jQe3dbTz589Q1oyMtiiiZfn18kGBMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GazL7BA0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fj9W7Phr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D696C4CED1;
-	Thu, 13 Feb 2025 14:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GazL7BA0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88819C4CED1;
+	Thu, 13 Feb 2025 14:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457069;
-	bh=Chy1+f2YB1i1E9fauegN/2NzDH+rlhxiay3CNQ8Qk/I=;
+	s=korg; t=1739457073;
+	bh=34EMIhJnvRKgexGj+aw0NasGOPNb2XJ40ceXnZtE7Is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fj9W7PhrmIf0aMKbYZZlUKVY9bfTi3vQ7Lpha6ZVGvdfuTO43jVqJNQqixyGTu/13
-	 LJ9LPCT8bnOGARZ7KWlawDMuxrhH7pzrQ+c+nmt/TqefPeE2Ptv9daqHwAQZ106PRi
-	 y6RzT5QT24gbf0ESzdgKRsgQqWv1wF1re0V943sg=
+	b=GazL7BA03Zi04J8QsOAZNq+UhkYRrkzXL2MiI8tLOoobgU9GkjaGGbJjyzPumM9JB
+	 oDLTmcFHvXRIINIFinHOl7nln9JXZZZzXP5dJNHKaRTW/rqT53ARAGbCcT4kyuSm4Y
+	 sEBmbbladB2uOEv9nWyKZZ4XfwFDJsOeHty59pWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Herve Codina <herve.codina@bootlin.com>,
+	Suleiman Souhlal <suleiman@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/422] irqchip/lan966x-oic: Make CONFIG_LAN966X_OIC depend on CONFIG_MCHP_LAN966X_PCI
-Date: Thu, 13 Feb 2025 15:22:30 +0100
-Message-ID: <20250213142436.472887649@linuxfoundation.org>
+Subject: [PATCH 6.12 010/422] sched: Dont try to catch up excess steal time.
+Date: Thu, 13 Feb 2025 15:22:39 +0100
+Message-ID: <20250213142436.823316651@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,37 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Suleiman Souhlal <suleiman@google.com>
 
-[ Upstream commit e06c9e3682f58fbeb632b7b866bb4fe66a4a4b42 ]
+[ Upstream commit 108ad0999085df2366dd9ef437573955cb3f5586 ]
 
-The Microchip LAN966x outband interrupt controller is only present on
-Microchip LAN966x SoCs, and only used in PCI endpoint mode.  Hence add a
-dependency on MCHP_LAN966X_PCI, to prevent asking the user about this
-driver when configuring a kernel without Microchip LAN966x PCIe support.
+When steal time exceeds the measured delta when updating clock_task, we
+currently try to catch up the excess in future updates.
+However, this results in inaccurate run times for the future things using
+clock_task, in some situations, as they end up getting additional steal
+time that did not actually happen.
+This is because there is a window between reading the elapsed time in
+update_rq_clock() and sampling the steal time in update_rq_clock_task().
+If the VCPU gets preempted between those two points, any additional
+steal time is accounted to the outgoing task even though the calculated
+delta did not actually contain any of that "stolen" time.
+When this race happens, we can end up with steal time that exceeds the
+calculated delta, and the previous code would try to catch up that excess
+steal time in future clock updates, which is given to the next,
+incoming task, even though it did not actually have any time stolen.
 
-Fixes: 3e3a7b35332924c8 ("irqchip: Add support for LAN966x OIC")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Herve Codina <herve.codina@bootlin.com>
-Link: https://lore.kernel.org/all/28e8a605e72ee45e27f0d06b2b71366159a9c782.1737383314.git.geert+renesas@glider.be
+This behavior is particularly bad when steal time can be very long,
+which we've seen when trying to extend steal time to contain the duration
+that the host was suspended [0]. When this happens, clock_task stays
+frozen, during which the running task stays running for the whole
+duration, since its run time doesn't increase.
+However the race can happen even under normal operation.
+
+Ideally we would read the elapsed cpu time and the steal time atomically,
+to prevent this race from happening in the first place, but doing so
+is non-trivial.
+
+Since the time between those two points isn't otherwise accounted anywhere,
+neither to the outgoing task nor the incoming task (because the "end of
+outgoing task" and "start of incoming task" timestamps are the same),
+I would argue that the right thing to do is to simply drop any excess steal
+time, in order to prevent these issues.
+
+[0] https://lore.kernel.org/kvm/20240820043543.837914-1-suleiman@google.com/
+
+Signed-off-by: Suleiman Souhlal <suleiman@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20241118043745.1857272-1-suleiman@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/sched/core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
-index 66ce15027f28d..c1f3048360085 100644
---- a/drivers/irqchip/Kconfig
-+++ b/drivers/irqchip/Kconfig
-@@ -169,6 +169,7 @@ config IXP4XX_IRQ
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index aba41c69f09c4..5d67f41d05d40 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -766,13 +766,15 @@ static void update_rq_clock_task(struct rq *rq, s64 delta)
+ #endif
+ #ifdef CONFIG_PARAVIRT_TIME_ACCOUNTING
+ 	if (static_key_false((&paravirt_steal_rq_enabled))) {
+-		steal = paravirt_steal_clock(cpu_of(rq));
++		u64 prev_steal;
++
++		steal = prev_steal = paravirt_steal_clock(cpu_of(rq));
+ 		steal -= rq->prev_steal_time_rq;
  
- config LAN966X_OIC
- 	tristate "Microchip LAN966x OIC Support"
-+	depends on MCHP_LAN966X_PCI || COMPILE_TEST
- 	select GENERIC_IRQ_CHIP
- 	select IRQ_DOMAIN
- 	help
+ 		if (unlikely(steal > delta))
+ 			steal = delta;
+ 
+-		rq->prev_steal_time_rq += steal;
++		rq->prev_steal_time_rq = prev_steal;
+ 		delta -= steal;
+ 	}
+ #endif
 -- 
 2.39.5
 
