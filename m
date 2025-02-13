@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC4626B0B1;
-	Thu, 13 Feb 2025 15:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFA926B0B1;
+	Thu, 13 Feb 2025 15:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459058; cv=none; b=T0mAwaY09iPRCwyKUuGAlmi6ttZKkNu8k+gKxUCUnUDkuTmolhRy7VYOQOi+2m5v53nasREYMWCzH3VRsx+I8kWUQo/amp22K62d5D1O8C1lAlI6qdYFyYJBs/q4nkWndk/L5+V4eiKkvyJDOJFTXgD1XMr/EiGf2EvoxkCO9wc=
+	t=1739459061; cv=none; b=A8sxNM1MUUWGCMjDJzeSm2sFpj5cdRGu4rHb/oUxO08rRlph/8FnoQBLRpbKE0hbcjcOLPfsxpE/KUJnWPaQ43pviyF4WRCM7EAnLLOGEsk/CoXi3+pcNg6gz5P7CtstmIFLHH5GPXljccCunJrteYGa2rCm1reNbrkwsdVRNIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459058; c=relaxed/simple;
-	bh=xZenHWf2LrOHwhcbYR8GLHQUs170jVbqsRX/Dk+CBkE=;
+	s=arc-20240116; t=1739459061; c=relaxed/simple;
+	bh=G0yUaObmzvVE0kRzVVPvP9Ktxg4G+exdCT4T+0DaTnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LdOCU/1Yr4CBtyHLkn/qXuMLbi5iK5olBnAB91URj06JfEEQ2UcQ1ysnqj18N4uWYZlpcpHaK56mTx3H2+hvhEnOL3COzCjDrGWpUhe+5wXzDbH95lBBlGgEVwaxBWvEJTxWLpRDLLOQ4BhFgv+lEcTq11h5O/7m4m162eMZtM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPgSMkqD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LzrH45DabY7jINjzd2RS9choXwf2dQ008B8HMxbHtHPDuLNA57awJQl/8JHdRRg2+88A3Mr3AmgT27noKuHwu+M1qTupRWFgGEH/FxvJK8MmdGjhSshSQ3vUTNrkE8Oc5TE2uE7nT5PG63GvwGGMF5GDZBtj02WpgqXaFxAcGps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Poe1Ci8j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPgSMkqD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5487C4CED1;
-	Thu, 13 Feb 2025 15:04:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Poe1Ci8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7EFC4CED1;
+	Thu, 13 Feb 2025 15:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459057;
-	bh=xZenHWf2LrOHwhcbYR8GLHQUs170jVbqsRX/Dk+CBkE=;
+	s=korg; t=1739459060;
+	bh=G0yUaObmzvVE0kRzVVPvP9Ktxg4G+exdCT4T+0DaTnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HPgSMkqDZjR5ioagM8GhxcLqArQ3K2nEqxzTj3/SY06Xa2FNRyP03r2/5bxqU0o9v
-	 cTDqQuDQcAIMWzRs0Rh6MHdUJIjzFwuVssETKkyiNj3pwpbDgHkKsuJkCwErb+Srz1
-	 14el4iHnbf9CP2BC/49Y2swKngSqhnFx27cSeU9Q=
+	b=Poe1Ci8jOpLYG6uH0yu7n60CcwAPfXakpQUYuEsRv804Dz/R4K/zOzhXmyNv7csKB
+	 DGSy+V7heOryK2jAoe8DnMU2oYEC+Pwc3kSs4XHtaIg1hTbs9pVLsYA1duW7Ld6C4e
+	 swk8GdyUmyYMnjkZI4Oe9DNtPOIMGZlvx5K6NSco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Kees Cook <kees@kernel.org>,
-	Nam Cao <namcao@linutronix.de>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.13 155/443] fs/proc: do_task_stat: Fix ESP not readable during coredump
-Date: Thu, 13 Feb 2025 15:25:20 +0100
-Message-ID: <20250213142446.579102006@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	John Garry <john.g.garry@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.13 156/443] block: mark GFP_NOIO around sysfs ->store()
+Date: Thu, 13 Feb 2025 15:25:21 +0100
+Message-ID: <20250213142446.616474691@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -47,68 +47,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Ming Lei <tom.leiming@gmail.com>
 
-commit ab251dacfbae28772c897f068a4184f478189ff2 upstream.
+commit 7c0be4ead1f8f5f8be0803f347de0de81e3b8e1c upstream.
 
-The field "eip" (instruction pointer) and "esp" (stack pointer) of a task
-can be read from /proc/PID/stat. These fields can be interesting for
-coredump.
+sysfs ->store is called with queue freezed, meantime we have several
+->store() callbacks(update_nr_requests, wbt, scheduler) to allocate
+memory with GFP_KERNEL which may run into direct reclaim code path,
+then potential deadlock can be caused.
 
-However, these fields were disabled by commit 0a1eb2d474ed ("fs/proc: Stop
-reporting eip and esp in /proc/PID/stat"), because it is generally unsafe
-to do so. But it is safe for a coredumping process, and therefore
-exceptions were made:
+Fix the issue by marking NOIO around sysfs ->store()
 
-  - for a coredumping thread by commit fd7d56270b52 ("fs/proc: Report
-    eip/esp in /prod/PID/stat for coredumping").
-
-  - for all other threads in a coredumping process by commit cb8f381f1613
-    ("fs/proc/array.c: allow reporting eip/esp for all coredumping
-    threads").
-
-The above two commits check the PF_DUMPCORE flag to determine a coredump thread
-and the PF_EXITING flag for the other threads.
-
-Unfortunately, commit 92307383082d ("coredump:  Don't perform any cleanups
-before dumping core") moved coredump to happen earlier and before PF_EXITING is
-set. Thus, checking PF_EXITING is no longer the correct way to determine
-threads in a coredumping process.
-
-Instead of PF_EXITING, use PF_POSTCOREDUMP to determine the other threads.
-
-Checking of PF_EXITING was added for coredumping, so it probably can now be
-removed. But it doesn't hurt to keep.
-
-Fixes: 92307383082d ("coredump:  Don't perform any cleanups before dumping core")
+Reported-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Cc: stable@vger.kernel.org
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Link: https://lore.kernel.org/r/d89af63d478d6c64cc46a01420b46fd6eb147d6f.1735805772.git.namcao@linutronix.de
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/r/20250113015833.698458-1-ming.lei@redhat.com
+Link: https://lore.kernel.org/linux-block/Z4RkemI9f6N5zoEF@fedora/T/#mc774c65eeca5c024d29695f9ac6152b87763f305
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/array.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-sysfs.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/proc/array.c
-+++ b/fs/proc/array.c
-@@ -500,7 +500,7 @@ static int do_task_stat(struct seq_file
- 		 * a program is not able to use ptrace(2) in that case. It is
- 		 * safe because the task has stopped executing permanently.
- 		 */
--		if (permitted && (task->flags & (PF_EXITING|PF_DUMPCORE))) {
-+		if (permitted && (task->flags & (PF_EXITING|PF_DUMPCORE|PF_POSTCOREDUMP))) {
- 			if (try_get_task_stack(task)) {
- 				eip = KSTK_EIP(task);
- 				esp = KSTK_ESP(task);
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -681,6 +681,7 @@ queue_attr_store(struct kobject *kobj, s
+ 	struct queue_sysfs_entry *entry = to_queue(attr);
+ 	struct gendisk *disk = container_of(kobj, struct gendisk, queue_kobj);
+ 	struct request_queue *q = disk->queue;
++	unsigned int noio_flag;
+ 	ssize_t res;
+ 
+ 	if (!entry->store_limit && !entry->store)
+@@ -711,7 +712,9 @@ queue_attr_store(struct kobject *kobj, s
+ 
+ 	mutex_lock(&q->sysfs_lock);
+ 	blk_mq_freeze_queue(q);
++	noio_flag = memalloc_noio_save();
+ 	res = entry->store(disk, page, length);
++	memalloc_noio_restore(noio_flag);
+ 	blk_mq_unfreeze_queue(q);
+ 	mutex_unlock(&q->sysfs_lock);
+ 	return res;
 
 
