@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B4D35961;
-	Thu, 13 Feb 2025 15:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEB878F30;
+	Thu, 13 Feb 2025 15:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460053; cv=none; b=e3+xDHFa8PnNTO8JtuLLrWUlVlt0Mr33qyCmobo7FUTQlP9Kup2uLXUyGp2+wxAxs/FC2NE6u6ZoQKlJ1h5cm7ni5vr0xGyoUaRQ4MB38CMu8mJbRW/OpgGp7Q4T8Huu3ZDOBcwEAvSILzzo3RVkHeryrk1wdRt8A1VkL2dwSko=
+	t=1739460056; cv=none; b=VM/m08ZfR0Sc5x9pZKK4EUZf1KAbSQ4FWz/bqUHJpk6A1ZNvTBrKI7i3GNNx41NScHKGTp6gRzpa3RSpz5q+zieDtPGKboUkNuLWhnoxFoBYVhUGa8tu6HOU/lVwymU0Eu5U0R1LDbMIevFK/ItVmMtZRLVhq6czeXH0mGC9EEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460053; c=relaxed/simple;
-	bh=MqP5DaJPsAYuAiUiibbqYpgAghgZhiYKWjK2B+z3JxQ=;
+	s=arc-20240116; t=1739460056; c=relaxed/simple;
+	bh=RXTXUIwuSqEodO+3z5iCRDAjQhvtaUsicikddK2G1tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UlVoO77JcfZULTeb3DpAn6JnHALc+cI2Es4T2I1j/KGkId4wjvsx4gmnpRDKwyCWRA9oG72Kwhy/9CJsNSNiqbtewPeD1qWBFX/f8/GwDNZRm5Y8SqGYQD1RzURX5W7QAw+tpC8QSjghMOGL5Tc9LECCs5fzNymsFZzA8K9NWMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Quy0nwcv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m+XEIn97WufLdaFqrSsQhl7XMMvuzsS5ONl1mLgv4AGUAk7BuAZU5zH24tC977U9CgR4d9IHTmIc1P7zkU+X4RwiCtbJys5+bSOhGhBXGfbEfPLV6k+kJJAz79VDk6EcfhW4JNgWlau0S/Yet3XAztwLZ/hQ6Tmx2lbstH8+k+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogLeVTMV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Quy0nwcv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25401C4CED1;
-	Thu, 13 Feb 2025 15:20:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogLeVTMV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFBFC4CED1;
+	Thu, 13 Feb 2025 15:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460053;
-	bh=MqP5DaJPsAYuAiUiibbqYpgAghgZhiYKWjK2B+z3JxQ=;
+	s=korg; t=1739460056;
+	bh=RXTXUIwuSqEodO+3z5iCRDAjQhvtaUsicikddK2G1tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Quy0nwcvr5phjTICwuSLl8dvzR0GYskMLwkRgMqyG0rhVmdp4blGoUv2yTreR59yg
-	 XRoWyx8+jfOT5uNumKKsFvC/nITcDhZ7uqYpLR6TV8BMxXgUy4Jp2DqtJA/PIj0GSL
-	 oIM2wSEbM4pjRaVPeL+UeRfy36dc7mCAai1MEaGE=
+	b=ogLeVTMVio6aSOFI+44PITCyGtIxSqPN2Peh0XN2BkItmJCaTI3rJyz/jZ4TUT2Nm
+	 4VnEvq/5sFQZM2wNpvkwSuQ+SvLHBU7ee6eejNuEcevBxvlFdoMVk7HqdiJJv7Ab61
+	 l4QkX9X87cO7OwIaYRvOP6l+khkICkMatqxPba5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.13 443/443] fs: fix adding security options to statmount.mnt_opt
-Date: Thu, 13 Feb 2025 15:30:08 +0100
-Message-ID: <20250213142457.708518801@linuxfoundation.org>
+	stable@kernel.org,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.13 414/443] misc: fastrpc: Fix copy buffer page size
+Date: Thu, 13 Feb 2025 15:29:39 +0100
+Message-ID: <20250213142456.585010772@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -50,70 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-commit 5eb987105357cb7cfa7cf3b1e2f66d5c0977e412 upstream.
+commit e966eae72762ecfdbdb82627e2cda48845b9dd66 upstream.
 
-Prepending security options was made conditional on sb->s_op->show_options,
-but security options are independent of sb options.
+For non-registered buffer, fastrpc driver copies the buffer and
+pass it to the remote subsystem. There is a problem with current
+implementation of page size calculation which is not considering
+the offset in the calculation. This might lead to passing of
+improper and out-of-bounds page size which could result in
+memory issue. Calculate page start and page end using the offset
+adjusted address instead of absolute address.
 
-Fixes: 056d33137bf9 ("fs: prepend statmount.mnt_opts string with security_sb_mnt_opts()")
-Fixes: f9af549d1fd3 ("fs: export mount options via statmount()")
-Cc: stable@vger.kernel.org # v6.11
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Link: https://lore.kernel.org/r/20250129151253.33241-1-mszeredi@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 02b45b47fbe8 ("misc: fastrpc: fix remote page size calculation")
+Cc: stable@kernel.org
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20250110134239.123603-4-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |   29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ drivers/misc/fastrpc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -5037,30 +5037,29 @@ static int statmount_mnt_opts(struct kst
- {
- 	struct vfsmount *mnt = s->mnt;
- 	struct super_block *sb = mnt->mnt_sb;
-+	size_t start = seq->count;
- 	int err;
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1019,8 +1019,8 @@ static int fastrpc_get_args(u32 kernel,
+ 					(pkt_size - rlen);
+ 			pages[i].addr = pages[i].addr &	PAGE_MASK;
  
--	if (sb->s_op->show_options) {
--		size_t start = seq->count;
--
--		err = security_sb_show_options(seq, sb);
--		if (err)
--			return err;
-+	err = security_sb_show_options(seq, sb);
-+	if (err)
-+		return err;
- 
-+	if (sb->s_op->show_options) {
- 		err = sb->s_op->show_options(seq, mnt->mnt_root);
- 		if (err)
- 			return err;
-+	}
- 
--		if (unlikely(seq_has_overflowed(seq)))
--			return -EAGAIN;
-+	if (unlikely(seq_has_overflowed(seq)))
-+		return -EAGAIN;
- 
--		if (seq->count == start)
--			return 0;
-+	if (seq->count == start)
-+		return 0;
- 
--		/* skip leading comma */
--		memmove(seq->buf + start, seq->buf + start + 1,
--			seq->count - start - 1);
--		seq->count--;
--	}
-+	/* skip leading comma */
-+	memmove(seq->buf + start, seq->buf + start + 1,
-+		seq->count - start - 1);
-+	seq->count--;
- 
- 	return 0;
- }
+-			pg_start = (args & PAGE_MASK) >> PAGE_SHIFT;
+-			pg_end = ((args + len - 1) & PAGE_MASK) >> PAGE_SHIFT;
++			pg_start = (rpra[i].buf.pv & PAGE_MASK) >> PAGE_SHIFT;
++			pg_end = ((rpra[i].buf.pv + len - 1) & PAGE_MASK) >> PAGE_SHIFT;
+ 			pages[i].size = (pg_end - pg_start + 1) * PAGE_SIZE;
+ 			args = args + mlen;
+ 			rlen -= mlen;
 
 
