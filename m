@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFD926B0AD;
-	Thu, 13 Feb 2025 15:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48924139566;
+	Thu, 13 Feb 2025 15:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459685; cv=none; b=CxAESpnwrrYbPSZNdl03/oLhLVDq9RwjkA+JEMtMbEfK2f2yQkOcOVVShck7BRAFZI+WMuf6Dw59O4IxLLUdaVhOoDcUCorNf5kUHearis4p5EyQTyTVTkpvOjovbOloSDk0/oZslN3MyjKZZyAt4gBdtHaPkBcJNXVWCf05T7A=
+	t=1739459689; cv=none; b=IFlVQClc+w31x9xe6PQaPLT6J1QxYdY6Od8wZ0XzVHjeTo7IS36XcZZTC2WnQvFMkLgMrQe5jSI4KdbGfSQ+WLu6SImggr9YF/JSr6BxiuoYI+ihPNOtblEn7BMrWYZkauw8Z1TP3azR6qy/9CPgMJ3DZxmKqP8bfAk3T35b3r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459685; c=relaxed/simple;
-	bh=JIQLqqe532Z8U7l2eQnzmDNhxVoAY30D/c6VhgvZ+Mc=;
+	s=arc-20240116; t=1739459689; c=relaxed/simple;
+	bh=EbhIxQGrLHkQZVwU3NCFRfsq/4Oh1PgVs8OtOpXvdHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tDmCGeZDUFEof/OXdV5NUGMrFTS5UUorslHBq8r7fgwc6R2s8vSOaapP3GxWLQHzwfVrYqUAnjiFnWtWExqZQS4vxOg72YYBPXrnu+iubUzx+pcxuH7dAAX9PhLoUTGOnEhNJfEP+1OwpkPiPKi3EOgj9LDWGnMLZFR/WK9LXJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rl9GdYf+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FVNmgZop+pq5XfUVqDV6KAUgGWAKEnBTgTn9gUY9h0YUQt6A9yby9RaYj9thDrHQ52y+Kb9i5dfhgLiE7Bhj+vFXZhR4Pfpo7kAQzye1pBlmpxpIbOxus8WWkV54FfSu3SkhX6B+qCVPCGloU1EWB5Q1dvGzv8m5BHUn1p4Y0h0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IbdPf/Os; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rl9GdYf+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373CDC4CEE4;
-	Thu, 13 Feb 2025 15:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IbdPf/Os"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE9DC4CED1;
+	Thu, 13 Feb 2025 15:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459685;
-	bh=JIQLqqe532Z8U7l2eQnzmDNhxVoAY30D/c6VhgvZ+Mc=;
+	s=korg; t=1739459689;
+	bh=EbhIxQGrLHkQZVwU3NCFRfsq/4Oh1PgVs8OtOpXvdHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rl9GdYf+N50aRhleujrWCRNrZpIpJX+7wNhpyUJR1LQ85G7wyCOXfwjip9JOROrJo
-	 M+19gvTo1LIT1QC8GgtJHtwS3/ztpxSYVZPDMG5kgMuDYQ+6AS3WKncaSKF7IjbbBu
-	 hPt+T7IFDl2fWTmKjXTrnNYRRD8MC6fvSXQAx4sI=
+	b=IbdPf/Os/G18G7PMXLdBp4wKgJGwnlx/GQKXPF8UAglboorY8PV3dwcl51GxTaDan
+	 LWAxucnrmqhLDQy3a4O6jMryEdKHA6epcPKDzLyV1JEjk8JTvYiKBH6QcjFbPeZc8K
+	 w0jvMtRuVx6930wfOtVploQGz3y9POKjVc0u/Uac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Subject: [PATCH 6.13 334/443] accel/ivpu: Fix error handling in recovery/reset
-Date: Thu, 13 Feb 2025 15:28:19 +0100
-Message-ID: <20250213142453.513558138@linuxfoundation.org>
+	Aubrey Li <aubrey.li@linux.intel.com>,
+	Koba Ko <kobak@nvidia.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Shi Liu <aurelianliu@tencent.com>
+Subject: [PATCH 6.13 335/443] ACPI: PRM: Remove unnecessary strict handler address checks
+Date: Thu, 13 Feb 2025 15:28:20 +0100
+Message-ID: <20250213142453.554052333@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -45,156 +47,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+From: Aubrey Li <aubrey.li@linux.intel.com>
 
-commit 41a2d8286c905614f29007f1bc8e652d54654b82 upstream.
+commit 7f5704b6a143b8eca640cba820968e798d065e91 upstream.
 
-Disable runtime PM for the duration of reset/recovery so it is possible
-to set the correct runtime PM state depending on the outcome of the
-`ivpu_resume()`. Don’t suspend or reset the HW if the NPU is suspended
-when the reset/recovery is requested. Also, move common reset/recovery
-code to separate functions for better code readability.
+Commit 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM
+handler and context") added unnecessary strict handler address checks,
+causing the PRM module to fail in translating memory error addresses.
 
-Fixes: 27d19268cf39 ("accel/ivpu: Improve recovery and reset support")
-Cc: stable@vger.kernel.org # v6.8+
-Reviewed-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250129124009.1039982-4-jacek.lawrynowicz@linux.intel.com
+Both static data buffer address and ACPI parameter buffer address may
+be NULL if they are not needed, as described in section 4.1.2 PRM Handler
+Information Structure of Platform Runtime Mechanism specification [1].
+
+Here are two examples from real hardware:
+
+----PRMT.dsl----
+
+- staic data address is not used
+[10Ch 0268   2]                     Revision : 0000
+[10Eh 0270   2]                       Length : 002C
+[110h 0272  16]                 Handler GUID : F6A58D47-E04F-4F5A-86B8-2A50D4AA109B
+[120h 0288   8]              Handler address : 0000000065CE51F4
+[128h 0296   8]           Satic Data Address : 0000000000000000
+[130h 0304   8]       ACPI Parameter Address : 000000006522A718
+
+- ACPI parameter address is not used
+[1B0h 0432   2]                     Revision : 0000
+[1B2h 0434   2]                       Length : 002C
+[1B4h 0436  16]                 Handler GUID : 657E8AE6-A8FC-4877-BB28-42E7DE1899A5
+[1C4h 0452   8]              Handler address : 0000000065C567C8
+[1CCh 0460   8]           Satic Data Address : 000000006113FB98
+[1D4h 0468   8]       ACPI Parameter Address : 0000000000000000
+
+Fixes: 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM handler and context")
+Reported-and-tested-by: Shi Liu <aurelianliu@tencent.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Aubrey Li <aubrey.li@linux.intel.com>
+Link: https://uefi.org/sites/default/files/resources/Platform%20Runtime%20Mechanism%20-%20with%20legal%20notice.pdf # [1]
+Reviewed-by: Koba Ko <kobak@nvidia.com>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://patch.msgid.link/20250126022250.3014210-1-aubrey.li@linux.intel.com
+[ rjw: Minor changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_pm.c |   79 +++++++++++++++++++++++--------------------
- 1 file changed, 43 insertions(+), 36 deletions(-)
+ drivers/acpi/prmt.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/accel/ivpu/ivpu_pm.c
-+++ b/drivers/accel/ivpu/ivpu_pm.c
-@@ -115,41 +115,57 @@ err_power_down:
- 	return ret;
- }
+--- a/drivers/acpi/prmt.c
++++ b/drivers/acpi/prmt.c
+@@ -287,9 +287,7 @@ static acpi_status acpi_platformrt_space
+ 		if (!handler || !module)
+ 			goto invalid_guid;
  
--static void ivpu_pm_recovery_work(struct work_struct *work)
-+static void ivpu_pm_reset_begin(struct ivpu_device *vdev)
- {
--	struct ivpu_pm_info *pm = container_of(work, struct ivpu_pm_info, recovery_work);
--	struct ivpu_device *vdev = pm->vdev;
--	char *evt[2] = {"IVPU_PM_EVENT=IVPU_RECOVER", NULL};
--	int ret;
--
--	ivpu_err(vdev, "Recovering the NPU (reset #%d)\n", atomic_read(&vdev->pm->reset_counter));
--
--	ret = pm_runtime_resume_and_get(vdev->drm.dev);
--	if (ret)
--		ivpu_err(vdev, "Failed to resume NPU: %d\n", ret);
--
--	ivpu_jsm_state_dump(vdev);
--	ivpu_dev_coredump(vdev);
-+	pm_runtime_disable(vdev->drm.dev);
- 
- 	atomic_inc(&vdev->pm->reset_counter);
- 	atomic_set(&vdev->pm->reset_pending, 1);
- 	down_write(&vdev->pm->reset_lock);
-+}
-+
-+static void ivpu_pm_reset_complete(struct ivpu_device *vdev)
-+{
-+	int ret;
- 
--	ivpu_suspend(vdev);
- 	ivpu_pm_prepare_cold_boot(vdev);
- 	ivpu_jobs_abort_all(vdev);
- 	ivpu_ms_cleanup_all(vdev);
- 
- 	ret = ivpu_resume(vdev);
--	if (ret)
-+	if (ret) {
- 		ivpu_err(vdev, "Failed to resume NPU: %d\n", ret);
-+		pm_runtime_set_suspended(vdev->drm.dev);
-+	} else {
-+		pm_runtime_set_active(vdev->drm.dev);
-+	}
- 
- 	up_write(&vdev->pm->reset_lock);
- 	atomic_set(&vdev->pm->reset_pending, 0);
- 
--	kobject_uevent_env(&vdev->drm.dev->kobj, KOBJ_CHANGE, evt);
- 	pm_runtime_mark_last_busy(vdev->drm.dev);
--	pm_runtime_put_autosuspend(vdev->drm.dev);
-+	pm_runtime_enable(vdev->drm.dev);
-+}
-+
-+static void ivpu_pm_recovery_work(struct work_struct *work)
-+{
-+	struct ivpu_pm_info *pm = container_of(work, struct ivpu_pm_info, recovery_work);
-+	struct ivpu_device *vdev = pm->vdev;
-+	char *evt[2] = {"IVPU_PM_EVENT=IVPU_RECOVER", NULL};
-+
-+	ivpu_err(vdev, "Recovering the NPU (reset #%d)\n", atomic_read(&vdev->pm->reset_counter));
-+
-+	ivpu_pm_reset_begin(vdev);
-+
-+	if (!pm_runtime_status_suspended(vdev->drm.dev)) {
-+		ivpu_jsm_state_dump(vdev);
-+		ivpu_dev_coredump(vdev);
-+		ivpu_suspend(vdev);
-+	}
-+
-+	ivpu_pm_reset_complete(vdev);
-+
-+	kobject_uevent_env(&vdev->drm.dev->kobj, KOBJ_CHANGE, evt);
- }
- 
- void ivpu_pm_trigger_recovery(struct ivpu_device *vdev, const char *reason)
-@@ -328,16 +344,13 @@ void ivpu_pm_reset_prepare_cb(struct pci
- 	struct ivpu_device *vdev = pci_get_drvdata(pdev);
- 
- 	ivpu_dbg(vdev, PM, "Pre-reset..\n");
--	atomic_inc(&vdev->pm->reset_counter);
--	atomic_set(&vdev->pm->reset_pending, 1);
- 
--	pm_runtime_get_sync(vdev->drm.dev);
--	down_write(&vdev->pm->reset_lock);
--	ivpu_prepare_for_reset(vdev);
--	ivpu_hw_reset(vdev);
--	ivpu_pm_prepare_cold_boot(vdev);
--	ivpu_jobs_abort_all(vdev);
--	ivpu_ms_cleanup_all(vdev);
-+	ivpu_pm_reset_begin(vdev);
-+
-+	if (!pm_runtime_status_suspended(vdev->drm.dev)) {
-+		ivpu_prepare_for_reset(vdev);
-+		ivpu_hw_reset(vdev);
-+	}
- 
- 	ivpu_dbg(vdev, PM, "Pre-reset done.\n");
- }
-@@ -345,18 +358,12 @@ void ivpu_pm_reset_prepare_cb(struct pci
- void ivpu_pm_reset_done_cb(struct pci_dev *pdev)
- {
- 	struct ivpu_device *vdev = pci_get_drvdata(pdev);
--	int ret;
- 
- 	ivpu_dbg(vdev, PM, "Post-reset..\n");
--	ret = ivpu_resume(vdev);
--	if (ret)
--		ivpu_err(vdev, "Failed to set RESUME state: %d\n", ret);
--	up_write(&vdev->pm->reset_lock);
--	atomic_set(&vdev->pm->reset_pending, 0);
--	ivpu_dbg(vdev, PM, "Post-reset done.\n");
- 
--	pm_runtime_mark_last_busy(vdev->drm.dev);
--	pm_runtime_put_autosuspend(vdev->drm.dev);
-+	ivpu_pm_reset_complete(vdev);
-+
-+	ivpu_dbg(vdev, PM, "Post-reset done.\n");
- }
- 
- void ivpu_pm_init(struct ivpu_device *vdev)
+-		if (!handler->handler_addr ||
+-		    !handler->static_data_buffer_addr ||
+-		    !handler->acpi_param_buffer_addr) {
++		if (!handler->handler_addr) {
+ 			buffer->prm_status = PRM_HANDLER_ERROR;
+ 			return AE_OK;
+ 		}
 
 
