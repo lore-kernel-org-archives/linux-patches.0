@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BC726B096;
-	Thu, 13 Feb 2025 15:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CC419E975;
+	Thu, 13 Feb 2025 15:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460652; cv=none; b=qGaHsW7tG15f0Yt8hKsYOIRgwxRfAJ8a0kyVU9T9G0iNwIIssnP09lU0zwAyMI4zOO9IUC/6ITEWSD/uakPc2I7fNUPmXGH+ioINa8/ql09fC3bL5Sqelh+07Zw9IjUiwTJeDwpIBLBkSogUy0I19a62FAXoE363v03Uhr5HKuU=
+	t=1739460656; cv=none; b=AYkHo7ZOm1zBp4Hp12xVBql33WoPwAWxZrBTuEA8CyRzu+x/92eJQYgMLHmf+xUNgkHZpXeXyhxQUmHWW3HBjacrqERbl5jUhcLVhMGrkk/Lftl9eUWWK02fwe+WCh9PNbLoR7nur3NVh0R+15cxDioxyQJnLo5wbvm4pTC5Ot4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460652; c=relaxed/simple;
-	bh=1Mo/ZpwpBR3bMQ8YqUZVvWQf1gQERpfgL4xvR8KivP0=;
+	s=arc-20240116; t=1739460656; c=relaxed/simple;
+	bh=XvuTOaWTYzcdGA0/7g9SxwkIxEuYkzr57kyL1SdZpS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrfSz/XNVzjqNQbQwpL/gLJ40Tw3lPCMZrKBYbnrroVKgh78MxaqpLh2+0BaBmDvDyk81Yyd6u4L71XosokyveMAVloaJGG6BU0OWM17N9lVK0VBR4b8/uqHMwCLw0f0OGV0nXHRSc15PaY1u2zQ8uh68FI34yn0gjEzMTjSrOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4c6Jysj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QB444K+SvT1gNJvVGOUC33Eg3N68cxubwMNh2CtLQ3r2w/Ewz/ZKPNqUnqKleYfnLC6QgaPj1SXysxk3+uWGRLVRcjxoJeyAXPEqrnZKhjikKbN6u1BcrI37LGuD6tcsUH0sJbna35WJQhF8AZSCso7wugWu9DuJnrZP0CnePt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUqK2QFN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4c6Jysj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4303C4CEE4;
-	Thu, 13 Feb 2025 15:30:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUqK2QFN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056DEC4AF0B;
+	Thu, 13 Feb 2025 15:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460652;
-	bh=1Mo/ZpwpBR3bMQ8YqUZVvWQf1gQERpfgL4xvR8KivP0=;
+	s=korg; t=1739460655;
+	bh=XvuTOaWTYzcdGA0/7g9SxwkIxEuYkzr57kyL1SdZpS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4c6Jysj2REuf0gwu/3UJfvTsiQwzbGhFvC8xQlyjJQew3+Q/zLLXz9JL66Zjw4Xo
-	 9dKrLPvooiZkMYGDOa5J1fiX5/6Gy4jV50fU9DMaXVvgqzJgrJePltKTPjpertA8WA
-	 1vQWa4YUpxjzapk5JfsaSp/RHlghkXcph+w3kvc8=
+	b=PUqK2QFNA+WX5VIPfpRMJUzsgffe10jITQuxsCKCK84ifQPnFNCS4jp6AYQ2GTsja
+	 Jc29cb3UmiBBxOY0HsCZp0V0iO/+iZEnyYOYFriD9SG15A+wt6afEO72yoFzgMHe1L
+	 rvQiDgV9NFOsWPI325cqqce3Vi6MJl6uc/nvWnBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Foster Snowhill <forst@pen.gy>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 142/273] usbnet: ipheth: document scope of NCM implementation
-Date: Thu, 13 Feb 2025 15:28:34 +0100
-Message-ID: <20250213142412.947045636@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.6 133/273] usb: gadget: f_tcm: Decrement command ref count on cleanup
+Date: Thu, 13 Feb 2025 15:28:25 +0100
+Message-ID: <20250213142412.593114345@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -51,47 +49,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Foster Snowhill <forst@pen.gy>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit be154b598fa54136e2be17d6dd13c8a8bc0078ce upstream.
+commit 3b2a52e88ab0c9469eaadd4d4c8f57d072477820 upstream.
 
-Clarify that the "NCM" implementation in `ipheth` is very limited, as
-iOS devices aren't compatible with the CDC NCM specification in regular
-tethering mode.
+We submitted the command with TARGET_SCF_ACK_KREF, which requires
+acknowledgment of command completion. If the command fails, make sure to
+decrement the ref count.
 
-For a standards-compliant implementation, one shall turn to
-the `cdc_ncm` module.
-
-Cc: stable@vger.kernel.org # 6.5.x
-Signed-off-by: Foster Snowhill <forst@pen.gy>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: cff834c16d23 ("usb-gadget/tcm: Convert to TARGET_SCF_ACK_KREF I/O krefs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/3c667b4d9c8b0b580346a69ff53616b6a74cfea2.1733876548.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/ipheth.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/gadget/function/f_tcm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
-index 5347cd7e295b..a19789b57190 100644
---- a/drivers/net/usb/ipheth.c
-+++ b/drivers/net/usb/ipheth.c
-@@ -218,6 +218,14 @@ static int ipheth_rcvbulk_callback_legacy(struct urb *urb)
- 	return ipheth_consume_skb(buf, len, dev);
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -973,6 +973,7 @@ static void usbg_data_write_cmpl(struct
+ 	return;
+ 
+ cleanup:
++	target_put_sess_cmd(se_cmd);
+ 	transport_generic_free_cmd(&cmd->se_cmd, 0);
  }
  
-+/* In "NCM mode", the iOS device encapsulates RX (phone->computer) traffic
-+ * in NCM Transfer Blocks (similarly to CDC NCM). However, unlike reverse
-+ * tethering (handled by the `cdc_ncm` driver), regular tethering is not
-+ * compliant with the CDC NCM spec, as the device is missing the necessary
-+ * descriptors, and TX (computer->phone) traffic is not encapsulated
-+ * at all. Thus `ipheth` implements a very limited subset of the spec with
-+ * the sole purpose of parsing RX URBs.
-+ */
- static int ipheth_rcvbulk_callback_ncm(struct urb *urb)
- {
- 	struct usb_cdc_ncm_nth16 *ncmh;
--- 
-2.48.1
-
 
 
