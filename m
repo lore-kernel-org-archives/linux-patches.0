@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E36526B098;
-	Thu, 13 Feb 2025 15:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A331626B0A4;
+	Thu, 13 Feb 2025 15:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459538; cv=none; b=F+z/bPdDTPXFndVw0SIhU7KYvTZ1YqYeQG1TnOIyPSxIuDyAH+eEAn+yKomJN/A1gVi6klEKtgD5mXHLp2USgAQTn0rE6xhuzmQB006CctyEUjyB6AcuMTXabEsm2I4F9FZVvqV8pmF1nlFyRGI2+r0srAIFEivMCA944mAV4eQ=
+	t=1739459541; cv=none; b=KYv35gZfNz1FTCRHPVfzk4obnEaQBsMPeA8oW/IwDAnYTid/tlv2KfKAO2pabkc3jdn2d3UIBXVWg8+ikwb0v1RM5R1Th0XZAG93M287Ni28eR+Pa/87QLqtOPv/o/hGToMzLM/twir/O+LLW0pB3EhoQ1o7zegETr7WU3PwUDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459538; c=relaxed/simple;
-	bh=iCzg/uxWt0xIaAkmRZGGD2kJTJOjodRx3Qegq6N7Pgg=;
+	s=arc-20240116; t=1739459541; c=relaxed/simple;
+	bh=xibdVeQxM3avhIZyAdpgRkSlfVAbDyg8p7tbBo+6iFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9/3QZUJTJbZmKvJ/E2gc4ASWGdn2OC0mwnwsJD4i/Cd0xw55/8rhBYxUBBTOctHT+48nAHGn/peY4frT9cwh8Xx9LFRzWXcK7WrskJfCRNN6l1eKpjFv91eCcK22v8OO/VKz8zlUDAvzL8emD/BbHyWSYeuTmfzPRnA1gpT6gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/GTrDLa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ae576+Y/d0QMl8+zfLl6SdDqxrjkT/fnPB7yVOiXFSbGPUtFmLwGTnSatrELUrdtlbKVeQrK+6VhsZW9viJ/hm6O0Gc0uAmN527Y5j6MQQqCq4U+MtaBRcnmOy3FB0Au9Ixw5A72PtsgF4ATftk3ntUCJ3dibeqmkBTKL0H5nlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FaTVrULw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/GTrDLa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2810C4CED1;
-	Thu, 13 Feb 2025 15:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FaTVrULw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C804C4CED1;
+	Thu, 13 Feb 2025 15:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459538;
-	bh=iCzg/uxWt0xIaAkmRZGGD2kJTJOjodRx3Qegq6N7Pgg=;
+	s=korg; t=1739459541;
+	bh=xibdVeQxM3avhIZyAdpgRkSlfVAbDyg8p7tbBo+6iFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/GTrDLaYzPpP2fJGkRZFqE8R4e1sXlbDuQy+UB5HI+o4lkh+f/zFYa/XWjq2wwcb
-	 BugNqgSQP3Q4D7AktPfkh9MMM+X6v+0bb0eNLnBiPGDingXNwBMH2YQhuNGgNQ25JZ
-	 fF7/eFlKcV3dN6fOs/QoPb/6OqmkCngE2Z7aMaiE=
+	b=FaTVrULwY5H2IKj//wuqjNYol9VmmnV209lIb2U/iJi7bPA+t/BPQqlB9o3Tkenjr
+	 ccrry/6qFoGMKHeYCR6B1wELEMJgMt/yGv3IbBENe+ss24gF7T/5KYFsFzLZrYgBya
+	 T5tIaMxfsNV3Ic72WIRJzyvZwFzFnB68tsDx+KJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Romain Naour <romain.naour@skf.com>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Roger Quadros <rogerq@kernel.org>,
 	Kevin Hilman <khilman@baylibre.com>
-Subject: [PATCH 6.13 294/443] ARM: dts: dra7: Add bus_dma_limit for l4 cfg bus
-Date: Thu, 13 Feb 2025 15:27:39 +0100
-Message-ID: <20250213142451.960165528@linuxfoundation.org>
+Subject: [PATCH 6.13 295/443] ARM: dts: ti/omap: gta04: fix pm issues caused by spi module
+Date: Thu, 13 Feb 2025 15:27:40 +0100
+Message-ID: <20250213142451.999269271@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -50,54 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Romain Naour <romain.naour@skf.com>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-commit c1472ec1dc4419d0bae663c1a1e6cb98dc7881ad upstream.
+commit 0cfbd7805fe13406500e6a6f2aa08f198d5db4bd upstream.
 
-A bus_dma_limit was added for l3 bus by commit cfb5d65f2595
-("ARM: dts: dra7: Add bus_dma_limit for L3 bus") to fix an issue
-observed only with SATA on DRA7-EVM with 4GB RAM and CONFIG_ARM_LPAE
-enabled.
+Despite CM_IDLEST1_CORE and CM_FCLKEN1_CORE behaving normal,
+disabling SPI leads to messages like when suspending:
+Powerdomain (core_pwrdm) didn't enter target state 0
+and according to /sys/kernel/debug/pm_debug/count off state is not
+entered. That was not connected to SPI during the discussion
+of disabling SPI. See:
+https://lore.kernel.org/linux-omap/20230122100852.32ae082c@aktux/
 
-Since kernel 5.13, the SATA issue can be reproduced again following
-the SATA node move from L3 bus to L4_cfg in commit 8af15365a368
-("ARM: dts: Configure interconnect target module for dra7 sata").
+The reason is that SPI is per default in slave mode. Linux driver
+will turn it to master per default. It slave mode, the powerdomain seems to
+be kept active if active chip select input is sensed.
 
-Fix it by adding an empty dma-ranges property to l4_cfg and
-segment@100000 nodes (parent device tree node of SATA controller) to
-inherit the 2GB dma ranges limit from l3 bus node.
+Fix that by explicitly disabling the SPI3 pins which used to be muxed by
+the bootloader since they are available on an optionally fitted header
+which would require dtb overlays anyways.
 
-Note: A similar fix was applied for PCIe controller by commit
-90d4d3f4ea45 ("ARM: dts: dra7: Fix bus_dma_limit for PCIe").
-
-Fixes: 8af15365a368 ("ARM: dts: Configure interconnect target module for dra7 sata").
-Link: https://lore.kernel.org/linux-omap/c583e1bb-f56b-4489-8012-ce742e85f233@smile.fr/
-Cc: stable@vger.kernel.org # 5.13
-Signed-off-by: Romain Naour <romain.naour@skf.com>
-Link: https://lore.kernel.org/r/20241115102537.1330300-1-romain.naour@smile.fr
+Fixes: a622310f7f01 ("ARM: dts: gta04: fix excess dma channel usage")
+CC: stable@vger.kernel.org
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20241204174152.2360431-1-andreas@kemnade.info
 Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/ti/omap/dra7-l4.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/boot/dts/ti/omap/omap3-gta04.dtsi |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/arch/arm/boot/dts/ti/omap/dra7-l4.dtsi
-+++ b/arch/arm/boot/dts/ti/omap/dra7-l4.dtsi
-@@ -12,6 +12,7 @@
- 	ranges = <0x00000000 0x4a000000 0x100000>,	/* segment 0 */
- 		 <0x00100000 0x4a100000 0x100000>,	/* segment 1 */
- 		 <0x00200000 0x4a200000 0x100000>;	/* segment 2 */
-+	dma-ranges;
+--- a/arch/arm/boot/dts/ti/omap/omap3-gta04.dtsi
++++ b/arch/arm/boot/dts/ti/omap/omap3-gta04.dtsi
+@@ -446,6 +446,7 @@
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <
+ 			&hsusb2_2_pins
++			&mcspi3hog_pins
+ 	>;
  
- 	segment@0 {					/* 0x4a000000 */
- 		compatible = "simple-pm-bus";
-@@ -557,6 +558,7 @@
- 			 <0x0007e000 0x0017e000 0x001000>,	/* ap 124 */
- 			 <0x00059000 0x00159000 0x001000>,	/* ap 125 */
- 			 <0x0005a000 0x0015a000 0x001000>;	/* ap 126 */
-+		dma-ranges;
+ 	hsusb2_2_pins: hsusb2-2-pins {
+@@ -459,6 +460,15 @@
+ 		>;
+ 	};
  
- 		target-module@2000 {			/* 0x4a102000, ap 27 3c.0 */
- 			compatible = "ti,sysc";
++	mcspi3hog_pins: mcspi3hog-pins {
++		pinctrl-single,pins = <
++			OMAP3630_CORE2_IOPAD(0x25dc, PIN_OUTPUT_PULLDOWN | MUX_MODE4)	/* etk_d0 */
++			OMAP3630_CORE2_IOPAD(0x25de, PIN_OUTPUT_PULLDOWN | MUX_MODE4)	/* etk_d1 */
++			OMAP3630_CORE2_IOPAD(0x25e0, PIN_OUTPUT_PULLDOWN | MUX_MODE4)	/* etk_d2 */
++			OMAP3630_CORE2_IOPAD(0x25e2, PIN_OUTPUT_PULLDOWN | MUX_MODE4)	/* etk_d3 */
++		>;
++	};
++
+ 	spi_gpio_pins: spi-gpio-pinmux-pins {
+ 		pinctrl-single,pins = <
+ 			OMAP3630_CORE2_IOPAD(0x25d8, PIN_OUTPUT | MUX_MODE4) /* clk */
 
 
