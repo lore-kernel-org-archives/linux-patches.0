@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE1826B080;
-	Thu, 13 Feb 2025 15:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8105B26B08F;
+	Thu, 13 Feb 2025 15:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459418; cv=none; b=h8bHy9ZCnMRYg12fZIBmgaKoLK9LhM7gAgvgCVqBzA0ydU0uXWD0PSfrRqNnVeU3x0rvspYZqXGda5TXRKGadGipLbWGj8A5ltZQQBI2vxoyY0S3ppC564SwzRrcWKMn3JMUlBKtjIUGF2qsnfXL3nMZkhyMpKPvrVpzh7ymN3M=
+	t=1739459421; cv=none; b=KmaZo8ZZk53RI2nVrtUT/3Fsvy6XlooXhMnN+4bhjiOWYx5ZJIjT/dnvAwSdMm6HU3a0ToDpazyRh2NVR15gBstUStMYdtOQly00sLcANEVIChspHW2j/AEyPYezEYurNVSZE0oc5qsUerKA2QYZB7AToRBHzMVSqSDIbQdwFtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459418; c=relaxed/simple;
-	bh=3+p70e+Sa5DG6VyHz3MW2lvdyAAJvLS0bTg+0WGZ6Xs=;
+	s=arc-20240116; t=1739459421; c=relaxed/simple;
+	bh=JE+ifE7Vl1vUxXm4LDSL0b5pEfoDqosRiXjOGBwJrI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eYK5pYHnyhheX9QsbuFNjtXHxM5a/2jEWE5TSsVdENrjriBmaFkeAVCQRAzXqmcRrszz/Qr7Y3ZIzNK+8mm+EwUtu9KSKIbxOx87lzAKWccnjaAivHDIp6YZv2C954vmclSoYa86ILbaI+ed0rwHOncbHj9rVSjNpY4nlAKvBZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOzPgLYO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LKOrdlfFuYg/2ovfSj7vnPgagjomYKIo2zKcIbIH34YURJpW1mp0p+Bd+sORVlaPGTYrj/w+AN5otZw5onnLrXu7nJhqecGymEKwjPvDuAI/4usk2ieXTQrZrVVcoJtYvIc9ittl+UUYUecgf9TOKsgPjhPlqYRbjxphDYbvJDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUHX0QwO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOzPgLYO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BEB5C4CED1;
-	Thu, 13 Feb 2025 15:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUHX0QwO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76D8C4CEEA;
+	Thu, 13 Feb 2025 15:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459417;
-	bh=3+p70e+Sa5DG6VyHz3MW2lvdyAAJvLS0bTg+0WGZ6Xs=;
+	s=korg; t=1739459421;
+	bh=JE+ifE7Vl1vUxXm4LDSL0b5pEfoDqosRiXjOGBwJrI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sOzPgLYO/GKEZj1GCzo6muzN8Otxgu+/JF/NSuF9WL4Q6tBvWewaESWg13MhbVwn2
-	 7XCrgINeipK3eR+oLdPQNuWRCRHSraNGCfNeguew2k2ZYC8lV+0dBdgsnoXgx0fwq6
-	 IIT9N1WhzWTAwl6wJj04RWkpJwyqPZoT1n8rUYBI=
+	b=mUHX0QwOZnW4CFLjPW/zlo+rLI2Ok5qDYnOnoK1ILRCXR99bwPjCIckaqFFjaniW8
+	 6RCN0da9EqtztPKH0n9eH6DByFBnS7znzW4W6tlHlXq7un2misJKqs4n7SZL984WQK
+	 LhaSP5pi5AB2pMRITirPLO1gS2uGuYTcYWv1EMCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hou Tao <houtao1@huawei.com>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.13 258/443] dm-crypt: dont update io->sector after kcryptd_crypt_write_io_submit()
-Date: Thu, 13 Feb 2025 15:27:03 +0100
-Message-ID: <20250213142450.570629634@linuxfoundation.org>
+Subject: [PATCH 6.13 259/443] dm-crypt: track tag_offset in convert_context
+Date: Thu, 13 Feb 2025 15:27:04 +0100
+Message-ID: <20250213142450.610584873@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,89 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Hou Tao <houtao1@huawei.com>
 
-commit 9fdbbdbbc92b1474a87b89f8b964892a63734492 upstream.
+commit 8b8f8037765757861f899ed3a2bfb34525b5c065 upstream.
 
-The updates of io->sector are the leftovers when dm-crypt allocated
-pages for partial write request. However, since commit cf2f1abfbd0db
-("dm crypt: don't allocate pages for a partial request"), there is no
-partial request anymore.
+dm-crypt uses tag_offset to index the integrity metadata for each crypt
+sector. When the initial crypt_convert() returns BLK_STS_DEV_RESOURCE,
+dm-crypt will try to continue the crypt/decrypt procedure in a kworker.
+However, it resets tag_offset as zero instead of using the tag_offset
+related with current sector. It may return unexpected data when using
+random IV or return unexpected integrity related error.
 
-After the introduction of write request rb-tree, the updates of
-io->sectors may interfere the insertion procedure, because ->sectors of
-these write requests which have already been added in the rb-tree may be
-changed during the insertion of new write request.
+Fix the problem by tracking tag_offset in per-IO convert_context.
+Therefore, when the crypt/decrypt procedure continues in a kworker, it
+could use the next tag_offset saved in convert_context.
 
-Fix it by removing these buggy updates of io->sectors. Considering these
-updates only effect the write request rb-tree, the commit which
-introduces the write request rb-tree is used as the fix tag.
-
-Fixes: b3c5fd305249 ("dm crypt: sort writes")
+Fixes: 8abec36d1274 ("dm crypt: do not wait for backlogged crypto request completion in softirq")
 Cc: stable@vger.kernel.org
 Signed-off-by: Hou Tao <houtao1@huawei.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |   14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/md/dm-crypt.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 --- a/drivers/md/dm-crypt.c
 +++ b/drivers/md/dm-crypt.c
-@@ -2092,7 +2092,6 @@ static void kcryptd_crypt_write_continue
- 	struct crypt_config *cc = io->cc;
- 	struct convert_context *ctx = &io->ctx;
- 	int crypt_finished;
--	sector_t sector = io->sector;
- 	blk_status_t r;
- 
- 	wait_for_completion(&ctx->restart);
-@@ -2109,10 +2108,8 @@ static void kcryptd_crypt_write_continue
- 	}
- 
- 	/* Encryption was already finished, submit io now */
--	if (crypt_finished) {
-+	if (crypt_finished)
- 		kcryptd_crypt_write_io_submit(io, 0);
--		io->sector = sector;
--	}
- 
- 	crypt_dec_pending(io);
+@@ -59,6 +59,7 @@ struct convert_context {
+ 	struct bio *bio_out;
+ 	struct bvec_iter iter_out;
+ 	atomic_t cc_pending;
++	unsigned int tag_offset;
+ 	u64 cc_sector;
+ 	union {
+ 		struct skcipher_request *req;
+@@ -1256,6 +1257,7 @@ static void crypt_convert_init(struct cr
+ 	if (bio_out)
+ 		ctx->iter_out = bio_out->bi_iter;
+ 	ctx->cc_sector = sector + cc->iv_offset;
++	ctx->tag_offset = 0;
+ 	init_completion(&ctx->restart);
  }
-@@ -2123,14 +2120,13 @@ static void kcryptd_crypt_write_convert(
- 	struct convert_context *ctx = &io->ctx;
- 	struct bio *clone;
- 	int crypt_finished;
--	sector_t sector = io->sector;
- 	blk_status_t r;
  
- 	/*
- 	 * Prevent io from disappearing until this function completes.
- 	 */
- 	crypt_inc_pending(io);
--	crypt_convert_init(cc, ctx, NULL, io->base_bio, sector);
-+	crypt_convert_init(cc, ctx, NULL, io->base_bio, io->sector);
+@@ -1588,7 +1590,6 @@ static void crypt_free_req(struct crypt_
+ static blk_status_t crypt_convert(struct crypt_config *cc,
+ 			 struct convert_context *ctx, bool atomic, bool reset_pending)
+ {
+-	unsigned int tag_offset = 0;
+ 	unsigned int sector_step = cc->sector_size >> SECTOR_SHIFT;
+ 	int r;
  
- 	clone = crypt_alloc_buffer(io, io->base_bio->bi_iter.bi_size);
- 	if (unlikely(!clone)) {
-@@ -2147,8 +2143,6 @@ static void kcryptd_crypt_write_convert(
- 		io->ctx.iter_in = clone->bi_iter;
- 	}
+@@ -1611,9 +1612,9 @@ static blk_status_t crypt_convert(struct
+ 		atomic_inc(&ctx->cc_pending);
  
--	sector += bio_sectors(clone);
--
- 	crypt_inc_pending(io);
- 	r = crypt_convert(cc, ctx,
- 			  test_bit(DM_CRYPT_NO_WRITE_WORKQUEUE, &cc->flags), true);
-@@ -2172,10 +2166,8 @@ static void kcryptd_crypt_write_convert(
- 	}
+ 		if (crypt_integrity_aead(cc))
+-			r = crypt_convert_block_aead(cc, ctx, ctx->r.req_aead, tag_offset);
++			r = crypt_convert_block_aead(cc, ctx, ctx->r.req_aead, ctx->tag_offset);
+ 		else
+-			r = crypt_convert_block_skcipher(cc, ctx, ctx->r.req, tag_offset);
++			r = crypt_convert_block_skcipher(cc, ctx, ctx->r.req, ctx->tag_offset);
  
- 	/* Encryption was already finished, submit io now */
--	if (crypt_finished) {
-+	if (crypt_finished)
- 		kcryptd_crypt_write_io_submit(io, 0);
--		io->sector = sector;
--	}
- 
- dec:
- 	crypt_dec_pending(io);
+ 		switch (r) {
+ 		/*
+@@ -1633,8 +1634,8 @@ static blk_status_t crypt_convert(struct
+ 					 * exit and continue processing in a workqueue
+ 					 */
+ 					ctx->r.req = NULL;
++					ctx->tag_offset++;
+ 					ctx->cc_sector += sector_step;
+-					tag_offset++;
+ 					return BLK_STS_DEV_RESOURCE;
+ 				}
+ 			} else {
+@@ -1648,8 +1649,8 @@ static blk_status_t crypt_convert(struct
+ 		 */
+ 		case -EINPROGRESS:
+ 			ctx->r.req = NULL;
++			ctx->tag_offset++;
+ 			ctx->cc_sector += sector_step;
+-			tag_offset++;
+ 			continue;
+ 		/*
+ 		 * The request was already processed (synchronously).
+@@ -1657,7 +1658,7 @@ static blk_status_t crypt_convert(struct
+ 		case 0:
+ 			atomic_dec(&ctx->cc_pending);
+ 			ctx->cc_sector += sector_step;
+-			tag_offset++;
++			ctx->tag_offset++;
+ 			if (!atomic)
+ 				cond_resched();
+ 			continue;
 
 
