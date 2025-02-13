@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D00326B0BA;
-	Thu, 13 Feb 2025 15:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A2A26B0BA;
+	Thu, 13 Feb 2025 15:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459165; cv=none; b=ldVkHLPxH/ui9ZUrSlIyVgRUAEWZqqi2Twgksi6+JoPsDzH0xo86hol0rL0/v2s9o+Kb8e3QyWLmU0DxEt/nccm4BQoo6Q53L7rjaZeS9R4z0aqZ4stQd3qe2f2UB6kB/K4BwgTxYeP5l1/1CMrzRg1j62YouTH6F8Yy77ppDws=
+	t=1739459174; cv=none; b=PRoNalaS1l7A8uISrKC3UzBpdeGKAjC5MKuJy7TquXOJqGdwNHv+w4MhvmC0+Fdj2RFCLdRdkhE8ZLvaYHwHxrAh6tklWwpW2iMF7xr2mbmjxaApM9mPlkTeuSOKi+gTEAzPb2Zmu6bQ8GWT8iGeMg+DqE08G5ygiuUtCEpYVig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459165; c=relaxed/simple;
-	bh=biYTaYFh9t1FKHe9RZ5U+1N0gCfkc0xlBYFUdcOEehw=;
+	s=arc-20240116; t=1739459174; c=relaxed/simple;
+	bh=QM26gaLKkJ42Pa0UGnhih5w9kf8rY/h8okxvGQSlDfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yb/eVbiU4TXwCC3ed4cgyGFfeg6WcgtILLsQFsjgzbHbbqJrjTvJ3xrHtjydQzG2blY0qTo5lgtwwBnIK9OLKeLEXX1AVAsdb/aGj9q1FRDH4l0N2Qv2x5/5nbua5WlFKVQks+gk/iqhu9TCaUBI7rArH/1yc+W3GKAtywj4HRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKZnwTA8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iTVysnCCKoYBcDC/IEmDy5QZsvx+CZeGuHecVqozDfhMRG09gDA2Fbh27hvVNUqDtD+6PVu93cQi2SY38IbSOGTxGMvS2GcfGfSef4Ay6vB8U1pK46vG2k7DzEW8VdLTwmNkOgQx93z2bpk9/J7V7MPwJ47oA00AVw3hUVeznG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lfx2f3RQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKZnwTA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947C9C4CED1;
-	Thu, 13 Feb 2025 15:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfx2f3RQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0F5C4CEE4;
+	Thu, 13 Feb 2025 15:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459165;
-	bh=biYTaYFh9t1FKHe9RZ5U+1N0gCfkc0xlBYFUdcOEehw=;
+	s=korg; t=1739459173;
+	bh=QM26gaLKkJ42Pa0UGnhih5w9kf8rY/h8okxvGQSlDfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IKZnwTA89x1ojSuLKQHKlrJeM40Im+oXWWbxpcGOjKEz5EeS2iYWxzW02mzi8jt9r
-	 orstJS75iMbQeSoub8b6RKj0wZNyPcL7cayH1Oo8b5yEalq5sgaz+v9bUS0ElyDqBQ
-	 pPgYVjUaeT48iPl5luRSaRwG/vyiP/Z8HHotrGgs=
+	b=lfx2f3RQw042IukiCKGBUWSK6KwqLJayeJxaJI71vkPII2AuBN2OToWu3nPkf/6k4
+	 NhNvqWj436pNG1wgTrjrWOFyz0Pl4zGSBM79aZ0cc2CXQKTQG4O8IDS6G/vlXXmmHr
+	 NxbYtu0FWKMohuBJ7kS2B+HpfP4tWuWdls4F0MPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Alyssa Ross <hi@alyssa.is>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.13 170/443] kvm: defer huge page recovery vhost task to later
-Date: Thu, 13 Feb 2025 15:25:35 +0100
-Message-ID: <20250213142447.163954450@linuxfoundation.org>
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Julia Filipchuk <julia.filipchuk@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.13 188/443] drm/xe: Fix and re-enable xe_print_blob_ascii85()
+Date: Thu, 13 Feb 2025 15:25:53 +0100
+Message-ID: <20250213142447.869222176@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -46,169 +47,165 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-commit 931656b9e2ff7029aee0b36e17780621948a6ac1 upstream.
+commit a9ab6591b45258b79af1cb66112fd9f83c8855da upstream.
 
-Some libraries want to ensure they are single threaded before forking,
-so making the kernel's kvm huge page recovery process a vhost task of
-the user process breaks those. The minijail library used by crosvm is
-one such affected application.
+Commit 70fb86a85dc9 ("drm/xe: Revert some changes that break a mesa
+debug tool") partially reverted some changes to workaround breakage
+caused to mesa tools. However, in doing so it also broke fetching the
+GuC log via debugfs since xe_print_blob_ascii85() simply bails out.
 
-Defer the task to after the first VM_RUN call, which occurs after the
-parent process has forked all its jailed processes. This needs to happen
-only once for the kvm instance, so introduce some general-purpose
-infrastructure for that, too.  It's similar in concept to pthread_once;
-except it is actually usable, because the callback takes a parameter.
+The fix is to avoid the extra newlines: the devcoredump interface is
+line-oriented and adding random newlines in the middle breaks it. If a
+tool is able to parse it by looking at the data and checking for chars
+that are out of the ascii85 space, it can still do so. A format change
+that breaks the line-oriented output on devcoredump however needs better
+coordination with existing tools.
 
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Tested-by: Alyssa Ross <hi@alyssa.is>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Message-ID: <20250123153543.2769928-1-kbusch@meta.com>
-[Move call_once API to include/linux. - Paolo]
+v2: Add suffix description comment
+v3: Reword explanation of xe_print_blob_ascii85() calling drm_puts()
+    in a loop
+
+Reviewed-by: José Roberto de Souza <jose.souza@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Julia Filipchuk <julia.filipchuk@intel.com>
+Cc: José Roberto de Souza <jose.souza@intel.com>
 Cc: stable@vger.kernel.org
-Fixes: d96c77bd4eeb ("KVM: x86: switch hugepage recovery thread to vhost_task")
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 70fb86a85dc9 ("drm/xe: Revert some changes that break a mesa debug tool")
+Fixes: ec1455ce7e35 ("drm/xe/devcoredump: Add ASCII85 dump helper function")
+Link: https://patchwork.freedesktop.org/patch/msgid/20250123202307.95103-2-jose.souza@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit 2c95bbf5002776117a69caed3b31c10bf7341bec)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm_host.h |    2 +
- arch/x86/kvm/mmu/mmu.c          |   18 +++++++++++-----
- arch/x86/kvm/x86.c              |    7 +++++-
- include/linux/call_once.h       |   45 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 66 insertions(+), 6 deletions(-)
- create mode 100644 include/linux/call_once.h
+ drivers/gpu/drm/xe/xe_devcoredump.c |   34 +++++++++++++---------------------
+ drivers/gpu/drm/xe/xe_devcoredump.h |    2 +-
+ drivers/gpu/drm/xe/xe_guc_ct.c      |    3 ++-
+ drivers/gpu/drm/xe/xe_guc_log.c     |    4 +++-
+ 4 files changed, 19 insertions(+), 24 deletions(-)
 
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -27,6 +27,7 @@
- #include <linux/hyperv.h>
- #include <linux/kfifo.h>
- #include <linux/sched/vhost_task.h>
-+#include <linux/call_once.h>
- 
- #include <asm/apic.h>
- #include <asm/pvclock-abi.h>
-@@ -1445,6 +1446,7 @@ struct kvm_arch {
- 	struct kvm_x86_pmu_event_filter __rcu *pmu_event_filter;
- 	struct vhost_task *nx_huge_page_recovery_thread;
- 	u64 nx_huge_page_last;
-+	struct once nx_once;
- 
- #ifdef CONFIG_X86_64
- 	/* The number of TDP MMU pages across all roots. */
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -7411,20 +7411,28 @@ static bool kvm_nx_huge_page_recovery_wo
- 	return true;
- }
- 
--int kvm_mmu_post_init_vm(struct kvm *kvm)
-+static void kvm_mmu_start_lpage_recovery(struct once *once)
+--- a/drivers/gpu/drm/xe/xe_devcoredump.c
++++ b/drivers/gpu/drm/xe/xe_devcoredump.c
+@@ -338,42 +338,34 @@ int xe_devcoredump_init(struct xe_device
+ /**
+  * xe_print_blob_ascii85 - print a BLOB to some useful location in ASCII85
+  *
+- * The output is split to multiple lines because some print targets, e.g. dmesg
+- * cannot handle arbitrarily long lines. Note also that printing to dmesg in
+- * piece-meal fashion is not possible, each separate call to drm_puts() has a
+- * line-feed automatically added! Therefore, the entire output line must be
+- * constructed in a local buffer first, then printed in one atomic output call.
++ * The output is split into multiple calls to drm_puts() because some print
++ * targets, e.g. dmesg, cannot handle arbitrarily long lines. These targets may
++ * add newlines, as is the case with dmesg: each drm_puts() call creates a
++ * separate line.
+  *
+  * There is also a scheduler yield call to prevent the 'task has been stuck for
+  * 120s' kernel hang check feature from firing when printing to a slow target
+  * such as dmesg over a serial port.
+  *
+- * TODO: Add compression prior to the ASCII85 encoding to shrink huge buffers down.
+- *
+  * @p: the printer object to output to
+  * @prefix: optional prefix to add to output string
++ * @suffix: optional suffix to add at the end. 0 disables it and is
++ *          not added to the output, which is useful when using multiple calls
++ *          to dump data to @p
+  * @blob: the Binary Large OBject to dump out
+  * @offset: offset in bytes to skip from the front of the BLOB, must be a multiple of sizeof(u32)
+  * @size: the size in bytes of the BLOB, must be a multiple of sizeof(u32)
+  */
+-void xe_print_blob_ascii85(struct drm_printer *p, const char *prefix,
++void xe_print_blob_ascii85(struct drm_printer *p, const char *prefix, char suffix,
+ 			   const void *blob, size_t offset, size_t size)
  {
--	if (nx_hugepage_mitigation_hard_disabled)
--		return 0;
-+	struct kvm_arch *ka = container_of(once, struct kvm_arch, nx_once);
-+	struct kvm *kvm = container_of(ka, struct kvm, arch);
+ 	const u32 *blob32 = (const u32 *)blob;
+ 	char buff[ASCII85_BUFSZ], *line_buff;
+ 	size_t line_pos = 0;
  
- 	kvm->arch.nx_huge_page_last = get_jiffies_64();
- 	kvm->arch.nx_huge_page_recovery_thread = vhost_task_create(
- 		kvm_nx_huge_page_recovery_worker, kvm_nx_huge_page_recovery_worker_kill,
- 		kvm, "kvm-nx-lpage-recovery");
- 
-+	if (kvm->arch.nx_huge_page_recovery_thread)
-+		vhost_task_start(kvm->arch.nx_huge_page_recovery_thread);
-+}
-+
-+int kvm_mmu_post_init_vm(struct kvm *kvm)
-+{
-+	if (nx_hugepage_mitigation_hard_disabled)
-+		return 0;
-+
-+	call_once(&kvm->arch.nx_once, kvm_mmu_start_lpage_recovery);
- 	if (!kvm->arch.nx_huge_page_recovery_thread)
- 		return -ENOMEM;
+-	/*
+-	 * Splitting blobs across multiple lines is not compatible with the mesa
+-	 * debug decoder tool. Note that even dropping the explicit '\n' below
+-	 * doesn't help because the GuC log is so big some underlying implementation
+-	 * still splits the lines at 512K characters. So just bail completely for
+-	 * the moment.
+-	 */
+-	return;
 -
--	vhost_task_start(kvm->arch.nx_huge_page_recovery_thread);
- 	return 0;
+ #define DMESG_MAX_LINE_LEN	800
+-#define MIN_SPACE		(ASCII85_BUFSZ + 2)		/* 85 + "\n\0" */
++	/* Always leave space for the suffix char and the \0 */
++#define MIN_SPACE		(ASCII85_BUFSZ + 2)	/* 85 + "<suffix>\0" */
+ 
+ 	if (size & 3)
+ 		drm_printf(p, "Size not word aligned: %zu", size);
+@@ -405,7 +397,6 @@ void xe_print_blob_ascii85(struct drm_pr
+ 		line_pos += strlen(line_buff + line_pos);
+ 
+ 		if ((line_pos + MIN_SPACE) >= DMESG_MAX_LINE_LEN) {
+-			line_buff[line_pos++] = '\n';
+ 			line_buff[line_pos++] = 0;
+ 
+ 			drm_puts(p, line_buff);
+@@ -417,10 +408,11 @@ void xe_print_blob_ascii85(struct drm_pr
+ 		}
+ 	}
+ 
++	if (suffix)
++		line_buff[line_pos++] = suffix;
++
+ 	if (line_pos) {
+-		line_buff[line_pos++] = '\n';
+ 		line_buff[line_pos++] = 0;
+-
+ 		drm_puts(p, line_buff);
+ 	}
+ 
+--- a/drivers/gpu/drm/xe/xe_devcoredump.h
++++ b/drivers/gpu/drm/xe/xe_devcoredump.h
+@@ -26,7 +26,7 @@ static inline int xe_devcoredump_init(st
  }
+ #endif
  
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -11463,6 +11463,10 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
- 	struct kvm_run *kvm_run = vcpu->run;
- 	int r;
+-void xe_print_blob_ascii85(struct drm_printer *p, const char *prefix,
++void xe_print_blob_ascii85(struct drm_printer *p, const char *prefix, char suffix,
+ 			   const void *blob, size_t offset, size_t size);
  
-+	r = kvm_mmu_post_init_vm(vcpu->kvm);
-+	if (r)
-+		return r;
-+
- 	vcpu_load(vcpu);
- 	kvm_sigset_activate(vcpu);
- 	kvm_run->flags = 0;
-@@ -12742,7 +12746,8 @@ out:
+ #endif
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -1700,7 +1700,8 @@ void xe_guc_ct_snapshot_print(struct xe_
+ 			   snapshot->g2h_outstanding);
  
- int kvm_arch_post_init_vm(struct kvm *kvm)
- {
--	return kvm_mmu_post_init_vm(kvm);
-+	once_init(&kvm->arch.nx_once);
-+	return 0;
+ 		if (snapshot->ctb)
+-			xe_print_blob_ascii85(p, "CTB data", snapshot->ctb, 0, snapshot->ctb_size);
++			xe_print_blob_ascii85(p, "CTB data", '\n',
++					      snapshot->ctb, 0, snapshot->ctb_size);
+ 	} else {
+ 		drm_puts(p, "CT disabled\n");
+ 	}
+--- a/drivers/gpu/drm/xe/xe_guc_log.c
++++ b/drivers/gpu/drm/xe/xe_guc_log.c
+@@ -211,8 +211,10 @@ void xe_guc_log_snapshot_print(struct xe
+ 	remain = snapshot->size;
+ 	for (i = 0; i < snapshot->num_chunks; i++) {
+ 		size_t size = min(GUC_LOG_CHUNK_SIZE, remain);
++		const char *prefix = i ? NULL : "Log data";
++		char suffix = i == snapshot->num_chunks - 1 ? '\n' : 0;
+ 
+-		xe_print_blob_ascii85(p, i ? NULL : "Log data", snapshot->copy[i], 0, size);
++		xe_print_blob_ascii85(p, prefix, suffix, snapshot->copy[i], 0, size);
+ 		remain -= size;
+ 	}
  }
- 
- static void kvm_unload_vcpu_mmu(struct kvm_vcpu *vcpu)
---- /dev/null
-+++ b/include/linux/call_once.h
-@@ -0,0 +1,45 @@
-+#ifndef _LINUX_CALL_ONCE_H
-+#define _LINUX_CALL_ONCE_H
-+
-+#include <linux/types.h>
-+#include <linux/mutex.h>
-+
-+#define ONCE_NOT_STARTED 0
-+#define ONCE_RUNNING     1
-+#define ONCE_COMPLETED   2
-+
-+struct once {
-+        atomic_t state;
-+        struct mutex lock;
-+};
-+
-+static inline void __once_init(struct once *once, const char *name,
-+			       struct lock_class_key *key)
-+{
-+        atomic_set(&once->state, ONCE_NOT_STARTED);
-+        __mutex_init(&once->lock, name, key);
-+}
-+
-+#define once_init(once)							\
-+do {									\
-+	static struct lock_class_key __key;				\
-+	__once_init((once), #once, &__key);				\
-+} while (0)
-+
-+static inline void call_once(struct once *once, void (*cb)(struct once *))
-+{
-+        /* Pairs with atomic_set_release() below.  */
-+        if (atomic_read_acquire(&once->state) == ONCE_COMPLETED)
-+                return;
-+
-+        guard(mutex)(&once->lock);
-+        WARN_ON(atomic_read(&once->state) == ONCE_RUNNING);
-+        if (atomic_read(&once->state) != ONCE_NOT_STARTED)
-+                return;
-+
-+        atomic_set(&once->state, ONCE_RUNNING);
-+        cb(once);
-+        atomic_set_release(&once->state, ONCE_COMPLETED);
-+}
-+
-+#endif /* _LINUX_CALL_ONCE_H */
 
 
