@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF0014658C;
-	Thu, 13 Feb 2025 14:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBDA148855;
+	Thu, 13 Feb 2025 14:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458444; cv=none; b=IFxfH4eIPZSlIE4RvZABYBND7YrdGbqLN4zEdP+x07ufrKtoc8gxdq3N+tiSI8RSHzVyeR3J8HuJzAZGrZFQjPDT0NN58b1eaAQvI5yS6rkp9kXjYvxYgGM2IY10ypp/JURn5Sk28ex0ZBfuopMbGtvdfshfD1Gll4F9SrN6aPM=
+	t=1739458447; cv=none; b=BI1MJHx7f7QM1l00+WCegGjD+z5OdFCQw7KyjL/ln3C3A1fuE/+w9JeguxR10CX6DTb07PTvYfkPDO8OP2o+XlqpPexc8W7tqAhsP5l4PLaK/XTj6t1zUH9rjktQ+9arWcfpRnExOh2KnpSAPsySrZQzVE9w8Ji4dwBC13ocp7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458444; c=relaxed/simple;
-	bh=sw0xRRw1PRR1vR8wVB99MaCZruPLPPZYT0fhj4BQTWU=;
+	s=arc-20240116; t=1739458447; c=relaxed/simple;
+	bh=g1NMqAIVZK02pU5qj1Yx6uYJZ42thvjnKBXhx4pjlqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AUfTbrLwE2qEWrYQ/fLpZxCzdmF+D0yE2vAsaDzEWh9/IrR88GZ9NjE5BsD/5VMOJvoA8oKzZBlBKRhI4Z4UwGjznk6wYdiUAYBWiKOejlb53PcnMpQhQoTtCkPuox6GFfhgTgzc5JxaIhqwA9VSV0EG/Klt+kC8Pcif9nV83lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MX8BDT5p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DOf5JPhI9Yz2reVQjDExpusOLRV98jv6x7QXz33UBZhpwrAs+GrlxH6byhLEgjOM6LHs/+bYhWENjscTCXYLITjYavbdrjIZpfZadKlb/1BoIKy1lE+jEqIfxzMQTLOpEXV2N1jU9kSW1bctYvX1BqhcFHp6nMUoB0xVq/EM0yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Na6521Nn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MX8BDT5p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660C6C4CED1;
-	Thu, 13 Feb 2025 14:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Na6521Nn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C111AC4CED1;
+	Thu, 13 Feb 2025 14:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458443;
-	bh=sw0xRRw1PRR1vR8wVB99MaCZruPLPPZYT0fhj4BQTWU=;
+	s=korg; t=1739458447;
+	bh=g1NMqAIVZK02pU5qj1Yx6uYJZ42thvjnKBXhx4pjlqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MX8BDT5p/0CB0Ae9thmlAgKeOZ7GrZCtdzp871/dVxauxnfldFJiApmvWqpDMvAbX
-	 kmxHZdRsRwN5O/caEuuvPt4H2hWTabbVdrUv8Fm2Vwl5OJ8MtftSQ8bpKXPbWlTUIG
-	 2gHNGoj8UoU8GsDtytQMacg51/5dLd6NLlJiqpMc=
+	b=Na6521NnY/Of0npzkDrs2/cvO7ceOJYhXHN+YfMocnH+clPfr2B+QlR6BBGVtGd0p
+	 THvviTGytqD6FU2nfnr2oN1K4nStDEc45uW3cNdn2jJrpu5kDjRVyZQT7oAii21EGV
+	 US9LL11VXt/heixyk3Vh/6TJkOCXJSrmr+6GsmtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 6.12 400/422] xfs: separate dquot buffer reads from xfs_dqflush
-Date: Thu, 13 Feb 2025 15:29:09 +0100
-Message-ID: <20250213142451.984653733@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 370/422] fgraph: Fix set_graph_notrace with setting TRACE_GRAPH_NOTRACE_BIT
+Date: Thu, 13 Feb 2025 15:28:39 +0100
+Message-ID: <20250213142450.826780220@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -50,242 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit a40fe30868ba433ac08376e30132400bec067583 upstream
+commit c8c9b1d2d5b4377c72a979f5a26e842a869aefc9 upstream.
 
-The first step towards holding the dquot buffer in the li_buf instead of
-reading it in the AIL is to separate the part that reads the buffer from
-the actual flush code.  There should be no functional changes.
+The code was restructured where the function graph notrace code, that
+would not trace a function and all its children is done by setting a
+NOTRACE flag when the function that is not to be traced is hit.
 
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+There's a TRACE_GRAPH_NOTRACE_BIT which defines the bit in the flags and a
+TRACE_GRAPH_NOTRACE which is the mask with that bit set. But the
+restructuring used TRACE_GRAPH_NOTRACE_BIT when it should have used
+TRACE_GRAPH_NOTRACE.
+
+For example:
+
+ # cd /sys/kernel/tracing
+ # echo set_track_prepare stack_trace_save  > set_graph_notrace
+ # echo function_graph > current_tracer
+ # cat trace
+[..]
+ 0)               |                          __slab_free() {
+ 0)               |                            free_to_partial_list() {
+ 0)               |                                  arch_stack_walk() {
+ 0)               |                                    __unwind_start() {
+ 0)   0.501 us    |                                      get_stack_info();
+
+Where a non filter trace looks like:
+
+ # echo > set_graph_notrace
+ # cat trace
+ 0)               |                            free_to_partial_list() {
+ 0)               |                              set_track_prepare() {
+ 0)               |                                stack_trace_save() {
+ 0)               |                                  arch_stack_walk() {
+ 0)               |                                    __unwind_start() {
+
+Where the filter should look like:
+
+ # cat trace
+ 0)               |                            free_to_partial_list() {
+ 0)               |                              _raw_spin_lock_irqsave() {
+ 0)   0.350 us    |                                preempt_count_add();
+ 0)   0.351 us    |                                do_raw_spin_lock();
+ 0)   2.440 us    |                              }
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20250208001511.535be150@batman.local.home
+Fixes: b84214890a9bc ("function_graph: Move graph notrace bit to shadow stack global var")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_dquot.c      |   57 +++++++++++++++++++++++++++++++-----------------
- fs/xfs/xfs_dquot.h      |    4 ++-
- fs/xfs/xfs_dquot_item.c |   20 +++++++++++++---
- fs/xfs/xfs_qm.c         |   37 +++++++++++++++++++++++++------
- 4 files changed, 86 insertions(+), 32 deletions(-)
+ kernel/trace/trace_functions_graph.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
---- a/fs/xfs/xfs_dquot.c
-+++ b/fs/xfs/xfs_dquot.c
-@@ -1233,6 +1233,42 @@ xfs_qm_dqflush_check(
- }
- 
- /*
-+ * Get the buffer containing the on-disk dquot.
-+ *
-+ * Requires dquot flush lock, will clear the dirty flag, delete the quota log
-+ * item from the AIL, and shut down the system if something goes wrong.
-+ */
-+int
-+xfs_dquot_read_buf(
-+	struct xfs_trans	*tp,
-+	struct xfs_dquot	*dqp,
-+	struct xfs_buf		**bpp)
-+{
-+	struct xfs_mount	*mp = dqp->q_mount;
-+	struct xfs_buf		*bp = NULL;
-+	int			error;
-+
-+	error = xfs_trans_read_buf(mp, tp, mp->m_ddev_targp, dqp->q_blkno,
-+				   mp->m_quotainfo->qi_dqchunklen, XBF_TRYLOCK,
-+				   &bp, &xfs_dquot_buf_ops);
-+	if (error == -EAGAIN)
-+		return error;
-+	if (xfs_metadata_is_sick(error))
-+		xfs_dquot_mark_sick(dqp);
-+	if (error)
-+		goto out_abort;
-+
-+	*bpp = bp;
-+	return 0;
-+
-+out_abort:
-+	dqp->q_flags &= ~XFS_DQFLAG_DIRTY;
-+	xfs_trans_ail_delete(&dqp->q_logitem.qli_item, 0);
-+	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
-+	return error;
-+}
-+
-+/*
-  * Write a modified dquot to disk.
-  * The dquot must be locked and the flush lock too taken by caller.
-  * The flush lock will not be unlocked until the dquot reaches the disk,
-@@ -1243,11 +1279,10 @@ xfs_qm_dqflush_check(
- int
- xfs_qm_dqflush(
- 	struct xfs_dquot	*dqp,
--	struct xfs_buf		**bpp)
-+	struct xfs_buf		*bp)
- {
- 	struct xfs_mount	*mp = dqp->q_mount;
- 	struct xfs_log_item	*lip = &dqp->q_logitem.qli_item;
--	struct xfs_buf		*bp;
- 	struct xfs_dqblk	*dqblk;
- 	xfs_failaddr_t		fa;
- 	int			error;
-@@ -1257,28 +1292,12 @@ xfs_qm_dqflush(
- 
- 	trace_xfs_dqflush(dqp);
- 
--	*bpp = NULL;
--
- 	xfs_qm_dqunpin_wait(dqp);
- 
--	/*
--	 * Get the buffer containing the on-disk dquot
--	 */
--	error = xfs_trans_read_buf(mp, NULL, mp->m_ddev_targp, dqp->q_blkno,
--				   mp->m_quotainfo->qi_dqchunklen, XBF_TRYLOCK,
--				   &bp, &xfs_dquot_buf_ops);
--	if (error == -EAGAIN)
--		goto out_unlock;
--	if (xfs_metadata_is_sick(error))
--		xfs_dquot_mark_sick(dqp);
--	if (error)
--		goto out_abort;
--
- 	fa = xfs_qm_dqflush_check(dqp);
- 	if (fa) {
- 		xfs_alert(mp, "corrupt dquot ID 0x%x in memory at %pS",
- 				dqp->q_id, fa);
--		xfs_buf_relse(bp);
- 		xfs_dquot_mark_sick(dqp);
- 		error = -EFSCORRUPTED;
- 		goto out_abort;
-@@ -1328,14 +1347,12 @@ xfs_qm_dqflush(
- 	}
- 
- 	trace_xfs_dqflush_done(dqp);
--	*bpp = bp;
- 	return 0;
- 
- out_abort:
- 	dqp->q_flags &= ~XFS_DQFLAG_DIRTY;
- 	xfs_trans_ail_delete(lip, 0);
- 	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
--out_unlock:
- 	xfs_dqfunlock(dqp);
- 	return error;
- }
---- a/fs/xfs/xfs_dquot.h
-+++ b/fs/xfs/xfs_dquot.h
-@@ -204,7 +204,9 @@ void xfs_dquot_to_disk(struct xfs_disk_d
- #define XFS_DQ_IS_DIRTY(dqp)	((dqp)->q_flags & XFS_DQFLAG_DIRTY)
- 
- void		xfs_qm_dqdestroy(struct xfs_dquot *dqp);
--int		xfs_qm_dqflush(struct xfs_dquot *dqp, struct xfs_buf **bpp);
-+int		xfs_dquot_read_buf(struct xfs_trans *tp, struct xfs_dquot *dqp,
-+				struct xfs_buf **bpp);
-+int		xfs_qm_dqflush(struct xfs_dquot *dqp, struct xfs_buf *bp);
- void		xfs_qm_dqunpin_wait(struct xfs_dquot *dqp);
- void		xfs_qm_adjust_dqtimers(struct xfs_dquot *d);
- void		xfs_qm_adjust_dqlimits(struct xfs_dquot *d);
---- a/fs/xfs/xfs_dquot_item.c
-+++ b/fs/xfs/xfs_dquot_item.c
-@@ -155,14 +155,26 @@ xfs_qm_dquot_logitem_push(
- 
- 	spin_unlock(&lip->li_ailp->ail_lock);
- 
--	error = xfs_qm_dqflush(dqp, &bp);
-+	error = xfs_dquot_read_buf(NULL, dqp, &bp);
-+	if (error) {
-+		if (error == -EAGAIN)
-+			rval = XFS_ITEM_LOCKED;
-+		xfs_dqfunlock(dqp);
-+		goto out_relock_ail;
-+	}
-+
-+	/*
-+	 * dqflush completes dqflock on error, and the delwri ioend does it on
-+	 * success.
-+	 */
-+	error = xfs_qm_dqflush(dqp, bp);
- 	if (!error) {
- 		if (!xfs_buf_delwri_queue(bp, buffer_list))
- 			rval = XFS_ITEM_FLUSHING;
--		xfs_buf_relse(bp);
--	} else if (error == -EAGAIN)
--		rval = XFS_ITEM_LOCKED;
-+	}
-+	xfs_buf_relse(bp);
- 
-+out_relock_ail:
- 	spin_lock(&lip->li_ailp->ail_lock);
- out_unlock:
- 	xfs_dqunlock(dqp);
---- a/fs/xfs/xfs_qm.c
-+++ b/fs/xfs/xfs_qm.c
-@@ -146,17 +146,28 @@ xfs_qm_dqpurge(
- 		 * We don't care about getting disk errors here. We need
- 		 * to purge this dquot anyway, so we go ahead regardless.
- 		 */
--		error = xfs_qm_dqflush(dqp, &bp);
-+		error = xfs_dquot_read_buf(NULL, dqp, &bp);
-+		if (error == -EAGAIN) {
-+			xfs_dqfunlock(dqp);
-+			dqp->q_flags &= ~XFS_DQFLAG_FREEING;
-+			goto out_unlock;
-+		}
-+		if (error)
-+			goto out_funlock;
-+
-+		/*
-+		 * dqflush completes dqflock on error, and the bwrite ioend
-+		 * does it on success.
-+		 */
-+		error = xfs_qm_dqflush(dqp, bp);
- 		if (!error) {
- 			error = xfs_bwrite(bp);
- 			xfs_buf_relse(bp);
--		} else if (error == -EAGAIN) {
--			dqp->q_flags &= ~XFS_DQFLAG_FREEING;
--			goto out_unlock;
- 		}
- 		xfs_dqflock(dqp);
- 	}
- 
-+out_funlock:
- 	ASSERT(atomic_read(&dqp->q_pincount) == 0);
- 	ASSERT(xlog_is_shutdown(dqp->q_logitem.qli_item.li_log) ||
- 		!test_bit(XFS_LI_IN_AIL, &dqp->q_logitem.qli_item.li_flags));
-@@ -462,7 +473,17 @@ xfs_qm_dquot_isolate(
- 		/* we have to drop the LRU lock to flush the dquot */
- 		spin_unlock(lru_lock);
- 
--		error = xfs_qm_dqflush(dqp, &bp);
-+		error = xfs_dquot_read_buf(NULL, dqp, &bp);
-+		if (error) {
-+			xfs_dqfunlock(dqp);
-+			goto out_unlock_dirty;
-+		}
-+
-+		/*
-+		 * dqflush completes dqflock on error, and the delwri ioend
-+		 * does it on success.
-+		 */
-+		error = xfs_qm_dqflush(dqp, bp);
- 		if (error)
- 			goto out_unlock_dirty;
- 
-@@ -1287,11 +1308,13 @@ xfs_qm_flush_one(
- 		goto out_unlock;
- 	}
- 
--	error = xfs_qm_dqflush(dqp, &bp);
-+	error = xfs_dquot_read_buf(NULL, dqp, &bp);
- 	if (error)
- 		goto out_unlock;
- 
--	xfs_buf_delwri_queue(bp, buffer_list);
-+	error = xfs_qm_dqflush(dqp, bp);
-+	if (!error)
-+		xfs_buf_delwri_queue(bp, buffer_list);
- 	xfs_buf_relse(bp);
- out_unlock:
- 	xfs_dqunlock(dqp);
+--- a/kernel/trace/trace_functions_graph.c
++++ b/kernel/trace/trace_functions_graph.c
+@@ -150,7 +150,7 @@ int trace_graph_entry(struct ftrace_grap
+ 	 * returning from the function.
+ 	 */
+ 	if (ftrace_graph_notrace_addr(trace->func)) {
+-		*task_var |= TRACE_GRAPH_NOTRACE_BIT;
++		*task_var |= TRACE_GRAPH_NOTRACE;
+ 		/*
+ 		 * Need to return 1 to have the return called
+ 		 * that will clear the NOTRACE bit.
 
 
