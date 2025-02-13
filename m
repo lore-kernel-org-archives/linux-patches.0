@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953632222DC;
-	Thu, 13 Feb 2025 14:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1357A221710;
+	Thu, 13 Feb 2025 14:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458301; cv=none; b=iL+IpNpEwsKIbpsGMjfXJXiuh2bG4XjeyA5ilWXUXz6PRYd2a3KJu+aBlUL8LzWy6lkoaEKyWmGzmTMWM2PoolG9sjy02ti2JdDqhUhhruQ1X0oQB5i5KJ7J3fglKgOfeWBvk5tuBuiQu1kBHq0am4VmleuSTr63vskTyDainqE=
+	t=1739458305; cv=none; b=vCOgIeJnoO1HTehkH+8c1EU4u+c4aOaOXpHSPVbYDs4mWWPKqt+u9cZUAR1SN8Qofk3LAivE3r0lenRx1qRVybMMgBIvHhOmUT3NdDVBxc+yVWlx8jktj6P/mrqoPLZMXTWIDc9dKXTud6ZoqEq8zJGX02wZMzS6aicdJFrfzqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458301; c=relaxed/simple;
-	bh=nkjkTUJdN+rbzhVLOaNH4/izYAa8xhWROw6taGsHiG4=;
+	s=arc-20240116; t=1739458305; c=relaxed/simple;
+	bh=88niFh5+YPUIlzKdGRBn2tmw1HL0km4+K9rBJdHNH1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S2VMX2FP0aA9jOnyJAaDRCoFo1MGCR476WtcZA9qCnE40HzKdGqgKUvLwRPI0NZdfYr0xen9S6dftpbfwlLArDshOfY92k2fOFzHwigu3R8/OwlhKjnYPrBv4HIPu4AMXX53qN6JPCPqM1PH6FupqjFbdagYWfNTFMP674IAqvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JsIpAY+0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m+i50GNVahokKg4f7v8NOrtAR1OMX3l6IrkBxaiRlNuC7qraGgW/2I6GauofHe+bWXNnn6efApuKONKWroa7ukFl5Fv6Azhu53BJ1OlK4eDZg3GhQVAO0Vp6S9afN/zZUSDAjqF7nKvYdmNtT7DTwtNVoIj91Cj/Ix/5j/f80u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8vFkaIt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JsIpAY+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B45CC4CED1;
-	Thu, 13 Feb 2025 14:51:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8vFkaIt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B7EC4CED1;
+	Thu, 13 Feb 2025 14:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458301;
-	bh=nkjkTUJdN+rbzhVLOaNH4/izYAa8xhWROw6taGsHiG4=;
+	s=korg; t=1739458304;
+	bh=88niFh5+YPUIlzKdGRBn2tmw1HL0km4+K9rBJdHNH1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JsIpAY+0tozBbeHyjMF2tAklL8ugE2X0E8uiZpFMD1kEC1Q2XTS9oLZrbwdgxjp5Q
-	 95uTLqHOS4HnFZH/wDjSF3cIBExRApNfVQ7za0W5uLnKcZChRQge7eQAGXbbY60/Iu
-	 GKGzAhW4iS9obNo+BFaq61brg2J7EDI2V/GhUm+s=
+	b=K8vFkaItd0hDEaFx6RYynwhQ1n73lHyKO2sOSPfVb77VU26JZqafmLL6Kg35jCnOV
+	 VNB9Me8KHy1TaVzxPKn9Km+5bsp3PECqgwhe+0jXvgl0S6N7m4iOKhssv/0PljgOdj
+	 +kJs4Ni48IqQMiJvp+pheRlQiqXcz6Af/M9BRpHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mostafa Saleh <smostafa@google.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Alex Williamson <alex.williamson@redhat.com>
-Subject: [PATCH 6.12 359/422] vfio/platform: check the bounds of read/write syscalls
-Date: Thu, 13 Feb 2025 15:28:28 +0100
-Message-ID: <20250213142450.405091188@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 360/422] selftests: mptcp: connect: -f: no reconnect
+Date: Thu, 13 Feb 2025 15:28:29 +0100
+Message-ID: <20250213142450.443681183@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -45,58 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Williamson <alex.williamson@redhat.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit ce9ff21ea89d191e477a02ad7eabf4f996b80a69 upstream.
+commit 5368a67307b3b2c347dc8965ac55b888be665934 upstream.
 
-count and offset are passed from user space and not checked, only
-offset is capped to 40 bits, which can be used to read/write out of
-bounds of the device.
+The '-f' parameter is there to force the kernel to emit MPTCP FASTCLOSE
+by closing the connection with unread bytes in the receive queue.
 
-Fixes: 6e3f26456009 (“vfio/platform: read and write support for the device fd”)
+The xdisconnect() helper was used to stop the connection, but it does
+more than that: it will shut it down, then wait before reconnecting to
+the same address. This causes the mptcp_join's "fastclose test" to fail
+all the time.
+
+This failure is due to a recent change, with commit 218cc166321f
+("selftests: mptcp: avoid spurious errors on disconnect"), but that went
+unnoticed because the test is currently ignored. The recent modification
+only shown an existing issue: xdisconnect() doesn't need to be used
+here, only the shutdown() part is needed.
+
+Fixes: 6bf41020b72b ("selftests: mptcp: update and extend fastclose test-cases")
 Cc: stable@vger.kernel.org
-Reported-by: Mostafa Saleh <smostafa@google.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
-Tested-by: Mostafa Saleh <smostafa@google.com>
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250204-net-mptcp-sft-conn-f-v1-1-6b470c72fffa@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/platform/vfio_platform_common.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_connect.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/vfio/platform/vfio_platform_common.c
-+++ b/drivers/vfio/platform/vfio_platform_common.c
-@@ -393,6 +393,11 @@ static ssize_t vfio_platform_read_mmio(s
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
+@@ -1302,7 +1302,7 @@ again:
+ 		return ret;
  
- 	count = min_t(size_t, count, reg->size - off);
- 
-+	if (off >= reg->size)
-+		return -EINVAL;
-+
-+	count = min_t(size_t, count, reg->size - off);
-+
- 	if (!reg->ioaddr) {
- 		reg->ioaddr =
- 			ioremap(reg->addr, reg->size);
-@@ -474,6 +479,11 @@ static ssize_t vfio_platform_write_mmio(
- 
- 	if (off >= reg->size)
- 		return -EINVAL;
-+
-+	count = min_t(size_t, count, reg->size - off);
-+
-+	if (off >= reg->size)
-+		return -EINVAL;
- 
- 	count = min_t(size_t, count, reg->size - off);
+ 	if (cfg_truncate > 0) {
+-		xdisconnect(fd);
++		shutdown(fd, SHUT_WR);
+ 	} else if (--cfg_repeat > 0) {
+ 		xdisconnect(fd);
  
 
 
