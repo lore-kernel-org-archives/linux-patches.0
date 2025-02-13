@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FE726B0B4;
-	Thu, 13 Feb 2025 15:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F771422D8;
+	Thu, 13 Feb 2025 15:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460293; cv=none; b=gE1Ftc1w/X15jHpscTjQzzvp/sKUok9aoKvbL7olY6SEP13c2yujb4Cl0klZVBbd4aUxDFR7SMqfxtfM6qji0wJQ2KSFDf0ssnjFIe6ksyj/I/m49iqR6kTYhXBKWkfup0RJrqG+e4wqin2Lo3EkKG4aRHNs29UlYpP10gWW68Y=
+	t=1739460297; cv=none; b=WiIn1HakBmtq1/pWpx/9qWGub3e7UFT4TEMDxmIf1bplTgIlV2GhWp16x4oyoNvwtzCpSUxoyFkjW74Q+NoIjt5ojgHQ6y/XLffRgVB5o1X+29T98czuZEKRPpjOvT/GJ4dovBzTg1pNOgD7GQEjWu9w+k0MQpgKNvpi7Af6xtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460293; c=relaxed/simple;
-	bh=wn37DtkQdF5PXDHeFnQDUIsJF2XpTmVChlg+ml68lDU=;
+	s=arc-20240116; t=1739460297; c=relaxed/simple;
+	bh=YNPqjI7UFxUIGe8yQAjxiopsMYcjU5GW/Dak9HxTJns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qr7ZQ7XRAdWGtuvP42Kv2jKYqqz20EUoIt2wCxMDUQtHq/MHmhaHgmY5QzV/19Tp6d64i4Rw9WrPQBzIzpG7LSpgzToGAGn+fAblVMNbfA+pHFIQ/uY5xl0hirFkMZMKoOo05Moi7xm+dnRvscMhlrzZnLIGaI71MRXaReImALc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrp4YQcv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dsMJkdv6egQeTKiH2igmiVg/uCxUiirCPUgmqu0ghk8WmAcSj2n+RPJq5QMVWkpcYW7A4XRkDAeH2BmtTWIn3HVMCIMrWt4N9l/nam14saOu+QhAsGTT1pObVy5S6ryOFnJ7atHNfJqHLxVyo2PFV2uEebasOVSD6LpzDxBva6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9uVJwfr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrp4YQcv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D53EC4CED1;
-	Thu, 13 Feb 2025 15:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9uVJwfr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DBA4C4CED1;
+	Thu, 13 Feb 2025 15:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460293;
-	bh=wn37DtkQdF5PXDHeFnQDUIsJF2XpTmVChlg+ml68lDU=;
+	s=korg; t=1739460297;
+	bh=YNPqjI7UFxUIGe8yQAjxiopsMYcjU5GW/Dak9HxTJns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jrp4YQcvHUmJOpmsWdlPJTgyGpAtSiMxc/syn24vDcOmNO2JBuiLXphbYmuQUQnh/
-	 5kz0p/XCfUlnJOtgNPTRek5YzsbeJ9j5o3DlN+570xiHuxkdW2j/A8VIXgOYV7uFzJ
-	 2umaBga4EpFZfu/6yoDz5ZDmPkh1oABYMa+R2dns=
+	b=d9uVJwfrJO6gQEL0kqArt2X1ff2DIaDIlDTdXWe0xb4yO9/kMglrnaEemY1gKuLs6
+	 dRLmZrmtBgZHY678wQljrywlA/pFKDSB9hxw8TlTxyoescDPxvKKwDPVALIVO+kukY
+	 H9GMplOENO8fOlluRBU2MOPXauLm1AC6nvKD85/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Stas Sergeev <stsp2@yandex.ru>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/273] wifi: iwlwifi: avoid memory leak
-Date: Thu, 13 Feb 2025 15:26:50 +0100
-Message-ID: <20250213142408.860815214@linuxfoundation.org>
+Subject: [PATCH 6.6 029/273] tun: fix group permission check
+Date: Thu, 13 Feb 2025 15:26:41 +0100
+Message-ID: <20250213142408.508433501@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -51,67 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Stas Sergeev <stsp2@yandex.ru>
 
-[ Upstream commit 80e96206a3ef348fbd658d98f2f43149c36df8bc ]
+[ Upstream commit 3ca459eaba1bf96a8c7878de84fa8872259a01e3 ]
 
-A caller of iwl_acpi_get_dsm_object must free the returned object.
-iwl_acpi_get_dsm_integer returns immediately without freeing
-it if the expected size is more than 8 bytes. Fix that.
+Currently tun checks the group permission even if the user have matched.
+Besides going against the usual permission semantic, this has a
+very interesting implication: if the tun group is not among the
+supplementary groups of the tun user, then effectively no one can
+access the tun device. CAP_SYS_ADMIN still can, but its the same as
+not setting the tun ownership.
 
-Note that with the current code this will never happen, since the caller
-of iwl_acpi_get_dsm_integer already checks that the expected size if
-either 1 or 4 bytes, so it can't exceed 8 bytes.
+This patch relaxes the group checking so that either the user match
+or the group match is enough. This avoids the situation when no one
+can access the device even though the ownership is properly set.
 
-While at it, print the DSM value instead of the return value, as this
-was the intention in the first place.
+Also I simplified the logic by removing the redundant inversions:
+tun_not_capable() --> !tun_capable()
 
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20241228223206.bf61eaab99f8.Ibdc5df02f885208c222456d42c889c43b7e3b2f7@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Stas Sergeev <stsp2@yandex.ru>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://patch.msgid.link/20241205073614.294773-1-stsp2@yandex.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/net/tun.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-index 9943e2d21a8f5..e72f238ff7b23 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-@@ -155,7 +155,7 @@ static int iwl_acpi_get_dsm_integer(struct device *dev, int rev, int func,
- 				    size_t expected_size)
- {
- 	union acpi_object *obj;
--	int ret = 0;
-+	int ret;
- 
- 	obj = iwl_acpi_get_dsm_object(dev, rev, func, NULL, guid);
- 	if (IS_ERR(obj)) {
-@@ -170,8 +170,10 @@ static int iwl_acpi_get_dsm_integer(struct device *dev, int rev, int func,
- 	} else if (obj->type == ACPI_TYPE_BUFFER) {
- 		__le64 le_value = 0;
- 
--		if (WARN_ON_ONCE(expected_size > sizeof(le_value)))
--			return -EINVAL;
-+		if (WARN_ON_ONCE(expected_size > sizeof(le_value))) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
- 
- 		/* if the buffer size doesn't match the expected size */
- 		if (obj->buffer.length != expected_size)
-@@ -192,8 +194,9 @@ static int iwl_acpi_get_dsm_integer(struct device *dev, int rev, int func,
- 	}
- 
- 	IWL_DEBUG_DEV_RADIO(dev,
--			    "ACPI: DSM method evaluated: func=%d, ret=%d\n",
--			    func, ret);
-+			    "ACPI: DSM method evaluated: func=%d, value=%lld\n",
-+			    func, *value);
-+	ret = 0;
- out:
- 	ACPI_FREE(obj);
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index cbb2f78ffde03..c84a749c52d12 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -574,14 +574,18 @@ static u16 tun_select_queue(struct net_device *dev, struct sk_buff *skb,
  	return ret;
+ }
+ 
+-static inline bool tun_not_capable(struct tun_struct *tun)
++static inline bool tun_capable(struct tun_struct *tun)
+ {
+ 	const struct cred *cred = current_cred();
+ 	struct net *net = dev_net(tun->dev);
+ 
+-	return ((uid_valid(tun->owner) && !uid_eq(cred->euid, tun->owner)) ||
+-		  (gid_valid(tun->group) && !in_egroup_p(tun->group))) &&
+-		!ns_capable(net->user_ns, CAP_NET_ADMIN);
++	if (ns_capable(net->user_ns, CAP_NET_ADMIN))
++		return 1;
++	if (uid_valid(tun->owner) && uid_eq(cred->euid, tun->owner))
++		return 1;
++	if (gid_valid(tun->group) && in_egroup_p(tun->group))
++		return 1;
++	return 0;
+ }
+ 
+ static void tun_set_real_num_queues(struct tun_struct *tun)
+@@ -2778,7 +2782,7 @@ static int tun_set_iff(struct net *net, struct file *file, struct ifreq *ifr)
+ 		    !!(tun->flags & IFF_MULTI_QUEUE))
+ 			return -EINVAL;
+ 
+-		if (tun_not_capable(tun))
++		if (!tun_capable(tun))
+ 			return -EPERM;
+ 		err = security_tun_dev_open(tun->security);
+ 		if (err < 0)
 -- 
 2.39.5
 
