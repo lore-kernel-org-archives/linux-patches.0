@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839361946C7;
-	Thu, 13 Feb 2025 15:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C72A143736;
+	Thu, 13 Feb 2025 15:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460407; cv=none; b=Rq5971z1UVS+jbwjmJqs3177KuqnCRlzGpXfCt+WWK4u2ngl9riSvIUUCkpXaOR9uiAYbaAB3EMrnyi/+WB6ZJG4JeBziBYc1O9Pz7iVjler7mtjnZuriLVL2tMykR3V2c8mn/NDvx6aDs5O43dG/e2vxZaj6/YWhbrThkrDHpg=
+	t=1739460411; cv=none; b=LVKVMquHKO7urXDTVAQUUeFdJxDdcDTf7IgMgGV/ECjhWb26VQKq0OhbObUptHbMUh29Q8NJLZdOutgPn+7HfdEHLsnz4amWVtVCwQwq2hTp3DVeNuj83PiKiMmwWul3LDk7Jcl/S3RtaCpSrA228pWdHJDwi6uXRCTjrOdWHMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460407; c=relaxed/simple;
-	bh=1ZeQak/eAiLDVtZ/kCix3cPh6gbju3t8v5DfFmP66eA=;
+	s=arc-20240116; t=1739460411; c=relaxed/simple;
+	bh=26AXXzcCX74Q/TkTZvRc46QmXNiPQEj2kSIPmrDgHj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eNEIUfsEyGB/7tzQQKEHNhsNSsDLyn/HqeruL4/qPU+qDy/x7fIBRMJ8+/xaaraiHLK1dxLsD3GLPQC2hqjUx8hUiCzhMRZjXFFDLeu+HEfYhty3nQ+9X7z1ooC16Y1suO9QBZgO+bHFh8G17r29cS8tO+MKZnRkViOBr00EtWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIBqIbjt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TzMTHGSwvtsGCJ+5hsaEfmQuNnoAtWBJiEArlC/JQpMzkRLYJ0q/GHvDjldJ4PtwMUGyP5MBPk7YZf4WI0GDi27NrW6uGYiuOoPCHoTq6SQPc6UBMHzNmDUk2Y9b7OIESd776SRmhyE2pRX3bjNdpALm3DUCJL+Y1zOlXMqE3Sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szK2JBNs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIBqIbjt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F8FC4CED1;
-	Thu, 13 Feb 2025 15:26:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szK2JBNs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6872AC4CED1;
+	Thu, 13 Feb 2025 15:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460407;
-	bh=1ZeQak/eAiLDVtZ/kCix3cPh6gbju3t8v5DfFmP66eA=;
+	s=korg; t=1739460410;
+	bh=26AXXzcCX74Q/TkTZvRc46QmXNiPQEj2kSIPmrDgHj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bIBqIbjt5vEdISM6nHvFhEoS5bEB4VHKJQSraaQ8rzfKwDFSKmdP8qVyqAd3lbisA
-	 fQbwuZc8387sgebM2tUqgoimNpAv3qwyL796s0FGA+B+2YGr/nGY8ev1KzUiJ1drgN
-	 ygIR5M+/Y098BkGkqIcNcWXS0M8d9IoDt2l7rC5I=
+	b=szK2JBNsgjdwYSf3uz5Zq8ZB5yEgY9nNo22W1m33FAVLTv3M+2IeOQHBb4d7a/0gL
+	 xrvTqnhFrWL4RXSI+qyaIG1PGchatcxGqYer5QXJdGDpfUmWZGqE5dw8PL2Wq9MKyP
+	 KV3PPhpTR0IZr1mL4ncR5d/UZyVkd64Hp/eKkJNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <mail@jakemoroni.com>,
-	Igor Russkikh <irusskikh@marvell.com>,
-	Simon Horman <horms@kernel.org>,
+	syzbot+7ff41b5215f0c534534e@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/273] net: atlantic: fix warning during hot unplug
-Date: Thu, 13 Feb 2025 15:27:24 +0100
-Message-ID: <20250213142410.196423425@linuxfoundation.org>
+Subject: [PATCH 6.6 073/273] net: rose: lock the socket in rose_bind()
+Date: Thu, 13 Feb 2025 15:27:25 +0100
+Message-ID: <20250213142410.234507514@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -53,69 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <mail@jakemoroni.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 028676bb189ed6d1b550a0fc570a9d695b6acfd3 ]
+[ Upstream commit a1300691aed9ee852b0a9192e29e2bdc2411a7e6 ]
 
-Firmware deinitialization performs MMIO accesses which are not
-necessary if the device has already been removed. In some cases,
-these accesses happen via readx_poll_timeout_atomic which ends up
-timing out, resulting in a warning at hw_atl2_utils_fw.c:112:
+syzbot reported a soft lockup in rose_loopback_timer(),
+with a repro calling bind() from multiple threads.
 
-[  104.595913] Call Trace:
-[  104.595915]  <TASK>
-[  104.595918]  ? show_regs+0x6c/0x80
-[  104.595923]  ? __warn+0x8d/0x150
-[  104.595925]  ? aq_a2_fw_deinit+0xcf/0xe0 [atlantic]
-[  104.595934]  ? report_bug+0x182/0x1b0
-[  104.595938]  ? handle_bug+0x6e/0xb0
-[  104.595940]  ? exc_invalid_op+0x18/0x80
-[  104.595942]  ? asm_exc_invalid_op+0x1b/0x20
-[  104.595944]  ? aq_a2_fw_deinit+0xcf/0xe0 [atlantic]
-[  104.595952]  ? aq_a2_fw_deinit+0xcf/0xe0 [atlantic]
-[  104.595959]  aq_nic_deinit.part.0+0xbd/0xf0 [atlantic]
-[  104.595964]  aq_nic_deinit+0x17/0x30 [atlantic]
-[  104.595970]  aq_ndev_close+0x2b/0x40 [atlantic]
-[  104.595975]  __dev_close_many+0xad/0x160
-[  104.595978]  dev_close_many+0x99/0x170
-[  104.595979]  unregister_netdevice_many_notify+0x18b/0xb20
-[  104.595981]  ? __call_rcu_common+0xcd/0x700
-[  104.595984]  unregister_netdevice_queue+0xc6/0x110
-[  104.595986]  unregister_netdev+0x1c/0x30
-[  104.595988]  aq_pci_remove+0xb1/0xc0 [atlantic]
+rose_bind() must lock the socket to avoid this issue.
 
-Fix this by skipping firmware deinitialization altogether if the
-PCI device is no longer present.
-
-Tested with an AQC113 attached via Thunderbolt by performing
-repeated unplug cycles while traffic was running via iperf.
-
-Fixes: 97bde5c4f909 ("net: ethernet: aquantia: Support for NIC-specific code")
-Signed-off-by: Jacob Moroni <mail@jakemoroni.com>
-Reviewed-by: Igor Russkikh <irusskikh@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250203143604.24930-3-mail@jakemoroni.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+7ff41b5215f0c534534e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/67a0f78d.050a0220.d7c5a.00a0.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20250203170838.3521361-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_nic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/rose/af_rose.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_nic.c b/drivers/net/ethernet/aquantia/atlantic/aq_nic.c
-index d6d6d5d37ff3e..c9b0d57696a48 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_nic.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_nic.c
-@@ -1441,7 +1441,9 @@ void aq_nic_deinit(struct aq_nic_s *self, bool link_down)
- 	aq_ptp_ring_free(self);
- 	aq_ptp_free(self);
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 342823b918e7c..66e9ceaaa43a1 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -701,11 +701,9 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+ 	struct net_device *dev;
+ 	ax25_address *source;
+ 	ax25_uid_assoc *user;
++	int err = -EINVAL;
+ 	int n;
  
--	if (likely(self->aq_fw_ops->deinit) && link_down) {
-+	/* May be invoked during hot unplug. */
-+	if (pci_device_is_present(self->pdev) &&
-+	    likely(self->aq_fw_ops->deinit) && link_down) {
- 		mutex_lock(&self->fwreq_mutex);
- 		self->aq_fw_ops->deinit(self->aq_hw);
- 		mutex_unlock(&self->fwreq_mutex);
+-	if (!sock_flag(sk, SOCK_ZAPPED))
+-		return -EINVAL;
+-
+ 	if (addr_len != sizeof(struct sockaddr_rose) && addr_len != sizeof(struct full_sockaddr_rose))
+ 		return -EINVAL;
+ 
+@@ -718,8 +716,15 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+ 	if ((unsigned int) addr->srose_ndigis > ROSE_MAX_DIGIS)
+ 		return -EINVAL;
+ 
+-	if ((dev = rose_dev_get(&addr->srose_addr)) == NULL)
+-		return -EADDRNOTAVAIL;
++	lock_sock(sk);
++
++	if (!sock_flag(sk, SOCK_ZAPPED))
++		goto out_release;
++
++	err = -EADDRNOTAVAIL;
++	dev = rose_dev_get(&addr->srose_addr);
++	if (!dev)
++		goto out_release;
+ 
+ 	source = &addr->srose_call;
+ 
+@@ -730,7 +735,8 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+ 	} else {
+ 		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
+ 			dev_put(dev);
+-			return -EACCES;
++			err = -EACCES;
++			goto out_release;
+ 		}
+ 		rose->source_call   = *source;
+ 	}
+@@ -753,8 +759,10 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+ 	rose_insert_socket(sk);
+ 
+ 	sock_reset_flag(sk, SOCK_ZAPPED);
+-
+-	return 0;
++	err = 0;
++out_release:
++	release_sock(sk);
++	return err;
+ }
+ 
+ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_len, int flags)
 -- 
 2.39.5
 
