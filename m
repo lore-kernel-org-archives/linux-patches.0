@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5876924168A;
-	Thu, 13 Feb 2025 14:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DC32A1D1;
+	Thu, 13 Feb 2025 14:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458237; cv=none; b=UOSId654Deq2q/aOSEguMRAkn0Zhb9q03Ktg0BOl3vFGbgOs5JpJ+66fEnz90OhpW+swjy3KOwarKAVTwNuLpcMawv6Ur1k7sJz1pwNLJUxE0jA8X5GO3WnB/yjzoAhPW9LG4FuTezR7zpTcaJOn90qZ+sWELE4Ej2kbWrYxpIM=
+	t=1739458240; cv=none; b=UArAiLRcH0sfqUnAV919xGJquB90XgW3solh1DMjvwWZe8JcTHV1RQGbprZUD6PaMPuS+Em4KnmxmcjtrsNrKU2brF9zXnzCi54cc19bP2O++JBSluIldleWV1hBgYGzQQDHM08F9gxqhLgrATXfL/F5TQLxhRPY6k0GiBsUwew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458237; c=relaxed/simple;
-	bh=Btq3ZJOO4ppscKNfOIdcHboyLHI/NVgq9jlh4dGmDts=;
+	s=arc-20240116; t=1739458240; c=relaxed/simple;
+	bh=NECLSObHoS7zeUidH5DrmMCVm4FUDTsiLBpX1ENv/+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m+KjbW6FvdzeVdjsfGH+cbnyaAewqFTLBxxUFxc9WOAt+Vyjz67wK8WUG23L39WPd1t0vVd5NKLrwukLE7GK5hiyoGLk4bXik8s8mQkf+CeAttZNGVrbkL4dkXUhsEROaz07o/cgGom6fnbhH9LtupMD19zbTe6KxIdqrP4CdIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCXOUAr2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQds2SGOuPt+nCzNhm+U90HKGuSIjDy6aU/SXuw+r1nYYRby04JSAXhwwcY9gk2YZLTTyGGMFj+zdTTJ0ajC81akGbs45EJCvjFW2ZxnIOYqUFWw8nvX/0O2U0JdCPk4loxlZezlrQu1pKsebHxo0yH+BXwHGXuXCg9zF9l8/j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPsvpH25; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCXOUAr2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE41C4CEE4;
-	Thu, 13 Feb 2025 14:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPsvpH25"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75793C4CED1;
+	Thu, 13 Feb 2025 14:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458236;
-	bh=Btq3ZJOO4ppscKNfOIdcHboyLHI/NVgq9jlh4dGmDts=;
+	s=korg; t=1739458239;
+	bh=NECLSObHoS7zeUidH5DrmMCVm4FUDTsiLBpX1ENv/+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCXOUAr2otimNzzzEltAMmAqrHVJgy0+yq8Wz+LLwA/Xg3hxPajQ87cMviyzk4V2O
-	 zx5fLo/uaw1hxEUgUTtHr3sBoI7XC4TP4Xv/0lTOKVN2QlQsIBf4l/7iiV/yW/LHYb
-	 ZLINC76ZDXNCYOfdBxrU6eTqBPXQLBkgU0B0c6Q4=
+	b=WPsvpH25b3zDWkvnxIvDQx5hCIw1HaRNoARvtrMrs4UqfYtiN0aeqDlcPg89kp9jA
+	 mVl7ohDntN2V6qewbg/QZZ0M/eEkmyaI2YnUB4up5IfrHaUxfOCuK9yBudXGd9cp3Q
+	 QP+tamu3p/OeY5NmegwQ++oJEv/1kdHEm4OSprgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jai Luthra <jai.luthra@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.12 333/422] media: i2c: ds90ub960: Fix logging SP & EQ status only for UB9702
-Date: Thu, 13 Feb 2025 15:28:02 +0100
-Message-ID: <20250213142449.404712211@linuxfoundation.org>
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Kaiyang Zhao <kaiyang2@cs.cmu.edu>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 342/422] mm/vmscan: accumulate nr_demoted for accurate demotion statistics
+Date: Thu, 13 Feb 2025 15:28:11 +0100
+Message-ID: <20250213142449.752680518@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,138 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-commit 42d0ec194aa12e9b97f09a94fe565ba2e5f631a2 upstream.
+commit a479b078fddb0ad7f9e3c6da22d9cf8f2b5c7799 upstream.
 
-UB9702 does not have SP and EQ registers, but the driver uses them in
-log_status(). Fix this by separating the SP and EQ related log_status()
-work into a separate function (for clarity) and calling that function
-only for UB960.
+In shrink_folio_list(), demote_folio_list() can be called 2 times.
+Currently stat->nr_demoted will only store the last nr_demoted( the later
+nr_demoted is always zero, the former nr_demoted will get lost), as a
+result number of demoted pages is not accurate.
 
-Cc: stable@vger.kernel.org
-Fixes: afe267f2d368 ("media: i2c: add DS90UB960 driver")
-Reviewed-by: Jai Luthra <jai.luthra@ideasonboard.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Accumulate the nr_demoted count across multiple calls to
+demote_folio_list(), ensuring accurate reporting of demotion statistics.
+
+[lizhijian@fujitsu.com: introduce local nr_demoted to fix nr_reclaimed double counting]
+  Link: https://lkml.kernel.org/r/20250111015253.425693-1-lizhijian@fujitsu.com
+Link: https://lkml.kernel.org/r/20250110122133.423481-1-lizhijian@fujitsu.com
+Fixes: f77f0c751478 ("mm,memcg: provide per-cgroup counters for NUMA balancing operations")
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Acked-by: Kaiyang Zhao <kaiyang2@cs.cmu.edu>
+Tested-by: Donet Tom <donettom@linux.ibm.com>
+Reviewed-by: Donet Tom <donettom@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ds90ub960.c |   90 +++++++++++++++++++++++-------------------
- 1 file changed, 50 insertions(+), 40 deletions(-)
+ mm/vmscan.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/media/i2c/ds90ub960.c
-+++ b/drivers/media/i2c/ds90ub960.c
-@@ -2950,6 +2950,54 @@ static const struct v4l2_subdev_pad_ops
- 	.set_fmt = ub960_set_fmt,
- };
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -1053,7 +1053,7 @@ static unsigned int shrink_folio_list(st
+ 	struct folio_batch free_folios;
+ 	LIST_HEAD(ret_folios);
+ 	LIST_HEAD(demote_folios);
+-	unsigned int nr_reclaimed = 0;
++	unsigned int nr_reclaimed = 0, nr_demoted = 0;
+ 	unsigned int pgactivate = 0;
+ 	bool do_demote_pass;
+ 	struct swap_iocb *plug = NULL;
+@@ -1522,8 +1522,9 @@ keep:
+ 	/* 'folio_list' is always empty here */
  
-+static void ub960_log_status_ub960_sp_eq(struct ub960_data *priv,
-+					 unsigned int nport)
-+{
-+	struct device *dev = &priv->client->dev;
-+	u8 eq_level;
-+	s8 strobe_pos;
-+	u8 v = 0;
-+
-+	/* Strobe */
-+
-+	ub960_read(priv, UB960_XR_AEQ_CTL1, &v);
-+
-+	dev_info(dev, "\t%s strobe\n",
-+		 (v & UB960_XR_AEQ_CTL1_AEQ_SFILTER_EN) ? "Adaptive" :
-+							  "Manual");
-+
-+	if (v & UB960_XR_AEQ_CTL1_AEQ_SFILTER_EN) {
-+		ub960_read(priv, UB960_XR_SFILTER_CFG, &v);
-+
-+		dev_info(dev, "\tStrobe range [%d, %d]\n",
-+			 ((v >> UB960_XR_SFILTER_CFG_SFILTER_MIN_SHIFT) & 0xf) - 7,
-+			 ((v >> UB960_XR_SFILTER_CFG_SFILTER_MAX_SHIFT) & 0xf) - 7);
-+	}
-+
-+	ub960_rxport_get_strobe_pos(priv, nport, &strobe_pos);
-+
-+	dev_info(dev, "\tStrobe pos %d\n", strobe_pos);
-+
-+	/* EQ */
-+
-+	ub960_rxport_read(priv, nport, UB960_RR_AEQ_BYPASS, &v);
-+
-+	dev_info(dev, "\t%s EQ\n",
-+		 (v & UB960_RR_AEQ_BYPASS_ENABLE) ? "Manual" :
-+						    "Adaptive");
-+
-+	if (!(v & UB960_RR_AEQ_BYPASS_ENABLE)) {
-+		ub960_rxport_read(priv, nport, UB960_RR_AEQ_MIN_MAX, &v);
-+
-+		dev_info(dev, "\tEQ range [%u, %u]\n",
-+			 (v >> UB960_RR_AEQ_MIN_MAX_AEQ_FLOOR_SHIFT) & 0xf,
-+			 (v >> UB960_RR_AEQ_MIN_MAX_AEQ_MAX_SHIFT) & 0xf);
-+	}
-+
-+	if (ub960_rxport_get_eq_level(priv, nport, &eq_level) == 0)
-+		dev_info(dev, "\tEQ level %u\n", eq_level);
-+}
-+
- static int ub960_log_status(struct v4l2_subdev *sd)
- {
- 	struct ub960_data *priv = sd_to_ub960(sd);
-@@ -2997,8 +3045,6 @@ static int ub960_log_status(struct v4l2_
- 
- 	for (nport = 0; nport < priv->hw_data->num_rxports; nport++) {
- 		struct ub960_rxport *rxport = priv->rxports[nport];
--		u8 eq_level;
--		s8 strobe_pos;
- 		unsigned int i;
- 
- 		dev_info(dev, "RX %u\n", nport);
-@@ -3034,44 +3080,8 @@ static int ub960_log_status(struct v4l2_
- 		ub960_rxport_read(priv, nport, UB960_RR_CSI_ERR_COUNTER, &v);
- 		dev_info(dev, "\tcsi_err_counter %u\n", v);
- 
--		/* Strobe */
--
--		ub960_read(priv, UB960_XR_AEQ_CTL1, &v);
--
--		dev_info(dev, "\t%s strobe\n",
--			 (v & UB960_XR_AEQ_CTL1_AEQ_SFILTER_EN) ? "Adaptive" :
--								  "Manual");
--
--		if (v & UB960_XR_AEQ_CTL1_AEQ_SFILTER_EN) {
--			ub960_read(priv, UB960_XR_SFILTER_CFG, &v);
--
--			dev_info(dev, "\tStrobe range [%d, %d]\n",
--				 ((v >> UB960_XR_SFILTER_CFG_SFILTER_MIN_SHIFT) & 0xf) - 7,
--				 ((v >> UB960_XR_SFILTER_CFG_SFILTER_MAX_SHIFT) & 0xf) - 7);
--		}
--
--		ub960_rxport_get_strobe_pos(priv, nport, &strobe_pos);
--
--		dev_info(dev, "\tStrobe pos %d\n", strobe_pos);
--
--		/* EQ */
--
--		ub960_rxport_read(priv, nport, UB960_RR_AEQ_BYPASS, &v);
--
--		dev_info(dev, "\t%s EQ\n",
--			 (v & UB960_RR_AEQ_BYPASS_ENABLE) ? "Manual" :
--							    "Adaptive");
--
--		if (!(v & UB960_RR_AEQ_BYPASS_ENABLE)) {
--			ub960_rxport_read(priv, nport, UB960_RR_AEQ_MIN_MAX, &v);
--
--			dev_info(dev, "\tEQ range [%u, %u]\n",
--				 (v >> UB960_RR_AEQ_MIN_MAX_AEQ_FLOOR_SHIFT) & 0xf,
--				 (v >> UB960_RR_AEQ_MIN_MAX_AEQ_MAX_SHIFT) & 0xf);
--		}
--
--		if (ub960_rxport_get_eq_level(priv, nport, &eq_level) == 0)
--			dev_info(dev, "\tEQ level %u\n", eq_level);
-+		if (!priv->hw_data->is_ub9702)
-+			ub960_log_status_ub960_sp_eq(priv, nport);
- 
- 		/* GPIOs */
- 		for (i = 0; i < UB960_NUM_BC_GPIOS; i++) {
+ 	/* Migrate folios selected for demotion */
+-	stat->nr_demoted = demote_folio_list(&demote_folios, pgdat);
+-	nr_reclaimed += stat->nr_demoted;
++	nr_demoted = demote_folio_list(&demote_folios, pgdat);
++	nr_reclaimed += nr_demoted;
++	stat->nr_demoted += nr_demoted;
+ 	/* Folios that could not be demoted are still in @demote_folios */
+ 	if (!list_empty(&demote_folios)) {
+ 		/* Folios which weren't demoted go back on @folio_list */
 
 
