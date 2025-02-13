@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BCC61946C7;
-	Thu, 13 Feb 2025 15:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167C9335BA;
+	Thu, 13 Feb 2025 15:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460154; cv=none; b=h8U2NZ07BREQ/WlNINCFXy8RvaxQI5Ag6XzcwZ+fouO+TadsbPfIlSxs/T+osk9oTzNcVgepPB77dkO7Rya9v/eGs9rOg1+fxs1/lPZKY4pA2E/8Nzt0HbyFy+/KhIeOqww7Cko1enrUBIvYOkEXrC3OE4zTB9ScGuJQ6pjKgNA=
+	t=1739460158; cv=none; b=rRqz0SLp0ltv6PXaFo1RL8UI1QjfrC2sJkgGDA1MLK3scr7fIV02bzDLriy7iT5/IBOXGb5+sqIg+sDVwxIapbWlHturd6lT7J4v3xO2MOCoUh5PXc+3TvvwvPk1vbj0EiLxiMLtSnCf3stfofi1QJ+WTIex0/XxQ7OFvhQtLu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460154; c=relaxed/simple;
-	bh=HEDbKtGN13Wr6r1JmZ2UKL0uimhE9WT1uLJMbnjihCo=;
+	s=arc-20240116; t=1739460158; c=relaxed/simple;
+	bh=ucucFfSD1EwT17bLwMDVCTRxCtXsVkC3X35dgl09nxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OFiLRBWrePcjV0CR2AKC0hqr4YnljS9vUCdh9f/MGsxwACTtCKk1mWW9uLX+Kefr7MegPKgdBWm7hmptgO3PN4d0i/E1dI6BcUV047fx8wJqf9XELzSMStQAkzksL6NwNmdwKjs/BQkLVfF2/4UjFg5UyznTd1cX1J0npm89m6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLbACafs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RImf6WRIr5s+5UzZx95BGuXWYEionYRlJfZPgb9fRBSqnP2O2S4QnkjuI2e2iH7xNg8VXN+Dyxs0FDN6yNiwaA1GNWXaMgM0XNNJVj+/jXtNUIen0YliLdJ2ULVCmFR69ZxjLdRCDuz1ghfECF6WmUXzZenddA5CEez4Z9uqq/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqxJRSTZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLbACafs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D0FC4CED1;
-	Thu, 13 Feb 2025 15:22:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqxJRSTZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5B4C4CED1;
+	Thu, 13 Feb 2025 15:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460154;
-	bh=HEDbKtGN13Wr6r1JmZ2UKL0uimhE9WT1uLJMbnjihCo=;
+	s=korg; t=1739460158;
+	bh=ucucFfSD1EwT17bLwMDVCTRxCtXsVkC3X35dgl09nxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VLbACafswl/LpYsrWeyOsjiRrhzmUXXPr5+PCjmtJtTITvwPBRRqt/bsib7ZCaMn+
-	 5TRGWOmCn/L2s4vktU54JHog1T8R0HOTpZn4z7KFJQaSvEyt5jWIes7/8KriaPTDOy
-	 AFZTna/KJj69uMZJI4jRsHlnIZ4bp+a+orRjHfpo=
+	b=wqxJRSTZQyP0TPPi1SA1SQvBsMI9Rs6Y0CYsq5IeXy/JK9WaT1GVX20bARdDGAxjI
+	 8jOHpyQnNfMhmJ4mpcBoxrNfqTJzIVbfbliYsXApyL1VvijIjiGnlrlBRDTCeK1loG
+	 CXkLYYXN+MFWHCJ8guXzqtxX84RYpqS+lSZlJjAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
-	Tycho Andersen <tandersen@netflix.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Kees Cook <kees@kernel.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/273] exec: fix up /proc/pid/comm in the execveat(AT_EMPTY_PATH) case
-Date: Thu, 13 Feb 2025 15:26:16 +0100
-Message-ID: <20250213142407.532115729@linuxfoundation.org>
+Subject: [PATCH 6.6 005/273] s390/stackleak: Use exrl instead of ex in __stackleak_poison()
+Date: Thu, 13 Feb 2025 15:26:17 +0100
+Message-ID: <20250213142407.569845380@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -49,112 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit 543841d1806029889c2f69f040e88b247aba8e22 ]
+[ Upstream commit a88c26bb8e04ee5f2678225c0130a5fbc08eef85 ]
 
-Zbigniew mentioned at Linux Plumber's that systemd is interested in
-switching to execveat() for service execution, but can't, because the
-contents of /proc/pid/comm are the file descriptor which was used,
-instead of the path to the binary[1]. This makes the output of tools like
-top and ps useless, especially in a world where most fds are opened
-CLOEXEC so the number is truly meaningless.
+exrl is present in all machines currently supported, therefore prefer
+it over ex. This saves one instruction and doesn't need an additional
+register to hold the address of the target instruction.
 
-When the filename passed in is empty (e.g. with AT_EMPTY_PATH), use the
-dentry's filename for "comm" instead of using the useless numeral from
-the synthetic fdpath construction. This way the actual exec machinery
-is unchanged, but cosmetically the comm looks reasonable to admins
-investigating things.
-
-Instead of adding TASK_COMM_LEN more bytes to bprm, use one of the unused
-flag bits to indicate that we need to set "comm" from the dentry.
-
-Suggested-by: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-Suggested-by: Tycho Andersen <tandersen@netflix.com>
-Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://github.com/uapi-group/kernel-features#set-comm-field-before-exec [1]
-Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
-Tested-by: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exec.c               | 29 ++++++++++++++++++++++++++---
- include/linux/binfmts.h |  4 +++-
- 2 files changed, 29 insertions(+), 4 deletions(-)
+ arch/s390/include/asm/processor.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/exec.c b/fs/exec.c
-index 7776209d98c10..4a6255aa4ea7f 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1362,7 +1362,28 @@ int begin_new_exec(struct linux_binprm * bprm)
- 		set_dumpable(current->mm, SUID_DUMP_USER);
- 
- 	perf_event_exec();
--	__set_task_comm(me, kbasename(bprm->filename), true);
-+
-+	/*
-+	 * If the original filename was empty, alloc_bprm() made up a path
-+	 * that will probably not be useful to admins running ps or similar.
-+	 * Let's fix it up to be something reasonable.
-+	 */
-+	if (bprm->comm_from_dentry) {
-+		/*
-+		 * Hold RCU lock to keep the name from being freed behind our back.
-+		 * Use acquire semantics to make sure the terminating NUL from
-+		 * __d_alloc() is seen.
-+		 *
-+		 * Note, we're deliberately sloppy here. We don't need to care about
-+		 * detecting a concurrent rename and just want a terminated name.
-+		 */
-+		rcu_read_lock();
-+		__set_task_comm(me, smp_load_acquire(&bprm->file->f_path.dentry->d_name.name),
-+				true);
-+		rcu_read_unlock();
-+	} else {
-+		__set_task_comm(me, kbasename(bprm->filename), true);
-+	}
- 
- 	/* An exec changes our domain. We are no longer part of the thread
- 	   group */
-@@ -1521,11 +1542,13 @@ static struct linux_binprm *alloc_bprm(int fd, struct filename *filename)
- 	if (fd == AT_FDCWD || filename->name[0] == '/') {
- 		bprm->filename = filename->name;
- 	} else {
--		if (filename->name[0] == '\0')
-+		if (filename->name[0] == '\0') {
- 			bprm->fdpath = kasprintf(GFP_KERNEL, "/dev/fd/%d", fd);
--		else
-+			bprm->comm_from_dentry = 1;
-+		} else {
- 			bprm->fdpath = kasprintf(GFP_KERNEL, "/dev/fd/%d/%s",
- 						  fd, filename->name);
-+		}
- 		if (!bprm->fdpath)
- 			goto out_free;
- 
-diff --git a/include/linux/binfmts.h b/include/linux/binfmts.h
-index 8d51f69f9f5ef..af9056d78fadf 100644
---- a/include/linux/binfmts.h
-+++ b/include/linux/binfmts.h
-@@ -42,7 +42,9 @@ struct linux_binprm {
- 		 * Set when errors can no longer be returned to the
- 		 * original userspace.
- 		 */
--		point_of_no_return:1;
-+		point_of_no_return:1,
-+		/* Set when "comm" must come from the dentry. */
-+		comm_from_dentry:1;
- 	struct file *executable; /* Executable to pass to the interpreter */
- 	struct file *interpreter;
- 	struct file *file;
+diff --git a/arch/s390/include/asm/processor.h b/arch/s390/include/asm/processor.h
+index e7338ed540d8f..2f373e8cfed33 100644
+--- a/arch/s390/include/asm/processor.h
++++ b/arch/s390/include/asm/processor.h
+@@ -140,8 +140,7 @@ static __always_inline void __stackleak_poison(unsigned long erase_low,
+ 		"	la	%[addr],256(%[addr])\n"
+ 		"	brctg	%[tmp],0b\n"
+ 		"1:	stg	%[poison],0(%[addr])\n"
+-		"	larl	%[tmp],3f\n"
+-		"	ex	%[count],0(%[tmp])\n"
++		"	exrl	%[count],3f\n"
+ 		"	j	4f\n"
+ 		"2:	stg	%[poison],0(%[addr])\n"
+ 		"	j	4f\n"
 -- 
 2.39.5
 
