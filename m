@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6902726B080;
-	Thu, 13 Feb 2025 15:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E036726B089;
+	Thu, 13 Feb 2025 15:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459366; cv=none; b=o0Fp0EVdJCA071eH8V9vM7VyngUJvBZ6hSMF9dQeP1sxXgaenCEfPVcNVvWBbSDdInbOBYrfPoSvhSuWXN+o82Fn9bM/56CCATcc7R5LsUsNRUGQc3daim+pEqGWsQHbGSEpniWWkygVFsASB+NXkq90i1jiS/rVyR95/bz+Pus=
+	t=1739459370; cv=none; b=p6WrWDn7VVZzpSSaQ9mG0pjQJ2RaDJ9fHVxxVOmLMf1N463m22mbUCa0Ue3q62OCJQNXHdbEEN9mTiLRUs977YVLjHfPeKys890YdJQpP0cm+nxw6QehTtgG+pWUkIPy/gdc6DfxoYkfDd+26GE50GVGTmB14lZ0y+/PaPAT4iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459366; c=relaxed/simple;
-	bh=2Qz6DPh1Lk+luCAbCYxcEqwVTvZedn+9OiVVWpRrvcQ=;
+	s=arc-20240116; t=1739459370; c=relaxed/simple;
+	bh=9bWCdEFVR0qzKSUSBK3au+nmaPghvsEXKmLTz1MLiNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GryNUY90M80NqG94+jtkqADweFE1wZGuBLSaW+B4tJpTuSq38W7fSxjXEh54ieqtvL7yfpwIYUhqhV/+al7jdqvOeajnoz/Mv4ruqrellf134erL+y6SyHmAY94LFFeQPdGGO/zbkDPP3/cEUCuPir7mJ8DNLGaNeASd5Ap+tpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxtvnMxQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pXgw7ch7ZuO5wQPOlgQqreuSKVEe2yOWo06spqYjJFAmUAiPPd2Vt8RZ1g3vYGUcZh1MtXfLMoTS3DjBSR0kEP0adSA/FlWsh3mSvmM1knm+IqrbzITXeokjhPRZTsSj3Csmfpq1p9/aWjnhS1bcS9PJdIk54E1NsVoi3OrA8eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANJqGw0G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxtvnMxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2929C4CED1;
-	Thu, 13 Feb 2025 15:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANJqGw0G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4B9C4CED1;
+	Thu, 13 Feb 2025 15:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459366;
-	bh=2Qz6DPh1Lk+luCAbCYxcEqwVTvZedn+9OiVVWpRrvcQ=;
+	s=korg; t=1739459369;
+	bh=9bWCdEFVR0qzKSUSBK3au+nmaPghvsEXKmLTz1MLiNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mxtvnMxQW1JCIqlC+jyveilXQk8T3anGb1GQ9awybYbdhMxWbUx7/4hCXFx6wvg7P
-	 le+YN2vA8K2CtOdVRdD+MGVy+44gzN/21UP8JZlaAGQ7Zpgyd60GuNNFiGcYFfYS8B
-	 QuLAC1waVHcjMLCvW9p/0bYDnJ1q9qTlaGLktqiQ=
+	b=ANJqGw0GvjCIPl4X3CCE4gqGjir5Hahx7MeVpH9BTfUxOiZ7IjvGumw46FCHwBeyW
+	 AZbpGI6kpYqG+98ST6wWW2/cd3DwTKRSem4ktinc5RbKEIw4SArt0dkHaJLt2UY94x
+	 h8beMFbBWU1fYWHK+A4wr/V4+PlaSI0S6RcEmJ90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Dave Young <dyoung@redhat.com>,
-	Usama Arif <usamaarif642@gmail.com>
-Subject: [PATCH 6.13 212/443] x86/efi: skip memattr table on kexec boot
-Date: Thu, 13 Feb 2025 15:26:17 +0100
-Message-ID: <20250213142448.797679896@linuxfoundation.org>
+	Anastasia Belova <abelova@astralinux.ru>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.13 203/443] clk: qcom: clk-rpmh: prevent integer overflow in recalc_rate
+Date: Thu, 13 Feb 2025 15:26:08 +0100
+Message-ID: <20250213142448.445308416@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,50 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Young <dyoung@redhat.com>
+From: Anastasia Belova <abelova@astralinux.ru>
 
-commit 64b45dd46e154ee7641d7e0457f3fa266e57179f upstream.
+commit 89aa5925d201b90a48416784831916ca203658f9 upstream.
 
-efi_memattr_init() added a sanity check to avoid firmware caused corruption.
-The check is based on efi memmap entry numbers, but kexec only takes the
-runtime related memmap entries thus this caused many false warnings, see
-below thread for details:
+aggr_state and unit fields are u32. The result of their
+multiplication may not fit in this type.
 
-https://lore.kernel.org/all/20250108215957.3437660-2-usamaarif642@gmail.com/
+Add explicit casting to prevent overflow.
 
-Ard suggests to skip the efi memattr table in kexec, this makes sense because
-those memattr fixups are not critical.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 8fbe4c49c0cc ("efi/memattr: Ignore table if the size is clearly bogus")
-Cc: <stable@vger.kernel.org> # v6.13+
-Reported-by: Breno Leitao <leitao@debian.org>
-Reported-and-tested-by: Usama Arif <usamaarif642@gmail.com>
-Suggested-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Dave Young <dyoung@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 04053f4d23a4 ("clk: qcom: clk-rpmh: Add IPA clock support")
+Cc: stable@vger.kernel.org # 5.4+
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+Link: https://lore.kernel.org/r/20241203084231.6001-1-abelova@astralinux.ru
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/platform/efi/quirks.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/clk/qcom/clk-rpmh.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/platform/efi/quirks.c b/arch/x86/platform/efi/quirks.c
-index 846bf49f2508..553f330198f2 100644
---- a/arch/x86/platform/efi/quirks.c
-+++ b/arch/x86/platform/efi/quirks.c
-@@ -561,6 +561,11 @@ int __init efi_reuse_config(u64 tables, int nr_tables)
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -329,7 +329,7 @@ static unsigned long clk_rpmh_bcm_recalc
+ {
+ 	struct clk_rpmh *c = to_clk_rpmh(hw);
  
- 		if (!efi_guidcmp(guid, SMBIOS_TABLE_GUID))
- 			((efi_config_table_64_t *)p)->table = data->smbios;
-+
-+		/* Do not bother to play with mem attr table across kexec */
-+		if (!efi_guidcmp(guid, EFI_MEMORY_ATTRIBUTES_TABLE_GUID))
-+			((efi_config_table_64_t *)p)->table = EFI_INVALID_TABLE_ADDR;
-+
- 		p += sz;
- 	}
- 	early_memunmap(tablep, nr_tables * sz);
--- 
-2.48.1
-
+-	return c->aggr_state * c->unit;
++	return (unsigned long)c->aggr_state * c->unit;
+ }
+ 
+ static const struct clk_ops clk_rpmh_bcm_ops = {
 
 
