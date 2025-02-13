@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C766B26B0BA;
-	Thu, 13 Feb 2025 15:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9E51552FA;
+	Thu, 13 Feb 2025 15:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458823; cv=none; b=T4tGT29VAbh+nEWef3cGmjb6aw3+JydBiSp/q8qNPtAe4UVqlaW2d0ATVJbVNIOUZ48cdYyCeBDnspDSTtu7UywDZC4donivy4zIZdl9YySu3JS2Fm8rW0x+9a8LvCjWnxL2V7tnZXCz/8CjQN2PNNT2wutunlNrds+g5U1/768=
+	t=1739458827; cv=none; b=t0QmvkFGvOGummraeZ9/e1u+RKJFRKuxG9mxGDhGtLdC7vPrqXFiVGFso83PeOJix2ZlVkh/YsSfLJcX8+sIItki2iHrZnBWDfSldMxearsu/ZimVl5pe0ATeo1UKYj3d7s6qkLz/uDOITrFiFDH10yTWlcLQkVRyRoY6KyiZX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458823; c=relaxed/simple;
-	bh=oNyaSlFAvjyHAvJqzAEYU1ZlpCM9AaB0kXDUO6Ak+to=;
+	s=arc-20240116; t=1739458827; c=relaxed/simple;
+	bh=LBi7P3KR2BZfpqZf2qcBJKNX4mwOWX3wLaGk0F3dEX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F4egfDiJOrvpwmEj3t4ns/o8CZO6o8YHF1QuchLigSPw3h+yzp6QZbrtCGahFTWEAyHbgDj+NbaYXQF6mR3hhEoc+IY6wK3mDiOjewQz0jByXrIieqzhA8yJy0buVpd002GjbpPtIxXYRHXgVIlxRHAFP3Z+qiC6N50rmSsK+PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxkChpss; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ssrlhyDJkwQoaoMzgu6yFtrLufEqlLgvZPI3wuQh6g3pZFhyHNvWwKU+TMFmthf9g7FnaANlp4WWVea9UK77gUisMxVZ9grv9jByXlZEjj2GJaqS28mFpVW74AZPPq9W6WUsbHmt6r9+YN3hwP1VI6VMOaHvRge11ury1U3Z+fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Njs8DB0Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxkChpss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6DFC4CED1;
-	Thu, 13 Feb 2025 15:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Njs8DB0Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641A8C4CED1;
+	Thu, 13 Feb 2025 15:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458823;
-	bh=oNyaSlFAvjyHAvJqzAEYU1ZlpCM9AaB0kXDUO6Ak+to=;
+	s=korg; t=1739458826;
+	bh=LBi7P3KR2BZfpqZf2qcBJKNX4mwOWX3wLaGk0F3dEX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zxkChpssxgpbx89lhw69EnCX5HrNHu3HPbcpc9DnsRAKjyTlAI+wd7DwQ9O056+v5
-	 B69pv8EvIVtS4pA7X/7eQuUf/tJbLlgnrA1BMzTTCzywFlxGK1MWz+RI8tyICECyGb
-	 rEStyUwzk+OB4d1wmA6XbFNpUUcTQ+Urc3mF3hgE=
+	b=Njs8DB0QjrwHbunMoCwUOK4dEJqlvLlTZbTlVdFmEKLbK3EJcl0SiUh9vGMFxFioV
+	 4+GBqRpTuZpCfwzhseWeT1+bVvL/VdY+LKs3M7eoFeRLs1cT07WGU7k2YL/F0Lfw7a
+	 EESBP9vdgwNMcBUfDEYr1LN+U/4grKjHO+6Eg220=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 087/443] ASoC: SOF: Intel: hda-dai: Ensure DAI widget is valid during params
-Date: Thu, 13 Feb 2025 15:24:12 +0100
-Message-ID: <20250213142443.968007438@linuxfoundation.org>
+Subject: [PATCH 6.13 088/443] bpf: Improve verifier log for resource leak on exit
+Date: Thu, 13 Feb 2025 15:24:13 +0100
+Message-ID: <20250213142444.006358017@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -48,82 +46,149 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 569922b82ca660f8b24e705f6cf674e6b1f99cc7 ]
+[ Upstream commit cbd8730aea8d79cda6b0f3c18b406dfdef0c1b80 ]
 
-Each cpu DAI should associate with a widget. However, the topology might
-not create the right number of DAI widgets for aggregated amps. And it
-will cause NULL pointer deference.
-Check that the DAI widget associated with the CPU DAI is valid to prevent
-NULL pointer deference due to missing DAI widgets in topologies with
-aggregated amps.
+The verifier log when leaking resources on BPF_EXIT may be a bit
+confusing, as it's a problem only when finally existing from the main
+prog, not from any of the subprogs. Hence, update the verifier error
+string and the corresponding selftests matching on it.
 
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Link: https://patch.msgid.link/20241203104853.56956-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Suggested-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20241204030400.208005-6-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-dai.c | 12 ++++++++++++
- sound/soc/sof/intel/hda.c     |  5 +++++
- 2 files changed, 17 insertions(+)
+ kernel/bpf/verifier.c                              |  2 +-
+ .../testing/selftests/bpf/progs/exceptions_fail.c  |  4 ++--
+ tools/testing/selftests/bpf/progs/preempt_lock.c   | 14 +++++++-------
+ .../selftests/bpf/progs/verifier_spin_lock.c       |  2 +-
+ 4 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda-dai.c b/sound/soc/sof/intel/hda-dai.c
-index 0db2a3e554fb2..da12aabc1bb85 100644
---- a/sound/soc/sof/intel/hda-dai.c
-+++ b/sound/soc/sof/intel/hda-dai.c
-@@ -503,6 +503,12 @@ int sdw_hda_dai_hw_params(struct snd_pcm_substream *substream,
- 	int ret;
- 	int i;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 77f56674aaa99..4f02345b764fd 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -18803,7 +18803,7 @@ static int do_check(struct bpf_verifier_env *env)
+ 				 * match caller reference state when it exits.
+ 				 */
+ 				err = check_resource_leak(env, exception_exit, !env->cur_state->curframe,
+-							  "BPF_EXIT instruction");
++							  "BPF_EXIT instruction in main prog");
+ 				if (err)
+ 					return err;
  
-+	if (!w) {
-+		dev_err(cpu_dai->dev, "%s widget not found, check amp link num in the topology\n",
-+			cpu_dai->name);
-+		return -EINVAL;
-+	}
-+
- 	ops = hda_dai_get_ops(substream, cpu_dai);
- 	if (!ops) {
- 		dev_err(cpu_dai->dev, "DAI widget ops not set\n");
-@@ -582,6 +588,12 @@ int sdw_hda_dai_hw_params(struct snd_pcm_substream *substream,
- 	 */
- 	for_each_rtd_cpu_dais(rtd, i, dai) {
- 		w = snd_soc_dai_get_widget(dai, substream->stream);
-+		if (!w) {
-+			dev_err(cpu_dai->dev,
-+				"%s widget not found, check amp link num in the topology\n",
-+				dai->name);
-+			return -EINVAL;
-+		}
- 		ipc4_copier = widget_to_copier(w);
- 		memcpy(&ipc4_copier->dma_config_tlv[cpu_dai_id], dma_config_tlv,
- 		       sizeof(*dma_config_tlv));
-diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
-index f991785f727e9..be689f6e10c81 100644
---- a/sound/soc/sof/intel/hda.c
-+++ b/sound/soc/sof/intel/hda.c
-@@ -63,6 +63,11 @@ static int sdw_params_stream(struct device *dev,
- 	struct snd_soc_dapm_widget *w = snd_soc_dai_get_widget(d, params_data->substream->stream);
- 	struct snd_sof_dai_config_data data = { 0 };
+diff --git a/tools/testing/selftests/bpf/progs/exceptions_fail.c b/tools/testing/selftests/bpf/progs/exceptions_fail.c
+index fe0f3fa5aab68..8a0fdff899271 100644
+--- a/tools/testing/selftests/bpf/progs/exceptions_fail.c
++++ b/tools/testing/selftests/bpf/progs/exceptions_fail.c
+@@ -131,7 +131,7 @@ int reject_subprog_with_lock(void *ctx)
+ }
  
-+	if (!w) {
-+		dev_err(dev, "%s widget not found, check amp link num in the topology\n",
-+			d->name);
-+		return -EINVAL;
-+	}
- 	data.dai_index = (params_data->link_id << 8) | d->id;
- 	data.dai_data = params_data->alh_stream_id;
- 	data.dai_node_id = data.dai_data;
+ SEC("?tc")
+-__failure __msg("BPF_EXIT instruction cannot be used inside bpf_rcu_read_lock-ed region")
++__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_rcu_read_lock-ed region")
+ int reject_with_rcu_read_lock(void *ctx)
+ {
+ 	bpf_rcu_read_lock();
+@@ -147,7 +147,7 @@ __noinline static int throwing_subprog(struct __sk_buff *ctx)
+ }
+ 
+ SEC("?tc")
+-__failure __msg("BPF_EXIT instruction cannot be used inside bpf_rcu_read_lock-ed region")
++__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_rcu_read_lock-ed region")
+ int reject_subprog_with_rcu_read_lock(void *ctx)
+ {
+ 	bpf_rcu_read_lock();
+diff --git a/tools/testing/selftests/bpf/progs/preempt_lock.c b/tools/testing/selftests/bpf/progs/preempt_lock.c
+index 885377e836077..5269571cf7b57 100644
+--- a/tools/testing/selftests/bpf/progs/preempt_lock.c
++++ b/tools/testing/selftests/bpf/progs/preempt_lock.c
+@@ -6,7 +6,7 @@
+ #include "bpf_experimental.h"
+ 
+ SEC("?tc")
+-__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
++__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
+ int preempt_lock_missing_1(struct __sk_buff *ctx)
+ {
+ 	bpf_preempt_disable();
+@@ -14,7 +14,7 @@ int preempt_lock_missing_1(struct __sk_buff *ctx)
+ }
+ 
+ SEC("?tc")
+-__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
++__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
+ int preempt_lock_missing_2(struct __sk_buff *ctx)
+ {
+ 	bpf_preempt_disable();
+@@ -23,7 +23,7 @@ int preempt_lock_missing_2(struct __sk_buff *ctx)
+ }
+ 
+ SEC("?tc")
+-__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
++__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
+ int preempt_lock_missing_3(struct __sk_buff *ctx)
+ {
+ 	bpf_preempt_disable();
+@@ -33,7 +33,7 @@ int preempt_lock_missing_3(struct __sk_buff *ctx)
+ }
+ 
+ SEC("?tc")
+-__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
++__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
+ int preempt_lock_missing_3_minus_2(struct __sk_buff *ctx)
+ {
+ 	bpf_preempt_disable();
+@@ -55,7 +55,7 @@ static __noinline void preempt_enable(void)
+ }
+ 
+ SEC("?tc")
+-__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
++__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
+ int preempt_lock_missing_1_subprog(struct __sk_buff *ctx)
+ {
+ 	preempt_disable();
+@@ -63,7 +63,7 @@ int preempt_lock_missing_1_subprog(struct __sk_buff *ctx)
+ }
+ 
+ SEC("?tc")
+-__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
++__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
+ int preempt_lock_missing_2_subprog(struct __sk_buff *ctx)
+ {
+ 	preempt_disable();
+@@ -72,7 +72,7 @@ int preempt_lock_missing_2_subprog(struct __sk_buff *ctx)
+ }
+ 
+ SEC("?tc")
+-__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
++__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
+ int preempt_lock_missing_2_minus_1_subprog(struct __sk_buff *ctx)
+ {
+ 	preempt_disable();
+diff --git a/tools/testing/selftests/bpf/progs/verifier_spin_lock.c b/tools/testing/selftests/bpf/progs/verifier_spin_lock.c
+index 3f679de73229f..25599eac9a702 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_spin_lock.c
++++ b/tools/testing/selftests/bpf/progs/verifier_spin_lock.c
+@@ -187,7 +187,7 @@ l0_%=:	r6 = r0;					\
+ 
+ SEC("cgroup/skb")
+ __description("spin_lock: test6 missing unlock")
+-__failure __msg("BPF_EXIT instruction cannot be used inside bpf_spin_lock-ed region")
++__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_spin_lock-ed region")
+ __failure_unpriv __msg_unpriv("")
+ __naked void spin_lock_test6_missing_unlock(void)
+ {
 -- 
 2.39.5
 
