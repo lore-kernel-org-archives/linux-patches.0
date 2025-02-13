@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C72A143736;
-	Thu, 13 Feb 2025 15:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE92314F121;
+	Thu, 13 Feb 2025 15:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460411; cv=none; b=LVKVMquHKO7urXDTVAQUUeFdJxDdcDTf7IgMgGV/ECjhWb26VQKq0OhbObUptHbMUh29Q8NJLZdOutgPn+7HfdEHLsnz4amWVtVCwQwq2hTp3DVeNuj83PiKiMmwWul3LDk7Jcl/S3RtaCpSrA228pWdHJDwi6uXRCTjrOdWHMk=
+	t=1739460414; cv=none; b=l4WIehnHUQJlgYhyi7xjlGXsdN0rzeochVOFE3ySxf+3HNMMLFbtFjfXGZRgrmpWurL3mh7c7zOj3StMXC3lUH0BkN2wAaYhmAFFFZSekODgIz6edDRbAAsYhtCk1buOw+gsX5sxyh4yJrUY5ovUUKT7fxY1TYi0/xRfEyOqvgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460411; c=relaxed/simple;
-	bh=26AXXzcCX74Q/TkTZvRc46QmXNiPQEj2kSIPmrDgHj4=;
+	s=arc-20240116; t=1739460414; c=relaxed/simple;
+	bh=Ck+rA0qkslfTMh8qOlGZu1ED2ZCmlmVSFAgL9JBLDHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TzMTHGSwvtsGCJ+5hsaEfmQuNnoAtWBJiEArlC/JQpMzkRLYJ0q/GHvDjldJ4PtwMUGyP5MBPk7YZf4WI0GDi27NrW6uGYiuOoPCHoTq6SQPc6UBMHzNmDUk2Y9b7OIESd776SRmhyE2pRX3bjNdpALm3DUCJL+Y1zOlXMqE3Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szK2JBNs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q1BInSe86+1Fw3hGEzAm/jlxHuxMHEcq6PhouMks9FU5qbsmxoBMJP9W0TDYfmjouWx+Fm3qSdF0d9WRzkXxTZNHH1DhnjEzM5EzKCesh9C0DLNZK9MLF+sl5kFGkISOLav8Jjlv6sPas2ncKiZIpVEMomz9910FV58fmciym6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1Rp96TA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szK2JBNs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6872AC4CED1;
-	Thu, 13 Feb 2025 15:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1Rp96TA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C7DC4CED1;
+	Thu, 13 Feb 2025 15:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460410;
-	bh=26AXXzcCX74Q/TkTZvRc46QmXNiPQEj2kSIPmrDgHj4=;
+	s=korg; t=1739460414;
+	bh=Ck+rA0qkslfTMh8qOlGZu1ED2ZCmlmVSFAgL9JBLDHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szK2JBNsgjdwYSf3uz5Zq8ZB5yEgY9nNo22W1m33FAVLTv3M+2IeOQHBb4d7a/0gL
-	 xrvTqnhFrWL4RXSI+qyaIG1PGchatcxGqYer5QXJdGDpfUmWZGqE5dw8PL2Wq9MKyP
-	 KV3PPhpTR0IZr1mL4ncR5d/UZyVkd64Hp/eKkJNA=
+	b=g1Rp96TA2WqzHWKI8KGLYtYVUMc1x8AOLV2rtxSQn/OR+W22W2ug1wZmTxh9rBtSn
+	 nRzRtx9UO/GjSg0T15u4EqHp2i6F+r8Sfoq6cy72dyXdYT2qFKVn0IWkqwVLzLlGcW
+	 fmHofWJA+iFmomvrIcgEhM0VCYkhnf85lwUhBwic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7ff41b5215f0c534534e@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Wagner <wagi@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/273] net: rose: lock the socket in rose_bind()
-Date: Thu, 13 Feb 2025 15:27:25 +0100
-Message-ID: <20250213142410.234507514@linuxfoundation.org>
+Subject: [PATCH 6.6 064/273] nvme-fc: use ctrl state getter
+Date: Thu, 13 Feb 2025 15:27:16 +0100
+Message-ID: <20250213142409.884812786@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -53,85 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit a1300691aed9ee852b0a9192e29e2bdc2411a7e6 ]
+[ Upstream commit c8ed6cb5d37bc09c7e25e49a670e9fd1a3bd1dfa ]
 
-syzbot reported a soft lockup in rose_loopback_timer(),
-with a repro calling bind() from multiple threads.
+Do not access the state variable directly, instead use proper
+synchronization so not stale data is read.
 
-rose_bind() must lock the socket to avoid this issue.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+7ff41b5215f0c534534e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/67a0f78d.050a0220.d7c5a.00a0.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/20250203170838.3521361-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e6e7f7ac03e4 ("nvme: ensure reset state check ordering")
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ drivers/nvme/host/fc.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 342823b918e7c..66e9ceaaa43a1 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -701,11 +701,9 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	struct net_device *dev;
- 	ax25_address *source;
- 	ax25_uid_assoc *user;
-+	int err = -EINVAL;
- 	int n;
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index cdb1e706f855e..91324791a5b66 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -2080,7 +2080,8 @@ nvme_fc_fcpio_done(struct nvmefc_fcp_req *req)
+ 		nvme_fc_complete_rq(rq);
  
--	if (!sock_flag(sk, SOCK_ZAPPED))
--		return -EINVAL;
--
- 	if (addr_len != sizeof(struct sockaddr_rose) && addr_len != sizeof(struct full_sockaddr_rose))
- 		return -EINVAL;
- 
-@@ -718,8 +716,15 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	if ((unsigned int) addr->srose_ndigis > ROSE_MAX_DIGIS)
- 		return -EINVAL;
- 
--	if ((dev = rose_dev_get(&addr->srose_addr)) == NULL)
--		return -EADDRNOTAVAIL;
-+	lock_sock(sk);
-+
-+	if (!sock_flag(sk, SOCK_ZAPPED))
-+		goto out_release;
-+
-+	err = -EADDRNOTAVAIL;
-+	dev = rose_dev_get(&addr->srose_addr);
-+	if (!dev)
-+		goto out_release;
- 
- 	source = &addr->srose_call;
- 
-@@ -730,7 +735,8 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	} else {
- 		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
- 			dev_put(dev);
--			return -EACCES;
-+			err = -EACCES;
-+			goto out_release;
- 		}
- 		rose->source_call   = *source;
- 	}
-@@ -753,8 +759,10 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	rose_insert_socket(sk);
- 
- 	sock_reset_flag(sk, SOCK_ZAPPED);
--
--	return 0;
-+	err = 0;
-+out_release:
-+	release_sock(sk);
-+	return err;
+ check_error:
+-	if (terminate_assoc && ctrl->ctrl.state != NVME_CTRL_RESETTING)
++	if (terminate_assoc &&
++	    nvme_ctrl_state(&ctrl->ctrl) != NVME_CTRL_RESETTING)
+ 		queue_work(nvme_reset_wq, &ctrl->ioerr_work);
  }
  
- static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_len, int flags)
+@@ -2534,6 +2535,8 @@ __nvme_fc_abort_outstanding_ios(struct nvme_fc_ctrl *ctrl, bool start_queues)
+ static void
+ nvme_fc_error_recovery(struct nvme_fc_ctrl *ctrl, char *errmsg)
+ {
++	enum nvme_ctrl_state state = nvme_ctrl_state(&ctrl->ctrl);
++
+ 	/*
+ 	 * if an error (io timeout, etc) while (re)connecting, the remote
+ 	 * port requested terminating of the association (disconnect_ls)
+@@ -2541,7 +2544,7 @@ nvme_fc_error_recovery(struct nvme_fc_ctrl *ctrl, char *errmsg)
+ 	 * the controller.  Abort any ios on the association and let the
+ 	 * create_association error path resolve things.
+ 	 */
+-	if (ctrl->ctrl.state == NVME_CTRL_CONNECTING) {
++	if (state == NVME_CTRL_CONNECTING) {
+ 		__nvme_fc_abort_outstanding_ios(ctrl, true);
+ 		set_bit(ASSOC_FAILED, &ctrl->flags);
+ 		dev_warn(ctrl->ctrl.device,
+@@ -2551,7 +2554,7 @@ nvme_fc_error_recovery(struct nvme_fc_ctrl *ctrl, char *errmsg)
+ 	}
+ 
+ 	/* Otherwise, only proceed if in LIVE state - e.g. on first error */
+-	if (ctrl->ctrl.state != NVME_CTRL_LIVE)
++	if (state != NVME_CTRL_LIVE)
+ 		return;
+ 
+ 	dev_warn(ctrl->ctrl.device,
 -- 
 2.39.5
 
