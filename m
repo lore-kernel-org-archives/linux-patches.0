@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9EA156F5E;
-	Thu, 13 Feb 2025 15:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C70199934;
+	Thu, 13 Feb 2025 15:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460612; cv=none; b=n2CHJ80xJbo4xLQasn6Sk7qVdbbDwUPwM7n1xNKcLWaBM1eRudyzXItfeBCokfcNLaCCy0jNkG48yFBm+PY+A3vvSE8kZHoPsDrER8KFN3MM10pLuUTGybLykteIOhLtXyqfm7tQ42FnBlVwaXjcU5nQ1p67hbJrr3V2G2CA9A0=
+	t=1739460616; cv=none; b=NUpQDGotoPrZJclzxVOjVvk27j/lpC1ZdOhMPdJRzb2tNOOMIdFqx8YMX79LWd5ppmjK/scsqRYmGTiOS3kygfjHo1DwKdOUWoY5Dc+uT3Jsr0G5mq2cAqoKPxOqn2zswmoAjXUKWDbFHckr2e8jmou064ufg1JUG0vv5NRzGlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460612; c=relaxed/simple;
-	bh=pCA3o/drXrdp11V8o2/QGSlaMu00l8MImsj2vuKBN9k=;
+	s=arc-20240116; t=1739460616; c=relaxed/simple;
+	bh=cjhox9k6a0zJveRRwx8KXkxfCnpvgUzB+aRb6Y0pL2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l7phOVUh0eLMDra0dqTaW5wQkX78Lr5j87p7CZvlCK60RrB5BMsEocDM2k3p+4FfTdCk8U+OJW3YlOspVGFbm/7/KVLL3uOhQqI9hZYFpckAOG70SbeYfFFDhlfHOsFb6zsJUK/2iBdiazVScVeHoXHozK7w00LazWFETXZq6K4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4ysYO58; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U6esGiK3et2mltLTn2LlY5nOS0EQnWkEcK2AnQlvcvKq5LRqCQQrfXPp/71FmcKDLkhBF4nUaZUPNbkFRBcOLqd+fxjxTm+tTxyQkY6+zUWUu1g+t1kPEfiPhDwwWy54U9V8lOTLOoZqe6kpT7xOy6eQI/nfIXiMD/C9L08TvXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QxG6dqVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4ysYO58"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD91C4CEE5;
-	Thu, 13 Feb 2025 15:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxG6dqVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C00CC4CEE9;
+	Thu, 13 Feb 2025 15:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460612;
-	bh=pCA3o/drXrdp11V8o2/QGSlaMu00l8MImsj2vuKBN9k=;
+	s=korg; t=1739460615;
+	bh=cjhox9k6a0zJveRRwx8KXkxfCnpvgUzB+aRb6Y0pL2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G4ysYO58phMv/r4jO80R8L3bNQyWuOexQSdIlinaUESxQzdvTdNm1e2XNHuFc+LX4
-	 D3t8bptcci/VexybIuWfQ7AFca/DAuJYJqNUQxmmRvmbKotXMnl6l/k70DIxvv5+XL
-	 lq0YoD0qrblyAYfb0xQ4rn5vg4Q5c2hktvzSjg4w=
+	b=QxG6dqVuv9cGY4lOT0NxO5mRNIrJMhuTsux7j4vS5wozHR4gbDK8vKOEZTtgAscH7
+	 niT5r7bJ4IUSldIfDUinWxH4tjmPMzxVmJfBOaAOsd+fZlhVxfjEDP+fAQwN6c8V2m
+	 Q0saFU8RfkrGhTcYnHLO+huk9nkh3hVN/Cu6OVh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kai=20M=C3=A4kisara?= <Kai.Makisara@kolumbus.fi>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 162/273] scsi: st: Dont set pos_unknown just after device recognition
-Date: Thu, 13 Feb 2025 15:28:54 +0100
-Message-ID: <20250213142413.736684044@linuxfoundation.org>
+	Foster Snowhill <forst@pen.gy>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 136/273] usbnet: ipheth: fix possible overflow in DPE length check
+Date: Thu, 13 Feb 2025 15:28:28 +0100
+Message-ID: <20250213142412.711471938@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -44,74 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
+From: Foster Snowhill <forst@pen.gy>
 
-commit 98b37881b7492ae9048ad48260cc8a6ee9eb39fd upstream.
+commit c219427ed296f94bb4b91d08626776dc7719ee27 upstream.
 
-Commit 9604eea5bd3a ("scsi: st: Add third party poweron reset handling") in
-v6.6 added new code to handle the Power On/Reset Unit Attention (POR UA)
-sense data. This was in addition to the existing method. When this Unit
-Attention is received, the driver blocks attempts to read, write and some
-other operations because the reset may have rewinded the tape. Because of
-the added code, also the initial POR UA resulted in blocking operations,
-including those that are used to set the driver options after the device is
-recognized. Also, reading and writing are refused, whereas they succeeded
-before this commit.
+Originally, it was possible for the DPE length check to overflow if
+wDatagramIndex + wDatagramLength > U16_MAX. This could lead to an OoB
+read.
 
-Add code to not set pos_unknown to block operations if the POR UA is
-received from the first test_ready() call after the st device has been
-created. This restores the behavior before v6.6.
+Move the wDatagramIndex term to the other side of the inequality.
 
-Signed-off-by: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
-Link: https://lore.kernel.org/r/20241216113755.30415-1-Kai.Makisara@kolumbus.fi
-Fixes: 9604eea5bd3a ("scsi: st: Add third party poweron reset handling")
-CC: stable@vger.kernel.org
-Closes: https://lore.kernel.org/linux-scsi/2201CF73-4795-4D3B-9A79-6EE5215CF58D@kolumbus.fi/
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+An existing condition ensures that wDatagramIndex < urb->actual_length.
+
+Fixes: a2d274c62e44 ("usbnet: ipheth: add CDC NCM support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Foster Snowhill <forst@pen.gy>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/st.c |    6 ++++++
- drivers/scsi/st.h |    1 +
- 2 files changed, 7 insertions(+)
+ drivers/net/usb/ipheth.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/st.c
-+++ b/drivers/scsi/st.c
-@@ -1028,6 +1028,11 @@ static int test_ready(struct scsi_tape *
- 			retval = new_session ? CHKRES_NEW_SESSION : CHKRES_READY;
- 		break;
- 	}
-+	if (STp->first_tur) {
-+		/* Don't set pos_unknown right after device recognition */
-+		STp->pos_unknown = 0;
-+		STp->first_tur = 0;
-+	}
- 
- 	if (SRpnt != NULL)
- 		st_release_request(SRpnt);
-@@ -4326,6 +4331,7 @@ static int st_probe(struct device *dev)
- 	blk_queue_rq_timeout(tpnt->device->request_queue, ST_TIMEOUT);
- 	tpnt->long_timeout = ST_LONG_TIMEOUT;
- 	tpnt->try_dio = try_direct_io;
-+	tpnt->first_tur = 1;
- 
- 	for (i = 0; i < ST_NBR_MODES; i++) {
- 		STm = &(tpnt->modes[i]);
---- a/drivers/scsi/st.h
-+++ b/drivers/scsi/st.h
-@@ -170,6 +170,7 @@ struct scsi_tape {
- 	unsigned char rew_at_close;  /* rewind necessary at close */
- 	unsigned char inited;
- 	unsigned char cleaning_req;  /* cleaning requested? */
-+	unsigned char first_tur;     /* first TEST UNIT READY */
- 	int block_size;
- 	int min_block;
- 	int max_block;
+diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
+index 46afb95ffabe..45daae234cb8 100644
+--- a/drivers/net/usb/ipheth.c
++++ b/drivers/net/usb/ipheth.c
+@@ -243,8 +243,8 @@ static int ipheth_rcvbulk_callback_ncm(struct urb *urb)
+ 	while (le16_to_cpu(dpe->wDatagramIndex) != 0 &&
+ 	       le16_to_cpu(dpe->wDatagramLength) != 0) {
+ 		if (le16_to_cpu(dpe->wDatagramIndex) >= urb->actual_length ||
+-		    le16_to_cpu(dpe->wDatagramIndex) +
+-		    le16_to_cpu(dpe->wDatagramLength) > urb->actual_length) {
++		    le16_to_cpu(dpe->wDatagramLength) > urb->actual_length -
++		    le16_to_cpu(dpe->wDatagramIndex)) {
+ 			dev->net->stats.rx_length_errors++;
+ 			return retval;
+ 		}
+-- 
+2.48.1
+
 
 
