@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A531547E3;
-	Thu, 13 Feb 2025 15:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0956E15E5D4;
+	Thu, 13 Feb 2025 15:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460697; cv=none; b=LUXmvLtB2P/5eu8vvFWnMrPZTDYaEfmGkGzoP/kmk3tzbd1E0wrfAnvFLy7bdFcyYOSqk3KOh1hwtE6usGJ0hzkMx+iwt0zSavZFrESMZFvZ8VFRo6IEfbQFVzMEUGf67GBHDEu+9wfEMqm4GEr8r4XOt+n6km9bezfAKbWuz8Y=
+	t=1739460701; cv=none; b=XdZxwEOkuFxhmPKTjhKCCLwH1wV5X+DQ4sPFMUFL16ZAtCu98J+MAzRGJtVFY/uff9mgpWXAzKwj4MhTL/UBN/Wuz6Jr+4drrvG0cTF2bYWSKXh/5aRJY7JEK00xB3XJH8VAFFhTPhBCEhmHEvkS9NlKUN8Y+wvCV39/slNdafA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460697; c=relaxed/simple;
-	bh=Ew5VvzumRfMjxB5iEOfErwRRFUaq9fEbr8uzJs1+u+8=;
+	s=arc-20240116; t=1739460701; c=relaxed/simple;
+	bh=3OaKNBN1128UQLkzAl01dkhwuqBdSsV5bX4m/joPFxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kjSLskI1Vo0qshFmW1ZUQANZ7R2Nc1PcsZXpEqT3es4fn5R6noW6hYnjqpwhRuKoLfft3I44dEgRl2KWo8huDu61qPo44qtwTew/XREkyF7k6BecTLUVgoS8Ladt14BkMQ8t5uOpSJ3IoXa9Wq9n1T/Ck+UK8uNv8Kp4b14xaFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Clp18yK+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=km6b+ny6GeS0OunV6hXhVDOjlT4G372GfNOjLlnoxDCCLoVbDtlTVjEMG7KitnrIHa1JWMhmnJlIdulIW9/YGKA7DoehSBO3fcPqqp/LeQCtKy9srZ2w29PfTj4/Xzave9sjDHLIfsebYLlSUx6D/7Gpa53qA6RmG2uXuPB+PV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rhBO/WdG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Clp18yK+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBF5C4CED1;
-	Thu, 13 Feb 2025 15:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhBO/WdG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D0FC4CED1;
+	Thu, 13 Feb 2025 15:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460697;
-	bh=Ew5VvzumRfMjxB5iEOfErwRRFUaq9fEbr8uzJs1+u+8=;
+	s=korg; t=1739460700;
+	bh=3OaKNBN1128UQLkzAl01dkhwuqBdSsV5bX4m/joPFxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Clp18yK+juJ0YvxiQzjLs2sdIjvrkfuVK4HZXAJaItza24LxVn65jTE/6uIqZOJj+
-	 2RZsXQ/Gf4ItLXhru2PJQfXxlreh/FVW0rvYZny04BQxHw1O2fBSHIzvSkxTnkqUW+
-	 lWhiLXs7VJfyp0m0G2gRUcdi3jIOV6lKSeQqtHLc=
+	b=rhBO/WdGe8C4sxnfPQuWpqaUO0iLphQKQsrAn3gscr9Ir7edwzQ0QQfkil8EAKI1i
+	 gRkw5N+rRwWrRDoyzFJte295BYAaxf3qst/fkYItKHqzTWIuyt93YBZJROnxcJSgRf
+	 Zx7576XXHRb2aDp3rup4CWl45CqGYFp6um/l+xY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 187/273] arm64: dts: qcom: sm8550: Fix MPSS memory length
-Date: Thu, 13 Feb 2025 15:29:19 +0100
-Message-ID: <20250213142414.713522163@linuxfoundation.org>
+	Romain Naour <romain.naour@skf.com>,
+	Kevin Hilman <khilman@baylibre.com>
+Subject: [PATCH 6.6 170/273] ARM: dts: dra7: Add bus_dma_limit for l4 cfg bus
+Date: Thu, 13 Feb 2025 15:29:02 +0100
+Message-ID: <20250213142414.047578686@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -52,40 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Romain Naour <romain.naour@skf.com>
 
-commit 8ef227e93a513d431f9345f23cd4d2d65607b985 upstream.
+commit c1472ec1dc4419d0bae663c1a1e6cb98dc7881ad upstream.
 
-The address space in MPSS/Modem PAS (Peripheral Authentication Service)
-remoteproc node should point to the QDSP PUB address space
-(QDSP6...SS_PUB) which has a length of 0x10000.  Value of 0x4040 was
-copied from older DTS, but it grew since then.
+A bus_dma_limit was added for l3 bus by commit cfb5d65f2595
+("ARM: dts: dra7: Add bus_dma_limit for L3 bus") to fix an issue
+observed only with SATA on DRA7-EVM with 4GB RAM and CONFIG_ARM_LPAE
+enabled.
 
-This should have no functional impact on Linux users, because PAS loader
-does not use this address space at all.
+Since kernel 5.13, the SATA issue can be reproduced again following
+the SATA node move from L3 bus to L4_cfg in commit 8af15365a368
+("ARM: dts: Configure interconnect target module for dra7 sata").
 
-Fixes: d0c061e366ed ("arm64: dts: qcom: sm8550: add adsp, cdsp & mdss nodes")
-Cc: stable@vger.kernel.org
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20241213-dts-qcom-cdsp-mpss-base-address-v3-9-2e0036fccd8d@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix it by adding an empty dma-ranges property to l4_cfg and
+segment@100000 nodes (parent device tree node of SATA controller) to
+inherit the 2GB dma ranges limit from l3 bus node.
+
+Note: A similar fix was applied for PCIe controller by commit
+90d4d3f4ea45 ("ARM: dts: dra7: Fix bus_dma_limit for PCIe").
+
+Fixes: 8af15365a368 ("ARM: dts: Configure interconnect target module for dra7 sata").
+Link: https://lore.kernel.org/linux-omap/c583e1bb-f56b-4489-8012-ce742e85f233@smile.fr/
+Cc: stable@vger.kernel.org # 5.13
+Signed-off-by: Romain Naour <romain.naour@skf.com>
+Link: https://lore.kernel.org/r/20241115102537.1330300-1-romain.naour@smile.fr
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/ti/omap/dra7-l4.dtsi |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1986,7 +1986,7 @@
+--- a/arch/arm/boot/dts/ti/omap/dra7-l4.dtsi
++++ b/arch/arm/boot/dts/ti/omap/dra7-l4.dtsi
+@@ -12,6 +12,7 @@
+ 	ranges = <0x00000000 0x4a000000 0x100000>,	/* segment 0 */
+ 		 <0x00100000 0x4a100000 0x100000>,	/* segment 1 */
+ 		 <0x00200000 0x4a200000 0x100000>;	/* segment 2 */
++	dma-ranges;
  
- 		remoteproc_mpss: remoteproc@4080000 {
- 			compatible = "qcom,sm8550-mpss-pas";
--			reg = <0x0 0x04080000 0x0 0x4040>;
-+			reg = <0x0 0x04080000 0x0 0x10000>;
+ 	segment@0 {					/* 0x4a000000 */
+ 		compatible = "simple-pm-bus";
+@@ -557,6 +558,7 @@
+ 			 <0x0007e000 0x0017e000 0x001000>,	/* ap 124 */
+ 			 <0x00059000 0x00159000 0x001000>,	/* ap 125 */
+ 			 <0x0005a000 0x0015a000 0x001000>;	/* ap 126 */
++		dma-ranges;
  
- 			interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_modem_in 0 IRQ_TYPE_EDGE_RISING>,
+ 		target-module@2000 {			/* 0x4a102000, ap 27 3c.0 */
+ 			compatible = "ti,sysc";
 
 
