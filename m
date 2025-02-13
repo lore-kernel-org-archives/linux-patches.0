@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B84226B0AD;
-	Thu, 13 Feb 2025 15:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B595D26B0A4;
+	Thu, 13 Feb 2025 15:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459521; cv=none; b=n+tt5mgWZVa5pseIe9gd/eYmGIIY0qTJb3moU4/wn+WGNM/SUwbHeI2HstWstqnJnpfFTKx1Ezw9R6pjaAJ7awWkW6BiFlJ9qgJaPP5ApZho6EY+8rb9K6u7qsIhfh4PX1yTcV4HESb+pKiT4OAlybef/F65INdpjFYsk7I8DW0=
+	t=1739459524; cv=none; b=N6+tj7O45XusM8keNSUTc+O9z9dNv8ZWP6vIDT/vUnjYq4Zog0FRulOqexDpnhgVfDbW46UBL76wy5ojUB4tJixlzgCa8FqanlEzSe149aNV0cQrvWQx4ysWrtKcSIMZo4WFcc4y4orxGG6a+YOZIQF1YTpP6f1FUg69JMp7HNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459521; c=relaxed/simple;
-	bh=s/JbEr9OXnJ4Dbwo0SZUaq8wlQ4IdYTKDqgy0ltRDV4=;
+	s=arc-20240116; t=1739459524; c=relaxed/simple;
+	bh=qcVWxSjT14Z3n0uCF6nFofszhldEFhTYNJLk0iDaBHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8rT6mz58QOhLxYDPa1EE8w5UK1e0Aq5PXXNSP6VzNxnb1thd7o9QaHUcyORmak1+fLQwPOduglY6DjMa0N29esUN5PdtDfChqXeRXKvaVlXtmLTq0EkFjwsXQU3gpJS9SsxuUwHsLdAv3WS9j/gEbVazFqkMp/r8hkQ4QANB68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f28W2+6q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uCLhpqjTBCk2ERA7xbdsvUFBR8hgJVt+M9lRtVGhSg4fm/+DkOdaMoqEGNdRr2Ud8taZ3qrX43EQlzbsyR3bffQfNCb4M4FuyxHkYvPm8xUoyog/h/txykbQeYxznS5pnkIosekVPCXJ3yUnS5uv3JCzEcBxOhaqRnRPXuv/rI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+iZ8+DO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f28W2+6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24A1C4CEE5;
-	Thu, 13 Feb 2025 15:12:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+iZ8+DO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24333C4CED1;
+	Thu, 13 Feb 2025 15:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459521;
-	bh=s/JbEr9OXnJ4Dbwo0SZUaq8wlQ4IdYTKDqgy0ltRDV4=;
+	s=korg; t=1739459524;
+	bh=qcVWxSjT14Z3n0uCF6nFofszhldEFhTYNJLk0iDaBHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f28W2+6qnWKSwd4oFkXsZiDwOHp2v7TkPfxDu4sJI50OsgUrFlDaezIUIZOuO59nm
-	 SwhBQeZ/zN38A+scYb66t/7ye+60SIjrBP+VHjFSkiolDlw1jKTqmaQvEi6/tQHQnV
-	 bob7PCcB1P8H71lv6QqvFEtJ0RzNUr3dNeCmh+y0=
+	b=Y+iZ8+DOhfd1x6FlIH44cxnb9LB3zGtrDxHtqiFCD4nLpjlmRwOVrEWHGzHW1nth6
+	 GTojAofEoCwV+W0W5yYZJQWJ6XVSxJQrcQATyTm9kxsqEjdTrGn8bUyRizBMs0qYtE
+	 v8vZMCFf3ql4BPMrqxpdNEFas1ObwY5+Zs5tPe1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.13 290/443] x86: rust: set rustc-abi=x86-softfloat on rustc>=1.86.0
-Date: Thu, 13 Feb 2025 15:27:35 +0100
-Message-ID: <20250213142451.803992102@linuxfoundation.org>
+	Jim Mattson <jmattson@google.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.13 291/443] x86/acpi: Fix LAPIC/x2APIC parsing order
+Date: Thu, 13 Feb 2025 15:27:36 +0100
+Message-ID: <20250213142451.843907260@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,83 +52,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-commit 6273a058383e05465083b535ed9469f2c8a48321 upstream.
+commit 0141978ae75bd48bac13fca6de131a5071c32011 upstream.
 
-When using Rust on the x86 architecture, we are currently using the
-unstable target.json feature to specify the compilation target. Rustc is
-going to change how softfloat is specified in the target.json file on
-x86, thus update generate_rust_target.rs to specify softfloat using the
-new option.
+On some systems, the same CPU (with the same APIC ID) is assigned a
+different logical CPU id after commit ec9aedb2aa1a ("x86/acpi: Ignore
+invalid x2APIC entries").
 
-Note that if you enable this parameter with a compiler that does not
-recognize it, then that triggers a warning but it does not break the
-build.
+This means that Linux enumerates the CPUs in a different order, which
+violates ACPI specification[1] that states:
 
-[ For future reference, this solves the following error:
+  "OSPM should initialize processors in the order that they appear in
+   the MADT"
 
-        RUSTC L rust/core.o
-      error: Error loading target specification: target feature
-      `soft-float` is incompatible with the ABI but gets enabled in
-      target spec. Run `rustc --print target-list` for a list of
-      built-in targets
+The problematic commit parses all LAPIC entries before any x2APIC
+entries, aiming to ignore x2APIC entries with APIC ID < 255 when valid
+LAPIC entries exist. However, it disrupts the CPU enumeration order on
+systems where x2APIC entries precede LAPIC entries in the MADT.
 
-  - Miguel ]
+Fix this problem by:
 
-Cc: <stable@vger.kernel.org> # Needed in 6.12.y and 6.13.y only (Rust is pinned in older LTSs).
-Link: https://github.com/rust-lang/rust/pull/136146
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com> # for x86
-Link: https://lore.kernel.org/r/20250203-rustc-1-86-x86-softfloat-v1-1-220a72a5003e@google.com
-[ Added 6.13.y too to Cc: stable tag and added reasoning to avoid
-  over-backporting. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+ 1) Parsing LAPIC entries first without registering them in the
+    topology to evaluate whether valid LAPIC entries exist.
+
+ 2) Restoring the MADT in order parser which invokes either the LAPIC
+    or the X2APIC parser function depending on the entry type.
+
+The X2APIC parser still ignores entries < 0xff in case that #1 found
+valid LAPIC entries independent of their position in the MADT table.
+
+Link: https://uefi.org/specs/ACPI/6.5/05_ACPI_Software_Programming_Model.html#madt-processor-local-apic-sapic-structure-entry-order
+Cc: All applicable <stable@vger.kernel.org>
+Reported-by: Jim Mattson <jmattson@google.com>
+Closes: https://lore.kernel.org/all/20241010213136.668672-1-jmattson@google.com/
+Fixes: ec9aedb2aa1a ("x86/acpi: Ignore invalid x2APIC entries")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Tested-by: Jim Mattson <jmattson@google.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://patch.msgid.link/20250117081420.4046737-1-rui.zhang@intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/generate_rust_target.rs |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ arch/x86/kernel/acpi/boot.c |   50 +++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 45 insertions(+), 5 deletions(-)
 
---- a/scripts/generate_rust_target.rs
-+++ b/scripts/generate_rust_target.rs
-@@ -165,6 +165,18 @@ impl KernelConfig {
-         let option = "CONFIG_".to_owned() + option;
-         self.0.contains_key(&option)
-     }
-+
-+    /// Is the rustc version at least `major.minor.patch`?
-+    fn rustc_version_atleast(&self, major: u32, minor: u32, patch: u32) -> bool {
-+        let check_version = 100000 * major + 100 * minor + patch;
-+        let actual_version = self
-+            .0
-+            .get("CONFIG_RUSTC_VERSION")
-+            .unwrap()
-+            .parse::<u32>()
-+            .unwrap();
-+        check_version <= actual_version
-+    }
+--- a/arch/x86/kernel/acpi/boot.c
++++ b/arch/x86/kernel/acpi/boot.c
+@@ -227,6 +227,28 @@ acpi_parse_x2apic(union acpi_subtable_he
  }
  
- fn main() {
-@@ -182,6 +194,9 @@ fn main() {
-         }
-     } else if cfg.has("X86_64") {
-         ts.push("arch", "x86_64");
-+        if cfg.rustc_version_atleast(1, 86, 0) {
-+            ts.push("rustc-abi", "x86-softfloat");
-+        }
-         ts.push(
-             "data-layout",
-             "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
-@@ -215,6 +230,9 @@ fn main() {
-             panic!("32-bit x86 only works under UML");
-         }
-         ts.push("arch", "x86");
-+        if cfg.rustc_version_atleast(1, 86, 0) {
-+            ts.push("rustc-abi", "x86-softfloat");
-+        }
-         ts.push(
-             "data-layout",
-             "e-m:e-p:32:32-p270:32:32-p271:32:32-p272:64:64-i128:128-f64:32:64-f80:32-n8:16:32-S128",
+ static int __init
++acpi_check_lapic(union acpi_subtable_headers *header, const unsigned long end)
++{
++	struct acpi_madt_local_apic *processor = NULL;
++
++	processor = (struct acpi_madt_local_apic *)header;
++
++	if (BAD_MADT_ENTRY(processor, end))
++		return -EINVAL;
++
++	/* Ignore invalid ID */
++	if (processor->id == 0xff)
++		return 0;
++
++	/* Ignore processors that can not be onlined */
++	if (!acpi_is_processor_usable(processor->lapic_flags))
++		return 0;
++
++	has_lapic_cpus = true;
++	return 0;
++}
++
++static int __init
+ acpi_parse_lapic(union acpi_subtable_headers * header, const unsigned long end)
+ {
+ 	struct acpi_madt_local_apic *processor = NULL;
+@@ -257,7 +279,6 @@ acpi_parse_lapic(union acpi_subtable_hea
+ 			       processor->processor_id, /* ACPI ID */
+ 			       processor->lapic_flags & ACPI_MADT_ENABLED);
+ 
+-	has_lapic_cpus = true;
+ 	return 0;
+ }
+ 
+@@ -1029,6 +1050,8 @@ static int __init early_acpi_parse_madt_
+ static int __init acpi_parse_madt_lapic_entries(void)
+ {
+ 	int count, x2count = 0;
++	struct acpi_subtable_proc madt_proc[2];
++	int ret;
+ 
+ 	if (!boot_cpu_has(X86_FEATURE_APIC))
+ 		return -ENODEV;
+@@ -1037,10 +1060,27 @@ static int __init acpi_parse_madt_lapic_
+ 				      acpi_parse_sapic, MAX_LOCAL_APIC);
+ 
+ 	if (!count) {
+-		count = acpi_table_parse_madt(ACPI_MADT_TYPE_LOCAL_APIC,
+-					acpi_parse_lapic, MAX_LOCAL_APIC);
+-		x2count = acpi_table_parse_madt(ACPI_MADT_TYPE_LOCAL_X2APIC,
+-					acpi_parse_x2apic, MAX_LOCAL_APIC);
++		/* Check if there are valid LAPIC entries */
++		acpi_table_parse_madt(ACPI_MADT_TYPE_LOCAL_APIC, acpi_check_lapic, MAX_LOCAL_APIC);
++
++		/*
++		 * Enumerate the APIC IDs in the order that they appear in the
++		 * MADT, no matter LAPIC entry or x2APIC entry is used.
++		 */
++		memset(madt_proc, 0, sizeof(madt_proc));
++		madt_proc[0].id = ACPI_MADT_TYPE_LOCAL_APIC;
++		madt_proc[0].handler = acpi_parse_lapic;
++		madt_proc[1].id = ACPI_MADT_TYPE_LOCAL_X2APIC;
++		madt_proc[1].handler = acpi_parse_x2apic;
++		ret = acpi_table_parse_entries_array(ACPI_SIG_MADT,
++				sizeof(struct acpi_table_madt),
++				madt_proc, ARRAY_SIZE(madt_proc), MAX_LOCAL_APIC);
++		if (ret < 0) {
++			pr_err("Error parsing LAPIC/X2APIC entries\n");
++			return ret;
++		}
++		count = madt_proc[0].count;
++		x2count = madt_proc[1].count;
+ 	}
+ 	if (!count && !x2count) {
+ 		pr_err("No LAPIC entries present\n");
 
 
