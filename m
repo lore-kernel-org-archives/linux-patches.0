@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3051626B0BE;
-	Thu, 13 Feb 2025 15:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85BC26B0BC;
+	Thu, 13 Feb 2025 15:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459926; cv=none; b=hkJb8KDbaUekLa63ourGcSFfAROaVLhLXvkm/Q2gOmmtrH6VQ30ySqFerd01Kqf6+6Jpq6EJ/+5DlgdD8XfmbH/8VUuZmLCpbyV9NbQ6A5GObQ0dcyDzS06aJ02yzmmVQBRPFwxxklTA13lRPGLSjej0F26IuCaMYGAAOHTwmkE=
+	t=1739459929; cv=none; b=Czg+CiKmgMG6Pf3GU2y08OOG6SvjDvsS0+C4/jX3tk9ZF9cEInMtN/+DYFzHzoo+OwjNH40bG1KiDq2C5Hd6rBPneiAJb45ln9bRcuLKddbNZAC2xoQJefj3IY3fMURACGSfUPLQ52/RtnFBfEv1Im5yjvwAMYDuKLC+x/l5XZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459926; c=relaxed/simple;
-	bh=ZlX0G1SaTShCIV2ZIR6o0piePEGkGxC9Lt+kVeyY4jg=;
+	s=arc-20240116; t=1739459929; c=relaxed/simple;
+	bh=gYKs1A8v1La+MZE7KEh7ENuE81wLIdvDqMP2pKfAHcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emRvKlKViVbGnAxdF+C9N7o66zTexCJNcMXgzlc7FP3OIsdCu/vW1B58Y1P8DFK9YKjdwSUL4GPxxjmm5kXtrY4h+R22doXhz2gTonsusUWivjAF6Dl9r4/HcAYsSgyObPvvPzB4Y+pq5+R4MYQyF22Ij107iLtKwOysNm34Frw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGPRq8IV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uZgndcbGaqOR973sEBiLsuR89PotP2owHvo63usVGB9kFCVe3g1ZeSW7g/tULjj6JPlGe8gSvtnOWj6kD0ELM1DNqT19cb7OQ0yrmlYJBnfg+G0UXZ2TZqdceWOdluE4eIbS24kI4TDDIjYOti5bLYGCJ7XAwFXKccuOcrIR1oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NN5+8fuL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGPRq8IV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E182C4CED1;
-	Thu, 13 Feb 2025 15:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NN5+8fuL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94D6C4CED1;
+	Thu, 13 Feb 2025 15:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459926;
-	bh=ZlX0G1SaTShCIV2ZIR6o0piePEGkGxC9Lt+kVeyY4jg=;
+	s=korg; t=1739459929;
+	bh=gYKs1A8v1La+MZE7KEh7ENuE81wLIdvDqMP2pKfAHcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGPRq8IVZl6aE7lqNHa+IDui2g+3F+LlSmuV0JWUnB2rJj1cWqUOBTm4KeGAbRuUT
-	 1EbLINb/1Kf6ebXaoZ8ueaOzozmvQAapsuDN/J6ZS3QZDYIJTTeD9VkOaPGqmb1QYJ
-	 SBo79L4mPaItmgOaFukSmbfUAPcW/p404qGEc4B0=
+	b=NN5+8fuL6+1yD0E4/DLhMNpOvRz8vbyaatJs1MqYDsBCZJlVXBss3TcaX4c1gxs4N
+	 JjPUw+dj01DhmZC6hvkKwJhNE+mgmSC1gpBk5e6KbeUTQSoidkjOpbx3MRYjpCMGjW
+	 Ol3aQGzR9eR8P5dKihXWuB3Ed2JJKhEBBXO84Wi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	Aijun Sun <aijun.sun@unisoc.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 378/443] mm: gup: fix infinite loop within __get_longterm_locked
-Date: Thu, 13 Feb 2025 15:29:03 +0100
-Message-ID: <20250213142455.194817113@linuxfoundation.org>
+	Uros Bizjak <ubizjak@gmail.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Tanmay Shah <tanmay.shah@amd.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>
+Subject: [PATCH 6.13 405/443] mailbox: zynqmp: Remove invalid __percpu annotation in zynqmp_ipi_probe()
+Date: Thu, 13 Feb 2025 15:29:30 +0100
+Message-ID: <20250213142456.237231333@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -54,87 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-commit 1aaf8c122918aa8897605a9aa1e8ed6600d6f930 upstream.
+commit 170a264d2611a0bfa96b7818730473db5e7546fc upstream.
 
-We can run into an infinite loop in __get_longterm_locked() when
-collect_longterm_unpinnable_folios() finds only folios that are isolated
-from the LRU or were never added to the LRU.  This can happen when all
-folios to be pinned are never added to the LRU, for example when
-vm_ops->fault allocated pages using cma_alloc() and never added them to
-the LRU.
+struct zynqmp_ipi_pdata __percpu *pdata is not a per-cpu variable,
+so it should not be annotated with __percpu annotation.
 
-Fix it by simply taking a look at the list in the single caller, to see if
-anything was added.
+Remove invalid __percpu annotation to fix several
 
-[zhaoyang.huang@unisoc.com: move definition of local]
-  Link: https://lkml.kernel.org/r/20250122012604.3654667-1-zhaoyang.huang@unisoc.com
-Link: https://lkml.kernel.org/r/20250121020159.3636477-1-zhaoyang.huang@unisoc.com
-Fixes: 67e139b02d99 ("mm/gup.c: refactor check_and_migrate_movable_pages()")
-Signed-off-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
-Reviewed-by: John Hubbard <jhubbard@nvidia.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Suggested-by: David Hildenbrand <david@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Aijun Sun <aijun.sun@unisoc.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+zynqmp-ipi-mailbox.c:920:15: warning: incorrect type in assignment (different address spaces)
+zynqmp-ipi-mailbox.c:920:15:    expected struct zynqmp_ipi_pdata [noderef] __percpu *pdata
+zynqmp-ipi-mailbox.c:920:15:    got void *
+zynqmp-ipi-mailbox.c:927:56: warning: incorrect type in argument 3 (different address spaces)
+zynqmp-ipi-mailbox.c:927:56:    expected unsigned int [usertype] *out_value
+zynqmp-ipi-mailbox.c:927:56:    got unsigned int [noderef] __percpu *
+...
+
+and several
+
+drivers/mailbox/zynqmp-ipi-mailbox.c:924:9: warning: dereference of noderef expression
+...
+
+sparse warnings.
+
+There were no changes in the resulting object file.
+
+Cc: stable@vger.kernel.org
+Fixes: 6ffb1635341b ("mailbox: zynqmp: handle SGI for shared IPI")
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Reviewed-by: Tanmay Shah <tanmay.shah@amd.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c |   14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -2323,13 +2323,13 @@ static void pofs_unpin(struct pages_or_f
- /*
-  * Returns the number of collected folios. Return value is always >= 0.
-  */
--static unsigned long collect_longterm_unpinnable_folios(
-+static void collect_longterm_unpinnable_folios(
- 		struct list_head *movable_folio_list,
- 		struct pages_or_folios *pofs)
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -905,7 +905,7 @@ static int zynqmp_ipi_probe(struct platf
  {
--	unsigned long i, collected = 0;
- 	struct folio *prev_folio = NULL;
- 	bool drain_allow = true;
-+	unsigned long i;
- 
- 	for (i = 0; i < pofs->nr_entries; i++) {
- 		struct folio *folio = pofs_get_folio(pofs, i);
-@@ -2341,8 +2341,6 @@ static unsigned long collect_longterm_un
- 		if (folio_is_longterm_pinnable(folio))
- 			continue;
- 
--		collected++;
--
- 		if (folio_is_device_coherent(folio))
- 			continue;
- 
-@@ -2364,8 +2362,6 @@ static unsigned long collect_longterm_un
- 				    NR_ISOLATED_ANON + folio_is_file_lru(folio),
- 				    folio_nr_pages(folio));
- 	}
--
--	return collected;
- }
- 
- /*
-@@ -2442,11 +2438,9 @@ static long
- check_and_migrate_movable_pages_or_folios(struct pages_or_folios *pofs)
- {
- 	LIST_HEAD(movable_folio_list);
--	unsigned long collected;
- 
--	collected = collect_longterm_unpinnable_folios(&movable_folio_list,
--						       pofs);
--	if (!collected)
-+	collect_longterm_unpinnable_folios(&movable_folio_list, pofs);
-+	if (list_empty(&movable_folio_list))
- 		return 0;
- 
- 	return migrate_longterm_unpinnable_folios(&movable_folio_list, pofs);
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *nc, *np = pdev->dev.of_node;
+-	struct zynqmp_ipi_pdata __percpu *pdata;
++	struct zynqmp_ipi_pdata *pdata;
+ 	struct of_phandle_args out_irq;
+ 	struct zynqmp_ipi_mbox *mbox;
+ 	int num_mboxes, ret = -EINVAL;
 
 
