@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7843C26B082;
-	Thu, 13 Feb 2025 15:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFBB26B0B1;
+	Thu, 13 Feb 2025 15:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459037; cv=none; b=DzMirqkErU0ytDRYsyGC646MDrcT72NTwilf2hvI+dSbGnWlO6dcWlNfgW/+LXeYfeNA4CNkHIee5N9Pgooj63CY2ywBWLv544498VZkyj7XF0ZmyYWOPvOXk9W7ERhonUUmwVXHHwUtVxFy231YBaXtBarfp78uof6i5jOScWg=
+	t=1739459040; cv=none; b=YjZfMtZsi7LbAtXPG+e5nSV2G3INC3pWA4gj2idz12du1gmGw9PoAAAkrVGQXk5eHqJGxvoEB5CEPy6V4oxoTLY10fpyEPsMDolOxu9pYx05KRQlUMjWF9l+PEiaZarPtnRTxw4Haf7zrmTE8O2QufcNQC4ha7W6yKt+jqMw1PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459037; c=relaxed/simple;
-	bh=8kJaK35/WMwQSG2O7XI3PJpfv3hKVwgp9q80xEamD2E=;
+	s=arc-20240116; t=1739459040; c=relaxed/simple;
+	bh=pzRr+gVIDE7mzMUcwpTLMLnSOsfSezIM/fHhicqf+JA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQNfuiYPlj9WKP7/K8q1CNquU5ZVogvpSoKNhvUagAtf1hcfdup8vu2vMoGd3hP79+U1U0tJQ5Hw9N4NfYzhBgTyiEWpD+DP2pcJVUHwKiQQYFwi19COxp7KOfl3e07PwmCBXO30SwciPgabglp8GClMhiw6PLSx9kv8jxpDMeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11RaZ/j/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YfAcT7ZvkKajOyyeMfbc01dnr4IpdZL2S0hgEH2N6PsQdcu4/U1+4uY4DnsQK3BuG0kcNDbnPck4OqaSBd0y2OXDkc593VAV2/4N3ARkx22vmczs9hnjgG/DhEAfJdjqpXUxl+uR4ujSstDC15djHV4FKT6Ffqox/ZeL7EAuRPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsAb6Y4R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11RaZ/j/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D689C4CED1;
-	Thu, 13 Feb 2025 15:03:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsAb6Y4R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE547C4CED1;
+	Thu, 13 Feb 2025 15:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459037;
-	bh=8kJaK35/WMwQSG2O7XI3PJpfv3hKVwgp9q80xEamD2E=;
+	s=korg; t=1739459040;
+	bh=pzRr+gVIDE7mzMUcwpTLMLnSOsfSezIM/fHhicqf+JA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=11RaZ/j/Nayp6PtxDuWU53Pjzw1P6gtPw5qz5jhoJ72/cZQ6wxHQ7jQuQ3oW1Z9/8
-	 INhisN+FPwJ7V0nirCo8WltzzB0/qLxrNwVDuAQA+k9L292PVQuJkPSP23Y0jnFCL0
-	 vuxFPNlb8oZ0kbtoVB9auRU3PCNugDiNxpwvgTBk=
+	b=NsAb6Y4ReLTliSttRBgBextaiEoHEjHKTIbp9WNrTGeehUsWVghrBrS2fUWhOYoTJ
+	 ArLpJbzoPM6GXH5jcEQWXvJ3WkA5g2nQ1Y0zIVFvE1xqE/7WJxgAZ1IfqN4rNcrtap
+	 RSemSqzZjZwr6xOvc6Wdw9+8e56UUDOTouYcwR2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meetakshi Setiya <msetiya@microsoft.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.13 150/443] smb: client: change lease epoch type from unsigned int to __u16
-Date: Thu, 13 Feb 2025 15:25:15 +0100
-Message-ID: <20250213142446.386178681@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Coly Li <colyli@kernel.org>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.13 151/443] md: reintroduce md-linear
+Date: Thu, 13 Feb 2025 15:25:16 +0100
+Message-ID: <20250213142446.425618823@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,189 +52,499 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meetakshi Setiya <msetiya@microsoft.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit 57e4a9bd61c308f607bc3e55e8fa02257b06b552 upstream.
+commit 127186cfb184eaccdfe948e6da66940cfa03efc5 upstream.
 
-MS-SMB2 section 2.2.13.2.10 specifies that 'epoch' should be a 16-bit
-unsigned integer used to track lease state changes. Change the data
-type of all instances of 'epoch' from unsigned int to __u16. This
-simplifies the epoch change comparisons and makes the code more
-compliant with the protocol spec.
+THe md-linear is removed by commit 849d18e27be9 ("md: Remove deprecated
+CONFIG_MD_LINEAR") because it has been marked as deprecated for a long
+time.
 
+However, md-linear is used widely for underlying disks with different size,
+sadly we didn't know this until now, and it's true useful to create
+partitions and assemble multiple raid and then append one to the other.
+
+People have to use dm-linear in this case now, however, they will prefer
+to minimize the number of involved modules.
+
+Fixes: 849d18e27be9 ("md: Remove deprecated CONFIG_MD_LINEAR")
 Cc: stable@vger.kernel.org
-Signed-off-by: Meetakshi Setiya <msetiya@microsoft.com>
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Coly Li <colyli@kernel.org>
+Acked-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20250102112841.1227111-1-yukuai1@huaweicloud.com
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsglob.h  |   14 +++++++-------
- fs/smb/client/smb1ops.c   |    2 +-
- fs/smb/client/smb2ops.c   |   18 +++++++++---------
- fs/smb/client/smb2pdu.c   |    2 +-
- fs/smb/client/smb2proto.h |    2 +-
- 5 files changed, 19 insertions(+), 19 deletions(-)
+ drivers/md/Kconfig             |   13 +
+ drivers/md/Makefile            |    2 
+ drivers/md/md-autodetect.c     |    8 
+ drivers/md/md-linear.c         |  354 +++++++++++++++++++++++++++++++++++++++++
+ drivers/md/md.c                |    2 
+ include/uapi/linux/raid/md_p.h |    2 
+ include/uapi/linux/raid/md_u.h |    2 
+ 7 files changed, 379 insertions(+), 4 deletions(-)
+ create mode 100644 drivers/md/md-linear.c
 
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -326,7 +326,7 @@ struct smb_version_operations {
- 	int (*handle_cancelled_mid)(struct mid_q_entry *, struct TCP_Server_Info *);
- 	void (*downgrade_oplock)(struct TCP_Server_Info *server,
- 				 struct cifsInodeInfo *cinode, __u32 oplock,
--				 unsigned int epoch, bool *purge_cache);
-+				 __u16 epoch, bool *purge_cache);
- 	/* process transaction2 response */
- 	bool (*check_trans2)(struct mid_q_entry *, struct TCP_Server_Info *,
- 			     char *, int);
-@@ -521,12 +521,12 @@ struct smb_version_operations {
- 	/* if we can do cache read operations */
- 	bool (*is_read_op)(__u32);
- 	/* set oplock level for the inode */
--	void (*set_oplock_level)(struct cifsInodeInfo *, __u32, unsigned int,
--				 bool *);
-+	void (*set_oplock_level)(struct cifsInodeInfo *cinode, __u32 oplock, __u16 epoch,
-+				 bool *purge_cache);
- 	/* create lease context buffer for CREATE request */
- 	char * (*create_lease_buf)(u8 *lease_key, u8 oplock);
- 	/* parse lease context buffer and return oplock/epoch info */
--	__u8 (*parse_lease_buf)(void *buf, unsigned int *epoch, char *lkey);
-+	__u8 (*parse_lease_buf)(void *buf, __u16 *epoch, char *lkey);
- 	ssize_t (*copychunk_range)(const unsigned int,
- 			struct cifsFileInfo *src_file,
- 			struct cifsFileInfo *target_file,
-@@ -1422,7 +1422,7 @@ struct cifs_fid {
- 	__u8 create_guid[16];
- 	__u32 access;
- 	struct cifs_pending_open *pending_open;
--	unsigned int epoch;
-+	__u16 epoch;
- #ifdef CONFIG_CIFS_DEBUG2
- 	__u64 mid;
- #endif /* CIFS_DEBUG2 */
-@@ -1455,7 +1455,7 @@ struct cifsFileInfo {
- 	bool oplock_break_cancelled:1;
- 	bool status_file_deleted:1; /* file has been deleted */
- 	bool offload:1; /* offload final part of _put to a wq */
--	unsigned int oplock_epoch; /* epoch from the lease break */
-+	__u16 oplock_epoch; /* epoch from the lease break */
- 	__u32 oplock_level; /* oplock/lease level from the lease break */
- 	int count;
- 	spinlock_t file_info_lock; /* protects four flag/count fields above */
-@@ -1552,7 +1552,7 @@ struct cifsInodeInfo {
- 	spinlock_t	open_file_lock;	/* protects openFileList */
- 	__u32 cifsAttrs; /* e.g. DOS archive bit, sparse, compressed, system */
- 	unsigned int oplock;		/* oplock/lease level we have */
--	unsigned int epoch;		/* used to track lease state changes */
-+	__u16 epoch;		/* used to track lease state changes */
- #define CIFS_INODE_PENDING_OPLOCK_BREAK   (0) /* oplock break in progress */
- #define CIFS_INODE_PENDING_WRITERS	  (1) /* Writes in progress */
- #define CIFS_INODE_FLAG_UNUSED		  (2) /* Unused flag */
---- a/fs/smb/client/smb1ops.c
-+++ b/fs/smb/client/smb1ops.c
-@@ -377,7 +377,7 @@ coalesce_t2(char *second_buf, struct smb
- static void
- cifs_downgrade_oplock(struct TCP_Server_Info *server,
- 		      struct cifsInodeInfo *cinode, __u32 oplock,
--		      unsigned int epoch, bool *purge_cache)
-+		      __u16 epoch, bool *purge_cache)
- {
- 	cifs_set_oplock_level(cinode, oplock);
- }
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3904,22 +3904,22 @@ static long smb3_fallocate(struct file *
- static void
- smb2_downgrade_oplock(struct TCP_Server_Info *server,
- 		      struct cifsInodeInfo *cinode, __u32 oplock,
--		      unsigned int epoch, bool *purge_cache)
-+		      __u16 epoch, bool *purge_cache)
- {
- 	server->ops->set_oplock_level(cinode, oplock, 0, NULL);
- }
+--- a/drivers/md/Kconfig
++++ b/drivers/md/Kconfig
+@@ -61,6 +61,19 @@ config MD_BITMAP_FILE
+ 	  various kernel APIs and can only work with files on a file system not
+ 	  actually sitting on the MD device.
  
- static void
- smb21_set_oplock_level(struct cifsInodeInfo *cinode, __u32 oplock,
--		       unsigned int epoch, bool *purge_cache);
-+		       __u16 epoch, bool *purge_cache);
++config MD_LINEAR
++	tristate "Linear (append) mode"
++	depends on BLK_DEV_MD
++	help
++	  If you say Y here, then your multiple devices driver will be able to
++	  use the so-called linear mode, i.e. it will combine the hard disk
++	  partitions by simply appending one to the other.
++
++	  To compile this as a module, choose M here: the module
++	  will be called linear.
++
++	  If unsure, say Y.
++
+ config MD_RAID0
+ 	tristate "RAID-0 (striping) mode"
+ 	depends on BLK_DEV_MD
+--- a/drivers/md/Makefile
++++ b/drivers/md/Makefile
+@@ -29,12 +29,14 @@ dm-zoned-y	+= dm-zoned-target.o dm-zoned
  
- static void
- smb3_downgrade_oplock(struct TCP_Server_Info *server,
- 		       struct cifsInodeInfo *cinode, __u32 oplock,
--		       unsigned int epoch, bool *purge_cache)
-+		       __u16 epoch, bool *purge_cache)
- {
- 	unsigned int old_state = cinode->oplock;
--	unsigned int old_epoch = cinode->epoch;
-+	__u16 old_epoch = cinode->epoch;
- 	unsigned int new_state;
+ md-mod-y	+= md.o md-bitmap.o
+ raid456-y	+= raid5.o raid5-cache.o raid5-ppl.o
++linear-y       += md-linear.o
  
- 	if (epoch > old_epoch) {
-@@ -3939,7 +3939,7 @@ smb3_downgrade_oplock(struct TCP_Server_
+ # Note: link order is important.  All raid personalities
+ # and must come before md.o, as they each initialise
+ # themselves, and md.o may use the personalities when it
+ # auto-initialised.
  
- static void
- smb2_set_oplock_level(struct cifsInodeInfo *cinode, __u32 oplock,
--		      unsigned int epoch, bool *purge_cache)
-+		      __u16 epoch, bool *purge_cache)
- {
- 	oplock &= 0xFF;
- 	cinode->lease_granted = false;
-@@ -3963,7 +3963,7 @@ smb2_set_oplock_level(struct cifsInodeIn
++obj-$(CONFIG_MD_LINEAR)		+= linear.o
+ obj-$(CONFIG_MD_RAID0)		+= raid0.o
+ obj-$(CONFIG_MD_RAID1)		+= raid1.o
+ obj-$(CONFIG_MD_RAID10)		+= raid10.o
+--- a/drivers/md/md-autodetect.c
++++ b/drivers/md/md-autodetect.c
+@@ -49,6 +49,7 @@ static int md_setup_ents __initdata;
+  *             instead of just one.  -- KTK
+  * 18May2000: Added support for persistent-superblock arrays:
+  *             md=n,0,factor,fault,device-list   uses RAID0 for device n
++ *             md=n,-1,factor,fault,device-list  uses LINEAR for device n
+  *             md=n,device-list      reads a RAID superblock from the devices
+  *             elements in device-list are read by name_to_kdev_t so can be
+  *             a hex number or something like /dev/hda1 /dev/sdb
+@@ -87,7 +88,7 @@ static int __init md_setup(char *str)
+ 		md_setup_ents++;
+ 	switch (get_option(&str, &level)) {	/* RAID level */
+ 	case 2: /* could be 0 or -1.. */
+-		if (level == 0) {
++		if (level == 0 || level == LEVEL_LINEAR) {
+ 			if (get_option(&str, &factor) != 2 ||	/* Chunk Size */
+ 					get_option(&str, &fault) != 2) {
+ 				printk(KERN_WARNING "md: Too few arguments supplied to md=.\n");
+@@ -95,7 +96,10 @@ static int __init md_setup(char *str)
+ 			}
+ 			md_setup_args[ent].level = level;
+ 			md_setup_args[ent].chunk = 1 << (factor+12);
+-			pername = "raid0";
++			if (level ==  LEVEL_LINEAR)
++				pername = "linear";
++			else
++				pername = "raid0";
+ 			break;
+ 		}
+ 		fallthrough;
+--- /dev/null
++++ b/drivers/md/md-linear.c
+@@ -0,0 +1,354 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * linear.c : Multiple Devices driver for Linux Copyright (C) 1994-96 Marc
++ * ZYNGIER <zyngier@ufr-info-p7.ibp.fr> or <maz@gloups.fdn.fr>
++ */
++
++#include <linux/blkdev.h>
++#include <linux/raid/md_u.h>
++#include <linux/seq_file.h>
++#include <linux/module.h>
++#include <linux/slab.h>
++#include <trace/events/block.h>
++#include "md.h"
++
++struct dev_info {
++	struct md_rdev	*rdev;
++	sector_t	end_sector;
++};
++
++struct linear_conf {
++	struct rcu_head         rcu;
++	sector_t                array_sectors;
++	/* a copy of mddev->raid_disks */
++	int                     raid_disks;
++	struct dev_info         disks[] __counted_by(raid_disks);
++};
++
++/*
++ * find which device holds a particular offset
++ */
++static inline struct dev_info *which_dev(struct mddev *mddev, sector_t sector)
++{
++	int lo, mid, hi;
++	struct linear_conf *conf;
++
++	lo = 0;
++	hi = mddev->raid_disks - 1;
++	conf = mddev->private;
++
++	/*
++	 * Binary Search
++	 */
++
++	while (hi > lo) {
++
++		mid = (hi + lo) / 2;
++		if (sector < conf->disks[mid].end_sector)
++			hi = mid;
++		else
++			lo = mid + 1;
++	}
++
++	return conf->disks + lo;
++}
++
++static sector_t linear_size(struct mddev *mddev, sector_t sectors, int raid_disks)
++{
++	struct linear_conf *conf;
++	sector_t array_sectors;
++
++	conf = mddev->private;
++	WARN_ONCE(sectors || raid_disks,
++		  "%s does not support generic reshape\n", __func__);
++	array_sectors = conf->array_sectors;
++
++	return array_sectors;
++}
++
++static int linear_set_limits(struct mddev *mddev)
++{
++	struct queue_limits lim;
++	int err;
++
++	md_init_stacking_limits(&lim);
++	lim.max_hw_sectors = mddev->chunk_sectors;
++	lim.max_write_zeroes_sectors = mddev->chunk_sectors;
++	lim.io_min = mddev->chunk_sectors << 9;
++	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
++	if (err) {
++		queue_limits_cancel_update(mddev->gendisk->queue);
++		return err;
++	}
++
++	return queue_limits_set(mddev->gendisk->queue, &lim);
++}
++
++static struct linear_conf *linear_conf(struct mddev *mddev, int raid_disks)
++{
++	struct linear_conf *conf;
++	struct md_rdev *rdev;
++	int ret = -EINVAL;
++	int cnt;
++	int i;
++
++	conf = kzalloc(struct_size(conf, disks, raid_disks), GFP_KERNEL);
++	if (!conf)
++		return ERR_PTR(-ENOMEM);
++
++	/*
++	 * conf->raid_disks is copy of mddev->raid_disks. The reason to
++	 * keep a copy of mddev->raid_disks in struct linear_conf is,
++	 * mddev->raid_disks may not be consistent with pointers number of
++	 * conf->disks[] when it is updated in linear_add() and used to
++	 * iterate old conf->disks[] earray in linear_congested().
++	 * Here conf->raid_disks is always consitent with number of
++	 * pointers in conf->disks[] array, and mddev->private is updated
++	 * with rcu_assign_pointer() in linear_addr(), such race can be
++	 * avoided.
++	 */
++	conf->raid_disks = raid_disks;
++
++	cnt = 0;
++	conf->array_sectors = 0;
++
++	rdev_for_each(rdev, mddev) {
++		int j = rdev->raid_disk;
++		struct dev_info *disk = conf->disks + j;
++		sector_t sectors;
++
++		if (j < 0 || j >= raid_disks || disk->rdev) {
++			pr_warn("md/linear:%s: disk numbering problem. Aborting!\n",
++				mdname(mddev));
++			goto out;
++		}
++
++		disk->rdev = rdev;
++		if (mddev->chunk_sectors) {
++			sectors = rdev->sectors;
++			sector_div(sectors, mddev->chunk_sectors);
++			rdev->sectors = sectors * mddev->chunk_sectors;
++		}
++
++		conf->array_sectors += rdev->sectors;
++		cnt++;
++	}
++	if (cnt != raid_disks) {
++		pr_warn("md/linear:%s: not enough drives present. Aborting!\n",
++			mdname(mddev));
++		goto out;
++	}
++
++	/*
++	 * Here we calculate the device offsets.
++	 */
++	conf->disks[0].end_sector = conf->disks[0].rdev->sectors;
++
++	for (i = 1; i < raid_disks; i++)
++		conf->disks[i].end_sector =
++			conf->disks[i-1].end_sector +
++			conf->disks[i].rdev->sectors;
++
++	if (!mddev_is_dm(mddev)) {
++		ret = linear_set_limits(mddev);
++		if (ret)
++			goto out;
++	}
++
++	return conf;
++
++out:
++	kfree(conf);
++	return ERR_PTR(ret);
++}
++
++static int linear_run(struct mddev *mddev)
++{
++	struct linear_conf *conf;
++	int ret;
++
++	if (md_check_no_bitmap(mddev))
++		return -EINVAL;
++
++	conf = linear_conf(mddev, mddev->raid_disks);
++	if (IS_ERR(conf))
++		return PTR_ERR(conf);
++
++	mddev->private = conf;
++	md_set_array_sectors(mddev, linear_size(mddev, 0, 0));
++
++	ret =  md_integrity_register(mddev);
++	if (ret) {
++		kfree(conf);
++		mddev->private = NULL;
++	}
++	return ret;
++}
++
++static int linear_add(struct mddev *mddev, struct md_rdev *rdev)
++{
++	/* Adding a drive to a linear array allows the array to grow.
++	 * It is permitted if the new drive has a matching superblock
++	 * already on it, with raid_disk equal to raid_disks.
++	 * It is achieved by creating a new linear_private_data structure
++	 * and swapping it in in-place of the current one.
++	 * The current one is never freed until the array is stopped.
++	 * This avoids races.
++	 */
++	struct linear_conf *newconf, *oldconf;
++
++	if (rdev->saved_raid_disk != mddev->raid_disks)
++		return -EINVAL;
++
++	rdev->raid_disk = rdev->saved_raid_disk;
++	rdev->saved_raid_disk = -1;
++
++	newconf = linear_conf(mddev, mddev->raid_disks + 1);
++	if (!newconf)
++		return -ENOMEM;
++
++	/* newconf->raid_disks already keeps a copy of * the increased
++	 * value of mddev->raid_disks, WARN_ONCE() is just used to make
++	 * sure of this. It is possible that oldconf is still referenced
++	 * in linear_congested(), therefore kfree_rcu() is used to free
++	 * oldconf until no one uses it anymore.
++	 */
++	oldconf = rcu_dereference_protected(mddev->private,
++			lockdep_is_held(&mddev->reconfig_mutex));
++	mddev->raid_disks++;
++	WARN_ONCE(mddev->raid_disks != newconf->raid_disks,
++		"copied raid_disks doesn't match mddev->raid_disks");
++	rcu_assign_pointer(mddev->private, newconf);
++	md_set_array_sectors(mddev, linear_size(mddev, 0, 0));
++	set_capacity_and_notify(mddev->gendisk, mddev->array_sectors);
++	kfree_rcu(oldconf, rcu);
++	return 0;
++}
++
++static void linear_free(struct mddev *mddev, void *priv)
++{
++	struct linear_conf *conf = priv;
++
++	kfree(conf);
++}
++
++static bool linear_make_request(struct mddev *mddev, struct bio *bio)
++{
++	struct dev_info *tmp_dev;
++	sector_t start_sector, end_sector, data_offset;
++	sector_t bio_sector = bio->bi_iter.bi_sector;
++
++	if (unlikely(bio->bi_opf & REQ_PREFLUSH)
++	    && md_flush_request(mddev, bio))
++		return true;
++
++	tmp_dev = which_dev(mddev, bio_sector);
++	start_sector = tmp_dev->end_sector - tmp_dev->rdev->sectors;
++	end_sector = tmp_dev->end_sector;
++	data_offset = tmp_dev->rdev->data_offset;
++
++	if (unlikely(bio_sector >= end_sector ||
++		     bio_sector < start_sector))
++		goto out_of_bounds;
++
++	if (unlikely(is_rdev_broken(tmp_dev->rdev))) {
++		md_error(mddev, tmp_dev->rdev);
++		bio_io_error(bio);
++		return true;
++	}
++
++	if (unlikely(bio_end_sector(bio) > end_sector)) {
++		/* This bio crosses a device boundary, so we have to split it */
++		struct bio *split = bio_split(bio, end_sector - bio_sector,
++					      GFP_NOIO, &mddev->bio_set);
++
++		if (IS_ERR(split)) {
++			bio->bi_status = errno_to_blk_status(PTR_ERR(split));
++			bio_endio(bio);
++			return true;
++		}
++
++		bio_chain(split, bio);
++		submit_bio_noacct(bio);
++		bio = split;
++	}
++
++	md_account_bio(mddev, &bio);
++	bio_set_dev(bio, tmp_dev->rdev->bdev);
++	bio->bi_iter.bi_sector = bio->bi_iter.bi_sector -
++		start_sector + data_offset;
++
++	if (unlikely((bio_op(bio) == REQ_OP_DISCARD) &&
++		     !bdev_max_discard_sectors(bio->bi_bdev))) {
++		/* Just ignore it */
++		bio_endio(bio);
++	} else {
++		if (mddev->gendisk)
++			trace_block_bio_remap(bio, disk_devt(mddev->gendisk),
++					      bio_sector);
++		mddev_check_write_zeroes(mddev, bio);
++		submit_bio_noacct(bio);
++	}
++	return true;
++
++out_of_bounds:
++	pr_err("md/linear:%s: make_request: Sector %llu out of bounds on dev %pg: %llu sectors, offset %llu\n",
++	       mdname(mddev),
++	       (unsigned long long)bio->bi_iter.bi_sector,
++	       tmp_dev->rdev->bdev,
++	       (unsigned long long)tmp_dev->rdev->sectors,
++	       (unsigned long long)start_sector);
++	bio_io_error(bio);
++	return true;
++}
++
++static void linear_status(struct seq_file *seq, struct mddev *mddev)
++{
++	seq_printf(seq, " %dk rounding", mddev->chunk_sectors / 2);
++}
++
++static void linear_error(struct mddev *mddev, struct md_rdev *rdev)
++{
++	if (!test_and_set_bit(MD_BROKEN, &mddev->flags)) {
++		char *md_name = mdname(mddev);
++
++		pr_crit("md/linear%s: Disk failure on %pg detected, failing array.\n",
++			md_name, rdev->bdev);
++	}
++}
++
++static void linear_quiesce(struct mddev *mddev, int state)
++{
++}
++
++static struct md_personality linear_personality = {
++	.name		= "linear",
++	.level		= LEVEL_LINEAR,
++	.owner		= THIS_MODULE,
++	.make_request	= linear_make_request,
++	.run		= linear_run,
++	.free		= linear_free,
++	.status		= linear_status,
++	.hot_add_disk	= linear_add,
++	.size		= linear_size,
++	.quiesce	= linear_quiesce,
++	.error_handler	= linear_error,
++};
++
++static int __init linear_init(void)
++{
++	return register_md_personality(&linear_personality);
++}
++
++static void linear_exit(void)
++{
++	unregister_md_personality(&linear_personality);
++}
++
++module_init(linear_init);
++module_exit(linear_exit);
++MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("Linear device concatenation personality for MD (deprecated)");
++MODULE_ALIAS("md-personality-1"); /* LINEAR - deprecated*/
++MODULE_ALIAS("md-linear");
++MODULE_ALIAS("md-level--1");
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -8124,7 +8124,7 @@ void md_error(struct mddev *mddev, struc
+ 		return;
+ 	mddev->pers->error_handler(mddev, rdev);
  
- static void
- smb21_set_oplock_level(struct cifsInodeInfo *cinode, __u32 oplock,
--		       unsigned int epoch, bool *purge_cache)
-+		       __u16 epoch, bool *purge_cache)
- {
- 	char message[5] = {0};
- 	unsigned int new_oplock = 0;
-@@ -4000,7 +4000,7 @@ smb21_set_oplock_level(struct cifsInodeI
+-	if (mddev->pers->level == 0)
++	if (mddev->pers->level == 0 || mddev->pers->level == LEVEL_LINEAR)
+ 		return;
  
- static void
- smb3_set_oplock_level(struct cifsInodeInfo *cinode, __u32 oplock,
--		      unsigned int epoch, bool *purge_cache)
-+		      __u16 epoch, bool *purge_cache)
- {
- 	unsigned int old_oplock = cinode->oplock;
+ 	if (mddev->degraded && !test_bit(MD_BROKEN, &mddev->flags))
+--- a/include/uapi/linux/raid/md_p.h
++++ b/include/uapi/linux/raid/md_p.h
+@@ -233,7 +233,7 @@ struct mdp_superblock_1 {
+ 	char	set_name[32];	/* set and interpreted by user-space */
  
-@@ -4114,7 +4114,7 @@ smb3_create_lease_buf(u8 *lease_key, u8
- }
+ 	__le64	ctime;		/* lo 40 bits are seconds, top 24 are microseconds or 0*/
+-	__le32	level;		/* 0,1,4,5 */
++	__le32	level;		/* 0,1,4,5, -1 (linear) */
+ 	__le32	layout;		/* only for raid5 and raid10 currently */
+ 	__le64	size;		/* used size of component devices, in 512byte sectors */
  
- static __u8
--smb2_parse_lease_buf(void *buf, unsigned int *epoch, char *lease_key)
-+smb2_parse_lease_buf(void *buf, __u16 *epoch, char *lease_key)
- {
- 	struct create_lease *lc = (struct create_lease *)buf;
+--- a/include/uapi/linux/raid/md_u.h
++++ b/include/uapi/linux/raid/md_u.h
+@@ -103,6 +103,8 @@ typedef struct mdu_array_info_s {
  
-@@ -4125,7 +4125,7 @@ smb2_parse_lease_buf(void *buf, unsigned
- }
+ } mdu_array_info_t;
  
- static __u8
--smb3_parse_lease_buf(void *buf, unsigned int *epoch, char *lease_key)
-+smb3_parse_lease_buf(void *buf, __u16 *epoch, char *lease_key)
- {
- 	struct create_lease_v2 *lc = (struct create_lease_v2 *)buf;
- 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -2329,7 +2329,7 @@ parse_posix_ctxt(struct create_context *
- 
- int smb2_parse_contexts(struct TCP_Server_Info *server,
- 			struct kvec *rsp_iov,
--			unsigned int *epoch,
-+			__u16 *epoch,
- 			char *lease_key, __u8 *oplock,
- 			struct smb2_file_all_info *buf,
- 			struct create_posix_rsp *posix)
---- a/fs/smb/client/smb2proto.h
-+++ b/fs/smb/client/smb2proto.h
-@@ -282,7 +282,7 @@ extern enum securityEnum smb2_select_sec
- 					enum securityEnum);
- int smb2_parse_contexts(struct TCP_Server_Info *server,
- 			struct kvec *rsp_iov,
--			unsigned int *epoch,
-+			__u16 *epoch,
- 			char *lease_key, __u8 *oplock,
- 			struct smb2_file_all_info *buf,
- 			struct create_posix_rsp *posix);
++#define LEVEL_LINEAR		(-1)
++
+ /* we need a value for 'no level specified' and 0
+  * means 'raid0', so we need something else.  This is
+  * for internal use only
 
 
