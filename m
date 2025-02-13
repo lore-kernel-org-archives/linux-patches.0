@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60D8281360;
-	Thu, 13 Feb 2025 14:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244592222AE;
+	Thu, 13 Feb 2025 14:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457588; cv=none; b=VUSs9/vBOQYodaLILf/6W23adP38jqeAKUIGSeoUVY87hI58NeRMuR2+UP6MRQvZ7YVrK/M1SMNYqQy1J+E8IAPSHYOgW4gzn50W7ml4CladpxM9pUVGDMmJseTL9XFKAPIbHiVYPY6/FDwYhqUF5/TRqV6QKWW/jKSa2lp+Wx0=
+	t=1739457594; cv=none; b=KlpQ+188YwUnOPkp7JU2DHQIc16SX1qlahdqPU3GoGFHIpdbQTtx7dFr7/o0rxLl5dqPyarCiFrkFe03QryS3Lf68rnilU/23vOo3Kp02fccH3297vjEcARV68vLivtWwkXZhcIUo21LIMOLIu3qnHja/pBnPpmkalIhw9xKMTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457588; c=relaxed/simple;
-	bh=/3DfFN4gHa7j1XY6zGjWD7LvxfvDxQZ43S23sYayhc8=;
+	s=arc-20240116; t=1739457594; c=relaxed/simple;
+	bh=GFD/oKX1HFEw1X+pbEYYXjUomulJ0xy6keX8cfyOcns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snBGZLcpHlK4gzkPnmBqCOgiqsJcES8hg8Cmeqe7GkZSIeSVZGsbZLf4e9uRzjr9c7vbbK3K7VXT8WCJUsCGERlpAhltJcwYdvApd5e4v68iBZeq9QiXlHSkSvc4m9+vFqGLUyoRrMJLWAKjayjL+q752r7eK79QHzM7XWMMyys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CA0Bq6Dv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BCcOh7wMSzIPk4lQZiqZqufWUyQKgMtfQT0irqmZW+BGNLwbV47e0g3dosJtPKQ7ZXOvFkjC4QJ3oYEEQOMCPzBpAdqIvad6GNtrb4QFKzOouj1zTgeZgylHWpwC+W8djabMIWyxRIgmC/FI2/NLo4MFdjVBJZEml4yXbZRiVck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgnca/ir; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CA0Bq6Dv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248C7C4CED1;
-	Thu, 13 Feb 2025 14:39:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgnca/ir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FB2C4CED1;
+	Thu, 13 Feb 2025 14:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457588;
-	bh=/3DfFN4gHa7j1XY6zGjWD7LvxfvDxQZ43S23sYayhc8=;
+	s=korg; t=1739457593;
+	bh=GFD/oKX1HFEw1X+pbEYYXjUomulJ0xy6keX8cfyOcns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CA0Bq6DvUT4gdQkiIFrrpCh5P4zTL1G9qLK92hXejIN2Ds/yreDRh0xV4BBWGKmfd
-	 pZ8S2/t5IDQwujzZ8+wo2ULhwh0EmiX/Z6TbNufgZGXhkeQDmMhfOAvYO7IdxZiLzj
-	 Zx/74gg6lmNnYznoMJpkke4rtbjwqm/sP8QHenbg=
+	b=cgnca/ir/r+3z8BHZxx97hxnt0XKs6joDeZM14csA4HX51FuE3ZRTyOndkFOjKTSn
+	 siwflGjNj/xbBDoGfZyrrpGgtTXZ8WzJEJzuvcQkJoKjGp2sNOT4jo8BOHQRXFXcmN
+	 dH9IszgW8Rp56bEe3ceKTW18RDE6XjhChCp8vtsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Christoph Schlameuss <schlameuss@linux.ibm.com>
-Subject: [PATCH 6.12 154/422] KVM: s390: vsie: fix some corner-cases when grabbing vsie pages
-Date: Thu, 13 Feb 2025 15:25:03 +0100
-Message-ID: <20250213142442.490571876@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 155/422] ksmbd: fix integer overflows on 32 bit systems
+Date: Thu, 13 Feb 2025 15:25:04 +0100
+Message-ID: <20250213142442.527689913@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,106 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 5f230f41fdd9e799f43a699348dc572bca7159aa upstream.
+commit aab98e2dbd648510f8f51b83fbf4721206ccae45 upstream.
 
-We try to reuse the same vsie page when re-executing the vsie with a
-given SCB address. The result is that we use the same shadow SCB --
-residing in the vsie page -- and can avoid flushing the TLB when
-re-running the vsie on a CPU.
+On 32bit systems the addition operations in ipc_msg_alloc() can
+potentially overflow leading to memory corruption.
+Add bounds checking using KSMBD_IPC_MAX_PAYLOAD to avoid overflow.
 
-So, when we allocate a fresh vsie page, or when we reuse a vsie page for
-a different SCB address -- reusing the shadow SCB in different context --
-we set ihcpu=0xffff to trigger the flush.
-
-However, after we looked up the SCB address in the radix tree, but before
-we grabbed the vsie page by raising the refcount to 2, someone could reuse
-the vsie page for a different SCB address, adjusting page->index and the
-radix tree. In that case, we would be reusing the vsie page with a
-wrong page->index.
-
-Another corner case is that we might set the SCB address for a vsie
-page, but fail the insertion into the radix tree. Whoever would reuse
-that page would remove the corresponding radix tree entry -- which might
-now be a valid entry pointing at another page, resulting in the wrong
-vsie page getting removed from the radix tree.
-
-Let's handle such races better, by validating that the SCB address of a
-vsie page didn't change after we grabbed it (not reuse for a different
-SCB; the alternative would be performing another tree lookup), and by
-setting the SCB address to invalid until the insertion in the tree
-succeeded (SCB addresses are aligned to 512, so ULONG_MAX is invalid).
-
-These scenarios are rare, the effects a bit unclear, and these issues were
-only found by code inspection. Let's CC stable to be safe.
-
-Fixes: a3508fbe9dc6 ("KVM: s390: vsie: initial support for nested virtualization")
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Reviewed-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
-Tested-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
-Message-ID: <20250107154344.1003072-2-david@redhat.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/vsie.c |   25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ fs/smb/server/transport_ipc.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/s390/kvm/vsie.c
-+++ b/arch/s390/kvm/vsie.c
-@@ -1362,8 +1362,14 @@ static struct vsie_page *get_vsie_page(s
- 	page = radix_tree_lookup(&kvm->arch.vsie.addr_to_page, addr >> 9);
- 	rcu_read_unlock();
- 	if (page) {
--		if (page_ref_inc_return(page) == 2)
--			return page_to_virt(page);
-+		if (page_ref_inc_return(page) == 2) {
-+			if (page->index == addr)
-+				return page_to_virt(page);
-+			/*
-+			 * We raced with someone reusing + putting this vsie
-+			 * page before we grabbed it.
-+			 */
-+		}
- 		page_ref_dec(page);
- 	}
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -626,6 +626,9 @@ ksmbd_ipc_spnego_authen_request(const ch
+ 	struct ksmbd_spnego_authen_request *req;
+ 	struct ksmbd_spnego_authen_response *resp;
  
-@@ -1393,15 +1399,20 @@ static struct vsie_page *get_vsie_page(s
- 			kvm->arch.vsie.next++;
- 			kvm->arch.vsie.next %= nr_vcpus;
- 		}
--		radix_tree_delete(&kvm->arch.vsie.addr_to_page, page->index >> 9);
-+		if (page->index != ULONG_MAX)
-+			radix_tree_delete(&kvm->arch.vsie.addr_to_page,
-+					  page->index >> 9);
- 	}
--	page->index = addr;
--	/* double use of the same address */
-+	/* Mark it as invalid until it resides in the tree. */
-+	page->index = ULONG_MAX;
++	if (blob_len > KSMBD_IPC_MAX_PAYLOAD)
++		return NULL;
 +
-+	/* Double use of the same address or allocation failure. */
- 	if (radix_tree_insert(&kvm->arch.vsie.addr_to_page, addr >> 9, page)) {
- 		page_ref_dec(page);
- 		mutex_unlock(&kvm->arch.vsie.mutex);
- 		return NULL;
- 	}
-+	page->index = addr;
- 	mutex_unlock(&kvm->arch.vsie.mutex);
+ 	msg = ipc_msg_alloc(sizeof(struct ksmbd_spnego_authen_request) +
+ 			blob_len + 1);
+ 	if (!msg)
+@@ -805,6 +808,9 @@ struct ksmbd_rpc_command *ksmbd_rpc_writ
+ 	struct ksmbd_rpc_command *req;
+ 	struct ksmbd_rpc_command *resp;
  
- 	vsie_page = page_to_virt(page);
-@@ -1496,7 +1507,9 @@ void kvm_s390_vsie_destroy(struct kvm *k
- 		vsie_page = page_to_virt(page);
- 		release_gmap_shadow(vsie_page);
- 		/* free the radix tree entry */
--		radix_tree_delete(&kvm->arch.vsie.addr_to_page, page->index >> 9);
-+		if (page->index != ULONG_MAX)
-+			radix_tree_delete(&kvm->arch.vsie.addr_to_page,
-+					  page->index >> 9);
- 		__free_page(page);
- 	}
- 	kvm->arch.vsie.page_count = 0;
++	if (payload_sz > KSMBD_IPC_MAX_PAYLOAD)
++		return NULL;
++
+ 	msg = ipc_msg_alloc(sizeof(struct ksmbd_rpc_command) + payload_sz + 1);
+ 	if (!msg)
+ 		return NULL;
+@@ -853,6 +859,9 @@ struct ksmbd_rpc_command *ksmbd_rpc_ioct
+ 	struct ksmbd_rpc_command *req;
+ 	struct ksmbd_rpc_command *resp;
+ 
++	if (payload_sz > KSMBD_IPC_MAX_PAYLOAD)
++		return NULL;
++
+ 	msg = ipc_msg_alloc(sizeof(struct ksmbd_rpc_command) + payload_sz + 1);
+ 	if (!msg)
+ 		return NULL;
 
 
