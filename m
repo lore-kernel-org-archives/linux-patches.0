@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5879F281375;
-	Thu, 13 Feb 2025 14:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4D2281349;
+	Thu, 13 Feb 2025 14:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457320; cv=none; b=ifTZDyJ78mUtjdPtUOZycf5tI/UUsyCNGcGFRzIxQOGpNckyM8275g7Ym3WmpbP0VtZgAbZY0hkMWoStjpbLic8B36r+9lm5u3DjtV/xs2ZhU+QA1CT6sNmvPCHQTH1F4udD/RS+sQtJuHtdE1NGVpiggpQg3j9M6N2afwNzbMY=
+	t=1739457324; cv=none; b=S/kgYXCBTYzagIpRcpWpi+vGl+7ElfSkDiF4SQ2ZQ3SjTPKrMbvW0Kx3kdFizJii5HDqLmmlY/eFpEQLZt0mK5gcLA+7zaH021VT+SsVjsf/O8U9WIVKVV3DihxWeGCE3/rv1NlqICIkKOAkQaNRNmXfX7UqwmAchVzxn0TcHLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457320; c=relaxed/simple;
-	bh=dCCsG6rRVKgYAVb+qc+SNp1WyQRVVseP+kOF9gpeOGQ=;
+	s=arc-20240116; t=1739457324; c=relaxed/simple;
+	bh=4rcWcO02J1qvPlNxQopmOfWIF17WERIUBRW5EWNwnT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o1XfBlxYBG1UkAtxVegvsPvFPsSz7jXpg79osMnZ06PMmGSVBAWO9oWtErvtRtj28x3KhdAtkT1/yzUloNOF+p9R+h4Ucg3xO1f25x0V59v3KdkML9XNLTvLRpQ/8m+tWe7ZHtNB+04RKOPtbZtzvqbiWjK6fKjvkuW37GDE8pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWeF/B5s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C7n02iPshY9jgBRdiWwG/i8RV62PL1bTE30QU5/Kdi4ibR1n6rIfu8czMr4dgNi9I1zUTb7wDIWAW7PmigSR6mNK9UXD7Rt+Dbb00jCuCWQkPK1Nb3tT+B3Vwin+dqCKL72owAatzq8lFd3xa8EdDKulyJCxNlWG9rL+j57jy3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3nyCtSE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWeF/B5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87AAC4CED1;
-	Thu, 13 Feb 2025 14:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3nyCtSE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B41C4CED1;
+	Thu, 13 Feb 2025 14:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457320;
-	bh=dCCsG6rRVKgYAVb+qc+SNp1WyQRVVseP+kOF9gpeOGQ=;
+	s=korg; t=1739457323;
+	bh=4rcWcO02J1qvPlNxQopmOfWIF17WERIUBRW5EWNwnT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hWeF/B5sS2xYS6fGGHTOeeHy4xH12Do8rnBbL5+tIcclSeXXE5/Sy65WjAjuRLNdu
-	 FWzLS3d+uTGnJiCE/XOM4tadTd6VhaxBEqX9O5V+ZB2F6/yOq3q/PjRQXxRuXKjE1X
-	 K+cdLePJAea9JHXfIucbW48TcbpMOrhxI+KWuWQ8=
+	b=z3nyCtSEAiAaLz7e+/ZfIA/8fjzZBankSnmgZs9VSKXF14KBtKadKP49g49U71K6P
+	 7MgEf7+JX6DhzX3SADcr+B7+F+IyqPunKl3ShdaR1TuDeUFk8Xl5ANS8EpE0AJf+aE
+	 FbMq0XsxYWeoYnPvRxl/pWg1gTSwqP1i+KyAlvI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Richard Acayan <mailingradian@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/422] ASoC: Intel: sof_sdw: Correct quirk for Lenovo Yoga Slim 7
-Date: Thu, 13 Feb 2025 15:23:47 +0100
-Message-ID: <20250213142439.566323470@linuxfoundation.org>
+Subject: [PATCH 6.12 079/422] iommu/arm-smmu-qcom: add sdm670 adreno iommu compatible
+Date: Thu, 13 Feb 2025 15:23:48 +0100
+Message-ID: <20250213142439.603805084@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -53,41 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Trimmer <simont@opensource.cirrus.com>
+From: Richard Acayan <mailingradian@gmail.com>
 
-[ Upstream commit 7662f0e5d55728a009229112ec820e963ed0e21c ]
+[ Upstream commit 42314738906380cbd3b6e9caf3ad34e1b2d66035 ]
 
-In addition to changing the DMI match to examine the product name rather
-than the SKU, this adds the quirk to inform the machine driver to not
-bind in the cs42l43 microphone DAI link.
+Add the compatible for the separate IOMMU on SDM670 for the Adreno GPU.
 
-Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20241206075903.195730-5-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This IOMMU has the compatible strings:
+
+	"qcom,sdm670-smmu-v2", "qcom,adreno-smmu", "qcom,smmu-v2"
+
+While the SMMU 500 doesn't need an entry for this specific SoC, the
+SMMU v2 compatible should have its own entry, as the fallback entry in
+arm-smmu.c handles "qcom,smmu-v2" without per-process page table support
+unless there is an entry here. This entry can't be the
+"qcom,adreno-smmu" compatible because dedicated GPU IOMMUs can also be
+SMMU 500 with different handling.
+
+Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241114004713.42404-6-mailingradian@gmail.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_sdw.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index 9f2dc24d44cb5..84fc35d88b926 100644
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -617,9 +617,10 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
- 		.callback = sof_sdw_quirk_cb,
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
--			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "380E")
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83HM")
- 		},
--		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS),
-+		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS |
-+					SOC_SDW_CODEC_MIC),
- 	},
- 	{
- 		.callback = sof_sdw_quirk_cb,
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 6372f3e25c4bc..601fb878d0ef2 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -567,6 +567,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+ 	{ .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_v2_data },
++	{ .compatible = "qcom,sdm670-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,sdm845-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,sdm845-smmu-500", .data = &sdm845_smmu_500_data },
+ 	{ .compatible = "qcom,sm6115-smmu-500", .data = &qcom_smmu_500_impl0_data},
 -- 
 2.39.5
 
