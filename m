@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB455684;
-	Thu, 13 Feb 2025 15:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35AC26B0BD;
+	Thu, 13 Feb 2025 15:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460545; cv=none; b=aByyUXIOCjbOdhZBaqQNIv30+iIoPaS9PdEPM51Z7wdcM0XGzp8E4q5hOb7SR8qDdnXolezEQdtKLHFQyNwYJhzT4iHG3bVKtZ3Hk30m/byfvVNqcTx9CB3refpWCP7Gaqlzz2LQM11bpq/5UXw33WN8J97tDzg5+cnKVjDUFgI=
+	t=1739460548; cv=none; b=rl1O2vXEOKBIhB5/aYQnO1sdIpYUpBuWQMtxAXbuwIn7TDLI3+m4w8OejSnzMIs/6sm4d9e4JqBnODfbGwMU888ENMwIH0v539omF9f13m3COawiG/Lrm8eElwmWMhby7OoqQCwETaIKDa1fyPmvUVTzW8oKAB+0TOkVmDuTikc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460545; c=relaxed/simple;
-	bh=6lyKoWFL+kbQTuB07OwgCOwOsgyVKahG7XJ6x+0rhSw=;
+	s=arc-20240116; t=1739460548; c=relaxed/simple;
+	bh=dtzscxvl76ywyYNRn6xVr1W/kxd5kCKUV8gGnkZh1nU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSBfQFNwoMdkgwDWxy5kz8PX3h8rNPQHhH/YLjYrfngNa4sMYNbHnO09idiHvMgMoMebQ1Np4+79el6jRydO1M+LB3IIK+HXZ9aL6o3w5c27jkpg5OiK1is1k7vDdzUHnoTF4jgrEFJ9LgITDsIJlKYA3yqaW7etG2zDmXviB8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yK/DI03c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IpN+SEhDgFQNiqxQMih2JgZkRy1734MXMABD/pE9RlBeMpfSkrr5bA3IPFZj/OZy4mCLuIm5tYOUX10aBc9gLRaLZ3i2bkHN8R4QDJxh8qKfKEoWChyMWtxbMyJeK2PUnY3cZDhWEe5yir8z3eoK6q79i4ebf4PDWYJQfcWAg1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfokDJEg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yK/DI03c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A4EC4CED1;
-	Thu, 13 Feb 2025 15:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfokDJEg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FAF3C4CED1;
+	Thu, 13 Feb 2025 15:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460545;
-	bh=6lyKoWFL+kbQTuB07OwgCOwOsgyVKahG7XJ6x+0rhSw=;
+	s=korg; t=1739460548;
+	bh=dtzscxvl76ywyYNRn6xVr1W/kxd5kCKUV8gGnkZh1nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yK/DI03cErq9yLPyPlrZHLQyibOV1WIyRgEHB6mdYnNdvWQjSpeNoOX0TVJFwHUdS
-	 OuRENnxiojHjXCLVcYXorG4x1vn3PSMXSeN9sS9hdMHeB81PfSN3zL8UkjJ1CaHJS8
-	 GuUDMRfQCPIbUvCupk37NhfqJEg2/yqeZzMBI0cU=
+	b=WfokDJEgFASLsQ0owVw0MvU/KG7FECSGnSIS0EdteVOzqZymg5OSeKbiynBRn4CLm
+	 ChKxP1nlkBe1a5kEYeuh5CmXDQyH13ifIw12S0NVlNKxD2asM4ZMqm6TaStY+EZyLa
+	 +yZKJdpRmUm9VhGuF2c73AzubjTEeyToZpRLdezA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nijs1@lenovo.com,
-	pgriffais@valvesoftware.com,
-	mpearson-lenovo@squebb.ca,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 143/273] ASoC: acp: Support microphone from Lenovo Go S
-Date: Thu, 13 Feb 2025 15:28:35 +0100
-Message-ID: <20250213142412.986648257@linuxfoundation.org>
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 144/273] soc: qcom: socinfo: Avoid out of bounds read of serial number
+Date: Thu, 13 Feb 2025 15:28:36 +0100
+Message-ID: <20250213142413.026040439@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -53,63 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit b9a8ea185f3f8024619b2e74b74375493c87df8c upstream.
+commit 22cf4fae6660b6e1a583a41cbf84e3046ca9ccd0 upstream.
 
-On Lenovo Go S there is a DMIC connected to the ACP but the firmware
-has no `AcpDmicConnected` ACPI _DSD.
+On MSM8916 devices, the serial number exposed in sysfs is constant and does
+not change across individual devices. It's always:
 
-Add a DMI entry for all possible Lenovo Go S SKUs to enable DMIC.
+  db410c:/sys/devices/soc0$ cat serial_number
+  2644893864
 
-Cc: nijs1@lenovo.com
-Cc: pgriffais@valvesoftware.com
-Cc: mpearson-lenovo@squebb.ca
+The firmware used on MSM8916 exposes SOCINFO_VERSION(0, 8), which does not
+have support for the serial_num field in the socinfo struct. There is an
+existing check to avoid exposing the serial number in that case, but it's
+not correct: When checking the item_size returned by SMEM, we need to make
+sure the *end* of the serial_num is within bounds, instead of comparing
+with the *start* offset. The serial_number currently exposed on MSM8916
+devices is just an out of bounds read of whatever comes after the socinfo
+struct in SMEM.
+
+Fix this by changing offsetof() to offsetofend(), so that the size of the
+field is also taken into account.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20250123024915.2457115-1-superm1@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: efb448d0a3fc ("soc: qcom: Add socinfo driver")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241230-qcom-socinfo-serialno-oob-v1-1-9b7a890da3da@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |   28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/soc/qcom/socinfo.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -307,6 +307,34 @@ static const struct dmi_system_id yc_acp
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83L3"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83N6"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83Q2"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83Q3"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "UM5302TA"),
- 		}
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -760,7 +760,7 @@ static int qcom_socinfo_probe(struct pla
+ 	if (!qs->attr.soc_id || !qs->attr.revision)
+ 		return -ENOMEM;
+ 
+-	if (offsetof(struct socinfo, serial_num) <= item_size) {
++	if (offsetofend(struct socinfo, serial_num) <= item_size) {
+ 		qs->attr.serial_number = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+ 							"%u",
+ 							le32_to_cpu(info->serial_num));
 
 
