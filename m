@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34E5221562;
-	Thu, 13 Feb 2025 14:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDA7211468;
+	Thu, 13 Feb 2025 14:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457951; cv=none; b=OZe5/7nM7T8pia3vDsqKuhUDy0EaCzkZ0p8kc5l9b/fmaJXNCR2yuyanz2vOFjJT4Ru20Jwgl74StD4itsdf2RihK33d8oeDgsjo6jNzoCDZwIFYyjQWxPGvHQyOp1he70oIT/gxdPOWfBiZWkt9/4eoZTN5WhjnGc1ZSywuF+g=
+	t=1739457954; cv=none; b=gCEyf/LyGkDT4e1m/r/XHyOL05k+hiBl4bXV9LkMr0nM8NRbv9QFIU4fIFsYhpNzjanYpgIcAgjg0HzRMZeImpuduN9O0yTuIjotfEvkxuIQr9hZOGAx7T88HM7SsExGmWP9hv0cUOO66B7yT9/BMCN+vFVL7UrCN8m9ZHVcI28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457951; c=relaxed/simple;
-	bh=PsRT0QQL5WqgXrCh1YETQtvgx97eZ2NiBant6P7QukQ=;
+	s=arc-20240116; t=1739457954; c=relaxed/simple;
+	bh=0qaQafI86SFbZJsDPC+W8MATH++Rqly7HYxaWC5u03Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EqHeSDocYI9jB1usykyxlQLftslsk8syzyJm2NGVo8eUpHaHrHTIoPyv128PY3HK+ERo6YKypQponGFUZF0mvLSa19l7wu5QlRgkv8BxrwKDTkzQmMOyIUBbZLid7JOf76MsakPyIp40Yqpqf05LJf3+k76dk7aptyw58gPVD2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZFhqWpK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MIZ5j7tWpSe2C1ZQKGBLhcjhZOozdSqCSsdv2g3y9aKZF4zrReChlAvAeOgF1XWdQXHpdyHXohg5HYmSgOT5zm9xJNN3eXlTpnfDPQGgq6pZHv1joG4WCqdDBvgRW6P7TvJv4aR6bK53R7/H2M/sYycgfOonKN0R6+8EpVjVbT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0yaOMqCR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZFhqWpK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00474C4CED1;
-	Thu, 13 Feb 2025 14:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0yaOMqCR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2BCC4CED1;
+	Thu, 13 Feb 2025 14:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457950;
-	bh=PsRT0QQL5WqgXrCh1YETQtvgx97eZ2NiBant6P7QukQ=;
+	s=korg; t=1739457953;
+	bh=0qaQafI86SFbZJsDPC+W8MATH++Rqly7HYxaWC5u03Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZFhqWpK+i21tOjMhbj0+Lgh4KC01vl1NYeLNGYCL5br48OrtZGgjI6ubAaJmacBs
-	 kq2i5stD9pUED8I9Sm5ariSIDHgxdf/t39S95BNKI/w9B2yFIgvJCJcUChHBFWopR9
-	 sb5cdHhpDACMN4rwEBZ4sd9b8xz3CTX/QaUw+KLg=
+	b=0yaOMqCRql8H7MhRuuSf11DNGcmS3W4ls6JaPejTwh8zzrKIO6Tu5oBJp13We1zFb
+	 wVlkGNf2DtJx+Nmeso/NaZuCSIvyl2olEAJYlOxLpbYZVe6sM9Er+6sIo1/qLDRklT
+	 ZCi69MW670D63HuTF9hnWVyzmgUV9RDRqvAkJp0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Pylypiv <ipylypiv@google.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 259/422] scsi: core: Do not retry I/Os during depopulation
-Date: Thu, 13 Feb 2025 15:26:48 +0100
-Message-ID: <20250213142446.534025980@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.12 260/422] kbuild: Move -Wenum-enum-conversion to W=2
+Date: Thu, 13 Feb 2025 15:26:49 +0100
+Message-ID: <20250213142446.574045838@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -50,55 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Pylypiv <ipylypiv@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 9ff7c383b8ac0c482a1da7989f703406d78445c6 upstream.
+commit 8f6629c004b193d23612641c3607e785819e97ab upstream.
 
-Fail I/Os instead of retry to prevent user space processes from being
-blocked on the I/O completion for several minutes.
+-Wenum-enum-conversion was strengthened in clang-19 to warn for C, which
+caused the kernel to move it to W=1 in commit 75b5ab134bb5 ("kbuild:
+Move -Wenum-{compare-conditional,enum-conversion} into W=1") because
+there were numerous instances that would break builds with -Werror.
+Unfortunately, this is not a full solution, as more and more developers,
+subsystems, and distributors are building with W=1 as well, so they
+continue to see the numerous instances of this warning.
 
-Retrying I/Os during "depopulation in progress" or "depopulation restore in
-progress" results in a continuous retry loop until the depopulation
-completes or until the I/O retry loop is aborted due to a timeout by the
-scsi_cmd_runtime_exceeced().
+Since the move to W=1, there have not been many new instances that have
+appeared through various build reports and the ones that have appeared
+seem to be following similar existing patterns, suggesting that most
+instances of this warning will not be real issues. The only alternatives
+for silencing this warning are adding casts (which is generally seen as
+an ugly practice) or refactoring the enums to macro defines or a unified
+enum (which may be undesirable because of type safety in other parts of
+the code).
 
-Depopulation is slow and can take 24+ hours to complete on 20+ TB HDDs.
-Most I/Os in the depopulation retry loop end up taking several minutes
-before returning the failure to user space.
+Move the warning to W=2, where warnings that occur frequently but may be
+relevant should reside.
 
-Cc: stable@vger.kernel.org # 4.18.x: 2bbeb8d scsi: core: Handle depopulation and restoration in progress
-Cc: stable@vger.kernel.org # 4.18.x
-Fixes: e37c7d9a0341 ("scsi: core: sanitize++ in progress")
-Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
-Link: https://lore.kernel.org/r/20250131184408.859579-1-ipylypiv@google.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: stable@vger.kernel.org
+Fixes: 75b5ab134bb5 ("kbuild: Move -Wenum-{compare-conditional,enum-conversion} into W=1")
+Link: https://lore.kernel.org/ZwRA9SOcOjjLJcpi@google.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_lib.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ scripts/Makefile.extrawarn |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -865,13 +865,18 @@ static void scsi_io_completion_action(st
- 				case 0x1a: /* start stop unit in progress */
- 				case 0x1b: /* sanitize in progress */
- 				case 0x1d: /* configuration in progress */
--				case 0x24: /* depopulation in progress */
--				case 0x25: /* depopulation restore in progress */
- 					action = ACTION_DELAYED_RETRY;
- 					break;
- 				case 0x0a: /* ALUA state transition */
- 					action = ACTION_DELAYED_REPREP;
- 					break;
-+				/*
-+				 * Depopulation might take many hours,
-+				 * thus it is not worthwhile to retry.
-+				 */
-+				case 0x24: /* depopulation in progress */
-+				case 0x25: /* depopulation restore in progress */
-+					fallthrough;
- 				default:
- 					action = ACTION_FAIL;
- 					break;
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -130,7 +130,6 @@ KBUILD_CFLAGS += $(call cc-disable-warni
+ KBUILD_CFLAGS += -Wno-tautological-constant-out-of-range-compare
+ KBUILD_CFLAGS += $(call cc-disable-warning, unaligned-access)
+ KBUILD_CFLAGS += -Wno-enum-compare-conditional
+-KBUILD_CFLAGS += -Wno-enum-enum-conversion
+ endif
+ 
+ endif
+@@ -154,6 +153,10 @@ KBUILD_CFLAGS += -Wno-missing-field-init
+ KBUILD_CFLAGS += -Wno-type-limits
+ KBUILD_CFLAGS += -Wno-shift-negative-value
+ 
++ifdef CONFIG_CC_IS_CLANG
++KBUILD_CFLAGS += -Wno-enum-enum-conversion
++endif
++
+ ifdef CONFIG_CC_IS_GCC
+ KBUILD_CFLAGS += -Wno-maybe-uninitialized
+ endif
 
 
