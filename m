@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44AF21D3F9;
-	Thu, 13 Feb 2025 14:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70EA21D3C3;
+	Thu, 13 Feb 2025 14:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457177; cv=none; b=a+VOVX8VpwJLreuHk1XDMaHyApAL+pljTKn8aZBBh0Csf/ETGSyMXmFFmRlGiWswxxpXtMMg1B48Su6wO1cP+pgjD1w+ODgL3692f71JjBYyNCkFcH0V9n1lWPhHfrH0zA3/wXrO1mu9sN9rZyVAQWCWx6x4OnW/+M7QfYCPm/4=
+	t=1739457180; cv=none; b=fXXwB/LoKfg51wZG4q1T3oM4Pl98pbHVyEDcl22deWOm9xQNhfLsMwMyUjgA9FxO9Jf6sDPrf9yJpE8EaZHK/IljgA3ejBHeWzUlDRn+nvalVAtfFWvLoSHCeXYdlOUKRJI5NEii0kJ/vE6Ixo7Q4Oe6aAJcyvdpnKGCgSdNYew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457177; c=relaxed/simple;
-	bh=txZ9A7CvJJGeR5oAuarkyd0tRHNL5IWUfuR0Zj9urYQ=;
+	s=arc-20240116; t=1739457180; c=relaxed/simple;
+	bh=ksNZl20mZtNNYE8QleVULJnz9q6XCr/DLIyUDal3qYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S6rLrWi+6goiG0a541BNq2eum9sIjVS4nlQ2XtqO8VaQWuNs7saLtVOFYKNbEwpT4CGaeUGv04E+cG6wVNJyCc+/R4EQqYr1HRUV2Oqcup1v4INL/hAL06VwZ7iUl/ZDPAEp1QtGS94Y9lt3uLqWf945Ha3ldbR43wCPprcahbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcHFwwSq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WMf+C5CaNS6ChycPFCINDnyR73PaHSNi6vtkrD3gEZ02vaqRI+frWRopQrFwR+GHcI7kpEi2QBX+wNKS4y6x7xcGBkXj2skNITBpiuU4o/Hejyqd9YBoxFo1dsODaczMdcA0FeHxE9SOr5ssqu/EThbPBh0nVvi2TdT0phny8+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ajajctqV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcHFwwSq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE11C4CED1;
-	Thu, 13 Feb 2025 14:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ajajctqV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C74C4CEE4;
+	Thu, 13 Feb 2025 14:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457177;
-	bh=txZ9A7CvJJGeR5oAuarkyd0tRHNL5IWUfuR0Zj9urYQ=;
+	s=korg; t=1739457180;
+	bh=ksNZl20mZtNNYE8QleVULJnz9q6XCr/DLIyUDal3qYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tcHFwwSqUwY0DoYmvtB3RS2vUl7Kg8f6bErYAdKzloCXin/RLZssvzuto7pGQ9g9s
-	 C9gdJeQ10dsVPBWE42WuEYDIBAAjQwCqULGaTpLhUk2E2HOlp70ZVDKBc1Tw7McUEm
-	 cabQyoWfgM0R2gkykcBVk2k4/u0tiUil39WBuRyI=
+	b=ajajctqVfP21xrUOT0MI9fkbk47sQzwPcfU7r7Kezxqod2Llj/GfVrwGEYLaYOayw
+	 rCQAtr1IdgQDjdfZinwioNk+LI8Flhdzt7mWXiH0aFyc8bEzt6J5UVbxiWehySedBJ
+	 AB7f/GWVxz9pwMS4Ob6yL7N8ocia2zBjbzqy7oSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dustin L. Howett" <dustin@howett.net>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/422] drm: panel-backlight-quirks: Add Framework 13 glossy and 2.8k panels
-Date: Thu, 13 Feb 2025 15:22:49 +0100
-Message-ID: <20250213142437.333086899@linuxfoundation.org>
+Subject: [PATCH 6.12 038/422] drm/amdkfd: Queue interrupt work to different CPU
+Date: Thu, 13 Feb 2025 15:23:07 +0100
+Message-ID: <20250213142438.026289543@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -47,58 +46,156 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dustin L. Howett <dustin@howett.net>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit d80b5c5b9be6b2e1cdeaaeaa8259523b63cae292 ]
+[ Upstream commit 34db5a32617d102e8042151bb87590e43c97132e ]
 
-I have tested these panels on the Framework Laptop 13 AMD with firmware
-revision 3.05 (latest at time of submission).
+For CPX mode, each KFD node has interrupt worker to process ih_fifo to
+send events to user space. Currently all interrupt workers of same adev
+queue to same CPU, all workers execution are actually serialized and
+this cause KFD ih_fifo overflow when CPU usage is high.
 
-Signed-off-by: Dustin L. Howett <dustin@howett.net>
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241111-amdgpu-min-backlight-quirk-v7-4-f662851fda69@weissschuh.net
+Use per-GPU unbounded highpri queue with number of workers equals to
+number of partitions, let queue_work select the next CPU round robin
+among the local CPUs of same NUMA.
+
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_backlight_quirks.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c    | 25 ++++++++--------------
+ drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c | 25 ++++++++--------------
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h      |  3 ++-
+ 3 files changed, 20 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel_backlight_quirks.c b/drivers/gpu/drm/drm_panel_backlight_quirks.c
-index f2aefff618ddb..c477d98ade2b4 100644
---- a/drivers/gpu/drm/drm_panel_backlight_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_backlight_quirks.c
-@@ -25,6 +25,22 @@ static const struct drm_panel_min_backlight_quirk drm_panel_min_backlight_quirks
- 		.ident.name = "NE135FBM-N41",
- 		.min_brightness = 0,
- 	},
-+	/* 13 inch glossy panel */
-+	{
-+		.dmi_match.field = DMI_BOARD_VENDOR,
-+		.dmi_match.value = "Framework",
-+		.ident.panel_id = drm_edid_encode_panel_id('B', 'O', 'E', 0x095f),
-+		.ident.name = "NE135FBM-N41",
-+		.min_brightness = 0,
-+	},
-+	/* 13 inch 2.8k panel */
-+	{
-+		.dmi_match.field = DMI_BOARD_VENDOR,
-+		.dmi_match.value = "Framework",
-+		.ident.panel_id = drm_edid_encode_panel_id('B', 'O', 'E', 0x0cb4),
-+		.ident.name = "NE135A1M-NY1",
-+		.min_brightness = 0,
-+	},
- };
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+index b05be24531e18..d350c7ce35b3d 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -637,6 +637,14 @@ static void kfd_cleanup_nodes(struct kfd_dev *kfd, unsigned int num_nodes)
+ 	struct kfd_node *knode;
+ 	unsigned int i;
  
- static bool drm_panel_min_backlight_quirk_matches(const struct drm_panel_min_backlight_quirk *quirk,
++	/*
++	 * flush_work ensures that there are no outstanding
++	 * work-queue items that will access interrupt_ring. New work items
++	 * can't be created because we stopped interrupt handling above.
++	 */
++	flush_workqueue(kfd->ih_wq);
++	destroy_workqueue(kfd->ih_wq);
++
+ 	for (i = 0; i < num_nodes; i++) {
+ 		knode = kfd->nodes[i];
+ 		device_queue_manager_uninit(knode->dqm);
+@@ -1058,21 +1066,6 @@ static int kfd_resume(struct kfd_node *node)
+ 	return err;
+ }
+ 
+-static inline void kfd_queue_work(struct workqueue_struct *wq,
+-				  struct work_struct *work)
+-{
+-	int cpu, new_cpu;
+-
+-	cpu = new_cpu = smp_processor_id();
+-	do {
+-		new_cpu = cpumask_next(new_cpu, cpu_online_mask) % nr_cpu_ids;
+-		if (cpu_to_node(new_cpu) == numa_node_id())
+-			break;
+-	} while (cpu != new_cpu);
+-
+-	queue_work_on(new_cpu, wq, work);
+-}
+-
+ /* This is called directly from KGD at ISR. */
+ void kgd2kfd_interrupt(struct kfd_dev *kfd, const void *ih_ring_entry)
+ {
+@@ -1098,7 +1091,7 @@ void kgd2kfd_interrupt(struct kfd_dev *kfd, const void *ih_ring_entry)
+ 			    	patched_ihre, &is_patched)
+ 		    && enqueue_ih_ring_entry(node,
+ 			    	is_patched ? patched_ihre : ih_ring_entry)) {
+-			kfd_queue_work(node->ih_wq, &node->interrupt_work);
++			queue_work(node->kfd->ih_wq, &node->interrupt_work);
+ 			spin_unlock_irqrestore(&node->interrupt_lock, flags);
+ 			return;
+ 		}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c b/drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c
+index 9b6b6e8825934..15b4b70cf1997 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c
+@@ -62,11 +62,14 @@ int kfd_interrupt_init(struct kfd_node *node)
+ 		return r;
+ 	}
+ 
+-	node->ih_wq = alloc_workqueue("KFD IH", WQ_HIGHPRI, 1);
+-	if (unlikely(!node->ih_wq)) {
+-		kfifo_free(&node->ih_fifo);
+-		dev_err(node->adev->dev, "Failed to allocate KFD IH workqueue\n");
+-		return -ENOMEM;
++	if (!node->kfd->ih_wq) {
++		node->kfd->ih_wq = alloc_workqueue("KFD IH", WQ_HIGHPRI | WQ_UNBOUND,
++						   node->kfd->num_nodes);
++		if (unlikely(!node->kfd->ih_wq)) {
++			kfifo_free(&node->ih_fifo);
++			dev_err(node->adev->dev, "Failed to allocate KFD IH workqueue\n");
++			return -ENOMEM;
++		}
+ 	}
+ 	spin_lock_init(&node->interrupt_lock);
+ 
+@@ -96,16 +99,6 @@ void kfd_interrupt_exit(struct kfd_node *node)
+ 	spin_lock_irqsave(&node->interrupt_lock, flags);
+ 	node->interrupts_active = false;
+ 	spin_unlock_irqrestore(&node->interrupt_lock, flags);
+-
+-	/*
+-	 * flush_work ensures that there are no outstanding
+-	 * work-queue items that will access interrupt_ring. New work items
+-	 * can't be created because we stopped interrupt handling above.
+-	 */
+-	flush_workqueue(node->ih_wq);
+-
+-	destroy_workqueue(node->ih_wq);
+-
+ 	kfifo_free(&node->ih_fifo);
+ }
+ 
+@@ -162,7 +155,7 @@ static void interrupt_wq(struct work_struct *work)
+ 			/* If we spent more than a second processing signals,
+ 			 * reschedule the worker to avoid soft-lockup warnings
+ 			 */
+-			queue_work(dev->ih_wq, &dev->interrupt_work);
++			queue_work(dev->kfd->ih_wq, &dev->interrupt_work);
+ 			break;
+ 		}
+ 	}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+index 26e48fdc87289..75523f30cd38b 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -273,7 +273,6 @@ struct kfd_node {
+ 
+ 	/* Interrupts */
+ 	struct kfifo ih_fifo;
+-	struct workqueue_struct *ih_wq;
+ 	struct work_struct interrupt_work;
+ 	spinlock_t interrupt_lock;
+ 
+@@ -366,6 +365,8 @@ struct kfd_dev {
+ 	struct kfd_node *nodes[MAX_KFD_NODES];
+ 	unsigned int num_nodes;
+ 
++	struct workqueue_struct *ih_wq;
++
+ 	/* Kernel doorbells for KFD device */
+ 	struct amdgpu_bo *doorbells;
+ 
 -- 
 2.39.5
 
