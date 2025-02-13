@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52B726B08D;
-	Thu, 13 Feb 2025 14:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB7526B08D;
+	Thu, 13 Feb 2025 14:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458361; cv=none; b=gYcCO2exvixnYIv143oQ4WEGKTN2wIbfTDewBynGycL2HWBEX/LT4YW3Nb4yi+G3uTOlzecq7d/w2MG8DNdn/NDnJR6uYvZ89wjQTe2n1klxLaLFc3K5uQOkRcIe6009sRxgouab9erGfeeyHkPMJKUu/xknSpnqWfLoCbGhUeM=
+	t=1739458365; cv=none; b=fTKunV8z3h7TYLq48ntFNKyqFTN/CogtKeJ12bJONVu/CAn8vmqzpebrr5cA/SiAjyTOBxeycF512rLqrOdVqL8jw05yfHD23sEmSzjdrGuyyY/8YWN6k4NszDjGbwJcYc8AprX6BAvwc9BkXryTo0sEk1lF1on9EPRSichtad8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458361; c=relaxed/simple;
-	bh=srrjhCbW5NO+7aV/SttpJsTh67h9/cT7ISJYI061GUI=;
+	s=arc-20240116; t=1739458365; c=relaxed/simple;
+	bh=F+Tft9Ur2PPOXwN125gsJPzPaePlWOAS2Va6g2jTigo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Md/bNwDcJdCBNMaexa/7gcd5q30Gfu8LNrI27j1eBnhaoxBWxxMUGwWMMIZIMhwbW6egExVSPX1xLeM4tbtnMAEu/TUNBQMH2+1WN/pNXYL9hqZNz/PL6Q93YNQdjXyqhspCBtyA5Ur17vy3M47ciZ55cosvtLS+gLrkVmhuc28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2DceIaa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P5LRgca53Uv3TucSe6FSdr7wMKYIq52Aw/cyw3lL9yrEczd9YPXhPopT7aVksAA0ofUj/WHwNOuKgFniJIyayvcYUUnnkS1nm2p7kg7QzwIFq0yEtCUdgIK3JB/LZWzKuJyXgOVujF5ydASq70CVy7EZHyNlfBBn0cS1/IhI588=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nkac+qIH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2DceIaa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19768C4CED1;
-	Thu, 13 Feb 2025 14:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nkac+qIH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876A0C4CED1;
+	Thu, 13 Feb 2025 14:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458361;
-	bh=srrjhCbW5NO+7aV/SttpJsTh67h9/cT7ISJYI061GUI=;
+	s=korg; t=1739458365;
+	bh=F+Tft9Ur2PPOXwN125gsJPzPaePlWOAS2Va6g2jTigo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2DceIaavG0sEtf8Nwyo9+kC+viYt4Trc1Wj67bARi1RLhKuncXODF8zPBlH6DO6K
-	 7gCFpivS4owtLnJs3Wm2bPkqQ61Jr+HRj+PgsVOmrOC+iovTefyRKzNVtVmuHpSXkO
-	 MJINDfCWsEsSRw4gR4IwnPpw7qCJwplFD9iZ+RYg=
+	b=Nkac+qIHSMEKt4jXFFB+1mN7mGW1wZBpeQPYHpaMDNVwwPEXQDdXdZrpvm9JT5dYX
+	 M3jbvpGBIXcHo71sR3NRK+/sxp7YvN6DEQWK/qIDb0zWSKezxN9Jis6Ac2BEAa0xX5
+	 pKiy8wreLPPZ5gJiyqFvsXgHIO+otFhMhG5ptmwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Fertser <fercerpav@gmail.com>,
+	Milos Reljin <milos_reljin@outlook.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 378/422] net/ncsi: wait for the last response to Deselect Package before configuring channel
-Date: Thu, 13 Feb 2025 15:28:47 +0100
-Message-ID: <20250213142451.134806709@linuxfoundation.org>
+Subject: [PATCH 6.12 379/422] net: phy: c45-tjaxx: add delay between MDIO write and read in soft_reset
+Date: Thu, 13 Feb 2025 15:28:48 +0100
+Message-ID: <20250213142451.173082388@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -50,64 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Fertser <fercerpav@gmail.com>
+From: Milos Reljin <milos_reljin@outlook.com>
 
-commit 6bb194d036c6e1b329dcdff459338cdd9a54802a upstream.
+commit bd1bbab717608757cccbbe08b0d46e6c3ed0ced5 upstream.
 
-The NCSI state machine as it's currently implemented assumes that
-transition to the next logical state is performed either explicitly by
-calling `schedule_work(&ndp->work)` to re-queue itself or implicitly
-after processing the predefined (ndp->pending_req_num) number of
-replies. Thus to avoid the configuration FSM from advancing prematurely
-and getting out of sync with the process it's essential to not skip
-waiting for a reply.
+In application note (AN13663) for TJA1120, on page 30, there's a figure
+with average PHY startup timing values following software reset.
+The time it takes for SMI to become operational after software reset
+ranges roughly from 500 us to 1500 us.
 
-This patch makes the code wait for reception of the Deselect Package
-response for the last package probed before proceeding to channel
-configuration.
+This commit adds 2000 us delay after MDIO write which triggers software
+reset. Without this delay, soft_reset function returns an error and
+prevents successful PHY init.
 
-Thanks go to Potin Lai and Cosmo Chou for the initial investigation and
-testing.
-
-Fixes: 8e13f70be05e ("net/ncsi: Probe single packages to avoid conflict")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-Link: https://patch.msgid.link/20250116152900.8656-1-fercerpav@gmail.com
+Fixes: b050f2f15e04 ("phy: nxp-c45: add driver for tja1103")
+Signed-off-by: Milos Reljin <milos_reljin@outlook.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/AM8P250MB0124D258E5A71041AF2CC322E1E32@AM8P250MB0124.EURP250.PROD.OUTLOOK.COM
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ncsi/ncsi-manage.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/phy/nxp-c45-tja11xx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ncsi/ncsi-manage.c
-+++ b/net/ncsi/ncsi-manage.c
-@@ -1385,6 +1385,12 @@ static void ncsi_probe_channel(struct nc
- 		nd->state = ncsi_dev_state_probe_package;
- 		break;
- 	case ncsi_dev_state_probe_package:
-+		if (ndp->package_probe_id >= 8) {
-+			/* Last package probed, finishing */
-+			ndp->flags |= NCSI_DEV_PROBED;
-+			break;
-+		}
+--- a/drivers/net/phy/nxp-c45-tja11xx.c
++++ b/drivers/net/phy/nxp-c45-tja11xx.c
+@@ -1296,6 +1296,8 @@ static int nxp_c45_soft_reset(struct phy
+ 	if (ret)
+ 		return ret;
+ 
++	usleep_range(2000, 2050);
 +
- 		ndp->pending_req_num = 1;
- 
- 		nca.type = NCSI_PKT_CMD_SP;
-@@ -1501,13 +1507,8 @@ static void ncsi_probe_channel(struct nc
- 		if (ret)
- 			goto error;
- 
--		/* Probe next package */
-+		/* Probe next package after receiving response */
- 		ndp->package_probe_id++;
--		if (ndp->package_probe_id >= 8) {
--			/* Probe finished */
--			ndp->flags |= NCSI_DEV_PROBED;
--			break;
--		}
- 		nd->state = ncsi_dev_state_probe_package;
- 		ndp->active_package = NULL;
- 		break;
+ 	return phy_read_mmd_poll_timeout(phydev, MDIO_MMD_VEND1,
+ 					 VEND1_DEVICE_CONTROL, ret,
+ 					 !(ret & DEVICE_CONTROL_RESET), 20000,
 
 
