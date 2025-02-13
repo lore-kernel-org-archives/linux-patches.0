@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1E3221562;
-	Thu, 13 Feb 2025 14:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FB84F218;
+	Thu, 13 Feb 2025 14:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458571; cv=none; b=a/JG5xZvPbRiIgfOJx2CvgMuOVFigANz2/S+xQ9cvTqD6odDdYCo7Y+LhKgV4dv+UxU6ApsKdDQk+FZQtLZvvlD1XEbjISVAerMdE/wZbYZRIKiiEMRY9mRV5JBiKApmq6NAFq3Oc3waANzW/+aAKiVv2751XOZswgSFrQRX6L4=
+	t=1739458575; cv=none; b=P4Dr3m75B5md782gXCWCfafnnsGiFh9tmj+yI2V2scWesjdLt7NVuxhTjHdsiXU/sOCa0ot7POK62OncS20+3LR55y/4EIlE9HV+iTqVneWQscuMxOahbqaso6gvS7ibLS+dlv7BGT2ryZPZKsq4LM6HSsqKZJcxhT3s3VKsbMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458571; c=relaxed/simple;
-	bh=a1J54o+jkIPYHdM8FFB/SkRhukWE0HFL0cLrpq77zGM=;
+	s=arc-20240116; t=1739458575; c=relaxed/simple;
+	bh=JgTtrGSLTCnZ7sbFmNfJjQvrZ36p6vG8npx8XApNMj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWDYS0wgNQuX6YK2FDyt+z19bIBM248yukbhfJay+1UwllaMVeiPlJBbT35tbGdL8PCLxcaLYjgX669gyECmZ55nIHb0sUMZ3sF8S+vUghZSw4l0mKT3BZjRQpOAcxoQi4Z2rnOuXe0+rWiKxgcexW6+Lilz5gr+pajhenSiZGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gy/PcEyQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxKQkxbz8xqT6ZzPB6H1ECm5s/OyUYW6SQoztEs4yDlIXcbTRio6W/mdP7xLBGNuaeDKlFJRtlpxjd0S2mNr6p7x1Xu2JXZ86BrdyVdI2Uxedj8KT36Wjopi4dPXw5xEWMutPiivrqbYMY7k6gsXsj6QwNuGzHcIRQbEHQ36rxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TPm63/p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gy/PcEyQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4921DC4CED1;
-	Thu, 13 Feb 2025 14:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TPm63/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769A3C4CED1;
+	Thu, 13 Feb 2025 14:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458571;
-	bh=a1J54o+jkIPYHdM8FFB/SkRhukWE0HFL0cLrpq77zGM=;
+	s=korg; t=1739458574;
+	bh=JgTtrGSLTCnZ7sbFmNfJjQvrZ36p6vG8npx8XApNMj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gy/PcEyQwnoLEo0/Xrylx8GixcjS7/b1MKyWTl4qFhyhPcT35u3s6X3OImX8bLHHk
-	 7w54lqcUPlYtUY1amDn/4N9VIAiytre2j8FTWIiFBV1BxvvnxShQ5G2tkAwtlR3das
-	 1hJQgQ5JPls1rRUysONhwisIbaTezXeRCAvJ9KFk=
+	b=0TPm63/pyL0o3lvk2km4IEuyJcLTh7ZCTFQ8FV4rxAp0DVtyi5lFAAvubByCqDWCU
+	 DXKyPsfSIFMFRf/pB+YamvYvlgA5s026jDT05FrksG8cD77Ncl3ghmU7UCA0BTi/zY
+	 wuDllWWc6sZON5JRIoHyaH+UYYNHyKQItqWOWyFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"J. R. Okajima" <hooanon05g@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Waiman Long <longman@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	Carlos Llamas <cmllamas@google.com>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 017/443] lockdep: Fix upper limit for LOCKDEP_*_BITS configs
-Date: Thu, 13 Feb 2025 15:23:02 +0100
-Message-ID: <20250213142441.286343424@linuxfoundation.org>
+Subject: [PATCH 6.13 018/443] x86/amd_nb: Restrict init function to AMD-based systems
+Date: Thu, 13 Feb 2025 15:23:03 +0100
+Message-ID: <20250213142441.323795038@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -56,84 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-[ Upstream commit e638072e61726cae363d48812815197a2a0e097f ]
+[ Upstream commit bee9e840609cc67d0a7d82f22a2130fb7a0a766d ]
 
-Lockdep has a set of configs used to determine the size of the static
-arrays that it uses. However, the upper limit that was initially setup
-for these configs is too high (30 bit shift). This equates to several
-GiB of static memory for individual symbols. Using such high values
-leads to linker errors:
+The code implicitly operates on AMD-based systems by matching on PCI
+IDs. However, the use of these IDs is going away.
 
-  $ make defconfig
-  $ ./scripts/config -e PROVE_LOCKING --set-val LOCKDEP_BITS 30
-  $ make olddefconfig all
-  [...]
-  ld: kernel image bigger than KERNEL_IMAGE_SIZE
-  ld: section .bss VMA wraps around address space
+Add an explicit CPU vendor check instead of relying on PCI IDs.
 
-Adjust the upper limits to the maximum values that avoid these issues.
-The need for anything more, likely points to a problem elsewhere. Note
-that LOCKDEP_CHAINS_BITS was intentionally left out as its upper limit
-had a different symptom and has already been fixed [1].
-
-Reported-by: J. R. Okajima <hooanon05g@gmail.com>
-Closes: https://lore.kernel.org/all/30795.1620913191@jrobl/ [1]
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Waiman Long <longman@redhat.com>
-Cc: Will Deacon <will@kernel.org>
-Acked-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Link: https://lore.kernel.org/r/20241024183631.643450-2-cmllamas@google.com
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20241206161210.163701-3-yazen.ghannam@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/Kconfig.debug | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kernel/amd_nb.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index f3d7237058793..bc725add84f46 100644
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -1504,7 +1504,7 @@ config LOCKDEP_SMALL
- config LOCKDEP_BITS
- 	int "Bitsize for MAX_LOCKDEP_ENTRIES"
- 	depends on LOCKDEP && !LOCKDEP_SMALL
--	range 10 30
-+	range 10 24
- 	default 15
- 	help
- 	  Try increasing this value if you hit "BUG: MAX_LOCKDEP_ENTRIES too low!" message.
-@@ -1520,7 +1520,7 @@ config LOCKDEP_CHAINS_BITS
- config LOCKDEP_STACK_TRACE_BITS
- 	int "Bitsize for MAX_STACK_TRACE_ENTRIES"
- 	depends on LOCKDEP && !LOCKDEP_SMALL
--	range 10 30
-+	range 10 26
- 	default 19
- 	help
- 	  Try increasing this value if you hit "BUG: MAX_STACK_TRACE_ENTRIES too low!" message.
-@@ -1528,7 +1528,7 @@ config LOCKDEP_STACK_TRACE_BITS
- config LOCKDEP_STACK_TRACE_HASH_BITS
- 	int "Bitsize for STACK_TRACE_HASH_SIZE"
- 	depends on LOCKDEP && !LOCKDEP_SMALL
--	range 10 30
-+	range 10 26
- 	default 14
- 	help
- 	  Try increasing this value if you need large STACK_TRACE_HASH_SIZE.
-@@ -1536,7 +1536,7 @@ config LOCKDEP_STACK_TRACE_HASH_BITS
- config LOCKDEP_CIRCULAR_QUEUE_BITS
- 	int "Bitsize for elements in circular_queue struct"
- 	depends on LOCKDEP
--	range 10 30
-+	range 10 26
- 	default 12
- 	help
- 	  Try increasing this value if you hit "lockdep bfs error:-1" warning due to __cq_enqueue() failure.
+diff --git a/arch/x86/kernel/amd_nb.c b/arch/x86/kernel/amd_nb.c
+index 9fe9972d2071b..37b8244899d89 100644
+--- a/arch/x86/kernel/amd_nb.c
++++ b/arch/x86/kernel/amd_nb.c
+@@ -582,6 +582,10 @@ static __init void fix_erratum_688(void)
+ 
+ static __init int init_amd_nbs(void)
+ {
++	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD &&
++	    boot_cpu_data.x86_vendor != X86_VENDOR_HYGON)
++		return 0;
++
+ 	amd_cache_northbridges();
+ 	amd_cache_gart();
+ 
 -- 
 2.39.5
 
