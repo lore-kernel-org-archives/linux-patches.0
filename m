@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49AA16BE17;
-	Thu, 13 Feb 2025 15:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F5518A6A7;
+	Thu, 13 Feb 2025 15:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459259; cv=none; b=P6Sg6ZEVjd8rrb/HlT0pPoSYSgsYCRAgcqIT4gElGOgKoQFkZKmQnlflDLZrVHF1DWwnq3yjLiAUQJJYunxHttVHvpe8VSo2oSIaAlWMeD4qCyiN1l4EUxl5GcIj+dQdqr4UqDGHL8vro2OxAje8cctOteW83ofCtI6y+35J1ko=
+	t=1739459263; cv=none; b=CLyPeDHD9349ErlczNzPqAgCYUeBs0HzZSc514VgJIfDC8c5vsz+lSN5cE/EwcMdYRp3LrXw8X1qYIa7caG5dh3vFjLDd33e62YTXO7G5mnWgPH8PrrGU9I+1jnP+DIgpkdPS9Si6ZAuQCvL2MlXtCjc1EpihmYiAmLNIQWAhAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459259; c=relaxed/simple;
-	bh=1RYuAqPjm/6kFarOqphXN1HeIKGg8VplI42uaxqEbNI=;
+	s=arc-20240116; t=1739459263; c=relaxed/simple;
+	bh=NEqQkHa+6ddkS5XVxOJvB0+QBrUINR1tkpii9EagaCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zb5n9G/h5DW5SPZLU3x+tIp4JHjPcAtpL/RlMBqIPC9BbxCcefPO8LjEM42TLgbHmzlMDaA3XiB/nUmYw6c+AHec8SKyDiuJSPlo3fKUUlGdN6OTa0zBle1e24m7MGuxrw0BhSihbtU3Qp+t3N2keLkNgpnkhvGYD2mjewjq+M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRYp1kiJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=We3iUQanpcDTvyhkH6NBxN33XZQIJNMrjBGTMZlLAHCloKhxoj7wC8shBnU2QY95WHNCkBBJ8e5Krx2Dh6ICgwSbGmiBB3V+6l6Jewmlss6OBx3Vrjqx3CBxpbd5X4QKsePe5ipwE54P6Q+wf/rxxd1bNO/OKHWj7Gv4hvjsZbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1Nv/Shs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRYp1kiJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0667C4CED1;
-	Thu, 13 Feb 2025 15:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1Nv/Shs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1333FC4CED1;
+	Thu, 13 Feb 2025 15:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459259;
-	bh=1RYuAqPjm/6kFarOqphXN1HeIKGg8VplI42uaxqEbNI=;
+	s=korg; t=1739459262;
+	bh=NEqQkHa+6ddkS5XVxOJvB0+QBrUINR1tkpii9EagaCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRYp1kiJ3Xe4ItPhCKXcQQsaM6SVa4/ZxTuOHwQ2Di45X5FreXO4rGPROQJyjn+cD
-	 lgQKYuny4QebwWLdWUeA46xEUtUqH6BB8nq85gAUTkImXPJ/7seJGYSQViFKVfPRQJ
-	 YBMYd2lvXfjqPVqkB4+v0fe7whM95oq/nTTvoJj8=
+	b=y1Nv/ShsfKWKwXcP9lGugnlOFmATlHwIwBAjLUtzN667xhsOU1VwKfMIY7IZeuRFe
+	 CTHqRVnLmB44wUZ812jcoO/2hoF9XMTtCa2y9LVj8q5ZB3VOgj7d1YRVK7PzesfNj6
+	 fo8fr/OdpyYSsN5qu4jUUsuBBSc5i3O55KOndqZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 6.13 213/443] perf bench: Fix undefined behavior in cmpworker()
-Date: Thu, 13 Feb 2025 15:26:18 +0100
-Message-ID: <20250213142448.836836799@linuxfoundation.org>
+	"Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
+	Avri Altman <Avri.Altman@wdc.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.13 214/443] scsi: ufs: core: Fix the HIGH/LOW_TEMP Bit Definitions
+Date: Thu, 13 Feb 2025 15:26:19 +0100
+Message-ID: <20250213142448.874096105@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,52 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Bao D. Nguyen <quic_nguyenb@quicinc.com>
 
-commit 62892e77b8a64b9dc0e1da75980aa145347b6820 upstream.
+commit 1b3e2d4ec0c5848776cc56d2624998aa5b2f0d27 upstream.
 
-The comparison function cmpworker() violates the C standard's
-requirements for qsort() comparison functions, which mandate symmetry
-and transitivity:
+According to the UFS Device Specification, the dExtendedUFSFeaturesSupport
+defines the support for TOO_HIGH_TEMPERATURE as bit[4] and the
+TOO_LOW_TEMPERATURE as bit[5]. Correct the code to match with
+the UFS device specification definition.
 
-Symmetry: If x < y, then y > x.
-Transitivity: If x < y and y < z, then x < z.
-
-In its current implementation, cmpworker() incorrectly returns 0 when
-w1->tid < w2->tid, which breaks both symmetry and transitivity. This
-violation causes undefined behavior, potentially leading to issues such
-as memory corruption in glibc [1].
-
-Fix the issue by returning -1 when w1->tid < w2->tid, ensuring
-compliance with the C standard and preventing undefined behavior.
-
-Link: https://www.qualys.com/2024/01/30/qsort.txt [1]
-Fixes: 121dd9ea0116 ("perf bench: Add epoll parallel epoll_wait benchmark")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Link: https://lore.kernel.org/r/20250116110842.4087530-1-visitorckw@gmail.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: e88e2d32200a ("scsi: ufs: core: Probe for temperature notification support")
+Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+Link: https://lore.kernel.org/r/69992b3e3e3434a5c7643be5a64de48be892ca46.1736793068.git.quic_nguyenb@quicinc.com
+Reviewed-by: Avri Altman <Avri.Altman@wdc.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/bench/epoll-wait.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/ufs/ufs.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/tools/perf/bench/epoll-wait.c
-+++ b/tools/perf/bench/epoll-wait.c
-@@ -420,7 +420,12 @@ static int cmpworker(const void *p1, con
+--- a/include/ufs/ufs.h
++++ b/include/ufs/ufs.h
+@@ -386,8 +386,8 @@ enum {
  
- 	struct worker *w1 = (struct worker *) p1;
- 	struct worker *w2 = (struct worker *) p2;
--	return w1->tid > w2->tid;
-+
-+	if (w1->tid > w2->tid)
-+		return 1;
-+	if (w1->tid < w2->tid)
-+		return -1;
-+	return 0;
- }
- 
- int bench_epoll_wait(int argc, const char **argv)
+ /* Possible values for dExtendedUFSFeaturesSupport */
+ enum {
+-	UFS_DEV_LOW_TEMP_NOTIF		= BIT(4),
+-	UFS_DEV_HIGH_TEMP_NOTIF		= BIT(5),
++	UFS_DEV_HIGH_TEMP_NOTIF		= BIT(4),
++	UFS_DEV_LOW_TEMP_NOTIF		= BIT(5),
+ 	UFS_DEV_EXT_TEMP_NOTIF		= BIT(6),
+ 	UFS_DEV_HPB_SUPPORT		= BIT(7),
+ 	UFS_DEV_WRITE_BOOSTER_SUP	= BIT(8),
 
 
