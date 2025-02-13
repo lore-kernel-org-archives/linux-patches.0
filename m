@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC5E26B094;
-	Thu, 13 Feb 2025 15:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B5226B089;
+	Thu, 13 Feb 2025 15:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459387; cv=none; b=S7dveBnEgUAFoXj9SWb6DsjItUhT5LcU2dCcLJ+7Fxjn2QMYOL757BLf5so3fzjJciwUHg/pYMYzZcbLTbrgWmkEmqIqHGoMYOtGKj4LP0dqjJKLgJ+RAhUJp0/6r9cPOayE5GAvLGqUPrJbUelYPj3IrN6dRycHH1Mqjc0OzwU=
+	t=1739459390; cv=none; b=BWZgXEgETtXHZpor25K5XzuQ/kF83zi6JtI4FosR2PEfARz+1lXJmlh130m49WqfCcJqXFDXcxf52nawXhzGn2SmeUvK179gzclQdra4fLkbUua7ymLlzszdG7TZ2cKtKEAB2wCyLKNb08Bjd5calzULvSgYZRpf8I5BDM0pE6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459387; c=relaxed/simple;
-	bh=1Z0S3Bana4ifBDTTjiHrGdslO/fcrYU6VMonpaTeQVY=;
+	s=arc-20240116; t=1739459390; c=relaxed/simple;
+	bh=4mzHCnJdHmmJ7J6/P5qXous0LyoRZh18rT5PqVyLwj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LdY708IQXrDQXXa2CbKnB3L0runTewzyHoa2tle5BkgUOBV6oAoEHUUNU/CpHoS9XfCg05yhffbTgUcOxDYfRQD7o2I+8272NBxesMt7KAAOT613gO5GkcrSAImW+8VkG+nA3qdaVmfqQw2eSn0cnSjMLJKK6t4TRNn8JWN2vDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EX2v0BSq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A3F2El1vKkPse7QQVLHEpHK1l0+lVHcSavIM5vlaBbL9gPyAoG7cZKg6jER3yKFf5GcT1uPtziJd37vARtCGjF+jAJJeYACtrBuhyvrEfxEZB7XrJlcFbPIrbqtigupmsYU8RpKY9xEmqbju/nQN65/CoTe2pHzL/tr9eBZmwnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbG39cfh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EX2v0BSq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09F2C4CED1;
-	Thu, 13 Feb 2025 15:09:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbG39cfh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE97C4CED1;
+	Thu, 13 Feb 2025 15:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459387;
-	bh=1Z0S3Bana4ifBDTTjiHrGdslO/fcrYU6VMonpaTeQVY=;
+	s=korg; t=1739459390;
+	bh=4mzHCnJdHmmJ7J6/P5qXous0LyoRZh18rT5PqVyLwj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EX2v0BSq9d8w4RwVaI1iSLVlrhx+8HvuP0KuF7W1ei/hYl7gO5OvNr/M3wN0RhAx2
-	 X0MkSr1wRPh2Fxn6aO3R7oJb6Qon4S3Hn7/eYthLOj4+eMuQ+Oy8STDcji+pAsaO5Z
-	 CWgxveVotc/hRG+gjp6gKp0nc724XryrMuiOlurg=
+	b=BbG39cfhvR/pDiyF+rbEvpcKQrwqfJXJ6MSwnpOL4Z0a4u6dNeUc5jDc/PwCIMDNu
+	 av6ATrXfkGdHfE5z+C23fRoVQKC7CYCpy/G9i5VhMh7MNZjp4IUXwQqxbHTGM1dHZG
+	 zdC5Z4hwYQyubRoEEicsaQlE4k1F5lk9YT9HHRKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	nijs1@lenovo.com,
+	pgriffais@valvesoftware.com,
+	mpearson-lenovo@squebb.ca,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.13 250/443] ASoC: renesas: rz-ssi: Add a check for negative sample_space
-Date: Thu, 13 Feb 2025 15:26:55 +0100
-Message-ID: <20250213142450.262617955@linuxfoundation.org>
+Subject: [PATCH 6.13 251/443] ASoC: acp: Support microphone from Lenovo Go S
+Date: Thu, 13 Feb 2025 15:26:56 +0100
+Message-ID: <20250213142450.302953641@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,40 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 82a0a3e6f8c02b3236b55e784a083fa4ee07c321 upstream.
+commit b9a8ea185f3f8024619b2e74b74375493c87df8c upstream.
 
-My static checker rule complains about this code.  The concern is that
-if "sample_space" is negative then the "sample_space >= runtime->channels"
-condition will not work as intended because it will be type promoted to a
-high unsigned int value.
+On Lenovo Go S there is a DMIC connected to the ACP but the firmware
+has no `AcpDmicConnected` ACPI _DSD.
 
-strm->fifo_sample_size is SSI_FIFO_DEPTH (32).  The SSIFSR_TDC_MASK is
-0x3f.  Without any further context it does seem like a reasonable warning
-and it can't hurt to add a check for negatives.
+Add a DMI entry for all possible Lenovo Go S SKUs to enable DMIC.
 
+Cc: nijs1@lenovo.com
+Cc: pgriffais@valvesoftware.com
+Cc: mpearson-lenovo@squebb.ca
 Cc: stable@vger.kernel.org
-Fixes: 03e786bd4341 ("ASoC: sh: Add RZ/G2L SSIF-2 driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/e07c3dc5-d885-4b04-a742-71f42243f4fd@stanley.mountain
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20250123024915.2457115-1-superm1@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/renesas/rz-ssi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
---- a/sound/soc/renesas/rz-ssi.c
-+++ b/sound/soc/renesas/rz-ssi.c
-@@ -526,6 +526,8 @@ static int rz_ssi_pio_send(struct rz_ssi
- 	sample_space = strm->fifo_sample_size;
- 	ssifsr = rz_ssi_reg_readl(ssi, SSIFSR);
- 	sample_space -= (ssifsr >> SSIFSR_TDC_SHIFT) & SSIFSR_TDC_MASK;
-+	if (sample_space < 0)
-+		return -EINVAL;
- 
- 	/* Only add full frames at a time */
- 	while (frames_left && (sample_space >= runtime->channels)) {
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -307,6 +307,34 @@ static const struct dmi_system_id yc_acp
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83L3"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83N6"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83Q2"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83Q3"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "UM5302TA"),
+ 		}
 
 
