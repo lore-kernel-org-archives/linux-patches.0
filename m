@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7513A266196;
-	Thu, 13 Feb 2025 14:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB0A26618F;
+	Thu, 13 Feb 2025 14:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458110; cv=none; b=N0MXB0a3vkXCm1WQhvmw/twzgHimlUNHwfSmHplYIrjE2nWhaVz8kkICR34vv9/8+XfhQSjgu7ju/s0MIcsnvOuizGv3vG3SzjmIu3g83/07pnHap7chD8sJPaS79EDm4c92j/T1hvQL6OpMikcc+60o9BOCADDszkxvLDyJwnc=
+	t=1739458113; cv=none; b=D+1Kg1eknk1UtfCsZG2ShjZuObJHm5cFEJc+q2px5Ug4vJhX1XDITCCLPCyv9BGYHiT1dlpcNTpnjpb0kfRtjVyKjsoKnfmgNpHvLzh4PsCFiVNkfMnBpSkchxorJBlpBjUXzT03ZxGxnNoa/uTfAXI/UWvVtgqnxeAIvJNJbpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458110; c=relaxed/simple;
-	bh=5XUJCw6mjZ/j8uQ/pBvpgsGF01ATZb5cmzWM21/3XgA=;
+	s=arc-20240116; t=1739458113; c=relaxed/simple;
+	bh=TL8/IYP7S5E5MxV0gWsFMDAEoYb0nfXM/71VXbr5Lts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2qZIHbO2ont/vvAonp6L8lZbXkhV5P7Q3nbllqwCwE2roOVl7/RmR85qW5sWms6Y+jrFc5jWgWV/YD0/52mzzACkG/+qlr9uF70EDcSX+wq6CM4b507M2KRqxjmpMbow/AoqNTuByAtMC7aP16A78NJKRjvxi3Ko2mDr72jfIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAx+g6EX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dmnTS1HUcxiSEk8c7DsnwSQJsj7SpMuBP8cUF2JeQ/4jLpjNjsr2AdMXDzXh7rcJLQqCysg+J7oXg6nkkQvwdVk5TcOx2GsOsMw1aTU4tJJ6tzDcOhk5AHQX015ZrOeLohpQ55SnHsmaaBLBbZ4JuVwpo56wgZTmahm4CBQMLy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UB/Jyacp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAx+g6EX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8167C4CED1;
-	Thu, 13 Feb 2025 14:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UB/Jyacp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEABC4CED1;
+	Thu, 13 Feb 2025 14:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458110;
-	bh=5XUJCw6mjZ/j8uQ/pBvpgsGF01ATZb5cmzWM21/3XgA=;
+	s=korg; t=1739458113;
+	bh=TL8/IYP7S5E5MxV0gWsFMDAEoYb0nfXM/71VXbr5Lts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jAx+g6EXS6Tqht8UdC2bOJDVy4/nNu9nyxyI1wTDuqgkWAC12Xux5hMA6GDfWR7Yk
-	 BFZWCe8QRzJBE+KIkSTlBYGvHPAbMB3yMKsi3ng5kZVibw5pyaPI4fiy0tC2qjDkAr
-	 JCX+OXhQrr1yGwCKdgw/5Odxbvn/OwwnGaAqPpSY=
+	b=UB/JyacpPAiC28EhhvGEecucV5Uy3DowaTRcC7LxOiaFBmZE85QfbT9aad/QA6hXC
+	 3m27ytefA8IBPs3gRp/8tC6gKGmQDjzBD7exVy+tE/nIhX2cJGtuadRrGQoOka8N8+
+	 SYndSQvml93985Y2SSWnWZCiMdN4wnKwn876WNfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.12 263/422] x86/acpi: Fix LAPIC/x2APIC parsing order
-Date: Thu, 13 Feb 2025 15:26:52 +0100
-Message-ID: <20250213142446.691701026@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.12 298/422] parisc: Temporarily disable jump label support
+Date: Thu, 13 Feb 2025 15:27:27 +0100
+Message-ID: <20250213142448.040882076@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,131 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Helge Deller <deller@kernel.org>
 
-commit 0141978ae75bd48bac13fca6de131a5071c32011 upstream.
+commit 3599bae489d86fbabe039f9a2ab5472ffb04f7f1 upstream.
 
-On some systems, the same CPU (with the same APIC ID) is assigned a
-different logical CPU id after commit ec9aedb2aa1a ("x86/acpi: Ignore
-invalid x2APIC entries").
+The 32-bit Debian kernel 6.12 fails to boot and crashes like this:
 
-This means that Linux enumerates the CPUs in a different order, which
-violates ACPI specification[1] that states:
+ init (pid 65): Protection id trap (code 7)
+ CPU: 0 UID: 0 PID: 65 Comm: init Not tainted 6.12.9 #2
+ Hardware name: 9000/778/B160L
 
-  "OSPM should initialize processors in the order that they appear in
-   the MADT"
+      YZrvWESTHLNXBCVMcbcbcbcbOGFRQPDI
+ PSW: 00000000000001000000000000001111 Not tainted
+ r00-03  0004000f 110d39d0 109a6558 12974400
+ r04-07  12a810e0 12a810e0 00000000 12a81144
+ r08-11  12a81174 00000007 00000000 00000002
+ r12-15  f8c55c08 0000006c 00000001 f8c55c08
+ r16-19  00000002 f8c58620 002da3a8 0000004e
+ r20-23  00001a46 0000000f 10754f84 00000000
+ r24-27  00000000 00000003 12ae6980 1127b9d0
+ r28-31  00000000 00000000 12974440 109a6558
+ sr00-03  00000000 00000000 00000000 00000010
+ sr04-07  00000000 00000000 00000000 00000000
 
-The problematic commit parses all LAPIC entries before any x2APIC
-entries, aiming to ignore x2APIC entries with APIC ID < 255 when valid
-LAPIC entries exist. However, it disrupts the CPU enumeration order on
-systems where x2APIC entries precede LAPIC entries in the MADT.
+ IASQ: 00000000 00000000 IAOQ: 110d39d0 110d39d4
+  IIR: baadf00d    ISR: 00000000  IOR: 110d39d0
+  CPU:        0   CR30: 128740c0 CR31: 00000000
+  ORIG_R28: 000003f3
+  IAOQ[0]: 0x110d39d0
+  IAOQ[1]: 0x110d39d4
+  RP(r2): security_sk_free+0x70/0x1a4
+ Backtrace:
+  [<10d8c844>] __sk_destruct+0x2bc/0x378
+  [<10d8e33c>] sk_destruct+0x68/0x8c
+  [<10d8e3dc>] __sk_free+0x7c/0x148
+  [<10d8e560>] sk_free+0xb8/0xf0
+  [<10f6420c>] unix_release_sock+0x3ac/0x50c
+  [<10f643b8>] unix_release+0x4c/0x7c
+  [<10d832f8>] __sock_release+0x5c/0xf8
+  [<10d833b4>] sock_close+0x20/0x44
+  [<107ba52c>] __fput+0xf8/0x468
+  [<107baa08>] __fput_sync+0xb4/0xd4
+  [<107b471c>] sys_close+0x44/0x94
+  [<10405334>] syscall_exit+0x0/0x10
 
-Fix this problem by:
+Bisecting points to this commit which triggers the issue:
+	commit  417c5643cd67a55f424b203b492082035d0236c3
+	Author: KP Singh <kpsingh@kernel.org>
+	Date:   Fri Aug 16 17:43:07 2024 +0200
+	        lsm: replace indirect LSM hook calls with static calls
 
- 1) Parsing LAPIC entries first without registering them in the
-    topology to evaluate whether valid LAPIC entries exist.
+After more analysis it seems that we don't fully implement the static calls
+and jump tables yet. Additionally the functions which mark kernel memory
+read-only or read-write-executable needs to be further enhanced to be able to
+fully support static calls.
 
- 2) Restoring the MADT in order parser which invokes either the LAPIC
-    or the X2APIC parser function depending on the entry type.
+Enabling CONFIG_SECURITY_YAMA=y was one possibility to trigger the issue,
+although YAMA isn't the reason for the fault.
 
-The X2APIC parser still ignores entries < 0xff in case that #1 found
-valid LAPIC entries independent of their position in the MADT table.
+As a temporary solution disable JUMP_LABEL functionality to
+avoid the crashes.
 
-Link: https://uefi.org/specs/ACPI/6.5/05_ACPI_Software_Programming_Model.html#madt-processor-local-apic-sapic-structure-entry-order
-Cc: All applicable <stable@vger.kernel.org>
-Reported-by: Jim Mattson <jmattson@google.com>
-Closes: https://lore.kernel.org/all/20241010213136.668672-1-jmattson@google.com/
-Fixes: ec9aedb2aa1a ("x86/acpi: Ignore invalid x2APIC entries")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Tested-by: Jim Mattson <jmattson@google.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://patch.msgid.link/20250117081420.4046737-1-rui.zhang@intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Cc: <stable@vger.kernel.org> # v6.12+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/acpi/boot.c |   50 +++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 45 insertions(+), 5 deletions(-)
+ arch/parisc/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/acpi/boot.c
-+++ b/arch/x86/kernel/acpi/boot.c
-@@ -227,6 +227,28 @@ acpi_parse_x2apic(union acpi_subtable_he
- }
- 
- static int __init
-+acpi_check_lapic(union acpi_subtable_headers *header, const unsigned long end)
-+{
-+	struct acpi_madt_local_apic *processor = NULL;
-+
-+	processor = (struct acpi_madt_local_apic *)header;
-+
-+	if (BAD_MADT_ENTRY(processor, end))
-+		return -EINVAL;
-+
-+	/* Ignore invalid ID */
-+	if (processor->id == 0xff)
-+		return 0;
-+
-+	/* Ignore processors that can not be onlined */
-+	if (!acpi_is_processor_usable(processor->lapic_flags))
-+		return 0;
-+
-+	has_lapic_cpus = true;
-+	return 0;
-+}
-+
-+static int __init
- acpi_parse_lapic(union acpi_subtable_headers * header, const unsigned long end)
- {
- 	struct acpi_madt_local_apic *processor = NULL;
-@@ -257,7 +279,6 @@ acpi_parse_lapic(union acpi_subtable_hea
- 			       processor->processor_id, /* ACPI ID */
- 			       processor->lapic_flags & ACPI_MADT_ENABLED);
- 
--	has_lapic_cpus = true;
- 	return 0;
- }
- 
-@@ -1029,6 +1050,8 @@ static int __init early_acpi_parse_madt_
- static int __init acpi_parse_madt_lapic_entries(void)
- {
- 	int count, x2count = 0;
-+	struct acpi_subtable_proc madt_proc[2];
-+	int ret;
- 
- 	if (!boot_cpu_has(X86_FEATURE_APIC))
- 		return -ENODEV;
-@@ -1037,10 +1060,27 @@ static int __init acpi_parse_madt_lapic_
- 				      acpi_parse_sapic, MAX_LOCAL_APIC);
- 
- 	if (!count) {
--		count = acpi_table_parse_madt(ACPI_MADT_TYPE_LOCAL_APIC,
--					acpi_parse_lapic, MAX_LOCAL_APIC);
--		x2count = acpi_table_parse_madt(ACPI_MADT_TYPE_LOCAL_X2APIC,
--					acpi_parse_x2apic, MAX_LOCAL_APIC);
-+		/* Check if there are valid LAPIC entries */
-+		acpi_table_parse_madt(ACPI_MADT_TYPE_LOCAL_APIC, acpi_check_lapic, MAX_LOCAL_APIC);
-+
-+		/*
-+		 * Enumerate the APIC IDs in the order that they appear in the
-+		 * MADT, no matter LAPIC entry or x2APIC entry is used.
-+		 */
-+		memset(madt_proc, 0, sizeof(madt_proc));
-+		madt_proc[0].id = ACPI_MADT_TYPE_LOCAL_APIC;
-+		madt_proc[0].handler = acpi_parse_lapic;
-+		madt_proc[1].id = ACPI_MADT_TYPE_LOCAL_X2APIC;
-+		madt_proc[1].handler = acpi_parse_x2apic;
-+		ret = acpi_table_parse_entries_array(ACPI_SIG_MADT,
-+				sizeof(struct acpi_table_madt),
-+				madt_proc, ARRAY_SIZE(madt_proc), MAX_LOCAL_APIC);
-+		if (ret < 0) {
-+			pr_err("Error parsing LAPIC/X2APIC entries\n");
-+			return ret;
-+		}
-+		count = madt_proc[0].count;
-+		x2count = madt_proc[1].count;
- 	}
- 	if (!count && !x2count) {
- 		pr_err("No LAPIC entries present\n");
+diff --git a/arch/parisc/Kconfig b/arch/parisc/Kconfig
+index aa6a3cad275d..fcc5973f7519 100644
+--- a/arch/parisc/Kconfig
++++ b/arch/parisc/Kconfig
+@@ -60,8 +60,8 @@ config PARISC
+ 	select HAVE_ARCH_MMAP_RND_BITS
+ 	select HAVE_ARCH_AUDITSYSCALL
+ 	select HAVE_ARCH_HASH
+-	select HAVE_ARCH_JUMP_LABEL
+-	select HAVE_ARCH_JUMP_LABEL_RELATIVE
++	# select HAVE_ARCH_JUMP_LABEL
++	# select HAVE_ARCH_JUMP_LABEL_RELATIVE
+ 	select HAVE_ARCH_KFENCE
+ 	select HAVE_ARCH_SECCOMP_FILTER
+ 	select HAVE_ARCH_TRACEHOOK
+-- 
+2.48.1
+
 
 
