@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EB615E5D4;
-	Thu, 13 Feb 2025 14:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73BB18D620;
+	Thu, 13 Feb 2025 14:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458468; cv=none; b=tORlzvbPpg7Hd2Lh8f4dTWcnG1m7hMUpTIGdIgNsKIFcngkWBvqwflg2lKnSM9Q4jwgqjUhtHj4+FyBmvlvnkHuRJNUwRnCGemS852i6kBFQMmQ3AM73eNnzRAfs/Lw5wze8v484247cLK9EfT8ZVgkh4M5XvJl9pTSkfPp5yZI=
+	t=1739458471; cv=none; b=mlQfGr5iw7Hdue8sIs2aog/VEicPDjooav41nLVIuh4LKIG/ZHu15ZMOd3eVFkiTScMrqi1rhZSHXGtj+LaKbUkM+riTZ63/WK1XE/ZrQrcyRuoUAkCXpNKcvUbDPdlv7RIArCbd0dHGOFrBOFsM7Frlg+NXKC4RlecUK6FLIMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458468; c=relaxed/simple;
-	bh=gqllOHqZHVxFicvY+MiypapSicD12BIXwDattFCENvw=;
+	s=arc-20240116; t=1739458471; c=relaxed/simple;
+	bh=qvlwiN4jnHH2IfqvaxqWVeTrCV38ZZo5eP/dlwNKpQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lFV8LDIMbCcRs81AOdEshATXS4p5QSkuhMubX4m3qpgWwFqUQP8CZOGw1lJ5b0LrJjzQGM4GF5zQ+B0nLEJzP543tQgxoKp9y5v+oAz1f+0qDrl6CKFyR2RRcWbFU4nw1S3/aThYdeG2ZbDxIHphoVmaZbDkG3ubDsDtAwmB8kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=py5eCLz7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WSGH5p3lL+6dHuLzqkaGnZcTnCbyMxVwdjp5rj9gwxXYi2ceKlXF0CkvM0GHXbFsAPN9UbnrIc0NRl0sWtnbF99VBMLEDai3ezP2OcwWbFZDvOQ3AlqnpR2psB0y8mmq47fG/OgPjq0NG7mwcwYsAAYRR5+n0K5SnOwn1KU7UoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTO3lj/P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="py5eCLz7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A555FC4CED1;
-	Thu, 13 Feb 2025 14:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTO3lj/P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254D2C4CED1;
+	Thu, 13 Feb 2025 14:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458468;
-	bh=gqllOHqZHVxFicvY+MiypapSicD12BIXwDattFCENvw=;
+	s=korg; t=1739458471;
+	bh=qvlwiN4jnHH2IfqvaxqWVeTrCV38ZZo5eP/dlwNKpQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=py5eCLz79NGyDtT6p2CJnQa/IVSIWKOKPdWlB270mAzOZ6QlyHEdH81fWMEhR+wqN
-	 35GMJeateOSMcW81n1bQ+r9oBnrbCENZeAI+OBmDJlmhXkDR3DMYLn5yPic4sfG9zm
-	 Ijf8HFSZiShYoQGYPYtlyhmYUekp0W/VoUsef1qU=
+	b=sTO3lj/PVAUTDkdVTmryC5O0XWsU8bFC87SYesaku5j/lcdZ/tvl4FI3hZAAdvbII
+	 r2CUQD50XAKETkK0l1Tn7JTN4jGjM7g7V5619azcXxoiyLU0omvGoxMFOtK2jeSx1s
+	 WZptuQKUJBzos/Sjsci011+LnEnUHlxxysYCF/ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	J David <j.david.lists@gmail.com>,
-	Rick Macklem <rmacklem@uoguelph.ca>,
-	NeilBrown <neilb@suse.de>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 366/422] NFSD: Encode COMPOUND operation status on page boundaries
-Date: Thu, 13 Feb 2025 15:28:35 +0100
-Message-ID: <20250213142450.672950979@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.12 402/422] xfs: attach dquot buffer to dquot log item buffer
+Date: Thu, 13 Feb 2025 15:29:11 +0100
+Message-ID: <20250213142452.062958020@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -53,117 +50,459 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit ef3675b45bcb6c17cabbbde620c6cea52ffb21ac upstream.
+commit acc8f8628c3737108f36e5637f4d5daeaf96d90e upstream
 
-J. David reports an odd corruption of a READDIR reply sent to a
-FreeBSD client.
+Ever since 6.12-rc1, I've observed a pile of warnings from the kernel
+when running fstests with quotas enabled:
 
-xdr_reserve_space() has to do a special trick when the @nbytes value
-requests more space than there is in the current page of the XDR
-buffer.
+WARNING: CPU: 1 PID: 458580 at mm/page_alloc.c:4221 __alloc_pages_noprof+0xc9c/0xf18
+CPU: 1 UID: 0 PID: 458580 Comm: xfsaild/sda3 Tainted: G        W          6.12.0-rc6-djwa #rc6 6ee3e0e531f6457e2d26aa008a3b65ff184b377c
+<snip>
+Call trace:
+ __alloc_pages_noprof+0xc9c/0xf18
+ alloc_pages_mpol_noprof+0x94/0x240
+ alloc_pages_noprof+0x68/0xf8
+ new_slab+0x3e0/0x568
+ ___slab_alloc+0x5a0/0xb88
+ __slab_alloc.constprop.0+0x7c/0xf8
+ __kmalloc_noprof+0x404/0x4d0
+ xfs_buf_get_map+0x594/0xde0 [xfs 384cb02810558b4c490343c164e9407332118f88]
+ xfs_buf_read_map+0x64/0x2e0 [xfs 384cb02810558b4c490343c164e9407332118f88]
+ xfs_trans_read_buf_map+0x1dc/0x518 [xfs 384cb02810558b4c490343c164e9407332118f88]
+ xfs_qm_dqflush+0xac/0x468 [xfs 384cb02810558b4c490343c164e9407332118f88]
+ xfs_qm_dquot_logitem_push+0xe4/0x148 [xfs 384cb02810558b4c490343c164e9407332118f88]
+ xfsaild+0x3f4/0xde8 [xfs 384cb02810558b4c490343c164e9407332118f88]
+ kthread+0x110/0x128
+ ret_from_fork+0x10/0x20
+---[ end trace 0000000000000000 ]---
 
-In that case, xdr_reserve_space() returns a pointer to the start of
-the next page, and then the next call to xdr_reserve_space() invokes
-__xdr_commit_encode() to copy enough of the data item back into the
-previous page to make that data item contiguous across the page
-boundary.
+This corresponds to the line:
 
-But we need to be careful in the case where buffer space is reserved
-early for a data item whose value will be inserted into the buffer
-later.
+	WARN_ON_ONCE(current->flags & PF_MEMALLOC);
 
-One such caller, nfsd4_encode_operation(), reserves 8 bytes in the
-encoding buffer for each COMPOUND operation. However, a READDIR
-result can sometimes encode file names so that there are only 4
-bytes left at the end of the current XDR buffer page (though plenty
-of pages are left to handle the remaining encoding tasks).
+within the NOFAIL checks.  What's happening here is that the XFS AIL is
+trying to write a disk quota update back into the filesystem, but for
+that it needs to read the ondisk buffer for the dquot.  The buffer is
+not in memory anymore, probably because it was evicted.  Regardless, the
+buffer cache tries to allocate a new buffer, but those allocations are
+NOFAIL.  The AIL thread has marked itself PF_MEMALLOC (aka noreclaim)
+since commit 43ff2122e6492b ("xfs: on-stack delayed write buffer lists")
+presumably because reclaim can push on XFS to push on the AIL.
 
-If a COMPOUND operation follows the READDIR result (say, a GETATTR),
-then nfsd4_encode_operation() will reserve 8 bytes for the op number
-(9) and the op status (usually NFS4_OK). In this weird case,
-xdr_reserve_space() returns a pointer to byte zero of the next buffer
-page, as it assumes the data item will be copied back into place (in
-the previous page) on the next call to xdr_reserve_space().
+An easy way to fix this probably would have been to drop the NOFAIL flag
+from the xfs_buf allocation and open code a retry loop, but then there's
+still the problem that for bs>ps filesystems, the buffer itself could
+require up to 64k worth of pages.
 
-nfsd4_encode_operation() writes the op num into the buffer, then
-saves the next 4-byte location for the op's status code. The next
-xdr_reserve_space() call is part of GETATTR encoding, so the op num
-gets copied back into the previous page, but the saved location for
-the op status continues to point to the wrong spot in the current
-XDR buffer page because __xdr_commit_encode() moved that data item.
+Inode items had similar behavior (multi-page cluster buffers that we
+don't want to allocate in the AIL) which we solved by making transaction
+precommit attach the inode cluster buffers to the dirty log item.  Let's
+solve the dquot problem in the same way.
 
-After GETATTR encoding is complete, nfsd4_encode_operation() writes
-the op status over the first XDR data item in the GETATTR result.
-The NFS4_OK status code (0) makes it look like there are zero items
-in the GETATTR's attribute bitmask.
+So: Make a real precommit handler to read the dquot buffer and attach it
+to the log item; pass it to dqflush in the push method; and have the
+iodone function detach the buffer once we've flushed everything.  Add a
+state flag to the log item to track when a thread has entered the
+precommit -> push mechanism to skip the detaching if it turns out that
+the dquot is very busy, as we don't hold the dquot lock between log item
+commit and AIL push).
 
-The patch description of commit 2825a7f90753 ("nfsd4: allow encoding
-across page boundaries") [2014] remarks that NFSD "can't handle a
-new operation starting close to the end of a page." This bug appears
-to be one reason for that remark.
+Reading and attaching the dquot buffer in the precommit hook is inspired
+by the work done for inode cluster buffers some time ago.
 
-Reported-by: J David <j.david.lists@gmail.com>
-Closes: https://lore.kernel.org/linux-nfs/3998d739-c042-46b4-8166-dbd6c5f0e804@oracle.com/T/#t
-Tested-by: Rick Macklem <rmacklem@uoguelph.ca>
-Reviewed-by: NeilBrown <neilb@suse.de>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: <stable@vger.kernel.org> # v6.12
+Fixes: 903edea6c53f09 ("mm: warn about illegal __GFP_NOFAIL usage in a more appropriate location and manner")
+Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ fs/xfs/xfs_dquot.c      |  129 ++++++++++++++++++++++++++++++++++++++++++++++--
+ fs/xfs/xfs_dquot.h      |    6 +-
+ fs/xfs/xfs_dquot_item.c |   39 +++++++++-----
+ fs/xfs/xfs_dquot_item.h |    7 ++
+ fs/xfs/xfs_qm.c         |    9 ++-
+ fs/xfs/xfs_trans_ail.c  |    2 
+ 6 files changed, 168 insertions(+), 24 deletions(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -5747,15 +5747,14 @@ nfsd4_encode_operation(struct nfsd4_comp
- 	struct nfs4_stateowner *so = resp->cstate.replay_owner;
- 	struct svc_rqst *rqstp = resp->rqstp;
- 	const struct nfsd4_operation *opdesc = op->opdesc;
--	int post_err_offset;
-+	unsigned int op_status_offset;
- 	nfsd4_enc encoder;
--	__be32 *p;
+
+--- a/fs/xfs/xfs_dquot.c
++++ b/fs/xfs/xfs_dquot.c
+@@ -69,6 +69,30 @@ xfs_dquot_mark_sick(
+ }
  
--	p = xdr_reserve_space(xdr, 8);
--	if (!p)
-+	if (xdr_stream_encode_u32(xdr, op->opnum) != XDR_UNIT)
-+		goto release;
-+	op_status_offset = xdr->buf->len;
-+	if (!xdr_reserve_space(xdr, XDR_UNIT))
- 		goto release;
--	*p++ = cpu_to_be32(op->opnum);
--	post_err_offset = xdr->buf->len;
+ /*
++ * Detach the dquot buffer if it's still attached, because we can get called
++ * through dqpurge after a log shutdown.  Caller must hold the dqflock or have
++ * otherwise isolated the dquot.
++ */
++void
++xfs_dquot_detach_buf(
++	struct xfs_dquot	*dqp)
++{
++	struct xfs_dq_logitem	*qlip = &dqp->q_logitem;
++	struct xfs_buf		*bp = NULL;
++
++	spin_lock(&qlip->qli_lock);
++	if (qlip->qli_item.li_buf) {
++		bp = qlip->qli_item.li_buf;
++		qlip->qli_item.li_buf = NULL;
++	}
++	spin_unlock(&qlip->qli_lock);
++	if (bp) {
++		list_del_init(&qlip->qli_item.li_bio_list);
++		xfs_buf_rele(bp);
++	}
++}
++
++/*
+  * This is called to free all the memory associated with a dquot
+  */
+ void
+@@ -76,6 +100,7 @@ xfs_qm_dqdestroy(
+ 	struct xfs_dquot	*dqp)
+ {
+ 	ASSERT(list_empty(&dqp->q_lru));
++	ASSERT(dqp->q_logitem.qli_item.li_buf == NULL);
  
- 	if (op->opnum == OP_ILLEGAL)
- 		goto status;
-@@ -5796,20 +5795,21 @@ nfsd4_encode_operation(struct nfsd4_comp
- 		 * bug if we had to do this on a non-idempotent op:
+ 	kvfree(dqp->q_logitem.qli_item.li_lv_shadow);
+ 	mutex_destroy(&dqp->q_qlock);
+@@ -1140,6 +1165,7 @@ xfs_qm_dqflush_done(
+ 			container_of(lip, struct xfs_dq_logitem, qli_item);
+ 	struct xfs_dquot	*dqp = qlip->qli_dquot;
+ 	struct xfs_ail		*ailp = lip->li_ailp;
++	struct xfs_buf		*bp = NULL;
+ 	xfs_lsn_t		tail_lsn;
+ 
+ 	/*
+@@ -1169,6 +1195,19 @@ xfs_qm_dqflush_done(
+ 	 * Release the dq's flush lock since we're done with it.
+ 	 */
+ 	xfs_dqfunlock(dqp);
++
++	/*
++	 * If this dquot hasn't been dirtied since initiating the last dqflush,
++	 * release the buffer reference.
++	 */
++	spin_lock(&qlip->qli_lock);
++	if (!qlip->qli_dirty) {
++		bp = lip->li_buf;
++		lip->li_buf = NULL;
++	}
++	spin_unlock(&qlip->qli_lock);
++	if (bp)
++		xfs_buf_rele(bp);
+ }
+ 
+ void
+@@ -1191,7 +1230,7 @@ xfs_buf_dquot_io_fail(
+ 
+ 	spin_lock(&bp->b_mount->m_ail->ail_lock);
+ 	list_for_each_entry(lip, &bp->b_li_list, li_bio_list)
+-		xfs_set_li_failed(lip, bp);
++		set_bit(XFS_LI_FAILED, &lip->li_flags);
+ 	spin_unlock(&bp->b_mount->m_ail->ail_lock);
+ }
+ 
+@@ -1243,6 +1282,7 @@ int
+ xfs_dquot_read_buf(
+ 	struct xfs_trans	*tp,
+ 	struct xfs_dquot	*dqp,
++	xfs_buf_flags_t		xbf_flags,
+ 	struct xfs_buf		**bpp)
+ {
+ 	struct xfs_mount	*mp = dqp->q_mount;
+@@ -1250,7 +1290,7 @@ xfs_dquot_read_buf(
+ 	int			error;
+ 
+ 	error = xfs_trans_read_buf(mp, tp, mp->m_ddev_targp, dqp->q_blkno,
+-				   mp->m_quotainfo->qi_dqchunklen, XBF_TRYLOCK,
++				   mp->m_quotainfo->qi_dqchunklen, xbf_flags,
+ 				   &bp, &xfs_dquot_buf_ops);
+ 	if (error == -EAGAIN)
+ 		return error;
+@@ -1270,6 +1310,77 @@ out_abort:
+ }
+ 
+ /*
++ * Attach a dquot buffer to this dquot to avoid allocating a buffer during a
++ * dqflush, since dqflush can be called from reclaim context.
++ */
++int
++xfs_dquot_attach_buf(
++	struct xfs_trans	*tp,
++	struct xfs_dquot	*dqp)
++{
++	struct xfs_dq_logitem	*qlip = &dqp->q_logitem;
++	struct xfs_log_item	*lip = &qlip->qli_item;
++	int			error;
++
++	spin_lock(&qlip->qli_lock);
++	if (!lip->li_buf) {
++		struct xfs_buf	*bp = NULL;
++
++		spin_unlock(&qlip->qli_lock);
++		error = xfs_dquot_read_buf(tp, dqp, 0, &bp);
++		if (error)
++			return error;
++
++		/*
++		 * Attach the dquot to the buffer so that the AIL does not have
++		 * to read the dquot buffer to push this item.
++		 */
++		xfs_buf_hold(bp);
++		spin_lock(&qlip->qli_lock);
++		lip->li_buf = bp;
++		xfs_trans_brelse(tp, bp);
++	}
++	qlip->qli_dirty = true;
++	spin_unlock(&qlip->qli_lock);
++
++	return 0;
++}
++
++/*
++ * Get a new reference the dquot buffer attached to this dquot for a dqflush
++ * operation.
++ *
++ * Returns 0 and a NULL bp if none was attached to the dquot; 0 and a locked
++ * bp; or -EAGAIN if the buffer could not be locked.
++ */
++int
++xfs_dquot_use_attached_buf(
++	struct xfs_dquot	*dqp,
++	struct xfs_buf		**bpp)
++{
++	struct xfs_buf		*bp = dqp->q_logitem.qli_item.li_buf;
++
++	/*
++	 * A NULL buffer can happen if the dquot dirty flag was set but the
++	 * filesystem shut down before transaction commit happened.  In that
++	 * case we're not going to flush anyway.
++	 */
++	if (!bp) {
++		ASSERT(xfs_is_shutdown(dqp->q_mount));
++
++		*bpp = NULL;
++		return 0;
++	}
++
++	if (!xfs_buf_trylock(bp))
++		return -EAGAIN;
++
++	xfs_buf_hold(bp);
++	*bpp = bp;
++	return 0;
++}
++
++/*
+  * Write a modified dquot to disk.
+  * The dquot must be locked and the flush lock too taken by caller.
+  * The flush lock will not be unlocked until the dquot reaches the disk,
+@@ -1283,7 +1394,8 @@ xfs_qm_dqflush(
+ 	struct xfs_buf		*bp)
+ {
+ 	struct xfs_mount	*mp = dqp->q_mount;
+-	struct xfs_log_item	*lip = &dqp->q_logitem.qli_item;
++	struct xfs_dq_logitem	*qlip = &dqp->q_logitem;
++	struct xfs_log_item	*lip = &qlip->qli_item;
+ 	struct xfs_dqblk	*dqblk;
+ 	xfs_failaddr_t		fa;
+ 	int			error;
+@@ -1313,8 +1425,15 @@ xfs_qm_dqflush(
+ 	 */
+ 	dqp->q_flags &= ~XFS_DQFLAG_DIRTY;
+ 
+-	xfs_trans_ail_copy_lsn(mp->m_ail, &dqp->q_logitem.qli_flush_lsn,
+-			&lip->li_lsn);
++	/*
++	 * We hold the dquot lock, so nobody can dirty it while we're
++	 * scheduling the write out.  Clear the dirty-since-flush flag.
++	 */
++	spin_lock(&qlip->qli_lock);
++	qlip->qli_dirty = false;
++	spin_unlock(&qlip->qli_lock);
++
++	xfs_trans_ail_copy_lsn(mp->m_ail, &qlip->qli_flush_lsn, &lip->li_lsn);
+ 
+ 	/*
+ 	 * copy the lsn into the on-disk dquot now while we have the in memory
+--- a/fs/xfs/xfs_dquot.h
++++ b/fs/xfs/xfs_dquot.h
+@@ -205,7 +205,7 @@ void xfs_dquot_to_disk(struct xfs_disk_d
+ 
+ void		xfs_qm_dqdestroy(struct xfs_dquot *dqp);
+ int		xfs_dquot_read_buf(struct xfs_trans *tp, struct xfs_dquot *dqp,
+-				struct xfs_buf **bpp);
++				xfs_buf_flags_t flags, struct xfs_buf **bpp);
+ int		xfs_qm_dqflush(struct xfs_dquot *dqp, struct xfs_buf *bp);
+ void		xfs_qm_dqunpin_wait(struct xfs_dquot *dqp);
+ void		xfs_qm_adjust_dqtimers(struct xfs_dquot *d);
+@@ -229,6 +229,10 @@ void		xfs_dqlockn(struct xfs_dqtrx *q);
+ 
+ void		xfs_dquot_set_prealloc_limits(struct xfs_dquot *);
+ 
++int xfs_dquot_attach_buf(struct xfs_trans *tp, struct xfs_dquot *dqp);
++int xfs_dquot_use_attached_buf(struct xfs_dquot *dqp, struct xfs_buf **bpp);
++void xfs_dquot_detach_buf(struct xfs_dquot *dqp);
++
+ static inline struct xfs_dquot *xfs_qm_dqhold(struct xfs_dquot *dqp)
+ {
+ 	xfs_dqlock(dqp);
+--- a/fs/xfs/xfs_dquot_item.c
++++ b/fs/xfs/xfs_dquot_item.c
+@@ -123,8 +123,9 @@ xfs_qm_dquot_logitem_push(
+ 		__releases(&lip->li_ailp->ail_lock)
+ 		__acquires(&lip->li_ailp->ail_lock)
+ {
+-	struct xfs_dquot	*dqp = DQUOT_ITEM(lip)->qli_dquot;
+-	struct xfs_buf		*bp = lip->li_buf;
++	struct xfs_dq_logitem	*qlip = DQUOT_ITEM(lip);
++	struct xfs_dquot	*dqp = qlip->qli_dquot;
++	struct xfs_buf		*bp;
+ 	uint			rval = XFS_ITEM_SUCCESS;
+ 	int			error;
+ 
+@@ -155,11 +156,10 @@ xfs_qm_dquot_logitem_push(
+ 
+ 	spin_unlock(&lip->li_ailp->ail_lock);
+ 
+-	error = xfs_dquot_read_buf(NULL, dqp, &bp);
+-	if (error) {
+-		if (error == -EAGAIN)
+-			rval = XFS_ITEM_LOCKED;
++	error = xfs_dquot_use_attached_buf(dqp, &bp);
++	if (error == -EAGAIN) {
+ 		xfs_dqfunlock(dqp);
++		rval = XFS_ITEM_LOCKED;
+ 		goto out_relock_ail;
+ 	}
+ 
+@@ -207,12 +207,10 @@ xfs_qm_dquot_logitem_committing(
+ }
+ 
+ #ifdef DEBUG_EXPENSIVE
+-static int
+-xfs_qm_dquot_logitem_precommit(
+-	struct xfs_trans	*tp,
+-	struct xfs_log_item	*lip)
++static void
++xfs_qm_dquot_logitem_precommit_check(
++	struct xfs_dquot	*dqp)
+ {
+-	struct xfs_dquot	*dqp = DQUOT_ITEM(lip)->qli_dquot;
+ 	struct xfs_mount	*mp = dqp->q_mount;
+ 	struct xfs_disk_dquot	ddq = { };
+ 	xfs_failaddr_t		fa;
+@@ -228,13 +226,24 @@ xfs_qm_dquot_logitem_precommit(
+ 		xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
+ 		ASSERT(fa == NULL);
+ 	}
+-
+-	return 0;
+ }
+ #else
+-# define xfs_qm_dquot_logitem_precommit	NULL
++# define xfs_qm_dquot_logitem_precommit_check(...)	((void)0)
+ #endif
+ 
++static int
++xfs_qm_dquot_logitem_precommit(
++	struct xfs_trans	*tp,
++	struct xfs_log_item	*lip)
++{
++	struct xfs_dq_logitem	*qlip = DQUOT_ITEM(lip);
++	struct xfs_dquot	*dqp = qlip->qli_dquot;
++
++	xfs_qm_dquot_logitem_precommit_check(dqp);
++
++	return xfs_dquot_attach_buf(tp, dqp);
++}
++
+ static const struct xfs_item_ops xfs_dquot_item_ops = {
+ 	.iop_size	= xfs_qm_dquot_logitem_size,
+ 	.iop_precommit	= xfs_qm_dquot_logitem_precommit,
+@@ -259,5 +268,7 @@ xfs_qm_dquot_logitem_init(
+ 
+ 	xfs_log_item_init(dqp->q_mount, &lp->qli_item, XFS_LI_DQUOT,
+ 					&xfs_dquot_item_ops);
++	spin_lock_init(&lp->qli_lock);
+ 	lp->qli_dquot = dqp;
++	lp->qli_dirty = false;
+ }
+--- a/fs/xfs/xfs_dquot_item.h
++++ b/fs/xfs/xfs_dquot_item.h
+@@ -14,6 +14,13 @@ struct xfs_dq_logitem {
+ 	struct xfs_log_item	qli_item;	/* common portion */
+ 	struct xfs_dquot	*qli_dquot;	/* dquot ptr */
+ 	xfs_lsn_t		qli_flush_lsn;	/* lsn at last flush */
++
++	/*
++	 * We use this spinlock to coordinate access to the li_buf pointer in
++	 * the log item and the qli_dirty flag.
++	 */
++	spinlock_t		qli_lock;
++	bool			qli_dirty;	/* dirtied since last flush? */
+ };
+ 
+ void xfs_qm_dquot_logitem_init(struct xfs_dquot *dqp);
+--- a/fs/xfs/xfs_qm.c
++++ b/fs/xfs/xfs_qm.c
+@@ -146,7 +146,7 @@ xfs_qm_dqpurge(
+ 		 * We don't care about getting disk errors here. We need
+ 		 * to purge this dquot anyway, so we go ahead regardless.
  		 */
- 		warn_on_nonidempotent_op(op);
--		xdr_truncate_encode(xdr, post_err_offset);
-+		xdr_truncate_encode(xdr, op_status_offset + XDR_UNIT);
+-		error = xfs_dquot_read_buf(NULL, dqp, &bp);
++		error = xfs_dquot_read_buf(NULL, dqp, XBF_TRYLOCK, &bp);
+ 		if (error == -EAGAIN) {
+ 			xfs_dqfunlock(dqp);
+ 			dqp->q_flags &= ~XFS_DQFLAG_FREEING;
+@@ -166,6 +166,7 @@ xfs_qm_dqpurge(
+ 		}
+ 		xfs_dqflock(dqp);
  	}
- 	if (so) {
--		int len = xdr->buf->len - post_err_offset;
-+		int len = xdr->buf->len - (op_status_offset + XDR_UNIT);
++	xfs_dquot_detach_buf(dqp);
  
- 		so->so_replay.rp_status = op->status;
- 		so->so_replay.rp_buflen = len;
--		read_bytes_from_xdr_buf(xdr->buf, post_err_offset,
-+		read_bytes_from_xdr_buf(xdr->buf, op_status_offset + XDR_UNIT,
- 						so->so_replay.rp_buf, len);
+ out_funlock:
+ 	ASSERT(atomic_read(&dqp->q_pincount) == 0);
+@@ -473,7 +474,7 @@ xfs_qm_dquot_isolate(
+ 		/* we have to drop the LRU lock to flush the dquot */
+ 		spin_unlock(lru_lock);
+ 
+-		error = xfs_dquot_read_buf(NULL, dqp, &bp);
++		error = xfs_dquot_read_buf(NULL, dqp, XBF_TRYLOCK, &bp);
+ 		if (error) {
+ 			xfs_dqfunlock(dqp);
+ 			goto out_unlock_dirty;
+@@ -491,6 +492,8 @@ xfs_qm_dquot_isolate(
+ 		xfs_buf_relse(bp);
+ 		goto out_unlock_dirty;
  	}
- status:
- 	op->status = nfsd4_map_status(op->status,
- 				      resp->cstate.minorversion);
--	*p = op->status;
-+	write_bytes_to_xdr_buf(xdr->buf, op_status_offset,
-+			       &op->status, XDR_UNIT);
- release:
- 	if (opdesc && opdesc->op_release)
- 		opdesc->op_release(&op->u);
++
++	xfs_dquot_detach_buf(dqp);
+ 	xfs_dqfunlock(dqp);
+ 
+ 	/*
+@@ -1308,7 +1311,7 @@ xfs_qm_flush_one(
+ 		goto out_unlock;
+ 	}
+ 
+-	error = xfs_dquot_read_buf(NULL, dqp, &bp);
++	error = xfs_dquot_read_buf(NULL, dqp, XBF_TRYLOCK, &bp);
+ 	if (error)
+ 		goto out_unlock;
+ 
+--- a/fs/xfs/xfs_trans_ail.c
++++ b/fs/xfs/xfs_trans_ail.c
+@@ -360,7 +360,7 @@ xfsaild_resubmit_item(
+ 
+ 	/* protected by ail_lock */
+ 	list_for_each_entry(lip, &bp->b_li_list, li_bio_list) {
+-		if (bp->b_flags & _XBF_INODES)
++		if (bp->b_flags & (_XBF_INODES | _XBF_DQUOTS))
+ 			clear_bit(XFS_LI_FAILED, &lip->li_flags);
+ 		else
+ 			xfs_clear_li_failed(lip);
 
 
