@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22069221710;
-	Thu, 13 Feb 2025 14:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36156281369;
+	Thu, 13 Feb 2025 14:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457836; cv=none; b=c+UvBCpCNeB8EONQLbwFRfDDeb6DSfbTIRxMmeZQ4ebg1wjX5qNdXRJhEWs9BYqXlHsTonN2/k2lEhawNc4kDpXUYAnv1jlEH3Nqxi7DfcNtqhqPLTwIHpSmIUxU+Jw8Is/YnsGMQjhVdufY9wUexyvpxu0vNJF54CplndnKICk=
+	t=1739457839; cv=none; b=BgWQJ17w1BwN7H+2ShWtuCR2ebzTqIaCtdEomJepqXsOkwyVyfVQYcQwbaxtZIWL3Ouo+KMqv3W7uMqR9U+lM0rbKT83JGjby6jMSnvoqM4HLJX7cQ1q9WYYMyClt7jvPiMTvIvD5Ods9xQ8o9rAxymuFJBrMNbqw0mqL0NVN7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457836; c=relaxed/simple;
-	bh=HnUkuPb0W/nF1EotVOYKKbwlDz5lyuij42pXqErrOIk=;
+	s=arc-20240116; t=1739457839; c=relaxed/simple;
+	bh=Oqc1+uuBUJ+/h/lQFeOroSlPOdFEh71RnuoMQSCHftc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8hmF3WsKr9EOpmiVv+/Y9WkUggiqvYKW9HgeV0w3rvw4w5G5dG4pmsgYmqXhVOgH2MgwI5i7WVylDNgp+h8vfJhLzT4MeM31UNxmXU0v3ggGJ1fmpIlc8K3gEedK6VtRRjWiJGzIGMdqN/BcYH1h0Lt4PRWguZXloyduEi+37o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5PG1bau; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QEhcXX17jtxN9gslu7rrF7qyzDmyfNm9BK5wVzKqEHjFF98HA66wde7L1VB4OZQsuVhNmdqJ09YLhZCyU1AsGn+tK7dp8RWW3NzznHAYLuGSw9n+CKXMrBZFA7+Y1GTFvcefuGz29+l5Vm84za+gXbxFT6H6lRcmihSAzszRAsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xV+DF5UM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5PG1bau"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A63C4AF09;
-	Thu, 13 Feb 2025 14:43:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xV+DF5UM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96094C4CEE2;
+	Thu, 13 Feb 2025 14:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457835;
-	bh=HnUkuPb0W/nF1EotVOYKKbwlDz5lyuij42pXqErrOIk=;
+	s=korg; t=1739457839;
+	bh=Oqc1+uuBUJ+/h/lQFeOroSlPOdFEh71RnuoMQSCHftc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t5PG1bauM+VI2rlhbCwvxZIfXpzhCTzyZva6oqRM25n6fcH82mDRaS/ZZLQ6cxKwF
-	 yYb0RenwZZfdLnDYzDySu7amcjweS1A+p0tEM5+PtjLdflh0OjzoSEVBAaWCWkKc1b
-	 g83dX1OJiOL/6BQdhWbGRasf2HmNai86gQsXKVYg=
+	b=xV+DF5UMlseOzuUepTJEUIkncw9z0zAB2Iklx6PRyIu/gaimo/n04yZ+ucIqDNwK9
+	 sa/tRJJ+U6CZAYEZF+ZDzl1SmUZHViW7jNJfYQe66k7FbJy8USpe7tRrlz5fADMc0v
+	 ZBHUzPOuPeZqh8AHTbjTeqNlN0DkvEdOM6heTB+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 225/422] arm64: dts: qcom: x1e80100: Fix usb_2 controller interrupts
-Date: Thu, 13 Feb 2025 15:26:14 +0100
-Message-ID: <20250213142445.219514613@linuxfoundation.org>
+	nijs1@lenovo.com,
+	pgriffais@valvesoftware.com,
+	mpearson-lenovo@squebb.ca,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 226/422] ASoC: acp: Support microphone from Lenovo Go S
+Date: Thu, 13 Feb 2025 15:26:15 +0100
+Message-ID: <20250213142445.258738296@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,52 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 680421056216efe727ff4ed48f481691d5873b9e upstream.
+commit b9a8ea185f3f8024619b2e74b74375493c87df8c upstream.
 
-Back when the CRD support was brought up, the usb_2 controller didn't
-have anything connected to it in order to test it properly, so it was
-never enabled.
+On Lenovo Go S there is a DMIC connected to the ACP but the firmware
+has no `AcpDmicConnected` ACPI _DSD.
 
-On the Lenovo ThinkPad T14s, the usb_2 controller has the fingerprint
-controller connected to it. So enabling it, proved that the interrupts
-lines were wrong from the start.
+Add a DMI entry for all possible Lenovo Go S SKUs to enable DMIC.
 
-Fix both the pwr_event and the DWC ctrl_irq lines, according to
-documentation.
-
-Fixes: 4af46b7bd66f ("arm64: dts: qcom: x1e80100: Add USB nodes")
-Cc: stable@vger.kernel.org	# 6.9
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20250107-x1e80100-fix-usb2-controller-irqs-v1-1-4689aa9852a7@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: nijs1@lenovo.com
+Cc: pgriffais@valvesoftware.com
+Cc: mpearson-lenovo@squebb.ca
+Cc: stable@vger.kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20250123024915.2457115-1-superm1@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -4115,7 +4115,7 @@
- 					  <&gcc GCC_USB20_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <200000000>;
- 
--			interrupts-extended = <&intc GIC_SPI 240 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts-extended = <&intc GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&pdc 50 IRQ_TYPE_EDGE_BOTH>,
- 					      <&pdc 49 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "pwr_event",
-@@ -4141,7 +4141,7 @@
- 			usb_2_dwc3: usb@a200000 {
- 				compatible = "snps,dwc3";
- 				reg = <0 0x0a200000 0 0xcd00>;
--				interrupts = <GIC_SPI 241 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts = <GIC_SPI 240 IRQ_TYPE_LEVEL_HIGH>;
- 				iommus = <&apps_smmu 0x14e0 0x0>;
- 				phys = <&usb_2_hsphy>;
- 				phy-names = "usb2-phy";
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -307,6 +307,34 @@ static const struct dmi_system_id yc_acp
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83L3"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83N6"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83Q2"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83Q3"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "UM5302TA"),
+ 		}
 
 
