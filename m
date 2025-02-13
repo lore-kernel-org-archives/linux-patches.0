@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07C726B0BD;
-	Thu, 13 Feb 2025 15:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E131411DE;
+	Thu, 13 Feb 2025 15:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460270; cv=none; b=bftg9lDiVtMR2nsUIIOhQuR9KXZH48YUk7MJnu839FlEFlx6z3DwSSm9QehVot/p+hkelt9VaFSr8NNSlU1PjX3zpkCO1m3QMlpp7eGJCFh3wyfSeLu8A2lKZTCtUA3Jkn1CWRD0HODyIKBC9C/qqVfJl/cWS6tfA/jrHp+b/ro=
+	t=1739460273; cv=none; b=X5USvKAp5YwKbA4wfAIl9DX0QVPfO7l2IGHYZ8SW26aME5SnITdTV1aDrZbI3BBHhrGJ/nfdhdzAbv6R475etM8+GZOi/PIUG55/j4v9fq5xPtGSjgQ+MGf22D/WF0gWlCuIBxOKV+FqcoF1/RyAc4Nh7PaddCCa7KqEsYPQ+R8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460270; c=relaxed/simple;
-	bh=FzvThIZlLZyXYVAzU6lfcBrhK3PqTKCjkzDlrRR8cEQ=;
+	s=arc-20240116; t=1739460273; c=relaxed/simple;
+	bh=uTwul3V3QYVImH3IvMkfzkWdiXWWiTUbnS2BlkDBuhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nkjDLmDwmrcysqpWh5xkT3bepD1Fm3Lw95fB4b8ePZOmT3KsxvXmlVe04ntQn6KQ/g7QAh0PK5IpkXG/ho0Gdk4k0w+PfUX+Y5ahqtYg7EpHZC7CAhxcdQdaO7hpffn0M3MdTPw54LgLAzfkaBVyub2rJY/zZhaqvJW+Td/iahg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcU4CB0p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bba3FEfTvpODnYkShk/pyOQRcVG2kEf6bMDmhkjFSVlcJHIJKJEdrlIjMa5nAoujVhMn992fZnM56/BXSuPPWbsIry+BoT+//M1huibkImUzmJlbzJWUZZorD3mlNLlweT06OUelKyI6FGYZes9ESaR7KKm1kbF9ji7p/BLz6aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFIUWOHL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcU4CB0p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DBF8C4CED1;
-	Thu, 13 Feb 2025 15:24:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFIUWOHL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EB5C4CED1;
+	Thu, 13 Feb 2025 15:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460269;
-	bh=FzvThIZlLZyXYVAzU6lfcBrhK3PqTKCjkzDlrRR8cEQ=;
+	s=korg; t=1739460273;
+	bh=uTwul3V3QYVImH3IvMkfzkWdiXWWiTUbnS2BlkDBuhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tcU4CB0pM3h6xfxyZOTuVjZjzlcUGgwV8HpNRIUy1m7i9a3QsKYq8s2wd0YWyUir0
-	 kXYWeimHpcaR5Vm/EPm2KfshAjPDiwnCyOsgTLkkPk6VmwLI0scPAx0T+hmFQj182y
-	 S1YgGe4TCMk5tk2r4kD6w24ZHoulQ9PUE8vRHowU=
+	b=aFIUWOHL0GaPFKQFsQqgfVS5x5uh8lR6GUW9sCr8B0iVxjNlq1TZq9J2rfC0QfmoQ
+	 03wCDHJaeeBnRW6R+rc7yzqA0lSli7cPUc1I0x5RAn0D15ZeBGeIILhRH4+SH0N0v2
+	 rNtoGi08b5e82S5BIzwSqejLtUFnJHKbViO0P6Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>,
-	Farblos <farblos@vodafonemail.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/273] gpu: drm_dp_cec: fix broken CEC adapter properties check
-Date: Thu, 13 Feb 2025 15:27:14 +0100
-Message-ID: <20250213142409.805355516@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Xu Du <xudu@redhat.com>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>
+Subject: [PATCH 6.6 063/273] ice: put Rx buffers after being done with current frame
+Date: Thu, 13 Feb 2025 15:27:15 +0100
+Message-ID: <20250213142409.843542286@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -52,88 +56,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil@xs4all.nl>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit 6daaae5ff7f3b23a2dacc9c387ff3d4f95b67cad ]
+[ Upstream commit 743bbd93cf29f653fae0e1416a31f03231689911 ]
 
-If the hotplug detect of a display is low for longer than one second
-(configurable through drm_dp_cec_unregister_delay), then the CEC adapter
-is unregistered since we assume the display was disconnected. If the
-HPD went low for less than one second, then we check if the properties
-of the CEC adapter have changed, since that indicates that we actually
-switch to new hardware and we have to unregister the old CEC device and
-register a new one.
+Introduce a new helper ice_put_rx_mbuf() that will go through gathered
+frags from current frame and will call ice_put_rx_buf() on them. Current
+logic that was supposed to simplify and optimize the driver where we go
+through a batch of all buffers processed in current NAPI instance turned
+out to be broken for jumbo frames and very heavy load that was coming
+from both multi-thread iperf and nginx/wrk pair between server and
+client. The delay introduced by approach that we are dropping is simply
+too big and we need to take the decision regarding page
+recycling/releasing as quick as we can.
 
-Unfortunately, the test for changed properties was written poorly, and
-after a new CEC capability was added to the CEC core code the test always
-returned true (i.e. the properties had changed).
+While at it, address an error path of ice_add_xdp_frag() - we were
+missing buffer putting from day 1 there.
 
-As a result the CEC device was unregistered and re-registered for every
-HPD toggle. If the CEC remote controller integration was also enabled
-(CONFIG_MEDIA_CEC_RC was set), then the corresponding input device was
-also unregistered and re-registered. As a result the input device in
-/sys would keep incrementing its number, e.g.:
+As a nice side effect we get rid of annoying and repetitive three-liner:
 
-/sys/devices/pci0000:00/0000:00:08.1/0000:e7:00.0/rc/rc0/input20
+	xdp->data = NULL;
+	rx_ring->first_desc = ntc;
+	rx_ring->nr_frags = 0;
 
-Since short HPD toggles are common, the number could over time get into
-the thousands.
+by embedding it within introduced routine.
 
-While not a serious issue (i.e. nothing crashes), it is not intended
-to work that way.
-
-This patch changes the test so that it only checks for the single CEC
-capability that can actually change, and it ignores any other
-capabilities, so this is now safe as well if new caps are added in
-the future.
-
-With the changed test the bit under #ifndef CONFIG_MEDIA_CEC_RC can be
-dropped as well, so that's a nice cleanup.
-
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Reported-by: Farblos <farblos@vodafonemail.de>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 2c6d1fffa1d9 ("drm: add support for DisplayPort CEC-Tunneling-over-AUX")
-Tested-by: Farblos <farblos@vodafonemail.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/361bb03d-1691-4e23-84da-0861ead5dbdc@xs4all.nl
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 1dc1a7e7f410 ("ice: Centrallize Rx buffer recycling")
+Reported-and-tested-by: Xu Du <xudu@redhat.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Co-developed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_dp_cec.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_txrx.c | 79 ++++++++++++++---------
+ 1 file changed, 50 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/gpu/drm/display/drm_dp_cec.c b/drivers/gpu/drm/display/drm_dp_cec.c
-index ae39dc7941903..868bf53db66ce 100644
---- a/drivers/gpu/drm/display/drm_dp_cec.c
-+++ b/drivers/gpu/drm/display/drm_dp_cec.c
-@@ -310,16 +310,6 @@ void drm_dp_cec_set_edid(struct drm_dp_aux *aux, const struct edid *edid)
- 	if (!aux->transfer)
- 		return;
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
+index 429afffa4c316..f5023ac9ab832 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
+@@ -1101,6 +1101,49 @@ ice_put_rx_buf(struct ice_rx_ring *rx_ring, struct ice_rx_buf *rx_buf)
+ 	rx_buf->page = NULL;
+ }
  
--#ifndef CONFIG_MEDIA_CEC_RC
--	/*
--	 * CEC_CAP_RC is part of CEC_CAP_DEFAULTS, but it is stripped by
--	 * cec_allocate_adapter() if CONFIG_MEDIA_CEC_RC is undefined.
--	 *
--	 * Do this here as well to ensure the tests against cec_caps are
--	 * correct.
--	 */
--	cec_caps &= ~CEC_CAP_RC;
--#endif
- 	cancel_delayed_work_sync(&aux->cec.unregister_work);
++/**
++ * ice_put_rx_mbuf - ice_put_rx_buf() caller, for all frame frags
++ * @rx_ring: Rx ring with all the auxiliary data
++ * @xdp: XDP buffer carrying linear + frags part
++ * @xdp_xmit: XDP_TX/XDP_REDIRECT verdict storage
++ * @ntc: a current next_to_clean value to be stored at rx_ring
++ *
++ * Walk through gathered fragments and satisfy internal page
++ * recycle mechanism; we take here an action related to verdict
++ * returned by XDP program;
++ */
++static void ice_put_rx_mbuf(struct ice_rx_ring *rx_ring, struct xdp_buff *xdp,
++			    u32 *xdp_xmit, u32 ntc)
++{
++	u32 nr_frags = rx_ring->nr_frags + 1;
++	u32 idx = rx_ring->first_desc;
++	u32 cnt = rx_ring->count;
++	struct ice_rx_buf *buf;
++	int i;
++
++	for (i = 0; i < nr_frags; i++) {
++		buf = &rx_ring->rx_buf[idx];
++
++		if (buf->act & (ICE_XDP_TX | ICE_XDP_REDIR)) {
++			ice_rx_buf_adjust_pg_offset(buf, xdp->frame_sz);
++			*xdp_xmit |= buf->act;
++		} else if (buf->act & ICE_XDP_CONSUMED) {
++			buf->pagecnt_bias++;
++		} else if (buf->act == ICE_XDP_PASS) {
++			ice_rx_buf_adjust_pg_offset(buf, xdp->frame_sz);
++		}
++
++		ice_put_rx_buf(rx_ring, buf);
++
++		if (++idx == cnt)
++			idx = 0;
++	}
++
++	xdp->data = NULL;
++	rx_ring->first_desc = ntc;
++	rx_ring->nr_frags = 0;
++}
++
+ /**
+  * ice_clean_rx_irq - Clean completed descriptors from Rx ring - bounce buf
+  * @rx_ring: Rx descriptor ring to transact packets on
+@@ -1118,7 +1161,6 @@ int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
+ 	unsigned int total_rx_bytes = 0, total_rx_pkts = 0;
+ 	unsigned int offset = rx_ring->rx_offset;
+ 	struct xdp_buff *xdp = &rx_ring->xdp;
+-	u32 cached_ntc = rx_ring->first_desc;
+ 	struct ice_tx_ring *xdp_ring = NULL;
+ 	struct bpf_prog *xdp_prog = NULL;
+ 	u32 ntc = rx_ring->next_to_clean;
+@@ -1126,7 +1168,6 @@ int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
+ 	u32 xdp_xmit = 0;
+ 	u32 cached_ntu;
+ 	bool failure;
+-	u32 first;
  
- 	mutex_lock(&aux->cec.lock);
-@@ -336,7 +326,9 @@ void drm_dp_cec_set_edid(struct drm_dp_aux *aux, const struct edid *edid)
- 		num_las = CEC_MAX_LOG_ADDRS;
+ 	xdp_prog = READ_ONCE(rx_ring->xdp_prog);
+ 	if (xdp_prog) {
+@@ -1189,6 +1230,7 @@ int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
+ 			xdp_prepare_buff(xdp, hard_start, offset, size, !!offset);
+ 			xdp_buff_clear_frags_flag(xdp);
+ 		} else if (ice_add_xdp_frag(rx_ring, xdp, rx_buf, size)) {
++			ice_put_rx_mbuf(rx_ring, xdp, NULL, ntc);
+ 			break;
+ 		}
+ 		if (++ntc == cnt)
+@@ -1204,9 +1246,8 @@ int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
+ 		total_rx_bytes += xdp_get_buff_len(xdp);
+ 		total_rx_pkts++;
  
- 	if (aux->cec.adap) {
--		if (aux->cec.adap->capabilities == cec_caps &&
-+		/* Check if the adapter properties have changed */
-+		if ((aux->cec.adap->capabilities & CEC_CAP_MONITOR_ALL) ==
-+		    (cec_caps & CEC_CAP_MONITOR_ALL) &&
- 		    aux->cec.adap->available_log_addrs == num_las) {
- 			/* Unchanged, so just set the phys addr */
- 			cec_s_phys_addr_from_edid(aux->cec.adap, edid);
+-		xdp->data = NULL;
+-		rx_ring->first_desc = ntc;
+-		rx_ring->nr_frags = 0;
++		ice_put_rx_mbuf(rx_ring, xdp, &xdp_xmit, ntc);
++
+ 		continue;
+ construct_skb:
+ 		if (likely(ice_ring_uses_build_skb(rx_ring)))
+@@ -1220,14 +1261,11 @@ int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
+ 			if (unlikely(xdp_buff_has_frags(xdp)))
+ 				ice_set_rx_bufs_act(xdp, rx_ring,
+ 						    ICE_XDP_CONSUMED);
+-			xdp->data = NULL;
+-			rx_ring->first_desc = ntc;
+-			rx_ring->nr_frags = 0;
+-			break;
+ 		}
+-		xdp->data = NULL;
+-		rx_ring->first_desc = ntc;
+-		rx_ring->nr_frags = 0;
++		ice_put_rx_mbuf(rx_ring, xdp, &xdp_xmit, ntc);
++
++		if (!skb)
++			break;
+ 
+ 		stat_err_bits = BIT(ICE_RX_FLEX_DESC_STATUS0_RXE_S);
+ 		if (unlikely(ice_test_staterr(rx_desc->wb.status_error0,
+@@ -1259,23 +1297,6 @@ int ice_clean_rx_irq(struct ice_rx_ring *rx_ring, int budget)
+ 		total_rx_pkts++;
+ 	}
+ 
+-	first = rx_ring->first_desc;
+-	while (cached_ntc != first) {
+-		struct ice_rx_buf *buf = &rx_ring->rx_buf[cached_ntc];
+-
+-		if (buf->act & (ICE_XDP_TX | ICE_XDP_REDIR)) {
+-			ice_rx_buf_adjust_pg_offset(buf, xdp->frame_sz);
+-			xdp_xmit |= buf->act;
+-		} else if (buf->act & ICE_XDP_CONSUMED) {
+-			buf->pagecnt_bias++;
+-		} else if (buf->act == ICE_XDP_PASS) {
+-			ice_rx_buf_adjust_pg_offset(buf, xdp->frame_sz);
+-		}
+-
+-		ice_put_rx_buf(rx_ring, buf);
+-		if (++cached_ntc >= cnt)
+-			cached_ntc = 0;
+-	}
+ 	rx_ring->next_to_clean = ntc;
+ 	/* return up to cleaned_count buffers to hardware */
+ 	failure = ice_alloc_rx_bufs(rx_ring, ICE_RX_DESC_UNUSED(rx_ring));
 -- 
 2.39.5
 
