@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DA21CEEBB;
-	Thu, 13 Feb 2025 15:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525561C07C3;
+	Thu, 13 Feb 2025 15:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458974; cv=none; b=oxQqX4lfji3Vm3J7HVML1oHDEnuw/6gPK16Y/wg9oM1AfmMSYvPXdWmNUUMeOhFdWvxecVeEsF/6hDPN+AEVTBD2Dv5cEXMriSkRrgpoUW3zFUjNX1+1Xy7wA/x114TEMPYEsyHCWgS44iwD6JXAL2rkczn6p/jGdeNZXx82xK8=
+	t=1739458978; cv=none; b=hRN3xartLee8OPz0HnwGZFLnXxtWl3azBlNCLn9nEeqZ99/RV7WceN5/IirbCLK5KlM2H2VWPLKGDAvB4qN61y0cJyN75a0j2VvFNqiuk60KDuHGkKeFYI6QpjYODd0RMIO9pK8WDrUtQFj7Ny47x27VfdGNkukfnr+43AqN5G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458974; c=relaxed/simple;
-	bh=XOEBUNzwtpYfWyLPb7lbst0pJd5gZMrGXmJ8seLJ0Mo=;
+	s=arc-20240116; t=1739458978; c=relaxed/simple;
+	bh=+0lnDLIr++ZFnHQn3/gB36P+lMm5q66cdeiPAnMyz3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A3n+r6G3HiBUXS36gxTilbgWwoIBzNziK8AC09SzORJgqrUBUoELuACMs25wNEj92/oaACRpU9VH0kzOL8sxxCZbB7/lGKnwE/fQ6sBCJ4dJ96+xGU/Sje+SRO5wM23BZF7JJo7OfG8c5jn0odyQVbRzquzru2okce9jltYi2AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnYRa4Q4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U5AyqgGQYe+jiW8XM5aQOlNLC6XK+jqDFGs/TTTUXIDQqu5PL7GnvuRWu0gxnSYiuifyXRDDGk3bcD/rP84LBGhh6SDnKeEPDrWiK8UgvvXfWtBEMWOQvj3GLzvIiXvxE3ZDXrmaw0w1RSIRjfnpnxdWzCu5JmADZ9y75BqfJW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjcapnI2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnYRa4Q4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25217C4CED1;
-	Thu, 13 Feb 2025 15:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjcapnI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49B9C4CED1;
+	Thu, 13 Feb 2025 15:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458974;
-	bh=XOEBUNzwtpYfWyLPb7lbst0pJd5gZMrGXmJ8seLJ0Mo=;
+	s=korg; t=1739458978;
+	bh=+0lnDLIr++ZFnHQn3/gB36P+lMm5q66cdeiPAnMyz3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JnYRa4Q4ceOQLShxVCN31fTxVpG+Mc08ILw9uG5o2faOAD/wnd5JWMLefEbAa6/cO
-	 vGiw0VcEM3T5ekQsQRYrrr0BpNBMf/dxVy3Ef44hChJa5rGtHkfB7XA3kOWdcMDN6F
-	 3nJi7s+ZUBZpmX+EtFH4G/8z6+nb/MsrMuvL8pzw=
+	b=TjcapnI22avp9S1/O9n9ryAbGIqcv9yFNgVPggTLFTtJCfZkpv6KWW7AJ8jykKCkr
+	 m4OrLi94R09Cny6NVoImXH4kZXWp8za0Y0im63p+1cUr07RF6WOQ0OgmkcZBvfK8+E
+	 pExgz/I4I7EZjIoXQwzatA1tuQPh/tOA4tz1toBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7ff41b5215f0c534534e@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Koichiro Den <koichiro.den@canonical.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 130/443] net: rose: lock the socket in rose_bind()
-Date: Thu, 13 Feb 2025 15:24:55 +0100
-Message-ID: <20250213142445.624950628@linuxfoundation.org>
+Subject: [PATCH 6.13 131/443] gpio: sim: lock hog configfs items if present
+Date: Thu, 13 Feb 2025 15:24:56 +0100
+Message-ID: <20250213142445.662354053@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -53,85 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit a1300691aed9ee852b0a9192e29e2bdc2411a7e6 ]
+[ Upstream commit 015b7dae084fa95465ff89f6cbf15fe49906a370 ]
 
-syzbot reported a soft lockup in rose_loopback_timer(),
-with a repro calling bind() from multiple threads.
+Depending on the user config, the leaf entry may be the hog directory,
+not line. Check it and lock the correct item.
 
-rose_bind() must lock the socket to avoid this issue.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+7ff41b5215f0c534534e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/67a0f78d.050a0220.d7c5a.00a0.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/20250203170838.3521361-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8bd76b3d3f3a ("gpio: sim: lock up configfs that an instantiated device depends on")
+Tested-by: Koichiro Den <koichiro.den@canonical.com>
+Link: https://lore.kernel.org/r/20250203110123.87701-1-brgl@bgdev.pl
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ drivers/gpio/gpio-sim.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 72c65d938a150..a4a668b88a8f2 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -701,11 +701,9 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	struct net_device *dev;
- 	ax25_address *source;
- 	ax25_uid_assoc *user;
-+	int err = -EINVAL;
- 	int n;
+diff --git a/drivers/gpio/gpio-sim.c b/drivers/gpio/gpio-sim.c
+index 686ae3d11ba36..940165235db64 100644
+--- a/drivers/gpio/gpio-sim.c
++++ b/drivers/gpio/gpio-sim.c
+@@ -1033,20 +1033,23 @@ gpio_sim_device_lockup_configfs(struct gpio_sim_device *dev, bool lock)
+ 	struct configfs_subsystem *subsys = dev->group.cg_subsys;
+ 	struct gpio_sim_bank *bank;
+ 	struct gpio_sim_line *line;
++	struct config_item *item;
  
--	if (!sock_flag(sk, SOCK_ZAPPED))
--		return -EINVAL;
--
- 	if (addr_len != sizeof(struct sockaddr_rose) && addr_len != sizeof(struct full_sockaddr_rose))
- 		return -EINVAL;
- 
-@@ -718,8 +716,15 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	if ((unsigned int) addr->srose_ndigis > ROSE_MAX_DIGIS)
- 		return -EINVAL;
- 
--	if ((dev = rose_dev_get(&addr->srose_addr)) == NULL)
--		return -EADDRNOTAVAIL;
-+	lock_sock(sk);
+ 	/*
+-	 * The device only needs to depend on leaf line entries. This is
++	 * The device only needs to depend on leaf entries. This is
+ 	 * sufficient to lock up all the configfs entries that the
+ 	 * instantiated, alive device depends on.
+ 	 */
+ 	list_for_each_entry(bank, &dev->bank_list, siblings) {
+ 		list_for_each_entry(line, &bank->line_list, siblings) {
++			item = line->hog ? &line->hog->item
++					 : &line->group.cg_item;
 +
-+	if (!sock_flag(sk, SOCK_ZAPPED))
-+		goto out_release;
-+
-+	err = -EADDRNOTAVAIL;
-+	dev = rose_dev_get(&addr->srose_addr);
-+	if (!dev)
-+		goto out_release;
- 
- 	source = &addr->srose_call;
- 
-@@ -730,7 +735,8 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	} else {
- 		if (ax25_uid_policy && !capable(CAP_NET_BIND_SERVICE)) {
- 			dev_put(dev);
--			return -EACCES;
-+			err = -EACCES;
-+			goto out_release;
+ 			if (lock)
+-				WARN_ON(configfs_depend_item_unlocked(
+-						subsys, &line->group.cg_item));
++				WARN_ON(configfs_depend_item_unlocked(subsys,
++								      item));
+ 			else
+-				configfs_undepend_item_unlocked(
+-						&line->group.cg_item);
++				configfs_undepend_item_unlocked(item);
  		}
- 		rose->source_call   = *source;
  	}
-@@ -753,8 +759,10 @@ static int rose_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 	rose_insert_socket(sk);
- 
- 	sock_reset_flag(sk, SOCK_ZAPPED);
--
--	return 0;
-+	err = 0;
-+out_release:
-+	release_sock(sk);
-+	return err;
  }
- 
- static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_len, int flags)
 -- 
 2.39.5
 
