@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7959C281375;
-	Thu, 13 Feb 2025 14:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D660D281349;
+	Thu, 13 Feb 2025 14:42:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457731; cv=none; b=NAO4bqFHkFfPSts4m23l/fSjS5LdPdpQ9mzuSiHoigItGjwY2RQ8IU9CL6FmcCeV2la+z+5d3/1tncLgRvQlGb0ZGHKuddUACdE9vNMXx8S0/bGwjvU3b1YSYnE/D/AATISo4BuciBDj7qCnTwyxBrnNcX673GfNe3Tg45HgGfk=
+	t=1739457734; cv=none; b=cfmlht/y3IKewnt6rcY2beKbjY5fbdZM/cOX1YlNLNzYaXiF0OmGoK6jhxKaMsGehSX4ZTQIFr5cwiIxoR6f2dProRLxYrc0CObConANz74Y3pi6KVD2D8NDBWe8qkbMFVExD/HkrDCrBzYPRY7Xe2VDjz9zzYzhI/MVldfZhEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457731; c=relaxed/simple;
-	bh=LHzH0im+gJybeH3fQ5HkVW3nYMxRyiA3AVm8hq/e2Eg=;
+	s=arc-20240116; t=1739457734; c=relaxed/simple;
+	bh=u99RCkfBcaYhHWoFSxgeT1FzRgn3YFgfkCdOJqhzM4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PMXsM4Wsg+0RkUisYXhLTozb8suKaeljUpjcy1BMQHPQgYpN3OixpXbm8gWg77jqxcXgEgTKz90wO2pj1E6/386NXcI5ytDeFhUI0tk5jVsBFvvpefZ9F2xhSpTU5SkpVALbARrRBKPFpEw4fiQb+SBxNn4/W6YbFeRlAGAoFBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bF1R8bop; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GFKlOjTe3sQu+X1YqLJymUhNygArDak0tvkP6kQ1nF79i0eFClMT+ojz9gnHSof3h3LzUtwi53VHA8v9t1QScjvZwDe5rSTcUfN0JstNNBsU9Z27YVYSuI5hba0U4PnhEZlGsr3u0pY9rDBT1CG1pCztKokCNYFG+9aWS/2oTQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbCAPzbl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bF1R8bop"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD802C4CED1;
-	Thu, 13 Feb 2025 14:42:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbCAPzbl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4322BC4CED1;
+	Thu, 13 Feb 2025 14:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457731;
-	bh=LHzH0im+gJybeH3fQ5HkVW3nYMxRyiA3AVm8hq/e2Eg=;
+	s=korg; t=1739457734;
+	bh=u99RCkfBcaYhHWoFSxgeT1FzRgn3YFgfkCdOJqhzM4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bF1R8bopdl8Udu3wzjIYWp90MHllA63eRbvmx5tkXHe0IctE4gUzAxzfUczsYtkm7
-	 xYYyslHyh1rqmq4JPcFhFWXA/tLNnoeX5AlPk7MyXuDFA3QRMgN4CG8yr8+tp+i2ky
-	 cwQ8/L7BnAImX9lso4/ikvu/hLuxqBSepb25C+mw=
+	b=gbCAPzblqHKwTiHRpbRlaoUsnajcQdjgE8eTX/SRKEVQatySGq3StdSRZlcmW6oIP
+	 AyxuOY1vnV/CdM5q685NBEysDbHZjDmBFiaZIyzZbUYLfhy3JWYhKXUUK/daWmFum6
+	 IM9rNQI3eK93PQ2+2KP6JGcbJ1Gd4v3D7tmmu5jU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Julia Filipchuk <julia.filipchuk@intel.com>,
-	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.12 165/422] drm/xe/devcoredump: Move exec queue snapshot to Contexts section
-Date: Thu, 13 Feb 2025 15:25:14 +0100
-Message-ID: <20250213142442.911350256@linuxfoundation.org>
+Subject: [PATCH 6.12 166/422] drm/i915/dp: Iterate DSC BPP from high to low on all platforms
+Date: Thu, 13 Feb 2025 15:25:15 +0100
+Message-ID: <20250213142442.949162438@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -47,57 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit 042c48b73699c47d84b6ace73036e5a31a0d4cfc upstream.
+commit 230b19bc2bcc5897d0e20b4ce7e9790a469a2db0 upstream.
 
-Having the exec queue snapshot inside a "GuC CT" section was always
-wrong.  Commit c28fd6c358db ("drm/xe/devcoredump: Improve section
-headings and add tile info") tried to fix that bug, but with that also
-broke the mesa tool that parses the devcoredump, hence it was reverted
-in commit a53da2fb25a3 ("drm/xe: Revert some changes that break a mesa
-debug tool").
+Commit 1c56e9a39833 ("drm/i915/dp: Get optimal link config to have best
+compressed bpp") tries to find the best compressed bpp for the
+link. However, it iterates from max to min bpp on display 13+, and from
+min to max on other platforms. This presumably leads to minimum
+compressed bpp always being chosen on display 11-12.
 
-With the mesa tool also fixed, this can propagate as a fix on both
-kernel and userspace side to avoid unnecessary headache for a debug
-feature.
+Iterate from high to low on all platforms to actually use the best
+possible compressed bpp.
 
-Cc: John Harrison <John.C.Harrison@Intel.com>
-Cc: Julia Filipchuk <julia.filipchuk@intel.com>
-Cc: José Roberto de Souza <jose.souza@intel.com>
-Cc: stable@vger.kernel.org
-Fixes: a53da2fb25a3 ("drm/xe: Revert some changes that break a mesa debug tool")
-Reviewed-by: José Roberto de Souza <jose.souza@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250123051112.1938193-2-lucas.demarchi@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit a37934ea75d331fafa7fe80b6180642ba5193422)
+Fixes: 1c56e9a39833 ("drm/i915/dp: Get optimal link config to have best compressed bpp")
+Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Cc: Imre Deak <imre.deak@intel.com>
+Cc: <stable@vger.kernel.org> # v6.7+
+Reviewed-by: Imre Deak <imre.deak@intel.com>
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/3bba67923cbcd13a59d26ef5fa4bb042b13c8a9b.1738327620.git.jani.nikula@intel.com
+(cherry picked from commit 56b0337d429356c3b9ecc36a03023c8cc856b196)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_devcoredump.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_devcoredump.c
-+++ b/drivers/gpu/drm/xe/xe_devcoredump.c
-@@ -104,11 +104,7 @@ static ssize_t __xe_devcoredump_read(cha
- 	drm_puts(&p, "\n**** GuC CT ****\n");
- 	xe_guc_ct_snapshot_print(ss->ct, &p);
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -2022,11 +2022,10 @@ icl_dsc_compute_link_config(struct intel
+ 	/* Compressed BPP should be less than the Input DSC bpp */
+ 	dsc_max_bpp = min(dsc_max_bpp, pipe_bpp - 1);
  
--	/*
--	 * Don't add a new section header here because the mesa debug decoder
--	 * tool expects the context information to be in the 'GuC CT' section.
--	 */
--	/* drm_puts(&p, "\n**** Contexts ****\n"); */
-+	drm_puts(&p, "\n**** Contexts ****\n");
- 	xe_guc_exec_queue_snapshot_print(ss->ge, &p);
+-	for (i = 0; i < ARRAY_SIZE(valid_dsc_bpp); i++) {
+-		if (valid_dsc_bpp[i] < dsc_min_bpp)
++	for (i = ARRAY_SIZE(valid_dsc_bpp) - 1; i >= 0; i--) {
++		if (valid_dsc_bpp[i] < dsc_min_bpp ||
++		    valid_dsc_bpp[i] > dsc_max_bpp)
+ 			continue;
+-		if (valid_dsc_bpp[i] > dsc_max_bpp)
+-			break;
  
- 	drm_puts(&p, "\n**** Job ****\n");
+ 		ret = dsc_compute_link_config(intel_dp,
+ 					      pipe_config,
 
 
