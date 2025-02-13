@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4151D2135AA;
-	Thu, 13 Feb 2025 14:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995FA26B08D;
+	Thu, 13 Feb 2025 14:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458348; cv=none; b=A3b6JTS8x6SyJBgG5gHuaSm1kBTR+ot9CXsts1s+zZvTBO2mzO2eTKDwn5m8a/1NlNIccodlanUCLSliWNzkkG0UzaPHpvTd+XHQtLHQRh9P+Om5vkfMf+uTOgrLzqvyMq73iG1atrezfZ+dmURg/RS02GwrGz1tGWImuccQnvo=
+	t=1739458351; cv=none; b=sIbc776Aueicl7YFcQ99febSYwNZPlgVQTpS6BvJLnm/yooXdJCY5JrPNhRBt1bTvV0UyFsD4a9bG52kusu2B0tUKBOpi+IhXN7lHSXBNn20aUDBB1UoF2EqUmmeYBlAY260U8gWh2LhDrX4AbLykMMnvmM0Tyz/9qI93emPrqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458348; c=relaxed/simple;
-	bh=RdH3b7assx0Z8rz3oCYzYeD0QRswrdFb5hhcbQ9NHBw=;
+	s=arc-20240116; t=1739458351; c=relaxed/simple;
+	bh=4gdci7zZzO/Vi0sRXSO+uG6Ft/BTPuZ9vbiM+7nS2hY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=paDTPWIPZVOKk23+EygkTtogxbvTipqfkXgdXb85BeFnkOCRWrQ23no9YwIU/L9E28/cHmJanvY6cQ5f7PfUFkuLa/eb2EjETkXjvnBhW9lcRFjlrFEnfTms6xOaaK/+bD2tMPQvEu4VoBp8ozF4TS5wJV7FV1bigEriVKHvmkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRpVuKZx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OLuGFlTJT50hZTG1YDmZKZ8sd8lb4QOwNT502VeU5z5pGcGVy0zhBJtQqFiNRopdBr02Y1krLIuA8FEDktKGutk76qi0GO6pqEcW1DlW8/0clDMQpl7x6rq/9kDYM5fRpelrFq7RriVRkOIqahkiz3ngWCNlLpnAiNnv2N2ClEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGV4HfeZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRpVuKZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A101DC4CED1;
-	Thu, 13 Feb 2025 14:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGV4HfeZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D66C4CEE4;
+	Thu, 13 Feb 2025 14:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458348;
-	bh=RdH3b7assx0Z8rz3oCYzYeD0QRswrdFb5hhcbQ9NHBw=;
+	s=korg; t=1739458351;
+	bh=4gdci7zZzO/Vi0sRXSO+uG6Ft/BTPuZ9vbiM+7nS2hY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tRpVuKZxBKuiDzZTTWQpCiwv2EBGcP7MDmfAr9JQ3Lr6+WErex+ICxMfutEepir+Q
-	 yMX+WC2z7UxoQxgKdbP+CauGCK0NC4MivpeMTDlk1866St6h0D317/XegPeq2VXK6t
-	 tOtenvd+cIKFL8qD0R253HSxzgawGnrikdYcJLxI=
+	b=MGV4HfeZKtOIwJA9jdaWqzX7MmPnUKCyy2BuKXMP0KqyK2WSQw2zyTgoXxmjSMSls
+	 rgVuCSJrVe/xNLUI2WAn4Bp5OI1WmLFlVQaFjVSZRvKZTYaYN3xauEDbPGRDrtxpZ/
+	 iN9fBGQga07CwEdBmPEnXONP0Ld9RqH07Du0gJC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jai Luthra <jai.luthra@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.12 332/422] media: i2c: ds90ub960: Fix UB9702 VC map
-Date: Thu, 13 Feb 2025 15:28:01 +0100
-Message-ID: <20250213142449.365787546@linuxfoundation.org>
+	Pekka Pessi <ppessi@nvidia.com>,
+	Kartik Rajput <kkartik@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>
+Subject: [PATCH 6.12 367/422] mailbox: tegra-hsp: Clear mailbox before using message
+Date: Thu, 13 Feb 2025 15:28:36 +0100
+Message-ID: <20250213142450.711412237@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,43 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Pekka Pessi <ppessi@nvidia.com>
 
-commit 5dbbd0609b83f6eb72c005e2e5979d0cd25243c8 upstream.
+commit 0b7f8328f988178b55ee11d772a6e1238c04d29d upstream.
 
-The driver uses a static CSI-2 virtual channel mapping where all virtual
-channels from an RX port are mapped to a virtual channel number matching
-the RX port number.
+The Tegra RCE (Camera) driver expects the mailbox to be empty before
+processing the IVC messages. On RT kernel, the threads processing the
+IVC messages (which are invoked after `mbox_chan_received_data()` is
+called) may be on a different CPU or running with a higher priority
+than the HSP interrupt handler thread. This can cause it to act on the
+message before the mailbox gets cleared in the HSP interrupt handler
+resulting in a loss of IVC notification.
 
-The UB960 and UB9702 have different registers for the purpose, and the
-UB9702 version is not correct. Each of the VC_ID_MAP registers do not
-contain a single mapping, as the driver currently thinks, but two.
+Fix this by clearing the mailbox data register before calling
+`mbox_chan_received_data()`.
 
-This can cause received VCs other than 0 to be mapped in a wrong way.
-
-Fix this by writing both mappings to each register.
-
+Fixes: 8f585d14030d ("mailbox: tegra-hsp: Add tegra_hsp_sm_ops")
+Fixes: 74c20dd0f892 ("mailbox: tegra-hsp: Add 128-bit shared mailbox support")
 Cc: stable@vger.kernel.org
-Fixes: afe267f2d368 ("media: i2c: add DS90UB960 driver")
-Reviewed-by: Jai Luthra <jai.luthra@ideasonboard.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Pekka Pessi <ppessi@nvidia.com>
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ds90ub960.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mailbox/tegra-hsp.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/media/i2c/ds90ub960.c
-+++ b/drivers/media/i2c/ds90ub960.c
-@@ -2533,7 +2533,7 @@ static int ub960_configure_ports_for_str
- 				for (i = 0; i < 8; i++)
- 					ub960_rxport_write(priv, nport,
- 							   UB960_RR_VC_ID_MAP(i),
--							   nport);
-+							   (nport << 4) | nport);
- 			}
+--- a/drivers/mailbox/tegra-hsp.c
++++ b/drivers/mailbox/tegra-hsp.c
+@@ -388,7 +388,6 @@ static void tegra_hsp_sm_recv32(struct t
+ 	value = tegra_hsp_channel_readl(channel, HSP_SM_SHRD_MBOX);
+ 	value &= ~HSP_SM_SHRD_MBOX_FULL;
+ 	msg = (void *)(unsigned long)value;
+-	mbox_chan_received_data(channel->chan, msg);
  
- 			break;
+ 	/*
+ 	 * Need to clear all bits here since some producers, such as TCU, depend
+@@ -398,6 +397,8 @@ static void tegra_hsp_sm_recv32(struct t
+ 	 * explicitly, so we have to make sure we cover all possible cases.
+ 	 */
+ 	tegra_hsp_channel_writel(channel, 0x0, HSP_SM_SHRD_MBOX);
++
++	mbox_chan_received_data(channel->chan, msg);
+ }
+ 
+ static const struct tegra_hsp_sm_ops tegra_hsp_sm_32bit_ops = {
+@@ -433,7 +434,6 @@ static void tegra_hsp_sm_recv128(struct
+ 	value[3] = tegra_hsp_channel_readl(channel, HSP_SHRD_MBOX_TYPE1_DATA3);
+ 
+ 	msg = (void *)(unsigned long)value;
+-	mbox_chan_received_data(channel->chan, msg);
+ 
+ 	/*
+ 	 * Clear data registers and tag.
+@@ -443,6 +443,8 @@ static void tegra_hsp_sm_recv128(struct
+ 	tegra_hsp_channel_writel(channel, 0x0, HSP_SHRD_MBOX_TYPE1_DATA2);
+ 	tegra_hsp_channel_writel(channel, 0x0, HSP_SHRD_MBOX_TYPE1_DATA3);
+ 	tegra_hsp_channel_writel(channel, 0x0, HSP_SHRD_MBOX_TYPE1_TAG);
++
++	mbox_chan_received_data(channel->chan, msg);
+ }
+ 
+ static const struct tegra_hsp_sm_ops tegra_hsp_sm_128bit_ops = {
 
 
