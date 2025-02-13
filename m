@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4304526B0BE;
-	Thu, 13 Feb 2025 15:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6020826B091;
+	Thu, 13 Feb 2025 15:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459804; cv=none; b=tLJUr8DiSmWZYc0hS8HMQNjWutrHtonQyF73J/0ZFgTMX0jiDhf1KYxCmdYUmWboSe+s5+XGVUmHWIkYev2hggVonblQk8qO/75Snp3tT+sBkI8SybL3tlEEm99oiWclkrNDnh77ijwblXSkJDLtKCjCUi7cBWa1E7Ny0Sm84mI=
+	t=1739459807; cv=none; b=aLYnV+47HNPZYK9kbecvO3eeAjIG12sOt6KUYgulnNY7IPvNIaoSzU4SdQBPfadWsS1fQiklRsyuE86JCDJocxHfN7JN2Z9MRLqwTDwgyc+ocOaC9GRPX/DMMyIbUGJxiGOCMy6oLzDKHVK3jBUhHfiFIzhdU1NN6JfaZm+Xn3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459804; c=relaxed/simple;
-	bh=v5jcmLQUEY9iENr9stj54EME+7UJZOI/qGYxu7lO2hU=;
+	s=arc-20240116; t=1739459807; c=relaxed/simple;
+	bh=seXMGDIzxP0VmzoCoYAebZUF4BOuzmF+YD9lEz+SeJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yp+VFqmfzFj+morzZRGuQ8Tc9GZIDvZqcoKJOj9yIkM0Xo3K0LWmNw1DGHSGSy4ob0AtynxMnRtHK3uD+LSpo904vE1Z2VtfrZqeNZ6UVq4SgJkaBlxrZdboXWLLB62Qe0rKWg2G9ubXZlmIAYsKE8EVDmm5548obQ9HMBq+eDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtBJ7Z/m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=beLnlWekD8HYJtPXwUySt82RWh0Ud83W6wYSdh6ZZ2O9rWAh+SUPGseKeIo27wN2kCuN1yYaDKVd6KR+aEbu7lJ5SsKbFJgGhdHOJugupKg9XhE+79MW62jFRsAZ0E3n4SAg6fmrb8ZuSutByXAbKwXQ2LBQlDy4Rp8SIUTXmv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1iwiiQc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtBJ7Z/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A413C4CEE5;
-	Thu, 13 Feb 2025 15:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1iwiiQc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF499C4CED1;
+	Thu, 13 Feb 2025 15:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459803;
-	bh=v5jcmLQUEY9iENr9stj54EME+7UJZOI/qGYxu7lO2hU=;
+	s=korg; t=1739459807;
+	bh=seXMGDIzxP0VmzoCoYAebZUF4BOuzmF+YD9lEz+SeJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JtBJ7Z/mD+9knIiPO+3k+jfwsRlruldZ5gWhdYrXBp/3pOwGViOPKzEOMKT1tiRvB
-	 ZGvF135WxLMUMg86IWV/W5rxsX4xurbJ4WaDPcYsqLZm0nbguE4DIQ25wtEw9Ffj7q
-	 qpdbL3GncGHBF5+qqqSFC2kGeInXpxFqHVmmM7hk=
+	b=N1iwiiQcOebtMFmYzL4lQDGErPtmiWS0V7QwVBXWo+BAjBKlcKcedJhHjZMuw/y1F
+	 MPfYn9Xa0kHT+aJKe86HAFbsOsQfCG3UNZTsPbG1rTc1KTMO1As8w3eP8iTgcrFWhw
+	 m5lIG55ODAZdoO75J26xkLS3qRNXIv48lr4GqHTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.13 368/443] media: i2c: ds90ub960: Fix use of non-existing registers on UB9702
-Date: Thu, 13 Feb 2025 15:28:53 +0100
-Message-ID: <20250213142454.810935952@linuxfoundation.org>
+Subject: [PATCH 6.13 369/443] media: i2c: ds90ub960: Fix UB9702 VC map
+Date: Thu, 13 Feb 2025 15:28:54 +0100
+Message-ID: <20250213142454.849763838@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -54,12 +54,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit 698cf6df87ffa83f259703e7443c15a4c5ceae86 upstream.
+commit 5dbbd0609b83f6eb72c005e2e5979d0cd25243c8 upstream.
 
-UB9702 doesn't have the registers for SP and EQ. Adjust the code in
-ub960_rxport_wait_locks() to not use those registers for UB9702. As
-these values are only used for a debug print here, there's no functional
-change.
+The driver uses a static CSI-2 virtual channel mapping where all virtual
+channels from an RX port are mapped to a virtual channel number matching
+the RX port number.
+
+The UB960 and UB9702 have different registers for the purpose, and the
+UB9702 version is not correct. Each of the VC_ID_MAP registers do not
+contain a single mapping, as the driver currently thinks, but two.
+
+This can cause received VCs other than 0 to be mapped in a wrong way.
+
+Fix this by writing both mappings to each register.
 
 Cc: stable@vger.kernel.org
 Fixes: afe267f2d368 ("media: i2c: add DS90UB960 driver")
@@ -69,43 +76,19 @@ Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ds90ub960.c |   24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ drivers/media/i2c/ds90ub960.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/media/i2c/ds90ub960.c
 +++ b/drivers/media/i2c/ds90ub960.c
-@@ -1576,16 +1576,24 @@ static int ub960_rxport_wait_locks(struc
+@@ -2532,7 +2532,7 @@ static int ub960_configure_ports_for_str
+ 				for (i = 0; i < 8; i++)
+ 					ub960_rxport_write(priv, nport,
+ 							   UB960_RR_VC_ID_MAP(i),
+-							   nport);
++							   (nport << 4) | nport);
+ 			}
  
- 		ub960_rxport_read16(priv, nport, UB960_RR_RX_FREQ_HIGH, &v);
- 
--		ret = ub960_rxport_get_strobe_pos(priv, nport, &strobe_pos);
--		if (ret)
--			return ret;
-+		if (priv->hw_data->is_ub9702) {
-+			dev_dbg(dev, "\trx%u: locked, freq %llu Hz\n",
-+				nport, (v * 1000000ULL) >> 8);
-+		} else {
-+			ret = ub960_rxport_get_strobe_pos(priv, nport,
-+							  &strobe_pos);
-+			if (ret)
-+				return ret;
- 
--		ret = ub960_rxport_get_eq_level(priv, nport, &eq_level);
--		if (ret)
--			return ret;
-+			ret = ub960_rxport_get_eq_level(priv, nport, &eq_level);
-+			if (ret)
-+				return ret;
- 
--		dev_dbg(dev, "\trx%u: locked, SP: %d, EQ: %u, freq %llu Hz\n",
--			nport, strobe_pos, eq_level, (v * 1000000ULL) >> 8);
-+			dev_dbg(dev,
-+				"\trx%u: locked, SP: %d, EQ: %u, freq %llu Hz\n",
-+				nport, strobe_pos, eq_level,
-+				(v * 1000000ULL) >> 8);
-+		}
- 	}
- 
- 	return 0;
+ 			break;
 
 
