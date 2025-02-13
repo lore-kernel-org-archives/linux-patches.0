@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC83613C816;
-	Thu, 13 Feb 2025 15:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C639426B098;
+	Thu, 13 Feb 2025 15:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460633; cv=none; b=ZqYGOGE4kCx47chiW9/2TM4lAx9P0r+hKh15AoVGHGVvPfRbYKEEBVaScSnoYZjYBq5tyHK1lPSo93kmM3+Xf4fnqHabHs4jnjMHC93rn8zayR64FZDOMRtHITWwmf0dEoCY3r5/LfxNniVD3p7ILyO0NfKdpaeIvNn0cR2zwyQ=
+	t=1739460635; cv=none; b=XPmFMkrJi23EVF2Iby93mJuDvy4wYim1NapNusOynUjnmIm5nxWr0Rb3ergvD19vMBvLFOKH7gzcw3Ks6iaV6MreH+rekjeAilK+5AnSy+WM5dP32zoQ4V0JsRcOI4+fvQAdvZEYhl4Z2DzLfMd5LxcRkvr1wQd2OQTiigIeoUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460633; c=relaxed/simple;
-	bh=kgDqOyuSqNQTo8FBJlPfRitqkV3fyPWs1UxmiEhZqBs=;
+	s=arc-20240116; t=1739460635; c=relaxed/simple;
+	bh=DFQZee2GFTLI2PwqB94O8IzZ22YxD3NH/jRJcaQ6hG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OBiNlWhRlQvHPufJyJRDXo2ITlFa6X1eCuTdzihNwLona1SqEhMNuXGbz2Y9c1RsJcE7pvBmWGmfoKsCeOCr41ynWFe5/JLcPBAPeQ+UoTpbR7giDRvrwcdXeQkXQb/c6Or6oY3zjX4GGsV0lROGwGUioYBaR5TGIfnpQpoSj2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fzb4LmoI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ngUc5tOimPzQzJV6GhYscv5jMT/fDgRIzEdHEa6B2BP3BaF1Ss14Sidgkp2WW7O41nTjCJcPbKvOGZo9xyYQ71sQ+6G1mOLKYoYywtVOn/i4XL0PdNeK0FWAhEs8Omk1DRjEIgr0TLmv0HyvQkf6NzItDiOhhccxkoBEnH0Zsq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nj/SUGXn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fzb4LmoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC121C4CED1;
-	Thu, 13 Feb 2025 15:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nj/SUGXn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F7FC4CED1;
+	Thu, 13 Feb 2025 15:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460632;
-	bh=kgDqOyuSqNQTo8FBJlPfRitqkV3fyPWs1UxmiEhZqBs=;
+	s=korg; t=1739460635;
+	bh=DFQZee2GFTLI2PwqB94O8IzZ22YxD3NH/jRJcaQ6hG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fzb4LmoIXVMQV4PehmCBqXTVn1M5n3guBZjlrV+OMS6eJeZANnoZ/AVZuX3Z0xS/6
-	 wLUcXHDHlMRk/Z926/IBlPxFDTsNwLG+flMIrbVgoNhKVlwBr3elbaibrrSwKl7Qxl
-	 dtilvRoLWCtg9cyGbIgcvL9aw6BtE2vveJKEKeC0=
+	b=Nj/SUGXn2+RB5LhenDmn477T5ZDleUp88cNtGYsnPSlSflDD2XVbxqiSrEW8+XPIJ
+	 Zs0WCWSV5EcID1sL89w9ADuUiU2H/ay3Tz81RebFVmLm4VZKeWxPcllFoVxEjSZXxq
+	 OozY/q9wYzNkYhb8ABFSxjMDMcGdn1mendUFH6mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Fiona Behrens <me@kloenk.dev>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.6 167/273] rust: init: use explicit ABI to clean warning in future compilers
-Date: Thu, 13 Feb 2025 15:28:59 +0100
-Message-ID: <20250213142413.929027622@linuxfoundation.org>
+	Foster Snowhill <forst@pen.gy>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 137/273] usbnet: ipheth: use static NDP16 location in URB
+Date: Thu, 13 Feb 2025 15:28:29 +0100
+Message-ID: <20250213142412.751761985@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -52,48 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Foster Snowhill <forst@pen.gy>
 
-commit c21bdb3d8a850afdfa4afe77eea39ae9533629b0 upstream.
+commit 86586dcb75cb8fd062a518aca8ee667938b91efb upstream.
 
-Starting with Rust 1.86.0 (currently in nightly, to be released on
-2025-04-03), the `missing_abi` lint is warn-by-default [1]:
+Original code allowed for the start of NDP16 to be anywhere within the
+URB based on the `wNdpIndex` value in NTH16. Only the start position of
+NDP16 was checked, so it was possible for even the fixed-length part
+of NDP16 to extend past the end of URB, leading to an out-of-bounds
+read.
 
-    error: extern declarations without an explicit ABI are deprecated
-        --> rust/doctests_kernel_generated.rs:3158:1
-         |
-    3158 | extern {
-         | ^^^^^^ help: explicitly specify the C ABI: `extern "C"`
-         |
-         = note: `-D missing-abi` implied by `-D warnings`
-         = help: to override `-D warnings` add `#[allow(missing_abi)]`
+On iOS devices, the NDP16 header always directly follows NTH16. Rely on
+and check for this specific format.
 
-Thus clean it up.
+This, along with NCM-specific minimal URB length check that already
+exists, will ensure that the fixed-length part of NDP16 plus a set
+amount of DPEs fit within the URB.
 
-Cc: <stable@vger.kernel.org> # Needed in 6.12.y and 6.13.y only (Rust is pinned in older LTSs).
-Fixes: 7f8977a7fe6d ("rust: init: add `{pin_}chain` functions to `{Pin}Init<T, E>`")
-Link: https://github.com/rust-lang/rust/pull/132397 [1]
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Fiona Behrens <me@kloenk.dev>
-Link: https://lore.kernel.org/r/20250121200934.222075-1-ojeda@kernel.org
-[ Added 6.13.y to Cc: stable tag. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Note that this commit alone does not fully address the OoB read.
+The limit on the amount of DPEs needs to be enforced separately.
+
+Fixes: a2d274c62e44 ("usbnet: ipheth: add CDC NCM support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Foster Snowhill <forst@pen.gy>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/init.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/ipheth.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/rust/kernel/init.rs
-+++ b/rust/kernel/init.rs
-@@ -788,7 +788,7 @@ pub unsafe trait PinInit<T: ?Sized, E =
-     /// use kernel::{types::Opaque, init::pin_init_from_closure};
-     /// #[repr(C)]
-     /// struct RawFoo([u8; 16]);
--    /// extern {
-+    /// extern "C" {
-     ///     fn init_foo(_: *mut RawFoo);
-     /// }
-     ///
+diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
+index 1ff5f7076ad5..c385623596d2 100644
+--- a/drivers/net/usb/ipheth.c
++++ b/drivers/net/usb/ipheth.c
+@@ -226,15 +226,14 @@ static int ipheth_rcvbulk_callback_ncm(struct urb *urb)
+ 
+ 	ncmh = urb->transfer_buffer;
+ 	if (ncmh->dwSignature != cpu_to_le32(USB_CDC_NCM_NTH16_SIGN) ||
+-	    le16_to_cpu(ncmh->wNdpIndex) >= urb->actual_length) {
++	    /* On iOS, NDP16 directly follows NTH16 */
++	    ncmh->wNdpIndex != cpu_to_le16(sizeof(struct usb_cdc_ncm_nth16))) {
+ 		dev->net->stats.rx_errors++;
+ 		return retval;
+ 	}
+ 
+-	ncm0 = urb->transfer_buffer + le16_to_cpu(ncmh->wNdpIndex);
+-	if (ncm0->dwSignature != cpu_to_le32(USB_CDC_NCM_NDP16_NOCRC_SIGN) ||
+-	    le16_to_cpu(ncmh->wHeaderLength) + le16_to_cpu(ncm0->wLength) >=
+-	    urb->actual_length) {
++	ncm0 = urb->transfer_buffer + sizeof(struct usb_cdc_ncm_nth16);
++	if (ncm0->dwSignature != cpu_to_le32(USB_CDC_NCM_NDP16_NOCRC_SIGN)) {
+ 		dev->net->stats.rx_errors++;
+ 		return retval;
+ 	}
+-- 
+2.48.1
+
 
 
