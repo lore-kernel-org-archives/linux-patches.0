@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B3370820;
-	Thu, 13 Feb 2025 15:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCB226B0B1;
+	Thu, 13 Feb 2025 15:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459203; cv=none; b=NemrAnA3GoqvoBMy7cFNH6RK8pq0YTHLWoyY4CY/n4OWMQ0whiY8GfwWJ6hJJFUm77alDmU7qdK17xCnO+D0ok+tJFNSb5ALTjXFoLiBACb7S7/iFEa2+oEyxytvLYMUOHCw+/8nd+RrvQYR9op5BQ/AtBseq6W2+FmNxzFMRK0=
+	t=1739459206; cv=none; b=bPAGXrWVXJh3jzPo92VJE0qFLDggO1IU5AletSgvYLZ0tkXoNK2Kp+jdwGDJizDFbGI6+aL4AuPIPK+tndnCBX9RhC13eaX2uQjT6eCS0/OPblej6aPbY/WMjvObnvH3UihbR95xCP4zrUK2WF0kezcqJyB44+4Q3lCNB/nE0+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459203; c=relaxed/simple;
-	bh=7+ZI+pl3vmrT/T4nNJI4Ow+ZV2nufpkiaLDuovV4tu0=;
+	s=arc-20240116; t=1739459206; c=relaxed/simple;
+	bh=qV+1PwZ52djm3PabUPAQPASdZox2iFWSLcPTS333wws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JfpA0318I+ezSrql9goZh3KrZhXixgQpNT+Ezw03os49bBnBDEfQSxaem574I2el4d28oyEQqScIRrQ7VjB+geyqXsS76ThpKqwAs0zLWPbEL+6Lcz5VRyepCiR3i+CKt+5eTpLpTah809CrZ0A2bpgP5k9yQfWdzVXrPrfg+xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miGitG76; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SYfcN4mqsC4wii7ww4slMrQjMluHTO1PLcsKwv9EzpKzVKM89IRfYLDzFvAKIdsiA2XTq6tuba0AjzKfGf/6Qz6TCO5dkh/qaXlPE/exTOG1RSVCJLBATUqu3/Dv7B4eX0bGm3B64iUGsosUlPEBpb9f/BJ4Hc4hEdzG2j1z2M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WN14seCT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miGitG76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9056AC4CEE4;
-	Thu, 13 Feb 2025 15:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WN14seCT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D13C4CED1;
+	Thu, 13 Feb 2025 15:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459203;
-	bh=7+ZI+pl3vmrT/T4nNJI4Ow+ZV2nufpkiaLDuovV4tu0=;
+	s=korg; t=1739459206;
+	bh=qV+1PwZ52djm3PabUPAQPASdZox2iFWSLcPTS333wws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=miGitG76gzlOerT7k3Mre5pjTqFIB9/iRftrL64zCD/jSlJr/wJUy2sQ964acK0hQ
-	 Am5Q/Ae80DFUsPXAfGdBwps+tyZcgdE+kCkgMkH1dbKR/aK+TgGLZt9DKGioAKdLiY
-	 VJO3NAwLSMYwGtKyolvScXt4OhKE05dCb0r6Ao5E=
+	b=WN14seCTGh6gZKfaD/B2RQtq1XaFC6QMd/xDf7CbMp2xi1y7cLYgGQPbeKzz8/feg
+	 vMD5i/p2h8HazVh9s9hl/obBKZj1Cg/YcyvcNzSpLSFETbp4GJyjvV04U8loj5HXsX
+	 PyX7F0dV5uy+RJ/Bsk3EUN4jXYx20IO/yeWSMvMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.13 197/443] clk: qcom: clk-alpha-pll: fix alpha mode configuration
-Date: Thu, 13 Feb 2025 15:26:02 +0100
-Message-ID: <20250213142448.215231736@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Christoph Schlameuss <schlameuss@linux.ibm.com>
+Subject: [PATCH 6.13 171/443] KVM: s390: vsie: fix some corner-cases when grabbing vsie pages
+Date: Thu, 13 Feb 2025 15:25:36 +0100
+Message-ID: <20250213142447.202008861@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,81 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: David Hildenbrand <david@redhat.com>
 
-commit 33f1722eb86e45320a3dd7b3d42f6593a1d595c2 upstream.
+commit 5f230f41fdd9e799f43a699348dc572bca7159aa upstream.
 
-Commit c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
-added support for configuring alpha mode, but it seems that the feature
-was never working in practice.
+We try to reuse the same vsie page when re-executing the vsie with a
+given SCB address. The result is that we use the same shadow SCB --
+residing in the vsie page -- and can avoid flushing the TLB when
+re-running the vsie on a CPU.
 
-The value of the alpha_{en,mode}_mask members of the configuration gets
-added to the value parameter passed to the regmap_update_bits() function,
-however the same values are not getting applied to the bitmask. As the
-result, the respective bits in the USER_CTL register are never modifed
-which leads to improper configuration of several PLLs.
+So, when we allocate a fresh vsie page, or when we reuse a vsie page for
+a different SCB address -- reusing the shadow SCB in different context --
+we set ihcpu=0xffff to trigger the flush.
 
-The following table shows the PLL configurations where the 'alpha_en_mask'
-member is set and which are passed as a parameter for the
-clk_alpha_pll_configure() function. In the table the 'expected rate' column
-shows the rate the PLL should run at with the given configuration, and
-the 'real rate' column shows the rate the PLL runs at actually. The real
-rates has been verified on hardwareOn IPQ* platforms, on other platforms,
-those are computed values only.
+However, after we looked up the SCB address in the radix tree, but before
+we grabbed the vsie page by raising the refcount to 2, someone could reuse
+the vsie page for a different SCB address, adjusting page->index and the
+radix tree. In that case, we would be reusing the vsie page with a
+wrong page->index.
 
-      file                 pll         expected rate   real rate
-  dispcc-qcm2290.c     disp_cc_pll0      768.0 MHz     768.0 MHz
-  dispcc-sm6115.c      disp_cc_pll0      768.0 MHz     768.0 MHz
-  gcc-ipq5018.c        ubi32_pll        1000.0 MHz !=  984.0 MHz
-  gcc-ipq6018.c        nss_crypto_pll   1200.0 MHz    1200.0 MHz
-  gcc-ipq6018.c        ubi32_pll        1497.6 MHz != 1488.0 MHz
-  gcc-ipq8074.c        nss_crypto_pll   1200.0 MHz != 1190.4 MHz
-  gcc-qcm2290.c        gpll11            532.0 MHz !=  518.4 MHz
-  gcc-qcm2290.c        gpll8             533.2 MHz !=  518.4 MHz
-  gcc-qcs404.c         gpll3             921.6 MHz     921.6 MHz
-  gcc-sm6115.c         gpll11            600.0 MHz !=  595.2 MHz
-  gcc-sm6115.c         gpll8             800.0 MHz !=  787.2 MHz
-  gpucc-sdm660.c       gpu_cc_pll0       800.0 MHz !=  787.2 MHz
-  gpucc-sdm660.c       gpu_cc_pll1       740.0 MHz !=  729.6 MHz
-  gpucc-sm6115.c       gpu_cc_pll0      1200.0 MHz != 1190.4 MHz
-  gpucc-sm6115.c       gpu_cc_pll1       640.0 MHz !=  633.6 MHz
-  gpucc-sm6125.c       gpu_pll0         1020.0 MHz != 1017.6 MHz
-  gpucc-sm6125.c       gpu_pll1          930.0 MHz !=  921.6 MHz
-  mmcc-sdm660.c        mmpll8            930.0 MHz !=  921.6 MHz
-  mmcc-sdm660.c        mmpll5            825.0 MHz !=  806.4 MHz
+Another corner case is that we might set the SCB address for a vsie
+page, but fail the insertion into the radix tree. Whoever would reuse
+that page would remove the corresponding radix tree entry -- which might
+now be a valid entry pointing at another page, resulting in the wrong
+vsie page getting removed from the radix tree.
 
-As it can be seen from the above, there are several PLLs which are
-configured incorrectly.
+Let's handle such races better, by validating that the SCB address of a
+vsie page didn't change after we grabbed it (not reuse for a different
+SCB; the alternative would be performing another tree lookup), and by
+setting the SCB address to invalid until the insertion in the tree
+succeeded (SCB addresses are aligned to 512, so ULONG_MAX is invalid).
 
-Change the code to apply both 'alpha_en_mask' and 'alpha_mode_mask'
-values to the bitmask in order to configure the alpha mode correctly.
+These scenarios are rare, the effects a bit unclear, and these issues were
+only found by code inspection. Let's CC stable to be safe.
 
-Applying the 'alpha_en_mask' fixes the initial rate of the PLLs showed
-in the table above. Since the 'alpha_mode_mask' is not used by any driver
-currently, that part of the change causes no functional changes.
-
+Fixes: a3508fbe9dc6 ("KVM: s390: vsie: initial support for nested virtualization")
 Cc: stable@vger.kernel.org
-Fixes: c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/r/20241021-fix-alpha-mode-config-v1-1-f32c254e02bc@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
+Tested-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
+Message-ID: <20250107154344.1003072-2-david@redhat.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/s390/kvm/vsie.c |   25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -432,6 +432,8 @@ void clk_alpha_pll_configure(struct clk_
- 	mask |= config->pre_div_mask;
- 	mask |= config->post_div_mask;
- 	mask |= config->vco_mask;
-+	mask |= config->alpha_en_mask;
-+	mask |= config->alpha_mode_mask;
+--- a/arch/s390/kvm/vsie.c
++++ b/arch/s390/kvm/vsie.c
+@@ -1362,8 +1362,14 @@ static struct vsie_page *get_vsie_page(s
+ 	page = radix_tree_lookup(&kvm->arch.vsie.addr_to_page, addr >> 9);
+ 	rcu_read_unlock();
+ 	if (page) {
+-		if (page_ref_inc_return(page) == 2)
+-			return page_to_virt(page);
++		if (page_ref_inc_return(page) == 2) {
++			if (page->index == addr)
++				return page_to_virt(page);
++			/*
++			 * We raced with someone reusing + putting this vsie
++			 * page before we grabbed it.
++			 */
++		}
+ 		page_ref_dec(page);
+ 	}
  
- 	regmap_update_bits(regmap, PLL_USER_CTL(pll), mask, val);
+@@ -1393,15 +1399,20 @@ static struct vsie_page *get_vsie_page(s
+ 			kvm->arch.vsie.next++;
+ 			kvm->arch.vsie.next %= nr_vcpus;
+ 		}
+-		radix_tree_delete(&kvm->arch.vsie.addr_to_page, page->index >> 9);
++		if (page->index != ULONG_MAX)
++			radix_tree_delete(&kvm->arch.vsie.addr_to_page,
++					  page->index >> 9);
+ 	}
+-	page->index = addr;
+-	/* double use of the same address */
++	/* Mark it as invalid until it resides in the tree. */
++	page->index = ULONG_MAX;
++
++	/* Double use of the same address or allocation failure. */
+ 	if (radix_tree_insert(&kvm->arch.vsie.addr_to_page, addr >> 9, page)) {
+ 		page_ref_dec(page);
+ 		mutex_unlock(&kvm->arch.vsie.mutex);
+ 		return NULL;
+ 	}
++	page->index = addr;
+ 	mutex_unlock(&kvm->arch.vsie.mutex);
  
+ 	vsie_page = page_to_virt(page);
+@@ -1496,7 +1507,9 @@ void kvm_s390_vsie_destroy(struct kvm *k
+ 		vsie_page = page_to_virt(page);
+ 		release_gmap_shadow(vsie_page);
+ 		/* free the radix tree entry */
+-		radix_tree_delete(&kvm->arch.vsie.addr_to_page, page->index >> 9);
++		if (page->index != ULONG_MAX)
++			radix_tree_delete(&kvm->arch.vsie.addr_to_page,
++					  page->index >> 9);
+ 		__free_page(page);
+ 	}
+ 	kvm->arch.vsie.page_count = 0;
 
 
