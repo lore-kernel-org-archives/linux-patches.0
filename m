@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80902A1CF;
-	Thu, 13 Feb 2025 15:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6207E26B0AD;
+	Thu, 13 Feb 2025 15:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459692; cv=none; b=TqTYN9/DnwRZGRx3dsVHsgb4ZQpXPiN6YxKacDb3uJ2HQk0cAq3Na4v0nD5mnxDC08yiPk/Y1/RoQAXrzVBg4iXIECODaxPl8RPGEIAa6yg4uHmL5bR+moJM275/zWPyiMKBATIV08jrdqHb6XTTsxGzzT0Yv8FuL/N5LSJebtk=
+	t=1739459696; cv=none; b=iQt3iWV1iHVK+u2ZjA485BmlCo5np81Y6Tqcj58/n8gPkcfsOl87zxjF3oirahnOXS/qybJ/yIhbo2F2wqnRGCtXiOIOCT1nn1+gH3pJhOZMjJu+lzoTD5ybwunzOMQnRLpjsR/WwtsKsSO3IYl+W/qQaISZ9rTZ+h1XzYmcrlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459692; c=relaxed/simple;
-	bh=SEOyeQ+IL3v+FnPN114AmLNwsC/ZuBns0dSGoxUQlCc=;
+	s=arc-20240116; t=1739459696; c=relaxed/simple;
+	bh=MJSl7X9iLsIpuxQBGaZ5aiNQSUe8S1eXhp2zg5j8dJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvTL7e01cMIBsMm/6Ror0dZALbWKFB0Y/eQ5NM2bNimifJ59b5vDcdundNMsPO2DVO4rwMkazLINDvb94Puz1LOsUqA4j/SkFXgCjYVHMnPdTV5WmSu81tR8TaCIKdMDxdJnelfbE3WlubRbKURNK0hUU95Ow5d4a7lFkc+aKdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnc4Q46c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E32oA2msGjHNYg+xKFi7CSHv+jbx9iCarHipV2qCxH+G8eqfWCZG9QgylaXa2q12FlaQmxlOvbYh/jOAq6pSEjZdFLDpjaiJQvCFS0smkJj9NjGC9jfxSxNv3uPV8km+jQkJhxHb6a717tZdzuMCeT3jec48t7ioJRqmUNfxmes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tFR+Knyz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnc4Q46c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4625BC4CEE4;
-	Thu, 13 Feb 2025 15:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tFR+Knyz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC477C4CED1;
+	Thu, 13 Feb 2025 15:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459692;
-	bh=SEOyeQ+IL3v+FnPN114AmLNwsC/ZuBns0dSGoxUQlCc=;
+	s=korg; t=1739459696;
+	bh=MJSl7X9iLsIpuxQBGaZ5aiNQSUe8S1eXhp2zg5j8dJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tnc4Q46c5SwjVBKWFIKkWsZnk/ogCKHaVNPdmTtbTiChtyJHTBbkp8Ali0yjnVc6R
-	 4+bkTWVzO9mLlrJ0naVdDv0y6Kn3Bo24fTdVKFveSbS92OWP61Gg0vpJZXehtVZNaq
-	 oQdsfwIWlHfFovEukX8nAc3cITXju+wrny2BnBa4=
+	b=tFR+KnyzpIW0lPg8SRhNHPFBHVXA6s+AbvcikBwRfDneZza8YxKbvdqI1eU3agACv
+	 Lxb/SFIgydyVznyjmLaYTMcZzooomP73Sjkud5M9ZX9CCliuOSOpw9UJ+TcLsEq4gW
+	 +chpCp3TGrVwyXlk/LH+sRnLFiM12SlDQdWiTSgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.13 309/443] arm64: dts: qcom: sm6375: Fix MPSS memory base and length
-Date: Thu, 13 Feb 2025 15:27:54 +0100
-Message-ID: <20250213142452.538576323@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Andy Liang <andy.liang@hpe.com>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.13 336/443] tpm: Change to kvalloc() in eventlog/acpi.c
+Date: Thu, 13 Feb 2025 15:28:21 +0100
+Message-ID: <20250213142453.591972554@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,44 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-commit 918e71ba0c08c3d609ad69067854b0f675c4a253 upstream.
+commit a3a860bc0fd6c07332e4911cf9a238d20de90173 upstream.
 
-The address space in MPSS/Modem PAS (Peripheral Authentication Service)
-remoteproc node should point to the QDSP PUB address space
-(QDSP6...SS_PUB): 0x0608_0000 with length of 0x10000.
+The following failure was reported on HPE ProLiant D320:
 
-0x0600_0000, value used so far, is the main region of Modem.
+[   10.693310][    T1] tpm_tis STM0925:00: 2.0 TPM (device-id 0x3, rev-id 0)
+[   10.848132][    T1] ------------[ cut here ]------------
+[   10.853559][    T1] WARNING: CPU: 59 PID: 1 at mm/page_alloc.c:4727 __alloc_pages_noprof+0x2ca/0x330
+[   10.862827][    T1] Modules linked in:
+[   10.866671][    T1] CPU: 59 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.0-lp155.2.g52785e2-default #1 openSUSE Tumbleweed (unreleased) 588cd98293a7c9eba9013378d807364c088c9375
+[   10.882741][    T1] Hardware name: HPE ProLiant DL320 Gen12/ProLiant DL320 Gen12, BIOS 1.20 10/28/2024
+[   10.892170][    T1] RIP: 0010:__alloc_pages_noprof+0x2ca/0x330
+[   10.898103][    T1] Code: 24 08 e9 4a fe ff ff e8 34 36 fa ff e9 88 fe ff ff 83 fe 0a 0f 86 b3 fd ff ff 80 3d 01 e7 ce 01 00 75 09 c6 05 f8 e6 ce 01 01 <0f> 0b 45 31 ff e9 e5 fe ff ff f7 c2 00 00 08 00 75 42 89 d9 80 e1
+[   10.917750][    T1] RSP: 0000:ffffb7cf40077980 EFLAGS: 00010246
+[   10.923777][    T1] RAX: 0000000000000000 RBX: 0000000000040cc0 RCX: 0000000000000000
+[   10.931727][    T1] RDX: 0000000000000000 RSI: 000000000000000c RDI: 0000000000040cc0
 
-Correct the base address and length, which should have no functional
-impact on Linux users, because PAS loader does not use this address
-space at all.
+The above transcript shows that ACPI pointed a 16 MiB buffer for the log
+events because RSI maps to the 'order' parameter of __alloc_pages_noprof().
+Address the bug by moving from devm_kmalloc() to devm_add_action() and
+kvmalloc() and devm_add_action().
 
-Fixes: 31cc61104f68 ("arm64: dts: qcom: sm6375: Add modem nodes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20241213-dts-qcom-cdsp-mpss-base-address-v3-19-2e0036fccd8d@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Suggested-by: Ard Biesheuvel <ardb@kernel.org>
+Cc: stable@vger.kernel.org # v2.6.16+
+Fixes: 55a82ab3181b ("[PATCH] tpm: add bios measurement log")
+Reported-by: Andy Liang <andy.liang@hpe.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219495
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Takashi Iwai <tiwai@suse.de>
+Tested-by: Andy Liang <andy.liang@hpe.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm6375.dtsi |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/tpm/eventlog/acpi.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-@@ -1516,9 +1516,9 @@
- 			#power-domain-cells = <1>;
- 		};
+--- a/drivers/char/tpm/eventlog/acpi.c
++++ b/drivers/char/tpm/eventlog/acpi.c
+@@ -63,6 +63,11 @@ static bool tpm_is_tpm2_log(void *bios_e
+ 	return n == 0;
+ }
  
--		remoteproc_mss: remoteproc@6000000 {
-+		remoteproc_mss: remoteproc@6080000 {
- 			compatible = "qcom,sm6375-mpss-pas";
--			reg = <0 0x06000000 0 0x4040>;
-+			reg = <0x0 0x06080000 0x0 0x10000>;
++static void tpm_bios_log_free(void *data)
++{
++	kvfree(data);
++}
++
+ /* read binary bios log */
+ int tpm_read_log_acpi(struct tpm_chip *chip)
+ {
+@@ -136,7 +141,7 @@ int tpm_read_log_acpi(struct tpm_chip *c
+ 	}
  
- 			interrupts-extended = <&intc GIC_SPI 307 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_modem_in 0 IRQ_TYPE_EDGE_RISING>,
+ 	/* malloc EventLog space */
+-	log->bios_event_log = devm_kmalloc(&chip->dev, len, GFP_KERNEL);
++	log->bios_event_log = kvmalloc(len, GFP_KERNEL);
+ 	if (!log->bios_event_log)
+ 		return -ENOMEM;
+ 
+@@ -161,10 +166,16 @@ int tpm_read_log_acpi(struct tpm_chip *c
+ 		goto err;
+ 	}
+ 
++	ret = devm_add_action(&chip->dev, tpm_bios_log_free, log->bios_event_log);
++	if (ret) {
++		log->bios_event_log = NULL;
++		goto err;
++	}
++
+ 	return format;
+ 
+ err:
+-	devm_kfree(&chip->dev, log->bios_event_log);
++	tpm_bios_log_free(log->bios_event_log);
+ 	log->bios_event_log = NULL;
+ 	return ret;
+ }
 
 
