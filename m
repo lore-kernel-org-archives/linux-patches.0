@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD0224166E;
-	Thu, 13 Feb 2025 14:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02571241693;
+	Thu, 13 Feb 2025 14:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457397; cv=none; b=F4AlnX/++bdMiWunzjJMp2IYBrhvZWcFk+dDDMks/qX68bhpRJYBUkooMG192Espzl8FjxdjZJgP862Xkx4AURYIGfuDO5PdBX2n4bm0XW3ekj2kyuBv+YyAUGekCCsC86smLzDV9IZdec4T3U+EmjfZIBVvPPcd11vabzrL94I=
+	t=1739457401; cv=none; b=Zh3rF0bPDMYf6yeftXm5yHUKKGDGO13ng5XftPRdfUUl8y5o24ZNuehDCbSFP4MLlOBkk5YP+EpnrF3D96vyz8UTl1BVdinGrWLwZLrHpQX3OkrR6ZC/7co5MIwFdJ1urxzmPfWrtWxd0L/8zWBf/2D+04d1DsE2fbMwi7P/pRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457397; c=relaxed/simple;
-	bh=bsApMNlGnKNxXD8Y38WzWoP7yeV2prZ17E2Bp24u9YU=;
+	s=arc-20240116; t=1739457401; c=relaxed/simple;
+	bh=JrtN25jAMAydX/BxwPIZ7osn3nhifvYzGeO0KuOQZgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F1y5AH+syo111nD9IguKNem1H4SFDm8JcwVLEuxY+rsAF9ikfEdSiivJypg3bxbdgM7vVyWqiNVPsl93zuPcgbJKz1k2PUwwYEWIIVH3jT5ABlZ9dV5pK463fCV7SJZ2xMEwL2/D//sMYFWbbq74EdomvTMHDpbIQDAVPMDMYe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVUm2oTD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VBz94J3v/vsJV1V9ahOVJBbvhWSbDjuntJQoaTOtSIRtVQyqIE1k7Ld3/tqvZa8cyvhNyEVDP+MR7DbSFA3yrKam4gVSiAXZZyddgzBrCbdor1SgjJ+Poyflz5pDXpwwGBw0aPnbf77AHOpLTDJL516VYMdLwQ2jR8nzvpS/Uas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okm+md7Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVUm2oTD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16C3C4CED1;
-	Thu, 13 Feb 2025 14:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okm+md7Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B63C4CED1;
+	Thu, 13 Feb 2025 14:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457397;
-	bh=bsApMNlGnKNxXD8Y38WzWoP7yeV2prZ17E2Bp24u9YU=;
+	s=korg; t=1739457400;
+	bh=JrtN25jAMAydX/BxwPIZ7osn3nhifvYzGeO0KuOQZgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DVUm2oTDam+039VLuF6nsf5NsaKMWp2WTxT7S6kaQtVlVMuyJxE/gEnLQruVAjKI7
-	 keeEUiNmT9e67ynczeJWfTRw1xbCbhBWu6shPT5ZEKvv+A9ZpedhPxAncDl5+CNjKj
-	 QKy14ODwMemDXnV3O1HEmpn2MChcK3tY5vL/OYQ0=
+	b=okm+md7ZxAL0e31YYWw8yLqaf5uDSMWOQo3GHOQpwWbzUteOBrWrm2jmQpaDqD/Fh
+	 uBElGzqDfH4nMfp4nIEtYfUit7+8H6zTwDmEhgXhvdSDNj6bxik4f+JTd77LuZMdah
+	 wFLDCN5SP2eWeF7GXXnlN54VuveJP+kNi5Xz8ftk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Swapnil Sapkal <swapnil.sapkal@amd.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Daniel Wagner <wagi@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/422] sched/fair: Fix inaccurate h_nr_runnable accounting with delayed dequeue
-Date: Thu, 13 Feb 2025 15:24:08 +0100
-Message-ID: <20250213142440.377054883@linuxfoundation.org>
+Subject: [PATCH 6.12 100/422] nvme: handle connectivity loss in nvme_set_queue_count
+Date: Thu, 13 Feb 2025 15:24:09 +0100
+Message-ID: <20250213142440.416286045@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -53,104 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 3429dd57f0deb1a602c2624a1dd7c4c11b6c4734 ]
+[ Upstream commit 294b2b7516fd06a8dd82e4a6118f318ec521e706 ]
 
-set_delayed() adjusts cfs_rq->h_nr_runnable for the hierarchy when an
-entity is delayed irrespective of whether the entity corresponds to a
-task or a cfs_rq.
+When the set feature attempts fails with any NVME status code set in
+nvme_set_queue_count, the function still report success. Though the
+numbers of queues set to 0. This is done to support controllers in
+degraded state (the admin queue is still up and running but no IO
+queues).
 
-Consider the following scenario:
+Though there is an exception. When nvme_set_features reports an host
+path error, nvme_set_queue_count should propagate this error as the
+connectivity is lost, which means also the admin queue is not working
+anymore.
 
-	root
-       /    \
-      A	     B (*) delayed since B is no longer eligible on root
-      |	     |
-    Task0  Task1 <--- dequeue_task_fair() - task blocks
-
-When Task1 blocks (dequeue_entity() for task's se returns true),
-dequeue_entities() will continue adjusting cfs_rq->h_nr_* for the
-hierarchy of Task1. However, when the sched_entity corresponding to
-cfs_rq B is delayed, set_delayed() will adjust the h_nr_runnable for the
-hierarchy too leading to both dequeue_entity() and set_delayed()
-decrementing h_nr_runnable for the dequeue of the same task.
-
-A SCHED_WARN_ON() to inspect h_nr_runnable post its update in
-dequeue_entities() like below:
-
-    cfs_rq->h_nr_runnable -= h_nr_runnable;
-    SCHED_WARN_ON(((int) cfs_rq->h_nr_runnable) < 0);
-
-is consistently tripped when running wakeup intensive workloads like
-hackbench in a cgroup.
-
-This error is self correcting since cfs_rq are per-cpu and cannot
-migrate. The entitiy is either picked for full dequeue or is requeued
-when a task wakes up below it. Both those paths call clear_delayed()
-which again increments h_nr_runnable of the hierarchy without
-considering if the entity corresponds to a task or not.
-
-h_nr_runnable will eventually reflect the correct value however in the
-interim, the incorrect values can still influence PELT calculation which
-uses se->runnable_weight or cfs_rq->h_nr_runnable.
-
-Since only delayed tasks take the early return path in
-dequeue_entities() and enqueue_task_fair(), adjust the
-h_nr_runnable in {set,clear}_delayed() only when a task is delayed as
-this path skips the h_nr_* update loops and returns early.
-
-For entities corresponding to cfs_rq, the h_nr_* update loop in the
-caller will do the right thing.
-
-Fixes: 76f2f783294d ("sched/eevdf: More PELT vs DELAYED_DEQUEUE")
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Tested-by: Swapnil Sapkal <swapnil.sapkal@amd.com>
-Link: https://lkml.kernel.org/r/20250117105852.23908-1-kprateek.nayak@amd.com
+Fixes: 9a0be7abb62f ("nvme: refactor set_queue_count")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/nvme/host/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 65e7be6448720..ddc096d6b0c20 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -5481,6 +5481,15 @@ static __always_inline void return_cfs_rq_runtime(struct cfs_rq *cfs_rq);
- static void set_delayed(struct sched_entity *se)
- {
- 	se->sched_delayed = 1;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 4c409efd8cec1..8da50df56b079 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1691,7 +1691,13 @@ int nvme_set_queue_count(struct nvme_ctrl *ctrl, int *count)
+ 
+ 	status = nvme_set_features(ctrl, NVME_FEAT_NUM_QUEUES, q_count, NULL, 0,
+ 			&result);
+-	if (status < 0)
 +
 +	/*
-+	 * Delayed se of cfs_rq have no tasks queued on them.
-+	 * Do not adjust h_nr_runnable since dequeue_entities()
-+	 * will account it for blocked tasks.
++	 * It's either a kernel error or the host observed a connection
++	 * lost. In either case it's not possible communicate with the
++	 * controller and thus enter the error code path.
 +	 */
-+	if (!entity_is_task(se))
-+		return;
-+
- 	for_each_sched_entity(se) {
- 		struct cfs_rq *cfs_rq = cfs_rq_of(se);
++	if (status < 0 || status == NVME_SC_HOST_PATH_ERROR)
+ 		return status;
  
-@@ -5493,6 +5502,16 @@ static void set_delayed(struct sched_entity *se)
- static void clear_delayed(struct sched_entity *se)
- {
- 	se->sched_delayed = 0;
-+
-+	/*
-+	 * Delayed se of cfs_rq have no tasks queued on them.
-+	 * Do not adjust h_nr_runnable since a dequeue has
-+	 * already accounted for it or an enqueue of a task
-+	 * below it will account for it in enqueue_task_fair().
-+	 */
-+	if (!entity_is_task(se))
-+		return;
-+
- 	for_each_sched_entity(se) {
- 		struct cfs_rq *cfs_rq = cfs_rq_of(se);
- 
+ 	/*
 -- 
 2.39.5
 
