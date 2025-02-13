@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289CE26B0B5;
-	Thu, 13 Feb 2025 15:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C32C2A1D1;
+	Thu, 13 Feb 2025 15:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458954; cv=none; b=K04ph2+1G5vvbhnzbeCnQeej6b1j6loXM9mWbmYayfEM7V1ouNXZgNVOgUhlwh3mrbjAfbmJFQ1wJm63FziYY/2d0mNVtAsDzTldrIA38PM5UtBEANGGIEgPeb6siEbTeAflw7ym1MSxy8gc6cW/tGIIl4iUA5xLhbBIdqjPy1c=
+	t=1739458957; cv=none; b=fSJmtcwEgFj1eDGzXVTkuFjURAXzUylEjIq6rEJSw03WNnFSEYom/SEeAlKaQWIzQs1gTWodEE3vw372FIw0Y3Gbjkoh7i05CviBA0wN35zx8fnvSYX4xVYTKBUmFIAbStTKrXjiGaRwVppVD9BUO+ykUd+GKv1r+WpIhwC3ebA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458954; c=relaxed/simple;
-	bh=/uMDcHs+04fZPbzuK53bOyHK7Pe1dMfkl0I/PqyaWZg=;
+	s=arc-20240116; t=1739458957; c=relaxed/simple;
+	bh=9AGGOlJhwNgIy/z7NAe/S5bkYVhPJEZCWvssKg/OKL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DrYkEkflwJGcp2LA+2t3So5AzfA/SPGtyTBKvgDz/zwNOoazUSnxqeAsyVdmC7kJ6b9HqN8tVfFyPKMtMpTeaC4uX/9X8I9s2VLnA8ESJ5b4bMuJNvCYRUUWPGDuY4h8l5cfmVqFcHdIGpwBfrS8Oi6OS3J/Zui3cTBQaL7mgBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRMfva7q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oHK0EPHNcU2kXvg0o2bDkCvPFS+Jn5EXkMW1H7vQujaaPO9xyy+PwY6kpMptBUi2rNkhjoDHttBfa5do+1zwk5O7cRI3/QtHYxfloWJg9nx6QqRV3UT+Eu+R1QIE+3mpdIgmeZQNMTSCHwHovch2OId42aAVKDFFWsmaqQ7Lqd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvLhTk92; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRMfva7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A69FC4CED1;
-	Thu, 13 Feb 2025 15:02:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvLhTk92"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1D5C4CED1;
+	Thu, 13 Feb 2025 15:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458954;
-	bh=/uMDcHs+04fZPbzuK53bOyHK7Pe1dMfkl0I/PqyaWZg=;
+	s=korg; t=1739458957;
+	bh=9AGGOlJhwNgIy/z7NAe/S5bkYVhPJEZCWvssKg/OKL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JRMfva7qylNSnoDo70V566lJMyW3Bcbo1bxmAPBGEIDkAb5eBSzLjF9ZXxh1ooXSe
-	 umjzC7Zg/X7vXhtsnNj9qRtK7uIMlFB479B4qApZtMNLV94zS02dAYUbPUgRxQIrxZ
-	 n8BAxCtGKbJdnHiEvhDUiYeZhggpZJFyDTlO9UGc=
+	b=vvLhTk92a333HGPqT+Ilubk9ghtWGZoM8Ntf+AcJAd++SMS5LgLGZw/ZrmgPc2GjG
+	 yDYh98mni2mqtOXLxcVpljs6ksPTFYP9SC+cD4JgOXxPenw6CIfZZbjKMXB2wCBmJk
+	 MSBUcwfXQnV0RmSfayPMaapL9htY8gXPa9piylBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
 	Joe Damato <jdamato@fastly.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 125/443] ethtool: ntuple: fix rss + ring_cookie check
-Date: Thu, 13 Feb 2025 15:24:50 +0100
-Message-ID: <20250213142445.434020541@linuxfoundation.org>
+Subject: [PATCH 6.13 126/443] selftests: drv-net: rss_ctx: add missing cleanup in queue reconfigure
+Date: Thu, 13 Feb 2025 15:24:51 +0100
+Message-ID: <20250213142445.472268970@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -54,35 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 2b91cc1214b165c25ac9b0885db89a0d3224028a ]
+[ Upstream commit de379dfd9ada2995699052f4a1ecebe5d8f8d70f ]
 
-The info.flow_type is for RXFH commands, ntuple flow_type is inside
-the flow spec. The check currently does nothing, as info.flow_type
-is 0 (or even uninitialized by user space) for ETHTOOL_SRXCLSRLINS.
+Commit under Fixes adds ntuple rules but never deletes them.
 
-Fixes: 9e43ad7a1ede ("net: ethtool: only allow set_rxnfc with rss + ring_cookie if driver opts in")
-Reviewed-by: Gal Pressman <gal@nvidia.com>
+Fixes: 29a4bc1fe961 ("selftest: extend test_rss_context_queue_reconfigure for action addition")
 Reviewed-by: Joe Damato <jdamato@fastly.com>
-Link: https://patch.msgid.link/20250201013040.725123-3-kuba@kernel.org
+Link: https://patch.msgid.link/20250201013040.725123-4-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/ioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/drivers/net/hw/rss_ctx.py | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
-index 34bee42e12470..7609ce2b2c5e2 100644
---- a/net/ethtool/ioctl.c
-+++ b/net/ethtool/ioctl.c
-@@ -993,7 +993,7 @@ static noinline_for_stack int ethtool_set_rxnfc(struct net_device *dev,
- 		return rc;
- 
- 	/* Nonzero ring with RSS only makes sense if NIC adds them together */
--	if (cmd == ETHTOOL_SRXCLSRLINS && info.flow_type & FLOW_RSS &&
-+	if (cmd == ETHTOOL_SRXCLSRLINS && info.fs.flow_type & FLOW_RSS &&
- 	    !ops->cap_rss_rxnfc_adds &&
- 	    ethtool_get_flow_spec_ring(info.fs.ring_cookie))
- 		return -EINVAL;
+diff --git a/tools/testing/selftests/drivers/net/hw/rss_ctx.py b/tools/testing/selftests/drivers/net/hw/rss_ctx.py
+index ca8a7edff3dda..27e24e20749ff 100755
+--- a/tools/testing/selftests/drivers/net/hw/rss_ctx.py
++++ b/tools/testing/selftests/drivers/net/hw/rss_ctx.py
+@@ -252,6 +252,7 @@ def test_rss_queue_reconfigure(cfg, main_ctx=True):
+         try:
+             # this targets queue 4, which doesn't exist
+             ntuple2 = ethtool_create(cfg, "-N", flow)
++            defer(ethtool, f"-N {cfg.ifname} delete {ntuple2}")
+         except CmdExitFailure:
+             pass
+         else:
+@@ -260,6 +261,7 @@ def test_rss_queue_reconfigure(cfg, main_ctx=True):
+         ethtool(f"-X {cfg.ifname} {ctx_ref} weight 1 0 1 0")
+         # ntuple rule therefore targets queues 1 and 3
+         ntuple2 = ethtool_create(cfg, "-N", flow)
++        defer(ethtool, f"-N {cfg.ifname} delete {ntuple2}")
+         # should replace existing filter
+         ksft_eq(ntuple, ntuple2)
+         _send_traffic_check(cfg, port, ctx_ref, { 'target': (1, 3),
 -- 
 2.39.5
 
