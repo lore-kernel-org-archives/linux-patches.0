@@ -1,107 +1,162 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E927716B3A1
-	for <patches@lists.linux.dev>; Thu, 13 Feb 2025 15:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF611AA786;
+	Thu, 13 Feb 2025 15:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460784; cv=none; b=ZmUQwT6La6N18cbEnKIHFMfolvOKQ0JEMkbgx1BCo0op1TFByod0MdvHVarnO11ZGE9FQ1OAqlj7rqyNioxmuWEV7hAKicsoueqxJ9jv6lSoXbxbUzY9joC0qrwHHyb1Alc0pXKBmKAgWbZbeDfLNQB+8znaaetWm3w01B5JSWE=
+	t=1739460786; cv=none; b=i61WwvkhChjPhPdDQz1dDm59/e9pMG8Rh32a8fP46Ff7s9FFOr1KBtBLuzOw+sofpSVDx05SFuuD5oFokVSps6CD2kz3o1C68neU7leuBEeEJdNp+bc9gXpLStW92iQyoHE/JUpGRZn1AWwlZuHK8sO7UHyPfN/6vdQB8JG8Q7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460784; c=relaxed/simple;
-	bh=t8QMv5hVTQ+R0IqU8p9CIOvH1ExAEP3a6Vf8v5IaDu0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nwBFaZkdW1J/PlPyP+BmZFLXz+yWNPvTB71Epa5iLXBk6vBM1m4/G36f5fvZitjFaIzBdzsZxHx0xXdUx2nN95Q3Hp7YGzmxgiPtCYqx0G3I+KGlObbBtUZIAW0+zDKBINKmXS6tKED+dkZbl59ndLde3g/isscwl7mXl/o0A5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zu0rm2RY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1739460786; c=relaxed/simple;
+	bh=8a/aTu59Z27RVY+PTegsNRZIUEV+4JQgHKqEf6GOKiA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=s3J2q4HTLS6h6I2BDcT+YLCqE1C1MtMgwf8unHR+tDD16MOuxemupw6yFU4PE28cE7+MMSdNvo3k+UNIcxGy5lGqAUZJ+ktuxuhlvResQx3pMlchEfOyQYkLtQR6Wg4lPxC7QHC1HzwWm0k5A5KtRWRJH6JEbsMkZeuoTQPHR+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rA/QDwsI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zu0rm2RY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9432CC4CEEE
-	for <patches@lists.linux.dev>; Thu, 13 Feb 2025 15:33:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739460783;
-	bh=t8QMv5hVTQ+R0IqU8p9CIOvH1ExAEP3a6Vf8v5IaDu0=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=Zu0rm2RYHRQAFLzKn4r1HNUMm8YFtDy2MYYtFUpabmqvXs66874sy8GDK5fdm9ZHY
-	 w5QC+it44v0XhZy8u8SLZWzM+Uo8+2eibnrdhjONcomdz+gkA8LKnLBcvxYEa3awEK
-	 4waS3GORPbRaeRFxe5NCxvQ6EoBVx5VNLpueKTNBqvdUV4k8fp5uUc1dCq0vmuQ03H
-	 QuGWQedP5GwbmxOZI29HQuY93RVX6y37ArJWxIhnXpzsKFhWpzXmyLol1k+UYuNb0k
-	 Ggp6cSPIzMlGEwTKeAOmsHe+NmdczDjA7zD9K3RavX3gAEnscHDnItccaRUyQHOAJp
-	 yCkILzAzWDACg==
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-543cc81ddebso1113704e87.1
-        for <patches@lists.linux.dev>; Thu, 13 Feb 2025 07:33:03 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXWqCNG74pVD+tBdnERFgpBcVyJhWSw5gvuFAFRDRRTUt3/vBIO2530LTcaz/VHV0esIyCV2kCe@lists.linux.dev
-X-Gm-Message-State: AOJu0YyRMecS/ywjzzHafXHkfS0lGfSOIdvt8HziiO7qIi9oayIGBRKl
-	gik+CNcUoapS0BTf6b3jrz6exXlTyHkh5axahwVYK/zYlrxHhaK24207utCvh5dvNWehgHHZ0hM
-	EAdnohqULB/Z8eSO63HZ4t+2WoOU=
-X-Google-Smtp-Source: AGHT+IFn/vzxAa1gLojO/0597IUwEJuHjE+ZMbhdN6Wkn18KpSJ16vMq38P8PaQcagI5saZOuyRj6jrZinDRQOOBjFs=
-X-Received: by 2002:a05:6512:1111:b0:545:6cf:6f3e with SMTP id
- 2adb3069b0e04-5451dde81aemr1356458e87.49.1739460781858; Thu, 13 Feb 2025
- 07:33:01 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rA/QDwsI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086D5C4CEE7;
+	Thu, 13 Feb 2025 15:33:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1739460786;
+	bh=8a/aTu59Z27RVY+PTegsNRZIUEV+4JQgHKqEf6GOKiA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=rA/QDwsIsKcMDIuwDd81BbIoMKdk5hjVm4LXzbwR1OBla4cezmMNnlnlvRgZYjXFj
+	 uc6mdv+rfuIVoLyJ+p91HCuC32t1e/DKD49P2MHMAA6a01g4mpnECu6uchWpcEEcxQ
+	 SqCdLGp/y7pEOY9FgouCYfOyoJhXoCwSchjyDDjk=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.6 213/273] media: uvcvideo: Fix crash during unbind if gpio unit is in use
+Date: Thu, 13 Feb 2025 15:29:45 +0100
+Message-ID: <20250213142415.733329991@linuxfoundation.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
+References: <20250213142407.354217048@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250210163732.281786-1-ojeda@kernel.org>
-In-Reply-To: <20250210163732.281786-1-ojeda@kernel.org>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Thu, 13 Feb 2025 16:32:50 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXHgjwHkLsJkM3H2pjEPXDvD80V+XhH_Gsjv8N4Cf6Bvkw@mail.gmail.com>
-X-Gm-Features: AWEUYZmhbBgIMQcrZGkDUPbbIKzS9-BDPJ0yLZaCMkeMRCLb0heF4J8bVRc0_r0
-Message-ID: <CAMj1kXHgjwHkLsJkM3H2pjEPXDvD80V+XhH_Gsjv8N4Cf6Bvkw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: rust: clean Rust 1.85.0 warning using softfloat target
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, 
-	moderated for non-subscribers <linux-arm-kernel@lists.infradead.org>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org, 
-	Matthew Maurer <mmaurer@google.com>, Ralf Jung <post@ralfj.de>, 
-	Jubilee Young <workingjubilee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Mon, 10 Feb 2025 at 17:38, Miguel Ojeda <ojeda@kernel.org> wrote:
->
-> Starting with Rust 1.85.0 (to be released 2025-02-20), `rustc` warns
-> [1] about disabling neon in the aarch64 hardfloat target:
->
->     warning: target feature `neon` cannot be toggled with
->              `-Ctarget-feature`: unsound on hard-float targets
->              because it changes float ABI
->       |
->       = note: this was previously accepted by the compiler but
->               is being phased out; it will become a hard error
->               in a future release!
->       = note: for more information, see issue #116344
->               <https://github.com/rust-lang/rust/issues/116344>
->
-> Thus, instead, use the softfloat target instead.
->
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-We have to carefully make the distinction here between codegen and ABI.
+------------------
 
-The arm64 C code in the kernel is built with -mgeneral-regs-only
-because FP/SIMD registers are not preserved/restored like GPRs, and so
-they must be used only in carefully controlled circumstances, i.e., in
-assembler code called under kernel_neon_begin()/kernel_neon_end()
-[modulo some exceptions related to NEON intrinsics]
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-This does not impact the ABI, which remains hard-float [this was the
-only arm64 calling convention that existed until about a year ago].
-Any function that takes or returns floats or doubles (or NEON
-intrinsic types) is simply rejected by the compiler.
+commit a9ea1a3d88b7947ce8cadb2afceee7a54872bbc5 upstream.
 
-Changing this to softfloat for Rust modifies this calling convention,
-i.e., it will result in floats and doubles being accepted as function
-parameters and return values, but there is no code in the kernel that
-actually supports/implements that. Also, it should be clarified
-whether using a softfloat ABI permits the compiler to use FP/SIMD
-registers in codegen. We might still need -Ctarget-feature="-neon"
-here afaict.
+We used the wrong device for the device managed functions. We used the
+usb device, when we should be using the interface device.
 
-Ideally, we'd have a target/target-feature combo that makes this more
-explicit: no FP/SIMD codegen at all, without affecting the ABI,
-therefore making float/double types in function prototypes illegal.
-AIUI, this change does something different.
+If we unbind the driver from the usb interface, the cleanup functions
+are never called. In our case, the IRQ is never disabled.
+
+If an IRQ is triggered, it will try to access memory sections that are
+already free, causing an OOPS.
+
+We cannot use the function devm_request_threaded_irq here. The devm_*
+clean functions may be called after the main structure is released by
+uvc_delete.
+
+Luckily this bug has small impact, as it is only affected by devices
+with gpio units and the user has to unbind the device, a disconnect will
+not trigger this error.
+
+Cc: stable@vger.kernel.org
+Fixes: 2886477ff987 ("media: uvcvideo: Implement UVC_EXT_GPIO_UNIT")
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20241106-uvc-crashrmmod-v6-1-fbf9781c6e83@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/media/usb/uvc/uvc_driver.c |   28 +++++++++++++++++++++-------
+ drivers/media/usb/uvc/uvcvideo.h   |    1 +
+ 2 files changed, 22 insertions(+), 7 deletions(-)
+
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -1280,14 +1280,14 @@ static int uvc_gpio_parse(struct uvc_dev
+ 	struct gpio_desc *gpio_privacy;
+ 	int irq;
+ 
+-	gpio_privacy = devm_gpiod_get_optional(&dev->udev->dev, "privacy",
++	gpio_privacy = devm_gpiod_get_optional(&dev->intf->dev, "privacy",
+ 					       GPIOD_IN);
+ 	if (IS_ERR_OR_NULL(gpio_privacy))
+ 		return PTR_ERR_OR_ZERO(gpio_privacy);
+ 
+ 	irq = gpiod_to_irq(gpio_privacy);
+ 	if (irq < 0)
+-		return dev_err_probe(&dev->udev->dev, irq,
++		return dev_err_probe(&dev->intf->dev, irq,
+ 				     "No IRQ for privacy GPIO\n");
+ 
+ 	unit = uvc_alloc_entity(UVC_EXT_GPIO_UNIT, UVC_EXT_GPIO_UNIT_ID, 0, 1);
+@@ -1313,15 +1313,27 @@ static int uvc_gpio_parse(struct uvc_dev
+ static int uvc_gpio_init_irq(struct uvc_device *dev)
+ {
+ 	struct uvc_entity *unit = dev->gpio_unit;
++	int ret;
+ 
+ 	if (!unit || unit->gpio.irq < 0)
+ 		return 0;
+ 
+-	return devm_request_threaded_irq(&dev->udev->dev, unit->gpio.irq, NULL,
+-					 uvc_gpio_irq,
+-					 IRQF_ONESHOT | IRQF_TRIGGER_FALLING |
+-					 IRQF_TRIGGER_RISING,
+-					 "uvc_privacy_gpio", dev);
++	ret = request_threaded_irq(unit->gpio.irq, NULL, uvc_gpio_irq,
++				   IRQF_ONESHOT | IRQF_TRIGGER_FALLING |
++				   IRQF_TRIGGER_RISING,
++				   "uvc_privacy_gpio", dev);
++
++	unit->gpio.initialized = !ret;
++
++	return ret;
++}
++
++static void uvc_gpio_deinit(struct uvc_device *dev)
++{
++	if (!dev->gpio_unit || !dev->gpio_unit->gpio.initialized)
++		return;
++
++	free_irq(dev->gpio_unit->gpio.irq, dev);
+ }
+ 
+ /* ------------------------------------------------------------------------
+@@ -1918,6 +1930,8 @@ static void uvc_unregister_video(struct
+ {
+ 	struct uvc_streaming *stream;
+ 
++	uvc_gpio_deinit(dev);
++
+ 	list_for_each_entry(stream, &dev->streams, list) {
+ 		/* Nothing to do here, continue. */
+ 		if (!video_is_registered(&stream->vdev))
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -229,6 +229,7 @@ struct uvc_entity {
+ 			u8  *bmControls;
+ 			struct gpio_desc *gpio_privacy;
+ 			int irq;
++			bool initialized;
+ 		} gpio;
+ 	};
+ 
+
+
