@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BC826B085;
-	Thu, 13 Feb 2025 14:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9DF26B0A4;
+	Thu, 13 Feb 2025 14:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458136; cv=none; b=Bs38KMP3dD2f5aN51MrkLkXCY/mYM/S5woldSC5fgDxYRKByQFAd9DmuEjVBozX66grGMDNybyCEkOZhfiWWG3+mkm65Q/6mjLaWY/KKtro7fjsiCiAMt5gBo/wMQxTDESiFvKModsNsgDnPlhcSkpIeKmWZgUYJIoG19XXxnLg=
+	t=1739458140; cv=none; b=U6ffUvYJSNZnGuaWQ8Emcbc0d+1TBtuEuuG4pLWbo8RJhtTYqObQj5ELYMFcjiIxqEDKo54/FbVNFSUItOIgI+JAk8AAkREx9l9nhgklMXqG5f83XK+WziDPx/M7MWOYWUFozC0jXSC3gjXE0ikokzKmDq1lNct8ougTRuScgBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458136; c=relaxed/simple;
-	bh=D7x2CvPRlS/BFYbug48ir+9pYbgpqMnKrtq8K4nYF8E=;
+	s=arc-20240116; t=1739458140; c=relaxed/simple;
+	bh=SsbSo7L4SOreKGgca9NtDz81mjuBdUrv90yjDU8/Bww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCG44hg9dNYVKTa7Sgms/jxQlt2UeG2omcqi7GhV6+2cOhg8sgGr9TDgIX4vVYDk1sdNM9sMVbPzGj3imuxbR7t4tKmAb/WClGezfv1LvI7L32NFrwl3jIEREeWy8GSFB9kJikvwLSELJf8hC0oCyYWZOFphwnpMijyQjnsUau4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o8kGcgYF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hy2/b+zkk8Im1fXKfD8VSVY4hNVoXoHc5UhX4F5bkq+dSN5+ca+KrfMF2zL94WQDZ/B/Bieik57A37342pecl88nZ+spvfbiPQv3+fsrXyr2h3/f6F03LE2k3dmtxt8xlnxcBc76MZg91A2RFynLGvsvbSh4NLEw/VtaeHtGyOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBXaKs8d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o8kGcgYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89ACC4CED1;
-	Thu, 13 Feb 2025 14:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBXaKs8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F38C4CEE5;
+	Thu, 13 Feb 2025 14:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458136;
-	bh=D7x2CvPRlS/BFYbug48ir+9pYbgpqMnKrtq8K4nYF8E=;
+	s=korg; t=1739458140;
+	bh=SsbSo7L4SOreKGgca9NtDz81mjuBdUrv90yjDU8/Bww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o8kGcgYFYwTQ8lAB1arHOrk/vzC18RfGrX0t//sR2R3nsQgcFU2ENww1xrEc6COL6
-	 mT1Qj8JmRJmM5PAECUznZziCAndxBWlxytV270xLjfXV63/kUlThp5cUvmLL+Fu6mN
-	 EMdQ0md/5CTcy8d+n6Kxx9Ilg2GFreI6A3AoAY2s=
+	b=LBXaKs8d4gg1+RBWDlGQN40spbrZTWt4Lu3/TM9rP2lZvyPz04XLke54RFxWK5cD7
+	 IBGZqA5TKHcRX+aBQQKUN6f9vdxEuQyavvKZLRrEfplTaGk3OrO8iiR/pZZ6PxjXqp
+	 oNt5PQ+Tg1HKXkf+yKX8v49bE0EnhlsJoVHEUIaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Kalinowski <ikalinowski@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.12 313/422] iommu/tegra241-cmdqv: Read SMMU IDR1.CMDQS instead of hardcoding
-Date: Thu, 13 Feb 2025 15:27:42 +0100
-Message-ID: <20250213142448.622416441@linuxfoundation.org>
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Nicolin Chen <nicolinc@nvidia.com>
+Subject: [PATCH 6.12 314/422] iommufd/fault: Destroy response and mutex in iommufd_fault_destroy()
+Date: Thu, 13 Feb 2025 15:27:43 +0100
+Message-ID: <20250213142448.664680245@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -53,67 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit e94dc6ddda8dd3770879a132d577accd2cce25f9 upstream.
+commit 3f4818ec139030f425476bf8a10b616bab53a7b5 upstream.
 
-The hardware limitation "max=19" actually comes from SMMU Command Queue.
-So, it'd be more natural for tegra241-cmdqv driver to read it out rather
-than hardcoding it itself.
+Both were missing in the initial patch.
 
-This is not an issue yet for a kernel on a baremetal system, but a guest
-kernel setting the queue base/size in form of IPA/gPA might result in a
-noncontiguous queue in the physical address space, if underlying physical
-pages backing up the guest RAM aren't contiguous entirely: e.g. 2MB-page
-backed guest RAM cannot guarantee a contiguous queue if it is 8MB (capped
-to VCMDQ_LOG2SIZE_MAX=19). This might lead to command errors when HW does
-linear-read from a noncontiguous queue memory.
-
-Adding this extra IDR1.CMDQS cap (in the guest kernel) allows VMM to set
-SMMU's IDR1.CMDQS=17 for the case mentioned above, so a guest-level queue
-will be capped to maximum 2MB, ensuring a contiguous queue memory.
-
-Fixes: a3799717b881 ("iommu/tegra241-cmdqv: Fix alignment failure at max_n_shift")
-Reported-by: Ian Kalinowski <ikalinowski@nvidia.com>
+Fixes: 07838f7fd529 ("iommufd: Add iommufd fault object")
+Link: https://patch.msgid.link/r/bc8bb13e215af27e62ee51bdba3648dd4ed2dce3.1736923732.git.nicolinc@nvidia.com
 Cc: stable@vger.kernel.org
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Link: https://lore.kernel.org/r/20241219051421.1850267-1-nicolinc@nvidia.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/iommu/iommufd/fault.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index c8ec74f089f3..dc7af970e9d0 100644
---- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -79,7 +79,6 @@
- #define TEGRA241_VCMDQ_PAGE1(q)		(TEGRA241_VCMDQ_PAGE1_BASE + 0x80*(q))
- #define  VCMDQ_ADDR			GENMASK(47, 5)
- #define  VCMDQ_LOG2SIZE			GENMASK(4, 0)
--#define  VCMDQ_LOG2SIZE_MAX		19
+--- a/drivers/iommu/iommufd/fault.c
++++ b/drivers/iommu/iommufd/fault.c
+@@ -208,6 +208,7 @@ void iommufd_fault_destroy(struct iommuf
+ {
+ 	struct iommufd_fault *fault = container_of(obj, struct iommufd_fault, obj);
+ 	struct iopf_group *group, *next;
++	unsigned long index;
  
- #define TEGRA241_VCMDQ_BASE		0x00000
- #define TEGRA241_VCMDQ_CONS_INDX_BASE	0x00008
-@@ -505,12 +504,15 @@ static int tegra241_vcmdq_alloc_smmu_cmdq(struct tegra241_vcmdq *vcmdq)
- 	struct arm_smmu_cmdq *cmdq = &vcmdq->cmdq;
- 	struct arm_smmu_queue *q = &cmdq->q;
- 	char name[16];
-+	u32 regval;
- 	int ret;
+ 	/*
+ 	 * The iommufd object's reference count is zero at this point.
+@@ -220,6 +221,13 @@ void iommufd_fault_destroy(struct iommuf
+ 		iopf_group_response(group, IOMMU_PAGE_RESP_INVALID);
+ 		iopf_free_group(group);
+ 	}
++	xa_for_each(&fault->response, index, group) {
++		xa_erase(&fault->response, index);
++		iopf_group_response(group, IOMMU_PAGE_RESP_INVALID);
++		iopf_free_group(group);
++	}
++	xa_destroy(&fault->response);
++	mutex_destroy(&fault->mutex);
+ }
  
- 	snprintf(name, 16, "vcmdq%u", vcmdq->idx);
- 
--	/* Queue size, capped to ensure natural alignment */
--	q->llq.max_n_shift = min_t(u32, CMDQ_MAX_SZ_SHIFT, VCMDQ_LOG2SIZE_MAX);
-+	/* Cap queue size to SMMU's IDR1.CMDQS and ensure natural alignment */
-+	regval = readl_relaxed(smmu->base + ARM_SMMU_IDR1);
-+	q->llq.max_n_shift =
-+		min_t(u32, CMDQ_MAX_SZ_SHIFT, FIELD_GET(IDR1_CMDQS, regval));
- 
- 	/* Use the common helper to init the VCMDQ, and then... */
- 	ret = arm_smmu_init_one_queue(smmu, q, vcmdq->page0,
--- 
-2.48.1
-
+ static void iommufd_compose_fault_message(struct iommu_fault *fault,
 
 
