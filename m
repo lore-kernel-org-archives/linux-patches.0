@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D909C26B080;
-	Thu, 13 Feb 2025 15:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A061126B082;
+	Thu, 13 Feb 2025 15:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459293; cv=none; b=JiyXCxTMQJ6p1p6rXImtOLLdo++0runEOMzpAfpKMqxy5eqZxPttTsuzZnfoFlo3z7mgDBXfKOQDBBqzGINe2I0j/hfRzAW7hl6RjhnBJSH6U+G8nsdodM9N/e/Np/CF/mb25YvrGGgQssGwWfK1/A7yJxHe7GUvLMyxIwbl7HY=
+	t=1739459297; cv=none; b=oTyjSoO/9jU4zGBvDXoQO9S+yspV8xSmUx/aLDcBde0vcORJo5Hqffn+sNacu93MaxnbgXUmeTO7eYnVAAgfMgV3zUJhd/+Mtyp4A1I9q1euEoe0ug3aSCYaHCfhN9fjP9MrZ4eYFQbYhFX7YHbr/07qkMGsUnXwsjvDUpj5K60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459293; c=relaxed/simple;
-	bh=azO2qdeXifJy5+ZMCKbc3nBAxQpSt4nIs5ahCUmM0vc=;
+	s=arc-20240116; t=1739459297; c=relaxed/simple;
+	bh=3lSP9LKftmIK436Eb8by0bvuRIyIhG1OtoU4oTCr+JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWqunPbrSBkg0i9+N4kO97Oza1IAwVPEZk723KxQxm7sEi6yIePsVB4HtIVb0nWhN+Hw6VTbXpSDgpS+Qf7Fatvr8ndzVWTXV8envbhTAHSofjWGLX1w1vqDUoMTowNhstCa5qfHdjfu4PjW2m/CFtE7SxTQ8P+7vSIi9rDoSOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVuOkXkj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VXKtnD79X+9vymUQlJAD/I8QNaXwXyVxXNo1ZxQm/s10QaSSZMta3gGIY2BSfoa92Z94RBZy+7qCsoii+CeT7x/Zb3KCsBScuO/fRJ+2egQfnjPUt40bNHa2/G28SoTLAgYieRbkG3I0+Ehpi4bvsR2OV+12ZRyLUhrVLx5QId0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gqzi2ri4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVuOkXkj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA59C4CED1;
-	Thu, 13 Feb 2025 15:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gqzi2ri4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8A0C4CED1;
+	Thu, 13 Feb 2025 15:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459293;
-	bh=azO2qdeXifJy5+ZMCKbc3nBAxQpSt4nIs5ahCUmM0vc=;
+	s=korg; t=1739459297;
+	bh=3lSP9LKftmIK436Eb8by0bvuRIyIhG1OtoU4oTCr+JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KVuOkXkj4yl0Uhn5MDT2JPoroWoYI3aRvujBRDONXNNXnTY9WXATQvb2zSOwLxRjg
-	 tr2wPYqIyOYL5Ekm16DkSSOs1gk3zBvpatNqIE6LbOdfHwqPJ4sIGTV/MNmtyECGU6
-	 TU6x5f23232aW7xQC+102sKY9WiDboZ1keVGiyEk=
+	b=Gqzi2ri46fSbsv9IXZ0Cg+gjdWXpGsHo/1PJMUfCXHHfCIZdaO7NRpE/vZeAKXSr8
+	 xnuz50A1ZJmtoE4HLtIJLgSbwqyL8jC+0tNpSHDte/ceOKFGhJyH1N2vR6JtpJJALr
+	 4LS+vc2d2G6mn2aY1dGP1cZFEE9dgcEZsz6bYHeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.13 205/443] clk: mediatek: mt2701-aud: fix conversion to mtk_clk_simple_probe
-Date: Thu, 13 Feb 2025 15:26:10 +0100
-Message-ID: <20250213142448.526066108@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Ludwig Rydberg <ludwig.rydberg@gaisler.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.13 223/443] atomic64: Use arch_spin_locks instead of raw_spin_locks
+Date: Thu, 13 Feb 2025 15:26:28 +0100
+Message-ID: <20250213142449.217998598@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,69 +58,239 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 5fba40be5fbad563914e3ce9d5129a6baaea1ff5 upstream.
+commit 6c8ad3ab45ad0e94bfb7a9c71f2fa9c6cacea4b2 upstream.
 
-Some of the audio subsystem clocks defined in clk-mt2701.h aren't
-actually used by the driver. This broke conversion to
-mtk_clk_simple_probe which expects that the highest possible clk id is
-defined by the ARRAY_SIZE.
+raw_spin_locks can be traced by lockdep or tracing itself. Atomic64
+operations can be used in the tracing infrastructure. When an architecture
+does not have true atomic64 operations it can use the generic version that
+disables interrupts and uses spin_locks.
 
-Add additional dummy clocks to fill the gaps and remain compatible with
-the existing DT bindings.
+The tracing ring buffer code uses atomic64 operations for the time
+keeping. But because some architectures use the default operations, the
+locking inside the atomic operations can cause an infinite recursion.
 
-Fixes: 0f69a423c458 ("clk: mediatek: Switch to mtk_clk_simple_probe() where possible")
+As atomic64 implementation is architecture specific, it should not be
+using raw_spin_locks() but instead arch_spin_locks as that is the purpose
+of arch_spin_locks. To be used in architecture specific implementations of
+generic infrastructure like atomic64 operations.
+
+Note, by switching from raw_spin_locks to arch_spin_locks, the locks taken
+to emulate the atomic64 operations will not have lockdep, mmio, or any
+kind of checks done on them. They will not even disable preemption,
+although the code will disable interrupts preventing the tasks that hold
+the locks from being preempted. As the locks held are done so for very
+short periods of time, and the logic is only done to emulate atomic64, not
+having them be instrumented should not be an issue.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://lore.kernel.org/r/a07584d803af57b9ce4b5df5e122c09bf5a56ac9.1734300668.git.daniel@makrotopia.org
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/20250122144311.64392baf@gandalf.local.home
+Fixes: c84897c0ff592 ("ring-buffer: Remove 32bit timestamp logic")
+Closes: https://lore.kernel.org/all/86fb4f86-a0e4-45a2-a2df-3154acc4f086@gaisler.com/
+Reported-by: Ludwig Rydberg <ludwig.rydberg@gaisler.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/mediatek/clk-mt2701-aud.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ lib/atomic64.c |   78 +++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 48 insertions(+), 30 deletions(-)
 
---- a/drivers/clk/mediatek/clk-mt2701-aud.c
-+++ b/drivers/clk/mediatek/clk-mt2701-aud.c
-@@ -55,10 +55,16 @@ static const struct mtk_gate audio_clks[
- 	GATE_DUMMY(CLK_DUMMY, "aud_dummy"),
- 	/* AUDIO0 */
- 	GATE_AUDIO0(CLK_AUD_AFE, "audio_afe", "aud_intbus_sel", 2),
-+	GATE_DUMMY(CLK_AUD_LRCK_DETECT, "audio_lrck_detect_dummy"),
-+	GATE_DUMMY(CLK_AUD_I2S, "audio_i2c_dummy"),
-+	GATE_DUMMY(CLK_AUD_APLL_TUNER, "audio_apll_tuner_dummy"),
- 	GATE_AUDIO0(CLK_AUD_HDMI, "audio_hdmi", "audpll_sel", 20),
- 	GATE_AUDIO0(CLK_AUD_SPDF, "audio_spdf", "audpll_sel", 21),
- 	GATE_AUDIO0(CLK_AUD_SPDF2, "audio_spdf2", "audpll_sel", 22),
- 	GATE_AUDIO0(CLK_AUD_APLL, "audio_apll", "audpll_sel", 23),
-+	GATE_DUMMY(CLK_AUD_TML, "audio_tml_dummy"),
-+	GATE_DUMMY(CLK_AUD_AHB_IDLE_EXT, "audio_ahb_idle_ext_dummy"),
-+	GATE_DUMMY(CLK_AUD_AHB_IDLE_INT, "audio_ahb_idle_int_dummy"),
- 	/* AUDIO1 */
- 	GATE_AUDIO1(CLK_AUD_I2SIN1, "audio_i2sin1", "aud_mux1_sel", 0),
- 	GATE_AUDIO1(CLK_AUD_I2SIN2, "audio_i2sin2", "aud_mux1_sel", 1),
-@@ -76,10 +82,12 @@ static const struct mtk_gate audio_clks[
- 	GATE_AUDIO1(CLK_AUD_ASRCI2, "audio_asrci2", "asm_h_sel", 13),
- 	GATE_AUDIO1(CLK_AUD_ASRCO1, "audio_asrco1", "asm_h_sel", 14),
- 	GATE_AUDIO1(CLK_AUD_ASRCO2, "audio_asrco2", "asm_h_sel", 15),
-+	GATE_DUMMY(CLK_AUD_HDMIRX, "audio_hdmirx_dummy"),
- 	GATE_AUDIO1(CLK_AUD_INTDIR, "audio_intdir", "intdir_sel", 20),
- 	GATE_AUDIO1(CLK_AUD_A1SYS, "audio_a1sys", "aud_mux1_sel", 21),
- 	GATE_AUDIO1(CLK_AUD_A2SYS, "audio_a2sys", "aud_mux2_sel", 22),
- 	GATE_AUDIO1(CLK_AUD_AFE_CONN, "audio_afe_conn", "aud_mux1_sel", 23),
-+	GATE_DUMMY(CLK_AUD_AFE_PCMIF, "audio_afe_pcmif_dummy"),
- 	GATE_AUDIO1(CLK_AUD_AFE_MRGIF, "audio_afe_mrgif", "aud_mux1_sel", 25),
- 	/* AUDIO2 */
- 	GATE_AUDIO2(CLK_AUD_MMIF_UL1, "audio_ul1", "aud_mux1_sel", 0),
-@@ -100,6 +108,8 @@ static const struct mtk_gate audio_clks[
- 	GATE_AUDIO2(CLK_AUD_MMIF_AWB2, "audio_awb2", "aud_mux1_sel", 15),
- 	GATE_AUDIO2(CLK_AUD_MMIF_DAI, "audio_dai", "aud_mux1_sel", 16),
- 	/* AUDIO3 */
-+	GATE_DUMMY(CLK_AUD_DMIC1, "audio_dmic1_dummy"),
-+	GATE_DUMMY(CLK_AUD_DMIC2, "audio_dmic2_dummy"),
- 	GATE_AUDIO3(CLK_AUD_ASRCI3, "audio_asrci3", "asm_h_sel", 2),
- 	GATE_AUDIO3(CLK_AUD_ASRCI4, "audio_asrci4", "asm_h_sel", 3),
- 	GATE_AUDIO3(CLK_AUD_ASRCI5, "audio_asrci5", "asm_h_sel", 4),
+--- a/lib/atomic64.c
++++ b/lib/atomic64.c
+@@ -25,15 +25,15 @@
+  * Ensure each lock is in a separate cacheline.
+  */
+ static union {
+-	raw_spinlock_t lock;
++	arch_spinlock_t lock;
+ 	char pad[L1_CACHE_BYTES];
+ } atomic64_lock[NR_LOCKS] __cacheline_aligned_in_smp = {
+ 	[0 ... (NR_LOCKS - 1)] = {
+-		.lock =  __RAW_SPIN_LOCK_UNLOCKED(atomic64_lock.lock),
++		.lock =  __ARCH_SPIN_LOCK_UNLOCKED,
+ 	},
+ };
+ 
+-static inline raw_spinlock_t *lock_addr(const atomic64_t *v)
++static inline arch_spinlock_t *lock_addr(const atomic64_t *v)
+ {
+ 	unsigned long addr = (unsigned long) v;
+ 
+@@ -45,12 +45,14 @@ static inline raw_spinlock_t *lock_addr(
+ s64 generic_atomic64_read(const atomic64_t *v)
+ {
+ 	unsigned long flags;
+-	raw_spinlock_t *lock = lock_addr(v);
++	arch_spinlock_t *lock = lock_addr(v);
+ 	s64 val;
+ 
+-	raw_spin_lock_irqsave(lock, flags);
++	local_irq_save(flags);
++	arch_spin_lock(lock);
+ 	val = v->counter;
+-	raw_spin_unlock_irqrestore(lock, flags);
++	arch_spin_unlock(lock);
++	local_irq_restore(flags);
+ 	return val;
+ }
+ EXPORT_SYMBOL(generic_atomic64_read);
+@@ -58,11 +60,13 @@ EXPORT_SYMBOL(generic_atomic64_read);
+ void generic_atomic64_set(atomic64_t *v, s64 i)
+ {
+ 	unsigned long flags;
+-	raw_spinlock_t *lock = lock_addr(v);
++	arch_spinlock_t *lock = lock_addr(v);
+ 
+-	raw_spin_lock_irqsave(lock, flags);
++	local_irq_save(flags);
++	arch_spin_lock(lock);
+ 	v->counter = i;
+-	raw_spin_unlock_irqrestore(lock, flags);
++	arch_spin_unlock(lock);
++	local_irq_restore(flags);
+ }
+ EXPORT_SYMBOL(generic_atomic64_set);
+ 
+@@ -70,11 +74,13 @@ EXPORT_SYMBOL(generic_atomic64_set);
+ void generic_atomic64_##op(s64 a, atomic64_t *v)			\
+ {									\
+ 	unsigned long flags;						\
+-	raw_spinlock_t *lock = lock_addr(v);				\
++	arch_spinlock_t *lock = lock_addr(v);				\
+ 									\
+-	raw_spin_lock_irqsave(lock, flags);				\
++	local_irq_save(flags);						\
++	arch_spin_lock(lock);						\
+ 	v->counter c_op a;						\
+-	raw_spin_unlock_irqrestore(lock, flags);			\
++	arch_spin_unlock(lock);						\
++	local_irq_restore(flags);					\
+ }									\
+ EXPORT_SYMBOL(generic_atomic64_##op);
+ 
+@@ -82,12 +88,14 @@ EXPORT_SYMBOL(generic_atomic64_##op);
+ s64 generic_atomic64_##op##_return(s64 a, atomic64_t *v)		\
+ {									\
+ 	unsigned long flags;						\
+-	raw_spinlock_t *lock = lock_addr(v);				\
++	arch_spinlock_t *lock = lock_addr(v);				\
+ 	s64 val;							\
+ 									\
+-	raw_spin_lock_irqsave(lock, flags);				\
++	local_irq_save(flags);						\
++	arch_spin_lock(lock);						\
+ 	val = (v->counter c_op a);					\
+-	raw_spin_unlock_irqrestore(lock, flags);			\
++	arch_spin_unlock(lock);						\
++	local_irq_restore(flags);					\
+ 	return val;							\
+ }									\
+ EXPORT_SYMBOL(generic_atomic64_##op##_return);
+@@ -96,13 +104,15 @@ EXPORT_SYMBOL(generic_atomic64_##op##_re
+ s64 generic_atomic64_fetch_##op(s64 a, atomic64_t *v)			\
+ {									\
+ 	unsigned long flags;						\
+-	raw_spinlock_t *lock = lock_addr(v);				\
++	arch_spinlock_t *lock = lock_addr(v);				\
+ 	s64 val;							\
+ 									\
+-	raw_spin_lock_irqsave(lock, flags);				\
++	local_irq_save(flags);						\
++	arch_spin_lock(lock);						\
+ 	val = v->counter;						\
+ 	v->counter c_op a;						\
+-	raw_spin_unlock_irqrestore(lock, flags);			\
++	arch_spin_unlock(lock);						\
++	local_irq_restore(flags);					\
+ 	return val;							\
+ }									\
+ EXPORT_SYMBOL(generic_atomic64_fetch_##op);
+@@ -131,14 +141,16 @@ ATOMIC64_OPS(xor, ^=)
+ s64 generic_atomic64_dec_if_positive(atomic64_t *v)
+ {
+ 	unsigned long flags;
+-	raw_spinlock_t *lock = lock_addr(v);
++	arch_spinlock_t *lock = lock_addr(v);
+ 	s64 val;
+ 
+-	raw_spin_lock_irqsave(lock, flags);
++	local_irq_save(flags);
++	arch_spin_lock(lock);
+ 	val = v->counter - 1;
+ 	if (val >= 0)
+ 		v->counter = val;
+-	raw_spin_unlock_irqrestore(lock, flags);
++	arch_spin_unlock(lock);
++	local_irq_restore(flags);
+ 	return val;
+ }
+ EXPORT_SYMBOL(generic_atomic64_dec_if_positive);
+@@ -146,14 +158,16 @@ EXPORT_SYMBOL(generic_atomic64_dec_if_po
+ s64 generic_atomic64_cmpxchg(atomic64_t *v, s64 o, s64 n)
+ {
+ 	unsigned long flags;
+-	raw_spinlock_t *lock = lock_addr(v);
++	arch_spinlock_t *lock = lock_addr(v);
+ 	s64 val;
+ 
+-	raw_spin_lock_irqsave(lock, flags);
++	local_irq_save(flags);
++	arch_spin_lock(lock);
+ 	val = v->counter;
+ 	if (val == o)
+ 		v->counter = n;
+-	raw_spin_unlock_irqrestore(lock, flags);
++	arch_spin_unlock(lock);
++	local_irq_restore(flags);
+ 	return val;
+ }
+ EXPORT_SYMBOL(generic_atomic64_cmpxchg);
+@@ -161,13 +175,15 @@ EXPORT_SYMBOL(generic_atomic64_cmpxchg);
+ s64 generic_atomic64_xchg(atomic64_t *v, s64 new)
+ {
+ 	unsigned long flags;
+-	raw_spinlock_t *lock = lock_addr(v);
++	arch_spinlock_t *lock = lock_addr(v);
+ 	s64 val;
+ 
+-	raw_spin_lock_irqsave(lock, flags);
++	local_irq_save(flags);
++	arch_spin_lock(lock);
+ 	val = v->counter;
+ 	v->counter = new;
+-	raw_spin_unlock_irqrestore(lock, flags);
++	arch_spin_unlock(lock);
++	local_irq_restore(flags);
+ 	return val;
+ }
+ EXPORT_SYMBOL(generic_atomic64_xchg);
+@@ -175,14 +191,16 @@ EXPORT_SYMBOL(generic_atomic64_xchg);
+ s64 generic_atomic64_fetch_add_unless(atomic64_t *v, s64 a, s64 u)
+ {
+ 	unsigned long flags;
+-	raw_spinlock_t *lock = lock_addr(v);
++	arch_spinlock_t *lock = lock_addr(v);
+ 	s64 val;
+ 
+-	raw_spin_lock_irqsave(lock, flags);
++	local_irq_save(flags);
++	arch_spin_lock(lock);
+ 	val = v->counter;
+ 	if (val != u)
+ 		v->counter += a;
+-	raw_spin_unlock_irqrestore(lock, flags);
++	arch_spin_unlock(lock);
++	local_irq_restore(flags);
+ 
+ 	return val;
+ }
 
 
