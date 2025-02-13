@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51E5241699;
-	Thu, 13 Feb 2025 14:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855A02222B1;
+	Thu, 13 Feb 2025 14:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457478; cv=none; b=KnHA55V7tfafocoCyKgj5xr9ebQfZASzPrjYiWrMOmCLU33k44iPrG7s9/5X969e3cZ2tuL2wCsodspw9BcOTCwcFmC6vDu2BXh96mLqXvOqtxaS45C5bcz4EEclMnEaeHdQK6TA0u4ueHXS4fdcufi9PFF2tl8BwQ0hySdG0yI=
+	t=1739457482; cv=none; b=OgwK8utuV2BBRjsQrP/hr475hPIEHXeNsDpUGKVDgwPLfvdF7CtWps/O4zlB0MQ+wuZGoPDnMHwqBnzfMPIucQtIXAiOqQUSW44N4XwNcC18SnMoBJhUbXP7NwbkEezhyxs2tNfs7ETpCgpaCVGH8Gg4ywDopGsEcq5BNVpeCKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457478; c=relaxed/simple;
-	bh=nE62W3Vthgo1mSoSKzC+RgQNE3K84dlKAaNnExxaJcc=;
+	s=arc-20240116; t=1739457482; c=relaxed/simple;
+	bh=QKVQgHYWSIEDDMJoePgxTBntpDHyEQ58tNvQ+I8Mul0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSTzXo/Fytxzk1bISZm+bC1hMfcKa8Q66V88mDRWllyRl8ZJtqUYEN0RoaZdG+AfR6ssVjIyL4ZR4yhZVMbXbIncxT2BWlYv5AMgdRSZb4TVfQOJPPLlF5QRScoTVc1rEkfxoI9Z9ODnrXRiKQNgJpEosc3Vbp6C31Z9E6pv9Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+8A/Pj8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nCjs0Lwgye2JlPf4lXOnfLj/Cwr4nGwTL5SvV5FUq1rKrF8YFeTf/EtnM1E9xCfMYF8tDJu8PyOAG5O3TWsWrLXhmWAPIVj5KdGmaP/nqjg47pO3Hmi1E+pAGRWUsi0tu6l/lodLVX6I/ufJcCvpUYmOq8VRQLB4ba5bL48wr7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZMt3+ps; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+8A/Pj8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428F9C4CED1;
-	Thu, 13 Feb 2025 14:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZMt3+ps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B6FC4CEE4;
+	Thu, 13 Feb 2025 14:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457478;
-	bh=nE62W3Vthgo1mSoSKzC+RgQNE3K84dlKAaNnExxaJcc=;
+	s=korg; t=1739457482;
+	bh=QKVQgHYWSIEDDMJoePgxTBntpDHyEQ58tNvQ+I8Mul0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+8A/Pj8mCJX6Aat3ODhmUcKd6B+ysxUQrcOF9GVGTWYX42+pNRjRxD79DKz3eH9h
-	 ccudq1J5u+/XWdNMQ5a+9hpfD3V5+Ur44YuqVqYj2v26+m+z1p4cJGse5+OuDJTMWE
-	 fmgHJXVdociAk38vUPBsnlkpPA2/2PUSOJ14ptbM=
+	b=NZMt3+psCVjUEXaAUQUnyLIi7lCzQO3txi2xtruNIeTu9juDBliCitSMmvQJyZXC4
+	 jurXOCf7FEfymQRjE14WudZWHLmyoupOixW2HV6aPm8m8cljyWkLVOHTBmGYLNWzyf
+	 qd712LWWqml8789SqTtAj1mHoaotFv3l0XD19zBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Juergen Gross <jgross@suse.com>,
-	Jan Beulich <jbeulich@suse.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 121/422] x86/xen: add FRAME_END to xen_hypercall_hvm()
-Date: Thu, 13 Feb 2025 15:24:30 +0100
-Message-ID: <20250213142441.220155501@linuxfoundation.org>
+Subject: [PATCH 6.12 122/422] ACPI: property: Fix return value for nval == 0 in acpi_data_prop_read()
+Date: Thu, 13 Feb 2025 15:24:31 +0100
+Message-ID: <20250213142441.257883023@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -53,36 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 0bd797b801bd8ee06c822844e20d73aaea0878dd ]
+[ Upstream commit ab930483eca9f3e816c35824b5868599af0c61d7 ]
 
-xen_hypercall_hvm() is missing a FRAME_END at the end, add it.
+While analysing code for software and OF node for the corner case when
+caller asks to read zero items in the supposed to be an array of values
+I found that ACPI behaves differently to what OF does, i.e.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202502030848.HTNTTuo9-lkp@intel.com/
-Fixes: b4845bb63838 ("x86/xen: add central hypercall functions")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+ 1. It returns -EINVAL when caller asks to read zero items from integer
+    array, while OF returns 0, if no other errors happened.
+
+ 2. It returns -EINVAL when caller asks to read zero items from string
+    array, while OF returns -ENODATA, if no other errors happened.
+
+Amend ACPI implementation to follow what OF does.
+
+Fixes: b31384fa5de3 ("Driver core: Unified device properties interface for platform firmware")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20250203194629.3731895-1-andriy.shevchenko@linux.intel.com
+[ rjw: Added empty line after a conditional ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/xen-head.S | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/property.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/xen/xen-head.S b/arch/x86/xen/xen-head.S
-index ce96877c3c4fe..55978e0dc1755 100644
---- a/arch/x86/xen/xen-head.S
-+++ b/arch/x86/xen/xen-head.S
-@@ -132,6 +132,7 @@ SYM_FUNC_START(xen_hypercall_hvm)
- 	pop %rcx
- 	pop %rax
- #endif
-+	FRAME_END
- 	/* Use correct hypercall function. */
- 	jz xen_hypercall_amd
- 	jmp xen_hypercall_intel
+diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
+index 80a52a4e66dd1..e9186339f6e6b 100644
+--- a/drivers/acpi/property.c
++++ b/drivers/acpi/property.c
+@@ -1187,8 +1187,6 @@ static int acpi_data_prop_read(const struct acpi_device_data *data,
+ 		}
+ 		break;
+ 	}
+-	if (nval == 0)
+-		return -EINVAL;
+ 
+ 	if (obj->type == ACPI_TYPE_BUFFER) {
+ 		if (proptype != DEV_PROP_U8)
+@@ -1212,9 +1210,11 @@ static int acpi_data_prop_read(const struct acpi_device_data *data,
+ 		ret = acpi_copy_property_array_uint(items, (u64 *)val, nval);
+ 		break;
+ 	case DEV_PROP_STRING:
+-		ret = acpi_copy_property_array_string(
+-			items, (char **)val,
+-			min_t(u32, nval, obj->package.count));
++		nval = min_t(u32, nval, obj->package.count);
++		if (nval == 0)
++			return -ENODATA;
++
++		ret = acpi_copy_property_array_string(items, (char **)val, nval);
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
 -- 
 2.39.5
 
