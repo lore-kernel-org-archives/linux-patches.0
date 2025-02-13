@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFBB26B0B1;
-	Thu, 13 Feb 2025 15:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C4326B0BC;
+	Thu, 13 Feb 2025 15:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459040; cv=none; b=YjZfMtZsi7LbAtXPG+e5nSV2G3INC3pWA4gj2idz12du1gmGw9PoAAAkrVGQXk5eHqJGxvoEB5CEPy6V4oxoTLY10fpyEPsMDolOxu9pYx05KRQlUMjWF9l+PEiaZarPtnRTxw4Haf7zrmTE8O2QufcNQC4ha7W6yKt+jqMw1PM=
+	t=1739459044; cv=none; b=i+bhgycxstcsC1Ppz9t8QBMIw3RmMwe91BamK2tDTLjjTuvYptkR730iC1fZHleK0/0HZXDnrdk9HV/2rUAOxymcgpcElj/KN7aGoTiMHuBoD1qW4XNBP16OzZJEmsrW1J+kgL5vj3x/hr2hzzDhWnxeW3ZV5Z7plPKO/l8QDrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459040; c=relaxed/simple;
-	bh=pzRr+gVIDE7mzMUcwpTLMLnSOsfSezIM/fHhicqf+JA=;
+	s=arc-20240116; t=1739459044; c=relaxed/simple;
+	bh=BbQvZ/4fPHUtvkWE1phcvDEFELAGRwgvUKifKaF+ylk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfAcT7ZvkKajOyyeMfbc01dnr4IpdZL2S0hgEH2N6PsQdcu4/U1+4uY4DnsQK3BuG0kcNDbnPck4OqaSBd0y2OXDkc593VAV2/4N3ARkx22vmczs9hnjgG/DhEAfJdjqpXUxl+uR4ujSstDC15djHV4FKT6Ffqox/ZeL7EAuRPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsAb6Y4R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kOo1GBjDLh7FoN2Lo72CBgf42YFOnWGR+wwxVhpglPml7xpmbVe0/+iPMvnKLwwACZK4cC8FegL8WpoJ2vdb820gNw91o3zsW7mkBd73kupbs9GLvXMynXRp5iAiWjCSJIdTGhucbq6O5gVACzpzYh/W29FDEI9eJiwpsvt9KQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAgO5U5N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsAb6Y4R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE547C4CED1;
-	Thu, 13 Feb 2025 15:03:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAgO5U5N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4EDC4CED1;
+	Thu, 13 Feb 2025 15:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459040;
-	bh=pzRr+gVIDE7mzMUcwpTLMLnSOsfSezIM/fHhicqf+JA=;
+	s=korg; t=1739459043;
+	bh=BbQvZ/4fPHUtvkWE1phcvDEFELAGRwgvUKifKaF+ylk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NsAb6Y4ReLTliSttRBgBextaiEoHEjHKTIbp9WNrTGeehUsWVghrBrS2fUWhOYoTJ
-	 ArLpJbzoPM6GXH5jcEQWXvJ3WkA5g2nQ1Y0zIVFvE1xqE/7WJxgAZ1IfqN4rNcrtap
-	 RSemSqzZjZwr6xOvc6Wdw9+8e56UUDOTouYcwR2U=
+	b=iAgO5U5NMGoJqGp222/4JQaHvbUH17TPwdBFI+tpJkFP8oHo2FHijAqjHEFWq47EM
+	 cmeXSqbHNh/guOyR+Th1MdjeowcME0A3XhKJnImqH84/lkywxEMZC0ZDqqWtGTNy7H
+	 6ynRdXoaVpy2VuJdxKJrAfAZNXUbP5wwrVMEvbEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Coly Li <colyli@kernel.org>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.13 151/443] md: reintroduce md-linear
-Date: Thu, 13 Feb 2025 15:25:16 +0100
-Message-ID: <20250213142446.425618823@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 6.13 152/443] s390/futex: Fix FUTEX_OP_ANDN implementation
+Date: Thu, 13 Feb 2025 15:25:17 +0100
+Message-ID: <20250213142446.464097611@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,499 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 127186cfb184eaccdfe948e6da66940cfa03efc5 upstream.
+commit 26701574cee6777f867f89b4a5c667817e1ee0dd upstream.
 
-THe md-linear is removed by commit 849d18e27be9 ("md: Remove deprecated
-CONFIG_MD_LINEAR") because it has been marked as deprecated for a long
-time.
+The futex operation FUTEX_OP_ANDN is supposed to implement
 
-However, md-linear is used widely for underlying disks with different size,
-sadly we didn't know this until now, and it's true useful to create
-partitions and assemble multiple raid and then append one to the other.
+*(int *)UADDR2 &= ~OPARG;
 
-People have to use dm-linear in this case now, however, they will prefer
-to minimize the number of involved modules.
+The s390 implementation just implements an AND instead of ANDN.
+Add the missing bitwise not operation to oparg to fix this.
 
-Fixes: 849d18e27be9 ("md: Remove deprecated CONFIG_MD_LINEAR")
+This is broken since nearly 19 years, so it looks like user space is
+not making use of this operation.
+
+Fixes: 3363fbdd6fb4 ("[PATCH] s390: futex atomic operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Coly Li <colyli@kernel.org>
-Acked-by: Mike Snitzer <snitzer@kernel.org>
-Link: https://lore.kernel.org/r/20250102112841.1227111-1-yukuai1@huaweicloud.com
-Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/Kconfig             |   13 +
- drivers/md/Makefile            |    2 
- drivers/md/md-autodetect.c     |    8 
- drivers/md/md-linear.c         |  354 +++++++++++++++++++++++++++++++++++++++++
- drivers/md/md.c                |    2 
- include/uapi/linux/raid/md_p.h |    2 
- include/uapi/linux/raid/md_u.h |    2 
- 7 files changed, 379 insertions(+), 4 deletions(-)
- create mode 100644 drivers/md/md-linear.c
+ arch/s390/include/asm/futex.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/Kconfig
-+++ b/drivers/md/Kconfig
-@@ -61,6 +61,19 @@ config MD_BITMAP_FILE
- 	  various kernel APIs and can only work with files on a file system not
- 	  actually sitting on the MD device.
- 
-+config MD_LINEAR
-+	tristate "Linear (append) mode"
-+	depends on BLK_DEV_MD
-+	help
-+	  If you say Y here, then your multiple devices driver will be able to
-+	  use the so-called linear mode, i.e. it will combine the hard disk
-+	  partitions by simply appending one to the other.
-+
-+	  To compile this as a module, choose M here: the module
-+	  will be called linear.
-+
-+	  If unsure, say Y.
-+
- config MD_RAID0
- 	tristate "RAID-0 (striping) mode"
- 	depends on BLK_DEV_MD
---- a/drivers/md/Makefile
-+++ b/drivers/md/Makefile
-@@ -29,12 +29,14 @@ dm-zoned-y	+= dm-zoned-target.o dm-zoned
- 
- md-mod-y	+= md.o md-bitmap.o
- raid456-y	+= raid5.o raid5-cache.o raid5-ppl.o
-+linear-y       += md-linear.o
- 
- # Note: link order is important.  All raid personalities
- # and must come before md.o, as they each initialise
- # themselves, and md.o may use the personalities when it
- # auto-initialised.
- 
-+obj-$(CONFIG_MD_LINEAR)		+= linear.o
- obj-$(CONFIG_MD_RAID0)		+= raid0.o
- obj-$(CONFIG_MD_RAID1)		+= raid1.o
- obj-$(CONFIG_MD_RAID10)		+= raid10.o
---- a/drivers/md/md-autodetect.c
-+++ b/drivers/md/md-autodetect.c
-@@ -49,6 +49,7 @@ static int md_setup_ents __initdata;
-  *             instead of just one.  -- KTK
-  * 18May2000: Added support for persistent-superblock arrays:
-  *             md=n,0,factor,fault,device-list   uses RAID0 for device n
-+ *             md=n,-1,factor,fault,device-list  uses LINEAR for device n
-  *             md=n,device-list      reads a RAID superblock from the devices
-  *             elements in device-list are read by name_to_kdev_t so can be
-  *             a hex number or something like /dev/hda1 /dev/sdb
-@@ -87,7 +88,7 @@ static int __init md_setup(char *str)
- 		md_setup_ents++;
- 	switch (get_option(&str, &level)) {	/* RAID level */
- 	case 2: /* could be 0 or -1.. */
--		if (level == 0) {
-+		if (level == 0 || level == LEVEL_LINEAR) {
- 			if (get_option(&str, &factor) != 2 ||	/* Chunk Size */
- 					get_option(&str, &fault) != 2) {
- 				printk(KERN_WARNING "md: Too few arguments supplied to md=.\n");
-@@ -95,7 +96,10 @@ static int __init md_setup(char *str)
- 			}
- 			md_setup_args[ent].level = level;
- 			md_setup_args[ent].chunk = 1 << (factor+12);
--			pername = "raid0";
-+			if (level ==  LEVEL_LINEAR)
-+				pername = "linear";
-+			else
-+				pername = "raid0";
- 			break;
- 		}
- 		fallthrough;
---- /dev/null
-+++ b/drivers/md/md-linear.c
-@@ -0,0 +1,354 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * linear.c : Multiple Devices driver for Linux Copyright (C) 1994-96 Marc
-+ * ZYNGIER <zyngier@ufr-info-p7.ibp.fr> or <maz@gloups.fdn.fr>
-+ */
-+
-+#include <linux/blkdev.h>
-+#include <linux/raid/md_u.h>
-+#include <linux/seq_file.h>
-+#include <linux/module.h>
-+#include <linux/slab.h>
-+#include <trace/events/block.h>
-+#include "md.h"
-+
-+struct dev_info {
-+	struct md_rdev	*rdev;
-+	sector_t	end_sector;
-+};
-+
-+struct linear_conf {
-+	struct rcu_head         rcu;
-+	sector_t                array_sectors;
-+	/* a copy of mddev->raid_disks */
-+	int                     raid_disks;
-+	struct dev_info         disks[] __counted_by(raid_disks);
-+};
-+
-+/*
-+ * find which device holds a particular offset
-+ */
-+static inline struct dev_info *which_dev(struct mddev *mddev, sector_t sector)
-+{
-+	int lo, mid, hi;
-+	struct linear_conf *conf;
-+
-+	lo = 0;
-+	hi = mddev->raid_disks - 1;
-+	conf = mddev->private;
-+
-+	/*
-+	 * Binary Search
-+	 */
-+
-+	while (hi > lo) {
-+
-+		mid = (hi + lo) / 2;
-+		if (sector < conf->disks[mid].end_sector)
-+			hi = mid;
-+		else
-+			lo = mid + 1;
-+	}
-+
-+	return conf->disks + lo;
-+}
-+
-+static sector_t linear_size(struct mddev *mddev, sector_t sectors, int raid_disks)
-+{
-+	struct linear_conf *conf;
-+	sector_t array_sectors;
-+
-+	conf = mddev->private;
-+	WARN_ONCE(sectors || raid_disks,
-+		  "%s does not support generic reshape\n", __func__);
-+	array_sectors = conf->array_sectors;
-+
-+	return array_sectors;
-+}
-+
-+static int linear_set_limits(struct mddev *mddev)
-+{
-+	struct queue_limits lim;
-+	int err;
-+
-+	md_init_stacking_limits(&lim);
-+	lim.max_hw_sectors = mddev->chunk_sectors;
-+	lim.max_write_zeroes_sectors = mddev->chunk_sectors;
-+	lim.io_min = mddev->chunk_sectors << 9;
-+	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
-+	if (err) {
-+		queue_limits_cancel_update(mddev->gendisk->queue);
-+		return err;
-+	}
-+
-+	return queue_limits_set(mddev->gendisk->queue, &lim);
-+}
-+
-+static struct linear_conf *linear_conf(struct mddev *mddev, int raid_disks)
-+{
-+	struct linear_conf *conf;
-+	struct md_rdev *rdev;
-+	int ret = -EINVAL;
-+	int cnt;
-+	int i;
-+
-+	conf = kzalloc(struct_size(conf, disks, raid_disks), GFP_KERNEL);
-+	if (!conf)
-+		return ERR_PTR(-ENOMEM);
-+
-+	/*
-+	 * conf->raid_disks is copy of mddev->raid_disks. The reason to
-+	 * keep a copy of mddev->raid_disks in struct linear_conf is,
-+	 * mddev->raid_disks may not be consistent with pointers number of
-+	 * conf->disks[] when it is updated in linear_add() and used to
-+	 * iterate old conf->disks[] earray in linear_congested().
-+	 * Here conf->raid_disks is always consitent with number of
-+	 * pointers in conf->disks[] array, and mddev->private is updated
-+	 * with rcu_assign_pointer() in linear_addr(), such race can be
-+	 * avoided.
-+	 */
-+	conf->raid_disks = raid_disks;
-+
-+	cnt = 0;
-+	conf->array_sectors = 0;
-+
-+	rdev_for_each(rdev, mddev) {
-+		int j = rdev->raid_disk;
-+		struct dev_info *disk = conf->disks + j;
-+		sector_t sectors;
-+
-+		if (j < 0 || j >= raid_disks || disk->rdev) {
-+			pr_warn("md/linear:%s: disk numbering problem. Aborting!\n",
-+				mdname(mddev));
-+			goto out;
-+		}
-+
-+		disk->rdev = rdev;
-+		if (mddev->chunk_sectors) {
-+			sectors = rdev->sectors;
-+			sector_div(sectors, mddev->chunk_sectors);
-+			rdev->sectors = sectors * mddev->chunk_sectors;
-+		}
-+
-+		conf->array_sectors += rdev->sectors;
-+		cnt++;
-+	}
-+	if (cnt != raid_disks) {
-+		pr_warn("md/linear:%s: not enough drives present. Aborting!\n",
-+			mdname(mddev));
-+		goto out;
-+	}
-+
-+	/*
-+	 * Here we calculate the device offsets.
-+	 */
-+	conf->disks[0].end_sector = conf->disks[0].rdev->sectors;
-+
-+	for (i = 1; i < raid_disks; i++)
-+		conf->disks[i].end_sector =
-+			conf->disks[i-1].end_sector +
-+			conf->disks[i].rdev->sectors;
-+
-+	if (!mddev_is_dm(mddev)) {
-+		ret = linear_set_limits(mddev);
-+		if (ret)
-+			goto out;
-+	}
-+
-+	return conf;
-+
-+out:
-+	kfree(conf);
-+	return ERR_PTR(ret);
-+}
-+
-+static int linear_run(struct mddev *mddev)
-+{
-+	struct linear_conf *conf;
-+	int ret;
-+
-+	if (md_check_no_bitmap(mddev))
-+		return -EINVAL;
-+
-+	conf = linear_conf(mddev, mddev->raid_disks);
-+	if (IS_ERR(conf))
-+		return PTR_ERR(conf);
-+
-+	mddev->private = conf;
-+	md_set_array_sectors(mddev, linear_size(mddev, 0, 0));
-+
-+	ret =  md_integrity_register(mddev);
-+	if (ret) {
-+		kfree(conf);
-+		mddev->private = NULL;
-+	}
-+	return ret;
-+}
-+
-+static int linear_add(struct mddev *mddev, struct md_rdev *rdev)
-+{
-+	/* Adding a drive to a linear array allows the array to grow.
-+	 * It is permitted if the new drive has a matching superblock
-+	 * already on it, with raid_disk equal to raid_disks.
-+	 * It is achieved by creating a new linear_private_data structure
-+	 * and swapping it in in-place of the current one.
-+	 * The current one is never freed until the array is stopped.
-+	 * This avoids races.
-+	 */
-+	struct linear_conf *newconf, *oldconf;
-+
-+	if (rdev->saved_raid_disk != mddev->raid_disks)
-+		return -EINVAL;
-+
-+	rdev->raid_disk = rdev->saved_raid_disk;
-+	rdev->saved_raid_disk = -1;
-+
-+	newconf = linear_conf(mddev, mddev->raid_disks + 1);
-+	if (!newconf)
-+		return -ENOMEM;
-+
-+	/* newconf->raid_disks already keeps a copy of * the increased
-+	 * value of mddev->raid_disks, WARN_ONCE() is just used to make
-+	 * sure of this. It is possible that oldconf is still referenced
-+	 * in linear_congested(), therefore kfree_rcu() is used to free
-+	 * oldconf until no one uses it anymore.
-+	 */
-+	oldconf = rcu_dereference_protected(mddev->private,
-+			lockdep_is_held(&mddev->reconfig_mutex));
-+	mddev->raid_disks++;
-+	WARN_ONCE(mddev->raid_disks != newconf->raid_disks,
-+		"copied raid_disks doesn't match mddev->raid_disks");
-+	rcu_assign_pointer(mddev->private, newconf);
-+	md_set_array_sectors(mddev, linear_size(mddev, 0, 0));
-+	set_capacity_and_notify(mddev->gendisk, mddev->array_sectors);
-+	kfree_rcu(oldconf, rcu);
-+	return 0;
-+}
-+
-+static void linear_free(struct mddev *mddev, void *priv)
-+{
-+	struct linear_conf *conf = priv;
-+
-+	kfree(conf);
-+}
-+
-+static bool linear_make_request(struct mddev *mddev, struct bio *bio)
-+{
-+	struct dev_info *tmp_dev;
-+	sector_t start_sector, end_sector, data_offset;
-+	sector_t bio_sector = bio->bi_iter.bi_sector;
-+
-+	if (unlikely(bio->bi_opf & REQ_PREFLUSH)
-+	    && md_flush_request(mddev, bio))
-+		return true;
-+
-+	tmp_dev = which_dev(mddev, bio_sector);
-+	start_sector = tmp_dev->end_sector - tmp_dev->rdev->sectors;
-+	end_sector = tmp_dev->end_sector;
-+	data_offset = tmp_dev->rdev->data_offset;
-+
-+	if (unlikely(bio_sector >= end_sector ||
-+		     bio_sector < start_sector))
-+		goto out_of_bounds;
-+
-+	if (unlikely(is_rdev_broken(tmp_dev->rdev))) {
-+		md_error(mddev, tmp_dev->rdev);
-+		bio_io_error(bio);
-+		return true;
-+	}
-+
-+	if (unlikely(bio_end_sector(bio) > end_sector)) {
-+		/* This bio crosses a device boundary, so we have to split it */
-+		struct bio *split = bio_split(bio, end_sector - bio_sector,
-+					      GFP_NOIO, &mddev->bio_set);
-+
-+		if (IS_ERR(split)) {
-+			bio->bi_status = errno_to_blk_status(PTR_ERR(split));
-+			bio_endio(bio);
-+			return true;
-+		}
-+
-+		bio_chain(split, bio);
-+		submit_bio_noacct(bio);
-+		bio = split;
-+	}
-+
-+	md_account_bio(mddev, &bio);
-+	bio_set_dev(bio, tmp_dev->rdev->bdev);
-+	bio->bi_iter.bi_sector = bio->bi_iter.bi_sector -
-+		start_sector + data_offset;
-+
-+	if (unlikely((bio_op(bio) == REQ_OP_DISCARD) &&
-+		     !bdev_max_discard_sectors(bio->bi_bdev))) {
-+		/* Just ignore it */
-+		bio_endio(bio);
-+	} else {
-+		if (mddev->gendisk)
-+			trace_block_bio_remap(bio, disk_devt(mddev->gendisk),
-+					      bio_sector);
-+		mddev_check_write_zeroes(mddev, bio);
-+		submit_bio_noacct(bio);
-+	}
-+	return true;
-+
-+out_of_bounds:
-+	pr_err("md/linear:%s: make_request: Sector %llu out of bounds on dev %pg: %llu sectors, offset %llu\n",
-+	       mdname(mddev),
-+	       (unsigned long long)bio->bi_iter.bi_sector,
-+	       tmp_dev->rdev->bdev,
-+	       (unsigned long long)tmp_dev->rdev->sectors,
-+	       (unsigned long long)start_sector);
-+	bio_io_error(bio);
-+	return true;
-+}
-+
-+static void linear_status(struct seq_file *seq, struct mddev *mddev)
-+{
-+	seq_printf(seq, " %dk rounding", mddev->chunk_sectors / 2);
-+}
-+
-+static void linear_error(struct mddev *mddev, struct md_rdev *rdev)
-+{
-+	if (!test_and_set_bit(MD_BROKEN, &mddev->flags)) {
-+		char *md_name = mdname(mddev);
-+
-+		pr_crit("md/linear%s: Disk failure on %pg detected, failing array.\n",
-+			md_name, rdev->bdev);
-+	}
-+}
-+
-+static void linear_quiesce(struct mddev *mddev, int state)
-+{
-+}
-+
-+static struct md_personality linear_personality = {
-+	.name		= "linear",
-+	.level		= LEVEL_LINEAR,
-+	.owner		= THIS_MODULE,
-+	.make_request	= linear_make_request,
-+	.run		= linear_run,
-+	.free		= linear_free,
-+	.status		= linear_status,
-+	.hot_add_disk	= linear_add,
-+	.size		= linear_size,
-+	.quiesce	= linear_quiesce,
-+	.error_handler	= linear_error,
-+};
-+
-+static int __init linear_init(void)
-+{
-+	return register_md_personality(&linear_personality);
-+}
-+
-+static void linear_exit(void)
-+{
-+	unregister_md_personality(&linear_personality);
-+}
-+
-+module_init(linear_init);
-+module_exit(linear_exit);
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Linear device concatenation personality for MD (deprecated)");
-+MODULE_ALIAS("md-personality-1"); /* LINEAR - deprecated*/
-+MODULE_ALIAS("md-linear");
-+MODULE_ALIAS("md-level--1");
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -8124,7 +8124,7 @@ void md_error(struct mddev *mddev, struc
- 		return;
- 	mddev->pers->error_handler(mddev, rdev);
- 
--	if (mddev->pers->level == 0)
-+	if (mddev->pers->level == 0 || mddev->pers->level == LEVEL_LINEAR)
- 		return;
- 
- 	if (mddev->degraded && !test_bit(MD_BROKEN, &mddev->flags))
---- a/include/uapi/linux/raid/md_p.h
-+++ b/include/uapi/linux/raid/md_p.h
-@@ -233,7 +233,7 @@ struct mdp_superblock_1 {
- 	char	set_name[32];	/* set and interpreted by user-space */
- 
- 	__le64	ctime;		/* lo 40 bits are seconds, top 24 are microseconds or 0*/
--	__le32	level;		/* 0,1,4,5 */
-+	__le32	level;		/* 0,1,4,5, -1 (linear) */
- 	__le32	layout;		/* only for raid5 and raid10 currently */
- 	__le64	size;		/* used size of component devices, in 512byte sectors */
- 
---- a/include/uapi/linux/raid/md_u.h
-+++ b/include/uapi/linux/raid/md_u.h
-@@ -103,6 +103,8 @@ typedef struct mdu_array_info_s {
- 
- } mdu_array_info_t;
- 
-+#define LEVEL_LINEAR		(-1)
-+
- /* we need a value for 'no level specified' and 0
-  * means 'raid0', so we need something else.  This is
-  * for internal use only
+--- a/arch/s390/include/asm/futex.h
++++ b/arch/s390/include/asm/futex.h
+@@ -44,7 +44,7 @@ static inline int arch_futex_atomic_op_i
+ 		break;
+ 	case FUTEX_OP_ANDN:
+ 		__futex_atomic_op("lr %2,%1\nnr %2,%5\n",
+-				  ret, oldval, newval, uaddr, oparg);
++				  ret, oldval, newval, uaddr, ~oparg);
+ 		break;
+ 	case FUTEX_OP_XOR:
+ 		__futex_atomic_op("lr %2,%1\nxr %2,%5\n",
 
 
