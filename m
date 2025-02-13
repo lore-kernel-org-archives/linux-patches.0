@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E3E13F434;
-	Thu, 13 Feb 2025 15:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8354D13F434;
+	Thu, 13 Feb 2025 15:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458992; cv=none; b=rCk4xaq9+XawG5HVm6MWuYjDC+zq+ZmZpblYjMU6zbbRriVF0vuMNMUdzZT6awfiNQOeymaw8M95ZzP9zVZ1lsrv/EJHDV0AdgPbFvwjvX9yYwmuUXYYJ+I5Ap6hSEs7CsqiRbfBQgSPkYezQmdvsxo3fepeAAzyVAFw1nLPXCo=
+	t=1739458995; cv=none; b=L5jHGgjQAnYRPscIb5+tfPZ5SgO1cUAJU2R14Nmg+WfigP4RG2Jhs0n85N/lPXlVfuOKRHbX8MPPV18IdmKv8DHrXFsQLpUGnvlobOzioGvYBcf1kVgP0Br/15v4qsygfrkIUO8MCEgo/F51f9TfOhjOnVs+QYZKx7qqP65jpc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458992; c=relaxed/simple;
-	bh=r9ZDRJR2slSXYhtr0GjWIyXK3fVgNz5/Wki5SwNZIso=;
+	s=arc-20240116; t=1739458995; c=relaxed/simple;
+	bh=OAslttIImXKHVHvab7V+o3FOS5VzSwWYyGtotf45GJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QzD2vHV+Gpi5N/kLynTTUfocY/l6rjynHZLxwT70Al5MPGQIjZZvmSI444bYci4TpYbqXfPeE3MSqzv/7E8de/EWj+9eJyZW+kJO1xQG8VsI4QVtk6Tk+Kgx4NV6OVSnKVbwaC26TScVSnzPUr+3z7pop79i1GIvr0Tl+1g8he0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4OASUGA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jwebX1GUUviALvbHn1wKsKuMkRLLD9Idi6sSRaUCfyNsQnsS1GkEgg+1KfE4+geQQWgoDqGR47sGxKFLHnQHNzF8wkFMxbvzPlx377+m3vYTe+k2kgGU8kv5wfowwtEIj9FQlcLdf1jR4CyjXPeg7ACD/s0S/tL3AvL7UtyhrsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvbVVdwS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4OASUGA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A1EC4CED1;
-	Thu, 13 Feb 2025 15:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvbVVdwS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03A7C4CED1;
+	Thu, 13 Feb 2025 15:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458992;
-	bh=r9ZDRJR2slSXYhtr0GjWIyXK3fVgNz5/Wki5SwNZIso=;
+	s=korg; t=1739458995;
+	bh=OAslttIImXKHVHvab7V+o3FOS5VzSwWYyGtotf45GJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C4OASUGAQYvmQDIP/ezGnpxql1XY5GEx/SDrmotlWTqAx/93MW2JdYE5pufjFstp3
-	 Dk++yAgH8XHvm7tZ3IouvpaRY8JeEeU2cggV44AbX2MIiMnPIEGekQ+LHenO+Ua2BE
-	 yZ+j3B80YOCbpN3QvxqkCnTyUrFJfVLHxUm0q/C4=
+	b=EvbVVdwSON5uC/oqd2iuEic6n33i5ZKm//icrpszhCfArirD6+E53/BFKxP5zD2/L
+	 dZaN+GttDfT4drQxlnOJiJDNSNjX/WAHYJ8D60409hMo2/+PRXlnSYbzl1WC0b9656
+	 ZhGA44hRy6glDyzi9pR7cvmzXa4GLxKHx9t+UiyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Andy Shevchenko <andy@kernel.org>
-Subject: [PATCH 6.13 104/443] platform/x86: serdev_helpers: Check for serial_ctrl_uid == NULL
-Date: Thu, 13 Feb 2025 15:24:29 +0100
-Message-ID: <20250213142444.624658481@linuxfoundation.org>
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Swapnil Sapkal <swapnil.sapkal@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 105/443] sched/fair: Fix inaccurate h_nr_runnable accounting with delayed dequeue
+Date: Thu, 13 Feb 2025 15:24:30 +0100
+Message-ID: <20250213142444.662530602@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -45,58 +47,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-commit 478b00a623d6c8ae23a1be7bcc96cb5497045cef upstream.
+[ Upstream commit 3429dd57f0deb1a602c2624a1dd7c4c11b6c4734 ]
 
-dell_uart_bl_pdev_probe() calls get_serdev_controller() with the
-serial_ctrl_uid parameter set to NULL.
+set_delayed() adjusts cfs_rq->h_nr_runnable for the hierarchy when an
+entity is delayed irrespective of whether the entity corresponds to a
+task or a cfs_rq.
 
-In case of errors this NULL parameter then gets passed to pr_err()
-as argument matching a "%s" conversion specification. This leads to
-compiler warnings when building with "make W=1".
+Consider the following scenario:
 
-Check serial_ctrl_uid before passing it to pr_err() to avoid these.
+	root
+       /    \
+      A	     B (*) delayed since B is no longer eligible on root
+      |	     |
+    Task0  Task1 <--- dequeue_task_fair() - task blocks
 
-Fixes: dc5afd720f84 ("platform/x86: Add new get_serdev_controller() helper")
-Cc: stable@vger.kernel.org
-Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Link: https://lore.kernel.org/r/20241204204227.95757-4-hdegoede@redhat.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When Task1 blocks (dequeue_entity() for task's se returns true),
+dequeue_entities() will continue adjusting cfs_rq->h_nr_* for the
+hierarchy of Task1. However, when the sched_entity corresponding to
+cfs_rq B is delayed, set_delayed() will adjust the h_nr_runnable for the
+hierarchy too leading to both dequeue_entity() and set_delayed()
+decrementing h_nr_runnable for the dequeue of the same task.
+
+A SCHED_WARN_ON() to inspect h_nr_runnable post its update in
+dequeue_entities() like below:
+
+    cfs_rq->h_nr_runnable -= h_nr_runnable;
+    SCHED_WARN_ON(((int) cfs_rq->h_nr_runnable) < 0);
+
+is consistently tripped when running wakeup intensive workloads like
+hackbench in a cgroup.
+
+This error is self correcting since cfs_rq are per-cpu and cannot
+migrate. The entitiy is either picked for full dequeue or is requeued
+when a task wakes up below it. Both those paths call clear_delayed()
+which again increments h_nr_runnable of the hierarchy without
+considering if the entity corresponds to a task or not.
+
+h_nr_runnable will eventually reflect the correct value however in the
+interim, the incorrect values can still influence PELT calculation which
+uses se->runnable_weight or cfs_rq->h_nr_runnable.
+
+Since only delayed tasks take the early return path in
+dequeue_entities() and enqueue_task_fair(), adjust the
+h_nr_runnable in {set,clear}_delayed() only when a task is delayed as
+this path skips the h_nr_* update loops and returns early.
+
+For entities corresponding to cfs_rq, the h_nr_* update loop in the
+caller will do the right thing.
+
+Fixes: 76f2f783294d ("sched/eevdf: More PELT vs DELAYED_DEQUEUE")
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Tested-by: Swapnil Sapkal <swapnil.sapkal@amd.com>
+Link: https://lkml.kernel.org/r/20250117105852.23908-1-kprateek.nayak@amd.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/serdev_helpers.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/sched/fair.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/drivers/platform/x86/serdev_helpers.h
-+++ b/drivers/platform/x86/serdev_helpers.h
-@@ -35,7 +35,7 @@ get_serdev_controller(const char *serial
- 	ctrl_adev = acpi_dev_get_first_match_dev(serial_ctrl_hid, serial_ctrl_uid, -1);
- 	if (!ctrl_adev) {
- 		pr_err("error could not get %s/%s serial-ctrl adev\n",
--		       serial_ctrl_hid, serial_ctrl_uid);
-+		       serial_ctrl_hid, serial_ctrl_uid ?: "*");
- 		return ERR_PTR(-ENODEV);
- 	}
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 8800679b508d9..7d0a05660e5ef 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -5372,6 +5372,15 @@ static __always_inline void return_cfs_rq_runtime(struct cfs_rq *cfs_rq);
+ static void set_delayed(struct sched_entity *se)
+ {
+ 	se->sched_delayed = 1;
++
++	/*
++	 * Delayed se of cfs_rq have no tasks queued on them.
++	 * Do not adjust h_nr_runnable since dequeue_entities()
++	 * will account it for blocked tasks.
++	 */
++	if (!entity_is_task(se))
++		return;
++
+ 	for_each_sched_entity(se) {
+ 		struct cfs_rq *cfs_rq = cfs_rq_of(se);
  
-@@ -43,7 +43,7 @@ get_serdev_controller(const char *serial
- 	ctrl_dev = get_device(acpi_get_first_physical_node(ctrl_adev));
- 	if (!ctrl_dev) {
- 		pr_err("error could not get %s/%s serial-ctrl physical node\n",
--		       serial_ctrl_hid, serial_ctrl_uid);
-+		       serial_ctrl_hid, serial_ctrl_uid ?: "*");
- 		ctrl_dev = ERR_PTR(-ENODEV);
- 		goto put_ctrl_adev;
- 	}
+@@ -5384,6 +5393,16 @@ static void set_delayed(struct sched_entity *se)
+ static void clear_delayed(struct sched_entity *se)
+ {
+ 	se->sched_delayed = 0;
++
++	/*
++	 * Delayed se of cfs_rq have no tasks queued on them.
++	 * Do not adjust h_nr_runnable since a dequeue has
++	 * already accounted for it or an enqueue of a task
++	 * below it will account for it in enqueue_task_fair().
++	 */
++	if (!entity_is_task(se))
++		return;
++
+ 	for_each_sched_entity(se) {
+ 		struct cfs_rq *cfs_rq = cfs_rq_of(se);
+ 
+-- 
+2.39.5
+
 
 
