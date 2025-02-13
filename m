@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5444426B0BC;
-	Thu, 13 Feb 2025 14:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF99A1422DD;
+	Thu, 13 Feb 2025 14:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458644; cv=none; b=KKNdYDArt/5BOshnfptAiHcDC2coUANQI0wHGRvvEqO0uspKvCPIpMtMeAXD/BOZPc3nf0VsCGnnZMMNdWUqJRJEeQoye381rkd6f16FkM/AoJ5ctdOFLu2sfYS38RhIH8fzwfZ1/e28rcsGfxTKKWGA6aqzXNA01oqxeltbXzY=
+	t=1739458647; cv=none; b=jh2n9tZETqQDNBh+zJdE8+hQIfy02hRyG6JqVkxz6YB5wzMXqvzqMLy4jNuaKIKyLRwHs0YLKHmdfYBe1jWW6xfAXPSUFpcdRrFUL0PQownSAUZL10cDq3L1P8I6A+gedRQjXt5hoByS6i+/BZLee+dVYd9hvoGScVyU9YswTM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458644; c=relaxed/simple;
-	bh=9R4JYlMq7hj/LHNe8jxsDotkO4DyR28/+8gau7yJ7eA=;
+	s=arc-20240116; t=1739458647; c=relaxed/simple;
+	bh=STYhixLmwO27ci9w/e4ZRCHiufZy62V/Tfl8+BamFE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kXxnOZxv0ZmaqPU7GKKvE97+xjhv7mLeIrgWHmvdMSSKeonZkuRJ6BP/V+upQlf1hV2Sh4XVe0iLBZNR2HJv88OYJWSMu3bo8LBVav6tJJ/a6j5QKyr/ygLT588Vg5Hhjp+UX56IPVNzYzFXxRNA4sJGFeR6lX2byJdVb6+to6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5nXUHIK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fuk20iN2HLpShSESNQTCIyHmyJFLbUiSWQejYRIktBiir807k800yCZ8Q8Kgns1lV83tCLM2H3qa9GeMrPk7mG8yWddhEJdAKqe+dbpd2lChdHm06iurAO120gLCqGH7ZXkbFa6wUlcOY/9E6AY9z0VROvFg4VdRpe5MLLQsNDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSz+ldua; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5nXUHIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABEEEC4CED1;
-	Thu, 13 Feb 2025 14:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSz+ldua"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A16C4CED1;
+	Thu, 13 Feb 2025 14:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458644;
-	bh=9R4JYlMq7hj/LHNe8jxsDotkO4DyR28/+8gau7yJ7eA=;
+	s=korg; t=1739458647;
+	bh=STYhixLmwO27ci9w/e4ZRCHiufZy62V/Tfl8+BamFE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s5nXUHIKhs4EWVLkSfbirEtJs7kEg52sJrovwaZcMgGhEFmaWzm1/SALdAeE/BkM6
-	 usSP/ns7HtQnzZjKxKhYrsjSljdrY91KBJiO8E3TjU7l39XtOFjjr4cFRPfpCti9tF
-	 o9M2Dwr7aoxUPz7VcPVLY9+GBspJ2Qc87f2m+OIE=
+	b=gSz+lduaDlswA6m/ExccxHKybMptdrCHDXLklBOMsLa4Y7qA9qXQVjUpnEQsjXHej
+	 52BqNcX8Lf9oP0vMBZSjwHQDIxgMtjUzz3Z+XGC14bUHBss5Nw0PxiCQw1pSeK9FIu
+	 3HhfG8Ei4XLw/pnvoUfgGiVHjLcd1i1seX98zCVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Petr Mladek <pmladek@suse.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Raphael Gallais-Pou <rgallaispou@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 030/443] printk: Fix signed integer overflow when defining LOG_BUF_LEN_MAX
-Date: Thu, 13 Feb 2025 15:23:15 +0100
-Message-ID: <20250213142441.787453956@linuxfoundation.org>
+Subject: [PATCH 6.13 039/443] drm/sti: hdmi: use eld_mutex to protect access to connector->eld
+Date: Thu, 13 Feb 2025 15:23:24 +0100
+Message-ID: <20250213142442.133768564@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,39 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 3d6f83df8ff2d5de84b50377e4f0d45e25311c7a ]
+[ Upstream commit e99c0b517bcd53cf61f998a3c4291333401cb391 ]
 
-Shifting 1 << 31 on a 32-bit int causes signed integer overflow, which
-leads to undefined behavior. To prevent this, cast 1 to u32 before
-performing the shift, ensuring well-defined behavior.
+Reading access to connector->eld can happen at the same time the
+drm_edid_to_eld() updates the data. Take the newly added eld_mutex in
+order to protect connector->eld from concurrent access.
 
-This change explicitly avoids any potential overflow by ensuring that
-the shift occurs on an unsigned 32-bit integer.
-
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Acked-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20240928113608.1438087-1-visitorckw@gmail.com
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Acked-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241206-drm-connector-eld-mutex-v2-9-c9bce1ee8bea@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/printk/printk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/sti/sti_hdmi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index f446a06b4da8c..07668433644b8 100644
---- a/kernel/printk/printk.c
-+++ b/kernel/printk/printk.c
-@@ -523,7 +523,7 @@ static struct latched_seq clear_seq = {
- /* record buffer */
- #define LOG_ALIGN __alignof__(unsigned long)
- #define __LOG_BUF_LEN (1 << CONFIG_LOG_BUF_SHIFT)
--#define LOG_BUF_LEN_MAX (u32)(1 << 31)
-+#define LOG_BUF_LEN_MAX ((u32)1 << 31)
- static char __log_buf[__LOG_BUF_LEN] __aligned(LOG_ALIGN);
- static char *log_buf = __log_buf;
- static u32 log_buf_len = __LOG_BUF_LEN;
+diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
+index 21b46a6465f08..f8bbae6393ef8 100644
+--- a/drivers/gpu/drm/sti/sti_hdmi.c
++++ b/drivers/gpu/drm/sti/sti_hdmi.c
+@@ -1225,7 +1225,9 @@ static int hdmi_audio_get_eld(struct device *dev, void *data, uint8_t *buf, size
+ 	struct drm_connector *connector = hdmi->drm_connector;
+ 
+ 	DRM_DEBUG_DRIVER("\n");
++	mutex_lock(&connector->eld_mutex);
+ 	memcpy(buf, connector->eld, min(sizeof(connector->eld), len));
++	mutex_unlock(&connector->eld_mutex);
+ 
+ 	return 0;
+ }
 -- 
 2.39.5
 
