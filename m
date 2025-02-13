@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2793E26B087;
-	Thu, 13 Feb 2025 15:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6E470805;
+	Thu, 13 Feb 2025 15:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460860; cv=none; b=GHMDrShU8G8dvSW+p2iN2D6xG1XE2HxLj8JjYANmgQylBsdizOPy/LBMf5jvkssCZ8MCVyddR4Eh2ft81EBe9xT2O4M+snZTGrs+F1mnea4+SHl2dZmeiJ3JUuUxFjcmUgca8nZ8DEebXRNAaz4f++7QftKkZQd1hTr9TzqGwbQ=
+	t=1739460863; cv=none; b=H8JUKN15z7JtI/dijmFhMRaz4zE0BT4mDLmFOeIVB/ZtEXhzQ3O+AlnwyRwXRx16m1lh/xH8Vn1xSqH2GuvSrcYUeTtcEOJ1OUFOtMG35KRdZ/6tSr7x0WFFtJKFd59vHl6qwhko7tdTuwyojih+ejGf0BR9stz95FGjkhTQmLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460860; c=relaxed/simple;
-	bh=YxvYPvyya/oy1JBBqEVflm6C+NzgwSC9LpkrbNWZHAw=;
+	s=arc-20240116; t=1739460863; c=relaxed/simple;
+	bh=yq/GRJItluuu4MI5tyF3AiKOtlYMYciQ3EfcRlO31mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2W3KV1N6vQf8F5sQeiImShqB7TYPw3PR8uTzcLM0eUZ2Ehi8WRh/XtqIV0brRdnb834h+gwWGM2lvgGnu1FH+Y38Ava4O7CebgA2sRdF7kXhMln+mz2N27NVYfhU4/Fk6iGvo4Bjw93xUsHoHswjm6E6t2ymIDlFTDCMCrE0Hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svubSovI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q6AF/WksndWrJtsCQO43whCkEITGZQ3OLSpHxj1JUWpYPqJsSYipvvmD92cDCSO9rR/Tx/HmHDo+QC8Awma1R/k6uJfavZjPxmi4BeYCXCwY3SygVU50swh9wDSZlh31ui8HZQfTAImD1DJzYHmt4SLn0euHGt6mKfrPZgAsHeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lI4dyHQZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svubSovI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89268C4CEE4;
-	Thu, 13 Feb 2025 15:34:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lI4dyHQZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C28CC4CED1;
+	Thu, 13 Feb 2025 15:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460860;
-	bh=YxvYPvyya/oy1JBBqEVflm6C+NzgwSC9LpkrbNWZHAw=;
+	s=korg; t=1739460863;
+	bh=yq/GRJItluuu4MI5tyF3AiKOtlYMYciQ3EfcRlO31mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=svubSovI6lX4ebkMY6SsH+eGdhVaAWHltiL/7HSyLEPOXHgspH+k4WkfufsFne/jM
-	 5MjWCPe7VhCBmGNrt1uxBp9Pcd+u/1EdzJ7u+/XrHel5SLgpUDmOXY57qXNimsKQxI
-	 L5tllHeoB1bMHf4G4T5TBgEqqL+04Uf2/kqdxeHM=
+	b=lI4dyHQZF/tK4TAi9e8Pm+8v9ny/FQMy54qnmZQWQUI8fL8eFPXnsrLpB0FrctfQk
+	 gO2D583xM4RV9LQq9j4ipCNGl2piWnWpT48spV9MdppFbVR/ko2Pi+JYL4SkoCjCBO
+	 TEQUFvODnVJsTU76fNhUHHKQkfqeGQD/+GSgBjzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Bobrowicz <sam@elite-embedded.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.6 206/273] media: ov5640: fix get_light_freq on auto
-Date: Thu, 13 Feb 2025 15:29:38 +0100
-Message-ID: <20250213142415.464216876@linuxfoundation.org>
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 233/273] ocfs2: fix incorrect CPU endianness conversion causing mount failure
+Date: Thu, 13 Feb 2025 15:30:05 +0100
+Message-ID: <20250213142416.642831765@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -52,33 +56,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Bobrowicz <sam@elite-embedded.com>
+From: Heming Zhao <heming.zhao@suse.com>
 
-commit 001d3753538d26ddcbef011f5643cfff58a7f672 upstream.
+commit f921da2c34692dfec5f72b5ae347b1bea22bb369 upstream.
 
-Light frequency was not properly returned when in auto
-mode and the detected frequency was 60Hz.
+Commit 23aab037106d ("ocfs2: fix UBSAN warning in ocfs2_verify_volume()")
+introduced a regression bug.  The blksz_bits value is already converted to
+CPU endian in the previous code; therefore, the code shouldn't use
+le32_to_cpu() anymore.
 
-Fixes: 19a81c1426c1 ("[media] add Omnivision OV5640 sensor driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sam Bobrowicz <sam@elite-embedded.com>
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Link: https://lkml.kernel.org/r/20250121112204.12834-1-heming.zhao@suse.com
+Fixes: 23aab037106d ("ocfs2: fix UBSAN warning in ocfs2_verify_volume()")
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov5640.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/super.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/i2c/ov5640.c
-+++ b/drivers/media/i2c/ov5640.c
-@@ -1982,6 +1982,7 @@ static int ov5640_get_light_freq(struct
- 			light_freq = 50;
- 		} else {
- 			/* 60Hz */
-+			light_freq = 60;
- 		}
- 	}
- 
+--- a/fs/ocfs2/super.c
++++ b/fs/ocfs2/super.c
+@@ -2343,7 +2343,7 @@ static int ocfs2_verify_volume(struct oc
+ 			mlog(ML_ERROR, "found superblock with incorrect block "
+ 			     "size bits: found %u, should be 9, 10, 11, or 12\n",
+ 			     blksz_bits);
+-		} else if ((1 << le32_to_cpu(blksz_bits)) != blksz) {
++		} else if ((1 << blksz_bits) != blksz) {
+ 			mlog(ML_ERROR, "found superblock with incorrect block "
+ 			     "size: found %u, should be %u\n", 1 << blksz_bits, blksz);
+ 		} else if (le16_to_cpu(di->id2.i_super.s_major_rev_level) !=
 
 
