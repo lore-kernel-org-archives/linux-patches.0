@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E53335BA;
-	Thu, 13 Feb 2025 15:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBB8335BA;
+	Thu, 13 Feb 2025 15:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460144; cv=none; b=rzQLpsl+oVfk2MLfBpCPTOWpuf6eWUn1/e3VMZIL9n4n9vICEXFn4SdDLkeD1RxaEdDj5FkM/Kyg6zNFxUCvj6uEBCKaSBCAGf59jULS4jbCN5bJw/mmZj+rfsbIbngmiQyyWcfa8PNjoWY2/xyvuSf+A1jav8qG/DojWPBtLZY=
+	t=1739460147; cv=none; b=HGkvx4gOfE0XRxFOfHSohg5+9qFIfO2ozBJL4QBJ+GuG/pdjlsVX9+DySiESmAixhSwcrMa/mE7zyAHbk9v8ep0ZTh4zPbDNw3JiBkTAGIrJRRdbFkluE1kxrpXUEdXWMZzgwbtBqRRdHHSkHF88xIQmigDGkPqoMigduCApcDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460144; c=relaxed/simple;
-	bh=ARQTZPh502VMO4VS2GQ7ctflrxYVKuDQVDIYiPMcnBA=;
+	s=arc-20240116; t=1739460147; c=relaxed/simple;
+	bh=PAn6dYH5mivf5DeUb8T0D8CZuDmrSUMjyrnWZ8kKngk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dzaeoxJeGbhSB7qSGUusMuhxtv1dIRlaRJRx2V1TOH2jb/B00IjfEIyU9ji7gh+gv4f+4o+mCeC8+UwLMoa/SNdGa66WbFzwMvC67Jv6s5G8YCSZXjHID6hGEufdz5QN1VtXkTwOKw7kNrb8wONdzL5gT7RJzuGUDdsAbh9x8XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVrPGQBR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qZri8j1eBiRvt0GVpCca66znp/UXFx2cObfmS0uiBzL6LoCOxB5mGs8RQ/BBnbskv8sBaY0j/JF2Y0ke28k3AgQBLLLaO1Z4NuP3JRg7v/pQcnFajgRluw/pyOY/whA6MLVAPvHylzuOj9V4LclTISTWSkd7R5nQjsnRcCIzOPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1yqS1iW0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVrPGQBR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597AEC4CEE8;
-	Thu, 13 Feb 2025 15:22:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1yqS1iW0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0059C4CED1;
+	Thu, 13 Feb 2025 15:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460143;
-	bh=ARQTZPh502VMO4VS2GQ7ctflrxYVKuDQVDIYiPMcnBA=;
+	s=korg; t=1739460147;
+	bh=PAn6dYH5mivf5DeUb8T0D8CZuDmrSUMjyrnWZ8kKngk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVrPGQBRvhkfWxBBEuQJwTDHu0QyXoi+2UCVBOLRB9XBKWNa23WUYRRPmi9PTcecL
-	 jnhcfhQJvgtmlH9sVCm5IE/bjhsl5L+l+jIaPqJF8FYI1jAW0dFXMZeMJV/5XvXmIa
-	 IumiPaWc+Z8VkVOPO7iW4XUO5h5LGs9cgxIoOSLI=
+	b=1yqS1iW0oX6mAIx4cis514P4LJ0cFWJj6aGOS0wcV1ZslNaZttmbVqAXVNr4P+/8C
+	 V5NYvLeBIP4AeDJO99w5Hsb7M5j20vOW+/6UHrBzXkPYcpguE4Py3C7fqbKljZFVRL
+	 b/3coqNfqsXgivVykfSVApR0tlTXMH70NJ3xSbhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4eb7a741b3216020043a@syzkaller.appspotmail.com,
-	Leo Stone <leocstone@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Chih-Kang Chang <gary.chang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/273] safesetid: check size of policy writes
-Date: Thu, 13 Feb 2025 15:26:39 +0100
-Message-ID: <20250213142408.432390351@linuxfoundation.org>
+Subject: [PATCH 6.6 028/273] wifi: rtw89: add crystal_cap check to avoid setting as overflow value
+Date: Thu, 13 Feb 2025 15:26:40 +0100
+Message-ID: <20250213142408.470156722@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -52,40 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Stone <leocstone@gmail.com>
+From: Chih-Kang Chang <gary.chang@realtek.com>
 
-[ Upstream commit f09ff307c7299392f1c88f763299e24bc99811c7 ]
+[ Upstream commit 7b98caea39676561f22db58752551161bb36462b ]
 
-syzbot attempts to write a buffer with a large size to a sysfs entry
-with writes handled by handle_policy_update(), triggering a warning
-in kmalloc.
+In the original flow, the crystal_cap might be calculated as a negative
+value and set as an overflow value. Therefore, we added a check to limit
+the calculated crystal_cap value. Additionally, we shrank the crystal_cap
+adjustment according to specific CFO.
 
-Check the size specified for write buffers before allocating.
-
-Reported-by: syzbot+4eb7a741b3216020043a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4eb7a741b3216020043a
-Signed-off-by: Leo Stone <leocstone@gmail.com>
-[PM: subject tweak]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241128055433.11851-7-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/safesetid/securityfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/realtek/rtw89/phy.c | 11 ++++++-----
+ drivers/net/wireless/realtek/rtw89/phy.h |  2 +-
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/security/safesetid/securityfs.c b/security/safesetid/securityfs.c
-index 25310468bcddf..8e1ffd70b18ab 100644
---- a/security/safesetid/securityfs.c
-+++ b/security/safesetid/securityfs.c
-@@ -143,6 +143,9 @@ static ssize_t handle_policy_update(struct file *file,
- 	char *buf, *p, *end;
- 	int err;
+diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
+index fac83b718a30c..457c1dd31bf9d 100644
+--- a/drivers/net/wireless/realtek/rtw89/phy.c
++++ b/drivers/net/wireless/realtek/rtw89/phy.c
+@@ -2438,7 +2438,6 @@ static void rtw89_phy_cfo_set_crystal_cap(struct rtw89_dev *rtwdev,
  
-+	if (len >= KMALLOC_MAX_SIZE)
-+		return -EINVAL;
+ 	if (!force && cfo->crystal_cap == crystal_cap)
+ 		return;
+-	crystal_cap = clamp_t(u8, crystal_cap, 0, 127);
+ 	if (chip->chip_id == RTL8852A || chip->chip_id == RTL8851B) {
+ 		rtw89_phy_cfo_set_xcap_reg(rtwdev, true, crystal_cap);
+ 		rtw89_phy_cfo_set_xcap_reg(rtwdev, false, crystal_cap);
+@@ -2552,7 +2551,7 @@ static void rtw89_phy_cfo_crystal_cap_adjust(struct rtw89_dev *rtwdev,
+ 					     s32 curr_cfo)
+ {
+ 	struct rtw89_cfo_tracking_info *cfo = &rtwdev->cfo_tracking;
+-	s8 crystal_cap = cfo->crystal_cap;
++	int crystal_cap = cfo->crystal_cap;
+ 	s32 cfo_abs = abs(curr_cfo);
+ 	int sign;
+ 
+@@ -2569,15 +2568,17 @@ static void rtw89_phy_cfo_crystal_cap_adjust(struct rtw89_dev *rtwdev,
+ 	}
+ 	sign = curr_cfo > 0 ? 1 : -1;
+ 	if (cfo_abs > CFO_TRK_STOP_TH_4)
+-		crystal_cap += 7 * sign;
++		crystal_cap += 3 * sign;
+ 	else if (cfo_abs > CFO_TRK_STOP_TH_3)
+-		crystal_cap += 5 * sign;
+-	else if (cfo_abs > CFO_TRK_STOP_TH_2)
+ 		crystal_cap += 3 * sign;
++	else if (cfo_abs > CFO_TRK_STOP_TH_2)
++		crystal_cap += 1 * sign;
+ 	else if (cfo_abs > CFO_TRK_STOP_TH_1)
+ 		crystal_cap += 1 * sign;
+ 	else
+ 		return;
 +
- 	pol = kmalloc(sizeof(struct setid_ruleset), GFP_KERNEL);
- 	if (!pol)
- 		return -ENOMEM;
++	crystal_cap = clamp(crystal_cap, 0, 127);
+ 	rtw89_phy_cfo_set_crystal_cap(rtwdev, (u8)crystal_cap, false);
+ 	rtw89_debug(rtwdev, RTW89_DBG_CFO,
+ 		    "X_cap{Curr,Default}={0x%x,0x%x}\n",
+diff --git a/drivers/net/wireless/realtek/rtw89/phy.h b/drivers/net/wireless/realtek/rtw89/phy.h
+index d6dc0cbbae43b..15ed23fa4218f 100644
+--- a/drivers/net/wireless/realtek/rtw89/phy.h
++++ b/drivers/net/wireless/realtek/rtw89/phy.h
+@@ -51,7 +51,7 @@
+ #define CFO_TRK_STOP_TH_4 (30 << 2)
+ #define CFO_TRK_STOP_TH_3 (20 << 2)
+ #define CFO_TRK_STOP_TH_2 (10 << 2)
+-#define CFO_TRK_STOP_TH_1 (00 << 2)
++#define CFO_TRK_STOP_TH_1 (03 << 2)
+ #define CFO_TRK_STOP_TH (2 << 2)
+ #define CFO_SW_COMP_FINE_TUNE (2 << 2)
+ #define CFO_PERIOD_CNT 15
 -- 
 2.39.5
 
