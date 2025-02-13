@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFF338389;
-	Thu, 13 Feb 2025 15:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333F92A1D1;
+	Thu, 13 Feb 2025 15:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458943; cv=none; b=cWT26JByXet/0v8ZodB2VNGkubNUwlzLQAjgaQqd8Y0qztZyqpIjLqG7g1ZxvJyJ7CisJhcyoxKtmSQ8a9zlnnreqwZ3zfezBmX8A3zzryRZDnPgS5WvIoyAXzKOh8wX9kH04cnXwDd4aFvUoLvd8OBbx+stF1HHzg9MiioFCXg=
+	t=1739458947; cv=none; b=UftWRjR5VddWbnD9aVg78Sz6sEZ/5pGXZPJnm6LUeGkDoFBO18gTV8h/e6uyxs/bXbBocNqLuR/DwbZBkmzEGnFGHSRWCpqNBPSIxYpRVqR1GfzSp7Okc2iUR+7fLaVFE8zrNmt4qKOtWkrHqMz97E6EGzDuQfC+CC/32ch+Jgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458943; c=relaxed/simple;
-	bh=KeEOf5YjgwBe0yU16sPUk2GJ7qXfk7v/hAaIMZ9TvQI=;
+	s=arc-20240116; t=1739458947; c=relaxed/simple;
+	bh=Br8sNPt2pjEb3l7aV6KRmWgaFdEUxAyKenRHTDIJfzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=obBFPXhcxVIAebXJhxC2rm7z6RBNGwuU2vWyh4CfxHSbiia42Pqvaa5DJdBr/ZRPmtk15YtIy2NXr59wDM2g941oAFPW4kZ74Npeprez2jAvBQBzmYG2nUqK9xq9YFZKwQNhp/ek1ZaJNJymamTmVazfzD2hEDcRPsbJL6+0x/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YD+KjFJC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IB5L1R1oVa+cFw5XhAMWpGXcrOYoVRBfkOgnh8jvkwAFrBdQOMcRmB0Pghw19vuhT+3S6t/DriyH4v8bSxuAylX4dNjPyvqyFY62aU3F5vPVrdDr433h33HadrsKxqQQBQiE1MD0LCQUXHm3je+vXgNtbdxnS5X2rBs/dWG9+DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhVM35YP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YD+KjFJC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3ACC4CED1;
-	Thu, 13 Feb 2025 15:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhVM35YP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9620BC4CEE4;
+	Thu, 13 Feb 2025 15:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458943;
-	bh=KeEOf5YjgwBe0yU16sPUk2GJ7qXfk7v/hAaIMZ9TvQI=;
+	s=korg; t=1739458947;
+	bh=Br8sNPt2pjEb3l7aV6KRmWgaFdEUxAyKenRHTDIJfzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YD+KjFJCi3oSgVy28Mq0p3ktoFBZneZAtPQYfSV20I8JJWHNJOb5ojyMlNw7NP/lV
-	 BE+Kbw2IZWzc7v/m4MgQ86bGGZFOyPK+MAxjapqprHtXT0UVPVLurSvH7RVStDqvbj
-	 u038wx3a+b2YTNUNWCHBiRorMWN9WxA34w30G06Q=
+	b=KhVM35YPC6Rv0AuL/5TGSxKvFkHQ0uLNkS77+zrLXjC1FEIsXZ6O9ARfzy/7NFHi6
+	 CeHDjlvQdqFqrJNjjG9j9PXVdzmbEgq3CPaY+kL/Mp3//+ck9b6Bq6JoahXtMEV24d
+	 QrmwV80Wfj5aRUOpnWP7JDK3pvY/b2wcKZTNeMpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 122/443] drm/xe/oa: Preserve oa_ctrl unused bits
-Date: Thu, 13 Feb 2025 15:24:47 +0100
-Message-ID: <20250213142445.319645262@linuxfoundation.org>
+Subject: [PATCH 6.13 123/443] drm/xe/pf: Fix migration initialization
+Date: Thu, 13 Feb 2025 15:24:48 +0100
+Message-ID: <20250213142445.358104170@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -46,99 +46,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ashutosh Dixit <ashutosh.dixit@intel.com>
+From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-[ Upstream commit 588c20079e17dae9e1f49ba42981a05de1c9136e ]
+[ Upstream commit 9f706fd8024208b0686bb8ec68589d758f765672 ]
 
-UMD's have interest in setting unused bits of the oa_ctrl register "out of
-band" for certain experiments. To facilitate this, don't clobber previous
-oa_ctrl unused bits, i.e. rmw the values rather than simply write them.
+The migration support only needs to be initialized once, but it
+was incorrectly called from the xe_gt_sriov_pf_init_hw(), which
+is part of the reset flow and may be called multiple times.
 
-Fixes: e936f885f1e9 ("drm/xe/oa/uapi: Expose OA stream fd")
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250117032155.3048063-1-ashutosh.dixit@intel.com
-(cherry picked from commit cfa9d40db8c30d894171010fe765d96e9bc6a47e)
+Fixes: d86e3737c7ab ("drm/xe/pf: Add functions to save and restore VF GuC state")
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: Michał Winiarski <michal.winiarski@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250120232443.544-1-michal.wajdeczko@intel.com
+(cherry picked from commit 9ebb5846e1a3b1705f8a7cbc528888a1aa0b163e)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/regs/xe_oa_regs.h |  6 ++++++
- drivers/gpu/drm/xe/xe_oa.c           | 12 ++++++++++--
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_gt.c          |  4 +++-
+ drivers/gpu/drm/xe/xe_gt_sriov_pf.c | 14 +++++++++++++-
+ drivers/gpu/drm/xe/xe_gt_sriov_pf.h |  6 ++++++
+ 3 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/regs/xe_oa_regs.h b/drivers/gpu/drm/xe/regs/xe_oa_regs.h
-index a9b0091cb7ee1..6d31573ed1765 100644
---- a/drivers/gpu/drm/xe/regs/xe_oa_regs.h
-+++ b/drivers/gpu/drm/xe/regs/xe_oa_regs.h
-@@ -59,6 +59,10 @@
- /* Common to all OA units */
- #define  OA_OACONTROL_REPORT_BC_MASK		REG_GENMASK(9, 9)
- #define  OA_OACONTROL_COUNTER_SIZE_MASK		REG_GENMASK(8, 8)
-+#define  OAG_OACONTROL_USED_BITS \
-+	(OAG_OACONTROL_OA_PES_DISAG_EN | OAG_OACONTROL_OA_CCS_SELECT_MASK | \
-+	 OAG_OACONTROL_OA_COUNTER_SEL_MASK | OAG_OACONTROL_OA_COUNTER_ENABLE | \
-+	 OA_OACONTROL_REPORT_BC_MASK | OA_OACONTROL_COUNTER_SIZE_MASK)
+diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
+index 94d468d01253d..77d818beb26d3 100644
+--- a/drivers/gpu/drm/xe/xe_gt.c
++++ b/drivers/gpu/drm/xe/xe_gt.c
+@@ -532,8 +532,10 @@ static int all_fw_domain_init(struct xe_gt *gt)
+ 	if (IS_SRIOV_PF(gt_to_xe(gt)) && !xe_gt_is_media_type(gt))
+ 		xe_lmtt_init_hw(&gt_to_tile(gt)->sriov.pf.lmtt);
  
- #define OAG_OA_DEBUG XE_REG(0xdaf8, XE_REG_OPTION_MASKED)
- #define  OAG_OA_DEBUG_DISABLE_MMIO_TRG			REG_BIT(14)
-@@ -85,6 +89,8 @@
- #define OAM_CONTEXT_CONTROL_OFFSET		(0x1bc)
- #define OAM_CONTROL_OFFSET			(0x194)
- #define  OAM_CONTROL_COUNTER_SEL_MASK		REG_GENMASK(3, 1)
-+#define  OAM_OACONTROL_USED_BITS \
-+	(OAM_CONTROL_COUNTER_SEL_MASK | OAG_OACONTROL_OA_COUNTER_ENABLE)
- #define OAM_DEBUG_OFFSET			(0x198)
- #define OAM_STATUS_OFFSET			(0x19c)
- #define OAM_MMIO_TRG_OFFSET			(0x1d0)
-diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
-index 678fa40e4cea7..d8af82dcdce4b 100644
---- a/drivers/gpu/drm/xe/xe_oa.c
-+++ b/drivers/gpu/drm/xe/xe_oa.c
-@@ -445,6 +445,12 @@ static u32 __oa_ccs_select(struct xe_oa_stream *stream)
- 	return val;
+-	if (IS_SRIOV_PF(gt_to_xe(gt)))
++	if (IS_SRIOV_PF(gt_to_xe(gt))) {
++		xe_gt_sriov_pf_init(gt);
+ 		xe_gt_sriov_pf_init_hw(gt);
++	}
+ 
+ 	xe_force_wake_put(gt_to_fw(gt), fw_ref);
+ 
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
+index e71fc3d2bda22..6f906c8e8108b 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf.c
+@@ -68,6 +68,19 @@ int xe_gt_sriov_pf_init_early(struct xe_gt *gt)
+ 	return 0;
  }
  
-+static u32 __oactrl_used_bits(struct xe_oa_stream *stream)
++/**
++ * xe_gt_sriov_pf_init - Prepare SR-IOV PF data structures on PF.
++ * @gt: the &xe_gt to initialize
++ *
++ * Late one-time initialization of the PF data.
++ *
++ * Return: 0 on success or a negative error code on failure.
++ */
++int xe_gt_sriov_pf_init(struct xe_gt *gt)
 +{
-+	return stream->hwe->oa_unit->type == DRM_XE_OA_UNIT_TYPE_OAG ?
-+		OAG_OACONTROL_USED_BITS : OAM_OACONTROL_USED_BITS;
++	return xe_gt_sriov_pf_migration_init(gt);
 +}
 +
- static void xe_oa_enable(struct xe_oa_stream *stream)
+ static bool pf_needs_enable_ggtt_guest_update(struct xe_device *xe)
  {
- 	const struct xe_oa_format *format = stream->oa_buffer.format;
-@@ -465,14 +471,14 @@ static void xe_oa_enable(struct xe_oa_stream *stream)
- 	    stream->hwe->oa_unit->type == DRM_XE_OA_UNIT_TYPE_OAG)
- 		val |= OAG_OACONTROL_OA_PES_DISAG_EN;
+ 	return GRAPHICS_VERx100(xe) == 1200;
+@@ -90,7 +103,6 @@ void xe_gt_sriov_pf_init_hw(struct xe_gt *gt)
+ 		pf_enable_ggtt_guest_update(gt);
  
--	xe_mmio_write32(&stream->gt->mmio, regs->oa_ctrl, val);
-+	xe_mmio_rmw32(&stream->gt->mmio, regs->oa_ctrl, __oactrl_used_bits(stream), val);
+ 	xe_gt_sriov_pf_service_update(gt);
+-	xe_gt_sriov_pf_migration_init(gt);
  }
  
- static void xe_oa_disable(struct xe_oa_stream *stream)
- {
- 	struct xe_mmio *mmio = &stream->gt->mmio;
+ static u32 pf_get_vf_regs_stride(struct xe_device *xe)
+diff --git a/drivers/gpu/drm/xe/xe_gt_sriov_pf.h b/drivers/gpu/drm/xe/xe_gt_sriov_pf.h
+index 96fab779a906f..f474509411c0c 100644
+--- a/drivers/gpu/drm/xe/xe_gt_sriov_pf.h
++++ b/drivers/gpu/drm/xe/xe_gt_sriov_pf.h
+@@ -10,6 +10,7 @@ struct xe_gt;
  
--	xe_mmio_write32(mmio, __oa_regs(stream)->oa_ctrl, 0);
-+	xe_mmio_rmw32(mmio, __oa_regs(stream)->oa_ctrl, __oactrl_used_bits(stream), 0);
- 	if (xe_mmio_wait32(mmio, __oa_regs(stream)->oa_ctrl,
- 			   OAG_OACONTROL_OA_COUNTER_ENABLE, 0, 50000, NULL, false))
- 		drm_err(&stream->oa->xe->drm,
-@@ -2569,6 +2575,8 @@ static void __xe_oa_init_oa_units(struct xe_gt *gt)
- 			u->type = DRM_XE_OA_UNIT_TYPE_OAM;
- 		}
+ #ifdef CONFIG_PCI_IOV
+ int xe_gt_sriov_pf_init_early(struct xe_gt *gt);
++int xe_gt_sriov_pf_init(struct xe_gt *gt);
+ void xe_gt_sriov_pf_init_hw(struct xe_gt *gt);
+ void xe_gt_sriov_pf_sanitize_hw(struct xe_gt *gt, unsigned int vfid);
+ void xe_gt_sriov_pf_restart(struct xe_gt *gt);
+@@ -19,6 +20,11 @@ static inline int xe_gt_sriov_pf_init_early(struct xe_gt *gt)
+ 	return 0;
+ }
  
-+		xe_mmio_write32(&gt->mmio, u->regs.oa_ctrl, 0);
++static inline int xe_gt_sriov_pf_init(struct xe_gt *gt)
++{
++	return 0;
++}
 +
- 		/* Ensure MMIO trigger remains disabled till there is a stream */
- 		xe_mmio_write32(&gt->mmio, u->regs.oa_debug,
- 				oag_configure_mmio_trigger(NULL, false));
+ static inline void xe_gt_sriov_pf_init_hw(struct xe_gt *gt)
+ {
+ }
 -- 
 2.39.5
 
