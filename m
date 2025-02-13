@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53C7214A69;
-	Thu, 13 Feb 2025 14:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5BA281349;
+	Thu, 13 Feb 2025 14:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457690; cv=none; b=fsUfPDFI14R0GPb0RvnY5RopSOt1nBCK14UqM98HgxQSYnbM4eVG5Wcq0VEhKljmVHSMPn7LQz5lzZRffVGsdeFk+ko/UwxAalZxurtnXlX44gqX0sqhvTMTDfxig4dQCjxjy16LO7jckFGEc4H0Pd2oVmus5XFbwVVadrlPkrk=
+	t=1739457694; cv=none; b=FJX+9+7DGxreI85ntpZtY4BPIAHAeAseWL4L7RhKHIpCpw+MvkMtFNGuC+bfKdpkiG1ifseM3/cMeTi9GQjjN57UrQQUQYe/jYQX8A1PFnWPqFExQKH7kIfpwOZhrNx2+IGmIkMwabZJi6DMSby0Dq2l1Z9XshuajiiqasnDGdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457690; c=relaxed/simple;
-	bh=UbsZMMcxCrnSEEJnxpLR8RKGa1F/z98jM3XgParXh7w=;
+	s=arc-20240116; t=1739457694; c=relaxed/simple;
+	bh=hl5Uyfa6yEXy4SeCx+vCC8u8dOO1mQ7wvptbhNorvAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6Sr5dghRwn0WOeiyTl4YWmQVkCK4CPF9i6jdRZopL0XXADBMgJPZSMip72s1iOhYsNNfP6QqcmeH8sgb/p6Z8t0pgWRXnGQtocPhtsLPh9b499S0OBJXtfLrrOsne0NwT54adJ29DG23u74Csq+DULeU8W28b6wmw0rhFGgjpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2C2u89lX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aiKO2v4QGWVOxvlR455Gu5LY7Cauw/iJ8597djRTebWCmB5xbPnwbFgSGbcS40iOHIXl1qmBxW/Z2KrSxG+NbACJ7FuncpE4aAy1P1DW0+DcCAf7ZuRFVxT2oZ3kVSlqbn+vtc5TebRGTHUyVBvs4IJXBgslYPP+bMgsECa92TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wsp13Oy8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2C2u89lX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221F1C4CED1;
-	Thu, 13 Feb 2025 14:41:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wsp13Oy8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57999C4CED1;
+	Thu, 13 Feb 2025 14:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457690;
-	bh=UbsZMMcxCrnSEEJnxpLR8RKGa1F/z98jM3XgParXh7w=;
+	s=korg; t=1739457693;
+	bh=hl5Uyfa6yEXy4SeCx+vCC8u8dOO1mQ7wvptbhNorvAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2C2u89lXTI7BDT7/5XgTLT5u4jqyqxcKRE/A9R+u6oTweCy6efSVkkaTQ8oWDUiYe
-	 kRlKpJ3VabeaDd2n1Q1Vy0ASdN4oeZ8DudhH++5XIRMQj5CEBANUq/8VfeAuvFFmIi
-	 jvV9HIe+sgdUVDJww/0m8t19NS+iCyQHbnoQQ3cM=
+	b=Wsp13Oy8n86GXP5hpdxeTBWuNsFquB5daLcIgcAClv/kqo5D4UgUngpU14Z9UPJ+C
+	 wUQfTIVg7uLeNZDZSN5T5Cvgt8LyOTqe3/ydt+hDwqRt+kODawrwq3IGyV0C3hz7dx
+	 kvpBU/iv/DL7ndT1zpZ2DEpFnaGWRxJvrDW0+ooE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Golle <daniel@makrotopia.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.12 185/422] clk: mediatek: mt2701-aud: fix conversion to mtk_clk_simple_probe
-Date: Thu, 13 Feb 2025 15:25:34 +0100
-Message-ID: <20250213142443.686179173@linuxfoundation.org>
+Subject: [PATCH 6.12 186/422] clk: mediatek: mt2701-bdp: add missing dummy clk
+Date: Thu, 13 Feb 2025 15:25:35 +0100
+Message-ID: <20250213142443.724410273@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -53,67 +53,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Golle <daniel@makrotopia.org>
 
-commit 5fba40be5fbad563914e3ce9d5129a6baaea1ff5 upstream.
+commit fd291adc5e9a4ee6cd91e57f148f3b427f80647b upstream.
 
-Some of the audio subsystem clocks defined in clk-mt2701.h aren't
-actually used by the driver. This broke conversion to
-mtk_clk_simple_probe which expects that the highest possible clk id is
-defined by the ARRAY_SIZE.
+Add dummy clk for index 0 which was missed during the conversion to
+mtk_clk_simple_probe().
 
-Add additional dummy clocks to fill the gaps and remain compatible with
-the existing DT bindings.
-
-Fixes: 0f69a423c458 ("clk: mediatek: Switch to mtk_clk_simple_probe() where possible")
+Fixes: 973d1607d936 ("clk: mediatek: mt2701: use mtk_clk_simple_probe to simplify driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://lore.kernel.org/r/a07584d803af57b9ce4b5df5e122c09bf5a56ac9.1734300668.git.daniel@makrotopia.org
+Link: https://lore.kernel.org/r/b8526c882a50f2b158df0eccb4a165956fd8fa13.1734300668.git.daniel@makrotopia.org
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/mediatek/clk-mt2701-aud.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/clk/mediatek/clk-mt2701-bdp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/clk/mediatek/clk-mt2701-aud.c
-+++ b/drivers/clk/mediatek/clk-mt2701-aud.c
-@@ -55,10 +55,16 @@ static const struct mtk_gate audio_clks[
- 	GATE_DUMMY(CLK_DUMMY, "aud_dummy"),
- 	/* AUDIO0 */
- 	GATE_AUDIO0(CLK_AUD_AFE, "audio_afe", "aud_intbus_sel", 2),
-+	GATE_DUMMY(CLK_AUD_LRCK_DETECT, "audio_lrck_detect_dummy"),
-+	GATE_DUMMY(CLK_AUD_I2S, "audio_i2c_dummy"),
-+	GATE_DUMMY(CLK_AUD_APLL_TUNER, "audio_apll_tuner_dummy"),
- 	GATE_AUDIO0(CLK_AUD_HDMI, "audio_hdmi", "audpll_sel", 20),
- 	GATE_AUDIO0(CLK_AUD_SPDF, "audio_spdf", "audpll_sel", 21),
- 	GATE_AUDIO0(CLK_AUD_SPDF2, "audio_spdf2", "audpll_sel", 22),
- 	GATE_AUDIO0(CLK_AUD_APLL, "audio_apll", "audpll_sel", 23),
-+	GATE_DUMMY(CLK_AUD_TML, "audio_tml_dummy"),
-+	GATE_DUMMY(CLK_AUD_AHB_IDLE_EXT, "audio_ahb_idle_ext_dummy"),
-+	GATE_DUMMY(CLK_AUD_AHB_IDLE_INT, "audio_ahb_idle_int_dummy"),
- 	/* AUDIO1 */
- 	GATE_AUDIO1(CLK_AUD_I2SIN1, "audio_i2sin1", "aud_mux1_sel", 0),
- 	GATE_AUDIO1(CLK_AUD_I2SIN2, "audio_i2sin2", "aud_mux1_sel", 1),
-@@ -76,10 +82,12 @@ static const struct mtk_gate audio_clks[
- 	GATE_AUDIO1(CLK_AUD_ASRCI2, "audio_asrci2", "asm_h_sel", 13),
- 	GATE_AUDIO1(CLK_AUD_ASRCO1, "audio_asrco1", "asm_h_sel", 14),
- 	GATE_AUDIO1(CLK_AUD_ASRCO2, "audio_asrco2", "asm_h_sel", 15),
-+	GATE_DUMMY(CLK_AUD_HDMIRX, "audio_hdmirx_dummy"),
- 	GATE_AUDIO1(CLK_AUD_INTDIR, "audio_intdir", "intdir_sel", 20),
- 	GATE_AUDIO1(CLK_AUD_A1SYS, "audio_a1sys", "aud_mux1_sel", 21),
- 	GATE_AUDIO1(CLK_AUD_A2SYS, "audio_a2sys", "aud_mux2_sel", 22),
- 	GATE_AUDIO1(CLK_AUD_AFE_CONN, "audio_afe_conn", "aud_mux1_sel", 23),
-+	GATE_DUMMY(CLK_AUD_AFE_PCMIF, "audio_afe_pcmif_dummy"),
- 	GATE_AUDIO1(CLK_AUD_AFE_MRGIF, "audio_afe_mrgif", "aud_mux1_sel", 25),
- 	/* AUDIO2 */
- 	GATE_AUDIO2(CLK_AUD_MMIF_UL1, "audio_ul1", "aud_mux1_sel", 0),
-@@ -100,6 +108,8 @@ static const struct mtk_gate audio_clks[
- 	GATE_AUDIO2(CLK_AUD_MMIF_AWB2, "audio_awb2", "aud_mux1_sel", 15),
- 	GATE_AUDIO2(CLK_AUD_MMIF_DAI, "audio_dai", "aud_mux1_sel", 16),
- 	/* AUDIO3 */
-+	GATE_DUMMY(CLK_AUD_DMIC1, "audio_dmic1_dummy"),
-+	GATE_DUMMY(CLK_AUD_DMIC2, "audio_dmic2_dummy"),
- 	GATE_AUDIO3(CLK_AUD_ASRCI3, "audio_asrci3", "asm_h_sel", 2),
- 	GATE_AUDIO3(CLK_AUD_ASRCI4, "audio_asrci4", "asm_h_sel", 3),
- 	GATE_AUDIO3(CLK_AUD_ASRCI5, "audio_asrci5", "asm_h_sel", 4),
+--- a/drivers/clk/mediatek/clk-mt2701-bdp.c
++++ b/drivers/clk/mediatek/clk-mt2701-bdp.c
+@@ -31,6 +31,7 @@ static const struct mtk_gate_regs bdp1_c
+ 	GATE_MTK(_id, _name, _parent, &bdp1_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
+ 
+ static const struct mtk_gate bdp_clks[] = {
++	GATE_DUMMY(CLK_DUMMY, "bdp_dummy"),
+ 	GATE_BDP0(CLK_BDP_BRG_BA, "brg_baclk", "mm_sel", 0),
+ 	GATE_BDP0(CLK_BDP_BRG_DRAM, "brg_dram", "mm_sel", 1),
+ 	GATE_BDP0(CLK_BDP_LARB_DRAM, "larb_dram", "mm_sel", 2),
 
 
