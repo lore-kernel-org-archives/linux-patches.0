@@ -1,99 +1,122 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42E4202C31
-	for <patches@lists.linux.dev>; Thu, 13 Feb 2025 09:45:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B959213E63;
+	Thu, 13 Feb 2025 11:54:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739439941; cv=none; b=gX0l89JGuIhENpAGXCLw0Jjee7V4eSbt9pqg+Zim24WxfhiccsZQYrxGi2Ohzv8T3/tHFlEq/Lq2s6QwWQCeoGtYuJyHDaVzFQsEndZAZZ3aSPWFp1g/HCj1E2C5wTlyRhWr9Fp2FDh1hSI25b0shLi9JU5wUvIghOXNd1H9a54=
+	t=1739447659; cv=none; b=Bpo7yAMdOWJDslRl/BeXXQmbKqPYKBGhqk5gLpiO45mKj1anfHVN+GSFOWxRx04dWb21BTGheJAfaZJ29dHhCyqi8ZTUSjUo+ryJzIDTwIy4gC8bWFIU3H/eemWwRD0Z7sA9PiG3hElFOBlkZEb/9gMXT29MlZLfUmFSJTC3OUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739439941; c=relaxed/simple;
-	bh=3Ilo/X3a30c4xDyqJmeIBjYKRtFgQM1sP1z2Knqi7Q0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YCe3vOJjfzL3OuaJz75XHo4ZXIo5GJQj8zDW6T0e3U9W3+gQ4tmmJv9GKIoCLmch73l6SNC7Dw+dkikWlKeNxLblV/HhElFes4fyVV43pzzlm74p5ftp7DFkigsJeKGweIdfuSkFtt/tAnI1xxN2WEkUeNdxT5do6gUznQfzlE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pFGrvy+j; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1739447659; c=relaxed/simple;
+	bh=MqDW9zds1aMzuxEr+ieIN3w8AUaeMBOtLSwPLf49hX4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qwa9QQqBS7Z5ZaFDP81yT1HNdjw2kCdkknVZaxymQZoICjUv9plzwiBFGhDyKnA98R8Qm7Zew1BmiIanJIQIafSWx+LV4/nLa06oHQJmmZBOcTiXGTy5LBSpTvRdM+r7lmt7x4WOT/Cj4GwqwERCeCdghhtkOhPGr2svUuM8PIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Q3BI4qYO; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Jc11mgkW; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pFGrvy+j"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4394829ef0fso11029855e9.0
-        for <patches@lists.linux.dev>; Thu, 13 Feb 2025 01:45:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739439937; x=1740044737; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Ilo/X3a30c4xDyqJmeIBjYKRtFgQM1sP1z2Knqi7Q0=;
-        b=pFGrvy+jTedsek6US8JEqYdSvMtIjn67hBUk9mQP0R2T1lWyez5MsNnaKlTimzQqw6
-         F+HcOn9miOYPkbSHvEKUHnPeZSLOVxZqWh0zYagfZKN15E+T4OJMLBEgMAq6Djx+BpbW
-         t32AnBdipXTxDysbH11gx5Q9E1q9mTX8eBs3xjd/BxNWacjuAQTrjig42aESX/pQBmvQ
-         FWXxTGNOuRbEnYtwMDQQ4qd6YJ7mpI+xfjes05MICDCyNswGb8U1oeFUOxejOAMrBM83
-         8DjEZsyxNMmpJIS+jG1em78dfaAf7hoWL4gDwtBH4n+vXHy6uIDfE/6GeyBOU6IgVxju
-         qUww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739439937; x=1740044737;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3Ilo/X3a30c4xDyqJmeIBjYKRtFgQM1sP1z2Knqi7Q0=;
-        b=W/ueECfY2tUyI3qF0P/KFPwLxQwBlnSI22o9xVOvBb+7NGIGDyZHPXhQMD6fWkoIco
-         85cgbjUv6748RxMB71u6fE2wfM26RFNY/TXea4EQzzLXb+Xoww1QE1zBJwJmiZPX6EEU
-         uzS0At29ZdBuzNIbEcnf2dZnv+/zc3/H8k3I0C7O5HUiwy+B0AKOqY1j56UuVU++xIyV
-         xKtVtbaFwt7oGyCebAx5/yiBAPjVvBwwfSmX7asU3GAzb/dJIKNJ/506wAG4x9A43e/u
-         zyeyU2VUdFPhZvamuXMH+M7aslDEvSyy0RIbC540EEVYGCxjRXuYZO/hJkgWSs1KnAdo
-         gkfA==
-X-Forwarded-Encrypted: i=1; AJvYcCX8nOJ8Itcjd6HE8K8mzVsa1USygDuKetIh4ry2/nN4JDVtaRBNw4lhFamHteOHnFc+/jKYmYnw@lists.linux.dev
-X-Gm-Message-State: AOJu0YxkAmrrAB4hFxM6z6EpQTNp7kv5hT+RaSmvMH1SaivRoEKXwy6R
-	Ij7IzUT3ekegcEBiBjR9uO/t0ovvNfQdIa2vZcNKx1reVMhN3klWKsGCguQxFvE=
-X-Gm-Gg: ASbGncvPuRkCo4aYY4kjUe1+G7zF/r5oi3qyeFbH5RGM/W3wcxMcrLM8++rXFKaJikP
-	aUWCmfcy/xsaCLjji9mRXi44UJASDAkvzeyG+ntiRwY8opY5xlqMiPwNmUSMtp/UAW7djkEufve
-	TBl9HXXo/aSnYPEvT1EQNGQHGOHQs+P6O6ZZNPBtbJqE+VJv+dQj7+O1ZQOu6jBVW2gi9nSMQla
-	Jjp/rpgjbjDiQSNen146MAHT4uHfCniRf0wfW3cJfhfvfPUfuDTrd/whCXa0PTOmZyYfDaHzQ6J
-	6/Jp16c/pmNMHA==
-X-Google-Smtp-Source: AGHT+IEIeCgAGFBXoUwvmjdG4kaT43lYwV+Fkp3fDkVeP6qXvOFBGNPRA7BU0T2qf6XHumXXrDCSDQ==
-X-Received: by 2002:a5d:47ca:0:b0:38d:cc9c:630c with SMTP id ffacd0b85a97d-38f24f2c099mr1998761f8f.10.1739439936845;
-        Thu, 13 Feb 2025 01:45:36 -0800 (PST)
-Received: from myrica ([2.221.137.100])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258b41b5sm1396930f8f.14.2025.02.13.01.45.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Feb 2025 01:45:36 -0800 (PST)
-Date: Thu, 13 Feb 2025 09:46:01 +0000
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: jacob.pan@linux.microsoft.com,
-	Easwar Hariharan <eahariha@linux.microsoft.com>,
-	"zhangyu1@microsoft.com" <zhangyu1@microsoft.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
-	virtualization@lists.linux.dev, Will Deacon <will@kernel.org>,
-	Eric Auger <eric.auger@redhat.com>, patches@lists.linux.dev,
-	tina.zhang@intel.com
-Subject: Re: [PATCH 3/5] iommu/virtio: Move to domain_alloc_paging()
-Message-ID: <20250213094601.GA243081@myrica>
-References: <0-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
- <3-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
- <20250212112235.714b0a14@DESKTOP-0403QTC.>
- <20250212233053.GV3754072@nvidia.com>
- <67ad876d.170a0220.3c21dc.85ceSMTPIN_ADDED_BROKEN@mx.google.com>
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Q3BI4qYO";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Jc11mgkW"
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1739447656;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=nVCFtiwujzbXkpW5Uts1EM44uRKfVCoT8Jxt43kwJZs=;
+	b=Q3BI4qYOehHagnGv2BUg8gNnenIzTcCi1NMESdqL0fLyHd4Yzz9+IYpIkFW3DSmDQXC8IS
+	mDGtthYVDx2iQwWZwUnTh5RKYIrVO3hb0Gfqd1n1IKRRgimeBkq0ktFM6oTIF5/fZCTowq
+	Gq3dQ9PHcGRe4lFk/9u9qz7xDA+MuzWXW085gYb3gIveOvL3Y5trtL5vHA8iXcWnWTD0YW
+	N5txuktSnn/uYzDWCNP62XXc7dXXwAOMmprC65aAK79c1RgYmPW9hsupcNDm5bZgV/YLLR
+	o5Wz5nWNxmHCU6rp6EVQiJketXY0mDMiDZ3D3yWCHb/4u5bU1K44Ws+l+l30Fw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1739447656;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=nVCFtiwujzbXkpW5Uts1EM44uRKfVCoT8Jxt43kwJZs=;
+	b=Jc11mgkW0InKn0tScvUbjLrXp5+HWbjchgXOPuZeADaKpvfZUaX8cj1bJW72TjyGhkpFQJ
+	YQ0RMmw6VpI9zhBw==
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com,
+ kevin.tian@intel.com, maz@kernel.org
+Cc: joro@8bytes.org, will@kernel.org, robin.murphy@arm.com,
+ shuah@kernel.org, iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
+ eric.auger@redhat.com, baolu.lu@linux.intel.com, yi.l.liu@intel.com,
+ yury.norov@gmail.com, jacob.pan@linux.microsoft.com,
+ patches@lists.linux.dev
+Subject: Re: [PATCH v1 01/13] genirq/msi: Store the IOMMU IOVA directly in
+ msi_desc instead of iommu_cookie
+In-Reply-To: <a580069c5e494ffffa668218b6fe3a207b01efec.1739005085.git.nicolinc@nvidia.com>
+References: <cover.1739005085.git.nicolinc@nvidia.com>
+ <a580069c5e494ffffa668218b6fe3a207b01efec.1739005085.git.nicolinc@nvidia.com>
+Date: Thu, 13 Feb 2025 12:54:15 +0100
+Message-ID: <87y0yajc0o.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <67ad876d.170a0220.3c21dc.85ceSMTPIN_ADDED_BROKEN@mx.google.com>
+Content-Type: text/plain
 
-Hi Jacob,
+On Sat, Feb 08 2025 at 01:02, Nicolin Chen wrote:
+> From: Jason Gunthorpe <jgg@nvidia.com>
+>
+> All the iommu cases simply want to override the MSI page's address with
+> the IOVA that was mapped through the iommu. This doesn't need a cookie
+> pointer, we just need to store the IOVA and its page size in the
+> msi_desc.
 
-On Wed, Feb 12, 2025 at 09:47:23PM -0800, Jacob Pan wrote:
-> Our code and backend support are still in the early stages, that is why
-> I am attempting to convert virtio-iommu driver to iommu_pt. Not sure if
-> anyone has done the QEMU part to support VIRTIO_IOMMU_F_ATTACH_TABLE?
-> @Jean @Eric Do you know?
+We need to do nothing :)
 
-As far as I know Tina worked on this most recently:
-https://github.com/TinaZhangZW/qemu/commits/virtio-iommu/vt-d-pgtable/
-https://lore.kernel.org/all/20231106071226.9656-1-tina.zhang@intel.com/
+> Instead provide msi_desc_set_iommu_msi_iova() which allows the IOMMU side
+> to specify the IOVA that the MSI page is placed during
+> iommu_dma_prepare_msi(). This is stored in the msi_desc and then
+> iommu_dma_compose_msi_msg() is a simple inline that sets address_hi/lo.
+>
+> The next patch will correct the naming.
+>
+> This is done because we cannot correctly lock access to group->domain
+> in
 
-Thanks,
-Jean
+Now this gets really confusing. How is the next patch which corrects the
+naming related the locking problem?
+
+> the atomic context that iommu_dma_compose_msi_msg() is called under. Today
+> the locking miss is tolerable because dma_iommu.c operates under an
+> assumption that the domain does not change while a driver is probed.
+>
+> However iommufd now permits the domain to change while the driver is
+> probed and VFIO userspace can create races with IRQ changes calling
+> iommu_dma_prepare_msi/compose_msi_msg() and changing/freeing the
+> iommu_domain.
+>
+> Removing the pointer, and critically, the call to
+> iommu_get_domain_for_dev() during compose resolves this race.
+
+So this change log really fails to follow the basic structure:
+
+   The context, the problem and the solution
+
+Something like this:
+
+   The IOMMU translation for MSI message addresses is a two stage
+   process:
+
+     1) A cookie containing the IOVA address is stored in the MSI
+        descriptor, when a MSI interrupt is allocated
+
+     2) The compose callback uses this cookie to apply the translation
+        to the message address.
+
+   This worked so far because .......
+
+   With the iommufd rework this becomes racy, because ...
+
+   Fix this by storing ... instead of ... ....
+
+Hmm?
+
+        tglx
+
