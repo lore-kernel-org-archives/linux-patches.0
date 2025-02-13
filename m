@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72FB26B0B9;
-	Thu, 13 Feb 2025 15:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BCC61946C7;
+	Thu, 13 Feb 2025 15:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460151; cv=none; b=lOuhsP1gQPAspHJfDfb65fW8kf8ZkK9pxxRCGfX/sQmQqrHyIUR+kg7Nlh8XZgN12o5AYRkzsHER8NPk1gcBYTzjp7KrlKYpUF04xfcs+xUVoq5xKD/71yNrlRkjktqO4FGoDv0huFjEaJJT1Gwprv95xZf0aCsKokHWibk8Mgg=
+	t=1739460154; cv=none; b=h8U2NZ07BREQ/WlNINCFXy8RvaxQI5Ag6XzcwZ+fouO+TadsbPfIlSxs/T+osk9oTzNcVgepPB77dkO7Rya9v/eGs9rOg1+fxs1/lPZKY4pA2E/8Nzt0HbyFy+/KhIeOqww7Cko1enrUBIvYOkEXrC3OE4zTB9ScGuJQ6pjKgNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460151; c=relaxed/simple;
-	bh=zEgF4g0AQMys4k6Epa35uEvH8+aFtp85pHii0/gWs34=;
+	s=arc-20240116; t=1739460154; c=relaxed/simple;
+	bh=HEDbKtGN13Wr6r1JmZ2UKL0uimhE9WT1uLJMbnjihCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixsyzvfcuEc4FWk7loX357nNoN/bG8Cm1eJnWLnT5V3tLfVcNjpmwPkbZuXsfJhibPQFb4PDQPKV1Ei5NWW9V0xPJU+281RnLu/H7D021exjp4xtdhXPQYGeiEPXOlk591XLNbVS7Ogb2p2NiQ7Jjrlt/nXGiuFCD6pz88unAoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YwVbZhCt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OFiLRBWrePcjV0CR2AKC0hqr4YnljS9vUCdh9f/MGsxwACTtCKk1mWW9uLX+Kefr7MegPKgdBWm7hmptgO3PN4d0i/E1dI6BcUV047fx8wJqf9XELzSMStQAkzksL6NwNmdwKjs/BQkLVfF2/4UjFg5UyznTd1cX1J0npm89m6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLbACafs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YwVbZhCt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B33C4CED1;
-	Thu, 13 Feb 2025 15:22:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLbACafs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D0FC4CED1;
+	Thu, 13 Feb 2025 15:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460150;
-	bh=zEgF4g0AQMys4k6Epa35uEvH8+aFtp85pHii0/gWs34=;
+	s=korg; t=1739460154;
+	bh=HEDbKtGN13Wr6r1JmZ2UKL0uimhE9WT1uLJMbnjihCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YwVbZhCtvptQ5yhLQpYqHZQl+jqk6jhd/8KWOmU/WmJvKiLUOHgJ7d7bEBIbI+eVI
-	 gCmaXWmd6Qaub65YLLp5yYFCEKYRp5EDuOP7Yoh2rqSL2kbISIWNUGgob8j3IL3i91
-	 WSNbuz6fMjjcqElgjheC68FoHJrZl5FjCpeagixM=
+	b=VLbACafswl/LpYsrWeyOsjiRrhzmUXXPr5+PCjmtJtTITvwPBRRqt/bsib7ZCaMn+
+	 5TRGWOmCn/L2s4vktU54JHog1T8R0HOTpZn4z7KFJQaSvEyt5jWIes7/8KriaPTDOy
+	 AFZTna/KJj69uMZJI4jRsHlnIZ4bp+a+orRjHfpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Gavin Shan <gshan@redhat.com>,
+	=?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>,
+	Tycho Andersen <tandersen@netflix.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 003/273] arm64/mm: Ensure adequate HUGE_MAX_HSTATE
-Date: Thu, 13 Feb 2025 15:26:15 +0100
-Message-ID: <20250213142407.494258827@linuxfoundation.org>
+Subject: [PATCH 6.6 004/273] exec: fix up /proc/pid/comm in the execveat(AT_EMPTY_PATH) case
+Date: Thu, 13 Feb 2025 15:26:16 +0100
+Message-ID: <20250213142407.532115729@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -52,60 +49,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 1e5823c8e86de83a43d59a522b4de29066d3b306 ]
+[ Upstream commit 543841d1806029889c2f69f040e88b247aba8e22 ]
 
-This asserts that HUGE_MAX_HSTATE is sufficient enough preventing potential
-hugetlb_max_hstate runtime overflow in hugetlb_add_hstate() thus triggering
-a BUG_ON() there after.
+Zbigniew mentioned at Linux Plumber's that systemd is interested in
+switching to execveat() for service execution, but can't, because the
+contents of /proc/pid/comm are the file descriptor which was used,
+instead of the path to the binary[1]. This makes the output of tools like
+top and ps useless, especially in a world where most fds are opened
+CLOEXEC so the number is truly meaningless.
 
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Link: https://lore.kernel.org/r/20241202064407.53807-1-anshuman.khandual@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+When the filename passed in is empty (e.g. with AT_EMPTY_PATH), use the
+dentry's filename for "comm" instead of using the useless numeral from
+the synthetic fdpath construction. This way the actual exec machinery
+is unchanged, but cosmetically the comm looks reasonable to admins
+investigating things.
+
+Instead of adding TASK_COMM_LEN more bytes to bprm, use one of the unused
+flag bits to indicate that we need to set "comm" from the dentry.
+
+Suggested-by: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
+Suggested-by: Tycho Andersen <tandersen@netflix.com>
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://github.com/uapi-group/kernel-features#set-comm-field-before-exec [1]
+Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>
+Tested-by: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/hugetlbpage.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/exec.c               | 29 ++++++++++++++++++++++++++---
+ include/linux/binfmts.h |  4 +++-
+ 2 files changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/mm/hugetlbpage.c b/arch/arm64/mm/hugetlbpage.c
-index 13fd592228b18..a5e1588780b2c 100644
---- a/arch/arm64/mm/hugetlbpage.c
-+++ b/arch/arm64/mm/hugetlbpage.c
-@@ -526,6 +526,18 @@ pte_t huge_ptep_clear_flush(struct vm_area_struct *vma,
+diff --git a/fs/exec.c b/fs/exec.c
+index 7776209d98c10..4a6255aa4ea7f 100644
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -1362,7 +1362,28 @@ int begin_new_exec(struct linux_binprm * bprm)
+ 		set_dumpable(current->mm, SUID_DUMP_USER);
  
- static int __init hugetlbpage_init(void)
- {
+ 	perf_event_exec();
+-	__set_task_comm(me, kbasename(bprm->filename), true);
++
 +	/*
-+	 * HugeTLB pages are supported on maximum four page table
-+	 * levels (PUD, CONT PMD, PMD, CONT PTE) for a given base
-+	 * page size, corresponding to hugetlb_add_hstate() calls
-+	 * here.
-+	 *
-+	 * HUGE_MAX_HSTATE should at least match maximum supported
-+	 * HugeTLB page sizes on the platform. Any new addition to
-+	 * supported HugeTLB page sizes will also require changing
-+	 * HUGE_MAX_HSTATE as well.
++	 * If the original filename was empty, alloc_bprm() made up a path
++	 * that will probably not be useful to admins running ps or similar.
++	 * Let's fix it up to be something reasonable.
 +	 */
-+	BUILD_BUG_ON(HUGE_MAX_HSTATE < 4);
- 	if (pud_sect_supported())
- 		hugetlb_add_hstate(PUD_SHIFT - PAGE_SHIFT);
++	if (bprm->comm_from_dentry) {
++		/*
++		 * Hold RCU lock to keep the name from being freed behind our back.
++		 * Use acquire semantics to make sure the terminating NUL from
++		 * __d_alloc() is seen.
++		 *
++		 * Note, we're deliberately sloppy here. We don't need to care about
++		 * detecting a concurrent rename and just want a terminated name.
++		 */
++		rcu_read_lock();
++		__set_task_comm(me, smp_load_acquire(&bprm->file->f_path.dentry->d_name.name),
++				true);
++		rcu_read_unlock();
++	} else {
++		__set_task_comm(me, kbasename(bprm->filename), true);
++	}
  
+ 	/* An exec changes our domain. We are no longer part of the thread
+ 	   group */
+@@ -1521,11 +1542,13 @@ static struct linux_binprm *alloc_bprm(int fd, struct filename *filename)
+ 	if (fd == AT_FDCWD || filename->name[0] == '/') {
+ 		bprm->filename = filename->name;
+ 	} else {
+-		if (filename->name[0] == '\0')
++		if (filename->name[0] == '\0') {
+ 			bprm->fdpath = kasprintf(GFP_KERNEL, "/dev/fd/%d", fd);
+-		else
++			bprm->comm_from_dentry = 1;
++		} else {
+ 			bprm->fdpath = kasprintf(GFP_KERNEL, "/dev/fd/%d/%s",
+ 						  fd, filename->name);
++		}
+ 		if (!bprm->fdpath)
+ 			goto out_free;
+ 
+diff --git a/include/linux/binfmts.h b/include/linux/binfmts.h
+index 8d51f69f9f5ef..af9056d78fadf 100644
+--- a/include/linux/binfmts.h
++++ b/include/linux/binfmts.h
+@@ -42,7 +42,9 @@ struct linux_binprm {
+ 		 * Set when errors can no longer be returned to the
+ 		 * original userspace.
+ 		 */
+-		point_of_no_return:1;
++		point_of_no_return:1,
++		/* Set when "comm" must come from the dentry. */
++		comm_from_dentry:1;
+ 	struct file *executable; /* Executable to pass to the interpreter */
+ 	struct file *interpreter;
+ 	struct file *file;
 -- 
 2.39.5
 
