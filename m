@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BB91946C7;
-	Thu, 13 Feb 2025 15:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F9B227E88;
+	Thu, 13 Feb 2025 15:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460932; cv=none; b=scnF6NHhIpxCx90NHlDTH8DoDd/d6qzLUoDjn3kvOqnjwTaN0j8MQbbIeYzeO4hpzRC3XWObXoDl6A8C0i3Lt1gzf9vsb6JbwRzKRw0wxzTzuJTnpmoB+oBQoU+h4fnfIvWX06GISgue0jA0Vvecd1Bx6sdjJ3JV/64EW9xFOrg=
+	t=1739460935; cv=none; b=H1LnzX3AVJ3ykARWE0GhglkynzJporhTEK935O99IR3+HrTh/0vorzOvTZ1tQC6dhdB0gKoKuY/fUhdJNSebhpVfYbQr9i9D5MZ2+Q+Yeu/OUjd3BO3NdBSyXBBiJ2CJkI3oFRQqUlGFsPAkgSHvEdqN3Dk2PwItzZnUxI0+Ehs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460932; c=relaxed/simple;
-	bh=JUfFV2qisA3hGne1Wn4Uv422fTmzQFI1a9M3kasGuwU=;
+	s=arc-20240116; t=1739460935; c=relaxed/simple;
+	bh=hu1CqQDTT4n8sYsdA9OlU4jU+Wp0BnxR3IuljP1ESgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P4IhEf7XWjvfvyVDZN63BHvfkqPQMdwP81Eec3TQ/v+18TnW4ePPPeBF9TLSj85p5C4ycRbHkI+IXLdifrfY3hFgSfUl2MFVlfZiwYBUeBm7Y4hDa+zlK33HV52Wj5tZ67x4yK5dtoIhF95+vub8QDYcSLR/vLo3KNZUCecjCPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11ON8fD2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P79QmlCMiaJZMcVg4CYxTiQeEZq9dYgAzXeUC3atg2KrDqfrRebRzhW8HGelkcZNixicIuNnxAy5goKJBpDCxCC8rBfheS9wQyooaTa8YEkTGcFe4Qf0xy94glOW9+f3ms0bDvyKjxrvVD6Kb/UB7xOrvnvB3ieqZ2e5GuNaWx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFbt9EQN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11ON8fD2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9339BC4CED1;
-	Thu, 13 Feb 2025 15:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFbt9EQN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9CDC4CED1;
+	Thu, 13 Feb 2025 15:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460932;
-	bh=JUfFV2qisA3hGne1Wn4Uv422fTmzQFI1a9M3kasGuwU=;
+	s=korg; t=1739460935;
+	bh=hu1CqQDTT4n8sYsdA9OlU4jU+Wp0BnxR3IuljP1ESgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=11ON8fD25KqlMFLWRD/gSDcae8+4ovVvZIOpc2RId6Vum9F9eglLTiejf4u5ilFFt
-	 fBO/3Mp5Kje3IwQoDsRTb4Exqlehwa7lLUdnyx/0n4UtFkzZM6tUUcErCR452FV/tP
-	 YCdMaaOZvI6oVVTyPvAGpX0JZu1fQZ48npbwKFas=
+	b=jFbt9EQNvvMROC/SKda7VpTxPFuKiUgEk/VXUz+jnKJM05gr2Soaw+Z00XHVK5IJ3
+	 sSy8N8yyBoEIDC68NWDK5+zVC2J/bPqPfpMEVnk3sxYn0SfpTzA/7a0pYp22sXkxpM
+	 qo2j+nTIX+FFKvtipkfCgFxVTKAZliSRIxSfS1Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Kacur <jkacur@redhat.com>,
-	Luis Goncalves <lgoncalv@redhat.com>,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	Tomas Glozar <tglozar@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 255/273] rtla/timerlat_top: Stop timerlat tracer on signal
-Date: Thu, 13 Feb 2025 15:30:27 +0100
-Message-ID: <20250213142417.500346055@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.6 256/273] pinctrl: samsung: fix fwnode refcount cleanup if platform_get_irq_optional() fails
+Date: Thu, 13 Feb 2025 15:30:28 +0100
+Message-ID: <20250213142417.539279260@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -53,72 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Glozar <tglozar@redhat.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit a4dfce7559d75430c464294ddee554be2a413c4a upstream.
+commit 459915f55509f4bfd6076daa1428e28490ddee3b upstream.
 
-Currently, when either SIGINT from the user or SIGALRM from the duration
-timer is caught by rtla-timerlat, stop_tracing is set to break out of
-the main loop. This is not sufficient for cases where the timerlat
-tracer is producing more data than rtla can consume, since in that case,
-rtla is looping indefinitely inside tracefs_iterate_raw_events, never
-reaches the check of stop_tracing and hangs.
+Commit 50ebd19e3585 ("pinctrl: samsung: drop pin banks references on
+error paths") fixed the pin bank references on the error paths of the
+probe function, but there is still an error path where this is not done.
 
-In addition to setting stop_tracing, also stop the timerlat tracer on
-received signal (SIGINT or SIGALRM). This will stop new samples so that
-the existing samples may be processed and tracefs_iterate_raw_events
-eventually exits.
+If samsung_pinctrl_get_soc_data() does not fail, the child references
+will have acquired, and they will need to be released in the error path
+of platform_get_irq_optional(), as it is done in the following error
+paths within the probe function.
+
+Replace the direct return in the error path with a goto instruction to
+the cleanup function.
 
 Cc: stable@vger.kernel.org
-Cc: John Kacur <jkacur@redhat.com>
-Cc: Luis Goncalves <lgoncalv@redhat.com>
-Cc: Gabriele Monaco <gmonaco@redhat.com>
-Link: https://lore.kernel.org/20250116144931.649593-4-tglozar@redhat.com
-Fixes: a828cd18bc4a ("rtla: Add timerlat tool and timelart top mode")
-Signed-off-by: Tomas Glozar <tglozar@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: a382d568f144 ("pinctrl: samsung: Use platform_get_irq_optional() to get the interrupt")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20241106-samsung-pinctrl-put-v1-1-de854e26dd03@gmail.com
+[krzysztof: change Fixes SHA to point to commit introducing the return
+ leading to OF node leak]
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/tracing/rtla/src/timerlat_top.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/pinctrl/samsung/pinctrl-samsung.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/tracing/rtla/src/timerlat_top.c
-+++ b/tools/tracing/rtla/src/timerlat_top.c
-@@ -728,9 +728,12 @@ out_err:
- }
+--- a/drivers/pinctrl/samsung/pinctrl-samsung.c
++++ b/drivers/pinctrl/samsung/pinctrl-samsung.c
+@@ -1150,7 +1150,7 @@ static int samsung_pinctrl_probe(struct
  
- static int stop_tracing;
-+static struct trace_instance *top_inst = NULL;
- static void stop_top(int sig)
- {
- 	stop_tracing = 1;
-+	if (top_inst)
-+		trace_instance_stop(top_inst);
- }
+ 	ret = platform_get_irq_optional(pdev, 0);
+ 	if (ret < 0 && ret != -ENXIO)
+-		return ret;
++		goto err_put_banks;
+ 	if (ret > 0)
+ 		drvdata->irq = ret;
  
- /*
-@@ -777,6 +780,13 @@ int timerlat_top_main(int argc, char *ar
- 	}
- 
- 	trace = &top->trace;
-+	/*
-+	* Save trace instance into global variable so that SIGINT can stop
-+	* the timerlat tracer.
-+	* Otherwise, rtla could loop indefinitely when overloaded.
-+	*/
-+	top_inst = trace;
-+
- 
- 	retval = enable_timerlat(trace);
- 	if (retval) {
-@@ -925,7 +935,7 @@ int timerlat_top_main(int argc, char *ar
- 
- 	return_value = 0;
- 
--	if (trace_is_off(&top->trace, &record->trace)) {
-+	if (trace_is_off(&top->trace, &record->trace) && !stop_tracing) {
- 		printf("rtla timerlat hit stop tracing\n");
- 
- 		if (!params->no_aa)
 
 
