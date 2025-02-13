@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23111547E3;
-	Thu, 13 Feb 2025 15:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD321632DD;
+	Thu, 13 Feb 2025 15:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460687; cv=none; b=mreUsj2aEjtz1HN2qSegJ9gzue+Tqf28GCAhnjbXSGjgHGA6ovBqkbeJFYDy976rvC2m+vEj5Y6QgnsHCLSDjpfrTODTYY0vnXeM2vLV7vr9ayaMy9HXX8WHJyBaqS0i2/g6qvvxiP3ZBoQc0b657z7gFS8ELWXq0E0BqLzEitE=
+	t=1739460691; cv=none; b=KwUmUUVGaYnqmnH74+PAr0SNs9Q/GL6AqBfkAE0eGM0t6+ZGjgUnv/8mXk/o7KxKdikUgXx1SWfzpLYqIgQS/+/5X6yzFOtbFfT7hC1DVd5KFEakYwI9b5A11k9CzCa3LD+q7prYwY/DA8KaieZgZaQN9cSWG7tiFznG027LxHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460687; c=relaxed/simple;
-	bh=1WjoYwK4dSJb+QKvvrIVrkd6TrtCLR7E0tUYEVRxWKo=;
+	s=arc-20240116; t=1739460691; c=relaxed/simple;
+	bh=4kY6ksw3yfwwPQR3eyj4hFh9qOV1s3w5xuU+F64gZT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tgOevL7dugks+cQTunTaqGwKu34ZpNee+hintt6ctYEQ+4QHrN2JIJIe3cZCCNWdfpzJsYGREGhOD3Uzr7q3DPV5Xx1G7F7kcz14BDiPST5O6L+ylgnQ7YBQRLvTzDNG7LnmKoeAipBYBNKL5J3eNjBfWZQdlLnymrULyr/L3s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7JhsU3t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i8oKe4SQdsExNKvn0jVqErC3Smi88j0RDgQTNsiAoaAqRGtLMWcyayYfgnUSxMiedWAHYRPjiyvj/FbySn9OuL0lVc6TtWj50wIyAIPKlmUcyGS/Ji17zcGJ8tPH4fFGBapvKzsSP673v4FtsCiLsVIiKjMZPq/rSdwyQVDjH6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSp45sQh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7JhsU3t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D090C4CED1;
-	Thu, 13 Feb 2025 15:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSp45sQh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A305CC4CEE4;
+	Thu, 13 Feb 2025 15:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460687;
-	bh=1WjoYwK4dSJb+QKvvrIVrkd6TrtCLR7E0tUYEVRxWKo=;
+	s=korg; t=1739460691;
+	bh=4kY6ksw3yfwwPQR3eyj4hFh9qOV1s3w5xuU+F64gZT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k7JhsU3tZtMevqETG3YId7oiptkDb0Sn7kphsNfpROk64k0kq53bFkD46ASRGGcxq
-	 P2nuQboVXgHj+2xwlLZ8lUCEgNtTYzOCHCpAJd/cBItE33/ewEdWV1MSGFQu2loBWU
-	 T+vT4HzlUBxjHXG00bC1euczeM2EpUDtPD/GTuX4=
+	b=wSp45sQhISHYWGcJw/0qCH6oa0JDbmCDENert7HXudkBSVYt5E6HO4PHPuZuu8Afr
+	 ZyGzOZW33erdY0h8tNjtm37V75AeXCcHKlNrKagXDt2vMIPTr/ilUDRmOZa1DhrcW2
+	 W2/N/7mpaQDIcSNw/caphgCmLmXdLWfDR0m/ygBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 184/273] arm64: dts: qcom: sm8450: Fix CDSP memory length
-Date: Thu, 13 Feb 2025 15:29:16 +0100
-Message-ID: <20250213142414.597054726@linuxfoundation.org>
+Subject: [PATCH 6.6 185/273] arm64: dts: qcom: sm8450: Fix MPSS memory length
+Date: Thu, 13 Feb 2025 15:29:17 +0100
+Message-ID: <20250213142414.636542437@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -53,12 +53,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 3751fe2cba2a9fba2204ef62102bc4bb027cec7b upstream.
+commit fa6442e87ab7c4a58c0b5fc64aab1aacc8034712 upstream.
 
-The address space in CDSP PAS (Peripheral Authentication Service)
+The address space in MPSS/Modem PAS (Peripheral Authentication Service)
 remoteproc node should point to the QDSP PUB address space
-(QDSP6...SS_PUB) which has a length of 0x10000.  Value of 0x1400000 was
-copied from older DTS, but it does not look accurate at all.
+(QDSP6...SS_PUB) which has a length of 0x10000.  Value of 0x4040 was
+copied from older DTS, but it grew since then.
 
 This should have no functional impact on Linux users, because PAS loader
 does not use this address space at all.
@@ -67,7 +67,7 @@ Fixes: 1172729576fb ("arm64: dts: qcom: sm8450: Add remoteproc enablers and inst
 Cc: stable@vger.kernel.org
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20241213-dts-qcom-cdsp-mpss-base-address-v3-5-2e0036fccd8d@linaro.org
+Link: https://lore.kernel.org/r/20241213-dts-qcom-cdsp-mpss-base-address-v3-6-2e0036fccd8d@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -76,14 +76,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -2475,7 +2475,7 @@
+@@ -2581,7 +2581,7 @@
  
- 		remoteproc_cdsp: remoteproc@32300000 {
- 			compatible = "qcom,sm8450-cdsp-pas";
--			reg = <0 0x32300000 0 0x1400000>;
-+			reg = <0 0x32300000 0 0x10000>;
+ 		remoteproc_mpss: remoteproc@4080000 {
+ 			compatible = "qcom,sm8450-mpss-pas";
+-			reg = <0x0 0x04080000 0x0 0x4040>;
++			reg = <0x0 0x04080000 0x0 0x10000>;
  
- 			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp_in 0 IRQ_TYPE_EDGE_RISING>,
+ 			interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_EDGE_RISING>,
+ 					      <&smp2p_modem_in 0 IRQ_TYPE_EDGE_RISING>,
 
 
