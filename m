@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C44C26B0BE;
-	Thu, 13 Feb 2025 14:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D11626B0BB;
+	Thu, 13 Feb 2025 14:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458427; cv=none; b=bzTlDe5BWy/HpbUssMUzdaBOnxRgVh5gsRUb1DAg92GIK8ZyM+WU6rZppTDdnDZ6s+9H30FsRgA30yMUVSfFKgrghagby/eZIuORdDp8Ejs83BFPo0o44SLxxrImnrtrl004ZmxEvHgJg/Lbt/mfQSs2Dn+cUZKqLV7TDnCCYSo=
+	t=1739458430; cv=none; b=hPvLGnr3U8VpYCMTcxVeF5Rq9fiEfhI9jtf0qm+G+zTPA/FkyKPCjBnFZTGzzrIXam4WJMVTsJzHhCWwyc/3T3bYooZxhS9uIQ89/jqrbg/lwt/2TSjNjdu2uXxeIr16DX7zqLZKQSjNRqshigG0QpKQUd+V7Oq7WCl+8G4mv74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458427; c=relaxed/simple;
-	bh=FhCkDh6fS+9Qk3q+gghzleFdIsXdAUF/l9OKvkSRYp0=;
+	s=arc-20240116; t=1739458430; c=relaxed/simple;
+	bh=WAYKlkApqHgzHS/3NhYeVhSpbgKhWh0Drg+HNAmabN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hLt4vt4UOEydqrkjIq+UiO8/NuUrOhfSmX/qhBrt+MMvsu9kyn3TvUfGlVmX8DwCE46IkB6GVdIZTa6FDSh7cLKi7UkYdALPq326ExitdDu1OKclf2KgIlldD0fFzMUJE/U1gR8MTCGcSBhwrbY5OcHkX8X5EPoS2socltRkEz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UdajlcLF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qJawmFcAXSbChrUy/hiI7nLt0fJdg/K9gvIK3zP7s1y/jO/p9SSDXuYXL1Tzs0RxGgwl+ybiwILVqF0vsMzy+/Ivpjz+J9YMu81J/te+x057/DL13eSUHPdGuSTng6kGawJc0g0FN+eHWCP79b0Cz6ZKJ4Pom8LIJDbiEfkUFDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=roEHrrEv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdajlcLF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61835C4CED1;
-	Thu, 13 Feb 2025 14:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="roEHrrEv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0255C4CED1;
+	Thu, 13 Feb 2025 14:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458426;
-	bh=FhCkDh6fS+9Qk3q+gghzleFdIsXdAUF/l9OKvkSRYp0=;
+	s=korg; t=1739458430;
+	bh=WAYKlkApqHgzHS/3NhYeVhSpbgKhWh0Drg+HNAmabN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UdajlcLFClscEbMUSkpL73hZXNWUHqKWqaUwu0pEMc5eZc0lKWf0V7aUa3hQr50Er
-	 WZaxXRYXzB/+c3xtHIRBkpnnFWPn6aZAytD1c5x6/1wdxGN3RIeF5ip/31g11pJyFr
-	 YQsC9CeCf3xXaHE2lvnvJkVACqdQBYytnfD0PLzk=
+	b=roEHrrEvlZEVKpRjEGqXJjgyjxA1iu8SyhnU+MsSdCScHrx7hgSXdX4yXA9XfM8+T
+	 bbJSkAAaFj8aO1h9VZnCby3iQi4lldpr3NbD+ohpJeU5RLJ/EcR3KtVpbG1NxJrzbA
+	 ciRpM769WrMllPK8J/o50Y7IxmEI/iUnMJCHO9Nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 369/422] NFC: nci: Add bounds checking in nci_hci_create_pipe()
-Date: Thu, 13 Feb 2025 15:28:38 +0100
-Message-ID: <20250213142450.788025654@linuxfoundation.org>
+	WangYuli <wangyuli@uniontech.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.12 396/422] MIPS: ftrace: Declare ftrace_get_parent_ra_addr() as static
+Date: Thu, 13 Feb 2025 15:29:05 +0100
+Message-ID: <20250213142451.827710692@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -46,42 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: WangYuli <wangyuli@uniontech.com>
 
-commit 110b43ef05342d5a11284cc8b21582b698b4ef1c upstream.
+commit ddd068d81445b17ac0bed084dfeb9e58b4df3ddd upstream.
 
-The "pipe" variable is a u8 which comes from the network.  If it's more
-than 127, then it results in memory corruption in the caller,
-nci_hci_connect_gate().
+Declare ftrace_get_parent_ra_addr() as static to suppress clang
+compiler warning that 'no previous prototype'. This function is
+not intended to be called from other parts.
 
-Cc: stable@vger.kernel.org
-Fixes: a1b0b9415817 ("NFC: nci: Create pipe on specific gate in nci_hci_connect_gate")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/bcf5453b-7204-4297-9c20-4d8c7dacf586@stanley.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix follow error with clang-19:
+
+arch/mips/kernel/ftrace.c:251:15: error: no previous prototype for function 'ftrace_get_parent_ra_addr' [-Werror,-Wmissing-prototypes]
+  251 | unsigned long ftrace_get_parent_ra_addr(unsigned long self_ra, unsigned long
+      |               ^
+arch/mips/kernel/ftrace.c:251:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+  251 | unsigned long ftrace_get_parent_ra_addr(unsigned long self_ra, unsigned long
+      | ^
+      | static
+1 error generated.
+
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/nci/hci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/mips/kernel/ftrace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/nfc/nci/hci.c
-+++ b/net/nfc/nci/hci.c
-@@ -542,6 +542,8 @@ static u8 nci_hci_create_pipe(struct nci
+--- a/arch/mips/kernel/ftrace.c
++++ b/arch/mips/kernel/ftrace.c
+@@ -248,7 +248,7 @@ int ftrace_disable_ftrace_graph_caller(v
+ #define S_R_SP	(0xafb0 << 16)	/* s{d,w} R, offset(sp) */
+ #define OFFSET_MASK	0xffff	/* stack offset range: 0 ~ PT_SIZE */
  
- 	pr_debug("pipe created=%d\n", pipe);
- 
-+	if (pipe >= NCI_HCI_MAX_PIPES)
-+		pipe = NCI_HCI_INVALID_PIPE;
- 	return pipe;
- }
- 
+-unsigned long ftrace_get_parent_ra_addr(unsigned long self_ra, unsigned long
++static unsigned long ftrace_get_parent_ra_addr(unsigned long self_ra, unsigned long
+ 		old_parent_ra, unsigned long parent_ra_addr, unsigned long fp)
+ {
+ 	unsigned long sp, ip, tmp;
 
 
