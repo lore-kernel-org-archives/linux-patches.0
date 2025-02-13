@@ -1,92 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFDA23A9BE;
-	Thu, 13 Feb 2025 13:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A949281360;
+	Thu, 13 Feb 2025 14:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739455158; cv=none; b=BastS8pUujXM+dqKojrLCzLvV7zh/7O75nb42mm8eJsiT/RpAjy95LBkleaGaHefwjKDkfDzm92GIt1BpMDQDlfOEaGB3T/ieA7N93WbLaAGRu/t6AloqgOHyYXfWvQl3Piok//lUIjNcSdr9zS5stYVZ3MpkZaXDm85TvxRWmk=
+	t=1739457070; cv=none; b=rjKMdNnkmgm236SHtDpBP37myDffAnGt/lHM91Vj0y5PLyqP3iimHMnPSMYPA7fkNHy/eWU7y8DOggExolzOZtPa2CRfloYiXj6qg5LnidDCkQVAF+QdSsMDknufVJQE78oZjWix1MV4GWTxDfWo7gG2hOVbN8z68NDdxgQjzCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739455158; c=relaxed/simple;
-	bh=kv8C+kxdksKQcbyaE9UMSrjCRll+aHQKDRacT2Sl+DY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b4e+2/YIITT7acJJA+gNPwzgBZi8t9oDobbpxEJ/qZKrabFQ3mqsi9DICHl+LobxeH2e6sZg4Bmz0URnhlHJrn0PwnPmjMCWkUFLvhUVxeJ89VdwBnyOO1QrYqErcoTRqHzME8DV25vLPj3l++HINXcD67xqJUZtjpqSJO87P2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qn6f0oGk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1739457070; c=relaxed/simple;
+	bh=Chy1+f2YB1i1E9fauegN/2NzDH+rlhxiay3CNQ8Qk/I=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=LrY2newjxQVud4acz3vxUeTng00WV5lWMtXtdld/rJ1KtfZxltdeP5QYN5gVEEGiYEOHP5DyyhgXQpDmgtTDOuS7ikny24KABZ81LhOwRS52RDNzAHRrlWvzNbHC32Y2l8QR7BXiXb8Rqpe9IEpgGkzL6Qm3q2VPiSBZafhZCxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fj9W7Phr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qn6f0oGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F22C4CED1;
-	Thu, 13 Feb 2025 13:59:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739455155;
-	bh=kv8C+kxdksKQcbyaE9UMSrjCRll+aHQKDRacT2Sl+DY=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fj9W7Phr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D696C4CED1;
+	Thu, 13 Feb 2025 14:31:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1739457069;
+	bh=Chy1+f2YB1i1E9fauegN/2NzDH+rlhxiay3CNQ8Qk/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qn6f0oGkfzm3ZF9c8O9NpMF2Q7fffS0EaCnoaKJ6Eb93wi7isvxhmY7HYv66J/L0o
-	 LPxRdwJGBa92FKp35t7YYtP3kS8vQsxcgj1zRbHE7LU18NonBDr/m7+N/rEzSt6y5H
-	 +nyidMsO87ldbfNBgD48xh3+tJm0jfTWCHn3XdzJQ1W/dQ4nsDlQ6NnRy5Kt3yQrmr
-	 isfhA7Yiqa6By/qm3oA8K74ldOI+OTCTjlQIkEXOEso5aGVeonJOl5iWCtAMBZUQHv
-	 rCah0T0Ly/TM07li5RwXINzwO7uKIXJpVgfF/dqwjxEPyVcpH3RGHtRPSejKJU+04f
-	 B52m23KMCijaw==
-From: Will Deacon <will@kernel.org>
-To: Catalin Marinas <catalin.marinas@arm.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Cc: kernel-team@android.com,
-	Will Deacon <will@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	b=fj9W7PhrmIf0aMKbYZZlUKVY9bfTi3vQ7Lpha6ZVGvdfuTO43jVqJNQqixyGTu/13
+	 LJ9LPCT8bnOGARZ7KWlawDMuxrhH7pzrQ+c+nmt/TqefPeE2Ptv9daqHwAQZ106PRi
+	 y6RzT5QT24gbf0ESzdgKRsgQqWv1wF1re0V943sg=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@vger.kernel.org,
-	Matthew Maurer <mmaurer@google.com>,
-	Ralf Jung <post@ralfj.de>,
-	Jubilee Young <workingjubilee@gmail.com>
-Subject: Re: [PATCH] arm64: rust: clean Rust 1.85.0 warning using softfloat target
-Date: Thu, 13 Feb 2025 13:59:03 +0000
-Message-Id: <173944714987.2610867.13703061512287477883.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20250210163732.281786-1-ojeda@kernel.org>
-References: <20250210163732.281786-1-ojeda@kernel.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/422] irqchip/lan966x-oic: Make CONFIG_LAN966X_OIC depend on CONFIG_MCHP_LAN966X_PCI
+Date: Thu, 13 Feb 2025 15:22:30 +0100
+Message-ID: <20250213142436.472887649@linuxfoundation.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
+References: <20250213142436.408121546@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Mon, 10 Feb 2025 17:37:32 +0100, Miguel Ojeda wrote:
-> Starting with Rust 1.85.0 (to be released 2025-02-20), `rustc` warns
-> [1] about disabling neon in the aarch64 hardfloat target:
-> 
->     warning: target feature `neon` cannot be toggled with
->              `-Ctarget-feature`: unsound on hard-float targets
->              because it changes float ABI
->       |
->       = note: this was previously accepted by the compiler but
->               is being phased out; it will become a hard error
->               in a future release!
->       = note: for more information, see issue #116344
->               <https://github.com/rust-lang/rust/issues/116344>
-> 
-> [...]
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-Applied to arm64 (for-next/fixes), thanks!
+------------------
 
-[1/1] arm64: rust: clean Rust 1.85.0 warning using softfloat target
-      https://git.kernel.org/arm64/c/446a8351f160
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-Cheers,
+[ Upstream commit e06c9e3682f58fbeb632b7b866bb4fe66a4a4b42 ]
+
+The Microchip LAN966x outband interrupt controller is only present on
+Microchip LAN966x SoCs, and only used in PCI endpoint mode.  Hence add a
+dependency on MCHP_LAN966X_PCI, to prevent asking the user about this
+driver when configuring a kernel without Microchip LAN966x PCIe support.
+
+Fixes: 3e3a7b35332924c8 ("irqchip: Add support for LAN966x OIC")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Herve Codina <herve.codina@bootlin.com>
+Link: https://lore.kernel.org/all/28e8a605e72ee45e27f0d06b2b71366159a9c782.1737383314.git.geert+renesas@glider.be
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/irqchip/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
+index 66ce15027f28d..c1f3048360085 100644
+--- a/drivers/irqchip/Kconfig
++++ b/drivers/irqchip/Kconfig
+@@ -169,6 +169,7 @@ config IXP4XX_IRQ
+ 
+ config LAN966X_OIC
+ 	tristate "Microchip LAN966x OIC Support"
++	depends on MCHP_LAN966X_PCI || COMPILE_TEST
+ 	select GENERIC_IRQ_CHIP
+ 	select IRQ_DOMAIN
+ 	help
 -- 
-Will
+2.39.5
 
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+
+
