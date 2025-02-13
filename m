@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DD5145A03;
-	Thu, 13 Feb 2025 15:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7463FB3B;
+	Thu, 13 Feb 2025 15:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459942; cv=none; b=Ac4d0hoEYHMaukiaQfbQiV6bD6OesdznqfQa6CCTRv2Wbb8DA0oTXaKkNQhPesTl+gkoaKyiJL+Zqz76R0p4lmd/Q2lt0SBjZ1eZDKRpfuiF9gnjfXBPr36c/qbVVM75iRwGkqbXh0p6PbPniqOW+bVD6ps1QmzvHj3jpP8lu3E=
+	t=1739459945; cv=none; b=fw30UaCRlay/lErfi0RzdiKCadtOhXdC8st6yO6EaRwR3d75Dl60Usw4qgqIDITpM/n36ig2IreBzDXEn+qjIi48Dio/4QIWAQ3w+YxwyO4Jzg2cZqay4zZIIbNRQVNOUsWl1VJ0OkIESJhBOl676qiz/OebNRtebnCMt/plkQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459942; c=relaxed/simple;
-	bh=sKzxIir9Yb/rk6AVSsOTyK0DmXoqDJHHaf2iLyJxA74=;
+	s=arc-20240116; t=1739459945; c=relaxed/simple;
+	bh=t8j9CFioDK5fFFQQ6qX1kBskGDE5DTzxyxIHNVu8WcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SyJq5dSlvhAtoh/FLJsEK2AU5CBZ7WPROKVOXFBSvTgzSnwCcFIUeYpW2AN9s0hYXchirRlb3/ghyRTKMl8sN8wvjT61GUULDTpvhbqPRaamyy/8bGWjEgPo5NVUbpXZfKIYxaYCL5Rjbdr7LxNry5D4dma6+qXqNaWvj3N3Gxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOwTR1Vg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pc6peHH5D1opWVWI+QRspEpaJgKvOasS50ORHAC0xzJeNi49DkEHs4F/cymSKvWMk0KkKvaZ5i61iTqVwMYDGZUmRiHnrmDFBvUryT+KKh3LmFlDhhD0H39IKFyBWmIRXH++Cp3zN0JfbkPwlMAaINXa9jRtbwKiEDuGRwd3GN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJ0x/krV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOwTR1Vg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53735C4CED1;
-	Thu, 13 Feb 2025 15:19:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJ0x/krV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3BB6C4CEE4;
+	Thu, 13 Feb 2025 15:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459941;
-	bh=sKzxIir9Yb/rk6AVSsOTyK0DmXoqDJHHaf2iLyJxA74=;
+	s=korg; t=1739459945;
+	bh=t8j9CFioDK5fFFQQ6qX1kBskGDE5DTzxyxIHNVu8WcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOwTR1VgjMAV+31c40xUUErAHb2zmJm3cRbyK1Aod8+zVUw9azsTF0/bMbOm60nuK
-	 BleDQWbQtfePKJYIXQd3NrqGH9GS8SXgEx6/RygVKb60THQvND71kFYBasqq/AusJH
-	 TsapUu5NN48MIs2WhcraLlrQondw3PWnKKgBzE/g=
+	b=LJ0x/krVLNzXQuo3J7ElO0MJqXi9vH9WGi+g0d68fpMPFFYa7m3YGT8yq94o3kx82
+	 veEsD63rY0Ss6wXeq2sL0l6BF8JE7zvVKuwny44HEz4gOLGUYdX6hmhzKL7Qb+Kh/g
+	 tS8m8Yh6hEMsH1EBOXmhhEJ++7ysQLjz+GL0MWV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Chan <towinchenmi@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.13 409/443] irqchip/apple-aic: Only handle PMC interrupt as FIQ when configured so
-Date: Thu, 13 Feb 2025 15:29:34 +0100
-Message-ID: <20250213142456.391001024@linuxfoundation.org>
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Kaiyang Zhao <kaiyang2@cs.cmu.edu>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.13 379/443] mm/vmscan: accumulate nr_demoted for accurate demotion statistics
+Date: Thu, 13 Feb 2025 15:29:04 +0100
+Message-ID: <20250213142455.231935229@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -50,42 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Chan <towinchenmi@gmail.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-commit 698244bbb3bfd32ddf9a0b70a12b1c7d69056497 upstream.
+commit a479b078fddb0ad7f9e3c6da22d9cf8f2b5c7799 upstream.
 
-The CPU PMU in Apple SoCs can be configured to fire its interrupt in one of
-several ways, and since Apple A11 one of the methods is FIQ, but the check
-of the configuration register fails to test explicitely for FIQ mode. It
-tests whether the IMODE bitfield is zero or not and the PMCRO_IACT bit is
-set. That results in false positives when the IMODE bitfield is not zero,
-but does not have the mode PMCR0_IMODE_FIQ.
+In shrink_folio_list(), demote_folio_list() can be called 2 times.
+Currently stat->nr_demoted will only store the last nr_demoted( the later
+nr_demoted is always zero, the former nr_demoted will get lost), as a
+result number of demoted pages is not accurate.
 
-Only handle the PMC interrupt as a FIQ when the CPU PMU has been configured
-to fire FIQs, i.e. the IMODE bitfield value is PMCR0_IMODE_FIQ and
-PMCR0_IACT is set.
+Accumulate the nr_demoted count across multiple calls to
+demote_folio_list(), ensuring accurate reporting of demotion statistics.
 
-Fixes: c7708816c944 ("irqchip/apple-aic: Wire PMU interrupts")
-Signed-off-by: Nick Chan <towinchenmi@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20250118163554.16733-1-towinchenmi@gmail.com
+[lizhijian@fujitsu.com: introduce local nr_demoted to fix nr_reclaimed double counting]
+  Link: https://lkml.kernel.org/r/20250111015253.425693-1-lizhijian@fujitsu.com
+Link: https://lkml.kernel.org/r/20250110122133.423481-1-lizhijian@fujitsu.com
+Fixes: f77f0c751478 ("mm,memcg: provide per-cgroup counters for NUMA balancing operations")
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Acked-by: Kaiyang Zhao <kaiyang2@cs.cmu.edu>
+Tested-by: Donet Tom <donettom@linux.ibm.com>
+Reviewed-by: Donet Tom <donettom@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-apple-aic.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/vmscan.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/irqchip/irq-apple-aic.c
-+++ b/drivers/irqchip/irq-apple-aic.c
-@@ -577,7 +577,8 @@ static void __exception_irq_entry aic_ha
- 						  AIC_FIQ_HWIRQ(AIC_TMR_EL02_VIRT));
- 	}
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -1053,7 +1053,7 @@ static unsigned int shrink_folio_list(st
+ 	struct folio_batch free_folios;
+ 	LIST_HEAD(ret_folios);
+ 	LIST_HEAD(demote_folios);
+-	unsigned int nr_reclaimed = 0;
++	unsigned int nr_reclaimed = 0, nr_demoted = 0;
+ 	unsigned int pgactivate = 0;
+ 	bool do_demote_pass;
+ 	struct swap_iocb *plug = NULL;
+@@ -1522,8 +1522,9 @@ keep:
+ 	/* 'folio_list' is always empty here */
  
--	if (read_sysreg_s(SYS_IMP_APL_PMCR0_EL1) & PMCR0_IACT) {
-+	if ((read_sysreg_s(SYS_IMP_APL_PMCR0_EL1) & (PMCR0_IMODE | PMCR0_IACT)) ==
-+			(FIELD_PREP(PMCR0_IMODE, PMCR0_IMODE_FIQ) | PMCR0_IACT)) {
- 		int irq;
- 		if (cpumask_test_cpu(smp_processor_id(),
- 				     &aic_irqc->fiq_aff[AIC_CPU_PMU_P]->aff))
+ 	/* Migrate folios selected for demotion */
+-	stat->nr_demoted = demote_folio_list(&demote_folios, pgdat);
+-	nr_reclaimed += stat->nr_demoted;
++	nr_demoted = demote_folio_list(&demote_folios, pgdat);
++	nr_reclaimed += nr_demoted;
++	stat->nr_demoted += nr_demoted;
+ 	/* Folios that could not be demoted are still in @demote_folios */
+ 	if (!list_empty(&demote_folios)) {
+ 		/* Folios which weren't demoted go back on @folio_list */
 
 
