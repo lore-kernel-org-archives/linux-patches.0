@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AF626B096;
-	Thu, 13 Feb 2025 15:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199C326B0AD;
+	Thu, 13 Feb 2025 15:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459675; cv=none; b=IwSD9pQdsYQA1xq93B7aUi2CYp2dtx4Qdeldo0tEEYUmc9wJyBSaf1lU3/Y8KL9mcy5lfONESsXfU5szwHe8colfNk5C2bGZI7O67xN8plQvwtfWctdC4k7IREvTPQXNaE+pZwybQFerSzCP7AxvOLZuFxkklxmJ0Fppu1TMn5g=
+	t=1739459679; cv=none; b=Dy78MKpPnStPdZdHouhiFS1pQ5wputqQLVcEhEWAcW8UPPIL21DqqR/huVtkmDPZzN6TiePGAVRN687D1hMcgoGwr7OzgAaMYnGGaHfSgNnaRII6bCBW6V7sN6L8Jo1/iup95sGCAWdFf5XVYi5OuIdrCsbEeAr26kdiN94KgUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459675; c=relaxed/simple;
-	bh=w6mJBbT5e+x8oE+ZfQbg+/UIE1A7gl34cHRN1r0WUoY=;
+	s=arc-20240116; t=1739459679; c=relaxed/simple;
+	bh=QCCWWD8WcyavN+w59rNJnG2860qQ7sgLJp38WdqPS64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VUMuos8HLJmsmMBngLNQZSOAyAh1Ct0HnfRdkZgz+uCR6ybJ3Tma8A1F81liFMAijtRAuUhGFGeVUBbzC5D+Io/WKRNy7y5+FW63qm6JK1i1HiMbLlYlCwIZrLsB6spVo+XH0UsZqNmHuGL7OHL1fOw8nsKpBjVLJObY7SVvNeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BP7l6BtB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OPvZd6nbJ9dY57KkgtTEbdHVza+F2bTQjITk6xandPE18VQG+TgKcJYjINLYFGO3JoxxBncxm/deAHvTJmF559SdN+Zm/dcnPE7xtmHNwOdFroBL+e5pWN9d3f92Ocll65PGMzq1pc1z2yUA0CIHKL1hh1urECFKfmJoxXz5sVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XIiD6WwJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BP7l6BtB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E047C4CED1;
-	Thu, 13 Feb 2025 15:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XIiD6WwJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9276EC4CEE4;
+	Thu, 13 Feb 2025 15:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459675;
-	bh=w6mJBbT5e+x8oE+ZfQbg+/UIE1A7gl34cHRN1r0WUoY=;
+	s=korg; t=1739459679;
+	bh=QCCWWD8WcyavN+w59rNJnG2860qQ7sgLJp38WdqPS64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BP7l6BtB4K+owrqd3XBEFP5qd6dqlefpbdpR2I3bf5RapEr8GfwjJHdeWDEmWL+LY
-	 x3m6bXGTxLiG00X9QhbFpbIEjWAZUviMWABaBlo5nP/96dJmrW3gskAWH94zwgo0FP
-	 3xqiaid9k1fcoMsVz8J0dNDKBRyk3gk2n49lMDBI=
+	b=XIiD6WwJU6nog/+TSRM/hhGSN7pLuKMpQjykkQ2DmyC2SreU3qDnsVpzrtKXT/gUr
+	 B9zBReVCgJa2hONE4sT2bO1Bi/8AtFmZxACyBS+9eHYYofAtOJWbKFK9LxX/A1NDmm
+	 0qenlj40h/LOKlFSh4AwRsJoiM5OQ2fLqbYGIPdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.13 331/443] xfs: Add error handling for xfs_reflink_cancel_cow_range
-Date: Thu, 13 Feb 2025 15:28:16 +0100
-Message-ID: <20250213142453.395978939@linuxfoundation.org>
+	Karol Wachowski <karol.wachowski@intel.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Subject: [PATCH 6.13 332/443] accel/ivpu: Fix error handling in ivpu_boot()
+Date: Thu, 13 Feb 2025 15:28:17 +0100
+Message-ID: <20250213142453.435160672@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,42 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 
-commit 26b63bee2f6e711c5a169997fd126fddcfb90848 upstream.
+commit f3be8a9b1afffbcc70f8e41063b151b1038d7813 upstream.
 
-In xfs_inactive(), xfs_reflink_cancel_cow_range() is called
-without error handling, risking unnoticed failures and
-inconsistent behavior compared to other parts of the code.
+Ensure IRQs and IPC are properly disabled if HW sched or DCT
+initialization fails.
 
-Fix this issue by adding an error handling for the
-xfs_reflink_cancel_cow_range(), improving code robustness.
-
-Fixes: 6231848c3aa5 ("xfs: check for cow blocks before trying to clear them")
-Cc: stable@vger.kernel.org # v4.17
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: cc3c72c7e610 ("accel/ivpu: Refactor failure diagnostics during boot")
+Cc: stable@vger.kernel.org # v6.13+
+Reviewed-by: Karol Wachowski <karol.wachowski@intel.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250129124009.1039982-2-jacek.lawrynowicz@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_inode.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/accel/ivpu/ivpu_drv.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -1404,8 +1404,11 @@ xfs_inactive(
- 		goto out;
+diff --git a/drivers/accel/ivpu/ivpu_drv.c b/drivers/accel/ivpu/ivpu_drv.c
+index ca2bf47ce248..0c4a82271c26 100644
+--- a/drivers/accel/ivpu/ivpu_drv.c
++++ b/drivers/accel/ivpu/ivpu_drv.c
+@@ -397,15 +397,19 @@ int ivpu_boot(struct ivpu_device *vdev)
+ 	if (ivpu_fw_is_cold_boot(vdev)) {
+ 		ret = ivpu_pm_dct_init(vdev);
+ 		if (ret)
+-			goto err_diagnose_failure;
++			goto err_disable_ipc;
  
- 	/* Try to clean out the cow blocks if there are any. */
--	if (xfs_inode_has_cow_data(ip))
--		xfs_reflink_cancel_cow_range(ip, 0, NULLFILEOFF, true);
-+	if (xfs_inode_has_cow_data(ip)) {
-+		error = xfs_reflink_cancel_cow_range(ip, 0, NULLFILEOFF, true);
-+		if (error)
-+			goto out;
-+	}
+ 		ret = ivpu_hw_sched_init(vdev);
+ 		if (ret)
+-			goto err_diagnose_failure;
++			goto err_disable_ipc;
+ 	}
  
- 	if (VFS_I(ip)->i_nlink != 0) {
- 		/*
+ 	return 0;
+ 
++err_disable_ipc:
++	ivpu_ipc_disable(vdev);
++	ivpu_hw_irq_disable(vdev);
++	disable_irq(vdev->irq);
+ err_diagnose_failure:
+ 	ivpu_hw_diagnose_failure(vdev);
+ 	ivpu_mmu_evtq_dump(vdev);
+-- 
+2.48.1
+
 
 
