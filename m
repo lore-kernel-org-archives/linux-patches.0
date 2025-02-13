@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A0D26B097;
-	Thu, 13 Feb 2025 15:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1EC26B080;
+	Thu, 13 Feb 2025 15:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459434; cv=none; b=tmmyqPC8ZwSwW65skK+27BhAwsJXbDdBCT4GYhgOXvd2+4pv0clUlPUTR/oa4ABR8zs4isRG3anwOSxftVr4Kuj8rpK80/y8HHvyDVTg9/OFezBDpA8JCqS4Tql2d23+W6LO1Kzv3YAZtkS3/uKcpUwcLILjCpPL33x/i1gK4jw=
+	t=1739459437; cv=none; b=Uygsk1EZ9Gv4zw/XCg/rStOq/4Ep1b2iAqPipdk+c7d7VCuBnjXbuqpxiHi1Xg0Q118kowmeTZmYp/AOe9ANQfKQ9bd4x+0yUTl6Dr7ocWKoPwhjgaS+REGjCUvRJfGbSC+deX8U9FJ87o0xr6SqbhISSZYNpoynHogLcIkF2Ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459434; c=relaxed/simple;
-	bh=+1mMJItrqnH12Mlo3XkFKDl0fydtuh2uscrqx2zkkfU=;
+	s=arc-20240116; t=1739459437; c=relaxed/simple;
+	bh=m4YvAwPnZ7MJPJNxpzrHn7/Ckw9BGfYlsMB1ZJ8IKE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jWug5MjihE8gBzvAtSywl4/IsjNMz65g2yzOM0xG1ROXhI7By7njfHbHI2oPl+z1HyTD/1xiWi5JFFXnDXiyW6RR14OPdH6Uic7vUelY5fvBnc12ZD2aWEu0aNfKvjApM112xQiWFa1O+TbOaGWNuKvv5fQx47S/j45hwCTLU/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QeYgdR7q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R7JSZUQ5pMvHp6weW5tsR/muQ4xSklKYz8ynXRXADyjnTYjj6G5r3CL1slkKZdq0Y/+6jck8VK5eVDR8s3X2JLZ46HeUO6TLeJQU/xrkdWu//INCq9yaHdJcYyGRIjro2HGGdSKbKpVEFj4j3aH0d4481V9dnwZlp2TKw9BnXG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPwN/zPq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QeYgdR7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D60C4CED1;
-	Thu, 13 Feb 2025 15:10:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPwN/zPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA46C4CED1;
+	Thu, 13 Feb 2025 15:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459434;
-	bh=+1mMJItrqnH12Mlo3XkFKDl0fydtuh2uscrqx2zkkfU=;
+	s=korg; t=1739459437;
+	bh=m4YvAwPnZ7MJPJNxpzrHn7/Ckw9BGfYlsMB1ZJ8IKE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QeYgdR7qwmisXbPtjI3AUmhtoP/g7KGJiUZOQJBHIw6USb1vxfGGc0JuzIPqz0AgX
-	 qiq7Y9LpVXnRIqacNi9J39kkB4cZJ9pij3Wibb49M6QNi+y05EiOHda1zIp3jZMzXj
-	 5dNbpMQXWT6nQ8h+d7+V5QGl1hZjQQ8RTMFgywc0=
+	b=wPwN/zPqMf8fvlKwT7BFVDpT7qWR8YH6Ia81ldKgsaOYNY+NVSSPUoS26fB0bwTva
+	 9pyWgOYNAY0CLpZjg39+ryNOlfOrIlwhArkh+TQn9zCJybQzBWLoA3CBcojlsMi5Zv
+	 8GuWc2Fiad15JZKSwkvuSZW57SYQHpiZflakvkJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.13 263/443] block: dont revert iter for -EIOCBQUEUED
-Date: Thu, 13 Feb 2025 15:27:08 +0100
-Message-ID: <20250213142450.765802315@linuxfoundation.org>
+	Tomasz Sikora <sikora.tomus@gmail.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.13 264/443] Revert "media: uvcvideo: Require entities to have a non-zero unique ID"
+Date: Thu, 13 Feb 2025 15:27:09 +0100
+Message-ID: <20250213142450.803776704@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -49,44 +54,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-commit b13ee668e8280ca5b07f8ce2846b9957a8a10853 upstream.
+commit 8004d635f27bbccaa5c083c50d4d5302a6ffa00e upstream.
 
-blkdev_read_iter() has a few odd checks, like gating the position and
-count adjustment on whether or not the result is bigger-than-or-equal to
-zero (where bigger than makes more sense), and not checking the return
-value of blkdev_direct_IO() before doing an iov_iter_revert(). The
-latter can lead to attempting to revert with a negative value, which
-when passed to iov_iter_revert() as an unsigned value will lead to
-throwing a WARN_ON() because unroll is bigger than MAX_RW_COUNT.
+This reverts commit 3dd075fe8ebbc6fcbf998f81a75b8c4b159a6195.
 
-Be sane and don't revert for -EIOCBQUEUED, like what is done in other
-spots.
+Tomasz has reported that his device, Generalplus Technology Inc. 808 Camera,
+with ID 1b3f:2002, stopped being detected:
 
+$ ls -l /dev/video*
+zsh: no matches found: /dev/video*
+[    7.230599] usb 3-2: Found multiple Units with ID 5
+
+This particular device is non-compliant, having both the Output Terminal
+and Processing Unit with ID 5. uvc_scan_fallback, though, is able to build
+a chain. However, when media elements are added and uvc_mc_create_links
+call uvc_entity_by_id, it will get the incorrect entity,
+media_create_pad_link will WARN, and it will fail to register the entities.
+
+In order to reinstate support for such devices in a timely fashion,
+reverting the fix for these warnings is appropriate. A proper fix that
+considers the existence of such non-compliant devices will be submitted in
+a later development cycle.
+
+Reported-by: Tomasz Sikora <sikora.tomus@gmail.com>
+Fixes: 3dd075fe8ebb ("media: uvcvideo: Require entities to have a non-zero unique ID")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://lore.kernel.org/r/20250114200045.1401644-1-cascardo@igalia.com
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/fops.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c |   70 ++++++++++++++-----------------------
+ 1 file changed, 27 insertions(+), 43 deletions(-)
 
---- a/block/fops.c
-+++ b/block/fops.c
-@@ -758,11 +758,12 @@ static ssize_t blkdev_read_iter(struct k
- 		file_accessed(iocb->ki_filp);
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -775,27 +775,14 @@ static const u8 uvc_media_transport_inpu
+ 	UVC_GUID_UVC_MEDIA_TRANSPORT_INPUT;
+ static const u8 uvc_processing_guid[16] = UVC_GUID_UVC_PROCESSING;
  
- 		ret = blkdev_direct_IO(iocb, to);
--		if (ret >= 0) {
-+		if (ret > 0) {
- 			iocb->ki_pos += ret;
- 			count -= ret;
+-static struct uvc_entity *uvc_alloc_new_entity(struct uvc_device *dev, u16 type,
+-					       u16 id, unsigned int num_pads,
+-					       unsigned int extra_size)
++static struct uvc_entity *uvc_alloc_entity(u16 type, u16 id,
++		unsigned int num_pads, unsigned int extra_size)
+ {
+ 	struct uvc_entity *entity;
+ 	unsigned int num_inputs;
+ 	unsigned int size;
+ 	unsigned int i;
+ 
+-	/* Per UVC 1.1+ spec 3.7.2, the ID should be non-zero. */
+-	if (id == 0) {
+-		dev_err(&dev->udev->dev, "Found Unit with invalid ID 0.\n");
+-		return ERR_PTR(-EINVAL);
+-	}
+-
+-	/* Per UVC 1.1+ spec 3.7.2, the ID is unique. */
+-	if (uvc_entity_by_id(dev, id)) {
+-		dev_err(&dev->udev->dev, "Found multiple Units with ID %u\n", id);
+-		return ERR_PTR(-EINVAL);
+-	}
+-
+ 	extra_size = roundup(extra_size, sizeof(*entity->pads));
+ 	if (num_pads)
+ 		num_inputs = type & UVC_TERM_OUTPUT ? num_pads : num_pads - 1;
+@@ -805,7 +792,7 @@ static struct uvc_entity *uvc_alloc_new_
+ 	     + num_inputs;
+ 	entity = kzalloc(size, GFP_KERNEL);
+ 	if (entity == NULL)
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
+ 
+ 	entity->id = id;
+ 	entity->type = type;
+@@ -917,10 +904,10 @@ static int uvc_parse_vendor_control(stru
+ 			break;
  		}
--		iov_iter_revert(to, count - iov_iter_count(to));
-+		if (ret != -EIOCBQUEUED)
-+			iov_iter_revert(to, count - iov_iter_count(to));
- 		if (ret < 0 || !count)
- 			goto reexpand;
- 	}
+ 
+-		unit = uvc_alloc_new_entity(dev, UVC_VC_EXTENSION_UNIT,
+-					    buffer[3], p + 1, 2 * n);
+-		if (IS_ERR(unit))
+-			return PTR_ERR(unit);
++		unit = uvc_alloc_entity(UVC_VC_EXTENSION_UNIT, buffer[3],
++					p + 1, 2*n);
++		if (unit == NULL)
++			return -ENOMEM;
+ 
+ 		memcpy(unit->guid, &buffer[4], 16);
+ 		unit->extension.bNumControls = buffer[20];
+@@ -1029,10 +1016,10 @@ static int uvc_parse_standard_control(st
+ 			return -EINVAL;
+ 		}
+ 
+-		term = uvc_alloc_new_entity(dev, type | UVC_TERM_INPUT,
+-					    buffer[3], 1, n + p);
+-		if (IS_ERR(term))
+-			return PTR_ERR(term);
++		term = uvc_alloc_entity(type | UVC_TERM_INPUT, buffer[3],
++					1, n + p);
++		if (term == NULL)
++			return -ENOMEM;
+ 
+ 		if (UVC_ENTITY_TYPE(term) == UVC_ITT_CAMERA) {
+ 			term->camera.bControlSize = n;
+@@ -1088,10 +1075,10 @@ static int uvc_parse_standard_control(st
+ 			return 0;
+ 		}
+ 
+-		term = uvc_alloc_new_entity(dev, type | UVC_TERM_OUTPUT,
+-					    buffer[3], 1, 0);
+-		if (IS_ERR(term))
+-			return PTR_ERR(term);
++		term = uvc_alloc_entity(type | UVC_TERM_OUTPUT, buffer[3],
++					1, 0);
++		if (term == NULL)
++			return -ENOMEM;
+ 
+ 		memcpy(term->baSourceID, &buffer[7], 1);
+ 
+@@ -1110,10 +1097,9 @@ static int uvc_parse_standard_control(st
+ 			return -EINVAL;
+ 		}
+ 
+-		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
+-					    p + 1, 0);
+-		if (IS_ERR(unit))
+-			return PTR_ERR(unit);
++		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, 0);
++		if (unit == NULL)
++			return -ENOMEM;
+ 
+ 		memcpy(unit->baSourceID, &buffer[5], p);
+ 
+@@ -1133,9 +1119,9 @@ static int uvc_parse_standard_control(st
+ 			return -EINVAL;
+ 		}
+ 
+-		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3], 2, n);
+-		if (IS_ERR(unit))
+-			return PTR_ERR(unit);
++		unit = uvc_alloc_entity(buffer[2], buffer[3], 2, n);
++		if (unit == NULL)
++			return -ENOMEM;
+ 
+ 		memcpy(unit->baSourceID, &buffer[4], 1);
+ 		unit->processing.wMaxMultiplier =
+@@ -1162,10 +1148,9 @@ static int uvc_parse_standard_control(st
+ 			return -EINVAL;
+ 		}
+ 
+-		unit = uvc_alloc_new_entity(dev, buffer[2], buffer[3],
+-					    p + 1, n);
+-		if (IS_ERR(unit))
+-			return PTR_ERR(unit);
++		unit = uvc_alloc_entity(buffer[2], buffer[3], p + 1, n);
++		if (unit == NULL)
++			return -ENOMEM;
+ 
+ 		memcpy(unit->guid, &buffer[4], 16);
+ 		unit->extension.bNumControls = buffer[20];
+@@ -1305,10 +1290,9 @@ static int uvc_gpio_parse(struct uvc_dev
+ 		return dev_err_probe(&dev->udev->dev, irq,
+ 				     "No IRQ for privacy GPIO\n");
+ 
+-	unit = uvc_alloc_new_entity(dev, UVC_EXT_GPIO_UNIT,
+-				    UVC_EXT_GPIO_UNIT_ID, 0, 1);
+-	if (IS_ERR(unit))
+-		return PTR_ERR(unit);
++	unit = uvc_alloc_entity(UVC_EXT_GPIO_UNIT, UVC_EXT_GPIO_UNIT_ID, 0, 1);
++	if (!unit)
++		return -ENOMEM;
+ 
+ 	unit->gpio.gpio_privacy = gpio_privacy;
+ 	unit->gpio.irq = irq;
 
 
