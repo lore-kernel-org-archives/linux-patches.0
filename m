@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0403281360;
-	Thu, 13 Feb 2025 14:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16FE281360;
+	Thu, 13 Feb 2025 14:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457243; cv=none; b=hBDa3RCMirJMfEYVwPucccztvfin0ir6cyIKIzekL8i2e3CjwNzZIgnYxWwNevmp4ZIToH2bNrF2PbklJQ+8cufVdDpaWb0VthEKbLgvVwL5JJ2zwMH9ZQUx3QGWsKIffaIA3k8F7QZMVHwryBtKQlu/PnTVKRpezMlN//MY/3I=
+	t=1739457247; cv=none; b=edi9bsNgvRp9o7UIBDsaDkM3CZXCOadsscmHNUNZpbg/PoDb7Emz39XT9f3lQYU2RjU0sMq4foEm8pt3v7Yh839ccEqSjyaQh5WJLH+UfMV/nqmTbgHmwqHwW1Nu0UXwr7Dr22wd4HOrlTEr1dI/uBmaqjhb7bbywOu6npmjOeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457243; c=relaxed/simple;
-	bh=Ib6VOnxdG1MVP9wVs/iIwNqcIhQ8lpNZgeyqcMZTsIg=;
+	s=arc-20240116; t=1739457247; c=relaxed/simple;
+	bh=txmYRemdGgV2hQo8pp6i/i440C0qFxgmbDYSkDSiwts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CidDdZGFtqcqOn/IWRQ44Dp0bCW+S/SVeWFEPmvlcrf21Tj+mzFgc5cfyVUAZV8B3XWDKogLy+WDoAzLtb0OqwYmgr3hiy3uvNExI6ZYB5Z5UBNsSplfcV2Br7EFwHzPBnKQ5uECE+Od5x8i4yuJ+Sq3icDGUPRoxbsGaFLOY1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tAxyisH/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XoeV88A2FXV/avA4vBJi3mNVVCTMoE/H67PvImJCCTv9f17mfaoYNv37ASRJeLJIIPyaK8EUGuAia97kl9cFksELhqKOftC10D7QcE6UI2phjazMPxKPf6RWktDDZe7Gur8gg3198AaYH1mmcRGnis8AqQjltora1HehpWeiVNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEqiTHOg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tAxyisH/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E086C4CED1;
-	Thu, 13 Feb 2025 14:34:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEqiTHOg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FEFC4CED1;
+	Thu, 13 Feb 2025 14:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457243;
-	bh=Ib6VOnxdG1MVP9wVs/iIwNqcIhQ8lpNZgeyqcMZTsIg=;
+	s=korg; t=1739457246;
+	bh=txmYRemdGgV2hQo8pp6i/i440C0qFxgmbDYSkDSiwts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tAxyisH/FbXUizROj0IAio2s3u/PKJQI8JXCQcKLeH7EyTghp6HhtLi8ZklllJnk0
-	 WnEqZrOnlhr0ybZ2ge9NZyFz+msYlm4siCybZPLjwQ0CIrOekv2blcsCZnNyW7mCyr
-	 Srlh71aZcQZzGXUirr651ZxTyKNgLZaQKVSFYwik=
+	b=mEqiTHOgdb6q/Z5FDV/2k+l/WM8z7/4adjeViZXdUdG2o4B+EEUEPf86Z4UJIb52L
+	 AUEqWyGM+ZIwf35D6Neyl8k7M3JU2N5zo57O7HoQYy+wtY5SosNxRSoZOSOOAdupUj
+	 bLqZdds9bm6GsWh7IBfHKcSU/tIYDLwgo49Ozvhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Ausef Yousof <Ausef.Yousof@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/422] drm/tests: hdmi: return meaningful value from set_connector_edid()
-Date: Thu, 13 Feb 2025 15:22:53 +0100
-Message-ID: <20250213142437.488353182@linuxfoundation.org>
+Subject: [PATCH 6.12 025/422] drm/amd/display: Populate chroma prefetch parameters, DET buffer fix
+Date: Thu, 13 Feb 2025 15:22:54 +0100
+Message-ID: <20250213142437.526133273@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,164 +54,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Ausef Yousof <Ausef.Yousof@amd.com>
 
-[ Upstream commit a8403be6eea91e4f5d8ad5dbc463dd08339eaece ]
+[ Upstream commit 70fec46519fca859aa209f5f02e7e0a0123aca4a ]
 
-The set_connector_edid() function returns a bogus 0, performing the
-check on the connector->funcs->fill_modes() result internally. Make the
-function pass the fill_modes()'s return value to the caller and move
-corresponding checks to the caller site.
+[WHY]
+Soft hang/lag observed during 10bit playback + moving cursor, corruption
+observed in other tickets for same reason, also failing MPO.
 
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241130-hdmi-mode-valid-v5-3-742644ec3b1f@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+1. Currently, we are always running
+   calculate_lowest_supported_state_for_temp_read which is only
+   necessary on dGPU
+2. Fast validate path does not apply DET buffer allocation policy
+3. Prefetch UrgBFactor chroma parameter not populated in prefetch
+   calculation
+
+[HOW]
+1. Add a check to see if we are on APU, if so, skip the code
+2. Add det buffer alloc policy checks to fast validate path
+3. Populate UrgentBurstChroma param in call to calculate
+   UrgBChroma prefetch values
+
+-revision commits: small formatting/brackets/null check addition + remove test change + dGPU code
+
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Signed-off-by: Ausef Yousof <Ausef.Yousof@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/tests/drm_hdmi_state_helper_test.c    | 31 +++++++++----------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+ .../amd/display/dc/dml2/display_mode_core.c   |  5 ++-
+ .../drm/amd/display/dc/dml2/dml2_wrapper.c    | 35 +++++++++++++------
+ 2 files changed, 29 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c b/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
-index 1e77689af6549..4ba869e0e794c 100644
---- a/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
-+++ b/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
-@@ -105,9 +105,8 @@ static int set_connector_edid(struct kunit *test, struct drm_connector *connecto
- 	mutex_lock(&drm->mode_config.mutex);
- 	ret = connector->funcs->fill_modes(connector, 4096, 4096);
- 	mutex_unlock(&drm->mode_config.mutex);
--	KUNIT_ASSERT_GT(test, ret, 0);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
+index 8dabb1ac0b684..be87dc0f07799 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
+@@ -6434,7 +6434,7 @@ static void dml_prefetch_check(struct display_mode_lib_st *mode_lib)
+ 							/* Output */
+ 							&mode_lib->ms.UrgentBurstFactorCursorPre[k],
+ 							&mode_lib->ms.UrgentBurstFactorLumaPre[k],
+-							&mode_lib->ms.UrgentBurstFactorChroma[k],
++							&mode_lib->ms.UrgentBurstFactorChromaPre[k],
+ 							&mode_lib->ms.NotUrgentLatencyHidingPre[k]);
  
--	return 0;
-+	return ret;
+ 					mode_lib->ms.cursor_bw_pre[k] = mode_lib->ms.cache_display_cfg.plane.NumberOfCursors[k] * mode_lib->ms.cache_display_cfg.plane.CursorWidth[k] *
+@@ -9190,6 +9190,8 @@ void dml_core_mode_programming(struct display_mode_lib_st *mode_lib, const struc
+ 			&locals->FractionOfUrgentBandwidth,
+ 			&s->dummy_boolean[0]); // dml_bool_t *PrefetchBandwidthSupport
+ 
++
++
+ 		if (s->VRatioPrefetchMoreThanMax != false || s->DestinationLineTimesForPrefetchLessThan2 != false) {
+ 			dml_print("DML::%s: VRatioPrefetchMoreThanMax                   = %u\n", __func__, s->VRatioPrefetchMoreThanMax);
+ 			dml_print("DML::%s: DestinationLineTimesForPrefetchLessThan2    = %u\n", __func__, s->DestinationLineTimesForPrefetchLessThan2);
+@@ -9204,6 +9206,7 @@ void dml_core_mode_programming(struct display_mode_lib_st *mode_lib, const struc
+ 			}
+ 		}
+ 
++
+ 		if (locals->PrefetchModeSupported == true && mode_lib->ms.support.ImmediateFlipSupport == true) {
+ 			locals->BandwidthAvailableForImmediateFlip = CalculateBandwidthAvailableForImmediateFlip(
+ 																	mode_lib->ms.num_active_planes,
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
+index 866b0abcff1ba..4d64c45930da4 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_wrapper.c
+@@ -533,14 +533,21 @@ static bool optimize_pstate_with_svp_and_drr(struct dml2_context *dml2, struct d
+ static bool call_dml_mode_support_and_programming(struct dc_state *context)
+ {
+ 	unsigned int result = 0;
+-	unsigned int min_state;
++	unsigned int min_state = 0;
+ 	int min_state_for_g6_temp_read = 0;
++
++
++	if (!context)
++		return false;
++
+ 	struct dml2_context *dml2 = context->bw_ctx.dml2;
+ 	struct dml2_wrapper_scratch *s = &dml2->v20.scratch;
+ 
+-	min_state_for_g6_temp_read = calculate_lowest_supported_state_for_temp_read(dml2, context);
++	if (!context->streams[0]->sink->link->dc->caps.is_apu) {
++		min_state_for_g6_temp_read = calculate_lowest_supported_state_for_temp_read(dml2, context);
+ 
+-	ASSERT(min_state_for_g6_temp_read >= 0);
++		ASSERT(min_state_for_g6_temp_read >= 0);
++	}
+ 
+ 	if (!dml2->config.use_native_pstate_optimization) {
+ 		result = optimize_pstate_with_svp_and_drr(dml2, context);
+@@ -551,14 +558,20 @@ static bool call_dml_mode_support_and_programming(struct dc_state *context)
+ 	/* Upon trying to sett certain frequencies in FRL, min_state_for_g6_temp_read is reported as -1. This leads to an invalid value of min_state causing crashes later on.
+ 	 * Use the default logic for min_state only when min_state_for_g6_temp_read is a valid value. In other cases, use the value calculated by the DML directly.
+ 	 */
+-	if (min_state_for_g6_temp_read >= 0)
+-		min_state = min_state_for_g6_temp_read > s->mode_support_params.out_lowest_state_idx ? min_state_for_g6_temp_read : s->mode_support_params.out_lowest_state_idx;
+-	else
+-		min_state = s->mode_support_params.out_lowest_state_idx;
+-
+-	if (result)
+-		result = dml_mode_programming(&dml2->v20.dml_core_ctx, min_state, &s->cur_display_config, true);
++	if (!context->streams[0]->sink->link->dc->caps.is_apu) {
++		if (min_state_for_g6_temp_read >= 0)
++			min_state = min_state_for_g6_temp_read > s->mode_support_params.out_lowest_state_idx ? min_state_for_g6_temp_read : s->mode_support_params.out_lowest_state_idx;
++		else
++			min_state = s->mode_support_params.out_lowest_state_idx;
++	}
+ 
++	if (result) {
++		if (!context->streams[0]->sink->link->dc->caps.is_apu) {
++			result = dml_mode_programming(&dml2->v20.dml_core_ctx, min_state, &s->cur_display_config, true);
++		} else {
++			result = dml_mode_programming(&dml2->v20.dml_core_ctx, s->mode_support_params.out_lowest_state_idx, &s->cur_display_config, true);
++		}
++	}
+ 	return result;
  }
  
- static const struct drm_connector_hdmi_funcs dummy_connector_hdmi_funcs = {
-@@ -223,7 +222,7 @@ drm_atomic_helper_connector_hdmi_init(struct kunit *test,
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_max_200mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_max_200mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
+@@ -687,6 +700,8 @@ static bool dml2_validate_only(struct dc_state *context)
+ 	build_unoptimized_policy_settings(dml2->v20.dml_core_ctx.project, &dml2->v20.dml_core_ctx.policy);
  
- 	return priv;
- }
-@@ -728,7 +727,7 @@ static void drm_test_check_output_bpc_crtc_mode_changed(struct kunit *test)
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
+ 	map_dc_state_into_dml_display_cfg(dml2, context, &dml2->v20.scratch.cur_display_config);
++	 if (!dml2->config.skip_hw_state_mapping)
++		 dml2_apply_det_buffer_allocation_policy(dml2, &dml2->v20.scratch.cur_display_config);
  
- 	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-@@ -802,7 +801,7 @@ static void drm_test_check_output_bpc_crtc_mode_not_changed(struct kunit *test)
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
- 
- 	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-@@ -873,7 +872,7 @@ static void drm_test_check_output_bpc_dvi(struct kunit *test)
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_dvi_1080p,
- 				 ARRAY_SIZE(test_edid_dvi_1080p));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
- 
- 	info = &conn->display_info;
- 	KUNIT_ASSERT_FALSE(test, info->is_hdmi);
-@@ -920,7 +919,7 @@ static void drm_test_check_tmds_char_rate_rgb_8bpc(struct kunit *test)
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_max_200mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_max_200mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
- 
- 	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-@@ -967,7 +966,7 @@ static void drm_test_check_tmds_char_rate_rgb_10bpc(struct kunit *test)
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_yuv_dc_max_340mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_340mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
- 
- 	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-@@ -1014,7 +1013,7 @@ static void drm_test_check_tmds_char_rate_rgb_12bpc(struct kunit *test)
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_yuv_dc_max_340mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_340mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
- 
- 	ctx = drm_kunit_helper_acquire_ctx_alloc(test);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx);
-@@ -1121,7 +1120,7 @@ static void drm_test_check_max_tmds_rate_bpc_fallback(struct kunit *test)
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
- 
- 	info = &conn->display_info;
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
-@@ -1190,7 +1189,7 @@ static void drm_test_check_max_tmds_rate_format_fallback(struct kunit *test)
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
- 
- 	info = &conn->display_info;
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
-@@ -1254,7 +1253,7 @@ static void drm_test_check_output_bpc_format_vic_1(struct kunit *test)
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
- 
- 	info = &conn->display_info;
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
-@@ -1314,7 +1313,7 @@ static void drm_test_check_output_bpc_format_driver_rgb_only(struct kunit *test)
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_200mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
- 
- 	info = &conn->display_info;
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
-@@ -1381,7 +1380,7 @@ static void drm_test_check_output_bpc_format_display_rgb_only(struct kunit *test
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_max_200mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_max_200mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
- 
- 	info = &conn->display_info;
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
-@@ -1447,7 +1446,7 @@ static void drm_test_check_output_bpc_format_driver_8bpc_only(struct kunit *test
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_yuv_dc_max_340mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_yuv_dc_max_340mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
- 
- 	info = &conn->display_info;
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
-@@ -1507,7 +1506,7 @@ static void drm_test_check_output_bpc_format_display_8bpc_only(struct kunit *tes
- 	ret = set_connector_edid(test, conn,
- 				 test_edid_hdmi_1080p_rgb_max_340mhz,
- 				 ARRAY_SIZE(test_edid_hdmi_1080p_rgb_max_340mhz));
--	KUNIT_ASSERT_EQ(test, ret, 0);
-+	KUNIT_ASSERT_GT(test, ret, 0);
- 
- 	info = &conn->display_info;
- 	KUNIT_ASSERT_TRUE(test, info->is_hdmi);
+ 	result = pack_and_call_dml_mode_support_ex(dml2,
+ 		&dml2->v20.scratch.cur_display_config,
 -- 
 2.39.5
 
