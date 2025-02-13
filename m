@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5756115252D;
-	Thu, 13 Feb 2025 15:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3E51411DE;
+	Thu, 13 Feb 2025 15:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460596; cv=none; b=onirw3iB+Bk+8onB6ZvD3SQG3JB4APV5lghLQuNFJ90DLcIQIWJiyXVKGd53sGW4drwLf4XAIjo3O8tNsnoQkTfxbyIQAbeNcstrFPT7DgB3nzR4Zz0Sc1hyub8JnhVMNRECtRoFkKhdnaJf9mhg7m0R7CGBBiPpqasosVbVdIE=
+	t=1739460599; cv=none; b=sGz1DOVj/DcN5SkeqXTKSfKCkt7YBXtZJNFsO91S2NNGUcnmxf04zqGbqBRcb12Iqj+OxytgvL4n6DRy8Dg7v927S14CYAdOvL5LK+YocIk/Pe9Kgd2D2MCq1VRzBYdpw5DLyOBE+0y1ayQAOP+WOytxJsRhipcqn67w7Kp7x7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460596; c=relaxed/simple;
-	bh=KKYmW2ige3k9vhT1Ds6k8ZgVAMRCjGGEs9vAXipekwg=;
+	s=arc-20240116; t=1739460599; c=relaxed/simple;
+	bh=mE6ArpyM59SPsNAspxDNj3xXP+srfqJlbSCgW5Q/KcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKmf4kfDSamz2/gMrB/Fj23K6h3q57S6/ZtfPgT+a7dXYGNaJSn5MezWjAFRREkl0GWs1R7zmjvq/3EMMDLij4w34CeiZbvtEwiAfM8TYbspmq2MOehzIyQINhzhKbvmlBrUAW2tnec7eTKJ3NgTkLh4UvZxB2U7LJakidntyao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1zmbA3c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q4s8JNrPPfIdX0POvbTbe0zwldgyAWHNc26gOHNk5zoEYvS2NitXFcI75qsjsjsAxuVRab3z7/634rnLQm4p7aBPBOaL+x9Ku1IHyW1ijrLssXusS886Dy3sZraaX1Nkp8guhUZBLCAbdl0mXugBZ6NQ2J55oQoqTNiuslVyIh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o12zisSb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1zmbA3c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C45C4CEE8;
-	Thu, 13 Feb 2025 15:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o12zisSb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3CCC4CED1;
+	Thu, 13 Feb 2025 15:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460596;
-	bh=KKYmW2ige3k9vhT1Ds6k8ZgVAMRCjGGEs9vAXipekwg=;
+	s=korg; t=1739460599;
+	bh=mE6ArpyM59SPsNAspxDNj3xXP+srfqJlbSCgW5Q/KcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u1zmbA3chVkYLEmbTLzs+ws6ZjSnc0R1BDwtVXos6MgHxy4OU9k30qnV1BVhU+fAj
-	 zO50HiM4EG33gp1ZAScqtaeIDccdtmZDyLJ9WvZXqTOmmFAGB8wRAyM3Uebzt+LADa
-	 plalbpFs9Q4tNaFTV/NYsDGPHtgLx5HFl/c4zj2A=
+	b=o12zisSb0HdZt4pl36rYiBAb3NnCMK8oDAzwZo2dY+MMw5Y4sAL/R8TO7059Mf9xN
+	 2kl73u83eYTHS4XJsEUBPfmdUADRWev2VHQ8Vki+OphykKtuvKq6LFRhqeG6GhpUBg
+	 FyNzmMNvf+YzBS2aL9P7meF0lfaqrXKdj7XrKEq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brad Griffis <bgriffis@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 6.6 157/273] arm64: tegra: Fix Tegra234 PCIe interrupt-map
-Date: Thu, 13 Feb 2025 15:28:49 +0100
-Message-ID: <20250213142413.540260220@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Georg Gottleuber <ggo@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.6 158/273] PCI: Avoid putting some root ports into D3 on TUXEDO Sirius Gen1
+Date: Thu, 13 Feb 2025 15:28:50 +0100
+Message-ID: <20250213142413.579480463@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -44,51 +46,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brad Griffis <bgriffis@nvidia.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-commit b615fbd70fce8582d92b3bdbbf3c9b80cadcfb55 upstream.
+commit b1049f2d68693c80a576c4578d96774a68df2bad upstream.
 
-For interrupt-map entries, the DTS specification requires
-that #address-cells is defined for both the child node and the
-interrupt parent.  For the PCIe interrupt-map entries, the parent
-node ("gic") has not specified #address-cells. The existing layout
-of the PCIe interrupt-map entries indicates that it assumes
-that #address-cells is zero for this node.
+commit 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend") sets the
+policy that all PCIe ports are allowed to use D3.  When the system is
+suspended if the port is not power manageable by the platform and won't be
+used for wakeup via a PME this sets up the policy for these ports to go
+into D3hot.
 
-Explicitly set #address-cells to zero for "gic" so that it complies
-with the device tree specification.
+This policy generally makes sense from an OSPM perspective but it leads to
+problems with wakeup from suspend on the TUXEDO Sirius 16 Gen 1 with a
+specific old BIOS. This manifests as a system hang.
 
-NVIDIA EDK2 works around this issue by assuming #address-cells
-is zero in this scenario, but that workaround is being removed and so
-this update is needed or else NVIDIA EDK2 cannot successfully parse the
-device tree and the board cannot boot.
+On the affected Device + BIOS combination, add a quirk for the root port of
+the problematic controller to ensure that these root ports are not put into
+D3hot at suspend.
 
-Fixes: ec142c44b026 ("arm64: tegra: Add P2U and PCIe controller nodes to Tegra234 DT")
-Signed-off-by: Brad Griffis <bgriffis@nvidia.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20241213235602.452303-1-bgriffis@nvidia.com
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+This patch is based on
+
+  https://lore.kernel.org/linux-pci/20230708214457.1229-2-mario.limonciello@amd.com
+
+but with the added condition both in the documentation and in the code to
+apply only to the TUXEDO Sirius 16 Gen 1 with a specific old BIOS and only
+the affected root ports.
+
+Fixes: 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend")
+Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20250114222436.1075456-1-wse@tuxedocomputers.com
+Co-developed-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.1+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra234.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/pci/fixup.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-@@ -1912,6 +1912,8 @@
- 			#redistributor-regions = <1>;
- 			#interrupt-cells = <3>;
- 			interrupt-controller;
+--- a/arch/x86/pci/fixup.c
++++ b/arch/x86/pci/fixup.c
+@@ -1010,4 +1010,34 @@ DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_
+ DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1668, amd_rp_pme_resume);
+ DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_suspend);
+ DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_resume);
 +
-+			#address-cells = <0>;
- 		};
- 
- 		smmu_iso: iommu@10000000 {
++/*
++ * Putting PCIe root ports on Ryzen SoCs with USB4 controllers into D3hot
++ * may cause problems when the system attempts wake up from s2idle.
++ *
++ * On the TUXEDO Sirius 16 Gen 1 with a specific old BIOS this manifests as
++ * a system hang.
++ */
++static const struct dmi_system_id quirk_tuxeo_rp_d3_dmi_table[] = {
++	{
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "TUXEDO"),
++			DMI_EXACT_MATCH(DMI_BOARD_NAME, "APX958"),
++			DMI_EXACT_MATCH(DMI_BIOS_VERSION, "V1.00A00_20240108"),
++		},
++	},
++	{}
++};
++
++static void quirk_tuxeo_rp_d3(struct pci_dev *pdev)
++{
++	struct pci_dev *root_pdev;
++
++	if (dmi_check_system(quirk_tuxeo_rp_d3_dmi_table)) {
++		root_pdev = pcie_find_root_port(pdev);
++		if (root_pdev)
++			root_pdev->dev_flags |= PCI_DEV_FLAGS_NO_D3;
++	}
++}
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1502, quirk_tuxeo_rp_d3);
+ #endif /* CONFIG_SUSPEND */
 
 
