@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BBD26B087;
-	Thu, 13 Feb 2025 15:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A878B1514F6;
+	Thu, 13 Feb 2025 15:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459092; cv=none; b=KpLFJxioJNfthMYtPWM16Doy5wE7/NHnZ3UDP6r1kefsHZsIWRqZhcEiM3eWRE9zduSGYLEgT3zCtya0XghfWdHuWyUaSh8p6fbk0vZk5raq7Vv4A3/qbkpsIk/VUJKkJLCD+o9CTPUCnJWIdFGOzDbRMxeN6a3XeLuHqT99pZM=
+	t=1739459095; cv=none; b=SPdovEVb4AN9fHQEEiKtSdlnn0bIS9U4V3gRVBeWPOcrTUKnMQeleDwUw6xw5AOQZ3qFQ36w8LVX9rLUZG/KJxiZ9RozlF9kM+1TkTmKETT9Ia0khAfJTQgeHqdPssATQyX/mDAShofsQSjV8h0XWiAry9N2CMCbAwEsqFm+O3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459092; c=relaxed/simple;
-	bh=jApS9iW1fp/DWD9yMEr1ey+Y6uqLeBJunRggdgfY/tw=;
+	s=arc-20240116; t=1739459095; c=relaxed/simple;
+	bh=vUCgNBMsbC3ySh6w1sjXOMBU9DIg09kZI1pfkQjhGP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sniZEo1EKa4AJlUWk9z/bfx6x+ZTy6/+Rd8Df//7JGfTV7e08nx2dFYM4IU6tKmrNzODB47F40JUTocCFtJ+KhJQ+awqsySVnNfi1C7UgfhkJ4aDCB5cbmy+G8ccd30bHnWEaeHejAv994+4mj8It7Tud85pvELNATEFoKq/POM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGOaaMUn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BT9DP6Z2nv7q99ynuU2sZcdkQhmG2Dwr29G2J8oPjofBaACDnNccqPY7tzBx0zICg9upS6sjAlCm9mrNhju04GBslhOwh9+jWhY6TeTGaayRFBpcG1G8AvnBY8Qcn72/uJCaPG8zXhxAj/ALpLaFAZpdsIXT13WL6wgscH6GpsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPPD3IEP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGOaaMUn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6096DC4CED1;
-	Thu, 13 Feb 2025 15:04:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPPD3IEP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8138C4CED1;
+	Thu, 13 Feb 2025 15:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459091;
-	bh=jApS9iW1fp/DWD9yMEr1ey+Y6uqLeBJunRggdgfY/tw=;
+	s=korg; t=1739459095;
+	bh=vUCgNBMsbC3ySh6w1sjXOMBU9DIg09kZI1pfkQjhGP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VGOaaMUnzi2A6gMfn5i32ytMyuFzUSV1rG9W9sbqQ7WE39GUwKS6gtrLqRa1culTS
-	 L33qx7tewmvX3//qmdrL+YUyASVy1ifk9HkjHE+8Rv55f0iPQOnz8tQ5xx8ICi7NCp
-	 23l7OmOhhyjjf7PYPm740Q5u8y9oSm1pC/sQzog8=
+	b=bPPD3IEPxH2DzLMxYVl5PkZhtFGGNEzG7nKpwT/7awsfluSSYqf45HTOxlHK2IDoM
+	 IKjxQ/R9XGc3WXAzBmQo8RDZnwrgtoW3yU/88CGOZ8hInoV84mKuLdXF+8rmSz486g
+	 1v+x2/egbFF7gFyl0mUBaV+Pb20FdAbNDWAjcx3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmytro Terletskyi <dmytro_terletskyi@epam.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.13 164/443] KVM: arm64: timer: Always evaluate the need for a soft timer
-Date: Thu, 13 Feb 2025 15:25:29 +0100
-Message-ID: <20250213142446.927179193@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Chris Zhong <zyw@rock-chips.com>,
+	Guenter Roeck <groeck@chromium.org>,
+	Sandy Huang <hjc@rock-chips.com>,
+	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org
+Subject: [PATCH 6.13 165/443] drm/rockchip: cdn-dp: Use drm_connector_helper_hpd_irq_event()
+Date: Thu, 13 Feb 2025 15:25:30 +0100
+Message-ID: <20250213142446.965715389@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -45,58 +51,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit b450dcce93bc2cf6d2bfaf5a0de88a94ebad8f89 upstream.
+commit 666e1960464140cc4bc9203c203097e70b54c95a upstream.
 
-When updating the interrupt state for an emulated timer, we return
-early and skip the setup of a soft timer that runs in parallel
-with the guest.
+The code for detecting and updating the connector status in
+cdn_dp_pd_event_work() has a number of problems.
 
-While this is OK if we have set the interrupt pending, it is pretty
-wrong if the guest moved CVAL into the future.  In that case,
-no timer is armed and the guest can wait for a very long time
-(it will take a full put/load cycle for the situation to resolve).
+- It does not aquire the locks to call the detect helper and update
+the connector status. These are struct drm_mode_config.connection_mutex
+and struct drm_mode_config.mutex.
 
-This is specially visible with EDK2 running at EL2, but still
-using the EL1 virtual timer, which in that case is fully emulated.
-Any key-press takes ages to be captured, as there is no UART
-interrupt and EDK2 relies on polling from a timer...
+- It does not use drm_helper_probe_detect(), which helps with the
+details of locking and detection.
 
-The fix is simply to drop the early return. If the timer interrupt
-is pending, we will still return early, and otherwise arm the soft
-timer.
+- It uses the connector's status field to determine a change to
+the connector status. The epoch_counter field is the correct one. The
+field signals a change even if the connector status' value did not
+change.
 
-Fixes: 4d74ecfa6458b ("KVM: arm64: Don't arm a hrtimer for an already pending timer")
-Cc: stable@vger.kernel.org
-Tested-by: Dmytro Terletskyi <dmytro_terletskyi@epam.com>
-Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20250204110050.150560-2-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Replace the code with a call to drm_connector_helper_hpd_irq_event(),
+which fixes all these problems.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 81632df69772 ("drm/rockchip: cdn-dp: do not use drm_helper_hpd_irq_event")
+Cc: Chris Zhong <zyw@rock-chips.com>
+Cc: Guenter Roeck <groeck@chromium.org>
+Cc: Sandy Huang <hjc@rock-chips.com>
+Cc: "Heiko Stübner" <heiko@sntech.de>
+Cc: Andy Yan <andy.yan@rock-chips.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-rockchip@lists.infradead.org
+Cc: <stable@vger.kernel.org> # v4.11+
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241105133848.480407-1-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/arch_timer.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/rockchip/cdn-dp-core.c |    9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
---- a/arch/arm64/kvm/arch_timer.c
-+++ b/arch/arm64/kvm/arch_timer.c
-@@ -466,10 +466,8 @@ static void timer_emulate(struct arch_ti
+--- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
++++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
+@@ -947,9 +947,6 @@ static void cdn_dp_pd_event_work(struct
+ {
+ 	struct cdn_dp_device *dp = container_of(work, struct cdn_dp_device,
+ 						event_work);
+-	struct drm_connector *connector = &dp->connector;
+-	enum drm_connector_status old_status;
+-
+ 	int ret;
  
- 	trace_kvm_timer_emulate(ctx, should_fire);
+ 	mutex_lock(&dp->lock);
+@@ -1009,11 +1006,7 @@ static void cdn_dp_pd_event_work(struct
  
--	if (should_fire != ctx->irq.level) {
-+	if (should_fire != ctx->irq.level)
- 		kvm_timer_update_irq(ctx->vcpu, should_fire, ctx);
--		return;
--	}
+ out:
+ 	mutex_unlock(&dp->lock);
+-
+-	old_status = connector->status;
+-	connector->status = connector->funcs->detect(connector, false);
+-	if (old_status != connector->status)
+-		drm_kms_helper_hotplug_event(dp->drm_dev);
++	drm_connector_helper_hpd_irq_event(&dp->connector);
+ }
  
- 	/*
- 	 * If the timer can fire now, we don't need to have a soft timer
+ static int cdn_dp_pd_event(struct notifier_block *nb,
 
 
