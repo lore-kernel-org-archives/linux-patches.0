@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9E51552FA;
-	Thu, 13 Feb 2025 15:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCFA2135AA;
+	Thu, 13 Feb 2025 15:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458827; cv=none; b=t0QmvkFGvOGummraeZ9/e1u+RKJFRKuxG9mxGDhGtLdC7vPrqXFiVGFso83PeOJix2ZlVkh/YsSfLJcX8+sIItki2iHrZnBWDfSldMxearsu/ZimVl5pe0ATeo1UKYj3d7s6qkLz/uDOITrFiFDH10yTWlcLQkVRyRoY6KyiZX4=
+	t=1739458831; cv=none; b=cLrWtfJBk/IDep/E+Q6ceTYeTiKpbNNDY5H3DiGK0Bu63Hzo4iElxQNizAUxgyOwWeYcrQbgH71Zw5fq/MZDsyi/5o+UpW9UplAwwfEEpkrkSgP05vct4bwvSpGKb4VUuo8vxNarK2roy8pGiZs9FiDl7TR2X1E8zzjXbOaL/7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458827; c=relaxed/simple;
-	bh=LBi7P3KR2BZfpqZf2qcBJKNX4mwOWX3wLaGk0F3dEX8=;
+	s=arc-20240116; t=1739458831; c=relaxed/simple;
+	bh=0C+tHuRCpoHHqoAA4nEDV0H6wLSjcaMPC3u1Ih+x0LM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ssrlhyDJkwQoaoMzgu6yFtrLufEqlLgvZPI3wuQh6g3pZFhyHNvWwKU+TMFmthf9g7FnaANlp4WWVea9UK77gUisMxVZ9grv9jByXlZEjj2GJaqS28mFpVW74AZPPq9W6WUsbHmt6r9+YN3hwP1VI6VMOaHvRge11ury1U3Z+fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Njs8DB0Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N/C0I+FqyAkQwixIHHGblGNhwTWDqt3vrEyNcLI3mZ3qmgzpX3Bv5qORq9mlS0JN+mw6Yw0o2DQxxPBIEHZ/iSVxEnyeziz46sf8eCUKAokUqyVU01TwCRQfkf14PCO4earkTV5QoQ1+qv4K+Hz/MDRAtPsqLRrUJq3A9eyiDko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWyxLYOR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Njs8DB0Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641A8C4CED1;
-	Thu, 13 Feb 2025 15:00:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWyxLYOR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771CCC4CEE5;
+	Thu, 13 Feb 2025 15:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458826;
-	bh=LBi7P3KR2BZfpqZf2qcBJKNX4mwOWX3wLaGk0F3dEX8=;
+	s=korg; t=1739458830;
+	bh=0C+tHuRCpoHHqoAA4nEDV0H6wLSjcaMPC3u1Ih+x0LM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Njs8DB0QjrwHbunMoCwUOK4dEJqlvLlTZbTlVdFmEKLbK3EJcl0SiUh9vGMFxFioV
-	 4+GBqRpTuZpCfwzhseWeT1+bVvL/VdY+LKs3M7eoFeRLs1cT07WGU7k2YL/F0Lfw7a
-	 EESBP9vdgwNMcBUfDEYr1LN+U/4grKjHO+6Eg220=
+	b=QWyxLYOR2Zlv7/Cxiq4tJXynsJcPt9uBocas2ER7RFHZK3Qv43mLfMIurseymyyxH
+	 VWUDtzL2ok5w5HV4ikUROc5bCIWhYltBNfBNIfu0f1K9AeGO2fFr9xml76p5ttFxJe
+	 vxc0zjjaHEV3S9Sw62lxJIsAeKBRo+ow9v+21ucA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Ingo Molnar <mingo@kernel.org>,
+	Baoquan He <bhe@redhat.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Eric Biederman <ebiederm@xmission.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 088/443] bpf: Improve verifier log for resource leak on exit
-Date: Thu, 13 Feb 2025 15:24:13 +0100
-Message-ID: <20250213142444.006358017@linuxfoundation.org>
+Subject: [PATCH 6.13 089/443] x86/kexec: Allocate PGD for x86_64 transition page tables separately
+Date: Thu, 13 Feb 2025 15:24:14 +0100
+Message-ID: <20250213142444.044525855@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,143 +57,229 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-[ Upstream commit cbd8730aea8d79cda6b0f3c18b406dfdef0c1b80 ]
+[ Upstream commit 4b5bc2ec9a239bce261ffeafdd63571134102323 ]
 
-The verifier log when leaking resources on BPF_EXIT may be a bit
-confusing, as it's a problem only when finally existing from the main
-prog, not from any of the subprogs. Hence, update the verifier error
-string and the corresponding selftests matching on it.
+Now that the following fix:
 
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Suggested-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20241204030400.208005-6-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+  d0ceea662d45 ("x86/mm: Add _PAGE_NOPTISHADOW bit to avoid updating userspace page tables")
+
+stops kernel_ident_mapping_init() from scribbling over the end of a
+4KiB PGD by assuming the following 4KiB will be a userspace PGD,
+there's no good reason for the kexec PGD to be part of a single
+8KiB allocation with the control_code_page.
+
+( It's not clear that that was the reason for x86_64 kexec doing it that
+  way in the first place either; there were no comments to that effect and
+  it seems to have been the case even before PTI came along. It looks like
+  it was just a happy accident which prevented memory corruption on kexec. )
+
+Either way, it definitely isn't needed now. Just allocate the PGD
+separately on x86_64, like i386 already does.
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Eric Biederman <ebiederm@xmission.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Link: https://lore.kernel.org/r/20241205153343.3275139-6-dwmw2@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                              |  2 +-
- .../testing/selftests/bpf/progs/exceptions_fail.c  |  4 ++--
- tools/testing/selftests/bpf/progs/preempt_lock.c   | 14 +++++++-------
- .../selftests/bpf/progs/verifier_spin_lock.c       |  2 +-
- 4 files changed, 11 insertions(+), 11 deletions(-)
+ arch/x86/include/asm/kexec.h       | 18 +++++++++---
+ arch/x86/kernel/machine_kexec_64.c | 45 ++++++++++++++++--------------
+ 2 files changed, 38 insertions(+), 25 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 77f56674aaa99..4f02345b764fd 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -18803,7 +18803,7 @@ static int do_check(struct bpf_verifier_env *env)
- 				 * match caller reference state when it exits.
- 				 */
- 				err = check_resource_leak(env, exception_exit, !env->cur_state->curframe,
--							  "BPF_EXIT instruction");
-+							  "BPF_EXIT instruction in main prog");
- 				if (err)
- 					return err;
+diff --git a/arch/x86/include/asm/kexec.h b/arch/x86/include/asm/kexec.h
+index ae5482a2f0ca0..ccb8ff37fa9d4 100644
+--- a/arch/x86/include/asm/kexec.h
++++ b/arch/x86/include/asm/kexec.h
+@@ -16,6 +16,7 @@
+ # define PAGES_NR		4
+ #endif
  
-diff --git a/tools/testing/selftests/bpf/progs/exceptions_fail.c b/tools/testing/selftests/bpf/progs/exceptions_fail.c
-index fe0f3fa5aab68..8a0fdff899271 100644
---- a/tools/testing/selftests/bpf/progs/exceptions_fail.c
-+++ b/tools/testing/selftests/bpf/progs/exceptions_fail.c
-@@ -131,7 +131,7 @@ int reject_subprog_with_lock(void *ctx)
++# define KEXEC_CONTROL_PAGE_SIZE	4096
+ # define KEXEC_CONTROL_CODE_MAX_SIZE	2048
+ 
+ #ifndef __ASSEMBLY__
+@@ -43,7 +44,6 @@ struct kimage;
+ /* Maximum address we can use for the control code buffer */
+ # define KEXEC_CONTROL_MEMORY_LIMIT TASK_SIZE
+ 
+-# define KEXEC_CONTROL_PAGE_SIZE	4096
+ 
+ /* The native architecture */
+ # define KEXEC_ARCH KEXEC_ARCH_386
+@@ -58,9 +58,6 @@ struct kimage;
+ /* Maximum address we can use for the control pages */
+ # define KEXEC_CONTROL_MEMORY_LIMIT     (MAXMEM-1)
+ 
+-/* Allocate one page for the pdp and the second for the code */
+-# define KEXEC_CONTROL_PAGE_SIZE  (4096UL + 4096UL)
+-
+ /* The native architecture */
+ # define KEXEC_ARCH KEXEC_ARCH_X86_64
+ #endif
+@@ -145,6 +142,19 @@ struct kimage_arch {
+ };
+ #else
+ struct kimage_arch {
++	/*
++	 * This is a kimage control page, as it must not overlap with either
++	 * source or destination address ranges.
++	 */
++	pgd_t *pgd;
++	/*
++	 * The virtual mapping of the control code page itself is used only
++	 * during the transition, while the current kernel's pages are all
++	 * in place. Thus the intermediate page table pages used to map it
++	 * are not control pages, but instead just normal pages obtained
++	 * with get_zeroed_page(). And have to be tracked (below) so that
++	 * they can be freed.
++	 */
+ 	p4d_t *p4d;
+ 	pud_t *pud;
+ 	pmd_t *pmd;
+diff --git a/arch/x86/kernel/machine_kexec_64.c b/arch/x86/kernel/machine_kexec_64.c
+index 9c9ac606893e9..7223c38a8708f 100644
+--- a/arch/x86/kernel/machine_kexec_64.c
++++ b/arch/x86/kernel/machine_kexec_64.c
+@@ -146,7 +146,8 @@ static void free_transition_pgtable(struct kimage *image)
+ 	image->arch.pte = NULL;
  }
  
- SEC("?tc")
--__failure __msg("BPF_EXIT instruction cannot be used inside bpf_rcu_read_lock-ed region")
-+__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_rcu_read_lock-ed region")
- int reject_with_rcu_read_lock(void *ctx)
+-static int init_transition_pgtable(struct kimage *image, pgd_t *pgd)
++static int init_transition_pgtable(struct kimage *image, pgd_t *pgd,
++				   unsigned long control_page)
  {
- 	bpf_rcu_read_lock();
-@@ -147,7 +147,7 @@ __noinline static int throwing_subprog(struct __sk_buff *ctx)
+ 	pgprot_t prot = PAGE_KERNEL_EXEC_NOENC;
+ 	unsigned long vaddr, paddr;
+@@ -157,7 +158,7 @@ static int init_transition_pgtable(struct kimage *image, pgd_t *pgd)
+ 	pte_t *pte;
+ 
+ 	vaddr = (unsigned long)relocate_kernel;
+-	paddr = __pa(page_address(image->control_code_page)+PAGE_SIZE);
++	paddr = control_page;
+ 	pgd += pgd_index(vaddr);
+ 	if (!pgd_present(*pgd)) {
+ 		p4d = (p4d_t *)get_zeroed_page(GFP_KERNEL);
+@@ -216,7 +217,7 @@ static void *alloc_pgt_page(void *data)
+ 	return p;
  }
  
- SEC("?tc")
--__failure __msg("BPF_EXIT instruction cannot be used inside bpf_rcu_read_lock-ed region")
-+__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_rcu_read_lock-ed region")
- int reject_subprog_with_rcu_read_lock(void *ctx)
+-static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
++static int init_pgtable(struct kimage *image, unsigned long control_page)
  {
- 	bpf_rcu_read_lock();
-diff --git a/tools/testing/selftests/bpf/progs/preempt_lock.c b/tools/testing/selftests/bpf/progs/preempt_lock.c
-index 885377e836077..5269571cf7b57 100644
---- a/tools/testing/selftests/bpf/progs/preempt_lock.c
-+++ b/tools/testing/selftests/bpf/progs/preempt_lock.c
-@@ -6,7 +6,7 @@
- #include "bpf_experimental.h"
+ 	struct x86_mapping_info info = {
+ 		.alloc_pgt_page	= alloc_pgt_page,
+@@ -225,12 +226,12 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
+ 		.kernpg_flag	= _KERNPG_TABLE_NOENC,
+ 	};
+ 	unsigned long mstart, mend;
+-	pgd_t *level4p;
+ 	int result;
+ 	int i;
  
- SEC("?tc")
--__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
-+__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
- int preempt_lock_missing_1(struct __sk_buff *ctx)
- {
- 	bpf_preempt_disable();
-@@ -14,7 +14,7 @@ int preempt_lock_missing_1(struct __sk_buff *ctx)
+-	level4p = (pgd_t *)__va(start_pgtable);
+-	clear_page(level4p);
++	image->arch.pgd = alloc_pgt_page(image);
++	if (!image->arch.pgd)
++		return -ENOMEM;
+ 
+ 	if (cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT)) {
+ 		info.page_flag   |= _PAGE_ENC;
+@@ -244,8 +245,8 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
+ 		mstart = pfn_mapped[i].start << PAGE_SHIFT;
+ 		mend   = pfn_mapped[i].end << PAGE_SHIFT;
+ 
+-		result = kernel_ident_mapping_init(&info,
+-						 level4p, mstart, mend);
++		result = kernel_ident_mapping_init(&info, image->arch.pgd,
++						   mstart, mend);
+ 		if (result)
+ 			return result;
+ 	}
+@@ -260,8 +261,8 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
+ 		mstart = image->segment[i].mem;
+ 		mend   = mstart + image->segment[i].memsz;
+ 
+-		result = kernel_ident_mapping_init(&info,
+-						 level4p, mstart, mend);
++		result = kernel_ident_mapping_init(&info, image->arch.pgd,
++						   mstart, mend);
+ 
+ 		if (result)
+ 			return result;
+@@ -271,15 +272,19 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
+ 	 * Prepare EFI systab and ACPI tables for kexec kernel since they are
+ 	 * not covered by pfn_mapped.
+ 	 */
+-	result = map_efi_systab(&info, level4p);
++	result = map_efi_systab(&info, image->arch.pgd);
+ 	if (result)
+ 		return result;
+ 
+-	result = map_acpi_tables(&info, level4p);
++	result = map_acpi_tables(&info, image->arch.pgd);
+ 	if (result)
+ 		return result;
+ 
+-	return init_transition_pgtable(image, level4p);
++	/*
++	 * This must be last because the intermediate page table pages it
++	 * allocates will not be control pages and may overlap the image.
++	 */
++	return init_transition_pgtable(image, image->arch.pgd, control_page);
  }
  
- SEC("?tc")
--__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
-+__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
- int preempt_lock_missing_2(struct __sk_buff *ctx)
+ static void load_segments(void)
+@@ -296,14 +301,14 @@ static void load_segments(void)
+ 
+ int machine_kexec_prepare(struct kimage *image)
  {
- 	bpf_preempt_disable();
-@@ -23,7 +23,7 @@ int preempt_lock_missing_2(struct __sk_buff *ctx)
+-	unsigned long start_pgtable;
++	unsigned long control_page;
+ 	int result;
+ 
+ 	/* Calculate the offsets */
+-	start_pgtable = page_to_pfn(image->control_code_page) << PAGE_SHIFT;
++	control_page = page_to_pfn(image->control_code_page) << PAGE_SHIFT;
+ 
+ 	/* Setup the identity mapped 64bit page table */
+-	result = init_pgtable(image, start_pgtable);
++	result = init_pgtable(image, control_page);
+ 	if (result)
+ 		return result;
+ 
+@@ -357,13 +362,12 @@ void machine_kexec(struct kimage *image)
+ #endif
+ 	}
+ 
+-	control_page = page_address(image->control_code_page) + PAGE_SIZE;
++	control_page = page_address(image->control_code_page);
+ 	__memcpy(control_page, relocate_kernel, KEXEC_CONTROL_CODE_MAX_SIZE);
+ 
+ 	page_list[PA_CONTROL_PAGE] = virt_to_phys(control_page);
+ 	page_list[VA_CONTROL_PAGE] = (unsigned long)control_page;
+-	page_list[PA_TABLE_PAGE] =
+-	  (unsigned long)__pa(page_address(image->control_code_page));
++	page_list[PA_TABLE_PAGE] = (unsigned long)__pa(image->arch.pgd);
+ 
+ 	if (image->type == KEXEC_TYPE_DEFAULT)
+ 		page_list[PA_SWAP_PAGE] = (page_to_pfn(image->swap_page)
+@@ -573,8 +577,7 @@ static void kexec_mark_crashkres(bool protect)
+ 
+ 	/* Don't touch the control code page used in crash_kexec().*/
+ 	control = PFN_PHYS(page_to_pfn(kexec_crash_image->control_code_page));
+-	/* Control code page is located in the 2nd page. */
+-	kexec_mark_range(crashk_res.start, control + PAGE_SIZE - 1, protect);
++	kexec_mark_range(crashk_res.start, control - 1, protect);
+ 	control += KEXEC_CONTROL_PAGE_SIZE;
+ 	kexec_mark_range(control, crashk_res.end, protect);
  }
- 
- SEC("?tc")
--__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
-+__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
- int preempt_lock_missing_3(struct __sk_buff *ctx)
- {
- 	bpf_preempt_disable();
-@@ -33,7 +33,7 @@ int preempt_lock_missing_3(struct __sk_buff *ctx)
- }
- 
- SEC("?tc")
--__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
-+__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
- int preempt_lock_missing_3_minus_2(struct __sk_buff *ctx)
- {
- 	bpf_preempt_disable();
-@@ -55,7 +55,7 @@ static __noinline void preempt_enable(void)
- }
- 
- SEC("?tc")
--__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
-+__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
- int preempt_lock_missing_1_subprog(struct __sk_buff *ctx)
- {
- 	preempt_disable();
-@@ -63,7 +63,7 @@ int preempt_lock_missing_1_subprog(struct __sk_buff *ctx)
- }
- 
- SEC("?tc")
--__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
-+__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
- int preempt_lock_missing_2_subprog(struct __sk_buff *ctx)
- {
- 	preempt_disable();
-@@ -72,7 +72,7 @@ int preempt_lock_missing_2_subprog(struct __sk_buff *ctx)
- }
- 
- SEC("?tc")
--__failure __msg("BPF_EXIT instruction cannot be used inside bpf_preempt_disable-ed region")
-+__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_preempt_disable-ed region")
- int preempt_lock_missing_2_minus_1_subprog(struct __sk_buff *ctx)
- {
- 	preempt_disable();
-diff --git a/tools/testing/selftests/bpf/progs/verifier_spin_lock.c b/tools/testing/selftests/bpf/progs/verifier_spin_lock.c
-index 3f679de73229f..25599eac9a702 100644
---- a/tools/testing/selftests/bpf/progs/verifier_spin_lock.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_spin_lock.c
-@@ -187,7 +187,7 @@ l0_%=:	r6 = r0;					\
- 
- SEC("cgroup/skb")
- __description("spin_lock: test6 missing unlock")
--__failure __msg("BPF_EXIT instruction cannot be used inside bpf_spin_lock-ed region")
-+__failure __msg("BPF_EXIT instruction in main prog cannot be used inside bpf_spin_lock-ed region")
- __failure_unpriv __msg_unpriv("")
- __naked void spin_lock_test6_missing_unlock(void)
- {
 -- 
 2.39.5
 
