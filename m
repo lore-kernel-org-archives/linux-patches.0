@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571F4145348;
-	Thu, 13 Feb 2025 14:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3EE8221710;
+	Thu, 13 Feb 2025 14:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458578; cv=none; b=tauWuNZIlUR8ERD8BA5wbKSzuetg1IzVWNJTtMkLj8HXWnC+rsQW0GFY4haibxkGebz/zqsiAbThhQfj8emL1NZt3A5xAvh5pIjDvbXSYrjoym07nVi3xGF2prX7kz3NoFwrS2n3RZo5+5ahWkiZYee2cjDHUf2GrKzVLaWHTd0=
+	t=1739458581; cv=none; b=joX/gtkK3Pz9cdU5QKmkeE+HmRGyGd6YBgVYQWwzgMZ5D6TCaWRScf4N40RNXXlqhP4/yxDM1xTo7v4mZGAW0jetQgEL0ex4oae/ATsco7EUaIMxqFVuLMIVyHN+kBsTyGXfdvBGDuf7akXrhpnDdpDNPLgDftjJf+3oLeEdNso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458578; c=relaxed/simple;
-	bh=eJof8NYJUkd7t/etvL+6QclXN8REUM1S3QsF3uJIldw=;
+	s=arc-20240116; t=1739458581; c=relaxed/simple;
+	bh=LbpoieTo3mutMh+HCknOaB/yszvxiFDBi0LXGsbi/SQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AhNcfOmmp5YLPJPk60NZFgsQzYoH9uneB9knbxthgP2uBTJWqDHCa1zTS1dDH7PQlAoBZ2pMrnoMl/NK20Q7Tn4movojImA0OQOWEjf7afYL+C/TMqWtwenDZLlpdGucz9nJej2yS/z7/YZDQ9vxKplJ0/kAb0Nt4Lj6MeYkkk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2E8RNTYK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oClzzk8C4Eg1i2QoUE8CtT8QOXEM4wYFM1OEsSw0UopensRY8kKakA7PjY+R8p89Mba52dcrdBB2m6SpJueoPW0sKig8y0/brM23AjZjy/I5NiowsiHmoRUFjhPA2baSGdJM/DblfRumzIZA3QY7VazseKrvM9JbY05d/PMTA68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+I+8p2M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2E8RNTYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8809C4CED1;
-	Thu, 13 Feb 2025 14:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+I+8p2M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2193FC4CED1;
+	Thu, 13 Feb 2025 14:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458578;
-	bh=eJof8NYJUkd7t/etvL+6QclXN8REUM1S3QsF3uJIldw=;
+	s=korg; t=1739458581;
+	bh=LbpoieTo3mutMh+HCknOaB/yszvxiFDBi0LXGsbi/SQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2E8RNTYK5Wj1c8O+8/KXbuiS921KO8RSp0cY4zEUQxsmBCIhClIo5+usiZMsZelTo
-	 VBzLYfBxLr5fzmJVMJYT2TuhZPiPNofvbEA7P1LkjQLz7ud1FVCurVeMr2uaCu5E7a
-	 M5fraEZq7bqHyBeifj9rnInAp/NVgUBFxtyp5N50=
+	b=t+I+8p2MHR06hCc1YqrLjFUe9Kxpa0lf65dCWwLb7TiQ+EyMpCvvFCEtWsNIL6wUW
+	 WHv5xxYmP/4wZp9ILtt50QxkbmeCyQQOaiTrFDNZFC8l59yL0AtMBGn4tocSEGtVlz
+	 ra74HFtuYhQp5m78jPipAdpbjYzjLp4uG1lnPe5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongwon Kim <dongwon.kim@intel.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Vivek Kasireddy <vivek.kasireddy@intel.com>,
-	Rob Clark <robdclark@gmail.com>,
+	syzbot+63913e558c084f7f8fdc@syzkaller.appspotmail.com,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 019/443] drm/virtio: New fence for every plane update
-Date: Thu, 13 Feb 2025 15:23:04 +0100
-Message-ID: <20250213142441.362448675@linuxfoundation.org>
+Subject: [PATCH 6.13 002/443] btrfs: fix lockdep splat while merging a relocation root
+Date: Thu, 13 Feb 2025 15:22:47 +0100
+Message-ID: <20250213142440.710103164@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -53,190 +52,220 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit d3c55b8ab6fe5fa2e7ab02efd36d09c39ee5022f ]
+[ Upstream commit a216542027b892e6651c1b4e076012140d04afaf ]
 
-Having a fence linked to a virtio_gpu_framebuffer in the plane update
-sequence would cause conflict when several planes referencing the same
-framebuffer (e.g. Xorg screen covering multi-displays configured for an
-extended mode) and those planes are updated concurrently. So it is needed
-to allocate a fence for every plane state instead of the framebuffer.
+When COWing a relocation tree path, at relocation.c:replace_path(), we
+can trigger a lockdep splat while we are in the btrfs_search_slot() call
+against the relocation root. This happens in that callchain at
+ctree.c:read_block_for_search() when we happen to find a child extent
+buffer already loaded through the fs tree with a lockdep class set to
+the fs tree. So when we attempt to lock that extent buffer through a
+relocation tree we have to reset the lockdep class to the class for a
+relocation tree, since a relocation tree has extent buffers that used
+to belong to a fs tree and may currently be already loaded (we swap
+extent buffers between the two trees at the end of replace_path()).
 
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-[dmitry.osipenko@collabora.com: rebase, fix up, edit commit message]
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241020230803.247419-2-dmitry.osipenko@collabora.com
+However we are missing calls to btrfs_maybe_reset_lockdep_class() to reset
+the lockdep class at ctree.c:read_block_for_search() before we read lock
+an extent buffer, just like we did for btrfs_search_slot() in commit
+b40130b23ca4 ("btrfs: fix lockdep splat with reloc root extent buffers").
+
+So add the missing btrfs_maybe_reset_lockdep_class() calls before the
+attempts to read lock an extent buffer at ctree.c:read_block_for_search().
+
+The lockdep splat was reported by syzbot and it looks like this:
+
+   ======================================================
+   WARNING: possible circular locking dependency detected
+   6.13.0-rc5-syzkaller-00163-gab75170520d4 #0 Not tainted
+   ------------------------------------------------------
+   syz.0.0/5335 is trying to acquire lock:
+   ffff8880545dbc38 (btrfs-tree-01){++++}-{4:4}, at: btrfs_tree_read_lock_nested+0x2f/0x250 fs/btrfs/locking.c:146
+
+   but task is already holding lock:
+   ffff8880545dba58 (btrfs-treloc-02/1){+.+.}-{4:4}, at: btrfs_tree_lock_nested+0x2f/0x250 fs/btrfs/locking.c:189
+
+   which lock already depends on the new lock.
+
+   the existing dependency chain (in reverse order) is:
+
+   -> #2 (btrfs-treloc-02/1){+.+.}-{4:4}:
+          reacquire_held_locks+0x3eb/0x690 kernel/locking/lockdep.c:5374
+          __lock_release kernel/locking/lockdep.c:5563 [inline]
+          lock_release+0x396/0xa30 kernel/locking/lockdep.c:5870
+          up_write+0x79/0x590 kernel/locking/rwsem.c:1629
+          btrfs_force_cow_block+0x14b3/0x1fd0 fs/btrfs/ctree.c:660
+          btrfs_cow_block+0x371/0x830 fs/btrfs/ctree.c:755
+          btrfs_search_slot+0xc01/0x3180 fs/btrfs/ctree.c:2153
+          replace_path+0x1243/0x2740 fs/btrfs/relocation.c:1224
+          merge_reloc_root+0xc46/0x1ad0 fs/btrfs/relocation.c:1692
+          merge_reloc_roots+0x3b3/0x980 fs/btrfs/relocation.c:1942
+          relocate_block_group+0xb0a/0xd40 fs/btrfs/relocation.c:3754
+          btrfs_relocate_block_group+0x77d/0xd90 fs/btrfs/relocation.c:4087
+          btrfs_relocate_chunk+0x12c/0x3b0 fs/btrfs/volumes.c:3494
+          __btrfs_balance+0x1b0f/0x26b0 fs/btrfs/volumes.c:4278
+          btrfs_balance+0xbdc/0x10c0 fs/btrfs/volumes.c:4655
+          btrfs_ioctl_balance+0x493/0x7c0 fs/btrfs/ioctl.c:3670
+          vfs_ioctl fs/ioctl.c:51 [inline]
+          __do_sys_ioctl fs/ioctl.c:906 [inline]
+          __se_sys_ioctl+0xf5/0x170 fs/ioctl.c:892
+          do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+          do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+          entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+   -> #1 (btrfs-tree-01/1){+.+.}-{4:4}:
+          lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5849
+          down_write_nested+0xa2/0x220 kernel/locking/rwsem.c:1693
+          btrfs_tree_lock_nested+0x2f/0x250 fs/btrfs/locking.c:189
+          btrfs_init_new_buffer fs/btrfs/extent-tree.c:5052 [inline]
+          btrfs_alloc_tree_block+0x41c/0x1440 fs/btrfs/extent-tree.c:5132
+          btrfs_force_cow_block+0x526/0x1fd0 fs/btrfs/ctree.c:573
+          btrfs_cow_block+0x371/0x830 fs/btrfs/ctree.c:755
+          btrfs_search_slot+0xc01/0x3180 fs/btrfs/ctree.c:2153
+          btrfs_insert_empty_items+0x9c/0x1a0 fs/btrfs/ctree.c:4351
+          btrfs_insert_empty_item fs/btrfs/ctree.h:688 [inline]
+          btrfs_insert_inode_ref+0x2bb/0xf80 fs/btrfs/inode-item.c:330
+          btrfs_rename_exchange fs/btrfs/inode.c:7990 [inline]
+          btrfs_rename2+0xcb7/0x2b90 fs/btrfs/inode.c:8374
+          vfs_rename+0xbdb/0xf00 fs/namei.c:5067
+          do_renameat2+0xd94/0x13f0 fs/namei.c:5224
+          __do_sys_renameat2 fs/namei.c:5258 [inline]
+          __se_sys_renameat2 fs/namei.c:5255 [inline]
+          __x64_sys_renameat2+0xce/0xe0 fs/namei.c:5255
+          do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+          do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+          entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+   -> #0 (btrfs-tree-01){++++}-{4:4}:
+          check_prev_add kernel/locking/lockdep.c:3161 [inline]
+          check_prevs_add kernel/locking/lockdep.c:3280 [inline]
+          validate_chain+0x18ef/0x5920 kernel/locking/lockdep.c:3904
+          __lock_acquire+0x1397/0x2100 kernel/locking/lockdep.c:5226
+          lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5849
+          down_read_nested+0xb5/0xa50 kernel/locking/rwsem.c:1649
+          btrfs_tree_read_lock_nested+0x2f/0x250 fs/btrfs/locking.c:146
+          btrfs_tree_read_lock fs/btrfs/locking.h:188 [inline]
+          read_block_for_search+0x718/0xbb0 fs/btrfs/ctree.c:1610
+          btrfs_search_slot+0x1274/0x3180 fs/btrfs/ctree.c:2237
+          replace_path+0x1243/0x2740 fs/btrfs/relocation.c:1224
+          merge_reloc_root+0xc46/0x1ad0 fs/btrfs/relocation.c:1692
+          merge_reloc_roots+0x3b3/0x980 fs/btrfs/relocation.c:1942
+          relocate_block_group+0xb0a/0xd40 fs/btrfs/relocation.c:3754
+          btrfs_relocate_block_group+0x77d/0xd90 fs/btrfs/relocation.c:4087
+          btrfs_relocate_chunk+0x12c/0x3b0 fs/btrfs/volumes.c:3494
+          __btrfs_balance+0x1b0f/0x26b0 fs/btrfs/volumes.c:4278
+          btrfs_balance+0xbdc/0x10c0 fs/btrfs/volumes.c:4655
+          btrfs_ioctl_balance+0x493/0x7c0 fs/btrfs/ioctl.c:3670
+          vfs_ioctl fs/ioctl.c:51 [inline]
+          __do_sys_ioctl fs/ioctl.c:906 [inline]
+          __se_sys_ioctl+0xf5/0x170 fs/ioctl.c:892
+          do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+          do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+          entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+   other info that might help us debug this:
+
+   Chain exists of:
+     btrfs-tree-01 --> btrfs-tree-01/1 --> btrfs-treloc-02/1
+
+    Possible unsafe locking scenario:
+
+          CPU0                    CPU1
+          ----                    ----
+     lock(btrfs-treloc-02/1);
+                                  lock(btrfs-tree-01/1);
+                                  lock(btrfs-treloc-02/1);
+     rlock(btrfs-tree-01);
+
+    *** DEADLOCK ***
+
+   8 locks held by syz.0.0/5335:
+    #0: ffff88801e3ae420 (sb_writers#13){.+.+}-{0:0}, at: mnt_want_write_file+0x5e/0x200 fs/namespace.c:559
+    #1: ffff888052c760d0 (&fs_info->reclaim_bgs_lock){+.+.}-{4:4}, at: __btrfs_balance+0x4c2/0x26b0 fs/btrfs/volumes.c:4183
+    #2: ffff888052c74850 (&fs_info->cleaner_mutex){+.+.}-{4:4}, at: btrfs_relocate_block_group+0x775/0xd90 fs/btrfs/relocation.c:4086
+    #3: ffff88801e3ae610 (sb_internal#2){.+.+}-{0:0}, at: merge_reloc_root+0xf11/0x1ad0 fs/btrfs/relocation.c:1659
+    #4: ffff888052c76470 (btrfs_trans_num_writers){++++}-{0:0}, at: join_transaction+0x405/0xda0 fs/btrfs/transaction.c:288
+    #5: ffff888052c76498 (btrfs_trans_num_extwriters){++++}-{0:0}, at: join_transaction+0x405/0xda0 fs/btrfs/transaction.c:288
+    #6: ffff8880545db878 (btrfs-tree-01/1){+.+.}-{4:4}, at: btrfs_tree_lock_nested+0x2f/0x250 fs/btrfs/locking.c:189
+    #7: ffff8880545dba58 (btrfs-treloc-02/1){+.+.}-{4:4}, at: btrfs_tree_lock_nested+0x2f/0x250 fs/btrfs/locking.c:189
+
+   stack backtrace:
+   CPU: 0 UID: 0 PID: 5335 Comm: syz.0.0 Not tainted 6.13.0-rc5-syzkaller-00163-gab75170520d4 #0
+   Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+   Call Trace:
+    <TASK>
+    __dump_stack lib/dump_stack.c:94 [inline]
+    dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+    print_circular_bug+0x13a/0x1b0 kernel/locking/lockdep.c:2074
+    check_noncircular+0x36a/0x4a0 kernel/locking/lockdep.c:2206
+    check_prev_add kernel/locking/lockdep.c:3161 [inline]
+    check_prevs_add kernel/locking/lockdep.c:3280 [inline]
+    validate_chain+0x18ef/0x5920 kernel/locking/lockdep.c:3904
+    __lock_acquire+0x1397/0x2100 kernel/locking/lockdep.c:5226
+    lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5849
+    down_read_nested+0xb5/0xa50 kernel/locking/rwsem.c:1649
+    btrfs_tree_read_lock_nested+0x2f/0x250 fs/btrfs/locking.c:146
+    btrfs_tree_read_lock fs/btrfs/locking.h:188 [inline]
+    read_block_for_search+0x718/0xbb0 fs/btrfs/ctree.c:1610
+    btrfs_search_slot+0x1274/0x3180 fs/btrfs/ctree.c:2237
+    replace_path+0x1243/0x2740 fs/btrfs/relocation.c:1224
+    merge_reloc_root+0xc46/0x1ad0 fs/btrfs/relocation.c:1692
+    merge_reloc_roots+0x3b3/0x980 fs/btrfs/relocation.c:1942
+    relocate_block_group+0xb0a/0xd40 fs/btrfs/relocation.c:3754
+    btrfs_relocate_block_group+0x77d/0xd90 fs/btrfs/relocation.c:4087
+    btrfs_relocate_chunk+0x12c/0x3b0 fs/btrfs/volumes.c:3494
+    __btrfs_balance+0x1b0f/0x26b0 fs/btrfs/volumes.c:4278
+    btrfs_balance+0xbdc/0x10c0 fs/btrfs/volumes.c:4655
+    btrfs_ioctl_balance+0x493/0x7c0 fs/btrfs/ioctl.c:3670
+    vfs_ioctl fs/ioctl.c:51 [inline]
+    __do_sys_ioctl fs/ioctl.c:906 [inline]
+    __se_sys_ioctl+0xf5/0x170 fs/ioctl.c:892
+    do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+    do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   RIP: 0033:0x7f1ac6985d29
+   Code: ff ff c3 (...)
+   RSP: 002b:00007f1ac63fe038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+   RAX: ffffffffffffffda RBX: 00007f1ac6b76160 RCX: 00007f1ac6985d29
+   RDX: 0000000020000180 RSI: 00000000c4009420 RDI: 0000000000000007
+   RBP: 00007f1ac6a01b08 R08: 0000000000000000 R09: 0000000000000000
+   R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+   R13: 0000000000000001 R14: 00007f1ac6b76160 R15: 00007fffda145a88
+    </TASK>
+
+Reported-by: syzbot+63913e558c084f7f8fdc@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/677b3014.050a0220.3b53b0.0064.GAE@google.com/
+Fixes: 99785998ed1c ("btrfs: reduce lock contention when eb cache miss for btree search")
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_drv.h   |  7 ++++
- drivers/gpu/drm/virtio/virtgpu_plane.c | 58 +++++++++++++++++---------
- 2 files changed, 46 insertions(+), 19 deletions(-)
+ fs/btrfs/ctree.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.h b/drivers/gpu/drm/virtio/virtgpu_drv.h
-index 64c236169db88..5dc8eeaf7123c 100644
---- a/drivers/gpu/drm/virtio/virtgpu_drv.h
-+++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
-@@ -194,6 +194,13 @@ struct virtio_gpu_framebuffer {
- #define to_virtio_gpu_framebuffer(x) \
- 	container_of(x, struct virtio_gpu_framebuffer, base)
+diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
+index 185985a337b30..5d2613b16cd24 100644
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -1563,6 +1563,7 @@ read_block_for_search(struct btrfs_root *root, struct btrfs_path *p,
  
-+struct virtio_gpu_plane_state {
-+	struct drm_plane_state base;
-+	struct virtio_gpu_fence *fence;
-+};
-+#define to_virtio_gpu_plane_state(x) \
-+	container_of(x, struct virtio_gpu_plane_state, base)
-+
- struct virtio_gpu_queue {
- 	struct virtqueue *vq;
- 	spinlock_t qlock;
-diff --git a/drivers/gpu/drm/virtio/virtgpu_plane.c b/drivers/gpu/drm/virtio/virtgpu_plane.c
-index a72a2dbda031c..7acd38b962c62 100644
---- a/drivers/gpu/drm/virtio/virtgpu_plane.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_plane.c
-@@ -66,11 +66,28 @@ uint32_t virtio_gpu_translate_format(uint32_t drm_fourcc)
- 	return format;
- }
+ 		if (!p->skip_locking) {
+ 			btrfs_unlock_up_safe(p, parent_level + 1);
++			btrfs_maybe_reset_lockdep_class(root, tmp);
+ 			tmp_locked = true;
+ 			btrfs_tree_read_lock(tmp);
+ 			btrfs_release_path(p);
+@@ -1606,6 +1607,7 @@ read_block_for_search(struct btrfs_root *root, struct btrfs_path *p,
  
-+static struct
-+drm_plane_state *virtio_gpu_plane_duplicate_state(struct drm_plane *plane)
-+{
-+	struct virtio_gpu_plane_state *new;
-+
-+	if (WARN_ON(!plane->state))
-+		return NULL;
-+
-+	new = kzalloc(sizeof(*new), GFP_KERNEL);
-+	if (!new)
-+		return NULL;
-+
-+	__drm_atomic_helper_plane_duplicate_state(plane, &new->base);
-+
-+	return &new->base;
-+}
-+
- static const struct drm_plane_funcs virtio_gpu_plane_funcs = {
- 	.update_plane		= drm_atomic_helper_update_plane,
- 	.disable_plane		= drm_atomic_helper_disable_plane,
- 	.reset			= drm_atomic_helper_plane_reset,
--	.atomic_duplicate_state = drm_atomic_helper_plane_duplicate_state,
-+	.atomic_duplicate_state = virtio_gpu_plane_duplicate_state,
- 	.atomic_destroy_state	= drm_atomic_helper_plane_destroy_state,
- };
- 
-@@ -138,11 +155,13 @@ static void virtio_gpu_resource_flush(struct drm_plane *plane,
- 	struct drm_device *dev = plane->dev;
- 	struct virtio_gpu_device *vgdev = dev->dev_private;
- 	struct virtio_gpu_framebuffer *vgfb;
-+	struct virtio_gpu_plane_state *vgplane_st;
- 	struct virtio_gpu_object *bo;
- 
- 	vgfb = to_virtio_gpu_framebuffer(plane->state->fb);
-+	vgplane_st = to_virtio_gpu_plane_state(plane->state);
- 	bo = gem_to_virtio_gpu_obj(vgfb->base.obj[0]);
--	if (vgfb->fence) {
-+	if (vgplane_st->fence) {
- 		struct virtio_gpu_object_array *objs;
- 
- 		objs = virtio_gpu_array_alloc(1);
-@@ -151,13 +170,11 @@ static void virtio_gpu_resource_flush(struct drm_plane *plane,
- 		virtio_gpu_array_add_obj(objs, vgfb->base.obj[0]);
- 		virtio_gpu_array_lock_resv(objs);
- 		virtio_gpu_cmd_resource_flush(vgdev, bo->hw_res_handle, x, y,
--					      width, height, objs, vgfb->fence);
-+					      width, height, objs,
-+					      vgplane_st->fence);
- 		virtio_gpu_notify(vgdev);
--
--		dma_fence_wait_timeout(&vgfb->fence->f, true,
-+		dma_fence_wait_timeout(&vgplane_st->fence->f, true,
- 				       msecs_to_jiffies(50));
--		dma_fence_put(&vgfb->fence->f);
--		vgfb->fence = NULL;
- 	} else {
- 		virtio_gpu_cmd_resource_flush(vgdev, bo->hw_res_handle, x, y,
- 					      width, height, NULL, NULL);
-@@ -247,20 +264,23 @@ static int virtio_gpu_plane_prepare_fb(struct drm_plane *plane,
- 	struct drm_device *dev = plane->dev;
- 	struct virtio_gpu_device *vgdev = dev->dev_private;
- 	struct virtio_gpu_framebuffer *vgfb;
-+	struct virtio_gpu_plane_state *vgplane_st;
- 	struct virtio_gpu_object *bo;
- 
- 	if (!new_state->fb)
- 		return 0;
- 
- 	vgfb = to_virtio_gpu_framebuffer(new_state->fb);
-+	vgplane_st = to_virtio_gpu_plane_state(new_state);
- 	bo = gem_to_virtio_gpu_obj(vgfb->base.obj[0]);
- 	if (!bo || (plane->type == DRM_PLANE_TYPE_PRIMARY && !bo->guest_blob))
- 		return 0;
- 
--	if (bo->dumb && (plane->state->fb != new_state->fb)) {
--		vgfb->fence = virtio_gpu_fence_alloc(vgdev, vgdev->fence_drv.context,
-+	if (bo->dumb) {
-+		vgplane_st->fence = virtio_gpu_fence_alloc(vgdev,
-+						     vgdev->fence_drv.context,
- 						     0);
--		if (!vgfb->fence)
-+		if (!vgplane_st->fence)
- 			return -ENOMEM;
- 	}
- 
-@@ -270,15 +290,15 @@ static int virtio_gpu_plane_prepare_fb(struct drm_plane *plane,
- static void virtio_gpu_plane_cleanup_fb(struct drm_plane *plane,
- 					struct drm_plane_state *state)
- {
--	struct virtio_gpu_framebuffer *vgfb;
-+	struct virtio_gpu_plane_state *vgplane_st;
- 
- 	if (!state->fb)
- 		return;
- 
--	vgfb = to_virtio_gpu_framebuffer(state->fb);
--	if (vgfb->fence) {
--		dma_fence_put(&vgfb->fence->f);
--		vgfb->fence = NULL;
-+	vgplane_st = to_virtio_gpu_plane_state(state);
-+	if (vgplane_st->fence) {
-+		dma_fence_put(&vgplane_st->fence->f);
-+		vgplane_st->fence = NULL;
- 	}
- }
- 
-@@ -291,6 +311,7 @@ static void virtio_gpu_cursor_plane_update(struct drm_plane *plane,
- 	struct virtio_gpu_device *vgdev = dev->dev_private;
- 	struct virtio_gpu_output *output = NULL;
- 	struct virtio_gpu_framebuffer *vgfb;
-+	struct virtio_gpu_plane_state *vgplane_st;
- 	struct virtio_gpu_object *bo = NULL;
- 	uint32_t handle;
- 
-@@ -303,6 +324,7 @@ static void virtio_gpu_cursor_plane_update(struct drm_plane *plane,
- 
- 	if (plane->state->fb) {
- 		vgfb = to_virtio_gpu_framebuffer(plane->state->fb);
-+		vgplane_st = to_virtio_gpu_plane_state(plane->state);
- 		bo = gem_to_virtio_gpu_obj(vgfb->base.obj[0]);
- 		handle = bo->hw_res_handle;
- 	} else {
-@@ -322,11 +344,9 @@ static void virtio_gpu_cursor_plane_update(struct drm_plane *plane,
- 			(vgdev, 0,
- 			 plane->state->crtc_w,
- 			 plane->state->crtc_h,
--			 0, 0, objs, vgfb->fence);
-+			 0, 0, objs, vgplane_st->fence);
- 		virtio_gpu_notify(vgdev);
--		dma_fence_wait(&vgfb->fence->f, true);
--		dma_fence_put(&vgfb->fence->f);
--		vgfb->fence = NULL;
-+		dma_fence_wait(&vgplane_st->fence->f, true);
- 	}
- 
- 	if (plane->state->fb != old_state->fb) {
+ 	if (!p->skip_locking) {
+ 		ASSERT(ret == -EAGAIN);
++		btrfs_maybe_reset_lockdep_class(root, tmp);
+ 		tmp_locked = true;
+ 		btrfs_tree_read_lock(tmp);
+ 		btrfs_release_path(p);
 -- 
 2.39.5
 
