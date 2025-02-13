@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001A1241667;
-	Thu, 13 Feb 2025 14:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B37527425B;
+	Thu, 13 Feb 2025 14:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457890; cv=none; b=LjWmVvpvI+TF5KnEndZ/nWcVmMS+C6yN5bNp8w7ZAvOlAhAeDJfclQ3NvkuMbrR+L8QVBreYWwBg7QsOq2xYsszLCxi196wMdqc44IIwIoV9dSnK88t5gPHICykkqKd+eB/Y1wuQsStZ8Dd9/xmC6emFFAf446XfyVFrT4fulww=
+	t=1739457893; cv=none; b=dghELyYCxZVOHASU7ofZPbVS63ssdbuzMa/J43X+RZ848jQMZTE3S3YHkLNwt1Mf7N649ElPcbzIAV8ghXZv1gepNGKe4WJbA/0dsEp6ZNPfnFTLm8IuHx3tZVv9kzM6f/5/n7oO1twApmLv2NqTvSWXMSL1o7mhJqOVnzb4g2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457890; c=relaxed/simple;
-	bh=ys8uDUSiy3H30+/9xEJc/T80c3ZTw3JUkGnQQJbPWNY=;
+	s=arc-20240116; t=1739457893; c=relaxed/simple;
+	bh=YlBbr10/TQzKvytrZXrwOKgCdjbxvL4Xniit941emDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M1Pu2l3CxcpzlGOnmdrSop6sWUt/eIEzzvClSUlBMcFSuBIhN0t9xn7jwTtH4EnhUKnKe8iH2uzrOpZa3lt74DJ8zO3oeq8NzhFPUk1GCs2FVaSDISFJYM8MysY26Ctg68+j0z96jo+9Ph5FYJRnnqtvJU3h+oek7LZV+Z+/WLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZrrmOvD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r1tJtqHkd0mheh4UVLmn1JUNQnFLyDmRWEAwFYpGLz5/s/j6n4iGJS4rb3AS/WEaXx7KUiPYR46qZbtc1iz+7f5QP7/x4Sm5nOfP0sP5N/l9RmwHTvIadcr7YwMEkI40gLR35s9t7ouuV9OmbuO5wnpfkGSTPamAXkVBZkjCHO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqYWbslM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZrrmOvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66AD1C4CED1;
-	Thu, 13 Feb 2025 14:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqYWbslM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C028DC4CEE7;
+	Thu, 13 Feb 2025 14:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457889;
-	bh=ys8uDUSiy3H30+/9xEJc/T80c3ZTw3JUkGnQQJbPWNY=;
+	s=korg; t=1739457893;
+	bh=YlBbr10/TQzKvytrZXrwOKgCdjbxvL4Xniit941emDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FZrrmOvDV9Iv/LFRYTGJjaa2a0G2pK9Y7GKZJ3LqxVSvg2SY/Ez85qHCsrIk7iuEB
-	 4R7619HxEY1Djq1v2zV/EzvppDkT0PM50LRvc6lbvy98m9xK1o192Fwd2BEMuVHG6c
-	 h8g6awGr3zqPUwzGLPuSzILPQ38Y3RnBATBML5hI=
+	b=VqYWbslMQk493d+yGPmVEjkHB5qbNNIoGk9SE3z7lRyzJwRzCICAUk4JWK/Wv/NsF
+	 aNxNmVBv89ieA+/V5uXg777+OFJvoOg2lQqC9hQlqDJ6ADGHt2J+k90lYR8Cn9RDuf
+	 ytRl7rkAygkJi0OlpquqFvOrdLe6+0Xp81sfOdT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Samantha Glocker <iam@anislandsomewhere.com>
-Subject: [PATCH 6.12 243/422] ALSA: hda/realtek: Fix quirk matching for Legion Pro 7
-Date: Thu, 13 Feb 2025 15:26:32 +0100
-Message-ID: <20250213142445.913830988@linuxfoundation.org>
+	Austrum <austrum.lab@gmail.com>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 244/422] ALSA: hda: Fix headset detection failure due to unstable sort
+Date: Thu, 13 Feb 2025 15:26:33 +0100
+Message-ID: <20250213142445.953521787@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -50,48 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-commit 0f3a822ae2254a1e7ce3a130a1efd94e2cab73ee upstream.
+commit 3b4309546b48fc167aa615a2d881a09c0a97971f upstream.
 
-The recent cleanup of the quirk table entries with the codec ID
-matching caused a regression on some Lenovo Legion 7 models with PCI
-SSID 17aa:386f: it assumed wrongly as if the codec SSID on the machine
-were also 17aa:386f, but in this case, it was 17aa:38a8.  This made
-the binding with a wrong sub-codec, instead of TAS2781, the Cirrus
-codec was bound.
+The auto_parser assumed sort() was stable, but the kernel's sort() uses
+heapsort, which has never been stable. After commit 0e02ca29a563
+("lib/sort: optimize heapsort with double-pop variation"), the order of
+equal elements changed, causing the headset to fail to work.
 
-For addressing the regression, correct the quirk entry to the right
-value 17aa:38a8.
+Fix the issue by recording the original order of elements before
+sorting and using it as a tiebreaker for equal elements in the
+comparison function.
 
-Note that this makes the entry appearing in an unsorted position.
-This exception is needed because the entry must match before the PCI
-SSID 17aa:386f.
-
-Also there is another entry for 17aa:38a8, but the latter is for PCI
-SSID matching while the new entry is for the codec SSID matching.
-
-Fixes: 504f052aa343 ("ALSA: hda/realtek: Use codec SSID matching for Lenovo devices")
-Reported-and-tested-by: Samantha Glocker <iam@anislandsomewhere.com>
-Closes: https://lore.kernel.org/CAGPQRHYd48U__UKYj2jJnT4+dnNNoWRBi+wj6zPRn=JpNMBUrg@mail.gmail.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250125120519.16420-1-tiwai@suse.de
+Fixes: b9030a005d58 ("ALSA: hda - Use standard sort function in hda_auto_parser.c")
+Reported-by: Austrum <austrum.lab@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219158
+Tested-by: Austrum <austrum.lab@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Link: https://patch.msgid.link/20250128165415.643223-1-visitorckw@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/hda_auto_parser.c |    8 +++++++-
+ sound/pci/hda/hda_auto_parser.h |    1 +
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10874,7 +10874,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x17aa, 0x3869, "Lenovo Yoga7 14IAL7", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	HDA_CODEC_QUIRK(0x17aa, 0x386e, "Legion Y9000X 2022 IAH7", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x386e, "Yoga Pro 7 14ARP8", ALC285_FIXUP_SPEAKER2_TO_DAC1),
--	HDA_CODEC_QUIRK(0x17aa, 0x386f, "Legion Pro 7 16ARX8H", ALC287_FIXUP_TAS2781_I2C),
-+	HDA_CODEC_QUIRK(0x17aa, 0x38a8, "Legion Pro 7 16ARX8H", ALC287_FIXUP_TAS2781_I2C), /* this must match before PCI SSID 17aa:386f below */
- 	SND_PCI_QUIRK(0x17aa, 0x386f, "Legion Pro 7i 16IAX7", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x3870, "Lenovo Yoga 7 14ARB7", ALC287_FIXUP_YOGA7_14ARB7_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3877, "Lenovo Legion 7 Slim 16ARHA7", ALC287_FIXUP_CS35L41_I2C_2),
+--- a/sound/pci/hda/hda_auto_parser.c
++++ b/sound/pci/hda/hda_auto_parser.c
+@@ -80,7 +80,11 @@ static int compare_input_type(const void
+ 
+ 	/* In case one has boost and the other one has not,
+ 	   pick the one with boost first. */
+-	return (int)(b->has_boost_on_pin - a->has_boost_on_pin);
++	if (a->has_boost_on_pin != b->has_boost_on_pin)
++		return (int)(b->has_boost_on_pin - a->has_boost_on_pin);
++
++	/* Keep the original order */
++	return a->order - b->order;
+ }
+ 
+ /* Reorder the surround channels
+@@ -400,6 +404,8 @@ int snd_hda_parse_pin_defcfg(struct hda_
+ 	reorder_outputs(cfg->speaker_outs, cfg->speaker_pins);
+ 
+ 	/* sort inputs in the order of AUTO_PIN_* type */
++	for (i = 0; i < cfg->num_inputs; i++)
++		cfg->inputs[i].order = i;
+ 	sort(cfg->inputs, cfg->num_inputs, sizeof(cfg->inputs[0]),
+ 	     compare_input_type, NULL);
+ 
+--- a/sound/pci/hda/hda_auto_parser.h
++++ b/sound/pci/hda/hda_auto_parser.h
+@@ -37,6 +37,7 @@ struct auto_pin_cfg_item {
+ 	unsigned int is_headset_mic:1;
+ 	unsigned int is_headphone_mic:1; /* Mic-only in headphone jack */
+ 	unsigned int has_boost_on_pin:1;
++	int order;
+ };
+ 
+ struct auto_pin_cfg;
 
 
