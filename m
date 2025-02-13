@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD52321D3FD;
-	Thu, 13 Feb 2025 14:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E4A21D3FD;
+	Thu, 13 Feb 2025 14:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457437; cv=none; b=f/7siiGJw3Qeg0Oz8T+po9vm59VjUlc4+4yc0YlepYU0MfIyCqcYFGl9/+nWGt2X2fEXVCd4pmB16SEngnBnu8X6nav0Y9dUYSjED7Nk5J7F0rG6x/ZT1UebVc1OOIMmvBpexCE9NdxQ1sQzToQe9VMCznxAacxXWcn/hHyKvO4=
+	t=1739457441; cv=none; b=neQYDkLGekOhlddumMZ/OwcoyoAlEKiZQfotw/ilYKytyqPem6Gm5ukxGd6QapE7HOYl5V16YXLHFzdq6wqHvN+c+QQox4u0Sj/3ebhQbyKJWVCAg+HjXssazAmSaIMGjeNCZzxxu1PYOZmGnIROCJU+Z/oYHVyh/yP4jcOpsYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457437; c=relaxed/simple;
-	bh=1AKZYKtdGCw21e22uerJxbuc5MDTvAC4VmVQ3yxq54g=;
+	s=arc-20240116; t=1739457441; c=relaxed/simple;
+	bh=jXecoZb1tiV+YkEGp9fDC86yADw9dF1C/nVzwr0Iosg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Hw6SgibTRZ/bIN9bm5LGFSQfR+KUKuEWo9LFwUrqMnnmfQoezrjvDihsezwq9MgKgpiCMZwEaCHfywSDfMS20K/gELVDdnl4o7mph3oWSPlqBUvQmeJG/yyW4AcKc6LfheSV05PjXHtTO6pgfqoJhEoyJss8+4LpTovptTlBgZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMrqkSzc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XDSqijGyIIXlca8ZkM8PajMDnQKPhvHpY1ff0ilPAapXM/6BQ7gtfJ74oNjlsaqwmDw2z5FXkjsHSj/FmaEsJgws30SC+gHpaoa5Rudb5abV9S3axVTg/JQR31ntT4aXi61KO1p/RFSMVpJVhcx46YhvNZA9lCcp65hTGnPcsFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f76BkG00; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMrqkSzc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8C5C4CED1;
-	Thu, 13 Feb 2025 14:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f76BkG00"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45431C4CED1;
+	Thu, 13 Feb 2025 14:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457437;
-	bh=1AKZYKtdGCw21e22uerJxbuc5MDTvAC4VmVQ3yxq54g=;
+	s=korg; t=1739457441;
+	bh=jXecoZb1tiV+YkEGp9fDC86yADw9dF1C/nVzwr0Iosg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UMrqkSzcjT9iGUwXRkPpR8Y4UPz6NbhbxwlqBr5hkAbbCoMN2ES69qid0dewcIO50
-	 AxfN7XsRymcnSopMVfN2YQpSslPVBDbE5hUjXWL4UBnOoRArZYbxsmAIPdzc2irkPm
-	 62MF7LI7a2EkIygFyn0eYH6/R6sCbQOe6p4hX0BU=
+	b=f76BkG00KJYxf7ZLrk9m6837hunS7y8qz0dXvpW5ivthk8XGs0JCtMGAuN2hEh9rZ
+	 W3ec/K+1jUUdTGKDEIWkhCOSJclTjslWPBmqBwEHyb2m1NmGe8ZkJYKORsv52AybE2
+	 d4uaf0IbAS8s1pw0JVxegyc+h87miqjnx3uyeYYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>,
-	Ronak Doshi <ronak.doshi@broadcom.com>,
+	Lenny Szubowicz <lszubowi@redhat.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 110/422] vmxnet3: Fix tx queue race condition with XDP
-Date: Thu, 13 Feb 2025 15:24:19 +0100
-Message-ID: <20250213142440.800802123@linuxfoundation.org>
+Subject: [PATCH 6.12 111/422] tg3: Disable tg3 PCIe AER on system reboot
+Date: Thu, 13 Feb 2025 15:24:20 +0100
+Message-ID: <20250213142440.838505335@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -47,116 +47,135 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>
+From: Lenny Szubowicz <lszubowi@redhat.com>
 
-[ Upstream commit 3f1baa91a1fdf3de9dbad4bd615b35fab347874b ]
+[ Upstream commit e0efe83ed325277bb70f9435d4d9fc70bebdcca8 ]
 
-If XDP traffic runs on a CPU which is greater than or equal to
-the number of the Tx queues of the NIC, then vmxnet3_xdp_get_tq()
-always picks up queue 0 for transmission as it uses reciprocal scale
-instead of simple modulo operation.
+Disable PCIe AER on the tg3 device on system reboot on a limited
+list of Dell PowerEdge systems. This prevents a fatal PCIe AER event
+on the tg3 device during the ACPI _PTS (prepare to sleep) method for
+S5 on those systems. The _PTS is invoked by acpi_enter_sleep_state_prep()
+as part of the kernel's reboot sequence as a result of commit
+38f34dba806a ("PM: ACPI: reboot: Reinstate S5 for reboot").
 
-vmxnet3_xdp_xmit() and vmxnet3_xdp_xmit_frame() use the above
-returned queue without any locking which can lead to race conditions
-when multiple XDP xmits run in parallel on different CPU's.
+There was an earlier fix for this problem by commit 2ca1c94ce0b6
+("tg3: Disable tg3 device on system reboot to avoid triggering AER").
+But it was discovered that this earlier fix caused a reboot hang
+when some Dell PowerEdge servers were booted via ipxe. To address
+this reboot hang, the earlier fix was essentially reverted by commit
+9fc3bc764334 ("tg3: power down device only on SYSTEM_POWER_OFF").
+This re-exposed the tg3 PCIe AER on reboot problem.
 
-This patch uses a simple module scheme when the current CPU equals or
-exceeds the number of Tx queues on the NIC. It also adds locking in
-vmxnet3_xdp_xmit() and vmxnet3_xdp_xmit_frame() functions.
+This fix is not an ideal solution because the root cause of the AER
+is in system firmware. Instead, it's a targeted work-around in the
+tg3 driver.
 
-Fixes: 54f00cce1178 ("vmxnet3: Add XDP support.")
-Signed-off-by: Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>
-Signed-off-by: Ronak Doshi <ronak.doshi@broadcom.com>
+Note also that the PCIe AER must be disabled on the tg3 device even
+if the system is configured to use "firmware first" error handling.
+
+V3:
+   - Fix sparse warning on improper comparison of pdev->current_state
+   - Adhere to netdev comment style
+
+Fixes: 9fc3bc764334 ("tg3: power down device only on SYSTEM_POWER_OFF")
+Signed-off-by: Lenny Szubowicz <lszubowi@redhat.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250131042340.156547-1-sankararaman.jayaraman@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vmxnet3/vmxnet3_xdp.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 58 +++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
-diff --git a/drivers/net/vmxnet3/vmxnet3_xdp.c b/drivers/net/vmxnet3/vmxnet3_xdp.c
-index 1341374a4588a..616ecc38d1726 100644
---- a/drivers/net/vmxnet3/vmxnet3_xdp.c
-+++ b/drivers/net/vmxnet3/vmxnet3_xdp.c
-@@ -28,7 +28,7 @@ vmxnet3_xdp_get_tq(struct vmxnet3_adapter *adapter)
- 	if (likely(cpu < tq_number))
- 		tq = &adapter->tx_queue[cpu];
- 	else
--		tq = &adapter->tx_queue[reciprocal_scale(cpu, tq_number)];
-+		tq = &adapter->tx_queue[cpu % tq_number];
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index d178138981a96..717e110d23c91 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -55,6 +55,7 @@
+ #include <linux/hwmon.h>
+ #include <linux/hwmon-sysfs.h>
+ #include <linux/crc32poly.h>
++#include <linux/dmi.h>
  
- 	return tq;
- }
-@@ -124,6 +124,7 @@ vmxnet3_xdp_xmit_frame(struct vmxnet3_adapter *adapter,
- 	u32 buf_size;
- 	u32 dw2;
+ #include <net/checksum.h>
+ #include <net/gso.h>
+@@ -18154,6 +18155,50 @@ static int tg3_resume(struct device *device)
  
-+	spin_lock_irq(&tq->tx_lock);
- 	dw2 = (tq->tx_ring.gen ^ 0x1) << VMXNET3_TXD_GEN_SHIFT;
- 	dw2 |= xdpf->len;
- 	ctx.sop_txd = tq->tx_ring.base + tq->tx_ring.next2fill;
-@@ -134,6 +135,7 @@ vmxnet3_xdp_xmit_frame(struct vmxnet3_adapter *adapter,
+ static SIMPLE_DEV_PM_OPS(tg3_pm_ops, tg3_suspend, tg3_resume);
  
- 	if (vmxnet3_cmd_ring_desc_avail(&tq->tx_ring) == 0) {
- 		tq->stats.tx_ring_full++;
-+		spin_unlock_irq(&tq->tx_lock);
- 		return -ENOSPC;
- 	}
- 
-@@ -142,8 +144,10 @@ vmxnet3_xdp_xmit_frame(struct vmxnet3_adapter *adapter,
- 		tbi->dma_addr = dma_map_single(&adapter->pdev->dev,
- 					       xdpf->data, buf_size,
- 					       DMA_TO_DEVICE);
--		if (dma_mapping_error(&adapter->pdev->dev, tbi->dma_addr))
-+		if (dma_mapping_error(&adapter->pdev->dev, tbi->dma_addr)) {
-+			spin_unlock_irq(&tq->tx_lock);
- 			return -EFAULT;
-+		}
- 		tbi->map_type |= VMXNET3_MAP_SINGLE;
- 	} else { /* XDP buffer from page pool */
- 		page = virt_to_page(xdpf->data);
-@@ -182,6 +186,7 @@ vmxnet3_xdp_xmit_frame(struct vmxnet3_adapter *adapter,
- 	dma_wmb();
- 	gdesc->dword[2] = cpu_to_le32(le32_to_cpu(gdesc->dword[2]) ^
- 						  VMXNET3_TXD_GEN);
-+	spin_unlock_irq(&tq->tx_lock);
- 
- 	/* No need to handle the case when tx_num_deferred doesn't reach
- 	 * threshold. Backend driver at hypervisor side will poll and reset
-@@ -225,6 +230,7 @@ vmxnet3_xdp_xmit(struct net_device *dev,
- {
- 	struct vmxnet3_adapter *adapter = netdev_priv(dev);
- 	struct vmxnet3_tx_queue *tq;
-+	struct netdev_queue *nq;
- 	int i;
- 
- 	if (unlikely(test_bit(VMXNET3_STATE_BIT_QUIESCED, &adapter->state)))
-@@ -236,6 +242,9 @@ vmxnet3_xdp_xmit(struct net_device *dev,
- 	if (tq->stopped)
- 		return -ENETDOWN;
- 
-+	nq = netdev_get_tx_queue(adapter->netdev, tq->qid);
++/* Systems where ACPI _PTS (Prepare To Sleep) S5 will result in a fatal
++ * PCIe AER event on the tg3 device if the tg3 device is not, or cannot
++ * be, powered down.
++ */
++static const struct dmi_system_id tg3_restart_aer_quirk_table[] = {
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R440"),
++		},
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R540"),
++		},
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R640"),
++		},
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R650"),
++		},
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R740"),
++		},
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R750"),
++		},
++	},
++	{}
++};
 +
-+	__netif_tx_lock(nq, smp_processor_id());
- 	for (i = 0; i < n; i++) {
- 		if (vmxnet3_xdp_xmit_frame(adapter, frames[i], tq, true)) {
- 			tq->stats.xdp_xmit_err++;
-@@ -243,6 +252,7 @@ vmxnet3_xdp_xmit(struct net_device *dev,
- 		}
- 	}
- 	tq->stats.xdp_xmit += i;
-+	__netif_tx_unlock(nq);
+ static void tg3_shutdown(struct pci_dev *pdev)
+ {
+ 	struct net_device *dev = pci_get_drvdata(pdev);
+@@ -18170,6 +18215,19 @@ static void tg3_shutdown(struct pci_dev *pdev)
  
- 	return i;
- }
+ 	if (system_state == SYSTEM_POWER_OFF)
+ 		tg3_power_down(tp);
++	else if (system_state == SYSTEM_RESTART &&
++		 dmi_first_match(tg3_restart_aer_quirk_table) &&
++		 pdev->current_state != PCI_D3cold &&
++		 pdev->current_state != PCI_UNKNOWN) {
++		/* Disable PCIe AER on the tg3 to avoid a fatal
++		 * error during this system restart.
++		 */
++		pcie_capability_clear_word(pdev, PCI_EXP_DEVCTL,
++					   PCI_EXP_DEVCTL_CERE |
++					   PCI_EXP_DEVCTL_NFERE |
++					   PCI_EXP_DEVCTL_FERE |
++					   PCI_EXP_DEVCTL_URRE);
++	}
+ 
+ 	rtnl_unlock();
+ 
 -- 
 2.39.5
 
