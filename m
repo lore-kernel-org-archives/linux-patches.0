@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A051DC745;
-	Thu, 13 Feb 2025 14:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33441DC745;
+	Thu, 13 Feb 2025 14:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458769; cv=none; b=gv75t3OsF32t9a1HlOcCjfENRorfAniZ+6OqNaVd23wnhdMjJNkLjuNGbhiSTcqO1Ox0NO0N6zWYJgs8MzVlMFQ09g9RF9iYyfsIYIuLCI0kuA/7XnyrgNqyxIfGxa4pcNzJn3dh+2hUmLhZJtn/9Cpp/5arrTY8u4FF5eIEj7w=
+	t=1739458772; cv=none; b=qbYMXg9IAsOwjFfbVuKNnEduq1FOfFdumoaX9PYpRTYKrXbK14q8fVLo2mAGEOnheaEP09Bxug8hx26aHlp4+aC/2NGmh0a6v0X2zMRCuulv61QQ0c3MqlYXySXyW9FKKhwaB7zBYs+7xIwUpuKDXm+yi0Gn1Rrnwli6NDdrbgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458769; c=relaxed/simple;
-	bh=FRbsv8ABApmWnnJtmqhKV6fHTMOac+B0iwxhlbdHcmk=;
+	s=arc-20240116; t=1739458772; c=relaxed/simple;
+	bh=7XvkBoUpBtFtxoBVKvRAq4dQ3/fbgjQfBbDScnu/FfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=STFo5AAuDNPLGgOdmA7e0CANs0dBaOqopxGGRhLYbyJz1k3aq6I7sKVpwnUhLRx/arVghePkxZptPprvaHHVRky5T4wsuD4E7kpepOTmYlfffJ08woAl4Ueaq+k9PMrwYmLprQsOFuZAqJRqTZpYsVWeyWZYY+FilqR7UiYQdKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JmcsxBof; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ClBjnB3cpdn0Fcq57TbVntJ8W94NQDlGCPjtk1gT3tPBKVBnfsi5hQIlM3R26fO6pkwtGmrwuC7hYUpp3IPmfO87PcXuxlCCakSJkr+iYrsyfC4DocvuJCZkfX1K72IkXIKG7wMQHrXT8+C3leGA8IhW6BDnuIn8hI9BLceSQe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxL/bK5r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JmcsxBof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69530C4CEE5;
-	Thu, 13 Feb 2025 14:59:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxL/bK5r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63B6C4CED1;
+	Thu, 13 Feb 2025 14:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458768;
-	bh=FRbsv8ABApmWnnJtmqhKV6fHTMOac+B0iwxhlbdHcmk=;
+	s=korg; t=1739458772;
+	bh=7XvkBoUpBtFtxoBVKvRAq4dQ3/fbgjQfBbDScnu/FfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JmcsxBofiBjYpwQabmIRlPBhT4jlogxUiHf/dUmzuPLG7bHwuaIXVbfM5tjnt40Mu
-	 +oYK0+Xy/M9PryB5GCFIBssGoLipZ1z9/fVcM+a0tCKHbB+5U96s4WAqkcwVXw+l27
-	 gS5KmXYKKbDgZX4TFsrVTEFeVvvkqX2xgow6TpQE=
+	b=hxL/bK5rJyGomN5wwO0pP+wvdfKlYTQPYD/+e+dGkx8K+wFQYDv46z+xgea4XLsFe
+	 0MnZvYB5Dax/d1Zh8Eroa88AmFYKHAIq8KuYf84NAY9Md6BkbdbpnZ+ucrkY6PINya
+	 +OdYlRCqewcv0j9i0/wfeUF5+k2gOT4ls8kI81f0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Erez Shitrit <erezsh@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Feng Tang <feng.tang@linux.alibaba.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ira Weiny <ira.weiny@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 065/443] net/mlx5: HWS, num_of_rules counter on matcher should be atomic
-Date: Thu, 13 Feb 2025 15:23:50 +0100
-Message-ID: <20250213142443.128754476@linuxfoundation.org>
+Subject: [PATCH 6.13 074/443] APEI: GHES: Have GHES honor the panic= setting
+Date: Thu, 13 Feb 2025 15:23:59 +0100
+Message-ID: <20250213142443.470675041@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -54,114 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yevgeny Kliteynik <kliteyn@nvidia.com>
+From: Borislav Petkov <bp@alien8.de>
 
-[ Upstream commit 61fb92701b8ac9174857c417cfa988adc24e32c2 ]
+[ Upstream commit 5c0e00a391dd0099fe95991bb2f962848d851916 ]
 
-Rule counter in matcher's struct is used in two places:
+The GHES driver overrides the panic= setting by force-rebooting the
+system after a fatal hw error has been reported. The intent being that
+such an error would be reported earlier.
 
-1. As heuristics to decide when the number of rules have crossed a
-certain percentage threshold and the matcher should be resized.
-We don't mind here if the number will be off by 1-2 due to concurrency.
+However, this is not optimal when a hard-to-debug issue requires long
+time to reproduce and when that happens, the box will get rebooted after
+30 seconds and thus destroy the whole hw context of when the error
+happened.
 
-2. When destroying matcher, the counter value is checked and the
-user is warned if it is not 0. Here we lock all the queues, so the
-counter will be correct.
+So rip out the default GHES panic timeout and honor the global one.
 
-We don't need to always have *exact* number, but we do need this
-number to not be corrupted, which is what is happening when the
-counter isn't atomic, due to update by different threads.
+In the panic disabled (panic=0) case, the error will still be logged to
+dmesg for later inspection and if panic after a hw error is really
+required, then that can be controlled the usual way - use panic= on the
+cmdline or set it in the kernel .config's CONFIG_PANIC_TIMEOUT.
 
-Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Reviewed-by: Erez Shitrit <erezsh@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250102181415.1477316-10-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Feng Tang <feng.tang@linux.alibaba.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Feng Tang <feng.tang@linux.alibaba.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://patch.msgid.link/20250113125224.GFZ4UMiNtWIJvgpveU@fat_crate.local
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/steering/hws/bwc.c       | 17 +++++++++++------
- .../mellanox/mlx5/core/steering/hws/bwc.h       |  2 +-
- 2 files changed, 12 insertions(+), 7 deletions(-)
+ drivers/acpi/apei/ghes.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.c
-index baacf662c0ab8..ae2849cf4dd49 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.c
-@@ -152,6 +152,8 @@ mlx5hws_bwc_matcher_create(struct mlx5hws_table *table,
- 	if (!bwc_matcher)
- 		return NULL;
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index 07789f0b59bcd..b727724946556 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -173,8 +173,6 @@ static struct gen_pool *ghes_estatus_pool;
+ static struct ghes_estatus_cache __rcu *ghes_estatus_caches[GHES_ESTATUS_CACHES_SIZE];
+ static atomic_t ghes_estatus_cache_alloced;
  
-+	atomic_set(&bwc_matcher->num_of_rules, 0);
+-static int ghes_panic_timeout __read_mostly = 30;
+-
+ static void __iomem *ghes_map(u64 pfn, enum fixed_addresses fixmap_idx)
+ {
+ 	phys_addr_t paddr;
+@@ -983,14 +981,16 @@ static void __ghes_panic(struct ghes *ghes,
+ 			 struct acpi_hest_generic_status *estatus,
+ 			 u64 buf_paddr, enum fixed_addresses fixmap_idx)
+ {
++	const char *msg = GHES_PFX "Fatal hardware error";
 +
- 	/* Check if the required match params can be all matched
- 	 * in single STE, otherwise complex matcher is needed.
- 	 */
-@@ -199,10 +201,12 @@ int mlx5hws_bwc_matcher_destroy_simple(struct mlx5hws_bwc_matcher *bwc_matcher)
+ 	__ghes_print_estatus(KERN_EMERG, ghes->generic, estatus);
  
- int mlx5hws_bwc_matcher_destroy(struct mlx5hws_bwc_matcher *bwc_matcher)
- {
--	if (bwc_matcher->num_of_rules)
-+	u32 num_of_rules = atomic_read(&bwc_matcher->num_of_rules);
+ 	ghes_clear_estatus(ghes, estatus, buf_paddr, fixmap_idx);
+ 
+-	/* reboot to log the error! */
+ 	if (!panic_timeout)
+-		panic_timeout = ghes_panic_timeout;
+-	panic("Fatal hardware error!");
++		pr_emerg("%s but panic disabled\n", msg);
 +
-+	if (num_of_rules)
- 		mlx5hws_err(bwc_matcher->matcher->tbl->ctx,
- 			    "BWC matcher destroy: matcher still has %d rules\n",
--			    bwc_matcher->num_of_rules);
-+			    num_of_rules);
- 
- 	mlx5hws_bwc_matcher_destroy_simple(bwc_matcher);
- 
-@@ -309,7 +313,7 @@ static void hws_bwc_rule_list_add(struct mlx5hws_bwc_rule *bwc_rule, u16 idx)
- {
- 	struct mlx5hws_bwc_matcher *bwc_matcher = bwc_rule->bwc_matcher;
- 
--	bwc_matcher->num_of_rules++;
-+	atomic_inc(&bwc_matcher->num_of_rules);
- 	bwc_rule->bwc_queue_idx = idx;
- 	list_add(&bwc_rule->list_node, &bwc_matcher->rules[idx]);
- }
-@@ -318,7 +322,7 @@ static void hws_bwc_rule_list_remove(struct mlx5hws_bwc_rule *bwc_rule)
- {
- 	struct mlx5hws_bwc_matcher *bwc_matcher = bwc_rule->bwc_matcher;
- 
--	bwc_matcher->num_of_rules--;
-+	atomic_dec(&bwc_matcher->num_of_rules);
- 	list_del_init(&bwc_rule->list_node);
++	panic(msg);
  }
  
-@@ -704,7 +708,8 @@ hws_bwc_matcher_rehash_size(struct mlx5hws_bwc_matcher *bwc_matcher)
- 	 * Need to check again if we really need rehash.
- 	 * If the reason for rehash was size, but not any more - skip rehash.
- 	 */
--	if (!hws_bwc_matcher_rehash_size_needed(bwc_matcher, bwc_matcher->num_of_rules))
-+	if (!hws_bwc_matcher_rehash_size_needed(bwc_matcher,
-+						atomic_read(&bwc_matcher->num_of_rules)))
- 		return 0;
- 
- 	/* Now we're done all the checking - do the rehash:
-@@ -797,7 +802,7 @@ int mlx5hws_bwc_rule_create_simple(struct mlx5hws_bwc_rule *bwc_rule,
- 	}
- 
- 	/* check if number of rules require rehash */
--	num_of_rules = bwc_matcher->num_of_rules;
-+	num_of_rules = atomic_read(&bwc_matcher->num_of_rules);
- 
- 	if (unlikely(hws_bwc_matcher_rehash_size_needed(bwc_matcher, num_of_rules))) {
- 		mutex_unlock(queue_lock);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.h
-index 0b745968e21e1..655fa7a22d84f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/bwc.h
-@@ -19,7 +19,7 @@ struct mlx5hws_bwc_matcher {
- 	u8 num_of_at;
- 	u16 priority;
- 	u8 size_log;
--	u32 num_of_rules; /* atomically accessed */
-+	atomic_t num_of_rules;
- 	struct list_head *rules;
- };
- 
+ static int ghes_proc(struct ghes *ghes)
 -- 
 2.39.5
 
