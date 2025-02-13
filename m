@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860F02A1D1;
-	Thu, 13 Feb 2025 15:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA3919C54B;
+	Thu, 13 Feb 2025 15:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459126; cv=none; b=SmveMtJE8ox0OC/IWCLEMHebwrUHXeyii2TkJCtgXkRmeDE5XQWcCSDocatdL1cId4nq7ej9PPSu5dleWmF4whICW+u1TVUhK/oVbOCMLK9oCnHcggQnIUYfu1mtMiSyKUK0PEna34IuGv0YWjsLZnfX5xaTOMk3kOVf2DBtAlA=
+	t=1739459130; cv=none; b=b+l3l+DSA/wGDFK8ro3tlZXERFAG/f5T6D1iRUBw5uAXkgA8vaLWFptS4sOcDWEZUuWyk18idLmN6VvqRzM+/bwQMC+GKLPTO9yByCNJj8L3152SvX7RLh77jEgErj/7Z767lnH/kFpNm+HYyTeZi5fdZtkfJfDnORzcGbECK2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459126; c=relaxed/simple;
-	bh=ionIXGVWu3FVammF9dFoQ0lDLa2QHsjRYG40XQwOMGw=;
+	s=arc-20240116; t=1739459130; c=relaxed/simple;
+	bh=hCCfmW7D7AhzFnzTOP8M17VoeDJkfx5m9ILcNwAwA1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWA3jDWXK/cwLgTPKmOIGC2PgCItze4RgDTarb88ATYXPRJsyMfuBbTUK6vvNXo50iSxS5B3kyCScJSkceETk9A3r8+1Z2MDv7f+lm7ihhah/wMORJcXzXkall4Q1mgxP2F6c2hcsdqcub2oxvxuDv7ZjU6hpDjmVtyTFn96mAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGSeccau; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GScIkVqy7aaubqH7uXdVRbmp9E88n3VriJfgx+MjrCOYvheZ+/o8YSrGC42/VjxMkMcPKqMdrKmgrY833mGMNzbzp+QEbCMG7h5LGVoEtgOJ5AelHMRZAaCymbIIuj43+AQZGJHMvDZ57EjNSU+AdzEpa2M3YjiDHT3bTMVcDm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLOoZAp2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGSeccau"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04DA5C4CED1;
-	Thu, 13 Feb 2025 15:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLOoZAp2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A5FC4CED1;
+	Thu, 13 Feb 2025 15:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459126;
-	bh=ionIXGVWu3FVammF9dFoQ0lDLa2QHsjRYG40XQwOMGw=;
+	s=korg; t=1739459129;
+	bh=hCCfmW7D7AhzFnzTOP8M17VoeDJkfx5m9ILcNwAwA1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGSeccauuVE0Z3QCv2CMYXhm1hsUojssvTOLQRPjtoMwrteyy9SBlhe7/0Xvx3pTE
-	 LsBvwOPVpGxbgcBik2cc0RI0+I4XnXF2J8/8DsnXoeoVkEn7Lp/k6e7y7OO/XTjPA1
-	 eHCpriIr3ae8bUNsw4s42dQtoA76aErtaiofDR6g=
+	b=iLOoZAp2ZFhf6Tm0chbl7T/PITJuEyGgO8Bo2eAtTpm0IVdlpLkuWJX+4ez1U18RB
+	 pnQYUw8Ykb/9SjJpre9xYGy/LLiNfjXBNTwTv2AvG2nHilDQP4cTD6WiHoCxs3n4U2
+	 UfPNkiBL+y7lM9oiuTL1h4FG/00soRmQKCRJQW+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Jan Beulich <jbeulich@suse.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 133/443] x86/xen: fix xen_hypercall_hvm() to not clobber %rbx
-Date: Thu, 13 Feb 2025 15:24:58 +0100
-Message-ID: <20250213142445.738692761@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Michal Luczaj <mhal@rbox.co>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.13 169/443] KVM: Explicitly verify target vCPU is online in kvm_get_vcpu()
+Date: Thu, 13 Feb 2025 15:25:34 +0100
+Message-ID: <20250213142447.124485000@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,44 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 98a5cfd2320966f40fe049a9855f8787f0126825 ]
+commit 1e7381f3617d14b3c11da80ff5f8a93ab14cfc46 upstream.
 
-xen_hypercall_hvm(), which is used when running as a Xen PVH guest at
-most only once during early boot, is clobbering %rbx. Depending on
-whether the caller relies on %rbx to be preserved across the call or
-not, this clobbering might result in an early crash of the system.
+Explicitly verify the target vCPU is fully online _prior_ to clamping the
+index in kvm_get_vcpu().  If the index is "bad", the nospec clamping will
+generate '0', i.e. KVM will return vCPU0 instead of NULL.
 
-This can be avoided by using an already saved register instead of %rbx.
+In practice, the bug is unlikely to cause problems, as it will only come
+into play if userspace or the guest is buggy or misbehaving, e.g. KVM may
+send interrupts to vCPU0 instead of dropping them on the floor.
 
-Fixes: b4845bb63838 ("x86/xen: add central hypercall functions")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, returning vCPU0 when it shouldn't exist per online_vcpus is
+problematic now that KVM uses an xarray for the vCPUs array, as KVM needs
+to insert into the xarray before publishing the vCPU to userspace (see
+commit c5b077549136 ("KVM: Convert the kvm->vcpus array to a xarray")),
+i.e. before vCPU creation is guaranteed to succeed.
+
+As a result, incorrectly providing access to vCPU0 will trigger a
+use-after-free if vCPU0 is dereferenced and kvm_vm_ioctl_create_vcpu()
+bails out of vCPU creation due to an error and frees vCPU0.  Commit
+afb2acb2e3a3 ("KVM: Fix vcpu_array[0] races") papered over that issue, but
+in doing so introduced an unsolvable teardown conundrum.  Preventing
+accesses to vCPU0 before it's fully online will allow reverting commit
+afb2acb2e3a3, without re-introducing the vcpu_array[0] UAF race.
+
+Fixes: 1d487e9bf8ba ("KVM: fix spectrev1 gadgets")
+Cc: stable@vger.kernel.org
+Cc: Will Deacon <will@kernel.org>
+Cc: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Acked-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20241009150455.1057573-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/xen/xen-head.S | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/kvm_host.h |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/x86/xen/xen-head.S b/arch/x86/xen/xen-head.S
-index 9252652afe596..72f28d66e0e52 100644
---- a/arch/x86/xen/xen-head.S
-+++ b/arch/x86/xen/xen-head.S
-@@ -117,8 +117,8 @@ SYM_FUNC_START(xen_hypercall_hvm)
- 	pop %ebx
- 	pop %eax
- #else
--	lea xen_hypercall_amd(%rip), %rbx
--	cmp %rax, %rbx
-+	lea xen_hypercall_amd(%rip), %rcx
-+	cmp %rax, %rcx
- #ifdef CONFIG_FRAME_POINTER
- 	pop %rax	/* Dummy pop. */
- #endif
--- 
-2.39.5
-
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -963,6 +963,15 @@ static inline struct kvm_io_bus *kvm_get
+ static inline struct kvm_vcpu *kvm_get_vcpu(struct kvm *kvm, int i)
+ {
+ 	int num_vcpus = atomic_read(&kvm->online_vcpus);
++
++	/*
++	 * Explicitly verify the target vCPU is online, as the anti-speculation
++	 * logic only limits the CPU's ability to speculate, e.g. given a "bad"
++	 * index, clamping the index to 0 would return vCPU0, not NULL.
++	 */
++	if (i >= num_vcpus)
++		return NULL;
++
+ 	i = array_index_nospec(i, num_vcpus);
+ 
+ 	/* Pairs with smp_wmb() in kvm_vm_ioctl_create_vcpu.  */
 
 
