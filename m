@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF34E214A69;
-	Thu, 13 Feb 2025 14:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0733928382;
+	Thu, 13 Feb 2025 14:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457632; cv=none; b=hyFLfABiEliyeYXLE4OJ+3k+czNZirN8ZAjB9OGJvHEwGW+s4xBMhOWgQMmS1qqPoJlSjr1L2gQrmQJVS5GmISi5FcqlNB9DgtDiGxKsB+EDG9aDEAfw2sP3Pds8GAFb4jrETCjh7vvf1lWUGc1Az3a/Juuff31cJknIlFgXFyQ=
+	t=1739457635; cv=none; b=pTx0Fz3MuQW3uabxc4CtLIDPQKnkM/Zxo4LL6Ssg18zR8J1WmRA7K93GGMC3wKLQTxmRL1zNxH/AYKzhJZtLAUc4dNtyCj4hQqP6PVym1s4PIr3tEMsyyBUO3W8YDwH9/gFKCnBxRnAuKa6aDRKJwZkNWyl+G46Sas/z8OJLQ/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457632; c=relaxed/simple;
-	bh=TjYMXCDlchaSuZWCh53LnS+5yR4NhFMUzoPXKAaPd6I=;
+	s=arc-20240116; t=1739457635; c=relaxed/simple;
+	bh=+EXGz5H+CsVjdFbFEOz0HEi5GvTM30OHJhN7RVjJ/LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oIWGgDarfJBnx9BFxki85pSjYsysZQlD+hTP48t1ehO/63QOztgN3LEfqZjfZAphpEAMxa57oh5Nvp+C4eSTMg1gkvT+d0I5/p6adn818XezNLfja93H862THCeFVJUGaTskRS1i5fmnCzLv0M2W+hoOLoYZOpwyD7Ubry1aILI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSaTfADi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZY8Tws0dhy8+RjzMkNDEqiHA8Ae8cdDYPTHrVpOv36RI3yw5JDMVVWhofrixgE1XuxZHboLGToqWfx3ZNOMt/j+ewf0YPM5JSupW4JxXzD5wMLr0hT3iuCyMlqGq6mT+1bj3Iue2PSL0kbQnIx6L8b9TIgHPMiqWoEbxFyvqSws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQidFVx2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSaTfADi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646BAC4CED1;
-	Thu, 13 Feb 2025 14:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQidFVx2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699ABC4CED1;
+	Thu, 13 Feb 2025 14:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457631;
-	bh=TjYMXCDlchaSuZWCh53LnS+5yR4NhFMUzoPXKAaPd6I=;
+	s=korg; t=1739457634;
+	bh=+EXGz5H+CsVjdFbFEOz0HEi5GvTM30OHJhN7RVjJ/LE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSaTfADi1nBlSURdpZE08Gxw3so/xQj5opVh7MvZorCUrsCydngo+Mfy6jSOx68lb
-	 UXV5fVs54+o4wayY0h29uyhKee/TCqKh2SDrMo/I1tY8cpMoWYrOLdwfPx4eyYHX6P
-	 pRhlDujoVxWMTyls0E6pPQfXrab5pKbGC3Zp1Ylg=
+	b=PQidFVx2eUOIGmGRWoYQzRrq7S2bFkm+jWq2s+OpdBadqU2/hY3wJZ6T2Z8hHz38Y
+	 w+zB41Ng4502t+R+rv1XCJ3U5jxe/QddILQZIeN4eawEcsy9evzSqm+JsZ4XXxKvgE
+	 Wx3KiJrbvPVxwdVhenApHvIcd6Qh7Ybxl0RR7UgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Ol=C5=A1=C3=A1k?= <marek.olsak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 168/422] drm/amdgpu: add a BO metadata flag to disable write compression for Vulkan
-Date: Thu, 13 Feb 2025 15:25:17 +0100
-Message-ID: <20250213142443.027258295@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Lo-an Chen <lo-an.chen@amd.com>,
+	Paul Hsieh <paul.hsieh@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.12 169/422] drm/amd/display: Fix seamless boot sequence
+Date: Thu, 13 Feb 2025 15:25:18 +0100
+Message-ID: <20250213142443.066814436@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -44,135 +49,139 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Olšák <marek.olsak@amd.com>
+From: Lo-an Chen <lo-an.chen@amd.com>
 
-commit 2255b40cacc2e5ef1b127770fc1808c60de4a2fc upstream.
+commit e01f07cb92513ca4b9b219ab9caa34d607bc1e2d upstream.
 
-Vulkan can't support DCC and Z/S compression on GFX12 without
-WRITE_COMPRESS_DISABLE in this commit or a completely different DCC
-interface.
+[WHY]
+When the system powers up eDP with external monitors in seamless boot
+sequence, stutter get enabled before TTU and HUBP registers being
+programmed, which resulting in underflow.
 
-AMDGPU_TILING_GFX12_SCANOUT is added because it's already used by userspace.
+[HOW]
+Enable TTU in hubp_init.
+Change the sequence that do not perpare_bandwidth and optimize_bandwidth
+while having seamless boot streams.
 
-Cc: stable@vger.kernel.org # 6.12.x
-Signed-off-by: Marek Olšák <marek.olsak@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Lo-an Chen <lo-an.chen@amd.com>
+Signed-off-by: Paul Hsieh <paul.hsieh@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |    3 ++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |    8 ++++++--
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h |    2 ++
- drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c  |    5 +++--
- include/uapi/drm/amdgpu_drm.h           |    9 ++++++++-
- 5 files changed, 21 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c                   |    2 +-
+ drivers/gpu/drm/amd/display/dc/hubbub/dcn30/dcn30_hubbub.c |    3 ++-
+ drivers/gpu/drm/amd/display/dc/hubbub/dcn31/dcn31_hubbub.c |    3 ++-
+ drivers/gpu/drm/amd/display/dc/hubbub/dcn32/dcn32_hubbub.c |    3 ++-
+ drivers/gpu/drm/amd/display/dc/hubbub/dcn35/dcn35_hubbub.c |    3 ++-
+ drivers/gpu/drm/amd/display/dc/hubp/dcn30/dcn30_hubp.c     |    2 ++
+ drivers/gpu/drm/amd/display/dc/hubp/dcn32/dcn32_hubp.c     |    2 ++
+ drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c    |    3 ++-
+ 8 files changed, 15 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -118,9 +118,10 @@
-  * - 3.57.0 - Compute tunneling on GFX10+
-  * - 3.58.0 - Add GFX12 DCC support
-  * - 3.59.0 - Cleared VRAM
-+ * - 3.60.0 - Add AMDGPU_TILING_GFX12_DCC_WRITE_COMPRESS_DISABLE (Vulkan requirement)
-  */
- #define KMS_DRIVER_MAJOR	3
--#define KMS_DRIVER_MINOR	59
-+#define KMS_DRIVER_MINOR	60
- #define KMS_DRIVER_PATCHLEVEL	0
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -2032,7 +2032,7 @@ static enum dc_status dc_commit_state_no
  
- /*
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -309,7 +309,7 @@ int amdgpu_ttm_copy_mem_to_mem(struct am
- 	mutex_lock(&adev->mman.gtt_window_lock);
- 	while (src_mm.remaining) {
- 		uint64_t from, to, cur_size, tiling_flags;
--		uint32_t num_type, data_format, max_com;
-+		uint32_t num_type, data_format, max_com, write_compress_disable;
- 		struct dma_fence *next;
+ 	dc_enable_stereo(dc, context, dc_streams, context->stream_count);
  
- 		/* Never copy more than 256MiB at once to avoid a timeout */
-@@ -340,9 +340,13 @@ int amdgpu_ttm_copy_mem_to_mem(struct am
- 			max_com = AMDGPU_TILING_GET(tiling_flags, GFX12_DCC_MAX_COMPRESSED_BLOCK);
- 			num_type = AMDGPU_TILING_GET(tiling_flags, GFX12_DCC_NUMBER_TYPE);
- 			data_format = AMDGPU_TILING_GET(tiling_flags, GFX12_DCC_DATA_FORMAT);
-+			write_compress_disable =
-+				AMDGPU_TILING_GET(tiling_flags, GFX12_DCC_WRITE_COMPRESS_DISABLE);
- 			copy_flags |= (AMDGPU_COPY_FLAGS_SET(MAX_COMPRESSED, max_com) |
- 				       AMDGPU_COPY_FLAGS_SET(NUMBER_TYPE, num_type) |
--				       AMDGPU_COPY_FLAGS_SET(DATA_FORMAT, data_format));
-+				       AMDGPU_COPY_FLAGS_SET(DATA_FORMAT, data_format) |
-+				       AMDGPU_COPY_FLAGS_SET(WRITE_COMPRESS_DISABLE,
-+							     write_compress_disable));
+-	if (context->stream_count > get_seamless_boot_stream_count(context) ||
++	if (get_seamless_boot_stream_count(context) == 0 ||
+ 		context->stream_count == 0) {
+ 		/* Must wait for no flips to be pending before doing optimize bw */
+ 		hwss_wait_for_no_pipes_pending(dc, context);
+--- a/drivers/gpu/drm/amd/display/dc/hubbub/dcn30/dcn30_hubbub.c
++++ b/drivers/gpu/drm/amd/display/dc/hubbub/dcn30/dcn30_hubbub.c
+@@ -129,7 +129,8 @@ bool hubbub3_program_watermarks(
+ 	REG_UPDATE(DCHUBBUB_ARB_DF_REQ_OUTSTAND,
+ 			DCHUBBUB_ARB_MIN_REQ_OUTSTAND, 0x1FF);
+ 
+-	hubbub1_allow_self_refresh_control(hubbub, !hubbub->ctx->dc->debug.disable_stutter);
++	if (safe_to_lower || hubbub->ctx->dc->debug.disable_stutter)
++		hubbub1_allow_self_refresh_control(hubbub, !hubbub->ctx->dc->debug.disable_stutter);
+ 
+ 	return wm_pending;
+ }
+--- a/drivers/gpu/drm/amd/display/dc/hubbub/dcn31/dcn31_hubbub.c
++++ b/drivers/gpu/drm/amd/display/dc/hubbub/dcn31/dcn31_hubbub.c
+@@ -750,7 +750,8 @@ static bool hubbub31_program_watermarks(
+ 	REG_UPDATE(DCHUBBUB_ARB_DF_REQ_OUTSTAND,
+ 			DCHUBBUB_ARB_MIN_REQ_OUTSTAND, 0x1FF);*/
+ 
+-	hubbub1_allow_self_refresh_control(hubbub, !hubbub->ctx->dc->debug.disable_stutter);
++	if (safe_to_lower || hubbub->ctx->dc->debug.disable_stutter)
++		hubbub1_allow_self_refresh_control(hubbub, !hubbub->ctx->dc->debug.disable_stutter);
+ 	return wm_pending;
+ }
+ 
+--- a/drivers/gpu/drm/amd/display/dc/hubbub/dcn32/dcn32_hubbub.c
++++ b/drivers/gpu/drm/amd/display/dc/hubbub/dcn32/dcn32_hubbub.c
+@@ -786,7 +786,8 @@ static bool hubbub32_program_watermarks(
+ 	REG_UPDATE(DCHUBBUB_ARB_DF_REQ_OUTSTAND,
+ 			DCHUBBUB_ARB_MIN_REQ_OUTSTAND, 0x1FF);*/
+ 
+-	hubbub1_allow_self_refresh_control(hubbub, !hubbub->ctx->dc->debug.disable_stutter);
++	if (safe_to_lower || hubbub->ctx->dc->debug.disable_stutter)
++		hubbub1_allow_self_refresh_control(hubbub, !hubbub->ctx->dc->debug.disable_stutter);
+ 
+ 	hubbub32_force_usr_retraining_allow(hubbub, hubbub->ctx->dc->debug.force_usr_allow);
+ 
+--- a/drivers/gpu/drm/amd/display/dc/hubbub/dcn35/dcn35_hubbub.c
++++ b/drivers/gpu/drm/amd/display/dc/hubbub/dcn35/dcn35_hubbub.c
+@@ -326,7 +326,8 @@ static bool hubbub35_program_watermarks(
+ 			DCHUBBUB_ARB_MIN_REQ_OUTSTAND_COMMIT_THRESHOLD, 0xA);/*hw delta*/
+ 	REG_UPDATE(DCHUBBUB_ARB_HOSTVM_CNTL, DCHUBBUB_ARB_MAX_QOS_COMMIT_THRESHOLD, 0xF);
+ 
+-	hubbub1_allow_self_refresh_control(hubbub, !hubbub->ctx->dc->debug.disable_stutter);
++	if (safe_to_lower || hubbub->ctx->dc->debug.disable_stutter)
++		hubbub1_allow_self_refresh_control(hubbub, !hubbub->ctx->dc->debug.disable_stutter);
+ 
+ 	hubbub32_force_usr_retraining_allow(hubbub, hubbub->ctx->dc->debug.force_usr_allow);
+ 
+--- a/drivers/gpu/drm/amd/display/dc/hubp/dcn30/dcn30_hubp.c
++++ b/drivers/gpu/drm/amd/display/dc/hubp/dcn30/dcn30_hubp.c
+@@ -484,6 +484,8 @@ void hubp3_init(struct hubp *hubp)
+ 	//hubp[i].HUBPREQ_DEBUG.HUBPREQ_DEBUG[26] = 1;
+ 	REG_WRITE(HUBPREQ_DEBUG, 1 << 26);
+ 
++	REG_UPDATE(DCHUBP_CNTL, HUBP_TTU_DISABLE, 0);
++
+ 	hubp_reset(hubp);
+ }
+ 
+--- a/drivers/gpu/drm/amd/display/dc/hubp/dcn32/dcn32_hubp.c
++++ b/drivers/gpu/drm/amd/display/dc/hubp/dcn32/dcn32_hubp.c
+@@ -168,6 +168,8 @@ void hubp32_init(struct hubp *hubp)
+ {
+ 	struct dcn20_hubp *hubp2 = TO_DCN20_HUBP(hubp);
+ 	REG_WRITE(HUBPREQ_DEBUG_DB, 1 << 8);
++
++	REG_UPDATE(DCHUBP_CNTL, HUBP_TTU_DISABLE, 0);
+ }
+ static struct hubp_funcs dcn32_hubp_funcs = {
+ 	.hubp_enable_tripleBuffer = hubp2_enable_triplebuffer,
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c
+@@ -236,7 +236,8 @@ void dcn35_init_hw(struct dc *dc)
  		}
  
- 		r = amdgpu_copy_buffer(ring, from, to, cur_size, resv,
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
-@@ -118,6 +118,8 @@ struct amdgpu_copy_mem {
- #define AMDGPU_COPY_FLAGS_NUMBER_TYPE_MASK		0x07
- #define AMDGPU_COPY_FLAGS_DATA_FORMAT_SHIFT		8
- #define AMDGPU_COPY_FLAGS_DATA_FORMAT_MASK		0x3f
-+#define AMDGPU_COPY_FLAGS_WRITE_COMPRESS_DISABLE_SHIFT	14
-+#define AMDGPU_COPY_FLAGS_WRITE_COMPRESS_DISABLE_MASK	0x1
- 
- #define AMDGPU_COPY_FLAGS_SET(field, value) \
- 	(((__u32)(value) & AMDGPU_COPY_FLAGS_##field##_MASK) << AMDGPU_COPY_FLAGS_##field##_SHIFT)
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c
-@@ -1688,11 +1688,12 @@ static void sdma_v7_0_emit_copy_buffer(s
- 				       uint32_t byte_count,
- 				       uint32_t copy_flags)
- {
--	uint32_t num_type, data_format, max_com;
-+	uint32_t num_type, data_format, max_com, write_cm;
- 
- 	max_com = AMDGPU_COPY_FLAGS_GET(copy_flags, MAX_COMPRESSED);
- 	data_format = AMDGPU_COPY_FLAGS_GET(copy_flags, DATA_FORMAT);
- 	num_type = AMDGPU_COPY_FLAGS_GET(copy_flags, NUMBER_TYPE);
-+	write_cm = AMDGPU_COPY_FLAGS_GET(copy_flags, WRITE_COMPRESS_DISABLE) ? 2 : 1;
- 
- 	ib->ptr[ib->length_dw++] = SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_COPY) |
- 		SDMA_PKT_COPY_LINEAR_HEADER_SUB_OP(SDMA_SUBOP_COPY_LINEAR) |
-@@ -1709,7 +1710,7 @@ static void sdma_v7_0_emit_copy_buffer(s
- 	if ((copy_flags & (AMDGPU_COPY_FLAGS_READ_DECOMPRESSED | AMDGPU_COPY_FLAGS_WRITE_COMPRESSED)))
- 		ib->ptr[ib->length_dw++] = SDMA_DCC_DATA_FORMAT(data_format) | SDMA_DCC_NUM_TYPE(num_type) |
- 			((copy_flags & AMDGPU_COPY_FLAGS_READ_DECOMPRESSED) ? SDMA_DCC_READ_CM(2) : 0) |
--			((copy_flags & AMDGPU_COPY_FLAGS_WRITE_COMPRESSED) ? SDMA_DCC_WRITE_CM(1) : 0) |
-+			((copy_flags & AMDGPU_COPY_FLAGS_WRITE_COMPRESSED) ? SDMA_DCC_WRITE_CM(write_cm) : 0) |
- 			SDMA_DCC_MAX_COM(max_com) | SDMA_DCC_MAX_UCOM(1);
- 	else
- 		ib->ptr[ib->length_dw++] = 0;
---- a/include/uapi/drm/amdgpu_drm.h
-+++ b/include/uapi/drm/amdgpu_drm.h
-@@ -411,13 +411,20 @@ struct drm_amdgpu_gem_userptr {
- /* GFX12 and later: */
- #define AMDGPU_TILING_GFX12_SWIZZLE_MODE_SHIFT			0
- #define AMDGPU_TILING_GFX12_SWIZZLE_MODE_MASK			0x7
--/* These are DCC recompression setting for memory management: */
-+/* These are DCC recompression settings for memory management: */
- #define AMDGPU_TILING_GFX12_DCC_MAX_COMPRESSED_BLOCK_SHIFT	3
- #define AMDGPU_TILING_GFX12_DCC_MAX_COMPRESSED_BLOCK_MASK	0x3 /* 0:64B, 1:128B, 2:256B */
- #define AMDGPU_TILING_GFX12_DCC_NUMBER_TYPE_SHIFT		5
- #define AMDGPU_TILING_GFX12_DCC_NUMBER_TYPE_MASK		0x7 /* CB_COLOR0_INFO.NUMBER_TYPE */
- #define AMDGPU_TILING_GFX12_DCC_DATA_FORMAT_SHIFT		8
- #define AMDGPU_TILING_GFX12_DCC_DATA_FORMAT_MASK		0x3f /* [0:4]:CB_COLOR0_INFO.FORMAT, [5]:MM */
-+/* When clearing the buffer or moving it from VRAM to GTT, don't compress and set DCC metadata
-+ * to uncompressed. Set when parts of an allocation bypass DCC and read raw data. */
-+#define AMDGPU_TILING_GFX12_DCC_WRITE_COMPRESS_DISABLE_SHIFT	14
-+#define AMDGPU_TILING_GFX12_DCC_WRITE_COMPRESS_DISABLE_MASK	0x1
-+/* bit gap */
-+#define AMDGPU_TILING_GFX12_SCANOUT_SHIFT			63
-+#define AMDGPU_TILING_GFX12_SCANOUT_MASK			0x1
- 
- /* Set/Get helpers for tiling flags. */
- #define AMDGPU_TILING_SET(field, value) \
+ 		hws->funcs.init_pipes(dc, dc->current_state);
+-		if (dc->res_pool->hubbub->funcs->allow_self_refresh_control)
++		if (dc->res_pool->hubbub->funcs->allow_self_refresh_control &&
++			!dc->res_pool->hubbub->ctx->dc->debug.disable_stutter)
+ 			dc->res_pool->hubbub->funcs->allow_self_refresh_control(dc->res_pool->hubbub,
+ 					!dc->res_pool->hubbub->ctx->dc->debug.disable_stutter);
+ 	}
 
 
