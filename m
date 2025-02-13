@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B04A26B096;
-	Thu, 13 Feb 2025 15:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AE826B098;
+	Thu, 13 Feb 2025 15:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460725; cv=none; b=lx8y+9dX0yWu9rW88LPUen0yHqarr+oLf6cvHOE/lfSGPUdftdC/yIj0noH5mF1eTwOcQxo0pC1g187om8M7YBKSf1lLzWL3Og7RBjwPTiFA1YNg9rzeSEpxaIuckD2El6hZOoJoAFRjTzsWBKEXO2p3WMJbGCVBOdlWC2PWDdo=
+	t=1739460728; cv=none; b=J8YfkvOKNMYvaZruy/ciSyuJQlUdUHKwKfUTnlchD0rxWj6NffS5JqL35Y2R4Dxkm5AvnWEhe/oNdqFCTB4AfoF3v79yJERZ7y9v6RGDfUG/NtH3UroKKB1P94FWoTUGCZIUiekEVp6V8AA0AvPjez8wXIjKsy325Qxi7FRrEa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460725; c=relaxed/simple;
-	bh=s5ecC1YQmFXSTXrRAT/DUGg8Ec0+bvV6+kzD7NAHH68=;
+	s=arc-20240116; t=1739460728; c=relaxed/simple;
+	bh=hvmDQ8GRe/D6DqqaZBuxtdnCaxJxRNN3SLbGJRk3mmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YkkmX31Nfe+jrsluVJ6jiAkHW08XQvvJyEfbSAbgp+hf+Oqi5IKgwp/ImidzTWJvDHa0B29ABkVluhqzjL40B9ia+6w3f+vMcGKrGCTxc7QDehJzH2dCmi7W5v/iys4gx9mxXO6Jov9sLylxFoTfeTC4SH+r5hYB+qSDbC4n0Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FoffpYk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xl9jj2hI7WGdDM54k4zZHf/Y3lsiTemqkcW7afwIfZuhBGY00q1BrgowGojlxL+pI6GRoS7JChqK0VkcPHFcR5oflU1JgrBsUUjNm15Gjr7u/H39IyaZwNMoNy/89GAefnrf6ta4BOJmatmkL3yDeIlvtqmiRmAPFIES7PVI2tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBX2gzv5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FoffpYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A181C4CED1;
-	Thu, 13 Feb 2025 15:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBX2gzv5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F69C4CED1;
+	Thu, 13 Feb 2025 15:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460725;
-	bh=s5ecC1YQmFXSTXrRAT/DUGg8Ec0+bvV6+kzD7NAHH68=;
+	s=korg; t=1739460728;
+	bh=hvmDQ8GRe/D6DqqaZBuxtdnCaxJxRNN3SLbGJRk3mmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1FoffpYkoAnIxU/ll/qsWtF1+5KDfy56CFuSSoMEHFMNEccXqknqdtdYEfpw8Sanr
-	 /PJaQVOLMMDYX6hUms1nyYS6lHDDFSmIsvnOv7PJ/ytpgBA9fN2pzinWNWxHAgHQ3U
-	 yT4I7HHUGChB788k1bS0czjOAu0JqEZ1yn2Bc3xc=
+	b=LBX2gzv5oGHVIbw1pWV2wIIFbObAtXYfs9N316Q9/g0YilXebBOznTPVnNatYpPAQ
+	 kszNK3stgeOQupy1BlfbC+UDknBdtJV7e0/c3WJF+hf5ThmO83vwPgSDcV+ntAox9E
+	 TnLtp4MqWppWJqPVvj6DtJ0u7jcMO1hf5IgDdn54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.6 194/273] xfs: Add error handling for xfs_reflink_cancel_cow_range
-Date: Thu, 13 Feb 2025 15:29:26 +0100
-Message-ID: <20250213142414.991511182@linuxfoundation.org>
+	Aubrey Li <aubrey.li@linux.intel.com>,
+	Koba Ko <kobak@nvidia.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Shi Liu <aurelianliu@tencent.com>
+Subject: [PATCH 6.6 195/273] ACPI: PRM: Remove unnecessary strict handler address checks
+Date: Thu, 13 Feb 2025 15:29:27 +0100
+Message-ID: <20250213142415.031840218@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -51,42 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Aubrey Li <aubrey.li@linux.intel.com>
 
-commit 26b63bee2f6e711c5a169997fd126fddcfb90848 upstream.
+commit 7f5704b6a143b8eca640cba820968e798d065e91 upstream.
 
-In xfs_inactive(), xfs_reflink_cancel_cow_range() is called
-without error handling, risking unnoticed failures and
-inconsistent behavior compared to other parts of the code.
+Commit 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM
+handler and context") added unnecessary strict handler address checks,
+causing the PRM module to fail in translating memory error addresses.
 
-Fix this issue by adding an error handling for the
-xfs_reflink_cancel_cow_range(), improving code robustness.
+Both static data buffer address and ACPI parameter buffer address may
+be NULL if they are not needed, as described in section 4.1.2 PRM Handler
+Information Structure of Platform Runtime Mechanism specification [1].
 
-Fixes: 6231848c3aa5 ("xfs: check for cow blocks before trying to clear them")
-Cc: stable@vger.kernel.org # v4.17
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Here are two examples from real hardware:
+
+----PRMT.dsl----
+
+- staic data address is not used
+[10Ch 0268   2]                     Revision : 0000
+[10Eh 0270   2]                       Length : 002C
+[110h 0272  16]                 Handler GUID : F6A58D47-E04F-4F5A-86B8-2A50D4AA109B
+[120h 0288   8]              Handler address : 0000000065CE51F4
+[128h 0296   8]           Satic Data Address : 0000000000000000
+[130h 0304   8]       ACPI Parameter Address : 000000006522A718
+
+- ACPI parameter address is not used
+[1B0h 0432   2]                     Revision : 0000
+[1B2h 0434   2]                       Length : 002C
+[1B4h 0436  16]                 Handler GUID : 657E8AE6-A8FC-4877-BB28-42E7DE1899A5
+[1C4h 0452   8]              Handler address : 0000000065C567C8
+[1CCh 0460   8]           Satic Data Address : 000000006113FB98
+[1D4h 0468   8]       ACPI Parameter Address : 0000000000000000
+
+Fixes: 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM handler and context")
+Reported-and-tested-by: Shi Liu <aurelianliu@tencent.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Aubrey Li <aubrey.li@linux.intel.com>
+Link: https://uefi.org/sites/default/files/resources/Platform%20Runtime%20Mechanism%20-%20with%20legal%20notice.pdf # [1]
+Reviewed-by: Koba Ko <kobak@nvidia.com>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://patch.msgid.link/20250126022250.3014210-1-aubrey.li@linux.intel.com
+[ rjw: Minor changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_inode.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/acpi/prmt.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -1738,8 +1738,11 @@ xfs_inactive(
- 		goto out;
+--- a/drivers/acpi/prmt.c
++++ b/drivers/acpi/prmt.c
+@@ -263,9 +263,7 @@ static acpi_status acpi_platformrt_space
+ 		if (!handler || !module)
+ 			goto invalid_guid;
  
- 	/* Try to clean out the cow blocks if there are any. */
--	if (xfs_inode_has_cow_data(ip))
--		xfs_reflink_cancel_cow_range(ip, 0, NULLFILEOFF, true);
-+	if (xfs_inode_has_cow_data(ip)) {
-+		error = xfs_reflink_cancel_cow_range(ip, 0, NULLFILEOFF, true);
-+		if (error)
-+			goto out;
-+	}
- 
- 	if (VFS_I(ip)->i_nlink != 0) {
- 		/*
+-		if (!handler->handler_addr ||
+-		    !handler->static_data_buffer_addr ||
+-		    !handler->acpi_param_buffer_addr) {
++		if (!handler->handler_addr) {
+ 			buffer->prm_status = PRM_HANDLER_ERROR;
+ 			return AE_OK;
+ 		}
 
 
