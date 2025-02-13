@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCCA1865EE;
-	Thu, 13 Feb 2025 15:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839361946C7;
+	Thu, 13 Feb 2025 15:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460404; cv=none; b=HNUrSJcPO/mCTVK1sGYW7og6OQoa6GHy2583F4YsUs4Nrf/3jf8kBj2zUDaffVAPIN9oYTzmaZgydNkeaJCnAXLZTSDtbHuwQgPNgK5x8v3pfQSQ+u5v2WeeyBucj6b4ovrfJZ/E94kKOWSz170q5xGQt5jj7CAtFj4YY6wVnC4=
+	t=1739460407; cv=none; b=Rq5971z1UVS+jbwjmJqs3177KuqnCRlzGpXfCt+WWK4u2ngl9riSvIUUCkpXaOR9uiAYbaAB3EMrnyi/+WB6ZJG4JeBziBYc1O9Pz7iVjler7mtjnZuriLVL2tMykR3V2c8mn/NDvx6aDs5O43dG/e2vxZaj6/YWhbrThkrDHpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460404; c=relaxed/simple;
-	bh=3YRkrpJZWl31gce+76ONQZ+dY7mmJqqV3kFrGUl1mkE=;
+	s=arc-20240116; t=1739460407; c=relaxed/simple;
+	bh=1ZeQak/eAiLDVtZ/kCix3cPh6gbju3t8v5DfFmP66eA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uqxOsVdW5/F44n34rvXmdy2bUp+k7z56LBhKh/hLxz8Gxny4lB/M/KXdA8WZanzp7vMqZn6vvMh1vrKr5gvCIJH56g5dhU4HDGnvH7ccZdxT678HOS/WoGUCOA0yGFzLAan9mILMRO+1tjPOvrug9BzuSU7nvO6g6IOofxnnFWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZLbOyH4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eNEIUfsEyGB/7tzQQKEHNhsNSsDLyn/HqeruL4/qPU+qDy/x7fIBRMJ8+/xaaraiHLK1dxLsD3GLPQC2hqjUx8hUiCzhMRZjXFFDLeu+HEfYhty3nQ+9X7z1ooC16Y1suO9QBZgO+bHFh8G17r29cS8tO+MKZnRkViOBr00EtWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIBqIbjt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZLbOyH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EBEC4CED1;
-	Thu, 13 Feb 2025 15:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIBqIbjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F8FC4CED1;
+	Thu, 13 Feb 2025 15:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460404;
-	bh=3YRkrpJZWl31gce+76ONQZ+dY7mmJqqV3kFrGUl1mkE=;
+	s=korg; t=1739460407;
+	bh=1ZeQak/eAiLDVtZ/kCix3cPh6gbju3t8v5DfFmP66eA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IZLbOyH4lWhltANMtZ8BkKeeyCGc5f1AKLcip50/AZnsWLaAPMpO4gr4KRzZXbQjS
-	 30pLIidVFXKvEDDWOUISo/zYNYoDiyXiJlV7enOVOndBj0IgmpxIDLTuYDOM+EqB3m
-	 n0JdUkLEPZn8IdHnOyHPsIOwCsznQWG2Kp79plXk=
+	b=bIBqIbjt5vEdISM6nHvFhEoS5bEB4VHKJQSraaQ8rzfKwDFSKmdP8qVyqAd3lbisA
+	 fQbwuZc8387sgebM2tUqgoimNpAv3qwyL796s0FGA+B+2YGr/nGY8ev1KzUiJ1drgN
+	 ygIR5M+/Y098BkGkqIcNcWXS0M8d9IoDt2l7rC5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Jacob Moroni <mail@jakemoroni.com>,
+	Igor Russkikh <irusskikh@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/273] gpio: pca953x: Improve interrupt support
-Date: Thu, 13 Feb 2025 15:27:23 +0100
-Message-ID: <20250213142410.158024957@linuxfoundation.org>
+Subject: [PATCH 6.6 072/273] net: atlantic: fix warning during hot unplug
+Date: Thu, 13 Feb 2025 15:27:24 +0100
+Message-ID: <20250213142410.196423425@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -52,66 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+From: Jacob Moroni <mail@jakemoroni.com>
 
-[ Upstream commit d6179f6c6204f9932aed3a7a2100b4a295dfed9d ]
+[ Upstream commit 028676bb189ed6d1b550a0fc570a9d695b6acfd3 ]
 
-The GPIO drivers with latch interrupt support (typically types starting
-with PCAL) have interrupt status registers to determine which particular
-inputs have caused an interrupt. Unfortunately there is no atomic
-operation to read these registers and clear the interrupt. Clearing the
-interrupt is done by reading the input registers.
+Firmware deinitialization performs MMIO accesses which are not
+necessary if the device has already been removed. In some cases,
+these accesses happen via readx_poll_timeout_atomic which ends up
+timing out, resulting in a warning at hw_atl2_utils_fw.c:112:
 
-The code was reading the interrupt status registers, and then reading
-the input registers. If an input changed between these two events it was
-lost.
+[  104.595913] Call Trace:
+[  104.595915]  <TASK>
+[  104.595918]  ? show_regs+0x6c/0x80
+[  104.595923]  ? __warn+0x8d/0x150
+[  104.595925]  ? aq_a2_fw_deinit+0xcf/0xe0 [atlantic]
+[  104.595934]  ? report_bug+0x182/0x1b0
+[  104.595938]  ? handle_bug+0x6e/0xb0
+[  104.595940]  ? exc_invalid_op+0x18/0x80
+[  104.595942]  ? asm_exc_invalid_op+0x1b/0x20
+[  104.595944]  ? aq_a2_fw_deinit+0xcf/0xe0 [atlantic]
+[  104.595952]  ? aq_a2_fw_deinit+0xcf/0xe0 [atlantic]
+[  104.595959]  aq_nic_deinit.part.0+0xbd/0xf0 [atlantic]
+[  104.595964]  aq_nic_deinit+0x17/0x30 [atlantic]
+[  104.595970]  aq_ndev_close+0x2b/0x40 [atlantic]
+[  104.595975]  __dev_close_many+0xad/0x160
+[  104.595978]  dev_close_many+0x99/0x170
+[  104.595979]  unregister_netdevice_many_notify+0x18b/0xb20
+[  104.595981]  ? __call_rcu_common+0xcd/0x700
+[  104.595984]  unregister_netdevice_queue+0xc6/0x110
+[  104.595986]  unregister_netdev+0x1c/0x30
+[  104.595988]  aq_pci_remove+0xb1/0xc0 [atlantic]
 
-The solution in this patch is to revert to the non-latch version of
-code, i.e. remembering the previous input status, and looking for the
-changes. This system results in no more I2C transfers, so is no slower.
-The latch property of the device still means interrupts will still be
-noticed if the input changes back to its initial state.
+Fix this by skipping firmware deinitialization altogether if the
+PCI device is no longer present.
 
-Fixes: 44896beae605 ("gpio: pca953x: add PCAL9535 interrupt support for Galileo Gen2")
-Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240606033102.2271916-1-mark.tomlinson@alliedtelesis.co.nz
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Tested with an AQC113 attached via Thunderbolt by performing
+repeated unplug cycles while traffic was running via iperf.
+
+Fixes: 97bde5c4f909 ("net: ethernet: aquantia: Support for NIC-specific code")
+Signed-off-by: Jacob Moroni <mail@jakemoroni.com>
+Reviewed-by: Igor Russkikh <irusskikh@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250203143604.24930-3-mail@jakemoroni.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pca953x.c | 19 -------------------
- 1 file changed, 19 deletions(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_nic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index 9c33f9da724cf..b882b26ab5007 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -847,25 +847,6 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
- 	DECLARE_BITMAP(trigger, MAX_LINE);
- 	int ret;
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_nic.c b/drivers/net/ethernet/aquantia/atlantic/aq_nic.c
+index d6d6d5d37ff3e..c9b0d57696a48 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_nic.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_nic.c
+@@ -1441,7 +1441,9 @@ void aq_nic_deinit(struct aq_nic_s *self, bool link_down)
+ 	aq_ptp_ring_free(self);
+ 	aq_ptp_free(self);
  
--	if (chip->driver_data & PCA_PCAL) {
--		/* Read the current interrupt status from the device */
--		ret = pca953x_read_regs(chip, PCAL953X_INT_STAT, trigger);
--		if (ret)
--			return false;
--
--		/* Check latched inputs and clear interrupt status */
--		ret = pca953x_read_regs(chip, chip->regs->input, cur_stat);
--		if (ret)
--			return false;
--
--		/* Apply filter for rising/falling edge selection */
--		bitmap_replace(new_stat, chip->irq_trig_fall, chip->irq_trig_raise, cur_stat, gc->ngpio);
--
--		bitmap_and(pending, new_stat, trigger, gc->ngpio);
--
--		return !bitmap_empty(pending, gc->ngpio);
--	}
--
- 	ret = pca953x_read_regs(chip, chip->regs->input, cur_stat);
- 	if (ret)
- 		return false;
+-	if (likely(self->aq_fw_ops->deinit) && link_down) {
++	/* May be invoked during hot unplug. */
++	if (pci_device_is_present(self->pdev) &&
++	    likely(self->aq_fw_ops->deinit) && link_down) {
+ 		mutex_lock(&self->fwreq_mutex);
+ 		self->aq_fw_ops->deinit(self->aq_hw);
+ 		mutex_unlock(&self->fwreq_mutex);
 -- 
 2.39.5
 
