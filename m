@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E3C14A605;
-	Thu, 13 Feb 2025 15:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D687C70805;
+	Thu, 13 Feb 2025 15:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460839; cv=none; b=jBY04aFWoIjqIPtv1Rx6goGedFTCA47XERuh97ojZrsv6H5xnGrFhqjC/BcWj6fCi/S+sgIKru7AlTUfweB5UoS0RxUW6osxNdh616v2umjSD/7Knx14Pb0eo8NLfAhE9Tr6HXlM/ZObR+iw57inen52WkOFM0bnAchx1BeeyZ0=
+	t=1739460842; cv=none; b=QeagFVbIyoAj2ZrNdexYdtevmy+0zF22R/+CKvcUTcTBYqrD8mc5e63a2mX2uBHBs8OpEVZa1BdFn9rOLFTteCNIjSUXVfoV7dnltQTIjvLntgDZfBkONQP5XGEDOTLN6jAQb+b1YOd3Fp754MjihY19lvoZtupXqK8YUF8LQwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460839; c=relaxed/simple;
-	bh=48c8XAZlb8wntmlib++b9/qsp+R2SMW5yp5cESQgouo=;
+	s=arc-20240116; t=1739460842; c=relaxed/simple;
+	bh=oQvTLn5xl6+vuoTViIrr5+nvhZCArB2XC3V7cQOcXGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CL9miC6mFKqcMOIjLiIorbnZKYy3vGtgSrCklwZ51Cet75mPG790ij9TERlEDkbwCL8SeYWmxP9rkwTyWHJafF4/0lAkTkPv8HWE+8bJYqr9qK8Csarm13ovDMi4GPMV3xgON8cp1V9vKrRtA5wcoFzEXmoL3uOayESCsoUqFZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQYnPOL9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R9UJeAeCOCTXvFTHw/uFQ1eb8QvNPuDYGr/SekaTA1o6oRt7+sg+hVHAW4I3eapDjIYoB7Sq1BBGRI81S7e967sxVuzl5ztupPgkYUz8hPnLiF2v3OvHDmCgHArzGMstpj1hjBRie3EfyI/OBKSWq7h86ajbftmjwkSCzK9/OdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHp3cK0h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQYnPOL9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48E3C4CED1;
-	Thu, 13 Feb 2025 15:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHp3cK0h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25BE2C4CED1;
+	Thu, 13 Feb 2025 15:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460839;
-	bh=48c8XAZlb8wntmlib++b9/qsp+R2SMW5yp5cESQgouo=;
+	s=korg; t=1739460842;
+	bh=oQvTLn5xl6+vuoTViIrr5+nvhZCArB2XC3V7cQOcXGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bQYnPOL9E+wnKca0moMNOYOm4c2I23de8CP3WUU2tFhb8pDuCLngg3YYEKQxrhODr
-	 QGO9tUP5Pz6KDuj/jNreB2Yp57oBsZwvUc9rTR3PafwNvu1ifCGtpMvzJJKuqRkl7D
-	 nLx0CroiS0mQ6DA8Vc2oIBSJKI+Sc10MBMm5zcn8=
+	b=hHp3cK0hfkNzEiidcYK9msHkA9jFYmR4+ixaGqKPD4dDdNV09ClqUzxkoeZnE7o6F
+	 UQTTX+Ik14HHQnksujb6vL6uTcxA9jD50nBwaR3I5u8eX/3krovEGDWM/1JcEoOR/t
+	 r8HwYqUpW9CBD5giZ3Q444J5EBXg1jMIxthCObRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Galas <ssgalas@cloud.ru>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 227/273] io_uring/net: dont retry connect operation on EPOLLERR
-Date: Thu, 13 Feb 2025 15:29:59 +0100
-Message-ID: <20250213142416.283783356@linuxfoundation.org>
+	Muhammad Ramdhan <ramdhan@starlabs.sg>,
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
+	Jacob Soo <jacob.soo@starlabs.sg>,
+	Pavel Begunkov <asml.silence@gmail.com>
+Subject: [PATCH 6.6 228/273] io_uring: fix io_req_prep_async with provided buffers
+Date: Thu, 13 Feb 2025 15:30:00 +0100
+Message-ID: <20250213142416.442489926@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -50,55 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 8c8492ca64e79c6e0f433e8c9d2bcbd039ef83d0 upstream.
+io_req_prep_async() can import provided buffers, commit the ring state
+by giving up on that before, it'll be reimported later if needed.
 
-If a socket is shutdown before the connection completes, POLLERR is set
-in the poll mask. However, connect ignores this as it doesn't know, and
-attempts the connection again. This may lead to a bogus -ETIMEDOUT
-result, where it should have noticed the POLLERR and just returned
--ECONNRESET instead.
-
-Have the poll logic check for whether or not POLLERR is set in the mask,
-and if so, mark the request as failed. Then connect can appropriately
-fail the request rather than retry it.
-
-Reported-by: Sergey Galas <ssgalas@cloud.ru>
-Cc: stable@vger.kernel.org
-Link: https://github.com/axboe/liburing/discussions/1335
-Fixes: 3fb1bd688172 ("io_uring/net: handle -EINPROGRESS correct for IORING_OP_CONNECT")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: Muhammad Ramdhan <ramdhan@starlabs.sg>
+Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Reported-by: Jacob Soo <jacob.soo@starlabs.sg>
+Fixes: c7fb19428d67d ("io_uring: add support for ring mapped supplied buffers")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c  |    5 +++++
- io_uring/poll.c |    2 ++
- 2 files changed, 7 insertions(+)
+ io_uring/io_uring.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1533,6 +1533,11 @@ int io_connect(struct io_kiocb *req, uns
- 		io = &__io;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1779,6 +1779,7 @@ int io_req_prep_async(struct io_kiocb *r
+ {
+ 	const struct io_cold_def *cdef = &io_cold_defs[req->opcode];
+ 	const struct io_issue_def *def = &io_issue_defs[req->opcode];
++	int ret;
+ 
+ 	/* assign early for deferred execution for non-fixed file */
+ 	if (def->needs_file && !(req->flags & REQ_F_FIXED_FILE) && !req->file)
+@@ -1791,7 +1792,9 @@ int io_req_prep_async(struct io_kiocb *r
+ 		if (io_alloc_async_data(req))
+ 			return -EAGAIN;
  	}
+-	return cdef->prep_async(req);
++	ret = cdef->prep_async(req);
++	io_kbuf_recycle(req, 0);
++	return ret;
+ }
  
-+	if (unlikely(req->flags & REQ_F_FAIL)) {
-+		ret = -ECONNRESET;
-+		goto out;
-+	}
-+
- 	file_flags = force_nonblock ? O_NONBLOCK : 0;
- 
- 	ret = __sys_connect_file(req->file, &io->address,
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -308,6 +308,8 @@ static int io_poll_check_events(struct i
- 				return IOU_POLL_REISSUE;
- 			}
- 		}
-+		if (unlikely(req->cqe.res & EPOLLERR))
-+			req_set_fail(req);
- 		if (req->apoll_events & EPOLLONESHOT)
- 			return IOU_POLL_DONE;
- 
+ static u32 io_get_sequence(struct io_kiocb *req)
 
 
