@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC8826B0B4;
-	Thu, 13 Feb 2025 15:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE5926B087;
+	Thu, 13 Feb 2025 15:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460535; cv=none; b=FZ00cw4c/7jnoeEgbHZw9Rh0GVhDsUTAhXxevp4pNBAQ/mLquLBkaHTuV8G4Sz0y2Tcf6R7gce8mkqYeEfgloWGmsAdgPS3oYIMxlUjuQcOz4eRDvXruASiojq1eVFzGeqt206Z4ralQ/O64aiSmwpflKCPEegYozvbROljbKkM=
+	t=1739460538; cv=none; b=W3qTqz1RyqvTLf9NPa7gggtFu+5wd1WxdQ3m46+ZhOe7FAO7mCUNQaun8ZvoCK3w0WCKJ8SXxN3aXEAhy3Jyz1TN5uskYlkxMtFQ3+D0pNhW7S0LO3Ra0WJvwBo6/DrGS45xdEKVsz7emNTIrvrX5eYDriw+IIjnYszInKp6eZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460535; c=relaxed/simple;
-	bh=kBWIR4mNqO7Sdod9ycIztTpih/Tut5jcjZF+Djlwf10=;
+	s=arc-20240116; t=1739460538; c=relaxed/simple;
+	bh=E9yBQrpaG7eZqL0D8ZLTTudCntzY1V5ZspNvj/Rc55o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vl2q9/zjwLJ4r5oCF0rRkPB3wL8xBiRT02nZ+4KnIEQ9tV7kqd40bqeOFel/Y5fumnXvZ+ZsHfJOxZE0TaLizliQYhyMG6D33Jnyh0BS/LpATiBn+1dAfuR/tttcKTS21PKSfSjum4LzpShz65TN49XItYLr9mft4+zNUq8ob7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/lJIt+z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZA0aJy444a8T9i15ilvHFsHb0ByaJv+Xg54s+o3OfatW3h30q6VGzuLzk8+6ryhWRChsxD+hOUzwQoDc7FAEjisSNAzrLClU0iU6Lb4R04JTjhIWMNLk1qfdoca3OdjqDez6/k6Ku2eH+AfB+Vd3Kzac1eAWGJ6COkJe2A6ewB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmPBkSNJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/lJIt+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52125C4CED1;
-	Thu, 13 Feb 2025 15:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmPBkSNJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE646C4CEE4;
+	Thu, 13 Feb 2025 15:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460534;
-	bh=kBWIR4mNqO7Sdod9ycIztTpih/Tut5jcjZF+Djlwf10=;
+	s=korg; t=1739460538;
+	bh=E9yBQrpaG7eZqL0D8ZLTTudCntzY1V5ZspNvj/Rc55o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O/lJIt+zdX94WFNocuwpzTe/t6FnbNEwNvf0e+L81Wv2ZTygPeEoiX81kDhdgAAAF
-	 G8GY/dhit/7vE5rEjv5g8WbogAbOsq24w/Mgcek5/kxoPc6hW4O21TapwlYIEwMmEG
-	 94HijIF0Kq3Z2ZEpLCvynOYu3pa2vNK3jkGEp8XY=
+	b=cmPBkSNJh5jSdY0nnlKdUk0ZZZwCzxb7u/IHympIBWkszwMbLBCf0z/dmku5NIIIp
+	 MukYHgNZylCc8ZEQGqfwe0/7Jsqa9wKj6KextARDROfmqsNM+XnXCEffUjlr64tDpm
+	 n2RrDhyGVt+6NmZjCBHh/PVFqogcuKhJ6/3Br2XU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jai Luthra <jai.luthra@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.6 107/273] media: i2c: ds90ub960: Fix UB9702 refclk register access
-Date: Thu, 13 Feb 2025 15:27:59 +0100
-Message-ID: <20250213142411.575319602@linuxfoundation.org>
+	Prike Liang <Prike.Liang@amd.com>,
+	Jonathan Kim <jonathan.kim@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 098/273] drm/amdkfd: only flush the validate MES contex
+Date: Thu, 13 Feb 2025 15:27:50 +0100
+Message-ID: <20250213142411.216876739@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -52,49 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Prike Liang <Prike.Liang@amd.com>
 
-commit ba3bdb93947c90f098061de1fb2458e2ca040093 upstream.
+commit 9078a5bfa21e78ae68b6d7c365d1b92f26720c55 upstream.
 
-UB9702 has the refclk freq register at a different offset than UB960,
-but the code uses the UB960's offset for both chips. Fix this.
+The following page fault was observed duringthe KFD process release.
+In this particular error case, the HIP test (./MemcpyPerformance -h)
+does not require the queue. As a result, the process_context_addr was
+not assigned when the KFD process was released, ultimately leading to
+this page fault during the execution of the function
+kfd_process_dequeue_from_all_devices().
 
-The refclk freq is only used for a debug print, so there's no functional
-change here.
+[345962.294891] amdgpu 0000:03:00.0: amdgpu: [gfxhub] page fault (src_id:0 ring:153 vmid:0 pasid:0)
+[345962.295333] amdgpu 0000:03:00.0: amdgpu:   in page starting at address 0x0000000000000000 from client 10
+[345962.295775] amdgpu 0000:03:00.0: amdgpu: GCVM_L2_PROTECTION_FAULT_STATUS:0x00000B33
+[345962.296097] amdgpu 0000:03:00.0: amdgpu:     Faulty UTCL2 client ID: CPC (0x5)
+[345962.296394] amdgpu 0000:03:00.0: amdgpu:     MORE_FAULTS: 0x1
+[345962.296633] amdgpu 0000:03:00.0: amdgpu:     WALKER_ERROR: 0x1
+[345962.296876] amdgpu 0000:03:00.0: amdgpu:     PERMISSION_FAULTS: 0x3
+[345962.297135] amdgpu 0000:03:00.0: amdgpu:     MAPPING_ERROR: 0x1
+[345962.297377] amdgpu 0000:03:00.0: amdgpu:     RW: 0x0
+[345962.297682] amdgpu 0000:03:00.0: amdgpu: [gfxhub] page fault (src_id:0 ring:169 vmid:0 pasid:0)
 
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Jonathan Kim <jonathan.kim@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Fixes: afe267f2d368 ("media: i2c: add DS90UB960 driver")
-Reviewed-by: Jai Luthra <jai.luthra@ideasonboard.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ds90ub960.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/media/i2c/ds90ub960.c
-+++ b/drivers/media/i2c/ds90ub960.c
-@@ -352,6 +352,8 @@
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -86,9 +86,12 @@ void kfd_process_dequeue_from_device(str
  
- #define UB960_SR_I2C_RX_ID(n)			(0xf8 + (n)) /* < UB960_FPD_RX_NPORTS */
- 
-+#define UB9702_SR_REFCLK_FREQ			0x3d
-+
- /* Indirect register blocks */
- #define UB960_IND_TARGET_PAT_GEN		0x00
- #define UB960_IND_TARGET_RX_ANA(n)		(0x01 + (n))
-@@ -3838,7 +3840,10 @@ static int ub960_enable_core_hw(struct u
- 	if (ret)
- 		goto err_pd_gpio;
- 
--	ret = ub960_read(priv, UB960_XR_REFCLK_FREQ, &refclk_freq);
-+	if (priv->hw_data->is_ub9702)
-+		ret = ub960_read(priv, UB9702_SR_REFCLK_FREQ, &refclk_freq);
-+	else
-+		ret = ub960_read(priv, UB960_XR_REFCLK_FREQ, &refclk_freq);
- 	if (ret)
- 		goto err_pd_gpio;
- 
+ 	if (pdd->already_dequeued)
+ 		return;
+-
++	/* The MES context flush needs to filter out the case which the
++	 * KFD process is created without setting up the MES context and
++	 * queue for creating a compute queue.
++	 */
+ 	dev->dqm->ops.process_termination(dev->dqm, &pdd->qpd);
+-	if (dev->kfd->shared_resources.enable_mes &&
++	if (dev->kfd->shared_resources.enable_mes && !!pdd->proc_ctx_gpu_addr &&
+ 	    down_read_trylock(&dev->adev->reset_domain->sem)) {
+ 		amdgpu_mes_flush_shader_debugger(dev->adev,
+ 						 pdd->proc_ctx_gpu_addr);
 
 
