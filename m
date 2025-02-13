@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6AA14F121;
-	Thu, 13 Feb 2025 15:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC8826B0B4;
+	Thu, 13 Feb 2025 15:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460531; cv=none; b=gV4wPuiJCWJH9bJbVHZ1FQacmNPHLN76uk4nV010jtYTLtdcFrg6xw7I91M2LCKoK/Of2rnT6PaPoZMX7SnWEWYKL9wLmStHknnLoK2FBW8sOjMVln6GkMlWHffLmMRN7L9P8/vIddjOBb8Zsgaz2D/dGmX88Sqt8g8bKUGkf/U=
+	t=1739460535; cv=none; b=FZ00cw4c/7jnoeEgbHZw9Rh0GVhDsUTAhXxevp4pNBAQ/mLquLBkaHTuV8G4Sz0y2Tcf6R7gce8mkqYeEfgloWGmsAdgPS3oYIMxlUjuQcOz4eRDvXruASiojq1eVFzGeqt206Z4ralQ/O64aiSmwpflKCPEegYozvbROljbKkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460531; c=relaxed/simple;
-	bh=kVqD80Bt0UtPLLlpq5ihoife4o3L7/8yi/8bfHOIkJk=;
+	s=arc-20240116; t=1739460535; c=relaxed/simple;
+	bh=kBWIR4mNqO7Sdod9ycIztTpih/Tut5jcjZF+Djlwf10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSDoYn4zm6qYO0b0IBQRzykfNWG3NSps5xc6/n+rYFk+P3xfHfXIq1IEbs9fohNLaCWP/6SCm6VjbfCErvn/RB22s4ttXkX5mJUdw13u2IAeY0uhb/IVsm982Z2YWtBHN73ycgdq+rMMh1muoIKU2F1ego9qW3NbRoHqxhtNnps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XT8jYq0t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vl2q9/zjwLJ4r5oCF0rRkPB3wL8xBiRT02nZ+4KnIEQ9tV7kqd40bqeOFel/Y5fumnXvZ+ZsHfJOxZE0TaLizliQYhyMG6D33Jnyh0BS/LpATiBn+1dAfuR/tttcKTS21PKSfSjum4LzpShz65TN49XItYLr9mft4+zNUq8ob7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/lJIt+z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XT8jYq0t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E20C4CED1;
-	Thu, 13 Feb 2025 15:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/lJIt+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52125C4CED1;
+	Thu, 13 Feb 2025 15:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460531;
-	bh=kVqD80Bt0UtPLLlpq5ihoife4o3L7/8yi/8bfHOIkJk=;
+	s=korg; t=1739460534;
+	bh=kBWIR4mNqO7Sdod9ycIztTpih/Tut5jcjZF+Djlwf10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XT8jYq0tReDXO4sGfUvLN6A03a88PN8QUQBXtEvb8SyiuW/Vkj+Tklr4BPUKnDTuC
-	 xoxAH9eG00tqkfpalXk71HJ9h5iOqK04E0YXOmZCd0fAIUfOnf2wbX/utssnKRwtii
-	 rsV6D4yMn9hO99eyh+rpLKXA2G0O5Ghb9q0GGT5A=
+	b=O/lJIt+zdX94WFNocuwpzTe/t6FnbNEwNvf0e+L81Wv2ZTygPeEoiX81kDhdgAAAF
+	 G8GY/dhit/7vE5rEjv5g8WbogAbOsq24w/Mgcek5/kxoPc6hW4O21TapwlYIEwMmEG
+	 94HijIF0Kq3Z2ZEpLCvynOYu3pa2vNK3jkGEp8XY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cody Eksal <masterr3c0rd@epochal.quest>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Chen-Yu Tsai <wens@csie.org>
-Subject: [PATCH 6.6 106/273] clk: sunxi-ng: a100: enable MMC clock reparenting
-Date: Thu, 13 Feb 2025 15:27:58 +0100
-Message-ID: <20250213142411.535772931@linuxfoundation.org>
+	Jai Luthra <jai.luthra@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.6 107/273] media: i2c: ds90ub960: Fix UB9702 refclk register access
+Date: Thu, 13 Feb 2025 15:27:59 +0100
+Message-ID: <20250213142411.575319602@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -51,59 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cody Eksal <masterr3c0rd@epochal.quest>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit 16414720045de30945b8d14b7907e0cbf81a4b49 upstream.
+commit ba3bdb93947c90f098061de1fb2458e2ca040093 upstream.
 
-While testing the MMC nodes proposed in [1], it was noted that mmc0/1
-would fail to initialize, with "mmc: fatal err update clk timeout" in
-the kernel logs. A closer look at the clock definitions showed that the MMC
-MPs had the "CLK_SET_RATE_NO_REPARENT" flag set. No reason was given for
-adding this flag in the first place, and its original purpose is unknown,
-but it doesn't seem to make sense and results in severe limitations to MMC
-speeds. Thus, remove this flag from the 3 MMC MPs.
+UB9702 has the refclk freq register at a different offset than UB960,
+but the code uses the UB960's offset for both chips. Fix this.
 
-[1] https://msgid.link/20241024170540.2721307-10-masterr3c0rd@epochal.quest
+The refclk freq is only used for a debug print, so there's no functional
+change here.
 
-Fixes: fb038ce4db55 ("clk: sunxi-ng: add support for the Allwinner A100 CCU")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cody Eksal <masterr3c0rd@epochal.quest>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://patch.msgid.link/20241109003739.3440904-1-masterr3c0rd@epochal.quest
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Fixes: afe267f2d368 ("media: i2c: add DS90UB960 driver")
+Reviewed-by: Jai Luthra <jai.luthra@ideasonboard.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun50i-a100.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/i2c/ds90ub960.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/clk/sunxi-ng/ccu-sun50i-a100.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun50i-a100.c
-@@ -436,7 +436,7 @@ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDI
- 					  24, 2,	/* mux */
- 					  BIT(31),	/* gate */
- 					  2,		/* post-div */
--					  CLK_SET_RATE_NO_REPARENT);
-+					  0);
+--- a/drivers/media/i2c/ds90ub960.c
++++ b/drivers/media/i2c/ds90ub960.c
+@@ -352,6 +352,8 @@
  
- static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDIV(mmc1_clk, "mmc1", mmc_parents, 0x834,
- 					  0, 4,		/* M */
-@@ -444,7 +444,7 @@ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDI
- 					  24, 2,	/* mux */
- 					  BIT(31),	/* gate */
- 					  2,		/* post-div */
--					  CLK_SET_RATE_NO_REPARENT);
-+					  0);
+ #define UB960_SR_I2C_RX_ID(n)			(0xf8 + (n)) /* < UB960_FPD_RX_NPORTS */
  
- static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDIV(mmc2_clk, "mmc2", mmc_parents, 0x838,
- 					  0, 4,		/* M */
-@@ -452,7 +452,7 @@ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDI
- 					  24, 2,	/* mux */
- 					  BIT(31),	/* gate */
- 					  2,		/* post-div */
--					  CLK_SET_RATE_NO_REPARENT);
-+					  0);
++#define UB9702_SR_REFCLK_FREQ			0x3d
++
+ /* Indirect register blocks */
+ #define UB960_IND_TARGET_PAT_GEN		0x00
+ #define UB960_IND_TARGET_RX_ANA(n)		(0x01 + (n))
+@@ -3838,7 +3840,10 @@ static int ub960_enable_core_hw(struct u
+ 	if (ret)
+ 		goto err_pd_gpio;
  
- static SUNXI_CCU_GATE(bus_mmc0_clk, "bus-mmc0", "ahb3", 0x84c, BIT(0), 0);
- static SUNXI_CCU_GATE(bus_mmc1_clk, "bus-mmc1", "ahb3", 0x84c, BIT(1), 0);
+-	ret = ub960_read(priv, UB960_XR_REFCLK_FREQ, &refclk_freq);
++	if (priv->hw_data->is_ub9702)
++		ret = ub960_read(priv, UB9702_SR_REFCLK_FREQ, &refclk_freq);
++	else
++		ret = ub960_read(priv, UB960_XR_REFCLK_FREQ, &refclk_freq);
+ 	if (ret)
+ 		goto err_pd_gpio;
+ 
 
 
