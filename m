@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C0D2222C0;
-	Thu, 13 Feb 2025 14:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E842222D2;
+	Thu, 13 Feb 2025 14:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457499; cv=none; b=dYvrlOwVgoB2+fdKYCCXEWeD6+C6HjlC30q10HTDqcKWjL78/u0JL1slW2TcFckjHLk8Bhpc4B+VEqPJNaPX9/Tz6JvGL0NH8gP33CTuX4JY2jflrrij/ve7qbpFR+Odfomuro7uzHJfGIlyFFgIcvRY7SxkZw2HgZ2YLJxDfts=
+	t=1739457502; cv=none; b=R8b7o4FD31p1I245U/MWANVMdO28wJiF1oGHEL6o8U5KsGQCnFRlEShF1xNUt/BfDn9216n9SMaU6HFJuVTtbcR/W6H7pG4P6rZj80i11BuGCsDVKmoiUfwGWvdQALPoBWT6Vny1uF+IHDX314Wjezy2XGmZDDN/97PMPDrSHpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457499; c=relaxed/simple;
-	bh=UtQKBUMTwoHgZNhBoM/QgFj+omvDywXz319wGUt0ifU=;
+	s=arc-20240116; t=1739457502; c=relaxed/simple;
+	bh=UN6AzCGM7ji2VjYxqqEGpW1LciOD4gQfwKtOzMYRfcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OpPm+JiGlIAVD9vdc8xll1QgWwURIj0/wtoPHlqHBwhUSLxY2f0OuY7R34bJrIvtAegldCJ6m/GmXKQ5bMzrPM7L2ZWLNpaDkGocUr7TMflFKu47aqLOwZ3nR8j5cjpu6yFvbq1gPFPMh4OlojMakwYOLtzrYSTdNFqpn/v/VuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XOtDaG/2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=p1la8dNwFltrXyZctgCtpynenV0NlUytHdY+xp+FA74IQCskLvDBjcDeK4PZPBtAE+2VJs7KUu+R3C69mLAqlFdGuXwleS4ZUZA53VwEyK/vVaySsHshVZhsG/A9BiU0ZS7TB7qgASPG4tE1zLLyjYGg0Vp9nJ02iDAcD/DngA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zp+Fl3jO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XOtDaG/2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC0EC4CED1;
-	Thu, 13 Feb 2025 14:38:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zp+Fl3jO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC599C4CED1;
+	Thu, 13 Feb 2025 14:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457499;
-	bh=UtQKBUMTwoHgZNhBoM/QgFj+omvDywXz319wGUt0ifU=;
+	s=korg; t=1739457502;
+	bh=UN6AzCGM7ji2VjYxqqEGpW1LciOD4gQfwKtOzMYRfcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XOtDaG/2KrSmljV/T5ROWGJzNmt0R1A7D1vkt2CEye9U4sRyPgzKhCQEEw90Fyqb7
-	 puDAB1M5bX7n41FB0HFnUiBmkMjKAylJd/aupBsIgZZNVKoK2p6j5DOrk3wfgvqT/P
-	 UvBlcQFzzonP9GRxA1odZMxJVlFzFVERI8LOqtNE=
+	b=zp+Fl3jOvqX7Of5h9pffiLnhLezwW9BbXM7A4i5Ot+LeBZ1MizpjjOXyM4IBrPHmi
+	 /uvyZitPdyenxsZ1eIhE91Y6TBfaOqPFNND0Np1lJ5Vl4lb4rX0JFjS4M5gj4IK4Pq
+	 RN2dFxKVm5Sx/gw0vI7IuhHIQsKS0CBamZhQiTCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	John Ogness <john.ogness@linutronix.de>
-Subject: [PATCH 6.12 096/422] tty: xilinx_uartps: split sysrq handling
-Date: Thu, 13 Feb 2025 15:24:05 +0100
-Message-ID: <20250213142440.260283908@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH 6.12 097/422] tty: Permit some TIOCL_SETSEL modes without CAP_SYS_ADMIN
+Date: Thu, 13 Feb 2025 15:24:06 +0100
+Message-ID: <20250213142440.299478951@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -44,80 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Günther Noack <gnoack@google.com>
 
-commit b06f388994500297bb91be60ffaf6825ecfd2afe upstream.
+commit 2f83e38a095f8bf7c6029883d894668b03b9bd93 upstream.
 
-lockdep detects the following circular locking dependency:
+With this, processes without CAP_SYS_ADMIN are able to use TIOCLINUX with
+subcode TIOCL_SETSEL, in the selection modes TIOCL_SETPOINTER,
+TIOCL_SELCLEAR and TIOCL_SELMOUSEREPORT.
 
-CPU 0                      CPU 1
-========================== ============================
-cdns_uart_isr()            printk()
-  uart_port_lock(port)       console_lock()
-			     cdns_uart_console_write()
-                               if (!port->sysrq)
-                                 uart_port_lock(port)
-  uart_handle_break()
-    port->sysrq = ...
-  uart_handle_sysrq_char()
-    printk()
-      console_lock()
+TIOCL_SETSEL was previously changed to require CAP_SYS_ADMIN, as this IOCTL
+let callers change the selection buffer and could be used to simulate
+keypresses.  These three TIOCL_SETSEL selection modes, however, are safe to
+use, as they do not modify the selection buffer.
 
-The fixed commit attempts to avoid this situation by only taking the
-port lock in cdns_uart_console_write if port->sysrq unset. However, if
-(as shown above) cdns_uart_console_write runs before port->sysrq is set,
-then it will try to take the port lock anyway. This may result in a
-deadlock.
+This fixes a mouse support regression that affected Emacs (invisible mouse
+cursor).
 
-Fix this by splitting sysrq handling into two parts. We use the prepare
-helper under the port lock and defer handling until we release the lock.
-
-Fixes: 74ea66d4ca06 ("tty: xuartps: Improve sysrq handling")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Cc: stable@vger.kernel.org # c980248179d: serial: xilinx_uartps: Use port lock wrappers
-Acked-by: John Ogness <john.ogness@linutronix.de>
-Link: https://lore.kernel.org/r/20250110213822.2107462-1-sean.anderson@linux.dev
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/ee3ec63269b43b34e1c90dd8c9743bf8@finder.org
+Fixes: 8d1b43f6a6df ("tty: Restrict access to TIOCLINUX' copy-and-paste subcommands")
+Signed-off-by: Günther Noack <gnoack@google.com>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Link: https://lore.kernel.org/r/20250110142122.1013222-1-gnoack@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/xilinx_uartps.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/tty/vt/selection.c |   14 ++++++++++++++
+ drivers/tty/vt/vt.c        |    2 --
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/xilinx_uartps.c
-+++ b/drivers/tty/serial/xilinx_uartps.c
-@@ -287,7 +287,7 @@ static void cdns_uart_handle_rx(void *de
- 				continue;
- 		}
+--- a/drivers/tty/vt/selection.c
++++ b/drivers/tty/vt/selection.c
+@@ -192,6 +192,20 @@ int set_selection_user(const struct tioc
+ 	if (copy_from_user(&v, sel, sizeof(*sel)))
+ 		return -EFAULT;
  
--		if (uart_handle_sysrq_char(port, data))
-+		if (uart_prepare_sysrq_char(port, data))
- 			continue;
- 
- 		if (is_rxbs_support) {
-@@ -495,7 +495,7 @@ static irqreturn_t cdns_uart_isr(int irq
- 	    !(readl(port->membase + CDNS_UART_CR) & CDNS_UART_CR_RX_DIS))
- 		cdns_uart_handle_rx(dev_id, isrstatus);
- 
--	uart_port_unlock(port);
-+	uart_unlock_and_check_sysrq(port);
- 	return IRQ_HANDLED;
++	/*
++	 * TIOCL_SELCLEAR, TIOCL_SELPOINTER and TIOCL_SELMOUSEREPORT are OK to
++	 * use without CAP_SYS_ADMIN as they do not modify the selection.
++	 */
++	switch (v.sel_mode) {
++	case TIOCL_SELCLEAR:
++	case TIOCL_SELPOINTER:
++	case TIOCL_SELMOUSEREPORT:
++		break;
++	default:
++		if (!capable(CAP_SYS_ADMIN))
++			return -EPERM;
++	}
++
+ 	return set_selection_kernel(&v, tty);
  }
  
-@@ -1380,9 +1380,7 @@ static void cdns_uart_console_write(stru
- 	unsigned int imr, ctrl;
- 	int locked = 1;
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -3345,8 +3345,6 @@ int tioclinux(struct tty_struct *tty, un
  
--	if (port->sysrq)
--		locked = 0;
--	else if (oops_in_progress)
-+	if (oops_in_progress)
- 		locked = uart_port_trylock_irqsave(port, &flags);
- 	else
- 		uart_port_lock_irqsave(port, &flags);
+ 	switch (type) {
+ 	case TIOCL_SETSEL:
+-		if (!capable(CAP_SYS_ADMIN))
+-			return -EPERM;
+ 		return set_selection_user(param, tty);
+ 	case TIOCL_PASTESEL:
+ 		if (!capable(CAP_SYS_ADMIN))
 
 
