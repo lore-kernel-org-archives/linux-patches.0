@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7007124167F;
-	Thu, 13 Feb 2025 14:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22819227EB3;
+	Thu, 13 Feb 2025 14:40:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457625; cv=none; b=A/e18LEUkMe0t890t5GOhta3xyjKOeNiZc9ISzmtLLgZebvGT3N7sl5VYvA/NCwjmGNipCrbTAkwk6Xq6H+eO0SjbeSOkT6gmWv05HZXX9sELDFLxAjAmM8WJ34FkElDDgc1Q8nNPJX34LaV8hjHIsZbO9d9Qz05yY+RVwWNwGI=
+	t=1739457628; cv=none; b=bT8euSwlK/1ZYkmhJ7m0fJZYkTJlM2zM2naW4krKEO9d2xG3rv8rghyMeFTOcWpcepNtc+gixVpq9MhOOTYp6kSNDxDixkcOX04gSik3LIcUxEkVYtekm22JzMCKn2//H7ZIJgO+cHRAKkiGGgSNsu+p2RdPFzJlG60+NzwaC2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457625; c=relaxed/simple;
-	bh=aleAURu2BmRsW9krMxaH9GeYw5FMKaJIK7yRqEh+FRk=;
+	s=arc-20240116; t=1739457628; c=relaxed/simple;
+	bh=4imPGuRDLxm0YOIv10Y49SUdO+IHzVx4QViHV1wupjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AcmXjgIaR/KtvvPmkQRspyODC/tZvP3XlGflonXs7mFwZrF2Mg3ypgXXUn8LEtYKuyiC5wC2OFWhMKzRJJ4pmAivLs6vk38oDF1wHZPdPUZczbqxABzwiWlF3paByE8Q6Q9iULSHqd1BLKkuun1v4kCES40G3Ps9ismFnDMi0Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLpifsKv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fSpxdWLi9IXHigKfyJfyoznO0qqumtCEakF0c4LH1XpC3K4ojz2ieMByeEI/0no5xqwQmGOAZE/VWJJbQT9DyLXmCle61bhYkLSFgU/16VI2m2DFfI8PQXB4PsEmV8f9jMkAfOigGIAPDj5ezrRy6g9y5Psl56tF3bMXyMxDGgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKRQljfV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLpifsKv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6236FC4CEEB;
-	Thu, 13 Feb 2025 14:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKRQljfV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5CBC4CED1;
+	Thu, 13 Feb 2025 14:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457625;
-	bh=aleAURu2BmRsW9krMxaH9GeYw5FMKaJIK7yRqEh+FRk=;
+	s=korg; t=1739457628;
+	bh=4imPGuRDLxm0YOIv10Y49SUdO+IHzVx4QViHV1wupjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yLpifsKvstuvBsMKKbDXBDmgYhsoUfNVY7/33YY5Ma0f55f6CLydKzEHMWz76/yGS
-	 JKaKXvH1xGj3nMgS2pM4e+jKI3xNx4y8WdJQOwMU00S6N7MHkjKNAsHu48lo4kZj9D
-	 4B0rhKggvQmrdtp7eeXoCGq36fZdHhCAwxvMzy3A=
+	b=WKRQljfVb7KlpgHKda0BT2yhEmSOZvoO7TLqgMWP0mspB/c7UEF2tBJ9V/R4bjmad
+	 v2aPosD4ijJeNW2csnFA3FQ9EGXBGjFnGv5znh5RNBlBg1Z6UZjwOSsggjm+ddIIqx
+	 hJlSqPQ2fGTyeQnLmH6N4J9fc696t/1ZQyAUG1+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quang Le <quanglex97@gmail.com>,
-	Cong Wang <cong.wang@bytedance.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 123/422] pfifo_tail_enqueue: Drop new packet when sch->limit == 0
-Date: Thu, 13 Feb 2025 15:24:32 +0100
-Message-ID: <20250213142441.295819504@linuxfoundation.org>
+	Prike Liang <Prike.Liang@amd.com>,
+	Jonathan Kim <jonathan.kim@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 159/422] drm/amdkfd: only flush the validate MES contex
+Date: Thu, 13 Feb 2025 15:25:08 +0100
+Message-ID: <20250213142442.680871947@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,72 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quang Le <quanglex97@gmail.com>
+From: Prike Liang <Prike.Liang@amd.com>
 
-[ Upstream commit 647cef20e649c576dff271e018d5d15d998b629d ]
+commit 9078a5bfa21e78ae68b6d7c365d1b92f26720c55 upstream.
 
-Expected behaviour:
-In case we reach scheduler's limit, pfifo_tail_enqueue() will drop a
-packet in scheduler's queue and decrease scheduler's qlen by one.
-Then, pfifo_tail_enqueue() enqueue new packet and increase
-scheduler's qlen by one. Finally, pfifo_tail_enqueue() return
-`NET_XMIT_CN` status code.
+The following page fault was observed duringthe KFD process release.
+In this particular error case, the HIP test (./MemcpyPerformance -h)
+does not require the queue. As a result, the process_context_addr was
+not assigned when the KFD process was released, ultimately leading to
+this page fault during the execution of the function
+kfd_process_dequeue_from_all_devices().
 
-Weird behaviour:
-In case we set `sch->limit == 0` and trigger pfifo_tail_enqueue() on a
-scheduler that has no packet, the 'drop a packet' step will do nothing.
-This means the scheduler's qlen still has value equal 0.
-Then, we continue to enqueue new packet and increase scheduler's qlen by
-one. In summary, we can leverage pfifo_tail_enqueue() to increase qlen by
-one and return `NET_XMIT_CN` status code.
+[345962.294891] amdgpu 0000:03:00.0: amdgpu: [gfxhub] page fault (src_id:0 ring:153 vmid:0 pasid:0)
+[345962.295333] amdgpu 0000:03:00.0: amdgpu:   in page starting at address 0x0000000000000000 from client 10
+[345962.295775] amdgpu 0000:03:00.0: amdgpu: GCVM_L2_PROTECTION_FAULT_STATUS:0x00000B33
+[345962.296097] amdgpu 0000:03:00.0: amdgpu:     Faulty UTCL2 client ID: CPC (0x5)
+[345962.296394] amdgpu 0000:03:00.0: amdgpu:     MORE_FAULTS: 0x1
+[345962.296633] amdgpu 0000:03:00.0: amdgpu:     WALKER_ERROR: 0x1
+[345962.296876] amdgpu 0000:03:00.0: amdgpu:     PERMISSION_FAULTS: 0x3
+[345962.297135] amdgpu 0000:03:00.0: amdgpu:     MAPPING_ERROR: 0x1
+[345962.297377] amdgpu 0000:03:00.0: amdgpu:     RW: 0x0
+[345962.297682] amdgpu 0000:03:00.0: amdgpu: [gfxhub] page fault (src_id:0 ring:169 vmid:0 pasid:0)
 
-The problem is:
-Let's say we have two qdiscs: Qdisc_A and Qdisc_B.
- - Qdisc_A's type must have '->graft()' function to create parent/child relationship.
-   Let's say Qdisc_A's type is `hfsc`. Enqueue packet to this qdisc will trigger `hfsc_enqueue`.
- - Qdisc_B's type is pfifo_head_drop. Enqueue packet to this qdisc will trigger `pfifo_tail_enqueue`.
- - Qdisc_B is configured to have `sch->limit == 0`.
- - Qdisc_A is configured to route the enqueued's packet to Qdisc_B.
-
-Enqueue packet through Qdisc_A will lead to:
- - hfsc_enqueue(Qdisc_A) -> pfifo_tail_enqueue(Qdisc_B)
- - Qdisc_B->q.qlen += 1
- - pfifo_tail_enqueue() return `NET_XMIT_CN`
- - hfsc_enqueue() check for `NET_XMIT_SUCCESS` and see `NET_XMIT_CN` => hfsc_enqueue() don't increase qlen of Qdisc_A.
-
-The whole process lead to a situation where Qdisc_A->q.qlen == 0 and Qdisc_B->q.qlen == 1.
-Replace 'hfsc' with other type (for example: 'drr') still lead to the same problem.
-This violate the design where parent's qlen should equal to the sum of its childrens'qlen.
-
-Bug impact: This issue can be used for user->kernel privilege escalation when it is reachable.
-
-Fixes: 57dbb2d83d10 ("sched: add head drop fifo queue")
-Reported-by: Quang Le <quanglex97@gmail.com>
-Signed-off-by: Quang Le <quanglex97@gmail.com>
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Link: https://patch.msgid.link/20250204005841.223511-2-xiyou.wangcong@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Jonathan Kim <jonathan.kim@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_fifo.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_fifo.c b/net/sched/sch_fifo.c
-index b50b2c2cc09bc..e6bfd39ff3396 100644
---- a/net/sched/sch_fifo.c
-+++ b/net/sched/sch_fifo.c
-@@ -40,6 +40,9 @@ static int pfifo_tail_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- {
- 	unsigned int prev_backlog;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -86,9 +86,12 @@ void kfd_process_dequeue_from_device(str
  
-+	if (unlikely(READ_ONCE(sch->limit) == 0))
-+		return qdisc_drop(skb, sch, to_free);
-+
- 	if (likely(sch->q.qlen < READ_ONCE(sch->limit)))
- 		return qdisc_enqueue_tail(skb, sch);
- 
--- 
-2.39.5
-
+ 	if (pdd->already_dequeued)
+ 		return;
+-
++	/* The MES context flush needs to filter out the case which the
++	 * KFD process is created without setting up the MES context and
++	 * queue for creating a compute queue.
++	 */
+ 	dev->dqm->ops.process_termination(dev->dqm, &pdd->qpd);
+-	if (dev->kfd->shared_resources.enable_mes &&
++	if (dev->kfd->shared_resources.enable_mes && !!pdd->proc_ctx_gpu_addr &&
+ 	    down_read_trylock(&dev->adev->reset_domain->sem)) {
+ 		amdgpu_mes_flush_shader_debugger(dev->adev,
+ 						 pdd->proc_ctx_gpu_addr);
 
 
