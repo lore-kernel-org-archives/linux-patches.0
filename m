@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1236726B09E;
-	Thu, 13 Feb 2025 15:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A272F26B0A5;
+	Thu, 13 Feb 2025 15:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459598; cv=none; b=u9OWhDQB1apjAPiRlDNULQ7vmrCAd+AUBqP4gD8JCXPzBf7pThDFGs1Sd6sPeOhhi6gy9ggF14AenT075q+TWwKgh4sV4slpF9E1glqCXMwlR3a7eBqCR/5lqER5XBqBF7g845Jh7KFVxRGoSp2InIWqhxZEjRsTwB5EVb/IQaM=
+	t=1739459601; cv=none; b=g/6C6uXecgWgXXkCuCCxG/meo54SFQkFI42azEzBJgxyyon4wP266/lo6nO+k7e2WXBAN4EmOZ+5eRDi5aCiEQCYxaTxTIlQyTXaIkyzKjYoViEgJakKdDDvWbXJvgnt28UItJdSFqeuP8h1eAiBr6uka1Fqgos4wCrGqTbUp6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459598; c=relaxed/simple;
-	bh=zAmhossX3c38Vf8KXUw/7IuyOlKtMWg8H31/Yqb6NXQ=;
+	s=arc-20240116; t=1739459601; c=relaxed/simple;
+	bh=rNLptWm48h+b9NfvnWye+7PmzJGtRjX3Cl6xID/chTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BaHRoR610J+9VIfHTpUmwTBi72ixXMgKf4LSA3ctUF3NyGbWgx5NtSEtuQzX+AxnLex189y1RwJfU25bY6nm7tr0EuF9jTkzzc7Dex1fSovPpqMXTdAV9ko1GxNv4CbElRmI9pXwvdltvlV7ET5W54dmg+Ii+N269jZGcAkNQ0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUU4Si79; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pjYbqzQRJZJtE/oXMds/XZLgmZcq4jPy7cqIp+9FyhW6k6LGaCEWthLuI3eEHv2LeUtwGdPoLziNzJPgry68/QqWs1dRoj+zVVvdrYPXTq7cbHHb+2TgP3YiBWbLAPh4jFrgBJ1albayr/JsQoaTozkKPFoASX9t87ztfmV0Mx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alR9xIQU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUU4Si79"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7162AC4CEE4;
-	Thu, 13 Feb 2025 15:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alR9xIQU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8060C4CEE4;
+	Thu, 13 Feb 2025 15:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459597;
-	bh=zAmhossX3c38Vf8KXUw/7IuyOlKtMWg8H31/Yqb6NXQ=;
+	s=korg; t=1739459601;
+	bh=rNLptWm48h+b9NfvnWye+7PmzJGtRjX3Cl6xID/chTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUU4Si797ktlRKnxDWvfDKZDoK6LJpHaVmsGAchDhYnsvQPH5EoM0BEER5sqYgi9g
-	 nJRE7jhbi1mr5EFYmZ62ln+uau9QfKkFDQikC1GrhVuh4VC6DyI7Zaoxeqyohdbjtl
-	 nb+3RgluCRcXYc3ZGnmh1PcXiimA2MDjQcG+vDOs=
+	b=alR9xIQUSbs3HOZf5ngYCR90OEIDiJpQFMYfamjj/YmkmtcMEne+x3JVJatOr0QiI
+	 pFt149B0Ko5cT1S/GeVkzkBVf0uiyERu9mQnuDD/NtNnjqMYmWqsWrSqGP24BUbbRl
+	 cyHAvJGw7bRKwC+y9sy8hEri4UacxpqTzv2XUnZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.13 279/443] KVM: x86/mmu: Ensure NX huge page recovery thread is alive before waking
-Date: Thu, 13 Feb 2025 15:27:24 +0100
-Message-ID: <20250213142451.374857535@linuxfoundation.org>
+	=?UTF-8?q?Kai=20M=C3=A4kisara?= <Kai.Makisara@kolumbus.fi>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.13 280/443] scsi: st: Dont set pos_unknown just after device recognition
+Date: Thu, 13 Feb 2025 15:27:25 +0100
+Message-ID: <20250213142451.414569996@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -45,117 +44,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
 
-commit 43fb96ae78551d7bfa4ecca956b258f085d67c40 upstream.
+commit 98b37881b7492ae9048ad48260cc8a6ee9eb39fd upstream.
 
-When waking a VM's NX huge page recovery thread, ensure the thread is
-actually alive before trying to wake it.  Now that the thread is spawned
-on-demand during KVM_RUN, a VM without a recovery thread is reachable via
-the related module params.
+Commit 9604eea5bd3a ("scsi: st: Add third party poweron reset handling") in
+v6.6 added new code to handle the Power On/Reset Unit Attention (POR UA)
+sense data. This was in addition to the existing method. When this Unit
+Attention is received, the driver blocks attempts to read, write and some
+other operations because the reset may have rewinded the tape. Because of
+the added code, also the initial POR UA resulted in blocking operations,
+including those that are used to set the driver options after the device is
+recognized. Also, reading and writing are refused, whereas they succeeded
+before this commit.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000040
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:vhost_task_wake+0x5/0x10
-  Call Trace:
-   <TASK>
-   set_nx_huge_pages+0xcc/0x1e0 [kvm]
-   param_attr_store+0x8a/0xd0
-   module_attr_store+0x1a/0x30
-   kernfs_fop_write_iter+0x12f/0x1e0
-   vfs_write+0x233/0x3e0
-   ksys_write+0x60/0xd0
-   do_syscall_64+0x5b/0x160
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  RIP: 0033:0x7f3b52710104
-   </TASK>
-  Modules linked in: kvm_intel kvm
-  CR2: 0000000000000040
+Add code to not set pos_unknown to block operations if the POR UA is
+received from the first test_ready() call after the st device has been
+created. This restores the behavior before v6.6.
 
-Fixes: 931656b9e2ff ("kvm: defer huge page recovery vhost task to later")
-Cc: stable@vger.kernel.org
-Cc: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20250124234623.3609069-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
+Link: https://lore.kernel.org/r/20241216113755.30415-1-Kai.Makisara@kolumbus.fi
+Fixes: 9604eea5bd3a ("scsi: st: Add third party poweron reset handling")
+CC: stable@vger.kernel.org
+Closes: https://lore.kernel.org/linux-scsi/2201CF73-4795-4D3B-9A79-6EE5215CF58D@kolumbus.fi/
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |   33 ++++++++++++++++++++++++++-------
- 1 file changed, 26 insertions(+), 7 deletions(-)
+ drivers/scsi/st.c |    6 ++++++
+ drivers/scsi/st.h |    1 +
+ 2 files changed, 7 insertions(+)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -7090,6 +7090,19 @@ static void mmu_destroy_caches(void)
- 	kmem_cache_destroy(mmu_page_header_cache);
- }
- 
-+static void kvm_wake_nx_recovery_thread(struct kvm *kvm)
-+{
-+	/*
-+	 * The NX recovery thread is spawned on-demand at the first KVM_RUN and
-+	 * may not be valid even though the VM is globally visible.  Do nothing,
-+	 * as such a VM can't have any possible NX huge pages.
-+	 */
-+	struct vhost_task *nx_thread = READ_ONCE(kvm->arch.nx_huge_page_recovery_thread);
-+
-+	if (nx_thread)
-+		vhost_task_wake(nx_thread);
-+}
-+
- static int get_nx_huge_pages(char *buffer, const struct kernel_param *kp)
- {
- 	if (nx_hugepage_mitigation_hard_disabled)
-@@ -7150,7 +7163,7 @@ static int set_nx_huge_pages(const char
- 			kvm_mmu_zap_all_fast(kvm);
- 			mutex_unlock(&kvm->slots_lock);
- 
--			vhost_task_wake(kvm->arch.nx_huge_page_recovery_thread);
-+			kvm_wake_nx_recovery_thread(kvm);
- 		}
- 		mutex_unlock(&kvm_lock);
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -1030,6 +1030,11 @@ static int test_ready(struct scsi_tape *
+ 			retval = new_session ? CHKRES_NEW_SESSION : CHKRES_READY;
+ 		break;
  	}
-@@ -7279,7 +7292,7 @@ static int set_nx_huge_pages_recovery_pa
- 		mutex_lock(&kvm_lock);
++	if (STp->first_tur) {
++		/* Don't set pos_unknown right after device recognition */
++		STp->pos_unknown = 0;
++		STp->first_tur = 0;
++	}
  
- 		list_for_each_entry(kvm, &vm_list, vm_list)
--			vhost_task_wake(kvm->arch.nx_huge_page_recovery_thread);
-+			kvm_wake_nx_recovery_thread(kvm);
+ 	if (SRpnt != NULL)
+ 		st_release_request(SRpnt);
+@@ -4328,6 +4333,7 @@ static int st_probe(struct device *dev)
+ 	blk_queue_rq_timeout(tpnt->device->request_queue, ST_TIMEOUT);
+ 	tpnt->long_timeout = ST_LONG_TIMEOUT;
+ 	tpnt->try_dio = try_direct_io;
++	tpnt->first_tur = 1;
  
- 		mutex_unlock(&kvm_lock);
- 	}
-@@ -7415,14 +7428,20 @@ static void kvm_mmu_start_lpage_recovery
- {
- 	struct kvm_arch *ka = container_of(once, struct kvm_arch, nx_once);
- 	struct kvm *kvm = container_of(ka, struct kvm, arch);
-+	struct vhost_task *nx_thread;
- 
- 	kvm->arch.nx_huge_page_last = get_jiffies_64();
--	kvm->arch.nx_huge_page_recovery_thread = vhost_task_create(
--		kvm_nx_huge_page_recovery_worker, kvm_nx_huge_page_recovery_worker_kill,
--		kvm, "kvm-nx-lpage-recovery");
-+	nx_thread = vhost_task_create(kvm_nx_huge_page_recovery_worker,
-+				      kvm_nx_huge_page_recovery_worker_kill,
-+				      kvm, "kvm-nx-lpage-recovery");
-+
-+	if (!nx_thread)
-+		return;
-+
-+	vhost_task_start(nx_thread);
- 
--	if (kvm->arch.nx_huge_page_recovery_thread)
--		vhost_task_start(kvm->arch.nx_huge_page_recovery_thread);
-+	/* Make the task visible only once it is fully started. */
-+	WRITE_ONCE(kvm->arch.nx_huge_page_recovery_thread, nx_thread);
- }
- 
- int kvm_mmu_post_init_vm(struct kvm *kvm)
+ 	for (i = 0; i < ST_NBR_MODES; i++) {
+ 		STm = &(tpnt->modes[i]);
+--- a/drivers/scsi/st.h
++++ b/drivers/scsi/st.h
+@@ -170,6 +170,7 @@ struct scsi_tape {
+ 	unsigned char rew_at_close;  /* rewind necessary at close */
+ 	unsigned char inited;
+ 	unsigned char cleaning_req;  /* cleaning requested? */
++	unsigned char first_tur;     /* first TEST UNIT READY */
+ 	int block_size;
+ 	int min_block;
+ 	int max_block;
 
 
