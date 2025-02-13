@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDA7211468;
-	Thu, 13 Feb 2025 14:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41DD221727;
+	Thu, 13 Feb 2025 14:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457954; cv=none; b=gCEyf/LyGkDT4e1m/r/XHyOL05k+hiBl4bXV9LkMr0nM8NRbv9QFIU4fIFsYhpNzjanYpgIcAgjg0HzRMZeImpuduN9O0yTuIjotfEvkxuIQr9hZOGAx7T88HM7SsExGmWP9hv0cUOO66B7yT9/BMCN+vFVL7UrCN8m9ZHVcI28=
+	t=1739457962; cv=none; b=AtCVQjvT+f15MLIvRQBIfbREzZZcTy85RwqwALBhB20ECADr7Uyrk6rDrpy2tjK67eYjS+ydtS8Dncx/NcP/W0mzmpg+zLUrryqSZI6haaFzyVbFntAyl9rqvPCeu23+zf2a+YRcV1x+36niqCPVGPBYwVP3tL/OJPAXE+EBVS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457954; c=relaxed/simple;
-	bh=0qaQafI86SFbZJsDPC+W8MATH++Rqly7HYxaWC5u03Q=;
+	s=arc-20240116; t=1739457962; c=relaxed/simple;
+	bh=21fTHBH7UCsJjugyuvZcWYu9PX5KsufWjV/77jYGBrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MIZ5j7tWpSe2C1ZQKGBLhcjhZOozdSqCSsdv2g3y9aKZF4zrReChlAvAeOgF1XWdQXHpdyHXohg5HYmSgOT5zm9xJNN3eXlTpnfDPQGgq6pZHv1joG4WCqdDBvgRW6P7TvJv4aR6bK53R7/H2M/sYycgfOonKN0R6+8EpVjVbT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0yaOMqCR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IRoTC45EbLOQkGP8FimU99xNSMiJ28PNkXvklDQ3W1jx7v5UhIuH87iTTtChdhhDOFzcZfh5E4q3MEVrRgrLfbCAhnRMdFW0jpQpLZ19hR0FbHwOg6mUL12Q/3hwLNJUTnVsh0QI5GdTllK+fGkCzb6Wua8SHss7Is9kwc0AbdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFLRSEf2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0yaOMqCR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2BCC4CED1;
-	Thu, 13 Feb 2025 14:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFLRSEf2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7099EC4CED1;
+	Thu, 13 Feb 2025 14:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457953;
-	bh=0qaQafI86SFbZJsDPC+W8MATH++Rqly7HYxaWC5u03Q=;
+	s=korg; t=1739457961;
+	bh=21fTHBH7UCsJjugyuvZcWYu9PX5KsufWjV/77jYGBrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0yaOMqCRql8H7MhRuuSf11DNGcmS3W4ls6JaPejTwh8zzrKIO6Tu5oBJp13We1zFb
-	 wVlkGNf2DtJx+Nmeso/NaZuCSIvyl2olEAJYlOxLpbYZVe6sM9Er+6sIo1/qLDRklT
-	 ZCi69MW670D63HuTF9hnWVyzmgUV9RDRqvAkJp0w=
+	b=QFLRSEf2tAmMuJiktvq04IvC5t4HTIZcMLOuSyR2fUEKqp+XQMdL7KY+zLgwjaSW2
+	 I0GLM31eQ+URbVorh2x3WRVAFRBfws1VoYqvxjjjQVfh+sjvw1+QY6XLRDw1b1bgyW
+	 6CRIgvrDqHJuTFdu6PYzsPk82XPqdnzUZ3NkgN3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.12 260/422] kbuild: Move -Wenum-enum-conversion to W=2
-Date: Thu, 13 Feb 2025 15:26:49 +0100
-Message-ID: <20250213142446.574045838@linuxfoundation.org>
+	Gary Guo <gary@garyguo.net>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Fiona Behrens <me@kloenk.dev>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.12 261/422] rust: init: use explicit ABI to clean warning in future compilers
+Date: Thu, 13 Feb 2025 15:26:50 +0100
+Message-ID: <20250213142446.612180717@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,61 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 8f6629c004b193d23612641c3607e785819e97ab upstream.
+commit c21bdb3d8a850afdfa4afe77eea39ae9533629b0 upstream.
 
--Wenum-enum-conversion was strengthened in clang-19 to warn for C, which
-caused the kernel to move it to W=1 in commit 75b5ab134bb5 ("kbuild:
-Move -Wenum-{compare-conditional,enum-conversion} into W=1") because
-there were numerous instances that would break builds with -Werror.
-Unfortunately, this is not a full solution, as more and more developers,
-subsystems, and distributors are building with W=1 as well, so they
-continue to see the numerous instances of this warning.
+Starting with Rust 1.86.0 (currently in nightly, to be released on
+2025-04-03), the `missing_abi` lint is warn-by-default [1]:
 
-Since the move to W=1, there have not been many new instances that have
-appeared through various build reports and the ones that have appeared
-seem to be following similar existing patterns, suggesting that most
-instances of this warning will not be real issues. The only alternatives
-for silencing this warning are adding casts (which is generally seen as
-an ugly practice) or refactoring the enums to macro defines or a unified
-enum (which may be undesirable because of type safety in other parts of
-the code).
+    error: extern declarations without an explicit ABI are deprecated
+        --> rust/doctests_kernel_generated.rs:3158:1
+         |
+    3158 | extern {
+         | ^^^^^^ help: explicitly specify the C ABI: `extern "C"`
+         |
+         = note: `-D missing-abi` implied by `-D warnings`
+         = help: to override `-D warnings` add `#[allow(missing_abi)]`
 
-Move the warning to W=2, where warnings that occur frequently but may be
-relevant should reside.
+Thus clean it up.
 
-Cc: stable@vger.kernel.org
-Fixes: 75b5ab134bb5 ("kbuild: Move -Wenum-{compare-conditional,enum-conversion} into W=1")
-Link: https://lore.kernel.org/ZwRA9SOcOjjLJcpi@google.com/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: <stable@vger.kernel.org> # Needed in 6.12.y and 6.13.y only (Rust is pinned in older LTSs).
+Fixes: 7f8977a7fe6d ("rust: init: add `{pin_}chain` functions to `{Pin}Init<T, E>`")
+Link: https://github.com/rust-lang/rust/pull/132397 [1]
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Fiona Behrens <me@kloenk.dev>
+Link: https://lore.kernel.org/r/20250121200934.222075-1-ojeda@kernel.org
+[ Added 6.13.y to Cc: stable tag. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/Makefile.extrawarn |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ rust/kernel/init.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/scripts/Makefile.extrawarn
-+++ b/scripts/Makefile.extrawarn
-@@ -130,7 +130,6 @@ KBUILD_CFLAGS += $(call cc-disable-warni
- KBUILD_CFLAGS += -Wno-tautological-constant-out-of-range-compare
- KBUILD_CFLAGS += $(call cc-disable-warning, unaligned-access)
- KBUILD_CFLAGS += -Wno-enum-compare-conditional
--KBUILD_CFLAGS += -Wno-enum-enum-conversion
- endif
- 
- endif
-@@ -154,6 +153,10 @@ KBUILD_CFLAGS += -Wno-missing-field-init
- KBUILD_CFLAGS += -Wno-type-limits
- KBUILD_CFLAGS += -Wno-shift-negative-value
- 
-+ifdef CONFIG_CC_IS_CLANG
-+KBUILD_CFLAGS += -Wno-enum-enum-conversion
-+endif
-+
- ifdef CONFIG_CC_IS_GCC
- KBUILD_CFLAGS += -Wno-maybe-uninitialized
- endif
+--- a/rust/kernel/init.rs
++++ b/rust/kernel/init.rs
+@@ -858,7 +858,7 @@ pub unsafe trait PinInit<T: ?Sized, E =
+     /// use kernel::{types::Opaque, init::pin_init_from_closure};
+     /// #[repr(C)]
+     /// struct RawFoo([u8; 16]);
+-    /// extern {
++    /// extern "C" {
+     ///     fn init_foo(_: *mut RawFoo);
+     /// }
+     ///
 
 
