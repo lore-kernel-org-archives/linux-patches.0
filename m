@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634C219C54B;
-	Thu, 13 Feb 2025 15:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860F02A1D1;
+	Thu, 13 Feb 2025 15:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459123; cv=none; b=h8CCD6X1quqjgsdfu2VjBmouu3wWBsGF+ZaPVVr7iKq26uGGkDvSFH93QfrX+haM8/jE/N9tpspyiGpsdnI6G87QtaOYFZqML1+0z16snW6Zo9EbJ38KNCgSrdAKDhkjSYJTMnAvQXntFoKsjJsBspruFY65dKzabDUKpGzdJv8=
+	t=1739459126; cv=none; b=SmveMtJE8ox0OC/IWCLEMHebwrUHXeyii2TkJCtgXkRmeDE5XQWcCSDocatdL1cId4nq7ej9PPSu5dleWmF4whICW+u1TVUhK/oVbOCMLK9oCnHcggQnIUYfu1mtMiSyKUK0PEna34IuGv0YWjsLZnfX5xaTOMk3kOVf2DBtAlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459123; c=relaxed/simple;
-	bh=jc5oYu0Cffetk3r2xrlZjnBYoldtUfpqX2RQ8ULSRiE=;
+	s=arc-20240116; t=1739459126; c=relaxed/simple;
+	bh=ionIXGVWu3FVammF9dFoQ0lDLa2QHsjRYG40XQwOMGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UeOQqIqE2/ha0//48THQguGAqZU6YSfhD7dfECuwPFV8JcpuK7s5e6BRtrhrGs3Rd15NkZual8LFsSld/9jTlxYxHlx9QkFv5FAySWI+wybDJ01XNkyah/ByoULUOmdc2qpNgUNdFDMJ8gWcg+wMGtiEcbg1pVtqMy0iVUdlgT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k95Mhpwv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UWA3jDWXK/cwLgTPKmOIGC2PgCItze4RgDTarb88ATYXPRJsyMfuBbTUK6vvNXo50iSxS5B3kyCScJSkceETk9A3r8+1Z2MDv7f+lm7ihhah/wMORJcXzXkall4Q1mgxP2F6c2hcsdqcub2oxvxuDv7ZjU6hpDjmVtyTFn96mAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGSeccau; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k95Mhpwv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC396C4CED1;
-	Thu, 13 Feb 2025 15:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGSeccau"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04DA5C4CED1;
+	Thu, 13 Feb 2025 15:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459123;
-	bh=jc5oYu0Cffetk3r2xrlZjnBYoldtUfpqX2RQ8ULSRiE=;
+	s=korg; t=1739459126;
+	bh=ionIXGVWu3FVammF9dFoQ0lDLa2QHsjRYG40XQwOMGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k95MhpwvkylfibmwXMZuho8lcXJxpvSWuaUa8Nk7iSysnaYGNWPMAFNc6pB8ZkJWJ
-	 L4+Ul0HdkxZilwChpsPlAp1I5aMfKN9YDI6BpE1x2somVLRIP25aGTn1u0cpapMvoa
-	 NW2MgUqZhUAnHaIZKv7H2+oCsM5b0ZZvHJ0r0HO8=
+	b=fGSeccauuVE0Z3QCv2CMYXhm1hsUojssvTOLQRPjtoMwrteyy9SBlhe7/0Xvx3pTE
+	 LsBvwOPVpGxbgcBik2cc0RI0+I4XnXF2J8/8DsnXoeoVkEn7Lp/k6e7y7OO/XTjPA1
+	 eHCpriIr3ae8bUNsw4s42dQtoA76aErtaiofDR6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Radu Rendec <rrendec@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 6.13 142/443] cpufreq: fix using cpufreq-dt as module
-Date: Thu, 13 Feb 2025 15:25:07 +0100
-Message-ID: <20250213142446.079302795@linuxfoundation.org>
+	Juergen Gross <jgross@suse.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 133/443] x86/xen: fix xen_hypercall_hvm() to not clobber %rbx
+Date: Thu, 13 Feb 2025 15:24:58 +0100
+Message-ID: <20250213142445.738692761@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,60 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Juergen Gross <jgross@suse.com>
 
-commit f1f010c9d9c62c865d9f54e94075800ba764b4d9 upstream.
+[ Upstream commit 98a5cfd2320966f40fe049a9855f8787f0126825 ]
 
-This driver can be built as a module since commit 3b062a086984 ("cpufreq:
-dt-platdev: Support building as module"), but unfortunately this caused
-a regression because the cputfreq-dt-platdev.ko module does not autoload.
+xen_hypercall_hvm(), which is used when running as a Xen PVH guest at
+most only once during early boot, is clobbering %rbx. Depending on
+whether the caller relies on %rbx to be preserved across the call or
+not, this clobbering might result in an early crash of the system.
 
-Usually, this is solved by just using the MODULE_DEVICE_TABLE() macro to
-export all the device IDs as module aliases. But this driver is special
-due how matches with devices and decides what platform supports.
+This can be avoided by using an already saved register instead of %rbx.
 
-There are two of_device_id lists, an allow list that are for CPU devices
-that always match and a deny list that's for devices that must not match.
-
-The driver registers a cpufreq-dt platform device for all the CPU device
-nodes that either are in the allow list or contain an operating-points-v2
-property and are not in the deny list.
-
-Enforce builtin compile of cpufreq-dt-platdev to make autoload work.
-
-Fixes: 3b062a086984 ("cpufreq: dt-platdev: Support building as module")
-Link: https://lore.kernel.org/all/20241104201424.2a42efdd@akair/
-Link: https://lore.kernel.org/all/20241119111918.1732531-1-javierm@redhat.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Reported-by: Radu Rendec <rrendec@redhat.com>
-Reported-by: Javier Martinez Canillas <javierm@redhat.com>
-[ Viresh: Picked commit log from Javier, updated tags ]
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b4845bb63838 ("x86/xen: add central hypercall functions")
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/Kconfig              |    2 +-
- drivers/cpufreq/cpufreq-dt-platdev.c |    2 --
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ arch/x86/xen/xen-head.S | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/cpufreq/Kconfig
-+++ b/drivers/cpufreq/Kconfig
-@@ -232,7 +232,7 @@ config CPUFREQ_VIRT
- 	  If in doubt, say N.
- 
- config CPUFREQ_DT_PLATDEV
--	tristate "Generic DT based cpufreq platdev driver"
-+	bool "Generic DT based cpufreq platdev driver"
- 	depends on OF
- 	help
- 	  This adds a generic DT based cpufreq platdev driver for frequency
---- a/drivers/cpufreq/cpufreq-dt-platdev.c
-+++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-@@ -235,5 +235,3 @@ create_pdev:
- 			       sizeof(struct cpufreq_dt_platform_data)));
- }
- core_initcall(cpufreq_dt_platdev_init);
--MODULE_DESCRIPTION("Generic DT based cpufreq platdev driver");
--MODULE_LICENSE("GPL");
+diff --git a/arch/x86/xen/xen-head.S b/arch/x86/xen/xen-head.S
+index 9252652afe596..72f28d66e0e52 100644
+--- a/arch/x86/xen/xen-head.S
++++ b/arch/x86/xen/xen-head.S
+@@ -117,8 +117,8 @@ SYM_FUNC_START(xen_hypercall_hvm)
+ 	pop %ebx
+ 	pop %eax
+ #else
+-	lea xen_hypercall_amd(%rip), %rbx
+-	cmp %rax, %rbx
++	lea xen_hypercall_amd(%rip), %rcx
++	cmp %rax, %rcx
+ #ifdef CONFIG_FRAME_POINTER
+ 	pop %rax	/* Dummy pop. */
+ #endif
+-- 
+2.39.5
+
 
 
