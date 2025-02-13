@@ -1,124 +1,144 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2A9214206;
-	Thu, 13 Feb 2025 11:58:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569EC227EBE;
+	Thu, 13 Feb 2025 12:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739447883; cv=none; b=rYkUMrZyIcNEyeCwmEAQFKgdhMfujVBiBScuDq1x0I4JgsIDCqiGLznQNEEbjqL/+BdxPTg4F4fa6UMhcd7FQp/CeojANnir5h6SWW6YzetLcmGDBbJCTK40D1UJhvcUKcqwLwj4KM5s4/IfMd+ZVpYL2Yu2WsLverf5joiQMLc=
+	t=1739448701; cv=none; b=YdBLF8GEw6AHvC+GSALbm4xM0dd/nx+G7+iMt6jROmvknl1az01p/xhWTyQmICuRiMROtVKqkPiLHgi6Hq9Yaodfk1Ba3A33JSKwIc7uraLfWoG+ig3p1IcdeQqZwB/j5EytYfPITUlOO1+BC4cxjZj0seS6drbFZJOVd1AplHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739447883; c=relaxed/simple;
-	bh=AK+FKyMd7dfZt0G7tPDijdfr9CalJ0oWmocbmIdcgPo=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=OGJ843Vwd3vn+F+N7v8Kp4R05umIWijccLJ6HDi+YLMTFawSy1/5dExdJWynvF+VZmMVsUo8/iRcf+BBf2+v4SH+e6ZcKNoIFngJgi+bylwqFsrHGxzm3dGCiQkkpqqULFL78zKnPEOqlqz/B4hS3xam528kv3kLqxpEIk/F0Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OlIO4VkI; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1739448701; c=relaxed/simple;
+	bh=/+89HoxCR4P4bed6CdrcvksQl9SDCWv/He6EHKr8h/Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SrZsAifkPIVBq+B5yfyII9au0LIJAWf6yAhbTY4xsGeZ1ZgKQ3mh9A7MTUG0eeKHcUr3y194vkPcNFo80HFBOY+p/7lgmvPlZNcqDurEqjxlA/XXe+wKbjALybCHU5HxpMCwwnJLG68B2m+HcGvpXgbCdTAA6Km5JlW9TZ3pADI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=rmp5Exz8; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Y0Z7BaOI; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OlIO4VkI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1739447883; x=1770983883;
-  h=message-id:date:mime-version:cc:subject:to:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=AK+FKyMd7dfZt0G7tPDijdfr9CalJ0oWmocbmIdcgPo=;
-  b=OlIO4VkI+p5xONu2FQ0KpNRC/otp0aTLDqKnBtD+q8L1F1RkZZ14pXZv
-   11I5DQ5atYrkcyqiZZ5stzS3gaVUGMEEI/jcdnv8W2ehe1P7uZXE+j0h9
-   9aBUdnTE9dRyE9uvHG9j32LAJRtnRhsuhl5I7kJwUXdWHKllmREfYHrGP
-   2PNLCUPWU/ziRs6yWkgOiS1wCAMcEaXGcL0jCkdUH5i4PYoXtZNRdHMj6
-   9qUApA8e77moX0T6O25mYHCFwzavJmtAbRtrWTGz5LRx3PYwKxoadQWms
-   XJl2D1WOsJe1ihuJtZhYKR8SpBKyNoDZ1aC9jSTcH/GnLGfyY5XkFcOHs
-   g==;
-X-CSE-ConnectionGUID: 04Fj9eEES+mmWX0wQ2+9/w==
-X-CSE-MsgGUID: 755Gr6BKSYuByl7NhZpqxA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="40261277"
-X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; 
-   d="scan'208";a="40261277"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 03:58:02 -0800
-X-CSE-ConnectionGUID: sqjDCNoHTtaIhPm2Z1Mc8A==
-X-CSE-MsgGUID: 62i6si6lRmG0UymwlyBHRQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
-   d="scan'208";a="118060259"
-Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.124.242.149]) ([10.124.242.149])
-  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 03:57:56 -0800
-Message-ID: <f7b6c833-b6c1-4154-9b77-13553e501f2b@linux.intel.com>
-Date: Thu, 13 Feb 2025 19:57:51 +0800
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="rmp5Exz8";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Y0Z7BaOI"
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1739448697;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/3WCJyWHDo+iDYPmzNhUzFQSCU4PUPzZ8RBmSh5HlJo=;
+	b=rmp5Exz8cDlyq2mtNnojNZqj7ZYko62PkYV3fFrSxq1Pna8q2IvK8E+v+gOW6NPZe3H/fm
+	v/gtkPMIycGTOD7g5TCR12qEEc2t80l1kfok3Rr5lARpVi1Qol6Y/Sd07nLa3zrHO6P1uD
+	O50ktZZ45CICbk5q7TDmQxGrtDowNsPOJGJn6yqOoBZIyKLUQ1hKtFRi6eLnOvEEHjww2q
+	SwW7fGiysuI7EIJ/+QezmN6TjL+mWqU/MiABFTbAn3252BVLG630/SZ+iFVnkC6NPoWd6Z
+	Q287nrW++IPa7QsqN/YAg8D4x2PbuybqPVxZJiezEtw2anHAwj18WosJkR1zeg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1739448697;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/3WCJyWHDo+iDYPmzNhUzFQSCU4PUPzZ8RBmSh5HlJo=;
+	b=Y0Z7BaOIti331G1gEPWryQVQcDyrmBsKbcJIPPOQl1tBPL9Xa9fzRGB6QnuJbUWt05xtY/
+	rPv67jYIe0eMiYCg==
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com,
+ kevin.tian@intel.com, maz@kernel.org
+Cc: joro@8bytes.org, will@kernel.org, robin.murphy@arm.com,
+ shuah@kernel.org, iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
+ eric.auger@redhat.com, baolu.lu@linux.intel.com, yi.l.liu@intel.com,
+ yury.norov@gmail.com, jacob.pan@linux.microsoft.com,
+ patches@lists.linux.dev
+Subject: Re: [PATCH v1 02/13] genirq/msi: Rename iommu_dma_compose_msi_msg()
+ to msi_msg_set_addr()
+In-Reply-To: <0cfaefcc104e29aeb031f316537249d8d53ef7fa.1739005085.git.nicolinc@nvidia.com>
+References: <cover.1739005085.git.nicolinc@nvidia.com>
+ <0cfaefcc104e29aeb031f316537249d8d53ef7fa.1739005085.git.nicolinc@nvidia.com>
+Date: Thu, 13 Feb 2025 13:11:37 +0100
+Message-ID: <87v7tejb7q.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: baolu.lu@linux.intel.com, Zhangfei Gao <zhangfei.gao@linaro.org>,
- acpica-devel@lists.linux.dev, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
- kvm@vger.kernel.org, Len Brown <lenb@kernel.org>,
- linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Robert Moore <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>,
- Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Donald Dutile <ddutile@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Hanjun Guo <guohanjun@huawei.com>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Jerry Snitselaar <jsnitsel@redhat.com>, Moritz Fischer <mdf@kernel.org>,
- Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>,
- patches@lists.linux.dev, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- Mostafa Saleh <smostafa@google.com>
-Subject: Re: [PATCH v4 00/12] Initial support for SMMUv3 nested translation
-To: Jason Gunthorpe <jgg@nvidia.com>
-References: <0-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
- <20241112182938.GA172989@nvidia.com>
- <CABQgh9HOHzeRF7JfrXrRAcGB53o29HkW9rnVTf4JefeVWDvzyQ@mail.gmail.com>
- <20241113012359.GB35230@nvidia.com>
- <9df3dd17-375a-4327-b2a8-e9f7690d81b1@linux.intel.com>
- <20241113164316.GL35230@nvidia.com>
- <6ed97a10-853f-429e-8506-94b218050ad3@linux.intel.com>
- <20241115175522.GA35230@nvidia.com> <20250122192622.GA965540@nvidia.com>
- <284dd081-8d53-45ef-ae18-78b0388c98ca@linux.intel.com>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <284dd081-8d53-45ef-ae18-78b0388c98ca@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 2025/2/5 11:45, Baolu Lu wrote:
-> On 2025/1/23 3:26, Jason Gunthorpe wrote:
->> On Fri, Nov 15, 2024 at 01:55:22PM -0400, Jason Gunthorpe wrote:
->>>>> I need your help to remove IOMMU_DEV_FEAT_IOPF from the intel
->>>>> driver. I have a patch series that eliminates it from all the other
->>>>> drivers, and I wrote a patch to remove FEAT_SVA from intel..
->>>> Yes, sure. Let's make this happen in the next cycle.
->>>>
->>>> FEAT_IOPF could be removed. IOPF manipulation can be handled in the
->>>> domain attachment path. A per-device refcount can be implemented. This
->>>> count increments with each iopf-capable domain attachment and 
->>>> decrements
->>>> with each detachment. PCI PRI is enabled for the first iopf-capable
->>>> domain and disabled when the last one is removed. Probably we can also
->>>> solve the PF/VF sharing PRI issue.
->>> Here is what I have so far, if you send me a patch for vt-d to move
->>> FEAT_IOPF into attach as you describe above (see what I did to arm for
->>> example), then I can send it next cycle
->>>
->>> https://github.com/jgunthorpe/linux/commits/iommu_no_feat/
->> Hey Baolu, a reminder on this, lets try for it next cycle?
-> 
-> Oh, I forgot this. Thanks for the reminding. Sure, let's try to make it
-> in the next cycle.
+On Sat, Feb 08 2025 at 01:02, Nicolin Chen wrote:
 
-Hi Jason,
+> From: Jason Gunthorpe <jgg@nvidia.com>
+>
+> The new function is used to take in a u64 MSI address and store it in the
 
-I've worked through the entire series. The patches are available here:
+Which new function? The subject claims this is a rename. That's
+confusing at best.
 
-https://github.com/LuBaolu/intel-iommu/commits/iommu-no-feat-v6.14-rc2
+> msi_msg. If the iommu has provided an alternative address then that is
+> replaced instead.
+>
+> All callers have a tidy u64 already so this also consolidates the repeated
+> low/high code into a small helper.
 
-Please check if this is the right direction.
+Now I'm really confused. Something like:
+
+    genirq/msi: Refactor iommu_dma_compose_msi_msg()
+
+    The call sites of iommu_dma_compose_msi_msg() have the following
+    pattern:
+
+      1) Set the MSI message address to the non-translated address
+
+      2) Invoke iommu_dma_compose_msi_msg() to apply IOVA translation if
+         available.
+
+    Rework and rename iommu_dma_compose_msi_msg() to handles both
+    address set up variants in one consolidated helper.
+
+Or something to that effect.
+
+> -/**
+> - * iommu_dma_compose_msi_msg() - Apply translation to an MSI message
+> - * @desc: MSI descriptor prepared by iommu_dma_prepare_msi()
+> - * @msg: MSI message containing target physical address
+> - */
+
+Please keep and rework the documentation comment.
+
+> -static inline void iommu_dma_compose_msi_msg(struct msi_desc *desc,
+> -					     struct msi_msg *msg)
+> +static inline void msi_msg_set_addr(struct msi_desc *desc, struct msi_msg *msg,
+> +				    u64 msi_addr)
+
+No line break required. You have 100 characters available.
+
+>  {
+>  #ifdef CONFIG_IRQ_MSI_IOMMU
+>  	if (desc->iommu_msi_page_shift) {
+> @@ -314,11 +309,14 @@ static inline void iommu_dma_compose_msi_msg(struct msi_desc *desc,
+>  			       << desc->iommu_msi_page_shift;
+>  
+>  		msg->address_hi = upper_32_bits(msi_iova);
+> -		msg->address_lo = lower_32_bits(msi_iova) |
+> -				  (msg->address_lo &
+> -				   ((1 << desc->iommu_msi_page_shift) - 1));
+> +		msg->address_lo =
+> +			lower_32_bits(msi_iova) |
+> +			(msi_addr & ((1 << desc->iommu_msi_page_shift) - 1));
+
+Please avoid unrelated random formatting changes. Especially in this
+case this is even more non-sensical as you introduced the original
+formatting in the previous patch. So fix it up there and make it:
+
+		msg->address_lo = lower_32_bits(msi_iova) |
+				  (msg->address_lo & ((1 << desc->iommu_msi_page_shift) - 1));
+
+which is way more readable than this displaced variant above.
+
+> +		return;
+>  
+> -	iommu_dma_compose_msi_msg(irq_data_get_msi_desc(d), msg);
+> +	msg->data = its_get_event_id(d);
+> +	msi_msg_set_addr(irq_data_get_msi_desc(d), msg,
+> +			 its_dev->its->get_msi_base(its_dev));
+
+No line break required here and at the other places.
 
 Thanks,
-baolu
+
+        tglx
