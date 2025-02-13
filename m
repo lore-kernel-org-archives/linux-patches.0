@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41DD221727;
-	Thu, 13 Feb 2025 14:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8CB211468;
+	Thu, 13 Feb 2025 14:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457962; cv=none; b=AtCVQjvT+f15MLIvRQBIfbREzZZcTy85RwqwALBhB20ECADr7Uyrk6rDrpy2tjK67eYjS+ydtS8Dncx/NcP/W0mzmpg+zLUrryqSZI6haaFzyVbFntAyl9rqvPCeu23+zf2a+YRcV1x+36niqCPVGPBYwVP3tL/OJPAXE+EBVS4=
+	t=1739457965; cv=none; b=AIcmg4u5CsiwwFn4w0nQgu3Otefd5DHmVAglsTWvFbkqTLTHcORwa3vo7kC7gdTSGpupISM52tMlIb0ammkCOGwn+HKmhCWPEu6Jo7ywFk8DhGCVs0fH5ktVn/TildJCaRymNsDVV8cgIU5H5ozRLX2AQZGuEQVdJfgWk1yqu8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457962; c=relaxed/simple;
-	bh=21fTHBH7UCsJjugyuvZcWYu9PX5KsufWjV/77jYGBrc=;
+	s=arc-20240116; t=1739457965; c=relaxed/simple;
+	bh=sWHOy66jahNeCWYhw9839gM1HICvkUM5kw4vYrCjee4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IRoTC45EbLOQkGP8FimU99xNSMiJ28PNkXvklDQ3W1jx7v5UhIuH87iTTtChdhhDOFzcZfh5E4q3MEVrRgrLfbCAhnRMdFW0jpQpLZ19hR0FbHwOg6mUL12Q/3hwLNJUTnVsh0QI5GdTllK+fGkCzb6Wua8SHss7Is9kwc0AbdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFLRSEf2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gjVrT0Q/8ZVhZ+twtvDP85II3kv4v60CvFrYmfynNctFYo1sFYKDZ16FCNlY5JanXYObQhDKeQV1ULxJrGmY1MVEDcJiEBBRlQuJicwbFoy3zBY9USgzhHifolEPFzNWqvyQYrxcE1GJdBTXBKzgYaUjUK7raNwJFlxpcnI4gQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cAW09YTh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFLRSEf2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7099EC4CED1;
-	Thu, 13 Feb 2025 14:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAW09YTh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FDBC4CED1;
+	Thu, 13 Feb 2025 14:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457961;
-	bh=21fTHBH7UCsJjugyuvZcWYu9PX5KsufWjV/77jYGBrc=;
+	s=korg; t=1739457965;
+	bh=sWHOy66jahNeCWYhw9839gM1HICvkUM5kw4vYrCjee4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QFLRSEf2tAmMuJiktvq04IvC5t4HTIZcMLOuSyR2fUEKqp+XQMdL7KY+zLgwjaSW2
-	 I0GLM31eQ+URbVorh2x3WRVAFRBfws1VoYqvxjjjQVfh+sjvw1+QY6XLRDw1b1bgyW
-	 6CRIgvrDqHJuTFdu6PYzsPk82XPqdnzUZ3NkgN3U=
+	b=cAW09YThaUuhI4LqI1qpGOveB3UEqDTTqqGpc8xjkQSF0me8/4s5PhZrVzN2gxgPL
+	 usT/61dnW+qT6kNYZXluivnH9Ff82IZ54RV5+BkPRD/vpSovfeYxQ207WCI0RFDg3h
+	 9Cg0IM7lTKj1lukx5a5mNpcwn9BNbJYXUkerpPIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
 	Alice Ryhl <aliceryhl@google.com>,
-	Fiona Behrens <me@kloenk.dev>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 261/422] rust: init: use explicit ABI to clean warning in future compilers
-Date: Thu, 13 Feb 2025 15:26:50 +0100
-Message-ID: <20250213142446.612180717@linuxfoundation.org>
+	Miguel Ojeda <ojeda@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.12 262/422] x86: rust: set rustc-abi=x86-softfloat on rustc>=1.86.0
+Date: Thu, 13 Feb 2025 15:26:51 +0100
+Message-ID: <20250213142446.651887297@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,48 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit c21bdb3d8a850afdfa4afe77eea39ae9533629b0 upstream.
+commit 6273a058383e05465083b535ed9469f2c8a48321 upstream.
 
-Starting with Rust 1.86.0 (currently in nightly, to be released on
-2025-04-03), the `missing_abi` lint is warn-by-default [1]:
+When using Rust on the x86 architecture, we are currently using the
+unstable target.json feature to specify the compilation target. Rustc is
+going to change how softfloat is specified in the target.json file on
+x86, thus update generate_rust_target.rs to specify softfloat using the
+new option.
 
-    error: extern declarations without an explicit ABI are deprecated
-        --> rust/doctests_kernel_generated.rs:3158:1
-         |
-    3158 | extern {
-         | ^^^^^^ help: explicitly specify the C ABI: `extern "C"`
-         |
-         = note: `-D missing-abi` implied by `-D warnings`
-         = help: to override `-D warnings` add `#[allow(missing_abi)]`
+Note that if you enable this parameter with a compiler that does not
+recognize it, then that triggers a warning but it does not break the
+build.
 
-Thus clean it up.
+[ For future reference, this solves the following error:
+
+        RUSTC L rust/core.o
+      error: Error loading target specification: target feature
+      `soft-float` is incompatible with the ABI but gets enabled in
+      target spec. Run `rustc --print target-list` for a list of
+      built-in targets
+
+  - Miguel ]
 
 Cc: <stable@vger.kernel.org> # Needed in 6.12.y and 6.13.y only (Rust is pinned in older LTSs).
-Fixes: 7f8977a7fe6d ("rust: init: add `{pin_}chain` functions to `{Pin}Init<T, E>`")
-Link: https://github.com/rust-lang/rust/pull/132397 [1]
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Fiona Behrens <me@kloenk.dev>
-Link: https://lore.kernel.org/r/20250121200934.222075-1-ojeda@kernel.org
-[ Added 6.13.y to Cc: stable tag. - Miguel ]
+Link: https://github.com/rust-lang/rust/pull/136146
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com> # for x86
+Link: https://lore.kernel.org/r/20250203-rustc-1-86-x86-softfloat-v1-1-220a72a5003e@google.com
+[ Added 6.13.y too to Cc: stable tag and added reasoning to avoid
+  over-backporting. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/init.rs |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/generate_rust_target.rs | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/rust/kernel/init.rs
-+++ b/rust/kernel/init.rs
-@@ -858,7 +858,7 @@ pub unsafe trait PinInit<T: ?Sized, E =
-     /// use kernel::{types::Opaque, init::pin_init_from_closure};
-     /// #[repr(C)]
-     /// struct RawFoo([u8; 16]);
--    /// extern {
-+    /// extern "C" {
-     ///     fn init_foo(_: *mut RawFoo);
-     /// }
-     ///
+diff --git a/scripts/generate_rust_target.rs b/scripts/generate_rust_target.rs
+index 0d00ac3723b5..4fd6b6ab3e32 100644
+--- a/scripts/generate_rust_target.rs
++++ b/scripts/generate_rust_target.rs
+@@ -165,6 +165,18 @@ fn has(&self, option: &str) -> bool {
+         let option = "CONFIG_".to_owned() + option;
+         self.0.contains_key(&option)
+     }
++
++    /// Is the rustc version at least `major.minor.patch`?
++    fn rustc_version_atleast(&self, major: u32, minor: u32, patch: u32) -> bool {
++        let check_version = 100000 * major + 100 * minor + patch;
++        let actual_version = self
++            .0
++            .get("CONFIG_RUSTC_VERSION")
++            .unwrap()
++            .parse::<u32>()
++            .unwrap();
++        check_version <= actual_version
++    }
+ }
+ 
+ fn main() {
+@@ -182,6 +194,9 @@ fn main() {
+         }
+     } else if cfg.has("X86_64") {
+         ts.push("arch", "x86_64");
++        if cfg.rustc_version_atleast(1, 86, 0) {
++            ts.push("rustc-abi", "x86-softfloat");
++        }
+         ts.push(
+             "data-layout",
+             "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
+@@ -215,6 +230,9 @@ fn main() {
+             panic!("32-bit x86 only works under UML");
+         }
+         ts.push("arch", "x86");
++        if cfg.rustc_version_atleast(1, 86, 0) {
++            ts.push("rustc-abi", "x86-softfloat");
++        }
+         ts.push(
+             "data-layout",
+             "e-m:e-p:32:32-p270:32:32-p271:32:32-p272:64:64-i128:128-f64:32:64-f80:32-n8:16:32-S128",
+-- 
+2.48.1
+
 
 
