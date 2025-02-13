@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7134126B091;
-	Thu, 13 Feb 2025 15:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED0226B091;
+	Thu, 13 Feb 2025 15:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459783; cv=none; b=VCGeSZmXSZ/md16J2Z20IPT+E2423Uc/sdR6FROyg36ENkzspIYgNBv7nlIHiE85HZ7fRtIQK3qBvA4BVjwKvnBIf4alt0dKGtwgLK7Sno4b+kqRO10MkMcU74ipnSzq91lNtGVEHtz4bux7zpRZUKkC+98sLZs2IUJ7qZ8ct2c=
+	t=1739459786; cv=none; b=ixMpmXzPF4QHDPvY8oZN/QNf1/JTlvOlG77FgzUADxK3czrUEewe1sxgWXQlwrdyI7CbpscC+zHBsz+AW/F6+nyQc1xKFVwUaJV/64iwNEPjQaQ0cNUQ0T55YTX0ev3isoajX3O6eZI33uwwu4iHHxUD6qr9XkvaOqgvEpXKRNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459783; c=relaxed/simple;
-	bh=t5WvL20Bb/dnT2bvoL2/IbUyVGrzzcoFxXaw2YsTVWE=;
+	s=arc-20240116; t=1739459786; c=relaxed/simple;
+	bh=Lgi2AXcQIGBCe3Gzz3B9eMFTFDbJK/+n7YaL/fG6xDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Evf5GbSa1rInLxpPFo5+Agw76s/n/8Trtra75NLUAduD5YyO/Jurf2w0EMx/Ut8uiVVHEUMhZZEzNeAVOo1XwAwZQQu3DzzZlHAoKrHJaDUXpf0h2wtEpJZskUllAWPBywGeiuQNJR5jrnItg5QDCY2cxWWRH1Z3vow/ZPIfWBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujablTpT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dDXxeQuWVoskPebf2lge1bc6j1tQdEYQP4yjC0kt1sLMPji/Yn2FOFovI8/7/7AZjlFZX/6t0IB7Bg6Ju6gonldSBZX0at6P6H1E0XVf4hNwqGTLhkQRRsWqy2cgskOUfLzx7unVQ1bhj9q325ytCCi6AxfqV2NuAkGMfzFI06s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/3IRaYW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujablTpT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62332C4CED1;
-	Thu, 13 Feb 2025 15:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/3IRaYW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34D5C4CED1;
+	Thu, 13 Feb 2025 15:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459782;
-	bh=t5WvL20Bb/dnT2bvoL2/IbUyVGrzzcoFxXaw2YsTVWE=;
+	s=korg; t=1739459786;
+	bh=Lgi2AXcQIGBCe3Gzz3B9eMFTFDbJK/+n7YaL/fG6xDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ujablTpT3C+lqNsQ4bopw5w90eBax0Mi5z1pZ/FbT66f2Ba0NkK9udNqSoVmJXHUm
-	 G6V3IRmfEkXuW5+Q4acpfmYtpzb+eOsZj/CLCxtxej0S9L3i/mk0dTIaO6sAEkXXhB
-	 wmtyHJ9DeRvxQ3a5NlzR++ZiYfTedpb8hOKmmEp0=
+	b=Z/3IRaYW2rogdJu7YDvA12tKnLeGH+73zs7/QA37oM7q7Id6pCziw5lIRQ2TrzZ6f
+	 iqo2FzsU8gIY6xh9lZcbNRjC3/R9AglLO4KChfApQF7t6PVKg2RFMLTy3WXalFkHX4
+	 xezRPw1Jhr8ccuasHZfNl9ZaCSiL0VHlqfiQQpVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
+	Nathan Hebert <nhebert@google.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.13 363/443] media: stm32: dcmipp: correct dma_set_mask_and_coherent mask value
-Date: Thu, 13 Feb 2025 15:28:48 +0100
-Message-ID: <20250213142454.619278651@linuxfoundation.org>
+Subject: [PATCH 6.13 364/443] media: venus: destroy hfi session after m2m_ctx release
+Date: Thu, 13 Feb 2025 15:28:49 +0100
+Message-ID: <20250213142454.657260680@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -50,32 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-commit b36077ba289b827b4e76e25e8d8e0cc90fa09186 upstream.
+commit df4ff47448fe0d392b29868e8398e3b0e587514d upstream.
 
-Correct the call to dma_set_mask_and_coherent which should be set
-to DMA_BIT_MASK(32).
+This partially reverts commit that made hfi_session_destroy()
+the first step of vdec/venc close().  The reason being is a
+regression report when, supposedly, encode/decoder is closed
+with still active streaming (no ->stop_streaming() call before
+close()) and pending pkts, so isr_thread cannot find instance
+and fails to process those pending pkts.  This was the idea
+behind the original patch - make it impossible to use instance
+under destruction, because this is racy, but apparently there
+are uses cases that depend on that unsafe pattern.  Return to
+the old (unsafe) behaviour for the time being (until a better
+fix is found).
 
-Fixes: 28e0f3772296 ("media: stm32-dcmipp: STM32 DCMIPP camera interface driver")
+Fixes: 45b1a1b348ec ("media: venus: sync with threaded IRQ during inst destruction")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
+Reported-by: Nathan Hebert <nhebert@google.com>
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-bytecap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/core.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-bytecap.c
-+++ b/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-bytecap.c
-@@ -887,7 +887,7 @@ struct dcmipp_ent_device *dcmipp_bytecap
- 	q->dev = dev;
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index 2d27c5167246..807487a1f536 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -506,18 +506,14 @@ static __maybe_unused int venus_runtime_suspend(struct device *dev)
+ void venus_close_common(struct venus_inst *inst)
+ {
+ 	/*
+-	 * First, remove the inst from the ->instances list, so that
+-	 * to_instance() will return NULL.
+-	 */
+-	hfi_session_destroy(inst);
+-	/*
+-	 * Second, make sure we don't have IRQ/IRQ-thread currently running
++	 * Make sure we don't have IRQ/IRQ-thread currently running
+ 	 * or pending execution, which would race with the inst destruction.
+ 	 */
+ 	synchronize_irq(inst->core->irq);
  
- 	/* DCMIPP requires 16 bytes aligned buffers */
--	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32) & ~0x0f);
-+	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
- 	if (ret) {
- 		dev_err(dev, "Failed to set DMA mask\n");
- 		goto err_mutex_destroy;
+ 	v4l2_m2m_ctx_release(inst->m2m_ctx);
+ 	v4l2_m2m_release(inst->m2m_dev);
++	hfi_session_destroy(inst);
+ 	v4l2_fh_del(&inst->fh);
+ 	v4l2_fh_exit(&inst->fh);
+ 	v4l2_ctrl_handler_free(&inst->ctrl_handler);
+-- 
+2.48.1
+
 
 
