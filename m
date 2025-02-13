@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2901422D8;
-	Thu, 13 Feb 2025 15:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CDF26B087;
+	Thu, 13 Feb 2025 15:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460498; cv=none; b=s1xkM4Lx6tsS8Dt7aIf5UEgvrOtBbA7qwSjUsXmmUVbj0FHl99d2HrYu4fXkKrAk+OxKFgPem9VC0MzBqTi8t+cRQKAuwIQDHnvDOx+BrL+kZ6h/a7l3ILMSEIA6mATtEpz/xC7REIW1WkGPCKDrX7oZQhfYuGT4z9w7qFOi3H4=
+	t=1739460501; cv=none; b=rZXYxaO0Dck4aOca87AYXBCfhEKOAMCpU4xT33VBHehPKBZfmGranTc4JTTDLDiEvEy9v5PS4OefhJKMd5AftkInTEB13BeUTphi2tz4pe79LHNxIbF4IGGWe8tOqu8HKisqH8bbc3/U58ZPwFTZM7RPx7sjBPpWgylxExUXvrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460498; c=relaxed/simple;
-	bh=jfLj4OAEHFx6HvbLyhKaTNdrnpaQlRJYZk22N0JgtzQ=;
+	s=arc-20240116; t=1739460501; c=relaxed/simple;
+	bh=NOBKCLRc0GKR2qhHP3rb36Zja+G2YMX0DSYf5PCxfl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G2h1P31ZcsVJO2EUWwiuRYbJvS0JI6ne3q0I/ONaC7JUjPdNa0QHFwDuurLgyMe6YAkeb+PUJUQQBmethty5C0Cz2NrGbC387QJP+zmq4wZzqn4NVr2nCRIoBmv4GUwiy66KDZ66HTig659t27BSKpzkgAl3wydYD5CTnneK2cY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRndtaFF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pf3XdUbp781/3tSm6Xw6Uqx2U9blpA0IFcDFBxipMa1OhDYRFleK0YeY6YK5PJUwjNyR9IeXYDhbBiLiia2FscSmFyxbOrSfXcmNSUzPm6022My3j+oKoot7Xy2880VvpzPgYWGMbsFSuxZlBEdnfqR8xQ+AOpigWyCNUmvwB4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbmqFMch; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRndtaFF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59109C4CED1;
-	Thu, 13 Feb 2025 15:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbmqFMch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E90C4CEE5;
+	Thu, 13 Feb 2025 15:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460497;
-	bh=jfLj4OAEHFx6HvbLyhKaTNdrnpaQlRJYZk22N0JgtzQ=;
+	s=korg; t=1739460501;
+	bh=NOBKCLRc0GKR2qhHP3rb36Zja+G2YMX0DSYf5PCxfl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRndtaFFpmSx03Ec3pcLF3/qXt+JRkpATr5wvhkjX8DXQc52m30zpmIDQIfAi8GuQ
-	 ETqTNOMK+hcngokPJA0ScuOcRkq/j0D+RlVQQtorB0BcB0WKpO52fKgFpCAACQgI8C
-	 j1SQ58bWZyRYlM/QnD+6E+uF7rGCxASqQ3YEpURk=
+	b=jbmqFMchlIxr8kFNvFOf1yWwpOv4SyhxAJiDnzCIxDymgf2OCz4GcmOvLPYsD6bZz
+	 dFP7ZGa4xEn3goN45oWZB0ntGPrypeoYGjStnlIrLyvcKt92anQ8fY6SrqFf93nNkM
+	 BjOVResQG4MU3OpaiEF0U4Kdg8pKlOTB0r1SOb0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ville Syrjala <ville.syrjala@linux.intel.com>,
-	Vidya Srinivas <vidya.srinivas@intel.com>,
-	Brian Geffon <bgeffon@google.com>,
-	Tomasz Figa <tfiga@google.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.6 101/273] drm/i915: Fix page cleanup on DMA remap failure
-Date: Thu, 13 Feb 2025 15:27:53 +0100
-Message-ID: <20250213142411.335537963@linuxfoundation.org>
+	Marcel Hamer <marcel.hamer@windriver.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.6 128/273] wifi: brcmfmac: fix NULL pointer dereference in brcmf_txfinalize()
+Date: Thu, 13 Feb 2025 15:28:20 +0100
+Message-ID: <20250213142412.398060822@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -48,76 +45,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Geffon <bgeffon@google.com>
+From: Marcel Hamer <marcel.hamer@windriver.com>
 
-commit fa6182c8b13ebfdc70ebdc09161a70dd8131f3b1 upstream.
+commit 68abd0c4ebf24cd499841a488b97a6873d5efabb upstream.
 
-When converting to folios the cleanup path of shmem_get_pages() was
-missed. When a DMA remap fails and the max segment size is greater than
-PAGE_SIZE it will attempt to retry the remap with a PAGE_SIZEd segment
-size. The cleanup code isn't properly using the folio apis and as a
-result isn't handling compound pages correctly.
+On removal of the device or unloading of the kernel module a potential NULL
+pointer dereference occurs.
 
-v2 -> v3:
-(Ville) Just use shmem_sg_free_table() as-is in the failure path of
-shmem_get_pages(). shmem_sg_free_table() will clear mapping unevictable
-but it will be reset when it retries in shmem_sg_alloc_table().
+The following sequence deletes the interface:
 
-v1 -> v2:
-(Ville) Fixed locations where we were not clearing mapping unevictable.
+  brcmf_detach()
+    brcmf_remove_interface()
+      brcmf_del_if()
+
+Inside the brcmf_del_if() function the drvr->if2bss[ifidx] is updated to
+BRCMF_BSSIDX_INVALID (-1) if the bsscfgidx matches.
+
+After brcmf_remove_interface() call the brcmf_proto_detach() function is
+called providing the following sequence:
+
+  brcmf_detach()
+    brcmf_proto_detach()
+      brcmf_proto_msgbuf_detach()
+        brcmf_flowring_detach()
+          brcmf_msgbuf_delete_flowring()
+            brcmf_msgbuf_remove_flowring()
+              brcmf_flowring_delete()
+                brcmf_get_ifp()
+                brcmf_txfinalize()
+
+Since brcmf_get_ip() can and actually will return NULL in this case the
+call to brcmf_txfinalize() will result in a NULL pointer dereference inside
+brcmf_txfinalize() when trying to update ifp->ndev->stats.tx_errors.
+
+This will only happen if a flowring still has an skb.
+
+Although the NULL pointer dereference has only been seen when trying to
+update the tx statistic, all other uses of the ifp pointer have been
+guarded as well with an early return if ifp is NULL.
 
 Cc: stable@vger.kernel.org
-Cc: Ville Syrjala <ville.syrjala@linux.intel.com>
-Cc: Vidya Srinivas <vidya.srinivas@intel.com>
-Link: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13487
-Link: https://lore.kernel.org/lkml/20250116135636.410164-1-bgeffon@google.com/
-Fixes: 0b62af28f249 ("i915: convert shmem_sg_free_table() to use a folio_batch")
-Signed-off-by: Brian Geffon <bgeffon@google.com>
-Suggested-by: Tomasz Figa <tfiga@google.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250127204332.336665-1-bgeffon@google.com
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Tested-by: Vidya Srinivas <vidya.srinivas@intel.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-(cherry picked from commit 9e304a18630875352636ad52a3d2af47c3bde824)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Marcel Hamer <marcel.hamer@windriver.com>
+Link: https://lore.kernel.org/all/b519e746-ddfd-421f-d897-7620d229e4b2@gmail.com/
+Acked-by: Arend van Spriel  <arend.vanspriel@broadcom.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20250116132240.731039-1-marcel.hamer@windriver.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_shmem.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-index fe69f2c8527d..ae3343c81a64 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-@@ -209,8 +209,6 @@ static int shmem_get_pages(struct drm_i915_gem_object *obj)
- 	struct address_space *mapping = obj->base.filp->f_mapping;
- 	unsigned int max_segment = i915_sg_segment_size(i915->drm.dev);
- 	struct sg_table *st;
--	struct sgt_iter sgt_iter;
--	struct page *page;
- 	int ret;
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -540,6 +540,11 @@ void brcmf_txfinalize(struct brcmf_if *i
+ 	struct ethhdr *eh;
+ 	u16 type;
  
- 	/*
-@@ -239,9 +237,7 @@ static int shmem_get_pages(struct drm_i915_gem_object *obj)
- 		 * for PAGE_SIZE chunks instead may be helpful.
- 		 */
- 		if (max_segment > PAGE_SIZE) {
--			for_each_sgt_page(page, sgt_iter, st)
--				put_page(page);
--			sg_free_table(st);
-+			shmem_sg_free_table(st, mapping, false, false);
- 			kfree(st);
++	if (!ifp) {
++		brcmu_pkt_buf_free_skb(txp);
++		return;
++	}
++
+ 	eh = (struct ethhdr *)(txp->data);
+ 	type = ntohs(eh->h_proto);
  
- 			max_segment = PAGE_SIZE;
--- 
-2.48.1
-
 
 
