@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AF326B086;
-	Thu, 13 Feb 2025 14:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94DE13B58A;
+	Thu, 13 Feb 2025 14:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458693; cv=none; b=HvARWgJpq+eC01j92O9d00qSWsgCDUYgK0hqzYqyjnzfVfZxX0iTGWpy3ElAOtYQUtGcl7pVdxRxKb3pWfnvfxY8ds4D6wwg7LaWUJRUOMW5MVCRUnANnE9RLuZ0idOVUlnCrX3UC8GLR2fVlu6EFAetBb9hjmt0vjtqLPqsV0A=
+	t=1739458698; cv=none; b=PY4T1QHYUjitohXUknIPqE1Y3kEHZzqz1AcgN43THR4FJ2on32kHdk9LLOCmc3jWq+aw6DZbZMSQK5V2fH+g3i//vahV38Tlx5LbWKvuZkM0g3PISP9NEABeyeXcr2esIFw4ZsqUAj9IBvOfnddMUkDxff1o9g+xYWGk/h3rB84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458693; c=relaxed/simple;
-	bh=Y9s7IGnxPX1xkib6ecwh/Ts3C4GJWahBeiavThO7Ogs=;
+	s=arc-20240116; t=1739458698; c=relaxed/simple;
+	bh=q7IFpJ6caSxRCGnLgOYUn22c7JHN9q2/3hjwT9d0qSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G2ccQBzSi7fg3K8eYlAQudyPOrYOb0wSVgoDBcUPpCGL6rYp0VS27NgoV7Cc/MpGn5467Uv6LHojioaz9rJKDkkePIuyUzo/i6QFsa/+0SpOoKEx5vwVwPJ++nBBN3mRvPF/LmtE/rJOHbzP/zBZpjJd/+afROZZuGQSN+gUhMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1QIwALF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dibpeOQPi9c+hBHfmQDbIwqt9WtpudRqFeeq40rfJJOhCZXNllkGZtruIgSDPy3PAEGrDrCdvtOLunRdGmPS/ry0R3I2aFiW+OlwntOVnHXGs9Mx43FIRgQG1VOWBqwEVzkHUDJhbriiFfCd4x+LqahKNvpUeo7e4R8POg9wz+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/RfVwlO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1QIwALF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E41C4CEE7;
-	Thu, 13 Feb 2025 14:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/RfVwlO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64604C4CEE4;
+	Thu, 13 Feb 2025 14:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458692;
-	bh=Y9s7IGnxPX1xkib6ecwh/Ts3C4GJWahBeiavThO7Ogs=;
+	s=korg; t=1739458697;
+	bh=q7IFpJ6caSxRCGnLgOYUn22c7JHN9q2/3hjwT9d0qSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W1QIwALFHiAQpnPQzd7YkRkgOBqYCNMF5nKp4++aWoX3B6fGiDPQR8lfsBHDi7wQB
-	 w1f5m44n6WNlFmqinkM8SCOXcdXPDJ4Yz5+jA8oN8z90r4twKrBOuB3oGex2bBGJjq
-	 8Ju0mxQHMF43UQboGD4p7nDAuze/uc2m2I1vMxmo=
+	b=W/RfVwlOyAYQFsRxBlFgMWCAWebUlIut8V2cHNtpP1bf7aajWcWivdGMAYy2pzjhc
+	 Qoq2L2HX2fnUxHlXGEL+CFh4mvlPZ41oOAg5/H1zOI0wqnacjBYMfwLWwyFLuxM7s/
+	 QoxlIMkAIjVT6zczect0Orbb8NvWI6N2XmNZ2LxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Gabe Teeger <Gabe.Teeger@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jeongjun Park <aha310510@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 051/443] drm/amd/display: Limit Scaling Ratio on DCN3.01
-Date: Thu, 13 Feb 2025 15:23:36 +0100
-Message-ID: <20250213142442.590591396@linuxfoundation.org>
+Subject: [PATCH 6.13 052/443] ring-buffer: Make reading page consistent with the code logic
+Date: Thu, 13 Feb 2025 15:23:37 +0100
+Message-ID: <20250213142442.629283453@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -54,53 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabe Teeger <Gabe.Teeger@amd.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit abc0ad6d08440761b199988c329ad7ac83f41c9b ]
+[ Upstream commit 6e31b759b076eebb4184117234f0c4eb9e4bc460 ]
 
-[why]
-Underflow and flickering was occuring due to high scaling ratios
-when resizing videos.
+In the loop of __rb_map_vma(), the 's' variable is calculated from the
+same logic that nr_pages is and they both come from nr_subbufs. But the
+relationship is not obvious and there's a WARN_ON_ONCE() around the 's'
+variable to make sure it never becomes equal to nr_subbufs within the
+loop. If that happens, then the code is buggy and needs to be fixed.
 
-[how]
-Limit the scaling ratios by increasing the max scaling factor
+The 'page' variable is calculated from cpu_buffer->subbuf_ids[s] which is
+an array of 'nr_subbufs' entries. If the code becomes buggy and 's'
+becomes equal to or greater than 'nr_subbufs' then this will be an out of
+bounds hit before the WARN_ON() is triggered and the code exiting safely.
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Gabe Teeger <Gabe.Teeger@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Make the 'page' initialization consistent with the code logic and assign
+it after the out of bounds check.
+
+Link: https://lore.kernel.org/20250110162612.13983-1-aha310510@gmail.com
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+[ sdr: rewrote change log ]
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/resource/dcn301/dcn301_resource.c  | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/trace/ring_buffer.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn301/dcn301_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn301/dcn301_resource.c
-index a9816affd312d..0cc8a27be5935 100644
---- a/drivers/gpu/drm/amd/display/dc/resource/dcn301/dcn301_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dcn301/dcn301_resource.c
-@@ -671,9 +671,9 @@ static const struct dc_plane_cap plane_cap = {
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 60210fb5b2110..6804ab126802b 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -7059,7 +7059,7 @@ static int __rb_map_vma(struct ring_buffer_per_cpu *cpu_buffer,
+ 	}
  
- 	/* 6:1 downscaling ratio: 1000/6 = 166.666 */
- 	.max_downscale_factor = {
--			.argb8888 = 167,
--			.nv12 = 167,
--			.fp16 = 167 
-+			.argb8888 = 358,
-+			.nv12 = 358,
-+			.fp16 = 358
- 	},
- 	64,
- 	64
-@@ -693,7 +693,7 @@ static const struct dc_debug_options debug_defaults_drv = {
- 	.disable_dcc = DCC_ENABLE,
- 	.vsr_support = true,
- 	.performance_trace = false,
--	.max_downscale_src_width = 7680,/*upto 8K*/
-+	.max_downscale_src_width = 4096,/*upto true 4k*/
- 	.scl_reset_length10 = true,
- 	.sanity_checks = false,
- 	.underflow_assert_delay_us = 0xFFFFFFFF,
+ 	while (p < nr_pages) {
+-		struct page *page = virt_to_page((void *)cpu_buffer->subbuf_ids[s]);
++		struct page *page;
+ 		int off = 0;
+ 
+ 		if (WARN_ON_ONCE(s >= nr_subbufs)) {
+@@ -7067,6 +7067,8 @@ static int __rb_map_vma(struct ring_buffer_per_cpu *cpu_buffer,
+ 			goto out;
+ 		}
+ 
++		page = virt_to_page((void *)cpu_buffer->subbuf_ids[s]);
++
+ 		for (; off < (1 << (subbuf_order)); off++, page++) {
+ 			if (p >= nr_pages)
+ 				break;
 -- 
 2.39.5
 
