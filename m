@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505DB26B082;
-	Thu, 13 Feb 2025 15:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D23626B088;
+	Thu, 13 Feb 2025 15:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459190; cv=none; b=fzA+YvHD8T42M5WTjs280I0G7HY2PSX6YiKpOSKgF8lzbtJh8oL8wHMraQt/i5qYSJh3ryCvDGXwLnMV7cwhY3bv0be3zpPJmg42pmHn1e/37JFW0QEiN2QTiq3ONJ7vjj+E/RqbZTgQOPb4KaiKnAtiFUHXf+9wCmqcBWt1+3Y=
+	t=1739459193; cv=none; b=M/yTl37iTdaPTd5ynz2gARhiUEENGIV/gYEdqfpsq419mjWkSKYcPzynx1g7AmWnPfqkGe5YTp7YWbNPG5HuftD58erCywIvTMop+foqTJQXmbuyNgDjQzMVEbx16l1zPKFl3+SDi29I0rCevKWk9vm+9IxwtKDC+Yytzgly0FA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459190; c=relaxed/simple;
-	bh=qIkkDf1XziAZcFsc7u38qn+5Oda/iIZWfSsKRxpOvbU=;
+	s=arc-20240116; t=1739459193; c=relaxed/simple;
+	bh=QAdcnTb54v7URbLqQUNE3c+Bkf3HjXs88ryNvcaFD9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aombEsboPYNFSrkhwE2PKrgstNfNfVjzfhU342zwVdDALIKzigeYtQ8U4NzeWF0fU4MLQusC4oimB+Mfh21ZyoYxaAbwRxEU5EEBx30mQvwk328XNOAuU375NVuHhs3Tg9WSAiwi0iMjNZfoHGv2GVRA5BCcRtLs2qx36cvUD2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umjkZ1pb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MIe+Mf9wrn/xSUgN5iSeFB3wdhr+0KVkZCXWL3G61U2ansk3lArqcfOGDLWKgiRlLOro4u+u8FULCBE1LiMlTKiZWNoC+GVfspETs/a4Yx2koUYX6BWQ4RSGvl9HI+cuEmxUinHc0bnEBhNTDajVxZe8S0v43n2aNzBOdYM5Gvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfBHE4Yy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umjkZ1pb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1D9C4CED1;
-	Thu, 13 Feb 2025 15:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfBHE4Yy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1115C4CED1;
+	Thu, 13 Feb 2025 15:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459190;
-	bh=qIkkDf1XziAZcFsc7u38qn+5Oda/iIZWfSsKRxpOvbU=;
+	s=korg; t=1739459193;
+	bh=QAdcnTb54v7URbLqQUNE3c+Bkf3HjXs88ryNvcaFD9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=umjkZ1pbtpX5M+Rnd8NgxEIYwkL+b0lq6D6JZmt88Ck5k2Jwicr8pG0RrqIK1RKiV
-	 FjFuhzvfore5+NQMCGP5rS6Q/itVC5bU0wU3zE1/u6KgQ4w+zZjb1vt+a5rwEI06lF
-	 o1RB6EDQYUU55B9rEpF3K2O2AqNONqtXwFlvJ4nM=
+	b=rfBHE4Yyzo1qAZKVsyy7jkZVCXx5d4NtSEpclvvIurbKKRltBvMpE0CY29sMp0wV1
+	 C+eLYNWHmg+y0T55L8J/b+JGm+xyzVk3NyChP3y5+9Xt4jBgqj+/Na3DL6b5P02bc1
+	 UjQP9I1P/ZQZRs/11kBWHPfX1aUdZKJkWP9pQGMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cody Eksal <masterr3c0rd@epochal.quest>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Chen-Yu Tsai <wens@csie.org>
-Subject: [PATCH 6.13 193/443] clk: sunxi-ng: a100: enable MMC clock reparenting
-Date: Thu, 13 Feb 2025 15:25:58 +0100
-Message-ID: <20250213142448.060196483@linuxfoundation.org>
+	Lubomir Rintel <lkundrak@v3.sk>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.13 194/443] clk: mmp2: call pm_genpd_init() only after genpd.name is set
+Date: Thu, 13 Feb 2025 15:25:59 +0100
+Message-ID: <20250213142448.097513819@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,59 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cody Eksal <masterr3c0rd@epochal.quest>
+From: Lubomir Rintel <lkundrak@v3.sk>
 
-commit 16414720045de30945b8d14b7907e0cbf81a4b49 upstream.
+commit e24b15d4704dcb73920c3d18a6157abd18df08c1 upstream.
 
-While testing the MMC nodes proposed in [1], it was noted that mmc0/1
-would fail to initialize, with "mmc: fatal err update clk timeout" in
-the kernel logs. A closer look at the clock definitions showed that the MMC
-MPs had the "CLK_SET_RATE_NO_REPARENT" flag set. No reason was given for
-adding this flag in the first place, and its original purpose is unknown,
-but it doesn't seem to make sense and results in severe limitations to MMC
-speeds. Thus, remove this flag from the 3 MMC MPs.
+Setting the genpd's struct device's name with dev_set_name() is
+happening within pm_genpd_init(). If it remains NULL, things can blow up
+later, such as when crafting the devfs hierarchy for the power domain:
 
-[1] https://msgid.link/20241024170540.2721307-10-masterr3c0rd@epochal.quest
+  Unable to handle kernel NULL pointer dereference at virtual address 00000000 when read
+  ...
+  Call trace:
+   strlen from start_creating+0x90/0x138
+   start_creating from debugfs_create_dir+0x20/0x178
+   debugfs_create_dir from genpd_debug_add.part.0+0x4c/0x144
+   genpd_debug_add.part.0 from genpd_debug_init+0x74/0x90
+   genpd_debug_init from do_one_initcall+0x5c/0x244
+   do_one_initcall from kernel_init_freeable+0x19c/0x1f4
+   kernel_init_freeable from kernel_init+0x1c/0x12c
+   kernel_init from ret_from_fork+0x14/0x28
 
-Fixes: fb038ce4db55 ("clk: sunxi-ng: add support for the Allwinner A100 CCU")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cody Eksal <masterr3c0rd@epochal.quest>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://patch.msgid.link/20241109003739.3440904-1-masterr3c0rd@epochal.quest
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Bisecting tracks this crash back to commit 899f44531fe6 ("pmdomain: core:
+Add GENPD_FLAG_DEV_NAME_FW flag"), which exchanges use of genpd->name
+with dev_name(&genpd->dev) in genpd_debug_add.part().
+
+Fixes: 899f44531fe6 ("pmdomain: core: Add GENPD_FLAG_DEV_NAME_FW flag")
+Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
+Cc: stable@vger.kernel.org # v6.12+
+Link: https://lore.kernel.org/r/20241231190336.423172-1-lkundrak@v3.sk
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun50i-a100.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/clk/mmp/pwr-island.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/clk/sunxi-ng/ccu-sun50i-a100.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun50i-a100.c
-@@ -436,7 +436,7 @@ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDI
- 					  24, 2,	/* mux */
- 					  BIT(31),	/* gate */
- 					  2,		/* post-div */
--					  CLK_SET_RATE_NO_REPARENT);
-+					  0);
+--- a/drivers/clk/mmp/pwr-island.c
++++ b/drivers/clk/mmp/pwr-island.c
+@@ -106,10 +106,10 @@ struct generic_pm_domain *mmp_pm_domain_
+ 	pm_domain->flags = flags;
+ 	pm_domain->lock = lock;
  
- static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDIV(mmc1_clk, "mmc1", mmc_parents, 0x834,
- 					  0, 4,		/* M */
-@@ -444,7 +444,7 @@ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDI
- 					  24, 2,	/* mux */
- 					  BIT(31),	/* gate */
- 					  2,		/* post-div */
--					  CLK_SET_RATE_NO_REPARENT);
-+					  0);
+-	pm_genpd_init(&pm_domain->genpd, NULL, true);
+ 	pm_domain->genpd.name = name;
+ 	pm_domain->genpd.power_on = mmp_pm_domain_power_on;
+ 	pm_domain->genpd.power_off = mmp_pm_domain_power_off;
++	pm_genpd_init(&pm_domain->genpd, NULL, true);
  
- static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDIV(mmc2_clk, "mmc2", mmc_parents, 0x838,
- 					  0, 4,		/* M */
-@@ -452,7 +452,7 @@ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDI
- 					  24, 2,	/* mux */
- 					  BIT(31),	/* gate */
- 					  2,		/* post-div */
--					  CLK_SET_RATE_NO_REPARENT);
-+					  0);
- 
- static SUNXI_CCU_GATE(bus_mmc0_clk, "bus-mmc0", "ahb3", 0x84c, BIT(0), 0);
- static SUNXI_CCU_GATE(bus_mmc1_clk, "bus-mmc1", "ahb3", 0x84c, BIT(1), 0);
+ 	return &pm_domain->genpd;
+ }
 
 
