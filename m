@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB2F153801;
-	Thu, 13 Feb 2025 15:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BBD26B087;
+	Thu, 13 Feb 2025 15:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459088; cv=none; b=b/hVqHGAWsFvAbVbugE8j9jj/n35tbTirYdhfVwn0PoU43t3IUAD8/gRKBgkF3K/miTEOyGr7/STaIqx7zP3KnCeBa9K4yjE62u6UGQ9Bn80PlAXWpo1oF6FRX6lGQlYY95O7xGoJwpLW8wmfGQdwnEgZ9HdC8k00AXpMGF9awU=
+	t=1739459092; cv=none; b=KpLFJxioJNfthMYtPWM16Doy5wE7/NHnZ3UDP6r1kefsHZsIWRqZhcEiM3eWRE9zduSGYLEgT3zCtya0XghfWdHuWyUaSh8p6fbk0vZk5raq7Vv4A3/qbkpsIk/VUJKkJLCD+o9CTPUCnJWIdFGOzDbRMxeN6a3XeLuHqT99pZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459088; c=relaxed/simple;
-	bh=T4yPeDiWMDpCCXxqRkG9nKYjqg8eNBpEyOldopOFymE=;
+	s=arc-20240116; t=1739459092; c=relaxed/simple;
+	bh=jApS9iW1fp/DWD9yMEr1ey+Y6uqLeBJunRggdgfY/tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZyzSdiL+s4dtUgOwjLukA9D35HliYR2Yju+Mx85pQgQJfmuGrTI4wuO6POBDjsZiPm4Y3J4Yg9FT30/mGnI2wjT9/3GM1bs2PdvAIilS6eOIdOTp/PSrvuGl9lqq478pT1bVjkBwj7kal47DXHlwEn6aBpQUlebkPZ/BXSAHNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQ5Ytfx4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sniZEo1EKa4AJlUWk9z/bfx6x+ZTy6/+Rd8Df//7JGfTV7e08nx2dFYM4IU6tKmrNzODB47F40JUTocCFtJ+KhJQ+awqsySVnNfi1C7UgfhkJ4aDCB5cbmy+G8ccd30bHnWEaeHejAv994+4mj8It7Tud85pvELNATEFoKq/POM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGOaaMUn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQ5Ytfx4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C13C4CED1;
-	Thu, 13 Feb 2025 15:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGOaaMUn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6096DC4CED1;
+	Thu, 13 Feb 2025 15:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459088;
-	bh=T4yPeDiWMDpCCXxqRkG9nKYjqg8eNBpEyOldopOFymE=;
+	s=korg; t=1739459091;
+	bh=jApS9iW1fp/DWD9yMEr1ey+Y6uqLeBJunRggdgfY/tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tQ5Ytfx4768pCmGEMJAQlEMqE8DVTgq1fVoyzpQu9Lx1m4MdZY0hawKbSvSTfNtDp
-	 i4bdi9wxmCFv5+Uydgm61Z/Z6Z/tDaJkRnNPKYWBR4wn2MJnq2kjmTD56yUEaXtotA
-	 oNL/CSS5Hdnfn8Kti1k3jNtxYRPgIjpowQb/q6OE=
+	b=VGOaaMUnzi2A6gMfn5i32ytMyuFzUSV1rG9W9sbqQ7WE39GUwKS6gtrLqRa1culTS
+	 L33qx7tewmvX3//qmdrL+YUyASVy1ifk9HkjHE+8Rv55f0iPQOnz8tQ5xx8ICi7NCp
+	 23l7OmOhhyjjf7PYPm740Q5u8y9oSm1pC/sQzog8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.13 163/443] arm64/mm: Reduce PA space to 48 bits when LPA2 is not enabled
-Date: Thu, 13 Feb 2025 15:25:28 +0100
-Message-ID: <20250213142446.887214895@linuxfoundation.org>
+	Dmytro Terletskyi <dmytro_terletskyi@epam.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.13 164/443] KVM: arm64: timer: Always evaluate the need for a soft timer
+Date: Thu, 13 Feb 2025 15:25:29 +0100
+Message-ID: <20250213142446.927179193@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,93 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 
-commit bf74bb73cd87c64bd5afc1fd4b749029997b6170 upstream.
+commit b450dcce93bc2cf6d2bfaf5a0de88a94ebad8f89 upstream.
 
-Currently, LPA2 kernel support implies support for up to 52 bits of
-physical addressing, and this is reflected in global definitions such as
-PHYS_MASK_SHIFT and MAX_PHYSMEM_BITS.
+When updating the interrupt state for an emulated timer, we return
+early and skip the setup of a soft timer that runs in parallel
+with the guest.
 
-This is potentially problematic, given that LPA2 hardware support is
-modeled as a CPU feature which can be overridden, and with LPA2 hardware
-support turned off, attempting to map physical regions with address bits
-[51:48] set (which may exist on LPA2 capable systems booting with
-arm64.nolva) will result in corrupted mappings with a truncated output
-address and bogus shareability attributes.
+While this is OK if we have set the interrupt pending, it is pretty
+wrong if the guest moved CVAL into the future.  In that case,
+no timer is armed and the guest can wait for a very long time
+(it will take a full put/load cycle for the situation to resolve).
 
-This means that the accepted physical address range in the mapping
-routines should be at most 48 bits wide when LPA2 support is configured
-but not enabled at runtime.
+This is specially visible with EDK2 running at EL2, but still
+using the EL1 virtual timer, which in that case is fully emulated.
+Any key-press takes ages to be captured, as there is no UART
+interrupt and EDK2 relies on polling from a timer...
 
-Fixes: 352b0395b505 ("arm64: Enable 52-bit virtual addressing for 4k and 16k granule configs")
+The fix is simply to drop the early return. If the timer interrupt
+is pending, we will still return early, and otherwise arm the soft
+timer.
+
+Fixes: 4d74ecfa6458b ("KVM: arm64: Don't arm a hrtimer for an already pending timer")
 Cc: stable@vger.kernel.org
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20241212081841.2168124-9-ardb+git@google.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Tested-by: Dmytro Terletskyi <dmytro_terletskyi@epam.com>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20250204110050.150560-2-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/pgtable-hwdef.h |    6 ------
- arch/arm64/include/asm/pgtable-prot.h  |    7 +++++++
- arch/arm64/include/asm/sparsemem.h     |    5 ++++-
- 3 files changed, 11 insertions(+), 7 deletions(-)
+ arch/arm64/kvm/arch_timer.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/arch/arm64/include/asm/pgtable-hwdef.h
-+++ b/arch/arm64/include/asm/pgtable-hwdef.h
-@@ -222,12 +222,6 @@
-  */
- #define S1_TABLE_AP		(_AT(pmdval_t, 3) << 61)
+--- a/arch/arm64/kvm/arch_timer.c
++++ b/arch/arm64/kvm/arch_timer.c
+@@ -466,10 +466,8 @@ static void timer_emulate(struct arch_ti
  
--/*
-- * Highest possible physical address supported.
-- */
--#define PHYS_MASK_SHIFT		(CONFIG_ARM64_PA_BITS)
--#define PHYS_MASK		((UL(1) << PHYS_MASK_SHIFT) - 1)
--
- #define TTBR_CNP_BIT		(UL(1) << 0)
+ 	trace_kvm_timer_emulate(ctx, should_fire);
  
- /*
---- a/arch/arm64/include/asm/pgtable-prot.h
-+++ b/arch/arm64/include/asm/pgtable-prot.h
-@@ -81,6 +81,7 @@ extern unsigned long prot_ns_shared;
- #define lpa2_is_enabled()	false
- #define PTE_MAYBE_SHARED	PTE_SHARED
- #define PMD_MAYBE_SHARED	PMD_SECT_S
-+#define PHYS_MASK_SHIFT		(CONFIG_ARM64_PA_BITS)
- #else
- static inline bool __pure lpa2_is_enabled(void)
- {
-@@ -89,9 +90,15 @@ static inline bool __pure lpa2_is_enable
+-	if (should_fire != ctx->irq.level) {
++	if (should_fire != ctx->irq.level)
+ 		kvm_timer_update_irq(ctx->vcpu, should_fire, ctx);
+-		return;
+-	}
  
- #define PTE_MAYBE_SHARED	(lpa2_is_enabled() ? 0 : PTE_SHARED)
- #define PMD_MAYBE_SHARED	(lpa2_is_enabled() ? 0 : PMD_SECT_S)
-+#define PHYS_MASK_SHIFT		(lpa2_is_enabled() ? CONFIG_ARM64_PA_BITS : 48)
- #endif
- 
- /*
-+ * Highest possible physical address supported.
-+ */
-+#define PHYS_MASK		((UL(1) << PHYS_MASK_SHIFT) - 1)
-+
-+/*
-  * If we have userspace only BTI we don't want to mark kernel pages
-  * guarded even if the system does support BTI.
-  */
---- a/arch/arm64/include/asm/sparsemem.h
-+++ b/arch/arm64/include/asm/sparsemem.h
-@@ -5,7 +5,10 @@
- #ifndef __ASM_SPARSEMEM_H
- #define __ASM_SPARSEMEM_H
- 
--#define MAX_PHYSMEM_BITS	CONFIG_ARM64_PA_BITS
-+#include <asm/pgtable-prot.h>
-+
-+#define MAX_PHYSMEM_BITS		PHYS_MASK_SHIFT
-+#define MAX_POSSIBLE_PHYSMEM_BITS	(52)
- 
- /*
-  * Section size must be at least 512MB for 64K base
+ 	/*
+ 	 * If the timer can fire now, we don't need to have a soft timer
 
 
