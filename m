@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4481227EA7;
-	Thu, 13 Feb 2025 14:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01AE2036F3;
+	Thu, 13 Feb 2025 14:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458555; cv=none; b=f/kg+c8C+bOyTB9JshImM+O5kVz9if8PS6kEveL0pAvLXmcHzXGwtzQ+fSVosgS9PaPGrkTtoBsWjb/StsRwTTqZ/N5nCSkJYiTnmurb8yA0GDqLm+ENaVcDAdbh6sdhvRbdql6pfp7X5XWqArGUJlYJaWn8ieFK1ziBBzk+prU=
+	t=1739458558; cv=none; b=ic4efEUy4fmEcmOMdjrjucur1lpl45YZKLrSLTN7cmNnL7X7J5kJuPl1kd5clQLGFuJ+f/1uqI/W07l98zWThcAFqM/OKtqkShkUGUNGRP4ohVzXi7+KAWHlrSwlkYWaj78rs8hRWI8HDuau1wmgOYa8CBZmpfFkKSIYQy66Bmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458555; c=relaxed/simple;
-	bh=cvaUbfCIQsddvLRdiXNwd2Q/G0o4L4U35HctwY/O2uM=;
+	s=arc-20240116; t=1739458558; c=relaxed/simple;
+	bh=zTZxnJygCshRocZ59hxA4h1v6fzsIuEYBw0kPGljSSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNnFqoNmX/1FFQ6SoQ5tDyuVPdj5BKomCAFaaOy4jZ6/nVOAPqggs0zsRhvft31NQbaUXgR5SOim/PLawR1HxCODeVRj1BmD1xcwuj5+m8+pbs8ASsaTA2qT47bLFtUf66OT1j8+VtGbSRNq+dJvr58RI6OscXFc8OIFKZy52Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmlOxA/R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hV3b54yzPZFoxRpPHTUWhHQJCJ9usmQ1NW4K7cFfderYA+RmhohjemYF05NqWc1YKNYYNg3sMBRxdPnk/8T6juTuxg85hsmCuzDVHVr5YvBSosLbaZB4OuMU3i4bgKKp1ITQ/suvuZ7DINSAIH4/y40mkBWJZzhUvyrMWpK8VwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11GxXzgp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmlOxA/R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D927C4CED1;
-	Thu, 13 Feb 2025 14:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11GxXzgp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40953C4CED1;
+	Thu, 13 Feb 2025 14:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458555;
-	bh=cvaUbfCIQsddvLRdiXNwd2Q/G0o4L4U35HctwY/O2uM=;
+	s=korg; t=1739458558;
+	bh=zTZxnJygCshRocZ59hxA4h1v6fzsIuEYBw0kPGljSSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dmlOxA/ReTWLSECE7b2oblJrsK/GSHoKnxrrv7mHnvx6XYobyNY918OYY3/8VXaxk
-	 mHlazHmy0926HUQR9BZcd/S0rkOVO/cEzY5t4Qbgo3MKfEpCDzCDnYUrBpr0R3zMuX
-	 csGSuHcT4kbVo/4BOXPN6wo9VoOZEc3evkF0Orr4=
+	b=11GxXzgpC3LlET5Vc411IphB2L2j0nGvzbaHFWbm6dBiocOgZNZlkdmDnq0bx3JuQ
+	 zqKm4ig1p2BsyTYREgJrhr9XwgzzEP03+kt34ojRuTHeewHMHZVhOvLSQj753u23I1
+	 WHyOrywXTN1nKJPrLrTZLgU1rCjdrYAqM1eHiFds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suleiman Souhlal <suleiman@google.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Phil Auld <pauld@redhat.com>,
+	Waiman Long <longman@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 012/443] sched: Dont try to catch up excess steal time.
-Date: Thu, 13 Feb 2025 15:22:57 +0100
-Message-ID: <20250213142441.096235301@linuxfoundation.org>
+Subject: [PATCH 6.13 013/443] sched/deadline: Correctly account for allocated bandwidth during hotplug
+Date: Thu, 13 Feb 2025 15:22:58 +0100
+Message-ID: <20250213142441.134818578@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,74 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suleiman Souhlal <suleiman@google.com>
+From: Juri Lelli <juri.lelli@redhat.com>
 
-[ Upstream commit 108ad0999085df2366dd9ef437573955cb3f5586 ]
+[ Upstream commit d4742f6ed7ea6df56e381f82ba4532245fa1e561 ]
 
-When steal time exceeds the measured delta when updating clock_task, we
-currently try to catch up the excess in future updates.
-However, this results in inaccurate run times for the future things using
-clock_task, in some situations, as they end up getting additional steal
-time that did not actually happen.
-This is because there is a window between reading the elapsed time in
-update_rq_clock() and sampling the steal time in update_rq_clock_task().
-If the VCPU gets preempted between those two points, any additional
-steal time is accounted to the outgoing task even though the calculated
-delta did not actually contain any of that "stolen" time.
-When this race happens, we can end up with steal time that exceeds the
-calculated delta, and the previous code would try to catch up that excess
-steal time in future clock updates, which is given to the next,
-incoming task, even though it did not actually have any time stolen.
+For hotplug operations, DEADLINE needs to check that there is still enough
+bandwidth left after removing the CPU that is going offline. We however
+fail to do so currently.
 
-This behavior is particularly bad when steal time can be very long,
-which we've seen when trying to extend steal time to contain the duration
-that the host was suspended [0]. When this happens, clock_task stays
-frozen, during which the running task stays running for the whole
-duration, since its run time doesn't increase.
-However the race can happen even under normal operation.
+Restore the correct behavior by restructuring dl_bw_manage() a bit, so
+that overflow conditions (not enough bandwidth left) are properly
+checked. Also account for dl_server bandwidth, i.e. discount such
+bandwidth in the calculation since NORMAL tasks will be anyway moved
+away from the CPU as a result of the hotplug operation.
 
-Ideally we would read the elapsed cpu time and the steal time atomically,
-to prevent this race from happening in the first place, but doing so
-is non-trivial.
-
-Since the time between those two points isn't otherwise accounted anywhere,
-neither to the outgoing task nor the incoming task (because the "end of
-outgoing task" and "start of incoming task" timestamps are the same),
-I would argue that the right thing to do is to simply drop any excess steal
-time, in order to prevent these issues.
-
-[0] https://lore.kernel.org/kvm/20240820043543.837914-1-suleiman@google.com/
-
-Signed-off-by: Suleiman Souhlal <suleiman@google.com>
+Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241118043745.1857272-1-suleiman@google.com
+Reviewed-by: Phil Auld <pauld@redhat.com>
+Tested-by: Waiman Long <longman@redhat.com>
+Link: https://lore.kernel.org/r/20241114142810.794657-3-juri.lelli@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/sched/core.c     |  2 +-
+ kernel/sched/deadline.c | 48 +++++++++++++++++++++++++++++++++--------
+ kernel/sched/sched.h    |  2 +-
+ 3 files changed, 41 insertions(+), 11 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index e0fd8069c60e6..ffceb5ff4c5c3 100644
+index ffceb5ff4c5c3..141bbe97d7e5f 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -766,13 +766,15 @@ static void update_rq_clock_task(struct rq *rq, s64 delta)
- #endif
- #ifdef CONFIG_PARAVIRT_TIME_ACCOUNTING
- 	if (static_key_false((&paravirt_steal_rq_enabled))) {
--		steal = paravirt_steal_clock(cpu_of(rq));
-+		u64 prev_steal;
+@@ -8185,7 +8185,7 @@ static void cpuset_cpu_active(void)
+ static int cpuset_cpu_inactive(unsigned int cpu)
+ {
+ 	if (!cpuhp_tasks_frozen) {
+-		int ret = dl_bw_check_overflow(cpu);
++		int ret = dl_bw_deactivate(cpu);
+ 
+ 		if (ret)
+ 			return ret;
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index d94f2ed6d1f46..b078014273d9e 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -3453,29 +3453,31 @@ int dl_cpuset_cpumask_can_shrink(const struct cpumask *cur,
+ }
+ 
+ enum dl_bw_request {
+-	dl_bw_req_check_overflow = 0,
++	dl_bw_req_deactivate = 0,
+ 	dl_bw_req_alloc,
+ 	dl_bw_req_free
+ };
+ 
+ static int dl_bw_manage(enum dl_bw_request req, int cpu, u64 dl_bw)
+ {
+-	unsigned long flags;
++	unsigned long flags, cap;
+ 	struct dl_bw *dl_b;
+ 	bool overflow = 0;
++	u64 fair_server_bw = 0;
+ 
+ 	rcu_read_lock_sched();
+ 	dl_b = dl_bw_of(cpu);
+ 	raw_spin_lock_irqsave(&dl_b->lock, flags);
+ 
+-	if (req == dl_bw_req_free) {
++	cap = dl_bw_capacity(cpu);
++	switch (req) {
++	case dl_bw_req_free:
+ 		__dl_sub(dl_b, dl_bw, dl_bw_cpus(cpu));
+-	} else {
+-		unsigned long cap = dl_bw_capacity(cpu);
+-
++		break;
++	case dl_bw_req_alloc:
+ 		overflow = __dl_overflow(dl_b, cap, 0, dl_bw);
+ 
+-		if (req == dl_bw_req_alloc && !overflow) {
++		if (!overflow) {
+ 			/*
+ 			 * We reserve space in the destination
+ 			 * root_domain, as we can't fail after this point.
+@@ -3484,6 +3486,34 @@ static int dl_bw_manage(enum dl_bw_request req, int cpu, u64 dl_bw)
+ 			 */
+ 			__dl_add(dl_b, dl_bw, dl_bw_cpus(cpu));
+ 		}
++		break;
++	case dl_bw_req_deactivate:
++		/*
++		 * cpu is going offline and NORMAL tasks will be moved away
++		 * from it. We can thus discount dl_server bandwidth
++		 * contribution as it won't need to be servicing tasks after
++		 * the cpu is off.
++		 */
++		if (cpu_rq(cpu)->fair_server.dl_server)
++			fair_server_bw = cpu_rq(cpu)->fair_server.dl_bw;
 +
-+		steal = prev_steal = paravirt_steal_clock(cpu_of(rq));
- 		steal -= rq->prev_steal_time_rq;
- 
- 		if (unlikely(steal > delta))
- 			steal = delta;
- 
--		rq->prev_steal_time_rq += steal;
-+		rq->prev_steal_time_rq = prev_steal;
- 		delta -= steal;
++		/*
++		 * Not much to check if no DEADLINE bandwidth is present.
++		 * dl_servers we can discount, as tasks will be moved out the
++		 * offlined CPUs anyway.
++		 */
++		if (dl_b->total_bw - fair_server_bw > 0) {
++			/*
++			 * Leaving at least one CPU for DEADLINE tasks seems a
++			 * wise thing to do.
++			 */
++			if (dl_bw_cpus(cpu))
++				overflow = __dl_overflow(dl_b, cap, fair_server_bw, 0);
++			else
++				overflow = 1;
++		}
++
++		break;
  	}
- #endif
+ 
+ 	raw_spin_unlock_irqrestore(&dl_b->lock, flags);
+@@ -3492,9 +3522,9 @@ static int dl_bw_manage(enum dl_bw_request req, int cpu, u64 dl_bw)
+ 	return overflow ? -EBUSY : 0;
+ }
+ 
+-int dl_bw_check_overflow(int cpu)
++int dl_bw_deactivate(int cpu)
+ {
+-	return dl_bw_manage(dl_bw_req_check_overflow, cpu, 0);
++	return dl_bw_manage(dl_bw_req_deactivate, cpu, 0);
+ }
+ 
+ int dl_bw_alloc(int cpu, u64 dl_bw)
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index c5d67a43fe524..96d9bbba94acc 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -362,7 +362,7 @@ extern void __getparam_dl(struct task_struct *p, struct sched_attr *attr);
+ extern bool __checkparam_dl(const struct sched_attr *attr);
+ extern bool dl_param_changed(struct task_struct *p, const struct sched_attr *attr);
+ extern int  dl_cpuset_cpumask_can_shrink(const struct cpumask *cur, const struct cpumask *trial);
+-extern int  dl_bw_check_overflow(int cpu);
++extern int  dl_bw_deactivate(int cpu);
+ extern s64 dl_scaled_delta_exec(struct rq *rq, struct sched_dl_entity *dl_se, s64 delta_exec);
+ /*
+  * SCHED_DEADLINE supports servers (nested scheduling) with the following
 -- 
 2.39.5
 
