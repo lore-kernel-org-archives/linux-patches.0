@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C74C26B080;
-	Thu, 13 Feb 2025 15:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FA426B080;
+	Thu, 13 Feb 2025 15:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458882; cv=none; b=Z6w05pZUCUkVwhtVNbOzr9nvc4+24jeKuxPscH+CK4kqotYcHA+nRrSqdrpTH5mD+tyqmuZeCSY9IMUKn4asSrlBSA+vTB86wCPBxqTeQqZwivS8WhsjDN84pcps4o2jtwu8vTnjCtLuoBFfAGriKCcQXbOAoraq6560zQm+O6s=
+	t=1739458886; cv=none; b=qqdxsBqKwpNznvd4AtatZMxpduGbTyZZE/nup2g+srnuxnZLG4Ph7Zy5CsgUiMF1grFkU2Cgxh/B+Snzmgvzs9hIsFJFcXSJAKBg4a6CkgGy2dzY1KZgiFk7Z6kxqHZxDEeWvLwp9uor8hIfCJgRGCCkrhO6U7jwlswcy81gLe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458882; c=relaxed/simple;
-	bh=KlA/IstsapbohTi0ZLRtsDtTBQayBSkvYe4JliQqEEE=;
+	s=arc-20240116; t=1739458886; c=relaxed/simple;
+	bh=7RmH3NhI4wj5DdZWFySUSHeQ+SANgsRIIJRO/b0TPwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/4vsm5jzXTMyreyul14Bn995+iEPscZnGl7H/5ZkfHZxJmXlvDPHTI8Aij8nIQZFUCErpOaQfdvWSch+BRuDBAEoNnBAkVJACu+7FTgjlXtwJE++sMs77DIl1jetz8KE6QhckmL+8kPXIvNBlnJbAJh9GVjzElAnxBdjZM2pQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byHDGFZd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aN19EnVquEZPqPHW1ArnTFfuVaDTkwJgDGZmx2zH+m6DqBcseOOFf1lEYbU8fH/LXYgbMrzdiaGOFb+dvSWpoMa4MUphE50hbPHr/z/MI/pkRtXhDVPBK3e0uUtPeY4niYyciYD/5EptCzcTee16lL4ivDGssQ1a6ru6XCcsgwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPmJKyEU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byHDGFZd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14D6C4CED1;
-	Thu, 13 Feb 2025 15:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPmJKyEU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F90DC4CED1;
+	Thu, 13 Feb 2025 15:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458882;
-	bh=KlA/IstsapbohTi0ZLRtsDtTBQayBSkvYe4JliQqEEE=;
+	s=korg; t=1739458885;
+	bh=7RmH3NhI4wj5DdZWFySUSHeQ+SANgsRIIJRO/b0TPwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=byHDGFZdq4xz1x0+If0V7tFKm93aFA9mNux7Lu87lMcZP4UpDXWZRdpBMINf+W+Du
-	 2j4Er2HUJXSGpqRAkhQwwu/1rlQCrDEmH+0PwJKBC8JRM3AAPOsCKNecLTP6cqPhSM
-	 dgkzdnawJ6Sai453qN3qUXBUOvr3BxO5rmPLNawI=
+	b=zPmJKyEUkYLwy/zANC46M0/ihVVodeC+tbwgvdaqJOtTHzHTlr6nYLmCgE1MkSy8u
+	 yk6JTLwC6RO2mlJvAGU+SzDaNHl+RllWs0pyBfyIEkPqVd/TD0wpbeHEf8MTyewA5o
+	 nGGMBelUZH7GnSzQHRkRYEgM9HDnGYODi4W2KOm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randolph Ha <rha051117@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Itamar Gozlan <igozlan@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 073/443] i2c: Force ELAN06FA touchpad I2C bus freq to 100KHz
-Date: Thu, 13 Feb 2025 15:23:58 +0100
-Message-ID: <20250213142443.432447132@linuxfoundation.org>
+Subject: [PATCH 6.13 064/443] net/mlx5: HWS, change error flow on matcher disconnect
+Date: Thu, 13 Feb 2025 15:23:49 +0100
+Message-ID: <20250213142443.091083173@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,71 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randolph Ha <rha051117@gmail.com>
+From: Yevgeny Kliteynik <kliteyn@nvidia.com>
 
-[ Upstream commit bfd74cd1fbc026f04446e67d6915c7e199c2bffd ]
+[ Upstream commit 1ce840c7a659aa53a31ef49f0271b4fd0dc10296 ]
 
-When a 400KHz freq is used on this model of ELAN touchpad in Linux,
-excessive smoothing (similar to when the touchpad's firmware detects
-a noisy signal) is sometimes applied. As some devices' (e.g, Lenovo
-V15 G4) ACPI tables specify a 400KHz frequency for this device and
-some I2C busses (e.g, Designware I2C) default to a 400KHz freq,
-force the speed to 100KHz as a workaround.
+Currently, when firmware failure occurs during matcher disconnect flow,
+the error flow of the function reconnects the matcher back and returns
+an error, which continues running the calling function and eventually
+frees the matcher that is being disconnected.
+This leads to a case where we have a freed matcher on the matchers list,
+which in turn leads to use-after-free and eventual crash.
 
-For future investigation: This problem may be related to the default
-HCNT/LCNT values given by some busses' drivers, because they are not
-specified in the aforementioned devices' ACPI tables, and because
-the device works without issues on Windows at what is expected to be
-a 400KHz frequency. The root cause of the issue is not known.
+This patch fixes that by not trying to reconnect the matcher back when
+some FW command fails during disconnect.
 
-Signed-off-by: Randolph Ha <rha051117@gmail.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Note that we're dealing here with FW error. We can't overcome this
+problem. This might lead to bad steering state (e.g. wrong connection
+between matchers), and will also lead to resource leakage, as it is
+the case with any other error handling during resource destruction.
+
+However, the goal here is to allow the driver to continue and not crash
+the machine with use-after-free error.
+
+Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Signed-off-by: Itamar Gozlan <igozlan@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250102181415.1477316-7-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-acpi.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ .../mellanox/mlx5/core/steering/hws/matcher.c | 24 +++++++------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-index 14ae0cfc325ef..d2499f302b508 100644
---- a/drivers/i2c/i2c-core-acpi.c
-+++ b/drivers/i2c/i2c-core-acpi.c
-@@ -355,6 +355,25 @@ static const struct acpi_device_id i2c_acpi_force_400khz_device_ids[] = {
- 	{}
- };
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/matcher.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/matcher.c
+index 1bb3a6f8c3cda..e94f96c0c781f 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/matcher.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/matcher.c
+@@ -165,14 +165,14 @@ static int hws_matcher_disconnect(struct mlx5hws_matcher *matcher)
+ 						    next->match_ste.rtc_0_id,
+ 						    next->match_ste.rtc_1_id);
+ 		if (ret) {
+-			mlx5hws_err(tbl->ctx, "Failed to disconnect matcher\n");
+-			goto matcher_reconnect;
++			mlx5hws_err(tbl->ctx, "Fatal error, failed to disconnect matcher\n");
++			return ret;
+ 		}
+ 	} else {
+ 		ret = mlx5hws_table_connect_to_miss_table(tbl, tbl->default_miss.miss_tbl);
+ 		if (ret) {
+-			mlx5hws_err(tbl->ctx, "Failed to disconnect last matcher\n");
+-			goto matcher_reconnect;
++			mlx5hws_err(tbl->ctx, "Fatal error, failed to disconnect last matcher\n");
++			return ret;
+ 		}
+ 	}
  
-+static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
-+	/*
-+	 * When a 400KHz freq is used on this model of ELAN touchpad in Linux,
-+	 * excessive smoothing (similar to when the touchpad's firmware detects
-+	 * a noisy signal) is sometimes applied. As some devices' (e.g, Lenovo
-+	 * V15 G4) ACPI tables specify a 400KHz frequency for this device and
-+	 * some I2C busses (e.g, Designware I2C) default to a 400KHz freq,
-+	 * force the speed to 100KHz as a workaround.
-+	 *
-+	 * For future investigation: This problem may be related to the default
-+	 * HCNT/LCNT values given by some busses' drivers, because they are not
-+	 * specified in the aforementioned devices' ACPI tables, and because
-+	 * the device works without issues on Windows at what is expected to be
-+	 * a 400KHz frequency. The root cause of the issue is not known.
-+	 */
-+	{ "ELAN06FA", 0 },
-+	{}
-+};
-+
- static acpi_status i2c_acpi_lookup_speed(acpi_handle handle, u32 level,
- 					   void *data, void **return_value)
- {
-@@ -373,6 +392,9 @@ static acpi_status i2c_acpi_lookup_speed(acpi_handle handle, u32 level,
- 	if (acpi_match_device_ids(adev, i2c_acpi_force_400khz_device_ids) == 0)
- 		lookup->force_speed = I2C_MAX_FAST_MODE_FREQ;
+@@ -180,27 +180,19 @@ static int hws_matcher_disconnect(struct mlx5hws_matcher *matcher)
+ 	if (prev_ft_id == tbl->ft_id) {
+ 		ret = mlx5hws_table_update_connected_miss_tables(tbl);
+ 		if (ret) {
+-			mlx5hws_err(tbl->ctx, "Fatal error, failed to update connected miss table\n");
+-			goto matcher_reconnect;
++			mlx5hws_err(tbl->ctx,
++				    "Fatal error, failed to update connected miss table\n");
++			return ret;
+ 		}
+ 	}
  
-+	if (acpi_match_device_ids(adev, i2c_acpi_force_100khz_device_ids) == 0)
-+		lookup->force_speed = I2C_MAX_STANDARD_MODE_FREQ;
-+
- 	return AE_OK;
+ 	ret = mlx5hws_table_ft_set_default_next_ft(tbl, prev_ft_id);
+ 	if (ret) {
+ 		mlx5hws_err(tbl->ctx, "Fatal error, failed to restore matcher ft default miss\n");
+-		goto matcher_reconnect;
++		return ret;
+ 	}
+ 
+ 	return 0;
+-
+-matcher_reconnect:
+-	if (list_empty(&tbl->matchers_list) || !prev)
+-		list_add(&matcher->list_node, &tbl->matchers_list);
+-	else
+-		/* insert after prev matcher */
+-		list_add(&matcher->list_node, &prev->list_node);
+-
+-	return ret;
  }
  
+ static void hws_matcher_set_rtc_attr_sz(struct mlx5hws_matcher *matcher,
 -- 
 2.39.5
 
