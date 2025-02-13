@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4833826B0BD;
-	Thu, 13 Feb 2025 15:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FE726B0B4;
+	Thu, 13 Feb 2025 15:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460290; cv=none; b=fFXJg6IywQDOVcCj8slfPcO9bsFI1xW+B8E3bA3r7b52hcGqEMQ5VGpQLX931m7ILL6Laklm+rrMicWtGlAgR/tRhsyIPXhsPwIzSExsMsyWGCBEeoydle1h+O+Ysih0IE85Wu+eXMt7+ywjRySyu7Ms0Xml1MQYrRFrFk8f4FI=
+	t=1739460293; cv=none; b=gE1Ftc1w/X15jHpscTjQzzvp/sKUok9aoKvbL7olY6SEP13c2yujb4Cl0klZVBbd4aUxDFR7SMqfxtfM6qji0wJQ2KSFDf0ssnjFIe6ksyj/I/m49iqR6kTYhXBKWkfup0RJrqG+e4wqin2Lo3EkKG4aRHNs29UlYpP10gWW68Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460290; c=relaxed/simple;
-	bh=4lSS+P3VK1/EBhW7SEzhHEB9kvtUaDcR1ELMJgyjQS0=;
+	s=arc-20240116; t=1739460293; c=relaxed/simple;
+	bh=wn37DtkQdF5PXDHeFnQDUIsJF2XpTmVChlg+ml68lDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qlehHlVEbFqaVEpkJuInh9KsJKV6iMFFGWJRZX3dFxeyWdzqpAvrfjDf2IjRXzR6WtrSReb2oQHTZCtQmEP74iitkJHDUnwMiQ9Ddyb62mZjDvXl9EZJ8v7aC+X9tYckrroflxld4fTBtVKtaXsF00P9eMqZ82lLvHfad+1jQvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lhZynrgc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qr7ZQ7XRAdWGtuvP42Kv2jKYqqz20EUoIt2wCxMDUQtHq/MHmhaHgmY5QzV/19Tp6d64i4Rw9WrPQBzIzpG7LSpgzToGAGn+fAblVMNbfA+pHFIQ/uY5xl0hirFkMZMKoOo05Moi7xm+dnRvscMhlrzZnLIGaI71MRXaReImALc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrp4YQcv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lhZynrgc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A993BC4CED1;
-	Thu, 13 Feb 2025 15:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrp4YQcv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D53EC4CED1;
+	Thu, 13 Feb 2025 15:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460290;
-	bh=4lSS+P3VK1/EBhW7SEzhHEB9kvtUaDcR1ELMJgyjQS0=;
+	s=korg; t=1739460293;
+	bh=wn37DtkQdF5PXDHeFnQDUIsJF2XpTmVChlg+ml68lDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lhZynrgc/F0v/wV2i0URwbu79kWH0VGUIsClblr/DUTzFP8U1FCQN52ZAEbHYJnln
-	 Oyc9cWekbLtJwcVubNcl4hnIELJYw5jaRm5XCmQM01/cDgJZx1AEuTXkf0cTfkKqDE
-	 faYowPyo7Dyglr391peS7Ptsxs758w26cZDir0x0=
+	b=jrp4YQcvHUmJOpmsWdlPJTgyGpAtSiMxc/syn24vDcOmNO2JBuiLXphbYmuQUQnh/
+	 5kz0p/XCfUlnJOtgNPTRek5YzsbeJ9j5o3DlN+570xiHuxkdW2j/A8VIXgOYV7uFzJ
+	 2umaBga4EpFZfu/6yoDz5ZDmPkh1oABYMa+R2dns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Stefan=20D=C3=B6singer?= <stefan@codeweavers.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/273] wifi: brcmfmac: Check the return value of of_property_read_string_index()
-Date: Thu, 13 Feb 2025 15:26:49 +0100
-Message-ID: <20250213142408.822188357@linuxfoundation.org>
+Subject: [PATCH 6.6 038/273] wifi: iwlwifi: avoid memory leak
+Date: Thu, 13 Feb 2025 15:26:50 +0100
+Message-ID: <20250213142408.860815214@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -46,88 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Dösinger <stefan@codeweavers.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 082d9e263af8de68f0c34f67b251818205160f6e ]
+[ Upstream commit 80e96206a3ef348fbd658d98f2f43149c36df8bc ]
 
-Somewhen between 6.10 and 6.11 the driver started to crash on my
-MacBookPro14,3. The property doesn't exist and 'tmp' remains
-uninitialized, so we pass a random pointer to devm_kstrdup().
+A caller of iwl_acpi_get_dsm_object must free the returned object.
+iwl_acpi_get_dsm_integer returns immediately without freeing
+it if the expected size is more than 8 bytes. Fix that.
 
-The crash I am getting looks like this:
+Note that with the current code this will never happen, since the caller
+of iwl_acpi_get_dsm_integer already checks that the expected size if
+either 1 or 4 bytes, so it can't exceed 8 bytes.
 
-BUG: unable to handle page fault for address: 00007f033c669379
-PF: supervisor read access in kernel mode
-PF: error_code(0x0001) - permissions violation
-PGD 8000000101341067 P4D 8000000101341067 PUD 101340067 PMD 1013bb067 PTE 800000010aee9025
-Oops: Oops: 0001 [#1] SMP PTI
-CPU: 4 UID: 0 PID: 827 Comm: (udev-worker) Not tainted 6.11.8-gentoo #1
-Hardware name: Apple Inc. MacBookPro14,3/Mac-551B86E5744E2388, BIOS 529.140.2.0.0 06/23/2024
-RIP: 0010:strlen+0x4/0x30
-Code: f7 75 ec 31 c0 c3 cc cc cc cc 48 89 f8 c3 cc cc cc cc 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa <80> 3f 00 74 14 48 89 f8 48 83 c0 01 80 38 00 75 f7 48 29 f8 c3 cc
-RSP: 0018:ffffb4aac0683ad8 EFLAGS: 00010202
-RAX: 00000000ffffffea RBX: 00007f033c669379 RCX: 0000000000000001
-RDX: 0000000000000cc0 RSI: 00007f033c669379 RDI: 00007f033c669379
-RBP: 00000000ffffffea R08: 0000000000000000 R09: 00000000c0ba916a
-R10: ffffffffffffffff R11: ffffffffb61ea260 R12: ffff91f7815b50c8
-R13: 0000000000000cc0 R14: ffff91fafefffe30 R15: ffffb4aac0683b30
-FS:  00007f033ccbe8c0(0000) GS:ffff91faeed00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f033c669379 CR3: 0000000107b1e004 CR4: 00000000003706f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ? __die+0x23/0x70
- ? page_fault_oops+0x149/0x4c0
- ? raw_spin_rq_lock_nested+0xe/0x20
- ? sched_balance_newidle+0x22b/0x3c0
- ? update_load_avg+0x78/0x770
- ? exc_page_fault+0x6f/0x150
- ? asm_exc_page_fault+0x26/0x30
- ? __pfx_pci_conf1_write+0x10/0x10
- ? strlen+0x4/0x30
- devm_kstrdup+0x25/0x70
- brcmf_of_probe+0x273/0x350 [brcmfmac]
+While at it, print the DSM value instead of the return value, as this
+was the intention in the first place.
 
-Signed-off-by: Stefan Dösinger <stefan@codeweavers.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20250106170958.3595-1-stefan@codeweavers.com
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20241228223206.bf61eaab99f8.Ibdc5df02f885208c222456d42c889c43b7e3b2f7@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-index 73fc701204e29..90d2c536bdaf0 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-@@ -96,13 +96,13 @@ void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
- 	/* Set board-type to the first string of the machine compatible prop */
- 	root = of_find_node_by_path("/");
- 	if (root && err) {
--		char *board_type;
-+		char *board_type = NULL;
- 		const char *tmp;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+index 9943e2d21a8f5..e72f238ff7b23 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+@@ -155,7 +155,7 @@ static int iwl_acpi_get_dsm_integer(struct device *dev, int rev, int func,
+ 				    size_t expected_size)
+ {
+ 	union acpi_object *obj;
+-	int ret = 0;
++	int ret;
  
--		of_property_read_string_index(root, "compatible", 0, &tmp);
--
- 		/* get rid of '/' in the compatible string to be able to find the FW */
--		board_type = devm_kstrdup(dev, tmp, GFP_KERNEL);
-+		if (!of_property_read_string_index(root, "compatible", 0, &tmp))
-+			board_type = devm_kstrdup(dev, tmp, GFP_KERNEL);
-+
- 		if (!board_type) {
- 			of_node_put(root);
- 			return;
+ 	obj = iwl_acpi_get_dsm_object(dev, rev, func, NULL, guid);
+ 	if (IS_ERR(obj)) {
+@@ -170,8 +170,10 @@ static int iwl_acpi_get_dsm_integer(struct device *dev, int rev, int func,
+ 	} else if (obj->type == ACPI_TYPE_BUFFER) {
+ 		__le64 le_value = 0;
+ 
+-		if (WARN_ON_ONCE(expected_size > sizeof(le_value)))
+-			return -EINVAL;
++		if (WARN_ON_ONCE(expected_size > sizeof(le_value))) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 
+ 		/* if the buffer size doesn't match the expected size */
+ 		if (obj->buffer.length != expected_size)
+@@ -192,8 +194,9 @@ static int iwl_acpi_get_dsm_integer(struct device *dev, int rev, int func,
+ 	}
+ 
+ 	IWL_DEBUG_DEV_RADIO(dev,
+-			    "ACPI: DSM method evaluated: func=%d, ret=%d\n",
+-			    func, ret);
++			    "ACPI: DSM method evaluated: func=%d, value=%lld\n",
++			    func, *value);
++	ret = 0;
+ out:
+ 	ACPI_FREE(obj);
+ 	return ret;
 -- 
 2.39.5
 
