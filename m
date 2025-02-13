@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDC92222D1;
-	Thu, 13 Feb 2025 14:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1151C23A990;
+	Thu, 13 Feb 2025 14:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457390; cv=none; b=ni/UjWO23VoukR66ywP2AdVCIbX/70IbJ06BjRsE8RCjAxxmOb0cXJQMUfKeqHPjHriuUZam6EHiz8YcM9+6Y9gqA3MX7h65z6TfYFUsQmI45hNW14oTWTCRXzlkr08fbvZzg9i8JT3cfBra5yE73C5D0G+UvB7Ce/KeTLG2Jks=
+	t=1739457394; cv=none; b=U6fwwT7dCn2/CCfX+EfBJsBiaqnISVT4IBcjejqGsmo1cSoErncsVEh673BewXOsE098AsN7y0e1o0Ad0hTOWDP7MMkjp3gBP1v5GWaR8aVCsnA/dxSrMswjC6VH0lhTs84+obkEaBywLTwRipj2JCxZWhTwjYSVHMgkd/BWzy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457390; c=relaxed/simple;
-	bh=5+jzHQYJDri1NzDzCFmrYBduJCokau/YHChxqiye+SE=;
+	s=arc-20240116; t=1739457394; c=relaxed/simple;
+	bh=OMhXarR19030jFWxWFeXxU/3Q7yEiXwJuZ3Ou4fcYIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EuaRx5Mb2+wB875xws5PIZQgTnaV+DClU9zLPgAk0qrWTamV9UakfiYwwDzZwN3YfiupZ6vL40rLdXpyX6rA4sfS5QDsaeDQ7dB6JSezvBHkBqIJUtz7dRVIfgFxmtX9IRl7KqfIEEcVCGIWQ7n5/FbfKvVRQ4GFmQDZMqs5pmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxTK8ku/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OAhfp5F8q7tU7W/oUSEKqkyCIQGqPyxXsPOhZ6s9PrcnBfWmPAYsPrS5qUItuG+0m+VCEo7942yi0sccconTizKUtJZlk2C0OpHmjMswNIj29ijc85mdVG1l5BH5YGECkIg1gR+5uc8MCyae+LzzP6/VyzEjzB22ak1K84XfCAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtpUO0bn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxTK8ku/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90401C4CEE2;
-	Thu, 13 Feb 2025 14:36:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtpUO0bn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B9FC4CEE2;
+	Thu, 13 Feb 2025 14:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457390;
-	bh=5+jzHQYJDri1NzDzCFmrYBduJCokau/YHChxqiye+SE=;
+	s=korg; t=1739457393;
+	bh=OMhXarR19030jFWxWFeXxU/3Q7yEiXwJuZ3Ou4fcYIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxTK8ku/u3rVISC8R1KR0GrLdrKBdR8DmPImoLt99aGip5tRGF/HfmznwaNBpVvbG
-	 1oxnThOFX8MRobNGPbK9wncDubJBozlNpl4G4FrxdYoPcCS2AwLnDuNunUyDPNXu0g
-	 S/mPsX+mTvxKGus1C+bTShda1P+17cuiJKoLrxLk=
+	b=OtpUO0bn1gM+ozS+vcqUn1HnQpvI+naxKrFKpRNa9uYZl3NwPnbzMCKtwaNFmwfj6
+	 +0XxjFrgO7vkFRh2Bi0lOb3qyaYmojiEfc372ylfj4tqWYL/GMLqS8ytB0o0C00tvs
+	 uu1/faFNCgLTmjEm0/9S8XT6CnFZk3/Bt3H2Wsvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/422] KVM: PPC: e500: Mark "struct page" dirty in kvmppc_e500_shadow_map()
-Date: Thu, 13 Feb 2025 15:23:58 +0100
-Message-ID: <20250213142439.987782225@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Andy Shevchenko <andy@kernel.org>
+Subject: [PATCH 6.12 098/422] platform/x86: serdev_helpers: Check for serial_ctrl_uid == NULL
+Date: Thu, 13 Feb 2025 15:24:07 +0100
+Message-ID: <20250213142440.337593941@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -46,81 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit c9be85dabb376299504e0d391d15662c0edf8273 ]
+commit 478b00a623d6c8ae23a1be7bcc96cb5497045cef upstream.
 
-Mark the underlying page as dirty in kvmppc_e500_ref_setup()'s sole
-caller, kvmppc_e500_shadow_map(), which will allow converting e500 to
-__kvm_faultin_pfn() + kvm_release_faultin_page() without having to do
-a weird dance between ref_setup() and shadow_map().
+dell_uart_bl_pdev_probe() calls get_serdev_controller() with the
+serial_ctrl_uid parameter set to NULL.
 
-Opportunistically drop the redundant kvm_set_pfn_accessed(), as
-shadow_map() puts the page via kvm_release_pfn_clean().
+In case of errors this NULL parameter then gets passed to pr_err()
+as argument matching a "%s" conversion specification. This leads to
+compiler warnings when building with "make W=1".
 
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <20241010182427.1434605-53-seanjc@google.com>
-Stable-dep-of: 87ecfdbc699c ("KVM: e500: always restore irqs")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Check serial_ctrl_uid before passing it to pr_err() to avoid these.
+
+Fixes: dc5afd720f84 ("platform/x86: Add new get_serdev_controller() helper")
+Cc: stable@vger.kernel.org
+Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://lore.kernel.org/r/20241204204227.95757-4-hdegoede@redhat.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kvm/e500_mmu_host.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/platform/x86/serdev_helpers.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kvm/e500_mmu_host.c b/arch/powerpc/kvm/e500_mmu_host.c
-index c664fdec75b1a..5c2adfd19e123 100644
---- a/arch/powerpc/kvm/e500_mmu_host.c
-+++ b/arch/powerpc/kvm/e500_mmu_host.c
-@@ -242,7 +242,7 @@ static inline int tlbe_is_writable(struct kvm_book3e_206_tlb_entry *tlbe)
- 	return tlbe->mas7_3 & (MAS3_SW|MAS3_UW);
- }
- 
--static inline void kvmppc_e500_ref_setup(struct tlbe_ref *ref,
-+static inline bool kvmppc_e500_ref_setup(struct tlbe_ref *ref,
- 					 struct kvm_book3e_206_tlb_entry *gtlbe,
- 					 kvm_pfn_t pfn, unsigned int wimg)
- {
-@@ -252,11 +252,7 @@ static inline void kvmppc_e500_ref_setup(struct tlbe_ref *ref,
- 	/* Use guest supplied MAS2_G and MAS2_E */
- 	ref->flags |= (gtlbe->mas2 & MAS2_ATTRIB_MASK) | wimg;
- 
--	/* Mark the page accessed */
--	kvm_set_pfn_accessed(pfn);
--
--	if (tlbe_is_writable(gtlbe))
--		kvm_set_pfn_dirty(pfn);
-+	return tlbe_is_writable(gtlbe);
- }
- 
- static inline void kvmppc_e500_ref_release(struct tlbe_ref *ref)
-@@ -337,6 +333,7 @@ static inline int kvmppc_e500_shadow_map(struct kvmppc_vcpu_e500 *vcpu_e500,
- 	unsigned int wimg = 0;
- 	pgd_t *pgdir;
- 	unsigned long flags;
-+	bool writable = false;
- 
- 	/* used to check for invalidations in progress */
- 	mmu_seq = kvm->mmu_invalidate_seq;
-@@ -490,7 +487,9 @@ static inline int kvmppc_e500_shadow_map(struct kvmppc_vcpu_e500 *vcpu_e500,
- 			goto out;
- 		}
+--- a/drivers/platform/x86/serdev_helpers.h
++++ b/drivers/platform/x86/serdev_helpers.h
+@@ -35,7 +35,7 @@ get_serdev_controller(const char *serial
+ 	ctrl_adev = acpi_dev_get_first_match_dev(serial_ctrl_hid, serial_ctrl_uid, -1);
+ 	if (!ctrl_adev) {
+ 		pr_err("error could not get %s/%s serial-ctrl adev\n",
+-		       serial_ctrl_hid, serial_ctrl_uid);
++		       serial_ctrl_hid, serial_ctrl_uid ?: "*");
+ 		return ERR_PTR(-ENODEV);
  	}
--	kvmppc_e500_ref_setup(ref, gtlbe, pfn, wimg);
-+	writable = kvmppc_e500_ref_setup(ref, gtlbe, pfn, wimg);
-+	if (writable)
-+		kvm_set_pfn_dirty(pfn);
  
- 	kvmppc_e500_setup_stlbe(&vcpu_e500->vcpu, gtlbe, tsize,
- 				ref, gvaddr, stlbe);
--- 
-2.39.5
-
+@@ -43,7 +43,7 @@ get_serdev_controller(const char *serial
+ 	ctrl_dev = get_device(acpi_get_first_physical_node(ctrl_adev));
+ 	if (!ctrl_dev) {
+ 		pr_err("error could not get %s/%s serial-ctrl physical node\n",
+-		       serial_ctrl_hid, serial_ctrl_uid);
++		       serial_ctrl_hid, serial_ctrl_uid ?: "*");
+ 		ctrl_dev = ERR_PTR(-ENODEV);
+ 		goto put_ctrl_adev;
+ 	}
 
 
