@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE23F221571;
-	Thu, 13 Feb 2025 14:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C183221552;
+	Thu, 13 Feb 2025 14:39:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457570; cv=none; b=W4wpAlliN9LS+5Te5JtYT39A/TiyoyB8XKmASUz4g1q2BctvOdEhorPQUonmWoFuGrlx80ipywHXQirK7s1eThXvxaPIZLoedas58ZwoXC3MX5SYe9AxW3XqJQr2JLBxwW/GdfiXUdNYvu9LthB9BzOJgyJq+NWUasLLWbqmAe0=
+	t=1739457573; cv=none; b=M70OdY9r7pVLFKx3EDiM5vCWVIVWQxdI1IsmNOe8cOZ68HMp2cvB4A4m5gnuTZXDbz5Wfe63o95xQ9M9J8go3e9eU9NLoQJ6Wvn9eZjcuOvSbwycwHVSR8tlyvrvp2ryFaOK4jYYmQOG2Zf6nGplyujqwjCtCN7xiDBx5hMnTGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457570; c=relaxed/simple;
-	bh=DJ5u3NWB/OY3rQagS7X7AlEuOiAW6ZKH/36ybRwGBmI=;
+	s=arc-20240116; t=1739457573; c=relaxed/simple;
+	bh=FZFHzuOtO1Z/wvgGNt14Mxr1UlIOcyHIgqGpIEE9kWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d2pbe04HiBttiYG+nmQ6Eia83kJxyw3lcBcg3OcKMKvEcXZZBAn0qMnWZ6BRiP6qHUwMv+deCX6bBmv/w2hTcM99N05pmKHG7+cb0uG55jQedFPqSH1AZvVbIXkaLm36gZ1maWieosfIjGc/Tv5Ge6bxw4aQlAel9Mfcr6HHwRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KaEmkJT5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MQQ/gOMSFW8XjpIGuMsV9NJllgqs1YhVzcrxYbB7fB/xuknOG4rNmQfsKV+q7ez93ds5+znF/Ynu+2JIafKmOlnWs5Dcbm+l07EmWkn4e6Ei/xDn+R5CRkeRQtAZcioBkyoaNDv7zx6XkVSh+r/FhUREyQsQ5F34C1V9GWs0LlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lV6csunR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KaEmkJT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF160C4CEE4;
-	Thu, 13 Feb 2025 14:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lV6csunR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E04FC4CEE2;
+	Thu, 13 Feb 2025 14:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457569;
-	bh=DJ5u3NWB/OY3rQagS7X7AlEuOiAW6ZKH/36ybRwGBmI=;
+	s=korg; t=1739457572;
+	bh=FZFHzuOtO1Z/wvgGNt14Mxr1UlIOcyHIgqGpIEE9kWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KaEmkJT5LRnBygx7lMmnq+jobJ+drTia8PPe5nvBSSn6YiBX9GMdHShA50lUTqHck
-	 YutPUFYo7W9HVLGRgCEDgP8WNwJ0JvI9LuSgzv6/1ROR1AZ4BdyFb8j4ugs0EDEy4h
-	 At6cPz0HzdwFBWCyGMYHGVPx7hpWX0aHsDgYbLFo=
+	b=lV6csunRgS/JnYWlRsDoNI6/dFvl3DBw7mbGPtRA+BT/tb2zlTiJrX6z7YEC6yTH0
+	 qqy9cDnuiGvEOGDdO7+JELBXLJUZYYefa8fxBES9nU6tv88Nvln6kL+ElS9cGUYUab
+	 CEeUAHPjDEwMFme2Kbsr7KyoRUL44Xkcx1YQXhRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Chris Zhong <zyw@rock-chips.com>,
-	Guenter Roeck <groeck@chromium.org>,
-	Sandy Huang <hjc@rock-chips.com>,
-	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	dri-devel@lists.freedesktop.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org
-Subject: [PATCH 6.12 149/422] drm/rockchip: cdn-dp: Use drm_connector_helper_hpd_irq_event()
-Date: Thu, 13 Feb 2025 15:24:58 +0100
-Message-ID: <20250213142442.297407023@linuxfoundation.org>
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Jakob Unterwurzacher <jakob.unterwurzacher@cherry.de>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.12 150/422] arm64: dts: rockchip: increase gmac rx_delay on rk3399-puma
+Date: Thu, 13 Feb 2025 15:24:59 +0100
+Message-ID: <20250213142442.337513901@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,77 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Jakob Unterwurzacher <jakobunt@gmail.com>
 
-commit 666e1960464140cc4bc9203c203097e70b54c95a upstream.
+commit 9d241b06802c6c2176ae7aa4f9f17f8a577ed337 upstream.
 
-The code for detecting and updating the connector status in
-cdn_dp_pd_event_work() has a number of problems.
+During mass manufacturing, we noticed the mmc_rx_crc_error counter,
+as reported by "ethtool -S eth0 | grep mmc_rx_crc_error", to increase
+above zero during nuttcp speedtests. Most of the time, this did not
+affect the achieved speed, but it prompted this investigation.
 
-- It does not aquire the locks to call the detect helper and update
-the connector status. These are struct drm_mode_config.connection_mutex
-and struct drm_mode_config.mutex.
+Cycling through the rx_delay range on six boards (see table below) of
+various ages shows that there is a large good region from 0x12 to 0x35
+where we see zero crc errors on all tested boards.
 
-- It does not use drm_helper_probe_detect(), which helps with the
-details of locking and detection.
+The old rx_delay value (0x10) seems to have always been on the edge for
+the KSZ9031RNX that is usually placed on Puma.
 
-- It uses the connector's status field to determine a change to
-the connector status. The epoch_counter field is the correct one. The
-field signals a change even if the connector status' value did not
-change.
+Choose "rx_delay = 0x23" to put us smack in the middle of the good
+region. This works fine as well with the KSZ9131RNX PHY that was used
+for a small number of boards during the COVID chip shortages.
 
-Replace the code with a call to drm_connector_helper_hpd_irq_event(),
-which fixes all these problems.
+	Board S/N        PHY        rx_delay good region
+	---------        ---        --------------------
+	Puma TT0069903   KSZ9031RNX 0x11 0x35
+	Puma TT0157733   KSZ9031RNX 0x11 0x35
+	Puma TT0681551   KSZ9031RNX 0x12 0x37
+	Puma TT0681156   KSZ9031RNX 0x10 0x38
+	Puma 17496030079 KSZ9031RNX 0x10 0x37 (Puma v1.2 from 2017)
+	Puma TT0681720   KSZ9131RNX 0x02 0x39 (alternative PHY used in very few boards)
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 81632df69772 ("drm/rockchip: cdn-dp: do not use drm_helper_hpd_irq_event")
-Cc: Chris Zhong <zyw@rock-chips.com>
-Cc: Guenter Roeck <groeck@chromium.org>
-Cc: Sandy Huang <hjc@rock-chips.com>
-Cc: "Heiko Stübner" <heiko@sntech.de>
-Cc: Andy Yan <andy.yan@rock-chips.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-rockchip@lists.infradead.org
-Cc: <stable@vger.kernel.org> # v4.11+
+	Intersection of good regions = 0x12 0x35
+	Middle of good region = 0x23
+
+Fixes: 2c66fc34e945 ("arm64: dts: rockchip: add RK3399-Q7 (Puma) SoM")
+Cc: stable@vger.kernel.org
+Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
+Tested-by: Quentin Schulz <quentin.schulz@cherry.de> # Puma v2.1 and v2.3 with KSZ9031
+Signed-off-by: Jakob Unterwurzacher <jakob.unterwurzacher@cherry.de>
+Link: https://lore.kernel.org/r/20241213-puma_rx_delay-v4-1-8e8e11cc6ed7@cherry.de
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241105133848.480407-1-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/rockchip/cdn-dp-core.c |    9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
-+++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
-@@ -947,9 +947,6 @@ static void cdn_dp_pd_event_work(struct
- {
- 	struct cdn_dp_device *dp = container_of(work, struct cdn_dp_device,
- 						event_work);
--	struct drm_connector *connector = &dp->connector;
--	enum drm_connector_status old_status;
--
- 	int ret;
+--- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
+@@ -181,7 +181,7 @@
+ 	snps,reset-active-low;
+ 	snps,reset-delays-us = <0 10000 50000>;
+ 	tx_delay = <0x10>;
+-	rx_delay = <0x10>;
++	rx_delay = <0x23>;
+ 	status = "okay";
+ };
  
- 	mutex_lock(&dp->lock);
-@@ -1009,11 +1006,7 @@ static void cdn_dp_pd_event_work(struct
- 
- out:
- 	mutex_unlock(&dp->lock);
--
--	old_status = connector->status;
--	connector->status = connector->funcs->detect(connector, false);
--	if (old_status != connector->status)
--		drm_kms_helper_hotplug_event(dp->drm_dev);
-+	drm_connector_helper_hpd_irq_event(&dp->connector);
- }
- 
- static int cdn_dp_pd_event(struct notifier_block *nb,
 
 
