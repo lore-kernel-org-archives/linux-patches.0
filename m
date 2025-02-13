@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F67926B08D;
-	Thu, 13 Feb 2025 15:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE7426B096;
+	Thu, 13 Feb 2025 15:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459023; cv=none; b=Ab1rfRkLejerbJVA19mdy08z3Ln7BQvt4lToW3ZTlTMVIn0YPtOaxHw5xunUj42yQWRkEiS0bnOxB4tJY8cx2wX26tIKzH7p8i2jQPzNXy4+JkfXCNNu6p2oqCv5rfaBVD9tJliCi8yzdlGAqWEd1YxjPuUrLN08mTeg2x9hT+0=
+	t=1739459027; cv=none; b=bWvsK7FBJOjHsPBx0MDPLlQaLtoko7Z1L5wY4+bLb2AMpTZGT9j4H3wd8TLzTmC/8hSNB2gQ2M5ztWTeoJu4+/iX14P0/pXNv9Obg/y0fJHzPrIqopI2zJXYL9ga03mB+Nr5psnt/X2sn7kHM27kMdYhLlFQH5jeDR9Vk5RzAcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459023; c=relaxed/simple;
-	bh=XgpNnAlyKJOPtr0XAOggFSU2/pJu10Qpa1T7AVK/R4o=;
+	s=arc-20240116; t=1739459027; c=relaxed/simple;
+	bh=mcpXKa/PnI9r2OWy0tJKdQy1eE1o4J6l+sr8lQ1ZGio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UenAceW3RZbmSfZgJBrexagH90YMfPeFP0a7BZ9ig6ytrSDoDqB3gxF9USsQg/ffoPJnbFd4j3kLiezvWBcOh/3kVH0vvgrtUWXUk9LReYgkg7/dZws6kJjgpktUK0GG0gom/1WDXAnM1jdoo5zod4VtOm3yctDqj1KfyS3wTXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nnf26IB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QUkvOWtjmvvGa+s4+Rvd0w56UKXqdL1uiVxjrvrhOr0tONDI72u5DQQG2h1AocRuezQKStCNweVCMf8Mj4u8D66PCOEKuSmuWHoJQGAQkSS2cqdvHpUzYV2TxDyI0KIlN80KANiNz2l6eJ6GNiZz9Gzqhi5INQ/wuZI9BPpk66o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtpO5pbB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nnf26IB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26D3C4CEE4;
-	Thu, 13 Feb 2025 15:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtpO5pbB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4365EC4CEE4;
+	Thu, 13 Feb 2025 15:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459023;
-	bh=XgpNnAlyKJOPtr0XAOggFSU2/pJu10Qpa1T7AVK/R4o=;
+	s=korg; t=1739459026;
+	bh=mcpXKa/PnI9r2OWy0tJKdQy1eE1o4J6l+sr8lQ1ZGio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0nnf26IB5cAGk7GaOVNNH1QwdtDtn8can2gKy5cEndsy1vEOzekS1wmhtOBUbWfS3
-	 ogMsSbDAtY0GNddO8UvZ1bId21EXoMlIK7NxlioZ+oMJeepwMiLdy7fBrHm/ChjHMF
-	 6rSZb7vqjyI7kWPGAq7D8L0GVKb9yfxHKMJTnduQ=
+	b=YtpO5pbBGvCg9keAcMrsJ2swL2XbXtcN6OuRNL3gIq8unPEzH0UAIIF8ZJm6lof12
+	 Qymy2BJ69lkeLbHlcEqvPOrUKrx3pT26k2+zrE0/JNhUIKOd5ARDr6Mhy2+rRRXoKg
+	 Z3CQ9R11SN4jV3f9zqTEJ8eu1J3vwcp9BAtKtmHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.13 146/443] cifs: Remove intermediate object of failed create SFU call
-Date: Thu, 13 Feb 2025 15:25:11 +0100
-Message-ID: <20250213142446.233497104@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Maarten Lankhorst <dev@lankhorst.se>
+Subject: [PATCH 6.13 147/443] drm/modeset: Handle tiled displays in pan_display_atomic.
+Date: Thu, 13 Feb 2025 15:25:12 +0100
+Message-ID: <20250213142446.271292776@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -44,91 +44,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Maarten Lankhorst <dev@lankhorst.se>
 
-commit 25f6184e24b3991eae977a29ecf27d537cc930b2 upstream.
+commit f4a9dd57e549a17a7dac1c1defec26abd7e5c2d4 upstream.
 
-Check if the server honored ATTR_SYSTEM flag by CREATE_OPTION_SPECIAL
-option. If not then server does not support ATTR_SYSTEM and newly
-created file is not SFU compatible, which means that the call failed.
+Tiled displays have a different x/y offset to begin with. Instead of
+attempting to remember this, just apply a delta instead.
 
-If CREATE was successful but either setting ATTR_SYSTEM failed or
-writing type/data information failed then remove the intermediate
-object created by CREATE. Otherwise intermediate empty object stay
-on the server.
+This fixes the first tile being duplicated on other tiles when vt
+switching.
 
-This ensures that if the creating of SFU files with system attribute is
-unsupported by the server then no empty file stay on the server as a result
-of unsupported operation.
-
-This is for example case with Samba server and Linux tmpfs storage without
-enabled xattr support (where Samba stores ATTR_SYSTEM bit).
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250116142825.3933-1-dev@lankhorst.se
+Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |   23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_fb_helper.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5077,6 +5077,7 @@ int __cifs_sfu_make_node(unsigned int xi
+--- a/drivers/gpu/drm/drm_fb_helper.c
++++ b/drivers/gpu/drm/drm_fb_helper.c
+@@ -1354,14 +1354,14 @@ int drm_fb_helper_set_par(struct fb_info
+ }
+ EXPORT_SYMBOL(drm_fb_helper_set_par);
+ 
+-static void pan_set(struct drm_fb_helper *fb_helper, int x, int y)
++static void pan_set(struct drm_fb_helper *fb_helper, int dx, int dy)
  {
- 	struct TCP_Server_Info *server = tcon->ses->server;
- 	struct cifs_open_parms oparms;
-+	struct cifs_open_info_data idata;
- 	struct cifs_io_parms io_parms = {};
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
- 	struct cifs_fid fid;
-@@ -5146,10 +5147,20 @@ int __cifs_sfu_make_node(unsigned int xi
- 			     CREATE_OPTION_SPECIAL, ACL_NO_MODE);
- 	oparms.fid = &fid;
+ 	struct drm_mode_set *mode_set;
  
--	rc = server->ops->open(xid, &oparms, &oplock, NULL);
-+	rc = server->ops->open(xid, &oparms, &oplock, &idata);
- 	if (rc)
- 		goto out;
- 
-+	/*
-+	 * Check if the server honored ATTR_SYSTEM flag by CREATE_OPTION_SPECIAL
-+	 * option. If not then server does not support ATTR_SYSTEM and newly
-+	 * created file is not SFU compatible, which means that the call failed.
-+	 */
-+	if (!(le32_to_cpu(idata.fi.Attributes) & ATTR_SYSTEM)) {
-+		rc = -EOPNOTSUPP;
-+		goto out_close;
-+	}
-+
- 	if (type_len + data_len > 0) {
- 		io_parms.pid = current->tgid;
- 		io_parms.tcon = tcon;
-@@ -5164,8 +5175,18 @@ int __cifs_sfu_make_node(unsigned int xi
- 					     iov, ARRAY_SIZE(iov)-1);
+ 	mutex_lock(&fb_helper->client.modeset_mutex);
+ 	drm_client_for_each_modeset(mode_set, &fb_helper->client) {
+-		mode_set->x = x;
+-		mode_set->y = y;
++		mode_set->x += dx;
++		mode_set->y += dy;
  	}
+ 	mutex_unlock(&fb_helper->client.modeset_mutex);
+ }
+@@ -1370,16 +1370,18 @@ static int pan_display_atomic(struct fb_
+ 			      struct fb_info *info)
+ {
+ 	struct drm_fb_helper *fb_helper = info->par;
+-	int ret;
++	int ret, dx, dy;
  
-+out_close:
- 	server->ops->close(xid, tcon, &fid);
+-	pan_set(fb_helper, var->xoffset, var->yoffset);
++	dx = var->xoffset - info->var.xoffset;
++	dy = var->yoffset - info->var.yoffset;
++	pan_set(fb_helper, dx, dy);
  
-+	/*
-+	 * If CREATE was successful but either setting ATTR_SYSTEM failed or
-+	 * writing type/data information failed then remove the intermediate
-+	 * object created by CREATE. Otherwise intermediate empty object stay
-+	 * on the server.
-+	 */
-+	if (rc)
-+		server->ops->unlink(xid, tcon, full_path, cifs_sb, NULL);
-+
- out:
- 	kfree(symname_utf16);
- 	return rc;
+ 	ret = drm_client_modeset_commit_locked(&fb_helper->client);
+ 	if (!ret) {
+ 		info->var.xoffset = var->xoffset;
+ 		info->var.yoffset = var->yoffset;
+ 	} else
+-		pan_set(fb_helper, info->var.xoffset, info->var.yoffset);
++		pan_set(fb_helper, -dx, -dy);
+ 
+ 	return ret;
+ }
 
 
