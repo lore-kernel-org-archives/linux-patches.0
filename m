@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A3526B0B5;
-	Thu, 13 Feb 2025 15:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB3326B0B5;
+	Thu, 13 Feb 2025 15:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458964; cv=none; b=T8yNHzdu0EcjH5INzaGMtVd7eRZaiv+GUZQELw3fBewTklI5Knk2oZEsUTcCW41wL0GbhZdYRiFlRkHeadf7Ljt9qaIABIFZETJdz6SwJM4PJZ2pk5Yjv233ixb0rXhUdejOlV+bfBXhe91WZAoW4dJawhtyc/UGEy76P5kkBb4=
+	t=1739458967; cv=none; b=RvGNoxzs3xlHlD3wAFs4y/BcShBZNfDEzCHCWG0pbIkSZ0UGsFh7SnFrZVA9ZnGT2vwtQSd4cqexU8cwEuevVj4Wiyj4ZS5lyTPwTlAYfo3ODZQcQk2J/yJG+tiO0zHoVaJfsKQ3hR8j0uglNaZL51srpuCtj3GvSf4zUQM5oa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458964; c=relaxed/simple;
-	bh=VRAJj/WPDSRZEeE5im6JLCpD69TeLATI/DWO2RS7Yr0=;
+	s=arc-20240116; t=1739458967; c=relaxed/simple;
+	bh=cg4QoOPNY5GkD6iebHvaw5izqAzkbzGwngdnPNG1WTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iziuCKgN85YdqS6UBemLMmaIg40u4n9nvTySuywJ6jjn10cr5IzgH9Tojbj+KxHDtws7b191C7mK4zW81o7mw8LrNsrjQe4VTO4xImB0LjpGvuT/JTqQfjRQdlv01DejQWNf6/YcSotcDiO+1e9SJ59Yvss906xxY0TOzORAKmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2Ly7yRD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RlQsGR1z7SkBRwMTVHA8WHaCGvuFwIIS9gXoXmZsdjFwsJ4hZmgEXAsnxnllB1rA4/fgzry8p9P6itzp8rk3UtnomkdxXauPtQh+Pl480yOGnQl+NqN4JDf01hSdSiiY2O7ONw4no3dfOfTMeRTyKzun0DybW6xjZWMkUKBz16s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkaiWU2W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2Ly7yRD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64D5C4CED1;
-	Thu, 13 Feb 2025 15:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkaiWU2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DAD8C4CEE4;
+	Thu, 13 Feb 2025 15:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458964;
-	bh=VRAJj/WPDSRZEeE5im6JLCpD69TeLATI/DWO2RS7Yr0=;
+	s=korg; t=1739458967;
+	bh=cg4QoOPNY5GkD6iebHvaw5izqAzkbzGwngdnPNG1WTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L2Ly7yRDJLgXkRKWpvo0XduyshZUm6OdyVCRY9w5P8op/+h8BjedVsa+CrqON8tsI
-	 eL2JmATlfRFeMPOAN27HQHTlq3g8eCYhxJWWAc0Q7+M5sicXAm2x5Q37F52c43W8x9
-	 usfWKbg2wx/JOySTAdeEQbo3jZymub8UYCnnVnJs=
+	b=VkaiWU2W1CoUU5twRM4coUEBskpI+dAyKVxhsEE6SoDoJNFc3PwvsRJ1tJt1cnP/G
+	 y9oWpUpRv9X5b4NJp4AsZvrZOH5UpcIFRdjfsd/o5mAxDUejNir930ZpGA5crX3Jp6
+	 9buwq7yzh351/UyLmWahOfa9qVd/YxZj0o2f477U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhan Anwar <farhan.anwar8@gmail.com>,
-	Rayan Margham <rayanmargham4@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Armin Wolf <W_Armin@gmx.de>,
+	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 101/443] platform/x86: acer-wmi: Ignore AC events
-Date: Thu, 13 Feb 2025 15:24:26 +0100
-Message-ID: <20250213142444.508530053@linuxfoundation.org>
+Subject: [PATCH 6.13 128/443] gpio: pca953x: Improve interrupt support
+Date: Thu, 13 Feb 2025 15:24:53 +0100
+Message-ID: <20250213142445.548577849@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -47,55 +46,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
 
-[ Upstream commit f6bfa25c6665f8721421ea94fe506cc22f1d4b43 ]
+[ Upstream commit d6179f6c6204f9932aed3a7a2100b4a295dfed9d ]
 
-On the Acer Swift SFG14-41, the events 8 - 1 and 8 - 0 are printed on
-AC connect/disconnect. Ignore those events to avoid spamming the
-kernel log with error messages.
+The GPIO drivers with latch interrupt support (typically types starting
+with PCAL) have interrupt status registers to determine which particular
+inputs have caused an interrupt. Unfortunately there is no atomic
+operation to read these registers and clear the interrupt. Clearing the
+interrupt is done by reading the input registers.
 
-Reported-by: Farhan Anwar <farhan.anwar8@gmail.com>
-Closes: https://lore.kernel.org/platform-driver-x86/2ffb529d-e7c8-4026-a3b8-120c8e7afec8@gmail.com
-Tested-by: Rayan Margham <rayanmargham4@gmail.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20250119201723.11102-2-W_Armin@gmx.de
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+The code was reading the interrupt status registers, and then reading
+the input registers. If an input changed between these two events it was
+lost.
+
+The solution in this patch is to revert to the non-latch version of
+code, i.e. remembering the previous input status, and looking for the
+changes. This system results in no more I2C transfers, so is no slower.
+The latch property of the device still means interrupts will still be
+noticed if the input changes back to its initial state.
+
+Fixes: 44896beae605 ("gpio: pca953x: add PCAL9535 interrupt support for Galileo Gen2")
+Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240606033102.2271916-1-mark.tomlinson@alliedtelesis.co.nz
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/acer-wmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpio/gpio-pca953x.c | 19 -------------------
+ 1 file changed, 19 deletions(-)
 
-diff --git a/drivers/platform/x86/acer-wmi.c b/drivers/platform/x86/acer-wmi.c
-index 1b966b75cb979..ac4f8ab45bdc0 100644
---- a/drivers/platform/x86/acer-wmi.c
-+++ b/drivers/platform/x86/acer-wmi.c
-@@ -95,6 +95,7 @@ enum acer_wmi_event_ids {
- 	WMID_HOTKEY_EVENT = 0x1,
- 	WMID_ACCEL_OR_KBD_DOCK_EVENT = 0x5,
- 	WMID_GAMING_TURBO_KEY_EVENT = 0x7,
-+	WMID_AC_EVENT = 0x8,
- };
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index be4c9981ebc40..d63c1030e6ac0 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -841,25 +841,6 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 	DECLARE_BITMAP(trigger, MAX_LINE);
+ 	int ret;
  
- enum acer_wmi_predator_v4_sys_info_command {
-@@ -2321,6 +2322,9 @@ static void acer_wmi_notify(union acpi_object *obj, void *context)
- 		if (return_value.key_num == 0x5 && has_cap(ACER_CAP_PLATFORM_PROFILE))
- 			acer_thermal_profile_change();
- 		break;
-+	case WMID_AC_EVENT:
-+		/* We ignore AC events here */
-+		break;
- 	default:
- 		pr_warn("Unknown function number - %d - %d\n",
- 			return_value.function, return_value.key_num);
+-	if (chip->driver_data & PCA_PCAL) {
+-		/* Read the current interrupt status from the device */
+-		ret = pca953x_read_regs(chip, PCAL953X_INT_STAT, trigger);
+-		if (ret)
+-			return false;
+-
+-		/* Check latched inputs and clear interrupt status */
+-		ret = pca953x_read_regs(chip, chip->regs->input, cur_stat);
+-		if (ret)
+-			return false;
+-
+-		/* Apply filter for rising/falling edge selection */
+-		bitmap_replace(new_stat, chip->irq_trig_fall, chip->irq_trig_raise, cur_stat, gc->ngpio);
+-
+-		bitmap_and(pending, new_stat, trigger, gc->ngpio);
+-
+-		return !bitmap_empty(pending, gc->ngpio);
+-	}
+-
+ 	ret = pca953x_read_regs(chip, chip->regs->input, cur_stat);
+ 	if (ret)
+ 		return false;
 -- 
 2.39.5
 
