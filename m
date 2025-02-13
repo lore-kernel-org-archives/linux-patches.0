@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF8321D3FC;
-	Thu, 13 Feb 2025 14:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F31281377;
+	Thu, 13 Feb 2025 14:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457216; cv=none; b=AbkiwVvQD0z3j1iZ1HZTjndaEUBAgB+FLd7JDfywmFygnXMPCE4Us2Do9mZAnjjStpKrF9wMNfboBkvsVA5/CJOhv41sSIhnny7F5Y9lxOBZTvCsSMXzaPjA3D2uJxAAKw1gc83KhLysThQao/ff1r7o4+IbwzFGMSiP5PSyBZk=
+	t=1739457219; cv=none; b=MHZuoYermp5hWQaBbsTawuojcCeJZzexTbM+krSURXhzc+VScZTtMdDuiqGVCZa6+hP1V+muhv3zDHMbbyKxZetuRDHHtOEpwFKSDY+ykm7KYkhe/ztLyAWwhMZAm0VTOA5ebvq5csCLRvm7ZuYyI7QGSf21nM+IDvG8p3aA6Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457216; c=relaxed/simple;
-	bh=wCoIKSr10ov6RTyrz2enivUtb/p18e2wvPJJBQRmO3I=;
+	s=arc-20240116; t=1739457219; c=relaxed/simple;
+	bh=rqV35hszPG0wQ8HtZBm7y5/n5bDIEWz91Oy38NvNbF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gYunBVnFuf4BIVe402OuQWhlxvD+9NX0pIQIa+D+3Bu4LtoIwsq37qNXge2amDKs/uxaq7li9+0BsSfNfiOsK1EfFP9vFhRZVxgF00Oom9WUtq2wlw4B+GJP44mlrmm4UIQJ6lCN4w+P25H6XpV3xaO4aTblALsuJn487Hz28qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kvivoh4f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VbPvGjUbe19+eW9DkzrvAULsjvQDr4L7K5VZnGjmPj4qmCzoIFhOw7pAm5XQJtSEfD85bslnXZVK/eOT5LfX7UMm8REVJoCVlKFVNT9FHX1JCuHPTshoB+OfISO7zVnRmYxtqPMG/4mbY/qzH9lC3Tu2Qt1Xp70iYL0dXB3Hlew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHJNoq4c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kvivoh4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A60FC4CED1;
-	Thu, 13 Feb 2025 14:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHJNoq4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0612C4CEE4;
+	Thu, 13 Feb 2025 14:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457215;
-	bh=wCoIKSr10ov6RTyrz2enivUtb/p18e2wvPJJBQRmO3I=;
+	s=korg; t=1739457219;
+	bh=rqV35hszPG0wQ8HtZBm7y5/n5bDIEWz91Oy38NvNbF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kvivoh4fdfVCiZ8NTGFUoXFqnbZFuAOyb8Kbhoxl68Qf/DSJX+mCUf8GEhO2otdoU
-	 jshX5RRIu9f+usSHPdSgN7z6EQS4jJGUoD5btzrhhn8bTqmRs7vv1Y05MujtCbgses
-	 557VqcbQIkkeWVpGn4lp46I9PVbKBnrF5jPKXxR8=
+	b=oHJNoq4caob4gmXGD/XwgZav7c7PTxsa8yzWxaQCN3Q20+uqQNSxJ3C+z30zeinyU
+	 8iracHn/OZnOpcI/x5bBFvb3b+sh2nFRTC0QkUrRUSKQotnkf6CTKxRBHOl0mNjdxq
+	 Qk6qyVe2CdvHFVomblY34wn/zOlt0Cyudf9OQJnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Wang <zhiw@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Chih-Kang Chang <gary.chang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 021/422] nvkm/gsp: correctly advance the read pointer of GSP message queue
-Date: Thu, 13 Feb 2025 15:22:50 +0100
-Message-ID: <20250213142437.372902068@linuxfoundation.org>
+Subject: [PATCH 6.12 048/422] wifi: rtw89: add crystal_cap check to avoid setting as overflow value
+Date: Thu, 13 Feb 2025 15:23:17 +0100
+Message-ID: <20250213142438.417265160@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -45,210 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhi Wang <zhiw@nvidia.com>
+From: Chih-Kang Chang <gary.chang@realtek.com>
 
-[ Upstream commit 8d9beb4aebc02c4bd09e1d39c9c5f1c68c786dbc ]
+[ Upstream commit 7b98caea39676561f22db58752551161bb36462b ]
 
-A GSP event message consists three parts: message header, RPC header,
-message body. GSP calculates the number of pages to write from the
-total size of a GSP message. This behavior can be observed from the
-movement of the write pointer.
+In the original flow, the crystal_cap might be calculated as a negative
+value and set as an overflow value. Therefore, we added a check to limit
+the calculated crystal_cap value. Additionally, we shrank the crystal_cap
+adjustment according to specific CFO.
 
-However, nvkm takes only the size of RPC header and message body as
-the message size when advancing the read pointer. When handling a
-two-page GSP message in the non rollback case, It wrongly takes the
-message body of the previous message as the message header of the next
-message. As the "message length" tends to be zero, in the calculation of
-size needs to be copied (0 - size of (message header)), the size needs to
-be copied will be "0xffffffxx". It also triggers a kernel panic due to a
-NULL pointer error.
-
-[  547.614102] msg: 00000f90: ff ff ff ff ff ff ff ff 40 d7 18 fb 8b 00 00 =
-00  ........@.......
-[  547.622533] msg: 00000fa0: 00 00 00 00 ff ff ff ff ff ff ff ff 00 00 00 =
-00  ................
-[  547.630965] msg: 00000fb0: ff ff ff ff ff ff ff ff 00 00 00 00 ff ff ff =
-ff  ................
-[  547.639397] msg: 00000fc0: ff ff ff ff 00 00 00 00 ff ff ff ff ff ff ff =
-ff  ................
-[  547.647832] nvkm 0000:c1:00.0: gsp: peek msg rpc fn:0 len:0x0/0xffffffff=
-ffffffe0
-[  547.655225] nvkm 0000:c1:00.0: gsp: get msg rpc fn:0 len:0x0/0xfffffffff=
-fffffe0
-[  547.662532] BUG: kernel NULL pointer dereference, address: 0000000000000=
-020
-[  547.669485] #PF: supervisor read access in kernel mode
-[  547.674624] #PF: error_code(0x0000) - not-present page
-[  547.679755] PGD 0 P4D 0
-[  547.682294] Oops: 0000 [#1] PREEMPT SMP NOPTI
-[  547.686643] CPU: 22 PID: 322 Comm: kworker/22:1 Tainted: G            E =
-     6.9.0-rc6+ #1
-[  547.694893] Hardware name: ASRockRack 1U1G-MILAN/N/ROMED8-NL, BIOS L3.12=
-E 09/06/2022
-[  547.702626] Workqueue: events r535_gsp_msgq_work [nvkm]
-[  547.707921] RIP: 0010:r535_gsp_msg_recv+0x87/0x230 [nvkm]
-[  547.713375] Code: 00 8b 70 08 48 89 e1 31 d2 4c 89 f7 e8 12 f5 ff ff 48 =
-89 c5 48 85 c0 0f 84 cf 00 00 00 48 81 fd 00 f0 ff ff 0f 87 c4 00 00 00 <8b=
-> 55 10 41 8b 46 30 85 d2 0f 85 f6 00 00 00 83 f8 04 76 10 ba 05
-[  547.732119] RSP: 0018:ffffabe440f87e10 EFLAGS: 00010203
-[  547.737335] RAX: 0000000000000010 RBX: 0000000000000008 RCX: 00000000000=
-0003f
-[  547.744461] RDX: 0000000000000000 RSI: ffffabe4480a8030 RDI: 00000000000=
-00010
-[  547.751585] RBP: 0000000000000010 R08: 0000000000000000 R09: ffffabe440f=
-87bb0
-[  547.758707] R10: ffffabe440f87dc8 R11: 0000000000000010 R12: 00000000000=
-00000
-[  547.765834] R13: 0000000000000000 R14: ffff9351df1e5000 R15: 00000000000=
-00000
-[  547.772958] FS:  0000000000000000(0000) GS:ffff93708eb00000(0000) knlGS:=
-0000000000000000
-[  547.781035] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  547.786771] CR2: 0000000000000020 CR3: 00000003cc220002 CR4: 00000000007=
-70ef0
-[  547.793896] PKRU: 55555554
-[  547.796600] Call Trace:
-[  547.799046]  <TASK>
-[  547.801152]  ? __die+0x20/0x70
-[  547.804211]  ? page_fault_oops+0x75/0x170
-[  547.808221]  ? print_hex_dump+0x100/0x160
-[  547.812226]  ? exc_page_fault+0x64/0x150
-[  547.816152]  ? asm_exc_page_fault+0x22/0x30
-[  547.820341]  ? r535_gsp_msg_recv+0x87/0x230 [nvkm]
-[  547.825184]  r535_gsp_msgq_work+0x42/0x50 [nvkm]
-[  547.829845]  process_one_work+0x196/0x3d0
-[  547.833861]  worker_thread+0x2fc/0x410
-[  547.837613]  ? __pfx_worker_thread+0x10/0x10
-[  547.841885]  kthread+0xdf/0x110
-[  547.845031]  ? __pfx_kthread+0x10/0x10
-[  547.848775]  ret_from_fork+0x30/0x50
-[  547.852354]  ? __pfx_kthread+0x10/0x10
-[  547.856097]  ret_from_fork_asm+0x1a/0x30
-[  547.860019]  </TASK>
-[  547.862208] Modules linked in: nvkm(E) gsp_log(E) snd_seq_dummy(E) snd_h=
-rtimer(E) snd_seq(E) snd_timer(E) snd_seq_device(E) snd(E) soundcore(E) rfk=
-ill(E) qrtr(E) vfat(E) fat(E) ipmi_ssif(E) amd_atl(E) intel_rapl_msr(E) int=
-el_rapl_common(E) amd64_edac(E) mlx5_ib(E) edac_mce_amd(E) kvm_amd(E) ib_uv=
-erbs(E) kvm(E) ib_core(E) acpi_ipmi(E) ipmi_si(E) ipmi_devintf(E) mxm_wmi(E=
-) joydev(E) rapl(E) ptdma(E) i2c_piix4(E) acpi_cpufreq(E) wmi_bmof(E) pcspk=
-r(E) k10temp(E) ipmi_msghandler(E) xfs(E) libcrc32c(E) ast(E) i2c_algo_bit(=
-E) drm_shmem_helper(E) crct10dif_pclmul(E) drm_kms_helper(E) ahci(E) crc32_=
-pclmul(E) nvme_tcp(E) libahci(E) nvme(E) crc32c_intel(E) nvme_fabrics(E) cd=
-c_ether(E) nvme_core(E) usbnet(E) mlx5_core(E) ghash_clmulni_intel(E) drm(E=
-) libata(E) ccp(E) mii(E) t10_pi(E) mlxfw(E) sp5100_tco(E) psample(E) pci_h=
-yperv_intf(E) wmi(E) dm_multipath(E) sunrpc(E) dm_mirror(E) dm_region_hash(=
-E) dm_log(E) dm_mod(E) be2iscsi(E) bnx2i(E) cnic(E) uio(E) cxgb4i(E) cxgb4(=
-E) tls(E) libcxgbi(E) libcxgb(E) qla4xxx(E)
-[  547.862283]  iscsi_boot_sysfs(E) iscsi_tcp(E) libiscsi_tcp(E) libiscsi(E=
-) scsi_transport_iscsi(E) fuse(E) [last unloaded: gsp_log(E)]
-[  547.962691] CR2: 0000000000000020
-[  547.966003] ---[ end trace 0000000000000000 ]---
-[  549.012012] clocksource: Long readout interval, skipping watchdog check:=
- cs_nsec: 1370499158 wd_nsec: 1370498904
-[  549.043676] pstore: backend (erst) writing error (-28)
-[  549.050924] RIP: 0010:r535_gsp_msg_recv+0x87/0x230 [nvkm]
-[  549.056389] Code: 00 8b 70 08 48 89 e1 31 d2 4c 89 f7 e8 12 f5 ff ff 48 =
-89 c5 48 85 c0 0f 84 cf 00 00 00 48 81 fd 00 f0 ff ff 0f 87 c4 00 00 00 <8b=
-> 55 10 41 8b 46 30 85 d2 0f 85 f6 00 00 00 83 f8 04 76 10 ba 05
-[  549.075138] RSP: 0018:ffffabe440f87e10 EFLAGS: 00010203
-[  549.080361] RAX: 0000000000000010 RBX: 0000000000000008 RCX: 00000000000=
-0003f
-[  549.087484] RDX: 0000000000000000 RSI: ffffabe4480a8030 RDI: 00000000000=
-00010
-[  549.094609] RBP: 0000000000000010 R08: 0000000000000000 R09: ffffabe440f=
-87bb0
-[  549.101733] R10: ffffabe440f87dc8 R11: 0000000000000010 R12: 00000000000=
-00000
-[  549.108857] R13: 0000000000000000 R14: ffff9351df1e5000 R15: 00000000000=
-00000
-[  549.115982] FS:  0000000000000000(0000) GS:ffff93708eb00000(0000) knlGS:=
-0000000000000000
-[  549.124061] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  549.129807] CR2: 0000000000000020 CR3: 00000003cc220002 CR4: 00000000007=
-70ef0
-[  549.136940] PKRU: 55555554
-[  549.139653] Kernel panic - not syncing: Fatal exception
-[  549.145054] Kernel Offset: 0x18c00000 from 0xffffffff81000000 (relocatio=
-n range: 0xffffffff80000000-0xffffffffbfffffff)
-[  549.165074] ---[ end Kernel panic - not syncing: Fatal exception ]---
-
-Also, nvkm wrongly advances the read pointer when handling a two-page GSP
-message in the rollback case. In the rollback case, the GSP message will
-be copied in two rounds. When handling a two-page GSP message, nvkm first
-copies amount of (GSP_PAGE_SIZE - header) data into the buffer, then
-advances the read pointer by the result of DIV_ROUND_UP(size,
-GSP_PAGE_SIZE). Thus, the read pointer is advanced by 1.
-
-Next, nvkm copies the amount of (total size - (GSP_PAGE_SIZE -
-header)) data into the buffer. The left amount of the data will be always
-larger than one page since the message header is not taken into account
-in the first copy. Thus, the read pointer is advanced by DIV_ROUND_UP(
-size(larger than one page), GSP_PAGE_SIZE) =3D 2.
-
-In the end, the read pointer is wrongly advanced by 3 when handling a
-two-page GSP message in the rollback case.
-
-Fix the problems by taking the total size of the message into account
-when advancing the read pointer and calculate the read pointer in the end
-of the all copies for the rollback case.
-
-BTW: the two-page GSP message can be observed in the msgq when vGPU is
-enabled.
-
-Signed-off-by: Zhi Wang <zhiw@nvidia.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241017071922.2518724-=
-2-zhiw@nvidia.com
+Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241128055433.11851-7-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/net/wireless/realtek/rtw89/phy.c | 11 ++++++-----
+ drivers/net/wireless/realtek/rtw89/phy.h |  2 +-
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c b/drivers/gpu/d=
-rm/nouveau/nvkm/subdev/gsp/r535.c
-index d586aea308984..bd4b5d6a7bd36 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
-@@ -121,6 +121,8 @@ r535_gsp_msgq_wait(struct nvkm_gsp *gsp, u32 repc, u32 =
-*prepc, int *ptime)
- 		return mqe->data;
+diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
+index 4b47b45f897cb..5c31639b4cade 100644
+--- a/drivers/net/wireless/realtek/rtw89/phy.c
++++ b/drivers/net/wireless/realtek/rtw89/phy.c
+@@ -3892,7 +3892,6 @@ static void rtw89_phy_cfo_set_crystal_cap(struct rtw89_dev *rtwdev,
+ 
+ 	if (!force && cfo->crystal_cap == crystal_cap)
+ 		return;
+-	crystal_cap = clamp_t(u8, crystal_cap, 0, 127);
+ 	if (chip->chip_id == RTL8852A || chip->chip_id == RTL8851B) {
+ 		rtw89_phy_cfo_set_xcap_reg(rtwdev, true, crystal_cap);
+ 		rtw89_phy_cfo_set_xcap_reg(rtwdev, false, crystal_cap);
+@@ -4015,7 +4014,7 @@ static void rtw89_phy_cfo_crystal_cap_adjust(struct rtw89_dev *rtwdev,
+ 					     s32 curr_cfo)
+ {
+ 	struct rtw89_cfo_tracking_info *cfo = &rtwdev->cfo_tracking;
+-	s8 crystal_cap = cfo->crystal_cap;
++	int crystal_cap = cfo->crystal_cap;
+ 	s32 cfo_abs = abs(curr_cfo);
+ 	int sign;
+ 
+@@ -4036,15 +4035,17 @@ static void rtw89_phy_cfo_crystal_cap_adjust(struct rtw89_dev *rtwdev,
  	}
-=20
-+	size =3D ALIGN(repc + GSP_MSG_HDR_SIZE, GSP_PAGE_SIZE);
+ 	sign = curr_cfo > 0 ? 1 : -1;
+ 	if (cfo_abs > CFO_TRK_STOP_TH_4)
+-		crystal_cap += 7 * sign;
++		crystal_cap += 3 * sign;
+ 	else if (cfo_abs > CFO_TRK_STOP_TH_3)
+-		crystal_cap += 5 * sign;
+-	else if (cfo_abs > CFO_TRK_STOP_TH_2)
+ 		crystal_cap += 3 * sign;
++	else if (cfo_abs > CFO_TRK_STOP_TH_2)
++		crystal_cap += 1 * sign;
+ 	else if (cfo_abs > CFO_TRK_STOP_TH_1)
+ 		crystal_cap += 1 * sign;
+ 	else
+ 		return;
 +
- 	msg =3D kvmalloc(repc, GFP_KERNEL);
- 	if (!msg)
- 		return ERR_PTR(-ENOMEM);
-@@ -129,19 +131,15 @@ r535_gsp_msgq_wait(struct nvkm_gsp *gsp, u32 repc, u3=
-2 *prepc, int *ptime)
- 	len =3D min_t(u32, repc, len);
- 	memcpy(msg, mqe->data, len);
-=20
--	rptr +=3D DIV_ROUND_UP(len, GSP_PAGE_SIZE);
--	if (rptr =3D=3D gsp->msgq.cnt)
--		rptr =3D 0;
--
- 	repc -=3D len;
-=20
- 	if (repc) {
- 		mqe =3D (void *)((u8 *)gsp->shm.msgq.ptr + 0x1000 + 0 * 0x1000);
- 		memcpy(msg + len, mqe, repc);
--
--		rptr +=3D DIV_ROUND_UP(repc, GSP_PAGE_SIZE);
- 	}
-=20
-+	rptr =3D (rptr + DIV_ROUND_UP(size, GSP_PAGE_SIZE)) % gsp->msgq.cnt;
-+
- 	mb();
- 	(*gsp->msgq.rptr) =3D rptr;
- 	return msg;
---=20
++	crystal_cap = clamp(crystal_cap, 0, 127);
+ 	rtw89_phy_cfo_set_crystal_cap(rtwdev, (u8)crystal_cap, false);
+ 	rtw89_debug(rtwdev, RTW89_DBG_CFO,
+ 		    "X_cap{Curr,Default}={0x%x,0x%x}\n",
+diff --git a/drivers/net/wireless/realtek/rtw89/phy.h b/drivers/net/wireless/realtek/rtw89/phy.h
+index 7e335c02ee6fb..9bb9c9c8e7a1b 100644
+--- a/drivers/net/wireless/realtek/rtw89/phy.h
++++ b/drivers/net/wireless/realtek/rtw89/phy.h
+@@ -57,7 +57,7 @@
+ #define CFO_TRK_STOP_TH_4 (30 << 2)
+ #define CFO_TRK_STOP_TH_3 (20 << 2)
+ #define CFO_TRK_STOP_TH_2 (10 << 2)
+-#define CFO_TRK_STOP_TH_1 (00 << 2)
++#define CFO_TRK_STOP_TH_1 (03 << 2)
+ #define CFO_TRK_STOP_TH (2 << 2)
+ #define CFO_SW_COMP_FINE_TUNE (2 << 2)
+ #define CFO_PERIOD_CNT 15
+-- 
 2.39.5
 
 
