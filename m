@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8228626B085;
-	Thu, 13 Feb 2025 14:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6919326B086;
+	Thu, 13 Feb 2025 14:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458124; cv=none; b=twrQJReL1laN0mSNR6mOXDpsBbmkoxUxqxwybD/lp0fbBl3hd2FbBCptfryLsDOCa83GR4BsaGnF2MCs1MBxe7oAnpdBmvthloK1zh4jqtK/Y3GX0+yXS/zbhvfktxgiqfLbhfWwUQCdK24V3E79ytJGKMNpH6GzepDhuXx0Cq8=
+	t=1739458127; cv=none; b=W3vupx+m2Oh3aYzPfe9cVI3FurqW0PbGaeVRMfps72wJ/x3GPOkc50MpHiIxvyZTb99YMxSxiTyvCfT5Kkm8p36W7MRcYTG7DDOG7y4VCVH8nyWAnPzEZinTo79wcQh39WQD7FW/VBGNvKOdPk4fNkBoJ0zZeNx34v45xPzRYq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458124; c=relaxed/simple;
-	bh=RqKpprDDEXAVB0i6IcYD7tIlNjW5xjDObbMWcc6KaFA=;
+	s=arc-20240116; t=1739458127; c=relaxed/simple;
+	bh=Ln6CkbaTD5+bTGusBZG34bBKTPwfR1V3NK/52gQogl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s0Z3vqWlFmYCq6koHOrwVcyAQDO4Hf0ylLLm58GbV/N1JBvRA39tJ7jBaynvbA9/AQhI0OPE5t4c/vqC/Ba/5fROHvjjDttJWrOXP3s7FaFhVbQ1r86SVdXZ+rwuGaeet9c1kpLja+h2UQRqDX6CRwUvQ/Fj2IQh5RBRcjVkoa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dz6oGVpZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dIWg5sLdqKG+VeM5P3X+f6gproBS7OPwbQtJsl5pM8mtZG1LHfshsNzQdsz7Sr0Sxu3meYvRaEoQUBm4jH7s2barTX+ILlyNKO8ADwtFb5VaK0PASUO/L+crTU+LlqsPYNFsNS16qOWjp4U4HVFzYQzx2DgTr59un0mtL4wY5zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vrROsQsn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dz6oGVpZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C5BC4CED1;
-	Thu, 13 Feb 2025 14:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vrROsQsn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09F6C4CED1;
+	Thu, 13 Feb 2025 14:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458124;
-	bh=RqKpprDDEXAVB0i6IcYD7tIlNjW5xjDObbMWcc6KaFA=;
+	s=korg; t=1739458127;
+	bh=Ln6CkbaTD5+bTGusBZG34bBKTPwfR1V3NK/52gQogl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dz6oGVpZ3M7kriFZnrIOXj4lYrKhkruIjoFX6/ePHtYvaGrMTd0yt7do4atfALGTI
-	 ALkWiCaKRqCLzMQRUWSz5OvUYQCcz/ZhBqgg5tjaOrsrdiGOmHNXbAoROtpDHcbvZX
-	 f44SvuxYjPgbGruCnqP2bq6Sv4Q7ZniNZPksPSho=
+	b=vrROsQsnzNfP1yyI7f8NeSN15btOiEKTWAPd0tHK03T0j7SnTRvDVxIyLteuLbe4F
+	 WlDPwOqHgY6lY6h1U9vkXaxSqxScdJlmTcb+Ytpe8chU2g0spf+nCggMf//o0uz1fS
+	 JT3VnQgx8i4bDVyMeC1dmG0vasfFIq07VVyD4zXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Christoph Lameter <cl@linux.com>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitriy Vyukov <dvyukov@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 309/422] kfence: skip __GFP_THISNODE allocations on NUMA systems
-Date: Thu, 13 Feb 2025 15:27:38 +0100
-Message-ID: <20250213142448.466705082@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mehdi Djait <mehdi.djait@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.12 310/422] media: ccs: Clean up parsed CCS static data on parse failure
+Date: Thu, 13 Feb 2025 15:27:39 +0100
+Message-ID: <20250213142448.506021635@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -54,50 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit e64f81946adf68cd75e2207dd9a51668348a4af8 upstream.
+commit da73efa8e675a2b58f1c7ae61201acfe57714bf7 upstream.
 
-On NUMA systems, __GFP_THISNODE indicates that an allocation _must_ be on
-a particular node, and failure to allocate on the desired node will result
-in a failed allocation.
+ccs_data_parse() releases the allocated in-memory data structure when the
+parser fails, but it does not clean up parsed metadata that is there to
+help access the actual data. Do that, in order to return the data
+structure in a sane state.
 
-Skip __GFP_THISNODE allocations if we are running on a NUMA system, since
-KFENCE can't guarantee which node its pool pages are allocated on.
-
-Link: https://lkml.kernel.org/r/20250124120145.410066-1-elver@google.com
-Fixes: 236e9f153852 ("kfence: skip all GFP_ZONEMASK allocations")
-Signed-off-by: Marco Elver <elver@google.com>
-Reported-by: Vlastimil Babka <vbabka@suse.cz>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Chistoph Lameter <cl@linux.com>
-Cc: Dmitriy Vyukov <dvyukov@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: a6b396f410b1 ("media: ccs: Add CCS static data parser library")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kfence/core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/i2c/ccs/ccs-data.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/mm/kfence/core.c
-+++ b/mm/kfence/core.c
-@@ -21,6 +21,7 @@
- #include <linux/log2.h>
- #include <linux/memblock.h>
- #include <linux/moduleparam.h>
-+#include <linux/nodemask.h>
- #include <linux/notifier.h>
- #include <linux/panic_notifier.h>
- #include <linux/random.h>
-@@ -1084,6 +1085,7 @@ void *__kfence_alloc(struct kmem_cache *
- 	 * properties (e.g. reside in DMAable memory).
- 	 */
- 	if ((flags & GFP_ZONEMASK) ||
-+	    ((flags & __GFP_THISNODE) && num_online_nodes() > 1) ||
- 	    (s->flags & (SLAB_CACHE_DMA | SLAB_CACHE_DMA32))) {
- 		atomic_long_inc(&counters[KFENCE_COUNTER_SKIP_INCOMPAT]);
- 		return NULL;
+--- a/drivers/media/i2c/ccs/ccs-data.c
++++ b/drivers/media/i2c/ccs/ccs-data.c
+@@ -10,6 +10,7 @@
+ #include <linux/limits.h>
+ #include <linux/mm.h>
+ #include <linux/slab.h>
++#include <linux/string.h>
+ 
+ #include "ccs-data-defs.h"
+ 
+@@ -948,15 +949,15 @@ int ccs_data_parse(struct ccs_data_conta
+ 
+ 	rval = __ccs_data_parse(&bin, ccsdata, data, len, dev, verbose);
+ 	if (rval)
+-		return rval;
++		goto out_cleanup;
+ 
+ 	rval = bin_backing_alloc(&bin);
+ 	if (rval)
+-		return rval;
++		goto out_cleanup;
+ 
+ 	rval = __ccs_data_parse(&bin, ccsdata, data, len, dev, false);
+ 	if (rval)
+-		goto out_free;
++		goto out_cleanup;
+ 
+ 	if (verbose && ccsdata->version)
+ 		print_ccs_data_version(dev, ccsdata->version);
+@@ -965,15 +966,16 @@ int ccs_data_parse(struct ccs_data_conta
+ 		rval = -EPROTO;
+ 		dev_dbg(dev, "parsing mismatch; base %p; now %p; end %p\n",
+ 			bin.base, bin.now, bin.end);
+-		goto out_free;
++		goto out_cleanup;
+ 	}
+ 
+ 	ccsdata->backing = bin.base;
+ 
+ 	return 0;
+ 
+-out_free:
++out_cleanup:
+ 	kvfree(bin.base);
++	memset(ccsdata, 0, sizeof(*ccsdata));
+ 
+ 	return rval;
+ }
 
 
