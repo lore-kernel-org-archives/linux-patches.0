@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5DA26B08A;
-	Thu, 13 Feb 2025 14:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3551E26B088;
+	Thu, 13 Feb 2025 14:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458159; cv=none; b=J9h5vLZBv2HscPKjSmglPAcKSc42ON0bsYWJm1XmvOFutxPo7s3suoEKIYOi1miawLNtq9CUkG2AKHbUvUYAvWvONSbwZ6AZ49ZPfChs+cISdpVH58XA1/loh+FDd0Sre5z8olomcGOHcfcA0wu0xkcGcBVziwRCmBlgy2yP3OA=
+	t=1739458163; cv=none; b=ZNLyG79fLncJmD417GXE18qXxQoVYAVukjoWvyii2sKoSaLOkdLtMpPZpmQ9WGZ80HigNVJxJsiWIgDp4lqehYp8MiWj7QRq/r/QtstP99TBOajc7fYJGSawFFFHQggcr46nfbjb80qGZ6TyQUr/Vlvcx25k9QNC+QE+wiPBU88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458159; c=relaxed/simple;
-	bh=kc3pXEjzb8wj+y3sSsc/L+p8px80NCH5J0KxgZ2M22o=;
+	s=arc-20240116; t=1739458163; c=relaxed/simple;
+	bh=UeH/PV/Ype/O/jQPpJ2QZabQY2W749p5N0FkX2ONqjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NuKOnHYR2JE/R44+uTutrnYcxqnoxih9VFbpWAkGLYxDErvwDmTzMG2hawg/Czd+rfycj5dCSVadnIJfKqJ0NRu4zzPvY78/Ghc5QuhplbJRuHGlxvdu9naWwVjSvnUAa5DbTAxTDn9pB3+T6KE8rM4E7n0AWVkkJS7eB1kv+Xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zpih2sXx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WURBs3wyhJSuv6po1TnBJZDewRfujeBKNxszGEw/aCCeKBB/41DvaFlYZ3bmG6QQ2iyQkUz7xLvyV2/z3z8TrTVyGBerMSsrPn/T7XrZCDTWhdgxwS58eTKMSVKhdsqWyTpOoRA9wCCbpHr44rp85qMdKMfrjtPiEDctF1SaUN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J9r7ykap; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zpih2sXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD37C4CED1;
-	Thu, 13 Feb 2025 14:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J9r7ykap"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993AEC4CED1;
+	Thu, 13 Feb 2025 14:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458159;
-	bh=kc3pXEjzb8wj+y3sSsc/L+p8px80NCH5J0KxgZ2M22o=;
+	s=korg; t=1739458163;
+	bh=UeH/PV/Ype/O/jQPpJ2QZabQY2W749p5N0FkX2ONqjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zpih2sXxhYDVvonQ9IP6k1E7ZQUKKw+SXW2hgD/r9+zY7TaK5BvIxXMM1oN5IviuX
-	 Zt523CSBSW5TmSTHaUF3qm2WQIiboFCgXFTgsIG938KWxLpt0KiqDIaEcIuOqx6hus
-	 cwZmYgdSm5El5R280qrFM4JfMpkZ6ItfV05akahw=
+	b=J9r7ykap/61o+ekQQDnAhZNOujI9KLJeq4f6tWCdLW8HQ7ipf8piGiOC31HfN/qdG
+	 mEkQ27qROqyEYN2aI5rgOpG58Ra3v16YpWvvwRNuFSN3JEWg/HVtENtpbi8aPLA93E
+	 k7zhEjv7JMShuYKdnMCb5dofOP+Oa24pLlshFzjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 319/422] soc: qcom: llcc: Enable LLCC_WRCACHE at boot on X1
-Date: Thu, 13 Feb 2025 15:27:48 +0100
-Message-ID: <20250213142448.859489187@linuxfoundation.org>
+Subject: [PATCH 6.12 320/422] soc: qcom: smem_state: fix missing of_node_put in error path
+Date: Thu, 13 Feb 2025 15:27:49 +0100
+Message-ID: <20250213142448.897000870@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,43 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 35d8bc131de0f0f280f0db42499512d79f05f456 upstream.
+commit 70096b4990848229d0784c5e51dc3c7c072f1111 upstream.
 
-The Last Level Cache is split into many slices, each one of which can
-be toggled on or off.
+If of_parse_phandle_with_args() succeeds, the OF node reference should
+be dropped, regardless of number of phandle arguments.
 
-Only certain slices are recommended to be turned on unconditionally,
-in order to reach optimal performance/latency/power levels.
-
-Enable WRCACHE on X1 at boot, in accordance with internal
-recommendations.
-
-No significant performance difference is expected.
-
-Fixes: b3cf69a43502 ("soc: qcom: llcc: Add configuration data for X1E80100")
 Cc: stable@vger.kernel.org
-Reviewed-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20241219-topic-llcc_x1e_wrcache-v3-1-b9848d9c3d63@oss.qualcomm.com
+Fixes: 9460ae2ff308 ("soc: qcom: Introduce common SMEM state machine code")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240822164853.231087-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/llcc-qcom.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/qcom/smem_state.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -2511,6 +2511,7 @@ static const struct llcc_slice_config x1
- 		.fixed_size = true,
- 		.bonus_ways = 0xfff,
- 		.cache_mode = 0,
-+		.activate_on_init = true,
- 	}, {
- 		.usecase_id = LLCC_CAMEXP0,
- 		.slice_id = 4,
+--- a/drivers/soc/qcom/smem_state.c
++++ b/drivers/soc/qcom/smem_state.c
+@@ -116,7 +116,8 @@ struct qcom_smem_state *qcom_smem_state_
+ 
+ 	if (args.args_count != 1) {
+ 		dev_err(dev, "invalid #qcom,smem-state-cells\n");
+-		return ERR_PTR(-EINVAL);
++		state = ERR_PTR(-EINVAL);
++		goto put;
+ 	}
+ 
+ 	state = of_node_to_state(args.np);
 
 
