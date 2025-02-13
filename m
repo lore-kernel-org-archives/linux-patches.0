@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C8718991E;
-	Thu, 13 Feb 2025 14:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFC126B086;
+	Thu, 13 Feb 2025 14:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458482; cv=none; b=Rl8gucojPesbCVioS5+3dgi5wUhGnXZH5igaQpXC910hEtAINLp9n9aDfa5XZoSmv7vRLgafQfIr02NNNdqwHywWkOz06nnTCt3rv/i2fQVXWCH0z2DLE4y+R8SenuOCKxzTmLwR3+Jt/npx/Wf0mh/HJSf8VTHwoi9Kgs54vhw=
+	t=1739458485; cv=none; b=RvMJmvRO0urdLQkwnJM6o0JBhyN4D4HIL3z4ioEKfl1Ezlwyfu9bfjBKt3NgxrRGJLKetsoXwV2fglIOSfT0HQq9gRgaCcIFqQJ30uefyeeDYVz9BXqpiKv9xKOGrXLghOcUjZ97W6G2Y4/NtotI/wSwsA6S8DFx6F3Eemzx4sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458482; c=relaxed/simple;
-	bh=z8c+CITP+6rtbIjOHvjyy1XcLwiD7iJ42jP2HXg7x4U=;
+	s=arc-20240116; t=1739458485; c=relaxed/simple;
+	bh=g+eBZ7QnxjRrnlZkG+NRe9s4dns3nQSJKWRmwrMUtZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vsea7Sv42v8a4Au+dw2x4Ero4NoQ9s3KhfgWBmo+H3/cRvDRCAT4OYxNnN2TwqTEoi4SAIPRWk/p8oF2zx8Ir2OVZBehwZtguTR/fdbIhDaGSCVa2yFGN7mzlfbdTeGs2VkpluTSJGv9o9uHm7Xqw2Gg75HD+0PKrUZtV+UlKRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Egc14aUm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FKFyKeSAs/51jO5Cx7FbsygbdPyAXBvotqWArsho2havUSP828jIvcxsrww4YviG805TfH7OgL9Z39KJ373Zxfgro9vZBfMuVzLHIgtlgZk8ZFgdVIT9vaqTDMKLs/+lr4TEIGjBmu7NdaH4OTi/siRpUBRBwpdyerIqzz24Yc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=As+W+i6T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Egc14aUm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A6DC4CEE5;
-	Thu, 13 Feb 2025 14:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="As+W+i6T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21A8C4CED1;
+	Thu, 13 Feb 2025 14:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458481;
-	bh=z8c+CITP+6rtbIjOHvjyy1XcLwiD7iJ42jP2HXg7x4U=;
+	s=korg; t=1739458485;
+	bh=g+eBZ7QnxjRrnlZkG+NRe9s4dns3nQSJKWRmwrMUtZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Egc14aUmNS/STmH9Q2jw82cr6Xo2Ob/K+n8twBxR4LRqZv7zaqQp2pYYV/dOr5YFe
-	 82MHfoZrgZPVBN5EvNJgcfun93Mcmzq8zSYDRxwqT7VQinYVmoHarMcEtO0sDFKiMP
-	 rsWxNK+20CGdGi0EA+fZZa4wF6QDwMZVyl7IFhYU=
+	b=As+W+i6Tr2vCYC208C5LiQojTCDnrupQml2T8fb25jPod2vm4bk28+K2eW6WBmt9a
+	 2FFslZPkfHiBQgXdt1K3jREM62uEAwUh3LiAcv0OrfyEy2NwFAUUXQf7DrI6tk2riE
+	 KOXRMmKJiS9D2NIVGDrhBew3ETdskADCpvxRSduE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
 	Yu Kuai <yukuai3@huawei.com>,
+	Coly Li <colyli@kernel.org>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Bart Van Assche <bvanassche@acm.org>,
 	Song Liu <song@kernel.org>
-Subject: [PATCH 6.12 413/422] md/md-linear: Fix a NULL vs IS_ERR() bug in linear_add()
-Date: Thu, 13 Feb 2025 15:29:22 +0100
-Message-ID: <20250213142452.501548436@linuxfoundation.org>
+Subject: [PATCH 6.12 414/422] md: Fix linear_set_limits()
+Date: Thu, 13 Feb 2025 15:29:23 +0100
+Message-ID: <20250213142452.540516001@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,35 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 62c552070a980363d55a6082b432ebd1cade7a6e upstream.
+commit a572593ac80e51eb69ecede7e614289fcccdbf8d upstream.
 
-The linear_conf() returns error pointers, it doesn't return NULL.  Update
-the error checking to match.
+queue_limits_cancel_update() must only be called if
+queue_limits_start_update() is called first. Remove the
+queue_limits_cancel_update() call from linear_set_limits() because
+there is no corresponding queue_limits_start_update() call.
 
+This bug was discovered by annotating all mutex operations with clang
+thread-safety attributes and by building the kernel with clang and
+-Wthread-safety.
+
+Cc: Yu Kuai <yukuai3@huawei.com>
+Cc: Coly Li <colyli@kernel.org>
+Cc: Mike Snitzer <snitzer@kernel.org>
+Cc: Christoph Hellwig <hch@lst.de>
 Fixes: 127186cfb184 ("md: reintroduce md-linear")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/add654be-759f-4b2d-93ba-a3726dae380c@stanley.mountain
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250129225636.2667932-1-bvanassche@acm.org
 Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md-linear.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/md-linear.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 --- a/drivers/md/md-linear.c
 +++ b/drivers/md/md-linear.c
-@@ -204,8 +204,8 @@ static int linear_add(struct mddev *mdde
- 	rdev->saved_raid_disk = -1;
+@@ -76,10 +76,8 @@ static int linear_set_limits(struct mdde
+ 	lim.max_write_zeroes_sectors = mddev->chunk_sectors;
+ 	lim.io_min = mddev->chunk_sectors << 9;
+ 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
+-	if (err) {
+-		queue_limits_cancel_update(mddev->gendisk->queue);
++	if (err)
+ 		return err;
+-	}
  
- 	newconf = linear_conf(mddev, mddev->raid_disks + 1);
--	if (!newconf)
--		return -ENOMEM;
-+	if (IS_ERR(newconf))
-+		return PTR_ERR(newconf);
- 
- 	/* newconf->raid_disks already keeps a copy of * the increased
- 	 * value of mddev->raid_disks, WARN_ONCE() is just used to make
+ 	return queue_limits_set(mddev->gendisk->queue, &lim);
+ }
 
 
