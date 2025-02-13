@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E401E0087;
-	Thu, 13 Feb 2025 14:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662241DB154;
+	Thu, 13 Feb 2025 14:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458492; cv=none; b=K8FRUaYtuhztCTXAyLdVaUBy4Af+Sr42PBGEzpurCvLL2RUYec/9F89lODB2AR+inMawFZKPaZno10Zln8E5chvHTreikxgldu7lRCNjJ5hruSSlXo4x527fey+IIw8T7ByTWcU2cutVtOZBBdyV24DZ/xXFpkA4a5O9cEDJvRk=
+	t=1739458495; cv=none; b=L8gdNXEJuZtxsTU4X41VsaURJ1eT6K44xIdwJvMXUytzpo2bBLswAaL78iuaoVRds7Ll1uea/D7IrliOFv3KK03E8ORpqgeSszKAjm5hk7BmDKQhpHTv9C+hyYGreYzy5TSovN/GxN16eYAgP5/hSRtdfXNjFz4rAE1NQr0saGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458492; c=relaxed/simple;
-	bh=S6XnTS2W02mq1vmY8K5FRQSx8zPYASva58L9Jo4gfH4=;
+	s=arc-20240116; t=1739458495; c=relaxed/simple;
+	bh=jsvBAUt9pOJMIPs7dGqL3bwl9H88epeu/FPNp7oIeBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GuJD3nlv5b1/navy/OzEttM0VY1mfVFWpQZ221CnuCmLxoXFjZyjcM7sD6oDXIADYxFxS1PXvw+jTj9yoslp2a7lXF7nFeSjsk+paMe5/kO1gP9apzh38m5fEDAHftf0iI4CSJHvL2kKTxZnDebw+rrMe2Z4IsYarHyWTBQHDW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFGmjWwM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=chKAMqlQ3JN85XyWxklVRRUwTXsZKX2smvQQvxGSNIKsy2y2eDk72riALDexfqqMt8DE7oUFH+WtoZo4LMDrq9GpzUE9ZkBHO4OcSOmY9rJMpPyr6I2QxEI+GeHDoebEjy92IRL99YfAdVS2gLGZr05SBU01K+GMkLoE4JKYCR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTC4Qc4x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFGmjWwM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C23C4CED1;
-	Thu, 13 Feb 2025 14:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTC4Qc4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DFFC4CED1;
+	Thu, 13 Feb 2025 14:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458491;
-	bh=S6XnTS2W02mq1vmY8K5FRQSx8zPYASva58L9Jo4gfH4=;
+	s=korg; t=1739458495;
+	bh=jsvBAUt9pOJMIPs7dGqL3bwl9H88epeu/FPNp7oIeBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CFGmjWwMCy0K+OQXfxTa1LRpsg+3CU3AV7qTnx/qsODfCeg5n4haq7twk8s0+95Nv
-	 ccCrgCRHDil34GP7cz5PhXHWr6++n6Zg+7abx6vvg/3hORgNDFhmtIjrzDgQXQl3OG
-	 Fj2d2Wq933oDatptDXhYYpZkjKr9ltCtynxRL8AA=
+	b=iTC4Qc4x6zNS3NzMB8v+VrxlDcGV0bM9X9aH170yAtwyZA9H0Ql7CsQVzUZGzscbF
+	 EhS6toWEXCYg1QJgquGweJ5k9OQkqWoUliKBdgj0T4QZD2CA8XQubHv3YmC5K5C0xl
+	 JOXdI1/FA6BeHj6T+8/zAr135o7wIltBrDcGURog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 416/422] Revert "drm/amd/display: Fix green screen issue after suspend"
-Date: Thu, 13 Feb 2025 15:29:25 +0100
-Message-ID: <20250213142452.618117431@linuxfoundation.org>
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Julia Filipchuk <julia.filipchuk@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.12 417/422] drm/xe: Fix and re-enable xe_print_blob_ascii85()
+Date: Thu, 13 Feb 2025 15:29:26 +0100
+Message-ID: <20250213142452.656908287@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -48,195 +47,149 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-commit 04d6273faed083e619fc39a738ab0372b6a4db20 upstream.
+commit a9ab6591b45258b79af1cb66112fd9f83c8855da upstream.
 
-This reverts commit 87b7ebc2e16c14d32a912f18206a4d6cc9abc3e8.
+Commit 70fb86a85dc9 ("drm/xe: Revert some changes that break a mesa
+debug tool") partially reverted some changes to workaround breakage
+caused to mesa tools. However, in doing so it also broke fetching the
+GuC log via debugfs since xe_print_blob_ascii85() simply bails out.
 
-A long time ago, we had an issue with the Raven system when it was
-connected to two displays: one with DP and another with HDMI. After the
-system woke up from suspension, we saw a solid green screen caused by an
-underflow generated by bad DCC metadata. To workaround this issue, the
-'commit 87b7ebc2e16c ("drm/amd/display: Fix green screen issue after
-suspend")' was introduced to disable the DCC for a few frames after in
-the resume phase. However, in hindsight, this solution was probably a
-workaround at the kernel level for some issues from another part
-(probably other driver components or user space). After applying this
-patch and trying to reproduce the green issue in a similar hardware
-system but using the latest kernel and userspace, we cannot see the
-issue, which makes this workaround obsolete and creates extra
-unnecessary complexity to the code; for all of this reason, this commit
-reverts the original change.
+The fix is to avoid the extra newlines: the devcoredump interface is
+line-oriented and adding random newlines in the middle breaks it. If a
+tool is able to parse it by looking at the data and checking for chars
+that are out of the ascii85 space, it can still do so. A format change
+that breaks the line-oriented output on devcoredump however needs better
+coordination with existing tools.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+v2: Add suffix description comment
+v3: Reword explanation of xe_print_blob_ascii85() calling drm_puts()
+    in a loop
+
+Reviewed-by: José Roberto de Souza <jose.souza@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Julia Filipchuk <julia.filipchuk@intel.com>
+Cc: José Roberto de Souza <jose.souza@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 70fb86a85dc9 ("drm/xe: Revert some changes that break a mesa debug tool")
+Fixes: ec1455ce7e35 ("drm/xe/devcoredump: Add ASCII85 dump helper function")
+Link: https://patchwork.freedesktop.org/patch/msgid/20250123202307.95103-2-jose.souza@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit 2c95bbf5002776117a69caed3b31c10bf7341bec)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c       |   12 ++------
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c |   22 +++++-----------
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.h |    3 --
- 3 files changed, 13 insertions(+), 24 deletions(-)
+ drivers/gpu/drm/xe/xe_devcoredump.c |   34 +++++++++++++---------------------
+ drivers/gpu/drm/xe/xe_devcoredump.h |    2 +-
+ drivers/gpu/drm/xe/xe_guc_log.c     |    2 +-
+ 3 files changed, 15 insertions(+), 23 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5499,8 +5499,7 @@ fill_dc_plane_info_and_addr(struct amdgp
- 			    const u64 tiling_flags,
- 			    struct dc_plane_info *plane_info,
- 			    struct dc_plane_address *address,
--			    bool tmz_surface,
--			    bool force_disable_dcc)
-+			    bool tmz_surface)
+--- a/drivers/gpu/drm/xe/xe_devcoredump.c
++++ b/drivers/gpu/drm/xe/xe_devcoredump.c
+@@ -333,42 +333,34 @@ int xe_devcoredump_init(struct xe_device
+ /**
+  * xe_print_blob_ascii85 - print a BLOB to some useful location in ASCII85
+  *
+- * The output is split to multiple lines because some print targets, e.g. dmesg
+- * cannot handle arbitrarily long lines. Note also that printing to dmesg in
+- * piece-meal fashion is not possible, each separate call to drm_puts() has a
+- * line-feed automatically added! Therefore, the entire output line must be
+- * constructed in a local buffer first, then printed in one atomic output call.
++ * The output is split into multiple calls to drm_puts() because some print
++ * targets, e.g. dmesg, cannot handle arbitrarily long lines. These targets may
++ * add newlines, as is the case with dmesg: each drm_puts() call creates a
++ * separate line.
+  *
+  * There is also a scheduler yield call to prevent the 'task has been stuck for
+  * 120s' kernel hang check feature from firing when printing to a slow target
+  * such as dmesg over a serial port.
+  *
+- * TODO: Add compression prior to the ASCII85 encoding to shrink huge buffers down.
+- *
+  * @p: the printer object to output to
+  * @prefix: optional prefix to add to output string
++ * @suffix: optional suffix to add at the end. 0 disables it and is
++ *          not added to the output, which is useful when using multiple calls
++ *          to dump data to @p
+  * @blob: the Binary Large OBject to dump out
+  * @offset: offset in bytes to skip from the front of the BLOB, must be a multiple of sizeof(u32)
+  * @size: the size in bytes of the BLOB, must be a multiple of sizeof(u32)
+  */
+-void xe_print_blob_ascii85(struct drm_printer *p, const char *prefix,
++void xe_print_blob_ascii85(struct drm_printer *p, const char *prefix, char suffix,
+ 			   const void *blob, size_t offset, size_t size)
  {
- 	const struct drm_framebuffer *fb = plane_state->fb;
- 	const struct amdgpu_framebuffer *afb =
-@@ -5599,7 +5598,7 @@ fill_dc_plane_info_and_addr(struct amdgp
- 					   &plane_info->tiling_info,
- 					   &plane_info->plane_size,
- 					   &plane_info->dcc, address,
--					   tmz_surface, force_disable_dcc);
-+					   tmz_surface);
- 	if (ret)
- 		return ret;
+ 	const u32 *blob32 = (const u32 *)blob;
+ 	char buff[ASCII85_BUFSZ], *line_buff;
+ 	size_t line_pos = 0;
  
-@@ -5620,7 +5619,6 @@ static int fill_dc_plane_attributes(stru
- 	struct dc_scaling_info scaling_info;
- 	struct dc_plane_info plane_info;
- 	int ret;
--	bool force_disable_dcc = false;
+-	/*
+-	 * Splitting blobs across multiple lines is not compatible with the mesa
+-	 * debug decoder tool. Note that even dropping the explicit '\n' below
+-	 * doesn't help because the GuC log is so big some underlying implementation
+-	 * still splits the lines at 512K characters. So just bail completely for
+-	 * the moment.
+-	 */
+-	return;
+-
+ #define DMESG_MAX_LINE_LEN	800
+-#define MIN_SPACE		(ASCII85_BUFSZ + 2)		/* 85 + "\n\0" */
++	/* Always leave space for the suffix char and the \0 */
++#define MIN_SPACE		(ASCII85_BUFSZ + 2)	/* 85 + "<suffix>\0" */
  
- 	ret = amdgpu_dm_plane_fill_dc_scaling_info(adev, plane_state, &scaling_info);
- 	if (ret)
-@@ -5631,13 +5629,11 @@ static int fill_dc_plane_attributes(stru
- 	dc_plane_state->clip_rect = scaling_info.clip_rect;
- 	dc_plane_state->scaling_quality = scaling_info.scaling_quality;
+ 	if (size & 3)
+ 		drm_printf(p, "Size not word aligned: %zu", size);
+@@ -400,7 +392,6 @@ void xe_print_blob_ascii85(struct drm_pr
+ 		line_pos += strlen(line_buff + line_pos);
  
--	force_disable_dcc = adev->asic_type == CHIP_RAVEN && adev->in_suspend;
- 	ret = fill_dc_plane_info_and_addr(adev, plane_state,
- 					  afb->tiling_flags,
- 					  &plane_info,
- 					  &dc_plane_state->address,
--					  afb->tmz_surface,
--					  force_disable_dcc);
-+					  afb->tmz_surface);
- 	if (ret)
- 		return ret;
+ 		if ((line_pos + MIN_SPACE) >= DMESG_MAX_LINE_LEN) {
+-			line_buff[line_pos++] = '\n';
+ 			line_buff[line_pos++] = 0;
  
-@@ -9063,7 +9059,7 @@ static void amdgpu_dm_commit_planes(stru
- 			afb->tiling_flags,
- 			&bundle->plane_infos[planes_count],
- 			&bundle->flip_addrs[planes_count].address,
--			afb->tmz_surface, false);
-+			afb->tmz_surface);
- 
- 		drm_dbg_state(state->dev, "plane: id=%d dcc_en=%d\n",
- 				 new_plane_state->plane->index,
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-@@ -309,8 +309,7 @@ static int amdgpu_dm_plane_fill_gfx9_pla
- 								     const struct plane_size *plane_size,
- 								     union dc_tiling_info *tiling_info,
- 								     struct dc_plane_dcc_param *dcc,
--								     struct dc_plane_address *address,
--								     const bool force_disable_dcc)
-+								     struct dc_plane_address *address)
- {
- 	const uint64_t modifier = afb->base.modifier;
- 	int ret = 0;
-@@ -318,7 +317,7 @@ static int amdgpu_dm_plane_fill_gfx9_pla
- 	amdgpu_dm_plane_fill_gfx9_tiling_info_from_modifier(adev, tiling_info, modifier);
- 	tiling_info->gfx9.swizzle = amdgpu_dm_plane_modifier_gfx9_swizzle_mode(modifier);
- 
--	if (amdgpu_dm_plane_modifier_has_dcc(modifier) && !force_disable_dcc) {
-+	if (amdgpu_dm_plane_modifier_has_dcc(modifier)) {
- 		uint64_t dcc_address = afb->address + afb->base.offsets[1];
- 		bool independent_64b_blks = AMD_FMT_MOD_GET(DCC_INDEPENDENT_64B, modifier);
- 		bool independent_128b_blks = AMD_FMT_MOD_GET(DCC_INDEPENDENT_128B, modifier);
-@@ -360,8 +359,7 @@ static int amdgpu_dm_plane_fill_gfx12_pl
- 								      const struct plane_size *plane_size,
- 								      union dc_tiling_info *tiling_info,
- 								      struct dc_plane_dcc_param *dcc,
--								      struct dc_plane_address *address,
--								      const bool force_disable_dcc)
-+								      struct dc_plane_address *address)
- {
- 	const uint64_t modifier = afb->base.modifier;
- 	int ret = 0;
-@@ -371,7 +369,7 @@ static int amdgpu_dm_plane_fill_gfx12_pl
- 
- 	tiling_info->gfx9.swizzle = amdgpu_dm_plane_modifier_gfx9_swizzle_mode(modifier);
- 
--	if (amdgpu_dm_plane_modifier_has_dcc(modifier) && !force_disable_dcc) {
-+	if (amdgpu_dm_plane_modifier_has_dcc(modifier)) {
- 		int max_compressed_block = AMD_FMT_MOD_GET(DCC_MAX_COMPRESSED_BLOCK, modifier);
- 
- 		dcc->enable = 1;
-@@ -839,8 +837,7 @@ int amdgpu_dm_plane_fill_plane_buffer_at
- 			     struct plane_size *plane_size,
- 			     struct dc_plane_dcc_param *dcc,
- 			     struct dc_plane_address *address,
--			     bool tmz_surface,
--			     bool force_disable_dcc)
-+			     bool tmz_surface)
- {
- 	const struct drm_framebuffer *fb = &afb->base;
- 	int ret;
-@@ -900,16 +897,14 @@ int amdgpu_dm_plane_fill_plane_buffer_at
- 		ret = amdgpu_dm_plane_fill_gfx12_plane_attributes_from_modifiers(adev, afb, format,
- 										 rotation, plane_size,
- 										 tiling_info, dcc,
--										 address,
--										 force_disable_dcc);
-+										 address);
- 		if (ret)
- 			return ret;
- 	} else if (adev->family >= AMDGPU_FAMILY_AI) {
- 		ret = amdgpu_dm_plane_fill_gfx9_plane_attributes_from_modifiers(adev, afb, format,
- 										rotation, plane_size,
- 										tiling_info, dcc,
--										address,
--										force_disable_dcc);
-+										address);
- 		if (ret)
- 			return ret;
- 	} else {
-@@ -1000,14 +995,13 @@ static int amdgpu_dm_plane_helper_prepar
- 	    dm_plane_state_old->dc_state != dm_plane_state_new->dc_state) {
- 		struct dc_plane_state *plane_state =
- 			dm_plane_state_new->dc_state;
--		bool force_disable_dcc = !plane_state->dcc.enable;
- 
- 		amdgpu_dm_plane_fill_plane_buffer_attributes(
- 			adev, afb, plane_state->format, plane_state->rotation,
- 			afb->tiling_flags,
- 			&plane_state->tiling_info, &plane_state->plane_size,
- 			&plane_state->dcc, &plane_state->address,
--			afb->tmz_surface, force_disable_dcc);
-+			afb->tmz_surface);
+ 			drm_puts(p, line_buff);
+@@ -412,10 +403,11 @@ void xe_print_blob_ascii85(struct drm_pr
+ 		}
  	}
  
- 	return 0;
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.h
-@@ -51,8 +51,7 @@ int amdgpu_dm_plane_fill_plane_buffer_at
- 				 struct plane_size *plane_size,
- 				 struct dc_plane_dcc_param *dcc,
- 				 struct dc_plane_address *address,
--				 bool tmz_surface,
--				 bool force_disable_dcc);
-+				 bool tmz_surface);
++	if (suffix)
++		line_buff[line_pos++] = suffix;
++
+ 	if (line_pos) {
+-		line_buff[line_pos++] = '\n';
+ 		line_buff[line_pos++] = 0;
+-
+ 		drm_puts(p, line_buff);
+ 	}
  
- int amdgpu_dm_plane_init(struct amdgpu_display_manager *dm,
- 			 struct drm_plane *plane,
+--- a/drivers/gpu/drm/xe/xe_devcoredump.h
++++ b/drivers/gpu/drm/xe/xe_devcoredump.h
+@@ -26,7 +26,7 @@ static inline int xe_devcoredump_init(st
+ }
+ #endif
+ 
+-void xe_print_blob_ascii85(struct drm_printer *p, const char *prefix,
++void xe_print_blob_ascii85(struct drm_printer *p, const char *prefix, char suffix,
+ 			   const void *blob, size_t offset, size_t size);
+ 
+ #endif
+--- a/drivers/gpu/drm/xe/xe_guc_log.c
++++ b/drivers/gpu/drm/xe/xe_guc_log.c
+@@ -78,7 +78,7 @@ void xe_guc_log_print(struct xe_guc_log
+ 
+ 	xe_map_memcpy_from(xe, copy, &log->bo->vmap, 0, size);
+ 
+-	xe_print_blob_ascii85(p, "Log data", copy, 0, size);
++	xe_print_blob_ascii85(p, "Log data", '\n', copy, 0, size);
+ 
+ 	vfree(copy);
+ }
 
 
