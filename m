@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2344924168F;
-	Thu, 13 Feb 2025 14:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906A6203719;
+	Thu, 13 Feb 2025 14:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458288; cv=none; b=PHfnItQz8bdxr2yLbTOiidmNNHaoasC/5I0zA+gU6w+UH80S4do+mgjrJX1btMDHEjQYCKyK00moLlml3zcooLqxSsIRD1kF64y1E7wq6YRbjuGtTDcoffJuFxzywzhYRg4qTizdc4/nUiWjmgYDg+diKw6nnpwoJYSKOcxj+Wc=
+	t=1739458291; cv=none; b=oL9XHPzJcPWarpROVBmEbYVlK4P3KIfmvMvistlTHQ8Rq3bgQPRfAaZ496B+8ISMESjGdolR2nCEUEmTunav/GNuJr7RHKSd8pnE7ZZ0PYKXxIPIm72csdMf/PLQTyz56DyyF5IcIejP5JHe7Ac9/fl6nGDrsCgehVYDm6R/79E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458288; c=relaxed/simple;
-	bh=vA34+ZP4SVq3xWBq8SUXnxHICym5uhg9akrdZxD/fOM=;
+	s=arc-20240116; t=1739458291; c=relaxed/simple;
+	bh=le5Fh/+HE2kgN19uOc5Bxd9Ngjyg+rZQSgR0q8qx+8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HaUnhsOaYfbwI3K4Vn8pPfUzD/nNWv/dS1q1inkNCqIOoSPZsrIz9DsnqGV0jeVhOD4JC8vOlgtOOy7zGWoyj4mW7jYRRhthQeaap5COmrlj4dPZnd9rdsiAB6JolnnYb3UaRGMbaCRiCIzMW4XnAZRv0MMPeI7EMd+OdVXVoo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D62aPMix; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gtW8Fvj23ly04RWfhpE5h6/F+cxQwLV+5ly6t/9tguFti0w6AHJRcc1F64WwY6k+/ZZwYU2dX2aHusuSXfc9NJ+qq8bN8SeCakHOE1dcBKLdJRgsJkNy+fe3ASwNx4KcQBgWjAeiXVET30hCGh0ztqI/wU2xMu9XBcMrl2G3dmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpM6r0Vn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D62aPMix"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23014C4CED1;
-	Thu, 13 Feb 2025 14:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpM6r0Vn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973D7C4CED1;
+	Thu, 13 Feb 2025 14:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458287;
-	bh=vA34+ZP4SVq3xWBq8SUXnxHICym5uhg9akrdZxD/fOM=;
+	s=korg; t=1739458291;
+	bh=le5Fh/+HE2kgN19uOc5Bxd9Ngjyg+rZQSgR0q8qx+8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D62aPMix8XSxL02IJsj41vZnXhI57PP/nXvD0vG97bKrvWm8dXZOGYCxuEVJjzu83
-	 TANXPK2DKhF1gCdc70gqf7OSF/ABaY68sfwvNYNWDzczwvbR9HG4guN3ZbGqp/C6cT
-	 SmlPbp+mZcZqcMuffED7cq+qHs6pty5I7sHSJs2M=
+	b=QpM6r0VnxnkfIRDXW5pkg+y9n/r6ejpW5LoR+zwYve3n/sqSEIR3buBQT/CJLOxWZ
+	 DfQ6u14PgL+tVOozXEAmmRrf4YHmoEVn/o/ekvkWu/+iO0cJ/3iihI3N1Okn7LHPL7
+	 1926/ZVxzE25al4r3oQ7V8ngiapLO+CuSkLlFmao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Peng Fan <peng.fan@nxp.com>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.12 355/422] nvmem: imx-ocotp-ele: fix reading from non zero offset
-Date: Thu, 13 Feb 2025 15:28:24 +0100
-Message-ID: <20250213142450.252629358@linuxfoundation.org>
+Subject: [PATCH 6.12 356/422] nvmem: imx-ocotp-ele: set word length to 1
+Date: Thu, 13 Feb 2025 15:28:25 +0100
+Message-ID: <20250213142450.291008005@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -54,56 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Sascha Hauer <s.hauer@pengutronix.de>
 
-commit 3c9e2cb6cecf65f7501004038c5d1ed85fb7db84 upstream.
+commit 1b2cb4d0b5b6a9d9fe78470704309ec75f8a1c3a upstream.
 
-In imx_ocotp_reg_read() the offset comes in as bytes and not as words.
-This means we have to divide offset by 4 to get to the correct word
-offset.
+The ELE hardware internally has a word length of 4. However, among other
+things we store MAC addresses in the ELE OCOTP. With a length of 6 bytes
+these are naturally unaligned to the word length. Therefore we must
+support unaligned reads in reg_read() and indeed it works properly when
+reg_read() is called via nvmem_reg_read(). Setting the word size to 4
+has the only visible effect that doing unaligned reads from userspace
+via bin_attr_nvmem_read() do not work because they are rejected by that
+function.
 
-Also the incoming offset might not be word aligned. In order to read
-from the OCOTP the driver aligns down the previous word boundary and
-reads from there. This means we have to skip this alignment offset from
-the temporary buffer when copying the data to the output buffer.
+Given that we have to abstract from word accesses to byte accesses in
+the driver, set the word size to 1. This allows bytewise accesses from
+userspace to be able to test what the driver has to support anyway.
 
 Fixes: 22e9e6fcfb50 ("nvmem: imx: support i.MX93 OCOTP")
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
 Cc: stable <stable@kernel.org>
 Reviewed-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20241230141901.263976-3-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20241230141901.263976-5-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/imx-ocotp-ele.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/nvmem/imx-ocotp-ele.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/nvmem/imx-ocotp-ele.c
 +++ b/drivers/nvmem/imx-ocotp-ele.c
-@@ -71,12 +71,14 @@ static int imx_ocotp_reg_read(void *cont
- 	u32 *buf;
- 	void *p;
- 	int i;
-+	u8 skipbytes;
- 
- 	if (offset + bytes > priv->data->size)
- 		bytes = priv->data->size - offset;
- 
--	index = offset;
--	num_bytes = round_up(bytes, 4);
-+	index = offset >> 2;
-+	skipbytes = offset - (index << 2);
-+	num_bytes = round_up(bytes + skipbytes, 4);
- 	count = num_bytes >> 2;
- 
- 	p = kzalloc(num_bytes, GFP_KERNEL);
-@@ -100,7 +102,7 @@ static int imx_ocotp_reg_read(void *cont
- 			*buf++ = readl_relaxed(reg + (i << 2));
- 	}
- 
--	memcpy(val, (u8 *)p, bytes);
-+	memcpy(val, ((u8 *)p) + skipbytes, bytes);
- 
- 	mutex_unlock(&priv->lock);
- 
+@@ -153,7 +153,7 @@ static int imx_ele_ocotp_probe(struct pl
+ 	priv->config.owner = THIS_MODULE;
+ 	priv->config.size = priv->data->size;
+ 	priv->config.reg_read = priv->data->reg_read;
+-	priv->config.word_size = 4;
++	priv->config.word_size = 1;
+ 	priv->config.stride = 1;
+ 	priv->config.priv = priv;
+ 	priv->config.read_only = true;
 
 
