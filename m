@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800BB26B087;
-	Thu, 13 Feb 2025 15:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB2F153801;
+	Thu, 13 Feb 2025 15:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459085; cv=none; b=JQiH/d+HBn/B/rNve8nt2V+pEXib2/u+z3dXZxLcp+ZK7LoX2K++xsJy0C96BVmXNS+lnJ87kBK401WeOIPCOMTprOaeQni9gGhF/WReyaizIsZjaQYFe7GcW5KcJSgeg1UVa0kc7QTomVT5zr9U+TMNYPK3mPXnQ/WhgsNJvmI=
+	t=1739459088; cv=none; b=b/hVqHGAWsFvAbVbugE8j9jj/n35tbTirYdhfVwn0PoU43t3IUAD8/gRKBgkF3K/miTEOyGr7/STaIqx7zP3KnCeBa9K4yjE62u6UGQ9Bn80PlAXWpo1oF6FRX6lGQlYY95O7xGoJwpLW8wmfGQdwnEgZ9HdC8k00AXpMGF9awU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459085; c=relaxed/simple;
-	bh=xOi6w2th1Kr4vvj/BDcRtXl48PAw6+ybV6qbrjSyCOE=;
+	s=arc-20240116; t=1739459088; c=relaxed/simple;
+	bh=T4yPeDiWMDpCCXxqRkG9nKYjqg8eNBpEyOldopOFymE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxdO4YfenarJoPlZkEeh7Q7zFgc8v2Mp2LYnlL/Uvgi7H1wbBqS4B6FJNQgK2IoMovNr4Uy5EDQmH0cC8LF8k5PTNKONPvLutXFNdINtj/F+njkvDcF05q2zHnEHov8p37ayqgnIfWSdi3LdWgXJmcU9Ez8PRpAcJzXdUEf+ZjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ck+Tnpzx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qZyzSdiL+s4dtUgOwjLukA9D35HliYR2Yju+Mx85pQgQJfmuGrTI4wuO6POBDjsZiPm4Y3J4Yg9FT30/mGnI2wjT9/3GM1bs2PdvAIilS6eOIdOTp/PSrvuGl9lqq478pT1bVjkBwj7kal47DXHlwEn6aBpQUlebkPZ/BXSAHNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQ5Ytfx4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ck+Tnpzx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B24C4CED1;
-	Thu, 13 Feb 2025 15:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQ5Ytfx4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C13C4CED1;
+	Thu, 13 Feb 2025 15:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459085;
-	bh=xOi6w2th1Kr4vvj/BDcRtXl48PAw6+ybV6qbrjSyCOE=;
+	s=korg; t=1739459088;
+	bh=T4yPeDiWMDpCCXxqRkG9nKYjqg8eNBpEyOldopOFymE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ck+Tnpzx9eMwGPio7ADXacQbuEY0+2LMUoG2WcHsdqnpEoia3Zz1B9AoGkjpPj4FW
-	 N5ymtCuKdRJy3qhEet3cIXQamGRpgp/MEfcjX1zl07cFwhW9Dx/ercFXlVlax80bhP
-	 0bf2XXPkgJ2wZ1AniowUgbNn08kjgjJmgpDeyBXs=
+	b=tQ5Ytfx4768pCmGEMJAQlEMqE8DVTgq1fVoyzpQu9Lx1m4MdZY0hawKbSvSTfNtDp
+	 i4bdi9wxmCFv5+Uydgm61Z/Z6Z/tDaJkRnNPKYWBR4wn2MJnq2kjmTD56yUEaXtotA
+	 oNL/CSS5Hdnfn8Kti1k3jNtxYRPgIjpowQb/q6OE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quang Le <quanglex97@gmail.com>,
-	Cong Wang <cong.wang@bytedance.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 136/443] pfifo_tail_enqueue: Drop new packet when sch->limit == 0
-Date: Thu, 13 Feb 2025 15:25:01 +0100
-Message-ID: <20250213142445.850773614@linuxfoundation.org>
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.13 163/443] arm64/mm: Reduce PA space to 48 bits when LPA2 is not enabled
+Date: Thu, 13 Feb 2025 15:25:28 +0100
+Message-ID: <20250213142446.887214895@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,72 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quang Le <quanglex97@gmail.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 647cef20e649c576dff271e018d5d15d998b629d ]
+commit bf74bb73cd87c64bd5afc1fd4b749029997b6170 upstream.
 
-Expected behaviour:
-In case we reach scheduler's limit, pfifo_tail_enqueue() will drop a
-packet in scheduler's queue and decrease scheduler's qlen by one.
-Then, pfifo_tail_enqueue() enqueue new packet and increase
-scheduler's qlen by one. Finally, pfifo_tail_enqueue() return
-`NET_XMIT_CN` status code.
+Currently, LPA2 kernel support implies support for up to 52 bits of
+physical addressing, and this is reflected in global definitions such as
+PHYS_MASK_SHIFT and MAX_PHYSMEM_BITS.
 
-Weird behaviour:
-In case we set `sch->limit == 0` and trigger pfifo_tail_enqueue() on a
-scheduler that has no packet, the 'drop a packet' step will do nothing.
-This means the scheduler's qlen still has value equal 0.
-Then, we continue to enqueue new packet and increase scheduler's qlen by
-one. In summary, we can leverage pfifo_tail_enqueue() to increase qlen by
-one and return `NET_XMIT_CN` status code.
+This is potentially problematic, given that LPA2 hardware support is
+modeled as a CPU feature which can be overridden, and with LPA2 hardware
+support turned off, attempting to map physical regions with address bits
+[51:48] set (which may exist on LPA2 capable systems booting with
+arm64.nolva) will result in corrupted mappings with a truncated output
+address and bogus shareability attributes.
 
-The problem is:
-Let's say we have two qdiscs: Qdisc_A and Qdisc_B.
- - Qdisc_A's type must have '->graft()' function to create parent/child relationship.
-   Let's say Qdisc_A's type is `hfsc`. Enqueue packet to this qdisc will trigger `hfsc_enqueue`.
- - Qdisc_B's type is pfifo_head_drop. Enqueue packet to this qdisc will trigger `pfifo_tail_enqueue`.
- - Qdisc_B is configured to have `sch->limit == 0`.
- - Qdisc_A is configured to route the enqueued's packet to Qdisc_B.
+This means that the accepted physical address range in the mapping
+routines should be at most 48 bits wide when LPA2 support is configured
+but not enabled at runtime.
 
-Enqueue packet through Qdisc_A will lead to:
- - hfsc_enqueue(Qdisc_A) -> pfifo_tail_enqueue(Qdisc_B)
- - Qdisc_B->q.qlen += 1
- - pfifo_tail_enqueue() return `NET_XMIT_CN`
- - hfsc_enqueue() check for `NET_XMIT_SUCCESS` and see `NET_XMIT_CN` => hfsc_enqueue() don't increase qlen of Qdisc_A.
-
-The whole process lead to a situation where Qdisc_A->q.qlen == 0 and Qdisc_B->q.qlen == 1.
-Replace 'hfsc' with other type (for example: 'drr') still lead to the same problem.
-This violate the design where parent's qlen should equal to the sum of its childrens'qlen.
-
-Bug impact: This issue can be used for user->kernel privilege escalation when it is reachable.
-
-Fixes: 57dbb2d83d10 ("sched: add head drop fifo queue")
-Reported-by: Quang Le <quanglex97@gmail.com>
-Signed-off-by: Quang Le <quanglex97@gmail.com>
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Link: https://patch.msgid.link/20250204005841.223511-2-xiyou.wangcong@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 352b0395b505 ("arm64: Enable 52-bit virtual addressing for 4k and 16k granule configs")
+Cc: stable@vger.kernel.org
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20241212081841.2168124-9-ardb+git@google.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_fifo.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/include/asm/pgtable-hwdef.h |    6 ------
+ arch/arm64/include/asm/pgtable-prot.h  |    7 +++++++
+ arch/arm64/include/asm/sparsemem.h     |    5 ++++-
+ 3 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/net/sched/sch_fifo.c b/net/sched/sch_fifo.c
-index b50b2c2cc09bc..e6bfd39ff3396 100644
---- a/net/sched/sch_fifo.c
-+++ b/net/sched/sch_fifo.c
-@@ -40,6 +40,9 @@ static int pfifo_tail_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+--- a/arch/arm64/include/asm/pgtable-hwdef.h
++++ b/arch/arm64/include/asm/pgtable-hwdef.h
+@@ -222,12 +222,6 @@
+  */
+ #define S1_TABLE_AP		(_AT(pmdval_t, 3) << 61)
+ 
+-/*
+- * Highest possible physical address supported.
+- */
+-#define PHYS_MASK_SHIFT		(CONFIG_ARM64_PA_BITS)
+-#define PHYS_MASK		((UL(1) << PHYS_MASK_SHIFT) - 1)
+-
+ #define TTBR_CNP_BIT		(UL(1) << 0)
+ 
+ /*
+--- a/arch/arm64/include/asm/pgtable-prot.h
++++ b/arch/arm64/include/asm/pgtable-prot.h
+@@ -81,6 +81,7 @@ extern unsigned long prot_ns_shared;
+ #define lpa2_is_enabled()	false
+ #define PTE_MAYBE_SHARED	PTE_SHARED
+ #define PMD_MAYBE_SHARED	PMD_SECT_S
++#define PHYS_MASK_SHIFT		(CONFIG_ARM64_PA_BITS)
+ #else
+ static inline bool __pure lpa2_is_enabled(void)
  {
- 	unsigned int prev_backlog;
+@@ -89,9 +90,15 @@ static inline bool __pure lpa2_is_enable
  
-+	if (unlikely(READ_ONCE(sch->limit) == 0))
-+		return qdisc_drop(skb, sch, to_free);
+ #define PTE_MAYBE_SHARED	(lpa2_is_enabled() ? 0 : PTE_SHARED)
+ #define PMD_MAYBE_SHARED	(lpa2_is_enabled() ? 0 : PMD_SECT_S)
++#define PHYS_MASK_SHIFT		(lpa2_is_enabled() ? CONFIG_ARM64_PA_BITS : 48)
+ #endif
+ 
+ /*
++ * Highest possible physical address supported.
++ */
++#define PHYS_MASK		((UL(1) << PHYS_MASK_SHIFT) - 1)
 +
- 	if (likely(sch->q.qlen < READ_ONCE(sch->limit)))
- 		return qdisc_enqueue_tail(skb, sch);
++/*
+  * If we have userspace only BTI we don't want to mark kernel pages
+  * guarded even if the system does support BTI.
+  */
+--- a/arch/arm64/include/asm/sparsemem.h
++++ b/arch/arm64/include/asm/sparsemem.h
+@@ -5,7 +5,10 @@
+ #ifndef __ASM_SPARSEMEM_H
+ #define __ASM_SPARSEMEM_H
  
--- 
-2.39.5
-
+-#define MAX_PHYSMEM_BITS	CONFIG_ARM64_PA_BITS
++#include <asm/pgtable-prot.h>
++
++#define MAX_PHYSMEM_BITS		PHYS_MASK_SHIFT
++#define MAX_POSSIBLE_PHYSMEM_BITS	(52)
+ 
+ /*
+  * Section size must be at least 512MB for 64K base
 
 
