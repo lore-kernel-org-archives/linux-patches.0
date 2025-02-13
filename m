@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA39E26B080;
-	Thu, 13 Feb 2025 14:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B58926B083;
+	Thu, 13 Feb 2025 14:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458416; cv=none; b=f5Apyi32ejDx6UkTCTmCh0dfkZ5aDWh7WVCJV9C0b2fNg8UII6dkp3y5oUU2YomuYuX8sfZxfTAsuHU7bgbGY+6gkC/0s4q3qNpYnJMQlt2YfRhylOkTcU2iPKemNpbWOSnbLz9zQK1MzKvfHdVJZ5Hp2+XFd/DneAh+/rOIkn4=
+	t=1739458420; cv=none; b=WHP0D7sLCONu+kWv2tRrfjFdYh0uC3Z33++jU1F7nRjUqJGCfUcGQUYb+6BVUN5GriuLWBxA+R6WZfLZqnjR2zJXMbyrspq1OqZAWa/0+oaj48mobb7+HESNGRM7ZjS2U7slZF6roCrHVBvzvJZEVqela2228BI5EC/fvvBbOSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458416; c=relaxed/simple;
-	bh=Lbfe3ufOEu61CG45F65ERUuGai55WW8B/qFAUkLqx0M=;
+	s=arc-20240116; t=1739458420; c=relaxed/simple;
+	bh=aAwrVDvSFpjFnJjyBdgGlVLCC2tb3vwp2dmjP6IgMVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OaDFrmW/312CABdjCQGpOEn7am0KOV2E9sVDYvTrr5sg+aeq0USUnirQ7DgnZ35vq+bpLqpVXExrfOlirsgIyO5XWMOV8eghw6gDa4lryiyhZGUOZSya6Ob1gS3Mkv4cV3FCy6uw50BDtH1mTlhnJt+d7cmciLhE4Vqei6OIkv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4M3wj9I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cxMZCKafxXXwQsU/HIUIvlTjKCwqpqO5PL62+afh3wJWmKCG5mQVviFXCOnAIwHWb17IIB3iKZ2Uf9AeT2oTs+lWnEA5JQYXy2ENzNDZuKn1OE71bbPZ2lRdtMolJ7PqjQWAMfOGoYc1esLz3RR7wclz70oX4vElpzH/jsHn+Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUm2UMjx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4M3wj9I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430A4C4CEE5;
-	Thu, 13 Feb 2025 14:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUm2UMjx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CFABC4CED1;
+	Thu, 13 Feb 2025 14:53:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458416;
-	bh=Lbfe3ufOEu61CG45F65ERUuGai55WW8B/qFAUkLqx0M=;
+	s=korg; t=1739458420;
+	bh=aAwrVDvSFpjFnJjyBdgGlVLCC2tb3vwp2dmjP6IgMVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M4M3wj9IihiLnJI71dmPUO1j2f4VkkE4UV/UdDn2efVMOmA2sbkhfMbHR20vxpe9G
-	 lvZzOVHqgI/lvD3Ijw3uRGVCK/Hqk1G42bvoX9V6wRmCQz6i0aZujGi3PGIrSqUv65
-	 0cD1D115HntCefAYrG5hR3T4GZU8vctkwvjflfxY=
+	b=iUm2UMjxS+qympQAESVK3GEGn+5BRkDDfG+Bkv8NaufCFvNRXaWcSUxJFDuKzUCpR
+	 pezdrWLzGO6A1kza9FMWcjIgPT62qGq+Ow23gJ6Mx6APkhnQ6CG+AgSqcIzzR9TRbG
+	 2iTJhRLmk0RJ8DpFDoz5HxIxIfrgQ87lYIYSpqnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
-	stable@kernel.org,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.12 393/422] rtc: zynqmp: Fix optional clock name property
-Date: Thu, 13 Feb 2025 15:29:02 +0100
-Message-ID: <20250213142451.713120465@linuxfoundation.org>
+	Matt Fleming <mfleming@cloudflare.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.12 394/422] timers/migration: Fix off-by-one root mis-connection
+Date: Thu, 13 Feb 2025 15:29:03 +0100
+Message-ID: <20250213142451.751396434@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,39 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Simek <michal.simek@amd.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-commit 2a388ff22d2cbfc5cbd628ef085bdcd3b7dc64f5 upstream.
+commit 868c9037df626b3c245ee26a290a03ae1f9f58d3 upstream.
 
-Clock description in DT binding introduced by commit f69060c14431
-("dt-bindings: rtc: zynqmp: Add clock information") is talking about "rtc"
-clock name but driver is checking "rtc_clk" name instead.
-Because clock is optional property likely in was never handled properly by
-the driver.
+Before attaching a new root to the old root, the children counter of the
+new root is checked to verify that only the upcoming CPU's top group have
+been connected to it. However since the recently added commit b729cc1ec21a
+("timers/migration: Fix another race between hotplug and idle entry/exit")
+this check is not valid anymore because the old root is pre-accounted
+as a child to the new root. Therefore after connecting the upcoming
+CPU's top group to the new root, the children count to be expected must
+be 2 and not 1 anymore.
 
-Fixes: 07dcc6f9c762 ("rtc: zynqmp: Add calibration set and get support")
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Cc: stable@kernel.org
-Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://lore.kernel.org/r/cd5f0c9d01ec1f5a240e37a7e0d85b8dacb3a869.1732723280.git.michal.simek@amd.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+This omission results in the old root to not be connected to the new
+root. Then eventually the system may run with more than one top level,
+which defeats the purpose of a single idle migrator.
+
+Also the old root is pre-accounted but not connected upon the new root
+creation. But it can be connected to the new root later on. Therefore
+the old root may be accounted twice to the new root. The propagation of
+such overcommit can end up creating a double final top-level root with a
+groupmask incorrectly initialized. Although harmless given that the final
+top level roots will never have a parent to walk up to, this oddity
+opportunistically reported the core issue:
+
+  WARNING: CPU: 8 PID: 0 at kernel/time/timer_migration.c:543 tmigr_requires_handle_remote
+  CPU: 8 UID: 0 PID: 0 Comm: swapper/8
+  RIP: 0010:tmigr_requires_handle_remote
+  Call Trace:
+   <IRQ>
+   ? tmigr_requires_handle_remote
+   ? hrtimer_run_queues
+   update_process_times
+   tick_periodic
+   tick_handle_periodic
+   __sysvec_apic_timer_interrupt
+   sysvec_apic_timer_interrupt
+  </IRQ>
+
+Fix the problem by taking the old root into account in the children count
+of the new root so the connection is not omitted.
+
+Also warn when more than one top level group exists to better detect
+similar issues in the future.
+
+Fixes: b729cc1ec21a ("timers/migration: Fix another race between hotplug and idle entry/exit")
+Reported-by: Matt Fleming <mfleming@cloudflare.com>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20250205160220.39467-1-frederic@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-zynqmp.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/time/timer_migration.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/rtc/rtc-zynqmp.c
-+++ b/drivers/rtc/rtc-zynqmp.c
-@@ -318,8 +318,8 @@ static int xlnx_rtc_probe(struct platfor
- 		return ret;
- 	}
+--- a/kernel/time/timer_migration.c
++++ b/kernel/time/timer_migration.c
+@@ -1668,6 +1668,9 @@ static int tmigr_setup_groups(unsigned i
  
--	/* Getting the rtc_clk info */
--	xrtcdev->rtc_clk = devm_clk_get_optional(&pdev->dev, "rtc_clk");
-+	/* Getting the rtc info */
-+	xrtcdev->rtc_clk = devm_clk_get_optional(&pdev->dev, "rtc");
- 	if (IS_ERR(xrtcdev->rtc_clk)) {
- 		if (PTR_ERR(xrtcdev->rtc_clk) != -EPROBE_DEFER)
- 			dev_warn(&pdev->dev, "Device clock not found.\n");
+ 	} while (i < tmigr_hierarchy_levels);
+ 
++	/* Assert single root */
++	WARN_ON_ONCE(!err && !group->parent && !list_is_singular(&tmigr_level_list[top]));
++
+ 	while (i > 0) {
+ 		group = stack[--i];
+ 
+@@ -1709,7 +1712,12 @@ static int tmigr_setup_groups(unsigned i
+ 		WARN_ON_ONCE(top == 0);
+ 
+ 		lvllist = &tmigr_level_list[top];
+-		if (group->num_children == 1 && list_is_singular(lvllist)) {
++
++		/*
++		 * Newly created root level should have accounted the upcoming
++		 * CPU's child group and pre-accounted the old root.
++		 */
++		if (group->num_children == 2 && list_is_singular(lvllist)) {
+ 			/*
+ 			 * The target CPU must never do the prepare work, except
+ 			 * on early boot when the boot CPU is the target. Otherwise
 
 
