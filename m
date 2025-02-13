@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4A82222C5;
-	Thu, 13 Feb 2025 14:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0854B2222C5;
+	Thu, 13 Feb 2025 14:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458330; cv=none; b=NQvQRPD5G2cHH/v1KEWV1vtCynEgoKJnSXZPP0fw84o+6/HcvKnAry4cQbkzzZZ9A9W0ZJ9aAORmMg05PCvJcxsifBORnchDH2NqKDdrqzi5rY46oJ2NHgFuCLmV9TWRIgbbTp+tkcQ3ydI1KGSc0WAWBLm+8pQ7NlEpyoIHr0o=
+	t=1739458334; cv=none; b=PmmLAjG9t5D6CGOq6i3xJWLrqmSMOE7zSJcYzvEFBys+ryza6LzgILHUasQkF1GSVmyfKhgDnr5HIUJIh823BgMPpYCV//Z47mCTGVIemSspUyOb7moEIsNqw9FfFDEGIkXPr8I2GFVJOuqLM6vZmYSn4ibBT4fQfx7DDFcuH78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458330; c=relaxed/simple;
-	bh=jlmNduH9eTXjUAt7zxvekzh+0golS1JEmfqtHvRjnXw=;
+	s=arc-20240116; t=1739458334; c=relaxed/simple;
+	bh=siGVTLvTSr4ClUOhW8STcb1PXbsnV337JQpq9sNy0x0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZvjPj1V3RqQ+SIwMvXbHPxY531Se76m9WwHTQlE9kgOS0EVTqX0zH7CLUjpr1WLKtyGDsD9P7O30IzOPheWhWUl3YyEKGgLs14bsrRA+AOywh0GM0ha59Wcz0oQ1dRJZSzLhE1x3Y7VafHm/RmztCL3I7AJPB1Hx/1BZcawyjh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4Fndobb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GWp4cnfmvvvXZPSVPiQPm0WLaWhJ64BJHu/njQRAbdXSRfMNedO1y0S3MLRLv5PSdwz0/GOojYTcnfRlaIXyYZolCBanZv8KvAvb0OxJ+Qkg0xqNz/MhZvNI1X6dMOauohBGjOQHP3jxpGyD/f1GuwhfPMKQbzDW4tWHMD7Ngpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tWV8Md4k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4Fndobb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEA3C4CED1;
-	Thu, 13 Feb 2025 14:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tWV8Md4k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78939C4CEE4;
+	Thu, 13 Feb 2025 14:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458330;
-	bh=jlmNduH9eTXjUAt7zxvekzh+0golS1JEmfqtHvRjnXw=;
+	s=korg; t=1739458333;
+	bh=siGVTLvTSr4ClUOhW8STcb1PXbsnV337JQpq9sNy0x0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d4FndobbNFRzxcBvMYBwsxRY9gdEdeC0qA5yCs/i3YUbDyW9BrdF8t593nfyiYQky
-	 2hkmWW/DOeZHkHbmSjiMJFI64sOjJlFqkGkP0PgpbzUiereDcNs5QRByXbdic17/C5
-	 +haSnpBXhd+Wep83DNxIgHGvKvXpFEWHHlvyDUhs=
+	b=tWV8Md4k3R9D5xa4LD7YAhswtaHw60enFiu+5gibVkHfIGfyZmkVVtuIeE4GtqL0s
+	 CEjkuMWFU8gunckpApHj8vIFPRMJksd/cVTCeuZ/Ml9JsHuH5wO9D3WEytFX3fWNtw
+	 Nehd9plK/zwkTlaon2HGMAhUcVD0quYvlX3/eqwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Ricardo Ribalda <ribalda@chromium.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.12 337/422] media: uvcvideo: Only save async fh if success
-Date: Thu, 13 Feb 2025 15:28:06 +0100
-Message-ID: <20250213142449.559916133@linuxfoundation.org>
+Subject: [PATCH 6.12 338/422] media: uvcvideo: Remove redundant NULL assignment
+Date: Thu, 13 Feb 2025 15:28:07 +0100
+Message-ID: <20250213142449.599512594@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -54,83 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit d9fecd096f67a4469536e040a8a10bbfb665918b upstream.
+commit 04d3398f66d2d31c4b8caea88f051a4257b7a161 upstream.
 
-Now we keep a reference to the active fh for any call to uvc_ctrl_set,
-regardless if it is an actual set or if it is a just a try or if the
-device refused the operation.
-
-We should only keep the file handle if the device actually accepted
-applying the operation.
+ctrl->handle will only be different than NULL for controls that have
+mappings. This is because that assignment is only done inside
+uvc_ctrl_set() for mapped controls.
 
 Cc: stable@vger.kernel.org
 Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
-Suggested-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://lore.kernel.org/r/20241203-uvc-fix-async-v6-1-26c867231118@chromium.org
+Link: https://lore.kernel.org/r/20241203-uvc-fix-async-v6-2-26c867231118@chromium.org
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c |   18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 --- a/drivers/media/usb/uvc/uvc_ctrl.c
 +++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1811,7 +1811,10 @@ int uvc_ctrl_begin(struct uvc_video_chai
- }
+@@ -1640,10 +1640,8 @@ bool uvc_ctrl_status_event_async(struct
+ 	struct uvc_device *dev = chain->dev;
+ 	struct uvc_ctrl_work *w = &dev->async_ctrl;
  
- static int uvc_ctrl_commit_entity(struct uvc_device *dev,
--	struct uvc_entity *entity, int rollback, struct uvc_control **err_ctrl)
-+				  struct uvc_fh *handle,
-+				  struct uvc_entity *entity,
-+				  int rollback,
-+				  struct uvc_control **err_ctrl)
- {
- 	struct uvc_control *ctrl;
- 	unsigned int i;
-@@ -1859,6 +1862,10 @@ static int uvc_ctrl_commit_entity(struct
- 				*err_ctrl = ctrl;
- 			return ret;
- 		}
-+
-+		if (!rollback && handle &&
-+		    ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
-+			ctrl->handle = handle;
- 	}
+-	if (list_empty(&ctrl->info.mappings)) {
+-		ctrl->handle = NULL;
++	if (list_empty(&ctrl->info.mappings))
+ 		return false;
+-	}
  
- 	return 0;
-@@ -1895,8 +1902,8 @@ int __uvc_ctrl_commit(struct uvc_fh *han
- 
- 	/* Find the control. */
- 	list_for_each_entry(entity, &chain->entities, chain) {
--		ret = uvc_ctrl_commit_entity(chain->dev, entity, rollback,
--					     &err_ctrl);
-+		ret = uvc_ctrl_commit_entity(chain->dev, handle, entity,
-+					     rollback, &err_ctrl);
- 		if (ret < 0) {
- 			if (ctrls)
- 				ctrls->error_idx =
-@@ -2046,9 +2053,6 @@ int uvc_ctrl_set(struct uvc_fh *handle,
- 	mapping->set(mapping, value,
- 		uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT));
- 
--	if (ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
--		ctrl->handle = handle;
--
- 	ctrl->dirty = 1;
- 	ctrl->modified = 1;
- 	return 0;
-@@ -2377,7 +2381,7 @@ int uvc_ctrl_restore_values(struct uvc_d
- 			ctrl->dirty = 1;
- 		}
- 
--		ret = uvc_ctrl_commit_entity(dev, entity, 0, NULL);
-+		ret = uvc_ctrl_commit_entity(dev, NULL, entity, 0, NULL);
- 		if (ret < 0)
- 			return ret;
- 	}
+ 	w->data = data;
+ 	w->urb = urb;
 
 
