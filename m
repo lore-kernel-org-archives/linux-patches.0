@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613FC15689A;
-	Thu, 13 Feb 2025 14:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFB5149C55;
+	Thu, 13 Feb 2025 14:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458218; cv=none; b=JV01kkSrO+6e7PfPcTZe6/OlGEUbC5O0HcjEWPVhXy2DjUGAf+CkDny9IFyPsxAcFxZPs1uLtg/qwQC+hVjqKQAPg741/q5y0hHA6EKLsmclDV3kLM8GNfBOoTnmrL4oKCAfvL6Hrj8qgaOh8Ips6NASoIbfkiZb2y3e78HrpoM=
+	t=1739458222; cv=none; b=E59/eL5C+NUp/xdJvJtKv8Rlkr76gyMVIUUl12M8o/Xwc9Mc6kLd7tCYFX4/VelXORGE4P9V9msexxDUbkxYgaGFkAxZck+plN0x2QS8+xcqKnhO3QZb/pRNVuW8tj0bzB9zi4YbajhPDhZJxwgRQqXNpWO2zIQ+4SWwCAmscUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458218; c=relaxed/simple;
-	bh=BJqM2pNQNZ/N8DCSDwRPZrBO+x1okUE5cH9OjShfmYc=;
+	s=arc-20240116; t=1739458222; c=relaxed/simple;
+	bh=Ih+ECOPd7cfC8/VeyEgedLDFo38OA4IbogwEsdaDMwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L9vQMSxhZ99DCOWS7kcUtmJJSBHDxPp8mSl+UvoxEI4joUahZh0BOLFX3+2uE8g8S90megy4Jkvml0pJfYzcijIY28C8Fo9MKZ2gG9axJdx1LY5ct+3Wd9gdBhLmnYaWDVbsjo8ieUC3LIQYSX/ahIDJhK2RXsgRzaz7X/f3gb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYBhNSvD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PPooLTlKcs6BKjVHUCktXJK2elO0G3V1oXEcCDN00vaI/ON9ViGb1kprmh+OgyaQXPgESfh3Jq40J8KGPhZRkUoV1LVDfkywzIDJF3Tuo81oJTy8vRgf498r/d6+yInnrUSN49stJm1HEuOSgaH0qSUNHgeqoX8amlmims1ACd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGOsYnHm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYBhNSvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5769C4CED1;
-	Thu, 13 Feb 2025 14:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGOsYnHm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EED4C4CED1;
+	Thu, 13 Feb 2025 14:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458218;
-	bh=BJqM2pNQNZ/N8DCSDwRPZrBO+x1okUE5cH9OjShfmYc=;
+	s=korg; t=1739458221;
+	bh=Ih+ECOPd7cfC8/VeyEgedLDFo38OA4IbogwEsdaDMwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EYBhNSvDHU/UkToz0G+OL17d9CtswlTi40BhGt61FMmitS4SL55RzU3DZaEyNcS2I
-	 zUNmYpMV/9KB5QaGTlUhEq/Pj0QmrgXfMl/aafMZcUR7oXhEx/iC3RxQtm3U7wZzt+
-	 R8AhN5reYCJPhUcmGdZeJWEAZXfyKTMUyPB1RFkU=
+	b=fGOsYnHmYERPpKUlLskNxx17kvXJoufa+4nOW/V0iuBCInxfmYzM0TjveHNxum3hB
+	 oIznS0O9zCZXuTMgXjX9wrV1RPTX3bKKMaNlSqI8s2teFHtVkGyOFk8AqiG0Zp3YGj
+	 GfA6NgQQxuEq/KRUb1Llf07sPiZXeABvef2+3f+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aubrey Li <aubrey.li@linux.intel.com>,
-	Koba Ko <kobak@nvidia.com>,
 	Ard Biesheuvel <ardb@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Shi Liu <aurelianliu@tencent.com>
-Subject: [PATCH 6.12 304/422] ACPI: PRM: Remove unnecessary strict handler address checks
-Date: Thu, 13 Feb 2025 15:27:33 +0100
-Message-ID: <20250213142448.274691691@linuxfoundation.org>
+	Andy Liang <andy.liang@hpe.com>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.12 305/422] tpm: Change to kvalloc() in eventlog/acpi.c
+Date: Thu, 13 Feb 2025 15:27:34 +0100
+Message-ID: <20250213142448.313167479@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -53,65 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aubrey Li <aubrey.li@linux.intel.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-commit 7f5704b6a143b8eca640cba820968e798d065e91 upstream.
+commit a3a860bc0fd6c07332e4911cf9a238d20de90173 upstream.
 
-Commit 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM
-handler and context") added unnecessary strict handler address checks,
-causing the PRM module to fail in translating memory error addresses.
+The following failure was reported on HPE ProLiant D320:
 
-Both static data buffer address and ACPI parameter buffer address may
-be NULL if they are not needed, as described in section 4.1.2 PRM Handler
-Information Structure of Platform Runtime Mechanism specification [1].
+[   10.693310][    T1] tpm_tis STM0925:00: 2.0 TPM (device-id 0x3, rev-id 0)
+[   10.848132][    T1] ------------[ cut here ]------------
+[   10.853559][    T1] WARNING: CPU: 59 PID: 1 at mm/page_alloc.c:4727 __alloc_pages_noprof+0x2ca/0x330
+[   10.862827][    T1] Modules linked in:
+[   10.866671][    T1] CPU: 59 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.0-lp155.2.g52785e2-default #1 openSUSE Tumbleweed (unreleased) 588cd98293a7c9eba9013378d807364c088c9375
+[   10.882741][    T1] Hardware name: HPE ProLiant DL320 Gen12/ProLiant DL320 Gen12, BIOS 1.20 10/28/2024
+[   10.892170][    T1] RIP: 0010:__alloc_pages_noprof+0x2ca/0x330
+[   10.898103][    T1] Code: 24 08 e9 4a fe ff ff e8 34 36 fa ff e9 88 fe ff ff 83 fe 0a 0f 86 b3 fd ff ff 80 3d 01 e7 ce 01 00 75 09 c6 05 f8 e6 ce 01 01 <0f> 0b 45 31 ff e9 e5 fe ff ff f7 c2 00 00 08 00 75 42 89 d9 80 e1
+[   10.917750][    T1] RSP: 0000:ffffb7cf40077980 EFLAGS: 00010246
+[   10.923777][    T1] RAX: 0000000000000000 RBX: 0000000000040cc0 RCX: 0000000000000000
+[   10.931727][    T1] RDX: 0000000000000000 RSI: 000000000000000c RDI: 0000000000040cc0
 
-Here are two examples from real hardware:
+The above transcript shows that ACPI pointed a 16 MiB buffer for the log
+events because RSI maps to the 'order' parameter of __alloc_pages_noprof().
+Address the bug by moving from devm_kmalloc() to devm_add_action() and
+kvmalloc() and devm_add_action().
 
-----PRMT.dsl----
-
-- staic data address is not used
-[10Ch 0268   2]                     Revision : 0000
-[10Eh 0270   2]                       Length : 002C
-[110h 0272  16]                 Handler GUID : F6A58D47-E04F-4F5A-86B8-2A50D4AA109B
-[120h 0288   8]              Handler address : 0000000065CE51F4
-[128h 0296   8]           Satic Data Address : 0000000000000000
-[130h 0304   8]       ACPI Parameter Address : 000000006522A718
-
-- ACPI parameter address is not used
-[1B0h 0432   2]                     Revision : 0000
-[1B2h 0434   2]                       Length : 002C
-[1B4h 0436  16]                 Handler GUID : 657E8AE6-A8FC-4877-BB28-42E7DE1899A5
-[1C4h 0452   8]              Handler address : 0000000065C567C8
-[1CCh 0460   8]           Satic Data Address : 000000006113FB98
-[1D4h 0468   8]       ACPI Parameter Address : 0000000000000000
-
-Fixes: 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM handler and context")
-Reported-and-tested-by: Shi Liu <aurelianliu@tencent.com>
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Aubrey Li <aubrey.li@linux.intel.com>
-Link: https://uefi.org/sites/default/files/resources/Platform%20Runtime%20Mechanism%20-%20with%20legal%20notice.pdf # [1]
-Reviewed-by: Koba Ko <kobak@nvidia.com>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://patch.msgid.link/20250126022250.3014210-1-aubrey.li@linux.intel.com
-[ rjw: Minor changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Suggested-by: Ard Biesheuvel <ardb@kernel.org>
+Cc: stable@vger.kernel.org # v2.6.16+
+Fixes: 55a82ab3181b ("[PATCH] tpm: add bios measurement log")
+Reported-by: Andy Liang <andy.liang@hpe.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219495
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Takashi Iwai <tiwai@suse.de>
+Tested-by: Andy Liang <andy.liang@hpe.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/prmt.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/char/tpm/eventlog/acpi.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/acpi/prmt.c
-+++ b/drivers/acpi/prmt.c
-@@ -287,9 +287,7 @@ static acpi_status acpi_platformrt_space
- 		if (!handler || !module)
- 			goto invalid_guid;
+--- a/drivers/char/tpm/eventlog/acpi.c
++++ b/drivers/char/tpm/eventlog/acpi.c
+@@ -63,6 +63,11 @@ static bool tpm_is_tpm2_log(void *bios_e
+ 	return n == 0;
+ }
  
--		if (!handler->handler_addr ||
--		    !handler->static_data_buffer_addr ||
--		    !handler->acpi_param_buffer_addr) {
-+		if (!handler->handler_addr) {
- 			buffer->prm_status = PRM_HANDLER_ERROR;
- 			return AE_OK;
- 		}
++static void tpm_bios_log_free(void *data)
++{
++	kvfree(data);
++}
++
+ /* read binary bios log */
+ int tpm_read_log_acpi(struct tpm_chip *chip)
+ {
+@@ -136,7 +141,7 @@ int tpm_read_log_acpi(struct tpm_chip *c
+ 	}
+ 
+ 	/* malloc EventLog space */
+-	log->bios_event_log = devm_kmalloc(&chip->dev, len, GFP_KERNEL);
++	log->bios_event_log = kvmalloc(len, GFP_KERNEL);
+ 	if (!log->bios_event_log)
+ 		return -ENOMEM;
+ 
+@@ -161,10 +166,16 @@ int tpm_read_log_acpi(struct tpm_chip *c
+ 		goto err;
+ 	}
+ 
++	ret = devm_add_action(&chip->dev, tpm_bios_log_free, log->bios_event_log);
++	if (ret) {
++		log->bios_event_log = NULL;
++		goto err;
++	}
++
+ 	return format;
+ 
+ err:
+-	devm_kfree(&chip->dev, log->bios_event_log);
++	tpm_bios_log_free(log->bios_event_log);
+ 	log->bios_event_log = NULL;
+ 	return ret;
+ }
 
 
