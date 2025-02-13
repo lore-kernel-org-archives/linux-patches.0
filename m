@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C197226B098;
-	Thu, 13 Feb 2025 15:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89B514A605;
+	Thu, 13 Feb 2025 15:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460247; cv=none; b=KPmDwwpe7dzq5LH2R10PAuKwLqAPcMiW9axK3vjJz+5jA9kHHjyfFTAJlSxWocL1nLsI3HJRkWUiEQOBlpCDs8K0wskpqApFONuVlraFZEYzzzl4sGvLutR8Qc8jWsGNVjQa5NY7si+OA7gh/o+P4z+1jKLOGywfzX9soL3Jr9Q=
+	t=1739460252; cv=none; b=eFO7dv5BOrDTpUfbj1u3jXVP+f9qRD9elavvuOtpwYfQG5Nfi/ze3STITD8q3CRoIP2dkkUfMz1wAJxMX7iym88sKEhLP0jjfQtQFJFRT/u5wtYdzlyJXTP+uEOvV+Fb+jIkBkVWebPhwhSyLE0dBhCzNEPqi0jzCoDudwvBLms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460247; c=relaxed/simple;
-	bh=xJFYKNgpfCc7zUzfHIzxOR0cGFqL9ful17e+gw21cy8=;
+	s=arc-20240116; t=1739460252; c=relaxed/simple;
+	bh=4xMG+OH7NBGXYs6H9Rh4PQzl62qhXaIi2bN95QXU/JI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wp6+MB94QGNcZ/3xsHFSija2PB6dcI1/VHGrxUmBRqzs5IzdV3AdQ1JaegM8jD05gZdqIFQcGPpyC5DiA0MjqOFc88Cw4jOwhn0Pu7IX1kzjv9cZpdw1zwH11doJjJZb1hQJczq9wDzXjwgRxSVp6in+ME0BSgl5I5+319UOFCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6cYeCjq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kVrY1bMwdkKpZo+TUTkLuKZ2Ca2YwDdxVi62qeJO+fCMHhQatBnBt9P8CWu2d68QYzxfy7FLiKBP9/K60O9RR0sD00FwYk9ZyxAO2ais3aJ50aU5SOawK4rS6vKcIM9oGwnH3bLEJ3ywkqnyo55WQZcrHgBfXhnVYIC0usxUPB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjs81+Fy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6cYeCjq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31129C4CED1;
-	Thu, 13 Feb 2025 15:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjs81+Fy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74EAC4CED1;
+	Thu, 13 Feb 2025 15:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460247;
-	bh=xJFYKNgpfCc7zUzfHIzxOR0cGFqL9ful17e+gw21cy8=;
+	s=korg; t=1739460251;
+	bh=4xMG+OH7NBGXYs6H9Rh4PQzl62qhXaIi2bN95QXU/JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6cYeCjqlJ85CAo4x0TC60RYEctEQILyejH4UiprxvXiBK+c4VfoN1L+xZ7+dzxde
-	 ObXJz8JNBfwU0dVue10W0KrGa6y3lIzM7soTocAyft/EMcUV9jYLOrm1Y3fg+xfxfy
-	 8q4EZ8jryBE+D2LRtJXHyXxpllrX1gSJcgKp0uiQ=
+	b=pjs81+Fyh57EhofIMwGerAe8PMM2N3ffMNjup/rU0Rwt70YTf3WxkYMU1sYPhnfnI
+	 EZz6bkerWSyXn11GMawk4gUjamEbSrDnDzLgkLj1GKtP4bsr4ZI/YwxU/IctTSZjgM
+	 rWv6IM5Fl/UYHsuLlDlJW/gDWgXy7PVxLLdNUbmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Peter Delevoryas <peter@pjd.dev>,
+	Patrick Williams <patrick@stwcx.xyz>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/273] KVM: e500: always restore irqs
-Date: Thu, 13 Feb 2025 15:27:09 +0100
-Message-ID: <20250213142409.607163765@linuxfoundation.org>
+Subject: [PATCH 6.6 058/273] net/ncsi: Add NC-SI 1.2 Get MC MAC Address command
+Date: Thu, 13 Feb 2025 15:27:10 +0100
+Message-ID: <20250213142409.645954860@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -51,45 +52,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Peter Delevoryas <peter@pjd.dev>
 
-[ Upstream commit 87ecfdbc699cc95fac73291b52650283ddcf929d ]
+[ Upstream commit b8291cf3d1180b5b61299922f17c9441616a805a ]
 
-If find_linux_pte fails, IRQs will not be restored.  This is unlikely
-to happen in practice since it would have been reported as hanging
-hosts, but it should of course be fixed anyway.
+This change adds support for the NC-SI 1.2 Get MC MAC Address command,
+specified here:
 
-Cc: stable@vger.kernel.org
-Reported-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+https://www.dmtf.org/sites/default/files/standards/documents/DSP0222_1.2.0.pdf
+
+It serves the exact same function as the existing OEM Get MAC Address
+commands, so if a channel reports that it supports NC-SI 1.2, we prefer
+to use the standard command rather than the OEM command.
+
+Verified with an invalid MAC address and 2 valid ones:
+
+[   55.137072] ftgmac100 1e690000.ftgmac eth0: NCSI: Received 3 provisioned MAC addresses
+[   55.137614] ftgmac100 1e690000.ftgmac eth0: NCSI: MAC address 0: 00:00:00:00:00:00
+[   55.138026] ftgmac100 1e690000.ftgmac eth0: NCSI: MAC address 1: fa:ce:b0:0c:20:22
+[   55.138528] ftgmac100 1e690000.ftgmac eth0: NCSI: MAC address 2: fa:ce:b0:0c:20:23
+[   55.139241] ftgmac100 1e690000.ftgmac eth0: NCSI: Unable to assign 00:00:00:00:00:00 to device
+[   55.140098] ftgmac100 1e690000.ftgmac eth0: NCSI: Set MAC address to fa:ce:b0:0c:20:22
+
+Signed-off-by: Peter Delevoryas <peter@pjd.dev>
+Signed-off-by: Patrick Williams <patrick@stwcx.xyz>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 9e2bbab94b88 ("net/ncsi: fix locking in Get MAC Address handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kvm/e500_mmu_host.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ncsi/ncsi-cmd.c    |  3 ++-
+ net/ncsi/ncsi-manage.c |  9 +++++++--
+ net/ncsi/ncsi-pkt.h    | 10 ++++++++++
+ net/ncsi/ncsi-rsp.c    | 41 ++++++++++++++++++++++++++++++++++++++++-
+ 4 files changed, 59 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/kvm/e500_mmu_host.c b/arch/powerpc/kvm/e500_mmu_host.c
-index 1910a48679e52..bd413dafbaf96 100644
---- a/arch/powerpc/kvm/e500_mmu_host.c
-+++ b/arch/powerpc/kvm/e500_mmu_host.c
-@@ -479,7 +479,6 @@ static inline int kvmppc_e500_shadow_map(struct kvmppc_vcpu_e500 *vcpu_e500,
- 		if (pte_present(pte)) {
- 			wimg = (pte_val(pte) >> PTE_WIMGE_SHIFT) &
- 				MAS2_WIMGE_MASK;
--			local_irq_restore(flags);
- 		} else {
- 			local_irq_restore(flags);
- 			pr_err_ratelimited("%s: pte not present: gfn %lx,pfn %lx\n",
-@@ -488,8 +487,9 @@ static inline int kvmppc_e500_shadow_map(struct kvmppc_vcpu_e500 *vcpu_e500,
- 			goto out;
- 		}
- 	}
--	writable = kvmppc_e500_ref_setup(ref, gtlbe, pfn, wimg);
-+	local_irq_restore(flags);
+diff --git a/net/ncsi/ncsi-cmd.c b/net/ncsi/ncsi-cmd.c
+index fd2236ee9a79d..b3ff37a181d73 100644
+--- a/net/ncsi/ncsi-cmd.c
++++ b/net/ncsi/ncsi-cmd.c
+@@ -270,7 +270,8 @@ static struct ncsi_cmd_handler {
+ 	{ NCSI_PKT_CMD_GPS,    0, ncsi_cmd_handler_default },
+ 	{ NCSI_PKT_CMD_OEM,   -1, ncsi_cmd_handler_oem     },
+ 	{ NCSI_PKT_CMD_PLDM,   0, NULL                     },
+-	{ NCSI_PKT_CMD_GPUUID, 0, ncsi_cmd_handler_default }
++	{ NCSI_PKT_CMD_GPUUID, 0, ncsi_cmd_handler_default },
++	{ NCSI_PKT_CMD_GMCMA,  0, ncsi_cmd_handler_default }
+ };
  
-+	writable = kvmppc_e500_ref_setup(ref, gtlbe, pfn, wimg);
- 	kvmppc_e500_setup_stlbe(&vcpu_e500->vcpu, gtlbe, tsize,
- 				ref, gvaddr, stlbe);
+ static struct ncsi_request *ncsi_alloc_command(struct ncsi_cmd_arg *nca)
+diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
+index 90c6cf676221a..5ecf611c88200 100644
+--- a/net/ncsi/ncsi-manage.c
++++ b/net/ncsi/ncsi-manage.c
+@@ -1040,11 +1040,16 @@ static void ncsi_configure_channel(struct ncsi_dev_priv *ndp)
+ 	case ncsi_dev_state_config_oem_gma:
+ 		nd->state = ncsi_dev_state_config_clear_vids;
  
+-		nca.type = NCSI_PKT_CMD_OEM;
+ 		nca.package = np->id;
+ 		nca.channel = nc->id;
+ 		ndp->pending_req_num = 1;
+-		ret = ncsi_gma_handler(&nca, nc->version.mf_id);
++		if (nc->version.major >= 1 && nc->version.minor >= 2) {
++			nca.type = NCSI_PKT_CMD_GMCMA;
++			ret = ncsi_xmit_cmd(&nca);
++		} else {
++			nca.type = NCSI_PKT_CMD_OEM;
++			ret = ncsi_gma_handler(&nca, nc->version.mf_id);
++		}
+ 		if (ret < 0)
+ 			schedule_work(&ndp->work);
+ 
+diff --git a/net/ncsi/ncsi-pkt.h b/net/ncsi/ncsi-pkt.h
+index c9d1da34dc4dc..f2f3b5c1b9412 100644
+--- a/net/ncsi/ncsi-pkt.h
++++ b/net/ncsi/ncsi-pkt.h
+@@ -338,6 +338,14 @@ struct ncsi_rsp_gpuuid_pkt {
+ 	__be32                  checksum;
+ };
+ 
++/* Get MC MAC Address */
++struct ncsi_rsp_gmcma_pkt {
++	struct ncsi_rsp_pkt_hdr rsp;
++	unsigned char           address_count;
++	unsigned char           reserved[3];
++	unsigned char           addresses[][ETH_ALEN];
++};
++
+ /* AEN: Link State Change */
+ struct ncsi_aen_lsc_pkt {
+ 	struct ncsi_aen_pkt_hdr aen;        /* AEN header      */
+@@ -398,6 +406,7 @@ struct ncsi_aen_hncdsc_pkt {
+ #define NCSI_PKT_CMD_GPUUID	0x52 /* Get package UUID                 */
+ #define NCSI_PKT_CMD_QPNPR	0x56 /* Query Pending NC PLDM request */
+ #define NCSI_PKT_CMD_SNPR	0x57 /* Send NC PLDM Reply  */
++#define NCSI_PKT_CMD_GMCMA	0x58 /* Get MC MAC Address */
+ 
+ 
+ /* NCSI packet responses */
+@@ -433,6 +442,7 @@ struct ncsi_aen_hncdsc_pkt {
+ #define NCSI_PKT_RSP_GPUUID	(NCSI_PKT_CMD_GPUUID + 0x80)
+ #define NCSI_PKT_RSP_QPNPR	(NCSI_PKT_CMD_QPNPR   + 0x80)
+ #define NCSI_PKT_RSP_SNPR	(NCSI_PKT_CMD_SNPR   + 0x80)
++#define NCSI_PKT_RSP_GMCMA	(NCSI_PKT_CMD_GMCMA  + 0x80)
+ 
+ /* NCSI response code/reason */
+ #define NCSI_PKT_RSP_C_COMPLETED	0x0000 /* Command Completed        */
+diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
+index f22d67cb04d37..e28be33bdf2c4 100644
+--- a/net/ncsi/ncsi-rsp.c
++++ b/net/ncsi/ncsi-rsp.c
+@@ -1093,6 +1093,44 @@ static int ncsi_rsp_handler_netlink(struct ncsi_request *nr)
+ 	return ret;
+ }
+ 
++static int ncsi_rsp_handler_gmcma(struct ncsi_request *nr)
++{
++	struct ncsi_dev_priv *ndp = nr->ndp;
++	struct net_device *ndev = ndp->ndev.dev;
++	struct ncsi_rsp_gmcma_pkt *rsp;
++	struct sockaddr saddr;
++	int ret = -1;
++	int i;
++
++	rsp = (struct ncsi_rsp_gmcma_pkt *)skb_network_header(nr->rsp);
++	saddr.sa_family = ndev->type;
++	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
++
++	netdev_info(ndev, "NCSI: Received %d provisioned MAC addresses\n",
++		    rsp->address_count);
++	for (i = 0; i < rsp->address_count; i++) {
++		netdev_info(ndev, "NCSI: MAC address %d: %02x:%02x:%02x:%02x:%02x:%02x\n",
++			    i, rsp->addresses[i][0], rsp->addresses[i][1],
++			    rsp->addresses[i][2], rsp->addresses[i][3],
++			    rsp->addresses[i][4], rsp->addresses[i][5]);
++	}
++
++	for (i = 0; i < rsp->address_count; i++) {
++		memcpy(saddr.sa_data, &rsp->addresses[i], ETH_ALEN);
++		ret = ndev->netdev_ops->ndo_set_mac_address(ndev, &saddr);
++		if (ret < 0) {
++			netdev_warn(ndev, "NCSI: Unable to assign %pM to device\n",
++				    saddr.sa_data);
++			continue;
++		}
++		netdev_warn(ndev, "NCSI: Set MAC address to %pM\n", saddr.sa_data);
++		break;
++	}
++
++	ndp->gma_flag = ret == 0;
++	return ret;
++}
++
+ static struct ncsi_rsp_handler {
+ 	unsigned char	type;
+ 	int             payload;
+@@ -1129,7 +1167,8 @@ static struct ncsi_rsp_handler {
+ 	{ NCSI_PKT_RSP_PLDM,   -1, ncsi_rsp_handler_pldm    },
+ 	{ NCSI_PKT_RSP_GPUUID, 20, ncsi_rsp_handler_gpuuid  },
+ 	{ NCSI_PKT_RSP_QPNPR,  -1, ncsi_rsp_handler_pldm    },
+-	{ NCSI_PKT_RSP_SNPR,   -1, ncsi_rsp_handler_pldm    }
++	{ NCSI_PKT_RSP_SNPR,   -1, ncsi_rsp_handler_pldm    },
++	{ NCSI_PKT_RSP_GMCMA,  -1, ncsi_rsp_handler_gmcma   },
+ };
+ 
+ int ncsi_rcv_rsp(struct sk_buff *skb, struct net_device *dev,
 -- 
 2.39.5
 
