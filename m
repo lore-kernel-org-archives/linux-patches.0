@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D06D1547E3;
-	Thu, 13 Feb 2025 14:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E0924500D;
+	Thu, 13 Feb 2025 14:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458658; cv=none; b=Z/6DiLGW2OBBo82YJITuEPcE6Haunha84S2FmQd1g2wCXt8ucPxlr499J7L0mf6uclpcFvxnxIHuMK3EPXTBQylP9iV7wJPNaCjAtFIe5YLbinR1/d4itVBy94OnhDW7M6hppaWjZRu22c4+7WRbC5jDABEtp0vPGT7YVJEC0K4=
+	t=1739458661; cv=none; b=pCn94XEO7hXjCgvTEBaUyrDRnYBN9mGrB2lVzP4F5h72QXh/vTFZRuxXtD6xQOhYEuK8Er/Mv7tz6VMNOPYTfyRHbuYNBUP1iWsZGXVm48Ht9Atlxk4rNIjhzm1cY9unIgjb2k33HiRu13XlQk2vmjHuv3p9eIroIEIUIGzWQvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458658; c=relaxed/simple;
-	bh=MpOC8OLbFu7uymj8TlNngwZP8/XUynpx4x0FUWcZWio=;
+	s=arc-20240116; t=1739458661; c=relaxed/simple;
+	bh=K1+Jralk6XjjXQU9GKfGc7tzdVg0sQANrKKyXchCE9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u9Qxmeh5suSzP0T5jKz91+A/5/DrbGDeqriOwtRfn701r+W35/A8mT8j2mMbMIevLmVaiP1MOnvTEj6VPh0M7tF3KUXnG6U2Q0QayUvEJ22Fg0rP5oIu1oYeSfpNzJzTZQ/2zh+7fWut8GpGol99WGXiT0J2fCbvhd5QwMWFHJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lj04RzPD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q0yIMRjCTM5dpwuq6ax0b9TaKY3+mJziyCXCrC+8UAf+jrZXEanCjH94I5tC8a/Hf2dhCC7G06g1WU9Fitn1XL1NFOxiwljAcF/qatRusxCbZKOZdq03pt1QqGHnoUVYXVvAQk1vJHwSxv6q8X/RW/B4IatyMUdM1CmkF1mmIs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tn68QTbD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lj04RzPD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D0A3C4CED1;
-	Thu, 13 Feb 2025 14:57:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tn68QTbD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCC0C4CEE4;
+	Thu, 13 Feb 2025 14:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458657;
-	bh=MpOC8OLbFu7uymj8TlNngwZP8/XUynpx4x0FUWcZWio=;
+	s=korg; t=1739458661;
+	bh=K1+Jralk6XjjXQU9GKfGc7tzdVg0sQANrKKyXchCE9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lj04RzPDzfzjLXiKwfg5/pUfOMacPlYOOeVztFhKxBwMyT835Sy91nGloPj3wZSer
-	 tDnVoHWz31J9SKf2V80+qckybJ1H7oilCZrveQZhzVA2fNsWL1KStTF2oXRq5D1wNM
-	 tww5jr/q4eXtpvGe0sO1UWTJB6qozzy21efJ93sM=
+	b=Tn68QTbDGxLrG2TnHW49VGm9EnjAnX+qti40i02WAdkC6klkUy5vNs3XlfdlvNMdc
+	 uKyqfEJLxVTIPs5o8Ku5ZuuH5WIR6K9fWVbyv5avzdX60VYSu8OstOyAOwVcQzsMj7
+	 SQ+JZ4z3JiNq12ow+Xflq1fKlB2FuucZGAm3jTd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 042/443] drm/amdgpu: Dont enable sdma 4.4.5 CTXEMPTY interrupt
-Date: Thu, 13 Feb 2025 15:23:27 +0100
-Message-ID: <20250213142442.248148953@linuxfoundation.org>
+Subject: [PATCH 6.13 043/443] drm/amdkfd: Queue interrupt work to different CPU
+Date: Thu, 13 Feb 2025 15:23:28 +0100
+Message-ID: <20250213142442.285928546@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -54,42 +54,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit b4b7271e5ca95b581f2fcc4ae852c4079215e92d ]
+[ Upstream commit 34db5a32617d102e8042151bb87590e43c97132e ]
 
-The sdma context empty interrupt is dropped in amdgpu_irq_dispatch
-as unregistered interrupt src_id 243, this interrupt accounts to 1/3 of
-total interrupts and causes IH primary ring overflow when running
-stressful benchmark application. Disable this interrupt has no side
-effect found.
+For CPX mode, each KFD node has interrupt worker to process ih_fifo to
+send events to user space. Currently all interrupt workers of same adev
+queue to same CPU, all workers execution are actually serialized and
+this cause KFD ih_fifo overflow when CPU usage is high.
+
+Use per-GPU unbounded highpri queue with number of workers equals to
+number of partitions, let queue_work select the next CPU round robin
+among the local CPUs of same NUMA.
 
 Signed-off-by: Philip Yang <Philip.Yang@amd.com>
 Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device.c    | 25 ++++++++--------------
+ drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c | 25 ++++++++--------------
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h      |  3 ++-
+ 3 files changed, 20 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-index a38553f38fdc8..ed68d7971a93a 100644
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-@@ -953,10 +953,12 @@ static int sdma_v4_4_2_inst_start(struct amdgpu_device *adev,
- 		/* set utc l1 enable flag always to 1 */
- 		temp = RREG32_SDMA(i, regSDMA_CNTL);
- 		temp = REG_SET_FIELD(temp, SDMA_CNTL, UTC_L1_ENABLE, 1);
--		/* enable context empty interrupt during initialization */
--		temp = REG_SET_FIELD(temp, SDMA_CNTL, CTXEMPTY_INT_ENABLE, 1);
--		WREG32_SDMA(i, regSDMA_CNTL, temp);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+index 9b51dd75fefc7..35caa71f317dc 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
+@@ -638,6 +638,14 @@ static void kfd_cleanup_nodes(struct kfd_dev *kfd, unsigned int num_nodes)
+ 	struct kfd_node *knode;
+ 	unsigned int i;
  
-+		if (amdgpu_ip_version(adev, SDMA0_HWIP, 0) < IP_VERSION(4, 4, 5)) {
-+			/* enable context empty interrupt during initialization */
-+			temp = REG_SET_FIELD(temp, SDMA_CNTL, CTXEMPTY_INT_ENABLE, 1);
-+			WREG32_SDMA(i, regSDMA_CNTL, temp);
++	/*
++	 * flush_work ensures that there are no outstanding
++	 * work-queue items that will access interrupt_ring. New work items
++	 * can't be created because we stopped interrupt handling above.
++	 */
++	flush_workqueue(kfd->ih_wq);
++	destroy_workqueue(kfd->ih_wq);
++
+ 	for (i = 0; i < num_nodes; i++) {
+ 		knode = kfd->nodes[i];
+ 		device_queue_manager_uninit(knode->dqm);
+@@ -1059,21 +1067,6 @@ static int kfd_resume(struct kfd_node *node)
+ 	return err;
+ }
+ 
+-static inline void kfd_queue_work(struct workqueue_struct *wq,
+-				  struct work_struct *work)
+-{
+-	int cpu, new_cpu;
+-
+-	cpu = new_cpu = smp_processor_id();
+-	do {
+-		new_cpu = cpumask_next(new_cpu, cpu_online_mask) % nr_cpu_ids;
+-		if (cpu_to_node(new_cpu) == numa_node_id())
+-			break;
+-	} while (cpu != new_cpu);
+-
+-	queue_work_on(new_cpu, wq, work);
+-}
+-
+ /* This is called directly from KGD at ISR. */
+ void kgd2kfd_interrupt(struct kfd_dev *kfd, const void *ih_ring_entry)
+ {
+@@ -1099,7 +1092,7 @@ void kgd2kfd_interrupt(struct kfd_dev *kfd, const void *ih_ring_entry)
+ 			    	patched_ihre, &is_patched)
+ 		    && enqueue_ih_ring_entry(node,
+ 			    	is_patched ? patched_ihre : ih_ring_entry)) {
+-			kfd_queue_work(node->ih_wq, &node->interrupt_work);
++			queue_work(node->kfd->ih_wq, &node->interrupt_work);
+ 			spin_unlock_irqrestore(&node->interrupt_lock, flags);
+ 			return;
+ 		}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c b/drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c
+index 9b6b6e8825934..15b4b70cf1997 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c
+@@ -62,11 +62,14 @@ int kfd_interrupt_init(struct kfd_node *node)
+ 		return r;
+ 	}
+ 
+-	node->ih_wq = alloc_workqueue("KFD IH", WQ_HIGHPRI, 1);
+-	if (unlikely(!node->ih_wq)) {
+-		kfifo_free(&node->ih_fifo);
+-		dev_err(node->adev->dev, "Failed to allocate KFD IH workqueue\n");
+-		return -ENOMEM;
++	if (!node->kfd->ih_wq) {
++		node->kfd->ih_wq = alloc_workqueue("KFD IH", WQ_HIGHPRI | WQ_UNBOUND,
++						   node->kfd->num_nodes);
++		if (unlikely(!node->kfd->ih_wq)) {
++			kfifo_free(&node->ih_fifo);
++			dev_err(node->adev->dev, "Failed to allocate KFD IH workqueue\n");
++			return -ENOMEM;
 +		}
- 		if (!amdgpu_sriov_vf(adev)) {
- 			if (adev->firmware.load_type != AMDGPU_FW_LOAD_PSP) {
- 				/* unhalt engine */
+ 	}
+ 	spin_lock_init(&node->interrupt_lock);
+ 
+@@ -96,16 +99,6 @@ void kfd_interrupt_exit(struct kfd_node *node)
+ 	spin_lock_irqsave(&node->interrupt_lock, flags);
+ 	node->interrupts_active = false;
+ 	spin_unlock_irqrestore(&node->interrupt_lock, flags);
+-
+-	/*
+-	 * flush_work ensures that there are no outstanding
+-	 * work-queue items that will access interrupt_ring. New work items
+-	 * can't be created because we stopped interrupt handling above.
+-	 */
+-	flush_workqueue(node->ih_wq);
+-
+-	destroy_workqueue(node->ih_wq);
+-
+ 	kfifo_free(&node->ih_fifo);
+ }
+ 
+@@ -162,7 +155,7 @@ static void interrupt_wq(struct work_struct *work)
+ 			/* If we spent more than a second processing signals,
+ 			 * reschedule the worker to avoid soft-lockup warnings
+ 			 */
+-			queue_work(dev->ih_wq, &dev->interrupt_work);
++			queue_work(dev->kfd->ih_wq, &dev->interrupt_work);
+ 			break;
+ 		}
+ 	}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+index 9e5ca0b93b2a2..74881a5ca59ad 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -273,7 +273,6 @@ struct kfd_node {
+ 
+ 	/* Interrupts */
+ 	struct kfifo ih_fifo;
+-	struct workqueue_struct *ih_wq;
+ 	struct work_struct interrupt_work;
+ 	spinlock_t interrupt_lock;
+ 
+@@ -366,6 +365,8 @@ struct kfd_dev {
+ 	struct kfd_node *nodes[MAX_KFD_NODES];
+ 	unsigned int num_nodes;
+ 
++	struct workqueue_struct *ih_wq;
++
+ 	/* Kernel doorbells for KFD device */
+ 	struct amdgpu_bo *doorbells;
+ 
 -- 
 2.39.5
 
