@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CE91547E3;
-	Thu, 13 Feb 2025 15:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8648426B098;
+	Thu, 13 Feb 2025 15:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460804; cv=none; b=IkLVSNoHPK9NKMsE9L4aXFuvbSDWPKc6Pbj0IynaZBokuUd4vp8sTzgKb+BCTpgKjnCpBHtvN/B5QuG7pAproaYNYmYRcOUy219bkxW8RGZGDlBw1I1pFm5ANRTSWOo1li5gtXhBlE8Jpjo/wkf9Zjhc7roZCliociGbDftKzLk=
+	t=1739460808; cv=none; b=Lo6rsGynyWolU3E5OS9KTzdEbsMKJ/XZB4xyPQ7IbKnikE3MnJglzoF+6Xp+867GqQVp/E78aVUX8tc45vpIfZIlLCYPV8vI6jHyr+q7RSN7MNleU7TRs9DcejRAU9qRCuCjHA9NWjDZcSf8i8lZsDoB/KxzR2u8dYXMRH0qf/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460804; c=relaxed/simple;
-	bh=h4GZpQs0YfUTRVm+hOaw4Y6AT7RiQUN2rMzkKdh52z0=;
+	s=arc-20240116; t=1739460808; c=relaxed/simple;
+	bh=//FjETKofN1Hzv9rGd4E3YOdLtOQ76OfsxW5sMDJLdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PS3c44FyZeGZePwcbmn43Nn3NjVV29gYj7elEKIpBLCC+PqhtZ0gtxvgGoD33mj+PdpV7x0xy10G9ZX/S8VNf4+LVvb9ATubg39CQX0ECWi3s7JIIFn4IDEzpe7VorEZSKzhtlcTnfwX3/p1YuoxDMg6RM7PgHVRLUUpLLy/8ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpKs4iyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oF7BasYoQ3kHbXmU6yk7wc/cjc4XeNQL1QpV/VT1QLtO+11bOHgR0pcdCoLk3Cpc2N6WmLK2vr+zPalm8Luq0Od/zAF7xE2Jc3T3uMUnTgVoeCN6VyPzuSf1wqdD2IbFibZL/vGOAabNb8OuW/mR4XDCCNBPge8ID9y1GdLGtIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wqtl+85p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpKs4iyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D01C4CED1;
-	Thu, 13 Feb 2025 15:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wqtl+85p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE14C4CED1;
+	Thu, 13 Feb 2025 15:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460804;
-	bh=h4GZpQs0YfUTRVm+hOaw4Y6AT7RiQUN2rMzkKdh52z0=;
+	s=korg; t=1739460808;
+	bh=//FjETKofN1Hzv9rGd4E3YOdLtOQ76OfsxW5sMDJLdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MpKs4iynX9KlOWowVXlgiAysMtc0zb/mix1VbiW6bu5MGDlGZXjIl98436HtGAjY/
-	 g67c1D3wh/0OrVn9V9bwY/WYpuBHgalJ5mW4fykVBKvLxzHnCmOUP2QYQAWwGSJGvX
-	 m4ChKB60RLt5byHSp8OWEC+JHQ/L8/yW6QPTL/3A=
+	b=Wqtl+85p04GTUWsgRS/hRKU7JxNvGp6V9/yCs5q0OpdfUvSVYC/1ebWcMA/qK45th
+	 n75lC4q+H9Y04iIlUL8sUT3n8UvsyLSRW7To28oZp9c1I7sLLk3jvaNQD7JRbw+faE
+	 TATFtxmHoqwZ/mf7YVQ0gcWZl3pG6k0kZQQF/vmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	reveliofuzzing <reveliofuzzing@gmail.com>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.6 218/273] ata: libata-sff: Ensure that we cannot write outside the allocated buffer
-Date: Thu, 13 Feb 2025 15:29:50 +0100
-Message-ID: <20250213142415.929891414@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 219/273] crypto: qce - fix goto jump in error path
+Date: Thu, 13 Feb 2025 15:29:51 +0100
+Message-ID: <20250213142415.968839189@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -50,81 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 6e74e53b34b6dec5a50e1404e2680852ec6768d2 upstream.
+commit 5278275c1758a38199b43530adfc50098f4b41c7 upstream.
 
-reveliofuzzing reported that a SCSI_IOCTL_SEND_COMMAND ioctl with out_len
-set to 0xd42, SCSI command set to ATA_16 PASS-THROUGH, ATA command set to
-ATA_NOP, and protocol set to ATA_PROT_PIO, can cause ata_pio_sector() to
-write outside the allocated buffer, overwriting random memory.
-
-While a ATA device is supposed to abort a ATA_NOP command, there does seem
-to be a bug either in libata-sff or QEMU, where either this status is not
-set, or the status is cleared before read by ata_sff_hsm_move().
-Anyway, that is most likely a separate bug.
-
-Looking at __atapi_pio_bytes(), it already has a safety check to ensure
-that __atapi_pio_bytes() cannot write outside the allocated buffer.
-
-Add a similar check to ata_pio_sector(), such that also ata_pio_sector()
-cannot write outside the allocated buffer.
+If qce_check_version() fails, we should jump to err_dma as we already
+called qce_dma_request() a couple lines before.
 
 Cc: stable@vger.kernel.org
-Reported-by: reveliofuzzing <reveliofuzzing@gmail.com>
-Closes: https://lore.kernel.org/linux-ide/CA+-ZZ_jTgxh3bS7m+KX07_EWckSnW3N2adX3KV63y4g7M4CZ2A@mail.gmail.com/
-Link: https://lore.kernel.org/r/20250127154303.15567-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: ec8f5d8f6f76 ("crypto: qce - Qualcomm crypto engine driver")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-sff.c |   18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/crypto/qce/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/ata/libata-sff.c
-+++ b/drivers/ata/libata-sff.c
-@@ -602,7 +602,7 @@ static void ata_pio_sector(struct ata_qu
- {
- 	struct ata_port *ap = qc->ap;
- 	struct page *page;
--	unsigned int offset;
-+	unsigned int offset, count;
+--- a/drivers/crypto/qce/core.c
++++ b/drivers/crypto/qce/core.c
+@@ -247,7 +247,7 @@ static int qce_crypto_probe(struct platf
  
- 	if (!qc->cursg) {
- 		qc->curbytes = qc->nbytes;
-@@ -618,25 +618,27 @@ static void ata_pio_sector(struct ata_qu
- 	page = nth_page(page, (offset >> PAGE_SHIFT));
- 	offset %= PAGE_SIZE;
+ 	ret = qce_check_version(qce);
+ 	if (ret)
+-		goto err_clks;
++		goto err_dma;
  
--	trace_ata_sff_pio_transfer_data(qc, offset, qc->sect_size);
-+	/* don't overrun current sg */
-+	count = min(qc->cursg->length - qc->cursg_ofs, qc->sect_size);
-+
-+	trace_ata_sff_pio_transfer_data(qc, offset, count);
- 
- 	/*
- 	 * Split the transfer when it splits a page boundary.  Note that the
- 	 * split still has to be dword aligned like all ATA data transfers.
- 	 */
- 	WARN_ON_ONCE(offset % 4);
--	if (offset + qc->sect_size > PAGE_SIZE) {
-+	if (offset + count > PAGE_SIZE) {
- 		unsigned int split_len = PAGE_SIZE - offset;
- 
- 		ata_pio_xfer(qc, page, offset, split_len);
--		ata_pio_xfer(qc, nth_page(page, 1), 0,
--			     qc->sect_size - split_len);
-+		ata_pio_xfer(qc, nth_page(page, 1), 0, count - split_len);
- 	} else {
--		ata_pio_xfer(qc, page, offset, qc->sect_size);
-+		ata_pio_xfer(qc, page, offset, count);
- 	}
- 
--	qc->curbytes += qc->sect_size;
--	qc->cursg_ofs += qc->sect_size;
-+	qc->curbytes += count;
-+	qc->cursg_ofs += count;
- 
- 	if (qc->cursg_ofs == qc->cursg->length) {
- 		qc->cursg = sg_next(qc->cursg);
+ 	spin_lock_init(&qce->lock);
+ 	tasklet_init(&qce->done_tasklet, qce_tasklet_req_done,
 
 
