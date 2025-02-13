@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA66335BA;
-	Thu, 13 Feb 2025 15:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D82335BA;
+	Thu, 13 Feb 2025 15:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460026; cv=none; b=NcleusRRzpKqUIGN58VLWN/o4UrTkCNUtnyAmfhEVOuT58kzYzcJs3DCUk1RFdZ8d1nbk0kcguKLvOCGroDkcWQFyHyZxhHW5pmkXl3J6kewR4KkIZHuTeOfCjauhe5Orfpn308mEtVaskVDKaQLEstbRek/xLsIO1L30XODddI=
+	t=1739460029; cv=none; b=OAWwBMLpjqsM4XWZGv5txLNKrOdQDQ5PFIXgxzD36M6PqGWEnEbb/Xp9/80z96Sw3D3b2EquVT48c2vyz/69EaNbTutpPIrJj9T+mkpBTWWcCusyvzeSYzc12RnJKsVLtD6nwAY2uXtE8VRCsQIggV0AvCxTXNTTW4JVrcW/JE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460026; c=relaxed/simple;
-	bh=vlmBiT3v3WiVX9TBQMb7xzWxtZMAahbQzN7VQF5MRYw=;
+	s=arc-20240116; t=1739460029; c=relaxed/simple;
+	bh=gFHBVqDro80LjHoAjnj8uTloRwQzmDYkN1JTcT1zA1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L9EDOAOBZ6rTEHZdRWMjmje2lsiPNtLKF5ATvyKHJWFZMnQa8Y9TiLYCMKxPOy86axdgXr6doNWHTo+bAmTWw+rFbT1ob2RQQJabcqy5gClHDnFmrG2HBfwrmoYA1UqILPva/fSzmq0SwL+U9/KSDgV79hhZ8lcl5I/r0v5RO5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cp/pqCaN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=vDwvNErLwLqoUBVPcc+d9RFBAeSkubtEzu47Sz323zs2pwHFfP/YhOgLu+3HjtpxByDDRNHWp4NXh48g+yF8k7bjvcH2K1LmWHNDYn+1+4wVbCZ3EeiJkBlqVF2GZtNJ0KuxjwkKy1fBhOWrRe3sK6W4QgDyLg7W3CL31yb03Xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDskFT1T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cp/pqCaN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497E5C4CED1;
-	Thu, 13 Feb 2025 15:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDskFT1T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5188EC4CED1;
+	Thu, 13 Feb 2025 15:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460025;
-	bh=vlmBiT3v3WiVX9TBQMb7xzWxtZMAahbQzN7VQF5MRYw=;
+	s=korg; t=1739460028;
+	bh=gFHBVqDro80LjHoAjnj8uTloRwQzmDYkN1JTcT1zA1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cp/pqCaNpeX8IQYyISsa0890bNQVqry8DvUDabZREk3Ga8VjPKrsnaikyrmVBwU4j
-	 v6aAVedndh6FUOKq/8btuaRMUOBFVdggMVsqqs8ec/EZoQk2+tt1JNqx52yxVbyraa
-	 ukajiNqebj/3pGkhzwjsjjn/ksK9dVN6hWZXCXvI=
+	b=pDskFT1T6Lq6b3V7cHzX60U+mM2e6e0PwHW83Suz4Wqtbziz3ztyz6zUqp8TjDq/2
+	 oT6mmu7Lec3SP8BYcjtoZgzV5cmbkGUYNZ8DXmNPA/cj7fPK3fd9e+cs5BYoqnTBAZ
+	 ZZowFFB4b49s/c2W+YgCLqVto1uuGohNxtYOFXFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
-	=20Bence?= <csokas.bence@prolan.hu>,
+	Hari.PrasathGE@microchip.com,
+	Mahesh.Abotula@microchip.com,
+	Marco.Cardellini@microchip.com,
+	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.13 435/443] spi: atmel-quadspi: Create `atmel_qspi_ops` to support newer SoC families
-Date: Thu, 13 Feb 2025 15:30:00 +0100
-Message-ID: <20250213142457.403171575@linuxfoundation.org>
+Subject: [PATCH 6.13 436/443] spi: atmel-qspi: Memory barriers after memory-mapped I/O
+Date: Thu, 13 Feb 2025 15:30:01 +0100
+Message-ID: <20250213142457.442000921@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,204 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Csókás, Bence <csokas.bence@prolan.hu>
+From: Bence Csókás <csokas.bence@prolan.hu>
 
-commit c0a0203cf57963792d59b3e4317a1d07b73df42a upstream.
+commit be92ab2de0ee1a13291c3b47b2d7eb24d80c0a2c upstream.
 
-Refactor the code to introduce an ops struct, to prepare for merging
-support for later SoCs, such as SAMA7G5. This code was based on the
-vendor's kernel (linux4microchip). Cc'ing original contributors.
+The QSPI peripheral control and status registers are
+accessible via the SoC's APB bus, whereas MMIO transactions'
+data travels on the AHB bus.
 
-Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
-Link: https://patch.msgid.link/20241128174316.3209354-2-csokas.bence@prolan.hu
+Microchip documentation and even sample code from Atmel
+emphasises the need for a memory barrier before the first
+MMIO transaction to the AHB-connected QSPI, and before the
+last write to its registers via APB. This is achieved by
+the following lines in `atmel_qspi_transfer()`:
+
+	/* Dummy read of QSPI_IFR to synchronize APB and AHB accesses */
+	(void)atmel_qspi_read(aq, QSPI_IFR);
+
+However, the current documentation makes no mention to
+synchronization requirements in the other direction, i.e.
+after the last data written via AHB, and before the first
+register access on APB.
+
+In our case, we were facing an issue where the QSPI peripheral
+would cease to send any new CSR (nCS Rise) interrupts,
+leading to a timeout in `atmel_qspi_wait_for_completion()`
+and ultimately this panic in higher levels:
+
+	ubi0 error: ubi_io_write: error -110 while writing 63108 bytes
+ to PEB 491:128, written 63104 bytes
+
+After months of extensive research of the codebase, fiddling
+around the debugger with kgdb, and back-and-forth with
+Microchip, we came to the conclusion that the issue is
+probably that the peripheral is still busy receiving on AHB
+when the LASTXFER bit is written to its Control Register
+on APB, therefore this write gets lost, and the peripheral
+still thinks there is more data to come in the MMIO transfer.
+This was first formulated when we noticed that doubling the
+write() of QSPI_CR_LASTXFER seemed to solve the problem.
+
+Ultimately, the solution is to introduce memory barriers
+after the AHB-mapped MMIO transfers, to ensure ordering.
+
+Fixes: d5433def3153 ("mtd: spi-nor: atmel-quadspi: Add spi-mem support to atmel-quadspi")
+Cc: Hari.PrasathGE@microchip.com
+Cc: Mahesh.Abotula@microchip.com
+Cc: Marco.Cardellini@microchip.com
+Cc: stable@vger.kernel.org # c0a0203cf579: ("spi: atmel-quadspi: Create `atmel_qspi_ops`"...)
+Cc: stable@vger.kernel.org # 6.x.y
+Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
+Link: https://patch.msgid.link/20241219091258.395187-1-csokas.bence@prolan.hu
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/atmel-quadspi.c |  111 ++++++++++++++++++++++++++++++--------------
- 1 file changed, 77 insertions(+), 34 deletions(-)
+ drivers/spi/atmel-quadspi.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 --- a/drivers/spi/atmel-quadspi.c
 +++ b/drivers/spi/atmel-quadspi.c
-@@ -138,11 +138,15 @@
- #define QSPI_WPSR_WPVSRC_MASK           GENMASK(15, 8)
- #define QSPI_WPSR_WPVSRC(src)           (((src) << 8) & QSPI_WPSR_WPVSRC)
+@@ -454,13 +454,20 @@ static int atmel_qspi_transfer(struct sp
+ 	(void)atmel_qspi_read(aq, QSPI_IFR);
  
-+#define ATMEL_QSPI_TIMEOUT		1000	/* ms */
+ 	/* Send/Receive data */
+-	if (op->data.dir == SPI_MEM_DATA_IN)
++	if (op->data.dir == SPI_MEM_DATA_IN) {
+ 		memcpy_fromio(op->data.buf.in, aq->mem + offset,
+ 			      op->data.nbytes);
+-	else
 +
- struct atmel_qspi_caps {
- 	bool has_qspick;
- 	bool has_ricr;
- };
++		/* Synchronize AHB and APB accesses again */
++		rmb();
++	} else {
+ 		memcpy_toio(aq->mem + offset, op->data.buf.out,
+ 			    op->data.nbytes);
  
-+struct atmel_qspi_ops;
++		/* Synchronize AHB and APB accesses again */
++		wmb();
++	}
 +
- struct atmel_qspi {
- 	void __iomem		*regs;
- 	void __iomem		*mem;
-@@ -150,13 +154,22 @@ struct atmel_qspi {
- 	struct clk		*qspick;
- 	struct platform_device	*pdev;
- 	const struct atmel_qspi_caps *caps;
-+	const struct atmel_qspi_ops *ops;
- 	resource_size_t		mmap_size;
- 	u32			pending;
-+	u32			irq_mask;
- 	u32			mr;
- 	u32			scr;
- 	struct completion	cmd_completion;
- };
+ 	/* Release the chip-select */
+ 	atmel_qspi_write(QSPI_CR_LASTXFER, aq, QSPI_CR);
  
-+struct atmel_qspi_ops {
-+	int (*set_cfg)(struct atmel_qspi *aq, const struct spi_mem_op *op,
-+		       u32 *offset);
-+	int (*transfer)(struct spi_mem *mem, const struct spi_mem_op *op,
-+			u32 offset);
-+};
-+
- struct atmel_qspi_mode {
- 	u8 cmd_buswidth;
- 	u8 addr_buswidth;
-@@ -404,10 +417,60 @@ static int atmel_qspi_set_cfg(struct atm
- 	return 0;
- }
- 
-+static int atmel_qspi_wait_for_completion(struct atmel_qspi *aq, u32 irq_mask)
-+{
-+	int err = 0;
-+	u32 sr;
-+
-+	/* Poll INSTRuction End status */
-+	sr = atmel_qspi_read(aq, QSPI_SR);
-+	if ((sr & irq_mask) == irq_mask)
-+		return 0;
-+
-+	/* Wait for INSTRuction End interrupt */
-+	reinit_completion(&aq->cmd_completion);
-+	aq->pending = sr & irq_mask;
-+	aq->irq_mask = irq_mask;
-+	atmel_qspi_write(irq_mask, aq, QSPI_IER);
-+	if (!wait_for_completion_timeout(&aq->cmd_completion,
-+					 msecs_to_jiffies(ATMEL_QSPI_TIMEOUT)))
-+		err = -ETIMEDOUT;
-+	atmel_qspi_write(irq_mask, aq, QSPI_IDR);
-+
-+	return err;
-+}
-+
-+static int atmel_qspi_transfer(struct spi_mem *mem,
-+			       const struct spi_mem_op *op, u32 offset)
-+{
-+	struct atmel_qspi *aq = spi_controller_get_devdata(mem->spi->controller);
-+
-+	/* Skip to the final steps if there is no data */
-+	if (!op->data.nbytes)
-+		return atmel_qspi_wait_for_completion(aq,
-+						      QSPI_SR_CMD_COMPLETED);
-+
-+	/* Dummy read of QSPI_IFR to synchronize APB and AHB accesses */
-+	(void)atmel_qspi_read(aq, QSPI_IFR);
-+
-+	/* Send/Receive data */
-+	if (op->data.dir == SPI_MEM_DATA_IN)
-+		memcpy_fromio(op->data.buf.in, aq->mem + offset,
-+			      op->data.nbytes);
-+	else
-+		memcpy_toio(aq->mem + offset, op->data.buf.out,
-+			    op->data.nbytes);
-+
-+	/* Release the chip-select */
-+	atmel_qspi_write(QSPI_CR_LASTXFER, aq, QSPI_CR);
-+
-+	return atmel_qspi_wait_for_completion(aq, QSPI_SR_CMD_COMPLETED);
-+}
-+
- static int atmel_qspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
- {
- 	struct atmel_qspi *aq = spi_controller_get_devdata(mem->spi->controller);
--	u32 sr, offset;
-+	u32 offset;
- 	int err;
- 
- 	/*
-@@ -416,46 +479,20 @@ static int atmel_qspi_exec_op(struct spi
- 	 * when the flash memories overrun the controller's memory space.
- 	 */
- 	if (op->addr.val + op->data.nbytes > aq->mmap_size)
--		return -ENOTSUPP;
-+		return -EOPNOTSUPP;
-+
-+	if (op->addr.nbytes > 4)
-+		return -EOPNOTSUPP;
- 
- 	err = pm_runtime_resume_and_get(&aq->pdev->dev);
- 	if (err < 0)
- 		return err;
- 
--	err = atmel_qspi_set_cfg(aq, op, &offset);
-+	err = aq->ops->set_cfg(aq, op, &offset);
- 	if (err)
- 		goto pm_runtime_put;
- 
--	/* Skip to the final steps if there is no data */
--	if (op->data.nbytes) {
--		/* Dummy read of QSPI_IFR to synchronize APB and AHB accesses */
--		(void)atmel_qspi_read(aq, QSPI_IFR);
--
--		/* Send/Receive data */
--		if (op->data.dir == SPI_MEM_DATA_IN)
--			memcpy_fromio(op->data.buf.in, aq->mem + offset,
--				      op->data.nbytes);
--		else
--			memcpy_toio(aq->mem + offset, op->data.buf.out,
--				    op->data.nbytes);
--
--		/* Release the chip-select */
--		atmel_qspi_write(QSPI_CR_LASTXFER, aq, QSPI_CR);
--	}
--
--	/* Poll INSTRuction End status */
--	sr = atmel_qspi_read(aq, QSPI_SR);
--	if ((sr & QSPI_SR_CMD_COMPLETED) == QSPI_SR_CMD_COMPLETED)
--		goto pm_runtime_put;
--
--	/* Wait for INSTRuction End interrupt */
--	reinit_completion(&aq->cmd_completion);
--	aq->pending = sr & QSPI_SR_CMD_COMPLETED;
--	atmel_qspi_write(QSPI_SR_CMD_COMPLETED, aq, QSPI_IER);
--	if (!wait_for_completion_timeout(&aq->cmd_completion,
--					 msecs_to_jiffies(1000)))
--		err = -ETIMEDOUT;
--	atmel_qspi_write(QSPI_SR_CMD_COMPLETED, aq, QSPI_IDR);
-+	err = aq->ops->transfer(mem, op, offset);
- 
- pm_runtime_put:
- 	pm_runtime_mark_last_busy(&aq->pdev->dev);
-@@ -599,12 +636,17 @@ static irqreturn_t atmel_qspi_interrupt(
- 		return IRQ_NONE;
- 
- 	aq->pending |= pending;
--	if ((aq->pending & QSPI_SR_CMD_COMPLETED) == QSPI_SR_CMD_COMPLETED)
-+	if ((aq->pending & aq->irq_mask) == aq->irq_mask)
- 		complete(&aq->cmd_completion);
- 
- 	return IRQ_HANDLED;
- }
- 
-+static const struct atmel_qspi_ops atmel_qspi_ops = {
-+	.set_cfg = atmel_qspi_set_cfg,
-+	.transfer = atmel_qspi_transfer,
-+};
-+
- static int atmel_qspi_probe(struct platform_device *pdev)
- {
- 	struct spi_controller *ctrl;
-@@ -629,6 +671,7 @@ static int atmel_qspi_probe(struct platf
- 
- 	init_completion(&aq->cmd_completion);
- 	aq->pdev = pdev;
-+	aq->ops = &atmel_qspi_ops;
- 
- 	/* Map the registers */
- 	aq->regs = devm_platform_ioremap_resource_byname(pdev, "qspi_base");
 
 
