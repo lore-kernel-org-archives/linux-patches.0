@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C298281349;
-	Thu, 13 Feb 2025 14:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C1413D8A4;
+	Thu, 13 Feb 2025 14:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457383; cv=none; b=YOLXg9IWN+us/4FDEC9/3UbMB3ll2xwZ/rrp+ghRjvVWtTLHfge/gUZrxXzM6UGfslaFnEcxJXZxBoYiGc43ISF9IUbx4DRqV3fvrZXGUc815mrwmm0sTEFhc4BIbzhV4PBdA61imqpL/P/Rld+XzZFIk5LBufBVQYiaBkLnjBs=
+	t=1739457387; cv=none; b=rwtmJPK1KfdbHATn51PFCGnfngfH5UZABsDku9vvWl58YjXPW7TQ2wNSVa2N0tjYHdP7LJcS1nRM1SCtqBr32gPY/oRenkcpZD9BcFkYw3elUJShfm8AfB49PRMR0m8KtNd3HcaUDMhrjMdJ9yjcd5L6LCMNMGtAqDowZ22wUHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457383; c=relaxed/simple;
-	bh=pw61gJp9gnaTbqh19EEkDIdi0KWh7gDIUYrHnT6g5wo=;
+	s=arc-20240116; t=1739457387; c=relaxed/simple;
+	bh=LGk7Maajl+/jCZiE15E5o3IcgIVyWtgV7ndaklg/rKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qNd/eblIMthHesoE5EIZscXFa5RAw+cX0WgWkArmb1Rss1xSPTHVdaq85c6yMqVYxHNgJJTmKHu0p6icXaNhM5Cq7XItM9aLypk1hZXjmWEc+Mfm5t85IOZsyzI8sIdnIrFu3bgkjWhQc4mqpNRHT7FOyddTZQIko4L9Cc+ilWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=157PA7CV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GAlyWZ9OppJq0H35S8G6RXvuf3gt1s6lGQocqd7IYMg8JA0eh8NEkaQHpDudlyLvGGDFHWXhRMC+zKn0HET4X51F0uzxu4FnGMJy8phXBmwWQeboqKSpmrMBjHhUkMsaQnE7DRh6v8pzxvx0t6bt4wNSJKt/rBw8AYhips8HcWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXZHXKcG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="157PA7CV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80547C4CED1;
-	Thu, 13 Feb 2025 14:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXZHXKcG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A51C4CED1;
+	Thu, 13 Feb 2025 14:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457383;
-	bh=pw61gJp9gnaTbqh19EEkDIdi0KWh7gDIUYrHnT6g5wo=;
+	s=korg; t=1739457386;
+	bh=LGk7Maajl+/jCZiE15E5o3IcgIVyWtgV7ndaklg/rKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=157PA7CVdZ16z6uGDgCxGWC2jhTyLD6+2b7QtRgyY/XsaXrPreOA6DmJVBYJEMAOr
-	 H7jeVjExh++zkwXOgdT6W08MMHbvsvkMs0avfg85IzHFQ7sFKoTLGG9uuE7dvoetsQ
-	 TG5I7RGmc+xhQCTRiDcCS72bXBeUAupwIndNrxdY=
+	b=cXZHXKcGRfofK7RZI4ZGvjrfvpmCiYx8+nUDv83wWza/sowjjxlXaRPNVfk+R9iGM
+	 nuzwKzE2CBNELn0PRTU+OeeSpuCKdZ/GnjDz+xS5ZeSgB6i/BwYGH3fyCt5l+23Leo
+	 A12hhswvKsZ/TWQSIN3KgGktdVyaMG2NfU+cQSd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	syzbot+7536f77535e5210a5c76@syzkaller.appspotmail.com,
+	Leo Stone <leocstone@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/422] wifi: iwlwifi: avoid memory leak
-Date: Thu, 13 Feb 2025 15:23:31 +0100
-Message-ID: <20250213142438.955143621@linuxfoundation.org>
+Subject: [PATCH 6.12 053/422] tomoyo: dont emit warning in tomoyo_write_control()
+Date: Thu, 13 Feb 2025 15:23:22 +0100
+Message-ID: <20250213142438.608856943@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,67 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 80e96206a3ef348fbd658d98f2f43149c36df8bc ]
+[ Upstream commit 3df7546fc03b8f004eee0b9e3256369f7d096685 ]
 
-A caller of iwl_acpi_get_dsm_object must free the returned object.
-iwl_acpi_get_dsm_integer returns immediately without freeing
-it if the expected size is more than 8 bytes. Fix that.
+syzbot is reporting too large allocation warning at tomoyo_write_control(),
+for one can write a very very long line without new line character. To fix
+this warning, I use __GFP_NOWARN rather than checking for KMALLOC_MAX_SIZE,
+for practically a valid line should be always shorter than 32KB where the
+"too small to fail" memory-allocation rule applies.
 
-Note that with the current code this will never happen, since the caller
-of iwl_acpi_get_dsm_integer already checks that the expected size if
-either 1 or 4 bytes, so it can't exceed 8 bytes.
+One might try to write a valid line that is longer than 32KB, but such
+request will likely fail with -ENOMEM. Therefore, I feel that separately
+returning -EINVAL when a line is longer than KMALLOC_MAX_SIZE is redundant.
+There is no need to distinguish over-32KB and over-KMALLOC_MAX_SIZE.
 
-While at it, print the DSM value instead of the return value, as this
-was the intention in the first place.
-
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20241228223206.bf61eaab99f8.Ibdc5df02f885208c222456d42c889c43b7e3b2f7@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: syzbot+7536f77535e5210a5c76@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7536f77535e5210a5c76
+Reported-by: Leo Stone <leocstone@gmail.com>
+Closes: https://lkml.kernel.org/r/20241216021459.178759-2-leocstone@gmail.com
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ security/tomoyo/common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-index 0bc32291815e1..a26c5573d2091 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-@@ -108,7 +108,7 @@ static int iwl_acpi_get_dsm_integer(struct device *dev, int rev, int func,
- 				    size_t expected_size)
- {
- 	union acpi_object *obj;
--	int ret = 0;
-+	int ret;
+diff --git a/security/tomoyo/common.c b/security/tomoyo/common.c
+index 5c7b059a332aa..972664962e8f6 100644
+--- a/security/tomoyo/common.c
++++ b/security/tomoyo/common.c
+@@ -2665,7 +2665,7 @@ ssize_t tomoyo_write_control(struct tomoyo_io_buffer *head,
  
- 	obj = iwl_acpi_get_dsm_object(dev, rev, func, NULL, guid);
- 	if (IS_ERR(obj)) {
-@@ -123,8 +123,10 @@ static int iwl_acpi_get_dsm_integer(struct device *dev, int rev, int func,
- 	} else if (obj->type == ACPI_TYPE_BUFFER) {
- 		__le64 le_value = 0;
+ 		if (head->w.avail >= head->writebuf_size - 1) {
+ 			const int len = head->writebuf_size * 2;
+-			char *cp = kzalloc(len, GFP_NOFS);
++			char *cp = kzalloc(len, GFP_NOFS | __GFP_NOWARN);
  
--		if (WARN_ON_ONCE(expected_size > sizeof(le_value)))
--			return -EINVAL;
-+		if (WARN_ON_ONCE(expected_size > sizeof(le_value))) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
- 
- 		/* if the buffer size doesn't match the expected size */
- 		if (obj->buffer.length != expected_size)
-@@ -145,8 +147,9 @@ static int iwl_acpi_get_dsm_integer(struct device *dev, int rev, int func,
- 	}
- 
- 	IWL_DEBUG_DEV_RADIO(dev,
--			    "ACPI: DSM method evaluated: func=%d, ret=%d\n",
--			    func, ret);
-+			    "ACPI: DSM method evaluated: func=%d, value=%lld\n",
-+			    func, *value);
-+	ret = 0;
- out:
- 	ACPI_FREE(obj);
- 	return ret;
+ 			if (!cp) {
+ 				error = -ENOMEM;
 -- 
 2.39.5
 
