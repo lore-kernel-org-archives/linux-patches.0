@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB8926B085;
-	Thu, 13 Feb 2025 15:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C044B26B082;
+	Thu, 13 Feb 2025 15:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459287; cv=none; b=fGPJ3zTXQXPibfszPzuRBSuHdGQQcevu5OswX3a30/IzV8r4Oi/EKXBlMFotTkIvZNcQne15U7oFUPq0DMgVm18gAtyRmlDztJTcQEpp4fuwO1/E7Txu0F6kD9uRjx5t7FiU7tW9JE2jH8iIDCs2oMF2D8zU3VoupBZJFgeNw+o=
+	t=1739459290; cv=none; b=di5QmFehfzhhFPyTQOu3ca2KnTgGIUUeyKDs8PkfLrp+NAMmpSbURgWGca0vGfVohGJioGWGcRadDoIVStT7DAmZ9O+bV4gRt9kNermSHBVAXzqq60o+1rclHj+iGGKjl2+ruVWIboUeBcj4xzWtS0+Q1eGZL10+rd35OYKM+uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459287; c=relaxed/simple;
-	bh=TQNJ0BTwhTd5D/djREZg+qcnMD6dH29bCyk2anf8a/A=;
+	s=arc-20240116; t=1739459290; c=relaxed/simple;
+	bh=dJltKLW/QOJ0gvwDR0Ic4FHYYOdyvTEyvI1fnWabKeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dXxbWEd+df1IgkkQqFegBzSSuXQ6e0VgIdV91UFJ13WfZE0O2eQBJVQNmfqbwX3ET2v1pwZhc5pvpE27S65RfFc4190XgBLM873PR8oEbShxDpDGMseeVXSmSsXf8nDaIQCbW+Y2cqVAc6+vwrXuNIceD/vbY0aT9qxWV1PYy8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THEsS7wW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ARfzkXpxBjnI55XUwt0JwOtVJgQkO/5RITIHrNdaR307apHhhmePDA6brgbnpCngqI1eQiWY+ckZHp7Fx26vFeco8FaQgomgpFALkrUrpKaMxUZquX436ZqM22nJJecPnlGEZLNVG2mHOb7iVlUkaEYTDgRqwns4aqIlY6E8mB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvaEVb5v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THEsS7wW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C1CC4CED1;
-	Thu, 13 Feb 2025 15:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvaEVb5v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882BFC4CED1;
+	Thu, 13 Feb 2025 15:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459286;
-	bh=TQNJ0BTwhTd5D/djREZg+qcnMD6dH29bCyk2anf8a/A=;
+	s=korg; t=1739459290;
+	bh=dJltKLW/QOJ0gvwDR0Ic4FHYYOdyvTEyvI1fnWabKeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=THEsS7wW3BnaUZe+WAPB1qkoWYA19XYPTaYTRAlQbR/OqKf+4geAUFS/AS6IC55ex
-	 l3ACUXu2RuZX/VF5VXZcGgIX1NQb9YGVFKimNbxBL5MQXyx6KVkLNC5cEB0h5oTS9p
-	 kho/BDD3k162G8k6qj1oNq0emRd4f6nk4Ghq9Amg=
+	b=TvaEVb5vj5kh4QrZSzGCcg5CoCd3jHr1xURcEbVQ9iYnKr2ytlVrLIk6MAZVPIxQ+
+	 vCVYmldZjDRhz317LHdSBOZ0ANFv6jLLeNy+6FCIoR+EGPWowBUkJ1WVHXRvTs+M4J
+	 jTLsZhF/z69LdafVdu+iDZHgq041NP+rdOjK7U8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.13 221/443] HID: hid-sensor-hub: dont use stale platform-data on remove
-Date: Thu, 13 Feb 2025 15:26:26 +0100
-Message-ID: <20250213142449.140598275@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Ludwig Rydberg <ludwig.rydberg@gaisler.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.13 222/443] ring-buffer: Do not allow events in NMI with generic atomic64 cmpxchg()
+Date: Thu, 13 Feb 2025 15:26:27 +0100
+Message-ID: <20250213142449.178681656@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -53,84 +58,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 8a5b38c3fd709e8acd2bfdedf66c25e6af759576 upstream.
+commit cd2375a3567fd3d93aa6c68e0027a5756213bda0 upstream.
 
-The hid-sensor-hub creates the individual device structs and transfers them
-to the created mfd platform-devices via the platform_data in the mfd_cell.
+Some architectures can not safely do atomic64 operations in NMI context.
+Since the ring buffer relies on atomic64 operations to do its time
+keeping, if an event is requested in NMI context, reject it for these
+architectures.
 
-Before e651a1da442a ("HID: hid-sensor-hub: Allow parallel synchronous reads")
-the sensor-hub was managing access centrally, with one "completion" in the
-hub's data structure, which needed to be finished on removal at the latest.
-
-The mentioned commit then moved this central management to each hid sensor
-device, resulting on a completion in each struct hid_sensor_hub_device.
-The remove procedure was adapted to go through all sensor devices and
-finish any pending "completion".
-
-What this didn't take into account was, platform_device_add_data() that is
-used by mfd_add{_hotplug}_devices() does a kmemdup on the submitted
-platform-data. So the data the platform-device gets is a copy of the
-original data, meaning that the device worked on a different completion
-than what sensor_hub_remove() currently wants to access.
-
-To fix that, use device_for_each_child() to go through each child-device
-similar to how mfd_remove_devices() unregisters the devices later and
-with that get the live platform_data to finalize the correct completion.
-
-Fixes: e651a1da442a ("HID: hid-sensor-hub: Allow parallel synchronous reads")
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Acked-by: Benjamin Tissoires <bentiss@kernel.org>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Acked-by: Jiri Kosina <jkosina@suse.com>
-Link: https://lore.kernel.org/r/20241107114712.538976-2-heiko@sntech.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/20250120235721.407068250@goodmis.org
+Fixes: c84897c0ff592 ("ring-buffer: Remove 32bit timestamp logic")
+Closes: https://lore.kernel.org/all/86fb4f86-a0e4-45a2-a2df-3154acc4f086@gaisler.com/
+Reported-by: Ludwig Rydberg <ludwig.rydberg@gaisler.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-sensor-hub.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ kernel/trace/ring_buffer.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-sensor-hub.c
-+++ b/drivers/hid/hid-sensor-hub.c
-@@ -730,23 +730,30 @@ err_stop_hw:
- 	return ret;
- }
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -4398,8 +4398,13 @@ rb_reserve_next_event(struct trace_buffe
+ 	int nr_loops = 0;
+ 	int add_ts_default;
  
-+static int sensor_hub_finalize_pending_fn(struct device *dev, void *data)
-+{
-+	struct hid_sensor_hub_device *hsdev = dev->platform_data;
-+
-+	if (hsdev->pending.status)
-+		complete(&hsdev->pending.ready);
-+
-+	return 0;
-+}
-+
- static void sensor_hub_remove(struct hid_device *hdev)
- {
- 	struct sensor_hub_data *data = hid_get_drvdata(hdev);
- 	unsigned long flags;
--	int i;
- 
- 	hid_dbg(hdev, " hardware removed\n");
- 	hid_hw_close(hdev);
- 	hid_hw_stop(hdev);
-+
- 	spin_lock_irqsave(&data->lock, flags);
--	for (i = 0; i < data->hid_sensor_client_cnt; ++i) {
--		struct hid_sensor_hub_device *hsdev =
--			data->hid_sensor_hub_client_devs[i].platform_data;
--		if (hsdev->pending.status)
--			complete(&hsdev->pending.ready);
--	}
-+	device_for_each_child(&hdev->dev, NULL,
-+			      sensor_hub_finalize_pending_fn);
- 	spin_unlock_irqrestore(&data->lock, flags);
-+
- 	mfd_remove_devices(&hdev->dev);
- 	mutex_destroy(&data->mutex);
- }
+-	/* ring buffer does cmpxchg, make sure it is safe in NMI context */
+-	if (!IS_ENABLED(CONFIG_ARCH_HAVE_NMI_SAFE_CMPXCHG) &&
++	/*
++	 * ring buffer does cmpxchg as well as atomic64 operations
++	 * (which some archs use locking for atomic64), make sure this
++	 * is safe in NMI context
++	 */
++	if ((!IS_ENABLED(CONFIG_ARCH_HAVE_NMI_SAFE_CMPXCHG) ||
++	     IS_ENABLED(CONFIG_GENERIC_ATOMIC64)) &&
+ 	    (unlikely(in_nmi()))) {
+ 		return NULL;
+ 	}
 
 
