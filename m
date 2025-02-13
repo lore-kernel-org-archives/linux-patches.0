@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70EA21D3C3;
-	Thu, 13 Feb 2025 14:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6C270830;
+	Thu, 13 Feb 2025 14:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457180; cv=none; b=fXXwB/LoKfg51wZG4q1T3oM4Pl98pbHVyEDcl22deWOm9xQNhfLsMwMyUjgA9FxO9Jf6sDPrf9yJpE8EaZHK/IljgA3ejBHeWzUlDRn+nvalVAtfFWvLoSHCeXYdlOUKRJI5NEii0kJ/vE6Ixo7Q4Oe6aAJcyvdpnKGCgSdNYew=
+	t=1739457184; cv=none; b=aW7nA5IcqK9HGZnpHbRzF62IUwfGMpiV7+Y4rETPqs22C41eiIv+/J6uDFJs5E5FDUGdcOvlfKIEoW07b3PwuPbXUjvcRIvBiub+j1svnbeSiW1inSFGUBm011f3pPCFw9hxs2AmiPL3sQCWre9RA0jfNPAN23kR8Twaf6Rp66Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457180; c=relaxed/simple;
-	bh=ksNZl20mZtNNYE8QleVULJnz9q6XCr/DLIyUDal3qYo=;
+	s=arc-20240116; t=1739457184; c=relaxed/simple;
+	bh=+CClQ4LctIUgUeTd9fbFreKidxY9x5WwJTxTvN1v/LI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WMf+C5CaNS6ChycPFCINDnyR73PaHSNi6vtkrD3gEZ02vaqRI+frWRopQrFwR+GHcI7kpEi2QBX+wNKS4y6x7xcGBkXj2skNITBpiuU4o/Hejyqd9YBoxFo1dsODaczMdcA0FeHxE9SOr5ssqu/EThbPBh0nVvi2TdT0phny8+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ajajctqV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HgUYWtePG/vCr5+AhpbRhuNf2ejyeTgxqfylvB9HgPd/r77qbQdfHt3sD+jDbTDbTwD33Zg+7h8DtPG4aoGYZcrfLFzr+lIihIi/IW0gqALU139JbPgbk2oQy1ksBT9JPxd+acr303nHaZzcxqGsF0AuU7oYNFUHeC+tjp3QcgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYBfO1YR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ajajctqV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C74C4CEE4;
-	Thu, 13 Feb 2025 14:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYBfO1YR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFD2C4CED1;
+	Thu, 13 Feb 2025 14:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457180;
-	bh=ksNZl20mZtNNYE8QleVULJnz9q6XCr/DLIyUDal3qYo=;
+	s=korg; t=1739457183;
+	bh=+CClQ4LctIUgUeTd9fbFreKidxY9x5WwJTxTvN1v/LI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ajajctqVfP21xrUOT0MI9fkbk47sQzwPcfU7r7Kezxqod2Llj/GfVrwGEYLaYOayw
-	 rCQAtr1IdgQDjdfZinwioNk+LI8Flhdzt7mWXiH0aFyc8bEzt6J5UVbxiWehySedBJ
-	 AB7f/GWVxz9pwMS4Ob6yL7N8ocia2zBjbzqy7oSk=
+	b=gYBfO1YRE6Osge+5EkKq52cmiViDopdKJnPEkUsC+dvyaH+e3/25htsebDfaS2ZwP
+	 DThCOp/zQd/SK/ZeVg4+tItq/LONZeHFgwzY4JB3Yb1pfY6lsaeNAGioYYOJYTlcTs
+	 8NHJxQx20PR6YXEK85FU6ntJLnPU+YGgqNHj06A8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Hermes Wu <hermes.wu@ite.com.tw>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/422] drm/amdkfd: Queue interrupt work to different CPU
-Date: Thu, 13 Feb 2025 15:23:07 +0100
-Message-ID: <20250213142438.026289543@linuxfoundation.org>
+Subject: [PATCH 6.12 039/422] drm/bridge: it6505: Change definition MAX_HDCP_DOWN_STREAM_COUNT
+Date: Thu, 13 Feb 2025 15:23:08 +0100
+Message-ID: <20250213142438.073710774@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,150 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Hermes Wu <hermes.wu@ite.com.tw>
 
-[ Upstream commit 34db5a32617d102e8042151bb87590e43c97132e ]
+[ Upstream commit 85597bc0d70c287ba41f17d14d3d857a38a3d727 ]
 
-For CPX mode, each KFD node has interrupt worker to process ih_fifo to
-send events to user space. Currently all interrupt workers of same adev
-queue to same CPU, all workers execution are actually serialized and
-this cause KFD ih_fifo overflow when CPU usage is high.
+A HDCP source device shall support max downstream to 127 devices.
+Change definition MAX_HDCP_DOWN_STREAM_COUNT to 127
 
-Use per-GPU unbounded highpri queue with number of workers equals to
-number of partitions, let queue_work select the next CPU round robin
-among the local CPUs of same NUMA.
+KSVs shall save for DRM blocked devices check.
+This results in struct it6505 growth by ~0.5 KiB.
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Hermes Wu <hermes.wu@ite.com.tw>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241230-v7-upstream-v7-4-e0fdd4844703@ite.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_device.c    | 25 ++++++++--------------
- drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c | 25 ++++++++--------------
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h      |  3 ++-
- 3 files changed, 20 insertions(+), 33 deletions(-)
+ drivers/gpu/drm/bridge/ite-it6505.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device.c b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-index b05be24531e18..d350c7ce35b3d 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device.c
-@@ -637,6 +637,14 @@ static void kfd_cleanup_nodes(struct kfd_dev *kfd, unsigned int num_nodes)
- 	struct kfd_node *knode;
- 	unsigned int i;
- 
-+	/*
-+	 * flush_work ensures that there are no outstanding
-+	 * work-queue items that will access interrupt_ring. New work items
-+	 * can't be created because we stopped interrupt handling above.
-+	 */
-+	flush_workqueue(kfd->ih_wq);
-+	destroy_workqueue(kfd->ih_wq);
-+
- 	for (i = 0; i < num_nodes; i++) {
- 		knode = kfd->nodes[i];
- 		device_queue_manager_uninit(knode->dqm);
-@@ -1058,21 +1066,6 @@ static int kfd_resume(struct kfd_node *node)
- 	return err;
- }
- 
--static inline void kfd_queue_work(struct workqueue_struct *wq,
--				  struct work_struct *work)
--{
--	int cpu, new_cpu;
--
--	cpu = new_cpu = smp_processor_id();
--	do {
--		new_cpu = cpumask_next(new_cpu, cpu_online_mask) % nr_cpu_ids;
--		if (cpu_to_node(new_cpu) == numa_node_id())
--			break;
--	} while (cpu != new_cpu);
--
--	queue_work_on(new_cpu, wq, work);
--}
--
- /* This is called directly from KGD at ISR. */
- void kgd2kfd_interrupt(struct kfd_dev *kfd, const void *ih_ring_entry)
- {
-@@ -1098,7 +1091,7 @@ void kgd2kfd_interrupt(struct kfd_dev *kfd, const void *ih_ring_entry)
- 			    	patched_ihre, &is_patched)
- 		    && enqueue_ih_ring_entry(node,
- 			    	is_patched ? patched_ihre : ih_ring_entry)) {
--			kfd_queue_work(node->ih_wq, &node->interrupt_work);
-+			queue_work(node->kfd->ih_wq, &node->interrupt_work);
- 			spin_unlock_irqrestore(&node->interrupt_lock, flags);
- 			return;
- 		}
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c b/drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c
-index 9b6b6e8825934..15b4b70cf1997 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_interrupt.c
-@@ -62,11 +62,14 @@ int kfd_interrupt_init(struct kfd_node *node)
- 		return r;
- 	}
- 
--	node->ih_wq = alloc_workqueue("KFD IH", WQ_HIGHPRI, 1);
--	if (unlikely(!node->ih_wq)) {
--		kfifo_free(&node->ih_fifo);
--		dev_err(node->adev->dev, "Failed to allocate KFD IH workqueue\n");
--		return -ENOMEM;
-+	if (!node->kfd->ih_wq) {
-+		node->kfd->ih_wq = alloc_workqueue("KFD IH", WQ_HIGHPRI | WQ_UNBOUND,
-+						   node->kfd->num_nodes);
-+		if (unlikely(!node->kfd->ih_wq)) {
-+			kfifo_free(&node->ih_fifo);
-+			dev_err(node->adev->dev, "Failed to allocate KFD IH workqueue\n");
-+			return -ENOMEM;
-+		}
- 	}
- 	spin_lock_init(&node->interrupt_lock);
- 
-@@ -96,16 +99,6 @@ void kfd_interrupt_exit(struct kfd_node *node)
- 	spin_lock_irqsave(&node->interrupt_lock, flags);
- 	node->interrupts_active = false;
- 	spin_unlock_irqrestore(&node->interrupt_lock, flags);
--
--	/*
--	 * flush_work ensures that there are no outstanding
--	 * work-queue items that will access interrupt_ring. New work items
--	 * can't be created because we stopped interrupt handling above.
--	 */
--	flush_workqueue(node->ih_wq);
--
--	destroy_workqueue(node->ih_wq);
--
- 	kfifo_free(&node->ih_fifo);
- }
- 
-@@ -162,7 +155,7 @@ static void interrupt_wq(struct work_struct *work)
- 			/* If we spent more than a second processing signals,
- 			 * reschedule the worker to avoid soft-lockup warnings
- 			 */
--			queue_work(dev->ih_wq, &dev->interrupt_work);
-+			queue_work(dev->kfd->ih_wq, &dev->interrupt_work);
- 			break;
- 		}
- 	}
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-index 26e48fdc87289..75523f30cd38b 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -273,7 +273,6 @@ struct kfd_node {
- 
- 	/* Interrupts */
- 	struct kfifo ih_fifo;
--	struct workqueue_struct *ih_wq;
- 	struct work_struct interrupt_work;
- 	spinlock_t interrupt_lock;
- 
-@@ -366,6 +365,8 @@ struct kfd_dev {
- 	struct kfd_node *nodes[MAX_KFD_NODES];
- 	unsigned int num_nodes;
- 
-+	struct workqueue_struct *ih_wq;
-+
- 	/* Kernel doorbells for KFD device */
- 	struct amdgpu_bo *doorbells;
- 
+diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
+index cf891e7677c0e..d55d7dad9545f 100644
+--- a/drivers/gpu/drm/bridge/ite-it6505.c
++++ b/drivers/gpu/drm/bridge/ite-it6505.c
+@@ -296,7 +296,7 @@
+ #define MAX_LANE_COUNT 4
+ #define MAX_LINK_RATE HBR
+ #define AUTO_TRAIN_RETRY 3
+-#define MAX_HDCP_DOWN_STREAM_COUNT 10
++#define MAX_HDCP_DOWN_STREAM_COUNT 127
+ #define MAX_CR_LEVEL 0x03
+ #define MAX_EQ_LEVEL 0x03
+ #define AUX_WAIT_TIMEOUT_MS 15
 -- 
 2.39.5
 
