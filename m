@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561E6281369;
-	Thu, 13 Feb 2025 14:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39D938389;
+	Thu, 13 Feb 2025 14:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457815; cv=none; b=ndW6fIcum+PfXLIeT7QNU9isstuUDg5lr7K0RK1TPqwH5DIj/UR5lerLKLHJrNEfosYCH5dyxsoj4s66pr+gWhnO1AfEehSeFxaj1ggbfWeCG2VDCNaA3b07NhZqkLPqqg+kyUZvI3iiHJ/lh7pU4tZMHX2vsOcokDS+XP2Qu7I=
+	t=1739457818; cv=none; b=t59yjfnqaH1MU5BqaMZsnjzP0KSTuJ4IpadsJs3z1DYqPkso5Rosiq1SdxuCV2YIml6Ic6Hfrr3CtuwsG+1Y/SikDzSMNnx/MHwLCXgaY7UucWp6NXFAPtKnAcw0+0gxRn2swq02YEzUeBKgB+VKMPi9kvTgRRK3D6rQvYOfZRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457815; c=relaxed/simple;
-	bh=+p+9+YmIn+Af8nGnbfIOP3+Pa9UtwXnTEtBvxvpln4s=;
+	s=arc-20240116; t=1739457818; c=relaxed/simple;
+	bh=fOFD35LvDtf0NLUdNe9p+0NBa9xOMhJ5VcXzFAwVXoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jcKPsDifMXoQGXeFy5PXQ4/QypAQOoyxttGNTXMUAaPe2vUGcYTewx2dydYw2bU0XUqrUS4oDwhP7+xDBXaaZixen9ppMLu7Wra/s2RbsEI9jiuSB4WgWP6Fm9KnpAuuCnVCEGSIyDFbIbKWfeT5ZhRueyfIUs2dN92J2GQgfE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxYCgPWY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GRBaX8UzQ/iRNcBmz1PoROf7dvpX6NAI7l6PWeKByvF5F/v6WGskFJeydwwobRkxfbXUn2Y913mOEoXZIczKe8oGJ0a6QyKIHxGTXewtyI9nMXFJ4FoFr3uX1LNKMdvVLPsd9r6ykyoqHp5GJ8NezYOqbG2NdPMb8DM7UitBPG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtUouAuQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxYCgPWY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96E9C4CED1;
-	Thu, 13 Feb 2025 14:43:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtUouAuQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BE1C4CED1;
+	Thu, 13 Feb 2025 14:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457815;
-	bh=+p+9+YmIn+Af8nGnbfIOP3+Pa9UtwXnTEtBvxvpln4s=;
+	s=korg; t=1739457818;
+	bh=fOFD35LvDtf0NLUdNe9p+0NBa9xOMhJ5VcXzFAwVXoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pxYCgPWYHZoMKKoEhk9QOGsKehE4C58W+rcz+lY9/2D/527P+IaAGtPVQ2M6kBJcs
-	 bx1IMmuu9X0Vk4Mk9hoy7tCZ0AMMmjkm8FAnbbQlnwPOzgV6/xZGxV6uzZq0M49Lih
-	 5dlPSebpshwHL51ITo9vKWW7YxuPPz3eF6eLVx0U=
+	b=qtUouAuQzTgXBYHaBtS6+rwDlm7SovWJg1qR6aiDcIHBPlVZ9Hbn2cGdj3LlLmy3M
+	 pEGqxYoT0gIi7waV9zvSczK5f6hCmHEPCaRoJW+157wm5/kw8cDjaeK7hgEwJ1Ztgf
+	 2wxjq2AcPkcl1wMVTPoiKQXlWvJ+fRRueeo4LDfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stephan Gerhold <stephan.gerhold@linaro.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 220/422] arm64: dts: qcom: x1e80100-qcp: Fix USB QMP PHY supplies
-Date: Thu, 13 Feb 2025 15:26:09 +0100
-Message-ID: <20250213142445.026911466@linuxfoundation.org>
+Subject: [PATCH 6.12 221/422] arm64: dts: qcom: x1e78100-lenovo-thinkpad-t14s: Fix USB QMP PHY supplies
+Date: Thu, 13 Feb 2025 15:26:10 +0100
+Message-ID: <20250213142445.065575473@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -53,26 +53,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit 4861ba7cf5a49969dee258dda2bf8d4e819135d1 upstream.
+commit 6efc01b75f819a2988aa9392f93a4d6501871525 upstream.
 
-On the X1E80100 QCP, &vreg_l3e_1p2 only powers &usb_mp_qmpphy0/1
+On the X1E80100 CRD, &vreg_l3e_1p2 only powers &usb_mp_qmpphy0/1
 (i.e. USBSS_3 and USBSS_4). The QMP PHYs for USB_0, USB_1 and USB_2
 are actually powered by &vreg_l2j_1p2.
 
+Since x1e78100-lenovo-thinkpad-t14s mostly just mirrors the power supplies
+from the x1e80100-crd device tree, assume that the fix also applies here.
+
 Cc: stable@vger.kernel.org
-Fixes: 20676f7819d7 ("arm64: dts: qcom: x1e80100-qcp: Fix USB PHYs regulators")
+Fixes: 7d1cbe2f4985 ("arm64: dts: qcom: Add X1E78100 ThinkPad T14s Gen 6")
 Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20241210-x1e80100-usb-qmp-supply-fix-v1-8-0adda5d30bbd@linaro.org
+Link: https://lore.kernel.org/r/20241210-x1e80100-usb-qmp-supply-fix-v1-2-0adda5d30bbd@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-@@ -896,7 +896,7 @@
+--- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
++++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+@@ -754,7 +754,7 @@
  };
  
  &usb_1_ss0_qmpphy {
@@ -81,19 +84,10 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	vdda-pll-supply = <&vreg_l1j_0p8>;
  
  	status = "okay";
-@@ -928,7 +928,7 @@
+@@ -786,7 +786,7 @@
  };
  
  &usb_1_ss1_qmpphy {
--	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-phy-supply = <&vreg_l2j_1p2>;
- 	vdda-pll-supply = <&vreg_l2d_0p9>;
- 
- 	status = "okay";
-@@ -960,7 +960,7 @@
- };
- 
- &usb_1_ss2_qmpphy {
 -	vdda-phy-supply = <&vreg_l3e_1p2>;
 +	vdda-phy-supply = <&vreg_l2j_1p2>;
  	vdda-pll-supply = <&vreg_l2d_0p9>;
