@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBB8335BA;
-	Thu, 13 Feb 2025 15:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72FB26B0B9;
+	Thu, 13 Feb 2025 15:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460147; cv=none; b=HGkvx4gOfE0XRxFOfHSohg5+9qFIfO2ozBJL4QBJ+GuG/pdjlsVX9+DySiESmAixhSwcrMa/mE7zyAHbk9v8ep0ZTh4zPbDNw3JiBkTAGIrJRRdbFkluE1kxrpXUEdXWMZzgwbtBqRRdHHSkHF88xIQmigDGkPqoMigduCApcDc=
+	t=1739460151; cv=none; b=lOuhsP1gQPAspHJfDfb65fW8kf8ZkK9pxxRCGfX/sQmQqrHyIUR+kg7Nlh8XZgN12o5AYRkzsHER8NPk1gcBYTzjp7KrlKYpUF04xfcs+xUVoq5xKD/71yNrlRkjktqO4FGoDv0huFjEaJJT1Gwprv95xZf0aCsKokHWibk8Mgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460147; c=relaxed/simple;
-	bh=PAn6dYH5mivf5DeUb8T0D8CZuDmrSUMjyrnWZ8kKngk=;
+	s=arc-20240116; t=1739460151; c=relaxed/simple;
+	bh=zEgF4g0AQMys4k6Epa35uEvH8+aFtp85pHii0/gWs34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZri8j1eBiRvt0GVpCca66znp/UXFx2cObfmS0uiBzL6LoCOxB5mGs8RQ/BBnbskv8sBaY0j/JF2Y0ke28k3AgQBLLLaO1Z4NuP3JRg7v/pQcnFajgRluw/pyOY/whA6MLVAPvHylzuOj9V4LclTISTWSkd7R5nQjsnRcCIzOPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1yqS1iW0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ixsyzvfcuEc4FWk7loX357nNoN/bG8Cm1eJnWLnT5V3tLfVcNjpmwPkbZuXsfJhibPQFb4PDQPKV1Ei5NWW9V0xPJU+281RnLu/H7D021exjp4xtdhXPQYGeiEPXOlk591XLNbVS7Ogb2p2NiQ7Jjrlt/nXGiuFCD6pz88unAoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YwVbZhCt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1yqS1iW0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0059C4CED1;
-	Thu, 13 Feb 2025 15:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YwVbZhCt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B33C4CED1;
+	Thu, 13 Feb 2025 15:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460147;
-	bh=PAn6dYH5mivf5DeUb8T0D8CZuDmrSUMjyrnWZ8kKngk=;
+	s=korg; t=1739460150;
+	bh=zEgF4g0AQMys4k6Epa35uEvH8+aFtp85pHii0/gWs34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1yqS1iW0oX6mAIx4cis514P4LJ0cFWJj6aGOS0wcV1ZslNaZttmbVqAXVNr4P+/8C
-	 V5NYvLeBIP4AeDJO99w5Hsb7M5j20vOW+/6UHrBzXkPYcpguE4Py3C7fqbKljZFVRL
-	 b/3coqNfqsXgivVykfSVApR0tlTXMH70NJ3xSbhA=
+	b=YwVbZhCtvptQ5yhLQpYqHZQl+jqk6jhd/8KWOmU/WmJvKiLUOHgJ7d7bEBIbI+eVI
+	 gCmaXWmd6Qaub65YLLp5yYFCEKYRp5EDuOP7Yoh2rqSL2kbISIWNUGgob8j3IL3i91
+	 WSNbuz6fMjjcqElgjheC68FoHJrZl5FjCpeagixM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Kang Chang <gary.chang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Gavin Shan <gshan@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 028/273] wifi: rtw89: add crystal_cap check to avoid setting as overflow value
-Date: Thu, 13 Feb 2025 15:26:40 +0100
-Message-ID: <20250213142408.470156722@linuxfoundation.org>
+Subject: [PATCH 6.6 003/273] arm64/mm: Ensure adequate HUGE_MAX_HSTATE
+Date: Thu, 13 Feb 2025 15:26:15 +0100
+Message-ID: <20250213142407.494258827@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -51,79 +58,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chih-Kang Chang <gary.chang@realtek.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-[ Upstream commit 7b98caea39676561f22db58752551161bb36462b ]
+[ Upstream commit 1e5823c8e86de83a43d59a522b4de29066d3b306 ]
 
-In the original flow, the crystal_cap might be calculated as a negative
-value and set as an overflow value. Therefore, we added a check to limit
-the calculated crystal_cap value. Additionally, we shrank the crystal_cap
-adjustment according to specific CFO.
+This asserts that HUGE_MAX_HSTATE is sufficient enough preventing potential
+hugetlb_max_hstate runtime overflow in hugetlb_add_hstate() thus triggering
+a BUG_ON() there after.
 
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241128055433.11851-7-pkshih@realtek.com
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Link: https://lore.kernel.org/r/20241202064407.53807-1-anshuman.khandual@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/phy.c | 11 ++++++-----
- drivers/net/wireless/realtek/rtw89/phy.h |  2 +-
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ arch/arm64/mm/hugetlbpage.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
-index fac83b718a30c..457c1dd31bf9d 100644
---- a/drivers/net/wireless/realtek/rtw89/phy.c
-+++ b/drivers/net/wireless/realtek/rtw89/phy.c
-@@ -2438,7 +2438,6 @@ static void rtw89_phy_cfo_set_crystal_cap(struct rtw89_dev *rtwdev,
+diff --git a/arch/arm64/mm/hugetlbpage.c b/arch/arm64/mm/hugetlbpage.c
+index 13fd592228b18..a5e1588780b2c 100644
+--- a/arch/arm64/mm/hugetlbpage.c
++++ b/arch/arm64/mm/hugetlbpage.c
+@@ -526,6 +526,18 @@ pte_t huge_ptep_clear_flush(struct vm_area_struct *vma,
  
- 	if (!force && cfo->crystal_cap == crystal_cap)
- 		return;
--	crystal_cap = clamp_t(u8, crystal_cap, 0, 127);
- 	if (chip->chip_id == RTL8852A || chip->chip_id == RTL8851B) {
- 		rtw89_phy_cfo_set_xcap_reg(rtwdev, true, crystal_cap);
- 		rtw89_phy_cfo_set_xcap_reg(rtwdev, false, crystal_cap);
-@@ -2552,7 +2551,7 @@ static void rtw89_phy_cfo_crystal_cap_adjust(struct rtw89_dev *rtwdev,
- 					     s32 curr_cfo)
+ static int __init hugetlbpage_init(void)
  {
- 	struct rtw89_cfo_tracking_info *cfo = &rtwdev->cfo_tracking;
--	s8 crystal_cap = cfo->crystal_cap;
-+	int crystal_cap = cfo->crystal_cap;
- 	s32 cfo_abs = abs(curr_cfo);
- 	int sign;
++	/*
++	 * HugeTLB pages are supported on maximum four page table
++	 * levels (PUD, CONT PMD, PMD, CONT PTE) for a given base
++	 * page size, corresponding to hugetlb_add_hstate() calls
++	 * here.
++	 *
++	 * HUGE_MAX_HSTATE should at least match maximum supported
++	 * HugeTLB page sizes on the platform. Any new addition to
++	 * supported HugeTLB page sizes will also require changing
++	 * HUGE_MAX_HSTATE as well.
++	 */
++	BUILD_BUG_ON(HUGE_MAX_HSTATE < 4);
+ 	if (pud_sect_supported())
+ 		hugetlb_add_hstate(PUD_SHIFT - PAGE_SHIFT);
  
-@@ -2569,15 +2568,17 @@ static void rtw89_phy_cfo_crystal_cap_adjust(struct rtw89_dev *rtwdev,
- 	}
- 	sign = curr_cfo > 0 ? 1 : -1;
- 	if (cfo_abs > CFO_TRK_STOP_TH_4)
--		crystal_cap += 7 * sign;
-+		crystal_cap += 3 * sign;
- 	else if (cfo_abs > CFO_TRK_STOP_TH_3)
--		crystal_cap += 5 * sign;
--	else if (cfo_abs > CFO_TRK_STOP_TH_2)
- 		crystal_cap += 3 * sign;
-+	else if (cfo_abs > CFO_TRK_STOP_TH_2)
-+		crystal_cap += 1 * sign;
- 	else if (cfo_abs > CFO_TRK_STOP_TH_1)
- 		crystal_cap += 1 * sign;
- 	else
- 		return;
-+
-+	crystal_cap = clamp(crystal_cap, 0, 127);
- 	rtw89_phy_cfo_set_crystal_cap(rtwdev, (u8)crystal_cap, false);
- 	rtw89_debug(rtwdev, RTW89_DBG_CFO,
- 		    "X_cap{Curr,Default}={0x%x,0x%x}\n",
-diff --git a/drivers/net/wireless/realtek/rtw89/phy.h b/drivers/net/wireless/realtek/rtw89/phy.h
-index d6dc0cbbae43b..15ed23fa4218f 100644
---- a/drivers/net/wireless/realtek/rtw89/phy.h
-+++ b/drivers/net/wireless/realtek/rtw89/phy.h
-@@ -51,7 +51,7 @@
- #define CFO_TRK_STOP_TH_4 (30 << 2)
- #define CFO_TRK_STOP_TH_3 (20 << 2)
- #define CFO_TRK_STOP_TH_2 (10 << 2)
--#define CFO_TRK_STOP_TH_1 (00 << 2)
-+#define CFO_TRK_STOP_TH_1 (03 << 2)
- #define CFO_TRK_STOP_TH (2 << 2)
- #define CFO_SW_COMP_FINE_TUNE (2 << 2)
- #define CFO_PERIOD_CNT 15
 -- 
 2.39.5
 
