@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A12438389;
-	Thu, 13 Feb 2025 14:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7702B335BA;
+	Thu, 13 Feb 2025 14:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457167; cv=none; b=OatBtuB0szkmN/SuisuuDA8pCxnQ4eMeSWBWYjqBIqEzext4iSXV5HAKC41THGMb8wkc1X1uJAQJvYvNxSbqgjIDAQ85cntORmakD0v7zWYHGOyct1B+2P5/faN919hKgJJeiu7Q+a5dTC5LRQv0eQZrkxdwZzizL60Ii3Ohkdg=
+	t=1739457170; cv=none; b=nKpZsmBzF4cHeGHVFLcQhBYnfPb9Lgnq7C7DpNCAvkDSPDHGZhAXnETht4/F8T5PHHr9ctfGgM+C3F0ENL7hxmL5oE7RpMKGu/HWFsk4jdxQqqpq+OPsIVbwM2xAK1/gi8EZzrRCAjPy+7J9mNMEkDnjlMG+QfwhcxEeymGXxYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457167; c=relaxed/simple;
-	bh=UPQfTFvHRfRDV5FaJoXGSKFyZRz+594m9diK+MhRsss=;
+	s=arc-20240116; t=1739457170; c=relaxed/simple;
+	bh=lr9vFPK9Vjse7u/VJThUiBc24CC2p6MMOepdUBTJXsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+0Fm0NFBmO7mfXeJHbOfOwTLTQuQ9rJ6eMoC6EwKv0yhYJ4VkWdNHNvWHpPTROPSTaOel97fGOoP6wnLQAdkPdwIrBCngO202nSS0WhDVS8rHjatwUbsI1RA0d7k7vDnXPW0w7Rf0pq03f7NBTb/VRzPymSpm2BHGnwZLDd2BY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZuCIOMG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X1FTTxZvxzP+5NT2jSt02sULwc0urnFKTLPYWA6cQjoHKBFyN2ICasq7IbyZZgbQlXulToB1ID3J8NCtY6cbLcBS+EAOeZ/Ib96GDmEv56Sznbd/ZphI5SS2bALwmM0cID6aPjojUcKQre6S1rTd8KIfjetualnGfNy3iw+XbhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AR0T/YKd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZuCIOMG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700B2C4CED1;
-	Thu, 13 Feb 2025 14:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AR0T/YKd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD37DC4CED1;
+	Thu, 13 Feb 2025 14:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457166;
-	bh=UPQfTFvHRfRDV5FaJoXGSKFyZRz+594m9diK+MhRsss=;
+	s=korg; t=1739457170;
+	bh=lr9vFPK9Vjse7u/VJThUiBc24CC2p6MMOepdUBTJXsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZuCIOMG8NRzO4J9P1/UmpxBH3caaI47cNWpvIqU9wyeuPxZF3EBWHOTeVno2Yupa
-	 wVZ1Cs/bVacvBRzCdXocX/qzyaLaVuA35UCvNmBIq5AD4Gu9/pSHPEyRFZ4QpkZp3h
-	 oHv7poKTFSVZkWjUTnRz1cNrBdVNt21xixnI7tIM=
+	b=AR0T/YKdLb/X5R/kvw6IhRLH6Jk2PTKeWV3yoqjqv2ru3nSomtPLKv//Qh40Y5tEw
+	 fwceR3v5W6WEbRtrGJmdI2I50QfML3P/wLtfvsQgzTWpXkwea73vdRbXWtVGjH/fzz
+	 BfQCmb/ztcL51LFN4BqbtWsOCViHoYCgzcGeUabE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 035/422] drm/vc4: hdmi: use eld_mutex to protect access to connector->eld
-Date: Thu, 13 Feb 2025 15:23:04 +0100
-Message-ID: <20250213142437.911086068@linuxfoundation.org>
+Subject: [PATCH 6.12 036/422] drm/amd/display: Fix Mode Cutoff in DSC Passthrough to DP2.1 Monitor
+Date: Thu, 13 Feb 2025 15:23:05 +0100
+Message-ID: <20250213142437.949496946@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,38 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Fangzhi Zuo <Jerry.Zuo@amd.com>
 
-[ Upstream commit 81a9a93b169a273ccc4a9a1ee56f17e9981d3f98 ]
+[ Upstream commit e56ad45e991128bf4db160b75a1d9f647a341d8f ]
 
-Reading access to connector->eld can happen at the same time the
-drm_edid_to_eld() updates the data. Take the newly added eld_mutex in
-order to protect connector->eld from concurrent access.
+Source --> DP2.1 MST hub --> DP1.4/2.1 monitor
 
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241206-drm-connector-eld-mutex-v2-10-c9bce1ee8bea@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+When change from DP1.4 to DP2.1 from monitor manual, modes higher than
+4k120 are all cutoff by mode validation. Switch back to DP1.4 gets all
+the modes up to 4k240 available to be enabled by dsc passthrough.
+
+[why]
+Compared to DP1.4 link from hub to monitor, DP2.1 link has larger
+full_pbn value that causes overflow in the process of doing conversion
+from pbn to kbps.
+
+[how]
+Change the data type accordingly to fit into the data limit during
+conversion calculation.
+
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 7e0a5ea7ab859..6b83d02b5d62a 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -2192,9 +2192,9 @@ static int vc4_hdmi_audio_get_eld(struct device *dev, void *data,
- 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
- 	struct drm_connector *connector = &vc4_hdmi->connector;
- 
--	mutex_lock(&vc4_hdmi->mutex);
-+	mutex_lock(&connector->eld_mutex);
- 	memcpy(buf, connector->eld, min(sizeof(connector->eld), len));
--	mutex_unlock(&vc4_hdmi->mutex);
-+	mutex_unlock(&connector->eld_mutex);
- 
- 	return 0;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index 754dbc544f03a..5bdf44c692180 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1691,16 +1691,16 @@ int pre_validate_dsc(struct drm_atomic_state *state,
+ 	return ret;
  }
+ 
+-static unsigned int kbps_from_pbn(unsigned int pbn)
++static uint32_t kbps_from_pbn(unsigned int pbn)
+ {
+-	unsigned int kbps = pbn;
++	uint64_t kbps = (uint64_t)pbn;
+ 
+ 	kbps *= (1000000 / PEAK_FACTOR_X1000);
+ 	kbps *= 8;
+ 	kbps *= 54;
+ 	kbps /= 64;
+ 
+-	return kbps;
++	return (uint32_t)kbps;
+ }
+ 
+ static bool is_dsc_common_config_possible(struct dc_stream_state *stream,
 -- 
 2.39.5
 
