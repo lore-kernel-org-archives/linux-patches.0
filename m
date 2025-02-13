@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B9126B083;
-	Thu, 13 Feb 2025 14:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF0014658C;
+	Thu, 13 Feb 2025 14:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458440; cv=none; b=IrxVhEHRxOQB0lOh51YWHqQIBS0olUBgxDjr2+TAhcCEoz0QANw3nN90Dz10nUPCWizURt1ZFGkdMiuWXP3hyGgDW97THm1uyVorpCKCJUW0DM3D3HzbCZSAMU243akb1Vi1N17I2EnGBW0YplnUbSaxw2toVlDxKyxqs/Sl7v8=
+	t=1739458444; cv=none; b=IFxfH4eIPZSlIE4RvZABYBND7YrdGbqLN4zEdP+x07ufrKtoc8gxdq3N+tiSI8RSHzVyeR3J8HuJzAZGrZFQjPDT0NN58b1eaAQvI5yS6rkp9kXjYvxYgGM2IY10ypp/JURn5Sk28ex0ZBfuopMbGtvdfshfD1Gll4F9SrN6aPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458440; c=relaxed/simple;
-	bh=O4+ckBoQqynndkODYIREcvQ/aXchbJQwTfffnArQ+/w=;
+	s=arc-20240116; t=1739458444; c=relaxed/simple;
+	bh=sw0xRRw1PRR1vR8wVB99MaCZruPLPPZYT0fhj4BQTWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xm2V8ulljTYOqjLLYqn6bRwkQV6shtXIpl4xGhj17PpEzTOfASWYGWPAlmE6eYDJrgJLcEHiK88ywYRpmyS9bAu/Zjiq6hRANcVbE7KsFcJpRFkH3zbqZwzHFVsuctbD3/7m45JnH0m7JItbMOo8ZM0Cvx90fGvGbrjWc94XPWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DSa17fl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AUfTbrLwE2qEWrYQ/fLpZxCzdmF+D0yE2vAsaDzEWh9/IrR88GZ9NjE5BsD/5VMOJvoA8oKzZBlBKRhI4Z4UwGjznk6wYdiUAYBWiKOejlb53PcnMpQhQoTtCkPuox6GFfhgTgzc5JxaIhqwA9VSV0EG/Klt+kC8Pcif9nV83lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MX8BDT5p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DSa17fl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085C4C4CED1;
-	Thu, 13 Feb 2025 14:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MX8BDT5p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660C6C4CED1;
+	Thu, 13 Feb 2025 14:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458440;
-	bh=O4+ckBoQqynndkODYIREcvQ/aXchbJQwTfffnArQ+/w=;
+	s=korg; t=1739458443;
+	bh=sw0xRRw1PRR1vR8wVB99MaCZruPLPPZYT0fhj4BQTWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1DSa17flUu0y3mDly7cEyrV8REDYU35z+24TVdEAoLKFTxzM7RaD61znfY7vQEO+Q
-	 3J+cGoOgCcL0C6IUi5WdqsIQEkSk3ejsyzi8pxvpbJ6trWjkyQNrpxJOWKDRxMUl8Q
-	 ygdY1XzGCsJ6D9TPjzB9M7EO5l4uC6rFj5g1pkv8=
+	b=MX8BDT5p/0CB0Ae9thmlAgKeOZ7GrZCtdzp871/dVxauxnfldFJiApmvWqpDMvAbX
+	 kmxHZdRsRwN5O/caEuuvPt4H2hWTabbVdrUv8Fm2Vwl5OJ8MtftSQ8bpKXPbWlTUIG
+	 2gHNGoj8UoU8GsDtytQMacg51/5dLd6NLlJiqpMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 6.12 399/422] xfs: dont lose solo dquot update transactions
-Date: Thu, 13 Feb 2025 15:29:08 +0100
-Message-ID: <20250213142451.944857174@linuxfoundation.org>
+Subject: [PATCH 6.12 400/422] xfs: separate dquot buffer reads from xfs_dqflush
+Date: Thu, 13 Feb 2025 15:29:09 +0100
+Message-ID: <20250213142451.984653733@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -52,160 +52,240 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit d00ffba4adacd0d4d905f6e64bd8cd87011f5711 upstream
+commit a40fe30868ba433ac08376e30132400bec067583 upstream
 
-Quota counter updates are tracked via incore objects which hang off the
-xfs_trans object.  These changes are then turned into dirty log items in
-xfs_trans_apply_dquot_deltas just prior to commiting the log items to
-the CIL.
+The first step towards holding the dquot buffer in the li_buf instead of
+reading it in the AIL is to separate the part that reads the buffer from
+the actual flush code.  There should be no functional changes.
 
-However, updating the incore deltas do not cause XFS_TRANS_DIRTY to be
-set on the transaction.  In other words, a pure quota counter update
-will be silently discarded if there are no other dirty log items
-attached to the transaction.
-
-This is currently not the case anywhere in the filesystem because quota
-updates always dirty at least one other metadata item, but a subsequent
-bug fix will add dquot log item precommits, so we actually need a dirty
-dquot log item prior to xfs_trans_run_precommits.  Also let's not leave
-a logic bomb.
-
-Cc: <stable@vger.kernel.org> # v2.6.35
-Fixes: 0924378a689ccb ("xfs: split out iclog writing from xfs_trans_commit()")
 Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_quota.h       |    7 ++++---
- fs/xfs/xfs_trans.c       |   10 +++-------
- fs/xfs/xfs_trans_dquot.c |   31 ++++++++++++++++++++++++++-----
- 3 files changed, 33 insertions(+), 15 deletions(-)
+ fs/xfs/xfs_dquot.c      |   57 +++++++++++++++++++++++++++++++-----------------
+ fs/xfs/xfs_dquot.h      |    4 ++-
+ fs/xfs/xfs_dquot_item.c |   20 +++++++++++++---
+ fs/xfs/xfs_qm.c         |   37 +++++++++++++++++++++++++------
+ 4 files changed, 86 insertions(+), 32 deletions(-)
 
 
---- a/fs/xfs/xfs_quota.h
-+++ b/fs/xfs/xfs_quota.h
-@@ -96,7 +96,8 @@ extern void xfs_trans_free_dqinfo(struct
- extern void xfs_trans_mod_dquot_byino(struct xfs_trans *, struct xfs_inode *,
- 		uint, int64_t);
- extern void xfs_trans_apply_dquot_deltas(struct xfs_trans *);
--extern void xfs_trans_unreserve_and_mod_dquots(struct xfs_trans *);
-+void xfs_trans_unreserve_and_mod_dquots(struct xfs_trans *tp,
-+		bool already_locked);
- int xfs_trans_reserve_quota_nblks(struct xfs_trans *tp, struct xfs_inode *ip,
- 		int64_t dblocks, int64_t rblocks, bool force);
- extern int xfs_trans_reserve_quota_bydquots(struct xfs_trans *,
-@@ -165,8 +166,8 @@ static inline void xfs_trans_mod_dquot_b
- 		struct xfs_inode *ip, uint field, int64_t delta)
- {
+--- a/fs/xfs/xfs_dquot.c
++++ b/fs/xfs/xfs_dquot.c
+@@ -1233,6 +1233,42 @@ xfs_qm_dqflush_check(
  }
--#define xfs_trans_apply_dquot_deltas(tp)
--#define xfs_trans_unreserve_and_mod_dquots(tp)
-+#define xfs_trans_apply_dquot_deltas(tp, a)
-+#define xfs_trans_unreserve_and_mod_dquots(tp, a)
- static inline int xfs_trans_reserve_quota_nblks(struct xfs_trans *tp,
- 		struct xfs_inode *ip, int64_t dblocks, int64_t rblocks,
- 		bool force)
---- a/fs/xfs/xfs_trans.c
-+++ b/fs/xfs/xfs_trans.c
-@@ -840,6 +840,7 @@ __xfs_trans_commit(
- 	 */
- 	if (tp->t_flags & XFS_TRANS_SB_DIRTY)
- 		xfs_trans_apply_sb_deltas(tp);
-+	xfs_trans_apply_dquot_deltas(tp);
  
- 	error = xfs_trans_run_precommits(tp);
- 	if (error)
-@@ -868,11 +869,6 @@ __xfs_trans_commit(
+ /*
++ * Get the buffer containing the on-disk dquot.
++ *
++ * Requires dquot flush lock, will clear the dirty flag, delete the quota log
++ * item from the AIL, and shut down the system if something goes wrong.
++ */
++int
++xfs_dquot_read_buf(
++	struct xfs_trans	*tp,
++	struct xfs_dquot	*dqp,
++	struct xfs_buf		**bpp)
++{
++	struct xfs_mount	*mp = dqp->q_mount;
++	struct xfs_buf		*bp = NULL;
++	int			error;
++
++	error = xfs_trans_read_buf(mp, tp, mp->m_ddev_targp, dqp->q_blkno,
++				   mp->m_quotainfo->qi_dqchunklen, XBF_TRYLOCK,
++				   &bp, &xfs_dquot_buf_ops);
++	if (error == -EAGAIN)
++		return error;
++	if (xfs_metadata_is_sick(error))
++		xfs_dquot_mark_sick(dqp);
++	if (error)
++		goto out_abort;
++
++	*bpp = bp;
++	return 0;
++
++out_abort:
++	dqp->q_flags &= ~XFS_DQFLAG_DIRTY;
++	xfs_trans_ail_delete(&dqp->q_logitem.qli_item, 0);
++	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
++	return error;
++}
++
++/*
+  * Write a modified dquot to disk.
+  * The dquot must be locked and the flush lock too taken by caller.
+  * The flush lock will not be unlocked until the dquot reaches the disk,
+@@ -1243,11 +1279,10 @@ xfs_qm_dqflush_check(
+ int
+ xfs_qm_dqflush(
+ 	struct xfs_dquot	*dqp,
+-	struct xfs_buf		**bpp)
++	struct xfs_buf		*bp)
+ {
+ 	struct xfs_mount	*mp = dqp->q_mount;
+ 	struct xfs_log_item	*lip = &dqp->q_logitem.qli_item;
+-	struct xfs_buf		*bp;
+ 	struct xfs_dqblk	*dqblk;
+ 	xfs_failaddr_t		fa;
+ 	int			error;
+@@ -1257,28 +1292,12 @@ xfs_qm_dqflush(
  
- 	ASSERT(tp->t_ticket != NULL);
+ 	trace_xfs_dqflush(dqp);
+ 
+-	*bpp = NULL;
+-
+ 	xfs_qm_dqunpin_wait(dqp);
  
 -	/*
--	 * If we need to update the superblock, then do it now.
+-	 * Get the buffer containing the on-disk dquot
 -	 */
--	xfs_trans_apply_dquot_deltas(tp);
+-	error = xfs_trans_read_buf(mp, NULL, mp->m_ddev_targp, dqp->q_blkno,
+-				   mp->m_quotainfo->qi_dqchunklen, XBF_TRYLOCK,
+-				   &bp, &xfs_dquot_buf_ops);
+-	if (error == -EAGAIN)
+-		goto out_unlock;
+-	if (xfs_metadata_is_sick(error))
+-		xfs_dquot_mark_sick(dqp);
+-	if (error)
+-		goto out_abort;
 -
- 	xlog_cil_commit(log, tp, &commit_seq, regrant);
- 
- 	xfs_trans_free(tp);
-@@ -898,7 +894,7 @@ out_unreserve:
- 	 * the dqinfo portion to be.  All that means is that we have some
- 	 * (non-persistent) quota reservations that need to be unreserved.
- 	 */
--	xfs_trans_unreserve_and_mod_dquots(tp);
-+	xfs_trans_unreserve_and_mod_dquots(tp, true);
- 	if (tp->t_ticket) {
- 		if (regrant && !xlog_is_shutdown(log))
- 			xfs_log_ticket_regrant(log, tp->t_ticket);
-@@ -992,7 +988,7 @@ xfs_trans_cancel(
+ 	fa = xfs_qm_dqflush_check(dqp);
+ 	if (fa) {
+ 		xfs_alert(mp, "corrupt dquot ID 0x%x in memory at %pS",
+ 				dqp->q_id, fa);
+-		xfs_buf_relse(bp);
+ 		xfs_dquot_mark_sick(dqp);
+ 		error = -EFSCORRUPTED;
+ 		goto out_abort;
+@@ -1328,14 +1347,12 @@ xfs_qm_dqflush(
  	}
- #endif
- 	xfs_trans_unreserve_and_mod_sb(tp);
--	xfs_trans_unreserve_and_mod_dquots(tp);
-+	xfs_trans_unreserve_and_mod_dquots(tp, false);
  
- 	if (tp->t_ticket) {
- 		xfs_log_ticket_ungrant(log, tp->t_ticket);
---- a/fs/xfs/xfs_trans_dquot.c
-+++ b/fs/xfs/xfs_trans_dquot.c
-@@ -602,6 +602,24 @@ xfs_trans_apply_dquot_deltas(
- 			ASSERT(dqp->q_blk.reserved >= dqp->q_blk.count);
- 			ASSERT(dqp->q_ino.reserved >= dqp->q_ino.count);
- 			ASSERT(dqp->q_rtb.reserved >= dqp->q_rtb.count);
-+
-+			/*
-+			 * We've applied the count changes and given back
-+			 * whatever reservation we didn't use.  Zero out the
-+			 * dqtrx fields.
-+			 */
-+			qtrx->qt_blk_res = 0;
-+			qtrx->qt_bcount_delta = 0;
-+			qtrx->qt_delbcnt_delta = 0;
-+
-+			qtrx->qt_rtblk_res = 0;
-+			qtrx->qt_rtblk_res_used = 0;
-+			qtrx->qt_rtbcount_delta = 0;
-+			qtrx->qt_delrtb_delta = 0;
-+
-+			qtrx->qt_ino_res = 0;
-+			qtrx->qt_ino_res_used = 0;
-+			qtrx->qt_icount_delta = 0;
- 		}
- 	}
+ 	trace_xfs_dqflush_done(dqp);
+-	*bpp = bp;
+ 	return 0;
+ 
+ out_abort:
+ 	dqp->q_flags &= ~XFS_DQFLAG_DIRTY;
+ 	xfs_trans_ail_delete(lip, 0);
+ 	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
+-out_unlock:
+ 	xfs_dqfunlock(dqp);
+ 	return error;
  }
-@@ -638,7 +656,8 @@ xfs_trans_unreserve_and_mod_dquots_hook(
-  */
- void
- xfs_trans_unreserve_and_mod_dquots(
--	struct xfs_trans	*tp)
-+	struct xfs_trans	*tp,
-+	bool			already_locked)
- {
- 	int			i, j;
- 	struct xfs_dquot	*dqp;
-@@ -667,10 +686,12 @@ xfs_trans_unreserve_and_mod_dquots(
- 			 * about the number of blocks used field, or deltas.
- 			 * Also we don't bother to zero the fields.
- 			 */
--			locked = false;
-+			locked = already_locked;
- 			if (qtrx->qt_blk_res) {
--				xfs_dqlock(dqp);
--				locked = true;
-+				if (!locked) {
-+					xfs_dqlock(dqp);
-+					locked = true;
-+				}
- 				dqp->q_blk.reserved -=
- 					(xfs_qcnt_t)qtrx->qt_blk_res;
- 			}
-@@ -691,7 +712,7 @@ xfs_trans_unreserve_and_mod_dquots(
- 				dqp->q_rtb.reserved -=
- 					(xfs_qcnt_t)qtrx->qt_rtblk_res;
- 			}
--			if (locked)
-+			if (locked && !already_locked)
- 				xfs_dqunlock(dqp);
+--- a/fs/xfs/xfs_dquot.h
++++ b/fs/xfs/xfs_dquot.h
+@@ -204,7 +204,9 @@ void xfs_dquot_to_disk(struct xfs_disk_d
+ #define XFS_DQ_IS_DIRTY(dqp)	((dqp)->q_flags & XFS_DQFLAG_DIRTY)
  
+ void		xfs_qm_dqdestroy(struct xfs_dquot *dqp);
+-int		xfs_qm_dqflush(struct xfs_dquot *dqp, struct xfs_buf **bpp);
++int		xfs_dquot_read_buf(struct xfs_trans *tp, struct xfs_dquot *dqp,
++				struct xfs_buf **bpp);
++int		xfs_qm_dqflush(struct xfs_dquot *dqp, struct xfs_buf *bp);
+ void		xfs_qm_dqunpin_wait(struct xfs_dquot *dqp);
+ void		xfs_qm_adjust_dqtimers(struct xfs_dquot *d);
+ void		xfs_qm_adjust_dqlimits(struct xfs_dquot *d);
+--- a/fs/xfs/xfs_dquot_item.c
++++ b/fs/xfs/xfs_dquot_item.c
+@@ -155,14 +155,26 @@ xfs_qm_dquot_logitem_push(
+ 
+ 	spin_unlock(&lip->li_ailp->ail_lock);
+ 
+-	error = xfs_qm_dqflush(dqp, &bp);
++	error = xfs_dquot_read_buf(NULL, dqp, &bp);
++	if (error) {
++		if (error == -EAGAIN)
++			rval = XFS_ITEM_LOCKED;
++		xfs_dqfunlock(dqp);
++		goto out_relock_ail;
++	}
++
++	/*
++	 * dqflush completes dqflock on error, and the delwri ioend does it on
++	 * success.
++	 */
++	error = xfs_qm_dqflush(dqp, bp);
+ 	if (!error) {
+ 		if (!xfs_buf_delwri_queue(bp, buffer_list))
+ 			rval = XFS_ITEM_FLUSHING;
+-		xfs_buf_relse(bp);
+-	} else if (error == -EAGAIN)
+-		rval = XFS_ITEM_LOCKED;
++	}
++	xfs_buf_relse(bp);
+ 
++out_relock_ail:
+ 	spin_lock(&lip->li_ailp->ail_lock);
+ out_unlock:
+ 	xfs_dqunlock(dqp);
+--- a/fs/xfs/xfs_qm.c
++++ b/fs/xfs/xfs_qm.c
+@@ -146,17 +146,28 @@ xfs_qm_dqpurge(
+ 		 * We don't care about getting disk errors here. We need
+ 		 * to purge this dquot anyway, so we go ahead regardless.
+ 		 */
+-		error = xfs_qm_dqflush(dqp, &bp);
++		error = xfs_dquot_read_buf(NULL, dqp, &bp);
++		if (error == -EAGAIN) {
++			xfs_dqfunlock(dqp);
++			dqp->q_flags &= ~XFS_DQFLAG_FREEING;
++			goto out_unlock;
++		}
++		if (error)
++			goto out_funlock;
++
++		/*
++		 * dqflush completes dqflock on error, and the bwrite ioend
++		 * does it on success.
++		 */
++		error = xfs_qm_dqflush(dqp, bp);
+ 		if (!error) {
+ 			error = xfs_bwrite(bp);
+ 			xfs_buf_relse(bp);
+-		} else if (error == -EAGAIN) {
+-			dqp->q_flags &= ~XFS_DQFLAG_FREEING;
+-			goto out_unlock;
  		}
+ 		xfs_dqflock(dqp);
+ 	}
+ 
++out_funlock:
+ 	ASSERT(atomic_read(&dqp->q_pincount) == 0);
+ 	ASSERT(xlog_is_shutdown(dqp->q_logitem.qli_item.li_log) ||
+ 		!test_bit(XFS_LI_IN_AIL, &dqp->q_logitem.qli_item.li_flags));
+@@ -462,7 +473,17 @@ xfs_qm_dquot_isolate(
+ 		/* we have to drop the LRU lock to flush the dquot */
+ 		spin_unlock(lru_lock);
+ 
+-		error = xfs_qm_dqflush(dqp, &bp);
++		error = xfs_dquot_read_buf(NULL, dqp, &bp);
++		if (error) {
++			xfs_dqfunlock(dqp);
++			goto out_unlock_dirty;
++		}
++
++		/*
++		 * dqflush completes dqflock on error, and the delwri ioend
++		 * does it on success.
++		 */
++		error = xfs_qm_dqflush(dqp, bp);
+ 		if (error)
+ 			goto out_unlock_dirty;
+ 
+@@ -1287,11 +1308,13 @@ xfs_qm_flush_one(
+ 		goto out_unlock;
+ 	}
+ 
+-	error = xfs_qm_dqflush(dqp, &bp);
++	error = xfs_dquot_read_buf(NULL, dqp, &bp);
+ 	if (error)
+ 		goto out_unlock;
+ 
+-	xfs_buf_delwri_queue(bp, buffer_list);
++	error = xfs_qm_dqflush(dqp, bp);
++	if (!error)
++		xfs_buf_delwri_queue(bp, buffer_list);
+ 	xfs_buf_relse(bp);
+ out_unlock:
+ 	xfs_dqunlock(dqp);
 
 
