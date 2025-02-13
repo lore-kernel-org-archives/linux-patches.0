@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D82335BA;
-	Thu, 13 Feb 2025 15:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5D535961;
+	Thu, 13 Feb 2025 15:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460029; cv=none; b=OAWwBMLpjqsM4XWZGv5txLNKrOdQDQ5PFIXgxzD36M6PqGWEnEbb/Xp9/80z96Sw3D3b2EquVT48c2vyz/69EaNbTutpPIrJj9T+mkpBTWWcCusyvzeSYzc12RnJKsVLtD6nwAY2uXtE8VRCsQIggV0AvCxTXNTTW4JVrcW/JE0=
+	t=1739460032; cv=none; b=P531zwL9hCBl8WOzjcWXi4dDgftP6WRguHZdPRjBpb+rfjEt0rtR3cQnkWi9b0jliZ3hfsINN7mrpRSCZyAzMqgbnzZsQOcZdJplFPsaHfAH26ABAFbSKve0WR8O+6S4IdRhV9DpMtgxgz7W4weLQ32M8vYycQ5PtmR8YnVfe/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460029; c=relaxed/simple;
-	bh=gFHBVqDro80LjHoAjnj8uTloRwQzmDYkN1JTcT1zA1E=;
+	s=arc-20240116; t=1739460032; c=relaxed/simple;
+	bh=o4BR1UnZf6m2SJceqtQv6Xl10h9oZ+ArDifLwlmMkIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=vDwvNErLwLqoUBVPcc+d9RFBAeSkubtEzu47Sz323zs2pwHFfP/YhOgLu+3HjtpxByDDRNHWp4NXh48g+yF8k7bjvcH2K1LmWHNDYn+1+4wVbCZ3EeiJkBlqVF2GZtNJ0KuxjwkKy1fBhOWrRe3sK6W4QgDyLg7W3CL31yb03Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDskFT1T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kns3Pk26yHs9JPwS4iIwvkHiPRTV/KHmNOMGqBEipcXzSxgPX+TC/6BmkHvCGVf1O2fRphVQL0YCOxRAUAihv7k6lbrRsNI4l2rsOKxAc5Fh9Fhjm6e2c5F30gMpBgznjMxfrEtMA/OFej3PVZy3DvXt6bTYzAUQb+7MhMyIDhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSi195gN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDskFT1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5188EC4CED1;
-	Thu, 13 Feb 2025 15:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSi195gN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7AA9C4CED1;
+	Thu, 13 Feb 2025 15:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460028;
-	bh=gFHBVqDro80LjHoAjnj8uTloRwQzmDYkN1JTcT1zA1E=;
+	s=korg; t=1739460032;
+	bh=o4BR1UnZf6m2SJceqtQv6Xl10h9oZ+ArDifLwlmMkIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pDskFT1T6Lq6b3V7cHzX60U+mM2e6e0PwHW83Suz4Wqtbziz3ztyz6zUqp8TjDq/2
-	 oT6mmu7Lec3SP8BYcjtoZgzV5cmbkGUYNZ8DXmNPA/cj7fPK3fd9e+cs5BYoqnTBAZ
-	 ZZowFFB4b49s/c2W+YgCLqVto1uuGohNxtYOFXFc=
+	b=uSi195gNp5efkG37X5CjEN1TqgtsErEodOzNvV8cy8pbWGV9F0Zf5cSIIXEA0TaKn
+	 /a9V8ZzhHk1JDieAE7k8RNsRaEO0vSB+4TJzNSj7JQ4YfjKXJ/7Rlp+3AsJ/ru+T4l
+	 JAU49CU3Zi2kXVP7sK7H0UrHMXg+GUbMRz9Fgbac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari.PrasathGE@microchip.com,
-	Mahesh.Abotula@microchip.com,
-	Marco.Cardellini@microchip.com,
-	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.13 436/443] spi: atmel-qspi: Memory barriers after memory-mapped I/O
-Date: Thu, 13 Feb 2025 15:30:01 +0100
-Message-ID: <20250213142457.442000921@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.13 437/443] x86/mm: Convert unreachable() to BUG()
+Date: Thu, 13 Feb 2025 15:30:02 +0100
+Message-ID: <20250213142457.480522628@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -47,94 +43,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bence Csókás <csokas.bence@prolan.hu>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit be92ab2de0ee1a13291c3b47b2d7eb24d80c0a2c upstream.
+commit 41a1e976623eb430f7b5a8619d3810b44e6235ad upstream.
 
-The QSPI peripheral control and status registers are
-accessible via the SoC's APB bus, whereas MMIO transactions'
-data travels on the AHB bus.
+Commit 2190966fbc14 ("x86: Convert unreachable() to BUG()") missed
+one.
 
-Microchip documentation and even sample code from Atmel
-emphasises the need for a memory barrier before the first
-MMIO transaction to the AHB-connected QSPI, and before the
-last write to its registers via APB. This is achieved by
-the following lines in `atmel_qspi_transfer()`:
+And after commit 06e24745985c ("objtool: Remove
+annotate_{,un}reachable()") the invalid use of unreachable()
+(rightfully) triggers warnings:
 
-	/* Dummy read of QSPI_IFR to synchronize APB and AHB accesses */
-	(void)atmel_qspi_read(aq, QSPI_IFR);
+  vmlinux.o: warning: objtool: page_fault_oops() falls through to next function is_prefetch()
 
-However, the current documentation makes no mention to
-synchronization requirements in the other direction, i.e.
-after the last data written via AHB, and before the first
-register access on APB.
-
-In our case, we were facing an issue where the QSPI peripheral
-would cease to send any new CSR (nCS Rise) interrupts,
-leading to a timeout in `atmel_qspi_wait_for_completion()`
-and ultimately this panic in higher levels:
-
-	ubi0 error: ubi_io_write: error -110 while writing 63108 bytes
- to PEB 491:128, written 63104 bytes
-
-After months of extensive research of the codebase, fiddling
-around the debugger with kgdb, and back-and-forth with
-Microchip, we came to the conclusion that the issue is
-probably that the peripheral is still busy receiving on AHB
-when the LASTXFER bit is written to its Control Register
-on APB, therefore this write gets lost, and the peripheral
-still thinks there is more data to come in the MMIO transfer.
-This was first formulated when we noticed that doubling the
-write() of QSPI_CR_LASTXFER seemed to solve the problem.
-
-Ultimately, the solution is to introduce memory barriers
-after the AHB-mapped MMIO transfers, to ensure ordering.
-
-Fixes: d5433def3153 ("mtd: spi-nor: atmel-quadspi: Add spi-mem support to atmel-quadspi")
-Cc: Hari.PrasathGE@microchip.com
-Cc: Mahesh.Abotula@microchip.com
-Cc: Marco.Cardellini@microchip.com
-Cc: stable@vger.kernel.org # c0a0203cf579: ("spi: atmel-quadspi: Create `atmel_qspi_ops`"...)
-Cc: stable@vger.kernel.org # 6.x.y
-Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
-Link: https://patch.msgid.link/20241219091258.395187-1-csokas.bence@prolan.hu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2190966fbc14 ("x86: Convert unreachable() to BUG()")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20241216093215.GD12338@noisy.programming.kicks-ass.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/atmel-quadspi.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ arch/x86/mm/fault.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/spi/atmel-quadspi.c
-+++ b/drivers/spi/atmel-quadspi.c
-@@ -454,13 +454,20 @@ static int atmel_qspi_transfer(struct sp
- 	(void)atmel_qspi_read(aq, QSPI_IFR);
+--- a/arch/x86/mm/fault.c
++++ b/arch/x86/mm/fault.c
+@@ -678,7 +678,7 @@ page_fault_oops(struct pt_regs *regs, un
+ 			      ASM_CALL_ARG3,
+ 			      , [arg1] "r" (regs), [arg2] "r" (address), [arg3] "r" (&info));
  
- 	/* Send/Receive data */
--	if (op->data.dir == SPI_MEM_DATA_IN)
-+	if (op->data.dir == SPI_MEM_DATA_IN) {
- 		memcpy_fromio(op->data.buf.in, aq->mem + offset,
- 			      op->data.nbytes);
--	else
-+
-+		/* Synchronize AHB and APB accesses again */
-+		rmb();
-+	} else {
- 		memcpy_toio(aq->mem + offset, op->data.buf.out,
- 			    op->data.nbytes);
- 
-+		/* Synchronize AHB and APB accesses again */
-+		wmb();
-+	}
-+
- 	/* Release the chip-select */
- 	atmel_qspi_write(QSPI_CR_LASTXFER, aq, QSPI_CR);
+-		unreachable();
++		BUG();
+ 	}
+ #endif
  
 
 
