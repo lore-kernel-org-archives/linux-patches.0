@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B3C70805;
-	Thu, 13 Feb 2025 15:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB36013C816;
+	Thu, 13 Feb 2025 15:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460623; cv=none; b=p/UMN3x2NshIYUVBhvFrSFe1/tpGexONiSdCwg+fdK/BgkIW19V/iZD/143jGjZNTOOXku9gZZX/LoMLT27Qzf6mvzvCJrdE7vs9OKBTRzXpw3vLjg4Zh8q4TZIBjHzxU4jSVfsJ6AdSVQgjeIAdHv94b32WwOKrbiXZirSABaQ=
+	t=1739460626; cv=none; b=dD2PqzuwQX6qUh8rBXGasfiWivbe74iVeXr32OtRm/crRHKOU2FnJFTrs6M8eWdD2A/4hu/6iKpPXsyIYNsVH6XTJiMmTnylg5opGTdj+Uk/kzK9zWsCK0QR/41d6QwoUPZvJBT+LLDdM6jTkS9DFQlNtKv8hZFWW/Y5QT6cqlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460623; c=relaxed/simple;
-	bh=dUHuv0oMt0oDVZN3tzlUmkWjz71irm425O+ZTF5DjPg=;
+	s=arc-20240116; t=1739460626; c=relaxed/simple;
+	bh=RTNt9kujLWPC3G33sZmBJFfMODZYKCnl+WSyk4wm9Lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AjyqY/BSCf3r/CyQXSkkNSn0BvmeOKsY75ZHBTWY2R7lzDiEOEWlb+SkqJzNal/j7MX7YzjD47JOU15ubDeCHXe/cZVaBmstJ81cxh6h3yl5q1nrQcgotjI57VVPz07qBkF2d95yTIPCxmdeNp1/C1ncORZfR34j9k11h8ORhm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayALFfUZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TpJeT+DJRa4ZA0+w+CPbNRYf/GbgyM48T23UZZNxitEuhIEk6t8N6idnUyGJCVgjWaYNSqT+sRoAu+RJLEaTwwovLxAKeeN2xEhjdkHura2h8/kO/PIVd77lR1wIMNLRDdaA6iDXSDf36vvOj7f++lzjlhbwI4zg3MqM9UMKqQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQ8Fv9H+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayALFfUZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61A54C4CED1;
-	Thu, 13 Feb 2025 15:30:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQ8Fv9H+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B25C4CEE4;
+	Thu, 13 Feb 2025 15:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460622;
-	bh=dUHuv0oMt0oDVZN3tzlUmkWjz71irm425O+ZTF5DjPg=;
+	s=korg; t=1739460625;
+	bh=RTNt9kujLWPC3G33sZmBJFfMODZYKCnl+WSyk4wm9Lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ayALFfUZOulcTF1QofSYJ0I85oQGwcG4yzuCjPjZi0qUHBTfb6jeqRZvaBK3Fk/jC
-	 M5I512VxN+cu1fUmmLD6yWI31Fg8HicFK1NWDrlqRMNVLLiJD82/Be3WulW2uJorBn
-	 CjfXvrasYTjw0kf09pnS2+JuAPQNEK7PjDq95CeM=
+	b=VQ8Fv9H+XQyMhGSlBVZnUlxIpsBWf7c1/owIiKzRDsx3sqDBSx+xBhjZCHRWRzSSr
+	 hS1ucoVK5XT8AQM/uqkwOdFmX00+q/+/F/m8tOoZGYSPYsa8XKsNIwGsMQZfjEZ8YD
+	 MgybIlD7Ov/tKV0N2QkgT39qGruChz8SKj9JKDiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Eric Biggers <ebiggers@google.com>,
+	stable@kernel.org,
+	Roman Kisel <romank@linux.microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Long Li <longli@microsoft.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 164/273] scsi: ufs: qcom: Fix crypto key eviction
-Date: Thu, 13 Feb 2025 15:28:56 +0100
-Message-ID: <20250213142413.814274286@linuxfoundation.org>
+Subject: [PATCH 6.6 165/273] scsi: storvsc: Set correct data length for sending SCSI command without payload
+Date: Thu, 13 Feb 2025 15:28:57 +0100
+Message-ID: <20250213142413.851967068@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -51,58 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Long Li <longli@microsoft.com>
 
-commit 7a0905caf5665be41094a6ceb5e9d2524de4627a upstream.
+commit 87c4b5e8a6b65189abd9ea5010ab308941f964a4 upstream.
 
-Commit 56541c7c4468 ("scsi: ufs: ufs-qcom: Switch to the new ICE API")
-introduced an incorrect check of the algorithm ID into the key eviction
-path, and thus qcom_ice_evict_key() is no longer ever called.  Fix it.
+In StorVSC, payload->range.len is used to indicate if this SCSI command
+carries payload. This data is allocated as part of the private driver data
+by the upper layer and may get passed to lower driver uninitialized.
 
-Fixes: 56541c7c4468 ("scsi: ufs: ufs-qcom: Switch to the new ICE API")
-Cc: stable@vger.kernel.org
-Cc: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20241210030839.1118805-1-ebiggers@kernel.org
+For example, the SCSI error handling mid layer may send TEST_UNIT_READY or
+REQUEST_SENSE while reusing the buffer from a failed command. The private
+data section may have stale data from the previous command.
+
+If the SCSI command doesn't carry payload, the driver may use this value as
+is for communicating with host, resulting in possible corruption.
+
+Fix this by always initializing this value.
+
+Fixes: be0cf6ca301c ("scsi: storvsc: Set the tablesize based on the information given by the host")
+Cc: stable@kernel.org
+Tested-by: Roman Kisel <romank@linux.microsoft.com>
+Reviewed-by: Roman Kisel <romank@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Long Li <longli@microsoft.com>
+Link: https://lore.kernel.org/r/1737601642-7759-1-git-send-email-longli@linuxonhyperv.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/ufs-qcom.c |   18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/scsi/storvsc_drv.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -158,8 +158,9 @@ static int ufs_qcom_ice_program_key(stru
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
- 	union ufs_crypto_cap_entry cap;
--	bool config_enable =
--		cfg->config_enable & UFS_CRYPTO_CONFIGURATION_ENABLE;
-+
-+	if (!(cfg->config_enable & UFS_CRYPTO_CONFIGURATION_ENABLE))
-+		return qcom_ice_evict_key(host->ice, slot);
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -1800,6 +1800,7 @@ static int storvsc_queuecommand(struct S
  
- 	/* Only AES-256-XTS has been tested so far. */
- 	cap = hba->crypto_cap_array[cfg->crypto_cap_idx];
-@@ -167,14 +168,11 @@ static int ufs_qcom_ice_program_key(stru
- 	    cap.key_size != UFS_CRYPTO_KEY_SIZE_256)
- 		return -EOPNOTSUPP;
+ 	length = scsi_bufflen(scmnd);
+ 	payload = (struct vmbus_packet_mpb_array *)&cmd_request->mpb;
++	payload->range.len = 0;
+ 	payload_sz = 0;
  
--	if (config_enable)
--		return qcom_ice_program_key(host->ice,
--					    QCOM_ICE_CRYPTO_ALG_AES_XTS,
--					    QCOM_ICE_CRYPTO_KEY_SIZE_256,
--					    cfg->crypto_key,
--					    cfg->data_unit_size, slot);
--	else
--		return qcom_ice_evict_key(host->ice, slot);
-+	return qcom_ice_program_key(host->ice,
-+				    QCOM_ICE_CRYPTO_ALG_AES_XTS,
-+				    QCOM_ICE_CRYPTO_KEY_SIZE_256,
-+				    cfg->crypto_key,
-+				    cfg->data_unit_size, slot);
- }
- 
- #else
+ 	if (scsi_sg_count(scmnd)) {
 
 
