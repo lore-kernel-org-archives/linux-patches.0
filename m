@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A707B23A9B5;
-	Thu, 13 Feb 2025 14:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7D523A9B5;
+	Thu, 13 Feb 2025 14:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457940; cv=none; b=gdA57ORb6CQ016LDLuDA6kwdC5ezDzU9EeCeejIGx6zSZWegdy5xL6mok+306b7bDlQ4HfkE9HXjsGez2D2uAGVRXl6PM8bquzbm1TVgK/cPkrok971DyMq4ZabnsSMaHoDPkBP3WbwFC/DiCj9mou+P1P06vqsDGONyv66qIow=
+	t=1739457944; cv=none; b=hs6PDiycFGBekjo+cvPH4tqND7vWXsI4iBFyFJ1Ned4cPR/ZmKaxopBJiwBj+NKuVn1QdN0FPuWdggsr7b0uydeOlOwPEPkfSsVKll6eM+Luvxc9eZ/R3xbaIDJtzEwWDkfxliaBbrzmm+0qgY+H+ZJYfvLOBlQoonLQOn/V6Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457940; c=relaxed/simple;
-	bh=oQeKm2chHVC3aRy3Vf/rUPx0xIV8Tky4CT18KCAjQJI=;
+	s=arc-20240116; t=1739457944; c=relaxed/simple;
+	bh=Do6HvGs0wJEOwnw4Lv2GCr0wkdVSzUEujPJioJdGKTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=urUqRN2EWZ53YMkxxcknM1khCqL9/0Jrn/4bCj1xVGjxLfKvNab38UC/29mSGwmzCEupalAbek0tUaLBtAQ7S7KMMqjD2nttVIDGI54z/FjRPXANmtM1eEBz8VauYnK5H+Vx/ifDPFqawK8GpyVVhWu1ekRYa4CXZwYtdEx1F7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJAXKonG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nLllZ55ZLtPCcrOYdpeJW7EdGCgONLuULloVkpYrvJVz9+y2nI16nZwbc2cmTZ5NAjhT+BsXGXwYBiEQ5nU/Xf1yZvGdLISreyImuMDY9MnQRPBLK8VY8tptkpqPZWzlIYjLwrWDjy9HqXPx9dVPRJxVABz4bVUv3ER0I42irD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=041vWTY5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJAXKonG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FF7C4CEEC;
-	Thu, 13 Feb 2025 14:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="041vWTY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75102C4CED1;
+	Thu, 13 Feb 2025 14:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457940;
-	bh=oQeKm2chHVC3aRy3Vf/rUPx0xIV8Tky4CT18KCAjQJI=;
+	s=korg; t=1739457944;
+	bh=Do6HvGs0wJEOwnw4Lv2GCr0wkdVSzUEujPJioJdGKTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJAXKonGZD6DSLEyvTw+q8dhKnkPdS3Ddju/ebnN7rJODNAENCYU1hddmjXYcP/7o
-	 ZQm+tVcFpmlRzK+Y7T2uLtojsMwvWGMPgSq66GkyzXbAHkqUx185WRkraIUXiFDkjK
-	 52Ex3BqVUsYXvtyd859gEUj0ekXcz2viLnDSMyXw=
+	b=041vWTY5moR7eOXtR0xskZA5GaRE7P4mrvYc5pGQ4r5KMaiIQoTFVOzJRhYgjmnCJ
+	 AJFCNYveqtBpRlFo0yIc9nHHXftxur44AKLzqx/FAnl8ACMM9KttTSV9LybFvfmgbT
+	 B6BQo+ZbZNAjI6T1V3aesACv/jnGuioT0CiC6LC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Bean Huo <beanhuo@micron.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 257/422] scsi: ufs: core: Fix use-after free in init error and remove paths
-Date: Thu, 13 Feb 2025 15:26:46 +0100
-Message-ID: <20250213142446.456731396@linuxfoundation.org>
+	WANG Xuerui <git@xen0n.name>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 231/422] LoongArch: Extend the maximum number of watchpoints
+Date: Thu, 13 Feb 2025 15:26:20 +0100
+Message-ID: <20250213142445.451149342@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -47,260 +46,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit f8fb2403ddebb5eea0033d90d9daae4c88749ada upstream.
+commit 531936dee53e471a3ec668de3c94ca357f54b7e8 upstream.
 
-devm_blk_crypto_profile_init() registers a cleanup handler to run when
-the associated (platform-) device is being released. For UFS, the
-crypto private data and pointers are stored as part of the ufs_hba's
-data structure 'struct ufs_hba::crypto_profile'. This structure is
-allocated as part of the underlying ufshcd and therefore Scsi_host
-allocation.
+The maximum number of load/store watchpoints and fetch instruction
+watchpoints is 14 each according to LoongArch Reference Manual, so
+extend the maximum number of watchpoints from 8 to 14 for ptrace.
 
-During driver release or during error handling in ufshcd_pltfrm_init(),
-this structure is released as part of ufshcd_dealloc_host() before the
-(platform-) device associated with the crypto call above is released.
-Once this device is released, the crypto cleanup code will run, using
-the just-released 'struct ufs_hba::crypto_profile'. This causes a
-use-after-free situation:
+By the way, just simply change 8 to 14 for the definition in struct
+user_watch_state at the beginning, but it may corrupt uapi, then add
+a new struct user_watch_state_v2 directly.
 
-  Call trace:
-   kfree+0x60/0x2d8 (P)
-   kvfree+0x44/0x60
-   blk_crypto_profile_destroy_callback+0x28/0x70
-   devm_action_release+0x1c/0x30
-   release_nodes+0x6c/0x108
-   devres_release_all+0x98/0x100
-   device_unbind_cleanup+0x20/0x70
-   really_probe+0x218/0x2d0
+As far as I can tell, the only users for this struct in the userspace
+are GDB and LLDB, there are no any problems of software compatibility
+between the application and kernel according to the analysis.
 
-In other words, the initialisation code flow is:
+The compatibility problem has been considered while developing and
+testing. When the applications in the userspace get watchpoint state,
+the length will be specified which is no bigger than the sizeof struct
+user_watch_state or user_watch_state_v2, the actual length is assigned
+as the minimal value of the application and kernel in the generic code
+of ptrace:
 
-  platform-device probe
-    ufshcd_pltfrm_init()
-      ufshcd_alloc_host()
-        scsi_host_alloc()
-          allocation of struct ufs_hba
-          creation of scsi-host devices
-    devm_blk_crypto_profile_init()
-      devm registration of cleanup handler using platform-device
+kernel/ptrace.c: ptrace_regset():
 
-and during error handling of ufshcd_pltfrm_init() or during driver
-removal:
+	kiov->iov_len = min(kiov->iov_len,
+			   (__kernel_size_t) (regset->n * regset->size));
 
-  ufshcd_dealloc_host()
-    scsi_host_put()
-      put_device(scsi-host)
-        release of struct ufs_hba
-  put_device(platform-device)
-    crypto cleanup handler
+	if (req == PTRACE_GETREGSET)
+		return copy_regset_to_user(task, view, regset_no, 0,
+					  kiov->iov_len, kiov->iov_base);
+	else
+		return copy_regset_from_user(task, view, regset_no, 0,
+					  kiov->iov_len, kiov->iov_base);
 
-To fix this use-after free, change ufshcd_alloc_host() to register a
-devres action to automatically cleanup the underlying SCSI device on
-ufshcd destruction, without requiring explicit calls to
-ufshcd_dealloc_host(). This way:
+For example, there are four kind of combinations, all of them work well.
 
-    * the crypto profile and all other ufs_hba-owned resources are
-      destroyed before SCSI (as they've been registered after)
-    * a memleak is plugged in tc-dwc-g210-pci.c remove() as a
-      side-effect
-    * EXPORT_SYMBOL_GPL(ufshcd_dealloc_host) can be removed fully as
-      it's not needed anymore
-    * no future drivers using ufshcd_alloc_host() could ever forget
-      adding the cleanup
+(1) "older kernel + older gdb", the actual length is 8+(8+8+4+4)*8=200;
+(2) "newer kernel + newer gdb", the actual length is 8+(8+8+4+4)*14=344;
+(3) "older kernel + newer gdb", the actual length is 8+(8+8+4+4)*8=200;
+(4) "newer kernel + older gdb", the actual length is 8+(8+8+4+4)*8=200.
 
-Fixes: cb77cb5abe1f ("blk-crypto: rename blk_keyslot_manager to blk_crypto_profile")
-Fixes: d76d9d7d1009 ("scsi: ufs: use devm_blk_ksm_init()")
+Link: https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.html#control-and-status-registers-related-to-watchpoints
 Cc: stable@vger.kernel.org
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://lore.kernel.org/r/20250124-ufshcd-fix-v4-1-c5d0144aae59@linaro.org
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Acked-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 1a69f7a161a7 ("LoongArch: ptrace: Expose hardware breakpoints to debuggers")
+Reviewed-by: WANG Xuerui <git@xen0n.name>
+Reviewed-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd.c        |   31 +++++++++++++++++++++----------
- drivers/ufs/host/ufshcd-pci.c    |    2 --
- drivers/ufs/host/ufshcd-pltfrm.c |   28 +++++++++-------------------
- include/ufs/ufshcd.h             |    1 -
- 4 files changed, 30 insertions(+), 32 deletions(-)
+ arch/loongarch/include/uapi/asm/ptrace.h |   10 ++++++++++
+ arch/loongarch/kernel/ptrace.c           |    6 +++---
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -10324,16 +10324,6 @@ EXPORT_SYMBOL_GPL(ufshcd_system_thaw);
- #endif /* CONFIG_PM_SLEEP  */
+--- a/arch/loongarch/include/uapi/asm/ptrace.h
++++ b/arch/loongarch/include/uapi/asm/ptrace.h
+@@ -72,6 +72,16 @@ struct user_watch_state {
+ 	} dbg_regs[8];
+ };
  
- /**
-- * ufshcd_dealloc_host - deallocate Host Bus Adapter (HBA)
-- * @hba: pointer to Host Bus Adapter (HBA)
-- */
--void ufshcd_dealloc_host(struct ufs_hba *hba)
--{
--	scsi_host_put(hba->host);
--}
--EXPORT_SYMBOL_GPL(ufshcd_dealloc_host);
--
--/**
-  * ufshcd_set_dma_mask - Set dma mask based on the controller
-  *			 addressing capability
-  * @hba: per adapter instance
-@@ -10352,11 +10342,25 @@ static int ufshcd_set_dma_mask(struct uf
- }
- 
- /**
-+ * ufshcd_devres_release - devres cleanup handler, invoked during release of
-+ *			   hba->dev
-+ * @host: pointer to SCSI host
-+ */
-+static void ufshcd_devres_release(void *host)
-+{
-+	scsi_host_put(host);
-+}
++struct user_watch_state_v2 {
++	uint64_t dbg_info;
++	struct {
++		uint64_t    addr;
++		uint64_t    mask;
++		uint32_t    ctrl;
++		uint32_t    pad;
++	} dbg_regs[14];
++};
 +
-+/**
-  * ufshcd_alloc_host - allocate Host Bus Adapter (HBA)
-  * @dev: pointer to device handle
-  * @hba_handle: driver private handle
-  *
-  * Return: 0 on success, non-zero value on failure.
-+ *
-+ * NOTE: There is no corresponding ufshcd_dealloc_host() because this function
-+ * keeps track of its allocations using devres and deallocates everything on
-+ * device removal automatically.
-  */
- int ufshcd_alloc_host(struct device *dev, struct ufs_hba **hba_handle)
- {
-@@ -10378,6 +10382,13 @@ int ufshcd_alloc_host(struct device *dev
- 		err = -ENOMEM;
- 		goto out_error;
- 	}
-+
-+	err = devm_add_action_or_reset(dev, ufshcd_devres_release,
-+				       host);
-+	if (err)
-+		return dev_err_probe(dev, err,
-+				     "failed to add ufshcd dealloc action\n");
-+
- 	host->nr_maps = HCTX_TYPE_POLL + 1;
- 	hba = shost_priv(host);
- 	hba->host = host;
---- a/drivers/ufs/host/ufshcd-pci.c
-+++ b/drivers/ufs/host/ufshcd-pci.c
-@@ -562,7 +562,6 @@ static void ufshcd_pci_remove(struct pci
- 	pm_runtime_forbid(&pdev->dev);
- 	pm_runtime_get_noresume(&pdev->dev);
- 	ufshcd_remove(hba);
--	ufshcd_dealloc_host(hba);
- }
+ #define PTRACE_SYSEMU			0x1f
+ #define PTRACE_SYSEMU_SINGLESTEP	0x20
  
- /**
-@@ -607,7 +606,6 @@ ufshcd_pci_probe(struct pci_dev *pdev, c
- 	err = ufshcd_init(hba, mmio_base, pdev->irq);
- 	if (err) {
- 		dev_err(&pdev->dev, "Initialization failed\n");
--		ufshcd_dealloc_host(hba);
- 		return err;
- 	}
+--- a/arch/loongarch/kernel/ptrace.c
++++ b/arch/loongarch/kernel/ptrace.c
+@@ -720,7 +720,7 @@ static int hw_break_set(struct task_stru
+ 	unsigned int note_type = regset->core_note_type;
  
---- a/drivers/ufs/host/ufshcd-pltfrm.c
-+++ b/drivers/ufs/host/ufshcd-pltfrm.c
-@@ -465,21 +465,17 @@ int ufshcd_pltfrm_init(struct platform_d
- 	struct device *dev = &pdev->dev;
+ 	/* Resource info */
+-	offset = offsetof(struct user_watch_state, dbg_regs);
++	offset = offsetof(struct user_watch_state_v2, dbg_regs);
+ 	user_regset_copyin_ignore(&pos, &count, &kbuf, &ubuf, 0, offset);
  
- 	mmio_base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(mmio_base)) {
--		err = PTR_ERR(mmio_base);
--		goto out;
--	}
-+	if (IS_ERR(mmio_base))
-+		return PTR_ERR(mmio_base);
- 
- 	irq = platform_get_irq(pdev, 0);
--	if (irq < 0) {
--		err = irq;
--		goto out;
--	}
-+	if (irq < 0)
-+		return irq;
- 
- 	err = ufshcd_alloc_host(dev, &hba);
- 	if (err) {
- 		dev_err(dev, "Allocation failed\n");
--		goto out;
-+		return err;
- 	}
- 
- 	hba->vops = vops;
-@@ -488,13 +484,13 @@ int ufshcd_pltfrm_init(struct platform_d
- 	if (err) {
- 		dev_err(dev, "%s: clock parse failed %d\n",
- 				__func__, err);
--		goto dealloc_host;
-+		return err;
- 	}
- 	err = ufshcd_parse_regulator_info(hba);
- 	if (err) {
- 		dev_err(dev, "%s: regulator init failed %d\n",
- 				__func__, err);
--		goto dealloc_host;
-+		return err;
- 	}
- 
- 	ufshcd_init_lanes_per_dir(hba);
-@@ -502,25 +498,20 @@ int ufshcd_pltfrm_init(struct platform_d
- 	err = ufshcd_parse_operating_points(hba);
- 	if (err) {
- 		dev_err(dev, "%s: OPP parse failed %d\n", __func__, err);
--		goto dealloc_host;
-+		return err;
- 	}
- 
- 	err = ufshcd_init(hba, mmio_base, irq);
- 	if (err) {
- 		dev_err_probe(dev, err, "Initialization failed with error %d\n",
- 			      err);
--		goto dealloc_host;
-+		return err;
- 	}
- 
- 	pm_runtime_set_active(dev);
- 	pm_runtime_enable(dev);
- 
- 	return 0;
--
--dealloc_host:
--	ufshcd_dealloc_host(hba);
--out:
--	return err;
- }
- EXPORT_SYMBOL_GPL(ufshcd_pltfrm_init);
- 
-@@ -534,7 +525,6 @@ void ufshcd_pltfrm_remove(struct platfor
- 
- 	pm_runtime_get_sync(&pdev->dev);
- 	ufshcd_remove(hba);
--	ufshcd_dealloc_host(hba);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_put_noidle(&pdev->dev);
- }
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -1297,7 +1297,6 @@ static inline void ufshcd_rmwl(struct uf
- void ufshcd_enable_irq(struct ufs_hba *hba);
- void ufshcd_disable_irq(struct ufs_hba *hba);
- int ufshcd_alloc_host(struct device *, struct ufs_hba **);
--void ufshcd_dealloc_host(struct ufs_hba *);
- int ufshcd_hba_enable(struct ufs_hba *hba);
- int ufshcd_init(struct ufs_hba *, void __iomem *, unsigned int);
- int ufshcd_link_recovery(struct ufs_hba *hba);
+ 	/* (address, mask, ctrl) registers */
+@@ -920,7 +920,7 @@ static const struct user_regset loongarc
+ #ifdef CONFIG_HAVE_HW_BREAKPOINT
+ 	[REGSET_HW_BREAK] = {
+ 		.core_note_type = NT_LOONGARCH_HW_BREAK,
+-		.n = sizeof(struct user_watch_state) / sizeof(u32),
++		.n = sizeof(struct user_watch_state_v2) / sizeof(u32),
+ 		.size = sizeof(u32),
+ 		.align = sizeof(u32),
+ 		.regset_get = hw_break_get,
+@@ -928,7 +928,7 @@ static const struct user_regset loongarc
+ 	},
+ 	[REGSET_HW_WATCH] = {
+ 		.core_note_type = NT_LOONGARCH_HW_WATCH,
+-		.n = sizeof(struct user_watch_state) / sizeof(u32),
++		.n = sizeof(struct user_watch_state_v2) / sizeof(u32),
+ 		.size = sizeof(u32),
+ 		.align = sizeof(u32),
+ 		.regset_get = hw_break_get,
 
 
