@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5918B156F41;
-	Thu, 13 Feb 2025 15:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40EA26B087;
+	Thu, 13 Feb 2025 15:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460962; cv=none; b=nC7IMzSk6wJVVqXGNppYmeDtw4DiV6Jj266JRc9oN5Sr4gjKb+GAGLY0CZreJ6LJmMvNUqKyzeat5LA4anlX/dj1Nb5by8izWTuChhftQ5k6o5Q+sMzBg2/nML3Xk7lcdLbmQe5k2ANaEoXzMGlAVJZgtlsKRmjwZR0ejUfnjaM=
+	t=1739460965; cv=none; b=VyFOtRIl+xrjwTsQH1Yc3FAprpR1x0M0I0LaEoRrx9Brui9zTo47EkndVl0r8eqo6jhGsbAL2IWRldmjTpxErSr5BJ1d2Lxwv47g7D7v+cAXxmTPRWL2M7Us9/kR6jHQXoTHdaXJ0S6PhVxBJXnBr404AVbUMh/0YMUUFaFThug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460962; c=relaxed/simple;
-	bh=AJ2sWpKC1w2zu9D3CceAOcwz9nMIlGnoJ8URLyls+cs=;
+	s=arc-20240116; t=1739460965; c=relaxed/simple;
+	bh=b8k09CxqF+nDxO98VD/quayxsuMPSU5L/d+U2mA4Ui4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IYsGgxF1VfGXldvs1t+b33l11aT6mYkeXhvS+jipSU8FkkYLJOHZWBsaRROnUpI3k7yEwocrdkEamIHquBpHgpkVyL3L4YcvY+CqCsPsCG5ly6pjEfgDbkIioVtVIxQ9DDIISY6T+7/0rKzGerRVW8XlJfbsf+TSNXaRTYppK8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=daKXWSgB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hIAMNjFsib/bxR/lTmvehXeBR6a+QaII8XD9Hoqh0wp9b5gRqo8pN86nvJBnXnRucPRAJIBhiIny33XifV9Axoex4ixfhiPy13mFYqfsQiEarwdUMs0gfAZI6FPDn3eiIJwO/LL+83QxFBY63LvAgeeFGEMN6QrelVZgBGV/xHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moXBBfbq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="daKXWSgB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E83C4CED1;
-	Thu, 13 Feb 2025 15:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moXBBfbq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22037C4CED1;
+	Thu, 13 Feb 2025 15:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460962;
-	bh=AJ2sWpKC1w2zu9D3CceAOcwz9nMIlGnoJ8URLyls+cs=;
+	s=korg; t=1739460965;
+	bh=b8k09CxqF+nDxO98VD/quayxsuMPSU5L/d+U2mA4Ui4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=daKXWSgB9xdLKtjRdTp8XAzJvvT5N+ayk/6ceKA2/Zcx3MmdiAodYUikaMtCZ6pn2
-	 WgFP2tJULFXlq20Xy2Xnp0Lnv1n7kb0R9ffwfGqUKJmLvutQeQzfBLR4pHTVAbdFcZ
-	 a9f9pJ5TA5657itheRDX5G2IY/amBALV113xfejg=
+	b=moXBBfbqCr4lTgqcdiyvSsJ+MerahnIvCtnxOZLa3lPLnum8vJg/TitGiKZy3atgc
+	 dv/uuQ0jxLx4bPIuAB0pBILTF/fPXYbifl6RGf54LTtlVxM76ZXG1UgmuaJhk7LCzJ
+	 +l/Pqwjt+hm6u7ue/zQ6GwNM5McwrRsA/lSnT+V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari.PrasathGE@microchip.com,
-	Mahesh.Abotula@microchip.com,
-	Marco.Cardellini@microchip.com,
-	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 261/273] spi: atmel-qspi: Memory barriers after memory-mapped I/O
-Date: Thu, 13 Feb 2025 15:30:33 +0100
-Message-ID: <20250213142417.732806851@linuxfoundation.org>
+	Paul Fertser <fercerpav@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 262/273] net/ncsi: use dev_set_mac_address() for Get MC MAC Address handling
+Date: Thu, 13 Feb 2025 15:30:34 +0100
+Message-ID: <20250213142417.772312512@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -47,94 +44,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bence Csókás <csokas.bence@prolan.hu>
+From: Paul Fertser <fercerpav@gmail.com>
 
-commit be92ab2de0ee1a13291c3b47b2d7eb24d80c0a2c upstream.
+commit 05d91cdb1f9108426b14975ef4eeddf15875ca05 upstream.
 
-The QSPI peripheral control and status registers are
-accessible via the SoC's APB bus, whereas MMIO transactions'
-data travels on the AHB bus.
+Copy of the rationale from 790071347a0a1a89e618eedcd51c687ea783aeb3:
 
-Microchip documentation and even sample code from Atmel
-emphasises the need for a memory barrier before the first
-MMIO transaction to the AHB-connected QSPI, and before the
-last write to its registers via APB. This is achieved by
-the following lines in `atmel_qspi_transfer()`:
+Change ndo_set_mac_address to dev_set_mac_address because
+dev_set_mac_address provides a way to notify network layer about MAC
+change. In other case, services may not aware about MAC change and keep
+using old one which set from network adapter driver.
 
-	/* Dummy read of QSPI_IFR to synchronize APB and AHB accesses */
-	(void)atmel_qspi_read(aq, QSPI_IFR);
+As example, DHCP client from systemd do not update MAC address without
+notification from net subsystem which leads to the problem with acquiring
+the right address from DHCP server.
 
-However, the current documentation makes no mention to
-synchronization requirements in the other direction, i.e.
-after the last data written via AHB, and before the first
-register access on APB.
+Since dev_set_mac_address requires RTNL lock the operation can not be
+performed directly in the response handler, see
+9e2bbab94b88295dcc57c7580393c9ee08d7314d.
 
-In our case, we were facing an issue where the QSPI peripheral
-would cease to send any new CSR (nCS Rise) interrupts,
-leading to a timeout in `atmel_qspi_wait_for_completion()`
-and ultimately this panic in higher levels:
+The way of selecting the first suitable MAC address from the list is
+changed, instead of having the driver check it this patch just assumes
+any valid MAC should be good.
 
-	ubi0 error: ubi_io_write: error -110 while writing 63108 bytes
- to PEB 491:128, written 63104 bytes
-
-After months of extensive research of the codebase, fiddling
-around the debugger with kgdb, and back-and-forth with
-Microchip, we came to the conclusion that the issue is
-probably that the peripheral is still busy receiving on AHB
-when the LASTXFER bit is written to its Control Register
-on APB, therefore this write gets lost, and the peripheral
-still thinks there is more data to come in the MMIO transfer.
-This was first formulated when we noticed that doubling the
-write() of QSPI_CR_LASTXFER seemed to solve the problem.
-
-Ultimately, the solution is to introduce memory barriers
-after the AHB-mapped MMIO transfers, to ensure ordering.
-
-Fixes: d5433def3153 ("mtd: spi-nor: atmel-quadspi: Add spi-mem support to atmel-quadspi")
-Cc: Hari.PrasathGE@microchip.com
-Cc: Mahesh.Abotula@microchip.com
-Cc: Marco.Cardellini@microchip.com
-Cc: stable@vger.kernel.org # c0a0203cf579: ("spi: atmel-quadspi: Create `atmel_qspi_ops`"...)
-Cc: stable@vger.kernel.org # 6.x.y
-Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
-Link: https://patch.msgid.link/20241219091258.395187-1-csokas.bence@prolan.hu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b8291cf3d118 ("net/ncsi: Add NC-SI 1.2 Get MC MAC Address command")
+Signed-off-by: Paul Fertser <fercerpav@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/atmel-quadspi.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/ncsi/ncsi-rsp.c |   18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
---- a/drivers/spi/atmel-quadspi.c
-+++ b/drivers/spi/atmel-quadspi.c
-@@ -454,13 +454,20 @@ static int atmel_qspi_transfer(struct sp
- 	(void)atmel_qspi_read(aq, QSPI_IFR);
+--- a/net/ncsi/ncsi-rsp.c
++++ b/net/ncsi/ncsi-rsp.c
+@@ -1089,14 +1089,12 @@ static int ncsi_rsp_handler_netlink(stru
+ static int ncsi_rsp_handler_gmcma(struct ncsi_request *nr)
+ {
+ 	struct ncsi_dev_priv *ndp = nr->ndp;
++	struct sockaddr *saddr = &ndp->pending_mac;
+ 	struct net_device *ndev = ndp->ndev.dev;
+ 	struct ncsi_rsp_gmcma_pkt *rsp;
+-	struct sockaddr saddr;
+-	int ret = -1;
+ 	int i;
  
- 	/* Send/Receive data */
--	if (op->data.dir == SPI_MEM_DATA_IN)
-+	if (op->data.dir == SPI_MEM_DATA_IN) {
- 		memcpy_fromio(op->data.buf.in, aq->mem + offset,
- 			      op->data.nbytes);
--	else
-+
-+		/* Synchronize AHB and APB accesses again */
-+		rmb();
-+	} else {
- 		memcpy_toio(aq->mem + offset, op->data.buf.out,
- 			    op->data.nbytes);
+ 	rsp = (struct ncsi_rsp_gmcma_pkt *)skb_network_header(nr->rsp);
+-	saddr.sa_family = ndev->type;
+ 	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
  
-+		/* Synchronize AHB and APB accesses again */
-+		wmb();
-+	}
-+
- 	/* Release the chip-select */
- 	atmel_qspi_write(QSPI_CR_LASTXFER, aq, QSPI_CR);
+ 	netdev_info(ndev, "NCSI: Received %d provisioned MAC addresses\n",
+@@ -1108,20 +1106,20 @@ static int ncsi_rsp_handler_gmcma(struct
+ 			    rsp->addresses[i][4], rsp->addresses[i][5]);
+ 	}
  
++	saddr->sa_family = ndev->type;
+ 	for (i = 0; i < rsp->address_count; i++) {
+-		memcpy(saddr.sa_data, &rsp->addresses[i], ETH_ALEN);
+-		ret = ndev->netdev_ops->ndo_set_mac_address(ndev, &saddr);
+-		if (ret < 0) {
++		if (!is_valid_ether_addr(rsp->addresses[i])) {
+ 			netdev_warn(ndev, "NCSI: Unable to assign %pM to device\n",
+-				    saddr.sa_data);
++				    rsp->addresses[i]);
+ 			continue;
+ 		}
+-		netdev_warn(ndev, "NCSI: Set MAC address to %pM\n", saddr.sa_data);
++		memcpy(saddr->sa_data, rsp->addresses[i], ETH_ALEN);
++		netdev_warn(ndev, "NCSI: Will set MAC address to %pM\n", saddr->sa_data);
+ 		break;
+ 	}
+ 
+-	ndp->gma_flag = ret == 0;
+-	return ret;
++	ndp->gma_flag = 1;
++	return 0;
+ }
+ 
+ static struct ncsi_rsp_handler {
 
 
