@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC90281349;
-	Thu, 13 Feb 2025 14:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD8338389;
+	Thu, 13 Feb 2025 14:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457704; cv=none; b=M2Baai5x7Vg5t1yLKPkHEMqDTCvkBNLXfX2ppEnjzmC0LII5viz1axVO5pauIXpFVfiDwqD5VjxJP5jDY6oa8pxtILK+bzAH4zHA8D8uQKKasVAW8I6NNlCtwTeqAHN3tbZfaU5wPN0etCCKGcCs3ozBASpd1p3ORPHvfGRCCSY=
+	t=1739457707; cv=none; b=DufXazwqgp4mcMmO/U9yyhVOn8KUWXnMV7NORMwBwvjjs04BPayiATrq82uY+jKCVrhgX+4+M0NZnKE+51SeV+7m0o98zJsN/z2Bffc10LQpYqq/UJ4/ud9bMQMrHjj4OALdRulhwInRu05a7c+CbuF5z1CEzB30uwNEEs1nP+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457704; c=relaxed/simple;
-	bh=MQIUSg3pG3sGAC1U803Z5TPEVxgwP8quqTIe0CHfHzI=;
+	s=arc-20240116; t=1739457707; c=relaxed/simple;
+	bh=N4lKFpxBYlYcZhOz+PqE5lHhGLoqwI7hoBKWldB6Obw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHZfat+tISnYrirAbxIeBfwrh2N0Yt7to5B1L6HPc8BtePiWUSyJ1K+8vkPWX5Sax7WZdf5UZBFx/FyYwGBk9d8gA19qitQm7xj2O2TyGf24tJaz7mf+3fpimerf/npvmtIeVbat1PehlOwnBWmbZDAVwL4KZAieiVB4fXwsd68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRzFHZbU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ASSbYCZhIcOsV0N/2JPpE6Jq11z+sW0qtj/8E4sKfnDE2v5CnaV+PAWkbFkEBLlC+bkI8A/LOA6ZZUgPuEyzsP1MxcClZvURow5OLoPgpuMGTY2rhnfS2n2mKQQoSypUwr2GQjOfP7Np1Li4YxoQXhggQo/ZY+r6LmlSb5hqrS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgE3cElu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRzFHZbU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F519C4CED1;
-	Thu, 13 Feb 2025 14:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgE3cElu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFDEC4CED1;
+	Thu, 13 Feb 2025 14:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457703;
-	bh=MQIUSg3pG3sGAC1U803Z5TPEVxgwP8quqTIe0CHfHzI=;
+	s=korg; t=1739457707;
+	bh=N4lKFpxBYlYcZhOz+PqE5lHhGLoqwI7hoBKWldB6Obw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRzFHZbUB9WGpqVr8nFQFIQnNc61IZ4iXSKTKdjQPPZ01IGWyGNpDkSmD8QHr7DYX
-	 iIenEPzuTDnEXpZkk5leDZuwRK1nBdKw8+gth+qitu/ZI6JrgKCL0ZtXMMc3H1zg/a
-	 u+9AURjIvbRl4xTSGQwsuc0MyGWrXgPWrn1eZlfQ=
+	b=ZgE3cElufKTXbQ0DVF10R4O7iao9pcExQyo30iEhU9jXBv9YEGqde8JXmCBDRigFW
+	 p7UTI2FGNR8w5owr3v3ExF0otKtabHB42+oW79LlohcTFOJ8v1ZBq/nGyn7pCcxlLO
+	 ccUVNl3u9hGdQKqBXMU8sSBToM2GApibEgilWf6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.12 188/422] clk: mediatek: mt2701-mm: add missing dummy clk
-Date: Thu, 13 Feb 2025 15:25:37 +0100
-Message-ID: <20250213142443.801508858@linuxfoundation.org>
+	Rafael Buchbinder <rafi@rbk.io>,
+	Eyal Birger <eyal.birger@gmail.com>,
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH 6.12 189/422] seccomp: passthrough uretprobe systemcall without filtering
+Date: Thu, 13 Feb 2025 15:25:38 +0100
+Message-ID: <20250213142443.840424031@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,34 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Eyal Birger <eyal.birger@gmail.com>
 
-commit 67aea188f23a5dde51c31a720ccf66aed0ce4187 upstream.
+commit cf6cb56ef24410fb5308f9655087f1eddf4452e6 upstream.
 
-Add dummy clk which was missed during the conversion to
-mtk_clk_pdev_probe() and is required for the existing DT bindings to
-keep working.
+When attaching uretprobes to processes running inside docker, the attached
+process is segfaulted when encountering the retprobe.
 
-Fixes: 65c10c50c9c7 ("clk: mediatek: Migrate to mtk_clk_pdev_probe() for multimedia clocks")
+The reason is that now that uretprobe is a system call the default seccomp
+filters in docker block it as they only allow a specific set of known
+syscalls. This is true for other userspace applications which use seccomp
+to control their syscall surface.
+
+Since uretprobe is a "kernel implementation detail" system call which is
+not used by userspace application code directly, it is impractical and
+there's very little point in forcing all userspace applications to
+explicitly allow it in order to avoid crashing tracked processes.
+
+Pass this systemcall through seccomp without depending on configuration.
+
+Note: uretprobe is currently only x86_64 and isn't expected to ever be
+supported in i386.
+
+Fixes: ff474a78cef5 ("uprobe: Add uretprobe syscall to speed up return probe")
+Reported-by: Rafael Buchbinder <rafi@rbk.io>
+Closes: https://lore.kernel.org/lkml/CAHsH6Gs3Eh8DFU0wq58c_LF8A4_+o6z456J7BidmcVY2AqOnHQ@mail.gmail.com/
+Link: https://lore.kernel.org/lkml/20250121182939.33d05470@gandalf.local.home/T/#me2676c378eff2d6a33f3054fed4a5f3afa64e65b
+Link: https://lore.kernel.org/lkml/20250128145806.1849977-1-eyal.birger@gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://lore.kernel.org/r/9de23440fcba1ffef9e77d58c9f505105e57a250.1734300668.git.daniel@makrotopia.org
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Eyal Birger <eyal.birger@gmail.com>
+Link: https://lore.kernel.org/r/20250202162921.335813-2-eyal.birger@gmail.com
+[kees: minimized changes for easier backporting, tweaked commit log]
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/mediatek/clk-mt2701-mm.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/seccomp.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/clk/mediatek/clk-mt2701-mm.c
-+++ b/drivers/clk/mediatek/clk-mt2701-mm.c
-@@ -31,6 +31,7 @@ static const struct mtk_gate_regs disp1_
- 	GATE_MTK(_id, _name, _parent, &disp1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
+--- a/kernel/seccomp.c
++++ b/kernel/seccomp.c
+@@ -749,6 +749,15 @@ static bool seccomp_is_const_allow(struc
+ 	if (WARN_ON_ONCE(!fprog))
+ 		return false;
  
- static const struct mtk_gate mm_clks[] = {
-+	GATE_DUMMY(CLK_DUMMY, "mm_dummy"),
- 	GATE_DISP0(CLK_MM_SMI_COMMON, "mm_smi_comm", "mm_sel", 0),
- 	GATE_DISP0(CLK_MM_SMI_LARB0, "mm_smi_larb0", "mm_sel", 1),
- 	GATE_DISP0(CLK_MM_CMDQ, "mm_cmdq", "mm_sel", 2),
++	/* Our single exception to filtering. */
++#ifdef __NR_uretprobe
++#ifdef SECCOMP_ARCH_COMPAT
++	if (sd->arch == SECCOMP_ARCH_NATIVE)
++#endif
++		if (sd->nr == __NR_uretprobe)
++			return true;
++#endif
++
+ 	for (pc = 0; pc < fprog->len; pc++) {
+ 		struct sock_filter *insn = &fprog->filter[pc];
+ 		u16 code = insn->code;
+@@ -1023,6 +1032,9 @@ static inline void seccomp_log(unsigned
+  */
+ static const int mode1_syscalls[] = {
+ 	__NR_seccomp_read, __NR_seccomp_write, __NR_seccomp_exit, __NR_seccomp_sigreturn,
++#ifdef __NR_uretprobe
++	__NR_uretprobe,
++#endif
+ 	-1, /* negative terminated */
+ };
+ 
 
 
