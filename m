@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF611AA786;
-	Thu, 13 Feb 2025 15:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B45114A605;
+	Thu, 13 Feb 2025 15:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460786; cv=none; b=i61WwvkhChjPhPdDQz1dDm59/e9pMG8Rh32a8fP46Ff7s9FFOr1KBtBLuzOw+sofpSVDx05SFuuD5oFokVSps6CD2kz3o1C68neU7leuBEeEJdNp+bc9gXpLStW92iQyoHE/JUpGRZn1AWwlZuHK8sO7UHyPfN/6vdQB8JG8Q7U=
+	t=1739460790; cv=none; b=XQIehoQaTujjbTAgetfU3zKchuaVVCe7RRI0ifZbyrsqDL5tLJa3m4ZqDlkGumVAHBzhgUkDjA3NaVGma7KPAVifJI+zmUdvqTYxBrqEpTq7x2iSy+y8giUPe0ke63CpmpdjUQS1xu+bclTbd8g9QplfpG19rHAPdwQcsVY728Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460786; c=relaxed/simple;
-	bh=8a/aTu59Z27RVY+PTegsNRZIUEV+4JQgHKqEf6GOKiA=;
+	s=arc-20240116; t=1739460790; c=relaxed/simple;
+	bh=nHRkZadxVT+ieH4bI0VfRdu5UYxSerubTGv//g6kRiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s3J2q4HTLS6h6I2BDcT+YLCqE1C1MtMgwf8unHR+tDD16MOuxemupw6yFU4PE28cE7+MMSdNvo3k+UNIcxGy5lGqAUZJ+ktuxuhlvResQx3pMlchEfOyQYkLtQR6Wg4lPxC7QHC1HzwWm0k5A5KtRWRJH6JEbsMkZeuoTQPHR+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rA/QDwsI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXl0yX2f6II4SjExW288hDWLg7qcxZA/LpomFSLGCngECku/4i8acDMek/BhAmFm2m5rFurTWYjHBC5odh1ypVNUR8F9JLigjLl/mcJuh0ckdorM8bxqtoMZyS9v/LBMU2/MQ6TUzsaolUrOqiWJ3qfmYduOwUTzgBC2CmTAQxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZYhEXzIN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rA/QDwsI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086D5C4CEE7;
-	Thu, 13 Feb 2025 15:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYhEXzIN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB71C4CEE4;
+	Thu, 13 Feb 2025 15:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460786;
-	bh=8a/aTu59Z27RVY+PTegsNRZIUEV+4JQgHKqEf6GOKiA=;
+	s=korg; t=1739460790;
+	bh=nHRkZadxVT+ieH4bI0VfRdu5UYxSerubTGv//g6kRiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rA/QDwsIsKcMDIuwDd81BbIoMKdk5hjVm4LXzbwR1OBla4cezmMNnlnlvRgZYjXFj
-	 uc6mdv+rfuIVoLyJ+p91HCuC32t1e/DKD49P2MHMAA6a01g4mpnECu6uchWpcEEcxQ
-	 SqCdLGp/y7pEOY9FgouCYfOyoJhXoCwSchjyDDjk=
+	b=ZYhEXzINe3BNpGXcf0SzvhvXm4p0FXkOi77Tld4DTFykNksJkbGd/EraXLp9bjqY4
+	 Wo4JDt7xqfo4Dpc9puJofzDrQnALKmG7JgfWCM0mKR0yGafkVYXkglpV75b7DfBZGR
+	 R6i+nDbW/gjj5mc8iFrHqg/CFDQuZOzkXdcxOYUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Ricardo Ribalda <ribalda@chromium.org>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.6 213/273] media: uvcvideo: Fix crash during unbind if gpio unit is in use
-Date: Thu, 13 Feb 2025 15:29:45 +0100
-Message-ID: <20250213142415.733329991@linuxfoundation.org>
+Subject: [PATCH 6.6 214/273] media: uvcvideo: Fix event flags in uvc_ctrl_send_events
+Date: Thu, 13 Feb 2025 15:29:46 +0100
+Message-ID: <20250213142415.770802346@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -54,109 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit a9ea1a3d88b7947ce8cadb2afceee7a54872bbc5 upstream.
+commit c31cffd5ae2c3d7ef21d9008977a9d117ce7a64e upstream.
 
-We used the wrong device for the device managed functions. We used the
-usb device, when we should be using the interface device.
+If there is an event that needs the V4L2_EVENT_CTRL_CH_FLAGS flag, all
+the following events will have that flag, regardless if they need it or
+not.
 
-If we unbind the driver from the usb interface, the cleanup functions
-are never called. In our case, the IRQ is never disabled.
-
-If an IRQ is triggered, it will try to access memory sections that are
-already free, causing an OOPS.
-
-We cannot use the function devm_request_threaded_irq here. The devm_*
-clean functions may be called after the main structure is released by
-uvc_delete.
-
-Luckily this bug has small impact, as it is only affected by devices
-with gpio units and the user has to unbind the device, a disconnect will
-not trigger this error.
+This is because we keep using the same variable all the time and we do
+not reset its original value.
 
 Cc: stable@vger.kernel.org
-Fixes: 2886477ff987 ("media: uvcvideo: Implement UVC_EXT_GPIO_UNIT")
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Fixes: 805e9b4a06bf ("[media] uvcvideo: Send control change events for slave ctrls when the master changes")
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20241106-uvc-crashrmmod-v6-1-fbf9781c6e83@chromium.org
+Link: https://lore.kernel.org/r/20241114-uvc-roi-v15-1-64cfeb56b6f8@chromium.org
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c |   28 +++++++++++++++++++++-------
- drivers/media/usb/uvc/uvcvideo.h   |    1 +
- 2 files changed, 22 insertions(+), 7 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -1280,14 +1280,14 @@ static int uvc_gpio_parse(struct uvc_dev
- 	struct gpio_desc *gpio_privacy;
- 	int irq;
- 
--	gpio_privacy = devm_gpiod_get_optional(&dev->udev->dev, "privacy",
-+	gpio_privacy = devm_gpiod_get_optional(&dev->intf->dev, "privacy",
- 					       GPIOD_IN);
- 	if (IS_ERR_OR_NULL(gpio_privacy))
- 		return PTR_ERR_OR_ZERO(gpio_privacy);
- 
- 	irq = gpiod_to_irq(gpio_privacy);
- 	if (irq < 0)
--		return dev_err_probe(&dev->udev->dev, irq,
-+		return dev_err_probe(&dev->intf->dev, irq,
- 				     "No IRQ for privacy GPIO\n");
- 
- 	unit = uvc_alloc_entity(UVC_EXT_GPIO_UNIT, UVC_EXT_GPIO_UNIT_ID, 0, 1);
-@@ -1313,15 +1313,27 @@ static int uvc_gpio_parse(struct uvc_dev
- static int uvc_gpio_init_irq(struct uvc_device *dev)
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1626,13 +1626,13 @@ static void uvc_ctrl_send_events(struct
  {
- 	struct uvc_entity *unit = dev->gpio_unit;
-+	int ret;
+ 	struct uvc_control_mapping *mapping;
+ 	struct uvc_control *ctrl;
+-	u32 changes = V4L2_EVENT_CTRL_CH_VALUE;
+ 	unsigned int i;
+ 	unsigned int j;
  
- 	if (!unit || unit->gpio.irq < 0)
- 		return 0;
+ 	for (i = 0; i < xctrls_count; ++i) {
+-		ctrl = uvc_find_control(handle->chain, xctrls[i].id, &mapping);
++		u32 changes = V4L2_EVENT_CTRL_CH_VALUE;
  
--	return devm_request_threaded_irq(&dev->udev->dev, unit->gpio.irq, NULL,
--					 uvc_gpio_irq,
--					 IRQF_ONESHOT | IRQF_TRIGGER_FALLING |
--					 IRQF_TRIGGER_RISING,
--					 "uvc_privacy_gpio", dev);
-+	ret = request_threaded_irq(unit->gpio.irq, NULL, uvc_gpio_irq,
-+				   IRQF_ONESHOT | IRQF_TRIGGER_FALLING |
-+				   IRQF_TRIGGER_RISING,
-+				   "uvc_privacy_gpio", dev);
-+
-+	unit->gpio.initialized = !ret;
-+
-+	return ret;
-+}
-+
-+static void uvc_gpio_deinit(struct uvc_device *dev)
-+{
-+	if (!dev->gpio_unit || !dev->gpio_unit->gpio.initialized)
-+		return;
-+
-+	free_irq(dev->gpio_unit->gpio.irq, dev);
- }
- 
- /* ------------------------------------------------------------------------
-@@ -1918,6 +1930,8 @@ static void uvc_unregister_video(struct
- {
- 	struct uvc_streaming *stream;
- 
-+	uvc_gpio_deinit(dev);
-+
- 	list_for_each_entry(stream, &dev->streams, list) {
- 		/* Nothing to do here, continue. */
- 		if (!video_is_registered(&stream->vdev))
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -229,6 +229,7 @@ struct uvc_entity {
- 			u8  *bmControls;
- 			struct gpio_desc *gpio_privacy;
- 			int irq;
-+			bool initialized;
- 		} gpio;
- 	};
- 
++		ctrl = uvc_find_control(handle->chain, xctrls[i].id, &mapping);
+ 		if (ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
+ 			/* Notification will be sent from an Interrupt event. */
+ 			continue;
 
 
