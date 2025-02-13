@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFA926B0B1;
-	Thu, 13 Feb 2025 15:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FD0201267;
+	Thu, 13 Feb 2025 15:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459061; cv=none; b=A8sxNM1MUUWGCMjDJzeSm2sFpj5cdRGu4rHb/oUxO08rRlph/8FnoQBLRpbKE0hbcjcOLPfsxpE/KUJnWPaQ43pviyF4WRCM7EAnLLOGEsk/CoXi3+pcNg6gz5P7CtstmIFLHH5GPXljccCunJrteYGa2rCm1reNbrkwsdVRNIc=
+	t=1739459064; cv=none; b=UshSjsR4RozppjnD5G6HVJVr52IX7epU+6GxeDJtjB49ShA75KtKHMbxVAh83PvurnYyo+EImQDRCIytRSJGIvfiUtJhv6vxPyV/Wi9vGePShQEHUVbnuUnuDRCOdtM9H+C7zQRJU+cfN7QOcKBJsHitlPw5PmZ/EJLNuEO62Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459061; c=relaxed/simple;
-	bh=G0yUaObmzvVE0kRzVVPvP9Ktxg4G+exdCT4T+0DaTnM=;
+	s=arc-20240116; t=1739459064; c=relaxed/simple;
+	bh=Tr876m93rnQ78dxmTxuHuOd3ZYkVec/uXj+XGSDwEMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LzrH45DabY7jINjzd2RS9choXwf2dQ008B8HMxbHtHPDuLNA57awJQl/8JHdRRg2+88A3Mr3AmgT27noKuHwu+M1qTupRWFgGEH/FxvJK8MmdGjhSshSQ3vUTNrkE8Oc5TE2uE7nT5PG63GvwGGMF5GDZBtj02WpgqXaFxAcGps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Poe1Ci8j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PlY/y1Nwry8qqLBpzxVG/CDZtGyN8cpkRmCJeZP9Dgf/ruCpZ/QBv7ezlk9Vzau8WoGjsv51AYLcAqAdX7OS1EMvGSneYEZyqSAdVJXXA6Ql+ge+xMbneqgKFCSvyM2f2oNvd+O7Q9M3t+xAAHqlU25NYvxP+S4RGQgvsw3Is6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/Nsecyq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Poe1Ci8j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7EFC4CED1;
-	Thu, 13 Feb 2025 15:04:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/Nsecyq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0442C4CED1;
+	Thu, 13 Feb 2025 15:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459060;
-	bh=G0yUaObmzvVE0kRzVVPvP9Ktxg4G+exdCT4T+0DaTnM=;
+	s=korg; t=1739459064;
+	bh=Tr876m93rnQ78dxmTxuHuOd3ZYkVec/uXj+XGSDwEMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Poe1Ci8jOpLYG6uH0yu7n60CcwAPfXakpQUYuEsRv804Dz/R4K/zOzhXmyNv7csKB
-	 DGSy+V7heOryK2jAoe8DnMU2oYEC+Pwc3kSs4XHtaIg1hTbs9pVLsYA1duW7Ld6C4e
-	 swk8GdyUmyYMnjkZI4Oe9DNtPOIMGZlvx5K6NSco=
+	b=I/NsecyqSiKgraOkSWrq9MGAAXuy5qehqeuxZyfg1yCeoceoKHdJ3oTcytjYsh4Ov
+	 4WW5RUyOQmmyPEZBbOMvIJpbv5N8SBrLLVT0g7GcFr7OCUVCVZ9JNZ0BrnHYeMd0Ge
+	 IPXsApKORNoQDz+bvzGC5Zkuc2RmsQd1kpC4iFx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.g.garry@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.13 156/443] block: mark GFP_NOIO around sysfs ->store()
-Date: Thu, 13 Feb 2025 15:25:21 +0100
-Message-ID: <20250213142446.616474691@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Nicolas Pitre <npitre@baylibre.com>,
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH 6.13 157/443] binfmt_flat: Fix integer overflow bug on 32 bit systems
+Date: Thu, 13 Feb 2025 15:25:22 +0100
+Message-ID: <20250213142446.655961581@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -47,56 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Lei <tom.leiming@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 7c0be4ead1f8f5f8be0803f347de0de81e3b8e1c upstream.
+commit 55cf2f4b945f6a6416cc2524ba740b83cc9af25a upstream.
 
-sysfs ->store is called with queue freezed, meantime we have several
-->store() callbacks(update_nr_requests, wbt, scheduler) to allocate
-memory with GFP_KERNEL which may run into direct reclaim code path,
-then potential deadlock can be caused.
+Most of these sizes and counts are capped at 256MB so the math doesn't
+result in an integer overflow.  The "relocs" count needs to be checked
+as well.  Otherwise on 32bit systems the calculation of "full_data"
+could be wrong.
 
-Fix the issue by marking NOIO around sysfs ->store()
+	full_data = data_len + relocs * sizeof(unsigned long);
 
-Reported-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: c995ee28d29d ("binfmt_flat: prevent kernel dammage from corrupted executable headers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/r/20250113015833.698458-1-ming.lei@redhat.com
-Link: https://lore.kernel.org/linux-block/Z4RkemI9f6N5zoEF@fedora/T/#mc774c65eeca5c024d29695f9ac6152b87763f305
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Nicolas Pitre <npitre@baylibre.com>
+Link: https://lore.kernel.org/r/5be17f6c-5338-43be-91ef-650153b975cb@stanley.mountain
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-sysfs.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/binfmt_flat.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -681,6 +681,7 @@ queue_attr_store(struct kobject *kobj, s
- 	struct queue_sysfs_entry *entry = to_queue(attr);
- 	struct gendisk *disk = container_of(kobj, struct gendisk, queue_kobj);
- 	struct request_queue *q = disk->queue;
-+	unsigned int noio_flag;
- 	ssize_t res;
- 
- 	if (!entry->store_limit && !entry->store)
-@@ -711,7 +712,9 @@ queue_attr_store(struct kobject *kobj, s
- 
- 	mutex_lock(&q->sysfs_lock);
- 	blk_mq_freeze_queue(q);
-+	noio_flag = memalloc_noio_save();
- 	res = entry->store(disk, page, length);
-+	memalloc_noio_restore(noio_flag);
- 	blk_mq_unfreeze_queue(q);
- 	mutex_unlock(&q->sysfs_lock);
- 	return res;
+--- a/fs/binfmt_flat.c
++++ b/fs/binfmt_flat.c
+@@ -478,7 +478,7 @@ static int load_flat_file(struct linux_b
+ 	 * 28 bits (256 MB) is way more than reasonable in this case.
+ 	 * If some top bits are set we have probable binary corruption.
+ 	*/
+-	if ((text_len | data_len | bss_len | stack_len | full_data) >> 28) {
++	if ((text_len | data_len | bss_len | stack_len | relocs | full_data) >> 28) {
+ 		pr_err("bad header\n");
+ 		ret = -ENOEXEC;
+ 		goto err;
 
 
