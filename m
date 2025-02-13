@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B67826B087;
-	Thu, 13 Feb 2025 15:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F5D26B087;
+	Thu, 13 Feb 2025 15:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460756; cv=none; b=LdK1/z79hwimuZOwMG/hHwGHxFBiOvZZ3GxUuUkYify494mXZf0j8BYKN6GdGbl+z2d7J0limsOZXX/unVS7FdVSrdCVIK9vnlHntG7DeHV2oPr9sE+GFO4GV2fEFipFoOUwuuH9bhn6PF/M82jUwl5s9ldJhY99SU76ovveSv8=
+	t=1739460759; cv=none; b=UxshpyM55pUB5f66es03XD9noZ1/1B/3lAXk8ipM0F0dCjVKih6YLcWel1kU/xclhCiREx2UdCGvXYheQI8tYyTZuHGQd3AESlKSDEEYENQYD1AZz14dtO81zqgtAVdmheDS1cmkMzd5vILBm1LL2tEWF0Ks8FHL7FuLIcV8cMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460756; c=relaxed/simple;
-	bh=ZCSX4lafpc1W6aA5Ck+rptp2qRLnjOUwywHf19Eay3s=;
+	s=arc-20240116; t=1739460759; c=relaxed/simple;
+	bh=UwAWjwp4hU6MYAoMlwumdSq76BR8wNsBAx9h3PxO1S4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hO5xt7xCbKw6EchhFTPYCM82wj0960Ar87aWyDyIjg7p0NHuwACqwKSK10MYpAgK6zaQSScXN4UZ7WpK/UC3IcRZju5cfj1tv+nKBd5L9Yj4mfbUA6ESlmpGnD9b7gIy+sK5kOpmRoomN8ukFbpoPEWyDvnEr1Ug+lxjqsfsjbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErOoD0ue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VyZwQTjsW0L52DYelhGJ22GMB5fLC6ewGiB0CdoS2wesKlRCNbMMQujfkqN2QwFB5LG4H1fjjmu+JiMyjDSviv0Eie5ButLQLJwS+zjBEADN0eSdl7IntIN+/KS9kJ1PTIESle1uhu16eCA7Zb2x1kbPoIwlQqJlATN2GLx0ilk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsGz5Res; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErOoD0ue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96387C4CEE9;
-	Thu, 13 Feb 2025 15:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsGz5Res"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5913C4CED1;
+	Thu, 13 Feb 2025 15:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460756;
-	bh=ZCSX4lafpc1W6aA5Ck+rptp2qRLnjOUwywHf19Eay3s=;
+	s=korg; t=1739460759;
+	bh=UwAWjwp4hU6MYAoMlwumdSq76BR8wNsBAx9h3PxO1S4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ErOoD0ueFPjUkeP51inu+UoGUBZgk+AuKXEmx5qpzGiq4l4iVNqGx57EekJ3kT8Sf
-	 7Dicx4LnaUZxyYILYkiHhtPDOy80fjInrBibjNgqziLuTePWu+pHfX72wdHuykcyv1
-	 1ylXSR4aByoisSwsIMUFUK1V62iSwpVZKyF9mjhk=
+	b=YsGz5ResCboOwZf5vKRqRxSv+nGClGcGstPD7tinaTzSPC+lhlzrBieMZV7CNQchE
+	 QacrA2JMcZT8w7CkDfq43eJmSkcTbxFbPjbgPQwT8QCaCtn/RvZGLnUN4fwgsyGMdS
+	 BI04MToFVfT3u2agr2twb1anNNoFaOKWUY2fLcvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 202/273] soc: qcom: smem_state: fix missing of_node_put in error path
-Date: Thu, 13 Feb 2025 15:29:34 +0100
-Message-ID: <20250213142415.305143288@linuxfoundation.org>
+Subject: [PATCH 6.6 172/273] arm64: dts: qcom: sm6115: Fix MPSS memory length
+Date: Thu, 13 Feb 2025 15:29:04 +0100
+Message-ID: <20250213142414.128775345@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -53,33 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 70096b4990848229d0784c5e51dc3c7c072f1111 upstream.
+commit 472d65e7cb591c8379dd6f40561f96be73a46f0f upstream.
 
-If of_parse_phandle_with_args() succeeds, the OF node reference should
-be dropped, regardless of number of phandle arguments.
+The address space in MPSS/Modem PAS (Peripheral Authentication Service)
+remoteproc node should point to the QDSP PUB address space
+(QDSP6...SS_PUB) which has a length of 0x10000.  Value of 0x100 was
+copied from older DTS, but it grew since then.
+
+This should have no functional impact on Linux users, because PAS loader
+does not use this address space at all.
 
 Cc: stable@vger.kernel.org
-Fixes: 9460ae2ff308 ("soc: qcom: Introduce common SMEM state machine code")
+Fixes: 96ce9227fdbc ("arm64: dts: qcom: sm6115: Add remoteproc nodes")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240822164853.231087-2-krzysztof.kozlowski@linaro.org
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20241213-dts-qcom-cdsp-mpss-base-address-v3-21-2e0036fccd8d@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/smem_state.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm6115.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/soc/qcom/smem_state.c
-+++ b/drivers/soc/qcom/smem_state.c
-@@ -116,7 +116,8 @@ struct qcom_smem_state *qcom_smem_state_
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -1667,7 +1667,7 @@
  
- 	if (args.args_count != 1) {
- 		dev_err(dev, "invalid #qcom,smem-state-cells\n");
--		return ERR_PTR(-EINVAL);
-+		state = ERR_PTR(-EINVAL);
-+		goto put;
- 	}
+ 		remoteproc_mpss: remoteproc@6080000 {
+ 			compatible = "qcom,sm6115-mpss-pas";
+-			reg = <0x0 0x06080000 0x0 0x100>;
++			reg = <0x0 0x06080000 0x0 0x10000>;
  
- 	state = of_node_to_state(args.np);
+ 			interrupts-extended = <&intc GIC_SPI 307 IRQ_TYPE_EDGE_RISING>,
+ 					      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
 
 
