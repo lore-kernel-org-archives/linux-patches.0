@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0601615853B;
-	Thu, 13 Feb 2025 15:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FD713D8A4;
+	Thu, 13 Feb 2025 15:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459003; cv=none; b=szewAJBy+9iYTXIDxUCnuKzNcVZtrulEXQVN/xU/lCBJOR1e7LmhYle/WuJkwu8CHC0DwBPrJwij7J+EeAksW+n3rmibiZbPdBLDw953HQ43J0A7Obi23CYsn/SVTNjFxvPlW8T+nZIdiLw+NtLuyscmoFiFo3AlMfzX8zArPqM=
+	t=1739459006; cv=none; b=sAKNaY4bCwpfKh5ndDy8xyHdu1t1c8ZRava1awJ0Eq20S+hqKUvyRoLwq6TzA9pLgAV4zidYOS9HIkkFqTk+7mwYbIGwMf+bea6eGbtXHhycY6vjMlol2OgzjH3qmdGNNuWsnefmFfR+Hs7uoVz1bIygeu24CO60mtox4gwBod8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459003; c=relaxed/simple;
-	bh=00QYngDnONxZR45AeBBo4GfJG8/Op53g3Y/YV7CLw0c=;
+	s=arc-20240116; t=1739459006; c=relaxed/simple;
+	bh=GkZ405AnMDooZPBc/cZ6ELurNxkISiXNgVMutKeLfkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1SaMcrRs03BzLmco6KB4xyAV7kowqBezyvcj5yPDeUVEsZwqUvrszhIHRx54t5hl/3HcW541SThS0TwhDufYBpITqlS3dVmLaJnqZ0dKUGP+oAicFK1EgV6Y3e/n9yQwTdvKlncVhhm9cKxoRDevRzn+tj8xZXQDmPxcVphc3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRSbg6v/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U/Ai0gJBXdORc2pt0mjNe9hzQsMpAqN3IR9snFYgat2atLRX3WJwRKyP7FCHRolfYY0ZdLuEI61I90uJFpSwBPR+3vsEZTlmaCHAs4GrBXZZkm16PcEJiuhIc1SVgG3LeMlUi6kvNQjdB0rYYY9MeQDnFZOQlmxck1ZFbYuz56Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvywgE1l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRSbg6v/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01294C4CED1;
-	Thu, 13 Feb 2025 15:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvywgE1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A87C4CED1;
+	Thu, 13 Feb 2025 15:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459002;
-	bh=00QYngDnONxZR45AeBBo4GfJG8/Op53g3Y/YV7CLw0c=;
+	s=korg; t=1739459005;
+	bh=GkZ405AnMDooZPBc/cZ6ELurNxkISiXNgVMutKeLfkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wRSbg6v/DjgN57igG4JTL71nzdHv6mE3v9lnvv/wU+8dm+Da5v3XH9ymaxTjyH0Fr
-	 9DXkOAaWZr5H6yqZqZES9UBW+Kz7os7Fv2Zlfq6VxkjMNifYKgP68fAji0vxHvt8bJ
-	 JCW5sbaFWAYBFpUmbeMYTNvolxG7aHUp0WtJxhhg=
+	b=IvywgE1llO5vdZA6DHhjPZVL/MI0ZpMUC9bZ/+8FHD2H/1MPXNVMUstQZ774cfs9j
+	 crgoV6QYJSlfy1bRnqYjWgggoH+oVaS0uY1027aOteROL+40BaOdsqroJorUdobkVK
+	 r21K79wHOBvSO61xIKk0I9PZipWtx79TIzqXHTqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Keith Busch <kbusch@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Yu-Chun Lin <eleanor15x@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 107/443] nvmet: fix a memory leak in controller identify
-Date: Thu, 13 Feb 2025 15:24:32 +0100
-Message-ID: <20250213142444.739656706@linuxfoundation.org>
+Subject: [PATCH 6.13 098/443] ASoC: amd: Add ACPI dependency to fix build error
+Date: Thu, 13 Feb 2025 15:24:23 +0100
+Message-ID: <20250213142444.392117395@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -52,52 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Yu-Chun Lin <eleanor15x@gmail.com>
 
-[ Upstream commit 58f5c8d5ca07a2f9fa93fb073f5b1646ec482ff2 ]
+[ Upstream commit 7e24ec93aecd12e33d31e38e5af4625553bbc727 ]
 
-Simply free an allocated buffer once we copied its content
-to the request sgl.
+As reported by the kernel test robot, the following error occurs:
 
-kmemleak complaint:
-unreferenced object 0xffff8cd40c388000 (size 4096):
-  comm "kworker/2:2H", pid 14739, jiffies 4401313113
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 0):
-    [<ffffffff9e01087a>] kmemleak_alloc+0x4a/0x90
-    [<ffffffff9d30324a>] __kmalloc_cache_noprof+0x35a/0x420
-    [<ffffffffc180b0e2>] nvmet_execute_identify+0x912/0x9f0 [nvmet]
-    [<ffffffffc181a72c>] nvmet_tcp_try_recv_pdu+0x84c/0xc90 [nvmet_tcp]
-    [<ffffffffc181ac02>] nvmet_tcp_io_work+0x82/0x8b0 [nvmet_tcp]
-    [<ffffffff9cfa7158>] process_one_work+0x178/0x3e0
-    [<ffffffff9cfa8e9c>] worker_thread+0x2ec/0x420
-    [<ffffffff9cfb2140>] kthread+0xf0/0x120
-    [<ffffffff9cee36a4>] ret_from_fork+0x44/0x70
-    [<ffffffff9ce7fdda>] ret_from_fork_asm+0x1a/0x30
+   sound/soc/amd/yc/acp6x-mach.c: In function 'acp6x_probe':
+>> sound/soc/amd/yc/acp6x-mach.c:573:15: error: implicit declaration of function 'acpi_evaluate_integer'; did you mean 'acpi_evaluate_object'? [-Werror=implicit-function-declaration]
+     573 |         ret = acpi_evaluate_integer(handle, "_WOV", NULL, &dmic_status);
+         |               ^~~~~~~~~~~~~~~~~~~~~
+         |               acpi_evaluate_object
+   cc1: some warnings being treated as errors
 
-Fixes: 84909f7decbd ("nvmet: use kzalloc instead of ZERO_PAGE in nvme_execute_identify_ns_nvm()")
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+The function 'acpi_evaluate_integer' and its prototype in 'acpi_bus.h'
+are only available when 'CONFIG_ACPI' is enabled. Add a 'depends on ACPI'
+directive in Kconfig to ensure proper compilation.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501090345.pBIDRTym-lkp@intel.com/
+Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
+Link: https://patch.msgid.link/20250109171547.362412-1-eleanor15x@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/admin-cmd.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/amd/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
-index fa89b0549c36c..7b70635373fd8 100644
---- a/drivers/nvme/target/admin-cmd.c
-+++ b/drivers/nvme/target/admin-cmd.c
-@@ -915,6 +915,7 @@ static void nvme_execute_identify_ns_nvm(struct nvmet_req *req)
- 		goto out;
- 	}
- 	status = nvmet_copy_to_sgl(req, 0, id, sizeof(*id));
-+	kfree(id);
- out:
- 	nvmet_req_complete(req, status);
- }
+diff --git a/sound/soc/amd/Kconfig b/sound/soc/amd/Kconfig
+index c7590d4989bba..8035211782791 100644
+--- a/sound/soc/amd/Kconfig
++++ b/sound/soc/amd/Kconfig
+@@ -105,7 +105,7 @@ config SND_SOC_AMD_ACP6x
+ config SND_SOC_AMD_YC_MACH
+ 	tristate "AMD YC support for DMIC"
+ 	select SND_SOC_DMIC
+-	depends on SND_SOC_AMD_ACP6x
++	depends on SND_SOC_AMD_ACP6x && ACPI
+ 	help
+ 	  This option enables machine driver for Yellow Carp platform
+ 	  using dmic. ACP IP has PDM Decoder block with DMA controller.
 -- 
 2.39.5
 
