@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E4A21D3FD;
-	Thu, 13 Feb 2025 14:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8D613D8A4;
+	Thu, 13 Feb 2025 14:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457441; cv=none; b=neQYDkLGekOhlddumMZ/OwcoyoAlEKiZQfotw/ilYKytyqPem6Gm5ukxGd6QapE7HOYl5V16YXLHFzdq6wqHvN+c+QQox4u0Sj/3ebhQbyKJWVCAg+HjXssazAmSaIMGjeNCZzxxu1PYOZmGnIROCJU+Z/oYHVyh/yP4jcOpsYA=
+	t=1739457444; cv=none; b=od5XrlEFNTLIgQ0E+FO2dPvNwRf8ffGXVlEmajcwNnRs2w5yWAknwPfsmCxQpawj6eRjg2vVwoPsbKZolJGtxjMs21GKVArWiUeCOLh1f5Gjzmwk8TGh1aAp6dsNNG3P0FvHEcCZT2xqx+2eRw8J98Us1N5X0ZwTKzx/rTQvFP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457441; c=relaxed/simple;
-	bh=jXecoZb1tiV+YkEGp9fDC86yADw9dF1C/nVzwr0Iosg=;
+	s=arc-20240116; t=1739457444; c=relaxed/simple;
+	bh=eTjF6cSc0jK518XpcVgotaQQuvenqP0wVTuxtarvLYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDSqijGyIIXlca8ZkM8PajMDnQKPhvHpY1ff0ilPAapXM/6BQ7gtfJ74oNjlsaqwmDw2z5FXkjsHSj/FmaEsJgws30SC+gHpaoa5Rudb5abV9S3axVTg/JQR31ntT4aXi61KO1p/RFSMVpJVhcx46YhvNZA9lCcp65hTGnPcsFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f76BkG00; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DlXjPVKqyOhLJu3jZfaAM5u57b41WE5yBGh373GgEOMBFpKlDfUQl6zBP32LThtlxDD5NBHXWEtpDGF16yIkVEuG4qnBAxFfVGf+KDch9LqCK5pmX7TDJ4w0+yWQ3SAauTiiI/XkiaFqwdM27esWmrJcB5r3nQyvcSDyemleiJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1iGuX9r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f76BkG00"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45431C4CED1;
-	Thu, 13 Feb 2025 14:37:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1iGuX9r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8EFC4CED1;
+	Thu, 13 Feb 2025 14:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457441;
-	bh=jXecoZb1tiV+YkEGp9fDC86yADw9dF1C/nVzwr0Iosg=;
+	s=korg; t=1739457444;
+	bh=eTjF6cSc0jK518XpcVgotaQQuvenqP0wVTuxtarvLYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f76BkG00KJYxf7ZLrk9m6837hunS7y8qz0dXvpW5ivthk8XGs0JCtMGAuN2hEh9rZ
-	 W3ec/K+1jUUdTGKDEIWkhCOSJclTjslWPBmqBwEHyb2m1NmGe8ZkJYKORsv52AybE2
-	 d4uaf0IbAS8s1pw0JVxegyc+h87miqjnx3uyeYYw=
+	b=Z1iGuX9rc+CNaw1bbHVwxD6OetLFWhCCu68HXPotdy/ZaJ4R9IDRToLSIxh0St7w/
+	 FIGRudrAbdqnFfkFP8VE1NdlQvhPN80s1sNwMUNlGiLfrMD9h2/dN91tyfYYMOxBvv
+	 DKNy5XzH6Mymrd+aO2Vsnzsp9qG7e+ETfMXTJ3do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lenny Szubowicz <lszubowi@redhat.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Simon Horman <horms@kernel.org>,
+	Yan Zhai <yan@cloudflare.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 111/422] tg3: Disable tg3 PCIe AER on system reboot
-Date: Thu, 13 Feb 2025 15:24:20 +0100
-Message-ID: <20250213142440.838505335@linuxfoundation.org>
+Subject: [PATCH 6.12 112/422] udp: gso: do not drop small packets when PMTU reduces
+Date: Thu, 13 Feb 2025 15:24:21 +0100
+Message-ID: <20250213142440.876343537@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -53,129 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lenny Szubowicz <lszubowi@redhat.com>
+From: Yan Zhai <yan@cloudflare.com>
 
-[ Upstream commit e0efe83ed325277bb70f9435d4d9fc70bebdcca8 ]
+[ Upstream commit 235174b2bed88501fda689c113c55737f99332d8 ]
 
-Disable PCIe AER on the tg3 device on system reboot on a limited
-list of Dell PowerEdge systems. This prevents a fatal PCIe AER event
-on the tg3 device during the ACPI _PTS (prepare to sleep) method for
-S5 on those systems. The _PTS is invoked by acpi_enter_sleep_state_prep()
-as part of the kernel's reboot sequence as a result of commit
-38f34dba806a ("PM: ACPI: reboot: Reinstate S5 for reboot").
+Commit 4094871db1d6 ("udp: only do GSO if # of segs > 1") avoided GSO
+for small packets. But the kernel currently dismisses GSO requests only
+after checking MTU/PMTU on gso_size. This means any packets, regardless
+of their payload sizes, could be dropped when PMTU becomes smaller than
+requested gso_size. We encountered this issue in production and it
+caused a reliability problem that new QUIC connection cannot be
+established before PMTU cache expired, while non GSO sockets still
+worked fine at the same time.
 
-There was an earlier fix for this problem by commit 2ca1c94ce0b6
-("tg3: Disable tg3 device on system reboot to avoid triggering AER").
-But it was discovered that this earlier fix caused a reboot hang
-when some Dell PowerEdge servers were booted via ipxe. To address
-this reboot hang, the earlier fix was essentially reverted by commit
-9fc3bc764334 ("tg3: power down device only on SYSTEM_POWER_OFF").
-This re-exposed the tg3 PCIe AER on reboot problem.
+Ideally, do not check any GSO related constraints when payload size is
+smaller than requested gso_size, and return EMSGSIZE instead of EINVAL
+on MTU/PMTU check failure to be more specific on the error cause.
 
-This fix is not an ideal solution because the root cause of the AER
-is in system firmware. Instead, it's a targeted work-around in the
-tg3 driver.
-
-Note also that the PCIe AER must be disabled on the tg3 device even
-if the system is configured to use "firmware first" error handling.
-
-V3:
-   - Fix sparse warning on improper comparison of pdev->current_state
-   - Adhere to netdev comment style
-
-Fixes: 9fc3bc764334 ("tg3: power down device only on SYSTEM_POWER_OFF")
-Signed-off-by: Lenny Szubowicz <lszubowi@redhat.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 4094871db1d6 ("udp: only do GSO if # of segs > 1")
+Signed-off-by: Yan Zhai <yan@cloudflare.com>
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 58 +++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ net/ipv4/udp.c                       |  4 ++--
+ net/ipv6/udp.c                       |  4 ++--
+ tools/testing/selftests/net/udpgso.c | 26 ++++++++++++++++++++++++++
+ 3 files changed, 30 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index d178138981a96..717e110d23c91 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -55,6 +55,7 @@
- #include <linux/hwmon.h>
- #include <linux/hwmon-sysfs.h>
- #include <linux/crc32poly.h>
-+#include <linux/dmi.h>
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index d2eeb6fc49b38..8da74dc63061c 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -985,9 +985,9 @@ static int udp_send_skb(struct sk_buff *skb, struct flowi4 *fl4,
+ 		const int hlen = skb_network_header_len(skb) +
+ 				 sizeof(struct udphdr);
  
- #include <net/checksum.h>
- #include <net/gso.h>
-@@ -18154,6 +18155,50 @@ static int tg3_resume(struct device *device)
+-		if (hlen + cork->gso_size > cork->fragsize) {
++		if (hlen + min(datalen, cork->gso_size) > cork->fragsize) {
+ 			kfree_skb(skb);
+-			return -EINVAL;
++			return -EMSGSIZE;
+ 		}
+ 		if (datalen > cork->gso_size * UDP_MAX_SEGMENTS) {
+ 			kfree_skb(skb);
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index 896c9c827a288..197d0ac47592a 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -1294,9 +1294,9 @@ static int udp_v6_send_skb(struct sk_buff *skb, struct flowi6 *fl6,
+ 		const int hlen = skb_network_header_len(skb) +
+ 				 sizeof(struct udphdr);
  
- static SIMPLE_DEV_PM_OPS(tg3_pm_ops, tg3_suspend, tg3_resume);
- 
-+/* Systems where ACPI _PTS (Prepare To Sleep) S5 will result in a fatal
-+ * PCIe AER event on the tg3 device if the tg3 device is not, or cannot
-+ * be, powered down.
-+ */
-+static const struct dmi_system_id tg3_restart_aer_quirk_table[] = {
+-		if (hlen + cork->gso_size > cork->fragsize) {
++		if (hlen + min(datalen, cork->gso_size) > cork->fragsize) {
+ 			kfree_skb(skb);
+-			return -EINVAL;
++			return -EMSGSIZE;
+ 		}
+ 		if (datalen > cork->gso_size * UDP_MAX_SEGMENTS) {
+ 			kfree_skb(skb);
+diff --git a/tools/testing/selftests/net/udpgso.c b/tools/testing/selftests/net/udpgso.c
+index 3f2fca02fec53..36ff28af4b190 100644
+--- a/tools/testing/selftests/net/udpgso.c
++++ b/tools/testing/selftests/net/udpgso.c
+@@ -102,6 +102,19 @@ struct testcase testcases_v4[] = {
+ 		.gso_len = CONST_MSS_V4,
+ 		.r_num_mss = 1,
+ 	},
 +	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R440"),
-+		},
++		/* datalen <= MSS < gso_len: will fall back to no GSO */
++		.tlen = CONST_MSS_V4,
++		.gso_len = CONST_MSS_V4 + 1,
++		.r_num_mss = 0,
++		.r_len_last = CONST_MSS_V4,
 +	},
 +	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R540"),
-+		},
++		/* MSS < datalen < gso_len: fail */
++		.tlen = CONST_MSS_V4 + 1,
++		.gso_len = CONST_MSS_V4 + 2,
++		.tfail = true,
++	},
+ 	{
+ 		/* send a single MSS + 1B */
+ 		.tlen = CONST_MSS_V4 + 1,
+@@ -205,6 +218,19 @@ struct testcase testcases_v6[] = {
+ 		.gso_len = CONST_MSS_V6,
+ 		.r_num_mss = 1,
+ 	},
++	{
++		/* datalen <= MSS < gso_len: will fall back to no GSO */
++		.tlen = CONST_MSS_V6,
++		.gso_len = CONST_MSS_V6 + 1,
++		.r_num_mss = 0,
++		.r_len_last = CONST_MSS_V6,
 +	},
 +	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R640"),
-+		},
++		/* MSS < datalen < gso_len: fail */
++		.tlen = CONST_MSS_V6 + 1,
++		.gso_len = CONST_MSS_V6 + 2,
++		.tfail = true
 +	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R650"),
-+		},
-+	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R740"),
-+		},
-+	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R750"),
-+		},
-+	},
-+	{}
-+};
-+
- static void tg3_shutdown(struct pci_dev *pdev)
- {
- 	struct net_device *dev = pci_get_drvdata(pdev);
-@@ -18170,6 +18215,19 @@ static void tg3_shutdown(struct pci_dev *pdev)
- 
- 	if (system_state == SYSTEM_POWER_OFF)
- 		tg3_power_down(tp);
-+	else if (system_state == SYSTEM_RESTART &&
-+		 dmi_first_match(tg3_restart_aer_quirk_table) &&
-+		 pdev->current_state != PCI_D3cold &&
-+		 pdev->current_state != PCI_UNKNOWN) {
-+		/* Disable PCIe AER on the tg3 to avoid a fatal
-+		 * error during this system restart.
-+		 */
-+		pcie_capability_clear_word(pdev, PCI_EXP_DEVCTL,
-+					   PCI_EXP_DEVCTL_CERE |
-+					   PCI_EXP_DEVCTL_NFERE |
-+					   PCI_EXP_DEVCTL_FERE |
-+					   PCI_EXP_DEVCTL_URRE);
-+	}
- 
- 	rtnl_unlock();
- 
+ 	{
+ 		/* send a single MSS + 1B */
+ 		.tlen = CONST_MSS_V6 + 1,
 -- 
 2.39.5
 
