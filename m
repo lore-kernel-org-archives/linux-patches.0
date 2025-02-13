@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E001D2222A5;
-	Thu, 13 Feb 2025 15:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BD51D63C5;
+	Thu, 13 Feb 2025 15:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460926; cv=none; b=vCv2AVPmNaIRGWF9zoBg7ki7Xhzez9rOAQmpo6UNegI7gRUoqfGJ8IBvGghZB7FzBWVJQS43H2lToJqsXUarzUQN1+uZ9yrm4TrpnVuUIaXEVJZ2eD0deK7Wh2CLQKSjri4ichw7FAeeNaljVVMQEDO9/fDZvhb8tGcXtFFIV4A=
+	t=1739460929; cv=none; b=hxcM+QUHjihKWXj48HpeOjwnDp205masfgFq8ex01ydhGC2GGmbjmMW2dYoT76zM3IA41mI6ZCD/CN9x9LAZ0SnlNedW6H+ix+PKILtmrBYAufTuvAfeln5vQkzink6hhrbP+YjHzwFcHxZAfjjue35WQRsSA1oFeiuwrkOoD84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460926; c=relaxed/simple;
-	bh=US63qqHiOgMAgV+mq/v+U7u0uDU3TuOLQgvA0dGCj8w=;
+	s=arc-20240116; t=1739460929; c=relaxed/simple;
+	bh=iWuRbBiLxudn29gm0ZYmJ2BDlil3l8c77teekNhFsiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oSgGO8dmATztyxBjVgQAKSHls/LUUIBgeN1hwZ53rRyzNSxCQgicgLFUbtmHj3h16eG5faHzzYQqL4C3bkGMC/hCBYVVajEPISNhHrwFAFUW4VXqOTFQGR1cpxil3F6yvVgPf/EFw0snDNW3XMg0oPCckOmTfBzkYSKoMe6v4hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b20pv2zq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=itoe6RJalim3P5aNGe9PfdkkuFs3yrieZDl8exvmXnPPYskaGGq43iCb0r1vOjylA13vPlP8cNdz/isMx02ZP51x31IXSj2ABilPjnV9q4HpzZvKM1p0IpLljtmmvMsGj5Irxwkzrl6XoNBs7NNGVRl8bb6sWEFo/4ku7GkmqUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuwlblgm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b20pv2zq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4947DC4CEE9;
-	Thu, 13 Feb 2025 15:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuwlblgm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538E6C4CEE5;
+	Thu, 13 Feb 2025 15:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460925;
-	bh=US63qqHiOgMAgV+mq/v+U7u0uDU3TuOLQgvA0dGCj8w=;
+	s=korg; t=1739460928;
+	bh=iWuRbBiLxudn29gm0ZYmJ2BDlil3l8c77teekNhFsiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b20pv2zqLEJelMF2jYm7h+FOB/8okRV7LCardRZhMTdQKaCYNERVP9U0n4qqK+8Vs
-	 Q9iLCKvkB7P9uDi8NscY4pZw0FDkqz95WPGaBbeonpvl/e9mS6ziCdDz+I3uogPLhC
-	 C0ZWgWJ7gy9Ymr3aigQNRlK4BwD+nqXexslR35ws=
+	b=iuwlblgm0NyBeEWTm9OU1FJCZDKUAHvV0WpANOlT6NBYEntN/ePF2ZmA7phfWhE/5
+	 +Riw4VH4OBSTT4Z7zAhmu6QOJ31HJL9TdLt4LZRa+PbaarcJaSTgOPfOlWpMTW1u6x
+	 z7Xvs7b5D2PporK/k+V7feFBfsBA/ecG4glO+Tx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gabriele Monaco <gmonaco@redhat.com>,
 	Tomas Glozar <tglozar@redhat.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 253/273] rtla: Add trace_instance_stop
-Date: Thu, 13 Feb 2025 15:30:25 +0100
-Message-ID: <20250213142417.424948569@linuxfoundation.org>
+Subject: [PATCH 6.6 254/273] rtla/timerlat_hist: Stop timerlat tracer on signal
+Date: Thu, 13 Feb 2025 15:30:26 +0100
+Message-ID: <20250213142417.462113055@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -55,53 +55,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomas Glozar <tglozar@redhat.com>
 
-commit e879b5dcf8d044f3865a32d95cc5b213f314c54f upstream.
+commit c73cab9dbed04d8f65ca69177b4b21ed3e09dfa7 upstream.
 
-Support not only turning trace on for the timerlat tracer, but also
-turning it off.
+Currently, when either SIGINT from the user or SIGALRM from the duration
+timer is caught by rtla-timerlat, stop_tracing is set to break out of
+the main loop. This is not sufficient for cases where the timerlat
+tracer is producing more data than rtla can consume, since in that case,
+rtla is looping indefinitely inside tracefs_iterate_raw_events, never
+reaches the check of stop_tracing and hangs.
 
-This will be used in subsequent patches to stop the timerlat tracer
-without also wiping the trace buffer.
+In addition to setting stop_tracing, also stop the timerlat tracer on
+received signal (SIGINT or SIGALRM). This will stop new samples so that
+the existing samples may be processed and tracefs_iterate_raw_events
+eventually exits.
 
 Cc: stable@vger.kernel.org
 Cc: John Kacur <jkacur@redhat.com>
 Cc: Luis Goncalves <lgoncalv@redhat.com>
 Cc: Gabriele Monaco <gmonaco@redhat.com>
-Link: https://lore.kernel.org/20250116144931.649593-2-tglozar@redhat.com
+Link: https://lore.kernel.org/20250116144931.649593-3-tglozar@redhat.com
+Fixes: 1eeb6328e8b3 ("rtla/timerlat: Add timerlat hist mode")
 Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/tracing/rtla/src/trace.c |    8 ++++++++
- tools/tracing/rtla/src/trace.h |    1 +
- 2 files changed, 9 insertions(+)
+ tools/tracing/rtla/src/timerlat_hist.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/tools/tracing/rtla/src/trace.c
-+++ b/tools/tracing/rtla/src/trace.c
-@@ -197,6 +197,14 @@ int trace_instance_start(struct trace_in
+--- a/tools/tracing/rtla/src/timerlat_hist.c
++++ b/tools/tracing/rtla/src/timerlat_hist.c
+@@ -949,9 +949,12 @@ out_err:
+ }
+ 
+ static int stop_tracing;
++static struct trace_instance *hist_inst = NULL;
+ static void stop_hist(int sig)
+ {
+ 	stop_tracing = 1;
++	if (hist_inst)
++		trace_instance_stop(hist_inst);
  }
  
  /*
-+ * trace_instance_stop - stop tracing a given rtla instance
-+ */
-+int trace_instance_stop(struct trace_instance *trace)
-+{
-+	return tracefs_trace_off(trace->inst);
-+}
-+
-+/*
-  * trace_events_free - free a list of trace events
-  */
- static void trace_events_free(struct trace_events *events)
---- a/tools/tracing/rtla/src/trace.h
-+++ b/tools/tracing/rtla/src/trace.h
-@@ -21,6 +21,7 @@ struct trace_instance {
+@@ -997,6 +1000,12 @@ int timerlat_hist_main(int argc, char *a
+ 	}
  
- int trace_instance_init(struct trace_instance *trace, char *tool_name);
- int trace_instance_start(struct trace_instance *trace);
-+int trace_instance_stop(struct trace_instance *trace);
- void trace_instance_destroy(struct trace_instance *trace);
+ 	trace = &tool->trace;
++	/*
++	 * Save trace instance into global variable so that SIGINT can stop
++	 * the timerlat tracer.
++	 * Otherwise, rtla could loop indefinitely when overloaded.
++	 */
++	hist_inst = trace;
  
- struct trace_seq *get_trace_seq(void);
+ 	retval = enable_timerlat(trace);
+ 	if (retval) {
+@@ -1129,7 +1138,7 @@ int timerlat_hist_main(int argc, char *a
+ 
+ 	return_value = 0;
+ 
+-	if (trace_is_off(&tool->trace, &record->trace)) {
++	if (trace_is_off(&tool->trace, &record->trace) && !stop_tracing) {
+ 		printf("rtla timerlat hit stop tracing\n");
+ 
+ 		if (!params->no_aa)
 
 
