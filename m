@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88265281349;
-	Thu, 13 Feb 2025 14:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E676B281349;
+	Thu, 13 Feb 2025 14:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739457299; cv=none; b=bN7v3exDIGmqYJLAVmrO+f9MYREui9UWMX4R5LjviKjpox439GYvgEc/idyf+BKj1e2oOhoAiQ7R1nikBu888XzQds2pwEgZQhPpeDef7PCTbvhjWzvGYgxyyzZ4ySli8i2/Grkh+9FgYTOGqgKzuDEOvnuT6Tvr44RKS0KnUso=
+	t=1739457303; cv=none; b=Q+/p/KBZAwSzbbU+m93MEcek9uTPM2HqjODVRpv6ns2Ewpfo5gLenk4Rjm0MN4U2xIv5+ksjpjLSyxn1ea9DtKRcgqmRhjP4pZZStB9FlasskMjApdZVUqMSvsE9rheZ0YCRdlcrD4QToBi2IAbxjYWdi6/+eHc9X3vNbqwwhjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739457299; c=relaxed/simple;
-	bh=KpKqJQrEWy/o0iT4dqPpthTAR7ssz0STOn76TWwat7s=;
+	s=arc-20240116; t=1739457303; c=relaxed/simple;
+	bh=PSCH1uWI5mhWZ9/s9CkcLQdF7Vazxj94NG+nLOk+ocI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3e7WdFU1S5q9krq48tHhzqBbMO4bANJw/kVtatGvY2t1VlNmo7D93aiRSLwlbfduKZBJ0GT6NkEYuSHBXbD2/dbyYFrfBWh4hwqUfrRW0NjWYZ8c1TUv4c0ZbIvmXOgRw398Zx2I6iSnz85IEUWNJrbRmCN8qF9L/0kpvjHxRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gopPob/v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oXBr/86Q9oddguh1HLWO/9UQRa2OmJ6CkAA2/fvKdObH5cOZ91a7CtLHcca3hWOU8tCnrEY+5QZgXVPUI914C3lm9cM2zRPvrLqo8cQYuaaMQqwaFxbjXE4mpEl79ZMq4p9P7/yr1zS7fL673nQhUHQFeqEct58UoVRmTkKM3nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dR8sEeG3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gopPob/v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBBAC4CED1;
-	Thu, 13 Feb 2025 14:34:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dR8sEeG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55962C4CEE2;
+	Thu, 13 Feb 2025 14:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739457299;
-	bh=KpKqJQrEWy/o0iT4dqPpthTAR7ssz0STOn76TWwat7s=;
+	s=korg; t=1739457302;
+	bh=PSCH1uWI5mhWZ9/s9CkcLQdF7Vazxj94NG+nLOk+ocI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gopPob/v86PtelUskzohVLVsEoXh+Old9bObaVWra9HJmoll0ME27n536QKuH+mzA
-	 bbBp19GnRcJewYMHDyEEYw2dFA2CVJgpotWW/LuglGvYFhL+xaMv+QfPyaOWXtVxui
-	 C0YAk43HOHye+reXaOhUNfSo8Kx363fmnYGzG5mE=
+	b=dR8sEeG3pZjmY4S4BAR2y1HBHm/KHBuGK5Nq1nRGm+dMMcEwqaKUSShxb3fhRnpVD
+	 HW7ho9Xsm1hbkJUKPXK7Ng97F94DuPgk7ei9BztOJiFsOPuxYJlzc8AVDLiBxFY1ik
+	 bcnr4A4OOJycM8kvde4rtAhfGfprOOZ7tvQk2etA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/422] wifi: rtw88: add __packed attribute to efuse layout struct
-Date: Thu, 13 Feb 2025 15:23:24 +0100
-Message-ID: <20250213142438.685496069@linuxfoundation.org>
+Subject: [PATCH 6.12 073/422] tipc: re-order conditions in tipc_crypto_key_rcv()
+Date: Thu, 13 Feb 2025 15:23:42 +0100
+Message-ID: <20250213142439.374559158@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142436.408121546@linuxfoundation.org>
 References: <20250213142436.408121546@linuxfoundation.org>
@@ -51,211 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 0daa521a1c8c29ffbefe6530f0d276e74e2749d0 ]
+[ Upstream commit 5fe71fda89745fc3cd95f70d06e9162b595c3702 ]
 
-The layout struct of efuse should not do address alignment by compiler.
-Otherwise it leads unexpected layout and size for certain arch suc as arm.
-In x86-64, the results are identical before and after this patch.
+On a 32bit system the "keylen + sizeof(struct tipc_aead_key)" math could
+have an integer wrapping issue.  It doesn't matter because the "keylen"
+is checked on the next line, but just to make life easier for static
+analysis tools, let's re-order these conditions and avoid the integer
+overflow.
 
-Also adjust bit-field to prevent over adjacent byte to avoid warning:
-  rtw88/rtw8822b.h:66:1: note: offset of packed bit-field `res2` has changed in GCC 4.4
-   66 | } __packed;
-      | ^
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202412120131.qk0x6OhE-lkp@intel.com/
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241212054203.135046-1-pkshih@realtek.com
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/main.h     | 4 ++--
- drivers/net/wireless/realtek/rtw88/rtw8723x.h | 8 ++++----
- drivers/net/wireless/realtek/rtw88/rtw8821c.h | 9 +++++----
- drivers/net/wireless/realtek/rtw88/rtw8822b.h | 9 +++++----
- drivers/net/wireless/realtek/rtw88/rtw8822c.h | 9 +++++----
- 5 files changed, 21 insertions(+), 18 deletions(-)
+ net/tipc/crypto.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/main.h b/drivers/net/wireless/realtek/rtw88/main.h
-index 945117afe1438..c808bb271e9d0 100644
---- a/drivers/net/wireless/realtek/rtw88/main.h
-+++ b/drivers/net/wireless/realtek/rtw88/main.h
-@@ -508,12 +508,12 @@ struct rtw_5g_txpwr_idx {
- 	struct rtw_5g_vht_ns_pwr_idx_diff vht_2s_diff;
- 	struct rtw_5g_vht_ns_pwr_idx_diff vht_3s_diff;
- 	struct rtw_5g_vht_ns_pwr_idx_diff vht_4s_diff;
--};
-+} __packed;
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index 43c3f1c971b8f..c524421ec6525 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -2293,8 +2293,8 @@ static bool tipc_crypto_key_rcv(struct tipc_crypto *rx, struct tipc_msg *hdr)
+ 	keylen = ntohl(*((__be32 *)(data + TIPC_AEAD_ALG_NAME)));
  
- struct rtw_txpwr_idx {
- 	struct rtw_2g_txpwr_idx pwr_idx_2g;
- 	struct rtw_5g_txpwr_idx pwr_idx_5g;
--};
-+} __packed;
- 
- struct rtw_channel_params {
- 	u8 center_chan;
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8723x.h b/drivers/net/wireless/realtek/rtw88/rtw8723x.h
-index e93bfce994bf8..a99af527c92cf 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8723x.h
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8723x.h
-@@ -47,7 +47,7 @@ struct rtw8723xe_efuse {
- 	u8 device_id[2];
- 	u8 sub_vendor_id[2];
- 	u8 sub_device_id[2];
--};
-+} __packed;
- 
- struct rtw8723xu_efuse {
- 	u8 res4[48];                    /* 0xd0 */
-@@ -56,12 +56,12 @@ struct rtw8723xu_efuse {
- 	u8 usb_option;                  /* 0x104 */
- 	u8 res5[2];			/* 0x105 */
- 	u8 mac_addr[ETH_ALEN];          /* 0x107 */
--};
-+} __packed;
- 
- struct rtw8723xs_efuse {
- 	u8 res4[0x4a];			/* 0xd0 */
- 	u8 mac_addr[ETH_ALEN];		/* 0x11a */
--};
-+} __packed;
- 
- struct rtw8723x_efuse {
- 	__le16 rtl_id;
-@@ -96,7 +96,7 @@ struct rtw8723x_efuse {
- 		struct rtw8723xu_efuse u;
- 		struct rtw8723xs_efuse s;
- 	};
--};
-+} __packed;
- 
- #define RTW8723X_IQK_ADDA_REG_NUM	16
- #define RTW8723X_IQK_MAC8_REG_NUM	3
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8821c.h b/drivers/net/wireless/realtek/rtw88/rtw8821c.h
-index 91ed921407bbe..10172f4d74bf2 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8821c.h
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8821c.h
-@@ -27,7 +27,7 @@ struct rtw8821cu_efuse {
- 	u8 res11[0xcf];
- 	u8 package_type;		/* 0x1fb */
- 	u8 res12[0x4];
--};
-+} __packed;
- 
- struct rtw8821ce_efuse {
- 	u8 mac_addr[ETH_ALEN];		/* 0xd0 */
-@@ -47,7 +47,8 @@ struct rtw8821ce_efuse {
- 	u8 ltr_en:1;
- 	u8 res1:2;
- 	u8 obff:2;
--	u8 res2:3;
-+	u8 res2_1:1;
-+	u8 res2_2:2;
- 	u8 obff_cap:2;
- 	u8 res3:4;
- 	u8 res4[3];
-@@ -63,7 +64,7 @@ struct rtw8821ce_efuse {
- 	u8 res6:1;
- 	u8 port_t_power_on_value:5;
- 	u8 res7;
--};
-+} __packed;
- 
- struct rtw8821cs_efuse {
- 	u8 res4[0x4a];			/* 0xd0 */
-@@ -101,7 +102,7 @@ struct rtw8821c_efuse {
- 		struct rtw8821cu_efuse u;
- 		struct rtw8821cs_efuse s;
- 	};
--};
-+} __packed;
- 
- static inline void
- _rtw_write32s_mask(struct rtw_dev *rtwdev, u32 addr, u32 mask, u32 data)
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822b.h b/drivers/net/wireless/realtek/rtw88/rtw8822b.h
-index cf85e63966a1c..e815bc97c218a 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8822b.h
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8822b.h
-@@ -27,7 +27,7 @@ struct rtw8822bu_efuse {
- 	u8 res11[0xcf];
- 	u8 package_type;		/* 0x1fb */
- 	u8 res12[0x4];
--};
-+} __packed;
- 
- struct rtw8822be_efuse {
- 	u8 mac_addr[ETH_ALEN];		/* 0xd0 */
-@@ -47,7 +47,8 @@ struct rtw8822be_efuse {
- 	u8 ltr_en:1;
- 	u8 res1:2;
- 	u8 obff:2;
--	u8 res2:3;
-+	u8 res2_1:1;
-+	u8 res2_2:2;
- 	u8 obff_cap:2;
- 	u8 res3:4;
- 	u8 res4[3];
-@@ -63,7 +64,7 @@ struct rtw8822be_efuse {
- 	u8 res6:1;
- 	u8 port_t_power_on_value:5;
- 	u8 res7;
--};
-+} __packed;
- 
- struct rtw8822bs_efuse {
- 	u8 res4[0x4a];			/* 0xd0 */
-@@ -103,7 +104,7 @@ struct rtw8822b_efuse {
- 		struct rtw8822bu_efuse u;
- 		struct rtw8822bs_efuse s;
- 	};
--};
-+} __packed;
- 
- static inline void
- _rtw_write32s_mask(struct rtw_dev *rtwdev, u32 addr, u32 mask, u32 data)
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8822c.h b/drivers/net/wireless/realtek/rtw88/rtw8822c.h
-index e2b383d633cd2..fc62b67a15f21 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8822c.h
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.h
-@@ -14,7 +14,7 @@ struct rtw8822cu_efuse {
- 	u8 res1[3];
- 	u8 mac_addr[ETH_ALEN];		/* 0x157 */
- 	u8 res2[0x3d];
--};
-+} __packed;
- 
- struct rtw8822cs_efuse {
- 	u8 res0[0x4a];			/* 0x120 */
-@@ -39,7 +39,8 @@ struct rtw8822ce_efuse {
- 	u8 ltr_en:1;
- 	u8 res1:2;
- 	u8 obff:2;
--	u8 res2:3;
-+	u8 res2_1:1;
-+	u8 res2_2:2;
- 	u8 obff_cap:2;
- 	u8 res3:4;
- 	u8 class_code[3];
-@@ -55,7 +56,7 @@ struct rtw8822ce_efuse {
- 	u8 res6:1;
- 	u8 port_t_power_on_value:5;
- 	u8 res7;
--};
-+} __packed;
- 
- struct rtw8822c_efuse {
- 	__le16 rtl_id;
-@@ -102,7 +103,7 @@ struct rtw8822c_efuse {
- 		struct rtw8822cu_efuse u;
- 		struct rtw8822cs_efuse s;
- 	};
--};
-+} __packed;
- 
- enum rtw8822c_dpk_agc_phase {
- 	RTW_DPK_GAIN_CHECK,
+ 	/* Verify the supplied size values */
+-	if (unlikely(size != keylen + sizeof(struct tipc_aead_key) ||
+-		     keylen > TIPC_AEAD_KEY_SIZE_MAX)) {
++	if (unlikely(keylen > TIPC_AEAD_KEY_SIZE_MAX ||
++		     size != keylen + sizeof(struct tipc_aead_key))) {
+ 		pr_debug("%s: invalid MSG_CRYPTO key size\n", rx->name);
+ 		goto exit;
+ 	}
 -- 
 2.39.5
 
