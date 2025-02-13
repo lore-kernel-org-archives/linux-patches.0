@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7841645;
-	Thu, 13 Feb 2025 15:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505DB26B082;
+	Thu, 13 Feb 2025 15:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739459186; cv=none; b=uYpYphnyxdQ3cE2HhzQlY659Aa9fk3CA8n1UdjLvQ7WJV9WYFQCLSSAv2Z5e6kl/XKtrpt4w56Tqs36FnUgH4cH/dfE4wMRFsamRWnlsI7+G4JQjlw3iErz1dN07ppjaQ0l9VuBPtpRtaZKpMeOXgK81Q99Tm9xaaSs6VGgYP50=
+	t=1739459190; cv=none; b=fzA+YvHD8T42M5WTjs280I0G7HY2PSX6YiKpOSKgF8lzbtJh8oL8wHMraQt/i5qYSJh3ryCvDGXwLnMV7cwhY3bv0be3zpPJmg42pmHn1e/37JFW0QEiN2QTiq3ONJ7vjj+E/RqbZTgQOPb4KaiKnAtiFUHXf+9wCmqcBWt1+3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739459186; c=relaxed/simple;
-	bh=XalvmYgXc2SzIroHdvG1E6D3Gwu8uOwv75dfK+B6ZL8=;
+	s=arc-20240116; t=1739459190; c=relaxed/simple;
+	bh=qIkkDf1XziAZcFsc7u38qn+5Oda/iIZWfSsKRxpOvbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/F3Q+dV9njIfGETIIB63sx55IV/zX9iPDAEaqf96HQwuDzkThEj/uqXHUMLG5f333t/G2HYVFqI2ozNoc/IUK2Uo6KEsaGFWiGunJcWYnkJuIaJabWU2QDtPobNQJWwThPynfbfWXFtBJEh0GN4uFIN0UhXZRReHp5CAmGWAdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHlxI87E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aombEsboPYNFSrkhwE2PKrgstNfNfVjzfhU342zwVdDALIKzigeYtQ8U4NzeWF0fU4MLQusC4oimB+Mfh21ZyoYxaAbwRxEU5EEBx30mQvwk328XNOAuU375NVuHhs3Tg9WSAiwi0iMjNZfoHGv2GVRA5BCcRtLs2qx36cvUD2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umjkZ1pb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHlxI87E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C56C4CED1;
-	Thu, 13 Feb 2025 15:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umjkZ1pb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1D9C4CED1;
+	Thu, 13 Feb 2025 15:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739459186;
-	bh=XalvmYgXc2SzIroHdvG1E6D3Gwu8uOwv75dfK+B6ZL8=;
+	s=korg; t=1739459190;
+	bh=qIkkDf1XziAZcFsc7u38qn+5Oda/iIZWfSsKRxpOvbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EHlxI87EfnokLbjHaTtym7WQMyOAdjatR/qayKHwSi1+Xzvvv3pnwVfotR+DCiCNG
-	 AcvvlN2Saw2LvjzihOrpFxwvxrFau91gzQfTOoF6J3YdS5wmHiBhMbdVmHZmGlzsw9
-	 BhUDM16pi9j6rIbto2OpSqBScs/zty2GxNlFXfdw=
+	b=umjkZ1pbtpX5M+Rnd8NgxEIYwkL+b0lq6D6JZmt88Ck5k2Jwicr8pG0RrqIK1RKiV
+	 FjFuhzvfore5+NQMCGP5rS6Q/itVC5bU0wU3zE1/u6KgQ4w+zZjb1vt+a5rwEI06lF
+	 o1RB6EDQYUU55B9rEpF3K2O2AqNONqtXwFlvJ4nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.13 192/443] Input: synaptics - fix crash when enabling pass-through port
-Date: Thu, 13 Feb 2025 15:25:57 +0100
-Message-ID: <20250213142448.022143473@linuxfoundation.org>
+	Cody Eksal <masterr3c0rd@epochal.quest>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@csie.org>
+Subject: [PATCH 6.13 193/443] clk: sunxi-ng: a100: enable MMC clock reparenting
+Date: Thu, 13 Feb 2025 15:25:58 +0100
+Message-ID: <20250213142448.060196483@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -50,131 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Cody Eksal <masterr3c0rd@epochal.quest>
 
-commit 08bd5b7c9a2401faabdaa1472d45c7de0755fd7e upstream.
+commit 16414720045de30945b8d14b7907e0cbf81a4b49 upstream.
 
-When enabling a pass-through port an interrupt might come before psmouse
-driver binds to the pass-through port. However synaptics sub-driver
-tries to access psmouse instance presumably associated with the
-pass-through port to figure out if only 1 byte of response or entire
-protocol packet needs to be forwarded to the pass-through port and may
-crash if psmouse instance has not been attached to the port yet.
+While testing the MMC nodes proposed in [1], it was noted that mmc0/1
+would fail to initialize, with "mmc: fatal err update clk timeout" in
+the kernel logs. A closer look at the clock definitions showed that the MMC
+MPs had the "CLK_SET_RATE_NO_REPARENT" flag set. No reason was given for
+adding this flag in the first place, and its original purpose is unknown,
+but it doesn't seem to make sense and results in severe limitations to MMC
+speeds. Thus, remove this flag from the 3 MMC MPs.
 
-Fix the crash by introducing open() and close() methods for the port and
-check if the port is open before trying to access psmouse instance.
-Because psmouse calls serio_open() only after attaching psmouse instance
-to serio port instance this prevents the potential crash.
+[1] https://msgid.link/20241024170540.2721307-10-masterr3c0rd@epochal.quest
 
-Reported-by: Takashi Iwai <tiwai@suse.de>
-Fixes: 100e16959c3c ("Input: libps2 - attach ps2dev instances as serio port's drvdata")
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1219522
+Fixes: fb038ce4db55 ("clk: sunxi-ng: add support for the Allwinner A100 CCU")
 Cc: stable@vger.kernel.org
-Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/Z4qSHORvPn7EU2j1@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Cody Eksal <masterr3c0rd@epochal.quest>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://patch.msgid.link/20241109003739.3440904-1-masterr3c0rd@epochal.quest
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |   56 ++++++++++++++++++++++++++++++----------
- drivers/input/mouse/synaptics.h |    1 
- 2 files changed, 43 insertions(+), 14 deletions(-)
+ drivers/clk/sunxi-ng/ccu-sun50i-a100.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -665,23 +665,50 @@ static void synaptics_pt_stop(struct ser
- 	priv->pt_port = NULL;
- }
+--- a/drivers/clk/sunxi-ng/ccu-sun50i-a100.c
++++ b/drivers/clk/sunxi-ng/ccu-sun50i-a100.c
+@@ -436,7 +436,7 @@ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDI
+ 					  24, 2,	/* mux */
+ 					  BIT(31),	/* gate */
+ 					  2,		/* post-div */
+-					  CLK_SET_RATE_NO_REPARENT);
++					  0);
  
-+static int synaptics_pt_open(struct serio *serio)
-+{
-+	struct psmouse *parent = psmouse_from_serio(serio->parent);
-+	struct synaptics_data *priv = parent->private;
-+
-+	guard(serio_pause_rx)(parent->ps2dev.serio);
-+	priv->pt_port_open = true;
-+
-+	return 0;
-+}
-+
-+static void synaptics_pt_close(struct serio *serio)
-+{
-+	struct psmouse *parent = psmouse_from_serio(serio->parent);
-+	struct synaptics_data *priv = parent->private;
-+
-+	guard(serio_pause_rx)(parent->ps2dev.serio);
-+	priv->pt_port_open = false;
-+}
-+
- static int synaptics_is_pt_packet(u8 *buf)
- {
- 	return (buf[0] & 0xFC) == 0x84 && (buf[3] & 0xCC) == 0xC4;
- }
+ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDIV(mmc1_clk, "mmc1", mmc_parents, 0x834,
+ 					  0, 4,		/* M */
+@@ -444,7 +444,7 @@ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDI
+ 					  24, 2,	/* mux */
+ 					  BIT(31),	/* gate */
+ 					  2,		/* post-div */
+-					  CLK_SET_RATE_NO_REPARENT);
++					  0);
  
--static void synaptics_pass_pt_packet(struct serio *ptport, u8 *packet)
-+static void synaptics_pass_pt_packet(struct synaptics_data *priv, u8 *packet)
- {
--	struct psmouse *child = psmouse_from_serio(ptport);
-+	struct serio *ptport;
+ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDIV(mmc2_clk, "mmc2", mmc_parents, 0x838,
+ 					  0, 4,		/* M */
+@@ -452,7 +452,7 @@ static SUNXI_CCU_MP_WITH_MUX_GATE_POSTDI
+ 					  24, 2,	/* mux */
+ 					  BIT(31),	/* gate */
+ 					  2,		/* post-div */
+-					  CLK_SET_RATE_NO_REPARENT);
++					  0);
  
--	if (child && child->state == PSMOUSE_ACTIVATED) {
--		serio_interrupt(ptport, packet[1], 0);
--		serio_interrupt(ptport, packet[4], 0);
--		serio_interrupt(ptport, packet[5], 0);
--		if (child->pktsize == 4)
--			serio_interrupt(ptport, packet[2], 0);
--	} else {
--		serio_interrupt(ptport, packet[1], 0);
-+	ptport = priv->pt_port;
-+	if (!ptport)
-+		return;
-+
-+	serio_interrupt(ptport, packet[1], 0);
-+
-+	if (priv->pt_port_open) {
-+		struct psmouse *child = psmouse_from_serio(ptport);
-+
-+		if (child->state == PSMOUSE_ACTIVATED) {
-+			serio_interrupt(ptport, packet[4], 0);
-+			serio_interrupt(ptport, packet[5], 0);
-+			if (child->pktsize == 4)
-+				serio_interrupt(ptport, packet[2], 0);
-+		}
- 	}
- }
- 
-@@ -720,6 +747,8 @@ static void synaptics_pt_create(struct p
- 	serio->write = synaptics_pt_write;
- 	serio->start = synaptics_pt_start;
- 	serio->stop = synaptics_pt_stop;
-+	serio->open = synaptics_pt_open;
-+	serio->close = synaptics_pt_close;
- 	serio->parent = psmouse->ps2dev.serio;
- 
- 	psmouse->pt_activate = synaptics_pt_activate;
-@@ -1216,11 +1245,10 @@ static psmouse_ret_t synaptics_process_b
- 
- 		if (SYN_CAP_PASS_THROUGH(priv->info.capabilities) &&
- 		    synaptics_is_pt_packet(psmouse->packet)) {
--			if (priv->pt_port)
--				synaptics_pass_pt_packet(priv->pt_port,
--							 psmouse->packet);
--		} else
-+			synaptics_pass_pt_packet(priv, psmouse->packet);
-+		} else {
- 			synaptics_process_packet(psmouse);
-+		}
- 
- 		return PSMOUSE_FULL_PACKET;
- 	}
---- a/drivers/input/mouse/synaptics.h
-+++ b/drivers/input/mouse/synaptics.h
-@@ -188,6 +188,7 @@ struct synaptics_data {
- 	bool disable_gesture;			/* disable gestures */
- 
- 	struct serio *pt_port;			/* Pass-through serio port */
-+	bool pt_port_open;
- 
- 	/*
- 	 * Last received Advanced Gesture Mode (AGM) packet. An AGM packet
+ static SUNXI_CCU_GATE(bus_mmc0_clk, "bus-mmc0", "ahb3", 0x84c, BIT(0), 0);
+ static SUNXI_CCU_GATE(bus_mmc1_clk, "bus-mmc1", "ahb3", 0x84c, BIT(1), 0);
 
 
