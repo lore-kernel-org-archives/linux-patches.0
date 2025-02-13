@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE5926B087;
-	Thu, 13 Feb 2025 15:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D5513D8A4;
+	Thu, 13 Feb 2025 15:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460538; cv=none; b=W3qTqz1RyqvTLf9NPa7gggtFu+5wd1WxdQ3m46+ZhOe7FAO7mCUNQaun8ZvoCK3w0WCKJ8SXxN3aXEAhy3Jyz1TN5uskYlkxMtFQ3+D0pNhW7S0LO3Ra0WJvwBo6/DrGS45xdEKVsz7emNTIrvrX5eYDriw+IIjnYszInKp6eZE=
+	t=1739460541; cv=none; b=sNT+v9qiuHvuu0d+F68seRjNj6j+1dZQA7rPeR8AgcjH0uZmc1Grs8cPxiBD6YWoXrCIztzdBdEv4tR8S+odQd0acVXf+uWEnEDDTqTf3Fsv5N1z1EwF4KnXyE/GF04olu5QSEvD3M3UuhjVhqcUvrXP6C2OXyqvpgM2TDDKrx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460538; c=relaxed/simple;
-	bh=E9yBQrpaG7eZqL0D8ZLTTudCntzY1V5ZspNvj/Rc55o=;
+	s=arc-20240116; t=1739460541; c=relaxed/simple;
+	bh=qCe+MTS1gghHjvqhojKFW/E38ULxigfRF3eTml+EgWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZA0aJy444a8T9i15ilvHFsHb0ByaJv+Xg54s+o3OfatW3h30q6VGzuLzk8+6ryhWRChsxD+hOUzwQoDc7FAEjisSNAzrLClU0iU6Lb4R04JTjhIWMNLk1qfdoca3OdjqDez6/k6Ku2eH+AfB+Vd3Kzac1eAWGJ6COkJe2A6ewB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmPBkSNJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZfC+fiYEUWPdG6YRtnR9t1jqdMmlAOq08+2tDS4KVDSdjXFx0H3seOCiYjqX2OZHDh2dfuTEWuLeFhlyhp+hcdaygv/8aw7CpqupPY+HiwyJg7LbPNOr6tvZ7ekjI5R13H5x4/svPTvr7hc+JNkyQvz8vlzE5hhmRQnEPSDccVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XreCZV6H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmPBkSNJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE646C4CEE4;
-	Thu, 13 Feb 2025 15:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XreCZV6H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307A4C4CED1;
+	Thu, 13 Feb 2025 15:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460538;
-	bh=E9yBQrpaG7eZqL0D8ZLTTudCntzY1V5ZspNvj/Rc55o=;
+	s=korg; t=1739460541;
+	bh=qCe+MTS1gghHjvqhojKFW/E38ULxigfRF3eTml+EgWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cmPBkSNJh5jSdY0nnlKdUk0ZZZwCzxb7u/IHympIBWkszwMbLBCf0z/dmku5NIIIp
-	 MukYHgNZylCc8ZEQGqfwe0/7Jsqa9wKj6KextARDROfmqsNM+XnXCEffUjlr64tDpm
-	 n2RrDhyGVt+6NmZjCBHh/PVFqogcuKhJ6/3Br2XU=
+	b=XreCZV6HbYraIParhriJYfomEx+AnanSTw3PEZY4fs4yRJfRt9cfSpKuQvHYpEwfE
+	 txu4i9tTxUzH1mAsiPVa86/8+x51ev+UqDDQyvfxUJ1wSBFCMgeJ/GwUC+1KvQA/B6
+	 Ifunhpz6M/2z+BhYF6OPy0hxNtCWtkhi/1ZkLF3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Jonathan Kim <jonathan.kim@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 098/273] drm/amdkfd: only flush the validate MES contex
-Date: Thu, 13 Feb 2025 15:27:50 +0100
-Message-ID: <20250213142411.216876739@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.6 134/273] usb: gadget: f_tcm: ep_autoconfig with fullspeed endpoint
+Date: Thu, 13 Feb 2025 15:28:26 +0100
+Message-ID: <20250213142412.632953954@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -51,53 +49,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 9078a5bfa21e78ae68b6d7c365d1b92f26720c55 upstream.
+commit 25224c1f07d31c261d04dfbc705a7a0f314a825d upstream.
 
-The following page fault was observed duringthe KFD process release.
-In this particular error case, the HIP test (./MemcpyPerformance -h)
-does not require the queue. As a result, the process_context_addr was
-not assigned when the KFD process was released, ultimately leading to
-this page fault during the execution of the function
-kfd_process_dequeue_from_all_devices().
+Match usb endpoint using fullspeed endpoint descriptor to make sure the
+wMaxPacketSize for fullspeed descriptors is automatically configured.
 
-[345962.294891] amdgpu 0000:03:00.0: amdgpu: [gfxhub] page fault (src_id:0 ring:153 vmid:0 pasid:0)
-[345962.295333] amdgpu 0000:03:00.0: amdgpu:   in page starting at address 0x0000000000000000 from client 10
-[345962.295775] amdgpu 0000:03:00.0: amdgpu: GCVM_L2_PROTECTION_FAULT_STATUS:0x00000B33
-[345962.296097] amdgpu 0000:03:00.0: amdgpu:     Faulty UTCL2 client ID: CPC (0x5)
-[345962.296394] amdgpu 0000:03:00.0: amdgpu:     MORE_FAULTS: 0x1
-[345962.296633] amdgpu 0000:03:00.0: amdgpu:     WALKER_ERROR: 0x1
-[345962.296876] amdgpu 0000:03:00.0: amdgpu:     PERMISSION_FAULTS: 0x3
-[345962.297135] amdgpu 0000:03:00.0: amdgpu:     MAPPING_ERROR: 0x1
-[345962.297377] amdgpu 0000:03:00.0: amdgpu:     RW: 0x0
-[345962.297682] amdgpu 0000:03:00.0: amdgpu: [gfxhub] page fault (src_id:0 ring:169 vmid:0 pasid:0)
-
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Jonathan Kim <jonathan.kim@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
 Cc: stable@vger.kernel.org
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/e4507bc824aed6e7c7f5a718392ab6a7c1480a7f.1733876548.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_tcm.c |   30 +++++++++++++-----------------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-@@ -86,9 +86,12 @@ void kfd_process_dequeue_from_device(str
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -1967,43 +1967,39 @@ static int tcm_bind(struct usb_configura
+ 	bot_intf_desc.bInterfaceNumber = iface;
+ 	uasp_intf_desc.bInterfaceNumber = iface;
+ 	fu->iface = iface;
+-	ep = usb_ep_autoconfig_ss(gadget, &uasp_ss_bi_desc,
+-			&uasp_bi_ep_comp_desc);
++	ep = usb_ep_autoconfig(gadget, &uasp_fs_bi_desc);
+ 	if (!ep)
+ 		goto ep_fail;
  
- 	if (pdd->already_dequeued)
- 		return;
--
-+	/* The MES context flush needs to filter out the case which the
-+	 * KFD process is created without setting up the MES context and
-+	 * queue for creating a compute queue.
-+	 */
- 	dev->dqm->ops.process_termination(dev->dqm, &pdd->qpd);
--	if (dev->kfd->shared_resources.enable_mes &&
-+	if (dev->kfd->shared_resources.enable_mes && !!pdd->proc_ctx_gpu_addr &&
- 	    down_read_trylock(&dev->adev->reset_domain->sem)) {
- 		amdgpu_mes_flush_shader_debugger(dev->adev,
- 						 pdd->proc_ctx_gpu_addr);
+ 	fu->ep_in = ep;
+ 
+-	ep = usb_ep_autoconfig_ss(gadget, &uasp_ss_bo_desc,
+-			&uasp_bo_ep_comp_desc);
++	ep = usb_ep_autoconfig(gadget, &uasp_fs_bo_desc);
+ 	if (!ep)
+ 		goto ep_fail;
+ 	fu->ep_out = ep;
+ 
+-	ep = usb_ep_autoconfig_ss(gadget, &uasp_ss_status_desc,
+-			&uasp_status_in_ep_comp_desc);
++	ep = usb_ep_autoconfig(gadget, &uasp_fs_status_desc);
+ 	if (!ep)
+ 		goto ep_fail;
+ 	fu->ep_status = ep;
+ 
+-	ep = usb_ep_autoconfig_ss(gadget, &uasp_ss_cmd_desc,
+-			&uasp_cmd_comp_desc);
++	ep = usb_ep_autoconfig(gadget, &uasp_fs_cmd_desc);
+ 	if (!ep)
+ 		goto ep_fail;
+ 	fu->ep_cmd = ep;
+ 
+ 	/* Assume endpoint addresses are the same for both speeds */
+-	uasp_bi_desc.bEndpointAddress =	uasp_ss_bi_desc.bEndpointAddress;
+-	uasp_bo_desc.bEndpointAddress = uasp_ss_bo_desc.bEndpointAddress;
++	uasp_bi_desc.bEndpointAddress =	uasp_fs_bi_desc.bEndpointAddress;
++	uasp_bo_desc.bEndpointAddress = uasp_fs_bo_desc.bEndpointAddress;
+ 	uasp_status_desc.bEndpointAddress =
+-		uasp_ss_status_desc.bEndpointAddress;
+-	uasp_cmd_desc.bEndpointAddress = uasp_ss_cmd_desc.bEndpointAddress;
++		uasp_fs_status_desc.bEndpointAddress;
++	uasp_cmd_desc.bEndpointAddress = uasp_fs_cmd_desc.bEndpointAddress;
+ 
+-	uasp_fs_bi_desc.bEndpointAddress = uasp_ss_bi_desc.bEndpointAddress;
+-	uasp_fs_bo_desc.bEndpointAddress = uasp_ss_bo_desc.bEndpointAddress;
+-	uasp_fs_status_desc.bEndpointAddress =
+-		uasp_ss_status_desc.bEndpointAddress;
+-	uasp_fs_cmd_desc.bEndpointAddress = uasp_ss_cmd_desc.bEndpointAddress;
++	uasp_ss_bi_desc.bEndpointAddress = uasp_fs_bi_desc.bEndpointAddress;
++	uasp_ss_bo_desc.bEndpointAddress = uasp_fs_bo_desc.bEndpointAddress;
++	uasp_ss_status_desc.bEndpointAddress =
++		uasp_fs_status_desc.bEndpointAddress;
++	uasp_ss_cmd_desc.bEndpointAddress = uasp_fs_cmd_desc.bEndpointAddress;
+ 
+ 	ret = usb_assign_descriptors(f, uasp_fs_function_desc,
+ 			uasp_hs_function_desc, uasp_ss_function_desc,
 
 
