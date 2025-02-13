@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A053157A5A;
-	Thu, 13 Feb 2025 15:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B321487FA;
+	Thu, 13 Feb 2025 15:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739458916; cv=none; b=LILIkWnWk9kHWjcP6GllLV/hq47FE9DC/AI33X+KAoa3BJN4t2M76p3P+owcLnWKkFae+gc3S+gkHT+04r8L6mgaodHkwaGHErNV4TX8Fcre4hM0aSCdjFbT2F7dJDnwMHC+dJV0Hvl6yS7MfJNAvuefMXvYfehNG6FAPY/HGn8=
+	t=1739458919; cv=none; b=f7ZzPGqSejDzlEblFpzSIc6TipynajZJQjpJcRhEKZEf1UtKxjAPfqDqmYskEdidVaHGNhc3BnGb3pELH/JtiIXrnibDOMc+tswswYiNaZnVNIN4lVxRtt5IB28FB+5lQ0RsqoHDt5LGUGcWEUTEVxWdjXRPjveKRBcVUn8b+EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739458916; c=relaxed/simple;
-	bh=eK0K1ZwX8AgO/8T4JcXialIyQH9JQBw1t0g5w6FKOb0=;
+	s=arc-20240116; t=1739458919; c=relaxed/simple;
+	bh=L8HJYjMc0AFqo/K42f42dTjTESLFvHWspnK3YlyPpTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VtUfMS5e0Qj/Jllaccu6h+B4XvFYfbNm7beknjQUxh2aRQzLnxIFwhVVB8sK76dJdNV2jf9hbZ8gudLbdoBXJobfiWcb/UQz3eHuu0B8vGyeBLGfmTNB/mhVTZuF4jMuTuCjIEe5OTzUJFzbxfFjwTNMfZB+d0nnXGCiTJIYMBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cyrvfzdX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gieabO694AqN+A78Ct0JLs19176yRcABz2e2G0tAfT8eh6pmJqdwFZaCnSoAaUkPq7cao5PleFkHalZFWhrMs3RVnmsj5PrkMAePsImj/TOxmdR+ehAAzBkKQl6nVCv4aXLJ1r4CBkuJNXE6ElymUanNZNn7VWkMcPQtkyOTjGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0u+sfph4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cyrvfzdX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A47AEC4CEE8;
-	Thu, 13 Feb 2025 15:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0u+sfph4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4126BC4CED1;
+	Thu, 13 Feb 2025 15:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739458916;
-	bh=eK0K1ZwX8AgO/8T4JcXialIyQH9JQBw1t0g5w6FKOb0=;
+	s=korg; t=1739458919;
+	bh=L8HJYjMc0AFqo/K42f42dTjTESLFvHWspnK3YlyPpTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cyrvfzdXpmF89FMrCgqPZq1lgagxfpokcAsyQlxmzNgn4Wa7QwrfHb835ohp8lJ6x
-	 FWkuQGdicyX6M5znZiMD+i17bGbMK94hfo/Bhr29cip2dzbyfSt7FBRjnvIZcjRZ+6
-	 5PUM/KNDmVaje249x6QaY69r45SBjP12S3g5sSX4=
+	b=0u+sfph4fF18wiy6xnvRs4eURRHLKTQqYUx9ZiajFmXDKR6D+dNXx6BklNmXDDHhD
+	 tuN+od7YuT2ZxXLAGuiAWawpAeKt0pleLuYQnT6xNGdnS27nCD9WZb/Ufyl4bS46RM
+	 oVRt151UgoYm2cF2/rA58ybUIyw/cYxlfGEcaI4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 115/443] net: bcmgenet: Correct overlaying of PHY and MAC Wake-on-LAN
-Date: Thu, 13 Feb 2025 15:24:40 +0100
-Message-ID: <20250213142445.050381969@linuxfoundation.org>
+Subject: [PATCH 6.13 116/443] ice: Add check for devm_kzalloc()
+Date: Thu, 13 Feb 2025 15:24:41 +0100
+Message-ID: <20250213142445.088897865@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
 References: <20250213142440.609878115@linuxfoundation.org>
@@ -51,72 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 46ded709232344b5750a852747a8881763c721ab ]
+[ Upstream commit a8aa6a6ddce9b5585f2b74f27f3feea1427fb4e7 ]
 
-Some Wake-on-LAN modes such as WAKE_FILTER may only be supported by the MAC,
-while others might be only supported by the PHY. Make sure that the .get_wol()
-returns the union of both rather than only that of the PHY if the PHY supports
-Wake-on-LAN.
+Add check for the return value of devm_kzalloc() to guarantee the success
+of allocation.
 
-When disabling Wake-on-LAN, make sure that this is done at both the PHY
-and MAC level, rather than doing an early return from the PHY driver.
-
-Fixes: 7e400ff35cbe ("net: bcmgenet: Add support for PHY-based Wake-on-LAN")
-Fixes: 9ee09edc05f2 ("net: bcmgenet: Properly overlay PHY and MAC Wake-on-LAN capabilities")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250129231342.35013-1-florian.fainelli@broadcom.com
+Fixes: 42c2eb6b1f43 ("ice: Implement devlink-rate API")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250131013832.24805-1-jiashengjiangcool@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/genet/bcmgenet_wol.c   | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/ice/devlink/devlink.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-index 0715ea5bf13ed..3b082114f2e53 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-@@ -41,9 +41,12 @@ void bcmgenet_get_wol(struct net_device *dev, struct ethtool_wolinfo *wol)
- {
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
- 	struct device *kdev = &priv->pdev->dev;
-+	u32 phy_wolopts = 0;
+diff --git a/drivers/net/ethernet/intel/ice/devlink/devlink.c b/drivers/net/ethernet/intel/ice/devlink/devlink.c
+index 415445cefdb2a..b1efd287b3309 100644
+--- a/drivers/net/ethernet/intel/ice/devlink/devlink.c
++++ b/drivers/net/ethernet/intel/ice/devlink/devlink.c
+@@ -977,6 +977,9 @@ static int ice_devlink_rate_node_new(struct devlink_rate *rate_node, void **priv
  
--	if (dev->phydev)
-+	if (dev->phydev) {
- 		phy_ethtool_get_wol(dev->phydev, wol);
-+		phy_wolopts = wol->wolopts;
-+	}
- 
- 	/* MAC is not wake-up capable, return what the PHY does */
- 	if (!device_can_wakeup(kdev))
-@@ -51,9 +54,14 @@ void bcmgenet_get_wol(struct net_device *dev, struct ethtool_wolinfo *wol)
- 
- 	/* Overlay MAC capabilities with that of the PHY queried before */
- 	wol->supported |= WAKE_MAGIC | WAKE_MAGICSECURE | WAKE_FILTER;
--	wol->wolopts = priv->wolopts;
--	memset(wol->sopass, 0, sizeof(wol->sopass));
-+	wol->wolopts |= priv->wolopts;
- 
-+	/* Return the PHY configured magic password */
-+	if (phy_wolopts & WAKE_MAGICSECURE)
-+		return;
+ 	/* preallocate memory for ice_sched_node */
+ 	node = devm_kzalloc(ice_hw_to_dev(pi->hw), sizeof(*node), GFP_KERNEL);
++	if (!node)
++		return -ENOMEM;
 +
-+	/* Otherwise the MAC one */
-+	memset(wol->sopass, 0, sizeof(wol->sopass));
- 	if (wol->wolopts & WAKE_MAGICSECURE)
- 		memcpy(wol->sopass, priv->sopass, sizeof(priv->sopass));
- }
-@@ -70,7 +78,7 @@ int bcmgenet_set_wol(struct net_device *dev, struct ethtool_wolinfo *wol)
- 	/* Try Wake-on-LAN from the PHY first */
- 	if (dev->phydev) {
- 		ret = phy_ethtool_set_wol(dev->phydev, wol);
--		if (ret != -EOPNOTSUPP)
-+		if (ret != -EOPNOTSUPP && wol->wolopts)
- 			return ret;
- 	}
+ 	*priv = node;
  
+ 	return 0;
 -- 
 2.39.5
 
