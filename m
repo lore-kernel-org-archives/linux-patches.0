@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950E919D092;
-	Thu, 13 Feb 2025 15:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6E1146588;
+	Thu, 13 Feb 2025 15:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739460214; cv=none; b=BQD7ju+lmk7/jFZr2LbrxmD61VtRNaEfFgTnKqvA9V4NGD7LB4UllrsJqmiXA4EusHh85bgV5XIVaYuIONUFPkWlWfqC7jU5q7JiRi1Nl0vFRcmjXIzJWwSPMuK/zuLb+y2i3gzYx7Ara3yt7QGndNs4H9ZUHXe+FHNgOErjkC4=
+	t=1739460218; cv=none; b=acLsm7lf50GplRBQGTx+9QlDmxo0z+kgjlqedcg59Z6cvdDB7WUKoYj+IFanmd7YgvCeedK9SBq9DGxi3ZyqW9W86QC0gU/8ZSa9se1Ngm2ERoW6aGUU+ZicD8Ahl5ExYpxDrM0lHOpGKXb+1v+stCN9nWuEw85iMRDwN5XD+b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739460214; c=relaxed/simple;
-	bh=LeohtLtnnq8eYsqwIcTaI1Q/NRtnpFYV/OZVdF12HY0=;
+	s=arc-20240116; t=1739460218; c=relaxed/simple;
+	bh=Lv3tkUTPZ3LH4IMmSX/R2LkI1xkwBYjeOkTdHLi+vc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JXk0WJU8hW4a8D6BeZlq8/YyPqKq+WqLMaErTkVt9Svr0HgiBFcbl9l1Ku2nDvB0eq9W6L22IrAQ32Ii8iqDmhq4ilhP0ueBnfFrxt7ALQRSlIK7KoGKB6hL8YBeLwRwFtUxHgVrgC5quSuh2uPpIthxN7YxXt/qBpawgo6wqfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuU+GgRH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G8xruMCZ+PlF5T2IJT6qz+BFsf8S1BCT2xhRNQZ00/+fHkVQUAo2b4sVd2pa2N4nM80LyQXPSenwGwN1oHC4udcNm0XSGX6IhhrowfYE/ZB4deccOwArUT5i7WRQnBKyUJrppMQJ8uZ/uYFUh9E2BKtySFWR+U47JFPN2iF7TjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttA0WZj4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuU+GgRH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0032EC4CED1;
-	Thu, 13 Feb 2025 15:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttA0WZj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D956C4CED1;
+	Thu, 13 Feb 2025 15:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739460214;
-	bh=LeohtLtnnq8eYsqwIcTaI1Q/NRtnpFYV/OZVdF12HY0=;
+	s=korg; t=1739460218;
+	bh=Lv3tkUTPZ3LH4IMmSX/R2LkI1xkwBYjeOkTdHLi+vc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TuU+GgRHu7ij+YAJ5uso9jPzp6O/Y249AMwnxa47Bm5np/hvtNRQ6dC9kq6kWnz0J
-	 bO6NB5jt2NQ41/odjIWsk+DYCcims0yFJ3hKO0Jh/vU9nNd+eA+xOq/OSfThQzFvQK
-	 ev2ZiPWquKob0S7Kr+csConhnrv6EFNxW5a1FP9o=
+	b=ttA0WZj4RwhEn6JFLHO+y2BkWAFFQd7zinZJRC2EQ6A50GVCPHqfxfjY+vAqn3JZJ
+	 huWYwfpmj+9/HBiWUu7Si0O1OO9UCkjRvrLxap326zj1NEYpeNHzJWx9PZ/HNbrvY7
+	 s0ULc084kQ6xRe11Pziqjh0EMRj0sUk7Frpmed68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/273] wifi: brcmsmac: add gain range check to wlc_phy_iqcal_gainparams_nphy()
-Date: Thu, 13 Feb 2025 15:26:43 +0100
-Message-ID: <20250213142408.586787518@linuxfoundation.org>
+Subject: [PATCH 6.6 049/273] platform/x86: int3472: Check for adev == NULL
+Date: Thu, 13 Feb 2025 15:27:01 +0100
+Message-ID: <20250213142409.290628048@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250213142407.354217048@linuxfoundation.org>
 References: <20250213142407.354217048@linuxfoundation.org>
@@ -46,45 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 3f4a0948c3524ae50f166dbc6572a3296b014e62 ]
+[ Upstream commit cd2fd6eab480dfc247b737cf7a3d6b009c4d0f1c ]
 
-In 'wlc_phy_iqcal_gainparams_nphy()', add gain range check to WARN()
-instead of possible out-of-bounds 'tbl_iqcal_gainparams_nphy' access.
-Compile tested only.
+Not all devices have an ACPI companion fwnode, so adev might be NULL. This
+can e.g. (theoretically) happen when a user manually binds one of
+the int3472 drivers to another i2c/platform device through sysfs.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Add a check for adev not being set and return -ENODEV in that case to
+avoid a possible NULL pointer deref in skl_int3472_get_acpi_buffer().
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241210070441.836362-1-dmantipov@yandex.ru
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20241209220522.25288-1-hdegoede@redhat.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/platform/x86/intel/int3472/discrete.c | 3 +++
+ drivers/platform/x86/intel/int3472/tps68470.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
-index 8580a27547891..42e7bc67e9143 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
-@@ -23427,6 +23427,9 @@ wlc_phy_iqcal_gainparams_nphy(struct brcms_phy *pi, u16 core_no,
- 				break;
- 		}
+diff --git a/drivers/platform/x86/intel/int3472/discrete.c b/drivers/platform/x86/intel/int3472/discrete.c
+index e33c2d75975cf..d56f79043f5e2 100644
+--- a/drivers/platform/x86/intel/int3472/discrete.c
++++ b/drivers/platform/x86/intel/int3472/discrete.c
+@@ -284,6 +284,9 @@ static int skl_int3472_discrete_probe(struct platform_device *pdev)
+ 	struct int3472_cldb cldb;
+ 	int ret;
  
-+		if (WARN_ON(k == NPHY_IQCAL_NUMGAINS))
-+			return;
++	if (!adev)
++		return -ENODEV;
 +
- 		params->txgm = tbl_iqcal_gainparams_nphy[band_idx][k][1];
- 		params->pga = tbl_iqcal_gainparams_nphy[band_idx][k][2];
- 		params->pad = tbl_iqcal_gainparams_nphy[band_idx][k][3];
+ 	ret = skl_int3472_fill_cldb(adev, &cldb);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Couldn't fill CLDB structure\n");
+diff --git a/drivers/platform/x86/intel/int3472/tps68470.c b/drivers/platform/x86/intel/int3472/tps68470.c
+index 1e107fd49f828..81ac4c6919630 100644
+--- a/drivers/platform/x86/intel/int3472/tps68470.c
++++ b/drivers/platform/x86/intel/int3472/tps68470.c
+@@ -152,6 +152,9 @@ static int skl_int3472_tps68470_probe(struct i2c_client *client)
+ 	int ret;
+ 	int i;
+ 
++	if (!adev)
++		return -ENODEV;
++
+ 	n_consumers = skl_int3472_fill_clk_pdata(&client->dev, &clk_pdata);
+ 	if (n_consumers < 0)
+ 		return n_consumers;
 -- 
 2.39.5
 
