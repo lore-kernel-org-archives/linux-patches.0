@@ -1,50 +1,38 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BC0189912;
-	Fri, 14 Feb 2025 05:42:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D57127E18;
+	Fri, 14 Feb 2025 05:54:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739511776; cv=none; b=tMcKU0v4zX/+dtt0r1yN7M7oTuP9UXg+d2OBD2QceCN64TyZkGpi1oidKwRma0Je8+k2nk02metJ68qyrJkQLFuEZ/LgWLW/oTFSoy1SNLpQntYaOvvoWcDLhJWovs+z5DrRrMmW9XDW9Fnz//q5aru8fuUK1FQXtmC+mwF2vDI=
+	t=1739512481; cv=none; b=bIJ260L3+vQMli/caGpgOUW6sRAHRgaNfr3qk+eWePEPiDdmPM9x8cXYwcsOH+/xv+Fk6UUs5n414avX4xN84V26Uxuo6nF+h2Ti6qquJtfcz3/AFs+XSA+e+aFiWnlXxNTt0+D6IA5FlqcKasPKLLtosYIKYAd58wpyLjnx6r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739511776; c=relaxed/simple;
-	bh=h6p7Y22j2hIaMSGgYnBcUas0+FeWCyvYHlZZIhCytkM=;
+	s=arc-20240116; t=1739512481; c=relaxed/simple;
+	bh=Q9yJSVReDDAppABu0RBikijyt2F5uHBFJV41jvoKm18=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g8o3uJ8lHoIxSp2n4pAUe9+0v8701EpF9/QfNQUnOANtnUtfeJISCFyx6+G+SqFRU26VIjvgw3yLU9F7yQOLYfsQMDGoa86H+rXfAKvLFj0lkpVSGQgv6uu0rt0x5xBhS8TbTNCnitrslwGV0k5k7jTCiJ++c25lR9zNLK7ebYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hZTWzL+R; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	 In-Reply-To:Content-Type; b=l3mPgaRoIGZd8GBHiK0s8c198H5ct514WygnVUT8NST1WFHbmq+bbnTzmMcWO1Tdss5xP05EgZc5VWEC9x3PouDDPrkHD8zpOiSOUVTpM75y9Fq0Web7X8BK6ZK3Wses6mEdmwAdliT/gQEi1a2coSNP6AF8aYlxd9hYZ68an+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=none smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=raq2HhZ9; arc=none smtp.client-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hZTWzL+R"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1739511774; x=1771047774;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=h6p7Y22j2hIaMSGgYnBcUas0+FeWCyvYHlZZIhCytkM=;
-  b=hZTWzL+RAv+XZmiZrV5fw47VQDy/Ohj+5ukcULnwOic2Zd02c/1c2E72
-   XW3lEnHM3FSdY0cL76767L/PtMR44X7rdebn27/tKpu5iA8+ffWygFxN6
-   8s3bjo0I7Dswm6fYg1ENtEMBxQM0DMqNZmijOr0yU0mSVHNRyHvpPbCcs
-   Qt8rxfcrnFVXz9o2jLv/HvrOYQ6uf4kyj+gkOtrUnqI2B7J7i5s4lBgKg
-   kYth46ptZ/BXtRaBovIm4OQobMYDNYPRW7rMKo6YdzEsN2quCEt7cDz6c
-   rBUgpPxzJ3v5w16tbMnTa51sDjpy9QouBPyq+rVRkzeUkWXtKe0zpDnEo
-   w==;
-X-CSE-ConnectionGUID: hxpl+tuZS66Brpxuh7xeAw==
-X-CSE-MsgGUID: a7C+9IccSz6rgY4sQuHuOQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="51680991"
-X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; 
-   d="scan'208";a="51680991"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 21:42:54 -0800
-X-CSE-ConnectionGUID: HFEGjSazTHyw5Tz92aIw/w==
-X-CSE-MsgGUID: RMkJwxJhQSmPkE76rQWIFA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="118573799"
-Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 21:42:47 -0800
-Message-ID: <bc9f4477-7976-4955-85dc-3e05ebe95ead@linux.intel.com>
-Date: Fri, 14 Feb 2025 13:39:52 +0800
+	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="raq2HhZ9"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:Content-Transfer-Encoding:Content-Type
+	:In-Reply-To:From:References:Cc:To:Subject:Reply-To:MIME-Version:Date:
+	Message-ID:Content-ID:Content-Description;
+	bh=sqimaXT9kayDFL7e+TOq2/bArAC6vZXSj2rt1Po417I=; b=raq2HhZ9X5CTlNRYvn32SXoW9m
+	mzClHtXTtzCrLOFzfw7a9G4yS1OkVuxw+s1QxfgoqzefUBnNd7bmuK8Tkd7A57uoT1g3SNRmsLMYS
+	v7C2tv0DcJWgAFidnVfDyX602/2neOq9Vc8cS56rI/BmWtqyKGCLOk2w3+VQdcTJ+QsC1rm8D8/a/
+	/7ZnhH/5LFj5I5ZRtLmUwqD08MJ0schQifsHpxBiSzILMXYMeQ3IrfPnCLqipyh/cBbgFc/mjHSAI
+	qF6TejU/SBKiSPQ3mpB/I7fEPgAUAQZZt0oj53pQCcvxt+v8iTPBCABueKG1eVxS+mqwGFMr75HR3
+	RHnI9kkQ==;
+Received: from authenticated user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
+	(Exim 4.94.2)
+	(envelope-from <daniel@debian.org>)
+	id 1tioel-009GIU-UG; Fri, 14 Feb 2025 05:54:32 +0000
+Message-ID: <93c10d38-718c-459d-84a5-4d87680b4da7@debian.org>
+Date: Fri, 14 Feb 2025 06:54:30 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,124 +40,32 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/12] Initial support for SMMUv3 nested translation
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Zhangfei Gao <zhangfei.gao@linaro.org>, acpica-devel@lists.linux.dev,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
- Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Robert Moore <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>,
- Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Donald Dutile <ddutile@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Hanjun Guo <guohanjun@huawei.com>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Jerry Snitselaar <jsnitsel@redhat.com>, Moritz Fischer <mdf@kernel.org>,
- Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>,
- patches@lists.linux.dev, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- Mostafa Saleh <smostafa@google.com>
-References: <20241112182938.GA172989@nvidia.com>
- <CABQgh9HOHzeRF7JfrXrRAcGB53o29HkW9rnVTf4JefeVWDvzyQ@mail.gmail.com>
- <20241113012359.GB35230@nvidia.com>
- <9df3dd17-375a-4327-b2a8-e9f7690d81b1@linux.intel.com>
- <20241113164316.GL35230@nvidia.com>
- <6ed97a10-853f-429e-8506-94b218050ad3@linux.intel.com>
- <20241115175522.GA35230@nvidia.com> <20250122192622.GA965540@nvidia.com>
- <284dd081-8d53-45ef-ae18-78b0388c98ca@linux.intel.com>
- <f7b6c833-b6c1-4154-9b77-13553e501f2b@linux.intel.com>
- <20250213184317.GB3886819@nvidia.com>
+Reply-To: daniel@debian.org
+Subject: Re: [PATCH 6.12 345/422] ata: libata-core: Add ATA_QUIRK_NOLPM for
+ Samsung SSD 870 QVO drives
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Niklas Cassel <cassel@kernel.org>
+References: <20250213142436.408121546@linuxfoundation.org>
+ <20250213142449.867734843@linuxfoundation.org>
 Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <20250213184317.GB3886819@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Daniel Baumann <daniel@debian.org>
+In-Reply-To: <20250213142449.867734843@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Debian-User: daniel
 
-On 2/14/25 02:43, Jason Gunthorpe wrote:
-> On Thu, Feb 13, 2025 at 07:57:51PM +0800, Baolu Lu wrote:
->> On 2025/2/5 11:45, Baolu Lu wrote:
->>> On 2025/1/23 3:26, Jason Gunthorpe wrote:
->>>> On Fri, Nov 15, 2024 at 01:55:22PM -0400, Jason Gunthorpe wrote:
->>>>>>> I need your help to remove IOMMU_DEV_FEAT_IOPF from the intel
->>>>>>> driver. I have a patch series that eliminates it from all the other
->>>>>>> drivers, and I wrote a patch to remove FEAT_SVA from intel..
->>>>>> Yes, sure. Let's make this happen in the next cycle.
->>>>>>
->>>>>> FEAT_IOPF could be removed. IOPF manipulation can be handled in the
->>>>>> domain attachment path. A per-device refcount can be implemented. This
->>>>>> count increments with each iopf-capable domain attachment
->>>>>> and decrements
->>>>>> with each detachment. PCI PRI is enabled for the first iopf-capable
->>>>>> domain and disabled when the last one is removed. Probably we can also
->>>>>> solve the PF/VF sharing PRI issue.
->>>>> Here is what I have so far, if you send me a patch for vt-d to move
->>>>> FEAT_IOPF into attach as you describe above (see what I did to arm for
->>>>> example), then I can send it next cycle
->>>>>
->>>>> https://github.com/jgunthorpe/linux/commits/iommu_no_feat/
->>>> Hey Baolu, a reminder on this, lets try for it next cycle?
->>>
->>> Oh, I forgot this. Thanks for the reminding. Sure, let's try to make it
->>> in the next cycle.
->>
->> Hi Jason,
->>
->> I've worked through the entire series. The patches are available here:
->>
->> https://github.com/LuBaolu/intel-iommu/commits/iommu-no-feat-v6.14-rc2
->>
->> Please check if this is the right direction.
-> 
-> Looks great, and you did all the cleanup stuff too!
-> 
-> The vt-d flow is a little more complicated than the ARM logic because
-> the driver flow is structed differently.
-> 
-> Do we really want ATS turned on if the only thing attached is an
-> IDENTITY domain? That will unnecessarily slow down ATS capable HW.. It
-> is functionally OK though.
+Hi Greg,
 
-It depends. The Intel driver uses a simple approach.
+On 2/13/25 15:28, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
 
-When the IOMMU is working in legacy mode, PASID and PRI are not
-supported. In this case, ATS will not be enabled if the identity domain
-is attached to the device.
+there was a report from a user that this is breaking it for them with
+newer firmware versions on the SSD - I'm narrowing it down to a list of
+older firmware versions that are affected and providing a follow-up patch.
 
-When the IOMMU is working in scalable mode, PASID and PRI are supported.
-ATS will always be enabled, even if the identity domain is attached to
-the device, because the PASID might use PRI, which depends on ATS
-functionality. This might not be the best choice, but it is the
-simplest and functional.
+It takes a bit more time than expected due to the cumbersome flashing
+routine (windows :/). It would be safe to not merge the original commit
+in the meantime to stable.
 
-If any device does not work with the identity domain and ATS enabled,
-then we can add a quirk to the driver, as we already have such a
-mechanism.
-
-> 
-> Also, are there enough ATC flushes around any domain type change? I
-> didn't check..
-
-The VT-d specification defines guidance for software to manage caches,
-both the IOTLB in the IOMMU and the ATC on the device (Table 28,
-Guidance to Software for Invalidations). The driver was written
-according to that guidance.
-
-> I feel like we should leave "iommu: Move PRI enablement for VF to
-> iommu driver" out for now, every driver needs this check?  AMD
-> supports SVA and PRI so it needs it too.
-
-Yes, agreed.
-
-> 
-> Do you want to squash those fixup patches and post it?
-
-Yes, sure. Let me post it for further review.
-
-> Thanks,
-> Jason
-
-Thanks,
-baolu
+Regards,
+Daniel
