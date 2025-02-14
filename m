@@ -1,80 +1,96 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C176134AB;
-	Fri, 14 Feb 2025 18:54:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D851C84C8
+	for <patches@lists.linux.dev>; Fri, 14 Feb 2025 19:43:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739559249; cv=none; b=YNuDLa+Nc32ONBab1mlb3viEkKcDO54QbA0M7kaWN1vxws5oL7SAz84rrpJUHaHe5M8JIaih7R5/C77I8O9KNkEH12OwX51FnhvPhOqAcaDyDRbDC9piuiLOqj35yEAZMwgFvoQzd0xEMLBRU2Iwt2dHnXCSh6xz/zhc9We8UjY=
+	t=1739562196; cv=none; b=ZN73h2URjCEWK4hhD9t8OloGHGfx/XBhTjoUqrC1JzdQMhJIb63wZVyIQp5kPvTN4Bw101kFBoS/atf98cxqri00PZCfjb+upONIXgBapYGEriy/aGA+xYKlwCND+YENzDVVHWTYb1tMpMOLcRy/P3bz1JOJmhyEKSFdzkYKsjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739559249; c=relaxed/simple;
-	bh=CdQQmkY1frX7rOg0v2xluKUqZNensdHIXPSt4opexaY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GMGunnQyn3lHUy68tJ29NaE3s/++Sdm++ti7M6zBVxX9XFHRO/ljtWUJg2OsqHbATOYUfIMI/X3xefsIFHE02fPu9iKGhr6wU2qHCuRAdQbMIaa1IYUvovibOhzJdlyDX71NblxSheMVBa3D4qq+8s74O/hU9btRgOwi+fN3+8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M7ZLoy6r; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1739562196; c=relaxed/simple;
+	bh=Q56QkAqSvsIKQBhKc9/nl5EaiJ4PZsSBDuJjpKC1AuM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZZzBuKNZI5tqFcUuUhdKvWowyes9AmFkMOT2AzabG2ceMSadIHxAbQQeAL4zx7wNxTFakxMmT9JbrHH+TfQq4ym42FWpPd7QWKhkPlgtaJc6MkYXqOc4Z77DKi8s53vBThhqX0kEp/7JMw7QdjVMeJSUaYTOnNodLxhd+KPpCis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sladewatkins.net; spf=pass smtp.mailfrom=sladewatkins.com; dkim=pass (2048-bit key) header.d=sladewatkins-com.20230601.gappssmtp.com header.i=@sladewatkins-com.20230601.gappssmtp.com header.b=SZVUc2Rd; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sladewatkins.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sladewatkins.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M7ZLoy6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78ABDC4CED1;
-	Fri, 14 Feb 2025 18:54:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739559248;
-	bh=CdQQmkY1frX7rOg0v2xluKUqZNensdHIXPSt4opexaY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=M7ZLoy6rqavRg54OkYuZ4gCGwK2Kfskj7/v95wA6g5S7D7E2f2XKeXxUmI5BWhWxk
-	 KJaBTpD29KJrRmFnVaUpfhIdIHw+mJuYlFYSs/al4A1U9BY4ASxcqwVcqXD6o46t6m
-	 s4HQyupRwUaoiTWrcF8g6RoWL3Z3HXuYI1fM5D+ISoMbX5/6UWbzKmd2SKjHmr3jgT
-	 6tbzmDMZMRFo3yt5hff4YOROaD6Cht/NgQoCqid7XRohpJrtoV34aG+87yOltQKFcM
-	 yVF1tI5IDaSJY+YH3B2tsY8RfvTsPT47Jlu9Md8b9ev0uKIQKk03gSjcU5RZuuX5AS
-	 owigVcUFG72Ug==
-Date: Fri, 14 Feb 2025 10:54:07 -0800
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Cc: "linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
-	"hare@suse.de" <hare@suse.de>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"gost.dev@samsung.com" <gost.dev@samsung.com>
-Subject: Re: [PATCH blktests v3 0/6] enable bs > ps device testing
-Message-ID: <Z6-RTxfPGWrAsNvC@bombadil.infradead.org>
-References: <20250212205448.2107005-1-mcgrof@kernel.org>
- <shkzvixvm26ojvvergul7orla45jsmgw5fcozm7en55sh7zen5@63udt7eqtvf5>
+	dkim=pass (2048-bit key) header.d=sladewatkins-com.20230601.gappssmtp.com header.i=@sladewatkins-com.20230601.gappssmtp.com header.b="SZVUc2Rd"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ab7e1286126so425348766b.0
+        for <patches@lists.linux.dev>; Fri, 14 Feb 2025 11:43:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sladewatkins-com.20230601.gappssmtp.com; s=20230601; t=1739562192; x=1740166992; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TY0DoOA/s8kkBWd88tL/y1YZXdpMeL10h/GY/yl8oOg=;
+        b=SZVUc2RdIG4/I3jYDu3L+YOEI3gVGRaZUYRXxqY7/qUyfz0+Cj+xC5TkmWF1H1XXAl
+         dXSLsugEk5+VeyD02E7oHnkORC3QVzjPWL+BCQXn3A8hetZjiMy1zgR2oUpy5K01pIoq
+         MwiXCiy1PVI1TO7HOMe/eRUscTSay2OlvoZYWITAroWWj1wbL4DIkQBDsffsdjvxxjD7
+         BZS3+DDIUJCi5mhtvc32M+mG6LnEuTWcsdHfxEUgskBnrZ6Rbhj9efIBF3jsg/crTfhn
+         NI6DSiqK717BmmxM9AHAxoFZVQz2Q9Jjp6/rNYwN2LxCiIJJeVOyr8XS7pKSu7t3q1Pg
+         BHxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739562192; x=1740166992;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TY0DoOA/s8kkBWd88tL/y1YZXdpMeL10h/GY/yl8oOg=;
+        b=hEBhySlQPWng7nZ/NijygQ5q5rJ4KFcPKJL2WK8TR7cnBoZ43wTOjNz87N6AGkv8l/
+         CE/KSjDiOdsg+diMtSiCdnd9BrUAVm0YmDQPuCKjvpDGiRAs6pmlW+8S341haHbUWqTc
+         2EULXV0cpjziV/fKVw3u45pUaJ4uYWUDmG26OC05+VphuTv5R/wsQSfcTrwMZxcoyHjS
+         u71Tlcpjvd5dsiizhgz19jtRARnN8mCMUURoVyjzFS1CnVL3/GORvoRQPk1Wr+Ai7Pr/
+         yFXBDtxcm7BCBjwRFjry1Nbk1t0mr0DmYyy/I81UN6zjwi239Pvr1gxlvG2RNbkAF7P0
+         BIDg==
+X-Forwarded-Encrypted: i=1; AJvYcCVU8Rdd3BALRFlRnc58pVJFTeED2/EfYEuchZLW4ukrGUkcUh9P0QE/iVy3c01mTL0OktIhlgzx@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx0Myi8W5DBf6OPIUY2+fQquC/MoogQFgi7fD1ty35cnaN4mOT8
+	OiT1MJEpyIc7zM+UsWM+BwdC8vtjKR5faKMfVfvWw3AFwiPviu34EOA2qodaVfHjE6ClLhhUrX8
+	GwbVPpNWX14uL5ynIshR0puHQ1NHsk7itlKv6OQ==
+X-Gm-Gg: ASbGncuRTc1zJ4sm3NMbj+44GEsMR5id2OUnzH0ZNXS+L62O1j7PDVHvIH/hNc3CugB
+	k00n5mVN/QYEFlbqEM/vr00BlUvjjde866wjxsl90awP+QESTxVDziBzOr4vtNFtYPQ0+R0w=
+X-Google-Smtp-Source: AGHT+IE1oGc2ZQExbVhQL+yj7D6/9XuOay+H9ZYPuFBGVhs2U2fRcRQf9e/FV030JbpAF4s0bLXtmTSrCHVrj20z6WY=
+X-Received: by 2002:a17:907:784b:b0:aba:6055:9f5b with SMTP id
+ a640c23a62f3a-abb70c01eadmr33484666b.2.1739562192539; Fri, 14 Feb 2025
+ 11:43:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <shkzvixvm26ojvvergul7orla45jsmgw5fcozm7en55sh7zen5@63udt7eqtvf5>
+References: <20250214133845.788244691@linuxfoundation.org>
+In-Reply-To: <20250214133845.788244691@linuxfoundation.org>
+From: Slade Watkins <srw@sladewatkins.net>
+Date: Fri, 14 Feb 2025 14:43:00 -0500
+X-Gm-Features: AWEUYZnRv0kmWQ8Wfq4_P-n3RgbAjB3ZTI3Gtrs3oZe14Y2S4Ma3FjndvU69qsQ
+Message-ID: <CA+pv=HMHE=uB2ya2_bd43H5H__Nay0nXG6cQH93ueC-R1K7YrA@mail.gmail.com>
+Subject: Re: [PATCH 6.12 000/419] 6.12.14-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 14, 2025 at 11:34:07AM +0000, Shinichiro Kawasaki wrote:
-> On Feb 12, 2025 / 12:54, Luis Chamberlain wrote:
-> > This v3 series addresses the feedback from the v2 series [0] and
-> > makes some minor new changes, the change are:
-> > 
-> >   - Fixes all shellcheck complaints
-> >   - Addresses spacing / tabs fixes
-> >   - Adds _test_dev_suits_xfs() as suggested by Shinichiro and makes
-> >     tests which require this depend on it
-> >   - Clamps _min_io() to 4k as well for backward compatibility
-> >   - Few minor enhancements to help capture up error messages from
-> >     mkfs from block/032
-> > 
-> > This goes tested against a 64k sector size NVMe drive, and also
-> > using ./check so regular loopback devices are used. This helps
-> > test 64k sector devices, patches for which have been posted [1].
-> >                                                                                                                                                                                               
-> > [0] https://lkml.kernel.org/r/20250204225729.422949-1-mcgrof@kernel.org
-> > [1] https://lkml.kernel.org/r/20250204231209.429356-1-mcgrof@kernel.org
-> 
-> Luis, thank you very much for the improvements. I made comments on some of
-> the patches. FYI, I reflected my comments on your patches, and pushed them to a
-> github repo branch [2]. Please take a look in them and see if my comments make
-> sense or not.
-> 
-> [2] https://github.com/kawasaki/blktests/commits/bs_ps/
+On Fri, Feb 14, 2025 at 8:58=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.12.14 release.
+> There are 419 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 16 Feb 2025 13:37:21 +0000.
+> Anything received after that time might be too late.
 
-Looks good, thanks for doing this, passes all my tests too, please feel
-free to merge :)
+Hi Greg,
+No regressions or any sort of issues to speak of. Builds fine on my
+x86_64 test machine.
 
-  Luis
+Tested-by: Slade Watkins <srw@sladewatkins.net>
+
+All the best,
+Slade
