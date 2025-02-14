@@ -1,74 +1,99 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4F1253BE
-	for <patches@lists.linux.dev>; Fri, 14 Feb 2025 00:58:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429F439FD9
+	for <patches@lists.linux.dev>; Fri, 14 Feb 2025 01:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739494729; cv=none; b=A+DrySInLJdtDQOIIgKR2PQM2U58nesGoIuWjxjwrvu9/ShxNrL/dMguQdM2kCFIKGCpujerPG8yTfDg6n6jSrgErRE2OT9z9l+OxPNdTwt+W/3FyQf6R/ONAGKeIZxKkCapL4BFe4xq8EDJvvUIL+ZjKYziRbcsq7ASlIUqtck=
+	t=1739497159; cv=none; b=e0mu2Lk5/rVGQErZeWR7BN6ESeeLmDffV19w5BS63GpWjCGfPQigbTKk47SJ3jnE9Ts/YTgvcVETscB2AtscF+x3sxvwQczXIlXsLK9iEQSflzLEeCBr+wWt7h/0rENIVh6uCf755pGMjIvkJeXUg9RsURSG5PSjJ3Yq/6a1ahk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739494729; c=relaxed/simple;
-	bh=sES3N0KOCj95wUW1kpcBsWvzb0jA4oJ+pPvo/7OVEpc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=WI2N7HCDUB/DLhyRhWM12WRRGWJCQ4mjwghYeBFBjsHv5Ry87LplMlXzTwMOJGhXZpJ4AVqQzSH8PG41G4rU73kDhMMe3FfM16jG8zH/I0uCqLqO2+7neaO5UGUPuEm31nrqA3HjvjTFDY8T3ywj0E2g6iq1T7+flIxeMjEu5LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=Fq6ZrS0c; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1739497159; c=relaxed/simple;
+	bh=9IxhGYBiqmCXEOQC+SsmBi/iEnbY572YamGs8pAzvaI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nbkEhELlaQ6SZ1aknZwYCFXpwX+oRAgDqTm/HMo3vMdi2UnqNXucLxtgRcVr2bV7hLXdF7omcrD39/A3e8uW6MZhLOUnKOPKQcdQP3t04ldlgtPSUK9vx4vZgJmjISdBAT0B+Gz7O2GivNUXKmQeUu3oOa1x+F+pEgUDA9nHJ5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QCpZJaSM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="Fq6ZrS0c"
-Received: by linux.microsoft.com (Postfix, from userid 1158)
-	id 42C56203F3CB; Thu, 13 Feb 2025 16:58:48 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 42C56203F3CB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1739494728;
-	bh=lw5OAMpvD91SmqoTd0RZGp90OwCZ6vSzyyb/Cz5IKPU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fq6ZrS0cZ8JOLt9tvxxFYN2gEj0veSvJPxmRtcnMfkGl0BEEK6E6lNQ89mkDnADb9
-	 R4byienxSrMKZ8qJial4iCYtlFDY7dX5Eb0IP3tXnA/CEjK9NR/2/c9jOr2yKBSfHi
-	 5Tfxins3IkKcPuKO13pdUemxV0ANX5etgYv+/obE=
-From: Hardik Garg <hargar@linux.microsoft.com>
-To: gregkh@linuxfoundation.org
-Cc: akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	srw@sladewatkins.net,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org
-Subject: Re: [PATCH 6.13 000/619] 6.13.3-rc1 review
-Date: Thu, 13 Feb 2025 16:58:48 -0800
-Message-Id: <1739494728-25049-1-git-send-email-hargar@linux.microsoft.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
-References: <20250213142440.609878115@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QCpZJaSM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEAC7C4CEE6
+	for <patches@lists.linux.dev>; Fri, 14 Feb 2025 01:39:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739497158;
+	bh=9IxhGYBiqmCXEOQC+SsmBi/iEnbY572YamGs8pAzvaI=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=QCpZJaSMvwlOtPipw6P2cmUd735GYuoTwoZ7oGgyosvm9q5hKR/SP0A5/TSGHCFA+
+	 BR0kVj9fAbXBEOmNfXfu+V08GkWLc/YOV/KSr0fXaxAa/WlhEChsxDOYG85kX7Fo11
+	 ESawMtQbxeG4MFhh5rm/fegF36JvEBXWBb2Tg+AuuDrzGRtQtuZ0TVuH23pcKt6/2h
+	 /2a+2mWeeUp/ifkZWJfWtpPYVEd3JfboIquEElv2t5QIDp8w5zBoSbD2oUzftfRakW
+	 cK7tx/mQJGvYTJBmVK/RTGoIhDCESXELHgOVsGk0mcVloBzOlbuikspPotWHdJxPLP
+	 u7haketNbg8kQ==
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-307bc125e2eso15971481fa.3
+        for <patches@lists.linux.dev>; Thu, 13 Feb 2025 17:39:18 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWQrAzDAXjnmqFQAQHvWHWo1MO6FohIk7lGRx4yEZSDqNJukf9dG5ZnLUuuOTUI6MSBbq/SkfiN@lists.linux.dev
+X-Gm-Message-State: AOJu0YxONW4lj9f613/N23gAl6dPo2tSMxtQy+3r60rAOwAwNnEeUK+w
+	3kTLPxR4xEuWor9FWcU6UK1XXitNxA/WBsShQhjqceV9Fd0CT54AX8zFVP5H38w0l5m7dlmfqIA
+	ZiMyTas6InNbAjyKFclLmahLOYrA=
+X-Google-Smtp-Source: AGHT+IGEYz+WkoUrySCxtqr7dpKbi6V2S+88qBoYDexCvVUD02b8yZebnuEPHDd5b4ywaSPaelkedcVjstzog0U1ao8=
+X-Received: by 2002:a05:6512:1281:b0:545:ee3:f3be with SMTP id
+ 2adb3069b0e04-5451dd88faemr1651337e87.10.1739497157461; Thu, 13 Feb 2025
+ 17:39:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+References: <20250210164245.282886-1-ojeda@kernel.org>
+In-Reply-To: <20250210164245.282886-1-ojeda@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Fri, 14 Feb 2025 10:38:41 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQBFX5q6yyKBJoxMoD5d9SwdKm0c23J4+LpjwA1eh=bZw@mail.gmail.com>
+X-Gm-Features: AWEUYZnI4fpDKGlVQ3nPgTvxchXJzpHlGyUSt2uP8tA04Q4qKsA6VL1SMVCFHCo
+Message-ID: <CAK7LNAQBFX5q6yyKBJoxMoD5d9SwdKm0c23J4+LpjwA1eh=bZw@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: rust: add rustc-min-version support function
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+	linux-doc@vger.kernel.org, 
+	moderated for non-subscribers <linux-arm-kernel@lists.infradead.org>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The kernel, bpf tool, perf tool, and kselftest builds fine for v6.13.3-rc1 on x86 and arm64 Azure VM.
+On Tue, Feb 11, 2025 at 1:43=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> Introduce `rustc-min-version` support function that mimics
+> `{gcc,clang}-min-version` ones, following commit 88b61e3bff93
+> ("Makefile.compiler: replace cc-ifversion with compiler-specific macros")=
+.
+>
+> In addition, use it in the first use case we have in the kernel (which
+> was done independently to minimize the changes needed for the fix).
+>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+> This is based on top of the fix so that the fix remains as simple as
+> possible:
+>
+>     https://lore.kernel.org/rust-for-linux/20250210163732.281786-1-ojeda@=
+kernel.org/
+>
 
-Kernel binary size for x86 build:
-text      data      bss      dec       hex      filename
-29934888  17832018  6320128  54087034  3394d7a  vmlinux
 
-Kernel binary size for arm64 build:
-text      data      bss     dec       hex      filename
-36672710  15080089  1054416 52807215  325c62f  vmlinux
 
-Tested-by: Hardik Garg <hargar@linux.microsoft.com>
+Do you want me to pick it up to kbuild tree,
+or will you take it with my Ack?
+
+If you go with the latter,
+Acked-by: Masahiro Yamada <masahiroy@kernel.org>
 
 
 
-
-Thanks,
-Hardik
+--=20
+Best Regards
+Masahiro Yamada
