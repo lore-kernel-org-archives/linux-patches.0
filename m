@@ -1,106 +1,175 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9942CCC5
-	for <patches@lists.linux.dev>; Fri, 14 Feb 2025 03:52:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BC0189912;
+	Fri, 14 Feb 2025 05:42:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739505171; cv=none; b=k4jHKP77XSa7GGEMeI2VnWEtqmE3Tsm8iWJZbq3gbXl8BAjNFq+cQHKCqGSr87XqL7OgHLCXdfrbLiIedkUXLcHqr6QbcVQRO/Jsq+ZYpEJi9KpCNaFRX6Zurn69ep8No23PvugkaL+CkS4bl+b3LTaw7iG3Jc/ubq6F5kpL60E=
+	t=1739511776; cv=none; b=tMcKU0v4zX/+dtt0r1yN7M7oTuP9UXg+d2OBD2QceCN64TyZkGpi1oidKwRma0Je8+k2nk02metJ68qyrJkQLFuEZ/LgWLW/oTFSoy1SNLpQntYaOvvoWcDLhJWovs+z5DrRrMmW9XDW9Fnz//q5aru8fuUK1FQXtmC+mwF2vDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739505171; c=relaxed/simple;
-	bh=Rs2j6gfwxMYn37DhzP1+0JgF/bStoQ+oF9AGaTTN5Sk=;
+	s=arc-20240116; t=1739511776; c=relaxed/simple;
+	bh=h6p7Y22j2hIaMSGgYnBcUas0+FeWCyvYHlZZIhCytkM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E2HKveK1srmV3tMfiqJiBbN0fqeR2a33Oh9Sui4ypuugfdEy6+R5CHYQqFS699YS1Q4NMOSvqklgcjsoRFGioDFF01UjhhAY5whjyk/nsGlDeWdR3MCIgOGj6OOcBRZZZNkTX1qE2xJI9OSmtv1d8Yg8J2qDG/9iDc0HL0uxVeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=m0dAAx2G; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	 In-Reply-To:Content-Type; b=g8o3uJ8lHoIxSp2n4pAUe9+0v8701EpF9/QfNQUnOANtnUtfeJISCFyx6+G+SqFRU26VIjvgw3yLU9F7yQOLYfsQMDGoa86H+rXfAKvLFj0lkpVSGQgv6uu0rt0x5xBhS8TbTNCnitrslwGV0k5k7jTCiJ++c25lR9zNLK7ebYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hZTWzL+R; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="m0dAAx2G"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43690d4605dso10276255e9.0
-        for <patches@lists.linux.dev>; Thu, 13 Feb 2025 19:52:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1739505168; x=1740109968; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cGTgsvQRtLrU16wvAkbEa6kMfXqNaErqcnGKNV8MsW8=;
-        b=m0dAAx2GdS9TpwyQUmY0pNxnh0mxzX2b/k4WpH5CiRHp89uQBXOrxiG/u3WwG0R0aB
-         sUQtfCXNuHKxDjFoT5Cx/MUqQtgTI6t7mGM86fwQuL03QJ58MWtinlHcjjRK/vsP/IPt
-         /HAyuOXPDK7TVXVNGxh1PQ+6xInJJ+YCemCBKMKrL0u9hO1MFvmjRClXJNL01WCxS0qv
-         ps5EyulQCnXey2QTJC+LvYFXXt6y3COKxzEszPHM0n4wHFif6fZAfP79dc5w+S47yCr2
-         zr48LroMLEddHutQRzyBacfmYSwmqg9M1zY40v3xmjvPRp2mUWVG77cQQkPKzpWQLPMn
-         DSrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739505168; x=1740109968;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cGTgsvQRtLrU16wvAkbEa6kMfXqNaErqcnGKNV8MsW8=;
-        b=mnBS2iceAgKfamoX9iCJUekbe8cYBMCCXdWAgXd6cfKxXuz0yXf7bI3MeD1vIHg7pB
-         B5/9mYPdO+qQGvzD8udvyTpSYRRrsM1kNZRIvF3sPfB3p14p4a2/WxLXRzQf+moqOkBZ
-         fbCezFsOPvtWKl/hkSp9C/PsPKoLNhDqlSaWHyp8pOL7j65TdkQJUCSE3hi5BEy/wP93
-         k+3TuuQd2yzeDquDqxtKsXRgxrcd1D3K5zMp6dhJGJ8z4qo+5ppEPUsgdLyW3e0dQ2Qa
-         GBRQ3er7K5nTPbtTwp/uvjyXWLoJDoVl8CahDxH5+GAw95gl/oZTy4NFim0J0mRN5+S4
-         xltg==
-X-Gm-Message-State: AOJu0YzmbVd/pVBtAmNxZ1POVKzIJrDb4XnLKLqi5U8uF556HjP9adJc
-	zz+UI4GeB4ENHKNKzrpXMClQ+mOUiOkaljKjPzNBLv7U/VgUqss=
-X-Gm-Gg: ASbGnctIrSK3NALhlV9OE3fXMXukhWRHQMvlSZVZoJ/8zTI9YEVIVuQD1d2YyLL2qmV
-	1mr5vhqP/ACKDBbwBmORDynXyeLbQyaiMCvAptOz9FTmO8KgfD2cv0KcEvgElnmx1mrw33kgpi6
-	sh/vwgrW3Yw/+61ZttyAWFco9nH9Z3HDUpJUuNK+48YwL2/41GAA+eLSzGgIfcMOSEL2Hy76z4e
-	0rxJMeIm8YeuPJYotjAnzziqAgZejux6GWn6xeTds01K55WKGnKTxWNb57TAgOg29K9ElJXJppD
-	/ANHDGSiqZfjLKibg2sAZFz5UT3hRit+tq/MFvvh1Cxp2b6ko9hye4dUABHn7NOouaI+
-X-Google-Smtp-Source: AGHT+IHnuZCZZN3hYCYtZNp8eBMnru/Soke5PXNSGlagpibSv/+mbMRJgyuZcAKim0m1e8spt/YyVQ==
-X-Received: by 2002:adf:e752:0:b0:38e:53e7:da50 with SMTP id ffacd0b85a97d-38f244e9028mr5242524f8f.30.1739505168074;
-        Thu, 13 Feb 2025 19:52:48 -0800 (PST)
-Received: from [192.168.1.3] (p5b2b4779.dip0.t-ipconnect.de. [91.43.71.121])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258b4118sm3582837f8f.18.2025.02.13.19.52.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Feb 2025 19:52:46 -0800 (PST)
-Message-ID: <85123df4-8339-455e-87aa-65570d39dab5@googlemail.com>
-Date: Fri, 14 Feb 2025 04:52:44 +0100
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hZTWzL+R"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1739511774; x=1771047774;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=h6p7Y22j2hIaMSGgYnBcUas0+FeWCyvYHlZZIhCytkM=;
+  b=hZTWzL+RAv+XZmiZrV5fw47VQDy/Ohj+5ukcULnwOic2Zd02c/1c2E72
+   XW3lEnHM3FSdY0cL76767L/PtMR44X7rdebn27/tKpu5iA8+ffWygFxN6
+   8s3bjo0I7Dswm6fYg1ENtEMBxQM0DMqNZmijOr0yU0mSVHNRyHvpPbCcs
+   Qt8rxfcrnFVXz9o2jLv/HvrOYQ6uf4kyj+gkOtrUnqI2B7J7i5s4lBgKg
+   kYth46ptZ/BXtRaBovIm4OQobMYDNYPRW7rMKo6YdzEsN2quCEt7cDz6c
+   rBUgpPxzJ3v5w16tbMnTa51sDjpy9QouBPyq+rVRkzeUkWXtKe0zpDnEo
+   w==;
+X-CSE-ConnectionGUID: hxpl+tuZS66Brpxuh7xeAw==
+X-CSE-MsgGUID: a7C+9IccSz6rgY4sQuHuOQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11314"; a="51680991"
+X-IronPort-AV: E=Sophos;i="6.12,310,1728975600"; 
+   d="scan'208";a="51680991"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 21:42:54 -0800
+X-CSE-ConnectionGUID: HFEGjSazTHyw5Tz92aIw/w==
+X-CSE-MsgGUID: RMkJwxJhQSmPkE76rQWIFA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="118573799"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 21:42:47 -0800
+Message-ID: <bc9f4477-7976-4955-85dc-3e05ebe95ead@linux.intel.com>
+Date: Fri, 14 Feb 2025 13:39:52 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.13 000/443] 6.13.3-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250213142440.609878115@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250213142440.609878115@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 00/12] Initial support for SMMUv3 nested translation
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Zhangfei Gao <zhangfei.gao@linaro.org>, acpica-devel@lists.linux.dev,
+ iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
+ Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Robert Moore <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>,
+ Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Donald Dutile <ddutile@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ Hanjun Guo <guohanjun@huawei.com>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Jerry Snitselaar <jsnitsel@redhat.com>, Moritz Fischer <mdf@kernel.org>,
+ Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ patches@lists.linux.dev, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Mostafa Saleh <smostafa@google.com>
+References: <20241112182938.GA172989@nvidia.com>
+ <CABQgh9HOHzeRF7JfrXrRAcGB53o29HkW9rnVTf4JefeVWDvzyQ@mail.gmail.com>
+ <20241113012359.GB35230@nvidia.com>
+ <9df3dd17-375a-4327-b2a8-e9f7690d81b1@linux.intel.com>
+ <20241113164316.GL35230@nvidia.com>
+ <6ed97a10-853f-429e-8506-94b218050ad3@linux.intel.com>
+ <20241115175522.GA35230@nvidia.com> <20250122192622.GA965540@nvidia.com>
+ <284dd081-8d53-45ef-ae18-78b0388c98ca@linux.intel.com>
+ <f7b6c833-b6c1-4154-9b77-13553e501f2b@linux.intel.com>
+ <20250213184317.GB3886819@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <20250213184317.GB3886819@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Am 13.02.2025 um 15:22 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.13.3 release.
-> There are 443 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 2/14/25 02:43, Jason Gunthorpe wrote:
+> On Thu, Feb 13, 2025 at 07:57:51PM +0800, Baolu Lu wrote:
+>> On 2025/2/5 11:45, Baolu Lu wrote:
+>>> On 2025/1/23 3:26, Jason Gunthorpe wrote:
+>>>> On Fri, Nov 15, 2024 at 01:55:22PM -0400, Jason Gunthorpe wrote:
+>>>>>>> I need your help to remove IOMMU_DEV_FEAT_IOPF from the intel
+>>>>>>> driver. I have a patch series that eliminates it from all the other
+>>>>>>> drivers, and I wrote a patch to remove FEAT_SVA from intel..
+>>>>>> Yes, sure. Let's make this happen in the next cycle.
+>>>>>>
+>>>>>> FEAT_IOPF could be removed. IOPF manipulation can be handled in the
+>>>>>> domain attachment path. A per-device refcount can be implemented. This
+>>>>>> count increments with each iopf-capable domain attachment
+>>>>>> and decrements
+>>>>>> with each detachment. PCI PRI is enabled for the first iopf-capable
+>>>>>> domain and disabled when the last one is removed. Probably we can also
+>>>>>> solve the PF/VF sharing PRI issue.
+>>>>> Here is what I have so far, if you send me a patch for vt-d to move
+>>>>> FEAT_IOPF into attach as you describe above (see what I did to arm for
+>>>>> example), then I can send it next cycle
+>>>>>
+>>>>> https://github.com/jgunthorpe/linux/commits/iommu_no_feat/
+>>>> Hey Baolu, a reminder on this, lets try for it next cycle?
+>>>
+>>> Oh, I forgot this. Thanks for the reminding. Sure, let's try to make it
+>>> in the next cycle.
+>>
+>> Hi Jason,
+>>
+>> I've worked through the entire series. The patches are available here:
+>>
+>> https://github.com/LuBaolu/intel-iommu/commits/iommu-no-feat-v6.14-rc2
+>>
+>> Please check if this is the right direction.
+> 
+> Looks great, and you did all the cleanup stuff too!
+> 
+> The vt-d flow is a little more complicated than the ARM logic because
+> the driver flow is structed differently.
+> 
+> Do we really want ATS turned on if the only thing attached is an
+> IDENTITY domain? That will unnecessarily slow down ATS capable HW.. It
+> is functionally OK though.
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
+It depends. The Intel driver uses a simple approach.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+When the IOMMU is working in legacy mode, PASID and PRI are not
+supported. In this case, ATS will not be enabled if the identity domain
+is attached to the device.
 
+When the IOMMU is working in scalable mode, PASID and PRI are supported.
+ATS will always be enabled, even if the identity domain is attached to
+the device, because the PASID might use PRI, which depends on ATS
+functionality. This might not be the best choice, but it is the
+simplest and functional.
 
-Beste Grüße,
-Peter Schneider
+If any device does not work with the identity domain and ATS enabled,
+then we can add a quirk to the driver, as we already have such a
+mechanism.
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+> 
+> Also, are there enough ATC flushes around any domain type change? I
+> didn't check..
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+The VT-d specification defines guidance for software to manage caches,
+both the IOTLB in the IOMMU and the ATC on the device (Table 28,
+Guidance to Software for Invalidations). The driver was written
+according to that guidance.
+
+> I feel like we should leave "iommu: Move PRI enablement for VF to
+> iommu driver" out for now, every driver needs this check?  AMD
+> supports SVA and PRI so it needs it too.
+
+Yes, agreed.
+
+> 
+> Do you want to squash those fixup patches and post it?
+
+Yes, sure. Let me post it for further review.
+
+> Thanks,
+> Jason
+
+Thanks,
+baolu
