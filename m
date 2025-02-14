@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D64188713;
-	Fri, 14 Feb 2025 13:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CE0188713;
+	Fri, 14 Feb 2025 13:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739540200; cv=none; b=dvrT40OkX9c0nMfT8AtT7ZxBR7w5WTXTlVOrMTRAszdHnhG3uSzXFvBMEX7EKqv9Zj1wWnIjQFVTbSf7y78O/0VmKQT5BR3XVnzF6FlxD5fk5VqOGfJHTDQ137QWTLajbiwazdJ4g5fwAzgjpghfsCYIBGO0lWYEphwV+20OJYM=
+	t=1739540220; cv=none; b=fpYt3J4NR0bwLAT/0uBrnBJitJGf3nNJihSsJnhh9f9/96168iuGLBWbrC3WOWP4lZcmKd/2y3CSTuFVFdnyQftB+Ubanq8d1agQpDAnPGJnGIazwyBpeUZxdc6QY/0QK/7504hRqHauPUGtLgAfaSenKAhPOAswBxPaE4tm05Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739540200; c=relaxed/simple;
-	bh=FDr/8w/Mw3nuq3cwDe/Ou4ZfyPI0cVa0KRi+7EQU1+E=;
+	s=arc-20240116; t=1739540220; c=relaxed/simple;
+	bh=583K14ihYPs7s9bkquTFFzsz3XER8F4uZKQtK+ocAsY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qFqEcMJlIwYSIcfwAv69lXeMap+WmRdmtvmg/FTVD8KyprWN6nIv9+mmnW2KwsAHFaBZUtoaNE8cE42lgpS4gllxWRO0WmYOuc+tB93DxyyhmOJijeTmNo8u/qko57q27MLVy95C//KSheYtE4+04gQKxESm8aToPYyvA81SXyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6TcpxKr; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=ouivVDn4SNHoV3iDLk4YS4a+NbGHYveGiHUxDvWs6KE4cyU8jegn3AxlptyKop6wHEjXl6G2ARxeu2FWiTcyGQlPAWw3G+Rh9nqFFT9eMWeK6e0+NwtjH3LdQCnN8BTUUiljpRoEOd6RoIJtAdcR/nNkOCQcmC3o7+Qu1Xl5WsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqsIgHpT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6TcpxKr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA414C4CED1;
-	Fri, 14 Feb 2025 13:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqsIgHpT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C433AC4CED1;
+	Fri, 14 Feb 2025 13:36:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739540200;
-	bh=FDr/8w/Mw3nuq3cwDe/Ou4ZfyPI0cVa0KRi+7EQU1+E=;
+	s=korg; t=1739540219;
+	bh=583K14ihYPs7s9bkquTFFzsz3XER8F4uZKQtK+ocAsY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=N6TcpxKrT5q1N+gF0T8eLdLziDSqVXHtFsKWqBNVWcpL3oxB6G3xNeJ9nnKBpY+RQ
-	 To3+iWBftYdZ1JB/hGJLJMmjM3twaNChc5FtVMWBctiblWdOOTMC2nJ5mpMMb9mPC0
-	 YIU9pNrOXjEhYHzuLU0uSJJpFVduRNOwXLBM8bG4=
-Date: Fri, 14 Feb 2025 14:36:37 +0100
+	b=xqsIgHpTFapERtnxOK5Q7wMBP0S+9V5fWII8f0M9pATCkf+kxQoOY2aRbVFUoMCdo
+	 Pr9ev6ucnPhC9EJz8/pO8RDenfewrlEyyQjWuSq7BzB9dUilrUmq7W4xSw4U8qdbyX
+	 oOBeuUjVLpqsf86e4xKMjs+b8UZGWfjlbV2KdIxo=
+Date: Fri, 14 Feb 2025 14:36:56 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
@@ -33,15 +33,16 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	Darrick Wong <darrick.wong@oracle.com>,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Darren Kenny <darren.kenny@oracle.com>
+	Arnd Bergmann <arnd@arndb.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>, linux-xfs@vger.kernel.org,
+	chandan.babu@oracle.com, "Darrick J. Wong" <djwong@kernel.org>,
+	Long Li <leo.lilong@huawei.com>, Wentao Liang <vulab@iscas.ac.cn>
 Subject: Re: [PATCH 6.12 000/422] 6.12.14-rc1 review
-Message-ID: <2025021420-scouring-circus-5dac@gregkh>
+Message-ID: <2025021448-ignition-aluminum-b304@gregkh>
 References: <20250213142436.408121546@linuxfoundation.org>
- <c6c19838-dfa0-4e94-b7bd-1dd49449573b@oracle.com>
- <2025021418-provoke-trilogy-2d6e@gregkh>
- <f25f0369-bbcc-47e5-8668-ddc8177ea02c@oracle.com>
+ <CA+G9fYuVj+rhFPLshE_RKfBMyMvKiHaDzPttZ1FeqqeJHOnSbQ@mail.gmail.com>
+ <CA+G9fYsVFoLTXYBqpeUN1VUTwy5kXTB82fztK62fMPR6tYxChA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,64 +51,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f25f0369-bbcc-47e5-8668-ddc8177ea02c@oracle.com>
+In-Reply-To: <CA+G9fYsVFoLTXYBqpeUN1VUTwy5kXTB82fztK62fMPR6tYxChA@mail.gmail.com>
 
-On Fri, Feb 14, 2025 at 03:24:08PM +0530, Harshit Mogalapalli wrote:
-> Hi Greg,
+On Fri, Feb 14, 2025 at 05:59:40PM +0530, Naresh Kamboju wrote:
+> On Fri, 14 Feb 2025 at 14:16, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> >
+> > On Thu, 13 Feb 2025 at 20:02, Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > This is the start of the stable review cycle for the 6.12.14 release.
+> > > There are 422 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > >
+> > > Responses should be made by Sat, 15 Feb 2025 14:23:11 +0000.
+> > > Anything received after that time might be too late.
+> > >
+> > > The whole patch series can be found in one patch at:
+> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.14-rc1.gz
+> > > or in the git tree and branch at:
+> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> > > and the diffstat can be found below.
+> > >
+> > > thanks,
+> > >
+> > > greg k-h
+> >
+> > Regressions on the arm64, powerpc builds failed with gcc-8/13 and clang
+> > on the Linux stable-rc 6.12.14-rc1.
+> >
+> > Build regression: arm, powerpc, fs/xfs/xfs_trans.c too few arguments
+> >
+> > Good: v6.12.13
+> > Bad:  6.12.14-rc1 (v6.12.13-423-gfb9a4bb2450b)
 > 
-> On 14/02/25 13:50, Greg Kroah-Hartman wrote:
-> > On Fri, Feb 14, 2025 at 01:23:23PM +0530, Harshit Mogalapalli wrote:
-> > > Hi,
-> > > 
-> > > 
-> > > On 13/02/25 19:52, Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 6.12.14 release.
-> > > > There are 422 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > 
-> > > I see these build failures:
-> > > 
-> > > fs/xfs/xfs_trans.c: In function '__xfs_trans_commit':
-> > > fs/xfs/xfs_trans.c:843:40: error: macro "xfs_trans_apply_dquot_deltas"
-> > > requires 2 arguments, but only 1 given
-> > >    843 |         xfs_trans_apply_dquot_deltas(tp);
-> > >        |                                        ^
-> > > In file included from fs/xfs/xfs_trans.c:15:
-> > > fs/xfs/xfs_quota.h:169:9: note: macro "xfs_trans_apply_dquot_deltas" defined
-> > > here
-> > >    169 | #define xfs_trans_apply_dquot_deltas(tp, a)
-> > >        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > > fs/xfs/xfs_trans.c:843:9: error: 'xfs_trans_apply_dquot_deltas' undeclared
-> > > (first use in this function); did you mean 'xfs_trans_apply_sb_deltas'?
-> > >    843 |         xfs_trans_apply_dquot_deltas(tp);
-> > >        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> > >        |         xfs_trans_apply_sb_deltas
-> > > fs/xfs/xfs_trans.c:843:9: note: each undeclared identifier is reported only
-> > > once for each function it appears in
-> > > make[4]: *** [scripts/Makefile.build:229: fs/xfs/xfs_trans.o] Error 1
-> > > make[4]: *** Waiting for unfinished jobs....
-> > > make[3]: *** [scripts/Makefile.build:478: fs/xfs] Error 2
-> > > make[3]: *** Waiting for unfinished jobs....
-> > > make[2]: *** [scripts/Makefile.build:478: fs] Error 2
-> > > make[2]: *** Waiting for unfinished jobs....
-> > > make[1]: *** [/builddir/build/BUILD/kernel-6.12.14/linux-6.12.14-master.20250214.el9.rc1/Makefile:1937:
-> > > .] Error 2
-> > > make: *** [Makefile:224: __sub-make] Error 2
-> > > 
-> > > 
-> > > This commit: 91717e464c593 ("xfs: don't lose solo dquot update
-> > > transactions") in the 6.12.14-rc1 is causing this.
-> > 
-> > Odd, I am guessing that you do not have CONFIG_XFS_QUOTA enabled?
-> > 
-> 
-> I do have that enabled.
-> 
-> CONFIG_XFS_QUOTA=y
+> Anders bisected this to,
+> # first bad commit:
+>    [91717e464c5939f7d01ca64742f773a75b319981]
+>    xfs: don't lose solo dquot update transactions
 
-Odd, that didn't trip in my test builds :(
-
-Anyway, now dropped, thanks!
+Offending commit now dropped, thanks.
 
 greg k-h
