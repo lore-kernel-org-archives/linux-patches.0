@@ -1,70 +1,70 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8BE1C7011
-	for <patches@lists.linux.dev>; Sat, 15 Feb 2025 17:24:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC471E5B7C
+	for <patches@lists.linux.dev>; Sat, 15 Feb 2025 17:25:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739640290; cv=none; b=u8kE/CjMITlRTyQKwD1YmqBwvIuY1mURIiwr3miHYvnyAhPIeP6CFG6vzKyZBq7CZkzKzqY8wUkM38Z11RDy+LtSOdEb0MgoS0zNiMVJGdVH1OhHvGAqc9x53Nz7aPJOU7dMdXOmlkJdOZLMZLmdfCoCrDt9jAQrCZQlx0dxnzQ=
+	t=1739640353; cv=none; b=ab6ZP9LHOW5YEc88day55WVAEfkNOnnZgEACnKggt14LfujZIP54qEzOiUraDlZ9M5b/jMCEkKR4IMhlSTBSe0yHdMEA915+DhMofbl5CXJiGiUT1UJUjhNXQo7XrSI7U8y/n0nPH3n/g8SKzJbkv/jScYy6TLLA1ErsZ1PlCCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739640290; c=relaxed/simple;
-	bh=teKQ4hdjN7BYX7EoxvrsCHltx1se2slKk6pRdKtxyvc=;
+	s=arc-20240116; t=1739640353; c=relaxed/simple;
+	bh=bWdwc4tU+jS/WtyYL5ZUs1E6ELOzM9Zd3g3hT2CGL20=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IvIyOoBaj3pZbP6DyVjXFAfd4oqS8C8QhoTdmcLigL5gRuIcFARFlRLsZ8yNYb7GZpYtoSs4to8L4EAa7rUualHooeWxFlb5TWguaMWUMZUjifTAfhvBv9N2VJpev92uOcal3NmBJtGK4gPIFmYcJKUuZLmogQxY6Vh8H3Lq018=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sladewatkins.net; spf=pass smtp.mailfrom=sladewatkins.com; dkim=pass (2048-bit key) header.d=sladewatkins.net header.i=@sladewatkins.net header.b=UqIGs9rV; arc=none smtp.client-ip=209.85.218.44
+	 To:Cc:Content-Type; b=OMlhnTsIZGiTBuq/wuuaB7UTAKiHUqI3Ihhvg7UJ1tEZ14g3GF5AOU/qejMvAf5TwqXUD7DS2VZUJiMDz+Dv7rATCKZSGzNBmugSCC27BtCAm9lBrumdMIuN1hctrHKuQRfG0FE8ppe5JaztEuR3Mz/BvcE5MLLALTpkbRdQihk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sladewatkins.net; spf=pass smtp.mailfrom=sladewatkins.com; dkim=pass (2048-bit key) header.d=sladewatkins.net header.i=@sladewatkins.net header.b=fmquOgCI; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sladewatkins.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sladewatkins.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sladewatkins.net header.i=@sladewatkins.net header.b="UqIGs9rV"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-aaec61d0f65so655208166b.1
-        for <patches@lists.linux.dev>; Sat, 15 Feb 2025 09:24:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=sladewatkins.net header.i=@sladewatkins.net header.b="fmquOgCI"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ab7c07e8b9bso529938566b.1
+        for <patches@lists.linux.dev>; Sat, 15 Feb 2025 09:25:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sladewatkins.net; s=google; t=1739640287; x=1740245087; darn=lists.linux.dev;
+        d=sladewatkins.net; s=google; t=1739640350; x=1740245150; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IEbvPfbzlqpfyi/ZuM8Sn6es2AIq+nlH6qd/TbLpx0Q=;
-        b=UqIGs9rVbYij+6K7X2Z+WRT6kvw1Sl0TQ0oqli1WjYRhK7Ka++7qi7CS9el7NGlDs/
-         /XqKcCIsjpTELVDSy8IYg8nva+Kar5U/D5tRpj5vu70y+s1JEblieS6qyZuNdQSSC+La
-         V6PbtRojKbska99eJArA9vXo7ON/a9jim1vK4OORNGOKvB6usDOiQms0bEXoJuNdPwNn
-         ZPOwKod03g5cOCBjKra8mypaSrYSHjxhIasRnEWt0spEsJ2Jm3BJAM5KvnljebHQwyXm
-         U/6+X+0v/zHz98UAd1/aHPD/E/AV6Vpx2ypvIJCoG6FHPjOMEXKCZlwb7ebKTaACrQmH
-         e00w==
+        bh=JHP8LGPaE55AxKwpSHf5L42NI3V/KQU7zbKAocoI1Fw=;
+        b=fmquOgCIUAd+XuBHEm+dyQEB4FHK1EkbwbyFB9R+2YDmWaRhAqob44SUR7G5OVQJHW
+         xmbANFSCkKt8P+zwt5VG9ZuHobQvN0oVeTbrIWUQI7237cv2hESiqk6L/2Q0rEIJ3Kjn
+         gZzaqHIP3KjRGZ3R6GdRY2uay+TQ6CYX+i9EYa0xTS/ZU0vssccUZlaw0xQTHctgfva+
+         IiF2t/rn3XaJZ8Zs0kf4peic6YxOnEQp54odiq/8XJhspcBR5h4p1zZ9/1zwzUFHi+C1
+         DM9Ie08N3APurZIkYZyXOb3CzpMEB/U05YbGhtgw0UpuhUV1edkb+YfQxsvXS4C4GpBf
+         HifA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739640287; x=1740245087;
+        d=1e100.net; s=20230601; t=1739640350; x=1740245150;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IEbvPfbzlqpfyi/ZuM8Sn6es2AIq+nlH6qd/TbLpx0Q=;
-        b=h92hHjo0K3CWCL039TXl6NfZ3vH8XkH63ySAPHvR8oFHG5OQCrWx+WiXo9rBuynbi3
-         yKfuSmuZ8u56EKDl1YFXa9dmo9V/uFTkUm1T7Z9S7SoQ5K6gVVqkEMbCIyYJA1jElkT6
-         3HbBW2w8J0pslz9N5bKJ/76nqkLVE1ukPiK6XVnbhX+iXKJhCKSa5r5KCoJjL+7ardQC
-         VEt8XFA7H286elzc3kcYm1FKcPqyXdDtbVCsi03RKe7lGQNCwwxA2HvITZjrx7qZWp1F
-         jDYp60sHrXt+lcgBJ9VDaYKMeTTagpebhy8nA/Q6+jMhIwG3eufEMvyV+QRrgqm4EG+v
-         Zs9g==
-X-Forwarded-Encrypted: i=1; AJvYcCWkDg/oYLG3jBxmCw+E8QHCzA6U6GDWcEhZKfspqQ5IQPA+Eblw2fjTzhZwDTZrIX2cJmcPAHDX@lists.linux.dev
-X-Gm-Message-State: AOJu0YzybhT8iHUNYvDo41gzLnwFNRTLaTRVAP7/KIzhfBVPKXlfVk0+
-	iFjun5TX752uMd2opkzegw1xylpf1N/NUOahlcQA5l4GcaDKmDpWEdbih+d7XDPgSvt3m9lQl2Y
-	EbZDuLBesWcErwN+wwhHkxnytbmMrfKtTWoevoQ==
-X-Gm-Gg: ASbGncvmBb+OGlnfFSxgIngxdcJNO0ba86sjueMBbc/ls5ZZnfSx+T1bTGNtMwD2X8S
-	GScLZItErS2+8DCLyeyKq9pDYeBR2AMEc1N4nefx3jIGZFfyHNaPfTlALlJZLfNjAo+5Argqd
-X-Google-Smtp-Source: AGHT+IHpM1eqc8tlYMhaHVIvfcF2/sov/Rb7t32A/3fz4T8tN5Lqj5CbXTDRT00b6qYe7eMIRGaa1Dgm4UxTcOcxbsM=
-X-Received: by 2002:a17:906:c153:b0:ab7:c3d4:2551 with SMTP id
- a640c23a62f3a-abb70dde461mr387599866b.33.1739640286846; Sat, 15 Feb 2025
- 09:24:46 -0800 (PST)
+        bh=JHP8LGPaE55AxKwpSHf5L42NI3V/KQU7zbKAocoI1Fw=;
+        b=grzlmVLo+30QfzsDtH3clfF433HxIWlUHxyXF0tm3vrKN5CmPyNd5k4RcDvP7maKDX
+         PreosL9l3F+EMr33xRjm4MzpBIAq1/tE2Dj9eQElCIP/n83y2m1zR3RlnezAcQG3PwJ5
+         0uRR4vtQfGlY9hWdlYtIELeOujpC+GT0LIjp0swMM4YYw0NVwVXi6fFe2FvjHVZFNDdr
+         o5gk3fD98AqUC5ljVs1xQB9+jc6RTLc77b8ZMFxrcufkcBzzxKH5Upfswz/AcQ1AxgoK
+         chcA8GMyyfN/oIxFLZHZdpQIPu1aW7NHNQC9+gZu25J5///g6ERwCWTkB78Liw3R7bnl
+         FQ2A==
+X-Forwarded-Encrypted: i=1; AJvYcCVp7eexNAQyibg6fXrgX6n3p79Yjnbg/l0hPruyegypiavhGydlq6X7KKqfVEVYMuHRISq/V9JQ@lists.linux.dev
+X-Gm-Message-State: AOJu0YxJQGm307CsFe31Gq+24GQCcchADsLnd8G3Ydv5p+prbF4AbLLw
+	Pb/reS/aIxo2TUGkO4zlnoT1vNkVw8lrqYvKSBwFMNW0MJnGUunb7gIhW80yVD2SahqcaUK4vtY
+	L9VwNGjHKwCs4oEDutTbu/DpREz5af2qt0R4D/w==
+X-Gm-Gg: ASbGncuk3EzNCYaTwNurKIPW7O+DvrVcVCriaPIuxGZUTYHU53loESWDhFPsu1U5h64
+	anmOu7f6COIBQFOY9n+mZJ617e0O3T5Xpzn1Zk868nYScoHPV7ob/zWrI02TnSBcFc+lgHwYv
+X-Google-Smtp-Source: AGHT+IHJzLjc0Mpd+v0lswpn7DhJ2tM9BZti1csqHDT4yfjUQZtHYKVsAb7uI+EuHhv1xXJViJSu9WBUuDD1SVw30Wc=
+X-Received: by 2002:a17:907:1c21:b0:ab6:fd1d:ef6b with SMTP id
+ a640c23a62f3a-abb70bad34amr363614966b.27.1739640349746; Sat, 15 Feb 2025
+ 09:25:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250215075701.840225877@linuxfoundation.org>
-In-Reply-To: <20250215075701.840225877@linuxfoundation.org>
+References: <20250215075925.888236411@linuxfoundation.org>
+In-Reply-To: <20250215075925.888236411@linuxfoundation.org>
 From: Slade Watkins <srw@sladewatkins.net>
-Date: Sat, 15 Feb 2025 12:24:35 -0500
-X-Gm-Features: AWEUYZlLRXmnBt-692KO7vYcJFwLxQMOVLPLKrHkNbf4YYJGv_M_v-aJo302zFo
-Message-ID: <CA+pv=HP-_uNh=Tdx4L30uN2TUO8K2pN2adYoXs_1HH=ScG0t2A@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/418] 6.12.14-rc3 review
+Date: Sat, 15 Feb 2025 12:25:38 -0500
+X-Gm-Features: AWEUYZkvqJ1y-XsnBU_Lwvy2M4G3bDMXGE9SW7Ow2NVPM6dh7UJTVqGNeXXm7gM
+Message-ID: <CA+pv=HOEzqtotB8hp4ikj_q7NWFB334CgPUT5BwYi2Re877dpA@mail.gmail.com>
+Subject: Re: [PATCH 6.13 000/442] 6.13.3-rc3 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -75,15 +75,15 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Feb 15, 2025 at 2:59=E2=80=AFAM Greg Kroah-Hartman
+On Sat, Feb 15, 2025 at 3:00=E2=80=AFAM Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.12.14 release.
-> There are 418 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.13.3 release.
+> There are 442 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
-> Responses should be made by Mon, 17 Feb 2025 07:52:41 +0000.
+> Responses should be made by Mon, 17 Feb 2025 07:57:54 +0000.
 > Anything received after that time might be too late.
 
 Hi Greg,
