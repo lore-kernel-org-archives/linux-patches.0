@@ -1,116 +1,201 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1134E194C8B;
-	Mon, 17 Feb 2025 11:37:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739792227; cv=none; b=fLn+wjGlS2Tlt0xv4J/Sv9kHEnM7xwkMXLwEPB7J/SPyeY4d0zV6yNYqKkHl6RBEdNdZPkxkHdE/2ga07R0ygEWariOvPdPTYqjoToRxxjnoS9OBTSTrROjFMOnNK5//q7e4pQHc+DnrSaHrjy5VxYEHxJCx3zyYaWukbtHM4qU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739792227; c=relaxed/simple;
-	bh=7nF6WKIMD0Koam7Ku83wpKSZ4ebHAFoccY30ttsjZPg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V/yYr8innLgfjdleaM6u1FmMxEwu40yqpSRfPgxoePCuzy9CnXm10DyK6jP75aSQXQo5jz/aALAAO8uRfa7TCppyLyXWajV5Sj2nNPbb0gKmbbzJcisWypPtrp5TAlcky/XpiMYx7tXVInZIhRkBQY15gsgp5xXVgZsnjn2KiMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xy8M7sav; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637D31AF0C2;
+	Tue, 18 Feb 2025 05:05:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1739855160; cv=fail; b=GXI4dQ2GNXqEHlwOKFIJIKj0zb5xv4TEKDhinerhzD3hp60c50udQ0bQYeehj/D95cOJ16zCDtTmXp7diOb33xZ7od17jjsgsf1IJqDUPczW9t9Ji6VHKd7nMXnEk/ZSKwGOGqwNXENyeajEVf5C/5QIUstj/91ZO7v0v9/AMG4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1739855160; c=relaxed/simple;
+	bh=dJVr2yT4DipbSLIwFSFcDKtcHwWX19Ib8fGbCNlwipE=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=tTvTyMkqZHt2q0LgLvWActGbrP9bV/TR2lD0g646LSgWQCNSeRvZ3ti0GoxnaH0Jen+OnW8AGAYt1VMXoGl3Jn+huUnzKKy75qeB6qrnlRXECI/K3WyLLOORiTOCmoWsiUPsaGMATYrwYz55Glz9y1pInCPpNtjK2+J/TVRa5a4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Nt14UTSl; arc=fail smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xy8M7sav"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9702C4CED1;
-	Mon, 17 Feb 2025 11:37:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739792226;
-	bh=7nF6WKIMD0Koam7Ku83wpKSZ4ebHAFoccY30ttsjZPg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Xy8M7savn9j3irkGmRvfXsrYgcsmNYqRFpNXByjiysepoxAQq9axWXmlhHZKEHt0b
-	 Z37gzyKT7wBsNtsOlsAZUtw3Os9LcgBO5cCdeic8/lPgYueliRiFa4matTf7rqC4uh
-	 tJ3UMokdBmo6MSMNBnK2GQ9SjOb2gtDLlBJNbm04=
-Date: Mon, 17 Feb 2025 12:37:03 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
-	linux-fsdevel@vger.kernel.org, linux-mm <linux-mm@kvack.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>, willy@infradead.org,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH 6.6 000/389] 6.6.76-rc2 review
-Message-ID: <2025021739-jackpot-lip-09f9@gregkh>
-References: <20250206155234.095034647@linuxfoundation.org>
- <CA+G9fYvKzV=jo9AmKH2tJeLr0W8xyjxuVO-P+ZEBdou6C=mKUw@mail.gmail.com>
- <CA+G9fYtqBxt+JwSLCcVBchh94GVRhbo9rTP26ceJ=sf4MDo61Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Nt14UTSl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1739855160; x=1771391160;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=dJVr2yT4DipbSLIwFSFcDKtcHwWX19Ib8fGbCNlwipE=;
+  b=Nt14UTSlubVZ4O/0iJAtfnCW3OKPT8XNPpS2AKJkJQuZxU3+b9TDS92e
+   ybuUyDfS90XoKbqQ9FdrPrbCo3XSLlNQfaB0CHTAufnQ9T1li/QH7kkFG
+   S0lDqUgb5NAEDl54rJvanuvO9pjRtmhXaKzbDYMbvMs3rfQe3G4pZ26Kz
+   SEX2reds6zY4Oooy6jJ3VsUvRoFF7Y7XdTMb7XJ/0neIiNnWzYV6oLvEp
+   HgsuAYJpOd5EmbbQSU5WHM/3KWQyFdkSzUZshSyamp8wnI44/uhbugLeQ
+   1scmVbm4Ds9KjCaLnU/+qz+XV/QBIOc8cd829W0VjXR+8YUXAK9y6pbEP
+   w==;
+X-CSE-ConnectionGUID: uJ2d8LRLRCOYrW1JJPr9Mw==
+X-CSE-MsgGUID: 2aJBrUxgSMqKHKl5WmqV7Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="44463528"
+X-IronPort-AV: E=Sophos;i="6.13,294,1732608000"; 
+   d="scan'208";a="44463528"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Feb 2025 21:05:59 -0800
+X-CSE-ConnectionGUID: 75HfAZ9TSA2xpXyFjCY1UA==
+X-CSE-MsgGUID: mABipiEvQVq0eIWijUqutA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="114754150"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+  by orviesa007.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 17 Feb 2025 21:05:58 -0800
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44; Mon, 17 Feb 2025 21:05:57 -0800
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14 via Frontend Transport; Mon, 17 Feb 2025 21:05:57 -0800
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.170)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Mon, 17 Feb 2025 21:05:56 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vJLAIDjF4MSEmBuX1paJ8/L/U2ME/VHtsB5olpThnARtXa8shNyifh302NeEZKZbjesyyvzQL7dPj48nS+RiMG+Zl1+hH5C1kaM/OGb6XF4VaOXke5pVlkCm8Uc0QNWxvTppYWOgPrFXBMNUCuww+Y5BrpD4mtdfuN+bG7U+kYDqksohSRxYicbky5pAoSbxiBCL0Sz4kpM0qLBCHlWCqDf4hZa2t8pkVV2vb1ojHFIgH+uTq3ZrY1wEv53th/kT2uuZhReWccSACdZz40ngMDJ5ftb//dUviSQfv8BnuIDvEQ6cnjrkn3+BaDXf/kaq3qrPm6xP11FWEiWSLMcILQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dJVr2yT4DipbSLIwFSFcDKtcHwWX19Ib8fGbCNlwipE=;
+ b=IxiBUn0nwxnnBhVUT2Oqy4uPqQD2sloEe6KP0agFagfpUCuz+etvwneplStY7Y0xHyy9Y5W6vZpwj9s4a5SwOSzBU59+KQVhPCIIi8211muLmtwoRCmrEKtqpryHripF56/ykBnGIkcYdi8s1kgGmmQ1cTxkSYISaNZid/GJ6SRxXGq5zv05OmnM90LBs4RPGRRamWAh5nK+4d56c/NyTVoVxmmUWwafLOu/I/0/z2Sr5G77hH+3P5Oz0jeIPKtSS3bE2fYPXqgtGDwOi7KY3+IaEhJc1uqqi1c87A3VNCnCEOKaAT8eimNH+vqVCdmZ7bAn5Kaq0Yum3YGpNI6Sog==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
+ by CH2PR11MB8778.namprd11.prod.outlook.com (2603:10b6:610:281::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.19; Tue, 18 Feb
+ 2025 05:05:54 +0000
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1]) by BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1%6]) with mapi id 15.20.8445.017; Tue, 18 Feb 2025
+ 05:05:54 +0000
+From: "Tian, Kevin" <kevin.tian@intel.com>
+To: Nicolin Chen <nicolinc@nvidia.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+	"corbet@lwn.net" <corbet@lwn.net>, "will@kernel.org" <will@kernel.org>
+CC: "joro@8bytes.org" <joro@8bytes.org>, "suravee.suthikulpanit@amd.com"
+	<suravee.suthikulpanit@amd.com>, "robin.murphy@arm.com"
+	<robin.murphy@arm.com>, "dwmw2@infradead.org" <dwmw2@infradead.org>,
+	"baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>, "shuah@kernel.org"
+	<shuah@kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "iommu@lists.linux.dev"
+	<iommu@lists.linux.dev>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-kselftest@vger.kernel.org"
+	<linux-kselftest@vger.kernel.org>, "linux-doc@vger.kernel.org"
+	<linux-doc@vger.kernel.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+	"jean-philippe@linaro.org" <jean-philippe@linaro.org>, "mdf@kernel.org"
+	<mdf@kernel.org>, "mshavit@google.com" <mshavit@google.com>,
+	"shameerali.kolothum.thodi@huawei.com"
+	<shameerali.kolothum.thodi@huawei.com>, "smostafa@google.com"
+	<smostafa@google.com>, "ddutile@redhat.com" <ddutile@redhat.com>, "Liu, Yi L"
+	<yi.l.liu@intel.com>, "patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: RE: [PATCH v6 01/14] iommufd/fault: Move two fault functions out of
+ the header
+Thread-Topic: [PATCH v6 01/14] iommufd/fault: Move two fault functions out of
+ the header
+Thread-Index: AQHbbsByR+T3yhH5dkaDWdPy5109aLNMp+kA
+Date: Tue, 18 Feb 2025 05:05:54 +0000
+Message-ID: <BN9PR11MB52768167F61D64327CB819CA8CFA2@BN9PR11MB5276.namprd11.prod.outlook.com>
+References: <cover.1737754129.git.nicolinc@nvidia.com>
+ <d47fb648e36a6a5f04e0d98d02fa71e47c4a77e8.1737754129.git.nicolinc@nvidia.com>
+In-Reply-To: <d47fb648e36a6a5f04e0d98d02fa71e47c4a77e8.1737754129.git.nicolinc@nvidia.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|CH2PR11MB8778:EE_
+x-ms-office365-filtering-correlation-id: f1008adf-7e68-4a56-cfa2-08dd4fd9ec13
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|376014|366016|7416014|1800799024|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?VP01cC/3R0hIyjVw9sGgTzeahQqD9LzZnusErTNvg9XQp9mTjmCMKppjgK4i?=
+ =?us-ascii?Q?mWhKaPzdSglDQ/UByHgLlvuYIlGQCGB2wdHv9HigbBgITNdJFQ6ii5XIiCwc?=
+ =?us-ascii?Q?51OdkpgsXNV4lFhKe1th2UW4XSR5a10S8ineBzNa78nu53zPqbzd8uevjJuN?=
+ =?us-ascii?Q?RHUY2FWeXnEJmlrAt7oYqdOJrEjagFMQ8s4zfSU3l9C+FYtqzjVyVf4RLo1S?=
+ =?us-ascii?Q?qocvGWNW2dqJvL12obpgjn5+kb8eiiImv2dhuIFqxZEwB8c2T2UgxdxSoGA1?=
+ =?us-ascii?Q?TW+CqirRtBcOl0+IO2pNX38J+dFpil3/5AX+8Igz/Gu8tgtljBKp3oxFQy3f?=
+ =?us-ascii?Q?NcxoJrhYiaT3IKJmlHVv6pzeYIF/r/j5ETyWWe4/FAnWIg9Lh3fm1T1AAjBs?=
+ =?us-ascii?Q?Fr5J/YhUO3qplPWrJjwcuJelml6jZLsCT7P/uewrWyzeydeWafCj4N0CwmIm?=
+ =?us-ascii?Q?GVggZcvwm8sWBXiltyB0EggCRvrUNNc/9+ZTWVTp/Dqhgxjev5azXATPSquS?=
+ =?us-ascii?Q?NkBm7skpN2JaJ7gFgDedwHSvSJNqKQ8m4ZRYp0H6KYyHNH0xNDaD4k/li/xC?=
+ =?us-ascii?Q?5U6NMNXN+xepDAeOd7yGjUhiviLmVpczTmDG31Sq3KLfHwW2JjzyPUHHpL8F?=
+ =?us-ascii?Q?dHZ959QEgEj1sseS9xiWqz9WyFFe/m+8tZaX1IPIyBrY7Qu8zIHuuPm4dTCf?=
+ =?us-ascii?Q?fUGbSb9Pi9bn0gSLYjm4kedbHVy+j7OLr1MOhFLStWZEF+btZSkOxVsvErD/?=
+ =?us-ascii?Q?IdfBG7gtvpgWL1BHuumKhj04ptwoi+6cmc8LI6ckzrl4UDCPH9kBC4u6/pRm?=
+ =?us-ascii?Q?Wn+judkiKnXC4zULmHtB5jO2HEDBulvl+bwno4yV3NvahtpzPd0efJisa0zY?=
+ =?us-ascii?Q?iyKwiYLk+cJJVFzsQIzg6H4Eh5JwMOb5jsbSr+jwgBdEhFFg/evrf2mOr3Lo?=
+ =?us-ascii?Q?rbo8tkB4PxzHuEzfxdAcwq+0ys+5Q9tZIHmaahIJWx1Lnzk6+P4R/mPSgYA4?=
+ =?us-ascii?Q?qhw4RSIr1WeRiaH/doIVGqhEHtCHGhU2zYxaFQUx7Xuczb0kh+0CadDq6Npp?=
+ =?us-ascii?Q?sgOBSyoJLoLxLBboE8kfY6gX8zJkxVKAJ0J3GR5n8PpulezeRPL4O2jRLQiB?=
+ =?us-ascii?Q?m2IY0lVZzgw4OvKUcg6d5L58Z4dHkgy1Sv6Xl1hC3SCxYkrOxqJzGRoO8MCt?=
+ =?us-ascii?Q?PmqTIA2ZhyqzRsKap5rV3qXqdcuONIosUJ4t5Xb6T9POwrOe/pM+M4/1qNWe?=
+ =?us-ascii?Q?hd1GG5GOGeO1swpuHQfGq2kP4SjKXwrSI8FD/gDKaxMOwrITWWlGHhuISVE5?=
+ =?us-ascii?Q?/ovD7vBwkLbC6dGK4KNtrOgvDv2MQvush5n0RJyjd8sbLw3YqL7qgd9Izp+E?=
+ =?us-ascii?Q?dELuuGTrKwzoBVA9vbyNGMCoAtbTfVEgUUBDnsZ8I3ruYialaeu7e3HuC3NW?=
+ =?us-ascii?Q?JvJG7465TU9viVwUBih4MixsV6alD7MN?=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(7416014)(1800799024)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?y8J3Ye51+u6DJvQfLDEMrx+Oq0lBQDymefd35f+CBYQ/g+jLcx+/gyQKO1zz?=
+ =?us-ascii?Q?pcqZAaBZETBU4yJ9KEo3HZDMNj2IIPG+SJPX+Ww/Idb3kRy43amGvxAPpx+Q?=
+ =?us-ascii?Q?OWKTSKcPx44MdFk39ka2kJ04g9RwneAy2RoNsbIrzEQG5USzDQdK+eMQJbIZ?=
+ =?us-ascii?Q?QarPQ8KYb2gzqXPe4/PArlSg7Vb0wa8PRCiGv3KQlPT8xO6zl4y0SfznS/44?=
+ =?us-ascii?Q?ZehFDmkC/8XCM7YY+qjykBkrntObUQnf3I8NdT/Rv84TjaZKWo4PtbQ2CvhA?=
+ =?us-ascii?Q?t8snbGfTqOwBcV4JohDmwxPo7PWexrdUxdl9PMYV0utx730b2zX2tD+oMKz3?=
+ =?us-ascii?Q?wPZtvEx/RWvWpO+8HWCH27DC+CcNG/G6l591aVLP/441tVKt1lBKBPM+Rn0I?=
+ =?us-ascii?Q?XciTO1m8IBCR1j8rHiAd8NtKKauX77L5d8rLc/yNHVcQBg5pdSDrywB6KSC/?=
+ =?us-ascii?Q?WJKDMV9xBIck2pSSeC/YPaifeP6IZsBXi3pcFFwHuCGer6g49u/nJqKGIRQT?=
+ =?us-ascii?Q?ub5RCXNlcWLKgvQz9R/V8RJ3z4SEYSkWelajxn9e0/kJj6vqwI8WC8JQJrio?=
+ =?us-ascii?Q?7IDsees/51oMRHiJManl6ld4+WezlAd9MH56ML85VvoKex5FQzu7bR/zmpfT?=
+ =?us-ascii?Q?14fgn8PJn9Yo2Rba8vRHN/baomjo369eaOPaUUPxzgxDkw1bLuXF614QfrFe?=
+ =?us-ascii?Q?9hJ9MZ9925M1GXObwixOM8CeJI1JYBFCdXE3WtfiNsOsLeY5MXM1QcLveHzv?=
+ =?us-ascii?Q?ScjfkhYne3MNS15hINONAIR13LXqxJe+bmvrd9WJixqWjGkp1Fqm6ITh2F3W?=
+ =?us-ascii?Q?2/GXOYDllJ1eRrATjjc6+M5OiB5l14YVSOVfMRMh75KvMxKc9onVO1d5lvdt?=
+ =?us-ascii?Q?jAbY9wlPumPiubAKDofMgy5h/9mkQx1WCYmHtuGfl8cMqkUJwRmkzlIPtM39?=
+ =?us-ascii?Q?n+xPHDhLFs9cRQmnba40zBxsift80R0BhkZSAEWWc2JHqoPuWFORwgvxYA1K?=
+ =?us-ascii?Q?cAIPD7wEQNkHpAgdXwJXqT4E9BPPF0zHfzVjhZ1H6r4eJEAQfgW8PF/UB0H+?=
+ =?us-ascii?Q?fqsJTkkUUKSt/7DCT8TlIDbxEHav4aKpBW12esLVC5Y9FIb7137acI9IMZhl?=
+ =?us-ascii?Q?wFpIMSpycZ60KpcvvPG2svFjRgFNc/O/cfKxIo/Rto3n02tyi2fh1bjikZ9M?=
+ =?us-ascii?Q?qKQNXM1z8Q1lTi7jHF1B2YMOoeD2o4oFEKx3lHlvaUIN0qviQxkQ2fHt0k2+?=
+ =?us-ascii?Q?fZ4h7PeDBPywEtStOTOgZrq0w6oZo4m9Tv487V1zrn4HwsmCNzi5M0SAEDnl?=
+ =?us-ascii?Q?ZxaXK9RaJgAg7Py/5S2UdDkMweb4nYUNaiaddBUmO5svVuMgyjooHP99MXj2?=
+ =?us-ascii?Q?KRBykSOnMtgxUi4+9UZTqkU45+MJRI4WhqgbBQCDdyaNTLD/6Ex6wU1DEYWh?=
+ =?us-ascii?Q?xVOkOUmwYhAEF1JbZoy5i1t2+SHvENxwYECAQDE1g67vOi+W1sGozhy5gdx0?=
+ =?us-ascii?Q?ZuMIP8rACeRYruaKqHwgfEgcuo0b0PLRUXbE+AfW68a4ZZGCCuqKvF6NJjpy?=
+ =?us-ascii?Q?WeEqxNtBO74wFc5O3xRf+k/EzgmWfHLEHcbukbIQ?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+G9fYtqBxt+JwSLCcVBchh94GVRhbo9rTP26ceJ=sf4MDo61Q@mail.gmail.com>
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f1008adf-7e68-4a56-cfa2-08dd4fd9ec13
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Feb 2025 05:05:54.3188
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: kJp+ueJQ/da9UkCVqSfpACJOD+R53OQIUliejjvU4tO61GFOT+nWzWV9U617xhCR3haVk76RZxvbQVqlFjtAkw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR11MB8778
+X-OriginatorOrg: intel.com
 
-On Mon, Feb 17, 2025 at 05:00:43PM +0530, Naresh Kamboju wrote:
-> On Sat, 8 Feb 2025 at 16:54, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> >
-> > On Thu, 6 Feb 2025 at 21:36, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > This is the start of the stable review cycle for the 6.6.76 release.
-> > > There are 389 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > >
-> > > Responses should be made by Sat, 08 Feb 2025 15:51:12 +0000.
-> > > Anything received after that time might be too late.
-> > >
-> > > The whole patch series can be found in one patch at:
-> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.76-rc2.gz
-> > > or in the git tree and branch at:
-> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> > > and the diffstat can be found below.
-> > >
-> > > thanks,
-> > >
-> > > greg k-h
-> >
-> >
-> > There are three different regressions found and reporting here,
-> > We are working on bisecting and investigating these issues,
-> 
-> We observed a kernel warning on QEMU-ARM64 and FVP while running the
-> newly added selftest: arm64: check_hugetlb_options. This issue appears
-> on 6.6.76 onward and 6.12.13 onward, as reported in the stable review [1].
-> However, the test case passes successfully on stable 6.13.
-> 
-> The selftests: arm64: check_hugetlb_options test was introduced following
-> the recent upgrade of kselftest test sources to the stable 6.13 branch.
-> As you are aware, LKFT runs the latest kselftest sources (from stable
-> 6.13.x) on 6.12.x, 6.6.x, and older kernels for validation purposes.
-> 
-> >From Anders' bisection results, we identified that the missing patch on
-> 6.12 is likely causing this regression:
-> 
-> First fixed commit:
-> [25c17c4b55def92a01e3eecc9c775a6ee25ca20f]
-> hugetlb: arm64: add MTE support
-> 
-> Could you confirm whether this patch is eligible for backporting to
-> 6.12 and 6.6 kernels?
-> If backporting is not an option, we will need to skip running this
-> test case on older kernels.
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Saturday, January 25, 2025 8:31 AM
+>=20
+> There is no need to keep them in the header. The vEVENTQ version of these
+> two functions will turn out to be a different implementation and will not
+> share with this fault version. Thus, move them out of the header.
+>=20
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 
-The test case itself should properly "skip" if the feature is not
-present in the kernel.  Why not fix that up instead?
-
-thanks,
-
-greg k-h
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
