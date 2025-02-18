@@ -1,207 +1,192 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2067.outbound.protection.outlook.com [40.107.92.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738CF26A1C7;
-	Tue, 18 Feb 2025 18:01:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739901660; cv=none; b=ADn+glDKvoQ1Su26kQ/8rfGl75zUfS55AGFVkGA2f1m08VpAZdk7QpqpH6JCBvo3LEoaiS3omdadwb7y0XlFiqySqHgUIYE6LsIpIkPaVS1n62+0fyMqHLLrKCyubKwhGsvkuZZhniqxN2SntNe4Ag75E5t6i2e77kSvtADv5Ho=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739901660; c=relaxed/simple;
-	bh=X5cIzxfZwo4klvtzNw2WXQrEgsOXMYEji5/AX5ITIWQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=I3AipNVLqk1fnWuWSumvUHg53KzLXho/EvMCKVUCfToZwgb9HFuy5qT2nDHEd0AcWjH3TY8XJvx49Jd0442Xsf+TS8AOKjoOE3CKCLvlHoMualfrZbddFTo4W62YjCC0dk0jabWKE7UPNQvn4swNAoj4Uy4xXzoOMvCD+4XbJ/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z9OShoef; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47FA270EC0;
+	Tue, 18 Feb 2025 18:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.67
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1739902092; cv=fail; b=j2gaXwhdXZ1XJrhF+F2DzBgXAoR7h1rvyO53fSQloVbC5qEg+/gw/yS1sZU+0uHKIvngtZWv04yCh192QTbZ/pFi/KMNqzzWzF3bHpqfUxme4KmnqYz66mRVJ7eY4+yb46UYDM2E1dRUwrZp0vfPfpeKJxg/mrlcMRmXsiZ9Xwc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1739902092; c=relaxed/simple;
+	bh=cFcVuRwR2iLY/52kTs4b8BSF0D1sndDLqhjg3xwiifw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=gwsOItsI4IdPr0eJh9YmLLPfYvTmIG5crhCqaKeYF9TFA61z0PMNNForPcmUKMuXGDki2NxyBAPJgk8XA8HgKScdVXg47ls/mP4JSQBqLb4oGpO/XPApLrSpdhY3SADZrttDa2YDrtX7idPKKF6lhy2XpmxrxcFjsDlxO2WyddU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=qp/cfPpe; arc=fail smtp.client-ip=40.107.92.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z9OShoef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB29AC4CEEC;
-	Tue, 18 Feb 2025 18:00:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739901659;
-	bh=X5cIzxfZwo4klvtzNw2WXQrEgsOXMYEji5/AX5ITIWQ=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=Z9OShoeff0MEWqdSawqu7BUaDxShRZlaCP/Hjtxnu+8WTPjbAp6gl5UrOBbgPOEpT
-	 9Vkd5F0SFCi+4Hs0flC1y0wZ0FOQysaIOlnFRZCu9pux4KMdyCyR6Ce1O28U48AqUR
-	 Wy2GGFB6jlXli7TL0zGbqwpXETSAeNjZ57eyvjHWNnZ6x262KFCtyigZL90xCQZgXj
-	 KKH7YqaZevr1eWXOssA3iXQXHeu1MNQA1sR8xMFhOsQ6VP8FTdbtFRAwpsKzvPbIWN
-	 ejmgsK+QR7mg21KqheprBt9F1nxuIvfC9etUV79k5NLeBkpxGMiF1mzKDNv/OvqaWk
-	 aT/tYr2UuU5+Q==
-Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-5f88b61399dso10479eaf.1;
-        Tue, 18 Feb 2025 10:00:59 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCW/isGI0ef6mDiPlkYMTWSJdRq5Qk+jxB0+85biR5rQOxH54LiVD6kagraqefKWz/x7OopYy/vKhQ==@lists.linux.dev, AJvYcCWGEXD5U5gtLJrtPImiHS0D1fRPexX3OaBOEQOI0P1K6TEW70gT+VB2a3yDayivV9sQItp7@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz/GlVDStge+fhGI6TrjTczF1ZG058FyDY5Suh38Cvkkl2Ceg9k
-	N911E+m6GAfwr0LcZRPPQbvW6ryeeAi1xLIT4Uz9GI83I8gbl01mTmqaSon1lripDZvGz5knGB9
-	TAShAyqWlV6WzsP1dxCWuVViLbEs=
-X-Google-Smtp-Source: AGHT+IETDgAQnHmB1ym4OH/7fYtrH92mUURjm4lU0AE1WtC++HdD+kU9yToWvnK1uP0KyAPNH389H1MMc1SiyZKwJrE=
-X-Received: by 2002:a05:6808:360c:b0:3f3:d367:52fa with SMTP id
- 5614622812f47-3f40ef62f11mr422255b6e.18.1739901658915; Tue, 18 Feb 2025
- 10:00:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="qp/cfPpe"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=m4wmI+TOeq0mErwWcjK4fI43eh535Q22YQK8mWYGMfCCbR3YiPAbe0TyfljKxSruDAzNkmosP4C3EXEn5Tl2hxpRFJ3hRxnVrlkSYaiIb6f3eqS//vYGcGELM5rf7LN7zxZTn2pe3fVXGL3rbjN5S+sFj+VOrDg1fyVJ0oUgitn6H1I0hEzbW5kSpC/FbzS5RokiAvjB1EFLPtZoEOcPzG6XOO5/K0PAguHColp5IQkr4u7vHRNVYp/K86mhe+hT88ZQLijzUdfWR4+u+XFtXORMtoj63Ks1QE66nR7GBEF7TAGP8BA0XCyp/A3AMivz0AmWLPA2XSlKHdGpSNRSBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TS/shLrBFmY6HBcWUeE/akb7T2DeYuPzRXyV636ihZc=;
+ b=tlxdpWUcPFJ0sKg41TUzF5GLXcOqOWSG14LhtMwrMQDqy9VQ2DVIVWrt4C4kMUGf41Ld4NK8l5fbUIGDEr9HODKnP0C5XOXWSS1ilj+sDqHAEx53tDDWg86nOfBtbyrwmxsblX2jusd/KjGcqcROrUJBHqn+hqfOIdzjF1N//90apz+WHz7ZQxY1IDhCmycQqZhg37/AreiF/YyiavT/hvVTYNtGFbvYpX8xWarlVPyzwxIHEe2eZG0waw1lQ2XKbgw/bIxNEFg9B5mDfpSUMU5ylFzgHVAcR2013mL1F6CW002dqW3EaEe5Lf8u/ocEThPw+KAuGu7sF0A5S1j3Iw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TS/shLrBFmY6HBcWUeE/akb7T2DeYuPzRXyV636ihZc=;
+ b=qp/cfPpetZk8r25LncXUQ8OkkUqcce9Ma53TA9oT40wQfAnzOYeDmqDxCUzGx5x9kabLQ0a3Equ+qFCa69/fOnKZP9ERgUAhsxZLmlZMugaptLC0Zs2516o+O2HdfHpgOW0AYtE/HzaYphaERQEDczOcV6+awbwAmRXrQHhfxfI5lHmgBs5ugPfEb9cGv8BDBc5q3CAg9nirSWRzqKk5UBVBh+OcdoDLMxPSdWHx3FzS5VvaeH0PjjNtVeDcpE9qPZvSwa01kkrXSRRS8aZWAhnMQqbrOa+PUYq1XFvlUtaEogx/zeciPOTxWo2P5bB5For39Nonqztz7BBqZI2kxQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by PH0PR12MB7905.namprd12.prod.outlook.com (2603:10b6:510:28b::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.14; Tue, 18 Feb
+ 2025 18:08:06 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8445.019; Tue, 18 Feb 2025
+ 18:08:06 +0000
+Date: Tue, 18 Feb 2025 14:08:05 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: kevin.tian@intel.com, corbet@lwn.net, will@kernel.org, joro@8bytes.org,
+	suravee.suthikulpanit@amd.com, robin.murphy@arm.com,
+	dwmw2@infradead.org, baolu.lu@linux.intel.com, shuah@kernel.org,
+	linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org,
+	eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org,
+	mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
+	smostafa@google.com, ddutile@redhat.com, yi.l.liu@intel.com,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v6 05/14] iommufd: Add IOMMUFD_OBJ_VEVENTQ and
+ IOMMUFD_CMD_VEVENTQ_ALLOC
+Message-ID: <20250218180805.GI4099685@nvidia.com>
+References: <cover.1737754129.git.nicolinc@nvidia.com>
+ <2fb8d9c7b01ad36b42849283cd33d931f11092cb.1737754129.git.nicolinc@nvidia.com>
+ <20250218152959.GB4099685@nvidia.com>
+ <Z7THxrq/6sYP/AIi@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z7THxrq/6sYP/AIi@nvidia.com>
+X-ClientProxiedBy: MN2PR10CA0024.namprd10.prod.outlook.com
+ (2603:10b6:208:120::37) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250210-acpi-platform_profile-fix-cfi-violation-v3-1-ed9e9901c33a@kernel.org>
-In-Reply-To: <20250210-acpi-platform_profile-fix-cfi-violation-v3-1-ed9e9901c33a@kernel.org>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Tue, 18 Feb 2025 19:00:47 +0100
-X-Gmail-Original-Message-ID: <CAJZ5v0hkJPWGv8PaPixC8vsr26vBBdGAL60X9iWwKVji098XRQ@mail.gmail.com>
-X-Gm-Features: AWEUYZnLPIAbvPd7TRilaLcKa1PtFaiC5w37sc-4vTEe472uPGyGX93-jh3odew
-Message-ID: <CAJZ5v0hkJPWGv8PaPixC8vsr26vBBdGAL60X9iWwKVji098XRQ@mail.gmail.com>
-Subject: Re: [PATCH v3] ACPI: platform-profile: Fix CFI violation when
- accessing sysfs files
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>, 
-	Hans de Goede <hdegoede@redhat.com>, Mark Pearson <mpearson-lenovo@squebb.ca>, 
-	Mario Limonciello <mario.limonciello@amd.com>, Kees Cook <kees@kernel.org>, 
-	Sami Tolvanen <samitolvanen@google.com>, linux-acpi@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
-	stable@vger.kernel.org, John Rowley <lkml@johnrowley.me>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|PH0PR12MB7905:EE_
+X-MS-Office365-Filtering-Correlation-Id: a4685c7b-0105-4b6f-abc3-08dd504731cd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?4K06gbJz8Kxys/e+n5wqCTe2FxLiPjbHS0YDgMLdpHTH63ngEgoPRDSTi5VV?=
+ =?us-ascii?Q?7Qw7HrtgFgItjndqWkAv/tanWxqKSyvSPP3FXwNMxgWCONMvy6OO4a+RkxLc?=
+ =?us-ascii?Q?dic4mv/CuFp5DLeyfN8YDVIgF4LFXnJ9F7u+VEvnMHhUTJkbLsMZngltoIY0?=
+ =?us-ascii?Q?7tGUpbStzGUpXLEHB9FRW1AqGCPs05MKfcZNm/omXh4ADuAB1XN7XBLcsWSM?=
+ =?us-ascii?Q?P4MLo3h2heaXerFN0MLHGbqbtIrLORKbGw8TjLNt1fTJwTvR42F1mUKw16kb?=
+ =?us-ascii?Q?iOryzylrNmey3LZSpH1aOrsVpeVQcvRR5sD3OFpwJju40iFjR+/yFKhuRBW3?=
+ =?us-ascii?Q?M8KLQk/fa+2Vy3Zn+1oJM02xTYaOfEmo4p2vfutgF4VZSvEcB3CVW4IZnMXv?=
+ =?us-ascii?Q?XxJFnMfcILrMLWY+vUJ0uZP+59w5d1xdXMHoZ5oxHw+remesoyywlOa74kOh?=
+ =?us-ascii?Q?umwS60p4td+iAtykSx2nnknPZ6bb+eIXXp3Pg3hWiQdScz1Re9eKmDflVNTV?=
+ =?us-ascii?Q?nkFPuJour+T1RZ01SBFq+lgwUSWer/oJhWV03gQ+g2qOiZ2JXJrB+EIguYWy?=
+ =?us-ascii?Q?L5ngoqMcZ80VeYcBt+pRAkok51OxY0feKL1od+VWb5hXJFFfvkoD9u2GBPuT?=
+ =?us-ascii?Q?xdFg8QKJW06op7/MoUuIBfUqxASdbxwio3GeWUg5dLZ8eBK4dcB+I3r7YEZL?=
+ =?us-ascii?Q?LWXaoCepJ9ez8qktdk+MNL10tVaeqszaZFvLAU+qNC+pzevr1cdfkaRkckeT?=
+ =?us-ascii?Q?BALBTU7/HGOInu6lju4p1aFE8npp/v68yBZDZU2X0NWHtJ2ZlfIpo0iiihMx?=
+ =?us-ascii?Q?EKvX3auXeOl8T39CTmcz/RmOPUPmSxL38XCN/WHoWIgpLk0iJ0biqUtDyPRB?=
+ =?us-ascii?Q?uVk64FvwTCqcPXDMa3owqOom/7Y3yE9+qYovLI42A1YhNaNi5PBxDfcE8pdm?=
+ =?us-ascii?Q?bMX1N+MT9J9RjXggXz+qnYTacWgcgiFg8IBar2AgvFP1dQ5j873B9NkB6wbU?=
+ =?us-ascii?Q?uHIjX19qrcfbcV59FGGxuP4pXVNdnJ7P1oD/OAZq4U+N3Sc10/amwCwXuCfV?=
+ =?us-ascii?Q?a259kqpQKYrYw+J5/1zyUx9QmIRqWkACLu0OgV1jwDMe/tLOBHc3C8jGZInO?=
+ =?us-ascii?Q?ecB0YVXmzJnF4GvXM/Y11p8qoa4dc/ku1QKER4AWkj1qucOmifYPeZeP+mtO?=
+ =?us-ascii?Q?6PfbdA5dI0B6t7x9syqvRnaVdhX4ls1hq2LCvhDxookzBK8oQ2BRpVIkb8+h?=
+ =?us-ascii?Q?PsPacxuujRJ8h81aM8S9pIMPF61GDkSqPLQNERLqIhM8WlCceneVk2aCotqQ?=
+ =?us-ascii?Q?uH0CXtBmUvXDjDEsLIkBWIL6MYN6qdqfT+ByhnqIaKxfv2/DASXlLPNqTRlK?=
+ =?us-ascii?Q?pfl1QAgi4JTC3am/x8Md8/oKLD8Y?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?PcEnHd7qPMYdRB1iyAjw7GXf0hLu+JmgzTZ4EDJ5nh7wp9l+tt1be5PHsuMn?=
+ =?us-ascii?Q?rNo65NlY8g2CKaS042rNIhm87prLD7Yl9mAktcEs0b/+Io6UWlm0iuR6m4yR?=
+ =?us-ascii?Q?hBgYnACpBkA+isn9AVKyWy/h8yR6k+4yFeq6ya0p3llaK3OfVKRIYxiIFgah?=
+ =?us-ascii?Q?fc8j+djg0GXSIyGywYjJQiwUUoB1wrgKf0SrKlBhrX2kEGhG9r8eoOgfq/bk?=
+ =?us-ascii?Q?33DsvjcvhH4tqi1/4QlbkMnq4wU8H9nMAl4nRocHWrqQwDPYMWubLyGg1O99?=
+ =?us-ascii?Q?4RNiICLgtY1zNEkY847rXaB+nE23HMKZEsW9k+nPi10I49fGh71dvMKbY4LH?=
+ =?us-ascii?Q?rw3/9RILD7Ow+HMVIbjBIduHgG1pYCnpfO7BP7zEstS5mS4tV7ZFxTx837Lv?=
+ =?us-ascii?Q?a/rPHcwAuP11OEQqCzR9JV6pNHJZDgGMOp92cSPp1RUuM0xguTcko9YTr+UE?=
+ =?us-ascii?Q?SMqgpXXHhfzJbsFSGfDR6AHuGpIstCkCPDw96taCoPUqxhoNG9+Ll+5u3vuB?=
+ =?us-ascii?Q?QFMSvYe99Ftu1SxZCACeF2NFmNXIyh7HMj6EXou7afyWksLgP0ptpK3uDO4K?=
+ =?us-ascii?Q?sqZEQpW+pQWq/P0F+W2EDOJW2Hop6L1AtIpL495KvrG2LD16OGb6jAxaugfC?=
+ =?us-ascii?Q?//Tx92tU2NJPImQmQEJlrDqo7gmZItoLKfKSobUdlVSfKW2vOtQZAoi/5ouO?=
+ =?us-ascii?Q?XfahvNkvvNr2RWgcCu1XaltyOWVENZTUb/9AFKQEwLNYSZtFimN0nBkkoiva?=
+ =?us-ascii?Q?Lh2ZjDnQcPhvnVuEi0l1WAyihkvbmbz9R78+qIrf4pRyqzN8K0NJ09ePayIF?=
+ =?us-ascii?Q?KxDS2BpZaRHG1YMEAAn0RnyS75ys89KiTHS6TX1nLSSn3FQclzeaQ9SorsoQ?=
+ =?us-ascii?Q?XAZchMD0DUCecfxs57Lz0B/OSmnlwY0fZv89+pd2+4o1iYP0/5ByYj9mcEUv?=
+ =?us-ascii?Q?6qGbf+wRMrboZ1nMi0XO2qpMmOtyUlEyYIEfuQbK7xV3P7+VBQ7/NZwQBFFM?=
+ =?us-ascii?Q?4yWvQllBN0+EMSv/61NjQ8su0t5QiVLkIEC0bl1vhQWzB4q2iV0+gizWHijA?=
+ =?us-ascii?Q?Vkm2ltTYzrDnHd2GmgV5sda9NuMdtd2GSJ2Y9ZSEcUZuca4XF24IU5/6Bvwq?=
+ =?us-ascii?Q?nvcPrv68rNuoOu/nvAx6fcWcV4vamTg4N69evULTyvuCsKBSZKf0j5m2WlEc?=
+ =?us-ascii?Q?PM5jt7pje38ETCtLK/FaRScA6lusWjzFPM8fSqqMgXAjNXdQ1eBaYM0bM3Ty?=
+ =?us-ascii?Q?nAHyzvqfyoX3zbs5RuA7/KlIvCRjGupfSafOtqX5Z30teBkVX259JngbbDTx?=
+ =?us-ascii?Q?KSqIdUt2uxcCejxzmXkA9fGnwgp3yFhz4IIG9HAAU4/djg6zy/FbH4FnsIh6?=
+ =?us-ascii?Q?AjD3GrB7Plu3s0LiQblCoRJ8TpGXc8fZiaNQbqvUDZ/niVbr/lY+UKmdwqz2?=
+ =?us-ascii?Q?WF5e+5o6+T8DPFeEPgzY9f5PpB+Kf8cEhBoCof73rICtJPcm4pswzJw4l+0S?=
+ =?us-ascii?Q?tgkiU6NuB85y0Gvvm8SvCjb0oVwxxqJQMPdUxsbPuO35jiZUmhUo6hOR3QD8?=
+ =?us-ascii?Q?BcpocbewWzp60WORS96bPEcXFXL98Pm+A38nZORT?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a4685c7b-0105-4b6f-abc3-08dd504731cd
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Feb 2025 18:08:06.6998
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: h51Z5c39L0o1h7VeY9PVFAXJf4HiEvLlpisUrmKukM6IriAEPOHzoEaJKmFkU1gz
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7905
 
-On Tue, Feb 11, 2025 at 3:28=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
->
-> When an attribute group is created with sysfs_create_group(), the
-> ->sysfs_ops() callback is set to kobj_sysfs_ops, which sets the ->show()
-> and ->store() callbacks to kobj_attr_show() and kobj_attr_store()
-> respectively. These functions use container_of() to get the respective
-> callback from the passed attribute, meaning that these callbacks need to
-> be the same type as the callbacks in 'struct kobj_attribute'.
->
-> However, the platform_profile sysfs functions have the type of the
-> ->show() and ->store() callbacks in 'struct device_attribute', which
-> results a CFI violation when accessing platform_profile or
-> platform_profile_choices under /sys/firmware/acpi because the types do
-> not match:
->
->   CFI failure at kobj_attr_show+0x19/0x30 (target: platform_profile_choic=
-es_show+0x0/0x140; expected type: 0x7a69590c)
->
-> There is no functional issue from the type mismatch because the layout
-> of 'struct kobj_attribute' and 'struct device_attribute' are the same,
-> so the container_of() cast does not break anything aside from CFI.
->
-> Change the type of platform_profile_choices_show() and
-> platform_profile_{show,store}() to match the callbacks in
-> 'struct kobj_attribute' and update the attribute variables to match,
-> which resolves the CFI violation.
->
-> Cc: stable@vger.kernel.org
-> Fixes: a2ff95e018f1 ("ACPI: platform: Add platform profile support")
-> Reported-by: John Rowley <lkml@johnrowley.me>
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/2047
-> Tested-by: John Rowley <lkml@johnrowley.me>
-> Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
-> Changes in v3:
-> - Rebase on 6.14-rc1, which includes updates to the driver to address
->   Greg's previous concerns but this change is still needed for the
->   legacy sysfs interface. v2 can be used for the stable backport.
-> - Link to v2: https://lore.kernel.org/r/20241118-acpi-platform_profile-fi=
-x-cfi-violation-v2-1-62ff952804de@kernel.org
->
-> Changes in v2:
-> - Rebase on linux-pm/acpi
-> - Pick up Sami's reviewed-by tag
-> - Adjust wording around why there is no functional issue from the
->   mismatched types
-> - Link to v1: https://lore.kernel.org/r/20240819-acpi-platform_profile-fi=
-x-cfi-violation-v1-1-479365d848f6@kernel.org
-> ---
->  drivers/acpi/platform_profile.c | 26 +++++++++++++-------------
->  1 file changed, 13 insertions(+), 13 deletions(-)
->
-> diff --git a/drivers/acpi/platform_profile.c b/drivers/acpi/platform_prof=
-ile.c
-> index fc92e43d0fe9..1b6317f759f9 100644
-> --- a/drivers/acpi/platform_profile.c
-> +++ b/drivers/acpi/platform_profile.c
-> @@ -260,14 +260,14 @@ static int _aggregate_choices(struct device *dev, v=
-oid *data)
->
->  /**
->   * platform_profile_choices_show - Show the available profile choices fo=
-r legacy sysfs interface
-> - * @dev: The device
-> + * @kobj: The kobject
->   * @attr: The attribute
->   * @buf: The buffer to write to
->   *
->   * Return: The number of bytes written
->   */
-> -static ssize_t platform_profile_choices_show(struct device *dev,
-> -                                            struct device_attribute *att=
-r,
-> +static ssize_t platform_profile_choices_show(struct kobject *kobj,
-> +                                            struct kobj_attribute *attr,
->                                              char *buf)
->  {
->         unsigned long aggregate[BITS_TO_LONGS(PLATFORM_PROFILE_LAST)];
-> @@ -333,14 +333,14 @@ static int _store_and_notify(struct device *dev, vo=
-id *data)
->
->  /**
->   * platform_profile_show - Show the current profile for legacy sysfs int=
-erface
-> - * @dev: The device
-> + * @kobj: The kobject
->   * @attr: The attribute
->   * @buf: The buffer to write to
->   *
->   * Return: The number of bytes written
->   */
-> -static ssize_t platform_profile_show(struct device *dev,
-> -                                    struct device_attribute *attr,
-> +static ssize_t platform_profile_show(struct kobject *kobj,
-> +                                    struct kobj_attribute *attr,
->                                      char *buf)
->  {
->         enum platform_profile_option profile =3D PLATFORM_PROFILE_LAST;
-> @@ -362,15 +362,15 @@ static ssize_t platform_profile_show(struct device =
-*dev,
->
->  /**
->   * platform_profile_store - Set the profile for legacy sysfs interface
-> - * @dev: The device
-> + * @kobj: The kobject
->   * @attr: The attribute
->   * @buf: The buffer to read from
->   * @count: The number of bytes to read
->   *
->   * Return: The number of bytes read
->   */
-> -static ssize_t platform_profile_store(struct device *dev,
-> -                                     struct device_attribute *attr,
-> +static ssize_t platform_profile_store(struct kobject *kobj,
-> +                                     struct kobj_attribute *attr,
->                                       const char *buf, size_t count)
->  {
->         unsigned long choices[BITS_TO_LONGS(PLATFORM_PROFILE_LAST)];
-> @@ -401,12 +401,12 @@ static ssize_t platform_profile_store(struct device=
- *dev,
->         return count;
->  }
->
-> -static DEVICE_ATTR_RO(platform_profile_choices);
-> -static DEVICE_ATTR_RW(platform_profile);
-> +static struct kobj_attribute attr_platform_profile_choices =3D __ATTR_RO=
-(platform_profile_choices);
-> +static struct kobj_attribute attr_platform_profile =3D __ATTR_RW(platfor=
-m_profile);
->
->  static struct attribute *platform_profile_attrs[] =3D {
-> -       &dev_attr_platform_profile_choices.attr,
-> -       &dev_attr_platform_profile.attr,
-> +       &attr_platform_profile_choices.attr,
-> +       &attr_platform_profile.attr,
->         NULL
->  };
->
->
-> ---
+On Tue, Feb 18, 2025 at 09:47:50AM -0800, Nicolin Chen wrote:
+> I think we can do:
+> 	if (!list_empty(list)) {
+> 		struct iommufd_vevent *next;
+> 
+> 		next = list_first_entry(list, struct iommufd_vevent, node);
+> 		if (next == &veventq->overflow) {
+> 			/* Make a copy of the overflow node for copy_to_user */
+> 			vevent = kzalloc(sizeof(*vevent), GFP_ATOMIC);
+> 			if (!vevent)
+> 				goto out_unlock;
+> 		}
+> 		list_del(&next->node);
+> 		if (vevent)
+> 			memcpy(vevent, next, sizeof(*vevent));
+> 		else
+> 			vevent = next;
+> 	}
 
-Applied as 6.15 material with some edits in the changelog, thanks!
+That looks right
+
+> > > +int iommufd_veventq_alloc(struct iommufd_ucmd *ucmd)
+> > > +{
+> > > +	struct iommu_veventq_alloc *cmd = ucmd->cmd;
+> > > +	struct iommufd_veventq *veventq;
+> > > +	struct iommufd_viommu *viommu;
+> > > +	int fdno;
+> > > +	int rc;
+> > > +
+> > > +	if (cmd->flags || cmd->type == IOMMU_VEVENTQ_TYPE_DEFAULT)
+> > > +		return -EOPNOTSUPP;
+> > > +	if (!cmd->veventq_depth)
+> > > +		return -EINVAL;
+> > 
+> > Check __reserved for 0 too
+> 
+> Kevin is suggesting a 32-bit flag field, so I think we can drop
+> the __reserved in that case.
+
+Those are different structs?
+
+Jason
