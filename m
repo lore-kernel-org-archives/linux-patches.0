@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CED41C5F18;
-	Wed, 19 Feb 2025 08:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8608B1DEFDC;
+	Wed, 19 Feb 2025 08:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954106; cv=none; b=sleU8hfRagU49EcXNW5wjqnJgSGO3xwP5cXKNNAJu+QadTnoxh6lfma/iAcELthyuPDN++gKnQP2xd36GVSYGw5ckWm/VbJmxLsYQogPmwMN79MCShB3vxzMBOqlrByJMKxp0a/SGpj3tKm3pKe2eNv7AOqaD1IPtnz4ccDJuMs=
+	t=1739954109; cv=none; b=l9j+HPOCp0cXxAFqEI7RfTT4PxBEUiZOg5Cp8zh0WL+HwN4vtnsgQvbuzFGi4XCFaWIKoKBae0xJM9AnYjmbscDgnqIzus34+12M5+lfkvN/szmFFhovq5YGM1wzTnwigP7Fv4Vuv9dIRjIluuanHPjoaDIjDyTCQcWBvWLLE2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954106; c=relaxed/simple;
-	bh=FCup1DIH89ejJ2vRM0cnWRalBv7rwJIyWxdfMMVjaMo=;
+	s=arc-20240116; t=1739954109; c=relaxed/simple;
+	bh=DjlL5Hlbm3D4EsY/Nu7m16ClmefbgKfqkJAd2aSRcyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CEcr/mvdXVKWS/GdJO/BlbfBzzptw2QTFlrPdKs3Wsu1191ZplJtoXsUQ8hCApSRVqU+8tpgu+kEaPPRUevKo1qLlb2FIxM16oM+6qV52ZU4FE5WzravWQf9fyD+Vpm1JGvFpd8tcexEQLeLViYof2IUwiuwt/mJ9BZVTSVh0jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAu9G/Fi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d7P8LpbkmZj+49UimO8wTW+8dcA70KYAfUuxZPAsnK5wLbOSmn7L+suLNLbEmtkg4yoZ6nsRj/+LHjlwiDJ5pRHiTnUA1EQkOCe0j8UDBz174QpwJZ8sXIVguMAlxIGpd4nIi7o0tyqUSJaBilntUgsHxc3rVD513yrh4e0fR7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLmYocDw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAu9G/Fi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1FFDC4CED1;
-	Wed, 19 Feb 2025 08:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLmYocDw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F19C4CED1;
+	Wed, 19 Feb 2025 08:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954106;
-	bh=FCup1DIH89ejJ2vRM0cnWRalBv7rwJIyWxdfMMVjaMo=;
+	s=korg; t=1739954109;
+	bh=DjlL5Hlbm3D4EsY/Nu7m16ClmefbgKfqkJAd2aSRcyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aAu9G/FiQZV6OQeJXE/0n7VQ97Jmsw659iGSfiikCwogqtNMKc75gbMGJ5R+9t6lS
-	 dqVN+vXXvN7hQO3UtAbq7a1p/5ILsTkEag9BHu1CB89xkJzCbnVFodobOX/n9tLNPO
-	 OY8Syn06vKWGR4+eaRfszT1B/3EVP/vuKwRuTOMs=
+	b=KLmYocDwqLK5PAFvHWCjHK7s2DULIZ/Xjt/qDUITE6XLSlyfxjWMjJV4bEKyXU39C
+	 SuXFfe30BUp9y+fxfEy8FZZn7iXoWTiJ7gPmNqXij31+/aoeRSKSFcywN2qp8+PCx1
+	 /V3yhcwSqZFQ/+EXK8wDnZEJ0j2QcbdpXWFsL6Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Varadarajan Narayanan <quic_varada@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Ankit Agrawal <ankita@nvidia.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 071/274] soc: qcom: llcc: Update configuration data for IPQ5424
-Date: Wed, 19 Feb 2025 09:25:25 +0100
-Message-ID: <20250219082612.399608235@linuxfoundation.org>
+Subject: [PATCH 6.13 098/274] vfio/nvgrace-gpu: Read dvsec register to determine need for uncached resmem
+Date: Wed, 19 Feb 2025 09:25:52 +0100
+Message-ID: <20250219082613.458476146@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -53,128 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
+From: Ankit Agrawal <ankita@nvidia.com>
 
-[ Upstream commit c88c323b610a6048b87c5d9fff69659678f69924 ]
+[ Upstream commit bd53764a60ad586ad5b6ed339423ad5e67824464 ]
 
-The 'broadcast' register space is present only in chipsets that
-have multiple instances of LLCC IP. Since IPQ5424 has only one
-instance, both the LLCC and LLCC_BROADCAST points to the same
-register space.
+NVIDIA's recently introduced Grace Blackwell (GB) Superchip is a
+continuation with the Grace Hopper (GH) superchip that provides a
+cache coherent access to CPU and GPU to each other's memory with
+an internal proprietary chip-to-chip cache coherent interconnect.
 
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20241121051935.1055222-3-quic_varada@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+There is a HW defect on GH systems to support the Multi-Instance
+GPU (MIG) feature [1] that necessiated the presence of a 1G region
+with uncached mapping carved out from the device memory. The 1G
+region is shown as a fake BAR (comprising region 2 and 3) to
+workaround the issue. This is fixed on the GB systems.
+
+The presence of the fix for the HW defect is communicated by the
+device firmware through the DVSEC PCI config register with ID 3.
+The module reads this to take a different codepath on GB vs GH.
+
+Scan through the DVSEC registers to identify the correct one and use
+it to determine the presence of the fix. Save the value in the device's
+nvgrace_gpu_pci_core_device structure.
+
+Link: https://www.nvidia.com/en-in/technologies/multi-instance-gpu/ [1]
+
+CC: Jason Gunthorpe <jgg@nvidia.com>
+CC: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
+Link: https://lore.kernel.org/r/20250124183102.3976-2-ankita@nvidia.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 57 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 55 insertions(+), 2 deletions(-)
+ drivers/vfio/pci/nvgrace-gpu/main.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 1560db00a0124..56823b6a2facc 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -142,6 +142,7 @@ struct qcom_llcc_config {
- 	bool skip_llcc_cfg;
- 	bool no_edac;
- 	bool irq_configured;
-+	bool no_broadcast_register;
- };
+diff --git a/drivers/vfio/pci/nvgrace-gpu/main.c b/drivers/vfio/pci/nvgrace-gpu/main.c
+index a467085038f0c..b76368958d1c5 100644
+--- a/drivers/vfio/pci/nvgrace-gpu/main.c
++++ b/drivers/vfio/pci/nvgrace-gpu/main.c
+@@ -23,6 +23,11 @@
+ /* A hardwired and constant ABI value between the GPU FW and VFIO driver. */
+ #define MEMBLK_SIZE SZ_512M
  
- struct qcom_sct_config {
-@@ -154,6 +155,38 @@ enum llcc_reg_offset {
- 	LLCC_COMMON_STATUS0,
- };
- 
-+static const struct llcc_slice_config ipq5424_data[] =  {
-+	{
-+		.usecase_id = LLCC_CPUSS,
-+		.slice_id = 1,
-+		.max_cap = 768,
-+		.priority = 1,
-+		.bonus_ways = 0xFFFF,
-+		.retain_on_pc = true,
-+		.activate_on_init = true,
-+		.write_scid_cacheable_en = true,
-+		.stale_en = true,
-+		.stale_cap_en = true,
-+		.alloc_oneway_en = true,
-+		.ovcap_en = true,
-+		.ovcap_prio = true,
-+		.vict_prio = true,
-+	},
-+	{
-+		.usecase_id = LLCC_VIDSC0,
-+		.slice_id = 2,
-+		.max_cap = 256,
-+		.priority = 2,
-+		.fixed_size = true,
-+		.bonus_ways = 0xF000,
-+		.retain_on_pc = true,
-+		.activate_on_init = true,
-+		.write_scid_cacheable_en = true,
-+		.stale_en = true,
-+		.stale_cap_en = true,
-+	},
-+};
++#define DVSEC_BITMAP_OFFSET 0xA
++#define MIG_SUPPORTED_WITH_CACHED_RESMEM BIT(0)
 +
- static const struct llcc_slice_config sa8775p_data[] =  {
- 	{
- 		.usecase_id = LLCC_CPUSS,
-@@ -3186,6 +3219,16 @@ static const struct qcom_llcc_config qdu1000_cfg[] = {
- 	},
++#define GPU_CAP_DVSEC_REGISTER 3
++
+ /*
+  * The state of the two device memory region - resmem and usemem - is
+  * saved as struct mem_region.
+@@ -46,6 +51,7 @@ struct nvgrace_gpu_pci_core_device {
+ 	struct mem_region resmem;
+ 	/* Lock to control device memory kernel mapping */
+ 	struct mutex remap_lock;
++	bool has_mig_hw_bug;
  };
  
-+static const struct qcom_llcc_config ipq5424_cfg[] = {
-+	{
-+		.sct_data       = ipq5424_data,
-+		.size           = ARRAY_SIZE(ipq5424_data),
-+		.reg_offset     = llcc_v2_1_reg_offset,
-+		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
-+		.no_broadcast_register = true,
-+	},
-+};
-+
- static const struct qcom_llcc_config sa8775p_cfg[] = {
- 	{
- 		.sct_data	= sa8775p_data,
-@@ -3361,6 +3404,11 @@ static const struct qcom_sct_config qdu1000_cfgs = {
- 	.num_config	= ARRAY_SIZE(qdu1000_cfg),
- };
- 
-+static const struct qcom_sct_config ipq5424_cfgs = {
-+	.llcc_config	= ipq5424_cfg,
-+	.num_config	= ARRAY_SIZE(ipq5424_cfg),
-+};
-+
- static const struct qcom_sct_config sa8775p_cfgs = {
- 	.llcc_config	= sa8775p_cfg,
- 	.num_config	= ARRAY_SIZE(sa8775p_cfg),
-@@ -3958,8 +4006,12 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 
- 	drv_data->bcast_regmap = qcom_llcc_init_mmio(pdev, i, "llcc_broadcast_base");
- 	if (IS_ERR(drv_data->bcast_regmap)) {
--		ret = PTR_ERR(drv_data->bcast_regmap);
--		goto err;
-+		if (cfg->no_broadcast_register) {
-+			drv_data->bcast_regmap = regmap;
-+		} else {
-+			ret = PTR_ERR(drv_data->bcast_regmap);
-+			goto err;
-+		}
- 	}
- 
- 	/* Extract version of the IP */
-@@ -4030,6 +4082,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+ static void nvgrace_gpu_init_fake_bar_emu_regs(struct vfio_device *core_vdev)
+@@ -812,6 +818,26 @@ nvgrace_gpu_init_nvdev_struct(struct pci_dev *pdev,
+ 	return ret;
  }
  
- static const struct of_device_id qcom_llcc_of_match[] = {
-+	{ .compatible = "qcom,ipq5424-llcc", .data = &ipq5424_cfgs},
- 	{ .compatible = "qcom,qcs615-llcc", .data = &qcs615_cfgs},
- 	{ .compatible = "qcom,qcs8300-llcc", .data = &qcs8300_cfgs},
- 	{ .compatible = "qcom,qdu1000-llcc", .data = &qdu1000_cfgs},
++static bool nvgrace_gpu_has_mig_hw_bug(struct pci_dev *pdev)
++{
++	int pcie_dvsec;
++	u16 dvsec_ctrl16;
++
++	pcie_dvsec = pci_find_dvsec_capability(pdev, PCI_VENDOR_ID_NVIDIA,
++					       GPU_CAP_DVSEC_REGISTER);
++
++	if (pcie_dvsec) {
++		pci_read_config_word(pdev,
++				     pcie_dvsec + DVSEC_BITMAP_OFFSET,
++				     &dvsec_ctrl16);
++
++		if (dvsec_ctrl16 & MIG_SUPPORTED_WITH_CACHED_RESMEM)
++			return false;
++	}
++
++	return true;
++}
++
+ static int nvgrace_gpu_probe(struct pci_dev *pdev,
+ 			     const struct pci_device_id *id)
+ {
+@@ -832,6 +858,8 @@ static int nvgrace_gpu_probe(struct pci_dev *pdev,
+ 	dev_set_drvdata(&pdev->dev, &nvdev->core_device);
+ 
+ 	if (ops == &nvgrace_gpu_pci_ops) {
++		nvdev->has_mig_hw_bug = nvgrace_gpu_has_mig_hw_bug(pdev);
++
+ 		/*
+ 		 * Device memory properties are identified in the host ACPI
+ 		 * table. Set the nvgrace_gpu_pci_core_device structure.
 -- 
 2.39.5
 
