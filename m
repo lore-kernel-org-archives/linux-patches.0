@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3EA1805B;
-	Wed, 19 Feb 2025 09:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F4E1805B;
+	Wed, 19 Feb 2025 09:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956852; cv=none; b=W43nEzZgXfUwqWwgGin3w/mNve+tSkfoEOW2GfBOshREj9yJoj52m9YOqr7F4wU7orgu1aJc0nKQODxx7G8WTz7I9uya0BL1HFN9/hbVEBRVEwrAeQ5yU2Cw60dYP3ARgJTKzGDkd9xrLWdtG+k5934SRwBtOUznHx0J1VMErHI=
+	t=1739956855; cv=none; b=sKaKqvlddY5TT5uWYuCamXnsA/2TXtAOki2OCc8kpDaPFRM6BK7O7ZEZ4j9PXprQv9xKKFi66bsONwFW1MT6HU6zsTSIV4OQ5FVoaezXffzetO6JZihYfEMYtgrG0HZ4RTiKimIGTGrs/xH2n5uHtEEPjnYLqLDMtI2stIS3ueA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956852; c=relaxed/simple;
-	bh=rGGiPVLWjhKreuVjCHKDFU3UG8KMU7QX3WQc7/j7AeM=;
+	s=arc-20240116; t=1739956855; c=relaxed/simple;
+	bh=mDju42BCgkq0yoonq7601x0J6kkob+KgXKdnsIRPq/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ULi7hXPhMygeVQ18nkU7s4S/v38vR1RqSK3hVQH5yYQ9RXzqiMzPeKop0klJqaPhzkDrk3f1lUInoEyZZlC9qNtKSvrnoGmyWIbwqTFwLqKWxiqZAJ5oOU8wnBPU/HY+HUO+n/TRzNw/t0qtCEMziX6JNXWZ8g1mGiBGvpPdzTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQMcS5fK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pRWoZoEWtGV7yQOHTz43fDfp8s//xcoFbo9GnvhFleW+76ZkCQWt9ckHVXarTJ7S9TLYqGfO6SEbT0uaeoXDuKYg9ypGYEOWO7xdQUU5KiAZB+ajn+aWS/hMC8uWdapRQiQTerJUvafRudJJpVkYC8xwK1eOphnfgOXnRBF+5qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArGNmvVa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQMcS5fK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA8DC4CED1;
-	Wed, 19 Feb 2025 09:20:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArGNmvVa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70194C4CED1;
+	Wed, 19 Feb 2025 09:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956851;
-	bh=rGGiPVLWjhKreuVjCHKDFU3UG8KMU7QX3WQc7/j7AeM=;
+	s=korg; t=1739956854;
+	bh=mDju42BCgkq0yoonq7601x0J6kkob+KgXKdnsIRPq/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IQMcS5fK6B+zwLNRqpE74UK8uavElB1UiYKS2d2giXHqNiqbcnWpTH7CP957EuA5m
-	 aZO0DGln2ebNsjNrxtLrctrYVeVWzJ1rEsuGW5gPxXT5h9uF+pwajqQVxgs7tz5xk6
-	 Csc/fzlUul9I2JseUpyEpFg5xJaZomgdi68zhp6M=
+	b=ArGNmvVa0mkVXlGcA2H6pnS9Mp15WkQvfAgmfMHNXI8Kb7WbsbooW60gyvpg2QajD
+	 BTjF8zq4t9m4NSCZnQeE/Aj69SDZKaoMMozdkynl3qAiyy5BP2T24AYt3Tyo0coFC2
+	 EObdB8VH0dCc6+0vZpXkpORv1kXTuyClCh/dQUJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Delevoryas <peter@pjd.dev>,
-	Patrick Williams <patrick@stwcx.xyz>,
+	Lenny Szubowicz <lszubowi@redhat.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 315/578] net/ncsi: Add NC-SI 1.2 Get MC MAC Address command
-Date: Wed, 19 Feb 2025 09:25:19 +0100
-Message-ID: <20250219082705.406856390@linuxfoundation.org>
+Subject: [PATCH 6.1 324/578] tg3: Disable tg3 PCIe AER on system reboot
+Date: Wed, 19 Feb 2025 09:25:28 +0100
+Message-ID: <20250219082705.756539184@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,171 +53,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Delevoryas <peter@pjd.dev>
+From: Lenny Szubowicz <lszubowi@redhat.com>
 
-[ Upstream commit b8291cf3d1180b5b61299922f17c9441616a805a ]
+[ Upstream commit e0efe83ed325277bb70f9435d4d9fc70bebdcca8 ]
 
-This change adds support for the NC-SI 1.2 Get MC MAC Address command,
-specified here:
+Disable PCIe AER on the tg3 device on system reboot on a limited
+list of Dell PowerEdge systems. This prevents a fatal PCIe AER event
+on the tg3 device during the ACPI _PTS (prepare to sleep) method for
+S5 on those systems. The _PTS is invoked by acpi_enter_sleep_state_prep()
+as part of the kernel's reboot sequence as a result of commit
+38f34dba806a ("PM: ACPI: reboot: Reinstate S5 for reboot").
 
-https://www.dmtf.org/sites/default/files/standards/documents/DSP0222_1.2.0.pdf
+There was an earlier fix for this problem by commit 2ca1c94ce0b6
+("tg3: Disable tg3 device on system reboot to avoid triggering AER").
+But it was discovered that this earlier fix caused a reboot hang
+when some Dell PowerEdge servers were booted via ipxe. To address
+this reboot hang, the earlier fix was essentially reverted by commit
+9fc3bc764334 ("tg3: power down device only on SYSTEM_POWER_OFF").
+This re-exposed the tg3 PCIe AER on reboot problem.
 
-It serves the exact same function as the existing OEM Get MAC Address
-commands, so if a channel reports that it supports NC-SI 1.2, we prefer
-to use the standard command rather than the OEM command.
+This fix is not an ideal solution because the root cause of the AER
+is in system firmware. Instead, it's a targeted work-around in the
+tg3 driver.
 
-Verified with an invalid MAC address and 2 valid ones:
+Note also that the PCIe AER must be disabled on the tg3 device even
+if the system is configured to use "firmware first" error handling.
 
-[   55.137072] ftgmac100 1e690000.ftgmac eth0: NCSI: Received 3 provisioned MAC addresses
-[   55.137614] ftgmac100 1e690000.ftgmac eth0: NCSI: MAC address 0: 00:00:00:00:00:00
-[   55.138026] ftgmac100 1e690000.ftgmac eth0: NCSI: MAC address 1: fa:ce:b0:0c:20:22
-[   55.138528] ftgmac100 1e690000.ftgmac eth0: NCSI: MAC address 2: fa:ce:b0:0c:20:23
-[   55.139241] ftgmac100 1e690000.ftgmac eth0: NCSI: Unable to assign 00:00:00:00:00:00 to device
-[   55.140098] ftgmac100 1e690000.ftgmac eth0: NCSI: Set MAC address to fa:ce:b0:0c:20:22
+V3:
+   - Fix sparse warning on improper comparison of pdev->current_state
+   - Adhere to netdev comment style
 
-Signed-off-by: Peter Delevoryas <peter@pjd.dev>
-Signed-off-by: Patrick Williams <patrick@stwcx.xyz>
+Fixes: 9fc3bc764334 ("tg3: power down device only on SYSTEM_POWER_OFF")
+Signed-off-by: Lenny Szubowicz <lszubowi@redhat.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 9e2bbab94b88 ("net/ncsi: fix locking in Get MAC Address handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-cmd.c    |  3 ++-
- net/ncsi/ncsi-manage.c |  9 +++++++--
- net/ncsi/ncsi-pkt.h    | 10 ++++++++++
- net/ncsi/ncsi-rsp.c    | 41 ++++++++++++++++++++++++++++++++++++++++-
- 4 files changed, 59 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 58 +++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
-diff --git a/net/ncsi/ncsi-cmd.c b/net/ncsi/ncsi-cmd.c
-index dda8b76b77988..7be177f551731 100644
---- a/net/ncsi/ncsi-cmd.c
-+++ b/net/ncsi/ncsi-cmd.c
-@@ -269,7 +269,8 @@ static struct ncsi_cmd_handler {
- 	{ NCSI_PKT_CMD_GPS,    0, ncsi_cmd_handler_default },
- 	{ NCSI_PKT_CMD_OEM,   -1, ncsi_cmd_handler_oem     },
- 	{ NCSI_PKT_CMD_PLDM,   0, NULL                     },
--	{ NCSI_PKT_CMD_GPUUID, 0, ncsi_cmd_handler_default }
-+	{ NCSI_PKT_CMD_GPUUID, 0, ncsi_cmd_handler_default },
-+	{ NCSI_PKT_CMD_GMCMA,  0, ncsi_cmd_handler_default }
- };
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index dab0ab10d111a..95d460237835d 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -55,6 +55,7 @@
+ #include <linux/hwmon.h>
+ #include <linux/hwmon-sysfs.h>
+ #include <linux/crc32poly.h>
++#include <linux/dmi.h>
  
- static struct ncsi_request *ncsi_alloc_command(struct ncsi_cmd_arg *nca)
-diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
-index 760b33fa03a8b..4583b29971933 100644
---- a/net/ncsi/ncsi-manage.c
-+++ b/net/ncsi/ncsi-manage.c
-@@ -1040,11 +1040,16 @@ static void ncsi_configure_channel(struct ncsi_dev_priv *ndp)
- 	case ncsi_dev_state_config_oem_gma:
- 		nd->state = ncsi_dev_state_config_clear_vids;
+ #include <net/checksum.h>
+ #include <net/ip.h>
+@@ -18114,6 +18115,50 @@ static int tg3_resume(struct device *device)
  
--		nca.type = NCSI_PKT_CMD_OEM;
- 		nca.package = np->id;
- 		nca.channel = nc->id;
- 		ndp->pending_req_num = 1;
--		ret = ncsi_gma_handler(&nca, nc->version.mf_id);
-+		if (nc->version.major >= 1 && nc->version.minor >= 2) {
-+			nca.type = NCSI_PKT_CMD_GMCMA;
-+			ret = ncsi_xmit_cmd(&nca);
-+		} else {
-+			nca.type = NCSI_PKT_CMD_OEM;
-+			ret = ncsi_gma_handler(&nca, nc->version.mf_id);
-+		}
- 		if (ret < 0)
- 			schedule_work(&ndp->work);
+ static SIMPLE_DEV_PM_OPS(tg3_pm_ops, tg3_suspend, tg3_resume);
  
-diff --git a/net/ncsi/ncsi-pkt.h b/net/ncsi/ncsi-pkt.h
-index c9d1da34dc4dc..f2f3b5c1b9412 100644
---- a/net/ncsi/ncsi-pkt.h
-+++ b/net/ncsi/ncsi-pkt.h
-@@ -338,6 +338,14 @@ struct ncsi_rsp_gpuuid_pkt {
- 	__be32                  checksum;
- };
- 
-+/* Get MC MAC Address */
-+struct ncsi_rsp_gmcma_pkt {
-+	struct ncsi_rsp_pkt_hdr rsp;
-+	unsigned char           address_count;
-+	unsigned char           reserved[3];
-+	unsigned char           addresses[][ETH_ALEN];
++/* Systems where ACPI _PTS (Prepare To Sleep) S5 will result in a fatal
++ * PCIe AER event on the tg3 device if the tg3 device is not, or cannot
++ * be, powered down.
++ */
++static const struct dmi_system_id tg3_restart_aer_quirk_table[] = {
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R440"),
++		},
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R540"),
++		},
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R640"),
++		},
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R650"),
++		},
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R740"),
++		},
++	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R750"),
++		},
++	},
++	{}
 +};
 +
- /* AEN: Link State Change */
- struct ncsi_aen_lsc_pkt {
- 	struct ncsi_aen_pkt_hdr aen;        /* AEN header      */
-@@ -398,6 +406,7 @@ struct ncsi_aen_hncdsc_pkt {
- #define NCSI_PKT_CMD_GPUUID	0x52 /* Get package UUID                 */
- #define NCSI_PKT_CMD_QPNPR	0x56 /* Query Pending NC PLDM request */
- #define NCSI_PKT_CMD_SNPR	0x57 /* Send NC PLDM Reply  */
-+#define NCSI_PKT_CMD_GMCMA	0x58 /* Get MC MAC Address */
+ static void tg3_shutdown(struct pci_dev *pdev)
+ {
+ 	struct net_device *dev = pci_get_drvdata(pdev);
+@@ -18130,6 +18175,19 @@ static void tg3_shutdown(struct pci_dev *pdev)
  
- 
- /* NCSI packet responses */
-@@ -433,6 +442,7 @@ struct ncsi_aen_hncdsc_pkt {
- #define NCSI_PKT_RSP_GPUUID	(NCSI_PKT_CMD_GPUUID + 0x80)
- #define NCSI_PKT_RSP_QPNPR	(NCSI_PKT_CMD_QPNPR   + 0x80)
- #define NCSI_PKT_RSP_SNPR	(NCSI_PKT_CMD_SNPR   + 0x80)
-+#define NCSI_PKT_RSP_GMCMA	(NCSI_PKT_CMD_GMCMA  + 0x80)
- 
- /* NCSI response code/reason */
- #define NCSI_PKT_RSP_C_COMPLETED	0x0000 /* Command Completed        */
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index f22d67cb04d37..e28be33bdf2c4 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -1093,6 +1093,44 @@ static int ncsi_rsp_handler_netlink(struct ncsi_request *nr)
- 	return ret;
- }
- 
-+static int ncsi_rsp_handler_gmcma(struct ncsi_request *nr)
-+{
-+	struct ncsi_dev_priv *ndp = nr->ndp;
-+	struct net_device *ndev = ndp->ndev.dev;
-+	struct ncsi_rsp_gmcma_pkt *rsp;
-+	struct sockaddr saddr;
-+	int ret = -1;
-+	int i;
-+
-+	rsp = (struct ncsi_rsp_gmcma_pkt *)skb_network_header(nr->rsp);
-+	saddr.sa_family = ndev->type;
-+	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
-+
-+	netdev_info(ndev, "NCSI: Received %d provisioned MAC addresses\n",
-+		    rsp->address_count);
-+	for (i = 0; i < rsp->address_count; i++) {
-+		netdev_info(ndev, "NCSI: MAC address %d: %02x:%02x:%02x:%02x:%02x:%02x\n",
-+			    i, rsp->addresses[i][0], rsp->addresses[i][1],
-+			    rsp->addresses[i][2], rsp->addresses[i][3],
-+			    rsp->addresses[i][4], rsp->addresses[i][5]);
+ 	if (system_state == SYSTEM_POWER_OFF)
+ 		tg3_power_down(tp);
++	else if (system_state == SYSTEM_RESTART &&
++		 dmi_first_match(tg3_restart_aer_quirk_table) &&
++		 pdev->current_state != PCI_D3cold &&
++		 pdev->current_state != PCI_UNKNOWN) {
++		/* Disable PCIe AER on the tg3 to avoid a fatal
++		 * error during this system restart.
++		 */
++		pcie_capability_clear_word(pdev, PCI_EXP_DEVCTL,
++					   PCI_EXP_DEVCTL_CERE |
++					   PCI_EXP_DEVCTL_NFERE |
++					   PCI_EXP_DEVCTL_FERE |
++					   PCI_EXP_DEVCTL_URRE);
 +	}
-+
-+	for (i = 0; i < rsp->address_count; i++) {
-+		memcpy(saddr.sa_data, &rsp->addresses[i], ETH_ALEN);
-+		ret = ndev->netdev_ops->ndo_set_mac_address(ndev, &saddr);
-+		if (ret < 0) {
-+			netdev_warn(ndev, "NCSI: Unable to assign %pM to device\n",
-+				    saddr.sa_data);
-+			continue;
-+		}
-+		netdev_warn(ndev, "NCSI: Set MAC address to %pM\n", saddr.sa_data);
-+		break;
-+	}
-+
-+	ndp->gma_flag = ret == 0;
-+	return ret;
-+}
-+
- static struct ncsi_rsp_handler {
- 	unsigned char	type;
- 	int             payload;
-@@ -1129,7 +1167,8 @@ static struct ncsi_rsp_handler {
- 	{ NCSI_PKT_RSP_PLDM,   -1, ncsi_rsp_handler_pldm    },
- 	{ NCSI_PKT_RSP_GPUUID, 20, ncsi_rsp_handler_gpuuid  },
- 	{ NCSI_PKT_RSP_QPNPR,  -1, ncsi_rsp_handler_pldm    },
--	{ NCSI_PKT_RSP_SNPR,   -1, ncsi_rsp_handler_pldm    }
-+	{ NCSI_PKT_RSP_SNPR,   -1, ncsi_rsp_handler_pldm    },
-+	{ NCSI_PKT_RSP_GMCMA,  -1, ncsi_rsp_handler_gmcma   },
- };
  
- int ncsi_rcv_rsp(struct sk_buff *skb, struct net_device *dev,
+ 	rtnl_unlock();
+ 
 -- 
 2.39.5
 
