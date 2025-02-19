@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F281DE3AF;
-	Wed, 19 Feb 2025 08:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33F21DE894;
+	Wed, 19 Feb 2025 08:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954956; cv=none; b=inE0pU4AtqupVsFwa5/CyMVdOBZLCOr+8GSaVCE336f/JUt2itSCDrzbVs64qr8ksEzWSaoKvYoc/wBPgNadKw+cgBvX/xqiSKNkUqAYQu21vPRR/9AOrv/i3siXYZbu2T1Tpqn8fV7A0UX3ivB8jI08IgIp8jfQ9iUSeuKmzSc=
+	t=1739954959; cv=none; b=pg3TgzsjcEnXF9/fS7dcRQI7npITpDbFQnxxWhX09ZmxW0absSlibJ7zNYTUwM+OhdXvKqZTm1D/BeQlq3JXNSmjwA0NHP3tApkh71nvAcqnFLTu0Rn5LBZ+SrU5eaNndF/MnYBm7parniwWvMSMAjgOk23L8fbHqHTyDPKIRwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954956; c=relaxed/simple;
-	bh=0YMd8nVhTIL6b8c+MUlzw5V12Tn0QGn8cfrAHmaYnVg=;
+	s=arc-20240116; t=1739954959; c=relaxed/simple;
+	bh=Dsy4rUe0dheYVmmdKvXypjVkI/ABehVSn19zTjN0YMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cZJamkn+xqtpo/vYFQ0h5hJAoRB0HQI1Gh9UCk0rtb9SnmUcH9GqFBay6bMRp0xEqEP1n8OE8PVLKHJxS8bvdoicrsDp0rtlgx6OXA9a4yNUlzfTkx3G8DyDJsVPPuEyzrgO8UGlwSnH2bo1Hf6x4Y90k335c7UKMK99i9p50LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYpeDvYL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G8VkV1qxm3sfUMTd0C+J+nkmbqKPxgY49aYbpSZZ5kMFxBnb3LDDIQCUecb7o05vwa9n5sIbSWFRDnFoQvEiXkHXJG/zW3voN7NrCwpc+5CHen2QI6iVcF/A4LB6+Wtb/5m/qax5To/bvNKu7D1xOPES8DjiPZ4v2hdNu4eU6qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0z3kXvYM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYpeDvYL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB97C4CEE7;
-	Wed, 19 Feb 2025 08:49:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0z3kXvYM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D49C4CEE8;
+	Wed, 19 Feb 2025 08:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954956;
-	bh=0YMd8nVhTIL6b8c+MUlzw5V12Tn0QGn8cfrAHmaYnVg=;
+	s=korg; t=1739954959;
+	bh=Dsy4rUe0dheYVmmdKvXypjVkI/ABehVSn19zTjN0YMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYpeDvYL8hP5cA00YJOcEA0QIRBTYxR/3Xo1Xvbwdiymn0PaLzjBrPXALUeo0O9X4
-	 K0QKU3m40nqkXSA984KqQUKgbjMi6d7PYTIZpXHiSzJGLm/dVtuuZUP3hX/UT8YIMw
-	 gvBuh+6k0qA9ej1s3G9Dq/QbKMdKAfbSAKdCfGGU=
+	b=0z3kXvYMwEZZtz/I+VnmqwDR7GHE0klCj9CtVizx0Xjo03pGIdILXyz44hltAJdMQ
+	 idf1bq9ebKpEqgt8RtOUGa/lwiyjcREzAVc3EEz4RMg2PKWjRn7BrA24Hh0qTnXG5k
+	 laLgMDFahgiwhfUOUKguFG5vUPljvyxdi0I3tWkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kartik Rajput <kkartik@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/230] soc/tegra: fuse: Update Tegra234 nvmem keepout list
-Date: Wed, 19 Feb 2025 09:26:18 +0100
-Message-ID: <20250219082604.100880981@linuxfoundation.org>
+Subject: [PATCH 6.12 088/230] ACPI: x86: Add skip i2c clients quirk for Vexia EDU ATLA 10 tablet 5V
+Date: Wed, 19 Feb 2025 09:26:45 +0100
+Message-ID: <20250219082605.142688972@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -51,79 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kartik Rajput <kkartik@nvidia.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 836b341cc8dab680acc06a7883bfeea89680b689 ]
+[ Upstream commit 8f62ca9c338aae4f73e9ce0221c3d4668359ddd8 ]
 
-Various Nvidia userspace applications and tests access following fuse
-via Fuse nvmem interface:
+The Vexia EDU ATLA 10 tablet comes in 2 different versions with
+significantly different mainboards. The only outward difference is that
+the charging barrel on one is marked 5V and the other is marked 9V.
 
-	* odmid
-	* odminfo
-	* boot_security_info
-	* public_key_hash
-	* reserved_odm0
-	* reserved_odm1
-	* reserved_odm2
-	* reserved_odm3
-	* reserved_odm4
-	* reserved_odm5
-	* reserved_odm6
-	* reserved_odm7
-	* odm_lock
-	* pk_h1
-	* pk_h2
-	* revoke_pk_h0
-	* revoke_pk_h1
-	* security_mode
-	* system_fw_field_ratchet0
-	* system_fw_field_ratchet1
-	* system_fw_field_ratchet2
-	* system_fw_field_ratchet3
-	* optin_enable
+Both ship with Android 4.4 as factory OS and have the usual broken DSDT
+issues for x86 Android tablets.
 
-Update tegra234_fuse_keepouts list to allow reading these fuse from
-nvmem sysfs interface.
+Add a quirk to skip ACPI I2C client enumeration for the 5V version to
+complement the existing quirk for the 9V version.
 
-Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
-Link: https://lore.kernel.org/r/20241127061053.16775-1-kkartik@nvidia.com
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20250123132202.18209-1-hdegoede@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/fuse/fuse-tegra30.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/acpi/x86/utils.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/soc/tegra/fuse/fuse-tegra30.c b/drivers/soc/tegra/fuse/fuse-tegra30.c
-index eb14e5ff5a0aa..e24ab5f7d2bf1 100644
---- a/drivers/soc/tegra/fuse/fuse-tegra30.c
-+++ b/drivers/soc/tegra/fuse/fuse-tegra30.c
-@@ -647,15 +647,20 @@ static const struct nvmem_cell_lookup tegra234_fuse_lookups[] = {
- };
- 
- static const struct nvmem_keepout tegra234_fuse_keepouts[] = {
--	{ .start = 0x01c, .end = 0x0c8 },
--	{ .start = 0x12c, .end = 0x184 },
-+	{ .start = 0x01c, .end = 0x064 },
-+	{ .start = 0x084, .end = 0x0a0 },
-+	{ .start = 0x0a4, .end = 0x0c8 },
-+	{ .start = 0x12c, .end = 0x164 },
-+	{ .start = 0x16c, .end = 0x184 },
- 	{ .start = 0x190, .end = 0x198 },
- 	{ .start = 0x1a0, .end = 0x204 },
--	{ .start = 0x21c, .end = 0x250 },
--	{ .start = 0x25c, .end = 0x2f0 },
-+	{ .start = 0x21c, .end = 0x2f0 },
- 	{ .start = 0x310, .end = 0x3d8 },
--	{ .start = 0x400, .end = 0x4f0 },
--	{ .start = 0x4f8, .end = 0x7e8 },
-+	{ .start = 0x400, .end = 0x420 },
-+	{ .start = 0x444, .end = 0x490 },
-+	{ .start = 0x4bc, .end = 0x4f0 },
-+	{ .start = 0x4f8, .end = 0x54c },
-+	{ .start = 0x57c, .end = 0x7e8 },
- 	{ .start = 0x8d0, .end = 0x8d8 },
- 	{ .start = 0xacc, .end = 0xf00 }
- };
+diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
+index cb45ef5240dab..068c1612660bc 100644
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -407,6 +407,19 @@ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
+ 		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
+ 					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
+ 	},
++	{
++		/* Vexia Edu Atla 10 tablet 5V version */
++		.matches = {
++			/* Having all 3 of these not set is somewhat unique */
++			DMI_MATCH(DMI_SYS_VENDOR, "To be filled by O.E.M."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "To be filled by O.E.M."),
++			DMI_MATCH(DMI_BOARD_NAME, "To be filled by O.E.M."),
++			/* Above strings are too generic, also match on BIOS date */
++			DMI_MATCH(DMI_BIOS_DATE, "05/14/2015"),
++		},
++		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
++					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
++	},
+ 	{
+ 		/* Vexia Edu Atla 10 tablet 9V version */
+ 		.matches = {
 -- 
 2.39.5
 
