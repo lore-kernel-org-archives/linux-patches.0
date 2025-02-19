@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9931DE3A3;
-	Wed, 19 Feb 2025 09:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84C11A314B;
+	Wed, 19 Feb 2025 09:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956668; cv=none; b=AjH7CoiM5qJHRMjA4mcx0RmHSvg0/CQjq9obkPnLkheo63BJwkE6V5wUN6lK2+mvIojB3tQ9bZn3SNPziXzdw3RFV9F6xYyInuQthtZ8Rn3l02vGrzgMHyIDzF/eq0nr34dsFIit5RJwgR0hARp0qZifGgSWkVAsDj4hx8JnF3s=
+	t=1739956672; cv=none; b=TrWeNEzwNBNt912d5RUWxjHvkcimlojtISjiqnifn0HjWdnjc2EvDyc2mI5XWU9YS30hJbAc+He4rZsI/4cYg5Zft1QHYQdd/9cKj1ZDlryU9JmhNkHjTkhhbgiN4jIV4JkeMyZuiksZobb2Vx/bTiJD1DwGDLSkTFJSGEneEOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956668; c=relaxed/simple;
-	bh=V88pI7N+QpTdsx/YkfMlkXpyCMKi+YcYrr9jWu11dtM=;
+	s=arc-20240116; t=1739956672; c=relaxed/simple;
+	bh=8HEtW0HpTzfQB5DPf+52VDbcOx22TYXXZLPT8KDuM4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcQTjVsjEAZRIwLTz0jn52rq0S5/Ih9PsIvOYqra0WrUFnL3u0tfSb5DJ/OcOmynNa/97D65RzQ1tgVrYJjyo6dc01GX15iTMPz197w1IU3oT2u7q7OzhkkW/aeOerxsniTcLdQgP4x38l6gU1FTnOs1cfakfDfvvU0zwcc3DOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEN/JOVY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OFarUWwsNq/Gg8kdseoWHVTzPXU/jgrhx34afi36YcwclOO8qBNrnMn4fmksMtHaaU1oMEqL4Mn/axbAFMZiftI4kAW/o9qkls8Y66tU9KptU3MDYlF0jh5xumcVdvTPxwK2Hy8ZgwfVF5LIgL09RtSqNHh9AIpkI21e5cjq7no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzkcB8mY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEN/JOVY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341CCC4CED1;
-	Wed, 19 Feb 2025 09:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzkcB8mY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CE4C4CED1;
+	Wed, 19 Feb 2025 09:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956668;
-	bh=V88pI7N+QpTdsx/YkfMlkXpyCMKi+YcYrr9jWu11dtM=;
+	s=korg; t=1739956671;
+	bh=8HEtW0HpTzfQB5DPf+52VDbcOx22TYXXZLPT8KDuM4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aEN/JOVYZwRvy+AW/nvkjsgeuQCTnZGEftuRIPlxbhiVJqd9ISyfIVASxY3sYyzPj
-	 L8MWFxG9XJIO45UZLznQhxZuVVozESdR45jLdOuNerVm1Cjg/NtpGG6Md4XPfJSuUi
-	 AWCu5D+NqzN1FYjkNuJHQw3bwgRCEAiX4GRr+DK4=
+	b=vzkcB8mY7m4NABtLsxzVCb3oLqriqZv6P7zdv04o0TxmIXOnROqHwQtx6OADaDxLt
+	 Ac7bGhYJPSUTG6S32wfB3hZSD1gYt7LcE1+g5L7NBI9BbzwvGYrSg208rx0LGy+Ua9
+	 M66RnYBKa1RglP6CzU4nRfmMX75m22UHbLWbGk34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+23728c2df58b3bd175ad@syzkaller.appspotmail.com,
+	syzbot+ebc0b8ae5d3590b2c074@syzkaller.appspotmail.com,
 	Paolo Abeni <pabeni@redhat.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 259/578] mptcp: consolidate suboption status
-Date: Wed, 19 Feb 2025 09:24:23 +0100
-Message-ID: <20250219082703.212768246@linuxfoundation.org>
+Subject: [PATCH 6.1 260/578] mptcp: handle fastopen disconnect correctly
+Date: Wed, 19 Feb 2025 09:24:24 +0100
+Message-ID: <20250219082703.251018057@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -54,326 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-commit c86b000782daba926c627d2fa00c3f60a75e7472 upstream.
+commit 619af16b3b57a3a4ee50b9a30add9ff155541e71 upstream.
 
-MPTCP maintains the received sub-options status is the bitmask carrying
-the received suboptions and in several bitfields carrying per suboption
-additional info.
+Syzbot was able to trigger a data stream corruption:
 
-Zeroing the bitmask before parsing is not enough to ensure a consistent
-status, and the MPTCP code has to additionally clear some bitfiled
-depending on the actually parsed suboption.
-
-The above schema is fragile, and syzbot managed to trigger a path where
-a relevant bitfield is not cleared/initialized:
-
-  BUG: KMSAN: uninit-value in __mptcp_expand_seq net/mptcp/options.c:1030 [inline]
-  BUG: KMSAN: uninit-value in mptcp_expand_seq net/mptcp/protocol.h:864 [inline]
-  BUG: KMSAN: uninit-value in ack_update_msk net/mptcp/options.c:1060 [inline]
-  BUG: KMSAN: uninit-value in mptcp_incoming_options+0x2036/0x3d30 net/mptcp/options.c:1209
-   __mptcp_expand_seq net/mptcp/options.c:1030 [inline]
-   mptcp_expand_seq net/mptcp/protocol.h:864 [inline]
-   ack_update_msk net/mptcp/options.c:1060 [inline]
-   mptcp_incoming_options+0x2036/0x3d30 net/mptcp/options.c:1209
-   tcp_data_queue+0xb4/0x7be0 net/ipv4/tcp_input.c:5233
-   tcp_rcv_established+0x1061/0x2510 net/ipv4/tcp_input.c:6264
-   tcp_v4_do_rcv+0x7f3/0x11a0 net/ipv4/tcp_ipv4.c:1916
-   tcp_v4_rcv+0x51df/0x5750 net/ipv4/tcp_ipv4.c:2351
-   ip_protocol_deliver_rcu+0x2a3/0x13d0 net/ipv4/ip_input.c:205
-   ip_local_deliver_finish+0x336/0x500 net/ipv4/ip_input.c:233
-   NF_HOOK include/linux/netfilter.h:314 [inline]
-   ip_local_deliver+0x21f/0x490 net/ipv4/ip_input.c:254
-   dst_input include/net/dst.h:460 [inline]
-   ip_rcv_finish+0x4a2/0x520 net/ipv4/ip_input.c:447
-   NF_HOOK include/linux/netfilter.h:314 [inline]
-   ip_rcv+0xcd/0x380 net/ipv4/ip_input.c:567
-   __netif_receive_skb_one_core net/core/dev.c:5704 [inline]
-   __netif_receive_skb+0x319/0xa00 net/core/dev.c:5817
-   process_backlog+0x4ad/0xa50 net/core/dev.c:6149
-   __napi_poll+0xe7/0x980 net/core/dev.c:6902
-   napi_poll net/core/dev.c:6971 [inline]
-   net_rx_action+0xa5a/0x19b0 net/core/dev.c:7093
-   handle_softirqs+0x1a0/0x7c0 kernel/softirq.c:561
-   __do_softirq+0x14/0x1a kernel/softirq.c:595
-   do_softirq+0x9a/0x100 kernel/softirq.c:462
-   __local_bh_enable_ip+0x9f/0xb0 kernel/softirq.c:389
-   local_bh_enable include/linux/bottom_half.h:33 [inline]
-   rcu_read_unlock_bh include/linux/rcupdate.h:919 [inline]
-   __dev_queue_xmit+0x2758/0x57d0 net/core/dev.c:4493
-   dev_queue_xmit include/linux/netdevice.h:3168 [inline]
-   neigh_hh_output include/net/neighbour.h:523 [inline]
-   neigh_output include/net/neighbour.h:537 [inline]
-   ip_finish_output2+0x187c/0x1b70 net/ipv4/ip_output.c:236
-   __ip_finish_output+0x287/0x810
-   ip_finish_output+0x4b/0x600 net/ipv4/ip_output.c:324
-   NF_HOOK_COND include/linux/netfilter.h:303 [inline]
-   ip_output+0x15f/0x3f0 net/ipv4/ip_output.c:434
-   dst_output include/net/dst.h:450 [inline]
-   ip_local_out net/ipv4/ip_output.c:130 [inline]
-   __ip_queue_xmit+0x1f2a/0x20d0 net/ipv4/ip_output.c:536
-   ip_queue_xmit+0x60/0x80 net/ipv4/ip_output.c:550
-   __tcp_transmit_skb+0x3cea/0x4900 net/ipv4/tcp_output.c:1468
-   tcp_transmit_skb net/ipv4/tcp_output.c:1486 [inline]
-   tcp_write_xmit+0x3b90/0x9070 net/ipv4/tcp_output.c:2829
-   __tcp_push_pending_frames+0xc4/0x380 net/ipv4/tcp_output.c:3012
-   tcp_send_fin+0x9f6/0xf50 net/ipv4/tcp_output.c:3618
-   __tcp_close+0x140c/0x1550 net/ipv4/tcp.c:3130
-   __mptcp_close_ssk+0x74e/0x16f0 net/mptcp/protocol.c:2496
-   mptcp_close_ssk+0x26b/0x2c0 net/mptcp/protocol.c:2550
-   mptcp_pm_nl_rm_addr_or_subflow+0x635/0xd10 net/mptcp/pm_netlink.c:889
-   mptcp_pm_nl_rm_subflow_received net/mptcp/pm_netlink.c:924 [inline]
-   mptcp_pm_flush_addrs_and_subflows net/mptcp/pm_netlink.c:1688 [inline]
-   mptcp_nl_flush_addrs_list net/mptcp/pm_netlink.c:1709 [inline]
-   mptcp_pm_nl_flush_addrs_doit+0xe10/0x1630 net/mptcp/pm_netlink.c:1750
-   genl_family_rcv_msg_doit net/netlink/genetlink.c:1115 [inline]
-   genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
-   genl_rcv_msg+0x1214/0x12c0 net/netlink/genetlink.c:1210
-   netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2542
-   genl_rcv+0x40/0x60 net/netlink/genetlink.c:1219
-   netlink_unicast_kernel net/netlink/af_netlink.c:1321 [inline]
-   netlink_unicast+0xf52/0x1260 net/netlink/af_netlink.c:1347
-   netlink_sendmsg+0x10da/0x11e0 net/netlink/af_netlink.c:1891
+  WARNING: CPU: 0 PID: 9846 at net/mptcp/protocol.c:1024 __mptcp_clean_una+0xddb/0xff0 net/mptcp/protocol.c:1024
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 9846 Comm: syz-executor351 Not tainted 6.13.0-rc2-syzkaller-00059-g00a5acdbf398 #0
+  Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 11/25/2024
+  RIP: 0010:__mptcp_clean_una+0xddb/0xff0 net/mptcp/protocol.c:1024
+  Code: fa ff ff 48 8b 4c 24 18 80 e1 07 fe c1 38 c1 0f 8c 8e fa ff ff 48 8b 7c 24 18 e8 e0 db 54 f6 e9 7f fa ff ff e8 e6 80 ee f5 90 <0f> 0b 90 4c 8b 6c 24 40 4d 89 f4 e9 04 f5 ff ff 44 89 f1 80 e1 07
+  RSP: 0018:ffffc9000c0cf400 EFLAGS: 00010293
+  RAX: ffffffff8bb0dd5a RBX: ffff888033f5d230 RCX: ffff888059ce8000
+  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+  RBP: ffffc9000c0cf518 R08: ffffffff8bb0d1dd R09: 1ffff110170c8928
+  R10: dffffc0000000000 R11: ffffed10170c8929 R12: 0000000000000000
+  R13: ffff888033f5d220 R14: dffffc0000000000 R15: ffff8880592b8000
+  FS:  00007f6e866496c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f6e86f491a0 CR3: 00000000310e6000 CR4: 00000000003526f0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  Call Trace:
+   <TASK>
+   __mptcp_clean_una_wakeup+0x7f/0x2d0 net/mptcp/protocol.c:1074
+   mptcp_release_cb+0x7cb/0xb30 net/mptcp/protocol.c:3493
+   release_sock+0x1aa/0x1f0 net/core/sock.c:3640
+   inet_wait_for_connect net/ipv4/af_inet.c:609 [inline]
+   __inet_stream_connect+0x8bd/0xf30 net/ipv4/af_inet.c:703
+   mptcp_sendmsg_fastopen+0x2a2/0x530 net/mptcp/protocol.c:1755
+   mptcp_sendmsg+0x1884/0x1b10 net/mptcp/protocol.c:1830
    sock_sendmsg_nosec net/socket.c:711 [inline]
-   __sock_sendmsg+0x30f/0x380 net/socket.c:726
-   ____sys_sendmsg+0x877/0xb60 net/socket.c:2583
-   ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2637
-   __sys_sendmsg net/socket.c:2669 [inline]
-   __do_sys_sendmsg net/socket.c:2674 [inline]
-   __se_sys_sendmsg net/socket.c:2672 [inline]
-   __x64_sys_sendmsg+0x212/0x3c0 net/socket.c:2672
-   x64_sys_call+0x2ed6/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:47
+   __sock_sendmsg+0x1a6/0x270 net/socket.c:726
+   ____sys_sendmsg+0x52a/0x7e0 net/socket.c:2583
+   ___sys_sendmsg net/socket.c:2637 [inline]
+   __sys_sendmsg+0x269/0x350 net/socket.c:2669
    do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
+   do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f6e86ebfe69
+  Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 b1 1f 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+  RSP: 002b:00007f6e86649168 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+  RAX: ffffffffffffffda RBX: 00007f6e86f491b8 RCX: 00007f6e86ebfe69
+  RDX: 0000000030004001 RSI: 0000000020000080 RDI: 0000000000000003
+  RBP: 00007f6e86f491b0 R08: 00007f6e866496c0 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 00007f6e86f491bc
+  R13: 000000000000006e R14: 00007ffe445d9420 R15: 00007ffe445d9508
+   </TASK>
 
-  Uninit was stored to memory at:
-   mptcp_get_options+0x2c0f/0x2f20 net/mptcp/options.c:397
-   mptcp_incoming_options+0x19a/0x3d30 net/mptcp/options.c:1150
-   tcp_data_queue+0xb4/0x7be0 net/ipv4/tcp_input.c:5233
-   tcp_rcv_established+0x1061/0x2510 net/ipv4/tcp_input.c:6264
-   tcp_v4_do_rcv+0x7f3/0x11a0 net/ipv4/tcp_ipv4.c:1916
-   tcp_v4_rcv+0x51df/0x5750 net/ipv4/tcp_ipv4.c:2351
-   ip_protocol_deliver_rcu+0x2a3/0x13d0 net/ipv4/ip_input.c:205
-   ip_local_deliver_finish+0x336/0x500 net/ipv4/ip_input.c:233
-   NF_HOOK include/linux/netfilter.h:314 [inline]
-   ip_local_deliver+0x21f/0x490 net/ipv4/ip_input.c:254
-   dst_input include/net/dst.h:460 [inline]
-   ip_rcv_finish+0x4a2/0x520 net/ipv4/ip_input.c:447
-   NF_HOOK include/linux/netfilter.h:314 [inline]
-   ip_rcv+0xcd/0x380 net/ipv4/ip_input.c:567
-   __netif_receive_skb_one_core net/core/dev.c:5704 [inline]
-   __netif_receive_skb+0x319/0xa00 net/core/dev.c:5817
-   process_backlog+0x4ad/0xa50 net/core/dev.c:6149
-   __napi_poll+0xe7/0x980 net/core/dev.c:6902
-   napi_poll net/core/dev.c:6971 [inline]
-   net_rx_action+0xa5a/0x19b0 net/core/dev.c:7093
-   handle_softirqs+0x1a0/0x7c0 kernel/softirq.c:561
-   __do_softirq+0x14/0x1a kernel/softirq.c:595
+The root cause is the bad handling of disconnect() generated internally
+by the MPTCP protocol in case of connect FASTOPEN errors.
 
-  Uninit was stored to memory at:
-   put_unaligned_be32 include/linux/unaligned.h:68 [inline]
-   mptcp_write_options+0x17f9/0x3100 net/mptcp/options.c:1417
-   mptcp_options_write net/ipv4/tcp_output.c:465 [inline]
-   tcp_options_write+0x6d9/0xe90 net/ipv4/tcp_output.c:759
-   __tcp_transmit_skb+0x294b/0x4900 net/ipv4/tcp_output.c:1414
-   tcp_transmit_skb net/ipv4/tcp_output.c:1486 [inline]
-   tcp_write_xmit+0x3b90/0x9070 net/ipv4/tcp_output.c:2829
-   __tcp_push_pending_frames+0xc4/0x380 net/ipv4/tcp_output.c:3012
-   tcp_send_fin+0x9f6/0xf50 net/ipv4/tcp_output.c:3618
-   __tcp_close+0x140c/0x1550 net/ipv4/tcp.c:3130
-   __mptcp_close_ssk+0x74e/0x16f0 net/mptcp/protocol.c:2496
-   mptcp_close_ssk+0x26b/0x2c0 net/mptcp/protocol.c:2550
-   mptcp_pm_nl_rm_addr_or_subflow+0x635/0xd10 net/mptcp/pm_netlink.c:889
-   mptcp_pm_nl_rm_subflow_received net/mptcp/pm_netlink.c:924 [inline]
-   mptcp_pm_flush_addrs_and_subflows net/mptcp/pm_netlink.c:1688 [inline]
-   mptcp_nl_flush_addrs_list net/mptcp/pm_netlink.c:1709 [inline]
-   mptcp_pm_nl_flush_addrs_doit+0xe10/0x1630 net/mptcp/pm_netlink.c:1750
-   genl_family_rcv_msg_doit net/netlink/genetlink.c:1115 [inline]
-   genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
-   genl_rcv_msg+0x1214/0x12c0 net/netlink/genetlink.c:1210
-   netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2542
-   genl_rcv+0x40/0x60 net/netlink/genetlink.c:1219
-   netlink_unicast_kernel net/netlink/af_netlink.c:1321 [inline]
-   netlink_unicast+0xf52/0x1260 net/netlink/af_netlink.c:1347
-   netlink_sendmsg+0x10da/0x11e0 net/netlink/af_netlink.c:1891
-   sock_sendmsg_nosec net/socket.c:711 [inline]
-   __sock_sendmsg+0x30f/0x380 net/socket.c:726
-   ____sys_sendmsg+0x877/0xb60 net/socket.c:2583
-   ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2637
-   __sys_sendmsg net/socket.c:2669 [inline]
-   __do_sys_sendmsg net/socket.c:2674 [inline]
-   __se_sys_sendmsg net/socket.c:2672 [inline]
-   __x64_sys_sendmsg+0x212/0x3c0 net/socket.c:2672
-   x64_sys_call+0x2ed6/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:47
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Address the issue increasing the socket disconnect counter even on such
+a case, to allow other threads waiting on the same socket lock to
+properly error out.
 
-  Uninit was stored to memory at:
-   mptcp_pm_add_addr_signal+0x3d7/0x4c0
-   mptcp_established_options_add_addr net/mptcp/options.c:666 [inline]
-   mptcp_established_options+0x1b9b/0x3a00 net/mptcp/options.c:884
-   tcp_established_options+0x2c4/0x7d0 net/ipv4/tcp_output.c:1012
-   __tcp_transmit_skb+0x5b7/0x4900 net/ipv4/tcp_output.c:1333
-   tcp_transmit_skb net/ipv4/tcp_output.c:1486 [inline]
-   tcp_write_xmit+0x3b90/0x9070 net/ipv4/tcp_output.c:2829
-   __tcp_push_pending_frames+0xc4/0x380 net/ipv4/tcp_output.c:3012
-   tcp_send_fin+0x9f6/0xf50 net/ipv4/tcp_output.c:3618
-   __tcp_close+0x140c/0x1550 net/ipv4/tcp.c:3130
-   __mptcp_close_ssk+0x74e/0x16f0 net/mptcp/protocol.c:2496
-   mptcp_close_ssk+0x26b/0x2c0 net/mptcp/protocol.c:2550
-   mptcp_pm_nl_rm_addr_or_subflow+0x635/0xd10 net/mptcp/pm_netlink.c:889
-   mptcp_pm_nl_rm_subflow_received net/mptcp/pm_netlink.c:924 [inline]
-   mptcp_pm_flush_addrs_and_subflows net/mptcp/pm_netlink.c:1688 [inline]
-   mptcp_nl_flush_addrs_list net/mptcp/pm_netlink.c:1709 [inline]
-   mptcp_pm_nl_flush_addrs_doit+0xe10/0x1630 net/mptcp/pm_netlink.c:1750
-   genl_family_rcv_msg_doit net/netlink/genetlink.c:1115 [inline]
-   genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
-   genl_rcv_msg+0x1214/0x12c0 net/netlink/genetlink.c:1210
-   netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2542
-   genl_rcv+0x40/0x60 net/netlink/genetlink.c:1219
-   netlink_unicast_kernel net/netlink/af_netlink.c:1321 [inline]
-   netlink_unicast+0xf52/0x1260 net/netlink/af_netlink.c:1347
-   netlink_sendmsg+0x10da/0x11e0 net/netlink/af_netlink.c:1891
-   sock_sendmsg_nosec net/socket.c:711 [inline]
-   __sock_sendmsg+0x30f/0x380 net/socket.c:726
-   ____sys_sendmsg+0x877/0xb60 net/socket.c:2583
-   ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2637
-   __sys_sendmsg net/socket.c:2669 [inline]
-   __do_sys_sendmsg net/socket.c:2674 [inline]
-   __se_sys_sendmsg net/socket.c:2672 [inline]
-   __x64_sys_sendmsg+0x212/0x3c0 net/socket.c:2672
-   x64_sys_call+0x2ed6/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:47
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-  Uninit was stored to memory at:
-   mptcp_pm_add_addr_received+0x95f/0xdd0 net/mptcp/pm.c:235
-   mptcp_incoming_options+0x2983/0x3d30 net/mptcp/options.c:1169
-   tcp_data_queue+0xb4/0x7be0 net/ipv4/tcp_input.c:5233
-   tcp_rcv_state_process+0x2a38/0x49d0 net/ipv4/tcp_input.c:6972
-   tcp_v4_do_rcv+0xbf9/0x11a0 net/ipv4/tcp_ipv4.c:1939
-   tcp_v4_rcv+0x51df/0x5750 net/ipv4/tcp_ipv4.c:2351
-   ip_protocol_deliver_rcu+0x2a3/0x13d0 net/ipv4/ip_input.c:205
-   ip_local_deliver_finish+0x336/0x500 net/ipv4/ip_input.c:233
-   NF_HOOK include/linux/netfilter.h:314 [inline]
-   ip_local_deliver+0x21f/0x490 net/ipv4/ip_input.c:254
-   dst_input include/net/dst.h:460 [inline]
-   ip_rcv_finish+0x4a2/0x520 net/ipv4/ip_input.c:447
-   NF_HOOK include/linux/netfilter.h:314 [inline]
-   ip_rcv+0xcd/0x380 net/ipv4/ip_input.c:567
-   __netif_receive_skb_one_core net/core/dev.c:5704 [inline]
-   __netif_receive_skb+0x319/0xa00 net/core/dev.c:5817
-   process_backlog+0x4ad/0xa50 net/core/dev.c:6149
-   __napi_poll+0xe7/0x980 net/core/dev.c:6902
-   napi_poll net/core/dev.c:6971 [inline]
-   net_rx_action+0xa5a/0x19b0 net/core/dev.c:7093
-   handle_softirqs+0x1a0/0x7c0 kernel/softirq.c:561
-   __do_softirq+0x14/0x1a kernel/softirq.c:595
-
-  Local variable mp_opt created at:
-   mptcp_incoming_options+0x119/0x3d30 net/mptcp/options.c:1127
-   tcp_data_queue+0xb4/0x7be0 net/ipv4/tcp_input.c:5233
-
-The current schema is too fragile; address the issue grouping all the
-state-related data together and clearing the whole group instead of
-just the bitmask. This also cleans-up the code a bit, as there is no
-need to individually clear "random" bitfield in a couple of places
-any more.
-
-Fixes: 84dfe3677a6f ("mptcp: send out dedicated ADD_ADDR packet")
+Fixes: c2b2ae3925b6 ("mptcp: handle correctly disconnect() failures")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+23728c2df58b3bd175ad@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/6786ac51.050a0220.216c54.00a7.GAE@google.com
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/541
+Reported-by: syzbot+ebc0b8ae5d3590b2c074@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/67605870.050a0220.37aaf.0137.GAE@google.com
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/537
+Tested-by: syzbot+ebc0b8ae5d3590b2c074@syzkaller.appspotmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250123-net-mptcp-syzbot-issues-v1-1-af73258a726f@kernel.org
+Link: https://patch.msgid.link/20250123-net-mptcp-syzbot-issues-v1-3-af73258a726f@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c  |   13 +++++--------
- net/mptcp/protocol.h |   30 ++++++++++++++++--------------
- 2 files changed, 21 insertions(+), 22 deletions(-)
+ net/mptcp/protocol.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -103,7 +103,6 @@ static void mptcp_parse_option(const str
- 			mp_opt->suboptions |= OPTION_MPTCP_DSS;
- 			mp_opt->use_map = 1;
- 			mp_opt->mpc_map = 1;
--			mp_opt->use_ack = 0;
- 			mp_opt->data_len = get_unaligned_be16(ptr);
- 			ptr += 2;
- 		}
-@@ -152,11 +151,6 @@ static void mptcp_parse_option(const str
- 		pr_debug("DSS\n");
- 		ptr++;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1779,8 +1779,10 @@ static int mptcp_sendmsg_fastopen(struct
+ 		 * see mptcp_disconnect().
+ 		 * Attempt it again outside the problematic scope.
+ 		 */
+-		if (!mptcp_disconnect(sk, 0))
++		if (!mptcp_disconnect(sk, 0)) {
++			sk->sk_disconnects++;
+ 			sk->sk_socket->state = SS_UNCONNECTED;
++		}
+ 	}
  
--		/* we must clear 'mpc_map' be able to detect MP_CAPABLE
--		 * map vs DSS map in mptcp_incoming_options(), and reconstruct
--		 * map info accordingly
--		 */
--		mp_opt->mpc_map = 0;
- 		flags = (*ptr++) & MPTCP_DSS_FLAG_MASK;
- 		mp_opt->data_fin = (flags & MPTCP_DSS_DATA_FIN) != 0;
- 		mp_opt->dsn64 = (flags & MPTCP_DSS_DSN64) != 0;
-@@ -364,8 +358,11 @@ void mptcp_get_options(const struct sk_b
- 	const unsigned char *ptr;
- 	int length;
- 
--	/* initialize option status */
--	mp_opt->suboptions = 0;
-+	/* Ensure that casting the whole status to u32 is efficient and safe */
-+	BUILD_BUG_ON(sizeof_field(struct mptcp_options_received, status) != sizeof(u32));
-+	BUILD_BUG_ON(!IS_ALIGNED(offsetof(struct mptcp_options_received, status),
-+				 sizeof(u32)));
-+	*(u32 *)&mp_opt->status = 0;
- 
- 	length = (th->doff * 4) - sizeof(struct tcphdr);
- 	ptr = (const unsigned char *)(th + 1);
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -141,22 +141,24 @@ struct mptcp_options_received {
- 	u32	subflow_seq;
- 	u16	data_len;
- 	__sum16	csum;
--	u16	suboptions;
-+	struct_group(status,
-+		u16 suboptions;
-+		u16 use_map:1,
-+		    dsn64:1,
-+		    data_fin:1,
-+		    use_ack:1,
-+		    ack64:1,
-+		    mpc_map:1,
-+		    reset_reason:4,
-+		    reset_transient:1,
-+		    echo:1,
-+		    backup:1,
-+		    deny_join_id0:1,
-+		    __unused:2;
-+	);
-+	u8	join_id;
- 	u32	token;
- 	u32	nonce;
--	u16	use_map:1,
--		dsn64:1,
--		data_fin:1,
--		use_ack:1,
--		ack64:1,
--		mpc_map:1,
--		reset_reason:4,
--		reset_transient:1,
--		echo:1,
--		backup:1,
--		deny_join_id0:1,
--		__unused:2;
--	u8	join_id;
- 	u64	thmac;
- 	u8	hmac[MPTCPOPT_HMAC_LEN];
- 	struct mptcp_addr_info addr;
+ 	return ret;
 
 
