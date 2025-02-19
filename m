@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3851D1EB195;
-	Wed, 19 Feb 2025 09:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268651D5175;
+	Wed, 19 Feb 2025 09:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957227; cv=none; b=g0l+5J0+Mdcfq7oAwyVlfcWVSMPTt49/OR5v5rzwF6kI88rBeZlL5A/coAcQNc9Hvd24OtU5S6gb4eROrnjxeVzJzNLDUe+gRMJ16s4rSx+yqOYUeR56NaYgIq203WCfd+z44yC4+s+bjRtRKRDxrtpswG0SUxI6NjY+zeI6Fko=
+	t=1739957230; cv=none; b=UPh8QOPunU+O9EThz0/RX19ShXNJN7RZCMV/PkxWF/QeIvQph89yZsyLfKcDP++gaAGR4GfRQolqkCwnD0ioW4/ueqxRxJoG3sLX6GDdKCGAbgaWeCNx9wSzJud+7rnBTS7EB3slNIk7fTqgJnw/MgvfwwCMcfmttmqgnhHDiKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957227; c=relaxed/simple;
-	bh=U+sNyKvIx0BPGGeLpmXzW0FRklVLXQ95kqzGNvQVTUo=;
+	s=arc-20240116; t=1739957230; c=relaxed/simple;
+	bh=guFFBN6DbYYXrM4QWf5pAlwkmfPt15JXYwXz4vNK/Jk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YebMbmLMdfAMSiYHxz3Kwpy9G2dzO4pr5i6XyQSKDXD01XhcK3IrgaqddH9K/UW7TpW9xPGspwVrZ+TMoeQe9xYD3Q3nAE5BqPaWRPrL4lwgB3L2wEImqWD+JxL5aCYYkp4U9XcdOhSKjH/13dd4RWRNp4Lfb70uHgLcpHM12Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qrz87Y7o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ahfggLDhEb6zx7I1LAmkgAQqg+9sDI1Qv5OqR9Aj2QzdmyTVH/i1HbWl1LCbjbtZNjhiAWyTC+GLbDTQwqbqbjOExixwFCAVnFtELzp2l9l5dVhDNsZ0yv5EZl7iBaPjO/TmIOttkUWSPSGjJDlE2ez2ZEVvJkFaPBsQHK3LHcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YF6J4tnP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qrz87Y7o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9D9C4CEEA;
-	Wed, 19 Feb 2025 09:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YF6J4tnP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B26C4CEEB;
+	Wed, 19 Feb 2025 09:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957226;
-	bh=U+sNyKvIx0BPGGeLpmXzW0FRklVLXQ95kqzGNvQVTUo=;
+	s=korg; t=1739957229;
+	bh=guFFBN6DbYYXrM4QWf5pAlwkmfPt15JXYwXz4vNK/Jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qrz87Y7o08nyqC+HSr5Bdafu5Wv+KfT+IY9tMMU0WlHEwroRAHDLg5/6Yp/OS1+Pm
-	 Zu4ORmH1AsmFt7ya5L9ryEs5LSqNIld9OXtZExphClY4hJpibRUwKUcAIHfRKtYs8L
-	 aqzn+30XEn5it6OdGJFMA9paSIerrh/TwZir6QiY=
+	b=YF6J4tnPY1e+bLjI73SNELI+Eh+7CG3dKxWQbC5fCvcgSeY1SB3AXdyAcLx6vM57z
+	 yUHS/Z1QDrCxMJafOs2B+191+0JQIMVQvntMB9Cq64I2er56/nHsKi2hSTXVEeSDQ+
+	 Im5S2sU22T8c/is3AreckecvEenrxBxtcIHwaj6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jennifer Berringer <jberring@redhat.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 421/578] nvmem: core: improve range check for nvmem_cell_write()
-Date: Wed, 19 Feb 2025 09:27:05 +0100
-Message-ID: <20250219082709.578321019@linuxfoundation.org>
+	Sergey Galas <ssgalas@cloud.ru>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 422/578] io_uring/net: dont retry connect operation on EPOLLERR
+Date: Wed, 19 Feb 2025 09:27:06 +0100
+Message-ID: <20250219082709.617465244@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -50,47 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jennifer Berringer <jberring@redhat.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 31507fc2ad36e0071751a710449db19c85d82a7f upstream.
+commit 8c8492ca64e79c6e0f433e8c9d2bcbd039ef83d0 upstream.
 
-When __nvmem_cell_entry_write() is called for an nvmem cell that does
-not need bit shifting, it requires that the len parameter exactly
-matches the nvmem cell size. However, when the nvmem cell has a nonzero
-bit_offset, it was skipping this check.
+If a socket is shutdown before the connection completes, POLLERR is set
+in the poll mask. However, connect ignores this as it doesn't know, and
+attempts the connection again. This may lead to a bogus -ETIMEDOUT
+result, where it should have noticed the POLLERR and just returned
+-ECONNRESET instead.
 
-Accepting values of len larger than the cell size results in
-nvmem_cell_prepare_write_buffer() trying to write past the end of a heap
-buffer that it allocates. Add a check to avoid that problem and instead
-return -EINVAL when len doesn't match the number of bits expected by the
-nvmem cell when bit_offset is nonzero.
+Have the poll logic check for whether or not POLLERR is set in the mask,
+and if so, mark the request as failed. Then connect can appropriately
+fail the request rather than retry it.
 
-This check uses cell->nbits in order to allow providing the smaller size
-to cells that are shifted into another byte by bit_offset. For example,
-a cell with nbits=8 and nonzero bit_offset would have bytes=2 but should
-accept a 1-byte write here, although no current callers depend on this.
-
-Fixes: 69aba7948cbe ("nvmem: Add a simple NVMEM framework for consumers")
+Reported-by: Sergey Galas <ssgalas@cloud.ru>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jennifer Berringer <jberring@redhat.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20241230141901.263976-7-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://github.com/axboe/liburing/discussions/1335
+Fixes: 3fb1bd688172 ("io_uring/net: handle -EINPROGRESS correct for IORING_OP_CONNECT")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ io_uring/net.c  |    5 +++++
+ io_uring/poll.c |    2 ++
+ 2 files changed, 7 insertions(+)
 
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -1532,6 +1532,8 @@ static int __nvmem_cell_entry_write(stru
- 		return -EINVAL;
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1486,6 +1486,11 @@ int io_connect(struct io_kiocb *req, uns
+ 		io = &__io;
+ 	}
  
- 	if (cell->bit_offset || cell->nbits) {
-+		if (len != BITS_TO_BYTES(cell->nbits) && len != cell->bytes)
-+			return -EINVAL;
- 		buf = nvmem_cell_prepare_write_buffer(cell, buf, len);
- 		if (IS_ERR(buf))
- 			return PTR_ERR(buf);
++	if (unlikely(req->flags & REQ_F_FAIL)) {
++		ret = -ECONNRESET;
++		goto out;
++	}
++
+ 	file_flags = force_nonblock ? O_NONBLOCK : 0;
+ 
+ 	ret = __sys_connect_file(req->file, &io->address,
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -288,6 +288,8 @@ static int io_poll_check_events(struct i
+ 				return IOU_POLL_REISSUE;
+ 			}
+ 		}
++		if (unlikely(req->cqe.res & EPOLLERR))
++			req_set_fail(req);
+ 		if (req->apoll_events & EPOLLONESHOT)
+ 			return IOU_POLL_DONE;
+ 		if (io_is_uring_fops(req->file))
 
 
