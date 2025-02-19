@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87951EFFA9;
-	Wed, 19 Feb 2025 09:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C0C1EFFA4;
+	Wed, 19 Feb 2025 09:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957237; cv=none; b=FdFK+3DBZeMT5r0fthzfxeUZxy6FwtPnIYaU1c+g8oKjI0uSjbvSe+e3SLgIOeOLYaIGgdtzubqkfQYaZmoUH41N16u0zCahPC8Y+LZpEhwck1/zJAuwcxNHPoiDrP8X6tBVhAr2oe5NOxY2QCUyHrYiGN1MIhg8avCxNCANYuU=
+	t=1739957238; cv=none; b=FB7k1JgEmUdoPdH9fMaIVoWATJ07NuPkucmpj0NXpCUjUEU+J/GoLl1LhloiS6lVs/FKYs3feEh3kdjOZcHYrfYmOFYE+em97xDnZEA2Y7Lx0cy7EnuOuSAGdr/d9hbGIx9ZNC4jtdHnpCEcA+ETXTxYOVFn9mf/sw/sojz0h/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957237; c=relaxed/simple;
-	bh=OxORLF/CzPuThe5U38EhYVbB2WVuRROlCEX1PlzK69Y=;
+	s=arc-20240116; t=1739957238; c=relaxed/simple;
+	bh=DedF2ZN7JZZD6KDXz0D7roWAeNwQlZ043fyeQDqpoQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fdurGAkxfXj4mowcUwkEwWnWDP3vjd5Ry8w00FQ3W+Ursq7csQDCW4sLUj8FPX/hg/mQ6A7j9ehdbeomDadQEBdTFhhUPGEk6N9RdN5bZnflu1NDLq1t06f+FMX5GKbB2glcE3ibqUYnC6nQmQrP1WSAMgN0vYd67+FwdYttc/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q4m3CFNL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JKqT4xaHG8iJOEoWvuLXVf3oyf+FqlZV9ohzvYUUfUm2RBxmgTgpIBDA4Pq9OQLzrSsGRp41R0eBMAZRsxx3vv8fCNb36coFVeNRf4tMSLQqsd2yzMzjZFCmtyBXpIRxlORBoEe9TSnmS53lMDyvrMhCc2JKzMR7zpFkgbC++Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iA6IeJn6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4m3CFNL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0710BC4CED1;
-	Wed, 19 Feb 2025 09:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iA6IeJn6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E277AC4CED1;
+	Wed, 19 Feb 2025 09:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957235;
-	bh=OxORLF/CzPuThe5U38EhYVbB2WVuRROlCEX1PlzK69Y=;
+	s=korg; t=1739957238;
+	bh=DedF2ZN7JZZD6KDXz0D7roWAeNwQlZ043fyeQDqpoQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q4m3CFNLY4h/BhkjUGmXCQT9b/ikm68oDSd47/fiwatGg1gEpK6gPTKtx1ftcXGCx
-	 ffykbA1TUnviAVCVFaql5uhYXH8Uv2CnBzSeWQZ3xSB+pBqNDSKKp8UTI8LxNviZSx
-	 5q4D2vFAprXYowRyL7ad72uXoILW+i4BTV/vl0sk=
+	b=iA6IeJn6Ot5dmTag6ooAh1HHMvNQW94lvm2nBBcQ+v3adXJKNIx/cM7t+gN5owOT8
+	 kcHpQF3/7Uwck3V3q0nzveei+TGW9M5R23F6eR9Pk8eNY8cwNsgIMshsJJUSJB8H1E
+	 RKO8STBL7niySgqN24KjbxACw2Mfhyjb8e+MkUYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 424/578] selftests: mptcp: connect: -f: no reconnect
-Date: Wed, 19 Feb 2025 09:27:08 +0100
-Message-ID: <20250219082709.696039082@linuxfoundation.org>
+	Mike Snitzer <snitzer@kernel.org>,
+	Anna Schumaker <anna.schumaker@oracle.com>
+Subject: [PATCH 6.1 425/578] pnfs/flexfiles: retry getting layout segment for reads
+Date: Wed, 19 Feb 2025 09:27:09 +0100
+Message-ID: <20250219082709.734008714@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,45 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit 5368a67307b3b2c347dc8965ac55b888be665934 upstream.
+commit eb3fabde15bccdf34f1c9b35a83aa4c0dacbb4ca upstream.
 
-The '-f' parameter is there to force the kernel to emit MPTCP FASTCLOSE
-by closing the connection with unread bytes in the receive queue.
+If ff_layout_pg_get_read()'s attempt to get a layout segment results
+in -EAGAIN have ff_layout_pg_init_read() retry it after sleeping.
 
-The xdisconnect() helper was used to stop the connection, but it does
-more than that: it will shut it down, then wait before reconnecting to
-the same address. This causes the mptcp_join's "fastclose test" to fail
-all the time.
+If "softerr" mount is used, use 'io_maxretrans' to limit the number of
+attempts to get a layout segment.
 
-This failure is due to a recent change, with commit 218cc166321f
-("selftests: mptcp: avoid spurious errors on disconnect"), but that went
-unnoticed because the test is currently ignored. The recent modification
-only shown an existing issue: xdisconnect() doesn't need to be used
-here, only the shutdown() part is needed.
+This fixes a long-standing issue of O_DIRECT reads failing with
+-EAGAIN (11) when using flexfiles Client Side Mirroring (CSM).
 
-Fixes: 6bf41020b72b ("selftests: mptcp: update and extend fastclose test-cases")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250204-net-mptcp-sft-conn-f-v1-1-6b470c72fffa@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_connect.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c |   27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
-@@ -1216,7 +1216,7 @@ again:
- 		return ret;
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -839,6 +839,9 @@ ff_layout_pg_init_read(struct nfs_pageio
+ 	struct nfs4_pnfs_ds *ds;
+ 	u32 ds_idx;
  
- 	if (cfg_truncate > 0) {
--		xdisconnect(fd);
-+		shutdown(fd, SHUT_WR);
- 	} else if (--cfg_repeat > 0) {
- 		xdisconnect(fd);
++	if (NFS_SERVER(pgio->pg_inode)->flags &
++			(NFS_MOUNT_SOFT|NFS_MOUNT_SOFTERR))
++		pgio->pg_maxretrans = io_maxretrans;
+ retry:
+ 	ff_layout_pg_check_layout(pgio, req);
+ 	/* Use full layout for now */
+@@ -852,6 +855,8 @@ retry:
+ 		if (!pgio->pg_lseg)
+ 			goto out_nolseg;
+ 	}
++	/* Reset wb_nio, since getting layout segment was successful */
++	req->wb_nio = 0;
  
+ 	ds = ff_layout_get_ds_for_read(pgio, &ds_idx);
+ 	if (!ds) {
+@@ -868,14 +873,24 @@ retry:
+ 	pgm->pg_bsize = mirror->mirror_ds->ds_versions[0].rsize;
+ 
+ 	pgio->pg_mirror_idx = ds_idx;
+-
+-	if (NFS_SERVER(pgio->pg_inode)->flags &
+-			(NFS_MOUNT_SOFT|NFS_MOUNT_SOFTERR))
+-		pgio->pg_maxretrans = io_maxretrans;
+ 	return;
+ out_nolseg:
+-	if (pgio->pg_error < 0)
+-		return;
++	if (pgio->pg_error < 0) {
++		if (pgio->pg_error != -EAGAIN)
++			return;
++		/* Retry getting layout segment if lower layer returned -EAGAIN */
++		if (pgio->pg_maxretrans && req->wb_nio++ > pgio->pg_maxretrans) {
++			if (NFS_SERVER(pgio->pg_inode)->flags & NFS_MOUNT_SOFTERR)
++				pgio->pg_error = -ETIMEDOUT;
++			else
++				pgio->pg_error = -EIO;
++			return;
++		}
++		pgio->pg_error = 0;
++		/* Sleep for 1 second before retrying */
++		ssleep(1);
++		goto retry;
++	}
+ out_mds:
+ 	trace_pnfs_mds_fallback_pg_init_read(pgio->pg_inode,
+ 			0, NFS4_MAX_UINT64, IOMODE_READ,
 
 
