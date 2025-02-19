@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72C51EDA15;
-	Wed, 19 Feb 2025 08:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A571F5854;
+	Wed, 19 Feb 2025 08:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954786; cv=none; b=kCgBOd38QDiWAueEbeU0/IbRuS2RI3Ijso4aHFwQJCTrd2tbSue8UsYZuL1Zf4LqVT2EAVODCUGS+oupxLbVZN1y6UFzDX65WVvdN4rbqHfXz+U4rSmA53nXZTenVHFw6xcUogcubExiQ8yaJMOoy4SWps/eEz5jVBT5an81320=
+	t=1739954789; cv=none; b=aL0BH9N2+0880B8iQIB1mCURholsJkuYGlU4ITRqpMwbuUTHt6IC9P6Temo0Elp9SYbj4Ko70PQkNE8uiSa2MTF1vZ0DGbEowCW0Zo43eyWDJ9iXs/51fJAbe/SUv1gWUaZuEk0ex1J3YMovm9sx26g9iW6/UE4EX61MfjuTm3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954786; c=relaxed/simple;
-	bh=7tbCCEnID+XHhnT/if24DDGSt32Wa5G27R10uQgnTkA=;
+	s=arc-20240116; t=1739954789; c=relaxed/simple;
+	bh=Nw5nKNf0883BItwJR/qALqXl1sB4Rxmy3tk1FeihvZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcNAWwADN4F1hCq9qquDrK3cob389AZ08jMFVOrqYri1Jl7BwX3dM1E+DbUvYtlvCUs++ukNo0q9i/lZjZh/tvRZGQQ+sp4EBFl84/VvAjrIv4NVPwFr2rI95fOdS3KZOGo+B8wYKfmc2HYmSSLcepDmAI0I0WP54i/+EEH/QKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WS1nWT22; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fgLpRq0EoE0YMWehpKRCy8l7jC51Y5dxi0PNbIWt9NXLriTJ42b6piv+6eEQ0Lf88SkjE4BanrhzX/XGEkVArWFyheAMrdh+W4TpoHrMo6wa5lG7kKgbwP0+vgVTpvLlb4KZJtII8ttX4tpTYGCq70kWzxtcshUI/7XGg3xE9h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHfbrfBU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WS1nWT22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C22FC4CED1;
-	Wed, 19 Feb 2025 08:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHfbrfBU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77ABBC4CED1;
+	Wed, 19 Feb 2025 08:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954785;
-	bh=7tbCCEnID+XHhnT/if24DDGSt32Wa5G27R10uQgnTkA=;
+	s=korg; t=1739954788;
+	bh=Nw5nKNf0883BItwJR/qALqXl1sB4Rxmy3tk1FeihvZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WS1nWT22tLBw2NjWu8/aEOQgtw0KX0VOmORfaEJ278/5ac0LK6TulsOcBRjK2Eus/
-	 CnA0uBjSUrRgUXSgOX3+gkmZmLcTTEjZKTD182+WIbI0Up8jG/5ZQFkAf9+Q3cmNY4
-	 JFnW3PeguXnSBftUZ4y3Y4qIkDszgL+8dNy2ZIXw=
+	b=RHfbrfBUB/DBR5p+SwhSyjMwcPKkTk61vf8fJdfzeuLwbsDPAWlwE1fvtliheYD9O
+	 D2G+JATc3Z9Ox06nhqr2qHWmJ2ci1Xbj7Ew4kQCOUylKaVYHjMvdZ/CG8SwP8ia+IP
+	 VyrGn3HuUUJhQmsv3ZFjcHenZvJ1UPH9ZugSU9so=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radu Rendec <rrendec@redhat.com>,
-	Will Deacon <will@kernel.org>,
+	Rupinderjit Singh <rusingh@redhat.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 036/230] arm64: cacheinfo: Avoid out-of-bounds write to cacheinfo array
-Date: Wed, 19 Feb 2025 09:25:53 +0100
-Message-ID: <20250219082603.122755925@linuxfoundation.org>
+Subject: [PATCH 6.12 037/230] gpu: host1x: Fix a use of uninitialized mutex
+Date: Wed, 19 Feb 2025 09:25:54 +0100
+Message-ID: <20250219082603.162724574@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -51,53 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radu Rendec <rrendec@redhat.com>
+From: Rupinderjit Singh <rusingh@redhat.com>
 
-[ Upstream commit 875d742cf5327c93cba1f11e12b08d3cce7a88d2 ]
+[ Upstream commit 02458fbfaa0170aabf8506f7d4ed054f02414251 ]
 
-The loop that detects/populates cache information already has a bounds
-check on the array size but does not account for cache levels with
-separate data/instructions cache. Fix this by incrementing the index
-for any populated leaf (instead of any populated level).
+commit c8347f915e67 ("gpu: host1x: Fix boot regression for Tegra")
+caused a use of uninitialized mutex leading to below warning when
+CONFIG_DEBUG_MUTEXES and CONFIG_DEBUG_LOCK_ALLOC are enabled.
 
-Fixes: 5d425c186537 ("arm64: kernel: add support for cpu cache information")
+[   41.662843] ------------[ cut here ]------------
+[   41.663012] DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+[   41.663035] WARNING: CPU: 4 PID: 794 at kernel/locking/mutex.c:587 __mutex_lock+0x670/0x878
+[   41.663458] Modules linked in: rtw88_8822c(+) bluetooth(+) rtw88_pci rtw88_core mac80211 aquantia libarc4 crc_itu_t cfg80211 tegra194_cpufreq dwmac_tegra(+) arm_dsu_pmu stmmac_platform stmmac pcs_xpcs rfkill at24 host1x(+) tegra_bpmp_thermal ramoops reed_solomon fuse loop nfnetlink xfs mmc_block rpmb_core ucsi_ccg ina3221 crct10dif_ce xhci_tegra ghash_ce lm90 sha2_ce sha256_arm64 sha1_ce sdhci_tegra pwm_fan sdhci_pltfm sdhci gpio_keys rtc_tegra cqhci mmc_core phy_tegra_xusb i2c_tegra tegra186_gpc_dma i2c_tegra_bpmp spi_tegra114 dm_mirror dm_region_hash dm_log dm_mod
+[   41.665078] CPU: 4 UID: 0 PID: 794 Comm: (udev-worker) Not tainted 6.11.0-29.31_1538613708.el10.aarch64+debug #1
+[   41.665838] Hardware name: NVIDIA NVIDIA Jetson AGX Orin Developer Kit/Jetson, BIOS 36.3.0-gcid-35594366 02/26/2024
+[   41.672555] pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   41.679636] pc : __mutex_lock+0x670/0x878
+[   41.683834] lr : __mutex_lock+0x670/0x878
+[   41.688035] sp : ffff800084b77090
+[   41.691446] x29: ffff800084b77160 x28: ffffdd4bebf7b000 x27: ffffdd4be96b1000
+[   41.698799] x26: 1fffe0002308361c x25: 1ffff0001096ee18 x24: 0000000000000000
+[   41.706149] x23: 0000000000000000 x22: 0000000000000002 x21: ffffdd4be6e3c7a0
+[   41.713500] x20: ffff800084b770f0 x19: ffff00011841b1e8 x18: 0000000000000000
+[   41.720675] x17: 0000000000000000 x16: 0000000000000000 x15: 0720072007200720
+[   41.728023] x14: 0000000000000000 x13: 0000000000000001 x12: ffff6001a96eaab3
+[   41.735375] x11: 1fffe001a96eaab2 x10: ffff6001a96eaab2 x9 : ffffdd4be4838bbc
+[   41.742723] x8 : 00009ffe5691554e x7 : ffff000d4b755593 x6 : 0000000000000001
+[   41.749985] x5 : ffff000d4b755590 x4 : 1fffe0001d88f001 x3 : dfff800000000000
+[   41.756988] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000ec478000
+[   41.764251] Call trace:
+[   41.766695]  __mutex_lock+0x670/0x878
+[   41.770373]  mutex_lock_nested+0x2c/0x40
+[   41.774134]  host1x_intr_start+0x54/0xf8 [host1x]
+[   41.778863]  host1x_runtime_resume+0x150/0x228 [host1x]
+[   41.783935]  pm_generic_runtime_resume+0x84/0xc8
+[   41.788485]  __rpm_callback+0xa0/0x478
+[   41.792422]  rpm_callback+0x15c/0x1a8
+[   41.795922]  rpm_resume+0x698/0xc08
+[   41.799597]  __pm_runtime_resume+0xa8/0x140
+[   41.803621]  host1x_probe+0x810/0xbc0 [host1x]
+[   41.807909]  platform_probe+0xcc/0x1a8
+[   41.811845]  really_probe+0x188/0x800
+[   41.815347]  __driver_probe_device+0x164/0x360
+[   41.819810]  driver_probe_device+0x64/0x1a8
+[   41.823834]  __driver_attach+0x180/0x490
+[   41.827773]  bus_for_each_dev+0x104/0x1a0
+[   41.831797]  driver_attach+0x44/0x68
+[   41.835296]  bus_add_driver+0x23c/0x4e8
+[   41.839235]  driver_register+0x15c/0x3a8
+[   41.843170]  __platform_register_drivers+0xa4/0x208
+[   41.848159]  tegra_host1x_init+0x4c/0xff8 [host1x]
+[   41.853147]  do_one_initcall+0xd4/0x380
+[   41.856997]  do_init_module+0x1dc/0x698
+[   41.860758]  load_module+0xc70/0x1300
+[   41.864435]  __do_sys_init_module+0x1a8/0x1d0
+[   41.868721]  __arm64_sys_init_module+0x74/0xb0
+[   41.873183]  invoke_syscall.constprop.0+0xdc/0x1e8
+[   41.877997]  do_el0_svc+0x154/0x1d0
+[   41.881671]  el0_svc+0x54/0x140
+[   41.884820]  el0t_64_sync_handler+0x120/0x130
+[   41.889285]  el0t_64_sync+0x1a4/0x1a8
+[   41.892960] irq event stamp: 69737
+[   41.896370] hardirqs last  enabled at (69737): [<ffffdd4be6d7768c>] _raw_spin_unlock_irqrestore+0x44/0xe8
+[   41.905739] hardirqs last disabled at (69736): [<ffffdd4be59dcd40>] clk_enable_lock+0x98/0x198
+[   41.914314] softirqs last  enabled at (68082): [<ffffdd4be466b1d0>] handle_softirqs+0x4c8/0x890
+[   41.922977] softirqs last disabled at (67945): [<ffffdd4be44f02a4>] __do_softirq+0x1c/0x28
+[   41.931289] ---[ end trace 0000000000000000 ]---
 
-Signed-off-by: Radu Rendec <rrendec@redhat.com>
-Link: https://lore.kernel.org/r/20250206174420.2178724-1-rrendec@redhat.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Inside the probe function when pm_runtime_enable() is called,
+the PM core invokes a resume callback if the device Host1x is
+in a suspended state. As it can be seen in the logs above,
+this leads to host1x_intr_start() function call which is
+trying to acquire a mutex lock. But, the function
+host_intr_init() only gets called after the pm_runtime_enable()
+where mutex is initialised leading to the use of mutex
+prior to its initialisation.
+
+Fix this by moving the mutex initialisation prior to the runtime
+PM enablement function pm_runtime_enable() in probe.
+
+Fixes: c8347f915e67 ("gpu: host1x: Fix boot regression for Tegra")
+Signed-off-by: Rupinderjit Singh <rusingh@redhat.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patchwork.ozlabs.org/project/linux-tegra/patch/20250206155803.201942-1-rusingh@redhat.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/cacheinfo.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/host1x/dev.c  | 2 ++
+ drivers/gpu/host1x/intr.c | 2 --
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kernel/cacheinfo.c b/arch/arm64/kernel/cacheinfo.c
-index d9c9218fa1fdd..309942b06c5bc 100644
---- a/arch/arm64/kernel/cacheinfo.c
-+++ b/arch/arm64/kernel/cacheinfo.c
-@@ -101,16 +101,18 @@ int populate_cache_leaves(unsigned int cpu)
- 	unsigned int level, idx;
- 	enum cache_type type;
- 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
--	struct cacheinfo *this_leaf = this_cpu_ci->info_list;
-+	struct cacheinfo *infos = this_cpu_ci->info_list;
- 
- 	for (idx = 0, level = 1; level <= this_cpu_ci->num_levels &&
--	     idx < this_cpu_ci->num_leaves; idx++, level++) {
-+	     idx < this_cpu_ci->num_leaves; level++) {
- 		type = get_cache_type(level);
- 		if (type == CACHE_TYPE_SEPARATE) {
--			ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
--			ci_leaf_init(this_leaf++, CACHE_TYPE_INST, level);
-+			if (idx + 1 >= this_cpu_ci->num_leaves)
-+				break;
-+			ci_leaf_init(&infos[idx++], CACHE_TYPE_DATA, level);
-+			ci_leaf_init(&infos[idx++], CACHE_TYPE_INST, level);
- 		} else {
--			ci_leaf_init(this_leaf++, type, level);
-+			ci_leaf_init(&infos[idx++], type, level);
- 		}
+diff --git a/drivers/gpu/host1x/dev.c b/drivers/gpu/host1x/dev.c
+index e98528777faae..710674ef40a97 100644
+--- a/drivers/gpu/host1x/dev.c
++++ b/drivers/gpu/host1x/dev.c
+@@ -625,6 +625,8 @@ static int host1x_probe(struct platform_device *pdev)
+ 		goto free_contexts;
  	}
- 	return 0;
+ 
++	mutex_init(&host->intr_mutex);
++
+ 	pm_runtime_enable(&pdev->dev);
+ 
+ 	err = devm_tegra_core_dev_init_opp_table_common(&pdev->dev);
+diff --git a/drivers/gpu/host1x/intr.c b/drivers/gpu/host1x/intr.c
+index b3285dd101804..f77a678949e96 100644
+--- a/drivers/gpu/host1x/intr.c
++++ b/drivers/gpu/host1x/intr.c
+@@ -104,8 +104,6 @@ int host1x_intr_init(struct host1x *host)
+ 	unsigned int id;
+ 	int i, err;
+ 
+-	mutex_init(&host->intr_mutex);
+-
+ 	for (id = 0; id < host1x_syncpt_nb_pts(host); ++id) {
+ 		struct host1x_syncpt *syncpt = &host->syncpt[id];
+ 
 -- 
 2.39.5
 
