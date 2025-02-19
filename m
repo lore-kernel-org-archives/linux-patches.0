@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEED1DF259;
-	Wed, 19 Feb 2025 09:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D5D1DF25E;
+	Wed, 19 Feb 2025 09:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956797; cv=none; b=bQALfo9vWgaxRKz7/DhnBg5g2BIsFzk5wqsXIcfNvbJ75lqJ6PgV3Ovn5eY8qMKLvH1/Ms6uol3wfVmG+6Ar9ha1OsCiNsmPCXRYnkRSIK8AkvLvTVj7Yb9pDTUei0QqPQD/fxp7ZYpwSDZUcKZW7ISMuGEgDsDYlWO07c11lck=
+	t=1739956800; cv=none; b=ZcsZ7lBz1Up2jkDiy/2dLMJidT15W6+gmsX0I1+mTSe3roYOVtvPVi9f+xdopGEKtbClC5TJBxdHfe2uR99KkJA/g7jcUzR3qvVndrevl0MKQ1zwwnv//E8BEZbJg8sg1NX/uQk/rSguUoCk+zkM9xT7LxIXw6gUEUyNCLQ7p1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956797; c=relaxed/simple;
-	bh=Dn+C9jwpzNw1um8mrKQunYHTnCdfLJ2NzuGFulqdUDY=;
+	s=arc-20240116; t=1739956800; c=relaxed/simple;
+	bh=ioTScVTQyJbInDqynY2WE85SUrSf1qPJ8z7ZyvJhfNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbFO3XBjNGlfZnnAsY+FyyihvhbZ2h+tbEyHY36CTV85lj2e2z+eYwu8mQMvDOXH/2I+RxgYu4w5bly9Y22OUA6Vpcqg6F7fyrY39uSfngRX4qcyPGdWEm21zYUCvZJwfOJBIesxGTNc49GujBJdDHtXIwJn0PCkeZMFEB88ITk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxEiVNn3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Vw3JwHRcHrsoBI1xbkh5AEfi3Uiykl8xIbqp/X7S0MmOoUbAR7+NiM+t6JxlnqdoZdT8AQiz7GE/vOwxFgUN/ABh+hZsAJDJkHSK7ExfXCIwgMW9RJ41PZ1DjyE8Zl+iiK74gbJJ6ujSlI68oAIVW5CnXRWMg4PFnrfIHAlXKhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3k/tpTM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxEiVNn3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0355CC4CED1;
-	Wed, 19 Feb 2025 09:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3k/tpTM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0758C4CEE7;
+	Wed, 19 Feb 2025 09:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956797;
-	bh=Dn+C9jwpzNw1um8mrKQunYHTnCdfLJ2NzuGFulqdUDY=;
+	s=korg; t=1739956800;
+	bh=ioTScVTQyJbInDqynY2WE85SUrSf1qPJ8z7ZyvJhfNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CxEiVNn3sH4LQlcwCKX9DF8uueAqQpJg0vCTXeP46xRkBE5QshiAWIFrm7pqEG9IP
-	 bpFEp8VdMujIuR+10m1cok1iXgb2jjkyxLofzv0BD1MSf7BMzDt4CuJVgNNgtkosu6
-	 oYxKSQNYhZrCL53nYIuA+RTp2pIrJ+1hoTJqnm+4=
+	b=b3k/tpTMS8QUmjdkxnI/Ds93yfaSwjyvRkeqJa0asSdWkCcErh3mPRPO3uQh1cFfw
+	 rNp/zfclpuyYfm/Yy8ZNsoob0qAoggwTEY3lBBjQYAxgN/XQgHyE3Lz5dNC4bO0QxB
+	 zhyU+Mf+G540ADEVIqS97Wf2sGOgdPX7OaICzzCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 303/578] iommu/arm-smmu-v3: Clean up more on probe failure
-Date: Wed, 19 Feb 2025 09:25:07 +0100
-Message-ID: <20250219082704.938366281@linuxfoundation.org>
+Subject: [PATCH 6.1 304/578] platform/x86: int3472: Check for adev == NULL
+Date: Wed, 19 Feb 2025 09:25:08 +0100
+Message-ID: <20250219082704.975669878@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -45,79 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit fcbd621567420b3a2f21f49bbc056de8b273c625 ]
+[ Upstream commit cd2fd6eab480dfc247b737cf7a3d6b009c4d0f1c ]
 
-kmemleak noticed that the iopf queue allocated deep down within
-arm_smmu_init_structures() can be leaked by a subsequent error return
-from arm_smmu_device_probe(). Furthermore, after arm_smmu_device_reset()
-we will also leave the SMMU enabled with an empty Stream Table, silently
-blocking all DMA. This proves rather annoying for debugging said probe
-failure, so let's handle it a bit better by putting the SMMU back into
-(more or less) the same state as if it hadn't probed at all.
+Not all devices have an ACPI companion fwnode, so adev might be NULL. This
+can e.g. (theoretically) happen when a user manually binds one of
+the int3472 drivers to another i2c/platform device through sysfs.
 
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/5137901958471cf67f2fad5c2229f8a8f1ae901a.1733406914.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Add a check for adev not being set and return -ENODEV in that case to
+avoid a possible NULL pointer deref in skl_int3472_get_acpi_buffer().
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20241209220522.25288-1-hdegoede@redhat.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/platform/x86/intel/int3472/discrete.c | 3 +++
+ drivers/platform/x86/intel/int3472/tps68470.c | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 45b43f729f895..96b72f3dad0d0 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3880,7 +3880,7 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
- 	/* Initialise in-memory data structures */
- 	ret = arm_smmu_init_structures(smmu);
- 	if (ret)
--		return ret;
-+		goto err_free_iopf;
+diff --git a/drivers/platform/x86/intel/int3472/discrete.c b/drivers/platform/x86/intel/int3472/discrete.c
+index c42c3faa2c32d..0f16436e5804b 100644
+--- a/drivers/platform/x86/intel/int3472/discrete.c
++++ b/drivers/platform/x86/intel/int3472/discrete.c
+@@ -359,6 +359,9 @@ static int skl_int3472_discrete_probe(struct platform_device *pdev)
+ 	struct int3472_cldb cldb;
+ 	int ret;
  
- 	/* Record our private device structure */
- 	platform_set_drvdata(pdev, smmu);
-@@ -3891,22 +3891,29 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
- 	/* Reset the device */
- 	ret = arm_smmu_device_reset(smmu, bypass);
- 	if (ret)
--		return ret;
-+		goto err_disable;
- 
- 	/* And we're up. Go go go! */
- 	ret = iommu_device_sysfs_add(&smmu->iommu, dev, NULL,
- 				     "smmu3.%pa", &ioaddr);
- 	if (ret)
--		return ret;
-+		goto err_disable;
- 
- 	ret = iommu_device_register(&smmu->iommu, &arm_smmu_ops, dev);
- 	if (ret) {
- 		dev_err(dev, "Failed to register iommu\n");
--		iommu_device_sysfs_remove(&smmu->iommu);
--		return ret;
-+		goto err_free_sysfs;
- 	}
- 
- 	return 0;
++	if (!adev)
++		return -ENODEV;
 +
-+err_free_sysfs:
-+	iommu_device_sysfs_remove(&smmu->iommu);
-+err_disable:
-+	arm_smmu_device_disable(smmu);
-+err_free_iopf:
-+	iopf_queue_free(smmu->evtq.iopf);
-+	return ret;
- }
+ 	ret = skl_int3472_fill_cldb(adev, &cldb);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Couldn't fill CLDB structure\n");
+diff --git a/drivers/platform/x86/intel/int3472/tps68470.c b/drivers/platform/x86/intel/int3472/tps68470.c
+index 5b8d1a9620a5d..82fb2fbc1000f 100644
+--- a/drivers/platform/x86/intel/int3472/tps68470.c
++++ b/drivers/platform/x86/intel/int3472/tps68470.c
+@@ -152,6 +152,9 @@ static int skl_int3472_tps68470_probe(struct i2c_client *client)
+ 	int ret;
+ 	int i;
  
- static int arm_smmu_device_remove(struct platform_device *pdev)
++	if (!adev)
++		return -ENODEV;
++
+ 	n_consumers = skl_int3472_fill_clk_pdata(&client->dev, &clk_pdata);
+ 	if (n_consumers < 0)
+ 		return n_consumers;
 -- 
 2.39.5
 
