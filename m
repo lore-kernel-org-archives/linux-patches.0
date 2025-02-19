@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DD31C9B97;
-	Wed, 19 Feb 2025 09:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5C81C5485;
+	Wed, 19 Feb 2025 09:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957535; cv=none; b=kNH6Sl3wTUI62IiV2uHlYWMtjJllau+pQj7eQlRChQYdEc4l9SyYE3ELRd2Xi7Md2KP08yeMu6RAKoI24w0LtNHep6SmqPWrwlqon3CUn4k/Un5KrtVEGf5QyRXLsj/NIrHN6Ov5q53rNxOj4nyt73XyueyyfrYSn/GQr2NjGnk=
+	t=1739957538; cv=none; b=LbmVoVPH5R3mS+TItJMlMQs3XMJX7hMkKzW2rTseFO4VYqqtoDgK7PQgal6s2B/JOKA71oyeB6aXD4uXcqgRwB/5WgAM2XnIY9a/IbeOIopimh25wGVXBMfoA8wig8J/h4PIb6RDxUyPcuLI+o30DxLf5aQ8vHWKCzAlaz+cEXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957535; c=relaxed/simple;
-	bh=ZfuIxYyn5DdFE9U1CvClnQECMA+CoIhT8KdfWDl1xAg=;
+	s=arc-20240116; t=1739957538; c=relaxed/simple;
+	bh=vJtYjD/FWnyQAuuoJ9yKu07J+LTOHDmI8GWQi+diRgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BW2D3yKPRnatZu9f1uTrn0KRQ3beTHrHaMkGugcBuFVM/82tlxkP2D6BEnsRV0tN755YlU4a9xBPoUSfWwlV2sMJIWehoFr6vRqMYBwFb54+UAtjofUsz5AKIKqrArT5IMbBx+Vz6Dh3rMTec5WSKfh7W4mQRxlHsJasVRb8d8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaSLGvCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cC79k7NsalR8zkMCr+KRmimf+OTjHfEtZY50fMTcNqHS1IjNzHsevPkYb8acHI/ROuV4Z0Gx6yTraZA/Hi1ibuZ9ih5LdFzMlB/hCDXqlYHk+WZROKz6tmxVMEBUa9IEGdSNoq2qN6bZpf056p3W2IMJJYaRgnXylfYfq2XkvwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zj8TdFe+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaSLGvCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FEFC4CEE6;
-	Wed, 19 Feb 2025 09:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zj8TdFe+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCE7C4CED1;
+	Wed, 19 Feb 2025 09:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957535;
-	bh=ZfuIxYyn5DdFE9U1CvClnQECMA+CoIhT8KdfWDl1xAg=;
+	s=korg; t=1739957538;
+	bh=vJtYjD/FWnyQAuuoJ9yKu07J+LTOHDmI8GWQi+diRgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iaSLGvCcaW3EqLzhASTo1Kwut87yJqdyaxnb727u5UR/laGGzaKalDlGM3ISYZ/9w
-	 WG7Lx0HO0fUA3ul21dO1wfjAZ19wgAjglXxJ+gUtxhgIO76nEs3g8rZy9sFakssKi1
-	 njgVbUYKV6+dB6Ibm5P4E7d7Sg9YPx4GdaQLN6wU=
+	b=Zj8TdFe+BRayAQax1XmEmUyuedd2MDjwJXGGPs4PRVNrdPMzpk/J8cNNRMGGCPbMB
+	 HwU+G0OrMh5KvaghGO/zztNTX0ZyXFqwRiQAIVUF25UGK5L0fcQjg53GuzOYjcSKI0
+	 n2cgwtEZyPmYBbfeOj1w5twGp5mpLATqZG0AvSCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Matt Turner <mattst88@gmail.com>,
-	Ivan Kokshaysky <ink@unseen.parts>
-Subject: [PATCH 6.1 527/578] alpha: align stack for page fault and user unaligned trap handlers
-Date: Wed, 19 Feb 2025 09:28:51 +0100
-Message-ID: <20250219082713.703715385@linuxfoundation.org>
+	Delgan <delgan.py@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mika Westerberg <westeri@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.1 528/578] gpiolib: acpi: Add a quirk for Acer Nitro ANV14
+Date: Wed, 19 Feb 2025 09:28:52 +0100
+Message-ID: <20250219082713.744576349@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,129 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Kokshaysky <ink@unseen.parts>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 3b35a171060f846b08b48646b38c30b5d57d17ff upstream.
+commit 8743d66979e494c5378563e6b5a32e913380abd8 upstream.
 
-do_page_fault() and do_entUna() are special because they use
-non-standard stack frame layout. Fix them manually.
+Spurious immediate wake up events are reported on Acer Nitro ANV14. GPIO 11 is
+specified as an edge triggered input and also a wake source but this pin is
+supposed to be an output pin for an LED, so it's effectively floating.
+
+Block the interrupt from getting set up for this GPIO on this device.
 
 Cc: stable@vger.kernel.org
-Tested-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Suggested-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Ivan Kokshaysky <ink@unseen.parts>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reported-by: Delgan <delgan.py@gmail.com>
+Tested-by: Delgan <delgan.py@gmail.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3954
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Mika Westerberg <westeri@kernel.org>
+Link: https://lore.kernel.org/r/20250211203222.761206-1-superm1@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/kernel/entry.S |   20 ++++++++++----------
- arch/alpha/kernel/traps.c |    2 +-
- arch/alpha/mm/fault.c     |    4 ++--
- 3 files changed, 13 insertions(+), 13 deletions(-)
+ drivers/gpio/gpiolib-acpi.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/arch/alpha/kernel/entry.S
-+++ b/arch/alpha/kernel/entry.S
-@@ -199,8 +199,8 @@ CFI_END_OSF_FRAME entArith
- CFI_START_OSF_FRAME entMM
- 	SAVE_ALL
- /* save $9 - $15 so the inline exception code can manipulate them.  */
--	subq	$sp, 56, $sp
--	.cfi_adjust_cfa_offset	56
-+	subq	$sp, 64, $sp
-+	.cfi_adjust_cfa_offset	64
- 	stq	$9, 0($sp)
- 	stq	$10, 8($sp)
- 	stq	$11, 16($sp)
-@@ -215,7 +215,7 @@ CFI_START_OSF_FRAME entMM
- 	.cfi_rel_offset	$13, 32
- 	.cfi_rel_offset	$14, 40
- 	.cfi_rel_offset	$15, 48
--	addq	$sp, 56, $19
-+	addq	$sp, 64, $19
- /* handle the fault */
- 	lda	$8, 0x3fff
- 	bic	$sp, $8, $8
-@@ -228,7 +228,7 @@ CFI_START_OSF_FRAME entMM
- 	ldq	$13, 32($sp)
- 	ldq	$14, 40($sp)
- 	ldq	$15, 48($sp)
--	addq	$sp, 56, $sp
-+	addq	$sp, 64, $sp
- 	.cfi_restore	$9
- 	.cfi_restore	$10
- 	.cfi_restore	$11
-@@ -236,7 +236,7 @@ CFI_START_OSF_FRAME entMM
- 	.cfi_restore	$13
- 	.cfi_restore	$14
- 	.cfi_restore	$15
--	.cfi_adjust_cfa_offset	-56
-+	.cfi_adjust_cfa_offset	-64
- /* finish up the syscall as normal.  */
- 	br	ret_from_sys_call
- CFI_END_OSF_FRAME entMM
-@@ -383,8 +383,8 @@ entUnaUser:
- 	.cfi_restore	$0
- 	.cfi_adjust_cfa_offset	-256
- 	SAVE_ALL		/* setup normal kernel stack */
--	lda	$sp, -56($sp)
--	.cfi_adjust_cfa_offset	56
-+	lda	$sp, -64($sp)
-+	.cfi_adjust_cfa_offset	64
- 	stq	$9, 0($sp)
- 	stq	$10, 8($sp)
- 	stq	$11, 16($sp)
-@@ -400,7 +400,7 @@ entUnaUser:
- 	.cfi_rel_offset	$14, 40
- 	.cfi_rel_offset	$15, 48
- 	lda	$8, 0x3fff
--	addq	$sp, 56, $19
-+	addq	$sp, 64, $19
- 	bic	$sp, $8, $8
- 	jsr	$26, do_entUnaUser
- 	ldq	$9, 0($sp)
-@@ -410,7 +410,7 @@ entUnaUser:
- 	ldq	$13, 32($sp)
- 	ldq	$14, 40($sp)
- 	ldq	$15, 48($sp)
--	lda	$sp, 56($sp)
-+	lda	$sp, 64($sp)
- 	.cfi_restore	$9
- 	.cfi_restore	$10
- 	.cfi_restore	$11
-@@ -418,7 +418,7 @@ entUnaUser:
- 	.cfi_restore	$13
- 	.cfi_restore	$14
- 	.cfi_restore	$15
--	.cfi_adjust_cfa_offset	-56
-+	.cfi_adjust_cfa_offset	-64
- 	br	ret_from_sys_call
- CFI_END_OSF_FRAME entUna
+--- a/drivers/gpio/gpiolib-acpi.c
++++ b/drivers/gpio/gpiolib-acpi.c
+@@ -1640,6 +1640,20 @@ static const struct dmi_system_id gpioli
+ 			.ignore_wake = "PNP0C50:00@8",
+ 		},
+ 	},
++	{
++		/*
++		 * Spurious wakeups from GPIO 11
++		 * Found in BIOS 1.04
++		 * https://gitlab.freedesktop.org/drm/amd/-/issues/3954
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++			DMI_MATCH(DMI_PRODUCT_FAMILY, "Acer Nitro V 14"),
++		},
++		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
++			.ignore_interrupt = "AMDI0030:00@11",
++		},
++	},
+ 	{} /* Terminating entry */
+ };
  
---- a/arch/alpha/kernel/traps.c
-+++ b/arch/alpha/kernel/traps.c
-@@ -707,7 +707,7 @@ s_reg_to_mem (unsigned long s_reg)
- static int unauser_reg_offsets[32] = {
- 	R(r0), R(r1), R(r2), R(r3), R(r4), R(r5), R(r6), R(r7), R(r8),
- 	/* r9 ... r15 are stored in front of regs.  */
--	-56, -48, -40, -32, -24, -16, -8,
-+	-64, -56, -48, -40, -32, -24, -16,	/* padding at -8 */
- 	R(r16), R(r17), R(r18),
- 	R(r19), R(r20), R(r21), R(r22), R(r23), R(r24), R(r25), R(r26),
- 	R(r27), R(r28), R(gp),
---- a/arch/alpha/mm/fault.c
-+++ b/arch/alpha/mm/fault.c
-@@ -78,8 +78,8 @@ __load_new_mm_context(struct mm_struct *
- 
- /* Macro for exception fixup code to access integer registers.  */
- #define dpf_reg(r)							\
--	(((unsigned long *)regs)[(r) <= 8 ? (r) : (r) <= 15 ? (r)-16 :	\
--				 (r) <= 18 ? (r)+10 : (r)-10])
-+	(((unsigned long *)regs)[(r) <= 8 ? (r) : (r) <= 15 ? (r)-17 :	\
-+				 (r) <= 18 ? (r)+11 : (r)-10])
- 
- asmlinkage void
- do_page_fault(unsigned long address, unsigned long mmcsr,
 
 
