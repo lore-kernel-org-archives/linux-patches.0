@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8251DF738;
-	Wed, 19 Feb 2025 08:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C991E04BE;
+	Wed, 19 Feb 2025 08:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954522; cv=none; b=FouzhIRZJVyvGAUnU14osVCyNulozga/Pon8V+/3mx9IBUcfhh9kh8pJ/N3knW3pHV4+ame2/Wol1bWTnZz3zbBWWitxffsGsVSSbswCbUSJfHcdeS8eEEJ+9if79pDto7+ONfkUCJnkPXp5X+j5sF+2iFcKXg8BqKg9ngMGGBA=
+	t=1739954525; cv=none; b=lW3Qfr37vv5v0/Ixxh5ModS5CzbI9FIF8qVJF8FSlSGaH6cCp1nAUV+t6tFPqMkyT0uuDWtvhR/X7+H0RU98NsDSag8HXvdHfY2EBNpSGiFXqFpl8VHLkX7pTKWNCMxs3sPSkOO7D4oCoWxFIzCUEg1H7bx4O2AM9lc4rHcoap8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954522; c=relaxed/simple;
-	bh=6azogLU2aGzD16+SRVNkx0ZU73mvDcV58p8yVgz6iLU=;
+	s=arc-20240116; t=1739954525; c=relaxed/simple;
+	bh=eFFctijlc8J5k1Wp3vcQqP1Glx7P+4oMk+kN7nochnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EcdCSTwoNs88Hdq1qitdZSArElNlXYKbewczLJ6CzSpRG4VjUpefWZFCKAZEieG0p6Dgh6pDINSoTnLsuoo9UXmSvB0HsNsDebKTSuqr27oJTsEL0H2k2lRfx/wN30a5Rk9m50mgAQLzntyGTXX02mctGosZdrcGSXBRb9qQeAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAESMyVz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HzNMvLqWS1l8lB76C4sWHaFqxqy9AJqX1eAFTeAuBqF4X8LLroIeXX8wYObVyKRj3/j3VPJMNK7HINaN6rNiGj+hkpatdQ5Gk+5HpBh/8jMsgHnqJTvOrZfAhj7XuT73jE4F1mjnyiobRTGafig+gqsfTjKkm6QkbUEb7jQydBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bnlsetow; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAESMyVz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089AFC4CEE7;
-	Wed, 19 Feb 2025 08:42:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bnlsetow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A16BC4CEE7;
+	Wed, 19 Feb 2025 08:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954521;
-	bh=6azogLU2aGzD16+SRVNkx0ZU73mvDcV58p8yVgz6iLU=;
+	s=korg; t=1739954524;
+	bh=eFFctijlc8J5k1Wp3vcQqP1Glx7P+4oMk+kN7nochnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XAESMyVzdt9S3xnTiMHjOm5yuDzqYACEBI8OI6r1uLB0nNmGt3e4whntpqU0hkOO7
-	 RoGvM4iZj+sRlcC6mPyi2dmnxOxpbhkT9NWTZQdgbbiUq1Am8O31mAc3GiS7m4SWYO
-	 yoAkJt797QtWtPHEjmlGgvUKYPTfRBdsehdv8KzI=
+	b=Bnlsetow7UsiB96msuKsKjEwm2CnyrEL7u59IY+qDDO646pcHbROhYZI+6SFWBhoQ
+	 dG662kkVR40sEuo7oXVMXLusgeVO6Gdn+6kp+tO4/qpXdd28neMx8I+I/1++NWU921
+	 RoFg2OGYDclzLt9JLLTkKFMquU2oIHrNL1AoNY74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicki Pfau <vi@endrift.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 228/274] HID: hid-steam: Move hidraw input (un)registering to work
-Date: Wed, 19 Feb 2025 09:28:02 +0100
-Message-ID: <20250219082618.500524536@linuxfoundation.org>
+Subject: [PATCH 6.13 229/274] net: make sure we retain NAPI ordering on netdev->napi_list
+Date: Wed, 19 Feb 2025 09:28:03 +0100
+Message-ID: <20250219082618.540052059@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -51,115 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 79504249d7e27cad4a3eeb9afc6386e418728ce0 ]
+[ Upstream commit d6c7b03497eef8b66bf0b5572881359913e39787 ]
 
-Due to an interplay between locking in the input and hid transport subsystems,
-attempting to register or deregister the relevant input devices during the
-hidraw open/close events can lead to a lock ordering issue. Though this
-shouldn't cause a deadlock, this commit moves the input device manipulation to
-deferred work to sidestep the issue.
+Netlink code depends on NAPI instances being sorted by ID on
+the netdev list for dump continuation. We need to be able to
+find the position on the list where we left off if dump does
+not fit in a single skb, and in the meantime NAPI instances
+can come and go.
 
-Fixes: 385a4886778f6 ("HID: steam: remove input device when a hid client is running.")
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+This was trivially true when we were assigning a new ID to every
+new NAPI instance. Since we added the NAPI config API, we try
+to retain the ID previously used for the same queue, but still
+add the new NAPI instance at the start of the list.
+
+This is fine if we reset the entire netdev and all NAPIs get
+removed and added back. If driver replaces a NAPI instance
+during an operation like DEVMEM queue reset, or recreates
+a subset of NAPI instances in other ways we may end up with
+broken ordering, and therefore Netlink dumps with either
+missing or duplicated entries.
+
+At this stage the problem is theoretical. Only two drivers
+support queue API, bnxt and gve. gve recreates NAPIs during
+queue reset, but it doesn't support NAPI config.
+bnxt supports NAPI config but doesn't recreate instances
+during reset.
+
+We need to save the ID in the config as soon as it is assigned
+because otherwise the new NAPI will not know what ID it will
+get at enable time, at the time it is being added.
+
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 011b03359038 ("Revert "net: skb: introduce and use a single page frag cache"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-steam.c | 38 +++++++++++++++++++++++++++++++-------
- 1 file changed, 31 insertions(+), 7 deletions(-)
+ net/core/dev.c | 42 ++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 36 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
-index 48139ef80dc11..5f8518f6f5ac7 100644
---- a/drivers/hid/hid-steam.c
-+++ b/drivers/hid/hid-steam.c
-@@ -313,6 +313,7 @@ struct steam_device {
- 	u16 rumble_left;
- 	u16 rumble_right;
- 	unsigned int sensor_timestamp_us;
-+	struct work_struct unregister_work;
- };
- 
- static int steam_recv_report(struct steam_device *steam,
-@@ -1072,6 +1073,31 @@ static void steam_mode_switch_cb(struct work_struct *work)
- 	}
+diff --git a/net/core/dev.c b/net/core/dev.c
+index fbb796375aa0e..09a9adfa7da99 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -6735,13 +6735,14 @@ static void napi_restore_config(struct napi_struct *n)
+ 	n->gro_flush_timeout = n->config->gro_flush_timeout;
+ 	n->irq_suspend_timeout = n->config->irq_suspend_timeout;
+ 	/* a NAPI ID might be stored in the config, if so use it. if not, use
+-	 * napi_hash_add to generate one for us. It will be saved to the config
+-	 * in napi_disable.
++	 * napi_hash_add to generate one for us.
+ 	 */
+-	if (n->config->napi_id)
++	if (n->config->napi_id) {
+ 		napi_hash_add_with_id(n, n->config->napi_id);
+-	else
++	} else {
+ 		napi_hash_add(n);
++		n->config->napi_id = n->napi_id;
++	}
  }
  
-+static void steam_work_unregister_cb(struct work_struct *work)
+ static void napi_save_config(struct napi_struct *n)
+@@ -6749,10 +6750,39 @@ static void napi_save_config(struct napi_struct *n)
+ 	n->config->defer_hard_irqs = n->defer_hard_irqs;
+ 	n->config->gro_flush_timeout = n->gro_flush_timeout;
+ 	n->config->irq_suspend_timeout = n->irq_suspend_timeout;
+-	n->config->napi_id = n->napi_id;
+ 	napi_hash_del(n);
+ }
+ 
++/* Netlink wants the NAPI list to be sorted by ID, if adding a NAPI which will
++ * inherit an existing ID try to insert it at the right position.
++ */
++static void
++netif_napi_dev_list_add(struct net_device *dev, struct napi_struct *napi)
 +{
-+	struct steam_device *steam = container_of(work, struct steam_device,
-+							unregister_work);
-+	unsigned long flags;
-+	bool connected;
-+	bool opened;
++	unsigned int new_id, pos_id;
++	struct list_head *higher;
++	struct napi_struct *pos;
 +
-+	spin_lock_irqsave(&steam->lock, flags);
-+	opened = steam->client_opened;
-+	connected = steam->connected;
-+	spin_unlock_irqrestore(&steam->lock, flags);
++	new_id = UINT_MAX;
++	if (napi->config && napi->config->napi_id)
++		new_id = napi->config->napi_id;
 +
-+	if (connected) {
-+		if (opened) {
-+			steam_sensors_unregister(steam);
-+			steam_input_unregister(steam);
-+		} else {
-+			steam_set_lizard_mode(steam, lizard_mode);
-+			steam_input_register(steam);
-+			steam_sensors_register(steam);
-+		}
++	higher = &dev->napi_list;
++	list_for_each_entry(pos, &dev->napi_list, dev_list) {
++		if (pos->napi_id >= MIN_NAPI_ID)
++			pos_id = pos->napi_id;
++		else if (pos->config)
++			pos_id = pos->config->napi_id;
++		else
++			pos_id = UINT_MAX;
++
++		if (pos_id <= new_id)
++			break;
++		higher = &pos->dev_list;
 +	}
++	list_add_rcu(&napi->dev_list, higher); /* adds after higher */
 +}
 +
- static bool steam_is_valve_interface(struct hid_device *hdev)
+ void netif_napi_add_weight(struct net_device *dev, struct napi_struct *napi,
+ 			   int (*poll)(struct napi_struct *, int), int weight)
  {
- 	struct hid_report_enum *rep_enum;
-@@ -1117,8 +1143,7 @@ static int steam_client_ll_open(struct hid_device *hdev)
- 	steam->client_opened++;
- 	spin_unlock_irqrestore(&steam->lock, flags);
+@@ -6779,7 +6809,7 @@ void netif_napi_add_weight(struct net_device *dev, struct napi_struct *napi,
+ 	napi->list_owner = -1;
+ 	set_bit(NAPI_STATE_SCHED, &napi->state);
+ 	set_bit(NAPI_STATE_NPSVC, &napi->state);
+-	list_add_rcu(&napi->dev_list, &dev->napi_list);
++	netif_napi_dev_list_add(dev, napi);
  
--	steam_sensors_unregister(steam);
--	steam_input_unregister(steam);
-+	schedule_work(&steam->unregister_work);
- 
- 	return 0;
- }
-@@ -1135,11 +1160,7 @@ static void steam_client_ll_close(struct hid_device *hdev)
- 	connected = steam->connected && !steam->client_opened;
- 	spin_unlock_irqrestore(&steam->lock, flags);
- 
--	if (connected) {
--		steam_set_lizard_mode(steam, lizard_mode);
--		steam_input_register(steam);
--		steam_sensors_register(steam);
--	}
-+	schedule_work(&steam->unregister_work);
- }
- 
- static int steam_client_ll_raw_request(struct hid_device *hdev,
-@@ -1231,6 +1252,7 @@ static int steam_probe(struct hid_device *hdev,
- 	INIT_LIST_HEAD(&steam->list);
- 	INIT_WORK(&steam->rumble_work, steam_haptic_rumble_cb);
- 	steam->sensor_timestamp_us = 0;
-+	INIT_WORK(&steam->unregister_work, steam_work_unregister_cb);
- 
- 	/*
- 	 * With the real steam controller interface, do not connect hidraw.
-@@ -1291,6 +1313,7 @@ static int steam_probe(struct hid_device *hdev,
- 	cancel_work_sync(&steam->work_connect);
- 	cancel_delayed_work_sync(&steam->mode_switch);
- 	cancel_work_sync(&steam->rumble_work);
-+	cancel_work_sync(&steam->unregister_work);
- 
- 	return ret;
- }
-@@ -1307,6 +1330,7 @@ static void steam_remove(struct hid_device *hdev)
- 	cancel_delayed_work_sync(&steam->mode_switch);
- 	cancel_work_sync(&steam->work_connect);
- 	cancel_work_sync(&steam->rumble_work);
-+	cancel_work_sync(&steam->unregister_work);
- 	hid_destroy_device(steam->client_hdev);
- 	steam->client_hdev = NULL;
- 	steam->client_opened = 0;
+ 	/* default settings from sysfs are applied to all NAPIs. any per-NAPI
+ 	 * configuration will be loaded in napi_enable
 -- 
 2.39.5
 
