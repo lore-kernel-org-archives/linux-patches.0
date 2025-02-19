@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D1E1E2614;
-	Wed, 19 Feb 2025 09:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0D21E25EB;
+	Wed, 19 Feb 2025 09:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955716; cv=none; b=oT3MuWdYaYbtn00YVQJyHnxnaO2VIBl8VzMTdxnhaOjXGSiTuGKTgWlZyKpW5mT4BdNo5KNFpBsWnP6/SBnnC+r2feN6okLxr3bdRNXrewi+rGHwv4aYuHw9AOUzsXfOAyKCBcfN5CTbYNSb1pF7bbyi1fqErQajruJmf9/X30k=
+	t=1739955720; cv=none; b=V68KnrHpQPWfx+6+CNo4k7bzVnL6mJrLfQN/mc7h5j5kupQgdOBR4PA5Rg4PT+O1rCBtZUV5nJRERtm2jr/Y8jDC/9MhdwJHdcU+jb5t2t3oFv6xjCzphkk2JqnR7t8myKsEG2hS1dZ4zPYF+XmHvH9+rjx3h+JoMCW/zM6g9/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955716; c=relaxed/simple;
-	bh=0EQJorR3t0JL4dn918en+Jqx5nunekhb4Tqq6znd0KI=;
+	s=arc-20240116; t=1739955720; c=relaxed/simple;
+	bh=N87I+pmOTW35RZbLNoxkL4A0mkcRxXAsvfTCMYvEoLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iri2mX6AbpPXjAIOduxY9vslixa7iy6KFPSFv3q14SpaizldForlU1SOxA2YbWyBfqc61vfUmILWKBvqL8p4tSrhEZWJXKCk0LZri5U7LeX4cMRyx18hi1usIN7JMpIZXUVwdgvEiyO4tC9nsUF+nuM/Uw4vecOSOuaKBNw0y5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OceQkYZ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cOQ5SYDZaxy0nukGByopFnq7zJOHYgiJ35IlO5BIwZhbfh7zZzVEq+SHVxD7h8DrppkbSgvLJH74XaowtR3P8SozKGdFDOyU9+6nAOhetGyXusvs2kEOKDOELjGNlcF1uAoD00f5DDxxB+3AZqFTpp6cjXxRMErGs4fCrQqovuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfAUGOav; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OceQkYZ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37AF0C4CED1;
-	Wed, 19 Feb 2025 09:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfAUGOav"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E716C4CED1;
+	Wed, 19 Feb 2025 09:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955716;
-	bh=0EQJorR3t0JL4dn918en+Jqx5nunekhb4Tqq6znd0KI=;
+	s=korg; t=1739955719;
+	bh=N87I+pmOTW35RZbLNoxkL4A0mkcRxXAsvfTCMYvEoLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OceQkYZ7tqjUmSfxl9mQweHfrcjuCp6PwO5M27o4vW1kq9bk+rVBFkI9RMsQ7RQcV
-	 wjIeFGhCAB4u9KIvfsmUTXT6wmBCvLnpGIglAX2a2uNvTszHLkTV9WiSaqwHx4/pdf
-	 B4kTn+CSwa3SJ44WRYNGvyvaUne3GNqGjrLyWqtQ=
+	b=CfAUGOavzNZ/AFeimnqjJbSzkR1jvzOD2AytBdj8P7KnTcbJFljvxulagGT2YeeRn
+	 Et3YD9tsCXYmDnadCfJ5Y6Zkr7wHAzfzN/IwKWQzjdN+qlSVPETSP5tiSr+w6K71ao
+	 QOwoguqAMni3yO091kWwbyDZBCh0w6N1dbRbMPqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 091/152] regmap-irq: Add missing kfree()
-Date: Wed, 19 Feb 2025 09:28:24 +0100
-Message-ID: <20250219082553.653862536@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.6 092/152] arm64: Handle .ARM.attributes section in linker scripts
+Date: Wed, 19 Feb 2025 09:28:25 +0100
+Message-ID: <20250219082553.693075090@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -50,40 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 32ffed055dcee17f6705f545b069e44a66067808 upstream.
+commit ca0f4fe7cf7183bfbdc67ca2de56ae1fc3a8db2b upstream.
 
-Add kfree() for "d->main_status_buf" to the error-handling path to prevent
-a memory leak.
+A recent LLVM commit [1] started generating an .ARM.attributes section
+similar to the one that exists for 32-bit, which results in orphan
+section warnings (or errors if CONFIG_WERROR is enabled) from the linker
+because it is not handled in the arm64 linker scripts.
 
-Fixes: a2d21848d921 ("regmap: regmap-irq: Add main status register support")
-Cc: stable@vger.kernel.org  # v5.1+
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://patch.msgid.link/20250205004343.14413-1-jiashengjiangcool@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  ld.lld: error: arch/arm64/kernel/vdso/vgettimeofday.o:(.ARM.attributes) is being placed in '.ARM.attributes'
+  ld.lld: error: arch/arm64/kernel/vdso/vgetrandom.o:(.ARM.attributes) is being placed in '.ARM.attributes'
+
+  ld.lld: error: vmlinux.a(lib/vsprintf.o):(.ARM.attributes) is being placed in '.ARM.attributes'
+  ld.lld: error: vmlinux.a(lib/win_minmax.o):(.ARM.attributes) is being placed in '.ARM.attributes'
+  ld.lld: error: vmlinux.a(lib/xarray.o):(.ARM.attributes) is being placed in '.ARM.attributes'
+
+Discard the new sections in the necessary linker scripts to resolve the
+warnings, as the kernel and vDSO do not need to retain it, similar to
+the .note.gnu.property section.
+
+Cc: stable@vger.kernel.org
+Fixes: b3e5d80d0c48 ("arm64/build: Warn on orphan section placement")
+Link: https://github.com/llvm/llvm-project/commit/ee99c4d4845db66c4daa2373352133f4b237c942 [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20250206-arm64-handle-arm-attributes-in-linker-script-v3-1-d53d169913eb@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap-irq.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/kernel/vdso/vdso.lds.S |    1 +
+ arch/arm64/kernel/vmlinux.lds.S   |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/base/regmap/regmap-irq.c
-+++ b/drivers/base/regmap/regmap-irq.c
-@@ -894,6 +894,7 @@ err_alloc:
- 	kfree(d->wake_buf);
- 	kfree(d->mask_buf_def);
- 	kfree(d->mask_buf);
-+	kfree(d->main_status_buf);
- 	kfree(d->status_buf);
- 	kfree(d->status_reg_buf);
- 	if (d->config_buf) {
-@@ -969,6 +970,7 @@ void regmap_del_irq_chip(int irq, struct
- 	kfree(d->wake_buf);
- 	kfree(d->mask_buf_def);
- 	kfree(d->mask_buf);
-+	kfree(d->main_status_buf);
- 	kfree(d->status_reg_buf);
- 	kfree(d->status_buf);
- 	if (d->config_buf) {
+--- a/arch/arm64/kernel/vdso/vdso.lds.S
++++ b/arch/arm64/kernel/vdso/vdso.lds.S
+@@ -38,6 +38,7 @@ SECTIONS
+ 	 */
+ 	/DISCARD/	: {
+ 		*(.note.GNU-stack .note.gnu.property)
++		*(.ARM.attributes)
+ 	}
+ 	.note		: { *(.note.*) }		:text	:note
+ 
+--- a/arch/arm64/kernel/vmlinux.lds.S
++++ b/arch/arm64/kernel/vmlinux.lds.S
+@@ -162,6 +162,7 @@ SECTIONS
+ 	/DISCARD/ : {
+ 		*(.interp .dynamic)
+ 		*(.dynsym .dynstr .hash .gnu.hash)
++		*(.ARM.attributes)
+ 	}
+ 
+ 	. = KIMAGE_VADDR;
 
 
