@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222551E3DC9;
-	Wed, 19 Feb 2025 09:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB381DEFD8;
+	Wed, 19 Feb 2025 09:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957474; cv=none; b=Qt4dpmyV0yJhyyNPV6W+EK3V7G/8/yozmJyBdcvJkzIuU14uGllnw9bAjRkKjRAUUOp1Q9fGfrZvTw8Zh06w8QdQXgomlNfpaJMJTcyaduingOBIgNBFvZ3c4fUsRSH+r/tqR3yyBhGjuQ1zhFnrtY9ytfhOMi8LTGsRGp+Hh9Q=
+	t=1739957477; cv=none; b=egQTTRWPrHMBPFM1QtlIB/RD5r98uPLJbaiLcZNK3478+Kx2km7ISo1VuHP271WZTabPAtWfN/3MD1Dl/MLKVFQHEKcTQJPAAGkSqUsGgsdtn/wSeVpezjLqNg15+9tBiONwOp3ev+Xjhc0IRUhli/h3oV6ipeDX+Lsnv0mkc0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957474; c=relaxed/simple;
-	bh=x7OjA3aGXXvz+ne7jH1p4EzgFgMzVZ00pwVsP1zpQN8=;
+	s=arc-20240116; t=1739957477; c=relaxed/simple;
+	bh=k0vmsSy1UUBCrBwxgW64eLWC/OnRU+Mwig0AZOAJdmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iC8QLUPhAZA+zD0XD1u9/ZcXfKNCtfqLKscHi8gBWmbrz322hLnmSpshRczrPJAa8uxy2dRUd4Bes9ARbhBAK2m5cWEe6SMG4/p1sgwkeH9ACYtgLBpnKPYKzzUn/0wSNHh6eLhYaIJXyYsEG9/NotfCQPGzCgf1YA3JS7K/6p4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxI8Q4m6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PTXqan6mbPqsQobUPqnqMfkG3AeIFdq/ze0yWYZ/ftYFNZjuD5dT4E5Y8MPuMJL+UbVXAUf8d9M2nRBpjK75RoY++T8O+YuRY0Ye2EpdFtUmgUuqP2/gEkhhphIRAwjevHX/EGrm74CqgVA0ndvWjMpSUseM4zcllYogHJE9aCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTZ7LwL5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxI8Q4m6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C42AC4CED1;
-	Wed, 19 Feb 2025 09:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTZ7LwL5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87CAAC4CED1;
+	Wed, 19 Feb 2025 09:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957474;
-	bh=x7OjA3aGXXvz+ne7jH1p4EzgFgMzVZ00pwVsP1zpQN8=;
+	s=korg; t=1739957476;
+	bh=k0vmsSy1UUBCrBwxgW64eLWC/OnRU+Mwig0AZOAJdmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxI8Q4m6oNvXOVB/GHVtWaMqaVBx6cvgsyJHXV1OvwH1iK4o5udOW4u32EHf8mmgN
-	 STSObjsohH/wfiUMpd+0nW6C3VffedrnC3nu7VPe3sM56K9zDb1nT/+zMtX/j0atMd
-	 rbSu59OHZ23Vb5Cj3R0LuFpyPLxvYA3050pngEpE=
+	b=vTZ7LwL5z60tH/H/yDaGsLdtnRcL0XiX9t8Ymn1bwTTqaNI+HeaCPI20EuHtI5SsE
+	 F10duK2uDQpY7DluZWZrfQBXpjRFJ2OSVXYt5blPAkFUlnIc2J4gQQFa7gFe1txCPu
+	 tp3KYoT0slnufDIXZJPtFKhWcEE20N+neaZYFxB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 521/578] can: c_can: fix unbalanced runtime PM disable in error path
-Date: Wed, 19 Feb 2025 09:28:45 +0100
-Message-ID: <20250219082713.470386125@linuxfoundation.org>
+	Jiri Pirko <jiri@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 539/578] net: treat possible_net_t net pointer as an RCU one and add read_pnet_rcu()
+Date: Wed, 19 Feb 2025 09:29:03 +0100
+Message-ID: <20250219082714.174648929@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,45 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jiri Pirko <jiri@nvidia.com>
 
-commit 257a2cd3eb578ee63d6bf90475dc4f4b16984139 upstream.
+[ Upstream commit 2034d90ae41ae93e30d492ebcf1f06f97a9cfba6 ]
 
-Runtime PM is enabled as one of the last steps of probe(), so all
-earlier gotos to "exit_free_device" label were not correct and were
-leading to unbalanced runtime PM disable depth.
+Make the net pointer stored in possible_net_t structure annotated as
+an RCU pointer. Change the access helpers to treat it as such.
+Introduce read_pnet_rcu() helper to allow caller to dereference
+the net pointer under RCU read lock.
 
-Fixes: 6e2fe01dd6f9 ("can: c_can: move runtime PM enable/disable to c_can_platform")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://patch.msgid.link/20250112-syscon-phandle-args-can-v1-1-314d9549906f@linaro.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 71b8471c93fa ("ipv4: use RCU protection in ipv4_default_advmss()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/c_can/c_can_platform.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/net/net_namespace.h | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/net/can/c_can/c_can_platform.c
-+++ b/drivers/net/can/c_can/c_can_platform.c
-@@ -395,15 +395,16 @@ static int c_can_plat_probe(struct platf
- 	if (ret) {
- 		dev_err(&pdev->dev, "registering %s failed (err=%d)\n",
- 			KBUILD_MODNAME, ret);
--		goto exit_free_device;
-+		goto exit_pm_runtime;
- 	}
+diff --git a/include/net/net_namespace.h b/include/net/net_namespace.h
+index 17c7a88418345..3ffcc1b02a590 100644
+--- a/include/net/net_namespace.h
++++ b/include/net/net_namespace.h
+@@ -353,21 +353,30 @@ static inline void put_net_track(struct net *net, netns_tracker *tracker)
  
- 	dev_info(&pdev->dev, "%s device registered (regs=%p, irq=%d)\n",
- 		 KBUILD_MODNAME, priv->base, dev->irq);
- 	return 0;
+ typedef struct {
+ #ifdef CONFIG_NET_NS
+-	struct net *net;
++	struct net __rcu *net;
+ #endif
+ } possible_net_t;
  
--exit_free_device:
-+exit_pm_runtime:
- 	pm_runtime_disable(priv->device);
-+exit_free_device:
- 	free_c_can_dev(dev);
- exit:
- 	dev_err(&pdev->dev, "probe failed\n");
+ static inline void write_pnet(possible_net_t *pnet, struct net *net)
+ {
+ #ifdef CONFIG_NET_NS
+-	pnet->net = net;
++	rcu_assign_pointer(pnet->net, net);
+ #endif
+ }
+ 
+ static inline struct net *read_pnet(const possible_net_t *pnet)
+ {
+ #ifdef CONFIG_NET_NS
+-	return pnet->net;
++	return rcu_dereference_protected(pnet->net, true);
++#else
++	return &init_net;
++#endif
++}
++
++static inline struct net *read_pnet_rcu(possible_net_t *pnet)
++{
++#ifdef CONFIG_NET_NS
++	return rcu_dereference(pnet->net);
+ #else
+ 	return &init_net;
+ #endif
+-- 
+2.39.5
+
 
 
