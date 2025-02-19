@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADE21E25ED;
-	Wed, 19 Feb 2025 09:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46CE1DC184;
+	Wed, 19 Feb 2025 09:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957129; cv=none; b=M3eSRWJTqYmWKip085bHhuMY54kRtykQmLW6fZroPheIZvwF2f0HIO3uExfv9fV/LOu2dHUKHZhvKQ7qZ0URYDLqkuv2k2uKij68prTR0FUYKLY8cjmtDPEJxZQ5istwuvkeUEyMg8WkYgmf2UFceeEWUXF8V+i4E5/cJSr1Hq0=
+	t=1739957132; cv=none; b=H8WWSI13nSEvTwN66JIx5adUWx3OSDl6dEDyQA/YmmW9zLdyYg8o8y6GJAGiByxt2Dy7rO01cqd/fGHQSLjmlhJDgwV++oGRKP2m8Z7mwJTvChWL3Ilwj9gRS44LzFdCflAbhUxC7mjbziRltDV54GaImg4ucmXM9CoaPcGX+DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957129; c=relaxed/simple;
-	bh=i4C76kDYAOEfEXWA+3KRHFk+HTTwkbkFUnDub5kxpGU=;
+	s=arc-20240116; t=1739957132; c=relaxed/simple;
+	bh=UO33rKJ0eSqAir8Z/0tfu4klFSUTzyMMOOO1tI0+SKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jENDI0BL5UiQNUI8bhG1VwO9KvYDFdfOX0NsIURxYNRoSIKeZunaJ12c30uiPAibx5MKjBZwv2FxcZkBq0fEW49kHnjJAeFLxvr7tQJCAmh1tGLSjdS7vCfFn+64XtVCyX5lYUwoxYPwvLS3epNLMc6JKCtKKkIZMFLYVpfYFwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFOLc9GI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p2Yi0/eZgPIrbF5FOVqT2Og0dzVWQ4yAo219YqxzazQpp46kzQ0zoF48EMrnTrAoekF36/yWGJisxU49tO4tZJWCpdqThZJUtY85pE4DSQUYBG7YVzJ+QiHRnhenvlHINK4/qBGg1Q9U6uDMVwlRku3ctvqEs7dJ8rIDvhGoJUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nHqXqAM1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFOLc9GI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F5AC4CEE7;
-	Wed, 19 Feb 2025 09:25:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHqXqAM1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0037C4CED1;
+	Wed, 19 Feb 2025 09:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957129;
-	bh=i4C76kDYAOEfEXWA+3KRHFk+HTTwkbkFUnDub5kxpGU=;
+	s=korg; t=1739957132;
+	bh=UO33rKJ0eSqAir8Z/0tfu4klFSUTzyMMOOO1tI0+SKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MFOLc9GIalCLpjFNnjht+UIHT9KUiOeSd/c45z3MCFXK1RdBtAFJboNNry9T/zF24
-	 9h2jm2/6HIohz/j2nM1CMFgIJCAqWZBaniHmkp6EdYRaaPngyfzoX9pN6iplBjIcGY
-	 OA/GPN2orRVfWXc2MgzFsRPedWb+R17OqQQ4c0uI=
+	b=nHqXqAM1n34AJJKEiItotMOlK6zfkSjh+WeiovhXlWIsJ9WYQLcrnbBNVp/2ijQkv
+	 OgdmDMU88iZ3R4fuoVt4MvuhUYtjrj9hAmUP+IyADt3ojcQ7rABeD2dpYBFjCe+XEb
+	 SoesCGdB9oMzgt62+ZA/UFjIc2ntUjqdmG8ui7Vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Austrum <austrum.lab@gmail.com>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 387/578] ALSA: hda/realtek: Enable headset mic on Positivo C6400
-Date: Wed, 19 Feb 2025 09:26:31 +0100
-Message-ID: <20250219082708.249212313@linuxfoundation.org>
+Subject: [PATCH 6.1 388/578] ALSA: hda: Fix headset detection failure due to unstable sort
+Date: Wed, 19 Feb 2025 09:26:32 +0100
+Message-ID: <20250219082708.288227789@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -50,32 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-commit 1aec3ed2e3e1512aba15e7e790196a44efd5f0a7 upstream.
+commit 3b4309546b48fc167aa615a2d881a09c0a97971f upstream.
 
-Positivo C6400 is equipped with ALC269VB, and it needs
-ALC269VB_FIXUP_ASUS_ZENBOOK quirk to make its headset mic work.
-Also must to limits the microphone boost.
+The auto_parser assumed sort() was stable, but the kernel's sort() uses
+heapsort, which has never been stable. After commit 0e02ca29a563
+("lib/sort: optimize heapsort with double-pop variation"), the order of
+equal elements changed, causing the headset to fail to work.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250114170619.11510-1-edson.drosdeck@gmail.com
+Fix the issue by recording the original order of elements before
+sorting and using it as a tiebreaker for equal elements in the
+comparison function.
+
+Fixes: b9030a005d58 ("ALSA: hda - Use standard sort function in hda_auto_parser.c")
+Reported-by: Austrum <austrum.lab@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219158
+Tested-by: Austrum <austrum.lab@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Link: https://patch.msgid.link/20250128165415.643223-1-visitorckw@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/hda_auto_parser.c |    8 +++++++-
+ sound/pci/hda/hda_auto_parser.h |    1 +
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10214,6 +10214,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x17aa, 0x511f, "Thinkpad", ALC298_FIXUP_TPT470_DOCK),
- 	SND_PCI_QUIRK(0x17aa, 0x9e54, "LENOVO NB", ALC269_FIXUP_LENOVO_EAPD),
- 	SND_PCI_QUIRK(0x17aa, 0x9e56, "Lenovo ZhaoYang CF4620Z", ALC286_FIXUP_SONY_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1849, 0x0269, "Positivo Master C6400", ALC269VB_FIXUP_ASUS_ZENBOOK),
- 	SND_PCI_QUIRK(0x1849, 0x1233, "ASRock NUC Box 1100", ALC233_FIXUP_NO_AUDIO_JACK),
- 	SND_PCI_QUIRK(0x1849, 0xa233, "Positivo Master C6300", ALC269_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x19e5, 0x3204, "Huawei MACH-WX9", ALC256_FIXUP_HUAWEI_MACH_WX9_PINS),
+--- a/sound/pci/hda/hda_auto_parser.c
++++ b/sound/pci/hda/hda_auto_parser.c
+@@ -80,7 +80,11 @@ static int compare_input_type(const void
+ 
+ 	/* In case one has boost and the other one has not,
+ 	   pick the one with boost first. */
+-	return (int)(b->has_boost_on_pin - a->has_boost_on_pin);
++	if (a->has_boost_on_pin != b->has_boost_on_pin)
++		return (int)(b->has_boost_on_pin - a->has_boost_on_pin);
++
++	/* Keep the original order */
++	return a->order - b->order;
+ }
+ 
+ /* Reorder the surround channels
+@@ -400,6 +404,8 @@ int snd_hda_parse_pin_defcfg(struct hda_
+ 	reorder_outputs(cfg->speaker_outs, cfg->speaker_pins);
+ 
+ 	/* sort inputs in the order of AUTO_PIN_* type */
++	for (i = 0; i < cfg->num_inputs; i++)
++		cfg->inputs[i].order = i;
+ 	sort(cfg->inputs, cfg->num_inputs, sizeof(cfg->inputs[0]),
+ 	     compare_input_type, NULL);
+ 
+--- a/sound/pci/hda/hda_auto_parser.h
++++ b/sound/pci/hda/hda_auto_parser.h
+@@ -35,6 +35,7 @@ struct auto_pin_cfg_item {
+ 	unsigned int is_headset_mic:1;
+ 	unsigned int is_headphone_mic:1; /* Mic-only in headphone jack */
+ 	unsigned int has_boost_on_pin:1;
++	int order;
+ };
+ 
+ struct auto_pin_cfg;
 
 
