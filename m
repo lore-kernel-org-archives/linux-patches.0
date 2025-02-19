@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353811E32D5;
-	Wed, 19 Feb 2025 08:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DC7155753;
+	Wed, 19 Feb 2025 08:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955248; cv=none; b=RiLXpsFgn9dU7feNuIVWIiK3TXqJw9/Lht93IQRKwn4Rgff0wmbp3LXDUbSjjChUtE5rRHF05wHoO47UBGWGMBYstHCwlAjtck1O/IGLI2zs6+PCk1XNh0GpMDLl/MhOfxRfuGpEPQ4pvfP5sjumcykKC6heGuyhPYqbvRY1gV8=
+	t=1739955251; cv=none; b=VzOTcmzQaSDr7H2+ZUONsYyTPPRBIiLy5nG2YWZI3efeDq1eLPNbbzpUiHKnBuemQBZx6QujubvROuUmlAmCFvLdV7jRo9xvwA5PlFdlvnwfolYhdXzJpZXoPgBTWyQHBy9R6pHvtnHAay6adAv7lOR47PNHnA2phz8ac0EpHLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955248; c=relaxed/simple;
-	bh=P4OWxwxZ/jm4ls8gPzg4Q0/Ea69CrPrXmfX9y4L7w+A=;
+	s=arc-20240116; t=1739955251; c=relaxed/simple;
+	bh=GgVNu3A8dyLDU5E+U2ZE0JfXVP+rLQHbs1GxOx/eYkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQyUHVrti/fqsqI0+sdpbEPo0Kt9ST3GUlLlaalPJXh73hHwW8fEleqMWDs61wR4nIB5xyh2X/ON23hx296GWGMe4dNxXqohe+TzH2U3Tc38r4EWVhdFWyWXLk0dZOsFXEmK5fm8i+GvWEPyxgNN50myUEES+Q8tDMKJkcTNt/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RyM8Pm4/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hG/szJW94vmwV4nbKb3gyIK4ry7q2D9pHfJT40bZdebSPdnW0oSFuJklbQgjCDw8R2thmbMxPkG/t66meWfmhHksgW2hY3F7+8i4w3J/3vyrbLvXurcEG0zP6mNSzJZLrhfw+mrrO3LD2ks1oJT8sKSLM8OLxAo7I0yqUfev2Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEiIfric; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RyM8Pm4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CB2C4CED1;
-	Wed, 19 Feb 2025 08:54:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEiIfric"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C39C4CED1;
+	Wed, 19 Feb 2025 08:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955248;
-	bh=P4OWxwxZ/jm4ls8gPzg4Q0/Ea69CrPrXmfX9y4L7w+A=;
+	s=korg; t=1739955251;
+	bh=GgVNu3A8dyLDU5E+U2ZE0JfXVP+rLQHbs1GxOx/eYkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RyM8Pm4/tW0lBuuOf26jGdBsrhXD1riCZPQA9S0W+zc7d+DjaX3fN3jY2AiOsSFd4
-	 acGUVLWdl6t/X4rwJ3KjpTrPZm/O6FNQSkrbxX5tlR8IiuwK0tJ6bHChrLNl4H29Iz
-	 Ocw2uAmF+iDUkD3hRKg11SSnGjA5nhumffdP7BSM=
+	b=jEiIfriczMAMCBGhBM5CBFxUTDgpJ2dckaTr8m/15LClGZP2utPON4AOeFavPGUuL
+	 ZCdhqsX0QZKT7qx2Sjw5YiDaBEYyA9YClD+2nHLU5ZlXKqFQ/75a+Sn224fFSlaBzi
+	 8JDmeyfPnJ3f01Jtvjomx1mu/QkAzw275Jk0Yjro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
 	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 178/230] cpufreq/amd-pstate: Remove the cppc_state check in offline/online functions
-Date: Wed, 19 Feb 2025 09:28:15 +0100
-Message-ID: <20250219082608.667968705@linuxfoundation.org>
+Subject: [PATCH 6.12 179/230] cpufreq/amd-pstate: Merge amd_pstate_epp_cpu_offline() and amd_pstate_epp_offline()
+Date: Wed, 19 Feb 2025 09:28:16 +0100
+Message-ID: <20250219082608.706756674@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -54,48 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
 
-[ Upstream commit b78f8c87ec3e7499bb049986838636d3afbc7ece ]
+[ Upstream commit 53ec2101dfede8fecdd240662281a12e537c3411 ]
 
-Only amd_pstate_epp driver (i.e. cppc_state = ACTIVE) enters the
-amd_pstate_epp_offline() and amd_pstate_epp_cpu_online() functions,
-so remove the unnecessary if condition checking if cppc_state is
-equal to AMD_PSTATE_ACTIVE.
+amd_pstate_epp_offline() is only called from within
+amd_pstate_epp_cpu_offline() and doesn't make much sense to have it at all.
+Hence, remove it.
+
+Also remove the unncessary debug print in the offline path while at it.
 
 Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
 Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Link: https://lore.kernel.org/r/20241204144842.164178-5-Dhananjay.Ugwekar@amd.com
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20241204144842.164178-6-Dhananjay.Ugwekar@amd.com
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Stable-dep-of: 3ace20038e19 ("cpufreq/amd-pstate: Fix cpufreq_policy ref counting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 19906141ef7fe..4dfe5bdcb2932 100644
+index 4dfe5bdcb2932..145a48fc49034 100644
 --- a/drivers/cpufreq/amd-pstate.c
 +++ b/drivers/cpufreq/amd-pstate.c
-@@ -1598,10 +1598,8 @@ static int amd_pstate_epp_cpu_online(struct cpufreq_policy *policy)
- 
- 	pr_debug("AMD CPU Core %d going online\n", cpudata->cpu);
- 
--	if (cppc_state == AMD_PSTATE_ACTIVE) {
--		amd_pstate_epp_reenable(cpudata);
--		cpudata->suspended = false;
--	}
-+	amd_pstate_epp_reenable(cpudata);
-+	cpudata->suspended = false;
- 
+@@ -1604,11 +1604,14 @@ static int amd_pstate_epp_cpu_online(struct cpufreq_policy *policy)
  	return 0;
  }
-@@ -1630,8 +1628,7 @@ static int amd_pstate_epp_cpu_offline(struct cpufreq_policy *policy)
- 	if (cpudata->suspended)
- 		return 0;
  
--	if (cppc_state == AMD_PSTATE_ACTIVE)
--		amd_pstate_epp_offline(policy);
-+	amd_pstate_epp_offline(policy);
+-static void amd_pstate_epp_offline(struct cpufreq_policy *policy)
++static int amd_pstate_epp_cpu_offline(struct cpufreq_policy *policy)
+ {
+ 	struct amd_cpudata *cpudata = policy->driver_data;
+ 	int min_perf;
+ 
++	if (cpudata->suspended)
++		return 0;
++
+ 	min_perf = READ_ONCE(cpudata->lowest_perf);
+ 
+ 	mutex_lock(&amd_pstate_limits_lock);
+@@ -1617,18 +1620,6 @@ static void amd_pstate_epp_offline(struct cpufreq_policy *policy)
+ 	amd_pstate_set_epp(cpudata, AMD_CPPC_EPP_BALANCE_POWERSAVE);
+ 
+ 	mutex_unlock(&amd_pstate_limits_lock);
+-}
+-
+-static int amd_pstate_epp_cpu_offline(struct cpufreq_policy *policy)
+-{
+-	struct amd_cpudata *cpudata = policy->driver_data;
+-
+-	pr_debug("AMD CPU Core %d going offline\n", cpudata->cpu);
+-
+-	if (cpudata->suspended)
+-		return 0;
+-
+-	amd_pstate_epp_offline(policy);
  
  	return 0;
  }
