@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6B81E0E0D;
-	Wed, 19 Feb 2025 08:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B536E1CCB21;
+	Wed, 19 Feb 2025 08:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954589; cv=none; b=D3PZOYi7DT1a/NUgadSOer0MPvS+UwCuejBYwrpUUMzl5/P+WMd8fEAfMGXXa+aGYzsAOkrCe+y4CBMTwDFSr98cQztdDRaOgTG1IoDSlzjUjxqTkyJjFmrt06xtQs5wt6M2jAA2P+WX24aq+bNzeT2xKcE2f212xj1yus8f7To=
+	t=1739954592; cv=none; b=eKH511OlJ2GkzTRUMKEz6Eum63RzEZkQ/G4Ob2VuDTCDogGi6B7BpfvcveBLlQt4oLtIqA+cToHzoK208LBkD0PZvPlu2gNulIbwLNfsq9nhDrcnT4lyyH9dWyiAacUwg7aXWHNKz/SHvMfmYF6SmqQF+HDbem6kymngKxouu+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954589; c=relaxed/simple;
-	bh=xq3kwD/pX35HGsRP8QOVAb29d5ccPMrhGxU/yx+zlbE=;
+	s=arc-20240116; t=1739954592; c=relaxed/simple;
+	bh=oHxKDsIfV5w54J8c6b6VAOR34Yqsce6TU3n1D08nQT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DNi7nzIg6lFyV4XdxvoLYgD00zfcPJ/6gxRYdCaCRWrVzk4FnpWv4UX2KnHJShKzDpnoWFj10TB8Milgq5kn7dd51MLk27w1d688XuLXMLfLEfS4j+9ln85Oz5nZFJiujJzDyUs+k2JfPaYbrnsvUkq8rzzXyyktBtyhff2IHgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aazLJzt4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ffa/WdtjcYU5sPTPnH0H1K/qdDYRrsjR+B8SOg6MGFf+kBGXpnLWOcmEpqDraZq7K4zupYaHZA6q2saljYxanwr1jcDYWVo/jnpiCUuFqRVLLd1uwWeKuhboXqRov+BKIFsEdZTKa+n6hKaxE6h6vWXz91sWq/5Z6tLy5GGZHRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=attecvNW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aazLJzt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7A5C4CEE6;
-	Wed, 19 Feb 2025 08:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="attecvNW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4C9C4CEE6;
+	Wed, 19 Feb 2025 08:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954589;
-	bh=xq3kwD/pX35HGsRP8QOVAb29d5ccPMrhGxU/yx+zlbE=;
+	s=korg; t=1739954592;
+	bh=oHxKDsIfV5w54J8c6b6VAOR34Yqsce6TU3n1D08nQT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aazLJzt4e/k3EQCsb/70yM6D1XNsOVcQAr8XYQuOnOz4keO3bDe3xS+IQcr+d5o2D
-	 dP6SD4g4aS6xlUAr9ZpkCFYxe17OJF7w36A58rThW70iOMA28GL2Q27nDJRvacQyyC
-	 LJnIyCmb5Ywckb/3opKrxoFjt8uw0EGKIjkyRZok=
+	b=attecvNW2EE327c9PYiNB+ABRQOJbUfM+Ez9kF7r5G2GTQcTpUmkGqMxHRaWy0j6W
+	 NRHn56WtA5ioPgpdYZOg+g3C7BAAyETJulhf0ycMDNVoE4yYXdDrkPOWZHMh2oyGnm
+	 JdQoNAgZViydpEeiT4voUxC+muI2iqHHlaufRPCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Li Zetao <lizetao1@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 251/274] io_uring/uring_cmd: unconditionally copy SQEs at prep time
-Date: Wed, 19 Feb 2025 09:28:25 +0100
-Message-ID: <20250219082619.402908884@linuxfoundation.org>
+	Bin Liu <b-liu@ti.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Jonathan Cormier <jcormier@criticallink.com>,
+	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Subject: [PATCH 6.13 252/274] drm/tidss: Fix issue in irq handling causing irq-flood issue
+Date: Wed, 19 Feb 2025 09:28:26 +0100
+Message-ID: <20250219082619.442156779@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -52,92 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit d6211ebbdaa541af197b50b8dd8f22642ce0b87f ]
+commit 44b6730ab53ef04944fbaf6da0e77397531517b7 upstream.
 
-This isn't generally necessary, but conditions have been observed where
-SQE data is accessed from the original SQE after prep has been done and
-outside of the initial issue. Opcode prep handlers must ensure that any
-SQE related data is stable beyond the prep phase, but uring_cmd is a bit
-special in how it handles the SQE which makes it susceptible to reading
-stale data. If the application has reused the SQE before the original
-completes, then that can lead to data corruption.
+It has been observed that sometimes DSS will trigger an interrupt and
+the top level interrupt (DISPC_IRQSTATUS) is not zero, but the VP and
+VID level interrupt-statuses are zero.
 
-Down the line we can relax this again once uring_cmd has been sanitized
-a bit, and avoid unnecessarily copying the SQE.
+As the top level irqstatus is supposed to tell whether we have VP/VID
+interrupts, the thinking of the driver authors was that this particular
+case could never happen. Thus the driver only clears the DISPC_IRQSTATUS
+bits which has corresponding interrupts in VP/VID status. So when this
+issue happens, the driver will not clear DISPC_IRQSTATUS, and we get an
+interrupt flood.
 
-Fixes: 5eff57fa9f3a ("io_uring/uring_cmd: defer SQE copying until it's needed")
-Reported-by: Caleb Sander Mateos <csander@purestorage.com>
-Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
-Reviewed-by: Li Zetao <lizetao1@huawei.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+It is unclear why the issue happens. It could be a race issue in the
+driver, but no such race has been found. It could also be an issue with
+the HW. However a similar case can be easily triggered by manually
+writing to DISPC_IRQSTATUS_RAW. This will forcibly set a bit in the
+DISPC_IRQSTATUS and trigger an interrupt, and as the driver never clears
+the bit, we get an interrupt flood.
+
+To fix the issue, always clear DISPC_IRQSTATUS. The concern with this
+solution is that if the top level irqstatus is the one that triggers the
+interrupt, always clearing DISPC_IRQSTATUS might leave some interrupts
+unhandled if VP/VID interrupt statuses have bits set. However, testing
+shows that if any of the irqstatuses is set (i.e. even if
+DISPC_IRQSTATUS == 0, but a VID irqstatus has a bit set), we will get an
+interrupt.
+
+Co-developed-by: Bin Liu <b-liu@ti.com>
+Signed-off-by: Bin Liu <b-liu@ti.com>
+Co-developed-by: Devarsh Thakkar <devarsht@ti.com>
+Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
+Co-developed-by: Jonathan Cormier <jcormier@criticallink.com>
+Signed-off-by: Jonathan Cormier <jcormier@criticallink.com>
+Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
+Cc: stable@vger.kernel.org
+Tested-by: Jonathan Cormier <jcormier@criticallink.com>
+Reviewed-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241021-tidss-irq-fix-v1-1-82ddaec94e4a@ideasonboard.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/uring_cmd.c | 34 +++++++++++-----------------------
- 1 file changed, 11 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/tidss/tidss_dispc.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/io_uring/uring_cmd.c b/io_uring/uring_cmd.c
-index 0ec58fcd6fc9b..8c44a5198414e 100644
---- a/io_uring/uring_cmd.c
-+++ b/io_uring/uring_cmd.c
-@@ -185,15 +185,6 @@ void io_uring_cmd_done(struct io_uring_cmd *ioucmd, ssize_t ret, u64 res2,
- }
- EXPORT_SYMBOL_GPL(io_uring_cmd_done);
- 
--static void io_uring_cmd_cache_sqes(struct io_kiocb *req)
--{
--	struct io_uring_cmd *ioucmd = io_kiocb_to_cmd(req, struct io_uring_cmd);
--	struct io_uring_cmd_data *cache = req->async_data;
--
--	memcpy(cache->sqes, ioucmd->sqe, uring_sqe_size(req->ctx));
--	ioucmd->sqe = cache->sqes;
--}
--
- static int io_uring_cmd_prep_setup(struct io_kiocb *req,
- 				   const struct io_uring_sqe *sqe)
+--- a/drivers/gpu/drm/tidss/tidss_dispc.c
++++ b/drivers/gpu/drm/tidss/tidss_dispc.c
+@@ -780,24 +780,20 @@ static
+ void dispc_k3_clear_irqstatus(struct dispc_device *dispc, dispc_irq_t clearmask)
  {
-@@ -204,10 +195,15 @@ static int io_uring_cmd_prep_setup(struct io_kiocb *req,
- 	if (unlikely(!cache))
- 		return -ENOMEM;
+ 	unsigned int i;
+-	u32 top_clear = 0;
  
--	ioucmd->sqe = sqe;
--	/* defer memcpy until we need it */
--	if (unlikely(req->flags & REQ_F_FORCE_ASYNC))
--		io_uring_cmd_cache_sqes(req);
-+	/*
-+	 * Unconditionally cache the SQE for now - this is only needed for
-+	 * requests that go async, but prep handlers must ensure that any
-+	 * sqe data is stable beyond prep. Since uring_cmd is special in
-+	 * that it doesn't read in per-op data, play it safe and ensure that
-+	 * any SQE data is stable beyond prep. This can later get relaxed.
-+	 */
-+	memcpy(cache->sqes, sqe, uring_sqe_size(req->ctx));
-+	ioucmd->sqe = cache->sqes;
- 	return 0;
- }
- 
-@@ -270,16 +266,8 @@ int io_uring_cmd(struct io_kiocb *req, unsigned int issue_flags)
+ 	for (i = 0; i < dispc->feat->num_vps; ++i) {
+-		if (clearmask & DSS_IRQ_VP_MASK(i)) {
++		if (clearmask & DSS_IRQ_VP_MASK(i))
+ 			dispc_k3_vp_write_irqstatus(dispc, i, clearmask);
+-			top_clear |= BIT(i);
+-		}
  	}
+ 	for (i = 0; i < dispc->feat->num_planes; ++i) {
+-		if (clearmask & DSS_IRQ_PLANE_MASK(i)) {
++		if (clearmask & DSS_IRQ_PLANE_MASK(i))
+ 			dispc_k3_vid_write_irqstatus(dispc, i, clearmask);
+-			top_clear |= BIT(4 + i);
+-		}
+ 	}
+ 	if (dispc->feat->subrev == DISPC_K2G)
+ 		return;
  
- 	ret = file->f_op->uring_cmd(ioucmd, issue_flags);
--	if (ret == -EAGAIN) {
--		struct io_uring_cmd_data *cache = req->async_data;
--
--		if (ioucmd->sqe != cache->sqes)
--			io_uring_cmd_cache_sqes(req);
--		return -EAGAIN;
--	} else if (ret == -EIOCBQUEUED) {
--		return -EIOCBQUEUED;
--	}
--
-+	if (ret == -EAGAIN || ret == -EIOCBQUEUED)
-+		return ret;
- 	if (ret < 0)
- 		req_set_fail(req);
- 	io_req_uring_cleanup(req, issue_flags);
--- 
-2.39.5
-
+-	dispc_write(dispc, DISPC_IRQSTATUS, top_clear);
++	/* always clear the top level irqstatus */
++	dispc_write(dispc, DISPC_IRQSTATUS, dispc_read(dispc, DISPC_IRQSTATUS));
+ 
+ 	/* Flush posted writes */
+ 	dispc_read(dispc, DISPC_IRQSTATUS);
 
 
