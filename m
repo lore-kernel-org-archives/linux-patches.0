@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3431E1A17;
-	Wed, 19 Feb 2025 09:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD781E32C3;
+	Wed, 19 Feb 2025 09:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955729; cv=none; b=oG2PkDrc+Tg/CYK/1P6cOEr1yVJ91EvBb6AwA272vKwHEFX9onP8Y8Vwh4PyjgG19vtOpN5tRrB3QgWYTtYOp5++TBaEdEBrvFhTeshfe96cI5VEzaOT9B4F0UfiwbcudTJaDK1dO81JFEo5VdNQ0Jcisl1WmR1qEXicAayLXbw=
+	t=1739955737; cv=none; b=Fdk7pWwY5un5uImR/Am/Lq+BAoELI3iM/+Nb+iLy5eSScY8qhU/L1K/N/ys+h2jaeR+GUn0moyVDapcPWM+qu3MAOWuqBfp5gzOyhsvEc53QCY4EItv3zAkwWqCU5BpMcYPaT6GyFXvhwXC/GtAl3FNDjhub/aUYqoNA8uleBro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955729; c=relaxed/simple;
-	bh=6qi+W2HzRei5X7koxRE5FyQ36iCC2qjhkYQaqqAY7Zo=;
+	s=arc-20240116; t=1739955737; c=relaxed/simple;
+	bh=6C9sPVvushIjFrd1gPcKfDwi718fv6/lRH/l5SdMUu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RehCBSRQ+lLtefoC7K4G1ZoaT3ue/g2Ooyuc/QxJr5MWk72l8MuAXtZ+AEe3dWEhr/9mKr8cMzVY1vLIzAdCQFTsTt3DLwWk3hxOx5aolQ59zH0aBo7Kfz+VME6L32nRGBwfa+YPwHi2Q4/yABI+EKVZLxpbT4dAIDxVAyB3ias=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7lIK+Kn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JWT/kRVEnBn+Zou44Sz7EyRJT4VFENGWAghA1EHaw/znbGbTf9LpK7ABLlAItmii3LxqolrWOYz6y0wckKBLVQIDL4TK5ABblbLlEUMXjunkZ1ZYPwBg3u9sz7865abSsK5pmu14feVKdgpzBh1wPuytpqUrupuDnPTR8BkPRxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1v/WAart; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7lIK+Kn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC60CC4CED1;
-	Wed, 19 Feb 2025 09:02:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1v/WAart"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3CDC4CED1;
+	Wed, 19 Feb 2025 09:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955729;
-	bh=6qi+W2HzRei5X7koxRE5FyQ36iCC2qjhkYQaqqAY7Zo=;
+	s=korg; t=1739955737;
+	bh=6C9sPVvushIjFrd1gPcKfDwi718fv6/lRH/l5SdMUu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l7lIK+KnACLf7rOIQGMU42iLYs5sHNQG8rgqIXUguP6OU1+uCjAmSycZt+2Uy7eqM
-	 BX88Ft0bwjbvgpgrXW9azSG4p9DoUK4sco5jP4CPaqyHz/uxqOuzrFMq9YpcLOO5kw
-	 uD/yNMIHnIr9uHNLYrObcqqwvUEFjH4EA3WEQbx4=
+	b=1v/WAartXDw1vAfVWyDh5LW5XXc+MD8rtRRw0BhOGTz00sEht/RQoC5MDuKg1sIVu
+	 TqB2K4HL4J9z+sI3c+NIh2t2fS4a4sQ+WeVMpqPcepDuG8LqDbmnIlLwTYW6/C8aIV
+	 zEB0UrDz3Fsr3l9x2awrptvzsZWMfRgNt7m17tKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 095/152] mlxsw: Add return value check for mlxsw_sp_port_get_stats_raw()
-Date: Wed, 19 Feb 2025 09:28:28 +0100
-Message-ID: <20250219082553.813024781@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	John Keeping <jkeeping@inmusicbrands.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 065/152] usb: gadget: f_midi: fix MIDI Streaming descriptor lengths
+Date: Wed, 19 Feb 2025 09:27:58 +0100
+Message-ID: <20250219082552.617916694@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -51,38 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-commit fee5d688940690cc845937459e340e4e02598e90 upstream.
+commit da1668997052ed1cb00322e1f3b63702615c9429 upstream.
 
-Add a check for the return value of mlxsw_sp_port_get_stats_raw()
-in __mlxsw_sp_port_get_stats(). If mlxsw_sp_port_get_stats_raw()
-returns an error, exit the function to prevent further processing
-with potentially invalid data.
+While the MIDI jacks are configured correctly, and the MIDIStreaming
+endpoint descriptors are filled with the correct information,
+bNumEmbMIDIJack and bLength are set incorrectly in these descriptors.
 
-Fixes: 614d509aa1e7 ("mlxsw: Move ethtool_ops to spectrum_ethtool.c")
-Cc: stable@vger.kernel.org # 5.9+
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/20250212152311.1332-1-vulab@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This does not matter when the numbers of in and out ports are equal, but
+when they differ the host will receive broken descriptors with
+uninitialized stack memory leaking into the descriptor for whichever
+value is smaller.
+
+The precise meaning of "in" and "out" in the port counts is not clearly
+defined and can be confusing.  But elsewhere the driver consistently
+uses this to match the USB meaning of IN and OUT viewed from the host,
+so that "in" ports send data to the host and "out" ports receive data
+from it.
+
+Cc: stable <stable@kernel.org>
+Fixes: c8933c3f79568 ("USB: gadget: f_midi: allow a dynamic number of input and output ports")
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Reviewed-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20250130195035.3883857-1-jkeeping@inmusicbrands.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_ethtool.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_midi.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_ethtool.c
-@@ -768,7 +768,9 @@ static void __mlxsw_sp_port_get_stats(st
- 	err = mlxsw_sp_get_hw_stats_by_group(&hw_stats, &len, grp);
- 	if (err)
- 		return;
--	mlxsw_sp_port_get_stats_raw(dev, grp, prio, ppcnt_pl);
-+	err = mlxsw_sp_port_get_stats_raw(dev, grp, prio, ppcnt_pl);
-+	if (err)
-+		return;
- 	for (i = 0; i < len; i++) {
- 		data[data_index + i] = hw_stats[i].getter(ppcnt_pl);
- 		if (!hw_stats[i].cells_bytes)
+--- a/drivers/usb/gadget/function/f_midi.c
++++ b/drivers/usb/gadget/function/f_midi.c
+@@ -1008,11 +1008,11 @@ static int f_midi_bind(struct usb_config
+ 	}
+ 
+ 	/* configure the endpoint descriptors ... */
+-	ms_out_desc.bLength = USB_DT_MS_ENDPOINT_SIZE(midi->in_ports);
+-	ms_out_desc.bNumEmbMIDIJack = midi->in_ports;
++	ms_out_desc.bLength = USB_DT_MS_ENDPOINT_SIZE(midi->out_ports);
++	ms_out_desc.bNumEmbMIDIJack = midi->out_ports;
+ 
+-	ms_in_desc.bLength = USB_DT_MS_ENDPOINT_SIZE(midi->out_ports);
+-	ms_in_desc.bNumEmbMIDIJack = midi->out_ports;
++	ms_in_desc.bLength = USB_DT_MS_ENDPOINT_SIZE(midi->in_ports);
++	ms_in_desc.bNumEmbMIDIJack = midi->in_ports;
+ 
+ 	/* ... and add them to the list */
+ 	endpoint_descriptor_index = i;
 
 
