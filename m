@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E544D1C175A;
-	Wed, 19 Feb 2025 08:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0874C1C175A;
+	Wed, 19 Feb 2025 08:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954969; cv=none; b=nMqq7gJYITv1iIPRLii4zbhJxi3Xne1qWdJlXXUlpsV2XPc6Y1SN8mEOEZSpXRPCmJ+BEi4XOr0gtguje7dob58V7L8YnpeGLOZWoSXs7w1jYJ0m1IuD2MIeOoUPvshD7LZeScet+uFbdFNoJwpSL/Q4iU7pxLvyv/Vg/u00UVM=
+	t=1739954972; cv=none; b=QxLMbBgEXiRn17y2aJLH6ZjwbCj9o4zK8n2fA/rvCcksv28zMMK7/Gn8wYAnNuet0C83OS+h3wSivc3aAZJXcPwmiUd14ywQw4kMPvvt3ApbmS/wqHYOuoFYmc60t3098LTY71l9aq0GRDHlxlq3G4vf7Art+x0q6hoYfEJUhJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954969; c=relaxed/simple;
-	bh=atBxWtpTpawNYaQzSeTwY1fHbtB3bozLg9byAK/lWks=;
+	s=arc-20240116; t=1739954972; c=relaxed/simple;
+	bh=Gp1gDIit/EEnuyOiF9lq4fuCPfKuqs3IM2M9t5w0v0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBwDTjRm2POb6sISaBk4E7jSFC3Uq+ffLRAnoll7vYw2sFNj3oLvvW3BJcC9EWokS1Xk07BUO+ezr5CJJpQmBNgz8wdg7XtBUuQjLu405j3DvgnQAsZBcdKLjY+nxtU6OwTSdtsd9VUXZRF5uTHVIlQ+l98L4r+fRxBPKA1HUKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4M0Ky+A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jq9JCO8JTFBUI8MzOh/ct1QCIAKYeajhum0BE07RuEdy+04fI4ZsoNsggbwm7sgGCJCzBJStJRkvjjnrJ2Al90cuJQ0aE3y7AhQyJHn/0tf191kp3FoDTrzpqJuT7eOTmOFAA0jnFXEh92cmTxb355DUTlomMffe7DQZqi4/i1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEP02bXi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4M0Ky+A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE0AC4CED1;
-	Wed, 19 Feb 2025 08:49:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEP02bXi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6904DC4CED1;
+	Wed, 19 Feb 2025 08:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954968;
-	bh=atBxWtpTpawNYaQzSeTwY1fHbtB3bozLg9byAK/lWks=;
+	s=korg; t=1739954971;
+	bh=Gp1gDIit/EEnuyOiF9lq4fuCPfKuqs3IM2M9t5w0v0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H4M0Ky+AG5T7C5tFKXPZ2Ne4fsKkgE7oMXIVuiRzZwgcqg2o+TkEs3iV8Ilw1v7OT
-	 NVwkrNATJxCqH7qYl2foZ55yYJWg802CxLUgk5QOGBys4BtLhyVnW6lMqgP46lquEw
-	 BfTvsgc38wdCtDbQNusLIe6nEtkuyQj7vwockotw=
+	b=eEP02bXigBimOGl2Zw9HgUy5EeaLs+1tS3dglUTZBbZNii6u3KjWCFv/r+RQFgSU7
+	 sU034ueIKlkQDDbV7y3UrJS6BZBpphoRrAPL74L5tv9gaic2bWb7KPzODT2oGXUsyC
+	 4a3xrYDHKhFcG56RoHfkW4ara9C2IHltxAS7PJiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leon@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 091/230] kbuild: suppress stdout from merge_config for silent builds
-Date: Wed, 19 Feb 2025 09:26:48 +0100
-Message-ID: <20250219082605.258769697@linuxfoundation.org>
+Subject: [PATCH 6.12 062/230] i3c: mipi-i3c-hci: Add Intel specific quirk to ring resuming
+Date: Wed, 19 Feb 2025 09:26:19 +0100
+Message-ID: <20250219082604.139744468@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -52,82 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
 
-[ Upstream commit 1f937a4bcb0472015818f30f4d3c5546d3f09933 ]
+[ Upstream commit ccdb2e0e3b00d13df90ac7a0524dd855173f1171 ]
 
-merge_config does not respect the Make's -s (--silent) option.
+MIPI I3C HCI on Intel hardware requires a quirk where ring needs to stop
+and set to run again after resuming the halted controller. This is not
+expected from the MIPI I3C HCI specification and is Intel specific.
 
-Let's sink the stdout from merge_config for silent builds.
+Add this quirk to generic aborted transfer handling and execute it only
+when ring is not in running state after a transfer error and attempted
+controller resume. This is the case on Intel hardware.
 
-This commit does not cater to the direct invocation of merge_config.sh
-(e.g. arch/mips/Makefile).
+It is not fully clear to me what is the ring running state in generic
+hardware in such case. I would expect if ring is not running, then stop
+request is a no-op and run request is either required or does the same
+what controller resume would do.
 
-Reported-by: Leon Romanovsky <leon@kernel.org>
-Closes: https://lore.kernel.org/all/e534ce33b0e1060eb85ece8429810f087b034c88.1733234008.git.leonro@nvidia.com/
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Tested-by: Leon Romanovsky <leon@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Link: https://lore.kernel.org/r/20241231115904.620052-1-jarkko.nikula@linux.intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/Makefile.defconf | 13 +++++++------
- scripts/kconfig/Makefile |  4 +++-
- 2 files changed, 10 insertions(+), 7 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/scripts/Makefile.defconf b/scripts/Makefile.defconf
-index 226ea3df3b4b4..a44307f08e9d6 100644
---- a/scripts/Makefile.defconf
-+++ b/scripts/Makefile.defconf
-@@ -1,6 +1,11 @@
- # SPDX-License-Identifier: GPL-2.0
- # Configuration heplers
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
+index 13adc58400942..fe955703e59b5 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -762,9 +762,26 @@ static bool hci_dma_irq_handler(struct i3c_hci *hci, unsigned int mask)
+ 			complete(&rh->op_done);
  
-+cmd_merge_fragments = \
-+	$(srctree)/scripts/kconfig/merge_config.sh \
-+	$4 -m -O $(objtree) $(srctree)/arch/$(SRCARCH)/configs/$2 \
-+	$(foreach config,$3,$(srctree)/arch/$(SRCARCH)/configs/$(config).config)
+ 		if (status & INTR_TRANSFER_ABORT) {
++			u32 ring_status;
 +
- # Creates 'merged defconfigs'
- # ---------------------------------------------------------------------------
- # Usage:
-@@ -8,9 +13,7 @@
- #
- # Input config fragments without '.config' suffix
- define merge_into_defconfig
--	$(Q)$(CONFIG_SHELL) $(srctree)/scripts/kconfig/merge_config.sh \
--		-m -O $(objtree) $(srctree)/arch/$(SRCARCH)/configs/$(1) \
--		$(foreach config,$(2),$(srctree)/arch/$(SRCARCH)/configs/$(config).config)
-+	$(call cmd,merge_fragments,$1,$2)
- 	+$(Q)$(MAKE) -f $(srctree)/Makefile olddefconfig
- endef
- 
-@@ -22,8 +25,6 @@ endef
- #
- # Input config fragments without '.config' suffix
- define merge_into_defconfig_override
--	$(Q)$(CONFIG_SHELL) $(srctree)/scripts/kconfig/merge_config.sh \
--		-Q -m -O $(objtree) $(srctree)/arch/$(SRCARCH)/configs/$(1) \
--		$(foreach config,$(2),$(srctree)/arch/$(SRCARCH)/configs/$(config).config)
-+	$(call cmd,merge_fragments,$1,$2,-Q)
- 	+$(Q)$(MAKE) -f $(srctree)/Makefile olddefconfig
- endef
-diff --git a/scripts/kconfig/Makefile b/scripts/kconfig/Makefile
-index a0a0be38cbdc1..fb50bd4f4103f 100644
---- a/scripts/kconfig/Makefile
-+++ b/scripts/kconfig/Makefile
-@@ -105,9 +105,11 @@ configfiles = $(wildcard $(srctree)/kernel/configs/$(1) $(srctree)/arch/$(SRCARC
- all-config-fragments = $(call configfiles,*.config)
- config-fragments = $(call configfiles,$@)
- 
-+cmd_merge_fragments = $(srctree)/scripts/kconfig/merge_config.sh -m $(KCONFIG_CONFIG) $(config-fragments)
-+
- %.config: $(obj)/conf
- 	$(if $(config-fragments),, $(error $@ fragment does not exists on this architecture))
--	$(Q)$(CONFIG_SHELL) $(srctree)/scripts/kconfig/merge_config.sh -m $(KCONFIG_CONFIG) $(config-fragments)
-+	$(call cmd,merge_fragments)
- 	$(Q)$(MAKE) -f $(srctree)/Makefile olddefconfig
- 
- PHONY += tinyconfig
+ 			dev_notice_ratelimited(&hci->master.dev,
+ 				"ring %d: Transfer Aborted\n", i);
+ 			mipi_i3c_hci_resume(hci);
++			ring_status = rh_reg_read(RING_STATUS);
++			if (!(ring_status & RING_STATUS_RUNNING) &&
++			    status & INTR_TRANSFER_COMPLETION &&
++			    status & INTR_TRANSFER_ERR) {
++				/*
++				 * Ring stop followed by run is an Intel
++				 * specific required quirk after resuming the
++				 * halted controller. Do it only when the ring
++				 * is not in running state after a transfer
++				 * error.
++				 */
++				rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE);
++				rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE |
++							   RING_CTRL_RUN_STOP);
++			}
+ 		}
+ 		if (status & INTR_WARN_INS_STOP_MODE)
+ 			dev_warn_ratelimited(&hci->master.dev,
 -- 
 2.39.5
 
