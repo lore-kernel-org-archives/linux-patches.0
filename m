@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050491DFD80;
-	Wed, 19 Feb 2025 09:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBEB1DEFDC;
+	Wed, 19 Feb 2025 09:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956829; cv=none; b=PIXKwuSUBtk1zeOy9bIFXAfUTvLN1bK1cOiDGbHc4mU0x80ygXx3ys+I47ruYX5mKRDIN5uwG9uVxPKZ9n5YYTatfCpPs8XBAt6PcctiYTmI8J59jpm0SbZm5+HKfKiBK1+K0O1XXEC/hrbQFSgSzHJxx9NscIxLxeDa/CopfAU=
+	t=1739956832; cv=none; b=jNOvApcfXtXCtLblRZsL6oYrztnzjiMhOMao5uMiBcqQD2hz0LTgVurs+dpTXcysXU+0crGiS5MpjMNhoO0iyAFJDdnfXuVRyh8pde3IsO494WDCRQw4UmOgf6nrncP6ztws939AEE+wkRqRf0bSNuJNDAAtdh7Q12VTqu7c/U4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956829; c=relaxed/simple;
-	bh=KkcNBTYk/HLQalkUvldKJ4r0bicjS/Cw+oAvLSPg9jo=;
+	s=arc-20240116; t=1739956832; c=relaxed/simple;
+	bh=qoGUw60v1Qxj0eZbY4cj+l1s3bkAaH00SgKqujfHRRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Chegx/BJznyh2cG5PwR0cE7BGhAK4XZQCxcTgj9WiEJR1mkOBJegzwZuX5jOyVqjGAsOaI0xmrnNjX1jCGRs/I1xZWo4BbkBhD5AEP2HMQtfLixZmOla8I/WpwTbFB6jXh/r8x8kGA6Xtd/1//WJmbSG3yQkiVC+uY9JLfMX3RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdRc29ve; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W6mYJhUupGC3j8hE6LFbCaDzAKzDfFcyhPnHURcRwko3cblGC4CTwGch9oZdFvbSuT5/X7EBtNdMvGi52fNW5Jh5/Xu1X14RzOXy1t1YTILIgo4K8tJptma1YLvL1fyNpRzMdrIonXMcWd5VPJciWwaXrQ59N882Khf82ucbChE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Haiebv/u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdRc29ve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E924C4CED1;
-	Wed, 19 Feb 2025 09:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Haiebv/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E053C4CEE6;
+	Wed, 19 Feb 2025 09:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956828;
-	bh=KkcNBTYk/HLQalkUvldKJ4r0bicjS/Cw+oAvLSPg9jo=;
+	s=korg; t=1739956831;
+	bh=qoGUw60v1Qxj0eZbY4cj+l1s3bkAaH00SgKqujfHRRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hdRc29vedcmm6hyAoH9384FNOSxFuquHXn0tIkxBJW8wqXD4HGplUHwtZyZBr3BXT
-	 16Q9+zeuPJz97uV4k+ajTZBCtleqKDRyP3bAL2O3jncZnDdWGyaPLh1XDLDCtqGuem
-	 FfyzIPIVCe0ZlIwdsFTvRsHMvbDWEJ2sGulNps1g=
+	b=Haiebv/unGDqiKBvEep96qsxBHgYuEtm1GNhaDNJuzJJ7l8Cp3d8LAWW4dWt47jUc
+	 Nlu8b5g+ojTlAzcB2GC2KhJyHRoQOWCsePpA79ua3DpRdUxZm9UjUW4xJ7397qhNsa
+	 d40hjnVPY5xxk7dggxJgKby5ZJj88OpF8M672KC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Hermes Wu <hermes.wu@ite.com.tw>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 313/578] usb: chipidea/ci_hdrc_imx: Convert to platform remove callback returning void
-Date: Wed, 19 Feb 2025 09:25:17 +0100
-Message-ID: <20250219082705.329051406@linuxfoundation.org>
+Subject: [PATCH 6.1 283/578] drm/bridge: it6505: fix HDCP encryption when R0 ready
+Date: Wed, 19 Feb 2025 09:24:47 +0100
+Message-ID: <20250219082704.147158822@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -44,69 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Hermes Wu <hermes.wu@ite.com.tw>
 
-[ Upstream commit ad593ed671feb49e93a77653886c042f68b6cdfd ]
+[ Upstream commit 8c01b0bae2f9e58f2fee0e811cb90d8331986554 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart from
-emitting a warning) and this typically results in resource leaks. To improve
-here there is a quest to make the remove callback return void. In the first
-step of this quest all drivers are converted to .remove_new() which already
-returns void. Eventually after all drivers are converted, .remove_new() is
-renamed to .remove().
+When starting HDCP authentication, HDCP encryption should be enabled
+when R0'is checked.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+Change encryption enables time at R0' ready.
+The hardware HDCP engine trigger is changed and the repeater KSV fails
+will restart HDCP.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230517230239.187727-6-u.kleine-koenig@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 74adad500346 ("usb: chipidea: ci_hdrc_imx: decrement device's refcount in .remove() and in the error path of .probe()")
+Signed-off-by: Hermes Wu <hermes.wu@ite.com.tw>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241230-v7-upstream-v7-6-e0fdd4844703@ite.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/ci_hdrc_imx.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/ite-it6505.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/usb/chipidea/ci_hdrc_imx.c b/drivers/usb/chipidea/ci_hdrc_imx.c
-index 984087bbf3e2b..362dcb2374bb7 100644
---- a/drivers/usb/chipidea/ci_hdrc_imx.c
-+++ b/drivers/usb/chipidea/ci_hdrc_imx.c
-@@ -507,7 +507,7 @@ static int ci_hdrc_imx_probe(struct platform_device *pdev)
- 	return ret;
+diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
+index 7e82f36f9fd02..c0bc9e0ce9810 100644
+--- a/drivers/gpu/drm/bridge/ite-it6505.c
++++ b/drivers/gpu/drm/bridge/ite-it6505.c
+@@ -2069,15 +2069,12 @@ static void it6505_hdcp_wait_ksv_list(struct work_struct *work)
+ 	ksv_list_check = it6505_hdcp_part2_ksvlist_check(it6505);
+ 	DRM_DEV_DEBUG_DRIVER(dev, "ksv list ready, ksv list check %s",
+ 			     ksv_list_check ? "pass" : "fail");
+-	if (ksv_list_check) {
+-		it6505_set_bits(it6505, REG_HDCP_TRIGGER,
+-				HDCP_TRIGGER_KSV_DONE, HDCP_TRIGGER_KSV_DONE);
++
++	if (ksv_list_check)
+ 		return;
+-	}
++
+ timeout:
+-	it6505_set_bits(it6505, REG_HDCP_TRIGGER,
+-			HDCP_TRIGGER_KSV_DONE | HDCP_TRIGGER_KSV_FAIL,
+-			HDCP_TRIGGER_KSV_DONE | HDCP_TRIGGER_KSV_FAIL);
++	it6505_start_hdcp(it6505);
  }
  
--static int ci_hdrc_imx_remove(struct platform_device *pdev)
-+static void ci_hdrc_imx_remove(struct platform_device *pdev)
+ static void it6505_hdcp_work(struct work_struct *work)
+@@ -2425,7 +2422,11 @@ static void it6505_irq_hdcp_ksv_check(struct it6505 *it6505)
  {
- 	struct ci_hdrc_imx_data *data = platform_get_drvdata(pdev);
+ 	struct device *dev = &it6505->client->dev;
  
-@@ -527,8 +527,6 @@ static int ci_hdrc_imx_remove(struct platform_device *pdev)
- 		if (data->hsic_pad_regulator)
- 			regulator_disable(data->hsic_pad_regulator);
- 	}
--
--	return 0;
+-	DRM_DEV_DEBUG_DRIVER(dev, "HDCP event Interrupt");
++	DRM_DEV_DEBUG_DRIVER(dev, "HDCP repeater R0 event Interrupt");
++	/* 1B01 HDCP encription should start when R0 is ready*/
++	it6505_set_bits(it6505, REG_HDCP_TRIGGER,
++			HDCP_TRIGGER_KSV_DONE, HDCP_TRIGGER_KSV_DONE);
++
+ 	schedule_work(&it6505->hdcp_wait_ksv_list);
  }
  
- static void ci_hdrc_imx_shutdown(struct platform_device *pdev)
-@@ -674,7 +672,7 @@ static const struct dev_pm_ops ci_hdrc_imx_pm_ops = {
- };
- static struct platform_driver ci_hdrc_imx_driver = {
- 	.probe = ci_hdrc_imx_probe,
--	.remove = ci_hdrc_imx_remove,
-+	.remove_new = ci_hdrc_imx_remove,
- 	.shutdown = ci_hdrc_imx_shutdown,
- 	.driver = {
- 		.name = "imx_usb",
 -- 
 2.39.5
 
