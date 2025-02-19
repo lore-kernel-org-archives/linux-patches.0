@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B941E0E1A;
-	Wed, 19 Feb 2025 08:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D995A1C548C;
+	Wed, 19 Feb 2025 08:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954595; cv=none; b=XFc/TKTDx925qZ77hvGAcPdHBgzjdHsotlhq1F8zwxs/qyu+JkQ5XHl75i32pM/5TM74tTkzbWeFrBUaI7RSB+iQIHdNX9D0hGVH2jeRlRtQgzbQqAWKAYNi3x1vwvYri4CGatdP6hGJf1irxqayeT1g/ARIHN3Fn6Ze89i2Vis=
+	t=1739954598; cv=none; b=F6DbHxoil/ZG8ihgwFncsvexkX1vXfqIHOJbTNJyOr5TIGYUJbDtH7SfBVVPG8kjQHeih0N74YLcAHQrn/nbXmjIaJxNTEd2EwcWN7PabKy8UVjO8CmU1W9XTAQuhFE7mc8FS3DcMLWx6ItPxc7KjICwYlEbOJliVmfKuexPjxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954595; c=relaxed/simple;
-	bh=tqmETMwfvdz13DCQIimpH8b4sUnW+FnFOOWKEEzoX5o=;
+	s=arc-20240116; t=1739954598; c=relaxed/simple;
+	bh=A55O0U0s3WPtKNCoy866zT9YSC7hOUi3vp7iTj1jXWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eM7tB0BLx9mH1QWSrWO+IgKN9Fr/xcu6MGVWdKu6Kt/eBJKEfpSxw+RC+6c1fVaodA5K4djXMtejACuWEhhf6q/ej+42G9qVhRj7ahco/bAOualZBHgMZhniMgEcRSVLZC+RpQorBIsimDwrd5FOr/5F8ST0DOnSAfMFMPlOmck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7j5I1s1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ROeNnecGh1OAcMr6EZ6x03qkt7fX5Y2wbKlL/odNXO4sAia2MAk8nwKxhG0Clsl6QdG7GR+vGb/zIDzwrgnw9enxMtaSY4tVjmmN7e38O3ZTqP3YVGcsEcaW/RYHMULtk/Ckkpz8xS4Vf5fQ+7g5Slz9NLKQePDO22kum8U0FJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4VJUjkP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7j5I1s1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44554C4CED1;
-	Wed, 19 Feb 2025 08:43:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4VJUjkP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58246C4CEE8;
+	Wed, 19 Feb 2025 08:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954595;
-	bh=tqmETMwfvdz13DCQIimpH8b4sUnW+FnFOOWKEEzoX5o=;
+	s=korg; t=1739954598;
+	bh=A55O0U0s3WPtKNCoy866zT9YSC7hOUi3vp7iTj1jXWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7j5I1s1LD5toS8WgTIk/4F4M0F0ZphH1rn5zYoySl+KFqD2mXT14zD5Di6Vc1eef
-	 JK3NTfNeFm0jItG37hmD8lNjVPQgUBqsstLylZtx5vMqNYC9PKhMURWYppeNJ84oTd
-	 xG2s34BOjyGvEewjveB09/MmndGPVH1PAaoC9ulc=
+	b=k4VJUjkPsIb0BfDiCUYaISiRKwOSyOm6rUY59OH6px8XF6e8q5jJeoFZw9CGiXtx3
+	 +xRjF4CzxPj79lLF8CTfX0DVXXJO2OYFKNY8becrHvcgApsgPDuRKSVnB/INN1eGFD
+	 lkm1C5Be2y2RcoEBEMq32rBBr2KgZ5SURVV6TpvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devarsh Thakkar <devarsht@ti.com>,
 	Jonathan Cormier <jcormier@criticallink.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
 	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
 	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: [PATCH 6.13 253/274] drm/tidss: Fix race condition while handling interrupt registers
-Date: Wed, 19 Feb 2025 09:28:27 +0100
-Message-ID: <20250219082619.481963519@linuxfoundation.org>
+Subject: [PATCH 6.13 254/274] drm/tidss: Clear the interrupt status for interrupts being disabled
+Date: Wed, 19 Feb 2025 09:28:28 +0100
+Message-ID: <20250219082619.522376806@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -54,55 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Devarsh Thakkar <devarsht@ti.com>
 
-commit a9a73f2661e6f625d306c9b0ef082e4593f45a21 upstream.
+commit 361a2ebb5cad211732ec3c5d962de49b21895590 upstream.
 
-The driver has a spinlock for protecting the irq_masks field and irq
-enable registers. However, the driver misses protecting the irq status
-registers which can lead to races.
+The driver does not touch the irqstatus register when it is disabling
+interrupts.  This might cause an interrupt to trigger for an interrupt
+that was just disabled.
 
-Take the spinlock when accessing irqstatus too.
+To fix the issue, clear the irqstatus registers right after disabling
+the interrupts.
 
 Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
 Cc: stable@vger.kernel.org
+Reported-by: Jonathan Cormier <jcormier@criticallink.com>
+Closes: https://e2e.ti.com/support/processors-group/processors/f/processors-forum/1394222/am625-issue-about-tidss-rcu_preempt-self-detected-stall-on-cpu/5424479#5424479
 Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
-[Tomi: updated the desc]
+[Tomi: mostly rewrote the patch]
 Reviewed-by: Jonathan Cormier <jcormier@criticallink.com>
 Tested-by: Jonathan Cormier <jcormier@criticallink.com>
 Reviewed-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
 Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241021-tidss-irq-fix-v1-6-82ddaec94e4a@ideasonboard.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20241021-tidss-irq-fix-v1-5-82ddaec94e4a@ideasonboard.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tidss/tidss_dispc.c |    4 ++++
- drivers/gpu/drm/tidss/tidss_irq.c   |    2 ++
- 2 files changed, 6 insertions(+)
+ drivers/gpu/drm/tidss/tidss_dispc.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 --- a/drivers/gpu/drm/tidss/tidss_dispc.c
 +++ b/drivers/gpu/drm/tidss/tidss_dispc.c
-@@ -2763,8 +2763,12 @@ static void dispc_init_errata(struct dis
-  */
- static void dispc_softreset_k2g(struct dispc_device *dispc)
+@@ -700,7 +700,7 @@ void dispc_k2g_set_irqenable(struct disp
  {
-+	unsigned long flags;
+ 	dispc_irq_t old_mask = dispc_k2g_read_irqenable(dispc);
+ 
+-	/* clear the irqstatus for newly enabled irqs */
++	/* clear the irqstatus for irqs that will be enabled */
+ 	dispc_k2g_clear_irqstatus(dispc, (mask ^ old_mask) & mask);
+ 
+ 	dispc_k2g_vp_set_irqenable(dispc, 0, mask);
+@@ -708,6 +708,9 @@ void dispc_k2g_set_irqenable(struct disp
+ 
+ 	dispc_write(dispc, DISPC_IRQENABLE_SET, (1 << 0) | (1 << 7));
+ 
++	/* clear the irqstatus for irqs that were disabled */
++	dispc_k2g_clear_irqstatus(dispc, (mask ^ old_mask) & old_mask);
 +
-+	spin_lock_irqsave(&dispc->tidss->wait_lock, flags);
- 	dispc_set_irqenable(dispc, 0);
- 	dispc_read_and_clear_irqstatus(dispc);
-+	spin_unlock_irqrestore(&dispc->tidss->wait_lock, flags);
+ 	/* flush posted write */
+ 	dispc_k2g_read_irqenable(dispc);
+ }
+@@ -839,7 +842,7 @@ static void dispc_k3_set_irqenable(struc
  
- 	for (unsigned int vp_idx = 0; vp_idx < dispc->feat->num_vps; ++vp_idx)
- 		VP_REG_FLD_MOD(dispc, vp_idx, DISPC_VP_CONTROL, 0, 0, 0);
---- a/drivers/gpu/drm/tidss/tidss_irq.c
-+++ b/drivers/gpu/drm/tidss/tidss_irq.c
-@@ -60,7 +60,9 @@ static irqreturn_t tidss_irq_handler(int
- 	unsigned int id;
- 	dispc_irq_t irqstatus;
+ 	old_mask = dispc_k3_read_irqenable(dispc);
  
-+	spin_lock(&tidss->wait_lock);
- 	irqstatus = dispc_read_and_clear_irqstatus(tidss->dispc);
-+	spin_unlock(&tidss->wait_lock);
+-	/* clear the irqstatus for newly enabled irqs */
++	/* clear the irqstatus for irqs that will be enabled */
+ 	dispc_k3_clear_irqstatus(dispc, (old_mask ^ mask) & mask);
  
- 	for (id = 0; id < tidss->num_crtcs; id++) {
- 		struct drm_crtc *crtc = tidss->crtcs[id];
+ 	for (i = 0; i < dispc->feat->num_vps; ++i) {
+@@ -864,6 +867,9 @@ static void dispc_k3_set_irqenable(struc
+ 	if (main_disable)
+ 		dispc_write(dispc, DISPC_IRQENABLE_CLR, main_disable);
+ 
++	/* clear the irqstatus for irqs that were disabled */
++	dispc_k3_clear_irqstatus(dispc, (old_mask ^ mask) & old_mask);
++
+ 	/* Flush posted writes */
+ 	dispc_read(dispc, DISPC_IRQENABLE_SET);
+ }
 
 
