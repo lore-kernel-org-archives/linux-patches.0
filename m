@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB181E32D7;
-	Wed, 19 Feb 2025 08:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DD11A314B;
+	Wed, 19 Feb 2025 08:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954228; cv=none; b=ZGuNWNCm/8PI65JTE1gF+ncfxcHL5zbbhR8c9kWOfAlexSSb5gGAi2qPAYcFVz6wX7mIgZP9WmpPsmYyXWf4F+5YlVHtF4L6C2Sb/YbAfgu2Cg/IDNvCHbZFn4ci7lt7WZ2GP3uixo4bEf9WRvndrbzhlD2SJpylFmJ0GaMA/r4=
+	t=1739954231; cv=none; b=t8YfILFL9n3B5lnzfgxhJz6ENyg+CD+/qvu4yD013mrCRTD+iRSJZ0YncTFt2voEPJG/onxT1osAZc5PRh4OxuBbmskRFYXUbbkXbuVaTDe+bBx1XxhF7XEt+WZ6aFyGjjzav0A5PC5VAyDOyulXYdyNjGl8Xo42i74/icgDnpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954228; c=relaxed/simple;
-	bh=BcgfHOM19G+MrZ4GPtbe85D3wKQpMhGLBt7Et5Puo94=;
+	s=arc-20240116; t=1739954231; c=relaxed/simple;
+	bh=dzuAT1P7ZQh8sTeUs2uxLcyGCrNYBB2tVT3iIdF/jPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQrlyyJ/HXA6LE+DOJbMIoTpXw1Gu3fJ/YHuinMvIpZJ/AaptRplLluLlmTtlmZfZUcTXwbVQ91FGP4tevdNjjo7V6Hv8WPvg6juLjXwjSE0jWbK/so4mV8cpma+k/E/hw/WoAUCHOBpb8fX+X40whiE++PRns+gQm1PykHV70g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikl6K5Yk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kWWp9y6ido2tKhW65OWNKCSbkPM68OrowJaETH/eJZD0zuwfF164KhDYJ9feEzNhD8b7dFr7XOMwyKGswujZ2D8gnn1drmKG8IoSMim02Ynh2PgK2T1rh4qUMk+Yio7Lzw2N42WlpQNsSnmpYS8dlI/YFfUEmF5+LYBz+3ofOpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s62e/wQJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikl6K5Yk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB930C4CED1;
-	Wed, 19 Feb 2025 08:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s62e/wQJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B06C4CED1;
+	Wed, 19 Feb 2025 08:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954228;
-	bh=BcgfHOM19G+MrZ4GPtbe85D3wKQpMhGLBt7Et5Puo94=;
+	s=korg; t=1739954231;
+	bh=dzuAT1P7ZQh8sTeUs2uxLcyGCrNYBB2tVT3iIdF/jPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ikl6K5YkgXCdZc2bkb7Z+jIGQl6bELaSjXvFi3uYnXFwPTZTff9lQMeNtRn3mWDNK
-	 RyaF6MgxH88N1k9Jh5RrsZr8HJQmiUoq/+LdjCNB7hbiHtqwJHVqSzaWyFkWypCvSI
-	 6AXK1+G/tAkltLUavvWQmpjAcevCs/5RVcOcCgDk=
+	b=s62e/wQJ4VomnyIZRw2ISLItzgY6EGL8XfXJHxO9j1q85Y1YGIMDkT6ll67m2Zsu+
+	 8zgFu5WfFpUhF6nq6M8W1vmR4R6P+6UzUH1vwhBEhtXrYnlDz4NTnDkSHDEeyCJDcq
+	 e5diZcKTtqq/kqTfnhGTc0Y+ZOhFbtpA4XubiIYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.13 136/274] usb: core: fix pipe creation for get_bMaxPacketSize0
-Date: Wed, 19 Feb 2025 09:26:30 +0100
-Message-ID: <20250219082614.929696283@linuxfoundation.org>
+	Mike Marshall <hubcap@omnibond.com>,
+	syzbot+fc519d7875f2d9186c1f@syzkaller.appspotmail.com,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 106/274] orangefs: fix a oob in orangefs_debug_write
+Date: Wed, 19 Feb 2025 09:26:00 +0100
+Message-ID: <20250219082613.765337529@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -51,64 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+From: Mike Marshall <hubcap@omnibond.com>
 
-commit 4aac0db5a0ebc599d4ad9bf5ebab78afa1f33e10 upstream.
+[ Upstream commit f7c848431632598ff9bce57a659db6af60d75b39 ]
 
-When usb_control_msg is used in the get_bMaxPacketSize0 function, the
-USB pipe does not include the endpoint device number. This can cause
-failures when a usb hub port is reinitialized after encountering a bad
-cable connection. As a result, the system logs the following error
-messages:
-usb usb2-port1: cannot reset (err = -32)
-usb usb2-port1: Cannot enable. Maybe the USB cable is bad?
-usb usb2-port1: attempt power cycle
-usb 2-1: new high-speed USB device number 5 using ci_hdrc
-usb 2-1: device descriptor read/8, error -71
+I got a syzbot report: slab-out-of-bounds Read in
+orangefs_debug_write... several people suggested fixes,
+I tested Al Viro's suggestion and made this patch.
 
-The problem began after commit 85d07c556216 ("USB: core: Unite old
-scheme and new scheme descriptor reads"). There
-usb_get_device_descriptor was replaced with get_bMaxPacketSize0. Unlike
-usb_get_device_descriptor, the get_bMaxPacketSize0 function uses the
-macro usb_rcvaddr0pipe, which does not include the endpoint device
-number. usb_get_device_descriptor, on the other hand, used the macro
-usb_rcvctrlpipe, which includes the endpoint device number.
-
-By modifying the get_bMaxPacketSize0 function to use usb_rcvctrlpipe
-instead of usb_rcvaddr0pipe, the issue can be resolved. This change will
-ensure that the endpoint device number is included in the USB pipe,
-preventing reinitialization failures. If the endpoint has not set the
-device number yet, it will still work because the device number is 0 in
-udev.
-
-Cc: stable <stable@kernel.org>
-Fixes: 85d07c556216 ("USB: core: Unite old scheme and new scheme descriptor reads")
-Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20250203105840.17539-1-eichest@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Reported-by: syzbot+fc519d7875f2d9186c1f@syzkaller.appspotmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/hub.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/orangefs/orangefs-debugfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -4698,7 +4698,6 @@ void usb_ep0_reinit(struct usb_device *u
- EXPORT_SYMBOL_GPL(usb_ep0_reinit);
+diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
+index 1b508f5433846..fa41db0884880 100644
+--- a/fs/orangefs/orangefs-debugfs.c
++++ b/fs/orangefs/orangefs-debugfs.c
+@@ -393,9 +393,9 @@ static ssize_t orangefs_debug_write(struct file *file,
+ 	 * Thwart users who try to jamb a ridiculous number
+ 	 * of bytes into the debug file...
+ 	 */
+-	if (count > ORANGEFS_MAX_DEBUG_STRING_LEN + 1) {
++	if (count > ORANGEFS_MAX_DEBUG_STRING_LEN) {
+ 		silly = count;
+-		count = ORANGEFS_MAX_DEBUG_STRING_LEN + 1;
++		count = ORANGEFS_MAX_DEBUG_STRING_LEN;
+ 	}
  
- #define usb_sndaddr0pipe()	(PIPE_CONTROL << 30)
--#define usb_rcvaddr0pipe()	((PIPE_CONTROL << 30) | USB_DIR_IN)
- 
- static int hub_set_address(struct usb_device *udev, int devnum)
- {
-@@ -4804,7 +4803,7 @@ static int get_bMaxPacketSize0(struct us
- 	for (i = 0; i < GET_MAXPACKET0_TRIES; ++i) {
- 		/* Start with invalid values in case the transfer fails */
- 		buf->bDescriptorType = buf->bMaxPacketSize0 = 0;
--		rc = usb_control_msg(udev, usb_rcvaddr0pipe(),
-+		rc = usb_control_msg(udev, usb_rcvctrlpipe(udev, 0),
- 				USB_REQ_GET_DESCRIPTOR, USB_DIR_IN,
- 				USB_DT_DEVICE << 8, 0,
- 				buf, size,
+ 	buf = kzalloc(ORANGEFS_MAX_DEBUG_STRING_LEN, GFP_KERNEL);
+-- 
+2.39.5
+
 
 
