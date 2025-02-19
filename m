@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944A91DF257;
-	Wed, 19 Feb 2025 08:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EF81DED6F;
+	Wed, 19 Feb 2025 08:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954112; cv=none; b=pYui8ScKPFamU9E5IQ/x9iFIKRpz+3HAEz1eSadOqwVeheT8Zv/dYDHnBHkviQbTW40wO3t3p2xauOBpZ4kXS6qz329m45Z5xF58SqHaomeJpJV9ersTwwm8Ez46/bQZvpLIt8kMbt9T1uKORTKu7eKboQLbTr6sEvBI/EKYeQY=
+	t=1739954115; cv=none; b=hGKfuXEmxiLQI2Dicum8srzTbdFCtCD5hPZBt7K8X0dN9NZl9Qy0dYF0HhPOlLEqdQlxNJ1x4p1KYfqbx9pa32ngXRiT3Af/K+iyyW9mPtWim2LrxsY7rRblIFbOcm/s7Qk8hhjImOx5MnqLxq3Fxmfe+zhJqRkKq+UbXoU0UGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954112; c=relaxed/simple;
-	bh=JFQreQSOX0iitDO/fg3UuSomc0PW3mTyUxGtvHLytB0=;
+	s=arc-20240116; t=1739954115; c=relaxed/simple;
+	bh=5Q+HFWXFHKcVNzHoL++V7gWvXkgHtY4jau1lvOkhqEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JQOLJ8UGlU1alZsPdxdgstq0X0I5kiaZTZrEsilQlB3fqLXRv744iuH84UF9ZmK2J9anYTe4WkFt4Bov1EOn856lmSF6VFMj5BrCOgjn3UKKwS0lR2zeBgHSDH9fD61HewC0knssLNSNe80fDI63C2Izf99QrTHx6+AWEHLvWZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDlIu1LJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mHS0lk0Xq5JnQotAy7Hmf+cvsyHzrgc3mQKMOjMVp2tU/ihmf1ugAp2RWsGsaUCTTPOc/AAY8EYS/3i+ROGy0UpR9c4gLoQtMOEU1woCuOVIkvU8ELVjC8TdjIWEccCYpTV5r6ePthZhZs2bsokXpyz3fz37qxUYHconyo8c0t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmNSwYCg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDlIu1LJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14ADFC4CED1;
-	Wed, 19 Feb 2025 08:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmNSwYCg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35FCBC4CED1;
+	Wed, 19 Feb 2025 08:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954112;
-	bh=JFQreQSOX0iitDO/fg3UuSomc0PW3mTyUxGtvHLytB0=;
+	s=korg; t=1739954115;
+	bh=5Q+HFWXFHKcVNzHoL++V7gWvXkgHtY4jau1lvOkhqEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VDlIu1LJHsOz/cNNdcCCRNJXCKn6UrUlO5OE/FZFb4G4weAVnHe6+ryDH7QmYIboE
-	 dEy3HJZoRboGjmrXv0Y+r+DMxs3FylT2IjoEiqg2Fv0YQKMda4o7VvN9aOfpIPYfsG
-	 btKXDuNgCfyFMLJ/dcqZmtvkPp2M1OVeDGeDiF/c=
+	b=XmNSwYCg/F6WQODispoL052rrsPyFms87k8XtdAoo8U3w4pnWD5VUTOZ2kS16WQhk
+	 DXlJFvPRkNXXL9AmZ6vNicyvGPO6sxuIr0/BxRsXTTFJgm5Oy06q3Yk/a9bLuahLUJ
+	 qXvGcMPHDKkMehVC8fT4sDoq26iLLorTnb16UENE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Ankit Agrawal <ankita@nvidia.com>,
+	syzbot+73d8fc29ec7cba8286fa@syzkaller.appspotmail.com,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 099/274] vfio/nvgrace-gpu: Expose the blackwell device PF BAR1 to the VM
-Date: Wed, 19 Feb 2025 09:25:53 +0100
-Message-ID: <20250219082613.495753423@linuxfoundation.org>
+Subject: [PATCH 6.13 100/274] fs/ntfs3: Mark inode as bad as soon as error detected in mi_enum_attr()
+Date: Wed, 19 Feb 2025 09:25:54 +0100
+Message-ID: <20250219082613.533282139@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -53,162 +51,592 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ankit Agrawal <ankita@nvidia.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 6a9eb2d125ba90d13b45bcfabcddf9f61268f6a8 ]
+[ Upstream commit 2afd4d267e6dbaec8d3ccd4f5396cb84bc67aa2e ]
 
-There is a HW defect on Grace Hopper (GH) to support the
-Multi-Instance GPU (MIG) feature [1] that necessiated the presence
-of a 1G region carved out from the device memory and mapped as
-uncached. The 1G region is shown as a fake BAR (comprising region 2 and 3)
-to workaround the issue.
+Extended the `mi_enum_attr()` function interface with an additional
+parameter, `struct ntfs_inode *ni`, to allow marking the inode
+as bad as soon as an error is detected.
 
-The Grace Blackwell systems (GB) differ from GH systems in the following
-aspects:
-1. The aforementioned HW defect is fixed on GB systems.
-2. There is a usable BAR1 (region 2 and 3) on GB systems for the
-GPUdirect RDMA feature [2].
-
-This patch accommodate those GB changes by showing the 64b physical
-device BAR1 (region2 and 3) to the VM instead of the fake one. This
-takes care of both the differences.
-
-Moreover, the entire device memory is exposed on GB as cacheable to
-the VM as there is no carveout required.
-
-Link: https://www.nvidia.com/en-in/technologies/multi-instance-gpu/ [1]
-Link: https://docs.nvidia.com/cuda/gpudirect-rdma/ [2]
-
-Cc: Kevin Tian <kevin.tian@intel.com>
-CC: Jason Gunthorpe <jgg@nvidia.com>
-Suggested-by: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
-Link: https://lore.kernel.org/r/20250124183102.3976-3-ankita@nvidia.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Reported-by: syzbot+73d8fc29ec7cba8286fa@syzkaller.appspotmail.com
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/nvgrace-gpu/main.c | 67 +++++++++++++++++++----------
- 1 file changed, 45 insertions(+), 22 deletions(-)
+ fs/ntfs3/attrib.c  | 11 ++++---
+ fs/ntfs3/frecord.c | 59 ++++++++++++++++++----------------
+ fs/ntfs3/ntfs_fs.h | 21 ++++++------
+ fs/ntfs3/record.c  | 79 ++++++++++++++++++++++++----------------------
+ 4 files changed, 90 insertions(+), 80 deletions(-)
 
-diff --git a/drivers/vfio/pci/nvgrace-gpu/main.c b/drivers/vfio/pci/nvgrace-gpu/main.c
-index b76368958d1c5..778bfd0655de0 100644
---- a/drivers/vfio/pci/nvgrace-gpu/main.c
-+++ b/drivers/vfio/pci/nvgrace-gpu/main.c
-@@ -17,9 +17,6 @@
- #define RESMEM_REGION_INDEX VFIO_PCI_BAR2_REGION_INDEX
- #define USEMEM_REGION_INDEX VFIO_PCI_BAR4_REGION_INDEX
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index 8d789b017fa9b..795cf8e75d2ea 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -787,7 +787,8 @@ int attr_set_size(struct ntfs_inode *ni, enum ATTR_TYPE type,
+ 		if (err)
+ 			goto out;
  
--/* Memory size expected as non cached and reserved by the VM driver */
--#define RESMEM_SIZE SZ_1G
--
- /* A hardwired and constant ABI value between the GPU FW and VFIO driver. */
- #define MEMBLK_SIZE SZ_512M
+-		attr = mi_find_attr(mi, NULL, type, name, name_len, &le->id);
++		attr = mi_find_attr(ni, mi, NULL, type, name, name_len,
++				    &le->id);
+ 		if (!attr) {
+ 			err = -EINVAL;
+ 			goto bad_inode;
+@@ -1181,7 +1182,7 @@ int attr_data_get_block(struct ntfs_inode *ni, CLST vcn, CLST clen, CLST *lcn,
+ 			goto out;
+ 		}
  
-@@ -72,7 +69,7 @@ nvgrace_gpu_memregion(int index,
- 	if (index == USEMEM_REGION_INDEX)
- 		return &nvdev->usemem;
+-		attr = mi_find_attr(mi, NULL, ATTR_DATA, NULL, 0, &le->id);
++		attr = mi_find_attr(ni, mi, NULL, ATTR_DATA, NULL, 0, &le->id);
+ 		if (!attr) {
+ 			err = -EINVAL;
+ 			goto out;
+@@ -1796,7 +1797,7 @@ int attr_allocate_frame(struct ntfs_inode *ni, CLST frame, size_t compr_size,
+ 				goto out;
+ 			}
  
--	if (index == RESMEM_REGION_INDEX)
-+	if (nvdev->resmem.memlength && index == RESMEM_REGION_INDEX)
- 		return &nvdev->resmem;
+-			attr = mi_find_attr(mi, NULL, ATTR_DATA, NULL, 0,
++			attr = mi_find_attr(ni, mi, NULL, ATTR_DATA, NULL, 0,
+ 					    &le->id);
+ 			if (!attr) {
+ 				err = -EINVAL;
+@@ -2041,8 +2042,8 @@ int attr_collapse_range(struct ntfs_inode *ni, u64 vbo, u64 bytes)
+ 				}
  
- 	return NULL;
-@@ -757,40 +754,67 @@ nvgrace_gpu_init_nvdev_struct(struct pci_dev *pdev,
- 			      u64 memphys, u64 memlength)
+ 				/* Look for required attribute. */
+-				attr = mi_find_attr(mi, NULL, ATTR_DATA, NULL,
+-						    0, &le->id);
++				attr = mi_find_attr(ni, mi, NULL, ATTR_DATA,
++						    NULL, 0, &le->id);
+ 				if (!attr) {
+ 					err = -EINVAL;
+ 					goto out;
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 8b39d0ce5f289..b9d6cb1fb54f4 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -75,7 +75,7 @@ struct ATTR_STD_INFO *ni_std(struct ntfs_inode *ni)
  {
- 	int ret = 0;
-+	u64 resmem_size = 0;
+ 	const struct ATTRIB *attr;
  
- 	/*
--	 * The VM GPU device driver needs a non-cacheable region to support
--	 * the MIG feature. Since the device memory is mapped as NORMAL cached,
--	 * carve out a region from the end with a different NORMAL_NC
--	 * property (called as reserved memory and represented as resmem). This
--	 * region then is exposed as a 64b BAR (region 2 and 3) to the VM, while
--	 * exposing the rest (termed as usable memory and represented using usemem)
--	 * as cacheable 64b BAR (region 4 and 5).
-+	 * On Grace Hopper systems, the VM GPU device driver needs a non-cacheable
-+	 * region to support the MIG feature owing to a hardware bug. Since the
-+	 * device memory is mapped as NORMAL cached, carve out a region from the end
-+	 * with a different NORMAL_NC property (called as reserved memory and
-+	 * represented as resmem). This region then is exposed as a 64b BAR
-+	 * (region 2 and 3) to the VM, while exposing the rest (termed as usable
-+	 * memory and represented using usemem) as cacheable 64b BAR (region 4 and 5).
- 	 *
- 	 *               devmem (memlength)
- 	 * |-------------------------------------------------|
- 	 * |                                           |
- 	 * usemem.memphys                              resmem.memphys
-+	 *
-+	 * This hardware bug is fixed on the Grace Blackwell platforms and the
-+	 * presence of the bug can be determined through nvdev->has_mig_hw_bug.
-+	 * Thus on systems with the hardware fix, there is no need to partition
-+	 * the GPU device memory and the entire memory is usable and mapped as
-+	 * NORMAL cached (i.e. resmem size is 0).
- 	 */
-+	if (nvdev->has_mig_hw_bug)
-+		resmem_size = SZ_1G;
-+
- 	nvdev->usemem.memphys = memphys;
+-	attr = mi_find_attr(&ni->mi, NULL, ATTR_STD, NULL, 0, NULL);
++	attr = mi_find_attr(ni, &ni->mi, NULL, ATTR_STD, NULL, 0, NULL);
+ 	return attr ? resident_data_ex(attr, sizeof(struct ATTR_STD_INFO)) :
+ 		      NULL;
+ }
+@@ -89,7 +89,7 @@ struct ATTR_STD_INFO5 *ni_std5(struct ntfs_inode *ni)
+ {
+ 	const struct ATTRIB *attr;
  
- 	/*
- 	 * The device memory exposed to the VM is added to the kernel by the
--	 * VM driver module in chunks of memory block size. Only the usable
--	 * memory (usemem) is added to the kernel for usage by the VM
--	 * workloads. Make the usable memory size memblock aligned.
-+	 * VM driver module in chunks of memory block size. Note that only the
-+	 * usable memory (usemem) is added to the kernel for usage by the VM
-+	 * workloads.
- 	 */
--	if (check_sub_overflow(memlength, RESMEM_SIZE,
-+	if (check_sub_overflow(memlength, resmem_size,
- 			       &nvdev->usemem.memlength)) {
- 		ret = -EOVERFLOW;
- 		goto done;
+-	attr = mi_find_attr(&ni->mi, NULL, ATTR_STD, NULL, 0, NULL);
++	attr = mi_find_attr(ni, &ni->mi, NULL, ATTR_STD, NULL, 0, NULL);
+ 
+ 	return attr ? resident_data_ex(attr, sizeof(struct ATTR_STD_INFO5)) :
+ 		      NULL;
+@@ -201,7 +201,8 @@ struct ATTRIB *ni_find_attr(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 			*mi = &ni->mi;
+ 
+ 		/* Look for required attribute in primary record. */
+-		return mi_find_attr(&ni->mi, attr, type, name, name_len, NULL);
++		return mi_find_attr(ni, &ni->mi, attr, type, name, name_len,
++				    NULL);
  	}
  
- 	/*
--	 * The USEMEM part of the device memory has to be MEMBLK_SIZE
--	 * aligned. This is a hardwired ABI value between the GPU FW and
--	 * VFIO driver. The VM device driver is also aware of it and make
--	 * use of the value for its calculation to determine USEMEM size.
-+	 * The usemem region is exposed as a 64B Bar composed of region 4 and 5.
-+	 * Calculate and save the BAR size for the region.
-+	 */
-+	nvdev->usemem.bar_size = roundup_pow_of_two(nvdev->usemem.memlength);
-+
-+	/*
-+	 * If the hardware has the fix for MIG, there is no requirement
-+	 * for splitting the device memory to create RESMEM. The entire
-+	 * device memory is usable and will be USEMEM. Return here for
-+	 * such case.
-+	 */
-+	if (!nvdev->has_mig_hw_bug)
-+		goto done;
-+
-+	/*
-+	 * When the device memory is split to workaround the MIG bug on
-+	 * Grace Hopper, the USEMEM part of the device memory has to be
-+	 * MEMBLK_SIZE aligned. This is a hardwired ABI value between the
-+	 * GPU FW and VFIO driver. The VM device driver is also aware of it
-+	 * and make use of the value for its calculation to determine USEMEM
-+	 * size. Note that the device memory may not be 512M aligned.
- 	 */
- 	nvdev->usemem.memlength = round_down(nvdev->usemem.memlength,
- 					     MEMBLK_SIZE);
-@@ -809,10 +833,9 @@ nvgrace_gpu_init_nvdev_struct(struct pci_dev *pdev,
+ 	/* First look for list entry of required type. */
+@@ -217,7 +218,7 @@ struct ATTRIB *ni_find_attr(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 		return NULL;
+ 
+ 	/* Look for required attribute. */
+-	attr = mi_find_attr(m, NULL, type, name, name_len, &le->id);
++	attr = mi_find_attr(ni, m, NULL, type, name, name_len, &le->id);
+ 
+ 	if (!attr)
+ 		goto out;
+@@ -259,7 +260,7 @@ struct ATTRIB *ni_enum_attr_ex(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 		if (mi)
+ 			*mi = &ni->mi;
+ 		/* Enum attributes in primary record. */
+-		return mi_enum_attr(&ni->mi, attr);
++		return mi_enum_attr(ni, &ni->mi, attr);
  	}
  
- 	/*
--	 * The memory regions are exposed as BARs. Calculate and save
--	 * the BAR size for them.
-+	 * The resmem region is exposed as a 64b BAR composed of region 2 and 3
-+	 * for Grace Hopper. Calculate and save the BAR size for the region.
+ 	/* Get next list entry. */
+@@ -275,7 +276,7 @@ struct ATTRIB *ni_enum_attr_ex(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 		*mi = mi2;
+ 
+ 	/* Find attribute in loaded record. */
+-	return rec_find_attr_le(mi2, le2);
++	return rec_find_attr_le(ni, mi2, le2);
+ }
+ 
+ /*
+@@ -293,7 +294,8 @@ struct ATTRIB *ni_load_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
+ 	if (!ni->attr_list.size) {
+ 		if (pmi)
+ 			*pmi = &ni->mi;
+-		return mi_find_attr(&ni->mi, NULL, type, name, name_len, NULL);
++		return mi_find_attr(ni, &ni->mi, NULL, type, name, name_len,
++				    NULL);
+ 	}
+ 
+ 	le = al_find_ex(ni, NULL, type, name, name_len, NULL);
+@@ -319,7 +321,7 @@ struct ATTRIB *ni_load_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
+ 	if (pmi)
+ 		*pmi = mi;
+ 
+-	attr = mi_find_attr(mi, NULL, type, name, name_len, &le->id);
++	attr = mi_find_attr(ni, mi, NULL, type, name, name_len, &le->id);
+ 	if (!attr)
+ 		return NULL;
+ 
+@@ -398,7 +400,8 @@ int ni_remove_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
+ 	int diff;
+ 
+ 	if (base_only || type == ATTR_LIST || !ni->attr_list.size) {
+-		attr = mi_find_attr(&ni->mi, NULL, type, name, name_len, id);
++		attr = mi_find_attr(ni, &ni->mi, NULL, type, name, name_len,
++				    id);
+ 		if (!attr)
+ 			return -ENOENT;
+ 
+@@ -437,7 +440,7 @@ int ni_remove_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
+ 
+ 		al_remove_le(ni, le);
+ 
+-		attr = mi_find_attr(mi, NULL, type, name, name_len, id);
++		attr = mi_find_attr(ni, mi, NULL, type, name, name_len, id);
+ 		if (!attr)
+ 			return -ENOENT;
+ 
+@@ -485,7 +488,7 @@ ni_ins_new_attr(struct ntfs_inode *ni, struct mft_inode *mi,
+ 		name = le->name;
+ 	}
+ 
+-	attr = mi_insert_attr(mi, type, name, name_len, asize, name_off);
++	attr = mi_insert_attr(ni, mi, type, name, name_len, asize, name_off);
+ 	if (!attr) {
+ 		if (le_added)
+ 			al_remove_le(ni, le);
+@@ -673,7 +676,7 @@ static int ni_try_remove_attr_list(struct ntfs_inode *ni)
+ 	if (err)
+ 		return err;
+ 
+-	attr_list = mi_find_attr(&ni->mi, NULL, ATTR_LIST, NULL, 0, NULL);
++	attr_list = mi_find_attr(ni, &ni->mi, NULL, ATTR_LIST, NULL, 0, NULL);
+ 	if (!attr_list)
+ 		return 0;
+ 
+@@ -695,7 +698,7 @@ static int ni_try_remove_attr_list(struct ntfs_inode *ni)
+ 		if (!mi)
+ 			return 0;
+ 
+-		attr = mi_find_attr(mi, NULL, le->type, le_name(le),
++		attr = mi_find_attr(ni, mi, NULL, le->type, le_name(le),
+ 				    le->name_len, &le->id);
+ 		if (!attr)
+ 			return 0;
+@@ -731,7 +734,7 @@ static int ni_try_remove_attr_list(struct ntfs_inode *ni)
+ 			goto out;
+ 		}
+ 
+-		attr = mi_find_attr(mi, NULL, le->type, le_name(le),
++		attr = mi_find_attr(ni, mi, NULL, le->type, le_name(le),
+ 				    le->name_len, &le->id);
+ 		if (!attr) {
+ 			/* Should never happened, 'cause already checked. */
+@@ -740,7 +743,7 @@ static int ni_try_remove_attr_list(struct ntfs_inode *ni)
+ 		asize = le32_to_cpu(attr->size);
+ 
+ 		/* Insert into primary record. */
+-		attr_ins = mi_insert_attr(&ni->mi, le->type, le_name(le),
++		attr_ins = mi_insert_attr(ni, &ni->mi, le->type, le_name(le),
+ 					  le->name_len, asize,
+ 					  le16_to_cpu(attr->name_off));
+ 		if (!attr_ins) {
+@@ -768,7 +771,7 @@ static int ni_try_remove_attr_list(struct ntfs_inode *ni)
+ 		if (!mi)
+ 			continue;
+ 
+-		attr = mi_find_attr(mi, NULL, le->type, le_name(le),
++		attr = mi_find_attr(ni, mi, NULL, le->type, le_name(le),
+ 				    le->name_len, &le->id);
+ 		if (!attr)
+ 			continue;
+@@ -831,7 +834,7 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+ 	free_b = 0;
+ 	attr = NULL;
+ 
+-	for (; (attr = mi_enum_attr(&ni->mi, attr)); le = Add2Ptr(le, sz)) {
++	for (; (attr = mi_enum_attr(ni, &ni->mi, attr)); le = Add2Ptr(le, sz)) {
+ 		sz = le_size(attr->name_len);
+ 		le->type = attr->type;
+ 		le->size = cpu_to_le16(sz);
+@@ -886,7 +889,7 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+ 		u32 asize = le32_to_cpu(b->size);
+ 		u16 name_off = le16_to_cpu(b->name_off);
+ 
+-		attr = mi_insert_attr(mi, b->type, Add2Ptr(b, name_off),
++		attr = mi_insert_attr(ni, mi, b->type, Add2Ptr(b, name_off),
+ 				      b->name_len, asize, name_off);
+ 		if (!attr)
+ 			goto out;
+@@ -909,7 +912,7 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+ 			goto out;
+ 	}
+ 
+-	attr = mi_insert_attr(&ni->mi, ATTR_LIST, NULL, 0,
++	attr = mi_insert_attr(ni, &ni->mi, ATTR_LIST, NULL, 0,
+ 			      lsize + SIZEOF_RESIDENT, SIZEOF_RESIDENT);
+ 	if (!attr)
+ 		goto out;
+@@ -993,13 +996,13 @@ static int ni_ins_attr_ext(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le,
+ 		mi = rb_entry(node, struct mft_inode, node);
+ 
+ 		if (is_mft_data &&
+-		    (mi_enum_attr(mi, NULL) ||
++		    (mi_enum_attr(ni, mi, NULL) ||
+ 		     vbo <= ((u64)mi->rno << sbi->record_bits))) {
+ 			/* We can't accept this record 'cause MFT's bootstrapping. */
+ 			continue;
+ 		}
+ 		if (is_mft &&
+-		    mi_find_attr(mi, NULL, ATTR_DATA, NULL, 0, NULL)) {
++		    mi_find_attr(ni, mi, NULL, ATTR_DATA, NULL, 0, NULL)) {
+ 			/*
+ 			 * This child record already has a ATTR_DATA.
+ 			 * So it can't accept any other records.
+@@ -1008,7 +1011,7 @@ static int ni_ins_attr_ext(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le,
+ 		}
+ 
+ 		if ((type != ATTR_NAME || name_len) &&
+-		    mi_find_attr(mi, NULL, type, name, name_len, NULL)) {
++		    mi_find_attr(ni, mi, NULL, type, name, name_len, NULL)) {
+ 			/* Only indexed attributes can share same record. */
+ 			continue;
+ 		}
+@@ -1157,7 +1160,7 @@ static int ni_insert_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
+ 	/* Estimate the result of moving all possible attributes away. */
+ 	attr = NULL;
+ 
+-	while ((attr = mi_enum_attr(&ni->mi, attr))) {
++	while ((attr = mi_enum_attr(ni, &ni->mi, attr))) {
+ 		if (attr->type == ATTR_STD)
+ 			continue;
+ 		if (attr->type == ATTR_LIST)
+@@ -1175,7 +1178,7 @@ static int ni_insert_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
+ 	attr = NULL;
+ 
+ 	for (;;) {
+-		attr = mi_enum_attr(&ni->mi, attr);
++		attr = mi_enum_attr(ni, &ni->mi, attr);
+ 		if (!attr) {
+ 			/* We should never be here 'cause we have already check this case. */
+ 			err = -EINVAL;
+@@ -1259,7 +1262,7 @@ static int ni_expand_mft_list(struct ntfs_inode *ni)
+ 	for (node = rb_first(&ni->mi_tree); node; node = rb_next(node)) {
+ 		mi = rb_entry(node, struct mft_inode, node);
+ 
+-		attr = mi_enum_attr(mi, NULL);
++		attr = mi_enum_attr(ni, mi, NULL);
+ 
+ 		if (!attr) {
+ 			mft_min = mi->rno;
+@@ -1280,7 +1283,7 @@ static int ni_expand_mft_list(struct ntfs_inode *ni)
+ 		ni_remove_mi(ni, mi_new);
+ 	}
+ 
+-	attr = mi_find_attr(&ni->mi, NULL, ATTR_DATA, NULL, 0, NULL);
++	attr = mi_find_attr(ni, &ni->mi, NULL, ATTR_DATA, NULL, 0, NULL);
+ 	if (!attr) {
+ 		err = -EINVAL;
+ 		goto out;
+@@ -1397,7 +1400,7 @@ int ni_expand_list(struct ntfs_inode *ni)
+ 			continue;
+ 
+ 		/* Find attribute in primary record. */
+-		attr = rec_find_attr_le(&ni->mi, le);
++		attr = rec_find_attr_le(ni, &ni->mi, le);
+ 		if (!attr) {
+ 			err = -EINVAL;
+ 			goto out;
+@@ -3343,7 +3346,7 @@ int ni_write_inode(struct inode *inode, int sync, const char *hint)
+ 		if (!mi->dirty)
+ 			continue;
+ 
+-		is_empty = !mi_enum_attr(mi, NULL);
++		is_empty = !mi_enum_attr(ni, mi, NULL);
+ 
+ 		if (is_empty)
+ 			clear_rec_inuse(mi->mrec);
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index cd8e8374bb5a0..382820464dee7 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -745,23 +745,24 @@ int mi_get(struct ntfs_sb_info *sbi, CLST rno, struct mft_inode **mi);
+ void mi_put(struct mft_inode *mi);
+ int mi_init(struct mft_inode *mi, struct ntfs_sb_info *sbi, CLST rno);
+ int mi_read(struct mft_inode *mi, bool is_mft);
+-struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr);
+-// TODO: id?
+-struct ATTRIB *mi_find_attr(struct mft_inode *mi, struct ATTRIB *attr,
+-			    enum ATTR_TYPE type, const __le16 *name,
+-			    u8 name_len, const __le16 *id);
+-static inline struct ATTRIB *rec_find_attr_le(struct mft_inode *rec,
++struct ATTRIB *mi_enum_attr(struct ntfs_inode *ni, struct mft_inode *mi,
++			    struct ATTRIB *attr);
++struct ATTRIB *mi_find_attr(struct ntfs_inode *ni, struct mft_inode *mi,
++			    struct ATTRIB *attr, enum ATTR_TYPE type,
++			    const __le16 *name, u8 name_len, const __le16 *id);
++static inline struct ATTRIB *rec_find_attr_le(struct ntfs_inode *ni,
++					      struct mft_inode *rec,
+ 					      struct ATTR_LIST_ENTRY *le)
+ {
+-	return mi_find_attr(rec, NULL, le->type, le_name(le), le->name_len,
++	return mi_find_attr(ni, rec, NULL, le->type, le_name(le), le->name_len,
+ 			    &le->id);
+ }
+ int mi_write(struct mft_inode *mi, int wait);
+ int mi_format_new(struct mft_inode *mi, struct ntfs_sb_info *sbi, CLST rno,
+ 		  __le16 flags, bool is_mft);
+-struct ATTRIB *mi_insert_attr(struct mft_inode *mi, enum ATTR_TYPE type,
+-			      const __le16 *name, u8 name_len, u32 asize,
+-			      u16 name_off);
++struct ATTRIB *mi_insert_attr(struct ntfs_inode *ni, struct mft_inode *mi,
++			      enum ATTR_TYPE type, const __le16 *name,
++			      u8 name_len, u32 asize, u16 name_off);
+ 
+ bool mi_remove_attr(struct ntfs_inode *ni, struct mft_inode *mi,
+ 		    struct ATTRIB *attr);
+diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
+index 61d53d39f3b9f..714c7ecedca83 100644
+--- a/fs/ntfs3/record.c
++++ b/fs/ntfs3/record.c
+@@ -31,7 +31,7 @@ static inline int compare_attr(const struct ATTRIB *left, enum ATTR_TYPE type,
+  *
+  * Return: Unused attribute id that is less than mrec->next_attr_id.
+  */
+-static __le16 mi_new_attt_id(struct mft_inode *mi)
++static __le16 mi_new_attt_id(struct ntfs_inode *ni, struct mft_inode *mi)
+ {
+ 	u16 free_id, max_id, t16;
+ 	struct MFT_REC *rec = mi->mrec;
+@@ -52,7 +52,7 @@ static __le16 mi_new_attt_id(struct mft_inode *mi)
+ 	attr = NULL;
+ 
+ 	for (;;) {
+-		attr = mi_enum_attr(mi, attr);
++		attr = mi_enum_attr(ni, mi, attr);
+ 		if (!attr) {
+ 			rec->next_attr_id = cpu_to_le16(max_id + 1);
+ 			mi->dirty = true;
+@@ -195,7 +195,8 @@ int mi_read(struct mft_inode *mi, bool is_mft)
+  * NOTE: mi->mrec - memory of size sbi->record_size
+  * here we sure that mi->mrec->total == sbi->record_size (see mi_read)
+  */
+-struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
++struct ATTRIB *mi_enum_attr(struct ntfs_inode *ni, struct mft_inode *mi,
++			    struct ATTRIB *attr)
+ {
+ 	const struct MFT_REC *rec = mi->mrec;
+ 	u32 used = le32_to_cpu(rec->used);
+@@ -209,11 +210,11 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 		off = le16_to_cpu(rec->attr_off);
+ 
+ 		if (used > total)
+-			return NULL;
++			goto out;
+ 
+ 		if (off >= used || off < MFTRECORD_FIXUP_OFFSET_1 ||
+ 		    !IS_ALIGNED(off, 8)) {
+-			return NULL;
++			goto out;
+ 		}
+ 
+ 		/* Skip non-resident records. */
+@@ -243,7 +244,7 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
  	 */
--	nvdev->usemem.bar_size = roundup_pow_of_two(nvdev->usemem.memlength);
- 	nvdev->resmem.bar_size = roundup_pow_of_two(nvdev->resmem.memlength);
- done:
- 	return ret;
+ 	if (off + 8 > used) {
+ 		static_assert(ALIGN(sizeof(enum ATTR_TYPE), 8) == 8);
+-		return NULL;
++		goto out;
+ 	}
+ 
+ 	if (attr->type == ATTR_END) {
+@@ -254,112 +255,116 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 	/* 0x100 is last known attribute for now. */
+ 	t32 = le32_to_cpu(attr->type);
+ 	if (!t32 || (t32 & 0xf) || (t32 > 0x100))
+-		return NULL;
++		goto out;
+ 
+ 	/* attributes in record must be ordered by type */
+ 	if (t32 < prev_type)
+-		return NULL;
++		goto out;
+ 
+ 	asize = le32_to_cpu(attr->size);
+ 
+ 	if (!IS_ALIGNED(asize, 8))
+-		return NULL;
++		goto out;
+ 
+ 	/* Check overflow and boundary. */
+ 	if (off + asize < off || off + asize > used)
+-		return NULL;
++		goto out;
+ 
+ 	/* Can we use the field attr->non_res. */
+ 	if (off + 9 > used)
+-		return NULL;
++		goto out;
+ 
+ 	/* Check size of attribute. */
+ 	if (!attr->non_res) {
+ 		/* Check resident fields. */
+ 		if (asize < SIZEOF_RESIDENT)
+-			return NULL;
++			goto out;
+ 
+ 		t16 = le16_to_cpu(attr->res.data_off);
+ 		if (t16 > asize)
+-			return NULL;
++			goto out;
+ 
+ 		if (le32_to_cpu(attr->res.data_size) > asize - t16)
+-			return NULL;
++			goto out;
+ 
+ 		t32 = sizeof(short) * attr->name_len;
+ 		if (t32 && le16_to_cpu(attr->name_off) + t32 > t16)
+-			return NULL;
++			goto out;
+ 
+ 		return attr;
+ 	}
+ 
+ 	/* Check nonresident fields. */
+ 	if (attr->non_res != 1)
+-		return NULL;
++		goto out;
+ 
+ 	/* Can we use memory including attr->nres.valid_size? */
+ 	if (asize < SIZEOF_NONRESIDENT)
+-		return NULL;
++		goto out;
+ 
+ 	t16 = le16_to_cpu(attr->nres.run_off);
+ 	if (t16 > asize)
+-		return NULL;
++		goto out;
+ 
+ 	t32 = sizeof(short) * attr->name_len;
+ 	if (t32 && le16_to_cpu(attr->name_off) + t32 > t16)
+-		return NULL;
++		goto out;
+ 
+ 	/* Check start/end vcn. */
+ 	if (le64_to_cpu(attr->nres.svcn) > le64_to_cpu(attr->nres.evcn) + 1)
+-		return NULL;
++		goto out;
+ 
+ 	data_size = le64_to_cpu(attr->nres.data_size);
+ 	if (le64_to_cpu(attr->nres.valid_size) > data_size)
+-		return NULL;
++		goto out;
+ 
+ 	alloc_size = le64_to_cpu(attr->nres.alloc_size);
+ 	if (data_size > alloc_size)
+-		return NULL;
++		goto out;
+ 
+ 	t32 = mi->sbi->cluster_mask;
+ 	if (alloc_size & t32)
+-		return NULL;
++		goto out;
+ 
+ 	if (!attr->nres.svcn && is_attr_ext(attr)) {
+ 		/* First segment of sparse/compressed attribute */
+ 		/* Can we use memory including attr->nres.total_size? */
+ 		if (asize < SIZEOF_NONRESIDENT_EX)
+-			return NULL;
++			goto out;
+ 
+ 		tot_size = le64_to_cpu(attr->nres.total_size);
+ 		if (tot_size & t32)
+-			return NULL;
++			goto out;
+ 
+ 		if (tot_size > alloc_size)
+-			return NULL;
++			goto out;
+ 	} else {
+ 		if (attr->nres.c_unit)
+-			return NULL;
++			goto out;
+ 
+ 		if (alloc_size > mi->sbi->volume.size)
+-			return NULL;
++			goto out;
+ 	}
+ 
+ 	return attr;
++
++out:
++	_ntfs_bad_inode(&ni->vfs_inode);
++	return NULL;
+ }
+ 
+ /*
+  * mi_find_attr - Find the attribute by type and name and id.
+  */
+-struct ATTRIB *mi_find_attr(struct mft_inode *mi, struct ATTRIB *attr,
+-			    enum ATTR_TYPE type, const __le16 *name,
+-			    u8 name_len, const __le16 *id)
++struct ATTRIB *mi_find_attr(struct ntfs_inode *ni, struct mft_inode *mi,
++			    struct ATTRIB *attr, enum ATTR_TYPE type,
++			    const __le16 *name, u8 name_len, const __le16 *id)
+ {
+ 	u32 type_in = le32_to_cpu(type);
+ 	u32 atype;
+ 
+ next_attr:
+-	attr = mi_enum_attr(mi, attr);
++	attr = mi_enum_attr(ni, mi, attr);
+ 	if (!attr)
+ 		return NULL;
+ 
+@@ -467,9 +472,9 @@ int mi_format_new(struct mft_inode *mi, struct ntfs_sb_info *sbi, CLST rno,
+  *
+  * Return: Not full constructed attribute or NULL if not possible to create.
+  */
+-struct ATTRIB *mi_insert_attr(struct mft_inode *mi, enum ATTR_TYPE type,
+-			      const __le16 *name, u8 name_len, u32 asize,
+-			      u16 name_off)
++struct ATTRIB *mi_insert_attr(struct ntfs_inode *ni, struct mft_inode *mi,
++			      enum ATTR_TYPE type, const __le16 *name,
++			      u8 name_len, u32 asize, u16 name_off)
+ {
+ 	size_t tail;
+ 	struct ATTRIB *attr;
+@@ -488,7 +493,7 @@ struct ATTRIB *mi_insert_attr(struct mft_inode *mi, enum ATTR_TYPE type,
+ 	 * at which we should insert it.
+ 	 */
+ 	attr = NULL;
+-	while ((attr = mi_enum_attr(mi, attr))) {
++	while ((attr = mi_enum_attr(ni, mi, attr))) {
+ 		int diff = compare_attr(attr, type, name, name_len, upcase);
+ 
+ 		if (diff < 0)
+@@ -508,7 +513,7 @@ struct ATTRIB *mi_insert_attr(struct mft_inode *mi, enum ATTR_TYPE type,
+ 		tail = used - PtrOffset(rec, attr);
+ 	}
+ 
+-	id = mi_new_attt_id(mi);
++	id = mi_new_attt_id(ni, mi);
+ 
+ 	memmove(Add2Ptr(attr, asize), attr, tail);
+ 	memset(attr, 0, asize);
 -- 
 2.39.5
 
