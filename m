@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0071C760D;
-	Wed, 19 Feb 2025 09:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50471DE891;
+	Wed, 19 Feb 2025 09:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957206; cv=none; b=EgE0xmDWvm5ZsEo9v/sTbQFyX7bAng731+pCbNv0Fzju/0Gh5FailqNDzKc4qT7GEHty7Krf65cR9gS/JFdOjC3LOuAXFDCLzxJxSQqx6RxR3WYQFHndVjuanjW/mT9acE+Vx7ogJNFGFuef7ARJX77wh/NusvZkRNbpkwh0It4=
+	t=1739957209; cv=none; b=PnFU45lnG4gHViRh5yl5Fc91Aw30kqDrC8fTt7aOR2/TDaE4TxyRjbeJvqbhoCpz4sAcY7JxPDD2PXWJdqJtTjLW2JjDcI+Z7RyjLmXUAtFYd/7f+n5Lj7V62NQ/ss14ALdhooNHUzO0yQ+er143YQ7VItEsg4EoilUFIwGQM60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957206; c=relaxed/simple;
-	bh=poiaEGPulsO+OmZ01T5CqV4/j4xqc/gFD8mjJ/ok8UY=;
+	s=arc-20240116; t=1739957209; c=relaxed/simple;
+	bh=x7j+6qrtjHubkOoY0Iz02Ooxx8lxLu2u/ueXaNggzik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JhlPn2cXBdfX/8dO52M0WFdt1R0fAevpBDouHvQpbf4t6yK3QK+SXo5u33DFThDoHJNjJ4CIqD175KRKq7jqSZBwodiMVoJcslWSbj8nv1vg7mrSHVlM5N5l9wg0NwTjQrl/JBtVKQvlDOqEtFQWNkDQ/e551TtloXRDPt2rN4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dp8nNTTl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QVB2mwAvFwb60ysynMC42ZeTlvo40tOU+W/3V7wnIo3SoiiKewpwTsBWLdDI+opR0EZHBcMYKPpy1uV10BJpiqTG8H/fIbhuUe9UYdnFmp4+yrlUHahMzxInSGkjFhUJZuW+cbNnHMh3pweQbZs23G35zB/1l8tYefA7t0lf/LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzsbETWp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dp8nNTTl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636E1C4CED1;
-	Wed, 19 Feb 2025 09:26:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzsbETWp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7BCC4CED1;
+	Wed, 19 Feb 2025 09:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957206;
-	bh=poiaEGPulsO+OmZ01T5CqV4/j4xqc/gFD8mjJ/ok8UY=;
+	s=korg; t=1739957209;
+	bh=x7j+6qrtjHubkOoY0Iz02Ooxx8lxLu2u/ueXaNggzik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dp8nNTTlptIjRcau7dg2HM63WhE4/jaTtnJCjZF588nZFtLocerpJdR7poC9drZCB
-	 q43+uA5mHW+j0Y3im6fZh+CMDJRo6M9tmnBN3tBuL/kWlMjM4ZEQhFhXf/x59bvA/T
-	 zoj/4NPuBgx6fXInxLktWkh7B8BlAX2zHSjTDYkA=
+	b=EzsbETWpJ7uUyhI94marXLcU2LO+Sj3sgDJv/mfnao7U6LoBMjtUNvXgaTKU8boDE
+	 yyyTGSbhHtZo5mlrDNi5Fc7VRYrlyo/MkqPT20012Ci1Y1Z+C4Fpv9EHAYYxMJcsY/
+	 3beto33mtRnk7ie6eHXqMO2kBpI3jCAkMs9ugEqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
-	stable@kernel.org,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 445/578] rtc: zynqmp: Fix optional clock name property
-Date: Wed, 19 Feb 2025 09:27:29 +0100
-Message-ID: <20250219082710.502861598@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 419/578] crypto: qce - unregister previously registered algos in error path
+Date: Wed, 19 Feb 2025 09:27:03 +0100
+Message-ID: <20250219082709.501654028@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,44 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Simek <michal.simek@amd.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 2a388ff22d2cbfc5cbd628ef085bdcd3b7dc64f5 upstream.
+commit e80cf84b608725303113d6fe98bb727bf7b7a40d upstream.
 
-Clock description in DT binding introduced by commit f69060c14431
-("dt-bindings: rtc: zynqmp: Add clock information") is talking about "rtc"
-clock name but driver is checking "rtc_clk" name instead.
-Because clock is optional property likely in was never handled properly by
-the driver.
+If we encounter an error when registering alorithms with the crypto
+framework, we just bail out and don't unregister the ones we
+successfully registered in prior iterations of the loop.
 
-Fixes: 07dcc6f9c762 ("rtc: zynqmp: Add calibration set and get support")
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Cc: stable@kernel.org
-Reviewed-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://lore.kernel.org/r/cd5f0c9d01ec1f5a240e37a7e0d85b8dacb3a869.1732723280.git.michal.simek@amd.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Add code that goes back over the algos and unregisters them before
+returning an error from qce_register_algs().
+
+Cc: stable@vger.kernel.org
+Fixes: ec8f5d8f6f76 ("crypto: qce - Qualcomm crypto engine driver")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-zynqmp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/qce/core.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/rtc/rtc-zynqmp.c b/drivers/rtc/rtc-zynqmp.c
-index 625f708a7caf..f39102b66eac 100644
---- a/drivers/rtc/rtc-zynqmp.c
-+++ b/drivers/rtc/rtc-zynqmp.c
-@@ -318,8 +318,8 @@ static int xlnx_rtc_probe(struct platform_device *pdev)
- 		return ret;
+--- a/drivers/crypto/qce/core.c
++++ b/drivers/crypto/qce/core.c
+@@ -48,16 +48,19 @@ static void qce_unregister_algs(struct q
+ static int qce_register_algs(struct qce_device *qce)
+ {
+ 	const struct qce_algo_ops *ops;
+-	int i, ret = -ENODEV;
++	int i, j, ret = -ENODEV;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(qce_ops); i++) {
+ 		ops = qce_ops[i];
+ 		ret = ops->register_algs(qce);
+-		if (ret)
+-			break;
++		if (ret) {
++			for (j = i - 1; j >= 0; j--)
++				ops->unregister_algs(qce);
++			return ret;
++		}
  	}
  
--	/* Getting the rtc_clk info */
--	xrtcdev->rtc_clk = devm_clk_get_optional(&pdev->dev, "rtc_clk");
-+	/* Getting the rtc info */
-+	xrtcdev->rtc_clk = devm_clk_get_optional(&pdev->dev, "rtc");
- 	if (IS_ERR(xrtcdev->rtc_clk)) {
- 		if (PTR_ERR(xrtcdev->rtc_clk) != -EPROBE_DEFER)
- 			dev_warn(&pdev->dev, "Device clock not found.\n");
--- 
-2.48.1
-
+-	return ret;
++	return 0;
+ }
+ 
+ static int qce_handle_request(struct crypto_async_request *async_req)
 
 
