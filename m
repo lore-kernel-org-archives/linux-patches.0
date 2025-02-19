@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BB41C5F0C;
-	Wed, 19 Feb 2025 09:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DD11C5F0C;
+	Wed, 19 Feb 2025 09:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956463; cv=none; b=Wr25tbTM9E5qAo9UaZ5uGeFNNDs69ch0pCbmJzVc2AgcjN+fPwaNlJlAVCLe3ko7HCuEaXzfSD7qts7vxJHPtwSh5byMj+5WR9vBz7z79vYUnSpOwbPyvSXhFBT5a/rTr5dy6QI5yNBMH6WqQ1kVeYPAba8Oi5TfAugYKnIa1Yo=
+	t=1739956466; cv=none; b=bAJM2LPZf/+GO7+ia9Mxq4t1JzPO8f3vn8o80xKs1QBZLQNeD+YEn7WFCux6ykgZu2RQGrzvps5fYNhuit5Q7H1/ozW0MsILipkRbMjr1sz9G22W3a0/vfqiHXlA6U5hV1UbehjicH9D82JfZ5iEt7yzeTPKbCphgSR7Y0m/g6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956463; c=relaxed/simple;
-	bh=7ThH0RcmO5Ltuvr3Hc26hAi8gGZmvDyMV5Hh/4K0yfA=;
+	s=arc-20240116; t=1739956466; c=relaxed/simple;
+	bh=vOCEXreaK28T2h8db6a+a98KyQFFG8VqGLa5M4Rc6LM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZU9HeTs5YWQIdxWnReZezgNqEtdAQaRcmkOJ9nyPpFwtZUwgV5enQfFrDgjReZ3QgiPayanlAxVIDJAEJjxwlc+N+fYVaqJ8Z6uQbKsj48InZ32wotpE8w3tjRvwVlVHGcFH19W+yyNHte71bMOuJ4d7/S87DF5qbs9HdZFPmi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vAM+5w3X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G8hlRsgdILNGQFybkDsadhXSq3KNb+6/jN/0DCz7/rBMYmgI7ln1mIUWLqQ9rCxRowsZEUuAr+1M8D5OuxORVAsILqkrVFktxDHM7lC0d8LbUOYH0YvJyRkWZghV4VkJsKuUKOFFfQxD/J5F+ObDwE4xIVKyr+3TRQFEa0pGuYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GeTaCYAt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vAM+5w3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7889FC4CED1;
-	Wed, 19 Feb 2025 09:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GeTaCYAt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DF9C4CED1;
+	Wed, 19 Feb 2025 09:14:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956462;
-	bh=7ThH0RcmO5Ltuvr3Hc26hAi8gGZmvDyMV5Hh/4K0yfA=;
+	s=korg; t=1739956465;
+	bh=vOCEXreaK28T2h8db6a+a98KyQFFG8VqGLa5M4Rc6LM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vAM+5w3XeJwGHgHC9F7Sdz4dHhGdvxCxzG9ZIaZJhDXbKBpbGFS/zL/jVEpk2M7/s
-	 7zbpiu5Z9+UMXS/ckNENgqmXweY71mLT91xmdWpaOQy9JkBlY9JVDk4y1brbkniV9U
-	 oqPXWGyfLZ2kUziq6Q1mGNS3dPCEy2+iefsbCSp8=
+	b=GeTaCYAt1YTS5CfMBXJVcDTwesVFfCrZhFIzRVGjXUEgvaJXU6g0uqjcnH68rYQ21
+	 pLZEXdJQSuJNwm+LQsX09BZjDhahoP7U6QeyS2KhBMhUcRs+EcnpG6DVbVtCPcWuEj
+	 axbgXboW4VoC63NCcPbyC1S+F+r/YTjYhpEPj1gI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+85992ace37d5b7b51635@syzkaller.appspotmail.com>,
-	Qasim Ijaz <qasdev00@gmail.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Oliver Neukum <oneukum@suse.com>,
+	syzbot+ffba8e636870dac0e0c0@syzkaller.appspotmail.com,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 187/578] iommufd/iova_bitmap: Fix shift-out-of-bounds in iova_bitmap_offset_to_index()
-Date: Wed, 19 Feb 2025 09:23:11 +0100
-Message-ID: <20250219082700.319667752@linuxfoundation.org>
+Subject: [PATCH 6.1 188/578] media: rc: iguanair: handle timeouts
+Date: Wed, 19 Feb 2025 09:23:12 +0100
+Message-ID: <20250219082700.361174603@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -53,45 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qasim Ijaz <qasdev00@gmail.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit e24c1551059268b37f6f40639883eafb281b8b9c ]
+[ Upstream commit b98d5000c50544f14bacb248c34e5219fbe81287 ]
 
-Resolve a UBSAN shift-out-of-bounds issue in iova_bitmap_offset_to_index()
-where shifting the constant "1" (of type int) by bitmap->mapped.pgshift
-(an unsigned long value) could result in undefined behavior.
+In case of a timeout the IO must be cancelled or
+the next IO using the URB will fail and/or overwrite
+an operational URB.
 
-The constant "1" defaults to a 32-bit "int", and when "pgshift" exceeds
-31 (e.g., pgshift = 63) the shift operation overflows, as the result
-cannot be represented in a 32-bit type.
+The automatic bisection fails because it arrives
+at a commit that correctly lets the test case run
+without an error.
 
-To resolve this, the constant is updated to "1UL", promoting it to an
-unsigned long type to match the operand's type.
-
-Fixes: 58ccf0190d19 ("vfio: Add an IOVA bitmap support")
-Link: https://patch.msgid.link/r/20250113223820.10713-1-qasdev00@gmail.com
-Reported-by: syzbot <syzbot+85992ace37d5b7b51635@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=85992ace37d5b7b51635
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Fixes: e99a7cfe93fd ("[media] iguanair: reuse existing urb callback for command responses")
+Reported-by: syzbot+ffba8e636870dac0e0c0@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/66f5cc9a.050a0220.46d20.0004.GAE@google.com/
+Tested-by: syzbot+ffba8e636870dac0e0c0@syzkaller.appspotmail.com
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/iova_bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/rc/iguanair.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vfio/iova_bitmap.c b/drivers/vfio/iova_bitmap.c
-index dfab5b742191a..76ef63b940d96 100644
---- a/drivers/vfio/iova_bitmap.c
-+++ b/drivers/vfio/iova_bitmap.c
-@@ -126,7 +126,7 @@ struct iova_bitmap {
- static unsigned long iova_bitmap_offset_to_index(struct iova_bitmap *bitmap,
- 						 unsigned long iova)
- {
--	unsigned long pgsize = 1 << bitmap->mapped.pgshift;
-+	unsigned long pgsize = 1UL << bitmap->mapped.pgshift;
+diff --git a/drivers/media/rc/iguanair.c b/drivers/media/rc/iguanair.c
+index 276bf3c8a8cb4..8af94246e5916 100644
+--- a/drivers/media/rc/iguanair.c
++++ b/drivers/media/rc/iguanair.c
+@@ -194,8 +194,10 @@ static int iguanair_send(struct iguanair *ir, unsigned size)
+ 	if (rc)
+ 		return rc;
  
- 	return iova / (BITS_PER_TYPE(*bitmap->bitmap) * pgsize);
+-	if (wait_for_completion_timeout(&ir->completion, TIMEOUT) == 0)
++	if (wait_for_completion_timeout(&ir->completion, TIMEOUT) == 0) {
++		usb_kill_urb(ir->urb_out);
+ 		return -ETIMEDOUT;
++	}
+ 
+ 	return rc;
  }
 -- 
 2.39.5
