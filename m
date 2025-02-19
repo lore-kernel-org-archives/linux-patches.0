@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFF41CAA7D;
-	Wed, 19 Feb 2025 08:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EE81CAA85;
+	Wed, 19 Feb 2025 08:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955576; cv=none; b=GuOKIRaKIJyyzHUu9Lt4OvYX3rcj5FvEGlIDxykjRK/KDaYx+H+6sSKcN/Sa3raB3BCpGb+hEWIPnU7gZSr72i4GnibpoGcWH76G0/uAZlsj4pMMLKPwP8we6NJLda2d9FWYnCtyKxMTazTxJW5rbqpf/YgNniOBW3RUEmkU/Mc=
+	t=1739955579; cv=none; b=RSm5Wcpqu7z2klv8pGaSELBEA1cwvRHHdHHcGvBt2/y5Jpxce652x1m2t19PZLcBmTkwQ4/NIVGYAdxc6DLMafJNqRwGctgrMl7TVB1t3w1b+8+1p4eS4oTRiliz7rsXLG5rwmro0woyU1DK41x1WP8lPJQbC7eEjcTyzBsLCgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955576; c=relaxed/simple;
-	bh=XX3EY5PgrcU7SimEIw6Fv/he0BSoBBVZvf+jT7dreMk=;
+	s=arc-20240116; t=1739955579; c=relaxed/simple;
+	bh=ps1p2byrLMOkiOkAm20eh9RXYJ26/hHh8gg3ulq9o8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h3Vp7LfhlwNjy45xioIWGfIQh85AwhnzCYhGwK04GjyS/MJgt4c+E4fCrDmGHHYHRXShjlfjkSK1is4kQapxFBms4x6xgJTNyOFXY0HapTdu9PzxH+VVmicKF3SeOb+FN9HhxFCU+Jg8CgQV8Vdai+133tWfCaiR0We5pXMjXVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mm+9a6QJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qbTOmSBxoBysJa5G6UUDPf4DTswLU/48x1IsRiIFvKsM0M/oumvZgqKge7qfsGXmNuaZdWJ0MNMXwAMbWY9u7qb10eJM5EXVdu5Xy5dgphocbTAkyp4VtCS59xHZgJMACyxDnPVfrxuzRCZ3a28saRyl4dVqDKzXJsAYLYCKDwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10yKLtrW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mm+9a6QJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14FEC4CED1;
-	Wed, 19 Feb 2025 08:59:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10yKLtrW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B3CC4CED1;
+	Wed, 19 Feb 2025 08:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955576;
-	bh=XX3EY5PgrcU7SimEIw6Fv/he0BSoBBVZvf+jT7dreMk=;
+	s=korg; t=1739955579;
+	bh=ps1p2byrLMOkiOkAm20eh9RXYJ26/hHh8gg3ulq9o8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mm+9a6QJko57lHzsqwwPpFefMFeo4kefiY2mEG0+gTbWP8uN6ZjBChbFMPe3SWZpq
-	 L28T1GUj25uV2GhwiBiCg8uT63S1yP9udPpaAihLdVxHTfQKqnFMTBl0wYVPpGxhj0
-	 86cu67tTWSG5lSJX8Unsb9GZNcB0RU2m+bwRmCVo=
+	b=10yKLtrWSy5hYB85bZlqjafuUcxe5r5nqWQ7bOxPdoqWxsTK68ip33rMUAXeAUNns
+	 N/jBb8gBoYFANBU9vkmtj1D+4bYrP5O8UBWzvtyV9Icp2eDGb8s9Af3JOAzry7UxT3
+	 z5iWfTr0B/w9/XQc2GwgvZJxAw80wdShDkucmcAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/152] ASoC: Intel: bytcr_rt5640: Add DMI quirk for Vexia Edu Atla 10 tablet 5V
-Date: Wed, 19 Feb 2025 09:27:41 +0100
-Message-ID: <20250219082551.946150994@linuxfoundation.org>
+	Andy Strohman <andrew@andrewstrohman.com>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 6.6 049/152] batman-adv: fix panic during interface removal
+Date: Wed, 19 Feb 2025 09:27:42 +0100
+Message-ID: <20250219082551.984945361@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -51,59 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Andy Strohman <andrew@andrewstrohman.com>
 
-[ Upstream commit 6917192378c1ce17ba31df51c4e0d8b1c97a453b ]
+commit ccb7276a6d26d6f8416e315b43b45e15ee7f29e2 upstream.
 
-The Vexia EDU ATLA 10 tablet comes in 2 different versions with
-significantly different mainboards. The only outward difference is that
-the charging barrel on one is marked 5V and the other is marked 9V.
+Reference counting is used to ensure that
+batadv_hardif_neigh_node and batadv_hard_iface
+are not freed before/during
+batadv_v_elp_throughput_metric_update work is
+finished.
 
-The 5V version mostly works with the BYTCR defaults, except that it is
-missing a CHAN package in its ACPI tables and the default of using
-SSP0-AIF2 is wrong, instead SSP0-AIF1 must be used. That and its jack
-detect signal is not inverted as it usually is.
+But there isn't a guarantee that the hard if will
+remain associated with a soft interface up until
+the work is finished.
 
-Add a DMI quirk for the 5V version to fix sound not working.
+This fixes a crash triggered by reboot that looks
+like this:
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/20250123132507.18434-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Call trace:
+ batadv_v_mesh_free+0xd0/0x4dc [batman_adv]
+ batadv_v_elp_throughput_metric_update+0x1c/0xa4
+ process_one_work+0x178/0x398
+ worker_thread+0x2e8/0x4d0
+ kthread+0xd8/0xdc
+ ret_from_fork+0x10/0x20
+
+(the batadv_v_mesh_free call is misleading,
+and does not actually happen)
+
+I was able to make the issue happen more reliably
+by changing hardif_neigh->bat_v.metric_work work
+to be delayed work. This allowed me to track down
+and confirm the fix.
+
+Cc: stable@vger.kernel.org
+Fixes: c833484e5f38 ("batman-adv: ELP - compute the metric based on the estimated throughput")
+Signed-off-by: Andy Strohman <andrew@andrewstrohman.com>
+[sven@narfation.org: prevent entering batadv_v_elp_get_throughput without
+ soft_iface]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ net/batman-adv/bat_v_elp.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index ddf68be0af14a..ce80adc30fe94 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -1132,7 +1132,22 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
- 					BYT_RT5640_SSP0_AIF2 |
- 					BYT_RT5640_MCLK_EN),
- 	},
--	{	/* Vexia Edu Atla 10 tablet */
-+	{
-+		/* Vexia Edu Atla 10 tablet 5V version */
-+		.matches = {
-+			/* Having all 3 of these not set is somewhat unique */
-+			DMI_MATCH(DMI_SYS_VENDOR, "To be filled by O.E.M."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "To be filled by O.E.M."),
-+			DMI_MATCH(DMI_BOARD_NAME, "To be filled by O.E.M."),
-+			/* Above strings are too generic, also match on BIOS date */
-+			DMI_MATCH(DMI_BIOS_DATE, "05/14/2015"),
-+		},
-+		.driver_data = (void *)(BYTCR_INPUT_DEFAULTS |
-+					BYT_RT5640_JD_NOT_INV |
-+					BYT_RT5640_SSP0_AIF1 |
-+					BYT_RT5640_MCLK_EN),
-+	},
-+	{	/* Vexia Edu Atla 10 tablet 9V version */
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
- 			DMI_MATCH(DMI_BOARD_NAME, "Aptio CRB"),
--- 
-2.39.5
-
+--- a/net/batman-adv/bat_v_elp.c
++++ b/net/batman-adv/bat_v_elp.c
+@@ -66,12 +66,19 @@ static void batadv_v_elp_start_timer(str
+ static u32 batadv_v_elp_get_throughput(struct batadv_hardif_neigh_node *neigh)
+ {
+ 	struct batadv_hard_iface *hard_iface = neigh->if_incoming;
++	struct net_device *soft_iface = hard_iface->soft_iface;
+ 	struct ethtool_link_ksettings link_settings;
+ 	struct net_device *real_netdev;
+ 	struct station_info sinfo;
+ 	u32 throughput;
+ 	int ret;
+ 
++	/* don't query throughput when no longer associated with any
++	 * batman-adv interface
++	 */
++	if (!soft_iface)
++		return BATADV_THROUGHPUT_DEFAULT_VALUE;
++
+ 	/* if the user specified a customised value for this interface, then
+ 	 * return it directly
+ 	 */
+@@ -141,7 +148,7 @@ static u32 batadv_v_elp_get_throughput(s
+ 
+ default_throughput:
+ 	if (!(hard_iface->bat_v.flags & BATADV_WARNING_DEFAULT)) {
+-		batadv_info(hard_iface->soft_iface,
++		batadv_info(soft_iface,
+ 			    "WiFi driver or ethtool info does not provide information about link speeds on interface %s, therefore defaulting to hardcoded throughput values of %u.%1u Mbps. Consider overriding the throughput manually or checking your driver.\n",
+ 			    hard_iface->net_dev->name,
+ 			    BATADV_THROUGHPUT_DEFAULT_VALUE / 10,
 
 
