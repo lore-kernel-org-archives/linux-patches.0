@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0B71C175A;
-	Wed, 19 Feb 2025 08:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B52A1DE8BF;
+	Wed, 19 Feb 2025 08:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954408; cv=none; b=TYY9RrcMG/sEMMWc89RNfqw1TomN0UhE4CiPPHTPouTUlLol3pLv3WEjID8GGNQcR5gMggFZ/BTWVuglR6cI2h5YpjxfWprvhHu/1ODcCEzVRuu49kInqxxiHa/nvI4d1yS1ZZYVSU/D3dTgeVrzS84HrZRFd1z5iAjTlR8NOEc=
+	t=1739954412; cv=none; b=iAk9jrUsmeBJ4KJKusNpD1hn+wZ4Fr41UQuPudOOMvLt70CkSI6LL5dBoGKIBSJ/utahDNA2zUcTogoguPrexQ/fGmmvT4921o+fbRoaaO21IUsvxzayGKL7OEcS4tPgpKgoYaXFljEFr2aEIEMGU0BYPnr6Ao8K6ccuqTdWBDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954408; c=relaxed/simple;
-	bh=tn+UrPDw0iuxO5JsCSN8w2Dpplk9db+t6QO5nUUr+6s=;
+	s=arc-20240116; t=1739954412; c=relaxed/simple;
+	bh=mJFafRSy1FvxGRDTodSPBiEsxj7AmELcGFF75pWbvFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HI7fXsfRrZDV96nJxYfiPat4Tr5fF39Gej6rm88yWOfFNIL5TND8Hv/XodULen6FWo7K1GhEapyZ+HbfYlTvvEkY5ek67HHzXBvR+dIgO9YlW15A4/sFhH6V8kMRY8pEZykBHCcwclvGMbQpDXNYy/fLGengxxeqZttf2xovB0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDUUFotU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LF8x3DK+lekevyeF0QVXxB4hvNZ+RR0GyfC9IDWTj9iKRQihUfRIU2OIfnHo9cJaotlJ+G2A8HdEBRkhKQwE8M/O6rI+B+Y10QggkifVt82jEi6WIpIi8I/dYRsAmAjHOWjRUdzgkJRwOaNM03HRZZPTFL+MR62+c4OyPFGUZTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kny7QQ75; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDUUFotU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3E4C4CED1;
-	Wed, 19 Feb 2025 08:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kny7QQ75"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804D6C4CED1;
+	Wed, 19 Feb 2025 08:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954408;
-	bh=tn+UrPDw0iuxO5JsCSN8w2Dpplk9db+t6QO5nUUr+6s=;
+	s=korg; t=1739954411;
+	bh=mJFafRSy1FvxGRDTodSPBiEsxj7AmELcGFF75pWbvFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QDUUFotUPHLE43Ki7foeWz1IT19Tfdn49viOXZdwiwpHEGDfjUExT1GEkCZCY2iGb
-	 A09GXGcGaWUaJ7yK8BMQJcvCd4B7GaOZqRY2JY+J8zbwAMlZ4RTKplG68GTmUfdMhz
-	 3B8q705Z0I8jgCCny1LSZQuEmO8anbk+xS97spYQ=
+	b=kny7QQ75JYNEZ1qDPj5Hkwo0ik0OyLb9gIqhSXSc9l1kHqFRa7jn7e8JPX8Tfsl0o
+	 3ih5bEJlBuNVgIwa/ZowOvyLCr2WHUXByxePIwgmUtg+2fYcD0VaKwpHfVUrKdRUFk
+	 vihaofUKv67r6K0HLrHnWMJZyhZuWOPqG+sMB7lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Iurman <justin.iurman@uliege.be>,
-	Alexander Aring <aahringo@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 195/274] net: ipv6: rpl_iptunnel: mitigate 2-realloc issue
-Date: Wed, 19 Feb 2025 09:27:29 +0100
-Message-ID: <20250219082617.216726760@linuxfoundation.org>
+Subject: [PATCH 6.13 196/274] net: ipv6: fix dst ref loops in rpl, seg6 and ioam6 lwtunnels
+Date: Wed, 19 Feb 2025 09:27:30 +0100
+Message-ID: <20250219082617.255620797@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -52,152 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Iurman <justin.iurman@uliege.be>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 985ec6f5e6235242191370628acb73d7a9f0c0ea ]
+[ Upstream commit 92191dd1073088753821b862b791dcc83e558e07 ]
 
-This patch mitigates the two-reallocations issue with rpl_iptunnel by
-providing the dst_entry (in the cache) to the first call to
-skb_cow_head(). As a result, the very first iteration would still
-trigger two reallocations (i.e., empty cache), while next iterations
-would only trigger a single reallocation.
+Some lwtunnels have a dst cache for post-transformation dst.
+If the packet destination did not change we may end up recording
+a reference to the lwtunnel in its own cache, and the lwtunnel
+state will never be freed.
 
-Performance tests before/after applying this patch, which clearly shows
-there is no impact (it even shows improvement):
-- before: https://ibb.co/nQJhqwc
-- after: https://ibb.co/4ZvW6wV
+Discovered by the ioam6.sh test, kmemleak was recently fixed
+to catch per-cpu memory leaks. I'm not sure if rpl and seg6
+can actually hit this, but in principle I don't see why not.
 
-Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
-Cc: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 92191dd10730 ("net: ipv6: fix dst ref loops in rpl, seg6 and ioam6 lwtunnels")
+Fixes: 8cb3bf8bff3c ("ipv6: ioam: Add support for the ip6ip6 encapsulation")
+Fixes: 6c8702c60b88 ("ipv6: sr: add support for SRH encapsulation and injection with lwtunnels")
+Fixes: a7a29f9c361f ("net: ipv6: add rpl sr tunnel")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250130031519.2716843-2-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/rpl_iptunnel.c | 46 ++++++++++++++++++++++-------------------
- 1 file changed, 25 insertions(+), 21 deletions(-)
+ net/ipv6/ioam6_iptunnel.c | 9 ++++++---
+ net/ipv6/rpl_iptunnel.c   | 9 ++++++---
+ net/ipv6/seg6_iptunnel.c  | 9 ++++++---
+ 3 files changed, 18 insertions(+), 9 deletions(-)
 
+diff --git a/net/ipv6/ioam6_iptunnel.c b/net/ipv6/ioam6_iptunnel.c
+index 28e5a89dc2557..7b6bd832930d1 100644
+--- a/net/ipv6/ioam6_iptunnel.c
++++ b/net/ipv6/ioam6_iptunnel.c
+@@ -411,9 +411,12 @@ static int ioam6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 			goto drop;
+ 		}
+ 
+-		local_bh_disable();
+-		dst_cache_set_ip6(&ilwt->cache, cache_dst, &fl6.saddr);
+-		local_bh_enable();
++		/* cache only if we don't create a dst reference loop */
++		if (dst->lwtstate != cache_dst->lwtstate) {
++			local_bh_disable();
++			dst_cache_set_ip6(&ilwt->cache, cache_dst, &fl6.saddr);
++			local_bh_enable();
++		}
+ 
+ 		err = skb_cow_head(skb, LL_RESERVED_SPACE(cache_dst->dev));
+ 		if (unlikely(err))
 diff --git a/net/ipv6/rpl_iptunnel.c b/net/ipv6/rpl_iptunnel.c
-index db3c19a42e1ca..7ba22d2f2bfef 100644
+index 7ba22d2f2bfef..be084089ec783 100644
 --- a/net/ipv6/rpl_iptunnel.c
 +++ b/net/ipv6/rpl_iptunnel.c
-@@ -125,7 +125,8 @@ static void rpl_destroy_state(struct lwtunnel_state *lwt)
- }
- 
- static int rpl_do_srh_inline(struct sk_buff *skb, const struct rpl_lwt *rlwt,
--			     const struct ipv6_rpl_sr_hdr *srh)
-+			     const struct ipv6_rpl_sr_hdr *srh,
-+			     struct dst_entry *cache_dst)
- {
- 	struct ipv6_rpl_sr_hdr *isrh, *csrh;
- 	const struct ipv6hdr *oldhdr;
-@@ -153,7 +154,7 @@ static int rpl_do_srh_inline(struct sk_buff *skb, const struct rpl_lwt *rlwt,
- 
- 	hdrlen = ((csrh->hdrlen + 1) << 3);
- 
--	err = skb_cow_head(skb, hdrlen + skb->mac_len);
-+	err = skb_cow_head(skb, hdrlen + dst_dev_overhead(cache_dst, skb));
- 	if (unlikely(err)) {
- 		kfree(buf);
- 		return err;
-@@ -186,7 +187,8 @@ static int rpl_do_srh_inline(struct sk_buff *skb, const struct rpl_lwt *rlwt,
- 	return 0;
- }
- 
--static int rpl_do_srh(struct sk_buff *skb, const struct rpl_lwt *rlwt)
-+static int rpl_do_srh(struct sk_buff *skb, const struct rpl_lwt *rlwt,
-+		      struct dst_entry *cache_dst)
- {
- 	struct dst_entry *dst = skb_dst(skb);
- 	struct rpl_iptunnel_encap *tinfo;
-@@ -196,7 +198,7 @@ static int rpl_do_srh(struct sk_buff *skb, const struct rpl_lwt *rlwt)
- 
- 	tinfo = rpl_encap_lwtunnel(dst->lwtstate);
- 
--	return rpl_do_srh_inline(skb, rlwt, tinfo->srh);
-+	return rpl_do_srh_inline(skb, rlwt, tinfo->srh, cache_dst);
- }
- 
- static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
-@@ -208,14 +210,14 @@ static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 
- 	rlwt = rpl_lwt_lwtunnel(orig_dst->lwtstate);
- 
--	err = rpl_do_srh(skb, rlwt);
--	if (unlikely(err))
--		goto drop;
--
- 	local_bh_disable();
- 	dst = dst_cache_get(&rlwt->cache);
- 	local_bh_enable();
- 
-+	err = rpl_do_srh(skb, rlwt, dst);
-+	if (unlikely(err))
-+		goto drop;
-+
- 	if (unlikely(!dst)) {
- 		struct ipv6hdr *hdr = ipv6_hdr(skb);
- 		struct flowi6 fl6;
-@@ -237,15 +239,15 @@ static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 		local_bh_disable();
- 		dst_cache_set_ip6(&rlwt->cache, dst, &fl6.saddr);
- 		local_bh_enable();
-+
-+		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
-+		if (unlikely(err))
-+			goto drop;
- 	}
- 
- 	skb_dst_drop(skb);
- 	skb_dst_set(skb, dst);
- 
--	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
--	if (unlikely(err))
--		goto drop;
--
- 	return dst_output(net, sk, skb);
- 
- drop:
-@@ -262,29 +264,31 @@ static int rpl_input(struct sk_buff *skb)
- 
- 	rlwt = rpl_lwt_lwtunnel(orig_dst->lwtstate);
- 
--	err = rpl_do_srh(skb, rlwt);
--	if (unlikely(err))
--		goto drop;
--
- 	local_bh_disable();
- 	dst = dst_cache_get(&rlwt->cache);
-+	local_bh_enable();
-+
-+	err = rpl_do_srh(skb, rlwt, dst);
-+	if (unlikely(err))
-+		goto drop;
- 
- 	if (!dst) {
- 		ip6_route_input(skb);
- 		dst = skb_dst(skb);
- 		if (!dst->error) {
-+			local_bh_disable();
- 			dst_cache_set_ip6(&rlwt->cache, dst,
- 					  &ipv6_hdr(skb)->saddr);
-+			local_bh_enable();
+@@ -236,9 +236,12 @@ static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 			goto drop;
  		}
-+
-+		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
-+		if (unlikely(err))
-+			goto drop;
- 	} else {
- 		skb_dst_drop(skb);
- 		skb_dst_set(skb, dst);
- 	}
--	local_bh_enable();
--
--	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
--	if (unlikely(err))
--		goto drop;
  
- 	return dst_input(skb);
+-		local_bh_disable();
+-		dst_cache_set_ip6(&rlwt->cache, dst, &fl6.saddr);
+-		local_bh_enable();
++		/* cache only if we don't create a dst reference loop */
++		if (orig_dst->lwtstate != dst->lwtstate) {
++			local_bh_disable();
++			dst_cache_set_ip6(&rlwt->cache, dst, &fl6.saddr);
++			local_bh_enable();
++		}
  
+ 		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
+ 		if (unlikely(err))
+diff --git a/net/ipv6/seg6_iptunnel.c b/net/ipv6/seg6_iptunnel.c
+index 4bf937bfc2633..316dbc2694f2a 100644
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -575,9 +575,12 @@ static int seg6_output_core(struct net *net, struct sock *sk,
+ 			goto drop;
+ 		}
+ 
+-		local_bh_disable();
+-		dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
+-		local_bh_enable();
++		/* cache only if we don't create a dst reference loop */
++		if (orig_dst->lwtstate != dst->lwtstate) {
++			local_bh_disable();
++			dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
++			local_bh_enable();
++		}
+ 
+ 		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
+ 		if (unlikely(err))
 -- 
 2.39.5
 
