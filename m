@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1001DE8AE;
-	Wed, 19 Feb 2025 08:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5106F1C175A;
+	Wed, 19 Feb 2025 08:49:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954987; cv=none; b=QKe9GpgDe6qk3zzegERxet/3fDalA28oRD0HFJ2bwe1XWHYnJ78VoVLb8YziB9/dqURH41LPTm1KOcvvXV31oQZwiSc9eZwMHVoYMIWi2hLqXUtxqvi6zs5QeVmcH7/fk8dmPIItQ6bwTljCwCKTdqzeIeBZ1rXeFjt27v98QMA=
+	t=1739954990; cv=none; b=SGKevH4OICxEA9HNi38YIqd35ZwAEWqqcsEdx3xf5MIN9yJbYg9qC55bA4ibIukck7xA3tshF+faczp3E2+IWJEp5bfQJW5+GRROXkNfEJ0OVIYaDt22inSC4tNjHLFYYBpMUfxE8I7y0LhJFBgxi4Xkevwr/hnQqBy1RkrutoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954987; c=relaxed/simple;
-	bh=gXZqU8Dte7ANQ1pveeI4crInpVbP5HSihwansS+cUJ8=;
+	s=arc-20240116; t=1739954990; c=relaxed/simple;
+	bh=caKbFOY+G4+kSE/QkvrOpadtpN8EX88aJVD/A4b6MvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LEvA55jDMApUrVkEWKnbZyjDdhVxeHgkQLiyXK35/4bRseYkCF0mxQ8tK5nxXlMR8KT6AihqFuaPu88JwJy/FYf7hmLcZ2t0t1d3v6v0TdvdjM3VNd2QKE//BM5EhLGVz6qkYZdgDmPzH6CfDd4KYamTcVmCfZey5TyVvrlY1Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7fu7+6q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QMGyBlguRgOZ5Vx3Pjgx0wmXIJmyoSN019aJhzi/IVhOEIgW71LVbKCFyPKMLBBFfMEtJzURtnAIjhRg9AOU4gXaNs2ot3VuEW41kdB296XuZrpfBRHYVwpWua+qX0h25nbdyjvTP+3u87UuRVs0KbfBl2WN3zmXB79fYoD1U/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/lz625E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7fu7+6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842A0C4CED1;
-	Wed, 19 Feb 2025 08:49:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/lz625E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C265AC4CED1;
+	Wed, 19 Feb 2025 08:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954987;
-	bh=gXZqU8Dte7ANQ1pveeI4crInpVbP5HSihwansS+cUJ8=;
+	s=korg; t=1739954990;
+	bh=caKbFOY+G4+kSE/QkvrOpadtpN8EX88aJVD/A4b6MvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7fu7+6qSxlzdEaiwu0gVA9UMr6ssqNfWfANTx4ZyW7yMxe2C2qPcE4c/48K8MJd5
-	 2a7YbhSxTKhzYNW+gkc3TnFSU9xcOltqVsJ9Gp7AasFZq4D4/gXSU2Bmd8knsiDqhj
-	 HjGewAd7qRMa4CHGA38wwezJOoZUttK+C84yF54A=
+	b=r/lz625EoBqkKHfYTiyvXWdFqFNhr3gwSRsoQ2VwyVW6AsYydPZ+rYSyIM7Zrew8f
+	 CLrvCAY+BK0qyz607StmpBEjT4FL4bychUHvuDsnjaWV/aITa313yecNF++TQIQ9St
+	 Gg2pSufkFaJhyTBlZKbtDyIqYq2VuzZJv5a6JGrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naushir Patuck <naush@raspberrypi.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Firas Jahjah <firasj@amazon.com>,
+	Yonatan Nachum <ynachum@amazon.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Gal Pressman <gal.pressman@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 067/230] media: bcm2835-unicam: Disable trigger mode operation
-Date: Wed, 19 Feb 2025 09:26:24 +0100
-Message-ID: <20250219082604.331066423@linuxfoundation.org>
+Subject: [PATCH 6.12 058/230] RDMA/efa: Reset device on probe failure
+Date: Wed, 19 Feb 2025 09:26:15 +0100
+Message-ID: <20250219082603.984726707@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -53,55 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naushir Patuck <naush@raspberrypi.com>
+From: Michael Margolin <mrgolin@amazon.com>
 
-[ Upstream commit 697a252bb2ea414cc1c0b4cf4e3d94a879eaf162 ]
+[ Upstream commit 123c13f10ed3627ba112172d8bd122a72cae226d ]
 
-The imx219/imx708 sensors frequently generate a single corrupt frame
-(image or embedded data) when the sensor first starts. This can either
-be a missing line, or invalid samples within the line. This only occurrs
-using the upstream Unicam kernel driver.
+Make sure the device is being reset on driver exit whatever the reason
+is, to keep the device aligned and allow it to close shared resources
+(e.g. admin queue).
 
-Disabling trigger mode elimiates this corruption. Since trigger mode is
-a legacy feature copied from the firmware driver and not expected to be
-needed, remove it. Tested on the Raspberry Pi cameras and shows no ill
-effects.
-
-Signed-off-by: Naushir Patuck <naush@raspberrypi.com>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Firas Jahjah <firasj@amazon.com>
+Reviewed-by: Yonatan Nachum <ynachum@amazon.com>
+Signed-off-by: Michael Margolin <mrgolin@amazon.com>
+Link: https://patch.msgid.link/20241225131548.15155-1-mrgolin@amazon.com
+Reviewed-by: Gal Pressman <gal.pressman@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/broadcom/bcm2835-unicam.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/infiniband/hw/efa/efa_main.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/broadcom/bcm2835-unicam.c b/drivers/media/platform/broadcom/bcm2835-unicam.c
-index a1d93c14553d8..9f81e1582a300 100644
---- a/drivers/media/platform/broadcom/bcm2835-unicam.c
-+++ b/drivers/media/platform/broadcom/bcm2835-unicam.c
-@@ -816,11 +816,6 @@ static irqreturn_t unicam_isr(int irq, void *dev)
- 		}
- 	}
- 
--	if (unicam_reg_read(unicam, UNICAM_ICTL) & UNICAM_FCM) {
--		/* Switch out of trigger mode if selected */
--		unicam_reg_write_field(unicam, UNICAM_ICTL, 1, UNICAM_TFC);
--		unicam_reg_write_field(unicam, UNICAM_ICTL, 0, UNICAM_FCM);
--	}
- 	return IRQ_HANDLED;
+diff --git a/drivers/infiniband/hw/efa/efa_main.c b/drivers/infiniband/hw/efa/efa_main.c
+index ad225823e6f2f..45a4564c670c0 100644
+--- a/drivers/infiniband/hw/efa/efa_main.c
++++ b/drivers/infiniband/hw/efa/efa_main.c
+@@ -470,7 +470,6 @@ static void efa_ib_device_remove(struct efa_dev *dev)
+ 	ibdev_info(&dev->ibdev, "Unregister ib device\n");
+ 	ib_unregister_device(&dev->ibdev);
+ 	efa_destroy_eqs(dev);
+-	efa_com_dev_reset(&dev->edev, EFA_REGS_RESET_NORMAL);
+ 	efa_release_doorbell_bar(dev);
  }
  
-@@ -984,8 +979,7 @@ static void unicam_start_rx(struct unicam_device *unicam,
+@@ -643,12 +642,14 @@ static struct efa_dev *efa_probe_device(struct pci_dev *pdev)
+ 	return ERR_PTR(err);
+ }
  
- 	unicam_reg_write_field(unicam, UNICAM_ANA, 0, UNICAM_DDL);
+-static void efa_remove_device(struct pci_dev *pdev)
++static void efa_remove_device(struct pci_dev *pdev,
++			      enum efa_regs_reset_reason_types reset_reason)
+ {
+ 	struct efa_dev *dev = pci_get_drvdata(pdev);
+ 	struct efa_com_dev *edev;
  
--	/* Always start in trigger frame capture mode (UNICAM_FCM set) */
--	val = UNICAM_FSIE | UNICAM_FEIE | UNICAM_FCM | UNICAM_IBOB;
-+	val = UNICAM_FSIE | UNICAM_FEIE | UNICAM_IBOB;
- 	line_int_freq = max(fmt->height >> 2, 128);
- 	unicam_set_field(&val, line_int_freq, UNICAM_LCIE_MASK);
- 	unicam_reg_write(unicam, UNICAM_ICTL, val);
+ 	edev = &dev->edev;
++	efa_com_dev_reset(edev, reset_reason);
+ 	efa_com_admin_destroy(edev);
+ 	efa_free_irq(dev, &dev->admin_irq);
+ 	efa_disable_msix(dev);
+@@ -676,7 +677,7 @@ static int efa_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	return 0;
+ 
+ err_remove_device:
+-	efa_remove_device(pdev);
++	efa_remove_device(pdev, EFA_REGS_RESET_INIT_ERR);
+ 	return err;
+ }
+ 
+@@ -685,7 +686,7 @@ static void efa_remove(struct pci_dev *pdev)
+ 	struct efa_dev *dev = pci_get_drvdata(pdev);
+ 
+ 	efa_ib_device_remove(dev);
+-	efa_remove_device(pdev);
++	efa_remove_device(pdev, EFA_REGS_RESET_NORMAL);
+ }
+ 
+ static void efa_shutdown(struct pci_dev *pdev)
 -- 
 2.39.5
 
