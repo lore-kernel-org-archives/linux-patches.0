@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AD61DE88C;
-	Wed, 19 Feb 2025 08:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E544D1C175A;
+	Wed, 19 Feb 2025 08:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954965; cv=none; b=GQ6GmSDNpnDNBS9lT+q4b4h8Uwi93I7vqHs+WotqHVVY8KrCAn74tyh0kQuqRjBcyTN4vRObFc7KXK+n4+VtQWsmdFh7AfmkBkFcS7Nga2gtcwkArzs0vdJPUrj/MwsOK+HYzLs3kaYgJy2ADYwHZwuQLNcnSflBWxGWFLNlRu4=
+	t=1739954969; cv=none; b=nMqq7gJYITv1iIPRLii4zbhJxi3Xne1qWdJlXXUlpsV2XPc6Y1SN8mEOEZSpXRPCmJ+BEi4XOr0gtguje7dob58V7L8YnpeGLOZWoSXs7w1jYJ0m1IuD2MIeOoUPvshD7LZeScet+uFbdFNoJwpSL/Q4iU7pxLvyv/Vg/u00UVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954965; c=relaxed/simple;
-	bh=Qu2zKuMnGh37Rsi8p9v2DRfntPBkJOVQGH45yaVaXPc=;
+	s=arc-20240116; t=1739954969; c=relaxed/simple;
+	bh=atBxWtpTpawNYaQzSeTwY1fHbtB3bozLg9byAK/lWks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HyMRp/p1sn6qOqFJmFGOBTo94/whSi46/n+md/00wgWu3O/4aaDrhxwUVXEIwGMW0exSEIC2lsGmriLxeCX517u2iJUMZuV2+gBJevb9/UHnAP3W1Y/r2P+ExLBChFMyz/aW608VCGmQgN40prQaTEUNZUMdUZ1igE/Le74a8HU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AD4GfBo6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fBwDTjRm2POb6sISaBk4E7jSFC3Uq+ffLRAnoll7vYw2sFNj3oLvvW3BJcC9EWokS1Xk07BUO+ezr5CJJpQmBNgz8wdg7XtBUuQjLu405j3DvgnQAsZBcdKLjY+nxtU6OwTSdtsd9VUXZRF5uTHVIlQ+l98L4r+fRxBPKA1HUKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4M0Ky+A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AD4GfBo6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7C4C4CED1;
-	Wed, 19 Feb 2025 08:49:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4M0Ky+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE0AC4CED1;
+	Wed, 19 Feb 2025 08:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954965;
-	bh=Qu2zKuMnGh37Rsi8p9v2DRfntPBkJOVQGH45yaVaXPc=;
+	s=korg; t=1739954968;
+	bh=atBxWtpTpawNYaQzSeTwY1fHbtB3bozLg9byAK/lWks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AD4GfBo6G4tSuO06ETievwB/ubGCnutkdP7W1c4QrN9v1NjY+HN8NFc3EjuPjdoV3
-	 JrZgZeKURoOdcqcXuDDmZsKgiYAk8h34AIPnHv7j5DWdvoQws0J38VW0FvVE2FBsyE
-	 Sbp+P7CjABSdtKT/zja3LAYqseF/O6FN7pnIOOyg=
+	b=H4M0Ky+AG5T7C5tFKXPZ2Ne4fsKkgE7oMXIVuiRzZwgcqg2o+TkEs3iV8Ilw1v7OT
+	 NVwkrNATJxCqH7qYl2foZ55yYJWg802CxLUgk5QOGBys4BtLhyVnW6lMqgP46lquEw
+	 BfTvsgc38wdCtDbQNusLIe6nEtkuyQj7vwockotw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Marshall <hubcap@omnibond.com>,
-	syzbot+fc519d7875f2d9186c1f@syzkaller.appspotmail.com,
+	Leon Romanovsky <leon@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/230] orangefs: fix a oob in orangefs_debug_write
-Date: Wed, 19 Feb 2025 09:26:47 +0100
-Message-ID: <20250219082605.220085229@linuxfoundation.org>
+Subject: [PATCH 6.12 091/230] kbuild: suppress stdout from merge_config for silent builds
+Date: Wed, 19 Feb 2025 09:26:48 +0100
+Message-ID: <20250219082605.258769697@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -51,37 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Marshall <hubcap@omnibond.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit f7c848431632598ff9bce57a659db6af60d75b39 ]
+[ Upstream commit 1f937a4bcb0472015818f30f4d3c5546d3f09933 ]
 
-I got a syzbot report: slab-out-of-bounds Read in
-orangefs_debug_write... several people suggested fixes,
-I tested Al Viro's suggestion and made this patch.
+merge_config does not respect the Make's -s (--silent) option.
 
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
-Reported-by: syzbot+fc519d7875f2d9186c1f@syzkaller.appspotmail.com
+Let's sink the stdout from merge_config for silent builds.
+
+This commit does not cater to the direct invocation of merge_config.sh
+(e.g. arch/mips/Makefile).
+
+Reported-by: Leon Romanovsky <leon@kernel.org>
+Closes: https://lore.kernel.org/all/e534ce33b0e1060eb85ece8429810f087b034c88.1733234008.git.leonro@nvidia.com/
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Tested-by: Leon Romanovsky <leon@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-debugfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/Makefile.defconf | 13 +++++++------
+ scripts/kconfig/Makefile |  4 +++-
+ 2 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
-index 1b508f5433846..fa41db0884880 100644
---- a/fs/orangefs/orangefs-debugfs.c
-+++ b/fs/orangefs/orangefs-debugfs.c
-@@ -393,9 +393,9 @@ static ssize_t orangefs_debug_write(struct file *file,
- 	 * Thwart users who try to jamb a ridiculous number
- 	 * of bytes into the debug file...
- 	 */
--	if (count > ORANGEFS_MAX_DEBUG_STRING_LEN + 1) {
-+	if (count > ORANGEFS_MAX_DEBUG_STRING_LEN) {
- 		silly = count;
--		count = ORANGEFS_MAX_DEBUG_STRING_LEN + 1;
-+		count = ORANGEFS_MAX_DEBUG_STRING_LEN;
- 	}
+diff --git a/scripts/Makefile.defconf b/scripts/Makefile.defconf
+index 226ea3df3b4b4..a44307f08e9d6 100644
+--- a/scripts/Makefile.defconf
++++ b/scripts/Makefile.defconf
+@@ -1,6 +1,11 @@
+ # SPDX-License-Identifier: GPL-2.0
+ # Configuration heplers
  
- 	buf = kzalloc(ORANGEFS_MAX_DEBUG_STRING_LEN, GFP_KERNEL);
++cmd_merge_fragments = \
++	$(srctree)/scripts/kconfig/merge_config.sh \
++	$4 -m -O $(objtree) $(srctree)/arch/$(SRCARCH)/configs/$2 \
++	$(foreach config,$3,$(srctree)/arch/$(SRCARCH)/configs/$(config).config)
++
+ # Creates 'merged defconfigs'
+ # ---------------------------------------------------------------------------
+ # Usage:
+@@ -8,9 +13,7 @@
+ #
+ # Input config fragments without '.config' suffix
+ define merge_into_defconfig
+-	$(Q)$(CONFIG_SHELL) $(srctree)/scripts/kconfig/merge_config.sh \
+-		-m -O $(objtree) $(srctree)/arch/$(SRCARCH)/configs/$(1) \
+-		$(foreach config,$(2),$(srctree)/arch/$(SRCARCH)/configs/$(config).config)
++	$(call cmd,merge_fragments,$1,$2)
+ 	+$(Q)$(MAKE) -f $(srctree)/Makefile olddefconfig
+ endef
+ 
+@@ -22,8 +25,6 @@ endef
+ #
+ # Input config fragments without '.config' suffix
+ define merge_into_defconfig_override
+-	$(Q)$(CONFIG_SHELL) $(srctree)/scripts/kconfig/merge_config.sh \
+-		-Q -m -O $(objtree) $(srctree)/arch/$(SRCARCH)/configs/$(1) \
+-		$(foreach config,$(2),$(srctree)/arch/$(SRCARCH)/configs/$(config).config)
++	$(call cmd,merge_fragments,$1,$2,-Q)
+ 	+$(Q)$(MAKE) -f $(srctree)/Makefile olddefconfig
+ endef
+diff --git a/scripts/kconfig/Makefile b/scripts/kconfig/Makefile
+index a0a0be38cbdc1..fb50bd4f4103f 100644
+--- a/scripts/kconfig/Makefile
++++ b/scripts/kconfig/Makefile
+@@ -105,9 +105,11 @@ configfiles = $(wildcard $(srctree)/kernel/configs/$(1) $(srctree)/arch/$(SRCARC
+ all-config-fragments = $(call configfiles,*.config)
+ config-fragments = $(call configfiles,$@)
+ 
++cmd_merge_fragments = $(srctree)/scripts/kconfig/merge_config.sh -m $(KCONFIG_CONFIG) $(config-fragments)
++
+ %.config: $(obj)/conf
+ 	$(if $(config-fragments),, $(error $@ fragment does not exists on this architecture))
+-	$(Q)$(CONFIG_SHELL) $(srctree)/scripts/kconfig/merge_config.sh -m $(KCONFIG_CONFIG) $(config-fragments)
++	$(call cmd,merge_fragments)
+ 	$(Q)$(MAKE) -f $(srctree)/Makefile olddefconfig
+ 
+ PHONY += tinyconfig
 -- 
 2.39.5
 
