@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6641E0DE2;
-	Wed, 19 Feb 2025 09:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463081E0DCA;
+	Wed, 19 Feb 2025 09:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955664; cv=none; b=CPriTR6fCZiGkSC2N09TXbMMIQhLZ31MIJNViLrNpAt31Xu1KbIPx2FRNojgbwAoD06bH4GRVK+IkSrE3KGEXTXKsDHpWOMIzwUzL3mSzzNxl1Z0XgQYnqfQcp9EuLFmyThnHGTfCYgW2iuqNlYyNY/tt7Kja0/NK1o+CnXinTg=
+	t=1739955667; cv=none; b=P0UEneqSb82nfuN4b3C8OCjhqMt6ZF8HbSBGINZBlZtwzO69U0ssi4WITPqimNnPArNkRJTCgZI6Ry6Eqyp8mL6gErRNWEtSJETztG9PA/KDMgD3Z/bo1463JE/3tX5qeM9viHWiMNBkXaO7dSuROxpTHRqCaFFKogDVCgLQhqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955664; c=relaxed/simple;
-	bh=unRwYXT0XR5lHS2vv2vv45SuNainJ/BU1rVNM1BGxKg=;
+	s=arc-20240116; t=1739955667; c=relaxed/simple;
+	bh=/J10Zu47SESrOIen0m455H17N+ZFupOEmirlXFiC++4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rGNNomSp4+9Tr6uidb2aRYGwFPSYZX/3GnczSLLj79MBghU6AX2YCxt3f0QDumOGX+fP6Su3rSz42Ttrca9oQJdFu3MjpMOsQloHr3tvoourarULCMrdOY13J9goTlvXCmYsTLk9n3IGh2qQbnawWfFPpy9LQucCWBU/Xk3LIJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMedM9eq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OCF3xHkOhAqzQOUeysXFMuu8f/DVlMnBCiQRpjS4/GMFPXaQrOpHlXrPtiFeJz46IhAPeTIXmFTxWS1e1yuLe1mIy/JCv6MwpTY1YaU1VMJV99IJ5j3NSHAf7UlpmLcPz9E+dhGRfQPkrhSpHuWXyd/tnSFTxoHP197eN+79lbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtJ+6nhB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMedM9eq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42B6C4CED1;
-	Wed, 19 Feb 2025 09:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtJ+6nhB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE63DC4CED1;
+	Wed, 19 Feb 2025 09:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955664;
-	bh=unRwYXT0XR5lHS2vv2vv45SuNainJ/BU1rVNM1BGxKg=;
+	s=korg; t=1739955667;
+	bh=/J10Zu47SESrOIen0m455H17N+ZFupOEmirlXFiC++4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMedM9eqs7TxiqCrT0tfh2b5roIDrdlv5yBev7ndijJ7rnZ07tO7St3+wfuw320B7
-	 eO4Nhvh61yBaYMiP37mpQfvgIMMvvnMPUnEllTEQiwJzxL7NpNgYHlPh54blH4uk2d
-	 PCM41b6y+Ah4U1sJ3pC6Ff8PzQkDbF6AvjUvJ+dc=
+	b=TtJ+6nhBkwNwh6TdO+svEiaLjDfaBRBtFhkOyyuSR9pRwWYDkAIT2D2qOsIaNgile
+	 0l7F4hwLPT5PihDhxXbhiV1ZSgiYWxEeOVRgdzXHpZFFYiRwlmC//+Tmi4CLE9Trft
+	 57L6221Dh4nnazvVJh+2sCzr8bRJ2hvPnhP0r1n8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexander=20H=C3=B6lzl?= <alexander.hoelzl@gmx.net>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	yan kang <kangyan91@outlook.com>,
+	yue sun <samsun1006219@gmail.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 076/152] can: j1939: j1939_sk_send_loop(): fix unable to send messages with data length zero
-Date: Wed, 19 Feb 2025 09:28:09 +0100
-Message-ID: <20250219082553.054542085@linuxfoundation.org>
+Subject: [PATCH 6.6 077/152] can: etas_es58x: fix potential NULL pointer dereference on udev->serial
+Date: Wed, 19 Feb 2025 09:28:10 +0100
+Message-ID: <20250219082553.093821020@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -45,82 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Hölzl <alexander.hoelzl@gmx.net>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-commit 44de577e61ed239db09f0da9d436866bef9b77dd upstream.
+commit a1ad2109ce41c9e3912dadd07ad8a9c640064ffb upstream.
 
-The J1939 standard requires the transmission of messages of length 0.
+The driver assumed that es58x_dev->udev->serial could never be NULL.
+While this is true on commercially available devices, an attacker
+could spoof the device identity providing a NULL USB serial number.
+That would trigger a NULL pointer dereference.
 
-For example proprietary messages are specified with a data length of 0
-to 1785. The transmission of such messages is not possible. Sending
-results in no error being returned but no corresponding can frame
-being generated.
+Add a check on es58x_dev->udev->serial before accessing it.
 
-Enable the transmission of zero length J1939 messages. In order to
-facilitate this two changes are necessary:
-
-1) If the transmission of a new message is requested from user space
-the message is segmented in j1939_sk_send_loop(). Let the segmentation
-take into account zero length messages, do not terminate immediately,
-queue the corresponding skb.
-
-2) j1939_session_skb_get_by_offset() selects the next skb to transmit
-for a session. Take into account that there might be zero length skbs
-in the queue.
-
-Signed-off-by: Alexander Hölzl <alexander.hoelzl@gmx.net>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20250205174651.103238-1-alexander.hoelzl@gmx.net
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Reported-by: yan kang <kangyan91@outlook.com>
+Reported-by: yue sun <samsun1006219@gmail.com>
+Closes: https://lore.kernel.org/linux-can/SY8P300MB0421E0013C0EBD2AA46BA709A1F42@SY8P300MB0421.AUSP300.PROD.OUTLOOK.COM/
+Fixes: 9f06631c3f1f ("can: etas_es58x: export product information through devlink_ops::info_get()")
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20250204154859.9797-2-mailhol.vincent@wanadoo.fr
 Cc: stable@vger.kernel.org
-[mkl: commit message rephrased]
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/socket.c    |    4 ++--
- net/can/j1939/transport.c |    5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/can/usb/etas_es58x/es58x_devlink.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/can/j1939/socket.c
-+++ b/net/can/j1939/socket.c
-@@ -1132,7 +1132,7 @@ static int j1939_sk_send_loop(struct j19
- 
- 	todo_size = size;
- 
--	while (todo_size) {
-+	do {
- 		struct j1939_sk_buff_cb *skcb;
- 
- 		segment_size = min_t(size_t, J1939_MAX_TP_PACKET_SIZE,
-@@ -1177,7 +1177,7 @@ static int j1939_sk_send_loop(struct j19
- 
- 		todo_size -= segment_size;
- 		session->total_queued_size += segment_size;
--	}
-+	} while (todo_size);
- 
- 	switch (ret) {
- 	case 0: /* OK */
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -382,8 +382,9 @@ sk_buff *j1939_session_skb_get_by_offset
- 	skb_queue_walk(&session->skb_queue, do_skb) {
- 		do_skcb = j1939_skb_to_cb(do_skb);
- 
--		if (offset_start >= do_skcb->offset &&
--		    offset_start < (do_skcb->offset + do_skb->len)) {
-+		if ((offset_start >= do_skcb->offset &&
-+		     offset_start < (do_skcb->offset + do_skb->len)) ||
-+		     (offset_start == 0 && do_skcb->offset == 0 && do_skb->len == 0)) {
- 			skb = do_skb;
- 		}
+--- a/drivers/net/can/usb/etas_es58x/es58x_devlink.c
++++ b/drivers/net/can/usb/etas_es58x/es58x_devlink.c
+@@ -248,7 +248,11 @@ static int es58x_devlink_info_get(struct
+ 			return ret;
  	}
+ 
+-	return devlink_info_serial_number_put(req, es58x_dev->udev->serial);
++	if (es58x_dev->udev->serial)
++		ret = devlink_info_serial_number_put(req,
++						     es58x_dev->udev->serial);
++
++	return ret;
+ }
+ 
+ const struct devlink_ops es58x_dl_ops = {
 
 
