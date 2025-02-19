@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83DF9158862;
-	Wed, 19 Feb 2025 09:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007991DFD80;
+	Wed, 19 Feb 2025 09:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957011; cv=none; b=GXeb5/gghhh29hTwP13gvqb0ivz0UtONuxwEVxDVUcCf1icBZfH/cFgLA9MOQTZ5bAWpcQ8S5jUFCpN5BoXBx2lyvnwPAzrZUXTU02vira4EZjLBep7Rjy4LLfIJrvJUkJNQj/LofkmWEKLpuqH8FyPkSWeoXIXKERGKW2mmmnY=
+	t=1739957014; cv=none; b=ApeIe4f9Q3wqdxPr1d9qPGKDSymxkuKI+nKWQQgZGB/wJtaFdF84yZ8g8NGL2KPUkGfRPMIjCZdZ/gACH0WtLB9T7XHyw9NEwbK/kjvJzL+zBKSbbwmpyBNyyEPjHIc98c+v3O6HsAjT5x9CrmtDbNXyhxfJKbsDj6FWf+jGZik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957011; c=relaxed/simple;
-	bh=iNRgzNlN1AZIxABZwHO6ZCTaIIh10yWTv63OsePK3mU=;
+	s=arc-20240116; t=1739957014; c=relaxed/simple;
+	bh=UQzChL/mTVGyn5j7AE1f+l2lKKyaMtKu4iVCwquD86o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wnf22rLnWMitXdnBNiWNiSmK3luoQzFOCcea0+QtCLWVseye6r0JWQnPUJHUtSzw154AnJ/6QuFnMDAOJxcFy4zJ34beuWEgdHLt+vbW+cunJAvZNJeQLLap4mSR7MLjU3TCS9mRWSHsIjz1MZkZ3QwUFOeWgD/jPl7wl9JhPBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBi/FMfL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BkoHiDOq0E8/sFSrwuXSSttmh1ITLYJoRgy8My0sHp6TkKyrce7/JNY8GDh6eN7dx5EZ1BxtUE4hnAekhnH6e087wWbk+OpQKhswQWeHhWWId5VbJbIxTrGZYeG9Q65dTUIfOj16GOBofDyj+HzSdCzpXbNYJLAxhFiFv9qMCe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpKbKGXG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBi/FMfL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBC3C4CED1;
-	Wed, 19 Feb 2025 09:23:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpKbKGXG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE73C4CEE6;
+	Wed, 19 Feb 2025 09:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957011;
-	bh=iNRgzNlN1AZIxABZwHO6ZCTaIIh10yWTv63OsePK3mU=;
+	s=korg; t=1739957013;
+	bh=UQzChL/mTVGyn5j7AE1f+l2lKKyaMtKu4iVCwquD86o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aBi/FMfLl3jwmqBYueVks1PFZYdq5vZGt+NGAWNEdXpsH3iKGZKVvQH45RVVZ1o5q
-	 BuAie2m57WeV9LQenqC8Y923iKyz+mRt2EYOHQXJ7kYJ5uThTzHDDOoxfZFjsWn2p3
-	 sDhoTOb2i/w7GuSuP0jW1S2g+T97GRAdOoSU7xYU=
+	b=mpKbKGXGlQkRiSzZDHwF+/Wo4q1Kej11s5fFwY/qvTRRhNQLADAn4W6k+i40OXu4L
+	 w/iA0V5T970V5N2IczZoPMV9apDy7tKzSO6ZKceABlvsM+9Xm+rpSacmhBGzohQE2G
+	 l4aGF2RDPHe+l5I9ngSiKmM/0c45WjpYLRqDc9uQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 377/578] soc: qcom: socinfo: Avoid out of bounds read of serial number
-Date: Wed, 19 Feb 2025 09:26:21 +0100
-Message-ID: <20250219082707.848015205@linuxfoundation.org>
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.1 351/578] drm/i915/guc: Debug print LRC state entries only if the context is pinned
+Date: Wed, 19 Feb 2025 09:25:55 +0100
+Message-ID: <20250219082706.828361155@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,49 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
+From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
 
-commit 22cf4fae6660b6e1a583a41cbf84e3046ca9ccd0 upstream.
+commit 57965269896313e1629a518d3971ad55f599b792 upstream.
 
-On MSM8916 devices, the serial number exposed in sysfs is constant and does
-not change across individual devices. It's always:
+After the context is unpinned the backing memory can also be unpinned,
+so any accesses via the lrc_reg_state pointer can end up in unmapped
+memory. To avoid that, make sure to only access that memory if the
+context is pinned when printing its info.
 
-  db410c:/sys/devices/soc0$ cat serial_number
-  2644893864
+v2: fix newline alignment
 
-The firmware used on MSM8916 exposes SOCINFO_VERSION(0, 8), which does not
-have support for the serial_num field in the socinfo struct. There is an
-existing check to avoid exposing the serial number in that case, but it's
-not correct: When checking the item_size returned by SMEM, we need to make
-sure the *end* of the serial_num is within bounds, instead of comparing
-with the *start* offset. The serial_number currently exposed on MSM8916
-devices is just an out of bounds read of whatever comes after the socinfo
-struct in SMEM.
-
-Fix this by changing offsetof() to offsetofend(), so that the size of the
-field is also taken into account.
-
-Cc: stable@vger.kernel.org
-Fixes: efb448d0a3fc ("soc: qcom: Add socinfo driver")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241230-qcom-socinfo-serialno-oob-v1-1-9b7a890da3da@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 28ff6520a34d ("drm/i915/guc: Update GuC debugfs to support new GuC")
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v5.15+
+Reviewed-by: John Harrison <John.C.Harrison@Intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250115001334.3875347-1-daniele.ceraolospurio@intel.com
+(cherry picked from commit 5bea40687c5cf2a33bf04e9110eb2e2b80222ef5)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/socinfo.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -652,7 +652,7 @@ static int qcom_socinfo_probe(struct pla
- 	if (!qs->attr.soc_id || !qs->attr.revision)
- 		return -ENOMEM;
- 
--	if (offsetof(struct socinfo, serial_num) <= item_size) {
-+	if (offsetofend(struct socinfo, serial_num) <= item_size) {
- 		qs->attr.serial_number = devm_kasprintf(&pdev->dev, GFP_KERNEL,
- 							"%u",
- 							le32_to_cpu(info->serial_num));
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
+@@ -4764,12 +4764,20 @@ static inline void guc_log_context(struc
+ {
+ 	drm_printf(p, "GuC lrc descriptor %u:\n", ce->guc_id.id);
+ 	drm_printf(p, "\tHW Context Desc: 0x%08x\n", ce->lrc.lrca);
+-	drm_printf(p, "\t\tLRC Head: Internal %u, Memory %u\n",
+-		   ce->ring->head,
+-		   ce->lrc_reg_state[CTX_RING_HEAD]);
+-	drm_printf(p, "\t\tLRC Tail: Internal %u, Memory %u\n",
+-		   ce->ring->tail,
+-		   ce->lrc_reg_state[CTX_RING_TAIL]);
++	if (intel_context_pin_if_active(ce)) {
++		drm_printf(p, "\t\tLRC Head: Internal %u, Memory %u\n",
++			   ce->ring->head,
++			   ce->lrc_reg_state[CTX_RING_HEAD]);
++		drm_printf(p, "\t\tLRC Tail: Internal %u, Memory %u\n",
++			   ce->ring->tail,
++			   ce->lrc_reg_state[CTX_RING_TAIL]);
++		intel_context_unpin(ce);
++	} else {
++		drm_printf(p, "\t\tLRC Head: Internal %u, Memory not pinned\n",
++			   ce->ring->head);
++		drm_printf(p, "\t\tLRC Tail: Internal %u, Memory not pinned\n",
++			   ce->ring->tail);
++	}
+ 	drm_printf(p, "\t\tContext Pin Count: %u\n",
+ 		   atomic_read(&ce->pin_count));
+ 	drm_printf(p, "\t\tGuC ID Ref Count: %u\n",
 
 
