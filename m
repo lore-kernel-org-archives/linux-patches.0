@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B94018C011;
-	Wed, 19 Feb 2025 08:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5300A1A841F;
+	Wed, 19 Feb 2025 08:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739953910; cv=none; b=pJzVQB1M3RxeegI2jaoE3LC9KCnj6VgJTe2tWeQhsu/80sL6FiVpsZetAArT4/OBHPLrzDL2F8VaWzOjFo8eDFHzB0PJ/if7kw3AuqwJP4SVPge6afycILSo9iuK08JuBgNEGdO2UiVMM81l5tHg2Bt6A4rbk3MZGl2+AypE6OI=
+	t=1739953913; cv=none; b=RojgmRGUrVx2gnf8hbzLOBR3BKrPqcMkVMvquD9FUR54TT2mKmwq2I954BMtuE1ujJCexZFT8mGQoBX8COipHyr4i3D/hNMlRAKVHpCw5AxYnYy0tu6sGVWlXo9jb3tTwJGPwvrU2yJBFpv3joweUPdFn6sBXk/ik7tyK3Wz/uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739953910; c=relaxed/simple;
-	bh=HzI0sUiqRXjjPFwmcSJqWBzqqDFX9FrjQ7w83Z9AiLs=;
+	s=arc-20240116; t=1739953913; c=relaxed/simple;
+	bh=xFzhKRHroCBuRK64INOfUvS+iUj6TWeB11eRtBL5qLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BNleoSgHKoxS480Nbrrv1aNMmgT5YfjDfSo6sNVyH4Hp2VKqYTigssfhzH726QywTpq3pMh1p7ilHIwBEaTZIVOA22oan6BOlMTo49+fOMvfmn65D1XfecrJJ8sbcW/l9m0Y4tlBg7UHBw0An8adnd/qBZzcsl5w/HpUsAUQc9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2X2Eo+t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MdqK1b2C90YE6FFxQZPDWwZiW0jR0ogSBANVb2/cZIG82Oe4rw2FfPyqCoo1jwFaCQO0FowG3GjlTG0Cn1GO/4dT5SqVof8k43+n3JXnx+kNBFI2zPY+VI6WuwjhRFkVqlcQ1K2A6DhEmEJZ51L7s2L7lk21QHe+T/htABTMWOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMoi9/iG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2X2Eo+t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9501CC4CED1;
-	Wed, 19 Feb 2025 08:31:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMoi9/iG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42C9C4CEEB;
+	Wed, 19 Feb 2025 08:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739953910;
-	bh=HzI0sUiqRXjjPFwmcSJqWBzqqDFX9FrjQ7w83Z9AiLs=;
+	s=korg; t=1739953913;
+	bh=xFzhKRHroCBuRK64INOfUvS+iUj6TWeB11eRtBL5qLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m2X2Eo+to9ivZJEkh38fUvN3I92zLpCfqYLeqomegFkmH2E+fqge0zrjdYZ2lXnbY
-	 cY+rf/0btJYHFmwo4RKAgqd5IR35fIhYmMkU6VKXRHY3EM2I5X+anYsyU2Rii4BqPM
-	 TVI/SJxOWO6sn0x0FxdNDjnmvMXlrfu9B+VrSSYM=
+	b=cMoi9/iGlBsOrEYpbCHn2N11eiqGEASqWv9C1sx5AiUP8LRfsssL+3raxcSQSf87n
+	 SW3FHcrzm+276O3gIFEM9xw8rwAcMFNcEU1M8JKVHGImubdV/+iWLTDXGbEEJ/p1Rn
+	 OYaUZg419v2ckfTCHLQ55sM39mTRMZOZBDx/uH1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.13 005/274] nfsd: validate the nfsd_serv pointer before calling svc_wake_up
-Date: Wed, 19 Feb 2025 09:24:19 +0100
-Message-ID: <20250219082609.746040041@linuxfoundation.org>
+	Yosry Ahmed <yosryahmed@google.com>,
+	Patrick Bellasi <derkling@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.13 006/274] x86/cpu/kvm: SRSO: Fix possible missing IBPB on VM-Exit
+Date: Wed, 19 Feb 2025 09:24:20 +0100
+Message-ID: <20250219082609.783754426@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -52,54 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Patrick Bellasi <derkling@google.com>
 
-commit b9382e29ca538b879645899ce45d652a304e2ed2 upstream.
+commit 318e8c339c9a0891c389298bb328ed0762a9935e upstream.
 
-nfsd_file_dispose_list_delayed can be called from the filecache
-laundrette, which is shut down after the nfsd threads are shut down and
-the nfsd_serv pointer is cleared. If nn->nfsd_serv is NULL then there
-are no threads to wake.
+In [1] the meaning of the synthetic IBPB flags has been redefined for a
+better separation of concerns:
+ - ENTRY_IBPB     -- issue IBPB on entry only
+ - IBPB_ON_VMEXIT -- issue IBPB on VM-Exit only
+and the Retbleed mitigations have been updated to match this new
+semantics.
 
-Ensure that the nn->nfsd_serv pointer is non-NULL before calling
-svc_wake_up in nfsd_file_dispose_list_delayed. This is safe since the
-svc_serv is not freed until after the filecache laundrette is cancelled.
+Commit [2] was merged shortly before [1], and their interaction was not
+handled properly. This resulted in IBPB not being triggered on VM-Exit
+in all SRSO mitigation configs requesting an IBPB there.
 
-Reported-by: Salvatore Bonaccorso <carnil@debian.org>
-Closes: https://bugs.debian.org/1093734
-Fixes: ffb402596147 ("nfsd: Don't leave work of closing files to a work queue")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Specifically, an IBPB on VM-Exit is triggered only when
+X86_FEATURE_IBPB_ON_VMEXIT is set. However:
+
+ - X86_FEATURE_IBPB_ON_VMEXIT is not set for "spec_rstack_overflow=ibpb",
+   because before [1] having X86_FEATURE_ENTRY_IBPB was enough. Hence,
+   an IBPB is triggered on entry but the expected IBPB on VM-exit is
+   not.
+
+ - X86_FEATURE_IBPB_ON_VMEXIT is not set also when
+   "spec_rstack_overflow=ibpb-vmexit" if X86_FEATURE_ENTRY_IBPB is
+   already set.
+
+   That's because before [1] this was effectively redundant. Hence, e.g.
+   a "retbleed=ibpb spec_rstack_overflow=bpb-vmexit" config mistakenly
+   reports the machine still vulnerable to SRSO, despite an IBPB being
+   triggered both on entry and VM-Exit, because of the Retbleed selected
+   mitigation config.
+
+ - UNTRAIN_RET_VM won't still actually do anything unless
+   CONFIG_MITIGATION_IBPB_ENTRY is set.
+
+For "spec_rstack_overflow=ibpb", enable IBPB on both entry and VM-Exit
+and clear X86_FEATURE_RSB_VMEXIT which is made superfluous by
+X86_FEATURE_IBPB_ON_VMEXIT. This effectively makes this mitigation
+option similar to the one for 'retbleed=ibpb', thus re-order the code
+for the RETBLEED_MITIGATION_IBPB option to be less confusing by having
+all features enabling before the disabling of the not needed ones.
+
+For "spec_rstack_overflow=ibpb-vmexit", guard this mitigation setting
+with CONFIG_MITIGATION_IBPB_ENTRY to ensure UNTRAIN_RET_VM sequence is
+effectively compiled in. Drop instead the CONFIG_MITIGATION_SRSO guard,
+since none of the SRSO compile cruft is required in this configuration.
+Also, check only that the required microcode is present to effectively
+enabled the IBPB on VM-Exit.
+
+Finally, update the KConfig description for CONFIG_MITIGATION_IBPB_ENTRY
+to list also all SRSO config settings enabled by this guard.
+
+Fixes: 864bcaa38ee4 ("x86/cpu/kvm: Provide UNTRAIN_RET_VM") [1]
+Fixes: d893832d0e1e ("x86/srso: Add IBPB on VMEXIT") [2]
+Reported-by: Yosry Ahmed <yosryahmed@google.com>
+Signed-off-by: Patrick Bellasi <derkling@google.com>
+Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/filecache.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ arch/x86/Kconfig           |    3 ++-
+ arch/x86/kernel/cpu/bugs.c |   21 ++++++++++++++-------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -445,11 +445,20 @@ nfsd_file_dispose_list_delayed(struct li
- 						struct nfsd_file, nf_gc);
- 		struct nfsd_net *nn = net_generic(nf->nf_net, nfsd_net_id);
- 		struct nfsd_fcache_disposal *l = nn->fcache_disposal;
-+		struct svc_serv *serv;
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -2593,7 +2593,8 @@ config MITIGATION_IBPB_ENTRY
+ 	depends on CPU_SUP_AMD && X86_64
+ 	default y
+ 	help
+-	  Compile the kernel with support for the retbleed=ibpb mitigation.
++	  Compile the kernel with support for the retbleed=ibpb and
++	  spec_rstack_overflow={ibpb,ibpb-vmexit} mitigations.
  
- 		spin_lock(&l->lock);
- 		list_move_tail(&nf->nf_gc, &l->freeme);
- 		spin_unlock(&l->lock);
--		svc_wake_up(nn->nfsd_serv);
+ config MITIGATION_IBRS_ENTRY
+ 	bool "Enable IBRS on kernel entry"
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1115,6 +1115,8 @@ do_cmd_auto:
+ 
+ 	case RETBLEED_MITIGATION_IBPB:
+ 		setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
++		setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
++		mitigate_smt = true;
+ 
+ 		/*
+ 		 * IBPB on entry already obviates the need for
+@@ -1124,9 +1126,6 @@ do_cmd_auto:
+ 		setup_clear_cpu_cap(X86_FEATURE_UNRET);
+ 		setup_clear_cpu_cap(X86_FEATURE_RETHUNK);
+ 
+-		setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
+-		mitigate_smt = true;
+-
+ 		/*
+ 		 * There is no need for RSB filling: entry_ibpb() ensures
+ 		 * all predictions, including the RSB, are invalidated,
+@@ -2643,6 +2642,7 @@ static void __init srso_select_mitigatio
+ 		if (IS_ENABLED(CONFIG_MITIGATION_IBPB_ENTRY)) {
+ 			if (has_microcode) {
+ 				setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
++				setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
+ 				srso_mitigation = SRSO_MITIGATION_IBPB;
+ 
+ 				/*
+@@ -2652,6 +2652,13 @@ static void __init srso_select_mitigatio
+ 				 */
+ 				setup_clear_cpu_cap(X86_FEATURE_UNRET);
+ 				setup_clear_cpu_cap(X86_FEATURE_RETHUNK);
 +
-+		/*
-+		 * The filecache laundrette is shut down after the
-+		 * nn->nfsd_serv pointer is cleared, but before the
-+		 * svc_serv is freed.
-+		 */
-+		serv = nn->nfsd_serv;
-+		if (serv)
-+			svc_wake_up(serv);
- 	}
- }
++				/*
++				 * There is no need for RSB filling: entry_ibpb() ensures
++				 * all predictions, including the RSB, are invalidated,
++				 * regardless of IBPB implementation.
++				 */
++				setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
+ 			}
+ 		} else {
+ 			pr_err("WARNING: kernel not compiled with MITIGATION_IBPB_ENTRY.\n");
+@@ -2659,8 +2666,8 @@ static void __init srso_select_mitigatio
+ 		break;
  
+ 	case SRSO_CMD_IBPB_ON_VMEXIT:
+-		if (IS_ENABLED(CONFIG_MITIGATION_SRSO)) {
+-			if (!boot_cpu_has(X86_FEATURE_ENTRY_IBPB) && has_microcode) {
++		if (IS_ENABLED(CONFIG_MITIGATION_IBPB_ENTRY)) {
++			if (has_microcode) {
+ 				setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
+ 				srso_mitigation = SRSO_MITIGATION_IBPB_ON_VMEXIT;
+ 
+@@ -2672,8 +2679,8 @@ static void __init srso_select_mitigatio
+ 				setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
+ 			}
+ 		} else {
+-			pr_err("WARNING: kernel not compiled with MITIGATION_SRSO.\n");
+-                }
++			pr_err("WARNING: kernel not compiled with MITIGATION_IBPB_ENTRY.\n");
++		}
+ 		break;
+ 	default:
+ 		break;
 
 
