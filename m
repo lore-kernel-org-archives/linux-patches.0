@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7C11E0DCC;
-	Wed, 19 Feb 2025 09:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32974155753;
+	Wed, 19 Feb 2025 09:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955670; cv=none; b=OgGHhM14xe8qGalTgkfliN8LJrAC6/194iFA3zKONJr+rtc1X+4zylJTn2Ht28Imofn6bs6fDICbXJhvMSCP9qHROlyiQXIuGkZGen0n9LM2M6j0La45D5Z2lmywihXjFenZOVIQ3ueOigDFyW8zDHan5QQ/ZydD5cf+bhbDlEs=
+	t=1739955676; cv=none; b=koZhWNUoRrUNehKWvKtSCRF3/0oTyFLaMobI4+bCeLVgfA5ldsF5tiTeeh4F58nI9sw9hSLjKDeSjsKQB6EnoJdZ2a+zGLF63kbHaBXb2pkKM+SzR4znRxYYNaxx4htptNTLg9YdvGFvW9Uh3FBgqeXr+5YT2+fX77jfjuHcNLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955670; c=relaxed/simple;
-	bh=WwvbYB1fq+edRS/81B9zrKmqfDVNEhpA6sPYKG9jnnA=;
+	s=arc-20240116; t=1739955676; c=relaxed/simple;
+	bh=E72m7hXuiF3WYAO9BbR0AzIZfRQ3cAaMqXzTIq/3FRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VtOsNkQNZ4aNVqtl4xMIH/zTLyc73CpOcOXlwVAvNCCGeN8vIxWUqnn/A/VT1HjWjJbgWM6wLijg/TgAqaLzl6G9SLwl2gsMCz8HeecjxAbOqo9aNkRP8kdnNupSgRF7ftmbShHiDcvbcw0a7XNN2DTBAkaNaGlXx1ciXJHvGLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UB785UY+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IOKxO9dQqQPb1L4aV/JKnosQWnBK4T1SSYWNL1zXU9AGIO7zOxaqDDivqXNOIXtpgVvPKto+988VMddpeUMt28b/1QT0pk+FwOjwkzPxcbv2FERxf8EyYSMSryhIqZWmYjDRh4ja6HboLvkOFh7BSP1/XU0Fxi58HOolVkQaMsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dy1MYjpg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UB785UY+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C63C4CEE6;
-	Wed, 19 Feb 2025 09:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dy1MYjpg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC679C4CED1;
+	Wed, 19 Feb 2025 09:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955670;
-	bh=WwvbYB1fq+edRS/81B9zrKmqfDVNEhpA6sPYKG9jnnA=;
+	s=korg; t=1739955673;
+	bh=E72m7hXuiF3WYAO9BbR0AzIZfRQ3cAaMqXzTIq/3FRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UB785UY+5mgv9is1IOP3465zn3etWiAHCNbPpqLCCXug57UnMjzoy1VPv+1TLRBJk
-	 ne/RvRlnGSnkmSPnCqKEIcsK0BMoCgpDyHPj/4ZQG8tmbMBfthSb+imCPXbxSYRrGE
-	 942kBYx363o3cPnrLUpXu2US4osiY8qw10qAqNeo=
+	b=dy1MYjpgJInqek8He2EMsbkoqKwxrANL0C0KXIffvMrm0jbJXcOEyTnOls7k7xw/1
+	 1dsJH0AfB5JVm7LJzHVqQvdvspgkY71olV7GfVnVOPd/H3z8RRYcZMiQQZa1eRA1aO
+	 Hyx1sWJioRHhMXRuC+eDSea6mWeA123YFPsUm3AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Matt Turner <mattst88@gmail.com>,
-	Ivan Kokshaysky <ink@unseen.parts>
-Subject: [PATCH 6.6 078/152] alpha: make stack 16-byte aligned (most cases)
-Date: Wed, 19 Feb 2025 09:28:11 +0100
-Message-ID: <20250219082553.132311239@linuxfoundation.org>
+	Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.6 079/152] wifi: ath12k: fix handling of 6 GHz rules
+Date: Wed, 19 Feb 2025 09:28:12 +0100
+Message-ID: <20250219082553.171536323@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -52,69 +50,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Kokshaysky <ink@unseen.parts>
+From: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
 
-commit 0a0f7362b0367634a2d5cb7c96226afc116f19c9 upstream.
+commit 64a1ba4072b34af1b76bf15fca5c2075b8cc4d64 upstream.
 
-The problem is that GCC expects 16-byte alignment of the incoming stack
-since early 2004, as Maciej found out [1]:
-  Having actually dug speculatively I can see that the psABI was changed in
- GCC 3.5 with commit e5e10fb4a350 ("re PR target/14539 (128-bit long double
- improperly aligned)") back in Mar 2004, when the stack pointer alignment
- was increased from 8 bytes to 16 bytes, and arch/alpha/kernel/entry.S has
- various suspicious stack pointer adjustments, starting with SP_OFF which
- is not a whole multiple of 16.
+In the US country code, to avoid including 6 GHz rules in the 5 GHz rules
+list, the number of 5 GHz rules is set to a default constant value of 4
+(REG_US_5G_NUM_REG_RULES). However, if there are more than 4 valid 5 GHz
+rules, the current logic will bypass the legitimate 6 GHz rules.
 
-Also, as Magnus noted, "ALPHA Calling Standard" [2] required the same:
- D.3.1 Stack Alignment
-  This standard requires that stacks be octaword aligned at the time a
-  new procedure is invoked.
+For example, if there are 5 valid 5 GHz rules and 1 valid 6 GHz rule, the
+current logic will only consider 4 of the 5 GHz rules, treating the last
+valid rule as a 6 GHz rule. Consequently, the actual 6 GHz rule is never
+processed, leading to the eventual disabling of 6 GHz channels.
 
-However:
-- the "normal" kernel stack is always misaligned by 8 bytes, thanks to
-  the odd number of 64-bit words in 'struct pt_regs', which is the very
-  first thing pushed onto the kernel thread stack;
-- syscall, fault, interrupt etc. handlers may, or may not, receive aligned
-  stack depending on numerous factors.
+To fix this issue, instead of hardcoding the value to 4, use a helper
+function to determine the number of 6 GHz rules present in the 5 GHz rules
+list and ignore only those rules.
 
-Somehow we got away with it until recently, when we ended up with
-a stack corruption in kernel/smp.c:smp_call_function_single() due to
-its use of 32-byte aligned local data and the compiler doing clever
-things allocating it on the stack.
-
-This adds padding between the PAL-saved and kernel-saved registers
-so that 'struct pt_regs' have an even number of 64-bit words.
-This makes the stack properly aligned for most of the kernel
-code, except two handlers which need special threatment.
-
-Note: struct pt_regs doesn't belong in uapi/asm; this should be fixed,
-but let's put this off until later.
-
-Link: https://lore.kernel.org/rcu/alpine.DEB.2.21.2501130248010.18889@angie.orcam.me.uk/ [1]
-Link: https://bitsavers.org/pdf/dec/alpha/Alpha_Calling_Standard_Rev_2.0_19900427.pdf [2]
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.3.1-00173-QCAHKSWPL_SILICONZ-1
 
 Cc: stable@vger.kernel.org
-Tested-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Ivan Kokshaysky <ink@unseen.parts>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Aditya Kumar Singh <aditya.kumar.singh@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250123-fix_6ghz_rules_handling-v1-1-d734bfa58ff4@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/include/uapi/asm/ptrace.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath12k/wmi.c |   61 +++++++++++++++++++++++++---------
+ drivers/net/wireless/ath/ath12k/wmi.h |    1 
+ 2 files changed, 45 insertions(+), 17 deletions(-)
 
---- a/arch/alpha/include/uapi/asm/ptrace.h
-+++ b/arch/alpha/include/uapi/asm/ptrace.h
-@@ -42,6 +42,8 @@ struct pt_regs {
- 	unsigned long trap_a0;
- 	unsigned long trap_a1;
- 	unsigned long trap_a2;
-+/* This makes the stack 16-byte aligned as GCC expects */
-+	unsigned long __pad0;
- /* These are saved by PAL-code: */
- 	unsigned long ps;
- 	unsigned long pc;
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -4418,6 +4418,22 @@ static struct ath12k_reg_rule
+ 	return reg_rule_ptr;
+ }
+ 
++static u8 ath12k_wmi_ignore_num_extra_rules(struct ath12k_wmi_reg_rule_ext_params *rule,
++					    u32 num_reg_rules)
++{
++	u8 num_invalid_5ghz_rules = 0;
++	u32 count, start_freq;
++
++	for (count = 0; count < num_reg_rules; count++) {
++		start_freq = le32_get_bits(rule[count].freq_info, REG_RULE_START_FREQ);
++
++		if (start_freq >= ATH12K_MIN_6G_FREQ)
++			num_invalid_5ghz_rules++;
++	}
++
++	return num_invalid_5ghz_rules;
++}
++
+ static int ath12k_pull_reg_chan_list_ext_update_ev(struct ath12k_base *ab,
+ 						   struct sk_buff *skb,
+ 						   struct ath12k_reg_info *reg_info)
+@@ -4428,6 +4444,7 @@ static int ath12k_pull_reg_chan_list_ext
+ 	u32 num_2g_reg_rules, num_5g_reg_rules;
+ 	u32 num_6g_reg_rules_ap[WMI_REG_CURRENT_MAX_AP_TYPE];
+ 	u32 num_6g_reg_rules_cl[WMI_REG_CURRENT_MAX_AP_TYPE][WMI_REG_MAX_CLIENT_TYPE];
++	u8 num_invalid_5ghz_ext_rules;
+ 	u32 total_reg_rules = 0;
+ 	int ret, i, j;
+ 
+@@ -4521,20 +4538,6 @@ static int ath12k_pull_reg_chan_list_ext
+ 
+ 	memcpy(reg_info->alpha2, &ev->alpha2, REG_ALPHA2_LEN);
+ 
+-	/* FIXME: Currently FW includes 6G reg rule also in 5G rule
+-	 * list for country US.
+-	 * Having same 6G reg rule in 5G and 6G rules list causes
+-	 * intersect check to be true, and same rules will be shown
+-	 * multiple times in iw cmd. So added hack below to avoid
+-	 * parsing 6G rule from 5G reg rule list, and this can be
+-	 * removed later, after FW updates to remove 6G reg rule
+-	 * from 5G rules list.
+-	 */
+-	if (memcmp(reg_info->alpha2, "US", 2) == 0) {
+-		reg_info->num_5g_reg_rules = REG_US_5G_NUM_REG_RULES;
+-		num_5g_reg_rules = reg_info->num_5g_reg_rules;
+-	}
+-
+ 	reg_info->dfs_region = le32_to_cpu(ev->dfs_region);
+ 	reg_info->phybitmap = le32_to_cpu(ev->phybitmap);
+ 	reg_info->num_phy = le32_to_cpu(ev->num_phy);
+@@ -4636,8 +4639,29 @@ static int ath12k_pull_reg_chan_list_ext
+ 		}
+ 	}
+ 
++	ext_wmi_reg_rule += num_2g_reg_rules;
++
++	/* Firmware might include 6 GHz reg rule in 5 GHz rule list
++	 * for few countries along with separate 6 GHz rule.
++	 * Having same 6 GHz reg rule in 5 GHz and 6 GHz rules list
++	 * causes intersect check to be true, and same rules will be
++	 * shown multiple times in iw cmd.
++	 * Hence, avoid parsing 6 GHz rule from 5 GHz reg rule list
++	 */
++	num_invalid_5ghz_ext_rules = ath12k_wmi_ignore_num_extra_rules(ext_wmi_reg_rule,
++								       num_5g_reg_rules);
++
++	if (num_invalid_5ghz_ext_rules) {
++		ath12k_dbg(ab, ATH12K_DBG_WMI,
++			   "CC: %s 5 GHz reg rules number %d from fw, %d number of invalid 5 GHz rules",
++			   reg_info->alpha2, reg_info->num_5g_reg_rules,
++			   num_invalid_5ghz_ext_rules);
++
++		num_5g_reg_rules = num_5g_reg_rules - num_invalid_5ghz_ext_rules;
++		reg_info->num_5g_reg_rules = num_5g_reg_rules;
++	}
++
+ 	if (num_5g_reg_rules) {
+-		ext_wmi_reg_rule += num_2g_reg_rules;
+ 		reg_info->reg_rules_5g_ptr =
+ 			create_ext_reg_rules_from_wmi(num_5g_reg_rules,
+ 						      ext_wmi_reg_rule);
+@@ -4649,7 +4673,12 @@ static int ath12k_pull_reg_chan_list_ext
+ 		}
+ 	}
+ 
+-	ext_wmi_reg_rule += num_5g_reg_rules;
++	/* We have adjusted the number of 5 GHz reg rules above. But still those
++	 * many rules needs to be adjusted in ext_wmi_reg_rule.
++	 *
++	 * NOTE: num_invalid_5ghz_ext_rules will be 0 for rest other cases.
++	 */
++	ext_wmi_reg_rule += (num_5g_reg_rules + num_invalid_5ghz_ext_rules);
+ 
+ 	for (i = 0; i < WMI_REG_CURRENT_MAX_AP_TYPE; i++) {
+ 		reg_info->reg_rules_6g_ap_ptr[i] =
+--- a/drivers/net/wireless/ath/ath12k/wmi.h
++++ b/drivers/net/wireless/ath/ath12k/wmi.h
+@@ -3891,7 +3891,6 @@ struct ath12k_wmi_eht_rate_set_params {
+ #define MAX_REG_RULES 10
+ #define REG_ALPHA2_LEN 2
+ #define MAX_6G_REG_RULES 5
+-#define REG_US_5G_NUM_REG_RULES 4
+ 
+ enum wmi_start_event_param {
+ 	WMI_VDEV_START_RESP_EVENT = 0,
 
 
