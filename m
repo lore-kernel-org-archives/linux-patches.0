@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007991DFD80;
-	Wed, 19 Feb 2025 09:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC44E17A2FE;
+	Wed, 19 Feb 2025 09:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957014; cv=none; b=ApeIe4f9Q3wqdxPr1d9qPGKDSymxkuKI+nKWQQgZGB/wJtaFdF84yZ8g8NGL2KPUkGfRPMIjCZdZ/gACH0WtLB9T7XHyw9NEwbK/kjvJzL+zBKSbbwmpyBNyyEPjHIc98c+v3O6HsAjT5x9CrmtDbNXyhxfJKbsDj6FWf+jGZik=
+	t=1739957016; cv=none; b=pwvX5WRzOcysyui5UKfvAVhG3srP1RioKlAC260xdr6NyjVNYphTLiD9tT3wN5QJNui3tsFC6tVb7MgsrBATcVXw9RaMD4BnMEba1AptG4DdVQ/bjZPDwnVJ1PCIYC80DPDWSkukySO18ej+/KwkYmi0o94DU25uGaYSXJh6jFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957014; c=relaxed/simple;
-	bh=UQzChL/mTVGyn5j7AE1f+l2lKKyaMtKu4iVCwquD86o=;
+	s=arc-20240116; t=1739957016; c=relaxed/simple;
+	bh=+6/brwmNjIupS+YwitP5yp6OKDuzLZmizYb9FuEdVeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BkoHiDOq0E8/sFSrwuXSSttmh1ITLYJoRgy8My0sHp6TkKyrce7/JNY8GDh6eN7dx5EZ1BxtUE4hnAekhnH6e087wWbk+OpQKhswQWeHhWWId5VbJbIxTrGZYeG9Q65dTUIfOj16GOBofDyj+HzSdCzpXbNYJLAxhFiFv9qMCe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpKbKGXG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fLd6vHuLV+RVM0kTiTYpnw+ZLcNRZPididIy6AJALgd4iboNGuwHbE+pmgGmU14PsAMuSdsu+jeFh6sKhULK179wrsv4P2eRD4cJZaXkZwiTkPX/v+MFSJWauNz5JM1JmTtp7s/P6U8wPSu1ybrHE5fiVjUkKQ/i42P5ubwtw8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRNGyvxk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpKbKGXG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE73C4CEE6;
-	Wed, 19 Feb 2025 09:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRNGyvxk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA3CC4CED1;
+	Wed, 19 Feb 2025 09:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957013;
-	bh=UQzChL/mTVGyn5j7AE1f+l2lKKyaMtKu4iVCwquD86o=;
+	s=korg; t=1739957016;
+	bh=+6/brwmNjIupS+YwitP5yp6OKDuzLZmizYb9FuEdVeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mpKbKGXGlQkRiSzZDHwF+/Wo4q1Kej11s5fFwY/qvTRRhNQLADAn4W6k+i40OXu4L
-	 w/iA0V5T970V5N2IczZoPMV9apDy7tKzSO6ZKceABlvsM+9Xm+rpSacmhBGzohQE2G
-	 l4aGF2RDPHe+l5I9ngSiKmM/0c45WjpYLRqDc9uQ=
+	b=zRNGyvxkjp70/SxAclSHOK06vl38O5m1+Q1N9fftAgE/X3t9fs6rN45Y1QiZ/yx2t
+	 mf9Wjx6qZ0/Ajc3K9cdr4Bayt5s3jwmA3MfYsxaHuBhDUTEIwus/VQ9ViVwTznPOYX
+	 iUgMJ2SNFJ051fbOXE4QOJylbYCBGiXlcdKZ0iDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 351/578] drm/i915/guc: Debug print LRC state entries only if the context is pinned
-Date: Wed, 19 Feb 2025 09:25:55 +0100
-Message-ID: <20250219082706.828361155@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH 6.1 378/578] serial: sh-sci: Drop __initdata macro for port_cfg
+Date: Wed, 19 Feb 2025 09:26:22 +0100
+Message-ID: <20250219082707.889258487@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,59 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit 57965269896313e1629a518d3971ad55f599b792 upstream.
+commit eaeee4225dba30bef4d424bdf134a07b7f423e8b upstream.
 
-After the context is unpinned the backing memory can also be unpinned,
-so any accesses via the lrc_reg_state pointer can end up in unmapped
-memory. To avoid that, make sure to only access that memory if the
-context is pinned when printing its info.
+The port_cfg object is used by serial_console_write(), which serves as
+the write function for the earlycon device. Marking port_cfg as __initdata
+causes it to be freed after kernel initialization, resulting in earlycon
+becoming unavailable thereafter. Remove the __initdata macro from port_cfg
+to resolve this issue.
 
-v2: fix newline alignment
-
-Fixes: 28ff6520a34d ("drm/i915/guc: Update GuC debugfs to support new GuC")
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: John Harrison <John.C.Harrison@Intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v5.15+
-Reviewed-by: John Harrison <John.C.Harrison@Intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250115001334.3875347-1-daniele.ceraolospurio@intel.com
-(cherry picked from commit 5bea40687c5cf2a33bf04e9110eb2e2b80222ef5)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 0b0cced19ab1 ("serial: sh-sci: Add CONFIG_SERIAL_EARLYCON support")
+Cc: stable@vger.kernel.org
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Fixes: 0b0cced19ab15c9e ("serial: sh-sci: Add CONFIG_SERIAL_EARLYCON support")
+Link: https://lore.kernel.org/r/20250116182249.3828577-2-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/tty/serial/sh-sci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-@@ -4764,12 +4764,20 @@ static inline void guc_log_context(struc
- {
- 	drm_printf(p, "GuC lrc descriptor %u:\n", ce->guc_id.id);
- 	drm_printf(p, "\tHW Context Desc: 0x%08x\n", ce->lrc.lrca);
--	drm_printf(p, "\t\tLRC Head: Internal %u, Memory %u\n",
--		   ce->ring->head,
--		   ce->lrc_reg_state[CTX_RING_HEAD]);
--	drm_printf(p, "\t\tLRC Tail: Internal %u, Memory %u\n",
--		   ce->ring->tail,
--		   ce->lrc_reg_state[CTX_RING_TAIL]);
-+	if (intel_context_pin_if_active(ce)) {
-+		drm_printf(p, "\t\tLRC Head: Internal %u, Memory %u\n",
-+			   ce->ring->head,
-+			   ce->lrc_reg_state[CTX_RING_HEAD]);
-+		drm_printf(p, "\t\tLRC Tail: Internal %u, Memory %u\n",
-+			   ce->ring->tail,
-+			   ce->lrc_reg_state[CTX_RING_TAIL]);
-+		intel_context_unpin(ce);
-+	} else {
-+		drm_printf(p, "\t\tLRC Head: Internal %u, Memory not pinned\n",
-+			   ce->ring->head);
-+		drm_printf(p, "\t\tLRC Tail: Internal %u, Memory not pinned\n",
-+			   ce->ring->tail);
-+	}
- 	drm_printf(p, "\t\tContext Pin Count: %u\n",
- 		   atomic_read(&ce->pin_count));
- 	drm_printf(p, "\t\tGuC ID Ref Count: %u\n",
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -3430,7 +3430,7 @@ sh_early_platform_init_buffer("earlyprin
+ 			   early_serial_buf, ARRAY_SIZE(early_serial_buf));
+ #endif
+ #ifdef CONFIG_SERIAL_SH_SCI_EARLYCON
+-static struct plat_sci_port port_cfg __initdata;
++static struct plat_sci_port port_cfg;
+ 
+ static int __init early_console_setup(struct earlycon_device *device,
+ 				      int type)
 
 
