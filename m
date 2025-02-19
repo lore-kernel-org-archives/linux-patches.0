@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FD31BEF77;
-	Wed, 19 Feb 2025 09:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E991BEF77;
+	Wed, 19 Feb 2025 09:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957144; cv=none; b=tnL8Po5skhbdFXerCdORirMnXjVGaN6nm+AAEelPMGLfQO5r9eR5+1lJ1ZKVisBzHLIArekcVVDd293mi8AsZn/b8rhTmpAMJEELar0pTzE4hlpzbK2DD89mOy9Z4Z6py63+PAUD/ozcyr6UydekT5QOXsWOd16SWjZp2H6x6eE=
+	t=1739957146; cv=none; b=MpmT8i4+mEjM7kXBMh57e6Y60z3dcOP45V+DhWw/8CCJ5Dybl6rqiBdtycVaORO3lH4871ULDmyFqC6b+EENGrmWnH/CU6qi0LeyoUM0L2I7mKpBquTPfLj248V/9juA9EM5fYlIQZMbFAbsukEnT/V9ptp5V+s7m+HR+cQIWvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957144; c=relaxed/simple;
-	bh=6NiSsHeo+xskx4Xw/qByjcG6ylA1zU1ECLnSKJQmdf4=;
+	s=arc-20240116; t=1739957146; c=relaxed/simple;
+	bh=MLG4M1vIp5vZR/4vpKs7eX1g2TocE2Wye08AOW3F1Tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/+a/sBTn23PMNOKp8jm6Qz+NSvFxHQOCQFlTbr8U4ZNxrbRgmtIZoQnabLfBRftayFriNKznli1x+DX464Eup5K/OliJzyyC8OjQLoBdM5UsdsJa4m7uoNQwkWEtIpNhPpmxyljRCmOLQ7+6MEGsoHfBkk+YzgBSJ9+I9lTn+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wELKlUkk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rglB1zUHc31cgIJZk7L0UdXuLJ6MgBEKjkR/Ot9BR3jjH2XuFWeUDqF+S50AomliA3bCEPFueKATxkWEqKV128SmqvC86zFA/0Phc2Ai1kGSmXeW1/YCOzlgOrTEt8R3J1y1+3MxCisxsK+Tkkdy5y0dBk+TMKRhpkqF0fzqO+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTKvLSE2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wELKlUkk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C222C4CED1;
-	Wed, 19 Feb 2025 09:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTKvLSE2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E43C4CED1;
+	Wed, 19 Feb 2025 09:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957143;
-	bh=6NiSsHeo+xskx4Xw/qByjcG6ylA1zU1ECLnSKJQmdf4=;
+	s=korg; t=1739957146;
+	bh=MLG4M1vIp5vZR/4vpKs7eX1g2TocE2Wye08AOW3F1Tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wELKlUkkGt86ZO9XrG1BpBtz6HUrmtYTquaJvukWofXVbX/SqsoVLCndXe3IFwBxO
-	 61AvYQYthPBYE9u6OKOEizrPfNUMJdwnHUCPBR0BKCTls/zqQYSIPIXe/+4gIu3sZH
-	 6LD9Wg18MOjNKHYwURvL9BztqghbtUtAqStHzL5s=
+	b=tTKvLSE2/qhJ4ogvpB4i7MUMmlyE4x2wj+UsqFemSp52PoZFVfb1yDoCW5UUUO/RH
+	 gxKIXZom99hfcHoLk67Q0+bXpXbH4bJdYe3Dqt6zUusX4CFjvsPx2YPFkiSG0GE+B5
+	 Rki8zJcWKnB4wAuAV6FmzBV+l57YpsxpDifgJSyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.1 382/578] dm-crypt: dont update io->sector after kcryptd_crypt_write_io_submit()
-Date: Wed, 19 Feb 2025 09:26:26 +0100
-Message-ID: <20250219082708.043741951@linuxfoundation.org>
+	reveliofuzzing <reveliofuzzing@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.1 417/578] ata: libata-sff: Ensure that we cannot write outside the allocated buffer
+Date: Wed, 19 Feb 2025 09:27:01 +0100
+Message-ID: <20250219082709.423913573@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -50,91 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 9fdbbdbbc92b1474a87b89f8b964892a63734492 upstream.
+commit 6e74e53b34b6dec5a50e1404e2680852ec6768d2 upstream.
 
-The updates of io->sector are the leftovers when dm-crypt allocated
-pages for partial write request. However, since commit cf2f1abfbd0db
-("dm crypt: don't allocate pages for a partial request"), there is no
-partial request anymore.
+reveliofuzzing reported that a SCSI_IOCTL_SEND_COMMAND ioctl with out_len
+set to 0xd42, SCSI command set to ATA_16 PASS-THROUGH, ATA command set to
+ATA_NOP, and protocol set to ATA_PROT_PIO, can cause ata_pio_sector() to
+write outside the allocated buffer, overwriting random memory.
 
-After the introduction of write request rb-tree, the updates of
-io->sectors may interfere the insertion procedure, because ->sectors of
-these write requests which have already been added in the rb-tree may be
-changed during the insertion of new write request.
+While a ATA device is supposed to abort a ATA_NOP command, there does seem
+to be a bug either in libata-sff or QEMU, where either this status is not
+set, or the status is cleared before read by ata_sff_hsm_move().
+Anyway, that is most likely a separate bug.
 
-Fix it by removing these buggy updates of io->sectors. Considering these
-updates only effect the write request rb-tree, the commit which
-introduces the write request rb-tree is used as the fix tag.
+Looking at __atapi_pio_bytes(), it already has a safety check to ensure
+that __atapi_pio_bytes() cannot write outside the allocated buffer.
 
-Fixes: b3c5fd305249 ("dm crypt: sort writes")
+Add a similar check to ata_pio_sector(), such that also ata_pio_sector()
+cannot write outside the allocated buffer.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: reveliofuzzing <reveliofuzzing@gmail.com>
+Closes: https://lore.kernel.org/linux-ide/CA+-ZZ_jTgxh3bS7m+KX07_EWckSnW3N2adX3KV63y4g7M4CZ2A@mail.gmail.com/
+Link: https://lore.kernel.org/r/20250127154303.15567-2-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |   14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/ata/libata-sff.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -2029,7 +2029,6 @@ static void kcryptd_crypt_write_continue
- 	struct crypt_config *cc = io->cc;
- 	struct convert_context *ctx = &io->ctx;
- 	int crypt_finished;
--	sector_t sector = io->sector;
- 	blk_status_t r;
+--- a/drivers/ata/libata-sff.c
++++ b/drivers/ata/libata-sff.c
+@@ -658,7 +658,7 @@ static void ata_pio_sector(struct ata_qu
+ {
+ 	struct ata_port *ap = qc->ap;
+ 	struct page *page;
+-	unsigned int offset;
++	unsigned int offset, count;
  
- 	wait_for_completion(&ctx->restart);
-@@ -2046,10 +2045,8 @@ static void kcryptd_crypt_write_continue
- 	}
+ 	if (!qc->cursg) {
+ 		qc->curbytes = qc->nbytes;
+@@ -674,25 +674,27 @@ static void ata_pio_sector(struct ata_qu
+ 	page = nth_page(page, (offset >> PAGE_SHIFT));
+ 	offset %= PAGE_SIZE;
  
- 	/* Encryption was already finished, submit io now */
--	if (crypt_finished) {
-+	if (crypt_finished)
- 		kcryptd_crypt_write_io_submit(io, 0);
--		io->sector = sector;
--	}
- 
- 	crypt_dec_pending(io);
- }
-@@ -2060,14 +2057,13 @@ static void kcryptd_crypt_write_convert(
- 	struct convert_context *ctx = &io->ctx;
- 	struct bio *clone;
- 	int crypt_finished;
--	sector_t sector = io->sector;
- 	blk_status_t r;
+-	trace_ata_sff_pio_transfer_data(qc, offset, qc->sect_size);
++	/* don't overrun current sg */
++	count = min(qc->cursg->length - qc->cursg_ofs, qc->sect_size);
++
++	trace_ata_sff_pio_transfer_data(qc, offset, count);
  
  	/*
- 	 * Prevent io from disappearing until this function completes.
+ 	 * Split the transfer when it splits a page boundary.  Note that the
+ 	 * split still has to be dword aligned like all ATA data transfers.
  	 */
- 	crypt_inc_pending(io);
--	crypt_convert_init(cc, ctx, NULL, io->base_bio, sector);
-+	crypt_convert_init(cc, ctx, NULL, io->base_bio, io->sector);
+ 	WARN_ON_ONCE(offset % 4);
+-	if (offset + qc->sect_size > PAGE_SIZE) {
++	if (offset + count > PAGE_SIZE) {
+ 		unsigned int split_len = PAGE_SIZE - offset;
  
- 	clone = crypt_alloc_buffer(io, io->base_bio->bi_iter.bi_size);
- 	if (unlikely(!clone)) {
-@@ -2084,8 +2080,6 @@ static void kcryptd_crypt_write_convert(
- 		io->ctx.iter_in = clone->bi_iter;
+ 		ata_pio_xfer(qc, page, offset, split_len);
+-		ata_pio_xfer(qc, nth_page(page, 1), 0,
+-			     qc->sect_size - split_len);
++		ata_pio_xfer(qc, nth_page(page, 1), 0, count - split_len);
+ 	} else {
+-		ata_pio_xfer(qc, page, offset, qc->sect_size);
++		ata_pio_xfer(qc, page, offset, count);
  	}
  
--	sector += bio_sectors(clone);
--
- 	crypt_inc_pending(io);
- 	r = crypt_convert(cc, ctx,
- 			  test_bit(DM_CRYPT_NO_WRITE_WORKQUEUE, &cc->flags), true);
-@@ -2109,10 +2103,8 @@ static void kcryptd_crypt_write_convert(
- 	}
+-	qc->curbytes += qc->sect_size;
+-	qc->cursg_ofs += qc->sect_size;
++	qc->curbytes += count;
++	qc->cursg_ofs += count;
  
- 	/* Encryption was already finished, submit io now */
--	if (crypt_finished) {
-+	if (crypt_finished)
- 		kcryptd_crypt_write_io_submit(io, 0);
--		io->sector = sector;
--	}
- 
- dec:
- 	crypt_dec_pending(io);
+ 	if (qc->cursg_ofs == qc->cursg->length) {
+ 		qc->cursg = sg_next(qc->cursg);
 
 
