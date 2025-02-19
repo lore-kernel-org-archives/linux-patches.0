@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DA51EA7D6;
-	Wed, 19 Feb 2025 08:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033271EA7EB;
+	Wed, 19 Feb 2025 08:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954278; cv=none; b=Ic8fVWYyDnu1kRIPWyaGY6j4uc2IqA3owyzXDqnFt66CwY/0AWiPVzeUAmlTnGKwxXm4bYLzY/s0xgtKUo9r0jh2tnxsQIsD3ZBUQ8XM6L/XaPqK5e5Hp1dvWXfqkQ0eXAsTlu0RKodSwjVd9yZjQxQAHdtEK3QfcbYPgMHKBDw=
+	t=1739954282; cv=none; b=K1Su7TdNaOvNgOK72dTry6LNExPK5iEBCn2XfswxA5fDyk632uqnHqNIPXUWtDSgAlfivtyEn1xljXrbWLDx3P0qCFV3iuwtIvY/Wb7DUhfOe5/fb+TxEw/9NHaRHYnTP3EREUQgeBlHJauBvXO/nW7SBK0gIloIzeK2ET0sfIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954278; c=relaxed/simple;
-	bh=kt/JOEDfbmdPqKxrk8KuaOalrJb0phuylFa6tmra3MM=;
+	s=arc-20240116; t=1739954282; c=relaxed/simple;
+	bh=YpiD9hcjQ2uwA5i5i6LnM/mm2MdexXX0/RpyZC2LVb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUJYUkdqoAnaA7XE5LHqe9ZWEdHmYmZDxd7v7XZiouC5f9rpUV3Q3uP9adg3odVdkFmEbVAa3Nbx+tpRhY1j2Y+9DvrmByFmNG1bTkqW1paE69LXcvXvbX2n047+5Q/kUI4c3tZYysU7YgG+Du0EbW39hHgLPRLhG7Fc+SAeLY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsY6RSQg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gT1egO3TXY0oVVkBOdw1GG2W7nFT9YljbdR+tMdeBf2XihRPFJLtFvto6Xbh8HH2UVjPSCvoPgsVMvGjYZfVLlAnhOpOfw6EeYFlclyfY5hXw0+9coaO66g0Y7l76qO8IAUEev9XMtLU4ohCUo8YsMqGv9vEpafl9u9AnfW5XxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufj2XNwD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsY6RSQg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093B7C4CED1;
-	Wed, 19 Feb 2025 08:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufj2XNwD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17ADEC4CED1;
+	Wed, 19 Feb 2025 08:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954278;
-	bh=kt/JOEDfbmdPqKxrk8KuaOalrJb0phuylFa6tmra3MM=;
+	s=korg; t=1739954281;
+	bh=YpiD9hcjQ2uwA5i5i6LnM/mm2MdexXX0/RpyZC2LVb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jsY6RSQgC8UomsFWXJQA8IT4VyYu38WJtFqFJPHBMw1fkGwACOtefU0L7cDA0PfVx
-	 6fMgavDw9buXt4YcW3yKgnFwUlaiSoiaOMH1nG8NeO9Me5cAkYWB9+/SCqH7GDpZZK
-	 9kCCfBWwZVgfg85ya3h5NVmoAz3VxqJ0DOqe3wJw=
+	b=ufj2XNwDqTCKpCTpHoCZ5Zpsx1cBGFBg5BQQB1mhqqHnPYIds5aIC76Pr5YmMbvh2
+	 uWck9WX17W+egHbfWM8bXH/6OnMuRycJzoiBMthiNU0dBDQU2gBT5AY2UAhGfhha8b
+	 jbCzn9tR7CzMWTmUGKSRuHJZXG81Y2w32gxNZEnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Matt Turner <mattst88@gmail.com>,
-	Ivan Kokshaysky <ink@unseen.parts>
-Subject: [PATCH 6.13 154/274] alpha: make stack 16-byte aligned (most cases)
-Date: Wed, 19 Feb 2025 09:26:48 +0100
-Message-ID: <20250219082615.624931858@linuxfoundation.org>
+	Aditya Garg <gargaditya08@live.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.13 155/274] wifi: brcmfmac: use random seed flag for BCM4355 and BCM4364 firmware
+Date: Wed, 19 Feb 2025 09:26:49 +0100
+Message-ID: <20250219082615.662912171@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -52,69 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Kokshaysky <ink@unseen.parts>
+From: Aditya Garg <gargaditya08@live.com>
 
-commit 0a0f7362b0367634a2d5cb7c96226afc116f19c9 upstream.
+commit 0e9724d0f89e8d77fa683e3129cadaed7c6e609d upstream.
 
-The problem is that GCC expects 16-byte alignment of the incoming stack
-since early 2004, as Maciej found out [1]:
-  Having actually dug speculatively I can see that the psABI was changed in
- GCC 3.5 with commit e5e10fb4a350 ("re PR target/14539 (128-bit long double
- improperly aligned)") back in Mar 2004, when the stack pointer alignment
- was increased from 8 bytes to 16 bytes, and arch/alpha/kernel/entry.S has
- various suspicious stack pointer adjustments, starting with SP_OFF which
- is not a whole multiple of 16.
+Before 6.13, random seed to the firmware was given based on the logic
+whether the device had valid OTP or not, and such devices were found
+mainly on the T2 and Apple Silicon Macs. In 6.13, the logic was changed,
+and the device table was used for this purpose, so as to cover the special
+case of BCM43752 chip.
 
-Also, as Magnus noted, "ALPHA Calling Standard" [2] required the same:
- D.3.1 Stack Alignment
-  This standard requires that stacks be octaword aligned at the time a
-  new procedure is invoked.
+During the transition, the device table for BCM4364 and BCM4355 Wi-Fi chips
+which had valid OTP was not modified, thus breaking Wi-Fi on these devices.
+This patch adds does the necessary changes, similar to the ones done for
+other chips.
 
-However:
-- the "normal" kernel stack is always misaligned by 8 bytes, thanks to
-  the odd number of 64-bit words in 'struct pt_regs', which is the very
-  first thing pushed onto the kernel thread stack;
-- syscall, fault, interrupt etc. handlers may, or may not, receive aligned
-  stack depending on numerous factors.
-
-Somehow we got away with it until recently, when we ended up with
-a stack corruption in kernel/smp.c:smp_call_function_single() due to
-its use of 32-byte aligned local data and the compiler doing clever
-things allocating it on the stack.
-
-This adds padding between the PAL-saved and kernel-saved registers
-so that 'struct pt_regs' have an even number of 64-bit words.
-This makes the stack properly aligned for most of the kernel
-code, except two handlers which need special threatment.
-
-Note: struct pt_regs doesn't belong in uapi/asm; this should be fixed,
-but let's put this off until later.
-
-Link: https://lore.kernel.org/rcu/alpine.DEB.2.21.2501130248010.18889@angie.orcam.me.uk/ [1]
-Link: https://bitsavers.org/pdf/dec/alpha/Alpha_Calling_Standard_Rev_2.0_19900427.pdf [2]
-
+Fixes: ea11a89c3ac6 ("wifi: brcmfmac: add flag for random seed during firmware download")
 Cc: stable@vger.kernel.org
-Tested-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Tested-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Ivan Kokshaysky <ink@unseen.parts>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+Acked-by: Arend van Spriel  <arend.vanspriel@broadcom.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/47E43F07-E11D-478C-86D4-23627154AC7C@live.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/include/uapi/asm/ptrace.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/alpha/include/uapi/asm/ptrace.h
-+++ b/arch/alpha/include/uapi/asm/ptrace.h
-@@ -42,6 +42,8 @@ struct pt_regs {
- 	unsigned long trap_a0;
- 	unsigned long trap_a1;
- 	unsigned long trap_a2;
-+/* This makes the stack 16-byte aligned as GCC expects */
-+	unsigned long __pad0;
- /* These are saved by PAL-code: */
- 	unsigned long ps;
- 	unsigned long pc;
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -2712,7 +2712,7 @@ static const struct pci_device_id brcmf_
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4350_DEVICE_ID, WCC),
+ 	BRCMF_PCIE_DEVICE_SUB(0x4355, BRCM_PCIE_VENDOR_ID_BROADCOM, 0x4355, WCC),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4354_RAW_DEVICE_ID, WCC),
+-	BRCMF_PCIE_DEVICE(BRCM_PCIE_4355_DEVICE_ID, WCC),
++	BRCMF_PCIE_DEVICE(BRCM_PCIE_4355_DEVICE_ID, WCC_SEED),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4356_DEVICE_ID, WCC),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43567_DEVICE_ID, WCC),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43570_DEVICE_ID, WCC),
+@@ -2723,7 +2723,7 @@ static const struct pci_device_id brcmf_
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_2G_DEVICE_ID, WCC),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_5G_DEVICE_ID, WCC),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_RAW_DEVICE_ID, WCC),
+-	BRCMF_PCIE_DEVICE(BRCM_PCIE_4364_DEVICE_ID, WCC),
++	BRCMF_PCIE_DEVICE(BRCM_PCIE_4364_DEVICE_ID, WCC_SEED),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_DEVICE_ID, BCA),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_2G_DEVICE_ID, BCA),
+ 	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_5G_DEVICE_ID, BCA),
 
 
