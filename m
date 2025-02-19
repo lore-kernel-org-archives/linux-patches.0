@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84C11A314B;
-	Wed, 19 Feb 2025 09:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620B61CD210;
+	Wed, 19 Feb 2025 09:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956672; cv=none; b=TrWeNEzwNBNt912d5RUWxjHvkcimlojtISjiqnifn0HjWdnjc2EvDyc2mI5XWU9YS30hJbAc+He4rZsI/4cYg5Zft1QHYQdd/9cKj1ZDlryU9JmhNkHjTkhhbgiN4jIV4JkeMyZuiksZobb2Vx/bTiJD1DwGDLSkTFJSGEneEOQ=
+	t=1739956674; cv=none; b=brFWUuLO4fKEgGcdfYfn1qr38/C+Br0k0hJhFKwD9JQt7vRgc76FMWDMQpcq3e+oBPXMpnFAYARiCuPH8yZOQKr7bb8quh38LIIK/TkkjWg0OcEnFwEGk4a4RAly9qIPocS7z4R5vvdlaTpdDeCKqcxvtdWmJMTFcbYMMb+Lzn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956672; c=relaxed/simple;
-	bh=8HEtW0HpTzfQB5DPf+52VDbcOx22TYXXZLPT8KDuM4s=;
+	s=arc-20240116; t=1739956674; c=relaxed/simple;
+	bh=9OU1VmR0TZPNxLng43QWMIVNLx1eWo8vfPzAymym3B0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OFarUWwsNq/Gg8kdseoWHVTzPXU/jgrhx34afi36YcwclOO8qBNrnMn4fmksMtHaaU1oMEqL4Mn/axbAFMZiftI4kAW/o9qkls8Y66tU9KptU3MDYlF0jh5xumcVdvTPxwK2Hy8ZgwfVF5LIgL09RtSqNHh9AIpkI21e5cjq7no=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzkcB8mY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nnAOHghJPD7n118StB4ur7c3xABKJ0yGInDkmV5OekzohWPB/elN8qB0/jQqNEKhQB8ZkTpn3qFpN/gIX7SV6dC49peZaKxe1FVfZ9Z9/j5ISryDpjeJGbyUq3JNL0bFpOsYHmzDtlpLauzj8ZqQYc0YcXP2wChuSVG1Ul4NgyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ja+y33B9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzkcB8mY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CE4C4CED1;
-	Wed, 19 Feb 2025 09:17:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ja+y33B9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9492C4CED1;
+	Wed, 19 Feb 2025 09:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956671;
-	bh=8HEtW0HpTzfQB5DPf+52VDbcOx22TYXXZLPT8KDuM4s=;
+	s=korg; t=1739956674;
+	bh=9OU1VmR0TZPNxLng43QWMIVNLx1eWo8vfPzAymym3B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vzkcB8mY7m4NABtLsxzVCb3oLqriqZv6P7zdv04o0TxmIXOnROqHwQtx6OADaDxLt
-	 Ac7bGhYJPSUTG6S32wfB3hZSD1gYt7LcE1+g5L7NBI9BbzwvGYrSg208rx0LGy+Ua9
-	 M66RnYBKa1RglP6CzU4nRfmMX75m22UHbLWbGk34=
+	b=Ja+y33B9C55W+BTE+eScKfysBPh4EKUGcOBct3hy0+K3vuwvjXiYVQYXwgDB+mYSL
+	 buIDeubEiPyuHWcq9pJp3x6OatEU/Vzbqbw9npW04Iq8cONpMAk6YJiKEObHuN391E
+	 d4mhTC2QXLJeCm8IAJ85VcAuxhLOoiTAizETUcNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ebc0b8ae5d3590b2c074@syzkaller.appspotmail.com,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 260/578] mptcp: handle fastopen disconnect correctly
-Date: Wed, 19 Feb 2025 09:24:24 +0100
-Message-ID: <20250219082703.251018057@linuxfoundation.org>
+	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.1 261/578] remoteproc: core: Fix ida_free call while not allocated
+Date: Wed, 19 Feb 2025 09:24:25 +0100
+Message-ID: <20250219082703.289873064@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,92 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
 
-commit 619af16b3b57a3a4ee50b9a30add9ff155541e71 upstream.
+commit 7378aeb664e5ebc396950b36a1f2dedf5aabec20 upstream.
 
-Syzbot was able to trigger a data stream corruption:
+In the rproc_alloc() function, on error, put_device(&rproc->dev) is
+called, leading to the call of the rproc_type_release() function.
+An error can occurs before ida_alloc is called.
 
-  WARNING: CPU: 0 PID: 9846 at net/mptcp/protocol.c:1024 __mptcp_clean_una+0xddb/0xff0 net/mptcp/protocol.c:1024
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 9846 Comm: syz-executor351 Not tainted 6.13.0-rc2-syzkaller-00059-g00a5acdbf398 #0
-  Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 11/25/2024
-  RIP: 0010:__mptcp_clean_una+0xddb/0xff0 net/mptcp/protocol.c:1024
-  Code: fa ff ff 48 8b 4c 24 18 80 e1 07 fe c1 38 c1 0f 8c 8e fa ff ff 48 8b 7c 24 18 e8 e0 db 54 f6 e9 7f fa ff ff e8 e6 80 ee f5 90 <0f> 0b 90 4c 8b 6c 24 40 4d 89 f4 e9 04 f5 ff ff 44 89 f1 80 e1 07
-  RSP: 0018:ffffc9000c0cf400 EFLAGS: 00010293
-  RAX: ffffffff8bb0dd5a RBX: ffff888033f5d230 RCX: ffff888059ce8000
-  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-  RBP: ffffc9000c0cf518 R08: ffffffff8bb0d1dd R09: 1ffff110170c8928
-  R10: dffffc0000000000 R11: ffffed10170c8929 R12: 0000000000000000
-  R13: ffff888033f5d220 R14: dffffc0000000000 R15: ffff8880592b8000
-  FS:  00007f6e866496c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00007f6e86f491a0 CR3: 00000000310e6000 CR4: 00000000003526f0
-  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  Call Trace:
-   <TASK>
-   __mptcp_clean_una_wakeup+0x7f/0x2d0 net/mptcp/protocol.c:1074
-   mptcp_release_cb+0x7cb/0xb30 net/mptcp/protocol.c:3493
-   release_sock+0x1aa/0x1f0 net/core/sock.c:3640
-   inet_wait_for_connect net/ipv4/af_inet.c:609 [inline]
-   __inet_stream_connect+0x8bd/0xf30 net/ipv4/af_inet.c:703
-   mptcp_sendmsg_fastopen+0x2a2/0x530 net/mptcp/protocol.c:1755
-   mptcp_sendmsg+0x1884/0x1b10 net/mptcp/protocol.c:1830
-   sock_sendmsg_nosec net/socket.c:711 [inline]
-   __sock_sendmsg+0x1a6/0x270 net/socket.c:726
-   ____sys_sendmsg+0x52a/0x7e0 net/socket.c:2583
-   ___sys_sendmsg net/socket.c:2637 [inline]
-   __sys_sendmsg+0x269/0x350 net/socket.c:2669
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7f6e86ebfe69
-  Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 b1 1f 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-  RSP: 002b:00007f6e86649168 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-  RAX: ffffffffffffffda RBX: 00007f6e86f491b8 RCX: 00007f6e86ebfe69
-  RDX: 0000000030004001 RSI: 0000000020000080 RDI: 0000000000000003
-  RBP: 00007f6e86f491b0 R08: 00007f6e866496c0 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 00007f6e86f491bc
-  R13: 000000000000006e R14: 00007ffe445d9420 R15: 00007ffe445d9508
-   </TASK>
+In such case in rproc_type_release(), the condition (rproc->index >= 0) is
+true as rproc->index has been  initialized to 0.
+ida_free() is called reporting a warning:
+[    4.181906] WARNING: CPU: 1 PID: 24 at lib/idr.c:525 ida_free+0x100/0x164
+[    4.186378] stm32-display-dsi 5a000000.dsi: Fixed dependency cycle(s) with /soc/dsi@5a000000/panel@0
+[    4.188854] ida_free called for id=0 which is not allocated.
+[    4.198256] mipi-dsi 5a000000.dsi.0: Fixed dependency cycle(s) with /soc/dsi@5a000000
+[    4.203556] Modules linked in: panel_orisetech_otm8009a dw_mipi_dsi_stm(+) gpu_sched dw_mipi_dsi stm32_rproc stm32_crc32 stm32_ipcc(+) optee(+)
+[    4.224307] CPU: 1 UID: 0 PID: 24 Comm: kworker/u10:0 Not tainted 6.12.0 #442
+[    4.231481] Hardware name: STM32 (Device Tree Support)
+[    4.236627] Workqueue: events_unbound deferred_probe_work_func
+[    4.242504] Call trace:
+[    4.242522]  unwind_backtrace from show_stack+0x10/0x14
+[    4.250218]  show_stack from dump_stack_lvl+0x50/0x64
+[    4.255274]  dump_stack_lvl from __warn+0x80/0x12c
+[    4.260134]  __warn from warn_slowpath_fmt+0x114/0x188
+[    4.265199]  warn_slowpath_fmt from ida_free+0x100/0x164
+[    4.270565]  ida_free from rproc_type_release+0x38/0x60
+[    4.275832]  rproc_type_release from device_release+0x30/0xa0
+[    4.281601]  device_release from kobject_put+0xc4/0x294
+[    4.286762]  kobject_put from rproc_alloc.part.0+0x208/0x28c
+[    4.292430]  rproc_alloc.part.0 from devm_rproc_alloc+0x80/0xc4
+[    4.298393]  devm_rproc_alloc from stm32_rproc_probe+0xd0/0x844 [stm32_rproc]
+[    4.305575]  stm32_rproc_probe [stm32_rproc] from platform_probe+0x5c/0xbc
 
-The root cause is the bad handling of disconnect() generated internally
-by the MPTCP protocol in case of connect FASTOPEN errors.
+Calling ida_alloc earlier in rproc_alloc ensures that the rproc->index is
+properly set.
 
-Address the issue increasing the socket disconnect counter even on such
-a case, to allow other threads waiting on the same socket lock to
-properly error out.
-
-Fixes: c2b2ae3925b6 ("mptcp: handle correctly disconnect() failures")
+Fixes: 08333b911f01 ("remoteproc: Directly use ida_alloc()/free()")
+Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+ebc0b8ae5d3590b2c074@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/67605870.050a0220.37aaf.0137.GAE@google.com
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/537
-Tested-by: syzbot+ebc0b8ae5d3590b2c074@syzkaller.appspotmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250123-net-mptcp-syzbot-issues-v1-3-af73258a726f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20241122175127.2188037-1-arnaud.pouliquen@foss.st.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/remoteproc/remoteproc_core.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1779,8 +1779,10 @@ static int mptcp_sendmsg_fastopen(struct
- 		 * see mptcp_disconnect().
- 		 * Attempt it again outside the problematic scope.
- 		 */
--		if (!mptcp_disconnect(sk, 0))
-+		if (!mptcp_disconnect(sk, 0)) {
-+			sk->sk_disconnects++;
- 			sk->sk_socket->state = SS_UNCONNECTED;
-+		}
- 	}
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -2464,6 +2464,13 @@ struct rproc *rproc_alloc(struct device
+ 	rproc->dev.driver_data = rproc;
+ 	idr_init(&rproc->notifyids);
  
- 	return ret;
++	/* Assign a unique device index and name */
++	rproc->index = ida_alloc(&rproc_dev_index, GFP_KERNEL);
++	if (rproc->index < 0) {
++		dev_err(dev, "ida_alloc failed: %d\n", rproc->index);
++		goto put_device;
++	}
++
+ 	rproc->name = kstrdup_const(name, GFP_KERNEL);
+ 	if (!rproc->name)
+ 		goto put_device;
+@@ -2474,13 +2481,6 @@ struct rproc *rproc_alloc(struct device
+ 	if (rproc_alloc_ops(rproc, ops))
+ 		goto put_device;
+ 
+-	/* Assign a unique device index and name */
+-	rproc->index = ida_alloc(&rproc_dev_index, GFP_KERNEL);
+-	if (rproc->index < 0) {
+-		dev_err(dev, "ida_alloc failed: %d\n", rproc->index);
+-		goto put_device;
+-	}
+-
+ 	dev_set_name(&rproc->dev, "remoteproc%d", rproc->index);
+ 
+ 	atomic_set(&rproc->power, 0);
 
 
