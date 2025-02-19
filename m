@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DD11C5F0C;
-	Wed, 19 Feb 2025 09:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D581C5F0C;
+	Wed, 19 Feb 2025 09:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956466; cv=none; b=bAJM2LPZf/+GO7+ia9Mxq4t1JzPO8f3vn8o80xKs1QBZLQNeD+YEn7WFCux6ykgZu2RQGrzvps5fYNhuit5Q7H1/ozW0MsILipkRbMjr1sz9G22W3a0/vfqiHXlA6U5hV1UbehjicH9D82JfZ5iEt7yzeTPKbCphgSR7Y0m/g6U=
+	t=1739956468; cv=none; b=OIThcP079I9vLpHO1O2BKs/63R8ZoqjW0i1NI3/BTL/j/O8zkbtUd0MUVrmNmfA5CnrvLHfX43XghLR0cZ7uR3YvMOZL/gmcKALz1zoLVezfGWfJs2QCFTR2Qbe8qJgGbmDGBVzF8JM7/o4d15XA5yh7ja+F4F6FQ/pYJXPI9MY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956466; c=relaxed/simple;
-	bh=vOCEXreaK28T2h8db6a+a98KyQFFG8VqGLa5M4Rc6LM=;
+	s=arc-20240116; t=1739956468; c=relaxed/simple;
+	bh=dYmD60QiUP1yOA0KXtnxEzWVxmKFhGZcIS1KC79Okp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G8hlRsgdILNGQFybkDsadhXSq3KNb+6/jN/0DCz7/rBMYmgI7ln1mIUWLqQ9rCxRowsZEUuAr+1M8D5OuxORVAsILqkrVFktxDHM7lC0d8LbUOYH0YvJyRkWZghV4VkJsKuUKOFFfQxD/J5F+ObDwE4xIVKyr+3TRQFEa0pGuYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GeTaCYAt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jUe1LvB1oXHvhs+V4oW0j5sOvNStInacX6r8jMRLIAQIY+u/KHJc15OEuYBacoSm1mCY+QAEA5OnxDIt61YehUTiJYX4L8x+MFqCzOnhY8T+AG4ZX9UW5KfLmJkG1tXXNEb8I8Ncgs1Z3SrH+137UBFIITNtcC4a9Q7dr8Ir/+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZY5cvXi1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GeTaCYAt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DF9C4CED1;
-	Wed, 19 Feb 2025 09:14:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZY5cvXi1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2A3C4CED1;
+	Wed, 19 Feb 2025 09:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956465;
-	bh=vOCEXreaK28T2h8db6a+a98KyQFFG8VqGLa5M4Rc6LM=;
+	s=korg; t=1739956468;
+	bh=dYmD60QiUP1yOA0KXtnxEzWVxmKFhGZcIS1KC79Okp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GeTaCYAt1YTS5CfMBXJVcDTwesVFfCrZhFIzRVGjXUEgvaJXU6g0uqjcnH68rYQ21
-	 pLZEXdJQSuJNwm+LQsX09BZjDhahoP7U6QeyS2KhBMhUcRs+EcnpG6DVbVtCPcWuEj
-	 axbgXboW4VoC63NCcPbyC1S+F+r/YTjYhpEPj1gI=
+	b=ZY5cvXi1mBhIXlC0wOB2Yekk6qvWK7yLKHPrUL0Ue6isAwKeSZgpATtV2MA2JFWPr
+	 t3iS/KW6ApNJzA0mjT30DoSx5u/DEIInXtJL9YxryxmeTm1eOcNUHz2/8htgHDUTX5
+	 fexL/TPNGRMJL+EP4lZNzD/IBH8GBOFy/EKdOjdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	syzbot+ffba8e636870dac0e0c0@syzkaller.appspotmail.com,
-	Sean Young <sean@mess.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 188/578] media: rc: iguanair: handle timeouts
-Date: Wed, 19 Feb 2025 09:23:12 +0100
-Message-ID: <20250219082700.361174603@linuxfoundation.org>
+Subject: [PATCH 6.1 189/578] media: lmedm04: Handle errors for lme2510_int_read
+Date: Wed, 19 Feb 2025 09:23:13 +0100
+Message-ID: <20250219082700.399710752@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -53,46 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit b98d5000c50544f14bacb248c34e5219fbe81287 ]
+[ Upstream commit a2836d3fe220220ff8c495ca9722f89cea8a67e7 ]
 
-In case of a timeout the IO must be cancelled or
-the next IO using the URB will fail and/or overwrite
-an operational URB.
+Add check for the return value of usb_pipe_endpoint() and
+usb_submit_urb() in order to catch the errors.
 
-The automatic bisection fails because it arrives
-at a commit that correctly lets the test case run
-without an error.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Fixes: e99a7cfe93fd ("[media] iguanair: reuse existing urb callback for command responses")
-Reported-by: syzbot+ffba8e636870dac0e0c0@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/66f5cc9a.050a0220.46d20.0004.GAE@google.com/
-Tested-by: syzbot+ffba8e636870dac0e0c0@syzkaller.appspotmail.com
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: 15e1ce33182d ("[media] lmedm04: Fix usb_submit_urb BOGUS urb xfer, pipe 1 != type 3 in interrupt urb")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20240521091042.1769684-1-nichen@iscas.ac.cn
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/iguanair.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb-v2/lmedm04.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/iguanair.c b/drivers/media/rc/iguanair.c
-index 276bf3c8a8cb4..8af94246e5916 100644
---- a/drivers/media/rc/iguanair.c
-+++ b/drivers/media/rc/iguanair.c
-@@ -194,8 +194,10 @@ static int iguanair_send(struct iguanair *ir, unsigned size)
- 	if (rc)
- 		return rc;
+diff --git a/drivers/media/usb/dvb-usb-v2/lmedm04.c b/drivers/media/usb/dvb-usb-v2/lmedm04.c
+index 8a34e6c0d6a6d..f0537b741d135 100644
+--- a/drivers/media/usb/dvb-usb-v2/lmedm04.c
++++ b/drivers/media/usb/dvb-usb-v2/lmedm04.c
+@@ -373,6 +373,7 @@ static int lme2510_int_read(struct dvb_usb_adapter *adap)
+ 	struct dvb_usb_device *d = adap_to_d(adap);
+ 	struct lme2510_state *lme_int = adap_to_priv(adap);
+ 	struct usb_host_endpoint *ep;
++	int ret;
  
--	if (wait_for_completion_timeout(&ir->completion, TIMEOUT) == 0)
-+	if (wait_for_completion_timeout(&ir->completion, TIMEOUT) == 0) {
-+		usb_kill_urb(ir->urb_out);
- 		return -ETIMEDOUT;
+ 	lme_int->lme_urb = usb_alloc_urb(0, GFP_KERNEL);
+ 
+@@ -390,11 +391,20 @@ static int lme2510_int_read(struct dvb_usb_adapter *adap)
+ 
+ 	/* Quirk of pipe reporting PIPE_BULK but behaves as interrupt */
+ 	ep = usb_pipe_endpoint(d->udev, lme_int->lme_urb->pipe);
++	if (!ep) {
++		usb_free_urb(lme_int->lme_urb);
++		return -ENODEV;
 +	}
  
- 	return rc;
- }
+ 	if (usb_endpoint_type(&ep->desc) == USB_ENDPOINT_XFER_BULK)
+ 		lme_int->lme_urb->pipe = usb_rcvbulkpipe(d->udev, 0xa);
+ 
+-	usb_submit_urb(lme_int->lme_urb, GFP_KERNEL);
++	ret = usb_submit_urb(lme_int->lme_urb, GFP_KERNEL);
++	if (ret) {
++		usb_free_urb(lme_int->lme_urb);
++		return ret;
++	}
++
+ 	info("INT Interrupt Service Started");
+ 
+ 	return 0;
 -- 
 2.39.5
 
