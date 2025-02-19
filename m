@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31CC1A315E;
-	Wed, 19 Feb 2025 09:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA5E1DFE1D;
+	Wed, 19 Feb 2025 09:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955619; cv=none; b=rmc7KTpxlfj2glfu15kR1TOzt/4XgDIGZ9rbEHbpGdbQ49ywlXPeGLANZgqcelkCk7POPpnHSfYwfUsU9cYXzYgHzMTpm7p8tIfIQOKUnpKB3j70DyIRZWxESvuB0gFPr1Qtuwz6aN9Zayoj+rz2Z/p27mzAiXYV2oYqFiGmU3w=
+	t=1739955622; cv=none; b=ORsEbTn1+IosCqaDZQEiojma5V7uy2/GgQzFSZhH2H6JTlm9SsHQFCaaRZ4I9uHkdwMfawVoekNbHCN0oSzL4gBKjWMCQBi1/c3Jxy4J3WIZP851TigSyIvD3c+Er5yFXQLSYBVbkOoj3GcsH+cQ3iLi0PIAgeevURTGlaV3hOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955619; c=relaxed/simple;
-	bh=vUiNAKCkHA9YmK/p9zgd2CBNpBipxwqnLgUT0JEPX1s=;
+	s=arc-20240116; t=1739955622; c=relaxed/simple;
+	bh=ADUpX0AU37pZtUZaij+hgfJ7b1qi14fLiBGT8dOcmOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYSoqU8y9Jc9+Oy5BUDJbinwoMSo0SnrkbhR4+QxJX3Gsmm3qiQnghlQTLlESo1pnnWLY4stU9K1lmhSmiR8PFgQ7WYuagUTjD5viZ3vWSQd8N4J84hM9r36KkpyQaO9Dc43Q6bz7mQFO7YdiaitKJsCDCIzz79vTfJqfUNLmkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkoc88SH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q3CCD8oHkxHjRPf89MvJSA9QpfjaaTQur+zBJfMxQ8pVuI+uv6wHKwj7ToIMsNY44ohXCjeirhDkJhapjUP7IMRBkeGNKj/JiU7QE4Y1csZtR0g64tMoE5B+8QMcCcj4H4G045RDnSNM1Cw/Vf7oR+b1CVoASXFxE0LTMHbeEMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppqRWEf0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkoc88SH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E16C4CED1;
-	Wed, 19 Feb 2025 09:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppqRWEf0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D32C4CED1;
+	Wed, 19 Feb 2025 09:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955619;
-	bh=vUiNAKCkHA9YmK/p9zgd2CBNpBipxwqnLgUT0JEPX1s=;
+	s=korg; t=1739955622;
+	bh=ADUpX0AU37pZtUZaij+hgfJ7b1qi14fLiBGT8dOcmOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wkoc88SH5RS2bBVsPZl/qt45C40NrOrmdNg1UWcq15+C69ow/RVGwgzDVMqAIa4P8
-	 Ry8y5see+ElPsKa89LaY6lToMvpZCNw5Nn1RIO/mjFOBKbVwqhcnHc3ChOch+Ss7hw
-	 MvZBasDjTOLArQsiqWTaFhl9I2VOuHVepouPcXn0=
+	b=ppqRWEf0lWhgeHyDYPVZXLY7Q0sGe8anh6+k6WHxgXkhHG5agb53qVmqj3EpIo5qs
+	 3LNo9L6jNRgXphJNpp+okximMNp9B/Iz6djT6Dtl71otiR8iiSa0Y7JAA2upUavaaY
+	 Mg+gOKqX3Tw5DJVGDKAzZ7/mObMVRyzexHEEqspk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/152] media: i2c: ds90ub913: Add error handling to ub913_hw_init()
-Date: Wed, 19 Feb 2025 09:27:23 +0100
-Message-ID: <20250219082551.231033706@linuxfoundation.org>
+Subject: [PATCH 6.6 031/152] media: i2c: ds90ub953: Add error handling for i2c reads/writes
+Date: Wed, 19 Feb 2025 09:27:24 +0100
+Message-ID: <20250219082551.270473919@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -55,10 +55,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit acd8f58d7a3bce0fbd3263961cd09555c00464ba ]
+[ Upstream commit 0794c43ea1e451007e80246e1288ebbf44139397 ]
 
-Add error handling to ub913_hw_init() using a new helper function,
-ub913_update_bits().
+Add error handling for i2c reads/writes in various places.
 
 Reported-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Closes: https://lore.kernel.org/all/Zv40EQSR__JDN_0M@kekkonen.localdomain/
@@ -68,54 +67,98 @@ Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ds90ub913.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+ drivers/media/i2c/ds90ub953.c | 46 ++++++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/media/i2c/ds90ub913.c b/drivers/media/i2c/ds90ub913.c
-index 5a650facae415..ae33d1ecf835d 100644
---- a/drivers/media/i2c/ds90ub913.c
-+++ b/drivers/media/i2c/ds90ub913.c
-@@ -8,6 +8,7 @@
-  * Copyright (c) 2023 Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-  */
+diff --git a/drivers/media/i2c/ds90ub953.c b/drivers/media/i2c/ds90ub953.c
+index 1dd29137d2d9f..007c95ac34d93 100644
+--- a/drivers/media/i2c/ds90ub953.c
++++ b/drivers/media/i2c/ds90ub953.c
+@@ -398,8 +398,13 @@ static int ub953_gpiochip_probe(struct ub953_data *priv)
+ 	int ret;
  
-+#include <linux/bitfield.h>
- #include <linux/clk-provider.h>
- #include <linux/clk.h>
- #include <linux/delay.h>
-@@ -146,6 +147,19 @@ static int ub913_write(const struct ub913_data *priv, u8 reg, u8 val)
- 	return ret;
+ 	/* Set all GPIOs to local input mode */
+-	ub953_write(priv, UB953_REG_LOCAL_GPIO_DATA, 0);
+-	ub953_write(priv, UB953_REG_GPIO_INPUT_CTRL, 0xf);
++	ret = ub953_write(priv, UB953_REG_LOCAL_GPIO_DATA, 0);
++	if (ret)
++		return ret;
++
++	ret = ub953_write(priv, UB953_REG_GPIO_INPUT_CTRL, 0xf);
++	if (ret)
++		return ret;
+ 
+ 	gc->label = dev_name(dev);
+ 	gc->parent = dev;
+@@ -961,10 +966,11 @@ static void ub953_calc_clkout_params(struct ub953_data *priv,
+ 	clkout_data->rate = clkout_rate;
  }
  
-+static int ub913_update_bits(const struct ub913_data *priv, u8 reg, u8 mask,
-+			     u8 val)
-+{
+-static void ub953_write_clkout_regs(struct ub953_data *priv,
+-				    const struct ub953_clkout_data *clkout_data)
++static int ub953_write_clkout_regs(struct ub953_data *priv,
++				   const struct ub953_clkout_data *clkout_data)
+ {
+ 	u8 clkout_ctrl0, clkout_ctrl1;
 +	int ret;
-+
-+	ret = regmap_update_bits(priv->regmap, reg, mask, val);
-+	if (ret < 0)
-+		dev_err(&priv->client->dev,
-+			"Cannot update register 0x%02x %d!\n", reg, ret);
-+
-+	return ret;
-+}
-+
- /*
-  * GPIO chip
-  */
-@@ -733,10 +747,13 @@ static int ub913_hw_init(struct ub913_data *priv)
- 	if (ret)
- 		return dev_err_probe(dev, ret, "i2c master init failed\n");
  
--	ub913_read(priv, UB913_REG_GENERAL_CFG, &v);
--	v &= ~UB913_REG_GENERAL_CFG_PCLK_RISING;
--	v |= priv->pclk_polarity_rising ? UB913_REG_GENERAL_CFG_PCLK_RISING : 0;
--	ub913_write(priv, UB913_REG_GENERAL_CFG, v);
-+	ret = ub913_update_bits(priv, UB913_REG_GENERAL_CFG,
-+				UB913_REG_GENERAL_CFG_PCLK_RISING,
-+				FIELD_PREP(UB913_REG_GENERAL_CFG_PCLK_RISING,
-+					   priv->pclk_polarity_rising));
+ 	if (priv->hw_data->is_ub971)
+ 		clkout_ctrl0 = clkout_data->m;
+@@ -974,8 +980,15 @@ static void ub953_write_clkout_regs(struct ub953_data *priv,
+ 
+ 	clkout_ctrl1 = clkout_data->n;
+ 
+-	ub953_write(priv, UB953_REG_CLKOUT_CTRL0, clkout_ctrl0);
+-	ub953_write(priv, UB953_REG_CLKOUT_CTRL1, clkout_ctrl1);
++	ret = ub953_write(priv, UB953_REG_CLKOUT_CTRL0, clkout_ctrl0);
++	if (ret)
++		return ret;
 +
++	ret = ub953_write(priv, UB953_REG_CLKOUT_CTRL1, clkout_ctrl1);
++	if (ret)
++		return ret;
++
++	return 0;
+ }
+ 
+ static unsigned long ub953_clkout_recalc_rate(struct clk_hw *hw,
+@@ -1055,9 +1068,7 @@ static int ub953_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	dev_dbg(&priv->client->dev, "%s %lu (requested %lu)\n", __func__,
+ 		clkout_data.rate, rate);
+ 
+-	ub953_write_clkout_regs(priv, &clkout_data);
+-
+-	return 0;
++	return ub953_write_clkout_regs(priv, &clkout_data);
+ }
+ 
+ static const struct clk_ops ub953_clkout_ops = {
+@@ -1082,7 +1093,9 @@ static int ub953_register_clkout(struct ub953_data *priv)
+ 
+ 	/* Initialize clkout to 25MHz by default */
+ 	ub953_calc_clkout_params(priv, UB953_DEFAULT_CLKOUT_RATE, &clkout_data);
+-	ub953_write_clkout_regs(priv, &clkout_data);
++	ret = ub953_write_clkout_regs(priv, &clkout_data);
++	if (ret)
++		return ret;
+ 
+ 	priv->clkout_clk_hw.init = &init;
+ 
+@@ -1229,10 +1242,15 @@ static int ub953_hw_init(struct ub953_data *priv)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "i2c init failed\n");
+ 
+-	ub953_write(priv, UB953_REG_GENERAL_CFG,
+-		    (priv->non_continous_clk ? 0 : UB953_REG_GENERAL_CFG_CONT_CLK) |
+-		    ((priv->num_data_lanes - 1) << UB953_REG_GENERAL_CFG_CSI_LANE_SEL_SHIFT) |
+-		    UB953_REG_GENERAL_CFG_CRC_TX_GEN_ENABLE);
++	v = 0;
++	v |= priv->non_continous_clk ? 0 : UB953_REG_GENERAL_CFG_CONT_CLK;
++	v |= (priv->num_data_lanes - 1) <<
++		UB953_REG_GENERAL_CFG_CSI_LANE_SEL_SHIFT;
++	v |= UB953_REG_GENERAL_CFG_CRC_TX_GEN_ENABLE;
++
++	ret = ub953_write(priv, UB953_REG_GENERAL_CFG, v);
 +	if (ret)
 +		return ret;
  
