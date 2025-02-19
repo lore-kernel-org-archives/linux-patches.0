@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D1E1DE88A;
-	Wed, 19 Feb 2025 09:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BF81DED5A;
+	Wed, 19 Feb 2025 09:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956161; cv=none; b=Z3Q27HH1OwV6kH80+72XI83f+T3j+WSXmGf8YgqYHesybT0j54p4kIMZhbxRaRl5ccn3riXRuT0B/x8RM0hPfTv6SNVe7Vqbj+UaH655Y83k2TJK+kyx5HWIoj9DsucOFD/kluQl+IXPTyd25qqabb4gY7NVrbnqSvmkcQNKg5k=
+	t=1739956164; cv=none; b=uUbtpB6GaHlpelVi/dX+xb1Ph1z1qQ1FC6lTRg2M6Av+haanb825zlK90NE+AQQr6M+GQeKythCP7ewXMWnIMfSc9/vidl3td/FKBXYDGEQyR+HNnjAOvYJo6nwL8yCF4SL5q7oLJ2t2uSbExEuO6ZEEc6OOX1e1FMHf0p6QSrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956161; c=relaxed/simple;
-	bh=Q/Md7RtoyDzJOqr31huydIcRvhCu5CSOo+zK8Lfx6vc=;
+	s=arc-20240116; t=1739956164; c=relaxed/simple;
+	bh=H4faPKW4+wzCE5oO2YXrrTRq8lHouETfkewE1PwxjKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OmaQZPhuNpy11jNndS2AV46wgBiyoqjL11a1VgqTLblUDMFHE7ILfqbYA1mL+2kEMykusd8goAWwFYvEetCfQ3cdPGpgN4IIoQp/LmJT3BFID67v9UY87Eb3G9wAqWeAMgmxMmzzrSEiPEAGXoFbeDHLQHRV4U90TPeya774LKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yG7OLfBM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJmqK0zk7c5Edpe90FQrpV2Wzut8X2BpZfa3hm4gt0K2tjSN97FqRwbpr3Ypa5mOMnfiBdvqzk/xM0sbsSvAWILihqst7fB7iDBXkx8LoA08kZ0WuEzEcZLaZ1ncewG/czUPrnfSKzauYADFKFjb/04k7aJOtzbYpirDlk2fDqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3Q7NrFN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yG7OLfBM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE76EC4CED1;
-	Wed, 19 Feb 2025 09:09:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3Q7NrFN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5461C4CEE6;
+	Wed, 19 Feb 2025 09:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956161;
-	bh=Q/Md7RtoyDzJOqr31huydIcRvhCu5CSOo+zK8Lfx6vc=;
+	s=korg; t=1739956164;
+	bh=H4faPKW4+wzCE5oO2YXrrTRq8lHouETfkewE1PwxjKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yG7OLfBM00AlqU97hRg4KOa1mtCpJ5Rfywt+qZBeYNHmJfzBEqHnMm/LWPWST/1IR
-	 lZuN48FBps1l1FXW5ZCOAMCLUnSZ/81ZZgMvRn3XRT8LbksJoHwTBh0ZI3PLPw+x4L
-	 sWqtSL6oHtk040WgbXy/V79o4RHmkU9DdNzjw17I=
+	b=i3Q7NrFNQt2zzTGx5hwZyTo6MLcW3IQrwLFwVlcBRr/95GCQxRtdrHGouz4aHq678
+	 KAGfEkijj4JxT1f3Scx3KE0H9n0EAC3RQMuTWb9QRhVDbUZBaQEZZGNyDBoc/Vl+vP
+	 FHz8ZMqRPQ7wc81LSd/gJA+OLt3fxqhjmGF5sDZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 086/578] cpufreq: ACPI: Fix max-frequency computation
-Date: Wed, 19 Feb 2025 09:21:30 +0100
-Message-ID: <20250219082656.346234282@linuxfoundation.org>
+Subject: [PATCH 6.1 087/578] selftests: timers: clocksource-switch: Adapt progress to kselftest framework
+Date: Wed, 19 Feb 2025 09:21:31 +0100
+Message-ID: <20250219082656.384656052@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -53,120 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautham R. Shenoy <gautham.shenoy@amd.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 0834667545962ef1c5e8684ed32b45d9c574acd3 ]
+[ Upstream commit 8694e6a7f7dba23d3abd9f5a96f64d161704c7b1 ]
 
-Commit 3c55e94c0ade ("cpufreq: ACPI: Extend frequency tables to cover
-boost frequencies") introduced an assumption in acpi_cpufreq_cpu_init()
-that the first entry in the P-state table was the nominal frequency.
-This assumption is incorrect. The frequency corresponding to the P0
-P-State need not be the same as the nominal frequency advertised via
-CPPC.
+When adapting the test to the kselftest framework, a few printf() calls
+indicating test progress were not updated.
 
-Since the driver is using the CPPC.highest_perf and CPPC.nominal_perf
-to compute the boost-ratio, it makes sense to use CPPC.nominal_freq to
-compute the max-frequency. CPPC.nominal_freq is advertised on
-platforms supporting CPPC revisions 3 or higher.
+Fix this by replacing these printf() calls by ksft_print_msg() calls.
 
-Hence, fallback to using the first entry in the P-State table only on
-platforms that do not advertise CPPC.nominal_freq.
-
-Fixes: 3c55e94c0ade ("cpufreq: ACPI: Extend frequency tables to cover boost frequencies")
-Tested-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20250113044107.566-1-gautham.shenoy@amd.com
-[ rjw: Retain reverse X-mas tree ordering of local variable declarations ]
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/7dd4b9ab6e43268846e250878ebf25ae6d3d01ce.1733994134.git.geert+renesas@glider.be
+Fixes: ce7d101750ff ("selftests: timers: clocksource-switch: adapt to kselftest framework")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/acpi-cpufreq.c | 36 +++++++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 9 deletions(-)
+ tools/testing/selftests/timers/clocksource-switch.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cpufreq/acpi-cpufreq.c b/drivers/cpufreq/acpi-cpufreq.c
-index 1bb2b90ebb21c..72464e4132e2b 100644
---- a/drivers/cpufreq/acpi-cpufreq.c
-+++ b/drivers/cpufreq/acpi-cpufreq.c
-@@ -635,7 +635,14 @@ static int acpi_cpufreq_blacklist(struct cpuinfo_x86 *c)
- #endif
- 
- #ifdef CONFIG_ACPI_CPPC_LIB
--static u64 get_max_boost_ratio(unsigned int cpu)
-+/*
-+ * get_max_boost_ratio: Computes the max_boost_ratio as the ratio
-+ * between the highest_perf and the nominal_perf.
-+ *
-+ * Returns the max_boost_ratio for @cpu. Returns the CPPC nominal
-+ * frequency via @nominal_freq if it is non-NULL pointer.
-+ */
-+static u64 get_max_boost_ratio(unsigned int cpu, u64 *nominal_freq)
- {
- 	struct cppc_perf_caps perf_caps;
- 	u64 highest_perf, nominal_perf;
-@@ -658,6 +665,9 @@ static u64 get_max_boost_ratio(unsigned int cpu)
- 
- 	nominal_perf = perf_caps.nominal_perf;
- 
-+	if (nominal_freq)
-+		*nominal_freq = perf_caps.nominal_freq;
-+
- 	if (!highest_perf || !nominal_perf) {
- 		pr_debug("CPU%d: highest or nominal performance missing\n", cpu);
- 		return 0;
-@@ -670,8 +680,12 @@ static u64 get_max_boost_ratio(unsigned int cpu)
- 
- 	return div_u64(highest_perf << SCHED_CAPACITY_SHIFT, nominal_perf);
- }
-+
- #else
--static inline u64 get_max_boost_ratio(unsigned int cpu) { return 0; }
-+static inline u64 get_max_boost_ratio(unsigned int cpu, u64 *nominal_freq)
-+{
-+	return 0;
-+}
- #endif
- 
- static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
-@@ -681,9 +695,9 @@ static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
- 	struct acpi_cpufreq_data *data;
- 	unsigned int cpu = policy->cpu;
- 	struct cpuinfo_x86 *c = &cpu_data(cpu);
-+	u64 max_boost_ratio, nominal_freq = 0;
- 	unsigned int valid_states = 0;
- 	unsigned int result = 0;
--	u64 max_boost_ratio;
- 	unsigned int i;
- #ifdef CONFIG_SMP
- 	static int blacklisted;
-@@ -833,16 +847,20 @@ static int acpi_cpufreq_cpu_init(struct cpufreq_policy *policy)
+diff --git a/tools/testing/selftests/timers/clocksource-switch.c b/tools/testing/selftests/timers/clocksource-switch.c
+index c5264594064c8..83faa4e354e38 100644
+--- a/tools/testing/selftests/timers/clocksource-switch.c
++++ b/tools/testing/selftests/timers/clocksource-switch.c
+@@ -156,8 +156,8 @@ int main(int argc, char **argv)
+ 	/* Check everything is sane before we start switching asynchronously */
+ 	if (do_sanity_check) {
+ 		for (i = 0; i < count; i++) {
+-			printf("Validating clocksource %s\n",
+-				clocksource_list[i]);
++			ksft_print_msg("Validating clocksource %s\n",
++					clocksource_list[i]);
+ 			if (change_clocksource(clocksource_list[i])) {
+ 				status = -1;
+ 				goto out;
+@@ -169,7 +169,7 @@ int main(int argc, char **argv)
+ 		}
  	}
- 	freq_table[valid_states].frequency = CPUFREQ_TABLE_END;
  
--	max_boost_ratio = get_max_boost_ratio(cpu);
-+	max_boost_ratio = get_max_boost_ratio(cpu, &nominal_freq);
- 	if (max_boost_ratio) {
--		unsigned int freq = freq_table[0].frequency;
-+		unsigned int freq = nominal_freq;
- 
- 		/*
--		 * Because the loop above sorts the freq_table entries in the
--		 * descending order, freq is the maximum frequency in the table.
--		 * Assume that it corresponds to the CPPC nominal frequency and
--		 * use it to set cpuinfo.max_freq.
-+		 * The loop above sorts the freq_table entries in the
-+		 * descending order. If ACPI CPPC has not advertised
-+		 * the nominal frequency (this is possible in CPPC
-+		 * revisions prior to 3), then use the first entry in
-+		 * the pstate table as a proxy for nominal frequency.
- 		 */
-+		if (!freq)
-+			freq = freq_table[0].frequency;
-+
- 		policy->cpuinfo.max_freq = freq * max_boost_ratio >> SCHED_CAPACITY_SHIFT;
- 	} else {
- 		/*
+-	printf("Running Asynchronous Switching Tests...\n");
++	ksft_print_msg("Running Asynchronous Switching Tests...\n");
+ 	pid = fork();
+ 	if (!pid)
+ 		return run_tests(runtime);
 -- 
 2.39.5
 
