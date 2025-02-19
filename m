@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AFC1AF0C0;
-	Wed, 19 Feb 2025 09:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936881AF0C0;
+	Wed, 19 Feb 2025 09:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955931; cv=none; b=B2XaZhd5QgYH+DqHRrIjJcnxmGrva3mXfO7Jc7Y68EAQxxRSXYKcwzPWdn/FNXrhkQ03sZnjQvYvpoI6MGywcDppL6kMQQrrR5i8/0A9qjOv7a0M3+EcCPJ3FLAkmk1n9owry0weTyj8gI4LPZYbv8Xz1DJW6v3XoFZvnX3+B7k=
+	t=1739955934; cv=none; b=VSjvjQtA0ZjTscOv7qRGGt5Csy+XZ1O2+RDJY08YxZhcmlMGJM+drp4/QtdxnseoD5RX9tjTsvYSMyJ3TsSumFb76renRwUZnynfrXe8qDGLcZgSsABoiHYgoTWAe+m+ZvC7pTKWotoZhxLIRDY7qmdqucWFDrjM8b6ppKqoO2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955931; c=relaxed/simple;
-	bh=KKPtCOYskNV9f2z7jtcnJjKbCxcVGaO39bvUHNgpJsk=;
+	s=arc-20240116; t=1739955934; c=relaxed/simple;
+	bh=6ILATVrFTbSRaj2Rf+66RtZ2Rash7pkCFJBo1cF6ozc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmyOfDM6K27+1sc46oxRVCtxa0kRqxmvcupSxfTL+b43GREPhjvsNNcm0bp1nNglJ2GAeoR9hjWL8yPlDuYY8e2ZJIgeB9FPyepPIeo6iDZgZrKBF3bahY5UACevQyR2IavDYz/ckQn+Zr6tcvt0TYIQ+JtiI1J4SAOEymo+wyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuEanXoR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jvTRDvegM4mIooXpl9JKA6gfw3viHS2MydhRKWnqKIatia+bJs4fBFuZsEp2wAhzJW2Iz9QW5YJ9CMx/1pzjwpYLkJLFchbJMDkUIBU0Uxk25vbmWBgZIYoO9qGoH/Skgo8yURW5G8QP1DEnMaT2d0OIgSz7BmeCpBnPzSY06So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KipWL/r1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuEanXoR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40FFEC4CED1;
-	Wed, 19 Feb 2025 09:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KipWL/r1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8F7C4CED1;
+	Wed, 19 Feb 2025 09:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955931;
-	bh=KKPtCOYskNV9f2z7jtcnJjKbCxcVGaO39bvUHNgpJsk=;
+	s=korg; t=1739955934;
+	bh=6ILATVrFTbSRaj2Rf+66RtZ2Rash7pkCFJBo1cF6ozc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yuEanXoRGYPkvFatIn/+yj1K8pCcJgUFyEadrLAd7IfW2GaYO/ZzSltAupxjGNo7A
-	 yaGksbQOUYkgeb1KuOrgAnIiCMwC3rJ5v2ln5ryyN9QcQyiFYfcfbG+pNuaU3Lrlnh
-	 w+IkY4pxiMIt5ewaisfRT2aaQmW0bCz5fvJiibmg=
+	b=KipWL/r1l0YZouczGkcXFQ18SUC2qqgI28E8HTdFn3FfRMAWvPEy7nqlvC7RjkFvc
+	 qSvf3NwgDdcf0KfnKcwB8Kq1DvuUJMVc1ag8YA1uXpVGg9GPutOMxyJV4bejb7hMdi
+	 tEjJ3keFEi6Ufb/M0m1RsmZqKwQq7NRpc+sM2JuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cormier <jcormier@criticallink.com>,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: [PATCH 6.6 130/152] drm/tidss: Clear the interrupt status for interrupts being disabled
-Date: Wed, 19 Feb 2025 09:29:03 +0100
-Message-ID: <20250219082555.190946886@linuxfoundation.org>
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 001/578] powerpc/book3s64/hugetlb: Fix disabling hugetlb when fadump is active
+Date: Wed, 19 Feb 2025 09:20:05 +0100
+Message-ID: <20250219082652.955915634@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
-References: <20250219082550.014812078@linuxfoundation.org>
+In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
+References: <20250219082652.891560343@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,76 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Devarsh Thakkar <devarsht@ti.com>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-commit 361a2ebb5cad211732ec3c5d962de49b21895590 upstream.
+[ Upstream commit d629d7a8efc33d05d62f4805c0ffb44727e3d99f ]
 
-The driver does not touch the irqstatus register when it is disabling
-interrupts.  This might cause an interrupt to trigger for an interrupt
-that was just disabled.
+Commit 8597538712eb ("powerpc/fadump: Do not use hugepages when fadump
+is active") disabled hugetlb support when fadump is active by returning
+early from hugetlbpage_init():arch/powerpc/mm/hugetlbpage.c and not
+populating hpage_shift/HPAGE_SHIFT.
 
-To fix the issue, clear the irqstatus registers right after disabling
-the interrupts.
+Later, commit 2354ad252b66 ("powerpc/mm: Update default hugetlb size
+early") moved the allocation of hpage_shift/HPAGE_SHIFT to early boot,
+which inadvertently re-enabled hugetlb support when fadump is active.
 
-Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
-Cc: stable@vger.kernel.org
-Reported-by: Jonathan Cormier <jcormier@criticallink.com>
-Closes: https://e2e.ti.com/support/processors-group/processors/f/processors-forum/1394222/am625-issue-about-tidss-rcu_preempt-self-detected-stall-on-cpu/5424479#5424479
-Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
-[Tomi: mostly rewrote the patch]
-Reviewed-by: Jonathan Cormier <jcormier@criticallink.com>
-Tested-by: Jonathan Cormier <jcormier@criticallink.com>
-Reviewed-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241021-tidss-irq-fix-v1-5-82ddaec94e4a@ideasonboard.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by implementing hugepages_supported() on powerpc. This ensures
+that disabling hugetlb for the fadump kernel is independent of
+hpage_shift/HPAGE_SHIFT.
+
+Fixes: 2354ad252b66 ("powerpc/mm: Update default hugetlb size early")
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20241217074640.1064510-1-sourabhjain@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tidss/tidss_dispc.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/powerpc/include/asm/hugetlb.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/gpu/drm/tidss/tidss_dispc.c
-+++ b/drivers/gpu/drm/tidss/tidss_dispc.c
-@@ -646,7 +646,7 @@ void dispc_k2g_set_irqenable(struct disp
- {
- 	dispc_irq_t old_mask = dispc_k2g_read_irqenable(dispc);
+diff --git a/arch/powerpc/include/asm/hugetlb.h b/arch/powerpc/include/asm/hugetlb.h
+index ea71f7245a63e..8d8f4909ae1a4 100644
+--- a/arch/powerpc/include/asm/hugetlb.h
++++ b/arch/powerpc/include/asm/hugetlb.h
+@@ -15,6 +15,15 @@
  
--	/* clear the irqstatus for newly enabled irqs */
-+	/* clear the irqstatus for irqs that will be enabled */
- 	dispc_k2g_clear_irqstatus(dispc, (mask ^ old_mask) & mask);
+ extern bool hugetlb_disabled;
  
- 	dispc_k2g_vp_set_irqenable(dispc, 0, mask);
-@@ -654,6 +654,9 @@ void dispc_k2g_set_irqenable(struct disp
- 
- 	dispc_write(dispc, DISPC_IRQENABLE_SET, (1 << 0) | (1 << 7));
- 
-+	/* clear the irqstatus for irqs that were disabled */
-+	dispc_k2g_clear_irqstatus(dispc, (mask ^ old_mask) & old_mask);
++static inline bool hugepages_supported(void)
++{
++	if (hugetlb_disabled)
++		return false;
 +
- 	/* flush posted write */
- 	dispc_k2g_read_irqenable(dispc);
- }
-@@ -785,7 +788,7 @@ static void dispc_k3_set_irqenable(struc
- 
- 	old_mask = dispc_k3_read_irqenable(dispc);
- 
--	/* clear the irqstatus for newly enabled irqs */
-+	/* clear the irqstatus for irqs that will be enabled */
- 	dispc_k3_clear_irqstatus(dispc, (old_mask ^ mask) & mask);
- 
- 	for (i = 0; i < dispc->feat->num_vps; ++i) {
-@@ -810,6 +813,9 @@ static void dispc_k3_set_irqenable(struc
- 	if (main_disable)
- 		dispc_write(dispc, DISPC_IRQENABLE_CLR, main_disable);
- 
-+	/* clear the irqstatus for irqs that were disabled */
-+	dispc_k3_clear_irqstatus(dispc, (old_mask ^ mask) & old_mask);
++	return HPAGE_SHIFT != 0;
++}
++#define hugepages_supported hugepages_supported
 +
- 	/* Flush posted writes */
- 	dispc_read(dispc, DISPC_IRQENABLE_SET);
- }
+ void __init hugetlbpage_init_defaultsize(void);
+ 
+ int slice_is_hugepage_only_range(struct mm_struct *mm, unsigned long addr,
+-- 
+2.39.5
+
 
 
