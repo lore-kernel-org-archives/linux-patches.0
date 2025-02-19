@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34A21CAA85;
-	Wed, 19 Feb 2025 09:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0831CAA6C;
+	Wed, 19 Feb 2025 09:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955997; cv=none; b=rw/jXYE/9VX6K4Nj7cxIjuJaXUBuMn873AihC090VYvfyeoDMGGtyDiLej5aDfdHeIa2mem+Ebj8O44LdM7+mZgv4OwcJNBWjwIr4862H5SnqK3s2SFtaJTy7lCXyXsrBnTMpaoY94vDCe7gAdEaaf102suuMKOWiD1ty9dQfdU=
+	t=1739956000; cv=none; b=T1orJ4V1VyseebEj7qUH2gVT2fJb3z3Q/RmG1C/VxHdfYmbClx56dNdgKKhMrHlI1cmtb7h2I5ulpwFmNrfFUrCQ9f9PVMg5KQqcNm7QaL9GDfVAPZe6xj5x+N+il8fCOCAOpEKHBOuGYKLDaiNdKVjAU6/MeWosdYI1QEdjsE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955997; c=relaxed/simple;
-	bh=TVCVetbT6LVWMDiHpHjSt9SqFeNx/85QfZwZ3iG7B18=;
+	s=arc-20240116; t=1739956000; c=relaxed/simple;
+	bh=LEr4bO2SG4JFV2ED0K5mO+bKeBtowosaclBAXMrRHjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ne0Ck7ddMYJveb5rq65CSpBycnaY8I8cq7tH9DDhTG6J0FK2kDht5fdxUePMWD8K4p0zV/x8Ms8PyWL80XYdumjaymGplUMY23lLlPXQv0CzhuKiVJPtWlILOHQLe7EyN0E5g/N3TmQZCi/76jQ7kzhVOEISrwYt+VoOLAv7U5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuQSSTeb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sn7Fj3hGuS7HUrGpEWuZ4YoaXZBnmL4j44I/K/BPAPUmW/u2t9lLsSqgfd9IOWiqDERPXAM9eyLcKrkmqVr6/8CZgDPGDkzK7JceV8pEkAZ/xTxXs8iIri6cei+/hHJQ19vNQjUyMghFbVqsRynjhvv+ndcerP/ehM4Wat0FDF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPK6LAxS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuQSSTeb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3D6C4CED1;
-	Wed, 19 Feb 2025 09:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPK6LAxS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26851C4CED1;
+	Wed, 19 Feb 2025 09:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955997;
-	bh=TVCVetbT6LVWMDiHpHjSt9SqFeNx/85QfZwZ3iG7B18=;
+	s=korg; t=1739956000;
+	bh=LEr4bO2SG4JFV2ED0K5mO+bKeBtowosaclBAXMrRHjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tuQSSTebDuWi1d7SCMFjSE1UaOpud+4hwAiXd7V4DiIxsni0/YApXG/1Nn4lGPGnz
-	 RoQQ3LLlxWNn3bTagmvhs79ppoDl9xoqQqFDGzqnkvmv6gAr14M1Vq1uwXhckTLXUr
-	 63WZthNIpj33+wwadcK4e989esFdvXruaQ9yZceE=
+	b=xPK6LAxSW33PbTJic7BFaJoybYOSu2WGWu11y7PwscikddW32bXb5UbPxoY03kYKh
+	 avFllRNzE6vjBNtrVMTdnxT1r9RYy75O+2fMrNa6TWKKuRrbd3RvlMMEClSABWgXRh
+	 JxkcFUbNsMnCYVuTcvRV/qSulCqHgPHM4PAyYTtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/578] OPP: add index check to assert to avoid buffer overflow in _read_freq()
-Date: Wed, 19 Feb 2025 09:20:34 +0100
-Message-ID: <20250219082654.081239127@linuxfoundation.org>
+Subject: [PATCH 6.1 031/578] OPP: fix dev_pm_opp_find_bw_*() when bandwidth table not initialized
+Date: Wed, 19 Feb 2025 09:20:35 +0100
+Message-ID: <20250219082654.120783230@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -53,181 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit d659bc68ed489022ea33342cfbda2911a81e7a0d ]
+[ Upstream commit b44b9bc7cab2967c3d6a791b1cd542c89fc07f0e ]
 
-Pass the freq index to the assert function to make sure
-we do not read a freq out of the opp->rates[] table when called
-from the indexed variants:
-dev_pm_opp_find_freq_exact_indexed() or
-dev_pm_opp_find_freq_ceil/floor_indexed().
+If a driver calls dev_pm_opp_find_bw_ceil/floor() the retrieve bandwidth
+from the OPP table but the bandwidth table was not created because the
+interconnect properties were missing in the OPP consumer node, the
+kernel will crash with:
 
-Add a secondary parameter to the assert function, unused
-for assert_single_clk() then add assert_clk_index() which
-will check for the clock index when called from the _indexed()
-find functions.
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
+...
+pc : _read_bw+0x8/0x10
+lr : _opp_table_find_key+0x9c/0x174
+...
+Call trace:
+  _read_bw+0x8/0x10 (P)
+  _opp_table_find_key+0x9c/0x174 (L)
+  _find_key+0x98/0x168
+  dev_pm_opp_find_bw_ceil+0x50/0x88
+...
 
-Fixes: 142e17c1c2b4 ("OPP: Introduce dev_pm_opp_find_freq_{ceil/floor}_indexed() APIs")
-Fixes: a5893928bb17 ("OPP: Add dev_pm_opp_find_freq_exact_indexed()")
+In order to fix the crash, create an assert function to check
+if the bandwidth table was created before trying to get a
+bandwidth with _read_bw().
+
+Fixes: add1dc094a74 ("OPP: Use generic key finding helpers for bandwidth key")
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Stable-dep-of: b44b9bc7cab2 ("OPP: fix dev_pm_opp_find_bw_*() when bandwidth table not initialized")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/opp/core.c | 42 +++++++++++++++++++++++++++---------------
- 1 file changed, 27 insertions(+), 15 deletions(-)
+ drivers/opp/core.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index 83ff32b7f4793..53286063df558 100644
+index 53286063df558..4211cfb27350f 100644
 --- a/drivers/opp/core.c
 +++ b/drivers/opp/core.c
-@@ -104,11 +104,21 @@ struct opp_table *_find_opp_table(struct device *dev)
-  * representation in the OPP table and manage the clock configuration themselves
-  * in an platform specific way.
-  */
--static bool assert_single_clk(struct opp_table *opp_table)
-+static bool assert_single_clk(struct opp_table *opp_table,
-+			      unsigned int __always_unused index)
- {
- 	return !WARN_ON(opp_table->clk_count > 1);
+@@ -119,6 +119,15 @@ static bool assert_clk_index(struct opp_table *opp_table,
+ 	return opp_table->clk_count > index;
  }
  
 +/*
-+ * Returns true if clock table is large enough to contain the clock index.
++ * Returns true if bandwidth table is large enough to contain the bandwidth index.
 + */
-+static bool assert_clk_index(struct opp_table *opp_table,
-+			     unsigned int index)
++static bool assert_bandwidth_index(struct opp_table *opp_table,
++				   unsigned int index)
 +{
-+	return opp_table->clk_count > index;
++	return opp_table->path_count > index;
 +}
 +
  /**
   * dev_pm_opp_get_voltage() - Gets the voltage corresponding to an opp
   * @opp:	opp for which voltage has to be returned for
-@@ -496,12 +506,12 @@ static struct dev_pm_opp *_opp_table_find_key(struct opp_table *opp_table,
- 		unsigned long (*read)(struct dev_pm_opp *opp, int index),
- 		bool (*compare)(struct dev_pm_opp **opp, struct dev_pm_opp *temp_opp,
- 				unsigned long opp_key, unsigned long key),
--		bool (*assert)(struct opp_table *opp_table))
-+		bool (*assert)(struct opp_table *opp_table, unsigned int index))
- {
- 	struct dev_pm_opp *temp_opp, *opp = ERR_PTR(-ERANGE);
- 
- 	/* Assert that the requirement is met */
--	if (assert && !assert(opp_table))
-+	if (assert && !assert(opp_table, index))
- 		return ERR_PTR(-EINVAL);
- 
- 	mutex_lock(&opp_table->lock);
-@@ -529,7 +539,7 @@ _find_key(struct device *dev, unsigned long *key, int index, bool available,
- 	  unsigned long (*read)(struct dev_pm_opp *opp, int index),
- 	  bool (*compare)(struct dev_pm_opp **opp, struct dev_pm_opp *temp_opp,
- 			  unsigned long opp_key, unsigned long key),
--	  bool (*assert)(struct opp_table *opp_table))
-+	  bool (*assert)(struct opp_table *opp_table, unsigned int index))
- {
- 	struct opp_table *opp_table;
+@@ -847,7 +856,8 @@ struct dev_pm_opp *dev_pm_opp_find_bw_ceil(struct device *dev, unsigned int *bw,
+ 	unsigned long temp = *bw;
  	struct dev_pm_opp *opp;
-@@ -552,7 +562,7 @@ _find_key(struct device *dev, unsigned long *key, int index, bool available,
- static struct dev_pm_opp *_find_key_exact(struct device *dev,
- 		unsigned long key, int index, bool available,
- 		unsigned long (*read)(struct dev_pm_opp *opp, int index),
--		bool (*assert)(struct opp_table *opp_table))
-+		bool (*assert)(struct opp_table *opp_table, unsigned int index))
- {
- 	/*
- 	 * The value of key will be updated here, but will be ignored as the
-@@ -565,7 +575,7 @@ static struct dev_pm_opp *_find_key_exact(struct device *dev,
- static struct dev_pm_opp *_opp_table_find_key_ceil(struct opp_table *opp_table,
- 		unsigned long *key, int index, bool available,
- 		unsigned long (*read)(struct dev_pm_opp *opp, int index),
--		bool (*assert)(struct opp_table *opp_table))
-+		bool (*assert)(struct opp_table *opp_table, unsigned int index))
- {
- 	return _opp_table_find_key(opp_table, key, index, available, read,
- 				   _compare_ceil, assert);
-@@ -574,7 +584,7 @@ static struct dev_pm_opp *_opp_table_find_key_ceil(struct opp_table *opp_table,
- static struct dev_pm_opp *_find_key_ceil(struct device *dev, unsigned long *key,
- 		int index, bool available,
- 		unsigned long (*read)(struct dev_pm_opp *opp, int index),
--		bool (*assert)(struct opp_table *opp_table))
-+		bool (*assert)(struct opp_table *opp_table, unsigned int index))
- {
- 	return _find_key(dev, key, index, available, read, _compare_ceil,
- 			 assert);
-@@ -583,7 +593,7 @@ static struct dev_pm_opp *_find_key_ceil(struct device *dev, unsigned long *key,
- static struct dev_pm_opp *_find_key_floor(struct device *dev,
- 		unsigned long *key, int index, bool available,
- 		unsigned long (*read)(struct dev_pm_opp *opp, int index),
--		bool (*assert)(struct opp_table *opp_table))
-+		bool (*assert)(struct opp_table *opp_table, unsigned int index))
- {
- 	return _find_key(dev, key, index, available, read, _compare_floor,
- 			 assert);
-@@ -644,7 +654,8 @@ struct dev_pm_opp *
- dev_pm_opp_find_freq_exact_indexed(struct device *dev, unsigned long freq,
- 				   u32 index, bool available)
- {
--	return _find_key_exact(dev, freq, index, available, _read_freq, NULL);
-+	return _find_key_exact(dev, freq, index, available, _read_freq,
-+			       assert_clk_index);
+ 
+-	opp = _find_key_ceil(dev, &temp, index, true, _read_bw, NULL);
++	opp = _find_key_ceil(dev, &temp, index, true, _read_bw,
++			     assert_bandwidth_index);
+ 	*bw = temp;
+ 	return opp;
  }
- EXPORT_SYMBOL_GPL(dev_pm_opp_find_freq_exact_indexed);
+@@ -878,7 +888,8 @@ struct dev_pm_opp *dev_pm_opp_find_bw_floor(struct device *dev,
+ 	unsigned long temp = *bw;
+ 	struct dev_pm_opp *opp;
  
-@@ -704,7 +715,8 @@ struct dev_pm_opp *
- dev_pm_opp_find_freq_ceil_indexed(struct device *dev, unsigned long *freq,
- 				  u32 index)
- {
--	return _find_key_ceil(dev, freq, index, true, _read_freq, NULL);
-+	return _find_key_ceil(dev, freq, index, true, _read_freq,
-+			      assert_clk_index);
+-	opp = _find_key_floor(dev, &temp, index, true, _read_bw, NULL);
++	opp = _find_key_floor(dev, &temp, index, true, _read_bw,
++			      assert_bandwidth_index);
+ 	*bw = temp;
+ 	return opp;
  }
- EXPORT_SYMBOL_GPL(dev_pm_opp_find_freq_ceil_indexed);
- 
-@@ -757,7 +769,7 @@ struct dev_pm_opp *
- dev_pm_opp_find_freq_floor_indexed(struct device *dev, unsigned long *freq,
- 				   u32 index)
- {
--	return _find_key_floor(dev, freq, index, true, _read_freq, NULL);
-+	return _find_key_floor(dev, freq, index, true, _read_freq, assert_clk_index);
- }
- EXPORT_SYMBOL_GPL(dev_pm_opp_find_freq_floor_indexed);
- 
-@@ -1671,7 +1683,7 @@ void dev_pm_opp_remove(struct device *dev, unsigned long freq)
- 	if (IS_ERR(opp_table))
- 		return;
- 
--	if (!assert_single_clk(opp_table))
-+	if (!assert_single_clk(opp_table, 0))
- 		goto put_table;
- 
- 	mutex_lock(&opp_table->lock);
-@@ -2022,7 +2034,7 @@ int _opp_add_v1(struct opp_table *opp_table, struct device *dev,
- 	unsigned long tol;
- 	int ret;
- 
--	if (!assert_single_clk(opp_table))
-+	if (!assert_single_clk(opp_table, 0))
- 		return -EINVAL;
- 
- 	new_opp = _opp_allocate(opp_table);
-@@ -2878,7 +2890,7 @@ static int _opp_set_availability(struct device *dev, unsigned long freq,
- 		return r;
- 	}
- 
--	if (!assert_single_clk(opp_table)) {
-+	if (!assert_single_clk(opp_table, 0)) {
- 		r = -EINVAL;
- 		goto put_table;
- 	}
-@@ -2954,7 +2966,7 @@ int dev_pm_opp_adjust_voltage(struct device *dev, unsigned long freq,
- 		return r;
- 	}
- 
--	if (!assert_single_clk(opp_table)) {
-+	if (!assert_single_clk(opp_table, 0)) {
- 		r = -EINVAL;
- 		goto put_table;
- 	}
 -- 
 2.39.5
 
