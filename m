@@ -1,103 +1,112 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from dispatch1-us1.ppe-hosted.com (dispatch1-us1.ppe-hosted.com [67.231.154.184])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD40D22A4D0;
-	Wed, 19 Feb 2025 19:16:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A637214A82
+	for <patches@lists.linux.dev>; Wed, 19 Feb 2025 20:13:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.154.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739992605; cv=none; b=nzjX7nfMGFb4E534XNZJrtMVV8MmWfWGQAKnnIpxY0WN2ohbf8ZWqltBM+YJA3cHuP2ENfivb/D5w6zPYfJbqGDEPPCbC/BVvQixf1fU3FYiYI+H3P6vFvSoI+t0z+nMZO89bsiSK4IPIURJ4JzxuXbD+SQL73G+sc9uqCaLd6c=
+	t=1739996041; cv=none; b=TAZFXrck1rkP5glrNwwYTPFCtQxNXpU/gs0ZQJNvy/jQau46TnKtXy5I90TA949NK8k3yilg5bNw4ghWoJJAVMDXJ+PYYras9P1RsQt6+AAFmp1pp5ZVGL4ard0Ix3iVgDwFeNtlSuI4q5TRNjv6eAMakyt3Tq7acNz3vrBmwlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739992605; c=relaxed/simple;
-	bh=Di8GzAOMyu209K+QXDGkxaslNjVdI8X3eZQ3Pss+aTg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fg4qQFgcAe40QzU0TotsH1oto+1n3wYm7Fo3VUxT4vrxZiYNEGBM3xCsOyg+CEYjaYLLBQN9xz7XPOvjHgq9Z8TeJ3IGyqEB6cvK5ZuZYZTWqNLAtIWUjLo5pUEDhrenuqJ9L6NHPXyaWeEME+GYvM9pqjlt7BllV7UWd/UY3GM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B914C4CED1;
-	Wed, 19 Feb 2025 19:16:37 +0000 (UTC)
-Date: Wed, 19 Feb 2025 19:16:35 +0000
-From: Catalin Marinas <catalin.marinas@arm.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org,
-	Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
-	linux-fsdevel@vger.kernel.org, linux-mm <linux-mm@kvack.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>, willy@infradead.org,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Yang Shi <yang@os.amperecomputing.com>,
-	David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH 6.6 000/389] 6.6.76-rc2 review
-Message-ID: <Z7YuE2rO5ikSeONy@arm.com>
-References: <20250206155234.095034647@linuxfoundation.org>
- <CA+G9fYvKzV=jo9AmKH2tJeLr0W8xyjxuVO-P+ZEBdou6C=mKUw@mail.gmail.com>
- <CA+G9fYtqBxt+JwSLCcVBchh94GVRhbo9rTP26ceJ=sf4MDo61Q@mail.gmail.com>
- <Z7Xj-zIe-Sa1syG7@arm.com>
- <Z7YSYArXkRFEy6FO@arm.com>
- <2025021959-koala-flypaper-1ad5@gregkh>
+	s=arc-20240116; t=1739996041; c=relaxed/simple;
+	bh=ncGs2z4pfHMjN+d3lpcfpfn98kj6rBfaHKbLUA6xG98=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=npz8A+2rsT/6K2+brFUU9CtoDkWlyrhYKeDhY1C7b9VG9NIo0BnLfHpjAnnUQPnqJkF82I2hfEEL2szgP47LEVZ8b72Ram7+gGcy8nopJu1r+9SIpd+VaaHUaefKTCnJxm/gijNb/d7M4X9HZOyy3/WUrJ8MeCXssAUIGVrfns8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sladewatkins.net; spf=pass smtp.mailfrom=sladewatkins.com; dkim=pass (2048-bit key) header.d=sladewatkins.com header.i=@sladewatkins.com header.b=Awq6Xmbh; dkim=pass (2048-bit key) header.d=sladewatkins.net header.i=@sladewatkins.net header.b=hDkeHOi0; arc=none smtp.client-ip=67.231.154.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sladewatkins.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sladewatkins.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=sladewatkins.com header.i=@sladewatkins.com header.b="Awq6Xmbh";
+	dkim=pass (2048-bit key) header.d=sladewatkins.net header.i=@sladewatkins.net header.b="hDkeHOi0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sladewatkins.com;
+ h=cc:cc:content-transfer-encoding:content-transfer-encoding:content-type:content-type:date:date:from:from:in-reply-to:in-reply-to:message-id:message-id:mime-version:mime-version:references:references:subject:subject:to:to;
+ s=selector-1739986532; bh=ut4P1R7thuxaKMIe42U//2Z0wRf+Qh4WiJbioRnnIoI=;
+ b=Awq6Xmbhiym8F2HZvToYTK3lP+Y5eTsASm6KRf0aGFWdro7wF8N31XFQw+5V8wsNGiIR5XfTt8mTPrliDUuTmlfpfhd6wS5o+G2UBtUvjowd3cdJgIWFQfkqVlW8fCiQpUn6fW7TJiTanYZanWK1g/49h0ljmCjRYMB7eM/wNN3/TWqYiL8cOu5DCPQq8/zsKRQPi2nvNANgu4mZSdBloMwLGUlQZhJbLiX7HYOx6pnSaLzMEeaQH3vmu2YaSOB/BNW6epxBq17swS4VITWMW6jb44mi6l96sgOVgfuDkPnY3n7e21l66mCHNX0Di1WnKGMXwG/FHBymA6uKkAUi8w==
+X-Virus-Scanned: Proofpoint Essentials engine
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTPS id 3DD612C008C
+	for <patches@lists.linux.dev>; Wed, 19 Feb 2025 20:13:57 +0000 (UTC)
+Received: by mail-ed1-f71.google.com with SMTP id 4fb4d7f45d1cf-5e08dfe2283so174127a12.2
+        for <patches@lists.linux.dev>; Wed, 19 Feb 2025 12:13:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sladewatkins.net; s=google; t=1739996036; x=1740600836; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ut4P1R7thuxaKMIe42U//2Z0wRf+Qh4WiJbioRnnIoI=;
+        b=hDkeHOi0qul8nA3Z6Y3QdqlzR+eZ3yhlSheF7JoOaHXU5sJywlOjkiSMHdT1+m5y6V
+         PadSBZweCiznEUhcrUjdVN4mznjhS0OG1WJmwffbE/BNTyX54W914UfxCBWyM/GmEBLW
+         guCbsXW/+YoVkT3H62GJ3VUmGz/qFRPGGY0DSOsGioZDA62COOuNhZmD7RGKIru/kZ8i
+         WgXDzfP6rifcPzdBaJmIiWAa7aV0coD/hdIQeQuxJmygCH0bpTSH1XgnS2ta6XSioIrD
+         AB2fwUezARPSMgUCz5DbUmRSS82BcOJvmoy3xuAd9XkZ/rxDhDJ/+CiTn7vb29BNQFLh
+         d90Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739996036; x=1740600836;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ut4P1R7thuxaKMIe42U//2Z0wRf+Qh4WiJbioRnnIoI=;
+        b=m1Uez6aulu5Xogyz+gChMimJxehsfU9QerxLxHSW26HEjV3AzmxzXIP179BONqze++
+         LcVf0n6apmjr8QdM9WLe0IULZb1DQzNjZPCiyquPHkA5jyAScRRlKzTFXiaz9Zia995+
+         98rcPdqtFrGjwoXscZyQltnez/+kuzZAibXsmwHepX9OS7qWaIfzXUgUinUi+dS7poDx
+         rc93JueV1ZZTtZ3A117xsf/dsNe1FbJWZOGMLJaAHrVZtpXykr0w9NOKuokEWoYPk6Ud
+         1eS4Xhil1IYBjK4HqDT+huotIZYwevkaa5A/K42E+Gwe4RKEKi9e5tankjD4HfYIsuBr
+         X4PQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUXpz6uv5WCqT/lmwGvMPFfxEsVWsxvHHaDTOyHnVUtGshebaXSehFB+UnTy3q+4dqiYFixidv3@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw2+hm8Em0SK4QtmLFt+yJ9u9+b1d36SQnZhKKZXhI2yHP5iAt6
+	BLArTQKjvC38deAzaPtMSkP7DMrLB4ZLYkExsKcd2wXiHxHcNuW6y+rmmS6YHnZVAKU5+kZeDUb
+	KEUwCvjeL+PplSdSNYCjmBw2B3Zx+2Yz4eWQdwjWysa/YxlbHv85wJ6WSPhkluZ/QuYhZrl91qM
+	0+3T/VU5SYkq/n+gQ0Kcf1lcAuOyDZ+3zosQI4kq9bCKe6enMLz1A=
+X-Gm-Gg: ASbGncvyDQqdT0BTU2DdnCvGD3+KsBF+YgTzL2l5FBwBGNV13YSdx8DwMExtUdkxf9c
+	Nfxwy7arypL13jzmweAPxCQD86XnulmLPwz/PESReCavIOBB79dkM28fAdh+tOg==
+X-Received: by 2002:a05:6402:35cb:b0:5dc:caab:9447 with SMTP id 4fb4d7f45d1cf-5e036063e6amr49232754a12.18.1739996035995;
+        Wed, 19 Feb 2025 12:13:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF0KvQ9Ik3mCAFqGO1Y3HmZ0iJJC1SyKZfLV7M2w+N5UlImKuoI4YmqvkXHE+fgnAGu7i3sSGq4opUKSR07pFE=
+X-Received: by 2002:a05:6402:35cb:b0:5dc:caab:9447 with SMTP id
+ 4fb4d7f45d1cf-5e036063e6amr49232642a12.18.1739996035270; Wed, 19 Feb 2025
+ 12:13:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2025021959-koala-flypaper-1ad5@gregkh>
+References: <20250219082652.891560343@linuxfoundation.org>
+In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
+From: Slade Watkins <srw@sladewatkins.net>
+Date: Wed, 19 Feb 2025 15:13:44 -0500
+X-Gm-Features: AWEUYZlZSDPa0fGt2SFhUpS9xdY1jqEpDAGyJntR_9fKDs7gkaEck9SEpNdTnsI
+Message-ID: <CA+pv=HNn2rhObW67iY-i0LkQoL30uXXxAbfWio7BgFCVp-0r3Q@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/578] 6.1.129-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-MDID: 1739996038-LClEKvFfrG0z
+X-MDID-O:
+ us5;at1;1739996038;LClEKvFfrG0z;<slade@sladewatkins.com>;34a45300d431351f6eba03f8f221989b
+X-PPE-TRUSTED: V=1;DIR=OUT;
 
-On Wed, Feb 19, 2025 at 07:09:26PM +0100, Greg Kroah-Hartman wrote:
-> On Wed, Feb 19, 2025 at 05:18:24PM +0000, Catalin Marinas wrote:
-> > The problem is in the arm64 arch_calc_vm_flag_bits() as it returns
-> > VM_MTE_ALLOWED for any MAP_ANONYMOUS ignoring MAP_HUGETLB (it's been
-> > doing this since day 1 of MTE). The implementation does handle the
-> > hugetlb file mmap() correctly but not the MAP_ANONYMOUS case.
-> > 
-> > The fix would be something like below:
-> > 
-> > -----------------8<--------------------------
-> > diff --git a/arch/arm64/include/asm/mman.h b/arch/arm64/include/asm/mman.h
-> > index 5966ee4a6154..8ff5d88c9f12 100644
-> > --- a/arch/arm64/include/asm/mman.h
-> > +++ b/arch/arm64/include/asm/mman.h
-> > @@ -28,7 +28,8 @@ static inline unsigned long arch_calc_vm_flag_bits(unsigned long flags)
-> >  	 * backed by tags-capable memory. The vm_flags may be overridden by a
-> >  	 * filesystem supporting MTE (RAM-based).
-> >  	 */
-> > -	if (system_supports_mte() && (flags & MAP_ANONYMOUS))
-> > +	if (system_supports_mte() &&
-> > +	    ((flags & MAP_ANONYMOUS) && !(flags & MAP_HUGETLB)))
-> >  		return VM_MTE_ALLOWED;
-> > 
-> >  	return 0;
-> > -------------------8<-----------------------
-> > 
-> > This fix won't make sense for mainline since it supports MAP_HUGETLB
-> > already.
-> > 
-> > Greg, are you ok with a stable-only fix as above or you'd rather see the
-> > full 25c17c4b55de ("hugetlb: arm64: add mte support") backported?
-> 
-> A stable-only fix for this is fine, thanks!  Can you send it with a
-> changelog and I'll queue it up.  Does it also need to go to older
-> kernels as well?
+On Wed, Feb 19, 2025 at 4:05=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.129 release.
+> There are 578 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-5.10, that's when we got MTE support in. There may be some slight
-variations depending on how far 5baf8b037deb ("mm: refactor
-arch_calc_vm_flag_bits() and arm64 MTE handling") got backported. This
-goes together with deb0f6562884 ("mm/mmap: undo ->mmap() when
-arch_validate_flags() fails"), so they may actually go all the way to
-5.10.
+Hi Greg,
+No regressions or any sort of issues to speak of. Builds fine on my
+x86_64 test machine.
 
-I'll prepare the patches tomorrow, give them a try and send to stable.
+Tested-by: Slade Watkins <srw@sladewatkins.net>
 
-Thanks.
-
--- 
-Catalin
+All the best,
+Slade
