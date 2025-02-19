@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E421E25E1;
-	Wed, 19 Feb 2025 08:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CAC1E105E;
+	Wed, 19 Feb 2025 08:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955221; cv=none; b=iHreAao/rPJvWr9Ce+jROsv50aJTPo8yDaAkJLN/l/67SJ/0qZkNtkUpyJwdBbQhAM0RLQNNFktalLe59hWOLnC4UVzXC17v3NSlEGwSdH9auZNgvZreMRhGihwTDjNDVc+ysE1X+AljfuNreX7zNTrG4nVz3JI2Vx7XZ4LVErc=
+	t=1739955223; cv=none; b=UGFPvsnPbLmdJsttVcDe7h4WvtI5TklKmh2flmMoo5KTreYhmTPSMK1m8vXBn4mCIBBG/oA6WZ2gDVvRWlI3SUvUqKzK/zCvql9QwzEQT8wS2HjI8eS29BkWN3NxA8ZFNUGB2C2i9eos29ePdgsa2EK0ryy+MEqIHOhO1tUjb0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955221; c=relaxed/simple;
-	bh=OzbU07ygxXki/qblaaU1SvrZ2/ZZRncXB/IwgZ44VrI=;
+	s=arc-20240116; t=1739955223; c=relaxed/simple;
+	bh=L4n5rKvBhM9sK8m4YzXXdh1/jQ+YtKD2ZMo1OxAxkUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=btgN7cUm/8N0ezdhEVAojR9fZ7JDdVU0+3TaPsdctJjuBzqfa8DmfQjEwoio6f34nC51KRXlY1Vy5xaIGWOfO2+/8wHigtXcAQ5rlk+iUsyswfdFpSso0FUn/2bnRcoRnhOCMRITlwV3NcmYEni4O6Kd8G2/6Nqu6HulywSPYDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0eWAvni; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ibVLf2q/SrLv3tZ3lBxrqWc6ULnqAlmHpk/eOaW3tVCMX+LLx3gYUrldHloJxeUbWOr1K68yip2XMNYNNCBQKvZ+kC1TCYifPcM5YpXB3ZaRZ8u/HWS8BN+zFJsmW4PJJkornSTqJI1uCKEv26Rs3XLu6Y1EPyO8pyaey7bdlEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmrbaoFR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0eWAvni"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABA4C4CED1;
-	Wed, 19 Feb 2025 08:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmrbaoFR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CD5C4CED1;
+	Wed, 19 Feb 2025 08:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955220;
-	bh=OzbU07ygxXki/qblaaU1SvrZ2/ZZRncXB/IwgZ44VrI=;
+	s=korg; t=1739955223;
+	bh=L4n5rKvBhM9sK8m4YzXXdh1/jQ+YtKD2ZMo1OxAxkUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p0eWAvniJbugqFeDbuuhGhEI5i4pIY1+SEjq2OhFgaxGhB5HNgHrGHrdurEcp7JD1
-	 3sE5UEPn6c1ZMHJmXJQ5tyGFU8e3wEzCKZDFaSeDE1+iI+A/uBp65+ksg6t2aLJJem
-	 r7gtOSbhVSeE1pbThYIxJMnG2bgrlnas5ueq/mi0=
+	b=DmrbaoFR0Vn7aVZ/z/EitlS53OLc4ViDCyYbc7wfZAa10YzvO5ZidBP5rZaxqGtP0
+	 0QaYyp/d+lVVtj9uJSS2y5i9a5z8SybH/kHtVYp8BYt9gziNw4MGbnn/9wua+skTZQ
+	 rQCpS3Yj840h/YXylpPX1IfHgyLoim2Vmq0dwC3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
-Subject: [PATCH 6.12 136/230] PCI: Avoid FLR for Mediatek MT7922 WiFi
-Date: Wed, 19 Feb 2025 09:27:33 +0100
-Message-ID: <20250219082607.005130575@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 127/230] USB: serial: option: fix Telit Cinterion FN990A name
+Date: Wed, 19 Feb 2025 09:27:24 +0100
+Message-ID: <20250219082606.654019720@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -44,85 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit 81f64e925c29fe6e99f04b131fac1935ac931e81 upstream.
+commit 12606fe73f33647c5e79bf666833bf0b225e649d upstream.
 
-The Mediatek MT7922 WiFi device advertises FLR support, but it apparently
-does not work, and all subsequent config reads return ~0:
+The correct name for FN990 is FN990A so use it in order to avoid
+confusion with FN990B.
 
-  pci 0000:01:00.0: [14c3:0616] type 00 class 0x028000 PCIe Endpoint
-  pciback 0000:01:00.0: not ready 65535ms after FLR; giving up
-
-After an FLR, pci_dev_wait() waits for the device to become ready.  Prior
-to d591f6804e7e ("PCI: Wait for device readiness with Configuration RRS"),
-it polls PCI_COMMAND until it is something other that PCI_POSSIBLE_ERROR
-(~0).  If it times out, pci_dev_wait() returns -ENOTTY and
-__pci_reset_function_locked() tries the next available reset method.
-Typically this is Secondary Bus Reset, which does work, so the MT7922 is
-eventually usable.
-
-After d591f6804e7e, if Configuration Request Retry Status Software
-Visibility (RRS SV) is enabled, pci_dev_wait() polls PCI_VENDOR_ID until it
-is something other than the special 0x0001 Vendor ID that indicates a
-completion with RRS status.
-
-When RRS SV is enabled, reads of PCI_VENDOR_ID should return either 0x0001,
-i.e., the config read was completed with RRS, or a valid Vendor ID.  On the
-MT7922, it seems that all config reads after FLR return ~0 indefinitely.
-When pci_dev_wait() reads PCI_VENDOR_ID and gets 0xffff, it assumes that's
-a valid Vendor ID and the device is now ready, so it returns with success.
-
-After pci_dev_wait() returns success, we restore config space and continue.
-Since the MT7922 is not actually ready after the FLR, the restore fails and
-the device is unusable.
-
-We considered changing pci_dev_wait() to continue polling if a
-PCI_VENDOR_ID read returns either 0x0001 or 0xffff.  This "works" as it did
-before d591f6804e7e, although we have to wait for the timeout and then fall
-back to SBR.  But it doesn't work for SR-IOV VFs, which *always* return
-0xffff as the Vendor ID.
-
-Mark Mediatek MT7922 WiFi devices to avoid the use of FLR completely.  This
-will cause fallback to another reset method, such as SBR.
-
-Link: https://lore.kernel.org/r/20250212193516.88741-1-helgaas@kernel.org
-Fixes: d591f6804e7e ("PCI: Wait for device readiness with Configuration RRS")
-Link: https://github.com/QubesOS/qubes-issues/issues/9689#issuecomment-2582927149
-Link: https://lore.kernel.org/r/Z4pHll_6GX7OUBzQ@mail-itl
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
 Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/serial/option.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5522,7 +5522,7 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_IN
-  * AMD Matisse USB 3.0 Host Controller 0x149c
-  * Intel 82579LM Gigabit Ethernet Controller 0x1502
-  * Intel 82579V Gigabit Ethernet Controller 0x1503
-- *
-+ * Mediatek MT7922 802.11ax PCI Express Wireless Network Adapter
-  */
- static void quirk_no_flr(struct pci_dev *dev)
- {
-@@ -5534,6 +5534,7 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AM
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_AMD, 0x7901, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1502, quirk_no_flr);
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x1503, quirk_no_flr);
-+DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_MEDIATEK, 0x0616, quirk_no_flr);
- 
- /* FLR may cause the SolidRun SNET DPU (rev 0x1) to hang */
- static void quirk_no_flr_snet(struct pci_dev *dev)
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1370,15 +1370,15 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(2) | RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1063, 0xff),	/* Telit LN920 (ECM) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1070, 0xff),	/* Telit FN990 (rmnet) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1070, 0xff),	/* Telit FN990A (rmnet) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1071, 0xff),	/* Telit FN990 (MBIM) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1071, 0xff),	/* Telit FN990A (MBIM) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1072, 0xff),	/* Telit FN990 (RNDIS) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1072, 0xff),	/* Telit FN990A (RNDIS) */
+ 	  .driver_info = NCTRL(2) | RSVD(3) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1073, 0xff),	/* Telit FN990 (ECM) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1073, 0xff),	/* Telit FN990A (ECM) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+-	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990 (PCIe) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990A (PCIe) */
+ 	  .driver_info = RSVD(0) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1080, 0xff),	/* Telit FE990 (rmnet) */
+ 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
 
 
