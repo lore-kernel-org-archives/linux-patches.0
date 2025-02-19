@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E7C286285;
-	Wed, 19 Feb 2025 09:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3883D286285;
+	Wed, 19 Feb 2025 09:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957541; cv=none; b=OMC8gxchjNjNRikGGY/k5kPrZKApaZw50Scsajl/b740vI6CJ910q2v5FgOz7jbPL6BVK0wFmRXWAQhn5WsobowElwmWzp5zXjrxEcA1zjJ0vfC7nZd2pYA+6EBUaNJJuo1wcJ9siwG9A7sbBhlceSr/ml2YQpFrBzVs+3fQ/90=
+	t=1739957544; cv=none; b=DcS3R0JK8k9dQqsI10lD1FlzjllLAaY0nQNXBJIo0GqJEpdOCNYnkZyhhSzHW2oLGKarnLIc40ZcndfjcM85rcIHPuG99Nr4IU3NNg4sqKluBk+aLGeOwm9b35O7s7EE78IZEJAgcQ+ijpeaXxNee4J9Vog/u9q5GKJfMRruEMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957541; c=relaxed/simple;
-	bh=DmOhW5ixSh9hBvbF6ieCu+NEBb2+MoA3hfq/LZGypD4=;
+	s=arc-20240116; t=1739957544; c=relaxed/simple;
+	bh=eMp+riZcUegDKICtvNzX7oJlHyripXURL6rFaw3CcdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNUgOVuyw2HoozfaTO5UtUSmFVpUUY9XkzEPGtfrk+exDc1NzXnqQJMkxHJo3reJRCUlVBAsbm/pI/QHeWNa79mbAFM/F1/ZcR+WXY90AumtUKAJe8GXbJt83Tpw8YGwj3gVgMtixtCNhq4RYdsNFyalNYqPUz3afJ/KhFzaH6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=no1ixNl5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CRzhzHRs3W40NrvD3xCWfn4s4PPplaAufb3OVeACimeoBbQFpvb8VaSXSKW+OEIDd8JwItAFGVRsYigRmnaaWfsg1KyQs0W9VLfmGm1W/hs33sZNmy/LOsHVLgcDFRRouKnCm5K5EGmUn1p7ME+TFhJXI6+CnPqfdvx/YxzEUAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9eKN55y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="no1ixNl5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D16AC4CED1;
-	Wed, 19 Feb 2025 09:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9eKN55y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF19C4CEE7;
+	Wed, 19 Feb 2025 09:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957540;
-	bh=DmOhW5ixSh9hBvbF6ieCu+NEBb2+MoA3hfq/LZGypD4=;
+	s=korg; t=1739957543;
+	bh=eMp+riZcUegDKICtvNzX7oJlHyripXURL6rFaw3CcdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=no1ixNl5lgQI1rA/XS2IBE6oEqZ6FSc3PCDdy0wKYNi+NbvGot+rEh2bUEDF8UcJG
-	 eEj/yvEsy8CAZ6b3kKw32apRgXVguT9r3xM6PUhtAxSvUGtLo/qUFm9PrixotzPP4r
-	 aYrYllhntsX7oYfgolydmsfAZMO4H8PkiNV8tMyc=
+	b=f9eKN55ymLeGI+Wob2Qtk5CH5nHvdN2kabY05xwEcdpxxiC3K6EHng7UxgytTQldE
+	 Wi737+JlD4+CTtFM849RFewdtZorESFNSXCNvvuCBXhuEHhhgTLuIBnPOwcH7vP1Y3
+	 DAPMeGRd8/1vdEK5rmAuaBe+CPJKlnDf7sIYG9Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chester A. Unal" <chester.a.unal@arinc9.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 519/578] USB: serial: option: drop MeiG Smart defines
-Date: Wed, 19 Feb 2025 09:28:43 +0100
-Message-ID: <20250219082713.393160798@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 555/578] ipv6: mcast: add RCU protection to mld_newpack()
+Date: Wed, 19 Feb 2025 09:29:19 +0100
+Message-ID: <20250219082714.789502425@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -50,74 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 6aa8a63c471eb6756aabd03f880feffe6a7af6c9 upstream.
+[ Upstream commit a527750d877fd334de87eef81f1cb5f0f0ca3373 ]
 
-Several MeiG Smart modems apparently use the same product id, making the
-defines even less useful.
+mld_newpack() can be called without RTNL or RCU being held.
 
-Drop them in favour of using comments consistently to make the id table
-slightly less unwieldy.
+Note that we no longer can use sock_alloc_send_skb() because
+ipv6.igmp_sk uses GFP_KERNEL allocations which can sleep.
 
-Cc: stable@vger.kernel.org
-Acked-by: Chester A. Unal <chester.a.unal@arinc9.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Instead use alloc_skb() and charge the net->ipv6.igmp_sk
+socket under RCU protection.
+
+Fixes: b8ad0cbc58f7 ("[NETNS][IPV6] mcast - handle several network namespace")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250212141021.1663666-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |   28 ++++++++--------------------
- 1 file changed, 8 insertions(+), 20 deletions(-)
+ net/ipv6/mcast.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -619,18 +619,6 @@ static void option_instat_callback(struc
- /* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
- #define LUAT_PRODUCT_AIR720U			0x4e00
+diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
+index a777695389403..a1b3f3e7921fa 100644
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -1731,21 +1731,19 @@ static struct sk_buff *mld_newpack(struct inet6_dev *idev, unsigned int mtu)
+ 	struct net_device *dev = idev->dev;
+ 	int hlen = LL_RESERVED_SPACE(dev);
+ 	int tlen = dev->needed_tailroom;
+-	struct net *net = dev_net(dev);
+ 	const struct in6_addr *saddr;
+ 	struct in6_addr addr_buf;
+ 	struct mld2_report *pmr;
+ 	struct sk_buff *skb;
+ 	unsigned int size;
+ 	struct sock *sk;
+-	int err;
++	struct net *net;
  
--/* MeiG Smart Technology products */
--#define MEIGSMART_VENDOR_ID			0x2dee
--/*
-- * MeiG Smart SLM828, SRM815, and SRM825L use the same product ID. SLM828 is
-- * based on Qualcomm SDX12. SRM815 and SRM825L are based on Qualcomm 315.
-- */
--#define MEIGSMART_PRODUCT_SRM825L		0x4d22
--/* MeiG Smart SLM320 based on UNISOC UIS8910 */
--#define MEIGSMART_PRODUCT_SLM320		0x4d41
--/* MeiG Smart SLM770A based on ASR1803 */
--#define MEIGSMART_PRODUCT_SLM770A		0x4d57
--
- /* Device flags */
+-	sk = net->ipv6.igmp_sk;
+ 	/* we assume size > sizeof(ra) here
+ 	 * Also try to not allocate high-order pages for big MTU
+ 	 */
+ 	size = min_t(int, mtu, PAGE_SIZE / 2) + hlen + tlen;
+-	skb = sock_alloc_send_skb(sk, size, 1, &err);
++	skb = alloc_skb(size, GFP_KERNEL);
+ 	if (!skb)
+ 		return NULL;
  
- /* Highest interface number which can be used with NCTRL() and RSVD() */
-@@ -2366,6 +2354,14 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0a05, 0xff) },			/* Fibocom FM650-CN (NCM mode) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0a06, 0xff) },			/* Fibocom FM650-CN (RNDIS mode) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0a07, 0xff) },			/* Fibocom FM650-CN (MBIM mode) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d41, 0xff, 0, 0) },		/* MeiG Smart SLM320 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d57, 0xff, 0, 0) },		/* MeiG Smart SLM770A */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0, 0) },		/* MeiG Smart SRM815 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0x10, 0x02) },	/* MeiG Smart SLM828 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0x10, 0x03) },	/* MeiG Smart SLM828 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2df3, 0x9d03, 0xff) },			/* LongSung M5710 */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1404, 0xff) },			/* GosunCn GM500 RNDIS */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
-@@ -2422,14 +2418,6 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM770A, 0xff, 0, 0) },
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0, 0) },	/* MeiG Smart SRM815 */
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0x10, 0x02) },	/* MeiG Smart SLM828 */
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0x10, 0x03) },	/* MeiG Smart SLM828 */
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
--	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
- 	  .driver_info = NCTRL(1) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0640, 0xff),			/* TCL IK512 ECM */
+@@ -1753,6 +1751,12 @@ static struct sk_buff *mld_newpack(struct inet6_dev *idev, unsigned int mtu)
+ 	skb_reserve(skb, hlen);
+ 	skb_tailroom_reserve(skb, mtu, tlen);
+ 
++	rcu_read_lock();
++
++	net = dev_net_rcu(dev);
++	sk = net->ipv6.igmp_sk;
++	skb_set_owner_w(skb, sk);
++
+ 	if (ipv6_get_lladdr(dev, &addr_buf, IFA_F_TENTATIVE)) {
+ 		/* <draft-ietf-magma-mld-source-05.txt>:
+ 		 * use unspecified address as the source address
+@@ -1764,6 +1768,8 @@ static struct sk_buff *mld_newpack(struct inet6_dev *idev, unsigned int mtu)
+ 
+ 	ip6_mc_hdr(sk, skb, dev, saddr, &mld2_all_mcr, NEXTHDR_HOP, 0);
+ 
++	rcu_read_unlock();
++
+ 	skb_put_data(skb, ra, sizeof(ra));
+ 
+ 	skb_set_transport_header(skb, skb_tail_pointer(skb) - skb->data);
+-- 
+2.39.5
+
 
 
