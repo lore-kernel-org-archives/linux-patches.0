@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246DA1E25E3;
-	Wed, 19 Feb 2025 08:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E72F1E2606;
+	Wed, 19 Feb 2025 08:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954651; cv=none; b=WnROq+VIJqNa57+ei5LxF+jNtuyjvhNBzWgjAxp2duSiBza8YFnk4Fc5OF33nKJe+EGgpX5jbGZbpRpWsc1ws41PjB1ZQ603bE2dvuuYFgfeVKBgTz+AugLkTCfsi0n+vuvH0rLVjIV8b8GslL+jaLBkRQOwDOUuyvmi1V106tw=
+	t=1739954654; cv=none; b=WVnCU7gDP+PzI1K7YGB6cJ99uJQJtaF+Im6hxpPv9FMHLCeocIhHanOZGPfj29h3xqMKUqZ5uZitrvRsN+PrUhKxRmxRjRorFrfpI5eqDA5H8vZ5EFBFQjsokx51IHxWUhzw2KEoan2s6vxLqFgl/lQwii3OvnHamq8mmQGvN1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954651; c=relaxed/simple;
-	bh=MHhzs2wZXiJPNIf5nIJEF+p23/2XhT+v/I+u9hHZa/Q=;
+	s=arc-20240116; t=1739954654; c=relaxed/simple;
+	bh=7yLay5thbhndgqYGfLEgTQuO+SncTkvmZ7IsaI1sYT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZMTjVft3vLAhztYNWUiKRCO3vzCl3maPG/ndl0dhi6UgtmRjNyrQ135MUhCsqWeJOB2hWzJJCtxa+tYmi3V3gHlT3pqf5Zg+8INL2LzUBlOyI2bxCk27xlTE2dtVPF953cofgreGPG/SayinZ/+BVCehZwenuJ5sLJx36UDHho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSORAdcP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QtTc3sE51U9pVrKbJwUzNbeVHC898E9HnT7OWSdcNQ4JgeOn4gqGD+wGPtNsfOX7+++C3tRqMHvr7IamnbIzDKcoJcz3T6fLX8gHT0RksmPOklBbeLxlkHYonpFhDEE6P23fVs8WQQQoV7AZAc+RRdabxQ0/Te5saj3FHKBkesM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvK5lTrV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSORAdcP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B81C4CEE6;
-	Wed, 19 Feb 2025 08:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvK5lTrV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88153C4CED1;
+	Wed, 19 Feb 2025 08:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954651;
-	bh=MHhzs2wZXiJPNIf5nIJEF+p23/2XhT+v/I+u9hHZa/Q=;
+	s=korg; t=1739954653;
+	bh=7yLay5thbhndgqYGfLEgTQuO+SncTkvmZ7IsaI1sYT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GSORAdcPdrKBCUoSDdpPnFiL8239CJkq/iHdrK8RAf4Iecb1KqDji/VvqdSV0yTSY
-	 MwkAivbhiK/hjTYngLlK1hapiVCCylTcj5C58LexYfhryTRRIDWlgZyEgN4XYhbNqp
-	 5DLINALhUdt09rsnzhA8SYnJSyqK8QwYKyTac6cY=
+	b=TvK5lTrVUrZcyjm5fCfxHZJMzd8H0cP8gNJkYGyooBqTDPsPRU4dRQJjUY27zBSm1
+	 vtXLj5gf8IEWGdvUh1GZWT/Uq57TtsOB5n0+iOi25IaqDfvIxcRY6vpAzS9avL2uIO
+	 KTGtx5DrP+bSTpppRPuyQ+gESA+i2nKiO60dDyeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bean Huo <beanhuo@micron.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.13 269/274] scsi: ufs: core: Ensure clk_gating.lock is used only after initialization
-Date: Wed, 19 Feb 2025 09:28:43 +0100
-Message-ID: <20250219082620.115651346@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
+	Jake Hillion <jakehillion@meta.com>
+Subject: [PATCH 6.13 270/274] sched_ext: Fix incorrect assumption about migration disabled tasks in task_can_run_on_remote_rq()
+Date: Wed, 19 Feb 2025 09:28:44 +0100
+Message-ID: <20250219082620.153419420@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -54,86 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avri Altman <avri.altman@wdc.com>
+From: Tejun Heo <tj@kernel.org>
 
-commit 3d4114a1d34413dfffa0094c2eb7b95e61087abd upstream.
+commit f3f08c3acfb8860e07a22814a344e83c99ad7398 upstream.
 
-Address a lockdep warning triggered by the use of the clk_gating.lock before
-it is properly initialized. The warning is as follows:
+While fixing migration disabled task handling, 32966821574c ("sched_ext: Fix
+migration disabled handling in targeted dispatches") assumed that a
+migration disabled task's ->cpus_ptr would only have the pinned CPU. While
+this is eventually true for migration disabled tasks that are switched out,
+->cpus_ptr update is performed by migrate_disable_switch() which is called
+right before context_switch() in __scheduler(). However, the task is
+enqueued earlier during pick_next_task() via put_prev_task_scx(), so there
+is a race window where another CPU can see the task on a DSQ.
 
-[    4.388838] INFO: trying to register non-static key.
-[    4.395673] The code is fine but needs lockdep annotation, or maybe
-[    4.402118] you didn't initialize this object before use?
-[    4.407673] turning off the locking correctness validator.
-[    4.413334] CPU: 5 UID: 0 PID: 58 Comm: kworker/u32:1 Not tainted 6.12-rc1 #185
-[    4.413343] Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
-[    4.413362] Call trace:
-[    4.413364]  show_stack+0x18/0x24 (C)
-[    4.413374]  dump_stack_lvl+0x90/0xd0
-[    4.413384]  dump_stack+0x18/0x24
-[    4.413392]  register_lock_class+0x498/0x4a8
-[    4.413400]  __lock_acquire+0xb4/0x1b90
-[    4.413406]  lock_acquire+0x114/0x310
-[    4.413413]  _raw_spin_lock_irqsave+0x60/0x88
-[    4.413423]  ufshcd_setup_clocks+0x2c0/0x490
-[    4.413433]  ufshcd_init+0x198/0x10ec
-[    4.413437]  ufshcd_pltfrm_init+0x600/0x7c0
-[    4.413444]  ufs_qcom_probe+0x20/0x58
-[    4.413449]  platform_probe+0x68/0xd8
-[    4.413459]  really_probe+0xbc/0x268
-[    4.413466]  __driver_probe_device+0x78/0x12c
-[    4.413473]  driver_probe_device+0x40/0x11c
-[    4.413481]  __device_attach_driver+0xb8/0xf8
-[    4.413489]  bus_for_each_drv+0x84/0xe4
-[    4.413495]  __device_attach+0xfc/0x18c
-[    4.413502]  device_initial_probe+0x14/0x20
-[    4.413510]  bus_probe_device+0xb0/0xb4
-[    4.413517]  deferred_probe_work_func+0x8c/0xc8
-[    4.413524]  process_scheduled_works+0x250/0x658
-[    4.413534]  worker_thread+0x15c/0x2c8
-[    4.413542]  kthread+0x134/0x200
-[    4.413550]  ret_from_fork+0x10/0x20
+If the CPU tries to dispatch the migration disabled task while in that
+window, task_allowed_on_cpu() will succeed and task_can_run_on_remote_rq()
+will subsequently trigger SCHED_WARN(is_migration_disabled()).
 
-To fix this issue, ensure that the spinlock is only used after it has been
-properly initialized before using it in ufshcd_setup_clocks().  Do that
-unconditionally as initializing a spinlock is a fast operation.
+  WARNING: CPU: 8 PID: 1837 at kernel/sched/ext.c:2466 task_can_run_on_remote_rq+0x12e/0x140
+  Sched_ext: layered (enabled+all), task: runnable_at=-10ms
+  RIP: 0010:task_can_run_on_remote_rq+0x12e/0x140
+  ...
+   <TASK>
+   consume_dispatch_q+0xab/0x220
+   scx_bpf_dsq_move_to_local+0x58/0xd0
+   bpf_prog_84dd17b0654b6cf0_layered_dispatch+0x290/0x1cfa
+   bpf__sched_ext_ops_dispatch+0x4b/0xab
+   balance_one+0x1fe/0x3b0
+   balance_scx+0x61/0x1d0
+   prev_balance+0x46/0xc0
+   __pick_next_task+0x73/0x1c0
+   __schedule+0x206/0x1730
+   schedule+0x3a/0x160
+   __do_sys_sched_yield+0xe/0x20
+   do_syscall_64+0xbb/0x1e0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fixes: 209f4e43b806 ("scsi: ufs: core: Introduce a new clock_gating lock")
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Avri Altman <avri.altman@wdc.com>
-Link: https://lore.kernel.org/r/20250128071207.75494-2-avri.altman@wdc.com
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fix it by converting the SCHED_WARN() back to a regular failure path. Also,
+perform the migration disabled test before task_allowed_on_cpu() test so
+that BPF schedulers which fail to handle migration disabled tasks can be
+noticed easily.
+
+While at it, adjust scx_ops_error() message for !task_allowed_on_cpu() case
+for brevity and consistency.
+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 32966821574c ("sched_ext: Fix migration disabled handling in targeted dispatches")
+Acked-by: Andrea Righi <arighi@nvidia.com>
+Reported-by: Jake Hillion <jakehillion@meta.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/sched/ext.c |   29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -2126,8 +2126,6 @@ static void ufshcd_init_clk_gating(struc
- 	INIT_DELAYED_WORK(&hba->clk_gating.gate_work, ufshcd_gate_work);
- 	INIT_WORK(&hba->clk_gating.ungate_work, ufshcd_ungate_work);
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -2324,6 +2324,25 @@ static bool task_can_run_on_remote_rq(st
+ 	SCHED_WARN_ON(task_cpu(p) == cpu);
  
--	spin_lock_init(&hba->clk_gating.lock);
--
- 	hba->clk_gating.clk_gating_workq = alloc_ordered_workqueue(
- 		"ufs_clk_gating_%d", WQ_MEM_RECLAIM | WQ_HIGHPRI,
- 		hba->host->host_no);
-@@ -10490,6 +10488,12 @@ int ufshcd_init(struct ufs_hba *hba, voi
- 	hba->irq = irq;
- 	hba->vps = &ufs_hba_vps;
- 
-+	/*
-+	 * Initialize clk_gating.lock early since it is being used in
-+	 * ufshcd_setup_clocks()
+ 	/*
++	 * If @p has migration disabled, @p->cpus_ptr is updated to contain only
++	 * the pinned CPU in migrate_disable_switch() while @p is being switched
++	 * out. However, put_prev_task_scx() is called before @p->cpus_ptr is
++	 * updated and thus another CPU may see @p on a DSQ inbetween leading to
++	 * @p passing the below task_allowed_on_cpu() check while migration is
++	 * disabled.
++	 *
++	 * Test the migration disabled state first as the race window is narrow
++	 * and the BPF scheduler failing to check migration disabled state can
++	 * easily be masked if task_allowed_on_cpu() is done first.
 +	 */
-+	spin_lock_init(&hba->clk_gating.lock);
++	if (unlikely(is_migration_disabled(p))) {
++		if (trigger_error)
++			scx_ops_error("SCX_DSQ_LOCAL[_ON] cannot move migration disabled %s[%d] from CPU %d to %d",
++				      p->comm, p->pid, task_cpu(p), cpu);
++		return false;
++	}
 +
- 	err = ufshcd_hba_init(hba);
- 	if (err)
- 		goto out_error;
++	/*
+ 	 * We don't require the BPF scheduler to avoid dispatching to offline
+ 	 * CPUs mostly for convenience but also because CPUs can go offline
+ 	 * between scx_bpf_dsq_insert() calls and here. Trigger error iff the
+@@ -2331,17 +2350,11 @@ static bool task_can_run_on_remote_rq(st
+ 	 */
+ 	if (!task_allowed_on_cpu(p, cpu)) {
+ 		if (trigger_error)
+-			scx_ops_error("SCX_DSQ_LOCAL[_ON] verdict target cpu %d not allowed for %s[%d]",
+-				      cpu_of(rq), p->comm, p->pid);
++			scx_ops_error("SCX_DSQ_LOCAL[_ON] target CPU %d not allowed for %s[%d]",
++				      cpu, p->comm, p->pid);
+ 		return false;
+ 	}
+ 
+-	/*
+-	 * If @p has migration disabled, @p->cpus_ptr only contains its current
+-	 * CPU and the above task_allowed_on_cpu() test should have failed.
+-	 */
+-	SCHED_WARN_ON(is_migration_disabled(p));
+-
+ 	if (!scx_rq_online(rq))
+ 		return false;
+ 
 
 
