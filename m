@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BA61DED7C;
-	Wed, 19 Feb 2025 09:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E30F1DF26A;
+	Wed, 19 Feb 2025 09:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957430; cv=none; b=Ddq/oxF482J5cLZzuqZjPqq8xgsQZZArE0vZ91ecmEmOYO1aJzC53elhFrJcgOPIjr6iFq1owGaD2m9+YPNMTVaUcerzs0Thizi5lmbchf+gpmyklYC+pzXKRIT7Hx2KRdyTMVkIngciY+3kDhxJcw/Yt83WmliKwdmHM021MIU=
+	t=1739957433; cv=none; b=SXh5SSQZH7rrkJg1jVLXVT5fBS9ux0W5WK5LZkg6nkvWcHcK8F0z33nD9S827IeTgeG+RJxjDoMybp+pGmpPSVX8dh6L1rvp72CdcXlG46joB8GuJDuK1skSR5zu6zlbIiuvAlIiuCL6XzR4t7Uk2+oxxOw2FilyE61B31gxkbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957430; c=relaxed/simple;
-	bh=y8ZA4DRY3yKQvJsxenqD0SHsB92G3yVtvKZhExAtXVI=;
+	s=arc-20240116; t=1739957433; c=relaxed/simple;
+	bh=9BqygaW+3ediELrrPYLqfpgtFCQHlYcuyD/wBWQCI7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ScOk345Ea70BFYacWwgNPHpz+5JeW/WzirIkqlwi4dY0GRp5oEymnMvwDbh8jjXWOMPtLqdBbuGmaZlSWgRFFhm1hvih0JT6cq6r9W4HqTXbj6ZA1oWJhy5KaT1jwGt3XBek2Rp31k4vstSU9mJaDV+iPBf04eFtJ0UEbQ1zlmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGlL3fdN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W+UUrnox5N7BdAjCQpAp2M6kc3uIKacnyIPuEg1TR3akS/yJYLAcITGH7+HMb6eyzuUjVw1Cu240mwum6cvIrnkPpbMwiYQaQk4nmGA5/D3j50+ptDZlaAU9qITx+byknJG2M7x6SZPWLP/usqME6MrqaAkCX/34YdrySlICPfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHlWbzj4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGlL3fdN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED29C4CED1;
-	Wed, 19 Feb 2025 09:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHlWbzj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1112CC4CED1;
+	Wed, 19 Feb 2025 09:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957430;
-	bh=y8ZA4DRY3yKQvJsxenqD0SHsB92G3yVtvKZhExAtXVI=;
+	s=korg; t=1739957433;
+	bh=9BqygaW+3ediELrrPYLqfpgtFCQHlYcuyD/wBWQCI7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yGlL3fdNBm8F6YtBIY+3fFOVBfR1vz2Hju+kfpQYd6QfqaAsNwi9Wg0zKnBWrajC8
-	 X1xHUgA8kePoEmp1I9nsLJxw+yAMgVl+pdwtlPqHrM5tuuz/AcjG2WZkS4aOMilrrK
-	 UdcC1S6Xpjostgc5ieRc841zN6kC6KcvzvSaQGag=
+	b=bHlWbzj4fG79UkXDzASn1oJ0h3dYKdaqU2717jKoMLn41BbWYQRsxrCmQ2WKAzhTc
+	 JwBSsxLmDRPr4hrSh5VFQhDzqSQP/CUPTunR1uyC/KspKf73CqZNOjt/gA3lUQy7iL
+	 T6AU8wnw2ZFzj61aWM5fo/HZ+g1hpkcg4p5cTqME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Koichiro Den <koichiro.den@canonical.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	kernel test roboto <oliver.sang@intel.com>,
+	Rik van Riel <riel@surriel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 492/578] selftests: gpio: gpio-sim: Fix missing chip disablements
-Date: Wed, 19 Feb 2025 09:28:16 +0100
-Message-ID: <20250219082712.350206409@linuxfoundation.org>
+Subject: [PATCH 6.1 493/578] x86/mm/tlb: Only trim the mm_cpumask once a second
+Date: Wed, 19 Feb 2025 09:28:17 +0100
+Message-ID: <20250219082712.387764835@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,201 +57,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <koichiro.den@canonical.com>
+From: Rik van Riel <riel@fb.com>
 
-[ Upstream commit f8524ac33cd452aef5384504b3264db6039a455e ]
+[ Upstream commit 6db2526c1d694c91c6e05e2f186c085e9460f202 ]
 
-Since upstream commit 8bd76b3d3f3a ("gpio: sim: lock up configfs that an
-instantiated device depends on"), rmdir for an active virtual devices
-been prohibited.
+Setting and clearing CPU bits in the mm_cpumask is only ever done
+by the CPU itself, from the context switch code or the TLB flush
+code.
 
-Update gpio-sim selftest to align with the change.
+Synchronization is handled by switch_mm_irqs_off() blocking interrupts.
 
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202501221006.a1ca5dfa-lkp@intel.com
-Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
-Link: https://lore.kernel.org/r/20250122043309.304621-1-koichiro.den@canonical.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Sending TLB flush IPIs to CPUs that are in the mm_cpumask, but no
+longer running the program causes a regression in the will-it-scale
+tlbflush2 test. This test is contrived, but a large regression here
+might cause a small regression in some real world workload.
+
+Instead of always sending IPIs to CPUs that are in the mm_cpumask,
+but no longer running the program, send these IPIs only once a second.
+
+The rest of the time we can skip over CPUs where the loaded_mm is
+different from the target mm.
+
+Reported-by: kernel test roboto <oliver.sang@intel.com>
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/r/20241204210316.612ee573@fangorn
+Closes: https://lore.kernel.org/oe-lkp/202411282207.6bd28eae-lkp@intel.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/gpio/gpio-sim.sh | 31 +++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/mmu.h         |  2 ++
+ arch/x86/include/asm/mmu_context.h |  1 +
+ arch/x86/include/asm/tlbflush.h    |  1 +
+ arch/x86/mm/tlb.c                  | 35 +++++++++++++++++++++++++++---
+ 4 files changed, 36 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/gpio/gpio-sim.sh b/tools/testing/selftests/gpio/gpio-sim.sh
-index bf67b23ed29ac..46101a800bebf 100755
---- a/tools/testing/selftests/gpio/gpio-sim.sh
-+++ b/tools/testing/selftests/gpio/gpio-sim.sh
-@@ -46,12 +46,6 @@ remove_chip() {
- 	rmdir $CONFIGFS_DIR/$CHIP || fail "Unable to remove the chip"
+diff --git a/arch/x86/include/asm/mmu.h b/arch/x86/include/asm/mmu.h
+index 5d7494631ea95..c07c018a1c139 100644
+--- a/arch/x86/include/asm/mmu.h
++++ b/arch/x86/include/asm/mmu.h
+@@ -33,6 +33,8 @@ typedef struct {
+ 	 */
+ 	atomic64_t tlb_gen;
+ 
++	unsigned long next_trim_cpumask;
++
+ #ifdef CONFIG_MODIFY_LDT_SYSCALL
+ 	struct rw_semaphore	ldt_usr_sem;
+ 	struct ldt_struct	*ldt;
+diff --git a/arch/x86/include/asm/mmu_context.h b/arch/x86/include/asm/mmu_context.h
+index b8d40ddeab00f..6f5c7584fe1e3 100644
+--- a/arch/x86/include/asm/mmu_context.h
++++ b/arch/x86/include/asm/mmu_context.h
+@@ -106,6 +106,7 @@ static inline int init_new_context(struct task_struct *tsk,
+ 
+ 	mm->context.ctx_id = atomic64_inc_return(&last_mm_ctx_id);
+ 	atomic64_set(&mm->context.tlb_gen, 0);
++	mm->context.next_trim_cpumask = jiffies + HZ;
+ 
+ #ifdef CONFIG_X86_INTEL_MEMORY_PROTECTION_KEYS
+ 	if (cpu_feature_enabled(X86_FEATURE_OSPKE)) {
+diff --git a/arch/x86/include/asm/tlbflush.h b/arch/x86/include/asm/tlbflush.h
+index cda3118f3b27d..d1eb6bbfd39e3 100644
+--- a/arch/x86/include/asm/tlbflush.h
++++ b/arch/x86/include/asm/tlbflush.h
+@@ -208,6 +208,7 @@ struct flush_tlb_info {
+ 	unsigned int		initiating_cpu;
+ 	u8			stride_shift;
+ 	u8			freed_tables;
++	u8			trim_cpumask;
+ };
+ 
+ void flush_tlb_local(void);
+diff --git a/arch/x86/mm/tlb.c b/arch/x86/mm/tlb.c
+index c1e31e9a85d76..b07e2167fcebf 100644
+--- a/arch/x86/mm/tlb.c
++++ b/arch/x86/mm/tlb.c
+@@ -878,9 +878,36 @@ static void flush_tlb_func(void *info)
+ 			nr_invalidate);
  }
  
--configfs_cleanup() {
--	for CHIP in `ls $CONFIGFS_DIR/`; do
--		remove_chip $CHIP
--	done
--}
--
- create_chip() {
- 	local CHIP=$1
- 
-@@ -105,6 +99,13 @@ disable_chip() {
- 	echo 0 > $CONFIGFS_DIR/$CHIP/live || fail "Unable to disable the chip"
- }
- 
-+configfs_cleanup() {
-+	for CHIP in `ls $CONFIGFS_DIR/`; do
-+		disable_chip $CHIP
-+		remove_chip $CHIP
-+	done
+-static bool tlb_is_not_lazy(int cpu, void *data)
++static bool should_flush_tlb(int cpu, void *data)
+ {
+-	return !per_cpu(cpu_tlbstate_shared.is_lazy, cpu);
++	struct flush_tlb_info *info = data;
++
++	/* Lazy TLB will get flushed at the next context switch. */
++	if (per_cpu(cpu_tlbstate_shared.is_lazy, cpu))
++		return false;
++
++	/* No mm means kernel memory flush. */
++	if (!info->mm)
++		return true;
++
++	/* The target mm is loaded, and the CPU is not lazy. */
++	if (per_cpu(cpu_tlbstate.loaded_mm, cpu) == info->mm)
++		return true;
++
++	/* In cpumask, but not the loaded mm? Periodically remove by flushing. */
++	if (info->trim_cpumask)
++		return true;
++
++	return false;
 +}
 +
- configfs_chip_name() {
- 	local CHIP=$1
- 	local BANK=$2
-@@ -181,6 +182,7 @@ create_chip chip
- create_bank chip bank
- enable_chip chip
- test -n `cat $CONFIGFS_DIR/chip/bank/chip_name` || fail "chip_name doesn't work"
-+disable_chip chip
- remove_chip chip
++static bool should_trim_cpumask(struct mm_struct *mm)
++{
++	if (time_after(jiffies, READ_ONCE(mm->context.next_trim_cpumask))) {
++		WRITE_ONCE(mm->context.next_trim_cpumask, jiffies + HZ);
++		return true;
++	}
++	return false;
+ }
  
- echo "1.2. chip_name returns 'none' if the chip is still pending"
-@@ -195,6 +197,7 @@ create_chip chip
- create_bank chip bank
- enable_chip chip
- test -n `cat $CONFIGFS_DIR/chip/dev_name` || fail "dev_name doesn't work"
-+disable_chip chip
- remove_chip chip
+ DEFINE_PER_CPU_SHARED_ALIGNED(struct tlb_state_shared, cpu_tlbstate_shared);
+@@ -914,7 +941,7 @@ STATIC_NOPV void native_flush_tlb_multi(const struct cpumask *cpumask,
+ 	if (info->freed_tables)
+ 		on_each_cpu_mask(cpumask, flush_tlb_func, (void *)info, true);
+ 	else
+-		on_each_cpu_cond_mask(tlb_is_not_lazy, flush_tlb_func,
++		on_each_cpu_cond_mask(should_flush_tlb, flush_tlb_func,
+ 				(void *)info, 1, cpumask);
+ }
  
- echo "2. Creating and configuring simulated chips"
-@@ -204,6 +207,7 @@ create_chip chip
- create_bank chip bank
- enable_chip chip
- test "`get_chip_num_lines chip bank`" = "1" || fail "default number of lines is not 1"
-+disable_chip chip
- remove_chip chip
+@@ -965,6 +992,7 @@ static struct flush_tlb_info *get_flush_tlb_info(struct mm_struct *mm,
+ 	info->freed_tables	= freed_tables;
+ 	info->new_tlb_gen	= new_tlb_gen;
+ 	info->initiating_cpu	= smp_processor_id();
++	info->trim_cpumask	= 0;
  
- echo "2.2. Number of lines can be specified"
-@@ -212,6 +216,7 @@ create_bank chip bank
- set_num_lines chip bank 16
- enable_chip chip
- test "`get_chip_num_lines chip bank`" = "16" || fail "number of lines is not 16"
-+disable_chip chip
- remove_chip chip
- 
- echo "2.3. Label can be set"
-@@ -220,6 +225,7 @@ create_bank chip bank
- set_label chip bank foobar
- enable_chip chip
- test "`get_chip_label chip bank`" = "foobar" || fail "label is incorrect"
-+disable_chip chip
- remove_chip chip
- 
- echo "2.4. Label can be left empty"
-@@ -227,6 +233,7 @@ create_chip chip
- create_bank chip bank
- enable_chip chip
- test -z "`cat $CONFIGFS_DIR/chip/bank/label`" || fail "label is not empty"
-+disable_chip chip
- remove_chip chip
- 
- echo "2.5. Line names can be configured"
-@@ -238,6 +245,7 @@ set_line_name chip bank 2 bar
- enable_chip chip
- test "`get_line_name chip bank 0`" = "foo" || fail "line name is incorrect"
- test "`get_line_name chip bank 2`" = "bar" || fail "line name is incorrect"
-+disable_chip chip
- remove_chip chip
- 
- echo "2.6. Line config can remain unused if offset is greater than number of lines"
-@@ -248,6 +256,7 @@ set_line_name chip bank 5 foobar
- enable_chip chip
- test "`get_line_name chip bank 0`" = "" || fail "line name is incorrect"
- test "`get_line_name chip bank 1`" = "" || fail "line name is incorrect"
-+disable_chip chip
- remove_chip chip
- 
- echo "2.7. Line configfs directory names are sanitized"
-@@ -267,6 +276,7 @@ for CHIP in $CHIPS; do
- 	enable_chip $CHIP
- done
- for CHIP in $CHIPS; do
-+  disable_chip $CHIP
- 	remove_chip $CHIP
- done
- 
-@@ -278,6 +288,7 @@ echo foobar > $CONFIGFS_DIR/chip/bank/label 2> /dev/null && \
- 	fail "Setting label of a live chip should fail"
- echo 8 > $CONFIGFS_DIR/chip/bank/num_lines 2> /dev/null && \
- 	fail "Setting number of lines of a live chip should fail"
-+disable_chip chip
- remove_chip chip
- 
- echo "2.10. Can't create line items when chip is live"
-@@ -285,6 +296,7 @@ create_chip chip
- create_bank chip bank
- enable_chip chip
- mkdir $CONFIGFS_DIR/chip/bank/line0 2> /dev/null && fail "Creating line item should fail"
-+disable_chip chip
- remove_chip chip
- 
- echo "2.11. Probe errors are propagated to user-space"
-@@ -316,6 +328,7 @@ mkdir -p $CONFIGFS_DIR/chip/bank/line4/hog
- enable_chip chip
- $BASE_DIR/gpio-mockup-cdev -s 1 /dev/`configfs_chip_name chip bank` 4 2> /dev/null && \
- 	fail "Setting the value of a hogged line shouldn't succeed"
-+disable_chip chip
- remove_chip chip
- 
- echo "3. Controlling simulated chips"
-@@ -331,6 +344,7 @@ test "$?" = "1" || fail "pull set incorrectly"
- sysfs_set_pull chip bank 0 pull-down
- $BASE_DIR/gpio-mockup-cdev /dev/`configfs_chip_name chip bank` 1
- test "$?" = "0" || fail "pull set incorrectly"
-+disable_chip chip
- remove_chip chip
- 
- echo "3.2. Pull can be read from sysfs"
-@@ -344,6 +358,7 @@ SYSFS_PATH=/sys/devices/platform/$DEVNAME/$CHIPNAME/sim_gpio0/pull
- test `cat $SYSFS_PATH` = "pull-down" || fail "reading the pull failed"
- sysfs_set_pull chip bank 0 pull-up
- test `cat $SYSFS_PATH` = "pull-up" || fail "reading the pull failed"
-+disable_chip chip
- remove_chip chip
- 
- echo "3.3. Incorrect input in sysfs is rejected"
-@@ -355,6 +370,7 @@ DEVNAME=`configfs_dev_name chip`
- CHIPNAME=`configfs_chip_name chip bank`
- SYSFS_PATH="/sys/devices/platform/$DEVNAME/$CHIPNAME/sim_gpio0/pull"
- echo foobar > $SYSFS_PATH 2> /dev/null && fail "invalid input not detected"
-+disable_chip chip
- remove_chip chip
- 
- echo "3.4. Can't write to value"
-@@ -365,6 +381,7 @@ DEVNAME=`configfs_dev_name chip`
- CHIPNAME=`configfs_chip_name chip bank`
- SYSFS_PATH="/sys/devices/platform/$DEVNAME/$CHIPNAME/sim_gpio0/value"
- echo 1 > $SYSFS_PATH 2> /dev/null && fail "writing to 'value' succeeded unexpectedly"
-+disable_chip chip
- remove_chip chip
- 
- echo "4. Simulated GPIO chips are functional"
-@@ -382,6 +399,7 @@ $BASE_DIR/gpio-mockup-cdev -s 1 /dev/`configfs_chip_name chip bank` 0 &
- sleep 0.1 # FIXME Any better way?
- test `cat $SYSFS_PATH` = "1" || fail "incorrect value read from sysfs"
- kill $!
-+disable_chip chip
- remove_chip chip
- 
- echo "4.2. Bias settings work correctly"
-@@ -394,6 +412,7 @@ CHIPNAME=`configfs_chip_name chip bank`
- SYSFS_PATH="/sys/devices/platform/$DEVNAME/$CHIPNAME/sim_gpio0/value"
- $BASE_DIR/gpio-mockup-cdev -b pull-up /dev/`configfs_chip_name chip bank` 0
- test `cat $SYSFS_PATH` = "1" || fail "bias setting does not work"
-+disable_chip chip
- remove_chip chip
- 
- echo "GPIO $MODULE test PASS"
+ 	return info;
+ }
+@@ -1007,6 +1035,7 @@ void flush_tlb_mm_range(struct mm_struct *mm, unsigned long start,
+ 	 * flush_tlb_func_local() directly in this case.
+ 	 */
+ 	if (cpumask_any_but(mm_cpumask(mm), cpu) < nr_cpu_ids) {
++		info->trim_cpumask = should_trim_cpumask(mm);
+ 		flush_tlb_multi(mm_cpumask(mm), info);
+ 	} else if (mm == this_cpu_read(cpu_tlbstate.loaded_mm)) {
+ 		lockdep_assert_irqs_enabled();
 -- 
 2.39.5
 
