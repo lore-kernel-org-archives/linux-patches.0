@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9151CC8B0;
-	Wed, 19 Feb 2025 08:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFF41CAA7D;
+	Wed, 19 Feb 2025 08:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955573; cv=none; b=NkOuqAA93in8uVf1rCvpi+Wet0izY8q4+RO+SYPsjpWnIbWGT7yVSfiMoRI2KdLJkdxoRS2NrnBSEIHkFTEfiHzoEeyDAvkIk6UYVOpFH50CiM6aBgUOgqnrmtN6ZkpVFsVKQ6tPrELNUKli8eY45yeBeFL22tW0BqrfUxPpLxw=
+	t=1739955576; cv=none; b=GuOKIRaKIJyyzHUu9Lt4OvYX3rcj5FvEGlIDxykjRK/KDaYx+H+6sSKcN/Sa3raB3BCpGb+hEWIPnU7gZSr72i4GnibpoGcWH76G0/uAZlsj4pMMLKPwP8we6NJLda2d9FWYnCtyKxMTazTxJW5rbqpf/YgNniOBW3RUEmkU/Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955573; c=relaxed/simple;
-	bh=Puu1Yx6EuPH9A99UP3quQiiU9goZ1tYCjzhnrgwr/hM=;
+	s=arc-20240116; t=1739955576; c=relaxed/simple;
+	bh=XX3EY5PgrcU7SimEIw6Fv/he0BSoBBVZvf+jT7dreMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JeuNrzJ02B8fubx5oRnX1AGyAq0qiTLJ21qTcf3ncz1GCc4zN6WkMw451z7P/wyt08KkjM3RZWdriwlwErX/yt1qT3qYRoN25klAu3NMWyhONhjALDriwTQDdR5p2Oc2kKpVp8VOPjfvvi/XQo/W3L5Ra11p9IGXC/7Usc7t4a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eYu4giIR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h3Vp7LfhlwNjy45xioIWGfIQh85AwhnzCYhGwK04GjyS/MJgt4c+E4fCrDmGHHYHRXShjlfjkSK1is4kQapxFBms4x6xgJTNyOFXY0HapTdu9PzxH+VVmicKF3SeOb+FN9HhxFCU+Jg8CgQV8Vdai+133tWfCaiR0We5pXMjXVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mm+9a6QJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYu4giIR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97E4C4CEE6;
-	Wed, 19 Feb 2025 08:59:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mm+9a6QJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14FEC4CED1;
+	Wed, 19 Feb 2025 08:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955573;
-	bh=Puu1Yx6EuPH9A99UP3quQiiU9goZ1tYCjzhnrgwr/hM=;
+	s=korg; t=1739955576;
+	bh=XX3EY5PgrcU7SimEIw6Fv/he0BSoBBVZvf+jT7dreMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eYu4giIRTj010PmgkGDsd26Q4LLEAdFzkP2YWrSsvab+f9bj18n/18zEM7YLTv1Oh
-	 6elJZq19fE1b+lUTuA/56p9E/CRse0HehSEclj1ecxgpx74q4bmmZnbciSBToV9atX
-	 pYyv2/JRPHuaWh4O5kmUJkrWJJcHPiVbk0HGGB5k=
+	b=mm+9a6QJko57lHzsqwwPpFefMFeo4kefiY2mEG0+gTbWP8uN6ZjBChbFMPe3SWZpq
+	 L28T1GUj25uV2GhwiBiCg8uT63S1yP9udPpaAihLdVxHTfQKqnFMTBl0wYVPpGxhj0
+	 86cu67tTWSG5lSJX8Unsb9GZNcB0RU2m+bwRmCVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Marshall <hubcap@omnibond.com>,
-	syzbot+fc519d7875f2d9186c1f@syzkaller.appspotmail.com,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/152] orangefs: fix a oob in orangefs_debug_write
-Date: Wed, 19 Feb 2025 09:27:40 +0100
-Message-ID: <20250219082551.907576146@linuxfoundation.org>
+Subject: [PATCH 6.6 048/152] ASoC: Intel: bytcr_rt5640: Add DMI quirk for Vexia Edu Atla 10 tablet 5V
+Date: Wed, 19 Feb 2025 09:27:41 +0100
+Message-ID: <20250219082551.946150994@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -51,37 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Marshall <hubcap@omnibond.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit f7c848431632598ff9bce57a659db6af60d75b39 ]
+[ Upstream commit 6917192378c1ce17ba31df51c4e0d8b1c97a453b ]
 
-I got a syzbot report: slab-out-of-bounds Read in
-orangefs_debug_write... several people suggested fixes,
-I tested Al Viro's suggestion and made this patch.
+The Vexia EDU ATLA 10 tablet comes in 2 different versions with
+significantly different mainboards. The only outward difference is that
+the charging barrel on one is marked 5V and the other is marked 9V.
 
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
-Reported-by: syzbot+fc519d7875f2d9186c1f@syzkaller.appspotmail.com
+The 5V version mostly works with the BYTCR defaults, except that it is
+missing a CHAN package in its ACPI tables and the default of using
+SSP0-AIF2 is wrong, instead SSP0-AIF1 must be used. That and its jack
+detect signal is not inverted as it usually is.
+
+Add a DMI quirk for the 5V version to fix sound not working.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20250123132507.18434-1-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-debugfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/intel/boards/bytcr_rt5640.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
-index 1b508f5433846..fa41db0884880 100644
---- a/fs/orangefs/orangefs-debugfs.c
-+++ b/fs/orangefs/orangefs-debugfs.c
-@@ -393,9 +393,9 @@ static ssize_t orangefs_debug_write(struct file *file,
- 	 * Thwart users who try to jamb a ridiculous number
- 	 * of bytes into the debug file...
- 	 */
--	if (count > ORANGEFS_MAX_DEBUG_STRING_LEN + 1) {
-+	if (count > ORANGEFS_MAX_DEBUG_STRING_LEN) {
- 		silly = count;
--		count = ORANGEFS_MAX_DEBUG_STRING_LEN + 1;
-+		count = ORANGEFS_MAX_DEBUG_STRING_LEN;
- 	}
- 
- 	buf = kzalloc(ORANGEFS_MAX_DEBUG_STRING_LEN, GFP_KERNEL);
+diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
+index ddf68be0af14a..ce80adc30fe94 100644
+--- a/sound/soc/intel/boards/bytcr_rt5640.c
++++ b/sound/soc/intel/boards/bytcr_rt5640.c
+@@ -1132,7 +1132,22 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
+ 					BYT_RT5640_SSP0_AIF2 |
+ 					BYT_RT5640_MCLK_EN),
+ 	},
+-	{	/* Vexia Edu Atla 10 tablet */
++	{
++		/* Vexia Edu Atla 10 tablet 5V version */
++		.matches = {
++			/* Having all 3 of these not set is somewhat unique */
++			DMI_MATCH(DMI_SYS_VENDOR, "To be filled by O.E.M."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "To be filled by O.E.M."),
++			DMI_MATCH(DMI_BOARD_NAME, "To be filled by O.E.M."),
++			/* Above strings are too generic, also match on BIOS date */
++			DMI_MATCH(DMI_BIOS_DATE, "05/14/2015"),
++		},
++		.driver_data = (void *)(BYTCR_INPUT_DEFAULTS |
++					BYT_RT5640_JD_NOT_INV |
++					BYT_RT5640_SSP0_AIF1 |
++					BYT_RT5640_MCLK_EN),
++	},
++	{	/* Vexia Edu Atla 10 tablet 9V version */
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
+ 			DMI_MATCH(DMI_BOARD_NAME, "Aptio CRB"),
 -- 
 2.39.5
 
