@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876CD1E0DEB;
-	Wed, 19 Feb 2025 08:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2839F1AF0C8;
+	Wed, 19 Feb 2025 08:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954577; cv=none; b=B8/H/ayxXQlZwmMosD01LqDi/xFM6lk60S9qcPLxh0CeH1dGl186DhhxDKqUgGJpC9ZCS5sLXKUqJRGeYOb6gvf6B+lr5R0bjcZ7gDaYTvbrTbAVWpe4bMptxi9ql5slzjfQNXvj8Nmeu3mctOb/dGkHltBQHglD3ZqUNTKzz8s=
+	t=1739954580; cv=none; b=lBo4zazQuXFdWsf2QuakQOunTeJb4mzUkJTxXNl5cvJQ9TvmvhdhjI8VciH1/OEs6N+whdx+lrBkyEDW0Xf0p6W9OGZKTO+EftNTjgoEAn4zIFogSj/DDZWkkL5KV4w9Y/Awnz2QPaMH2QuuMYnAw4nDth0J53s7hZnfjYFgeoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954577; c=relaxed/simple;
-	bh=EPaAqBYn+cn4rbeL7N4iWN9BOAmVO3U1Vy7w3NdyKZ0=;
+	s=arc-20240116; t=1739954580; c=relaxed/simple;
+	bh=6lf3Ri6um7gI+ByjmcQTGuTGrpSkyog7BZ1uWYNwg48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8dtrFPbAdMM0tvF1jZDRENVHP4d0WTO0xnOOnR0SgNAjLF3L1R2Y6zulDlrFIrom2FlLz527Q0pUwNrhWgC5xLGNJ4vV6VpM45PSr7+lIGh6DmiCHwpTib6R0jZLUZqVeBGAi9thbqKQKFhLxg5Z8OeJmQq5iq5Ov5sxhzcjks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1+56WlZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a2cILTfeoKPvLEdGCVKsFQhpnPqSvw7xIaPtlxHUkzUXK9InHu/VSNOOSoQN/GhyYvTw/ZmG8F0woiccgqwoxqONYwO4cq3gUzYcRjBuMpJc4n7D2m9NHgR1jSj9WWhs1HEP1N83DGqSBaYKtyx0Me9pJNFpnIJXrOEJLkfh+TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3WRZsxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1+56WlZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E191C4CED1;
-	Wed, 19 Feb 2025 08:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3WRZsxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9DAC4CED1;
+	Wed, 19 Feb 2025 08:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954577;
-	bh=EPaAqBYn+cn4rbeL7N4iWN9BOAmVO3U1Vy7w3NdyKZ0=;
+	s=korg; t=1739954580;
+	bh=6lf3Ri6um7gI+ByjmcQTGuTGrpSkyog7BZ1uWYNwg48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h1+56WlZMNfMHd12JAraY03hoJC1IqUSeKWNDPcVhrIYoeMUC/c05vWbFKob2o7A3
-	 mahamkWYTyI8P5jlLeZE/KIbq4Gcfb+ZHpUY/j+7m0oIf0oBEfIV1t+FEXGObjQWSU
-	 jeAyOdRWppGsLoYjxOxulfjHFX+uUfR6unWgtYPU=
+	b=v3WRZsxGv4gCEDlmCxOoBIxhbIOU05W02WupTJmTjyexZG9MeqEAN8BCEddtBgFZW
+	 A7ws+zefhMQIqKIhdqailSEbDFgcsHioSDo62J7QK9UnNnu+sNrihKaybWweaXYFnK
+	 n1ChUkhUZOvkVY0fIo5mq1162gA1fs9tKdSOMu2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 205/274] scsi: ufs: Fix toggling of clk_gating.state when clock gating is not allowed
-Date: Wed, 19 Feb 2025 09:27:39 +0100
-Message-ID: <20250219082617.598632195@linuxfoundation.org>
+Subject: [PATCH 6.13 240/274] ndisc: extend RCU protection in ndisc_send_skb()
+Date: Wed, 19 Feb 2025 09:28:14 +0100
+Message-ID: <20250219082618.972061448@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -54,45 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avri Altman <avri.altman@wdc.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 839a74b5649c9f41d939a05059b5ca6b17156d03 ]
+[ Upstream commit ed6ae1f325d3c43966ec1b62ac1459e2b8e45640 ]
 
-This commit addresses an issue where clk_gating.state is being toggled in
-ufshcd_setup_clocks() even if clock gating is not allowed.
+ndisc_send_skb() can be called without RTNL or RCU held.
 
-The fix is to add a check for hba->clk_gating.is_initialized before toggling
-clk_gating.state in ufshcd_setup_clocks().
+Acquire rcu_read_lock() earlier, so that we can use dev_net_rcu()
+and avoid a potential UAF.
 
-Since clk_gating.lock is now initialized unconditionally, it can no longer
-lead to the spinlock being used before it is properly initialized, but
-instead it is mostly for documentation purposes.
-
-Fixes: 1ab27c9cf8b6 ("ufs: Add support for clock gating")
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Avri Altman <avri.altman@wdc.com>
-Link: https://lore.kernel.org/r/20250128071207.75494-3-avri.altman@wdc.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 1762f7e88eb3 ("[NETNS][IPV6] ndisc - make socket control per namespace")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250207135841.1948589-8-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ndisc.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 8a52397276b74..03c0ee10d8f48 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -9209,7 +9209,7 @@ static int ufshcd_setup_clocks(struct ufs_hba *hba, bool on)
- 			if (!IS_ERR_OR_NULL(clki->clk) && clki->enabled)
- 				clk_disable_unprepare(clki->clk);
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 90f8aa2d7af2e..8699d1a188dc4 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -471,16 +471,20 @@ static void ip6_nd_hdr(struct sk_buff *skb,
+ void ndisc_send_skb(struct sk_buff *skb, const struct in6_addr *daddr,
+ 		    const struct in6_addr *saddr)
+ {
++	struct icmp6hdr *icmp6h = icmp6_hdr(skb);
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net *net = dev_net(skb->dev);
+-	struct sock *sk = net->ipv6.ndisc_sk;
+ 	struct inet6_dev *idev;
++	struct net *net;
++	struct sock *sk;
+ 	int err;
+-	struct icmp6hdr *icmp6h = icmp6_hdr(skb);
+ 	u8 type;
+ 
+ 	type = icmp6h->icmp6_type;
+ 
++	rcu_read_lock();
++
++	net = dev_net_rcu(skb->dev);
++	sk = net->ipv6.ndisc_sk;
+ 	if (!dst) {
+ 		struct flowi6 fl6;
+ 		int oif = skb->dev->ifindex;
+@@ -488,6 +492,7 @@ void ndisc_send_skb(struct sk_buff *skb, const struct in6_addr *daddr,
+ 		icmpv6_flow_init(sk, &fl6, type, saddr, daddr, oif);
+ 		dst = icmp6_dst_alloc(skb->dev, &fl6);
+ 		if (IS_ERR(dst)) {
++			rcu_read_unlock();
+ 			kfree_skb(skb);
+ 			return;
  		}
--	} else if (!ret && on) {
-+	} else if (!ret && on && hba->clk_gating.is_initialized) {
- 		scoped_guard(spinlock_irqsave, &hba->clk_gating.lock)
- 			hba->clk_gating.state = CLKS_ON;
- 		trace_ufshcd_clk_gating(dev_name(hba->dev),
+@@ -502,7 +507,6 @@ void ndisc_send_skb(struct sk_buff *skb, const struct in6_addr *daddr,
+ 
+ 	ip6_nd_hdr(skb, saddr, daddr, READ_ONCE(inet6_sk(sk)->hop_limit), skb->len);
+ 
+-	rcu_read_lock();
+ 	idev = __in6_dev_get(dst->dev);
+ 	IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTREQUESTS);
+ 
 -- 
 2.39.5
 
