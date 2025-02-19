@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDE81DE4F9;
-	Wed, 19 Feb 2025 08:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298ED1CAA68;
+	Wed, 19 Feb 2025 08:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955462; cv=none; b=PWK4DPbv63KPW/6EhyyE3sl999nok5ReAJFr/8TSr4+EBj8omVv1NqxRgAqOrGcAvc011S7nqLAbQbG3+f9ZWK9j+0MTw2qro0CXf9nR+t/gN/pUQtikER+bYtf+fgZLKbFoqYSiFWQbkmGbFHQ2vH/nrF8n8lVGFRDJh+LtKaQ=
+	t=1739955465; cv=none; b=py4BsTktFDevcv0WNmre1DEY1KRNuMx2DvZ0hdqQg9fqz2wd0E0gMbknQPdvXx4VRYCCI2G0FxZ7+Xn5Xr2fG4kONvppx187xjcIPsA1KjwuxCU02u405FnWDXAVDUxANM/q+VdlCHI326OcHWqkuCI/6qUxKt0Hi5uVCfS+Fsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955462; c=relaxed/simple;
-	bh=lXXA6hvJlqSYXi8rQ6MY1TOphmtaeaKJYGIKXCF0mqA=;
+	s=arc-20240116; t=1739955465; c=relaxed/simple;
+	bh=1Qsr1RJz9J1ed0RKo//WWSLJvRCmoF+2XwZxPJZYHCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7X+U13MaejDUqMhGQSjZ/1DMLGkuO60x3/Ub8bT8p5EYs6K8NNmD1lHFrDUr2KShQqKjBIR2PbvI0Rh50lbAo0wmlDFSuYfkD0oA74kx5ASzhYuWpqxOz+EIedhPH3v9tEf486zf0zow/pYX8zvaTgSnFZbeSpd0ORjGz8afY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPeTQ7Au; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=R6Ojx/zg4RakAMrsf5zpHbR6MNqRLg4FD2X4YlzdMnItdHePhPfpJN9OmjF4BdF2zCI+KXV+/GXUNO81wr+QBp/nuf41WE7+dwLh3uXtl7nNi/4cS+9vMRylI1M6obm4httbLEGKF5Sa6aqTy0pReyEvPIjfP+qpUZZyTlK/tII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3STIGHc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPeTQ7Au"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99287C4CED1;
-	Wed, 19 Feb 2025 08:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3STIGHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F42C4CED1;
+	Wed, 19 Feb 2025 08:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955462;
-	bh=lXXA6hvJlqSYXi8rQ6MY1TOphmtaeaKJYGIKXCF0mqA=;
+	s=korg; t=1739955465;
+	bh=1Qsr1RJz9J1ed0RKo//WWSLJvRCmoF+2XwZxPJZYHCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bPeTQ7AuIiZOQ3B4up8fYEKO36F3AuykSwoTYflFqz4AeyywU/YJYkapDCqBobAnJ
-	 FSFvInRom5DyU1DaGwloWZpPaxienzngFeZ0Om0kMJBq7FWkMaL1Ot5KfAArJ+hV4P
-	 C1AJ7hM5fNMhOvjWkV0Ut46X7aeIKMEzeIUS7ATQ=
+	b=M3STIGHcUjinq68Niu1YwFPgbUOepLucNBdqXoSn1rV/oGravrMYO/mbFaF/o4u3Y
+	 bG7bPt0hbgTEY0pLtK1Ux8Ha44tgo4E2KeEScwKN9d4N3OSnSV3j8c4DFQ5SV1eFP4
+	 wtbHiCJCMskF8E2NRfssZPVsJvcVAykxeVoohJF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radu Rendec <rrendec@redhat.com>,
-	Will Deacon <will@kernel.org>,
+	Axel Busch <axel.busch@ibm.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Muhammad Adeel <muhammad.adeel@ibm.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/152] arm64: cacheinfo: Avoid out-of-bounds write to cacheinfo array
-Date: Wed, 19 Feb 2025 09:27:07 +0100
-Message-ID: <20250219082550.592525070@linuxfoundation.org>
+Subject: [PATCH 6.6 015/152] cgroup: Remove steal time from usage_usec
+Date: Wed, 19 Feb 2025 09:27:08 +0100
+Message-ID: <20250219082550.629968056@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -45,59 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Radu Rendec <rrendec@redhat.com>
+From: Muhammad Adeel <Muhammad.Adeel@ibm.com>
 
-[ Upstream commit 875d742cf5327c93cba1f11e12b08d3cce7a88d2 ]
+[ Upstream commit db5fd3cf8bf41b84b577b8ad5234ea95f327c9be ]
 
-The loop that detects/populates cache information already has a bounds
-check on the array size but does not account for cache levels with
-separate data/instructions cache. Fix this by incrementing the index
-for any populated leaf (instead of any populated level).
+The CPU usage time is the time when user, system or both are using the CPU.
+Steal time is the time when CPU is waiting to be run by the Hypervisor. It
+should not be added to the CPU usage time, hence removing it from the
+usage_usec entry.
 
-Fixes: 5d425c186537 ("arm64: kernel: add support for cpu cache information")
-
-Signed-off-by: Radu Rendec <rrendec@redhat.com>
-Link: https://lore.kernel.org/r/20250206174420.2178724-1-rrendec@redhat.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 936f2a70f2077 ("cgroup: add cpu.stat file to root cgroup")
+Acked-by: Axel Busch <axel.busch@ibm.com>
+Acked-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Muhammad Adeel <muhammad.adeel@ibm.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/cacheinfo.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ kernel/cgroup/rstat.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/cacheinfo.c b/arch/arm64/kernel/cacheinfo.c
-index d9c9218fa1fdd..309942b06c5bc 100644
---- a/arch/arm64/kernel/cacheinfo.c
-+++ b/arch/arm64/kernel/cacheinfo.c
-@@ -101,16 +101,18 @@ int populate_cache_leaves(unsigned int cpu)
- 	unsigned int level, idx;
- 	enum cache_type type;
- 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
--	struct cacheinfo *this_leaf = this_cpu_ci->info_list;
-+	struct cacheinfo *infos = this_cpu_ci->info_list;
+diff --git a/kernel/cgroup/rstat.c b/kernel/cgroup/rstat.c
+index d80d7a6081412..c32439b855f5d 100644
+--- a/kernel/cgroup/rstat.c
++++ b/kernel/cgroup/rstat.c
+@@ -469,7 +469,6 @@ static void root_cgroup_cputime(struct cgroup_base_stat *bstat)
  
- 	for (idx = 0, level = 1; level <= this_cpu_ci->num_levels &&
--	     idx < this_cpu_ci->num_leaves; idx++, level++) {
-+	     idx < this_cpu_ci->num_leaves; level++) {
- 		type = get_cache_type(level);
- 		if (type == CACHE_TYPE_SEPARATE) {
--			ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
--			ci_leaf_init(this_leaf++, CACHE_TYPE_INST, level);
-+			if (idx + 1 >= this_cpu_ci->num_leaves)
-+				break;
-+			ci_leaf_init(&infos[idx++], CACHE_TYPE_DATA, level);
-+			ci_leaf_init(&infos[idx++], CACHE_TYPE_INST, level);
- 		} else {
--			ci_leaf_init(this_leaf++, type, level);
-+			ci_leaf_init(&infos[idx++], type, level);
- 		}
- 	}
- 	return 0;
+ 		cputime->sum_exec_runtime += user;
+ 		cputime->sum_exec_runtime += sys;
+-		cputime->sum_exec_runtime += cpustat[CPUTIME_STEAL];
+ 
+ #ifdef CONFIG_SCHED_CORE
+ 		bstat->forceidle_sum += cpustat[CPUTIME_FORCEIDLE];
 -- 
 2.39.5
 
