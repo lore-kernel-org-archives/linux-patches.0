@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333141BD9C6;
-	Wed, 19 Feb 2025 09:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63D41BD9C6;
+	Wed, 19 Feb 2025 09:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957500; cv=none; b=KK/aKm0e11GLFhUqVqlqutwc52T8SMLhjrP8kCCzoo9hVZGmyK3RWYMFpYcHGrFniXu/16mEKJ/xbE1+T81rKzIUB7cA+RPLxfpxPdqJ7g+2dawhNKtEPSoyjE24H6zqaZROnZTf/HahDs2Vuo2UMaVshCV0Zw/Wm0h3ZJUFr/U=
+	t=1739957502; cv=none; b=jf4P6hwHbq2Z3/sR1BQESHLGd7H0tj5CAJsP1UMSuY5jgNQj9/h2B2LbFTTQhE8ucecmxvrbjhM2YVZFt7zuODCmftNNChzKRwqHUlspqhtIF5V6IXmzKQzwbmbNxAu1+Fap3DgxnPLCGbBDyD8O3hT/MNbbD2tCwZkVZKoja7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957500; c=relaxed/simple;
-	bh=xXJYytYvp+hNZuO3qk34j4PkmjZJChpopLJLG8CKepY=;
+	s=arc-20240116; t=1739957502; c=relaxed/simple;
+	bh=HFNizW6OsImYJKXyP9nwYiczhyTbBZLUbDT65tzgXZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sD6MgUL60pLYT9l1/tbPqAJRxb9RhLtmVGzvTet5xa/Ft+bhaAhb5TDLOYGHXlwAfsZBscsstLO+foDTjWtX9V2013jzl5JwOJxPxQC6iFSMzI+va1/Fr5E/QLpKKKcwaGSSBSVLqGzmrUCYrZX3xPN/gzwptJ9RCWhVXYqefFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=og/qujKW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WQ8feM3RC7SjtC+NzcOouLLA0B8SOTLDwFRlq22JJWU6ZBhBMMYPefH8kRsuOuY8508pEMFNCHGOEDHE3dhRVbAWjHdKghi9ucR2A7kZa5tooQXkU6AQpeOMLqfhzqS00sFBte8ENkXdk6K3OpeRIENDFG2ml48Z3QzTiqdNEGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0cr4D/p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="og/qujKW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5937EC4CED1;
-	Wed, 19 Feb 2025 09:31:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0cr4D/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E325C4CED1;
+	Wed, 19 Feb 2025 09:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957499;
-	bh=xXJYytYvp+hNZuO3qk34j4PkmjZJChpopLJLG8CKepY=;
+	s=korg; t=1739957502;
+	bh=HFNizW6OsImYJKXyP9nwYiczhyTbBZLUbDT65tzgXZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=og/qujKWZ894MBRbeytZGcGDECGpglFY4osqXWg2CcW2bBkiiQBHbakkKbsG8on9d
-	 hwVJ/9R6v7MjlGWkqzdJ1TAH9V4LUpWsfNNurkLYSxlywO9YgPMUwPudORmf6tsvJN
-	 a7eY6s1OIMWdzCSqXxCpRP3g24Aedq00M9dtPmmE=
+	b=h0cr4D/p8ddTD5W2aolTqWDC4ZuvRZVr7pX1JSx33wDuAu8HMsbe/64ddO5wnwauq
+	 Son9Q+Tqiq4Qu3x/n5sWh0vaoh2DzPg/Drn7VKw40GJRvkrf6FLnjfhvdbfdTZnjU7
+	 L/+XQvHRMQ2W1hLMo1qxgDUElXxXvU3/v5vrXzgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 547/578] flow_dissector: use RCU protection to fetch dev_net()
-Date: Wed, 19 Feb 2025 09:29:11 +0100
-Message-ID: <20250219082714.483504907@linuxfoundation.org>
+Subject: [PATCH 6.1 548/578] ipv6: use RCU protection in ip6_default_advmss()
+Date: Wed, 19 Feb 2025 09:29:12 +0100
+Message-ID: <20250219082714.521249842@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -54,77 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit afec62cd0a4191cde6dd3a75382be4d51a38ce9b ]
+[ Upstream commit 3c8ffcd248da34fc41e52a46e51505900115fc2a ]
 
-__skb_flow_dissect() can be called from arbitrary contexts.
+ip6_default_advmss() needs rcu protection to make
+sure the net structure it reads does not disappear.
 
-It must extend its RCU protection section to include
-the call to dev_net(), which can become dev_net_rcu().
-
-This makes sure the net structure can not disappear under us.
-
-Fixes: 9b52e3f267a6 ("flow_dissector: handle no-skb use case")
+Fixes: 5578689a4e3c ("[NETNS][IPV6] route6 - make route6 per namespace")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250205155120.1676781-10-edumazet@google.com
+Link: https://patch.msgid.link/20250205155120.1676781-11-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ net/ipv6/route.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index fba8eb1bb2815..de17f13232381 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -1004,10 +1004,12 @@ bool __skb_flow_dissect(const struct net *net,
- 					      FLOW_DISSECTOR_KEY_BASIC,
- 					      target_container);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index f3268bac9f198..17918f411386a 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3190,13 +3190,18 @@ static unsigned int ip6_default_advmss(const struct dst_entry *dst)
+ {
+ 	struct net_device *dev = dst->dev;
+ 	unsigned int mtu = dst_mtu(dst);
+-	struct net *net = dev_net(dev);
++	struct net *net;
+ 
+ 	mtu -= sizeof(struct ipv6hdr) + sizeof(struct tcphdr);
  
 +	rcu_read_lock();
 +
- 	if (skb) {
- 		if (!net) {
- 			if (skb->dev)
--				net = dev_net(skb->dev);
-+				net = dev_net_rcu(skb->dev);
- 			else if (skb->sk)
- 				net = sock_net(skb->sk);
- 		}
-@@ -1018,7 +1020,6 @@ bool __skb_flow_dissect(const struct net *net,
- 		enum netns_bpf_attach_type type = NETNS_BPF_FLOW_DISSECTOR;
- 		struct bpf_prog_array *run_array;
- 
--		rcu_read_lock();
- 		run_array = rcu_dereference(init_net.bpf.run_array[type]);
- 		if (!run_array)
- 			run_array = rcu_dereference(net->bpf.run_array[type]);
-@@ -1046,17 +1047,17 @@ bool __skb_flow_dissect(const struct net *net,
- 			prog = READ_ONCE(run_array->items[0].prog);
- 			result = bpf_flow_dissect(prog, &ctx, n_proto, nhoff,
- 						  hlen, flags);
--			if (result == BPF_FLOW_DISSECTOR_CONTINUE)
--				goto dissect_continue;
--			__skb_flow_bpf_to_target(&flow_keys, flow_dissector,
--						 target_container);
--			rcu_read_unlock();
--			return result == BPF_OK;
-+			if (result != BPF_FLOW_DISSECTOR_CONTINUE) {
-+				__skb_flow_bpf_to_target(&flow_keys, flow_dissector,
-+							 target_container);
-+				rcu_read_unlock();
-+				return result == BPF_OK;
-+			}
- 		}
--dissect_continue:
--		rcu_read_unlock();
- 	}
++	net = dev_net_rcu(dev);
+ 	if (mtu < net->ipv6.sysctl.ip6_rt_min_advmss)
+ 		mtu = net->ipv6.sysctl.ip6_rt_min_advmss;
  
 +	rcu_read_unlock();
 +
- 	if (dissector_uses_key(flow_dissector,
- 			       FLOW_DISSECTOR_KEY_ETH_ADDRS)) {
- 		struct ethhdr *eth = eth_hdr(skb);
+ 	/*
+ 	 * Maximal non-jumbo IPv6 payload is IPV6_MAXPLEN and
+ 	 * corresponding MSS is IPV6_MAXPLEN - tcp_header_size.
 -- 
 2.39.5
 
