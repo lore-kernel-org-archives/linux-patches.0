@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5437F1805B;
-	Wed, 19 Feb 2025 09:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B441CD208;
+	Wed, 19 Feb 2025 09:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956846; cv=none; b=N68WtLEzPc5t2beC812f+mnbX25fpyc85h/kyTkTXoxI0PIYJjbmFUCbbUue4g8e02lOwCqW7gdqQj6fQpnuxAIsqYpe7oSheod/x77JpTKf4XQaHpTS/4F5tgEnTAf5j7mILoN3anmpS+FqOJFqteHaJu732WjpRT1izZ5/USw=
+	t=1739956849; cv=none; b=SaSjn1s+Z5pWqoJCTDg7WDO/oS39n4W38gf/GxKVSTil0CZSQ9EpZE4l8pVPVQDjdopPofz5WM65t/outQacXDWNufIn0M5M6+/1nijepFmJwHiFAvkNaC5DI2tX1HkiBOsAHQHN0EqIMI90+vY/CHfer/Yc4ibC5IR2HPcr/8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956846; c=relaxed/simple;
-	bh=8/gxTR/z9e+HXVvajLERWbGF8aIoDYb+ijs8vwpGocM=;
+	s=arc-20240116; t=1739956849; c=relaxed/simple;
+	bh=68ltqnvDpZ2YwTpMQbjvQ3pvV8DRmE4m9wmQRhqXvi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IPcZ5T+C1kNWwasGgY0g4FV7bsvksfxEZ5N3lfuoaXaokdmeHlQyx84txDr0/rlWyR4rXRma9V0INQt7SC9o+2OrPBxpSsJ1zqEqONBKIHlggmLA2jjtXKtNizwCFu73yspbT+6IpsK8Ra+4/StwOX0WYzNkt8OiU3bwd91anNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wIhfvFRr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=frummYhdzQ/8eOZf29yDxfpfgviRgcjcKR5qAVrCp+GZlyVcz7nuZD5mdlR0hEGWGD+22XoM8/xPyoN2pRXZ5aeBPQ7FHPVQNWh4FEF0dZgLJBGDlVwegDPu9WvYHGoIMkh8b+Kp8Un+IMiaIAL3a21YaLC6ZQ5xPJkdEqXQ+vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmvVw3Yp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIhfvFRr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13A0C4CED1;
-	Wed, 19 Feb 2025 09:20:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmvVw3Yp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0930C4CED1;
+	Wed, 19 Feb 2025 09:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956846;
-	bh=8/gxTR/z9e+HXVvajLERWbGF8aIoDYb+ijs8vwpGocM=;
+	s=korg; t=1739956849;
+	bh=68ltqnvDpZ2YwTpMQbjvQ3pvV8DRmE4m9wmQRhqXvi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wIhfvFRrD55t83S0L05sUUL+wI9eIIwJ1fJK0glNnjK1hSH2aZL+BrjLu52Rw9baw
-	 MKtR4e5rdCoxaZfUnlSRNIBdb+xP6h9JSzLrcf/3h1Ga+2ZpsxKw1Gcx5UY2qZazgN
-	 RnRpFW4Cz6bgnGhp6kJYBF+LpyP2hTII5faDDDh4=
+	b=QmvVw3Ypt2UMyBQBxt5JJ3IX5ipl6rcVNWm9cNVzCoL8qMGiuGmEyC39QLxAYaVHR
+	 4gln8igCDRn3SJu9hY8Y0oMCCzGyCKczvCwaXHJFGuGfo/SNPFaVwj5p+X3TfsjpEl
+	 SXGbkunx6cWjB3yOHLbZABE7f+JLUB+lzJGgB5JM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 288/578] wifi: brcmsmac: add gain range check to wlc_phy_iqcal_gainparams_nphy()
-Date: Wed, 19 Feb 2025 09:24:52 +0100
-Message-ID: <20250219082704.341451887@linuxfoundation.org>
+Subject: [PATCH 6.1 279/578] printk: Fix signed integer overflow when defining LOG_BUF_LEN_MAX
+Date: Wed, 19 Feb 2025 09:24:43 +0100
+Message-ID: <20250219082703.993383484@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,39 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit 3f4a0948c3524ae50f166dbc6572a3296b014e62 ]
+[ Upstream commit 3d6f83df8ff2d5de84b50377e4f0d45e25311c7a ]
 
-In 'wlc_phy_iqcal_gainparams_nphy()', add gain range check to WARN()
-instead of possible out-of-bounds 'tbl_iqcal_gainparams_nphy' access.
-Compile tested only.
+Shifting 1 << 31 on a 32-bit int causes signed integer overflow, which
+leads to undefined behavior. To prevent this, cast 1 to u32 before
+performing the shift, ensuring well-defined behavior.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This change explicitly avoids any potential overflow by ensuring that
+the shift occurs on an unsigned 32-bit integer.
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/20241210070441.836362-1-dmantipov@yandex.ru
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Acked-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20240928113608.1438087-1-visitorckw@gmail.com
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c | 3 +++
- 1 file changed, 3 insertions(+)
+ kernel/printk/printk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
-index 8580a27547891..42e7bc67e9143 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
-@@ -23427,6 +23427,9 @@ wlc_phy_iqcal_gainparams_nphy(struct brcms_phy *pi, u16 core_no,
- 				break;
- 		}
- 
-+		if (WARN_ON(k == NPHY_IQCAL_NUMGAINS))
-+			return;
-+
- 		params->txgm = tbl_iqcal_gainparams_nphy[band_idx][k][1];
- 		params->pga = tbl_iqcal_gainparams_nphy[band_idx][k][2];
- 		params->pad = tbl_iqcal_gainparams_nphy[band_idx][k][3];
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index 5a88134fba79f..c93beab96c860 100644
+--- a/kernel/printk/printk.c
++++ b/kernel/printk/printk.c
+@@ -403,7 +403,7 @@ static struct latched_seq clear_seq = {
+ /* record buffer */
+ #define LOG_ALIGN __alignof__(unsigned long)
+ #define __LOG_BUF_LEN (1 << CONFIG_LOG_BUF_SHIFT)
+-#define LOG_BUF_LEN_MAX (u32)(1 << 31)
++#define LOG_BUF_LEN_MAX ((u32)1 << 31)
+ static char __log_buf[__LOG_BUF_LEN] __aligned(LOG_ALIGN);
+ static char *log_buf = __log_buf;
+ static u32 log_buf_len = __LOG_BUF_LEN;
 -- 
 2.39.5
 
