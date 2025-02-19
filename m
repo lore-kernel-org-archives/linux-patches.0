@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA9D1C5F0C;
-	Wed, 19 Feb 2025 08:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9101D14FF;
+	Wed, 19 Feb 2025 08:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954555; cv=none; b=qvupUytDRtKyZW6GnfxvR/bZjR7mHV0IzWD9i2Qy2A34B39lbe+AWb7UeKoCy9/pHN5bVSc5P23eyu4PjTGzedSQzOZTSnNW+by4Kna8quaAmiiKOADcpEIE5Yicgy4tCntDDkJNzvF5eSAfXSWhw7nB5YjaALqHnFNgJLucGtc=
+	t=1739954558; cv=none; b=Jmh+BSPaevhDRea3LkcQorHGpUeRIjRSM9DolUai1B+Ouhu2DZbVqgpSU/xaBG42eDg0pssaY4MB+yYQKJ29cKN2aUVgEdpg8m0ZlxZPyAjYivKh24W+Fp6Dk0dwJGZXJ8rwwBwFZrse4zUgM3BMbFkeiFXUPyurCPX2wtvMAj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954555; c=relaxed/simple;
-	bh=8cZsoPvpbdp5K6+VwvvB8MPh4kWI3LQAIVI0SmZnD8s=;
+	s=arc-20240116; t=1739954558; c=relaxed/simple;
+	bh=kDJYY5RrjyFgsXu0rlRCylI3qhLvp4KP7klQZZFBsQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qwRhrwb2YkcSBEw1D0h79Q+e+gXdJ2po+i4x34XIFgGfhafUv7J1MeY6GdcriR1Z3P+3ajvmDu3YuXjJ0huac0ay9rxteLhIeFjmJEFeuJzVD3GiMDtmG1R91ZowLXAz8S8vHEXGBolSFwRNwjUg1nLTc7XiWoktL+7U2XFHfJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XN/dskdS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bf7eSYpDvN8dk6RFBH0odEcq8Q4Zo+jg6Osd5h3VA/nwhq/QKbpVsevVyRYtTGl+4+HLi0afG3CCUO5EgEZwi2uNcT6RC1/oCGyetSLUXxnQesFQaJrP1bJFsEvvIYj67RouDk6bYcFo4dqdvVjZVUylrrmFj+MY5PwVR99p2QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2E91636; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XN/dskdS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5554C4CED1;
-	Wed, 19 Feb 2025 08:42:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2E91636"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB035C4CED1;
+	Wed, 19 Feb 2025 08:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954555;
-	bh=8cZsoPvpbdp5K6+VwvvB8MPh4kWI3LQAIVI0SmZnD8s=;
+	s=korg; t=1739954558;
+	bh=kDJYY5RrjyFgsXu0rlRCylI3qhLvp4KP7klQZZFBsQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XN/dskdSxcBkHV1JsjhH6tEU7sDfDGlC+BZ6ic4mjvUdK9vuDmo0AopSy1UwRE8C2
-	 Pe97ZvIx+RgyCDnul5AGLmnSCA5Wrg5REfQ7tgiHtSiQQHrDoCfStDwYih/W+01D87
-	 6tbb00Mplq4SyrC/51h/+7TWYkM1It8lWjy/n+3o=
+	b=f2E91636IXIBYn9JmQQUc9z3luh5FFWSfvexoDL3Annpjq4zUFaBN6NfUkBzF8Wsf
+	 feyRWmuVqIDnm/r4uWPtifjTU/bi8czr1OcqiJ02yaL46TZYody3e8ghStOU52fHTQ
+	 fg/K1PtsorFoMspgvmhvt//seSG0Q5HEOrW2mvgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 238/274] arp: use RCU protection in arp_xmit()
-Date: Wed, 19 Feb 2025 09:28:12 +0100
-Message-ID: <20250219082618.895385377@linuxfoundation.org>
+Subject: [PATCH 6.13 209/274] cpufreq/amd-pstate: Refactor amd_pstate_epp_reenable() and amd_pstate_epp_offline()
+Date: Wed, 19 Feb 2025 09:27:43 +0100
+Message-ID: <20250219082617.758039198@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -53,42 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
 
-[ Upstream commit a42b69f692165ec39db42d595f4f65a4c8f42e44 ]
+[ Upstream commit b1089e0c8817fda93d474eaa82ad86386887aefe ]
 
-arp_xmit() can be called without RTNL or RCU protection.
+Replace similar code chunks with amd_pstate_update_perf() and
+amd_pstate_set_epp() function calls.
 
-Use RCU protection to avoid potential UAF.
-
-Fixes: 29a26a568038 ("netfilter: Pass struct net into the netfilter hooks")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250207135841.1948589-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Link: https://lore.kernel.org/r/20241204144842.164178-4-Dhananjay.Ugwekar@amd.com
+[ML: Fix LKP reported error about unused variable]
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Stable-dep-of: 3ace20038e19 ("cpufreq/amd-pstate: Fix cpufreq_policy ref counting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/arp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cpufreq/amd-pstate.c | 38 +++++++-----------------------------
+ 1 file changed, 7 insertions(+), 31 deletions(-)
 
-diff --git a/net/ipv4/arp.c b/net/ipv4/arp.c
-index cb9a7ed8abd3a..f23a1ec6694cb 100644
---- a/net/ipv4/arp.c
-+++ b/net/ipv4/arp.c
-@@ -659,10 +659,12 @@ static int arp_xmit_finish(struct net *net, struct sock *sk, struct sk_buff *skb
-  */
- void arp_xmit(struct sk_buff *skb)
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index f6d04eb40af94..72c613cba7086 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -1605,25 +1605,17 @@ static int amd_pstate_epp_set_policy(struct cpufreq_policy *policy)
+ 
+ static void amd_pstate_epp_reenable(struct amd_cpudata *cpudata)
  {
-+	rcu_read_lock();
- 	/* Send it off, maybe filter it using firewalling first.  */
- 	NF_HOOK(NFPROTO_ARP, NF_ARP_OUT,
--		dev_net(skb->dev), NULL, skb, NULL, skb->dev,
-+		dev_net_rcu(skb->dev), NULL, skb, NULL, skb->dev,
- 		arp_xmit_finish);
-+	rcu_read_unlock();
+-	struct cppc_perf_ctrls perf_ctrls;
+-	u64 value, max_perf;
++	u64 max_perf;
+ 	int ret;
+ 
+ 	ret = amd_pstate_cppc_enable(true);
+ 	if (ret)
+ 		pr_err("failed to enable amd pstate during resume, return %d\n", ret);
+ 
+-	value = READ_ONCE(cpudata->cppc_req_cached);
+ 	max_perf = READ_ONCE(cpudata->highest_perf);
+ 
+-	if (cpu_feature_enabled(X86_FEATURE_CPPC)) {
+-		wrmsrl_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ, value);
+-	} else {
+-		perf_ctrls.max_perf = max_perf;
+-		cppc_set_perf(cpudata->cpu, &perf_ctrls);
+-		perf_ctrls.energy_perf = AMD_CPPC_ENERGY_PERF_PREF(cpudata->epp_cached);
+-		cppc_set_epp_perf(cpudata->cpu, &perf_ctrls, 1);
+-	}
++	amd_pstate_update_perf(cpudata, 0, 0, max_perf, false);
++	amd_pstate_set_epp(cpudata, cpudata->epp_cached);
  }
- EXPORT_SYMBOL(arp_xmit);
+ 
+ static int amd_pstate_epp_cpu_online(struct cpufreq_policy *policy)
+@@ -1643,31 +1635,15 @@ static int amd_pstate_epp_cpu_online(struct cpufreq_policy *policy)
+ static void amd_pstate_epp_offline(struct cpufreq_policy *policy)
+ {
+ 	struct amd_cpudata *cpudata = policy->driver_data;
+-	struct cppc_perf_ctrls perf_ctrls;
+ 	int min_perf;
+-	u64 value;
+ 
+ 	min_perf = READ_ONCE(cpudata->lowest_perf);
+-	value = READ_ONCE(cpudata->cppc_req_cached);
+ 
+ 	mutex_lock(&amd_pstate_limits_lock);
+-	if (cpu_feature_enabled(X86_FEATURE_CPPC)) {
+-		cpudata->epp_policy = CPUFREQ_POLICY_UNKNOWN;
+-
+-		/* Set max perf same as min perf */
+-		value &= ~AMD_CPPC_MAX_PERF(~0L);
+-		value |= AMD_CPPC_MAX_PERF(min_perf);
+-		value &= ~AMD_CPPC_MIN_PERF(~0L);
+-		value |= AMD_CPPC_MIN_PERF(min_perf);
+-		wrmsrl_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ, value);
+-	} else {
+-		perf_ctrls.desired_perf = 0;
+-		perf_ctrls.min_perf = min_perf;
+-		perf_ctrls.max_perf = min_perf;
+-		cppc_set_perf(cpudata->cpu, &perf_ctrls);
+-		perf_ctrls.energy_perf = AMD_CPPC_ENERGY_PERF_PREF(HWP_EPP_BALANCE_POWERSAVE);
+-		cppc_set_epp_perf(cpudata->cpu, &perf_ctrls, 1);
+-	}
++
++	amd_pstate_update_perf(cpudata, min_perf, 0, min_perf, false);
++	amd_pstate_set_epp(cpudata, AMD_CPPC_EPP_BALANCE_POWERSAVE);
++
+ 	mutex_unlock(&amd_pstate_limits_lock);
+ }
  
 -- 
 2.39.5
