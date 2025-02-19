@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53E31CAA7D;
-	Wed, 19 Feb 2025 08:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BCF11E98FC;
+	Wed, 19 Feb 2025 08:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954269; cv=none; b=ukjD37IGnH2WAlFtRyfipZZlnQinKn4XK8jszoC2Jgjugt97PA/QwoH6TWtu9jHi15t9I+IDDr7rE35GltlUNw8B/VDgcnuunT2jMpKZFipGfWWMttel8vR3ViQsd0fEFzm1UPdQ3JODmGwwL+DoLdOGBZn7mbzsTceibhJWmHU=
+	t=1739954272; cv=none; b=Bw6zKvUTLbMZNoAiVPDnqueW63Ssc8gkmULkK7STvlQBWG6ulJycYyS7khClrrUSejNKXTuDx/NIE6m5bsduiLAXxWbmr2yLv509oFqB9VfogJjrZOCHLlxWOqfTrmnn/iAAqyt2ntykq34hvbC6sPUSO9pivl/wOav1pwOiDns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954269; c=relaxed/simple;
-	bh=yiLXbXxymNpwEgPw5Xi8gyTJVs65o7QxJCUgzYl4Mg4=;
+	s=arc-20240116; t=1739954272; c=relaxed/simple;
+	bh=Ep1zkGihxCAMyS4R8OfrDtQXF89RljgDuDo8ohC6S5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CPBYPoRzgLpsP6VolkRYkn31d5XGkRh/DVrd0/tu4qkTVjGTr2Zx0z0zuvDw134169ovkPiW/Ze7TZRO/8rWYKTvW5mqQzqDz+knMdgpfgYnfUkqdK7ZEYd0C6F2/aZtqguUGk8HfFnTJE8f6EpgaSv26aKefsIrdssMAP1AYw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZUxnbpT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qo/b4TYj+1ebbUPBPkS3L9mSfhedp4kjcSXL2sRnZDymmrA7JjNa2W1bJpvQAUCBQbxkR0hnawArGq/ocgRtZkAtTecfTiFi5hUZ58c/O/DvV6LPw/ANmJyrofNmkM2kE0etdjouG8Kv56glCZCdlvSPXDCtsgoixViwm/HEl2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRtsnFlw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZUxnbpT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4608C4CEEC;
-	Wed, 19 Feb 2025 08:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRtsnFlw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5191C4CED1;
+	Wed, 19 Feb 2025 08:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954269;
-	bh=yiLXbXxymNpwEgPw5Xi8gyTJVs65o7QxJCUgzYl4Mg4=;
+	s=korg; t=1739954272;
+	bh=Ep1zkGihxCAMyS4R8OfrDtQXF89RljgDuDo8ohC6S5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AZUxnbpTB3ycVVzsDccHoG5mwt97NiSsGwdiPmDE6hmSqWxxiNuamYwMWhTQKcz82
-	 awYN9fF4cfx/x6hTjFxgApbbew/XIw4yKaKvWQWeEkC0fT6AXwm6i39ZAEqJLvHtNd
-	 UPYXys+EQ13EzpwCHnq1SNNpsszu6rC2J23dUqFk=
+	b=JRtsnFlwInFMymDLX+dM3+7udMBPf4vpS1uJ7x+QVDF8Xp0mN5dqVxOsC13XNHzzk
+	 hdf+9bEU7euuifkQ9XOTHWYkFncmxT0QsjCC6KPBHja3etk0JnwNyjEapfXxqDyEZJ
+	 fTqnew1sUPvdbFyjnhEi9p8o8lqdexaIKght3Rts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexander=20H=C3=B6lzl?= <alexander.hoelzl@gmx.net>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Robin van der Gracht <robin@protonic.nl>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.13 151/274] can: j1939: j1939_sk_send_loop(): fix unable to send messages with data length zero
-Date: Wed, 19 Feb 2025 09:26:45 +0100
-Message-ID: <20250219082615.508975833@linuxfoundation.org>
+Subject: [PATCH 6.13 152/274] can: rockchip: rkcanfd_handle_rx_fifo_overflow_int(): bail out if skb cannot be allocated
+Date: Wed, 19 Feb 2025 09:26:46 +0100
+Message-ID: <20250219082615.546289220@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -45,82 +44,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Hölzl <alexander.hoelzl@gmx.net>
+From: Robin van der Gracht <robin@protonic.nl>
 
-commit 44de577e61ed239db09f0da9d436866bef9b77dd upstream.
+commit f7f0adfe64de08803990dc4cbecd2849c04e314a upstream.
 
-The J1939 standard requires the transmission of messages of length 0.
+Fix NULL pointer check in rkcanfd_handle_rx_fifo_overflow_int() to
+bail out if skb cannot be allocated.
 
-For example proprietary messages are specified with a data length of 0
-to 1785. The transmission of such messages is not possible. Sending
-results in no error being returned but no corresponding can frame
-being generated.
-
-Enable the transmission of zero length J1939 messages. In order to
-facilitate this two changes are necessary:
-
-1) If the transmission of a new message is requested from user space
-the message is segmented in j1939_sk_send_loop(). Let the segmentation
-take into account zero length messages, do not terminate immediately,
-queue the corresponding skb.
-
-2) j1939_session_skb_get_by_offset() selects the next skb to transmit
-for a session. Take into account that there might be zero length skbs
-in the queue.
-
-Signed-off-by: Alexander Hölzl <alexander.hoelzl@gmx.net>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20250205174651.103238-1-alexander.hoelzl@gmx.net
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Fixes: ff60bfbaf67f ("can: rockchip_canfd: add driver for Rockchip CAN-FD controller")
 Cc: stable@vger.kernel.org
-[mkl: commit message rephrased]
+Signed-off-by: Robin van der Gracht <robin@protonic.nl>
+Link: https://patch.msgid.link/20250208-fix-rockchip-canfd-v1-1-ec533c8a9895@pengutronix.de
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/socket.c    |    4 ++--
- net/can/j1939/transport.c |    5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/can/rockchip/rockchip_canfd-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/can/j1939/socket.c
-+++ b/net/can/j1939/socket.c
-@@ -1132,7 +1132,7 @@ static int j1939_sk_send_loop(struct j19
+--- a/drivers/net/can/rockchip/rockchip_canfd-core.c
++++ b/drivers/net/can/rockchip/rockchip_canfd-core.c
+@@ -622,7 +622,7 @@ rkcanfd_handle_rx_fifo_overflow_int(stru
+ 	netdev_dbg(priv->ndev, "RX-FIFO overflow\n");
  
- 	todo_size = size;
+ 	skb = rkcanfd_alloc_can_err_skb(priv, &cf, &timestamp);
+-	if (skb)
++	if (!skb)
+ 		return 0;
  
--	while (todo_size) {
-+	do {
- 		struct j1939_sk_buff_cb *skcb;
- 
- 		segment_size = min_t(size_t, J1939_MAX_TP_PACKET_SIZE,
-@@ -1177,7 +1177,7 @@ static int j1939_sk_send_loop(struct j19
- 
- 		todo_size -= segment_size;
- 		session->total_queued_size += segment_size;
--	}
-+	} while (todo_size);
- 
- 	switch (ret) {
- 	case 0: /* OK */
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -382,8 +382,9 @@ sk_buff *j1939_session_skb_get_by_offset
- 	skb_queue_walk(&session->skb_queue, do_skb) {
- 		do_skcb = j1939_skb_to_cb(do_skb);
- 
--		if (offset_start >= do_skcb->offset &&
--		    offset_start < (do_skcb->offset + do_skb->len)) {
-+		if ((offset_start >= do_skcb->offset &&
-+		     offset_start < (do_skcb->offset + do_skb->len)) ||
-+		     (offset_start == 0 && do_skcb->offset == 0 && do_skb->len == 0)) {
- 			skb = do_skb;
- 		}
- 	}
+ 	rkcanfd_get_berr_counter_corrected(priv, &bec);
 
 
