@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20321DE8A6;
-	Wed, 19 Feb 2025 09:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F991DE8A6;
+	Wed, 19 Feb 2025 09:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955910; cv=none; b=TheCppbuj0bCmMedJIYdN+jxfCSHZly9qCzEcnH4kE0yrnrnNAZoHLdZvFP21xYKLuGZYPCGJkEBf+6B4HTep+DnTqmayStpXZm76qHjFAaZVcyywhYxGHx77X4OevxSZEGclJrYNZbqxJ2fFzllhRlBl8HVR+nXs9T3/R1YjSI=
+	t=1739955913; cv=none; b=Njcguny8+vOuXOd00EflMwKpOunntVc1B8TfHiVZMe/LoTDUAJ6gBcfHoiy9ktxOsWSZOkbH8w6PoWEJggCvJFNwTbbeBmn+C6L5iyiihFIWrMhRddhYVzPd8S20wtjCNehi4e2mJkYJrI71s+aHmxweQ0LX1+hI5eBteM8UT9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955910; c=relaxed/simple;
-	bh=+7jmhSwvJ0oO5WBsNp3BC/Qd2y+uUET858aLXwaICYY=;
+	s=arc-20240116; t=1739955913; c=relaxed/simple;
+	bh=QtbILcJcFVDEyclW0/wcSBPgzT+exelXpZREZF+kB4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uRSI2uaGg5QOMRSOBObGpZwJVAlV1I9LE1OtaJ4UrBQlv8yPhvoDNa64SOzKf8jBCFMlqkMY6gGCnR6yF0QS5J3taUuvTeZH9wbgc2l7XUaU/Qpx+E3dV/EKT9LDV5nQMdG4KCNADI1xTgrlZo4py0wwyL2cP3QWwdGrUb/k28U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjqCFvNY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rhdGj35c7UwZ4inHGSQyj+SjXN4b6VGldM7iEqGYLjaFHh1SfUyZ7xTXGvsiSO1vRT9M8AdfGzhCSbuvRrf/wYapL7OEwO88jXyxAHEzPC83Rr6VO2jzdYCPeJ0OLGEEkesdUmUC58T9J/h2QKCUoG4WR9C53utdPfP8qFl8whA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16Wn0LiA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjqCFvNY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23FF1C4CED1;
-	Wed, 19 Feb 2025 09:05:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16Wn0LiA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067D1C4CED1;
+	Wed, 19 Feb 2025 09:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955910;
-	bh=+7jmhSwvJ0oO5WBsNp3BC/Qd2y+uUET858aLXwaICYY=;
+	s=korg; t=1739955913;
+	bh=QtbILcJcFVDEyclW0/wcSBPgzT+exelXpZREZF+kB4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NjqCFvNYv2ZoNNxdJQ0r4BtDX6KzlcaH2+KRsSpJWA86Y9oqRyNp9RhBC7/y8fa26
-	 cxjzrw/qK5bJapjZl4CTU+keRqE+5A1lSIfkt6SNzgFlg8NU6WyRiEc6djH2S82OP9
-	 5jj0Iy3i0AiTAXlJY/sxGFgl1uKG8sKhx4/mZTY0=
+	b=16Wn0LiAK24VUu7Q+gxONdDrwEMbH9Hp84MKXGCQTJiLLwoXujJnq3WCh/2KA4tMJ
+	 byAGNigewDmRDEPWRTLLhcova0jlqoI9OBTboaVhkEA8Q1GruS01F1yoIxWZTZWEk7
+	 NkonAMkHGbUbIQp1d+lXgAIgSLCfcX+ww0YsnHVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Zenla <alex@edera.dev>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.6 133/152] x86/static-call: Remove early_boot_irqs_disabled check to fix Xen PVH dom0
-Date: Wed, 19 Feb 2025 09:29:06 +0100
-Message-ID: <20250219082555.307349980@linuxfoundation.org>
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	He Zhe <zhe.he@windriver.com>
+Subject: [PATCH 6.6 134/152] drm/amd/display: Add null check for head_pipe in dcn201_acquire_free_pipe_for_layer
+Date: Wed, 19 Feb 2025 09:29:07 +0100
+Message-ID: <20250219082555.346825702@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -53,44 +59,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit 5cc2db37124bb33914996d6fdbb2ddb3811f2945 upstream.
+commit f22f4754aaa47d8c59f166ba3042182859e5dff7 upstream.
 
-__static_call_update_early() has a check for early_boot_irqs_disabled, but
-is used before early_boot_irqs_disabled is set up in start_kernel().
+This commit addresses a potential null pointer dereference issue in the
+`dcn201_acquire_free_pipe_for_layer` function. The issue could occur
+when `head_pipe` is null.
 
-Xen PV has always special cased early_boot_irqs_disabled, but Xen PVH does
-not and falls over the BUG when booting as dom0.
+The fix adds a check to ensure `head_pipe` is not null before asserting
+it. If `head_pipe` is null, the function returns NULL to prevent a
+potential null pointer dereference.
 
-It is very suspect that early_boot_irqs_disabled starts as 0, becomes 1 for
-a time, then becomes 0 again, but as this needs backporting to fix a
-breakage in a security fix, dropping the BUG_ON() is the far safer option.
+Reported by smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/resource/dcn201/dcn201_resource.c:1016 dcn201_acquire_free_pipe_for_layer() error: we previously assumed 'head_pipe' could be null (see line 1010)
 
-Fixes: 0ef8047b737d ("x86/static-call: provide a way to do very early static-call updates")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219620
-Reported-by: Alex Zenla <alex@edera.dev>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Alex Zenla <alex@edera.dev>
-Link: https://lore.kernel.org/r/20241221211046.6475-1-andrew.cooper3@citrix.com
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ dcn201 was moved from drivers/gpu/drm/amd/display/dc to
+  drivers/gpu/drm/amd/display/dc/resource since commit
+  8b8eed05a1c6 ("drm/amd/display: Refactor resource into component directory").
+  The path is changed accordingly to apply the patch on 6.6.y. ]
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/static_call.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn201/dcn201_resource.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/static_call.c
-+++ b/arch/x86/kernel/static_call.c
-@@ -175,7 +175,6 @@ EXPORT_SYMBOL_GPL(arch_static_call_trans
- noinstr void __static_call_update_early(void *tramp, void *func)
- {
- 	BUG_ON(system_state != SYSTEM_BOOTING);
--	BUG_ON(!early_boot_irqs_disabled);
- 	BUG_ON(static_call_initialized);
- 	__text_gen_insn(tramp, JMP32_INSN_OPCODE, tramp, func, JMP32_INSN_SIZE);
- 	sync_core();
+--- a/drivers/gpu/drm/amd/display/dc/dcn201/dcn201_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn201/dcn201_resource.c
+@@ -1002,8 +1002,10 @@ static struct pipe_ctx *dcn201_acquire_f
+ 	struct pipe_ctx *head_pipe = resource_get_otg_master_for_stream(res_ctx, opp_head_pipe->stream);
+ 	struct pipe_ctx *idle_pipe = resource_find_free_secondary_pipe_legacy(res_ctx, pool, head_pipe);
+ 
+-	if (!head_pipe)
++	if (!head_pipe) {
+ 		ASSERT(0);
++		return NULL;
++	}
+ 
+ 	if (!idle_pipe)
+ 		return NULL;
 
 
