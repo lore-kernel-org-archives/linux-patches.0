@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FEC1DB546;
-	Wed, 19 Feb 2025 09:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838801CAA68;
+	Wed, 19 Feb 2025 09:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956634; cv=none; b=H0fGlowZaQlm6UJk/lQjHDiZhXS0ohzM6mwhpDknrytIcWb7teau4Sp8XCp5eag0fwXlsUFfGkz1QsH06xPRiNqQB5SrgcrKzBO+fWkEvKRXDYJyUV3pCz/N88crqpj2I6pfquP6eTBndumI18BnZx+GMH8W9TQ7po3lWzYk40U=
+	t=1739956637; cv=none; b=PlK4yiNOFqLiovCyLj0Q2KUijFguIB92FSJzpGi4wcGrv3nDve8eC6SjAeimna/60B5gNzJ0gJLCQ1QadujpST5zUZh7Ot4jCN9z4uI7m0YRtSL4IY/Xoa8Shfr9x0U97UdNo66qyKh5l6lrg35FC5/iltsTb2yDMKPbPTGI3XM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956634; c=relaxed/simple;
-	bh=3SSh+Q2t+ONVATC58OdkvXT6h6Cdb46ixc6nmM546r0=;
+	s=arc-20240116; t=1739956637; c=relaxed/simple;
+	bh=fJl2Ua5IZlMWAM0HvqDcbA6JSqrNL/r2eE05wcMsgJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LjNnEEgEbnLLugw05PlafhvD1QvstuefhBDQ9mJU3mqn0HCyuM9b+/kLDmI5rPfEL6E/JpTKJNcwIc9F7SCntHQzRkPrGYzQ2gV4VMMDWmBVZNzsghQzAUQptMnIndRvKbRruMzmDIZ1K8pk+owxlGkOuesyxmLv+gmAI8QgoSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLy9MCBF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GiKZBDLjDxSiP+/lQWMjiTf9VSK5JtyVkG2ayGMWz5KJWrsb6fycoq9uT4/1laJ2+rUk/Bj2ECNaZKlbZzwJJ9VYlR3O6SWeriUwJ+IPpYtOs6oD/+pW/kuXsyG2zsrTRKMP5ORidJDvM7dax36tMXgqsqBBMiVZ0NJFrSVBxHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdraI348; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLy9MCBF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1850C4CED1;
-	Wed, 19 Feb 2025 09:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdraI348"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1329C4CED1;
+	Wed, 19 Feb 2025 09:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956634;
-	bh=3SSh+Q2t+ONVATC58OdkvXT6h6Cdb46ixc6nmM546r0=;
+	s=korg; t=1739956637;
+	bh=fJl2Ua5IZlMWAM0HvqDcbA6JSqrNL/r2eE05wcMsgJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tLy9MCBFjHHC0hXbRIBNzjURflKbTSrNz896aRpOOU3y+UMaMRiio6ytLEDI5LOYo
-	 +jK2wrN0+98FfTCXT4vttpc576jLD8/S6e4WZDP6rtdnk332EP4x+RCMFuTL3iDGJE
-	 b+TgK5Q2fX5Qk3AinpUiU501y3bvqli0maDW4eto=
+	b=QdraI348rgeOtt1/gTyU2kwP8BzysfeHALuxjViXgT+ff7hEjEETmKW6oGkEteGFf
+	 wGgmVmD49moie5/Q7tgYIBofTSeEN3weVGAr5pOV2RkZRVP0tOujF4J5kGq2/2gLEP
+	 A9Z/oedyVLdfV/fFYqz7/qROzM336PEzKqpkgPXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	pangliyuan <pangliyuan1@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 215/578] ubifs: skip dumping tnc tree when zroot is null
-Date: Wed, 19 Feb 2025 09:23:39 +0100
-Message-ID: <20250219082701.514391324@linuxfoundation.org>
+Subject: [PATCH 6.1 216/578] regulator: core: Add missing newline character
+Date: Wed, 19 Feb 2025 09:23:40 +0100
+Message-ID: <20250219082701.552158718@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,58 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: pangliyuan <pangliyuan1@huawei.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit bdb0ca39e0acccf6771db49c3f94ed787d05f2d7 ]
+[ Upstream commit 155c569fa4c3b340fbf8571a0e42dd415c025377 ]
 
-Clearing slab cache will free all znode in memory and make
-c->zroot.znode = NULL, then dumping tnc tree will access
-c->zroot.znode which cause null pointer dereference.
+dev_err_probe() error messages need newline character.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219624#c0
-Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
-Signed-off-by: pangliyuan <pangliyuan1@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: 6eabfc018e8d ("regulator: core: Allow specifying an initial load w/ the bulk API")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://patch.msgid.link/20250122072019.1926093-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/debug.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ drivers/regulator/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ubifs/debug.c b/fs/ubifs/debug.c
-index 3f128b9fdfbb2..9613725ed1935 100644
---- a/fs/ubifs/debug.c
-+++ b/fs/ubifs/debug.c
-@@ -946,16 +946,20 @@ void ubifs_dump_tnc(struct ubifs_info *c)
- 
- 	pr_err("\n");
- 	pr_err("(pid %d) start dumping TNC tree\n", current->pid);
--	znode = ubifs_tnc_levelorder_next(c, c->zroot.znode, NULL);
--	level = znode->level;
--	pr_err("== Level %d ==\n", level);
--	while (znode) {
--		if (level != znode->level) {
--			level = znode->level;
--			pr_err("== Level %d ==\n", level);
-+	if (c->zroot.znode) {
-+		znode = ubifs_tnc_levelorder_next(c, c->zroot.znode, NULL);
-+		level = znode->level;
-+		pr_err("== Level %d ==\n", level);
-+		while (znode) {
-+			if (level != znode->level) {
-+				level = znode->level;
-+				pr_err("== Level %d ==\n", level);
-+			}
-+			ubifs_dump_znode(c, znode);
-+			znode = ubifs_tnc_levelorder_next(c, c->zroot.znode, znode);
- 		}
--		ubifs_dump_znode(c, znode);
--		znode = ubifs_tnc_levelorder_next(c, c->zroot.znode, znode);
-+	} else {
-+		pr_err("empty TNC tree in memory\n");
- 	}
- 	pr_err("(pid %d) finish dumping TNC tree\n", current->pid);
- }
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 518b64b2d69bc..fc52551aa265e 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -4897,7 +4897,7 @@ int regulator_bulk_get(struct device *dev, int num_consumers,
+ 						      consumers[i].supply);
+ 		if (IS_ERR(consumers[i].consumer)) {
+ 			ret = dev_err_probe(dev, PTR_ERR(consumers[i].consumer),
+-					    "Failed to get supply '%s'",
++					    "Failed to get supply '%s'\n",
+ 					    consumers[i].supply);
+ 			consumers[i].consumer = NULL;
+ 			goto err;
 -- 
 2.39.5
 
