@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E301DE4D7;
-	Wed, 19 Feb 2025 09:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23AE1CAA93;
+	Wed, 19 Feb 2025 09:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957404; cv=none; b=TgCZ+v+5bolRZNsqHiyh7G2Ji3LwP4jEldBwnA00LW/FkKSLCGdySCOfduAyosAdVe4ecSliLYuVWMO83lXORvdJsD0r9rDHHxjN65buGYz1Dw5aBdeRSi9dNKQfzPPWMxXv0kNOK3quzGjFTGPvvzleQYYkWOKRhbdBUglsjJQ=
+	t=1739957407; cv=none; b=I+7ON/OiBdpwXK8aJNs0qIg5YwdoRPl9mYKWLC8DWqMZzKEhCrViKwNRbZbXR9xLPAuY/dGUplWTxkOdhPYM28Htw4DK0AhuIoEv34PtFfO3TMiKvlA+eC0jMyXmgSDXAbHHD3h/BVj+znxjBZ046BwIFcjhevNL5pwyCAz/9tA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957404; c=relaxed/simple;
-	bh=m/S+0SWUqIOOEI6ypFY7C7DX8hc8NQ7gHGOixWp6QUU=;
+	s=arc-20240116; t=1739957407; c=relaxed/simple;
+	bh=8/pYyoP1XpZoJAV/9/mpPKOTrLaHHE01X+f0khalOAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GXBHJ0sMnPbABPQdOSOt0cY7cXuqCnKBDDvmR4/0VN3ZLHuvbLqrnrlBwttW2U6UVDygrmiMLh7NuVF7715w1CdUY6yUT6koJ6FvT3v6cI5myQi39ebST98z6hAWkhegCwCZ7Ayqe1yr5GeIoq8We6KrXqDIB00ZVcv0STUD3J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CisTAXJS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H2egetdBZzD0HAfUYiF9Un4S3h7l9JeAY7esrPrRTGH1FBIbbM0IkRQbh1JQWOUW2EzVzRekFDnepigSuu9ObckzQevgvI/RgVOMLc8HQ+7HkHgIt9cNmN+0GFgD5HwWxwpmYwJPpiPxLdiMjbjgknP24duLSTN/gOR9GqKeQRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJqKGFXq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CisTAXJS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CC0C4CED1;
-	Wed, 19 Feb 2025 09:30:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJqKGFXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B360C4CED1;
+	Wed, 19 Feb 2025 09:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957404;
-	bh=m/S+0SWUqIOOEI6ypFY7C7DX8hc8NQ7gHGOixWp6QUU=;
+	s=korg; t=1739957407;
+	bh=8/pYyoP1XpZoJAV/9/mpPKOTrLaHHE01X+f0khalOAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CisTAXJSDwkHfq31mPjaR0aD1izK9joxyiqZTxnpkLBqpEaopj3cZeiAmDbzYtJuP
-	 YRU8yuElep4zQdY5RqtS4tvpVbHRRXdRSuLCMglqHm/IfIptQye16cjuKVHJpGDzfE
-	 lCSbjWvGOH7zOJLN41+KGCN/aq76ZIAHZnS5Q29w=
+	b=HJqKGFXqC4oU118rbOgBdSdcvbMKtPLE6792lU7bSvUcn/w2DEmu5sJnh9MpJvlI4
+	 I69HCqrLAWviQILWTNVGeexUmckgZ1zWJ3RZo0JAA+plStTw/7YrC6twcX+yrW/Awm
+	 RfvQ7KWULTq2IvBJaTHMiyffUku71KmJg4XtdWME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jann Horn <jannh@google.com>
-Subject: [PATCH 6.1 514/578] usb: cdc-acm: Check control transfer buffer size before access
-Date: Wed, 19 Feb 2025 09:28:38 +0100
-Message-ID: <20250219082713.201269837@linuxfoundation.org>
+	John Kacur <jkacur@redhat.com>,
+	Luis Goncalves <lgoncalv@redhat.com>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 488/578] rtla/timerlat_hist: Abort event processing on second signal
+Date: Wed, 19 Feb 2025 09:28:12 +0100
+Message-ID: <20250219082712.196422660@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -50,66 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Tomas Glozar <tglozar@redhat.com>
 
-commit e563b01208f4d1f609bcab13333b6c0e24ce6a01 upstream.
+[ Upstream commit d6899e560366e10141189697502bc5521940c588 ]
 
-If the first fragment is shorter than struct usb_cdc_notification, we can't
-calculate an expected_size. Log an error and discard the notification
-instead of reading lengths from memory outside the received data, which can
-lead to memory corruption when the expected_size decreases between
-fragments, causing `expected_size - acm->nb_index` to wrap.
+If either SIGINT is received twice, or after a SIGALRM (that is, after
+timerlat was supposed to stop), abort processing events currently left
+in the tracefs buffer and exit immediately.
 
-This issue has been present since the beginning of git history; however,
-it only leads to memory corruption since commit ea2583529cd1
-("cdc-acm: reassemble fragmented notifications").
+This allows the user to exit rtla without waiting for processing all
+events, should that take longer than wanted, at the cost of not
+processing all samples.
 
-A mitigating factor is that acm_ctrl_irq() can only execute after userspace
-has opened /dev/ttyACM*; but if ModemManager is running, ModemManager will
-do that automatically depending on the USB device's vendor/product IDs and
-its other interfaces.
-
-Cc: stable <stable@kernel.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: John Kacur <jkacur@redhat.com>
+Cc: Luis Goncalves <lgoncalv@redhat.com>
+Cc: Gabriele Monaco <gmonaco@redhat.com>
+Link: https://lore.kernel.org/20250116144931.649593-5-tglozar@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/cdc-acm.c |   17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ tools/tracing/rtla/src/timerlat_hist.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -360,7 +360,7 @@ static void acm_process_notification(str
- static void acm_ctrl_irq(struct urb *urb)
+diff --git a/tools/tracing/rtla/src/timerlat_hist.c b/tools/tracing/rtla/src/timerlat_hist.c
+index 83cc7ef3d36b3..b7a7dcd68b570 100644
+--- a/tools/tracing/rtla/src/timerlat_hist.c
++++ b/tools/tracing/rtla/src/timerlat_hist.c
+@@ -786,6 +786,14 @@ static int stop_tracing;
+ static struct trace_instance *hist_inst = NULL;
+ static void stop_hist(int sig)
  {
- 	struct acm *acm = urb->context;
--	struct usb_cdc_notification *dr = urb->transfer_buffer;
-+	struct usb_cdc_notification *dr;
- 	unsigned int current_size = urb->actual_length;
- 	unsigned int expected_size, copy_size, alloc_size;
- 	int retval;
-@@ -387,9 +387,20 @@ static void acm_ctrl_irq(struct urb *urb
- 
- 	usb_mark_last_busy(acm->dev);
- 
--	if (acm->nb_index)
-+	if (acm->nb_index == 0) {
++	if (stop_tracing) {
 +		/*
-+		 * The first chunk of a message must contain at least the
-+		 * notification header with the length field, otherwise we
-+		 * can't get an expected_size.
++		 * Stop requested twice in a row; abort event processing and
++		 * exit immediately
 +		 */
-+		if (current_size < sizeof(struct usb_cdc_notification)) {
-+			dev_dbg(&acm->control->dev, "urb too short\n");
-+			goto exit;
-+		}
-+		dr = urb->transfer_buffer;
-+	} else {
- 		dr = (struct usb_cdc_notification *)acm->notification_buffer;
--
++		tracefs_iterate_stop(hist_inst->inst);
++		return;
 +	}
- 	/* size = notification-header + (optional) data */
- 	expected_size = sizeof(struct usb_cdc_notification) +
- 					le16_to_cpu(dr->wLength);
+ 	stop_tracing = 1;
+ 	if (hist_inst)
+ 		trace_instance_stop(hist_inst);
+-- 
+2.39.5
+
 
 
