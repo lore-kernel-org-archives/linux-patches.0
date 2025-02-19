@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2D41DE2C5;
-	Wed, 19 Feb 2025 09:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BEA1E5B8F;
+	Wed, 19 Feb 2025 09:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956138; cv=none; b=EtASm6zKorBbJhpIQn3aEIj7Gk6X6vxHF+MyoJu36LTTDhXnsoCzbzq0+csqqDi23J0dtOd5yik9+8X4Ypnm/cmC/8DNmIMez7CkJvQerD4FZlfIepmgtv7CAH3E1rCiBYdy9EiNPqBPNsBpWqdbTKHXUC08BmYoRok9NRbukzg=
+	t=1739956141; cv=none; b=YP0pPOkcZ9U/12PODtWlPbbciOyydAhli6aIsdCx3oWxeRAZpzH/k7DZFSoX3Q9rd6EQLRnsAZAO+nds/qDKES/T1+xLjoFdUEbNdhGb7U5ouAQr6/6bCUojN1zEGkKxphDXgGIEadBf2Y8guUi4uQjafwtIFIp1sk2BTqdsEls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956138; c=relaxed/simple;
-	bh=zKgRheXyjtH+x9/M6WY6ieuB1XvTBwl93MfWiazKm+Q=;
+	s=arc-20240116; t=1739956141; c=relaxed/simple;
+	bh=JJgem6AGJKcXWg/8UeZETanl4i1Bkdba7UqELw+jQ70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FmNk297gbIy0vK6eshjGZrzpsVVDWT5Ji2M28JHH9TLu79lZaQHgxyl8Q+iv2Xm9KUo8Feis+x/kqSo3VgWcmVHKegvc7FJPPY5r08SA1KcGjVSxHdhHKF7EVSOdeziCjUNv4oLJrsEIT8RJu3nnHTKQYn0HKIOXb8BNPEqPnik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yz7H1kcF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ku+9WBXsioVq03i5hHWLQf3/HqfU5KO0Mmk8Yn1crBvQByY3KlVFGS7G05OFQdnu0E4dXwMJMcCF6VCxxhcn8rTHlAjpuVXNWCyiEFJO00xdnWK0iFGapjXbgijkflJAqs6R0Wwl/Uyg+kOpxeLSDCMW2+bxyO9D9fD3VariqjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lv79Ebno; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yz7H1kcF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3139C4CED1;
-	Wed, 19 Feb 2025 09:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lv79Ebno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAE7C4CEE6;
+	Wed, 19 Feb 2025 09:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956138;
-	bh=zKgRheXyjtH+x9/M6WY6ieuB1XvTBwl93MfWiazKm+Q=;
+	s=korg; t=1739956141;
+	bh=JJgem6AGJKcXWg/8UeZETanl4i1Bkdba7UqELw+jQ70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yz7H1kcFP36gfKvRa6U5s6TdpGieLczYOk6B/6fZnN09ZSFjqAdFgPrcL4n7Bbxty
-	 q6oXmd65HSMAowBuJmtY8Xt5aStNUw7vp3ZG+gS118vpFK2ueHEey9UP9cqjp675yn
-	 XcirD1IXG+aU7iKSXYktxGB4hAVt+kKSMARNT9ug=
+	b=Lv79EbnoewVpjRz0iGW1EaeN9eku62YtAIxaxumGYxrtFamTcYlkwZrcE2IZ0/MiZ
+	 BMgxxiLaRAeKwtjqKPXNThA/nCKwHM0G4C04y3Z7jJ0zzLd8Uwkktpt9bXs3Tx6m/e
+	 Iy2MT1SV0iXDWMQ6d+pFGv0j8eR94MS37COEe9W8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/578] dt-bindings: mmc: controller: clarify the address-cells description
-Date: Wed, 19 Feb 2025 09:20:50 +0100
-Message-ID: <20250219082654.703129899@linuxfoundation.org>
+Subject: [PATCH 6.1 047/578] dt-bindings: leds: class-multicolor: Fix path to color definitions
+Date: Wed, 19 Feb 2025 09:20:51 +0100
+Message-ID: <20250219082654.742883930@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,37 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit b2b8e93ec00b8110cb37cbde5400d5abfdaed6a7 ]
+[ Upstream commit 609bc99a4452ffbce82d10f024a85d911c42e6cd ]
 
-The term "slot ID" has nothing to do with the SDIO function number
-which is specified in the reg property of the subnodes, rephrase
-the description to be more accurate.
+The LED color definitions have always been in
+include/dt-bindings/leds/common.h in upstream.
 
-Fixes: f9b7989859dd ("dt-bindings: mmc: Add YAML schemas for the generic MMC options")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Message-ID: <20241128-topic-amlogic-arm32-upstream-bindings-fixes-convert-meson-mx-sdio-v4-1-11d9f9200a59@linaro.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 5c7f8ffe741daae7 ("dt: bindings: Add multicolor class dt bindings documention")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/a3c7ea92e90b77032f2e480d46418b087709286d.1731588129.git.geert+renesas@glider.be
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/mmc/mmc-controller.yaml | 2 +-
+ .../devicetree/bindings/leds/leds-class-multicolor.yaml         | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
-index 802e3ca8be4df..f6bd7d19f4619 100644
---- a/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
-+++ b/Documentation/devicetree/bindings/mmc/mmc-controller.yaml
-@@ -25,7 +25,7 @@ properties:
-   "#address-cells":
-     const: 1
+diff --git a/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml b/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml
+index 31840e33dcf55..3452cc9ef3373 100644
+--- a/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml
++++ b/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml
+@@ -27,7 +27,7 @@ properties:
      description: |
--      The cell is the slot ID if a function subnode is used.
-+      The cell is the SDIO function number if a function subnode is used.
+       For multicolor LED support this property should be defined as either
+       LED_COLOR_ID_RGB or LED_COLOR_ID_MULTI which can be found in
+-      include/linux/leds/common.h.
++      include/dt-bindings/leds/common.h.
+     enum: [ 8, 9 ]
  
-   "#size-cells":
-     const: 0
+ required:
 -- 
 2.39.5
 
