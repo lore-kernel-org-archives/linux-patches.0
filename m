@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A51D1DF25D;
-	Wed, 19 Feb 2025 09:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7991F1538;
+	Wed, 19 Feb 2025 09:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957241; cv=none; b=XFLEXCTEi9Ce2ApaKYc0Rc4Wv7/yQ8AsCpAvUBULV6GmIzpayyfuPAES/tolblSjLy0hIIiEMSDDtSjeobg961up39ENH/f6ib++FZNGiDEnhro1TEsrXFlYQSHfhqn4epWCwYvkwNabYhXf6xzIEm0ogBdbSPli38Xye0EBFV8=
+	t=1739957244; cv=none; b=gQZnH+V8Fuy+jVbW9mikEqiSsUhVcZTbI14+nZtTg6vtyJ7dFK66xydUD8erMexapov5GeIDo9vidRtVqH89BFb+FRMFSPfWShIVDxhSt2tqRzrMutbPsuQ4fbLzuRSAbv6dKm7zDYxScpHIszpQJh5QIqC929AmdrX5fR74rjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957241; c=relaxed/simple;
-	bh=O6qKr1O0mPYtjZ0gfRq9heDmobWhU5nzqjkF0Z02zuE=;
+	s=arc-20240116; t=1739957244; c=relaxed/simple;
+	bh=ljtprST/1otnMIiHk/ykZlLY5g/BzauPJ6A52KrreM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/BzBM2K0F2NWSQd+G0LhYJM6cTcOyl72/gVSf3WsJX5uT11B9Q2sGn0VE/rCTr6HeVS8H/LSEfFHeC+HMRrI78mMahDZ/KMUKYdYwwH406f/Z4As5sQFHQ6b99NQ7xfOf7gxvhDK3misQB5jP9D3/iaiIYhPKyBdKiwPKLzxbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOfqrJVY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g7Y0dwS4wGAtSzGCxl881buC5Z/m/chUngk4PV26GR4lJzLq791VlacbjdtFn6BFuD5nF+KvS/Ww4m0Y506gwftSJRsMGCoJJT8ZEDSQ9/Ciskl4+AkxQhOnMycgEaXQ9XHRFCn92Zc4eNl845wQirXqihbJOi28pcLM29B3d5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opy4Speg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOfqrJVY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A37C4CED1;
-	Wed, 19 Feb 2025 09:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opy4Speg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7FBEC4CED1;
+	Wed, 19 Feb 2025 09:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957241;
-	bh=O6qKr1O0mPYtjZ0gfRq9heDmobWhU5nzqjkF0Z02zuE=;
+	s=korg; t=1739957244;
+	bh=ljtprST/1otnMIiHk/ykZlLY5g/BzauPJ6A52KrreM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nOfqrJVYDXE7xQ3fo9wWxz2fF/DYQI/caf+fL62Y+R4rz/bevX3uStgJeJUlaUYuF
-	 RpjYCez2I/wqNQlcbTfMkn1W5cyshrShK6X5OI7+PqgRMurx5m+sfmbGYYDWbqxbJK
-	 0OVDphFRZIDs1SWPKERooruO+bg1/HD/KYcrvLWU=
+	b=opy4Spegbj/RX7Anq8eH3T+8oCTDx2aFNzzZh6a6u5VaYKHZAsOo/oc21qoPDveUN
+	 PKwoJTX+JFAXiRgKpoWaAObhGj6A6DxcTkPkOMpXqqa88XcEU3DsHsm8CA97SlchwS
+	 UHnpoXQZ5Q5lqZALVzj4AuA4vMoQMLPHV9Jr3+iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Patrick Wang <patrick.wang.shcn@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 416/578] mm: kmemleak: fix upper boundary check for physical address objects
-Date: Wed, 19 Feb 2025 09:27:00 +0100
-Message-ID: <20250219082709.382941580@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Michal Simek <michal.simek@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>
+Subject: [PATCH 6.1 451/578] gpio: xilinx: remove excess kernel doc
+Date: Wed, 19 Feb 2025 09:27:35 +0100
+Message-ID: <20250219082710.734111263@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -53,51 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 488b5b9eca68497b533ced059be5eff19578bbca upstream.
+commit 4c7fcbf5077532b80bc233c83d56e09a6bfa16b0 upstream.
 
-Memblock allocations are registered by kmemleak separately, based on their
-physical address.  During the scanning stage, it checks whether an object
-is within the min_low_pfn and max_low_pfn boundaries and ignores it
-otherwise.
+The irqchip field has been removed from struct xgpio_instance so remove
+the doc as well.
 
-With the recent addition of __percpu pointer leak detection (commit
-6c99d4eb7c5e ("kmemleak: enable tracking for percpu pointers")), kmemleak
-started reporting leaks in setup_zone_pageset() and
-setup_per_cpu_pageset().  These were caused by the node_data[0] object
-(initialised in alloc_node_data()) ending on the PFN_PHYS(max_low_pfn)
-boundary.  The non-strict upper boundary check introduced by commit
-84c326299191 ("mm: kmemleak: check physical address when scan") causes the
-pg_data_t object to be ignored (not scanned) and the __percpu pointers it
-contains to be reported as leaks.
-
-Make the max_low_pfn upper boundary check strict when deciding whether to
-ignore a physical address object and not scan it.
-
-Link: https://lkml.kernel.org/r/20250127184233.2974311-1-catalin.marinas@arm.com
-Fixes: 84c326299191 ("mm: kmemleak: check physical address when scan")
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Tested-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Cc: Patrick Wang <patrick.wang.shcn@gmail.com>
-Cc: <stable@vger.kernel.org>	[6.0.x]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: b4510f8fd5d0 ("gpio: xilinx: Convert to immutable irq_chip")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202312150239.IyuTVvrL-lkp@intel.com/
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kmemleak.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-xilinx.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/mm/kmemleak.c
-+++ b/mm/kmemleak.c
-@@ -1520,7 +1520,7 @@ static void kmemleak_scan(void)
- 			unsigned long phys = object->pointer;
- 
- 			if (PHYS_PFN(phys) < min_low_pfn ||
--			    PHYS_PFN(phys + object->size) >= max_low_pfn)
-+			    PHYS_PFN(phys + object->size) > max_low_pfn)
- 				__paint_it(object, KMEMLEAK_BLACK);
- 		}
- 
+--- a/drivers/gpio/gpio-xilinx.c
++++ b/drivers/gpio/gpio-xilinx.c
+@@ -52,7 +52,6 @@
+  * @dir: GPIO direction shadow register
+  * @gpio_lock: Lock used for synchronization
+  * @irq: IRQ used by GPIO device
+- * @irqchip: IRQ chip
+  * @enable: GPIO IRQ enable/disable bitfield
+  * @rising_edge: GPIO IRQ rising edge enable/disable bitfield
+  * @falling_edge: GPIO IRQ falling edge enable/disable bitfield
 
 
