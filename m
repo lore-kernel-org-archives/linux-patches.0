@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F40E1EFF89;
-	Wed, 19 Feb 2025 08:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304941CAA66;
+	Wed, 19 Feb 2025 08:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739953992; cv=none; b=f5Nxr8cvOm29bTih//fXLY/ObC4JEywfpS6pNHpaUUEUI7uZg2LGdAQ/6N7lLC3d0lSP+HBW5t+laDyUGRepnC3teLWZ6YAkyftct+z3DCwvl/gBMjWDiZ78fzhrdPCAZEpsZGXRf8o01Tx835eQhKoPEUtagRwiQp9u70wBHNE=
+	t=1739953995; cv=none; b=t+nqMHQ14ivfL38Kshu1E7Cy4QaAZuT49BS6wjI/KwwIcamHGesoWljts58t5AB48/YmnLjDCRazBqwpkBFzqE1pLi82Tn8t9KImhq8Na00CI0uKzVSJH7QDdc+k1AXhoumgNVYrWs+itzReZJRt8ICcXcfRsUw8MNujJ41cSlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739953992; c=relaxed/simple;
-	bh=MEjbD5fVCqskvjHgyZdbA2XohBz/JuHHLbkY8hFoc7Y=;
+	s=arc-20240116; t=1739953995; c=relaxed/simple;
+	bh=P3S/EryvE4OcZW4L0WC49L0Of1lfJBzUH/Ri1jYSlJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gklys6hm6UjTfVFa/LiezI6uoPZqBsarVgxwMVO+RgsF1AHtVvz0Bfoe54/0Jy9PcCIlw0bUnFT4woV3I9cSWOnF7JQydd6JYHoiljzXvY7Wye0fWjK/NgcKaj27/XIJX+//tr9T/T9Ldrj3EvVcnKeC9wXmecvwcv0YsXEwZGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sd/cJMhQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QGBJAcb6vLC4X8h0f5BOIKwhlcds1zgph8OXcHY+13HYPyJvvP0vDMYVv6iYWn4FYNLLwUfeN8nYixx7fsZDfhtiKQUXwBNzISelvJb1GyEBQ9FEungXmYtdOh4rNWvDUAn2ri+3xBCodPFtmE8/nlNW6njz/WPnkG8uzLuW4v8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJHvOdLw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sd/cJMhQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97DE2C4CED1;
-	Wed, 19 Feb 2025 08:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJHvOdLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2A7C4CED1;
+	Wed, 19 Feb 2025 08:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739953992;
-	bh=MEjbD5fVCqskvjHgyZdbA2XohBz/JuHHLbkY8hFoc7Y=;
+	s=korg; t=1739953995;
+	bh=P3S/EryvE4OcZW4L0WC49L0Of1lfJBzUH/Ri1jYSlJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sd/cJMhQ/1mQxZncERnXCxn+YVZ1z4VVJokbcS7BoIshYnL6h8LOGrlu/WyUpASUT
-	 4eS4PbSqNpy8aYKO+565CM05zZaBVLLtf7K3DS5mZXk+YSsPgS09DcyeLeYs6rm2fs
-	 cM+2aHwjTAmVx1uv9Jchc5xwfT/6q+YbGv4xh5NY=
+	b=pJHvOdLw8If+KE6DJvqJtSd7nA70N3P+Hp7RcYt7SBdgq3GvOXoCOSNAWHWEVGTS5
+	 v03+OCdIMoBiN4MMEx2rtOI9dVCoz+cUJHj6t/GmliOlB0MUyWLJggutSXm1AJ66Cd
+	 EUPNFKMnYjQZ8kUaKBvli6D7VGyGhN385RDih8Jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Vejvalka <jan.vejvalka@lfmotol.cuni.cz>,
 	Juergen Gross <jgross@suse.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
+	Alan Robinson <Alan.Robinson@fujitsu.com>,
+	Jan Beulich <jbeulich@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 061/274] xen/swiotlb: relax alignment requirements
-Date: Wed, 19 Feb 2025 09:25:15 +0100
-Message-ID: <20250219082612.013201219@linuxfoundation.org>
+Subject: [PATCH 6.13 062/274] x86/xen: allow larger contiguous memory regions in PV guests
+Date: Wed, 19 Feb 2025 09:25:16 +0100
+Message-ID: <20250219082612.051361171@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -54,80 +54,167 @@ Content-Transfer-Encoding: 8bit
 
 From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 85fcb57c983f423180ba6ec5d0034242da05cc54 ]
+[ Upstream commit e93ec87286bd1fd30b7389e7a387cfb259f297e3 ]
 
-When mapping a buffer for DMA via .map_page or .map_sg DMA operations,
-there is no need to check the machine frames to be aligned according
-to the mapped areas size. All what is needed in these cases is that the
-buffer is contiguous at machine level.
+Today a PV guest (including dom0) can create 2MB contiguous memory
+regions for DMA buffers at max. This has led to problems at least
+with the megaraid_sas driver, which wants to allocate a 2.3MB DMA
+buffer.
 
-So carve out the alignment check from range_straddles_page_boundary()
-and move it to a helper called by xen_swiotlb_alloc_coherent() and
-xen_swiotlb_free_coherent() directly.
+The limiting factor is the frame array used to do the hypercall for
+making the memory contiguous, which has 512 entries and is just a
+static array in mmu_pv.c.
+
+In order to not waste memory for non-PV guests, put the initial
+frame array into .init.data section and dynamically allocate an array
+from the .init_after_bootmem hook of PV guests.
+
+In case a contiguous memory area larger than the initially supported
+2MB is requested, allocate a larger buffer for the frame list. Note
+that such an allocation is tried only after memory management has been
+initialized properly, which is tested via a flag being set in the
+.init_after_bootmem hook.
 
 Fixes: 9f40ec84a797 ("xen/swiotlb: add alignment check for dma buffers")
-Reported-by: Jan Vejvalka <jan.vejvalka@lfmotol.cuni.cz>
-Tested-by: Jan Vejvalka <jan.vejvalka@lfmotol.cuni.cz>
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Tested-by: Alan Robinson <Alan.Robinson@fujitsu.com>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/swiotlb-xen.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ arch/x86/xen/mmu_pv.c | 71 +++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 62 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/xen/swiotlb-xen.c b/drivers/xen/swiotlb-xen.c
-index a337edcf8faf7..26c62e0d34e98 100644
---- a/drivers/xen/swiotlb-xen.c
-+++ b/drivers/xen/swiotlb-xen.c
-@@ -74,19 +74,21 @@ static inline phys_addr_t xen_dma_to_phys(struct device *dev,
- 	return xen_bus_to_phys(dev, dma_to_phys(dev, dma_addr));
- }
+diff --git a/arch/x86/xen/mmu_pv.c b/arch/x86/xen/mmu_pv.c
+index 55a4996d0c04f..ffdf0d299c5d7 100644
+--- a/arch/x86/xen/mmu_pv.c
++++ b/arch/x86/xen/mmu_pv.c
+@@ -111,6 +111,51 @@ static pud_t level3_user_vsyscall[PTRS_PER_PUD] __page_aligned_bss;
+  */
+ static DEFINE_SPINLOCK(xen_reservation_lock);
  
-+static inline bool range_requires_alignment(phys_addr_t p, size_t size)
-+{
-+	phys_addr_t algn = 1ULL << (get_order(size) + PAGE_SHIFT);
-+	phys_addr_t bus_addr = pfn_to_bfn(XEN_PFN_DOWN(p)) << XEN_PAGE_SHIFT;
++/* Protected by xen_reservation_lock. */
++#define MIN_CONTIG_ORDER 9 /* 2MB */
++static unsigned int discontig_frames_order = MIN_CONTIG_ORDER;
++static unsigned long discontig_frames_early[1UL << MIN_CONTIG_ORDER] __initdata;
++static unsigned long *discontig_frames __refdata = discontig_frames_early;
++static bool discontig_frames_dyn;
 +
-+	return IS_ALIGNED(p, algn) && !IS_ALIGNED(bus_addr, algn);
++static int alloc_discontig_frames(unsigned int order)
++{
++	unsigned long *new_array, *old_array;
++	unsigned int old_order;
++	unsigned long flags;
++
++	BUG_ON(order < MIN_CONTIG_ORDER);
++	BUILD_BUG_ON(sizeof(discontig_frames_early) != PAGE_SIZE);
++
++	new_array = (unsigned long *)__get_free_pages(GFP_KERNEL,
++						      order - MIN_CONTIG_ORDER);
++	if (!new_array)
++		return -ENOMEM;
++
++	spin_lock_irqsave(&xen_reservation_lock, flags);
++
++	old_order = discontig_frames_order;
++
++	if (order > discontig_frames_order || !discontig_frames_dyn) {
++		if (!discontig_frames_dyn)
++			old_array = NULL;
++		else
++			old_array = discontig_frames;
++
++		discontig_frames = new_array;
++		discontig_frames_order = order;
++		discontig_frames_dyn = true;
++	} else {
++		old_array = new_array;
++	}
++
++	spin_unlock_irqrestore(&xen_reservation_lock, flags);
++
++	free_pages((unsigned long)old_array, old_order - MIN_CONTIG_ORDER);
++
++	return 0;
 +}
 +
- static inline int range_straddles_page_boundary(phys_addr_t p, size_t size)
- {
- 	unsigned long next_bfn, xen_pfn = XEN_PFN_DOWN(p);
- 	unsigned int i, nr_pages = XEN_PFN_UP(xen_offset_in_page(p) + size);
--	phys_addr_t algn = 1ULL << (get_order(size) + PAGE_SHIFT);
+ /*
+  * Note about cr3 (pagetable base) values:
+  *
+@@ -812,6 +857,9 @@ static void __init xen_after_bootmem(void)
+ 	SetPagePinned(virt_to_page(level3_user_vsyscall));
+ #endif
+ 	xen_pgd_walk(&init_mm, xen_mark_pinned, FIXADDR_TOP);
++
++	if (alloc_discontig_frames(MIN_CONTIG_ORDER))
++		BUG();
+ }
  
- 	next_bfn = pfn_to_bfn(xen_pfn);
+ static void xen_unpin_page(struct mm_struct *mm, struct page *page,
+@@ -2199,10 +2247,6 @@ void __init xen_init_mmu_ops(void)
+ 	memset(dummy_mapping, 0xff, PAGE_SIZE);
+ }
  
--	/* If buffer is physically aligned, ensure DMA alignment. */
--	if (IS_ALIGNED(p, algn) &&
--	    !IS_ALIGNED((phys_addr_t)next_bfn << XEN_PAGE_SHIFT, algn))
--		return 1;
+-/* Protected by xen_reservation_lock. */
+-#define MAX_CONTIG_ORDER 9 /* 2MB */
+-static unsigned long discontig_frames[1<<MAX_CONTIG_ORDER];
 -
- 	for (i = 1; i < nr_pages; i++)
- 		if (pfn_to_bfn(++xen_pfn) != ++next_bfn)
- 			return 1;
-@@ -156,7 +158,8 @@ xen_swiotlb_alloc_coherent(struct device *dev, size_t size,
+ #define VOID_PTE (mfn_pte(0, __pgprot(0)))
+ static void xen_zap_pfn_range(unsigned long vaddr, unsigned int order,
+ 				unsigned long *in_frames,
+@@ -2319,18 +2363,25 @@ int xen_create_contiguous_region(phys_addr_t pstart, unsigned int order,
+ 				 unsigned int address_bits,
+ 				 dma_addr_t *dma_handle)
+ {
+-	unsigned long *in_frames = discontig_frames, out_frame;
++	unsigned long *in_frames, out_frame;
+ 	unsigned long  flags;
+ 	int            success;
+ 	unsigned long vstart = (unsigned long)phys_to_virt(pstart);
  
- 	*dma_handle = xen_phys_to_dma(dev, phys);
- 	if (*dma_handle + size - 1 > dma_mask ||
--	    range_straddles_page_boundary(phys, size)) {
-+	    range_straddles_page_boundary(phys, size) ||
-+	    range_requires_alignment(phys, size)) {
- 		if (xen_create_contiguous_region(phys, order, fls64(dma_mask),
- 				dma_handle) != 0)
- 			goto out_free_pages;
-@@ -182,7 +185,8 @@ xen_swiotlb_free_coherent(struct device *dev, size_t size, void *vaddr,
- 	size = ALIGN(size, XEN_PAGE_SIZE);
+-	if (unlikely(order > MAX_CONTIG_ORDER))
+-		return -ENOMEM;
++	if (unlikely(order > discontig_frames_order)) {
++		if (!discontig_frames_dyn)
++			return -ENOMEM;
++
++		if (alloc_discontig_frames(order))
++			return -ENOMEM;
++	}
  
- 	if (WARN_ON_ONCE(dma_handle + size - 1 > dev->coherent_dma_mask) ||
--	    WARN_ON_ONCE(range_straddles_page_boundary(phys, size)))
-+	    WARN_ON_ONCE(range_straddles_page_boundary(phys, size) ||
-+			 range_requires_alignment(phys, size)))
- 	    	return;
+ 	memset((void *) vstart, 0, PAGE_SIZE << order);
  
- 	if (TestClearPageXenRemapped(virt_to_page(vaddr)))
+ 	spin_lock_irqsave(&xen_reservation_lock, flags);
+ 
++	in_frames = discontig_frames;
++
+ 	/* 1. Zap current PTEs, remembering MFNs. */
+ 	xen_zap_pfn_range(vstart, order, in_frames, NULL);
+ 
+@@ -2354,12 +2405,12 @@ int xen_create_contiguous_region(phys_addr_t pstart, unsigned int order,
+ 
+ void xen_destroy_contiguous_region(phys_addr_t pstart, unsigned int order)
+ {
+-	unsigned long *out_frames = discontig_frames, in_frame;
++	unsigned long *out_frames, in_frame;
+ 	unsigned long  flags;
+ 	int success;
+ 	unsigned long vstart;
+ 
+-	if (unlikely(order > MAX_CONTIG_ORDER))
++	if (unlikely(order > discontig_frames_order))
+ 		return;
+ 
+ 	vstart = (unsigned long)phys_to_virt(pstart);
+@@ -2367,6 +2418,8 @@ void xen_destroy_contiguous_region(phys_addr_t pstart, unsigned int order)
+ 
+ 	spin_lock_irqsave(&xen_reservation_lock, flags);
+ 
++	out_frames = discontig_frames;
++
+ 	/* 1. Find start MFN of contiguous extent. */
+ 	in_frame = virt_to_mfn((void *)vstart);
+ 
 -- 
 2.39.5
 
