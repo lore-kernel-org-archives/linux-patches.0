@@ -1,182 +1,157 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511A01F61C
-	for <patches@lists.linux.dev>; Wed, 19 Feb 2025 17:27:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787812147E8;
+	Wed, 19 Feb 2025 18:09:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739986067; cv=none; b=Mbm/2a0Ap9bHa7Bdn8CqxvbRHB9dM6iEVmMu7t85wf84ATTdycky5q8083U7oQAm/J00ANVWmcap5J/oC7Jb4IGhL4vByGQGYKgMeQxIP2mBUZzxwfZF5JqJBVGmHfaUC2IMZQGpcbxpJUIdxcUivNtCjJe7tp0y2fwCMXWBvBQ=
+	t=1739988569; cv=none; b=MCY/SdI/47UNEFXiycESsSIacxKO4VjwIGjF42JvG5Uwfj4yvoTg4p/8m4LIjbeJ5KJkg873+WOZ6/7RoM41giPtorc9zoTeEP21OwlAAAgbIGUkyV3ClfKSR2ZrJPu0x/zXgNBYMyKuM0BZuTUyM5naN6C/e3/K+M37P++5V34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739986067; c=relaxed/simple;
-	bh=F7/KNztpiz9Tz7FrAFHcJZgfmbJ30wYqJ2aY4YVpE8U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZD5ciqthLDZ98bg+QkSNPTibDctqIHIh6aTQj3kyS//FJ11FmTOP0ILIbkunHyJb8cX1/6g9e7KZaNAYlTwApSj5tJiyJ1p0JfsWHWuevBdsb0TjoJYyjQFal/s/5eFpCj0K3E3RGnLWGQjVAZKn0JYLqvYnlvzZzNB7quJbODM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=criticallink.com; spf=pass smtp.mailfrom=criticallink.com; dkim=pass (2048-bit key) header.d=criticallink.com header.i=@criticallink.com header.b=iOCIlUNx; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=criticallink.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=criticallink.com
+	s=arc-20240116; t=1739988569; c=relaxed/simple;
+	bh=89pN2lzpnqx4pWKh5CtnkftsUiCXfM/YS4po5Dm9sWw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mQU8+XjZgPha3R01o/VSKaL1HGD+lZhgWBhWkp96kJJKlZvJaKS6igzluVVhw6nIe8S7pAUQT5dU8GB9Kc5eVn6VscgxImjh8jf5aV/Mh/iznGzjZbIUUER7SUgmviHjZMPsb8rf9W1Kia2MQ6fu1GCrJyoL/4ghVTAqff0sgms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTG+FjzA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=criticallink.com header.i=@criticallink.com header.b="iOCIlUNx"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-54626a71b40so70434e87.3
-        for <patches@lists.linux.dev>; Wed, 19 Feb 2025 09:27:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=criticallink.com; s=google; t=1739986063; x=1740590863; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lN7htDFfdWYBEBovB41RfScVEwCh90leE1Ry19y0hzg=;
-        b=iOCIlUNxP0uW4kEOqkDVOUpmMB14mtYbZfY//D8VAeSbgNfk+AmVoX1PvcCPr05cLV
-         iySuE8aT5Kaup37tWMRjhZ67YW3/nfBQZ+/CUKFMXjQOOtw7RTVI4yxa8zT7ako4Fu1W
-         nwvg7LTqvL/OPQzfhCAq6cqecl5px0Xji1bZt26GifE6iKgg+UKzMZGdZv0lrCzaxAoV
-         8aeZWFXylZy5b9ZkPgOE9PEshucRef9MbzP74Q+fi5O7CJO4HGDzPUTftR3ocIGWZcLm
-         uzSAm3bamDljEvlNmrIyZjeKwjx1BmbrZt1wpGVr8R1il5ZQymjStU2lI4wqvCwFvmfA
-         PKyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739986063; x=1740590863;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lN7htDFfdWYBEBovB41RfScVEwCh90leE1Ry19y0hzg=;
-        b=nZ03CP/aDQ2YVf9WdSb70HWOM2/ZAYDHXVQ3fci4CA4COf4NsaIu+5FTJ1jA6h0CFI
-         gz/90hTs2RlnZp685zag/Q1N+jXyoC8R11H/NLSzHjgaD6cRQTiJZJtxJe3nrcrO9fqJ
-         loTeYpx7nzRXhvgpA0nXSoJQRUfTGuByvRLwqRWDaFYHRdwA9efVdYpLm4y5b80U+DTh
-         jlxsBXSBt5je3WO2VgtgYSPxmnXSLYuArlRo0PRqgi/isqxW8jV+cfddSXXl5jgLISGe
-         HxWxB9hsteBIlq+IOjg7QIVEjjAf/Q0ZnAg9NtOb6fQ9u2RnUyOIimTdWeckgjm/k4Ma
-         af6w==
-X-Forwarded-Encrypted: i=1; AJvYcCUXfLJo9df1OGNnwx1hK6PaldxlXUMN0YQ1+BapaS3PyYArLn//dDEov3/nPZgq5hoLz04IbXBB@lists.linux.dev
-X-Gm-Message-State: AOJu0YzqKfHYXV8wav5Oe6x1iLhwcFNWwk4rOtILolP+RR82UrrWpoWP
-	V/Mq3iG4g0LZlqIL8dNxxcR68kGEfrrY5m8yhCZXUb86qAiJWpJQSmvPGShZ+iyJ6ESW0CA5Qu0
-	1frkPmAL/zXrjrY9lkrAshINqYiz4UHUBaMOlJB6JZ9pMHHUg0w==
-X-Gm-Gg: ASbGncvibNu6Qohvfz/4cMTzFyStQJ7VFmjTPQpOZ+merwf7y1Ihl6GHgKhDipCxTTv
-	jEChL+o+sIe8gbxeiRsi4svE6eUUXJlOT8+fg+SEU7bQs8HwNivnJ9jnc21NercZtb0SFjZo=
-X-Google-Smtp-Source: AGHT+IG1mbpg1DUJZPHFFLGCFOHgr+0I1tYczB2jZkUcybESu9VB0EQyeQ6O2FbwMenyBXndXIi7ei09FKVuelV3+hE=
-X-Received: by 2002:a05:6512:308f:b0:546:3052:41f3 with SMTP id
- 2adb3069b0e04-546305242f4mr1849695e87.3.1739986063447; Wed, 19 Feb 2025
- 09:27:43 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTG+FjzA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE1AC4CED1;
+	Wed, 19 Feb 2025 18:09:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1739988569;
+	bh=89pN2lzpnqx4pWKh5CtnkftsUiCXfM/YS4po5Dm9sWw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LTG+FjzABQ7n7DrisxPtoZmA2zEvi4uzF9hzOHHpMb5sB6eWt5cCLd8cAhHAzbPe6
+	 EYcNhRG2vo3DAhoUmQtN7iN8JrDv9YWu1AM8OPan6/tSHDfSZ2iIqHyxJDXow5aU8K
+	 a9XJsPDHtMBPOu16IiImWiw7pN+dh4YezumkgO+w=
+Date: Wed, 19 Feb 2025 19:09:26 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org,
+	Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+	linux-fsdevel@vger.kernel.org, linux-mm <linux-mm@kvack.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>, willy@infradead.org,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Yang Shi <yang@os.amperecomputing.com>,
+	David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH 6.6 000/389] 6.6.76-rc2 review
+Message-ID: <2025021959-koala-flypaper-1ad5@gregkh>
+References: <20250206155234.095034647@linuxfoundation.org>
+ <CA+G9fYvKzV=jo9AmKH2tJeLr0W8xyjxuVO-P+ZEBdou6C=mKUw@mail.gmail.com>
+ <CA+G9fYtqBxt+JwSLCcVBchh94GVRhbo9rTP26ceJ=sf4MDo61Q@mail.gmail.com>
+ <Z7Xj-zIe-Sa1syG7@arm.com>
+ <Z7YSYArXkRFEy6FO@arm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250219082652.891560343@linuxfoundation.org> <20250219082714.827798335@linuxfoundation.org>
-In-Reply-To: <20250219082714.827798335@linuxfoundation.org>
-From: Jon Cormier <jcormier@criticallink.com>
-Date: Wed, 19 Feb 2025 12:27:31 -0500
-X-Gm-Features: AWEUYZnAcpsPmpoLeipbzFcfh4YnbuLCBX35WtDaimque7oJeRUKfINrBSQ0cGo
-Message-ID: <CADL8D3Y-xe8hO30mV4obU68rK1G2FeOr_nS6VsmP349HJWMphA@mail.gmail.com>
-Subject: Re: [PATCH 6.1 556/578] drm/tidss: Fix issue in irq handling causing
- irq-flood issue
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, Bin Liu <b-liu@ti.com>, 
-	Devarsh Thakkar <devarsht@ti.com>, Aradhya Bhatia <aradhya.bhatia@linux.dev>, 
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z7YSYArXkRFEy6FO@arm.com>
 
-On Wed, Feb 19, 2025 at 4:32=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> 6.1-stable review patch.  If anyone has any objections, please let me kno=
-w.
+On Wed, Feb 19, 2025 at 05:18:24PM +0000, Catalin Marinas wrote:
+> On Wed, Feb 19, 2025 at 02:00:27PM +0000, Catalin Marinas wrote:
+> > > On Sat, 8 Feb 2025 at 16:54, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > > > Regression on qemu-arm64 and FVP noticed this kernel warning running
+> > > > selftests: arm64: check_hugetlb_options test case on 6.6.76-rc1 and
+> > > > 6.6.76-rc2.
+> > > >
+> > > > Test regression: WARNING-arch-arm64-mm-copypage-copy_highpage
+> > > >
+> > > > ------------[ cut here ]------------
+> > > > [   96.920028] WARNING: CPU: 1 PID: 3611 at
+> > > > arch/arm64/mm/copypage.c:29 copy_highpage
+> > > > (arch/arm64/include/asm/mte.h:87)
+> > > > [   96.922100] Modules linked in: crct10dif_ce sm3_ce sm3 sha3_ce
+> > > > sha512_ce sha512_arm64 fuse drm backlight ip_tables x_tables
+> > > > [   96.925603] CPU: 1 PID: 3611 Comm: check_hugetlb_o Not tainted 6.6.76-rc2 #1
+> > > > [   96.926956] Hardware name: linux,dummy-virt (DT)
+> > > > [   96.927695] pstate: 43402009 (nZcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+> > > > [   96.928687] pc : copy_highpage (arch/arm64/include/asm/mte.h:87)
+> > > > [   96.929037] lr : copy_highpage
+> > > > (arch/arm64/include/asm/alternative-macros.h:232
+> > > > arch/arm64/include/asm/cpufeature.h:443
+> > > > arch/arm64/include/asm/cpufeature.h:504
+> > > > arch/arm64/include/asm/cpufeature.h:814 arch/arm64/mm/copypage.c:27)
+> > > > [   96.929399] sp : ffff800088aa3ab0
+> > > > [   96.930232] x29: ffff800088aa3ab0 x28: 00000000000001ff x27: 0000000000000000
+> > > > [   96.930784] x26: 0000000000000000 x25: 0000ffff9b800000 x24: 0000ffff9b9ff000
+> > > > [   96.931402] x23: fffffc0003257fc0 x22: ffff0000c95ff000 x21: ffff0000c93ff000
+> > > > [   96.932054] x20: fffffc0003257fc0 x19: fffffc000324ffc0 x18: 0000ffff9b800000
+> > > > [   96.933357] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+> > > > [   96.934091] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+> > > > [   96.935095] x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
+> > > > [   96.935982] x8 : 0bfffc0001800000 x7 : 0000000000000000 x6 : 0000000000000000
+> > > > [   96.936536] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000000
+> > > > [   96.937089] x2 : 0000000000000000 x1 : ffff0000c9600000 x0 : ffff0000c9400080
+> > > > [   96.939431] Call trace:
+> > > > [   96.939920] copy_highpage (arch/arm64/include/asm/mte.h:87)
+> > > > [   96.940443] copy_user_highpage (arch/arm64/mm/copypage.c:40)
+> > > > [   96.940963] copy_user_large_folio (mm/memory.c:5977 mm/memory.c:6109)
+> > > > [   96.941535] hugetlb_wp (mm/hugetlb.c:5701)
+> > > > [   96.941948] hugetlb_fault (mm/hugetlb.c:6237)
+> > > > [   96.942344] handle_mm_fault (mm/memory.c:5330)
+> > > > [   96.942794] do_page_fault (arch/arm64/mm/fault.c:513
+> > > > arch/arm64/mm/fault.c:626)
+> > > > [   96.943341] do_mem_abort (arch/arm64/mm/fault.c:846)
+> > > > [   96.943797] el0_da (arch/arm64/kernel/entry-common.c:133
+> > > > arch/arm64/kernel/entry-common.c:144
+> > > > arch/arm64/kernel/entry-common.c:547)
+> > > > [   96.944229] el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:0)
+> > > > [   96.944765] el0t_64_sync (arch/arm64/kernel/entry.S:599)
+> > > > [   96.945383] ---[ end trace 0000000000000000 ]---
+> > 
+> > Prior to commit 25c17c4b55de ("hugetlb: arm64: add mte support"), there
+> > was no hugetlb support with MTE, so the above code path should not
+> > happen - it seems to get a PROT_MTE hugetlb page which should have been
+> > prevented by arch_validate_flags(). Or something else corrupts the page
+> > flags and we end up with some random PG_mte_tagged set.
+> 
+> The problem is in the arm64 arch_calc_vm_flag_bits() as it returns
+> VM_MTE_ALLOWED for any MAP_ANONYMOUS ignoring MAP_HUGETLB (it's been
+> doing this since day 1 of MTE). The implementation does handle the
+> hugetlb file mmap() correctly but not the MAP_ANONYMOUS case.
+> 
+> The fix would be something like below:
+> 
+> -----------------8<--------------------------
+> diff --git a/arch/arm64/include/asm/mman.h b/arch/arm64/include/asm/mman.h
+> index 5966ee4a6154..8ff5d88c9f12 100644
+> --- a/arch/arm64/include/asm/mman.h
+> +++ b/arch/arm64/include/asm/mman.h
+> @@ -28,7 +28,8 @@ static inline unsigned long arch_calc_vm_flag_bits(unsigned long flags)
+>  	 * backed by tags-capable memory. The vm_flags may be overridden by a
+>  	 * filesystem supporting MTE (RAM-based).
+>  	 */
+> -	if (system_supports_mte() && (flags & MAP_ANONYMOUS))
+> +	if (system_supports_mte() &&
+> +	    ((flags & MAP_ANONYMOUS) && !(flags & MAP_HUGETLB)))
+>  		return VM_MTE_ALLOWED;
+> 
+>  	return 0;
+> -------------------8<-----------------------
+> 
+> This fix won't make sense for mainline since it supports MAP_HUGETLB
+> already.
+> 
+> Greg, are you ok with a stable-only fix as above or you'd rather see the
+> full 25c17c4b55de ("hugetlb: arm64: add mte support") backported?
 
-Looks good to me
->
->
-> ------------------
->
-> From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
->
-> commit 44b6730ab53ef04944fbaf6da0e77397531517b7 upstream.
->
-> It has been observed that sometimes DSS will trigger an interrupt and
-> the top level interrupt (DISPC_IRQSTATUS) is not zero, but the VP and
-> VID level interrupt-statuses are zero.
->
-> As the top level irqstatus is supposed to tell whether we have VP/VID
-> interrupts, the thinking of the driver authors was that this particular
-> case could never happen. Thus the driver only clears the DISPC_IRQSTATUS
-> bits which has corresponding interrupts in VP/VID status. So when this
-> issue happens, the driver will not clear DISPC_IRQSTATUS, and we get an
-> interrupt flood.
->
-> It is unclear why the issue happens. It could be a race issue in the
-> driver, but no such race has been found. It could also be an issue with
-> the HW. However a similar case can be easily triggered by manually
-> writing to DISPC_IRQSTATUS_RAW. This will forcibly set a bit in the
-> DISPC_IRQSTATUS and trigger an interrupt, and as the driver never clears
-> the bit, we get an interrupt flood.
->
-> To fix the issue, always clear DISPC_IRQSTATUS. The concern with this
-> solution is that if the top level irqstatus is the one that triggers the
-> interrupt, always clearing DISPC_IRQSTATUS might leave some interrupts
-> unhandled if VP/VID interrupt statuses have bits set. However, testing
-> shows that if any of the irqstatuses is set (i.e. even if
-> DISPC_IRQSTATUS =3D=3D 0, but a VID irqstatus has a bit set), we will get=
- an
-> interrupt.
->
-> Co-developed-by: Bin Liu <b-liu@ti.com>
-> Signed-off-by: Bin Liu <b-liu@ti.com>
-> Co-developed-by: Devarsh Thakkar <devarsht@ti.com>
-> Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
-> Co-developed-by: Jonathan Cormier <jcormier@criticallink.com>
-> Signed-off-by: Jonathan Cormier <jcormier@criticallink.com>
-> Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Disp=
-lay SubSystem")
-> Cc: stable@vger.kernel.org
-> Tested-by: Jonathan Cormier <jcormier@criticallink.com>
-> Reviewed-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
-> Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-> Link: https://patchwork.freedesktop.org/patch/msgid/20241021-tidss-irq-fi=
-x-v1-1-82ddaec94e4a@ideasonboard.com
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  drivers/gpu/drm/tidss/tidss_dispc.c |   12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
->
-> --- a/drivers/gpu/drm/tidss/tidss_dispc.c
-> +++ b/drivers/gpu/drm/tidss/tidss_dispc.c
-> @@ -679,24 +679,20 @@ static
->  void dispc_k3_clear_irqstatus(struct dispc_device *dispc, dispc_irq_t cl=
-earmask)
->  {
->         unsigned int i;
-> -       u32 top_clear =3D 0;
->
->         for (i =3D 0; i < dispc->feat->num_vps; ++i) {
-> -               if (clearmask & DSS_IRQ_VP_MASK(i)) {
-> +               if (clearmask & DSS_IRQ_VP_MASK(i))
->                         dispc_k3_vp_write_irqstatus(dispc, i, clearmask);
-> -                       top_clear |=3D BIT(i);
-> -               }
->         }
->         for (i =3D 0; i < dispc->feat->num_planes; ++i) {
-> -               if (clearmask & DSS_IRQ_PLANE_MASK(i)) {
-> +               if (clearmask & DSS_IRQ_PLANE_MASK(i))
->                         dispc_k3_vid_write_irqstatus(dispc, i, clearmask)=
-;
-> -                       top_clear |=3D BIT(4 + i);
-> -               }
->         }
->         if (dispc->feat->subrev =3D=3D DISPC_K2G)
->                 return;
->
-> -       dispc_write(dispc, DISPC_IRQSTATUS, top_clear);
-> +       /* always clear the top level irqstatus */
-> +       dispc_write(dispc, DISPC_IRQSTATUS, dispc_read(dispc, DISPC_IRQST=
-ATUS));
->
->         /* Flush posted writes */
->         dispc_read(dispc, DISPC_IRQSTATUS);
->
->
+A stable-only fix for this is fine, thanks!  Can you send it with a
+changelog and I'll queue it up.  Does it also need to go to older
+kernels as well?
 
+thanks,
 
---=20
-Jonathan Cormier
-Senior Software Engineer
-
-Voice:  315.425.4045 x222
-
-http://www.CriticalLink.com
-6712 Brooklawn Parkway, Syracuse, NY 13211
+greg k-h
