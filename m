@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DDF1DE3D6;
-	Wed, 19 Feb 2025 08:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037D21DED5E;
+	Wed, 19 Feb 2025 08:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954465; cv=none; b=P7UHG3vs3W3PwaL++KkqWl5mKk1aMdXS0WDbH8P12nLvJYCMP5YjA75ruKN+tf+tktb5w7G5hiwpMI2UaHGlHeIHWRcPNHlmtBLGv6m/Wis8N4L5F5VJ0vv0hYg+boanGff/PxL5RYC/KWJeCoYCpTrgS9SUEJ4+IrezLIbC9UM=
+	t=1739954473; cv=none; b=DS6GNkpKQhGxpp0CZF7iNEprNjdgZL529jgXZmmTiTk5SHBQ+c7xMAcwgg/OersaP5DV6LRK4ASN9amIJyWPi+YMSxmAqRjw877rWQkwCKazgPH0StZAI4PNkIeJO/KT6V7mnGt2z3zGts02HCTAHq+iGIUIICdqiqWK9ctbp8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954465; c=relaxed/simple;
-	bh=8zfJCjb7xA5SUgYMCTBSS+asuO2jj8lvm6Ey9v85ZTw=;
+	s=arc-20240116; t=1739954473; c=relaxed/simple;
+	bh=el+DCZlMeRCzujGn9uji9l8cVLddeTr2IWuU5+IK0HU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qbsG/oIkeq5sBxmn85DiDCuFvt0n2jj5/45iaRtY4hVa85FHmJxlIatTsZP0eKLf99VIcTQE50q7JglMBsn+m27VuisZwGoVmzPmekkBGT3h6hc3sncf2jvaYjkwZDOXhD7UrFX+t9t58kElY9spKbWRP1nvoHqlN+9yyzNi9Xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHrxvCUs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X6O6QqOhxmY5L0TZ4s0vda3n9j/2PTMWoLEDI4calCMUChEH/BIZAPib6qhkhtA+nC06Z8TyLf7NULd5qC2L0rZHkOaK/DJ0FwVN3iABdyfL303/gtA5aInXLkOilo9C6/xnKMLpVenrzpn7V8SxnBrZRW1e4uaT+12n3AL9u80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMmDfkr7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHrxvCUs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0A1C4CED1;
-	Wed, 19 Feb 2025 08:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMmDfkr7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C192C4CED1;
+	Wed, 19 Feb 2025 08:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954464;
-	bh=8zfJCjb7xA5SUgYMCTBSS+asuO2jj8lvm6Ey9v85ZTw=;
+	s=korg; t=1739954472;
+	bh=el+DCZlMeRCzujGn9uji9l8cVLddeTr2IWuU5+IK0HU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHrxvCUsrEneDuHtL4/L4aH+NdZjn7xBA4H+MqJXVtdhmdcKVB3992Q9C1L+DrSnC
-	 K+SJ7uhpuXyRCpKiTZ3adekZ0g8tE3cwx21/FS2mz1MExS930C/9Z10tH3UhgPeBYw
-	 ZZ7bEwgjDtyvpO+5Ceo5TnuUR6zaQOGz7quo1eMI=
+	b=JMmDfkr7ePQRfDD80oqvR1Mr3LxR+BCTzbqAzWQWnmbrrXJutDJ5960VEAsix1/1z
+	 fPXyDGL8b209lGj1FAzWySH9ixyRWn97In5O0zwOTpEhbDFKaw6c2pYyZCjHDJmyQV
+	 g0hVlPOeDQXHLnhyG9eSTjTKf6LrQMY4Nl/PTlXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruowen Qin <ruqin@redhat.com>,
-	Jinghao Jia <jinghao7@illinois.edu>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 206/274] samples/hid: remove unnecessary -I flags from libbpf EXTRA_CFLAGS
-Date: Wed, 19 Feb 2025 09:27:40 +0100
-Message-ID: <20250219082617.636980336@linuxfoundation.org>
+Subject: [PATCH 6.13 215/274] ipv4: use RCU protection in ip_dst_mtu_maybe_forward()
+Date: Wed, 19 Feb 2025 09:27:49 +0100
+Message-ID: <20250219082617.992464793@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -52,61 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinghao Jia <jinghao7@illinois.edu>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1739cafdb8decad538410b05a4640055408826de ]
+[ Upstream commit 071d8012869b6af352acca346ade13e7be90a49f ]
 
-Commit 5a6ea7022ff4 ("samples/bpf: Remove unnecessary -I flags from
-libbpf EXTRA_CFLAGS") fixed the build error caused by redundant include
-path for samples/bpf, but not samples/hid.
+ip_dst_mtu_maybe_forward() must use RCU protection to make
+sure the net structure it reads does not disappear.
 
-Apply the same fix on samples/hid as well.
-
-Fixes: 13b25489b6f8 ("kbuild: change working directory to external module directory with M=")
-Tested-by: Ruowen Qin <ruqin@redhat.com>
-Signed-off-by: Jinghao Jia <jinghao7@illinois.edu>
-Link: https://patch.msgid.link/20250203085506.220297-2-jinghao7@illinois.edu
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Fixes: f87c10a8aa1e8 ("ipv4: introduce ip_dst_mtu_maybe_forward and protect forwarding path against pmtu spoofing")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250205155120.1676781-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/hid/Makefile | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/net/ip.h | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/samples/hid/Makefile b/samples/hid/Makefile
-index 8ea59e9631a33..69159c81d0457 100644
---- a/samples/hid/Makefile
-+++ b/samples/hid/Makefile
-@@ -40,16 +40,17 @@ BPF_EXTRA_CFLAGS += -I$(srctree)/arch/mips/include/asm/mach-generic
- endif
- endif
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 0e548c1f2a0ec..23ecb10945b0f 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -471,9 +471,12 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
+ 						    bool forwarding)
+ {
+ 	const struct rtable *rt = dst_rtable(dst);
+-	struct net *net = dev_net(dst->dev);
+-	unsigned int mtu;
++	unsigned int mtu, res;
++	struct net *net;
++
++	rcu_read_lock();
  
--TPROGS_CFLAGS += -Wall -O2
--TPROGS_CFLAGS += -Wmissing-prototypes
--TPROGS_CFLAGS += -Wstrict-prototypes
-+COMMON_CFLAGS += -Wall -O2
-+COMMON_CFLAGS += -Wmissing-prototypes
-+COMMON_CFLAGS += -Wstrict-prototypes
++	net = dev_net_rcu(dst->dev);
+ 	if (READ_ONCE(net->ipv4.sysctl_ip_fwd_use_pmtu) ||
+ 	    ip_mtu_locked(dst) ||
+ 	    !forwarding) {
+@@ -497,7 +500,11 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
+ out:
+ 	mtu = min_t(unsigned int, mtu, IP_MAX_MTU);
  
-+TPROGS_CFLAGS += $(COMMON_CFLAGS)
- TPROGS_CFLAGS += -I$(objtree)/usr/include
- TPROGS_CFLAGS += -I$(LIBBPF_INCLUDE)
- TPROGS_CFLAGS += -I$(srctree)/tools/include
+-	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
++	res = mtu - lwtunnel_headroom(dst->lwtstate, mtu);
++
++	rcu_read_unlock();
++
++	return res;
+ }
  
- ifdef SYSROOT
--TPROGS_CFLAGS += --sysroot=$(SYSROOT)
-+COMMON_CFLAGS += --sysroot=$(SYSROOT)
- TPROGS_LDFLAGS := -L$(SYSROOT)/usr/lib
- endif
- 
-@@ -112,7 +113,7 @@ clean:
- 
- $(LIBBPF): $(wildcard $(LIBBPF_SRC)/*.[ch] $(LIBBPF_SRC)/Makefile) | $(LIBBPF_OUTPUT)
- # Fix up variables inherited from Kbuild that tools/ build system won't like
--	$(MAKE) -C $(LIBBPF_SRC) RM='rm -rf' EXTRA_CFLAGS="$(TPROGS_CFLAGS)" \
-+	$(MAKE) -C $(LIBBPF_SRC) RM='rm -rf' EXTRA_CFLAGS="$(COMMON_CFLAGS)" \
- 		LDFLAGS=$(TPROGS_LDFLAGS) srctree=$(HID_SAMPLES_PATH)/../../ \
- 		O= OUTPUT=$(LIBBPF_OUTPUT)/ DESTDIR=$(LIBBPF_DESTDIR) prefix= \
- 		$@ install_headers
+ static inline unsigned int ip_skb_dst_mtu(struct sock *sk,
 -- 
 2.39.5
 
