@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466DF1D90B9;
-	Wed, 19 Feb 2025 08:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9A41CF5C0;
+	Wed, 19 Feb 2025 08:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954365; cv=none; b=rJ6QTZDHYzKfk1Y4tAFbhk5E2EpNeBBEhkPDsLqmLuF2OnaID1KwsPFiP4a1NF0jwxWVGS2yDdV2/KGWY3l50yK7vqh/tTXGYl1ZvmTTifs1/Lu1K3Q+6gIsZJXxASPvRgpPnouGDWP8vvLSLNcwaWBQici3NFCoL5Bbro9N2Hs=
+	t=1739954368; cv=none; b=t17l+Nkrq7iUOQ0Mlr5zHjq4HRxuySNBmWLt1G8ATm4fpLKug2PQGIgb+zsImpMUrzT66vFwom/deRl16vcRVk3OyWG2moZAkSDUJoG7Zio6E/zAzhAUjbblcXcTIc45w/AFQsKBfx4i87Sj5spxL6YuI6Id9OKnltrNEmP5paU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954365; c=relaxed/simple;
-	bh=zJtzt7jtP7iVLhoWrVtt96e7al5ycJYQ5FcljtQec0Y=;
+	s=arc-20240116; t=1739954368; c=relaxed/simple;
+	bh=B/pKr/WIBJRQB2DMEGDg/QUzboRzCpBL66z2c6XJv/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rnh8WjNUNlKBQ30c2qkHsH26Xf+UMN/zyGXi9wgbMpDkebBv9QTPBkZhCsod9kiMiaCKa6fxPe6aSQmqkCWNGRCTn15c9Ds9Umq3RL6fL4a+YILvSi4yIvHVPx7YJm1X1ZlnjFmiIsC0NTbxkMk63LP+47GDUQ0FcUj6T32ZHC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqLWVguF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CNIjSyG56nwUKj3mAcj3e2WcZDut2M1ZmQBN44mhXCphbH2PqHbwULeD6GMrk/tCvDtrnGg8H3lYXB+3px7WYlbDuAmSExEOkaVEJyTVXOdhSLdhs7k55quGRzLLSl0Q5zfSjz4EIWaYlRBj9YQy0H2x24FCrUeSS2QlfgJPeOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n78fScKv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqLWVguF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B983EC4CED1;
-	Wed, 19 Feb 2025 08:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n78fScKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B623FC4CED1;
+	Wed, 19 Feb 2025 08:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954365;
-	bh=zJtzt7jtP7iVLhoWrVtt96e7al5ycJYQ5FcljtQec0Y=;
+	s=korg; t=1739954368;
+	bh=B/pKr/WIBJRQB2DMEGDg/QUzboRzCpBL66z2c6XJv/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tqLWVguFMVI0/T00vnS/fwZDG40CG5KaOGNgTPLlq+Bju8DRtasm3SiwWu8PYsV4s
-	 w0WvXAddwNTdNGRJ/ZTt9eGb0khVvqTqT4Zvnj2XdvRKZLX/F4jFvQxG9A2ctFY1bD
-	 UXFqZN29GVK9z2xoWrjzQViOF5Y+bD30jcqjWWzE=
+	b=n78fScKvPHWYgBf9uJ1f+JOgCTl+H+fNT3axzII6sNhKHJZE60hj0KjIUc/E8bzGQ
+	 Kvd7mkEl6ptJCaoBmN1n9ixKYucm0zBVc9wjaVMxjZ0aImJH1gk8eNRbr26ck4pnR4
+	 uOx8t2QpQi2Vr+ceHIw657cpaVdPORnpJMG7svrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Richard Cochran <richardcochran@gmail.com>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.13 182/274] ptp: vmclock: Dont unregister misc device if it was not registered
-Date: Wed, 19 Feb 2025 09:27:16 +0100
-Message-ID: <20250219082616.706264772@linuxfoundation.org>
+	Andy-ld Lu <andy-ld.lu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.13 183/274] mmc: mtk-sd: Fix register settings for hs400(es) mode
+Date: Wed, 19 Feb 2025 09:27:17 +0100
+Message-ID: <20250219082616.745540366@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -46,53 +45,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Andy-ld Lu <andy-ld.lu@mediatek.com>
 
-commit 39e926c3a21b25af6cae479fbb752f193240ce03 upstream.
+commit 3e68abf2b9cebe76c6cd4b1aca8e95cd671035a3 upstream.
 
-vmclock_remove() tries to detect the successful registration of the misc
-device based on the value of its minor value.
-However that check is incorrect if the misc device registration was not
-attempted in the first place.
+For hs400(es) mode, the 'hs400-ds-delay' is typically configured in the
+dts. However, some projects may only define 'mediatek,hs400-ds-dly3',
+which can lead to initialization failures in hs400es mode. CMD13 reported
+response crc error in the mmc_switch_status() just after switching to
+hs400es mode.
 
-Always initialize the minor number, so the check works properly.
+[    1.914038][   T82] mmc0: mmc_select_hs400es failed, error -84
+[    1.914954][   T82] mmc0: error -84 whilst initialising MMC card
 
-Fixes: 205032724226 ("ptp: Add support for the AMZNC10C 'vmclock' device")
+Currently, the hs400_ds_dly3 value is set within the tuning function. This
+means that the PAD_DS_DLY3 field is not configured before tuning process,
+which is the reason for the above-mentioned CMD13 response crc error.
+
+Move the PAD_DS_DLY3 field configuration into msdc_prepare_hs400_tuning(),
+and add a value check of hs400_ds_delay to prevent overwriting by zero when
+the 'hs400-ds-delay' is not set in the dts. In addition, since hs400(es)
+only tune the PAD_DS_DLY1, the PAD_DS_DLY2_SEL bit should be cleared to
+bypass it.
+
+Fixes: c4ac38c6539b ("mmc: mtk-sd: Add HS400 online tuning support")
+Signed-off-by: Andy-ld Lu <andy-ld.lu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20250123092644.7359-1-andy-ld.lu@mediatek.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ptp/ptp_vmclock.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mmc/host/mtk-sd.c |   31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
---- a/drivers/ptp/ptp_vmclock.c
-+++ b/drivers/ptp/ptp_vmclock.c
-@@ -547,6 +547,8 @@ static int vmclock_probe(struct platform
- 		goto out;
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -273,6 +273,7 @@
+ #define MSDC_PAD_TUNE_CMD2_SEL	  BIT(21)   /* RW */
+ 
+ #define PAD_DS_TUNE_DLY_SEL       BIT(0)	  /* RW */
++#define PAD_DS_TUNE_DLY2_SEL      BIT(1)	  /* RW */
+ #define PAD_DS_TUNE_DLY1	  GENMASK(6, 2)   /* RW */
+ #define PAD_DS_TUNE_DLY2	  GENMASK(11, 7)  /* RW */
+ #define PAD_DS_TUNE_DLY3	  GENMASK(16, 12) /* RW */
+@@ -318,6 +319,7 @@
+ 
+ /* EMMC50_PAD_DS_TUNE mask */
+ #define PAD_DS_DLY_SEL		BIT(16)	/* RW */
++#define PAD_DS_DLY2_SEL		BIT(15)	/* RW */
+ #define PAD_DS_DLY1		GENMASK(14, 10)	/* RW */
+ #define PAD_DS_DLY3		GENMASK(4, 0)	/* RW */
+ 
+@@ -2498,13 +2500,23 @@ tune_done:
+ static int msdc_prepare_hs400_tuning(struct mmc_host *mmc, struct mmc_ios *ios)
+ {
+ 	struct msdc_host *host = mmc_priv(mmc);
++
+ 	host->hs400_mode = true;
+ 
+-	if (host->top_base)
+-		writel(host->hs400_ds_delay,
+-		       host->top_base + EMMC50_PAD_DS_TUNE);
+-	else
+-		writel(host->hs400_ds_delay, host->base + PAD_DS_TUNE);
++	if (host->top_base) {
++		if (host->hs400_ds_dly3)
++			sdr_set_field(host->top_base + EMMC50_PAD_DS_TUNE,
++				      PAD_DS_DLY3, host->hs400_ds_dly3);
++		if (host->hs400_ds_delay)
++			writel(host->hs400_ds_delay,
++			       host->top_base + EMMC50_PAD_DS_TUNE);
++	} else {
++		if (host->hs400_ds_dly3)
++			sdr_set_field(host->base + PAD_DS_TUNE,
++				      PAD_DS_TUNE_DLY3, host->hs400_ds_dly3);
++		if (host->hs400_ds_delay)
++			writel(host->hs400_ds_delay, host->base + PAD_DS_TUNE);
++	}
+ 	/* hs400 mode must set it to 0 */
+ 	sdr_clr_bits(host->base + MSDC_PATCH_BIT2, MSDC_PATCH_BIT2_CFGCRCSTS);
+ 	/* to improve read performance, set outstanding to 2 */
+@@ -2524,14 +2536,11 @@ static int msdc_execute_hs400_tuning(str
+ 	if (host->top_base) {
+ 		sdr_set_bits(host->top_base + EMMC50_PAD_DS_TUNE,
+ 			     PAD_DS_DLY_SEL);
+-		if (host->hs400_ds_dly3)
+-			sdr_set_field(host->top_base + EMMC50_PAD_DS_TUNE,
+-				      PAD_DS_DLY3, host->hs400_ds_dly3);
++		sdr_clr_bits(host->top_base + EMMC50_PAD_DS_TUNE,
++			     PAD_DS_DLY2_SEL);
+ 	} else {
+ 		sdr_set_bits(host->base + PAD_DS_TUNE, PAD_DS_TUNE_DLY_SEL);
+-		if (host->hs400_ds_dly3)
+-			sdr_set_field(host->base + PAD_DS_TUNE,
+-				      PAD_DS_TUNE_DLY3, host->hs400_ds_dly3);
++		sdr_clr_bits(host->base + PAD_DS_TUNE, PAD_DS_TUNE_DLY2_SEL);
  	}
  
-+	st->miscdev.minor = MISC_DYNAMIC_MINOR;
-+
- 	/*
- 	 * If the structure is big enough, it can be mapped to userspace.
- 	 * Theoretically a guest OS even using larger pages could still
-@@ -554,7 +556,6 @@ static int vmclock_probe(struct platform
- 	 * cross that bridge if/when we come to it.
- 	 */
- 	if (le32_to_cpu(st->clk->size) >= PAGE_SIZE) {
--		st->miscdev.minor = MISC_DYNAMIC_MINOR;
- 		st->miscdev.fops = &vmclock_miscdev_fops;
- 		st->miscdev.name = st->name;
- 
+ 	host->hs400_tuning = true;
 
 
