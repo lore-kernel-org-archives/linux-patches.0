@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C170E1DE3D6;
-	Wed, 19 Feb 2025 08:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DDF1DE3D6;
+	Wed, 19 Feb 2025 08:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954461; cv=none; b=YNvhVGFz6aeeMkIyuw+eW6OqirU+sudv+GokBrI1nex9B7Dz0v2W6DnZGD6RuKLC3FsLRLH/FxqkkOz1OLdjLqu3XEAhZT2lWycdvMTMxcBhK29KNcN4oVm6f4WRdBi5ppNfa5mZzX1Cr1R3o9CpkLzzscPhM8USOtQGY7DuDFI=
+	t=1739954465; cv=none; b=P7UHG3vs3W3PwaL++KkqWl5mKk1aMdXS0WDbH8P12nLvJYCMP5YjA75ruKN+tf+tktb5w7G5hiwpMI2UaHGlHeIHWRcPNHlmtBLGv6m/Wis8N4L5F5VJ0vv0hYg+boanGff/PxL5RYC/KWJeCoYCpTrgS9SUEJ4+IrezLIbC9UM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954461; c=relaxed/simple;
-	bh=uiNzWH4xhZlWjBdJ+2XYeAbkQ3ndR5vhmAez1zOGdzk=;
+	s=arc-20240116; t=1739954465; c=relaxed/simple;
+	bh=8zfJCjb7xA5SUgYMCTBSS+asuO2jj8lvm6Ey9v85ZTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hiUfrtHvOyI+ixltylWEcpnNbXPILVd/h6Nmlk2j0qT59XPF4VaxMFsKUeFvRQ2+qgh9qjyx3wofx7i3ZsLpe2+fiJfEztr5/FaEf6aZLAr0uT3mDnI2Icj7pkM57LUTolyDsnyglBKDqXRAnCZLRM50eLXHhST7XCnNvh9yvAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfGb/2tA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qbsG/oIkeq5sBxmn85DiDCuFvt0n2jj5/45iaRtY4hVa85FHmJxlIatTsZP0eKLf99VIcTQE50q7JglMBsn+m27VuisZwGoVmzPmekkBGT3h6hc3sncf2jvaYjkwZDOXhD7UrFX+t9t58kElY9spKbWRP1nvoHqlN+9yyzNi9Xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHrxvCUs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfGb/2tA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43CF1C4CEE9;
-	Wed, 19 Feb 2025 08:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHrxvCUs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0A1C4CED1;
+	Wed, 19 Feb 2025 08:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954461;
-	bh=uiNzWH4xhZlWjBdJ+2XYeAbkQ3ndR5vhmAez1zOGdzk=;
+	s=korg; t=1739954464;
+	bh=8zfJCjb7xA5SUgYMCTBSS+asuO2jj8lvm6Ey9v85ZTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EfGb/2tAvTJGuPK/EcxO/lRWUFLNYS/wFH02d/PVKXZWg4Syfpkcer8Q/TmxLQvpW
-	 UGTqlIHB4pkn9/mqwGOFCrUO3n/pSIufVB4CW2EfDQDU992MdZ9fpKdbSe6pVEJI24
-	 DUmot+1Tgk2SHW42tOJiyOOi2+RsuMsoV9u14qT8=
+	b=MHrxvCUsrEneDuHtL4/L4aH+NdZjn7xBA4H+MqJXVtdhmdcKVB3992Q9C1L+DrSnC
+	 K+SJ7uhpuXyRCpKiTZ3adekZ0g8tE3cwx21/FS2mz1MExS930C/9Z10tH3UhgPeBYw
+	 ZZ7bEwgjDtyvpO+5Ceo5TnuUR6zaQOGz7quo1eMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.13 171/274] s390/pci: Fix handling of isolated VFs
-Date: Wed, 19 Feb 2025 09:27:05 +0100
-Message-ID: <20250219082616.283178805@linuxfoundation.org>
+	Ruowen Qin <ruqin@redhat.com>,
+	Jinghao Jia <jinghao7@illinois.edu>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 206/274] samples/hid: remove unnecessary -I flags from libbpf EXTRA_CFLAGS
+Date: Wed, 19 Feb 2025 09:27:40 +0100
+Message-ID: <20250219082617.636980336@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -51,106 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Jinghao Jia <jinghao7@illinois.edu>
 
-commit 2844ddbd540fc84d7571cca65d6c43088e4d6952 upstream.
+[ Upstream commit 1739cafdb8decad538410b05a4640055408826de ]
 
-In contrast to the commit message of the fixed commit VFs whose parent
-PF is not configured are not always isolated, that is put on their own
-PCI domain. This is because for VFs to be added to an existing PCI
-domain it is enough for that PCI domain to share the same topology ID or
-PCHID. Such a matching PCI domain without a parent PF may exist when
-a PF from the same PCI card created the domain with the VF being a child
-of a different, non accessible, PF. While not causing technical issues
-it makes the rules which VFs are isolated inconsistent.
+Commit 5a6ea7022ff4 ("samples/bpf: Remove unnecessary -I flags from
+libbpf EXTRA_CFLAGS") fixed the build error caused by redundant include
+path for samples/bpf, but not samples/hid.
 
-Fix this by explicitly checking that the parent PF exists on the PCI
-domain determined by the topology ID or PCHID before registering the VF.
-This works because a parent PF which is under control of this Linux
-instance must be enabled and configured at the point where its child VFs
-appear because otherwise SR-IOV could not have been enabled on the
-parent.
+Apply the same fix on samples/hid as well.
 
-Fixes: 25f39d3dcb48 ("s390/pci: Ignore RID for isolated VFs")
-Cc: stable@vger.kernel.org
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 13b25489b6f8 ("kbuild: change working directory to external module directory with M=")
+Tested-by: Ruowen Qin <ruqin@redhat.com>
+Signed-off-by: Jinghao Jia <jinghao7@illinois.edu>
+Link: https://patch.msgid.link/20250203085506.220297-2-jinghao7@illinois.edu
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci_bus.c |   20 ++++++++++++++++++++
- arch/s390/pci/pci_iov.c |    2 +-
- arch/s390/pci/pci_iov.h |    7 +++++++
- 3 files changed, 28 insertions(+), 1 deletion(-)
+ samples/hid/Makefile | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/arch/s390/pci/pci_bus.c
-+++ b/arch/s390/pci/pci_bus.c
-@@ -331,6 +331,17 @@ error:
- 	return rc;
- }
+diff --git a/samples/hid/Makefile b/samples/hid/Makefile
+index 8ea59e9631a33..69159c81d0457 100644
+--- a/samples/hid/Makefile
++++ b/samples/hid/Makefile
+@@ -40,16 +40,17 @@ BPF_EXTRA_CFLAGS += -I$(srctree)/arch/mips/include/asm/mach-generic
+ endif
+ endif
  
-+static bool zpci_bus_is_isolated_vf(struct zpci_bus *zbus, struct zpci_dev *zdev)
-+{
-+	struct pci_dev *pdev;
-+
-+	pdev = zpci_iov_find_parent_pf(zbus, zdev);
-+	if (!pdev)
-+		return true;
-+	pci_dev_put(pdev);
-+	return false;
-+}
-+
- int zpci_bus_device_register(struct zpci_dev *zdev, struct pci_ops *ops)
- {
- 	bool topo_is_tid = zdev->tid_avail;
-@@ -345,6 +356,15 @@ int zpci_bus_device_register(struct zpci
+-TPROGS_CFLAGS += -Wall -O2
+-TPROGS_CFLAGS += -Wmissing-prototypes
+-TPROGS_CFLAGS += -Wstrict-prototypes
++COMMON_CFLAGS += -Wall -O2
++COMMON_CFLAGS += -Wmissing-prototypes
++COMMON_CFLAGS += -Wstrict-prototypes
  
- 	topo = topo_is_tid ? zdev->tid : zdev->pchid;
- 	zbus = zpci_bus_get(topo, topo_is_tid);
-+	/*
-+	 * An isolated VF gets its own domain/bus even if there exists
-+	 * a matching domain/bus already
-+	 */
-+	if (zbus && zpci_bus_is_isolated_vf(zbus, zdev)) {
-+		zpci_bus_put(zbus);
-+		zbus = NULL;
-+	}
-+
- 	if (!zbus) {
- 		zbus = zpci_bus_alloc(topo, topo_is_tid);
- 		if (!zbus)
---- a/arch/s390/pci/pci_iov.c
-+++ b/arch/s390/pci/pci_iov.c
-@@ -74,7 +74,7 @@ static int zpci_iov_link_virtfn(struct p
-  * found. If the function is not a VF or has no RequesterID information,
-  * NULL is returned as well.
-  */
--static struct pci_dev *zpci_iov_find_parent_pf(struct zpci_bus *zbus, struct zpci_dev *zdev)
-+struct pci_dev *zpci_iov_find_parent_pf(struct zpci_bus *zbus, struct zpci_dev *zdev)
- {
- 	int i, vfid, devfn, cand_devfn;
- 	struct pci_dev *pdev;
---- a/arch/s390/pci/pci_iov.h
-+++ b/arch/s390/pci/pci_iov.h
-@@ -19,6 +19,8 @@ void zpci_iov_map_resources(struct pci_d
++TPROGS_CFLAGS += $(COMMON_CFLAGS)
+ TPROGS_CFLAGS += -I$(objtree)/usr/include
+ TPROGS_CFLAGS += -I$(LIBBPF_INCLUDE)
+ TPROGS_CFLAGS += -I$(srctree)/tools/include
  
- int zpci_iov_setup_virtfn(struct zpci_bus *zbus, struct pci_dev *virtfn, int vfn);
+ ifdef SYSROOT
+-TPROGS_CFLAGS += --sysroot=$(SYSROOT)
++COMMON_CFLAGS += --sysroot=$(SYSROOT)
+ TPROGS_LDFLAGS := -L$(SYSROOT)/usr/lib
+ endif
  
-+struct pci_dev *zpci_iov_find_parent_pf(struct zpci_bus *zbus, struct zpci_dev *zdev);
-+
- #else /* CONFIG_PCI_IOV */
- static inline void zpci_iov_remove_virtfn(struct pci_dev *pdev, int vfn) {}
+@@ -112,7 +113,7 @@ clean:
  
-@@ -28,5 +30,10 @@ static inline int zpci_iov_setup_virtfn(
- {
- 	return 0;
- }
-+
-+static inline struct pci_dev *zpci_iov_find_parent_pf(struct zpci_bus *zbus, struct zpci_dev *zdev)
-+{
-+	return NULL;
-+}
- #endif /* CONFIG_PCI_IOV */
- #endif /* __S390_PCI_IOV_h */
+ $(LIBBPF): $(wildcard $(LIBBPF_SRC)/*.[ch] $(LIBBPF_SRC)/Makefile) | $(LIBBPF_OUTPUT)
+ # Fix up variables inherited from Kbuild that tools/ build system won't like
+-	$(MAKE) -C $(LIBBPF_SRC) RM='rm -rf' EXTRA_CFLAGS="$(TPROGS_CFLAGS)" \
++	$(MAKE) -C $(LIBBPF_SRC) RM='rm -rf' EXTRA_CFLAGS="$(COMMON_CFLAGS)" \
+ 		LDFLAGS=$(TPROGS_LDFLAGS) srctree=$(HID_SAMPLES_PATH)/../../ \
+ 		O= OUTPUT=$(LIBBPF_OUTPUT)/ DESTDIR=$(LIBBPF_DESTDIR) prefix= \
+ 		$@ install_headers
+-- 
+2.39.5
+
 
 
