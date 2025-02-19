@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99D51DEFC5;
-	Wed, 19 Feb 2025 09:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE8C1EA7DA;
+	Wed, 19 Feb 2025 09:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956967; cv=none; b=JLt/6xrZ+N3o3B3ab1DD7dlOn7TAOBeO+PaQW2HLovNZIecihgVEiibvfkBM5y+MX3jsr7+gI1cgeDXoeyipv6IUFl7pEFLl8GjTx7GNrlWZCIZeYi9hC67SXCNOuFyOYmMtjFFaZ3T8NBBRu0501E2Vg8o4gJA3ER7I/fTBRl4=
+	t=1739956971; cv=none; b=GJ+6Y76PI1qOqLmo6LjhOQ8+5ibxzfiapiJUQoJQuFI0QY5AN9S6i0kzNEreiVgU7NWfN6TkQks4yBPAXBzTO/b5WaWU7xkzDBvshuaNS/n5iaNZJgCAtF6vGPd2Un55RGkfsB/7zZJuECg/O+/iZNg1ziNhSApVNFG3WlgCZGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956967; c=relaxed/simple;
-	bh=lPexBF9/pK/fnig2/V6yfFDcHKI9kvGg6zXYGcUztY4=;
+	s=arc-20240116; t=1739956971; c=relaxed/simple;
+	bh=FU64sOC9gfmrhw4pMkfPu/48o62cJvtz3O9/mZcpRbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Kw2V3Vpzk8zECoT67RROv4YYS0h6c4liUCEFsaCdLXsLVjiTPDMnELr8E4lYeeVMIrw4jfiVQbYOSK1yMmhLyVBNfyOPyVB22ovWMGIpGK3tEPxaaglV904s5UywZbZ6vaPwqiMpU7UcRrpnz7xB0gaTs3PCWjOFacKMUd/c9AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vE+VpJ26; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BSA3LyHi6Cl7kDTszdtUC6E1qLK4xhmtiX074j+OCVy4j9smCopvtsvUEKoPn+cUw6wD01w+/ePSEQ8st4b1k166sTgq+BB2KHVKgZ8D0SXqzftZtElzbeQ1+4EefmZbvv/HyEcAI/YQO/7swT/S34bWOzmCB/rziIqVWs2t06w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZQvCgGx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vE+VpJ26"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623FFC4CED1;
-	Wed, 19 Feb 2025 09:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZQvCgGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438D6C4CED1;
+	Wed, 19 Feb 2025 09:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956967;
-	bh=lPexBF9/pK/fnig2/V6yfFDcHKI9kvGg6zXYGcUztY4=;
+	s=korg; t=1739956970;
+	bh=FU64sOC9gfmrhw4pMkfPu/48o62cJvtz3O9/mZcpRbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vE+VpJ26L6BktH0Yuz/xAyPwnqCtHutAx+nePjopl5HVt0L/rO96My9VW40UwmvSE
-	 cLwwbhCKMWw87lDCaJ2hOvJhvYlDD2QRAaS7sRfPTey6foIJ7fNeQhkfacXaNLHQP1
-	 EyQWoieWRp7sL1vfCV9fUOkQMRMbsmhcaR80LLFM=
+	b=YZQvCgGxyfbQ982ACE5BE9XpHO7umDtkHkayHcxmOI/xiIc3kcOoWsabvba1htjEV
+	 qYmLcHxBSdxN3PioD/Oj6LLQdR8ODnpO5r87ez7OwkXlSRr7o+h9Z4LiIUchTIBTO5
+	 JVUogpmX6ckSQdKVF9tAe6Vy5kQPRrFkAPQFuCvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kostadin Shishmanov <kostadinshishmanov@protonmail.com>,
-	Jakub Jelinek <jakub@redhat.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.1 363/578] efi: libstub: Use -std=gnu11 to fix build with GCC 15
-Date: Wed, 19 Feb 2025 09:26:07 +0100
-Message-ID: <20250219082707.299407387@linuxfoundation.org>
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	James Clark <james.clark@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>
+Subject: [PATCH 6.1 364/578] perf bench: Fix undefined behavior in cmpworker()
+Date: Wed, 19 Feb 2025 09:26:08 +0100
+Message-ID: <20250219082707.338091795@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -46,56 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-commit 8ba14d9f490aef9fd535c04e9e62e1169eb7a055 upstream.
+commit 62892e77b8a64b9dc0e1da75980aa145347b6820 upstream.
 
-GCC 15 changed the default C standard version to C23, which should not
-have impacted the kernel because it requests the gnu11 standard via
-'-std=' in the main Makefile. However, the EFI libstub Makefile uses its
-own set of KBUILD_CFLAGS for x86 without a '-std=' value (i.e., using
-the default), resulting in errors from the kernel's definitions of bool,
-true, and false in stddef.h, which are reserved keywords under C23.
+The comparison function cmpworker() violates the C standard's
+requirements for qsort() comparison functions, which mandate symmetry
+and transitivity:
 
-  ./include/linux/stddef.h:11:9: error: expected identifier before ‘false’
-     11 |         false   = 0,
-  ./include/linux/types.h:35:33: error: two or more data types in declaration specifiers
-     35 | typedef _Bool                   bool;
+Symmetry: If x < y, then y > x.
+Transitivity: If x < y and y < z, then x < z.
 
-Set '-std=gnu11' in the x86 cflags to resolve the error and consistently
-use the same C standard version for the entire kernel. All other
-architectures reuse KBUILD_CFLAGS from the rest of the kernel, so this
-issue is not visible for them.
+In its current implementation, cmpworker() incorrectly returns 0 when
+w1->tid < w2->tid, which breaks both symmetry and transitivity. This
+violation causes undefined behavior, potentially leading to issues such
+as memory corruption in glibc [1].
 
+Fix the issue by returning -1 when w1->tid < w2->tid, ensuring
+compliance with the C standard and preventing undefined behavior.
+
+Link: https://www.qualys.com/2024/01/30/qsort.txt [1]
+Fixes: 121dd9ea0116 ("perf bench: Add epoll parallel epoll_wait benchmark")
 Cc: stable@vger.kernel.org
-Reported-by: Kostadin Shishmanov <kostadinshishmanov@protonmail.com>
-Closes: https://lore.kernel.org/4OAhbllK7x4QJGpZjkYjtBYNLd_2whHx9oFiuZcGwtVR4hIzvduultkgfAIRZI3vQpZylu7Gl929HaYFRGeMEalWCpeMzCIIhLxxRhq4U-Y=@protonmail.com/
-Reported-by: Jakub Jelinek <jakub@redhat.com>
-Closes: https://lore.kernel.org/Z4467umXR2PZ0M1H@tucnak/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Link: https://lore.kernel.org/r/20250116110842.4087530-1-visitorckw@gmail.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/bench/epoll-wait.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/firmware/efi/libstub/Makefile
-+++ b/drivers/firmware/efi/libstub/Makefile
-@@ -7,7 +7,7 @@
- #
- cflags-$(CONFIG_X86_32)		:= -march=i386
- cflags-$(CONFIG_X86_64)		:= -mcmodel=small
--cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ \
-+cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ -std=gnu11 \
- 				   -fPIC -fno-strict-aliasing -mno-red-zone \
- 				   -mno-mmx -mno-sse -fshort-wchar \
- 				   -Wno-pointer-sign \
+--- a/tools/perf/bench/epoll-wait.c
++++ b/tools/perf/bench/epoll-wait.c
+@@ -420,7 +420,12 @@ static int cmpworker(const void *p1, con
+ 
+ 	struct worker *w1 = (struct worker *) p1;
+ 	struct worker *w2 = (struct worker *) p2;
+-	return w1->tid > w2->tid;
++
++	if (w1->tid > w2->tid)
++		return 1;
++	if (w1->tid < w2->tid)
++		return -1;
++	return 0;
+ }
+ 
+ int bench_epoll_wait(int argc, const char **argv)
 
 
