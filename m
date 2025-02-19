@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82E21B4F0C;
-	Wed, 19 Feb 2025 09:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B30C1DE3AE;
+	Wed, 19 Feb 2025 09:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956950; cv=none; b=fj2p0y+wzp69f+Qszey+PYD7WqyEOmMGafG7IDA1wqWXXdmG+KzswvQcW6HhMfVLS8OT88A7L2fSnH1R1GXDQaYUMuNqNHOoEgtk+ywPIZRdGLVXyykwXGsM4TAtXhKN9u9JVbRUQGdeBqQ0oFiBkf26X1tsCJsXfTo7cJ/EpQE=
+	t=1739956953; cv=none; b=lwTXMyyOv0semvXfbKAKY0pUH3KuBoiNz0aBtlmcnHpQPX0paisE8CwFgc0C5Hu1g4WpE7K4XSs8mwNvn5iMoWYtwYG53A2VvYcna4nZ6K88tlo4zpDRPmzxKD00dKfJ4ow0HHCM/meid3Xste8Eo0vhHBMOO5yBoXdU0MD/T20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956950; c=relaxed/simple;
-	bh=KSlQdBnpqZRC5Wo6XDwYFQ6ZWPErHPha7RKAvnFgM5s=;
+	s=arc-20240116; t=1739956953; c=relaxed/simple;
+	bh=5dXDiELnt4AwjcISW3m8d4ZZLrglU5urHRtsd4b9X+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNEDc9jjNSInnmnTA8GY1T3/7QwX2/VPWWhCepfCkKDGzE2jZLzEngk3ejnHNphUmm+nM3fByCrG/t+AWJo2hCDkScnwVrFbLceKdVjr7IEWK9CTI59n7GyhYpCdbr8vCUd7LOr/yei0RVxiwhEjjO/dsAe5PgOKarcRYHcWlhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zquhRveu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TKWethFB7kGO2P7qC75IS7SKFHI3OR+BeMNLOAtBF3ilW5Y0goKKT++m9WJrEWdXAa40aHVjOCSSJ565KkBv2tO21V7M7W+XwlAnjJqnFJJMYylXdxcEfEauhScBqwQWByUkpWw40kVRagsHP4ZbCPL0dqzczGwXcAtyNlsBpeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KH/U+vRZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zquhRveu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CDFC4CED1;
-	Wed, 19 Feb 2025 09:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KH/U+vRZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BD5C4CED1;
+	Wed, 19 Feb 2025 09:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956950;
-	bh=KSlQdBnpqZRC5Wo6XDwYFQ6ZWPErHPha7RKAvnFgM5s=;
+	s=korg; t=1739956953;
+	bh=5dXDiELnt4AwjcISW3m8d4ZZLrglU5urHRtsd4b9X+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zquhRveuhmuOmJdG/QnaCTF3FM8TiwUMLTes+qpgzhlAXNje/60K7m4uarJWWTzf+
-	 z3VY3jPl04TJm0OvD95G2WVt26qO2n/cNOKWD3DgLR77QeWBEliHA+akel8QHy9/SO
-	 H0WB2lT1t9xmWctsGKpuPwldkmiwLNQQKlR02asY=
+	b=KH/U+vRZZ8auPs0rGd5p+FijSEuzzTBp40YSheVWRimyUitYGKGpk3/W9ZkEwABkQ
+	 t0Prs4k74xAr5U3kbd9j/E0+VGTqpDIdP67GJNyDxTn/KPMUmsILI9Q1R5eUvDqlXN
+	 XixrsK+aUK0u6b8kIbzD5airA+qh7RwGynWo2YA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 349/578] drm/amd/pm: Mark MM activity as unsupported
-Date: Wed, 19 Feb 2025 09:25:53 +0100
-Message-ID: <20250219082706.746059571@linuxfoundation.org>
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.1 358/578] clk: qcom: gcc-sm6350: Add missing parent_map for two clocks
+Date: Wed, 19 Feb 2025 09:26:02 +0100
+Message-ID: <20250219082707.104538637@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,31 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-commit 819bf6662b93a5a8b0c396d2c7e7fab6264c9808 upstream.
+commit 96fe1a7ee477d701cfc98ab9d3c730c35d966861 upstream.
 
-Aldebaran doesn't support querying MM activity percentage. Keep the
-field as 0xFFs to mark it as unsupported.
+If a clk_rcg2 has a parent, it should also have parent_map defined,
+otherwise we'll get a NULL pointer dereference when calling clk_set_rate
+like the following:
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+  [    3.388105] Call trace:
+  [    3.390664]  qcom_find_src_index+0x3c/0x70 (P)
+  [    3.395301]  qcom_find_src_index+0x1c/0x70 (L)
+  [    3.399934]  _freq_tbl_determine_rate+0x48/0x100
+  [    3.404753]  clk_rcg2_determine_rate+0x1c/0x28
+  [    3.409387]  clk_core_determine_round_nolock+0x58/0xe4
+  [    3.421414]  clk_core_round_rate_nolock+0x48/0xfc
+  [    3.432974]  clk_core_round_rate_nolock+0xd0/0xfc
+  [    3.444483]  clk_core_set_rate_nolock+0x8c/0x300
+  [    3.455886]  clk_set_rate+0x38/0x14c
+
+Add the parent_map property for two clocks where it's missing and also
+un-inline the parent_data as well to keep the matching parent_map and
+parent_data together.
+
+Fixes: 131abae905df ("clk: qcom: Add SM6350 GCC driver")
 Cc: stable@vger.kernel.org
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20241220-sm6350-parent_map-v1-1-64f3d04cb2eb@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/clk/qcom/gcc-sm6350.c |   22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-@@ -1759,7 +1759,6 @@ static ssize_t aldebaran_get_gpu_metrics
+--- a/drivers/clk/qcom/gcc-sm6350.c
++++ b/drivers/clk/qcom/gcc-sm6350.c
+@@ -182,6 +182,14 @@ static const struct clk_parent_data gcc_
+ 	{ .hw = &gpll0_out_odd.clkr.hw },
+ };
  
- 	gpu_metrics->average_gfx_activity = metrics.AverageGfxActivity;
- 	gpu_metrics->average_umc_activity = metrics.AverageUclkActivity;
--	gpu_metrics->average_mm_activity = 0;
- 
- 	/* Valid power data is available only from primary die */
- 	if (aldebaran_is_primary(smu)) {
++static const struct parent_map gcc_parent_map_3[] = {
++	{ P_BI_TCXO, 0 },
++};
++
++static const struct clk_parent_data gcc_parent_data_3[] = {
++	{ .fw_name = "bi_tcxo" },
++};
++
+ static const struct parent_map gcc_parent_map_4[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_GPLL0_OUT_MAIN, 1 },
+@@ -701,13 +709,12 @@ static struct clk_rcg2 gcc_ufs_phy_phy_a
+ 	.cmd_rcgr = 0x3a0b0,
+ 	.mnd_width = 0,
+ 	.hid_width = 5,
++	.parent_map = gcc_parent_map_3,
+ 	.freq_tbl = ftbl_gcc_ufs_phy_phy_aux_clk_src,
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "gcc_ufs_phy_phy_aux_clk_src",
+-		.parent_data = &(const struct clk_parent_data){
+-			.fw_name = "bi_tcxo",
+-		},
+-		.num_parents = 1,
++		.parent_data = gcc_parent_data_3,
++		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
+ 		.ops = &clk_rcg2_ops,
+ 	},
+ };
+@@ -764,13 +771,12 @@ static struct clk_rcg2 gcc_usb30_prim_mo
+ 	.cmd_rcgr = 0x1a034,
+ 	.mnd_width = 0,
+ 	.hid_width = 5,
++	.parent_map = gcc_parent_map_3,
+ 	.freq_tbl = ftbl_gcc_usb30_prim_mock_utmi_clk_src,
+ 	.clkr.hw.init = &(struct clk_init_data){
+ 		.name = "gcc_usb30_prim_mock_utmi_clk_src",
+-		.parent_data = &(const struct clk_parent_data){
+-			.fw_name = "bi_tcxo",
+-		},
+-		.num_parents = 1,
++		.parent_data = gcc_parent_data_3,
++		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
+ 		.ops = &clk_rcg2_ops,
+ 	},
+ };
 
 
