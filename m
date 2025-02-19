@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B15E1DF74C;
-	Wed, 19 Feb 2025 09:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D571C7013;
+	Wed, 19 Feb 2025 09:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957272; cv=none; b=CItx4ytUYdUmMMDnk5T3NYSnPjH4HgW6b7L8CbR32RsYwoOKDvur7Er6sRgYWgnOMkvT86MBOOBjhSG0SrKHfAGXC92Nlt1+NoIjVn25Nuyemb6WFAFCFmcd201xVsAOpGPxrfFKkPFM96wjxIflcYqK8UA8K5+TsvZPgDNDS6s=
+	t=1739957276; cv=none; b=bvH8Uub9sBXI5IwZ3HwtZ4EYF8n/zhAaJ94/5QCqeiwfu3NaFTe/XYoXwg1BwM61Y8BSaTvwKbllFmyJFE3HP0MTKqo+MmAWP8EWCOpUMRvfy0XPKIwin8hPuZG8XRU7gCODhvufWLugf7978xjcsGjUhpm3XQksHY87b9KqOHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957272; c=relaxed/simple;
-	bh=Up6mrYyStS+fV2kaFrtsagoZqFk8UbgMikbN8Q4QMRU=;
+	s=arc-20240116; t=1739957276; c=relaxed/simple;
+	bh=NFIY0CH/4KSXfc8nb5tztqHmev4l+45BcovcPYHVl58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ASbCSngWZ95WpazU4xUd+UNkduCB7EICpHD6bN6gQ+MVjSAUbq6o7SbDIQJPetj1KSMk0hx0TreARRvm97I8sDBqUnlhj1aiBhICpy7YWw0rubhkp8LB6RUmLmNKIkAwyYaZSnlX+BjoSqmiIyK/PbxjIlSQgyn16YeCiIYuybk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmNciYGK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DG1Q/2cJi68ZdNjjVoI5hMCNDxeXOB4f4g1+e3PsgWryHx1Z94pkou+32wgN4M4wzkWMF8IUw3NUsFV/lkQp6HMIxslnNBAqgs1gfwnRn8APkD0WcMiG0RF4SSK1gPfWka3f3HWnx1BtSTRCb7aX/aNIwQW+O9je7XoyN9Mlc+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDjyNrBE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmNciYGK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032FCC4CED1;
-	Wed, 19 Feb 2025 09:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDjyNrBE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06CFBC4CED1;
+	Wed, 19 Feb 2025 09:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957272;
-	bh=Up6mrYyStS+fV2kaFrtsagoZqFk8UbgMikbN8Q4QMRU=;
+	s=korg; t=1739957275;
+	bh=NFIY0CH/4KSXfc8nb5tztqHmev4l+45BcovcPYHVl58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XmNciYGKM6gZydmRsup6Xg6iu98kNoUyrRiatWFtRVR1XDV55BFodAvz3NHTAQBwE
-	 sHZn+Zr6TItQWedN5uQ+MwLel2gsJi74xXZ1HbmTBA8PGBumMd9s6Rb+9UC5MAJqMV
-	 uCrw/dg48tdUTOTX1TLeb77txj3c7ZsDXXCyqUNY=
+	b=IDjyNrBEftATl8PhFys2pAh468mIbP/3rhORrdh4mlrmSDHUdZcHSyxq74IIahvvT
+	 u2y1I1z27DrWXnItq1rwfdkA6l1lTMyo+xWAjYDLvC6zqpLymj7d19rk4KtmmjLVim
+	 Bc1keO1YZly2AAXK3+YXCDFx3z2xwltxenbjNGQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 469/578] vrf: use RCU protection in l3mdev_l3_out()
-Date: Wed, 19 Feb 2025 09:27:53 +0100
-Message-ID: <20250219082711.455604084@linuxfoundation.org>
+	Jiacheng Xu <stitch@zju.edu.cn>,
+	syzbot+5a64828fcc4c2ad9b04f@syzkaller.appspotmail.com,
+	Su Yue <glass.su@suse.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 452/578] ocfs2: check dir i_size in ocfs2_find_entry
+Date: Wed, 19 Feb 2025 09:27:36 +0100
+Message-ID: <20250219082710.772742711@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -53,52 +59,217 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Su Yue <glass.su@suse.com>
 
-[ Upstream commit 6d0ce46a93135d96b7fa075a94a88fe0da8e8773 ]
+commit b0fce54b8c0d8e5f2b4c243c803c5996e73baee8 upstream.
 
-l3mdev_l3_out() can be called without RCU being held:
+syz reports an out of bounds read:
 
-raw_sendmsg()
- ip_push_pending_frames()
-  ip_send_skb()
-   ip_local_out()
-    __ip_local_out()
-     l3mdev_ip_out()
+==================================================================
+BUG: KASAN: slab-out-of-bounds in ocfs2_match fs/ocfs2/dir.c:334
+[inline]
+BUG: KASAN: slab-out-of-bounds in ocfs2_search_dirblock+0x283/0x6e0
+fs/ocfs2/dir.c:367
+Read of size 1 at addr ffff88804d8b9982 by task syz-executor.2/14802
 
-Add rcu_read_lock() / rcu_read_unlock() pair to avoid
-a potential UAF.
+CPU: 0 UID: 0 PID: 14802 Comm: syz-executor.2 Not tainted 6.13.0-rc4 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1
+04/01/2014
+Sched_ext: serialise (enabled+all), task: runnable_at=-10ms
+Call Trace:
+<TASK>
+__dump_stack lib/dump_stack.c:94 [inline]
+dump_stack_lvl+0x229/0x350 lib/dump_stack.c:120
+print_address_description mm/kasan/report.c:378 [inline]
+print_report+0x164/0x530 mm/kasan/report.c:489
+kasan_report+0x147/0x180 mm/kasan/report.c:602
+ocfs2_match fs/ocfs2/dir.c:334 [inline]
+ocfs2_search_dirblock+0x283/0x6e0 fs/ocfs2/dir.c:367
+ocfs2_find_entry_id fs/ocfs2/dir.c:414 [inline]
+ocfs2_find_entry+0x1143/0x2db0 fs/ocfs2/dir.c:1078
+ocfs2_find_files_on_disk+0x18e/0x530 fs/ocfs2/dir.c:1981
+ocfs2_lookup_ino_from_name+0xb6/0x110 fs/ocfs2/dir.c:2003
+ocfs2_lookup+0x30a/0xd40 fs/ocfs2/namei.c:122
+lookup_open fs/namei.c:3627 [inline]
+open_last_lookups fs/namei.c:3748 [inline]
+path_openat+0x145a/0x3870 fs/namei.c:3984
+do_filp_open+0xe9/0x1c0 fs/namei.c:4014
+do_sys_openat2+0x135/0x1d0 fs/open.c:1402
+do_sys_open fs/open.c:1417 [inline]
+__do_sys_openat fs/open.c:1433 [inline]
+__se_sys_openat fs/open.c:1428 [inline]
+__x64_sys_openat+0x15d/0x1c0 fs/open.c:1428
+do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+do_syscall_64+0xf6/0x210 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f01076903ad
+Code: c3 e8 a7 2b 00 00 0f 1f 80 00 00 00 00 f3 0f 1e fa 48 89 f8 48 89
+f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01
+f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f01084acfc8 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
+RAX: ffffffffffffffda RBX: 00007f01077cbf80 RCX: 00007f01076903ad
+RDX: 0000000000105042 RSI: 0000000020000080 RDI: ffffffffffffff9c
+RBP: 00007f01077cbf80 R08: 0000000000000000 R09: 0000000000000000
+R10: 00000000000001ff R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f01077cbf80 R14: 00007f010764fc90 R15: 00007f010848d000
+</TASK>
+==================================================================
 
-Fixes: a8e3e1a9f020 ("net: l3mdev: Add hook to output path")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250207135841.1948589-7-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+And a general protection fault in ocfs2_prepare_dir_for_insert:
+
+==================================================================
+loop0: detected capacity change from 0 to 32768
+JBD2: Ignoring recovery information on journal
+ocfs2: Mounting device (7,0) on (node local, slot 0) with ordered data
+mode.
+Oops: general protection fault, probably for non-canonical address
+0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 0 UID: 0 PID: 5096 Comm: syz-executor792 Not tainted
+6.11.0-rc4-syzkaller-00002-gb0da640826ba #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
+1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+RIP: 0010:ocfs2_find_dir_space_id fs/ocfs2/dir.c:3406 [inline]
+RIP: 0010:ocfs2_prepare_dir_for_insert+0x3309/0x5c70 fs/ocfs2/dir.c:4280
+Code: 00 00 e8 2a 25 13 fe e9 ba 06 00 00 e8 20 25 13 fe e9 4f 01 00 00
+e8 16 25 13 fe 49 8d 7f 08 49 8d 5f 09 48 89 f8 48 c1 e8 03 <42> 0f b6
+04 20 84 c0 0f 85 bd 23 00 00 48 89 d8 48 c1 e8 03 42 0f
+RSP: 0018:ffffc9000af9f020 EFLAGS: 00010202
+RAX: 0000000000000001 RBX: 0000000000000009 RCX: ffff88801e27a440
+RDX: 0000000000000000 RSI: 0000000000000400 RDI: 0000000000000008
+RBP: ffffc9000af9f830 R08: ffffffff8380395b R09: ffffffff838090a7
+R10: 0000000000000002 R11: ffff88801e27a440 R12: dffffc0000000000
+R13: ffff88803c660878 R14: f700000000000088 R15: 0000000000000000
+FS:  000055555a677380(0000) GS:ffff888020800000(0000)
+knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000560bce569178 CR3: 000000001de5a000 CR4: 0000000000350ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+ocfs2_mknod+0xcaf/0x2b40 fs/ocfs2/namei.c:292
+vfs_mknod+0x36d/0x3b0 fs/namei.c:4088
+do_mknodat+0x3ec/0x5b0
+__do_sys_mknodat fs/namei.c:4166 [inline]
+__se_sys_mknodat fs/namei.c:4163 [inline]
+__x64_sys_mknodat+0xa7/0xc0 fs/namei.c:4163
+do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f2dafda3a99
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 17 00 00 90 48 89
+f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08
+0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8
+64 89 01 48
+RSP: 002b:00007ffe336a6658 EFLAGS: 00000246 ORIG_RAX:
+0000000000000103
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX:
+00007f2dafda3a99
+RDX: 00000000000021c0 RSI: 0000000020000040 RDI:
+00000000ffffff9c
+RBP: 00007f2dafe1b5f0 R08: 0000000000004480 R09:
+000055555a6784c0
+R10: 0000000000000103 R11: 0000000000000246 R12:
+00007ffe336a6680
+R13: 00007ffe336a68a8 R14: 431bde82d7b634db R15:
+00007f2dafdec03b
+</TASK>
+==================================================================
+
+The two reports are all caused invalid negative i_size of dir inode.  For
+ocfs2, dir_inode can't be negative or zero.
+
+Here add a check in which is called by ocfs2_check_dir_for_entry().  It
+fixes the second report as ocfs2_check_dir_for_entry() must be called
+before ocfs2_prepare_dir_for_insert().  Also set a up limit for dir with
+OCFS2_INLINE_DATA_FL.  The i_size can't be great than blocksize.
+
+Link: https://lkml.kernel.org/r/20250106140640.92260-1-glass.su@suse.com
+Reported-by: Jiacheng Xu <stitch@zju.edu.cn>
+Link: https://lore.kernel.org/ocfs2-devel/17a04f01.1ae74.19436d003fc.Coremail.stitch@zju.edu.cn/T/#u
+Reported-by: syzbot+5a64828fcc4c2ad9b04f@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/0000000000005894f3062018caf1@google.com/T/
+Signed-off-by: Su Yue <glass.su@suse.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/l3mdev.h | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ocfs2/dir.c |   25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/l3mdev.h b/include/net/l3mdev.h
-index 031c661aa14df..bdfa9d414360c 100644
---- a/include/net/l3mdev.h
-+++ b/include/net/l3mdev.h
-@@ -198,10 +198,12 @@ struct sk_buff *l3mdev_l3_out(struct sock *sk, struct sk_buff *skb, u16 proto)
- 	if (netif_is_l3_slave(dev)) {
- 		struct net_device *master;
+--- a/fs/ocfs2/dir.c
++++ b/fs/ocfs2/dir.c
+@@ -1065,26 +1065,39 @@ int ocfs2_find_entry(const char *name, i
+ {
+ 	struct buffer_head *bh;
+ 	struct ocfs2_dir_entry *res_dir = NULL;
++	int ret = 0;
  
-+		rcu_read_lock();
- 		master = netdev_master_upper_dev_get_rcu(dev);
- 		if (master && master->l3mdev_ops->l3mdev_l3_out)
- 			skb = master->l3mdev_ops->l3mdev_l3_out(master, sk,
- 								skb, proto);
-+		rcu_read_unlock();
+ 	if (ocfs2_dir_indexed(dir))
+ 		return ocfs2_find_entry_dx(name, namelen, dir, lookup);
+ 
++	if (unlikely(i_size_read(dir) <= 0)) {
++		ret = -EFSCORRUPTED;
++		mlog_errno(ret);
++		goto out;
++	}
+ 	/*
+ 	 * The unindexed dir code only uses part of the lookup
+ 	 * structure, so there's no reason to push it down further
+ 	 * than this.
+ 	 */
+-	if (OCFS2_I(dir)->ip_dyn_features & OCFS2_INLINE_DATA_FL)
++	if (OCFS2_I(dir)->ip_dyn_features & OCFS2_INLINE_DATA_FL) {
++		if (unlikely(i_size_read(dir) > dir->i_sb->s_blocksize)) {
++			ret = -EFSCORRUPTED;
++			mlog_errno(ret);
++			goto out;
++		}
+ 		bh = ocfs2_find_entry_id(name, namelen, dir, &res_dir);
+-	else
++	} else {
+ 		bh = ocfs2_find_entry_el(name, namelen, dir, &res_dir);
++	}
+ 
+ 	if (bh == NULL)
+ 		return -ENOENT;
+ 
+ 	lookup->dl_leaf_bh = bh;
+ 	lookup->dl_entry = res_dir;
+-	return 0;
++out:
++	return ret;
+ }
+ 
+ /*
+@@ -2011,6 +2024,7 @@ int ocfs2_lookup_ino_from_name(struct in
+  *
+  * Return 0 if the name does not exist
+  * Return -EEXIST if the directory contains the name
++ * Return -EFSCORRUPTED if found corruption
+  *
+  * Callers should have i_rwsem + a cluster lock on dir
+  */
+@@ -2024,9 +2038,12 @@ int ocfs2_check_dir_for_entry(struct ino
+ 	trace_ocfs2_check_dir_for_entry(
+ 		(unsigned long long)OCFS2_I(dir)->ip_blkno, namelen, name);
+ 
+-	if (ocfs2_find_entry(name, namelen, dir, &lookup) == 0) {
++	ret = ocfs2_find_entry(name, namelen, dir, &lookup);
++	if (ret == 0) {
+ 		ret = -EEXIST;
+ 		mlog_errno(ret);
++	} else if (ret == -ENOENT) {
++		ret = 0;
  	}
  
- 	return skb;
--- 
-2.39.5
-
+ 	ocfs2_free_dir_lookup_result(&lookup);
 
 
