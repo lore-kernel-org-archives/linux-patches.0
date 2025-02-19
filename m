@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22471DED53;
-	Wed, 19 Feb 2025 09:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25221DEFCC;
+	Wed, 19 Feb 2025 09:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956772; cv=none; b=kk2L2YmGvtApQCky/NEom0wmXeF+Uuu/BU07hcoLn/PggQLHOagXhyiupAMuvh3eIu0WEBL13bsDkb3mh/88TGMEI4Mym4kKKtxVr6ySJ0EXlL6RU2c6nhgcbA2jT27uTIruyvkSYN8xTn/SAcYaqssNK68RlNJGVIORUWfprzQ=
+	t=1739956774; cv=none; b=Eig7Ghyaav7eZivgnWwps7cNPHc2CXNuHsvWg/F8qo0Akr9d7ukRtfoHu/RkVSf6DB5IqYOV+sMHFfa3vtgzyzoFwc106myqv09fnEB2S5rytqxFPSIe8pn2U25DQiZ+uYr4DWfbaQnRwTMBAD9JoIGFZRJicgVq9BPBZN130nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956772; c=relaxed/simple;
-	bh=2Zn8dEaJxi2POJwoSv6U6IdzyHrvSjzjlftptcsXJho=;
+	s=arc-20240116; t=1739956774; c=relaxed/simple;
+	bh=oIeBVvzWG470IheahXnoiqWHL7VJ1BgE4N43aRKt4FU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2SmCVGOXXmPPCJf78mJ60VS5yw0VwLYV1QkOWR7kc+v+Yctxch1J7nVnh++MZb94EFoRPiLTLg62doookMcvw0QMORV3H8yaEor/JJsYdriLmMDMB2E3WeuGz83f6iTQ2FZUicABBzMdF8GGbYgf9rv+yEPCmkho/1ERFHd9fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtbBnIO9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sqSKRkMGCrR++CYviKNo8b8g3sRZK7aeWVAfLOOE0lnxCezn2qiMej+EFl8w4n3AHAN5CHkh26WZURcimiQmsPmCmZrDn0HkEACoDw2UeRpUdU63CaZtO7Na/3eONxUICPPwNnrpkeaR5c2kotZBYr/xtiSO2HQJZJXvNekMHRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0VcNjrY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtbBnIO9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8F3C4CED1;
-	Wed, 19 Feb 2025 09:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0VcNjrY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8DFC4CEE6;
+	Wed, 19 Feb 2025 09:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956771;
-	bh=2Zn8dEaJxi2POJwoSv6U6IdzyHrvSjzjlftptcsXJho=;
+	s=korg; t=1739956774;
+	bh=oIeBVvzWG470IheahXnoiqWHL7VJ1BgE4N43aRKt4FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WtbBnIO9Ok8F8x47iyL6F42nXlsesPcqM0yq708n/y+0Nh287RZ+/O1Hkay5xdCpw
-	 ZjLeiY6MVAIlp3LCZzovNlpL0XbUK6l5QClW5yT6Gr5k8bI0cdAvoFxZynLWT508EX
-	 KR9d154FZ9kR9amVUPrthJ/gaAYEqzrOmbrFEBf8=
+	b=X0VcNjrYlW1DyT0LPBTDkVgH3aI2TqRxU/tOH2rro7u/PzKmEHngfXW82010GErYt
+	 lrO3bpsXCSzv2rEbNyXDuvcg7rTJzmu5fNVkXyBBgwsBA/QCbRSXBCreF3X78hBf53
+	 MznyxpMV8y8qzNK96soRP2zfeOrIY0Ey9GzvnanY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randolph Ha <rha051117@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Feng Tang <feng.tang@linux.alibaba.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ira Weiny <ira.weiny@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 295/578] i2c: Force ELAN06FA touchpad I2C bus freq to 100KHz
-Date: Wed, 19 Feb 2025 09:24:59 +0100
-Message-ID: <20250219082704.616364827@linuxfoundation.org>
+Subject: [PATCH 6.1 296/578] APEI: GHES: Have GHES honor the panic= setting
+Date: Wed, 19 Feb 2025 09:25:00 +0100
+Message-ID: <20250219082704.655468342@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,71 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randolph Ha <rha051117@gmail.com>
+From: Borislav Petkov <bp@alien8.de>
 
-[ Upstream commit bfd74cd1fbc026f04446e67d6915c7e199c2bffd ]
+[ Upstream commit 5c0e00a391dd0099fe95991bb2f962848d851916 ]
 
-When a 400KHz freq is used on this model of ELAN touchpad in Linux,
-excessive smoothing (similar to when the touchpad's firmware detects
-a noisy signal) is sometimes applied. As some devices' (e.g, Lenovo
-V15 G4) ACPI tables specify a 400KHz frequency for this device and
-some I2C busses (e.g, Designware I2C) default to a 400KHz freq,
-force the speed to 100KHz as a workaround.
+The GHES driver overrides the panic= setting by force-rebooting the
+system after a fatal hw error has been reported. The intent being that
+such an error would be reported earlier.
 
-For future investigation: This problem may be related to the default
-HCNT/LCNT values given by some busses' drivers, because they are not
-specified in the aforementioned devices' ACPI tables, and because
-the device works without issues on Windows at what is expected to be
-a 400KHz frequency. The root cause of the issue is not known.
+However, this is not optimal when a hard-to-debug issue requires long
+time to reproduce and when that happens, the box will get rebooted after
+30 seconds and thus destroy the whole hw context of when the error
+happened.
 
-Signed-off-by: Randolph Ha <rha051117@gmail.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+So rip out the default GHES panic timeout and honor the global one.
+
+In the panic disabled (panic=0) case, the error will still be logged to
+dmesg for later inspection and if panic after a hw error is really
+required, then that can be controlled the usual way - use panic= on the
+cmdline or set it in the kernel .config's CONFIG_PANIC_TIMEOUT.
+
+Reported-by: Feng Tang <feng.tang@linux.alibaba.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Feng Tang <feng.tang@linux.alibaba.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://patch.msgid.link/20250113125224.GFZ4UMiNtWIJvgpveU@fat_crate.local
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-acpi.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/acpi/apei/ghes.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
-index 14ae0cfc325ef..d2499f302b508 100644
---- a/drivers/i2c/i2c-core-acpi.c
-+++ b/drivers/i2c/i2c-core-acpi.c
-@@ -355,6 +355,25 @@ static const struct acpi_device_id i2c_acpi_force_400khz_device_ids[] = {
- 	{}
- };
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index dd808cf65c841..83a4b417b27b9 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -155,8 +155,6 @@ static unsigned long ghes_estatus_pool_size_request;
+ static struct ghes_estatus_cache *ghes_estatus_caches[GHES_ESTATUS_CACHES_SIZE];
+ static atomic_t ghes_estatus_cache_alloced;
  
-+static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
-+	/*
-+	 * When a 400KHz freq is used on this model of ELAN touchpad in Linux,
-+	 * excessive smoothing (similar to when the touchpad's firmware detects
-+	 * a noisy signal) is sometimes applied. As some devices' (e.g, Lenovo
-+	 * V15 G4) ACPI tables specify a 400KHz frequency for this device and
-+	 * some I2C busses (e.g, Designware I2C) default to a 400KHz freq,
-+	 * force the speed to 100KHz as a workaround.
-+	 *
-+	 * For future investigation: This problem may be related to the default
-+	 * HCNT/LCNT values given by some busses' drivers, because they are not
-+	 * specified in the aforementioned devices' ACPI tables, and because
-+	 * the device works without issues on Windows at what is expected to be
-+	 * a 400KHz frequency. The root cause of the issue is not known.
-+	 */
-+	{ "ELAN06FA", 0 },
-+	{}
-+};
-+
- static acpi_status i2c_acpi_lookup_speed(acpi_handle handle, u32 level,
- 					   void *data, void **return_value)
+-static int ghes_panic_timeout __read_mostly = 30;
+-
+ static void __iomem *ghes_map(u64 pfn, enum fixed_addresses fixmap_idx)
  {
-@@ -373,6 +392,9 @@ static acpi_status i2c_acpi_lookup_speed(acpi_handle handle, u32 level,
- 	if (acpi_match_device_ids(adev, i2c_acpi_force_400khz_device_ids) == 0)
- 		lookup->force_speed = I2C_MAX_FAST_MODE_FREQ;
- 
-+	if (acpi_match_device_ids(adev, i2c_acpi_force_100khz_device_ids) == 0)
-+		lookup->force_speed = I2C_MAX_STANDARD_MODE_FREQ;
+ 	phys_addr_t paddr;
+@@ -858,14 +856,16 @@ static void __ghes_panic(struct ghes *ghes,
+ 			 struct acpi_hest_generic_status *estatus,
+ 			 u64 buf_paddr, enum fixed_addresses fixmap_idx)
+ {
++	const char *msg = GHES_PFX "Fatal hardware error";
 +
- 	return AE_OK;
+ 	__ghes_print_estatus(KERN_EMERG, ghes->generic, estatus);
+ 
+ 	ghes_clear_estatus(ghes, estatus, buf_paddr, fixmap_idx);
+ 
+-	/* reboot to log the error! */
+ 	if (!panic_timeout)
+-		panic_timeout = ghes_panic_timeout;
+-	panic("Fatal hardware error!");
++		pr_emerg("%s but panic disabled\n", msg);
++
++	panic(msg);
  }
  
+ static int ghes_proc(struct ghes *ghes)
 -- 
 2.39.5
 
