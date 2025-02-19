@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2701CAA6F;
-	Wed, 19 Feb 2025 08:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0595A1CAA6C;
+	Wed, 19 Feb 2025 08:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954870; cv=none; b=h5+GB7CcyD/IticRMh+dSoyC5YlGnGVXPBuu40I2/1fSpV2eSuP2EYwLJQXe4RVrpxBBbvs2JD2+qxGLO8PYAK1g8OvstJmVB97+UFkzmdFOVoKrqh6faMn1YVhF4GptXIvK9VHBRfnSNiZZKdb3K9+JivekTwM1LlDMYaHp3NE=
+	t=1739954874; cv=none; b=fLK1LXuLQHXK31RV5cn9NjStq98lLE3GH9pdfVnBshFZOHBW+WYr5Qy23R12MX3z2HjPKZp+GsvHW5THJDXfFajYb8ku5UbtplvyTB2YptjdMqa2itCq2s9pKA9NpNFNHdlQq3P5Wx04PaEwC9dETihY8LOvb0gfBDtpnxObzgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954870; c=relaxed/simple;
-	bh=PniVTAYu6RvF+7NNSiznkLHx1Rzm9PGMi3uz/PyEwEE=;
+	s=arc-20240116; t=1739954874; c=relaxed/simple;
+	bh=KpGDLzV4PuFn5A/iCHnWZmzl+xvaeHp1Q7vmIEmqcMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRKbygYr6WzBe3lU6MgR1Xzben4kbbFT/W7KXAiXhBK1do5LZEZwjkP2oeN7keeZl8mxNFH9vVArF3yhKo2QTv9lth1OXXuiisaHAsxy3v9Myws7TY6X8NqxBqKgwipe6IjbLeZefnVhOk7MYsihqfMEtOQs181bPvH98KK6ak8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsJBahSm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AAWEUJzugN8Nj/uZJTlWgGLo1LkOV1GVBAVZAWK6IsxLCPRLrDkDw2rgU54s0Bc+Fg26RcvlhBMby05G4R3R30VGW/aSFGYqKyS4tRyKKauBMLRaPK3D0MkUIDgC7J9P9K9HzrAvekl53yx7C0SRgciActkDItd9xXbmtkXkcFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTr0Fo6C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsJBahSm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF83C4CED1;
-	Wed, 19 Feb 2025 08:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTr0Fo6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29651C4CEE6;
+	Wed, 19 Feb 2025 08:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954870;
-	bh=PniVTAYu6RvF+7NNSiznkLHx1Rzm9PGMi3uz/PyEwEE=;
+	s=korg; t=1739954873;
+	bh=KpGDLzV4PuFn5A/iCHnWZmzl+xvaeHp1Q7vmIEmqcMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BsJBahSmpMtRJBGjaRanUwVjOUtmGUa3pOIACU5kYjAW3HJb9apxGuZGGqyKsdY4M
-	 jVr5NbQ0fTCD8DXAlKkVUzEm03tsQo/++xKExuAaSkbApQzi1lKonrg7PXqnMc5sAM
-	 g3VNsugqmkwf7PbdjOAshSfuTGYXyX60+A8XkFFo=
+	b=tTr0Fo6CWVRSRieW9TbKB0EAeVPDkR8SeJmmT8LZqKV/YZmlmJMCP+haQyx+ixfuL
+	 CRmBEd62x8R3UjgDI8AxdzqBU8NbylX3DbJwf3+q+xx/Kqs9IaFvvD9ZsRCi34Y3Vb
+	 d77qyMEbNks2rdi9eqDeURl43vz+v2sC7yVV1Whw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Quadros <rogerq@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kiran K <kiran.k@intel.com>,
+	Bjorn Helgaas <helgaas@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/230] net: ethernet: ti: am65_cpsw: fix tx_cleanup for XDP case
-Date: Wed, 19 Feb 2025 09:25:47 +0100
-Message-ID: <20250219082602.886016845@linuxfoundation.org>
+Subject: [PATCH 6.12 031/230] Bluetooth: btintel_pcie: Fix a potential race condition
+Date: Wed, 19 Feb 2025 09:25:48 +0100
+Message-ID: <20250219082602.926016925@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -51,55 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roger Quadros <rogerq@kernel.org>
+From: Kiran K <kiran.k@intel.com>
 
-[ Upstream commit 4542536f664f752db5feba2c5998b165933c34f2 ]
+[ Upstream commit 872274b992839ff64fe560767fe7ee5f942ccdb1 ]
 
-For XDP transmit case, swdata doesn't contain SKB but the
-XDP Frame. Infer the correct swdata based on buffer type
-and return the XDP Frame for XDP transmit case.
+On HCI_OP_RESET command, firmware raises alive interrupt. Driver needs
+to wait for this before sending other command. This patch fixes the potential
+miss of alive interrupt due to which HCI_OP_RESET can timeout.
 
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Fixes: 8acacc40f733 ("net: ethernet: ti: am65-cpsw: Add minimal XDP support")
-Link: https://patch.msgid.link/20250210-am65-cpsw-xdp-fixes-v1-3-ec6b1f7f1aca@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Expected flow:
+If tx command is HCI_OP_RESET,
+  1. set data->gp0_received = false
+  2. send HCI_OP_RESET
+  3. wait for alive interrupt
+
+Actual flow having potential race:
+If tx command is HCI_OP_RESET,
+ 1. send HCI_OP_RESET
+   1a. Firmware raises alive interrupt here and in ISR
+       data->gp0_received  is set to true
+ 2. set data->gp0_received = false
+ 3. wait for alive interrupt
+
+Signed-off-by: Kiran K <kiran.k@intel.com>
+Fixes: 05c200c8f029 ("Bluetooth: btintel_pcie: Add handshake between driver and firmware")
+Reported-by: Bjorn Helgaas <helgaas@kernel.org>
+Closes: https://patchwork.kernel.org/project/bluetooth/patch/20241001104451.626964-1-kiran.k@intel.com/
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btintel_pcie.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 14df3c0141679..3e090f87f97eb 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -585,16 +585,24 @@ static void am65_cpsw_nuss_xmit_free(struct am65_cpsw_tx_chn *tx_chn,
- static void am65_cpsw_nuss_tx_cleanup(void *data, dma_addr_t desc_dma)
- {
- 	struct am65_cpsw_tx_chn *tx_chn = data;
-+	enum am65_cpsw_tx_buf_type buf_type;
- 	struct cppi5_host_desc_t *desc_tx;
-+	struct xdp_frame *xdpf;
- 	struct sk_buff *skb;
- 	void **swdata;
- 
- 	desc_tx = k3_cppi_desc_pool_dma2virt(tx_chn->desc_pool, desc_dma);
- 	swdata = cppi5_hdesc_get_swdata(desc_tx);
--	skb = *(swdata);
--	am65_cpsw_nuss_xmit_free(tx_chn, desc_tx);
-+	buf_type = am65_cpsw_nuss_buf_type(tx_chn, desc_dma);
-+	if (buf_type == AM65_CPSW_TX_BUF_TYPE_SKB) {
-+		skb = *(swdata);
-+		dev_kfree_skb_any(skb);
-+	} else {
-+		xdpf = *(swdata);
-+		xdp_return_frame(xdpf);
-+	}
- 
--	dev_kfree_skb_any(skb);
-+	am65_cpsw_nuss_xmit_free(tx_chn, desc_tx);
- }
- 
- static struct sk_buff *am65_cpsw_build_skb(void *page_addr,
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index 8bd663f4bac1b..53f6b4f76bccd 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -1312,6 +1312,10 @@ static int btintel_pcie_send_frame(struct hci_dev *hdev,
+ 			if (opcode == 0xfc01)
+ 				btintel_pcie_inject_cmd_complete(hdev, opcode);
+ 		}
++		/* Firmware raises alive interrupt on HCI_OP_RESET */
++		if (opcode == HCI_OP_RESET)
++			data->gp0_received = false;
++
+ 		hdev->stat.cmd_tx++;
+ 		break;
+ 	case HCI_ACLDATA_PKT:
+@@ -1349,7 +1353,6 @@ static int btintel_pcie_send_frame(struct hci_dev *hdev,
+ 			   opcode, btintel_pcie_alivectxt_state2str(old_ctxt),
+ 			   btintel_pcie_alivectxt_state2str(data->alive_intr_ctxt));
+ 		if (opcode == HCI_OP_RESET) {
+-			data->gp0_received = false;
+ 			ret = wait_event_timeout(data->gp0_wait_q,
+ 						 data->gp0_received,
+ 						 msecs_to_jiffies(BTINTEL_DEFAULT_INTR_TIMEOUT_MS));
 -- 
 2.39.5
 
