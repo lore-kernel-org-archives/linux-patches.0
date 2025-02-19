@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214171D79BE;
-	Wed, 19 Feb 2025 08:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC9A1D6DB1;
+	Wed, 19 Feb 2025 08:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954207; cv=none; b=lJQH2WmQu8BR7wxHSm9/N7r9qOlpnBbQrm4vuB06DqzJdO2yYon3/NoVQlar3W709pIXsgq651AVQHYttCWu5Ut6XXhl5lqW1NN1pfi6G5O0nvqzV0B95GGYK2QjWa2o53HOgtf4hIFB3BToPk+GlUMcSQt7HsZW9kTT0/xU1lI=
+	t=1739954210; cv=none; b=jl87NcdsmTrgyOxW9KY651Wx7SO+zHbsNi9Af6BSXLDpGQ/ZRuYnK3U5Km88NwXajG3YY97YYMWoLuIw/phfna7/9eat4DLZNRsw7evxSqQfsYiZdBvekr2fO1wPhq+N3gr13vOlt0UxrvRlpSgFk7d/ko/rDHRCJewxZ7mmMGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954207; c=relaxed/simple;
-	bh=euEzCSGv0ToNTZMliFVsxT+v86X8ughUtMEI9AUjU/I=;
+	s=arc-20240116; t=1739954210; c=relaxed/simple;
+	bh=sITgN7jkpWPBQr/9K9OF+e2fI+cSTneHQU9o9yGa92U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LcgifkF6z8crYUsXiGv9lH2soNDi7mYe9+2cueSTPo/QQsCZDfJ/YmiG1mUavSil5xATUizgwnqOEVOCcaoGsvpTXaoH4kcygDOb3EgaLVJLlioQZOEp+f5LnM3x+EJpZFQv7fNnO8Hn/+K8dKJOpOPcC75QKGA2L3xZizJuGNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=petNO9jA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OKAIkXK+Ebu0YEgQaRLojKCzRVWgfF7SiwQLTa3+BnNz9baeuAq6M21JOclKmYwQxuTDpHc8UVn30+hLS1tfh7bBj+LJQF6hLgyHxwOqNxzda8epP/LL9QZHvIlVa0op0pO7rIyB5fxtOly1hlP9QjzAq5oFuZD8eBcbh4BaeDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=miJkQIO6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="petNO9jA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872E7C4CEE7;
-	Wed, 19 Feb 2025 08:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="miJkQIO6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B203C4CED1;
+	Wed, 19 Feb 2025 08:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954206;
-	bh=euEzCSGv0ToNTZMliFVsxT+v86X8ughUtMEI9AUjU/I=;
+	s=korg; t=1739954210;
+	bh=sITgN7jkpWPBQr/9K9OF+e2fI+cSTneHQU9o9yGa92U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=petNO9jAadueLozKZxYk2Nmt46hZjmvKbsZ/1dfo/lsmc/Jj2CADnIpYbQvJtFe6G
-	 ft5TNQctNfLppVrj+wPFRXfkcRGlIrgXb9vH+pOEBGgBIuUnC6KbLCHjfAL/OUwAhz
-	 HPCTiUxmpT87dT9c/w27TcAglf78GT5HiXw0ynnM=
+	b=miJkQIO6GuMDI7d1UXQUuZ1T7dmndRmLw8Qdu3DIFzKc24fXuKOUCxF5rNUFfMrq7
+	 vDDaO+VgTQsmnBF5yo/GTKSy8Xf6K0hIerYPjOw32k1Ll33iM0TjEnm6A9Il0f4Lpg
+	 8FbTEBSJ/ae3NpMCQ2Btv4dkZsQZgepEvAUVxx9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Elson Roy Serrao <quic_eserrao@quicinc.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.13 130/274] usb: roles: set switch registered flag early on
-Date: Wed, 19 Feb 2025 09:26:24 +0100
-Message-ID: <20250219082614.698394438@linuxfoundation.org>
+	Jos Wang <joswang@lenovo.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Amit Sunil Dhamne <amitsd@google.com>
+Subject: [PATCH 6.13 131/274] usb: typec: tcpm: PSSourceOffTimer timeout in PR_Swap enters ERROR_RECOVERY
+Date: Wed, 19 Feb 2025 09:26:25 +0100
+Message-ID: <20250219082614.736182451@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -45,72 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Elson Roy Serrao <quic_eserrao@quicinc.com>
+From: Jos Wang <joswang@lenovo.com>
 
-commit 634775a752a86784511018a108f3b530cc3399a7 upstream.
+commit 659f5d55feb75782bd46cf130da3c1f240afe9ba upstream.
 
-The role switch registration and set_role() can happen in parallel as they
-are invoked independent of each other. There is a possibility that a driver
-might spend significant amount of time in usb_role_switch_register() API
-due to the presence of time intensive operations like component_add()
-which operate under common mutex. This leads to a time window after
-allocating the switch and before setting the registered flag where the set
-role notifications are dropped. Below timeline summarizes this behavior
+As PD2.0 spec ("6.5.6.2 PSSourceOffTimer")，the PSSourceOffTimer is
+used by the Policy Engine in Dual-Role Power device that is currently
+acting as a Sink to timeout on a PS_RDY Message during a Power Role
+Swap sequence. This condition leads to a Hard Reset for USB Type-A and
+Type-B Plugs and Error Recovery for Type-C plugs and return to USB
+Default Operation.
 
-Thread1				|	Thread2
-usb_role_switch_register()	|
-	|			|
-	---> allocate switch	|
-	|			|
-	---> component_add()	|	usb_role_switch_set_role()
-	|			|	|
-	|			|	--> Drop role notifications
-	|			|	    since sw->registered
-	|			|	    flag is not set.
-	|			|
-	--->Set registered flag.|
+Therefore, after PSSourceOffTimer timeout, the tcpm state machine should
+switch from PR_SWAP_SNK_SRC_SINK_OFF to ERROR_RECOVERY. This can also
+solve the test items in the USB power delivery compliance test:
+TEST.PD.PROT.SNK.12 PR_Swap – PSSourceOffTimer Timeout
 
-To avoid this, set the registered flag early on in the switch register
-API.
+[1] https://usb.org/document-library/usb-power-delivery-compliance-test-specification-0/USB_PD3_CTS_Q4_2025_OR.zip
 
-Fixes: b787a3e78175 ("usb: roles: don't get/set_role() when usb_role_switch is unregistered")
+Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+Signed-off-by: Jos Wang <joswang@lenovo.com>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250206193950.22421-1-quic_eserrao@quicinc.com
+Tested-by: Amit Sunil Dhamne <amitsd@google.com>
+Link: https://lore.kernel.org/r/20250213134921.3798-1-joswang1221@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/roles/class.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/roles/class.c
-+++ b/drivers/usb/roles/class.c
-@@ -387,8 +387,11 @@ usb_role_switch_register(struct device *
- 	dev_set_name(&sw->dev, "%s-role-switch",
- 		     desc->name ? desc->name : dev_name(parent));
- 
-+	sw->registered = true;
-+
- 	ret = device_register(&sw->dev);
- 	if (ret) {
-+		sw->registered = false;
- 		put_device(&sw->dev);
- 		return ERR_PTR(ret);
- 	}
-@@ -399,8 +402,6 @@ usb_role_switch_register(struct device *
- 			dev_warn(&sw->dev, "failed to add component\n");
- 	}
- 
--	sw->registered = true;
--
- 	/* TODO: Symlinks for the host port and the device controller. */
- 
- 	return sw;
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -5541,8 +5541,7 @@ static void run_state_machine(struct tcp
+ 		tcpm_set_auto_vbus_discharge_threshold(port, TYPEC_PWR_MODE_USB,
+ 						       port->pps_data.active, 0);
+ 		tcpm_set_charge(port, false);
+-		tcpm_set_state(port, hard_reset_state(port),
+-			       port->timings.ps_src_off_time);
++		tcpm_set_state(port, ERROR_RECOVERY, port->timings.ps_src_off_time);
+ 		break;
+ 	case PR_SWAP_SNK_SRC_SOURCE_ON:
+ 		tcpm_enable_auto_vbus_discharge(port, true);
 
 
