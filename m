@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05F11DE2B5;
-	Wed, 19 Feb 2025 08:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C691C175A;
+	Wed, 19 Feb 2025 08:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954383; cv=none; b=fHNjHBIvkn10p/9QcqfV3E0jXBn/iVCBdtOUH9yJFOwPe2q7pELJfVkHe1TttVSIK7ZDpUUByJLQOLtKK0LD1pNzbGHdbaeQhUpHVyq2KUmF67ETHrcRjvIOxbVmfjNwRhdpOjo2VudHK81SR0m6olx6bpRbLgIhJeJXZijhFCk=
+	t=1739954387; cv=none; b=n4RgGIFTZvd+zLiv2fNQEQ0EEZytX+i8WNo1Y5qEuEDo/Uwmip9nlLlZuxjVKcdOW6zmg0wCTP01pvFW+K84IDf8c3noXRRbc2HIVLsMAY636bBduHKlyvdC1zObwm/b7iqLJSUyT1l+r8tw3BgQqkwp+EfWfIXqBBfXcMnUp4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954383; c=relaxed/simple;
-	bh=pKPtWD6eMKtbDKzNEqIaAn9ZqYSgRlSzmUu0ttq7lpI=;
+	s=arc-20240116; t=1739954387; c=relaxed/simple;
+	bh=zgCtU7GroL0YaoqL9s5sH7WOOzXoegtjlQaLFZRBtaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uULDFDw0yRAGx3RUUN/lInwGVVd6ZXIlY7RxbizjB9sjoveXt9d4F1lnDPbwPpK8pppTI4mB02s12rh0M6621QkS6DXpc48azE7nZjOydiurDhDhK48+FgsHCk+mj4jWQYCWGU62gigjcs4wZ6z6LDvIG4zvf1I0uxhsbAC+7MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lveAMbcS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SqgD0axtk9YXU9Tzu4GsJxdWnPOhb5z2SHsH9iLXln0lNgDFD0FK8TUkdQ8E3GjUNS4lPs+h4xUWDDLoPYgORHghmTsXOKshnH7maaOJoYIE3M0TUiVnNXyV0HLTqPi9iw8T+B/CQT4+qkhUp9pqHUA/71tFne6Bmf1dygOd2eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2GHoZmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lveAMbcS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5259AC4CED1;
-	Wed, 19 Feb 2025 08:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2GHoZmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699DCC4CEE6;
+	Wed, 19 Feb 2025 08:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954383;
-	bh=pKPtWD6eMKtbDKzNEqIaAn9ZqYSgRlSzmUu0ttq7lpI=;
+	s=korg; t=1739954387;
+	bh=zgCtU7GroL0YaoqL9s5sH7WOOzXoegtjlQaLFZRBtaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lveAMbcSBWL3+vgmdo0Cs2w/2ljtruYQC5dD2FbCj5vaSbH0uV72roZ3ric9727Pd
-	 8QiXZVcW2dm9dMjGkrURvMMdBULhYe8YlaQhmxwcZiRAHE08cH1dYPldNSpF2p006e
-	 FhHSJeYe38AppC4OWX+kLGXc1oPZoh24vJC8aRQ4=
+	b=a2GHoZmP3cbiEey6WBYZqX9NQrNjN4fVRp/5A7zL+QZROem9kvU6Eb11CBzptduYZ
+	 A01JGtLt6WJ9lfH+DEX7fm9aq1OaQjDI170TUId4yvCcCO0FFH7UPP+AE/It45xsfu
+	 7Y97QRjycp0Oss7FJDZnkH8VTTl+pMFi5kXdj6Ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.13 188/274] cifs: pick channels for individual subrequests
-Date: Wed, 19 Feb 2025 09:27:22 +0100
-Message-ID: <20250219082616.942739113@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Zheng Zengkai <zhengzengkai@huawei.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.13 189/274] ACPI: GTDT: Relax sanity checking on Platform Timers array count
+Date: Wed, 19 Feb 2025 09:27:23 +0100
+Message-ID: <20250219082616.980374058@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -51,86 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-commit f1bf10d7e909fe898a112f5cae1e97ce34d6484d upstream.
+commit f818227a2f3d1d4f26469347e428323d61cc83f0 upstream.
 
-The netfs library could break down a read request into
-multiple subrequests. When multichannel is used, there is
-potential to improve performance when each of these
-subrequests pick a different channel.
+Perhaps unsurprisingly there are some platforms where the GTDT isn't
+quite right and the Platforms Timer array overflows the length of the
+overall table.
 
-Today we call cifs_pick_channel when the main read request
-is initialized in cifs_init_request. This change moves this to
-cifs_prepare_read, which is the right place to pick channel since
-it gets called for each subrequest.
+While the recently-added sanity checking isn't wrong, it makes it
+impossible to boot the kernel on offending platforms. Try to hobble
+along and limit the Platform Timer count to the bounds of the table.
 
-Interestingly cifs_prepare_write already does channel selection
-for individual subreq, but looks like it was missed for read.
-This is especially important when multichannel is used with
-increased rasize.
-
-In my test setup, with rasize set to 8MB, a sequential read
-of large file was taking 11.5s without this change. With the
-change, it completed in 9s. The difference is even more signigicant
-with bigger rasize.
-
-Cc: <stable@vger.kernel.org>
-Cc: David Howells <dhowells@redhat.com>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc: Zheng Zengkai <zhengzengkai@huawei.com>
+Cc: stable@vger.kernel.org
+Fixes: 263e22d6bd1f ("ACPI: GTDT: Tighten the check for the array of platform timer structures")
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Link: https://lore.kernel.org/r/20250128001749.3132656-1-oliver.upton@linux.dev
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsglob.h |    1 -
- fs/smb/client/file.c     |    7 ++++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/acpi/arm64/gtdt.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -1483,7 +1483,6 @@ struct cifs_io_parms {
- struct cifs_io_request {
- 	struct netfs_io_request		rreq;
- 	struct cifsFileInfo		*cfile;
--	struct TCP_Server_Info		*server;
- 	pid_t				pid;
- };
+diff --git a/drivers/acpi/arm64/gtdt.c b/drivers/acpi/arm64/gtdt.c
+index 3561553eff8b..70f8290b659d 100644
+--- a/drivers/acpi/arm64/gtdt.c
++++ b/drivers/acpi/arm64/gtdt.c
+@@ -163,7 +163,7 @@ int __init acpi_gtdt_init(struct acpi_table_header *table,
+ {
+ 	void *platform_timer;
+ 	struct acpi_table_gtdt *gtdt;
+-	int cnt = 0;
++	u32 cnt = 0;
  
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -147,7 +147,7 @@ static int cifs_prepare_read(struct netf
- 	struct netfs_io_request *rreq = subreq->rreq;
- 	struct cifs_io_subrequest *rdata = container_of(subreq, struct cifs_io_subrequest, subreq);
- 	struct cifs_io_request *req = container_of(subreq->rreq, struct cifs_io_request, rreq);
--	struct TCP_Server_Info *server = req->server;
-+	struct TCP_Server_Info *server;
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(rreq->inode->i_sb);
- 	size_t size;
- 	int rc = 0;
-@@ -156,6 +156,8 @@ static int cifs_prepare_read(struct netf
- 		rdata->xid = get_xid();
- 		rdata->have_xid = true;
- 	}
+ 	gtdt = container_of(table, struct acpi_table_gtdt, header);
+ 	acpi_gtdt_desc.gtdt = gtdt;
+@@ -188,13 +188,17 @@ int __init acpi_gtdt_init(struct acpi_table_header *table,
+ 		cnt++;
+ 
+ 	if (cnt != gtdt->platform_timer_count) {
++		cnt = min(cnt, gtdt->platform_timer_count);
++		pr_err(FW_BUG "limiting Platform Timer count to %d\n", cnt);
++	}
 +
-+	server = cifs_pick_channel(tlink_tcon(req->cfile->tlink)->ses);
- 	rdata->server = server;
++	if (!cnt) {
+ 		acpi_gtdt_desc.platform_timer = NULL;
+-		pr_err(FW_BUG "invalid timer data.\n");
+-		return -EINVAL;
++		return 0;
+ 	}
  
- 	if (cifs_sb->ctx->rsize == 0)
-@@ -198,7 +200,7 @@ static void cifs_issue_read(struct netfs
- 	struct netfs_io_request *rreq = subreq->rreq;
- 	struct cifs_io_subrequest *rdata = container_of(subreq, struct cifs_io_subrequest, subreq);
- 	struct cifs_io_request *req = container_of(subreq->rreq, struct cifs_io_request, rreq);
--	struct TCP_Server_Info *server = req->server;
-+	struct TCP_Server_Info *server = rdata->server;
- 	int rc = 0;
+ 	if (platform_timer_count)
+-		*platform_timer_count = gtdt->platform_timer_count;
++		*platform_timer_count = cnt;
  
- 	cifs_dbg(FYI, "%s: op=%08x[%x] mapping=%p len=%zu/%zu\n",
-@@ -265,7 +267,6 @@ static int cifs_init_request(struct netf
- 		open_file = file->private_data;
- 		rreq->netfs_priv = file->private_data;
- 		req->cfile = cifsFileInfo_get(open_file);
--		req->server = cifs_pick_channel(tlink_tcon(req->cfile->tlink)->ses);
- 		if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_RWPIDFORWARD)
- 			req->pid = req->cfile->pid;
- 	} else if (rreq->origin != NETFS_WRITEBACK) {
+ 	return 0;
+ }
+-- 
+2.48.1
+
 
 
