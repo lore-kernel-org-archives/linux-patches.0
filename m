@@ -1,174 +1,163 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D16C1DED57
-	for <patches@lists.linux.dev>; Wed, 19 Feb 2025 08:58:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9AF1DE3AE;
+	Wed, 19 Feb 2025 08:58:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955536; cv=none; b=BKVF3mxedhjffQTXbxIr/XQMZDEj49K6LOd3QBkJilkloa1qwuAwXrL2w7IbZgKWfgxCwkqRHNAzqUmCPht0WKid7XqxwF7q/bGrDfODcFfk4ye/OFvZy8NXv4xVtNx57+VYX4BkpUDui6SuP1OMSwi7b9dntchqmnf083KbRO4=
+	t=1739955538; cv=none; b=Y2uI/g6Qqqy4kLIniHUWnDyNYcdjQ/yLJ/VljUAA0jBUb1At39Z5WBcIpuwY6QRKV2mBrV7wtVzn9yPHqeVocPb1wIaBb7NzHLmciErlXsjevumt6GUaRSt7o3w0IeihB8NH0FQKyqnkapR9MuNDe2zJkgOGbfLCfAbkNUzkVPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955536; c=relaxed/simple;
-	bh=wO/6BSf/ZusKqipQukzO7Dtz9mSKLmO+4Ku4WrpLgw4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=s2SfDXq47vJlwjWM4ERi00edtIpBtElOuEW5VGK7Zt86m4FojdgZTOBIFJddyz8/YiFRgWm6rAqBXl+dkTnOVt6cUpqW5F7wK+IklGKMHrhHpgsvqm4/eB+OMYZeKMPwbugB93Zcq0aWWdD6gaIKu9wFkeQLvUqKoO+auu90vNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lCghoFID; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739955538; c=relaxed/simple;
+	bh=AVICKPMZguHil36II4j1RhxyWDq+aR9gT0UMgq573D0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CLf0t5vv7BeFjVUGffXSx+0azyasGb6upKdMMTkGAm6kc0qRckE7t6PwmHOj/HK0eXNND92bBzmxH4O96/vnRllpfg/ti82tECxwLZYt4at+sgt1GmE7X/luMkmpUHQBu88yVOVpLi6LTgIhmYKOc6MdwomIy7I0W+uCQ2oDjZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IRVpYhn9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lCghoFID"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5e0505275b7so5701245a12.3
-        for <patches@lists.linux.dev>; Wed, 19 Feb 2025 00:58:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739955532; x=1740560332; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sPYgKL9mz20WeqRf2n6s6KWAKXTyT5lCL3eATb+Q0X0=;
-        b=lCghoFIDckYwjmwghIhy1RZ21a4XUIedUYKuobmGRjf7f2uIXQ8fzF38OXkL0M8W98
-         Uvin5bocjajuxlQ+gRJuzGXafpq1wmA8YhQBVXcV3MAdCTVrVorg65zb9+3gCZ6ds2ly
-         +GSC48KiZ6zZnuRwq26nzO4U0qPfZQ46mPm3nJRz+Dugjz5nMmwKCqsO5dxm6D967xg0
-         a65Cq54YmXIn4MbIz6DTyBIC0WhEWZiSHTBdUHWFEeMICGaFHoHjNkb2UQ2aXTiiYYK8
-         YbrnJKQhMyKMnZVWaYvNSl2Z+YyCIdq2tQf9D6UrFpxZEhYhHHeutnqMt54dX/1Q2gYq
-         E0Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739955532; x=1740560332;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sPYgKL9mz20WeqRf2n6s6KWAKXTyT5lCL3eATb+Q0X0=;
-        b=EHsxDk/Kk3tjbaqRN81TqDIp9AG7NZtjODPE6ZDt2hb6P3JIi83R0iB3dYLa+wpYvD
-         /R2fYN8wWgFKQ46Mc/aTmoE/0CrkBKqMr28+4ekRVV5W2Opv1ly3HM4DbL6YJM2fPpM7
-         Gaz5YSGuHFo6E2QyB91FcONouEBRp+MmdwTDSC3e9PJ3udTsqeGINpRCT/HOvnrLVqoe
-         99uty5/JnAZZq8h4SUmefYDhN0dDxlutCEZsqEDyD/DetHlwpBc5VtUMLrmuxMNlDyKf
-         AHhKg34IqNi0zLrwpeitTBhcydeTQEp4R+P8LhN+R90Hkue8ESiv0QWX889c8P2Nrvaw
-         vAIw==
-X-Gm-Message-State: AOJu0Yymy7Mv+xm+KmsNlFFTs8q9V8N0jhrXvFv0Z7QlhwHMk4TbkNxt
-	lVtiKMImef+hHyWkMjGJgrdiAdPfbqznrNfqWd3DTPlUKTvqXsIwQHjx4I3z
-X-Gm-Gg: ASbGnctx9srVw0wcMAfDsUshz1fzkk4HXvszigjlt1nJCkretAxChogTxrJc8TWYfio
-	fK5UTtz5F46fAkF5ib5ACSaLHuEGcJrsdkYnkWxs76fsSbjtJ1YLrZDpTi8Yko89xag+gv11Npz
-	mhtWX3cncx/5YAyOSU4bKobVkm3QXVW/tfPeWefv7Ay6FHdwjfj4SieXHJ96hNuUU61yTfZFibn
-	4/28Rh8oygKsM423Z0a+nRpyFlZa5D8SC3CDwghd/gDfLvvfogF8sAwAN+gO55wcVDJEadjqoB8
-	KMgnfO0UgOBsYUEbM6xc5T/2zu8nwnZ3XSk1JgjGyJTq1HzseSx+kwjcOA==
-X-Google-Smtp-Source: AGHT+IF+lRwCFoZ/rYv2lYXMEsn99+2d5jWGkVFmY3F0KjL0NpDI7z/zZK2DhXNxEYNjhrHWOodACA==
-X-Received: by 2002:a17:907:a088:b0:abb:b1ce:b4ed with SMTP id a640c23a62f3a-abbccc4df42mr258290166b.8.1739955531800;
-        Wed, 19 Feb 2025 00:58:51 -0800 (PST)
-Received: from [192.168.0.9] (pc-201-96-67-156-static.strong-pc.com. [156.67.96.201])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abbb186c5d5sm352597966b.51.2025.02.19.00.58.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Feb 2025 00:58:51 -0800 (PST)
-Message-ID: <bee822ff-b6eb-47ab-8d6d-af11e89ef5b2@gmail.com>
-Date: Wed, 19 Feb 2025 09:58:50 +0100
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IRVpYhn9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E7DC4CED1;
+	Wed, 19 Feb 2025 08:58:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1739955538;
+	bh=AVICKPMZguHil36II4j1RhxyWDq+aR9gT0UMgq573D0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=IRVpYhn9SDWrRMLPlHW8kScmFFM7it2Lu1tiEGnQRWHu59+OxHILEdBJo3D/T//RV
+	 GACJFctstY+60V5DDXQlrXMB67g6/8yvYPIgLFrIt00t5rby4A8SRqRGu/WNeRBEI9
+	 2e0MVzp6qI2cXcfgDufNzPhb3D0PJbHVFoDLQsj0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Rakesh Babu Saladi <Saladi.Rakeshbabu@microchip.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 037/152] PCI: switchtec: Add Microchip PCI100X device IDs
+Date: Wed, 19 Feb 2025 09:27:30 +0100
+Message-ID: <20250219082551.505159153@linuxfoundation.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
+References: <20250219082550.014812078@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 097/230] drm/amdgpu/gfx9: manually control gfxoff for
- CS on RV
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Lijo Lazar <lijo.lazar@amd.com>,
- Sergey Kovalenko <seryoga.engineering@gmail.com>,
- Alex Deucher <alexander.deucher@amd.com>
-References: <20250219082601.683263930@linuxfoundation.org>
- <20250219082605.490351110@linuxfoundation.org>
-Content-Language: en-US, pl-PL
-From: =?UTF-8?B?QsWCYcW8ZWogU3pjenlnaWXFgg==?= <mumei6102@gmail.com>
-In-Reply-To: <20250219082605.490351110@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-This patch has to be changed for 6.12 - "gfx_v9_0_set_powergating_state" 
-has 'amdgpu_device' argument instead of 'amdgpu_ip_block' argument there.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-On 2/19/25 09:26, Greg Kroah-Hartman wrote:
-> 6.12-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Alex Deucher <alexander.deucher@amd.com>
-> 
-> commit b35eb9128ebeec534eed1cefd6b9b1b7282cf5ba upstream.
-> 
-> When mesa started using compute queues more often
-> we started seeing additional hangs with compute queues.
-> Disabling gfxoff seems to mitigate that.  Manually
-> control gfxoff and gfx pg with command submissions to avoid
-> any issues related to gfxoff.  KFD already does the same
-> thing for these chips.
-> 
-> v2: limit to compute
-> v3: limit to APUs
-> v4: limit to Raven/PCO
-> v5: only update the compute ring_funcs
-> v6: Disable GFX PG
-> v7: adjust order
-> 
-> Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-> Suggested-by: Błażej Szczygieł <mumei6102@gmail.com>
-> Suggested-by: Sergey Kovalenko <seryoga.engineering@gmail.com>
-> Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3861
-> Link: https://lists.freedesktop.org/archives/amd-gfx/2025-January/119116.html
-> Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-> Cc: stable@vger.kernel.org # 6.12.x
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->   drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |   36 ++++++++++++++++++++++++++++++++--
->   1 file changed, 34 insertions(+), 2 deletions(-)
-> 
-> --- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-> @@ -7415,6 +7415,38 @@ static void gfx_v9_0_ring_emit_cleaner_s
->   	amdgpu_ring_write(ring, 0);  /* RESERVED field, programmed to zero */
->   }
->   
-> +static void gfx_v9_0_ring_begin_use_compute(struct amdgpu_ring *ring)
-> +{
-> +	struct amdgpu_device *adev = ring->adev;
-> +	struct amdgpu_ip_block *gfx_block =
-> +		amdgpu_device_ip_get_ip_block(adev, AMD_IP_BLOCK_TYPE_GFX);
-> +
-> +	amdgpu_gfx_enforce_isolation_ring_begin_use(ring);
-> +
-> +	/* Raven and PCO APUs seem to have stability issues
-> +	 * with compute and gfxoff and gfx pg.  Disable gfx pg during
-> +	 * submission and allow again afterwards.
-> +	 */
-> +	if (gfx_block && amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 1, 0))
-> +		gfx_v9_0_set_powergating_state(gfx_block, AMD_PG_STATE_UNGATE);
-> +}
-> +
-> +static void gfx_v9_0_ring_end_use_compute(struct amdgpu_ring *ring)
-> +{
-> +	struct amdgpu_device *adev = ring->adev;
-> +	struct amdgpu_ip_block *gfx_block =
-> +		amdgpu_device_ip_get_ip_block(adev, AMD_IP_BLOCK_TYPE_GFX);
-> +
-> +	/* Raven and PCO APUs seem to have stability issues
-> +	 * with compute and gfxoff and gfx pg.  Disable gfx pg during
-> +	 * submission and allow again afterwards.
-> +	 */
-> +	if (gfx_block && amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 1, 0))
-> +		gfx_v9_0_set_powergating_state(gfx_block, AMD_PG_STATE_GATE);
-> +
-> +	amdgpu_gfx_enforce_isolation_ring_end_use(ring);
-> +}
-> +
->   static const struct amd_ip_funcs gfx_v9_0_ip_funcs = {
->   	.name = "gfx_v9_0",
->   	.early_init = gfx_v9_0_early_init,
-> @@ -7591,8 +7623,8 @@ static const struct amdgpu_ring_funcs gf
->   	.emit_wave_limit = gfx_v9_0_emit_wave_limit,
->   	.reset = gfx_v9_0_reset_kcq,
->   	.emit_cleaner_shader = gfx_v9_0_ring_emit_cleaner_shader,
-> -	.begin_use = amdgpu_gfx_enforce_isolation_ring_begin_use,
-> -	.end_use = amdgpu_gfx_enforce_isolation_ring_end_use,
-> +	.begin_use = gfx_v9_0_ring_begin_use_compute,
-> +	.end_use = gfx_v9_0_ring_end_use_compute,
->   };
->   
->   static const struct amdgpu_ring_funcs gfx_v9_0_ring_funcs_kiq = {
-> 
-> 
+------------------
+
+From: Rakesh Babu Saladi <Saladi.Rakeshbabu@microchip.com>
+
+[ Upstream commit a3282f84b2151d254dc4abf24d1255c6382be774 ]
+
+Add Microchip parts to the Device ID table so the driver supports PCI100x
+devices.
+
+Add a new macro to quirk the Microchip Switchtec PCI100x parts to allow DMA
+access via NTB to work when the IOMMU is turned on.
+
+PCI100x family has 6 variants; each variant is designed for different
+application usages, different port counts and lane counts:
+
+  PCI1001 has 1 x4 upstream port and 3 x4 downstream ports
+  PCI1002 has 1 x4 upstream port and 4 x2 downstream ports
+  PCI1003 has 2 x4 upstream ports, 2 x2 upstream ports, and 2 x2
+    downstream ports
+  PCI1004 has 4 x4 upstream ports
+  PCI1005 has 1 x4 upstream port and 6 x2 downstream ports
+  PCI1006 has 6 x2 upstream ports and 2 x2 downstream ports
+
+[Historical note: these parts use PCI_VENDOR_ID_EFAR (0x1055), from EFAR
+Microsystems, which was acquired in 1996 by Standard Microsystems Corp,
+which was acquired by Microchip Technology in 2012.  The PCI-SIG confirms
+that Vendor ID 0x1055 is assigned to Microchip even though it's not
+visible via https://pcisig.com/membership/member-companies]
+
+Link: https://lore.kernel.org/r/20250120095524.243103-1-Saladi.Rakeshbabu@microchip.com
+Signed-off-by: Rakesh Babu Saladi <Saladi.Rakeshbabu@microchip.com>
+[bhelgaas: Vendor ID history]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-By: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/pci/quirks.c           | 11 +++++++++++
+ drivers/pci/switch/switchtec.c | 26 ++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+)
+
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index a256928fb126c..70f484b811dea 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5978,6 +5978,17 @@ SWITCHTEC_QUIRK(0x5552);  /* PAXA 52XG5 */
+ SWITCHTEC_QUIRK(0x5536);  /* PAXA 36XG5 */
+ SWITCHTEC_QUIRK(0x5528);  /* PAXA 28XG5 */
+ 
++#define SWITCHTEC_PCI100X_QUIRK(vid) \
++	DECLARE_PCI_FIXUP_CLASS_FINAL(PCI_VENDOR_ID_EFAR, vid, \
++		PCI_CLASS_BRIDGE_OTHER, 8, quirk_switchtec_ntb_dma_alias)
++SWITCHTEC_PCI100X_QUIRK(0x1001);  /* PCI1001XG4 */
++SWITCHTEC_PCI100X_QUIRK(0x1002);  /* PCI1002XG4 */
++SWITCHTEC_PCI100X_QUIRK(0x1003);  /* PCI1003XG4 */
++SWITCHTEC_PCI100X_QUIRK(0x1004);  /* PCI1004XG4 */
++SWITCHTEC_PCI100X_QUIRK(0x1005);  /* PCI1005XG4 */
++SWITCHTEC_PCI100X_QUIRK(0x1006);  /* PCI1006XG4 */
++
++
+ /*
+  * The PLX NTB uses devfn proxy IDs to move TLPs between NT endpoints.
+  * These IDs are used to forward responses to the originator on the other
+diff --git a/drivers/pci/switch/switchtec.c b/drivers/pci/switch/switchtec.c
+index 5a4adf6c04cf8..455fa5035a245 100644
+--- a/drivers/pci/switch/switchtec.c
++++ b/drivers/pci/switch/switchtec.c
+@@ -1737,6 +1737,26 @@ static void switchtec_pci_remove(struct pci_dev *pdev)
+ 		.driver_data = gen, \
+ 	}
+ 
++#define SWITCHTEC_PCI100X_DEVICE(device_id, gen) \
++	{ \
++		.vendor     = PCI_VENDOR_ID_EFAR, \
++		.device     = device_id, \
++		.subvendor  = PCI_ANY_ID, \
++		.subdevice  = PCI_ANY_ID, \
++		.class      = (PCI_CLASS_MEMORY_OTHER << 8), \
++		.class_mask = 0xFFFFFFFF, \
++		.driver_data = gen, \
++	}, \
++	{ \
++		.vendor     = PCI_VENDOR_ID_EFAR, \
++		.device     = device_id, \
++		.subvendor  = PCI_ANY_ID, \
++		.subdevice  = PCI_ANY_ID, \
++		.class      = (PCI_CLASS_BRIDGE_OTHER << 8), \
++		.class_mask = 0xFFFFFFFF, \
++		.driver_data = gen, \
++	}
++
+ static const struct pci_device_id switchtec_pci_tbl[] = {
+ 	SWITCHTEC_PCI_DEVICE(0x8531, SWITCHTEC_GEN3),  /* PFX 24xG3 */
+ 	SWITCHTEC_PCI_DEVICE(0x8532, SWITCHTEC_GEN3),  /* PFX 32xG3 */
+@@ -1831,6 +1851,12 @@ static const struct pci_device_id switchtec_pci_tbl[] = {
+ 	SWITCHTEC_PCI_DEVICE(0x5552, SWITCHTEC_GEN5),  /* PAXA 52XG5 */
+ 	SWITCHTEC_PCI_DEVICE(0x5536, SWITCHTEC_GEN5),  /* PAXA 36XG5 */
+ 	SWITCHTEC_PCI_DEVICE(0x5528, SWITCHTEC_GEN5),  /* PAXA 28XG5 */
++	SWITCHTEC_PCI100X_DEVICE(0x1001, SWITCHTEC_GEN4),  /* PCI1001 16XG4 */
++	SWITCHTEC_PCI100X_DEVICE(0x1002, SWITCHTEC_GEN4),  /* PCI1002 12XG4 */
++	SWITCHTEC_PCI100X_DEVICE(0x1003, SWITCHTEC_GEN4),  /* PCI1003 16XG4 */
++	SWITCHTEC_PCI100X_DEVICE(0x1004, SWITCHTEC_GEN4),  /* PCI1004 16XG4 */
++	SWITCHTEC_PCI100X_DEVICE(0x1005, SWITCHTEC_GEN4),  /* PCI1005 16XG4 */
++	SWITCHTEC_PCI100X_DEVICE(0x1006, SWITCHTEC_GEN4),  /* PCI1006 16XG4 */
+ 	{0}
+ };
+ MODULE_DEVICE_TABLE(pci, switchtec_pci_tbl);
+-- 
+2.39.5
+
+
 
