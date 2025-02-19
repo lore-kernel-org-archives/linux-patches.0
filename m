@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0721DE3BE;
-	Wed, 19 Feb 2025 08:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D8C1C726D;
+	Wed, 19 Feb 2025 08:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954947; cv=none; b=m+5tQw01a+O9ao2kONnD/1KpldGd18D/gQmDg6yLTDQU/JaR1SxqX8/G4VEF0x6KwBe/HAAy2e9/KZf90B5I9WeEli9PZy/yDo0p6C5y4D/BCcCarLGlhECZcSqbCTMXb0T2qRwbEXpMqgq3NwyqQ1Mou/NTKkKyxlmHv8tdUD4=
+	t=1739954950; cv=none; b=gr+8SRpITRIlqqEJS8/ml6W/8pvNdj/Fg8bI3O5YQ3wd+oh+yv2mqO7KPyoxp8xPMs8y/KfBS/EHTiHxJ0XVrnCnryCj3uL67N1/KoFIO7eRUrBEm6XYIR41n7axohjZ65a+dsz46CrmltSLS0yb51blHpo4tfou4r/5VfvqYu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954947; c=relaxed/simple;
-	bh=4guqVsx8NksCE1CHiVKwP0mZAXuavuC066R7+xa77sY=;
+	s=arc-20240116; t=1739954950; c=relaxed/simple;
+	bh=rJo/32JYH4K+K32MkYBE2yyPGvRNCvIJV0Wrfs2bgTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCwpQWliYJytHm1jYxDzYiUAYcMfeWS27J3QAsqNXENZDH/dSbJEjmcq37+nT0jBJFmTcqP72BkeVq9I1HY7eBgrrCeZ6e0wHoCPjTAPQHYiFwsqkxlPZqdLBm+Vg1VikrcfRa5183babxU2NoZRDZeV70QVjxXInaCeWV3snW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHveNFGV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l7FYVXeA24IO9wU0X0+DdKZdUZE3nAEzH5l290V4Ql92ipPQwRc2WX64Fg9efAzmasNks9Q11cKH+JGUlVZ1r9SsyijKdZ7kH4CNwdw5/wIbFWfzy8qXVMWBbGOtUVsDPR4bHTHzZW5AuVOAk8qltBVPc0IChOvqXmyISVbORI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhgtSCNM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHveNFGV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CBDC4CED1;
-	Wed, 19 Feb 2025 08:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhgtSCNM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C468BC4CEE6;
+	Wed, 19 Feb 2025 08:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954947;
-	bh=4guqVsx8NksCE1CHiVKwP0mZAXuavuC066R7+xa77sY=;
+	s=korg; t=1739954950;
+	bh=rJo/32JYH4K+K32MkYBE2yyPGvRNCvIJV0Wrfs2bgTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wHveNFGVAAPy4ERowbbqpsmuL3Ww+G2JWfSCeWFLHxVzqawItk7GbYkk4/YWEUzpK
-	 6Y1e89QwzFLsS5leSMeZzbSTmSsxSCm3yygwafJbsermNzppBNjIunqfYVy7nJIssM
-	 q+q5j+jbdByGNZRm8WSO6LMqK3Kr5loQxfgj+yhY=
+	b=nhgtSCNMFZE14gYqwty+clsaujxVxn5fmL+zrieJ+Ug4mIq7vQ1CAdtXPTmJ9trrS
+	 lBfpUHAOXvYFNUUbYLV/GVNxog9kLTNXGEUagTwalxxXV9pdJpGwJZXIGcZf9NLAa2
+	 ZCXfSwPLnRsehg/b416xYGROoQEgEuCoJI98zB3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Maksym Planeta <maksym@exostellar.io>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 085/230] fs/ntfs3: Unify inode corruption marking with _ntfs_bad_inode()
-Date: Wed, 19 Feb 2025 09:26:42 +0100
-Message-ID: <20250219082605.025193447@linuxfoundation.org>
+Subject: [PATCH 6.12 086/230] Grab mm lock before grabbing pt lock
+Date: Wed, 19 Feb 2025 09:26:43 +0100
+Message-ID: <20250219082605.063989045@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -50,158 +51,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Maksym Planeta <maksym@exostellar.io>
 
-[ Upstream commit 55ad333de0f80bc0caee10c6c27196cdcf8891bb ]
+[ Upstream commit 6d002348789bc16e9203e9818b7a3688787e3b29 ]
 
-Also reworked error handling in a couple of places.
+Function xen_pin_page calls xen_pte_lock, which in turn grab page
+table lock (ptlock). When locking, xen_pte_lock expect mm->page_table_lock
+to be held before grabbing ptlock, but this does not happen when pinning
+is caused by xen_mm_pin_all.
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+This commit addresses lockdep warning below, which shows up when
+suspending a Xen VM.
+
+[ 3680.658422] Freezing user space processes
+[ 3680.660156] Freezing user space processes completed (elapsed 0.001 seconds)
+[ 3680.660182] OOM killer disabled.
+[ 3680.660192] Freezing remaining freezable tasks
+[ 3680.661485] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
+[ 3680.685254]
+[ 3680.685265] ==================================
+[ 3680.685269] WARNING: Nested lock was not taken
+[ 3680.685274] 6.12.0+ #16 Tainted: G        W
+[ 3680.685279] ----------------------------------
+[ 3680.685283] migration/0/19 is trying to lock:
+[ 3680.685288] ffff88800bac33c0 (ptlock_ptr(ptdesc)#2){+.+.}-{3:3}, at: xen_pin_page+0x175/0x1d0
+[ 3680.685303]
+[ 3680.685303] but this task is not holding:
+[ 3680.685308] init_mm.page_table_lock
+[ 3680.685311]
+[ 3680.685311] stack backtrace:
+[ 3680.685316] CPU: 0 UID: 0 PID: 19 Comm: migration/0 Tainted: G        W          6.12.0+ #16
+[ 3680.685324] Tainted: [W]=WARN
+[ 3680.685328] Stopper: multi_cpu_stop+0x0/0x120 <- __stop_cpus.constprop.0+0x8c/0xd0
+[ 3680.685339] Call Trace:
+[ 3680.685344]  <TASK>
+[ 3680.685347]  dump_stack_lvl+0x77/0xb0
+[ 3680.685356]  __lock_acquire+0x917/0x2310
+[ 3680.685364]  lock_acquire+0xce/0x2c0
+[ 3680.685369]  ? xen_pin_page+0x175/0x1d0
+[ 3680.685373]  _raw_spin_lock_nest_lock+0x2f/0x70
+[ 3680.685381]  ? xen_pin_page+0x175/0x1d0
+[ 3680.685386]  xen_pin_page+0x175/0x1d0
+[ 3680.685390]  ? __pfx_xen_pin_page+0x10/0x10
+[ 3680.685394]  __xen_pgd_walk+0x233/0x2c0
+[ 3680.685401]  ? stop_one_cpu+0x91/0x100
+[ 3680.685405]  __xen_pgd_pin+0x5d/0x250
+[ 3680.685410]  xen_mm_pin_all+0x70/0xa0
+[ 3680.685415]  xen_pv_pre_suspend+0xf/0x280
+[ 3680.685420]  xen_suspend+0x57/0x1a0
+[ 3680.685428]  multi_cpu_stop+0x6b/0x120
+[ 3680.685432]  ? update_cpumasks_hier+0x7c/0xa60
+[ 3680.685439]  ? __pfx_multi_cpu_stop+0x10/0x10
+[ 3680.685443]  cpu_stopper_thread+0x8c/0x140
+[ 3680.685448]  ? smpboot_thread_fn+0x20/0x1f0
+[ 3680.685454]  ? __pfx_smpboot_thread_fn+0x10/0x10
+[ 3680.685458]  smpboot_thread_fn+0xed/0x1f0
+[ 3680.685462]  kthread+0xde/0x110
+[ 3680.685467]  ? __pfx_kthread+0x10/0x10
+[ 3680.685471]  ret_from_fork+0x2f/0x50
+[ 3680.685478]  ? __pfx_kthread+0x10/0x10
+[ 3680.685482]  ret_from_fork_asm+0x1a/0x30
+[ 3680.685489]  </TASK>
+[ 3680.685491]
+[ 3680.685491] other info that might help us debug this:
+[ 3680.685497] 1 lock held by migration/0/19:
+[ 3680.685500]  #0: ffffffff8284df38 (pgd_lock){+.+.}-{3:3}, at: xen_mm_pin_all+0x14/0xa0
+[ 3680.685512]
+[ 3680.685512] stack backtrace:
+[ 3680.685518] CPU: 0 UID: 0 PID: 19 Comm: migration/0 Tainted: G        W          6.12.0+ #16
+[ 3680.685528] Tainted: [W]=WARN
+[ 3680.685531] Stopper: multi_cpu_stop+0x0/0x120 <- __stop_cpus.constprop.0+0x8c/0xd0
+[ 3680.685538] Call Trace:
+[ 3680.685541]  <TASK>
+[ 3680.685544]  dump_stack_lvl+0x77/0xb0
+[ 3680.685549]  __lock_acquire+0x93c/0x2310
+[ 3680.685554]  lock_acquire+0xce/0x2c0
+[ 3680.685558]  ? xen_pin_page+0x175/0x1d0
+[ 3680.685562]  _raw_spin_lock_nest_lock+0x2f/0x70
+[ 3680.685568]  ? xen_pin_page+0x175/0x1d0
+[ 3680.685572]  xen_pin_page+0x175/0x1d0
+[ 3680.685578]  ? __pfx_xen_pin_page+0x10/0x10
+[ 3680.685582]  __xen_pgd_walk+0x233/0x2c0
+[ 3680.685588]  ? stop_one_cpu+0x91/0x100
+[ 3680.685592]  __xen_pgd_pin+0x5d/0x250
+[ 3680.685596]  xen_mm_pin_all+0x70/0xa0
+[ 3680.685600]  xen_pv_pre_suspend+0xf/0x280
+[ 3680.685607]  xen_suspend+0x57/0x1a0
+[ 3680.685611]  multi_cpu_stop+0x6b/0x120
+[ 3680.685615]  ? update_cpumasks_hier+0x7c/0xa60
+[ 3680.685620]  ? __pfx_multi_cpu_stop+0x10/0x10
+[ 3680.685625]  cpu_stopper_thread+0x8c/0x140
+[ 3680.685629]  ? smpboot_thread_fn+0x20/0x1f0
+[ 3680.685634]  ? __pfx_smpboot_thread_fn+0x10/0x10
+[ 3680.685638]  smpboot_thread_fn+0xed/0x1f0
+[ 3680.685642]  kthread+0xde/0x110
+[ 3680.685645]  ? __pfx_kthread+0x10/0x10
+[ 3680.685649]  ret_from_fork+0x2f/0x50
+[ 3680.685654]  ? __pfx_kthread+0x10/0x10
+[ 3680.685657]  ret_from_fork_asm+0x1a/0x30
+[ 3680.685662]  </TASK>
+[ 3680.685267] xen:grant_table: Grant tables using version 1 layout
+[ 3680.685921] OOM killer enabled.
+[ 3680.685934] Restarting tasks ... done.
+
+Signed-off-by: Maksym Planeta <maksym@exostellar.io>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20241204103516.3309112-1-maksym@exostellar.io>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c  |  4 ++--
- fs/ntfs3/dir.c     |  2 +-
- fs/ntfs3/frecord.c | 12 +++++++-----
- fs/ntfs3/fsntfs.c  |  6 +++++-
- fs/ntfs3/index.c   |  6 ++----
- fs/ntfs3/inode.c   |  3 +++
- 6 files changed, 20 insertions(+), 13 deletions(-)
+ arch/x86/xen/mmu_pv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index 8d789b017fa9b..da1a9312e61a0 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -1406,7 +1406,7 @@ int attr_wof_frame_info(struct ntfs_inode *ni, struct ATTRIB *attr,
- 	 */
- 	if (!attr->non_res) {
- 		if (vbo[1] + bytes_per_off > le32_to_cpu(attr->res.data_size)) {
--			ntfs_inode_err(&ni->vfs_inode, "is corrupted");
-+			_ntfs_bad_inode(&ni->vfs_inode);
- 			return -EINVAL;
- 		}
- 		addr = resident_data(attr);
-@@ -2587,7 +2587,7 @@ int attr_force_nonresident(struct ntfs_inode *ni)
+diff --git a/arch/x86/xen/mmu_pv.c b/arch/x86/xen/mmu_pv.c
+index ffdf0d299c5d7..d078de2c952b3 100644
+--- a/arch/x86/xen/mmu_pv.c
++++ b/arch/x86/xen/mmu_pv.c
+@@ -826,6 +826,7 @@ void xen_mm_pin_all(void)
+ {
+ 	struct page *page;
  
- 	attr = ni_find_attr(ni, NULL, &le, ATTR_DATA, NULL, 0, NULL, &mi);
- 	if (!attr) {
--		ntfs_bad_inode(&ni->vfs_inode, "no data attribute");
-+		_ntfs_bad_inode(&ni->vfs_inode);
- 		return -ENOENT;
++	spin_lock(&init_mm.page_table_lock);
+ 	spin_lock(&pgd_lock);
+ 
+ 	list_for_each_entry(page, &pgd_list, lru) {
+@@ -836,6 +837,7 @@ void xen_mm_pin_all(void)
  	}
  
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index fc6a8aa29e3af..b6da80c69ca63 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -512,7 +512,7 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
- 		ctx->pos = pos;
- 	} else if (err < 0) {
- 		if (err == -EINVAL)
--			ntfs_inode_err(dir, "directory corrupted");
-+			_ntfs_bad_inode(dir);
- 		ctx->pos = eod;
- 	}
- 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index c33e818b3164c..175662acd5eaf 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -148,8 +148,10 @@ int ni_load_mi_ex(struct ntfs_inode *ni, CLST rno, struct mft_inode **mi)
- 		goto out;
- 
- 	err = mi_get(ni->mi.sbi, rno, &r);
--	if (err)
-+	if (err) {
-+		_ntfs_bad_inode(&ni->vfs_inode);
- 		return err;
-+	}
- 
- 	ni_add_mi(ni, r);
- 
-@@ -238,8 +240,7 @@ struct ATTRIB *ni_find_attr(struct ntfs_inode *ni, struct ATTRIB *attr,
- 	return attr;
- 
- out:
--	ntfs_inode_err(&ni->vfs_inode, "failed to parse mft record");
--	ntfs_set_state(ni->mi.sbi, NTFS_DIRTY_ERROR);
-+	_ntfs_bad_inode(&ni->vfs_inode);
- 	return NULL;
+ 	spin_unlock(&pgd_lock);
++	spin_unlock(&init_mm.page_table_lock);
  }
  
-@@ -330,6 +331,7 @@ struct ATTRIB *ni_load_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
- 	    vcn <= le64_to_cpu(attr->nres.evcn))
- 		return attr;
+ static void __init xen_mark_pinned(struct mm_struct *mm, struct page *page,
+@@ -935,6 +937,7 @@ void xen_mm_unpin_all(void)
+ {
+ 	struct page *page;
  
-+	_ntfs_bad_inode(&ni->vfs_inode);
- 	return NULL;
- }
++	spin_lock(&init_mm.page_table_lock);
+ 	spin_lock(&pgd_lock);
  
-@@ -1604,8 +1606,8 @@ int ni_delete_all(struct ntfs_inode *ni)
- 		roff = le16_to_cpu(attr->nres.run_off);
- 
- 		if (roff > asize) {
--			_ntfs_bad_inode(&ni->vfs_inode);
--			return -EINVAL;
-+			/* ni_enum_attr_ex checks this case. */
-+			continue;
- 		}
- 
- 		/* run==1 means unpack and deallocate. */
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index 0fa636038b4e4..6c73e93afb478 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -908,7 +908,11 @@ void ntfs_bad_inode(struct inode *inode, const char *hint)
- 
- 	ntfs_inode_err(inode, "%s", hint);
- 	make_bad_inode(inode);
--	ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
-+	/* Avoid recursion if bad inode is $Volume. */
-+	if (inode->i_ino != MFT_REC_VOL &&
-+	    !(sbi->flags & NTFS_FLAGS_LOG_REPLAYING)) {
-+		ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
-+	}
- }
- 
- /*
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index 9089c58a005ce..7eb9fae22f8da 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -1094,8 +1094,7 @@ int indx_read(struct ntfs_index *indx, struct ntfs_inode *ni, CLST vbn,
- 
- ok:
- 	if (!index_buf_check(ib, bytes, &vbn)) {
--		ntfs_inode_err(&ni->vfs_inode, "directory corrupted");
--		ntfs_set_state(ni->mi.sbi, NTFS_DIRTY_ERROR);
-+		_ntfs_bad_inode(&ni->vfs_inode);
- 		err = -EINVAL;
- 		goto out;
- 	}
-@@ -1117,8 +1116,7 @@ int indx_read(struct ntfs_index *indx, struct ntfs_inode *ni, CLST vbn,
- 
- out:
- 	if (err == -E_NTFS_CORRUPT) {
--		ntfs_inode_err(&ni->vfs_inode, "directory corrupted");
--		ntfs_set_state(ni->mi.sbi, NTFS_DIRTY_ERROR);
-+		_ntfs_bad_inode(&ni->vfs_inode);
- 		err = -EINVAL;
+ 	list_for_each_entry(page, &pgd_list, lru) {
+@@ -946,6 +949,7 @@ void xen_mm_unpin_all(void)
  	}
  
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index be04d2845bb7b..a1e11228dafd0 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -410,6 +410,9 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 	if (!std5)
- 		goto out;
+ 	spin_unlock(&pgd_lock);
++	spin_unlock(&init_mm.page_table_lock);
+ }
  
-+	if (is_bad_inode(inode))
-+		goto out;
-+
- 	if (!is_match && name) {
- 		err = -ENOENT;
- 		goto out;
+ static void xen_enter_mmap(struct mm_struct *mm)
 -- 
 2.39.5
 
