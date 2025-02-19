@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FF61B4F21;
-	Wed, 19 Feb 2025 09:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8AD1B4F21;
+	Wed, 19 Feb 2025 09:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956486; cv=none; b=BS6j/02RidkqUCQZCAo1YpujSGqJATW8nfRieyVqsI17ZmpJj39/RklL63KDjLGhzEKHnWwSXHkO3nF1iBFeN5v/E+MvgaIpL3GwGNrDbiwaeqNdLxMtC51lbgdxn89JPhDIc26IvbOcvOiL1CEKsrm18y8u2OgZvdGNAeIgcRg=
+	t=1739956489; cv=none; b=g8AT78NzKVqkFmYo1yX2a0BKVkG2aa8md06UZT6EcTJHOoDzVez+yjbrYjJq9rLaUmE2PpQQTbRrUlOijFTB0SYFB6EaqUT4Puwz7V+41LzILWtAAqdcdul/TZ5v6IdvVPpSkmrV1r8kDBJJG1/1i77yTpwxvGja67CxaLYpOeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956486; c=relaxed/simple;
-	bh=zQ7ACg1w4BXQGRH9SWQgyuDubza2W281ubV1aNZwRfI=;
+	s=arc-20240116; t=1739956489; c=relaxed/simple;
+	bh=bNXq2+vzF83eG/w/8rSbr2DwAUdipB+8tPAPfBSsofs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V05fD4ji8PiflD0HFLUbqpj9gvkKapv9RrwJeHpx+Yjs1ZLtRQ9cD15qKg5gHfv0weRtmQUZdWLgesAEMPywg6PZg7c92TRCHB/e4SFvy8ZKr30y2rR40AJhh0LiulfuBmjo5dsdiqRosLqV5k0sCIAf9HsT/y2VH9IKh89lHL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdHG39jU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=etYa74J31B+fozLa4vxQiexGHnX1Gsi7V2Xe3zCLRHWFfVwc4CoNz49fo9at4nUtGALCcvJqOjR80Co0X94fSh9O3B6mHIqJjtDOBTzdqM7MFQT5oLu38K8O8Q+fJzp9pMAi+4LDfSya4FuG9hR3S/vUsfG5FAOYR29d3HtvymY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQLeypjK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdHG39jU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8857DC4CED1;
-	Wed, 19 Feb 2025 09:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQLeypjK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62549C4CED1;
+	Wed, 19 Feb 2025 09:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956485;
-	bh=zQ7ACg1w4BXQGRH9SWQgyuDubza2W281ubV1aNZwRfI=;
+	s=korg; t=1739956488;
+	bh=bNXq2+vzF83eG/w/8rSbr2DwAUdipB+8tPAPfBSsofs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qdHG39jUvRG9zRuwADL04Sw6+R6wxKKj5WaZPYXsOUu6y6RhQUdEYI1wwuJG6jEvC
-	 HYsqkQ7cXpANlUYQ0d+03Qf+CAp3oeZ1PtUSGAcSoFBnvv3gQ5NFhSvdfEwYi8KQWj
-	 NI0Jz/8O5lGTYh14OxRG/gWvfUW7yQdxCn2dEM5U=
+	b=UQLeypjK8iJ+s8EfsrYXeMmqmAy5LM+MqLMtwFJ9VQhy4q/0GEjl/1oat03TlBuJy
+	 m7JA92cefbpJ9FEo329BopjkT9O0UZsrKS6GIN34UChUXaLJvpH1EMLcXyE1Q0Gjtv
+	 mknwXftksgC2KPSrzOSEm5uuzV1Nncm6LefRHkcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 195/578] media: camif-core: Add check for clk_enable()
-Date: Wed, 19 Feb 2025 09:23:19 +0100
-Message-ID: <20250219082700.630797266@linuxfoundation.org>
+Subject: [PATCH 6.1 178/578] dts: arm64: mediatek: mt8195: Remove MT8183 compatible for OVL
+Date: Wed, 19 Feb 2025 09:23:02 +0100
+Message-ID: <20250219082659.968295870@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -53,48 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
 
-[ Upstream commit 77ed2470ac09c2b0a33cf3f98cc51d18ba9ed976 ]
+[ Upstream commit ce3dbc46d7e30a84b8e99c730e3172dd5efbf094 ]
 
-Add check for the return value of clk_enable() to gurantee the success.
+The OVL hardware capabilities have changed starting from MT8195,
+making the MT8183 compatible no longer applicable.
+Therefore, it is necessary to remove the MT8183 compatible for OVL.
 
-Fixes: babde1c243b2 ("[media] V4L: Add driver for S3C24XX/S3C64XX SoC series camera interface")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+Fixes: b852ee68fd72 ("arm64: dts: mt8195: Add display node for vdosys0")
+Link: https://lore.kernel.org/r/20241219181531.4282-5-jason-jh.lin@mediatek.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/samsung/s3c-camif/camif-core.c   | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/samsung/s3c-camif/camif-core.c b/drivers/media/platform/samsung/s3c-camif/camif-core.c
-index 6e8ef86566b78..38c586b01b174 100644
---- a/drivers/media/platform/samsung/s3c-camif/camif-core.c
-+++ b/drivers/media/platform/samsung/s3c-camif/camif-core.c
-@@ -528,10 +528,19 @@ static int s3c_camif_remove(struct platform_device *pdev)
- static int s3c_camif_runtime_resume(struct device *dev)
- {
- 	struct camif_dev *camif = dev_get_drvdata(dev);
-+	int ret;
-+
-+	ret = clk_enable(camif->clock[CLK_GATE]);
-+	if (ret)
-+		return ret;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index aa8fbaf15e629..274edce5d5e6e 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -2000,7 +2000,7 @@
+ 		};
  
--	clk_enable(camif->clock[CLK_GATE]);
- 	/* null op on s3c244x */
--	clk_enable(camif->clock[CLK_CAM]);
-+	ret = clk_enable(camif->clock[CLK_CAM]);
-+	if (ret) {
-+		clk_disable(camif->clock[CLK_GATE]);
-+		return ret;
-+	}
-+
- 	return 0;
- }
- 
+ 		ovl0: ovl@1c000000 {
+-			compatible = "mediatek,mt8195-disp-ovl", "mediatek,mt8183-disp-ovl";
++			compatible = "mediatek,mt8195-disp-ovl";
+ 			reg = <0 0x1c000000 0 0x1000>;
+ 			interrupts = <GIC_SPI 636 IRQ_TYPE_LEVEL_HIGH 0>;
+ 			power-domains = <&spm MT8195_POWER_DOMAIN_VDOSYS0>;
 -- 
 2.39.5
 
