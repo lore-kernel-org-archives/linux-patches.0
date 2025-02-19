@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2FD28629E;
-	Wed, 19 Feb 2025 09:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B9628629E;
+	Wed, 19 Feb 2025 09:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957044; cv=none; b=ZICs+0YYfYPww7PA+j7LpBGPUP9JqHmOmhA64gCo1vypba20KIBsS9zPbkchTIpJvx7I0Lh4JW1zCmMkgwyR45KZXH/kJR5YdQK3uXluAwHpryvC7TszUL3WFmxUX0AADyUYmObKV69EJecyIkAzIrSy3VmVx3LBuGS7MnCprSs=
+	t=1739957047; cv=none; b=MY5MxFuOV9Q7rBkEkgIdHz6JGKFoxgmDuIxhPvKamulR4Es6V6l4UlexS07BtjzYA8wm5s3Lt2PYJpyjhJHGJFhRKMqCu37ikVezWHsTYkEhVHv9gaD4MCxCm+fy7bpeSiL7WbxP8AS/134Vd6NTGsguhHwe1UroGpdm9kNXjM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957044; c=relaxed/simple;
-	bh=B+r8h714TzZDm6/GVMEkluR8B14H0xEGN7CWnfVNZlM=;
+	s=arc-20240116; t=1739957047; c=relaxed/simple;
+	bh=CCpxzaLAqwkfGWZkmjkX6DT+tg82jyPOylvBedoXLvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b97yUwJdfENznOclD2Avk2J8ZTZmZ6zoyklWgZFShgYxs6AvqSuyjY37wxQCZFpNsLorUYvrow87T59nl07gBU42f0YmeCMIdiuP0kT4axGDPL5zwfoWgPtnJr5C/L614x9SyGxf0R6i5S/atCZBLBNiV197Ek7bue3vDDkNH9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TOCM0HTs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HGkq37zvdT29wkxpEc3zzGVCd4lREKohkFkp/QQCeFpjvMNE1tUiBNdNlwASDOmBLzAa1WJ1IqMD1GiXH2ktyZ+V4EE4u7xeSzjILnuQ9eFGceCmtC6jwIBkoDBzd4ek0mUypWfFfEn52/QmMRDAgY5bBOBcbh8oAXwEH9raJRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bK5yEg6P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TOCM0HTs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73487C4CED1;
-	Wed, 19 Feb 2025 09:24:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bK5yEg6P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C247C4CED1;
+	Wed, 19 Feb 2025 09:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957044;
-	bh=B+r8h714TzZDm6/GVMEkluR8B14H0xEGN7CWnfVNZlM=;
+	s=korg; t=1739957046;
+	bh=CCpxzaLAqwkfGWZkmjkX6DT+tg82jyPOylvBedoXLvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TOCM0HTsr826i+Z6asYdcmKzxLxG9bXT8iUj3vpqAv/wpWRI9VisGUkwxqfUa1D6C
-	 1gWfaJnrB7FAtHvC1rXmXi7XHKR24wAQmMLPKkjUIrUQaKRFfi9CdLyxgm6IPfGwbo
-	 Bql0oWWkbv9IqSTqJqhajP7fdrVWl7897YTtKABY=
+	b=bK5yEg6PCV2l7l1K2YDZk+c5NI32H/7BGv4CaM3er3KN4mb9BJWkwTF21QEsfztn3
+	 J7G2uWZPxnL71XH/AOhew7KBV6koOijguJz3FKSos7PJy0SF0LHccZzctQ/ZsBgP8w
+	 HXTQalb5eS3e9+Y43SfN0/GpDryZ2upoH0gvlBcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 357/578] clk: qcom: clk-alpha-pll: fix alpha mode configuration
-Date: Wed, 19 Feb 2025 09:26:01 +0100
-Message-ID: <20250219082707.065628629@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 348/578] ksmbd: fix integer overflows on 32 bit systems
+Date: Wed, 19 Feb 2025 09:25:52 +0100
+Message-ID: <20250219082706.708091467@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,81 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 33f1722eb86e45320a3dd7b3d42f6593a1d595c2 upstream.
+commit aab98e2dbd648510f8f51b83fbf4721206ccae45 upstream.
 
-Commit c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
-added support for configuring alpha mode, but it seems that the feature
-was never working in practice.
+On 32bit systems the addition operations in ipc_msg_alloc() can
+potentially overflow leading to memory corruption.
+Add bounds checking using KSMBD_IPC_MAX_PAYLOAD to avoid overflow.
 
-The value of the alpha_{en,mode}_mask members of the configuration gets
-added to the value parameter passed to the regmap_update_bits() function,
-however the same values are not getting applied to the bitmask. As the
-result, the respective bits in the USER_CTL register are never modifed
-which leads to improper configuration of several PLLs.
-
-The following table shows the PLL configurations where the 'alpha_en_mask'
-member is set and which are passed as a parameter for the
-clk_alpha_pll_configure() function. In the table the 'expected rate' column
-shows the rate the PLL should run at with the given configuration, and
-the 'real rate' column shows the rate the PLL runs at actually. The real
-rates has been verified on hardwareOn IPQ* platforms, on other platforms,
-those are computed values only.
-
-      file                 pll         expected rate   real rate
-  dispcc-qcm2290.c     disp_cc_pll0      768.0 MHz     768.0 MHz
-  dispcc-sm6115.c      disp_cc_pll0      768.0 MHz     768.0 MHz
-  gcc-ipq5018.c        ubi32_pll        1000.0 MHz !=  984.0 MHz
-  gcc-ipq6018.c        nss_crypto_pll   1200.0 MHz    1200.0 MHz
-  gcc-ipq6018.c        ubi32_pll        1497.6 MHz != 1488.0 MHz
-  gcc-ipq8074.c        nss_crypto_pll   1200.0 MHz != 1190.4 MHz
-  gcc-qcm2290.c        gpll11            532.0 MHz !=  518.4 MHz
-  gcc-qcm2290.c        gpll8             533.2 MHz !=  518.4 MHz
-  gcc-qcs404.c         gpll3             921.6 MHz     921.6 MHz
-  gcc-sm6115.c         gpll11            600.0 MHz !=  595.2 MHz
-  gcc-sm6115.c         gpll8             800.0 MHz !=  787.2 MHz
-  gpucc-sdm660.c       gpu_cc_pll0       800.0 MHz !=  787.2 MHz
-  gpucc-sdm660.c       gpu_cc_pll1       740.0 MHz !=  729.6 MHz
-  gpucc-sm6115.c       gpu_cc_pll0      1200.0 MHz != 1190.4 MHz
-  gpucc-sm6115.c       gpu_cc_pll1       640.0 MHz !=  633.6 MHz
-  gpucc-sm6125.c       gpu_pll0         1020.0 MHz != 1017.6 MHz
-  gpucc-sm6125.c       gpu_pll1          930.0 MHz !=  921.6 MHz
-  mmcc-sdm660.c        mmpll8            930.0 MHz !=  921.6 MHz
-  mmcc-sdm660.c        mmpll5            825.0 MHz !=  806.4 MHz
-
-As it can be seen from the above, there are several PLLs which are
-configured incorrectly.
-
-Change the code to apply both 'alpha_en_mask' and 'alpha_mode_mask'
-values to the bitmask in order to configure the alpha mode correctly.
-
-Applying the 'alpha_en_mask' fixes the initial rate of the PLLs showed
-in the table above. Since the 'alpha_mode_mask' is not used by any driver
-currently, that part of the change causes no functional changes.
-
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
 Cc: stable@vger.kernel.org
-Fixes: c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://lore.kernel.org/r/20241021-fix-alpha-mode-config-v1-1-f32c254e02bc@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/server/transport_ipc.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -339,6 +339,8 @@ void clk_alpha_pll_configure(struct clk_
- 	mask |= config->pre_div_mask;
- 	mask |= config->post_div_mask;
- 	mask |= config->vco_mask;
-+	mask |= config->alpha_en_mask;
-+	mask |= config->alpha_mode_mask;
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -567,6 +567,9 @@ ksmbd_ipc_spnego_authen_request(const ch
+ 	struct ksmbd_spnego_authen_request *req;
+ 	struct ksmbd_spnego_authen_response *resp;
  
- 	regmap_update_bits(regmap, PLL_USER_CTL(pll), mask, val);
++	if (blob_len > KSMBD_IPC_MAX_PAYLOAD)
++		return NULL;
++
+ 	msg = ipc_msg_alloc(sizeof(struct ksmbd_spnego_authen_request) +
+ 			blob_len + 1);
+ 	if (!msg)
+@@ -746,6 +749,9 @@ struct ksmbd_rpc_command *ksmbd_rpc_writ
+ 	struct ksmbd_rpc_command *req;
+ 	struct ksmbd_rpc_command *resp;
  
++	if (payload_sz > KSMBD_IPC_MAX_PAYLOAD)
++		return NULL;
++
+ 	msg = ipc_msg_alloc(sizeof(struct ksmbd_rpc_command) + payload_sz + 1);
+ 	if (!msg)
+ 		return NULL;
+@@ -794,6 +800,9 @@ struct ksmbd_rpc_command *ksmbd_rpc_ioct
+ 	struct ksmbd_rpc_command *req;
+ 	struct ksmbd_rpc_command *resp;
+ 
++	if (payload_sz > KSMBD_IPC_MAX_PAYLOAD)
++		return NULL;
++
+ 	msg = ipc_msg_alloc(sizeof(struct ksmbd_rpc_command) + payload_sz + 1);
+ 	if (!msg)
+ 		return NULL;
 
 
