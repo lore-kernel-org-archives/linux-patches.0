@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB811C6FE3;
-	Wed, 19 Feb 2025 08:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312CA1CAA6F;
+	Wed, 19 Feb 2025 08:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739953932; cv=none; b=XZq2QgLHDt0WPcczXVdt6YV+10UTIBP71/bU9JSUmAskdLl/PM9013q40XriRm2fKyQXhju+LW1KgeuXTUE34CSX1j10AQHdp23sWL7kpZICu8wMX59O7Hb7NgsyEEN0EeHDsKhTYwdJ2qLn9wSWBy7aHDNMKF8KygCF3m22NTg=
+	t=1739953935; cv=none; b=ZNEHaF4pnaufZga41CCvQnfp5twnZlyPg+E5+u4z/b1sEPH7w/l7fodOlJAVxzs7ONnEVst8RKOcBbkItTcSPlpGRx+W5nBxdgfnA6AZHM0b3OJWfyYi7RK6p2t6HWkHzwANA3aruXGfkifBkcxejNlar1b5xsuQANjTo65kAg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739953932; c=relaxed/simple;
-	bh=Ynhag8F+6Nzkl3CPrKIfa2OBQJHQ1EQ59JyucLhqbBk=;
+	s=arc-20240116; t=1739953935; c=relaxed/simple;
+	bh=MRK73paQdeqRSiFiMqxavWDrGk2eXS04lJF6LLNxHgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M9sMURRB5V5PiROpJ4sUKVsEGrIgqyJgQSGS3LQyYkyyrV/U2QqnmM88eH3nddGZel4NFn3ZdwFBk7EsoAW5+F3Enxi5HkXu/pF419WwUXFP5r/D5Pxlfqq9/OfhOZ8m7pNSqzAVW/vkiCS13v2eOtTajJrQz7wBQwnRdzsLgtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrX6BDLc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=L9MqqBkQaB9j/KaVh+LXcfckTAxHchZfc9iCHGfEYi7f6E7P5ic/TihD7KN5hwvxcXC9EE5OVnkL/X1OeyaFBHy4Sl1KF19ivD8kKsmnsL1d1A7sC1VrZm8IAGiby3Z4RXx8dhflyhP0AcViCO43RMRKWWykqdXJgV2VReFau0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfmUdqZG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrX6BDLc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D700C4CED1;
-	Wed, 19 Feb 2025 08:32:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfmUdqZG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49F3C4CED1;
+	Wed, 19 Feb 2025 08:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739953932;
-	bh=Ynhag8F+6Nzkl3CPrKIfa2OBQJHQ1EQ59JyucLhqbBk=;
+	s=korg; t=1739953935;
+	bh=MRK73paQdeqRSiFiMqxavWDrGk2eXS04lJF6LLNxHgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yrX6BDLcz/Pb9X+NzfDc/S2FtzhgQRIwALo/qVatvoTZCVB543NVXbzFOCllCcf4c
-	 LuUzGyR7y7dW8b2HsDLP3W4hxEmYdWK+E6gRUBHyI7G13umnrkyUkqDbNOL4FyvI0i
-	 5K2d8EtVRf3mTJIpBf0FClA4/eE/luCrM7UYuC8Q=
+	b=xfmUdqZGeFa5pInZtnvMP4jEe2EmRXHoSRquvawOJJb298nNW1JC60PQ52u9sV7/a
+	 TwibQrFRpikqE5BnJxGpmMKjb6uhwFxnqozS8SknEqWJG5UzG5LypUWkMliglD5v3P
+	 43x3O1ZKAeKsrr6y7l+mi5mpQ5jhYT6sDLh49XXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
+	Axel Busch <axel.busch@ibm.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Muhammad Adeel <muhammad.adeel@ibm.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 043/274] drm/panthor: avoid garbage value in panthor_ioctl_dev_query()
-Date: Wed, 19 Feb 2025 09:24:57 +0100
-Message-ID: <20250219082611.211278228@linuxfoundation.org>
+Subject: [PATCH 6.13 044/274] cgroup: Remove steal time from usage_usec
+Date: Wed, 19 Feb 2025 09:24:58 +0100
+Message-ID: <20250219082611.248569345@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -47,44 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Muhammad Adeel <Muhammad.Adeel@ibm.com>
 
-[ Upstream commit 3b32b7f638fe61e9d29290960172f4e360e38233 ]
+[ Upstream commit db5fd3cf8bf41b84b577b8ad5234ea95f327c9be ]
 
-'priorities_info' is uninitialized, and the uninitialized value is copied
-to user object when calling PANTHOR_UOBJ_SET(). Using memset to initialize
-'priorities_info' to avoid this garbage value problem.
+The CPU usage time is the time when user, system or both are using the CPU.
+Steal time is the time when CPU is waiting to be run by the Hypervisor. It
+should not be added to the CPU usage time, hence removing it from the
+usage_usec entry.
 
-Fixes: f70000ef2352 ("drm/panthor: Add DEV_QUERY_GROUP_PRIORITIES_INFO dev query")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250119025828.1168419-1-suhui@nfschina.com
+Fixes: 936f2a70f2077 ("cgroup: add cpu.stat file to root cgroup")
+Acked-by: Axel Busch <axel.busch@ibm.com>
+Acked-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Muhammad Adeel <muhammad.adeel@ibm.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_drv.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/cgroup/rstat.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_drv.c b/drivers/gpu/drm/panthor/panthor_drv.c
-index 0b3fbee3d37a8..44f5c72d46c3f 100644
---- a/drivers/gpu/drm/panthor/panthor_drv.c
-+++ b/drivers/gpu/drm/panthor/panthor_drv.c
-@@ -802,6 +802,7 @@ static void panthor_query_group_priorities_info(struct drm_file *file,
- {
- 	int prio;
+diff --git a/kernel/cgroup/rstat.c b/kernel/cgroup/rstat.c
+index 5877974ece92c..aac91466279f1 100644
+--- a/kernel/cgroup/rstat.c
++++ b/kernel/cgroup/rstat.c
+@@ -590,7 +590,6 @@ static void root_cgroup_cputime(struct cgroup_base_stat *bstat)
  
-+	memset(arg, 0, sizeof(*arg));
- 	for (prio = PANTHOR_GROUP_PRIORITY_REALTIME; prio >= 0; prio--) {
- 		if (!group_priority_permit(file, prio))
- 			arg->allowed_mask |= BIT(prio);
+ 		cputime->sum_exec_runtime += user;
+ 		cputime->sum_exec_runtime += sys;
+-		cputime->sum_exec_runtime += cpustat[CPUTIME_STEAL];
+ 
+ #ifdef CONFIG_SCHED_CORE
+ 		bstat->forceidle_sum += cpustat[CPUTIME_FORCEIDLE];
 -- 
 2.39.5
 
