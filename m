@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27911E5203;
-	Wed, 19 Feb 2025 08:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F418D1E51F7;
+	Wed, 19 Feb 2025 08:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954257; cv=none; b=aLTw2BNKLpnPB49S12KSDmI2rIBG9CJkeiyygrqNe6LDJFY0Vidnr2+7QI9d234dpvuW99OcbDuqBDq5IXjOYS8BIkOgJ0bjcHRTWK+erHSBz15TfhXUNC2WqnJjOPV9OkPOPm///nlzuHqE6OHrIyQ2HflWINI2lwgFokiVriI=
+	t=1739954260; cv=none; b=egKRUOnaiVXnnLjOtQzEWbSTSGEaob9BmZ9nvt7a1PO0nIZRvCBd5xAtUJ/ab2oLdKsH7JRULqZWvvcYER/TV1c20xsoc9l+tOwe7rwCYWeTRoo5ISUe/Sv7LWSZxuxX/aZrPBmtfIqUvX0ibetqPw28xAVt60uF8w+1KN+xrWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954257; c=relaxed/simple;
-	bh=ajCksjW2+/LjhVeR2kbRdqnjfepRTHU7qJrHYO6rZS8=;
+	s=arc-20240116; t=1739954260; c=relaxed/simple;
+	bh=WOOiql+TMiPu2AOank4uuG2OopV/VfW2d8E/H0K/cjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsLZY1e7Fu8Z+eKIZo/6uldJ/Wo/kJ+zC6oe4yifFc4BWL/SNPKSS5C4KHqk6XO3CgOITKoggZm4o6KsZj5ZHsl4ZlZvvSRWH1sNbeL2s97CC/Nzw4Ic77D9i43duijjT72dDgSMkibNF8sWVuREFgG+oW8YXnSj1ie/e5/2VjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UpuAiekE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y2Qxb7rxeRd3nlPrbx2dnYkoIthGmsaNY28ooTAeJu2flfX2Y1Gd+EaMZ5ldsRnGigibrwZGkfgWOhu8KE0vcqqf77sdLrshj5EM42hAbxRRhwWcQ0XgKI97FSOwrEWrsP33B1E7e+87bOrY9jE0c6jXcS2Kvn+pf8wfnXMaP7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GhkWkFsw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UpuAiekE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF70C4CED1;
-	Wed, 19 Feb 2025 08:37:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GhkWkFsw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725F8C4CED1;
+	Wed, 19 Feb 2025 08:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954256;
-	bh=ajCksjW2+/LjhVeR2kbRdqnjfepRTHU7qJrHYO6rZS8=;
+	s=korg; t=1739954259;
+	bh=WOOiql+TMiPu2AOank4uuG2OopV/VfW2d8E/H0K/cjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UpuAiekEAWJXoRa5U08KjUFBINe81Vrk61crh0Htd5Xz6ZP+j0rXvLReA3kexMUJ/
-	 3lCJgHhZUKtzQIbgH2j3xQ7sSPdq6B+8NdETR6OallwUaEgeY4V9h8F4UrTopRVi1M
-	 hhFNeaW3VhSURURNKhCXbenxPpL/2+GE+wL3xmuA=
+	b=GhkWkFswIkAHQL5TFPoxYGrF1XMBfWsuO47izShGRpj6j5BJaLCJWmqIa3QxjVZda
+	 ynSBHBfHfD8tp5YtSKOuCvYAEoSXtyEMtXumHj/3MlFabmPkCFaFSgooGILCc50nJj
+	 JeSHdjb126e/2BJfPK/7/zLu5rgDbgswUjlpYkJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	"Chester A. Unal" <chester.a.unal@arinc9.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.13 147/274] USB: serial: option: fix Telit Cinterion FN990A name
-Date: Wed, 19 Feb 2025 09:26:41 +0100
-Message-ID: <20250219082615.353204217@linuxfoundation.org>
+Subject: [PATCH 6.13 148/274] USB: serial: option: drop MeiG Smart defines
+Date: Wed, 19 Feb 2025 09:26:42 +0100
+Message-ID: <20250219082615.392244132@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -50,43 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 12606fe73f33647c5e79bf666833bf0b225e649d upstream.
+commit 6aa8a63c471eb6756aabd03f880feffe6a7af6c9 upstream.
 
-The correct name for FN990 is FN990A so use it in order to avoid
-confusion with FN990B.
+Several MeiG Smart modems apparently use the same product id, making the
+defines even less useful.
 
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Drop them in favour of using comments consistently to make the id table
+slightly less unwieldy.
+
 Cc: stable@vger.kernel.org
+Acked-by: Chester A. Unal <chester.a.unal@arinc9.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/usb/serial/option.c |   28 ++++++++--------------------
+ 1 file changed, 8 insertions(+), 20 deletions(-)
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -1370,15 +1370,15 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(2) | RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1063, 0xff),	/* Telit LN920 (ECM) */
- 	  .driver_info = NCTRL(0) | RSVD(1) },
--	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1070, 0xff),	/* Telit FN990 (rmnet) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1070, 0xff),	/* Telit FN990A (rmnet) */
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
--	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1071, 0xff),	/* Telit FN990 (MBIM) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1071, 0xff),	/* Telit FN990A (MBIM) */
- 	  .driver_info = NCTRL(0) | RSVD(1) },
--	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1072, 0xff),	/* Telit FN990 (RNDIS) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1072, 0xff),	/* Telit FN990A (RNDIS) */
- 	  .driver_info = NCTRL(2) | RSVD(3) },
--	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1073, 0xff),	/* Telit FN990 (ECM) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1073, 0xff),	/* Telit FN990A (ECM) */
- 	  .driver_info = NCTRL(0) | RSVD(1) },
--	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990 (PCIe) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1075, 0xff),	/* Telit FN990A (PCIe) */
- 	  .driver_info = RSVD(0) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1080, 0xff),	/* Telit FE990 (rmnet) */
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
+@@ -619,18 +619,6 @@ static void option_instat_callback(struc
+ /* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
+ #define LUAT_PRODUCT_AIR720U			0x4e00
+ 
+-/* MeiG Smart Technology products */
+-#define MEIGSMART_VENDOR_ID			0x2dee
+-/*
+- * MeiG Smart SLM828, SRM815, and SRM825L use the same product ID. SLM828 is
+- * based on Qualcomm SDX12. SRM815 and SRM825L are based on Qualcomm 315.
+- */
+-#define MEIGSMART_PRODUCT_SRM825L		0x4d22
+-/* MeiG Smart SLM320 based on UNISOC UIS8910 */
+-#define MEIGSMART_PRODUCT_SLM320		0x4d41
+-/* MeiG Smart SLM770A based on ASR1803 */
+-#define MEIGSMART_PRODUCT_SLM770A		0x4d57
+-
+ /* Device flags */
+ 
+ /* Highest interface number which can be used with NCTRL() and RSVD() */
+@@ -2366,6 +2354,14 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0a05, 0xff) },			/* Fibocom FM650-CN (NCM mode) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0a06, 0xff) },			/* Fibocom FM650-CN (RNDIS mode) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0a07, 0xff) },			/* Fibocom FM650-CN (MBIM mode) */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d41, 0xff, 0, 0) },		/* MeiG Smart SLM320 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d57, 0xff, 0, 0) },		/* MeiG Smart SLM770A */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0, 0) },		/* MeiG Smart SRM815 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0x10, 0x02) },	/* MeiG Smart SLM828 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0x10, 0x03) },	/* MeiG Smart SLM828 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2df3, 0x9d03, 0xff) },			/* LongSung M5710 */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1404, 0xff) },			/* GosunCn GM500 RNDIS */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
+@@ -2422,14 +2418,6 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM770A, 0xff, 0, 0) },
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0, 0) },	/* MeiG Smart SRM815 */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0x10, 0x02) },	/* MeiG Smart SLM828 */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0x10, 0x03) },	/* MeiG Smart SLM828 */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
+ 	  .driver_info = NCTRL(1) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0640, 0xff),			/* TCL IK512 ECM */
 
 
