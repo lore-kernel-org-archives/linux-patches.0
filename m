@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C691C175A;
-	Wed, 19 Feb 2025 08:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5F31DE2CD;
+	Wed, 19 Feb 2025 08:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954387; cv=none; b=n4RgGIFTZvd+zLiv2fNQEQ0EEZytX+i8WNo1Y5qEuEDo/Uwmip9nlLlZuxjVKcdOW6zmg0wCTP01pvFW+K84IDf8c3noXRRbc2HIVLsMAY636bBduHKlyvdC1zObwm/b7iqLJSUyT1l+r8tw3BgQqkwp+EfWfIXqBBfXcMnUp4g=
+	t=1739954390; cv=none; b=m0d0F1/egglwMOXLTxcEMuVbo0TjTsjQLqU+YaJgxm3z30hGPLhRX0AXak+yVHvMgQRjSAUjdWD/KatP2Rke68s6IDY8vlT6CoO67pQBA4wxWX552g7ITYn4m11Yx2GCbgukhroo63qWhQThdu4aBBuzGozu09kq12V4ci5OTbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954387; c=relaxed/simple;
-	bh=zgCtU7GroL0YaoqL9s5sH7WOOzXoegtjlQaLFZRBtaQ=;
+	s=arc-20240116; t=1739954390; c=relaxed/simple;
+	bh=6EMPE+ikn4jw+rFp3VsbqZcQubucIpHpyncOCjBtj9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqgD0axtk9YXU9Tzu4GsJxdWnPOhb5z2SHsH9iLXln0lNgDFD0FK8TUkdQ8E3GjUNS4lPs+h4xUWDDLoPYgORHghmTsXOKshnH7maaOJoYIE3M0TUiVnNXyV0HLTqPi9iw8T+B/CQT4+qkhUp9pqHUA/71tFne6Bmf1dygOd2eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2GHoZmP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jhhMjW3KY+wIPm3DK/OynK18MzKoQYnDDUacA/NNjCJob4mB30Idb+biqnaVsG7fCLqxK29QWftxiqtVFMO3ILTyb8dnYuwbzkzn08saV46/AsdR5Fe43Z9/cnAveDzUhN9B2f27qZNrOyAjRT7qTZNl5Jjg7jy85g9AMij7Y9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmKkqTht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2GHoZmP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699DCC4CEE6;
-	Wed, 19 Feb 2025 08:39:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmKkqTht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7986C4CEE6;
+	Wed, 19 Feb 2025 08:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954387;
-	bh=zgCtU7GroL0YaoqL9s5sH7WOOzXoegtjlQaLFZRBtaQ=;
+	s=korg; t=1739954390;
+	bh=6EMPE+ikn4jw+rFp3VsbqZcQubucIpHpyncOCjBtj9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a2GHoZmP3cbiEey6WBYZqX9NQrNjN4fVRp/5A7zL+QZROem9kvU6Eb11CBzptduYZ
-	 A01JGtLt6WJ9lfH+DEX7fm9aq1OaQjDI170TUId4yvCcCO0FFH7UPP+AE/It45xsfu
-	 7Y97QRjycp0Oss7FJDZnkH8VTTl+pMFi5kXdj6Ck=
+	b=nmKkqThtymlSkz10pXOwHhTdZvfmOHJs8BDWMKqvBi2nZAkRDGvxocQ7mwNb4k+m8
+	 GpMmnvUk52BQytDumA554RSWuwK4t9dLAFiap4JYihLyGUtOuEs+n5S3+tAlLarpRR
+	 UB8xFRAd2ejR0ur2wVCijl2lv0gJhN8hYpZmreno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Zheng Zengkai <zhengzengkai@huawei.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.13 189/274] ACPI: GTDT: Relax sanity checking on Platform Timers array count
-Date: Wed, 19 Feb 2025 09:27:23 +0100
-Message-ID: <20250219082616.980374058@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.13 190/274] mlxsw: Add return value check for mlxsw_sp_port_get_stats_raw()
+Date: Wed, 19 Feb 2025 09:27:24 +0100
+Message-ID: <20250219082617.018414390@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -53,69 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit f818227a2f3d1d4f26469347e428323d61cc83f0 upstream.
+commit fee5d688940690cc845937459e340e4e02598e90 upstream.
 
-Perhaps unsurprisingly there are some platforms where the GTDT isn't
-quite right and the Platforms Timer array overflows the length of the
-overall table.
+Add a check for the return value of mlxsw_sp_port_get_stats_raw()
+in __mlxsw_sp_port_get_stats(). If mlxsw_sp_port_get_stats_raw()
+returns an error, exit the function to prevent further processing
+with potentially invalid data.
 
-While the recently-added sanity checking isn't wrong, it makes it
-impossible to boot the kernel on offending platforms. Try to hobble
-along and limit the Platform Timer count to the bounds of the table.
-
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc: Zheng Zengkai <zhengzengkai@huawei.com>
-Cc: stable@vger.kernel.org
-Fixes: 263e22d6bd1f ("ACPI: GTDT: Tighten the check for the array of platform timer structures")
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Link: https://lore.kernel.org/r/20250128001749.3132656-1-oliver.upton@linux.dev
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 614d509aa1e7 ("mlxsw: Move ethtool_ops to spectrum_ethtool.c")
+Cc: stable@vger.kernel.org # 5.9+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/20250212152311.1332-1-vulab@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/arm64/gtdt.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_ethtool.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/arm64/gtdt.c b/drivers/acpi/arm64/gtdt.c
-index 3561553eff8b..70f8290b659d 100644
---- a/drivers/acpi/arm64/gtdt.c
-+++ b/drivers/acpi/arm64/gtdt.c
-@@ -163,7 +163,7 @@ int __init acpi_gtdt_init(struct acpi_table_header *table,
- {
- 	void *platform_timer;
- 	struct acpi_table_gtdt *gtdt;
--	int cnt = 0;
-+	u32 cnt = 0;
- 
- 	gtdt = container_of(table, struct acpi_table_gtdt, header);
- 	acpi_gtdt_desc.gtdt = gtdt;
-@@ -188,13 +188,17 @@ int __init acpi_gtdt_init(struct acpi_table_header *table,
- 		cnt++;
- 
- 	if (cnt != gtdt->platform_timer_count) {
-+		cnt = min(cnt, gtdt->platform_timer_count);
-+		pr_err(FW_BUG "limiting Platform Timer count to %d\n", cnt);
-+	}
-+
-+	if (!cnt) {
- 		acpi_gtdt_desc.platform_timer = NULL;
--		pr_err(FW_BUG "invalid timer data.\n");
--		return -EINVAL;
-+		return 0;
- 	}
- 
- 	if (platform_timer_count)
--		*platform_timer_count = gtdt->platform_timer_count;
-+		*platform_timer_count = cnt;
- 
- 	return 0;
- }
--- 
-2.48.1
-
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_ethtool.c
+@@ -768,7 +768,9 @@ static void __mlxsw_sp_port_get_stats(st
+ 	err = mlxsw_sp_get_hw_stats_by_group(&hw_stats, &len, grp);
+ 	if (err)
+ 		return;
+-	mlxsw_sp_port_get_stats_raw(dev, grp, prio, ppcnt_pl);
++	err = mlxsw_sp_port_get_stats_raw(dev, grp, prio, ppcnt_pl);
++	if (err)
++		return;
+ 	for (i = 0; i < len; i++) {
+ 		data[data_index + i] = hw_stats[i].getter(ppcnt_pl);
+ 		if (!hw_stats[i].cells_bytes)
 
 
