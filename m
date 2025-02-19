@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586741C4609;
-	Wed, 19 Feb 2025 08:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6C31C4609;
+	Wed, 19 Feb 2025 08:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955437; cv=none; b=bR+qsJio7wrfFO2h4M3lY74XQaYoiTnWKV6s2BF6z91dIHQWrGXrLkPCzl+sF+u+Mu/Q/HJl3Pb8me5mtKGfRpm7/KQlPZD+eAdPYinHoYlJAtIxXO6M6t0WgjfHUlCssAnKbI0xmv/48IbH/nRwxtwz+lhRcI96Z8qdab5phOs=
+	t=1739955440; cv=none; b=defBiDKIb+20RT0lLokP6Dy1QnLIGxg5qQojPZpRtCzf2cX5PfQl0ILN1EMwT2Ho+Yi7B2d62Qhl2UZXJczPKI/ZDniiSLKKatEPQB6egIfjoqoMbbunkKGwE7HXb00DaMAi//U3nFDfDMxWV+K2cWwbluUV1JUWmGUsva97fto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955437; c=relaxed/simple;
-	bh=stKiCD4a7ZI4iacDGVlR20LhESoOxC+rmto9q7X/0f4=;
+	s=arc-20240116; t=1739955440; c=relaxed/simple;
+	bh=7j7RkosGgiI+H2TjiuhDDll6ecUtqQc+IdUJk3a2fbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OrLtByhfsuQqs7yRj3Q4KiD7hUvwbuCzv7jPQ8o2LzX0nN40Vs48scAhzwfnHbBUbsIgmHyBiHx05qj6bbs67hjlsqkE9Aq4rWuYYG/YzsIJkPiZ/eCcM/RhO/1TabxLOfXgbwj13cMcRxogc+Z6APKFJ88HSmCTUJOGax47uJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSAYEFV+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cs/weSiZlyt9RGS/N3pX+2LVGw+Qw6iT75eC7SupzO9e1iSozxrelpxrRsd3r++UQkv4Ppuf4xOHaVM5J0kfVdY/jtgihzP3AzktkfYw0/tnMgIEQnv86aOSkGvQSwUJqQSYRK8+/IOr7VjrDFOV5suR4ROwBsc0/tv6+HzGTd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kimhi+VH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSAYEFV+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB731C4CED1;
-	Wed, 19 Feb 2025 08:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kimhi+VH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3097C4CED1;
+	Wed, 19 Feb 2025 08:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955437;
-	bh=stKiCD4a7ZI4iacDGVlR20LhESoOxC+rmto9q7X/0f4=;
+	s=korg; t=1739955440;
+	bh=7j7RkosGgiI+H2TjiuhDDll6ecUtqQc+IdUJk3a2fbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sSAYEFV+tlU8SMFvodjJ8yGn51GgeH+4FyAR3TzktUK+81LLT/Hqus0uhh+n/sLuc
-	 NEEHn8/f4p4GhBKb5USY5Ll3dqJaOXMkKHXmxVkhlOXdT7NEvQNOHlzL/Y9msa3uTx
-	 4o2pmLMc9CWvvme7O7cMxJnv8MO9byjxBE1VJScE=
+	b=kimhi+VHu63gO801KkY2Myjk99d329pF2OeDS16HO0YZq0hT+KAHrgRjMpbB1v048
+	 5L+dUbBxohy8ZkWcU8E4L+C9LQFTbNxARA+sHcbJqDB/X1QJUHtsEPHaa3C24e2XA7
+	 Pxgz1t6ovS6cJVgjlBMoQXwztxdfJmnbYUndTWl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 204/230] ipv6: mcast: add RCU protection to mld_newpack()
-Date: Wed, 19 Feb 2025 09:28:41 +0100
-Message-ID: <20250219082609.674905465@linuxfoundation.org>
+	Bin Liu <b-liu@ti.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Jonathan Cormier <jcormier@criticallink.com>,
+	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Subject: [PATCH 6.12 205/230] drm/tidss: Fix issue in irq handling causing irq-flood issue
+Date: Wed, 19 Feb 2025 09:28:42 +0100
+Message-ID: <20250219082609.712224311@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -52,80 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit a527750d877fd334de87eef81f1cb5f0f0ca3373 ]
+commit 44b6730ab53ef04944fbaf6da0e77397531517b7 upstream.
 
-mld_newpack() can be called without RTNL or RCU being held.
+It has been observed that sometimes DSS will trigger an interrupt and
+the top level interrupt (DISPC_IRQSTATUS) is not zero, but the VP and
+VID level interrupt-statuses are zero.
 
-Note that we no longer can use sock_alloc_send_skb() because
-ipv6.igmp_sk uses GFP_KERNEL allocations which can sleep.
+As the top level irqstatus is supposed to tell whether we have VP/VID
+interrupts, the thinking of the driver authors was that this particular
+case could never happen. Thus the driver only clears the DISPC_IRQSTATUS
+bits which has corresponding interrupts in VP/VID status. So when this
+issue happens, the driver will not clear DISPC_IRQSTATUS, and we get an
+interrupt flood.
 
-Instead use alloc_skb() and charge the net->ipv6.igmp_sk
-socket under RCU protection.
+It is unclear why the issue happens. It could be a race issue in the
+driver, but no such race has been found. It could also be an issue with
+the HW. However a similar case can be easily triggered by manually
+writing to DISPC_IRQSTATUS_RAW. This will forcibly set a bit in the
+DISPC_IRQSTATUS and trigger an interrupt, and as the driver never clears
+the bit, we get an interrupt flood.
 
-Fixes: b8ad0cbc58f7 ("[NETNS][IPV6] mcast - handle several network namespace")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250212141021.1663666-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To fix the issue, always clear DISPC_IRQSTATUS. The concern with this
+solution is that if the top level irqstatus is the one that triggers the
+interrupt, always clearing DISPC_IRQSTATUS might leave some interrupts
+unhandled if VP/VID interrupt statuses have bits set. However, testing
+shows that if any of the irqstatuses is set (i.e. even if
+DISPC_IRQSTATUS == 0, but a VID irqstatus has a bit set), we will get an
+interrupt.
+
+Co-developed-by: Bin Liu <b-liu@ti.com>
+Signed-off-by: Bin Liu <b-liu@ti.com>
+Co-developed-by: Devarsh Thakkar <devarsht@ti.com>
+Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
+Co-developed-by: Jonathan Cormier <jcormier@criticallink.com>
+Signed-off-by: Jonathan Cormier <jcormier@criticallink.com>
+Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
+Cc: stable@vger.kernel.org
+Tested-by: Jonathan Cormier <jcormier@criticallink.com>
+Reviewed-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241021-tidss-irq-fix-v1-1-82ddaec94e4a@ideasonboard.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/mcast.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/tidss/tidss_dispc.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index 6551648512585..b7b62e5a562e5 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -1730,21 +1730,19 @@ static struct sk_buff *mld_newpack(struct inet6_dev *idev, unsigned int mtu)
- 	struct net_device *dev = idev->dev;
- 	int hlen = LL_RESERVED_SPACE(dev);
- 	int tlen = dev->needed_tailroom;
--	struct net *net = dev_net(dev);
- 	const struct in6_addr *saddr;
- 	struct in6_addr addr_buf;
- 	struct mld2_report *pmr;
- 	struct sk_buff *skb;
- 	unsigned int size;
- 	struct sock *sk;
--	int err;
-+	struct net *net;
+--- a/drivers/gpu/drm/tidss/tidss_dispc.c
++++ b/drivers/gpu/drm/tidss/tidss_dispc.c
+@@ -780,24 +780,20 @@ static
+ void dispc_k3_clear_irqstatus(struct dispc_device *dispc, dispc_irq_t clearmask)
+ {
+ 	unsigned int i;
+-	u32 top_clear = 0;
  
--	sk = net->ipv6.igmp_sk;
- 	/* we assume size > sizeof(ra) here
- 	 * Also try to not allocate high-order pages for big MTU
- 	 */
- 	size = min_t(int, mtu, PAGE_SIZE / 2) + hlen + tlen;
--	skb = sock_alloc_send_skb(sk, size, 1, &err);
-+	skb = alloc_skb(size, GFP_KERNEL);
- 	if (!skb)
- 		return NULL;
+ 	for (i = 0; i < dispc->feat->num_vps; ++i) {
+-		if (clearmask & DSS_IRQ_VP_MASK(i)) {
++		if (clearmask & DSS_IRQ_VP_MASK(i))
+ 			dispc_k3_vp_write_irqstatus(dispc, i, clearmask);
+-			top_clear |= BIT(i);
+-		}
+ 	}
+ 	for (i = 0; i < dispc->feat->num_planes; ++i) {
+-		if (clearmask & DSS_IRQ_PLANE_MASK(i)) {
++		if (clearmask & DSS_IRQ_PLANE_MASK(i))
+ 			dispc_k3_vid_write_irqstatus(dispc, i, clearmask);
+-			top_clear |= BIT(4 + i);
+-		}
+ 	}
+ 	if (dispc->feat->subrev == DISPC_K2G)
+ 		return;
  
-@@ -1752,6 +1750,12 @@ static struct sk_buff *mld_newpack(struct inet6_dev *idev, unsigned int mtu)
- 	skb_reserve(skb, hlen);
- 	skb_tailroom_reserve(skb, mtu, tlen);
+-	dispc_write(dispc, DISPC_IRQSTATUS, top_clear);
++	/* always clear the top level irqstatus */
++	dispc_write(dispc, DISPC_IRQSTATUS, dispc_read(dispc, DISPC_IRQSTATUS));
  
-+	rcu_read_lock();
-+
-+	net = dev_net_rcu(dev);
-+	sk = net->ipv6.igmp_sk;
-+	skb_set_owner_w(skb, sk);
-+
- 	if (ipv6_get_lladdr(dev, &addr_buf, IFA_F_TENTATIVE)) {
- 		/* <draft-ietf-magma-mld-source-05.txt>:
- 		 * use unspecified address as the source address
-@@ -1763,6 +1767,8 @@ static struct sk_buff *mld_newpack(struct inet6_dev *idev, unsigned int mtu)
- 
- 	ip6_mc_hdr(sk, skb, dev, saddr, &mld2_all_mcr, NEXTHDR_HOP, 0);
- 
-+	rcu_read_unlock();
-+
- 	skb_put_data(skb, ra, sizeof(ra));
- 
- 	skb_set_transport_header(skb, skb_tail_pointer(skb) - skb->data);
--- 
-2.39.5
-
+ 	/* Flush posted writes */
+ 	dispc_read(dispc, DISPC_IRQSTATUS);
 
 
