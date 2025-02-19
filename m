@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC32158862;
-	Wed, 19 Feb 2025 09:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6CC1E04BA;
+	Wed, 19 Feb 2025 09:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956554; cv=none; b=bqRmk0itAhd6PkbuOxXWTrkNkAEBph62nzQLW52ZdzFZ296qBY10Q4Ip8RwX1NesnWLHz+ryXflRpbsMLXJOyQEDcN8YckhKwuLWYbAjdXgpjHsS0J2hAx8DJsQbM8G2IT/Y1iBhYzYg1sCRhXFG9bcPS76/rQPSPFpqdPsuNqI=
+	t=1739956557; cv=none; b=GV3s271xNDWaq7GokhwuiRYMUekXXAj1wH6y0ZDxmi2qYTWSPFat01aI7BrdoLXbNOunkoF5oDeMeuKqNHzYHPR9l+lNN5GQ9muKyi08dYe1EWqSzsef828n7xrDjmnz4UNVT4+1O6e9OjSXz0wO/Gso/XMoypLFhNpL/em1RUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956554; c=relaxed/simple;
-	bh=akZyqXAKMK8i7G8KEQQT6jSeYdPRa5FkLXEEuCdqWSc=;
+	s=arc-20240116; t=1739956557; c=relaxed/simple;
+	bh=YC41/R21y+x/twDCogc+SGQCUT3o0nWxnEIzIHLd3hI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TnVEU0p+krdsbeDckxL4r3OUM7adNVL2peuMYDdvDQ4EvnRLeNnEpGlQxeXa7aUmddIe2s3XlhKBeDRcvEaDQcUyM36WzECe4zQ7W8RlDa9SxTCxhx53rGJ5ELvypM1Kg5CCxmtjPmDhVeYZi3ppnqWpjJNoworekpIWybQWQWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fITFn9QG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T7/JaHQItJ3GsvY0AZhfULavh/YMeF4fUUOx00CegK5wRspWpJhNB0PAk1mR4W6Y5xGcmjBF+6CI0OjMeSm9jk9M/iUK61/zRUQeIFhE0zL5giiXG39i+I243O+IRUaYtuRseSzmm/s8a/VM0iU6ORK4usn2k2rwqKMRqMuURjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVXdsCQu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fITFn9QG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E70C4CEE6;
-	Wed, 19 Feb 2025 09:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVXdsCQu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D7AC4AF0C;
+	Wed, 19 Feb 2025 09:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956554;
-	bh=akZyqXAKMK8i7G8KEQQT6jSeYdPRa5FkLXEEuCdqWSc=;
+	s=korg; t=1739956557;
+	bh=YC41/R21y+x/twDCogc+SGQCUT3o0nWxnEIzIHLd3hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fITFn9QGlYwKFaMFGXgUh5La4sTQb5lil8IkrZxtyyb41vWTaU508lD90ITM0IIcm
-	 tAfQS2dviUhbNJ62zjctYrPlqSHBZt/EqOEi6e7/A8nv+eC7EsyyGtOT2RR3GuzA6U
-	 6DkPP9qikvffIFSuFO9AvkXfDsH9MoSDR4noywBo=
+	b=nVXdsCQumAt7d0DI+otdQI/qqloAXW+UImPdTG1v3XoLzR9GwcmJNyu+GPo2iKgfF
+	 1bASZCQ4edYOH+sqo3i8QmK09VrtRoHSxttuJtrFOMtDVJnrWHpuB4eLF+UuoPZ4B2
+	 +23dF9RlJqCUSAnSaiN67VkPvD75VY9HnRStJISc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 176/578] arm64: dts: qcom: sm8150-microsoft-surface-duo: fix typos in da7280 properties
-Date: Wed, 19 Feb 2025 09:23:00 +0100
-Message-ID: <20250219082659.890898304@linuxfoundation.org>
+Subject: [PATCH 6.1 212/578] xfrm: replay: Fix the update of replay_esn->oseq_hi for GSO
+Date: Wed, 19 Feb 2025 09:23:36 +0100
+Message-ID: <20250219082701.398823256@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,50 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit 9875adffb87da5c40f4013e55104f5e2fc071c2a ]
+[ Upstream commit c05c5e5aa163f4682ca97a2f0536575fc7dbdecb ]
 
-The dlg,const-op-mode & dlg,periodic-op-mode were mis-names with twice
-the "dlg," prefix, drop one to match the bindings.
+When skb needs GSO and wrap around happens, if xo->seq.low (seqno of
+the first skb segment) is before the last seq number but oseq (seqno
+of the last segment) is after it, xo->seq.low is still bigger than
+replay_esn->oseq while oseq is smaller than it, so the update of
+replay_esn->oseq_hi is missed for this case wrap around because of
+the change in the cited commit.
 
-This fixes:
-sm8150-microsoft-surface-duo.dtb: da7280@4a: 'dlg,const-op-mode' is a required property
-	from schema $id: http://devicetree.org/schemas/input/dlg,da7280.yaml#
-m8150-microsoft-surface-duo.dtb: da7280@4a: 'dlg,periodic-op-mode' is a required property
-	from schema $id: http://devicetree.org/schemas/input/dlg,da7280.yaml#
-sm8150-microsoft-surface-duo.dtb: da7280@4a: 'dlg,dlg,const-op-mode', 'dlg,dlg,periodic-op-mode' do not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/input/dlg,da7280.yaml#
+For example, if sending a packet with gso_segs=3 while old
+replay_esn->oseq=0xfffffffe, we calculate:
+    xo->seq.low = 0xfffffffe + 1 = 0x0xffffffff
+    oseq = 0xfffffffe + 3 = 0x1
+(oseq < replay_esn->oseq) is true, but (xo->seq.low <
+replay_esn->oseq) is false, so replay_esn->oseq_hi is not incremented.
 
-With the dlg,da7280.yaml converted from dlg,da7280.txt at [1].
+To fix this issue, change the outer checking back for the update of
+replay_esn->oseq_hi. And add new checking inside for the update of
+packet's oseq_hi.
 
-[1] https://lore.kernel.org/all/20241206-topic-misc-da7280-convert-v2-1-1c3539f75604@linaro.org/
-
-Fixes: d1f781db47a8 ("arm64: dts: qcom: add initial device-tree for Microsoft Surface Duo")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241230-topic-misc-dt-fixes-v4-6-1e6880e9dda3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 4b549ccce941 ("xfrm: replay: Fix ESN wrap around for GSO")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_replay.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-index 5397fba9417bb..51ddbac3cfe56 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-microsoft-surface-duo.dts
-@@ -376,8 +376,8 @@
- 		pinctrl-0 = <&da7280_intr_default>;
+diff --git a/net/xfrm/xfrm_replay.c b/net/xfrm/xfrm_replay.c
+index ce56d659c55a6..7f52bb2e14c13 100644
+--- a/net/xfrm/xfrm_replay.c
++++ b/net/xfrm/xfrm_replay.c
+@@ -714,10 +714,12 @@ static int xfrm_replay_overflow_offload_esn(struct xfrm_state *x, struct sk_buff
+ 			oseq += skb_shinfo(skb)->gso_segs;
+ 		}
  
- 		dlg,actuator-type = "LRA";
--		dlg,dlg,const-op-mode = <1>;
--		dlg,dlg,periodic-op-mode = <1>;
-+		dlg,const-op-mode = <1>;
-+		dlg,periodic-op-mode = <1>;
- 		dlg,nom-microvolt = <2000000>;
- 		dlg,abs-max-microvolt = <2000000>;
- 		dlg,imax-microamp = <129000>;
+-		if (unlikely(xo->seq.low < replay_esn->oseq)) {
+-			XFRM_SKB_CB(skb)->seq.output.hi = ++oseq_hi;
+-			xo->seq.hi = oseq_hi;
+-			replay_esn->oseq_hi = oseq_hi;
++		if (unlikely(oseq < replay_esn->oseq)) {
++			replay_esn->oseq_hi = ++oseq_hi;
++			if (xo->seq.low < replay_esn->oseq) {
++				XFRM_SKB_CB(skb)->seq.output.hi = oseq_hi;
++				xo->seq.hi = oseq_hi;
++			}
+ 			if (replay_esn->oseq_hi == 0) {
+ 				replay_esn->oseq--;
+ 				replay_esn->oseq_hi--;
 -- 
 2.39.5
 
