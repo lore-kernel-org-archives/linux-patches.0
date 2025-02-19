@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1F31DF263;
-	Wed, 19 Feb 2025 09:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195922AE74;
+	Wed, 19 Feb 2025 09:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956503; cv=none; b=RWdK69vjns5nprmXF8PptNNL+w4yOSt2oTsJIEtZsrSXa1t8I66zs11zTITCuPO7KjK8ZwjmH68KW2pCviowqy7qLad0fOtk7xAX4PZgbIOcM0grO8mnfanXGqM7l209Hw0s0SIOA5MVZszwTwMAN5xYigGV00gR7opEv/tgNEc=
+	t=1739956506; cv=none; b=B7oLwYpB4VaUqav8GRHSqKdZ3JDlc1ZfgUf0n9e3/NMIu1f2ZczqB5Ccgp1VLXrON2LhWHcXgzk12c82mrHGhgTHYtctoh+ycsEf4x1LnFsOtl+olgzKfja5RvhwbJmB9NCNMZEbdKfOkdi5u6oNW+BaHtjeNPlHYjpVUn9Rzqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956503; c=relaxed/simple;
-	bh=+jp2jAV+MOAiR/Cxyvew2SIDfS/rd5tla3yo8P5QyE4=;
+	s=arc-20240116; t=1739956506; c=relaxed/simple;
+	bh=BwLxGp7WYbN2oB8xdi+OI0IVN1uWqpCbshXU7cw24IA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WJjMYApGeAQPlIhwXADrjeXdGOBYJEyNDTTmaH9L320gEF7KMcmFLjW6f8HgP6hjOTcArQKjxZDKFV6eKxAIf1SD55WFRbAoScnPnwJDJEK4LcZtiZLTpG1MbGBwFck0TR78WnmqB597tcAgHXWbvmLHCH/R5IG8vi+VrWLBUEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npac5p6W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ejmpe1UHB5DM078i14Sm6hhZgUDiNfXZCX7LFbmQWDt9eYUj+BBN11xXUejpJNe0Bu8mqx76uL7fadctYJvtySTfDszOCkk/qAdmhDyLOk4n5tc+qisV8kxRzqBqeD0BhGZJuDRggwpSVY7K6g+uZjC4zByyDFU7Q/M+9B8fZdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqY+blUe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npac5p6W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DC9C4CED1;
-	Wed, 19 Feb 2025 09:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqY+blUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90436C4CED1;
+	Wed, 19 Feb 2025 09:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956503;
-	bh=+jp2jAV+MOAiR/Cxyvew2SIDfS/rd5tla3yo8P5QyE4=;
+	s=korg; t=1739956506;
+	bh=BwLxGp7WYbN2oB8xdi+OI0IVN1uWqpCbshXU7cw24IA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npac5p6WnJ7UL3lRz4hQUb9bBiQz468bzpa3x6xR+bDscFIA5QkZVZ97ajMhaWCJq
-	 ccgz16xgAD9icaEiZTQ+FxI7/bGSP7lGkHlR/L6YxD7PNmxOCCe1r3B+R/FkjlvNoh
-	 u0vVu1ogdYIv/R8y+v1JPMgfKDjWYgu1g1Loan7o=
+	b=lqY+blUe/riTtIgTlsJqEqrHQJzH3ldi3P27yPOCtIOhog4O70B0wE7UND/0T2dqf
+	 vaiQ3aT/tgj+tJTISNp+Ofy/WHkuteBcxWDv68P4qFIMy+gUCqBKh01Y4URS7++PhM
+	 Pv6vRVNVLU2MvO9QbjrXFSHrUGk4CfFc9FDHEoPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	King Dix <kingdix10@qq.com>,
+	Mohamed Khalfella <khalfella@gmail.com>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 200/578] PCI: rcar-ep: Fix incorrect variable used when calling devm_request_mem_region()
-Date: Wed, 19 Feb 2025 09:23:24 +0100
-Message-ID: <20250219082700.830407757@linuxfoundation.org>
+Subject: [PATCH 6.1 201/578] PCI: endpoint: pci-epf-test: Set dma_chan_rx pointer to NULL on error
+Date: Wed, 19 Feb 2025 09:23:25 +0100
+Message-ID: <20250219082700.869998509@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -54,63 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: King Dix <kingdix10@qq.com>
+From: Mohamed Khalfella <khalfella@gmail.com>
 
-[ Upstream commit 2d2da5a4c1b4509f6f7e5a8db015cd420144beb4 ]
+[ Upstream commit b1b1f4b12969130c0a6ec0cf0299460cb01e799c ]
 
-The rcar_pcie_parse_outbound_ranges() uses the devm_request_mem_region()
-macro to request a needed resource. A string variable that lives on the
-stack is then used to store a dynamically computed resource name, which
-is then passed on as one of the macro arguments. This can lead to
-undefined behavior.
+If dma_chan_tx allocation fails, set dma_chan_rx to NULL after it is
+freed.
 
-Depending on the current contents of the memory, the manifestations of
-errors may vary. One possible output may be as follows:
-
-  $ cat /proc/iomem
-  30000000-37ffffff :
-  38000000-3fffffff :
-
-Sometimes, garbage may appear after the colon.
-
-In very rare cases, if no NULL-terminator is found in memory, the system
-might crash because the string iterator will overrun which can lead to
-access of unmapped memory above the stack.
-
-Thus, fix this by replacing outbound_name with the name of the previously
-requested resource. With the changes applied, the output will be as
-follows:
-
-  $ cat /proc/iomem
-  30000000-37ffffff : memory2
-  38000000-3fffffff : memory3
-
-Fixes: 2a6d0d63d999 ("PCI: rcar: Add endpoint mode support")
-Link: https://lore.kernel.org/r/tencent_DBDCC19D60F361119E76919ADAB25EC13C06@qq.com
-Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: King Dix <kingdix10@qq.com>
+Link: https://lore.kernel.org/r/20241227160841.92382-1-khalfella@gmail.com
+Fixes: 8353813c88ef ("PCI: endpoint: Enable DMA tests for endpoints with DMA capabilities")
+Signed-off-by: Mohamed Khalfella <khalfella@gmail.com>
 [kwilczynski: commit log]
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rcar-ep.c | 2 +-
+ drivers/pci/endpoint/functions/pci-epf-test.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pcie-rcar-ep.c b/drivers/pci/controller/pcie-rcar-ep.c
-index f9682df1da619..209719fb6ddcc 100644
---- a/drivers/pci/controller/pcie-rcar-ep.c
-+++ b/drivers/pci/controller/pcie-rcar-ep.c
-@@ -107,7 +107,7 @@ static int rcar_pcie_parse_outbound_ranges(struct rcar_pcie_endpoint *ep,
- 		}
- 		if (!devm_request_mem_region(&pdev->dev, res->start,
- 					     resource_size(res),
--					     outbound_name)) {
-+					     res->name)) {
- 			dev_err(pcie->dev, "Cannot request memory region %s.\n",
- 				outbound_name);
- 			return -EIO;
+diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+index 2e8a4de2ababd..be10d7b976e94 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-test.c
++++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+@@ -251,7 +251,7 @@ static int pci_epf_test_init_dma_chan(struct pci_epf_test *epf_test)
+ 
+ fail_back_rx:
+ 	dma_release_channel(epf_test->dma_chan_rx);
+-	epf_test->dma_chan_tx = NULL;
++	epf_test->dma_chan_rx = NULL;
+ 
+ fail_back_tx:
+ 	dma_cap_zero(mask);
 -- 
 2.39.5
 
