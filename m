@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C55B1CB518;
-	Wed, 19 Feb 2025 09:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD621A315E;
+	Wed, 19 Feb 2025 09:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956024; cv=none; b=oorCB0K+z9s2GI5YOJHHBI15hvBYGDWe0tK7Z5NqWZXtvnkLRf7ueVYh9nmM+pBiuVtczu1l5/4D/LWYtsfPStA60T6/dyCgd7VE3xbqqFK9FVCcVWl+CetvnXuRBgBGI/zatXIG5fX3pXsP81471POLItcvkcsY8ZV4vSwGL7g=
+	t=1739956027; cv=none; b=JJPOX+PYJypWmmxxh7/z3QQHcmmbZtQYhIdvNqGctLHyVnDbs/ygs0TSiBWbAYI15wbCj4HEZm/A0B0oPywzMc5n4hL/7VowY+lpSrpXe3SZEqqubAdj8VT+ycithMiWLleyv/QDLYoZJgpEyxgh0JLLvKN1vygQh1DbuRbSQDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956024; c=relaxed/simple;
-	bh=/mOPFvtqUrBuR/0CSQqyJT20qENzbzVG3gDUTeNoi5k=;
+	s=arc-20240116; t=1739956027; c=relaxed/simple;
+	bh=EodkXTcDnDXzk4fhYSzvAERU0sVJXX282TCcouF8KfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZqpJlHOJZjDzz6DBm6lHFX31CX+aN8uC2uVBtfoDcdTDkY6A/cX0QOv68/8O8naB7ADtdxkBSBZJICPF9EnB7WMz0pEizvGqlVtq6r8o17/F2pumF7WIKWPmixgOs9QnVr3OkkrI1g7KdjGW1EEmOJl2UxL7V+H/LPCtCIlqH9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aoY4v7FO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gkek4z2gKkyk2xv3yXFq6nRj/SnGtcQ755q5M48QyK0CpS73B/JEeTaeqdrJJg74aawpq1Av7wf+kY9ZQOewkO88e2fBDKPkXWp2lg3QK6eZ/lKv0Qnhvwjw4pI5njXCyKZABD9sWT0OwCRdTFoOAwaE6p+hdx6CMpO3j2my0kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AFzGWttN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aoY4v7FO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84868C4CEE6;
-	Wed, 19 Feb 2025 09:07:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AFzGWttN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640D8C4CED1;
+	Wed, 19 Feb 2025 09:07:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956023;
-	bh=/mOPFvtqUrBuR/0CSQqyJT20qENzbzVG3gDUTeNoi5k=;
+	s=korg; t=1739956026;
+	bh=EodkXTcDnDXzk4fhYSzvAERU0sVJXX282TCcouF8KfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aoY4v7FO/XJbLn7iHlDFAIvXvMxUZPNvh6PE9RSucJjqB319ThRwTNKNmNoVaixJh
-	 /IQwUUQkJzqCvhvFqbNC+VKPORICDsJqR9kAp0KENsvHyOLvPNQehuwyL9+KuFik0t
-	 UmOYYSh+m/k1Qz4uUK2QXRLOrdN8rDbxUiJX2nE8=
+	b=AFzGWttNeIpIiv4EP+PrgL5Gqx1b5SC+oy2kTxyGXLpIOD8A01oqWjiMhOgkA7GK/
+	 N+ZyVpwD5sFaDVJjT2WXZQ7Uja+FFYqwt2hl0oNGS+/3pNya7L2iPhL92RKzQaQluN
+	 tRsKdDYuMjXTa9BNtruzeuoOI72puaeIDIRTLtiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/578] wifi: rtlwifi: wait for firmware loading before releasing memory
-Date: Wed, 19 Feb 2025 09:20:42 +0100
-Message-ID: <20250219082654.392976738@linuxfoundation.org>
+Subject: [PATCH 6.1 009/578] selftests/powerpc: Fix argument order to timer_sub()
+Date: Wed, 19 Feb 2025 09:20:13 +0100
+Message-ID: <20250219082653.262759536@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,45 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit b4b26642b31ef282df6ff7ea8531985edfdef12a ]
+[ Upstream commit 2bf66e66d2e6feece6175ec09ec590a0a8563bdd ]
 
-At probe error path, the firmware loading work may have already been
-queued. In such a case, it will try to access memory allocated by the probe
-function, which is about to be released. In such paths, wait for the
-firmware worker to finish before releasing memory.
+Commit c814bf958926 ("powerpc/selftests: Use timersub() for
+gettimeofday()"), got the order of arguments to timersub() wrong,
+leading to a negative time delta being reported, eg:
 
-Fixes: a7f7c15e945a ("rtlwifi: rtl8192cu: Free ieee80211_hw if probing fails")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241107133322.855112-4-cascardo@igalia.com
+  test: gettimeofday
+  tags: git_version:v6.12-rc5-409-gdddf291c3030
+  time = -3.297781
+  success: gettimeofday
+
+The correct order is minuend, subtrahend, which in this case is end,
+start. Which gives:
+
+  test: gettimeofday
+  tags: git_version:v6.12-rc5-409-gdddf291c3030-dirty
+  time = 3.300650
+  success: gettimeofday
+
+Fixes: c814bf958926 ("powerpc/selftests: Use timersub() for gettimeofday()")
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20241218114347.428108-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/usb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/testing/selftests/powerpc/benchmarks/gettimeofday.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/usb.c b/drivers/net/wireless/realtek/rtlwifi/usb.c
-index c2a3c88ea1fcc..038d9bb652b64 100644
---- a/drivers/net/wireless/realtek/rtlwifi/usb.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/usb.c
-@@ -1073,13 +1073,15 @@ int rtl_usb_probe(struct usb_interface *intf,
- 	err = ieee80211_register_hw(hw);
- 	if (err) {
- 		pr_err("Can't register mac80211 hw.\n");
--		goto error_out;
-+		goto error_init_vars;
+diff --git a/tools/testing/selftests/powerpc/benchmarks/gettimeofday.c b/tools/testing/selftests/powerpc/benchmarks/gettimeofday.c
+index 580fcac0a09f3..b71ef8a493ed1 100644
+--- a/tools/testing/selftests/powerpc/benchmarks/gettimeofday.c
++++ b/tools/testing/selftests/powerpc/benchmarks/gettimeofday.c
+@@ -20,7 +20,7 @@ static int test_gettimeofday(void)
+ 		gettimeofday(&tv_end, NULL);
  	}
- 	rtlpriv->mac80211.mac80211_registered = 1;
  
- 	set_bit(RTL_STATUS_INTERFACE_START, &rtlpriv->status);
- 	return 0;
+-	timersub(&tv_start, &tv_end, &tv_diff);
++	timersub(&tv_end, &tv_start, &tv_diff);
  
-+error_init_vars:
-+	wait_for_completion(&rtlpriv->firmware_loading_complete);
- error_out:
- 	rtl_deinit_core(hw);
- error_out2:
+ 	printf("time = %.6f\n", tv_diff.tv_sec + (tv_diff.tv_usec) * 1e-6);
+ 
 -- 
 2.39.5
 
