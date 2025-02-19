@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7E61CAA9C;
-	Wed, 19 Feb 2025 08:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B11A1CAA9C;
+	Wed, 19 Feb 2025 08:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955555; cv=none; b=F+US9rcpFhE0Xwc7L5TBdR7xsi4wSWbDKBaHEMClcIDeHoTeS91f81Kya7KHq6/PE8JXxF8QD3//hKcMd3hXAPuCicuXuTzNWlvoRzZ4bFdVUJg61kOg5kSGpAO+qYUjOJLgzPSSQfNmvGm+wpy7VF2ZNUJoRT+aFCxkYjEeBl8=
+	t=1739955558; cv=none; b=MicMig9NACFCws/qG3rS3rSmuli1ZKklZ82rycP3M0ERYX9aeguHGK6urGymIrbKgEMe7co0gESGlapCfnrUvHrhxzLanPhls4WdiEbSfmgOAPLE8ls7zl9kWyr4axI7GekTAIeNCxYthjTkht93vNVG0CTQ+QVijx14j80FIh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955555; c=relaxed/simple;
-	bh=1nXLPom4hN1UNMI6/RPZVKqkuMInlguXhJIRY7Ut0JU=;
+	s=arc-20240116; t=1739955558; c=relaxed/simple;
+	bh=oX5CLAjJ2+5/E6LWmP8KXiEhThUEPl6gpTDKpzi63uY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=COMfJp6ervkdOyuORJfmrx82rEwHSDFjwmrlMlSSdhknxDestY8rMGKGk7gtgbEKhJvJ48gYFGGYUPhIJI09MczuCxMbOX4vA222U1vOFY4bUsTzTsL41ly3zUlbvdwPaG7hQvvVSrBZKZFL4ymvFyK0wJ4P2qKHfKF8Sojogt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okIBmcPP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rkh3nIRuMmhhuHmu4FY3fVIdneMFDwnA5O/px/6AxiBurOfp2kqkEy8YA5O88dfo041mhSCwNKeRcdMQMBuqCuTY4b2ZpVS0+gSn5Uy6BDrUD9bNSjsgpQQdbvhjE8z4n0REx94CJdcUUsO0Qm4DIlByLv2vTqbrCz8b2DEMHd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDRP+/Y8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okIBmcPP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F236C4CED1;
-	Wed, 19 Feb 2025 08:59:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDRP+/Y8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D40C4CEE6;
+	Wed, 19 Feb 2025 08:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955554;
-	bh=1nXLPom4hN1UNMI6/RPZVKqkuMInlguXhJIRY7Ut0JU=;
+	s=korg; t=1739955557;
+	bh=oX5CLAjJ2+5/E6LWmP8KXiEhThUEPl6gpTDKpzi63uY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=okIBmcPPPNokQAOO0tSl5d8w7yWip7tq7M8KFNZsWT9rq0tXMMN1c8FPHJ8/yw+7X
-	 YW3FG7xvXoeHpThurchVdHTsN6t7qmMtS8lXYrXKyk7lKnJiTUYCyPCjSLg+xz7lsc
-	 m9ckFzqbHS5Od7RhbO+nRDOCR9mNCTyuIssZz6HA=
+	b=cDRP+/Y8VKOcXUmF9HxRvyuhnnLVoVvFNPCdpei39c8iYj4com5f0qIU89HLVJ9wo
+	 Za3kJpJRXCUI3ORJ9iqIF0We9Fo7ZtsiuQEcfu43dzRY5dRNCR+dQmYnJ+IMFZWkqe
+	 Q44iWDOms6WSBm04J4UGtxkatpBawIPMeVk5JY2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zichen Xie <zichenxie0106@gmail.com>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Maksym Planeta <maksym@exostellar.io>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/152] NFS: Fix potential buffer overflowin nfs_sysfs_link_rpc_client()
-Date: Wed, 19 Feb 2025 09:27:35 +0100
-Message-ID: <20250219082551.706797101@linuxfoundation.org>
+Subject: [PATCH 6.6 043/152] Grab mm lock before grabbing pt lock
+Date: Wed, 19 Feb 2025 09:27:36 +0100
+Message-ID: <20250219082551.746680652@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -52,40 +51,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zichen Xie <zichenxie0106@gmail.com>
+From: Maksym Planeta <maksym@exostellar.io>
 
-[ Upstream commit 49fd4e34751e90e6df009b70cd0659dc839e7ca8 ]
+[ Upstream commit 6d002348789bc16e9203e9818b7a3688787e3b29 ]
 
-name is char[64] where the size of clnt->cl_program->name remains
-unknown. Invoking strcat() directly will also lead to potential buffer
-overflow. Change them to strscpy() and strncat() to fix potential
-issues.
+Function xen_pin_page calls xen_pte_lock, which in turn grab page
+table lock (ptlock). When locking, xen_pte_lock expect mm->page_table_lock
+to be held before grabbing ptlock, but this does not happen when pinning
+is caused by xen_mm_pin_all.
 
-Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+This commit addresses lockdep warning below, which shows up when
+suspending a Xen VM.
+
+[ 3680.658422] Freezing user space processes
+[ 3680.660156] Freezing user space processes completed (elapsed 0.001 seconds)
+[ 3680.660182] OOM killer disabled.
+[ 3680.660192] Freezing remaining freezable tasks
+[ 3680.661485] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
+[ 3680.685254]
+[ 3680.685265] ==================================
+[ 3680.685269] WARNING: Nested lock was not taken
+[ 3680.685274] 6.12.0+ #16 Tainted: G        W
+[ 3680.685279] ----------------------------------
+[ 3680.685283] migration/0/19 is trying to lock:
+[ 3680.685288] ffff88800bac33c0 (ptlock_ptr(ptdesc)#2){+.+.}-{3:3}, at: xen_pin_page+0x175/0x1d0
+[ 3680.685303]
+[ 3680.685303] but this task is not holding:
+[ 3680.685308] init_mm.page_table_lock
+[ 3680.685311]
+[ 3680.685311] stack backtrace:
+[ 3680.685316] CPU: 0 UID: 0 PID: 19 Comm: migration/0 Tainted: G        W          6.12.0+ #16
+[ 3680.685324] Tainted: [W]=WARN
+[ 3680.685328] Stopper: multi_cpu_stop+0x0/0x120 <- __stop_cpus.constprop.0+0x8c/0xd0
+[ 3680.685339] Call Trace:
+[ 3680.685344]  <TASK>
+[ 3680.685347]  dump_stack_lvl+0x77/0xb0
+[ 3680.685356]  __lock_acquire+0x917/0x2310
+[ 3680.685364]  lock_acquire+0xce/0x2c0
+[ 3680.685369]  ? xen_pin_page+0x175/0x1d0
+[ 3680.685373]  _raw_spin_lock_nest_lock+0x2f/0x70
+[ 3680.685381]  ? xen_pin_page+0x175/0x1d0
+[ 3680.685386]  xen_pin_page+0x175/0x1d0
+[ 3680.685390]  ? __pfx_xen_pin_page+0x10/0x10
+[ 3680.685394]  __xen_pgd_walk+0x233/0x2c0
+[ 3680.685401]  ? stop_one_cpu+0x91/0x100
+[ 3680.685405]  __xen_pgd_pin+0x5d/0x250
+[ 3680.685410]  xen_mm_pin_all+0x70/0xa0
+[ 3680.685415]  xen_pv_pre_suspend+0xf/0x280
+[ 3680.685420]  xen_suspend+0x57/0x1a0
+[ 3680.685428]  multi_cpu_stop+0x6b/0x120
+[ 3680.685432]  ? update_cpumasks_hier+0x7c/0xa60
+[ 3680.685439]  ? __pfx_multi_cpu_stop+0x10/0x10
+[ 3680.685443]  cpu_stopper_thread+0x8c/0x140
+[ 3680.685448]  ? smpboot_thread_fn+0x20/0x1f0
+[ 3680.685454]  ? __pfx_smpboot_thread_fn+0x10/0x10
+[ 3680.685458]  smpboot_thread_fn+0xed/0x1f0
+[ 3680.685462]  kthread+0xde/0x110
+[ 3680.685467]  ? __pfx_kthread+0x10/0x10
+[ 3680.685471]  ret_from_fork+0x2f/0x50
+[ 3680.685478]  ? __pfx_kthread+0x10/0x10
+[ 3680.685482]  ret_from_fork_asm+0x1a/0x30
+[ 3680.685489]  </TASK>
+[ 3680.685491]
+[ 3680.685491] other info that might help us debug this:
+[ 3680.685497] 1 lock held by migration/0/19:
+[ 3680.685500]  #0: ffffffff8284df38 (pgd_lock){+.+.}-{3:3}, at: xen_mm_pin_all+0x14/0xa0
+[ 3680.685512]
+[ 3680.685512] stack backtrace:
+[ 3680.685518] CPU: 0 UID: 0 PID: 19 Comm: migration/0 Tainted: G        W          6.12.0+ #16
+[ 3680.685528] Tainted: [W]=WARN
+[ 3680.685531] Stopper: multi_cpu_stop+0x0/0x120 <- __stop_cpus.constprop.0+0x8c/0xd0
+[ 3680.685538] Call Trace:
+[ 3680.685541]  <TASK>
+[ 3680.685544]  dump_stack_lvl+0x77/0xb0
+[ 3680.685549]  __lock_acquire+0x93c/0x2310
+[ 3680.685554]  lock_acquire+0xce/0x2c0
+[ 3680.685558]  ? xen_pin_page+0x175/0x1d0
+[ 3680.685562]  _raw_spin_lock_nest_lock+0x2f/0x70
+[ 3680.685568]  ? xen_pin_page+0x175/0x1d0
+[ 3680.685572]  xen_pin_page+0x175/0x1d0
+[ 3680.685578]  ? __pfx_xen_pin_page+0x10/0x10
+[ 3680.685582]  __xen_pgd_walk+0x233/0x2c0
+[ 3680.685588]  ? stop_one_cpu+0x91/0x100
+[ 3680.685592]  __xen_pgd_pin+0x5d/0x250
+[ 3680.685596]  xen_mm_pin_all+0x70/0xa0
+[ 3680.685600]  xen_pv_pre_suspend+0xf/0x280
+[ 3680.685607]  xen_suspend+0x57/0x1a0
+[ 3680.685611]  multi_cpu_stop+0x6b/0x120
+[ 3680.685615]  ? update_cpumasks_hier+0x7c/0xa60
+[ 3680.685620]  ? __pfx_multi_cpu_stop+0x10/0x10
+[ 3680.685625]  cpu_stopper_thread+0x8c/0x140
+[ 3680.685629]  ? smpboot_thread_fn+0x20/0x1f0
+[ 3680.685634]  ? __pfx_smpboot_thread_fn+0x10/0x10
+[ 3680.685638]  smpboot_thread_fn+0xed/0x1f0
+[ 3680.685642]  kthread+0xde/0x110
+[ 3680.685645]  ? __pfx_kthread+0x10/0x10
+[ 3680.685649]  ret_from_fork+0x2f/0x50
+[ 3680.685654]  ? __pfx_kthread+0x10/0x10
+[ 3680.685657]  ret_from_fork_asm+0x1a/0x30
+[ 3680.685662]  </TASK>
+[ 3680.685267] xen:grant_table: Grant tables using version 1 layout
+[ 3680.685921] OOM killer enabled.
+[ 3680.685934] Restarting tasks ... done.
+
+Signed-off-by: Maksym Planeta <maksym@exostellar.io>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20241204103516.3309112-1-maksym@exostellar.io>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/sysfs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/xen/mmu_pv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/nfs/sysfs.c b/fs/nfs/sysfs.c
-index bf378ecd5d9fd..7b59a40d40c06 100644
---- a/fs/nfs/sysfs.c
-+++ b/fs/nfs/sysfs.c
-@@ -280,9 +280,9 @@ void nfs_sysfs_link_rpc_client(struct nfs_server *server,
- 	char name[RPC_CLIENT_NAME_SIZE];
- 	int ret;
+diff --git a/arch/x86/xen/mmu_pv.c b/arch/x86/xen/mmu_pv.c
+index 2db46626acea2..88a722954f3f7 100644
+--- a/arch/x86/xen/mmu_pv.c
++++ b/arch/x86/xen/mmu_pv.c
+@@ -827,6 +827,7 @@ void xen_mm_pin_all(void)
+ {
+ 	struct page *page;
  
--	strcpy(name, clnt->cl_program->name);
--	strcat(name, uniq ? uniq : "");
--	strcat(name, "_client");
-+	strscpy(name, clnt->cl_program->name, sizeof(name));
-+	strncat(name, uniq ? uniq : "", sizeof(name) - strlen(name) - 1);
-+	strncat(name, "_client", sizeof(name) - strlen(name) - 1);
++	spin_lock(&init_mm.page_table_lock);
+ 	spin_lock(&pgd_lock);
  
- 	ret = sysfs_create_link_nowarn(&server->kobj,
- 						&clnt->cl_sysfs->kobject, name);
+ 	list_for_each_entry(page, &pgd_list, lru) {
+@@ -837,6 +838,7 @@ void xen_mm_pin_all(void)
+ 	}
+ 
+ 	spin_unlock(&pgd_lock);
++	spin_unlock(&init_mm.page_table_lock);
+ }
+ 
+ static void __init xen_mark_pinned(struct mm_struct *mm, struct page *page,
+@@ -936,6 +938,7 @@ void xen_mm_unpin_all(void)
+ {
+ 	struct page *page;
+ 
++	spin_lock(&init_mm.page_table_lock);
+ 	spin_lock(&pgd_lock);
+ 
+ 	list_for_each_entry(page, &pgd_list, lru) {
+@@ -947,6 +950,7 @@ void xen_mm_unpin_all(void)
+ 	}
+ 
+ 	spin_unlock(&pgd_lock);
++	spin_unlock(&init_mm.page_table_lock);
+ }
+ 
+ static void xen_enter_mmap(struct mm_struct *mm)
 -- 
 2.39.5
 
