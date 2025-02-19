@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C171DF253;
-	Wed, 19 Feb 2025 08:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602461C7B62;
+	Wed, 19 Feb 2025 08:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954807; cv=none; b=VkMHIb9x/ksc4vLlMUmXMdPIxDegPGrBxB2aY3Gg8x1hnSdEzYbDyADGMq7qIZkkSFXOzC6Q58Sbqdk05Ha2JLa3+9bzpN7S8QHvmNbVaFDrY/r+mTTx+KxssOwmd8etoLkrXolNAvQ4f1XgtMt4/QH9vHAJSG5q8qPMqc0v9bI=
+	t=1739954810; cv=none; b=ePiu4reh/9j1/1KUd+ZmSFwM7aY/BnqjU7OMl76XOO3P9lc+g2A1RTa0m72e3fM9ctM1EpUdaV1R+E7625mK67AiqRIe0kH8k40+DpnZ13DN7g7+sG5ET5vMM2VESx3vNC7qd7h/1VUfoQXtmHuY2X6OQHRIGqpzB58rl6NZsLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954807; c=relaxed/simple;
-	bh=5EDJaJkfI4TNUC8zo1cppL2RG8PB+T61qz2rTTVJtS4=;
+	s=arc-20240116; t=1739954810; c=relaxed/simple;
+	bh=z7FJkTHwwAEG49aXTgTeVnpDTUlsOb5NLTNgImVa0ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PflbTBNrygsqYMih8sWVFy3xEEhFi2BNdmR2k0if2XdgcxeJYhYngsdD6O4H7IZTaefQl4tRHLF2RCUr+PW2kEcr5N/f8dbUp38WFRhGLzzI2cDyXIxqacIyb/l0KM231GVxzs2WaPF6jsX4fEPw5SDE7iwh6Wu+yXuQVBgVSIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NgJhMqse; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LDxkmOFYW5IsJHLRNBssBCbj2idRiy1t+52j9Po+XJVuOyZxccs+/SPLk8MhR9+xDGr2v/U1o5rGw+dtNkI+7bbN/WzbZ+k+qzjDA9+XW8MeM0FzJ8ZelufEPhdv99XEz7hGLv+G0j/MadQDiT70gnxt//Ut4N0qK0vdH8YANlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+gIRyyx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgJhMqse"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B901BC4CEE6;
-	Wed, 19 Feb 2025 08:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+gIRyyx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2259C4CED1;
+	Wed, 19 Feb 2025 08:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954807;
-	bh=5EDJaJkfI4TNUC8zo1cppL2RG8PB+T61qz2rTTVJtS4=;
+	s=korg; t=1739954810;
+	bh=z7FJkTHwwAEG49aXTgTeVnpDTUlsOb5NLTNgImVa0ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NgJhMqseS4w0+fYyJVa0mFlapteUN0GL/WFMP6fs5Dy301IchBA7h5Uhz/5EE9UDl
-	 wMzLgqJS7lZ1bAEhHUl/4YTYFbQdhMmzySg11KZFkeeqAn7XgD98qKmDo1+QECSwz/
-	 FghiVcIec/yTTFb9bTXw+8WVO0pUOf9ySwrOYFsU=
+	b=Q+gIRyyxsFsjho5WmDJY8QLrvDjEm/lqcx9cLTTnVAq+SRXEZnBxRWP/roLzNfsDJ
+	 TfVcVZJOGRTaQ89J1cMqG7nsPUCkdlAL+00IZ5TNFComRj6Oe79KqJF7UT4q+3eBI7
+	 6LhiozA3h3OKLgun0ihSZgAXqBYqelFRmUgMGMvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6a9624592218c2c5e7aa@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Roopa Prabhu <roopa@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Markus Mayer <mmayer@broadcom.com>,
+	Artur Weber <aweber.kernel@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 025/230] vxlan: check vxlan_vnigroup_init() return value
-Date: Wed, 19 Feb 2025 09:25:42 +0100
-Message-ID: <20250219082602.691636600@linuxfoundation.org>
+Subject: [PATCH 6.12 043/230] gpio: bcm-kona: Make sure GPIO bits are unlocked when requesting IRQ
+Date: Wed, 19 Feb 2025 09:26:00 +0100
+Message-ID: <20250219082603.395739689@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -54,73 +54,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Artur Weber <aweber.kernel@gmail.com>
 
-[ Upstream commit 5805402dcc56241987bca674a1b4da79a249bab7 ]
+[ Upstream commit 57f5db77a915cc29461a679a6bcae7097967be1a ]
 
-vxlan_init() must check vxlan_vnigroup_init() success
-otherwise a crash happens later, spotted by syzbot.
+The settings for all GPIOs are locked by default in bcm_kona_gpio_reset.
+The settings for a GPIO are unlocked when requesting it as a GPIO, but
+not when requesting it as an interrupt, causing the IRQ settings to not
+get applied.
 
-Oops: general protection fault, probably for non-canonical address 0xdffffc000000002c: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000160-0x0000000000000167]
-CPU: 0 UID: 0 PID: 7313 Comm: syz-executor147 Not tainted 6.14.0-rc1-syzkaller-00276-g69b54314c975 #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
- RIP: 0010:vxlan_vnigroup_uninit+0x89/0x500 drivers/net/vxlan/vxlan_vnifilter.c:912
-Code: 00 48 8b 44 24 08 4c 8b b0 98 41 00 00 49 8d 86 60 01 00 00 48 89 c2 48 89 44 24 10 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80> 3c 02 00 0f 85 4d 04 00 00 49 8b 86 60 01 00 00 48 ba 00 00 00
-RSP: 0018:ffffc9000cc1eea8 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 0000000000000001 RCX: ffffffff8672effb
-RDX: 000000000000002c RSI: ffffffff8672ecb9 RDI: ffff8880461b4f18
-RBP: ffff8880461b4ef4 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000020000
-R13: ffff8880461b0d80 R14: 0000000000000000 R15: dffffc0000000000
-FS:  00007fecfa95d6c0(0000) GS:ffff88806a600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fecfa95cfb8 CR3: 000000004472c000 CR4: 0000000000352ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
-  vxlan_uninit+0x1ab/0x200 drivers/net/vxlan/vxlan_core.c:2942
-  unregister_netdevice_many_notify+0x12d6/0x1f30 net/core/dev.c:11824
-  unregister_netdevice_many net/core/dev.c:11866 [inline]
-  unregister_netdevice_queue+0x307/0x3f0 net/core/dev.c:11736
-  register_netdevice+0x1829/0x1eb0 net/core/dev.c:10901
-  __vxlan_dev_create+0x7c6/0xa30 drivers/net/vxlan/vxlan_core.c:3981
-  vxlan_newlink+0xd1/0x130 drivers/net/vxlan/vxlan_core.c:4407
-  rtnl_newlink_create net/core/rtnetlink.c:3795 [inline]
-  __rtnl_newlink net/core/rtnetlink.c:3906 [inline]
+Fix this by making sure to unlock the right bits when an IRQ is requested.
+To avoid a situation where an IRQ being released causes a lock despite
+the same GPIO being used by a GPIO request or vice versa, add an unlock
+counter and only lock if it reaches 0.
 
-Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
-Reported-by: syzbot+6a9624592218c2c5e7aa@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/67a9d9b4.050a0220.110943.002d.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Roopa Prabhu <roopa@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250210105242.883482-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 757651e3d60e ("gpio: bcm281xx: Add GPIO driver")
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Markus Mayer <mmayer@broadcom.com>
+Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20250206-kona-gpio-fixes-v2-2-409135eab780@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-bcm-kona.c | 67 +++++++++++++++++++++++++++++-------
+ 1 file changed, 55 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 6e9a3795846aa..5e7cdd1b806fb 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2871,8 +2871,11 @@ static int vxlan_init(struct net_device *dev)
- 	struct vxlan_dev *vxlan = netdev_priv(dev);
- 	int err;
+diff --git a/drivers/gpio/gpio-bcm-kona.c b/drivers/gpio/gpio-bcm-kona.c
+index 77bd4ec93a231..17f3f210fee9d 100644
+--- a/drivers/gpio/gpio-bcm-kona.c
++++ b/drivers/gpio/gpio-bcm-kona.c
+@@ -69,6 +69,22 @@ struct bcm_kona_gpio {
+ struct bcm_kona_gpio_bank {
+ 	int id;
+ 	int irq;
++	/*
++	 * Used to keep track of lock/unlock operations for each GPIO in the
++	 * bank.
++	 *
++	 * All GPIOs are locked by default (see bcm_kona_gpio_reset), and the
++	 * unlock count for all GPIOs is 0 by default. Each unlock increments
++	 * the counter, and each lock decrements the counter.
++	 *
++	 * The lock function only locks the GPIO once its unlock counter is
++	 * down to 0. This is necessary because the GPIO is unlocked in two
++	 * places in this driver: once for requested GPIOs, and once for
++	 * requested IRQs. Since it is possible for a GPIO to be requested
++	 * as both a GPIO and an IRQ, we need to ensure that we don't lock it
++	 * too early.
++	 */
++	u8 gpio_unlock_count[GPIO_PER_BANK];
+ 	/* Used in the interrupt handler */
+ 	struct bcm_kona_gpio *kona_gpio;
+ };
+@@ -87,14 +103,23 @@ static void bcm_kona_gpio_lock_gpio(struct bcm_kona_gpio *kona_gpio,
+ 	unsigned long flags;
+ 	int bank_id = GPIO_BANK(gpio);
+ 	int bit = GPIO_BIT(gpio);
++	struct bcm_kona_gpio_bank *bank = &kona_gpio->banks[bank_id];
  
--	if (vxlan->cfg.flags & VXLAN_F_VNIFILTER)
--		vxlan_vnigroup_init(vxlan);
-+	if (vxlan->cfg.flags & VXLAN_F_VNIFILTER) {
-+		err = vxlan_vnigroup_init(vxlan);
-+		if (err)
-+			return err;
+-	raw_spin_lock_irqsave(&kona_gpio->lock, flags);
++	if (bank->gpio_unlock_count[bit] == 0) {
++		dev_err(kona_gpio->gpio_chip.parent,
++			"Unbalanced locks for GPIO %u\n", gpio);
++		return;
 +	}
  
- 	err = gro_cells_init(&vxlan->gro_cells, dev);
- 	if (err)
+-	val = readl(kona_gpio->reg_base + GPIO_PWD_STATUS(bank_id));
+-	val |= BIT(bit);
+-	bcm_kona_gpio_write_lock_regs(kona_gpio->reg_base, bank_id, val);
++	if (--bank->gpio_unlock_count[bit] == 0) {
++		raw_spin_lock_irqsave(&kona_gpio->lock, flags);
+ 
+-	raw_spin_unlock_irqrestore(&kona_gpio->lock, flags);
++		val = readl(kona_gpio->reg_base + GPIO_PWD_STATUS(bank_id));
++		val |= BIT(bit);
++		bcm_kona_gpio_write_lock_regs(kona_gpio->reg_base, bank_id, val);
++
++		raw_spin_unlock_irqrestore(&kona_gpio->lock, flags);
++	}
+ }
+ 
+ static void bcm_kona_gpio_unlock_gpio(struct bcm_kona_gpio *kona_gpio,
+@@ -104,14 +129,19 @@ static void bcm_kona_gpio_unlock_gpio(struct bcm_kona_gpio *kona_gpio,
+ 	unsigned long flags;
+ 	int bank_id = GPIO_BANK(gpio);
+ 	int bit = GPIO_BIT(gpio);
++	struct bcm_kona_gpio_bank *bank = &kona_gpio->banks[bank_id];
+ 
+-	raw_spin_lock_irqsave(&kona_gpio->lock, flags);
++	if (bank->gpio_unlock_count[bit] == 0) {
++		raw_spin_lock_irqsave(&kona_gpio->lock, flags);
+ 
+-	val = readl(kona_gpio->reg_base + GPIO_PWD_STATUS(bank_id));
+-	val &= ~BIT(bit);
+-	bcm_kona_gpio_write_lock_regs(kona_gpio->reg_base, bank_id, val);
++		val = readl(kona_gpio->reg_base + GPIO_PWD_STATUS(bank_id));
++		val &= ~BIT(bit);
++		bcm_kona_gpio_write_lock_regs(kona_gpio->reg_base, bank_id, val);
+ 
+-	raw_spin_unlock_irqrestore(&kona_gpio->lock, flags);
++		raw_spin_unlock_irqrestore(&kona_gpio->lock, flags);
++	}
++
++	++bank->gpio_unlock_count[bit];
+ }
+ 
+ static int bcm_kona_gpio_get_dir(struct gpio_chip *chip, unsigned gpio)
+@@ -362,6 +392,7 @@ static void bcm_kona_gpio_irq_mask(struct irq_data *d)
+ 
+ 	kona_gpio = irq_data_get_irq_chip_data(d);
+ 	reg_base = kona_gpio->reg_base;
++
+ 	raw_spin_lock_irqsave(&kona_gpio->lock, flags);
+ 
+ 	val = readl(reg_base + GPIO_INT_MASK(bank_id));
+@@ -384,6 +415,7 @@ static void bcm_kona_gpio_irq_unmask(struct irq_data *d)
+ 
+ 	kona_gpio = irq_data_get_irq_chip_data(d);
+ 	reg_base = kona_gpio->reg_base;
++
+ 	raw_spin_lock_irqsave(&kona_gpio->lock, flags);
+ 
+ 	val = readl(reg_base + GPIO_INT_MSKCLR(bank_id));
+@@ -479,15 +511,26 @@ static void bcm_kona_gpio_irq_handler(struct irq_desc *desc)
+ static int bcm_kona_gpio_irq_reqres(struct irq_data *d)
+ {
+ 	struct bcm_kona_gpio *kona_gpio = irq_data_get_irq_chip_data(d);
++	unsigned int gpio = d->hwirq;
++
++	/*
++	 * We need to unlock the GPIO before any other operations are performed
++	 * on the relevant GPIO configuration registers
++	 */
++	bcm_kona_gpio_unlock_gpio(kona_gpio, gpio);
+ 
+-	return gpiochip_reqres_irq(&kona_gpio->gpio_chip, d->hwirq);
++	return gpiochip_reqres_irq(&kona_gpio->gpio_chip, gpio);
+ }
+ 
+ static void bcm_kona_gpio_irq_relres(struct irq_data *d)
+ {
+ 	struct bcm_kona_gpio *kona_gpio = irq_data_get_irq_chip_data(d);
++	unsigned int gpio = d->hwirq;
++
++	/* Once we no longer use it, lock the GPIO again */
++	bcm_kona_gpio_lock_gpio(kona_gpio, gpio);
+ 
+-	gpiochip_relres_irq(&kona_gpio->gpio_chip, d->hwirq);
++	gpiochip_relres_irq(&kona_gpio->gpio_chip, gpio);
+ }
+ 
+ static struct irq_chip bcm_gpio_irq_chip = {
 -- 
 2.39.5
 
