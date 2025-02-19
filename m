@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE831E0DB5;
-	Wed, 19 Feb 2025 09:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17731E0DCA;
+	Wed, 19 Feb 2025 09:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956303; cv=none; b=gNzXIFV2uF0G26r8AjvEp41v3phbpLlgNq2P0rgDK7CAvIXnDwYi7Di5QYhi+qSh3CErIA5XmbUrpnG/VdrNbZ1aCwX1Et5y9MTyfYzX2VQtgVbj3vPk+bGYN1ChbLpS0ra7Ah5w7VbBV2/s9a/v5DO7w+hY9bBqlVRBsW8RfTw=
+	t=1739956306; cv=none; b=tuqBEygRR4tz4FwrCmfY4V9wdzCaDP2MEm801r+JiLv4IHDWSa2+aBIeYU/RtcIraLR0m7hJyORL5lptoRnrcTexUKUBSnXbJXNFFt1fAKu7dZ3iNo3PIsv60+h9QmI0+Fw86r9H2M3lW5/c8t/PD+rUkxf9tNiVitFEMiAn7dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956303; c=relaxed/simple;
-	bh=ktkZzCq0epiFFwPGqs7jBtLmSeGldV5SOUIXUBPh5aM=;
+	s=arc-20240116; t=1739956306; c=relaxed/simple;
+	bh=vItoEDLTYwFP8uo4OQ47MbhXo9B6iZ2mQzDsX8T+mnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lYxlUR0tVSeSbCnhoEUdfKsJcg8SLlddQq2/zgYSBt2L4FEC8xTDBmKpLHGD3ZpZy62QMBQov8hE4LDp7JmI7D+z1C4ygF8qQyJH4BJ4CDRMzlmwjjx4JhLR0Dy5zIy6k/H21+gRbFogmRDOcddRLXXHxdNftPxlMVtFXPFPH+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1AYdkib; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vEGbhkJKrTZ3+cR+IPKjrGyket2JJnvrWmHpQdkzmobOXTGwrPxLY7Z4ki6oLX8VGzlsO6gvUpoVoUiAt48CDrFE8shvATPRsHxYsBmi7Hq05XoOjWu1BZbKg/K74o6w51aW9Xr04R+1JgBHK6hXE7Eli83N8QHbgwZHUY23Zks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0md0mxa+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1AYdkib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A58DC4CEE7;
-	Wed, 19 Feb 2025 09:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0md0mxa+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26ED6C4CED1;
+	Wed, 19 Feb 2025 09:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956303;
-	bh=ktkZzCq0epiFFwPGqs7jBtLmSeGldV5SOUIXUBPh5aM=;
+	s=korg; t=1739956306;
+	bh=vItoEDLTYwFP8uo4OQ47MbhXo9B6iZ2mQzDsX8T+mnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X1AYdkib77pJwoPR9LTFgaRhBIxo9xlSGCTDSry2YSEUfoijQHWTlSoemmkALWKZ/
-	 SytP7VA4MPv5+hijHwIdhVpBTff1eO9EyE82d6VCuMRlCF2DV74amZJ3JWk+ZTS7ew
-	 wESTnBjDNF5ZHNqmjpmmWpZOD63lTpAC335fSLHk=
+	b=0md0mxa+TlBYXF4GJpPqrOUHklMaj7+OGXAOEqUKnyZUoChqWYc6ZaqhaZ5IZx5uT
+	 XHMKZVpHPGjX0r+pCLxRC+AqZeHk4ZhmMa69LdCVy0alkVYnG0s6BRpHmopG58G2Wj
+	 NpDxlAkEaE8LvruALMYm9ubfxNeOGygfP8DtHHK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Val Packett <val@packett.cool>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 134/578] arm64: dts: mt8183: set DMIC one-wire mode on Damu
-Date: Wed, 19 Feb 2025 09:22:18 +0100
-Message-ID: <20250219082658.260447110@linuxfoundation.org>
+Subject: [PATCH 6.1 135/578] arm64: dts: mediatek: mt8516: fix GICv2 range
+Date: Wed, 19 Feb 2025 09:22:19 +0100
+Message-ID: <20250219082658.298922959@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -53,39 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsin-Yi Wang <hsinyi@chromium.org>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 6c379e8b984815fc8f876e4bc78c4d563f13ddae ]
+[ Upstream commit e3ee31e4409f051c021a30122f3c470f093a7386 ]
 
-Sets DMIC one-wire mode on Damu.
+On the MT8167 which is based on the MT8516 DTS, the following error
+was appearing on boot, breaking interrupt operation:
 
-Fixes: cabc71b08eb5 ("arm64: dts: mt8183: Add kukui-jacuzzi-damu board")
-Signed-off-by: Hsin-Yi Wang <hsinyi@chromium.org>
+GICv2 detected, but range too small and irqchip.gicv2_force_probe not set
+
+Similar to what's been proposed for MT7622 which has the same issue,
+fix by using the range reported by force_probe.
+
+Link: https://lore.kernel.org/all/YmhNSLgp%2Fyg8Vr1F@makrotopia.org/
+Fixes: 5236347bde42 ("arm64: dts: mediatek: add dtsi for MT8516")
+Signed-off-by: Val Packett <val@packett.cool>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://lore.kernel.org/r/20241113-damu-v4-1-6911b69610dd@chromium.org
+Link: https://lore.kernel.org/r/20241204190524.21862-2-val@packett.cool
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-damu.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt8516.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-damu.dts b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-damu.dts
-index 5cbb5a1ae3f2f..ca4196870f9db 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-damu.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-damu.dts
-@@ -26,6 +26,10 @@
- 	hid-descr-addr = <0x0001>;
- };
- 
-+&mt6358codec {
-+	mediatek,dmic-mode = <1>; /* one-wire */
-+};
-+
- &qca_wifi {
- 	qcom,ath10k-calibration-variant = "GO_DAMU";
- };
+diff --git a/arch/arm64/boot/dts/mediatek/mt8516.dtsi b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
+index d1b67c82d7617..81ac7f2f710b4 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8516.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
+@@ -269,7 +269,7 @@
+ 			interrupt-parent = <&gic>;
+ 			interrupt-controller;
+ 			reg = <0 0x10310000 0 0x1000>,
+-			      <0 0x10320000 0 0x1000>,
++			      <0 0x1032f000 0 0x2000>,
+ 			      <0 0x10340000 0 0x2000>,
+ 			      <0 0x10360000 0 0x2000>;
+ 			interrupts = <GIC_PPI 9
 -- 
 2.39.5
 
