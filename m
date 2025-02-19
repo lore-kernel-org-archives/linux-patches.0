@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A5F1DE889;
-	Wed, 19 Feb 2025 08:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0B71C175A;
+	Wed, 19 Feb 2025 08:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954405; cv=none; b=feYSZnQ6L8OfPs64tD2KXTXkZcowHSuloVKr9yzt4svL1kjVwooameUwpS6mJm6YluYWMWxXUmBBTAFpGcEVxyNtKKPj4wmJLBbchMKQ8w96NqaG3oyWfAUTljO2/65yVuoVNLS914yD1O9C7pysWlX0Fl9pHbiPEBxQ6zKs3aU=
+	t=1739954408; cv=none; b=TYY9RrcMG/sEMMWc89RNfqw1TomN0UhE4CiPPHTPouTUlLol3pLv3WEjID8GGNQcR5gMggFZ/BTWVuglR6cI2h5YpjxfWprvhHu/1ODcCEzVRuu49kInqxxiHa/nvI4d1yS1ZZYVSU/D3dTgeVrzS84HrZRFd1z5iAjTlR8NOEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954405; c=relaxed/simple;
-	bh=KkldybmVKm1Su/P3iQaIPM43J7Kol9ebIc+YsYIbzHE=;
+	s=arc-20240116; t=1739954408; c=relaxed/simple;
+	bh=tn+UrPDw0iuxO5JsCSN8w2Dpplk9db+t6QO5nUUr+6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BOKrxi5tBBy0gDA8Qr3OgA7HvKCfH2/WFrv1G03ZAEhWb7LVbrKkYr4r8NCuvfksKTMPm6NnF3B0X6Iues01XtOL0nZ5r/5/+mJ+LQTiq3gqkJBQgAJUAjv+VcCQgZj7iecDcHc7Bs10v83mPMhatL7i4ShCl5GNdrwKBTkUyHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uefxzv+9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HI7fXsfRrZDV96nJxYfiPat4Tr5fF39Gej6rm88yWOfFNIL5TND8Hv/XodULen6FWo7K1GhEapyZ+HbfYlTvvEkY5ek67HHzXBvR+dIgO9YlW15A4/sFhH6V8kMRY8pEZykBHCcwclvGMbQpDXNYy/fLGengxxeqZttf2xovB0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDUUFotU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uefxzv+9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2500BC4CED1;
-	Wed, 19 Feb 2025 08:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDUUFotU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3E4C4CED1;
+	Wed, 19 Feb 2025 08:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954405;
-	bh=KkldybmVKm1Su/P3iQaIPM43J7Kol9ebIc+YsYIbzHE=;
+	s=korg; t=1739954408;
+	bh=tn+UrPDw0iuxO5JsCSN8w2Dpplk9db+t6QO5nUUr+6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uefxzv+95oNCTFYOP1dplXE56eb9tA/cC5NZOWSWSFfN0UXj+JyBdugoxkER5Dt4U
-	 x2nQiPVSLr+mB8/YsR9D3XKZBHPQmrwL3zdjKWejEoTEzF2T7Ohw3T+b00rtwlMrjw
-	 WHRVkJJHxF1T56fFcAZwKVpEuJD9af0ua3xJfY7U=
+	b=QDUUFotUPHLE43Ki7foeWz1IT19Tfdn49viOXZdwiwpHEGDfjUExT1GEkCZCY2iGb
+	 A09GXGcGaWUaJ7yK8BMQJcvCd4B7GaOZqRY2JY+J8zbwAMlZ4RTKplG68GTmUfdMhz
+	 3B8q705Z0I8jgCCny1LSZQuEmO8anbk+xS97spYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Justin Iurman <justin.iurman@uliege.be>,
-	David Lebrun <dlebrun@google.com>,
+	Alexander Aring <aahringo@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 194/274] net: ipv6: seg6_iptunnel: mitigate 2-realloc issue
-Date: Wed, 19 Feb 2025 09:27:28 +0100
-Message-ID: <20250219082617.178784537@linuxfoundation.org>
+Subject: [PATCH 6.13 195/274] net: ipv6: rpl_iptunnel: mitigate 2-realloc issue
+Date: Wed, 19 Feb 2025 09:27:29 +0100
+Message-ID: <20250219082617.216726760@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -54,181 +54,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Justin Iurman <justin.iurman@uliege.be>
 
-[ Upstream commit 40475b63761abb6f8fdef960d03228a08662c9c4 ]
+[ Upstream commit 985ec6f5e6235242191370628acb73d7a9f0c0ea ]
 
-This patch mitigates the two-reallocations issue with seg6_iptunnel by
+This patch mitigates the two-reallocations issue with rpl_iptunnel by
 providing the dst_entry (in the cache) to the first call to
 skb_cow_head(). As a result, the very first iteration would still
 trigger two reallocations (i.e., empty cache), while next iterations
 would only trigger a single reallocation.
 
 Performance tests before/after applying this patch, which clearly shows
-the improvement:
-- before: https://ibb.co/3Cg4sNH
-- after: https://ibb.co/8rQ350r
+there is no impact (it even shows improvement):
+- before: https://ibb.co/nQJhqwc
+- after: https://ibb.co/4ZvW6wV
 
 Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
-Cc: David Lebrun <dlebrun@google.com>
+Cc: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 92191dd10730 ("net: ipv6: fix dst ref loops in rpl, seg6 and ioam6 lwtunnels")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_iptunnel.c | 85 ++++++++++++++++++++++++----------------
- 1 file changed, 52 insertions(+), 33 deletions(-)
+ net/ipv6/rpl_iptunnel.c | 46 ++++++++++++++++++++++-------------------
+ 1 file changed, 25 insertions(+), 21 deletions(-)
 
-diff --git a/net/ipv6/seg6_iptunnel.c b/net/ipv6/seg6_iptunnel.c
-index 098632adc9b5a..4bf937bfc2633 100644
---- a/net/ipv6/seg6_iptunnel.c
-+++ b/net/ipv6/seg6_iptunnel.c
-@@ -124,8 +124,8 @@ static __be32 seg6_make_flowlabel(struct net *net, struct sk_buff *skb,
- 	return flowlabel;
+diff --git a/net/ipv6/rpl_iptunnel.c b/net/ipv6/rpl_iptunnel.c
+index db3c19a42e1ca..7ba22d2f2bfef 100644
+--- a/net/ipv6/rpl_iptunnel.c
++++ b/net/ipv6/rpl_iptunnel.c
+@@ -125,7 +125,8 @@ static void rpl_destroy_state(struct lwtunnel_state *lwt)
  }
  
--/* encapsulate an IPv6 packet within an outer IPv6 header with a given SRH */
--int seg6_do_srh_encap(struct sk_buff *skb, struct ipv6_sr_hdr *osrh, int proto)
-+static int __seg6_do_srh_encap(struct sk_buff *skb, struct ipv6_sr_hdr *osrh,
-+			       int proto, struct dst_entry *cache_dst)
+ static int rpl_do_srh_inline(struct sk_buff *skb, const struct rpl_lwt *rlwt,
+-			     const struct ipv6_rpl_sr_hdr *srh)
++			     const struct ipv6_rpl_sr_hdr *srh,
++			     struct dst_entry *cache_dst)
  {
- 	struct dst_entry *dst = skb_dst(skb);
- 	struct net *net = dev_net(dst->dev);
-@@ -137,7 +137,7 @@ int seg6_do_srh_encap(struct sk_buff *skb, struct ipv6_sr_hdr *osrh, int proto)
- 	hdrlen = (osrh->hdrlen + 1) << 3;
- 	tot_len = hdrlen + sizeof(*hdr);
+ 	struct ipv6_rpl_sr_hdr *isrh, *csrh;
+ 	const struct ipv6hdr *oldhdr;
+@@ -153,7 +154,7 @@ static int rpl_do_srh_inline(struct sk_buff *skb, const struct rpl_lwt *rlwt,
  
--	err = skb_cow_head(skb, tot_len + skb->mac_len);
-+	err = skb_cow_head(skb, tot_len + dst_dev_overhead(cache_dst, skb));
- 	if (unlikely(err))
- 		return err;
- 
-@@ -197,11 +197,18 @@ int seg6_do_srh_encap(struct sk_buff *skb, struct ipv6_sr_hdr *osrh, int proto)
- 
- 	return 0;
- }
-+
-+/* encapsulate an IPv6 packet within an outer IPv6 header with a given SRH */
-+int seg6_do_srh_encap(struct sk_buff *skb, struct ipv6_sr_hdr *osrh, int proto)
-+{
-+	return __seg6_do_srh_encap(skb, osrh, proto, NULL);
-+}
- EXPORT_SYMBOL_GPL(seg6_do_srh_encap);
- 
- /* encapsulate an IPv6 packet within an outer IPv6 header with reduced SRH */
- static int seg6_do_srh_encap_red(struct sk_buff *skb,
--				 struct ipv6_sr_hdr *osrh, int proto)
-+				 struct ipv6_sr_hdr *osrh, int proto,
-+				 struct dst_entry *cache_dst)
- {
- 	__u8 first_seg = osrh->first_segment;
- 	struct dst_entry *dst = skb_dst(skb);
-@@ -230,7 +237,7 @@ static int seg6_do_srh_encap_red(struct sk_buff *skb,
- 
- 	tot_len = red_hdrlen + sizeof(struct ipv6hdr);
- 
--	err = skb_cow_head(skb, tot_len + skb->mac_len);
-+	err = skb_cow_head(skb, tot_len + dst_dev_overhead(cache_dst, skb));
- 	if (unlikely(err))
- 		return err;
- 
-@@ -317,8 +324,8 @@ static int seg6_do_srh_encap_red(struct sk_buff *skb,
- 	return 0;
- }
- 
--/* insert an SRH within an IPv6 packet, just after the IPv6 header */
--int seg6_do_srh_inline(struct sk_buff *skb, struct ipv6_sr_hdr *osrh)
-+static int __seg6_do_srh_inline(struct sk_buff *skb, struct ipv6_sr_hdr *osrh,
-+				struct dst_entry *cache_dst)
- {
- 	struct ipv6hdr *hdr, *oldhdr;
- 	struct ipv6_sr_hdr *isrh;
-@@ -326,7 +333,7 @@ int seg6_do_srh_inline(struct sk_buff *skb, struct ipv6_sr_hdr *osrh)
- 
- 	hdrlen = (osrh->hdrlen + 1) << 3;
+ 	hdrlen = ((csrh->hdrlen + 1) << 3);
  
 -	err = skb_cow_head(skb, hdrlen + skb->mac_len);
 +	err = skb_cow_head(skb, hdrlen + dst_dev_overhead(cache_dst, skb));
- 	if (unlikely(err))
+ 	if (unlikely(err)) {
+ 		kfree(buf);
  		return err;
- 
-@@ -369,9 +376,8 @@ int seg6_do_srh_inline(struct sk_buff *skb, struct ipv6_sr_hdr *osrh)
- 
+@@ -186,7 +187,8 @@ static int rpl_do_srh_inline(struct sk_buff *skb, const struct rpl_lwt *rlwt,
  	return 0;
  }
--EXPORT_SYMBOL_GPL(seg6_do_srh_inline);
  
--static int seg6_do_srh(struct sk_buff *skb)
-+static int seg6_do_srh(struct sk_buff *skb, struct dst_entry *cache_dst)
+-static int rpl_do_srh(struct sk_buff *skb, const struct rpl_lwt *rlwt)
++static int rpl_do_srh(struct sk_buff *skb, const struct rpl_lwt *rlwt,
++		      struct dst_entry *cache_dst)
  {
  	struct dst_entry *dst = skb_dst(skb);
- 	struct seg6_iptunnel_encap *tinfo;
-@@ -384,7 +390,7 @@ static int seg6_do_srh(struct sk_buff *skb)
- 		if (skb->protocol != htons(ETH_P_IPV6))
- 			return -EINVAL;
+ 	struct rpl_iptunnel_encap *tinfo;
+@@ -196,7 +198,7 @@ static int rpl_do_srh(struct sk_buff *skb, const struct rpl_lwt *rlwt)
  
--		err = seg6_do_srh_inline(skb, tinfo->srh);
-+		err = __seg6_do_srh_inline(skb, tinfo->srh, cache_dst);
- 		if (err)
- 			return err;
- 		break;
-@@ -402,9 +408,11 @@ static int seg6_do_srh(struct sk_buff *skb)
- 			return -EINVAL;
+ 	tinfo = rpl_encap_lwtunnel(dst->lwtstate);
  
- 		if (tinfo->mode == SEG6_IPTUN_MODE_ENCAP)
--			err = seg6_do_srh_encap(skb, tinfo->srh, proto);
-+			err = __seg6_do_srh_encap(skb, tinfo->srh,
-+						  proto, cache_dst);
- 		else
--			err = seg6_do_srh_encap_red(skb, tinfo->srh, proto);
-+			err = seg6_do_srh_encap_red(skb, tinfo->srh,
-+						    proto, cache_dst);
- 
- 		if (err)
- 			return err;
-@@ -425,11 +433,13 @@ static int seg6_do_srh(struct sk_buff *skb)
- 		skb_push(skb, skb->mac_len);
- 
- 		if (tinfo->mode == SEG6_IPTUN_MODE_L2ENCAP)
--			err = seg6_do_srh_encap(skb, tinfo->srh,
--						IPPROTO_ETHERNET);
-+			err = __seg6_do_srh_encap(skb, tinfo->srh,
-+						  IPPROTO_ETHERNET,
-+						  cache_dst);
- 		else
- 			err = seg6_do_srh_encap_red(skb, tinfo->srh,
--						    IPPROTO_ETHERNET);
-+						    IPPROTO_ETHERNET,
-+						    cache_dst);
- 
- 		if (err)
- 			return err;
-@@ -444,6 +454,13 @@ static int seg6_do_srh(struct sk_buff *skb)
- 	return 0;
+-	return rpl_do_srh_inline(skb, rlwt, tinfo->srh);
++	return rpl_do_srh_inline(skb, rlwt, tinfo->srh, cache_dst);
  }
  
-+/* insert an SRH within an IPv6 packet, just after the IPv6 header */
-+int seg6_do_srh_inline(struct sk_buff *skb, struct ipv6_sr_hdr *osrh)
-+{
-+	return __seg6_do_srh_inline(skb, osrh, NULL);
-+}
-+EXPORT_SYMBOL_GPL(seg6_do_srh_inline);
-+
- static int seg6_input_finish(struct net *net, struct sock *sk,
- 			     struct sk_buff *skb)
- {
-@@ -458,31 +475,33 @@ static int seg6_input_core(struct net *net, struct sock *sk,
- 	struct seg6_lwt *slwt;
- 	int err;
+ static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+@@ -208,14 +210,14 @@ static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
  
--	err = seg6_do_srh(skb);
+ 	rlwt = rpl_lwt_lwtunnel(orig_dst->lwtstate);
+ 
+-	err = rpl_do_srh(skb, rlwt);
 -	if (unlikely(err))
 -		goto drop;
 -
- 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
- 
  	local_bh_disable();
- 	dst = dst_cache_get(&slwt->cache);
+ 	dst = dst_cache_get(&rlwt->cache);
+ 	local_bh_enable();
+ 
++	err = rpl_do_srh(skb, rlwt, dst);
++	if (unlikely(err))
++		goto drop;
++
+ 	if (unlikely(!dst)) {
+ 		struct ipv6hdr *hdr = ipv6_hdr(skb);
+ 		struct flowi6 fl6;
+@@ -237,15 +239,15 @@ static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 		local_bh_disable();
+ 		dst_cache_set_ip6(&rlwt->cache, dst, &fl6.saddr);
+ 		local_bh_enable();
++
++		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
++		if (unlikely(err))
++			goto drop;
+ 	}
+ 
+ 	skb_dst_drop(skb);
+ 	skb_dst_set(skb, dst);
+ 
+-	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
+-	if (unlikely(err))
+-		goto drop;
+-
+ 	return dst_output(net, sk, skb);
+ 
+ drop:
+@@ -262,29 +264,31 @@ static int rpl_input(struct sk_buff *skb)
+ 
+ 	rlwt = rpl_lwt_lwtunnel(orig_dst->lwtstate);
+ 
+-	err = rpl_do_srh(skb, rlwt);
+-	if (unlikely(err))
+-		goto drop;
+-
+ 	local_bh_disable();
+ 	dst = dst_cache_get(&rlwt->cache);
 +	local_bh_enable();
 +
-+	err = seg6_do_srh(skb, dst);
++	err = rpl_do_srh(skb, rlwt, dst);
 +	if (unlikely(err))
 +		goto drop;
  
@@ -237,7 +178,7 @@ index 098632adc9b5a..4bf937bfc2633 100644
  		dst = skb_dst(skb);
  		if (!dst->error) {
 +			local_bh_disable();
- 			dst_cache_set_ip6(&slwt->cache, dst,
+ 			dst_cache_set_ip6(&rlwt->cache, dst,
  					  &ipv6_hdr(skb)->saddr);
 +			local_bh_enable();
  		}
@@ -255,49 +196,8 @@ index 098632adc9b5a..4bf937bfc2633 100644
 -	if (unlikely(err))
 -		goto drop;
  
- 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
- 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
-@@ -528,16 +547,16 @@ static int seg6_output_core(struct net *net, struct sock *sk,
- 	struct seg6_lwt *slwt;
- 	int err;
+ 	return dst_input(skb);
  
--	err = seg6_do_srh(skb);
--	if (unlikely(err))
--		goto drop;
--
- 	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
- 
- 	local_bh_disable();
- 	dst = dst_cache_get(&slwt->cache);
- 	local_bh_enable();
- 
-+	err = seg6_do_srh(skb, dst);
-+	if (unlikely(err))
-+		goto drop;
-+
- 	if (unlikely(!dst)) {
- 		struct ipv6hdr *hdr = ipv6_hdr(skb);
- 		struct flowi6 fl6;
-@@ -559,15 +578,15 @@ static int seg6_output_core(struct net *net, struct sock *sk,
- 		local_bh_disable();
- 		dst_cache_set_ip6(&slwt->cache, dst, &fl6.saddr);
- 		local_bh_enable();
-+
-+		err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
-+		if (unlikely(err))
-+			goto drop;
- 	}
- 
- 	skb_dst_drop(skb);
- 	skb_dst_set(skb, dst);
- 
--	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
--	if (unlikely(err))
--		goto drop;
--
- 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
- 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT, net, sk, skb,
- 			       NULL, skb_dst(skb)->dev, dst_output);
 -- 
 2.39.5
 
