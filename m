@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7CE1BEF71;
-	Wed, 19 Feb 2025 09:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E391DE3CE;
+	Wed, 19 Feb 2025 09:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956916; cv=none; b=uB+S0tfFLgHVJrf3/q8I0SzFX8W9ZWvaMrqz3fdcCEpbQadwnM8l8iq57Uti6fd8ziaQnZA5ZhlrO6gwoN/lG/3/gn+zPyGyOaZ9QtJiVqmc2Oz5LvzjHs/BD/VTJccCcxdINgOZE6xDbCX1/ZNfyxvozO59VswUmB7DnkCgPzQ=
+	t=1739956919; cv=none; b=ajIWETBL/JGqqzFK+/aFq3mbZ0qRDNXF9iqTrXGvwdhDWvKRWCVfJmPKnaRtJvDuN0E4vmAtpyWc+uPxGUiW3R+4Kc524cy7Wf6nb9aN2hRgxqmGobs+Bz/iJ8AExOznURcYTY/bjSQQ9O0n4MVio01YpVzt9t74oMyQEGFfFWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956916; c=relaxed/simple;
-	bh=163sDyXac2kydKDsoDMtycwit8QMmhFsY2v1qvl/cr4=;
+	s=arc-20240116; t=1739956919; c=relaxed/simple;
+	bh=XLFseLySva84RkMFdyMGkSuLizl3GQr59DgJw1I0Qck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jC47TpE+QAkd9ebCovzhUyNsfJB6NEiNQik6WCQCUZfSquXntBjV6czk4o+OZOIkywWpsB/fxvaEmemctikZ8OC4cjgRoSYg8WSDI93hBGxdOIe1J9XBw+3ZfCxdihSdYY+1zPita7mJbgypQ/XwFrt6zypZxl+4Dv+bs1iSTBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s7ooxLHI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LFwaovx3FCaWao3fwdE3NxtoMv7KwcNfdo9CLIo5z+OGDhrSLzJtL+H11t1XWAJIR74h55Uxc3aXCyEuIMqNGzj3xPQb4wW6mKrvz60g5IF54Iey/VhrZDpeSVBNDHO5vU/xEttVzElQKi6JdRo9tnjOKXn4BMKyKAcUHXZH7bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhBToIy3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s7ooxLHI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF0FC4CED1;
-	Wed, 19 Feb 2025 09:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhBToIy3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5516C4CED1;
+	Wed, 19 Feb 2025 09:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956916;
-	bh=163sDyXac2kydKDsoDMtycwit8QMmhFsY2v1qvl/cr4=;
+	s=korg; t=1739956919;
+	bh=XLFseLySva84RkMFdyMGkSuLizl3GQr59DgJw1I0Qck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7ooxLHI2xW4EVkf40f7m4/DcGmpN9i+R1wHfueCinMJLF77wHZJ7/SvVGnzHMXiC
-	 PN/ieH7KHz3qlVbnkvd13HmKrpy6auHfnMNteDCue3Jk5UApEWTLOGYtYMYT/jFDwo
-	 EIzDK+J5Ljh0n+gKDDP3Rb0RYaqs6vuWbwJNbIbo=
+	b=RhBToIy3n18eifjQ8iTc7aAq6XW/YJYnEMbp3QI0AdWfLk6QjVxTbkj07QxS4sGty
+	 sBPzAkQyK9fPFkRpSfRT8BQm4gmcMgNiR4fwYNm01v6IFpjYV9iuC9JT4znWM3YLSj
+	 vgPNH/6yEPfJo2PdnZ/Ti6kfsVbm8q3+HyPaTDYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 317/578] gpio: xilinx: Convert to immutable irq_chip
-Date: Wed, 19 Feb 2025 09:25:21 +0100
-Message-ID: <20250219082705.482699856@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Chris Zhong <zyw@rock-chips.com>,
+	Guenter Roeck <groeck@chromium.org>,
+	Sandy Huang <hjc@rock-chips.com>,
+	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org
+Subject: [PATCH 6.1 344/578] drm/rockchip: cdn-dp: Use drm_connector_helper_hpd_irq_event()
+Date: Wed, 19 Feb 2025 09:25:48 +0100
+Message-ID: <20250219082706.550790662@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -46,100 +51,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit b4510f8fd5d0e9afa777f115871f5d522540c417 ]
+commit 666e1960464140cc4bc9203c203097e70b54c95a upstream.
 
-Convert the driver to immutable irq-chip with a bit of
-intuition.
+The code for detecting and updating the connector status in
+cdn_dp_pd_event_work() has a number of problems.
 
-Cc: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Stable-dep-of: 9860370c2172 ("gpio: xilinx: Convert gpio_lock to raw spinlock")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+- It does not aquire the locks to call the detect helper and update
+the connector status. These are struct drm_mode_config.connection_mutex
+and struct drm_mode_config.mutex.
+
+- It does not use drm_helper_probe_detect(), which helps with the
+details of locking and detection.
+
+- It uses the connector's status field to determine a change to
+the connector status. The epoch_counter field is the correct one. The
+field signals a change even if the connector status' value did not
+change.
+
+Replace the code with a call to drm_connector_helper_hpd_irq_event(),
+which fixes all these problems.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 81632df69772 ("drm/rockchip: cdn-dp: do not use drm_helper_hpd_irq_event")
+Cc: Chris Zhong <zyw@rock-chips.com>
+Cc: Guenter Roeck <groeck@chromium.org>
+Cc: Sandy Huang <hjc@rock-chips.com>
+Cc: "Heiko Stübner" <heiko@sntech.de>
+Cc: Andy Yan <andy.yan@rock-chips.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-rockchip@lists.infradead.org
+Cc: <stable@vger.kernel.org> # v4.11+
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241105133848.480407-1-tzimmermann@suse.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-xilinx.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/rockchip/cdn-dp-core.c |    9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/gpio/gpio-xilinx.c b/drivers/gpio/gpio-xilinx.c
-index 2fc6b6ff7f165..31f05c7d5915e 100644
---- a/drivers/gpio/gpio-xilinx.c
-+++ b/drivers/gpio/gpio-xilinx.c
-@@ -68,7 +68,6 @@ struct xgpio_instance {
- 	DECLARE_BITMAP(dir, 64);
- 	spinlock_t gpio_lock;	/* For serializing operations */
- 	int irq;
--	struct irq_chip irqchip;
- 	DECLARE_BITMAP(enable, 64);
- 	DECLARE_BITMAP(rising_edge, 64);
- 	DECLARE_BITMAP(falling_edge, 64);
-@@ -416,6 +415,8 @@ static void xgpio_irq_mask(struct irq_data *irq_data)
- 		xgpio_writereg(chip->regs + XGPIO_IPIER_OFFSET, temp);
- 	}
- 	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+
-+	gpiochip_disable_irq(&chip->gc, irq_offset);
- }
- 
- /**
-@@ -431,6 +432,8 @@ static void xgpio_irq_unmask(struct irq_data *irq_data)
- 	u32 old_enable = xgpio_get_value32(chip->enable, bit);
- 	u32 mask = BIT(bit / 32), val;
- 
-+	gpiochip_enable_irq(&chip->gc, irq_offset);
-+
- 	spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	__set_bit(bit, chip->enable);
-@@ -544,6 +547,16 @@ static void xgpio_irqhandler(struct irq_desc *desc)
- 	chained_irq_exit(irqchip, desc);
- }
- 
-+static const struct irq_chip xgpio_irq_chip = {
-+	.name = "gpio-xilinx",
-+	.irq_ack = xgpio_irq_ack,
-+	.irq_mask = xgpio_irq_mask,
-+	.irq_unmask = xgpio_irq_unmask,
-+	.irq_set_type = xgpio_set_irq_type,
-+	.flags = IRQCHIP_IMMUTABLE,
-+	GPIOCHIP_IRQ_RESOURCE_HELPERS,
-+};
-+
- /**
-  * xgpio_probe - Probe method for the GPIO device.
-  * @pdev: pointer to the platform device
-@@ -664,12 +677,6 @@ static int xgpio_probe(struct platform_device *pdev)
- 	if (chip->irq <= 0)
- 		goto skip_irq;
- 
--	chip->irqchip.name = "gpio-xilinx";
--	chip->irqchip.irq_ack = xgpio_irq_ack;
--	chip->irqchip.irq_mask = xgpio_irq_mask;
--	chip->irqchip.irq_unmask = xgpio_irq_unmask;
--	chip->irqchip.irq_set_type = xgpio_set_irq_type;
+--- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
++++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
+@@ -948,9 +948,6 @@ static void cdn_dp_pd_event_work(struct
+ {
+ 	struct cdn_dp_device *dp = container_of(work, struct cdn_dp_device,
+ 						event_work);
+-	struct drm_connector *connector = &dp->connector;
+-	enum drm_connector_status old_status;
 -
- 	/* Disable per-channel interrupts */
- 	xgpio_writereg(chip->regs + XGPIO_IPIER_OFFSET, 0);
- 	/* Clear any existing per-channel interrupts */
-@@ -679,7 +686,7 @@ static int xgpio_probe(struct platform_device *pdev)
- 	xgpio_writereg(chip->regs + XGPIO_GIER_OFFSET, XGPIO_GIER_IE);
+ 	int ret;
  
- 	girq = &chip->gc.irq;
--	girq->chip = &chip->irqchip;
-+	gpio_irq_chip_set_chip(girq, &xgpio_irq_chip);
- 	girq->parent_handler = xgpio_irqhandler;
- 	girq->num_parents = 1;
- 	girq->parents = devm_kcalloc(&pdev->dev, 1,
--- 
-2.39.5
-
+ 	mutex_lock(&dp->lock);
+@@ -1012,11 +1009,7 @@ static void cdn_dp_pd_event_work(struct
+ 
+ out:
+ 	mutex_unlock(&dp->lock);
+-
+-	old_status = connector->status;
+-	connector->status = connector->funcs->detect(connector, false);
+-	if (old_status != connector->status)
+-		drm_kms_helper_hotplug_event(dp->drm_dev);
++	drm_connector_helper_hpd_irq_event(&dp->connector);
+ }
+ 
+ static int cdn_dp_pd_event(struct notifier_block *nb,
 
 
