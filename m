@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C881A315E;
-	Wed, 19 Feb 2025 09:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02FD1A315E;
+	Wed, 19 Feb 2025 09:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956256; cv=none; b=cikiQjv1bXhBGiMU6zOBLA4dPISoxNYyun+jAXJuz2dIlUn14W1iU/JG4PTXesAHYoz9eY2lKrIIJnmx2b23hRN4WOAhP4A82TrsFMoNjcxjRQccnY/6NE3Rd5/sGTCh4P4ImcT3Gvj/+VWm3oOXPAE3Z01EEGFafU2yc1ccKak=
+	t=1739956257; cv=none; b=bggH8edyhfPdFsnVSkICYl0lLdY6dEEx4fNJUU+uY6vmrmziUwffbykWauNWmlQm0IKD6uezk3BkIBIfT9OGK2T7XRqA8JuHwyC/eEVQujeO6wt8rSFTBdADuPmuFslhNEfVTbF0kIsksX2cIyUd9Uy2FrQ/30YBTl2HsAitDto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956256; c=relaxed/simple;
-	bh=XpNFDKmkDwtqcNadAbgSOC9iaNqwoULKLFeTKKeu2Dc=;
+	s=arc-20240116; t=1739956257; c=relaxed/simple;
+	bh=8x2MxYdH6mg7uyTf8Gl77mbVN3EHwHMc4ELPNCKYAao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQ/0FbmYv0dXTaHDBMxPAlxEKOy/B6CaEJNTgHAR3kx24vnSyCOeCDoJJUH903RlipzHt7zo/r4Vb4Wno2iuOGoWRjtjj79JYH+wYCV/L8iFJCYlxmS3pOXxXAuHHmW9dPBKi1nU7zAC6lEtrB6H2qpXf5q7x7+CfqKD2sLQyPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kI7SRWOJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lMQumlB6SbtWp768SXqt754D5TW1OLhKGCDlTdc6klQLNsYl0W/0kWjejh+YQmAmdqojcau75GoQFcyz0aqAfm/eOFYUuw44WvZk1exSEZ5pdgcgMOdNj4rkjQ77r62ZJevddStEqCIC/vjdSrmwn9l+ghg3J9thtJIe5gvJMIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKtBo8A9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kI7SRWOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F98C4CEE6;
-	Wed, 19 Feb 2025 09:10:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKtBo8A9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A43C4CEE6;
+	Wed, 19 Feb 2025 09:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956254;
-	bh=XpNFDKmkDwtqcNadAbgSOC9iaNqwoULKLFeTKKeu2Dc=;
+	s=korg; t=1739956257;
+	bh=8x2MxYdH6mg7uyTf8Gl77mbVN3EHwHMc4ELPNCKYAao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kI7SRWOJwwj7cTiaYNMc6Vx+tCQtrjfyaqzHe27DutP0TYv4xH+FA/cwyvngVQMVs
-	 xI22UXaZD1poYlDPHNfx+Y/jvzLefBe/EsfWt3UFAfe2NBW8QB1hw+S9UyPz/h/jyC
-	 +M6K6GiK+STuXz0LfFa6HsS6nJEs7FrCzQ590g2E=
+	b=HKtBo8A9FdgXdq/BcSlFJ75u5l3LWVPf/QhoR/dIDmfDo3RHGsfhJ2jhi9XqcfVYB
+	 L06+4g59KPWZ185sM46NrcuiPkD65p1f6rAHtQNrA58S2bKZOa8IyDKmQ/qnkWuQt9
+	 x7vKqPccu9/YAAsHm9ksHAk/ADIZ59VUJekLeOmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Nigro <fnigro@redhat.com>,
-	Ilan Green <igreen@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Clark Williams <williams@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Stephane Eranian <eranian@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 118/578] perf namespaces: Fixup the nsinfo__in_pidns() return type, its bool
-Date: Wed, 19 Feb 2025 09:22:02 +0100
-Message-ID: <20250219082657.624275302@linuxfoundation.org>
+Subject: [PATCH 6.1 119/578] ASoC: Intel: avs: Fix theoretical infinite loop
+Date: Wed, 19 Feb 2025 09:22:03 +0100
+Message-ID: <20250219082657.663948023@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -63,62 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 64a7617efd5ae1d57a75e464d7134eec947c3fe3 ]
+[ Upstream commit cf4d74256fe103ece7b2647550e6c063048e5682 ]
 
-When adding support for refconunt checking a cut'n'paste made this
-function, that is just an accessor to a bool member of 'struct nsinfo',
-return a pid_t, when that member is a boolean, fix it.
+While 'stack_dump_size' is a u32 bitfield of 16 bits, u32 has a bigger
+upper bound than the type u16 of loop counter 'offset' what in theory
+may lead to infinite loop condition.
 
-Fixes: bcaf0a97858de7ab ("perf namespaces: Add functions to access nsinfo")
-Reported-by: Francesco Nigro <fnigro@redhat.com>
-Reported-by: Ilan Green <igreen@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Clark Williams <williams@redhat.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Stephane Eranian <eranian@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>
-Link: https://lore.kernel.org/r/20241206204828.507527-6-acme@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Found out by Coverity static analyzer.
+
+Fixes: c8c960c10971 ("ASoC: Intel: avs: APL-based platforms support")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20250109122216.3667847-4-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/namespaces.c | 2 +-
- tools/perf/util/namespaces.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/intel/avs/apl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/namespaces.c b/tools/perf/util/namespaces.c
-index fe59c2b9cd624..33cf78a4a28b5 100644
---- a/tools/perf/util/namespaces.c
-+++ b/tools/perf/util/namespaces.c
-@@ -237,7 +237,7 @@ pid_t nsinfo__pid(const struct nsinfo  *nsi)
-         return nsi->pid;
- }
+diff --git a/sound/soc/intel/avs/apl.c b/sound/soc/intel/avs/apl.c
+index f366478a875de..c4a0b9104151e 100644
+--- a/sound/soc/intel/avs/apl.c
++++ b/sound/soc/intel/avs/apl.c
+@@ -112,7 +112,7 @@ static int apl_coredump(struct avs_dev *adev, union avs_notify_msg *msg)
+ 	struct apl_log_buffer_layout layout;
+ 	void __iomem *addr, *buf;
+ 	size_t dump_size;
+-	u16 offset = 0;
++	u32 offset = 0;
+ 	u8 *dump, *pos;
  
--pid_t nsinfo__in_pidns(const struct nsinfo  *nsi)
-+bool nsinfo__in_pidns(const struct nsinfo *nsi)
- {
-         return nsi->in_pidns;
- }
-diff --git a/tools/perf/util/namespaces.h b/tools/perf/util/namespaces.h
-index 62a9145a6ffba..c108972a97ef5 100644
---- a/tools/perf/util/namespaces.h
-+++ b/tools/perf/util/namespaces.h
-@@ -57,7 +57,7 @@ void nsinfo__clear_need_setns(struct nsinfo *nsi);
- pid_t nsinfo__tgid(const struct nsinfo  *nsi);
- pid_t nsinfo__nstgid(const struct nsinfo  *nsi);
- pid_t nsinfo__pid(const struct nsinfo  *nsi);
--pid_t nsinfo__in_pidns(const struct nsinfo  *nsi);
-+bool nsinfo__in_pidns(const struct nsinfo  *nsi);
- void nsinfo__set_in_pidns(struct nsinfo *nsi);
- 
- void nsinfo__mountns_enter(struct nsinfo *nsi, struct nscookie *nc);
+ 	dump_size = AVS_FW_REGS_SIZE + msg->ext.coredump.stack_dump_size;
 -- 
 2.39.5
 
