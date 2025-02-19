@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36EA17A2FE;
-	Wed, 19 Feb 2025 09:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEED1DF259;
+	Wed, 19 Feb 2025 09:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956794; cv=none; b=NISohmW3fBFPvcp7xbcetnPGcXlMI8HD5sVVbddtbfI6zqDbLel/vL8GqbWgp8jmtpatF5OtsPHOeWLSocFvzPT0c/CErqJN1yFF4Fvo7RL5nUA8szJzQeMMCKVG2MZKuIRcdLIZoAhi0QjEEYsKs0JGs9u1AG9zVpTGVjSyEHU=
+	t=1739956797; cv=none; b=bQALfo9vWgaxRKz7/DhnBg5g2BIsFzk5wqsXIcfNvbJ75lqJ6PgV3Ovn5eY8qMKLvH1/Ms6uol3wfVmG+6Ar9ha1OsCiNsmPCXRYnkRSIK8AkvLvTVj7Yb9pDTUei0QqPQD/fxp7ZYpwSDZUcKZW7ISMuGEgDsDYlWO07c11lck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956794; c=relaxed/simple;
-	bh=tQwdqWgz36DscYeytwD9GxIpyvcaOcy/Zh/7EBYXhY4=;
+	s=arc-20240116; t=1739956797; c=relaxed/simple;
+	bh=Dn+C9jwpzNw1um8mrKQunYHTnCdfLJ2NzuGFulqdUDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+725y+Mlyr3+4oCiuXtXg6K7Z+toFp58Wj+vvB/87DAu3hxo0l9sy5fIWWPzJXSTkGU3arZCj9HSn0u7wP6rMBYXFTri1NrITBfLCHDnMg1oO+p4bLjJ1y/VqdnlMH1DNjF9LZOiVghdWWQLd2gl7EFDx2G8HpDy9/RqPDWdxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zu4zFVhi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hbFO3XBjNGlfZnnAsY+FyyihvhbZ2h+tbEyHY36CTV85lj2e2z+eYwu8mQMvDOXH/2I+RxgYu4w5bly9Y22OUA6Vpcqg6F7fyrY39uSfngRX4qcyPGdWEm21zYUCvZJwfOJBIesxGTNc49GujBJdDHtXIwJn0PCkeZMFEB88ITk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxEiVNn3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zu4zFVhi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 400FEC4CED1;
-	Wed, 19 Feb 2025 09:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxEiVNn3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0355CC4CED1;
+	Wed, 19 Feb 2025 09:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956794;
-	bh=tQwdqWgz36DscYeytwD9GxIpyvcaOcy/Zh/7EBYXhY4=;
+	s=korg; t=1739956797;
+	bh=Dn+C9jwpzNw1um8mrKQunYHTnCdfLJ2NzuGFulqdUDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zu4zFVhiNavqhshwNqDrjpVBoL0yo6TXJdpCAEWD5/F1ZHe8/lhSbK67kb2Dh1WOL
-	 aFo19xPn4mITWk4jhpJEA95CYlRcd/Wn2oqhrJYA51G46IlSJa7Ie2Oeaq1ozAc/2k
-	 k/RtrLZK7psuI4VVrX+ngm3LTA/b24n2kBW+jwTg=
+	b=CxEiVNn3sH4LQlcwCKX9DF8uueAqQpJg0vCTXeP46xRkBE5QshiAWIFrm7pqEG9IP
+	 bpFEp8VdMujIuR+10m1cok1iXgb2jjkyxLofzv0BD1MSf7BMzDt4CuJVgNNgtkosu6
+	 oYxKSQNYhZrCL53nYIuA+RTp2pIrJ+1hoTJqnm+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Ingo Molnar <mingo@kernel.org>,
-	Baoquan He <bhe@redhat.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 302/578] x86/kexec: Allocate PGD for x86_64 transition page tables separately
-Date: Wed, 19 Feb 2025 09:25:06 +0100
-Message-ID: <20250219082704.898769288@linuxfoundation.org>
+Subject: [PATCH 6.1 303/578] iommu/arm-smmu-v3: Clean up more on probe failure
+Date: Wed, 19 Feb 2025 09:25:07 +0100
+Message-ID: <20250219082704.938366281@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -57,229 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit 4b5bc2ec9a239bce261ffeafdd63571134102323 ]
+[ Upstream commit fcbd621567420b3a2f21f49bbc056de8b273c625 ]
 
-Now that the following fix:
+kmemleak noticed that the iopf queue allocated deep down within
+arm_smmu_init_structures() can be leaked by a subsequent error return
+from arm_smmu_device_probe(). Furthermore, after arm_smmu_device_reset()
+we will also leave the SMMU enabled with an empty Stream Table, silently
+blocking all DMA. This proves rather annoying for debugging said probe
+failure, so let's handle it a bit better by putting the SMMU back into
+(more or less) the same state as if it hadn't probed at all.
 
-  d0ceea662d45 ("x86/mm: Add _PAGE_NOPTISHADOW bit to avoid updating userspace page tables")
-
-stops kernel_ident_mapping_init() from scribbling over the end of a
-4KiB PGD by assuming the following 4KiB will be a userspace PGD,
-there's no good reason for the kexec PGD to be part of a single
-8KiB allocation with the control_code_page.
-
-( It's not clear that that was the reason for x86_64 kexec doing it that
-  way in the first place either; there were no comments to that effect and
-  it seems to have been the case even before PTI came along. It looks like
-  it was just a happy accident which prevented memory corruption on kexec. )
-
-Either way, it definitely isn't needed now. Just allocate the PGD
-separately on x86_64, like i386 already does.
-
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Vivek Goyal <vgoyal@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Eric Biederman <ebiederm@xmission.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Link: https://lore.kernel.org/r/20241205153343.3275139-6-dwmw2@infradead.org
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/5137901958471cf67f2fad5c2229f8a8f1ae901a.1733406914.git.robin.murphy@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kexec.h       | 18 +++++++++---
- arch/x86/kernel/machine_kexec_64.c | 45 ++++++++++++++++--------------
- 2 files changed, 38 insertions(+), 25 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/include/asm/kexec.h b/arch/x86/include/asm/kexec.h
-index 256eee99afc8f..e2e1ec99c9998 100644
---- a/arch/x86/include/asm/kexec.h
-+++ b/arch/x86/include/asm/kexec.h
-@@ -16,6 +16,7 @@
- # define PAGES_NR		4
- #endif
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 45b43f729f895..96b72f3dad0d0 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -3880,7 +3880,7 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+ 	/* Initialise in-memory data structures */
+ 	ret = arm_smmu_init_structures(smmu);
+ 	if (ret)
+-		return ret;
++		goto err_free_iopf;
  
-+# define KEXEC_CONTROL_PAGE_SIZE	4096
- # define KEXEC_CONTROL_CODE_MAX_SIZE	2048
+ 	/* Record our private device structure */
+ 	platform_set_drvdata(pdev, smmu);
+@@ -3891,22 +3891,29 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+ 	/* Reset the device */
+ 	ret = arm_smmu_device_reset(smmu, bypass);
+ 	if (ret)
+-		return ret;
++		goto err_disable;
  
- #ifndef __ASSEMBLY__
-@@ -44,7 +45,6 @@ struct kimage;
- /* Maximum address we can use for the control code buffer */
- # define KEXEC_CONTROL_MEMORY_LIMIT TASK_SIZE
+ 	/* And we're up. Go go go! */
+ 	ret = iommu_device_sysfs_add(&smmu->iommu, dev, NULL,
+ 				     "smmu3.%pa", &ioaddr);
+ 	if (ret)
+-		return ret;
++		goto err_disable;
  
--# define KEXEC_CONTROL_PAGE_SIZE	4096
- 
- /* The native architecture */
- # define KEXEC_ARCH KEXEC_ARCH_386
-@@ -59,9 +59,6 @@ struct kimage;
- /* Maximum address we can use for the control pages */
- # define KEXEC_CONTROL_MEMORY_LIMIT     (MAXMEM-1)
- 
--/* Allocate one page for the pdp and the second for the code */
--# define KEXEC_CONTROL_PAGE_SIZE  (4096UL + 4096UL)
--
- /* The native architecture */
- # define KEXEC_ARCH KEXEC_ARCH_X86_64
- #endif
-@@ -146,6 +143,19 @@ struct kimage_arch {
- };
- #else
- struct kimage_arch {
-+	/*
-+	 * This is a kimage control page, as it must not overlap with either
-+	 * source or destination address ranges.
-+	 */
-+	pgd_t *pgd;
-+	/*
-+	 * The virtual mapping of the control code page itself is used only
-+	 * during the transition, while the current kernel's pages are all
-+	 * in place. Thus the intermediate page table pages used to map it
-+	 * are not control pages, but instead just normal pages obtained
-+	 * with get_zeroed_page(). And have to be tracked (below) so that
-+	 * they can be freed.
-+	 */
- 	p4d_t *p4d;
- 	pud_t *pud;
- 	pmd_t *pmd;
-diff --git a/arch/x86/kernel/machine_kexec_64.c b/arch/x86/kernel/machine_kexec_64.c
-index 24b6eaacc81eb..5d61a342871b5 100644
---- a/arch/x86/kernel/machine_kexec_64.c
-+++ b/arch/x86/kernel/machine_kexec_64.c
-@@ -149,7 +149,8 @@ static void free_transition_pgtable(struct kimage *image)
- 	image->arch.pte = NULL;
- }
- 
--static int init_transition_pgtable(struct kimage *image, pgd_t *pgd)
-+static int init_transition_pgtable(struct kimage *image, pgd_t *pgd,
-+				   unsigned long control_page)
- {
- 	pgprot_t prot = PAGE_KERNEL_EXEC_NOENC;
- 	unsigned long vaddr, paddr;
-@@ -160,7 +161,7 @@ static int init_transition_pgtable(struct kimage *image, pgd_t *pgd)
- 	pte_t *pte;
- 
- 	vaddr = (unsigned long)relocate_kernel;
--	paddr = __pa(page_address(image->control_code_page)+PAGE_SIZE);
-+	paddr = control_page;
- 	pgd += pgd_index(vaddr);
- 	if (!pgd_present(*pgd)) {
- 		p4d = (p4d_t *)get_zeroed_page(GFP_KERNEL);
-@@ -219,7 +220,7 @@ static void *alloc_pgt_page(void *data)
- 	return p;
- }
- 
--static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
-+static int init_pgtable(struct kimage *image, unsigned long control_page)
- {
- 	struct x86_mapping_info info = {
- 		.alloc_pgt_page	= alloc_pgt_page,
-@@ -228,12 +229,12 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
- 		.kernpg_flag	= _KERNPG_TABLE_NOENC,
- 	};
- 	unsigned long mstart, mend;
--	pgd_t *level4p;
- 	int result;
- 	int i;
- 
--	level4p = (pgd_t *)__va(start_pgtable);
--	clear_page(level4p);
-+	image->arch.pgd = alloc_pgt_page(image);
-+	if (!image->arch.pgd)
-+		return -ENOMEM;
- 
- 	if (cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT)) {
- 		info.page_flag   |= _PAGE_ENC;
-@@ -247,8 +248,8 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
- 		mstart = pfn_mapped[i].start << PAGE_SHIFT;
- 		mend   = pfn_mapped[i].end << PAGE_SHIFT;
- 
--		result = kernel_ident_mapping_init(&info,
--						 level4p, mstart, mend);
-+		result = kernel_ident_mapping_init(&info, image->arch.pgd,
-+						   mstart, mend);
- 		if (result)
- 			return result;
- 	}
-@@ -263,8 +264,8 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
- 		mstart = image->segment[i].mem;
- 		mend   = mstart + image->segment[i].memsz;
- 
--		result = kernel_ident_mapping_init(&info,
--						 level4p, mstart, mend);
-+		result = kernel_ident_mapping_init(&info, image->arch.pgd,
-+						   mstart, mend);
- 
- 		if (result)
- 			return result;
-@@ -274,15 +275,19 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
- 	 * Prepare EFI systab and ACPI tables for kexec kernel since they are
- 	 * not covered by pfn_mapped.
- 	 */
--	result = map_efi_systab(&info, level4p);
-+	result = map_efi_systab(&info, image->arch.pgd);
- 	if (result)
- 		return result;
- 
--	result = map_acpi_tables(&info, level4p);
-+	result = map_acpi_tables(&info, image->arch.pgd);
- 	if (result)
- 		return result;
- 
--	return init_transition_pgtable(image, level4p);
-+	/*
-+	 * This must be last because the intermediate page table pages it
-+	 * allocates will not be control pages and may overlap the image.
-+	 */
-+	return init_transition_pgtable(image, image->arch.pgd, control_page);
- }
- 
- static void load_segments(void)
-@@ -299,14 +304,14 @@ static void load_segments(void)
- 
- int machine_kexec_prepare(struct kimage *image)
- {
--	unsigned long start_pgtable;
-+	unsigned long control_page;
- 	int result;
- 
- 	/* Calculate the offsets */
--	start_pgtable = page_to_pfn(image->control_code_page) << PAGE_SHIFT;
-+	control_page = page_to_pfn(image->control_code_page) << PAGE_SHIFT;
- 
- 	/* Setup the identity mapped 64bit page table */
--	result = init_pgtable(image, start_pgtable);
-+	result = init_pgtable(image, control_page);
- 	if (result)
- 		return result;
- 
-@@ -353,13 +358,12 @@ void machine_kexec(struct kimage *image)
- #endif
+ 	ret = iommu_device_register(&smmu->iommu, &arm_smmu_ops, dev);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register iommu\n");
+-		iommu_device_sysfs_remove(&smmu->iommu);
+-		return ret;
++		goto err_free_sysfs;
  	}
  
--	control_page = page_address(image->control_code_page) + PAGE_SIZE;
-+	control_page = page_address(image->control_code_page);
- 	__memcpy(control_page, relocate_kernel, KEXEC_CONTROL_CODE_MAX_SIZE);
- 
- 	page_list[PA_CONTROL_PAGE] = virt_to_phys(control_page);
- 	page_list[VA_CONTROL_PAGE] = (unsigned long)control_page;
--	page_list[PA_TABLE_PAGE] =
--	  (unsigned long)__pa(page_address(image->control_code_page));
-+	page_list[PA_TABLE_PAGE] = (unsigned long)__pa(image->arch.pgd);
- 
- 	if (image->type == KEXEC_TYPE_DEFAULT)
- 		page_list[PA_SWAP_PAGE] = (page_to_pfn(image->swap_page)
-@@ -578,8 +582,7 @@ static void kexec_mark_crashkres(bool protect)
- 
- 	/* Don't touch the control code page used in crash_kexec().*/
- 	control = PFN_PHYS(page_to_pfn(kexec_crash_image->control_code_page));
--	/* Control code page is located in the 2nd page. */
--	kexec_mark_range(crashk_res.start, control + PAGE_SIZE - 1, protect);
-+	kexec_mark_range(crashk_res.start, control - 1, protect);
- 	control += KEXEC_CONTROL_PAGE_SIZE;
- 	kexec_mark_range(control, crashk_res.end, protect);
+ 	return 0;
++
++err_free_sysfs:
++	iommu_device_sysfs_remove(&smmu->iommu);
++err_disable:
++	arm_smmu_device_disable(smmu);
++err_free_iopf:
++	iopf_queue_free(smmu->evtq.iopf);
++	return ret;
  }
+ 
+ static int arm_smmu_device_remove(struct platform_device *pdev)
 -- 
 2.39.5
 
