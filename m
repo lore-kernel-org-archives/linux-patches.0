@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6721BEF82;
-	Wed, 19 Feb 2025 09:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494CE1C831A;
+	Wed, 19 Feb 2025 09:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955604; cv=none; b=h4/OOtvtsvMI3XBTTsyYYEG97zJYCNbzustbeJ9w2555FC/aGc2tyLk2SRY3ICKpqylBrfWolgI+Mm1U5dp7Y/Yq5Yw8zMcWC6h+xOidBcxrZartgMyPtiQcNPcEApkarAHt3IvrDLZw9D6IWdu5PPScEA6y6DsMWToFHCENiEw=
+	t=1739955607; cv=none; b=AhA+OYe7wQPy8rj0jUCc1fW6ANQOCRHFrsAwFYD88I/rzyQJ0T5fL/hIUCN37poGr7AG6EK5QMZBYM8UgPAUyrzlZF/RW4PyLD6JbSia+TYHAV5jNKpOGcW9TCUd2elFUpHf+fsSoslAivxawmPL0ACY0qAFxjn1fLjZgDwds6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955604; c=relaxed/simple;
-	bh=7+X2lE1qYveR7cwGfrgyc57jCpwUCP9cPoz/bsyvsQs=;
+	s=arc-20240116; t=1739955607; c=relaxed/simple;
+	bh=ctSmUCDgHOOZEPG8ZzdkeLMPNq6NtQ9BIaB/8D+Z4HA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qwbhpT2bnxomyq9GwMS9pwAVW1vXt6xEIYDDhgDFS2etjO1nqMpRaIeK3qkiyXc++xaIygTYH/vKvat5lKMYvB/5MFg/l7TEDUQ9NIdLRyUDD/6Zj4JUZ0hRVa152X5tptvZGVAdLuqvkSj6X/CAt7skKWSfPPPIf7mbfO92orE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQ72SodY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VfOrD4O3s9/egVaajmT4F/gfgrinSa6jNmHbMHv4pIxOTSeXhl2noJKiA+0sJqPeS7Q/xmnE8/U60pof5bW/ypj/PqUjDd3xmoXQqFtV4VTJeEvPjUZij7dp7aqn37NF88A8JfZ6At9DdaSYNG0so+B/pD1hRwUAXWHX1f6bW2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySsJ6XFG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQ72SodY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31D3C4CEE8;
-	Wed, 19 Feb 2025 09:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySsJ6XFG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03B7C4CED1;
+	Wed, 19 Feb 2025 09:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955604;
-	bh=7+X2lE1qYveR7cwGfrgyc57jCpwUCP9cPoz/bsyvsQs=;
+	s=korg; t=1739955607;
+	bh=ctSmUCDgHOOZEPG8ZzdkeLMPNq6NtQ9BIaB/8D+Z4HA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pQ72SodYEadMODOSjtTiROH/czvxz5w6GsomNMK34yn+NePMYSftqVF6o/zxCSwT9
-	 S2LGnQzWiMxl6GPZ0P879EseJeWS83fyGVX21TUl41qD9iP7/sBMYFMyhOf0CeH9dz
-	 XeUTLtKnKBnAGMjCZBpS1hbiOs6jruDXm4pdMcFI=
+	b=ySsJ6XFGAUD8JmRtaKe8VZUhOrCBOUjDHy6hPdMDXRgKAtqyWraiJ8IXZCc7XJVMX
+	 FA54o/GtZ+hT0EMywWmM4GEpFzpkiRJf6KSx4h/qlT1MTrxFMk+8C++oxYm56fwOwz
+	 9guNlFOQ1WPjpaf0hGsaRjEOp+nExeSBHrlW6UGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvarasu Ganesan <selvarasu.g@samsung.com>
-Subject: [PATCH 6.6 056/152] usb: gadget: f_midi: Fixing wMaxPacketSize exceeded issue during MIDI bind retries
-Date: Wed, 19 Feb 2025 09:27:49 +0100
-Message-ID: <20250219082552.263098113@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Selvarasu Ganesan <selvarasu.g@samsung.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.6 057/152] usb: dwc3: Fix timeout issue during controller enter/exit from halt state
+Date: Wed, 19 Feb 2025 09:27:50 +0100
+Message-ID: <20250219082552.304011926@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -43,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -51,62 +54,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Selvarasu Ganesan <selvarasu.g@samsung.com>
 
-commit 9e8b21410f310c50733f6e1730bae5a8e30d3570 upstream.
+commit d3a8c28426fc1fb3252753a9f1db0d691ffc21b0 upstream.
 
-The current implementation sets the wMaxPacketSize of bulk in/out
-endpoints to 1024 bytes at the end of the f_midi_bind function. However,
-in cases where there is a failure in the first midi bind attempt,
-consider rebinding. This scenario may encounter an f_midi_bind issue due
-to the previous bind setting the bulk endpoint's wMaxPacketSize to 1024
-bytes, which exceeds the ep->maxpacket_limit where configured dwc3 TX/RX
-FIFO's maxpacket size of 512 bytes for IN/OUT endpoints in support HS
-speed only.
+There is a frequent timeout during controller enter/exit from halt state
+after toggling the run_stop bit by SW. This timeout occurs when
+performing frequent role switches between host and device, causing
+device enumeration issues due to the timeout. This issue was not present
+when USB2 suspend PHY was disabled by passing the SNPS quirks
+(snps,dis_u2_susphy_quirk and snps,dis_enblslpm_quirk) from the DTS.
+However, there is a requirement to enable USB2 suspend PHY by setting of
+GUSB2PHYCFG.ENBLSLPM and GUSB2PHYCFG.SUSPHY bits when controller starts
+in gadget or host mode results in the timeout issue.
 
-Here the term "rebind" in this context refers to attempting to bind the
-MIDI function a second time in certain scenarios. The situations where
-rebinding is considered include:
+This commit addresses this timeout issue by ensuring that the bits
+GUSB2PHYCFG.ENBLSLPM and GUSB2PHYCFG.SUSPHY are cleared before starting
+the dwc3_gadget_run_stop sequence and restoring them after the
+dwc3_gadget_run_stop sequence is completed.
 
- * When there is a failure in the first UDC write attempt, which may be
-   caused by other functions bind along with MIDI.
- * Runtime composition change : Example : MIDI,ADB to MIDI. Or MIDI to
-   MIDI,ADB.
-
-This commit addresses this issue by resetting the wMaxPacketSize before
-endpoint claim. And here there is no need to reset all values in the usb
-endpoint descriptor structure, as all members except wMaxPacketSize and
-bEndpointAddress have predefined values.
-
-This ensures that restores the endpoint to its expected configuration,
-and preventing conflicts with value of ep->maxpacket_limit. It also
-aligns with the approach used in other function drivers, which treat
-endpoint descriptors as if they were full speed before endpoint claim.
-
-Fixes: 46decc82ffd5 ("usb: gadget: unconditionally allocate hs/ss descriptor in bind operation")
-Cc: stable@vger.kernel.org
+Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
 Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
-Link: https://lore.kernel.org/r/20250118060134.927-1-selvarasu.g@samsung.com
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20250201163903.459-1-selvarasu.g@samsung.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_midi.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/dwc3/gadget.c |   34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
---- a/drivers/usb/gadget/function/f_midi.c
-+++ b/drivers/usb/gadget/function/f_midi.c
-@@ -906,6 +906,15 @@ static int f_midi_bind(struct usb_config
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -2618,10 +2618,38 @@ static int dwc3_gadget_run_stop(struct d
+ {
+ 	u32			reg;
+ 	u32			timeout = 2000;
++	u32			saved_config = 0;
  
- 	status = -ENODEV;
+ 	if (pm_runtime_suspended(dwc->dev))
+ 		return 0;
  
 +	/*
-+	 * Reset wMaxPacketSize with maximum packet size of FS bulk transfer before
-+	 * endpoint claim. This ensures that the wMaxPacketSize does not exceed the
-+	 * limit during bind retries where configured dwc3 TX/RX FIFO's maxpacket
-+	 * size of 512 bytes for IN/OUT endpoints in support HS speed only.
++	 * When operating in USB 2.0 speeds (HS/FS), ensure that
++	 * GUSB2PHYCFG.ENBLSLPM and GUSB2PHYCFG.SUSPHY are cleared before starting
++	 * or stopping the controller. This resolves timeout issues that occur
++	 * during frequent role switches between host and device modes.
++	 *
++	 * Save and clear these settings, then restore them after completing the
++	 * controller start or stop sequence.
++	 *
++	 * This solution was discovered through experimentation as it is not
++	 * mentioned in the dwc3 programming guide. It has been tested on an
++	 * Exynos platforms.
 +	 */
-+	bulk_in_desc.wMaxPacketSize = cpu_to_le16(64);
-+	bulk_out_desc.wMaxPacketSize = cpu_to_le16(64);
++	reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
++	if (reg & DWC3_GUSB2PHYCFG_SUSPHY) {
++		saved_config |= DWC3_GUSB2PHYCFG_SUSPHY;
++		reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
++	}
 +
- 	/* allocate instance-specific endpoints */
- 	midi->in_ep = usb_ep_autoconfig(cdev->gadget, &bulk_in_desc);
- 	if (!midi->in_ep)
++	if (reg & DWC3_GUSB2PHYCFG_ENBLSLPM) {
++		saved_config |= DWC3_GUSB2PHYCFG_ENBLSLPM;
++		reg &= ~DWC3_GUSB2PHYCFG_ENBLSLPM;
++	}
++
++	if (saved_config)
++		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
++
+ 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
+ 	if (is_on) {
+ 		if (DWC3_VER_IS_WITHIN(DWC3, ANY, 187A)) {
+@@ -2649,6 +2677,12 @@ static int dwc3_gadget_run_stop(struct d
+ 		reg &= DWC3_DSTS_DEVCTRLHLT;
+ 	} while (--timeout && !(!is_on ^ !reg));
+ 
++	if (saved_config) {
++		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
++		reg |= saved_config;
++		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
++	}
++
+ 	if (!timeout)
+ 		return -ETIMEDOUT;
+ 
 
 
