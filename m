@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B211E1A2D;
-	Wed, 19 Feb 2025 08:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CA81E0DCA;
+	Wed, 19 Feb 2025 08:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955227; cv=none; b=BU4+3P78oM0JOCOkmHjCHe2iofNc+VuE3BL7ZhbYP0Liwa82fQt0cF9c8uY5bWtpPjEPnZZS/CtQbW7HCDy3Os+eZ1BKdw7rqZr0xHQD4rM2dxnrCwO5/D+x5nnidsXnlfqUhTWMxlmHwUcTPbzeV74tvGbteuyl0vOlUc5a2sA=
+	t=1739955230; cv=none; b=BQCOqm+adpTecVX1EdDmBt0c35ckk7Ku9OiHktWQADc6icze1TEktNDWg9YYwSH+YGjww5dJZGIY73e4+9ANkIULCns1OxsiSLJTkwrP6MkrOWLMateGgJ6aai4OI2SSfO4I7dRA/VW1jo9ZA8GahybjViDrmG5OIcYiHDs7eMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955227; c=relaxed/simple;
-	bh=mZQUkcJo5k3KNrpAUfFx3AMG8QrEND13GhxcbazXzEk=;
+	s=arc-20240116; t=1739955230; c=relaxed/simple;
+	bh=93RZffK1R7YWNLCasJ8j/PUGNddnxLYptXhSrKjgWWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUwwOfWoJMr6v5UGS0ga/WxU/A4clw/E0ab/dXZjEE7aJh3tj3P4l7zCnsakDRKh9xfi6fAbWh9uYWO0UXAlXxI8bKKTtG9sMF8WY8w4Pz+aj+FaRrRLkV7Zwnn4i6smpLctKo42PqEUnvmAgxT2R0NjBJd1quNiDr5Q6kwwzvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbTJdjgw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rf28tuQRiOROkbq15pRMDn+gXXnAp8BLI9gkdmzTa5/3zcbd79mEdMz38z0noPFkojca2/9gqMshUokgJS7BP95DWjE1fUwz7vUctqXYaCwdVr37sxNzBuW0d9jG32KNpsplvJHveWomJ2B9GoWafSCll24ZLXTRRjlqxNvkiDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moV5wZpt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbTJdjgw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6425DC4CED1;
-	Wed, 19 Feb 2025 08:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moV5wZpt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B2FC4CED1;
+	Wed, 19 Feb 2025 08:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955226;
-	bh=mZQUkcJo5k3KNrpAUfFx3AMG8QrEND13GhxcbazXzEk=;
+	s=korg; t=1739955229;
+	bh=93RZffK1R7YWNLCasJ8j/PUGNddnxLYptXhSrKjgWWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TbTJdjgwlp9MDuhU+pMQRFw3kgS9GkIRbUX1oPnOGdf74XI9RUgQeJ2AelExojhUl
-	 adcBFflscWeX+JNSLsJMLKwqVfoktxC9rhjF3GsqGwPNU3dGYZ/WDrz5AJmS1CdJKz
-	 jv7mW+O1VB47qVOtWYed3l3SmxvvxI6jrciV3RnY=
+	b=moV5wZpt6CxCkd+zN87yug9ezita8zdFsFLyMLxISoOU5/DUEDxAQPlOA84M8k0Lg
+	 CyT8MihmfSCmoug6cxcs/OXTU7gU2ut079sZ1t0LGxgoFr9HPLnmrtFyu/yQjM28n8
+	 T6LG2TmwR1epFhgUj+tGxq5lTDJyz3KEcZ+exyno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Iurman <justin.iurman@uliege.be>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 163/230] include: net: add static inline dst_dev_overhead() to dst.h
-Date: Wed, 19 Feb 2025 09:28:00 +0100
-Message-ID: <20250219082608.073557854@linuxfoundation.org>
+Subject: [PATCH 6.12 172/230] scsi: ufs: core: Introduce a new clock_gating lock
+Date: Wed, 19 Feb 2025 09:28:09 +0100
+Message-ID: <20250219082608.432356669@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -53,47 +52,334 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Iurman <justin.iurman@uliege.be>
+From: Avri Altman <avri.altman@wdc.com>
 
-[ Upstream commit 0600cf40e9b36fe17f9c9f04d4f9cef249eaa5e7 ]
+[ Upstream commit 209f4e43b8068c24cde227f464111030430153fa ]
 
-Add static inline dst_dev_overhead() function to include/net/dst.h. This
-helper function is used by ioam6_iptunnel, rpl_iptunnel and
-seg6_iptunnel to get the dev's overhead based on a cache entry
-(dst_entry). If the cache is empty, the default and generic value
-skb->mac_len is returned. Otherwise, LL_RESERVED_SPACE() over dst's dev
-is returned.
+Introduce a new clock gating lock to serialize access to some of the clock
+gating members instead of the host_lock.
 
-Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
-Cc: Alexander Lobakin <aleksander.lobakin@intel.com>
-Cc: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 92191dd10730 ("net: ipv6: fix dst ref loops in rpl, seg6 and ioam6 lwtunnels")
+While at it, simplify the code with the guard() macro and co for automatic
+cleanup of the new lock. There are some explicit
+spin_lock_irqsave()/spin_unlock_irqrestore() snaking instances I left
+behind because I couldn't make heads or tails of it.
+
+Additionally, move the trace_ufshcd_clk_gating() call from inside the
+region protected by the lock as it doesn't needs protection.
+
+Signed-off-by: Avri Altman <avri.altman@wdc.com>
+Link: https://lore.kernel.org/r/20241124070808.194860-4-avri.altman@wdc.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 839a74b5649c ("scsi: ufs: Fix toggling of clk_gating.state when clock gating is not allowed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/dst.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/ufs/core/ufshcd.c | 109 ++++++++++++++++++--------------------
+ include/ufs/ufshcd.h      |   9 +++-
+ 2 files changed, 59 insertions(+), 59 deletions(-)
 
-diff --git a/include/net/dst.h b/include/net/dst.h
-index 0f303cc602520..08647c99d79c9 100644
---- a/include/net/dst.h
-+++ b/include/net/dst.h
-@@ -440,6 +440,15 @@ static inline void dst_set_expires(struct dst_entry *dst, int timeout)
- 		dst->expires = expires;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 217619d64940e..5682fdcbf2da5 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -1840,19 +1840,16 @@ static void ufshcd_exit_clk_scaling(struct ufs_hba *hba)
+ static void ufshcd_ungate_work(struct work_struct *work)
+ {
+ 	int ret;
+-	unsigned long flags;
+ 	struct ufs_hba *hba = container_of(work, struct ufs_hba,
+ 			clk_gating.ungate_work);
+ 
+ 	cancel_delayed_work_sync(&hba->clk_gating.gate_work);
+ 
+-	spin_lock_irqsave(hba->host->host_lock, flags);
+-	if (hba->clk_gating.state == CLKS_ON) {
+-		spin_unlock_irqrestore(hba->host->host_lock, flags);
+-		return;
++	scoped_guard(spinlock_irqsave, &hba->clk_gating.lock) {
++		if (hba->clk_gating.state == CLKS_ON)
++			return;
+ 	}
+ 
+-	spin_unlock_irqrestore(hba->host->host_lock, flags);
+ 	ufshcd_hba_vreg_set_hpm(hba);
+ 	ufshcd_setup_clocks(hba, true);
+ 
+@@ -1887,7 +1884,7 @@ void ufshcd_hold(struct ufs_hba *hba)
+ 	if (!ufshcd_is_clkgating_allowed(hba) ||
+ 	    !hba->clk_gating.is_initialized)
+ 		return;
+-	spin_lock_irqsave(hba->host->host_lock, flags);
++	spin_lock_irqsave(&hba->clk_gating.lock, flags);
+ 	hba->clk_gating.active_reqs++;
+ 
+ start:
+@@ -1903,11 +1900,11 @@ void ufshcd_hold(struct ufs_hba *hba)
+ 		 */
+ 		if (ufshcd_can_hibern8_during_gating(hba) &&
+ 		    ufshcd_is_link_hibern8(hba)) {
+-			spin_unlock_irqrestore(hba->host->host_lock, flags);
++			spin_unlock_irqrestore(&hba->clk_gating.lock, flags);
+ 			flush_result = flush_work(&hba->clk_gating.ungate_work);
+ 			if (hba->clk_gating.is_suspended && !flush_result)
+ 				return;
+-			spin_lock_irqsave(hba->host->host_lock, flags);
++			spin_lock_irqsave(&hba->clk_gating.lock, flags);
+ 			goto start;
+ 		}
+ 		break;
+@@ -1936,17 +1933,17 @@ void ufshcd_hold(struct ufs_hba *hba)
+ 		 */
+ 		fallthrough;
+ 	case REQ_CLKS_ON:
+-		spin_unlock_irqrestore(hba->host->host_lock, flags);
++		spin_unlock_irqrestore(&hba->clk_gating.lock, flags);
+ 		flush_work(&hba->clk_gating.ungate_work);
+ 		/* Make sure state is CLKS_ON before returning */
+-		spin_lock_irqsave(hba->host->host_lock, flags);
++		spin_lock_irqsave(&hba->clk_gating.lock, flags);
+ 		goto start;
+ 	default:
+ 		dev_err(hba->dev, "%s: clk gating is in invalid state %d\n",
+ 				__func__, hba->clk_gating.state);
+ 		break;
+ 	}
+-	spin_unlock_irqrestore(hba->host->host_lock, flags);
++	spin_unlock_irqrestore(&hba->clk_gating.lock, flags);
+ }
+ EXPORT_SYMBOL_GPL(ufshcd_hold);
+ 
+@@ -1954,30 +1951,32 @@ static void ufshcd_gate_work(struct work_struct *work)
+ {
+ 	struct ufs_hba *hba = container_of(work, struct ufs_hba,
+ 			clk_gating.gate_work.work);
+-	unsigned long flags;
+ 	int ret;
+ 
+-	spin_lock_irqsave(hba->host->host_lock, flags);
+-	/*
+-	 * In case you are here to cancel this work the gating state
+-	 * would be marked as REQ_CLKS_ON. In this case save time by
+-	 * skipping the gating work and exit after changing the clock
+-	 * state to CLKS_ON.
+-	 */
+-	if (hba->clk_gating.is_suspended ||
+-		(hba->clk_gating.state != REQ_CLKS_OFF)) {
+-		hba->clk_gating.state = CLKS_ON;
+-		trace_ufshcd_clk_gating(dev_name(hba->dev),
+-					hba->clk_gating.state);
+-		goto rel_lock;
+-	}
++	scoped_guard(spinlock_irqsave, &hba->clk_gating.lock) {
++		/*
++		 * In case you are here to cancel this work the gating state
++		 * would be marked as REQ_CLKS_ON. In this case save time by
++		 * skipping the gating work and exit after changing the clock
++		 * state to CLKS_ON.
++		 */
++		if (hba->clk_gating.is_suspended ||
++		    hba->clk_gating.state != REQ_CLKS_OFF) {
++			hba->clk_gating.state = CLKS_ON;
++			trace_ufshcd_clk_gating(dev_name(hba->dev),
++						hba->clk_gating.state);
++			return;
++		}
+ 
+-	if (ufshcd_is_ufs_dev_busy(hba) ||
+-	    hba->ufshcd_state != UFSHCD_STATE_OPERATIONAL ||
+-	    hba->clk_gating.active_reqs)
+-		goto rel_lock;
++		if (hba->clk_gating.active_reqs)
++			return;
++	}
+ 
+-	spin_unlock_irqrestore(hba->host->host_lock, flags);
++	scoped_guard(spinlock_irqsave, hba->host->host_lock) {
++		if (ufshcd_is_ufs_dev_busy(hba) ||
++		    hba->ufshcd_state != UFSHCD_STATE_OPERATIONAL)
++			return;
++	}
+ 
+ 	/* put the link into hibern8 mode before turning off clocks */
+ 	if (ufshcd_can_hibern8_during_gating(hba)) {
+@@ -1988,7 +1987,7 @@ static void ufshcd_gate_work(struct work_struct *work)
+ 					__func__, ret);
+ 			trace_ufshcd_clk_gating(dev_name(hba->dev),
+ 						hba->clk_gating.state);
+-			goto out;
++			return;
+ 		}
+ 		ufshcd_set_link_hibern8(hba);
+ 	}
+@@ -2008,32 +2007,34 @@ static void ufshcd_gate_work(struct work_struct *work)
+ 	 * prevent from doing cancel work multiple times when there are
+ 	 * new requests arriving before the current cancel work is done.
+ 	 */
+-	spin_lock_irqsave(hba->host->host_lock, flags);
++	guard(spinlock_irqsave)(&hba->clk_gating.lock);
+ 	if (hba->clk_gating.state == REQ_CLKS_OFF) {
+ 		hba->clk_gating.state = CLKS_OFF;
+ 		trace_ufshcd_clk_gating(dev_name(hba->dev),
+ 					hba->clk_gating.state);
+ 	}
+-rel_lock:
+-	spin_unlock_irqrestore(hba->host->host_lock, flags);
+-out:
+-	return;
  }
  
-+static inline unsigned int dst_dev_overhead(struct dst_entry *dst,
-+					    struct sk_buff *skb)
-+{
-+	if (likely(dst))
-+		return LL_RESERVED_SPACE(dst->dev);
+-/* host lock must be held before calling this variant */
+ static void __ufshcd_release(struct ufs_hba *hba)
+ {
++	lockdep_assert_held(&hba->clk_gating.lock);
 +
-+	return skb->mac_len;
-+}
+ 	if (!ufshcd_is_clkgating_allowed(hba))
+ 		return;
+ 
+ 	hba->clk_gating.active_reqs--;
+ 
+ 	if (hba->clk_gating.active_reqs || hba->clk_gating.is_suspended ||
+-	    hba->ufshcd_state != UFSHCD_STATE_OPERATIONAL ||
+-	    ufshcd_has_pending_tasks(hba) || !hba->clk_gating.is_initialized ||
++	    !hba->clk_gating.is_initialized ||
+ 	    hba->clk_gating.state == CLKS_OFF)
+ 		return;
+ 
++	scoped_guard(spinlock_irqsave, hba->host->host_lock) {
++		if (ufshcd_has_pending_tasks(hba) ||
++		    hba->ufshcd_state != UFSHCD_STATE_OPERATIONAL)
++			return;
++	}
 +
- INDIRECT_CALLABLE_DECLARE(int ip6_output(struct net *, struct sock *,
- 					 struct sk_buff *));
- INDIRECT_CALLABLE_DECLARE(int ip_output(struct net *, struct sock *,
+ 	hba->clk_gating.state = REQ_CLKS_OFF;
+ 	trace_ufshcd_clk_gating(dev_name(hba->dev), hba->clk_gating.state);
+ 	queue_delayed_work(hba->clk_gating.clk_gating_workq,
+@@ -2043,11 +2044,8 @@ static void __ufshcd_release(struct ufs_hba *hba)
+ 
+ void ufshcd_release(struct ufs_hba *hba)
+ {
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(hba->host->host_lock, flags);
++	guard(spinlock_irqsave)(&hba->clk_gating.lock);
+ 	__ufshcd_release(hba);
+-	spin_unlock_irqrestore(hba->host->host_lock, flags);
+ }
+ EXPORT_SYMBOL_GPL(ufshcd_release);
+ 
+@@ -2062,11 +2060,9 @@ static ssize_t ufshcd_clkgate_delay_show(struct device *dev,
+ void ufshcd_clkgate_delay_set(struct device *dev, unsigned long value)
+ {
+ 	struct ufs_hba *hba = dev_get_drvdata(dev);
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(hba->host->host_lock, flags);
++	guard(spinlock_irqsave)(&hba->clk_gating.lock);
+ 	hba->clk_gating.delay_ms = value;
+-	spin_unlock_irqrestore(hba->host->host_lock, flags);
+ }
+ EXPORT_SYMBOL_GPL(ufshcd_clkgate_delay_set);
+ 
+@@ -2094,7 +2090,6 @@ static ssize_t ufshcd_clkgate_enable_store(struct device *dev,
+ 		struct device_attribute *attr, const char *buf, size_t count)
+ {
+ 	struct ufs_hba *hba = dev_get_drvdata(dev);
+-	unsigned long flags;
+ 	u32 value;
+ 
+ 	if (kstrtou32(buf, 0, &value))
+@@ -2102,9 +2097,10 @@ static ssize_t ufshcd_clkgate_enable_store(struct device *dev,
+ 
+ 	value = !!value;
+ 
+-	spin_lock_irqsave(hba->host->host_lock, flags);
++	guard(spinlock_irqsave)(&hba->clk_gating.lock);
++
+ 	if (value == hba->clk_gating.is_enabled)
+-		goto out;
++		return count;
+ 
+ 	if (value)
+ 		__ufshcd_release(hba);
+@@ -2112,8 +2108,7 @@ static ssize_t ufshcd_clkgate_enable_store(struct device *dev,
+ 		hba->clk_gating.active_reqs++;
+ 
+ 	hba->clk_gating.is_enabled = value;
+-out:
+-	spin_unlock_irqrestore(hba->host->host_lock, flags);
++
+ 	return count;
+ }
+ 
+@@ -2155,6 +2150,8 @@ static void ufshcd_init_clk_gating(struct ufs_hba *hba)
+ 	INIT_DELAYED_WORK(&hba->clk_gating.gate_work, ufshcd_gate_work);
+ 	INIT_WORK(&hba->clk_gating.ungate_work, ufshcd_ungate_work);
+ 
++	spin_lock_init(&hba->clk_gating.lock);
++
+ 	hba->clk_gating.clk_gating_workq = alloc_ordered_workqueue(
+ 		"ufs_clk_gating_%d", WQ_MEM_RECLAIM | WQ_HIGHPRI,
+ 		hba->host->host_no);
+@@ -9194,7 +9191,6 @@ static int ufshcd_setup_clocks(struct ufs_hba *hba, bool on)
+ 	int ret = 0;
+ 	struct ufs_clk_info *clki;
+ 	struct list_head *head = &hba->clk_list_head;
+-	unsigned long flags;
+ 	ktime_t start = ktime_get();
+ 	bool clk_state_changed = false;
+ 
+@@ -9245,11 +9241,10 @@ static int ufshcd_setup_clocks(struct ufs_hba *hba, bool on)
+ 				clk_disable_unprepare(clki->clk);
+ 		}
+ 	} else if (!ret && on) {
+-		spin_lock_irqsave(hba->host->host_lock, flags);
+-		hba->clk_gating.state = CLKS_ON;
++		scoped_guard(spinlock_irqsave, &hba->clk_gating.lock)
++			hba->clk_gating.state = CLKS_ON;
+ 		trace_ufshcd_clk_gating(dev_name(hba->dev),
+ 					hba->clk_gating.state);
+-		spin_unlock_irqrestore(hba->host->host_lock, flags);
+ 	}
+ 
+ 	if (clk_state_changed)
+diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+index d5e43a1dcff22..47cba116f87b8 100644
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -402,6 +402,9 @@ enum clk_gating_state {
+  * delay_ms
+  * @ungate_work: worker to turn on clocks that will be used in case of
+  * interrupt context
++ * @clk_gating_workq: workqueue for clock gating work.
++ * @lock: serialize access to some struct ufs_clk_gating members. An outer lock
++ * relative to the host lock
+  * @state: the current clocks state
+  * @delay_ms: gating delay in ms
+  * @is_suspended: clk gating is suspended when set to 1 which can be used
+@@ -412,11 +415,14 @@ enum clk_gating_state {
+  * @is_initialized: Indicates whether clock gating is initialized or not
+  * @active_reqs: number of requests that are pending and should be waited for
+  * completion before gating clocks.
+- * @clk_gating_workq: workqueue for clock gating work.
+  */
+ struct ufs_clk_gating {
+ 	struct delayed_work gate_work;
+ 	struct work_struct ungate_work;
++	struct workqueue_struct *clk_gating_workq;
++
++	spinlock_t lock;
++
+ 	enum clk_gating_state state;
+ 	unsigned long delay_ms;
+ 	bool is_suspended;
+@@ -425,7 +431,6 @@ struct ufs_clk_gating {
+ 	bool is_enabled;
+ 	bool is_initialized;
+ 	int active_reqs;
+-	struct workqueue_struct *clk_gating_workq;
+ };
+ 
+ /**
 -- 
 2.39.5
 
