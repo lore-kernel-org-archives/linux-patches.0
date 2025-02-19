@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C551A1B6CFA;
-	Wed, 19 Feb 2025 09:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A901C831A;
+	Wed, 19 Feb 2025 09:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956751; cv=none; b=U/r56c/j/l4B2AieJ3/xSfEpL0y2RCuSgFnOpW6OqCrcy/e6qC0/y7kEyEYuuKc/6WGE8FjIKlX/ZTV4SuIE48z4D/rM5hPIi5S3GdctXjcolEivEu5U7aNpaqpkJe6O6f7jqi/pbah+8fo2e9uVFxAaD1cpcDzZJuEi3LYq/is=
+	t=1739956755; cv=none; b=bhTJ/Ojc59/ATtyDjEXCfhJzAZ8FTyhmZ6zGAyHu1TQ5jPaGNHZtuaF1OLmFM6lVoxhgGFNRAxT0GgGYAa42Nhdi7O5EkogbT3QQ2PTuBOaXbQUBJydmhTZrTLsb7RqzcNcYLUIcHRd7EapsysKyjPcVymSbG3djozdNy69f/HU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956751; c=relaxed/simple;
-	bh=7G7FCYsJTEFEDXqNqx6Z0tysKrErh1cR/AMaSZRhi20=;
+	s=arc-20240116; t=1739956755; c=relaxed/simple;
+	bh=stuYAaVOoYzhSOEbSOdZBuwR4QaYgZUDB5lkUR5HHRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIhmBZiULHx6EFqum9GuWCSoMbNYM1tc7962C5qg+gWzHmx+22Ef7jsr41ZEroNe23NbY550HpwIBnelzlQhtvF82KqwQkt7A8EUqr0eiObtL7uEyVVEYERj5anQaMyGmhzNS5D7zfHb0Y8z15DgBMQEG9pz2I6I5/Rj5vfJuak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXUqsssj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j2zpxFtuPw2FY2sUWw8NCIK8OvmzypuPsCAU4fMl93ID4LK7s9iDd4IGiEKeg8eooPYeH3ZsfZQVA468FX7QyalwObolnq419NDOyCU8thUcl6TFB5+24pGvZGXJUKzphfB+hXIehncfenoMFJt0a5G1kTF/1plFT1UzLStOKVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ieK5IwRV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXUqsssj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CA4C4CED1;
-	Wed, 19 Feb 2025 09:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ieK5IwRV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A449C4CED1;
+	Wed, 19 Feb 2025 09:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956751;
-	bh=7G7FCYsJTEFEDXqNqx6Z0tysKrErh1cR/AMaSZRhi20=;
+	s=korg; t=1739956754;
+	bh=stuYAaVOoYzhSOEbSOdZBuwR4QaYgZUDB5lkUR5HHRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qXUqsssjZMaNxASgZMvNcLV7Dwi95aWidiF/ahgQDHaaR7iKWk7ug+SOK0HiVMx4x
-	 ulzAPF/1+AhYpylDW20Rq45nT8dKTPLYzovEEzrViFqoBayeo6szEsSZIYiwoaw4y2
-	 WycxUpM1brtmZvcFmnPt/0FaWm+MULKgICHRUxfI=
+	b=ieK5IwRVPleY/GlZbYy85fUW2c3PvdZGmPDOkEPPVfVRlKG5iwMhSHQxEJkuzKVDi
+	 /q6nfojAjv/MftXFIq+7hjhQNj3rLcXvj2kFhSRYK5GmemytxEzcmJGCKBaABYxDN8
+	 dxrsMEk5gec072H/YMFPOw7JzcrNaemo5IabuOMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Fangzhi Zuo <Jerry.Zuo@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	syzbot+7536f77535e5210a5c76@syzkaller.appspotmail.com,
+	Leo Stone <leocstone@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 280/578] drm/amd/display: Fix Mode Cutoff in DSC Passthrough to DP2.1 Monitor
-Date: Wed, 19 Feb 2025 09:24:44 +0100
-Message-ID: <20250219082704.031814233@linuxfoundation.org>
+Subject: [PATCH 6.1 289/578] tomoyo: dont emit warning in tomoyo_write_control()
+Date: Wed, 19 Feb 2025 09:24:53 +0100
+Message-ID: <20250219082704.381071349@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -54,59 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangzhi Zuo <Jerry.Zuo@amd.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit e56ad45e991128bf4db160b75a1d9f647a341d8f ]
+[ Upstream commit 3df7546fc03b8f004eee0b9e3256369f7d096685 ]
 
-Source --> DP2.1 MST hub --> DP1.4/2.1 monitor
+syzbot is reporting too large allocation warning at tomoyo_write_control(),
+for one can write a very very long line without new line character. To fix
+this warning, I use __GFP_NOWARN rather than checking for KMALLOC_MAX_SIZE,
+for practically a valid line should be always shorter than 32KB where the
+"too small to fail" memory-allocation rule applies.
 
-When change from DP1.4 to DP2.1 from monitor manual, modes higher than
-4k120 are all cutoff by mode validation. Switch back to DP1.4 gets all
-the modes up to 4k240 available to be enabled by dsc passthrough.
+One might try to write a valid line that is longer than 32KB, but such
+request will likely fail with -ENOMEM. Therefore, I feel that separately
+returning -EINVAL when a line is longer than KMALLOC_MAX_SIZE is redundant.
+There is no need to distinguish over-32KB and over-KMALLOC_MAX_SIZE.
 
-[why]
-Compared to DP1.4 link from hub to monitor, DP2.1 link has larger
-full_pbn value that causes overflow in the process of doing conversion
-from pbn to kbps.
-
-[how]
-Change the data type accordingly to fit into the data limit during
-conversion calculation.
-
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
-Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: syzbot+7536f77535e5210a5c76@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7536f77535e5210a5c76
+Reported-by: Leo Stone <leocstone@gmail.com>
+Closes: https://lkml.kernel.org/r/20241216021459.178759-2-leocstone@gmail.com
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ security/tomoyo/common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index 1acef5f3838f3..5eb994ed54717 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -1555,16 +1555,16 @@ int pre_validate_dsc(struct drm_atomic_state *state,
- 	return ret;
- }
+diff --git a/security/tomoyo/common.c b/security/tomoyo/common.c
+index a7af085550b2d..5f1cdd0af115d 100644
+--- a/security/tomoyo/common.c
++++ b/security/tomoyo/common.c
+@@ -2664,7 +2664,7 @@ ssize_t tomoyo_write_control(struct tomoyo_io_buffer *head,
  
--static unsigned int kbps_from_pbn(unsigned int pbn)
-+static uint32_t kbps_from_pbn(unsigned int pbn)
- {
--	unsigned int kbps = pbn;
-+	uint64_t kbps = (uint64_t)pbn;
+ 		if (head->w.avail >= head->writebuf_size - 1) {
+ 			const int len = head->writebuf_size * 2;
+-			char *cp = kzalloc(len, GFP_NOFS);
++			char *cp = kzalloc(len, GFP_NOFS | __GFP_NOWARN);
  
- 	kbps *= (1000000 / PEAK_FACTOR_X1000);
- 	kbps *= 8;
- 	kbps *= 54;
- 	kbps /= 64;
- 
--	return kbps;
-+	return (uint32_t)kbps;
- }
- 
- static bool is_dsc_common_config_possible(struct dc_stream_state *stream,
+ 			if (!cp) {
+ 				error = -ENOMEM;
 -- 
 2.39.5
 
