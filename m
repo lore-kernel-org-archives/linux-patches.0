@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB071CAA86;
-	Wed, 19 Feb 2025 09:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9741DED49;
+	Wed, 19 Feb 2025 09:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956936; cv=none; b=lKOrgc6DxpED31ZLQ+yl856MZaZ1jisiBbA4lzLKJsxEmXdLFk4qHW+3/gpTgbBjJJZWRIbz0Lq1fTFlAHVjm8Z8igZD6Uj0emBDRj783py/8k0ExsjIZama683T+JCt+omilohmnIWWBViuodZLNdnMdwvI2EOnpd0yR/lZt5o=
+	t=1739956939; cv=none; b=ajlJc0Ityd9IISygZ2rmVRhbV9+rSKSZTL5JceEpbJ5ztSUmOxu7OAACTsK5iOHxosrKKfqCc4o5Ru93yFQqOaR9ZokgHRmXoLfCHxsfWEgaFhycADh5YRytf73aIeNwZIIprZh38AWjohrv42H3CNhhp+nlqvW33WNPYhuzNwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956936; c=relaxed/simple;
-	bh=7ebfmqb2qYCTun9Kd0x5LQ1d7fy8uCiTLcQqaKSWMzk=;
+	s=arc-20240116; t=1739956939; c=relaxed/simple;
+	bh=CzV3v3m9/Yg2dM1zxgXu6B6fjCSOtRw96vY5A8ynuJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LCnNDBJQgeCLek8afmf+bJFsbfSlJyeHxFh7Vz+XzuizAwP6YV32K7ucJPf2xKWlD8JMiTWP0pGbBgvVzebanFzpo/EjX6obWVJU37tX3PX5I0S8rtVNNTwRmUad4ACq1uqeKxey2hbfGyZgbgh44Nu911q0uvqr9KgZlCG3x7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIhpDst4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PbACuwSwWn0nuLrN7/TTkG7SEFTUzmM6j/VRf+KnP3oFfUbg7deVBSNVJkRk33pe7racwaeqL5Ha+lGihFeHv44nPp04CGj7mepvlDwR920wKdC2EEJvBGw5/fHoqncFJTxzab4phPHaqbCbh7Mh1p74CcIGva2LayKO6kge3uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xW07SO6j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIhpDst4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD696C4CEE6;
-	Wed, 19 Feb 2025 09:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xW07SO6j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA222C4CED1;
+	Wed, 19 Feb 2025 09:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956936;
-	bh=7ebfmqb2qYCTun9Kd0x5LQ1d7fy8uCiTLcQqaKSWMzk=;
+	s=korg; t=1739956939;
+	bh=CzV3v3m9/Yg2dM1zxgXu6B6fjCSOtRw96vY5A8ynuJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FIhpDst4p0M62s88O6XXOJPxKPCuj4yKVEs8SJIxXvUVmuYZWcQQf5pAVQUob2eUe
-	 d8OZbm6/DBfw9/OYEEzjJQaJpGdIYn56FyGPGs41koYNOkqKUXdfVux8xBquUqkCjc
-	 VozPT2Ba7OO5gd+66AqUsaYZJgOI3V15ohm6X1fo=
+	b=xW07SO6j8YphEnskXQg3OLpmVRCpn8T0K0bDKaKlIv18hkDLL/8u/pzhtRUtLjKOa
+	 RXUAvOw6/L3fxWc2UcCPjzYfq1QB+S5HCA/G1LTWSgExg78kLw36pfEpkWFR9JxxmH
+	 91sXYx/miS+WB4cHbBwhlMo5mWDeFgVkRjLvnYqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Florac <eflorac@intellique.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Daniel Wagner <wagi@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 320/578] xfs: dont over-report free space or inodes in statvfs
-Date: Wed, 19 Feb 2025 09:25:24 +0100
-Message-ID: <20250219082705.598752640@linuxfoundation.org>
+Subject: [PATCH 6.1 321/578] nvme: handle connectivity loss in nvme_set_queue_count
+Date: Wed, 19 Feb 2025 09:25:25 +0100
+Message-ID: <20250219082705.637555687@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,83 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 4b8d867ca6e2fc6d152f629fdaf027053b81765a ]
+[ Upstream commit 294b2b7516fd06a8dd82e4a6118f318ec521e706 ]
 
-Emmanual Florac reports a strange occurrence when project quota limits
-are enabled, free space is lower than the remaining quota, and someone
-runs statvfs:
+When the set feature attempts fails with any NVME status code set in
+nvme_set_queue_count, the function still report success. Though the
+numbers of queues set to 0. This is done to support controllers in
+degraded state (the admin queue is still up and running but no IO
+queues).
 
-  # mkfs.xfs -f /dev/sda
-  # mount /dev/sda /mnt -o prjquota
-  # xfs_quota  -x -c 'limit -p bhard=2G 55' /mnt
-  # mkdir /mnt/dir
-  # xfs_io -c 'chproj 55' -c 'chattr +P' -c 'stat -vvvv' /mnt/dir
-  # fallocate -l 19g /mnt/a
-  # df /mnt /mnt/dir
-  Filesystem      Size  Used Avail Use% Mounted on
-  /dev/sda         20G   20G  345M  99% /mnt
-  /dev/sda        2.0G     0  2.0G   0% /mnt
+Though there is an exception. When nvme_set_features reports an host
+path error, nvme_set_queue_count should propagate this error as the
+connectivity is lost, which means also the admin queue is not working
+anymore.
 
-I think the bug here is that xfs_fill_statvfs_from_dquot unconditionally
-assigns to f_bfree without checking that the filesystem has enough free
-space to fill the remaining project quota.  However, this is a
-longstanding behavior of xfs so it's unclear what to do here.
-
-Cc: <stable@vger.kernel.org> # v2.6.18
-Fixes: 932f2c323196c2 ("[XFS] statvfs component of directory/project quota support, code originally by Glen.")
-Reported-by: Emmanuel Florac <eflorac@intellique.com>
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+Fixes: 9a0be7abb62f ("nvme: refactor set_queue_count")
 Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_qm_bhv.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/nvme/host/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/xfs/xfs_qm_bhv.c b/fs/xfs/xfs_qm_bhv.c
-index 268a07218c777..26b2c449f3c66 100644
---- a/fs/xfs/xfs_qm_bhv.c
-+++ b/fs/xfs/xfs_qm_bhv.c
-@@ -32,21 +32,28 @@ xfs_fill_statvfs_from_dquot(
- 	limit = blkres->softlimit ?
- 		blkres->softlimit :
- 		blkres->hardlimit;
--	if (limit && statp->f_blocks > limit) {
--		statp->f_blocks = limit;
--		statp->f_bfree = statp->f_bavail =
--			(statp->f_blocks > blkres->reserved) ?
--			 (statp->f_blocks - blkres->reserved) : 0;
-+	if (limit) {
-+		uint64_t	remaining = 0;
-+
-+		if (limit > blkres->reserved)
-+			remaining = limit - blkres->reserved;
-+
-+		statp->f_blocks = min(statp->f_blocks, limit);
-+		statp->f_bfree = min(statp->f_bfree, remaining);
-+		statp->f_bavail = min(statp->f_bavail, remaining);
- 	}
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index abca395385b2e..ba76cd3b5f852 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1609,7 +1609,13 @@ int nvme_set_queue_count(struct nvme_ctrl *ctrl, int *count)
  
- 	limit = dqp->q_ino.softlimit ?
- 		dqp->q_ino.softlimit :
- 		dqp->q_ino.hardlimit;
--	if (limit && statp->f_files > limit) {
--		statp->f_files = limit;
--		statp->f_ffree =
--			(statp->f_files > dqp->q_ino.reserved) ?
--			 (statp->f_files - dqp->q_ino.reserved) : 0;
-+	if (limit) {
-+		uint64_t	remaining = 0;
+ 	status = nvme_set_features(ctrl, NVME_FEAT_NUM_QUEUES, q_count, NULL, 0,
+ 			&result);
+-	if (status < 0)
 +
-+		if (limit > dqp->q_ino.reserved)
-+			remaining = limit - dqp->q_ino.reserved;
-+
-+		statp->f_files = min(statp->f_files, limit);
-+		statp->f_ffree = min(statp->f_ffree, remaining);
- 	}
- }
++	/*
++	 * It's either a kernel error or the host observed a connection
++	 * lost. In either case it's not possible communicate with the
++	 * controller and thus enter the error code path.
++	 */
++	if (status < 0 || status == NVME_SC_HOST_PATH_ERROR)
+ 		return status;
  
+ 	/*
 -- 
 2.39.5
 
