@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E76C1EDA3A;
-	Wed, 19 Feb 2025 08:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683FF1EDA3A;
+	Wed, 19 Feb 2025 08:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955366; cv=none; b=p/mLeSven95wX2oe30HnKSP8nf30ceHGrj6GbO2ozub3+zzrE8+ZsYAlygESQsteeVFXvUYe2wEdCw+6IDZHdHcVe9qN1sPTtPZkIL/1KCHn9321fVXxX8wE5s01gRLqvi5o4LORWTqGEoEsOhKjNvfuLFTtyZooviOc7CxvaNA=
+	t=1739955369; cv=none; b=S1HLXM1Vg82ewOdZYB5j2W1hwBS2GMKBKW75P+adJSQok6ZerAr49QvEZOQh43UFSpFiH9MVMxTAnyWlnZkxL/70YKvSruKtwo7+Uz0cnzXMXy9GxhUuXqrpcqOzR0l5vR4Y+5W0+S9J0vOA1wyIcmrJbWZv+myzNXyhKEj/XU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955366; c=relaxed/simple;
-	bh=hwjc2ajyvMUA5Y0JxCowYRtUn6q5jq+2DO1U6FHDeG8=;
+	s=arc-20240116; t=1739955369; c=relaxed/simple;
+	bh=fA5TmwjS/3vwO9Tgxt8S7nPWcJEb4dOfor+l7hvgMA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfYM0A2gu21t+OCbfNIT77bK/LzLdVv3CsHHr0kTTpR1qHY07Ffprris9LLX+xbz6xGmPj4gp9fFQ+Alf9QniBWA2qQo3wX/3S+9FKIxs68pI7wJn7D4RiwtGHr44tEN+k45X71lTzHG85oyMgt5OV0J+yjhBWxTrgZhxaLIXAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdh/Fw8s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=czWSQRxAJ9ecjRjMVPzq/3YEYOcQL2VoIQmyN1vl812vYHmxgmldSq3eKbZ9+xrUG5O5vQUm9EqdPERsE8fazmzuolpyeruAHUHLnb8ltzfcPC1ntdvUWxX7b4JjJnpkQxSHfY4kU+CTrtOAj/IDSuxxzmztH09ZgmC3/HR8TBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cF9eG4Nh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdh/Fw8s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5749C4CED1;
-	Wed, 19 Feb 2025 08:56:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cF9eG4Nh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8DCC4CED1;
+	Wed, 19 Feb 2025 08:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955366;
-	bh=hwjc2ajyvMUA5Y0JxCowYRtUn6q5jq+2DO1U6FHDeG8=;
+	s=korg; t=1739955369;
+	bh=fA5TmwjS/3vwO9Tgxt8S7nPWcJEb4dOfor+l7hvgMA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdh/Fw8sUFnuMvRei9dtH3DPanDmxGImiPQNBJ+8Lf6kfHucYCN0VUbsijnry0pLL
-	 7Vi/2f3FJfZD3DakV8ui1QdbTY+w/IfU44k3bx6Wz4J2XaN/v03lCy4ubop3izuAbX
-	 qWv+pg3h3h1m9VgG444ab8dhaNUZ2acEIema451g=
+	b=cF9eG4NhuYdRxY7WfjSjsoyeawLiDfuMkXX9BNgH13WPGU3k+uBKgO3oWTiF3EOGp
+	 t81GYLTNxegcNrJ33PZI96yiUhs8iRlPMMjpsl9K70C2Bn1f0QV3t/mZLD96rFh/lY
+	 EvYaHPTjyu+KgzivIrlyYGIZ2kM2hWB+Car3CUVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Brandt <chris.brandt@renesas.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>
-Subject: [PATCH 6.12 214/230] drm: renesas: rz-du: Increase supported resolutions
-Date: Wed, 19 Feb 2025 09:28:51 +0100
-Message-ID: <20250219082610.066745804@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 6.12 215/230] netdevsim: print human readable IP address
+Date: Wed, 19 Feb 2025 09:28:52 +0100
+Message-ID: <20250219082610.105892200@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -51,41 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Brandt <chris.brandt@renesas.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-commit 226570680bbde0a698f2985db20d9faf4f23cc6e upstream.
+commit c71bc6da6198a6d88df86094f1052bb581951d65 upstream.
 
-The supported resolutions were misrepresented in earlier versions of
-hardware manuals.
+Currently, IPSec addresses are printed in hexadecimal format, which is
+not user-friendly. e.g.
 
-Fixes: 768e9e61b3b9 ("drm: renesas: Add RZ/G2L DU Support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Brandt <chris.brandt@renesas.com>
-Tested-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241120150328.4131525-1-chris.brandt@renesas.com
+  # cat /sys/kernel/debug/netdevsim/netdevsim0/ports/0/ipsec
+  SA count=2 tx=20
+  sa[0] rx ipaddr=0x00000000 00000000 00000000 0100a8c0
+  sa[0]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
+  sa[0]    key=0x3167608a ca4f1397 43565909 941fa627
+  sa[1] tx ipaddr=0x00000000 00000000 00000000 00000000
+  sa[1]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
+  sa[1]    key=0x3167608a ca4f1397 43565909 941fa627
+
+This patch updates the code to print the IPSec address in a human-readable
+format for easier debug. e.g.
+
+ # cat /sys/kernel/debug/netdevsim/netdevsim0/ports/0/ipsec
+ SA count=4 tx=40
+ sa[0] tx ipaddr=0.0.0.0
+ sa[0]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
+ sa[0]    key=0x3167608a ca4f1397 43565909 941fa627
+ sa[1] rx ipaddr=192.168.0.1
+ sa[1]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
+ sa[1]    key=0x3167608a ca4f1397 43565909 941fa627
+ sa[2] tx ipaddr=::
+ sa[2]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
+ sa[2]    key=0x3167608a ca4f1397 43565909 941fa627
+ sa[3] rx ipaddr=2000::1
+ sa[3]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
+ sa[3]    key=0x3167608a ca4f1397 43565909 941fa627
+
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20241010040027.21440-2-liuhangbin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 ---
- drivers/gpu/drm/renesas/rz-du/rzg2l_du_kms.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/netdevsim/ipsec.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/renesas/rz-du/rzg2l_du_kms.c
-+++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_du_kms.c
-@@ -311,11 +311,11 @@ int rzg2l_du_modeset_init(struct rzg2l_d
- 	dev->mode_config.helper_private = &rzg2l_du_mode_config_helper;
+--- a/drivers/net/netdevsim/ipsec.c
++++ b/drivers/net/netdevsim/ipsec.c
+@@ -39,10 +39,14 @@ static ssize_t nsim_dbg_netdev_ops_read(
+ 		if (!sap->used)
+ 			continue;
  
- 	/*
--	 * The RZ DU uses the VSP1 for memory access, and is limited
--	 * to frame sizes of 1920x1080.
-+	 * The RZ DU was designed to support a frame size of 1920x1200 (landscape)
-+	 * or 1200x1920 (portrait).
- 	 */
- 	dev->mode_config.max_width = 1920;
--	dev->mode_config.max_height = 1080;
-+	dev->mode_config.max_height = 1920;
- 
- 	rcdu->num_crtcs = hweight8(rcdu->info->channels_mask);
- 
+-		p += scnprintf(p, bufsize - (p - buf),
+-			       "sa[%i] %cx ipaddr=0x%08x %08x %08x %08x\n",
+-			       i, (sap->rx ? 'r' : 't'), sap->ipaddr[0],
+-			       sap->ipaddr[1], sap->ipaddr[2], sap->ipaddr[3]);
++		if (sap->xs->props.family == AF_INET6)
++			p += scnprintf(p, bufsize - (p - buf),
++				       "sa[%i] %cx ipaddr=%pI6c\n",
++				       i, (sap->rx ? 'r' : 't'), &sap->ipaddr);
++		else
++			p += scnprintf(p, bufsize - (p - buf),
++				       "sa[%i] %cx ipaddr=%pI4\n",
++				       i, (sap->rx ? 'r' : 't'), &sap->ipaddr[3]);
+ 		p += scnprintf(p, bufsize - (p - buf),
+ 			       "sa[%i]    spi=0x%08x proto=0x%x salt=0x%08x crypt=%d\n",
+ 			       i, be32_to_cpu(sap->xs->id.spi),
 
 
