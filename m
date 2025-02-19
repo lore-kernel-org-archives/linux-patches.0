@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DF51DE3AE;
-	Wed, 19 Feb 2025 08:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075DA1DED4C;
+	Wed, 19 Feb 2025 08:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955014; cv=none; b=g9B+yplDrIfCvejb92quSwpODBDU3TIF2M6js3wIudLuBz6m8oQawlZhgwc8aZNL/ZiBBBFNP8j2JWNeeT3IXQAeG8GSRNGIfWyhOewf1SgRAHZR+gW0r0biLtZ175lCCpe7SgDipY4cALzlz8MrahwmjtEOW/0DbLdNd5dXQNY=
+	t=1739955017; cv=none; b=iA6cd2nGameR0SZBdTU+zWOtzIV9FuBa3s/SUfhb68BljvsQb+76c5yskBO1i8BEnyD4AZhLLxaoIcgt6xMUjwURmCvx0sz5KE47kswBgsuivUFwCSwUE3xIOv1rPtJm3fsdRfvFcqpUDIVh4OH7TyqjPlxF/nk9viksKnPvJPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955014; c=relaxed/simple;
-	bh=41TV3SlWA/kHhKT3O//368+iIgGQmzLt4bW9ZLnuZtI=;
+	s=arc-20240116; t=1739955017; c=relaxed/simple;
+	bh=Z60vFgMH7zc9yqCkQ/0CAKPnoMu0AphOa+ZQvVRMn5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QuQmgLlwC+dl0gvgvcMplhqxd0nsiid1F7BXDkcBZKU1THp7z1NuI/ZdbyPdO0NGhcTONrk4t+Kuqg2TN0p3il0n0Po/7TgxV82VIpUin3Ov0cpVN04ZSensxHnukfckjeVCZ4H0sjiCOkLYJvLHYgfcEiUvGJg+K1bhgVr6Tds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nPtQDEm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J3wMAl15gs/ywEKtfeMJJdpTNt74GNS3YE7IcM0WzGTImRqIW3C/RAu0iBlbrJwEnOKHOvb0n+ubaKEtECk4SFCJehRzsxlLbA37UFcYPdHVnZgSm3ec2b1FpDmP216V8Bzt4SNNZBnXuIZ5wCT0UYcGc0eladIEFSNNXQhE33g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwBCzwTs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nPtQDEm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6295AC4CED1;
-	Wed, 19 Feb 2025 08:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwBCzwTs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0FFC4CED1;
+	Wed, 19 Feb 2025 08:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955013;
-	bh=41TV3SlWA/kHhKT3O//368+iIgGQmzLt4bW9ZLnuZtI=;
+	s=korg; t=1739955016;
+	bh=Z60vFgMH7zc9yqCkQ/0CAKPnoMu0AphOa+ZQvVRMn5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1nPtQDEmxvLXCio2QWOkODvgoMGeMENq456suVjwk5xpAeAZgvTa3DCfaMfmwPjSJ
-	 kmRJWWX1NjHxyp0xP6pyRldGuF3dHhhEwAG3YSr/Ubb/9W5fLyyZMbLXvNfQiyr0r9
-	 XdmfL49riv8NyWafaZP3Bw/CZLVrD1AJbmyROPWs=
+	b=UwBCzwTssQRreKbyhYj6gJzF6mHDSMm/mfZ/hDEmQ0ORD0zsKmHfn+NSuOCzyyG9l
+	 8gl89y8gOxB+nqyxThjAHRJylt6Jw64UUKUTcpfOvT2nrLLvjx3iFGw+9VPkuevJaX
+	 SIe9W21o7IXE5dM2jh6OLkc+thY+W5bP8tW4L77g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Vincent Donnefort <vdonnefort@google.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.12 106/230] tracing: Do not allow mmap() of persistent ring buffer
-Date: Wed, 19 Feb 2025 09:27:03 +0100
-Message-ID: <20250219082605.838807364@linuxfoundation.org>
+Subject: [PATCH 6.12 107/230] ring-buffer: Validate the persistent meta data subbuf array
+Date: Wed, 19 Feb 2025 09:27:04 +0100
+Message-ID: <20250219082605.878104148@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -54,99 +54,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 129fe718819cc5e24ea2f489db9ccd4371f0c6f6 upstream.
+commit f5b95f1fa2ef3a03f49eeec658ba97e721412b32 upstream.
 
-When trying to mmap a trace instance buffer that is attached to
-reserve_mem, it would crash:
+The meta data for a mapped ring buffer contains an array of indexes of all
+the subbuffers. The first entry is the reader page, and the rest of the
+entries lay out the order of the subbuffers in how the ring buffer link
+list is to be created.
 
- BUG: unable to handle page fault for address: ffffe97bd00025c8
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 2862f3067 P4D 2862f3067 PUD 0
- Oops: Oops: 0000 [#1] PREEMPT_RT SMP PTI
- CPU: 4 UID: 0 PID: 981 Comm: mmap-rb Not tainted 6.14.0-rc2-test-00003-g7f1a5e3fbf9e-dirty #233
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
- RIP: 0010:validate_page_before_insert+0x5/0xb0
- Code: e2 01 89 d0 c3 cc cc cc cc 66 66 2e 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 <48> 8b 46 08 a8 01 75 67 66 90 48 89 f0 8b 50 34 85 d2 74 76 48 89
- RSP: 0018:ffffb148c2f3f968 EFLAGS: 00010246
- RAX: ffff9fa5d3322000 RBX: ffff9fa5ccff9c08 RCX: 00000000b879ed29
- RDX: ffffe97bd00025c0 RSI: ffffe97bd00025c0 RDI: ffff9fa5ccff9c08
- RBP: ffffb148c2f3f9f0 R08: 0000000000000004 R09: 0000000000000004
- R10: 0000000000000000 R11: 0000000000000200 R12: 0000000000000000
- R13: 00007f16a18d5000 R14: ffff9fa5c48db6a8 R15: 0000000000000000
- FS:  00007f16a1b54740(0000) GS:ffff9fa73df00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: ffffe97bd00025c8 CR3: 00000001048c6006 CR4: 0000000000172ef0
- Call Trace:
-  <TASK>
-  ? __die_body.cold+0x19/0x1f
-  ? __die+0x2e/0x40
-  ? page_fault_oops+0x157/0x2b0
-  ? search_module_extables+0x53/0x80
-  ? validate_page_before_insert+0x5/0xb0
-  ? kernelmode_fixup_or_oops.isra.0+0x5f/0x70
-  ? __bad_area_nosemaphore+0x16e/0x1b0
-  ? bad_area_nosemaphore+0x16/0x20
-  ? do_kern_addr_fault+0x77/0x90
-  ? exc_page_fault+0x22b/0x230
-  ? asm_exc_page_fault+0x2b/0x30
-  ? validate_page_before_insert+0x5/0xb0
-  ? vm_insert_pages+0x151/0x400
-  __rb_map_vma+0x21f/0x3f0
-  ring_buffer_map+0x21b/0x2f0
-  tracing_buffers_mmap+0x70/0xd0
-  __mmap_region+0x6f0/0xbd0
-  mmap_region+0x7f/0x130
-  do_mmap+0x475/0x610
-  vm_mmap_pgoff+0xf2/0x1d0
-  ksys_mmap_pgoff+0x166/0x200
-  __x64_sys_mmap+0x37/0x50
-  x64_sys_call+0x1670/0x1d70
-  do_syscall_64+0xbb/0x1d0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The validator currently makes sure that all the entries are within the
+range of 0 and nr_subbufs. But it does not check if there are any
+duplicates.
 
-The reason was that the code that maps the ring buffer pages to user space
-has:
+While working on the ring buffer, I corrupted this array, where I added
+duplicates. The validator did not catch it and created the ring buffer
+link list on top of it. Luckily, the corruption was only that the reader
+page was also in the writer path and only presented corrupted data but did
+not crash the kernel. But if there were duplicates in the writer side,
+then it could corrupt the ring buffer link list and cause a crash.
 
-	page = virt_to_page((void *)cpu_buffer->subbuf_ids[s]);
-
-And uses that in:
-
-	vm_insert_pages(vma, vma->vm_start, pages, &nr_pages);
-
-But virt_to_page() does not work with vmap()'d memory which is what the
-persistent ring buffer has. It is rather trivial to allow this, but for
-now just disable mmap() of instances that have their ring buffer from the
-reserve_mem option.
-
-If an mmap() is performed on a persistent buffer it will return -ENODEV
-just like it would if the .mmap field wasn't defined in the
-file_operations structure.
+Create a bitmask array with the size of the number of subbuffers. Then
+clear it. When walking through the subbuf array checking to see if the
+entries are within the range, test if its bit is already set in the
+subbuf_mask. If it is, then there is duplicates and fail the validation.
+If not, set the corresponding bit and continue.
 
 Cc: stable@vger.kernel.org
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Vincent Donnefort <vdonnefort@google.com>
-Link: https://lore.kernel.org/20250214115547.0d7287d3@gandalf.local.home
-Fixes: 9b7bdf6f6ece6 ("tracing: Have trace_printk not use binary prints if boot buffer")
+Link: https://lore.kernel.org/20250214102820.7509ddea@gandalf.local.home
+Fixes: c76883f18e59b ("ring-buffer: Add test if range of boot buffer is valid")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/trace/ring_buffer.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -8364,6 +8364,10 @@ static int tracing_buffers_mmap(struct f
- 	struct trace_iterator *iter = &info->iter;
- 	int ret = 0;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 07b421115692..0419d41a2060 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1672,7 +1672,8 @@ static void *rb_range_buffer(struct ring_buffer_per_cpu *cpu_buffer, int idx)
+  * must be the same.
+  */
+ static bool rb_meta_valid(struct ring_buffer_meta *meta, int cpu,
+-			  struct trace_buffer *buffer, int nr_pages)
++			  struct trace_buffer *buffer, int nr_pages,
++			  unsigned long *subbuf_mask)
+ {
+ 	int subbuf_size = PAGE_SIZE;
+ 	struct buffer_data_page *subbuf;
+@@ -1680,6 +1681,9 @@ static bool rb_meta_valid(struct ring_buffer_meta *meta, int cpu,
+ 	unsigned long buffers_end;
+ 	int i;
  
-+	/* Currently the boot mapped buffer is not supported for mmap */
-+	if (iter->tr->flags & TRACE_ARRAY_FL_BOOT)
-+		return -ENODEV;
++	if (!subbuf_mask)
++		return false;
 +
- 	ret = get_snapshot_map(iter->tr);
- 	if (ret)
- 		return ret;
+ 	/* Check the meta magic and meta struct size */
+ 	if (meta->magic != RING_BUFFER_META_MAGIC ||
+ 	    meta->struct_size != sizeof(*meta)) {
+@@ -1712,6 +1716,8 @@ static bool rb_meta_valid(struct ring_buffer_meta *meta, int cpu,
+ 
+ 	subbuf = rb_subbufs_from_meta(meta);
+ 
++	bitmap_clear(subbuf_mask, 0, meta->nr_subbufs);
++
+ 	/* Is the meta buffers and the subbufs themselves have correct data? */
+ 	for (i = 0; i < meta->nr_subbufs; i++) {
+ 		if (meta->buffers[i] < 0 ||
+@@ -1725,6 +1731,12 @@ static bool rb_meta_valid(struct ring_buffer_meta *meta, int cpu,
+ 			return false;
+ 		}
+ 
++		if (test_bit(meta->buffers[i], subbuf_mask)) {
++			pr_info("Ring buffer boot meta [%d] array has duplicates\n", cpu);
++			return false;
++		}
++
++		set_bit(meta->buffers[i], subbuf_mask);
+ 		subbuf = (void *)subbuf + subbuf_size;
+ 	}
+ 
+@@ -1889,17 +1901,22 @@ static void rb_meta_init_text_addr(struct ring_buffer_meta *meta)
+ static void rb_range_meta_init(struct trace_buffer *buffer, int nr_pages)
+ {
+ 	struct ring_buffer_meta *meta;
++	unsigned long *subbuf_mask;
+ 	unsigned long delta;
+ 	void *subbuf;
+ 	int cpu;
+ 	int i;
+ 
++	/* Create a mask to test the subbuf array */
++	subbuf_mask = bitmap_alloc(nr_pages + 1, GFP_KERNEL);
++	/* If subbuf_mask fails to allocate, then rb_meta_valid() will return false */
++
+ 	for (cpu = 0; cpu < nr_cpu_ids; cpu++) {
+ 		void *next_meta;
+ 
+ 		meta = rb_range_meta(buffer, nr_pages, cpu);
+ 
+-		if (rb_meta_valid(meta, cpu, buffer, nr_pages)) {
++		if (rb_meta_valid(meta, cpu, buffer, nr_pages, subbuf_mask)) {
+ 			/* Make the mappings match the current address */
+ 			subbuf = rb_subbufs_from_meta(meta);
+ 			delta = (unsigned long)subbuf - meta->first_buffer;
+@@ -1943,6 +1960,7 @@ static void rb_range_meta_init(struct trace_buffer *buffer, int nr_pages)
+ 			subbuf += meta->subbuf_size;
+ 		}
+ 	}
++	bitmap_free(subbuf_mask);
+ }
+ 
+ static void *rbm_start(struct seq_file *m, loff_t *pos)
+-- 
+2.48.1
+
 
 
