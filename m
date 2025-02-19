@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF0C1DFE2C;
-	Wed, 19 Feb 2025 09:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B8D1C173F;
+	Wed, 19 Feb 2025 09:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956289; cv=none; b=VacidBFklcZz2nBVVnKr2Xrf8Nx/udns0U3XmcC1BWlw3bYJZPhi/p0NNRNLaRruyvAZLAMSEg2WHgUJq13b9YTmqJZRZIxWiXL08r5NSuphflcTLfhhpVPFQGuKTr0cyLJFDuSjq6PAO6yRIurZbRdrFgDoxds5A/1uMrZOJvc=
+	t=1739956292; cv=none; b=Ih+xbruoCjj+4qMOmOgfM5WlEZ/T+HOVQR1jkGfi9fbk0IyRMTU9nluPrQYkFyam6s50d1GHQONa2jiE5L4Nbinxy+d4iKspP0uJsnf3KFgYO5KoVNvDkSqdH8pROxlbSneJIUEZtsmyUn2UHf0CRj+hu/VYIt1+qpkk7PVgVAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956289; c=relaxed/simple;
-	bh=27SlilzsyX8nJnz/sTqeaLEACo1HdZZunDJbINjz2T8=;
+	s=arc-20240116; t=1739956292; c=relaxed/simple;
+	bh=GFWPhag4G94cAQkOAGFRyHaRAzq7vqlS/POi/0cVu2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XfYCPO93zFuwzLLhL3gmtJocZ1GfWku5U0Cz5/6+UkpOqvqjIT0d+g5rYEwPjavzPlKSqh/PzpDNjT+Gtfvy3u+1WrzLcgYBs55/jgPmTwQGWI3i7sY96C9cjoMkhVi8M9A4j0BsCPslc3UC16ifj5SBS/3FElNnS7cYhL9/nS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPQf68Xp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gyy8NBqKtzj7rkXoAjL8P9DQbFFBiMfnQ8zDJ0f8l7RMeAlUb96NFnwh+pfLKhkMkVvacUVh8WPiZmaWlDxcWZySJxCiFk2DXPkErcHzucWTsBhpvGOInvgF8hucgcMTHnJqmfuEUF0oYhCkUu855WzBmOYTWM52ntrrHALFiFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLWxqiMx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPQf68Xp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E73C4CED1;
-	Wed, 19 Feb 2025 09:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLWxqiMx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93063C4CEE6;
+	Wed, 19 Feb 2025 09:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956289;
-	bh=27SlilzsyX8nJnz/sTqeaLEACo1HdZZunDJbINjz2T8=;
+	s=korg; t=1739956292;
+	bh=GFWPhag4G94cAQkOAGFRyHaRAzq7vqlS/POi/0cVu2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lPQf68XphsqNVZOcA23JY7BkbNo5Sp/15UO0uQ4y21AQT4Eyvf8lrZU0jgngVIIDF
-	 /oz7DcKr3ov69PJGSAh0itmDZ62khD0Warp8KpgNCWp8y9Qp6o8PcOnvV1F3YLYFJU
-	 YfG/k9/WLznHkl3PoocRtD0sAHxGccImP7xmruN0=
+	b=DLWxqiMx0/mNaDq+W/XyW7wjHHd/WxuZymHbNqaaKrb56DYJApX3A91SD4EJCP9XP
+	 ySsaVn0Ag3hKGyhgISuwR8jRG9uAv18/VrYXVOHIj8CfYJoX9ZhEMQ6NZ/u8UCR8cn
+	 dXLnw3+Jza5nLWZ5xR2TVPkEo8K3zLRYMzxeO7JI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Jordan <daniel.m.jordan@oracle.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 129/578] padata: add pd get/put refcnt helper
-Date: Wed, 19 Feb 2025 09:22:13 +0100
-Message-ID: <20250219082658.061362555@linuxfoundation.org>
+Subject: [PATCH 6.1 130/578] padata: avoid UAF for reorder_work
+Date: Wed, 19 Feb 2025 09:22:14 +0100
+Message-ID: <20250219082658.100015284@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -54,85 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit ae154202cc6a189b035359f3c4e143d5c24d5352 ]
+[ Upstream commit dd7d37ccf6b11f3d95e797ebe4e9e886d0332600 ]
 
-Add helpers for pd to get/put refcnt to make code consice.
+Although the previous patch can avoid ps and ps UAF for _do_serial, it
+can not avoid potential UAF issue for reorder_work. This issue can
+happen just as below:
 
+crypto_request			crypto_request		crypto_del_alg
+padata_do_serial
+  ...
+  padata_reorder
+    // processes all remaining
+    // requests then breaks
+    while (1) {
+      if (!padata)
+        break;
+      ...
+    }
+
+				padata_do_serial
+				  // new request added
+				  list_add
+    // sees the new request
+    queue_work(reorder_work)
+				  padata_reorder
+				    queue_work_on(squeue->work)
+...
+
+				<kworker context>
+				padata_serial_worker
+				// completes new request,
+				// no more outstanding
+				// requests
+
+							crypto_del_alg
+							  // free pd
+
+<kworker context>
+invoke_padata_reorder
+  // UAF of pd
+
+To avoid UAF for 'reorder_work', get 'pd' ref before put 'reorder_work'
+into the 'serial_wq' and put 'pd' ref until the 'serial_wq' finish.
+
+Fixes: bbefa1dd6a6d ("crypto: pcrypt - Avoid deadlock by using per-instance padata queues")
 Signed-off-by: Chen Ridong <chenridong@huawei.com>
 Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: dd7d37ccf6b1 ("padata: avoid UAF for reorder_work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ kernel/padata.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/padata.c b/kernel/padata.c
-index 5f3069907d497..b3f9ecb3b6711 100644
+index b3f9ecb3b6711..e2bef90e6fd0c 100644
 --- a/kernel/padata.c
 +++ b/kernel/padata.c
-@@ -47,6 +47,22 @@ struct padata_mt_job_state {
- static void padata_free_pd(struct parallel_data *pd);
- static void __init padata_mt_helper(struct work_struct *work);
+@@ -344,8 +344,14 @@ static void padata_reorder(struct parallel_data *pd)
+ 	smp_mb();
  
-+static inline void padata_get_pd(struct parallel_data *pd)
-+{
-+	refcount_inc(&pd->refcnt);
-+}
-+
-+static inline void padata_put_pd_cnt(struct parallel_data *pd, int cnt)
-+{
-+	if (refcount_sub_and_test(cnt, &pd->refcnt))
-+		padata_free_pd(pd);
-+}
-+
-+static inline void padata_put_pd(struct parallel_data *pd)
-+{
-+	padata_put_pd_cnt(pd, 1);
-+}
-+
- static int padata_index_to_cpu(struct parallel_data *pd, int cpu_index)
- {
- 	int cpu, target_cpu;
-@@ -198,7 +214,7 @@ int padata_do_parallel(struct padata_shell *ps,
- 	if ((pinst->flags & PADATA_RESET))
- 		goto out;
- 
--	refcount_inc(&pd->refcnt);
-+	padata_get_pd(pd);
- 	padata->pd = pd;
- 	padata->cb_cpu = *cb_cpu;
- 
-@@ -372,8 +388,7 @@ static void padata_serial_worker(struct work_struct *serial_work)
- 	}
- 	local_bh_enable();
- 
--	if (refcount_sub_and_test(cnt, &pd->refcnt))
--		padata_free_pd(pd);
-+	padata_put_pd_cnt(pd, cnt);
+ 	reorder = per_cpu_ptr(pd->reorder_list, pd->cpu);
+-	if (!list_empty(&reorder->list) && padata_find_next(pd, false))
++	if (!list_empty(&reorder->list) && padata_find_next(pd, false)) {
++		/*
++		 * Other context(eg. the padata_serial_worker) can finish the request.
++		 * To avoid UAF issue, add pd ref here, and put pd ref after reorder_work finish.
++		 */
++		padata_get_pd(pd);
+ 		queue_work(pinst->serial_wq, &pd->reorder_work);
++	}
  }
  
- /**
-@@ -670,8 +685,7 @@ static int padata_replace(struct padata_instance *pinst)
- 	synchronize_rcu();
- 
- 	list_for_each_entry_continue_reverse(ps, &pinst->pslist, list)
--		if (refcount_dec_and_test(&ps->opd->refcnt))
--			padata_free_pd(ps->opd);
-+		padata_put_pd(ps->opd);
- 
- 	pinst->flags &= ~PADATA_RESET;
- 
-@@ -1119,8 +1133,7 @@ void padata_free_shell(struct padata_shell *ps)
- 	mutex_lock(&ps->pinst->lock);
- 	list_del(&ps->list);
- 	pd = rcu_dereference_protected(ps->pd, 1);
--	if (refcount_dec_and_test(&pd->refcnt))
--		padata_free_pd(pd);
+ static void invoke_padata_reorder(struct work_struct *work)
+@@ -356,6 +362,8 @@ static void invoke_padata_reorder(struct work_struct *work)
+ 	pd = container_of(work, struct parallel_data, reorder_work);
+ 	padata_reorder(pd);
+ 	local_bh_enable();
++	/* Pairs with putting the reorder_work in the serial_wq */
 +	padata_put_pd(pd);
- 	mutex_unlock(&ps->pinst->lock);
+ }
  
- 	kfree(ps);
+ static void padata_serial_worker(struct work_struct *serial_work)
 -- 
 2.39.5
 
