@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2DB18C011;
-	Wed, 19 Feb 2025 08:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A871C5F18;
+	Wed, 19 Feb 2025 08:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739953956; cv=none; b=cQhc/ae7xQMmcA5UNqB533Tbd7VypEjKbHk75XpPg2iD8HYU8ihjOY+7LWm1ojeE9Yk8tJaYiq/j9s2FMJgPcQuLORACmGWuY5iTbkqIRwvfDyE253hWNmdq7F6hqGg3T8C+mOiqAuJBB+qIhNdDG0qOjHF+dkNiSWGLN0Aec9A=
+	t=1739953962; cv=none; b=k+YBrS0K3R/ZhH9c/W1YiIMWzEazsomvtpCablvwZiNKeFePW8xk1JqdCHGtYjz87OCi6uvD86/C7PI0e1cS9qgFRTPWtiWtLCMbEbk8jhKKJMRKhY6aV+q6bWpEJ3dYbIZGNi7+Pm0atfyRQWcPCzB5+UYTk2V/jBmWQKFtDk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739953956; c=relaxed/simple;
-	bh=op+v77RSnz36xDRONx+Gl1Go43HViNWM0asz0sPQl/w=;
+	s=arc-20240116; t=1739953962; c=relaxed/simple;
+	bh=WzmaeuO78ER2juCe6IaSdGlPIJ3hUDmbAe3xcf8QkjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BtDRUcHC2zgjrGbxxGplyLuXjbGfx0UJQNDwFklvEeBhWsXTacA3H8KNr1zKGH5z2CQm/nULZUvQJPAydATY/ZvzAjjUpTsXqe6X+3rcMvlgTjd6zQBMQySo3Jw2G2M2GjGbDIBKfAppqH8a5iiAYXXVmto1JFwXunLKOxbNnU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JBQN+pV0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kcLC5228iT4mXlYevdbn8/GYZCQAGs+rtkvqlt5X0bkQfyj/qTp3tv+mA0RZKhylveWVrI0WcW42avGw5gvhLrPjHNAKLtpBvWibn80DSzn7gGdr8wHHP9XSr+wk6x7LEuaS4wgSFFB4wrYR9IoK6iDB117mC/z1YYAhdwUMWME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j2K9GOi+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JBQN+pV0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E85C4CED1;
-	Wed, 19 Feb 2025 08:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2K9GOi+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56822C4CEE6;
+	Wed, 19 Feb 2025 08:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739953956;
-	bh=op+v77RSnz36xDRONx+Gl1Go43HViNWM0asz0sPQl/w=;
+	s=korg; t=1739953959;
+	bh=WzmaeuO78ER2juCe6IaSdGlPIJ3hUDmbAe3xcf8QkjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JBQN+pV09IeY4t/1zivzb1rv82W3er85zZsB21cyj6mn55XQPB9ubnBm8bjQ0TGj4
-	 DN32k94Or6M9c3u7m21cqPcpT/PLWyNt/JL87nF0tCEgxrdg6xvHxzNpVhNZgFZMfg
-	 NySssSzksOP4DazdFOLll2/pKA0FEHLgVXai1sj8=
+	b=j2K9GOi+QsvH5y2movBimlsy0Vj+VYesWoANsYVbom+OJXkCiLDF7jiu6x/+H2HEJ
+	 fUjwwPKlqv7GJqpnDEQ2652A4LtCxDgJm6IuqJ8OkUWtwDhXCS1M0gSLlOLpJ22sBA
+	 lxBykOyiXwSrzGdd+/+HgGhs7SbxfAQGlr4n+fck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 051/274] thermal/netlink: Prevent userspace segmentation fault by adjusting UAPI header
-Date: Wed, 19 Feb 2025 09:25:05 +0100
-Message-ID: <20250219082611.518188330@linuxfoundation.org>
+Subject: [PATCH 6.13 052/274] io_uring/waitid: dont abuse io_tw_state
+Date: Wed, 19 Feb 2025 09:25:06 +0100
+Message-ID: <20250219082611.556668060@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -52,64 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit c195b9c6ab9c383d7aa3f4a65879b3ca90cb378b ]
+[ Upstream commit 06521ac0485effdcc9c792cb0b40ed8e6f2f5fb8 ]
 
-The intel-lpmd tool [1], which uses the THERMAL_GENL_ATTR_CPU_CAPABILITY
-attribute to receive HFI events from kernel space, encounters a
-segmentation fault after commit 1773572863c4 ("thermal: netlink: Add the
-commands and the events for the thresholds").
+struct io_tw_state is managed by core io_uring, and opcode handling code
+must never try to cheat and create their own instances, it's plain
+incorrect.
 
-The issue arises because the THERMAL_GENL_ATTR_CPU_CAPABILITY raw value
-was changed while intel_lpmd still uses the old value.
+io_waitid_complete() attempts exactly that outside of the task work
+context, and even though the ring is locked, there would be no one to
+reap the requests from the defer completion list. It only works now
+because luckily it's called before io_uring_try_cancel_uring_cmd(),
+which flushes completions.
 
-Although intel_lpmd can be updated to check the THERMAL_GENL_VERSION and
-use the appropriate THERMAL_GENL_ATTR_CPU_CAPABILITY value, the commit
-itself is questionable.
-
-The commit introduced a new element in the middle of enum thermal_genl_attr,
-which affects many existing attributes and introduces potential risks
-and unnecessary maintenance burdens for userspace thermal netlink event
-users.
-
-Solve the issue by moving the newly introduced
-THERMAL_GENL_ATTR_TZ_PREV_TEMP attribute to the end of the
-enum thermal_genl_attr. This ensures that all existing thermal generic
-netlink attributes remain unaffected.
-
-Link: https://github.com/intel/intel-lpmd [1]
-Fixes: 1773572863c4 ("thermal: netlink: Add the commands and the events for the thresholds")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://patch.msgid.link/20250208074907.5679-1-rui.zhang@intel.com
-[ rjw: Subject edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: f31ecf671ddc4 ("io_uring: add IORING_OP_WAITID support")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/thermal.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/waitid.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/thermal.h b/include/uapi/linux/thermal.h
-index 349718c271ebf..46a2633d33aaa 100644
---- a/include/uapi/linux/thermal.h
-+++ b/include/uapi/linux/thermal.h
-@@ -30,7 +30,6 @@ enum thermal_genl_attr {
- 	THERMAL_GENL_ATTR_TZ,
- 	THERMAL_GENL_ATTR_TZ_ID,
- 	THERMAL_GENL_ATTR_TZ_TEMP,
--	THERMAL_GENL_ATTR_TZ_PREV_TEMP,
- 	THERMAL_GENL_ATTR_TZ_TRIP,
- 	THERMAL_GENL_ATTR_TZ_TRIP_ID,
- 	THERMAL_GENL_ATTR_TZ_TRIP_TYPE,
-@@ -54,6 +53,7 @@ enum thermal_genl_attr {
- 	THERMAL_GENL_ATTR_THRESHOLD,
- 	THERMAL_GENL_ATTR_THRESHOLD_TEMP,
- 	THERMAL_GENL_ATTR_THRESHOLD_DIRECTION,
-+	THERMAL_GENL_ATTR_TZ_PREV_TEMP,
- 	__THERMAL_GENL_ATTR_MAX,
- };
- #define THERMAL_GENL_ATTR_MAX (__THERMAL_GENL_ATTR_MAX - 1)
+diff --git a/io_uring/waitid.c b/io_uring/waitid.c
+index daef5dd644f04..eddd2dffc88b6 100644
+--- a/io_uring/waitid.c
++++ b/io_uring/waitid.c
+@@ -118,7 +118,6 @@ static int io_waitid_finish(struct io_kiocb *req, int ret)
+ static void io_waitid_complete(struct io_kiocb *req, int ret)
+ {
+ 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
+-	struct io_tw_state ts = {};
+ 
+ 	/* anyone completing better be holding a reference */
+ 	WARN_ON_ONCE(!(atomic_read(&iw->refs) & IO_WAITID_REF_MASK));
+@@ -131,7 +130,6 @@ static void io_waitid_complete(struct io_kiocb *req, int ret)
+ 	if (ret < 0)
+ 		req_set_fail(req);
+ 	io_req_set_res(req, ret, 0);
+-	io_req_task_complete(req, &ts);
+ }
+ 
+ static bool __io_waitid_cancel(struct io_ring_ctx *ctx, struct io_kiocb *req)
+@@ -153,6 +151,7 @@ static bool __io_waitid_cancel(struct io_ring_ctx *ctx, struct io_kiocb *req)
+ 	list_del_init(&iwa->wo.child_wait.entry);
+ 	spin_unlock_irq(&iw->head->lock);
+ 	io_waitid_complete(req, -ECANCELED);
++	io_req_queue_tw_complete(req, -ECANCELED);
+ 	return true;
+ }
+ 
+@@ -258,6 +257,7 @@ static void io_waitid_cb(struct io_kiocb *req, struct io_tw_state *ts)
+ 	}
+ 
+ 	io_waitid_complete(req, ret);
++	io_req_task_complete(req, ts);
+ }
+ 
+ static int io_waitid_wait(struct wait_queue_entry *wait, unsigned mode,
 -- 
 2.39.5
 
