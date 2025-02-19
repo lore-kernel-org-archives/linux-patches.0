@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6B41E1A2B;
-	Wed, 19 Feb 2025 09:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9CF1E1A17;
+	Wed, 19 Feb 2025 09:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955695; cv=none; b=RWhWLt9ng/QUDg5WmGbak5xD9PgvV53F9VSqZxC0ZTSbuAyDpzf8aY9yxRAR0mU9wRgwPK2pQHMPAK/wDDdx0uW7Wzqi9swbQCLAf2ICnMSPwj9r1oavLg7oOeZTpqMrlCMONVLfrFETZTAOPr1tBUn3uTAgqFpqCs4MCNMxk8s=
+	t=1739955698; cv=none; b=U8i7ewODnGvc2+n23P/wApuIYPM04JVaDrzxxnbkVM0mBRB0xLCNYxxTAUEplJfzv3Uc1nvhqYmoG5N2Dfj6pl3t+9blbSP+E0GYY7KYCQ79/Frh5iNEWOSeSnFcVRlSzey2fgec8YSMNPyt+EQSnyBn1Uywnr+35dP4W/e93DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955695; c=relaxed/simple;
-	bh=cY2glzsnoSE4yjMGy9I/xSP2m2sfgVAvBCNzIZkg7E8=;
+	s=arc-20240116; t=1739955698; c=relaxed/simple;
+	bh=ekOyx0nBjZ//AymZvedEKNwEgS2XEeprvbX/rRehJt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tSqrzRfwJj88j/86mZptimqB+ENZiX2/rSHPKtx78JjZxyZUQhSBnESK1Vz+j7KbXQXqcJ6EMHbsQDJZx7oziglWw0zUnT1Cam22pYV5PoSI9KXusg3DVLuxYgbT5c/ZajhcwBHgdd2HEXUNBhgr+NWTseUGm75UJ6R4xYwQpdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eV1N6Z5/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OiLSXKgv/IrxhJPikaYYHDzwJtcr7EzWZUtTpfWutfXOR+T3JZ+phIX7me4fojuxwBl+pNizwQ1EfqX601MOGmssvtP9uEcdD4RTdK+QCdutyexMOK3/drTihwGtwbvTH7rXHqEFQfWQ187KvrHEI1JrNge0emNMLMYyK/ln2Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqRAEdQ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eV1N6Z5/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50093C4CED1;
-	Wed, 19 Feb 2025 09:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqRAEdQ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97AD4C4CED1;
+	Wed, 19 Feb 2025 09:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955694;
-	bh=cY2glzsnoSE4yjMGy9I/xSP2m2sfgVAvBCNzIZkg7E8=;
+	s=korg; t=1739955698;
+	bh=ekOyx0nBjZ//AymZvedEKNwEgS2XEeprvbX/rRehJt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eV1N6Z5/FFrB03LA0vlkoG6EOhMAwGEBRWByPjSPX9g6VLZRSuLb/JNJw68412gZN
-	 DZ/uq8/RM65hZQYZld1+gEi5WGE3oW+3ZrU5hu2EvCyX779PHPwsJ1DEum2mkCk2c5
-	 bdkcDUUihBf4ipskBXM3r+1VP05b9Nn32g6MY1YI=
+	b=kqRAEdQ7gF25SSb8+7NjEVnMq0hfSLVjdV7TB8ExAuf+UMml3plDudYZ/M6BgK1si
+	 6OzsvzTwkA74fy3LdfJgLVaNNDz5Fuui4OIi9KpGGp0AekUFvtpkIG3XHT177vT6cJ
+	 m4u4XRvLcL0Mn90/+kqNC0DoxblUZf06lh6l1PZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	John Keeping <jkeeping@inmusicbrands.com>
-Subject: [PATCH 6.6 085/152] serial: 8250: Fix fifo underflow on flush
-Date: Wed, 19 Feb 2025 09:28:18 +0100
-Message-ID: <20250219082553.418414877@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Magnus Lindholm <linmag7@gmail.com>,
+	Matt Turner <mattst88@gmail.com>,
+	Ivan Kokshaysky <ink@unseen.parts>
+Subject: [PATCH 6.6 086/152] alpha: align stack for page fault and user unaligned trap handlers
+Date: Wed, 19 Feb 2025 09:28:19 +0100
+Message-ID: <20250219082553.457996250@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -50,114 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Ivan Kokshaysky <ink@unseen.parts>
 
-commit 9e512eaaf8f4008c44ede3dfc0fbc9d9c5118583 upstream.
+commit 3b35a171060f846b08b48646b38c30b5d57d17ff upstream.
 
-When flushing the serial port's buffer, uart_flush_buffer() calls
-kfifo_reset() but if there is an outstanding DMA transfer then the
-completion function will consume data from the kfifo via
-uart_xmit_advance(), underflowing and leading to ongoing DMA as the
-driver tries to transmit another 2^32 bytes.
+do_page_fault() and do_entUna() are special because they use
+non-standard stack frame layout. Fix them manually.
 
-This is readily reproduced with serial-generic and amidi sending even
-short messages as closing the device on exit will wait for the fifo to
-drain and in the underflow case amidi hangs for 30 seconds on exit in
-tty_wait_until_sent().  A trace of that gives:
-
-     kworker/1:1-84    [001]    51.769423: bprint:               serial8250_tx_dma: tx_size=3 fifo_len=3
-           amidi-763   [001]    51.769460: bprint:               uart_flush_buffer: resetting fifo
- irq/21-fe530000-76    [000]    51.769474: bprint:               __dma_tx_complete: tx_size=3
- irq/21-fe530000-76    [000]    51.769479: bprint:               serial8250_tx_dma: tx_size=4096 fifo_len=4294967293
- irq/21-fe530000-76    [000]    51.781295: bprint:               __dma_tx_complete: tx_size=4096
- irq/21-fe530000-76    [000]    51.781301: bprint:               serial8250_tx_dma: tx_size=4096 fifo_len=4294963197
- irq/21-fe530000-76    [000]    51.793131: bprint:               __dma_tx_complete: tx_size=4096
- irq/21-fe530000-76    [000]    51.793135: bprint:               serial8250_tx_dma: tx_size=4096 fifo_len=4294959101
- irq/21-fe530000-76    [000]    51.804949: bprint:               __dma_tx_complete: tx_size=4096
-
-Since the port lock is held in when the kfifo is reset in
-uart_flush_buffer() and in __dma_tx_complete(), adding a flush_buffer
-hook to adjust the outstanding DMA byte count is sufficient to avoid the
-kfifo underflow.
-
-Fixes: 9ee4b83e51f74 ("serial: 8250: Add support for dmaengine")
-Cc: stable <stable@kernel.org>
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Link: https://lore.kernel.org/r/20250208124148.1189191-1-jkeeping@inmusicbrands.com
+Cc: stable@vger.kernel.org
+Tested-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Suggested-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Ivan Kokshaysky <ink@unseen.parts>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250.h      |    2 ++
- drivers/tty/serial/8250/8250_dma.c  |   16 ++++++++++++++++
- drivers/tty/serial/8250/8250_port.c |    9 +++++++++
- 3 files changed, 27 insertions(+)
+ arch/alpha/kernel/entry.S |   20 ++++++++++----------
+ arch/alpha/kernel/traps.c |    2 +-
+ arch/alpha/mm/fault.c     |    4 ++--
+ 3 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/drivers/tty/serial/8250/8250.h
-+++ b/drivers/tty/serial/8250/8250.h
-@@ -350,6 +350,7 @@ static inline int is_omap1510_8250(struc
+--- a/arch/alpha/kernel/entry.S
++++ b/arch/alpha/kernel/entry.S
+@@ -198,8 +198,8 @@ CFI_END_OSF_FRAME entArith
+ CFI_START_OSF_FRAME entMM
+ 	SAVE_ALL
+ /* save $9 - $15 so the inline exception code can manipulate them.  */
+-	subq	$sp, 56, $sp
+-	.cfi_adjust_cfa_offset	56
++	subq	$sp, 64, $sp
++	.cfi_adjust_cfa_offset	64
+ 	stq	$9, 0($sp)
+ 	stq	$10, 8($sp)
+ 	stq	$11, 16($sp)
+@@ -214,7 +214,7 @@ CFI_START_OSF_FRAME entMM
+ 	.cfi_rel_offset	$13, 32
+ 	.cfi_rel_offset	$14, 40
+ 	.cfi_rel_offset	$15, 48
+-	addq	$sp, 56, $19
++	addq	$sp, 64, $19
+ /* handle the fault */
+ 	lda	$8, 0x3fff
+ 	bic	$sp, $8, $8
+@@ -227,7 +227,7 @@ CFI_START_OSF_FRAME entMM
+ 	ldq	$13, 32($sp)
+ 	ldq	$14, 40($sp)
+ 	ldq	$15, 48($sp)
+-	addq	$sp, 56, $sp
++	addq	$sp, 64, $sp
+ 	.cfi_restore	$9
+ 	.cfi_restore	$10
+ 	.cfi_restore	$11
+@@ -235,7 +235,7 @@ CFI_START_OSF_FRAME entMM
+ 	.cfi_restore	$13
+ 	.cfi_restore	$14
+ 	.cfi_restore	$15
+-	.cfi_adjust_cfa_offset	-56
++	.cfi_adjust_cfa_offset	-64
+ /* finish up the syscall as normal.  */
+ 	br	ret_from_sys_call
+ CFI_END_OSF_FRAME entMM
+@@ -382,8 +382,8 @@ entUnaUser:
+ 	.cfi_restore	$0
+ 	.cfi_adjust_cfa_offset	-256
+ 	SAVE_ALL		/* setup normal kernel stack */
+-	lda	$sp, -56($sp)
+-	.cfi_adjust_cfa_offset	56
++	lda	$sp, -64($sp)
++	.cfi_adjust_cfa_offset	64
+ 	stq	$9, 0($sp)
+ 	stq	$10, 8($sp)
+ 	stq	$11, 16($sp)
+@@ -399,7 +399,7 @@ entUnaUser:
+ 	.cfi_rel_offset	$14, 40
+ 	.cfi_rel_offset	$15, 48
+ 	lda	$8, 0x3fff
+-	addq	$sp, 56, $19
++	addq	$sp, 64, $19
+ 	bic	$sp, $8, $8
+ 	jsr	$26, do_entUnaUser
+ 	ldq	$9, 0($sp)
+@@ -409,7 +409,7 @@ entUnaUser:
+ 	ldq	$13, 32($sp)
+ 	ldq	$14, 40($sp)
+ 	ldq	$15, 48($sp)
+-	lda	$sp, 56($sp)
++	lda	$sp, 64($sp)
+ 	.cfi_restore	$9
+ 	.cfi_restore	$10
+ 	.cfi_restore	$11
+@@ -417,7 +417,7 @@ entUnaUser:
+ 	.cfi_restore	$13
+ 	.cfi_restore	$14
+ 	.cfi_restore	$15
+-	.cfi_adjust_cfa_offset	-56
++	.cfi_adjust_cfa_offset	-64
+ 	br	ret_from_sys_call
+ CFI_END_OSF_FRAME entUna
  
- #ifdef CONFIG_SERIAL_8250_DMA
- extern int serial8250_tx_dma(struct uart_8250_port *);
-+extern void serial8250_tx_dma_flush(struct uart_8250_port *);
- extern int serial8250_rx_dma(struct uart_8250_port *);
- extern void serial8250_rx_dma_flush(struct uart_8250_port *);
- extern int serial8250_request_dma(struct uart_8250_port *);
-@@ -382,6 +383,7 @@ static inline int serial8250_tx_dma(stru
- {
- 	return -1;
- }
-+static inline void serial8250_tx_dma_flush(struct uart_8250_port *p) { }
- static inline int serial8250_rx_dma(struct uart_8250_port *p)
- {
- 	return -1;
---- a/drivers/tty/serial/8250/8250_dma.c
-+++ b/drivers/tty/serial/8250/8250_dma.c
-@@ -139,6 +139,22 @@ err:
- 	return ret;
- }
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -707,7 +707,7 @@ s_reg_to_mem (unsigned long s_reg)
+ static int unauser_reg_offsets[32] = {
+ 	R(r0), R(r1), R(r2), R(r3), R(r4), R(r5), R(r6), R(r7), R(r8),
+ 	/* r9 ... r15 are stored in front of regs.  */
+-	-56, -48, -40, -32, -24, -16, -8,
++	-64, -56, -48, -40, -32, -24, -16,	/* padding at -8 */
+ 	R(r16), R(r17), R(r18),
+ 	R(r19), R(r20), R(r21), R(r22), R(r23), R(r24), R(r25), R(r26),
+ 	R(r27), R(r28), R(gp),
+--- a/arch/alpha/mm/fault.c
++++ b/arch/alpha/mm/fault.c
+@@ -78,8 +78,8 @@ __load_new_mm_context(struct mm_struct *
  
-+void serial8250_tx_dma_flush(struct uart_8250_port *p)
-+{
-+	struct uart_8250_dma *dma = p->dma;
-+
-+	if (!dma->tx_running)
-+		return;
-+
-+	/*
-+	 * kfifo_reset() has been called by the serial core, avoid
-+	 * advancing and underflowing in __dma_tx_complete().
-+	 */
-+	dma->tx_size = 0;
-+
-+	dmaengine_terminate_async(dma->rxchan);
-+}
-+
- int serial8250_rx_dma(struct uart_8250_port *p)
- {
- 	struct uart_8250_dma		*dma = p->dma;
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -2557,6 +2557,14 @@ static unsigned int npcm_get_divisor(str
- 	return DIV_ROUND_CLOSEST(port->uartclk, 16 * baud + 2) - 2;
- }
+ /* Macro for exception fixup code to access integer registers.  */
+ #define dpf_reg(r)							\
+-	(((unsigned long *)regs)[(r) <= 8 ? (r) : (r) <= 15 ? (r)-16 :	\
+-				 (r) <= 18 ? (r)+10 : (r)-10])
++	(((unsigned long *)regs)[(r) <= 8 ? (r) : (r) <= 15 ? (r)-17 :	\
++				 (r) <= 18 ? (r)+11 : (r)-10])
  
-+static void serial8250_flush_buffer(struct uart_port *port)
-+{
-+	struct uart_8250_port *up = up_to_u8250p(port);
-+
-+	if (up->dma)
-+		serial8250_tx_dma_flush(up);
-+}
-+
- static unsigned int serial8250_do_get_divisor(struct uart_port *port,
- 					      unsigned int baud,
- 					      unsigned int *frac)
-@@ -3260,6 +3268,7 @@ static const struct uart_ops serial8250_
- 	.break_ctl	= serial8250_break_ctl,
- 	.startup	= serial8250_startup,
- 	.shutdown	= serial8250_shutdown,
-+	.flush_buffer	= serial8250_flush_buffer,
- 	.set_termios	= serial8250_set_termios,
- 	.set_ldisc	= serial8250_set_ldisc,
- 	.pm		= serial8250_pm,
+ asmlinkage void
+ do_page_fault(unsigned long address, unsigned long mmcsr,
 
 
