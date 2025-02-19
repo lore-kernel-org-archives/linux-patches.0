@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3866E1BEF71;
-	Wed, 19 Feb 2025 09:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C08C1DE2DE;
+	Wed, 19 Feb 2025 09:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957365; cv=none; b=dQwFOxb4PP7yx7edT73nFYXglRv9sYbBqRJYUOayc6pkBtScm1fWmoFTxN/wtihNopWelcyqyHsnNOu1+GC3MF+G1WHwFSdXepvMKP33okwR41uUh+GWNm4dAqFmdJn5KSh4Sup0lGKa/5aSPB9YquwCfn38/cPObUodlJZRAx8=
+	t=1739957368; cv=none; b=aa88EFSwsc4pCP1/FlUR7OKb8et1sGJ5Kj58dzVGjb/G0vFcBIFbphqwF0SMeAFaZZHMM/yCrF13X/1lZfEppW5+p3qixt8WXrVB4h0lOKw7IntkziSDnmtjQvO63OcZ17sG3juXr5yHhWOm1nuTVmIr6+F3aCJJIwEGCJBmFnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957365; c=relaxed/simple;
-	bh=cRrJHCW7VNBXgLb4xq/9XRlELfHuLK/RBQO0gLsko50=;
+	s=arc-20240116; t=1739957368; c=relaxed/simple;
+	bh=zy+GKTGiY+/hcdgj4WxboflP/XVoQ/eV0BMgLWs4NuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaFg8FTTwvnCJ9xWj6jDUEsgrG9RHusILT/nfuCuVV74c0MJpVXufpgS7XJxpXanS2DVz6cJTVeS8eHZbphzF9Rl4C34ADCSk7NS4alDwIpStMWANfSvE7SfKqfYu4laiwjBfpsKpTyKhZdYXoDERkXO9KRvBtPnjxGKFdI6JWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XADDEteA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LXXwUIb//+NxxGcQaY6Yx/kKr2A+3qbmziG44+K5ms2s6SMTS0VvH3iyHjxt5W0q4kj15k4PD8ofaYagyPN8yN6qW16/9eIRFDwBAsAQQokMpR+qKVIjqyLsf3nlbK+qyHy5TDOuC8D2dFgCEQN0/9PU5UVjq2TLlJu5I0fSGkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxtPBG4S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XADDEteA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7097C4CED1;
-	Wed, 19 Feb 2025 09:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxtPBG4S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90601C4CEE6;
+	Wed, 19 Feb 2025 09:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957365;
-	bh=cRrJHCW7VNBXgLb4xq/9XRlELfHuLK/RBQO0gLsko50=;
+	s=korg; t=1739957367;
+	bh=zy+GKTGiY+/hcdgj4WxboflP/XVoQ/eV0BMgLWs4NuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XADDEteAuG7lRgIcduNEFOSxU78ymMlwUN9zUZjRXeukgw0KatzRFSzYycKHFNmCf
-	 nkFyK3xW6xBYPrw/Pfff76wogs/dMMnNio54z49tn2v/2JvInNs5NKuKjiqVBEmQWL
-	 FzACMIw0MbNtEwsClmAVnrijn4OVIEY+mEgSeJjE=
+	b=mxtPBG4SUCYaPbyu6v+/TOR7wyg1slrgmwCY3FuxaC+x/f5QTwFoRXd1WY+s1Az0B
+	 i7lj8dydiHDtWcHtn8WN65Qg8tJwV62K8s+X/oPofzFD1HX+l4hO43aYmrajAoFReC
+	 POtAbg/Ap1EOPiXfq+VHvDkP5/9wDXx1U2cYvlkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 501/578] KVM: nSVM: Enter guest mode before initializing nested NPT MMU
-Date: Wed, 19 Feb 2025 09:28:25 +0100
-Message-ID: <20250219082712.696679043@linuxfoundation.org>
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.1 502/578] perf/x86/intel: Ensure LBRs are disabled when a CPU is starting
+Date: Wed, 19 Feb 2025 09:28:26 +0100
+Message-ID: <20250219082712.735170052@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,79 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 46d6c6f3ef0eaff71c2db6d77d4e2ebb7adac34f upstream.
+commit c631a2de7ae48d50434bdc205d901423f8577c65 upstream.
 
-When preparing vmcb02 for nested VMRUN (or state restore), "enter" guest
-mode prior to initializing the MMU for nested NPT so that guest_mode is
-set in the MMU's role.  KVM's model is that all L2 MMUs are tagged with
-guest_mode, as the behavior of hypervisor MMUs tends to be significantly
-different than kernel MMUs.
+Explicitly clear DEBUGCTL.LBR when a CPU is starting, prior to purging the
+LBR MSRs themselves, as at least one system has been found to transfer
+control to the kernel with LBRs enabled (it's unclear whether it's a BIOS
+flaw or a CPU goof).  Because the kernel preserves the original DEBUGCTL,
+even when toggling LBRs, leaving DEBUGCTL.LBR as is results in running
+with LBRs enabled at all times.
 
-Practically speaking, the bug is relatively benign, as KVM only directly
-queries role.guest_mode in kvm_mmu_free_guest_mode_roots() and
-kvm_mmu_page_ad_need_write_protect(), which SVM doesn't use, and in paths
-that are optimizations (mmu_page_zap_pte() and
-shadow_mmu_try_split_huge_pages()).
-
-And while the role is incorprated into shadow page usage, because nested
-NPT requires KVM to be using NPT for L1, reusing shadow pages across L1
-and L2 is impossible as L1 MMUs will always have direct=1, while L2 MMUs
-will have direct=0.
-
-Hoist the TLB processing and setting of HF_GUEST_MASK to the beginning
-of the flow instead of forcing guest_mode in the MMU, as nothing in
-nested_vmcb02_prepare_control() between the old and new locations touches
-TLB flush requests or HF_GUEST_MASK, i.e. there's no reason to present
-inconsistent vCPU state to the MMU.
-
-Fixes: 69cb877487de ("KVM: nSVM: move MMU setup to nested_prepare_vmcb_control")
-Cc: stable@vger.kernel.org
-Reported-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Reviewed-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://lore.kernel.org/r/20250130010825.220346-1-seanjc@google.com
+Closes: https://lore.kernel.org/all/c9d8269bff69f6359731d758e3b1135dedd7cc61.camel@redhat.com
+Reported-by: Maxim Levitsky <mlevitsk@redhat.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20250131010721.470503-1-seanjc@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c    |    2 +-
- arch/x86/kvm/svm/nested.c |   10 +++++-----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ arch/x86/events/intel/core.c     |    5 ++++-
+ arch/x86/include/asm/msr-index.h |    3 ++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -5150,7 +5150,7 @@ void kvm_init_shadow_npt_mmu(struct kvm_
- 	union kvm_mmu_page_role root_role;
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -4582,8 +4582,11 @@ static void intel_pmu_cpu_starting(int c
  
- 	/* NPT requires CR0.PG=1. */
--	WARN_ON_ONCE(cpu_role.base.direct);
-+	WARN_ON_ONCE(cpu_role.base.direct || !cpu_role.base.guest_mode);
- 
- 	root_role = cpu_role.base;
- 	root_role.level = kvm_mmu_get_tdp_level(vcpu);
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -619,6 +619,11 @@ static void nested_vmcb02_prepare_contro
- 	u32 pause_count12;
- 	u32 pause_thresh12;
- 
-+	nested_svm_transition_tlb_flush(vcpu);
-+
-+	/* Enter Guest-Mode */
-+	enter_guest_mode(vcpu);
-+
+ 	init_debug_store_on_cpu(cpu);
  	/*
- 	 * Filled at exit: exit_code, exit_code_hi, exit_info_1, exit_info_2,
- 	 * exit_int_info, exit_int_info_err, next_rip, insn_len, insn_bytes.
-@@ -717,11 +722,6 @@ static void nested_vmcb02_prepare_contro
- 		}
- 	}
+-	 * Deal with CPUs that don't clear their LBRs on power-up.
++	 * Deal with CPUs that don't clear their LBRs on power-up, and that may
++	 * even boot with LBRs enabled.
+ 	 */
++	if (!static_cpu_has(X86_FEATURE_ARCH_LBR) && x86_pmu.lbr_nr)
++		msr_clear_bit(MSR_IA32_DEBUGCTLMSR, DEBUGCTLMSR_LBR_BIT);
+ 	intel_pmu_lbr_reset();
  
--	nested_svm_transition_tlb_flush(vcpu);
--
--	/* Enter Guest-Mode */
--	enter_guest_mode(vcpu);
--
- 	/*
- 	 * Merge guest and host intercepts - must be called with vcpu in
- 	 * guest-mode to take effect.
+ 	cpuc->lbr_sel = NULL;
+--- a/arch/x86/include/asm/msr-index.h
++++ b/arch/x86/include/asm/msr-index.h
+@@ -357,7 +357,8 @@
+ #define MSR_IA32_PASID_VALID		BIT_ULL(31)
+ 
+ /* DEBUGCTLMSR bits (others vary by model): */
+-#define DEBUGCTLMSR_LBR			(1UL <<  0) /* last branch recording */
++#define DEBUGCTLMSR_LBR_BIT		0	     /* last branch recording */
++#define DEBUGCTLMSR_LBR			(1UL <<  DEBUGCTLMSR_LBR_BIT)
+ #define DEBUGCTLMSR_BTF_SHIFT		1
+ #define DEBUGCTLMSR_BTF			(1UL <<  1) /* single-step on branches */
+ #define DEBUGCTLMSR_BUS_LOCK_DETECT	(1UL <<  2)
 
 
