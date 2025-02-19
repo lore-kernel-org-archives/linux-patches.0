@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6921CAA65;
-	Wed, 19 Feb 2025 08:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2D11C5485;
+	Wed, 19 Feb 2025 08:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955391; cv=none; b=bxXjpTHch/VH48JgJnu8r9r4wFn+41bY1A2xk7epV/YJ7Woc4Qi9yKxZmt1E4OzfF5CHS+RmxAf2GDQOgc7ec5wADQy+F6xfI1hbB0QdZducvpu9Wa3ougYqChkZSi3gTJl/SoczBwYN/V7fUOJ8VWQBcW6eaCEUtUMjXDwVNEk=
+	t=1739955394; cv=none; b=VOmx2aKCDxv01eajAA/MRQoIBKb56wbOd++eYetPTqVhA+6TWDIa+IBvweXEPaFc0Z3BJcdadn56abyKfUP1c4vI2/zy7BdK82DgxaQhsuggrag+RPZyrlMIcIVYUZXX55/8YDGsERsPSktvhTqZ6N4yUVuy+rIKn5IkRNM5XZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955391; c=relaxed/simple;
-	bh=+wF3/Ds3iOSewy0F66KWJY2XG6pSO8Osr5LM6IbYnt4=;
+	s=arc-20240116; t=1739955394; c=relaxed/simple;
+	bh=PdMHwQzhUyQKRcEimg/8H6END5Di+ZOLGKsQ33eX7nY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N3zEaEDt81Vf2nMdnAITFYqHmqEVeaSCxqwCREX+1iJJmFgyDWiwQ263INnqddMetfWIonTsypXyrSYRAmypoYIXkIRqgQtHEhhoBrHfZe/uOimSdqK6pXSF+sKshAXGvkYbsNLVcvpqC2gBESjsYBdjkS9NNBoGN0ePcy+quH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oO1ax86; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nSj6IxzS9s0q9jeN2zgVkDa8fWpxWOyGuAuLcSMeiO3o25bNrFU7s/lzEZlObF8yChnZgeibxr8Vhm6KFOssuM6hoZRKk7brsXxBWXCmkXY71t/7jkwmgU8wMAfOCMb7ObzSqfZQJzzDAzUMx0Bk0uZTvFMiv0svH8Tkk6oD6po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YU56ZsnU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oO1ax86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A70C4CED1;
-	Wed, 19 Feb 2025 08:56:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YU56ZsnU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D36C4CEE6;
+	Wed, 19 Feb 2025 08:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955391;
-	bh=+wF3/Ds3iOSewy0F66KWJY2XG6pSO8Osr5LM6IbYnt4=;
+	s=korg; t=1739955394;
+	bh=PdMHwQzhUyQKRcEimg/8H6END5Di+ZOLGKsQ33eX7nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1oO1ax86CYDGRWfuMCS9Dsj2dM0CHjxlHIX/fGYJOn/QYDq5zORqr3Rt+D4CPffq5
-	 PlNotGSMYMZ63ed5zX0yII1vr6RO+WrT8ILeogOxFB+NEGtc1DLdx3f9kl8FBkNm7Z
-	 a+4vx/+64Rm0n+NJGB/R7eAFedsrUEBa7SAcVWqI=
+	b=YU56ZsnUIQo0IEYU95V0J7b/qXsz99JBOs9G1VM0eKyBTLz2WiMruUorSuyRN6Y9C
+	 tsQqyV8KA3a6kN9bX92iH8B6KT3eXE3rtt1CDyKL4xxTUeWuOcETFCWRM32Lxu2UT2
+	 GjoUGcMbDwrM8UvUS2+j3RnVOCA3aKApEETSfqkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>
-Subject: [PATCH 6.12 221/230] bpf: handle implicit declaration of function gettid in bpf_iter.c
-Date: Wed, 19 Feb 2025 09:28:58 +0100
-Message-ID: <20250219082610.335736714@linuxfoundation.org>
+	Ihor Solodrai <ihor.solodrai@pm.me>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Alan Maguire <alan.maguire@oracle.com>
+Subject: [PATCH 6.12 222/230] selftests/bpf: Fix uprobe consumer test
+Date: Wed, 19 Feb 2025 09:28:59 +0100
+Message-ID: <20250219082610.374572362@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -45,60 +47,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 42602e3a06f8e5b9a059344e305c9bee2dcc87c8 upstream.
+commit 4b7c05598a644782b8451e415bb56f31e5c9d3ee upstream.
 
-As we can see from the title, when I compiled the selftests/bpf, I
-saw the error:
-implicit declaration of function ‘gettid’ ; did you mean ‘getgid’? [-Werror=implicit-function-declaration]
-  skel->bss->tid = gettid();
-                   ^~~~~~
-                   getgid
+With newly merged code the uprobe behaviour is slightly different
+and affects uprobe consumer test.
 
-Directly call the syscall solves this issue.
+We no longer need to check if the uprobe object is still preserved
+after removing last uretprobe, because it stays as long as there's
+pending/installed uretprobe instance.
 
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Alan Maguire <alan.maguire@oracle.com>
-Tested-by: Alan Maguire <alan.maguire@oracle.com>
-Link: https://lore.kernel.org/r/20241029074627.80289-1-kerneljasonxing@gmail.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+This allows to run uretprobe consumers registered 'after' uprobe was
+hit even if previous uretprobe got unregistered before being hit.
+
+The uprobe object will be now removed after the last uprobe ref is
+released and in such case it's held by ri->uprobe (return instance)
+which is released after the uretprobe is hit.
+
+Reported-by: Ihor Solodrai <ihor.solodrai@pm.me>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: Ihor Solodrai <ihor.solodrai@pm.me>
+Closes: https://lore.kernel.org/bpf/w6U8Z9fdhjnkSp2UaFaV1fGqJXvfLEtDKEUyGDkwmoruDJ_AgF_c0FFhrkeKW18OqiP-05s9yDKiT6X-Ns-avN_ABf0dcUkXqbSJN1TQSXo=@pm.me/
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Cc: Alan Maguire <alan.maguire@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/prog_tests/bpf_iter.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c |    9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
---- a/tools/testing/selftests/bpf/prog_tests/bpf_iter.c
-+++ b/tools/testing/selftests/bpf/prog_tests/bpf_iter.c
-@@ -226,7 +226,7 @@ static void test_task_common_nocheck(str
- 	ASSERT_OK(pthread_create(&thread_id, NULL, &do_nothing_wait, NULL),
- 		  "pthread_create");
+--- a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
++++ b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
+@@ -869,21 +869,14 @@ static void consumer_test(struct uprobe_
+ 			fmt = "prog 0/1: uprobe";
+ 		} else {
+ 			/*
+-			 * uprobe return is tricky ;-)
+-			 *
+ 			 * to trigger uretprobe consumer, the uretprobe needs to be installed,
+ 			 * which means one of the 'return' uprobes was alive when probe was hit:
+ 			 *
+ 			 *   idxs: 2/3 uprobe return in 'installed' mask
+-			 *
+-			 * in addition if 'after' state removes everything that was installed in
+-			 * 'before' state, then uprobe kernel object goes away and return uprobe
+-			 * is not installed and we won't hit it even if it's in 'after' state.
+ 			 */
+ 			unsigned long had_uretprobes  = before & 0b1100; /* is uretprobe installed */
+-			unsigned long probe_preserved = before & after;  /* did uprobe go away */
  
--	skel->bss->tid = gettid();
-+	skel->bss->tid = syscall(SYS_gettid);
- 
- 	do_dummy_read_opts(skel->progs.dump_task, opts);
- 
-@@ -255,10 +255,10 @@ static void *run_test_task_tid(void *arg
- 	union bpf_iter_link_info linfo;
- 	int num_unknown_tid, num_known_tid;
- 
--	ASSERT_NEQ(getpid(), gettid(), "check_new_thread_id");
-+	ASSERT_NEQ(getpid(), syscall(SYS_gettid), "check_new_thread_id");
- 
- 	memset(&linfo, 0, sizeof(linfo));
--	linfo.task.tid = gettid();
-+	linfo.task.tid = syscall(SYS_gettid);
- 	opts.link_info = &linfo;
- 	opts.link_info_len = sizeof(linfo);
- 	test_task_common(&opts, 0, 1);
+-			if (had_uretprobes && probe_preserved && test_bit(idx, after))
++			if (had_uretprobes && test_bit(idx, after))
+ 				val++;
+ 			fmt = "idx 2/3: uretprobe";
+ 		}
 
 
