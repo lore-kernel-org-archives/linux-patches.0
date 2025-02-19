@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F481158862;
-	Wed, 19 Feb 2025 09:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C6D1DE8B0;
+	Wed, 19 Feb 2025 09:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957595; cv=none; b=Fxpq8LSVBMp7R2L6c7T2YKHRyXLLtiMubDTP0jGAB9IBLB44TNLzWESfjGOY2ZsZJs5T89XNSJdluj+qzsoc2FDvZW7zeTJ0SXD0vXxCL7kjtMsfjMVhSjYJRb6gjzeJ+0qi4438eKryUiNgdwakcYfFCclm3zWkNPRrMuCibHQ=
+	t=1739957600; cv=none; b=Zo+jNjrDwi/pLOxTYTkIDbfB4KnsCk42Aeem9IXDr8LJZAcS7NEl/yaFr2ttU7e7SSIlXwM0zwEKmIMGgR+kuI4t4JBbrPH3VBOzqikrqDG5QY+2/MuUXX0xuVbFOY6TTjWMJW0IafGYEqOthOvjX18ePuBYbYFqao2QHAjfpbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957595; c=relaxed/simple;
-	bh=XW4wtEkd1ibvMWzbryKoIMnOEYF5PM8cFl5yRaAr5dU=;
+	s=arc-20240116; t=1739957600; c=relaxed/simple;
+	bh=THdSF2SX+lzr54sO+bveNOek/GfRMn9wn8e2NfgV0Xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tXCMwUPnENNDt9/jk95TZSzslu+kXEhsPVHLrB2/dwoZnw57Au1jyFd0vhscRDUQNP723yy+8ganQW3r9lhPTBy4vj3sLKhOws5asnGIUJ3mURAMmbXwtAVS8Q0+rrzCDRlclWoQetKa1XcTpMYDddGf23z/rkOdYlo2DUrZI8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrI0v+6k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bqmpN9Svww4/DMzpRaSkbYUgkRBYXqj0SAovG2SVhQuZ5sqGP8YXWfWhwyqQ1ciFTdL88EyB799Y4XpKlGta0j+1BqIqdI+MY9dpFBw0J9n2DH0Qg363QTrpc8gzu6/uYoeUjRNM/6xIsuiS2ntQDkRgS3BDoR0EFEiapd5gM3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jo8ujuDW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrI0v+6k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF348C4CEE6;
-	Wed, 19 Feb 2025 09:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jo8ujuDW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D46CC4CED1;
+	Wed, 19 Feb 2025 09:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957595;
-	bh=XW4wtEkd1ibvMWzbryKoIMnOEYF5PM8cFl5yRaAr5dU=;
+	s=korg; t=1739957597;
+	bh=THdSF2SX+lzr54sO+bveNOek/GfRMn9wn8e2NfgV0Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xrI0v+6krqbb8/g7/vY9cdAJnA/+FCgJVxmjy5I/DIOGtuAmp3YSSrixttwLEmQJt
-	 tNa1hBGNYEEqEilqGxL7R/bjerHAijtlHZXdhUFtPgtfVqAfJmvbAo5eTnmLzcyGw7
-	 m+TydIa7wgjWQfjDOjFdlan8ttLbv2yaq6CrYG60=
+	b=jo8ujuDWX6XMPmniA0fyQtnOP+H0eT0dJjhA5J+RR886LlHPVGV05LBTVC8l9MS81
+	 AfQsf9UW5vXr5GshJRmFoGa1wOGZqcxqMt15z7w1BqANWJ34jiczy9zbBSjnIZdZJ5
+	 n4AXqFFuzcetWjl20SVVJkMaPrLpbMIOd/FIKKaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.1 558/578] drm/v3d: Stop active perfmon if it is being destroyed
-Date: Wed, 19 Feb 2025 09:29:22 +0100
-Message-ID: <20250219082714.904910484@linuxfoundation.org>
+	John Ogness <john.ogness@linutronix.de>,
+	Petr Mladek <pmladek@suse.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Brian Norris <briannorris@chromium.org>
+Subject: [PATCH 6.1 559/578] kdb: Do not assume write() callback available
+Date: Wed, 19 Feb 2025 09:29:23 +0100
+Message-ID: <20250219082714.945543689@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -44,56 +48,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Gmeiner <cgmeiner@igalia.com>
+From: John Ogness <john.ogness@linutronix.de>
 
-commit 21f1435b1e6b012a07c42f36b206d2b66fc8f13b upstream.
+commit 6d3e0d8cc63221dec670d0ee92ac57961581e975 upstream.
 
-If the active performance monitor (`v3d->active_perfmon`) is being
-destroyed, stop it first. Currently, the active perfmon is not
-stopped during destruction, leaving the `v3d->active_perfmon` pointer
-stale. This can lead to undefined behavior and instability.
+It is allowed for consoles to not provide a write() callback. For
+example ttynull does this.
 
-This patch ensures that the active perfmon is stopped before being
-destroyed, aligning with the behavior introduced in commit
-7d1fd3638ee3 ("drm/v3d: Stop the active perfmon before being destroyed").
+Check if a write() callback is available before using it.
 
-Cc: stable@vger.kernel.org # v5.15+
-Fixes: 26a4dc29b74a ("drm/v3d: Expose performance counters to userspace")
-Signed-off-by: Christian Gmeiner <cgmeiner@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241118221948.1758130-1-christian.gmeiner@gmail.com
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20230717194607.145135-2-john.ogness@linutronix.de
+Cc: Brian Norris <briannorris@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_perfmon.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/debug/kdb/kdb_io.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/v3d/v3d_perfmon.c
-+++ b/drivers/gpu/drm/v3d/v3d_perfmon.c
-@@ -175,6 +175,7 @@ int v3d_perfmon_destroy_ioctl(struct drm
- {
- 	struct v3d_file_priv *v3d_priv = file_priv->driver_priv;
- 	struct drm_v3d_perfmon_destroy *req = data;
-+	struct v3d_dev *v3d = v3d_priv->v3d;
- 	struct v3d_perfmon *perfmon;
- 
- 	mutex_lock(&v3d_priv->perfmon.lock);
-@@ -184,6 +185,10 @@ int v3d_perfmon_destroy_ioctl(struct drm
- 	if (!perfmon)
- 		return -EINVAL;
- 
-+	/* If the active perfmon is being destroyed, stop it first */
-+	if (perfmon == v3d->active_perfmon)
-+		v3d_perfmon_stop(v3d, perfmon, false);
-+
- 	v3d_perfmon_put(perfmon);
- 
- 	return 0;
+--- a/kernel/debug/kdb/kdb_io.c
++++ b/kernel/debug/kdb/kdb_io.c
+@@ -576,6 +576,8 @@ static void kdb_msg_write(const char *ms
+ 			continue;
+ 		if (c == dbg_io_ops->cons)
+ 			continue;
++		if (!c->write)
++			continue;
+ 		/*
+ 		 * Set oops_in_progress to encourage the console drivers to
+ 		 * disregard their internal spin locks: in the current calling
 
 
