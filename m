@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39FE1A314B;
-	Wed, 19 Feb 2025 08:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B961E1A2B;
+	Wed, 19 Feb 2025 08:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954222; cv=none; b=cRmZ7rKs+Wl9LZjEMVc6PLB8ZfW7Vghyf3G0ata+zxMve72ZZ+F7gWYtsd4ENsa68TNryCr36GcbD+gPt5T0WxSthw1ktJvbf3qXVpX9nCCncs+yJjrjU+LOONS5K6ERRC2PRHSX0nE2515ciS/xmqpfr1OndV0hPLZr4FYlCUU=
+	t=1739954225; cv=none; b=B9ET+gLdUBxwQjLv53bYSMaDu4SFu2+97XcWVypsdvYLradLzjECLL8Zkr1nnzPmvVaaRQ7Rk6sKgfgAuWU+/RcxHBeL9m/OuBC92TuKE0Nu/6AMYIhKWxVtfcX5/48BtKiR6RoVyrKsILNN6qe0ntB/sjXhjmL2My0mK4xV5aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954222; c=relaxed/simple;
-	bh=17B6ScSwk8OgVQTUCsuKPlDF86Mwm29kB7kh48v3+rA=;
+	s=arc-20240116; t=1739954225; c=relaxed/simple;
+	bh=3g0L/UW2xsI24sNhsXfRjVco7kmVmcJdFBlS0u5ECCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHtle/CmA4/rUEHd/jG21RMdSKL9D5Orlc0z0PuNsLPD/YslamGSAl7J+6F3MIZfbwqVPHGupigmRrn7j8hsY/V7H4z7+QPO71WfaivK8Aw7lourM6LMKIvwKCF6WpsjJnAnC09bmp6qkA7DVrRuuQznrl70WcaIqwgt14L/Wl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OaRwzwKv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=naiRNt9kB6jyU+dZmYWSueTUtiAJi0L6dkTT+3shxm2ELyPpEJoRXwmDRseEq+mivNfvWCq/TvwrY2m4RsKIHYjMmmmTWRp8ZAYKz58ykpbla/WQyFD6Hu/2dL5P7BTt2hGO1p7/Lq9Ok2la9WseQXXI+DyijeVV+Q2oRNW3kDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQD3WXkM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OaRwzwKv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93ACC4CED1;
-	Wed, 19 Feb 2025 08:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQD3WXkM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB62EC4CED1;
+	Wed, 19 Feb 2025 08:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954222;
-	bh=17B6ScSwk8OgVQTUCsuKPlDF86Mwm29kB7kh48v3+rA=;
+	s=korg; t=1739954225;
+	bh=3g0L/UW2xsI24sNhsXfRjVco7kmVmcJdFBlS0u5ECCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OaRwzwKvX4aX1f9rjJ65VoxHU40/1dBn3R72T5OTh2pltnvUuPuIJv5xmAFky8ai4
-	 ZyNF6LTr8muyzeufL33GEQPxQ6eB9OhplQrkP9l4J83UJNhUx0aSz/Ahva2wlrSfu6
-	 qa6A6KEe4lkDrNI6eohq0RFVsnMTsfFWsOS1L+Pg=
+	b=wQD3WXkMl0SypUGpKF8UdwIXBos9nvCh9PU5m2cIOzfVX+TjmOe7/1l1n/sMZl4Mq
+	 hU5QVoyEE1NFpVDc0D/inolzUVilIdPu+mKZl46Y3cSmiXd9Wyl/dJV2GhL4Kq9m7L
+	 OVmc2I4/elPsg0bf67mUjrUxQ0WF0byNdK8JQJRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>
-Subject: [PATCH 6.13 134/274] usb: xhci: Restore xhci_pci support for Renesas HCs
-Date: Wed, 19 Feb 2025 09:26:28 +0100
-Message-ID: <20250219082614.852720113@linuxfoundation.org>
+	Baoqi Zhang <zhangbaoqi@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.13 135/274] USB: pci-quirks: Fix HCCPARAMS register error for LS7A EHCI
+Date: Wed, 19 Feb 2025 09:26:29 +0100
+Message-ID: <20250219082614.890899254@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -51,55 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit c81d9fcd5b9402166048f377d4e5e0ee6f9ef26d upstream.
+commit e71f7f42e3c874ac3314b8f250e8416a706165af upstream.
 
-Some Renesas HCs require firmware upload to work, this is handled by the
-xhci_pci_renesas driver. Other variants of those chips load firmware from
-a SPI flash and are ready to work with xhci_pci alone.
+LS7A EHCI controller doesn't have extended capabilities, so the EECP
+(EHCI Extended Capabilities Pointer) field of HCCPARAMS register should
+be 0x0, but it reads as 0xa0 now. This is a hardware flaw and will be
+fixed in future, now just clear the EECP field to avoid error messages
+on boot:
 
-A refactor merged in v6.12 broke the latter configuration so that users
-are finding their hardware ignored by the normal driver and are forced to
-enable the firmware loader which isn't really necessary on their systems.
+......
+[    0.581675] pci 0000:00:04.1: EHCI: unrecognized capability ff
+[    0.581699] pci 0000:00:04.1: EHCI: unrecognized capability ff
+[    0.581716] pci 0000:00:04.1: EHCI: unrecognized capability ff
+[    0.581851] pci 0000:00:04.1: EHCI: unrecognized capability ff
+......
+[    0.581916] pci 0000:00:05.1: EHCI: unrecognized capability ff
+[    0.581951] pci 0000:00:05.1: EHCI: unrecognized capability ff
+[    0.582704] pci 0000:00:05.1: EHCI: unrecognized capability ff
+[    0.582799] pci 0000:00:05.1: EHCI: unrecognized capability ff
+......
 
-Let xhci_pci work with those chips as before when the firmware loader is
-disabled by kernel configuration.
-
-Fixes: 25f51b76f90f ("xhci-pci: Make xhci-pci-renesas a proper modular driver")
 Cc: stable <stable@kernel.org>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219616
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219726
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Tested-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://lore.kernel.org/r/20250128104529.58a79bfc@foxbook
+Signed-off-by: Baoqi Zhang <zhangbaoqi@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://lore.kernel.org/r/20250202124935.480500-1-chenhuacai@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/usb/host/pci-quirks.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -653,8 +653,8 @@ put_runtime_pm:
- }
- EXPORT_SYMBOL_NS_GPL(xhci_pci_common_probe, "xhci");
- 
--static const struct pci_device_id pci_ids_reject[] = {
--	/* handled by xhci-pci-renesas */
-+/* handled by xhci-pci-renesas if enabled */
-+static const struct pci_device_id pci_ids_renesas[] = {
- 	{ PCI_DEVICE(PCI_VENDOR_ID_RENESAS, 0x0014) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_RENESAS, 0x0015) },
- 	{ /* end: all zeroes */ }
-@@ -662,7 +662,8 @@ static const struct pci_device_id pci_id
- 
- static int xhci_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
- {
--	if (pci_match_id(pci_ids_reject, dev))
-+	if (IS_ENABLED(CONFIG_USB_XHCI_PCI_RENESAS) &&
-+			pci_match_id(pci_ids_renesas, dev))
- 		return -ENODEV;
- 
- 	return xhci_pci_common_probe(dev, id);
+--- a/drivers/usb/host/pci-quirks.c
++++ b/drivers/usb/host/pci-quirks.c
+@@ -958,6 +958,15 @@ static void quirk_usb_disable_ehci(struc
+ 	 * booting from USB disk or using a usb keyboard
+ 	 */
+ 	hcc_params = readl(base + EHCI_HCC_PARAMS);
++
++	/* LS7A EHCI controller doesn't have extended capabilities, the
++	 * EECP (EHCI Extended Capabilities Pointer) field of HCCPARAMS
++	 * register should be 0x0 but it reads as 0xa0.  So clear it to
++	 * avoid error messages on boot.
++	 */
++	if (pdev->vendor == PCI_VENDOR_ID_LOONGSON && pdev->device == 0x7a14)
++		hcc_params &= ~(0xffL << 8);
++
+ 	offset = (hcc_params >> 8) & 0xff;
+ 	while (offset && --count) {
+ 		pci_read_config_dword(pdev, offset, &cap);
 
 
