@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3883E1DE3B1;
-	Wed, 19 Feb 2025 08:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0721DE3BE;
+	Wed, 19 Feb 2025 08:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954944; cv=none; b=mjXW11ayyoUTsJSTpTwoqY6JkRE/9TAAahB6Dr+nvCJfGXeLWpRx/2/i+/7OrPuQO9KTELSY3X9fnRGqKX5cLqEnmiI4X75bW/5EYzwaeHntArfMkTpa70NWt4vv3wPfsmwJSAuuRNQTSqsHzYrluUgFuekZE7JO6YHFoSJwP0Q=
+	t=1739954947; cv=none; b=m+5tQw01a+O9ao2kONnD/1KpldGd18D/gQmDg6yLTDQU/JaR1SxqX8/G4VEF0x6KwBe/HAAy2e9/KZf90B5I9WeEli9PZy/yDo0p6C5y4D/BCcCarLGlhECZcSqbCTMXb0T2qRwbEXpMqgq3NwyqQ1Mou/NTKkKyxlmHv8tdUD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954944; c=relaxed/simple;
-	bh=7cCKN1ajQz5vT6TCovH0yjRKRmc0CebF6Vc9EBxhY6w=;
+	s=arc-20240116; t=1739954947; c=relaxed/simple;
+	bh=4guqVsx8NksCE1CHiVKwP0mZAXuavuC066R7+xa77sY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ttItD6VPNLLVRJOJBBNnpdTwU+bkYVsxfNcFOfrQ8Sqjz5foGtHXjcxYEQbwmeDgewKKXUvzQWXEWTTDIvp9ENXlfvd7r3TmHnpYItAwBlVa3NOtnowKYgFBgB5U2T+YH5lktvKHD3UO2DF3pmILaHksa3eP9rv/YOL75U5QZkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0q2Cs30; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jCwpQWliYJytHm1jYxDzYiUAYcMfeWS27J3QAsqNXENZDH/dSbJEjmcq37+nT0jBJFmTcqP72BkeVq9I1HY7eBgrrCeZ6e0wHoCPjTAPQHYiFwsqkxlPZqdLBm+Vg1VikrcfRa5183babxU2NoZRDZeV70QVjxXInaCeWV3snW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHveNFGV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0q2Cs30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9657C4CED1;
-	Wed, 19 Feb 2025 08:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHveNFGV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CBDC4CED1;
+	Wed, 19 Feb 2025 08:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954944;
-	bh=7cCKN1ajQz5vT6TCovH0yjRKRmc0CebF6Vc9EBxhY6w=;
+	s=korg; t=1739954947;
+	bh=4guqVsx8NksCE1CHiVKwP0mZAXuavuC066R7+xa77sY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c0q2Cs30sUQf5BiXL7Bnt6L+wTetF9jgRqRCe3uJVQg72ePn0Fc2789bI3VlZAp7w
-	 Lmw7IkHHQPyCI/zRVj3R0ASdK5Sm5MCGVVFw7nvG+XbImMX4eEpC4633m4H+GLy1O7
-	 CphBFirsifErw9vHHNpnzab5PiPLibSxjND0mWT4=
+	b=wHveNFGVAAPy4ERowbbqpsmuL3Ww+G2JWfSCeWFLHxVzqawItk7GbYkk4/YWEUzpK
+	 6Y1e89QwzFLsS5leSMeZzbSTmSsxSCm3yygwafJbsermNzppBNjIunqfYVy7nJIssM
+	 q+q5j+jbdByGNZRm8WSO6LMqK3Kr5loQxfgj+yhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Ankit Agrawal <ankita@nvidia.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/230] vfio/nvgrace-gpu: Expose the blackwell device PF BAR1 to the VM
-Date: Wed, 19 Feb 2025 09:26:41 +0100
-Message-ID: <20250219082604.986286480@linuxfoundation.org>
+Subject: [PATCH 6.12 085/230] fs/ntfs3: Unify inode corruption marking with _ntfs_bad_inode()
+Date: Wed, 19 Feb 2025 09:26:42 +0100
+Message-ID: <20250219082605.025193447@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -53,162 +50,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ankit Agrawal <ankita@nvidia.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 6a9eb2d125ba90d13b45bcfabcddf9f61268f6a8 ]
+[ Upstream commit 55ad333de0f80bc0caee10c6c27196cdcf8891bb ]
 
-There is a HW defect on Grace Hopper (GH) to support the
-Multi-Instance GPU (MIG) feature [1] that necessiated the presence
-of a 1G region carved out from the device memory and mapped as
-uncached. The 1G region is shown as a fake BAR (comprising region 2 and 3)
-to workaround the issue.
+Also reworked error handling in a couple of places.
 
-The Grace Blackwell systems (GB) differ from GH systems in the following
-aspects:
-1. The aforementioned HW defect is fixed on GB systems.
-2. There is a usable BAR1 (region 2 and 3) on GB systems for the
-GPUdirect RDMA feature [2].
-
-This patch accommodate those GB changes by showing the 64b physical
-device BAR1 (region2 and 3) to the VM instead of the fake one. This
-takes care of both the differences.
-
-Moreover, the entire device memory is exposed on GB as cacheable to
-the VM as there is no carveout required.
-
-Link: https://www.nvidia.com/en-in/technologies/multi-instance-gpu/ [1]
-Link: https://docs.nvidia.com/cuda/gpudirect-rdma/ [2]
-
-Cc: Kevin Tian <kevin.tian@intel.com>
-CC: Jason Gunthorpe <jgg@nvidia.com>
-Suggested-by: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
-Link: https://lore.kernel.org/r/20250124183102.3976-3-ankita@nvidia.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/nvgrace-gpu/main.c | 67 +++++++++++++++++++----------
- 1 file changed, 45 insertions(+), 22 deletions(-)
+ fs/ntfs3/attrib.c  |  4 ++--
+ fs/ntfs3/dir.c     |  2 +-
+ fs/ntfs3/frecord.c | 12 +++++++-----
+ fs/ntfs3/fsntfs.c  |  6 +++++-
+ fs/ntfs3/index.c   |  6 ++----
+ fs/ntfs3/inode.c   |  3 +++
+ 6 files changed, 20 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/vfio/pci/nvgrace-gpu/main.c b/drivers/vfio/pci/nvgrace-gpu/main.c
-index 178ee4180d5c4..9e1c57baab64a 100644
---- a/drivers/vfio/pci/nvgrace-gpu/main.c
-+++ b/drivers/vfio/pci/nvgrace-gpu/main.c
-@@ -17,9 +17,6 @@
- #define RESMEM_REGION_INDEX VFIO_PCI_BAR2_REGION_INDEX
- #define USEMEM_REGION_INDEX VFIO_PCI_BAR4_REGION_INDEX
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index 8d789b017fa9b..da1a9312e61a0 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -1406,7 +1406,7 @@ int attr_wof_frame_info(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 	 */
+ 	if (!attr->non_res) {
+ 		if (vbo[1] + bytes_per_off > le32_to_cpu(attr->res.data_size)) {
+-			ntfs_inode_err(&ni->vfs_inode, "is corrupted");
++			_ntfs_bad_inode(&ni->vfs_inode);
+ 			return -EINVAL;
+ 		}
+ 		addr = resident_data(attr);
+@@ -2587,7 +2587,7 @@ int attr_force_nonresident(struct ntfs_inode *ni)
  
--/* Memory size expected as non cached and reserved by the VM driver */
--#define RESMEM_SIZE SZ_1G
--
- /* A hardwired and constant ABI value between the GPU FW and VFIO driver. */
- #define MEMBLK_SIZE SZ_512M
+ 	attr = ni_find_attr(ni, NULL, &le, ATTR_DATA, NULL, 0, NULL, &mi);
+ 	if (!attr) {
+-		ntfs_bad_inode(&ni->vfs_inode, "no data attribute");
++		_ntfs_bad_inode(&ni->vfs_inode);
+ 		return -ENOENT;
+ 	}
  
-@@ -72,7 +69,7 @@ nvgrace_gpu_memregion(int index,
- 	if (index == USEMEM_REGION_INDEX)
- 		return &nvdev->usemem;
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index fc6a8aa29e3af..b6da80c69ca63 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -512,7 +512,7 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
+ 		ctx->pos = pos;
+ 	} else if (err < 0) {
+ 		if (err == -EINVAL)
+-			ntfs_inode_err(dir, "directory corrupted");
++			_ntfs_bad_inode(dir);
+ 		ctx->pos = eod;
+ 	}
  
--	if (index == RESMEM_REGION_INDEX)
-+	if (nvdev->resmem.memlength && index == RESMEM_REGION_INDEX)
- 		return &nvdev->resmem;
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index c33e818b3164c..175662acd5eaf 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -148,8 +148,10 @@ int ni_load_mi_ex(struct ntfs_inode *ni, CLST rno, struct mft_inode **mi)
+ 		goto out;
  
+ 	err = mi_get(ni->mi.sbi, rno, &r);
+-	if (err)
++	if (err) {
++		_ntfs_bad_inode(&ni->vfs_inode);
+ 		return err;
++	}
+ 
+ 	ni_add_mi(ni, r);
+ 
+@@ -238,8 +240,7 @@ struct ATTRIB *ni_find_attr(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 	return attr;
+ 
+ out:
+-	ntfs_inode_err(&ni->vfs_inode, "failed to parse mft record");
+-	ntfs_set_state(ni->mi.sbi, NTFS_DIRTY_ERROR);
++	_ntfs_bad_inode(&ni->vfs_inode);
  	return NULL;
-@@ -757,40 +754,67 @@ nvgrace_gpu_init_nvdev_struct(struct pci_dev *pdev,
- 			      u64 memphys, u64 memlength)
- {
- 	int ret = 0;
-+	u64 resmem_size = 0;
+ }
  
- 	/*
--	 * The VM GPU device driver needs a non-cacheable region to support
--	 * the MIG feature. Since the device memory is mapped as NORMAL cached,
--	 * carve out a region from the end with a different NORMAL_NC
--	 * property (called as reserved memory and represented as resmem). This
--	 * region then is exposed as a 64b BAR (region 2 and 3) to the VM, while
--	 * exposing the rest (termed as usable memory and represented using usemem)
--	 * as cacheable 64b BAR (region 4 and 5).
-+	 * On Grace Hopper systems, the VM GPU device driver needs a non-cacheable
-+	 * region to support the MIG feature owing to a hardware bug. Since the
-+	 * device memory is mapped as NORMAL cached, carve out a region from the end
-+	 * with a different NORMAL_NC property (called as reserved memory and
-+	 * represented as resmem). This region then is exposed as a 64b BAR
-+	 * (region 2 and 3) to the VM, while exposing the rest (termed as usable
-+	 * memory and represented using usemem) as cacheable 64b BAR (region 4 and 5).
- 	 *
- 	 *               devmem (memlength)
- 	 * |-------------------------------------------------|
- 	 * |                                           |
- 	 * usemem.memphys                              resmem.memphys
-+	 *
-+	 * This hardware bug is fixed on the Grace Blackwell platforms and the
-+	 * presence of the bug can be determined through nvdev->has_mig_hw_bug.
-+	 * Thus on systems with the hardware fix, there is no need to partition
-+	 * the GPU device memory and the entire memory is usable and mapped as
-+	 * NORMAL cached (i.e. resmem size is 0).
- 	 */
-+	if (nvdev->has_mig_hw_bug)
-+		resmem_size = SZ_1G;
-+
- 	nvdev->usemem.memphys = memphys;
+@@ -330,6 +331,7 @@ struct ATTRIB *ni_load_attr(struct ntfs_inode *ni, enum ATTR_TYPE type,
+ 	    vcn <= le64_to_cpu(attr->nres.evcn))
+ 		return attr;
  
- 	/*
- 	 * The device memory exposed to the VM is added to the kernel by the
--	 * VM driver module in chunks of memory block size. Only the usable
--	 * memory (usemem) is added to the kernel for usage by the VM
--	 * workloads. Make the usable memory size memblock aligned.
-+	 * VM driver module in chunks of memory block size. Note that only the
-+	 * usable memory (usemem) is added to the kernel for usage by the VM
-+	 * workloads.
- 	 */
--	if (check_sub_overflow(memlength, RESMEM_SIZE,
-+	if (check_sub_overflow(memlength, resmem_size,
- 			       &nvdev->usemem.memlength)) {
- 		ret = -EOVERFLOW;
- 		goto done;
++	_ntfs_bad_inode(&ni->vfs_inode);
+ 	return NULL;
+ }
+ 
+@@ -1604,8 +1606,8 @@ int ni_delete_all(struct ntfs_inode *ni)
+ 		roff = le16_to_cpu(attr->nres.run_off);
+ 
+ 		if (roff > asize) {
+-			_ntfs_bad_inode(&ni->vfs_inode);
+-			return -EINVAL;
++			/* ni_enum_attr_ex checks this case. */
++			continue;
+ 		}
+ 
+ 		/* run==1 means unpack and deallocate. */
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index 0fa636038b4e4..6c73e93afb478 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -908,7 +908,11 @@ void ntfs_bad_inode(struct inode *inode, const char *hint)
+ 
+ 	ntfs_inode_err(inode, "%s", hint);
+ 	make_bad_inode(inode);
+-	ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
++	/* Avoid recursion if bad inode is $Volume. */
++	if (inode->i_ino != MFT_REC_VOL &&
++	    !(sbi->flags & NTFS_FLAGS_LOG_REPLAYING)) {
++		ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
++	}
+ }
+ 
+ /*
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index 9089c58a005ce..7eb9fae22f8da 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1094,8 +1094,7 @@ int indx_read(struct ntfs_index *indx, struct ntfs_inode *ni, CLST vbn,
+ 
+ ok:
+ 	if (!index_buf_check(ib, bytes, &vbn)) {
+-		ntfs_inode_err(&ni->vfs_inode, "directory corrupted");
+-		ntfs_set_state(ni->mi.sbi, NTFS_DIRTY_ERROR);
++		_ntfs_bad_inode(&ni->vfs_inode);
+ 		err = -EINVAL;
+ 		goto out;
+ 	}
+@@ -1117,8 +1116,7 @@ int indx_read(struct ntfs_index *indx, struct ntfs_inode *ni, CLST vbn,
+ 
+ out:
+ 	if (err == -E_NTFS_CORRUPT) {
+-		ntfs_inode_err(&ni->vfs_inode, "directory corrupted");
+-		ntfs_set_state(ni->mi.sbi, NTFS_DIRTY_ERROR);
++		_ntfs_bad_inode(&ni->vfs_inode);
+ 		err = -EINVAL;
  	}
  
- 	/*
--	 * The USEMEM part of the device memory has to be MEMBLK_SIZE
--	 * aligned. This is a hardwired ABI value between the GPU FW and
--	 * VFIO driver. The VM device driver is also aware of it and make
--	 * use of the value for its calculation to determine USEMEM size.
-+	 * The usemem region is exposed as a 64B Bar composed of region 4 and 5.
-+	 * Calculate and save the BAR size for the region.
-+	 */
-+	nvdev->usemem.bar_size = roundup_pow_of_two(nvdev->usemem.memlength);
-+
-+	/*
-+	 * If the hardware has the fix for MIG, there is no requirement
-+	 * for splitting the device memory to create RESMEM. The entire
-+	 * device memory is usable and will be USEMEM. Return here for
-+	 * such case.
-+	 */
-+	if (!nvdev->has_mig_hw_bug)
-+		goto done;
-+
-+	/*
-+	 * When the device memory is split to workaround the MIG bug on
-+	 * Grace Hopper, the USEMEM part of the device memory has to be
-+	 * MEMBLK_SIZE aligned. This is a hardwired ABI value between the
-+	 * GPU FW and VFIO driver. The VM device driver is also aware of it
-+	 * and make use of the value for its calculation to determine USEMEM
-+	 * size. Note that the device memory may not be 512M aligned.
- 	 */
- 	nvdev->usemem.memlength = round_down(nvdev->usemem.memlength,
- 					     MEMBLK_SIZE);
-@@ -809,10 +833,9 @@ nvgrace_gpu_init_nvdev_struct(struct pci_dev *pdev,
- 	}
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index be04d2845bb7b..a1e11228dafd0 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -410,6 +410,9 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 	if (!std5)
+ 		goto out;
  
- 	/*
--	 * The memory regions are exposed as BARs. Calculate and save
--	 * the BAR size for them.
-+	 * The resmem region is exposed as a 64b BAR composed of region 2 and 3
-+	 * for Grace Hopper. Calculate and save the BAR size for the region.
- 	 */
--	nvdev->usemem.bar_size = roundup_pow_of_two(nvdev->usemem.memlength);
- 	nvdev->resmem.bar_size = roundup_pow_of_two(nvdev->resmem.memlength);
- done:
- 	return ret;
++	if (is_bad_inode(inode))
++		goto out;
++
+ 	if (!is_match && name) {
+ 		err = -ENOENT;
+ 		goto out;
 -- 
 2.39.5
 
