@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570AD1AF0C8;
-	Wed, 19 Feb 2025 09:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AFE1DF265;
+	Wed, 19 Feb 2025 09:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956224; cv=none; b=nyvxbPk/S1N4TNaTZNnQ47pId+W0AuXgZ9BzRLtncQEL1xak+ZF0YusIWUOeKnOQ3OkyzxeRZw3ClRN0R74hCIcBisJa/daRgT8n1qN2jt7aVhX4v8iT9v8NnfcAig8ZAZebwRPu//A06WRku35pKCo6wjN5k/HMUCegjQemQAU=
+	t=1739956229; cv=none; b=C0ZgVwj7yO8MaYm7kruTdlP3hUMNFbpSLcQfBYieRB9sNEzJwlmVNWRynDp+jaXnUY7qX7YmsO5td0fUqBecCUU5mDC1jdo1HfI4gD1j7pMTm1LQAJU8nJiVupdC2mfZ/CSFd/Ds32j1DnpjqeDyCUlF78I2pVWDnIV5IVJw8nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956224; c=relaxed/simple;
-	bh=e9yVtp4N4U0gLz/HoVHaG/c3YbV3zF6LQyZ9eSF0Xh0=;
+	s=arc-20240116; t=1739956229; c=relaxed/simple;
+	bh=uKRfEsiv1bRaFc+ZxLdZFuNQdGMrmVthX7rAbewuOYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QaaANZBED86KsLkkvh5YZJgeF88capdUI+bsmX/6zdP9gx8UIuE8Xy15QUrsMM0qYLQlvdJ5GVYfW/1cvQeD8iUqbLq5IY0Vgyv6c7rs+WyNbHKIsn44y+Idt9rD4nBs7eueIYDeK/g9JbV4Av2CZ4ROc1/64/t8YgghPp0sEeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIfO8zwN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MwBg97eyyLq+2zJ+IHpVubRL7gvD9500vwiA3chS5wIzoN4WzAqFKzeh1bhRNQiuuMTk9mKiRUxk7lRZ81d3HDMe2mRtAx2YEyztBPzdyhudkTxGBgyXL0DpTj8ezShDkvVqIzrY5EdpI9wHvnW6Hr4K2YMAQvisvnJJhB6PQA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=of7CuJny; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIfO8zwN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5383C4CED1;
-	Wed, 19 Feb 2025 09:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="of7CuJny"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5297C4CEE6;
+	Wed, 19 Feb 2025 09:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956224;
-	bh=e9yVtp4N4U0gLz/HoVHaG/c3YbV3zF6LQyZ9eSF0Xh0=;
+	s=korg; t=1739956229;
+	bh=uKRfEsiv1bRaFc+ZxLdZFuNQdGMrmVthX7rAbewuOYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MIfO8zwNUu2GNa2PKRieQ5DeUqqRlb8gYcWgjHHCldXk59Jp8ESumvA9BYMJTP/ta
-	 S8GJ/RX693Q+FFwA76pjBC9EG3TGvWBUy0Lpj8cYrQ8SVJCuSwvERneSdX+TKAtjO4
-	 etwTwOMZZwDOzz+Wo/s4NcdhftVnD23+O03jX3d8=
+	b=of7CuJnyg0hMdZ/pM0pBvNTdPLAJFM8N2cJdnZC70SbE51rImkEAIwm6fpH0NArUH
+	 807P7lg2o+G/7P8ZoT2lb4R0UbABeSZMomup+gZfWm9TyDhISyZSnBsj6f+h2pTcn7
+	 aT11W9a4avphzjj/IET5141VwWrb+N5mnfVvo5ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Song Liu <song@kernel.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Zichen Xie <zichenxie0106@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/578] perf header: Fix one memory leakage in process_bpf_btf()
-Date: Wed, 19 Feb 2025 09:21:50 +0100
-Message-ID: <20250219082657.142824976@linuxfoundation.org>
+Subject: [PATCH 6.1 077/578] samples/landlock: Fix possible NULL dereference in parse_path()
+Date: Wed, 19 Feb 2025 09:21:21 +0100
+Message-ID: <20250219082655.917659052@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -57,55 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Zichen Xie <zichenxie0106@gmail.com>
 
-[ Upstream commit 875d22980a062521beed7b5df71fb13a1af15d83 ]
+[ Upstream commit 078bf9438a31567e2c0587159ccefde835fb1ced ]
 
-If __perf_env__insert_btf() returns false due to a duplicate btf node
-insertion, the temporary node will leak. Add a check to ensure the memory
-is freed if the function returns false.
+malloc() may return NULL, leading to NULL dereference.  Add a NULL
+check.
 
-Fixes: a70a1123174ab592 ("perf bpf: Save BTF information as headers to perf.data")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Song Liu <song@kernel.org>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20241205084500.823660-2-quic_zhonhan@quicinc.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: ba84b0bf5a16 ("samples/landlock: Add a sandbox manager example")
+Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
+Link: https://lore.kernel.org/r/20241128032955.11711-1-zichenxie0106@gmail.com
+[mic: Simplify fix]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/header.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ samples/landlock/sandboxer.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index b2b0293567f07..c4c8a04f3acad 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -3183,7 +3183,8 @@ static int process_bpf_btf(struct feat_fd *ff, void *data __maybe_unused)
- 		if (__do_read(ff, node->data, data_size))
- 			goto out;
- 
--		__perf_env__insert_btf(env, node);
-+		if (!__perf_env__insert_btf(env, node))
-+			free(node);
- 		node = NULL;
+diff --git a/samples/landlock/sandboxer.c b/samples/landlock/sandboxer.c
+index f29bb3c722307..ce9b77bc167b1 100644
+--- a/samples/landlock/sandboxer.c
++++ b/samples/landlock/sandboxer.c
+@@ -65,6 +65,9 @@ static int parse_path(char *env_path, const char ***const path_list)
+ 		}
  	}
+ 	*path_list = malloc(num_paths * sizeof(**path_list));
++	if (!*path_list)
++		return -1;
++
+ 	for (i = 0; i < num_paths; i++)
+ 		(*path_list)[i] = strsep(&env_path, ENV_PATH_TOKEN);
  
+@@ -99,6 +102,10 @@ static int populate_ruleset(const char *const env_var, const int ruleset_fd,
+ 	env_path_name = strdup(env_path_name);
+ 	unsetenv(env_var);
+ 	num_paths = parse_path(env_path_name, &path_list);
++	if (num_paths < 0) {
++		fprintf(stderr, "Failed to allocate memory\n");
++		goto out_free_name;
++	}
+ 	if (num_paths == 1 && path_list[0][0] == '\0') {
+ 		/*
+ 		 * Allows to not use all possible restrictions (e.g. use
 -- 
 2.39.5
 
