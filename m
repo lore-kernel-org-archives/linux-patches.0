@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C7728629E;
-	Wed, 19 Feb 2025 09:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3301D515B;
+	Wed, 19 Feb 2025 09:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957290; cv=none; b=kpXN+5QuNY6k7nIyOlID9aOiP0TwRqr6mc6d6W0n05KBP+rl21c/3XGkZzSHJdV/2fAJIuB/EcrlsFvIHdOh2a3JCoEej9Uz4+sChrTidI5nEBoHHUGGMbJwmpbkKpn7j/RbwgZji5TxB6wYtXeCGmEqzsPBtmUMQtGU9RGBiAs=
+	t=1739957293; cv=none; b=oktpNpboiilgmQQ7LkLC9c+gDIyHrVBPIoOEDScATPfHpDYCTBdx53R9KU+xMK1Ah6gKAamYYRkA83JxdPp2dTuEQ03kqO6l8ZIZkl3PZHKoinhqcMjfdS/zm7SzWDhnsT2h6/mVYY5BNzuAeptf9n7YsitxSWRrycuxYH2I9jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957290; c=relaxed/simple;
-	bh=1rMtAGpzfxIhs2LUAgnARlwuxweml2qTxXBYHfPPnCQ=;
+	s=arc-20240116; t=1739957293; c=relaxed/simple;
+	bh=wpyUJGgwRsuaC/LPo2qOD/qGafYkNI/wDQTOaWz/UBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cb9sPiSwsiTYkeW/lTsMb/dmy2CAXMD4cP5jgLFFW/xFIAWdP0/kLKi+scXix5+iQ2zjhTWLc/qj4EUPLGKbKUXiwH60KBqvz6lapWac/EQOXe2/RzkSsXacJrFwDz7Y7/z9kkST3TFFD0bqWE+mW7JgMYyP8Np1UrhYpFhclaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYCNr4xI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uij4NHbbrb2M9+hwerT2Wp2JlsWRalnYTxUky58noGGxB/wCBpeUxfwmrx3JUivyf0+YX29ycpL3vkOR6T1cAUyhMlNW6wldSdKG9Maoz/AW1t0K4yraOEbBIY3NtlrCaxNh/Zq/k/WBKHDKeVTYIM8iNYBIxqqL7myU95gskhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1eGWNmE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYCNr4xI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB85C4CED1;
-	Wed, 19 Feb 2025 09:28:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1eGWNmE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340A9C4CED1;
+	Wed, 19 Feb 2025 09:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957290;
-	bh=1rMtAGpzfxIhs2LUAgnARlwuxweml2qTxXBYHfPPnCQ=;
+	s=korg; t=1739957293;
+	bh=wpyUJGgwRsuaC/LPo2qOD/qGafYkNI/wDQTOaWz/UBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JYCNr4xIq2+RQG2HIVqjyz4zZl5+dNXiyVPVujg6Gm3/rlyjSGhm3N4yAIrD/3Zns
-	 O7igfXccs/Ps0N1vLqY2PPXg5qw7rBQ6eGoRHv1S3i5GS+6WwyZIDKbjbkm87f7Vo3
-	 mhZlyb9t07bsTGcJ5GdKsMqIMQQc2m/5elwtXeCo=
+	b=d1eGWNmEitcbjfS8OSAy0CP07jF2AyNGWdsp1+McoZasY5LlN9tMQJQKgk3Ea8FvZ
+	 EZUSQkwXM1QPghukROAW5jFSb2tzy+BqfsWAFDITrx9BPiMDZgP/diHFLA+M4H11af
+	 H2e4GSCLQs5jW/8h/Lt+8C0O/dIWT6V1OYZIKVjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Mikolaj Wasiak <mikolaj.wasiak@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Markus Mayer <mmayer@broadcom.com>,
+	Artur Weber <aweber.kernel@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 474/578] drm/i915/selftests: avoid using uninitialized context
-Date: Wed, 19 Feb 2025 09:27:58 +0100
-Message-ID: <20250219082711.652419563@linuxfoundation.org>
+Subject: [PATCH 6.1 475/578] gpio: bcm-kona: Fix GPIO lock/unlock for banks above bank 0
+Date: Wed, 19 Feb 2025 09:27:59 +0100
+Message-ID: <20250219082711.689940459@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -53,50 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Karas <krzysztof.karas@intel.com>
+From: Artur Weber <aweber.kernel@gmail.com>
 
-[ Upstream commit 53139b3f9998ea07289e7b70b909fea2264a0de9 ]
+[ Upstream commit de1d0d160f64ee76df1d364d521b2faf465a091c ]
 
-There is an error path in igt_ppgtt_alloc(), which leads
-to ww object being passed down to i915_gem_ww_ctx_fini() without
-initialization. Correct that by only putting ppgtt->vm and
-returning early.
+The GPIO lock/unlock functions clear/write a bit to the relevant
+register for each bank. However, due to an oversight the bit that
+was being written was based on the total GPIO number, not the index
+of the GPIO within the relevant bank, causing it to fail for any
+GPIO above 32 (thus any GPIO for banks above bank 0).
 
-Fixes: 480ae79537b2 ("drm/i915/selftests: Prepare gtt tests for obj->mm.lock removal")
-Signed-off-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Reviewed-by: Mikolaj Wasiak <mikolaj.wasiak@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/iuaonpjc3rywmvhna6umjlvzilocn2uqsrxfxfob24e2taocbi@lkaivvfp4777
-(cherry picked from commit 8d8334632ea62424233ac6529712868241d0f8df)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fix lock/unlock for these banks by using the correct bit.
+
+Fixes: bdb93c03c550 ("gpio: bcm281xx: Centralize register locking")
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Markus Mayer <mmayer@broadcom.com>
+Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20250206-kona-gpio-fixes-v2-1-409135eab780@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/selftests/i915_gem_gtt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-bcm-kona.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/selftests/i915_gem_gtt.c b/drivers/gpu/drm/i915/selftests/i915_gem_gtt.c
-index e050a2de5fd1d..e25f76b46b0a4 100644
---- a/drivers/gpu/drm/i915/selftests/i915_gem_gtt.c
-+++ b/drivers/gpu/drm/i915/selftests/i915_gem_gtt.c
-@@ -164,7 +164,7 @@ static int igt_ppgtt_alloc(void *arg)
- 		return PTR_ERR(ppgtt);
+diff --git a/drivers/gpio/gpio-bcm-kona.c b/drivers/gpio/gpio-bcm-kona.c
+index 70770429ba483..7e8adc5cc15a0 100644
+--- a/drivers/gpio/gpio-bcm-kona.c
++++ b/drivers/gpio/gpio-bcm-kona.c
+@@ -85,11 +85,12 @@ static void bcm_kona_gpio_lock_gpio(struct bcm_kona_gpio *kona_gpio,
+ 	u32 val;
+ 	unsigned long flags;
+ 	int bank_id = GPIO_BANK(gpio);
++	int bit = GPIO_BIT(gpio);
  
- 	if (!ppgtt->vm.allocate_va_range)
--		goto err_ppgtt_cleanup;
-+		goto ppgtt_vm_put;
+ 	raw_spin_lock_irqsave(&kona_gpio->lock, flags);
  
- 	/*
- 	 * While we only allocate the page tables here and so we could
-@@ -232,7 +232,7 @@ static int igt_ppgtt_alloc(void *arg)
- 			goto retry;
- 	}
- 	i915_gem_ww_ctx_fini(&ww);
--
-+ppgtt_vm_put:
- 	i915_vm_put(&ppgtt->vm);
- 	return err;
- }
+ 	val = readl(kona_gpio->reg_base + GPIO_PWD_STATUS(bank_id));
+-	val |= BIT(gpio);
++	val |= BIT(bit);
+ 	bcm_kona_gpio_write_lock_regs(kona_gpio->reg_base, bank_id, val);
+ 
+ 	raw_spin_unlock_irqrestore(&kona_gpio->lock, flags);
+@@ -101,11 +102,12 @@ static void bcm_kona_gpio_unlock_gpio(struct bcm_kona_gpio *kona_gpio,
+ 	u32 val;
+ 	unsigned long flags;
+ 	int bank_id = GPIO_BANK(gpio);
++	int bit = GPIO_BIT(gpio);
+ 
+ 	raw_spin_lock_irqsave(&kona_gpio->lock, flags);
+ 
+ 	val = readl(kona_gpio->reg_base + GPIO_PWD_STATUS(bank_id));
+-	val &= ~BIT(gpio);
++	val &= ~BIT(bit);
+ 	bcm_kona_gpio_write_lock_regs(kona_gpio->reg_base, bank_id, val);
+ 
+ 	raw_spin_unlock_irqrestore(&kona_gpio->lock, flags);
 -- 
 2.39.5
 
