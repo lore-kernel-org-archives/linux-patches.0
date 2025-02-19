@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F119B1E0DF6;
-	Wed, 19 Feb 2025 08:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214171D79BE;
+	Wed, 19 Feb 2025 08:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954204; cv=none; b=AG7JxRI/T28ssOosY0GuYZ0EvjLs5BqcBd69dBKJwicbG4ymECkdD+4h29XCWO5PRqfztbCyo49jYVkScgE8pHC8plZ9xtQVbfnI3ASOw7udlwTmiCfyK0mYQdWS25REUBonjuH5lf4/hyN9DsONHqtdoWR+Shc4hDCMjAo85zo=
+	t=1739954207; cv=none; b=lJQH2WmQu8BR7wxHSm9/N7r9qOlpnBbQrm4vuB06DqzJdO2yYon3/NoVQlar3W709pIXsgq651AVQHYttCWu5Ut6XXhl5lqW1NN1pfi6G5O0nvqzV0B95GGYK2QjWa2o53HOgtf4hIFB3BToPk+GlUMcSQt7HsZW9kTT0/xU1lI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954204; c=relaxed/simple;
-	bh=uZ+0sigmelZS6D/yq/RxQ2IvRwmJtxZ6c/+9W90Ekko=;
+	s=arc-20240116; t=1739954207; c=relaxed/simple;
+	bh=euEzCSGv0ToNTZMliFVsxT+v86X8ughUtMEI9AUjU/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kB1qOv71DHIIe3wjPq9VqE8H7aH7APTgkCCXXo0DQ75IZAHTL1R6yFKJNKIj3i9RpHVhux+ETb6If5Gpl+5kbbyEoOZsYXRNHHTbqr8IXO1Lf+2rNMndXsYBo9Tdh/UwSU0nKVsPBKMn96qFjDmOxxbTeMfSOkKJWJD7YblRoXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGu/1OvI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LcgifkF6z8crYUsXiGv9lH2soNDi7mYe9+2cueSTPo/QQsCZDfJ/YmiG1mUavSil5xATUizgwnqOEVOCcaoGsvpTXaoH4kcygDOb3EgaLVJLlioQZOEp+f5LnM3x+EJpZFQv7fNnO8Hn/+K8dKJOpOPcC75QKGA2L3xZizJuGNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=petNO9jA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGu/1OvI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F97C4CEE9;
-	Wed, 19 Feb 2025 08:36:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="petNO9jA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872E7C4CEE7;
+	Wed, 19 Feb 2025 08:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954203;
-	bh=uZ+0sigmelZS6D/yq/RxQ2IvRwmJtxZ6c/+9W90Ekko=;
+	s=korg; t=1739954206;
+	bh=euEzCSGv0ToNTZMliFVsxT+v86X8ughUtMEI9AUjU/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGu/1OvI3UL7ENr52cbxsFnj5H+iC682AUxVbfT5fdsFh8oLPcfZ7vLjMlMhWNc8C
-	 2SoBrhoAsP8QJLRJeeHGh5h8+wjArpeOJL6XaYQlqDmJBhANvq0T9qZhsSaQaIsT7A
-	 EXapz2TFMuwu2uOwiJniLFisPLxBGy/7REvA+1hs=
+	b=petNO9jAadueLozKZxYk2Nmt46hZjmvKbsZ/1dfo/lsmc/Jj2CADnIpYbQvJtFe6G
+	 ft5TNQctNfLppVrj+wPFRXfkcRGlIrgXb9vH+pOEBGgBIuUnC6KbLCHjfAL/OUwAhz
+	 HPCTiUxmpT87dT9c/w27TcAglf78GT5HiXw0ynnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Selvarasu Ganesan <selvarasu.g@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.13 129/274] usb: dwc3: Fix timeout issue during controller enter/exit from halt state
-Date: Wed, 19 Feb 2025 09:26:23 +0100
-Message-ID: <20250219082614.660569483@linuxfoundation.org>
+	Elson Roy Serrao <quic_eserrao@quicinc.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.13 130/274] usb: roles: set switch registered flag early on
+Date: Wed, 19 Feb 2025 09:26:24 +0100
+Message-ID: <20250219082614.698394438@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -45,95 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Selvarasu Ganesan <selvarasu.g@samsung.com>
+From: Elson Roy Serrao <quic_eserrao@quicinc.com>
 
-commit d3a8c28426fc1fb3252753a9f1db0d691ffc21b0 upstream.
+commit 634775a752a86784511018a108f3b530cc3399a7 upstream.
 
-There is a frequent timeout during controller enter/exit from halt state
-after toggling the run_stop bit by SW. This timeout occurs when
-performing frequent role switches between host and device, causing
-device enumeration issues due to the timeout. This issue was not present
-when USB2 suspend PHY was disabled by passing the SNPS quirks
-(snps,dis_u2_susphy_quirk and snps,dis_enblslpm_quirk) from the DTS.
-However, there is a requirement to enable USB2 suspend PHY by setting of
-GUSB2PHYCFG.ENBLSLPM and GUSB2PHYCFG.SUSPHY bits when controller starts
-in gadget or host mode results in the timeout issue.
+The role switch registration and set_role() can happen in parallel as they
+are invoked independent of each other. There is a possibility that a driver
+might spend significant amount of time in usb_role_switch_register() API
+due to the presence of time intensive operations like component_add()
+which operate under common mutex. This leads to a time window after
+allocating the switch and before setting the registered flag where the set
+role notifications are dropped. Below timeline summarizes this behavior
 
-This commit addresses this timeout issue by ensuring that the bits
-GUSB2PHYCFG.ENBLSLPM and GUSB2PHYCFG.SUSPHY are cleared before starting
-the dwc3_gadget_run_stop sequence and restoring them after the
-dwc3_gadget_run_stop sequence is completed.
+Thread1				|	Thread2
+usb_role_switch_register()	|
+	|			|
+	---> allocate switch	|
+	|			|
+	---> component_add()	|	usb_role_switch_set_role()
+	|			|	|
+	|			|	--> Drop role notifications
+	|			|	    since sw->registered
+	|			|	    flag is not set.
+	|			|
+	--->Set registered flag.|
 
-Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
+To avoid this, set the registered flag early on in the switch register
+API.
+
+Fixes: b787a3e78175 ("usb: roles: don't get/set_role() when usb_role_switch is unregistered")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20250201163903.459-1-selvarasu.g@samsung.com
+Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250206193950.22421-1-quic_eserrao@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |   34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ drivers/usb/roles/class.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2630,10 +2630,38 @@ static int dwc3_gadget_run_stop(struct d
- {
- 	u32			reg;
- 	u32			timeout = 2000;
-+	u32			saved_config = 0;
+--- a/drivers/usb/roles/class.c
++++ b/drivers/usb/roles/class.c
+@@ -387,8 +387,11 @@ usb_role_switch_register(struct device *
+ 	dev_set_name(&sw->dev, "%s-role-switch",
+ 		     desc->name ? desc->name : dev_name(parent));
  
- 	if (pm_runtime_suspended(dwc->dev))
- 		return 0;
++	sw->registered = true;
++
+ 	ret = device_register(&sw->dev);
+ 	if (ret) {
++		sw->registered = false;
+ 		put_device(&sw->dev);
+ 		return ERR_PTR(ret);
+ 	}
+@@ -399,8 +402,6 @@ usb_role_switch_register(struct device *
+ 			dev_warn(&sw->dev, "failed to add component\n");
+ 	}
  
-+	/*
-+	 * When operating in USB 2.0 speeds (HS/FS), ensure that
-+	 * GUSB2PHYCFG.ENBLSLPM and GUSB2PHYCFG.SUSPHY are cleared before starting
-+	 * or stopping the controller. This resolves timeout issues that occur
-+	 * during frequent role switches between host and device modes.
-+	 *
-+	 * Save and clear these settings, then restore them after completing the
-+	 * controller start or stop sequence.
-+	 *
-+	 * This solution was discovered through experimentation as it is not
-+	 * mentioned in the dwc3 programming guide. It has been tested on an
-+	 * Exynos platforms.
-+	 */
-+	reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-+	if (reg & DWC3_GUSB2PHYCFG_SUSPHY) {
-+		saved_config |= DWC3_GUSB2PHYCFG_SUSPHY;
-+		reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
-+	}
-+
-+	if (reg & DWC3_GUSB2PHYCFG_ENBLSLPM) {
-+		saved_config |= DWC3_GUSB2PHYCFG_ENBLSLPM;
-+		reg &= ~DWC3_GUSB2PHYCFG_ENBLSLPM;
-+	}
-+
-+	if (saved_config)
-+		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
-+
- 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
- 	if (is_on) {
- 		if (DWC3_VER_IS_WITHIN(DWC3, ANY, 187A)) {
-@@ -2661,6 +2689,12 @@ static int dwc3_gadget_run_stop(struct d
- 		reg &= DWC3_DSTS_DEVCTRLHLT;
- 	} while (--timeout && !(!is_on ^ !reg));
+-	sw->registered = true;
+-
+ 	/* TODO: Symlinks for the host port and the device controller. */
  
-+	if (saved_config) {
-+		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-+		reg |= saved_config;
-+		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
-+	}
-+
- 	if (!timeout)
- 		return -ETIMEDOUT;
- 
+ 	return sw;
 
 
