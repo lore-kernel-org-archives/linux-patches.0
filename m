@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC4B1C2432;
-	Wed, 19 Feb 2025 09:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDBF158862;
+	Wed, 19 Feb 2025 09:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957573; cv=none; b=JTcQ+GLrIiLY4brBlU1LC0y82F4clgNWCdxopHixsI4dy0ZTcogewOW+ewas5lvJ8bXE4K6qXYk2s7zPYFhyfuQqy/sC4+YUzi2r3t62nrmpUy6DPug3zNJOSi3/FeTXf3KsB3+6RLLcUH4YAtx3bwXT7eESXE29O/TAMJiAF60=
+	t=1739957575; cv=none; b=UeQyAdgCAoX9TPaL6C6V93HEI/JEzs+Fi/8kuaAciXLLR/n/tJe6UeY6pzYhH5LfPS3b3lRdONwjQyaI6rSwRJ7EYnKMDhWhG1EU1oqb4q87BRDOA0JIzpODzMBx3nmSBjW44mF8gmG7qMq6HlpNDTAvSTeUiHIoLJQvtRnTaCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957573; c=relaxed/simple;
-	bh=cQrocWIj5IjelluV2DFaHpw0x8wdNRR7kSLB83Zajes=;
+	s=arc-20240116; t=1739957575; c=relaxed/simple;
+	bh=wuPdFnKMLLLcW7csfBrZfVBqEOjDW0lQhjrUT9uDpvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sB2xJx2dzBLHPYRIr/a8QcVZIHoDYPkHBOYqYrmw0cUBNhOBeL2br+QyODsEvzDZP1ycstOkKRxGqECqU7i2Dw8N1r/0U+XVOzMW01Ko+RUs0AT9ccO1zP3t2Fqs6PMUtlrYjQZWsv0s2aZFj9t0BL6icQn29itMwUkioLKhBlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tWHcyfRm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CxGRiXgG9DaWx8BPZGplPWwCtNKhg0vgSPGgfTPoo9lM48gn8CBjDWNv8V140ZhegQpnoYHeAn5SFf0oCAGfRoMA2PLBg8DzDwvmyTKIpaqMqvT1p2j10ilzCIXWnFHDAOVDQDGAojgGguDX5Hsg8CRb03jVQc7H7TQ/YCo1Fl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tC9jzl42; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tWHcyfRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9F9C4CED1;
-	Wed, 19 Feb 2025 09:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tC9jzl42"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DC8C4CED1;
+	Wed, 19 Feb 2025 09:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957572;
-	bh=cQrocWIj5IjelluV2DFaHpw0x8wdNRR7kSLB83Zajes=;
+	s=korg; t=1739957575;
+	bh=wuPdFnKMLLLcW7csfBrZfVBqEOjDW0lQhjrUT9uDpvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tWHcyfRm/ihwz1UUZfAyD9pjqKDKGdAMY6zppjf+EX0XWFD47oSXmsIYSaWW/GSO0
-	 8hGUEqClCa6/MlY6bil8rVkVS3EXTPy9hbHX3TZynQC2GFytI5znQ6Ty0XvG7zSTJL
-	 CN08lnkip75+QAPofQXKUJ6O0DcSC4hN0u7DA/1w=
+	b=tC9jzl42kAJph11EU07+h/yjma6bbj/y5WRLw/Frg/2mrChrTdhGiF73eSBIpXxGN
+	 ZRPQ0PygEDHTZQArwZggevPwCPH8kYKy6dy3DvQAbSYG7n0VBhBwU/P//uVoYjYmP1
+	 yWRWvu5Lo0LWmgcUsclpsF5tW8M2miNk1SbDA8Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 6.1 573/578] netdevsim: print human readable IP address
-Date: Wed, 19 Feb 2025 09:29:37 +0100
-Message-ID: <20250219082715.493281522@linuxfoundation.org>
+	Bin Liu <b-liu@ti.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Jonathan Cormier <jcormier@criticallink.com>,
+	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Subject: [PATCH 6.1 556/578] drm/tidss: Fix issue in irq handling causing irq-flood issue
+Date: Wed, 19 Feb 2025 09:29:20 +0100
+Message-ID: <20250219082714.827798335@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,70 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit c71bc6da6198a6d88df86094f1052bb581951d65 upstream.
+commit 44b6730ab53ef04944fbaf6da0e77397531517b7 upstream.
 
-Currently, IPSec addresses are printed in hexadecimal format, which is
-not user-friendly. e.g.
+It has been observed that sometimes DSS will trigger an interrupt and
+the top level interrupt (DISPC_IRQSTATUS) is not zero, but the VP and
+VID level interrupt-statuses are zero.
 
-  # cat /sys/kernel/debug/netdevsim/netdevsim0/ports/0/ipsec
-  SA count=2 tx=20
-  sa[0] rx ipaddr=0x00000000 00000000 00000000 0100a8c0
-  sa[0]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
-  sa[0]    key=0x3167608a ca4f1397 43565909 941fa627
-  sa[1] tx ipaddr=0x00000000 00000000 00000000 00000000
-  sa[1]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
-  sa[1]    key=0x3167608a ca4f1397 43565909 941fa627
+As the top level irqstatus is supposed to tell whether we have VP/VID
+interrupts, the thinking of the driver authors was that this particular
+case could never happen. Thus the driver only clears the DISPC_IRQSTATUS
+bits which has corresponding interrupts in VP/VID status. So when this
+issue happens, the driver will not clear DISPC_IRQSTATUS, and we get an
+interrupt flood.
 
-This patch updates the code to print the IPSec address in a human-readable
-format for easier debug. e.g.
+It is unclear why the issue happens. It could be a race issue in the
+driver, but no such race has been found. It could also be an issue with
+the HW. However a similar case can be easily triggered by manually
+writing to DISPC_IRQSTATUS_RAW. This will forcibly set a bit in the
+DISPC_IRQSTATUS and trigger an interrupt, and as the driver never clears
+the bit, we get an interrupt flood.
 
- # cat /sys/kernel/debug/netdevsim/netdevsim0/ports/0/ipsec
- SA count=4 tx=40
- sa[0] tx ipaddr=0.0.0.0
- sa[0]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
- sa[0]    key=0x3167608a ca4f1397 43565909 941fa627
- sa[1] rx ipaddr=192.168.0.1
- sa[1]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
- sa[1]    key=0x3167608a ca4f1397 43565909 941fa627
- sa[2] tx ipaddr=::
- sa[2]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
- sa[2]    key=0x3167608a ca4f1397 43565909 941fa627
- sa[3] rx ipaddr=2000::1
- sa[3]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
- sa[3]    key=0x3167608a ca4f1397 43565909 941fa627
+To fix the issue, always clear DISPC_IRQSTATUS. The concern with this
+solution is that if the top level irqstatus is the one that triggers the
+interrupt, always clearing DISPC_IRQSTATUS might leave some interrupts
+unhandled if VP/VID interrupt statuses have bits set. However, testing
+shows that if any of the irqstatuses is set (i.e. even if
+DISPC_IRQSTATUS == 0, but a VID irqstatus has a bit set), we will get an
+interrupt.
 
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20241010040027.21440-2-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Co-developed-by: Bin Liu <b-liu@ti.com>
+Signed-off-by: Bin Liu <b-liu@ti.com>
+Co-developed-by: Devarsh Thakkar <devarsht@ti.com>
+Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
+Co-developed-by: Jonathan Cormier <jcormier@criticallink.com>
+Signed-off-by: Jonathan Cormier <jcormier@criticallink.com>
+Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
+Cc: stable@vger.kernel.org
+Tested-by: Jonathan Cormier <jcormier@criticallink.com>
+Reviewed-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241021-tidss-irq-fix-v1-1-82ddaec94e4a@ideasonboard.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/netdevsim/ipsec.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/tidss/tidss_dispc.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
---- a/drivers/net/netdevsim/ipsec.c
-+++ b/drivers/net/netdevsim/ipsec.c
-@@ -39,10 +39,14 @@ static ssize_t nsim_dbg_netdev_ops_read(
- 		if (!sap->used)
- 			continue;
+--- a/drivers/gpu/drm/tidss/tidss_dispc.c
++++ b/drivers/gpu/drm/tidss/tidss_dispc.c
+@@ -679,24 +679,20 @@ static
+ void dispc_k3_clear_irqstatus(struct dispc_device *dispc, dispc_irq_t clearmask)
+ {
+ 	unsigned int i;
+-	u32 top_clear = 0;
  
--		p += scnprintf(p, bufsize - (p - buf),
--			       "sa[%i] %cx ipaddr=0x%08x %08x %08x %08x\n",
--			       i, (sap->rx ? 'r' : 't'), sap->ipaddr[0],
--			       sap->ipaddr[1], sap->ipaddr[2], sap->ipaddr[3]);
-+		if (sap->xs->props.family == AF_INET6)
-+			p += scnprintf(p, bufsize - (p - buf),
-+				       "sa[%i] %cx ipaddr=%pI6c\n",
-+				       i, (sap->rx ? 'r' : 't'), &sap->ipaddr);
-+		else
-+			p += scnprintf(p, bufsize - (p - buf),
-+				       "sa[%i] %cx ipaddr=%pI4\n",
-+				       i, (sap->rx ? 'r' : 't'), &sap->ipaddr[3]);
- 		p += scnprintf(p, bufsize - (p - buf),
- 			       "sa[%i]    spi=0x%08x proto=0x%x salt=0x%08x crypt=%d\n",
- 			       i, be32_to_cpu(sap->xs->id.spi),
+ 	for (i = 0; i < dispc->feat->num_vps; ++i) {
+-		if (clearmask & DSS_IRQ_VP_MASK(i)) {
++		if (clearmask & DSS_IRQ_VP_MASK(i))
+ 			dispc_k3_vp_write_irqstatus(dispc, i, clearmask);
+-			top_clear |= BIT(i);
+-		}
+ 	}
+ 	for (i = 0; i < dispc->feat->num_planes; ++i) {
+-		if (clearmask & DSS_IRQ_PLANE_MASK(i)) {
++		if (clearmask & DSS_IRQ_PLANE_MASK(i))
+ 			dispc_k3_vid_write_irqstatus(dispc, i, clearmask);
+-			top_clear |= BIT(4 + i);
+-		}
+ 	}
+ 	if (dispc->feat->subrev == DISPC_K2G)
+ 		return;
+ 
+-	dispc_write(dispc, DISPC_IRQSTATUS, top_clear);
++	/* always clear the top level irqstatus */
++	dispc_write(dispc, DISPC_IRQSTATUS, dispc_read(dispc, DISPC_IRQSTATUS));
+ 
+ 	/* Flush posted writes */
+ 	dispc_read(dispc, DISPC_IRQSTATUS);
 
 
