@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2131CAA86;
-	Wed, 19 Feb 2025 09:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608C81A315E;
+	Wed, 19 Feb 2025 09:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956012; cv=none; b=XM6ms5tH0Z0yZ3oErr8HpVxzLYuYgW+HPoQRRgwh/8/M5a7C0P+JMHkBVegbVmDUqjGk7qLEl9+qZXjvrb1b1gb9dXK4sAoiJgx0Gb2BQsmE3SYrv+4HjZjTlVo6vp+MJdXNl06+Ey2HMVNbO2taZASFZR0MIErb9w2ijtiw+EY=
+	t=1739956015; cv=none; b=Sj/FNEX6eSUCPIfniPQeblnd7yCvuNcP49iCqF3tm6tDI2MAzv/zv2dzXGGD6lKwi6G9ERjX264rwW1Sv7dydFLcWrx/iLlbTKk7YcBHu6saaSo2xWFmwBQoCkn+kEBcav7FGHwCQYO9e8ZiYP95woE5l1fwBRlfgw2U+Kj0A4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956012; c=relaxed/simple;
-	bh=wetrCDqJGvIH92Pvp8JjuaGrJyHanP/jlxl573ziXoM=;
+	s=arc-20240116; t=1739956015; c=relaxed/simple;
+	bh=Og8i0ZhNERP98MRTI/bYIUqI1YCXzg4fS8QRgzMTdLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EarGCxGPVnwOuKETN1U4HyS83QKnlhyV2Nw/ljAb5t7dGTxBQx+A6mVSPtGvFFINzA7xK8zWD4tdb5ERkmaxhydfaIPaYd4BdlA0U1IC5DZ8h4TDGOFyR0e3fVvt8ATpxi/sk5Va2KQXFZDSTNJZ544YsKN7mWajmdqzf9PmgQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCYXnt9y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jfeeXLpL7/JlVoQS5K1BY1GSk863mscsZVyTuD/f2NsklmA11nKjb5/zMzlIDcHjWsKQnzVuI/rQwyyGyrCVKUvghmibZ+W/MQ/Fdf8Vd/ip5+4H0HavMH/jDv9QhmYSArybEIBKdYyqhzvkYOFon7Ovn1Tq8MsDySsZjsbA1zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKR+vQ2L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCYXnt9y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32F8C4CED1;
-	Wed, 19 Feb 2025 09:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKR+vQ2L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3924C4CED1;
+	Wed, 19 Feb 2025 09:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956012;
-	bh=wetrCDqJGvIH92Pvp8JjuaGrJyHanP/jlxl573ziXoM=;
+	s=korg; t=1739956015;
+	bh=Og8i0ZhNERP98MRTI/bYIUqI1YCXzg4fS8QRgzMTdLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VCYXnt9yqbHbsRwXRP4d+DBDlwvM11+DulczKJHOZnrFFuzJLUoNZ+D8aB/WOEZH5
-	 KsjcQSenCXaSuIpLSS93PJwfuafIO1fvpcSAPT0jqissw2Epo2kToh7kPhDcrEwgcw
-	 DAIPQd+DH1aMEXy7a8oyobl6wx9ZvA/j8m4++7p8=
+	b=IKR+vQ2Lyvo5AbehjMC39Xe4jN0Dzq4KjiOIMqNif5/PqpGNk/w+Alwl99s6rCobP
+	 QgFDjvQc8u0U+bT3J+1MFLhJTlXEO+G2smWawMXhCTtFkt2BAJXD3uueQHxYLBF8pj
+	 roF/LmUQKo2xS+xzM82h9fITr2s3MYW0WTkk2V3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Balaji Pothunoori <quic_bpothuno@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/578] nvme: Add error check for xa_store in nvme_get_effects_log
-Date: Wed, 19 Feb 2025 09:20:12 +0100
-Message-ID: <20250219082653.224654434@linuxfoundation.org>
+Subject: [PATCH 6.1 035/578] wifi: ath11k: Fix unexpected return buffer manager error for WCN6750/WCN6855
+Date: Wed, 19 Feb 2025 09:20:39 +0100
+Message-ID: <20250219082654.277663639@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -53,50 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
+From: Balaji Pothunoori <quic_bpothuno@quicinc.com>
 
-[ Upstream commit ac32057acc7f3d7a238dafaa9b2aa2bc9750080e ]
+[ Upstream commit 78e154d42f2c72905fe66a400847e1b2b101b7b2 ]
 
-The xa_store() may fail due to memory allocation failure because there
-is no guarantee that the index csi is already used. This fix adds an
-error check of the return value of xa_store() in nvme_get_effects_log().
+The following error messages were encountered while parsing fragmented RX
+packets for WCN6750/WCN6855:
 
-Fixes: 1cf7a12e09aa ("nvme: use an xarray to lookup the Commands Supported and Effects log")
-Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+ath11k 17a10040.wifi: invalid return buffer manager 4
+
+This issue arose due to a hardcoded check for HAL_RX_BUF_RBM_SW3_BM
+introduced in 'commit 71c748b5e01e ("ath11k: Fix unexpected return buffer
+manager error for QCA6390")'
+
+For WCN6750 and WCN6855, the return buffer manager ID should be
+HAL_RX_BUF_RBM_SW1_BM. The incorrect conditional check caused fragmented
+packets to be dropped, resulting in the above error log.
+
+Fix this by adding a check for HAL_RX_BUF_RBM_SW1_BM.
+
+Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.2.0.c2-00258-QCAMSLSWPL-1
+Tested-on: WCN6855 hw2.1 WLAN.HSP.1.1-04479-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
+
+Fixes: 71c748b5e01e ("ath11k: Fix unexpected return buffer manager error for QCA6390")
+Signed-off-by: Balaji Pothunoori <quic_bpothuno@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Acked-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20241030114625.2416942-1-quic_bpothuno@quicinc.com
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/dp_rx.c  | 1 +
+ drivers/net/wireless/ath/ath11k/hal_rx.c | 3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 92ffeb6605618..abca395385b2e 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3099,7 +3099,7 @@ int nvme_get_log(struct nvme_ctrl *ctrl, u32 nsid, u8 log_page, u8 lsp, u8 csi,
- static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
- 				struct nvme_effects_log **log)
- {
--	struct nvme_effects_log	*cel = xa_load(&ctrl->cels, csi);
-+	struct nvme_effects_log *old, *cel = xa_load(&ctrl->cels, csi);
- 	int ret;
+diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
+index d01616d06a326..2f6b22708b53f 100644
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -3795,6 +3795,7 @@ int ath11k_dp_process_rx_err(struct ath11k_base *ab, struct napi_struct *napi,
+ 		ath11k_hal_rx_msdu_link_info_get(link_desc_va, &num_msdus, msdu_cookies,
+ 						 &rbm);
+ 		if (rbm != HAL_RX_BUF_RBM_WBM_IDLE_DESC_LIST &&
++		    rbm != HAL_RX_BUF_RBM_SW1_BM &&
+ 		    rbm != HAL_RX_BUF_RBM_SW3_BM) {
+ 			ab->soc_stats.invalid_rbm++;
+ 			ath11k_warn(ab, "invalid return buffer manager %d\n", rbm);
+diff --git a/drivers/net/wireless/ath/ath11k/hal_rx.c b/drivers/net/wireless/ath/ath11k/hal_rx.c
+index 7f39c6fb7408c..d1785e71ffc98 100644
+--- a/drivers/net/wireless/ath/ath11k/hal_rx.c
++++ b/drivers/net/wireless/ath/ath11k/hal_rx.c
+@@ -371,7 +371,8 @@ int ath11k_hal_wbm_desc_parse_err(struct ath11k_base *ab, void *desc,
  
- 	if (cel)
-@@ -3116,7 +3116,11 @@ static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
- 		return ret;
+ 	ret_buf_mgr = FIELD_GET(BUFFER_ADDR_INFO1_RET_BUF_MGR,
+ 				wbm_desc->buf_addr_info.info1);
+-	if (ret_buf_mgr != HAL_RX_BUF_RBM_SW3_BM) {
++	if (ret_buf_mgr != HAL_RX_BUF_RBM_SW1_BM &&
++	    ret_buf_mgr != HAL_RX_BUF_RBM_SW3_BM) {
+ 		ab->soc_stats.invalid_rbm++;
+ 		return -EINVAL;
  	}
- 
--	xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
-+	old = xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
-+	if (xa_is_err(old)) {
-+		kfree(cel);
-+		return xa_err(old);
-+	}
- out:
- 	*log = cel;
- 	return 0;
 -- 
 2.39.5
 
