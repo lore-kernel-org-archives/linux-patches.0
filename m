@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42231C173D;
-	Wed, 19 Feb 2025 09:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FD31BEF77;
+	Wed, 19 Feb 2025 09:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957141; cv=none; b=oYZGdmyUtg+UrlMQEGxsLbNbcpv9uAwfFr4fzv7vVer40eSLAAPG1hnPLFyuwskouYm+b07rq+b891NmYUxVXWafVctM5EXqbLOTv3S1Vimkz0MHntdAIyEZwlFmcw9ecM4gceeMg2DZAvU9fIlfsaypl1z/2lpZwL1dkb60Ppk=
+	t=1739957144; cv=none; b=tnL8Po5skhbdFXerCdORirMnXjVGaN6nm+AAEelPMGLfQO5r9eR5+1lJ1ZKVisBzHLIArekcVVDd293mi8AsZn/b8rhTmpAMJEELar0pTzE4hlpzbK2DD89mOy9Z4Z6py63+PAUD/ozcyr6UydekT5QOXsWOd16SWjZp2H6x6eE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957141; c=relaxed/simple;
-	bh=wi2cF5Cw/H8kJ7sFFjE9jyzi/qv6qAFFRB57JX8UDDM=;
+	s=arc-20240116; t=1739957144; c=relaxed/simple;
+	bh=6NiSsHeo+xskx4Xw/qByjcG6ylA1zU1ECLnSKJQmdf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OjNxJqiYrrPFsK7pYFnRxRLm9qKDXQAuBI3D3VMwMs01ZpIybf1C78ruTC8Su1N7dZbAaBXZR5nLr4HR3DUdlsWJaziLQsE7GKGT/PdSTetLAsTcSRquVNUwn+ZM1odYC5/Hw5ban1HYgpbacTDynI/vHKyiUDkqjmXfPWFaexU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcVxjJ4G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h/+a/sBTn23PMNOKp8jm6Qz+NSvFxHQOCQFlTbr8U4ZNxrbRgmtIZoQnabLfBRftayFriNKznli1x+DX464Eup5K/OliJzyyC8OjQLoBdM5UsdsJa4m7uoNQwkWEtIpNhPpmxyljRCmOLQ7+6MEGsoHfBkk+YzgBSJ9+I9lTn+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wELKlUkk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcVxjJ4G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E767C4CED1;
-	Wed, 19 Feb 2025 09:25:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wELKlUkk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C222C4CED1;
+	Wed, 19 Feb 2025 09:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957140;
-	bh=wi2cF5Cw/H8kJ7sFFjE9jyzi/qv6qAFFRB57JX8UDDM=;
+	s=korg; t=1739957143;
+	bh=6NiSsHeo+xskx4Xw/qByjcG6ylA1zU1ECLnSKJQmdf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PcVxjJ4GHODi0XUoaXV4BA98DBA9k+HEsLs4BWwnaQb6xt0HhckWaqI57XDZEk/pU
-	 3Lrzb9TsJXSMGqpJbsr3MDaq5OGJkWhIvQpxes/LhfEpgdUqtzwwQps2nCGursamkn
-	 oSuQTdOflDp1T/QTQ8QHcixahezkw+1t9x5+MThE=
+	b=wELKlUkkGt86ZO9XrG1BpBtz6HUrmtYTquaJvukWofXVbX/SqsoVLCndXe3IFwBxO
+	 61AvYQYthPBYE9u6OKOEizrPfNUMJdwnHUCPBR0BKCTls/zqQYSIPIXe/+4gIu3sZH
+	 6LD9Wg18MOjNKHYwURvL9BztqghbtUtAqStHzL5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georg Gottleuber <ggo@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 391/578] nvme-pci: Add TUXEDO InfinityFlex to Samsung sleep quirk
-Date: Wed, 19 Feb 2025 09:26:35 +0100
-Message-ID: <20250219082708.406609038@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.1 382/578] dm-crypt: dont update io->sector after kcryptd_crypt_write_io_submit()
+Date: Wed, 19 Feb 2025 09:26:26 +0100
+Message-ID: <20250219082708.043741951@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,37 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georg Gottleuber <ggo@tuxedocomputers.com>
+From: Hou Tao <houtao1@huawei.com>
 
-commit dbf2bb1a1319b7c7d8828905378a6696cca6b0f2 upstream.
+commit 9fdbbdbbc92b1474a87b89f8b964892a63734492 upstream.
 
-On the TUXEDO InfinityFlex, a Samsung 990 Evo NVMe leads to a high power
-consumption in s2idle sleep (4 watts).
+The updates of io->sector are the leftovers when dm-crypt allocated
+pages for partial write request. However, since commit cf2f1abfbd0db
+("dm crypt: don't allocate pages for a partial request"), there is no
+partial request anymore.
 
-This patch applies 'Force No Simple Suspend' quirk to achieve a sleep with
-a lower power consumption, typically around 1.4 watts.
+After the introduction of write request rb-tree, the updates of
+io->sectors may interfere the insertion procedure, because ->sectors of
+these write requests which have already been added in the rb-tree may be
+changed during the insertion of new write request.
 
-Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+Fix it by removing these buggy updates of io->sectors. Considering these
+updates only effect the write request rb-tree, the commit which
+introduces the write request rb-tree is used as the fix tag.
+
+Fixes: b3c5fd305249 ("dm crypt: sort writes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm-crypt.c |   14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3103,7 +3103,8 @@ static unsigned long check_vendor_combin
- 		 * because of high power consumption (> 2 Watt) in s2idle
- 		 * sleep. Only some boards with Intel CPU are affected.
- 		 */
--		if (dmi_match(DMI_BOARD_NAME, "GMxPXxx") ||
-+		if (dmi_match(DMI_BOARD_NAME, "DN50Z-140HC-YD") ||
-+		    dmi_match(DMI_BOARD_NAME, "GMxPXxx") ||
- 		    dmi_match(DMI_BOARD_NAME, "PH4PG31") ||
- 		    dmi_match(DMI_BOARD_NAME, "PH4PRX1_PH6PRX1") ||
- 		    dmi_match(DMI_BOARD_NAME, "PH6PG01_PH6PG71"))
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -2029,7 +2029,6 @@ static void kcryptd_crypt_write_continue
+ 	struct crypt_config *cc = io->cc;
+ 	struct convert_context *ctx = &io->ctx;
+ 	int crypt_finished;
+-	sector_t sector = io->sector;
+ 	blk_status_t r;
+ 
+ 	wait_for_completion(&ctx->restart);
+@@ -2046,10 +2045,8 @@ static void kcryptd_crypt_write_continue
+ 	}
+ 
+ 	/* Encryption was already finished, submit io now */
+-	if (crypt_finished) {
++	if (crypt_finished)
+ 		kcryptd_crypt_write_io_submit(io, 0);
+-		io->sector = sector;
+-	}
+ 
+ 	crypt_dec_pending(io);
+ }
+@@ -2060,14 +2057,13 @@ static void kcryptd_crypt_write_convert(
+ 	struct convert_context *ctx = &io->ctx;
+ 	struct bio *clone;
+ 	int crypt_finished;
+-	sector_t sector = io->sector;
+ 	blk_status_t r;
+ 
+ 	/*
+ 	 * Prevent io from disappearing until this function completes.
+ 	 */
+ 	crypt_inc_pending(io);
+-	crypt_convert_init(cc, ctx, NULL, io->base_bio, sector);
++	crypt_convert_init(cc, ctx, NULL, io->base_bio, io->sector);
+ 
+ 	clone = crypt_alloc_buffer(io, io->base_bio->bi_iter.bi_size);
+ 	if (unlikely(!clone)) {
+@@ -2084,8 +2080,6 @@ static void kcryptd_crypt_write_convert(
+ 		io->ctx.iter_in = clone->bi_iter;
+ 	}
+ 
+-	sector += bio_sectors(clone);
+-
+ 	crypt_inc_pending(io);
+ 	r = crypt_convert(cc, ctx,
+ 			  test_bit(DM_CRYPT_NO_WRITE_WORKQUEUE, &cc->flags), true);
+@@ -2109,10 +2103,8 @@ static void kcryptd_crypt_write_convert(
+ 	}
+ 
+ 	/* Encryption was already finished, submit io now */
+-	if (crypt_finished) {
++	if (crypt_finished)
+ 		kcryptd_crypt_write_io_submit(io, 0);
+-		io->sector = sector;
+-	}
+ 
+ dec:
+ 	crypt_dec_pending(io);
 
 
