@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28C9176ADE;
-	Wed, 19 Feb 2025 09:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60851D88DB;
+	Wed, 19 Feb 2025 09:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957334; cv=none; b=chahE9hSvw1/a1ScWPQqYW0hsOsrQPKP0D8YtNuLbEw4Xlk2aUmfJfx7/Qc97Jka7WM21Us2RvV5kuhuhilg7aAf6S4lHh7hdbAhTk/ZDr97Gjn2G3Q1kVqBo3Ufiou7YYNrw7VWIU6FEEYOfBbGjaGt44HmIJka9sgugjNFcWs=
+	t=1739957336; cv=none; b=MMDSEI+6HpCH29EHYCFemRd1bx94d87pZbSREDuNs+FY4jh2TEFnWEbNWoX/BxhdFjg3xehygVywA33ymD7eD47Y9pwzxHIsNBLDLXRS4bPbMKdY5ZOmrLYKq5Zao0R5mZtTYKBZrjEfPO30XtHqLz4Tqm/o/vyRWOZ3cqVpaRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957334; c=relaxed/simple;
-	bh=rCAWFhlhPQfPjeBg1SLYw/2qmFpWLfg6R2H9Mg8xN6A=;
+	s=arc-20240116; t=1739957336; c=relaxed/simple;
+	bh=uzmmus7CYBAIE+f6BB0oY8hUxc3UM/DZZ7ZkLjhzsNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZFasjuRCvvp99EEMF8qa9NA5wy2JMOXuhRlMDMkCNcTziclexCKc5bXBTMJuxNNWvru+0IJrgjiTGZ+LlnGP9CoxpIxqEi8FvNzfznpWeApgUZgvuVmJX9DdGYpV23zpMhdPS7fdaot2O17dQ0Dnd2SmJMyVAqenL99MI6jC390=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vV3UPKrR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JpiUe8qjfTGFBL1G9u5xefRnuZmC3t/2LnwsjX5LISjs9GcSPRqvIcXL50OixvpSPhnWTZlaiORXqMtskkRGy9EDBJskjE3rLlDRR+miqX9QUmgr+Xe9Ugd2Qa5hQdDrUbgPC4sIw2M0vzBm1MxuTte7zZtK7OTYAnWlKRp3aP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0eq+s4bL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vV3UPKrR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C94CC4CED1;
-	Wed, 19 Feb 2025 09:28:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0eq+s4bL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D394C4CED1;
+	Wed, 19 Feb 2025 09:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957333;
-	bh=rCAWFhlhPQfPjeBg1SLYw/2qmFpWLfg6R2H9Mg8xN6A=;
+	s=korg; t=1739957336;
+	bh=uzmmus7CYBAIE+f6BB0oY8hUxc3UM/DZZ7ZkLjhzsNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vV3UPKrRbF01tHBIyFycQvnTNF6dTH/vLoi2DuieRIvIxYK2mtTAag9+XtUUeWy5l
-	 zW9cYBpqZFOg60gpdc7BxlcqUFl/2Pu3LI/6eaifHyyC52hGy1f45rHk+GvjWfWQe5
-	 RIy+uMO8zoLjffmx7Tl1DKZK2Lc4sB9YBCY8UWO0=
+	b=0eq+s4bLnr0G/PcJErSKqdJN3B4naWV/4ziaZTiGZq2taembfVoNoYLRT4/DGgqRY
+	 Xn/f7XIwh8SG1Mq5lP8NyCRJg0bfOvTNlY++q/ySQAkSuZhVdWqZf8KtFcEVon7Fq+
+	 /M7AWcpIZ7Galta1SHNVXxWsjBSQg7OsSf7NdeRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	David Binderman <dcb314@hotmail.com>,
-	Peng Zhang <zhangpeng.00@bytedance.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Vernon Yang <vernon2gm@gmail.com>,
 	Wei Yang <richard.weiyang@gmail.com>,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 457/578] maple_tree: fix static analyser cppcheck issue
-Date: Wed, 19 Feb 2025 09:27:41 +0100
-Message-ID: <20250219082710.974895684@linuxfoundation.org>
+Subject: [PATCH 6.1 458/578] maple_tree: simplify split calculation
+Date: Wed, 19 Feb 2025 09:27:42 +0100
+Message-ID: <20250219082711.023421388@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -55,68 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liam R. Howlett <Liam.Howlett@oracle.com>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-commit 5729e06c819184b7ba40869c1ad53e1a463040b2 upstream.
+commit 4f6a6bed0bfef4b966f076f33eb4f5547226056a upstream.
 
-Patch series "Maple tree mas_{next,prev}_range() and cleanup", v4.
-
-This patchset contains a number of clean ups to the code to make it more
-usable (next/prev range), the addition of debug output formatting, the
-addition of printing the maple state information in the WARN_ON/BUG_ON
-code.
-
-There is also work done here to keep nodes active during iterations to
-reduce the necessity of re-walking the tree.
-
-Finally, there is a new interface added to move to the next or previous
-range in the tree, even if it is empty.
-
-The organisation of the patches is as follows:
-
-0001-0004 - Small clean ups
-0005-0018 - Additional debug options and WARN_ON/BUG_ON changes
-0019      - Test module __init and __exit addition
-0020-0021 - More functional clean ups
-0022-0026 - Changes to keep nodes active
-0027-0034 - Add new mas_{prev,next}_range()
-0035      - Use new mas_{prev,next}_range() in mmap_region()
+Patch series "simplify split calculation", v3.
 
 
-This patch (of 35):
+This patch (of 3):
 
-Static analyser of the maple tree code noticed that the split variable is
-being used to dereference into an array prior to checking the variable
-itself.  Fix this issue by changing the order of the statement to check
-the variable first.
+The current calculation for splitting nodes tries to enforce a minimum
+span on the leaf nodes.  This code is complex and never worked correctly
+to begin with, due to the min value being passed as 0 for all leaves.
 
-Link: https://lkml.kernel.org/r/20230518145544.1722059-1-Liam.Howlett@oracle.com
-Link: https://lkml.kernel.org/r/20230518145544.1722059-2-Liam.Howlett@oracle.com
-Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Reported-by: David Binderman <dcb314@hotmail.com>
-Reviewed-by: Peng Zhang<zhangpeng.00@bytedance.com>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Vernon Yang <vernon2gm@gmail.com>
-Cc: Wei Yang <richard.weiyang@gmail.com>
+The calculation should just split the data as equally as possible
+between the new nodes.  Note that b_end will be one more than the data,
+so the left side is still favoured in the calculation.
+
+The current code may also lead to a deficient node by not leaving enough
+data for the right side of the split. This issue is also addressed with
+the split calculation change.
+
+[Liam.Howlett@Oracle.com: rephrase the change log]
+Link: https://lkml.kernel.org/r/20241113031616.10530-1-richard.weiyang@gmail.com
+Link: https://lkml.kernel.org/r/20241113031616.10530-2-richard.weiyang@gmail.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ lib/maple_tree.c |   23 ++++++-----------------
+ 1 file changed, 6 insertions(+), 17 deletions(-)
 
 --- a/lib/maple_tree.c
 +++ b/lib/maple_tree.c
-@@ -1935,8 +1935,9 @@ static inline int mab_calc_split(struct
- 		 * causes one node to be deficient.
- 		 * NOTE: mt_min_slots is 1 based, b_end and split are zero.
- 		 */
--		while (((bn->pivot[split] - min) < slot_count - 1) &&
--		       (split < slot_count - 1) && (b_end - split > slot_min))
-+		while ((split < slot_count - 1) &&
-+		       ((bn->pivot[split] - min) < slot_count - 1) &&
-+		       (b_end - split > slot_min))
- 			split++;
+@@ -1890,11 +1890,11 @@ static inline int mab_no_null_split(stru
+  * Return: The first split location.  The middle split is set in @mid_split.
+  */
+ static inline int mab_calc_split(struct ma_state *mas,
+-	 struct maple_big_node *bn, unsigned char *mid_split, unsigned long min)
++	 struct maple_big_node *bn, unsigned char *mid_split)
+ {
+ 	unsigned char b_end = bn->b_end;
+ 	int split = b_end / 2; /* Assume equal split. */
+-	unsigned char slot_min, slot_count = mt_slots[bn->type];
++	unsigned char slot_count = mt_slots[bn->type];
+ 
+ 	/*
+ 	 * To support gap tracking, all NULL entries are kept together and a node cannot
+@@ -1927,18 +1927,7 @@ static inline int mab_calc_split(struct
+ 		split = b_end / 3;
+ 		*mid_split = split * 2;
+ 	} else {
+-		slot_min = mt_min_slots[bn->type];
+-
+ 		*mid_split = 0;
+-		/*
+-		 * Avoid having a range less than the slot count unless it
+-		 * causes one node to be deficient.
+-		 * NOTE: mt_min_slots is 1 based, b_end and split are zero.
+-		 */
+-		while ((split < slot_count - 1) &&
+-		       ((bn->pivot[split] - min) < slot_count - 1) &&
+-		       (b_end - split > slot_min))
+-			split++;
  	}
  
+ 	/* Avoid ending a node on a NULL entry */
+@@ -2664,7 +2653,7 @@ static inline struct maple_enode
+ static inline unsigned char mas_mab_to_node(struct ma_state *mas,
+ 	struct maple_big_node *b_node, struct maple_enode **left,
+ 	struct maple_enode **right, struct maple_enode **middle,
+-	unsigned char *mid_split, unsigned long min)
++	unsigned char *mid_split)
+ {
+ 	unsigned char split = 0;
+ 	unsigned char slot_count = mt_slots[b_node->type];
+@@ -2677,7 +2666,7 @@ static inline unsigned char mas_mab_to_n
+ 	if (b_node->b_end < slot_count) {
+ 		split = b_node->b_end;
+ 	} else {
+-		split = mab_calc_split(mas, b_node, mid_split, min);
++		split = mab_calc_split(mas, b_node, mid_split);
+ 		*right = mas_new_ma_node(mas, b_node);
+ 	}
+ 
+@@ -3076,7 +3065,7 @@ static int mas_spanning_rebalance(struct
+ 		mast->bn->b_end--;
+ 		mast->bn->type = mte_node_type(mast->orig_l->node);
+ 		split = mas_mab_to_node(mas, mast->bn, &left, &right, &middle,
+-					&mid_split, mast->orig_l->min);
++					&mid_split);
+ 		mast_set_split_parents(mast, left, middle, right, split,
+ 				       mid_split);
+ 		mast_cp_to_nodes(mast, left, middle, right, split, mid_split);
+@@ -3591,7 +3580,7 @@ static int mas_split(struct ma_state *ma
+ 		if (mas_push_data(mas, height, &mast, false))
+ 			break;
+ 
+-		split = mab_calc_split(mas, b_node, &mid_split, prev_l_mas.min);
++		split = mab_calc_split(mas, b_node, &mid_split);
+ 		mast_split_data(&mast, mas, split);
+ 		/*
+ 		 * Usually correct, mab_mas_cp in the above call overwrites
 
 
