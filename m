@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2FD1D63E8;
-	Wed, 19 Feb 2025 08:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54081CD213;
+	Wed, 19 Feb 2025 08:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955446; cv=none; b=TIt0L7ooIZbHs1aC14NoUl/A/YzItybqkKlfU3FuBiaZAKM67ubEhS9/GRD6E4+CgP9QldX5u1mmQXpAhV3B2fCgZaJzWU+Vg4ij6rdJh7jhqTQiddzgHqaJpJNHyNvTSDgXgryEB1vrBbHuvwvRcDawtU8Y80q84/wdYCEKq9k=
+	t=1739955449; cv=none; b=g3cbTCiX/EyV0U953sDMvy2QxpfFnnz1pbfIoz0OyqHqkeollcivGw0Cyl0Q6bAk72JiGIXs/5qJOrXXvZIBJXvbEVfpflTJtY/fdhH0P2/vdWR3ZMdthBopCYWLz8GqfHrPfQL11FE85jw05skDGTWr2Ja53bZvcpn6hkq0tc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955446; c=relaxed/simple;
-	bh=lZxn5q7kb6aVLvt+t3M2q0+5NBmw6Yfo0RTDVpaOhMw=;
+	s=arc-20240116; t=1739955449; c=relaxed/simple;
+	bh=keiXZe/JblW9/8pZjkV1xPDkcR6mOv5AEJPC2TsnDzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uCaMq/9DG3lXrK7tEoJVH6nApRNJSuHIVZuKxKBxZ2ASqQgjlcaNXS3+DtFZEBFshGCMWtSo9wQz8rB2Y6b+Pk1SipmNGIGzwlFPp31DfWz5J/VWX1x7hQmLgUdDHYTE0Tuu4ePCt0yC9NXvxjhOqupC4FGN0v8/PVzPjtW0iZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vqvv2ydg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N74R0fCuKYuLz4MVlRm33JXhjw7Jp5J7xVqwc0h/OMWbLNIIzPt5jF1WBaUb1c+W4RHkxqFvS9BpNalbzaKidsUbXLRsoRfyF7QmxpycihFw3lew/6LpDnukPJGGa+0OeZSCqdEiF7iOMIQD4KuW6D7TjfXvZsU8wBMcikPxK60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fWy1aEwa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vqvv2ydg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B462C4CED1;
-	Wed, 19 Feb 2025 08:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWy1aEwa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277ADC4CED1;
+	Wed, 19 Feb 2025 08:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955446;
-	bh=lZxn5q7kb6aVLvt+t3M2q0+5NBmw6Yfo0RTDVpaOhMw=;
+	s=korg; t=1739955449;
+	bh=keiXZe/JblW9/8pZjkV1xPDkcR6mOv5AEJPC2TsnDzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vqvv2ydgkX3ZTWQ7xYhyg34xfN0fKLd7Ac5RQG2LWAK/d7mIgfsEuEUbLArlvUuFU
-	 nfh2+dX3FQZITuPpvS29CUPdEIFZqOI4WE3Am5sZN32o3IZe1xTYqjbZkdWbgLs9UW
-	 eHoEdjgLfW5dh6QBe7kAb1GGMa14GlHtj9R1s4Fk=
+	b=fWy1aEwaNaTapnwbS6q6jucT0EwcYPoHfXLGD0lKT4s6WXbde6YOg3xCT+fyJPhlY
+	 U4/VSNF69zz6hcYy53TUVh4zt0T2fn7yx7XYjn/lK6/a1gU3vaPdzJfIGwBVjq5GoY
+	 zpcEgvdgNBMgAH5DR8/BmL4WbtuV3SfBgoo1Aghc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Rick Macklem <rmacklem@uoguelph.ca>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 001/152] nfsd: clear acl_access/acl_default after releasing them
-Date: Wed, 19 Feb 2025 09:26:54 +0100
-Message-ID: <20250219082550.078346694@linuxfoundation.org>
+	syzbot+6a9624592218c2c5e7aa@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Roopa Prabhu <roopa@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 010/152] vxlan: check vxlan_vnigroup_init() return value
+Date: Wed, 19 Feb 2025 09:27:03 +0100
+Message-ID: <20250219082550.435475211@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -52,110 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 7faf14a7b0366f153284db0ad3347c457ea70136 upstream.
+[ Upstream commit 5805402dcc56241987bca674a1b4da79a249bab7 ]
 
-If getting acl_default fails, acl_access and acl_default will be released
-simultaneously. However, acl_access will still retain a pointer pointing
-to the released posix_acl, which will trigger a WARNING in
-nfs3svc_release_getacl like this:
+vxlan_init() must check vxlan_vnigroup_init() success
+otherwise a crash happens later, spotted by syzbot.
 
-------------[ cut here ]------------
-refcount_t: underflow; use-after-free.
-WARNING: CPU: 26 PID: 3199 at lib/refcount.c:28
-refcount_warn_saturate+0xb5/0x170
-Modules linked in:
-CPU: 26 UID: 0 PID: 3199 Comm: nfsd Not tainted
-6.12.0-rc6-00079-g04ae226af01f-dirty #8
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.16.1-2.fc37 04/01/2014
-RIP: 0010:refcount_warn_saturate+0xb5/0x170
-Code: cc cc 0f b6 1d b3 20 a5 03 80 fb 01 0f 87 65 48 d8 00 83 e3 01 75
-e4 48 c7 c7 c0 3b 9b 85 c6 05 97 20 a5 03 01 e8 fb 3e 30 ff <0f> 0b eb
-cd 0f b6 1d 8a3
-RSP: 0018:ffffc90008637cd8 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff83904fde
-RDX: dffffc0000000000 RSI: 0000000000000008 RDI: ffff88871ed36380
-RBP: ffff888158beeb40 R08: 0000000000000001 R09: fffff520010c6f56
-R10: ffffc90008637ab7 R11: 0000000000000001 R12: 0000000000000001
-R13: ffff888140e77400 R14: ffff888140e77408 R15: ffffffff858b42c0
-FS:  0000000000000000(0000) GS:ffff88871ed00000(0000)
-knlGS:0000000000000000
+Oops: general protection fault, probably for non-canonical address 0xdffffc000000002c: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000160-0x0000000000000167]
+CPU: 0 UID: 0 PID: 7313 Comm: syz-executor147 Not tainted 6.14.0-rc1-syzkaller-00276-g69b54314c975 #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+ RIP: 0010:vxlan_vnigroup_uninit+0x89/0x500 drivers/net/vxlan/vxlan_vnifilter.c:912
+Code: 00 48 8b 44 24 08 4c 8b b0 98 41 00 00 49 8d 86 60 01 00 00 48 89 c2 48 89 44 24 10 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80> 3c 02 00 0f 85 4d 04 00 00 49 8b 86 60 01 00 00 48 ba 00 00 00
+RSP: 0018:ffffc9000cc1eea8 EFLAGS: 00010202
+RAX: dffffc0000000000 RBX: 0000000000000001 RCX: ffffffff8672effb
+RDX: 000000000000002c RSI: ffffffff8672ecb9 RDI: ffff8880461b4f18
+RBP: ffff8880461b4ef4 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000020000
+R13: ffff8880461b0d80 R14: 0000000000000000 R15: dffffc0000000000
+FS:  00007fecfa95d6c0(0000) GS:ffff88806a600000(0000) knlGS:0000000000000000
 CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000562384d32158 CR3: 000000055cc6a000 CR4: 00000000000006f0
+CR2: 00007fecfa95cfb8 CR3: 000000004472c000 CR4: 0000000000352ef0
 DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
 DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
 Call Trace:
  <TASK>
- ? refcount_warn_saturate+0xb5/0x170
- ? __warn+0xa5/0x140
- ? refcount_warn_saturate+0xb5/0x170
- ? report_bug+0x1b1/0x1e0
- ? handle_bug+0x53/0xa0
- ? exc_invalid_op+0x17/0x40
- ? asm_exc_invalid_op+0x1a/0x20
- ? tick_nohz_tick_stopped+0x1e/0x40
- ? refcount_warn_saturate+0xb5/0x170
- ? refcount_warn_saturate+0xb5/0x170
- nfs3svc_release_getacl+0xc9/0xe0
- svc_process_common+0x5db/0xb60
- ? __pfx_svc_process_common+0x10/0x10
- ? __rcu_read_unlock+0x69/0xa0
- ? __pfx_nfsd_dispatch+0x10/0x10
- ? svc_xprt_received+0xa1/0x120
- ? xdr_init_decode+0x11d/0x190
- svc_process+0x2a7/0x330
- svc_handle_xprt+0x69d/0x940
- svc_recv+0x180/0x2d0
- nfsd+0x168/0x200
- ? __pfx_nfsd+0x10/0x10
- kthread+0x1a2/0x1e0
- ? kthread+0xf4/0x1e0
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x34/0x60
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-Kernel panic - not syncing: kernel: panic_on_warn set ...
+  vxlan_uninit+0x1ab/0x200 drivers/net/vxlan/vxlan_core.c:2942
+  unregister_netdevice_many_notify+0x12d6/0x1f30 net/core/dev.c:11824
+  unregister_netdevice_many net/core/dev.c:11866 [inline]
+  unregister_netdevice_queue+0x307/0x3f0 net/core/dev.c:11736
+  register_netdevice+0x1829/0x1eb0 net/core/dev.c:10901
+  __vxlan_dev_create+0x7c6/0xa30 drivers/net/vxlan/vxlan_core.c:3981
+  vxlan_newlink+0xd1/0x130 drivers/net/vxlan/vxlan_core.c:4407
+  rtnl_newlink_create net/core/rtnetlink.c:3795 [inline]
+  __rtnl_newlink net/core/rtnetlink.c:3906 [inline]
 
-Clear acl_access/acl_default after posix_acl_release is called to prevent
-UAF from being triggered.
-
-Fixes: a257cdd0e217 ("[PATCH] NFSD: Add server support for NFSv3 ACLs.")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241107014705.2509463-1-lilingfeng@huaweicloud.com/
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Reviewed-by: Rick Macklem <rmacklem@uoguelph.ca>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
+Reported-by: syzbot+6a9624592218c2c5e7aa@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/67a9d9b4.050a0220.110943.002d.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Roopa Prabhu <roopa@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250210105242.883482-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs2acl.c |    2 ++
- fs/nfsd/nfs3acl.c |    2 ++
- 2 files changed, 4 insertions(+)
+ drivers/net/vxlan/vxlan_core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/nfs2acl.c
-+++ b/fs/nfsd/nfs2acl.c
-@@ -84,6 +84,8 @@ out:
- fail:
- 	posix_acl_release(resp->acl_access);
- 	posix_acl_release(resp->acl_default);
-+	resp->acl_access = NULL;
-+	resp->acl_default = NULL;
- 	goto out;
- }
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index ee02a92338da1..64db3e98a1b66 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2966,8 +2966,11 @@ static int vxlan_init(struct net_device *dev)
+ 	struct vxlan_dev *vxlan = netdev_priv(dev);
+ 	int err;
  
---- a/fs/nfsd/nfs3acl.c
-+++ b/fs/nfsd/nfs3acl.c
-@@ -76,6 +76,8 @@ out:
- fail:
- 	posix_acl_release(resp->acl_access);
- 	posix_acl_release(resp->acl_default);
-+	resp->acl_access = NULL;
-+	resp->acl_default = NULL;
- 	goto out;
- }
+-	if (vxlan->cfg.flags & VXLAN_F_VNIFILTER)
+-		vxlan_vnigroup_init(vxlan);
++	if (vxlan->cfg.flags & VXLAN_F_VNIFILTER) {
++		err = vxlan_vnigroup_init(vxlan);
++		if (err)
++			return err;
++	}
  
+ 	dev->tstats = netdev_alloc_pcpu_stats(struct pcpu_sw_netstats);
+ 	if (!dev->tstats) {
+-- 
+2.39.5
+
 
 
