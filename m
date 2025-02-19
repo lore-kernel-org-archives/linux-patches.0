@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E2B1CAA95;
-	Wed, 19 Feb 2025 09:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167461C4A06;
+	Wed, 19 Feb 2025 09:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956072; cv=none; b=Me17gV/jC4vg3rHCvxHHQ41lbCj1OY8RVM1q6wxlVqp7E6GEDRPSE4eUJKGVEe68vEjZUEe5NXCakxfV22bS7xsZCHLS6hiu+ul7/vv+u2Oq3CvlzVxVOzsLgZ8GkzXTyfQlhUsTP5El2Z4SJ0WZGZbSHcHP1xXVuRUZJ1tkRug=
+	t=1739956075; cv=none; b=F+YYAVU/bwUuKuhVdgTKvomWa5cIb7Dtza9ah5ZtlaCEvF89eFV9yJYZdCiUNIgBFT62ZDhqso+bZAvCuQFR5iWHPJlnFirrPHvynDni8Dy4my/oBs1ttq/YbSauN7kZ9FOJSbN69N5nL837SU3yyEEogztklDG/yV9w5Rqa+e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956072; c=relaxed/simple;
-	bh=H5+spaTVQFN1M8K+6KVRjp63M82RNWLUfwvTA77fOLA=;
+	s=arc-20240116; t=1739956075; c=relaxed/simple;
+	bh=EmCX4x5DFV/DC21EDjs+Fp1JpGwgiUrKZ8kw4YqQ26A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=os9OIE0FBHu9bYP+Jg9zF/DBDNCkfVBJKEcgNqtYAApy7luubL6Wh/CifcnFuF9CezA6B/B68PL4jxqNhP17/5ueBTNozvbYWTI9vhKtEDrWYIlhrsvXPWqLL4uOUoRQo/JE+QXusMY/cXQW3/mBhAQYXL50hoDRpCYxzPMPjaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSr++9A0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BKjtBzscyntlyAfL0nouKx6jZP3D09uiuVWMtawsRlKC0SjTq4t4vMHoPdcHiewxpimV85ZKFXc70UqX1G3Nt0oSoh0o6QOeBYDgWGC8GK6EQWBOVgEDC27dV+xCH3wcdkr+eCU1t25KMiJBRM4oTcs11l+McSmqLf8xu+tt9UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYX/wXPZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSr++9A0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5AAFC4CED1;
-	Wed, 19 Feb 2025 09:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYX/wXPZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9C1C4CED1;
+	Wed, 19 Feb 2025 09:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956072;
-	bh=H5+spaTVQFN1M8K+6KVRjp63M82RNWLUfwvTA77fOLA=;
+	s=korg; t=1739956074;
+	bh=EmCX4x5DFV/DC21EDjs+Fp1JpGwgiUrKZ8kw4YqQ26A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sSr++9A0kGITjTKyJZkFJxNC0v6lxBz21g/G3wsnQNvso5mDdJmpvQvqxRVbRi/RY
-	 ZIbugWSrb+Ogu1S646cIhkzigu+ZgdzPKmpFPKyHqviEz/CbAMS1wRNg3NlW5s5XEZ
-	 ryTSq2SVAwXurc4Y+qaSKfjdCJiRcnpY/61r0UwA=
+	b=gYX/wXPZWWnM673AVGEtCpD6C5rZS359TUAa2LWoZouAVtUuOSBvjayJ6KAi1xaRr
+	 i9aZ2iffU25ZxQUw3niX3b5fta6XLjtF6SCdo4LySk4CkbhnaMkuX25HobLpLDPwtq
+	 px1ZZAnhBmvg4oE18Hq4wwhy/3bs66sc1/Gxn+Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/578] regulator: dt-bindings: mt6315: Drop regulator-compatible property
-Date: Wed, 19 Feb 2025 09:20:59 +0100
-Message-ID: <20250219082655.055751524@linuxfoundation.org>
+Subject: [PATCH 6.1 056/578] ACPI: fan: cleanup resources in the error path of .probe()
+Date: Wed, 19 Feb 2025 09:21:00 +0100
+Message-ID: <20250219082655.094358512@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,60 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 08242719a8af603db54a2a79234a8fe600680105 ]
+[ Upstream commit c759bc8e9046f9812238f506d70f07d3ea4206d4 ]
 
-The "regulator-compatible" property has been deprecated since 2012 in
-commit 13511def87b9 ("regulator: deprecate regulator-compatible DT
-property"), which is so old it's not even mentioned in the converted
-regulator bindings YAML file. It should not have been used for new
-submissions such as the MT6315.
+Call thermal_cooling_device_unregister() and sysfs_remove_link() in the
+error path of acpi_fan_probe() to fix possible memory leak.
 
-Drop the property from the MT6315 regulator binding and its examples.
+This bug was found by an experimental static analysis tool that I am
+developing.
 
-Fixes: 977fb5b58469 ("regulator: document binding for MT6315 regulator")
-Fixes: 6d435a94ba5b ("regulator: mt6315: Enforce regulator-compatible, not name")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20241211052427.4178367-2-wenst@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 05a83d972293 ("ACPI: register ACPI Fan as generic thermal cooling device")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Link: https://patch.msgid.link/20241211032812.210164-1-joe@pf.is.s.u-tokyo.ac.jp
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/regulator/mt6315-regulator.yaml     | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/acpi/fan_core.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml b/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
-index 364b58730be2b..796c09f24f3e6 100644
---- a/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
-+++ b/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
-@@ -31,10 +31,6 @@ properties:
-         $ref: "regulator.yaml#"
-         unevaluatedProperties: false
+diff --git a/drivers/acpi/fan_core.c b/drivers/acpi/fan_core.c
+index 52a0b303b70aa..36907331a6691 100644
+--- a/drivers/acpi/fan_core.c
++++ b/drivers/acpi/fan_core.c
+@@ -366,19 +366,25 @@ static int acpi_fan_probe(struct platform_device *pdev)
+ 	result = sysfs_create_link(&pdev->dev.kobj,
+ 				   &cdev->device.kobj,
+ 				   "thermal_cooling");
+-	if (result)
++	if (result) {
+ 		dev_err(&pdev->dev, "Failed to create sysfs link 'thermal_cooling'\n");
++		goto err_unregister;
++	}
  
--        properties:
--          regulator-compatible:
--            pattern: "^vbuck[1-4]$"
--
-     additionalProperties: false
+ 	result = sysfs_create_link(&cdev->device.kobj,
+ 				   &pdev->dev.kobj,
+ 				   "device");
+ 	if (result) {
+ 		dev_err(&pdev->dev, "Failed to create sysfs link 'device'\n");
+-		goto err_end;
++		goto err_remove_link;
+ 	}
  
- required:
-@@ -52,7 +48,6 @@ examples:
+ 	return 0;
  
-       regulators {
-         vbuck1 {
--          regulator-compatible = "vbuck1";
-           regulator-min-microvolt = <300000>;
-           regulator-max-microvolt = <1193750>;
-           regulator-enable-ramp-delay = <256>;
-@@ -60,7 +55,6 @@ examples:
-         };
- 
-         vbuck3 {
--          regulator-compatible = "vbuck3";
-           regulator-min-microvolt = <300000>;
-           regulator-max-microvolt = <1193750>;
-           regulator-enable-ramp-delay = <256>;
++err_remove_link:
++	sysfs_remove_link(&pdev->dev.kobj, "thermal_cooling");
++err_unregister:
++	thermal_cooling_device_unregister(cdev);
+ err_end:
+ 	if (fan->acpi4)
+ 		acpi_fan_delete_attributes(device);
 -- 
 2.39.5
 
