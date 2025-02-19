@@ -1,123 +1,111 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009911DED55
-	for <patches@lists.linux.dev>; Wed, 19 Feb 2025 15:15:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3E31F8BC9
+	for <patches@lists.linux.dev>; Wed, 19 Feb 2025 15:43:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739978149; cv=none; b=RceaK3dxCNAvjmSzbFXCbsfKTU0TC2olr1NLEdJDH17CIWoKtr8msqJOvY45913Vz8mwazxur++71cPEBpwE0n/9Vj6GfG2zRvg3drD5O/3FTmKVc63cTucrpiwX+pIycxFRAe//7BUK6Gy/9YPxkdLhOcduKk1n1r3XaxMDCyI=
+	t=1739979840; cv=none; b=DidU+Oz9Lb0NLnL3SgZA4wqT++PGy3AHtKswwNYAD3YVgc8XF2cMhE9mlxBcFEn0YaDRNgtfLQzUuA0f7chLUh+iRbdfzv8xhg4gnExYuUnPd2SrDMUyjhiXH6VN6vQ1SEdONlFZjLH3Ej6qeGOwdd7QyPNaWVCmdo97+H+1r1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739978149; c=relaxed/simple;
-	bh=Iv6t7FRn2B5grw2+MtJh7t4h4IagAcD/o0AdA80NfQU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=T7CvM/sAUFdIjXLVvfqKdC3+ZavjrF1oGQ9n5dPwVQXf4zrO3jUejGVmnH/9r/J1OGpMRgPJQynhYKsoEbcHdMLk3JFNb9M3LQuB70QB1gA48TkXLmkjpqlcbpALnDZvSqqgCmnj6IOMFb/mZDp2PyB0mPzqMrirLw4x+mX9Elo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EaFUlCWg; arc=none smtp.client-ip=209.85.219.45
+	s=arc-20240116; t=1739979840; c=relaxed/simple;
+	bh=YNmYlTClH6f57hMX0irzBAGNNqToOG6S23UwEJ2SIOI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fmb/KGyEsxB0TT2a3tDM3cXCyomjCarv4dA9dzl0FuHY1afKCLUJLje6GIMDYlY5kz4YT5W7OwX4Y0bOny9mwLfoXstMVYCTLIB9jwLmXYPyBDgNbHyDRQ4LIcuHU6NA3k6rZB5NpCJ7ugK39y1H+calh9Jrjk4LPjTGUGYfkwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TUadXWKP; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EaFUlCWg"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6e1b11859a7so32923366d6.1
-        for <patches@lists.linux.dev>; Wed, 19 Feb 2025 07:15:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TUadXWKP"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-abbdc4a0b5aso125848366b.0
+        for <patches@lists.linux.dev>; Wed, 19 Feb 2025 07:43:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739978147; x=1740582947; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=i4BufmELc/H5oLk6Se7bfRixYeydt1UGAVr8rJzEKPM=;
-        b=EaFUlCWg9Yw/FNkP1kBnJgYiChWn8yw0sL3h45Vm/tlzLnYe8+olZBsYdhTKq5UMO2
-         SngcNZAeUPX3CNL137XufDdRSd9cjFKgKX+nZ5hbcR5Slj5VP4JJ+Ye/DEi/uC99Ebmp
-         WjiEdE+UBwOaLm7UPHPcz7x9gJl6D9uAKPkmYK4xaUr4xmX935on8q71xkJFVXeyIgeh
-         89YYfGj6cDC6fKubALATWN2sHOrW6/Dfd2MDHYJIzfR0qrgsqaKYPXY6/z/H/IpD39vL
-         FzKkGRYgZApV2sUyP3CVQaSbsM7JcNXcN8L9Cww7tMy2Ly4+pCX2D3gLFqHCP5vg77jK
-         PbpA==
+        d=linaro.org; s=google; t=1739979837; x=1740584637; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ztTcSqiM5jchwSh7zNDJUJXvpA9bZcVb5dRh9uYh8nc=;
+        b=TUadXWKPQpM4iSDQLZVDnJhaiOq41EYMVw82mDePxzNDXmDLyPygfc2Kk8QOcsKIHC
+         jtCfjj9DuXBQvDTIqw2igP46x7t83hIXAcSpCQ5p09UBnqVilEvEy9aEyiNBnJW71pMg
+         3OrzTlZ2d6bI473xoqGk78iSVFPsn6NB/nYOH6a+bCfhPGlW7hdT7sZQ7NRca123boKA
+         2OtdVi5aBtnJwGr/C+2cw5uy7s4/CPgyfM77saERy2x+c1HmANBSwMsWje1l/S/wRy2w
+         9b6M8ywFOSFV9j0FFd30ByARJxs/XHbbbo2DhQG8lGrsAoT2/u90FWEL4hLqc4Tcycyr
+         eiQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739978147; x=1740582947;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i4BufmELc/H5oLk6Se7bfRixYeydt1UGAVr8rJzEKPM=;
-        b=uIhW3GykkS0UMuwyo2Egy0LKOxr3YLnkdQ2IzMQTJXdTwkb8ApczlMNvpQmnQmCD7u
-         ip8FLT9t+tVdj5L2GURNt1rMSayZgeVvL4mUglfiFpcjMwaudIijU1+MfR6kIxWi/CkW
-         WZfnrgP95XxTyExXGooYr7Ki3X9zABoUGZSBF2ocafLtS2KXR0Ds9z0nFAqriJJQe/rJ
-         Xs1hOmNLSMejPGqNawe4B5hhf9RKnbbqho0SvpzkY7LRT9T8JOBMiJx/wzM6ghckfndk
-         4MiYgB/3JXrFD7tOH/wUR5Kq9kVPbKAcwblK6xeHiRqojbz/sNmTDiFIwFdeNXrSeRRr
-         rv7w==
-X-Forwarded-Encrypted: i=1; AJvYcCUQ8yC8w+4ugFKsWavD45jCkaF3T/vaAom/HJ8KIyrkrtQHY4Cm1E2hF12RfUT9EwxQHac2xIy+@lists.linux.dev
-X-Gm-Message-State: AOJu0YzN13RJIpb1ZGsXEVmuwZQHsW3uVOTxbcasI3YItwia+DqrPTbe
-	hUYPLCrQRv/u+r3irzRnBEsaaQXjpizSxqq0Zbr8EEsFbzLnCOdJG5pKoKIuRGoObJOvglHIsD+
-	jrZLZAZPkvar15ebouoo9PQGpMFsMKlGIAwvlBw==
-X-Gm-Gg: ASbGnctJA4r8jARKBZqgLPE3qmOfqjrmVYI4DXArM6o8dgCvviO/PdOSPEOpPHzG4mW
-	bE1o6Wbu4cqPdckw8PVzHsyyo3YaAYdkFczU0H0weZfwMDHdgWUxlpGzMHQ76j1JbRTG2QiS4ml
-	w=
-X-Google-Smtp-Source: AGHT+IFOL53hLpR9huwVKcdEp9S5ol3K22XXCd3/mcd/L2bQqRKMnRbCt0AScL5oNtTya9R/VDI/ycGal6VHuQEUFVs=
-X-Received: by 2002:a05:6214:1d2c:b0:6e6:5d61:4f01 with SMTP id
- 6a1803df08f44-6e6974fc658mr68832166d6.8.1739978146707; Wed, 19 Feb 2025
- 07:15:46 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739979837; x=1740584637;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ztTcSqiM5jchwSh7zNDJUJXvpA9bZcVb5dRh9uYh8nc=;
+        b=ZoUmC9SPoMr9xAkg7zR0LxDBH7MFYWohZw6/qCNc55csX5+VbBy9mrHcKPhV5HbPw9
+         zvY5WDefbwQaBv3C+UwAkEPfXoFv6Cb62QE+nmteUvaK4NJ0XI9oOdWW1srqtiCZ32QZ
+         8rcL2sEiEbzXkm0IyjTbVJEsNp93q3j7Y8a8DQmR4Fpb5vVZSphMN0J4tHIOw8lGEm7e
+         +cD9IvV/WsDYD9H7y3L+vJZLK1e71o6F0O5IrrnIyVBp0beQWFgyHr+QopymyB7y54My
+         ckEU6tBW3Swi6pqfWxZzms68ewkzNHVXedsXfyKfFappeyrTZeez9w9vw5B4XhHK1ypB
+         svxg==
+X-Forwarded-Encrypted: i=1; AJvYcCX1u14bQvel1U8NGGstXQKw+PS19NyHQVe6dJ/1gpmKLoBUtJDPGATtN7j7UupLAdTsZeAE9NHZ@lists.linux.dev
+X-Gm-Message-State: AOJu0YwjY8/1RYie+G9Fr0Swa8IZnWJEdtCv4iw9f0Bhc0uq5qKvBbYx
+	e2U/E0j6aL1G2M4ywtVSJebeYkh5h8gn4amoVfGC7UHXOL2YUtza8ZHqB9sx+Hk=
+X-Gm-Gg: ASbGncsxB8c5XBy83My1Z9EhTfclzn3FPZ5+tNb5SXz/0Rf+doRyZWf/Qy9Ep+EYjnr
+	GGQ5RCPYpUO31DszifemB0PHcEi0PemoEYWPmJuqQ6DYVMno+41kxJE7sWszf+AzNoUHkw84DML
+	1lUA9WdUn2E4AaEJZVe+fnY11XwKPn0Xp1h2RaqsMm0XRVssG8F6R6BeE6IcLArpY8kkg0ZvLk5
+	QuE84khN9u3QMWMWDUHVCmlx9mWD4NKzqF8YlbdVUU/eGJS2TJltNTNWLu/hY4Eum2+YcOrKHVp
+	r1BY31Ca6dFaahRnE1c5
+X-Google-Smtp-Source: AGHT+IEuAZ/31Yw+onuB6dX7P6MBrwUPKEqWPMc6/GLwGLwgBLIZWvMyIkebqkSIVitXPRtyLX0fJg==
+X-Received: by 2002:a17:907:d307:b0:abb:aa8f:c9cd with SMTP id a640c23a62f3a-abbcc7f2ab3mr419789166b.28.1739979836924;
+        Wed, 19 Feb 2025 07:43:56 -0800 (PST)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-abbaa56026fsm491684066b.113.2025.02.19.07.43.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2025 07:43:56 -0800 (PST)
+Date: Wed, 19 Feb 2025 18:43:52 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Catalin Marinas <catalin.marinas@arm.com>,
+	Yang Shi <yang@os.amperecomputing.com>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+	Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+	linux-fsdevel@vger.kernel.org, linux-mm <linux-mm@kvack.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>, willy@infradead.org,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Yang Shi <yang@os.amperecomputing.com>,
+	David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH 6.6 000/389] 6.6.76-rc2 review
+Message-ID: <b44dc8f6-7abf-4168-b96d-54f1562008e6@stanley.mountain>
+References: <20250206155234.095034647@linuxfoundation.org>
+ <CA+G9fYvKzV=jo9AmKH2tJeLr0W8xyjxuVO-P+ZEBdou6C=mKUw@mail.gmail.com>
+ <CA+G9fYtqBxt+JwSLCcVBchh94GVRhbo9rTP26ceJ=sf4MDo61Q@mail.gmail.com>
+ <Z7Xj-zIe-Sa1syG7@arm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250215075701.840225877@linuxfoundation.org> <CA+G9fYsBu8DOLEDQoGrdZmjwZKvz72tMmrVPnQSJLNMbefYymw@mail.gmail.com>
-In-Reply-To: <CA+G9fYsBu8DOLEDQoGrdZmjwZKvz72tMmrVPnQSJLNMbefYymw@mail.gmail.com>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 19 Feb 2025 20:45:34 +0530
-X-Gm-Features: AWEUYZmBriKaF0g7ZN6AKPL4WUNipNS0LvWaItl7Uel4aGCuiaCeYdtgGR_kvUY
-Message-ID: <CA+G9fYugvbR5jJrOUHd==_h2MXKDfVjivRnaXxvwWL_dzBXdGw@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/418] 6.12.14-rc3 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z7Xj-zIe-Sa1syG7@arm.com>
 
-On Mon, 17 Feb 2025 at 13:08, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
->
-> On Sat, 15 Feb 2025 at 13:29, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.12.14 release.
-> > There are 418 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Mon, 17 Feb 2025 07:52:41 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.14-rc3.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
->
-> Regression on qemu-arm64, qemu-armv7 and qemu-x86-64 on 6.12.14-rc3
-> We will investigate this and get back to you.
->
-> Test regression: arm64, arm, x86 selftests: memfd: run_fuse_test.sh
->
-> * fvp-aemva, kselftest-memfd
->   - memfd_run_fuse_test_sh
-> * qemu-armv7, kselftest-memfd
->   - memfd_run_fuse_test_sh
-> * qemu-arm64, kselftest-memfd
->   - memfd_run_fuse_test_sh
-> * qemu-x86_64, kselftest-memfd
->   - memfd_run_fuse_test_sh
->
-> # Test log
-> selftests: memfd: run_fuse_test.sh
-> ./fuse_mnt: error while loading shared libraries: libfuse.so.2: cannot
-> open shared object file: No such file or directory
-> not ok 2 selftests: memfd: run_fuse_test.sh  exit=127
+Hi Catalin and Yang Shi,
 
-We are installing libfuse2 in our rootfs to fix this at our end.
+What's happening is that we backport the latest kselftests and run
+them on the old kernels.  This is a supported thing so kselftests
+are supposed to be able to handle that.
 
-- Naresh
+So we need to modify the testing/selftests/arm64/mte/check_hugetlb_options.c
+to check if the feature is present and disable the test for older
+kernels.
+
+This is not an issue with the stable kernel it's an issue with the
+new selftest.
+
+regards,
+dan carpenter
+
