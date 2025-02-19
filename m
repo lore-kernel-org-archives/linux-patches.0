@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D05A1C701E;
-	Wed, 19 Feb 2025 09:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10771CAA8E;
+	Wed, 19 Feb 2025 09:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955845; cv=none; b=sqedjEHLDF4YM1DpBI1B68UskZtJZrK509slWbIrO1Ku/5R9RQfY0ZCnBTrugALgwXEB1/Y8KaJpGHlQvQjUXFA6k1QBPlWZwvGEevUXsvoK2a4oNhk5CJaRMN9gstN1oudbcW4z0EGOp+fJaH3cfkljiyn/fTPaG/B2vu2AHf8=
+	t=1739955848; cv=none; b=hjoxyd+3JmCWxE7E0KqcPfCTnqyS6dZhAovJAXVpS4D//+FvLRP80u0wlFp9zsSguLF9enQ9WjfAWckAsQ+tFeu9lLO/Lj5a/K/olyKeBw4QJ3U/8b4sgLrRxRYClF671KPxPGkI+6nEi6TPzFHNHhb0wtMPQuSg/NEIfc0S0o8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955845; c=relaxed/simple;
-	bh=mJcBgy63Z1X/vF6rYz+qkzZ2YPwKhJEN7ZPxnheDqqY=;
+	s=arc-20240116; t=1739955848; c=relaxed/simple;
+	bh=cVtC4dihLgK0nl9aj02bZvwtn0XuM9z8j8lL60p+Jyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHvzBGCqMd4yo24Vb0HHBGJzdEZJNVZUHdviW71Lu4TZ0ERYPPu91K0R9pcwrA0zmRMOQNPVYWjuOU1+iuBig+KCJlyJ9zXsYfd3xf6sK+P3mUok2jGgijzPx6MAt2pO5RMtIuPA6zxWC8OG1FxUppNI3vYkfnutDSRYxq3ntPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHnvCeFA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ppc9PtEtQCxMukdlK9SsC98HaY1a7M5f2bSY6z9QZPRLrMPYd6/CtDLPKbyOpHv6t9uMKsxOsIXdqR4nPPLDqtGVghPbaAxou5vKe/suNO0eyRdIVGQgvhQLQ2m9slWULwvtk7CcxGMKSt2enrSXAhdmhj/+99/vEeD0754Ujp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTw/WHgw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHnvCeFA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E92EC4CED1;
-	Wed, 19 Feb 2025 09:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTw/WHgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E8DC4CED1;
+	Wed, 19 Feb 2025 09:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955845;
-	bh=mJcBgy63Z1X/vF6rYz+qkzZ2YPwKhJEN7ZPxnheDqqY=;
+	s=korg; t=1739955848;
+	bh=cVtC4dihLgK0nl9aj02bZvwtn0XuM9z8j8lL60p+Jyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHnvCeFA3bWDhyTotnZ8ui/TqFUj0iBBjD/5bD0Cq6jgWrcc26LNInTrx2lIEFpAy
-	 /jmTKJ40kpzeae5ppPn5J85XBEfjbQL8CiwHD8fZ/uSsswVAhtrrwMdO8FMfi5OYTh
-	 Ar5eSZEWfM1gKCtAk0YCHrf9k/hGbi+tvhWYnEbI=
+	b=uTw/WHgwhHdalx6m0U2qsgS5+PX/PtyEHgjqyLQZJ8Dy9Y0gMPXI2QzFH71gRHECi
+	 crmtn5ljOpQuvPEW68ud8djAo0zoZHakRrfZaP98vkpZovRuyFUyN8Dop1USjsc9qW
+	 dpWc/zE2MyJjbOpLpyVokg84fO7UfFvjAf1zlNIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/152] net: add dev_net_rcu() helper
-Date: Wed, 19 Feb 2025 09:28:34 +0100
-Message-ID: <20250219082554.054298041@linuxfoundation.org>
+Subject: [PATCH 6.6 102/152] ipv4: use RCU protection in ipv4_default_advmss()
+Date: Wed, 19 Feb 2025 09:28:35 +0100
+Message-ID: <20250219082554.094610438@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -54,58 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 482ad2a4ace2740ca0ff1cbc8f3c7f862f3ab507 ]
+[ Upstream commit 71b8471c93fa0bcab911fcb65da1eb6c4f5f735f ]
 
-dev->nd_net can change, readers should either
-use rcu_read_lock() or RTNL.
+ipv4_default_advmss() must use RCU protection to make
+sure the net structure it reads does not disappear.
 
-We currently use a generic helper, dev_net() with
-no debugging support. We probably have many hidden bugs.
-
-Add dev_net_rcu() helper for callers using rcu_read_lock()
-protection.
-
+Fixes: 2e9589ff809e ("ipv4: Namespaceify min_adv_mss sysctl knob")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250205155120.1676781-2-edumazet@google.com
+Link: https://patch.msgid.link/20250205155120.1676781-5-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 71b8471c93fa ("ipv4: use RCU protection in ipv4_default_advmss()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h   | 6 ++++++
- include/net/net_namespace.h | 2 +-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ net/ipv4/route.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 8b5121eb8757e..95ee88dfe0b9c 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -2593,6 +2593,12 @@ struct net *dev_net(const struct net_device *dev)
- 	return read_pnet(&dev->nd_net);
- }
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 61fc2166a870e..15cf2949ce951 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1306,10 +1306,15 @@ static void set_class_tag(struct rtable *rt, u32 tag)
  
-+static inline
-+struct net *dev_net_rcu(const struct net_device *dev)
-+{
-+	return read_pnet_rcu(&dev->nd_net);
-+}
+ static unsigned int ipv4_default_advmss(const struct dst_entry *dst)
+ {
+-	struct net *net = dev_net(dst->dev);
+ 	unsigned int header_size = sizeof(struct tcphdr) + sizeof(struct iphdr);
+-	unsigned int advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
+-				    net->ipv4.ip_rt_min_advmss);
++	unsigned int advmss;
++	struct net *net;
 +
- static inline
- void dev_net_set(struct net_device *dev, struct net *net)
- {
-diff --git a/include/net/net_namespace.h b/include/net/net_namespace.h
-index b767bdcd9e122..ce3f84c6eb8eb 100644
---- a/include/net/net_namespace.h
-+++ b/include/net/net_namespace.h
-@@ -389,7 +389,7 @@ static inline struct net *read_pnet(const possible_net_t *pnet)
- #endif
- }
++	rcu_read_lock();
++	net = dev_net_rcu(dst->dev);
++	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
++				   net->ipv4.ip_rt_min_advmss);
++	rcu_read_unlock();
  
--static inline struct net *read_pnet_rcu(possible_net_t *pnet)
-+static inline struct net *read_pnet_rcu(const possible_net_t *pnet)
- {
- #ifdef CONFIG_NET_NS
- 	return rcu_dereference(pnet->net);
+ 	return min(advmss, IPV4_MAX_PMTU - header_size);
+ }
 -- 
 2.39.5
 
