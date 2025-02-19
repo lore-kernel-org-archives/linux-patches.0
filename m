@@ -1,226 +1,155 @@
-Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16AF286291
-	for <patches@lists.linux.dev>; Wed, 19 Feb 2025 11:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB191DF74C
+	for <patches@lists.linux.dev>; Wed, 19 Feb 2025 11:57:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739965595; cv=none; b=KJDONbIOxCPULYWisb6aHg80GYMup7tErAelEMDWsdAQOF83Ox6+Yi9O0loa5ZwKqiTyBSsLx1LixnxRs5XPjgahlooAeykmtsRuxzup6B4BVvSBOTzOxzum+ycmRieUHEd10sQxjQQlud4pnRzEjt6/wBZWcAPh85dVJR2Mh5k=
+	t=1739966224; cv=none; b=kJ2nJj2YVmn7LM+zGzCGDumVHfgog1VaPCuPMd0xWmkKxdbe7+x3UNYY4qUXYC+0vCA+7ACWt8afUY/DwvpVXqIoBbSTl0HMes3pnya8Gr8NeiDL2fvpIlvcjs14hMeh7E9wSno697kLxG8rHcvRUarWKTOJxox0zvxzZFaqU1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739965595; c=relaxed/simple;
-	bh=W5u1FrXnUB5o2ySGCDV+bt2qhFs4I8vgtzJs7ugYWFA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tyKSOFWjKvEApxm7FdMzakDPhbDLUS7+GSSRUaYTI0s7vcyfV++cxd/VZ0yWY6OPHVnOg8vZCxLQKaHK8OVuvIqbfvgu0pHvj+fgb06m7z8jffH5UHHRjseO4pw3PF0Zv4ul4ZkgPFNtRWWH1YE2B3UZftIDs9U4ThcZoAyXnB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n2DgwnBa; arc=none smtp.client-ip=209.85.217.41
+	s=arc-20240116; t=1739966224; c=relaxed/simple;
+	bh=6RY7FVDmjzHQ80JIOPX5CPjs33fql1if6bYOaBzH3d0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M1YpDbqMtvYiaPuT3kYxYRQ3/T3Rg32jew26p9rekwh2nSV8sFnI+IFvoR7zevsUuE36bNStsfEq691iwOGi5y8dk6GYpTrhRi1OyDreQvK7n3ZRwTxrMX6sAiIgg+sf7IJiYD9fZpQ233bFoiiW6aGTrr8gB3QZHGmyEMXFHlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Xgm36uwd; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n2DgwnBa"
-Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-4bd3a8b88f3so2648979137.0
-        for <patches@lists.linux.dev>; Wed, 19 Feb 2025 03:46:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xgm36uwd"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43932b9b09aso72508135e9.3
+        for <patches@lists.linux.dev>; Wed, 19 Feb 2025 03:57:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1739965592; x=1740570392; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9HAi+JPAWVvmwhTEypy4+thacQq13MfYR6lEe+X0Q8c=;
-        b=n2DgwnBad+lRdy3WT8Qg3S4SKQFv+Dz5smOHlESUm34qGHUYv/tDBeMs0dKvrMm9gE
-         Dt3fiLsMp6S5aUjLnnKIsoU1M3VxE/Ttjutm+IOTupo4v7z8mzqAVvXAF3s1SsqsNMat
-         id9OBhaAyD9ybEvNlVYJjr/RyyBQ6SoLuHAXjCd/NUspl1mI0hWp8DKi3oevWfVAwfy+
-         0jeLd0QDAVdQS1Y74SuRQWKHJtIVcIansSu5J05+VWH/Y6wXjnpZ0tkvhw4hfRHLWo/r
-         r7qoBrcdITy2+Y9W8walgjmPBBSqRhLRSv9R/9ux9pzGzPizxKYBzHwoZUcqCY5AoySj
-         SKnA==
+        d=linaro.org; s=google; t=1739966221; x=1740571021; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=okn6O09si7kBE/1dHlS71dUjErVE7LOWp8T65eAQeJw=;
+        b=Xgm36uwd7v2jZTnU75gAClvZKmN/nODOiQQ/igenn2mQ6j2bIw3vyWryR8r6x3WQlt
+         2YKSVzdnVsKvJsJDLctimnUdnCVWa2sPIkxD/eflOo66AUEPVoX/PehoU15enIZZv8dP
+         7Sqt/bskrnG7Tj4irxn7C62AzzT6/0OMfE82PUA9xWG1fd1zU3qIyD52oyLQzokKrMsp
+         PvHRGFi/goOkZghTwJanF5DMHSA76o0GpXdUgma0abLllqkbQkKQESS9dkOzswxLtLpJ
+         9ZnT88OA3MOKAWlPHqnGutpkGLPCKXRZuUlz+GLy3T7/JmO6Y7iH//qx6Shd/PW8THGB
+         CswQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739965592; x=1740570392;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9HAi+JPAWVvmwhTEypy4+thacQq13MfYR6lEe+X0Q8c=;
-        b=juo4OuamJ5FSPtim3rJ5H1izx+vgW2jCOersZDBO9N1MsXwL2KUqUyj+yXkmGqQc5S
-         0Z6fxontLMVMKo8UoUBKiEOEREOw+SAQsg8rLPRvSP5I+PEUm8YqrGfli0daijZ4bwYr
-         21Y0NJtaWMMjSY6KNNTiYGjUFKklCho8JyqIHYRApBcQMp6OW8lDKuzL0S+Fh0ZtiPGD
-         hktLKIe2L8loEUh4OceymWoQpBIiOSAk/4xts00Ler2LUzeHgoaZuLJZbHjzF1/CP+Fz
-         on8VFQju+Xs1ecOEvUHBOvyjfn9uUH9SrnU5ak/kJ9i3uiltoNahIQ0o0OVmsUp6/m8m
-         Eryw==
-X-Forwarded-Encrypted: i=1; AJvYcCU9J+rnTUh0as3wBMCoF9KxpBIi1R9tUTwKFJJlNfC0hJdUzXDKc7NJrR5Pg0Jy8iw77DUAUuAq@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx80sNiiqZp7jWS5R4Zo9Zyk4o8GBvLUvxrdcgV05kqvRh70wvW
-	lAm9H+EmEDRfYALHus12DiuyC0Cgq7fiaogKuJCxt6TykyhzDkf1ALZZhLjCQQmheJZGAc+FNpM
-	Dzh5PBFnzC/S/vYQwv+6yoNNatfKy07+IRlNlJQ==
-X-Gm-Gg: ASbGnctdYMkUG7J/dXWM7QaT7HHoi/riE19C/h4p9w31mwBiiNiB9XszltAHP6+LXNF
-	DGbW/cBIESDgExy0InCG2Kj1U1hvhc6Oq54QZhtpEdF79bczw4GJMhAUtn33vkzp0ReTV1mpx9P
-	M=
-X-Google-Smtp-Source: AGHT+IEZMwel+bdv06rxq65I3rJQXcMsB1FE/5DSKjDmaNs3ziyhRih3YYHUPsKR/IZQx53GRqU+Jzw+0+WRrQS8RNc=
-X-Received: by 2002:a05:6102:3f9e:b0:4bc:de7e:415d with SMTP id
- ada2fe7eead31-4be85c05531mr1674046137.13.1739965591759; Wed, 19 Feb 2025
- 03:46:31 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739966221; x=1740571021;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=okn6O09si7kBE/1dHlS71dUjErVE7LOWp8T65eAQeJw=;
+        b=ovAA5lEIcHJj0LsgiwCPl8zuyV/DYdCm1Q2GnBz08AicfR3bpJ6bSQQ5q3xHi8Btkm
+         aK3Mk1DKYMAyavaRYidZcPwFN8w5hy4uYGeb5BUVFRt7SqtV12Xx+V5Cli2fDll2cmj4
+         yXWDdoRX4ZKzjSUPtPGHNkECaX8rYEimF0vQbMQVbHy6VLTVqKwVCl1QlBqEAO5PGlm+
+         iPPFA4dLEl2Sw/O0HlghiEbo+Udw+UN9RLzA8vjrUSdfBwn4QltITUsxvfrowFERaN5C
+         /gBViDWmiyyW0bylOt5/2d+P5Zov/BHKh2ltis7zQkQb1p6cyATG/MTdiovN61s0O1UB
+         Lo/A==
+X-Forwarded-Encrypted: i=1; AJvYcCVakRc0UbszglQPQ0Z2c8YhfaKZA3esiM/yPYgolpsM83WnkMK2ddzsi7Qhbk5yWjzYNaEwC/6e@lists.linux.dev
+X-Gm-Message-State: AOJu0YwePg5URXXNuJI2+ukQGIZldt0j/pDpmmECzD7nwmk2UDsZ1zed
+	kvtmjvukqAnX7FIp6ABnH2JowLQAel6hBe5xrbJoBrb2QZwB28Ep/8VT2Bc97zw=
+X-Gm-Gg: ASbGncuIXd7ElVIt9qNSaMitRDMnTHuxGMZEaU4fuoLuBuNf8nQnyhdF6IEHZYjhZcz
+	Kvk3qy6+yzQdZcc0uT1KXWCUMH+/8Kc1OVvua8JLtGqiulhCzBO2vF1UZ4WdtkjDQclFiVtUTZH
+	9XgdLsn/0IGt1ZrJe0E9EACrROvLm4nixMMphZLsiJMe4N+/Bg7lXbefrDXJAFMGPz/NQ8X/r5O
+	JZ7Dc/tc2/fpqeF8+/uylPGf/UKhKrJCYnMhwy5LxdhFx+n1wbYjN636Tbp2bu45jqD7f1N6l3J
+	lTxTLm69Gr6XxA==
+X-Google-Smtp-Source: AGHT+IHSWNh//eVPg2Iw3nDUVl0/mWY9Z+uXIwGFBr+HZ53WHNcQN3v6J5LnzFUh/oHgFMghQ7chOw==
+X-Received: by 2002:a05:600c:19c7:b0:439:9b80:ca6f with SMTP id 5b1f17b1804b1-4399b80ccd1mr24399735e9.5.1739966220791;
+        Wed, 19 Feb 2025 03:57:00 -0800 (PST)
+Received: from myrica ([2.221.137.100])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43984924201sm88322405e9.6.2025.02.19.03.56.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2025 03:57:00 -0800 (PST)
+Date: Wed, 19 Feb 2025 11:57:25 +0000
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+To: Yu Zhang <zhangyu1@linux.microsoft.com>
+Cc: jacob.pan@linux.microsoft.com,
+	Easwar Hariharan <eahariha@linux.microsoft.com>,
+	"zhangyu1@microsoft.com" <zhangyu1@microsoft.com>,
+	Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
+	virtualization@lists.linux.dev, Will Deacon <will@kernel.org>,
+	Eric Auger <eric.auger@redhat.com>, patches@lists.linux.dev
+Subject: Re: [PATCH 3/5] iommu/virtio: Move to domain_alloc_paging()
+Message-ID: <20250219115725.GB513544@myrica>
+References: <3-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
+ <20250212112235.714b0a14@DESKTOP-0403QTC.>
+ <20250212233053.GV3754072@nvidia.com>
+ <67ad876d.170a0220.3c21dc.85ceSMTPIN_ADDED_BROKEN@mx.google.com>
+ <20250213094601.GA243081@myrica>
+ <5irmuy6xwrjsrdjy7tmfzlnotxqdoqagjdsdtqjrrit673zaka@r43nyvc5gcyf>
+ <20250213180919.GC243081@myrica>
+ <cu7lznx5bxnqoavt3ri4dtzwt7lu3loitn7a344rbnmahpnc6h@2e2dknchxjmd>
+ <20250219103518.GA513544@myrica>
+ <jdyb4bxo5miiybkjbmnkszlcx5vwik7lqa5kgx4ptsage6tlu7@axsub4six2uu>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250206155234.095034647@linuxfoundation.org> <CA+G9fYvKzV=jo9AmKH2tJeLr0W8xyjxuVO-P+ZEBdou6C=mKUw@mail.gmail.com>
- <CA+G9fYtqBxt+JwSLCcVBchh94GVRhbo9rTP26ceJ=sf4MDo61Q@mail.gmail.com> <2025021739-jackpot-lip-09f9@gregkh>
-In-Reply-To: <2025021739-jackpot-lip-09f9@gregkh>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 19 Feb 2025 17:16:19 +0530
-X-Gm-Features: AWEUYZlyd4o7hzsRTR-wDg8_BLL7BUQwlm0UHAZOQ22uI97jC6UQqnJWmLWSRIs
-Message-ID: <CA+G9fYtJzD8+BkyBZEss9Vvv2f=8tJUcSyWDGjyOshj1D5hMyA@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/389] 6.6.76-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org, Linux Crypto Mailing List <linux-crypto@vger.kernel.org>, 
-	linux-fsdevel@vger.kernel.org, linux-mm <linux-mm@kvack.org>, 
-	Anders Roxell <anders.roxell@linaro.org>, Dan Carpenter <dan.carpenter@linaro.org>, 
-	Arnd Bergmann <arnd@arndb.de>, Herbert Xu <herbert@gondor.apana.org.au>, willy@infradead.org, 
-	Pankaj Raghav <p.raghav@samsung.com>, Yang Shi <yang@os.amperecomputing.com>, 
-	Catalin Marinas <catalin.marinas@arm.com>, David Hildenbrand <david@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <jdyb4bxo5miiybkjbmnkszlcx5vwik7lqa5kgx4ptsage6tlu7@axsub4six2uu>
 
-On Mon, 17 Feb 2025 at 17:07, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Mon, Feb 17, 2025 at 05:00:43PM +0530, Naresh Kamboju wrote:
-> > On Sat, 8 Feb 2025 at 16:54, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> > >
-> > > On Thu, 6 Feb 2025 at 21:36, Greg Kroah-Hartman
-> > > <gregkh@linuxfoundation.org> wrote:
-> > > >
-> > > > This is the start of the stable review cycle for the 6.6.76 release.
-> > > > There are 389 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > >
-> > > > Responses should be made by Sat, 08 Feb 2025 15:51:12 +0000.
-> > > > Anything received after that time might be too late.
-> > > >
-> > > > The whole patch series can be found in one patch at:
-> > > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.76-rc2.gz
-> > > > or in the git tree and branch at:
-> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> > > > and the diffstat can be found below.
-> > > >
-> > > > thanks,
-> > > >
-> > > > greg k-h
-> > >
-> > >
-> > > There are three different regressions found and reporting here,
-> > > We are working on bisecting and investigating these issues,
-> >
-> > We observed a kernel warning on QEMU-ARM64 and FVP while running the
-> > newly added selftest: arm64: check_hugetlb_options. This issue appears
-> > on 6.6.76 onward and 6.12.13 onward, as reported in the stable review [1].
-> > However, the test case passes successfully on stable 6.13.
-> >
-> > The selftests: arm64: check_hugetlb_options test was introduced following
-> > the recent upgrade of kselftest test sources to the stable 6.13 branch.
-> > As you are aware, LKFT runs the latest kselftest sources (from stable
-> > 6.13.x) on 6.12.x, 6.6.x, and older kernels for validation purposes.
-> >
-> > >From Anders' bisection results, we identified that the missing patch on
-> > 6.12 is likely causing this regression:
-> >
-> > First fixed commit:
-> > [25c17c4b55def92a01e3eecc9c775a6ee25ca20f]
-> > hugetlb: arm64: add MTE support
-> >
-> > Could you confirm whether this patch is eligible for backporting to
-> > 6.12 and 6.6 kernels?
-> > If backporting is not an option, we will need to skip running this
-> > test case on older kernels.
->
-> The test case itself should properly "skip" if the feature is not
-> present in the kernel.  Why not fix that up instead?
+On Wed, Feb 19, 2025 at 07:11:43PM +0800, Yu Zhang wrote:
+> On Wed, Feb 19, 2025 at 10:35:18AM +0000, Jean-Philippe Brucker wrote:
+> > On Wed, Feb 19, 2025 at 05:39:19PM +0800, Yu Zhang wrote:
+> > > On Thu, Feb 13, 2025 at 06:09:19PM +0000, Jean-Philippe Brucker wrote:
+> > > > On Fri, Feb 14, 2025 at 01:03:43AM +0800, Yu Zhang wrote:
+> > > > > On Thu, Feb 13, 2025 at 09:46:01AM +0000, Jean-Philippe Brucker wrote:
+> > > > > > Hi Jacob,
+> > > > > > 
+> > > > > > On Wed, Feb 12, 2025 at 09:47:23PM -0800, Jacob Pan wrote:
+> > > > > > > Our code and backend support are still in the early stages, that is why
+> > > > > > > I am attempting to convert virtio-iommu driver to iommu_pt. Not sure if
+> > > > > > > anyone has done the QEMU part to support VIRTIO_IOMMU_F_ATTACH_TABLE?
+> > > > > > > @Jean @Eric Do you know?
+> > > > > > 
+> > > > > > As far as I know Tina worked on this most recently:
+> > > > > > https://github.com/TinaZhangZW/qemu/commits/virtio-iommu/vt-d-pgtable/
+> > > > > > https://lore.kernel.org/all/20231106071226.9656-1-tina.zhang@intel.com/
+> > > > > 
+> > > > > Thanks a lot for this information, Jean.
+> > > > > IIUC, these patches were trying to add VT-d IO page table support in
+> > > > > virtio-iommu, but it is not based on Jason's generic PT [1]. Just wondering,
+> > > > > does anyone have plan to do the incorporation? 
+> > > > 
+> > > > I'm not aware of anyone working on this at the moment. Something you will
+> > > > need for a portable pviommu is a library that manages PASID tables rather
+> > > > than page tables [1], because the Arm SMMUv3 arch only support assigning
+> > > > PASID tables to the guest. Alternatively you could implement opaque PASID
+> > > > table allocation via host calls, letting the guest allocate GPA space and
+> > > > the host manage the PASID table, but that idea didn't seem very popular at
+> > > > the time.
+> > > 
+> > > Thank you, Jean. Just had a study of the spec. For ARM SMMUv3, letting
+> > > the guest manage the PASID table, and then assigning it directly to the
+> > > backend in ATTACH_TABLE request looks quite resonable. But for VT-d,
+> > > my understanding is the PASID table shall be managed by host. By "that
+> > > idea didn't seem very popular", do you mean that people also want the 
+> > > ATTCH_TABLE request for VT-d also assign the PASID table(an virtual one
+> > > managed by the guest). If yes, why? 
+> > 
+> > No, the proposal for managing the PASID table in the host was done before
+> > the VT-d architecture added Scalable mode, so at the time they also had to
+> > assign whole PASID tables to the guest and weren't keen on managing it in
+> > the host. I believe in revision 3 (2018) the architecture added support
+> > for Scalable mode and the ability to manage PASID tables in the host.
+> > 
+> > Nowadays it wouldn't make sense for a pvIOMMU to manage the VT-d PASID
+> > tables in the guest, because as I understand it there is no demand for
+> > supporting the legacy mode address translation of VT-d.
+> 
+> Thanks, Jean. Yeah, my understanding is that old revisions of VT-d looks
+> more like the ARM SMMUv3. But with scalable mode introduced, there's no
+> need for a pvIOMMU to allocate a guest version PASID table on VT-d.
+> 
+> So my question becomes: why do we need a library that manages PASID
+> tables in the guest? To also support AMD IOMMU besides ARM SMMUv3(
+> I saw your spec proposed both ATTACH_TABLE request for AMD GCR3 table
+> and ATTACH_TABLE request for AMD page table, but don't know which one
+> is more preferred in practice)?
 
-The reported test gets PASS at the end, but generates kernel warning
-while running the test case (always reproducible) on 6.12 and 6.6.
+I don't know either, but given that the parts about AMD and RISC-V in the
+proposal haven't received feedback they will definitely change, and it's a
+question for AMD and RISC-V people.
 
-The reported warning was not seen on stable 6.13.
-
-# Test log:
-
-# selftests: arm64: check_hugetlb_options
-# 1..12
-# ok 1 Check hugetlb memory with private mapping, sync error mode,
-mmap memory and tag check off
-# ok 2 Check hugetlb memory with private mapping, no error mode, mmap
-memory and tag check off
-# ok 3 Check hugetlb memory with private mapping, sync error mode,
-mmap memory and tag check on
-# ok 4 Check hugetlb memory with private mapping, sync error mode,
-mmap/mprotect memory and tag check on
-# ok 5 Check hugetlb memory with private mapping, async error mode,
-mmap memory and tag check on
-# ok 6 Check hugetlb memory with private mapping, async error mode,
-mmap/mprotect memory and tag check on
-# ok 7 Check clear PROT_MTE flags with private mapping, sync error
-mode and mmap memory
-# ok 8 Check clear PROT_MTE flags with private mapping and sync error
-mode and mmap/mprotect memory
-# ok 9 Check child hugetlb memory with private mapping, precise mode
-and mmap memory
-------------[ cut here ]------------
-[   96.920028] WARNING: CPU: 1 PID: 3611 at
-arch/arm64/mm/copypage.c:29 copy_highpage
-(arch/arm64/include/asm/mte.h:87)
-[   96.922100] Modules linked in: crct10dif_ce sm3_ce sm3 sha3_ce
-sha512_ce sha512_arm64 fuse drm backlight ip_tables x_tables
-[   96.925603] CPU: 1 PID: 3611 Comm: check_hugetlb_o Not tainted 6.6.76-rc2 #1
-[   96.926956] Hardware name: linux,dummy-virt (DT)
-[   96.927695] pstate: 43402009 (nZcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-[   96.928687] pc : copy_highpage (arch/arm64/include/asm/mte.h:87)
-[   96.929037] lr : copy_highpage
-(arch/arm64/include/asm/alternative-macros.h:232
-arch/arm64/include/asm/cpufeature.h:443
-arch/arm64/include/asm/cpufeature.h:504
-arch/arm64/include/asm/cpufeature.h:814 arch/arm64/mm/copypage.c:27)
-[   96.929399] sp : ffff800088aa3ab0
-[   96.930232] x29: ffff800088aa3ab0 x28: 00000000000001ff x27: 0000000000000000
-[   96.930784] x26: 0000000000000000 x25: 0000ffff9b800000 x24: 0000ffff9b9ff000
-[   96.931402] x23: fffffc0003257fc0 x22: ffff0000c95ff000 x21: ffff0000c93ff000
-[   96.932054] x20: fffffc0003257fc0 x19: fffffc000324ffc0 x18: 0000ffff9b800000
-[   96.933357] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-[   96.934091] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-[   96.935095] x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
-[   96.935982] x8 : 0bfffc0001800000 x7 : 0000000000000000 x6 : 0000000000000000
-[   96.936536] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000000
-[   96.937089] x2 : 0000000000000000 x1 : ffff0000c9600000 x0 : ffff0000c9400080
-[   96.939431] Call trace:
-[   96.939920] copy_highpage (arch/arm64/include/asm/mte.h:87)
-[   96.940443] copy_user_highpage (arch/arm64/mm/copypage.c:40)
-[   96.940963] copy_user_large_folio (mm/memory.c:5977 mm/memory.c:6109)
-[   96.941535] hugetlb_wp (mm/hugetlb.c:5701)
-[   96.941948] hugetlb_fault (mm/hugetlb.c:6237)
-[   96.942344] handle_mm_fault (mm/memory.c:5330)
-[   96.942794] do_page_fault (arch/arm64/mm/fault.c:513
-arch/arm64/mm/fault.c:626)
-[   96.943341] do_mem_abort (arch/arm64/mm/fault.c:846)
-[   96.943797] el0_da (arch/arm64/kernel/entry-common.c:133
-arch/arm64/kernel/entry-common.c:144
-arch/arm64/kernel/entry-common.c:547)
-[   96.944229] el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:0)
-[   96.944765] el0t_64_sync (arch/arm64/kernel/entry.S:599)
-[ 96.945383] ---[ end trace 0000000000000000 ]---#
-ok 10 Check child hugetlb memory with private mapping, precise mode
-and mmap memory
-# ok 11 Check child hugetlb memory with private mapping, precise mode
-and mmap/mprotect memory
-# ok 12 Check child hugetlb memory with private mapping, precise mode
-and mmap/mprotect memory
-# # Totals: pass:12 fail:0 xfail:0 xpass:0 skip:0 error:0
-ok 2 selftests: arm64: check_hugetlb_options
-
-Links:
- - https://lore.kernel.org/all/CA+G9fYtqBxt+JwSLCcVBchh94GVRhbo9rTP26ceJ=sf4MDo61Q@mail.gmail.com/
-
->
-> thanks,
->
-> greg k-h
-
-- Naresh
+Thanks,
+Jean
