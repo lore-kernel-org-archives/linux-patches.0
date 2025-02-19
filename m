@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257F51C701E;
-	Wed, 19 Feb 2025 09:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FCD1D90D9;
+	Wed, 19 Feb 2025 09:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955824; cv=none; b=gtfoerWyHErkshz7MzXcJJybnYMXuojNJpFxLjh5paBy/roMJLFd3Mxc1AS2jxLB5MUDGP7cksUKR5gxdOnFlpsP+4+k0ZUccn5Z1E4G4MOu6DNyCJlg6qwoD2Tc7ULHNMqSEgEI89CqZdx8iFlV1KCG1zi+zDcDiWM8aKEOgJM=
+	t=1739955827; cv=none; b=nW5xWESVm3zIQpBgVOe7mwU4p0b+r/jp9DYr047wARucwSnf+y8LgRwsE0qX99CHwTbZwtbopHPDwyc5oSJ1oNa90d0P6hhz0wJ9XxcKMDXLJSU8/acQeErNdB0+hphGKsUAj1KQjYWlMhXOXqRbaCJ5gIwBpErhF0lPapba1b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955824; c=relaxed/simple;
-	bh=fmHdfjlYuYmgoYjKX4JYwg0Ou8EpKThH2XI2/7m+h7I=;
+	s=arc-20240116; t=1739955827; c=relaxed/simple;
+	bh=Q9a3zzWjYqVZXHTDz13PL+w8CeUTvfYa92InAZKJyq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=COG0VDDprC6uBHedbXB0vbm5dTuEYeFSCDFwph/LR/4mjQdlEwDV8O5b9Y81D3blvAPBkV4VS+mclrmX4JINMvThsLNV/mppBMuQGZ6LRscXXZSiLWrdSmNfsuZMO/cR6Xq3KlrMQZ9zuSDQDRCDpCK+SIb26MId5QbHU29q2Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voA9HLRJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ukcBtHl54NIAahzxCBP1QUQSDt9id0M+7W1RTkN3HcB2mPW1ecmN5UVE48RnuZUZHSPwNFODfBRxaWnRRME0MnXzDnFggWOpXkFbed1faB6u485CbACkaxwPSqVQ6plBsdk3WOjUBRcrgHYpz9Bsop+hKUSaaRamagP5LfuezUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWqGY/Z/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voA9HLRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B666C4CEE8;
-	Wed, 19 Feb 2025 09:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWqGY/Z/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCFFC4CED1;
+	Wed, 19 Feb 2025 09:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955824;
-	bh=fmHdfjlYuYmgoYjKX4JYwg0Ou8EpKThH2XI2/7m+h7I=;
+	s=korg; t=1739955827;
+	bh=Q9a3zzWjYqVZXHTDz13PL+w8CeUTvfYa92InAZKJyq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=voA9HLRJGeo8cDdUa449g4Ty8c+jCzjpNxJ0I7id1r3RBfR1ce9pX40UodC5GrmGl
-	 Fzchsyua4dRKH5YNCZbgUmPtEOf4Y2jS6ZlpB+L6DHiAiWRaSBmyG0LPMiMZaDoeIF
-	 SlsG52frpb8uxro98cIrijVeSS4IuZ8vJWSxdFx0=
+	b=uWqGY/Z/ndov9x7oF5MCSWDm947s7djPXyDoP6Wkcr4USoQVGqKIOvJH9rXXzpwsE
+	 AKp36ucvzarfCbxW7ksBskyZV77BCZaf/54ZIecbTqQZI067LlNnowQ69o7n41W29U
+	 uf9iiKx7wYGTRhPzSCFJDYDEXRAD3koL7UssrQIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 125/152] openvswitch: use RCU protection in ovs_vport_cmd_fill_info()
-Date: Wed, 19 Feb 2025 09:28:58 +0100
-Message-ID: <20250219082554.994906482@linuxfoundation.org>
+Subject: [PATCH 6.6 099/152] ipv4: add RCU protection to ip4_dst_hoplimit()
+Date: Wed, 19 Feb 2025 09:28:32 +0100
+Message-ID: <20250219082553.975726891@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -54,62 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 90b2f49a502fa71090d9f4fe29a2f51fe5dff76d ]
+[ Upstream commit 469308552ca4560176cfc100e7ca84add1bebd7c ]
 
-ovs_vport_cmd_fill_info() can be called without RTNL or RCU.
+ip4_dst_hoplimit() must use RCU protection to make
+sure the net structure it reads does not disappear.
 
-Use RCU protection and dev_net_rcu() to avoid potential UAF.
-
-Fixes: 9354d4520342 ("openvswitch: reliable interface indentification in port dumps")
+Fixes: fa50d974d104 ("ipv4: Namespaceify ip_default_ttl sysctl knob")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250207135841.1948589-6-edumazet@google.com
+Link: https://patch.msgid.link/20250205155120.1676781-3-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/datapath.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ include/net/route.h | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index b7232142c13f8..cb52fac7caa3c 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -2103,6 +2103,7 @@ static int ovs_vport_cmd_fill_info(struct vport *vport, struct sk_buff *skb,
+diff --git a/include/net/route.h b/include/net/route.h
+index 51a45b1887b56..0171e9e1bbea3 100644
+--- a/include/net/route.h
++++ b/include/net/route.h
+@@ -357,10 +357,15 @@ static inline int inet_iif(const struct sk_buff *skb)
+ static inline int ip4_dst_hoplimit(const struct dst_entry *dst)
  {
- 	struct ovs_header *ovs_header;
- 	struct ovs_vport_stats vport_stats;
-+	struct net *net_vport;
- 	int err;
+ 	int hoplimit = dst_metric_raw(dst, RTAX_HOPLIMIT);
+-	struct net *net = dev_net(dst->dev);
  
- 	ovs_header = genlmsg_put(skb, portid, seq, &dp_vport_genl_family,
-@@ -2119,12 +2120,15 @@ static int ovs_vport_cmd_fill_info(struct vport *vport, struct sk_buff *skb,
- 	    nla_put_u32(skb, OVS_VPORT_ATTR_IFINDEX, vport->dev->ifindex))
- 		goto nla_put_failure;
+-	if (hoplimit == 0)
++	if (hoplimit == 0) {
++		const struct net *net;
++
++		rcu_read_lock();
++		net = dev_net_rcu(dst->dev);
+ 		hoplimit = READ_ONCE(net->ipv4.sysctl_ip_default_ttl);
++		rcu_read_unlock();
++	}
+ 	return hoplimit;
+ }
  
--	if (!net_eq(net, dev_net(vport->dev))) {
--		int id = peernet2id_alloc(net, dev_net(vport->dev), gfp);
-+	rcu_read_lock();
-+	net_vport = dev_net_rcu(vport->dev);
-+	if (!net_eq(net, net_vport)) {
-+		int id = peernet2id_alloc(net, net_vport, GFP_ATOMIC);
- 
- 		if (nla_put_s32(skb, OVS_VPORT_ATTR_NETNSID, id))
--			goto nla_put_failure;
-+			goto nla_put_failure_unlock;
- 	}
-+	rcu_read_unlock();
- 
- 	ovs_vport_get_stats(vport, &vport_stats);
- 	if (nla_put_64bit(skb, OVS_VPORT_ATTR_STATS,
-@@ -2145,6 +2149,8 @@ static int ovs_vport_cmd_fill_info(struct vport *vport, struct sk_buff *skb,
- 	genlmsg_end(skb, ovs_header);
- 	return 0;
- 
-+nla_put_failure_unlock:
-+	rcu_read_unlock();
- nla_put_failure:
- 	err = -EMSGSIZE;
- error:
 -- 
 2.39.5
 
