@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DC7155753;
-	Wed, 19 Feb 2025 08:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7174B155753;
+	Wed, 19 Feb 2025 08:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955251; cv=none; b=VzOTcmzQaSDr7H2+ZUONsYyTPPRBIiLy5nG2YWZI3efeDq1eLPNbbzpUiHKnBuemQBZx6QujubvROuUmlAmCFvLdV7jRo9xvwA5PlFdlvnwfolYhdXzJpZXoPgBTWyQHBy9R6pHvtnHAay6adAv7lOR47PNHnA2phz8ac0EpHLw=
+	t=1739955254; cv=none; b=iEjyjiHorFwyi2H02FMSQo6vOrMBvWiJpce9vw0vfiWizleaF1ADBJxJ33152E1bYSuDDpH5WNb8v+1IqpykJufKYcU/clxVHHINMPKnTPl5KDdrybOqWCAwnoNUmI0YLQKL9Z2WRLEqG8STZD8VYluUJTe/y3RDBGeedBr9iCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955251; c=relaxed/simple;
-	bh=GgVNu3A8dyLDU5E+U2ZE0JfXVP+rLQHbs1GxOx/eYkE=;
+	s=arc-20240116; t=1739955254; c=relaxed/simple;
+	bh=/KLFXpyUP976cdrCi9yHF0N2BIUaiYEzcUqsUYlaJTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hG/szJW94vmwV4nbKb3gyIK4ry7q2D9pHfJT40bZdebSPdnW0oSFuJklbQgjCDw8R2thmbMxPkG/t66meWfmhHksgW2hY3F7+8i4w3J/3vyrbLvXurcEG0zP6mNSzJZLrhfw+mrrO3LD2ks1oJT8sKSLM8OLxAo7I0yqUfev2Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEiIfric; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rb59UtzGXle+bXGy3YeXKT9nTXzt1ZY2GADLsF2rtTVCyH8vjyKBC/a3+IF6LMvjtlmAHn5HeiuQZl//1UTUdzJTmpx3Cq49J650xCY1/DYE7bptMe0/SLS2qpmyfrsK55IEr88nFEb7urUSf92Gw9nk5NtB5VnccwPl3zwMwl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXPJvTWr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEiIfric"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C39C4CED1;
-	Wed, 19 Feb 2025 08:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXPJvTWr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E342EC4CED1;
+	Wed, 19 Feb 2025 08:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955251;
-	bh=GgVNu3A8dyLDU5E+U2ZE0JfXVP+rLQHbs1GxOx/eYkE=;
+	s=korg; t=1739955254;
+	bh=/KLFXpyUP976cdrCi9yHF0N2BIUaiYEzcUqsUYlaJTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jEiIfriczMAMCBGhBM5CBFxUTDgpJ2dckaTr8m/15LClGZP2utPON4AOeFavPGUuL
-	 ZCdhqsX0QZKT7qx2Sjw5YiDaBEYyA9YClD+2nHLU5ZlXKqFQ/75a+Sn224fFSlaBzi
-	 8JDmeyfPnJ3f01Jtvjomx1mu/QkAzw275Jk0Yjro=
+	b=xXPJvTWre8qU+8NeKbwl2+FNA6Zur+PmRT4VunfNH2HSo872yMmxaFeuMBa2K6dJ7
+	 euhpPba+rs8y2jj5BifyL7zo0SdUHaUHPo6eSGxhPjGEXPQcLSiXCO7LvE7k89dEu9
+	 8AMtPUfA01WaTxfg8Lr7WOIUqzwZVGcdUg3gVUso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
 	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 179/230] cpufreq/amd-pstate: Merge amd_pstate_epp_cpu_offline() and amd_pstate_epp_offline()
-Date: Wed, 19 Feb 2025 09:28:16 +0100
-Message-ID: <20250219082608.706756674@linuxfoundation.org>
+Subject: [PATCH 6.12 180/230] cpufreq/amd-pstate: convert mutex use to guard()
+Date: Wed, 19 Feb 2025 09:28:17 +0100
+Message-ID: <20250219082608.745357792@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -52,66 +51,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 53ec2101dfede8fecdd240662281a12e537c3411 ]
+[ Upstream commit 6c093d5a5b73ec1caf1e706510ae6031af2f9d43 ]
 
-amd_pstate_epp_offline() is only called from within
-amd_pstate_epp_cpu_offline() and doesn't make much sense to have it at all.
-Hence, remove it.
+Using scoped guard declaration will unlock mutexes automatically.
 
-Also remove the unncessary debug print in the offline path while at it.
-
-Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
 Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20241204144842.164178-6-Dhananjay.Ugwekar@amd.com
+Link: https://lore.kernel.org/r/20241209185248.16301-5-mario.limonciello@amd.com
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Stable-dep-of: 3ace20038e19 ("cpufreq/amd-pstate: Fix cpufreq_policy ref counting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 17 ++++-------------
- 1 file changed, 4 insertions(+), 13 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 32 ++++++++++++--------------------
+ 1 file changed, 12 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 4dfe5bdcb2932..145a48fc49034 100644
+index 145a48fc49034..33777f5ab7d16 100644
 --- a/drivers/cpufreq/amd-pstate.c
 +++ b/drivers/cpufreq/amd-pstate.c
-@@ -1604,11 +1604,14 @@ static int amd_pstate_epp_cpu_online(struct cpufreq_policy *policy)
- 	return 0;
+@@ -696,12 +696,12 @@ static int amd_pstate_set_boost(struct cpufreq_policy *policy, int state)
+ 		pr_err("Boost mode is not supported by this processor or SBIOS\n");
+ 		return -EOPNOTSUPP;
+ 	}
+-	mutex_lock(&amd_pstate_driver_lock);
++	guard(mutex)(&amd_pstate_driver_lock);
++
+ 	ret = amd_pstate_cpu_boost_update(policy, state);
+ 	WRITE_ONCE(cpudata->boost_state, !ret ? state : false);
+ 	policy->boost_enabled = !ret ? state : false;
+ 	refresh_frequency_limits(policy);
+-	mutex_unlock(&amd_pstate_driver_lock);
+ 
+ 	return ret;
+ }
+@@ -792,7 +792,8 @@ static void amd_pstate_update_limits(unsigned int cpu)
+ 	if (!amd_pstate_prefcore)
+ 		return;
+ 
+-	mutex_lock(&amd_pstate_driver_lock);
++	guard(mutex)(&amd_pstate_driver_lock);
++
+ 	ret = amd_get_highest_perf(cpu, &cur_high);
+ 	if (ret)
+ 		goto free_cpufreq_put;
+@@ -812,7 +813,6 @@ static void amd_pstate_update_limits(unsigned int cpu)
+ 	if (!highest_perf_changed)
+ 		cpufreq_update_policy(cpu);
+ 
+-	mutex_unlock(&amd_pstate_driver_lock);
  }
  
--static void amd_pstate_epp_offline(struct cpufreq_policy *policy)
-+static int amd_pstate_epp_cpu_offline(struct cpufreq_policy *policy)
- {
- 	struct amd_cpudata *cpudata = policy->driver_data;
- 	int min_perf;
+ /*
+@@ -1145,11 +1145,11 @@ static ssize_t store_energy_performance_preference(
+ 	if (ret < 0)
+ 		return -EINVAL;
  
-+	if (cpudata->suspended)
-+		return 0;
+-	mutex_lock(&amd_pstate_limits_lock);
++	guard(mutex)(&amd_pstate_limits_lock);
 +
+ 	ret = amd_pstate_set_energy_pref_index(cpudata, ret);
+-	mutex_unlock(&amd_pstate_limits_lock);
+ 
+-	return ret ?: count;
++	return ret ? ret : count;
+ }
+ 
+ static ssize_t show_energy_performance_preference(
+@@ -1297,13 +1297,10 @@ EXPORT_SYMBOL_GPL(amd_pstate_update_status);
+ static ssize_t status_show(struct device *dev,
+ 			   struct device_attribute *attr, char *buf)
+ {
+-	ssize_t ret;
+ 
+-	mutex_lock(&amd_pstate_driver_lock);
+-	ret = amd_pstate_show_status(buf);
+-	mutex_unlock(&amd_pstate_driver_lock);
++	guard(mutex)(&amd_pstate_driver_lock);
+ 
+-	return ret;
++	return amd_pstate_show_status(buf);
+ }
+ 
+ static ssize_t status_store(struct device *a, struct device_attribute *b,
+@@ -1312,9 +1309,8 @@ static ssize_t status_store(struct device *a, struct device_attribute *b,
+ 	char *p = memchr(buf, '\n', count);
+ 	int ret;
+ 
+-	mutex_lock(&amd_pstate_driver_lock);
++	guard(mutex)(&amd_pstate_driver_lock);
+ 	ret = amd_pstate_update_status(buf, p ? p - buf : count);
+-	mutex_unlock(&amd_pstate_driver_lock);
+ 
+ 	return ret < 0 ? ret : count;
+ }
+@@ -1614,13 +1610,11 @@ static int amd_pstate_epp_cpu_offline(struct cpufreq_policy *policy)
+ 
  	min_perf = READ_ONCE(cpudata->lowest_perf);
  
- 	mutex_lock(&amd_pstate_limits_lock);
-@@ -1617,18 +1620,6 @@ static void amd_pstate_epp_offline(struct cpufreq_policy *policy)
+-	mutex_lock(&amd_pstate_limits_lock);
++	guard(mutex)(&amd_pstate_limits_lock);
+ 
+ 	amd_pstate_update_perf(cpudata, min_perf, 0, min_perf, false);
  	amd_pstate_set_epp(cpudata, AMD_CPPC_EPP_BALANCE_POWERSAVE);
  
- 	mutex_unlock(&amd_pstate_limits_lock);
--}
+-	mutex_unlock(&amd_pstate_limits_lock);
 -
--static int amd_pstate_epp_cpu_offline(struct cpufreq_policy *policy)
--{
--	struct amd_cpudata *cpudata = policy->driver_data;
--
--	pr_debug("AMD CPU Core %d going offline\n", cpudata->cpu);
--
--	if (cpudata->suspended)
--		return 0;
--
--	amd_pstate_epp_offline(policy);
- 
  	return 0;
  }
+ 
+@@ -1656,13 +1650,11 @@ static int amd_pstate_epp_resume(struct cpufreq_policy *policy)
+ 	struct amd_cpudata *cpudata = policy->driver_data;
+ 
+ 	if (cpudata->suspended) {
+-		mutex_lock(&amd_pstate_limits_lock);
++		guard(mutex)(&amd_pstate_limits_lock);
+ 
+ 		/* enable amd pstate from suspend state*/
+ 		amd_pstate_epp_reenable(cpudata);
+ 
+-		mutex_unlock(&amd_pstate_limits_lock);
+-
+ 		cpudata->suspended = false;
+ 	}
+ 
 -- 
 2.39.5
 
