@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD011DE2CA;
-	Wed, 19 Feb 2025 09:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC8E1DF74C;
+	Wed, 19 Feb 2025 09:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957266; cv=none; b=cQc1NbGICs8/K40sEhXsKd7Y0z+A2A/Uqs73iQoPOlaKQ9FwvbVZBQx35H0SHeGB8PEClwBf8SVmNElfwwQ240FRMTdkVOQYtO1x1B0a47jeJmFIhmHfFCl/M9euuhfk7acYwr73IfmNHsAgW3hr2ztgWIcCfSpjO1FtTDeIfw0=
+	t=1739957269; cv=none; b=Fzsh/YQEVyO3J2nHsY0Bb6N1Tw8T+MuwQcub2mbIOPNrUGN06PT/6nrkUuYMsgCDqHQJLWHdovwRXJaOSjx3fEVF9Mzp14Pr/W3CTZleEXNWmEcq2Pno9ln1dtkwfIqb7Bstm/lKhXq2BVSmMAxmt2Kat8nHfu8sh0a4NMG0Nik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957266; c=relaxed/simple;
-	bh=zyFwFR8lQeWa35Ev/PcLHYC/G/MVokHW/DrRxkx58xk=;
+	s=arc-20240116; t=1739957269; c=relaxed/simple;
+	bh=061oHuBRtZZMJv2RAFqWkjkVHHaHvplEyQ7oL8wCK38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAlcjgp9TlwVSe4psIzmJWrAxDL7YBZEAkMdwuE5q8XT5p4pWnZYxnbfqshDywB6sTYCdVZ12ZxBMFQh3IqH522piO5arLwYq1Qm0cuGYwzXvaE021fkEPZYstoY/r1dywXtUzWgOWLykcTabG2rO76jgDV0Se08z/OcnUUVqFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIYH+ELt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RWDHiSKZhYNAw16Vhjm50BTf1uh94IrbQoyYqzGFPSkO9rRXgNnsaeY7qBphwoEszVHg6DfsppyvZYJ2U0t9TUolcbc0ppYLQf/fn80POiC+2OB9Ys9xwujxkAkBQo1RJ+lBJdqkU5lYSdMZ7h8yyzIIP9N2ntJSVSrbygDRpQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ke20De+0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIYH+ELt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B268C4CED1;
-	Wed, 19 Feb 2025 09:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ke20De+0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC4FC4CED1;
+	Wed, 19 Feb 2025 09:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957266;
-	bh=zyFwFR8lQeWa35Ev/PcLHYC/G/MVokHW/DrRxkx58xk=;
+	s=korg; t=1739957269;
+	bh=061oHuBRtZZMJv2RAFqWkjkVHHaHvplEyQ7oL8wCK38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AIYH+ELt3sMMo3iYssiu8qsHxi8OYmiJOXyLdgHT9eVy0c0XRGaJFsOQn0H8x0hdM
-	 uH5e1UBY6s41tCJBv9+4jRIi4nM8NUDxhCHP7UWWhdmgqIWv7KMDNWDVyW0WJiYaxg
-	 n5ocq6OMozKGOJWv9mVI3abgzTK20hdg9LHmiPWs=
+	b=ke20De+01bhfteM7lvPY6VYDfT5tgHPsp/fWHS5qcoNUyJB9Okf56g2T4GYXoT1fI
+	 TGgtM7OcllPAwcRRmfQKFSsGIlkAJ1Qy0+Pr/pNyiAil1f8kuVDlv8aP9PYRKKVC7z
+	 Set0Obd6ArCy6GC9KzAE4Iy/ZSF4EFBsv52OdIcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com,
-	Murad Masimov <m.masimov@mt-integration.ru>,
+	Eric Dumazet <edumazet@google.com>,
+	Stephen Suryaputra <ssuryaextr@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 467/578] ax25: Fix refcount leak caused by setting SO_BINDTODEVICE sockopt
-Date: Wed, 19 Feb 2025 09:27:51 +0100
-Message-ID: <20250219082711.377626112@linuxfoundation.org>
+Subject: [PATCH 6.1 468/578] ndisc: ndisc_send_redirect() must use dev_get_by_index_rcu()
+Date: Wed, 19 Feb 2025 09:27:52 +0100
+Message-ID: <20250219082711.416035712@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,92 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit bca0902e61731a75fc4860c8720168d9f1bae3b6 ]
+[ Upstream commit 48145a57d4bbe3496e8e4880b23ea6b511e6e519 ]
 
-If an AX25 device is bound to a socket by setting the SO_BINDTODEVICE
-socket option, a refcount leak will occur in ax25_release().
+ndisc_send_redirect() is called under RCU protection, not RTNL.
 
-Commit 9fd75b66b8f6 ("ax25: Fix refcount leaks caused by ax25_cb_del()")
-added decrement of device refcounts in ax25_release(). In order for that
-to work correctly the refcounts must already be incremented when the
-device is bound to the socket. An AX25 device can be bound to a socket
-by either calling ax25_bind() or setting SO_BINDTODEVICE socket option.
-In both cases the refcounts should be incremented, but in fact it is done
-only in ax25_bind().
+It must use dev_get_by_index_rcu() instead of __dev_get_by_index()
 
-This bug leads to the following issue reported by Syzkaller:
-
-================================================================
-refcount_t: decrement hit 0; leaking memory.
-WARNING: CPU: 1 PID: 5932 at lib/refcount.c:31 refcount_warn_saturate+0x1ed/0x210 lib/refcount.c:31
-Modules linked in:
-CPU: 1 UID: 0 PID: 5932 Comm: syz-executor424 Not tainted 6.13.0-rc4-syzkaller-00110-g4099a71718b0 #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-RIP: 0010:refcount_warn_saturate+0x1ed/0x210 lib/refcount.c:31
-Call Trace:
- <TASK>
- __refcount_dec include/linux/refcount.h:336 [inline]
- refcount_dec include/linux/refcount.h:351 [inline]
- ref_tracker_free+0x710/0x820 lib/ref_tracker.c:236
- netdev_tracker_free include/linux/netdevice.h:4156 [inline]
- netdev_put include/linux/netdevice.h:4173 [inline]
- netdev_put include/linux/netdevice.h:4169 [inline]
- ax25_release+0x33f/0xa10 net/ax25/af_ax25.c:1069
- __sock_release+0xb0/0x270 net/socket.c:640
- sock_close+0x1c/0x30 net/socket.c:1408
- ...
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- ...
- </TASK>
-================================================================
-
-Fix the implementation of ax25_setsockopt() by adding increment of
-refcounts for the new device bound, and decrement of refcounts for
-the old unbound device.
-
-Fixes: 9fd75b66b8f6 ("ax25: Fix refcount leaks caused by ax25_cb_del()")
-Reported-by: syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Link: https://patch.msgid.link/20250203091203.1744-1-m.masimov@mt-integration.ru
+Fixes: 2f17becfbea5 ("vrf: check the original netdevice for generating redirect")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Stephen Suryaputra <ssuryaextr@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250207135841.1948589-2-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/af_ax25.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/ipv6/ndisc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 4b96dedcc3c9c..862e03493b7ed 100644
---- a/net/ax25/af_ax25.c
-+++ b/net/ax25/af_ax25.c
-@@ -685,6 +685,15 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 44d3e6ab0c7d4..6df3f4aadf641 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -1684,7 +1684,7 @@ void ndisc_send_redirect(struct sk_buff *skb, const struct in6_addr *target)
+ 	bool ret;
  
-+		if (ax25->ax25_dev) {
-+			if (dev == ax25->ax25_dev->dev) {
-+				rcu_read_unlock();
-+				break;
-+			}
-+			netdev_put(ax25->ax25_dev->dev, &ax25->dev_tracker);
-+			ax25_dev_put(ax25->ax25_dev);
-+		}
-+
- 		ax25->ax25_dev = ax25_dev_ax25dev(dev);
- 		if (!ax25->ax25_dev) {
- 			rcu_read_unlock();
-@@ -692,6 +701,8 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
- 		ax25_fillin_cb(ax25, ax25->ax25_dev);
-+		netdev_hold(dev, &ax25->dev_tracker, GFP_ATOMIC);
-+		ax25_dev_hold(ax25->ax25_dev);
- 		rcu_read_unlock();
- 		break;
- 
+ 	if (netif_is_l3_master(skb->dev)) {
+-		dev = __dev_get_by_index(dev_net(skb->dev), IPCB(skb)->iif);
++		dev = dev_get_by_index_rcu(dev_net(skb->dev), IPCB(skb)->iif);
+ 		if (!dev)
+ 			return;
+ 	}
 -- 
 2.39.5
 
