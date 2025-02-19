@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D141E1C26;
-	Wed, 19 Feb 2025 08:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF4B1E105E;
+	Wed, 19 Feb 2025 08:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955204; cv=none; b=oIpuhlrIQr3stDPoVUCZnzvBut9eO/Y9twbbKtfyHcgqIfbaF2LjlgHXCrzo4bUfhcexWcdQ8iPXW94JoHq6iTN7t9prevO6n7oiieKfpkSQ8x4B4OMXWVu1IUsJitm3jYlJipqw37KD5HwAv7nLUAuHR0ZlIQu+UhOaCaEcI44=
+	t=1739955207; cv=none; b=lTjoweFgEMc5uDy0ZbtOVp/mCzbzuc5IQOMnFxfI5E9Nt/wg8mnMh57KFkpT5uQcrmRzp3WvbDDruP7FiEIdkNTMDqG/K1SxJ0hhkC6s01/eClWQY4VJioveVuu24uld3Ib0ZIEh792/XnWNYjYeaBzXh6muyNrnZDawSnsHqaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955204; c=relaxed/simple;
-	bh=Xxq6idH8dhSBd+9VXL9U9CZNHJkBQ6iSPLicat8eS64=;
+	s=arc-20240116; t=1739955207; c=relaxed/simple;
+	bh=ZYQNTgrCugyum/ljBKqjEkX6HLqIuQFImpwmas1r8Ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fwswk21p6kXGp5wnn2eCZgyM+mw1EA4QsZLPcmEf5hmz8SagzJ0tTrwZ1ziOi6gHCBPhfazxFYWhnGG1fSKBDmB7FrYhleFi0FYakIxiLywJutw/F9NBpg3IpTORhxaTLf6DntyuVyfNtP1W9lEa29tHtXpIScI9pF//4ABR42Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJ1V74hm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DDxtXzIEZPxvYDzH6yhpG0Bs7/WdSySHC9AncjXkIduBYRMR1VzalAmiIMSJbN+RlfYtGW7aTnUeyoHdKrs1x6AwHHxZ5GfJPLXwJO/8/Dtf72SHPNbpI2HDqhf/ZsJmAOqVWNfvIyl8k2mJ5/ygZCbkgF4UB3Jee7YW/M3U9Ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4t/8Det; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJ1V74hm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3ECC4CEE6;
-	Wed, 19 Feb 2025 08:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4t/8Det"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735D5C4CED1;
+	Wed, 19 Feb 2025 08:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955203;
-	bh=Xxq6idH8dhSBd+9VXL9U9CZNHJkBQ6iSPLicat8eS64=;
+	s=korg; t=1739955206;
+	bh=ZYQNTgrCugyum/ljBKqjEkX6HLqIuQFImpwmas1r8Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJ1V74hmAXt3w7UfobkQPEsruoAkLKiVcGVZsLDVYu0lW0TotxWrd+ndY/KHvGOjl
-	 SKGDQKbL33OfgBNJS5neMIaIoqVMxz8u9ujIV/duProbvGJQwEYrQzNQfgltETsGZi
-	 LjzASfitCylTGTYtXJEWuILtJ6+RWmpxQ5adAGNA=
+	b=h4t/8Detil4RYrJuucCbygOj002ndtbPAgqM9itGIhqASku5gnUQPh886iox1wQEd
+	 nnr1stkFZyrdqvRT/NM5lNwWMidQ0gvGjKh+HINKeczXi21I3QuNvC2Eh02++VdprE
+	 0l/xTfNQR0PeUXwJemPJGKo0nSPQh2oMgOY3EtCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexander=20H=C3=B6lzl?= <alexander.hoelzl@gmx.net>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Robin van der Gracht <robin@protonic.nl>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.12 131/230] can: j1939: j1939_sk_send_loop(): fix unable to send messages with data length zero
-Date: Wed, 19 Feb 2025 09:27:28 +0100
-Message-ID: <20250219082606.810822059@linuxfoundation.org>
+Subject: [PATCH 6.12 132/230] can: rockchip: rkcanfd_handle_rx_fifo_overflow_int(): bail out if skb cannot be allocated
+Date: Wed, 19 Feb 2025 09:27:29 +0100
+Message-ID: <20250219082606.849428618@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -45,82 +44,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Hölzl <alexander.hoelzl@gmx.net>
+From: Robin van der Gracht <robin@protonic.nl>
 
-commit 44de577e61ed239db09f0da9d436866bef9b77dd upstream.
+commit f7f0adfe64de08803990dc4cbecd2849c04e314a upstream.
 
-The J1939 standard requires the transmission of messages of length 0.
+Fix NULL pointer check in rkcanfd_handle_rx_fifo_overflow_int() to
+bail out if skb cannot be allocated.
 
-For example proprietary messages are specified with a data length of 0
-to 1785. The transmission of such messages is not possible. Sending
-results in no error being returned but no corresponding can frame
-being generated.
-
-Enable the transmission of zero length J1939 messages. In order to
-facilitate this two changes are necessary:
-
-1) If the transmission of a new message is requested from user space
-the message is segmented in j1939_sk_send_loop(). Let the segmentation
-take into account zero length messages, do not terminate immediately,
-queue the corresponding skb.
-
-2) j1939_session_skb_get_by_offset() selects the next skb to transmit
-for a session. Take into account that there might be zero length skbs
-in the queue.
-
-Signed-off-by: Alexander Hölzl <alexander.hoelzl@gmx.net>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20250205174651.103238-1-alexander.hoelzl@gmx.net
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Fixes: ff60bfbaf67f ("can: rockchip_canfd: add driver for Rockchip CAN-FD controller")
 Cc: stable@vger.kernel.org
-[mkl: commit message rephrased]
+Signed-off-by: Robin van der Gracht <robin@protonic.nl>
+Link: https://patch.msgid.link/20250208-fix-rockchip-canfd-v1-1-ec533c8a9895@pengutronix.de
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/socket.c    |    4 ++--
- net/can/j1939/transport.c |    5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/can/rockchip/rockchip_canfd-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/can/j1939/socket.c
-+++ b/net/can/j1939/socket.c
-@@ -1132,7 +1132,7 @@ static int j1939_sk_send_loop(struct j19
+diff --git a/drivers/net/can/rockchip/rockchip_canfd-core.c b/drivers/net/can/rockchip/rockchip_canfd-core.c
+index df18c85fc078..d9a937ba126c 100644
+--- a/drivers/net/can/rockchip/rockchip_canfd-core.c
++++ b/drivers/net/can/rockchip/rockchip_canfd-core.c
+@@ -622,7 +622,7 @@ rkcanfd_handle_rx_fifo_overflow_int(struct rkcanfd_priv *priv)
+ 	netdev_dbg(priv->ndev, "RX-FIFO overflow\n");
  
- 	todo_size = size;
+ 	skb = rkcanfd_alloc_can_err_skb(priv, &cf, &timestamp);
+-	if (skb)
++	if (!skb)
+ 		return 0;
  
--	while (todo_size) {
-+	do {
- 		struct j1939_sk_buff_cb *skcb;
- 
- 		segment_size = min_t(size_t, J1939_MAX_TP_PACKET_SIZE,
-@@ -1177,7 +1177,7 @@ static int j1939_sk_send_loop(struct j19
- 
- 		todo_size -= segment_size;
- 		session->total_queued_size += segment_size;
--	}
-+	} while (todo_size);
- 
- 	switch (ret) {
- 	case 0: /* OK */
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -382,8 +382,9 @@ sk_buff *j1939_session_skb_get_by_offset
- 	skb_queue_walk(&session->skb_queue, do_skb) {
- 		do_skcb = j1939_skb_to_cb(do_skb);
- 
--		if (offset_start >= do_skcb->offset &&
--		    offset_start < (do_skcb->offset + do_skb->len)) {
-+		if ((offset_start >= do_skcb->offset &&
-+		     offset_start < (do_skcb->offset + do_skb->len)) ||
-+		     (offset_start == 0 && do_skcb->offset == 0 && do_skb->len == 0)) {
- 			skb = do_skb;
- 		}
- 	}
+ 	rkcanfd_get_berr_counter_corrected(priv, &bec);
+-- 
+2.48.1
+
 
 
