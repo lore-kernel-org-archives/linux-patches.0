@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DA72AE74;
-	Wed, 19 Feb 2025 09:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5DE2AE74;
+	Wed, 19 Feb 2025 09:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957396; cv=none; b=D6oTl3PZmi6ri6WhqS8T0hatuZVQW/2vdGmdFWiWCWjth/Wskyiya4/XxUt8OOYTmjRx4MIA4aENAX8qbz8P2LRPSD5J4Gl9zeGRteiERp7dOEnz+FlNIMnnaPWeepsb4DGTpiX9+3TawSB4LxjHPAIO12eRl7h5TON05skohVo=
+	t=1739957399; cv=none; b=kIVsmBKVPjeDGtAOr1VcTALT0dtoKzdkRYLA01BWFIIu8gkd5pq1EZ3z8uxM6jzgCtHZCrjuwWGlBQYZMqeyMFD12W8QrO4CU5oRpXPecHOBcK4YT3LbJc76X9al6rjl8THq+UNNieYtnKvuBnh1YtsFoUvrmtRCCqixSWY9BA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957396; c=relaxed/simple;
-	bh=8hakwSRMZ6Vi6Zr2a+GJ7lgXS8ypx9uKSp3t+HCjmpo=;
+	s=arc-20240116; t=1739957399; c=relaxed/simple;
+	bh=edsErOkSz9M6s2fnbYn+kEZ1PIA/7O+n4RpFlBIhNKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1mvs0aNlytHCGTXrx+2D2eUqOV9YOpSIWw3eedNtw6hSIlfmlKqAo91yIphojSvHAcjSHYzYsn9fY7XNj1z9nNwzWfCPr/1cDI6yg7VDp28Fs1GBigCIoFv4ooVkSngROSsdJKVMrTG4c2HqGlKXuNjkgm2cFCJ1AV/1Y/cozM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEZZZQno; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bxv/QbVwekw9m64SE1mqm8C1vtBWdWlQdAya8rBPmmdmp8wtsjXDd+IDmV5ezTxFvezM8IUqhrO/Egjlk2/dnDUQq1978ZMkhFzVCq+RVjTk2DNY4RgRHrzvPGQccIuSwY8D0djmIbo64sw0HZgc0rsfweJnABIKn5J1Y+9M/Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=geW6nx4C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEZZZQno"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C92C4CEE7;
-	Wed, 19 Feb 2025 09:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="geW6nx4C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4005C4CEE6;
+	Wed, 19 Feb 2025 09:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957396;
-	bh=8hakwSRMZ6Vi6Zr2a+GJ7lgXS8ypx9uKSp3t+HCjmpo=;
+	s=korg; t=1739957399;
+	bh=edsErOkSz9M6s2fnbYn+kEZ1PIA/7O+n4RpFlBIhNKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XEZZZQnocFI+rwMiD0aAyMYmPF2dQHOktHPdU3Kv9kGtmTEwAzO05kNSOGJJG0hVJ
-	 no/yuxYNFNrLlFSNc6NQylhyfYlzUDmxb8XGS0zuvPLsXhgyKknMvLH+O2Ihk3pmNT
-	 1gMJBcc1VV8+QUFvrFRDUc277VmMx25mO4r/sr+I=
+	b=geW6nx4C94qm29u28bzjROO9Q5R7CoybgoTqfi57n7IHFuLNQ9keYzlvet9N2GBSJ
+	 hOimNkCrtbOsmhPpjbFIh5IqbCkbDFzdXVZrX1edfIKyo4+OtHHL/bwdjRmkSQjQ9M
+	 +ikHwTXIsNa3Tojya/9/lfOQAxHCVe6ccdAdnmtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 511/578] usb: gadget: f_midi: fix MIDI Streaming descriptor lengths
-Date: Wed, 19 Feb 2025 09:28:35 +0100
-Message-ID: <20250219082713.085273523@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Robert Morris <rtm@csail.mit.edu>
+Subject: [PATCH 6.1 512/578] USB: hub: Ignore non-compliant devices with too many configs or interfaces
+Date: Wed, 19 Feb 2025 09:28:36 +0100
+Message-ID: <20250219082713.124187160@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,52 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit da1668997052ed1cb00322e1f3b63702615c9429 upstream.
+commit 2240fed37afbcdb5e8b627bc7ad986891100e05d upstream.
 
-While the MIDI jacks are configured correctly, and the MIDIStreaming
-endpoint descriptors are filled with the correct information,
-bNumEmbMIDIJack and bLength are set incorrectly in these descriptors.
+Robert Morris created a test program which can cause
+usb_hub_to_struct_hub() to dereference a NULL or inappropriate
+pointer:
 
-This does not matter when the numbers of in and out ports are equal, but
-when they differ the host will receive broken descriptors with
-uninitialized stack memory leaking into the descriptor for whichever
-value is smaller.
+Oops: general protection fault, probably for non-canonical address
+0xcccccccccccccccc: 0000 [#1] SMP DEBUG_PAGEALLOC PTI
+CPU: 7 UID: 0 PID: 117 Comm: kworker/7:1 Not tainted 6.13.0-rc3-00017-gf44d154d6e3d #14
+Hardware name: FreeBSD BHYVE/BHYVE, BIOS 14.0 10/17/2021
+Workqueue: usb_hub_wq hub_event
+RIP: 0010:usb_hub_adjust_deviceremovable+0x78/0x110
+...
+Call Trace:
+ <TASK>
+ ? die_addr+0x31/0x80
+ ? exc_general_protection+0x1b4/0x3c0
+ ? asm_exc_general_protection+0x26/0x30
+ ? usb_hub_adjust_deviceremovable+0x78/0x110
+ hub_probe+0x7c7/0xab0
+ usb_probe_interface+0x14b/0x350
+ really_probe+0xd0/0x2d0
+ ? __pfx___device_attach_driver+0x10/0x10
+ __driver_probe_device+0x6e/0x110
+ driver_probe_device+0x1a/0x90
+ __device_attach_driver+0x7e/0xc0
+ bus_for_each_drv+0x7f/0xd0
+ __device_attach+0xaa/0x1a0
+ bus_probe_device+0x8b/0xa0
+ device_add+0x62e/0x810
+ usb_set_configuration+0x65d/0x990
+ usb_generic_driver_probe+0x4b/0x70
+ usb_probe_device+0x36/0xd0
 
-The precise meaning of "in" and "out" in the port counts is not clearly
-defined and can be confusing.  But elsewhere the driver consistently
-uses this to match the USB meaning of IN and OUT viewed from the host,
-so that "in" ports send data to the host and "out" ports receive data
-from it.
+The cause of this error is that the device has two interfaces, and the
+hub driver binds to interface 1 instead of interface 0, which is where
+usb_hub_to_struct_hub() looks.
 
+We can prevent the problem from occurring by refusing to accept hub
+devices that violate the USB spec by having more than one
+configuration or interface.
+
+Reported-and-tested-by: Robert Morris <rtm@csail.mit.edu>
 Cc: stable <stable@kernel.org>
-Fixes: c8933c3f79568 ("USB: gadget: f_midi: allow a dynamic number of input and output ports")
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20250130195035.3883857-1-jkeeping@inmusicbrands.com
+Closes: https://lore.kernel.org/linux-usb/95564.1737394039@localhost/
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/c27f3bf4-63d8-4fb5-ac82-09e3cd19f61c@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_midi.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/core/hub.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/usb/gadget/function/f_midi.c
-+++ b/drivers/usb/gadget/function/f_midi.c
-@@ -999,11 +999,11 @@ static int f_midi_bind(struct usb_config
- 	}
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -1819,6 +1819,17 @@ static int hub_probe(struct usb_interfac
+ 	hdev = interface_to_usbdev(intf);
  
- 	/* configure the endpoint descriptors ... */
--	ms_out_desc.bLength = USB_DT_MS_ENDPOINT_SIZE(midi->in_ports);
--	ms_out_desc.bNumEmbMIDIJack = midi->in_ports;
-+	ms_out_desc.bLength = USB_DT_MS_ENDPOINT_SIZE(midi->out_ports);
-+	ms_out_desc.bNumEmbMIDIJack = midi->out_ports;
- 
--	ms_in_desc.bLength = USB_DT_MS_ENDPOINT_SIZE(midi->out_ports);
--	ms_in_desc.bNumEmbMIDIJack = midi->out_ports;
-+	ms_in_desc.bLength = USB_DT_MS_ENDPOINT_SIZE(midi->in_ports);
-+	ms_in_desc.bNumEmbMIDIJack = midi->in_ports;
- 
- 	/* ... and add them to the list */
- 	endpoint_descriptor_index = i;
+ 	/*
++	 * The USB 2.0 spec prohibits hubs from having more than one
++	 * configuration or interface, and we rely on this prohibition.
++	 * Refuse to accept a device that violates it.
++	 */
++	if (hdev->descriptor.bNumConfigurations > 1 ||
++			hdev->actconfig->desc.bNumInterfaces > 1) {
++		dev_err(&intf->dev, "Invalid hub with more than one config or interface\n");
++		return -EINVAL;
++	}
++
++	/*
+ 	 * Set default autosuspend delay as 0 to speedup bus suspend,
+ 	 * based on the below considerations:
+ 	 *
 
 
