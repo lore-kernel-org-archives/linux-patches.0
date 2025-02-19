@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710421E048F;
-	Wed, 19 Feb 2025 09:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FB31DC747;
+	Wed, 19 Feb 2025 09:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957342; cv=none; b=QLTWlA7MWSHjYmH70/rqzdhlk61txrrAJPeOCEysCEgxSLnsJkJaw1ztqBTaiaxtUEKFrOOh+4ATHEwAXRbV615XNFzc++3w4TXGK/S8OyqVZ6/0zFfEzRwWP36WImJzFJMzU7kf+kAX9oQgeuE9ehFwiNn+zRb8SQrBOzvg+WE=
+	t=1739957345; cv=none; b=qv4dLgpS9oaf5wnJhnZl0wDAA80aROi05gtc3M+buFZ4E3LRbRzECcgvQn3ZhuvuUcxS+zAl3kkfKMeW1mhjR8Y65BFcbXlllEyDNZcE/kOjV1GYURAVkE+lIsqad8IN2eW99M93u4/IHmJqPk2VcHw0s4xSf/pWcywVHSn53T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957342; c=relaxed/simple;
-	bh=h99fds2MaTiwVgc4ocVn+fbgyNdB+VFdJT6loanjCj8=;
+	s=arc-20240116; t=1739957345; c=relaxed/simple;
+	bh=jxaUseyylkfZdZLv1vur9ofVUnnCo1QgCVMe3Sku8JQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fvi8aUKQyeYMupq+7I+NIgHp4h7CvV3dNDBx+aPMLOpFieCiaWajkZm+PWr0CbbJK+tuODhkGSVw5PHIYTDgmHsVxIG5VJg/1FEs+djg+9SsXiOWo3pKMlUTI6FaEfSbmT+6ohIWc2Kr0mx3hdnsm27lRKSN8oazHbASAewHR0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AznXJufc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ll9lw5Stb9OkR1KJtEWnEKsQLH1bb23HQMulkPR6LPM4JpWyF69YGDtgBQz8FjZkTTUsvd9+p8wZeEB76DaZri3CbBk8TAXND/mplPqc9elEcQV6GyY8mVbcmkCAzT4+YxS/NSUVHLvbpliYQa3opfMU2EbNmg2qutBoX6RAFIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJazizp4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AznXJufc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF45DC4CED1;
-	Wed, 19 Feb 2025 09:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJazizp4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC412C4AF09;
+	Wed, 19 Feb 2025 09:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957342;
-	bh=h99fds2MaTiwVgc4ocVn+fbgyNdB+VFdJT6loanjCj8=;
+	s=korg; t=1739957345;
+	bh=jxaUseyylkfZdZLv1vur9ofVUnnCo1QgCVMe3Sku8JQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AznXJufcIEAivHMArxskWa7IAIBKFqsPBtZvEX901Zq+rZDxlW3MjDGSLUF4flzv4
-	 raQ8k4MiKvLXkXxKKCaqbS/c7M2YXOoTIbQ06oQ1XfTD6DENDZbaXfrkwsmAMSDGsf
-	 5gGjnVKS2Kez3G3tnwtGqeYZFCq33yYb1j2D83mI=
+	b=fJazizp4a6ZO3DphgzDmmlva+Gh1Xzfs3VHsJ13Be52JrlIEzhjfyTtls4KQiTZga
+	 N3DxWPbtbV9jTJEisRzp5C/toAz0HvKdNP0rgjX8KR4PyGtQoL6zEzU+/HYjl05CwO
+	 xmQoE2DbIrEOhxRp+UjCTEINHTu9yshpi30mLVa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Fertser <fercerpav@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 450/578] net/ncsi: use dev_set_mac_address() for Get MC MAC Address handling
-Date: Wed, 19 Feb 2025 09:27:34 +0100
-Message-ID: <20250219082710.696175549@linuxfoundation.org>
+	Rakesh Babu Saladi <Saladi.Rakeshbabu@microchip.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 486/578] PCI: switchtec: Add Microchip PCI100X device IDs
+Date: Wed, 19 Feb 2025 09:28:10 +0100
+Message-ID: <20250219082712.119575321@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -50,82 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Fertser <fercerpav@gmail.com>
+From: Rakesh Babu Saladi <Saladi.Rakeshbabu@microchip.com>
 
-commit 05d91cdb1f9108426b14975ef4eeddf15875ca05 upstream.
+[ Upstream commit a3282f84b2151d254dc4abf24d1255c6382be774 ]
 
-Copy of the rationale from 790071347a0a1a89e618eedcd51c687ea783aeb3:
+Add Microchip parts to the Device ID table so the driver supports PCI100x
+devices.
 
-Change ndo_set_mac_address to dev_set_mac_address because
-dev_set_mac_address provides a way to notify network layer about MAC
-change. In other case, services may not aware about MAC change and keep
-using old one which set from network adapter driver.
+Add a new macro to quirk the Microchip Switchtec PCI100x parts to allow DMA
+access via NTB to work when the IOMMU is turned on.
 
-As example, DHCP client from systemd do not update MAC address without
-notification from net subsystem which leads to the problem with acquiring
-the right address from DHCP server.
+PCI100x family has 6 variants; each variant is designed for different
+application usages, different port counts and lane counts:
 
-Since dev_set_mac_address requires RTNL lock the operation can not be
-performed directly in the response handler, see
-9e2bbab94b88295dcc57c7580393c9ee08d7314d.
+  PCI1001 has 1 x4 upstream port and 3 x4 downstream ports
+  PCI1002 has 1 x4 upstream port and 4 x2 downstream ports
+  PCI1003 has 2 x4 upstream ports, 2 x2 upstream ports, and 2 x2
+    downstream ports
+  PCI1004 has 4 x4 upstream ports
+  PCI1005 has 1 x4 upstream port and 6 x2 downstream ports
+  PCI1006 has 6 x2 upstream ports and 2 x2 downstream ports
 
-The way of selecting the first suitable MAC address from the list is
-changed, instead of having the driver check it this patch just assumes
-any valid MAC should be good.
+[Historical note: these parts use PCI_VENDOR_ID_EFAR (0x1055), from EFAR
+Microsystems, which was acquired in 1996 by Standard Microsystems Corp,
+which was acquired by Microchip Technology in 2012.  The PCI-SIG confirms
+that Vendor ID 0x1055 is assigned to Microchip even though it's not
+visible via https://pcisig.com/membership/member-companies]
 
-Fixes: b8291cf3d118 ("net/ncsi: Add NC-SI 1.2 Get MC MAC Address command")
-Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20250120095524.243103-1-Saladi.Rakeshbabu@microchip.com
+Signed-off-by: Rakesh Babu Saladi <Saladi.Rakeshbabu@microchip.com>
+[bhelgaas: Vendor ID history]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-By: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-rsp.c |   18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/pci/quirks.c           | 11 +++++++++++
+ drivers/pci/switch/switchtec.c | 26 ++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+)
 
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -1089,14 +1089,12 @@ static int ncsi_rsp_handler_netlink(stru
- static int ncsi_rsp_handler_gmcma(struct ncsi_request *nr)
- {
- 	struct ncsi_dev_priv *ndp = nr->ndp;
-+	struct sockaddr *saddr = &ndp->pending_mac;
- 	struct net_device *ndev = ndp->ndev.dev;
- 	struct ncsi_rsp_gmcma_pkt *rsp;
--	struct sockaddr saddr;
--	int ret = -1;
- 	int i;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index c16c8507d048e..fb115b8ba342d 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5870,6 +5870,17 @@ SWITCHTEC_QUIRK(0x5552);  /* PAXA 52XG5 */
+ SWITCHTEC_QUIRK(0x5536);  /* PAXA 36XG5 */
+ SWITCHTEC_QUIRK(0x5528);  /* PAXA 28XG5 */
  
- 	rsp = (struct ncsi_rsp_gmcma_pkt *)skb_network_header(nr->rsp);
--	saddr.sa_family = ndev->type;
- 	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
- 
- 	netdev_info(ndev, "NCSI: Received %d provisioned MAC addresses\n",
-@@ -1108,20 +1106,20 @@ static int ncsi_rsp_handler_gmcma(struct
- 			    rsp->addresses[i][4], rsp->addresses[i][5]);
++#define SWITCHTEC_PCI100X_QUIRK(vid) \
++	DECLARE_PCI_FIXUP_CLASS_FINAL(PCI_VENDOR_ID_EFAR, vid, \
++		PCI_CLASS_BRIDGE_OTHER, 8, quirk_switchtec_ntb_dma_alias)
++SWITCHTEC_PCI100X_QUIRK(0x1001);  /* PCI1001XG4 */
++SWITCHTEC_PCI100X_QUIRK(0x1002);  /* PCI1002XG4 */
++SWITCHTEC_PCI100X_QUIRK(0x1003);  /* PCI1003XG4 */
++SWITCHTEC_PCI100X_QUIRK(0x1004);  /* PCI1004XG4 */
++SWITCHTEC_PCI100X_QUIRK(0x1005);  /* PCI1005XG4 */
++SWITCHTEC_PCI100X_QUIRK(0x1006);  /* PCI1006XG4 */
++
++
+ /*
+  * The PLX NTB uses devfn proxy IDs to move TLPs between NT endpoints.
+  * These IDs are used to forward responses to the originator on the other
+diff --git a/drivers/pci/switch/switchtec.c b/drivers/pci/switch/switchtec.c
+index 332af6938d7fd..9011518b1d132 100644
+--- a/drivers/pci/switch/switchtec.c
++++ b/drivers/pci/switch/switchtec.c
+@@ -1739,6 +1739,26 @@ static void switchtec_pci_remove(struct pci_dev *pdev)
+ 		.driver_data = gen, \
  	}
  
-+	saddr->sa_family = ndev->type;
- 	for (i = 0; i < rsp->address_count; i++) {
--		memcpy(saddr.sa_data, &rsp->addresses[i], ETH_ALEN);
--		ret = ndev->netdev_ops->ndo_set_mac_address(ndev, &saddr);
--		if (ret < 0) {
-+		if (!is_valid_ether_addr(rsp->addresses[i])) {
- 			netdev_warn(ndev, "NCSI: Unable to assign %pM to device\n",
--				    saddr.sa_data);
-+				    rsp->addresses[i]);
- 			continue;
- 		}
--		netdev_warn(ndev, "NCSI: Set MAC address to %pM\n", saddr.sa_data);
-+		memcpy(saddr->sa_data, rsp->addresses[i], ETH_ALEN);
-+		netdev_warn(ndev, "NCSI: Will set MAC address to %pM\n", saddr->sa_data);
- 		break;
- 	}
- 
--	ndp->gma_flag = ret == 0;
--	return ret;
-+	ndp->gma_flag = 1;
-+	return 0;
- }
- 
- static struct ncsi_rsp_handler {
++#define SWITCHTEC_PCI100X_DEVICE(device_id, gen) \
++	{ \
++		.vendor     = PCI_VENDOR_ID_EFAR, \
++		.device     = device_id, \
++		.subvendor  = PCI_ANY_ID, \
++		.subdevice  = PCI_ANY_ID, \
++		.class      = (PCI_CLASS_MEMORY_OTHER << 8), \
++		.class_mask = 0xFFFFFFFF, \
++		.driver_data = gen, \
++	}, \
++	{ \
++		.vendor     = PCI_VENDOR_ID_EFAR, \
++		.device     = device_id, \
++		.subvendor  = PCI_ANY_ID, \
++		.subdevice  = PCI_ANY_ID, \
++		.class      = (PCI_CLASS_BRIDGE_OTHER << 8), \
++		.class_mask = 0xFFFFFFFF, \
++		.driver_data = gen, \
++	}
++
+ static const struct pci_device_id switchtec_pci_tbl[] = {
+ 	SWITCHTEC_PCI_DEVICE(0x8531, SWITCHTEC_GEN3),  /* PFX 24xG3 */
+ 	SWITCHTEC_PCI_DEVICE(0x8532, SWITCHTEC_GEN3),  /* PFX 32xG3 */
+@@ -1833,6 +1853,12 @@ static const struct pci_device_id switchtec_pci_tbl[] = {
+ 	SWITCHTEC_PCI_DEVICE(0x5552, SWITCHTEC_GEN5),  /* PAXA 52XG5 */
+ 	SWITCHTEC_PCI_DEVICE(0x5536, SWITCHTEC_GEN5),  /* PAXA 36XG5 */
+ 	SWITCHTEC_PCI_DEVICE(0x5528, SWITCHTEC_GEN5),  /* PAXA 28XG5 */
++	SWITCHTEC_PCI100X_DEVICE(0x1001, SWITCHTEC_GEN4),  /* PCI1001 16XG4 */
++	SWITCHTEC_PCI100X_DEVICE(0x1002, SWITCHTEC_GEN4),  /* PCI1002 12XG4 */
++	SWITCHTEC_PCI100X_DEVICE(0x1003, SWITCHTEC_GEN4),  /* PCI1003 16XG4 */
++	SWITCHTEC_PCI100X_DEVICE(0x1004, SWITCHTEC_GEN4),  /* PCI1004 16XG4 */
++	SWITCHTEC_PCI100X_DEVICE(0x1005, SWITCHTEC_GEN4),  /* PCI1005 16XG4 */
++	SWITCHTEC_PCI100X_DEVICE(0x1006, SWITCHTEC_GEN4),  /* PCI1006 16XG4 */
+ 	{0}
+ };
+ MODULE_DEVICE_TABLE(pci, switchtec_pci_tbl);
+-- 
+2.39.5
+
 
 
