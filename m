@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BF81DED5A;
-	Wed, 19 Feb 2025 09:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397E01DE3BB;
+	Wed, 19 Feb 2025 09:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956164; cv=none; b=uUbtpB6GaHlpelVi/dX+xb1Ph1z1qQ1FC6lTRg2M6Av+haanb825zlK90NE+AQQr6M+GQeKythCP7ewXMWnIMfSc9/vidl3td/FKBXYDGEQyR+HNnjAOvYJo6nwL8yCF4SL5q7oLJ2t2uSbExEuO6ZEEc6OOX1e1FMHf0p6QSrI=
+	t=1739956167; cv=none; b=A9QOJRTiDT4psiANwSmSTIjj2nJNHW8y4SGg3RlTNE8NK74O6QFD8kwiwY6TfeLoha1rQ7rgMCFjAgRXLi3KgTRGSsKr59uyOS69ElkoL9JyUaFltM2xH8h47ptxSp+n4cqo1F56+D47GhAd3Fm8bHZtf/8tIuUao/QrI82e1fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956164; c=relaxed/simple;
-	bh=H4faPKW4+wzCE5oO2YXrrTRq8lHouETfkewE1PwxjKc=;
+	s=arc-20240116; t=1739956167; c=relaxed/simple;
+	bh=9zDKBKOYoS1ULjhy8b/G+Nn68yN8Dhk4jHMWaUvDcYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJmqK0zk7c5Edpe90FQrpV2Wzut8X2BpZfa3hm4gt0K2tjSN97FqRwbpr3Ypa5mOMnfiBdvqzk/xM0sbsSvAWILihqst7fB7iDBXkx8LoA08kZ0WuEzEcZLaZ1ncewG/czUPrnfSKzauYADFKFjb/04k7aJOtzbYpirDlk2fDqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3Q7NrFN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fi8+WQURxOEnROsv+tCz1FXBuv3NO8IVVDdtc0LRmaIRJpy0lnghg0sC2tes3dF8wqQpoB/ECYykoLIu9HYa45eoAOpgvJMM1fH27qQ3prxT3d+Y25Y8pe/VFtQ+4w1Q0hTYDMESxqCubJQ15cNtx1WlAfDcMOeLiRAfsnHa9ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHud7jKH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3Q7NrFN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5461C4CEE6;
-	Wed, 19 Feb 2025 09:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHud7jKH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD025C4CEE6;
+	Wed, 19 Feb 2025 09:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956164;
-	bh=H4faPKW4+wzCE5oO2YXrrTRq8lHouETfkewE1PwxjKc=;
+	s=korg; t=1739956167;
+	bh=9zDKBKOYoS1ULjhy8b/G+Nn68yN8Dhk4jHMWaUvDcYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i3Q7NrFNQt2zzTGx5hwZyTo6MLcW3IQrwLFwVlcBRr/95GCQxRtdrHGouz4aHq678
-	 KAGfEkijj4JxT1f3Scx3KE0H9n0EAC3RQMuTWb9QRhVDbUZBaQEZZGNyDBoc/Vl+vP
-	 FHz8ZMqRPQ7wc81LSd/gJA+OLt3fxqhjmGF5sDZ0=
+	b=ZHud7jKHdJ++6mZGuXCmz5Ldu9F5K66HWNLmn229qt7tKEFPiPPmj41nwLfBvOfOQ
+	 18VOTW4oEGz/xUYxEDmA0uOQ8o8f+uK+hpPG93FSUAzofKmVHj6JbFh/Mdv5VewSX2
+	 ak4EKB/cS5no3s4P8tUhlzwWubjz++DmDrfTuJkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	"Dmitry V. Levin" <ldv@strace.io>,
+	Kees Cook <kees@kernel.org>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/578] selftests: timers: clocksource-switch: Adapt progress to kselftest framework
-Date: Wed, 19 Feb 2025 09:21:31 +0100
-Message-ID: <20250219082656.384656052@linuxfoundation.org>
+Subject: [PATCH 6.1 088/578] selftests: harness: fix printing of mismatch values in __EXPECT()
+Date: Wed, 19 Feb 2025 09:21:32 +0100
+Message-ID: <20250219082656.422887183@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,49 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Dmitry V. Levin <ldv@strace.io>
 
-[ Upstream commit 8694e6a7f7dba23d3abd9f5a96f64d161704c7b1 ]
+[ Upstream commit 02bc220dc6dc7c56edc4859bc5dd2c08b95d5fb5 ]
 
-When adapting the test to the kselftest framework, a few printf() calls
-indicating test progress were not updated.
+intptr_t and uintptr_t are not big enough types on 32-bit architectures
+when printing 64-bit values, resulting to the following incorrect
+diagnostic output:
 
-Fix this by replacing these printf() calls by ksft_print_msg() calls.
+  # get_syscall_info.c:209:get_syscall_info:Expected exp_args[2] (3134324433) == info.entry.args[1] (3134324433)
 
-Link: https://lore.kernel.org/r/7dd4b9ab6e43268846e250878ebf25ae6d3d01ce.1733994134.git.geert+renesas@glider.be
-Fixes: ce7d101750ff ("selftests: timers: clocksource-switch: adapt to kselftest framework")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Replace intptr_t and uintptr_t with intmax_t and uintmax_t, respectively.
+With this fix, the same test produces more usable diagnostic output:
+
+  # get_syscall_info.c:209:get_syscall_info:Expected exp_args[2] (3134324433) == info.entry.args[1] (18446744072548908753)
+
+Link: https://lore.kernel.org/r/20250108170757.GA6723@strace.io
+Fixes: b5bb6d3068ea ("selftests/seccomp: fix 32-bit build warnings")
+Signed-off-by: Dmitry V. Levin <ldv@strace.io>
+Reviewed-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/timers/clocksource-switch.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/kselftest_harness.h | 24 ++++++++++-----------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/tools/testing/selftests/timers/clocksource-switch.c b/tools/testing/selftests/timers/clocksource-switch.c
-index c5264594064c8..83faa4e354e38 100644
---- a/tools/testing/selftests/timers/clocksource-switch.c
-+++ b/tools/testing/selftests/timers/clocksource-switch.c
-@@ -156,8 +156,8 @@ int main(int argc, char **argv)
- 	/* Check everything is sane before we start switching asynchronously */
- 	if (do_sanity_check) {
- 		for (i = 0; i < count; i++) {
--			printf("Validating clocksource %s\n",
--				clocksource_list[i]);
-+			ksft_print_msg("Validating clocksource %s\n",
-+					clocksource_list[i]);
- 			if (change_clocksource(clocksource_list[i])) {
- 				status = -1;
- 				goto out;
-@@ -169,7 +169,7 @@ int main(int argc, char **argv)
- 		}
- 	}
- 
--	printf("Running Asynchronous Switching Tests...\n");
-+	ksft_print_msg("Running Asynchronous Switching Tests...\n");
- 	pid = fork();
- 	if (!pid)
- 		return run_tests(runtime);
+diff --git a/tools/testing/selftests/kselftest_harness.h b/tools/testing/selftests/kselftest_harness.h
+index 584687c3286dd..9d1379da59dfe 100644
+--- a/tools/testing/selftests/kselftest_harness.h
++++ b/tools/testing/selftests/kselftest_harness.h
+@@ -709,33 +709,33 @@
+ 		/* Report with actual signedness to avoid weird output. */ \
+ 		switch (is_signed_type(__exp) * 2 + is_signed_type(__seen)) { \
+ 		case 0: { \
+-			unsigned long long __exp_print = (uintptr_t)__exp; \
+-			unsigned long long __seen_print = (uintptr_t)__seen; \
+-			__TH_LOG("Expected %s (%llu) %s %s (%llu)", \
++			uintmax_t __exp_print = (uintmax_t)__exp; \
++			uintmax_t __seen_print = (uintmax_t)__seen; \
++			__TH_LOG("Expected %s (%ju) %s %s (%ju)", \
+ 				 _expected_str, __exp_print, #_t, \
+ 				 _seen_str, __seen_print); \
+ 			break; \
+ 			} \
+ 		case 1: { \
+-			unsigned long long __exp_print = (uintptr_t)__exp; \
+-			long long __seen_print = (intptr_t)__seen; \
+-			__TH_LOG("Expected %s (%llu) %s %s (%lld)", \
++			uintmax_t __exp_print = (uintmax_t)__exp; \
++			intmax_t  __seen_print = (intmax_t)__seen; \
++			__TH_LOG("Expected %s (%ju) %s %s (%jd)", \
+ 				 _expected_str, __exp_print, #_t, \
+ 				 _seen_str, __seen_print); \
+ 			break; \
+ 			} \
+ 		case 2: { \
+-			long long __exp_print = (intptr_t)__exp; \
+-			unsigned long long __seen_print = (uintptr_t)__seen; \
+-			__TH_LOG("Expected %s (%lld) %s %s (%llu)", \
++			intmax_t  __exp_print = (intmax_t)__exp; \
++			uintmax_t __seen_print = (uintmax_t)__seen; \
++			__TH_LOG("Expected %s (%jd) %s %s (%ju)", \
+ 				 _expected_str, __exp_print, #_t, \
+ 				 _seen_str, __seen_print); \
+ 			break; \
+ 			} \
+ 		case 3: { \
+-			long long __exp_print = (intptr_t)__exp; \
+-			long long __seen_print = (intptr_t)__seen; \
+-			__TH_LOG("Expected %s (%lld) %s %s (%lld)", \
++			intmax_t  __exp_print = (intmax_t)__exp; \
++			intmax_t  __seen_print = (intmax_t)__seen; \
++			__TH_LOG("Expected %s (%jd) %s %s (%jd)", \
+ 				 _expected_str, __exp_print, #_t, \
+ 				 _seen_str, __seen_print); \
+ 			break; \
 -- 
 2.39.5
 
