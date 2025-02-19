@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169FF1DF97F;
-	Wed, 19 Feb 2025 09:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014491CAA85;
+	Wed, 19 Feb 2025 09:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955981; cv=none; b=ESNd0XfCzMCGhUGzxV648B/DgZtqJcU8UVznsHgAkuFz4lYpj0zLKTsiXEdbEqqBYvSFnw2weFpMcmyqI/c+RuuThpJe3ePqcJT6jYopZv43rmNOk8bx9POjYFtpVEqfEQKAKm4X04gFn5YoIWLlpGeqXipyet4jbTAolci6UmY=
+	t=1739955984; cv=none; b=Vm5SMZ6CdO+QqS/2mZARU2WHzEZnvxdVMbtnH9y3dULBPGPoZ/JyGZiY/pgSaa64Y9ehY3gQWCZG+TUWYyC+7w7oXxfNgEcEU2XiPqUsd1sXwNuP/fDQcmOU8LrOzMM6ujX9wVaMuQzD2XPLW/dIPttAGyCzXyTTGLhm6ovps2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955981; c=relaxed/simple;
-	bh=QTP0QjzmHCv79IJiQQcdaWWyR62VWVEQqRPazjQNsIM=;
+	s=arc-20240116; t=1739955984; c=relaxed/simple;
+	bh=yWd4yjiP3YK9AmamS+0p+MDxS69M4Hc84RmWEPphLQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UCPUf50DP+ANvOUgIFl2mmfXLL55G2pXN4xFkIc/7L+AJySmM+yqwqLMA4D/z7B75A9E5ttbHUyxHi7M6zeKZJ028YTgGYbFPJXS7baC6qoMr/FP+ZcbN1fTTxdIK1TmbmGjzljhQu8JeluAa+kM4C5PB81/IO7pFiWeDby+lJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScUQi5BN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dSW7+pzqgEkbE9FRbmZSJHXMtppPxSTwdIYu3g2Q+G8V4lF8vnGIg4CZNmrn99DlEC3EdK/YUjvTMbdCmgp/a0Dv3xF5D7b6RhW2xKh0jmcZNQjm1iOlLs6/wBQPznqowBW8V1j7qMI5AZKZMCxrTnC2XePH3bkLNg2uEYMt3Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uk3f6KXr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScUQi5BN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7F0C4CED1;
-	Wed, 19 Feb 2025 09:06:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uk3f6KXr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B14DC4CED1;
+	Wed, 19 Feb 2025 09:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955980;
-	bh=QTP0QjzmHCv79IJiQQcdaWWyR62VWVEQqRPazjQNsIM=;
+	s=korg; t=1739955983;
+	bh=yWd4yjiP3YK9AmamS+0p+MDxS69M4Hc84RmWEPphLQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ScUQi5BNOsjFSK7be6tEbAqXxAm+Dc4ocUiYV1GGPF0ahoIBJPggOUN4+YLRCHzpw
-	 x1HNyPSKdmn6CkUx50vTlYeqB+BZgv0193R7Y4fzyDo7dFjf8s/w55+Ajm8RHGSKnU
-	 mfUzJVDnswW7QfYBDoOWHwVQECX4lsuKIzTCrfec=
+	b=uk3f6KXrFQ0t86TegYPAv02t3F1zSle2tX/nKYEbcWCE4anzuQ+MPZWk5FFBZ1bCS
+	 MOxwOuv8xlh8xTGWMMberlFazmc2AbaTD6JrlfWJSGGctV+8anUa3w6qkr952hdK0h
+	 RCPKu1lI/jAPR4i2bc/xpZh/o+5DLpj5S600tlNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <eugen.hristev@linaro.org>,
-	Kees Cook <kees@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/578] pstore/blk: trivial typo fixes
-Date: Wed, 19 Feb 2025 09:20:11 +0100
-Message-ID: <20250219082653.187152189@linuxfoundation.org>
+Subject: [PATCH 6.1 025/578] OPP: Rearrange entries in pm_opp.h
+Date: Wed, 19 Feb 2025 09:20:29 +0100
+Message-ID: <20250219082653.884773666@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,44 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eugen Hristev <eugen.hristev@linaro.org>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit 542243af7182efaeaf6d0f4643f7de437541a9af ]
+[ Upstream commit 754833b3194c30dad5af0145e25192a8e29521ab ]
 
-Fix trivial typos in comments.
+Rearrange the helper function declarations / definitions to keep them in
+order of freq, level and then bw.
 
-Fixes: 2a03ddbde1e1 ("pstore/blk: Move verify_size() macro out of function")
-Fixes: 17639f67c1d6 ("pstore/blk: Introduce backend for block devices")
-Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
-Link: https://lore.kernel.org/r/20250101111921.850406-1-eugen.hristev@linaro.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Stable-dep-of: b44b9bc7cab2 ("OPP: fix dev_pm_opp_find_bw_*() when bandwidth table not initialized")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/blk.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/pm_opp.h | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/fs/pstore/blk.c b/fs/pstore/blk.c
-index 4ae0cfcd15f20..c6911c9997628 100644
---- a/fs/pstore/blk.c
-+++ b/fs/pstore/blk.c
-@@ -89,7 +89,7 @@ static struct pstore_device_info *pstore_device_info;
- 		_##name_ = check_size(name, alignsize);		\
- 	else							\
- 		_##name_ = 0;					\
--	/* Synchronize module parameters with resuls. */	\
-+	/* Synchronize module parameters with results. */	\
- 	name = _##name_ / 1024;					\
- 	dev->zone.name = _##name_;				\
+diff --git a/include/linux/pm_opp.h b/include/linux/pm_opp.h
+index dc1fb58907929..3821f50b9b89c 100644
+--- a/include/linux/pm_opp.h
++++ b/include/linux/pm_opp.h
+@@ -121,17 +121,19 @@ unsigned long dev_pm_opp_get_suspend_opp_freq(struct device *dev);
+ struct dev_pm_opp *dev_pm_opp_find_freq_exact(struct device *dev,
+ 					      unsigned long freq,
+ 					      bool available);
++
+ struct dev_pm_opp *dev_pm_opp_find_freq_floor(struct device *dev,
+ 					      unsigned long *freq);
+ 
++struct dev_pm_opp *dev_pm_opp_find_freq_ceil(struct device *dev,
++					     unsigned long *freq);
++
+ struct dev_pm_opp *dev_pm_opp_find_level_exact(struct device *dev,
+ 					       unsigned int level);
++
+ struct dev_pm_opp *dev_pm_opp_find_level_ceil(struct device *dev,
+ 					      unsigned int *level);
+ 
+-struct dev_pm_opp *dev_pm_opp_find_freq_ceil(struct device *dev,
+-					     unsigned long *freq);
+-
+ struct dev_pm_opp *dev_pm_opp_find_bw_ceil(struct device *dev,
+ 					   unsigned int *bw, int index);
+ 
+@@ -247,32 +249,32 @@ static inline unsigned long dev_pm_opp_get_suspend_opp_freq(struct device *dev)
+ 	return 0;
  }
-@@ -121,7 +121,7 @@ static int __register_pstore_device(struct pstore_device_info *dev)
- 	if (pstore_device_info)
- 		return -EBUSY;
  
--	/* zero means not limit on which backends to attempt to store. */
-+	/* zero means no limit on which backends attempt to store. */
- 	if (!dev->flags)
- 		dev->flags = UINT_MAX;
+-static inline struct dev_pm_opp *dev_pm_opp_find_level_exact(struct device *dev,
+-					unsigned int level)
++static inline struct dev_pm_opp *dev_pm_opp_find_freq_exact(struct device *dev,
++					unsigned long freq, bool available)
+ {
+ 	return ERR_PTR(-EOPNOTSUPP);
+ }
  
+-static inline struct dev_pm_opp *dev_pm_opp_find_level_ceil(struct device *dev,
+-					unsigned int *level)
++static inline struct dev_pm_opp *dev_pm_opp_find_freq_floor(struct device *dev,
++					unsigned long *freq)
+ {
+ 	return ERR_PTR(-EOPNOTSUPP);
+ }
+ 
+-static inline struct dev_pm_opp *dev_pm_opp_find_freq_exact(struct device *dev,
+-					unsigned long freq, bool available)
++static inline struct dev_pm_opp *dev_pm_opp_find_freq_ceil(struct device *dev,
++					unsigned long *freq)
+ {
+ 	return ERR_PTR(-EOPNOTSUPP);
+ }
+ 
+-static inline struct dev_pm_opp *dev_pm_opp_find_freq_floor(struct device *dev,
+-					unsigned long *freq)
++static inline struct dev_pm_opp *dev_pm_opp_find_level_exact(struct device *dev,
++					unsigned int level)
+ {
+ 	return ERR_PTR(-EOPNOTSUPP);
+ }
+ 
+-static inline struct dev_pm_opp *dev_pm_opp_find_freq_ceil(struct device *dev,
+-					unsigned long *freq)
++static inline struct dev_pm_opp *dev_pm_opp_find_level_ceil(struct device *dev,
++					unsigned int *level)
+ {
+ 	return ERR_PTR(-EOPNOTSUPP);
+ }
 -- 
 2.39.5
 
