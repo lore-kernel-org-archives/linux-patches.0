@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0711E231E;
-	Wed, 19 Feb 2025 09:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15EF1DE2C5;
+	Wed, 19 Feb 2025 09:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956129; cv=none; b=G830f+yBOCzHw4YQSFCgVb6Us7KjpsMbgaseO7jVfBLG3rz7ZO8qWHaza8AWYinWAG6Ogq9r3BVK3t+nJ+19pd6Ai8w7vSCQ+Fe9oMtEMhWntNn6LCRQkRx5i+Zfw+Ea45Cp6idf8l3toXoQQBwcmmtzlGPnzN0fch2pw7phXeo=
+	t=1739956133; cv=none; b=EWwUijHpT+qqua4OfzxaS0wpPfrSWHNVJkGRyWfEp30MnHPf73UJ3FlooHxXejC5GoR03Xwv+v6QS3UtJAm3AQ08KNkJnPA1p/9t6lhDDlSWPQ/7ciqVVfD+ocXm2P3GYePH6CgFu9N6nME0if0V8SWN+cTGLNNRc1g0PaqeL+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956129; c=relaxed/simple;
-	bh=ykDvI14QNAnVDvo4ZfmMQN2IV5XLu4fClIw6hCl1Pys=;
+	s=arc-20240116; t=1739956133; c=relaxed/simple;
+	bh=AYhjmYHMocu/jyd3F3Vtx5IKhcZ56eFfMwcM3iSWTb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bpSalrRGNWW/Pf+hhWCKxVRPoxhqNDZwX/kfU2wQNzFi8VZufY35NY9ovxVdYnWmCY8gbiptRwv+vlXAi/5LzV8sMzPL4gRzq3DoCe3mDYytw2Z9o1ZAhruLJQwuvb4BQqJRGpclAaL3E6hcfzZZwLVVBOJipFyQ9fACcSyABwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ixCwla/Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dESm3MhksumrgeNeKXGePIfHxllSjxpwU93MQDHfA8p8M2blEzxdqpYRPVw8L9vPWaM/Yu0kvW0uoCKrYv+b4DHUXDkpKKktCMWU3+8vF++vAoNX5LK/9UJIzIWhUMCTpeRlfgXtGYQmLkrj/2u3/NDVZmBOXGzpuL3CanYZJ5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSmkJ5QF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ixCwla/Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E5CC4CEE6;
-	Wed, 19 Feb 2025 09:08:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSmkJ5QF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DFE6C4CED1;
+	Wed, 19 Feb 2025 09:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956129;
-	bh=ykDvI14QNAnVDvo4ZfmMQN2IV5XLu4fClIw6hCl1Pys=;
+	s=korg; t=1739956132;
+	bh=AYhjmYHMocu/jyd3F3Vtx5IKhcZ56eFfMwcM3iSWTb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ixCwla/YWoinNe2tVH0evgzOSGwbccqOmzGTtVuTgp3o977VzDGb6JGHyBBCmbs7x
-	 gpMhp4jZJ3Kk3kwLlAtJkgC+k7azIeVsXCeUoiapuz9yrHhx3m04Sfx40IagZQR7H3
-	 0PEc0CLDZBT1/sesX5is/o/5LV75tiJt4W6uRXd0=
+	b=rSmkJ5QFbhYsB2u5wbfMTqm4cz47rQNa2jRGhOGxkeQTCLblxWrblFZ/7ItnsaiB+
+	 6UCpfJ3IsdWPNHYP2xJ6yE6qkTyOnMk+kMIDgcCqQpkSdinRweA8MXH5vn84PI6YYe
+	 /zunZFfjVLier9lWOWusV8RSif2e9vz0aLsegfi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot <syzkaller@googlegroups.com>,
+	Octavian Purdila <tavip@google.com>,
 	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/578] net_sched: sch_sfq: handle bigger packets
-Date: Wed, 19 Feb 2025 09:20:47 +0100
-Message-ID: <20250219082654.586292150@linuxfoundation.org>
+Subject: [PATCH 6.1 044/578] net_sched: sch_sfq: dont allow 1 packet limit
+Date: Wed, 19 Feb 2025 09:20:48 +0100
+Message-ID: <20250219082654.624296233@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -46,169 +47,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Octavian Purdila <tavip@google.com>
 
-[ Upstream commit e4650d7ae4252f67e997a632adfae0dd74d3a99a ]
+[ Upstream commit 10685681bafce6febb39770f3387621bf5d67d0b ]
 
-SFQ has an assumption on dealing with packets smaller than 64KB.
+The current implementation does not work correctly with a limit of
+1. iproute2 actually checks for this and this patch adds the check in
+kernel as well.
 
-Even before BIG TCP, TCA_STAB can provide arbitrary big values
-in qdisc_pkt_len(skb)
+This fixes the following syzkaller reported crash:
 
-It is time to switch (struct sfq_slot)->allot to a 32bit field.
+UBSAN: array-index-out-of-bounds in net/sched/sch_sfq.c:210:6
+index 65535 is out of range for type 'struct sfq_head[128]'
+CPU: 0 PID: 2569 Comm: syz-executor101 Not tainted 5.10.0-smp-DEV #1
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Call Trace:
+  __dump_stack lib/dump_stack.c:79 [inline]
+  dump_stack+0x125/0x19f lib/dump_stack.c:120
+  ubsan_epilogue lib/ubsan.c:148 [inline]
+  __ubsan_handle_out_of_bounds+0xed/0x120 lib/ubsan.c:347
+  sfq_link net/sched/sch_sfq.c:210 [inline]
+  sfq_dec+0x528/0x600 net/sched/sch_sfq.c:238
+  sfq_dequeue+0x39b/0x9d0 net/sched/sch_sfq.c:500
+  sfq_reset+0x13/0x50 net/sched/sch_sfq.c:525
+  qdisc_reset+0xfe/0x510 net/sched/sch_generic.c:1026
+  tbf_reset+0x3d/0x100 net/sched/sch_tbf.c:319
+  qdisc_reset+0xfe/0x510 net/sched/sch_generic.c:1026
+  dev_reset_queue+0x8c/0x140 net/sched/sch_generic.c:1296
+  netdev_for_each_tx_queue include/linux/netdevice.h:2350 [inline]
+  dev_deactivate_many+0x6dc/0xc20 net/sched/sch_generic.c:1362
+  __dev_close_many+0x214/0x350 net/core/dev.c:1468
+  dev_close_many+0x207/0x510 net/core/dev.c:1506
+  unregister_netdevice_many+0x40f/0x16b0 net/core/dev.c:10738
+  unregister_netdevice_queue+0x2be/0x310 net/core/dev.c:10695
+  unregister_netdevice include/linux/netdevice.h:2893 [inline]
+  __tun_detach+0x6b6/0x1600 drivers/net/tun.c:689
+  tun_detach drivers/net/tun.c:705 [inline]
+  tun_chr_close+0x104/0x1b0 drivers/net/tun.c:3640
+  __fput+0x203/0x840 fs/file_table.c:280
+  task_work_run+0x129/0x1b0 kernel/task_work.c:185
+  exit_task_work include/linux/task_work.h:33 [inline]
+  do_exit+0x5ce/0x2200 kernel/exit.c:931
+  do_group_exit+0x144/0x310 kernel/exit.c:1046
+  __do_sys_exit_group kernel/exit.c:1057 [inline]
+  __se_sys_exit_group kernel/exit.c:1055 [inline]
+  __x64_sys_exit_group+0x3b/0x40 kernel/exit.c:1055
+ do_syscall_64+0x6c/0xd0
+ entry_SYSCALL_64_after_hwframe+0x61/0xcb
+RIP: 0033:0x7fe5e7b52479
+Code: Unable to access opcode bytes at RIP 0x7fe5e7b5244f.
+RSP: 002b:00007ffd3c800398 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fe5e7b52479
+RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000000
+RBP: 00007fe5e7bcd2d0 R08: ffffffffffffffb8 R09: 0000000000000014
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fe5e7bcd2d0
+R13: 0000000000000000 R14: 00007fe5e7bcdd20 R15: 00007fe5e7b24270
 
-sizeof(struct sfq_slot) is now 64 bytes, giving better cache locality.
+The crash can be also be reproduced with the following (with a tc
+recompiled to allow for sfq limits of 1):
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20241008111603.653140-1-edumazet@google.com
+tc qdisc add dev dummy0 handle 1: root tbf rate 1Kbit burst 100b lat 1s
+../iproute2-6.9.0/tc/tc qdisc add dev dummy0 handle 2: parent 1:10 sfq limit 1
+ifconfig dummy0 up
+ping -I dummy0 -f -c2 -W0.1 8.8.8.8
+sleep 1
+
+Scenario that triggers the crash:
+
+* the first packet is sent and queued in TBF and SFQ; qdisc qlen is 1
+
+* TBF dequeues: it peeks from SFQ which moves the packet to the
+  gso_skb list and keeps qdisc qlen set to 1. TBF is out of tokens so
+  it schedules itself for later.
+
+* the second packet is sent and TBF tries to queues it to SFQ. qdisc
+  qlen is now 2 and because the SFQ limit is 1 the packet is dropped
+  by SFQ. At this point qlen is 1, and all of the SFQ slots are empty,
+  however q->tail is not NULL.
+
+At this point, assuming no more packets are queued, when sch_dequeue
+runs again it will decrement the qlen for the current empty slot
+causing an underflow and the subsequent out of bounds access.
+
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Octavian Purdila <tavip@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241204030520.2084663-2-tavip@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 10685681bafc ("net_sched: sch_sfq: don't allow 1 packet limit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c | 39 +++++++++++++--------------------------
- 1 file changed, 13 insertions(+), 26 deletions(-)
+ net/sched/sch_sfq.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index ed362eefeea9a..7d4feae2fae36 100644
+index 7d4feae2fae36..60754f366ab7b 100644
 --- a/net/sched/sch_sfq.c
 +++ b/net/sched/sch_sfq.c
-@@ -77,12 +77,6 @@
- #define SFQ_EMPTY_SLOT		0xffff
- #define SFQ_DEFAULT_HASH_DIVISOR 1024
- 
--/* We use 16 bits to store allot, and want to handle packets up to 64K
-- * Scale allot by 8 (1<<3) so that no overflow occurs.
-- */
--#define SFQ_ALLOT_SHIFT		3
--#define SFQ_ALLOT_SIZE(X)	DIV_ROUND_UP(X, 1 << SFQ_ALLOT_SHIFT)
--
- /* This type should contain at least SFQ_MAX_DEPTH + 1 + SFQ_MAX_FLOWS values */
- typedef u16 sfq_index;
- 
-@@ -104,7 +98,7 @@ struct sfq_slot {
- 	sfq_index	next; /* next slot in sfq RR chain */
- 	struct sfq_head dep; /* anchor in dep[] chains */
- 	unsigned short	hash; /* hash value (index in ht[]) */
--	short		allot; /* credit for this slot */
-+	int		allot; /* credit for this slot */
- 
- 	unsigned int    backlog;
- 	struct red_vars vars;
-@@ -120,7 +114,6 @@ struct sfq_sched_data {
- 	siphash_key_t 	perturbation;
- 	u8		cur_depth;	/* depth of longest slot */
- 	u8		flags;
--	unsigned short  scaled_quantum; /* SFQ_ALLOT_SIZE(quantum) */
- 	struct tcf_proto __rcu *filter_list;
- 	struct tcf_block *block;
- 	sfq_index	*ht;		/* Hash table ('divisor' slots) */
-@@ -456,7 +449,7 @@ sfq_enqueue(struct sk_buff *skb, struct Qdisc *sch, struct sk_buff **to_free)
- 		 */
- 		q->tail = slot;
- 		/* We could use a bigger initial quantum for new flows */
--		slot->allot = q->scaled_quantum;
-+		slot->allot = q->quantum;
- 	}
- 	if (++sch->q.qlen <= q->limit)
- 		return NET_XMIT_SUCCESS;
-@@ -493,7 +486,7 @@ sfq_dequeue(struct Qdisc *sch)
- 	slot = &q->slots[a];
- 	if (slot->allot <= 0) {
- 		q->tail = slot;
--		slot->allot += q->scaled_quantum;
-+		slot->allot += q->quantum;
- 		goto next_slot;
- 	}
- 	skb = slot_dequeue_head(slot);
-@@ -512,7 +505,7 @@ sfq_dequeue(struct Qdisc *sch)
- 		}
- 		q->tail->next = next_a;
- 	} else {
--		slot->allot -= SFQ_ALLOT_SIZE(qdisc_pkt_len(skb));
-+		slot->allot -= qdisc_pkt_len(skb);
- 	}
- 	return skb;
- }
-@@ -595,7 +588,7 @@ static void sfq_rehash(struct Qdisc *sch)
- 				q->tail->next = x;
- 			}
- 			q->tail = slot;
--			slot->allot = q->scaled_quantum;
-+			slot->allot = q->quantum;
- 		}
- 	}
- 	sch->q.qlen -= dropped;
-@@ -628,7 +621,8 @@ static void sfq_perturbation(struct timer_list *t)
- 	rcu_read_unlock();
- }
- 
--static int sfq_change(struct Qdisc *sch, struct nlattr *opt)
-+static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
-+		      struct netlink_ext_ack *extack)
- {
- 	struct sfq_sched_data *q = qdisc_priv(sch);
- 	struct tc_sfq_qopt *ctl = nla_data(opt);
-@@ -646,14 +640,10 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt)
- 	    (!is_power_of_2(ctl->divisor) || ctl->divisor > 65536))
- 		return -EINVAL;
- 
--	/* slot->allot is a short, make sure quantum is not too big. */
--	if (ctl->quantum) {
--		unsigned int scaled = SFQ_ALLOT_SIZE(ctl->quantum);
--
--		if (scaled <= 0 || scaled > SHRT_MAX)
--			return -EINVAL;
-+	if ((int)ctl->quantum < 0) {
-+		NL_SET_ERR_MSG_MOD(extack, "invalid quantum");
-+		return -EINVAL;
- 	}
--
- 	if (ctl_v1 && !red_check_params(ctl_v1->qth_min, ctl_v1->qth_max,
- 					ctl_v1->Wlog, ctl_v1->Scell_log, NULL))
- 		return -EINVAL;
-@@ -663,10 +653,8 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt)
+@@ -652,6 +652,10 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
+ 		if (!p)
  			return -ENOMEM;
  	}
++	if (ctl->limit == 1) {
++		NL_SET_ERR_MSG_MOD(extack, "invalid limit");
++		return -EINVAL;
++	}
  	sch_tree_lock(sch);
--	if (ctl->quantum) {
-+	if (ctl->quantum)
+ 	if (ctl->quantum)
  		q->quantum = ctl->quantum;
--		q->scaled_quantum = SFQ_ALLOT_SIZE(q->quantum);
--	}
- 	WRITE_ONCE(q->perturb_period, ctl->perturb_period * HZ);
- 	if (ctl->flows)
- 		q->maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
-@@ -762,12 +750,11 @@ static int sfq_init(struct Qdisc *sch, struct nlattr *opt,
- 	q->divisor = SFQ_DEFAULT_HASH_DIVISOR;
- 	q->maxflows = SFQ_DEFAULT_FLOWS;
- 	q->quantum = psched_mtu(qdisc_dev(sch));
--	q->scaled_quantum = SFQ_ALLOT_SIZE(q->quantum);
- 	q->perturb_period = 0;
- 	get_random_bytes(&q->perturbation, sizeof(q->perturbation));
- 
- 	if (opt) {
--		int err = sfq_change(sch, opt);
-+		int err = sfq_change(sch, opt, extack);
- 		if (err)
- 			return err;
- 	}
-@@ -878,7 +865,7 @@ static int sfq_dump_class_stats(struct Qdisc *sch, unsigned long cl,
- 	if (idx != SFQ_EMPTY_SLOT) {
- 		const struct sfq_slot *slot = &q->slots[idx];
- 
--		xstats.allot = slot->allot << SFQ_ALLOT_SHIFT;
-+		xstats.allot = slot->allot;
- 		qs.qlen = slot->qlen;
- 		qs.backlog = slot->backlog;
- 	}
 -- 
 2.39.5
 
