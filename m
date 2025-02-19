@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBDC1E25F8;
-	Wed, 19 Feb 2025 08:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE601E834B;
+	Wed, 19 Feb 2025 08:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739953980; cv=none; b=odZNe9t4J9CM13tU26wVPCM561/k446E2GGkAFovMQS3ieunJLbu4mFkaSncDA8UvMvk0BBuc7vzorKp0aaCDMZ0vwkN4oP9e4n1Ql6kMAF2nIb2qVfzL4w0ZZuQmSyQoWvqEr4HM5VDFv8iglqniypCYJ4aFHMZnZL1k2SH2fQ=
+	t=1739953983; cv=none; b=E1HHyuX/fqz/ysAA0j5PpUGfafcNA0vwXSZGSFU4XkNsoZCBBmVj4+UCz2v0vjUX73dSmsgxz0Q0CFgHIkxH8ROCnUvkeIvFG+mjTXeFNBZzxHTN4gUDASdHonaWeaqy4cy4zJOh4ekqV9EUlQZdj/2LEKylF1gOLpctvWnskF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739953980; c=relaxed/simple;
-	bh=naJH5m+N2286qhjaywTPLvZh3KlYTbevl7jTglniVvg=;
+	s=arc-20240116; t=1739953983; c=relaxed/simple;
+	bh=EUhjnmL6wuOZbap+Js5rJkPiYm8ANizVokso0af1jsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ibAcdTJ6uLFRLocmMImtKynvOE4MiyBfLknJKYO7Dj9l/VKlt69JxARJK76NoXSO03k/Y2l+gSqVtk44902wYgODLbvdNmtgqnApdMCB1JANhHgJLsiTOYkHBL5xg4bHflLr6grWr5v+eNisyAErn/7Mfmpso7D3rnyk3y9YGSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jkgv9mxV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ALkZlG7T4W0yK4qIID6shsMZY5aZ9np0gcmWh9z3RdHxutYLUm1MuZLY5ggLWWr/LA/+jesp0nR89jH0LtCHw788ycuD6q9HQySVzVrBLajQmI/9oxdmsL7iCDsfCp+JBYQQn65GL1m/xgIiO7W+wYV9+kKdrw6YDqRwH7e2K+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1e66RmIf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jkgv9mxV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233FEC4CEE8;
-	Wed, 19 Feb 2025 08:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1e66RmIf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43975C4CEE7;
+	Wed, 19 Feb 2025 08:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739953979;
-	bh=naJH5m+N2286qhjaywTPLvZh3KlYTbevl7jTglniVvg=;
+	s=korg; t=1739953982;
+	bh=EUhjnmL6wuOZbap+Js5rJkPiYm8ANizVokso0af1jsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jkgv9mxVjAo+7AKzZDhd/jcRYlT1dkDwG7ETgsL3Q+NwkwXpVxEOn0xVmly+RNrkd
-	 eZE2KuUBLcuZuOOvz3yMkJSHm3uBe8cZxYXy4Ii7LEMwleKdBlVLksTa28O7kQC5XM
-	 rO7RHeEE+/4VAe/K2ddb+5elMUYR/By6xt6gIoiU=
+	b=1e66RmIfDzoq1bqAHPNeV6UkYQ67EJZaWmmy9tR9TeqoFfR+Sd+dC3pM238HgYeqS
+	 C0pDw0HVJmAPlme4rlWuIN3WovF56XZF38WSkmvkHi3WZrvYEoOaQcQq6rcyvQUA9r
+	 ynd0yoNpuiNJgxFiDonkuN17hKPb2AL9Dm/5/CCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Glenn Washburn <development@efficientek.com>,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Richard Weinberger <richard@nod.at>,
+	Zhu Lingshan <lingshan.zhu@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 057/274] um: fix execve stub execution on old host OSs
-Date: Wed, 19 Feb 2025 09:25:11 +0100
-Message-ID: <20250219082611.860512003@linuxfoundation.org>
+Subject: [PATCH 6.13 058/274] amdkfd: properly free gang_ctx_bo when failed to init user queue
+Date: Wed, 19 Feb 2025 09:25:12 +0100
+Message-ID: <20250219082611.899582759@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -53,72 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Zhu Lingshan <lingshan.zhu@amd.com>
 
-[ Upstream commit f82a9e7b9fa922bb9cccb00aae684a27b79e6df7 ]
+[ Upstream commit a33f7f9660705fb2ecf3467b2c48965564f392ce ]
 
-The stub execution uses the somewhat new close_range and execveat
-syscalls. Of these two, the execveat call is essential, but the
-close_range call is more about stub process hygiene rather than safety
-(and its result is ignored).
+The destructor of a gtt bo is declared as
+void amdgpu_amdkfd_free_gtt_mem(struct amdgpu_device *adev, void **mem_obj);
+Which takes void** as the second parameter.
 
-Replace both calls with a raw syscall as older machines might not have a
-recent enough kernel for close_range (with CLOSE_RANGE_CLOEXEC) or a
-libc that does not yet expose both of the syscalls.
+GCC allows passing void* to the function because void* can be implicitly
+casted to any other types, so it can pass compiling.
 
-Fixes: 32e8eaf263d9 ("um: use execveat to create userspace MMs")
-Reported-by: Glenn Washburn <development@efficientek.com>
-Closes: https://lore.kernel.org/20250108022404.05e0de1e@crass-HP-ZBook-15-G2
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Link: https://patch.msgid.link/20250113094107.674738-1-benjamin@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+However, passing this void* parameter into the function's
+execution process(which expects void** and dereferencing void**)
+will result in errors.
+
+Signed-off-by: Zhu Lingshan <lingshan.zhu@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Fixes: fb91065851cd ("drm/amdkfd: Refactor queue wptr_bo GART mapping")
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/os-Linux/skas/process.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/um/os-Linux/skas/process.c b/arch/um/os-Linux/skas/process.c
-index f683cfc9e51a5..e2f8f156402f5 100644
---- a/arch/um/os-Linux/skas/process.c
-+++ b/arch/um/os-Linux/skas/process.c
-@@ -181,6 +181,10 @@ extern char __syscall_stub_start[];
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+index bd595b1db15f2..1d538e874140c 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -298,7 +298,7 @@ static int init_user_queue(struct process_queue_manager *pqm,
+ 	return 0;
  
- static int stub_exe_fd;
- 
-+#ifndef CLOSE_RANGE_CLOEXEC
-+#define CLOSE_RANGE_CLOEXEC	(1U << 2)
-+#endif
-+
- static int userspace_tramp(void *stack)
- {
- 	char *const argv[] = { "uml-userspace", NULL };
-@@ -202,8 +206,12 @@ static int userspace_tramp(void *stack)
- 	init_data.stub_data_fd = phys_mapping(uml_to_phys(stack), &offset);
- 	init_data.stub_data_offset = MMAP_OFFSET(offset);
- 
--	/* Set CLOEXEC on all FDs and then unset on all memory related FDs */
--	close_range(0, ~0U, CLOSE_RANGE_CLOEXEC);
-+	/*
-+	 * Avoid leaking unneeded FDs to the stub by setting CLOEXEC on all FDs
-+	 * and then unsetting it on all memory related FDs.
-+	 * This is not strictly necessary from a safety perspective.
-+	 */
-+	syscall(__NR_close_range, 0, ~0U, CLOSE_RANGE_CLOEXEC);
- 
- 	fcntl(init_data.stub_data_fd, F_SETFD, 0);
- 	for (iomem = iomem_regions; iomem; iomem = iomem->next)
-@@ -224,7 +232,9 @@ static int userspace_tramp(void *stack)
- 	if (ret != sizeof(init_data))
- 		exit(4);
- 
--	execveat(stub_exe_fd, "", argv, NULL, AT_EMPTY_PATH);
-+	/* Raw execveat for compatibility with older libc versions */
-+	syscall(__NR_execveat, stub_exe_fd, (unsigned long)"",
-+		(unsigned long)argv, NULL, AT_EMPTY_PATH);
- 
- 	exit(5);
- }
+ free_gang_ctx_bo:
+-	amdgpu_amdkfd_free_gtt_mem(dev->adev, (*q)->gang_ctx_bo);
++	amdgpu_amdkfd_free_gtt_mem(dev->adev, &(*q)->gang_ctx_bo);
+ cleanup:
+ 	uninit_queue(*q);
+ 	*q = NULL;
 -- 
 2.39.5
 
