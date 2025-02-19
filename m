@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FCD1D90D9;
-	Wed, 19 Feb 2025 09:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383D01C701E;
+	Wed, 19 Feb 2025 09:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955827; cv=none; b=nW5xWESVm3zIQpBgVOe7mwU4p0b+r/jp9DYr047wARucwSnf+y8LgRwsE0qX99CHwTbZwtbopHPDwyc5oSJ1oNa90d0P6hhz0wJ9XxcKMDXLJSU8/acQeErNdB0+hphGKsUAj1KQjYWlMhXOXqRbaCJ5gIwBpErhF0lPapba1b8=
+	t=1739955830; cv=none; b=TeKpM6x0N5q1q8toaF1Rh5CyXNhI42Gc5RVhqmGY3hU/TBygtQujLAhMEjTSXVhKrU3C9YJvn2jc0Oe5IBCdHJhKLiMZOIP3MMXubQZVV0N8y428yZXJ8wdd6N4fv35RREsGdlvP6rw/MGT4Gx1BqijHgoBOVIvkrm+fegYyMfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955827; c=relaxed/simple;
-	bh=Q9a3zzWjYqVZXHTDz13PL+w8CeUTvfYa92InAZKJyq4=;
+	s=arc-20240116; t=1739955830; c=relaxed/simple;
+	bh=JDI/bF3QrCBA6rjCEOWtGaVIvF+dXo3cbb1CbMue/DE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ukcBtHl54NIAahzxCBP1QUQSDt9id0M+7W1RTkN3HcB2mPW1ecmN5UVE48RnuZUZHSPwNFODfBRxaWnRRME0MnXzDnFggWOpXkFbed1faB6u485CbACkaxwPSqVQ6plBsdk3WOjUBRcrgHYpz9Bsop+hKUSaaRamagP5LfuezUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWqGY/Z/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EX9j2kuJwcdMlFGdQ0xnXgkMh0DSLrlAYLwhHZCjBmkRuhG2mjYXXjQGQ/8SgBH8ph0eI8TeGB711OP2z8dm09Ln0Bx6gAR/G9P4BscY7U0WjqsHacRqSCm2Ly4WsWFhoon84MOo+BN8r7pL2sFdcfsPjB+wndbeZGGzqiIi5xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2r57Ltw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWqGY/Z/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCFFC4CED1;
-	Wed, 19 Feb 2025 09:03:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2r57Ltw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFE3C4CED1;
+	Wed, 19 Feb 2025 09:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955827;
-	bh=Q9a3zzWjYqVZXHTDz13PL+w8CeUTvfYa92InAZKJyq4=;
+	s=korg; t=1739955830;
+	bh=JDI/bF3QrCBA6rjCEOWtGaVIvF+dXo3cbb1CbMue/DE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uWqGY/Z/ndov9x7oF5MCSWDm947s7djPXyDoP6Wkcr4USoQVGqKIOvJH9rXXzpwsE
-	 AKp36ucvzarfCbxW7ksBskyZV77BCZaf/54ZIecbTqQZI067LlNnowQ69o7n41W29U
-	 uf9iiKx7wYGTRhPzSCFJDYDEXRAD3koL7UssrQIc=
+	b=x2r57LtwaTKqI8s7AwdP43v2la+vDkMpMiYpqmK3gnGRnM1eqEskeMT5VTnW3OECt
+	 /OC3zPaXDnmlDIAyeT3EuFiUekXVCduVq30cr1Bvt/v1eApwPTEK7OLlyRAFI9KPgc
+	 KGZcxBBcomkog/cMqwyTy6UbplKm1icqF7iIwehs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 099/152] ipv4: add RCU protection to ip4_dst_hoplimit()
-Date: Wed, 19 Feb 2025 09:28:32 +0100
-Message-ID: <20250219082553.975726891@linuxfoundation.org>
+Subject: [PATCH 6.6 126/152] ndisc: extend RCU protection in ndisc_send_skb()
+Date: Wed, 19 Feb 2025 09:28:59 +0100
+Message-ID: <20250219082555.032916615@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -54,42 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 469308552ca4560176cfc100e7ca84add1bebd7c ]
+[ Upstream commit ed6ae1f325d3c43966ec1b62ac1459e2b8e45640 ]
 
-ip4_dst_hoplimit() must use RCU protection to make
-sure the net structure it reads does not disappear.
+ndisc_send_skb() can be called without RTNL or RCU held.
 
-Fixes: fa50d974d104 ("ipv4: Namespaceify ip_default_ttl sysctl knob")
+Acquire rcu_read_lock() earlier, so that we can use dev_net_rcu()
+and avoid a potential UAF.
+
+Fixes: 1762f7e88eb3 ("[NETNS][IPV6] ndisc - make socket control per namespace")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250205155120.1676781-3-edumazet@google.com
+Link: https://patch.msgid.link/20250207135841.1948589-8-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/route.h | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/ipv6/ndisc.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/route.h b/include/net/route.h
-index 51a45b1887b56..0171e9e1bbea3 100644
---- a/include/net/route.h
-+++ b/include/net/route.h
-@@ -357,10 +357,15 @@ static inline int inet_iif(const struct sk_buff *skb)
- static inline int ip4_dst_hoplimit(const struct dst_entry *dst)
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index ea3cb26da5846..8d853971f2f68 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -471,16 +471,20 @@ static void ip6_nd_hdr(struct sk_buff *skb,
+ void ndisc_send_skb(struct sk_buff *skb, const struct in6_addr *daddr,
+ 		    const struct in6_addr *saddr)
  {
- 	int hoplimit = dst_metric_raw(dst, RTAX_HOPLIMIT);
--	struct net *net = dev_net(dst->dev);
++	struct icmp6hdr *icmp6h = icmp6_hdr(skb);
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net *net = dev_net(skb->dev);
+-	struct sock *sk = net->ipv6.ndisc_sk;
+ 	struct inet6_dev *idev;
++	struct net *net;
++	struct sock *sk;
+ 	int err;
+-	struct icmp6hdr *icmp6h = icmp6_hdr(skb);
+ 	u8 type;
  
--	if (hoplimit == 0)
-+	if (hoplimit == 0) {
-+		const struct net *net;
+ 	type = icmp6h->icmp6_type;
+ 
++	rcu_read_lock();
 +
-+		rcu_read_lock();
-+		net = dev_net_rcu(dst->dev);
- 		hoplimit = READ_ONCE(net->ipv4.sysctl_ip_default_ttl);
-+		rcu_read_unlock();
-+	}
- 	return hoplimit;
- }
++	net = dev_net_rcu(skb->dev);
++	sk = net->ipv6.ndisc_sk;
+ 	if (!dst) {
+ 		struct flowi6 fl6;
+ 		int oif = skb->dev->ifindex;
+@@ -488,6 +492,7 @@ void ndisc_send_skb(struct sk_buff *skb, const struct in6_addr *daddr,
+ 		icmpv6_flow_init(sk, &fl6, type, saddr, daddr, oif);
+ 		dst = icmp6_dst_alloc(skb->dev, &fl6);
+ 		if (IS_ERR(dst)) {
++			rcu_read_unlock();
+ 			kfree_skb(skb);
+ 			return;
+ 		}
+@@ -502,7 +507,6 @@ void ndisc_send_skb(struct sk_buff *skb, const struct in6_addr *daddr,
+ 
+ 	ip6_nd_hdr(skb, saddr, daddr, inet6_sk(sk)->hop_limit, skb->len);
+ 
+-	rcu_read_lock();
+ 	idev = __in6_dev_get(dst->dev);
+ 	IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTREQUESTS);
  
 -- 
 2.39.5
