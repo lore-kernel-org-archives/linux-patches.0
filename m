@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D192586FF;
-	Wed, 19 Feb 2025 21:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354F523C8B2;
+	Wed, 19 Feb 2025 21:35:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740000946; cv=none; b=YtZNnCyXWaU4w5b+NM2L47AC0pIsm8YflMJbI0+ZOdeYjNIo0aDsIKs56CfdzCenu+Mfd3qeRTDJ+7o8Yt1NcSeqWJ5niaysSYE85KO/poHnF5wxQxNcRU56BDtpTtOuH7xh9h0NV8mbmLRtQ/ZqtzQvd2bfyxAZxvf97DmVst4=
+	t=1740000955; cv=none; b=pxi6Sv61R7hzg96BXLJM6NqK9WWYmtbZCcOInSU4AlPstDwKFZMDLlArci5ENa+wqFFPdGOYmc846kK3qY7WFcHZPRjLLVmpNpH0v2eNFOAXxaaanU8ckpX6xJdSQEouv+mRZMbISyn0SvzhYXTgqAoAQdTudvg/ooUKI7rtAt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740000946; c=relaxed/simple;
-	bh=7C9BEP6U2zRFLQpRp50+wSeN3pw3cG+SdQl/AqbfcO0=;
+	s=arc-20240116; t=1740000955; c=relaxed/simple;
+	bh=S4iDQ4g8NHW6rPD6c9xr/H2QlLfA+OqBdFPT1FPCwpw=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KfBMzy6xvAVJa/OFp9pLeT3tcey7eFfV/BYtFn9VghsI9vyBLqBTbGkEYroYs7gjse4bLBj4X67/dDM4D4cWOkeV0lcv9F+To3O59A/Q39oXbttnn7D7p1Ew4StM7y+Pi3aRnFt5p25Rz3dZJuu69c4CLpusN9A9hcCf3A5NXjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UxJ8sjm9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=F+6I/GmHnOmPIw3Sd3q9fXpsiT6y4ssk82OAal8wmTgNkD5JQWgw8Lm6bM54SMa0+GPvgWpOqJpFyfvoexHGov19elu03pgrIJ3yTsJpaRfvB/6ugAxf5CAVOpNoBL6I3E3y8IGxIetd9V7JlVfIC+9IhE9wKRhl4sSAbsoNYVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c0DaXoqs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UxJ8sjm9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD32CC4CED1;
-	Wed, 19 Feb 2025 21:35:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c0DaXoqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70042C4CED1;
+	Wed, 19 Feb 2025 21:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740000946;
-	bh=7C9BEP6U2zRFLQpRp50+wSeN3pw3cG+SdQl/AqbfcO0=;
+	s=k20201202; t=1740000954;
+	bh=S4iDQ4g8NHW6rPD6c9xr/H2QlLfA+OqBdFPT1FPCwpw=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=UxJ8sjm927AC5nCVPqT4eD5hldn8oYTw/4AcBuC7Vz+AteeNRkr0Ue6jWfLaeEnrZ
-	 o+ahWg1aExuQ2i1xhxH6iskEZwr14DtJzn8+eHhjO6Dott34um5wDUuwF6DH75Poek
-	 y22G48qvNspbKqoEHSQQUUBKVvIMZsD+iSMhsBPRmbAPtt8KImgOBM/QZhUXHoCy45
-	 aedf1hPgy2iwqtIr1uHPkhXeo6AABOa/+REohJeA5Rkc6ux9adQdHxVDsDh5HcVMs4
-	 g6TLS5Mck6u3tg+VTzTaHvUv7iOk+c4tK/qeAVgqrcjaDRuihIoTJlF8jGMsaz7aXk
-	 V/+vrgOF6jdsw==
-Date: Wed, 19 Feb 2025 13:35:45 -0800
+	b=c0DaXoqsHzW2/9cJZqiusvdtZqXyROkBdDdAgsG0cyNhPcBPl8Y/PY0JORpuGX3sE
+	 dO/xjsazS1GSVxNYGeh17e3g56lvxD8WVHV6Wrmu3PsptkpFWyr5eJ9rbMdkUF2YA1
+	 5rAUUYcDhrxYTZvvkykaVJFHqIXGnLkHWTRlz2ZSYogwZjvwJCA6LJXZwA3YvuzPuQ
+	 pmknhZWl/1jY/W1iCHv9osPMPWPxjlYUXv2H58osXsZyFpxrPWA3XSaut2pjqSSQzs
+	 hKbYhRMjQ8htxX0EhkT/TkOadSfr50hdRWjdxr9E0UAF/qHwznvu+8C//g1OcUOWfh
+	 QanOnd+pyaQtQ==
+Date: Wed, 19 Feb 2025 13:35:53 -0800
 From: Jakub Kicinski <kuba@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, Joe Damato
  <jdamato@fastly.com>, Eric Dumazet <edumazet@google.com>, Kuniyuki Iwashima
  <kuniyu@amazon.com>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.13 233/274] net: add netdev->up protected by
+Subject: Re: [PATCH 6.13 234/274] net: protect netdev->napi_list with
  netdev_lock()
-Message-ID: <20250219133545.489a4141@kernel.org>
-In-Reply-To: <20250219082618.698868926@linuxfoundation.org>
+Message-ID: <20250219133553.55120b32@kernel.org>
+In-Reply-To: <20250219082618.736918558@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
-	<20250219082618.698868926@linuxfoundation.org>
+	<20250219082618.736918558@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,37 +47,27 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On Wed, 19 Feb 2025 09:28:07 +0100 Greg Kroah-Hartman wrote:
+On Wed, 19 Feb 2025 09:28:08 +0100 Greg Kroah-Hartman wrote:
 > 6.13-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
 > From: Jakub Kicinski <kuba@kernel.org>
 > 
-> [ Upstream commit 5112457f3d8e41f987908266068af88ef9f3ab78 ]
+> [ Upstream commit 1b23cdbd2bbc4b40e21c12ae86c2781e347ff0f8 ]
 > 
-> Some uAPI (netdev netlink) hide net_device's sub-objects while
-> the interface is down to ensure uniform behavior across drivers.
-> To remove the rtnl_lock dependency from those uAPIs we need a way
-> to safely tell if the device is down or up.
+> Hold netdev->lock when NAPIs are getting added or removed.
+> This will allow safe access to NAPI instances of a net_device
+> without rtnl_lock.
 > 
-> Add an indication of whether device is open or closed, protected
-> by netdev->lock. The semantics are the same as IFF_UP, but taking
-> netdev_lock around every write to ->flags would be a lot of code
-> churn.
-> 
-> We don't want to blanket the entire open / close path by netdev_lock,
-> because it will prevent us from applying it to specific structures -
-> core helpers won't be able to take that lock from any function
-> called by the drivers on open/close paths.
-> 
-> So the state of the flag is "pessimistic", as in it may report false
-> negatives, but never false positives.
+> Create a family of helpers which assume the lock is already taken.
+> Switch iavf to them, as it makes extensive use of netdev->lock,
+> already.
 > 
 > Reviewed-by: Joe Damato <jdamato@fastly.com>
 > Reviewed-by: Eric Dumazet <edumazet@google.com>
 > Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-> Link: https://patch.msgid.link/20250115035319.559603-5-kuba@kernel.org
+> Link: https://patch.msgid.link/20250115035319.559603-6-kuba@kernel.org
 > Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 > Stable-dep-of: 011b03359038 ("Revert "net: skb: introduce and use a single page frag cache"")
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
