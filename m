@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6893188CCA;
-	Wed, 19 Feb 2025 09:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258C82AE74;
+	Wed, 19 Feb 2025 09:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957175; cv=none; b=WFDFOAc+B5JaQvyaGPI6zJR0vcO6DJUxhTXiNfsBVcgmFDZrV9uSy71gXOPufBbegoMvlJgEEv1pjq1WNZznOgaoFEG8ugFwJAsO2CezLAzRtBWzPHdKS3LAdqJ0hwdpcQnAEsCLUeAXB4qok4BjFEACh5nQihqwof3nfMYbCaE=
+	t=1739957178; cv=none; b=FMwB7bA3DzhWAiFiadI9Myg+eNbn5n4kqQ0qsZ9R5JVtbuHE24FE4k/KnoCdw+vu6/dBPPK8Obzjp+537poInr3G3XRroW4JNvbr70NfLSi7ymzo7dXIl4QGmj/eVjHjsOU2frXomvYZtuvoLBkv1SOeuZ2xZv0WyUdYQGPbnkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957175; c=relaxed/simple;
-	bh=t5WGsgCfxSeMbagri7E4u541anHqQqhSDX2jHkx2UWQ=;
+	s=arc-20240116; t=1739957178; c=relaxed/simple;
+	bh=fYptBRfxZ10SvvtB++cyiwUAZqxvlVY6hu6SxKd31sE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dKQoBHe5YwnnrkeOHIwI56JEyp4K2LTQxQqn1TqWYS+KDeYouWDC1KmfXo12Z0/LGH4vauXX+NCV9mZ13fPiJtTxcBIkgHRHUe0a58cVgleWjBMiTxj5g/jk5870y6jHS2cmJyL+JCZ06XwiqQZ2Uo2SqiVqdhK7v+iJ1pBZpCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFDQF1Py; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=derjblh12cop8LwaaeMCPn/0l57lnMuscsteyiz1DYZKqKIpnf4WITDTjhmkCugp2cKKmM6uzRQqDT6jKta2fl13B0ZnD91QvneNwPUKeP0M3+BYdGBb2x9M4/oPuarP8znybdJNKPUiClquDS0vdEaWxkpHKnrVViI49FoWtzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPJx+bxS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFDQF1Py"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA94C4CED1;
-	Wed, 19 Feb 2025 09:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPJx+bxS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A55C4CED1;
+	Wed, 19 Feb 2025 09:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957175;
-	bh=t5WGsgCfxSeMbagri7E4u541anHqQqhSDX2jHkx2UWQ=;
+	s=korg; t=1739957178;
+	bh=fYptBRfxZ10SvvtB++cyiwUAZqxvlVY6hu6SxKd31sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFDQF1PyqnLVQaFqFHwM2l/Ycw1zOkU4mGwq7DpeIm1hs6lEny/AY7fWYlJAbYtJK
-	 wTWAGJ1YkMg+Z+uyf47Iob8BMOY+u5KLDpD56/86Fo+QP1gskYqwgcFn3O4JwjIRfv
-	 GLDf/qfvgWhvf0NyEDNRorlNgQdvkEjWN0+xrW00=
+	b=MPJx+bxSkSP3COe8RqeBgoNfK2EsQZVGAHcARJXR2qYpNW0XDUDuCJpQ7iqdqseGf
+	 5J0mwj9OsyqvWW1gXmYzFuPGbeYFeeuTKOu6OgxkVBP1iyDI7/+ZDXfZV2Cydc96KW
+	 ZD4rJrWSxxd8ZVvXtRzIEQAT/yebDwG7uW2iQKkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 435/578] misc: fastrpc: Fix registered buffer page address
-Date: Wed, 19 Feb 2025 09:27:19 +0100
-Message-ID: <20250219082710.122223386@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 418/578] crypto: qce - fix goto jump in error path
+Date: Wed, 19 Feb 2025 09:27:02 +0100
+Message-ID: <20250219082709.462982990@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,48 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 6ca4ea1f88a06a04ed7b2c9c6bf9f00833b68214 upstream.
+commit 5278275c1758a38199b43530adfc50098f4b41c7 upstream.
 
-For registered  buffers, fastrpc driver sends the buffer information
-to remote subsystem. There is a problem with current implementation
-where the page address is being sent with an offset leading to
-improper buffer address on DSP. This is leads to functional failures
-as DSP expects base address in page information and extracts offset
-information from remote arguments. Mask the offset and pass the base
-page address to DSP.
+If qce_check_version() fails, we should jump to err_dma as we already
+called qce_dma_request() a couple lines before.
 
-This issue is observed is a corner case when some buffer which is registered
-with fastrpc framework is passed with some offset by user and then the DSP
-implementation tried to read the data. As DSP expects base address and takes
-care of offsetting with remote arguments, passing an offsetted address will
-result in some unexpected data read in DSP.
-
-All generic usecases usually pass the buffer as it is hence is problem is
-not usually observed. If someone tries to pass offsetted buffer and then
-tries to compare data at HLOS and DSP end, then the ambiguity will be observed.
-
-Fixes: 80f3afd72bd4 ("misc: fastrpc: consider address offset before sending to DSP")
-Cc: stable@kernel.org
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20250110134239.123603-3-srinivas.kandagatla@linaro.org
+Cc: stable@vger.kernel.org
+Fixes: ec8f5d8f6f76 ("crypto: qce - Qualcomm crypto engine driver")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    2 +-
+ drivers/crypto/qce/core.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -934,7 +934,7 @@ static int fastrpc_get_args(u32 kernel,
- 			mmap_read_lock(current->mm);
- 			vma = find_vma(current->mm, ctx->args[i].ptr);
- 			if (vma)
--				pages[i].addr += ctx->args[i].ptr -
-+				pages[i].addr += (ctx->args[i].ptr & PAGE_MASK) -
- 						 vma->vm_start;
- 			mmap_read_unlock(current->mm);
+--- a/drivers/crypto/qce/core.c
++++ b/drivers/crypto/qce/core.c
+@@ -236,7 +236,7 @@ static int qce_crypto_probe(struct platf
  
+ 	ret = qce_check_version(qce);
+ 	if (ret)
+-		goto err_clks;
++		goto err_dma;
+ 
+ 	spin_lock_init(&qce->lock);
+ 	tasklet_init(&qce->done_tasklet, qce_tasklet_req_done,
 
 
