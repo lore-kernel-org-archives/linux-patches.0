@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C386D1C5F0C;
-	Wed, 19 Feb 2025 09:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F301C7019;
+	Wed, 19 Feb 2025 09:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955925; cv=none; b=rYw7vBYpT7BeM9fJzP0SnwBW7v770irFPvzi7JZ/t6VGQpI2Is4qRCkHPHZ42k8NfrIqpjKUQo1oifeNYZ/uPV31f4IH9PYK8aaN9jP0Sv7UT9kkjh/HSwEdpYXwBn+nJxpgtqxbqUYPT34APY0yLEVwSv2XBk+KXYtxFsxHgZ8=
+	t=1739955929; cv=none; b=ap6bx8Ht/tu5WPM6YUGzmdG3Y+coNSHnkmuIW6i5Wm2KDCag1j4waIbEOkVsn9Xav9WyUBj3mOTox7nXYhPZb4whhZJObGWCNICTI9OIwrtCNDN70eLoLkdpixk6QZcKwaru8LBVvGWea+YBhWrYFDoC4YsjjoXHTI3CDzhuEiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955925; c=relaxed/simple;
-	bh=WYV4mEHEhHBlcWG6GeihYOtnhFndqxuReuybcn/qI0k=;
+	s=arc-20240116; t=1739955929; c=relaxed/simple;
+	bh=Sl6LYX3H5MwAXf8P6cipcHlV3EhsfkG2IiUNGix9ZXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AO7U1DoYOKEsRhAQktCegEnS/IYwRTv68r+i6kUmotYvF/hDONCMgHKfn3POy5PfnNjdbwsqR2LTtE2cVfzMYRzSXbFEk7nZntTeGnj+ufenhdclbZKgUBIK90EcsmyEKRWv6cC0nW2ji7nQA65JBIFL8zVSe2S3hrjX+5Lm2Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j2X5AcHD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PrEI66qGJlcoP/ZhFVIa7LARosrxEDextxIsKPr7TdS0iODLhuOHiy+krfsUdbqfxSJefd4ld5i/oSbLITXzR418nburkXwc3lE7QsYB7LWkul8rC/1sfDF2VAqdDqQbggCNeEk67c7qmwdkuevgsvHjQs7almBj81Ry7msMPs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v45k2W3q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2X5AcHD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467E8C4CED1;
-	Wed, 19 Feb 2025 09:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v45k2W3q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B2EC4CED1;
+	Wed, 19 Feb 2025 09:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955925;
-	bh=WYV4mEHEhHBlcWG6GeihYOtnhFndqxuReuybcn/qI0k=;
+	s=korg; t=1739955928;
+	bh=Sl6LYX3H5MwAXf8P6cipcHlV3EhsfkG2IiUNGix9ZXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j2X5AcHDe9hXhrtGXfu54bhW7dy6W3doIVUjPZjVkP/4X7wxOs1RML+2h87V/u0dw
-	 3dznmGUK+Ju7OnoePX9O2zLOHQmY2bH9J8Zl9HC23LwfE51TGBHL01Q2p+5gsabZuG
-	 7r/gCvR9vjEoUFt+lS49BzwfN6OOeOPoN6C1xmQk=
+	b=v45k2W3qXJBjKX3a2bv4mizsQ6+f69uvbwmqwz42MHo/zhhmrmw7QcGC38H5LGpgI
+	 A+76CbiR6HI/AEpgI3LGppz0mMLyOKuzemSfOk9KIZgj+DNkXmz7/LvZCM3qgD1aTj
+	 5Lkmx4AHKpZKQOlOLbfXzeTC/UNvini9FItN76+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Song Liu <song@kernel.org>,
-	Yu Kuai <yukuai3@huawei.com>
-Subject: [PATCH 6.6 138/152] md/raid5: recheck if reshape has finished with device_lock held
-Date: Wed, 19 Feb 2025 09:29:11 +0100
-Message-ID: <20250219082555.504840734@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Xiao Ni <xni@redhat.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.6 139/152] md/md-bitmap: factor behind write counters out from bitmap_{start/end}write()
+Date: Wed, 19 Feb 2025 09:29:12 +0100
+Message-ID: <20250219082555.544106459@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -51,131 +51,258 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit 25b3a8237a03ec0b67b965b52d74862e77ef7115 upstream.
+commit 08c50142a128dcb2d7060aa3b4c5db8837f7a46a upstream.
 
-When handling an IO request, MD checks if a reshape is currently
-happening, and if so, where the IO sector is in relation to the reshape
-progress. MD uses conf->reshape_progress for both of these tasks.  When
-the reshape finishes, conf->reshape_progress is set to MaxSector.  If
-this occurs after MD checks if the reshape is currently happening but
-before it calls ahead_of_reshape(), then ahead_of_reshape() will end up
-comparing the IO sector against MaxSector. During a backwards reshape,
-this will make MD think the IO sector is in the area not yet reshaped,
-causing it to use the previous configuration, and map the IO to the
-sector where that data was before the reshape.
+behind_write is only used in raid1, prepare to refactor
+bitmap_{start/end}write(), there are no functional changes.
 
-This bug can be triggered by running the lvm2
-lvconvert-raid-reshape-linear_to_raid6-single-type.sh test in a loop,
-although it's very hard to reproduce.
-
-Fix this by factoring the code that checks where the IO sector is in
-relation to the reshape out to a helper called get_reshape_loc(),
-which reads reshape_progress and reshape_safe while holding the
-device_lock, and then rechecks if the reshape has finished before
-calling ahead_of_reshape with the saved values.
-
-Also use the helper during the REQ_NOWAIT check to see if the location
-is inside of the reshape region.
-
-Fixes: fef9c61fdfabf ("md/raid5: change reshape-progress measurement to cope with reshaping backwards.")
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Xiao Ni <xni@redhat.com>
+Link: https://lore.kernel.org/r/20250109015145.158868-2-yukuai1@huaweicloud.com
 Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240702151802.1632010-1-bmarzins@redhat.com
+[There is no bitmap_operations, resolve conflicts by exporting new api
+md_bitmap_{start,end}_behind_write]
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid5.c |   64 +++++++++++++++++++++++++++++++++--------------------
- 1 file changed, 41 insertions(+), 23 deletions(-)
+ drivers/md/md-bitmap.c   |   60 +++++++++++++++++++++++++++++------------------
+ drivers/md/md-bitmap.h   |    6 +++-
+ drivers/md/raid1.c       |   11 +++++---
+ drivers/md/raid10.c      |    5 +--
+ drivers/md/raid5-cache.c |    4 +--
+ drivers/md/raid5.c       |   13 ++++------
+ 6 files changed, 59 insertions(+), 40 deletions(-)
 
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -5972,6 +5972,39 @@ static bool reshape_disabled(struct mdde
- 	return is_md_suspended(mddev) || !md_is_rdwr(mddev);
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -1465,22 +1465,12 @@ __acquires(bitmap->lock)
+ 			&(bitmap->bp[page].map[pageoff]);
  }
  
-+enum reshape_loc {
-+	LOC_NO_RESHAPE,
-+	LOC_AHEAD_OF_RESHAPE,
-+	LOC_INSIDE_RESHAPE,
-+	LOC_BEHIND_RESHAPE,
-+};
-+
-+static enum reshape_loc get_reshape_loc(struct mddev *mddev,
-+		struct r5conf *conf, sector_t logical_sector)
-+{
-+	sector_t reshape_progress, reshape_safe;
-+	/*
-+	 * Spinlock is needed as reshape_progress may be
-+	 * 64bit on a 32bit platform, and so it might be
-+	 * possible to see a half-updated value
-+	 * Of course reshape_progress could change after
-+	 * the lock is dropped, so once we get a reference
-+	 * to the stripe that we think it is, we will have
-+	 * to check again.
-+	 */
-+	spin_lock_irq(&conf->device_lock);
-+	reshape_progress = conf->reshape_progress;
-+	reshape_safe = conf->reshape_safe;
-+	spin_unlock_irq(&conf->device_lock);
-+	if (reshape_progress == MaxSector)
-+		return LOC_NO_RESHAPE;
-+	if (ahead_of_reshape(mddev, logical_sector, reshape_progress))
-+		return LOC_AHEAD_OF_RESHAPE;
-+	if (ahead_of_reshape(mddev, logical_sector, reshape_safe))
-+		return LOC_INSIDE_RESHAPE;
-+	return LOC_BEHIND_RESHAPE;
-+}
-+
- static enum stripe_result make_stripe_request(struct mddev *mddev,
- 		struct r5conf *conf, struct stripe_request_ctx *ctx,
- 		sector_t logical_sector, struct bio *bi)
-@@ -5986,28 +6019,14 @@ static enum stripe_result make_stripe_re
- 	seq = read_seqcount_begin(&conf->gen_lock);
+-int md_bitmap_startwrite(struct bitmap *bitmap, sector_t offset, unsigned long sectors, int behind)
++int md_bitmap_startwrite(struct bitmap *bitmap, sector_t offset,
++			 unsigned long sectors)
+ {
+ 	if (!bitmap)
+ 		return 0;
  
- 	if (unlikely(conf->reshape_progress != MaxSector)) {
--		/*
--		 * Spinlock is needed as reshape_progress may be
--		 * 64bit on a 32bit platform, and so it might be
--		 * possible to see a half-updated value
--		 * Of course reshape_progress could change after
--		 * the lock is dropped, so once we get a reference
--		 * to the stripe that we think it is, we will have
--		 * to check again.
--		 */
--		spin_lock_irq(&conf->device_lock);
--		if (ahead_of_reshape(mddev, logical_sector,
--				     conf->reshape_progress)) {
--			previous = 1;
--		} else {
--			if (ahead_of_reshape(mddev, logical_sector,
--					     conf->reshape_safe)) {
--				spin_unlock_irq(&conf->device_lock);
--				ret = STRIPE_SCHEDULE_AND_RETRY;
--				goto out;
--			}
-+		enum reshape_loc loc = get_reshape_loc(mddev, conf,
-+						       logical_sector);
-+		if (loc == LOC_INSIDE_RESHAPE) {
-+			ret = STRIPE_SCHEDULE_AND_RETRY;
-+			goto out;
- 		}
--		spin_unlock_irq(&conf->device_lock);
-+		if (loc == LOC_AHEAD_OF_RESHAPE)
-+			previous = 1;
+-	if (behind) {
+-		int bw;
+-		atomic_inc(&bitmap->behind_writes);
+-		bw = atomic_read(&bitmap->behind_writes);
+-		if (bw > bitmap->behind_writes_used)
+-			bitmap->behind_writes_used = bw;
+-
+-		pr_debug("inc write-behind count %d/%lu\n",
+-			 bw, bitmap->mddev->bitmap_info.max_write_behind);
+-	}
+-
+ 	while (sectors) {
+ 		sector_t blocks;
+ 		bitmap_counter_t *bmc;
+@@ -1527,20 +1517,13 @@ int md_bitmap_startwrite(struct bitmap *
  	}
+ 	return 0;
+ }
+-EXPORT_SYMBOL(md_bitmap_startwrite);
++EXPORT_SYMBOL_GPL(md_bitmap_startwrite);
  
- 	new_sector = raid5_compute_sector(conf, logical_sector, previous,
-@@ -6189,8 +6208,7 @@ static bool raid5_make_request(struct md
- 	/* Bail out if conflicts with reshape and REQ_NOWAIT is set */
- 	if ((bi->bi_opf & REQ_NOWAIT) &&
- 	    (conf->reshape_progress != MaxSector) &&
--	    !ahead_of_reshape(mddev, logical_sector, conf->reshape_progress) &&
--	    ahead_of_reshape(mddev, logical_sector, conf->reshape_safe)) {
-+	    get_reshape_loc(mddev, conf, logical_sector) == LOC_INSIDE_RESHAPE) {
- 		bio_wouldblock_error(bi);
- 		if (rw == WRITE)
- 			md_write_end(mddev);
+ void md_bitmap_endwrite(struct bitmap *bitmap, sector_t offset,
+-			unsigned long sectors, int success, int behind)
++			unsigned long sectors, int success)
+ {
+ 	if (!bitmap)
+ 		return;
+-	if (behind) {
+-		if (atomic_dec_and_test(&bitmap->behind_writes))
+-			wake_up(&bitmap->behind_wait);
+-		pr_debug("dec write-behind count %d/%lu\n",
+-			 atomic_read(&bitmap->behind_writes),
+-			 bitmap->mddev->bitmap_info.max_write_behind);
+-	}
+ 
+ 	while (sectors) {
+ 		sector_t blocks;
+@@ -1580,7 +1563,7 @@ void md_bitmap_endwrite(struct bitmap *b
+ 			sectors = 0;
+ 	}
+ }
+-EXPORT_SYMBOL(md_bitmap_endwrite);
++EXPORT_SYMBOL_GPL(md_bitmap_endwrite);
+ 
+ static int __bitmap_start_sync(struct bitmap *bitmap, sector_t offset, sector_t *blocks,
+ 			       int degraded)
+@@ -1842,6 +1825,39 @@ void md_bitmap_free(struct bitmap *bitma
+ }
+ EXPORT_SYMBOL(md_bitmap_free);
+ 
++void md_bitmap_start_behind_write(struct mddev *mddev)
++{
++	struct bitmap *bitmap = mddev->bitmap;
++	int bw;
++
++	if (!bitmap)
++		return;
++
++	atomic_inc(&bitmap->behind_writes);
++	bw = atomic_read(&bitmap->behind_writes);
++	if (bw > bitmap->behind_writes_used)
++		bitmap->behind_writes_used = bw;
++
++	pr_debug("inc write-behind count %d/%lu\n",
++		 bw, bitmap->mddev->bitmap_info.max_write_behind);
++}
++EXPORT_SYMBOL_GPL(md_bitmap_start_behind_write);
++
++void md_bitmap_end_behind_write(struct mddev *mddev)
++{
++	struct bitmap *bitmap = mddev->bitmap;
++
++	if (!bitmap)
++		return;
++
++	if (atomic_dec_and_test(&bitmap->behind_writes))
++		wake_up(&bitmap->behind_wait);
++	pr_debug("dec write-behind count %d/%lu\n",
++		 atomic_read(&bitmap->behind_writes),
++		 bitmap->mddev->bitmap_info.max_write_behind);
++}
++EXPORT_SYMBOL_GPL(md_bitmap_end_behind_write);
++
+ void md_bitmap_wait_behind_writes(struct mddev *mddev)
+ {
+ 	struct bitmap *bitmap = mddev->bitmap;
+--- a/drivers/md/md-bitmap.h
++++ b/drivers/md/md-bitmap.h
+@@ -253,9 +253,11 @@ void md_bitmap_dirty_bits(struct bitmap
+ 
+ /* these are exported */
+ int md_bitmap_startwrite(struct bitmap *bitmap, sector_t offset,
+-			 unsigned long sectors, int behind);
++			 unsigned long sectors);
+ void md_bitmap_endwrite(struct bitmap *bitmap, sector_t offset,
+-			unsigned long sectors, int success, int behind);
++			unsigned long sectors, int success);
++void md_bitmap_start_behind_write(struct mddev *mddev);
++void md_bitmap_end_behind_write(struct mddev *mddev);
+ int md_bitmap_start_sync(struct bitmap *bitmap, sector_t offset, sector_t *blocks, int degraded);
+ void md_bitmap_end_sync(struct bitmap *bitmap, sector_t offset, sector_t *blocks, int aborted);
+ void md_bitmap_close_sync(struct bitmap *bitmap);
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -419,11 +419,12 @@ static void close_write(struct r1bio *r1
+ 		bio_put(r1_bio->behind_master_bio);
+ 		r1_bio->behind_master_bio = NULL;
+ 	}
++	if (test_bit(R1BIO_BehindIO, &r1_bio->state))
++		md_bitmap_end_behind_write(r1_bio->mddev);
+ 	/* clear the bitmap if all writes complete successfully */
+ 	md_bitmap_endwrite(r1_bio->mddev->bitmap, r1_bio->sector,
+ 			   r1_bio->sectors,
+-			   !test_bit(R1BIO_Degraded, &r1_bio->state),
+-			   test_bit(R1BIO_BehindIO, &r1_bio->state));
++			   !test_bit(R1BIO_Degraded, &r1_bio->state));
+ 	md_write_end(r1_bio->mddev);
+ }
+ 
+@@ -1530,8 +1531,10 @@ static void raid1_write_request(struct m
+ 				alloc_behind_master_bio(r1_bio, bio);
+ 			}
+ 
+-			md_bitmap_startwrite(bitmap, r1_bio->sector, r1_bio->sectors,
+-					     test_bit(R1BIO_BehindIO, &r1_bio->state));
++			if (test_bit(R1BIO_BehindIO, &r1_bio->state))
++				md_bitmap_start_behind_write(mddev);
++			md_bitmap_startwrite(bitmap, r1_bio->sector,
++					     r1_bio->sectors);
+ 			first_clone = 0;
+ 		}
+ 
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -430,8 +430,7 @@ static void close_write(struct r10bio *r
+ 	/* clear the bitmap if all writes complete successfully */
+ 	md_bitmap_endwrite(r10_bio->mddev->bitmap, r10_bio->sector,
+ 			   r10_bio->sectors,
+-			   !test_bit(R10BIO_Degraded, &r10_bio->state),
+-			   0);
++			   !test_bit(R10BIO_Degraded, &r10_bio->state));
+ 	md_write_end(r10_bio->mddev);
+ }
+ 
+@@ -1554,7 +1553,7 @@ static void raid10_write_request(struct
+ 	md_account_bio(mddev, &bio);
+ 	r10_bio->master_bio = bio;
+ 	atomic_set(&r10_bio->remaining, 1);
+-	md_bitmap_startwrite(mddev->bitmap, r10_bio->sector, r10_bio->sectors, 0);
++	md_bitmap_startwrite(mddev->bitmap, r10_bio->sector, r10_bio->sectors);
+ 
+ 	for (i = 0; i < conf->copies; i++) {
+ 		if (r10_bio->devs[i].bio)
+--- a/drivers/md/raid5-cache.c
++++ b/drivers/md/raid5-cache.c
+@@ -315,8 +315,8 @@ void r5c_handle_cached_data_endio(struct
+ 			r5c_return_dev_pending_writes(conf, &sh->dev[i]);
+ 			md_bitmap_endwrite(conf->mddev->bitmap, sh->sector,
+ 					   RAID5_STRIPE_SECTORS(conf),
+-					   !test_bit(STRIPE_DEGRADED, &sh->state),
+-					   0);
++					   !test_bit(STRIPE_DEGRADED,
++						     &sh->state));
+ 		}
+ 	}
+ }
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -3606,7 +3606,7 @@ static void __add_stripe_bio(struct stri
+ 		set_bit(STRIPE_BITMAP_PENDING, &sh->state);
+ 		spin_unlock_irq(&sh->stripe_lock);
+ 		md_bitmap_startwrite(conf->mddev->bitmap, sh->sector,
+-				     RAID5_STRIPE_SECTORS(conf), 0);
++				     RAID5_STRIPE_SECTORS(conf));
+ 		spin_lock_irq(&sh->stripe_lock);
+ 		clear_bit(STRIPE_BITMAP_PENDING, &sh->state);
+ 		if (!sh->batch_head) {
+@@ -3708,7 +3708,7 @@ handle_failed_stripe(struct r5conf *conf
+ 		}
+ 		if (bitmap_end)
+ 			md_bitmap_endwrite(conf->mddev->bitmap, sh->sector,
+-					   RAID5_STRIPE_SECTORS(conf), 0, 0);
++					   RAID5_STRIPE_SECTORS(conf), 0);
+ 		bitmap_end = 0;
+ 		/* and fail all 'written' */
+ 		bi = sh->dev[i].written;
+@@ -3754,7 +3754,7 @@ handle_failed_stripe(struct r5conf *conf
+ 		}
+ 		if (bitmap_end)
+ 			md_bitmap_endwrite(conf->mddev->bitmap, sh->sector,
+-					   RAID5_STRIPE_SECTORS(conf), 0, 0);
++					   RAID5_STRIPE_SECTORS(conf), 0);
+ 		/* If we were in the middle of a write the parity block might
+ 		 * still be locked - so just clear all R5_LOCKED flags
+ 		 */
+@@ -4107,8 +4107,8 @@ returnbi:
+ 				}
+ 				md_bitmap_endwrite(conf->mddev->bitmap, sh->sector,
+ 						   RAID5_STRIPE_SECTORS(conf),
+-						   !test_bit(STRIPE_DEGRADED, &sh->state),
+-						   0);
++						   !test_bit(STRIPE_DEGRADED,
++							     &sh->state));
+ 				if (head_sh->batch_head) {
+ 					sh = list_first_entry(&sh->batch_list,
+ 							      struct stripe_head,
+@@ -5853,8 +5853,7 @@ static void make_discard_request(struct
+ 			     d++)
+ 				md_bitmap_startwrite(mddev->bitmap,
+ 						     sh->sector,
+-						     RAID5_STRIPE_SECTORS(conf),
+-						     0);
++						     RAID5_STRIPE_SECTORS(conf));
+ 			sh->bm_seq = conf->seq_flush + 1;
+ 			set_bit(STRIPE_BIT_DELAY, &sh->state);
+ 		}
 
 
