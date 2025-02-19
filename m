@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5333B1A841F;
-	Wed, 19 Feb 2025 08:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632081A841F;
+	Wed, 19 Feb 2025 08:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955505; cv=none; b=EUrCbnDITj2Nm6WDOa/KlbeLPh+UHHy+bb10GJ8XzeUCa2uu2VFziP2bzucz0y0TkF3Q1wdTeGQd6iu9kZatHvAL3Q52S73kE2vh7XonI/AFEw9DVQX93gzHdRdDJ0uWLtB9nm7nMT/1SLMj0BpQYQp+QG1lrmHtWRJ/v9DN3og=
+	t=1739955508; cv=none; b=JkQRriKDYoSAAIm9rGuaysmdIhAnSaDkY9ngfNKJNqO6Q0IRhOJvpgg9M+uVaJ8NGw/9VGsPv512vgVYyjEow/1FxjmptNy2q2pd3TPcEM+eikxXe7vBGx1zrxweXad8a2tcNiuAQWnpXG8CvmOA/dOdhoxLTGN0pf36cJb0SYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955505; c=relaxed/simple;
-	bh=+vwtQkmq3ZRhEt0Z1y7MRBDdTpKQKQ/2IGK+xClhelo=;
+	s=arc-20240116; t=1739955508; c=relaxed/simple;
+	bh=7ydquqqzcfsehK1OnjgC9TtFt1GkVDeo6tnxiLNwZBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HKNXL8lumTCcKI1q78qpESDb5HN54RmE/3qTyQtdsgbR3VIBaYgAESwIiwsieYuH+1etmpR8P5Y5kqWZWG/NvbyPTJZh2RO4eNTK8Za7oJq0Q+kIIp5LKRzOX4SgdBGha/V2S3TNU3ZO+HVG7dh4UoVYFo/RMwLaNBSpHyaMT+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1zG8MUF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=R4xGMI/N+Bx8zQs1DN/SFeHfqttDLODSRPT3fen2yREv5F0esjcUgldCQ0aD+xyuoOWZ6FL2PdPdC3UkLMX5uFYdw0gupowp3PsHRXopkQHsfm9HciaqHpLZQc+l28XsE9kc0gr46BPbK65cNOv3yfgeYVQXd2ruDkcjLqbbfcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrMRSmZg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1zG8MUF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE15BC4CED1;
-	Wed, 19 Feb 2025 08:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrMRSmZg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E32C4CED1;
+	Wed, 19 Feb 2025 08:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955505;
-	bh=+vwtQkmq3ZRhEt0Z1y7MRBDdTpKQKQ/2IGK+xClhelo=;
+	s=korg; t=1739955508;
+	bh=7ydquqqzcfsehK1OnjgC9TtFt1GkVDeo6tnxiLNwZBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1zG8MUFfrJ10M8cMg3OMUyTU3mh7bOfaJ6LOZ7NRH/glcnmn9dPwgT4Y6audcavM
-	 HKuc9WKYZeYB89zhDyoSxuBf4RbG0/U0n10vM/ajrogoIRxnGlW/8/NVhkZHwoFGdK
-	 CSYgNZihcegttp4kU6VQv5lJcHgYoJByCEcWI4fs=
+	b=CrMRSmZgSyeqXxenYDBOsFaq7KUkYUK/xJqkp2H7azZp1P7nAtD2cfUndngS5cIlC
+	 i5BhQzPNMPgjzVGywhsxObpljtCeqx5o6HR6bqDqrjWWiCwbywhepRaIM4oMg8SCfN
+	 T5P29CGYp8kV2I1BDWfZXKsOliG+RDxbjugVV4NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
+	syzbot+9c9179ac46169c56c1ad@syzkaller.appspotmail.com,
+	=?UTF-8?q?T=C3=BAlio=20Fernandes?= <tuliomf09@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 004/152] HID: multitouch: Add NULL check in mt_input_configured
-Date: Wed, 19 Feb 2025 09:26:57 +0100
-Message-ID: <20250219082550.197660638@linuxfoundation.org>
+Subject: [PATCH 6.6 005/152] HID: hid-thrustmaster: fix stack-out-of-bounds read in usb_check_int_endpoints()
+Date: Wed, 19 Feb 2025 09:26:58 +0100
+Message-ID: <20250219082550.237320190@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -45,47 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Tulio Fernandes <tuliomf09@gmail.com>
 
-[ Upstream commit 9b8e2220d3a052a690b1d1b23019673e612494c5 ]
+[ Upstream commit 0b43d98ff29be3144e86294486b1373b5df74c0e ]
 
-devm_kasprintf() can return a NULL pointer on failure,but this
-returned value in mt_input_configured() is not checked.
-Add NULL check in mt_input_configured(), to handle kernel NULL
-pointer dereference error.
+Syzbot[1] has detected a stack-out-of-bounds read of the ep_addr array from
+hid-thrustmaster driver. This array is passed to usb_check_int_endpoints
+function from usb.c core driver, which executes a for loop that iterates
+over the elements of the passed array. Not finding a null element at the end of
+the array, it tries to read the next, non-existent element, crashing the kernel.
 
-Fixes: 479439463529 ("HID: multitouch: Correct devm device reference for hidinput input_dev name")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
+To fix this, a 0 element was added at the end of the array to break the for
+loop.
+
+[1] https://syzkaller.appspot.com/bug?extid=9c9179ac46169c56c1ad
+
+Reported-by: syzbot+9c9179ac46169c56c1ad@syzkaller.appspotmail.com
+Fixes: 50420d7c79c3 ("HID: hid-thrustmaster: Fix warning in thrustmaster_probe by adding endpoint check")
+Signed-off-by: Túlio Fernandes <tuliomf09@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/hid/hid-thrustmaster.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 5ad871a7d1a44..6386043aab0bb 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -1668,9 +1668,12 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
- 		break;
- 	}
+diff --git a/drivers/hid/hid-thrustmaster.c b/drivers/hid/hid-thrustmaster.c
+index 6c3e758bbb09e..3b81468a1df29 100644
+--- a/drivers/hid/hid-thrustmaster.c
++++ b/drivers/hid/hid-thrustmaster.c
+@@ -171,7 +171,7 @@ static void thrustmaster_interrupts(struct hid_device *hdev)
+ 	b_ep = ep->desc.bEndpointAddress;
  
--	if (suffix)
-+	if (suffix) {
- 		hi->input->name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
- 						 "%s %s", hdev->name, suffix);
-+		if (!hi->input->name)
-+			return -ENOMEM;
-+	}
+ 	/* Are the expected endpoints present? */
+-	u8 ep_addr[1] = {b_ep};
++	u8 ep_addr[2] = {b_ep, 0};
  
- 	return 0;
- }
+ 	if (!usb_check_int_endpoints(usbif, ep_addr)) {
+ 		hid_err(hdev, "Unexpected non-int endpoint\n");
 -- 
 2.39.5
 
