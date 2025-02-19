@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B961E1A2B;
-	Wed, 19 Feb 2025 08:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB181E32D7;
+	Wed, 19 Feb 2025 08:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954225; cv=none; b=B9ET+gLdUBxwQjLv53bYSMaDu4SFu2+97XcWVypsdvYLradLzjECLL8Zkr1nnzPmvVaaRQ7Rk6sKgfgAuWU+/RcxHBeL9m/OuBC92TuKE0Nu/6AMYIhKWxVtfcX5/48BtKiR6RoVyrKsILNN6qe0ntB/sjXhjmL2My0mK4xV5aI=
+	t=1739954228; cv=none; b=ZGuNWNCm/8PI65JTE1gF+ncfxcHL5zbbhR8c9kWOfAlexSSb5gGAi2qPAYcFVz6wX7mIgZP9WmpPsmYyXWf4F+5YlVHtF4L6C2Sb/YbAfgu2Cg/IDNvCHbZFn4ci7lt7WZ2GP3uixo4bEf9WRvndrbzhlD2SJpylFmJ0GaMA/r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954225; c=relaxed/simple;
-	bh=3g0L/UW2xsI24sNhsXfRjVco7kmVmcJdFBlS0u5ECCg=;
+	s=arc-20240116; t=1739954228; c=relaxed/simple;
+	bh=BcgfHOM19G+MrZ4GPtbe85D3wKQpMhGLBt7Et5Puo94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=naiRNt9kB6jyU+dZmYWSueTUtiAJi0L6dkTT+3shxm2ELyPpEJoRXwmDRseEq+mivNfvWCq/TvwrY2m4RsKIHYjMmmmTWRp8ZAYKz58ykpbla/WQyFD6Hu/2dL5P7BTt2hGO1p7/Lq9Ok2la9WseQXXI+DyijeVV+Q2oRNW3kDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQD3WXkM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lQrlyyJ/HXA6LE+DOJbMIoTpXw1Gu3fJ/YHuinMvIpZJ/AaptRplLluLlmTtlmZfZUcTXwbVQ91FGP4tevdNjjo7V6Hv8WPvg6juLjXwjSE0jWbK/so4mV8cpma+k/E/hw/WoAUCHOBpb8fX+X40whiE++PRns+gQm1PykHV70g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikl6K5Yk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQD3WXkM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB62EC4CED1;
-	Wed, 19 Feb 2025 08:37:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikl6K5Yk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB930C4CED1;
+	Wed, 19 Feb 2025 08:37:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954225;
-	bh=3g0L/UW2xsI24sNhsXfRjVco7kmVmcJdFBlS0u5ECCg=;
+	s=korg; t=1739954228;
+	bh=BcgfHOM19G+MrZ4GPtbe85D3wKQpMhGLBt7Et5Puo94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wQD3WXkMl0SypUGpKF8UdwIXBos9nvCh9PU5m2cIOzfVX+TjmOe7/1l1n/sMZl4Mq
-	 hU5QVoyEE1NFpVDc0D/inolzUVilIdPu+mKZl46Y3cSmiXd9Wyl/dJV2GhL4Kq9m7L
-	 OVmc2I4/elPsg0bf67mUjrUxQ0WF0byNdK8JQJRs=
+	b=ikl6K5YkgXCdZc2bkb7Z+jIGQl6bELaSjXvFi3uYnXFwPTZTff9lQMeNtRn3mWDNK
+	 RyaF6MgxH88N1k9Jh5RrsZr8HJQmiUoq/+LdjCNB7hbiHtqwJHVqSzaWyFkWypCvSI
+	 6AXK1+G/tAkltLUavvWQmpjAcevCs/5RVcOcCgDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Baoqi Zhang <zhangbaoqi@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.13 135/274] USB: pci-quirks: Fix HCCPARAMS register error for LS7A EHCI
-Date: Wed, 19 Feb 2025 09:26:29 +0100
-Message-ID: <20250219082614.890899254@linuxfoundation.org>
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.13 136/274] usb: core: fix pipe creation for get_bMaxPacketSize0
+Date: Wed, 19 Feb 2025 09:26:30 +0100
+Message-ID: <20250219082614.929696283@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -51,54 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-commit e71f7f42e3c874ac3314b8f250e8416a706165af upstream.
+commit 4aac0db5a0ebc599d4ad9bf5ebab78afa1f33e10 upstream.
 
-LS7A EHCI controller doesn't have extended capabilities, so the EECP
-(EHCI Extended Capabilities Pointer) field of HCCPARAMS register should
-be 0x0, but it reads as 0xa0 now. This is a hardware flaw and will be
-fixed in future, now just clear the EECP field to avoid error messages
-on boot:
+When usb_control_msg is used in the get_bMaxPacketSize0 function, the
+USB pipe does not include the endpoint device number. This can cause
+failures when a usb hub port is reinitialized after encountering a bad
+cable connection. As a result, the system logs the following error
+messages:
+usb usb2-port1: cannot reset (err = -32)
+usb usb2-port1: Cannot enable. Maybe the USB cable is bad?
+usb usb2-port1: attempt power cycle
+usb 2-1: new high-speed USB device number 5 using ci_hdrc
+usb 2-1: device descriptor read/8, error -71
 
-......
-[    0.581675] pci 0000:00:04.1: EHCI: unrecognized capability ff
-[    0.581699] pci 0000:00:04.1: EHCI: unrecognized capability ff
-[    0.581716] pci 0000:00:04.1: EHCI: unrecognized capability ff
-[    0.581851] pci 0000:00:04.1: EHCI: unrecognized capability ff
-......
-[    0.581916] pci 0000:00:05.1: EHCI: unrecognized capability ff
-[    0.581951] pci 0000:00:05.1: EHCI: unrecognized capability ff
-[    0.582704] pci 0000:00:05.1: EHCI: unrecognized capability ff
-[    0.582799] pci 0000:00:05.1: EHCI: unrecognized capability ff
-......
+The problem began after commit 85d07c556216 ("USB: core: Unite old
+scheme and new scheme descriptor reads"). There
+usb_get_device_descriptor was replaced with get_bMaxPacketSize0. Unlike
+usb_get_device_descriptor, the get_bMaxPacketSize0 function uses the
+macro usb_rcvaddr0pipe, which does not include the endpoint device
+number. usb_get_device_descriptor, on the other hand, used the macro
+usb_rcvctrlpipe, which includes the endpoint device number.
+
+By modifying the get_bMaxPacketSize0 function to use usb_rcvctrlpipe
+instead of usb_rcvaddr0pipe, the issue can be resolved. This change will
+ensure that the endpoint device number is included in the USB pipe,
+preventing reinitialization failures. If the endpoint has not set the
+device number yet, it will still work because the device number is 0 in
+udev.
 
 Cc: stable <stable@kernel.org>
-Signed-off-by: Baoqi Zhang <zhangbaoqi@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Link: https://lore.kernel.org/r/20250202124935.480500-1-chenhuacai@loongson.cn
+Fixes: 85d07c556216 ("USB: core: Unite old scheme and new scheme descriptor reads")
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250203105840.17539-1-eichest@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/pci-quirks.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/core/hub.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/host/pci-quirks.c
-+++ b/drivers/usb/host/pci-quirks.c
-@@ -958,6 +958,15 @@ static void quirk_usb_disable_ehci(struc
- 	 * booting from USB disk or using a usb keyboard
- 	 */
- 	hcc_params = readl(base + EHCI_HCC_PARAMS);
-+
-+	/* LS7A EHCI controller doesn't have extended capabilities, the
-+	 * EECP (EHCI Extended Capabilities Pointer) field of HCCPARAMS
-+	 * register should be 0x0 but it reads as 0xa0.  So clear it to
-+	 * avoid error messages on boot.
-+	 */
-+	if (pdev->vendor == PCI_VENDOR_ID_LOONGSON && pdev->device == 0x7a14)
-+		hcc_params &= ~(0xffL << 8);
-+
- 	offset = (hcc_params >> 8) & 0xff;
- 	while (offset && --count) {
- 		pci_read_config_dword(pdev, offset, &cap);
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -4698,7 +4698,6 @@ void usb_ep0_reinit(struct usb_device *u
+ EXPORT_SYMBOL_GPL(usb_ep0_reinit);
+ 
+ #define usb_sndaddr0pipe()	(PIPE_CONTROL << 30)
+-#define usb_rcvaddr0pipe()	((PIPE_CONTROL << 30) | USB_DIR_IN)
+ 
+ static int hub_set_address(struct usb_device *udev, int devnum)
+ {
+@@ -4804,7 +4803,7 @@ static int get_bMaxPacketSize0(struct us
+ 	for (i = 0; i < GET_MAXPACKET0_TRIES; ++i) {
+ 		/* Start with invalid values in case the transfer fails */
+ 		buf->bDescriptorType = buf->bMaxPacketSize0 = 0;
+-		rc = usb_control_msg(udev, usb_rcvaddr0pipe(),
++		rc = usb_control_msg(udev, usb_rcvctrlpipe(udev, 0),
+ 				USB_REQ_GET_DESCRIPTOR, USB_DIR_IN,
+ 				USB_DT_DEVICE << 8, 0,
+ 				buf, size,
 
 
