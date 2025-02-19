@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8531BEF82;
-	Wed, 19 Feb 2025 09:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70781BEF82;
+	Wed, 19 Feb 2025 09:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955747; cv=none; b=o//d/o/Ai8r0tvXLaJ5hmKFms2c9kNKBuzyOfr6ms9CNtLJkxGSQueNxh+cyQjP8ckVgkm0T5MJWZu7MoH8gjfntm6U5mSWw9w13FDL7JDzsfH+zeTXDPa4y+0KGaSrnXQ42DHEIuVnWBL4YuNO4lzJNB8NOPDsR3vYYHzfQhno=
+	t=1739955749; cv=none; b=TQHGMlq90/0hW5kt80KPBG1BL9bbaaQ04nT7W91u/WNPyATiKeOsw986pFQlB8SM1EnvPBVprKiuOXarxD1MqBHgvLNvpWASPkcCy6aSMzosHpN+9Vaid/qmmEjz1kugd4ST0BpzEGqoMx30JgdSYvKGc9G0ny/Xp6mlBHQ/RZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955747; c=relaxed/simple;
-	bh=S3OfuMQOopurwvMkCGO7n+1u1y1wWG9/3wMhJtaASjY=;
+	s=arc-20240116; t=1739955749; c=relaxed/simple;
+	bh=OrhVNWx5Ekwm/cS6QyeKxPqk4st6pW0vJ2wXmLVkhLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PQ/21CHi9KYr5mg77oXNwQR7zAtbpDfFKYoLQUrw+4xXezUpA8El/T5q615U2cNgCz6QrRjXolXvJDTuja0qYk1mUO5AAbEVBuPHApc8zZ266yNBw6gNVMiqhUQA0chkUnmxld9MpQw7T1lujl4fskMZSfvxtxEG68ShxQ1qN2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DtGIM38C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VtK+riYogkRarMXMHLNGteEHNd97fTO6WdPJhSVatB/WhoA4ol4M8xpCakCh0PD250k9d95tnGV7LBWiYTkRK16IOwOgCbvuLbokF4oi2V7ViBe4zVH7YFYlEFJM6wimeC2vPnwzHm9DScy8vNMKq2maF42AvUAWUt7QpwYGTB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sx0ecYtI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DtGIM38C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10355C4CED1;
-	Wed, 19 Feb 2025 09:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sx0ecYtI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A92C4CED1;
+	Wed, 19 Feb 2025 09:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955746;
-	bh=S3OfuMQOopurwvMkCGO7n+1u1y1wWG9/3wMhJtaASjY=;
+	s=korg; t=1739955749;
+	bh=OrhVNWx5Ekwm/cS6QyeKxPqk4st6pW0vJ2wXmLVkhLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DtGIM38CZ0p+Rlm4NNcRCBQtttMor22J/YUDShgBh2z13TRsyzxo3QK0il0VPICD8
-	 eEkrTh8EKxwqbza9XzA3xGzaDhTRd021czft988GJsmu+YQkzCqwgTNfHVsQr9OuZ+
-	 RRmm4kicttVBWxxnwmBAzrLItCfCv2rtB6RGGq+g=
+	b=Sx0ecYtI0GsBur/BbmSYNMUzAgsuy873U3eObeaT+LvXAM7INle71iQnO7rwIoRAl
+	 YdGRZm0y38UL1hTJI00jclP4zhcDI5LUGgj+VqEzOua7IwocHnMtSaai6pwjFE2+hi
+	 1I/Qqg8/g5/O1Gv+tWivfuudeobngHxNt5Xnnfe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Jann Horn <jannh@google.com>
-Subject: [PATCH 6.6 068/152] usb: cdc-acm: Check control transfer buffer size before access
-Date: Wed, 19 Feb 2025 09:28:01 +0100
-Message-ID: <20250219082552.738353673@linuxfoundation.org>
+Subject: [PATCH 6.6 069/152] usb: cdc-acm: Fix handling of oversized fragments
+Date: Wed, 19 Feb 2025 09:28:02 +0100
+Message-ID: <20250219082552.776261796@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -52,64 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Jann Horn <jannh@google.com>
 
-commit e563b01208f4d1f609bcab13333b6c0e24ce6a01 upstream.
+commit 12e712964f41d05ae034989892de445781c46730 upstream.
 
-If the first fragment is shorter than struct usb_cdc_notification, we can't
-calculate an expected_size. Log an error and discard the notification
-instead of reading lengths from memory outside the received data, which can
-lead to memory corruption when the expected_size decreases between
-fragments, causing `expected_size - acm->nb_index` to wrap.
+If we receive an initial fragment of size 8 bytes which specifies a wLength
+of 1 byte (so the reassembled message is supposed to be 9 bytes long), and
+we then receive a second fragment of size 9 bytes (which is not supposed to
+happen), we currently wrongly bypass the fragment reassembly code but still
+pass the pointer to the acm->notification_buffer to
+acm_process_notification().
 
-This issue has been present since the beginning of git history; however,
-it only leads to memory corruption since commit ea2583529cd1
-("cdc-acm: reassemble fragmented notifications").
+Make this less wrong by always going through fragment reassembly when we
+expect more fragments.
 
-A mitigating factor is that acm_ctrl_irq() can only execute after userspace
-has opened /dev/ttyACM*; but if ModemManager is running, ModemManager will
-do that automatically depending on the USB device's vendor/product IDs and
-its other interfaces.
+Before this patch, receiving an overlong fragment could lead to `newctrl`
+in acm_process_notification() being uninitialized data (instead of data
+coming from the device).
 
 Cc: stable <stable@kernel.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: ea2583529cd1 ("cdc-acm: reassemble fragmented notifications")
 Signed-off-by: Jann Horn <jannh@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |   17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/usb/class/cdc-acm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/usb/class/cdc-acm.c
 +++ b/drivers/usb/class/cdc-acm.c
-@@ -371,7 +371,7 @@ static void acm_process_notification(str
- static void acm_ctrl_irq(struct urb *urb)
- {
- 	struct acm *acm = urb->context;
--	struct usb_cdc_notification *dr = urb->transfer_buffer;
-+	struct usb_cdc_notification *dr;
- 	unsigned int current_size = urb->actual_length;
- 	unsigned int expected_size, copy_size, alloc_size;
- 	int retval;
-@@ -398,9 +398,20 @@ static void acm_ctrl_irq(struct urb *urb
- 
- 	usb_mark_last_busy(acm->dev);
- 
--	if (acm->nb_index)
-+	if (acm->nb_index == 0) {
-+		/*
-+		 * The first chunk of a message must contain at least the
-+		 * notification header with the length field, otherwise we
-+		 * can't get an expected_size.
-+		 */
-+		if (current_size < sizeof(struct usb_cdc_notification)) {
-+			dev_dbg(&acm->control->dev, "urb too short\n");
-+			goto exit;
-+		}
-+		dr = urb->transfer_buffer;
-+	} else {
- 		dr = (struct usb_cdc_notification *)acm->notification_buffer;
--
-+	}
- 	/* size = notification-header + (optional) data */
+@@ -416,7 +416,7 @@ static void acm_ctrl_irq(struct urb *urb
  	expected_size = sizeof(struct usb_cdc_notification) +
  					le16_to_cpu(dr->wLength);
+ 
+-	if (current_size < expected_size) {
++	if (acm->nb_index != 0 || current_size < expected_size) {
+ 		/* notification is transmitted fragmented, reassemble */
+ 		if (acm->nb_size < expected_size) {
+ 			u8 *new_buffer;
 
 
