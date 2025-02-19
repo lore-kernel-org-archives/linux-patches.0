@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB881EB1B8;
-	Wed, 19 Feb 2025 08:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AB11DE2D8;
+	Wed, 19 Feb 2025 08:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954300; cv=none; b=iV2VMtPYp9WrJoL1ctVtlFPEIcdjyG+tdyrmOy4figmruv/8ITECY189l/cxt5ROeUzs17plF0AioqYqEVxCF1SPc5Rb6+yl3zKxnu9JIRQ58/6/ZHswylpBKlKpc10xdFtoakHtFzREXOl+vN/a9WKXUp2n5u5Jx1IfghmhL6M=
+	t=1739954304; cv=none; b=pnUav2eEfjJ3o1V8Mupvf8gss1Wa9ZGwQhsPT9+YOcydyq8m042vTbIc4TSRyTY6vUWeqarWtiHlGiubcHIquSL1L6OF3ny0zEjULJeEid/T63ZfTO2qpOYmNoEnBSFfep9KgL2VAsTupO9OaJfcYIRihyXkQYeGavaxRIURBes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954300; c=relaxed/simple;
-	bh=7EIZ0MIwxhMRJLxbgSKSGv4xM71CIJXEwEkozcqfeNI=;
+	s=arc-20240116; t=1739954304; c=relaxed/simple;
+	bh=Bq5tmamhAFQiOssS/cruO3gYFpsgc3B4GJX0qJLzxZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZfR9fuJ7ym/TmzGzT8HpY8j91F2LQlLhdFJtDaCMjDlVkBF907grmWMOlHhMdKFSsVbR1OolP9OPMDvnAKeOWlaEE0yvm2KtYZLtwzp7LExKjVBDUKLpR8mgLAJivVGpKLFc4l3otQhK8KG7H8bbtxPoc+GW7ak05ayZQrOnxrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9zO2It2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AQvOTnuH7A9PeNG4dkZIAeLbyCrlaURjyIdLburFMt8xtn4Ub9SWbR/0egk207vBc1JnKwBGtJdDP8f/hMry4M0z3MLFi9j/3+l7eUUyqZkSlppVW/fjuHS1pi5AlqXbgxnWUgBlgnroDKCcAPsVvc1motox51BlLwgwEW9JtYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxDFBLfG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9zO2It2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6024DC4CED1;
-	Wed, 19 Feb 2025 08:38:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxDFBLfG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76677C4CED1;
+	Wed, 19 Feb 2025 08:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954299;
-	bh=7EIZ0MIwxhMRJLxbgSKSGv4xM71CIJXEwEkozcqfeNI=;
+	s=korg; t=1739954302;
+	bh=Bq5tmamhAFQiOssS/cruO3gYFpsgc3B4GJX0qJLzxZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9zO2It2dGU+Z4Zc74tBgcXDzON+RkFsGWE2FxirzWgCtg5WAGKK3q8uTJByNWLR7
-	 Oz9cg6q4bxNJrgDo26RM7fBnJYfUdXir21B2IUwCioTTLarOhSGTLNTZzUsA+3xn4b
-	 CvKOiOHthjGm+5f/PXrTIwWfy+OwoJwXcZUB6Y5E=
+	b=sxDFBLfGw7xBK63hItT+3E3Z/7TWoz3L/O20eceDHtfCjsR3HmReThavvKmO47d/u
+	 0NlOQ747j4LUpAVLhbOw7zB50vcqjzzvgTnP7nny8YwJPJbtngmJj5tVaSjsHMQgA0
+	 RSBuC8AlxduXjlUbCcUDt/DBdcRjszGQrh1Cjf/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Matthew Maurer <mmaurer@google.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Ralf Jung <post@ralfj.de>,
-	Jubilee Young <workingjubilee@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Trevor Gross <tmgross@umich.edu>
-Subject: [PATCH 6.13 160/274] arm64: rust: clean Rust 1.85.0 warning using softfloat target
-Date: Wed, 19 Feb 2025 09:26:54 +0100
-Message-ID: <20250219082615.856497421@linuxfoundation.org>
+	Gary Guo <gary@garyguo.net>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.13 161/274] objtool/rust: add one more `noreturn` Rust function
+Date: Wed, 19 Feb 2025 09:26:55 +0100
+Message-ID: <20250219082615.896623240@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -58,67 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Miguel Ojeda <ojeda@kernel.org>
 
-commit 446a8351f160d65a1c5df7097f31c74102ed2bb1 upstream.
+commit cee6f9a9c87b6ecfb51845950c28216b231c3610 upstream.
 
-Starting with Rust 1.85.0 (to be released 2025-02-20), `rustc` warns
-[1] about disabling neon in the aarch64 hardfloat target:
+Starting with Rust 1.85.0 (currently in beta, to be released 2025-02-20),
+under some kernel configurations with `CONFIG_RUST_DEBUG_ASSERTIONS=y`,
+one may trigger a new `objtool` warning:
 
-    warning: target feature `neon` cannot be toggled with
-             `-Ctarget-feature`: unsound on hard-float targets
-             because it changes float ABI
-      |
-      = note: this was previously accepted by the compiler but
-              is being phased out; it will become a hard error
-              in a future release!
-      = note: for more information, see issue #116344
-              <https://github.com/rust-lang/rust/issues/116344>
+    rust/kernel.o: warning: objtool: _R...securityNtB2_11SecurityCtx8as_bytes()
+    falls through to next function _R...core3ops4drop4Drop4drop()
 
-Thus, instead, use the softfloat target instead.
+due to a call to the `noreturn` symbol:
 
-While trying it out, I found that the kernel sanitizers were not enabled
-for that built-in target [2]. Upstream Rust agreed to backport
-the enablement for the current beta so that it is ready for
-the 1.85.0 release [3] -- thanks!
+    core::panicking::assert_failed::<usize, usize>
 
-However, that still means that before Rust 1.85.0, we cannot switch
-since sanitizers could be in use. Thus conditionally do so.
+Thus add it to the list so that `objtool` knows it is actually `noreturn`.
+Do so matching with `strstr` since it is a generic.
+
+See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
+for more details.
 
 Cc: stable@vger.kernel.org # Needed in 6.12.y and 6.13.y only (Rust is pinned in older LTSs).
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Matthew Maurer <mmaurer@google.com>
-Cc: Alice Ryhl <aliceryhl@google.com>
-Cc: Ralf Jung <post@ralfj.de>
-Cc: Jubilee Young <workingjubilee@gmail.com>
-Link: https://github.com/rust-lang/rust/pull/133417 [1]
-Link: https://rust-lang.zulipchat.com/#narrow/channel/131828-t-compiler/topic/arm64.20neon.20.60-Ctarget-feature.60.20warning/near/495358442 [2]
-Link: https://github.com/rust-lang/rust/pull/135905 [3]
-Link: https://github.com/rust-lang/rust/issues/116344
+Fixes: 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://lore.kernel.org/r/20250112143951.751139-1-ojeda@kernel.org
+[ Updated Cc: stable@ to include 6.13.y. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
-Tested-by: Matthew Maurer <mmaurer@google.com>
-Reviewed-by: Ralf Jung <post@ralfj.de>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20250210163732.281786-1-ojeda@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/Makefile |    4 ++++
- 1 file changed, 4 insertions(+)
+ tools/objtool/check.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/Makefile
-+++ b/arch/arm64/Makefile
-@@ -48,7 +48,11 @@ KBUILD_CFLAGS	+= $(CC_FLAGS_NO_FPU) \
- KBUILD_CFLAGS	+= $(call cc-disable-warning, psabi)
- KBUILD_AFLAGS	+= $(compat_vdso)
- 
-+ifeq ($(call test-ge, $(CONFIG_RUSTC_VERSION), 108500),y)
-+KBUILD_RUSTFLAGS += --target=aarch64-unknown-none-softfloat
-+else
- KBUILD_RUSTFLAGS += --target=aarch64-unknown-none -Ctarget-feature="-neon"
-+endif
- 
- KBUILD_CFLAGS	+= $(call cc-option,-mabi=lp64)
- KBUILD_AFLAGS	+= $(call cc-option,-mabi=lp64)
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -218,6 +218,7 @@ static bool is_rust_noreturn(const struc
+ 	       str_ends_with(func->name, "_4core9panicking18panic_bounds_check")			||
+ 	       str_ends_with(func->name, "_4core9panicking19assert_failed_inner")			||
+ 	       str_ends_with(func->name, "_4core9panicking36panic_misaligned_pointer_dereference")	||
++	       strstr(func->name, "_4core9panicking13assert_failed")					||
+ 	       strstr(func->name, "_4core9panicking11panic_const24panic_const_")			||
+ 	       (strstr(func->name, "_4core5slice5index24slice_") &&
+ 		str_ends_with(func->name, "_fail"));
 
 
