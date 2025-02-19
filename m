@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDF11DFE36;
-	Wed, 19 Feb 2025 08:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28421DFE39;
+	Wed, 19 Feb 2025 08:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955124; cv=none; b=Mx/Eegjk7sHEUPa/jBRMJcwztL8f9JLtRRxJ6IhcbvoMD9ONofrlT2F9SEgteGPOl97GCQSN4bdI/sUUiDBsJESjLvQsicCJBX4VBDeJNkoGJ0xwg/ycfni9CZd0j78NhnS5+5DtTi1kUwKUjwJjsCAOqN4RXL2v20S/M+WRc9c=
+	t=1739955126; cv=none; b=mSbgiS5snNp5iS5x7plU+8Ha68LXM9QFFpT0mcxFHFs3YUHDX4OBpTzt9WxKofkhNyca+XtrWhUliVYF2VBVyo7C89tXnYFcM0YgHM1+vC3Dos0ZVQXhjV3mS/NCeEcV21p+2z++1Ux4ldlXbEZhtyfQul8jNNR8Zho0/1WKbqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955124; c=relaxed/simple;
-	bh=dGKO9lmtUK+t3OBap3R0ZsmUcIsM+EOabMkIZhHLzcw=;
+	s=arc-20240116; t=1739955126; c=relaxed/simple;
+	bh=1qG/3kwR2vCSFPEwqpAtgIX9uh3vJemB+HYs9o4+6gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qn3fShe31GbCz2LbeHjjLWBiSdccJ0JkJwdBtnTyoLBsXNt6aUrOAa9Chsl+TKjs+LF7sJObSo1wLYmY/JjNCjlGpsGDORjbXYgIUHYFRYzJWB5GT2ywTeurIGMuNQFymGATq3sD3c0QlmOomELMwERMrU1G7fnlCsuV+ss95ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFleBANy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uwc8QcIVR2N1sRxvcigAANFvxclJqAZ++2YdRYx4+l3RyLfVt/YhaZcsqYWJsVLTL0WwyUq29Kyq3tyaate1jtkAt6sOpw5y/UFjiZo9TqMdxy1564fIreskBdo4D+Sa/KZFTKbpEhD4tL/JC+65mxhW2Gud6yPMXJLWseW0zXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFUgB9Qo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFleBANy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FBAC4CEE6;
-	Wed, 19 Feb 2025 08:52:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFUgB9Qo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F802C4CEE6;
+	Wed, 19 Feb 2025 08:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955123;
-	bh=dGKO9lmtUK+t3OBap3R0ZsmUcIsM+EOabMkIZhHLzcw=;
+	s=korg; t=1739955126;
+	bh=1qG/3kwR2vCSFPEwqpAtgIX9uh3vJemB+HYs9o4+6gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kFleBANyJz5h0+Se8eUm5GmnoMhZJk47sCua4xwwZ+quQfHv905BXbwpgLOKpluzj
-	 qlKLdMh5a08CAetbdmwthQuviP679GybkGnfxp1kXCdVWKWNWM3DXeJQmdlnWC7rGe
-	 LymPBk4BsGbTFWpZw2XUU2TIHJWWhQV1WMZ9fcio=
+	b=HFUgB9QolghlqCz5koibdXpEKe9nFGVVVVxLYW4MoMVQo/X8y0pQU22lIs4NIYvFy
+	 iCnkcO8th4wQZXqH7B81f+0nN80SuHVX3dkqxX2mdTC6mtAIPtrkp3wxu4wecEtFX/
+	 cy5bh1Ub3JkHB4AVoP6vGQZwjwFM+TqzGOndLje4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
+	Yutaro Ohno <yutaro.ono.418@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 140/230] objtool/rust: add one more `noreturn` Rust function
-Date: Wed, 19 Feb 2025 09:27:37 +0100
-Message-ID: <20250219082607.163091287@linuxfoundation.org>
+Subject: [PATCH 6.12 141/230] rust: rbtree: fix overindented list item
+Date: Wed, 19 Feb 2025 09:27:38 +0100
+Message-ID: <20250219082607.202571990@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -52,45 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Miguel Ojeda <ojeda@kernel.org>
 
-commit cee6f9a9c87b6ecfb51845950c28216b231c3610 upstream.
+commit 2e4f982cf392af2f1282b5537a72144e064799e3 upstream.
 
-Starting with Rust 1.85.0 (currently in beta, to be released 2025-02-20),
-under some kernel configurations with `CONFIG_RUST_DEBUG_ASSERTIONS=y`,
-one may trigger a new `objtool` warning:
+Starting with Rust 1.86.0 (to be released 2025-04-03), Clippy will have
+a new lint, `doc_overindented_list_items` [1], which catches cases of
+overindented list items.
 
-    rust/kernel.o: warning: objtool: _R...securityNtB2_11SecurityCtx8as_bytes()
-    falls through to next function _R...core3ops4drop4Drop4drop()
+The lint has been added by Yutaro Ohno, based on feedback from the kernel
+[2] on a patch that fixed a similar case -- commit 0c5928deada1 ("rust:
+block: fix formatting in GenDisk doc").
 
-due to a call to the `noreturn` symbol:
+Clippy reports a few cases in the kernel, apart from the one already
+fixed in the commit above. One is this one:
 
-    core::panicking::assert_failed::<usize, usize>
+    error: doc list item overindented
+        --> rust/kernel/rbtree.rs:1152:5
+         |
+    1152 | ///     null, it is a pointer to the root of the [`RBTree`].
+         |     ^^^^ help: try using `  ` (2 spaces)
+         |
+         = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#doc_overindented_list_items
+         = note: `-D clippy::doc-overindented-list-items` implied by `-D warnings`
+         = help: to override `-D warnings` add `#[allow(clippy::doc_overindented_list_items)]`
 
-Thus add it to the list so that `objtool` knows it is actually `noreturn`.
-Do so matching with `strstr` since it is a generic.
+Thus clean it up.
 
-See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-for more details.
-
+Cc: Yutaro Ohno <yutaro.ono.418@gmail.com>
 Cc: stable@vger.kernel.org # Needed in 6.12.y and 6.13.y only (Rust is pinned in older LTSs).
-Fixes: 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/r/20250112143951.751139-1-ojeda@kernel.org
-[ Updated Cc: stable@ to include 6.13.y. - Miguel ]
+Fixes: a335e9591404 ("rust: rbtree: add `RBTree::entry`")
+Link: https://github.com/rust-lang/rust-clippy/pull/13711 [1]
+Link: https://github.com/rust-lang/rust-clippy/issues/13601 [2]
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Yutaro Ohno <yutaro.ono.418@gmail.com>
+Link: https://lore.kernel.org/r/20250206232022.599998-1-ojeda@kernel.org
+[ There are a few other cases, so updated message. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/objtool/check.c |    1 +
- 1 file changed, 1 insertion(+)
+ rust/kernel/rbtree.rs |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -218,6 +218,7 @@ static bool is_rust_noreturn(const struc
- 	       str_ends_with(func->name, "_4core9panicking18panic_bounds_check")			||
- 	       str_ends_with(func->name, "_4core9panicking19assert_failed_inner")			||
- 	       str_ends_with(func->name, "_4core9panicking36panic_misaligned_pointer_dereference")	||
-+	       strstr(func->name, "_4core9panicking13assert_failed")					||
- 	       strstr(func->name, "_4core9panicking11panic_const24panic_const_")			||
- 	       (strstr(func->name, "_4core5slice5index24slice_") &&
- 		str_ends_with(func->name, "_fail"));
+--- a/rust/kernel/rbtree.rs
++++ b/rust/kernel/rbtree.rs
+@@ -1147,7 +1147,7 @@ pub struct VacantEntry<'a, K, V> {
+ /// # Invariants
+ /// - `parent` may be null if the new node becomes the root.
+ /// - `child_field_of_parent` is a valid pointer to the left-child or right-child of `parent`. If `parent` is
+-///     null, it is a pointer to the root of the [`RBTree`].
++///   null, it is a pointer to the root of the [`RBTree`].
+ struct RawVacantEntry<'a, K, V> {
+     rbtree: *mut RBTree<K, V>,
+     /// The node that will become the parent of the new node if we insert one.
 
 
