@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108BD1DE2A4;
-	Wed, 19 Feb 2025 08:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA691ADC84;
+	Wed, 19 Feb 2025 08:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954676; cv=none; b=Z+FmmNXus4TP8uypS4KKwI3xnPuBFWqhZJQJOTOipQjG7l+1zsUfcWpH03/bz6P8KqC1l10xaLPMawbg/wptIY3yF+I3XAWF2rbCMPNpiniS6xb2aoIZ5Evx2y09Zdo2oI379648ZQYjDbze9iVzW2eQqJE47OJOnCkOBv9SpnY=
+	t=1739954678; cv=none; b=SyBnc5Ipi+0UCygpy5Pr2Q5tQ7frIcZfMOsJawmq1xETYMjixxwjY4GCYJJyCq9c8rg/1hVPIeTUSK/W+s5LrJzOwKubimsQ+okbgBDIT7w4IlBCCghqMlnKHNltQuH0QEG8RERuhk2qfUIgTmzytQgcPk8xo4ooM/tE2xL99U8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954676; c=relaxed/simple;
-	bh=qMFZPa3+/bL3szjTOYoAd4ZbuREe1cd/Wnu83HsoaVc=;
+	s=arc-20240116; t=1739954678; c=relaxed/simple;
+	bh=3uKh5KJk71ZcaV+nZ11OWuDEpMs2mwyS+Wyjdy2ssjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+Y5EbYA+j3k3n1TmWE13SLALfmvlNXvu62KOWDTXI2g/6HsuBrHAE9ZxFPgfQvw5RYExIJp5HlEm9T7KJvIyR1LeBHXAuMUUpw+WDNmSnG/ButlMX48XilAcmrWuK3xUuM9KQPlJCdLgTGTARruDRDka9wu5he1SgPwULhxBEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8MWqMVq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B2HMB0i4x1LeUfFPAT7T1VaaklBBI6jhfaEG8fXxD6vC5hXW4d0TCD3Xsm7Dvf4ARrKQiNXLC9O0jzvRXAL7yIKawPOpEVQfjqBRZMMxFumGiSFG5XVBh6+WrMq+RiRD4YMQmj5fmAOVJ/8qf5sgSoLMPLdZwb8MhSemQbVBkZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kufz3UxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8MWqMVq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22222C4CED1;
-	Wed, 19 Feb 2025 08:44:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kufz3UxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B69C4CED1;
+	Wed, 19 Feb 2025 08:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954675;
-	bh=qMFZPa3+/bL3szjTOYoAd4ZbuREe1cd/Wnu83HsoaVc=;
+	s=korg; t=1739954678;
+	bh=3uKh5KJk71ZcaV+nZ11OWuDEpMs2mwyS+Wyjdy2ssjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8MWqMVqSnUMMOg04eM3zvlP2CssIhIZzbwJ1pb9kNyX3AfqUPMVs5+dv4pkW2Ryg
-	 Eg4w+vxzkEpgvUmdVBFsqhmMtuk+DpJj2OCV6sgEOm9A9vq5ExDo/cKwDwLzfGyH+y
-	 UJfXGPQXjiCLjFcz6RNbUTNnhBxOH+2dA3+fCUS4=
+	b=kufz3UxGT7Ukbxuob7+l4U1Gil1+oWrdtvtaw/vSZz8sFawlXKL1ZmIAbUyKouOek
+	 kIk5Ku+/SFvLGLoEh8mGhBNFm7G2A4tYKgcxBjiEV47dAHjK1Mg+TwpARre1mNNuR2
+	 Ael5Obad2+INj7xn5L94nHJ2NIvYpkTyuZfWSfzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Caleb Sander Mateos <csander@purestorage.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 246/274] io_uring/uring_cmd: dont assume io_uring_cmd_data layout
-Date: Wed, 19 Feb 2025 09:28:20 +0100
-Message-ID: <20250219082619.208320780@linuxfoundation.org>
+Subject: [PATCH 6.13 247/274] io_uring/uring_cmd: switch sqe to async_data on EAGAIN
+Date: Wed, 19 Feb 2025 09:28:21 +0100
+Message-ID: <20250219082619.247289146@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -53,42 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit 34cae91215c6f65bed2a124fb9283da6ec0b8dd9 ]
+[ Upstream commit e663da62ba8672aaa66843f1af8b20e3bb1a0515 ]
 
-eaf72f7b414f ("io_uring/uring_cmd: cleanup struct io_uring_cmd_data
-layout") removed most of the places assuming struct io_uring_cmd_data
-has sqes as its first field. However, the EAGAIN case in io_uring_cmd()
-still compares ioucmd->sqe to the struct io_uring_cmd_data pointer using
-a void * cast. Since fa3595523d72 ("io_uring: get rid of alloc cache
-init_once handling"), sqes is no longer io_uring_cmd_data's first field.
-As a result, the pointers will always compare unequal and memcpy() may
-be called with the same source and destination.
+5eff57fa9f3a ("io_uring/uring_cmd: defer SQE copying until it's needed")
+moved the unconditional memcpy() of the uring_cmd SQE to async_data
+to 2 cases when the request goes async:
+- If REQ_F_FORCE_ASYNC is set to force the initial issue to go async
+- If ->uring_cmd() returns -EAGAIN in the initial non-blocking issue
 
-Replace the incorrect void * cast with the address of the sqes field.
+Unlike the REQ_F_FORCE_ASYNC case, in the EAGAIN case, io_uring_cmd()
+copies the SQE to async_data but neglects to update the io_uring_cmd's
+sqe field to point to async_data. As a result, sqe still points to the
+slot in the userspace-mapped SQ. At the end of io_submit_sqes(), the
+kernel advances the SQ head index, allowing userspace to reuse the slot
+for a new SQE. If userspace reuses the slot before the io_uring worker
+reissues the original SQE, the io_uring_cmd's SQE will be corrupted.
+
+Introduce a helper io_uring_cmd_cache_sqes() to copy the original SQE to
+the io_uring_cmd's async_data and point sqe there. Use it for both the
+REQ_F_FORCE_ASYNC and EAGAIN cases. This ensures the uring_cmd doesn't
+read from the SQ slot after it has been returned to userspace.
 
 Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Fixes: eaf72f7b414f ("io_uring/uring_cmd: cleanup struct io_uring_cmd_data layout")
-Link: https://lore.kernel.org/r/20250212204546.3751645-2-csander@purestorage.com
+Fixes: 5eff57fa9f3a ("io_uring/uring_cmd: defer SQE copying until it's needed")
+Link: https://lore.kernel.org/r/20250212204546.3751645-3-csander@purestorage.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: e663da62ba86 ("io_uring/uring_cmd: switch sqe to async_data on EAGAIN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/uring_cmd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/uring_cmd.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
 diff --git a/io_uring/uring_cmd.c b/io_uring/uring_cmd.c
-index caed143fb156d..b72154fefbee9 100644
+index b72154fefbee9..0ec58fcd6fc9b 100644
 --- a/io_uring/uring_cmd.c
 +++ b/io_uring/uring_cmd.c
-@@ -268,7 +268,7 @@ int io_uring_cmd(struct io_kiocb *req, unsigned int issue_flags)
- 	if (ret == -EAGAIN) {
+@@ -185,6 +185,15 @@ void io_uring_cmd_done(struct io_uring_cmd *ioucmd, ssize_t ret, u64 res2,
+ }
+ EXPORT_SYMBOL_GPL(io_uring_cmd_done);
+ 
++static void io_uring_cmd_cache_sqes(struct io_kiocb *req)
++{
++	struct io_uring_cmd *ioucmd = io_kiocb_to_cmd(req, struct io_uring_cmd);
++	struct io_uring_cmd_data *cache = req->async_data;
++
++	memcpy(cache->sqes, ioucmd->sqe, uring_sqe_size(req->ctx));
++	ioucmd->sqe = cache->sqes;
++}
++
+ static int io_uring_cmd_prep_setup(struct io_kiocb *req,
+ 				   const struct io_uring_sqe *sqe)
+ {
+@@ -195,14 +204,10 @@ static int io_uring_cmd_prep_setup(struct io_kiocb *req,
+ 	if (unlikely(!cache))
+ 		return -ENOMEM;
+ 
+-	if (!(req->flags & REQ_F_FORCE_ASYNC)) {
+-		/* defer memcpy until we need it */
+-		ioucmd->sqe = sqe;
+-		return 0;
+-	}
+-
+-	memcpy(cache->sqes, sqe, uring_sqe_size(req->ctx));
+-	ioucmd->sqe = cache->sqes;
++	ioucmd->sqe = sqe;
++	/* defer memcpy until we need it */
++	if (unlikely(req->flags & REQ_F_FORCE_ASYNC))
++		io_uring_cmd_cache_sqes(req);
+ 	return 0;
+ }
+ 
+@@ -269,7 +274,7 @@ int io_uring_cmd(struct io_kiocb *req, unsigned int issue_flags)
  		struct io_uring_cmd_data *cache = req->async_data;
  
--		if (ioucmd->sqe != (void *) cache)
-+		if (ioucmd->sqe != cache->sqes)
- 			memcpy(cache->sqes, ioucmd->sqe, uring_sqe_size(req->ctx));
+ 		if (ioucmd->sqe != cache->sqes)
+-			memcpy(cache->sqes, ioucmd->sqe, uring_sqe_size(req->ctx));
++			io_uring_cmd_cache_sqes(req);
  		return -EAGAIN;
  	} else if (ret == -EIOCBQUEUED) {
+ 		return -EIOCBQUEUED;
 -- 
 2.39.5
 
