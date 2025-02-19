@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50471DE891;
-	Wed, 19 Feb 2025 09:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AAA1DED45;
+	Wed, 19 Feb 2025 09:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957209; cv=none; b=PnFU45lnG4gHViRh5yl5Fc91Aw30kqDrC8fTt7aOR2/TDaE4TxyRjbeJvqbhoCpz4sAcY7JxPDD2PXWJdqJtTjLW2JjDcI+Z7RyjLmXUAtFYd/7f+n5Lj7V62NQ/ss14ALdhooNHUzO0yQ+er143YQ7VItEsg4EoilUFIwGQM60=
+	t=1739957212; cv=none; b=EktKZzDJJzO70p1X+RsyGfiSTPkrB5JTglgkjfNwlM79Lxt7dqluxAq8V+svUSPxdGL2Cx06imuIuzkt+CBEmxFQQSFyklSrx1cHwCvPvZ6lbPdNaebRQi5PF6VP7Cc1rlyVfGQRPprZtjMkWRrUdaSzvQKEyWRfF9rvUJQf064=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957209; c=relaxed/simple;
-	bh=x7j+6qrtjHubkOoY0Iz02Ooxx8lxLu2u/ueXaNggzik=;
+	s=arc-20240116; t=1739957212; c=relaxed/simple;
+	bh=i+z3IHMlNqVW4M5nSgTfc2F5DcoDt1lcgghMAH0Pcm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QVB2mwAvFwb60ysynMC42ZeTlvo40tOU+W/3V7wnIo3SoiiKewpwTsBWLdDI+opR0EZHBcMYKPpy1uV10BJpiqTG8H/fIbhuUe9UYdnFmp4+yrlUHahMzxInSGkjFhUJZuW+cbNnHMh3pweQbZs23G35zB/1l8tYefA7t0lf/LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzsbETWp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tsNyvSfu/Wgm5Y2TqBbosZPzLoYmgZTEx8bERma3lMAXBbJXMJ69jw0aGl19aPpDVKA1CFDTOaTE7CQ3nHCyPKXFcmemjvV5hHbyaY2010P7rbLY44meFr/bgJyiiSXP35w3IrI1mdQvqv6wGhxFOakTorwqxtk1J7s/1ui8K8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHj1SUwU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzsbETWp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7BCC4CED1;
-	Wed, 19 Feb 2025 09:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHj1SUwU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E105C4CEE6;
+	Wed, 19 Feb 2025 09:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957209;
-	bh=x7j+6qrtjHubkOoY0Iz02Ooxx8lxLu2u/ueXaNggzik=;
+	s=korg; t=1739957212;
+	bh=i+z3IHMlNqVW4M5nSgTfc2F5DcoDt1lcgghMAH0Pcm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EzsbETWpJ7uUyhI94marXLcU2LO+Sj3sgDJv/mfnao7U6LoBMjtUNvXgaTKU8boDE
-	 yyyTGSbhHtZo5mlrDNi5Fc7VRYrlyo/MkqPT20012Ci1Y1Z+C4Fpv9EHAYYxMJcsY/
-	 3beto33mtRnk7ie6eHXqMO2kBpI3jCAkMs9ugEqg=
+	b=GHj1SUwUUEVDNij8GopOxr1cFCh1sdqmlyrAWlllOJsyKab3Apa0JWMmcvcPh6A/y
+	 5yNOpWV6AjDoVXUxUUyxUr4iifXKZNE4IDPj0B+dpT8i/HYSVnjrFb3cA3A9Yh9ZZp
+	 SMft8zHKwU9tIWfLsYKFsa2IhCW2Ci5Zhqgc5HOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.1 419/578] crypto: qce - unregister previously registered algos in error path
-Date: Wed, 19 Feb 2025 09:27:03 +0100
-Message-ID: <20250219082709.501654028@linuxfoundation.org>
+	Muhammad Ramdhan <ramdhan@starlabs.sg>,
+	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
+	Jacob Soo <jacob.soo@starlabs.sg>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 446/578] io_uring: fix multishots with selected buffers
+Date: Wed, 19 Feb 2025 09:27:30 +0100
+Message-ID: <20250219082710.540588323@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,52 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit e80cf84b608725303113d6fe98bb727bf7b7a40d upstream.
+[ upstream commit d63b0e8a628e62ca85a0f7915230186bb92f8bb4 ]
 
-If we encounter an error when registering alorithms with the crypto
-framework, we just bail out and don't unregister the ones we
-successfully registered in prior iterations of the loop.
-
-Add code that goes back over the algos and unregisters them before
-returning an error from qce_register_algs().
+We do io_kbuf_recycle() when arming a poll but every iteration of a
+multishot can grab more buffers, which is why we need to flush the kbuf
+ring state before continuing with waiting.
 
 Cc: stable@vger.kernel.org
-Fixes: ec8f5d8f6f76 ("crypto: qce - Qualcomm crypto engine driver")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: b3fdea6ecb55c ("io_uring: multishot recv")
+Reported-by: Muhammad Ramdhan <ramdhan@starlabs.sg>
+Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
+Reported-by: Jacob Soo <jacob.soo@starlabs.sg>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/1bfc9990fe435f1fc6152ca9efeba5eb3e68339c.1738025570.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/qce/core.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ io_uring/poll.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/crypto/qce/core.c
-+++ b/drivers/crypto/qce/core.c
-@@ -48,16 +48,19 @@ static void qce_unregister_algs(struct q
- static int qce_register_algs(struct qce_device *qce)
- {
- 	const struct qce_algo_ops *ops;
--	int i, ret = -ENODEV;
-+	int i, j, ret = -ENODEV;
- 
- 	for (i = 0; i < ARRAY_SIZE(qce_ops); i++) {
- 		ops = qce_ops[i];
- 		ret = ops->register_algs(qce);
--		if (ret)
--			break;
-+		if (ret) {
-+			for (j = i - 1; j >= 0; j--)
-+				ops->unregister_algs(qce);
-+			return ret;
-+		}
- 	}
- 
--	return ret;
-+	return 0;
- }
- 
- static int qce_handle_request(struct crypto_async_request *async_req)
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -307,6 +307,8 @@ static int io_poll_check_events(struct i
+ 			}
+ 		} else {
+ 			int ret = io_poll_issue(req, locked);
++			io_kbuf_recycle(req, 0);
++
+ 			if (ret == IOU_STOP_MULTISHOT)
+ 				return IOU_POLL_REMOVE_POLL_USE_RES;
+ 			if (ret < 0)
 
 
