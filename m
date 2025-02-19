@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C791CD210;
-	Wed, 19 Feb 2025 08:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A0F1CEEBE;
+	Wed, 19 Feb 2025 08:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954359; cv=none; b=SH022M/XHDgP3DDMh2MVLJJQtVoSktSGGG5Jn3NkAfihxih6/IZ+sLyp1oJsh/R8orNhqLvzdXbyv4G2TfnSOg8gxVV3RoDRnmEebeO9CUgFNsGkuLI9+2pukFQNt4gKtUW8DQWt3QvRA1pOStVIA4Wpy7eI0brMm+uKg5m0iaY=
+	t=1739954362; cv=none; b=Izwgl9ivJuwysMHO1HFqixNrE8AlwInkjDFI9uasyna9uUMmPEACvwLtsUO/XTAJi3O0oGBnM4zSCsiJ+J6kWu1paH2RBOKNpZYEasuQR8uCRQB5bLoYTEgMXG/O6mDhA3ZMKy5/E1jS3sB65VkINwa1/nQKXIsRS+5f90BwZZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954359; c=relaxed/simple;
-	bh=Pb1DKxvwqH5/NjQxUgoj7jsfOPBngAsCqvAezW5s0W4=;
+	s=arc-20240116; t=1739954362; c=relaxed/simple;
+	bh=E/cABL6ZEtwJS34dBTtsSEpyU8jddf2l2sdhYLKr35c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEOTI4Zk6x4vJ2ViY8wVRnpYntQIoOnjEroJohsOEJAGhOCzrr+Ajh/q1IQohcrFfM5SFWdw0oksc6Eyr9k5/NzNDvBfK6IsFcZlaj6v5buvvQ3UTqsmajFXdIT9/bGhA4UwyExzUUkeqDa78sZxVBB3+QEcJGKJ6vRU/b5ln6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vGM5RIZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V4Vni7zj9gYCb48cITx4XwlmiBLcUwlU2KL95SGBHfxNvzbNVbypCNkhjIGHzE8ZAno5Vj7BrwL2eb3o0DEj/XG1CkL/fubZHjg8V5DKzkJEBriGomg7vpVSFJqTq6e0/ueaQtrmIB4v15izXHfek2fiBaA6S3Hio3cEjmtfuow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSLsOEE4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vGM5RIZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70899C4CEE6;
-	Wed, 19 Feb 2025 08:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSLsOEE4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FB4C4CED1;
+	Wed, 19 Feb 2025 08:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954358;
-	bh=Pb1DKxvwqH5/NjQxUgoj7jsfOPBngAsCqvAezW5s0W4=;
+	s=korg; t=1739954362;
+	bh=E/cABL6ZEtwJS34dBTtsSEpyU8jddf2l2sdhYLKr35c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2vGM5RIZgQVq2MPKDOHpBUsO5xnpM4PhAFPBSZJMaGnPndNDrNqh4rP9s2D+sRhtt
-	 977d7Fe0oyQw8hGrfzrYqM9G6g/pOXvq0Z7PfjzYvfRuczgs9fW15WyF9RoU/Hn2R0
-	 C87xOTbdFW6YSEcAf1wQlH44g5kg8c/OQF6L2CXw=
+	b=LSLsOEE4Xywlca9A3MZ+xnDiW0DjfK65Q5qi0gYCqS1NsXVs/MUCr1AxG2uxiiC3W
+	 eWL0sB46vUEauIc/Ndu9IU8G3fJBIrHRXewnZ8rhb1x3L8H32Vvg6w+yxoP6HHWY/Z
+	 Wo78KV/Pwo1XyCF9HUdho/A+80Cc5VXw4NltZnz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Delgan <delgan.py@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mika Westerberg <westeri@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.13 172/274] gpiolib: acpi: Add a quirk for Acer Nitro ANV14
-Date: Wed, 19 Feb 2025 09:27:06 +0100
-Message-ID: <20250219082616.321856773@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.13 181/274] arm64: Handle .ARM.attributes section in linker scripts
+Date: Wed, 19 Feb 2025 09:27:15 +0100
+Message-ID: <20250219082616.669117763@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -52,51 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 8743d66979e494c5378563e6b5a32e913380abd8 upstream.
+commit ca0f4fe7cf7183bfbdc67ca2de56ae1fc3a8db2b upstream.
 
-Spurious immediate wake up events are reported on Acer Nitro ANV14. GPIO 11 is
-specified as an edge triggered input and also a wake source but this pin is
-supposed to be an output pin for an LED, so it's effectively floating.
+A recent LLVM commit [1] started generating an .ARM.attributes section
+similar to the one that exists for 32-bit, which results in orphan
+section warnings (or errors if CONFIG_WERROR is enabled) from the linker
+because it is not handled in the arm64 linker scripts.
 
-Block the interrupt from getting set up for this GPIO on this device.
+  ld.lld: error: arch/arm64/kernel/vdso/vgettimeofday.o:(.ARM.attributes) is being placed in '.ARM.attributes'
+  ld.lld: error: arch/arm64/kernel/vdso/vgetrandom.o:(.ARM.attributes) is being placed in '.ARM.attributes'
+
+  ld.lld: error: vmlinux.a(lib/vsprintf.o):(.ARM.attributes) is being placed in '.ARM.attributes'
+  ld.lld: error: vmlinux.a(lib/win_minmax.o):(.ARM.attributes) is being placed in '.ARM.attributes'
+  ld.lld: error: vmlinux.a(lib/xarray.o):(.ARM.attributes) is being placed in '.ARM.attributes'
+
+Discard the new sections in the necessary linker scripts to resolve the
+warnings, as the kernel and vDSO do not need to retain it, similar to
+the .note.gnu.property section.
 
 Cc: stable@vger.kernel.org
-Reported-by: Delgan <delgan.py@gmail.com>
-Tested-by: Delgan <delgan.py@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3954
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Mika Westerberg <westeri@kernel.org>
-Link: https://lore.kernel.org/r/20250211203222.761206-1-superm1@kernel.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: b3e5d80d0c48 ("arm64/build: Warn on orphan section placement")
+Link: https://github.com/llvm/llvm-project/commit/ee99c4d4845db66c4daa2373352133f4b237c942 [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20250206-arm64-handle-arm-attributes-in-linker-script-v3-1-d53d169913eb@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-acpi.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/arm64/kernel/vdso/vdso.lds.S |    1 +
+ arch/arm64/kernel/vmlinux.lds.S   |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/gpio/gpiolib-acpi.c
-+++ b/drivers/gpio/gpiolib-acpi.c
-@@ -1689,6 +1689,20 @@ static const struct dmi_system_id gpioli
- 			.ignore_wake = "PNP0C50:00@8",
- 		},
- 	},
-+	{
-+		/*
-+		 * Spurious wakeups from GPIO 11
-+		 * Found in BIOS 1.04
-+		 * https://gitlab.freedesktop.org/drm/amd/-/issues/3954
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_MATCH(DMI_PRODUCT_FAMILY, "Acer Nitro V 14"),
-+		},
-+		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
-+			.ignore_interrupt = "AMDI0030:00@11",
-+		},
-+	},
- 	{} /* Terminating entry */
- };
+--- a/arch/arm64/kernel/vdso/vdso.lds.S
++++ b/arch/arm64/kernel/vdso/vdso.lds.S
+@@ -41,6 +41,7 @@ SECTIONS
+ 	 */
+ 	/DISCARD/	: {
+ 		*(.note.GNU-stack .note.gnu.property)
++		*(.ARM.attributes)
+ 	}
+ 	.note		: { *(.note.*) }		:text	:note
  
+--- a/arch/arm64/kernel/vmlinux.lds.S
++++ b/arch/arm64/kernel/vmlinux.lds.S
+@@ -162,6 +162,7 @@ SECTIONS
+ 	/DISCARD/ : {
+ 		*(.interp .dynamic)
+ 		*(.dynsym .dynstr .hash .gnu.hash)
++		*(.ARM.attributes)
+ 	}
+ 
+ 	. = KIMAGE_VADDR;
 
 
