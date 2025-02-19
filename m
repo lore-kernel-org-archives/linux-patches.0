@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A298E1CB518;
-	Wed, 19 Feb 2025 08:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573CB1DE2D8;
+	Wed, 19 Feb 2025 08:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954312; cv=none; b=RcLf8rd5wIafPY9RQgguqTNxUqCpRhkkTr+SVTQbwnTJ1lbbSYJ+zGmNzMEHeIjG8tXXLJSqy7ZNpD2NlZpVhlYJz7A575Iu1NYbi17MkpIh+veMoT0LDIVVu445O6Q2Kry+u2Ephs20KUfC/1bM8fpH3oPNprREWj8OO2YDowc=
+	t=1739954315; cv=none; b=jnW5Xcx3Lfk0cLlVygQS4ixH84cTMYAffYBvjr17dM5G8+tK35mXX2NQy2Y7Uh1JWDvQjQCxv71Oveqsxyy6vcTIfWVRWXxHL3p9SdOssdbPxc/lzSmYWMdARNoTGD1DQPtNZh17MuZEFdzrTOfCmGdwqo5E3KHmN/L23apK9Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954312; c=relaxed/simple;
-	bh=BuFXdB4hVDnnrFhyrCzpgsej4gdL3VuBFncTCfIVR1Y=;
+	s=arc-20240116; t=1739954315; c=relaxed/simple;
+	bh=QTJsXJdcXcI0AFsOuM41yeGQWVVidgWWP7bGAIJmOK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UTSBPnuC1n60X/OKeSUUqVPr4/+nwTewNynOT1CJpKFVSzIPZtBJHUyJ18j4vzRcgIbfVnLtzTJ1ryDJc9Z8bltIYn51yNv+r/2aiUhflCdi4w/MDh4qN0M3GUEvEOjRQK8J5k8xGTUBULR8/NGA7FNnokqD1oyoVw6gCBeSapc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3Vf9cOC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ooJQcRYt268bH90EUfpm33wzl4jxAIu7wyCY11yIsjc8a2lz0vb4YvDWQW/b1b9Z203BVJpLoujrEu1mcwMp9C31cI7A5/M1kfWMT3dO97Fk19aOWeifxh1LJsgWBmZu3Exq6y6yHOO5LicBHIWQba7Dpv9N6j3GAio2MJS30jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGIyTNKo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3Vf9cOC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D2EC4CED1;
-	Wed, 19 Feb 2025 08:38:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGIyTNKo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F2DC4CEE6;
+	Wed, 19 Feb 2025 08:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954312;
-	bh=BuFXdB4hVDnnrFhyrCzpgsej4gdL3VuBFncTCfIVR1Y=;
+	s=korg; t=1739954315;
+	bh=QTJsXJdcXcI0AFsOuM41yeGQWVVidgWWP7bGAIJmOK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J3Vf9cOCymqkUhowSrC+d+F6yXv1fvIo2R8vEE9a24SaOiY/zg6xzrHX44wAid0CI
-	 u4aeqr9JreqF7V6BZId0W+hJ2dYUn3iPGlHU3Ol5PXWNJ/oij2AAcRJdLVITfAxBTv
-	 o0pzJZhzF/Ik7fy6QscNTq8JS1QVGGqCwqV+hle8=
+	b=LGIyTNKozz+qvLgVrpvEN/zrNiHzl4zir2ti69QKYBWgT9QQGCFvXFcmFZc+NvD2f
+	 bOqC6pOOBTBVq1YG/luZdei0deyqQTRcmLT6Vdds+phaUFEz33boIdiDTPyGs00mRG
+	 iHrdTgxuvZzVpn45klMkJm4LzvQVZRorb3dTuuEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.13 164/274] rtnetlink: fix netns leak with rtnl_setlink()
-Date: Wed, 19 Feb 2025 09:26:58 +0100
-Message-ID: <20250219082616.013057713@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.13 165/274] serial: port: Assign ->iotype correctly when ->iobase is set
+Date: Wed, 19 Feb 2025 09:26:59 +0100
+Message-ID: <20250219082616.052648145@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -51,33 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 1438f5d07b9a7afb15e1d0e26df04a6fd4e56a3c upstream.
+commit 166ac2bba167d575e7146beaa66093bc7c072f43 upstream.
 
-A call to rtnl_nets_destroy() is needed to release references taken on
-netns put in rtnl_nets.
+Currently the ->iotype is always assigned to the UPIO_MEM when
+the respective property is not found. However, this will not
+support the cases when user wants to have UPIO_PORT to be set
+or preserved.  Support this scenario by checking ->iobase value
+and default the ->iotype respectively.
 
-CC: stable@vger.kernel.org
-Fixes: 636af13f213b ("rtnetlink: Register rtnl_dellink() and rtnl_setlink() with RTNL_FLAG_DOIT_PERNET_WIP.")
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250205221037.2474426-1-nicolas.dichtel@6wind.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1117a6fdc7c1 ("serial: 8250_of: Switch to use uart_read_port_properties()")
+Fixes: e894b6005dce ("serial: port: Introduce a common helper to read properties")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250124161530.398361-2-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/serial_port.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -3423,6 +3423,7 @@ static int rtnl_setlink(struct sk_buff *
- 		err = -ENODEV;
- 
- 	rtnl_nets_unlock(&rtnl_nets);
-+	rtnl_nets_destroy(&rtnl_nets);
- errout:
- 	return err;
- }
+--- a/drivers/tty/serial/serial_port.c
++++ b/drivers/tty/serial/serial_port.c
+@@ -173,6 +173,7 @@ EXPORT_SYMBOL(uart_remove_one_port);
+  * The caller is responsible to initialize the following fields of the @port
+  *   ->dev (must be valid)
+  *   ->flags
++ *   ->iobase
+  *   ->mapbase
+  *   ->mapsize
+  *   ->regshift (if @use_defaults is false)
+@@ -214,7 +215,7 @@ static int __uart_read_properties(struct
+ 	/* Read the registers I/O access type (default: MMIO 8-bit) */
+ 	ret = device_property_read_u32(dev, "reg-io-width", &value);
+ 	if (ret) {
+-		port->iotype = UPIO_MEM;
++		port->iotype = port->iobase ? UPIO_PORT : UPIO_MEM;
+ 	} else {
+ 		switch (value) {
+ 		case 1:
 
 
