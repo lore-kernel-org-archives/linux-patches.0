@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AB51DE2B5;
-	Wed, 19 Feb 2025 08:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFF11DDC10;
+	Wed, 19 Feb 2025 08:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954015; cv=none; b=LHhT4uylgA98FVaMmt6MLg4j3PM3v6BBpFVWmFZK7h4RZjKiC3Biy9M18xanGPeozfg5PFJkBV6Un7lXmPtM4tZm9OTRbxXawqYxkTIwyFYqnyduGFaIla0Zhw7L1ui6z81K9RNvOVvO6M9bpmj5pxJimopVESI+K6XwSqgl/z0=
+	t=1739954017; cv=none; b=LzcDKT65EIxQ98Ww8wvVt+fnjtgB5PEuIeAFzgXdkGd5qjqC3uytxnfRBHlJGx9g6ZdLElGkpYXknDQmmfs3mn/uZVKw9qSCpcP8vYWAPOmCMGr6K/TCgDV8r6tadGnLwlpr+uUJJouf2uwThnGZ/bN3Qajfbvy2+cT0S8ThnGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954015; c=relaxed/simple;
-	bh=5rSjT0VbXrwEFUka6MvHc2QYMmTdzi9XH3Nv4CDVM04=;
+	s=arc-20240116; t=1739954017; c=relaxed/simple;
+	bh=kL9B3yMmecplIlEWmY0yVDw4MWXgSzevMv+6bt+ffLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PJS5GfHRU15lBdn6YYxkKruhF3ths52EjszgIOS0YERjNGBAb4/ihC0mgPEfi/ImWfFyATdg1NDD/gYYsSLPtfSk7GYH8MaMj9sjpOHjyN5hF9jKLETtQ30fAbouud8bv/7O8bTTzJeyIC6MynL13nqCRY1z/3e1hE3SABC0bqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tE9273zM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c19Lnqr8ZJF6Rpbav0jL+AGLlxNIU5MmyLX5RIfi1Dfh/D3m+c6/YchLYb/OV4QxykxpXNVUN1yJ50h/G4gtjY0qb6QpGqgNIN/dYH3sxY6IHBL30W664PbgCswqanEwUX14vguZTAxvWVve2gsfBYve+doibRZoZ5nx4B/AbWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/zVcrUp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tE9273zM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DDBC4CEE8;
-	Wed, 19 Feb 2025 08:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/zVcrUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5C1C4CED1;
+	Wed, 19 Feb 2025 08:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954013;
-	bh=5rSjT0VbXrwEFUka6MvHc2QYMmTdzi9XH3Nv4CDVM04=;
+	s=korg; t=1739954016;
+	bh=kL9B3yMmecplIlEWmY0yVDw4MWXgSzevMv+6bt+ffLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tE9273zMSe667xYv9KsrxVVPbYIBgr8XjoUODjgxJSWjLnmqHEM4lRrOS7TP3mXnK
-	 habGAersZaWxE2gwJoENaG2zPHFGYjUpdbjVzSfm7ZWMPuMLJYEnZY+d8Ze+kT8hDH
-	 tr3tRHkIFWO1H9V20cyPELwIajcQanlq6sGriFyc=
+	b=J/zVcrUp/25VgOEg6B55eQ6KTxOjKcziSG/l+HedZTK4Yk0Pr9Bd6MEQeJsL2qj1V
+	 cM/o/80lilQbDhW6LIv+s+T3ThzAJ1ZTH/YV5OikrqUaBaKJZp6LfnVFkKL6YF2GA1
+	 pzgxfxCAKdA3GBojJYZJSXDuqmx6vUnkP9x9zDZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hamish McIntyre-Bhatty <kernel-bugzilla@regd.hamishmb.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	syzbot+1fcd957a82e3a1baa94d@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 067/274] iommu/amd: Expicitly enable CNTRL.EPHEn bit in resume path
-Date: Wed, 19 Feb 2025 09:25:21 +0100
-Message-ID: <20250219082612.245355059@linuxfoundation.org>
+Subject: [PATCH 6.13 037/274] team: better TEAM_OPTION_TYPE_STRING validation
+Date: Wed, 19 Feb 2025 09:24:51 +0100
+Message-ID: <20250219082610.980398160@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -52,67 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ef75966abf950c0539534effa4960caa29fb7167 ]
+[ Upstream commit 5bef3ac184b5626ea62385d6b82a1992b89d7940 ]
 
-With recent kernel, AMDGPU failed to resume after suspend on certain laptop.
+syzbot reported following splat [1]
 
-Sample log:
------------
-Nov 14 11:52:19 Thinkbook kernel: iommu ivhd0: AMD-Vi: Event logged [ILLEGAL_DEV_TABLE_ENTRY device=0000:06:00.0 pasid=0x00000 address=0x135300000 flags=0x0080]
-Nov 14 11:52:19 Thinkbook kernel: AMD-Vi: DTE[0]: 7d90000000000003
-Nov 14 11:52:19 Thinkbook kernel: AMD-Vi: DTE[1]: 0000100103fc0009
-Nov 14 11:52:19 Thinkbook kernel: AMD-Vi: DTE[2]: 2000000117840013
-Nov 14 11:52:19 Thinkbook kernel: AMD-Vi: DTE[3]: 0000000000000000
+Make sure user-provided data contains one nul byte.
 
-This is because in resume path, CNTRL[EPHEn] is not set. Fix this by
-setting CNTRL[EPHEn] to 1 in resume path if EFR[EPHSUP] is set.
+[1]
+ BUG: KMSAN: uninit-value in string_nocheck lib/vsprintf.c:633 [inline]
+ BUG: KMSAN: uninit-value in string+0x3ec/0x5f0 lib/vsprintf.c:714
+  string_nocheck lib/vsprintf.c:633 [inline]
+  string+0x3ec/0x5f0 lib/vsprintf.c:714
+  vsnprintf+0xa5d/0x1960 lib/vsprintf.c:2843
+  __request_module+0x252/0x9f0 kernel/module/kmod.c:149
+  team_mode_get drivers/net/team/team_core.c:480 [inline]
+  team_change_mode drivers/net/team/team_core.c:607 [inline]
+  team_mode_option_set+0x437/0x970 drivers/net/team/team_core.c:1401
+  team_option_set drivers/net/team/team_core.c:375 [inline]
+  team_nl_options_set_doit+0x1339/0x1f90 drivers/net/team/team_core.c:2662
+  genl_family_rcv_msg_doit net/netlink/genetlink.c:1115 [inline]
+  genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
+  genl_rcv_msg+0x1214/0x12c0 net/netlink/genetlink.c:1210
+  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2543
+  genl_rcv+0x40/0x60 net/netlink/genetlink.c:1219
+  netlink_unicast_kernel net/netlink/af_netlink.c:1322 [inline]
+  netlink_unicast+0xf52/0x1260 net/netlink/af_netlink.c:1348
+  netlink_sendmsg+0x10da/0x11e0 net/netlink/af_netlink.c:1892
+  sock_sendmsg_nosec net/socket.c:718 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:733
+  ____sys_sendmsg+0x877/0xb60 net/socket.c:2573
+  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2627
+  __sys_sendmsg net/socket.c:2659 [inline]
+  __do_sys_sendmsg net/socket.c:2664 [inline]
+  __se_sys_sendmsg net/socket.c:2662 [inline]
+  __x64_sys_sendmsg+0x212/0x3c0 net/socket.c:2662
+  x64_sys_call+0x2ed6/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:47
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Note
-  May be better approach is to save the control register in suspend path
-  and restore it in resume path instead of trying to set indivisual
-  bits. We will have separate patch for that.
-
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219499
-Fixes: c4cb23111103 ("iommu/amd: Add support for enable/disable IOPF")
-Tested-by: Hamish McIntyre-Bhatty <kernel-bugzilla@regd.hamishmb.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20250127094411.5931-1-vasant.hegde@amd.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
+Reported-by: syzbot+1fcd957a82e3a1baa94d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1fcd957a82e3a1baa94d
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20250212134928.1541609-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h | 1 +
- drivers/iommu/amd/init.c            | 4 ++++
- 2 files changed, 5 insertions(+)
+ drivers/net/team/team_core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index fdb0357e0bb91..903b426c9f893 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -175,6 +175,7 @@
- #define CONTROL_GAM_EN		25
- #define CONTROL_GALOG_EN	28
- #define CONTROL_GAINT_EN	29
-+#define CONTROL_EPH_EN		45
- #define CONTROL_XT_EN		50
- #define CONTROL_INTCAPXT_EN	51
- #define CONTROL_IRTCACHEDIS	59
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index db4b52aae1fcf..4c0f876445de1 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -2635,6 +2635,10 @@ static void iommu_init_flags(struct amd_iommu *iommu)
- 
- 	/* Set IOTLB invalidation timeout to 1s */
- 	iommu_set_inv_tlb_timeout(iommu, CTRL_INV_TO_1S);
-+
-+	/* Enable Enhanced Peripheral Page Request Handling */
-+	if (check_feature(FEATURE_EPHSUP))
-+		iommu_feature_enable(iommu, CONTROL_EPH_EN);
- }
- 
- static void iommu_apply_resume_quirks(struct amd_iommu *iommu)
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index dc7cbd6a9798a..f4019815f4736 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -2639,7 +2639,9 @@ int team_nl_options_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 				ctx.data.u32_val = nla_get_u32(attr_data);
+ 				break;
+ 			case TEAM_OPTION_TYPE_STRING:
+-				if (nla_len(attr_data) > TEAM_STRING_MAX_LEN) {
++				if (nla_len(attr_data) > TEAM_STRING_MAX_LEN ||
++				    !memchr(nla_data(attr_data), '\0',
++					    nla_len(attr_data))) {
+ 					err = -EINVAL;
+ 					goto team_put;
+ 				}
 -- 
 2.39.5
 
