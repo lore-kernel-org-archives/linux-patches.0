@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5247513FD86;
-	Wed, 19 Feb 2025 09:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390761B6CFA;
+	Wed, 19 Feb 2025 09:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956243; cv=none; b=bfg7OyVzHyjPHkoIMvLSCZomE02+V62YVLHvrz/BeyOPyfX+5lhdlBimx+LDW93WP28emmI+MoAL/jRgNyGzbFXQBAYrMcRBu7WZECLsu0mnDIoArwN/iYB7bu+DZ5XJNKGAA91fVRWiwAdPB4os67tgbJaZYn7Rejw3qDG/d/A=
+	t=1739956246; cv=none; b=He9J4L8QCshM4Z4whbSYVK4/m+JnouCtUsZCWBXzLg7EA7lGHU/JUa5I5oJa1dtvIjIovPau5GCSVSRXysYh3Yib3zudQT5A0CbegpHBxUaz6VIV2PiKkcznuwp0doIioNH65hl95gRP+6EzUDi7YRLTMI0cRy/6H7ttU1zrgtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956243; c=relaxed/simple;
-	bh=HPKhV0Kk4TF32VPT2JEDLd9RBAdHucCbd1Hz7dkZKKY=;
+	s=arc-20240116; t=1739956246; c=relaxed/simple;
+	bh=I4L2RDEHQhvcs5NxForC15/SdPmUIs19WP93zxHG0BA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t5xYFmUcIi5JwT0Hlvpp1gjWaPH7jGvSFYWPuT3m5Mpfe4GWdKS9zayaVQ553XFu/ulXOSunFkPtM7780td3FyDtnvPzBf/Zr+dptJNKw1LNjvnWHbP4KFvoKvAjVYgHkpNu3Y5xaZJyVRoyli2djdYORWF7K+lrZxwvVQDdnuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZS/719fe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uJx9pZohaHi9jEUPh7edJIY1hwKlJv2aKZGYoSE1JkKNkfQ5cZ3Z1z3XPtPIUK4MKphyuy4NibmaxRD9MNrOpA3OtA7I+A9srJvk9sHZrgdTpQBQC0VsJZrZAQ1fCizhNQzeQ3oxSW1OfO27zKN1QiGYQ1XyEXtVg6/CElyeCP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YgS2AE2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZS/719fe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A25C4CED1;
-	Wed, 19 Feb 2025 09:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YgS2AE2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A31C4CED1;
+	Wed, 19 Feb 2025 09:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956243;
-	bh=HPKhV0Kk4TF32VPT2JEDLd9RBAdHucCbd1Hz7dkZKKY=;
+	s=korg; t=1739956246;
+	bh=I4L2RDEHQhvcs5NxForC15/SdPmUIs19WP93zxHG0BA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZS/719fe1smE7IgU1T7F3CwnyS8yqvuXT6CunF8DcK2fSSBtRfng4615bmx1C5QD9
-	 IFmLpHVGL8dwof5RMelxpu8z8GYNn389NJNDxoRr+jVfYAGgb9xTFrLU2E8QhyYwiF
-	 wLJYAIKdQwZqb8tQpub7X13bELx7WJvW3YI/Jm/M=
+	b=2YgS2AE2k+RyM007pKFj3R1fVj+fRZTNTy173DZPUnaEH/oCIjOU2r6W94uIDowli
+	 fb1OMJtr1P7wu3JZJsHKqKO9bK6osGl+GeJFmosCNo8CRBGPtBxoMVOApry6Ryt+ae
+	 ySsdA6TIKJGm7vAF/iCSiUahbkEPMbf6qW4M4X8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <david@fromorbit.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Paul Moore <paul@paul-moore.com>,
-	syzbot+34b68f850391452207df@syzkaller.appspotmail.com,
-	syzbot+360866a59e3c80510a62@syzkaller.appspotmail.com,
-	Ubisectech Sirius <bugreport@ubisectech.com>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 082/578] landlock: Handle weird files
-Date: Wed, 19 Feb 2025 09:21:26 +0100
-Message-ID: <20250219082656.187882113@linuxfoundation.org>
+Subject: [PATCH 6.1 073/578] mfd: syscon: Remove extern from function prototypes
+Date: Wed, 19 Feb 2025 09:21:17 +0100
+Message-ID: <20250219082655.758933165@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,69 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Peter Griffin <peter.griffin@linaro.org>
 
-[ Upstream commit 49440290a0935f428a1e43a5ac8dc275a647ff80 ]
+[ Upstream commit 0db017f8edd9b9af818bc1d68ba578df1b4c4628 ]
 
-A corrupted filesystem (e.g. bcachefs) might return weird files.
-Instead of throwing a warning and allowing access to such file, treat
-them as regular files.
+The kernel coding style does not require 'extern' in function prototypes
+in .h files, so remove them as they are not needed.
 
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: Paul Moore <paul@paul-moore.com>
-Reported-by: syzbot+34b68f850391452207df@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/000000000000a65b35061cffca61@google.com
-Reported-by: syzbot+360866a59e3c80510a62@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/67379b3f.050a0220.85a0.0001.GAE@google.com
-Reported-by: Ubisectech Sirius <bugreport@ubisectech.com>
-Closes: https://lore.kernel.org/r/c426821d-8380-46c4-a494-7008bbd7dd13.bugreport@ubisectech.com
-Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
-Reviewed-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://lore.kernel.org/r/20250110153918.241810-1-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+To avoid checkpatch warnings such as
+CHECK: Lines should not end with a '('
++struct regmap *syscon_regmap_lookup_by_phandle(
+
+The indentation is also updated. No functional changes in this patch.
+
+Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
+Link: https://lore.kernel.org/r/20240220115012.471689-3-peter.griffin@linaro.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Stable-dep-of: 805f7aaf7fee ("mfd: syscon: Fix race in device_node_get_regmap()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/landlock/fs.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ include/linux/mfd/syscon.h | 25 +++++++++++--------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/security/landlock/fs.c b/security/landlock/fs.c
-index 7b0e5976113c2..7b95afcc6b437 100644
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -669,10 +669,6 @@ static inline access_mask_t get_mode_access(const umode_t mode)
- 	switch (mode & S_IFMT) {
- 	case S_IFLNK:
- 		return LANDLOCK_ACCESS_FS_MAKE_SYM;
--	case 0:
--		/* A zero mode translates to S_IFREG. */
--	case S_IFREG:
--		return LANDLOCK_ACCESS_FS_MAKE_REG;
- 	case S_IFDIR:
- 		return LANDLOCK_ACCESS_FS_MAKE_DIR;
- 	case S_IFCHR:
-@@ -683,9 +679,12 @@ static inline access_mask_t get_mode_access(const umode_t mode)
- 		return LANDLOCK_ACCESS_FS_MAKE_FIFO;
- 	case S_IFSOCK:
- 		return LANDLOCK_ACCESS_FS_MAKE_SOCK;
-+	case S_IFREG:
-+	case 0:
-+		/* A zero mode translates to S_IFREG. */
- 	default:
--		WARN_ON_ONCE(1);
--		return 0;
-+		/* Treats weird files as regular files. */
-+		return LANDLOCK_ACCESS_FS_MAKE_REG;
- 	}
- }
+diff --git a/include/linux/mfd/syscon.h b/include/linux/mfd/syscon.h
+index fecc2fa2a3647..c315903f6dab3 100644
+--- a/include/linux/mfd/syscon.h
++++ b/include/linux/mfd/syscon.h
+@@ -17,20 +17,17 @@
+ struct device_node;
  
+ #ifdef CONFIG_MFD_SYSCON
+-extern struct regmap *device_node_to_regmap(struct device_node *np);
+-extern struct regmap *syscon_node_to_regmap(struct device_node *np);
+-extern struct regmap *syscon_regmap_lookup_by_compatible(const char *s);
+-extern struct regmap *syscon_regmap_lookup_by_phandle(
+-					struct device_node *np,
+-					const char *property);
+-extern struct regmap *syscon_regmap_lookup_by_phandle_args(
+-					struct device_node *np,
+-					const char *property,
+-					int arg_count,
+-					unsigned int *out_args);
+-extern struct regmap *syscon_regmap_lookup_by_phandle_optional(
+-					struct device_node *np,
+-					const char *property);
++struct regmap *device_node_to_regmap(struct device_node *np);
++struct regmap *syscon_node_to_regmap(struct device_node *np);
++struct regmap *syscon_regmap_lookup_by_compatible(const char *s);
++struct regmap *syscon_regmap_lookup_by_phandle(struct device_node *np,
++					       const char *property);
++struct regmap *syscon_regmap_lookup_by_phandle_args(struct device_node *np,
++						    const char *property,
++						    int arg_count,
++						    unsigned int *out_args);
++struct regmap *syscon_regmap_lookup_by_phandle_optional(struct device_node *np,
++							const char *property);
+ #else
+ static inline struct regmap *device_node_to_regmap(struct device_node *np)
+ {
 -- 
 2.39.5
 
