@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354F523C8B2;
-	Wed, 19 Feb 2025 21:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D145A25A2CE;
+	Wed, 19 Feb 2025 21:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740000955; cv=none; b=pxi6Sv61R7hzg96BXLJM6NqK9WWYmtbZCcOInSU4AlPstDwKFZMDLlArci5ENa+wqFFPdGOYmc846kK3qY7WFcHZPRjLLVmpNpH0v2eNFOAXxaaanU8ckpX6xJdSQEouv+mRZMbISyn0SvzhYXTgqAoAQdTudvg/ooUKI7rtAt8=
+	t=1740000968; cv=none; b=SyghCiFYcYp4QMUnjPkTLZvaDvSYRx/Igsj7KaxediJfFcbWXH+aI1ZdP4plSgQViJe6bX0Def3FqiH+APwdMVU9y4kt18DJ41Wd2YoozfJhEVmHefEltLgOsarmSZFLIn47rlHVPNvBz5VPmUCexMTdwJAdvhhXUSo1+hpIkt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740000955; c=relaxed/simple;
-	bh=S4iDQ4g8NHW6rPD6c9xr/H2QlLfA+OqBdFPT1FPCwpw=;
+	s=arc-20240116; t=1740000968; c=relaxed/simple;
+	bh=H8cW+KqFza/9wuv7O8fJzMx0LlSrfigkACT10J58gp0=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F+6I/GmHnOmPIw3Sd3q9fXpsiT6y4ssk82OAal8wmTgNkD5JQWgw8Lm6bM54SMa0+GPvgWpOqJpFyfvoexHGov19elu03pgrIJ3yTsJpaRfvB/6ugAxf5CAVOpNoBL6I3E3y8IGxIetd9V7JlVfIC+9IhE9wKRhl4sSAbsoNYVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c0DaXoqs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ItVvNDK6AkQ8AEAtmQg7It6KAim0EnksC0LRCc+2HAFbMXIG/M5caih+2c7LSaz5CIER/a9/9TrDkYhMnnzRFRfIkVffmWholHMbUlq5pQgrw6L0fbdSTiO+7WD9Kr6WvSPLA+Dn4H4zj9P9SNenjV+4qeWzHt6q1Rp5r9OBmRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T4oki23B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c0DaXoqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70042C4CED1;
-	Wed, 19 Feb 2025 21:35:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T4oki23B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D845C4CEEC;
+	Wed, 19 Feb 2025 21:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740000954;
-	bh=S4iDQ4g8NHW6rPD6c9xr/H2QlLfA+OqBdFPT1FPCwpw=;
+	s=k20201202; t=1740000968;
+	bh=H8cW+KqFza/9wuv7O8fJzMx0LlSrfigkACT10J58gp0=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=c0DaXoqsHzW2/9cJZqiusvdtZqXyROkBdDdAgsG0cyNhPcBPl8Y/PY0JORpuGX3sE
-	 dO/xjsazS1GSVxNYGeh17e3g56lvxD8WVHV6Wrmu3PsptkpFWyr5eJ9rbMdkUF2YA1
-	 5rAUUYcDhrxYTZvvkykaVJFHqIXGnLkHWTRlz2ZSYogwZjvwJCA6LJXZwA3YvuzPuQ
-	 pmknhZWl/1jY/W1iCHv9osPMPWPxjlYUXv2H58osXsZyFpxrPWA3XSaut2pjqSSQzs
-	 hKbYhRMjQ8htxX0EhkT/TkOadSfr50hdRWjdxr9E0UAF/qHwznvu+8C//g1OcUOWfh
-	 QanOnd+pyaQtQ==
-Date: Wed, 19 Feb 2025 13:35:53 -0800
+	b=T4oki23BOklJRKQRrSsBaXrq37NWTBXHfc2eQZ8rbrtekenigDrNgwdtQv8fa5lQ6
+	 8Uqj41b6Qwb7u5iG0a//FcJ6gtmgp56YOAK8oUfVgFaX/PSwvRAs/x8a+RZB/ERbGx
+	 U/PR9GcbTvnR2xd38uEIapiTTYgDghyJ/4aCxjWa3EauahKmyLI4QRtUEeED/TByYg
+	 ys9Duj3bl7KmnJ4CWUi3uGwGWe6xgx2bEcvgG51rxyUuU5NaxoMLIJ6T9kOQBsACXQ
+	 9gC9+mZXLqwYhTK/xFMPRUserlgFWiCyp8/ux31cjah/yzmv8z5GT38ajPCPp9Xo+M
+	 iCuFWMZWQzhsg==
+Date: Wed, 19 Feb 2025 13:36:07 -0800
 From: Jakub Kicinski <kuba@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, Joe Damato
- <jdamato@fastly.com>, Eric Dumazet <edumazet@google.com>, Kuniyuki Iwashima
- <kuniyu@amazon.com>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.13 234/274] net: protect netdev->napi_list with
- netdev_lock()
-Message-ID: <20250219133553.55120b32@kernel.org>
-In-Reply-To: <20250219082618.736918558@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, Eric Dumazet
+ <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Sasha Levin
+ <sashal@kernel.org>
+Subject: Re: [PATCH 6.13 235/274] Revert "net: skb: introduce and use a
+ single page frag cache"
+Message-ID: <20250219133607.03a5add6@kernel.org>
+In-Reply-To: <20250219082618.775483707@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
-	<20250219082618.736918558@linuxfoundation.org>
+	<20250219082618.775483707@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,29 +47,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On Wed, 19 Feb 2025 09:28:08 +0100 Greg Kroah-Hartman wrote:
+On Wed, 19 Feb 2025 09:28:09 +0100 Greg Kroah-Hartman wrote:
 > 6.13-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: Jakub Kicinski <kuba@kernel.org>
+> From: Paolo Abeni <pabeni@redhat.com>
 > 
-> [ Upstream commit 1b23cdbd2bbc4b40e21c12ae86c2781e347ff0f8 ]
+> [ Upstream commit 011b0335903832facca86cd8ed05d7d8d94c9c76 ]
 > 
-> Hold netdev->lock when NAPIs are getting added or removed.
-> This will allow safe access to NAPI instances of a net_device
-> without rtnl_lock.
+> This reverts commit dbae2b062824 ("net: skb: introduce and use a single
+> page frag cache"). The intended goal of such change was to counter a
+> performance regression introduced by commit 3226b158e67c ("net: avoid
+> 32 x truesize under-estimation for tiny skbs").
 > 
-> Create a family of helpers which assume the lock is already taken.
-> Switch iavf to them, as it makes extensive use of netdev->lock,
-> already.
+> Unfortunately, the blamed commit introduces another regression for the
+> virtio_net driver. Such a driver calls napi_alloc_skb() with a tiny
+> size, so that the whole head frag could fit a 512-byte block.
 > 
-> Reviewed-by: Joe Damato <jdamato@fastly.com>
-> Reviewed-by: Eric Dumazet <edumazet@google.com>
-> Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-> Link: https://patch.msgid.link/20250115035319.559603-6-kuba@kernel.org
+> The single page frag cache uses a 1K fragment for such allocation, and
+> the additional overhead, under small UDP packets flood, makes the page
+> allocator a bottleneck.
+> 
+> Thanks to commit bf9f1baa279f ("net: add dedicated kmem_cache for
+> typical/small skb->head"), this revert does not re-introduce the
+> original regression. Actually, in the relevant test on top of this
+> revert, I measure a small but noticeable positive delta, just above
+> noise level.
+> 
+> The revert itself required some additional mangling due to the
+> introduction of the SKB_HEAD_ALIGN() helper and local lock infra in the
+> affected code.
+> 
+> Suggested-by: Eric Dumazet <edumazet@google.com>
+> Fixes: dbae2b062824 ("net: skb: introduce and use a single page frag cache")
+> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+> Link: https://patch.msgid.link/e649212fde9f0fdee23909ca0d14158d32bb7425.1738877290.git.pabeni@redhat.com
 > Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> Stable-dep-of: 011b03359038 ("Revert "net: skb: introduce and use a single page frag cache"")
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-please drop
+As already pointed out this was reverted
