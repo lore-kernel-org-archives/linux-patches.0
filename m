@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189AD1DE4C6;
-	Wed, 19 Feb 2025 09:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497A11CAA86;
+	Wed, 19 Feb 2025 09:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957181; cv=none; b=EG6e2kkRAf5CzitehnFD3jlxGNN/vUCt2i5IDV9R1/IoqEpavr6tiogRCGiHgZ0/aY9oO92J2a7J0ZpL0hnwV9XQwGO9Z/eu6T4ehjwzYr6mfnDLU7EzMMyB0eX2eEWGElvwdbajXeRcMWARs9yBb2tFc7AxUsNju/ZU9iU6m5I=
+	t=1739957184; cv=none; b=VD8BiBnhLQg1uO1sOvB5CiOdee+3ycB/MmwlvhVba+lZHp5AeIW7IPTlwgpaLfXZYHg5mukGwhbilV59oBwNDFhunkPXzS0pr5PKnuxZsKqFKsxTpjuEkNt2RlSyiVHKvVEpeYNRwimWEYfXk7aLJmxMXmiiwL5kQorae3XsAkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957181; c=relaxed/simple;
-	bh=5LSYFfR1uY5WYLVtUHpIxvTGinuWTPiLdOyGU7pOg54=;
+	s=arc-20240116; t=1739957184; c=relaxed/simple;
+	bh=ZYeUZp6wk2F4GBk82U2MKJ7mbwmyY+wlovXtpaEp7Ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mJVgylzFQ2vNpINt7GVPvE6jMvZM0KLi9RHXxsRNx4Zd389vGy+2bFqWZXi+hD/RamZn8MwrMQsl0g1+R2Ig3nHTyMZ5bpZE8qUqr/yxsNZXGDFP6XoROgI60o7PL/dS95VJxbYMqLUVnIdp5zVvQ+KQrYpL39AL15OxxUmb66A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LC/Gpfgh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UCn4FbExQ9cdxCPAsARCRND0Z/8/wUTx1IGCO3LsNuiNZtaaGbFJe6ht0SgBsGcgdoieCjrYu2ZElOR1HDPx02/4dA0J20YHvj2scOJVkSzNqKyTogTnrX69w4fNnQ6CsWIDNBpr3gRlcS/5o16oc9PagX2otszKt0BMMuI3aH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wIqAvEpK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LC/Gpfgh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E00C4CED1;
-	Wed, 19 Feb 2025 09:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIqAvEpK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D237C4CED1;
+	Wed, 19 Feb 2025 09:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957180;
-	bh=5LSYFfR1uY5WYLVtUHpIxvTGinuWTPiLdOyGU7pOg54=;
+	s=korg; t=1739957183;
+	bh=ZYeUZp6wk2F4GBk82U2MKJ7mbwmyY+wlovXtpaEp7Ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LC/Gpfgh6hfdo5xGLABr3XW0TpR/RXXtAgAo3Wm+0YrRnJ5WKdkDLtgR8J13b9QBp
-	 Sn18Wq5gvbrY/6mHw4bcPTDCe4Or8W9A5wtocZ+VzKW/p/svcOGdlYsBjFyI6KeB2h
-	 NYy9jw9oeKcL+7F1R1StfLqyd4GIv2+v7qQG+Yic=
+	b=wIqAvEpKYLDpmDo+h4H7qL2SDhIQkbhRh47wv27PpyA805wd6D2I5/cbV9A3vB4kr
+	 F+cq+UBQidKPW7qivSg/eAUHR7wUBg2QxssVVyC06Yf+gwYKbmvmGqEfa+vxzxBsC4
+	 esWVyexuK9lXDTWdXL+fjl72brfCq/88RXPXuQ8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 436/578] misc: fastrpc: Fix copy buffer page size
-Date: Wed, 19 Feb 2025 09:27:20 +0100
-Message-ID: <20250219082710.161256753@linuxfoundation.org>
+	Paul Fertser <fercerpav@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 437/578] net/ncsi: wait for the last response to Deselect Package before configuring channel
+Date: Wed, 19 Feb 2025 09:27:21 +0100
+Message-ID: <20250219082710.198219422@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,40 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+From: Paul Fertser <fercerpav@gmail.com>
 
-commit e966eae72762ecfdbdb82627e2cda48845b9dd66 upstream.
+commit 6bb194d036c6e1b329dcdff459338cdd9a54802a upstream.
 
-For non-registered buffer, fastrpc driver copies the buffer and
-pass it to the remote subsystem. There is a problem with current
-implementation of page size calculation which is not considering
-the offset in the calculation. This might lead to passing of
-improper and out-of-bounds page size which could result in
-memory issue. Calculate page start and page end using the offset
-adjusted address instead of absolute address.
+The NCSI state machine as it's currently implemented assumes that
+transition to the next logical state is performed either explicitly by
+calling `schedule_work(&ndp->work)` to re-queue itself or implicitly
+after processing the predefined (ndp->pending_req_num) number of
+replies. Thus to avoid the configuration FSM from advancing prematurely
+and getting out of sync with the process it's essential to not skip
+waiting for a reply.
 
-Fixes: 02b45b47fbe8 ("misc: fastrpc: fix remote page size calculation")
-Cc: stable@kernel.org
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20250110134239.123603-4-srinivas.kandagatla@linaro.org
+This patch makes the code wait for reception of the Deselect Package
+response for the last package probed before proceeding to channel
+configuration.
+
+Thanks go to Potin Lai and Cosmo Chou for the initial investigation and
+testing.
+
+Fixes: 8e13f70be05e ("net/ncsi: Probe single packages to avoid conflict")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paul Fertser <fercerpav@gmail.com>
+Link: https://patch.msgid.link/20250116152900.8656-1-fercerpav@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ncsi/ncsi-manage.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -961,8 +961,8 @@ static int fastrpc_get_args(u32 kernel,
- 					(pkt_size - rlen);
- 			pages[i].addr = pages[i].addr &	PAGE_MASK;
+--- a/net/ncsi/ncsi-manage.c
++++ b/net/ncsi/ncsi-manage.c
+@@ -1385,6 +1385,12 @@ static void ncsi_probe_channel(struct nc
+ 		nd->state = ncsi_dev_state_probe_package;
+ 		break;
+ 	case ncsi_dev_state_probe_package:
++		if (ndp->package_probe_id >= 8) {
++			/* Last package probed, finishing */
++			ndp->flags |= NCSI_DEV_PROBED;
++			break;
++		}
++
+ 		ndp->pending_req_num = 1;
  
--			pg_start = (args & PAGE_MASK) >> PAGE_SHIFT;
--			pg_end = ((args + len - 1) & PAGE_MASK) >> PAGE_SHIFT;
-+			pg_start = (rpra[i].buf.pv & PAGE_MASK) >> PAGE_SHIFT;
-+			pg_end = ((rpra[i].buf.pv + len - 1) & PAGE_MASK) >> PAGE_SHIFT;
- 			pages[i].size = (pg_end - pg_start + 1) * PAGE_SIZE;
- 			args = args + mlen;
- 			rlen -= mlen;
+ 		nca.type = NCSI_PKT_CMD_SP;
+@@ -1501,13 +1507,8 @@ static void ncsi_probe_channel(struct nc
+ 		if (ret)
+ 			goto error;
+ 
+-		/* Probe next package */
++		/* Probe next package after receiving response */
+ 		ndp->package_probe_id++;
+-		if (ndp->package_probe_id >= 8) {
+-			/* Probe finished */
+-			ndp->flags |= NCSI_DEV_PROBED;
+-			break;
+-		}
+ 		nd->state = ncsi_dev_state_probe_package;
+ 		ndp->active_package = NULL;
+ 		break;
 
 
