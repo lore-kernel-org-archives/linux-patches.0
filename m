@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8344176ADE;
-	Wed, 19 Feb 2025 09:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553CC1C2432;
+	Wed, 19 Feb 2025 09:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956620; cv=none; b=QpyEbqQ09n+FsKyMJVA1EpWEta7yKhNpIGrc46GK01yE/W3fBGI7gpw1jFHz12mib+Iqm+eNFsZV+DekgzYvhS4uPTzSs3Hb8MswO8ReVwnnFUFnn85m8JfI3IELaRzyaThNUOOKU0Vn0EgdvjgmltoosQCnaZqenZaKJHXCCz4=
+	t=1739956623; cv=none; b=h9UPt8VMgD6+gNEnII4NMsqY/affZTkCeA9SEzpOdjtIGV/9UhzlWWQ1VzxguDXxGnUMEL5ijwOrXSOAnRN0fh2U/o9SD2oYGwM4cv9is0+oS+lZVwwCaAxtORoDjY256XIZa2j+RwZmL35aHagtXq+Smv5r9fbxs07ejnSbq1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956620; c=relaxed/simple;
-	bh=jyobTBlZrudfKyEFw7seZjeE86pZtXqUAJ3Xwk2Aq30=;
+	s=arc-20240116; t=1739956623; c=relaxed/simple;
+	bh=t7ZEt6mySzycWyBa34n17L8KzVzFq/4OrlOwBL5XNuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LI5ZR8cekc54/HbaS/6yioiTT6z16Pjo73ajTG32kt3ndt3Mf8aRc/p8Y6qepuSLpG88oEjlF621f3L7LOopcisRxhQehDAL2vMBxopxWQseJopcFxYwF6LuPaX2npDHDB2PwTrVCP2WcV90171sVtZn5RMzBcNEdduTHkn8Lfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HirPEp8f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZcE11qVY/lQWyW+lK6WrIHFFUUXb0QX6k2Dj1ifjxUe3jtj+iQeBLOaofbtZ3dmhXb3FTPg5Cv3yH7UH05vOqdRzxQyS6YiQVE7m4J97SArpkHZZnKa0QqIFfn0m4FvuCTRu6eR5GoXwFC8sqQ/x6hcs1hSMFD25KaU+b6CykHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bt5wGyc7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HirPEp8f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C51C4CED1;
-	Wed, 19 Feb 2025 09:16:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bt5wGyc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D45BC4CEE7;
+	Wed, 19 Feb 2025 09:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956619;
-	bh=jyobTBlZrudfKyEFw7seZjeE86pZtXqUAJ3Xwk2Aq30=;
+	s=korg; t=1739956622;
+	bh=t7ZEt6mySzycWyBa34n17L8KzVzFq/4OrlOwBL5XNuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HirPEp8fQL7b+Widn9ToSNURtnKKcvBHM7Z0GW6kCUtmXCE416ZouCxMf+Z9rjbYd
-	 NqAVedsee6p8Nqp32Re6Wnhy/Z8uTzFPa/+BMfVkgFePq7+I5SXKep95rixeQ2J2er
-	 kjdXQVC/ebCqYlnaKfPs5Te9ib9SZiyt+BvWY9+U=
+	b=bt5wGyc7IiFQNm4R2vTUijNIfwgGwb7YdwXkU0lW1fzg2rjOlCwa+QOMEmAcIopUg
+	 zWt+QIq4ToYVphxCSdJvhJMueOmQuiMxJkmXV8jWVf+KcmRPavw73zfj+qZ28KpexL
+	 0C3wAVoDKa+Z4AjR2ZjzhViK8YDfpiz0zXdFDPi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	kernel test robot <lkp@intel.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Christian Gmeiner <cgmeiner@igalia.com>,
+	Brian Cain <bcain@quicinc.com>,
+	Brian Cain <brian.cain@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 214/578] rtc: pcf85063: fix potential OOB write in PCF85063 NVMEM read
-Date: Wed, 19 Feb 2025 09:23:38 +0100
-Message-ID: <20250219082701.475794555@linuxfoundation.org>
+Subject: [PATCH 6.1 241/578] hexagon: fix using plain integer as NULL pointer warning in cmpxchg
+Date: Wed, 19 Feb 2025 09:24:05 +0100
+Message-ID: <20250219082702.516624928@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,49 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 3ab8c5ed4f84fa20cd16794fe8dc31f633fbc70c ]
+[ Upstream commit 8a20030038742b9915c6d811a4e6c14b126cafb4 ]
 
-The nvmem interface supports variable buffer sizes, while the regmap
-interface operates with fixed-size storage. If an nvmem client uses a
-buffer size less than 4 bytes, regmap_read will write out of bounds
-as it expects the buffer to point at an unsigned int.
+Sparse reports
 
-Fix this by using an intermediary unsigned int to hold the value.
+    net/ipv4/inet_diag.c:1511:17: sparse: sparse: Using plain integer as NULL pointer
 
-Fixes: fadfd092ee91 ("rtc: pcf85063: add nvram support")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Link: https://lore.kernel.org/r/20241218-rtc-pcf85063-stack-corruption-v1-1-12fd0ee0f046@pengutronix.de
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Due to this code calling cmpxchg on a non-integer type
+struct inet_diag_handler *
+
+    return !cmpxchg((const struct inet_diag_handler**)&inet_diag_table[type],
+                    NULL, h) ? 0 : -EEXIST;
+
+While hexagon's cmpxchg assigns an integer value to a variable of this
+type.
+
+    __typeof__(*(ptr)) __oldval = 0;
+
+Update this assignment to cast 0 to the correct type.
+
+The original issue is easily reproduced at head with the below block,
+and is absent after this change.
+
+    make LLVM=1 ARCH=hexagon defconfig
+    make C=1 LLVM=1 ARCH=hexagon net/ipv4/inet_diag.o
+
+Fixes: 99a70aa051d2 ("Hexagon: Add processor and system headers")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202411091538.PGSTqUBi-lkp@intel.com/
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Tested-by: Christian Gmeiner <cgmeiner@igalia.com>
+Link: https://lore.kernel.org/r/20241203221736.282020-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Brian Cain <bcain@quicinc.com>
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85063.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ arch/hexagon/include/asm/cmpxchg.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
-index 754e03984f986..6ffdc10b32d32 100644
---- a/drivers/rtc/rtc-pcf85063.c
-+++ b/drivers/rtc/rtc-pcf85063.c
-@@ -322,7 +322,16 @@ static const struct rtc_class_ops pcf85063_rtc_ops = {
- static int pcf85063_nvmem_read(void *priv, unsigned int offset,
- 			       void *val, size_t bytes)
- {
--	return regmap_read(priv, PCF85063_REG_RAM, val);
-+	unsigned int tmp;
-+	int ret;
-+
-+	ret = regmap_read(priv, PCF85063_REG_RAM, &tmp);
-+	if (ret < 0)
-+		return ret;
-+
-+	*(u8 *)val = tmp;
-+
-+	return 0;
- }
- 
- static int pcf85063_nvmem_write(void *priv, unsigned int offset,
+diff --git a/arch/hexagon/include/asm/cmpxchg.h b/arch/hexagon/include/asm/cmpxchg.h
+index cdb705e1496af..72c6e16c3f237 100644
+--- a/arch/hexagon/include/asm/cmpxchg.h
++++ b/arch/hexagon/include/asm/cmpxchg.h
+@@ -56,7 +56,7 @@ static inline unsigned long __xchg(unsigned long x, volatile void *ptr,
+ 	__typeof__(ptr) __ptr = (ptr);				\
+ 	__typeof__(*(ptr)) __old = (old);			\
+ 	__typeof__(*(ptr)) __new = (new);			\
+-	__typeof__(*(ptr)) __oldval = 0;			\
++	__typeof__(*(ptr)) __oldval = (__typeof__(*(ptr))) 0;	\
+ 								\
+ 	asm volatile(						\
+ 		"1:	%0 = memw_locked(%1);\n"		\
 -- 
 2.39.5
 
