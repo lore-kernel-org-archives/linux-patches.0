@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6CC1E04BA;
-	Wed, 19 Feb 2025 09:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9781E0B73;
+	Wed, 19 Feb 2025 09:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956557; cv=none; b=GV3s271xNDWaq7GokhwuiRYMUekXXAj1wH6y0ZDxmi2qYTWSPFat01aI7BrdoLXbNOunkoF5oDeMeuKqNHzYHPR9l+lNN5GQ9muKyi08dYe1EWqSzsef828n7xrDjmnz4UNVT4+1O6e9OjSXz0wO/Gso/XMoypLFhNpL/em1RUA=
+	t=1739956560; cv=none; b=rSoqumNIAsn/9oQB9wmwITs0Y50R+iVan+5MgQh3rRvUaIH7Yhidfrew9yUjSRL1iaynppshFmwo4twFhiOeioOeLfIQPMj2rdFeJaYCVxzq7mXdD/Z+cU7p08iZ52PRR1xeQhAxWSaZZLBvLTh/3pKIO9QeT4/TUnrGST5PqgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956557; c=relaxed/simple;
-	bh=YC41/R21y+x/twDCogc+SGQCUT3o0nWxnEIzIHLd3hI=;
+	s=arc-20240116; t=1739956560; c=relaxed/simple;
+	bh=maTp7UX1UZ+cAA0o3021D/zHLtqv3UeYLVW4lXD7kBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T7/JaHQItJ3GsvY0AZhfULavh/YMeF4fUUOx00CegK5wRspWpJhNB0PAk1mR4W6Y5xGcmjBF+6CI0OjMeSm9jk9M/iUK61/zRUQeIFhE0zL5giiXG39i+I243O+IRUaYtuRseSzmm/s8a/VM0iU6ORK4usn2k2rwqKMRqMuURjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVXdsCQu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bMXpHHQn+BApF+2ljdHECLqmzSEE2tpZuDwdbAagzEi/kCIVNKi3GXxeA+ObAcdTX4i2iLmjYZuF81jBQdXr5AZZ9Y3ldc2fqwTcio2xozvmVwvgPtiav5zpr8ktyzwJngIAG9h/y9C7d3VF7HXvWb83Sb6UIEyo4h/XlKFqaoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBUXeMKs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVXdsCQu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D7AC4AF0C;
-	Wed, 19 Feb 2025 09:15:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBUXeMKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EADC4CEE7;
+	Wed, 19 Feb 2025 09:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956557;
-	bh=YC41/R21y+x/twDCogc+SGQCUT3o0nWxnEIzIHLd3hI=;
+	s=korg; t=1739956560;
+	bh=maTp7UX1UZ+cAA0o3021D/zHLtqv3UeYLVW4lXD7kBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nVXdsCQumAt7d0DI+otdQI/qqloAXW+UImPdTG1v3XoLzR9GwcmJNyu+GPo2iKgfF
-	 1bASZCQ4edYOH+sqo3i8QmK09VrtRoHSxttuJtrFOMtDVJnrWHpuB4eLF+UuoPZ4B2
-	 +23dF9RlJqCUSAnSaiN67VkPvD75VY9HnRStJISc=
+	b=uBUXeMKs7rkavRjkshG0EiBqY99ffxX4Hw2UiZ3vqZYLYOZSQekPdMPhYSLOK6R/9
+	 +8ygVn5tRsW8h2yPDfinhTwDMGNtGthK+jaAGuwhI+d7/tO+icoggOURKeGuQfsGlT
+	 Ww8XIdotQ97mzdnMXE0zFuKbquK2v4jT0Gm+lVBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 212/578] xfrm: replay: Fix the update of replay_esn->oseq_hi for GSO
-Date: Wed, 19 Feb 2025 09:23:36 +0100
-Message-ID: <20250219082701.398823256@linuxfoundation.org>
+Subject: [PATCH 6.1 221/578] PM: hibernate: Add error handling for syscore_suspend()
+Date: Wed, 19 Feb 2025 09:23:45 +0100
+Message-ID: <20250219082701.747764604@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -53,59 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit c05c5e5aa163f4682ca97a2f0536575fc7dbdecb ]
+[ Upstream commit e20a70c572539a486dbd91b225fa6a194a5e2122 ]
 
-When skb needs GSO and wrap around happens, if xo->seq.low (seqno of
-the first skb segment) is before the last seq number but oseq (seqno
-of the last segment) is after it, xo->seq.low is still bigger than
-replay_esn->oseq while oseq is smaller than it, so the update of
-replay_esn->oseq_hi is missed for this case wrap around because of
-the change in the cited commit.
+In hibernation_platform_enter(), the code did not check the
+return value of syscore_suspend(), potentially leading to a
+situation where syscore_resume() would be called even if
+syscore_suspend() failed. This could cause unpredictable
+behavior or system instability.
 
-For example, if sending a packet with gso_segs=3 while old
-replay_esn->oseq=0xfffffffe, we calculate:
-    xo->seq.low = 0xfffffffe + 1 = 0x0xffffffff
-    oseq = 0xfffffffe + 3 = 0x1
-(oseq < replay_esn->oseq) is true, but (xo->seq.low <
-replay_esn->oseq) is false, so replay_esn->oseq_hi is not incremented.
+Modify the code sequence in question to properly handle errors returned
+by syscore_suspend(). If an error occurs in the suspend path, the code
+now jumps to label 'Enable_irqs' skipping the syscore_resume() call and
+only enabling interrupts after setting the system state to SYSTEM_RUNNING.
 
-To fix this issue, change the outer checking back for the update of
-replay_esn->oseq_hi. And add new checking inside for the update of
-packet's oseq_hi.
-
-Fixes: 4b549ccce941 ("xfrm: replay: Fix ESN wrap around for GSO")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 40dc166cb5dd ("PM / Core: Introduce struct syscore_ops for core subsystems PM")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20250119143205.2103-1-vulab@iscas.ac.cn
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_replay.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ kernel/power/hibernate.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_replay.c b/net/xfrm/xfrm_replay.c
-index ce56d659c55a6..7f52bb2e14c13 100644
---- a/net/xfrm/xfrm_replay.c
-+++ b/net/xfrm/xfrm_replay.c
-@@ -714,10 +714,12 @@ static int xfrm_replay_overflow_offload_esn(struct xfrm_state *x, struct sk_buff
- 			oseq += skb_shinfo(skb)->gso_segs;
- 		}
+diff --git a/kernel/power/hibernate.c b/kernel/power/hibernate.c
+index 30d1274f03f62..ec34c96514b36 100644
+--- a/kernel/power/hibernate.c
++++ b/kernel/power/hibernate.c
+@@ -599,7 +599,11 @@ int hibernation_platform_enter(void)
  
--		if (unlikely(xo->seq.low < replay_esn->oseq)) {
--			XFRM_SKB_CB(skb)->seq.output.hi = ++oseq_hi;
--			xo->seq.hi = oseq_hi;
--			replay_esn->oseq_hi = oseq_hi;
-+		if (unlikely(oseq < replay_esn->oseq)) {
-+			replay_esn->oseq_hi = ++oseq_hi;
-+			if (xo->seq.low < replay_esn->oseq) {
-+				XFRM_SKB_CB(skb)->seq.output.hi = oseq_hi;
-+				xo->seq.hi = oseq_hi;
-+			}
- 			if (replay_esn->oseq_hi == 0) {
- 				replay_esn->oseq--;
- 				replay_esn->oseq_hi--;
+ 	local_irq_disable();
+ 	system_state = SYSTEM_SUSPEND;
+-	syscore_suspend();
++
++	error = syscore_suspend();
++	if (error)
++		goto Enable_irqs;
++
+ 	if (pm_wakeup_pending()) {
+ 		error = -EAGAIN;
+ 		goto Power_up;
+@@ -611,6 +615,7 @@ int hibernation_platform_enter(void)
+ 
+  Power_up:
+ 	syscore_resume();
++ Enable_irqs:
+ 	system_state = SYSTEM_RUNNING;
+ 	local_irq_enable();
+ 
 -- 
 2.39.5
 
