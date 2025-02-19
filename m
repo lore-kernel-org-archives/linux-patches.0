@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3D91DF252;
-	Wed, 19 Feb 2025 09:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25C01BEF71;
+	Wed, 19 Feb 2025 09:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955759; cv=none; b=FvM1kkbQnKu+dMDgmNRahqFpx/jcBrGwocxL/zj4oZmwcYcd3T9PZIXuQuAcsaXQcnQrKrQi6jn92WrGZm7jrJcn2vWok5pGcdybdmmJ1lUd9jokahuLIL2ipeu3z/IUP/RfhiilbZ1Hqs4N1tz+kULfDy30pSnNXuyZ9nTLK7k=
+	t=1739955762; cv=none; b=sPay9tvcojZWupjI0tCiFPSo5U+PeKa+gZHbJa1qS6Ir44bAamxdYz6bWSeSevABNZk+wfwNYtg4/76fCKbuV0nkPCvuwdt8QPYbSZZjK81pzgCOMv8NNmmZ71ZV2adm/vRqrlgJcLqQ8v4Q0dYgf3ZfasI5q1rDDdYugCUU5/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955759; c=relaxed/simple;
-	bh=aQkOZ7yUqqsM4T/JQnm1knOlObvHr23zdO7NcSuCNFM=;
+	s=arc-20240116; t=1739955762; c=relaxed/simple;
+	bh=Dgo9ALiSSVmYuADPxYrstpWRND6iUNp2K/A8aeMq/hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVZKHxFgAea6RCmAx7Uwgk6KkI0obdiVK+LC7/2Ze1nu6aFMFIRoPGvoxuqCvdrVxQ+pbFtbqDHyJoH5b5EgJfllVBvAtgz8zxkjzdy5AGcY6JsWcvSQgn5GKUajXMeGhq+nd1eL+EcIesKDORBRKx6Ulvmf0EBgW7dWvaX3W4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3dc8s8v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=btWWPDa06pGsZiPGbLUjXs3VCHRqnJe6ILESMTkcGO1F865x3f/awvPFozUV9dR6qOkBt86/nDrZyOfpKSfymi37E2o6ivCm5qyaBf3dbEID7P6vetA6WL64E64aYDJgdn3+waIctVW02yHkgaWI95I2Agqwp/azxgT7pwmh9aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lsiohctr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3dc8s8v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF2EC4CED1;
-	Wed, 19 Feb 2025 09:02:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lsiohctr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6657CC4CED1;
+	Wed, 19 Feb 2025 09:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955758;
-	bh=aQkOZ7yUqqsM4T/JQnm1knOlObvHr23zdO7NcSuCNFM=;
+	s=korg; t=1739955761;
+	bh=Dgo9ALiSSVmYuADPxYrstpWRND6iUNp2K/A8aeMq/hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3dc8s8vw0M7GtUmYwBaoqk4RdE70yYmCCMe9tJfFwWZ1FwyWCmaakPRNYVwFLgPG
-	 Vi4ipw1lIMlvLPjwIYVBw06cIGwlnkma539bVkCKLLvJS9JQRS4WSn52+gbSsLDOsR
-	 9dNx0g2zcZGL9T7uFtiBcklwScLBrIwtDwQJ1Fp0=
+	b=Lsiohctr53LwSBzUIcjPZx2bJ/A21BKHtBNfkIgQU6Sg2Ggdm3Zqdlgmp225KrSyG
+	 5qlat2Ia9geMHM4unsstxwbowRZjLqDEvLzPQ0UvG4XV9U7hlbiRVh+cp6SgleVryO
+	 i8UhIZegHkJS/EdP7di02JEjPGX/I3HgFi9jn0wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	John Stultz <jstultz@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/152] clocksource: Use pr_info() for "Checking clocksource synchronization" message
-Date: Wed, 19 Feb 2025 09:28:30 +0100
-Message-ID: <20250219082553.891887487@linuxfoundation.org>
+Subject: [PATCH 6.6 106/152] ipv4: use RCU protection in __ip_rt_update_pmtu()
+Date: Wed, 19 Feb 2025 09:28:39 +0100
+Message-ID: <20250219082554.251723127@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -53,42 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1f566840a82982141f94086061927a90e79440e5 ]
+[ Upstream commit 139512191bd06f1b496117c76372b2ce372c9a41 ]
 
-The "Checking clocksource synchronization" message is normally printed
-when clocksource_verify_percpu() is called for a given clocksource if
-both the CLOCK_SOURCE_UNSTABLE and CLOCK_SOURCE_VERIFY_PERCPU flags
-are set.
+__ip_rt_update_pmtu() must use RCU protection to make
+sure the net structure it reads does not disappear.
 
-It is an informational message and so pr_info() is the correct choice.
-
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Acked-by: John Stultz <jstultz@google.com>
-Link: https://lore.kernel.org/all/20250125015442.3740588-1-longman@redhat.com
-Stable-dep-of: 6bb05a33337b ("clocksource: Use migrate_disable() to avoid calling get_random_u32() in atomic context")
+Fixes: 2fbc6e89b2f1 ("ipv4: Update exception handling for multipath routes via same device")
+Fixes: 1de6b15a434c ("Namespaceify min_pmtu sysctl")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250205155120.1676781-8-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/clocksource.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/route.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
-index aa864999dc21b..6b5b7c9c14732 100644
---- a/kernel/time/clocksource.c
-+++ b/kernel/time/clocksource.c
-@@ -360,7 +360,8 @@ void clocksource_verify_percpu(struct clocksource *cs)
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 2e524c27a5171..97dc30a03dbf2 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1020,9 +1020,9 @@ out:	kfree_skb_reason(skb, reason);
+ static void __ip_rt_update_pmtu(struct rtable *rt, struct flowi4 *fl4, u32 mtu)
+ {
+ 	struct dst_entry *dst = &rt->dst;
+-	struct net *net = dev_net(dst->dev);
+ 	struct fib_result res;
+ 	bool lock = false;
++	struct net *net;
+ 	u32 old_mtu;
+ 
+ 	if (ip_mtu_locked(dst))
+@@ -1032,6 +1032,8 @@ static void __ip_rt_update_pmtu(struct rtable *rt, struct flowi4 *fl4, u32 mtu)
+ 	if (old_mtu < mtu)
  		return;
+ 
++	rcu_read_lock();
++	net = dev_net_rcu(dst->dev);
+ 	if (mtu < net->ipv4.ip_rt_min_pmtu) {
+ 		lock = true;
+ 		mtu = min(old_mtu, net->ipv4.ip_rt_min_pmtu);
+@@ -1039,9 +1041,8 @@ static void __ip_rt_update_pmtu(struct rtable *rt, struct flowi4 *fl4, u32 mtu)
+ 
+ 	if (rt->rt_pmtu == mtu && !lock &&
+ 	    time_before(jiffies, dst->expires - net->ipv4.ip_rt_mtu_expires / 2))
+-		return;
++		goto out;
+ 
+-	rcu_read_lock();
+ 	if (fib_lookup(net, fl4, &res, 0) == 0) {
+ 		struct fib_nh_common *nhc;
+ 
+@@ -1055,14 +1056,14 @@ static void __ip_rt_update_pmtu(struct rtable *rt, struct flowi4 *fl4, u32 mtu)
+ 				update_or_create_fnhe(nhc, fl4->daddr, 0, mtu, lock,
+ 						      jiffies + net->ipv4.ip_rt_mtu_expires);
+ 			}
+-			rcu_read_unlock();
+-			return;
++			goto out;
+ 		}
+ #endif /* CONFIG_IP_ROUTE_MULTIPATH */
+ 		nhc = FIB_RES_NHC(res);
+ 		update_or_create_fnhe(nhc, fl4->daddr, 0, mtu, lock,
+ 				      jiffies + net->ipv4.ip_rt_mtu_expires);
  	}
- 	testcpu = smp_processor_id();
--	pr_warn("Checking clocksource %s synchronization from CPU %d to CPUs %*pbl.\n", cs->name, testcpu, cpumask_pr_args(&cpus_chosen));
-+	pr_info("Checking clocksource %s synchronization from CPU %d to CPUs %*pbl.\n",
-+		cs->name, testcpu, cpumask_pr_args(&cpus_chosen));
- 	for_each_cpu(cpu, &cpus_chosen) {
- 		if (cpu == testcpu)
- 			continue;
++out:
+ 	rcu_read_unlock();
+ }
+ 
 -- 
 2.39.5
 
