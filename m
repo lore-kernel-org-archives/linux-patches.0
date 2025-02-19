@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E9E1DFE25;
-	Wed, 19 Feb 2025 09:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E2B1CAA95;
+	Wed, 19 Feb 2025 09:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956069; cv=none; b=kGlosE0nspVJMOvM3xuNXE6TcfAq20xA2ju7K+ZQVibxFaXix4qB9e6w5q5GVp3LZ7wX/BH6S+vDhVsba7TGVkieEGAyNRNguPAu/wPAWqulXzDrU3Mj12j9j3Z9Pbk/VhPyiM3hlIvPRD4vlxIjLebgSEBDxGTCUsxFIYWTsLk=
+	t=1739956072; cv=none; b=Me17gV/jC4vg3rHCvxHHQ41lbCj1OY8RVM1q6wxlVqp7E6GEDRPSE4eUJKGVEe68vEjZUEe5NXCakxfV22bS7xsZCHLS6hiu+ul7/vv+u2Oq3CvlzVxVOzsLgZ8GkzXTyfQlhUsTP5El2Z4SJ0WZGZbSHcHP1xXVuRUZJ1tkRug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956069; c=relaxed/simple;
-	bh=1JzB/313ZrNoCVRQCsP6ygDGZ2fwRbjtO/Nf40gR3KA=;
+	s=arc-20240116; t=1739956072; c=relaxed/simple;
+	bh=H5+spaTVQFN1M8K+6KVRjp63M82RNWLUfwvTA77fOLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q5Il8HNsSdb24eAcOX8PRScHhwuxp0YLFKkM6uPogFwNp/uOf7radm8yy6/PAJGiHLTOiHktGxB8AyJO0/MAmU4vBIa5zRTY4sx15zwCBG8fZY6MWLYRBjOqrp7WVerjTNvXHf3L9xbuR0EdCrKQ+oagCQNHnPXcdRdONBWAgaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VQpQ7sa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=os9OIE0FBHu9bYP+Jg9zF/DBDNCkfVBJKEcgNqtYAApy7luubL6Wh/CifcnFuF9CezA6B/B68PL4jxqNhP17/5ueBTNozvbYWTI9vhKtEDrWYIlhrsvXPWqLL4uOUoRQo/JE+QXusMY/cXQW3/mBhAQYXL50hoDRpCYxzPMPjaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSr++9A0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VQpQ7sa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF23C4CED1;
-	Wed, 19 Feb 2025 09:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSr++9A0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5AAFC4CED1;
+	Wed, 19 Feb 2025 09:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956069;
-	bh=1JzB/313ZrNoCVRQCsP6ygDGZ2fwRbjtO/Nf40gR3KA=;
+	s=korg; t=1739956072;
+	bh=H5+spaTVQFN1M8K+6KVRjp63M82RNWLUfwvTA77fOLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0VQpQ7saSLqecxcXcGLf+GuTJCq/jf9syoEebW60pLYkm9EZByz5u9Oc/KhRiD6L1
-	 LDTKoEY1DIx4jhHNso00FzAEou7yX4RPbiUCIc7b9my8xpgb8JPDheGzzTgd/ET4Wg
-	 r1OvadQu5tS51ygaFS7sr1dSqopH7SqOdE/QKgZo=
+	b=sSr++9A0kGITjTKyJZkFJxNC0v6lxBz21g/G3wsnQNvso5mDdJmpvQvqxRVbRi/RY
+	 ZIbugWSrb+Ogu1S646cIhkzigu+ZgdzPKmpFPKyHqviEz/CbAMS1wRNg3NlW5s5XEZ
+	 ryTSq2SVAwXurc4Y+qaSKfjdCJiRcnpY/61r0UwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	He Lugang <helugang@uniontech.com>,
-	WangYuli <wangyuli@uniontech.com>,
-	=?UTF-8?q?Ulrich=20M=C3=BCller?= <ulm@gentoo.org>,
-	Jiri Kosina <jkosina@suse.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/578] HID: multitouch: fix support for Goodix PID 0x01e9
-Date: Wed, 19 Feb 2025 09:20:58 +0100
-Message-ID: <20250219082655.017327304@linuxfoundation.org>
+Subject: [PATCH 6.1 055/578] regulator: dt-bindings: mt6315: Drop regulator-compatible property
+Date: Wed, 19 Feb 2025 09:20:59 +0100
+Message-ID: <20250219082655.055751524@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -47,44 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Kosina <jkosina@suse.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 8ade5e05bd094485ce370fad66a6a3fb6f50bfbc ]
+[ Upstream commit 08242719a8af603db54a2a79234a8fe600680105 ]
 
-Commit c8000deb68365b ("HID: multitouch: Add support for GT7868Q") added
-support for 0x01e8 and 0x01e9, but the mt_device[] entries were added
-twice for 0x01e8 and there was none added for 0x01e9. Fix that.
+The "regulator-compatible" property has been deprecated since 2012 in
+commit 13511def87b9 ("regulator: deprecate regulator-compatible DT
+property"), which is so old it's not even mentioned in the converted
+regulator bindings YAML file. It should not have been used for new
+submissions such as the MT6315.
 
-Fixes: c8000deb68365b ("HID: multitouch: Add support for GT7868Q")
-Reported-by: He Lugang <helugang@uniontech.com>
-Reported-by: WangYuli <wangyuli@uniontech.com>
-Reported-by: Ulrich Müller <ulm@gentoo.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Drop the property from the MT6315 regulator binding and its examples.
+
+Fixes: 977fb5b58469 ("regulator: document binding for MT6315 regulator")
+Fixes: 6d435a94ba5b ("regulator: mt6315: Enforce regulator-compatible, not name")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20241211052427.4178367-2-wenst@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../devicetree/bindings/regulator/mt6315-regulator.yaml     | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index e62104e1a6038..5ad871a7d1a44 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -2072,7 +2072,7 @@ static const struct hid_device_id mt_devices[] = {
- 		     I2C_DEVICE_ID_GOODIX_01E8) },
- 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU,
- 	  HID_DEVICE(BUS_I2C, HID_GROUP_ANY, I2C_VENDOR_ID_GOODIX,
--		     I2C_DEVICE_ID_GOODIX_01E8) },
-+		     I2C_DEVICE_ID_GOODIX_01E9) },
+diff --git a/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml b/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
+index 364b58730be2b..796c09f24f3e6 100644
+--- a/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/mt6315-regulator.yaml
+@@ -31,10 +31,6 @@ properties:
+         $ref: "regulator.yaml#"
+         unevaluatedProperties: false
  
- 	/* GoodTouch panels */
- 	{ .driver_data = MT_CLS_NSMU,
+-        properties:
+-          regulator-compatible:
+-            pattern: "^vbuck[1-4]$"
+-
+     additionalProperties: false
+ 
+ required:
+@@ -52,7 +48,6 @@ examples:
+ 
+       regulators {
+         vbuck1 {
+-          regulator-compatible = "vbuck1";
+           regulator-min-microvolt = <300000>;
+           regulator-max-microvolt = <1193750>;
+           regulator-enable-ramp-delay = <256>;
+@@ -60,7 +55,6 @@ examples:
+         };
+ 
+         vbuck3 {
+-          regulator-compatible = "vbuck3";
+           regulator-min-microvolt = <300000>;
+           regulator-max-microvolt = <1193750>;
+           regulator-enable-ramp-delay = <256>;
 -- 
 2.39.5
 
