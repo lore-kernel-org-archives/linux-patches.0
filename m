@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A771B1DE887;
-	Wed, 19 Feb 2025 09:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904A41805B;
+	Wed, 19 Feb 2025 09:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956837; cv=none; b=u+yj8+J8USSMNRK1qFkI7HilmE6nn6Z9U4NS/HMZp+pXWBpJwBZ2d1atFN94mgA5uPb2eOBo3J6DDZDzbXZVyyPAV6Q8LcPgRJ4DzXoquphGHdh3VVuK3zrHq0xdk423wTIvq8XN4rxPwaDsAFZnqX2SyxEZcLML+RVyoxXnI8s=
+	t=1739956840; cv=none; b=A1MMXTz6hpgQIjrDhKDcKL4kYfA0BN7mwi595o3KsGFtsceqFXKvtKtymHl4xK1tqgwB/+kP/EVnoU8VUq8DXvr69NY0zlFeq+qHuGiYdnO+O6T7n3qdFvc/3knIl5dh5VXfnItQ7T8x5XgOETD3pOVRGiLwveq7y5t5qOwtZd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956837; c=relaxed/simple;
-	bh=83y1f1O7zfQi4Ta/vihwa9eVEtLgE0rB0RdlltCdAXg=;
+	s=arc-20240116; t=1739956840; c=relaxed/simple;
+	bh=piTd/uvJ1rAxb4mkaghV6vV5tCsjm8E7S83dYLA5nAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PU/FrqsjQQ08rh0JmtS31Uz28/4tHMXoCTGlgp9I416kqTNVlSfSFmteRZ+fk/ImdlmTCPGbIrjFu3NYoH4LSL26T0GszSBw5AQgbemfSjL2pLrN2hZHGsmc6RHiOSF8Bn9FftITil79re7BzRQDsqDp9SSV3n5Vqw8uGNoln4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTvjYa8t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iaHgruXe+QdU/seXfGyV4JbdiCglPGbh9xzDp2dj33Sv+Its1hSH1Qmm+CkmKc93Sf63sb4A5vSCBn8k0yo7U6N/oZyZz0QHZiB+xr6VZ8KrAqGRJ/wi/fUMMU261ySiR8eYH7tzTFHAWfmZO1IoV5G3/CxTzeLSYMueZgJqOo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEZASgwC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTvjYa8t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5A9C4CED1;
-	Wed, 19 Feb 2025 09:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEZASgwC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18EEBC4CEE7;
+	Wed, 19 Feb 2025 09:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956837;
-	bh=83y1f1O7zfQi4Ta/vihwa9eVEtLgE0rB0RdlltCdAXg=;
+	s=korg; t=1739956840;
+	bh=piTd/uvJ1rAxb4mkaghV6vV5tCsjm8E7S83dYLA5nAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hTvjYa8twcDQxCv6FoDTmNHlA+GCAH7P4yvv5CCGzeJ3REIh/09mh8Jf4wRq0gRvW
-	 VniO0bQ13zbjNecanlfa/rC8KN6C9MhA2+9cwaSo3VglO8t2KJaMYUSmfuh8rT5R0K
-	 Ar9EvFxVT1gzGmjdeQmJtLZb5idPIUsd21ADCjXE=
+	b=mEZASgwCfl7ysXaEsxfPcdG2UWqbjk+oYVkQBBRy4Vex3nSN4ttGhGYlBAXfFLkgL
+	 9heOsgc3cBSaxo/xTK+KGGj1cJGnhzZHzvWALWznkq4VMExDskXhXAgIUXxj8Y/e/x
+	 VeQavKpmoh7lxQwBHI9808/+44m/3xE5fIirPJy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4eb7a741b3216020043a@syzkaller.appspotmail.com,
-	Leo Stone <leocstone@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Stas Sergeev <stsp2@yandex.ru>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 285/578] safesetid: check size of policy writes
-Date: Wed, 19 Feb 2025 09:24:49 +0100
-Message-ID: <20250219082704.224660247@linuxfoundation.org>
+Subject: [PATCH 6.1 286/578] tun: fix group permission check
+Date: Wed, 19 Feb 2025 09:24:50 +0100
+Message-ID: <20250219082704.262699770@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,40 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Stone <leocstone@gmail.com>
+From: Stas Sergeev <stsp2@yandex.ru>
 
-[ Upstream commit f09ff307c7299392f1c88f763299e24bc99811c7 ]
+[ Upstream commit 3ca459eaba1bf96a8c7878de84fa8872259a01e3 ]
 
-syzbot attempts to write a buffer with a large size to a sysfs entry
-with writes handled by handle_policy_update(), triggering a warning
-in kmalloc.
+Currently tun checks the group permission even if the user have matched.
+Besides going against the usual permission semantic, this has a
+very interesting implication: if the tun group is not among the
+supplementary groups of the tun user, then effectively no one can
+access the tun device. CAP_SYS_ADMIN still can, but its the same as
+not setting the tun ownership.
 
-Check the size specified for write buffers before allocating.
+This patch relaxes the group checking so that either the user match
+or the group match is enough. This avoids the situation when no one
+can access the device even though the ownership is properly set.
 
-Reported-by: syzbot+4eb7a741b3216020043a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4eb7a741b3216020043a
-Signed-off-by: Leo Stone <leocstone@gmail.com>
-[PM: subject tweak]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Also I simplified the logic by removing the redundant inversions:
+tun_not_capable() --> !tun_capable()
+
+Signed-off-by: Stas Sergeev <stsp2@yandex.ru>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://patch.msgid.link/20241205073614.294773-1-stsp2@yandex.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/safesetid/securityfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/tun.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/security/safesetid/securityfs.c b/security/safesetid/securityfs.c
-index 25310468bcddf..8e1ffd70b18ab 100644
---- a/security/safesetid/securityfs.c
-+++ b/security/safesetid/securityfs.c
-@@ -143,6 +143,9 @@ static ssize_t handle_policy_update(struct file *file,
- 	char *buf, *p, *end;
- 	int err;
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index ea98d93138c12..a6c9f9062dbd4 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -574,14 +574,18 @@ static u16 tun_select_queue(struct net_device *dev, struct sk_buff *skb,
+ 	return ret;
+ }
  
-+	if (len >= KMALLOC_MAX_SIZE)
-+		return -EINVAL;
-+
- 	pol = kmalloc(sizeof(struct setid_ruleset), GFP_KERNEL);
- 	if (!pol)
- 		return -ENOMEM;
+-static inline bool tun_not_capable(struct tun_struct *tun)
++static inline bool tun_capable(struct tun_struct *tun)
+ {
+ 	const struct cred *cred = current_cred();
+ 	struct net *net = dev_net(tun->dev);
+ 
+-	return ((uid_valid(tun->owner) && !uid_eq(cred->euid, tun->owner)) ||
+-		  (gid_valid(tun->group) && !in_egroup_p(tun->group))) &&
+-		!ns_capable(net->user_ns, CAP_NET_ADMIN);
++	if (ns_capable(net->user_ns, CAP_NET_ADMIN))
++		return 1;
++	if (uid_valid(tun->owner) && uid_eq(cred->euid, tun->owner))
++		return 1;
++	if (gid_valid(tun->group) && in_egroup_p(tun->group))
++		return 1;
++	return 0;
+ }
+ 
+ static void tun_set_real_num_queues(struct tun_struct *tun)
+@@ -2767,7 +2771,7 @@ static int tun_set_iff(struct net *net, struct file *file, struct ifreq *ifr)
+ 		    !!(tun->flags & IFF_MULTI_QUEUE))
+ 			return -EINVAL;
+ 
+-		if (tun_not_capable(tun))
++		if (!tun_capable(tun))
+ 			return -EPERM;
+ 		err = security_tun_dev_open(tun->security);
+ 		if (err < 0)
 -- 
 2.39.5
 
