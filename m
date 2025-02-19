@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650241D9A50;
-	Wed, 19 Feb 2025 09:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDC51BD9C6;
+	Wed, 19 Feb 2025 09:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956887; cv=none; b=cyRmfsV/C3MtgyQBA15Q9J+qcB14Hw+iu3dCcMN2yIqLTZatVvWzOZvMWTh5dzuT2C9lZrmC+NPO6Us5F6BUVTUd2OXg6hUwMpmCABWDSaPldpTfEKYvHHaeRblPBfiv1NWvsirgXDj8LxPwvta1FPP/vQ5HP4Fh55CYUal/gAA=
+	t=1739956890; cv=none; b=HWDNl63kIoTsvfUTH1KpL83cKss7wuVptKGrdzImog8F/BvPSF8/Mt5O0Y2Pjg8ehWsZE4d8A5BVVOIfVcT3FlbNxl1hgQhN4wBkgBYN6gfN8Y3AUV4bbIPR+aVSJESBSKHU0tkipVGAtjHfHtF11X2hiT9yH7ua4tH09c1EFdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956887; c=relaxed/simple;
-	bh=NtOHSxboRtP7r1IO6fqai7qVgmPHYw9fVCGkOvE6ueE=;
+	s=arc-20240116; t=1739956890; c=relaxed/simple;
+	bh=mGQvBsmWxlVlkX0n0186xEUG78n0vHptrIj9jyJf08I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qqME6i0qy0HoQ1dKbl+8NLTivD7HXwHglPKxeq4hzi/geC5lGXmXMGqielMgHBJyEpLbHi9Gr9CGvg0oJBBNfdOFIep6NtVTIL1InBLUKT69tr0lAdV1mw1xQTHsNaSgxKNzE9bcVkYAGPNS30In15hgUlWfqP3RZqXUdEarRBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imoMcrfP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HEYkw/I/9LMCm8dFd7wPBo34H/1/85QYlYzcQaNKLbPTmj7L6uRkRi+xc6WUwN8qS1CkqLUuqrZ9/E4BJh3AMi5JdqzyVytpuXbZ6c2CFS43wLpef6iCYt7IGDS6QKcVz/xPhevMdYcqlQUKam5ei2Ace2RbgmX8AkJ3tN4ubvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/JArKwO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imoMcrfP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2339C4CED1;
-	Wed, 19 Feb 2025 09:21:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/JArKwO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3864C4CEE7;
+	Wed, 19 Feb 2025 09:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956887;
-	bh=NtOHSxboRtP7r1IO6fqai7qVgmPHYw9fVCGkOvE6ueE=;
+	s=korg; t=1739956890;
+	bh=mGQvBsmWxlVlkX0n0186xEUG78n0vHptrIj9jyJf08I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imoMcrfPp1OuIiHqcfoPdHEeWsn1on2+24LnXHX+PIeMpm9YVQ+bglnNMwByup+7R
-	 QfqGldq7gNQY+tYRdR6lD/92KDApUI7Z/5FsYR370vDx8yvcxIlzX+frdkXf0TW7QZ
-	 dNyHy+ZAYXL4skUuSy7RCUTyjeS0TujjeyGRIfto=
+	b=M/JArKwOMqqfS/4nXvupOToSN18gKapao3bzLlCDXVTpiLGMo1dVGD/UnM6jjqaZm
+	 U+GeQDWD3cHF6w9iK71c2rQL3lVycGBh6eRoWahCEFh1e0WtfOgumudLBv4pmwcw39
+	 f75U5X0ojtZtvd4qiieYtSbjNVFLOwWTg4soSq+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Botha <joe@atomic.ac>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 334/578] net: sched: Fix truncation of offloaded action statistics
-Date: Wed, 19 Feb 2025 09:25:38 +0100
-Message-ID: <20250219082706.157516942@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 335/578] cpufreq: s3c64xx: Fix compilation warning
+Date: Wed, 19 Feb 2025 09:25:39 +0100
+Message-ID: <20250219082706.196828606@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -54,77 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit 811b8f534fd85e17077bd2ac0413bcd16cc8fb9b ]
+commit 43855ac61483cb914f060851535ea753c094b3e0 upstream.
 
-In case of tc offload, when user space queries the kernel for tc action
-statistics, tc will query the offloaded statistics from device drivers.
-Among other statistics, drivers are expected to pass the number of
-packets that hit the action since the last query as a 64-bit number.
+The driver generates following warning when regulator support isn't
+enabled in the kernel. Fix it.
 
-Unfortunately, tc treats the number of packets as a 32-bit number,
-leading to truncation and incorrect statistics when the number of
-packets since the last query exceeds 0xffffffff:
+   drivers/cpufreq/s3c64xx-cpufreq.c: In function 's3c64xx_cpufreq_set_target':
+>> drivers/cpufreq/s3c64xx-cpufreq.c:55:22: warning: variable 'old_freq' set but not used [-Wunused-but-set-variable]
+      55 |         unsigned int old_freq, new_freq;
+         |                      ^~~~~~~~
+>> drivers/cpufreq/s3c64xx-cpufreq.c:54:30: warning: variable 'dvfs' set but not used [-Wunused-but-set-variable]
+      54 |         struct s3c64xx_dvfs *dvfs;
+         |                              ^~~~
 
-$ tc -s filter show dev swp2 ingress
-filter protocol all pref 1 flower chain 0
-filter protocol all pref 1 flower chain 0 handle 0x1
-  skip_sw
-  in_hw in_hw_count 1
-        action order 1: mirred (Egress Redirect to device swp1) stolen
-        index 1 ref 1 bind 1 installed 58 sec used 0 sec
-        Action statistics:
-        Sent 1133877034176 bytes 536959475 pkt (dropped 0, overlimits 0 requeues 0)
-[...]
-
-According to the above, 2111-byte packets were redirected which is
-impossible as only 64-byte packets were transmitted and the MTU was
-1500.
-
-Fix by treating packets as a 64-bit number:
-
-$ tc -s filter show dev swp2 ingress
-filter protocol all pref 1 flower chain 0
-filter protocol all pref 1 flower chain 0 handle 0x1
-  skip_sw
-  in_hw in_hw_count 1
-        action order 1: mirred (Egress Redirect to device swp1) stolen
-        index 1 ref 1 bind 1 installed 61 sec used 0 sec
-        Action statistics:
-        Sent 1370624380864 bytes 21416005951 pkt (dropped 0, overlimits 0 requeues 0)
-[...]
-
-Which shows that only 64-byte packets were redirected (1370624380864 /
-21416005951 = 64).
-
-Fixes: 380407023526 ("net/sched: Enable netdev drivers to update statistics of offloaded actions")
-Reported-by: Joe Botha <joe@atomic.ac>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250204123839.1151804-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501191803.CtfT7b2o-lkp@intel.com/
+Cc: 5.4+ <stable@vger.kernel.org> # v5.4+
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/236b227e929e5adc04d1e9e7af6845a46c8e9432.1737525916.git.viresh.kumar@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sch_generic.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/s3c64xx-cpufreq.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index 743acbc43c851..80f657bf2e047 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -817,7 +817,7 @@ static inline int qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- }
+--- a/drivers/cpufreq/s3c64xx-cpufreq.c
++++ b/drivers/cpufreq/s3c64xx-cpufreq.c
+@@ -24,6 +24,7 @@ struct s3c64xx_dvfs {
+ 	unsigned int vddarm_max;
+ };
  
- static inline void _bstats_update(struct gnet_stats_basic_sync *bstats,
--				  __u64 bytes, __u32 packets)
-+				  __u64 bytes, __u64 packets)
++#ifdef CONFIG_REGULATOR
+ static struct s3c64xx_dvfs s3c64xx_dvfs_table[] = {
+ 	[0] = { 1000000, 1150000 },
+ 	[1] = { 1050000, 1150000 },
+@@ -31,6 +32,7 @@ static struct s3c64xx_dvfs s3c64xx_dvfs_
+ 	[3] = { 1200000, 1350000 },
+ 	[4] = { 1300000, 1350000 },
+ };
++#endif
+ 
+ static struct cpufreq_frequency_table s3c64xx_freq_table[] = {
+ 	{ 0, 0,  66000 },
+@@ -51,15 +53,16 @@ static struct cpufreq_frequency_table s3
+ static int s3c64xx_cpufreq_set_target(struct cpufreq_policy *policy,
+ 				      unsigned int index)
  {
- 	u64_stats_update_begin(&bstats->syncp);
- 	u64_stats_add(&bstats->bytes, bytes);
--- 
-2.39.5
-
+-	struct s3c64xx_dvfs *dvfs;
+-	unsigned int old_freq, new_freq;
++	unsigned int new_freq = s3c64xx_freq_table[index].frequency;
+ 	int ret;
+ 
++#ifdef CONFIG_REGULATOR
++	struct s3c64xx_dvfs *dvfs;
++	unsigned int old_freq;
++
+ 	old_freq = clk_get_rate(policy->clk) / 1000;
+-	new_freq = s3c64xx_freq_table[index].frequency;
+ 	dvfs = &s3c64xx_dvfs_table[s3c64xx_freq_table[index].driver_data];
+ 
+-#ifdef CONFIG_REGULATOR
+ 	if (vddarm && new_freq > old_freq) {
+ 		ret = regulator_set_voltage(vddarm,
+ 					    dvfs->vddarm_min,
 
 
