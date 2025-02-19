@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99F91DED5C;
-	Wed, 19 Feb 2025 08:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B40188CCA;
+	Wed, 19 Feb 2025 08:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955020; cv=none; b=tFA8vly8u1y/4+37hpDXelFEZmD+X4DWCnoRdKp2Jp45XkaBFwTAqtLQMl4PAgynfSmhQXLRqmEz1Zk+PiMU3Jh+K1hGj5MWiKsduMM5SVahV394HWKkuUID/TJSzcQOl1wc+qmpPEtOgHw1vtLkR7b3fOEo5XdGSL3lp/nm6rs=
+	t=1739955023; cv=none; b=kjJz4mNT47QYEeFhJreIkxDhwx15tep8wJbYwDZGpljAtLyDNw0Zngn3fCr/vQ9F+H8MJ0eODlgCZw2mHCNSCQqUToVJQmFITgLjusNQce1Z71ccawvnhRrHn4FKNvDQz+cJj+oKe0VJRmkF94Kc6RVVGOa6UuJp921AzNrjCh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955020; c=relaxed/simple;
-	bh=ascVHkDYiSYmUkCgI6XT/HdDFesby7jJF9B1kqv4qw4=;
+	s=arc-20240116; t=1739955023; c=relaxed/simple;
+	bh=YSh8F0L2zwPNHCNoeDg6xTt6OVRhZa+zapV6Dzjth3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iUricFrZSgP1AT4Cfz5wUUW1RLR92xdsJ0Mj5j5LeUuEGVapvt9NvViYDWxHP9TFTFZI/H4WRoD1yyRjl1DsC1kE7yp5ZZ5D6+FoOIS076bW4AKbAiPqMIwwK+xtO6hAxh69jDXQ6c85A7Lqis95dkFwC1pJ0O+GmFoPop4bwWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0pG7e+b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jxHvo4nhfYeXL5C5elY254B+kNVuovfvP1wQCAcVpktIrGgO6DPYpK14gUXjZxO4djpecCrOZgvyXkjIJkCjvouFfvkDI1T+gA8LxJ0+jzkqH6jP9ZtjCr1nQfITPKIn6FRBzXxnSe0RfNLz7H6IIq8RECF1Ljncr7sjIA6xjJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=llfXnbX6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0pG7e+b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F39AC4CED1;
-	Wed, 19 Feb 2025 08:50:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="llfXnbX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795F6C4CEE7;
+	Wed, 19 Feb 2025 08:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955019;
-	bh=ascVHkDYiSYmUkCgI6XT/HdDFesby7jJF9B1kqv4qw4=;
+	s=korg; t=1739955022;
+	bh=YSh8F0L2zwPNHCNoeDg6xTt6OVRhZa+zapV6Dzjth3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O0pG7e+bJ+E/u1RpR7SHq1fpZu3w9z91cflAJcEPx58SzWSSwVhpSuFVxEM7GWx53
-	 RfU2sghJgh9zBOceAG3znBSlbyv8yu0rHVydWoXMIbmJsKMgGP7kXpmfmNz6+aNDOO
-	 7dsL+jU4kKTDowzM/j6wwQy80mHFL+agCe7yWOkY=
+	b=llfXnbX6viabmjBa8KIs3uMscA8V03JeRyhsFzYmPWMYljLuK7ucAcUSX2CaKIGrl
+	 53YKWL6MVMn/Hy9YO7rzgMDWOIDRtS+4oXR87JVE4gsYAvNletwKZZKjre3PsRyEEa
+	 dUhKaWC5JB11s8nKpbKYi286Nuc1KlQ5pnsJZ324=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.12 108/230] ring-buffer: Update pages_touched to reflect persistent buffer content
-Date: Wed, 19 Feb 2025 09:27:05 +0100
-Message-ID: <20250219082605.916374849@linuxfoundation.org>
+	Selvarasu Ganesan <selvarasu.g@samsung.com>
+Subject: [PATCH 6.12 109/230] usb: gadget: f_midi: Fixing wMaxPacketSize exceeded issue during MIDI bind retries
+Date: Wed, 19 Feb 2025 09:27:06 +0100
+Message-ID: <20250219082605.954882809@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -52,46 +49,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Selvarasu Ganesan <selvarasu.g@samsung.com>
 
-commit 97937834ae876f29565415ab15f1284666dc6be3 upstream.
+commit 9e8b21410f310c50733f6e1730bae5a8e30d3570 upstream.
 
-The pages_touched field represents the number of subbuffers in the ring
-buffer that have content that can be read. This is used in accounting of
-"dirty_pages" and "buffer_percent" to allow the user to wait for the
-buffer to be filled to a certain amount before it reads the buffer in
-blocking mode.
+The current implementation sets the wMaxPacketSize of bulk in/out
+endpoints to 1024 bytes at the end of the f_midi_bind function. However,
+in cases where there is a failure in the first midi bind attempt,
+consider rebinding. This scenario may encounter an f_midi_bind issue due
+to the previous bind setting the bulk endpoint's wMaxPacketSize to 1024
+bytes, which exceeds the ep->maxpacket_limit where configured dwc3 TX/RX
+FIFO's maxpacket size of 512 bytes for IN/OUT endpoints in support HS
+speed only.
 
-The persistent buffer never updated this value so it was set to zero, and
-this accounting would take it as it had no content. This would cause user
-space to wait for content even though there's enough content in the ring
-buffer that satisfies the buffer_percent.
+Here the term "rebind" in this context refers to attempting to bind the
+MIDI function a second time in certain scenarios. The situations where
+rebinding is considered include:
 
+ * When there is a failure in the first UDC write attempt, which may be
+   caused by other functions bind along with MIDI.
+ * Runtime composition change : Example : MIDI,ADB to MIDI. Or MIDI to
+   MIDI,ADB.
+
+This commit addresses this issue by resetting the wMaxPacketSize before
+endpoint claim. And here there is no need to reset all values in the usb
+endpoint descriptor structure, as all members except wMaxPacketSize and
+bEndpointAddress have predefined values.
+
+This ensures that restores the endpoint to its expected configuration,
+and preventing conflicts with value of ep->maxpacket_limit. It also
+aligns with the approach used in other function drivers, which treat
+endpoint descriptors as if they were full speed before endpoint claim.
+
+Fixes: 46decc82ffd5 ("usb: gadget: unconditionally allocate hs/ss descriptor in bind operation")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Vincent Donnefort <vdonnefort@google.com>
-Link: https://lore.kernel.org/20250214123512.0631436e@gandalf.local.home
-Fixes: 5f3b6e839f3ce ("ring-buffer: Validate boot range memory events")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
+Link: https://lore.kernel.org/r/20250118060134.927-1-selvarasu.g@samsung.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/gadget/function/f_midi.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1850,6 +1850,11 @@ static void rb_meta_validate_events(stru
- 				cpu_buffer->cpu);
- 			goto invalid;
- 		}
+--- a/drivers/usb/gadget/function/f_midi.c
++++ b/drivers/usb/gadget/function/f_midi.c
+@@ -907,6 +907,15 @@ static int f_midi_bind(struct usb_config
+ 
+ 	status = -ENODEV;
+ 
++	/*
++	 * Reset wMaxPacketSize with maximum packet size of FS bulk transfer before
++	 * endpoint claim. This ensures that the wMaxPacketSize does not exceed the
++	 * limit during bind retries where configured dwc3 TX/RX FIFO's maxpacket
++	 * size of 512 bytes for IN/OUT endpoints in support HS speed only.
++	 */
++	bulk_in_desc.wMaxPacketSize = cpu_to_le16(64);
++	bulk_out_desc.wMaxPacketSize = cpu_to_le16(64);
 +
-+		/* If the buffer has content, update pages_touched */
-+		if (ret)
-+			local_inc(&cpu_buffer->pages_touched);
-+
- 		entries += ret;
- 		entry_bytes += local_read(&head_page->page->commit);
- 		local_set(&cpu_buffer->head_page->entries, ret);
+ 	/* allocate instance-specific endpoints */
+ 	midi->in_ep = usb_ep_autoconfig(cdev->gadget, &bulk_in_desc);
+ 	if (!midi->in_ep)
 
 
