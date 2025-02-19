@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EB61DC747;
-	Wed, 19 Feb 2025 08:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD8E1CAA68;
+	Wed, 19 Feb 2025 08:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954922; cv=none; b=uH5FJcVTP8kHi7MZ6vKFTpzaxu+GNHiD+oucmSWPGyWwsmMai8h9LcUwVlLldQ1aVkQuzw6FlnfFLRzXLc/FegP2I+LkBKaCghlZcx5w6EknPtzXy1Shq/lOzMCRvomq+XOw8Z8ikEXWMS80BigE/+dBtaSGH+pqT+juPFwMTZI=
+	t=1739954925; cv=none; b=gzxATPI6le6aBgVUjPUZ3RrHc3cbJIBMXTgmAoueh4Cpetqe7zfYoE1NvtBp2IXnJSz+NcLtYdjWeO8MJg38530+YhLK6I0PB9pMOEaTNqQtq9ToWvzS3NnAZ6oRhRd3bAMPQWxHvsHNUW9ZgbCEKDI9NavEyopf/kK5Wi6OgPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954922; c=relaxed/simple;
-	bh=D59jGf0KDXFQYL1z80DZarNHXGGmUT2Q6g5kOZnawWA=;
+	s=arc-20240116; t=1739954925; c=relaxed/simple;
+	bh=5hiUAadu5DXq4Z3gf83iNbS1kknwh6MnUTrdRY63b/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EMi2ED0U7W+a7PvJtrA3opK3cHuzH97zYRK3Kd/n/b15Kyjt2lb2SR5KYfVX1nvrgtCDZcBozbci38gU92NhiXYhWRlViehyvFi6nSw1lNVFzPBlESqQjMSWJ3BSs92MeimQH3NiQUQzbYb11y9VU/UVjyJKHo/MftATTsVbX6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQrqIODg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N44/myMffpdKu8nAQpGdlhUerRWRbMIN8mQQfpT/wNNOk5b/0GB02IE6wjBjVfQ7dvuU7ftwvtA7VXnDasrgDETz3tLpKNIzads2LMMiVOuCC3CL/tKffyx2RR7zEZqFt3De1t5WFOhjr7OHgcxE5MK5ojzc45UnkbyjQdhVeYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQ/5N2Db; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQrqIODg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8A7C4CED1;
-	Wed, 19 Feb 2025 08:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQ/5N2Db"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F944C4CED1;
+	Wed, 19 Feb 2025 08:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954922;
-	bh=D59jGf0KDXFQYL1z80DZarNHXGGmUT2Q6g5kOZnawWA=;
+	s=korg; t=1739954925;
+	bh=5hiUAadu5DXq4Z3gf83iNbS1kknwh6MnUTrdRY63b/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QQrqIODgy3rA1urqphUPW63WnPZoBlMMdjUiSTtiQESnCZbgvIYQl4Q017q5pwmTr
-	 1Puaj/jutdhN91T7w7Pse0AjYU9K6UmT3YdJYRGmMXerI7dMwKJ5HTIbe9w2rmAb3k
-	 SIwr1Z+YYbdE0hMSWHHmlT3mUO/qZz+SZgK2RGqk=
+	b=tQ/5N2Db9MbkU2zW0PRDOh7TvgclL0WTWU/Xdbcnbt/3NGsm8L1DI9CJ6i7N9fNvZ
+	 qS+xfjTZJmhxaGJGQmOL/b0STjQoOHjEGHbzux6syan9aOE0S25Q7FvcCoV62NSiCH
+	 u93REAJjUHJrB9cWX56yHveQSplIESE6JHBxFQqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Helge Deller <deller@gmx.de>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 060/230] fbdev: omap: use threaded IRQ for LCD DMA
-Date: Wed, 19 Feb 2025 09:26:17 +0100
-Message-ID: <20250219082604.062874408@linuxfoundation.org>
+Subject: [PATCH 6.12 078/230] serial: 8250_pci: Share WCH IDs with parport_serial driver
+Date: Wed, 19 Feb 2025 09:26:35 +0100
+Message-ID: <20250219082604.755109295@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -52,82 +50,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaro Koskinen <aaro.koskinen@iki.fi>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit e4b6b665df815b4841e71b72f06446884e8aad40 ]
+[ Upstream commit 535a07698b8b3e6f305673102d297262cae2360a ]
 
-When using touchscreen and framebuffer, Nokia 770 crashes easily with:
+parport_serial driver uses subset of WCH IDs that are present in 8250_pci.
+Share them via pci_ids.h and switch parport_serial to use defined constants.
 
-    BUG: scheduling while atomic: irq/144-ads7846/82/0x00010000
-    Modules linked in: usb_f_ecm g_ether usb_f_rndis u_ether libcomposite configfs omap_udc ohci_omap ohci_hcd
-    CPU: 0 UID: 0 PID: 82 Comm: irq/144-ads7846 Not tainted 6.12.7-770 #2
-    Hardware name: Nokia 770
-    Call trace:
-     unwind_backtrace from show_stack+0x10/0x14
-     show_stack from dump_stack_lvl+0x54/0x5c
-     dump_stack_lvl from __schedule_bug+0x50/0x70
-     __schedule_bug from __schedule+0x4d4/0x5bc
-     __schedule from schedule+0x34/0xa0
-     schedule from schedule_preempt_disabled+0xc/0x10
-     schedule_preempt_disabled from __mutex_lock.constprop.0+0x218/0x3b4
-     __mutex_lock.constprop.0 from clk_prepare_lock+0x38/0xe4
-     clk_prepare_lock from clk_set_rate+0x18/0x154
-     clk_set_rate from sossi_read_data+0x4c/0x168
-     sossi_read_data from hwa742_read_reg+0x5c/0x8c
-     hwa742_read_reg from send_frame_handler+0xfc/0x300
-     send_frame_handler from process_pending_requests+0x74/0xd0
-     process_pending_requests from lcd_dma_irq_handler+0x50/0x74
-     lcd_dma_irq_handler from __handle_irq_event_percpu+0x44/0x130
-     __handle_irq_event_percpu from handle_irq_event+0x28/0x68
-     handle_irq_event from handle_level_irq+0x9c/0x170
-     handle_level_irq from generic_handle_domain_irq+0x2c/0x3c
-     generic_handle_domain_irq from omap1_handle_irq+0x40/0x8c
-     omap1_handle_irq from generic_handle_arch_irq+0x28/0x3c
-     generic_handle_arch_irq from call_with_stack+0x1c/0x24
-     call_with_stack from __irq_svc+0x94/0xa8
-    Exception stack(0xc5255da0 to 0xc5255de8)
-    5da0: 00000001 c22fc620 00000000 00000000 c08384a8 c106fc00 00000000 c240c248
-    5dc0: c113a600 c3f6ec30 00000001 00000000 c22fc620 c5255df0 c22fc620 c0279a94
-    5de0: 60000013 ffffffff
-     __irq_svc from clk_prepare_lock+0x4c/0xe4
-     clk_prepare_lock from clk_get_rate+0x10/0x74
-     clk_get_rate from uwire_setup_transfer+0x40/0x180
-     uwire_setup_transfer from spi_bitbang_transfer_one+0x2c/0x9c
-     spi_bitbang_transfer_one from spi_transfer_one_message+0x2d0/0x664
-     spi_transfer_one_message from __spi_pump_transfer_message+0x29c/0x498
-     __spi_pump_transfer_message from __spi_sync+0x1f8/0x2e8
-     __spi_sync from spi_sync+0x24/0x40
-     spi_sync from ads7846_halfd_read_state+0x5c/0x1c0
-     ads7846_halfd_read_state from ads7846_irq+0x58/0x348
-     ads7846_irq from irq_thread_fn+0x1c/0x78
-     irq_thread_fn from irq_thread+0x120/0x228
-     irq_thread from kthread+0xc8/0xe8
-     kthread from ret_from_fork+0x14/0x28
-
-As a quick fix, switch to a threaded IRQ which provides a stable system.
-
-Signed-off-by: Aaro Koskinen <aaro.koskinen@iki.fi>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20241204031114.1029882-3-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/omap/lcd_dma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/parport/parport_serial.c   | 12 ++++++++----
+ drivers/tty/serial/8250/8250_pci.c | 10 ++--------
+ include/linux/pci_ids.h            | 11 +++++++++++
+ 3 files changed, 21 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/video/fbdev/omap/lcd_dma.c b/drivers/video/fbdev/omap/lcd_dma.c
-index f85817635a8c2..0da23c57e4757 100644
---- a/drivers/video/fbdev/omap/lcd_dma.c
-+++ b/drivers/video/fbdev/omap/lcd_dma.c
-@@ -432,8 +432,8 @@ static int __init omap_init_lcd_dma(void)
+diff --git a/drivers/parport/parport_serial.c b/drivers/parport/parport_serial.c
+index 3644997a83425..24d4f3a3ec3d0 100644
+--- a/drivers/parport/parport_serial.c
++++ b/drivers/parport/parport_serial.c
+@@ -266,10 +266,14 @@ static struct pci_device_id parport_serial_pci_tbl[] = {
+ 	{ 0x1409, 0x7168, 0x1409, 0xd079, 0, 0, timedia_9079c },
  
- 	spin_lock_init(&lcd_dma.lock);
+ 	/* WCH CARDS */
+-	{ 0x4348, 0x5053, PCI_ANY_ID, PCI_ANY_ID, 0, 0, wch_ch353_1s1p},
+-	{ 0x4348, 0x7053, 0x4348, 0x3253, 0, 0, wch_ch353_2s1p},
+-	{ 0x1c00, 0x3050, 0x1c00, 0x3050, 0, 0, wch_ch382_0s1p},
+-	{ 0x1c00, 0x3250, 0x1c00, 0x3250, 0, 0, wch_ch382_2s1p},
++	{ PCI_VENDOR_ID_WCHCN, PCI_DEVICE_ID_WCHCN_CH353_1S1P,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, wch_ch353_1s1p },
++	{ PCI_VENDOR_ID_WCHCN, PCI_DEVICE_ID_WCHCN_CH353_2S1P,
++	  0x4348, 0x3253, 0, 0, wch_ch353_2s1p },
++	{ PCI_VENDOR_ID_WCHIC, PCI_DEVICE_ID_WCHIC_CH382_0S1P,
++	  0x1c00, 0x3050, 0, 0, wch_ch382_0s1p },
++	{ PCI_VENDOR_ID_WCHIC, PCI_DEVICE_ID_WCHIC_CH382_2S1P,
++	  0x1c00, 0x3250, 0, 0, wch_ch382_2s1p },
  
--	r = request_irq(INT_DMA_LCD, lcd_dma_irq_handler, 0,
--			"LCD DMA", NULL);
-+	r = request_threaded_irq(INT_DMA_LCD, NULL, lcd_dma_irq_handler,
-+				 IRQF_ONESHOT, "LCD DMA", NULL);
- 	if (r != 0)
- 		pr_err("unable to request IRQ for LCD DMA (error %d)\n", r);
+ 	/* BrainBoxes PX272/PX306 MIO card */
+ 	{ PCI_VENDOR_ID_INTASHIELD, 0x4100,
+diff --git a/drivers/tty/serial/8250/8250_pci.c b/drivers/tty/serial/8250/8250_pci.c
+index 82fba431a95cf..de6d90bf0d70a 100644
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -64,23 +64,17 @@
+ #define PCIE_DEVICE_ID_NEO_2_OX_IBM	0x00F6
+ #define PCI_DEVICE_ID_PLX_CRONYX_OMEGA	0xc001
+ #define PCI_DEVICE_ID_INTEL_PATSBURG_KT 0x1d3d
+-#define PCI_VENDOR_ID_WCHCN		0x4348
++
+ #define PCI_DEVICE_ID_WCHCN_CH352_2S	0x3253
+-#define PCI_DEVICE_ID_WCHCN_CH353_4S	0x3453
+-#define PCI_DEVICE_ID_WCHCN_CH353_2S1PF	0x5046
+-#define PCI_DEVICE_ID_WCHCN_CH353_1S1P	0x5053
+-#define PCI_DEVICE_ID_WCHCN_CH353_2S1P	0x7053
+ #define PCI_DEVICE_ID_WCHCN_CH355_4S	0x7173
++
+ #define PCI_VENDOR_ID_AGESTAR		0x5372
+ #define PCI_DEVICE_ID_AGESTAR_9375	0x6872
+ #define PCI_DEVICE_ID_BROADCOM_TRUMANAGE 0x160a
+ #define PCI_DEVICE_ID_AMCC_ADDIDATA_APCI7800 0x818e
+ 
+-#define PCI_VENDOR_ID_WCHIC		0x1c00
+-#define PCI_DEVICE_ID_WCHIC_CH382_2S1P	0x3250
+ #define PCI_DEVICE_ID_WCHIC_CH384_4S	0x3470
+ #define PCI_DEVICE_ID_WCHIC_CH384_8S	0x3853
+-#define PCI_DEVICE_ID_WCHIC_CH382_2S	0x3253
+ 
+ #define PCI_DEVICE_ID_MOXA_CP102E	0x1024
+ #define PCI_DEVICE_ID_MOXA_CP102EL	0x1025
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index 4cf6aaed5f35d..22f6b018cff8d 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -2589,6 +2589,11 @@
+ 
+ #define PCI_VENDOR_ID_REDHAT		0x1b36
+ 
++#define PCI_VENDOR_ID_WCHIC		0x1c00
++#define PCI_DEVICE_ID_WCHIC_CH382_0S1P	0x3050
++#define PCI_DEVICE_ID_WCHIC_CH382_2S1P	0x3250
++#define PCI_DEVICE_ID_WCHIC_CH382_2S	0x3253
++
+ #define PCI_VENDOR_ID_SILICOM_DENMARK	0x1c2c
+ 
+ #define PCI_VENDOR_ID_AMAZON_ANNAPURNA_LABS	0x1c36
+@@ -2643,6 +2648,12 @@
+ #define PCI_VENDOR_ID_AKS		0x416c
+ #define PCI_DEVICE_ID_AKS_ALADDINCARD	0x0100
+ 
++#define PCI_VENDOR_ID_WCHCN		0x4348
++#define PCI_DEVICE_ID_WCHCN_CH353_4S	0x3453
++#define PCI_DEVICE_ID_WCHCN_CH353_2S1PF	0x5046
++#define PCI_DEVICE_ID_WCHCN_CH353_1S1P	0x5053
++#define PCI_DEVICE_ID_WCHCN_CH353_2S1P	0x7053
++
+ #define PCI_VENDOR_ID_ACCESSIO		0x494f
+ #define PCI_DEVICE_ID_ACCESSIO_WDG_CSM	0x22c0
  
 -- 
 2.39.5
