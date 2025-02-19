@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779701C5D56;
-	Wed, 19 Feb 2025 08:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74FCD1C5D56;
+	Wed, 19 Feb 2025 08:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739953859; cv=none; b=C6xbqDjI0SU19rz2blG/heeGgi24/M/jAYRLqav8KRrdoBLnpxLoy+ktcQ7szzzsdDQ7OD8Iwelh0ACugnskQ6e7XadI75au210BlOdQw3i9KUGCX2zevetTzPBuIjg+KEJrXNTQ4Yqvs0RnUi/++1J4HWlj2GzmK4ec6fwkP/M=
+	t=1739953862; cv=none; b=cWC7hv21wk62PxprRBeRWfRkrTjkORJnmB8LqKLJ2Qh4y7duWmm4fktisDQkJMIkvA97Nsrlk/pkYn5fBWGb30LcijGezQup9DBzYK9VQgBsS83jJQXR6VbLb2lGAl5mgxlGJPo3vIaKBTpYuhtl1ZuaoPxMWLDdWypTQOKEFB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739953859; c=relaxed/simple;
-	bh=APBwybGDeqAgKwE0G0KzpUvxl/AyZKu+Vt4w8yU0BNs=;
+	s=arc-20240116; t=1739953862; c=relaxed/simple;
+	bh=v0sDaFTaE8wWkPHqsJWIggJhyCNZ2gkZGy0XqHhShz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYLQ3HDw8fj2+Lom68AtPwqbPtbb2XpjA+nxdqTet5YEfWDXmIirQtJb55siZ3n0eilluboMroVfov7bJ8TEI9ALONCw1+d7QDdFhWwDYAOC7Ckp1Afw45re2xfWnReG5snPpU3rMJBzXaIlWmdPDzkPAXtMjI1kTshF+4bbKtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMwC8P15; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HLSIckLMToGeeLYVr7KdUXo3QPbAV0ex/YjhJhS+zsB4ZKEC0sTlrDpWuXwE/6crb5Aipyhp9Vc6BZcHicYpu4mmiS8NQxvCFvc1Se4F7bYBlEmlRUUuQ/bbuUDZQ/AJNiCkJJ5aTDKaqbPL6aUz2dZMbfC6sqUvrZu9TZrPJc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9hJ53bA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMwC8P15"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F126C4CED1;
-	Wed, 19 Feb 2025 08:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9hJ53bA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE398C4CED1;
+	Wed, 19 Feb 2025 08:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739953859;
-	bh=APBwybGDeqAgKwE0G0KzpUvxl/AyZKu+Vt4w8yU0BNs=;
+	s=korg; t=1739953862;
+	bh=v0sDaFTaE8wWkPHqsJWIggJhyCNZ2gkZGy0XqHhShz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMwC8P15WEBPlUc9gWNfd+Mo/0Sq5IwnEnxPnFyayWGbURml/gnVo11eO4Mukgkwt
-	 XzSlJfwrhFtE1Cabx+/frMivCAt3LEeXnsIUq7zIM7Ni7JyWs5bXuxqszeM8wWYAIl
-	 VQecxU4iKi7WpVYdBOpj/oGzkaRANjCSg3hOOevQ=
+	b=c9hJ53bAZUXXekN2c+B6Zqtr+JSBCi6N4hPLQxHgW4JYrd8s5FoBv5LMSXX/QYbG3
+	 E7+P+tsNYD0PwJpjvXnHYPrVB+8tvvWmpczGkLgVdtQIU9YHCmA7tvLJuJRVwj/e//
+	 UJ3kpwSMhidL+ZgSFotc3ocOTuwgcvZk38Tbodi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Reyders Morales <reyders1@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 020/274] net: fib_rules: annotate data-races around rule->[io]ifindex
-Date: Wed, 19 Feb 2025 09:24:34 +0100
-Message-ID: <20250219082610.330366400@linuxfoundation.org>
+Subject: [PATCH 6.13 021/274] Documentation/networking: fix basic node example document ISO 15765-2
+Date: Wed, 19 Feb 2025 09:24:35 +0100
+Message-ID: <20250219082610.368749329@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -53,100 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Reyders Morales <reyders1@gmail.com>
 
-[ Upstream commit cb827db50a88aebec516151681adb6db10b688ee ]
+[ Upstream commit d0b197b6505fe3788860fc2a81b3ce53cbecc69c ]
 
-rule->iifindex and rule->oifindex can be read without holding RTNL.
+In the current struct sockaddr_can tp is member of can_addr. tp is not
+member of struct sockaddr_can.
 
-Add READ_ONCE()/WRITE_ONCE() annotations where needed.
-
-Fixes: 32affa5578f0 ("fib: rules: no longer hold RTNL in fib_nl_dumprule()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250206083051.2494877-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Reyders Morales <reyders1@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20250203224720.42530-1-reyders1@gmail.com
+Fixes: 67711e04254c ("Documentation: networking: document ISO 15765-2")
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/fib_rules.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ Documentation/networking/iso15765-2.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/fib_rules.c b/net/core/fib_rules.c
-index 34185d138c95a..ff1cebd71f7b4 100644
---- a/net/core/fib_rules.c
-+++ b/net/core/fib_rules.c
-@@ -37,8 +37,8 @@ static const struct fib_kuid_range fib_kuid_range_unset = {
+diff --git a/Documentation/networking/iso15765-2.rst b/Documentation/networking/iso15765-2.rst
+index 0e9d960741783..37ebb2c417cb4 100644
+--- a/Documentation/networking/iso15765-2.rst
++++ b/Documentation/networking/iso15765-2.rst
+@@ -369,8 +369,8 @@ to their default.
  
- bool fib_rule_matchall(const struct fib_rule *rule)
- {
--	if (rule->iifindex || rule->oifindex || rule->mark || rule->tun_id ||
--	    rule->flags)
-+	if (READ_ONCE(rule->iifindex) || READ_ONCE(rule->oifindex) ||
-+	    rule->mark || rule->tun_id || rule->flags)
- 		return false;
- 	if (rule->suppress_ifgroup != -1 || rule->suppress_prefixlen != -1)
- 		return false;
-@@ -261,12 +261,14 @@ static int fib_rule_match(struct fib_rule *rule, struct fib_rules_ops *ops,
- 			  struct flowi *fl, int flags,
- 			  struct fib_lookup_arg *arg)
- {
--	int ret = 0;
-+	int iifindex, oifindex, ret = 0;
+   addr.can_family = AF_CAN;
+   addr.can_ifindex = if_nametoindex("can0");
+-  addr.tp.tx_id = 0x18DA42F1 | CAN_EFF_FLAG;
+-  addr.tp.rx_id = 0x18DAF142 | CAN_EFF_FLAG;
++  addr.can_addr.tp.tx_id = 0x18DA42F1 | CAN_EFF_FLAG;
++  addr.can_addr.tp.rx_id = 0x18DAF142 | CAN_EFF_FLAG;
  
--	if (rule->iifindex && (rule->iifindex != fl->flowi_iif))
-+	iifindex = READ_ONCE(rule->iifindex);
-+	if (iifindex && (iifindex != fl->flowi_iif))
- 		goto out;
- 
--	if (rule->oifindex && (rule->oifindex != fl->flowi_oif))
-+	oifindex = READ_ONCE(rule->oifindex);
-+	if (oifindex && (oifindex != fl->flowi_oif))
- 		goto out;
- 
- 	if ((rule->mark ^ fl->flowi_mark) & rule->mark_mask)
-@@ -1039,14 +1041,14 @@ static int fib_nl_fill_rule(struct sk_buff *skb, struct fib_rule *rule,
- 	if (rule->iifname[0]) {
- 		if (nla_put_string(skb, FRA_IIFNAME, rule->iifname))
- 			goto nla_put_failure;
--		if (rule->iifindex == -1)
-+		if (READ_ONCE(rule->iifindex) == -1)
- 			frh->flags |= FIB_RULE_IIF_DETACHED;
- 	}
- 
- 	if (rule->oifname[0]) {
- 		if (nla_put_string(skb, FRA_OIFNAME, rule->oifname))
- 			goto nla_put_failure;
--		if (rule->oifindex == -1)
-+		if (READ_ONCE(rule->oifindex) == -1)
- 			frh->flags |= FIB_RULE_OIF_DETACHED;
- 	}
- 
-@@ -1218,10 +1220,10 @@ static void attach_rules(struct list_head *rules, struct net_device *dev)
- 	list_for_each_entry(rule, rules, list) {
- 		if (rule->iifindex == -1 &&
- 		    strcmp(dev->name, rule->iifname) == 0)
--			rule->iifindex = dev->ifindex;
-+			WRITE_ONCE(rule->iifindex, dev->ifindex);
- 		if (rule->oifindex == -1 &&
- 		    strcmp(dev->name, rule->oifname) == 0)
--			rule->oifindex = dev->ifindex;
-+			WRITE_ONCE(rule->oifindex, dev->ifindex);
- 	}
- }
- 
-@@ -1231,9 +1233,9 @@ static void detach_rules(struct list_head *rules, struct net_device *dev)
- 
- 	list_for_each_entry(rule, rules, list) {
- 		if (rule->iifindex == dev->ifindex)
--			rule->iifindex = -1;
-+			WRITE_ONCE(rule->iifindex, -1);
- 		if (rule->oifindex == dev->ifindex)
--			rule->oifindex = -1;
-+			WRITE_ONCE(rule->oifindex, -1);
- 	}
- }
- 
+   ret = bind(s, (struct sockaddr *)&addr, sizeof(addr));
+   if (ret < 0)
 -- 
 2.39.5
 
