@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D881F8BDD;
-	Wed, 19 Feb 2025 08:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483D51F8BA5;
+	Wed, 19 Feb 2025 08:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954835; cv=none; b=O7fKunmzVzsJBUIoweo4RNG+t4yCUzhcyG6k38gn2zYRKDLhqLApBu0IRH55QeeaKI6qrAn326NHgcIpmTOzF+xJU1ZYRh2+M2UefAshypb6GOWTz80rkteOVgIriPjLmDpRSS9uw72e0mLR2/5K6n0GvIJq+sEdJ/E2MDrx05s=
+	t=1739954838; cv=none; b=bxU8mNzECldCwQnoBf3zbEWkHPSqQFtCkl9vdZ4CFFTTraHB8tmvDzzOn11Oi1wHZDIZX5jkmuvS2QlBnYFTXbRyDG8dRjM8aa7VlqGfL4ww5Xi6eF7T2KSb2OIoihatV4W76mJwsEzgVUrx29JRxODwBsRnFtZwI3i6wGWX1Fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954835; c=relaxed/simple;
-	bh=a76bHN6abmqKFKTmGaq+QCFPbFlQklVislZFyonKF2I=;
+	s=arc-20240116; t=1739954838; c=relaxed/simple;
+	bh=2Iud9zXa8K/DOqNcIidakJ2a/FGaK59UnvVXWNEXwZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z1ZLnadhxVh38mb5V/xDbM/4PgOQYdZ1h25CWCEe4djzEEPc5PU+K8Libwzs2Rzh0eO1xfH7mD9I8SIA5f3rfzEDcb48yHBYGtQjNwqIvZJwHTsAWz0s9MMbFBaGtmVHwAG3eE+l3LndWqfcpg5+25N2h3Km8EaLqesGNp1G1gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgmBfVey; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CxQNiMiPZ+PprEBkwLtM1pXEAdCelBAJGH4bgl9Pu4gzXnk6Nrlsl/ibsSJF7BXY5OmzbtjWZbAzhM6mXZOAHfZNTC+qg9IS/u8Mb/mqHXcN+jPT6XTOLH+tyoTHIACLfaCYOS4se1jZF8qpATae76KNarAX52ugnay+WHtf9zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YpvCL6v9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgmBfVey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85CEC4CED1;
-	Wed, 19 Feb 2025 08:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YpvCL6v9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEF3C4CED1;
+	Wed, 19 Feb 2025 08:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954835;
-	bh=a76bHN6abmqKFKTmGaq+QCFPbFlQklVislZFyonKF2I=;
+	s=korg; t=1739954838;
+	bh=2Iud9zXa8K/DOqNcIidakJ2a/FGaK59UnvVXWNEXwZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DgmBfVey+aS/yoxqryDrBP9KyN6Ax5UecdrM69jM1Tgq6T96qufJEAuRPNrGwX0OA
-	 0SKCR0GqIH+VLuUKRhj/Fq7o45UrNb5ycRHsi0zSjbNCEDtf6xxjUYtKHYQnJLrBVN
-	 qIurcukISHcUEoquEopZb3yBQu5xnhQ6OyumhpMw=
+	b=YpvCL6v9ejo8S+M6J1c2i99IG+ADEoDlLZHZgsPjQCj4dykHmRgjn8jZq9IAC+zNz
+	 EWPHs9Nmr2j5KVoMBjRBFNMRMeK/qta/dbvtt+ycBfgSFSABD95pU7l2O9mjdr46ZM
+	 4aM+u+3cjq1lBgCgj2bQnWtMf7pMPMiAEhLPjh94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Alan Robinson <Alan.Robinson@fujitsu.com>,
-	Jan Beulich <jbeulich@suse.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/230] x86/xen: allow larger contiguous memory regions in PV guests
-Date: Wed, 19 Feb 2025 09:26:08 +0100
-Message-ID: <20250219082603.705789601@linuxfoundation.org>
+Subject: [PATCH 6.12 052/230] block: cleanup and fix batch completion adding conditions
+Date: Wed, 19 Feb 2025 09:26:09 +0100
+Message-ID: <20250219082603.745084626@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -52,169 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit e93ec87286bd1fd30b7389e7a387cfb259f297e3 ]
+[ Upstream commit 1f47ed294a2bd577d5ae43e6e28e1c9a3be4a833 ]
 
-Today a PV guest (including dom0) can create 2MB contiguous memory
-regions for DMA buffers at max. This has led to problems at least
-with the megaraid_sas driver, which wants to allocate a 2.3MB DMA
-buffer.
+The conditions for whether or not a request is allowed adding to a
+completion batch are a bit hard to read, and they also have a few
+issues. One is that ioerror may indeed be a random value on passthrough,
+and it's being checked unconditionally of whether or not the given
+request is a passthrough request or not.
 
-The limiting factor is the frame array used to do the hypercall for
-making the memory contiguous, which has 512 entries and is just a
-static array in mmu_pv.c.
+Rewrite the conditions to be separate for easier reading, and only check
+ioerror for non-passthrough requests. This fixes an issue with bio
+unmapping on passthrough, where it fails getting added to a batch. This
+both leads to suboptimal performance, and may trigger a potential
+schedule-under-atomic condition for polled passthrough IO.
 
-In order to not waste memory for non-PV guests, put the initial
-frame array into .init.data section and dynamically allocate an array
-from the .init_after_bootmem hook of PV guests.
-
-In case a contiguous memory area larger than the initially supported
-2MB is requested, allocate a larger buffer for the frame list. Note
-that such an allocation is tried only after memory management has been
-initialized properly, which is tested via a flag being set in the
-.init_after_bootmem hook.
-
-Fixes: 9f40ec84a797 ("xen/swiotlb: add alignment check for dma buffers")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Tested-by: Alan Robinson <Alan.Robinson@fujitsu.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: f794f3351f26 ("block: add support for blk_mq_end_request_batch()")
+Link: https://lore.kernel.org/r/20575f0a-656e-4bb3-9d82-dec6c7e3a35c@kernel.dk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/mmu_pv.c | 71 +++++++++++++++++++++++++++++++++++++------
- 1 file changed, 62 insertions(+), 9 deletions(-)
+ include/linux/blk-mq.h | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/xen/mmu_pv.c b/arch/x86/xen/mmu_pv.c
-index 55a4996d0c04f..ffdf0d299c5d7 100644
---- a/arch/x86/xen/mmu_pv.c
-+++ b/arch/x86/xen/mmu_pv.c
-@@ -111,6 +111,51 @@ static pud_t level3_user_vsyscall[PTRS_PER_PUD] __page_aligned_bss;
-  */
- static DEFINE_SPINLOCK(xen_reservation_lock);
- 
-+/* Protected by xen_reservation_lock. */
-+#define MIN_CONTIG_ORDER 9 /* 2MB */
-+static unsigned int discontig_frames_order = MIN_CONTIG_ORDER;
-+static unsigned long discontig_frames_early[1UL << MIN_CONTIG_ORDER] __initdata;
-+static unsigned long *discontig_frames __refdata = discontig_frames_early;
-+static bool discontig_frames_dyn;
-+
-+static int alloc_discontig_frames(unsigned int order)
-+{
-+	unsigned long *new_array, *old_array;
-+	unsigned int old_order;
-+	unsigned long flags;
-+
-+	BUG_ON(order < MIN_CONTIG_ORDER);
-+	BUILD_BUG_ON(sizeof(discontig_frames_early) != PAGE_SIZE);
-+
-+	new_array = (unsigned long *)__get_free_pages(GFP_KERNEL,
-+						      order - MIN_CONTIG_ORDER);
-+	if (!new_array)
-+		return -ENOMEM;
-+
-+	spin_lock_irqsave(&xen_reservation_lock, flags);
-+
-+	old_order = discontig_frames_order;
-+
-+	if (order > discontig_frames_order || !discontig_frames_dyn) {
-+		if (!discontig_frames_dyn)
-+			old_array = NULL;
-+		else
-+			old_array = discontig_frames;
-+
-+		discontig_frames = new_array;
-+		discontig_frames_order = order;
-+		discontig_frames_dyn = true;
-+	} else {
-+		old_array = new_array;
-+	}
-+
-+	spin_unlock_irqrestore(&xen_reservation_lock, flags);
-+
-+	free_pages((unsigned long)old_array, old_order - MIN_CONTIG_ORDER);
-+
-+	return 0;
-+}
-+
- /*
-  * Note about cr3 (pagetable base) values:
-  *
-@@ -812,6 +857,9 @@ static void __init xen_after_bootmem(void)
- 	SetPagePinned(virt_to_page(level3_user_vsyscall));
- #endif
- 	xen_pgd_walk(&init_mm, xen_mark_pinned, FIXADDR_TOP);
-+
-+	if (alloc_discontig_frames(MIN_CONTIG_ORDER))
-+		BUG();
- }
- 
- static void xen_unpin_page(struct mm_struct *mm, struct page *page,
-@@ -2199,10 +2247,6 @@ void __init xen_init_mmu_ops(void)
- 	memset(dummy_mapping, 0xff, PAGE_SIZE);
- }
- 
--/* Protected by xen_reservation_lock. */
--#define MAX_CONTIG_ORDER 9 /* 2MB */
--static unsigned long discontig_frames[1<<MAX_CONTIG_ORDER];
--
- #define VOID_PTE (mfn_pte(0, __pgprot(0)))
- static void xen_zap_pfn_range(unsigned long vaddr, unsigned int order,
- 				unsigned long *in_frames,
-@@ -2319,18 +2363,25 @@ int xen_create_contiguous_region(phys_addr_t pstart, unsigned int order,
- 				 unsigned int address_bits,
- 				 dma_addr_t *dma_handle)
+diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
+index c5063e0a38a05..a53cbe2569104 100644
+--- a/include/linux/blk-mq.h
++++ b/include/linux/blk-mq.h
+@@ -880,12 +880,22 @@ static inline bool blk_mq_add_to_batch(struct request *req,
+ 				       void (*complete)(struct io_comp_batch *))
  {
--	unsigned long *in_frames = discontig_frames, out_frame;
-+	unsigned long *in_frames, out_frame;
- 	unsigned long  flags;
- 	int            success;
- 	unsigned long vstart = (unsigned long)phys_to_virt(pstart);
- 
--	if (unlikely(order > MAX_CONTIG_ORDER))
--		return -ENOMEM;
-+	if (unlikely(order > discontig_frames_order)) {
-+		if (!discontig_frames_dyn)
-+			return -ENOMEM;
-+
-+		if (alloc_discontig_frames(order))
-+			return -ENOMEM;
+ 	/*
+-	 * blk_mq_end_request_batch() can't end request allocated from
+-	 * sched tags
++	 * Check various conditions that exclude batch processing:
++	 * 1) No batch container
++	 * 2) Has scheduler data attached
++	 * 3) Not a passthrough request and end_io set
++	 * 4) Not a passthrough request and an ioerror
+ 	 */
+-	if (!iob || (req->rq_flags & RQF_SCHED_TAGS) || ioerror ||
+-			(req->end_io && !blk_rq_is_passthrough(req)))
++	if (!iob)
+ 		return false;
++	if (req->rq_flags & RQF_SCHED_TAGS)
++		return false;
++	if (!blk_rq_is_passthrough(req)) {
++		if (req->end_io)
++			return false;
++		if (ioerror < 0)
++			return false;
 +	}
  
- 	memset((void *) vstart, 0, PAGE_SIZE << order);
- 
- 	spin_lock_irqsave(&xen_reservation_lock, flags);
- 
-+	in_frames = discontig_frames;
-+
- 	/* 1. Zap current PTEs, remembering MFNs. */
- 	xen_zap_pfn_range(vstart, order, in_frames, NULL);
- 
-@@ -2354,12 +2405,12 @@ int xen_create_contiguous_region(phys_addr_t pstart, unsigned int order,
- 
- void xen_destroy_contiguous_region(phys_addr_t pstart, unsigned int order)
- {
--	unsigned long *out_frames = discontig_frames, in_frame;
-+	unsigned long *out_frames, in_frame;
- 	unsigned long  flags;
- 	int success;
- 	unsigned long vstart;
- 
--	if (unlikely(order > MAX_CONTIG_ORDER))
-+	if (unlikely(order > discontig_frames_order))
- 		return;
- 
- 	vstart = (unsigned long)phys_to_virt(pstart);
-@@ -2367,6 +2418,8 @@ void xen_destroy_contiguous_region(phys_addr_t pstart, unsigned int order)
- 
- 	spin_lock_irqsave(&xen_reservation_lock, flags);
- 
-+	out_frames = discontig_frames;
-+
- 	/* 1. Find start MFN of contiguous extent. */
- 	in_frame = virt_to_mfn((void *)vstart);
- 
+ 	if (!iob->complete)
+ 		iob->complete = complete;
 -- 
 2.39.5
 
