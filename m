@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A202A1EDA3C;
-	Wed, 19 Feb 2025 08:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0781EF082;
+	Wed, 19 Feb 2025 08:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954855; cv=none; b=j9PlLl6/J1FowXV83oMnuSrabbY5I1emxE97ed0ugsP68suTiFNKz4k/5PURXr20aahkAVsFH9nU9jD4eAWoTs0EzBUW/NbIwt9bJEj/a7rS4w2BEOtkYnKx+OjsFORGpkUzF7HImLAMioZ7SLhnxbD/KQohmd9pu4ca2CuXc5E=
+	t=1739954858; cv=none; b=OkkPpvZpT17MCGry2ZW5ATvcilfx8c9ZCYE+OgiqflXzIJrcJBcDSP54nURg73aOR6ARmCMtn/7OiNbAvv39gA/LxrN2Ykgt1nRz0qsIo0ZqqNIAbaAGOgMiXXSuWbtd4Y/ggVu7xUo03LbBDQiHyFpNvS2W/+PqByv6TFvjlCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954855; c=relaxed/simple;
-	bh=UV9JC6c97OEML8A/p3rg0AEH4jrj+/vaxI/DtBmj7ls=;
+	s=arc-20240116; t=1739954858; c=relaxed/simple;
+	bh=P0xdb9MTAvZgcj3gcL00UMwrmv9IjV5DwaOT9wbPtzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RXndNmLfoML7u7o2ezZldx8bmIq5EMKbVI1JiwHQl3rqKDHa+4GPPQoWvXMVc3b/IgmHfzOgBUTF7xsLoC4fy4Gh3UZUTHD6TkgV2psXANEXutPD/dBwkGjdejQpbxGTrtQjIXV0ztKIlXLez9+gpBE3dGd6DH6/owutDRtdEKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6gJfdX+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sho5XdkuXybgeTCpuRDj/fUciD+WsIZTKeR7RCYtXGsK9oKejxPx6CKFDDLtphFxleNUs9HwoTJ5kAGi6VLoxE4isRlEk30TZJlPOHkJI0wqwclLzVXTq6vlyV7BhzlYzbKdhBzTNHFrrSWX0w+S5JCU/lcm56YIEBtlQaPTZa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFh6oNdg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6gJfdX+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7595C4CED1;
-	Wed, 19 Feb 2025 08:47:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFh6oNdg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EABC4CED1;
+	Wed, 19 Feb 2025 08:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954855;
-	bh=UV9JC6c97OEML8A/p3rg0AEH4jrj+/vaxI/DtBmj7ls=;
+	s=korg; t=1739954858;
+	bh=P0xdb9MTAvZgcj3gcL00UMwrmv9IjV5DwaOT9wbPtzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6gJfdX+nxH9ni3z2l2EEssLjcUfAqqM35A+RLWEpVt6A5nMd02NB4fU8Pp35g4mU
-	 egFR5/nCRw8L7k4j53fyn2VlkrMEWHKxOznUALt6Fpsa2bpj9B3dw+qRpVnDtCWdY2
-	 Vl2hc2KRQ6jVJtuhbuQXqiFEM/8Gwt2qVIJHWRZY=
+	b=BFh6oNdgEjOmz0x6gK6/Z0rOo++3rsMohydxKcZAXdi4o13BKFxX0kplfoWLXkYex
+	 HQkmo9bbZXjuX4kNi/WTU7590R5PSc/wyHrMPO84Dg53MbPHSuKbGQ4Gz7rOJi3ioF
+	 0UM8QmyGmuFcsWDSeH167MH3+CZQ38faFug4a2Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hamish McIntyre-Bhatty <kernel-bugzilla@regd.hamishmb.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Daniel Xu <dxu@dxuuu.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/230] iommu/amd: Expicitly enable CNTRL.EPHEn bit in resume path
-Date: Wed, 19 Feb 2025 09:26:13 +0100
-Message-ID: <20250219082603.906913113@linuxfoundation.org>
+Subject: [PATCH 6.12 057/230] tools: fix annoying "mkdir -p ..." logs when building tools in parallel
+Date: Wed, 19 Feb 2025 09:26:14 +0100
+Message-ID: <20250219082603.946669484@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -52,67 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit ef75966abf950c0539534effa4960caa29fb7167 ]
+[ Upstream commit d1d0963121769d8d16150b913fe886e48efefa51 ]
 
-With recent kernel, AMDGPU failed to resume after suspend on certain laptop.
+When CONFIG_OBJTOOL=y or CONFIG_DEBUG_INFO_BTF=y, parallel builds
+show awkward "mkdir -p ..." logs.
 
-Sample log:
------------
-Nov 14 11:52:19 Thinkbook kernel: iommu ivhd0: AMD-Vi: Event logged [ILLEGAL_DEV_TABLE_ENTRY device=0000:06:00.0 pasid=0x00000 address=0x135300000 flags=0x0080]
-Nov 14 11:52:19 Thinkbook kernel: AMD-Vi: DTE[0]: 7d90000000000003
-Nov 14 11:52:19 Thinkbook kernel: AMD-Vi: DTE[1]: 0000100103fc0009
-Nov 14 11:52:19 Thinkbook kernel: AMD-Vi: DTE[2]: 2000000117840013
-Nov 14 11:52:19 Thinkbook kernel: AMD-Vi: DTE[3]: 0000000000000000
+  $ make -j16
+    [ snip ]
+  mkdir -p /home/masahiro/ref/linux/tools/objtool && make O=/home/masahiro/ref/linux subdir=tools/objtool --no-print-directory -C objtool
+  mkdir -p /home/masahiro/ref/linux/tools/bpf/resolve_btfids && make O=/home/masahiro/ref/linux subdir=tools/bpf/resolve_btfids --no-print-directory -C bpf/resolve_btfids
 
-This is because in resume path, CNTRL[EPHEn] is not set. Fix this by
-setting CNTRL[EPHEn] to 1 in resume path if EFR[EPHSUP] is set.
+Defining MAKEFLAGS=<value> on the command line wipes out command line
+switches from the resultant MAKEFLAGS definition, even though the command
+line switches are active. [1]
 
-Note
-  May be better approach is to save the control register in suspend path
-  and restore it in resume path instead of trying to set indivisual
-  bits. We will have separate patch for that.
+MAKEFLAGS puts all single-letter options into the first word, and that
+word will be empty if no single-letter options were given. [2]
+However, this breaks if MAKEFLAGS=<value> is given on the command line.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219499
-Fixes: c4cb23111103 ("iommu/amd: Add support for enable/disable IOPF")
-Tested-by: Hamish McIntyre-Bhatty <kernel-bugzilla@regd.hamishmb.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20250127094411.5931-1-vasant.hegde@amd.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+The tools/ and tools/% targets set MAKEFLAGS=<value> on the command
+line, which breaks the following code in tools/scripts/Makefile.include:
+
+    short-opts := $(firstword -$(MAKEFLAGS))
+
+If MAKEFLAGS really needs modification, it should be done through the
+environment variable, as follows:
+
+    MAKEFLAGS=<value> $(MAKE) ...
+
+That said, I question whether modifying MAKEFLAGS is necessary here.
+The only flag we might want to exclude is --no-print-directory, as the
+tools build system changes the working directory. However, people might
+find the "Entering/Leaving directory" logs annoying.
+
+I simply removed the offending MAKEFLAGS=<value>.
+
+[1]: https://savannah.gnu.org/bugs/?62469
+[2]: https://www.gnu.org/software/make/manual/make.html#Testing-Flags
+
+Fixes: ea01fa9f63ae ("tools: Connect to the kernel build system")
+Fixes: a50e43332756 ("perf tools: Honor parallel jobs")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Tested-by: Daniel Xu <dxu@dxuuu.xyz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h | 1 +
- drivers/iommu/amd/init.c            | 4 ++++
- 2 files changed, 5 insertions(+)
+ Makefile | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index 601fb4ee69009..6fb2f2919ab1f 100644
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -175,6 +175,7 @@
- #define CONTROL_GAM_EN		25
- #define CONTROL_GALOG_EN	28
- #define CONTROL_GAINT_EN	29
-+#define CONTROL_EPH_EN		45
- #define CONTROL_XT_EN		50
- #define CONTROL_INTCAPXT_EN	51
- #define CONTROL_IRTCACHEDIS	59
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 43131c3a21726..dbe2d13972fef 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -2647,6 +2647,10 @@ static void iommu_init_flags(struct amd_iommu *iommu)
+diff --git a/Makefile b/Makefile
+index 26a471dbed62a..40c97774c4e4b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1357,18 +1357,13 @@ ifneq ($(wildcard $(resolve_btfids_O)),)
+ 	$(Q)$(MAKE) -sC $(srctree)/tools/bpf/resolve_btfids O=$(resolve_btfids_O) clean
+ endif
  
- 	/* Set IOTLB invalidation timeout to 1s */
- 	iommu_set_inv_tlb_timeout(iommu, CTRL_INV_TO_1S);
-+
-+	/* Enable Enhanced Peripheral Page Request Handling */
-+	if (check_feature(FEATURE_EPHSUP))
-+		iommu_feature_enable(iommu, CONTROL_EPH_EN);
- }
+-# Clear a bunch of variables before executing the submake
+-ifeq ($(quiet),silent_)
+-tools_silent=s
+-endif
+-
+ tools/: FORCE
+ 	$(Q)mkdir -p $(objtree)/tools
+-	$(Q)$(MAKE) LDFLAGS= MAKEFLAGS="$(tools_silent) $(filter --j% -j,$(MAKEFLAGS))" O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/
++	$(Q)$(MAKE) LDFLAGS= O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/
  
- static void iommu_apply_resume_quirks(struct amd_iommu *iommu)
+ tools/%: FORCE
+ 	$(Q)mkdir -p $(objtree)/tools
+-	$(Q)$(MAKE) LDFLAGS= MAKEFLAGS="$(tools_silent) $(filter --j% -j,$(MAKEFLAGS))" O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/ $*
++	$(Q)$(MAKE) LDFLAGS= O=$(abspath $(objtree)) subdir=tools -C $(srctree)/tools/ $*
+ 
+ # ---------------------------------------------------------------------------
+ # Kernel selftest
 -- 
 2.39.5
 
