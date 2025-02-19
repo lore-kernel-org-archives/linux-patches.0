@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887C71D61B5;
-	Wed, 19 Feb 2025 09:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736A01CCEE7;
+	Wed, 19 Feb 2025 09:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956178; cv=none; b=XbMQaFZ+QZw2kr2i6aeRTXOxgEtBZxN8Cd+yXeZYb1BRRSNeu1DNPgKXLLFcS4/aExPQScbW5n8K/vLDatmUUIU0nU/6WsoMfk5+Q7l0+XFTYMixg4xpImAasw1b4CJjGvtcoSq2SHt9bm/qG0cLsBEH3Csys5QgL3jKHLgP6RU=
+	t=1739956181; cv=none; b=Vx0BASfnLgh7CyJP4ilAlvYdMtVriqRogT9Px3DcXSlCAPWcMSRB6MoBNU9x1PC2r7wtENQIzsDdm/4Ub2Q3OWdtnS0sH9mo6aHumLQVRwdjQKOKV1z9u1T2YqJznsqcFHREmqx3tnvwqW7xe8yIUv/OZRHvCB0um+E5IDO+20A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956178; c=relaxed/simple;
-	bh=35rE8HXnt7MCL3j38+qb0zdgX0zOa7d1VO3fWy9hOug=;
+	s=arc-20240116; t=1739956181; c=relaxed/simple;
+	bh=O+8noV60ER+qfK047huXywH43ZMsl9/cA+Zs/+s8YXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=irrVki/JQ7PsIS/Td23VN+eXaSWbG8pBhaNtM/m7uBfaGwFd7FIBmTZL7XnXIw0vBxN0S6HozPQPnzIBjKGQFXJ9lx02tcWzVTbjzH+hlsLAUuTWLfLMRaEZ3mDTeCskGCBxhlYJM2Z06hyCPdqig+hUljJrYSAYlepdPKQ6ILk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PgQ4oFKp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mcqf/JyIlS2JhbZUsOQ+grTqwQ/IRiiQiFkWo0mjmqZXR1R65JEmZbk/pxaph5h0lFs0hI4Nzy+9L+sSsLPk0HS+sOKK7aLMlfQhWJvx+6zWrONH7CVmxxaH/bkdHlVeLGGf6fviWSudZp9RsVvQXe1cLti+aElIzqPW8QPwnb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSswlfi7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PgQ4oFKp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1300EC4CED1;
-	Wed, 19 Feb 2025 09:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSswlfi7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8ABC4CED1;
+	Wed, 19 Feb 2025 09:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956178;
-	bh=35rE8HXnt7MCL3j38+qb0zdgX0zOa7d1VO3fWy9hOug=;
+	s=korg; t=1739956181;
+	bh=O+8noV60ER+qfK047huXywH43ZMsl9/cA+Zs/+s8YXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PgQ4oFKpq/YiX4izmQj2iCTVJPovUpcWko4me52UADm93lg6cmBx1MhUT9+ZeciWQ
-	 nlgsmg2LYBxCGTJ3eyKKrFgCmxZ1gsyAJK0twm4x92sxIN3phI4I90gI5uXMlGruA1
-	 HMHOi0/w1KrfCfDXneOvTtbq2fWum1u3JKt0B40Y=
+	b=GSswlfi7n7FqKjb+OkVtwrevDgDzi3kybSKzkcYEiMWfdKM0i+robIwJe5yRZi1kB
+	 e4RR4+9TGnTGs+eT6ceGGPAt6I9MYW/LWFIrv9/E0DKXOWYWkD6Nj/hGf9yTFQAClI
+	 l35g5aIaCGP9nilCC+QRqM8n8fgx/OA/j1r5tPQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingwei Zheng <zmw12306@gmail.com>,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/578] pwm: stm32: Add check for clk_enable()
-Date: Wed, 19 Feb 2025 09:21:36 +0100
-Message-ID: <20250219082656.579180505@linuxfoundation.org>
+Subject: [PATCH 6.1 075/578] mfd: syscon: Use scoped variables with memory allocators to simplify error paths
+Date: Wed, 19 Feb 2025 09:21:19 +0100
+Message-ID: <20250219082655.838436358@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -46,48 +45,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingwei Zheng <zmw12306@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit e8c59791ebb60790c74b2c3ab520f04a8a57219a ]
+[ Upstream commit 82f898f47112bc7b787cb9ce8803c4e2f9f60c89 ]
 
-Add check for the return value of clk_enable() to catch the potential
-error.
+Allocate the memory with scoped/cleanup.h to reduce error handling and
+make the code a bit simpler.
 
-Fixes: 19f1016ea960 ("pwm: stm32: Fix enable count for clk in .probe()")
-Signed-off-by: Mingwei Zheng <zmw12306@gmail.com>
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Link: https://lore.kernel.org/r/20241215224752.220318-1-zmw12306@gmail.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240707114823.9175-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Stable-dep-of: 805f7aaf7fee ("mfd: syscon: Fix race in device_node_get_regmap()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/mfd/syscon.c | 20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index 2070d107c6328..fda7d76f08b1b 100644
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -631,8 +631,11 @@ static int stm32_pwm_probe(struct platform_device *pdev)
- 	priv->chip.npwm = stm32_pwm_detect_channels(priv, &num_enabled);
+diff --git a/drivers/mfd/syscon.c b/drivers/mfd/syscon.c
+index 1ce8f6f9d7f54..cc7b07882fee4 100644
+--- a/drivers/mfd/syscon.c
++++ b/drivers/mfd/syscon.c
+@@ -8,6 +8,7 @@
+  * Author: Dong Aisheng <dong.aisheng@linaro.org>
+  */
  
- 	/* Initialize clock refcount to number of enabled PWM channels. */
--	for (i = 0; i < num_enabled; i++)
--		clk_enable(priv->clk);
-+	for (i = 0; i < num_enabled; i++) {
-+		ret = clk_enable(priv->clk);
-+		if (ret)
-+			return ret;
-+	}
++#include <linux/cleanup.h>
+ #include <linux/clk.h>
+ #include <linux/err.h>
+ #include <linux/hwspinlock.h>
+@@ -43,7 +44,6 @@ static const struct regmap_config syscon_regmap_config = {
+ static struct syscon *of_syscon_register(struct device_node *np, bool check_clk)
+ {
+ 	struct clk *clk;
+-	struct syscon *syscon;
+ 	struct regmap *regmap;
+ 	void __iomem *base;
+ 	u32 reg_io_width;
+@@ -51,20 +51,16 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_clk)
+ 	struct regmap_config syscon_config = syscon_regmap_config;
+ 	struct resource res;
  
- 	ret = pwmchip_add(&priv->chip);
- 	if (ret < 0)
+-	syscon = kzalloc(sizeof(*syscon), GFP_KERNEL);
++	struct syscon *syscon __free(kfree) = kzalloc(sizeof(*syscon), GFP_KERNEL);
+ 	if (!syscon)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	if (of_address_to_resource(np, 0, &res)) {
+-		ret = -ENOMEM;
+-		goto err_map;
+-	}
++	if (of_address_to_resource(np, 0, &res))
++		return ERR_PTR(-ENOMEM);
+ 
+ 	base = of_iomap(np, 0);
+-	if (!base) {
+-		ret = -ENOMEM;
+-		goto err_map;
+-	}
++	if (!base)
++		return ERR_PTR(-ENOMEM);
+ 
+ 	/* Parse the device's DT node for an endianness specification */
+ 	if (of_property_read_bool(np, "big-endian"))
+@@ -139,7 +135,7 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_clk)
+ 	list_add_tail(&syscon->list, &syscon_list);
+ 	spin_unlock(&syscon_list_slock);
+ 
+-	return syscon;
++	return_ptr(syscon);
+ 
+ err_attach:
+ 	if (!IS_ERR(clk))
+@@ -148,8 +144,6 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_clk)
+ 	regmap_exit(regmap);
+ err_regmap:
+ 	iounmap(base);
+-err_map:
+-	kfree(syscon);
+ 	return ERR_PTR(ret);
+ }
+ 
 -- 
 2.39.5
 
