@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF4B1E105E;
-	Wed, 19 Feb 2025 08:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6550C1E1C26;
+	Wed, 19 Feb 2025 08:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955207; cv=none; b=lTjoweFgEMc5uDy0ZbtOVp/mCzbzuc5IQOMnFxfI5E9Nt/wg8mnMh57KFkpT5uQcrmRzp3WvbDDruP7FiEIdkNTMDqG/K1SxJ0hhkC6s01/eClWQY4VJioveVuu24uld3Ib0ZIEh792/XnWNYjYeaBzXh6muyNrnZDawSnsHqaI=
+	t=1739955210; cv=none; b=o28fTV/LdeRcDh95wjuSK0nw+EPwtcqTy7YxJWDGXTu6i9hdOG+30ZEaypdFZ9P8F8NDw+ANwKNQynidV0/FCQBx/UFQ4N+2LjpMCGlJYUZhz7OBWPr7gfEBeOeTnhLq9qyKFxEUbeuN4bQTHKeXU0QXCQxR1gpRewdRRcuW2nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955207; c=relaxed/simple;
-	bh=ZYQNTgrCugyum/ljBKqjEkX6HLqIuQFImpwmas1r8Ds=;
+	s=arc-20240116; t=1739955210; c=relaxed/simple;
+	bh=C1oKM/GOFvIdxD8DpSOdpLnAQoAQJbXD18jJ+BoVQdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DDxtXzIEZPxvYDzH6yhpG0Bs7/WdSySHC9AncjXkIduBYRMR1VzalAmiIMSJbN+RlfYtGW7aTnUeyoHdKrs1x6AwHHxZ5GfJPLXwJO/8/Dtf72SHPNbpI2HDqhf/ZsJmAOqVWNfvIyl8k2mJ5/ygZCbkgF4UB3Jee7YW/M3U9Ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4t/8Det; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kvC3+1dl15pm/f/UZuAqwewrhznNB1OFXdjjO0NfJmHKoy/wGC8+AQt1jx/5YDWJwy0A/EePsMD8sBdWhi2UpuSPw2DRn25qrduIXTgVpoVs97bTEvXOZK6ManmTWZ3XUCM4knr8tVPNS2ovp3vd9dlw87HGneJo6MK7DFuf7BE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bo8LsHPY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4t/8Det"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735D5C4CED1;
-	Wed, 19 Feb 2025 08:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bo8LsHPY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F419C4CEE6;
+	Wed, 19 Feb 2025 08:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955206;
-	bh=ZYQNTgrCugyum/ljBKqjEkX6HLqIuQFImpwmas1r8Ds=;
+	s=korg; t=1739955209;
+	bh=C1oKM/GOFvIdxD8DpSOdpLnAQoAQJbXD18jJ+BoVQdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4t/8Detil4RYrJuucCbygOj002ndtbPAgqM9itGIhqASku5gnUQPh886iox1wQEd
-	 nnr1stkFZyrdqvRT/NM5lNwWMidQ0gvGjKh+HINKeczXi21I3QuNvC2Eh02++VdprE
-	 0l/xTfNQR0PeUXwJemPJGKo0nSPQh2oMgOY3EtCA=
+	b=Bo8LsHPYIqTIm2YTMCA2Rap/JfJcV3PQQjxyWzPx8ZeARZUg2cMKJq5DM1cLFfpvR
+	 GZH0zHzbqsQ4EhsdO3yrgi4C0i7EPtPsZw5cO7/Kxh/dfGnl0WCU0K9J2GIlRcIpEM
+	 hZckwnybIJyMpe8Hrne+/p5sE7ozNgmrTQO5/p8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin van der Gracht <robin@protonic.nl>,
+	yan kang <kangyan91@outlook.com>,
+	yue sun <samsun1006219@gmail.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.12 132/230] can: rockchip: rkcanfd_handle_rx_fifo_overflow_int(): bail out if skb cannot be allocated
-Date: Wed, 19 Feb 2025 09:27:29 +0100
-Message-ID: <20250219082606.849428618@linuxfoundation.org>
+Subject: [PATCH 6.12 133/230] can: etas_es58x: fix potential NULL pointer dereference on udev->serial
+Date: Wed, 19 Feb 2025 09:27:30 +0100
+Message-ID: <20250219082606.888284325@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -50,38 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin van der Gracht <robin@protonic.nl>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-commit f7f0adfe64de08803990dc4cbecd2849c04e314a upstream.
+commit a1ad2109ce41c9e3912dadd07ad8a9c640064ffb upstream.
 
-Fix NULL pointer check in rkcanfd_handle_rx_fifo_overflow_int() to
-bail out if skb cannot be allocated.
+The driver assumed that es58x_dev->udev->serial could never be NULL.
+While this is true on commercially available devices, an attacker
+could spoof the device identity providing a NULL USB serial number.
+That would trigger a NULL pointer dereference.
 
-Fixes: ff60bfbaf67f ("can: rockchip_canfd: add driver for Rockchip CAN-FD controller")
+Add a check on es58x_dev->udev->serial before accessing it.
+
+Reported-by: yan kang <kangyan91@outlook.com>
+Reported-by: yue sun <samsun1006219@gmail.com>
+Closes: https://lore.kernel.org/linux-can/SY8P300MB0421E0013C0EBD2AA46BA709A1F42@SY8P300MB0421.AUSP300.PROD.OUTLOOK.COM/
+Fixes: 9f06631c3f1f ("can: etas_es58x: export product information through devlink_ops::info_get()")
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20250204154859.9797-2-mailhol.vincent@wanadoo.fr
 Cc: stable@vger.kernel.org
-Signed-off-by: Robin van der Gracht <robin@protonic.nl>
-Link: https://patch.msgid.link/20250208-fix-rockchip-canfd-v1-1-ec533c8a9895@pengutronix.de
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/rockchip/rockchip_canfd-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/usb/etas_es58x/es58x_devlink.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/rockchip/rockchip_canfd-core.c b/drivers/net/can/rockchip/rockchip_canfd-core.c
-index df18c85fc078..d9a937ba126c 100644
---- a/drivers/net/can/rockchip/rockchip_canfd-core.c
-+++ b/drivers/net/can/rockchip/rockchip_canfd-core.c
-@@ -622,7 +622,7 @@ rkcanfd_handle_rx_fifo_overflow_int(struct rkcanfd_priv *priv)
- 	netdev_dbg(priv->ndev, "RX-FIFO overflow\n");
+--- a/drivers/net/can/usb/etas_es58x/es58x_devlink.c
++++ b/drivers/net/can/usb/etas_es58x/es58x_devlink.c
+@@ -248,7 +248,11 @@ static int es58x_devlink_info_get(struct
+ 			return ret;
+ 	}
  
- 	skb = rkcanfd_alloc_can_err_skb(priv, &cf, &timestamp);
--	if (skb)
-+	if (!skb)
- 		return 0;
+-	return devlink_info_serial_number_put(req, es58x_dev->udev->serial);
++	if (es58x_dev->udev->serial)
++		ret = devlink_info_serial_number_put(req,
++						     es58x_dev->udev->serial);
++
++	return ret;
+ }
  
- 	rkcanfd_get_berr_counter_corrected(priv, &bec);
--- 
-2.48.1
-
+ const struct devlink_ops es58x_dl_ops = {
 
 
