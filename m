@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E6B1C548C;
-	Wed, 19 Feb 2025 08:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8171F1C5D69;
+	Wed, 19 Feb 2025 08:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955157; cv=none; b=WNBh7nnSGQ64f1d7xtD2ertlllAHoKOqGKrw0o05QrK50EVsAWl5jxq7+j+54iTPYSRxVBzA6213f0b8MX06wsqDuOIFybCOVGuMlgSgQlEaFueZPj3uWtNLycaONm5w+x7paUT6+SD9NkiuGq1r9H80J4hyhqP+aNR9r5OhMTk=
+	t=1739955160; cv=none; b=eViOZiXFVhuWI+GuGYX721EQIYbEb1DW9zA5bcPM3uP6P3uI83b7wVbi5Wv7F85vPkSFE2qBmDdVbX+klnXe+v+GWbT8O02HBUrUZrdo+wy8Qzao/K46gkstrDaACh6vMabpVdhwRj05kJSkYFDt7SGoNY0UtG6VVTSpY2PgDV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955157; c=relaxed/simple;
-	bh=mappXI8nagcn+NtfgjgX1sbPkgLzPo0MtVKf6kHiDjY=;
+	s=arc-20240116; t=1739955160; c=relaxed/simple;
+	bh=U07meSbTjkoXTCxB1yRaw0odaCtwmVrfulYQ8huH+n4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSes2hEnvD+0l7yVN58/3oA4wGp8JzwCshaKzv1+EpiQShbjKKWcWy7TgR0oJQsnc75bW4WT6z9YAZglgjTKHK5MxHhav9vaklLNgMMf/eihPiSsKQHEwXa5fJvpit7ZsVDM+JTwFFr/idqNzL71Q+Cst7vS0aychxR0wWJAirA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYJSp0jb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QmDPbJQjFlBkVkuq82/ljsoDTJ4IWNW1gNmVi06CJMaSEF+MPgXNTCyFOnxT2aJNkCTMgNE2DhQc0sK1e7HNAvDLVr2dDPpBTrf2mmogOlzo/Iba3OndOd8VMh/hFWrJSmMxXX28Tky/ems6/pMuenNTceG7MII2RIMSCcWRTsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXzeJG7R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYJSp0jb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FE6C4CED1;
-	Wed, 19 Feb 2025 08:52:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXzeJG7R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0393CC4CED1;
+	Wed, 19 Feb 2025 08:52:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955157;
-	bh=mappXI8nagcn+NtfgjgX1sbPkgLzPo0MtVKf6kHiDjY=;
+	s=korg; t=1739955160;
+	bh=U07meSbTjkoXTCxB1yRaw0odaCtwmVrfulYQ8huH+n4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYJSp0jbriqMvfnl+K/3Nm1DEQE6P9UjiecbzH6Cm/O9rQTmGYvGVjjJ3CHiwT66C
-	 gZsUz03KcsESq3ngOtQolSw5JDX3gbeT6JkphL++jFstovzTN4/hvZw551rDHxoNp0
-	 Zoza/D2VArxxr/2g0VnJTLOXWGiKLpSyUwZll56A=
+	b=hXzeJG7ReNEy9ZyiYqm6l2R+kil8/2aj13RvV4kBuFooHEOeUu45Sz9EQi6fN89p/
+	 ewtPNK00yitevdrpW0oxCQujrd8eUP3+yx+PCH1WKJChWbAhfuRnmMqRmM1gBJloFZ
+	 3ppaqvF5cGopMKe2qUaJwdTxOIiNj+LmznSaynIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Delgan <delgan.py@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mika Westerberg <westeri@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.12 150/230] gpiolib: acpi: Add a quirk for Acer Nitro ANV14
-Date: Wed, 19 Feb 2025 09:27:47 +0100
-Message-ID: <20250219082607.556163120@linuxfoundation.org>
+Subject: [PATCH 6.12 151/230] gpio: stmpe: Check return value of stmpe_reg_read in stmpe_gpio_irq_sync_unlock
+Date: Wed, 19 Feb 2025 09:27:48 +0100
+Message-ID: <20250219082607.595341695@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -52,51 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 8743d66979e494c5378563e6b5a32e913380abd8 upstream.
+commit b9644fbfbcab13da7f8b37bef7c51e5b8407d031 upstream.
 
-Spurious immediate wake up events are reported on Acer Nitro ANV14. GPIO 11 is
-specified as an edge triggered input and also a wake source but this pin is
-supposed to be an output pin for an LED, so it's effectively floating.
+The stmpe_reg_read function can fail, but its return value is not checked
+in stmpe_gpio_irq_sync_unlock. This can lead to silent failures and
+incorrect behavior if the hardware access fails.
 
-Block the interrupt from getting set up for this GPIO on this device.
+This patch adds checks for the return value of stmpe_reg_read. If the
+function fails, an error message is logged and the function returns
+early to avoid further issues.
 
-Cc: stable@vger.kernel.org
-Reported-by: Delgan <delgan.py@gmail.com>
-Tested-by: Delgan <delgan.py@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3954
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Mika Westerberg <westeri@kernel.org>
-Link: https://lore.kernel.org/r/20250211203222.761206-1-superm1@kernel.org
+Fixes: b888fb6f2a27 ("gpio: stmpe: i2c transfer are forbiden in atomic context")
+Cc: stable@vger.kernel.org # 4.16+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20250212021849.275-1-vulab@iscas.ac.cn
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-acpi.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpio/gpio-stmpe.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/gpio/gpiolib-acpi.c
-+++ b/drivers/gpio/gpiolib-acpi.c
-@@ -1691,6 +1691,20 @@ static const struct dmi_system_id gpioli
- 			.ignore_wake = "PNP0C50:00@8",
- 		},
- 	},
-+	{
-+		/*
-+		 * Spurious wakeups from GPIO 11
-+		 * Found in BIOS 1.04
-+		 * https://gitlab.freedesktop.org/drm/amd/-/issues/3954
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_MATCH(DMI_PRODUCT_FAMILY, "Acer Nitro V 14"),
-+		},
-+		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
-+			.ignore_interrupt = "AMDI0030:00@11",
-+		},
-+	},
- 	{} /* Terminating entry */
- };
+--- a/drivers/gpio/gpio-stmpe.c
++++ b/drivers/gpio/gpio-stmpe.c
+@@ -191,7 +191,7 @@ static void stmpe_gpio_irq_sync_unlock(s
+ 		[REG_IE][CSB] = STMPE_IDX_IEGPIOR_CSB,
+ 		[REG_IE][MSB] = STMPE_IDX_IEGPIOR_MSB,
+ 	};
+-	int i, j;
++	int ret, i, j;
+ 
+ 	/*
+ 	 * STMPE1600: to be able to get IRQ from pins,
+@@ -199,8 +199,16 @@ static void stmpe_gpio_irq_sync_unlock(s
+ 	 * GPSR or GPCR registers
+ 	 */
+ 	if (stmpe->partnum == STMPE1600) {
+-		stmpe_reg_read(stmpe, stmpe->regs[STMPE_IDX_GPMR_LSB]);
+-		stmpe_reg_read(stmpe, stmpe->regs[STMPE_IDX_GPMR_CSB]);
++		ret = stmpe_reg_read(stmpe, stmpe->regs[STMPE_IDX_GPMR_LSB]);
++		if (ret < 0) {
++			dev_err(stmpe->dev, "Failed to read GPMR_LSB: %d\n", ret);
++			goto err;
++		}
++		ret = stmpe_reg_read(stmpe, stmpe->regs[STMPE_IDX_GPMR_CSB]);
++		if (ret < 0) {
++			dev_err(stmpe->dev, "Failed to read GPMR_CSB: %d\n", ret);
++			goto err;
++		}
+ 	}
+ 
+ 	for (i = 0; i < CACHE_NR_REGS; i++) {
+@@ -222,6 +230,7 @@ static void stmpe_gpio_irq_sync_unlock(s
+ 		}
+ 	}
+ 
++err:
+ 	mutex_unlock(&stmpe_gpio->irq_lock);
+ }
  
 
 
