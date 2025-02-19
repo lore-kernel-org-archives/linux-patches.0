@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762311DE8B7;
-	Wed, 19 Feb 2025 08:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF8D1C175A;
+	Wed, 19 Feb 2025 08:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954998; cv=none; b=KNrBuDKV3MeK4Je6Jpoxl93l48jAMfa1NPHxy3Y9rMYTsdlUhbPuCPx9GbTdpyyXhX6gQQB/UZRTgd93lfuGa0w3SpGM5N6H9JJtdgdgfOtQGmbDr4L/fWpNPjdZ898uNNKh6Vg22bWkdclHAR5cS20l/n683oJLOLH263goJME=
+	t=1739955001; cv=none; b=EiCu+0jyF/uakXbpr1d1oVOb4+oDLQ0eqlhJ5G61/u48tWPuvOg4wq25Oey2YiZ3Zbl6OnEpir6ge8nYe/7yfiuOybbr2iQtG1SYY9v7kJitU3ME4HPwwcU+M8oF+5VmrFu5WC+bcLSNUuKan4TadS5wvWbDdHdyfhbzoNt3GmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954998; c=relaxed/simple;
-	bh=PKNpCxKiZsqXll6CJBJNR6a44xVom/Vj4nCX/F9IvME=;
+	s=arc-20240116; t=1739955001; c=relaxed/simple;
+	bh=+HtchtPuMuJFzwxvA/GHOst+IHcSPhEKyeStCD4HSzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FDoX/qHmz6TVdJyOCjNQD0JrbBR5cEzJHGkraQDLab5nOBvfUkQVJ7m+Lr2zVguuxV3aPyM+qyC8evIHD3C934zenZwGDq2YY6vEsvf2iouuYnM0albucOZ0lkWj/bhy7t0sbekES4RCetcbaYeTCV17TqL0hi/oHy95kVHF26Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pEi6mbT2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WpoZrUUyGiaibQwhtakt+kk3E01JPUC274k29UoojDs2RAckWT0s1lV/P2u135Dox33St/vSBOMpB7kz3p+/77z5546CHQzqgB4pcDSR/bbB/7UiL1VBgkc+Xoreetp+8CmfImxf+Vq9fmFkkjVeTHAQ9Y7hOVBJibaevz/SUwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIEpIKT7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pEi6mbT2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7940C4CED1;
-	Wed, 19 Feb 2025 08:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIEpIKT7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060A6C4CED1;
+	Wed, 19 Feb 2025 08:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954998;
-	bh=PKNpCxKiZsqXll6CJBJNR6a44xVom/Vj4nCX/F9IvME=;
+	s=korg; t=1739955001;
+	bh=+HtchtPuMuJFzwxvA/GHOst+IHcSPhEKyeStCD4HSzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pEi6mbT2yerYDcZGGpDVZtqr4kAly9g4e8e1OXyUnrQX5UdZvpKHuHiG76kioMEcI
-	 G3UJ6WE9XocneIRwknHwBVWoqiJ7POkrQpl4gDH+xmUOqfQi87R+MSPQbBcQ3HYyDc
-	 H56n8HI1DBEIXRjQmnEiPthG/0B5/WX3Vv4NkgnQ=
+	b=AIEpIKT7XjoV2Sx7eYNgRqNQWErjD0D/g/2j6SGTyvFprp5u+hNGB8ZjzbmbBxJaT
+	 YHH4FGLO0CL04wMeS41T+S9BR9c5P2GkebmO3XesrDXw9JkfXYf6d7cDyKhaAbIBDu
+	 VvapEQRHUr3e1RE1HWsPPB400KW3qYS1+0KZKAPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Jelinek <jakub@redhat.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 093/230] kbuild: Use -fzero-init-padding-bits=all
-Date: Wed, 19 Feb 2025 09:26:50 +0100
-Message-ID: <20250219082605.336276053@linuxfoundation.org>
+	Yosry Ahmed <yosry.ahmed@linux.dev>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 102/230] KVM: nSVM: Enter guest mode before initializing nested NPT MMU
+Date: Wed, 19 Feb 2025 09:26:59 +0100
+Message-ID: <20250219082605.686424065@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -53,89 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit dce4aab8441d285b9a78b33753e0bf583c1320ee ]
+commit 46d6c6f3ef0eaff71c2db6d77d4e2ebb7adac34f upstream.
 
-GCC 15 introduces a regression in "= { 0 }" style initialization of
-unions that Linux has depended on for eliminating uninitialized variable
-contents. GCC does not seem likely to fix it[1], instead suggesting[2]
-that affected projects start using -fzero-init-padding-bits=unions.
+When preparing vmcb02 for nested VMRUN (or state restore), "enter" guest
+mode prior to initializing the MMU for nested NPT so that guest_mode is
+set in the MMU's role.  KVM's model is that all L2 MMUs are tagged with
+guest_mode, as the behavior of hypervisor MMUs tends to be significantly
+different than kernel MMUs.
 
-To avoid future surprises beyond just the current situation with unions,
-enable -fzero-init-padding-bits=all when available (GCC 15+). This will
-correctly zero padding bits in unions and structs that might have been
-left uninitialized, and will make sure there is no immediate regression
-in union initializations. As seen in the stackinit KUnit selftest union
-cases, which were passing before, were failing under GCC 15:
+Practically speaking, the bug is relatively benign, as KVM only directly
+queries role.guest_mode in kvm_mmu_free_guest_mode_roots() and
+kvm_mmu_page_ad_need_write_protect(), which SVM doesn't use, and in paths
+that are optimizations (mmu_page_zap_pte() and
+shadow_mmu_try_split_huge_pages()).
 
-    not ok 18 test_small_start_old_zero
-    ok 29 test_small_start_dynamic_partial # SKIP XFAIL uninit bytes: 63
-    ok 32 test_small_start_assigned_dynamic_partial # SKIP XFAIL uninit bytes: 63
-    ok 67 test_small_start_static_partial # SKIP XFAIL uninit bytes: 63
-    ok 70 test_small_start_static_all # SKIP XFAIL uninit bytes: 56
-    ok 73 test_small_start_dynamic_all # SKIP XFAIL uninit bytes: 56
-    ok 82 test_small_start_assigned_static_partial # SKIP XFAIL uninit bytes: 63
-    ok 85 test_small_start_assigned_static_all # SKIP XFAIL uninit bytes: 56
-    ok 88 test_small_start_assigned_dynamic_all # SKIP XFAIL uninit bytes: 56
+And while the role is incorprated into shadow page usage, because nested
+NPT requires KVM to be using NPT for L1, reusing shadow pages across L1
+and L2 is impossible as L1 MMUs will always have direct=1, while L2 MMUs
+will have direct=0.
 
-The above all now pass again with -fzero-init-padding-bits=all added.
+Hoist the TLB processing and setting of HF_GUEST_MASK to the beginning
+of the flow instead of forcing guest_mode in the MMU, as nothing in
+nested_vmcb02_prepare_control() between the old and new locations touches
+TLB flush requests or HF_GUEST_MASK, i.e. there's no reason to present
+inconsistent vCPU state to the MMU.
 
-This also fixes the following cases for struct initialization that had
-been XFAIL until now because there was no compiler support beyond the
-larger "-ftrivial-auto-var-init=zero" option:
-
-    ok 38 test_small_hole_static_all # SKIP XFAIL uninit bytes: 3
-    ok 39 test_big_hole_static_all # SKIP XFAIL uninit bytes: 124
-    ok 40 test_trailing_hole_static_all # SKIP XFAIL uninit bytes: 7
-    ok 42 test_small_hole_dynamic_all # SKIP XFAIL uninit bytes: 3
-    ok 43 test_big_hole_dynamic_all # SKIP XFAIL uninit bytes: 124
-    ok 44 test_trailing_hole_dynamic_all # SKIP XFAIL uninit bytes: 7
-    ok 58 test_small_hole_assigned_static_all # SKIP XFAIL uninit bytes: 3
-    ok 59 test_big_hole_assigned_static_all # SKIP XFAIL uninit bytes: 124
-    ok 60 test_trailing_hole_assigned_static_all # SKIP XFAIL uninit bytes: 7
-    ok 62 test_small_hole_assigned_dynamic_all # SKIP XFAIL uninit bytes: 3
-    ok 63 test_big_hole_assigned_dynamic_all # SKIP XFAIL uninit bytes: 124
-    ok 64 test_trailing_hole_assigned_dynamic_all # SKIP XFAIL uninit bytes: 7
-
-All of the above now pass when built under GCC 15. Tests can be seen
-with:
-
-    ./tools/testing/kunit/kunit.py run stackinit --arch=x86_64 \
-        --make_option CC=gcc-15
-
-Clang continues to fully initialize these kinds of variables[3] without
-additional flags.
-
-Suggested-by: Jakub Jelinek <jakub@redhat.com>
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=118403 [1]
-Link: https://lore.kernel.org/linux-toolchains/Z0hRrrNU3Q+ro2T7@tucnak/ [2]
-Link: https://github.com/llvm/llvm-project/commit/7a086e1b2dc05f54afae3591614feede727601fa [3]
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://lore.kernel.org/r/20250127191031.245214-3-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 69cb877487de ("KVM: nSVM: move MMU setup to nested_prepare_vmcb_control")
+Cc: stable@vger.kernel.org
+Reported-by: Yosry Ahmed <yosry.ahmed@linux.dev>
+Reviewed-by: Yosry Ahmed <yosry.ahmed@linux.dev>
+Link: https://lore.kernel.org/r/20250130010825.220346-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/Makefile.extrawarn | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kvm/mmu/mmu.c    |    2 +-
+ arch/x86/kvm/svm/nested.c |   10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
-index d75897559d184..dc081cf46d211 100644
---- a/scripts/Makefile.extrawarn
-+++ b/scripts/Makefile.extrawarn
-@@ -82,6 +82,9 @@ KBUILD_CFLAGS += $(call cc-option,-Werror=designated-init)
- # Warn if there is an enum types mismatch
- KBUILD_CFLAGS += $(call cc-option,-Wenum-conversion)
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -5591,7 +5591,7 @@ void kvm_init_shadow_npt_mmu(struct kvm_
+ 	union kvm_mmu_page_role root_role;
  
-+# Explicitly clear padding bits during variable initialization
-+KBUILD_CFLAGS += $(call cc-option,-fzero-init-padding-bits=all)
+ 	/* NPT requires CR0.PG=1. */
+-	WARN_ON_ONCE(cpu_role.base.direct);
++	WARN_ON_ONCE(cpu_role.base.direct || !cpu_role.base.guest_mode);
+ 
+ 	root_role = cpu_role.base;
+ 	root_role.level = kvm_mmu_get_tdp_level(vcpu);
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -646,6 +646,11 @@ static void nested_vmcb02_prepare_contro
+ 	u32 pause_count12;
+ 	u32 pause_thresh12;
+ 
++	nested_svm_transition_tlb_flush(vcpu);
 +
- KBUILD_CFLAGS += -Wextra
- KBUILD_CFLAGS += -Wunused
++	/* Enter Guest-Mode */
++	enter_guest_mode(vcpu);
++
+ 	/*
+ 	 * Filled at exit: exit_code, exit_code_hi, exit_info_1, exit_info_2,
+ 	 * exit_int_info, exit_int_info_err, next_rip, insn_len, insn_bytes.
+@@ -762,11 +767,6 @@ static void nested_vmcb02_prepare_contro
+ 		}
+ 	}
  
--- 
-2.39.5
-
+-	nested_svm_transition_tlb_flush(vcpu);
+-
+-	/* Enter Guest-Mode */
+-	enter_guest_mode(vcpu);
+-
+ 	/*
+ 	 * Merge guest and host intercepts - must be called with vcpu in
+ 	 * guest-mode to take effect.
 
 
