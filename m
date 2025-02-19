@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CDF1B6D0A;
-	Wed, 19 Feb 2025 09:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F121DED40;
+	Wed, 19 Feb 2025 09:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956199; cv=none; b=L09RUy3OARVRiEVuQ6NBX2OZBKnPuaDJP7UVlPg7dmq9f9JZr59linGAA267OyqQ51qf5e6YNn+Tj0QAycJVYS+ze1uWe9kQ8vUJDbVUeBTTgFPl+IOUc5HjCH286AlCdadZQYiOjBn/WfJScvMELLyCzI79TAdUX8iYRBae3kQ=
+	t=1739956201; cv=none; b=dX/IA/dLuoRlIw1RsZLT7+MjvWD6jvhAoxIVFa0FB98VNHulQpC4w72iPOPmL8KjRrKAXnGkEJxqj7VznvuWZyJv2ae01nBgRKiw2OBS5bge9ufyv/18bs2O/OdKXu463S0PevBPPETSqKieDkKjyzBvohs1EuSHOMJEBK2NduA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956199; c=relaxed/simple;
-	bh=VO3oee+X4aLSuvgZ2TF/90Gm5j4kky+ZN+bhdBNNTAI=;
+	s=arc-20240116; t=1739956201; c=relaxed/simple;
+	bh=nabQoq2iPycl5DYgcwi6qpTe8a2wl5URKe28EGw787Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qy9kfQho2MEIRyZwDgXcXDN8gJUIzDWB3WWCu0iBB3JpCpJIGvpALaSDb2LP/S9r7EjZeSk9WAcYmM/zRFrH8jKwMuKX2Do9iLCT8HWi9wg1jcimZBDe7LHi1Kd6pnx/AQwbKIL/q+e9+3Tsyt59N2O2f4HETRNXBsl0BcTdx2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wB8bqQcj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ei70iSq/e+5sR0JwMPJIqkd7Zs4TFi3oKEuw79dsYxHwzrm7O+lEJQ//S4GOhFl2G/MD0vF/MKfGpTffJy4jbgHP2nkGtNOnq9HtZSleli0JEl/b3ZZNJ/V+om/Uo91/TuNOyqYJlO6e+UlRuYvDz2oZAusy5S5GNXRpP9WntBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvfiqtng; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wB8bqQcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165F7C4CEE8;
-	Wed, 19 Feb 2025 09:09:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvfiqtng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C13C4CED1;
+	Wed, 19 Feb 2025 09:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956198;
-	bh=VO3oee+X4aLSuvgZ2TF/90Gm5j4kky+ZN+bhdBNNTAI=;
+	s=korg; t=1739956201;
+	bh=nabQoq2iPycl5DYgcwi6qpTe8a2wl5URKe28EGw787Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wB8bqQcjRRMHYR1KEVrQSxqMxk6oP9Y9hMCjg6GAFHDKUqc2xG1GPGIQCpFfAgf+c
-	 3E8K94IjUdXktk1KPIT3d39B3Pnmv23HQGRL+Fa2zQ7LtnthNhbXs5YksjKV/maEsN
-	 IZLeR8ca553aDM3Oi2Tx+6cJMstKpYvLwt/jZadc=
+	b=qvfiqtngBQcAU0Asuy8eBSbGuHVUhV505oaVy/cb7iGXkDluEHKNroq9Ywvu7h2+q
+	 x5vpZ3YY+Mr7ENMsdm16LqBTDkjGPznYpQdiMvneeD2P9MFuWxlQfvWSH+JS80JF00
+	 I3189Gex9pxbMKJRElbU2c9RVfTCNq6OhRuO61Hk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Roger Quadros <rogerq@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/578] netfilter: nft_flow_offload: update tcp state flags under lock
-Date: Wed, 19 Feb 2025 09:21:42 +0100
-Message-ID: <20250219082656.813126812@linuxfoundation.org>
+Subject: [PATCH 6.1 099/578] net: ethernet: ti: am65-cpsw: fix freeing IRQ in am65_cpsw_nuss_remove_tx_chns()
+Date: Wed, 19 Feb 2025 09:21:43 +0100
+Message-ID: <20250219082656.851096155@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,61 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Roger Quadros <rogerq@kernel.org>
 
-[ Upstream commit 7a4b61406395291ffb7220a10e8951a9a8684819 ]
+[ Upstream commit 4395a44acb15850e492dd1de9ec4b6479d96bc80 ]
 
-The conntrack entry is already public, there is a small chance that another
-CPU is handling a packet in reply direction and racing with the tcp state
-update.
+When getting the IRQ we use k3_udma_glue_tx_get_irq() which returns
+negative error value on error. So not NULL check is not sufficient
+to deteremine if IRQ is valid. Check that IRQ is greater then zero
+to ensure it is valid.
 
-Move this under ct spinlock.
+There is no issue at probe time but at runtime user can invoke
+.set_channels which results in the following call chain.
+am65_cpsw_set_channels()
+ am65_cpsw_nuss_update_tx_rx_chns()
+  am65_cpsw_nuss_remove_tx_chns()
+  am65_cpsw_nuss_init_tx_chns()
 
-This is done once, when ct is about to be offloaded, so this should
-not result in a noticeable performance hit.
+At this point if am65_cpsw_nuss_init_tx_chns() fails due to
+k3_udma_glue_tx_get_irq() then tx_chn->irq will be set to a
+negative value.
 
-Fixes: 8437a6209f76 ("netfilter: nft_flow_offload: set liberal tracking mode for tcp")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Then, at subsequent .set_channels with higher channel count we
+will attempt to free an invalid IRQ in am65_cpsw_nuss_remove_tx_chns()
+leading to a kernel warning.
+
+The issue is present in the original commit that introduced this driver,
+although there, am65_cpsw_nuss_update_tx_rx_chns() existed as
+am65_cpsw_nuss_update_tx_chns().
+
+Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_flow_offload.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
-index 7a8707632a815..9d335aa58907d 100644
---- a/net/netfilter/nft_flow_offload.c
-+++ b/net/netfilter/nft_flow_offload.c
-@@ -288,6 +288,15 @@ static bool nft_flow_offload_skip(struct sk_buff *skb, int family)
- 	return false;
- }
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 33df06a2de13a..32828d4ac64ce 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -1541,7 +1541,7 @@ void am65_cpsw_nuss_remove_tx_chns(struct am65_cpsw_common *common)
+ 	for (i = 0; i < common->tx_ch_num; i++) {
+ 		struct am65_cpsw_tx_chn *tx_chn = &common->tx_chns[i];
  
-+static void flow_offload_ct_tcp(struct nf_conn *ct)
-+{
-+	/* conntrack will not see all packets, disable tcp window validation. */
-+	spin_lock_bh(&ct->lock);
-+	ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
-+	ct->proto.tcp.seen[1].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
-+	spin_unlock_bh(&ct->lock);
-+}
-+
- static void nft_flow_offload_eval(const struct nft_expr *expr,
- 				  struct nft_regs *regs,
- 				  const struct nft_pktinfo *pkt)
-@@ -355,11 +364,8 @@ static void nft_flow_offload_eval(const struct nft_expr *expr,
- 		goto err_flow_alloc;
+-		if (tx_chn->irq)
++		if (tx_chn->irq > 0)
+ 			devm_free_irq(dev, tx_chn->irq, tx_chn);
  
- 	flow_offload_route_init(flow, &route);
--
--	if (tcph) {
--		ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
--		ct->proto.tcp.seen[1].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
--	}
-+	if (tcph)
-+		flow_offload_ct_tcp(ct);
- 
- 	ret = flow_offload_add(flowtable, flow);
- 	if (ret < 0)
+ 		netif_napi_del(&tx_chn->napi_tx);
 -- 
 2.39.5
 
