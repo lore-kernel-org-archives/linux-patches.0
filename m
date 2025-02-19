@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6C6176ADE;
-	Wed, 19 Feb 2025 09:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CB41C175A;
+	Wed, 19 Feb 2025 09:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957604; cv=none; b=d0tTMKCOUAw0yoeCPXBHuCoMj1N+t9NcUJ5gNI7iQHYsKkHaZzzspVDue0Cc9CoT8irc1XuJ+WDk80rLfSgq+xj4oWj5XEW80V3lPTm/XyEaIKeYaIZmqJQ0gv4m+QfttAT/MDcbIPBJkB3QbqkVlpOWMoPs++TZExeIbk6ls0E=
+	t=1739957606; cv=none; b=Gz19yVu/UAtJa8B8kHE9cmEWwN1rXCKFcN9RtnUiisojoujHobCjQetypvrVPlaEWUtsczVf5fHJD5lv2GhSJVHa3rKEL07Z6fp5k5OUNS7R+165GUg9LpCzVpp9z4LWsIsBojsVYc8PX7YsAZW82chCc1a/qugaG/uZ6/RXWbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957604; c=relaxed/simple;
-	bh=yu9g86Ji4ybP9JTNGDf6OpdWlsRJCSPLa+si5kF1hkE=;
+	s=arc-20240116; t=1739957606; c=relaxed/simple;
+	bh=CByLJuqZjbuhd8Uc4vXQwrvw7sRMgZv0xYhvUDqqPKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F5PFpZWBWEFKNVAE0jAf2kwFdqnmshruauX6GDHn5jUrZtpR22kSTiGSwaZyfoVDf75frPq4MhdEeFY/rfeeURQaowLYbImSsnxx5Dvib1UC/VHcaGfcvDvbWWiGOhZqq0gY6/2cpgttMT/526AtedjRmn8ss6VXfzzmrnLF5so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGV7Rtl0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GVJssqH2jbtctGAEmHMayLb+etV1PKUem+nk9V0lNcnVPecWg+YADhkjx9nEI+b+4fmvvmNlq/phzFBf6OcKXMVlePG6EGLe/FobKw/oF/t8UBHJTOVZeNBo0h4KjX2y1GCQymlKxu6BUSMQM5ItoeEL3TAFMMjO2d+I8i63MX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhLyrOsU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGV7Rtl0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAA9C4CED1;
-	Wed, 19 Feb 2025 09:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhLyrOsU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B55C4CED1;
+	Wed, 19 Feb 2025 09:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957603;
-	bh=yu9g86Ji4ybP9JTNGDf6OpdWlsRJCSPLa+si5kF1hkE=;
+	s=korg; t=1739957606;
+	bh=CByLJuqZjbuhd8Uc4vXQwrvw7sRMgZv0xYhvUDqqPKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yGV7Rtl0qRv73z4kLKRnPyaYqzqJ6KBMfgBgQixT7Q/UcCdhiCDtaJgOvbwKR1l6T
-	 pO05YZu/x65uC+MSJA6b+nzzJmDTEOLWtlFd1b4TlqgMvsPyC86t+UIcct7c9Blarn
-	 O5TPMM35YF7B7JrJRgosqzfIbhDs88StNeZ/46xA=
+	b=vhLyrOsUROM0UZFnIjWO0xNInHZYtky0R68+SSaekTTvTfYMYjY5rrsZUzfgaWj1V
+	 m1GfWG63Dcymy6POQVJK1tDnMv1f+/D9bd9/3utyEZzpA5U/kJYxyYhERr5n0XdQM9
+	 Xo6fRqkZegf+2liy0spu8KkvDTXExx56AxP6/FW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	Bin Lan <lanbincn@qq.com>
-Subject: [PATCH 6.1 561/578] iommu: Return right value in iommu_sva_bind_device()
-Date: Wed, 19 Feb 2025 09:29:25 +0100
-Message-ID: <20250219082715.027174877@linuxfoundation.org>
+	Sumit Gupta <sumitg@nvidia.com>,
+	Ivy Huang <yijuh@nvidia.com>,
+	Brad Griffis <bgriffis@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 6.1 562/578] arm64: tegra: Fix typo in Tegra234 dce-fabric compatible
+Date: Wed, 19 Feb 2025 09:29:26 +0100
+Message-ID: <20250219082715.070179717@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -54,45 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-commit 89e8a2366e3bce584b6c01549d5019c5cda1205e upstream.
+commit 604120fd9e9df50ee0e803d3c6e77a1f45d2c58e upstream.
 
-iommu_sva_bind_device() should return either a sva bond handle or an
-ERR_PTR value in error cases. Existing drivers (idxd and uacce) only
-check the return value with IS_ERR(). This could potentially lead to
-a kernel NULL pointer dereference issue if the function returns NULL
-instead of an error pointer.
+The compatible string for the Tegra DCE fabric is currently defined as
+'nvidia,tegra234-sce-fabric' but this is incorrect because this is the
+compatible string for SCE fabric. Update the compatible for the DCE
+fabric to correct the compatible string.
 
-In reality, this doesn't cause any problems because iommu_sva_bind_device()
-only returns NULL when the kernel is not configured with CONFIG_IOMMU_SVA.
-In this case, iommu_dev_enable_feature(dev, IOMMU_DEV_FEAT_SVA) will
-return an error, and the device drivers won't call iommu_sva_bind_device()
-at all.
+This compatible needs to be correct in order for the interconnect
+to catch things such as improper data accesses.
 
-Fixes: 26b25a2b98e4 ("iommu: Bind process address spaces to devices")
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20240528042528.71396-1-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Signed-off-by: Bin Lan <lanbincn@qq.com>
+Cc: stable@vger.kernel.org
+Fixes: 302e154000ec ("arm64: tegra: Add node for CBB 2.0 on Tegra234")
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Ivy Huang <yijuh@nvidia.com>
+Reviewed-by: Brad Griffis <bgriffis@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20241218000737.1789569-2-yijuh@nvidia.com
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Brad Griffis <bgriffis@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/iommu.h |    2 +-
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -999,7 +999,7 @@ iommu_dev_disable_feature(struct device
- static inline struct iommu_sva *
- iommu_sva_bind_device(struct device *dev, struct mm_struct *mm, void *drvdata)
- {
--	return NULL;
-+	return ERR_PTR(-ENODEV);
- }
+--- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+@@ -1558,7 +1558,7 @@
+ 		};
  
- static inline void iommu_sva_unbind_device(struct iommu_sva *handle)
+ 		dce-fabric@de00000 {
+-			compatible = "nvidia,tegra234-sce-fabric";
++			compatible = "nvidia,tegra234-dce-fabric";
+ 			reg = <0xde00000 0x40000>;
+ 			interrupts = <GIC_SPI 381 IRQ_TYPE_LEVEL_HIGH>;
+ 			status = "okay";
 
 
