@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11D71DF24D;
-	Wed, 19 Feb 2025 09:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36EA17A2FE;
+	Wed, 19 Feb 2025 09:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956792; cv=none; b=UfkcUa57rh0rlwU2Q4v3BEr11lSUrC0PSrTNT69yY73O5/CISue4Q9OZ9/jnQ2gk5AYhy7k1wz8OMcl6tGf4KkvK8+/yDu/ZLpdKuGPas3AtnnJgH33NhgcIJsTjfL269K2PjG5bpIToYyKBkdWyLir+buWXEcQkr9yUprn+Vbo=
+	t=1739956794; cv=none; b=NISohmW3fBFPvcp7xbcetnPGcXlMI8HD5sVVbddtbfI6zqDbLel/vL8GqbWgp8jmtpatF5OtsPHOeWLSocFvzPT0c/CErqJN1yFF4Fvo7RL5nUA8szJzQeMMCKVG2MZKuIRcdLIZoAhi0QjEEYsKs0JGs9u1AG9zVpTGVjSyEHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956792; c=relaxed/simple;
-	bh=X0eSu9vqS6/j+OGuhEtHCVKF/6LEeUtlFespJceNSjk=;
+	s=arc-20240116; t=1739956794; c=relaxed/simple;
+	bh=tQwdqWgz36DscYeytwD9GxIpyvcaOcy/Zh/7EBYXhY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OrX+G32OL4Hyk8GPLfsvqUTBXyeq8FdKOeM6uxYgbgL7ShurrDVR7S+Oiea+8wVmtkkoMB33hjbu+tmiEBK0Ou1h4rSOsATw98Bul46X2PCofwelyvWNnkwjc5QzemUMziiRiZ24w1fDkhqGLM0XOf1gNz+YUl6VLdWf2IlT7eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCVGcBo0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j+725y+Mlyr3+4oCiuXtXg6K7Z+toFp58Wj+vvB/87DAu3hxo0l9sy5fIWWPzJXSTkGU3arZCj9HSn0u7wP6rMBYXFTri1NrITBfLCHDnMg1oO+p4bLjJ1y/VqdnlMH1DNjF9LZOiVghdWWQLd2gl7EFDx2G8HpDy9/RqPDWdxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zu4zFVhi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCVGcBo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70944C4CED1;
-	Wed, 19 Feb 2025 09:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zu4zFVhi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 400FEC4CED1;
+	Wed, 19 Feb 2025 09:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956791;
-	bh=X0eSu9vqS6/j+OGuhEtHCVKF/6LEeUtlFespJceNSjk=;
+	s=korg; t=1739956794;
+	bh=tQwdqWgz36DscYeytwD9GxIpyvcaOcy/Zh/7EBYXhY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCVGcBo0BVze2OS6kOgbjxhcYzXVr/DFhZyJRKvIE5jPJr+DaYHqF2a1DeZmM3Wb6
-	 J9dB1Jd6+TDNTQNpYkBlFijZp89ndV2+IvVdpxChPagNFVudC/geMp1X86CgdfWhWz
-	 H/++EyNA5nOWPSCcDQBLSSYGpd/Culfry+Lcx2zo=
+	b=Zu4zFVhiNavqhshwNqDrjpVBoL0yo6TXJdpCAEWD5/F1ZHe8/lhSbK67kb2Dh1WOL
+	 aFo19xPn4mITWk4jhpJEA95CYlRcd/Wn2oqhrJYA51G46IlSJa7Ie2Oeaq1ozAc/2k
+	 k/RtrLZK7psuI4VVrX+ngm3LTA/b24n2kBW+jwTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Ye <liuye@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Ingo Molnar <mingo@kernel.org>,
+	Baoquan He <bhe@redhat.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Eric Biederman <ebiederm@xmission.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 301/578] selftests/net/ipsec: Fix Null pointer dereference in rtattr_pack()
-Date: Wed, 19 Feb 2025 09:25:05 +0100
-Message-ID: <20250219082704.858694269@linuxfoundation.org>
+Subject: [PATCH 6.1 302/578] x86/kexec: Allocate PGD for x86_64 transition page tables separately
+Date: Wed, 19 Feb 2025 09:25:06 +0100
+Message-ID: <20250219082704.898769288@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,47 +57,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Ye <liuye@kylinos.cn>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-[ Upstream commit 3a0b7fa095212b51ed63892540c4f249991a2d74 ]
+[ Upstream commit 4b5bc2ec9a239bce261ffeafdd63571134102323 ]
 
-Address Null pointer dereference / undefined behavior in rtattr_pack
-(note that size is 0 in the bad case).
+Now that the following fix:
 
-Flagged by cppcheck as:
-    tools/testing/selftests/net/ipsec.c:230:25: warning: Possible null pointer
-    dereference: payload [nullPointer]
-    memcpy(RTA_DATA(attr), payload, size);
-                           ^
-    tools/testing/selftests/net/ipsec.c:1618:54: note: Calling function 'rtattr_pack',
-    4th argument 'NULL' value is 0
-    if (rtattr_pack(&req.nh, sizeof(req), XFRMA_IF_ID, NULL, 0)) {
-                                                       ^
-    tools/testing/selftests/net/ipsec.c:230:25: note: Null pointer dereference
-    memcpy(RTA_DATA(attr), payload, size);
-                           ^
-Signed-off-by: Liu Ye <liuye@kylinos.cn>
+  d0ceea662d45 ("x86/mm: Add _PAGE_NOPTISHADOW bit to avoid updating userspace page tables")
 
-Link: https://patch.msgid.link/20250116013037.29470-1-liuye@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+stops kernel_ident_mapping_init() from scribbling over the end of a
+4KiB PGD by assuming the following 4KiB will be a userspace PGD,
+there's no good reason for the kexec PGD to be part of a single
+8KiB allocation with the control_code_page.
+
+( It's not clear that that was the reason for x86_64 kexec doing it that
+  way in the first place either; there were no comments to that effect and
+  it seems to have been the case even before PTI came along. It looks like
+  it was just a happy accident which prevented memory corruption on kexec. )
+
+Either way, it definitely isn't needed now. Just allocate the PGD
+separately on x86_64, like i386 already does.
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Eric Biederman <ebiederm@xmission.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Link: https://lore.kernel.org/r/20241205153343.3275139-6-dwmw2@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/ipsec.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/kexec.h       | 18 +++++++++---
+ arch/x86/kernel/machine_kexec_64.c | 45 ++++++++++++++++--------------
+ 2 files changed, 38 insertions(+), 25 deletions(-)
 
-diff --git a/tools/testing/selftests/net/ipsec.c b/tools/testing/selftests/net/ipsec.c
-index be4a30a0d02ae..9b44a091802cb 100644
---- a/tools/testing/selftests/net/ipsec.c
-+++ b/tools/testing/selftests/net/ipsec.c
-@@ -227,7 +227,8 @@ static int rtattr_pack(struct nlmsghdr *nh, size_t req_sz,
+diff --git a/arch/x86/include/asm/kexec.h b/arch/x86/include/asm/kexec.h
+index 256eee99afc8f..e2e1ec99c9998 100644
+--- a/arch/x86/include/asm/kexec.h
++++ b/arch/x86/include/asm/kexec.h
+@@ -16,6 +16,7 @@
+ # define PAGES_NR		4
+ #endif
  
- 	attr->rta_len = RTA_LENGTH(size);
- 	attr->rta_type = rta_type;
--	memcpy(RTA_DATA(attr), payload, size);
-+	if (payload)
-+		memcpy(RTA_DATA(attr), payload, size);
++# define KEXEC_CONTROL_PAGE_SIZE	4096
+ # define KEXEC_CONTROL_CODE_MAX_SIZE	2048
  
- 	return 0;
+ #ifndef __ASSEMBLY__
+@@ -44,7 +45,6 @@ struct kimage;
+ /* Maximum address we can use for the control code buffer */
+ # define KEXEC_CONTROL_MEMORY_LIMIT TASK_SIZE
+ 
+-# define KEXEC_CONTROL_PAGE_SIZE	4096
+ 
+ /* The native architecture */
+ # define KEXEC_ARCH KEXEC_ARCH_386
+@@ -59,9 +59,6 @@ struct kimage;
+ /* Maximum address we can use for the control pages */
+ # define KEXEC_CONTROL_MEMORY_LIMIT     (MAXMEM-1)
+ 
+-/* Allocate one page for the pdp and the second for the code */
+-# define KEXEC_CONTROL_PAGE_SIZE  (4096UL + 4096UL)
+-
+ /* The native architecture */
+ # define KEXEC_ARCH KEXEC_ARCH_X86_64
+ #endif
+@@ -146,6 +143,19 @@ struct kimage_arch {
+ };
+ #else
+ struct kimage_arch {
++	/*
++	 * This is a kimage control page, as it must not overlap with either
++	 * source or destination address ranges.
++	 */
++	pgd_t *pgd;
++	/*
++	 * The virtual mapping of the control code page itself is used only
++	 * during the transition, while the current kernel's pages are all
++	 * in place. Thus the intermediate page table pages used to map it
++	 * are not control pages, but instead just normal pages obtained
++	 * with get_zeroed_page(). And have to be tracked (below) so that
++	 * they can be freed.
++	 */
+ 	p4d_t *p4d;
+ 	pud_t *pud;
+ 	pmd_t *pmd;
+diff --git a/arch/x86/kernel/machine_kexec_64.c b/arch/x86/kernel/machine_kexec_64.c
+index 24b6eaacc81eb..5d61a342871b5 100644
+--- a/arch/x86/kernel/machine_kexec_64.c
++++ b/arch/x86/kernel/machine_kexec_64.c
+@@ -149,7 +149,8 @@ static void free_transition_pgtable(struct kimage *image)
+ 	image->arch.pte = NULL;
+ }
+ 
+-static int init_transition_pgtable(struct kimage *image, pgd_t *pgd)
++static int init_transition_pgtable(struct kimage *image, pgd_t *pgd,
++				   unsigned long control_page)
+ {
+ 	pgprot_t prot = PAGE_KERNEL_EXEC_NOENC;
+ 	unsigned long vaddr, paddr;
+@@ -160,7 +161,7 @@ static int init_transition_pgtable(struct kimage *image, pgd_t *pgd)
+ 	pte_t *pte;
+ 
+ 	vaddr = (unsigned long)relocate_kernel;
+-	paddr = __pa(page_address(image->control_code_page)+PAGE_SIZE);
++	paddr = control_page;
+ 	pgd += pgd_index(vaddr);
+ 	if (!pgd_present(*pgd)) {
+ 		p4d = (p4d_t *)get_zeroed_page(GFP_KERNEL);
+@@ -219,7 +220,7 @@ static void *alloc_pgt_page(void *data)
+ 	return p;
+ }
+ 
+-static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
++static int init_pgtable(struct kimage *image, unsigned long control_page)
+ {
+ 	struct x86_mapping_info info = {
+ 		.alloc_pgt_page	= alloc_pgt_page,
+@@ -228,12 +229,12 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
+ 		.kernpg_flag	= _KERNPG_TABLE_NOENC,
+ 	};
+ 	unsigned long mstart, mend;
+-	pgd_t *level4p;
+ 	int result;
+ 	int i;
+ 
+-	level4p = (pgd_t *)__va(start_pgtable);
+-	clear_page(level4p);
++	image->arch.pgd = alloc_pgt_page(image);
++	if (!image->arch.pgd)
++		return -ENOMEM;
+ 
+ 	if (cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT)) {
+ 		info.page_flag   |= _PAGE_ENC;
+@@ -247,8 +248,8 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
+ 		mstart = pfn_mapped[i].start << PAGE_SHIFT;
+ 		mend   = pfn_mapped[i].end << PAGE_SHIFT;
+ 
+-		result = kernel_ident_mapping_init(&info,
+-						 level4p, mstart, mend);
++		result = kernel_ident_mapping_init(&info, image->arch.pgd,
++						   mstart, mend);
+ 		if (result)
+ 			return result;
+ 	}
+@@ -263,8 +264,8 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
+ 		mstart = image->segment[i].mem;
+ 		mend   = mstart + image->segment[i].memsz;
+ 
+-		result = kernel_ident_mapping_init(&info,
+-						 level4p, mstart, mend);
++		result = kernel_ident_mapping_init(&info, image->arch.pgd,
++						   mstart, mend);
+ 
+ 		if (result)
+ 			return result;
+@@ -274,15 +275,19 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
+ 	 * Prepare EFI systab and ACPI tables for kexec kernel since they are
+ 	 * not covered by pfn_mapped.
+ 	 */
+-	result = map_efi_systab(&info, level4p);
++	result = map_efi_systab(&info, image->arch.pgd);
+ 	if (result)
+ 		return result;
+ 
+-	result = map_acpi_tables(&info, level4p);
++	result = map_acpi_tables(&info, image->arch.pgd);
+ 	if (result)
+ 		return result;
+ 
+-	return init_transition_pgtable(image, level4p);
++	/*
++	 * This must be last because the intermediate page table pages it
++	 * allocates will not be control pages and may overlap the image.
++	 */
++	return init_transition_pgtable(image, image->arch.pgd, control_page);
+ }
+ 
+ static void load_segments(void)
+@@ -299,14 +304,14 @@ static void load_segments(void)
+ 
+ int machine_kexec_prepare(struct kimage *image)
+ {
+-	unsigned long start_pgtable;
++	unsigned long control_page;
+ 	int result;
+ 
+ 	/* Calculate the offsets */
+-	start_pgtable = page_to_pfn(image->control_code_page) << PAGE_SHIFT;
++	control_page = page_to_pfn(image->control_code_page) << PAGE_SHIFT;
+ 
+ 	/* Setup the identity mapped 64bit page table */
+-	result = init_pgtable(image, start_pgtable);
++	result = init_pgtable(image, control_page);
+ 	if (result)
+ 		return result;
+ 
+@@ -353,13 +358,12 @@ void machine_kexec(struct kimage *image)
+ #endif
+ 	}
+ 
+-	control_page = page_address(image->control_code_page) + PAGE_SIZE;
++	control_page = page_address(image->control_code_page);
+ 	__memcpy(control_page, relocate_kernel, KEXEC_CONTROL_CODE_MAX_SIZE);
+ 
+ 	page_list[PA_CONTROL_PAGE] = virt_to_phys(control_page);
+ 	page_list[VA_CONTROL_PAGE] = (unsigned long)control_page;
+-	page_list[PA_TABLE_PAGE] =
+-	  (unsigned long)__pa(page_address(image->control_code_page));
++	page_list[PA_TABLE_PAGE] = (unsigned long)__pa(image->arch.pgd);
+ 
+ 	if (image->type == KEXEC_TYPE_DEFAULT)
+ 		page_list[PA_SWAP_PAGE] = (page_to_pfn(image->swap_page)
+@@ -578,8 +582,7 @@ static void kexec_mark_crashkres(bool protect)
+ 
+ 	/* Don't touch the control code page used in crash_kexec().*/
+ 	control = PFN_PHYS(page_to_pfn(kexec_crash_image->control_code_page));
+-	/* Control code page is located in the 2nd page. */
+-	kexec_mark_range(crashk_res.start, control + PAGE_SIZE - 1, protect);
++	kexec_mark_range(crashk_res.start, control - 1, protect);
+ 	control += KEXEC_CONTROL_PAGE_SIZE;
+ 	kexec_mark_range(control, crashk_res.end, protect);
  }
 -- 
 2.39.5
