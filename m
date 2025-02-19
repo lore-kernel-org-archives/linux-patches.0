@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52D41D90D9;
-	Wed, 19 Feb 2025 09:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6341C175A;
+	Wed, 19 Feb 2025 09:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956348; cv=none; b=O5fY3Dga6LMMF0vehpR2AXop3uDMsis9BX2M+S4DQfA1Y/MsAel/4eqFGwBoMCm6BwOdeHkg+wpn52QRapMio1BiAPoiHB1HogD5sM9MS4edWoNHY+zp1fvKHvoGgDEa9kJlXtilgBURVAF3VeZcqZaLlQ0cMIiXgvRcrQi6j20=
+	t=1739956351; cv=none; b=fecTeyyGpGPnCRNq9MPtVorBOAHFncvt5yhFq+jircAhshC8Vl0WuA7PDBXqvCSEcPXWOwILI0Psd+hJ/9vXwD9urX5cLQUp+JTauqQjP+QC1DTSTguUsmg0lOjoDiS/tuJ/Ngsfsy9RzpOvQ1GYNUBMfA1SC6h3StlRjo+DEjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956348; c=relaxed/simple;
-	bh=JGU3mla3R7m/MZ8nfNRDLWc6tNIdZYTaTieiyICiF8M=;
+	s=arc-20240116; t=1739956351; c=relaxed/simple;
+	bh=tohHQhQwvnBNMYoh2zSBVA26NndWbYz6S37ue6WlFEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSKFgnDSS5EKkxsGLUgvDFOJrFbAohat7Xbx8+F0XItkR9lMbveF/tGLYxeBzUZAJrUvGKqONLG2UbQx1dELjNFlvBEVjl0yJO/pgelMAXYJy8czT3Ny6+UKSohlmGUnSaiT78rcruncb+nDRwphBZbjF79BWt3DVaAYIepZyV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJ8sHcZP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A7TAqQe6/XhAyju8wGaBoocbQ8gL9EQG+ealXn+nrZZIRcs47t9RiDmNMbl7Aq/Hi6ovNMxd0U0hqpRVp1SIw1zNAs2hrfiZvDWFJyyO5QUbPh0EppsFgly9XNzVWwZ7Ku/wWm7ZHdzEX+s6GxZpihw4WomCw1lYLCFauRYuKRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbymJQAe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJ8sHcZP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F576C4CED1;
-	Wed, 19 Feb 2025 09:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbymJQAe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C54C4CEE7;
+	Wed, 19 Feb 2025 09:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956348;
-	bh=JGU3mla3R7m/MZ8nfNRDLWc6tNIdZYTaTieiyICiF8M=;
+	s=korg; t=1739956351;
+	bh=tohHQhQwvnBNMYoh2zSBVA26NndWbYz6S37ue6WlFEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJ8sHcZPrPXBWG9oPQxuyHxT5Mgu8FPNcFPgvCSRHCNz5rRGPPOIq7ShzTGSzH0xk
-	 hB7eHnrqfpllVDybdTmSVjXfkZUtcja9eT4DmI+t5oppOsAQCP0EpgtNhaa9oKVHUA
-	 dGElPDh3kqftjwTMoxadtElKfgZJBDuQEhPki30g=
+	b=QbymJQAevvkThrtvT6KHqXtA3ZIz8HO21vZezRI9vGYE2gtmAqfDEUaBQlQFsfFKb
+	 sj3J58ePbJsG9zj9a6FJvNhKupw/Qw4Xc6xvRswr5/C80xZvCkVm5SoBeuaHqNm9Zl
+	 NDkuC5BkHPRi9rjIS+2+wcOomcBLRJys2X3fUksk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Song Liu <song@kernel.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/578] perf header: Fix one memory leakage in process_bpf_prog_info()
-Date: Wed, 19 Feb 2025 09:21:51 +0100
-Message-ID: <20250219082657.185181810@linuxfoundation.org>
+Subject: [PATCH 6.1 142/578] arm64: dts: mediatek: mt8173-elm: Drop regulator-compatible property
+Date: Wed, 19 Feb 2025 09:22:26 +0100
+Message-ID: <20250219082658.570343411@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -63,97 +51,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit a7da6c7030e1aec32f0a41c7b4fa70ec96042019 ]
+[ Upstream commit 4b907b3ea5fba240808136cc5599d14b52230b39 ]
 
-Function __perf_env__insert_bpf_prog_info() will return without inserting
-bpf prog info node into perf env again due to a duplicate bpf prog info
-node insertion, causing the temporary info_linear and info_node memory to
-leak. Modify the return type of this function to bool and add a check to
-ensure the memory is freed if the function returns false.
+The "regulator-compatible" property has been deprecated since 2012 in
+commit 13511def87b9 ("regulator: deprecate regulator-compatible DT
+property"), which is so old it's not even mentioned in the converted
+regulator bindings YAML file. It is also not listed in the MT6397
+regulator bindings. Having them present produces a whole bunch of
+validation errors:
 
-Fixes: 606f972b1361f477 ("perf bpf: Save bpf_prog_info information as headers to perf.data")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Song Liu <song@kernel.org>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20241205084500.823660-3-quic_zhonhan@quicinc.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+    Unevaluated properties are not allowed ('regulator-compatible' was unexpected)
+
+Drop the "regulator-compatible" property from the board dts. The
+property values are the same as the node name, so everything should
+continue to work.
+
+Fixes: 689b937bedde ("arm64: dts: mediatek: add mt8173 elm and hana board")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20241211052427.4178367-4-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/env.c    | 5 +++--
- tools/perf/util/env.h    | 2 +-
- tools/perf/util/header.c | 5 ++++-
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi | 23 --------------------
+ 1 file changed, 23 deletions(-)
 
-diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
-index 5d878bae7d9a5..a0393f9c5fda7 100644
---- a/tools/perf/util/env.c
-+++ b/tools/perf/util/env.c
-@@ -27,7 +27,7 @@ void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 	up_write(&env->bpf_progs.lock);
- }
+diff --git a/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi b/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
+index e21feb85d822b..6e82aea16c729 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
+@@ -938,7 +938,6 @@
+ 			compatible = "mediatek,mt6397-regulator";
  
--void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
-+bool __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
- {
- 	__u32 prog_id = info_node->info_linear->info.id;
- 	struct bpf_prog_info_node *node;
-@@ -45,13 +45,14 @@ void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info
- 			p = &(*p)->rb_right;
- 		} else {
- 			pr_debug("duplicated bpf prog info %u\n", prog_id);
--			return;
-+			return false;
- 		}
- 	}
+ 			mt6397_vpca15_reg: buck_vpca15 {
+-				regulator-compatible = "buck_vpca15";
+ 				regulator-name = "vpca15";
+ 				regulator-min-microvolt = < 700000>;
+ 				regulator-max-microvolt = <1350000>;
+@@ -948,7 +947,6 @@
+ 			};
  
- 	rb_link_node(&info_node->rb_node, parent, p);
- 	rb_insert_color(&info_node->rb_node, &env->bpf_progs.infos);
- 	env->bpf_progs.infos_cnt++;
-+	return true;
- }
+ 			mt6397_vpca7_reg: buck_vpca7 {
+-				regulator-compatible = "buck_vpca7";
+ 				regulator-name = "vpca7";
+ 				regulator-min-microvolt = < 700000>;
+ 				regulator-max-microvolt = <1350000>;
+@@ -958,7 +956,6 @@
+ 			};
  
- struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
-diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
-index 359eff51cb85b..7d1360ff79fd8 100644
---- a/tools/perf/util/env.h
-+++ b/tools/perf/util/env.h
-@@ -164,7 +164,7 @@ const char *perf_env__raw_arch(struct perf_env *env);
- int perf_env__nr_cpus_avail(struct perf_env *env);
+ 			mt6397_vsramca15_reg: buck_vsramca15 {
+-				regulator-compatible = "buck_vsramca15";
+ 				regulator-name = "vsramca15";
+ 				regulator-min-microvolt = < 700000>;
+ 				regulator-max-microvolt = <1350000>;
+@@ -967,7 +964,6 @@
+ 			};
  
- void perf_env__init(struct perf_env *env);
--void __perf_env__insert_bpf_prog_info(struct perf_env *env,
-+bool __perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				      struct bpf_prog_info_node *info_node);
- void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				    struct bpf_prog_info_node *info_node);
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index c4c8a04f3acad..f0885d9781cf2 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -3136,7 +3136,10 @@ static int process_bpf_prog_info(struct feat_fd *ff, void *data __maybe_unused)
- 		/* after reading from file, translate offset to address */
- 		bpil_offs_to_addr(info_linear);
- 		info_node->info_linear = info_linear;
--		__perf_env__insert_bpf_prog_info(env, info_node);
-+		if (!__perf_env__insert_bpf_prog_info(env, info_node)) {
-+			free(info_linear);
-+			free(info_node);
-+		}
- 	}
+ 			mt6397_vsramca7_reg: buck_vsramca7 {
+-				regulator-compatible = "buck_vsramca7";
+ 				regulator-name = "vsramca7";
+ 				regulator-min-microvolt = < 700000>;
+ 				regulator-max-microvolt = <1350000>;
+@@ -976,7 +972,6 @@
+ 			};
  
- 	up_write(&env->bpf_progs.lock);
+ 			mt6397_vcore_reg: buck_vcore {
+-				regulator-compatible = "buck_vcore";
+ 				regulator-name = "vcore";
+ 				regulator-min-microvolt = < 700000>;
+ 				regulator-max-microvolt = <1350000>;
+@@ -985,7 +980,6 @@
+ 			};
+ 
+ 			mt6397_vgpu_reg: buck_vgpu {
+-				regulator-compatible = "buck_vgpu";
+ 				regulator-name = "vgpu";
+ 				regulator-min-microvolt = < 700000>;
+ 				regulator-max-microvolt = <1350000>;
+@@ -994,7 +988,6 @@
+ 			};
+ 
+ 			mt6397_vdrm_reg: buck_vdrm {
+-				regulator-compatible = "buck_vdrm";
+ 				regulator-name = "vdrm";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <1400000>;
+@@ -1003,7 +996,6 @@
+ 			};
+ 
+ 			mt6397_vio18_reg: buck_vio18 {
+-				regulator-compatible = "buck_vio18";
+ 				regulator-name = "vio18";
+ 				regulator-min-microvolt = <1620000>;
+ 				regulator-max-microvolt = <1980000>;
+@@ -1012,18 +1004,15 @@
+ 			};
+ 
+ 			mt6397_vtcxo_reg: ldo_vtcxo {
+-				regulator-compatible = "ldo_vtcxo";
+ 				regulator-name = "vtcxo";
+ 				regulator-always-on;
+ 			};
+ 
+ 			mt6397_va28_reg: ldo_va28 {
+-				regulator-compatible = "ldo_va28";
+ 				regulator-name = "va28";
+ 			};
+ 
+ 			mt6397_vcama_reg: ldo_vcama {
+-				regulator-compatible = "ldo_vcama";
+ 				regulator-name = "vcama";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <1800000>;
+@@ -1031,18 +1020,15 @@
+ 			};
+ 
+ 			mt6397_vio28_reg: ldo_vio28 {
+-				regulator-compatible = "ldo_vio28";
+ 				regulator-name = "vio28";
+ 				regulator-always-on;
+ 			};
+ 
+ 			mt6397_vusb_reg: ldo_vusb {
+-				regulator-compatible = "ldo_vusb";
+ 				regulator-name = "vusb";
+ 			};
+ 
+ 			mt6397_vmc_reg: ldo_vmc {
+-				regulator-compatible = "ldo_vmc";
+ 				regulator-name = "vmc";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -1050,7 +1036,6 @@
+ 			};
+ 
+ 			mt6397_vmch_reg: ldo_vmch {
+-				regulator-compatible = "ldo_vmch";
+ 				regulator-name = "vmch";
+ 				regulator-min-microvolt = <3000000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -1058,7 +1043,6 @@
+ 			};
+ 
+ 			mt6397_vemc_3v3_reg: ldo_vemc3v3 {
+-				regulator-compatible = "ldo_vemc3v3";
+ 				regulator-name = "vemc_3v3";
+ 				regulator-min-microvolt = <3000000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -1066,7 +1050,6 @@
+ 			};
+ 
+ 			mt6397_vgp1_reg: ldo_vgp1 {
+-				regulator-compatible = "ldo_vgp1";
+ 				regulator-name = "vcamd";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <1800000>;
+@@ -1074,7 +1057,6 @@
+ 			};
+ 
+ 			mt6397_vgp2_reg: ldo_vgp2 {
+-				regulator-compatible = "ldo_vgp2";
+ 				regulator-name = "vcamio";
+ 				regulator-min-microvolt = <3300000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -1082,7 +1064,6 @@
+ 			};
+ 
+ 			mt6397_vgp3_reg: ldo_vgp3 {
+-				regulator-compatible = "ldo_vgp3";
+ 				regulator-name = "vcamaf";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <1800000>;
+@@ -1090,7 +1071,6 @@
+ 			};
+ 
+ 			mt6397_vgp4_reg: ldo_vgp4 {
+-				regulator-compatible = "ldo_vgp4";
+ 				regulator-name = "vgp4";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -1098,7 +1078,6 @@
+ 			};
+ 
+ 			mt6397_vgp5_reg: ldo_vgp5 {
+-				regulator-compatible = "ldo_vgp5";
+ 				regulator-name = "vgp5";
+ 				regulator-min-microvolt = <1200000>;
+ 				regulator-max-microvolt = <3000000>;
+@@ -1106,7 +1085,6 @@
+ 			};
+ 
+ 			mt6397_vgp6_reg: ldo_vgp6 {
+-				regulator-compatible = "ldo_vgp6";
+ 				regulator-name = "vgp6";
+ 				regulator-min-microvolt = <3300000>;
+ 				regulator-max-microvolt = <3300000>;
+@@ -1115,7 +1093,6 @@
+ 			};
+ 
+ 			mt6397_vibr_reg: ldo_vibr {
+-				regulator-compatible = "ldo_vibr";
+ 				regulator-name = "vibr";
+ 				regulator-min-microvolt = <1300000>;
+ 				regulator-max-microvolt = <3300000>;
 -- 
 2.39.5
 
