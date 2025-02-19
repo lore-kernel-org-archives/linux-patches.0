@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BD71DF977;
-	Wed, 19 Feb 2025 08:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521981DFDB3;
+	Wed, 19 Feb 2025 08:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954484; cv=none; b=cwozS7iLPl/8ABHhCa6aRrwm4PUZlvoM0CPWEd2wQ/h9j3U3tEVEVJQ9AQYhLQeM/47XuIeeBW5bsmqSDYyuP1MnE6j1rBqS9rX+3kU0LhTQvUx6M3v6+sYLoDQUeN5SOFJeqzasrUTlwzUmLdJJ72G4rghvTEx5VLMIu2xzpTM=
+	t=1739954487; cv=none; b=WpzaT5SZ6yZo89hm8weMhvR2WWptQSdkaJS1zCSdQ5ZjxpD2Bys+1sdeHGM6YYanC7TrDtpGbkoHiuDTaP8uB/NaGpLkF8d+tPaQmIcmu1tUinp+z8mAcyoUzvS7MuEwWdDTvpusGmLbc3ZVkCg0qgrOyczXZ3B2Tv5PWGpsZYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954484; c=relaxed/simple;
-	bh=04yG23WKX5ggqdmjN07FwJOwLW+ZTz/fDei1lvxOPYI=;
+	s=arc-20240116; t=1739954487; c=relaxed/simple;
+	bh=Scs4kuHz2GWOJDQ3IcE855t/HIrFjg2btZcPng4TS0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UJldwhVQuYimr+2GyUQOp72Vb1r6CFtgork2fJzfgDGZeu8L9o+olOxxn/O4lhFWGcZv41vql5TL5oNTZGjqx4J6jOb2+6q5VY4MKgPVYY2jpn1s9pqTY3BlKprNdjYkWuZnPa7pfbEOomPV+1OCT5Y5eHF0KUwWnhIicBMtxrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QaqsEhg+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VhObaHEeh4TKbb0E2BGF07/6d+b3UxxqcU2qhgbRQy8XWdlL12kic719bGMrDmDawgQ5ffrn0wJ36nh2Zd6FWeVLBpcW3rFNZFCCa3io5toxev6D0wI/7KyqP3Md6NhFFv1W1yZqB5AN7UEuRS++CyfU5mGs228HLfLeDbiPikg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjmmjZ+N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QaqsEhg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95FFC4CED1;
-	Wed, 19 Feb 2025 08:41:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjmmjZ+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2822C4CED1;
+	Wed, 19 Feb 2025 08:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954484;
-	bh=04yG23WKX5ggqdmjN07FwJOwLW+ZTz/fDei1lvxOPYI=;
+	s=korg; t=1739954487;
+	bh=Scs4kuHz2GWOJDQ3IcE855t/HIrFjg2btZcPng4TS0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QaqsEhg+tlexJjAbNEjmgI6EyYMGBQNHSxLUdnwycF6+O6dynu/iYR8cyGK63HMBs
-	 pJ7ZxbNJa4dIYGTQg3btPxrFXclUvO4ucIe6hCzeTyobnMFQqI+KFGLEkgxwrllnc3
-	 T5MrAFsz/d7p2DzAY6maWlr/XFv8gBojfwX0kW74=
+	b=BjmmjZ+NZdj/xIjALced27q+vkzAczfNVl47i5Dr8HhOleaZI/cyhkjGMqIK1pYCt
+	 0E+dXK7Of8XK5sLl+caBdlqGkJ5nqfL6cffF8kcZubkTeA1vkCd2eZm9k1Qs1aVuyE
+	 QszrAnVftYAjJoh2K7LstFlVFglK8kZHrjnCWq+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 217/274] ipv4: use RCU protection in ipv4_default_advmss()
-Date: Wed, 19 Feb 2025 09:27:51 +0100
-Message-ID: <20250219082618.068856335@linuxfoundation.org>
+Subject: [PATCH 6.13 218/274] ipv4: use RCU protection in rt_is_expired()
+Date: Wed, 19 Feb 2025 09:27:52 +0100
+Message-ID: <20250219082618.109285092@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -54,44 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 71b8471c93fa0bcab911fcb65da1eb6c4f5f735f ]
+[ Upstream commit dd205fcc33d92d54eee4d7f21bb073af9bd5ce2b ]
 
-ipv4_default_advmss() must use RCU protection to make
+rt_is_expired() must use RCU protection to make
 sure the net structure it reads does not disappear.
 
-Fixes: 2e9589ff809e ("ipv4: Namespaceify min_adv_mss sysctl knob")
+Fixes: e84f84f27647 ("netns: place rt_genid into struct net")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250205155120.1676781-5-edumazet@google.com
+Link: https://patch.msgid.link/20250205155120.1676781-6-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/ipv4/route.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 3a1467f2d553f..829c8d41aaae2 100644
+index 829c8d41aaae2..152697459e918 100644
 --- a/net/ipv4/route.c
 +++ b/net/ipv4/route.c
-@@ -1307,10 +1307,15 @@ static void set_class_tag(struct rtable *rt, u32 tag)
+@@ -390,7 +390,13 @@ static inline int ip_rt_proc_init(void)
  
- static unsigned int ipv4_default_advmss(const struct dst_entry *dst)
+ static inline bool rt_is_expired(const struct rtable *rth)
  {
--	struct net *net = dev_net(dst->dev);
- 	unsigned int header_size = sizeof(struct tcphdr) + sizeof(struct iphdr);
--	unsigned int advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
--				    net->ipv4.ip_rt_min_advmss);
-+	unsigned int advmss;
-+	struct net *net;
+-	return rth->rt_genid != rt_genid_ipv4(dev_net(rth->dst.dev));
++	bool res;
 +
 +	rcu_read_lock();
-+	net = dev_net_rcu(dst->dev);
-+	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
-+				   net->ipv4.ip_rt_min_advmss);
++	res = rth->rt_genid != rt_genid_ipv4(dev_net_rcu(rth->dst.dev));
 +	rcu_read_unlock();
- 
- 	return min(advmss, IPV4_MAX_PMTU - header_size);
++
++	return res;
  }
+ 
+ void rt_cache_flush(struct net *net)
 -- 
 2.39.5
 
