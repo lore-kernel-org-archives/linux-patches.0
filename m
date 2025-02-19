@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9CD1A841F;
-	Wed, 19 Feb 2025 08:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1206A1A841F;
+	Wed, 19 Feb 2025 08:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955493; cv=none; b=q36q9IbsyGNHpdDurXQAJiZps6XLxJvM0DYprafEFcrELBD64/MUwlnQYSkZHJ9J76H1wil2CWgRd+wGsTeQJVovJ17Y/gJfEqZv9bazhZHPNTcQRXKS2QMhImm/NY7hbm6uOzAdG7kYEvDxbFcAJpFJbJl85w6ceMMDLDQnGjY=
+	t=1739955496; cv=none; b=j5igT/CgQ6BtfACqcBE+nLQZjCDmMFQ/ST1QnZ46TiqP1QbX/6MlVYGxoI1uplVeSSa2aYa1azqgKzZeBx5M+E/ijrkD+45b4/ShugYj4R3Z4i4tV3Z1BbhnbYd3ImEEfAyeG52CcYU+selOzLaGydTW786hJeQs9yRXnZIcfu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955493; c=relaxed/simple;
-	bh=/brVrkQdGmJls25UB6CcMf154mbSA+M7rvV6G/sdWmE=;
+	s=arc-20240116; t=1739955496; c=relaxed/simple;
+	bh=taGogW7ytytSalD2KhCeFv+qz0emWKBXaB+ux3+xR9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FnJNWBB9ArfMUlMUpsjsmDExL9zGkVM8/ptse62Pyi9vZfbjkH0G9AgfXK4AQjt21PlppKrOLDJPcfZz8u0q8D8vpQlATg8Jjud49FWIZaciDRDXzuHDmGf5T/trCJQK6w/ERyiXIBQGC0k2u3dWbeHtEbLPIiuJ8wafVB4s5W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xaFSrFTe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vEfumJ44A490yP1uSHCf1KjWumXR2yC5tKg9fuFzF01qcNzu7ScdmikamvRJuVwdnZb2EqX/MlAV5tuDMJkkasXwIZWI4UDrSmgsmTqqVTIgKcof1stT4vsih6NHgr1rL7HdG3twdKR3Z2co04bmTg/2xmRyENv7qcqprTVcmho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtHjQSe3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xaFSrFTe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E8BC4CED1;
-	Wed, 19 Feb 2025 08:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtHjQSe3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C4DC4CED1;
+	Wed, 19 Feb 2025 08:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955492;
-	bh=/brVrkQdGmJls25UB6CcMf154mbSA+M7rvV6G/sdWmE=;
+	s=korg; t=1739955495;
+	bh=taGogW7ytytSalD2KhCeFv+qz0emWKBXaB+ux3+xR9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xaFSrFTeui89XpCroQ91ORL9SW37NRPm868g8vYWlUKza8g5Zds/ZzRyFU3iRd76M
-	 ENqLokFzbDMD2+mDUHloT3Ix7bWDdH7ncAS1IF+meYng3v80vIfD2Jx5Hq3fU5cfbE
-	 Sa+8o5QY41FXzqbViaCE4viFAKmWXFT79q1g1k3s=
+	b=rtHjQSe38bOggnuEXlMaphvMg5/NHdYY4E77JEuNrACi+XeWtfo959Gmtzm3OK2wQ
+	 g1oX9CTSGqQyw2Kdlsrnpm/8+A7puiCxJUeYhCghnP6yCPm/k9EPP8cEzlcqBKGYno
+	 f7rtcnoyC5qihXCI8BqtL/gm9CsGkyrLD6ZrINt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/152] block: cleanup and fix batch completion adding conditions
-Date: Wed, 19 Feb 2025 09:27:16 +0100
-Message-ID: <20250219082550.951391825@linuxfoundation.org>
+Subject: [PATCH 6.6 024/152] gpiolib: Fix crash on error in gpiochip_get_ngpios()
+Date: Wed, 19 Feb 2025 09:27:17 +0100
+Message-ID: <20250219082550.991613284@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -50,61 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 1f47ed294a2bd577d5ae43e6e28e1c9a3be4a833 ]
+[ Upstream commit 7b4aebeecbbd5b5fe73e35fad3f62ed21aa7ef44 ]
 
-The conditions for whether or not a request is allowed adding to a
-completion batch are a bit hard to read, and they also have a few
-issues. One is that ioerror may indeed be a random value on passthrough,
-and it's being checked unconditionally of whether or not the given
-request is a passthrough request or not.
+The gpiochip_get_ngpios() uses chip_*() macros to print messages.
+However these macros rely on gpiodev to be initialised and set,
+which is not the case when called via bgpio_init(). In such a case
+the printing messages will crash on NULL pointer dereference.
+Replace chip_*() macros by the respective dev_*() ones to avoid
+such crash.
 
-Rewrite the conditions to be separate for easier reading, and only check
-ioerror for non-passthrough requests. This fixes an issue with bio
-unmapping on passthrough, where it fails getting added to a batch. This
-both leads to suboptimal performance, and may trigger a potential
-schedule-under-atomic condition for polled passthrough IO.
-
-Fixes: f794f3351f26 ("block: add support for blk_mq_end_request_batch()")
-Link: https://lore.kernel.org/r/20575f0a-656e-4bb3-9d82-dec6c7e3a35c@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 55b2395e4e92 ("gpio: mmio: handle "ngpios" properly in bgpio_init()")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250213155646.2882324-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/blk-mq.h | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/gpio/gpiolib.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
-index 958ed7e89b301..1d482c2aabbdf 100644
---- a/include/linux/blk-mq.h
-+++ b/include/linux/blk-mq.h
-@@ -849,12 +849,22 @@ static inline bool blk_mq_add_to_batch(struct request *req,
- 				       void (*complete)(struct io_comp_batch *))
- {
- 	/*
--	 * blk_mq_end_request_batch() can't end request allocated from
--	 * sched tags
-+	 * Check various conditions that exclude batch processing:
-+	 * 1) No batch container
-+	 * 2) Has scheduler data attached
-+	 * 3) Not a passthrough request and end_io set
-+	 * 4) Not a passthrough request and an ioerror
- 	 */
--	if (!iob || (req->rq_flags & RQF_SCHED_TAGS) || ioerror ||
--			(req->end_io && !blk_rq_is_passthrough(req)))
-+	if (!iob)
- 		return false;
-+	if (req->rq_flags & RQF_SCHED_TAGS)
-+		return false;
-+	if (!blk_rq_is_passthrough(req)) {
-+		if (req->end_io)
-+			return false;
-+		if (ioerror < 0)
-+			return false;
-+	}
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 5c0016c77d2ab..efb592b6f6aa7 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -723,13 +723,13 @@ int gpiochip_get_ngpios(struct gpio_chip *gc, struct device *dev)
+ 	}
  
- 	if (!iob->complete)
- 		iob->complete = complete;
+ 	if (gc->ngpio == 0) {
+-		chip_err(gc, "tried to insert a GPIO chip with zero lines\n");
++		dev_err(dev, "tried to insert a GPIO chip with zero lines\n");
+ 		return -EINVAL;
+ 	}
+ 
+ 	if (gc->ngpio > FASTPATH_NGPIO)
+-		chip_warn(gc, "line cnt %u is greater than fast path cnt %u\n",
+-			gc->ngpio, FASTPATH_NGPIO);
++		dev_warn(dev, "line cnt %u is greater than fast path cnt %u\n",
++			 gc->ngpio, FASTPATH_NGPIO);
+ 
+ 	return 0;
+ }
 -- 
 2.39.5
 
