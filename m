@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE601E834B;
-	Wed, 19 Feb 2025 08:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02451EC018;
+	Wed, 19 Feb 2025 08:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739953983; cv=none; b=E1HHyuX/fqz/ysAA0j5PpUGfafcNA0vwXSZGSFU4XkNsoZCBBmVj4+UCz2v0vjUX73dSmsgxz0Q0CFgHIkxH8ROCnUvkeIvFG+mjTXeFNBZzxHTN4gUDASdHonaWeaqy4cy4zJOh4ekqV9EUlQZdj/2LEKylF1gOLpctvWnskF0=
+	t=1739953985; cv=none; b=RHoVfLsu/IBmbCi8xfX8IbTslqYq0vqfh4bXI9e+UDMklke0FQUnAvdk37Pz7tgN6oy9mXbaR+LqX8Bb3m+5TgSjKrau7GHQipHAwspqFIzydAxW3IHs1dV8/Wf4RnYBGbew83KUXoxoiAJA9ssCrIA8+mYuEDshRwLsI0AzEE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739953983; c=relaxed/simple;
-	bh=EUhjnmL6wuOZbap+Js5rJkPiYm8ANizVokso0af1jsg=;
+	s=arc-20240116; t=1739953985; c=relaxed/simple;
+	bh=dpJ6RTCBOuERrQsXCqeB/sZdw70vw8klK8dUaT+OxPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ALkZlG7T4W0yK4qIID6shsMZY5aZ9np0gcmWh9z3RdHxutYLUm1MuZLY5ggLWWr/LA/+jesp0nR89jH0LtCHw788ycuD6q9HQySVzVrBLajQmI/9oxdmsL7iCDsfCp+JBYQQn65GL1m/xgIiO7W+wYV9+kKdrw6YDqRwH7e2K+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1e66RmIf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cr2XZ0Y/v0br9+cR2xkwR2QYOFj+ryjRZSW3Gi6CbJ+b1bgJPsXay/XluYNzalAGAFV+tm2y4DZdyWTQXLaIQcRdIXXqZvNAwzfUxam8GBxqWJO3SHVhtzZPcuCluVFnmjJFjiTGzkB966A0vRQtbpCW/B/DCVre1YRzdoIdbIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXvKaj5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1e66RmIf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43975C4CEE7;
-	Wed, 19 Feb 2025 08:33:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXvKaj5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C629C4CEEB;
+	Wed, 19 Feb 2025 08:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739953982;
-	bh=EUhjnmL6wuOZbap+Js5rJkPiYm8ANizVokso0af1jsg=;
+	s=korg; t=1739953985;
+	bh=dpJ6RTCBOuERrQsXCqeB/sZdw70vw8klK8dUaT+OxPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1e66RmIfDzoq1bqAHPNeV6UkYQ67EJZaWmmy9tR9TeqoFfR+Sd+dC3pM238HgYeqS
-	 C0pDw0HVJmAPlme4rlWuIN3WovF56XZF38WSkmvkHi3WZrvYEoOaQcQq6rcyvQUA9r
-	 ynd0yoNpuiNJgxFiDonkuN17hKPb2AL9Dm/5/CCw=
+	b=nXvKaj5l8k9d4obrQRYeFq4y5OHLhwHoc1i9UwZFX2c3AjsFpGkE0Es2Z8DtemWsq
+	 qDz9uWmeOVWodYzaVXQ6Ey17oMH3cs6twZeVHU3441goKxZldzJUT8dDVBKesB47xW
+	 3Uv3MkzId/MjnXP6ZCSMV7JyUhnqdFLNxjQIDjRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Lingshan <lingshan.zhu@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Jiang Liu <gerry@linux.alibaba.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 058/274] amdkfd: properly free gang_ctx_bo when failed to init user queue
-Date: Wed, 19 Feb 2025 09:25:12 +0100
-Message-ID: <20250219082611.899582759@linuxfoundation.org>
+Subject: [PATCH 6.13 059/274] drm/amdgpu: bail out when failed to load fw in psp_init_cap_microcode()
+Date: Wed, 19 Feb 2025 09:25:13 +0100
+Message-ID: <20250219082611.937181725@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -52,43 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Lingshan <lingshan.zhu@amd.com>
+From: Jiang Liu <gerry@linux.alibaba.com>
 
-[ Upstream commit a33f7f9660705fb2ecf3467b2c48965564f392ce ]
+[ Upstream commit a0a455b4bc7483ad60e8b8a50330c1e05bb7bfcf ]
 
-The destructor of a gtt bo is declared as
-void amdgpu_amdkfd_free_gtt_mem(struct amdgpu_device *adev, void **mem_obj);
-Which takes void** as the second parameter.
+In function psp_init_cap_microcode(), it should bail out when failed to
+load firmware, otherwise it may cause invalid memory access.
 
-GCC allows passing void* to the function because void* can be implicitly
-casted to any other types, so it can pass compiling.
-
-However, passing this void* parameter into the function's
-execution process(which expects void** and dereferencing void**)
-will result in errors.
-
-Signed-off-by: Zhu Lingshan <lingshan.zhu@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Fixes: fb91065851cd ("drm/amdkfd: Refactor queue wptr_bo GART mapping")
+Fixes: 07dbfc6b102e ("drm/amd: Use `amdgpu_ucode_*` helpers for PSP")
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Jiang Liu <gerry@linux.alibaba.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-index bd595b1db15f2..1d538e874140c 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
-@@ -298,7 +298,7 @@ static int init_user_queue(struct process_queue_manager *pqm,
- 	return 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+index 448f9e742983f..75c0f64602ed9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -3790,9 +3790,10 @@ int psp_init_cap_microcode(struct psp_context *psp, const char *chip_name)
+ 		if (err == -ENODEV) {
+ 			dev_warn(adev->dev, "cap microcode does not exist, skip\n");
+ 			err = 0;
+-			goto out;
++		} else {
++			dev_err(adev->dev, "fail to initialize cap microcode\n");
+ 		}
+-		dev_err(adev->dev, "fail to initialize cap microcode\n");
++		goto out;
+ 	}
  
- free_gang_ctx_bo:
--	amdgpu_amdkfd_free_gtt_mem(dev->adev, (*q)->gang_ctx_bo);
-+	amdgpu_amdkfd_free_gtt_mem(dev->adev, &(*q)->gang_ctx_bo);
- cleanup:
- 	uninit_queue(*q);
- 	*q = NULL;
+ 	info = &adev->firmware.ucode[AMDGPU_UCODE_ID_CAP];
 -- 
 2.39.5
 
