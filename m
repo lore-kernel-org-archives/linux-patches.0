@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056321A841F;
-	Wed, 19 Feb 2025 08:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDF51C5D56;
+	Wed, 19 Feb 2025 08:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739953850; cv=none; b=rvxF1tIgXVkM9oxJUjTnCf6kfsNKya0TauPdpZ1Z550mc+liDA2EQMS6/cWBg35XsGZEZhP3/G6R64w7R+wjUFASo8Lsk7J69AJN1rZqVyAS+nDeY34GvW9sU4Vl2ETjJQYrVTyalY7a2rr3PjpQc0Ce3nUb2k1/9oCij2LQjmQ=
+	t=1739953853; cv=none; b=tRHSQcqIYqhFjYnU4wCxHne6Ue7wR50JLc/QEhA4WdNqEuq1t8ndbxRlGTE85L1ie+w37wq9VIzIbORx49dLXwWyzqSNXdcyEPGoF9EF9kP+mHuauADICs/78fqsh/ae5V+ALleIDVzbTTszUmDCvdAeM6vJYJNVcm+hDOccAbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739953850; c=relaxed/simple;
-	bh=5nIzLrDR0hFEgqmF/GBavf9axOfe8osNAJaXrwFK1a0=;
+	s=arc-20240116; t=1739953853; c=relaxed/simple;
+	bh=AJAnCD5NWb6zkTzQeP6E0gTOx1ELWz3hrPiJ/ONB2Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M2vhIR3m+qlbm3iMX2u18PT9DfA+5qhfOO7+a0RSkXyFcEHG7riMFX/+XXaJx/LfcdGxIzPgRTcoX4qn3Lvndu6R38mtbAYSQTILdkuEzhJiIf6M9hd09b3yOOMhjEvqZMxBpFVuIJciXifBImaNAbzESWUTHdt/HOJjAX3gLqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXXYO8ob; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tQrL1MSHAesNJwS2ekKxqX1fRD/l586Gm3Xd7ZPqhH5MKMZq8K9WIAgXosb99tcoWu8xjuE+T5r4hqVXcrlINPWSYqa3WASamNofGqyDKSo9YtbljH9b3aCpUXchA7SBWeYHocsdwX1tMBJoSJV76URr+8N4Sbw1+cjB87K5szw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVz3iBTo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXXYO8ob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABFAC4CED1;
-	Wed, 19 Feb 2025 08:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVz3iBTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE07C4CED1;
+	Wed, 19 Feb 2025 08:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739953849;
-	bh=5nIzLrDR0hFEgqmF/GBavf9axOfe8osNAJaXrwFK1a0=;
+	s=korg; t=1739953853;
+	bh=AJAnCD5NWb6zkTzQeP6E0gTOx1ELWz3hrPiJ/ONB2Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sXXYO8obGkRI6k90YWVDHHorln53G0hrSdppsCQAEqhnW27aukJGW5VCIzKLxpM1y
-	 jRXlM51/vpX7xJ8UjNVn0r4aFXc0vViyndMxB1GkiNudpnu3bwU854ggBJYIKmLohw
-	 sGM+EbHNzhcP1dKzj21JnsypNp2onZVnoMnHdPWw=
+	b=jVz3iBTojbmvgpNQteA0XzfZl2dnwGgKipfv7NGXDtQl2ADKMZO5jT/wZYhTGMA8I
+	 z2BknZZM+jF3PH5fFdWvGfc2bc/XLgLpzA4kpl4ifB9pRY/BZEMhhD3DDAyWE2gSQb
+	 VW1XBTMRs4DgvljBP06R/VMa6nq8uPVhk3P0W9ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Ito <ito.kohei@socionext.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com,
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 018/274] spi: sn-f-ospi: Fix division by zero
-Date: Wed, 19 Feb 2025 09:24:32 +0100
-Message-ID: <20250219082610.252454226@linuxfoundation.org>
+Subject: [PATCH 6.13 019/274] ax25: Fix refcount leak caused by setting SO_BINDTODEVICE sockopt
+Date: Wed, 19 Feb 2025 09:24:33 +0100
+Message-ID: <20250219082610.291578272@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -52,39 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit 3588b1c0fde2f58d166e3f94a5a58d64b893526c ]
+[ Upstream commit bca0902e61731a75fc4860c8720168d9f1bae3b6 ]
 
-When there is no dummy cycle in the spi-nor commands, both dummy bus cycle
-bytes and width are zero. Because of the cpu's warning when divided by
-zero, the warning should be avoided. Return just zero to avoid such
-calculations.
+If an AX25 device is bound to a socket by setting the SO_BINDTODEVICE
+socket option, a refcount leak will occur in ax25_release().
 
-Fixes: 1b74dd64c861 ("spi: Add Socionext F_OSPI SPI flash controller driver")
-Co-developed-by: Kohei Ito <ito.kohei@socionext.com>
-Signed-off-by: Kohei Ito <ito.kohei@socionext.com>
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Link: https://patch.msgid.link/20250206085747.3834148-1-hayashi.kunihiko@socionext.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Commit 9fd75b66b8f6 ("ax25: Fix refcount leaks caused by ax25_cb_del()")
+added decrement of device refcounts in ax25_release(). In order for that
+to work correctly the refcounts must already be incremented when the
+device is bound to the socket. An AX25 device can be bound to a socket
+by either calling ax25_bind() or setting SO_BINDTODEVICE socket option.
+In both cases the refcounts should be incremented, but in fact it is done
+only in ax25_bind().
+
+This bug leads to the following issue reported by Syzkaller:
+
+================================================================
+refcount_t: decrement hit 0; leaking memory.
+WARNING: CPU: 1 PID: 5932 at lib/refcount.c:31 refcount_warn_saturate+0x1ed/0x210 lib/refcount.c:31
+Modules linked in:
+CPU: 1 UID: 0 PID: 5932 Comm: syz-executor424 Not tainted 6.13.0-rc4-syzkaller-00110-g4099a71718b0 #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+RIP: 0010:refcount_warn_saturate+0x1ed/0x210 lib/refcount.c:31
+Call Trace:
+ <TASK>
+ __refcount_dec include/linux/refcount.h:336 [inline]
+ refcount_dec include/linux/refcount.h:351 [inline]
+ ref_tracker_free+0x710/0x820 lib/ref_tracker.c:236
+ netdev_tracker_free include/linux/netdevice.h:4156 [inline]
+ netdev_put include/linux/netdevice.h:4173 [inline]
+ netdev_put include/linux/netdevice.h:4169 [inline]
+ ax25_release+0x33f/0xa10 net/ax25/af_ax25.c:1069
+ __sock_release+0xb0/0x270 net/socket.c:640
+ sock_close+0x1c/0x30 net/socket.c:1408
+ ...
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ ...
+ </TASK>
+================================================================
+
+Fix the implementation of ax25_setsockopt() by adding increment of
+refcounts for the new device bound, and decrement of refcounts for
+the old unbound device.
+
+Fixes: 9fd75b66b8f6 ("ax25: Fix refcount leaks caused by ax25_cb_del()")
+Reported-by: syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Link: https://patch.msgid.link/20250203091203.1744-1-m.masimov@mt-integration.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sn-f-ospi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ax25/af_ax25.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/spi/spi-sn-f-ospi.c b/drivers/spi/spi-sn-f-ospi.c
-index adac645732fed..56ef114effc97 100644
---- a/drivers/spi/spi-sn-f-ospi.c
-+++ b/drivers/spi/spi-sn-f-ospi.c
-@@ -116,6 +116,9 @@ struct f_ospi {
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index aa6c714892ec9..9f3b8b682adb2 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -685,6 +685,15 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
  
- static u32 f_ospi_get_dummy_cycle(const struct spi_mem_op *op)
- {
-+	if (!op->dummy.nbytes)
-+		return 0;
++		if (ax25->ax25_dev) {
++			if (dev == ax25->ax25_dev->dev) {
++				rcu_read_unlock();
++				break;
++			}
++			netdev_put(ax25->ax25_dev->dev, &ax25->dev_tracker);
++			ax25_dev_put(ax25->ax25_dev);
++		}
 +
- 	return (op->dummy.nbytes * 8) / op->dummy.buswidth;
- }
+ 		ax25->ax25_dev = ax25_dev_ax25dev(dev);
+ 		if (!ax25->ax25_dev) {
+ 			rcu_read_unlock();
+@@ -692,6 +701,8 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 		ax25_fillin_cb(ax25, ax25->ax25_dev);
++		netdev_hold(dev, &ax25->dev_tracker, GFP_ATOMIC);
++		ax25_dev_hold(ax25->ax25_dev);
+ 		rcu_read_unlock();
+ 		break;
  
 -- 
 2.39.5
