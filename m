@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DCE81DE89B;
-	Wed, 19 Feb 2025 08:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DD11DED44;
+	Wed, 19 Feb 2025 08:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954063; cv=none; b=lnrJwmRi7Osz6s4V4dmxMX49KOWL4iSAWrP27FasP8VuijaOWRTo5/u8qldeZx9R5CAkXrGw5XDK1OKvN/N3QRNUlHnXdnCNiZZm9HVpLbw4hhVSixzcO1Cmvqod4GFqbOosYtMm+3xHXXQ81F24fctZFqYKrMd+jJiiuxHkhy8=
+	t=1739954066; cv=none; b=XLnPDnMEzeF/gfD06OVxoV/X8V/18JJVZEwMPSN1CKfT0uDK4UOkxRH3h+dUK00IBtHetUTfReqiRj0HZtXQkXSZZW0SNClTH3+Ua+N76x8lkAhAg3wZKri5FXyXE6HhxsBX+SbeX9YUlYjRVS/QVEDSIB1ucfILz/+1TDPajVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954063; c=relaxed/simple;
-	bh=UzLr0BHJUNTqaUBaPbe/CdS8W+lZqBtsuRbvgYcUAn8=;
+	s=arc-20240116; t=1739954066; c=relaxed/simple;
+	bh=qpDHBhVAOpy5mQrqgmj+9qe+uinl8Q0zMJ/DHuifgUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cJxvceaU/bsaWyxe+Tz62EdIZ23dFD4QutGYJYxXvWZJt10KeSYnspyQoe/qNzM9/hWdrgenGn5RzQ9W0u3OJVwttt3J1+Id/4X9kIDcClDFw0+dSd4hYj6UwpGLmgcjEdq2x6YKU8oVykJrrOke4vKhNBkkOkC4QF8UK4QvC6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvwoHmD8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jFPaIdvupfCHJv3xd8l3TvUgWAee269BSUkpoK/r4BtbysvU9Bkv4fZl+GJlavGRBk4rQHISkqgOqbOzIFkyxVTZw/+nNjFsNgRbiCKAtuLK+AVZpPLVHJ0F+EpHDBxnUlDqIVDdYdGPVMC6ZJdwmj7VwH6m7XSgcBzSf6HIrz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJLrTQ9v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvwoHmD8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CBFDC4CED1;
-	Wed, 19 Feb 2025 08:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJLrTQ9v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB047C4CED1;
+	Wed, 19 Feb 2025 08:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954063;
-	bh=UzLr0BHJUNTqaUBaPbe/CdS8W+lZqBtsuRbvgYcUAn8=;
+	s=korg; t=1739954066;
+	bh=qpDHBhVAOpy5mQrqgmj+9qe+uinl8Q0zMJ/DHuifgUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GvwoHmD8ALQsLcwly+ZY/ZAqnYDROhKfiiY99EJOPAcf2Rh1BgoFg2wyKNsEOSktj
-	 VKIDri0BshouHvVuj8cl2EsPQ/vcq47XhNeJQGJbs1vCKqVWuROFcoX72obs6wEe7g
-	 wcaePQ8nZcT9aBbA+ueRkiQlCz+Z5ZaKMLab3FO4=
+	b=RJLrTQ9vc+D5mq3P3rjXiNNlBgZ1jX7YPvXNZvm16RtXOZbMdMMrMY4rFGjyeZeA0
+	 S2HQpAcCO+QkPY0oa0BUxRhOJChsswJhRCBau3OzvrXi+Vybd+Ir4RS2eokqMhp13q
+	 GlKolSJ/XBlLKPJBc/L6qb1FjHQDu4eAtrP+z7yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Starks <jostarks@microsoft.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Easwar Hariharan <eahariha@linux.microsoft.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Hui Ma <hui.ma@airoha.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 085/274] Drivers: hv: vmbus: Wait for boot-time offers during boot and resume
-Date: Wed, 19 Feb 2025 09:25:39 +0100
-Message-ID: <20250219082612.949436698@linuxfoundation.org>
+Subject: [PATCH 6.13 086/274] PCI: mediatek-gen3: Avoid PCIe resetting via PERST# for Airoha EN7581 SoC
+Date: Wed, 19 Feb 2025 09:25:40 +0100
+Message-ID: <20250219082612.987357641@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -49,253 +46,139 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 113386ca981c3997db6b83272c7ecf47456aeddb ]
+[ Upstream commit 491cb9c5084790aafa02e843349492c284373231 ]
 
-Channel offers are requested during VMBus initialization and resume from
-hibernation. Add support to wait for all boot-time channel offers to
-be delivered and processed before returning from vmbus_request_offers.
+Airoha EN7581 has a hw bug asserting/releasing PERST# signal causing
+occasional PCIe link down issues. In order to overcome the problem,
+PERST# signal is not asserted/released during device probe or
+suspend/resume phase and the PCIe block is reset using
+en7523_reset_assert() and en7581_pci_enable().
 
-This is in analogy to a PCI bus not returning from probe until it has
-scanned all devices on the bus.
+Introduce flags field in the mtk_gen3_pcie_pdata struct in order to
+specify per-SoC capabilities.
 
-Without this, user mode can race with VMBus initialization and miss
-channel offers. User mode has no way to work around this other than
-sleeping for a while, since there is no way to know when VMBus has
-finished processing boot-time offers.
-
-With this added functionality, remove earlier logic which keeps track
-of count of offered channels post resume from hibernation. Once all
-offers delivered message is received, no further boot-time offers are
-going to be received. Consequently, logic to prevent suspend from
-happening after previous resume had missing offers, is also removed.
-
-Co-developed-by: John Starks <jostarks@microsoft.com>
-Signed-off-by: John Starks <jostarks@microsoft.com>
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Reviewed-by: Easwar Hariharan <eahariha@linux.microsoft.com>
-Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/20250102130712.1661-2-namjain@linux.microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20250102130712.1661-2-namjain@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20250109-pcie-en7581-rst-fix-v4-1-4a45c89fb143@kernel.org
+Tested-by: Hui Ma <hui.ma@airoha.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/channel_mgmt.c | 61 +++++++++++++++++++++++++++++----------
- drivers/hv/connection.c   |  4 +--
- drivers/hv/hyperv_vmbus.h | 14 ++-------
- drivers/hv/vmbus_drv.c    | 16 ----------
- 4 files changed, 51 insertions(+), 44 deletions(-)
+ drivers/pci/controller/pcie-mediatek-gen3.c | 59 ++++++++++++++-------
+ 1 file changed, 41 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
-index 3c6011a48dabe..6e084c2074141 100644
---- a/drivers/hv/channel_mgmt.c
-+++ b/drivers/hv/channel_mgmt.c
-@@ -944,16 +944,6 @@ void vmbus_initiate_unload(bool crash)
- 		vmbus_wait_for_unload();
- }
+diff --git a/drivers/pci/controller/pcie-mediatek-gen3.c b/drivers/pci/controller/pcie-mediatek-gen3.c
+index be52e3a123abd..74dfef8ce9ec1 100644
+--- a/drivers/pci/controller/pcie-mediatek-gen3.c
++++ b/drivers/pci/controller/pcie-mediatek-gen3.c
+@@ -133,10 +133,18 @@ struct mtk_gen3_pcie;
+ #define PCIE_CONF_LINK2_CTL_STS		(PCIE_CFG_OFFSET_ADDR + 0xb0)
+ #define PCIE_CONF_LINK2_LCR2_LINK_SPEED	GENMASK(3, 0)
  
--static void check_ready_for_resume_event(void)
--{
--	/*
--	 * If all the old primary channels have been fixed up, then it's safe
--	 * to resume.
--	 */
--	if (atomic_dec_and_test(&vmbus_connection.nr_chan_fixup_on_resume))
--		complete(&vmbus_connection.ready_for_resume_event);
--}
--
- static void vmbus_setup_channel_state(struct vmbus_channel *channel,
- 				      struct vmbus_channel_offer_channel *offer)
- {
-@@ -1109,8 +1099,6 @@ static void vmbus_onoffer(struct vmbus_channel_message_header *hdr)
- 
- 		/* Add the channel back to the array of channels. */
- 		vmbus_channel_map_relid(oldchannel);
--		check_ready_for_resume_event();
--
- 		mutex_unlock(&vmbus_connection.channel_mutex);
- 		return;
- 	}
-@@ -1296,13 +1284,28 @@ EXPORT_SYMBOL_GPL(vmbus_hvsock_device_unregister);
- 
- /*
-  * vmbus_onoffers_delivered -
-- * This is invoked when all offers have been delivered.
-+ * The CHANNELMSG_ALLOFFERS_DELIVERED message arrives after all
-+ * boot-time offers are delivered. A boot-time offer is for the primary
-+ * channel for any virtual hardware configured in the VM at the time it boots.
-+ * Boot-time offers include offers for physical devices assigned to the VM
-+ * via Hyper-V's Discrete Device Assignment (DDA) functionality that are
-+ * handled as virtual PCI devices in Linux (e.g., NVMe devices and GPUs).
-+ * Boot-time offers do not include offers for VMBus sub-channels. Because
-+ * devices can be hot-added to the VM after it is booted, additional channel
-+ * offers that aren't boot-time offers can be received at any time after the
-+ * all-offers-delivered message.
-  *
-- * Nothing to do here.
-+ * SR-IOV NIC Virtual Functions (VFs) assigned to a VM are not considered
-+ * to be assigned to the VM at boot-time, and offers for VFs may occur after
-+ * the all-offers-delivered message. VFs are optional accelerators to the
-+ * synthetic VMBus NIC and are effectively hot-added only after the VMBus
-+ * NIC channel is opened (once it knows the guest can support it, via the
-+ * sriov bit in the netvsc protocol).
++enum mtk_gen3_pcie_flags {
++	SKIP_PCIE_RSTB	= BIT(0), /* Skip PERST# assertion during device
++				   * probing or suspend/resume phase to
++				   * avoid hw bugs/issues.
++				   */
++};
++
+ /**
+  * struct mtk_gen3_pcie_pdata - differentiate between host generations
+  * @power_up: pcie power_up callback
+  * @phy_resets: phy reset lines SoC data.
++ * @flags: pcie device flags.
   */
- static void vmbus_onoffers_delivered(
- 			struct vmbus_channel_message_header *hdr)
- {
-+	complete(&vmbus_connection.all_offers_delivered_event);
- }
- 
- /*
-@@ -1578,7 +1581,8 @@ void vmbus_onmessage(struct vmbus_channel_message_header *hdr)
- }
- 
- /*
-- * vmbus_request_offers - Send a request to get all our pending offers.
-+ * vmbus_request_offers - Send a request to get all our pending offers
-+ * and wait for all boot-time offers to arrive.
-  */
- int vmbus_request_offers(void)
- {
-@@ -1596,6 +1600,10 @@ int vmbus_request_offers(void)
- 
- 	msg->msgtype = CHANNELMSG_REQUESTOFFERS;
- 
-+	/*
-+	 * This REQUESTOFFERS message will result in the host sending an all
-+	 * offers delivered message after all the boot-time offers are sent.
-+	 */
- 	ret = vmbus_post_msg(msg, sizeof(struct vmbus_channel_message_header),
- 			     true);
- 
-@@ -1607,6 +1615,29 @@ int vmbus_request_offers(void)
- 		goto cleanup;
- 	}
- 
-+	/*
-+	 * Wait for the host to send all boot-time offers.
-+	 * Keeping it as a best-effort mechanism, where a warning is
-+	 * printed if a timeout occurs, and execution is resumed.
-+	 */
-+	if (!wait_for_completion_timeout(&vmbus_connection.all_offers_delivered_event,
-+					 secs_to_jiffies(60))) {
-+		pr_warn("timed out waiting for all boot-time offers to be delivered.\n");
-+	}
-+
-+	/*
-+	 * Flush handling of offer messages (which may initiate work on
-+	 * other work queues).
-+	 */
-+	flush_workqueue(vmbus_connection.work_queue);
-+
-+	/*
-+	 * Flush workqueue for processing the incoming offers. Subchannel
-+	 * offers and their processing can happen later, so there is no need to
-+	 * flush that workqueue here.
-+	 */
-+	flush_workqueue(vmbus_connection.handle_primary_chan_wq);
-+
- cleanup:
- 	kfree(msginfo);
- 
-diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
-index f001ae880e1db..8351360bba161 100644
---- a/drivers/hv/connection.c
-+++ b/drivers/hv/connection.c
-@@ -34,8 +34,8 @@ struct vmbus_connection vmbus_connection = {
- 
- 	.ready_for_suspend_event = COMPLETION_INITIALIZER(
- 				  vmbus_connection.ready_for_suspend_event),
--	.ready_for_resume_event	= COMPLETION_INITIALIZER(
--				  vmbus_connection.ready_for_resume_event),
-+	.all_offers_delivered_event = COMPLETION_INITIALIZER(
-+				  vmbus_connection.all_offers_delivered_event),
+ struct mtk_gen3_pcie_pdata {
+ 	int (*power_up)(struct mtk_gen3_pcie *pcie);
+@@ -144,6 +152,7 @@ struct mtk_gen3_pcie_pdata {
+ 		const char *id[MAX_NUM_PHY_RESETS];
+ 		int num_resets;
+ 	} phy_resets;
++	u32 flags;
  };
- EXPORT_SYMBOL_GPL(vmbus_connection);
  
-diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
-index 52cb744b4d7fd..e4058af987316 100644
---- a/drivers/hv/hyperv_vmbus.h
-+++ b/drivers/hv/hyperv_vmbus.h
-@@ -287,18 +287,10 @@ struct vmbus_connection {
- 	struct completion ready_for_suspend_event;
+ /**
+@@ -438,22 +447,33 @@ static int mtk_pcie_startup_port(struct mtk_gen3_pcie *pcie)
+ 	val |= PCIE_DISABLE_DVFSRC_VLT_REQ;
+ 	writel_relaxed(val, pcie->base + PCIE_MISC_CTRL_REG);
  
+-	/* Assert all reset signals */
+-	val = readl_relaxed(pcie->base + PCIE_RST_CTRL_REG);
+-	val |= PCIE_MAC_RSTB | PCIE_PHY_RSTB | PCIE_BRG_RSTB | PCIE_PE_RSTB;
+-	writel_relaxed(val, pcie->base + PCIE_RST_CTRL_REG);
+-
  	/*
--	 * The number of primary channels that should be "fixed up"
--	 * upon resume: these channels are re-offered upon resume, and some
--	 * fields of the channel offers (i.e. child_relid and connection_id)
--	 * can change, so the old offermsg must be fixed up, before the resume
--	 * callbacks of the VSC drivers start to further touch the channels.
-+	 * Completed once the host has offered all boot-time channels.
-+	 * Note that some channels may still be under process on a workqueue.
+-	 * Described in PCIe CEM specification sections 2.2 (PERST# Signal)
+-	 * and 2.2.1 (Initial Power-Up (G3 to S0)).
+-	 * The deassertion of PERST# should be delayed 100ms (TPVPERL)
+-	 * for the power and clock to become stable.
++	 * Airoha EN7581 has a hw bug asserting/releasing PCIE_PE_RSTB signal
++	 * causing occasional PCIe link down. In order to overcome the issue,
++	 * PCIE_RSTB signals are not asserted/released at this stage and the
++	 * PCIe block is reset using en7523_reset_assert() and
++	 * en7581_pci_enable().
  	 */
--	atomic_t nr_chan_fixup_on_resume;
--	/*
--	 * vmbus_bus_resume() waits for "nr_chan_fixup_on_resume" to
--	 * drop to zero.
--	 */
--	struct completion ready_for_resume_event;
-+	struct completion all_offers_delivered_event;
- };
- 
- 
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 2892b8da20a5e..bf5608a740561 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -2427,11 +2427,6 @@ static int vmbus_bus_suspend(struct device *dev)
- 	if (atomic_read(&vmbus_connection.nr_chan_close_on_suspend) > 0)
- 		wait_for_completion(&vmbus_connection.ready_for_suspend_event);
- 
--	if (atomic_read(&vmbus_connection.nr_chan_fixup_on_resume) != 0) {
--		pr_err("Can not suspend due to a previous failed resuming\n");
--		return -EBUSY;
--	}
+-	msleep(100);
 -
- 	mutex_lock(&vmbus_connection.channel_mutex);
+-	/* De-assert reset signals */
+-	val &= ~(PCIE_MAC_RSTB | PCIE_PHY_RSTB | PCIE_BRG_RSTB | PCIE_PE_RSTB);
+-	writel_relaxed(val, pcie->base + PCIE_RST_CTRL_REG);
++	if (!(pcie->soc->flags & SKIP_PCIE_RSTB)) {
++		/* Assert all reset signals */
++		val = readl_relaxed(pcie->base + PCIE_RST_CTRL_REG);
++		val |= PCIE_MAC_RSTB | PCIE_PHY_RSTB | PCIE_BRG_RSTB |
++		       PCIE_PE_RSTB;
++		writel_relaxed(val, pcie->base + PCIE_RST_CTRL_REG);
++
++		/*
++		 * Described in PCIe CEM specification revision 6.0.
++		 *
++		 * The deassertion of PERST# should be delayed 100ms (TPVPERL)
++		 * for the power and clock to become stable.
++		 */
++		msleep(PCIE_T_PVPERL_MS);
++
++		/* De-assert reset signals */
++		val &= ~(PCIE_MAC_RSTB | PCIE_PHY_RSTB | PCIE_BRG_RSTB |
++			 PCIE_PE_RSTB);
++		writel_relaxed(val, pcie->base + PCIE_RST_CTRL_REG);
++	}
  
- 	list_for_each_entry(channel, &vmbus_connection.chn_list, listentry) {
-@@ -2456,17 +2451,12 @@ static int vmbus_bus_suspend(struct device *dev)
- 			pr_err("Sub-channel not deleted!\n");
- 			WARN_ON_ONCE(1);
- 		}
--
--		atomic_inc(&vmbus_connection.nr_chan_fixup_on_resume);
+ 	/* Check if the link is up or not */
+ 	err = readl_poll_timeout(pcie->base + PCIE_LINK_STATUS_REG, val,
+@@ -1231,10 +1251,12 @@ static int mtk_pcie_suspend_noirq(struct device *dev)
+ 		return err;
  	}
  
- 	mutex_unlock(&vmbus_connection.channel_mutex);
+-	/* Pull down the PERST# pin */
+-	val = readl_relaxed(pcie->base + PCIE_RST_CTRL_REG);
+-	val |= PCIE_PE_RSTB;
+-	writel_relaxed(val, pcie->base + PCIE_RST_CTRL_REG);
++	if (!(pcie->soc->flags & SKIP_PCIE_RSTB)) {
++		/* Assert the PERST# pin */
++		val = readl_relaxed(pcie->base + PCIE_RST_CTRL_REG);
++		val |= PCIE_PE_RSTB;
++		writel_relaxed(val, pcie->base + PCIE_RST_CTRL_REG);
++	}
  
- 	vmbus_initiate_unload(false);
+ 	dev_dbg(pcie->dev, "entered L2 states successfully");
  
--	/* Reset the event for the next resume. */
--	reinit_completion(&vmbus_connection.ready_for_resume_event);
--
- 	return 0;
- }
+@@ -1285,6 +1307,7 @@ static const struct mtk_gen3_pcie_pdata mtk_pcie_soc_en7581 = {
+ 		.id[2] = "phy-lane2",
+ 		.num_resets = 3,
+ 	},
++	.flags = SKIP_PCIE_RSTB,
+ };
  
-@@ -2502,14 +2492,8 @@ static int vmbus_bus_resume(struct device *dev)
- 	if (ret != 0)
- 		return ret;
- 
--	WARN_ON(atomic_read(&vmbus_connection.nr_chan_fixup_on_resume) == 0);
--
- 	vmbus_request_offers();
- 
--	if (wait_for_completion_timeout(
--		&vmbus_connection.ready_for_resume_event, secs_to_jiffies(10)) == 0)
--		pr_err("Some vmbus device is missing after suspending?\n");
--
- 	/* Reset the event for the next suspend. */
- 	reinit_completion(&vmbus_connection.ready_for_suspend_event);
- 
+ static const struct of_device_id mtk_pcie_of_match[] = {
 -- 
 2.39.5
 
