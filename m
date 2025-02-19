@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A1B1DE4D7;
-	Wed, 19 Feb 2025 08:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9591C548C;
+	Wed, 19 Feb 2025 08:43:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954617; cv=none; b=pLYGtkuJr5lOxRZXiFXAf1OOR99iLkkFLhpKNss9sZvpLfMX/u5KkFog/vTNdm2x1x034ryxh5RAVUXuKbPaofAzOuA+TBUjWq/pCuWMqgpAoDKigVhrRFeTKisbtSj+kULsJYeSdkiACjYwajXd4fljOrDUNNWStih5s5n+/5M=
+	t=1739954621; cv=none; b=kKj37P/i0GM+fgKw2fZmf4BEucbtYIshrjkVaU0GmhPkZOiBZYlO5cKT62F4nV5hVaxHp6H1DG3Z/8FVqZfbuHvPJzvZRvjg17LJcWu0g/rQvC4Pd1syCV4RX9BQzG4HnhbZXX6uCf7i+57u4B3B/LppG2yWD2TqbFhto0dU6jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954617; c=relaxed/simple;
-	bh=2xh6Y2mmmRxkObgjHOgAaNMYVuzoUjT8u9uKUXld3xU=;
+	s=arc-20240116; t=1739954621; c=relaxed/simple;
+	bh=46sFXpqAmnNH0GqVjfyfJISyRgmUSYRcGqOFcSC8+NM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dbp5S0M8YMHbuz3CBBdEJSJU3OISJNmjRwPvWt+KblVudbpAq282FlTRhEe5SS1jz09agf11NMsOJBFhY+o2e7EZPjZ8Xa0pC4O+OnWCYHp8hXL23+Mh4+DmD9R4OCwhX6R5xyAtV2Xjc+HGlXIF7A6Jh/nI1f5PXExlMTnJuu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQ7Td/f6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LhhF9dOTlFGF9bBvHOixLmPm4CcTuKlPscmUBUKHkBeahjJHuHaNt1wl/bPJFNwYrQz6yXDFvCdmzi+cQXlxe/Me8myXl2sDZJGTXuUJEYLl6DMoIc3jivsC9wCNuEhUN8HHKNHFM7tbYOSGmpTSxRKb1WEh9tKzXfSVKoTSowo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PuAbuvl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQ7Td/f6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD94C4CED1;
-	Wed, 19 Feb 2025 08:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PuAbuvl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E963CC4CED1;
+	Wed, 19 Feb 2025 08:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954617;
-	bh=2xh6Y2mmmRxkObgjHOgAaNMYVuzoUjT8u9uKUXld3xU=;
+	s=korg; t=1739954620;
+	bh=46sFXpqAmnNH0GqVjfyfJISyRgmUSYRcGqOFcSC8+NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WQ7Td/f6mdY1nfvgEOsL+1TjfQKPjSY6MarCPFC05a/uMpihTKylb2cvrbr0OWRGR
-	 iS6RBsars7Y48GTzhq64esNvKCBBeZxln8OkUumGSc8npEp0jimpKij1s5aYt9no7x
-	 hhSBTKmKLCcvoxogdA+5gLbLFMF3cg6CaOY/ZDjE=
+	b=1PuAbuvlM/72pL61zyBduIs5fz0LsBqoenDHGbjFd8gR//CDtiTAW0nXx1qS80SMK
+	 7OsdAaphB+zI7gNqjCvHh7bkn6zQArJjGRW8RXlpFXlMb4EMsK/Lc+m/QYUodHPiIJ
+	 Ij1Pjf/UFz7ZrwJXhbRMp6p/uuMnNl3olSnSUCgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.13 259/274] drm/v3d: Stop active perfmon if it is being destroyed
-Date: Wed, 19 Feb 2025 09:28:33 +0100
-Message-ID: <20250219082619.722845232@linuxfoundation.org>
+	Karol Przybylski <karprzy7@gmail.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Subject: [PATCH 6.13 260/274] drm: zynqmp_dp: Fix integer overflow in zynqmp_dp_rate_get()
+Date: Wed, 19 Feb 2025 09:28:34 +0100
+Message-ID: <20250219082619.764612680@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -44,56 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Gmeiner <cgmeiner@igalia.com>
+From: Karol Przybylski <karprzy7@gmail.com>
 
-commit 21f1435b1e6b012a07c42f36b206d2b66fc8f13b upstream.
+commit 67a615c5cb6dc33ed35492dc0d67e496cbe8de68 upstream.
 
-If the active performance monitor (`v3d->active_perfmon`) is being
-destroyed, stop it first. Currently, the active perfmon is not
-stopped during destruction, leaving the `v3d->active_perfmon` pointer
-stale. This can lead to undefined behavior and instability.
+This patch fixes a potential integer overflow in the zynqmp_dp_rate_get()
 
-This patch ensures that the active perfmon is stopped before being
-destroyed, aligning with the behavior introduced in commit
-7d1fd3638ee3 ("drm/v3d: Stop the active perfmon before being destroyed").
+The issue comes up when the expression
+drm_dp_bw_code_to_link_rate(dp->test.bw_code) * 10000 is evaluated using 32-bit
+Now the constant is a compatible 64-bit type.
 
-Cc: stable@vger.kernel.org # v5.15+
-Fixes: 26a4dc29b74a ("drm/v3d: Expose performance counters to userspace")
-Signed-off-by: Christian Gmeiner <cgmeiner@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241118221948.1758130-1-christian.gmeiner@gmail.com
+Resolves coverity issues: CID 1636340 and CID 1635811
+
+Cc: stable@vger.kernel.org
+Fixes: 28edaacb821c ("drm: zynqmp_dp: Add debugfs interface for compliance testing")
+Signed-off-by: Karol Przybylski <karprzy7@gmail.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/stable/20241212095057.1015146-1-karprzy7%40gmail.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241215125355.938953-1-karprzy7@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_perfmon.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/xlnx/zynqmp_dp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/v3d/v3d_perfmon.c
-+++ b/drivers/gpu/drm/v3d/v3d_perfmon.c
-@@ -384,6 +384,7 @@ int v3d_perfmon_destroy_ioctl(struct drm
- {
- 	struct v3d_file_priv *v3d_priv = file_priv->driver_priv;
- 	struct drm_v3d_perfmon_destroy *req = data;
-+	struct v3d_dev *v3d = v3d_priv->v3d;
- 	struct v3d_perfmon *perfmon;
+diff --git a/drivers/gpu/drm/xlnx/zynqmp_dp.c b/drivers/gpu/drm/xlnx/zynqmp_dp.c
+index 25c5dc61ee88..56a261a40ea3 100644
+--- a/drivers/gpu/drm/xlnx/zynqmp_dp.c
++++ b/drivers/gpu/drm/xlnx/zynqmp_dp.c
+@@ -2190,7 +2190,7 @@ static int zynqmp_dp_rate_get(void *data, u64 *val)
+ 	struct zynqmp_dp *dp = data;
  
- 	mutex_lock(&v3d_priv->perfmon.lock);
-@@ -393,6 +394,10 @@ int v3d_perfmon_destroy_ioctl(struct drm
- 	if (!perfmon)
- 		return -EINVAL;
- 
-+	/* If the active perfmon is being destroyed, stop it first */
-+	if (perfmon == v3d->active_perfmon)
-+		v3d_perfmon_stop(v3d, perfmon, false);
-+
- 	v3d_perfmon_put(perfmon);
- 
+ 	mutex_lock(&dp->lock);
+-	*val = drm_dp_bw_code_to_link_rate(dp->test.bw_code) * 10000;
++	*val = drm_dp_bw_code_to_link_rate(dp->test.bw_code) * 10000ULL;
+ 	mutex_unlock(&dp->lock);
  	return 0;
+ }
+-- 
+2.48.1
+
 
 
