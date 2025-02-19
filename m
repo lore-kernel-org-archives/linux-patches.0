@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F301DE3AE;
-	Wed, 19 Feb 2025 08:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06321DE3AE;
+	Wed, 19 Feb 2025 08:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955541; cv=none; b=AzEG7J0csREV6UBTDA1JhITwUqsLJIWi4I3fIE6PuxtJYVeC22IE5eux9KuNZCkZcqpLuZkX55h4HoYcdawWzgPRMPG6M8Jgjjg4HFNtoyhZl/V1IctevceyFkJqvOop75W2i2AnDeSDfAA0j6DqSZqZ2aKHBERH3lF6NUaNzHw=
+	t=1739955544; cv=none; b=ZFE7s8SuTRH62hYR8N5nVr+AZ4/gl7IOWX9iOONHXJaAAg6q/z9rEOXaxoT9Hh46EUsFCYf/xJ4Pc2qkaRa0J0wKwY7TQdmOuchajIAWZO1/UR7ta5vJQ1YoAkNhx9SISIxccS4toYXLVLfT3Q51wPX2nhk5+1sKnnrS7VPEt8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955541; c=relaxed/simple;
-	bh=PHH3TKWF3RLHG3SgfCKX6bCCp/vmvMan43V0nfsFcjc=;
+	s=arc-20240116; t=1739955544; c=relaxed/simple;
+	bh=8CQnFZwSMdELtx9GyLT49YeJ/K4lYEHL1H80JrLqHqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e86+E6ctfE8ynHhB5HWhoSdUJRiWTnPB5fypLvGH0chG+gGXfdu3v1KbI/uk4D3t3Utu11A5TN+LHg5s6KnW9623ZZkYpxd24DodCy3B+bNiWzKStROQ3tzzBf7uNs98LPt9KEyUPh2vz454a2XuchLNcGcTF6UT2lkS1k214uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDBAMrrE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N4tCfnPbbyB1l3Qqt1Rp4GcyTF1kGPmustS5XLt7vRjIBcmGO24tAGjZF3UZG2rjYEh+Tjaz4ql2I9zDoFzqsOmaROt9Aa2GnURiZqwNj9aHbyFL8vDP97HVf/y54FKK/h9uxnZuBYv6edOjtCCWsP3LT1i4amAYgjTylUYki9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkQE0z1z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDBAMrrE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D073FC4CED1;
-	Wed, 19 Feb 2025 08:59:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkQE0z1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1160C4CED1;
+	Wed, 19 Feb 2025 08:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955541;
-	bh=PHH3TKWF3RLHG3SgfCKX6bCCp/vmvMan43V0nfsFcjc=;
+	s=korg; t=1739955544;
+	bh=8CQnFZwSMdELtx9GyLT49YeJ/K4lYEHL1H80JrLqHqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDBAMrrEfGkWvr91b7jjrR6CgY7rj+ApouZIVyhDkzzmHsw5nV3dGxv+GvV0bc5Cv
-	 1KP2VFnzUBQ4SXk+Res9938MfLQQrAuvFnFTnPeMbRkC6zfy1td7L71UwRdHDaZVXf
-	 J43+GOr8C6Sz8lxihhhEs+A11hHnUkwOXbWUgEEs=
+	b=wkQE0z1zqU5Kc1sA5/dlIURRG2MlSpEZSA23lGQJZDIJrXFf/h6XUNHDVdDggZu3D
+	 pI2d/Istncd848qMrQrvU3QlAlwdaRrn+thQft6EVTJeFHbGNvTSCKYhHY7Qk0dWon
+	 5eud6KY1rdqNmepg8QVpZaLkn4Qc1PjcGrHTvJDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	John Kacur <jkacur@redhat.com>,
+	Luis Goncalves <lgoncalv@redhat.com>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/152] scsi: ufs: bsg: Set bsg_queue to NULL after removal
-Date: Wed, 19 Feb 2025 09:27:31 +0100
-Message-ID: <20250219082551.544333548@linuxfoundation.org>
+Subject: [PATCH 6.6 039/152] rtla/timerlat_hist: Abort event processing on second signal
+Date: Wed, 19 Feb 2025 09:27:32 +0100
+Message-ID: <20250219082551.588362572@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -52,35 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit 1e95c798d8a7f70965f0f88d4657b682ff0ec75f ]
+[ Upstream commit d6899e560366e10141189697502bc5521940c588 ]
 
-Currently, this does not cause any issues, but I believe it is necessary to
-set bsg_queue to NULL after removing it to prevent potential use-after-free
-(UAF) access.
+If either SIGINT is received twice, or after a SIGALRM (that is, after
+timerlat was supposed to stop), abort processing events currently left
+in the tracefs buffer and exit immediately.
 
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20241218014214.64533-3-kanie@linux.alibaba.com
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This allows the user to exit rtla without waiting for processing all
+events, should that take longer than wanted, at the cost of not
+processing all samples.
+
+Cc: John Kacur <jkacur@redhat.com>
+Cc: Luis Goncalves <lgoncalv@redhat.com>
+Cc: Gabriele Monaco <gmonaco@redhat.com>
+Link: https://lore.kernel.org/20250116144931.649593-5-tglozar@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs_bsg.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/tracing/rtla/src/timerlat_hist.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/ufs/core/ufs_bsg.c b/drivers/ufs/core/ufs_bsg.c
-index f21423a7a6d7d..8fbd46cd8c2b8 100644
---- a/drivers/ufs/core/ufs_bsg.c
-+++ b/drivers/ufs/core/ufs_bsg.c
-@@ -216,6 +216,7 @@ void ufs_bsg_remove(struct ufs_hba *hba)
- 		return;
- 
- 	bsg_remove_queue(hba->bsg_queue);
-+	hba->bsg_queue = NULL;
- 
- 	device_del(bsg_dev);
- 	put_device(bsg_dev);
+diff --git a/tools/tracing/rtla/src/timerlat_hist.c b/tools/tracing/rtla/src/timerlat_hist.c
+index 1525e88c6cf96..a985e57954820 100644
+--- a/tools/tracing/rtla/src/timerlat_hist.c
++++ b/tools/tracing/rtla/src/timerlat_hist.c
+@@ -952,6 +952,14 @@ static int stop_tracing;
+ static struct trace_instance *hist_inst = NULL;
+ static void stop_hist(int sig)
+ {
++	if (stop_tracing) {
++		/*
++		 * Stop requested twice in a row; abort event processing and
++		 * exit immediately
++		 */
++		tracefs_iterate_stop(hist_inst->inst);
++		return;
++	}
+ 	stop_tracing = 1;
+ 	if (hist_inst)
+ 		trace_instance_stop(hist_inst);
 -- 
 2.39.5
 
