@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C33018FC86;
-	Wed, 19 Feb 2025 08:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1231A841F;
+	Wed, 19 Feb 2025 08:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739953916; cv=none; b=FxSoN58aan8oVpnXw8frxnazy0MCI706vknkhHSIMt40PBb8MjUk0whxWhFgl1JHpdRCCwXJnDswXqUmr7KvKiAHGmpuFvWxCHxYw9zUOqZX9eT6Sa2oh60YTfYpintoNBA4aLoOgyBs3xOZoKiMngLUTBNyQ6VY1QlDvMnlufI=
+	t=1739953919; cv=none; b=n/aii2PcXQhC2CFOTY+Vm29eai5+LpNJ8nBZIui0cpaugUnBwXbYvplPrBa6fcADyyvo17mpmK+VmYhFN665GN1Z2b8Vap2WUIJdQFfICGT6e0HfI13MLJEkk8k7fAZb0jU4bnAat5QRiWd3R18H2Y2KbxusDxNaFXCSRP+rXY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739953916; c=relaxed/simple;
-	bh=TwryS8608p3wJMOqYQHi4F97mSvbJM6S3h6PxCAMILI=;
+	s=arc-20240116; t=1739953919; c=relaxed/simple;
+	bh=VWSTMkCxXz+r7w5OeZzrMYvL03kEnuwjH1T52x6p4LY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vs+p7Fr801MRdUFpV6lY8aZsJp+ms4eQoyi5flghKrV4L38tooPmrSTzyWxWrC7RArq2HGovd0b/2NFTnA8kIGwujfaALWQn8ITrp4C9vus3GzirzYA0uuQakreRzQwAcnvlAR/XRzYA07ToMlLXx1hIOb4cP18kAvVsdu7MooE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dto2MncZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nr67rCL+lUNiPaqgA60CtCO4p1EODrh42Imc4me3Lvujq1YjbSwwctF4MkuTSNSW7NjZi+WdfuUdjxde7rTWicaRM+6nwHiF6ji4h+MuHbCl9bwwDsnlmlqjB3qu/NBrFBoFmfDeIBYW2HhVnVMSWNhlboUPBqMX7SzTygKvgo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSY3mKzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dto2MncZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DD9C4CEE6;
-	Wed, 19 Feb 2025 08:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSY3mKzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA978C4CEEC;
+	Wed, 19 Feb 2025 08:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739953916;
-	bh=TwryS8608p3wJMOqYQHi4F97mSvbJM6S3h6PxCAMILI=;
+	s=korg; t=1739953919;
+	bh=VWSTMkCxXz+r7w5OeZzrMYvL03kEnuwjH1T52x6p4LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dto2MncZE8F0mm3EudyJwU5U+N7NRiJkrBQdiDj9l/JA8R1yTu5hol3r3lDEcIqA6
-	 Zb3k6pYqMtf3H8tKNzhzxlTmHYif/4tkYGFN90xtyrXFDaaMh7ZsH/qVtCt+UoITLy
-	 GUZy0dZ4xF2td1uRPuQv4IrB0YVehAOulSVqgzCc=
+	b=GSY3mKzQLo2CCU8qNHlAHLoDgmAR2d2/BF85pLrlPEaWAYdAXz0nJB0gYDxuDpRHd
+	 wfacwRjAaTppvDbduDi6biYrMWPGQCjeQQ3brgIajFS/iJFXwlrzX4Cn4pzwecDGa9
+	 W1xrzo92lf1S00Sfp9L+ACSHO1tKnPq5XHluaz5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 007/274] pinctrl: cy8c95x0: Fix off-by-one in the regmap range settings
-Date: Wed, 19 Feb 2025 09:24:21 +0100
-Message-ID: <20250219082609.821565920@linuxfoundation.org>
+Subject: [PATCH 6.13 008/274] pinctrl: cy8c95x0: Avoid accessing reserved registers
+Date: Wed, 19 Feb 2025 09:24:22 +0100
+Message-ID: <20250219082609.860806385@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -53,43 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 6f36f103cff1737094f2187b1f9a7b312820d377 ]
+[ Upstream commit 3fbe3fe28764455e4fc3578afb9765f46f9ce93d ]
 
-The range_max is inclusive, so we need to use the number of
-the last accessible register address.
+The checks for vrtual registers in the cy8c95x0_readable_register()
+and cy8c95x0_writeable_register() are not aligned and broken.
 
-Fixes: 8670de9fae49 ("pinctrl: cy8c95x0: Use regmap ranges")
+Fix that by explicitly avoiding reserved registers to be accessed.
+
+Fixes: 71e4001a0455 ("pinctrl: pinctrl-cy8c95x0: Fix regcache")
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/20250203131506.3318201-2-andriy.shevchenko@linux.intel.com
+Link: https://lore.kernel.org/20250203131506.3318201-3-andriy.shevchenko@linux.intel.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-cy8c95x0.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pinctrl/pinctrl-cy8c95x0.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/pinctrl/pinctrl-cy8c95x0.c b/drivers/pinctrl/pinctrl-cy8c95x0.c
-index 0d6c2027d4c18..5c6bcbf6c3377 100644
+index 5c6bcbf6c3377..c787a9aadfdfb 100644
 --- a/drivers/pinctrl/pinctrl-cy8c95x0.c
 +++ b/drivers/pinctrl/pinctrl-cy8c95x0.c
-@@ -1438,15 +1438,15 @@ static int cy8c95x0_probe(struct i2c_client *client)
- 	switch (chip->tpin) {
- 	case 20:
- 		strscpy(chip->name, cy8c95x0_id[0].name);
--		regmap_range_conf.range_max = CY8C95X0_VIRTUAL + 3 * MUXED_STRIDE;
-+		regmap_range_conf.range_max = CY8C95X0_VIRTUAL + 3 * MUXED_STRIDE - 1;
- 		break;
- 	case 40:
- 		strscpy(chip->name, cy8c95x0_id[1].name);
--		regmap_range_conf.range_max = CY8C95X0_VIRTUAL + 6 * MUXED_STRIDE;
-+		regmap_range_conf.range_max = CY8C95X0_VIRTUAL + 6 * MUXED_STRIDE - 1;
- 		break;
- 	case 60:
- 		strscpy(chip->name, cy8c95x0_id[2].name);
--		regmap_range_conf.range_max = CY8C95X0_VIRTUAL + 8 * MUXED_STRIDE;
-+		regmap_range_conf.range_max = CY8C95X0_VIRTUAL + 8 * MUXED_STRIDE - 1;
- 		break;
+@@ -328,14 +328,14 @@ static int cypress_get_pin_mask(struct cy8c95x0_pinctrl *chip, unsigned int pin)
+ static bool cy8c95x0_readable_register(struct device *dev, unsigned int reg)
+ {
+ 	/*
+-	 * Only 12 registers are present per port (see Table 6 in the
+-	 * datasheet).
++	 * Only 12 registers are present per port (see Table 6 in the datasheet).
+ 	 */
+-	if (reg >= CY8C95X0_VIRTUAL && (reg % MUXED_STRIDE) < 12)
+-		return true;
++	if (reg >= CY8C95X0_VIRTUAL && (reg % MUXED_STRIDE) >= 12)
++		return false;
+ 
+ 	switch (reg) {
+ 	case 0x24 ... 0x27:
++	case 0x31 ... 0x3f:
+ 		return false;
  	default:
- 		return -ENODEV;
+ 		return true;
+@@ -344,8 +344,11 @@ static bool cy8c95x0_readable_register(struct device *dev, unsigned int reg)
+ 
+ static bool cy8c95x0_writeable_register(struct device *dev, unsigned int reg)
+ {
+-	if (reg >= CY8C95X0_VIRTUAL)
+-		return true;
++	/*
++	 * Only 12 registers are present per port (see Table 6 in the datasheet).
++	 */
++	if (reg >= CY8C95X0_VIRTUAL && (reg % MUXED_STRIDE) >= 12)
++		return false;
+ 
+ 	switch (reg) {
+ 	case CY8C95X0_INPUT_(0) ... CY8C95X0_INPUT_(7):
+@@ -353,6 +356,7 @@ static bool cy8c95x0_writeable_register(struct device *dev, unsigned int reg)
+ 	case CY8C95X0_DEVID:
+ 		return false;
+ 	case 0x24 ... 0x27:
++	case 0x31 ... 0x3f:
+ 		return false;
+ 	default:
+ 		return true;
 -- 
 2.39.5
 
