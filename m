@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5C81C5485;
-	Wed, 19 Feb 2025 09:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E7C286285;
+	Wed, 19 Feb 2025 09:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957538; cv=none; b=LbmVoVPH5R3mS+TItJMlMQs3XMJX7hMkKzW2rTseFO4VYqqtoDgK7PQgal6s2B/JOKA71oyeB6aXD4uXcqgRwB/5WgAM2XnIY9a/IbeOIopimh25wGVXBMfoA8wig8J/h4PIb6RDxUyPcuLI+o30DxLf5aQ8vHWKCzAlaz+cEXc=
+	t=1739957541; cv=none; b=OMC8gxchjNjNRikGGY/k5kPrZKApaZw50Scsajl/b740vI6CJ910q2v5FgOz7jbPL6BVK0wFmRXWAQhn5WsobowElwmWzp5zXjrxEcA1zjJ0vfC7nZd2pYA+6EBUaNJJuo1wcJ9siwG9A7sbBhlceSr/ml2YQpFrBzVs+3fQ/90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957538; c=relaxed/simple;
-	bh=vJtYjD/FWnyQAuuoJ9yKu07J+LTOHDmI8GWQi+diRgs=;
+	s=arc-20240116; t=1739957541; c=relaxed/simple;
+	bh=DmOhW5ixSh9hBvbF6ieCu+NEBb2+MoA3hfq/LZGypD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cC79k7NsalR8zkMCr+KRmimf+OTjHfEtZY50fMTcNqHS1IjNzHsevPkYb8acHI/ROuV4Z0Gx6yTraZA/Hi1ibuZ9ih5LdFzMlB/hCDXqlYHk+WZROKz6tmxVMEBUa9IEGdSNoq2qN6bZpf056p3W2IMJJYaRgnXylfYfq2XkvwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zj8TdFe+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uNUgOVuyw2HoozfaTO5UtUSmFVpUUY9XkzEPGtfrk+exDc1NzXnqQJMkxHJo3reJRCUlVBAsbm/pI/QHeWNa79mbAFM/F1/ZcR+WXY90AumtUKAJe8GXbJt83Tpw8YGwj3gVgMtixtCNhq4RYdsNFyalNYqPUz3afJ/KhFzaH6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=no1ixNl5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zj8TdFe+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCE7C4CED1;
-	Wed, 19 Feb 2025 09:32:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="no1ixNl5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D16AC4CED1;
+	Wed, 19 Feb 2025 09:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957538;
-	bh=vJtYjD/FWnyQAuuoJ9yKu07J+LTOHDmI8GWQi+diRgs=;
+	s=korg; t=1739957540;
+	bh=DmOhW5ixSh9hBvbF6ieCu+NEBb2+MoA3hfq/LZGypD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zj8TdFe+BRayAQax1XmEmUyuedd2MDjwJXGGPs4PRVNrdPMzpk/J8cNNRMGGCPbMB
-	 HwU+G0OrMh5KvaghGO/zztNTX0ZyXFqwRiQAIVUF25UGK5L0fcQjg53GuzOYjcSKI0
-	 n2cgwtEZyPmYBbfeOj1w5twGp5mpLATqZG0AvSCM=
+	b=no1ixNl5lgQI1rA/XS2IBE6oEqZ6FSc3PCDdy0wKYNi+NbvGot+rEh2bUEDF8UcJG
+	 eEj/yvEsy8CAZ6b3kKw32apRgXVguT9r3xM6PUhtAxSvUGtLo/qUFm9PrixotzPP4r
+	 aYrYllhntsX7oYfgolydmsfAZMO4H8PkiNV8tMyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Delgan <delgan.py@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mika Westerberg <westeri@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.1 528/578] gpiolib: acpi: Add a quirk for Acer Nitro ANV14
-Date: Wed, 19 Feb 2025 09:28:52 +0100
-Message-ID: <20250219082713.744576349@linuxfoundation.org>
+	"Chester A. Unal" <chester.a.unal@arinc9.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 519/578] USB: serial: option: drop MeiG Smart defines
+Date: Wed, 19 Feb 2025 09:28:43 +0100
+Message-ID: <20250219082713.393160798@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,51 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 8743d66979e494c5378563e6b5a32e913380abd8 upstream.
+commit 6aa8a63c471eb6756aabd03f880feffe6a7af6c9 upstream.
 
-Spurious immediate wake up events are reported on Acer Nitro ANV14. GPIO 11 is
-specified as an edge triggered input and also a wake source but this pin is
-supposed to be an output pin for an LED, so it's effectively floating.
+Several MeiG Smart modems apparently use the same product id, making the
+defines even less useful.
 
-Block the interrupt from getting set up for this GPIO on this device.
+Drop them in favour of using comments consistently to make the id table
+slightly less unwieldy.
 
 Cc: stable@vger.kernel.org
-Reported-by: Delgan <delgan.py@gmail.com>
-Tested-by: Delgan <delgan.py@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3954
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Mika Westerberg <westeri@kernel.org>
-Link: https://lore.kernel.org/r/20250211203222.761206-1-superm1@kernel.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Acked-by: Chester A. Unal <chester.a.unal@arinc9.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-acpi.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/usb/serial/option.c |   28 ++++++++--------------------
+ 1 file changed, 8 insertions(+), 20 deletions(-)
 
---- a/drivers/gpio/gpiolib-acpi.c
-+++ b/drivers/gpio/gpiolib-acpi.c
-@@ -1640,6 +1640,20 @@ static const struct dmi_system_id gpioli
- 			.ignore_wake = "PNP0C50:00@8",
- 		},
- 	},
-+	{
-+		/*
-+		 * Spurious wakeups from GPIO 11
-+		 * Found in BIOS 1.04
-+		 * https://gitlab.freedesktop.org/drm/amd/-/issues/3954
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_MATCH(DMI_PRODUCT_FAMILY, "Acer Nitro V 14"),
-+		},
-+		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
-+			.ignore_interrupt = "AMDI0030:00@11",
-+		},
-+	},
- 	{} /* Terminating entry */
- };
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -619,18 +619,6 @@ static void option_instat_callback(struc
+ /* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
+ #define LUAT_PRODUCT_AIR720U			0x4e00
  
+-/* MeiG Smart Technology products */
+-#define MEIGSMART_VENDOR_ID			0x2dee
+-/*
+- * MeiG Smart SLM828, SRM815, and SRM825L use the same product ID. SLM828 is
+- * based on Qualcomm SDX12. SRM815 and SRM825L are based on Qualcomm 315.
+- */
+-#define MEIGSMART_PRODUCT_SRM825L		0x4d22
+-/* MeiG Smart SLM320 based on UNISOC UIS8910 */
+-#define MEIGSMART_PRODUCT_SLM320		0x4d41
+-/* MeiG Smart SLM770A based on ASR1803 */
+-#define MEIGSMART_PRODUCT_SLM770A		0x4d57
+-
+ /* Device flags */
+ 
+ /* Highest interface number which can be used with NCTRL() and RSVD() */
+@@ -2366,6 +2354,14 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0a05, 0xff) },			/* Fibocom FM650-CN (NCM mode) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0a06, 0xff) },			/* Fibocom FM650-CN (RNDIS mode) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0a07, 0xff) },			/* Fibocom FM650-CN (MBIM mode) */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d41, 0xff, 0, 0) },		/* MeiG Smart SLM320 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d57, 0xff, 0, 0) },		/* MeiG Smart SLM770A */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0, 0) },		/* MeiG Smart SRM815 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0x10, 0x02) },	/* MeiG Smart SLM828 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0x10, 0x03) },	/* MeiG Smart SLM828 */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d22, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2df3, 0x9d03, 0xff) },			/* LongSung M5710 */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1404, 0xff) },			/* GosunCn GM500 RNDIS */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
+@@ -2422,14 +2418,6 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM770A, 0xff, 0, 0) },
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0, 0) },	/* MeiG Smart SRM815 */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0x10, 0x02) },	/* MeiG Smart SLM828 */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0x10, 0x03) },	/* MeiG Smart SLM828 */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM815 and SRM825L */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825L */
+-	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825L */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
+ 	  .driver_info = NCTRL(1) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0640, 0xff),			/* TCL IK512 ECM */
 
 
