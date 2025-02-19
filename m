@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FDBF1EEA2A;
-	Wed, 19 Feb 2025 08:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666D41EF082;
+	Wed, 19 Feb 2025 08:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954849; cv=none; b=VNbfx8c+TDn0t3TYD5B8dWjHiopFJXOyeY2nM8PBWg9aRu35F7YTZ7//oWfUPtLVHeSbnCENye+RNDwsjNwMLyG4hW8P6n2CpiBHkhEZSUwQlQTSyXAq9r2UDAs8+GQHI2i2Zsf9Ui3h+QvKC0nmzfCxlZQJk/E7MlYXLIQvrHc=
+	t=1739954852; cv=none; b=rtf7mNuVgSo7P0mOsVAy5SsMcVWYNTJimFvI7cidvBUazQMn6funQRSfHDsd+Cn7eC4Gvk6FAd0KXovt4g+i8kbaimrCxcqR1uvfvRxEz+J2D1VKtn8giJFcoXfmWyvPD1E2Znb2CgYAPltkqxeKZVM/gNLLNFD0i6WGjOEz8aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954849; c=relaxed/simple;
-	bh=oJsJ6U5FU3Qlzqhoh6f9NCbIGrvhfyJ08EL+NWLF5Js=;
+	s=arc-20240116; t=1739954852; c=relaxed/simple;
+	bh=xd6IHO3bg0WCtHKsKAVssoW6Kz4dQAhJaWK+Y9EYkwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQ2DYN4WL3fm3jPQCAHc5kkP+Xoy+pHuzWyCOtP2r0CyZvy+zfwto7NBxdw5v6vZkB2wJKfAxFJsHa7O/AU8gKgPE75pp0ZkPi0y4zNpYHP+vz8HB+20LmomdtsJg9jm6XKd1gN1FbQuCB2m68xl5aAjDzJfpKQWNsGnnR7Lj+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHO1kJao; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VnhgiSnNsq47+YASZ+B6YKLw2I4WyJaEGq+UkvB6tB6qGuUbzstIOnVlu8BJUTSwmHX1HA1TypIy3L3cQDJTVY73GQXn7YwRLNsrpRgBcPBxNygqUQ4jTzcHgD1uuMqu7w7LYlOAS+hN8sr6Hy7DJuQ5dg0TIhCjq12bRQDxEK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JnTiXQn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHO1kJao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B254DC4CEE6;
-	Wed, 19 Feb 2025 08:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JnTiXQn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D835CC4CEE8;
+	Wed, 19 Feb 2025 08:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954849;
-	bh=oJsJ6U5FU3Qlzqhoh6f9NCbIGrvhfyJ08EL+NWLF5Js=;
+	s=korg; t=1739954852;
+	bh=xd6IHO3bg0WCtHKsKAVssoW6Kz4dQAhJaWK+Y9EYkwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SHO1kJaohLdqval8Kk6kAe56EbpVOuomglrWEJXm33ZfXca6zSNVjWVlh/CgxCyC6
-	 36RIDearLBV8nmI4i8aFkEWSbRCAfixdD3KEaVsgGEWjMcEKh+eNGfptsmwVhKwaXf
-	 zLsBD40Xdo0taZekcKcwXmaV7EjO2BJimfW/cLLg=
+	b=2JnTiXQnpxEjnFmRrp+OcDblY//HoNImqKkn4G9054oiS6PNnnu13jMumjUrtRog2
+	 OOs1PRjlYSUHDvmuHJj39oQZfL2bkxVOOwyGTF+smulvAeG5y7IyrB7arCpQE1+n4U
+	 Y6kWx66jq4dyjwrWu1rKSUG+hZDPsga2O7bwtl0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuyi Zhou <zhouchuyi@bytedance.com>,
-	Tejun Heo <tj@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 054/230] sched_ext: Use SCX_CALL_OP_TASK in task_tick_scx
-Date: Wed, 19 Feb 2025 09:26:11 +0100
-Message-ID: <20250219082603.827357661@linuxfoundation.org>
+Subject: [PATCH 6.12 055/230] gpiolib: Fix crash on error in gpiochip_get_ngpios()
+Date: Wed, 19 Feb 2025 09:26:12 +0100
+Message-ID: <20250219082603.867907477@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -51,68 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuyi Zhou <zhouchuyi@bytedance.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit f5717c93a1b999970f3a64d771a1a9ee68cc37d0 ]
+[ Upstream commit 7b4aebeecbbd5b5fe73e35fad3f62ed21aa7ef44 ]
 
-Now when we use scx_bpf_task_cgroup() in ops.tick() to get the cgroup of
-the current task, the following error will occur:
+The gpiochip_get_ngpios() uses chip_*() macros to print messages.
+However these macros rely on gpiodev to be initialised and set,
+which is not the case when called via bgpio_init(). In such a case
+the printing messages will crash on NULL pointer dereference.
+Replace chip_*() macros by the respective dev_*() ones to avoid
+such crash.
 
-scx_foo[3795244] triggered exit kind 1024:
-  runtime error (called on a task not being operated on)
-
-The reason is that we are using SCX_CALL_OP() instead of SCX_CALL_OP_TASK()
-when calling ops.tick(), which triggers the error during the subsequent
-scx_kf_allowed_on_arg_tasks() check.
-
-SCX_CALL_OP_TASK() was first introduced in commit 36454023f50b ("sched_ext:
-Track tasks that are subjects of the in-flight SCX operation") to ensure
-task's rq lock is held when accessing task's sched_group. Since ops.tick()
-is marked as SCX_KF_TERMINAL and task_tick_scx() is protected by the rq
-lock, we can use SCX_CALL_OP_TASK() to avoid the above issue. Similarly,
-the same changes should be made for ops.disable() and ops.exit_task(), as
-they are also protected by task_rq_lock() and it's safe to access the
-task's task_group.
-
-Fixes: 36454023f50b ("sched_ext: Track tasks that are subjects of the in-flight SCX operation")
-Signed-off-by: Chuyi Zhou <zhouchuyi@bytedance.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 55b2395e4e92 ("gpio: mmio: handle "ngpios" properly in bgpio_init()")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20250213155646.2882324-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 6 +++---
+ drivers/gpio/gpiolib.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 45e7461fd4c94..b88fa640325e5 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3447,7 +3447,7 @@ static void task_tick_scx(struct rq *rq, struct task_struct *curr, int queued)
- 		curr->scx.slice = 0;
- 		touch_core_sched(rq, curr);
- 	} else if (SCX_HAS_OP(tick)) {
--		SCX_CALL_OP(SCX_KF_REST, tick, curr);
-+		SCX_CALL_OP_TASK(SCX_KF_REST, tick, curr);
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 44372f8647d51..1e8f0bdb6ae3b 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -905,13 +905,13 @@ int gpiochip_get_ngpios(struct gpio_chip *gc, struct device *dev)
  	}
  
- 	if (!curr->scx.slice)
-@@ -3594,7 +3594,7 @@ static void scx_ops_disable_task(struct task_struct *p)
- 	WARN_ON_ONCE(scx_get_task_state(p) != SCX_TASK_ENABLED);
- 
- 	if (SCX_HAS_OP(disable))
--		SCX_CALL_OP(SCX_KF_REST, disable, p);
-+		SCX_CALL_OP_TASK(SCX_KF_REST, disable, p);
- 	scx_set_task_state(p, SCX_TASK_READY);
- }
- 
-@@ -3623,7 +3623,7 @@ static void scx_ops_exit_task(struct task_struct *p)
+ 	if (gc->ngpio == 0) {
+-		chip_err(gc, "tried to insert a GPIO chip with zero lines\n");
++		dev_err(dev, "tried to insert a GPIO chip with zero lines\n");
+ 		return -EINVAL;
  	}
  
- 	if (SCX_HAS_OP(exit_task))
--		SCX_CALL_OP(SCX_KF_REST, exit_task, p, &args);
-+		SCX_CALL_OP_TASK(SCX_KF_REST, exit_task, p, &args);
- 	scx_set_task_state(p, SCX_TASK_NONE);
- }
+ 	if (gc->ngpio > FASTPATH_NGPIO)
+-		chip_warn(gc, "line cnt %u is greater than fast path cnt %u\n",
+-			gc->ngpio, FASTPATH_NGPIO);
++		dev_warn(dev, "line cnt %u is greater than fast path cnt %u\n",
++			 gc->ngpio, FASTPATH_NGPIO);
  
+ 	return 0;
+ }
 -- 
 2.39.5
 
