@@ -1,102 +1,93 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19A31C7013
-	for <patches@lists.linux.dev>; Wed, 19 Feb 2025 09:54:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8366D2862A1
+	for <patches@lists.linux.dev>; Wed, 19 Feb 2025 10:25:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739958864; cv=none; b=PCaTuuTF0lzY8jI2syJEv0fZXq6gbMCPk0w5bjRy0Cak/991IMwPJOFZcSeAhwAvJymBI10xMFmRejlDaTua4lKCBGwr24i9OQW2F+MfKkqR71oLAygM85pf4o0Plg2pbD+1EBCzQhDu1DzsVWVRlRhwRnyBFdtvF8zrWM/beEE=
+	t=1739960706; cv=none; b=Xr2JKtjea2uP0gTvKZAU393+0wKcETe4VlL3hfsRUBK7e2ts8YvT4udGnwBYiXb1l3xfF/1fI5ovLCPT/37oYv3qZtGXUPpWzI5h01A/LCVmTay6zLSyeQvzLKCr0Kx6Q9wLNynLHQD2TeeFQfmq+aTkIyg6EQCCCMhLVEqp0DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739958864; c=relaxed/simple;
-	bh=FfvqskgKTPSFoGOkrm9Aj6YyyR2dEeyLXz1vwGuyTu8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XyE5I8Z3cQHR+uQSqJAmlMGVln8JcVOQe0oiq4+VLs86WbtIPOY47VAQaKo8DWzn6k0rhi71BBW4+37SV1NmYUzR6KaXGUzHgSKin4xBm68WXSl3z8Bs50GTDcJMxa6Srgdyf0jw0X4/ZNXXQkPr/6G+spJJ6bvD3Pkwesfn7no=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gfMoe0R6; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739960706; c=relaxed/simple;
+	bh=70xw9/zk6se8hKbZVVs7psYYypJwFKVOXlbDMO4NNLI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UfsEWeCKAax9N4+zDuC56aUQpNwxAR4OXwJHFfFb6kF+F/uDN8dr/Uw0EgnZt00fPjgKhI6HJZZ7Lburr5PQUw2gMQZ22alUwR17/WUlMV9YjqixNCsjhK8IAcAiIxwG25XBN7Lla4fbMslQbgCOBI6R14UyDxHQW72QwUDRb6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=OEfeN0fw; arc=none smtp.client-ip=89.58.32.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gfMoe0R6"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-abb90f68f8cso627930166b.3
-        for <patches@lists.linux.dev>; Wed, 19 Feb 2025 01:54:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739958861; x=1740563661; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UzWk2OL1SOHfTidLq0uZH1erG+Z4ao2Q35XKqTe/yeQ=;
-        b=gfMoe0R6Vpq3xNfhm/OXD7bsxtxdNng+sEAmkzQycij+vHs06rYIt21Q5j3ZDoXLgB
-         D9d75PgIhYhQyn90mmarfX4JqpSF6OwzKDAAvghydt1PaIOYTGPpwaXcxQOyvT7EgRUG
-         BoW4AYfjQdyjUqrXcp1afWJdnLj9tX63aKKkseZHMg4px8MYRSngrCrLNTQ2jZ1Rz6Ix
-         0ijrQlPGGvGgQbkdOP747/8k2Cq3kO0ktXwDn6G7gyTJwdpThVK/7C9FWfaShPhdR55o
-         RoID8aqpXpmRhwf6C2bYvwj4LWAPonZ/qcM1f9edwaeCjGyZ4uMvES2KuQryOkD2CfXT
-         a37g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739958861; x=1740563661;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UzWk2OL1SOHfTidLq0uZH1erG+Z4ao2Q35XKqTe/yeQ=;
-        b=ujOw+l3I5FCEs8kudQSdSDNEnGsE9kY/mTeg26QW5V4pLObYj0mQZpMAqEMM026Dja
-         E/WGFvioAeT8wf/Z2+7WhFhRzueObXMYym+x23/jtGUBDHClIMNWVg1mcQEq3s5+xrW+
-         myQ+rNk3e991tbS4+Q/iYThUL/K7wy7oH+epsIshVGl7GF7sWrQdZNowuPsTVru19kPZ
-         +wmoN8sfSp1fvS2g+0l/LM1Q0MqBoBNKij113JX3aI1F9Z6x1XHrul3zOCG2Gm+bbZ1c
-         fo1UCyLEGgyHVEccv5POx5kN52RhnNvW1WHBSGK1QPN+/1i4JO3lp/H4vZl2AqHpamXO
-         Fgdg==
-X-Forwarded-Encrypted: i=1; AJvYcCWDnzyxMQBdGaDt3pLLI0qxeuex1co//IEovJ24CMnuUUEe3pzCRdg/rS5Bxa8lBTRpmByoCtJQ@lists.linux.dev
-X-Gm-Message-State: AOJu0YzHGoeH2Nrn9rSXywQnKPLIK1LfVHSVBqSNdSmFEj105Hj2ffwI
-	h/9tX3SH3i/AHceSfBBpP8tmlISKHE/YeCciWsf0mBsgZUNaQTVR
-X-Gm-Gg: ASbGncvVx1TGdLlIhdM3QC3FS09M5saB0hD+n2CW+6sqciWBCe1b0aLMxvj+NqtcU9y
-	fHEc1Fnpde1Yr5YDGIhYIxDaY2+TN20mTjc/yu2lMQ34DRKMTztuLQ1VEXTaQ9Xs0dtbil+yNcN
-	1erDe8JL/SDFrpDtez3foDsBcfOeecv1XIj4JmoLyHa+2SK3Ym7ce7wke45Qph9qH6VH6SVIKuC
-	gSkkQYxOZpdja+mU1gY4gsy6++OOfq4jpKq9dTmBkcmjdM6iRZMMytxf2DdU/fvBHvZ5ZBCDRRE
-	hVDxnvJWi8kjI0S93qyhyVXhm5PVGU4o4wkx9ISuaStVszRI+Tji49SERg==
-X-Google-Smtp-Source: AGHT+IFUXdifchAYRC2XVoOKv+l1G2LwyFmvENSZSxzDWHXbNHiK06f8CYAM43WM0AmfoIIoJt2Nzg==
-X-Received: by 2002:a17:906:395b:b0:abb:b12b:e103 with SMTP id a640c23a62f3a-abbb12be1fbmr762017166b.34.1739958860993;
-        Wed, 19 Feb 2025 01:54:20 -0800 (PST)
-Received: from [192.168.0.9] (pc-201-96-67-156-static.strong-pc.com. [156.67.96.201])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aba5337673dsm1226050966b.89.2025.02.19.01.54.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Feb 2025 01:54:20 -0800 (PST)
-Message-ID: <7083ab36-715e-47b8-be46-591b5fedf8a7@gmail.com>
-Date: Wed, 19 Feb 2025 10:54:19 +0100
+	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="OEfeN0fw"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 3905D10382D3C;
+	Wed, 19 Feb 2025 11:24:50 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
+	t=1739960696;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=R+P3f4KN/Jh3rG/rD8+HRKO0VqzZWriCsR2W/RI9aUE=;
+	b=OEfeN0fwBN6LCHPHGEXv00yMdeHpV7M0J7V73vfQiPWg3+ExFnjZ49jJ97m3AVByjqrOeP
+	/RShWpr3bh44xiN/rKm9K/M3/VjJStvsf4SJZcl1u6eS8kN5gaUB5nT1zuBcj+CAM+9NL5
+	10ECkJH1pJ9I65ztLtFb+Niw/O1UGNOm43KQIUwe6Vmjmc8zxcNLDLLjN0hyszejk1Iynr
+	H7uAKcV8R5kse0tu/BhVyf1tiOpHpyLzwOg2vmtLMQ7MmuWTreOU25mCw2RBzg9gbJq/Kz
+	ZWNKeCyG+L5CtokpKh2ng+8fb7uyiCwbjgczInBVD4Jpn01is9Akqlf6HdHmVA==
+Date: Wed, 19 Feb 2025 11:24:48 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 000/578] 6.1.129-rc1 review
+Message-ID: <Z7WxcPi+JKuyJsds@duo.ucw.cz>
+References: <20250219082652.891560343@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.13 116/274] drm/amdgpu/gfx9: manually control gfxoff for
- CS on RV
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- Lijo Lazar <lijo.lazar@amd.com>,
- Sergey Kovalenko <seryoga.engineering@gmail.com>,
- Alex Deucher <alexander.deucher@amd.com>
-References: <20250219082609.533585153@linuxfoundation.org>
- <20250219082614.161530240@linuxfoundation.org>
- <96738386-9155-4eea-b91d-8590ef3b4562@gmail.com>
- <2025021944-imaginary-demote-31d1@gregkh>
-Content-Language: en-US, pl-PL
-From: =?UTF-8?B?QsWCYcW8ZWogU3pjenlnaWXFgg==?= <mumei6102@gmail.com>
-In-Reply-To: <2025021944-imaginary-demote-31d1@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="JcUuyTE4Uj/fkr9+"
+Content-Disposition: inline
+In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-It builds because in 6.13 and older this function has 'void *' argument 
-which is casted to 'amdgpu_device *'.
 
-On 2/19/25 10:08, Greg Kroah-Hartman wrote:
-> On Wed, Feb 19, 2025 at 09:59:05AM +0100, Błażej Szczygieł wrote:
->> This patch has to be changed for 6.13 - "gfx_v9_0_set_powergating_state" has
->> 'amdgpu_device' argument instead of 'amdgpu_ip_block' argument there.
-> 
-> Why does it build then?
-> 
-> Anyway, can you send a working version?  I'll go drop this from the
-> queues for now.
-> 
-> thanks,
-> 
-> greg k-h
+--JcUuyTE4Uj/fkr9+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+Hi!
+
+> This is the start of the stable review cycle for the 6.1.129 release.
+> There are 578 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+CIP testing did not find any problems here:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.1.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--JcUuyTE4Uj/fkr9+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZ7WxcAAKCRAw5/Bqldv6
+8u5oAJ49aUqdpfP5A+PgynAWh+GzrsTC8gCghu41czmzQTiBd4R1gGZxUW/LtQY=
+=upo+
+-----END PGP SIGNATURE-----
+
+--JcUuyTE4Uj/fkr9+--
