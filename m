@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE771BEF71;
-	Wed, 19 Feb 2025 08:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499F41EEA27;
+	Wed, 19 Feb 2025 08:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955360; cv=none; b=pV0YIhE37cPKVsJzzW3GBNPdfOv1Fawzv/+V4AITZhAtJ0Zzda0yysJy2diVSrm4okOj0BROtjjPPdUEIssjpRpbVc7gJBp9+d3D95bd+lMCjWaQ5YG3pKpy1Ucud5uVnMQ1omJjRBM9fJ5WixsWK/ruzFXoZ5RHAtRgJjW7rwo=
+	t=1739955363; cv=none; b=RHs0XBkOvm41gjpH9EF+vHNIyTv7myjMZ/HiBTXs7K1RUYNcxhu83NisqPGSTXfX/ogw4TgX+zVmx4q9MWXcmUxx1LJ8eGMQkjYNHiOY4mXB9xv/6ZAr1sjbS4IRmsOrhiQ5gXwayg0xwSxEK/Teel+1K6/Qcvl64JGDhP04Oak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955360; c=relaxed/simple;
-	bh=CF/DoEJIR7QmCjweckZ1R/mAam3gNqZgd354MtDtkFA=;
+	s=arc-20240116; t=1739955363; c=relaxed/simple;
+	bh=Gq44AhOdQ1g2CXtPMrMEzTNCkU5IXtWvD2CYhHGH83w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GY/lskGjv5T6ZiPxd4BloM07bjJ26TBKYNv0kcloGhaoioRVFVWPevqo3IzPUohU+roUSeN6YabHTP/41mA1TRrRrcNMPFMa8PPNAlxZnaHWbbWXJMbptMToYNhtBDxTAaytN8cumGSJSgnkOaovNosgJat7rUn6TWIyHrLoOKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwTMuh22; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EjMtGoHmUknMfmOaIykEMDtitHkKJO4adPTpEVHGThYMiPQEez47j+7UHGUqX4+5qSVbln3UML2ZT9+9GMM84DrX0xGelF8aQmdcowR0vSXz+uOokx/rRM/eViwv9g3tws7iVY6ggiQxaWek8btbQmHekerzm2pkn44tj8qTVFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoVwV6S3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwTMuh22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C365C4CED1;
-	Wed, 19 Feb 2025 08:55:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoVwV6S3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB97FC4CED1;
+	Wed, 19 Feb 2025 08:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955360;
-	bh=CF/DoEJIR7QmCjweckZ1R/mAam3gNqZgd354MtDtkFA=;
+	s=korg; t=1739955363;
+	bh=Gq44AhOdQ1g2CXtPMrMEzTNCkU5IXtWvD2CYhHGH83w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OwTMuh22n9YupSSHw2ryzMOy30mWcijwrvQfj1QTEJa2EOOsbJEfFf6owDcRHD2Cn
-	 8nBRGoqldQkVSjzS5CoE4Lw3rv4QZ2lf/m1sQwYZK1N2Cs9sJhHD+qmKXgRmxzXu0P
-	 Pdbn/eg5jjeWqQ/vskNvL26TJ630v/uzJedLeM0s=
+	b=YoVwV6S3Cn2du/tLiGtHfCFNEN7cLi9JgnLklAzlEF4Ovgnt8vhdyuAVnG85zToJY
+	 kKhY0DIvwRDmWe7tiMkWgPBdmElVS2rLVkH2GnZrVuwzBsUnj8i0FDdWCXaap6QU75
+	 BQa3aNU0xcPV/pClYswK8FTfaRsNlThstV73kmF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.12 212/230] drm/v3d: Stop active perfmon if it is being destroyed
-Date: Wed, 19 Feb 2025 09:28:49 +0100
-Message-ID: <20250219082609.986365568@linuxfoundation.org>
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	intel-xe@lists.freedesktop.org,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>
+Subject: [PATCH 6.12 213/230] drm/xe/tracing: Fix a potential TP_printk UAF
+Date: Wed, 19 Feb 2025 09:28:50 +0100
+Message-ID: <20250219082610.026162189@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -51,49 +57,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Gmeiner <cgmeiner@igalia.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-commit 21f1435b1e6b012a07c42f36b206d2b66fc8f13b upstream.
+commit 07089083a526ea19daa72a1edf9d6e209615b77c upstream.
 
-If the active performance monitor (`v3d->active_perfmon`) is being
-destroyed, stop it first. Currently, the active perfmon is not
-stopped during destruction, leaving the `v3d->active_perfmon` pointer
-stale. This can lead to undefined behavior and instability.
+The commit
+afd2627f727b ("tracing: Check "%s" dereference via the field and not the TP_printk format")
+exposes potential UAFs in the xe_bo_move trace event.
 
-This patch ensures that the active perfmon is stopped before being
-destroyed, aligning with the behavior introduced in commit
-7d1fd3638ee3 ("drm/v3d: Stop the active perfmon before being destroyed").
+Fix those by avoiding dereferencing the
+xe_mem_type_to_name[] array at TP_printk time.
 
-Cc: stable@vger.kernel.org # v5.15+
-Fixes: 26a4dc29b74a ("drm/v3d: Expose performance counters to userspace")
-Signed-off-by: Christian Gmeiner <cgmeiner@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241118221948.1758130-1-christian.gmeiner@gmail.com
+Since some code refactoring has taken place, explicit backporting may
+be needed for kernels older than 6.10.
+
+Fixes: e46d3f813abd ("drm/xe/trace: Extract bo, vm, vma traces")
+Cc: Gustavo Sousa <gustavo.sousa@intel.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: intel-xe@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.11+
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241223134250.14345-1-thomas.hellstrom@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_perfmon.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/xe/xe_trace_bo.h |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/v3d/v3d_perfmon.c
-+++ b/drivers/gpu/drm/v3d/v3d_perfmon.c
-@@ -384,6 +384,7 @@ int v3d_perfmon_destroy_ioctl(struct drm
- {
- 	struct v3d_file_priv *v3d_priv = file_priv->driver_priv;
- 	struct drm_v3d_perfmon_destroy *req = data;
-+	struct v3d_dev *v3d = v3d_priv->v3d;
- 	struct v3d_perfmon *perfmon;
+--- a/drivers/gpu/drm/xe/xe_trace_bo.h
++++ b/drivers/gpu/drm/xe/xe_trace_bo.h
+@@ -55,8 +55,8 @@ TRACE_EVENT(xe_bo_move,
+ 	    TP_STRUCT__entry(
+ 		     __field(struct xe_bo *, bo)
+ 		     __field(size_t, size)
+-		     __field(u32, new_placement)
+-		     __field(u32, old_placement)
++		     __string(new_placement_name, xe_mem_type_to_name[new_placement])
++		     __string(old_placement_name, xe_mem_type_to_name[old_placement])
+ 		     __string(device_id, __dev_name_bo(bo))
+ 		     __field(bool, move_lacks_source)
+ 			),
+@@ -64,15 +64,15 @@ TRACE_EVENT(xe_bo_move,
+ 	    TP_fast_assign(
+ 		   __entry->bo      = bo;
+ 		   __entry->size = bo->size;
+-		   __entry->new_placement = new_placement;
+-		   __entry->old_placement = old_placement;
++		   __assign_str(new_placement_name);
++		   __assign_str(old_placement_name);
+ 		   __assign_str(device_id);
+ 		   __entry->move_lacks_source = move_lacks_source;
+ 		   ),
+ 	    TP_printk("move_lacks_source:%s, migrate object %p [size %zu] from %s to %s device_id:%s",
+ 		      __entry->move_lacks_source ? "yes" : "no", __entry->bo, __entry->size,
+-		      xe_mem_type_to_name[__entry->old_placement],
+-		      xe_mem_type_to_name[__entry->new_placement], __get_str(device_id))
++		      __get_str(old_placement_name),
++		      __get_str(new_placement_name), __get_str(device_id))
+ );
  
- 	mutex_lock(&v3d_priv->perfmon.lock);
-@@ -393,6 +394,10 @@ int v3d_perfmon_destroy_ioctl(struct drm
- 	if (!perfmon)
- 		return -EINVAL;
- 
-+	/* If the active perfmon is being destroyed, stop it first */
-+	if (perfmon == v3d->active_perfmon)
-+		v3d_perfmon_stop(v3d, perfmon, false);
-+
- 	v3d_perfmon_put(perfmon);
- 
- 	return 0;
+ DECLARE_EVENT_CLASS(xe_vma,
 
 
