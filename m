@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012B61D5175;
-	Wed, 19 Feb 2025 09:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3851D1EB195;
+	Wed, 19 Feb 2025 09:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957224; cv=none; b=MyLlw6FK44lzBS7Bdvbai10unR7LQnBrAiTsrxZvyWHzcqmomWuZ2py0patXimEuGwQhZ8sL/BuUXmB8jydhttGvCH4wkyhoVlUro9SL4jgRP5qfRDXcRwIC+jTc2JqqGu2XJXkH20TryXD85gseKiyfeSjnNYarZNZTuQ6S/vc=
+	t=1739957227; cv=none; b=g0l+5J0+Mdcfq7oAwyVlfcWVSMPTt49/OR5v5rzwF6kI88rBeZlL5A/coAcQNc9Hvd24OtU5S6gb4eROrnjxeVzJzNLDUe+gRMJ16s4rSx+yqOYUeR56NaYgIq203WCfd+z44yC4+s+bjRtRKRDxrtpswG0SUxI6NjY+zeI6Fko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957224; c=relaxed/simple;
-	bh=emzprnWGk+/rhfGqcEmNbECSlXQiXP5Pt/r+HuXazSU=;
+	s=arc-20240116; t=1739957227; c=relaxed/simple;
+	bh=U+sNyKvIx0BPGGeLpmXzW0FRklVLXQ95kqzGNvQVTUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yfjwg59e8+zNoqbihD3LdjfklYUE2dDa/iAYtUlzgwz16CKuhKL5ySxBimBZLIPCpPI9bo6S26NPKfpWgrWHDRzhTj5TeKd9TIutk0XUyuG4/1nUzQ3n9z3N/4YTyBEuUTmvtB0tNwsX/WdKE8AXFhk4KXGTQlGSczsuuOJyMX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=de7Rqk2j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YebMbmLMdfAMSiYHxz3Kwpy9G2dzO4pr5i6XyQSKDXD01XhcK3IrgaqddH9K/UW7TpW9xPGspwVrZ+TMoeQe9xYD3Q3nAE5BqPaWRPrL4lwgB3L2wEImqWD+JxL5aCYYkp4U9XcdOhSKjH/13dd4RWRNp4Lfb70uHgLcpHM12Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qrz87Y7o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="de7Rqk2j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800D5C4CED1;
-	Wed, 19 Feb 2025 09:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qrz87Y7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9D9C4CEEA;
+	Wed, 19 Feb 2025 09:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957223;
-	bh=emzprnWGk+/rhfGqcEmNbECSlXQiXP5Pt/r+HuXazSU=;
+	s=korg; t=1739957226;
+	bh=U+sNyKvIx0BPGGeLpmXzW0FRklVLXQ95kqzGNvQVTUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=de7Rqk2jycmtau3NZMT7CP4CRME9wLNC42JPl/xKmZAOwqWUx9zjGWYJsZDricPoX
-	 oXKaWdsH1kYzeBl4rcj1pFzojB+jPHn+wpTv5+XPmh6GdSX3ZKkBMv9IwnIRILRYPE
-	 f8Cwiul29Zc6Dcb0DbJsK3klJShPCIiEVf/nM8/8=
+	b=Qrz87Y7o08nyqC+HSr5Bdafu5Wv+KfT+IY9tMMU0WlHEwroRAHDLg5/6Yp/OS1+Pm
+	 Zu4ORmH1AsmFt7ya5L9ryEs5LSqNIld9OXtZExphClY4hJpibRUwKUcAIHfRKtYs8L
+	 aqzn+30XEn5it6OdGJFMA9paSIerrh/TwZir6QiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Jennifer Berringer <jberring@redhat.com>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 420/578] nvmem: qcom-spmi-sdam: Set size in struct nvmem_config
-Date: Wed, 19 Feb 2025 09:27:04 +0100
-Message-ID: <20250219082709.539165893@linuxfoundation.org>
+Subject: [PATCH 6.1 421/578] nvmem: core: improve range check for nvmem_cell_write()
+Date: Wed, 19 Feb 2025 09:27:05 +0100
+Message-ID: <20250219082709.578321019@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,41 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Jennifer Berringer <jberring@redhat.com>
 
-commit e88f516ea417c71bb3702603ac6af9e95338cfa6 upstream.
+commit 31507fc2ad36e0071751a710449db19c85d82a7f upstream.
 
-Let the nvmem core know what size the SDAM is, most notably this fixes
-the size of /sys/bus/nvmem/devices/spmi_sdam*/nvmem being '0' and makes
-user space work with that file.
+When __nvmem_cell_entry_write() is called for an nvmem cell that does
+not need bit shifting, it requires that the len parameter exactly
+matches the nvmem cell size. However, when the nvmem cell has a nonzero
+bit_offset, it was skipping this check.
 
-  ~ # hexdump -C -s 64 /sys/bus/nvmem/devices/spmi_sdam2/nvmem
-  00000040  02 01 00 00 04 00 00 00  00 00 00 00 00 00 00 00  |................|
-  00000050  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
-  *
-  00000080
+Accepting values of len larger than the cell size results in
+nvmem_cell_prepare_write_buffer() trying to write past the end of a heap
+buffer that it allocates. Add a check to avoid that problem and instead
+return -EINVAL when len doesn't match the number of bits expected by the
+nvmem cell when bit_offset is nonzero.
 
-Fixes: 40ce9798794f ("nvmem: add QTI SDAM driver")
+This check uses cell->nbits in order to allow providing the smaller size
+to cells that are shifted into another byte by bit_offset. For example,
+a cell with nbits=8 and nonzero bit_offset would have bytes=2 but should
+accept a 1-byte write here, although no current callers depend on this.
+
+Fixes: 69aba7948cbe ("nvmem: Add a simple NVMEM framework for consumers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Signed-off-by: Jennifer Berringer <jberring@redhat.com>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20241230141901.263976-6-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20241230141901.263976-7-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/qcom-spmi-sdam.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvmem/core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/nvmem/qcom-spmi-sdam.c
-+++ b/drivers/nvmem/qcom-spmi-sdam.c
-@@ -143,6 +143,7 @@ static int sdam_probe(struct platform_de
- 	sdam->sdam_config.id = NVMEM_DEVID_AUTO;
- 	sdam->sdam_config.owner = THIS_MODULE;
- 	sdam->sdam_config.stride = 1;
-+	sdam->sdam_config.size = sdam->size;
- 	sdam->sdam_config.word_size = 1;
- 	sdam->sdam_config.reg_read = sdam_read;
- 	sdam->sdam_config.reg_write = sdam_write;
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -1532,6 +1532,8 @@ static int __nvmem_cell_entry_write(stru
+ 		return -EINVAL;
+ 
+ 	if (cell->bit_offset || cell->nbits) {
++		if (len != BITS_TO_BYTES(cell->nbits) && len != cell->bytes)
++			return -EINVAL;
+ 		buf = nvmem_cell_prepare_write_buffer(cell, buf, len);
+ 		if (IS_ERR(buf))
+ 			return PTR_ERR(buf);
 
 
