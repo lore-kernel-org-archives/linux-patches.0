@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714611BD9DE;
-	Wed, 19 Feb 2025 09:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5793D1DE2BF;
+	Wed, 19 Feb 2025 09:12:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956357; cv=none; b=hfdmQvMwVXnZJ8oLp8n8UVfUcEtldiLYM7Fs3JyLNRn+cNfXH3yOwgVpoMK+PQWuwukMN+DsGPx8Rm2sQMNyEkuXGf3HEGfNNpOKmN0GPPGuPzV1zzYJ88kdSz2G539Zp/U6HayFzPXCqDTMioTQl01vRJvUuvfMTCtaE4D9J1k=
+	t=1739956360; cv=none; b=Y6dJlugGzpG1f42JxgOTztUKW7YCd1z44h529kMz9YeId1wJJlEFPXsdao0kbIz+eGzvwbDgnw2WFRwNRdZ1dKGlaFgzmmX8JynnN9aYVq9A1t5SncUzla0ORQShOWHj6pNTZsVbLt432rDClkszonM91R2k8co7A0TZMjS2ZLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956357; c=relaxed/simple;
-	bh=9G/lf/6Ko5wQzkYWv24L2x3YNTm1WwUuML2/upA2Efw=;
+	s=arc-20240116; t=1739956360; c=relaxed/simple;
+	bh=QF//QZAtBnL24yrHRrESzPT264FdKvT3T7L/v5RnLoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=djnu4w7CGfT082gqOaq4T4nPjiJz66dyA1gOZ542vuRlR+p+8+joY6l6pKb8XxIdsNg4u4CkujHActcBhWxJdIk4t3n5I2iadFWngJastboSIOQYa952M+SmIq00Kcw0/0w2wHm5skU4uugo2Zqk40balNABSm+cW14eXw8jWNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEqKxy3E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sy498c6HaS/GJ4Jg3VAGOy69BXTM0VMQ5rjlwUQr6I7jtj1OLpIjRj6sSP03XcZC9OIybz9DBJYTDt9OEI2o6lPRYx5nylJw4PtojEHcQ9Y/xLiqdCUTSQcxqFrCQ9yyGnE4fq6uSm8rCtgKpvNqhi1Wb2XOef/lFBhvcqh1F1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UOEMxcI4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEqKxy3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C69C4CED1;
-	Wed, 19 Feb 2025 09:12:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UOEMxcI4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA5EC4CED1;
+	Wed, 19 Feb 2025 09:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956357;
-	bh=9G/lf/6Ko5wQzkYWv24L2x3YNTm1WwUuML2/upA2Efw=;
+	s=korg; t=1739956360;
+	bh=QF//QZAtBnL24yrHRrESzPT264FdKvT3T7L/v5RnLoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wEqKxy3ETy1mjfwr1USvJLzf0tZFpRtk91xXc4rjyduhyhZuP+Lz1KbWwxlHaq/sx
-	 TbLoB5LP53EW6oL37baav6CPfE5Wg0oG6T+fZnPVvAvo0+QZmr1c99SXfUNpDgzMuJ
-	 OTLbLp2WSYriJvacTOqdnKq6YvZwZuHx59fhAPi8=
+	b=UOEMxcI48oKLQ3y64oGqk8QSehnwypf2xyXBdchmbDElySJXfHn72/7SvlJ8qVfiu
+	 MBt+5Vsn8RWbfQA+8sWRoq3D3NRfvcX3UD/DM/ATJKq+mV8YzkwFvCTk7rE7xrlkMJ
+	 B35GkgRtnsX5fCQKw6ODutVPedvU2lIgD/1Wg4K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Marek Vasut <marex@denx.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 152/578] arm64: dts: mediatek: mt8183-kukui-jacuzzi: Drop pp3300_panel voltage settings
-Date: Wed, 19 Feb 2025 09:22:36 +0100
-Message-ID: <20250219082658.956476387@linuxfoundation.org>
+Subject: [PATCH 6.1 153/578] arm64: dts: qcom: msm8996-xiaomi-gemini: Fix LP5562 LED1 reg property
+Date: Wed, 19 Feb 2025 09:22:37 +0100
+Message-ID: <20250219082658.994002443@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,38 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 0b5b1c881a909f17c05ef4b1ccb421e077f6e466 ]
+[ Upstream commit 02e784c5023232c48c6ec79b52ac8929d4e4db34 ]
 
-The pp3300_panel fixed regulator is just a load switch. It does not have
-any regulating capabilities. Thus having voltage constraints on it is
-wrong.
+The LP5562 led@1 reg property should likely be set to 1 to match
+the unit. Fix it.
 
-Remove the voltage constraints.
-
-Fixes: cabc71b08eb5 ("arm64: dts: mt8183: Add kukui-jacuzzi-damu board")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20241030070224.1006331-2-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 4ac46b3682c5 ("arm64: dts: qcom: msm8996: xiaomi-gemini: Add support for Xiaomi Mi 5")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241006022012.366601-1-marex@denx.de
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-index 629c4b7ecbc62..8e0575f8c1b27 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-@@ -39,8 +39,6 @@
- 	pp3300_panel: pp3300-panel {
- 		compatible = "regulator-fixed";
- 		regulator-name = "pp3300_panel";
--		regulator-min-microvolt = <3300000>;
--		regulator-max-microvolt = <3300000>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pp3300_panel_pins>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
+index 3bbafb68ba5c5..543282fe2abbd 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
++++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
+@@ -65,7 +65,7 @@
+ 		};
  
+ 		led@1 {
+-			reg = <0>;
++			reg = <1>;
+ 			chan-name = "button-backlight1";
+ 			led-cur = /bits/ 8 <0x32>;
+ 			max-cur = /bits/ 8 <0xC8>;
 -- 
 2.39.5
 
