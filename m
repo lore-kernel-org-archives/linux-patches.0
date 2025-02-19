@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FC41DED5C;
-	Wed, 19 Feb 2025 08:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B559D1DED5E;
+	Wed, 19 Feb 2025 08:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955037; cv=none; b=vEQ2c4cJ+GbWD1mUgllj09mze1840U2ke+bfiFZEOeu2NTQDsoTuW4pz8AuE7FZ82lOQWZskMyMON51jlsWRNmmCBufvGQ5FaD/kTcAYAWM/FTtkJ/6X9E44ju6y1s9oeYe6wS0PawQMxdgSdkkBJIJ7fA8jW5DjEYGJbozF404=
+	t=1739955040; cv=none; b=aq/mUM7IxXbtyvzDcP0moJfWdaf0ORDSdEpWwFZPdhDGCguZR5gkBmnuRDtsGGIZdzyrUgGlpjx8+OPYq/74avfzjQmKLFV+H7Ro44BYE6QNqZus05yGYOUnXdeTS1TNLA0+Si7felR41VdG+JjI1e2r1+POU1FSuJ+H/qu4P+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955037; c=relaxed/simple;
-	bh=Iaj24D2JuCl89UBW1jh7GDpUOPoN8X18n7MT/VfuV50=;
+	s=arc-20240116; t=1739955040; c=relaxed/simple;
+	bh=32W734hV7tquQPfOoM+RLnLgTmrC5rUIfb39DRj4TGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WNAfOIP0gFGyVHb7nHLnV8LnLeEaFpF11HA5Jpm0koTren7M/7Nv0y/EYe2H07M/WGaabZ8Hryh5/q+iBTVc1qRnAVB694mcomE3Ea2DYVoTu5K3riw9+t/dZgecEWIpiRx0sHIX93ZaX1J0WXWWBiU5/9pzJanuA6OjfpOz2yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FuO68Nw+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kHp0MygPXaWglcjVPeq+c++yHK+qnM1vR2hysPdjFyts/EC1vZJCdJnouQrqKxJID6j/LNNfGRil2R7QJLm4ln4NnfgLGWS+YhyPH7H8NJrwlJ0qoEJM1RGmH6wHQRypAMRyLxhIcFILPgL8nd2qm/UVl+xeCiOwYwRfsnEOb2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlTx8oxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FuO68Nw+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5141C4CEE6;
-	Wed, 19 Feb 2025 08:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlTx8oxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE86BC4CED1;
+	Wed, 19 Feb 2025 08:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955037;
-	bh=Iaj24D2JuCl89UBW1jh7GDpUOPoN8X18n7MT/VfuV50=;
+	s=korg; t=1739955040;
+	bh=32W734hV7tquQPfOoM+RLnLgTmrC5rUIfb39DRj4TGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FuO68Nw+32/ws+mG0IN9ddYpQTjr4T5clozIyt08odBBgGR9Jc9z/SbIhmNIsUZQC
-	 gUP/D7+Y4M1I3Iwn8UkSs/uzdqN2AZmWgGBktK2CSK2M/iA0B27VHwH2tbtCe2t5Rh
-	 PusxzJAm4LQ0SmiDiSIn3Ae1xsnu/UdtxoQH1IFE=
+	b=nlTx8oxGc0zBk4iCVvuSAzUV14uh4SsM6XlFZUBfEw6LXuG2r5q3D1Eo1cczQcLoD
+	 pFo8XEMLYyKjGmE3QDg2/DLLTEccc0zw+h8nDm7JgSNXeiDlsopefMFeJHe65vJV7b
+	 7aD6F6j+TGyqnYf9Bk5Osac6Hfw4g7GfomjjIRHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Strohman <andrew@andrewstrohman.com>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.12 094/230] batman-adv: fix panic during interface removal
-Date: Wed, 19 Feb 2025 09:26:51 +0100
-Message-ID: <20250219082605.375549037@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Guo Ren <guoren@linux.alibaba.com>
+Subject: [PATCH 6.12 112/230] usb: gadget: udc: renesas_usb3: Fix compiler warning
+Date: Wed, 19 Feb 2025 09:27:09 +0100
+Message-ID: <20250219082606.070724895@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -51,81 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Strohman <andrew@andrewstrohman.com>
+From: Guo Ren <guoren@linux.alibaba.com>
 
-commit ccb7276a6d26d6f8416e315b43b45e15ee7f29e2 upstream.
+commit 335a1fc1193481f8027f176649c72868172f6f8b upstream.
 
-Reference counting is used to ensure that
-batadv_hardif_neigh_node and batadv_hard_iface
-are not freed before/during
-batadv_v_elp_throughput_metric_update work is
-finished.
+drivers/usb/gadget/udc/renesas_usb3.c: In function 'renesas_usb3_probe':
+drivers/usb/gadget/udc/renesas_usb3.c:2638:73: warning: '%d'
+directive output may be truncated writing between 1 and 11 bytes into a
+region of size 6 [-Wformat-truncation=]
+2638 |   snprintf(usb3_ep->ep_name, sizeof(usb3_ep->ep_name), "ep%d", i);
+                                    ^~~~~~~~~~~~~~~~~~~~~~~~     ^~   ^
 
-But there isn't a guarantee that the hard if will
-remain associated with a soft interface up until
-the work is finished.
-
-This fixes a crash triggered by reboot that looks
-like this:
-
-Call trace:
- batadv_v_mesh_free+0xd0/0x4dc [batman_adv]
- batadv_v_elp_throughput_metric_update+0x1c/0xa4
- process_one_work+0x178/0x398
- worker_thread+0x2e8/0x4d0
- kthread+0xd8/0xdc
- ret_from_fork+0x10/0x20
-
-(the batadv_v_mesh_free call is misleading,
-and does not actually happen)
-
-I was able to make the issue happen more reliably
-by changing hardif_neigh->bat_v.metric_work work
-to be delayed work. This allowed me to track down
-and confirm the fix.
-
+Fixes: 746bfe63bba3 ("usb: gadget: renesas_usb3: add support for Renesas USB3.0 peripheral controller")
 Cc: stable@vger.kernel.org
-Fixes: c833484e5f38 ("batman-adv: ELP - compute the metric based on the estimated throughput")
-Signed-off-by: Andy Strohman <andrew@andrewstrohman.com>
-[sven@narfation.org: prevent entering batadv_v_elp_get_throughput without
- soft_iface]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501201409.BIQPtkeB-lkp@intel.com/
+Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250122081231.47594-1-guoren@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bat_v_elp.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/renesas_usb3.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/batman-adv/bat_v_elp.c
-+++ b/net/batman-adv/bat_v_elp.c
-@@ -66,12 +66,19 @@ static void batadv_v_elp_start_timer(str
- static u32 batadv_v_elp_get_throughput(struct batadv_hardif_neigh_node *neigh)
- {
- 	struct batadv_hard_iface *hard_iface = neigh->if_incoming;
-+	struct net_device *soft_iface = hard_iface->soft_iface;
- 	struct ethtool_link_ksettings link_settings;
- 	struct net_device *real_netdev;
- 	struct station_info sinfo;
- 	u32 throughput;
- 	int ret;
+--- a/drivers/usb/gadget/udc/renesas_usb3.c
++++ b/drivers/usb/gadget/udc/renesas_usb3.c
+@@ -310,7 +310,7 @@ struct renesas_usb3_request {
+ 	struct list_head	queue;
+ };
  
-+	/* don't query throughput when no longer associated with any
-+	 * batman-adv interface
-+	 */
-+	if (!soft_iface)
-+		return BATADV_THROUGHPUT_DEFAULT_VALUE;
-+
- 	/* if the user specified a customised value for this interface, then
- 	 * return it directly
- 	 */
-@@ -141,7 +148,7 @@ static u32 batadv_v_elp_get_throughput(s
- 
- default_throughput:
- 	if (!(hard_iface->bat_v.flags & BATADV_WARNING_DEFAULT)) {
--		batadv_info(hard_iface->soft_iface,
-+		batadv_info(soft_iface,
- 			    "WiFi driver or ethtool info does not provide information about link speeds on interface %s, therefore defaulting to hardcoded throughput values of %u.%1u Mbps. Consider overriding the throughput manually or checking your driver.\n",
- 			    hard_iface->net_dev->name,
- 			    BATADV_THROUGHPUT_DEFAULT_VALUE / 10,
+-#define USB3_EP_NAME_SIZE	8
++#define USB3_EP_NAME_SIZE	16
+ struct renesas_usb3_ep {
+ 	struct usb_ep ep;
+ 	struct renesas_usb3 *usb3;
 
 
