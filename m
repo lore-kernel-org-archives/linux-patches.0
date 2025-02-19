@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9DC1C9B97;
-	Wed, 19 Feb 2025 09:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77021C3C00;
+	Wed, 19 Feb 2025 09:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956283; cv=none; b=jtKJT5p/mFip8X7zM5isaKhTg3NGdGp3Q4DKpU5DPu3KA1Pz/n89GpK+zxA8ufb4Q426ROwFiUr6HXgIwZWqnJUe5LYj8KcKEUZen2pIK64USMWmOLSV4WTFIyp2x+Zv6edFeT+psZ0G4fkQ4QxvjNXmwzL2mJwfkXr1vwuKi7g=
+	t=1739956286; cv=none; b=S+AnfuWftOREfAKphRTNcWHZwjZ0imYXO6fR46xUw/qMaD265YfTE0rCNdo0pNcRtX1+cDhH+9t2F+qIl5tVcSyhgkDiWsx74ByTIHiTkWqJXeXnBZtEJVVGsX8C5ZxXqNMCkJL8C+zfyPZ0Y3jUUW2zvXOxLtj5pSQJiXUQVlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956283; c=relaxed/simple;
-	bh=OzmE0696ugMpJ9XTwQnLF4BbvloWK7N6kUYAPh1/ZCg=;
+	s=arc-20240116; t=1739956286; c=relaxed/simple;
+	bh=u+Hhpkju9BEy3djWwReFqDOHOhL4ETJKSugEwnb/IyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BULVWiXzhqVG2tqI3hnUishCo92sd9etfbJEGpHEL7iPzNWXKIfvVe0apY2YZ0gHPkVzmFCQdDQ6/Xz0z/LPiwSS4yOgkGZ4n6R5cj8BNLi/u5DHOOoxM3wz0c1lxbkrXcukqboOuqi+MgimUmacEoO9i2oFZNA1jy8Pv0HOUS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vbIIm3l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Noy5FZT6FTpIXN3iGxFxyeLEFKZwrubekO6aijScZEuuvikHklnMANJney7k38nKVhsqEA4oIHqNKdVgbiv9Q1C73r59u3ignli9eZxzYIcNHW1MjAnlNWWlvXCocUbbYHohO2C9R9OP1jgtPXVXW4vZftnxY7VwR/nHWKTVzpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOmblBG1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vbIIm3l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D811FC4CED1;
-	Wed, 19 Feb 2025 09:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOmblBG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47E7C4CED1;
+	Wed, 19 Feb 2025 09:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956283;
-	bh=OzmE0696ugMpJ9XTwQnLF4BbvloWK7N6kUYAPh1/ZCg=;
+	s=korg; t=1739956286;
+	bh=u+Hhpkju9BEy3djWwReFqDOHOhL4ETJKSugEwnb/IyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2vbIIm3l43lwxtQGVKa/9ftroR9NHqMULP1VbcLQHSKajC+ekcQhJZc5uJJPQQ7Lc
-	 51DxMBltMMxZHwqF1Tp+0VZV+p4j2FZm+ehMDydxhST+YTwA/Yh62TYmxKdM4gA2MO
-	 6m5IDyBh4Op20CpoqEaHikHCNYc9saOjF5vaGIuE=
+	b=NOmblBG1libpdzF/7w6cg4A5UGLuHhRu7Gdg8SXiz3mXX0iFidz3iDC/oXv1ZSmUE
+	 7c1CaIluc0wHQnsHtH29ajYsopnqdcFrcUit4e0QGeD0L/Tr91hyZYZZ1FQr4GeW/m
+	 fP4DCd6ed+iPpTKWYbU3aK15S2dVSgQ7fTk/9Gps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chen Ridong <chenridong@huawei.com>,
+	Qu Zicheng <quzicheng@huawei.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 127/578] ALSA: hda/realtek - Fixed headphone distorted sound on Acer Aspire A115-31 laptop
-Date: Wed, 19 Feb 2025 09:22:11 +0100
-Message-ID: <20250219082657.982885587@linuxfoundation.org>
+Subject: [PATCH 6.1 128/578] padata: fix UAF in padata_reorder
+Date: Wed, 19 Feb 2025 09:22:12 +0100
+Message-ID: <20250219082658.023572412@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,34 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit 5cb4e5b056772e341b590755a976081776422053 ]
+[ Upstream commit e01780ea4661172734118d2a5f41bc9720765668 ]
 
-Sound played through headphones is distorted.
+A bug was found when run ltp test:
 
-Fixes: 34ab5bbc6e82 ("ALSA: hda/realtek - Add Headset Mic supported Acer NB platform")
-Closes: https://lore.kernel.org/linux-sound/e142749b-7714-4733-9452-918fbe328c8f@gmail.com/
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/0a89b6c18ed94378a105fa61e9f290e4@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+BUG: KASAN: slab-use-after-free in padata_find_next+0x29/0x1a0
+Read of size 4 at addr ffff88bbfe003524 by task kworker/u113:2/3039206
+
+CPU: 0 PID: 3039206 Comm: kworker/u113:2 Kdump: loaded Not tainted 6.6.0+
+Workqueue: pdecrypt_parallel padata_parallel_worker
+Call Trace:
+<TASK>
+dump_stack_lvl+0x32/0x50
+print_address_description.constprop.0+0x6b/0x3d0
+print_report+0xdd/0x2c0
+kasan_report+0xa5/0xd0
+padata_find_next+0x29/0x1a0
+padata_reorder+0x131/0x220
+padata_parallel_worker+0x3d/0xc0
+process_one_work+0x2ec/0x5a0
+
+If 'mdelay(10)' is added before calling 'padata_find_next' in the
+'padata_reorder' function, this issue could be reproduced easily with
+ltp test (pcrypt_aead01).
+
+This can be explained as bellow:
+
+pcrypt_aead_encrypt
+...
+padata_do_parallel
+refcount_inc(&pd->refcnt); // add refcnt
+...
+padata_do_serial
+padata_reorder // pd
+while (1) {
+padata_find_next(pd, true); // using pd
+queue_work_on
+...
+padata_serial_worker				crypto_del_alg
+padata_put_pd_cnt // sub refcnt
+						padata_free_shell
+						padata_put_pd(ps->pd);
+						// pd is freed
+// loop again, but pd is freed
+// call padata_find_next, UAF
+}
+
+In the padata_reorder function, when it loops in 'while', if the alg is
+deleted, the refcnt may be decreased to 0 before entering
+'padata_find_next', which leads to UAF.
+
+As mentioned in [1], do_serial is supposed to be called with BHs disabled
+and always happen under RCU protection, to address this issue, add
+synchronize_rcu() in 'padata_free_shell' wait for all _do_serial calls
+to finish.
+
+[1] https://lore.kernel.org/all/20221028160401.cccypv4euxikusiq@parnassus.localdomain/
+[2] https://lore.kernel.org/linux-kernel/jfjz5d7zwbytztackem7ibzalm5lnxldi2eofeiczqmqs2m7o6@fq426cwnjtkm/
+Fixes: b128a3040935 ("padata: allocate workqueue internally")
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Signed-off-by: Qu Zicheng <quzicheng@huawei.com>
+Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/padata.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index eec488aa7890d..8da964c3856fe 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9583,6 +9583,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1025, 0x1308, "Acer Aspire Z24-890", ALC286_FIXUP_ACER_AIO_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x132a, "Acer TravelMate B114-21", ALC233_FIXUP_ACER_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x1330, "Acer TravelMate X514-51T", ALC255_FIXUP_ACER_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1025, 0x1360, "Acer Aspire A115", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x141f, "Acer Spin SP513-54N", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x142b, "Acer Swift SF314-42", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x1430, "Acer TravelMate B311R-31", ALC256_FIXUP_ACER_MIC_NO_PRESENCE),
+diff --git a/kernel/padata.c b/kernel/padata.c
+index 46b75d6b3618c..5f3069907d497 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -1110,6 +1110,12 @@ void padata_free_shell(struct padata_shell *ps)
+ 	if (!ps)
+ 		return;
+ 
++	/*
++	 * Wait for all _do_serial calls to finish to avoid touching
++	 * freed pd's and ps's.
++	 */
++	synchronize_rcu();
++
+ 	mutex_lock(&ps->pinst->lock);
+ 	list_del(&ps->list);
+ 	pd = rcu_dereference_protected(ps->pd, 1);
 -- 
 2.39.5
 
