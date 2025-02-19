@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98ED51DE3D6;
-	Wed, 19 Feb 2025 08:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9821CAA95;
+	Wed, 19 Feb 2025 08:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954430; cv=none; b=ZQOvQ/I3FteJiqrL89OWlyNXF6IBi/2u5RalrWl/dLwBN65g+CEu914FscreEpCkZLnJF7BvJRhcbAkMwxRQORop33siCUEWLLbPcEilAvgOMiZCGU8aQsgAReWGOsixHEAhZ1DC9QeDCu8KKymgvRELXrPqLLXjkyD9rY/GWwM=
+	t=1739954434; cv=none; b=nQ9Huoh7eT+XI6kIbYH54gb3h2dOP452TCL0WNy4io59itX1omQ4nMS/MirbQ2PJpHHjNaT0HxMbSeQj7IXtINPWPv9fLaXDEi+9dJ9R3oE80TRSqfesFOyHI/Z2MirVotYAEbUUpD04CL174utha27lTmJVgEt0lTf92iSolIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954430; c=relaxed/simple;
-	bh=ZkzMkEpmuFcv9ilTqWj+xUQzOmI21sj9pjGkZPiYtEU=;
+	s=arc-20240116; t=1739954434; c=relaxed/simple;
+	bh=8oOFGOgdLEmwvseKWIZ+8sq5sScDp5m9iTvraiKsqeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bHRZlz4qyli2bJQx0pIGVkUyORuMbHL4kB1suNjSB5wajIvK3YH32AnoitU//VfAo0wNkRbXPjNNCf/pzDAmRBdMxeK2LefQWc6Fz2+ll0dxdwwdHzK4tFUUqRNfjUsU0lNDeAqACmM3+rMbcbVrrP0FryOpoU7GfmTlUFLR89k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDMzpuO+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f1kIfLHecrFWdGmELbjYXtiTkVkpYNnP6DFzBuufNL+6nS4JCQ71EZyof37lrOcumL10HQL7AkF0aTs05WsJG4u6PkkwERkJPROgx88abG4z4ONPgNxKDClihwMY5DkXz1noQt0thSGO2F63Khcw94mIXzLOwaKplGedsj+b0Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ae0aCJai; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDMzpuO+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18872C4CEE7;
-	Wed, 19 Feb 2025 08:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ae0aCJai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C095C4CED1;
+	Wed, 19 Feb 2025 08:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954430;
-	bh=ZkzMkEpmuFcv9ilTqWj+xUQzOmI21sj9pjGkZPiYtEU=;
+	s=korg; t=1739954433;
+	bh=8oOFGOgdLEmwvseKWIZ+8sq5sScDp5m9iTvraiKsqeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDMzpuO+qQXZ38mv4qRrUIU4UPmlo+zXSBGw/5MH5MdF1lExop92GsM81Iph0eV6S
-	 F7Am2Dyhk/jEAzp26SwPl31CAF9wWuIZ6O9hU+sYihe63VW0bwgstRbXc/hAPsjRkp
-	 Yva2GaIZbsDEUxCaxyTCVtf2PgNrErILy5Ey2nHo=
+	b=Ae0aCJaiVjNeGOZVwpEii2R460CoyohBsQcK8N7lYg2ojHUul6xzkwXsmHoPE8vRt
+	 emrToJQpj8mfzNLWAanbqeZg7Hublj5FlunGQtcouHiISd/dlaAmVwBGoN45oWa/lX
+	 FmPEcpWDCT+Yp1jROIFMscI+2lVulsEkqi3niv6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 201/274] drm/xe/oa: Set stream->pollin in xe_oa_buffer_check_unlocked
-Date: Wed, 19 Feb 2025 09:27:35 +0100
-Message-ID: <20250219082617.446376615@linuxfoundation.org>
+Subject: [PATCH 6.13 202/274] scsi: ufs: core: Introduce ufshcd_has_pending_tasks()
+Date: Wed, 19 Feb 2025 09:27:36 +0100
+Message-ID: <20250219082617.484222349@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -53,66 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Dixit <ashutosh.dixit@intel.com>
+From: Avri Altman <avri.altman@wdc.com>
 
-[ Upstream commit 990d35edc5d333ca6cd3acfdfc13683dc5bb105f ]
+[ Upstream commit e738ba458e7539be1757dcdf85835a5c7b11fad4 ]
 
-We rely on stream->pollin to decide whether or not to block during
-poll/read calls. However, currently there are blocking read code paths
-which don't even set stream->pollin. The best place to consistently set
-stream->pollin for all code paths is therefore to set it in
-xe_oa_buffer_check_unlocked.
+Prepare to remove hba->clk_gating.active_reqs check from
+ufshcd_is_ufs_dev_busy().
 
-Fixes: e936f885f1e9 ("drm/xe/oa/uapi: Expose OA stream fd")
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250115222029.3002103-1-ashutosh.dixit@intel.com
-(cherry picked from commit d3fedff828bb7e4a422c42caeafd5d974e24ee43)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Avri Altman <avri.altman@wdc.com>
+Link: https://lore.kernel.org/r/20241124070808.194860-2-avri.altman@wdc.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 839a74b5649c ("scsi: ufs: Fix toggling of clk_gating.state when clock gating is not allowed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_oa.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/ufs/core/ufshcd.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
-index d56b0a0ede0da..913f6ba606370 100644
---- a/drivers/gpu/drm/xe/xe_oa.c
-+++ b/drivers/gpu/drm/xe/xe_oa.c
-@@ -239,7 +239,6 @@ static bool xe_oa_buffer_check_unlocked(struct xe_oa_stream *stream)
- 	u32 tail, hw_tail, partial_report_size, available;
- 	int report_size = stream->oa_buffer.format->size;
- 	unsigned long flags;
--	bool pollin;
- 
- 	spin_lock_irqsave(&stream->oa_buffer.ptr_lock, flags);
- 
-@@ -284,11 +283,11 @@ static bool xe_oa_buffer_check_unlocked(struct xe_oa_stream *stream)
- 	stream->oa_buffer.tail = tail;
- 
- 	available = xe_oa_circ_diff(stream, stream->oa_buffer.tail, stream->oa_buffer.head);
--	pollin = available >= stream->wait_num_reports * report_size;
-+	stream->pollin = available >= stream->wait_num_reports * report_size;
- 
- 	spin_unlock_irqrestore(&stream->oa_buffer.ptr_lock, flags);
- 
--	return pollin;
-+	return stream->pollin;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index d4a628169a51a..f2cacdac1a4fe 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -258,10 +258,16 @@ ufs_get_desired_pm_lvl_for_dev_link_state(enum ufs_dev_pwr_mode dev_state,
+ 	return UFS_PM_LVL_0;
  }
  
- static enum hrtimer_restart xe_oa_poll_check_timer_cb(struct hrtimer *hrtimer)
-@@ -296,10 +295,8 @@ static enum hrtimer_restart xe_oa_poll_check_timer_cb(struct hrtimer *hrtimer)
- 	struct xe_oa_stream *stream =
- 		container_of(hrtimer, typeof(*stream), poll_check_timer);
++static bool ufshcd_has_pending_tasks(struct ufs_hba *hba)
++{
++	return hba->outstanding_tasks || hba->active_uic_cmd ||
++	       hba->uic_async_done;
++}
++
+ static bool ufshcd_is_ufs_dev_busy(struct ufs_hba *hba)
+ {
+-	return (hba->clk_gating.active_reqs || hba->outstanding_reqs || hba->outstanding_tasks ||
+-		hba->active_uic_cmd || hba->uic_async_done);
++	return hba->clk_gating.active_reqs || hba->outstanding_reqs ||
++	       ufshcd_has_pending_tasks(hba);
+ }
  
--	if (xe_oa_buffer_check_unlocked(stream)) {
--		stream->pollin = true;
-+	if (xe_oa_buffer_check_unlocked(stream))
- 		wake_up(&stream->poll_wq);
--	}
+ static const struct ufs_dev_quirk ufs_fixups[] = {
+@@ -1999,8 +2005,7 @@ static void __ufshcd_release(struct ufs_hba *hba)
  
- 	hrtimer_forward_now(hrtimer, ns_to_ktime(stream->poll_period_ns));
+ 	if (hba->clk_gating.active_reqs || hba->clk_gating.is_suspended ||
+ 	    hba->ufshcd_state != UFSHCD_STATE_OPERATIONAL ||
+-	    hba->outstanding_tasks || !hba->clk_gating.is_initialized ||
+-	    hba->active_uic_cmd || hba->uic_async_done ||
++	    ufshcd_has_pending_tasks(hba) || !hba->clk_gating.is_initialized ||
+ 	    hba->clk_gating.state == CLKS_OFF)
+ 		return;
  
 -- 
 2.39.5
