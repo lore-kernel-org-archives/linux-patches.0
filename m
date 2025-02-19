@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202201C3BF1;
-	Wed, 19 Feb 2025 08:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12C11C3BF1;
+	Wed, 19 Feb 2025 08:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739953889; cv=none; b=VFL+fPTfk8lvzbHd8nN7nA8hc3KS1w7mxnK67T5CKZY2dzsMOTBfzEEuMu5/A9Tma/+R7TIa7T/VEvfO26nAGK4xu+dfem22LoxOvnoGAJv5R+Gl9MnjYt+isB/2nlOWU6CzWeipGa75NaoP0Us1vEfDzMgFAza46KGEeHSwSm8=
+	t=1739953891; cv=none; b=FPA8yzl+ZGcIJPTv9CkHdsPnORyi2M7P4c/7cn7PCSmGyzw26Mg6uDJCKaNNpO831302bJ7rua+Kkii6KjUf7RZuwYt8n/AlBNwRgq22nb0tI/FfCHzUTaoByqPC3amZ0GwNw4JDyxTy8/MK/eg1iPQbaEgf294Y3l1gjkV4Sao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739953889; c=relaxed/simple;
-	bh=1/YIz8RTvk/6EWaPuU70+++OhBF8sOuE4D9RuOEZZiw=;
+	s=arc-20240116; t=1739953891; c=relaxed/simple;
+	bh=W1Ye5HSQfLD/b4yePV3c8fYlDYbwW4B5wHYxKkkzSIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZxpB8hqqsCC+KQt09jNdbFo3tjPaOaYN3DFMmm6FXM3qrjVnm5hQXUYXJa4JvTvpeCaAgZVJI8VFrhRLzvgL+FAVKP4+19RV9FlzeaT+5PATKRnfAtN+9zztQTsSMhefYnfAYfBwGCHVo3JG2GiN7BMw4VCWIMkW2i8Szcsl13E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9oAnIF/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EtsnHw15l05p6w6HSquz4veZ0lsdoLJpuyc+FeHZB5PZpzu7GRUa51yXzuQXT0S72WZ9Kvl/Nlc/n8jyxD+vqYpdkATekWBuAhEaW41MDO7A0ttZT9EvHJkyV1ZwnU9RhMG+WUHluqkhua6lvCYRAnR0Wc5EIZza0VtLQw7KAY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUmwkQhr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9oAnIF/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C620C4CED1;
-	Wed, 19 Feb 2025 08:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUmwkQhr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52724C4CED1;
+	Wed, 19 Feb 2025 08:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739953888;
-	bh=1/YIz8RTvk/6EWaPuU70+++OhBF8sOuE4D9RuOEZZiw=;
+	s=korg; t=1739953891;
+	bh=W1Ye5HSQfLD/b4yePV3c8fYlDYbwW4B5wHYxKkkzSIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9oAnIF/SHjLqyoa/VLatXRxBrqdut2gmnrjG+xIOiZDmkJCAS+GFi2KQjbx87Y+/
-	 2zR0e0Nh+8fZ/B4Grho3lvSPPYAwYdL3aol/MAwEmJ/ckT/8qAnWMYvTZ3JGYBNHbt
-	 DUepo/PM11vXlEqSqgXtFh+s/D1IMAj9iYTSLKhM=
+	b=WUmwkQhr5lgiFrlWRdTtltHxBZ12uR3NiDRmLhIPvZ0Zd8OTZdU9QfZQB2m1IGeKK
+	 iy6Om/ZqwjDo3TisWSb98kny8MzPUjh8rordq8euT/e9SKIRXNiE7dMymXY+J6B97+
+	 KLUTWdh90wS9l1RMRMKC/pt4sKGNff//s6hqJAkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zdenek Bouska <zdenek.bouska@siemens.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Florian Bezdeka <florian.bezdeka@siemens.com>,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	syzbot+6a9624592218c2c5e7aa@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Roopa Prabhu <roopa@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 028/274] igc: Fix HW RX timestamp when passed by ZC XDP
-Date: Wed, 19 Feb 2025 09:24:42 +0100
-Message-ID: <20250219082610.637331972@linuxfoundation.org>
+Subject: [PATCH 6.13 029/274] vxlan: check vxlan_vnigroup_init() return value
+Date: Wed, 19 Feb 2025 09:24:43 +0100
+Message-ID: <20250219082610.675468944@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -56,124 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zdenek Bouska <zdenek.bouska@siemens.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 7822dd4d6d4bebca5045a395e1784ef09cae2d43 ]
+[ Upstream commit 5805402dcc56241987bca674a1b4da79a249bab7 ]
 
-Fixes HW RX timestamp in the following scenario:
-- AF_PACKET socket with enabled HW RX timestamps is created
-- AF_XDP socket with enabled zero copy is created
-- frame is forwarded to the BPF program, where the timestamp should
-  still be readable (extracted by igc_xdp_rx_timestamp(), kfunc
-  behind bpf_xdp_metadata_rx_timestamp())
-- the frame got XDP_PASS from BPF program, redirecting to the stack
-- AF_PACKET socket receives the frame with HW RX timestamp
+vxlan_init() must check vxlan_vnigroup_init() success
+otherwise a crash happens later, spotted by syzbot.
 
-Moves the skb timestamp setting from igc_dispatch_skb_zc() to
-igc_construct_skb_zc() so that igc_construct_skb_zc() is similar to
-igc_construct_skb().
+Oops: general protection fault, probably for non-canonical address 0xdffffc000000002c: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000160-0x0000000000000167]
+CPU: 0 UID: 0 PID: 7313 Comm: syz-executor147 Not tainted 6.14.0-rc1-syzkaller-00276-g69b54314c975 #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+ RIP: 0010:vxlan_vnigroup_uninit+0x89/0x500 drivers/net/vxlan/vxlan_vnifilter.c:912
+Code: 00 48 8b 44 24 08 4c 8b b0 98 41 00 00 49 8d 86 60 01 00 00 48 89 c2 48 89 44 24 10 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80> 3c 02 00 0f 85 4d 04 00 00 49 8b 86 60 01 00 00 48 ba 00 00 00
+RSP: 0018:ffffc9000cc1eea8 EFLAGS: 00010202
+RAX: dffffc0000000000 RBX: 0000000000000001 RCX: ffffffff8672effb
+RDX: 000000000000002c RSI: ffffffff8672ecb9 RDI: ffff8880461b4f18
+RBP: ffff8880461b4ef4 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000020000
+R13: ffff8880461b0d80 R14: 0000000000000000 R15: dffffc0000000000
+FS:  00007fecfa95d6c0(0000) GS:ffff88806a600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fecfa95cfb8 CR3: 000000004472c000 CR4: 0000000000352ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+  vxlan_uninit+0x1ab/0x200 drivers/net/vxlan/vxlan_core.c:2942
+  unregister_netdevice_many_notify+0x12d6/0x1f30 net/core/dev.c:11824
+  unregister_netdevice_many net/core/dev.c:11866 [inline]
+  unregister_netdevice_queue+0x307/0x3f0 net/core/dev.c:11736
+  register_netdevice+0x1829/0x1eb0 net/core/dev.c:10901
+  __vxlan_dev_create+0x7c6/0xa30 drivers/net/vxlan/vxlan_core.c:3981
+  vxlan_newlink+0xd1/0x130 drivers/net/vxlan/vxlan_core.c:4407
+  rtnl_newlink_create net/core/rtnetlink.c:3795 [inline]
+  __rtnl_newlink net/core/rtnetlink.c:3906 [inline]
 
-This issue can also be reproduced by running:
- # tools/testing/selftests/bpf/xdp_hw_metadata enp1s0
-When a frame with the wrong port 9092 (instead of 9091) is used:
- # echo -n xdp | nc -u -q1 192.168.10.9 9092
-then the RX timestamp is missing and xdp_hw_metadata prints:
- skb hwtstamp is not found!
-
-With this fix or when copy mode is used:
- # tools/testing/selftests/bpf/xdp_hw_metadata -c enp1s0
-then RX timestamp is found and xdp_hw_metadata prints:
- found skb hwtstamp = 1736509937.852786132
-
-Fixes: 069b142f5819 ("igc: Add support for PTP .getcyclesx64()")
-Signed-off-by: Zdenek Bouska <zdenek.bouska@siemens.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Florian Bezdeka <florian.bezdeka@siemens.com>
-Reviewed-by: Song Yoong Siang <yoong.siang.song@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
+Reported-by: syzbot+6a9624592218c2c5e7aa@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/67a9d9b4.050a0220.110943.002d.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Roopa Prabhu <roopa@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250210105242.883482-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 27872bdea9bd1..d6c3147725b7e 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -2707,8 +2707,9 @@ static int igc_clean_rx_irq(struct igc_q_vector *q_vector, const int budget)
- }
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 9ea63059d52d7..cbe0f191a116b 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2904,8 +2904,11 @@ static int vxlan_init(struct net_device *dev)
+ 	struct vxlan_dev *vxlan = netdev_priv(dev);
+ 	int err;
  
- static struct sk_buff *igc_construct_skb_zc(struct igc_ring *ring,
--					    struct xdp_buff *xdp)
-+					    struct igc_xdp_buff *ctx)
- {
-+	struct xdp_buff *xdp = &ctx->xdp;
- 	unsigned int totalsize = xdp->data_end - xdp->data_meta;
- 	unsigned int metasize = xdp->data - xdp->data_meta;
- 	struct sk_buff *skb;
-@@ -2727,27 +2728,28 @@ static struct sk_buff *igc_construct_skb_zc(struct igc_ring *ring,
- 		__skb_pull(skb, metasize);
- 	}
- 
-+	if (ctx->rx_ts) {
-+		skb_shinfo(skb)->tx_flags |= SKBTX_HW_TSTAMP_NETDEV;
-+		skb_hwtstamps(skb)->netdev_data = ctx->rx_ts;
+-	if (vxlan->cfg.flags & VXLAN_F_VNIFILTER)
+-		vxlan_vnigroup_init(vxlan);
++	if (vxlan->cfg.flags & VXLAN_F_VNIFILTER) {
++		err = vxlan_vnigroup_init(vxlan);
++		if (err)
++			return err;
 +	}
-+
- 	return skb;
- }
  
- static void igc_dispatch_skb_zc(struct igc_q_vector *q_vector,
- 				union igc_adv_rx_desc *desc,
--				struct xdp_buff *xdp,
--				ktime_t timestamp)
-+				struct igc_xdp_buff *ctx)
- {
- 	struct igc_ring *ring = q_vector->rx.ring;
- 	struct sk_buff *skb;
- 
--	skb = igc_construct_skb_zc(ring, xdp);
-+	skb = igc_construct_skb_zc(ring, ctx);
- 	if (!skb) {
- 		ring->rx_stats.alloc_failed++;
- 		set_bit(IGC_RING_FLAG_RX_ALLOC_FAILED, &ring->flags);
- 		return;
- 	}
- 
--	if (timestamp)
--		skb_hwtstamps(skb)->hwtstamp = timestamp;
--
- 	if (igc_cleanup_headers(ring, desc, skb))
- 		return;
- 
-@@ -2783,7 +2785,6 @@ static int igc_clean_rx_irq_zc(struct igc_q_vector *q_vector, const int budget)
- 		union igc_adv_rx_desc *desc;
- 		struct igc_rx_buffer *bi;
- 		struct igc_xdp_buff *ctx;
--		ktime_t timestamp = 0;
- 		unsigned int size;
- 		int res;
- 
-@@ -2813,6 +2814,8 @@ static int igc_clean_rx_irq_zc(struct igc_q_vector *q_vector, const int budget)
- 			 */
- 			bi->xdp->data_meta += IGC_TS_HDR_LEN;
- 			size -= IGC_TS_HDR_LEN;
-+		} else {
-+			ctx->rx_ts = NULL;
- 		}
- 
- 		bi->xdp->data_end = bi->xdp->data + size;
-@@ -2821,7 +2824,7 @@ static int igc_clean_rx_irq_zc(struct igc_q_vector *q_vector, const int budget)
- 		res = __igc_xdp_run_prog(adapter, prog, bi->xdp);
- 		switch (res) {
- 		case IGC_XDP_PASS:
--			igc_dispatch_skb_zc(q_vector, desc, bi->xdp, timestamp);
-+			igc_dispatch_skb_zc(q_vector, desc, ctx);
- 			fallthrough;
- 		case IGC_XDP_CONSUMED:
- 			xsk_buff_free(bi->xdp);
+ 	err = gro_cells_init(&vxlan->gro_cells, dev);
+ 	if (err)
 -- 
 2.39.5
 
