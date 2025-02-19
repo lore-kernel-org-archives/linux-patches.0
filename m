@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088161D79BE;
-	Wed, 19 Feb 2025 08:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15CD21C4A20;
+	Wed, 19 Feb 2025 09:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955598; cv=none; b=bGKiWuABnQ7VOGvOqca1hotBrTPf6pjyDrNgdKyEKDr3rm08nuPYS+328zKZwccLm2MWlVvHt0eKIZpYj60MpzNRJ/BlbXyvypnNK867CsW1OMNxYEcY1PHEGgMaQBTI04a+V4D3UmPr+K6+3gi3qe490i8B0fWV/G8CgE9m368=
+	t=1739955601; cv=none; b=FWBa2SASLLvIyqgPlo0hFF8um5Q1t2NJd8wJjBJEVbJnH2g3Mj3T3UJ1UM8YQY2MwqmRLqtPfHrOK0PDv+bfAalVHieAPsLICa05k8da0v8s7BCNsIH1OfIAd/wn9PH0R84TgsNmizptILehQmWKBjhGcfmYDV98Y8vYB+0Vqds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955598; c=relaxed/simple;
-	bh=OM+zorXML8uHGcbwyf7nXz+onrDHrAHWwCiKTn6KlpU=;
+	s=arc-20240116; t=1739955601; c=relaxed/simple;
+	bh=lYW8UvMe+c0cZLL4Ow8SxkYzdPl3zeecxzkbBk2BYiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cDQImjZgdOx7edEnkxLmpYxtk4n7M6QfF74jHEix1M72DJgp9zlo2Agt0AvXm+vNj8ipQe59L21ooK8eMzUAuLs8aQdWgOOE4CPbQqdc7DjKxWDNuaPZLdU+9vqWv8qnzM0bd1hCItn6nwc55cCDON15/v4rceu8Wa4BsuLpAGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2Ztdhy0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tVDP8X8Pl9gIMBCebQzD0pYeHH3Lq8Dz3cUHFpAmcaEvO5J2YJeGgj6LiF2P3y2wnF9jqa6yAP87JudSg49s8nWfNMOYryduthK+Hw89ghKMjwCPAFGDs+d+ePJuP8EIaRMundZWDlXqniiM5+pg1M6BaxBa8hmCPKu6VBuSpEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7Ovm801; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2Ztdhy0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC62C4CED1;
-	Wed, 19 Feb 2025 08:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7Ovm801"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE2AC4CED1;
+	Wed, 19 Feb 2025 09:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955597;
-	bh=OM+zorXML8uHGcbwyf7nXz+onrDHrAHWwCiKTn6KlpU=;
+	s=korg; t=1739955601;
+	bh=lYW8UvMe+c0cZLL4Ow8SxkYzdPl3zeecxzkbBk2BYiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g2Ztdhy07loDqBo/j8lHYZbxuy3+Tg1EefrAYnNZW+p8oc6NCMGn8gVazfL2Vbtkg
-	 w3BPPTdf7fJ53LeU15m8Y0Cvvvf5hDPNUSKfCZJU4W5UN7+0Q3fpBNM/SB7jO2YXmW
-	 EzBSXZTyeX/vDwtk06815dPF7NNtB7Cm0dUsOEfY=
+	b=V7Ovm8015uBzlp+qgwM9jM7rdCNb5ksTfjOsvqv0bTgT1TH4snkn909St6beBJfgd
+	 g1Zbvm27KKHREL9ZnsbSyV4IQc0W4KUFZdnS+vBgoztAr8SAUw4ko/v41paQOgYeu1
+	 q4Nx7bDTcwJsBfDyxKnWlhw6GHk4PWTDaTraQSBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.6 055/152] perf/x86/intel: Ensure LBRs are disabled when a CPU is starting
-Date: Wed, 19 Feb 2025 09:27:48 +0100
-Message-ID: <20250219082552.224064337@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 029/152] media: cxd2841er: fix 64-bit division on gcc-9
+Date: Wed, 19 Feb 2025 09:27:22 +0100
+Message-ID: <20250219082551.192304898@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -51,56 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit c631a2de7ae48d50434bdc205d901423f8577c65 upstream.
+[ Upstream commit 8d46603eeeb4c6abff1d2e49f2a6ae289dac765e ]
 
-Explicitly clear DEBUGCTL.LBR when a CPU is starting, prior to purging the
-LBR MSRs themselves, as at least one system has been found to transfer
-control to the kernel with LBRs enabled (it's unclear whether it's a BIOS
-flaw or a CPU goof).  Because the kernel preserves the original DEBUGCTL,
-even when toggling LBRs, leaving DEBUGCTL.LBR as is results in running
-with LBRs enabled at all times.
+It appears that do_div() once more gets confused by a complex
+expression that ends up not quite being constant despite
+__builtin_constant_p() thinking it is:
 
-Closes: https://lore.kernel.org/all/c9d8269bff69f6359731d758e3b1135dedd7cc61.camel@redhat.com
-Reported-by: Maxim Levitsky <mlevitsk@redhat.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20250131010721.470503-1-seanjc@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ERROR: modpost: "__aeabi_uldivmod" [drivers/media/dvb-frontends/cxd2841er.ko] undefined!
+
+Use div_u64() instead, forcing the expression to be evaluated
+first, and making it a bit more readable.
+
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Closes: https://lore.kernel.org/linux-media/CA+G9fYvvNm-aYodLaAwwTjEGtX0YxR-1R14FOA5aHKt0sSVsYg@mail.gmail.com/
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/linux-media/CA+G9fYvvNm-aYodLaAwwTjEGtX0YxR-1R14FOA5aHKt0sSVsYg@mail.gmail.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+[hverkuil: added Closes tags]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c     |    5 ++++-
- arch/x86/include/asm/msr-index.h |    3 ++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/dvb-frontends/cxd2841er.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -4715,8 +4715,11 @@ static void intel_pmu_cpu_starting(int c
+diff --git a/drivers/media/dvb-frontends/cxd2841er.c b/drivers/media/dvb-frontends/cxd2841er.c
+index d925ca24183b5..415f1f91cc307 100644
+--- a/drivers/media/dvb-frontends/cxd2841er.c
++++ b/drivers/media/dvb-frontends/cxd2841er.c
+@@ -311,12 +311,8 @@ static int cxd2841er_set_reg_bits(struct cxd2841er_priv *priv,
  
- 	init_debug_store_on_cpu(cpu);
- 	/*
--	 * Deal with CPUs that don't clear their LBRs on power-up.
-+	 * Deal with CPUs that don't clear their LBRs on power-up, and that may
-+	 * even boot with LBRs enabled.
- 	 */
-+	if (!static_cpu_has(X86_FEATURE_ARCH_LBR) && x86_pmu.lbr_nr)
-+		msr_clear_bit(MSR_IA32_DEBUGCTLMSR, DEBUGCTLMSR_LBR_BIT);
- 	intel_pmu_lbr_reset();
+ static u32 cxd2841er_calc_iffreq_xtal(enum cxd2841er_xtal xtal, u32 ifhz)
+ {
+-	u64 tmp;
+-
+-	tmp = (u64) ifhz * 16777216;
+-	do_div(tmp, ((xtal == SONY_XTAL_24000) ? 48000000 : 41000000));
+-
+-	return (u32) tmp;
++	return div_u64(ifhz * 16777216ull,
++		       (xtal == SONY_XTAL_24000) ? 48000000 : 41000000);
+ }
  
- 	cpuc->lbr_sel = NULL;
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -358,7 +358,8 @@
- #define MSR_IA32_PASID_VALID		BIT_ULL(31)
- 
- /* DEBUGCTLMSR bits (others vary by model): */
--#define DEBUGCTLMSR_LBR			(1UL <<  0) /* last branch recording */
-+#define DEBUGCTLMSR_LBR_BIT		0	     /* last branch recording */
-+#define DEBUGCTLMSR_LBR			(1UL <<  DEBUGCTLMSR_LBR_BIT)
- #define DEBUGCTLMSR_BTF_SHIFT		1
- #define DEBUGCTLMSR_BTF			(1UL <<  1) /* single-step on branches */
- #define DEBUGCTLMSR_BUS_LOCK_DETECT	(1UL <<  2)
+ static u32 cxd2841er_calc_iffreq(u32 ifhz)
+-- 
+2.39.5
+
 
 
