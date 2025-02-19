@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF0F2147E4;
-	Wed, 19 Feb 2025 21:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8147520F082;
+	Wed, 19 Feb 2025 21:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740000894; cv=none; b=kvDTxznoC4STrH9+yD7W3ggod0SCR7ovFI0fQCTvWeMfOcq+hFPl7bT4d13HvTGopK9S2n55y6dsaHEbkhQ3A+oxToHBlozdaSCTsfBK7SLzVOvWUYRDa227RXL5mKuD3PTJzOE4oUR50337dWmdlVJejmXoKCwJhu1hRafxvSc=
+	t=1740000922; cv=none; b=pC8e2VUENcOdgXTtq68fuesnJRJmrRZTFH7/5KapGu8lp7xzSIQ2GZ4LkExhmtJOoL1pexwQkBICavh3lGjy1XU0cdjPoLPY2dPEAvZfG9CFTZWULbwyUMl0RhRcTNXZcnoH7MIf2zroQzvlcBmzRH1eShjPKTWcv8a4fOufZKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740000894; c=relaxed/simple;
-	bh=HBXTtTA7xUXflTeT130vM1iT0i7s6QLv9KxPZn7oWC4=;
+	s=arc-20240116; t=1740000922; c=relaxed/simple;
+	bh=e4aJMAv1V4CuQwKgqxlK6659bCn6Finu4jYa97q8UPU=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dhv63isr3WnNfjupdrXn8rvUt1uDb4U6UDcwucutMC2qZtqWwk187kE7ea5eGtNLjHrfKAdov2xjkNlVqCg9+B1uHGs5FwSiZ2mj9fE65WqrsO86dE7XIRJ0PQMxtLF0Hkl8Do/H9WPJx+3QMVFrFsU4TDGO2l+1Qzff5xRBsjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nY8wC7Ht; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LDXiUWUlulp4VMaxRhqKK/81UoAQtetUouzRdDaRZjQS2/XzEhPiD2Rg4h3Ej5ftjZcOldMw0ww3f9LMOnBlbLkOHOWkJhY+ZUCv3J3e68q16lshnkMAbhPIR6TO7+xPU48MtHx8XwkNAnPFZmP6yHwjuruecF3ALc35QD/uCU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hABoKHFq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nY8wC7Ht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0EBBC4CEDD;
-	Wed, 19 Feb 2025 21:34:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hABoKHFq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D8CC4CED1;
+	Wed, 19 Feb 2025 21:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740000894;
-	bh=HBXTtTA7xUXflTeT130vM1iT0i7s6QLv9KxPZn7oWC4=;
+	s=k20201202; t=1740000921;
+	bh=e4aJMAv1V4CuQwKgqxlK6659bCn6Finu4jYa97q8UPU=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=nY8wC7Htfc0MnAppEd6qFEiuEYcAUNbhm4OesmGart9uUXdZBJwio4/F8xULZ89eI
-	 AlaDiIIgfBcPYJlMJbk+1eHbgVPfrT3Vd4KeZmW78xQTYaFPHPgRqxtBRdExqhoCTu
-	 wmazQ/dmBPq9Z1L1FROhVbNQ6C79WQ0Hq82Pn0qjjMxLx+8OT2RzZjZJQsAuYp1BjK
-	 tzBIV0bfdFcM2GxsJMil47LVQ5QSp2UWMf1e5uXGjMVHLWP7mMYS3jS2VNJmjj/aNQ
-	 mJfZCzzrEdM5a/jAPA/qAtldWexeRYMj7HeFR7TNPLyl9NHgcgeC1j4OJh1YgKmH33
-	 CsEu6LymEktJQ==
-Date: Wed, 19 Feb 2025 13:34:53 -0800
+	b=hABoKHFqZTUTY9EggftxV5DLIE0HbtiSQlvNoh112UWJjTdWjVetJj/NFTfU85Im8
+	 CI4sbGgyihWA0UBT25LqoON/ErvLwhbiQfC5i4YOAzVPDxuanr5DLkzKXGWxSxN3Zs
+	 eh7pJK3X7ybZCPMx4sPKBZDO2YW395bqoYv/6pF1Hqwwy2IkK3lkDEzynBIYvxfay2
+	 cVC2l5uNgIfQm3FqJEhaUFCTgdMqnVJ8TDO8bi1616ZUgt3IoswOi9o7SNdRPecDhI
+	 oKILY1S7HirOPSqESGCrNyi5fbx//IclwrqWG1ipC2sEH9DJQHLp5XFzwT159l6EQD
+	 OPnIf6xenUhFA==
+Date: Wed, 19 Feb 2025 13:35:21 -0800
 From: Jakub Kicinski <kuba@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, Sasha Levin
- <sashal@kernel.org>
-Subject: Re: [PATCH 6.13 230/274] eth: iavf: extend the netdev_lock usage
-Message-ID: <20250219133453.0550fb92@kernel.org>
-In-Reply-To: <20250219082618.582615972@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, Joe Damato
+ <jdamato@fastly.com>, Eric Dumazet <edumazet@google.com>, Kuniyuki Iwashima
+ <kuniyu@amazon.com>, Przemek Kitszel <przemyslaw.kitszel@intel.com>, Sasha
+ Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.13 231/274] net: add netdev_lock() / netdev_unlock()
+ helpers
+Message-ID: <20250219133521.6d6a9f3c@kernel.org>
+In-Reply-To: <20250219082618.621038202@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
-	<20250219082618.582615972@linuxfoundation.org>
+	<20250219082618.621038202@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,9 +48,25 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On Wed, 19 Feb 2025 09:28:04 +0100 Greg Kroah-Hartman wrote:
-> iavf uses the netdev->lock already to protect shapers.
-> In an upcoming series we'll try to protect NAPI instances
-> with netdev->lock.
+On Wed, 19 Feb 2025 09:28:05 +0100 Greg Kroah-Hartman wrote:
+> 6.13-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Jakub Kicinski <kuba@kernel.org>
+> 
+> [ Upstream commit ebda2f0bbde540ff7da168d2837f8cfb14581e2e ]
+> 
+> Add helpers for locking the netdev instance, use it in drivers
+> and the shaper code. This will make grepping for the lock usage
+> much easier, as we extend the lock to cover more fields.
+> 
+> Reviewed-by: Joe Damato <jdamato@fastly.com>
+> Reviewed-by: Eric Dumazet <edumazet@google.com>
+> Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+> Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+> Link: https://patch.msgid.link/20250115035319.559603-2-kuba@kernel.org
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> Stable-dep-of: 011b03359038 ("Revert "net: skb: introduce and use a single page frag cache"")
 
-Please drop from all branches, waaay too risky
+please drop from all branches
