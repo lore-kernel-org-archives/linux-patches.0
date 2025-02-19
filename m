@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D1C54782;
-	Wed, 19 Feb 2025 02:12:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72ED1156228;
+	Wed, 19 Feb 2025 02:59:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739931170; cv=none; b=NGSKgv4GmtgMHkTdSUJzZpTukbikcG4a4yeDQ8lx59683YyXcOHBIu5LxIM6QCt6KuF5QUpAquFZcrXJZZJNZO7ARKO/e43f8jHeUxrLihcbH7Oyiv3pUJg6Wl2ZAZE25NG9ysyE1NC2qbHRMHQvAzSzDUzau7CO/znZpnucKH4=
+	t=1739933971; cv=none; b=K+tZMECwXi6t/d8RBgf3JBMcNDQOBF+9AtoE6JwpmT7bUq4mc2e0RMOuUDC84yorIHnqOBXlJC16nGnmKiRxeT9PfXWjmb5SmEacMvuNE9VU2cGEkjvTjqkk68YES0tNbo+lXvuGw7WRMCLNHB94oI/BzfqisHtkOiYnNi8xbvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739931170; c=relaxed/simple;
-	bh=L4dOu00QBkrvIlSABtaObxkMy1PBjMvwydaerJNjvtQ=;
+	s=arc-20240116; t=1739933971; c=relaxed/simple;
+	bh=rOMFbl3z2EdNZq26KKAZFNR9PZtZbOBVCWnC4y2z5Us=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XmLyHM88Z/sGqmzG1wtqQ7Q35o8d38NbwXg0f0G+ItIKbnfwi82as2FdVTxSHYU3VAwqGOwLZLN3+NXFzjZleT9ipMt5dJUqJTsNRltwH3I8w4S7oQnWyoKWTBUPnDxR3YXEmr5Q3ARouPiJENn1UXzmyTN2t01LY0hsAuVUODg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=j90eyoDB; arc=none smtp.client-ip=198.175.65.16
+	 In-Reply-To:Content-Type; b=tdNwk3zyvXqkoVti0+MgvO1LWuF0OmEdKofwZc3AIRIKoPLcvVVlKhBn8H7uFRQpfsXGiyoJRJ6JZNaiw1DoeNd1wOrRtKuse2kKzThMbEBAFVBuqnZUXwaOiJkrYcXVXr+L5ygpUfn4oPVo8kj7x8hpR4aDqjmgaKOaAIYIGpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cWb89XwX; arc=none smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j90eyoDB"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cWb89XwX"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1739931170; x=1771467170;
+  t=1739933970; x=1771469970;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=L4dOu00QBkrvIlSABtaObxkMy1PBjMvwydaerJNjvtQ=;
-  b=j90eyoDBC2Q7f1SecgsLlTAFjT0apoBfbNq6zFyXhptefxifO2VgPO2C
-   hl97PiOlyeXz6+OwP8YIAgj77w59AdsvUxkliRMAeFvJBQiSTNCbYIxUj
-   LfIkRekaKg1o5FcJddRMe9Ova5ugdjJkOxNnwjiWy+Hp5mW5AnRIfNt52
-   zZK/bymJetvUtSMbysnB3knNDZjCeZyJ8JOaPc4kqSIGwWDX/tPNXJG6C
-   gdFBUYmNEpi/tuiftsxxjORm3HyurEkNQhWJqD8RiJoluZawaAX8E2vsU
-   bNB9j0GKOY6jPMwuxewtZLSMNwvsgKsHGgtlNLAi7TVWPmBgtI2Sv7Fgo
-   w==;
-X-CSE-ConnectionGUID: kkDoaOz8QfeDTpTUtZJ6mA==
-X-CSE-MsgGUID: aGD5X2KATsqNf4asYKxOFA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="40780148"
+  bh=rOMFbl3z2EdNZq26KKAZFNR9PZtZbOBVCWnC4y2z5Us=;
+  b=cWb89XwX4WiW/Us0lQSQ1A+3h65LQyfmSFc9HBhtKBfAM1m1bkICR3ud
+   Xe7PIASmjUvU2m2WXeLMYT1GQY0X4wFeWm4Pd+GKJTC/XPaAzWIja9upY
+   cBy75tzZZ2PUam3Jai92J2IrRhYxiVJaDEONAl38tqmlhIO3vQ2O0F+/Z
+   3DggkAyknIg+rFywqZLnafDGV8qwlOSId2bxpu91qcmeBscareg5oBFRZ
+   l+aujq9mdFrzVrmRPQm9tK3ZtBX4jqN0EBueQ66ieZug5rKaz9lwbhLrL
+   364+kopLosg9MlloqnbQIhYLEekNweDOlwBm3BysRr44a0rz60TO10VlX
+   g==;
+X-CSE-ConnectionGUID: NfPJi3MBQWWOBJSamckOqg==
+X-CSE-MsgGUID: bCxO3ZFhSxC0z3HvkVvANw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11348"; a="40515891"
 X-IronPort-AV: E=Sophos;i="6.13,296,1732608000"; 
-   d="scan'208";a="40780148"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2025 18:12:49 -0800
-X-CSE-ConnectionGUID: wdkQ11ldTpOd1cV+PafJ1g==
-X-CSE-MsgGUID: LjO0SyJ3SR+0TUso89+tqw==
+   d="scan'208";a="40515891"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2025 18:59:29 -0800
+X-CSE-ConnectionGUID: TBYZGMlXQXKSyTkYi9M/6A==
+X-CSE-MsgGUID: 7HleMqibRqa4OaCc6SPD+g==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.13,296,1732608000"; 
-   d="scan'208";a="115096578"
+   d="scan'208";a="114437430"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2025 18:12:42 -0800
-Message-ID: <f7e30bd8-ae1f-42fe-a8a6-2b448a474044@linux.intel.com>
-Date: Wed, 19 Feb 2025 10:09:39 +0800
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2025 18:59:21 -0800
+Message-ID: <25d9f6de-5cc0-41ec-bdbc-0cf5f66743cf@linux.intel.com>
+Date: Wed, 19 Feb 2025 10:56:18 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,79 +52,86 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/12] Initial support for SMMUv3 nested translation
+Subject: Re: [PATCH v2 07/23] iommu/pages: De-inline the substantial functions
 To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Zhangfei Gao <zhangfei.gao@linaro.org>, acpica-devel@lists.linux.dev,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
- Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Robert Moore <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>,
- Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Donald Dutile <ddutile@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Hanjun Guo <guohanjun@huawei.com>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Jerry Snitselaar <jsnitsel@redhat.com>, Moritz Fischer <mdf@kernel.org>,
- Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>,
- patches@lists.linux.dev, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- Mostafa Saleh <smostafa@google.com>
-References: <20241113164316.GL35230@nvidia.com>
- <6ed97a10-853f-429e-8506-94b218050ad3@linux.intel.com>
- <20241115175522.GA35230@nvidia.com> <20250122192622.GA965540@nvidia.com>
- <284dd081-8d53-45ef-ae18-78b0388c98ca@linux.intel.com>
- <f7b6c833-b6c1-4154-9b77-13553e501f2b@linux.intel.com>
- <20250213184317.GB3886819@nvidia.com>
- <bc9f4477-7976-4955-85dc-3e05ebe95ead@linux.intel.com>
- <20250214124150.GF3886819@nvidia.com>
- <58e7fbee-6688-4a49-8b7a-f0e81e6562db@linux.intel.com>
- <20250218130333.GA4099685@nvidia.com>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>,
+ Alyssa Rosenzweig <alyssa@rosenzweig.io>, Albert Ou <aou@eecs.berkeley.edu>,
+ asahi@lists.linux.dev, David Woodhouse <dwmw2@infradead.org>,
+ Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+ Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-kernel@lists.infradead.org,
+ linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+ linux-tegra@vger.kernel.org, Marek Szyprowski <m.szyprowski@samsung.com>,
+ Hector Martin <marcan@marcan.st>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Robin Murphy
+ <robin.murphy@arm.com>, Samuel Holland <samuel@sholland.org>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Sven Peter <sven@svenpeter.dev>, Thierry Reding <thierry.reding@gmail.com>,
+ Tomasz Jeznach <tjeznach@rivosinc.com>, Krishna Reddy <vdumpa@nvidia.com>,
+ Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+ Bagas Sanjaya <bagasdotme@gmail.com>, Joerg Roedel <jroedel@suse.de>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+ David Rientjes <rientjes@google.com>, Matthew Wilcox <willy@infradead.org>
+References: <7-v2-545d29711869+a76b5-iommu_pages_jgg@nvidia.com>
+ <84fd4500-a12c-40d6-a532-e2956ed1c35e@linux.intel.com>
+ <20250218201924.GJ4183890@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <20250218130333.GA4099685@nvidia.com>
+In-Reply-To: <20250218201924.GJ4183890@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2/18/25 21:03, Jason Gunthorpe wrote:
-> On Sat, Feb 15, 2025 at 05:53:13PM +0800, Baolu Lu wrote:
->> On 2/14/25 20:41, Jason Gunthorpe wrote:
->>> On Fri, Feb 14, 2025 at 01:39:52PM +0800, Baolu Lu wrote:
->>>
->>>> When the IOMMU is working in scalable mode, PASID and PRI are supported.
->>>> ATS will always be enabled, even if the identity domain is attached to
->>>> the device, because the PASID might use PRI, which depends on ATS
->>>> functionality. This might not be the best choice, but it is the
->>>> simplest and functional.
->>> The arm driver keeps track of things and enables ATS when PASIDs are
->>> present
->> I am not aware of any VT-d hardware implementation that supports
->> scalable mode but not PASID. If there were one, it would be worthwhile
->> to add an optimization to avoid enabling ATS during probe if PASID is
->> not supported.
-> I mean domains attached to PASIDs that need PRI/ATS/etc
+On 2/19/25 04:19, Jason Gunthorpe wrote:
+> On Sat, Feb 15, 2025 at 04:48:04PM +0800, Baolu Lu wrote:
+> 
+>>> +#include <linux/gfp.h>
+>>> +#include <linux/mm.h>
+>>> +
+>>> +/**
+>>> + * iommu_alloc_pages_node - Allocate a zeroed page of a given order from
+>>> + *                          specific NUMA node
+>>> + * @nid: memory NUMA node id
+>>> + * @gfp: buddy allocator flags
+>>> + * @order: page order
+>>> + *
+>>> + * Returns the virtual address of the allocated page. The page must be
+>>> + * freed either by calling iommu_free_page() or via iommu_put_pages_list().
+>> nit: ... by calling iommu_free_pages() ...
+> Got it
+> 
+>> and
+>>
+>>   s/page/pages/g in above comments?
+> There is alot of historical confusion here because it was all designed
+> around alloc_pages() which allocated a list of contiguous pages that
+> could be subdivided. When this moved to GFP_COMP and later to
+> folio_alloc() the subdivision is no longer possible. So it is not
+> "pages" at all anymore, but a single "[compound] page".
+> 
+> So the module name is called "iommu-pages" but aside from the free
+> list functions everything else acts on a single [compound] page only.
+> 
+> If you think about it too much it makes no sense but I didn't want to
+> rename every function. I tried to keep it so that "iommu pages" was
+> part of othe module name, and function designators, but the comments
+> talk about a singular [compound] page
+> 
+>>> +static void __iommu_free_page(struct page *page)
+>> It's more readable if renaming it to __iommu_free_pages()?
+> Ah.. Well, it captures the module name but nothing it does acts on
+> multiple things, since it is internal I used the other name
+> 
+> How about I rename it later on to:
+> 
+> static void __iommu_free_desc(struct ioptdesc *iopt)
+> 
+> ?
 
-Yeah, that's a better solution. The PCI PRI/ATS features are only
-enabled when a domain that requires them is attached to it. I will
-consider it in the Intel driver later.
-
->>> Although, I'm wondering now, that check should be on the SVA paths as
->>> well as the iommufd path..
->> That appears to be a fix.
-> Does SVA have the same issue?
-
-One case I can think of is SVA on SR-IOV VFs. Without the in-progress
-iopf refcount patch series, enabling and disabling iopf could be
-problematic, because all PRI enablement is switched in the PF, it's
-possible that enable and disable operations won't be paired correctly.
-
-Another issue is that a failure or invalid page group response may halt
-the PRI interface, which would cause SVA on other VFs to stop working.
-
-So, we should probably disable SVA on VFs for now and re-enable it after
-all these issues are resolved.
+No problem. It actually depends on you. Since this is only used locally,
+the iommu drivers won't use it. So, anything that helps understand what
+it does is okay. :-)
 
 Thanks,
 baolu
