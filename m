@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805131C2432;
-	Wed, 19 Feb 2025 09:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B8D1C2432;
+	Wed, 19 Feb 2025 09:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956003; cv=none; b=PGPBfqcBZqlbXGoJAmrs2DWmaCe3/9jzg/++2w4PmYh3vuOPMV8QnVZvT5UMvQvRe7lmqa/N9SC/7aGsZvjQdmImOswPg/vuwEA4tSsFrlfOsdFKkCPGMYNrazgyQV/+lyNPo0ZnFzuqVn7ojNmDWGDuG/YViIgYRtWHcbsjv/I=
+	t=1739956006; cv=none; b=Pf70PYTXSUN6u7ZUJlxkoow6usxi0H7r2o8dMf34UXCLdyGHktB+OC/uBG/4j5Y7q0l85jvDFthdMh+6aA20R0/XsOtZDuIv0hnlrfgHlQeg+VkeeWo+sK6okCBBdiRdH4MWPJHYV2u1q/sMtOGcyEEIPk8jE54J+cSCQCejHxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956003; c=relaxed/simple;
-	bh=hq4hsi25/vlY+wel0u40qDdSVa7b4l3VJsC32AilYyU=;
+	s=arc-20240116; t=1739956006; c=relaxed/simple;
+	bh=rz0Cq1OKqlgnZmbvm5xL8Z3oUfZxYXeqFFHKUlAjHBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iXraWX8PO0eBoGl2CfUfehLpI3yV883GxxVzw7TXL5xRz4fHjEL5bwENbkkVzIQh+CJKBkx15PSCVJ6LBngynpS/JDdPltTytb97FrHfhQRC80KKX3WSTW4wy10T9SECHVrzswT+fJlpHDayIfcUc3oHJJXLcvtCklx8KAUH4FM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6RUrPA4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DuBUcMEuRIRRb18cf+9vhddzrTcIqtb+Bk1JwExIZGkCAibOuoXvs+dN9cRRuVJJ6QfeQdm2YBic5LTn0pE+QSOxOW82iMpZdP2RUWtwQ/AlBAezvZ0WpzO0Ed5lMf62P5Nzjvqfn7c+HsBq3flPNlO9CjPk9E1kvtoGCsDVLqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+1+0hsx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6RUrPA4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03478C4CED1;
-	Wed, 19 Feb 2025 09:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+1+0hsx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE45BC4CED1;
+	Wed, 19 Feb 2025 09:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956003;
-	bh=hq4hsi25/vlY+wel0u40qDdSVa7b4l3VJsC32AilYyU=;
+	s=korg; t=1739956006;
+	bh=rz0Cq1OKqlgnZmbvm5xL8Z3oUfZxYXeqFFHKUlAjHBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R6RUrPA4pNStBkejfQa2If94Wrr9Lt1Bx192Li87wfoSaOJ6eQyDWcS8eCQZ/TVfO
-	 egBEme7dYbo46eB1//cPZ4h2kWctg9TA6KAC7jPpHiaYgL9OVl7jUzWEHDVqf4h6d6
-	 K9h0qfUUV47qJuWbGAjQ+td7QToEZwYVY4PIX520=
+	b=e+1+0hsxfQQfcce4z7lT5Zm3Ntg3ZP77UNhsy7CPVBpYf4Md7mbjuIv2dKIgKYl8E
+	 QwLPBEjzNSMUvdiHju8s9KmN1svmRUrv2irW/wJeI/BWJ63+io1uv7YOxPQ+Wi4XV5
+	 dWP9CYc9wGUygEWC+UtLYnkYLGXpTHeFZwVcmbSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Hermes Wu <hermes.wu@ite.com.tw>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/578] drm/bridge: it6505: Change definition of AUX_FIFO_MAX_SIZE
-Date: Wed, 19 Feb 2025 09:20:36 +0100
-Message-ID: <20250219082654.161013009@linuxfoundation.org>
+Subject: [PATCH 6.1 033/578] genirq: Make handle_enforce_irqctx() unconditionally available
+Date: Wed, 19 Feb 2025 09:20:37 +0100
+Message-ID: <20250219082654.199329639@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,37 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hermes Wu <hermes.wu@ite.com.tw>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit c14870218c14532b0f0a7805b96a4d3c92d06fb2 ]
+[ Upstream commit 8d187a77f04c14fb459a5301d69f733a5a1396bc ]
 
-The hardware AUX FIFO is 16 bytes
-Change definition of AUX_FIFO_MAX_SIZE to 16
+Commit 1b57d91b969c ("irqchip/gic-v2, v3: Prevent SW resends entirely")
+sett the flag which enforces interrupt handling in interrupt context and
+prevents software base resends for ARM GIC v2/v3.
 
-Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Hermes Wu <hermes.wu@ite.com.tw>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241230-v7-upstream-v7-1-e0fdd4844703@ite.corp-partner.google.com
+But it missed that the helper function which checks the flag was hidden
+behind CONFIG_GENERIC_PENDING_IRQ, which is not set by ARM[64].
+
+Make the helper unconditionally available so that the enforcement actually
+works.
+
+Fixes: 1b57d91b969c ("irqchip/gic-v2, v3: Prevent SW resends entirely")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20241210101811.497716609@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ite-it6505.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/irq/internals.h | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
-index 5a23277be4445..45596b211fb88 100644
---- a/drivers/gpu/drm/bridge/ite-it6505.c
-+++ b/drivers/gpu/drm/bridge/ite-it6505.c
-@@ -300,7 +300,7 @@
- #define MAX_CR_LEVEL 0x03
- #define MAX_EQ_LEVEL 0x03
- #define AUX_WAIT_TIMEOUT_MS 15
--#define AUX_FIFO_MAX_SIZE 32
-+#define AUX_FIFO_MAX_SIZE 16
- #define PIXEL_CLK_DELAY 1
- #define PIXEL_CLK_INVERSE 0
- #define ADJUST_PHASE_THRESHOLD 80000
+diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
+index 5fdc0b5575797..35e85323940c3 100644
+--- a/kernel/irq/internals.h
++++ b/kernel/irq/internals.h
+@@ -429,10 +429,6 @@ static inline struct cpumask *irq_desc_get_pending_mask(struct irq_desc *desc)
+ {
+ 	return desc->pending_mask;
+ }
+-static inline bool handle_enforce_irqctx(struct irq_data *data)
+-{
+-	return irqd_is_handle_enforce_irqctx(data);
+-}
+ bool irq_fixup_move_pending(struct irq_desc *desc, bool force_clear);
+ #else /* CONFIG_GENERIC_PENDING_IRQ */
+ static inline bool irq_can_move_pcntxt(struct irq_data *data)
+@@ -459,11 +455,12 @@ static inline bool irq_fixup_move_pending(struct irq_desc *desc, bool fclear)
+ {
+ 	return false;
+ }
++#endif /* !CONFIG_GENERIC_PENDING_IRQ */
++
+ static inline bool handle_enforce_irqctx(struct irq_data *data)
+ {
+-	return false;
++	return irqd_is_handle_enforce_irqctx(data);
+ }
+-#endif /* !CONFIG_GENERIC_PENDING_IRQ */
+ 
+ #if !defined(CONFIG_IRQ_DOMAIN) || !defined(CONFIG_IRQ_DOMAIN_HIERARCHY)
+ static inline int irq_domain_activate_irq(struct irq_data *data, bool reserve)
 -- 
 2.39.5
 
