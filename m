@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC881C5F30;
-	Wed, 19 Feb 2025 08:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA201C175A;
+	Wed, 19 Feb 2025 08:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954978; cv=none; b=CFJH8ujhITew624rEABwldJj9h2oXiW/V9E7BQsdQY2oV0Nd139/jySVDR7zIcBysXGt4vB5Av5Q9x/Mpd09LYljqLypSe90DJCeROxo5ZT62SNxaVOzHfz77+QvUTJ05QzUpWPZdB7MuKkMoHNDFVa96Ufo9Me+Qawj7kIzSAQ=
+	t=1739954981; cv=none; b=plZiSLsoeuB8pbhBTPk4S7VFNn08yOgud4U/n0LBLJFt1SOmQfMRLnW4wTBevWS+jYkbNRY2xNjtNuXB25nGIbt8vg6U/DikNqYqp0/a2gfzf5h0laFi2uEplfWBxmBe5UAwY64QDp4KFuvNQAECmhkapBBJsGB+lGPQVLCzAJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954978; c=relaxed/simple;
-	bh=XE7+7mE0BPiYJOZ33OESXjKLao0EivXuPO6/EFx9CAI=;
+	s=arc-20240116; t=1739954981; c=relaxed/simple;
+	bh=6GRMO0/5fHoVycWfD0rDIBd5sCYi8c/inSBwJ6/paBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ErkFzVNaXcL8KgBd/Ss73SVOgFvAseoSk2Us0RHT7AZqIc5xb3/mmTi6gWk8GWpAduzo1xz4pUMkqavaWH7MaQx8F0JPDjub3uOBkWwZQbBN09PHsTpsmhN16qm/jaJRuFGhudopF7tbWmlzcif3XbidgolT/nQsozWYUg7WuTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eq3o3vin; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dRh65HNGfVf8BauLlqzYSY2HSqdqk4hVKoeL2U++HeFzZkxme/Keay1iKHZjUbZyplIlXf+DdkBLDxBMlJsIWQfxhiT7OPXb7dPV/YicN1hg6P1DpraHh75yQT7ydIX5U2sUe+JkovCUk/DInkzwfm4nA2cE8LlEr+V84PRHSZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGucPefL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eq3o3vin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602D4C4CED1;
-	Wed, 19 Feb 2025 08:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGucPefL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED01C4CED1;
+	Wed, 19 Feb 2025 08:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954977;
-	bh=XE7+7mE0BPiYJOZ33OESXjKLao0EivXuPO6/EFx9CAI=;
+	s=korg; t=1739954980;
+	bh=6GRMO0/5fHoVycWfD0rDIBd5sCYi8c/inSBwJ6/paBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eq3o3vin936B5P4UFCfLz1f0USRtUbonCN0aDZB0OHIKQTope5nPqF8I/f0yirPW6
-	 k2/ZofWS7pGgpB9wMzTxkKldPZnnPjxkVN9judpIFczOWurosJpwwndPy/7uJ5FwoP
-	 jX/eoinOETbW6uSTJBNokFJfBbv0IXB4oJqXDYLA=
+	b=pGucPefLKquWS7f40M8Ekvkuml3oyEKalIpQ3oXteT7kZrbGmnrvc9mNCpM58awjq
+	 YOwzrxnSZacYSPLVpDWAXvlvWF4BreVJhv7EMnow4VXPdA32VXni1Yj/OgA3I7t/JY
+	 Iuwk+hCVj3aGVlYuIlLwFqRlSntWLB63ZEFpqcdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Jai Luthra <jai.luthra@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/230] media: cxd2841er: fix 64-bit division on gcc-9
-Date: Wed, 19 Feb 2025 09:26:21 +0100
-Message-ID: <20250219082604.215651044@linuxfoundation.org>
+Subject: [PATCH 6.12 065/230] media: i2c: ds90ub913: Add error handling to ub913_hw_init()
+Date: Wed, 19 Feb 2025 09:26:22 +0100
+Message-ID: <20250219082604.255154918@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -54,51 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 8d46603eeeb4c6abff1d2e49f2a6ae289dac765e ]
+[ Upstream commit acd8f58d7a3bce0fbd3263961cd09555c00464ba ]
 
-It appears that do_div() once more gets confused by a complex
-expression that ends up not quite being constant despite
-__builtin_constant_p() thinking it is:
+Add error handling to ub913_hw_init() using a new helper function,
+ub913_update_bits().
 
-ERROR: modpost: "__aeabi_uldivmod" [drivers/media/dvb-frontends/cxd2841er.ko] undefined!
-
-Use div_u64() instead, forcing the expression to be evaluated
-first, and making it a bit more readable.
-
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Closes: https://lore.kernel.org/linux-media/CA+G9fYvvNm-aYodLaAwwTjEGtX0YxR-1R14FOA5aHKt0sSVsYg@mail.gmail.com/
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/linux-media/CA+G9fYvvNm-aYodLaAwwTjEGtX0YxR-1R14FOA5aHKt0sSVsYg@mail.gmail.com/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-[hverkuil: added Closes tags]
+Reported-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Closes: https://lore.kernel.org/all/Zv40EQSR__JDN_0M@kekkonen.localdomain/
+Reviewed-by: Jai Luthra <jai.luthra@ideasonboard.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/cxd2841er.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/media/i2c/ds90ub913.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/cxd2841er.c b/drivers/media/dvb-frontends/cxd2841er.c
-index d925ca24183b5..415f1f91cc307 100644
---- a/drivers/media/dvb-frontends/cxd2841er.c
-+++ b/drivers/media/dvb-frontends/cxd2841er.c
-@@ -311,12 +311,8 @@ static int cxd2841er_set_reg_bits(struct cxd2841er_priv *priv,
+diff --git a/drivers/media/i2c/ds90ub913.c b/drivers/media/i2c/ds90ub913.c
+index b5375d7366299..7670d6c82d923 100644
+--- a/drivers/media/i2c/ds90ub913.c
++++ b/drivers/media/i2c/ds90ub913.c
+@@ -8,6 +8,7 @@
+  * Copyright (c) 2023 Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+  */
  
- static u32 cxd2841er_calc_iffreq_xtal(enum cxd2841er_xtal xtal, u32 ifhz)
- {
--	u64 tmp;
--
--	tmp = (u64) ifhz * 16777216;
--	do_div(tmp, ((xtal == SONY_XTAL_24000) ? 48000000 : 41000000));
--
--	return (u32) tmp;
-+	return div_u64(ifhz * 16777216ull,
-+		       (xtal == SONY_XTAL_24000) ? 48000000 : 41000000);
++#include <linux/bitfield.h>
+ #include <linux/clk-provider.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+@@ -146,6 +147,19 @@ static int ub913_write(const struct ub913_data *priv, u8 reg, u8 val)
+ 	return ret;
  }
  
- static u32 cxd2841er_calc_iffreq(u32 ifhz)
++static int ub913_update_bits(const struct ub913_data *priv, u8 reg, u8 mask,
++			     u8 val)
++{
++	int ret;
++
++	ret = regmap_update_bits(priv->regmap, reg, mask, val);
++	if (ret < 0)
++		dev_err(&priv->client->dev,
++			"Cannot update register 0x%02x %d!\n", reg, ret);
++
++	return ret;
++}
++
+ /*
+  * GPIO chip
+  */
+@@ -733,10 +747,13 @@ static int ub913_hw_init(struct ub913_data *priv)
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "i2c master init failed\n");
+ 
+-	ub913_read(priv, UB913_REG_GENERAL_CFG, &v);
+-	v &= ~UB913_REG_GENERAL_CFG_PCLK_RISING;
+-	v |= priv->pclk_polarity_rising ? UB913_REG_GENERAL_CFG_PCLK_RISING : 0;
+-	ub913_write(priv, UB913_REG_GENERAL_CFG, v);
++	ret = ub913_update_bits(priv, UB913_REG_GENERAL_CFG,
++				UB913_REG_GENERAL_CFG_PCLK_RISING,
++				FIELD_PREP(UB913_REG_GENERAL_CFG_PCLK_RISING,
++					   priv->pclk_polarity_rising));
++
++	if (ret)
++		return ret;
+ 
+ 	return 0;
+ }
 -- 
 2.39.5
 
