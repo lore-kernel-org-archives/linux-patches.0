@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADE51B6CFA;
-	Wed, 19 Feb 2025 09:19:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4781A315E;
+	Wed, 19 Feb 2025 09:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956740; cv=none; b=J/Lb899d0fEe+RNq4ioBVqumZ93NIxsh+l/d2ayda9fm5B3yzOQfK+39xuRr/CApPtPoLp+KzY4rHN0f0otVBQfwd0hXVRNHUiVgR+i6Ct3c5gA9V/b9Pykm7ztu0fRq5YoJ1IMX+I3OmmlgZzZSuwv1Uv3EmtE7bVIN2uBb+eI=
+	t=1739956743; cv=none; b=WQhmwce8+gEWfUZZZJxnn9+pmOqWVYlq3srM/aNYSKGV6HCMTOcPmHOPX7utwfEkfoOJfPcSmRcGTG5S6VzUoqJvv1pwZ9OC6hIjaceubXHiKI4XPmplNkjoyl7Qap3QiPo6axveqT5u3ISUhichJ1sfuqqdExG6ER3RpbBb/Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956740; c=relaxed/simple;
-	bh=kBAL90oKwe2H+3tEiV+OVa0M7FKGY7FrMRmzC1dqxBE=;
+	s=arc-20240116; t=1739956743; c=relaxed/simple;
+	bh=4rX7SN8uSMmMMgbgVg4StPssE79CStfICRLJOZdl05Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RKHoLP34TQIwEmgXt3OSzxSJxRG5IWVHLVT+09123HT1+BhElUVAkdzOFCi2gCxYdrqYOZ/eSsI9e9ygVUF5bNM06+O5s4Xc4uGSgpxKAAS0xByyuXHMgb4kfSxEJynrEWKMRvWgS2e3jaLQfkzjoqAgfePEY2UUHW/cNZxy+F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6DW0iqP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UrUF4xRnxF/NP9rGXhDsy9A8DCaL3tz/Wk9/yjuL1lLOUIjpdQsMwJBRaBusYveAvHVR0nNSIPXdrHKhlUWApPtLgBri6mqcuyi9M8DnMOf2dHdHlKjj4F24N6Ct//jV5FpGPNEwcXJlsDtxDxepNaZ8rQygaYGZ/aTq0xSXjVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JY/MIXNu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6DW0iqP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65FEC4CED1;
-	Wed, 19 Feb 2025 09:18:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JY/MIXNu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB26C4CED1;
+	Wed, 19 Feb 2025 09:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956740;
-	bh=kBAL90oKwe2H+3tEiV+OVa0M7FKGY7FrMRmzC1dqxBE=;
+	s=korg; t=1739956743;
+	bh=4rX7SN8uSMmMMgbgVg4StPssE79CStfICRLJOZdl05Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6DW0iqPS2XP4veyx3+jTXyU1m8ahZRD0iou2GQB/2P7YP4bmXBS7KgQ6O3NYhoV2
-	 MGTpIBmAi/Zdsj4ee/5Uo+/bTRGnmdIIttE7/X0LCVqFAHa4qQswGixnmRRG0Qzx9e
-	 XQRTVuMXLeDwhgPUHwzTF97rXIApvY0zd7ujZBAU=
+	b=JY/MIXNuVGGuVlMqPiuMGJ2m+tAOwiBIHEiSS9kQfS+WuMX98ZhIJLPl6SuhbBsfz
+	 vwQAKh6lIDVCthqhxz/SNBSAsC4bTSH1hOMkjZtfMguWgCx09Fze6RXkTQhPpBS0EY
+	 njVtagiyKRr6vlV9Uggxh5mvtxLdz3iLnqxuJGWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 252/578] usb: xhci: Fix NULL pointer dereference on certain command aborts
-Date: Wed, 19 Feb 2025 09:24:16 +0100
-Message-ID: <20250219082702.941360623@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Sean Rhodes <sean@starlabs.systems>
+Subject: [PATCH 6.1 253/578] drivers/card_reader/rtsx_usb: Restore interrupt based detection
+Date: Wed, 19 Feb 2025 09:24:17 +0100
+Message-ID: <20250219082702.980591387@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -50,51 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Sean Rhodes <sean@starlabs.systems>
 
-commit 1e0a19912adb68a4b2b74fd77001c96cd83eb073 upstream.
+commit 235b630eda072d7e7b102ab346d6b8a2c028a772 upstream.
 
-If a command is queued to the final usable TRB of a ring segment, the
-enqueue pointer is advanced to the subsequent link TRB and no further.
-If the command is later aborted, when the abort completion is handled
-the dequeue pointer is advanced to the first TRB of the next segment.
+This commit reintroduces interrupt-based card detection previously
+used in the rts5139 driver. This functionality was removed in commit
+00d8521dcd23 ("staging: remove rts5139 driver code").
 
-If no further commands are queued, xhci_handle_stopped_cmd_ring() sees
-the ring pointers unequal and assumes that there is a pending command,
-so it calls xhci_mod_cmd_timer() which crashes if cur_cmd was NULL.
+Reintroducing this mechanism fixes presence detection for certain card
+readers, which with the current driver, will taken approximately 20
+seconds to enter S3 as `mmc_rescan` has to be frozen.
 
-Don't attempt timer setup if cur_cmd is NULL. The subsequent doorbell
-ring likely is unnecessary too, but it's harmless. Leave it alone.
-
-This is probably Bug 219532, but no confirmation has been received.
-
-The issue has been independently reproduced and confirmed fixed using
-a USB MCU programmed to NAK the Status stage of SET_ADDRESS forever.
-Everything continued working normally after several prevented crashes.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219532
-Fixes: c311e391a7ef ("xhci: rework command timeout and cancellation,")
-CC: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20241227120142.1035206-4-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 00d8521dcd23 ("staging: remove rts5139 driver code")
+Cc: stable@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sean Rhodes <sean@starlabs.systems>
+Link: https://lore.kernel.org/r/20241119085815.11769-1-sean@starlabs.systems
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/misc/cardreader/rtsx_usb.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -380,7 +380,8 @@ static void xhci_handle_stopped_cmd_ring
- 	if ((xhci->cmd_ring->dequeue != xhci->cmd_ring->enqueue) &&
- 	    !(xhci->xhc_state & XHCI_STATE_DYING)) {
- 		xhci->current_cmd = cur_cmd;
--		xhci_mod_cmd_timer(xhci);
-+		if (cur_cmd)
-+			xhci_mod_cmd_timer(xhci);
- 		xhci_ring_cmd_db(xhci);
+--- a/drivers/misc/cardreader/rtsx_usb.c
++++ b/drivers/misc/cardreader/rtsx_usb.c
+@@ -286,6 +286,7 @@ static int rtsx_usb_get_status_with_bulk
+ int rtsx_usb_get_card_status(struct rtsx_ucr *ucr, u16 *status)
+ {
+ 	int ret;
++	u8 interrupt_val = 0;
+ 	u16 *buf;
+ 
+ 	if (!status)
+@@ -308,6 +309,20 @@ int rtsx_usb_get_card_status(struct rtsx
+ 		ret = rtsx_usb_get_status_with_bulk(ucr, status);
  	}
- }
+ 
++	rtsx_usb_read_register(ucr, CARD_INT_PEND, &interrupt_val);
++	/* Cross check presence with interrupts */
++	if (*status & XD_CD)
++		if (!(interrupt_val & XD_INT))
++			*status &= ~XD_CD;
++
++	if (*status & SD_CD)
++		if (!(interrupt_val & SD_INT))
++			*status &= ~SD_CD;
++
++	if (*status & MS_CD)
++		if (!(interrupt_val & MS_INT))
++			*status &= ~MS_CD;
++
+ 	/* usb_control_msg may return positive when success */
+ 	if (ret < 0)
+ 		return ret;
 
 
