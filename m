@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949171DF277;
-	Wed, 19 Feb 2025 09:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7CF1E0B80;
+	Wed, 19 Feb 2025 09:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957439; cv=none; b=bBtBtmv6ep8O2MduSmfum3ML3yFHSvxswKKn/t3iHKRfjdQTh15ZqUeOAvjuGHBPT5P/zXVwZLK88tS5CCjPCH4iyotKnJajPrKbVHzKvbXlSPCWPMTrqIiPBvevcQPPnFcPY4bUTgJ2SQ1fCD8GgDQbLNCKHtYd8xbd5TiAHUs=
+	t=1739957442; cv=none; b=VhRxZ22kMby8KpeFwZXNH9s8krw90cTtLpTvOkZJ+EdOeLIrzEhX6zHc7E7Zi5kpVj6oGKThYaivdttpHKR9dZAGubwHSzHReHjt4A1s01UEOq475nCXY+NoYRwZHxkpjB3nGqFOKvEggdeO3lAlyxCveQsWQfUk/WfF6ML902A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957439; c=relaxed/simple;
-	bh=b/8/GqFzR0aIaA3BV7kzlR7ffuZGcqbZ5rfEZG9OpcY=;
+	s=arc-20240116; t=1739957442; c=relaxed/simple;
+	bh=oTKxrx7iydYZiFB66ttmt4p/MGJcThyOGwoFRxKKx7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a8xbTuTGhkwYmnEfgIXZKc7sD6Kmj8XPmOAnZQ5oAvzDfJ2yCW2DgkbAxdEnawi1yv6ckG3RAfHqd361uFkTyjkPi85W4x1k3RnXQ9n7IILXjoH9t5nqL4BfvSjqiAVD7BOhOtHqp/dmkX6RxH3drgEsyiUSde8h84NeCZ+Y5T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT69F5XV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ICG4/PVt6bsjBP7xUhwuCNqCpwAX2WUkb1PreK2uHC20Gq/Wt6Qd+cfxCqUbJ8LjjFv86TFrgvujkpoQNketGfDjIrTx7AXYMi/sSIb7od08ehWHhG42Z8lzoH6lJta6Rwb25zmZ5caX3TxH143ww355Nr5NHI+2y7jCQTnzWe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qx6lzgqD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT69F5XV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BD0C4CED1;
-	Wed, 19 Feb 2025 09:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qx6lzgqD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82D0C4CED1;
+	Wed, 19 Feb 2025 09:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957439;
-	bh=b/8/GqFzR0aIaA3BV7kzlR7ffuZGcqbZ5rfEZG9OpcY=;
+	s=korg; t=1739957442;
+	bh=oTKxrx7iydYZiFB66ttmt4p/MGJcThyOGwoFRxKKx7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OT69F5XVFAWGgCD43DqxoUpFgULXxOy2/wgjIQ+S0RLqODBbV1hEnA/zw7P+nYpME
-	 OjiqDisB02qTgexpbuuqzpSZGPkxx12N9Dh37ZiX33o+cr/vCRuMXZftlnsLaaVPQD
-	 exYPis354hSLG5ya2sTz8TK+wE/Eb0kMWXBewPXI=
+	b=Qx6lzgqDJ+Pz6RCP5cDFt8qM6QjJcpxZ4wMlCA6eoefWl2MNz4Zxp7Ehs7WijUVnI
+	 3l4+e/55PhtFckTX6/hzPBiJs8nHYkTapAAgbYSvadJ873zWV7/W3gbMqcP3iNYscz
+	 5wphBVnolBQ+8GAkpH3ir7ThEyoFaLpBh3EvNSk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 485/578] PCI/DPC: Quirk PIO log size for Intel Raptor Lake-P
-Date: Wed, 19 Feb 2025 09:28:09 +0100
-Message-ID: <20250219082712.079848919@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.1 520/578] can: ctucanfd: handle skb allocation failure
+Date: Wed, 19 Feb 2025 09:28:44 +0100
+Message-ID: <20250219082713.431220870@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -46,57 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit b198499c7d2508a76243b98e7cca992f6fd2b7f7 ]
+commit 9bd24927e3eeb85642c7baa3b28be8bea6c2a078 upstream.
 
-Apparently the Raptor Lake-P reference firmware configures the PIO log size
-correctly, but some vendor BIOSes, including at least ASUSTeK COMPUTER INC.
-Zenbook UX3402VA_UX3402VA, do not.
+If skb allocation fails, the pointer to struct can_frame is NULL. This
+is actually handled everywhere inside ctucan_err_interrupt() except for
+the only place.
 
-Apply the quirk for Raptor Lake-P.  This prevents kernel complaints like:
+Add the missed NULL check.
 
-  DPC: RP PIO log size 0 is invalid
+Found by Linux Verification Center (linuxtesting.org) with SVACE static
+analysis tool.
 
-and also enables the DPC driver to dump the RP PIO Log registers when DPC
-is triggered.
-
-Note that the bug report also mentions 8086:a76e, which has been already
-added by 627c6db20703 ("PCI/DPC: Quirk PIO log size for Intel Raptor Lake
-Root Ports").
-
-Link: https://lore.kernel.org/r/20250102164315.7562-1-tiwai@suse.de
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1234623
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2dcb8e8782d8 ("can: ctucanfd: add support for CTU CAN FD open-source IP core - bus independent part.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Pavel Pisa <pisa@cmp.felk.cvut.cz>
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://patch.msgid.link/20250114152138.139580-1-pchelkin@ispras.ru
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/can/ctucanfd/ctucanfd_base.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 2b3df65005ca8..c16c8507d048e 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -6139,6 +6139,7 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a2b, dpc_log_size);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a2d, dpc_log_size);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a2f, dpc_log_size);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a31, dpc_log_size);
-+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0xa72f, dpc_log_size);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0xa73f, dpc_log_size);
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0xa76e, dpc_log_size);
- #endif
--- 
-2.39.5
-
+--- a/drivers/net/can/ctucanfd/ctucanfd_base.c
++++ b/drivers/net/can/ctucanfd/ctucanfd_base.c
+@@ -867,10 +867,12 @@ static void ctucan_err_interrupt(struct
+ 			}
+ 			break;
+ 		case CAN_STATE_ERROR_ACTIVE:
+-			cf->can_id |= CAN_ERR_CNT;
+-			cf->data[1] = CAN_ERR_CRTL_ACTIVE;
+-			cf->data[6] = bec.txerr;
+-			cf->data[7] = bec.rxerr;
++			if (skb) {
++				cf->can_id |= CAN_ERR_CNT;
++				cf->data[1] = CAN_ERR_CRTL_ACTIVE;
++				cf->data[6] = bec.txerr;
++				cf->data[7] = bec.rxerr;
++			}
+ 			break;
+ 		default:
+ 			netdev_warn(ndev, "unhandled error state (%d:%s)!\n",
 
 
