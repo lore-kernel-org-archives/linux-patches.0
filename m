@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7671CC8B0;
-	Wed, 19 Feb 2025 09:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02BD1C7019;
+	Wed, 19 Feb 2025 09:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956449; cv=none; b=Prwg1DknNDUKqroCM2plKkSKFHxpiDg5cwKsEhxOMDoBAvL7jsHUjydtkottteMvsoj7fNW1RoJPueE01Tge2UBlRjyjlC17WF7aUGvfxILuiIkU8GSX1qhTmhBl2en76oByW2JlXk0GzZAa4uwdoka/Z1a2AlmaFNBdJyr/0zc=
+	t=1739956451; cv=none; b=RSJTblqx0yg2sUFq+bRqTmb8qbuf+yrdLInEVIHaN70munBtOeAG+qR9pxpTurb0kbnGEBbnjXnG7eBcZJYBPHDb1s0hA62sEfY1BRAvXZUJ5qdrNNAvAoh/+mu1kJWJR5Fwdtns5ACnrazjIXDfxcxTYfFDiJBMlGVaEawnDro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956449; c=relaxed/simple;
-	bh=UZuWw8WwgCe6+h3wiLmSx4prvQCN1MCmZgfrWWkpiFM=;
+	s=arc-20240116; t=1739956451; c=relaxed/simple;
+	bh=R8pHwj52zCvnYapysKLA774BPC48/yChw4Xh6cWdCIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pk5KnEDAlXMTZGk3syKcp6Jc+s1OpSY+UW0VkyNlLBEI5UtcxaHfkMnppRk+0F3rcEHfPG2MyMOty8Y2C94FzV4lLhGifNd53ewV45rJFLNh5vDk+di5CxLKnDpjYWxMJFKUFN8oPKWzbf5RI6Pfmh1VaIXmRJj4SoXmLj6Bh4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqlC/VLU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBdGVOthMwcFxS28gm2rAtXUAhlmCYHEyijz7+Rr+Qy84BnV6HQOEPQQanvu4zu/cMuULbGrXd5K2Vge6cjXZrJNFb+5o+OKJEK/NhsK2z2cHsCSkXtQ7koBCqvcXF4zQUKBacOVpM7baemDmm9/iKXGFTn50QS8VNS4YBsPeYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OotIqVVn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqlC/VLU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAC4C4CED1;
-	Wed, 19 Feb 2025 09:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OotIqVVn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA453C4CED1;
+	Wed, 19 Feb 2025 09:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956448;
-	bh=UZuWw8WwgCe6+h3wiLmSx4prvQCN1MCmZgfrWWkpiFM=;
+	s=korg; t=1739956451;
+	bh=R8pHwj52zCvnYapysKLA774BPC48/yChw4Xh6cWdCIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iqlC/VLUbRHdyhAnza0nlxB6M81yLy/OB8zHoXW52IWK9GqS9w2grI4UoQgvgm1oT
-	 rReENz02cdqXCqOzvgS+WKvmCDpBiXTOJtYpCqk0Ol+U4eupRGNSr/Sg0bGzn1O4zG
-	 TAReUM4ungb9SwnnnBP7pXGp0s5znaYiYKLRyCfg=
+	b=OotIqVVndERgnhp0lilU+0/oQ73TDJ2vak0GYJJcxZ+lZdOwLy3oWziMs7uiESW6M
+	 r550Kf4K2CIktD35B6PMW2ITejmZ/Ua+sEy94LJKkKKvlM3P9Imizg/lEgCCiCtWnC
+	 a5ERQWlh8MyhpYJLOA+LPY9UPvabIzUmbh/ITPb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Ma Ke <make_ruc2021@163.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 149/578] arm64: dts: mediatek: mt8183: willow: Support second source touchscreen
-Date: Wed, 19 Feb 2025 09:22:33 +0100
-Message-ID: <20250219082658.839424820@linuxfoundation.org>
+Subject: [PATCH 6.1 150/578] RDMA/srp: Fix error handling in srp_add_port
+Date: Wed, 19 Feb 2025 09:22:34 +0100
+Message-ID: <20250219082658.878299137@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,47 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsin-Te Yuan <yuanhsinte@chromium.org>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit 9594935260d76bffe200bea6cfab6ba0752e70d9 ]
+[ Upstream commit a3cbf68c69611188cd304229e346bffdabfd4277 ]
 
-Some willow devices use second source touchscreen.
+As comment of device_add() says, if device_add() succeeds, you should
+call device_del() when you want to get rid of it. If device_add() has
+not succeeded, use only put_device() to drop the reference count.
 
-Fixes: f006bcf1c972 ("arm64: dts: mt8183: Add kukui-jacuzzi-willow board")
-Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Link: https://lore.kernel.org/r/20241213-touchscreen-v3-2-7c1f670913f9@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Add a put_device() call before returning from the function to decrement
+reference count for cleanup.
+
+Found by code review.
+
+Fixes: c8e4c2397655 ("RDMA/srp: Rework the srp_add_port() error path")
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Link: https://patch.msgid.link/20241217075538.2909996-1-make_ruc2021@163.com
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/infiniband/ulp/srp/ib_srp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi
-index 76d33540166f9..c942e461a177e 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi
-@@ -6,6 +6,21 @@
- /dts-v1/;
- #include "mt8183-kukui-jacuzzi.dtsi"
+diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
+index c4dcef76e9646..8df23ab974c16 100644
+--- a/drivers/infiniband/ulp/srp/ib_srp.c
++++ b/drivers/infiniband/ulp/srp/ib_srp.c
+@@ -3983,7 +3983,6 @@ static struct srp_host *srp_add_port(struct srp_device *device, u32 port)
+ 	return host;
  
-+&i2c0 {
-+	touchscreen@40 {
-+		compatible = "hid-over-i2c";
-+		reg = <0x40>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&touchscreen_pins>;
-+
-+		interrupts-extended = <&pio 155 IRQ_TYPE_LEVEL_LOW>;
-+
-+		post-power-on-delay-ms = <70>;
-+		hid-descr-addr = <0x0001>;
-+	};
-+};
-+
- &i2c2 {
- 	trackpad@2c {
- 		compatible = "hid-over-i2c";
+ put_host:
+-	device_del(&host->dev);
+ 	put_device(&host->dev);
+ 	return NULL;
+ }
 -- 
 2.39.5
 
