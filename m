@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32AE91AF0C8;
-	Wed, 19 Feb 2025 08:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58BB1AF0C8;
+	Wed, 19 Feb 2025 08:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739953901; cv=none; b=q5rbvyQVOL5whdpgpKE2AbND1DJ+xCMXRynmYsp9AwHGEITkJW9/GxewYYZVV9wY/qIYwavL9vI21POzgiVtywPCLXPGtq/YNV3QuwWeLvpFdGryaVitRslv8Jz1HDkynve3/ltt19UO5+lgegDFwY7H5mMWaPq0KGCdNw2iYuQ=
+	t=1739953904; cv=none; b=UhwJ04YTJS5aLM9YXyv34PmQ3WUZOPFsm5YSmOPi/7LziSz3d/SM21t5Rw0l52lG1qf+4yADgUE/nG0N9C/h34i1UckasHo6cjlcE+GvYsO97s7hmUQDf/TDx0UHi9iNDAaB7HMv2KvVNB1D01nraelQ3wZd3e43DIkkbQrFNd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739953901; c=relaxed/simple;
-	bh=D+rHIHGHD1uJC6JQdXKO2C2QusCGZPi+nNv5m6u7ymM=;
+	s=arc-20240116; t=1739953904; c=relaxed/simple;
+	bh=/JZ4h2bV4j9rvJ74SbHmLqQjqIAMH542/EAsdFMdqGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2IB2ggWq/k9vrOpNM84Ynme/hhGskoy4Iqm5Q4NRm7n8eTwwDEajl22ulRCxkaPyrkJg0SHSahWHs1NtX9bTk0QAY01bjEWd8+GcZDClmmTCSLjg/TS6yI5P3D8AJE3RDoetlwaLTxYocipAUC4MA2/ODkJkKdhA59AQvTAnDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWm91+J1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WjoMK66shMobL0EuoQqD1RcSR1t72Y/aBGWiLyaWiLWiJ4qGB/ltroOqJzP5XFYnmtvLCxHsCoKFwuNPW3wTGnnVdNGfiWN52PKGSb5Q+JDs3lLYe5sWQGiMQrEA6Psf15Ivyp4ilFqZcOyWpQ44aHZk5iQ7mKWu3YBJucFWqI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+qIr2Do; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWm91+J1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C886C4CEE9;
-	Wed, 19 Feb 2025 08:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+qIr2Do"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F5FC4CED1;
+	Wed, 19 Feb 2025 08:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739953900;
-	bh=D+rHIHGHD1uJC6JQdXKO2C2QusCGZPi+nNv5m6u7ymM=;
+	s=korg; t=1739953903;
+	bh=/JZ4h2bV4j9rvJ74SbHmLqQjqIAMH542/EAsdFMdqGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aWm91+J1AEm5jqP6QbFof/m5QuznibZxjsKxtYWVyTM6GsKszajfgGYdz40GUYKhX
-	 IQ1yM/546we0DuQs9669ZTJbNfTrf0cS5GmqaYyolKcDtEt+AdZnBR49Yd2gmU8LTI
-	 fvr/qbjds53ot5LrneL8s6RDRVIlecebs6/t7SQo=
+	b=u+qIr2DoaV9CI/RRkb6h8g2yB4k41js/GJ9Z4VdXW7XVNzRUOBUFbEazvwB0HhaoA
+	 tc/OUUEPasdxA+EATS/FYFQ8Z9aDGlaNYtTT10JcgG7+u7eKz9bbzoZ3V5CLyK/IFY
+	 KhOkt9IkhwvJC4nPviiBF2zkRRAV59Jq72kaLQKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Yuli Wang <wangyuli@uniontech.com>,
+	Bibo Mao <maobibo@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 031/274] LoongArch: csum: Fix OoB access in IP checksum code for negative lengths
-Date: Wed, 19 Feb 2025 09:24:45 +0100
-Message-ID: <20250219082610.750610585@linuxfoundation.org>
+Subject: [PATCH 6.13 032/274] LoongArch: KVM: Fix typo issue about GCFG feature detection
+Date: Wed, 19 Feb 2025 09:24:46 +0100
+Message-ID: <20250219082610.788623878@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -52,39 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuli Wang <wangyuli@uniontech.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-[ Upstream commit 6287f1a8c16138c2ec750953e35039634018c84a ]
+[ Upstream commit bdb13252e5d1518823b81f458d9975c85d5240c2 ]
 
-Commit 69e3a6aa6be2 ("LoongArch: Add checksum optimization for 64-bit
-system") would cause an undefined shift and an out-of-bounds read.
+This is typo issue and misusage about GCFG feature macro. The code
+is wrong, only that it does not cause obvious problem since GCFG is
+set again on vCPU context switch.
 
-Commit 8bd795fedb84 ("arm64: csum: Fix OoB access in IP checksum code
-for negative lengths") fixes the same issue on ARM64.
-
-Fixes: 69e3a6aa6be2 ("LoongArch: Add checksum optimization for 64-bit system")
-Co-developed-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Yuli Wang <wangyuli@uniontech.com>
+Fixes: 0d0df3c99d4f ("LoongArch: KVM: Implement kvm hardware enable, disable interface")
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/lib/csum.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kvm/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/loongarch/lib/csum.c b/arch/loongarch/lib/csum.c
-index a5e84b403c3b3..df309ae4045de 100644
---- a/arch/loongarch/lib/csum.c
-+++ b/arch/loongarch/lib/csum.c
-@@ -25,7 +25,7 @@ unsigned int __no_sanitize_address do_csum(const unsigned char *buff, int len)
- 	const u64 *ptr;
- 	u64 data, sum64 = 0;
+diff --git a/arch/loongarch/kvm/main.c b/arch/loongarch/kvm/main.c
+index 396fed2665a51..034402e0948c9 100644
+--- a/arch/loongarch/kvm/main.c
++++ b/arch/loongarch/kvm/main.c
+@@ -285,9 +285,9 @@ int kvm_arch_enable_virtualization_cpu(void)
+ 	 * TOE=0:       Trap on Exception.
+ 	 * TIT=0:       Trap on Timer.
+ 	 */
+-	if (env & CSR_GCFG_GCIP_ALL)
++	if (env & CSR_GCFG_GCIP_SECURE)
+ 		gcfg |= CSR_GCFG_GCI_SECURE;
+-	if (env & CSR_GCFG_MATC_ROOT)
++	if (env & CSR_GCFG_MATP_ROOT)
+ 		gcfg |= CSR_GCFG_MATC_ROOT;
  
--	if (unlikely(len == 0))
-+	if (unlikely(len <= 0))
- 		return 0;
- 
- 	offset = (unsigned long)buff & 7;
+ 	write_csr_gcfg(gcfg);
 -- 
 2.39.5
 
