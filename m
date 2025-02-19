@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07581C701E;
-	Wed, 19 Feb 2025 09:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E37F1C701E;
+	Wed, 19 Feb 2025 09:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955792; cv=none; b=EkSsgBl8F9y5zSiD3lGKg0WrhKtfYJ0uaNuAB7YOv7KR4Nlc45LxBJwIhwJKVNMoUtT54kQ6p3ZNFxDU9LYTb/e7n4B0d5bqkEG/9A7ajbwH68hzWAb5OqaA8Z6tg+x36afAjmg8hfGiSHqtXyAtMJR3SGzNJT4H5ZFr9f/ToQg=
+	t=1739955796; cv=none; b=WxA0WpAESP2GSx0Bl52LbmlNckdEQeluL69/+C/w0yn61vfZ0HnPgCChoWocvdavFZh/qMBIAcfwnPS1Y3Vbc1G3bl7rRgHyBoPHfN9A/kIdKoxI1tjSf1r+5lFACiQmMCxR04A+on7GZWtlfBPAGX5U+QAK6RjVC21Xc+xNhms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955792; c=relaxed/simple;
-	bh=B1+JgsycXNMo8/I4F1QmpquFn6CkJ+6yjz4xY5cD6kI=;
+	s=arc-20240116; t=1739955796; c=relaxed/simple;
+	bh=xfu4ixxMRRv+jpSM5uNp21BftV8ex9J6IgSfyMtPOPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsppRAtJfYNnciAC8daUXOjQjv7xfVOlIeoQEZmNW4Z9Tw1x3W8EruOYJE/KiulM1TSbi8+oQ+rqs/yqQv5adUiwqxcUGldYbpDFC/fiAzTL4H/EtZN5BKd61AGnCYT8LOb4zLhfptciFt5Txh+JTO2NDcjiTuEgnS7/ojvza9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igM2Nzhz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bnvy02nwzsIxtc6/zFK6YV9+uZCrA7ExJJAuxs3nmXLvws4HSfeKEhEg7nm0HCYkPksgcROTfLcfiZEwCT+DvXRb7ldp8atJyQ+C2QhW9HbJRhR7YCNP1HNcR/v7CKGrWmGG8AlKRL6SlDgKxWzos1r1Cm/Ut83BVfKVEGXoMwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SC2mi33l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igM2Nzhz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328B7C4CED1;
-	Wed, 19 Feb 2025 09:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SC2mi33l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49AE5C4CEE7;
+	Wed, 19 Feb 2025 09:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955792;
-	bh=B1+JgsycXNMo8/I4F1QmpquFn6CkJ+6yjz4xY5cD6kI=;
+	s=korg; t=1739955795;
+	bh=xfu4ixxMRRv+jpSM5uNp21BftV8ex9J6IgSfyMtPOPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=igM2NzhzxIqiTgKB9yfKzYK1mK0WVO+SiPhVfDofvYU3ASr6cVcfekZZrdipmSzYH
-	 Naiv/Bv/jdMCfhmwS3gXz/ePLkFTD/1xT3LktHLSxWKRrjBC96DNKZaDIQ2GpUpk87
-	 azLae9HGUtuVfUQf9nWUP3OUZ7Q5vPUPILXvWF3M=
+	b=SC2mi33lCJGhCHypSJIyPzyyFXkMA3EV1GByvddTKFPAEc1gBO4vLPepMyEVEXhd5
+	 7yDgcj5P8uvHPLvQnDVLHqPzYGGRoC0LQrxUvfyOoaiCD1TeOckOKv4Tbm8Tr/vEu4
+	 UVLpsByTgJ5smTEndKEd/P3bJqEVIPxZa44+o01c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Waiman Long <longman@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vicki Pfau <vi@endrift.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 098/152] clocksource: Use migrate_disable() to avoid calling get_random_u32() in atomic context
-Date: Wed, 19 Feb 2025 09:28:31 +0100
-Message-ID: <20250219082553.935115306@linuxfoundation.org>
+Subject: [PATCH 6.6 116/152] HID: hid-steam: remove pointless error message
+Date: Wed, 19 Feb 2025 09:28:49 +0100
+Message-ID: <20250219082554.646465488@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -53,79 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 6bb05a33337b2c842373857b63de5c9bf1ae2a09 ]
+[ Upstream commit a9668169961106f3598384fe95004106ec191201 ]
 
-The following bug report happened with a PREEMPT_RT kernel:
+This error message doesn't really add any information.  If modprobe
+fails then the user will already know what the error code is.  In the
+case of kmalloc() it's a style violation to print an error message for
+that because kmalloc has it's own better error messages built in.
 
-  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 2012, name: kwatchdog
-  preempt_count: 1, expected: 0
-  RCU nest depth: 0, expected: 0
-  get_random_u32+0x4f/0x110
-  clocksource_verify_choose_cpus+0xab/0x1a0
-  clocksource_verify_percpu.part.0+0x6b/0x330
-  clocksource_watchdog_kthread+0x193/0x1a0
-
-It is due to the fact that clocksource_verify_choose_cpus() is invoked with
-preemption disabled.  This function invokes get_random_u32() to obtain
-random numbers for choosing CPUs.  The batched_entropy_32 local lock and/or
-the base_crng.lock spinlock in driver/char/random.c will be acquired during
-the call. In PREEMPT_RT kernel, they are both sleeping locks and so cannot
-be acquired in atomic context.
-
-Fix this problem by using migrate_disable() to allow smp_processor_id() to
-be reliably used without introducing atomic context. preempt_disable() is
-then called after clocksource_verify_choose_cpus() but before the
-clocksource measurement is being run to avoid introducing unexpected
-latency.
-
-Fixes: 7560c02bdffb ("clocksource: Check per-CPU clock synchronization when marked unstable")
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/all/20250131173323.891943-2-longman@redhat.com
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Vicki Pfau <vi@endrift.com>
+Link: https://lore.kernel.org/r/305898fb-6bd4-4749-806c-05ec51bbeb80@moroto.mountain
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Stable-dep-of: 79504249d7e2 ("HID: hid-steam: Move hidraw input (un)registering to work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/clocksource.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/hid/hid-steam.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
-index 6b5b7c9c14732..3130f24daf597 100644
---- a/kernel/time/clocksource.c
-+++ b/kernel/time/clocksource.c
-@@ -351,10 +351,10 @@ void clocksource_verify_percpu(struct clocksource *cs)
- 	cpumask_clear(&cpus_ahead);
- 	cpumask_clear(&cpus_behind);
- 	cpus_read_lock();
--	preempt_disable();
-+	migrate_disable();
- 	clocksource_verify_choose_cpus();
- 	if (cpumask_empty(&cpus_chosen)) {
--		preempt_enable();
-+		migrate_enable();
- 		cpus_read_unlock();
- 		pr_warn("Not enough CPUs to check clocksource '%s'.\n", cs->name);
- 		return;
-@@ -362,6 +362,7 @@ void clocksource_verify_percpu(struct clocksource *cs)
- 	testcpu = smp_processor_id();
- 	pr_info("Checking clocksource %s synchronization from CPU %d to CPUs %*pbl.\n",
- 		cs->name, testcpu, cpumask_pr_args(&cpus_chosen));
-+	preempt_disable();
- 	for_each_cpu(cpu, &cpus_chosen) {
- 		if (cpu == testcpu)
- 			continue;
-@@ -381,6 +382,7 @@ void clocksource_verify_percpu(struct clocksource *cs)
- 			cs_nsec_min = cs_nsec;
- 	}
- 	preempt_enable();
-+	migrate_enable();
- 	cpus_read_unlock();
- 	if (!cpumask_empty(&cpus_ahead))
- 		pr_warn("        CPUs %*pbl ahead of CPU %d for clocksource %s.\n",
+diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
+index 2f87026f01de1..2f11f77ae2153 100644
+--- a/drivers/hid/hid-steam.c
++++ b/drivers/hid/hid-steam.c
+@@ -1108,10 +1108,9 @@ static int steam_probe(struct hid_device *hdev,
+ 		return hid_hw_start(hdev, HID_CONNECT_DEFAULT);
+ 
+ 	steam = devm_kzalloc(&hdev->dev, sizeof(*steam), GFP_KERNEL);
+-	if (!steam) {
+-		ret = -ENOMEM;
+-		goto steam_alloc_fail;
+-	}
++	if (!steam)
++		return -ENOMEM;
++
+ 	steam->hdev = hdev;
+ 	hid_set_drvdata(hdev, steam);
+ 	spin_lock_init(&steam->lock);
+@@ -1178,9 +1177,6 @@ static int steam_probe(struct hid_device *hdev,
+ 	cancel_work_sync(&steam->work_connect);
+ 	cancel_delayed_work_sync(&steam->mode_switch);
+ 	cancel_work_sync(&steam->rumble_work);
+-steam_alloc_fail:
+-	hid_err(hdev, "%s: failed with error %d\n",
+-			__func__, ret);
+ 	return ret;
+ }
+ 
 -- 
 2.39.5
 
