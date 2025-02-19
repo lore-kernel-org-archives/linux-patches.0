@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAED11B4F0C;
-	Wed, 19 Feb 2025 09:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC39D1CCB4B;
+	Wed, 19 Feb 2025 09:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956697; cv=none; b=peWkAb71hzMNDLQnGeNP1BKc61dnGdxEUsGSYNzWG2gtCB0SjlAQ+qHhxTYvPCOPnCOLrJMyk0ng9r0g4oIqKxjM4HjVBQzuDfla+QigDB73epuUAswd2cMBJxI49eoit2TLIVvwMLkt0Mk8fXHJ0iD3RJP2i7Qaid++M71rtvA=
+	t=1739956697; cv=none; b=nfMggYk8lm06+UyRRa6v7feGwVxrIbA0xGBaEsXxf5Tvw1hvjm3GblS2Wi4qgpBTPLitiWaDTCUw5Bupl2OePLYuLvW97SzCz41ifQJ2pz0tPJHBilqLM3br+ZArClMOMxXowWwGN+yd4ZPhocROQEVb1NOz42UFCfYOgDTkmpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1739956697; c=relaxed/simple;
-	bh=KgkM7JpPFkG7W+gJhdvJfD2VJPvUltPSSJ/KhQKuPl0=;
+	bh=UbzMeFdynOruvEUPFrIR2RNP5RqeYx9wiHypdvaLdCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AgLEbzm44RZ/XPVYbOA2Q0kflHUDJs647TOxL55nyhHZEzMejrgRhxwlmQ0FWt6K2Ib8H9qh7yujayEZGH2CQ29+iaaCNv9zjrushrpbaWLNLmQl4/ypFxd3251AXkPcXQdnqatqoiFBLafvT9MfUVmdZH8/Y71G6V2BPeJTvEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfM3Xp67; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tBAcRoqgKRFlV+k35oOunKAQ6K0jxeBxViSN6oPptXDJUUMUPNDKsWl0vhJn9h0QfmXF+Dq3gdIcULhkjEyUfjI1RARdI3lKuIk3w7YBLeSFRc7w04wN7QORTkZIyXSpBaZffVnzrd/i64V8wt3s8FRMDY1al2qJvB09EOe3aRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bij1wgHC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfM3Xp67"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEABC4CED1;
-	Wed, 19 Feb 2025 09:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bij1wgHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70A0C4CEE6;
+	Wed, 19 Feb 2025 09:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956694;
-	bh=KgkM7JpPFkG7W+gJhdvJfD2VJPvUltPSSJ/KhQKuPl0=;
+	s=korg; t=1739956697;
+	bh=UbzMeFdynOruvEUPFrIR2RNP5RqeYx9wiHypdvaLdCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EfM3Xp67lC5afN+vZnjGiiTqlXX4P/rHPZ2lus/laqlGqkcxj+f9u11KAR97tVv+J
-	 FWsyDy6zClnPt71XSrbk75v4wC0BYvtWdSY5D4InevSJmDUT2OpINoHKOnoBmFT1a+
-	 WuaZA9ivpNx+Ry2y43gpBFp4ufTbpbsWCjvFk+pU=
+	b=bij1wgHChTYd7qeEqyVf92fCLBSJqXPDieL+8Lkz8rdTcYEg4lwwaMOEGv7obH0vK
+	 +iku8833GudWKZxUGK+fBDymvAWsbGR1w1q+ieUAWCH+cyaq/EGgN9eyy8I7I+46HV
+	 89ffELtIkJc41nIPaEugzbjCOHBdhCaljmnRwIcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Cyrill Gorcunov <gorcunov@gmail.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 267/578] ptp: Properly handle compat ioctls
-Date: Wed, 19 Feb 2025 09:24:31 +0100
-Message-ID: <20250219082703.526061035@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 6.1 268/578] s390: Add -std=gnu11 to decompressor and purgatory CFLAGS
+Date: Wed, 19 Feb 2025 09:24:32 +0100
+Message-ID: <20250219082703.564855754@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -48,56 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 19ae40f572a9ce1ade9954990af709a03fd37010 ]
+commit 3b8b80e993766dc96d1a1c01c62f5d15fafc79b9 upstream.
 
-Pointer arguments passed to ioctls need to pass through compat_ptr() to
-work correctly on s390; as explained in Documentation/driver-api/ioctl.rst.
-Detect compat mode at runtime and call compat_ptr() for those commands
-which do take pointer arguments.
+GCC changed the default C standard dialect from gnu17 to gnu23,
+which should not have impacted the kernel because it explicitly requests
+the gnu11 standard in the main Makefile. However, there are certain
+places in the s390 code that use their own CFLAGS without a '-std='
+value, which break with this dialect change because of the kernel's own
+definitions of bool, false, and true conflicting with the C23 reserved
+keywords.
 
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/lkml/1ba5d3a4-7931-455b-a3ce-85a968a7cb10@app.fastmail.com/
-Fixes: d94ba80ebbea ("ptp: Added a brand new class driver for ptp clocks.")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Link: https://patch.msgid.link/20250125-posix-clock-compat_ioctl-v2-1-11c865c500eb@weissschuh.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
+     11 |         false   = 0,
+        |         ^~~~~
+  include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
+  include/linux/types.h:35:33: error: 'bool' cannot be defined via 'typedef'
+     35 | typedef _Bool                   bool;
+        |                                 ^~~~
+  include/linux/types.h:35:33: note: 'bool' is a keyword with '-std=c23' onwards
+
+Add '-std=gnu11' to the decompressor and purgatory CFLAGS to eliminate
+these errors and make the C standard version of these areas match the
+rest of the kernel.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250122-s390-fix-std-for-gcc-15-v1-1-8b00cadee083@kernel.org
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ptp/ptp_chardev.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/s390/Makefile           |    2 +-
+ arch/s390/purgatory/Makefile |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/ptp/ptp_chardev.c
-+++ b/drivers/ptp/ptp_chardev.c
-@@ -4,6 +4,7 @@
-  *
-  * Copyright (C) 2010 OMICRON electronics GmbH
-  */
-+#include <linux/compat.h>
- #include <linux/module.h>
- #include <linux/posix-clock.h>
- #include <linux/poll.h>
-@@ -124,6 +125,9 @@ long ptp_ioctl(struct posix_clock *pc, u
- 	struct timespec64 ts;
- 	int enable, err = 0;
+--- a/arch/s390/Makefile
++++ b/arch/s390/Makefile
+@@ -21,7 +21,7 @@ KBUILD_AFLAGS_DECOMPRESSOR := $(CLANG_FL
+ ifndef CONFIG_AS_IS_LLVM
+ KBUILD_AFLAGS_DECOMPRESSOR += $(if $(CONFIG_DEBUG_INFO),$(aflags_dwarf))
+ endif
+-KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -mpacked-stack
++KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -mpacked-stack -std=gnu11
+ KBUILD_CFLAGS_DECOMPRESSOR += -DDISABLE_BRANCH_PROFILING -D__NO_FORTIFY
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-delete-null-pointer-checks -msoft-float -mbackchain
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-asynchronous-unwind-tables
+--- a/arch/s390/purgatory/Makefile
++++ b/arch/s390/purgatory/Makefile
+@@ -21,7 +21,7 @@ UBSAN_SANITIZE := n
+ KASAN_SANITIZE := n
+ KCSAN_SANITIZE := n
  
-+	if (in_compat_syscall() && cmd != PTP_ENABLE_PPS && cmd != PTP_ENABLE_PPS2)
-+		arg = (unsigned long)compat_ptr(arg);
-+
- 	switch (cmd) {
- 
- 	case PTP_CLOCK_GETCAPS:
+-KBUILD_CFLAGS := -fno-strict-aliasing -Wall -Wstrict-prototypes
++KBUILD_CFLAGS := -std=gnu11 -fno-strict-aliasing -Wall -Wstrict-prototypes
+ KBUILD_CFLAGS += -Wno-pointer-sign -Wno-sign-compare
+ KBUILD_CFLAGS += -fno-zero-initialized-in-bss -fno-builtin -ffreestanding
+ KBUILD_CFLAGS += -c -MD -Os -m64 -msoft-float -fno-common
 
 
