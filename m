@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EB51C548C;
-	Wed, 19 Feb 2025 08:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999121C5D56;
+	Wed, 19 Feb 2025 08:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954669; cv=none; b=dkDWkXJC0DGMso9cUMLdW55TX74VF9AEA/y7EUFkScq+1Tv2mvKyxw5Sz5KvEpn2dQvVJqJzhk3jEoXzALbHOAnUGypRAFoVbZXM2Bh7I6PYIlXNNfopTr6OgIH7B1rSFpKWZZ0tZSB5eIQqKVAPkYgIC6fiL81v3pgavmvxS7E=
+	t=1739954672; cv=none; b=QikIGeswZv6lvXmtOiXEe20kLZUOh4h+wVs0vqIwkbA5LB9dY2DnBJj3AMKj4Pie/TgszRMf0kkalmJOwtLVSqkbMDTIXW76TuryywTlUqkTazJ0yFkjZzYmi0YFTEG5a1/Kp5qjVw7ZmZRD7PjW2r6N8OclEOrTsler4jneBmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954669; c=relaxed/simple;
-	bh=d1vQ0GtEf9Urr/StispSXZ0fbaO5e2W52Sniai5F10k=;
+	s=arc-20240116; t=1739954672; c=relaxed/simple;
+	bh=Nyqv4WT1l74ZM4cOw0UcIBlmNp/MNSY9W11iGbJGNjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uw1F/UJhVrBpHBv9Afoe6A6rugowLz+T+p6H2ApzqO5YXXoTURJqgS7fnyg3XGavj6JgurmhbzaJTdx6mnHI9CWk2VJ+R5YoBKvbs5xvCHX1ZZudfRYvRTJ04LKgA8bFAXZKJvuZYVUDJpludxW79rc+u5Fon//kfD3BMDIZJg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1K21MBDH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f5fdh+Ec8bduUBIjzJkfFrkxFZlcXCdRVgOavaghL3OfvL2313d3hSXfUvjge5FkAKKYx1Mc9onDIrqvvVOZsW53tqosWNn4DbYPc/3KqkBhdwUwY2/bvOl7CpYl2fOPUZ0s9xKrdrJ0xhQGBt6P9tF3yqHn4r7af0GB/5IFw44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QaRiwe3h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1K21MBDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0221AC4CED1;
-	Wed, 19 Feb 2025 08:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QaRiwe3h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173F8C4CED1;
+	Wed, 19 Feb 2025 08:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954669;
-	bh=d1vQ0GtEf9Urr/StispSXZ0fbaO5e2W52Sniai5F10k=;
+	s=korg; t=1739954672;
+	bh=Nyqv4WT1l74ZM4cOw0UcIBlmNp/MNSY9W11iGbJGNjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1K21MBDHdy3IlOm1qiO6eEVUrJ8pGrHe97RSFeEMcxnN/R1RPSt672lF8IHhmcekX
-	 82SXMvCCGP1NKzjDg7+FVRKbyY/MxZo2uM4HoKPLhgikNlXhh/Fe0GnRb4P09kePXG
-	 TTYmhza5lkZd0VlFL3f6+VIST5hYcV6rJWS3Sl1s=
+	b=QaRiwe3hbDVJoH7GA7P/BjeECl9eTqzfmOcdSQuOYhfrpIjzWtUBcIwcnwLJVIUNr
+	 twVrf3eYkLUcTwejkX0C20zNHmggihFWEVeJq91DvbtO+CD2jNHaC2LmAPOXXmix0Q
+	 E16I3TcGhuAwY8IiNdvwIJEZGyjAJPjWLVuXjjs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 244/274] iavf: Fix a locking bug in an error path
-Date: Wed, 19 Feb 2025 09:28:18 +0100
-Message-ID: <20250219082619.127595356@linuxfoundation.org>
+Subject: [PATCH 6.13 245/274] io_uring/uring_cmd: cleanup struct io_uring_cmd_data layout
+Date: Wed, 19 Feb 2025 09:28:19 +0100
+Message-ID: <20250219082619.169547663@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -51,36 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit e589adf5b70c07b1ab974d077046fdbf583b2f36 ]
+[ Upstream commit eaf72f7b414f5944585e7dee9c915c7f8f7f6344 ]
 
-If the netdev lock has been obtained, unlock it before returning.
-This bug has been detected by the Clang thread-safety analyzer.
+A few spots in uring_cmd assume that the SQEs copied are always at the
+start of the structure, and hence mix req->async_data and the struct
+itself.
 
-Fixes: afc664987ab3 ("eth: iavf: extend the netdev_lock usage")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20250206175114.1974171-28-bvanassche@acm.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Clean that up and use the proper indices.
+
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: e663da62ba86 ("io_uring/uring_cmd: switch sqe to async_data on EAGAIN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/uring_cmd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 4639f55a17be1..37904e2de30bd 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -2903,8 +2903,8 @@ static void iavf_watchdog_task(struct work_struct *work)
+diff --git a/io_uring/uring_cmd.c b/io_uring/uring_cmd.c
+index f43adcc16cf65..caed143fb156d 100644
+--- a/io_uring/uring_cmd.c
++++ b/io_uring/uring_cmd.c
+@@ -201,8 +201,8 @@ static int io_uring_cmd_prep_setup(struct io_kiocb *req,
+ 		return 0;
  	}
  
- 	mutex_unlock(&adapter->crit_lock);
--	netdev_unlock(netdev);
- restart_watchdog:
-+	netdev_unlock(netdev);
- 	if (adapter->state >= __IAVF_DOWN)
- 		queue_work(adapter->wq, &adapter->adminq_task);
- 	if (adapter->aq_required)
+-	memcpy(req->async_data, sqe, uring_sqe_size(req->ctx));
+-	ioucmd->sqe = req->async_data;
++	memcpy(cache->sqes, sqe, uring_sqe_size(req->ctx));
++	ioucmd->sqe = cache->sqes;
+ 	return 0;
+ }
+ 
+@@ -269,7 +269,7 @@ int io_uring_cmd(struct io_kiocb *req, unsigned int issue_flags)
+ 		struct io_uring_cmd_data *cache = req->async_data;
+ 
+ 		if (ioucmd->sqe != (void *) cache)
+-			memcpy(cache, ioucmd->sqe, uring_sqe_size(req->ctx));
++			memcpy(cache->sqes, ioucmd->sqe, uring_sqe_size(req->ctx));
+ 		return -EAGAIN;
+ 	} else if (ret == -EIOCBQUEUED) {
+ 		return -EIOCBQUEUED;
 -- 
 2.39.5
 
