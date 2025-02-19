@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E156A1DF739;
-	Wed, 19 Feb 2025 09:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACBD1DF252;
+	Wed, 19 Feb 2025 09:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957553; cv=none; b=QEVMozHBtlET86pso4+eGFTH50SJqRa+c5kmLdxb7Zshd4/0tIlCxg9a17XRV34ONHrV0dodif+Ke8Pinselq8Bz4WXp7YiuvTGcLRIjO7zFI8sQ+/fM8WznhdqR4+g3/Ei0ctxs7Dw8qfyPsA+54HYveuT+EuV13TfMcyuN7YI=
+	t=1739957555; cv=none; b=oPq/Hq9foyIXrXwEAHGaGcWoSLe2gjuKUMWPcgmGFqoCqD8EicQnXuBnJbgBF7tE/YQJfs+1HXwrs1bQxe2WmjZlvVbOkeR2w459Um8ttpsO1H9ONHuMngsUyBHMrfmbOKHx9WCV1Cw8JGqOcRy3z8wLJL+biP+CeGUGOzXyso8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957553; c=relaxed/simple;
-	bh=dTpgrfT0y0xDx5DTLAFnA9GTETdKwEGaxY52Y0ayE7Y=;
+	s=arc-20240116; t=1739957555; c=relaxed/simple;
+	bh=DhIrDnUDEcO7w+XWYgJDlrPMnYv/eXM24akKQpZaYJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nIOCrv9dWA4SktIKkzoNY1PAOG7C9w/5HI1+MaxinOTEds9wGb61xFltoO1mRVHmJcZggcxID9Vw1pJXtHxUWs0XtPMtK70ZfrSZ4AchEypneBh4u7MrvVdrOi5FSG4zrVA+wxtlzQasxGJSjzYpv9QU1vdt3tSsEb1+e3tK9fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Soz9wYiX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UmXepGkvmqGuz64lYuU+X2Ivm4wDEmU37XlsBIbGvlKNqLwMpwbSxBlTAKRpEgxZweBf870JWY7TKRvPAG5QrFYEA7C2uG7g2r2GmSTqlpBgRtxhzBYYbcKtCc1se47A1gYyBCi3pasnZyjcnDxGUQXRDNzc+wi/e3HpALHXTEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1HgYL3/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Soz9wYiX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC70C4CED1;
-	Wed, 19 Feb 2025 09:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1HgYL3/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C21C4CEE6;
+	Wed, 19 Feb 2025 09:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957552;
-	bh=dTpgrfT0y0xDx5DTLAFnA9GTETdKwEGaxY52Y0ayE7Y=;
+	s=korg; t=1739957555;
+	bh=DhIrDnUDEcO7w+XWYgJDlrPMnYv/eXM24akKQpZaYJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Soz9wYiXtB+j5wIiepfI27G5S/btENivM/dvtf4ttOSk57c12jpla0BXgjDemaFva
-	 BHkvccc2cpBN/sYMbXwj4o6gMiUMzgdeMVCPLT6Y/X6TWtBr5LL14LwgqcL7mMTpHT
-	 xyDzesqDUvGfUphI9QwcHmKI/33CZszoDWPOE2/M=
+	b=y1HgYL3/I0ctx4X3iZp/mQ5ZdeHDKrhLPkADlEsxYicjwFMVAjjAHq2nERO3bG8fb
+	 iYzUz4K9MRwHinulNG/zGas9rNkRHtr8HKbe/MppbDK4BZMbzEsEjAwf/f9QPBy0Cr
+	 GCQxlGaZNHO5JFdr4+OyoC9H/wpvR7+k+t5QvGkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Subject: [PATCH 6.1 566/578] nilfs2: do not output warnings when clearing dirty buffers
-Date: Wed, 19 Feb 2025 09:29:30 +0100
-Message-ID: <20250219082715.224537192@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+b2b14916b77acf8626d7@syzkaller.appspotmail.com,
+	syzbot+d98fd19acd08b36ff422@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 567/578] nilfs2: do not force clear folio if buffer is referenced
+Date: Wed, 19 Feb 2025 09:29:31 +0100
+Message-ID: <20250219082715.263067331@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,144 +54,151 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 299910dcb4525ac0274f3efa9527876315ba4f67 upstream.
+commit ca76bb226bf47ff04c782cacbd299f12ddee1ec1 upstream.
 
-After detecting file system corruption and degrading to a read-only mount,
-dirty folios and buffers in the page cache are cleared, and a large number
-of warnings are output at that time, often filling up the kernel log.
+Patch series "nilfs2: protect busy buffer heads from being force-cleared".
 
-In this case, since the degrading to a read-only mount is output to the
-kernel log, these warnings are not very meaningful, and are rather a
-nuisance in system management and debugging.
+This series fixes the buffer head state inconsistency issues reported by
+syzbot that occurs when the filesystem is corrupted and falls back to
+read-only, and the associated buffer head use-after-free issue.
 
-The related nilfs2-specific page/folio routines have a silent argument
-that suppresses the warning output, but since it is not currently used
-meaningfully, remove both the silent argument and the warning output.
+This patch (of 2):
+
+Syzbot has reported that after nilfs2 detects filesystem corruption and
+falls back to read-only, inconsistencies in the buffer state may occur.
+
+One of the inconsistencies is that when nilfs2 calls mark_buffer_dirty()
+to set a data or metadata buffer as dirty, but it detects that the buffer
+is not in the uptodate state:
+
+ WARNING: CPU: 0 PID: 6049 at fs/buffer.c:1177 mark_buffer_dirty+0x2e5/0x520
+  fs/buffer.c:1177
+ ...
+ Call Trace:
+  <TASK>
+  nilfs_palloc_commit_alloc_entry+0x4b/0x160 fs/nilfs2/alloc.c:598
+  nilfs_ifile_create_inode+0x1dd/0x3a0 fs/nilfs2/ifile.c:73
+  nilfs_new_inode+0x254/0x830 fs/nilfs2/inode.c:344
+  nilfs_mkdir+0x10d/0x340 fs/nilfs2/namei.c:218
+  vfs_mkdir+0x2f9/0x4f0 fs/namei.c:4257
+  do_mkdirat+0x264/0x3a0 fs/namei.c:4280
+  __do_sys_mkdirat fs/namei.c:4295 [inline]
+  __se_sys_mkdirat fs/namei.c:4293 [inline]
+  __x64_sys_mkdirat+0x87/0xa0 fs/namei.c:4293
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+The other is when nilfs_btree_propagate(), which propagates the dirty
+state to the ancestor nodes of a b-tree that point to a dirty buffer,
+detects that the origin buffer is not dirty, even though it should be:
+
+ WARNING: CPU: 0 PID: 5245 at fs/nilfs2/btree.c:2089
+  nilfs_btree_propagate+0xc79/0xdf0 fs/nilfs2/btree.c:2089
+ ...
+ Call Trace:
+  <TASK>
+  nilfs_bmap_propagate+0x75/0x120 fs/nilfs2/bmap.c:345
+  nilfs_collect_file_data+0x4d/0xd0 fs/nilfs2/segment.c:587
+  nilfs_segctor_apply_buffers+0x184/0x340 fs/nilfs2/segment.c:1006
+  nilfs_segctor_scan_file+0x28c/0xa50 fs/nilfs2/segment.c:1045
+  nilfs_segctor_collect_blocks fs/nilfs2/segment.c:1216 [inline]
+  nilfs_segctor_collect fs/nilfs2/segment.c:1540 [inline]
+  nilfs_segctor_do_construct+0x1c28/0x6b90 fs/nilfs2/segment.c:2115
+  nilfs_segctor_construct+0x181/0x6b0 fs/nilfs2/segment.c:2479
+  nilfs_segctor_thread_construct fs/nilfs2/segment.c:2587 [inline]
+  nilfs_segctor_thread+0x69e/0xe80 fs/nilfs2/segment.c:2701
+  kthread+0x2f0/0x390 kernel/kthread.c:389
+  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+  </TASK>
+
+Both of these issues are caused by the callbacks that handle the
+page/folio write requests, forcibly clear various states, including the
+working state of the buffers they hold, at unexpected times when they
+detect read-only fallback.
+
+Fix these issues by checking if the buffer is referenced before clearing
+the page/folio state, and skipping the clear if it is.
 
 [konishi.ryusuke@gmail.com: adjusted for page/folio conversion]
-Link: https://lkml.kernel.org/r/20240816090128.4561-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20250107200202.6432-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20250107200202.6432-2-konishi.ryusuke@gmail.com
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+b2b14916b77acf8626d7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b2b14916b77acf8626d7
+Reported-by: syzbot+d98fd19acd08b36ff422@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=d98fd19acd08b36ff422
+Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
+Tested-by: syzbot+b2b14916b77acf8626d7@syzkaller.appspotmail.com
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: ca76bb226bf4 ("nilfs2: do not force clear folio if buffer is referenced")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/inode.c |    4 ++--
- fs/nilfs2/mdt.c   |    6 +++---
- fs/nilfs2/page.c  |   20 +++-----------------
- fs/nilfs2/page.h  |    4 ++--
- 4 files changed, 10 insertions(+), 24 deletions(-)
+ fs/nilfs2/page.c |   35 +++++++++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 6 deletions(-)
 
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -162,7 +162,7 @@ static int nilfs_writepages(struct addre
- 	int err = 0;
- 
- 	if (sb_rdonly(inode->i_sb)) {
--		nilfs_clear_dirty_pages(mapping, false);
-+		nilfs_clear_dirty_pages(mapping);
- 		return -EROFS;
- 	}
- 
-@@ -185,7 +185,7 @@ static int nilfs_writepage(struct page *
- 		 * have dirty pages that try to be flushed in background.
- 		 * So, here we simply discard this dirty page.
- 		 */
--		nilfs_clear_dirty_page(page, false);
-+		nilfs_clear_dirty_page(page);
- 		unlock_page(page);
- 		return -EROFS;
- 	}
---- a/fs/nilfs2/mdt.c
-+++ b/fs/nilfs2/mdt.c
-@@ -411,7 +411,7 @@ nilfs_mdt_write_page(struct page *page,
- 		 * have dirty pages that try to be flushed in background.
- 		 * So, here we simply discard this dirty page.
- 		 */
--		nilfs_clear_dirty_page(page, false);
-+		nilfs_clear_dirty_page(page);
- 		unlock_page(page);
- 		return -EROFS;
- 	}
-@@ -634,10 +634,10 @@ void nilfs_mdt_restore_from_shadow_map(s
- 	if (mi->mi_palloc_cache)
- 		nilfs_palloc_clear_cache(inode);
- 
--	nilfs_clear_dirty_pages(inode->i_mapping, true);
-+	nilfs_clear_dirty_pages(inode->i_mapping);
- 	nilfs_copy_back_pages(inode->i_mapping, shadow->inode->i_mapping);
- 
--	nilfs_clear_dirty_pages(ii->i_assoc_inode->i_mapping, true);
-+	nilfs_clear_dirty_pages(ii->i_assoc_inode->i_mapping);
- 	nilfs_copy_back_pages(ii->i_assoc_inode->i_mapping,
- 			      NILFS_I(shadow->inode)->i_assoc_inode->i_mapping);
- 
 --- a/fs/nilfs2/page.c
 +++ b/fs/nilfs2/page.c
-@@ -354,9 +354,8 @@ repeat:
- /**
-  * nilfs_clear_dirty_pages - discard dirty pages in address space
-  * @mapping: address space with dirty pages for discarding
-- * @silent: suppress [true] or print [false] warning messages
-  */
--void nilfs_clear_dirty_pages(struct address_space *mapping, bool silent)
-+void nilfs_clear_dirty_pages(struct address_space *mapping)
- {
- 	struct pagevec pvec;
- 	unsigned int i;
-@@ -377,7 +376,7 @@ void nilfs_clear_dirty_pages(struct addr
- 			 * was acquired.  Skip processing in that case.
- 			 */
- 			if (likely(page->mapping == mapping))
--				nilfs_clear_dirty_page(page, silent);
-+				nilfs_clear_dirty_page(page);
- 
- 			unlock_page(page);
- 		}
-@@ -389,19 +388,11 @@ void nilfs_clear_dirty_pages(struct addr
+@@ -388,24 +388,44 @@ void nilfs_clear_dirty_pages(struct addr
  /**
   * nilfs_clear_dirty_page - discard dirty page
   * @page: dirty page that will be discarded
-- * @silent: suppress [true] or print [false] warning messages
++ *
++ * nilfs_clear_dirty_page() clears working states including dirty state for
++ * the page and its buffers.  If the page has buffers, clear only if it is
++ * confirmed that none of the buffer heads are busy (none have valid
++ * references and none are locked).
   */
--void nilfs_clear_dirty_page(struct page *page, bool silent)
-+void nilfs_clear_dirty_page(struct page *page)
+ void nilfs_clear_dirty_page(struct page *page)
  {
--	struct inode *inode = page->mapping->host;
--	struct super_block *sb = inode->i_sb;
--
  	BUG_ON(!PageLocked(page));
  
--	if (!silent)
--		nilfs_warn(sb, "discard dirty page: offset=%lld, ino=%lu",
--			   page_offset(page), inode->i_ino);
+-	ClearPageUptodate(page);
+-	ClearPageMappedToDisk(page);
+-	ClearPageChecked(page);
 -
- 	ClearPageUptodate(page);
- 	ClearPageMappedToDisk(page);
- 	ClearPageChecked(page);
-@@ -417,11 +408,6 @@ void nilfs_clear_dirty_page(struct page
- 		bh = head = page_buffers(page);
+ 	if (page_has_buffers(page)) {
+-		struct buffer_head *bh, *head;
++		struct buffer_head *bh, *head = page_buffers(page);
+ 		const unsigned long clear_bits =
+ 			(BIT(BH_Uptodate) | BIT(BH_Dirty) | BIT(BH_Mapped) |
+ 			 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
+ 			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
+ 			 BIT(BH_Delay));
++		bool busy, invalidated = false;
+ 
+-		bh = head = page_buffers(page);
++recheck_buffers:
++		busy = false;
++		bh = head;
++		do {
++			if (atomic_read(&bh->b_count) | buffer_locked(bh)) {
++				busy = true;
++				break;
++			}
++		} while (bh = bh->b_this_page, bh != head);
++
++		if (busy) {
++			if (invalidated)
++				return;
++			invalidate_bh_lrus();
++			invalidated = true;
++			goto recheck_buffers;
++		}
++
++		bh = head;
  		do {
  			lock_buffer(bh);
--			if (!silent)
--				nilfs_warn(sb,
--					   "discard dirty block: blocknr=%llu, size=%zu",
--					   (u64)bh->b_blocknr, bh->b_size);
--
  			set_mask_bits(&bh->b_state, clear_bits, 0);
- 			unlock_buffer(bh);
+@@ -413,6 +433,9 @@ void nilfs_clear_dirty_page(struct page
  		} while (bh = bh->b_this_page, bh != head);
---- a/fs/nilfs2/page.h
-+++ b/fs/nilfs2/page.h
-@@ -41,8 +41,8 @@ void nilfs_page_bug(struct page *);
+ 	}
  
- int nilfs_copy_dirty_pages(struct address_space *, struct address_space *);
- void nilfs_copy_back_pages(struct address_space *, struct address_space *);
--void nilfs_clear_dirty_page(struct page *, bool);
--void nilfs_clear_dirty_pages(struct address_space *, bool);
-+void nilfs_clear_dirty_page(struct page *page);
-+void nilfs_clear_dirty_pages(struct address_space *mapping);
- unsigned int nilfs_page_count_clean_buffers(struct page *, unsigned int,
- 					    unsigned int);
- unsigned long nilfs_find_uncommitted_extent(struct inode *inode,
++	ClearPageUptodate(page);
++	ClearPageMappedToDisk(page);
++	ClearPageChecked(page);
+ 	__nilfs_clear_page_dirty(page);
+ }
+ 
 
 
