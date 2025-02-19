@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA691ADC84;
-	Wed, 19 Feb 2025 08:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFFD1ADC84;
+	Wed, 19 Feb 2025 08:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954678; cv=none; b=SyBnc5Ipi+0UCygpy5Pr2Q5tQ7frIcZfMOsJawmq1xETYMjixxwjY4GCYJJyCq9c8rg/1hVPIeTUSK/W+s5LrJzOwKubimsQ+okbgBDIT7w4IlBCCghqMlnKHNltQuH0QEG8RERuhk2qfUIgTmzytQgcPk8xo4ooM/tE2xL99U8=
+	t=1739954682; cv=none; b=VKMPnI1IbL+xvuVr2OGtNSvcGLvMZHxSGPcODO+59aTh2M79/X/L4M19afcZKcZmTgiFT7L1Rk6IvOjjJWZNGeYhGeDzPQYpGXrYKnhG6UNShmep8axa5xm/UCQNNSSQojPVsha/bltsizXF7XPTcnVNborF+lYWXhyEfqoAREM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954678; c=relaxed/simple;
-	bh=3uKh5KJk71ZcaV+nZ11OWuDEpMs2mwyS+Wyjdy2ssjk=;
+	s=arc-20240116; t=1739954682; c=relaxed/simple;
+	bh=OLOrwV3yP4nGBcbjESegT/kEwja0+KCMh4bLHys4dzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2HMB0i4x1LeUfFPAT7T1VaaklBBI6jhfaEG8fXxD6vC5hXW4d0TCD3Xsm7Dvf4ARrKQiNXLC9O0jzvRXAL7yIKawPOpEVQfjqBRZMMxFumGiSFG5XVBh6+WrMq+RiRD4YMQmj5fmAOVJ/8qf5sgSoLMPLdZwb8MhSemQbVBkZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kufz3UxG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RSy293jD+I9T4C/XOouwEXx3xBgvODWU9EsAdO5X0xkZt4b7sbHHk1fRGkfhc8XtrQzEUzrPfAOaEaaW7mPZDH0Lzl+mQUPKawRGYo8zBqa1+GjittRyBooEDmhh/PqlYYYjRzg9vNLnTI2tlPodrNTR7MJuy3Qgl6gEeaLL74o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lX3O06v3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kufz3UxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B69C4CED1;
-	Wed, 19 Feb 2025 08:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lX3O06v3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A78C4CED1;
+	Wed, 19 Feb 2025 08:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954678;
-	bh=3uKh5KJk71ZcaV+nZ11OWuDEpMs2mwyS+Wyjdy2ssjk=;
+	s=korg; t=1739954681;
+	bh=OLOrwV3yP4nGBcbjESegT/kEwja0+KCMh4bLHys4dzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kufz3UxGT7Ukbxuob7+l4U1Gil1+oWrdtvtaw/vSZz8sFawlXKL1ZmIAbUyKouOek
-	 kIk5Ku+/SFvLGLoEh8mGhBNFm7G2A4tYKgcxBjiEV47dAHjK1Mg+TwpARre1mNNuR2
-	 Ael5Obad2+INj7xn5L94nHJ2NIvYpkTyuZfWSfzE=
+	b=lX3O06v34RaJ7hJxhs8vL2/zQmC0SVNG65tieAa94cIzEsg+DJEvPZLmRhTlYCXJ1
+	 3FWAQg1eZ7UEfgjVSUMV/VgMT2hcrgX8aDwujTDeDtFytS+UjfvoQWQJ7STUIWaXWn
+	 lvOhjiNjPmRAhWXg8zsZU/D+VtXt5q2zkynSQgzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 247/274] io_uring/uring_cmd: switch sqe to async_data on EAGAIN
-Date: Wed, 19 Feb 2025 09:28:21 +0100
-Message-ID: <20250219082619.247289146@linuxfoundation.org>
+Subject: [PATCH 6.13 248/274] ipv6: mcast: add RCU protection to mld_newpack()
+Date: Wed, 19 Feb 2025 09:28:22 +0100
+Message-ID: <20250219082619.285752957@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -51,86 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Sander Mateos <csander@purestorage.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e663da62ba8672aaa66843f1af8b20e3bb1a0515 ]
+[ Upstream commit a527750d877fd334de87eef81f1cb5f0f0ca3373 ]
 
-5eff57fa9f3a ("io_uring/uring_cmd: defer SQE copying until it's needed")
-moved the unconditional memcpy() of the uring_cmd SQE to async_data
-to 2 cases when the request goes async:
-- If REQ_F_FORCE_ASYNC is set to force the initial issue to go async
-- If ->uring_cmd() returns -EAGAIN in the initial non-blocking issue
+mld_newpack() can be called without RTNL or RCU being held.
 
-Unlike the REQ_F_FORCE_ASYNC case, in the EAGAIN case, io_uring_cmd()
-copies the SQE to async_data but neglects to update the io_uring_cmd's
-sqe field to point to async_data. As a result, sqe still points to the
-slot in the userspace-mapped SQ. At the end of io_submit_sqes(), the
-kernel advances the SQ head index, allowing userspace to reuse the slot
-for a new SQE. If userspace reuses the slot before the io_uring worker
-reissues the original SQE, the io_uring_cmd's SQE will be corrupted.
+Note that we no longer can use sock_alloc_send_skb() because
+ipv6.igmp_sk uses GFP_KERNEL allocations which can sleep.
 
-Introduce a helper io_uring_cmd_cache_sqes() to copy the original SQE to
-the io_uring_cmd's async_data and point sqe there. Use it for both the
-REQ_F_FORCE_ASYNC and EAGAIN cases. This ensures the uring_cmd doesn't
-read from the SQ slot after it has been returned to userspace.
+Instead use alloc_skb() and charge the net->ipv6.igmp_sk
+socket under RCU protection.
 
-Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Fixes: 5eff57fa9f3a ("io_uring/uring_cmd: defer SQE copying until it's needed")
-Link: https://lore.kernel.org/r/20250212204546.3751645-3-csander@purestorage.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: b8ad0cbc58f7 ("[NETNS][IPV6] mcast - handle several network namespace")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250212141021.1663666-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/uring_cmd.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ net/ipv6/mcast.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/io_uring/uring_cmd.c b/io_uring/uring_cmd.c
-index b72154fefbee9..0ec58fcd6fc9b 100644
---- a/io_uring/uring_cmd.c
-+++ b/io_uring/uring_cmd.c
-@@ -185,6 +185,15 @@ void io_uring_cmd_done(struct io_uring_cmd *ioucmd, ssize_t ret, u64 res2,
- }
- EXPORT_SYMBOL_GPL(io_uring_cmd_done);
+diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
+index 6551648512585..b7b62e5a562e5 100644
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -1730,21 +1730,19 @@ static struct sk_buff *mld_newpack(struct inet6_dev *idev, unsigned int mtu)
+ 	struct net_device *dev = idev->dev;
+ 	int hlen = LL_RESERVED_SPACE(dev);
+ 	int tlen = dev->needed_tailroom;
+-	struct net *net = dev_net(dev);
+ 	const struct in6_addr *saddr;
+ 	struct in6_addr addr_buf;
+ 	struct mld2_report *pmr;
+ 	struct sk_buff *skb;
+ 	unsigned int size;
+ 	struct sock *sk;
+-	int err;
++	struct net *net;
  
-+static void io_uring_cmd_cache_sqes(struct io_kiocb *req)
-+{
-+	struct io_uring_cmd *ioucmd = io_kiocb_to_cmd(req, struct io_uring_cmd);
-+	struct io_uring_cmd_data *cache = req->async_data;
+-	sk = net->ipv6.igmp_sk;
+ 	/* we assume size > sizeof(ra) here
+ 	 * Also try to not allocate high-order pages for big MTU
+ 	 */
+ 	size = min_t(int, mtu, PAGE_SIZE / 2) + hlen + tlen;
+-	skb = sock_alloc_send_skb(sk, size, 1, &err);
++	skb = alloc_skb(size, GFP_KERNEL);
+ 	if (!skb)
+ 		return NULL;
+ 
+@@ -1752,6 +1750,12 @@ static struct sk_buff *mld_newpack(struct inet6_dev *idev, unsigned int mtu)
+ 	skb_reserve(skb, hlen);
+ 	skb_tailroom_reserve(skb, mtu, tlen);
+ 
++	rcu_read_lock();
 +
-+	memcpy(cache->sqes, ioucmd->sqe, uring_sqe_size(req->ctx));
-+	ioucmd->sqe = cache->sqes;
-+}
++	net = dev_net_rcu(dev);
++	sk = net->ipv6.igmp_sk;
++	skb_set_owner_w(skb, sk);
 +
- static int io_uring_cmd_prep_setup(struct io_kiocb *req,
- 				   const struct io_uring_sqe *sqe)
- {
-@@ -195,14 +204,10 @@ static int io_uring_cmd_prep_setup(struct io_kiocb *req,
- 	if (unlikely(!cache))
- 		return -ENOMEM;
+ 	if (ipv6_get_lladdr(dev, &addr_buf, IFA_F_TENTATIVE)) {
+ 		/* <draft-ietf-magma-mld-source-05.txt>:
+ 		 * use unspecified address as the source address
+@@ -1763,6 +1767,8 @@ static struct sk_buff *mld_newpack(struct inet6_dev *idev, unsigned int mtu)
  
--	if (!(req->flags & REQ_F_FORCE_ASYNC)) {
--		/* defer memcpy until we need it */
--		ioucmd->sqe = sqe;
--		return 0;
--	}
--
--	memcpy(cache->sqes, sqe, uring_sqe_size(req->ctx));
--	ioucmd->sqe = cache->sqes;
-+	ioucmd->sqe = sqe;
-+	/* defer memcpy until we need it */
-+	if (unlikely(req->flags & REQ_F_FORCE_ASYNC))
-+		io_uring_cmd_cache_sqes(req);
- 	return 0;
- }
+ 	ip6_mc_hdr(sk, skb, dev, saddr, &mld2_all_mcr, NEXTHDR_HOP, 0);
  
-@@ -269,7 +274,7 @@ int io_uring_cmd(struct io_kiocb *req, unsigned int issue_flags)
- 		struct io_uring_cmd_data *cache = req->async_data;
++	rcu_read_unlock();
++
+ 	skb_put_data(skb, ra, sizeof(ra));
  
- 		if (ioucmd->sqe != cache->sqes)
--			memcpy(cache->sqes, ioucmd->sqe, uring_sqe_size(req->ctx));
-+			io_uring_cmd_cache_sqes(req);
- 		return -EAGAIN;
- 	} else if (ret == -EIOCBQUEUED) {
- 		return -EIOCBQUEUED;
+ 	skb_set_transport_header(skb, skb_tail_pointer(skb) - skb->data);
 -- 
 2.39.5
 
