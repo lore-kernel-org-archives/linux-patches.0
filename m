@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B8D1C2432;
-	Wed, 19 Feb 2025 09:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC851A315E;
+	Wed, 19 Feb 2025 09:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956006; cv=none; b=Pf70PYTXSUN6u7ZUJlxkoow6usxi0H7r2o8dMf34UXCLdyGHktB+OC/uBG/4j5Y7q0l85jvDFthdMh+6aA20R0/XsOtZDuIv0hnlrfgHlQeg+VkeeWo+sK6okCBBdiRdH4MWPJHYV2u1q/sMtOGcyEEIPk8jE54J+cSCQCejHxs=
+	t=1739956009; cv=none; b=CM1l6rz902Jcdd5yRiVAFun3KqmWthnyd4oqf9Af5FVm4j1cdjb11RvEl63EgN9M/3d8+6dB1s6V7a7BhDjHBXWBP88BDljoYdFIldPEENJ6fpPbNmkJ/64EnjJ2XGikHuJhHCBYZedR8fnCMoJ/EfjsQY0JUO8Z7nVNwjdTkNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956006; c=relaxed/simple;
-	bh=rz0Cq1OKqlgnZmbvm5xL8Z3oUfZxYXeqFFHKUlAjHBg=;
+	s=arc-20240116; t=1739956009; c=relaxed/simple;
+	bh=xnAtYpGUFNTxnMehkmE8jKw8+JJIoITHlruHPh2nDbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DuBUcMEuRIRRb18cf+9vhddzrTcIqtb+Bk1JwExIZGkCAibOuoXvs+dN9cRRuVJJ6QfeQdm2YBic5LTn0pE+QSOxOW82iMpZdP2RUWtwQ/AlBAezvZ0WpzO0Ed5lMf62P5Nzjvqfn7c+HsBq3flPNlO9CjPk9E1kvtoGCsDVLqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+1+0hsx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y4tftjE4XPrCI8xcA1Hsukk3uAvRfDT3o46e3AYL8t9xd/dfhAPpJRkpo6ID3T3I3R1PAIe0cmU3UJtRpoP3NvxO3HeEPB0s/UMlTf9aHn801uEuQbXOS4TeOtq73c7mcGOOUAIibbXf4O4+C87mrkzA2pSxI+dyfVCcQ5nC6XA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PeHOVMTo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+1+0hsx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE45BC4CED1;
-	Wed, 19 Feb 2025 09:06:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PeHOVMTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F03C4CED1;
+	Wed, 19 Feb 2025 09:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956006;
-	bh=rz0Cq1OKqlgnZmbvm5xL8Z3oUfZxYXeqFFHKUlAjHBg=;
+	s=korg; t=1739956009;
+	bh=xnAtYpGUFNTxnMehkmE8jKw8+JJIoITHlruHPh2nDbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+1+0hsxfQQfcce4z7lT5Zm3Ntg3ZP77UNhsy7CPVBpYf4Md7mbjuIv2dKIgKYl8E
-	 QwLPBEjzNSMUvdiHju8s9KmN1svmRUrv2irW/wJeI/BWJ63+io1uv7YOxPQ+Wi4XV5
-	 dWP9CYc9wGUygEWC+UtLYnkYLGXpTHeFZwVcmbSw=
+	b=PeHOVMTowZhTtb3f4NB7WNsaJ6qgoHom5gl5TYH/LiavM6qbUgcVZjTMK/V3W6vPR
+	 we2rWUBQGabZgmmzMtf1FgvGiMUyQaAxIF7+sIpkl4MAz47GtcyZSvDkbrl4R/veau
+	 wCZUO7yGQu6kuwH2Dnwg4UEi6U9Sj7rtOHPUo9cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Charles Han <hanchunchao@inspur.com>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/578] genirq: Make handle_enforce_irqctx() unconditionally available
-Date: Wed, 19 Feb 2025 09:20:37 +0100
-Message-ID: <20250219082654.199329639@linuxfoundation.org>
+Subject: [PATCH 6.1 034/578] ipmi: ipmb: Add check devm_kasprintf() returned value
+Date: Wed, 19 Feb 2025 09:20:38 +0100
+Message-ID: <20250219082654.239099880@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -50,58 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Charles Han <hanchunchao@inspur.com>
 
-[ Upstream commit 8d187a77f04c14fb459a5301d69f733a5a1396bc ]
+[ Upstream commit 2378bd0b264ad3a1f76bd957caf33ee0c7945351 ]
 
-Commit 1b57d91b969c ("irqchip/gic-v2, v3: Prevent SW resends entirely")
-sett the flag which enforces interrupt handling in interrupt context and
-prevents software base resends for ARM GIC v2/v3.
+devm_kasprintf() can return a NULL pointer on failure but this
+returned value is not checked.
 
-But it missed that the helper function which checks the flag was hidden
-behind CONFIG_GENERIC_PENDING_IRQ, which is not set by ARM[64].
-
-Make the helper unconditionally available so that the enforcement actually
-works.
-
-Fixes: 1b57d91b969c ("irqchip/gic-v2, v3: Prevent SW resends entirely")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20241210101811.497716609@linutronix.de
+Fixes: 51bd6f291583 ("Add support for IPMB driver")
+Signed-off-by: Charles Han <hanchunchao@inspur.com>
+Message-ID: <20240926094419.25900-1-hanchunchao@inspur.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/internals.h | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/char/ipmi/ipmb_dev_int.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
-index 5fdc0b5575797..35e85323940c3 100644
---- a/kernel/irq/internals.h
-+++ b/kernel/irq/internals.h
-@@ -429,10 +429,6 @@ static inline struct cpumask *irq_desc_get_pending_mask(struct irq_desc *desc)
- {
- 	return desc->pending_mask;
- }
--static inline bool handle_enforce_irqctx(struct irq_data *data)
--{
--	return irqd_is_handle_enforce_irqctx(data);
--}
- bool irq_fixup_move_pending(struct irq_desc *desc, bool force_clear);
- #else /* CONFIG_GENERIC_PENDING_IRQ */
- static inline bool irq_can_move_pcntxt(struct irq_data *data)
-@@ -459,11 +455,12 @@ static inline bool irq_fixup_move_pending(struct irq_desc *desc, bool fclear)
- {
- 	return false;
- }
-+#endif /* !CONFIG_GENERIC_PENDING_IRQ */
+diff --git a/drivers/char/ipmi/ipmb_dev_int.c b/drivers/char/ipmi/ipmb_dev_int.c
+index a0e9e80d92eeb..d6a4b1671d5bc 100644
+--- a/drivers/char/ipmi/ipmb_dev_int.c
++++ b/drivers/char/ipmi/ipmb_dev_int.c
+@@ -321,6 +321,9 @@ static int ipmb_probe(struct i2c_client *client)
+ 	ipmb_dev->miscdev.name = devm_kasprintf(&client->dev, GFP_KERNEL,
+ 						"%s%d", "ipmb-",
+ 						client->adapter->nr);
++	if (!ipmb_dev->miscdev.name)
++		return -ENOMEM;
 +
- static inline bool handle_enforce_irqctx(struct irq_data *data)
- {
--	return false;
-+	return irqd_is_handle_enforce_irqctx(data);
- }
--#endif /* !CONFIG_GENERIC_PENDING_IRQ */
- 
- #if !defined(CONFIG_IRQ_DOMAIN) || !defined(CONFIG_IRQ_DOMAIN_HIERARCHY)
- static inline int irq_domain_activate_irq(struct irq_data *data, bool reserve)
+ 	ipmb_dev->miscdev.fops = &ipmb_fops;
+ 	ipmb_dev->miscdev.parent = &client->dev;
+ 	ret = misc_register(&ipmb_dev->miscdev);
 -- 
 2.39.5
 
