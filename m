@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097391DE4C6;
-	Wed, 19 Feb 2025 09:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E301DE4D7;
+	Wed, 19 Feb 2025 09:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957402; cv=none; b=BPsKvo/Itb4vMA7Ve2Jyz5hlW2kcTbpMG3pD/8NZ7Nmn20ywvFtcOHG8cWbL6nS9AKwtkyWWPnl0oR8ri9FxT/aHkmCVs2f+VtpkwnTUoLSQ1aek5IrVkU0fv4SzOOQKjL2f4JASh4Kr64Ofj7ntQKooTreHmfKHPPsoCz7llfY=
+	t=1739957404; cv=none; b=TgCZ+v+5bolRZNsqHiyh7G2Ji3LwP4jEldBwnA00LW/FkKSLCGdySCOfduAyosAdVe4ecSliLYuVWMO83lXORvdJsD0r9rDHHxjN65buGYz1Dw5aBdeRSi9dNKQfzPPWMxXv0kNOK3quzGjFTGPvvzleQYYkWOKRhbdBUglsjJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957402; c=relaxed/simple;
-	bh=WqQhFOBkmUL/RYUXFySoNVL5s6StdFQwtmsPbaAnVhY=;
+	s=arc-20240116; t=1739957404; c=relaxed/simple;
+	bh=m/S+0SWUqIOOEI6ypFY7C7DX8hc8NQ7gHGOixWp6QUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZcHzwSaE7z4ZyrqDpmVhOnofZsP9yK/v1MVFgmW+I21pH19F1iUg9KYC2Az0eVSCAnRdjPDJGI9My+PIe/W1nVetQlEdSpf0mV0bFHdJScj8JmyKp0vijIMvrQ6iCzc9OJI4iBJm8/sd2N0RmqVY0EARvYuz2beoPbs+pfK9i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yy/iOWc0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GXBHJ0sMnPbABPQdOSOt0cY7cXuqCnKBDDvmR4/0VN3ZLHuvbLqrnrlBwttW2U6UVDygrmiMLh7NuVF7715w1CdUY6yUT6koJ6FvT3v6cI5myQi39ebST98z6hAWkhegCwCZ7Ayqe1yr5GeIoq8We6KrXqDIB00ZVcv0STUD3J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CisTAXJS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yy/iOWc0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B74C4CED1;
-	Wed, 19 Feb 2025 09:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CisTAXJS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CC0C4CED1;
+	Wed, 19 Feb 2025 09:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957401;
-	bh=WqQhFOBkmUL/RYUXFySoNVL5s6StdFQwtmsPbaAnVhY=;
+	s=korg; t=1739957404;
+	bh=m/S+0SWUqIOOEI6ypFY7C7DX8hc8NQ7gHGOixWp6QUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yy/iOWc0EuO4u72lwiqPig3GJcDriirbrRs7bGyQBiXBI3C3ZUvpKBHQecQxCc6sf
-	 dDJ2hxZRSurwTxeN8iFgwGyUWzck22B7T5+qycUgV/WqpGG5i0xLvtFL6fKO02G586
-	 s33lsQG7+fvmNJbGoCGIYTZABsi973uHf5KnbK5c=
+	b=CisTAXJSDwkHfq31mPjaR0aD1izK9joxyiqZTxnpkLBqpEaopj3cZeiAmDbzYtJuP
+	 YRU8yuElep4zQdY5RqtS4tvpVbHRRXdRSuLCMglqHm/IfIptQye16cjuKVHJpGDzfE
+	 lCSbjWvGOH7zOJLN41+KGCN/aq76ZIAHZnS5Q29w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 6.1 513/578] USB: cdc-acm: Fill in Renesas R-Car D3 USB Download mode quirk
-Date: Wed, 19 Feb 2025 09:28:37 +0100
-Message-ID: <20250219082713.163666352@linuxfoundation.org>
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 6.1 514/578] usb: cdc-acm: Check control transfer buffer size before access
+Date: Wed, 19 Feb 2025 09:28:38 +0100
+Message-ID: <20250219082713.201269837@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,46 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Jann Horn <jannh@google.com>
 
-commit 7284922f3e4fa285dff1b8bb593aa9a0b8458f30 upstream.
+commit e563b01208f4d1f609bcab13333b6c0e24ce6a01 upstream.
 
-Add Renesas R-Car D3 USB Download mode quirk and update comments
-on all the other Renesas R-Car USB Download mode quirks to discern
-them from each other. This follows R-Car Series, 3rd Generation
-reference manual Rev.2.00 chapter 19.2.8 USB download mode .
+If the first fragment is shorter than struct usb_cdc_notification, we can't
+calculate an expected_size. Log an error and discard the notification
+instead of reading lengths from memory outside the received data, which can
+lead to memory corruption when the expected_size decreases between
+fragments, causing `expected_size - acm->nb_index` to wrap.
 
-Fixes: 6d853c9e4104 ("usb: cdc-acm: Add DISABLE_ECHO for Renesas USB Download mode")
+This issue has been present since the beginning of git history; however,
+it only leads to memory corruption since commit ea2583529cd1
+("cdc-acm: reassemble fragmented notifications").
+
+A mitigating factor is that acm_ctrl_irq() can only execute after userspace
+has opened /dev/ttyACM*; but if ModemManager is running, ModemManager will
+do that automatically depending on the USB device's vendor/product IDs and
+its other interfaces.
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20250209145708.106914-1-marek.vasut+renesas@mailbox.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jann Horn <jannh@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/usb/class/cdc-acm.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
 --- a/drivers/usb/class/cdc-acm.c
 +++ b/drivers/usb/class/cdc-acm.c
-@@ -1703,13 +1703,16 @@ static const struct usb_device_id acm_id
- 	{ USB_DEVICE(0x0870, 0x0001), /* Metricom GS Modem */
- 	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
- 	},
--	{ USB_DEVICE(0x045b, 0x023c),	/* Renesas USB Download mode */
-+	{ USB_DEVICE(0x045b, 0x023c),	/* Renesas R-Car H3 USB Download mode */
- 	.driver_info = DISABLE_ECHO,	/* Don't echo banner */
- 	},
--	{ USB_DEVICE(0x045b, 0x0248),	/* Renesas USB Download mode */
-+	{ USB_DEVICE(0x045b, 0x0247),	/* Renesas R-Car D3 USB Download mode */
- 	.driver_info = DISABLE_ECHO,	/* Don't echo banner */
- 	},
--	{ USB_DEVICE(0x045b, 0x024D),	/* Renesas USB Download mode */
-+	{ USB_DEVICE(0x045b, 0x0248),	/* Renesas R-Car M3-N USB Download mode */
-+	.driver_info = DISABLE_ECHO,	/* Don't echo banner */
-+	},
-+	{ USB_DEVICE(0x045b, 0x024D),	/* Renesas R-Car E3 USB Download mode */
- 	.driver_info = DISABLE_ECHO,	/* Don't echo banner */
- 	},
- 	{ USB_DEVICE(0x0e8d, 0x0003), /* FIREFLY, MediaTek Inc; andrey.arapov@gmail.com */
+@@ -360,7 +360,7 @@ static void acm_process_notification(str
+ static void acm_ctrl_irq(struct urb *urb)
+ {
+ 	struct acm *acm = urb->context;
+-	struct usb_cdc_notification *dr = urb->transfer_buffer;
++	struct usb_cdc_notification *dr;
+ 	unsigned int current_size = urb->actual_length;
+ 	unsigned int expected_size, copy_size, alloc_size;
+ 	int retval;
+@@ -387,9 +387,20 @@ static void acm_ctrl_irq(struct urb *urb
+ 
+ 	usb_mark_last_busy(acm->dev);
+ 
+-	if (acm->nb_index)
++	if (acm->nb_index == 0) {
++		/*
++		 * The first chunk of a message must contain at least the
++		 * notification header with the length field, otherwise we
++		 * can't get an expected_size.
++		 */
++		if (current_size < sizeof(struct usb_cdc_notification)) {
++			dev_dbg(&acm->control->dev, "urb too short\n");
++			goto exit;
++		}
++		dr = urb->transfer_buffer;
++	} else {
+ 		dr = (struct usb_cdc_notification *)acm->notification_buffer;
+-
++	}
+ 	/* size = notification-header + (optional) data */
+ 	expected_size = sizeof(struct usb_cdc_notification) +
+ 					le16_to_cpu(dr->wLength);
 
 
