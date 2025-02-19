@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DD61E0E16;
-	Wed, 19 Feb 2025 09:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C061B1E105E;
+	Wed, 19 Feb 2025 09:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957453; cv=none; b=Cl7d/IYJ6uiLfEGo+wEwEY/j6dcnDeryzwO8Y0plb4SGHUhZ/u1aAMeHuxT1J9NfeIjiue1Bm8r8WAueQYZNUPlXRWpOHAqDwbxQSBcCtAMbXAm80iW4C7aRAeyDd823pJlKxr6K1PJP+4ceKvasCJq8hTyEPPrJPa2xnfnYDlw=
+	t=1739957456; cv=none; b=lt4B42SBxbXUUNO2YkF+cFujQ1uxXXWRbAJJXp+o1BpCQWYpX5rAJlNmT7QCLU9jwqABrivOw/MSIRfrdrUBc5/KCJveG+sliNOBAAY46iIlCmDtqh38J2MV9zc2OArMaDwQk8pKFLIAlkfRaGr8OzeC3IlX3fYKcZvwQLN+aPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957453; c=relaxed/simple;
-	bh=GuIR4CC29JOQSohVJMsbtABaoL0TsFupxmYHP0FAAqE=;
+	s=arc-20240116; t=1739957456; c=relaxed/simple;
+	bh=rh3xowcIWDb8NbQZfAtRT4TV38t7wS1p1BZaurH1Tio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NUa0tT3p5ADEk3eIIjIGC9Jb0VXySqPyy4GeFrojwlNwR/JbYf+Zu71mz49xGT0s1WmXnsHoAk1kkUhDe/xoZO/1hFSNZC6m1gCsYyby/nL8KXx5Ftj6YoRj/SCrnEzYG4YaxfZ2Y+ppSja7Pkfew0LC/FwptIBccfhnk77z9EI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzkZhd91; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QKlff97jHHwwQpDytHyOJ+cQnOpiBBnkUpyDE8y2A3VC4MhYFXylkAaeFxSSAlQxAFoMYkMtVDtpoYWsVrfhteEsUMO5+yLaHVThaTTo0PWlZd8HL4ud08uUzU97mY7OJeb8aPsHeLIvTwOEl9d69AJ4XynxF6eSZHqXoxUTF/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/879mI2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzkZhd91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B181C4CED1;
-	Wed, 19 Feb 2025 09:30:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/879mI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44468C4CED1;
+	Wed, 19 Feb 2025 09:30:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957453;
-	bh=GuIR4CC29JOQSohVJMsbtABaoL0TsFupxmYHP0FAAqE=;
+	s=korg; t=1739957456;
+	bh=rh3xowcIWDb8NbQZfAtRT4TV38t7wS1p1BZaurH1Tio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uzkZhd91xi0Tq7VrSXYgz7jK8t26Lhn2iAjOLtAqhtLO28/Bj3QNfvQKJGLTR3eLk
-	 dFY5AEWlgL0Iejgri9h5t4PoDYXsaZR/5rseQpnmxRlDdFIFBGHzw8u1xjHvgBvMvG
-	 Vo+tELVtsfASaYAahUXyBLtKrDVVkg4sSxQTA4Ek=
+	b=L/879mI2xaYMFtxdRayPrjKXNFaiNxnHiEBwrCvyaIxqf+ZkMtaMyjl3GJMQ52b09
+	 SUAUToQDKlrVAOVXU3I8UZbE8uOlSL+xVGtPJv9U6ZsR+aY6yGrP1cBaS0z+4fWLKv
+	 7tKSMoHQTMbMimiXgStsoHSy22IYm0c2PKo7poec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.1 532/578] arm64: Handle .ARM.attributes section in linker scripts
-Date: Wed, 19 Feb 2025 09:28:56 +0100
-Message-ID: <20250219082713.906353876@linuxfoundation.org>
+	Andy-ld Lu <andy-ld.lu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 533/578] mmc: mtk-sd: Fix register settings for hs400(es) mode
+Date: Wed, 19 Feb 2025 09:28:57 +0100
+Message-ID: <20250219082713.944247639@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -50,57 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Andy-ld Lu <andy-ld.lu@mediatek.com>
 
-commit ca0f4fe7cf7183bfbdc67ca2de56ae1fc3a8db2b upstream.
+commit 3e68abf2b9cebe76c6cd4b1aca8e95cd671035a3 upstream.
 
-A recent LLVM commit [1] started generating an .ARM.attributes section
-similar to the one that exists for 32-bit, which results in orphan
-section warnings (or errors if CONFIG_WERROR is enabled) from the linker
-because it is not handled in the arm64 linker scripts.
+For hs400(es) mode, the 'hs400-ds-delay' is typically configured in the
+dts. However, some projects may only define 'mediatek,hs400-ds-dly3',
+which can lead to initialization failures in hs400es mode. CMD13 reported
+response crc error in the mmc_switch_status() just after switching to
+hs400es mode.
 
-  ld.lld: error: arch/arm64/kernel/vdso/vgettimeofday.o:(.ARM.attributes) is being placed in '.ARM.attributes'
-  ld.lld: error: arch/arm64/kernel/vdso/vgetrandom.o:(.ARM.attributes) is being placed in '.ARM.attributes'
+[    1.914038][   T82] mmc0: mmc_select_hs400es failed, error -84
+[    1.914954][   T82] mmc0: error -84 whilst initialising MMC card
 
-  ld.lld: error: vmlinux.a(lib/vsprintf.o):(.ARM.attributes) is being placed in '.ARM.attributes'
-  ld.lld: error: vmlinux.a(lib/win_minmax.o):(.ARM.attributes) is being placed in '.ARM.attributes'
-  ld.lld: error: vmlinux.a(lib/xarray.o):(.ARM.attributes) is being placed in '.ARM.attributes'
+Currently, the hs400_ds_dly3 value is set within the tuning function. This
+means that the PAD_DS_DLY3 field is not configured before tuning process,
+which is the reason for the above-mentioned CMD13 response crc error.
 
-Discard the new sections in the necessary linker scripts to resolve the
-warnings, as the kernel and vDSO do not need to retain it, similar to
-the .note.gnu.property section.
+Move the PAD_DS_DLY3 field configuration into msdc_prepare_hs400_tuning(),
+and add a value check of hs400_ds_delay to prevent overwriting by zero when
+the 'hs400-ds-delay' is not set in the dts. In addition, since hs400(es)
+only tune the PAD_DS_DLY1, the PAD_DS_DLY2_SEL bit should be cleared to
+bypass it.
 
+Fixes: c4ac38c6539b ("mmc: mtk-sd: Add HS400 online tuning support")
+Signed-off-by: Andy-ld Lu <andy-ld.lu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Cc: stable@vger.kernel.org
-Fixes: b3e5d80d0c48 ("arm64/build: Warn on orphan section placement")
-Link: https://github.com/llvm/llvm-project/commit/ee99c4d4845db66c4daa2373352133f4b237c942 [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20250206-arm64-handle-arm-attributes-in-linker-script-v3-1-d53d169913eb@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20250123092644.7359-1-andy-ld.lu@mediatek.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/vdso/vdso.lds.S |    1 +
- arch/arm64/kernel/vmlinux.lds.S   |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/mmc/host/mtk-sd.c |   31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
---- a/arch/arm64/kernel/vdso/vdso.lds.S
-+++ b/arch/arm64/kernel/vdso/vdso.lds.S
-@@ -38,6 +38,7 @@ SECTIONS
- 	 */
- 	/DISCARD/	: {
- 		*(.note.GNU-stack .note.gnu.property)
-+		*(.ARM.attributes)
- 	}
- 	.note		: { *(.note.*) }		:text	:note
+--- a/drivers/mmc/host/mtk-sd.c
++++ b/drivers/mmc/host/mtk-sd.c
+@@ -262,6 +262,7 @@
+ #define MSDC_PAD_TUNE_CMD_SEL	  BIT(21)   /* RW */
  
---- a/arch/arm64/kernel/vmlinux.lds.S
-+++ b/arch/arm64/kernel/vmlinux.lds.S
-@@ -149,6 +149,7 @@ SECTIONS
- 	/DISCARD/ : {
- 		*(.interp .dynamic)
- 		*(.dynsym .dynstr .hash .gnu.hash)
-+		*(.ARM.attributes)
+ #define PAD_DS_TUNE_DLY_SEL       BIT(0)	  /* RW */
++#define PAD_DS_TUNE_DLY2_SEL      BIT(1)	  /* RW */
+ #define PAD_DS_TUNE_DLY1	  GENMASK(6, 2)   /* RW */
+ #define PAD_DS_TUNE_DLY2	  GENMASK(11, 7)  /* RW */
+ #define PAD_DS_TUNE_DLY3	  GENMASK(16, 12) /* RW */
+@@ -307,6 +308,7 @@
+ 
+ /* EMMC50_PAD_DS_TUNE mask */
+ #define PAD_DS_DLY_SEL		BIT(16)	/* RW */
++#define PAD_DS_DLY2_SEL		BIT(15)	/* RW */
+ #define PAD_DS_DLY1		GENMASK(14, 10)	/* RW */
+ #define PAD_DS_DLY3		GENMASK(4, 0)	/* RW */
+ 
+@@ -2293,13 +2295,23 @@ tune_done:
+ static int msdc_prepare_hs400_tuning(struct mmc_host *mmc, struct mmc_ios *ios)
+ {
+ 	struct msdc_host *host = mmc_priv(mmc);
++
+ 	host->hs400_mode = true;
+ 
+-	if (host->top_base)
+-		writel(host->hs400_ds_delay,
+-		       host->top_base + EMMC50_PAD_DS_TUNE);
+-	else
+-		writel(host->hs400_ds_delay, host->base + PAD_DS_TUNE);
++	if (host->top_base) {
++		if (host->hs400_ds_dly3)
++			sdr_set_field(host->top_base + EMMC50_PAD_DS_TUNE,
++				      PAD_DS_DLY3, host->hs400_ds_dly3);
++		if (host->hs400_ds_delay)
++			writel(host->hs400_ds_delay,
++			       host->top_base + EMMC50_PAD_DS_TUNE);
++	} else {
++		if (host->hs400_ds_dly3)
++			sdr_set_field(host->base + PAD_DS_TUNE,
++				      PAD_DS_TUNE_DLY3, host->hs400_ds_dly3);
++		if (host->hs400_ds_delay)
++			writel(host->hs400_ds_delay, host->base + PAD_DS_TUNE);
++	}
+ 	/* hs400 mode must set it to 0 */
+ 	sdr_clr_bits(host->base + MSDC_PATCH_BIT2, MSDC_PATCH_BIT2_CFGCRCSTS);
+ 	/* to improve read performance, set outstanding to 2 */
+@@ -2319,14 +2331,11 @@ static int msdc_execute_hs400_tuning(str
+ 	if (host->top_base) {
+ 		sdr_set_bits(host->top_base + EMMC50_PAD_DS_TUNE,
+ 			     PAD_DS_DLY_SEL);
+-		if (host->hs400_ds_dly3)
+-			sdr_set_field(host->top_base + EMMC50_PAD_DS_TUNE,
+-				      PAD_DS_DLY3, host->hs400_ds_dly3);
++		sdr_clr_bits(host->top_base + EMMC50_PAD_DS_TUNE,
++			     PAD_DS_DLY2_SEL);
+ 	} else {
+ 		sdr_set_bits(host->base + PAD_DS_TUNE, PAD_DS_TUNE_DLY_SEL);
+-		if (host->hs400_ds_dly3)
+-			sdr_set_field(host->base + PAD_DS_TUNE,
+-				      PAD_DS_TUNE_DLY3, host->hs400_ds_dly3);
++		sdr_clr_bits(host->base + PAD_DS_TUNE, PAD_DS_TUNE_DLY2_SEL);
  	}
  
- 	. = KIMAGE_VADDR;
+ 	host->hs400_tuning = true;
 
 
