@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BFF1DF74E;
-	Wed, 19 Feb 2025 09:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C3E1DF754;
+	Wed, 19 Feb 2025 09:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956263; cv=none; b=PiWlHiPd+l/h9/tnaGN7NueK4D3tgeI6Ui1q2ZiWKGdKyM7wb73yosHKw6DpZIfHAiiNFV80H5XIyp18h2RmXufzgMm4/lzrlgoLqlhf4ZlxIg3h9/G8IPAA4YjF6z6EwNP16ROaYdoZYm47T7JeyopHBi/gsz3MXlSkc92TUe8=
+	t=1739956266; cv=none; b=DdlG9hbsN59CU3j0DfIhVwAw3WugCPcfrMx27Z9pYn8ZQPkUVa3+QtZmGb0Vjai/N4W6Ard2SK9x13hbxYQBhY7cx5LhtGTXXBOd/BEiFRebGtS3vBpHAfZB3EZW9e+H7Ym03yhAXWYVaDukychYL5XE6v2gyB2X6WwEhPvk4SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956263; c=relaxed/simple;
-	bh=Kx4iSUTLw0jj3jPJaHumWa7iM9jkx/F2+1RMDwwy6IQ=;
+	s=arc-20240116; t=1739956266; c=relaxed/simple;
+	bh=V4PoUPxHPq7D5m9txOaV+d3XsGKDHPncjZMMSiiuI1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfTfqFmS3Vj08p0SjdHHo9F1J7S2KHRYtSLyFIxw8/rdD1ka1QXzunBvgg0uPOyU9XWyu2txuli9m0H2dDKujB6TLjjXHldAs1JEXfL3EmSK8GDRwFyML/iAZeCD332hxJmOvKyC8tfFbczfrV4yI1L1AHnhjoRo7YMHgHIx4nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oifd0mPP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eyi1GBhWBJS40LvTmGZqvKuGajXZ0ZOaJ/0s3erKSf54RLmLP35sdR55sHdNvchkWvJzJ6qb90ZfbDn30bOHF6blAFxl8EBAIZYuiwATZpxAbBcAAIczlHgHn9aYJwPSz5qTolxYwuQvsAqb3zkpvyX2Ti61c8V951qcNe0b6nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxBEFz0m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oifd0mPP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FEEC4CEE6;
-	Wed, 19 Feb 2025 09:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxBEFz0m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDA5C4CED1;
+	Wed, 19 Feb 2025 09:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956263;
-	bh=Kx4iSUTLw0jj3jPJaHumWa7iM9jkx/F2+1RMDwwy6IQ=;
+	s=korg; t=1739956266;
+	bh=V4PoUPxHPq7D5m9txOaV+d3XsGKDHPncjZMMSiiuI1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oifd0mPPZXEXyTsAaF0zcWw1s7ciogaFT35AAi/wfK4n0mQCvZJ4Kh4ima7z81dY0
-	 HOeO5TEyzl1g58bHZDrBIAaaQyFEdCJVTi7k/rOgz3pjTRkzjz/CxC39ld5GCw2qWc
-	 pAhtxfdVtRenlu6XMolugj+Arh6Kpr/LO+LQdKUg=
+	b=nxBEFz0mEzUiNhS0dJDA6RusliiivVW81GTofK2FSZ4tXuaRWns1bLdC/S+m3liyQ
+	 G/yny8p+yQsMX2j+HXb6xp8i+NCbf9pp5ii5MBqMTcCM02dNRViSnoMfCpv3R8ntkC
+	 5ZS0QzFVuyTeSjmtX4j4F73GPBj8jWfl9pPzBZKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chen Ni <nichen@iscas.ac.cn>,
 	Valentin Caron <valentin.caron@foss.st.com>,
-	Alexandre TORGUE <alexandre.torgue@foss.st.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 121/578] pinctrl: stm32: set default gpio line names using pin names
-Date: Wed, 19 Feb 2025 09:22:05 +0100
-Message-ID: <20250219082657.743111797@linuxfoundation.org>
+Subject: [PATCH 6.1 122/578] pinctrl: stm32: Add check for devm_kcalloc
+Date: Wed, 19 Feb 2025 09:22:06 +0100
+Message-ID: <20250219082657.782581910@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,87 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valentin Caron <valentin.caron@foss.st.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 32c170ff15b044579b1f8b8cdabf543406dde9da ]
+[ Upstream commit b0eeba527e704d6023a6cd9103f929226e326b03 ]
 
-Add stm32_pctrl_get_desc_pin_from_gpio function to find a stm32 pin
-descriptor which is matching with a gpio.
-Most of the time pin number is equal to pin index in array. So the first
-part of the function is useful to speed up.
+Add check for the return value of devm_kcalloc() and return the error
+if it fails in order to avoid NULL pointer dereference.
 
-And during gpio bank register, we set default gpio names with pin names.
-
-Signed-off-by: Valentin Caron <valentin.caron@foss.st.com>
-Acked-by: Alexandre TORGUE <alexandre.torgue@foss.st.com>
-Link: https://lore.kernel.org/r/20230620104349.834687-1-valentin.caron@foss.st.com
+Fixes: 32c170ff15b0 ("pinctrl: stm32: set default gpio line names using pin names")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Acked-by: Valentin Caron <valentin.caron@foss.st.com>
+Link: https://lore.kernel.org/r/20231031080807.3600656-1-nichen@iscas.ac.cn
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Stable-dep-of: 451bc9aea9a1 ("pinctrl: stm32: Add check for clk_enable()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 35 +++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index e198233c10bad..ae2b146544758 100644
+index ae2b146544758..7599c66abdf06 100644
 --- a/drivers/pinctrl/stm32/pinctrl-stm32.c
 +++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -1273,6 +1273,28 @@ static const struct pinconf_ops stm32_pconf_ops = {
- 	.pin_config_dbg_show	= stm32_pconf_dbg_show,
- };
- 
-+static struct stm32_desc_pin *stm32_pctrl_get_desc_pin_from_gpio(struct stm32_pinctrl *pctl,
-+								 struct stm32_gpio_bank *bank,
-+								 unsigned int offset)
-+{
-+	unsigned int stm32_pin_nb = bank->bank_nr * STM32_GPIO_PINS_PER_BANK + offset;
-+	struct stm32_desc_pin *pin_desc;
-+	int i;
-+
-+	/* With few exceptions (e.g. bank 'Z'), pin number matches with pin index in array */
-+	pin_desc = pctl->pins + stm32_pin_nb;
-+	if (pin_desc->pin.number == stm32_pin_nb)
-+		return pin_desc;
-+
-+	/* Otherwise, loop all array to find the pin with the right number */
-+	for (i = 0; i < pctl->npins; i++) {
-+		pin_desc = pctl->pins + i;
-+		if (pin_desc->pin.number == stm32_pin_nb)
-+			return pin_desc;
-+	}
-+	return NULL;
-+}
-+
- static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode_handle *fwnode)
- {
- 	struct stm32_gpio_bank *bank = &pctl->banks[pctl->nbanks];
-@@ -1283,6 +1305,8 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
- 	struct resource res;
- 	int npins = STM32_GPIO_PINS_PER_BANK;
- 	int bank_nr, err, i = 0;
-+	struct stm32_desc_pin *stm32_pin;
-+	char **names;
- 
- 	if (!IS_ERR(bank->rstc))
- 		reset_control_deassert(bank->rstc);
-@@ -1352,6 +1376,17 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
- 		}
+@@ -1377,6 +1377,11 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
  	}
  
-+	names = devm_kcalloc(dev, npins, sizeof(char *), GFP_KERNEL);
-+	for (i = 0; i < npins; i++) {
-+		stm32_pin = stm32_pctrl_get_desc_pin_from_gpio(pctl, bank, i);
-+		if (stm32_pin && stm32_pin->pin.name)
-+			names[i] = devm_kasprintf(dev, GFP_KERNEL, "%s", stm32_pin->pin.name);
-+		else
-+			names[i] = NULL;
+ 	names = devm_kcalloc(dev, npins, sizeof(char *), GFP_KERNEL);
++	if (!names) {
++		err = -ENOMEM;
++		goto err_clk;
 +	}
 +
-+	bank->gpio_chip.names = (const char * const *)names;
-+
- 	err = gpiochip_add_data(&bank->gpio_chip, bank);
- 	if (err) {
- 		dev_err(dev, "Failed to add gpiochip(%d)!\n", bank_nr);
+ 	for (i = 0; i < npins; i++) {
+ 		stm32_pin = stm32_pctrl_get_desc_pin_from_gpio(pctl, bank, i);
+ 		if (stm32_pin && stm32_pin->pin.name)
 -- 
 2.39.5
 
