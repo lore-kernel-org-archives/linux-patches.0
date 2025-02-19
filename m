@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060511E0B7F;
-	Wed, 19 Feb 2025 09:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD37D1E0B7D;
+	Wed, 19 Feb 2025 09:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956569; cv=none; b=qSsyj8TIBWaaP8+srNjqYcO6nDDl6wkWOQdEaNbXvNPUNJBL5Dph/P2ZeuWXjMQN7LwIM9LfZ94ITIOakTw1nGiBY1h/clYrDVXn2WBJUxSyV74Klc03nmu5I/CRG49o7wkCSMFzF5SPMaew8iUk397HOVB4OWe/wHh1zek04tE=
+	t=1739956571; cv=none; b=lUlZPY4rMRmxsgmJLAqIwEoaZat7xensCAvQRPhFtzto60aq4DKv3eZTvGdpCba7NKq0fRpc3mAfnhc3tcl8ljEtKkUSYs06EqSNNagSftUAXmOnt2S2LgIwY/CymjCRmTkuSnaqsF6Z8vVqde1Xxs5ySgd01mDrbrlvuYT+KiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956569; c=relaxed/simple;
-	bh=gl4dI+QXthUiA50FLqCfhOP2yJZPXeS8uYutnyS+Dzs=;
+	s=arc-20240116; t=1739956571; c=relaxed/simple;
+	bh=RZIJKIsedaJWR7gDUE4fEZkefv7/Te7X1zDfPPdb09Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MaVGmTHOcR9b+99v/rZLfXC3uIcGEXjPwvIUfpQZHDx0uESitzB8rzjyjssPZD+6g69bPlsVThq8boaTEl5/17KFXsn3Q0Ho2E+EOGy6A9u2EjQCJppX6L+s9ha64U5lLxmFmicR6CRCsbEJrqDYs/SOnuYkqugCsc3VuKM7w6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuUVJfAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WsBEsAcOY8TwSr2mZ1LqLAmt1Jl9Qj0CfwKDC62zPKCuTNcKiVzRRZE2zRfZkPrBHnKPNLzphjtw91xsjUJk6LqI6n8b6XtvSbJ87wYc3dYC/3ap/EwqBPnnIrU4jDKxXgi3rt3mVskiVy0BTm2uv0NKVwYNskFHV8olHIL7qo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIDDGrqB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuUVJfAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8185BC4CEE6;
-	Wed, 19 Feb 2025 09:16:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIDDGrqB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58600C4CEE8;
+	Wed, 19 Feb 2025 09:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956568;
-	bh=gl4dI+QXthUiA50FLqCfhOP2yJZPXeS8uYutnyS+Dzs=;
+	s=korg; t=1739956571;
+	bh=RZIJKIsedaJWR7gDUE4fEZkefv7/Te7X1zDfPPdb09Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZuUVJfAq7zu/yzhxX7ceFEUs99Z6+u9rNKREVtQ627HXTElLi+xZFSQaCXs8gtLhE
-	 JqHrgYBzHU+PuTNJQ5rDEaboqvobZSEH0Ktyyvyau2+yzRjzcCaW9osu1hgsmwMmc0
-	 XOubwMcAtlN9GTIeiGRZ+zZRf0nGhYslsyfFWde4=
+	b=ZIDDGrqB7RYCnFwFHKPcO88+Lm96GBPYi9nTnw3qCRus16olHt6nphWAeLo5FgXyy
+	 4/xVOlZ/qdpSbVI15NnpbK27NXqHqeZChcdb8yCe5ZYC7om/Q77M9+diZ/zlCadrTb
+	 XUfwR5eLLxwEqPoAwglaSJ77M4OOzE2tBwTG4C7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2e5de9e3ab986b71d2bf@syzkaller.appspotmail.com,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 224/578] net: netdevsim: try to close UDP port harness races
-Date: Wed, 19 Feb 2025 09:23:48 +0100
-Message-ID: <20250219082701.865381569@linuxfoundation.org>
+Subject: [PATCH 6.1 225/578] vxlan: Fix uninit-value in vxlan_vnifilter_dump()
+Date: Wed, 19 Feb 2025 09:23:49 +0100
+Message-ID: <20250219082701.903077173@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,173 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 50bf398e1ceacb9a7f85bd3bdca065ebe5cb6159 ]
+[ Upstream commit 5066293b9b7046a906eff60e3949a887ae185a43 ]
 
-syzbot discovered that we remove the debugfs files after we free
-the netdev. Try to clean up the relevant dir while the device
-is still around.
+KMSAN reported an uninit-value access in vxlan_vnifilter_dump() [1].
 
-Reported-by: syzbot+2e5de9e3ab986b71d2bf@syzkaller.appspotmail.com
-Fixes: 424be63ad831 ("netdevsim: add UDP tunnel port offload support")
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250122224503.762705-1-kuba@kernel.org
+If the length of the netlink message payload is less than
+sizeof(struct tunnel_msg), vxlan_vnifilter_dump() accesses bytes
+beyond the message. This can lead to uninit-value access. Fix this by
+returning an error in such situations.
+
+[1]
+BUG: KMSAN: uninit-value in vxlan_vnifilter_dump+0x328/0x920 drivers/net/vxlan/vxlan_vnifilter.c:422
+ vxlan_vnifilter_dump+0x328/0x920 drivers/net/vxlan/vxlan_vnifilter.c:422
+ rtnl_dumpit+0xd5/0x2f0 net/core/rtnetlink.c:6786
+ netlink_dump+0x93e/0x15f0 net/netlink/af_netlink.c:2317
+ __netlink_dump_start+0x716/0xd60 net/netlink/af_netlink.c:2432
+ netlink_dump_start include/linux/netlink.h:340 [inline]
+ rtnetlink_dump_start net/core/rtnetlink.c:6815 [inline]
+ rtnetlink_rcv_msg+0x1256/0x14a0 net/core/rtnetlink.c:6882
+ netlink_rcv_skb+0x467/0x660 net/netlink/af_netlink.c:2542
+ rtnetlink_rcv+0x35/0x40 net/core/rtnetlink.c:6944
+ netlink_unicast_kernel net/netlink/af_netlink.c:1321 [inline]
+ netlink_unicast+0xed6/0x1290 net/netlink/af_netlink.c:1347
+ netlink_sendmsg+0x1092/0x1230 net/netlink/af_netlink.c:1891
+ sock_sendmsg_nosec net/socket.c:711 [inline]
+ __sock_sendmsg+0x330/0x3d0 net/socket.c:726
+ ____sys_sendmsg+0x7f4/0xb50 net/socket.c:2583
+ ___sys_sendmsg+0x271/0x3b0 net/socket.c:2637
+ __sys_sendmsg net/socket.c:2669 [inline]
+ __do_sys_sendmsg net/socket.c:2674 [inline]
+ __se_sys_sendmsg net/socket.c:2672 [inline]
+ __x64_sys_sendmsg+0x211/0x3e0 net/socket.c:2672
+ x64_sys_call+0x3878/0x3d90 arch/x86/include/generated/asm/syscalls_64.h:47
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xd9/0x1d0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Uninit was created at:
+ slab_post_alloc_hook mm/slub.c:4110 [inline]
+ slab_alloc_node mm/slub.c:4153 [inline]
+ kmem_cache_alloc_node_noprof+0x800/0xe80 mm/slub.c:4205
+ kmalloc_reserve+0x13b/0x4b0 net/core/skbuff.c:587
+ __alloc_skb+0x347/0x7d0 net/core/skbuff.c:678
+ alloc_skb include/linux/skbuff.h:1323 [inline]
+ netlink_alloc_large_skb+0xa5/0x280 net/netlink/af_netlink.c:1196
+ netlink_sendmsg+0xac9/0x1230 net/netlink/af_netlink.c:1866
+ sock_sendmsg_nosec net/socket.c:711 [inline]
+ __sock_sendmsg+0x330/0x3d0 net/socket.c:726
+ ____sys_sendmsg+0x7f4/0xb50 net/socket.c:2583
+ ___sys_sendmsg+0x271/0x3b0 net/socket.c:2637
+ __sys_sendmsg net/socket.c:2669 [inline]
+ __do_sys_sendmsg net/socket.c:2674 [inline]
+ __se_sys_sendmsg net/socket.c:2672 [inline]
+ __x64_sys_sendmsg+0x211/0x3e0 net/socket.c:2672
+ x64_sys_call+0x3878/0x3d90 arch/x86/include/generated/asm/syscalls_64.h:47
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xd9/0x1d0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+CPU: 0 UID: 0 PID: 30991 Comm: syz.4.10630 Not tainted 6.12.0-10694-gc44daa7e3c73 #29
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
+
+Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250123145746.785768-1-syoshida@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/netdevsim.h             |  1 +
- drivers/net/netdevsim/udp_tunnels.c           | 23 +++++++++++--------
- .../drivers/net/netdevsim/udp_tunnel_nic.sh   | 16 ++++++-------
- 3 files changed, 23 insertions(+), 17 deletions(-)
+ drivers/net/vxlan/vxlan_vnifilter.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/netdevsim/netdevsim.h b/drivers/net/netdevsim/netdevsim.h
-index 7d8ed8d8df5c9..02e3518e9a7e2 100644
---- a/drivers/net/netdevsim/netdevsim.h
-+++ b/drivers/net/netdevsim/netdevsim.h
-@@ -98,6 +98,7 @@ struct netdevsim {
- 		u32 sleep;
- 		u32 __ports[2][NSIM_UDP_TUNNEL_N_PORTS];
- 		u32 (*ports)[NSIM_UDP_TUNNEL_N_PORTS];
-+		struct dentry *ddir;
- 		struct debugfs_u32_array dfs_ports[2];
- 	} udp_ports;
+diff --git a/drivers/net/vxlan/vxlan_vnifilter.c b/drivers/net/vxlan/vxlan_vnifilter.c
+index 3d113d709d194..1ffc00e270802 100644
+--- a/drivers/net/vxlan/vxlan_vnifilter.c
++++ b/drivers/net/vxlan/vxlan_vnifilter.c
+@@ -411,6 +411,11 @@ static int vxlan_vnifilter_dump(struct sk_buff *skb, struct netlink_callback *cb
+ 	struct tunnel_msg *tmsg;
+ 	struct net_device *dev;
  
-diff --git a/drivers/net/netdevsim/udp_tunnels.c b/drivers/net/netdevsim/udp_tunnels.c
-index 02dc3123eb6c1..640b4983a9a0d 100644
---- a/drivers/net/netdevsim/udp_tunnels.c
-+++ b/drivers/net/netdevsim/udp_tunnels.c
-@@ -112,9 +112,11 @@ nsim_udp_tunnels_info_reset_write(struct file *file, const char __user *data,
- 	struct net_device *dev = file->private_data;
- 	struct netdevsim *ns = netdev_priv(dev);
- 
--	memset(ns->udp_ports.ports, 0, sizeof(ns->udp_ports.__ports));
- 	rtnl_lock();
--	udp_tunnel_nic_reset_ntf(dev);
-+	if (dev->reg_state == NETREG_REGISTERED) {
-+		memset(ns->udp_ports.ports, 0, sizeof(ns->udp_ports.__ports));
-+		udp_tunnel_nic_reset_ntf(dev);
++	if (cb->nlh->nlmsg_len < nlmsg_msg_size(sizeof(struct tunnel_msg))) {
++		NL_SET_ERR_MSG(cb->extack, "Invalid msg length");
++		return -EINVAL;
 +	}
- 	rtnl_unlock();
- 
- 	return count;
-@@ -144,23 +146,23 @@ int nsim_udp_tunnels_info_create(struct nsim_dev *nsim_dev,
- 	else
- 		ns->udp_ports.ports = nsim_dev->udp_ports.__ports;
- 
--	debugfs_create_u32("udp_ports_inject_error", 0600,
--			   ns->nsim_dev_port->ddir,
-+	ns->udp_ports.ddir = debugfs_create_dir("udp_ports",
-+						ns->nsim_dev_port->ddir);
 +
-+	debugfs_create_u32("inject_error", 0600, ns->udp_ports.ddir,
- 			   &ns->udp_ports.inject_error);
+ 	tmsg = nlmsg_data(cb->nlh);
  
- 	ns->udp_ports.dfs_ports[0].array = ns->udp_ports.ports[0];
- 	ns->udp_ports.dfs_ports[0].n_elements = NSIM_UDP_TUNNEL_N_PORTS;
--	debugfs_create_u32_array("udp_ports_table0", 0400,
--				 ns->nsim_dev_port->ddir,
-+	debugfs_create_u32_array("table0", 0400, ns->udp_ports.ddir,
- 				 &ns->udp_ports.dfs_ports[0]);
- 
- 	ns->udp_ports.dfs_ports[1].array = ns->udp_ports.ports[1];
- 	ns->udp_ports.dfs_ports[1].n_elements = NSIM_UDP_TUNNEL_N_PORTS;
--	debugfs_create_u32_array("udp_ports_table1", 0400,
--				 ns->nsim_dev_port->ddir,
-+	debugfs_create_u32_array("table1", 0400, ns->udp_ports.ddir,
- 				 &ns->udp_ports.dfs_ports[1]);
- 
--	debugfs_create_file("udp_ports_reset", 0200, ns->nsim_dev_port->ddir,
-+	debugfs_create_file("reset", 0200, ns->udp_ports.ddir,
- 			    dev, &nsim_udp_tunnels_info_reset_fops);
- 
- 	/* Note: it's not normal to allocate the info struct like this!
-@@ -196,6 +198,9 @@ int nsim_udp_tunnels_info_create(struct nsim_dev *nsim_dev,
- 
- void nsim_udp_tunnels_info_destroy(struct net_device *dev)
- {
-+	struct netdevsim *ns = netdev_priv(dev);
-+
-+	debugfs_remove_recursive(ns->udp_ports.ddir);
- 	kfree(dev->udp_tunnel_nic_info);
- 	dev->udp_tunnel_nic_info = NULL;
- }
-diff --git a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-index 185b02d2d4cd1..7af78990b5bb6 100755
---- a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-+++ b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-@@ -142,7 +142,7 @@ function pre_ethtool {
- }
- 
- function check_table {
--    local path=$NSIM_DEV_DFS/ports/$port/udp_ports_table$1
-+    local path=$NSIM_DEV_DFS/ports/$port/udp_ports/table$1
-     local -n expected=$2
-     local last=$3
- 
-@@ -212,7 +212,7 @@ function check_tables {
- }
- 
- function print_table {
--    local path=$NSIM_DEV_DFS/ports/$port/udp_ports_table$1
-+    local path=$NSIM_DEV_DFS/ports/$port/udp_ports/table$1
-     read -a have < $path
- 
-     tree $NSIM_DEV_DFS/
-@@ -640,7 +640,7 @@ for port in 0 1; do
-     NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
- 
--    echo 110 > $NSIM_DEV_DFS/ports/$port/udp_ports_inject_error
-+    echo 110 > $NSIM_DEV_DFS/ports/$port/udp_ports/inject_error
- 
-     msg="1 - create VxLANs v6"
-     exp0=( 0 0 0 0 )
-@@ -662,7 +662,7 @@ for port in 0 1; do
-     new_geneve gnv0 20000
- 
-     msg="2 - destroy GENEVE"
--    echo 2 > $NSIM_DEV_DFS/ports/$port/udp_ports_inject_error
-+    echo 2 > $NSIM_DEV_DFS/ports/$port/udp_ports/inject_error
-     exp1=( `mke 20000 2` 0 0 0 )
-     del_dev gnv0
- 
-@@ -763,7 +763,7 @@ for port in 0 1; do
-     msg="create VxLANs v4"
-     new_vxlan vxlan0 10000 $NSIM_NETDEV
- 
--    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
-     check_tables
- 
-     msg="NIC device goes down"
-@@ -774,7 +774,7 @@ for port in 0 1; do
-     fi
-     check_tables
- 
--    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
-     check_tables
- 
-     msg="NIC device goes up again"
-@@ -788,7 +788,7 @@ for port in 0 1; do
-     del_dev vxlan0
-     check_tables
- 
--    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+    echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
-     check_tables
- 
-     msg="destroy NIC"
-@@ -895,7 +895,7 @@ msg="vacate VxLAN in overflow table"
- exp0=( `mke 10000 1` `mke 10004 1` 0 `mke 10003 1` )
- del_dev vxlan2
- 
--echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports_reset
-+echo 1 > $NSIM_DEV_DFS/ports/$port/udp_ports/reset
- check_tables
- 
- msg="tunnels destroyed 2"
+ 	if (tmsg->flags & ~TUNNEL_MSG_VALID_USER_FLAGS) {
 -- 
 2.39.5
 
