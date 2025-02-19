@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F521DF972;
-	Wed, 19 Feb 2025 09:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD011DE2CA;
+	Wed, 19 Feb 2025 09:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957264; cv=none; b=AYlrYH/J8Au4EFfSdIc6LbjrWF8+gZrfOkBqPxAX14QYU8ovNA8peh77chMpiM0JZEdgm8Xq+5So7jzBjcqSAbymrBS+L4/t36ggy+e92F/axUBwbnws1vm1DP3G1tpl8NZA03yNzfdF+wdxp5ZYbGP/XdtfpQ3oA1GkniCbJig=
+	t=1739957266; cv=none; b=cQc1NbGICs8/K40sEhXsKd7Y0z+A2A/Uqs73iQoPOlaKQ9FwvbVZBQx35H0SHeGB8PEClwBf8SVmNElfwwQ240FRMTdkVOQYtO1x1B0a47jeJmFIhmHfFCl/M9euuhfk7acYwr73IfmNHsAgW3hr2ztgWIcCfSpjO1FtTDeIfw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957264; c=relaxed/simple;
-	bh=aqFyB26s9dpCnvlBjEg5yDhO3GdnUHM3jmCKPCI8StQ=;
+	s=arc-20240116; t=1739957266; c=relaxed/simple;
+	bh=zyFwFR8lQeWa35Ev/PcLHYC/G/MVokHW/DrRxkx58xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sEvRYRfV9ZFTyTK4NmGbxNLJCI8x85OPVeHdrXiH6JYQWh9pwT9b9kCJnETFDx8PTc8YIVfuo+L9r7C+FN3LxIvMquvKoLPdErB4yz2aUgPWij0ksLjNF2ruXAUvjAv2UwQm3akU905DeL+YvkCOC1jNFNGQ+5mTMWnjJLbzMp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVQ1W+2v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WAlcjgp9TlwVSe4psIzmJWrAxDL7YBZEAkMdwuE5q8XT5p4pWnZYxnbfqshDywB6sTYCdVZ12ZxBMFQh3IqH522piO5arLwYq1Qm0cuGYwzXvaE021fkEPZYstoY/r1dywXtUzWgOWLykcTabG2rO76jgDV0Se08z/OcnUUVqFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIYH+ELt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVQ1W+2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653DCC4CED1;
-	Wed, 19 Feb 2025 09:27:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIYH+ELt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B268C4CED1;
+	Wed, 19 Feb 2025 09:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957263;
-	bh=aqFyB26s9dpCnvlBjEg5yDhO3GdnUHM3jmCKPCI8StQ=;
+	s=korg; t=1739957266;
+	bh=zyFwFR8lQeWa35Ev/PcLHYC/G/MVokHW/DrRxkx58xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cVQ1W+2v3Aue+rb9uNXY6PAOlPmsDovB/jQlcCsAgfEvAVMErtWXL4RViKHeI7MQM
-	 Y56luC+KdPJtfdsqZTGqQEP80dWSAInaUZZf6jPTZ38xfDSvtbG/7E5RfiQc0JDVai
-	 0HakWWXmKa8XBzGomtYhoulwE5PmUGJHQkh5+QM8=
+	b=AIYH+ELt3sMMo3iYssiu8qsHxi8OYmiJOXyLdgHT9eVy0c0XRGaJFsOQn0H8x0hdM
+	 uH5e1UBY6s41tCJBv9+4jRIi4nM8NUDxhCHP7UWWhdmgqIWv7KMDNWDVyW0WJiYaxg
+	 n5ocq6OMozKGOJWv9mVI3abgzTK20hdg9LHmiPWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9c9179ac46169c56c1ad@syzkaller.appspotmail.com,
-	=?UTF-8?q?T=C3=BAlio=20Fernandes?= <tuliomf09@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com,
+	Murad Masimov <m.masimov@mt-integration.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 466/578] HID: hid-thrustmaster: fix stack-out-of-bounds read in usb_check_int_endpoints()
-Date: Wed, 19 Feb 2025 09:27:50 +0100
-Message-ID: <20250219082711.339826688@linuxfoundation.org>
+Subject: [PATCH 6.1 467/578] ax25: Fix refcount leak caused by setting SO_BINDTODEVICE sockopt
+Date: Wed, 19 Feb 2025 09:27:51 +0100
+Message-ID: <20250219082711.377626112@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -46,50 +46,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tulio Fernandes <tuliomf09@gmail.com>
+From: Murad Masimov <m.masimov@mt-integration.ru>
 
-[ Upstream commit 0b43d98ff29be3144e86294486b1373b5df74c0e ]
+[ Upstream commit bca0902e61731a75fc4860c8720168d9f1bae3b6 ]
 
-Syzbot[1] has detected a stack-out-of-bounds read of the ep_addr array from
-hid-thrustmaster driver. This array is passed to usb_check_int_endpoints
-function from usb.c core driver, which executes a for loop that iterates
-over the elements of the passed array. Not finding a null element at the end of
-the array, it tries to read the next, non-existent element, crashing the kernel.
+If an AX25 device is bound to a socket by setting the SO_BINDTODEVICE
+socket option, a refcount leak will occur in ax25_release().
 
-To fix this, a 0 element was added at the end of the array to break the for
-loop.
+Commit 9fd75b66b8f6 ("ax25: Fix refcount leaks caused by ax25_cb_del()")
+added decrement of device refcounts in ax25_release(). In order for that
+to work correctly the refcounts must already be incremented when the
+device is bound to the socket. An AX25 device can be bound to a socket
+by either calling ax25_bind() or setting SO_BINDTODEVICE socket option.
+In both cases the refcounts should be incremented, but in fact it is done
+only in ax25_bind().
 
-[1] https://syzkaller.appspot.com/bug?extid=9c9179ac46169c56c1ad
+This bug leads to the following issue reported by Syzkaller:
 
-Reported-by: syzbot+9c9179ac46169c56c1ad@syzkaller.appspotmail.com
-Fixes: 50420d7c79c3 ("HID: hid-thrustmaster: Fix warning in thrustmaster_probe by adding endpoint check")
-Signed-off-by: Túlio Fernandes <tuliomf09@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+================================================================
+refcount_t: decrement hit 0; leaking memory.
+WARNING: CPU: 1 PID: 5932 at lib/refcount.c:31 refcount_warn_saturate+0x1ed/0x210 lib/refcount.c:31
+Modules linked in:
+CPU: 1 UID: 0 PID: 5932 Comm: syz-executor424 Not tainted 6.13.0-rc4-syzkaller-00110-g4099a71718b0 #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+RIP: 0010:refcount_warn_saturate+0x1ed/0x210 lib/refcount.c:31
+Call Trace:
+ <TASK>
+ __refcount_dec include/linux/refcount.h:336 [inline]
+ refcount_dec include/linux/refcount.h:351 [inline]
+ ref_tracker_free+0x710/0x820 lib/ref_tracker.c:236
+ netdev_tracker_free include/linux/netdevice.h:4156 [inline]
+ netdev_put include/linux/netdevice.h:4173 [inline]
+ netdev_put include/linux/netdevice.h:4169 [inline]
+ ax25_release+0x33f/0xa10 net/ax25/af_ax25.c:1069
+ __sock_release+0xb0/0x270 net/socket.c:640
+ sock_close+0x1c/0x30 net/socket.c:1408
+ ...
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ ...
+ </TASK>
+================================================================
+
+Fix the implementation of ax25_setsockopt() by adding increment of
+refcounts for the new device bound, and decrement of refcounts for
+the old unbound device.
+
+Fixes: 9fd75b66b8f6 ("ax25: Fix refcount leaks caused by ax25_cb_del()")
+Reported-by: syzbot+33841dc6aa3e1d86b78a@syzkaller.appspotmail.com
+Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
+Link: https://patch.msgid.link/20250203091203.1744-1-m.masimov@mt-integration.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-thrustmaster.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ax25/af_ax25.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/hid/hid-thrustmaster.c b/drivers/hid/hid-thrustmaster.c
-index 6c3e758bbb09e..3b81468a1df29 100644
---- a/drivers/hid/hid-thrustmaster.c
-+++ b/drivers/hid/hid-thrustmaster.c
-@@ -171,7 +171,7 @@ static void thrustmaster_interrupts(struct hid_device *hdev)
- 	b_ep = ep->desc.bEndpointAddress;
+diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
+index 4b96dedcc3c9c..862e03493b7ed 100644
+--- a/net/ax25/af_ax25.c
++++ b/net/ax25/af_ax25.c
+@@ -685,6 +685,15 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
  
- 	/* Are the expected endpoints present? */
--	u8 ep_addr[1] = {b_ep};
-+	u8 ep_addr[2] = {b_ep, 0};
++		if (ax25->ax25_dev) {
++			if (dev == ax25->ax25_dev->dev) {
++				rcu_read_unlock();
++				break;
++			}
++			netdev_put(ax25->ax25_dev->dev, &ax25->dev_tracker);
++			ax25_dev_put(ax25->ax25_dev);
++		}
++
+ 		ax25->ax25_dev = ax25_dev_ax25dev(dev);
+ 		if (!ax25->ax25_dev) {
+ 			rcu_read_unlock();
+@@ -692,6 +701,8 @@ static int ax25_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 		ax25_fillin_cb(ax25, ax25->ax25_dev);
++		netdev_hold(dev, &ax25->dev_tracker, GFP_ATOMIC);
++		ax25_dev_hold(ax25->ax25_dev);
+ 		rcu_read_unlock();
+ 		break;
  
- 	if (!usb_check_int_endpoints(usbif, ep_addr)) {
- 		hid_err(hdev, "Unexpected non-int endpoint\n");
 -- 
 2.39.5
 
