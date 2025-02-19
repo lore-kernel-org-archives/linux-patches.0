@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7492B1D88AC;
-	Wed, 19 Feb 2025 08:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657E21D9A50;
+	Wed, 19 Feb 2025 08:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954001; cv=none; b=ITq7NOXSjrYeXZETx45RgDyJa4fSLu9s2usR0g/zJSPMvdxiOPexP4Es6+wz3qivLdNiF2XQ+bC0fT66NXNkIw5BfFoiT10Af+Av5GHvg0l0oZWKDGciMYrtd/yH1C9YjpNId0BqcHqDUJNHB8/hhBhX7u7KxCbOHOGVsFhFW9Q=
+	t=1739954004; cv=none; b=odCCw+5MFZfuPcrAD5LyqPIrtuiQbWbGiRoxx+jO1tEAI3bLzs7vX8rnSbdVnLPOfEPMEY9djocwsiMFsMbtNFhvWRQfD29cIW3j7VOAzPxLrlsSrhv2M3X4lU7gr6sl7AcOfcc1/KN8yhenbNqitda9HbnECj+FlR2PgHI05oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954001; c=relaxed/simple;
-	bh=wxuzjZpGkZ3wzzHvBcVOi4ksmYvc2xnMUXXzhdg1zIY=;
+	s=arc-20240116; t=1739954004; c=relaxed/simple;
+	bh=VC84BO/vcrlJwSS1ibpLXAwWvF4gPcBo7qtdCaylbNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jzx3lV6j6jRPGvpR3G/P7XxlwxzNKkR1yQdtu4YOV9erL0SWL/jbXNgPcAKhQjaaiQ0snF0Rgff0opkkEFXpYOa/ZcNaxYWP0BH7u8iuyZsV8SQY2cdjmYN/rcJI72tvY/oP3oVT45rOqya7dWYiOClIFOMac7b/ySbKQpOs3OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ex8CrrFX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EprwR9iLN7eX6v9+MBhaLFzl+gJVnagto+Rw2Z/ClSrpsIPjZuJntRLq2bnZZ9pO0fm55pUv246kPh6281io8SaLeJIDLwXVXT+V40cOaqxculA8+YSLzb0ysF7QaznaDx+4nvbqocPpS0VuKo5tTXOPRiLTzbye3SCLBJmMrZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyGS14Bn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ex8CrrFX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD295C4CED1;
-	Wed, 19 Feb 2025 08:33:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyGS14Bn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2A6C4CEE6;
+	Wed, 19 Feb 2025 08:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954001;
-	bh=wxuzjZpGkZ3wzzHvBcVOi4ksmYvc2xnMUXXzhdg1zIY=;
+	s=korg; t=1739954004;
+	bh=VC84BO/vcrlJwSS1ibpLXAwWvF4gPcBo7qtdCaylbNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ex8CrrFX2+ExYzFD1irchHwSYzfsW/9bbvTBf6aWShwXO2eRMVK0dAgfI6ecjs86v
-	 2+YIImVRPwh6x/MmwP648ctxa1MRPTpl0nmOqEoDKyA1Vd9vrRSZ3Ye3VhM6ohNvZ0
-	 8dg3BzKmu2VeF7MruRKs/ZvFAug3T1Ej2J2k1pyc=
+	b=hyGS14Bn6RXOxZasAyovoGlTjtO2QQQMhH5wofvcpS3did0SEzDfR9OYOPLINz9OH
+	 C35mqNzNUipGoZHbUZ1AoCcT0tYnSbGCavKvo5IqCtM8omfw4bj9+BveV6JZKt7rC5
+	 CHh5F+2iaNZlpC+e/iXPwa0ZeB9Ixj+M8KBsenqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Chuyi Zhou <zhouchuyi@bytedance.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 063/274] block: cleanup and fix batch completion adding conditions
-Date: Wed, 19 Feb 2025 09:25:17 +0100
-Message-ID: <20250219082612.089856951@linuxfoundation.org>
+Subject: [PATCH 6.13 064/274] sched_ext: Fix the incorrect bpf_list kfunc API in common.bpf.h.
+Date: Wed, 19 Feb 2025 09:25:18 +0100
+Message-ID: <20250219082612.128534729@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -50,61 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Chuyi Zhou <zhouchuyi@bytedance.com>
 
-[ Upstream commit 1f47ed294a2bd577d5ae43e6e28e1c9a3be4a833 ]
+[ Upstream commit 2e2006c91c842c551521434466f9b4324719c9a7 ]
 
-The conditions for whether or not a request is allowed adding to a
-completion batch are a bit hard to read, and they also have a few
-issues. One is that ioerror may indeed be a random value on passthrough,
-and it's being checked unconditionally of whether or not the given
-request is a passthrough request or not.
+Now BPF only supports bpf_list_push_{front,back}_impl kfunc, not bpf_list_
+push_{front,back}.
 
-Rewrite the conditions to be separate for easier reading, and only check
-ioerror for non-passthrough requests. This fixes an issue with bio
-unmapping on passthrough, where it fails getting added to a batch. This
-both leads to suboptimal performance, and may trigger a potential
-schedule-under-atomic condition for polled passthrough IO.
+This patch fix this issue. Without this patch, if we use bpf_list kfunc
+in scx, the BPF verifier would complain:
 
-Fixes: f794f3351f26 ("block: add support for blk_mq_end_request_batch()")
-Link: https://lore.kernel.org/r/20575f0a-656e-4bb3-9d82-dec6c7e3a35c@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+libbpf: extern (func ksym) 'bpf_list_push_back': not found in kernel or
+module BTFs
+libbpf: failed to load object 'scx_foo'
+libbpf: failed to load BPF skeleton 'scx_foo': -EINVAL
+
+With this patch, the bpf list kfunc will work as expected.
+
+Signed-off-by: Chuyi Zhou <zhouchuyi@bytedance.com>
+Fixes: 2a52ca7c98960 ("sched_ext: Add scx_simple and scx_example_qmap example schedulers")
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/blk-mq.h | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ tools/sched_ext/include/scx/common.bpf.h | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
-index c596e0e4cb751..7b19b83349cf8 100644
---- a/include/linux/blk-mq.h
-+++ b/include/linux/blk-mq.h
-@@ -872,12 +872,22 @@ static inline bool blk_mq_add_to_batch(struct request *req,
- 				       void (*complete)(struct io_comp_batch *))
- {
- 	/*
--	 * blk_mq_end_request_batch() can't end request allocated from
--	 * sched tags
-+	 * Check various conditions that exclude batch processing:
-+	 * 1) No batch container
-+	 * 2) Has scheduler data attached
-+	 * 3) Not a passthrough request and end_io set
-+	 * 4) Not a passthrough request and an ioerror
- 	 */
--	if (!iob || (req->rq_flags & RQF_SCHED_TAGS) || ioerror ||
--			(req->end_io && !blk_rq_is_passthrough(req)))
-+	if (!iob)
- 		return false;
-+	if (req->rq_flags & RQF_SCHED_TAGS)
-+		return false;
-+	if (!blk_rq_is_passthrough(req)) {
-+		if (req->end_io)
-+			return false;
-+		if (ioerror < 0)
-+			return false;
-+	}
+diff --git a/tools/sched_ext/include/scx/common.bpf.h b/tools/sched_ext/include/scx/common.bpf.h
+index 625f5b046776c..9fa64b053ba91 100644
+--- a/tools/sched_ext/include/scx/common.bpf.h
++++ b/tools/sched_ext/include/scx/common.bpf.h
+@@ -251,8 +251,16 @@ void bpf_obj_drop_impl(void *kptr, void *meta) __ksym;
+ #define bpf_obj_new(type) ((type *)bpf_obj_new_impl(bpf_core_type_id_local(type), NULL))
+ #define bpf_obj_drop(kptr) bpf_obj_drop_impl(kptr, NULL)
  
- 	if (!iob->complete)
- 		iob->complete = complete;
+-void bpf_list_push_front(struct bpf_list_head *head, struct bpf_list_node *node) __ksym;
+-void bpf_list_push_back(struct bpf_list_head *head, struct bpf_list_node *node) __ksym;
++int bpf_list_push_front_impl(struct bpf_list_head *head,
++				    struct bpf_list_node *node,
++				    void *meta, __u64 off) __ksym;
++#define bpf_list_push_front(head, node) bpf_list_push_front_impl(head, node, NULL, 0)
++
++int bpf_list_push_back_impl(struct bpf_list_head *head,
++				   struct bpf_list_node *node,
++				   void *meta, __u64 off) __ksym;
++#define bpf_list_push_back(head, node) bpf_list_push_back_impl(head, node, NULL, 0)
++
+ struct bpf_list_node *bpf_list_pop_front(struct bpf_list_head *head) __ksym;
+ struct bpf_list_node *bpf_list_pop_back(struct bpf_list_head *head) __ksym;
+ struct bpf_rb_node *bpf_rbtree_remove(struct bpf_rb_root *root,
 -- 
 2.39.5
 
