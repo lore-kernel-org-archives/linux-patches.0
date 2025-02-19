@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE0D1E25EB;
-	Wed, 19 Feb 2025 09:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7711E25EB;
+	Wed, 19 Feb 2025 09:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955710; cv=none; b=gLg/12wzHSMKDC7JZZOzT56qgF4nwwp0bODaRWltU42p+irTP9+mv5awvBmYmdYWKLFth7HrFZ7a/ToHvllekwtt3gSk8OX3m+IlM5ewR3MtFEh7e/S497O1KDDvKpvrYsz11aCfG0rOkleZWl2CSEr4xI6PxLhJADI3xpBBAnA=
+	t=1739955713; cv=none; b=IjV2izo7L11CKDhmrp0LIew8Djjc6fHmCplVLFZD+YwOZoWCvwMPcJu9oHV98sF+6sFyzXMEi8o0h15qLAV0xC9fGg1Df3InAd79Dd3UMWydeqRZR2o431RMs1pwr9rg7nVp0v/l2NiSTIiOYYrB3Kyj5TMDRUKKnM5K6jqzK3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955710; c=relaxed/simple;
-	bh=fY7QJd3vx2utSZ9Rsg6UaIX7CT9LK3RAsESN2NQdTlw=;
+	s=arc-20240116; t=1739955713; c=relaxed/simple;
+	bh=WjPpR+Hnt6/oMvAbclM0gEKFtmbcOIVUl34jimOBViw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K4LWJW2rOlDB505kTNmGxydwCctUMJxnqyew0YORe2/P9jitIsSw3uLbhcIPl1Dy4JJ8K06qQURUuXGVnQVdtfxFEuDnyU+aRssbQuLEZezRe1fL7Cq1Zmx1wj95mdWEaTah9ahbb8Hy+XV0Q4fYfIEWQH7tRuZ46BOmI6ibc0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZkLwe2c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MkaxWdox8E5znGFuESaglJhRxqzR+8mzh+4LQ9qUq4z1S+URNaCQ7NDwk8c64BTp4M74UfO6ox7g1RRX0l/WauQ7ev/XrlhABdOEeus5jQxjFGjW5Hv/qIPsCt554GQAJ7oEym6y8v01b8JDiUMpAAHmQHsY2i2C/Cw+k3qndqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mLjyBrV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZkLwe2c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133EDC4CED1;
-	Wed, 19 Feb 2025 09:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mLjyBrV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B1F5C4CED1;
+	Wed, 19 Feb 2025 09:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955710;
-	bh=fY7QJd3vx2utSZ9Rsg6UaIX7CT9LK3RAsESN2NQdTlw=;
+	s=korg; t=1739955713;
+	bh=WjPpR+Hnt6/oMvAbclM0gEKFtmbcOIVUl34jimOBViw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZkLwe2ce5SOCscWXOUQQ2BtiHKUHnRD8MTIRTqAUA2jCJWxQQhurLNyPkX+qwFib
-	 6F6r7wbdJBWwzYwwZWhnTm7c01MnXSKSzoclLDUhdr1bFM5tXDLLbD1KGEjMJQ2Hjf
-	 JJaD6TM054o84/kw5wxhFNe37Or3T4RcnUU3m8S8=
+	b=1mLjyBrVR1EBWOSNqf0DCghrhNzRjZRO4JQUMp/7VeAQhrNlw8hmNCl8viiAL2z+g
+	 hJseQZyWOMfMBHm25lktNE5B4p4AdBLIQtAmYniWLHgvkE7l0d6ROZERdD8aG9w/rX
+	 J0RlwQK+fMOQJC7GFdUI4tuj7//Mea8bwGH0X5pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Varadarajan Narayanan <quic_varada@quicinc.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 090/152] regulator: qcom_smd: Add l2, l5 sub-node to mp5496 regulator
-Date: Wed, 19 Feb 2025 09:28:23 +0100
-Message-ID: <20250219082553.613992184@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Forest <forestix@nom.one>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.6 064/152] USB: Add USB_QUIRK_NO_LPM quirk for sony xperia xz1 smartphone
+Date: Wed, 19 Feb 2025 09:27:57 +0100
+Message-ID: <20250219082552.579316605@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -51,32 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit b0eddc21900fb44f8c5db95710479865e3700fbd upstream.
+commit 159daf1258227f44b26b5d38f4aa8f37b8cca663 upstream.
 
-Adding l2, l5 sub-node entry to mp5496 regulator node.
+The fastboot tool for communicating with Android bootloaders does not
+work reliably with this device if USB 2 Link Power Management (LPM)
+is enabled.
 
-Cc: stable@vger.kernel.org
-Acked-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-Link: https://patch.msgid.link/20250205074657.4142365-2-quic_varada@quicinc.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Various fastboot commands are affected, including the
+following, which usually reproduces the problem within two tries:
+
+  fastboot getvar kernel
+  getvar:kernel  FAILED (remote: 'GetVar Variable Not found')
+
+This issue was hidden on many systems up until commit 63a1f8454962
+("xhci: stored cached port capability values in one place") as the xhci
+driver failed to detect USB 2 LPM support if USB 3 ports were listed
+before USB 2 ports in the "supported protocol capabilities".
+
+Adding the quirk resolves the issue. No drawbacks are expected since
+the device uses different USB product IDs outside of fastboot mode, and
+since fastboot commands worked before, until LPM was enabled on the
+tested system by the aforementioned commit.
+
+Based on a patch from Forest <forestix@nom.one> from which most of the
+code and commit message is taken.
+
+Cc: stable <stable@kernel.org>
+Reported-by: Forest <forestix@nom.one>
+Closes: https://lore.kernel.org/hk8umj9lv4l4qguftdq1luqtdrpa1gks5l@sonic.net
+Tested-by: Forest <forestix@nom.one>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20250206151836.51742-1-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
-+++ b/Documentation/devicetree/bindings/regulator/qcom,smd-rpm-regulator.yaml
-@@ -22,7 +22,7 @@ description:
-   Each sub-node is identified using the node's name, with valid values listed
-   for each of the pmics below.
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -432,6 +432,9 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x0c45, 0x7056), .driver_info =
+ 			USB_QUIRK_IGNORE_REMOTE_WAKEUP },
  
--  For mp5496, s1, s2
-+  For mp5496, s1, s2, l2, l5
- 
-   For pm2250, s1, s2, s3, s4, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11,
-   l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22
++	/* Sony Xperia XZ1 Compact (lilac) smartphone in fastboot mode */
++	{ USB_DEVICE(0x0fce, 0x0dde), .driver_info = USB_QUIRK_NO_LPM },
++
+ 	/* Action Semiconductor flash disk */
+ 	{ USB_DEVICE(0x10d6, 0x2200), .driver_info =
+ 			USB_QUIRK_STRING_FETCH_255 },
 
 
