@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28621EEA2A;
-	Wed, 19 Feb 2025 08:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64D51D54E9;
+	Wed, 19 Feb 2025 08:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955421; cv=none; b=hKC9d/CYloitxyRXGQTOHJLQE4Fqz/6HiMBPqi8w7BSVu7lExiiXErPNWkU4hoTVTPRVkr3k5MCk8yh/kKlgTyrE6I3NGBud3aciUvuDZUM45nh01pPG+ra3vH/ZN1jAd92F5SIwBdBPe3NmbRzhuHorgLfZUD1Su+xPrbd95qU=
+	t=1739955424; cv=none; b=cr0/T2O9BaIO3RQh1oazH5EwhqGWSe98rl0PKhk0gCpThfjUj/R2R7HQW+V+N3JkRIHXo3mQi6xsKX2vgAZLs0QPnEqrVml4y35Dvl5xHIv9phbRu94I2QlL9kyDEFQy1zM8TCyJP4AXTb2DiUUTndyKbO9dHNMxydLRqNjrQEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955421; c=relaxed/simple;
-	bh=qgsTKqmVCT7ZqcAHTR/c/A9f8HkP5hI16QcugY34Fx0=;
+	s=arc-20240116; t=1739955424; c=relaxed/simple;
+	bh=3SrB2qTeNqX940EiYnN6MsoYMToD+wA3CVYBBFe9LQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wdugtf2DiJly+77ZxN0wXOT1m14gdKLzrrmQwEyyXXChuhHcD45IHyFoKmRHTlEb6g8UF8VwCjH0flyeDtgOMk0qmfKgyqz1kdsyA6SuK3QGtGLMtyY2amDOUpxGGqr7MG6lyfG6U5+p7yF3P/FUoT43uChE9/VXHz5GazBZRyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRyRe7RT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bw4j7L4el0HvZ/dG1EA/FTSjBUHTo+eu0AtaOMM47XuPRdWKXyxYMPfKXhLsrzyuV9eErTV44/xAP07jpZJt4hdDRirGAw0Jjx5BLmtTp5d7qljsmz6ms9vEiK/7VbnLVsK3iwE4NCCqijssnjMa0zBQjBgaAgmiU5l0hvL9J8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBp+PbG6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRyRe7RT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24140C4CED1;
-	Wed, 19 Feb 2025 08:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBp+PbG6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F11C4CED1;
+	Wed, 19 Feb 2025 08:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955421;
-	bh=qgsTKqmVCT7ZqcAHTR/c/A9f8HkP5hI16QcugY34Fx0=;
+	s=korg; t=1739955424;
+	bh=3SrB2qTeNqX940EiYnN6MsoYMToD+wA3CVYBBFe9LQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FRyRe7RT92qgu8S6H3SdpUcOUi+ilNCkQjckstXDGnFJOkmqhCpL/iU5V5maes2vl
-	 J0CXCgbpr10XLNNIL86EbjyqCJBLOIIq6C6HXrCG64Lmr0not3UQVqv2x5ergCrlFO
-	 3m8jmgAS7F4WnVr3aw+o4wsqsWH5Hkbq559FEgfQ=
+	b=RBp+PbG6GDW8rHpP7UPHjlv7iPc1omcVOkzgrwrg8HhiBHi4w+gNdSNEOTf0bTyBN
+	 OOxy83u7IciHlwS/nUAVsx69vpTDSjCcHI8Bij1khSxiEERZ+8FNA8x6ObQFKfi+uy
+	 yIHcY+3mgfJN4raQigBSR/N4BfQs5OYBipw9deHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Stefan=20N=C3=BCrnberger?= <stefan.nuernberger@cyberus-technology.de>
-Subject: [PATCH 6.12 230/230] Revert "vfio/platform: check the bounds of read/write syscalls"
-Date: Wed, 19 Feb 2025 09:29:07 +0100
-Message-ID: <20250219082610.679699587@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 200/230] ndisc: extend RCU protection in ndisc_send_skb()
+Date: Wed, 19 Feb 2025 09:28:37 +0100
+Message-ID: <20250219082609.518652700@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -43,52 +47,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Eric Dumazet <edumazet@google.com>
 
-This reverts commit 61ba518195d61c38c6cb86f83135e51f93735442.
+[ Upstream commit ed6ae1f325d3c43966ec1b62ac1459e2b8e45640 ]
 
-It had been committed multiple times to the tree, and isn't needed
-again.
+ndisc_send_skb() can be called without RTNL or RCU held.
 
-Link: https://lore.kernel.org/r/a082db2605514513a0a8568382d5bd2b6f1877a0.camel@cyberus-technology.de
-Reported-by: Stefan Nürnberger <stefan.nuernberger@cyberus-technology.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acquire rcu_read_lock() earlier, so that we can use dev_net_rcu()
+and avoid a potential UAF.
+
+Fixes: 1762f7e88eb3 ("[NETNS][IPV6] ndisc - make socket control per namespace")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250207135841.1948589-8-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/platform/vfio_platform_common.c |   10 ----------
- 1 file changed, 10 deletions(-)
+ net/ipv6/ndisc.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/vfio/platform/vfio_platform_common.c
-+++ b/drivers/vfio/platform/vfio_platform_common.c
-@@ -393,11 +393,6 @@ static ssize_t vfio_platform_read_mmio(s
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 90f8aa2d7af2e..8699d1a188dc4 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -471,16 +471,20 @@ static void ip6_nd_hdr(struct sk_buff *skb,
+ void ndisc_send_skb(struct sk_buff *skb, const struct in6_addr *daddr,
+ 		    const struct in6_addr *saddr)
+ {
++	struct icmp6hdr *icmp6h = icmp6_hdr(skb);
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net *net = dev_net(skb->dev);
+-	struct sock *sk = net->ipv6.ndisc_sk;
+ 	struct inet6_dev *idev;
++	struct net *net;
++	struct sock *sk;
+ 	int err;
+-	struct icmp6hdr *icmp6h = icmp6_hdr(skb);
+ 	u8 type;
  
- 	count = min_t(size_t, count, reg->size - off);
+ 	type = icmp6h->icmp6_type;
  
--	if (off >= reg->size)
--		return -EINVAL;
--
--	count = min_t(size_t, count, reg->size - off);
--
- 	if (!reg->ioaddr) {
- 		reg->ioaddr =
- 			ioremap(reg->addr, reg->size);
-@@ -479,11 +474,6 @@ static ssize_t vfio_platform_write_mmio(
++	rcu_read_lock();
++
++	net = dev_net_rcu(skb->dev);
++	sk = net->ipv6.ndisc_sk;
+ 	if (!dst) {
+ 		struct flowi6 fl6;
+ 		int oif = skb->dev->ifindex;
+@@ -488,6 +492,7 @@ void ndisc_send_skb(struct sk_buff *skb, const struct in6_addr *daddr,
+ 		icmpv6_flow_init(sk, &fl6, type, saddr, daddr, oif);
+ 		dst = icmp6_dst_alloc(skb->dev, &fl6);
+ 		if (IS_ERR(dst)) {
++			rcu_read_unlock();
+ 			kfree_skb(skb);
+ 			return;
+ 		}
+@@ -502,7 +507,6 @@ void ndisc_send_skb(struct sk_buff *skb, const struct in6_addr *daddr,
  
- 	if (off >= reg->size)
- 		return -EINVAL;
--
--	count = min_t(size_t, count, reg->size - off);
--
--	if (off >= reg->size)
--		return -EINVAL;
+ 	ip6_nd_hdr(skb, saddr, daddr, READ_ONCE(inet6_sk(sk)->hop_limit), skb->len);
  
- 	count = min_t(size_t, count, reg->size - off);
+-	rcu_read_lock();
+ 	idev = __in6_dev_get(dst->dev);
+ 	IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTREQUESTS);
  
+-- 
+2.39.5
+
 
 
