@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9781B6D0A;
-	Wed, 19 Feb 2025 09:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1367F1A314B;
+	Wed, 19 Feb 2025 09:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957158; cv=none; b=V/ZrepRujc3sXTARTkBtI03kG6rm1WRAITIAIDKYP0rn1gh1X+krnuzBMDbfgeDHimfDzWtTdPOep8rWDklAcN856DESRYkF/hV+MCeDbJhVeP0GFi59V8WBpv53eRvD+mAN39PDw3KpkTD2xXVZajkaqPdnZfqtUhKWfC6AMM8=
+	t=1739957161; cv=none; b=IFG5HEtj+eDc+6bXwzNvN3pJ2K2h2Erp6XfA4AjvotRj2GcihYT5pLGVoWrAA7u0aRiya4Xb8kIQpsq02aTSYB7XvENQFq7Y9MaHavqRZaFF4vdEvLWVVwiBUBH5uKMr8IoCrSep9aS7nDFJAfrbOd549EFs28v9rN1Njk664oM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957158; c=relaxed/simple;
-	bh=HCvdH8yNPQfoFMgIpogMkvjjrGu+x1tgxfe99Is0LUw=;
+	s=arc-20240116; t=1739957161; c=relaxed/simple;
+	bh=e4LYy1W6x6uqUsxRoGQc2AtsAbfmCsscdaPo8jQeLhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIzwdLAzZj5Z5ndXyuaWiUmyMFSsU2aHQNbd8Sz14N3gOfcrjgxKgwnzGhLmu4SDNM9ojgIf6/ZOX0LkkeYeb1ZKUm7YPT89xk1zEvfHZhw99MqAgUHnb4ql/+A/lwRUg5Ydh/3zJGZ/o3V4dKGxYBWn5PP0sXL0kXL5Q3SAWUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9u75eJ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q1uxfq82BtYwN+1yPJL1g6t/prUJy1oUNIzZKDTtp5j0pshLfcDn/MiunfXNPpz8kFv1mauosiSUbbieE5TfQFMN3kCJfx3UXRROHMytwDtF3G65o3PbPFi06deM+Aju15ceaXeZQdlV27UZOM/Qh/eje/pKI7nk3AjuMIIKMug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xM+nwQvy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9u75eJ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D6FC4CED1;
-	Wed, 19 Feb 2025 09:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xM+nwQvy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B790C4CEE6;
+	Wed, 19 Feb 2025 09:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957158;
-	bh=HCvdH8yNPQfoFMgIpogMkvjjrGu+x1tgxfe99Is0LUw=;
+	s=korg; t=1739957160;
+	bh=e4LYy1W6x6uqUsxRoGQc2AtsAbfmCsscdaPo8jQeLhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9u75eJ6h/PGXuHv6M+S5xptRhj4HpsOK01WieuzTNntIl4EayxgJnebEiuxMwzCW
-	 KFiRmm9sg9uQnhapaUR/KrscvyKHUo5CDm5yq/BazEGm7CjnxC5NgjAWv4T33S4UxF
-	 vZv3mn9khfZx7NTd7LR6jYT3SOpVQSIyrFQLgyuk=
+	b=xM+nwQvyTU5PpY7ijFXzaHBY1co9P1rWL5LwZhGe0IEQLLLBMSE7fnEt/3EUl0iIA
+	 SzOnEpzn4SQKxBUbCpvXLKW0MLEX+RvP9Hen3GdqgVkDsZmOzLUxtNl6KLrBVO7RE1
+	 p8Oa7OQNErkQSlv87anH6NG3S2zWl9w68yXjDCB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pekka Pessi <ppessi@nvidia.com>,
-	Kartik Rajput <kkartik@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>
-Subject: [PATCH 6.1 429/578] mailbox: tegra-hsp: Clear mailbox before using message
-Date: Wed, 19 Feb 2025 09:27:13 +0100
-Message-ID: <20250219082709.891634008@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 430/578] NFC: nci: Add bounds checking in nci_hci_create_pipe()
+Date: Wed, 19 Feb 2025 09:27:14 +0100
+Message-ID: <20250219082709.929703710@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,68 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pekka Pessi <ppessi@nvidia.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 0b7f8328f988178b55ee11d772a6e1238c04d29d upstream.
+commit 110b43ef05342d5a11284cc8b21582b698b4ef1c upstream.
 
-The Tegra RCE (Camera) driver expects the mailbox to be empty before
-processing the IVC messages. On RT kernel, the threads processing the
-IVC messages (which are invoked after `mbox_chan_received_data()` is
-called) may be on a different CPU or running with a higher priority
-than the HSP interrupt handler thread. This can cause it to act on the
-message before the mailbox gets cleared in the HSP interrupt handler
-resulting in a loss of IVC notification.
+The "pipe" variable is a u8 which comes from the network.  If it's more
+than 127, then it results in memory corruption in the caller,
+nci_hci_connect_gate().
 
-Fix this by clearing the mailbox data register before calling
-`mbox_chan_received_data()`.
-
-Fixes: 8f585d14030d ("mailbox: tegra-hsp: Add tegra_hsp_sm_ops")
-Fixes: 74c20dd0f892 ("mailbox: tegra-hsp: Add 128-bit shared mailbox support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pekka Pessi <ppessi@nvidia.com>
-Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: a1b0b9415817 ("NFC: nci: Create pipe on specific gate in nci_hci_connect_gate")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/bcf5453b-7204-4297-9c20-4d8c7dacf586@stanley.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/tegra-hsp.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/nfc/nci/hci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mailbox/tegra-hsp.c
-+++ b/drivers/mailbox/tegra-hsp.c
-@@ -388,7 +388,6 @@ static void tegra_hsp_sm_recv32(struct t
- 	value = tegra_hsp_channel_readl(channel, HSP_SM_SHRD_MBOX);
- 	value &= ~HSP_SM_SHRD_MBOX_FULL;
- 	msg = (void *)(unsigned long)value;
--	mbox_chan_received_data(channel->chan, msg);
+--- a/net/nfc/nci/hci.c
++++ b/net/nfc/nci/hci.c
+@@ -540,6 +540,8 @@ static u8 nci_hci_create_pipe(struct nci
  
- 	/*
- 	 * Need to clear all bits here since some producers, such as TCU, depend
-@@ -398,6 +397,8 @@ static void tegra_hsp_sm_recv32(struct t
- 	 * explicitly, so we have to make sure we cover all possible cases.
- 	 */
- 	tegra_hsp_channel_writel(channel, 0x0, HSP_SM_SHRD_MBOX);
-+
-+	mbox_chan_received_data(channel->chan, msg);
+ 	pr_debug("pipe created=%d\n", pipe);
+ 
++	if (pipe >= NCI_HCI_MAX_PIPES)
++		pipe = NCI_HCI_INVALID_PIPE;
+ 	return pipe;
  }
  
- static const struct tegra_hsp_sm_ops tegra_hsp_sm_32bit_ops = {
-@@ -433,7 +434,6 @@ static void tegra_hsp_sm_recv128(struct
- 	value[3] = tegra_hsp_channel_readl(channel, HSP_SHRD_MBOX_TYPE1_DATA3);
- 
- 	msg = (void *)(unsigned long)value;
--	mbox_chan_received_data(channel->chan, msg);
- 
- 	/*
- 	 * Clear data registers and tag.
-@@ -443,6 +443,8 @@ static void tegra_hsp_sm_recv128(struct
- 	tegra_hsp_channel_writel(channel, 0x0, HSP_SHRD_MBOX_TYPE1_DATA2);
- 	tegra_hsp_channel_writel(channel, 0x0, HSP_SHRD_MBOX_TYPE1_DATA3);
- 	tegra_hsp_channel_writel(channel, 0x0, HSP_SHRD_MBOX_TYPE1_TAG);
-+
-+	mbox_chan_received_data(channel->chan, msg);
- }
- 
- static const struct tegra_hsp_sm_ops tegra_hsp_sm_128bit_ops = {
 
 
