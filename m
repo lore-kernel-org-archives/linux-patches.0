@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDEE1C5F0C;
-	Wed, 19 Feb 2025 09:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82E21B4F0C;
+	Wed, 19 Feb 2025 09:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956947; cv=none; b=L+RbGgbj3zs/hYPDmmZRFrGQLs0s1KmhKVx1viaQwXTJQpWRc1k5LEZwcxlzk/jRRECDqHtEbSO1T8ViIhPvlWhyhyEB/V1oWydyZ1r2YRcKZ9UAJHqjSMaTBx1pbCkQ3DYTaXKQ8bz4Qlw3OdsoG6W+yebRVtH7KgA3KtH4nc0=
+	t=1739956950; cv=none; b=fj2p0y+wzp69f+Qszey+PYD7WqyEOmMGafG7IDA1wqWXXdmG+KzswvQcW6HhMfVLS8OT88A7L2fSnH1R1GXDQaYUMuNqNHOoEgtk+ywPIZRdGLVXyykwXGsM4TAtXhKN9u9JVbRUQGdeBqQ0oFiBkf26X1tsCJsXfTo7cJ/EpQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956947; c=relaxed/simple;
-	bh=R8twkDqWYpJnWLo2dE7wOff1ki4wRb06e8jh9lPPCRo=;
+	s=arc-20240116; t=1739956950; c=relaxed/simple;
+	bh=KSlQdBnpqZRC5Wo6XDwYFQ6ZWPErHPha7RKAvnFgM5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lIEcOeco8WRp056dGQL5cpj1u7uh4cArD5Fp3UXXdqg61JamXNPkiNf5yV2ieNDqYwmBeCnv15OnL3N5Z383FRGchJQ2SW9oK5Ck65UY9gAjl6mo7xfN2YGAU8JZJRH8cyi2lvmC9f18J9/gFwUxt9B4GIrHbPgNbteLgnczhes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DM0KyhmM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sNEDc9jjNSInnmnTA8GY1T3/7QwX2/VPWWhCepfCkKDGzE2jZLzEngk3ejnHNphUmm+nM3fByCrG/t+AWJo2hCDkScnwVrFbLceKdVjr7IEWK9CTI59n7GyhYpCdbr8vCUd7LOr/yei0RVxiwhEjjO/dsAe5PgOKarcRYHcWlhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zquhRveu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DM0KyhmM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441B2C4CED1;
-	Wed, 19 Feb 2025 09:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zquhRveu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CDFC4CED1;
+	Wed, 19 Feb 2025 09:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956947;
-	bh=R8twkDqWYpJnWLo2dE7wOff1ki4wRb06e8jh9lPPCRo=;
+	s=korg; t=1739956950;
+	bh=KSlQdBnpqZRC5Wo6XDwYFQ6ZWPErHPha7RKAvnFgM5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DM0KyhmMX3KrOPewzkHslzg1lnS2AIKgdbHCSXGGHW08ruOrqpaDkociF+uZZq/md
-	 3yJcVh8v1CnfSWt5Ocp7bEdP8/arn0K2REJ4K1KXDYnF/CgIwVAerUjN0QjLNgblDZ
-	 glMJTTP5My9RQmqCAMSL4jVQA669Fvd0ToS4jjwU=
+	b=zquhRveuhmuOmJdG/QnaCTF3FM8TiwUMLTes+qpgzhlAXNje/60K7m4uarJWWTzf+
+	 z3VY3jPl04TJm0OvD95G2WVt26qO2n/cNOKWD3DgLR77QeWBEliHA+akel8QHy9/SO
+	 H0WB2lT1t9xmWctsGKpuPwldkmiwLNQQKlR02asY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Peter Chen <peter.chen@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 314/578] usb: chipidea: ci_hdrc_imx: decrement devices refcount in .remove() and in the error path of .probe()
-Date: Wed, 19 Feb 2025 09:25:18 +0100
-Message-ID: <20250219082705.368338261@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 349/578] drm/amd/pm: Mark MM activity as unsupported
+Date: Wed, 19 Feb 2025 09:25:53 +0100
+Message-ID: <20250219082706.746059571@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,114 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 74adad500346fb07d69af2c79acbff4adb061134 ]
+commit 819bf6662b93a5a8b0c396d2c7e7fab6264c9808 upstream.
 
-Current implementation of ci_hdrc_imx_driver does not decrement the
-refcount of the device obtained in usbmisc_get_init_data(). Add a
-put_device() call in .remove() and in .probe() before returning an
-error.
+Aldebaran doesn't support querying MM activity percentage. Keep the
+field as 0xFFs to mark it as unsupported.
 
-This bug was found by an experimental static analysis tool that I am
-developing.
-
-Cc: stable <stable@kernel.org>
-Fixes: f40017e0f332 ("chipidea: usbmisc_imx: Add USB support for VF610 SoCs")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20241216015539.352579-1-joe@pf.is.s.u-tokyo.ac.jp
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/ci_hdrc_imx.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/usb/chipidea/ci_hdrc_imx.c b/drivers/usb/chipidea/ci_hdrc_imx.c
-index 362dcb2374bb7..07872440a8d96 100644
---- a/drivers/usb/chipidea/ci_hdrc_imx.c
-+++ b/drivers/usb/chipidea/ci_hdrc_imx.c
-@@ -357,25 +357,29 @@ static int ci_hdrc_imx_probe(struct platform_device *pdev)
- 		data->pinctrl = devm_pinctrl_get(dev);
- 		if (PTR_ERR(data->pinctrl) == -ENODEV)
- 			data->pinctrl = NULL;
--		else if (IS_ERR(data->pinctrl))
--			return dev_err_probe(dev, PTR_ERR(data->pinctrl),
-+		else if (IS_ERR(data->pinctrl)) {
-+			ret = dev_err_probe(dev, PTR_ERR(data->pinctrl),
- 					     "pinctrl get failed\n");
-+			goto err_put;
-+		}
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
+@@ -1759,7 +1759,6 @@ static ssize_t aldebaran_get_gpu_metrics
  
- 		data->hsic_pad_regulator =
- 				devm_regulator_get_optional(dev, "hsic");
- 		if (PTR_ERR(data->hsic_pad_regulator) == -ENODEV) {
- 			/* no pad regualator is needed */
- 			data->hsic_pad_regulator = NULL;
--		} else if (IS_ERR(data->hsic_pad_regulator))
--			return dev_err_probe(dev, PTR_ERR(data->hsic_pad_regulator),
-+		} else if (IS_ERR(data->hsic_pad_regulator)) {
-+			ret = dev_err_probe(dev, PTR_ERR(data->hsic_pad_regulator),
- 					     "Get HSIC pad regulator error\n");
-+			goto err_put;
-+		}
+ 	gpu_metrics->average_gfx_activity = metrics.AverageGfxActivity;
+ 	gpu_metrics->average_umc_activity = metrics.AverageUclkActivity;
+-	gpu_metrics->average_mm_activity = 0;
  
- 		if (data->hsic_pad_regulator) {
- 			ret = regulator_enable(data->hsic_pad_regulator);
- 			if (ret) {
- 				dev_err(dev,
- 					"Failed to enable HSIC pad regulator\n");
--				return ret;
-+				goto err_put;
- 			}
- 		}
- 	}
-@@ -389,13 +393,14 @@ static int ci_hdrc_imx_probe(struct platform_device *pdev)
- 			dev_err(dev,
- 				"pinctrl_hsic_idle lookup failed, err=%ld\n",
- 					PTR_ERR(pinctrl_hsic_idle));
--			return PTR_ERR(pinctrl_hsic_idle);
-+			ret = PTR_ERR(pinctrl_hsic_idle);
-+			goto err_put;
- 		}
- 
- 		ret = pinctrl_select_state(data->pinctrl, pinctrl_hsic_idle);
- 		if (ret) {
- 			dev_err(dev, "hsic_idle select failed, err=%d\n", ret);
--			return ret;
-+			goto err_put;
- 		}
- 
- 		data->pinctrl_hsic_active = pinctrl_lookup_state(data->pinctrl,
-@@ -404,7 +409,8 @@ static int ci_hdrc_imx_probe(struct platform_device *pdev)
- 			dev_err(dev,
- 				"pinctrl_hsic_active lookup failed, err=%ld\n",
- 					PTR_ERR(data->pinctrl_hsic_active));
--			return PTR_ERR(data->pinctrl_hsic_active);
-+			ret = PTR_ERR(data->pinctrl_hsic_active);
-+			goto err_put;
- 		}
- 	}
- 
-@@ -504,6 +510,8 @@ static int ci_hdrc_imx_probe(struct platform_device *pdev)
- 	if (pdata.flags & CI_HDRC_PMQOS)
- 		cpu_latency_qos_remove_request(&data->pm_qos_req);
- 	data->ci_pdev = NULL;
-+err_put:
-+	put_device(data->usbmisc_data->dev);
- 	return ret;
- }
- 
-@@ -527,6 +535,7 @@ static void ci_hdrc_imx_remove(struct platform_device *pdev)
- 		if (data->hsic_pad_regulator)
- 			regulator_disable(data->hsic_pad_regulator);
- 	}
-+	put_device(data->usbmisc_data->dev);
- }
- 
- static void ci_hdrc_imx_shutdown(struct platform_device *pdev)
--- 
-2.39.5
-
+ 	/* Valid power data is available only from primary die */
+ 	if (aldebaran_is_primary(smu)) {
 
 
