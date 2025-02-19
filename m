@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7CA1DE2BE;
-	Wed, 19 Feb 2025 08:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1346E1EEA54;
+	Wed, 19 Feb 2025 08:56:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955385; cv=none; b=m/vTcS+OaSpnCZ2mP6L+acKJBeYx9LpwWW8fJbUwKiUJBDVo2IufBDBIRCBiHrtDYC+C1LzkxORdrUxN5+67R0NDclJegwCcrhfxf5c98pBXCjLjPGJWzum6YkRjXXxZN8hZwWoeSUp1lo5ij/3JaixjWHLFWSgoj/rpfBNO5PU=
+	t=1739955388; cv=none; b=V/ZUbOgse+6yzAP9IS6NOD8DduVJKJt8Ua4POZ4RPKm0vxTWYQDTioEqnDwFhNPc3h/RI9uVFMquElNtv3NKopgVAV88jbbNjnQrmWB9zvdgrC5IWqpGXqGqSbA7m+yUfXmZyz+wpZy8y3OSpovN6vAu00FCN1vNYnNpfTR/JvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955385; c=relaxed/simple;
-	bh=z4canbL1ccqsuvByLkRhTKXn0wz7D9F/HLO7C0DutrY=;
+	s=arc-20240116; t=1739955388; c=relaxed/simple;
+	bh=OkaIchXxmQUCl38TcdI50OnHkwBuhM3ilyXzXjVz3gY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8UXgXAKQb5VJ/SciGxS+3o5VBNvibByMvZFtqgvPR2pZOu5MyBprEAIFCnkn21LCAlws2MJVkMT23Epuofek0/5Bd5x84+KmNMmf7T6TfVHTaLufrm2T71fedm6rdao9hMv0SDtEiswXWrn0IL/IB157D0664E2awJn5vzb/ZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tFx2oMBl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b2SUZUtYqmRRwibR1XsHGwSxH2fVzf+dwY0kSbjtx7xNDZn9Fk/2bq9ADpPT6eyGIfjHID3X2p397pFzsCHyFnA4LTZBnmDQYZoOvzcmf6pCNA7uRa81e0XIzMsp+GioOhyQ/bl3PnHPLihZkfeubN8+ufMEgdvs0qSplsWnISg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbWoJLw1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tFx2oMBl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B667C4CED1;
-	Wed, 19 Feb 2025 08:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbWoJLw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1F9C4CED1;
+	Wed, 19 Feb 2025 08:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955384;
-	bh=z4canbL1ccqsuvByLkRhTKXn0wz7D9F/HLO7C0DutrY=;
+	s=korg; t=1739955388;
+	bh=OkaIchXxmQUCl38TcdI50OnHkwBuhM3ilyXzXjVz3gY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tFx2oMBljmNpKeF9wUI7C8yLqO3oDrMfstr7Q5Zd9zdHOS17FVwabqdk4354DKX7I
-	 Gk7aHrDRmKUs0+yBQRyF8Hdhw7SBzrnYtMJGh1c6oxMZcXxdVri9zhOJglx1EClxaq
-	 iaw6zB5HqCJkLYAk1vn8ivuytv11tRMfRGOg5Pkw=
+	b=wbWoJLw1+2Iw/fUHI1zPVlvQQ8NvgHHbNnnBLRvu5NwHeO5NkC8K/Z05knsUOJZeW
+	 +eW958TSYdkNJn8byRU6yN3bfLYU7DGeRo/c35SLLHh/23lnGvQD6irEzbTs4ebpnk
+	 OySCz7uxrdzj69t5M+RHHTKrqKrt65s/csHUwxC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juri Lelli <juri.lelli@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Phil Auld <pauld@redhat.com>,
-	Waiman Long <longman@redhat.com>
-Subject: [PATCH 6.12 219/230] sched/deadline: Check bandwidth overflow earlier for hotplug
-Date: Wed, 19 Feb 2025 09:28:56 +0100
-Message-ID: <20250219082610.258219409@linuxfoundation.org>
+	Alex Zenla <alex@edera.dev>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.12 220/230] x86/static-call: Remove early_boot_irqs_disabled check to fix Xen PVH dom0
+Date: Wed, 19 Feb 2025 09:28:57 +0100
+Message-ID: <20250219082610.297477064@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -52,119 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juri Lelli <juri.lelli@redhat.com>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-commit 53916d5fd3c0b658de3463439dd2b7ce765072cb upstream.
+commit 5cc2db37124bb33914996d6fdbb2ddb3811f2945 upstream.
 
-Currently we check for bandwidth overflow potentially due to hotplug
-operations at the end of sched_cpu_deactivate(), after the cpu going
-offline has already been removed from scheduling, active_mask, etc.
-This can create issues for DEADLINE tasks, as there is a substantial
-race window between the start of sched_cpu_deactivate() and the moment
-we possibly decide to roll-back the operation if dl_bw_deactivate()
-returns failure in cpuset_cpu_inactive(). An example is a throttled
-task that sees its replenishment timer firing while the cpu it was
-previously running on is considered offline, but before
-dl_bw_deactivate() had a chance to say no and roll-back happened.
+__static_call_update_early() has a check for early_boot_irqs_disabled, but
+is used before early_boot_irqs_disabled is set up in start_kernel().
 
-Fix this by directly calling dl_bw_deactivate() first thing in
-sched_cpu_deactivate() and do the required calculation in the former
-function considering the cpu passed as an argument as offline already.
+Xen PV has always special cased early_boot_irqs_disabled, but Xen PVH does
+not and falls over the BUG when booting as dom0.
 
-By doing so we also simplify sched_cpu_deactivate(), as there is no need
-anymore for any kind of roll-back if we fail early.
+It is very suspect that early_boot_irqs_disabled starts as 0, becomes 1 for
+a time, then becomes 0 again, but as this needs backporting to fix a
+breakage in a security fix, dropping the BUG_ON() is the far safer option.
 
-Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Tested-by: Waiman Long <longman@redhat.com>
-Link: https://lore.kernel.org/r/Zzc1DfPhbvqDDIJR@jlelli-thinkpadt14gen4.remote.csb
+Fixes: 0ef8047b737d ("x86/static-call: provide a way to do very early static-call updates")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219620
+Reported-by: Alex Zenla <alex@edera.dev>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Alex Zenla <alex@edera.dev>
+Link: https://lore.kernel.org/r/20241221211046.6475-1-andrew.cooper3@citrix.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c     |   22 +++++++---------------
- kernel/sched/deadline.c |   12 ++++++++++--
- 2 files changed, 17 insertions(+), 17 deletions(-)
+ arch/x86/kernel/static_call.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -8091,19 +8091,14 @@ static void cpuset_cpu_active(void)
- 	cpuset_update_active_cpus();
- }
- 
--static int cpuset_cpu_inactive(unsigned int cpu)
-+static void cpuset_cpu_inactive(unsigned int cpu)
+--- a/arch/x86/kernel/static_call.c
++++ b/arch/x86/kernel/static_call.c
+@@ -175,7 +175,6 @@ EXPORT_SYMBOL_GPL(arch_static_call_trans
+ noinstr void __static_call_update_early(void *tramp, void *func)
  {
- 	if (!cpuhp_tasks_frozen) {
--		int ret = dl_bw_deactivate(cpu);
--
--		if (ret)
--			return ret;
- 		cpuset_update_active_cpus();
- 	} else {
- 		num_cpus_frozen++;
- 		partition_sched_domains(1, NULL, NULL);
- 	}
--	return 0;
- }
- 
- static inline void sched_smt_present_inc(int cpu)
-@@ -8165,6 +8160,11 @@ int sched_cpu_deactivate(unsigned int cp
- 	struct rq *rq = cpu_rq(cpu);
- 	int ret;
- 
-+	ret = dl_bw_deactivate(cpu);
-+
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * Remove CPU from nohz.idle_cpus_mask to prevent participating in
- 	 * load balancing when not active
-@@ -8210,15 +8210,7 @@ int sched_cpu_deactivate(unsigned int cp
- 		return 0;
- 
- 	sched_update_numa(cpu, false);
--	ret = cpuset_cpu_inactive(cpu);
--	if (ret) {
--		sched_smt_present_inc(cpu);
--		sched_set_rq_online(rq, cpu);
--		balance_push_set(cpu, false);
--		set_cpu_active(cpu, true);
--		sched_update_numa(cpu, true);
--		return ret;
--	}
-+	cpuset_cpu_inactive(cpu);
- 	sched_domains_numa_masks_clear(cpu);
- 	return 0;
- }
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -3511,6 +3511,13 @@ static int dl_bw_manage(enum dl_bw_reque
- 		break;
- 	case dl_bw_req_deactivate:
- 		/*
-+		 * cpu is not off yet, but we need to do the math by
-+		 * considering it off already (i.e., what would happen if we
-+		 * turn cpu off?).
-+		 */
-+		cap -= arch_scale_cpu_capacity(cpu);
-+
-+		/*
- 		 * cpu is going offline and NORMAL tasks will be moved away
- 		 * from it. We can thus discount dl_server bandwidth
- 		 * contribution as it won't need to be servicing tasks after
-@@ -3527,9 +3534,10 @@ static int dl_bw_manage(enum dl_bw_reque
- 		if (dl_b->total_bw - fair_server_bw > 0) {
- 			/*
- 			 * Leaving at least one CPU for DEADLINE tasks seems a
--			 * wise thing to do.
-+			 * wise thing to do. As said above, cpu is not offline
-+			 * yet, so account for that.
- 			 */
--			if (dl_bw_cpus(cpu))
-+			if (dl_bw_cpus(cpu) - 1)
- 				overflow = __dl_overflow(dl_b, cap, fair_server_bw, 0);
- 			else
- 				overflow = 1;
+ 	BUG_ON(system_state != SYSTEM_BOOTING);
+-	BUG_ON(!early_boot_irqs_disabled);
+ 	BUG_ON(static_call_initialized);
+ 	__text_gen_insn(tramp, JMP32_INSN_OPCODE, tramp, func, JMP32_INSN_SIZE);
+ 	sync_core();
 
 
