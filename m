@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D1E1C3C00;
-	Wed, 19 Feb 2025 09:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9DC1C9B97;
+	Wed, 19 Feb 2025 09:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956280; cv=none; b=ltztuRX7aiEJqI2oGuXy87E5cvoO1TffYaqCRP53wDhVO+hSOzyFlj8wsB6bAScjrKnkafpviHJZ9Zz0kwcE+CGqGAnlb1caMCjs9Ck6QZFzEBr0pvyRzMIdqqtTM08uRNuyMHlEXn7Tpr4dL7eUdhRG+MkIXERjhEvIAsQNmo8=
+	t=1739956283; cv=none; b=jtKJT5p/mFip8X7zM5isaKhTg3NGdGp3Q4DKpU5DPu3KA1Pz/n89GpK+zxA8ufb4Q426ROwFiUr6HXgIwZWqnJUe5LYj8KcKEUZen2pIK64USMWmOLSV4WTFIyp2x+Zv6edFeT+psZ0G4fkQ4QxvjNXmwzL2mJwfkXr1vwuKi7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956280; c=relaxed/simple;
-	bh=MCajxj9XY320pQI8eJ3KOPbn1npDE7V8HiVIP1M1Iq0=;
+	s=arc-20240116; t=1739956283; c=relaxed/simple;
+	bh=OzmE0696ugMpJ9XTwQnLF4BbvloWK7N6kUYAPh1/ZCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fzhm6+qL/36c3oj0tyROsvAP1CFPVrN+dUnb5/dB9rv83T0Yhj8yynC81/W20R0sgW0Cx1yTnW3omoTSdB5RgjezROMHr6KMCKPAfhpP1XNetltroonN0yc2z5AegwuwGpmTzo8c9l0M8ghbOvRgohXf/z8MqYWG+Sg7dOgVAL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5gozzxv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BULVWiXzhqVG2tqI3hnUishCo92sd9etfbJEGpHEL7iPzNWXKIfvVe0apY2YZ0gHPkVzmFCQdDQ6/Xz0z/LPiwSS4yOgkGZ4n6R5cj8BNLi/u5DHOOoxM3wz0c1lxbkrXcukqboOuqi+MgimUmacEoO9i2oFZNA1jy8Pv0HOUS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vbIIm3l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5gozzxv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0041BC4CED1;
-	Wed, 19 Feb 2025 09:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vbIIm3l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D811FC4CED1;
+	Wed, 19 Feb 2025 09:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956280;
-	bh=MCajxj9XY320pQI8eJ3KOPbn1npDE7V8HiVIP1M1Iq0=;
+	s=korg; t=1739956283;
+	bh=OzmE0696ugMpJ9XTwQnLF4BbvloWK7N6kUYAPh1/ZCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5gozzxv6piMnVMKF6WiYQqNWqTWmmfvZkKe8PPqiiMRhF/9IQDgOuxCuqhPy2sFD
-	 +qgECXgKCCTwGYmxUyNPFbC1aTZLPIYNjb80/mGhPdNDHugtlw1LeoD5oFIB7uF8v5
-	 BxXkgu+nIHSPUkuDZ1o2Cs80HL0ccOW9Eu8v0gH0=
+	b=2vbIIm3l43lwxtQGVKa/9ftroR9NHqMULP1VbcLQHSKajC+ekcQhJZc5uJJPQQ7Lc
+	 51DxMBltMMxZHwqF1Tp+0VZV+p4j2FZm+ehMDydxhST+YTwA/Yh62TYmxKdM4gA2MO
+	 6m5IDyBh4Op20CpoqEaHikHCNYc9saOjF5vaGIuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/578] ASoC: renesas: rz-ssi: Use only the proper amount of dividers
-Date: Wed, 19 Feb 2025 09:21:53 +0100
-Message-ID: <20250219082657.271391179@linuxfoundation.org>
+Subject: [PATCH 6.1 127/578] ALSA: hda/realtek - Fixed headphone distorted sound on Acer Aspire A115-31 laptop
+Date: Wed, 19 Feb 2025 09:22:11 +0100
+Message-ID: <20250219082657.982885587@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -52,39 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 55c209cd4318c701e6e88e0b2512a0f12dd02a7d ]
+[ Upstream commit 5cb4e5b056772e341b590755a976081776422053 ]
 
-There is no need to populate the ckdv[] with invalid dividers as that
-part will not be indexed anyway. The ssi->audio_mck/bclk_rate should
-always be >= 0. While at it, change the ckdv type as u8, as the divider
-128 was previously using the s8 sign bit.
+Sound played through headphones is distorted.
 
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Fixes: 03e786bd43410fa9 ("ASoC: sh: Add RZ/G2L SSIF-2 driver")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20241210170953.2936724-6-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 34ab5bbc6e82 ("ALSA: hda/realtek - Add Headset Mic supported Acer NB platform")
+Closes: https://lore.kernel.org/linux-sound/e142749b-7714-4733-9452-918fbe328c8f@gmail.com/
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/0a89b6c18ed94378a105fa61e9f290e4@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sh/rz-ssi.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/sh/rz-ssi.c b/sound/soc/sh/rz-ssi.c
-index 5d6bae33ae34c..468050467bb39 100644
---- a/sound/soc/sh/rz-ssi.c
-+++ b/sound/soc/sh/rz-ssi.c
-@@ -244,8 +244,7 @@ static void rz_ssi_stream_quit(struct rz_ssi_priv *ssi,
- static int rz_ssi_clk_setup(struct rz_ssi_priv *ssi, unsigned int rate,
- 			    unsigned int channels)
- {
--	static s8 ckdv[16] = { 1,  2,  4,  8, 16, 32, 64, 128,
--			       6, 12, 24, 48, 96, -1, -1, -1 };
-+	static u8 ckdv[] = { 1,  2,  4,  8, 16, 32, 64, 128, 6, 12, 24, 48, 96 };
- 	unsigned int channel_bits = 32;	/* System Word Length */
- 	unsigned long bclk_rate = rate * channels * channel_bits;
- 	unsigned int div;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index eec488aa7890d..8da964c3856fe 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9583,6 +9583,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1025, 0x1308, "Acer Aspire Z24-890", ALC286_FIXUP_ACER_AIO_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x132a, "Acer TravelMate B114-21", ALC233_FIXUP_ACER_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x1330, "Acer TravelMate X514-51T", ALC255_FIXUP_ACER_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1025, 0x1360, "Acer Aspire A115", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x141f, "Acer Spin SP513-54N", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x142b, "Acer Swift SF314-42", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x1430, "Acer TravelMate B311R-31", ALC256_FIXUP_ACER_MIC_NO_PRESENCE),
 -- 
 2.39.5
 
