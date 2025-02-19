@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFF81DC996;
-	Wed, 19 Feb 2025 08:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EB61DC747;
+	Wed, 19 Feb 2025 08:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954920; cv=none; b=jHfOfK0j1pKjEvO0q9wcZRpgTYzbuuGwVd9t+3NGz6ksVy92pa6fV/xjOqik/sU5FTIpFLmVt9jB+aNX7YiLb4naeEemUD+p5Bw9kkQ7Wdv/Hn+y1pJSOSuL2v366/mGzAC/M9GNRb63L9X31nsrEzsmfrWd2wfWrPboXW+KoPQ=
+	t=1739954922; cv=none; b=uH5FJcVTP8kHi7MZ6vKFTpzaxu+GNHiD+oucmSWPGyWwsmMai8h9LcUwVlLldQ1aVkQuzw6FlnfFLRzXLc/FegP2I+LkBKaCghlZcx5w6EknPtzXy1Shq/lOzMCRvomq+XOw8Z8ikEXWMS80BigE/+dBtaSGH+pqT+juPFwMTZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954920; c=relaxed/simple;
-	bh=cYeMQBZPT1jdEP27FXfO3y/gIzqztmejOImZzl5lmxg=;
+	s=arc-20240116; t=1739954922; c=relaxed/simple;
+	bh=D59jGf0KDXFQYL1z80DZarNHXGGmUT2Q6g5kOZnawWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u723dO/nHlZRZGeLnprAelWdRCMbtpWczMMGgnv3ikwtwWiHvyP73fLbz9VQXIjFq2CW1hFROyhSkqRPf5quLwZ0N3Lybqr/FkfvVBG5a9aLmmLDJLrNkoyygE5cxiEMXsYCjYEZcsa4sKqPj6hx/YJn2ghoDTbz/RC8Un9J8ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wa8xmzY2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EMi2ED0U7W+a7PvJtrA3opK3cHuzH97zYRK3Kd/n/b15Kyjt2lb2SR5KYfVX1nvrgtCDZcBozbci38gU92NhiXYhWRlViehyvFi6nSw1lNVFzPBlESqQjMSWJ3BSs92MeimQH3NiQUQzbYb11y9VU/UVjyJKHo/MftATTsVbX6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQrqIODg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wa8xmzY2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A2AC4CED1;
-	Wed, 19 Feb 2025 08:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQrqIODg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8A7C4CED1;
+	Wed, 19 Feb 2025 08:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954919;
-	bh=cYeMQBZPT1jdEP27FXfO3y/gIzqztmejOImZzl5lmxg=;
+	s=korg; t=1739954922;
+	bh=D59jGf0KDXFQYL1z80DZarNHXGGmUT2Q6g5kOZnawWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wa8xmzY2Kptkumt4cubZ5CJIcvRhMsQW9w0jSLVJxAjuusVfrF1vZujljnXbvJMie
-	 356HZMgaUZa1wegdye3NQN14VU0gJOyjo5JcVKx2sOysnSmfloib53dDn8uks4BvYD
-	 BvHhtTk7YQTETjTUSJ4HFvwXkkhoB+x5J6ewsZJk=
+	b=QQrqIODgy3rA1urqphUPW63WnPZoBlMMdjUiSTtiQESnCZbgvIYQl4Q017q5pwmTr
+	 1Puaj/jutdhN91T7w7Pse0AjYU9K6UmT3YdJYRGmMXerI7dMwKJ5HTIbe9w2rmAb3k
+	 SIwr1Z+YYbdE0hMSWHHmlT3mUO/qZz+SZgK2RGqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Aaro Koskinen <aaro.koskinen@iki.fi>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/230] serial: 8250_pci: Resolve WCH vendor ID ambiguity
-Date: Wed, 19 Feb 2025 09:26:34 +0100
-Message-ID: <20250219082604.717725047@linuxfoundation.org>
+Subject: [PATCH 6.12 060/230] fbdev: omap: use threaded IRQ for LCD DMA
+Date: Wed, 19 Feb 2025 09:26:17 +0100
+Message-ID: <20250219082604.062874408@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -50,215 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Aaro Koskinen <aaro.koskinen@iki.fi>
 
-[ Upstream commit 16076ca3a1565491bcb28689e555d569a39391c7 ]
+[ Upstream commit e4b6b665df815b4841e71b72f06446884e8aad40 ]
 
-There are two sites of the same brand: wch.cn and wch-ic.com.
-They are property of the same company, but it appears that they
-managed to get two different PCI vendor IDs. Rename them accordingly
-using standard pattern, i.e. PCI_VENDOR_ID_...
+When using touchscreen and framebuffer, Nokia 770 crashes easily with:
 
-While at it, move to PCI_VDEVICE() in the ID tables.
+    BUG: scheduling while atomic: irq/144-ads7846/82/0x00010000
+    Modules linked in: usb_f_ecm g_ether usb_f_rndis u_ether libcomposite configfs omap_udc ohci_omap ohci_hcd
+    CPU: 0 UID: 0 PID: 82 Comm: irq/144-ads7846 Not tainted 6.12.7-770 #2
+    Hardware name: Nokia 770
+    Call trace:
+     unwind_backtrace from show_stack+0x10/0x14
+     show_stack from dump_stack_lvl+0x54/0x5c
+     dump_stack_lvl from __schedule_bug+0x50/0x70
+     __schedule_bug from __schedule+0x4d4/0x5bc
+     __schedule from schedule+0x34/0xa0
+     schedule from schedule_preempt_disabled+0xc/0x10
+     schedule_preempt_disabled from __mutex_lock.constprop.0+0x218/0x3b4
+     __mutex_lock.constprop.0 from clk_prepare_lock+0x38/0xe4
+     clk_prepare_lock from clk_set_rate+0x18/0x154
+     clk_set_rate from sossi_read_data+0x4c/0x168
+     sossi_read_data from hwa742_read_reg+0x5c/0x8c
+     hwa742_read_reg from send_frame_handler+0xfc/0x300
+     send_frame_handler from process_pending_requests+0x74/0xd0
+     process_pending_requests from lcd_dma_irq_handler+0x50/0x74
+     lcd_dma_irq_handler from __handle_irq_event_percpu+0x44/0x130
+     __handle_irq_event_percpu from handle_irq_event+0x28/0x68
+     handle_irq_event from handle_level_irq+0x9c/0x170
+     handle_level_irq from generic_handle_domain_irq+0x2c/0x3c
+     generic_handle_domain_irq from omap1_handle_irq+0x40/0x8c
+     omap1_handle_irq from generic_handle_arch_irq+0x28/0x3c
+     generic_handle_arch_irq from call_with_stack+0x1c/0x24
+     call_with_stack from __irq_svc+0x94/0xa8
+    Exception stack(0xc5255da0 to 0xc5255de8)
+    5da0: 00000001 c22fc620 00000000 00000000 c08384a8 c106fc00 00000000 c240c248
+    5dc0: c113a600 c3f6ec30 00000001 00000000 c22fc620 c5255df0 c22fc620 c0279a94
+    5de0: 60000013 ffffffff
+     __irq_svc from clk_prepare_lock+0x4c/0xe4
+     clk_prepare_lock from clk_get_rate+0x10/0x74
+     clk_get_rate from uwire_setup_transfer+0x40/0x180
+     uwire_setup_transfer from spi_bitbang_transfer_one+0x2c/0x9c
+     spi_bitbang_transfer_one from spi_transfer_one_message+0x2d0/0x664
+     spi_transfer_one_message from __spi_pump_transfer_message+0x29c/0x498
+     __spi_pump_transfer_message from __spi_sync+0x1f8/0x2e8
+     __spi_sync from spi_sync+0x24/0x40
+     spi_sync from ads7846_halfd_read_state+0x5c/0x1c0
+     ads7846_halfd_read_state from ads7846_irq+0x58/0x348
+     ads7846_irq from irq_thread_fn+0x1c/0x78
+     irq_thread_fn from irq_thread+0x120/0x228
+     irq_thread from kthread+0xc8/0xe8
+     kthread from ret_from_fork+0x14/0x28
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20241204031114.1029882-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+As a quick fix, switch to a threaded IRQ which provides a stable system.
+
+Signed-off-by: Aaro Koskinen <aaro.koskinen@iki.fi>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_pci.c | 82 +++++++++++++++---------------
- 1 file changed, 41 insertions(+), 41 deletions(-)
+ drivers/video/fbdev/omap/lcd_dma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_pci.c b/drivers/tty/serial/8250/8250_pci.c
-index 6709b6a5f3011..82fba431a95cf 100644
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -64,23 +64,23 @@
- #define PCIE_DEVICE_ID_NEO_2_OX_IBM	0x00F6
- #define PCI_DEVICE_ID_PLX_CRONYX_OMEGA	0xc001
- #define PCI_DEVICE_ID_INTEL_PATSBURG_KT 0x1d3d
--#define PCI_VENDOR_ID_WCH		0x4348
--#define PCI_DEVICE_ID_WCH_CH352_2S	0x3253
--#define PCI_DEVICE_ID_WCH_CH353_4S	0x3453
--#define PCI_DEVICE_ID_WCH_CH353_2S1PF	0x5046
--#define PCI_DEVICE_ID_WCH_CH353_1S1P	0x5053
--#define PCI_DEVICE_ID_WCH_CH353_2S1P	0x7053
--#define PCI_DEVICE_ID_WCH_CH355_4S	0x7173
-+#define PCI_VENDOR_ID_WCHCN		0x4348
-+#define PCI_DEVICE_ID_WCHCN_CH352_2S	0x3253
-+#define PCI_DEVICE_ID_WCHCN_CH353_4S	0x3453
-+#define PCI_DEVICE_ID_WCHCN_CH353_2S1PF	0x5046
-+#define PCI_DEVICE_ID_WCHCN_CH353_1S1P	0x5053
-+#define PCI_DEVICE_ID_WCHCN_CH353_2S1P	0x7053
-+#define PCI_DEVICE_ID_WCHCN_CH355_4S	0x7173
- #define PCI_VENDOR_ID_AGESTAR		0x5372
- #define PCI_DEVICE_ID_AGESTAR_9375	0x6872
- #define PCI_DEVICE_ID_BROADCOM_TRUMANAGE 0x160a
- #define PCI_DEVICE_ID_AMCC_ADDIDATA_APCI7800 0x818e
+diff --git a/drivers/video/fbdev/omap/lcd_dma.c b/drivers/video/fbdev/omap/lcd_dma.c
+index f85817635a8c2..0da23c57e4757 100644
+--- a/drivers/video/fbdev/omap/lcd_dma.c
++++ b/drivers/video/fbdev/omap/lcd_dma.c
+@@ -432,8 +432,8 @@ static int __init omap_init_lcd_dma(void)
  
--#define PCIE_VENDOR_ID_WCH		0x1c00
--#define PCIE_DEVICE_ID_WCH_CH382_2S1P	0x3250
--#define PCIE_DEVICE_ID_WCH_CH384_4S	0x3470
--#define PCIE_DEVICE_ID_WCH_CH384_8S	0x3853
--#define PCIE_DEVICE_ID_WCH_CH382_2S	0x3253
-+#define PCI_VENDOR_ID_WCHIC		0x1c00
-+#define PCI_DEVICE_ID_WCHIC_CH382_2S1P	0x3250
-+#define PCI_DEVICE_ID_WCHIC_CH384_4S	0x3470
-+#define PCI_DEVICE_ID_WCHIC_CH384_8S	0x3853
-+#define PCI_DEVICE_ID_WCHIC_CH382_2S	0x3253
+ 	spin_lock_init(&lcd_dma.lock);
  
- #define PCI_DEVICE_ID_MOXA_CP102E	0x1024
- #define PCI_DEVICE_ID_MOXA_CP102EL	0x1025
-@@ -2777,80 +2777,80 @@ static struct pci_serial_quirk pci_serial_quirks[] = {
- 	},
- 	/* WCH CH353 1S1P card (16550 clone) */
- 	{
--		.vendor         = PCI_VENDOR_ID_WCH,
--		.device         = PCI_DEVICE_ID_WCH_CH353_1S1P,
-+		.vendor         = PCI_VENDOR_ID_WCHCN,
-+		.device         = PCI_DEVICE_ID_WCHCN_CH353_1S1P,
- 		.subvendor      = PCI_ANY_ID,
- 		.subdevice      = PCI_ANY_ID,
- 		.setup          = pci_wch_ch353_setup,
- 	},
- 	/* WCH CH353 2S1P card (16550 clone) */
- 	{
--		.vendor         = PCI_VENDOR_ID_WCH,
--		.device         = PCI_DEVICE_ID_WCH_CH353_2S1P,
-+		.vendor         = PCI_VENDOR_ID_WCHCN,
-+		.device         = PCI_DEVICE_ID_WCHCN_CH353_2S1P,
- 		.subvendor      = PCI_ANY_ID,
- 		.subdevice      = PCI_ANY_ID,
- 		.setup          = pci_wch_ch353_setup,
- 	},
- 	/* WCH CH353 4S card (16550 clone) */
- 	{
--		.vendor         = PCI_VENDOR_ID_WCH,
--		.device         = PCI_DEVICE_ID_WCH_CH353_4S,
-+		.vendor         = PCI_VENDOR_ID_WCHCN,
-+		.device         = PCI_DEVICE_ID_WCHCN_CH353_4S,
- 		.subvendor      = PCI_ANY_ID,
- 		.subdevice      = PCI_ANY_ID,
- 		.setup          = pci_wch_ch353_setup,
- 	},
- 	/* WCH CH353 2S1PF card (16550 clone) */
- 	{
--		.vendor         = PCI_VENDOR_ID_WCH,
--		.device         = PCI_DEVICE_ID_WCH_CH353_2S1PF,
-+		.vendor         = PCI_VENDOR_ID_WCHCN,
-+		.device         = PCI_DEVICE_ID_WCHCN_CH353_2S1PF,
- 		.subvendor      = PCI_ANY_ID,
- 		.subdevice      = PCI_ANY_ID,
- 		.setup          = pci_wch_ch353_setup,
- 	},
- 	/* WCH CH352 2S card (16550 clone) */
- 	{
--		.vendor		= PCI_VENDOR_ID_WCH,
--		.device		= PCI_DEVICE_ID_WCH_CH352_2S,
-+		.vendor		= PCI_VENDOR_ID_WCHCN,
-+		.device		= PCI_DEVICE_ID_WCHCN_CH352_2S,
- 		.subvendor	= PCI_ANY_ID,
- 		.subdevice	= PCI_ANY_ID,
- 		.setup		= pci_wch_ch353_setup,
- 	},
- 	/* WCH CH355 4S card (16550 clone) */
- 	{
--		.vendor		= PCI_VENDOR_ID_WCH,
--		.device		= PCI_DEVICE_ID_WCH_CH355_4S,
-+		.vendor		= PCI_VENDOR_ID_WCHCN,
-+		.device		= PCI_DEVICE_ID_WCHCN_CH355_4S,
- 		.subvendor	= PCI_ANY_ID,
- 		.subdevice	= PCI_ANY_ID,
- 		.setup		= pci_wch_ch355_setup,
- 	},
- 	/* WCH CH382 2S card (16850 clone) */
- 	{
--		.vendor         = PCIE_VENDOR_ID_WCH,
--		.device         = PCIE_DEVICE_ID_WCH_CH382_2S,
-+		.vendor         = PCI_VENDOR_ID_WCHIC,
-+		.device         = PCI_DEVICE_ID_WCHIC_CH382_2S,
- 		.subvendor      = PCI_ANY_ID,
- 		.subdevice      = PCI_ANY_ID,
- 		.setup          = pci_wch_ch38x_setup,
- 	},
- 	/* WCH CH382 2S1P card (16850 clone) */
- 	{
--		.vendor         = PCIE_VENDOR_ID_WCH,
--		.device         = PCIE_DEVICE_ID_WCH_CH382_2S1P,
-+		.vendor         = PCI_VENDOR_ID_WCHIC,
-+		.device         = PCI_DEVICE_ID_WCHIC_CH382_2S1P,
- 		.subvendor      = PCI_ANY_ID,
- 		.subdevice      = PCI_ANY_ID,
- 		.setup          = pci_wch_ch38x_setup,
- 	},
- 	/* WCH CH384 4S card (16850 clone) */
- 	{
--		.vendor         = PCIE_VENDOR_ID_WCH,
--		.device         = PCIE_DEVICE_ID_WCH_CH384_4S,
-+		.vendor         = PCI_VENDOR_ID_WCHIC,
-+		.device         = PCI_DEVICE_ID_WCHIC_CH384_4S,
- 		.subvendor      = PCI_ANY_ID,
- 		.subdevice      = PCI_ANY_ID,
- 		.setup          = pci_wch_ch38x_setup,
- 	},
- 	/* WCH CH384 8S card (16850 clone) */
- 	{
--		.vendor         = PCIE_VENDOR_ID_WCH,
--		.device         = PCIE_DEVICE_ID_WCH_CH384_8S,
-+		.vendor         = PCI_VENDOR_ID_WCHIC,
-+		.device         = PCI_DEVICE_ID_WCHIC_CH384_8S,
- 		.subvendor      = PCI_ANY_ID,
- 		.subdevice      = PCI_ANY_ID,
- 		.init           = pci_wch_ch38x_init,
-@@ -3927,11 +3927,11 @@ static const struct pci_device_id blacklist[] = {
+-	r = request_irq(INT_DMA_LCD, lcd_dma_irq_handler, 0,
+-			"LCD DMA", NULL);
++	r = request_threaded_irq(INT_DMA_LCD, NULL, lcd_dma_irq_handler,
++				 IRQF_ONESHOT, "LCD DMA", NULL);
+ 	if (r != 0)
+ 		pr_err("unable to request IRQ for LCD DMA (error %d)\n", r);
  
- 	/* multi-io cards handled by parport_serial */
- 	/* WCH CH353 2S1P */
--	{ PCI_DEVICE(0x4348, 0x7053), 0, 0, REPORT_CONFIG(PARPORT_SERIAL), },
-+	{ PCI_VDEVICE(WCHCN, 0x7053), REPORT_CONFIG(PARPORT_SERIAL), },
- 	/* WCH CH353 1S1P */
--	{ PCI_DEVICE(0x4348, 0x5053), 0, 0, REPORT_CONFIG(PARPORT_SERIAL), },
-+	{ PCI_VDEVICE(WCHCN, 0x5053), REPORT_CONFIG(PARPORT_SERIAL), },
- 	/* WCH CH382 2S1P */
--	{ PCI_DEVICE(0x1c00, 0x3250), 0, 0, REPORT_CONFIG(PARPORT_SERIAL), },
-+	{ PCI_VDEVICE(WCHIC, 0x3250), REPORT_CONFIG(PARPORT_SERIAL), },
- 
- 	/* Intel platforms with MID UART */
- 	{ PCI_VDEVICE(INTEL, 0x081b), REPORT_8250_CONFIG(MID), },
-@@ -6004,27 +6004,27 @@ static const struct pci_device_id serial_pci_tbl[] = {
- 	 * WCH CH353 series devices: The 2S1P is handled by parport_serial
- 	 * so not listed here.
- 	 */
--	{	PCI_VENDOR_ID_WCH, PCI_DEVICE_ID_WCH_CH353_4S,
-+	{	PCI_VENDOR_ID_WCHCN, PCI_DEVICE_ID_WCHCN_CH353_4S,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0, pbn_b0_bt_4_115200 },
- 
--	{	PCI_VENDOR_ID_WCH, PCI_DEVICE_ID_WCH_CH353_2S1PF,
-+	{	PCI_VENDOR_ID_WCHCN, PCI_DEVICE_ID_WCHCN_CH353_2S1PF,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0, pbn_b0_bt_2_115200 },
- 
--	{	PCI_VENDOR_ID_WCH, PCI_DEVICE_ID_WCH_CH355_4S,
-+	{	PCI_VENDOR_ID_WCHCN, PCI_DEVICE_ID_WCHCN_CH355_4S,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0, pbn_b0_bt_4_115200 },
- 
--	{	PCIE_VENDOR_ID_WCH, PCIE_DEVICE_ID_WCH_CH382_2S,
-+	{	PCI_VENDOR_ID_WCHIC, PCI_DEVICE_ID_WCHIC_CH382_2S,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0, pbn_wch382_2 },
- 
--	{	PCIE_VENDOR_ID_WCH, PCIE_DEVICE_ID_WCH_CH384_4S,
-+	{	PCI_VENDOR_ID_WCHIC, PCI_DEVICE_ID_WCHIC_CH384_4S,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0, pbn_wch384_4 },
- 
--	{	PCIE_VENDOR_ID_WCH, PCIE_DEVICE_ID_WCH_CH384_8S,
-+	{	PCI_VENDOR_ID_WCHIC, PCI_DEVICE_ID_WCHIC_CH384_8S,
- 		PCI_ANY_ID, PCI_ANY_ID,
- 		0, 0, pbn_wch384_8 },
- 	/*
 -- 
 2.39.5
 
