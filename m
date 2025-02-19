@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFF11DDC10;
-	Wed, 19 Feb 2025 08:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4EF1DE2B8;
+	Wed, 19 Feb 2025 08:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954017; cv=none; b=LzcDKT65EIxQ98Ww8wvVt+fnjtgB5PEuIeAFzgXdkGd5qjqC3uytxnfRBHlJGx9g6ZdLElGkpYXknDQmmfs3mn/uZVKw9qSCpcP8vYWAPOmCMGr6K/TCgDV8r6tadGnLwlpr+uUJJouf2uwThnGZ/bN3Qajfbvy2+cT0S8ThnGo=
+	t=1739954020; cv=none; b=EdH5z2uYgMOi2/hPAgxqG6Z9HYtz04SNuXQygLYOmpahxP70hVx45LTIoodAYaBN8+9BrVvbV71tyLzD2BUGsWE98rkanBkSPEDRQj0tjcCZ4PBRIpJji6kgHSvfM/LeNMJHzgH6aHObTCPQBz0zPviIY0l2foVx3x2xI7wMHrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954017; c=relaxed/simple;
-	bh=kL9B3yMmecplIlEWmY0yVDw4MWXgSzevMv+6bt+ffLw=;
+	s=arc-20240116; t=1739954020; c=relaxed/simple;
+	bh=vTtRW/kU6hVZBvQouWydAhbiOR+0grMA4cibCMGxPN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c19Lnqr8ZJF6Rpbav0jL+AGLlxNIU5MmyLX5RIfi1Dfh/D3m+c6/YchLYb/OV4QxykxpXNVUN1yJ50h/G4gtjY0qb6QpGqgNIN/dYH3sxY6IHBL30W664PbgCswqanEwUX14vguZTAxvWVve2gsfBYve+doibRZoZ5nx4B/AbWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/zVcrUp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cw7uwRb7az2KdBZEfTPVD53r8dMK1FU1IHJqWaEhl+wGFNvvX7iLU03udKpMTUft8LkV4/6vKYorSsYyvBRL/mjAKNHwXCDSJ64CtB+xrT8yRTyl8bElaffyqJuMc2mwBfFqaenKXyA6lNxxtptgoqhpvJy7OtTW2jL+QOMWehg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vtmmBLJD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/zVcrUp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5C1C4CED1;
-	Wed, 19 Feb 2025 08:33:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vtmmBLJD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A998C4CED1;
+	Wed, 19 Feb 2025 08:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954016;
-	bh=kL9B3yMmecplIlEWmY0yVDw4MWXgSzevMv+6bt+ffLw=;
+	s=korg; t=1739954019;
+	bh=vTtRW/kU6hVZBvQouWydAhbiOR+0grMA4cibCMGxPN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/zVcrUp/25VgOEg6B55eQ6KTxOjKcziSG/l+HedZTK4Yk0Pr9Bd6MEQeJsL2qj1V
-	 cM/o/80lilQbDhW6LIv+s+T3ThzAJ1ZTH/YV5OikrqUaBaKJZp6LfnVFkKL6YF2GA1
-	 pzgxfxCAKdA3GBojJYZJSXDuqmx6vUnkP9x9zDZY=
+	b=vtmmBLJDpGSM/10BdZjarrjFsZMfopBZgG+0MhI+xdlVdiHg7VoV6vs3h1AxsdAwu
+	 kL2WEa/P9NGUfZP8Je9QYKwDLnKiZI5Z6DeQDjpVwI+dU/pB1Dr/+/SgqUmXPSz2LG
+	 nL42uejE5eM2VJ2ytgK4mj9EIJhfKcPDW+cnGrWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1fcd957a82e3a1baa94d@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	cheung wall <zzqq0103.hey@gmail.com>,
+	Lai Jiangshan <jiangshan.ljs@antgroup.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 037/274] team: better TEAM_OPTION_TYPE_STRING validation
-Date: Wed, 19 Feb 2025 09:24:51 +0100
-Message-ID: <20250219082610.980398160@linuxfoundation.org>
+Subject: [PATCH 6.13 038/274] workqueue: Put the pwq after detaching the rescuer from the pool
+Date: Wed, 19 Feb 2025 09:24:52 +0100
+Message-ID: <20250219082611.017994535@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -47,80 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lai Jiangshan <jiangshan.ljs@antgroup.com>
 
-[ Upstream commit 5bef3ac184b5626ea62385d6b82a1992b89d7940 ]
+[ Upstream commit e76946110137703c16423baf6ee177b751a34b7e ]
 
-syzbot reported following splat [1]
+The commit 68f83057b913("workqueue: Reap workers via kthread_stop() and
+remove detach_completion") adds code to reap the normal workers but
+mistakenly does not handle the rescuer and also removes the code waiting
+for the rescuer in put_unbound_pool(), which caused a use-after-free bug
+reported by Cheung Wall.
 
-Make sure user-provided data contains one nul byte.
+To avoid the use-after-free bug, the pool’s reference must be held until
+the detachment is complete. Therefore, move the code that puts the pwq
+after detaching the rescuer from the pool.
 
-[1]
- BUG: KMSAN: uninit-value in string_nocheck lib/vsprintf.c:633 [inline]
- BUG: KMSAN: uninit-value in string+0x3ec/0x5f0 lib/vsprintf.c:714
-  string_nocheck lib/vsprintf.c:633 [inline]
-  string+0x3ec/0x5f0 lib/vsprintf.c:714
-  vsnprintf+0xa5d/0x1960 lib/vsprintf.c:2843
-  __request_module+0x252/0x9f0 kernel/module/kmod.c:149
-  team_mode_get drivers/net/team/team_core.c:480 [inline]
-  team_change_mode drivers/net/team/team_core.c:607 [inline]
-  team_mode_option_set+0x437/0x970 drivers/net/team/team_core.c:1401
-  team_option_set drivers/net/team/team_core.c:375 [inline]
-  team_nl_options_set_doit+0x1339/0x1f90 drivers/net/team/team_core.c:2662
-  genl_family_rcv_msg_doit net/netlink/genetlink.c:1115 [inline]
-  genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
-  genl_rcv_msg+0x1214/0x12c0 net/netlink/genetlink.c:1210
-  netlink_rcv_skb+0x375/0x650 net/netlink/af_netlink.c:2543
-  genl_rcv+0x40/0x60 net/netlink/genetlink.c:1219
-  netlink_unicast_kernel net/netlink/af_netlink.c:1322 [inline]
-  netlink_unicast+0xf52/0x1260 net/netlink/af_netlink.c:1348
-  netlink_sendmsg+0x10da/0x11e0 net/netlink/af_netlink.c:1892
-  sock_sendmsg_nosec net/socket.c:718 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:733
-  ____sys_sendmsg+0x877/0xb60 net/socket.c:2573
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2627
-  __sys_sendmsg net/socket.c:2659 [inline]
-  __do_sys_sendmsg net/socket.c:2664 [inline]
-  __se_sys_sendmsg net/socket.c:2662 [inline]
-  __x64_sys_sendmsg+0x212/0x3c0 net/socket.c:2662
-  x64_sys_call+0x2ed6/0x3c30 arch/x86/include/generated/asm/syscalls_64.h:47
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
-Reported-by: syzbot+1fcd957a82e3a1baa94d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1fcd957a82e3a1baa94d
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20250212134928.1541609-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: cheung wall <zzqq0103.hey@gmail.com>
+Cc: cheung wall <zzqq0103.hey@gmail.com>
+Link: https://lore.kernel.org/lkml/CAKHoSAvP3iQW+GwmKzWjEAOoPvzeWeoMO0Gz7Pp3_4kxt-RMoA@mail.gmail.com/
+Fixes: 68f83057b913("workqueue: Reap workers via kthread_stop() and remove detach_completion")
+Signed-off-by: Lai Jiangshan <jiangshan.ljs@antgroup.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/workqueue.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index dc7cbd6a9798a..f4019815f4736 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -2639,7 +2639,9 @@ int team_nl_options_set_doit(struct sk_buff *skb, struct genl_info *info)
- 				ctx.data.u32_val = nla_get_u32(attr_data);
- 				break;
- 			case TEAM_OPTION_TYPE_STRING:
--				if (nla_len(attr_data) > TEAM_STRING_MAX_LEN) {
-+				if (nla_len(attr_data) > TEAM_STRING_MAX_LEN ||
-+				    !memchr(nla_data(attr_data), '\0',
-+					    nla_len(attr_data))) {
- 					err = -EINVAL;
- 					goto team_put;
- 				}
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 9362484a653c4..218f8c1388086 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -3516,12 +3516,6 @@ static int rescuer_thread(void *__rescuer)
+ 			}
+ 		}
+ 
+-		/*
+-		 * Put the reference grabbed by send_mayday().  @pool won't
+-		 * go away while we're still attached to it.
+-		 */
+-		put_pwq(pwq);
+-
+ 		/*
+ 		 * Leave this pool. Notify regular workers; otherwise, we end up
+ 		 * with 0 concurrency and stalling the execution.
+@@ -3532,6 +3526,12 @@ static int rescuer_thread(void *__rescuer)
+ 
+ 		worker_detach_from_pool(rescuer);
+ 
++		/*
++		 * Put the reference grabbed by send_mayday().  @pool might
++		 * go away any time after it.
++		 */
++		put_pwq_unlocked(pwq);
++
+ 		raw_spin_lock_irq(&wq_mayday_lock);
+ 	}
+ 
 -- 
 2.39.5
 
