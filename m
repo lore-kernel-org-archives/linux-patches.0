@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60851D88DB;
-	Wed, 19 Feb 2025 09:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B582C1DFE0C;
+	Wed, 19 Feb 2025 09:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957336; cv=none; b=MMDSEI+6HpCH29EHYCFemRd1bx94d87pZbSREDuNs+FY4jh2TEFnWEbNWoX/BxhdFjg3xehygVywA33ymD7eD47Y9pwzxHIsNBLDLXRS4bPbMKdY5ZOmrLYKq5Zao0R5mZtTYKBZrjEfPO30XtHqLz4Tqm/o/vyRWOZ3cqVpaRs=
+	t=1739957339; cv=none; b=VtU0zhJoodUXdgrFWGcrpvkV0NHD5zMdq35YtsN9aGz+pO4z1EI7qtY4VVajn7grMczG5lVN9/pmkcCDSNqqQp8cgg7U3oKfJEVgTVkHbp5qJrl0jjIshgzsxjUPb5XQOH8ryw96Y6J+fCiVHqV7LF77vLUijZUfxdhE6R9JHRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957336; c=relaxed/simple;
-	bh=uzmmus7CYBAIE+f6BB0oY8hUxc3UM/DZZ7ZkLjhzsNI=;
+	s=arc-20240116; t=1739957339; c=relaxed/simple;
+	bh=PqWMUUPh9QPFR3/1zqyuBlIpwumR144vYCZOORJ0O2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JpiUe8qjfTGFBL1G9u5xefRnuZmC3t/2LnwsjX5LISjs9GcSPRqvIcXL50OixvpSPhnWTZlaiORXqMtskkRGy9EDBJskjE3rLlDRR+miqX9QUmgr+Xe9Ugd2Qa5hQdDrUbgPC4sIw2M0vzBm1MxuTte7zZtK7OTYAnWlKRp3aP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0eq+s4bL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTRAB2sihQNr4lrPLFeJhseFV/AJ0vpDT5OF3hXAR2N4lqkQGIWHmY4UlvtQsz5oY9MIRr4ngxTcFJfzz1tuVjQGQuYh2pcXJo43yXNEvc4rm3L8iRANSh+56UYNA2Rli+I5OWR+Ol7aaQdfhQuNmXrNAKiQ3YBRBBvf4aKbgqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rItay5dm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0eq+s4bL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D394C4CED1;
-	Wed, 19 Feb 2025 09:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rItay5dm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243B0C4CEE6;
+	Wed, 19 Feb 2025 09:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957336;
-	bh=uzmmus7CYBAIE+f6BB0oY8hUxc3UM/DZZ7ZkLjhzsNI=;
+	s=korg; t=1739957339;
+	bh=PqWMUUPh9QPFR3/1zqyuBlIpwumR144vYCZOORJ0O2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0eq+s4bLnr0G/PcJErSKqdJN3B4naWV/4ziaZTiGZq2taembfVoNoYLRT4/DGgqRY
-	 Xn/f7XIwh8SG1Mq5lP8NyCRJg0bfOvTNlY++q/ySQAkSuZhVdWqZf8KtFcEVon7Fq+
-	 /M7AWcpIZ7Galta1SHNVXxWsjBSQg7OsSf7NdeRo=
+	b=rItay5dm8sbEHQ/Tv1RVsRghplHX7FdUz9VmHZKmNLSkfMkRlSJyzRHjbzjAOimYs
+	 5fZub8SX3+rLJlXxXg+dYWz61VsRECOH5y2YDMVYMZJkfDmR9NVnwTo0j6a/O4JPgA
+	 gOSkWsbQFs2hUshsqC9VzJh6oWhwyb1LSorrtSZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <richard.weiyang@gmail.com>,
-	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
-	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 458/578] maple_tree: simplify split calculation
-Date: Wed, 19 Feb 2025 09:27:42 +0100
-Message-ID: <20250219082711.023421388@linuxfoundation.org>
+	Calvin Owens <calvin@wbinvd.org>,
+	Michal Schmidt <mschmidt@redhat.com>
+Subject: [PATCH 6.1 459/578] pps: Fix a use-after-free
+Date: Wed, 19 Feb 2025 09:27:43 +0100
+Message-ID: <20250219082711.062817322@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -53,112 +50,600 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <richard.weiyang@gmail.com>
+From: Calvin Owens <calvin@wbinvd.org>
 
-commit 4f6a6bed0bfef4b966f076f33eb4f5547226056a upstream.
+commit c79a39dc8d060b9e64e8b0fa9d245d44befeefbe upstream.
 
-Patch series "simplify split calculation", v3.
+On a board running ntpd and gpsd, I'm seeing a consistent use-after-free
+in sys_exit() from gpsd when rebooting:
 
+    pps pps1: removed
+    ------------[ cut here ]------------
+    kobject: '(null)' (00000000db4bec24): is not initialized, yet kobject_put() is being called.
+    WARNING: CPU: 2 PID: 440 at lib/kobject.c:734 kobject_put+0x120/0x150
+    CPU: 2 UID: 299 PID: 440 Comm: gpsd Not tainted 6.11.0-rc6-00308-gb31c44928842 #1
+    Hardware name: Raspberry Pi 4 Model B Rev 1.1 (DT)
+    pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+    pc : kobject_put+0x120/0x150
+    lr : kobject_put+0x120/0x150
+    sp : ffffffc0803d3ae0
+    x29: ffffffc0803d3ae0 x28: ffffff8042dc9738 x27: 0000000000000001
+    x26: 0000000000000000 x25: ffffff8042dc9040 x24: ffffff8042dc9440
+    x23: ffffff80402a4620 x22: ffffff8042ef4bd0 x21: ffffff80405cb600
+    x20: 000000000008001b x19: ffffff8040b3b6e0 x18: 0000000000000000
+    x17: 0000000000000000 x16: 0000000000000000 x15: 696e6920746f6e20
+    x14: 7369203a29343263 x13: 205d303434542020 x12: 0000000000000000
+    x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
+    x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
+    x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000000
+    x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+    Call trace:
+     kobject_put+0x120/0x150
+     cdev_put+0x20/0x3c
+     __fput+0x2c4/0x2d8
+     ____fput+0x1c/0x38
+     task_work_run+0x70/0xfc
+     do_exit+0x2a0/0x924
+     do_group_exit+0x34/0x90
+     get_signal+0x7fc/0x8c0
+     do_signal+0x128/0x13b4
+     do_notify_resume+0xdc/0x160
+     el0_svc+0xd4/0xf8
+     el0t_64_sync_handler+0x140/0x14c
+     el0t_64_sync+0x190/0x194
+    ---[ end trace 0000000000000000 ]---
 
-This patch (of 3):
+...followed by more symptoms of corruption, with similar stacks:
 
-The current calculation for splitting nodes tries to enforce a minimum
-span on the leaf nodes.  This code is complex and never worked correctly
-to begin with, due to the min value being passed as 0 for all leaves.
+    refcount_t: underflow; use-after-free.
+    kernel BUG at lib/list_debug.c:62!
+    Kernel panic - not syncing: Oops - BUG: Fatal exception
 
-The calculation should just split the data as equally as possible
-between the new nodes.  Note that b_end will be one more than the data,
-so the left side is still favoured in the calculation.
+This happens because pps_device_destruct() frees the pps_device with the
+embedded cdev immediately after calling cdev_del(), but, as the comment
+above cdev_del() notes, fops for previously opened cdevs are still
+callable even after cdev_del() returns. I think this bug has always
+been there: I can't explain why it suddenly started happening every time
+I reboot this particular board.
 
-The current code may also lead to a deficient node by not leaving enough
-data for the right side of the split. This issue is also addressed with
-the split calculation change.
+In commit d953e0e837e6 ("pps: Fix a use-after free bug when
+unregistering a source."), George Spelvin suggested removing the
+embedded cdev. That seems like the simplest way to fix this, so I've
+implemented his suggestion, using __register_chrdev() with pps_idr
+becoming the source of truth for which minor corresponds to which
+device.
 
-[Liam.Howlett@Oracle.com: rephrase the change log]
-Link: https://lkml.kernel.org/r/20241113031616.10530-1-richard.weiyang@gmail.com
-Link: https://lkml.kernel.org/r/20241113031616.10530-2-richard.weiyang@gmail.com
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
-Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+But now that pps_idr defines userspace visibility instead of cdev_add(),
+we need to be sure the pps->dev refcount can't reach zero while
+userspace can still find it again. So, the idr_remove() call moves to
+pps_unregister_cdev(), and pps_idr now holds a reference to pps->dev.
+
+    pps_core: source serial1 got cdev (251:1)
+    <...>
+    pps pps1: removed
+    pps_core: unregistering pps1
+    pps_core: deallocating pps1
+
+Fixes: d953e0e837e6 ("pps: Fix a use-after free bug when unregistering a source.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Calvin Owens <calvin@wbinvd.org>
+Reviewed-by: Michal Schmidt <mschmidt@redhat.com>
+Link: https://lore.kernel.org/r/a17975fd5ae99385791929e563f72564edbcf28f.1731383727.git.calvin@wbinvd.org
+Signed-off-by: Calvin Owens <calvin@wbinvd.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c |   23 ++++++-----------------
- 1 file changed, 6 insertions(+), 17 deletions(-)
+ drivers/pps/clients/pps-gpio.c    |    4 -
+ drivers/pps/clients/pps-ktimer.c  |    4 -
+ drivers/pps/clients/pps-ldisc.c   |    6 -
+ drivers/pps/clients/pps_parport.c |    4 -
+ drivers/pps/kapi.c                |   10 +-
+ drivers/pps/kc.c                  |   10 +-
+ drivers/pps/pps.c                 |  127 +++++++++++++++++++-------------------
+ drivers/ptp/ptp_ocp.c             |    2 
+ include/linux/pps_kernel.h        |    3 
+ 9 files changed, 87 insertions(+), 83 deletions(-)
 
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -1890,11 +1890,11 @@ static inline int mab_no_null_split(stru
-  * Return: The first split location.  The middle split is set in @mid_split.
+--- a/drivers/pps/clients/pps-gpio.c
++++ b/drivers/pps/clients/pps-gpio.c
+@@ -214,8 +214,8 @@ static int pps_gpio_probe(struct platfor
+ 		return -EINVAL;
+ 	}
+ 
+-	dev_info(data->pps->dev, "Registered IRQ %d as PPS source\n",
+-		 data->irq);
++	dev_dbg(&data->pps->dev, "Registered IRQ %d as PPS source\n",
++		data->irq);
+ 
+ 	return 0;
+ }
+--- a/drivers/pps/clients/pps-ktimer.c
++++ b/drivers/pps/clients/pps-ktimer.c
+@@ -56,7 +56,7 @@ static struct pps_source_info pps_ktimer
+ 
+ static void __exit pps_ktimer_exit(void)
+ {
+-	dev_info(pps->dev, "ktimer PPS source unregistered\n");
++	dev_dbg(&pps->dev, "ktimer PPS source unregistered\n");
+ 
+ 	del_timer_sync(&ktimer);
+ 	pps_unregister_source(pps);
+@@ -74,7 +74,7 @@ static int __init pps_ktimer_init(void)
+ 	timer_setup(&ktimer, pps_ktimer_event, 0);
+ 	mod_timer(&ktimer, jiffies + HZ);
+ 
+-	dev_info(pps->dev, "ktimer PPS source registered\n");
++	dev_dbg(&pps->dev, "ktimer PPS source registered\n");
+ 
+ 	return 0;
+ }
+--- a/drivers/pps/clients/pps-ldisc.c
++++ b/drivers/pps/clients/pps-ldisc.c
+@@ -32,7 +32,7 @@ static void pps_tty_dcd_change(struct tt
+ 	pps_event(pps, &ts, active ? PPS_CAPTUREASSERT :
+ 			PPS_CAPTURECLEAR, NULL);
+ 
+-	dev_dbg(pps->dev, "PPS %s at %lu\n",
++	dev_dbg(&pps->dev, "PPS %s at %lu\n",
+ 			active ? "assert" : "clear", jiffies);
+ }
+ 
+@@ -69,7 +69,7 @@ static int pps_tty_open(struct tty_struc
+ 		goto err_unregister;
+ 	}
+ 
+-	dev_info(pps->dev, "source \"%s\" added\n", info.path);
++	dev_dbg(&pps->dev, "source \"%s\" added\n", info.path);
+ 
+ 	return 0;
+ 
+@@ -89,7 +89,7 @@ static void pps_tty_close(struct tty_str
+ 	if (WARN_ON(!pps))
+ 		return;
+ 
+-	dev_info(pps->dev, "removed\n");
++	dev_info(&pps->dev, "removed\n");
+ 	pps_unregister_source(pps);
+ }
+ 
+--- a/drivers/pps/clients/pps_parport.c
++++ b/drivers/pps/clients/pps_parport.c
+@@ -81,7 +81,7 @@ static void parport_irq(void *handle)
+ 	/* check the signal (no signal means the pulse is lost this time) */
+ 	if (!signal_is_set(port)) {
+ 		local_irq_restore(flags);
+-		dev_err(dev->pps->dev, "lost the signal\n");
++		dev_err(&dev->pps->dev, "lost the signal\n");
+ 		goto out_assert;
+ 	}
+ 
+@@ -98,7 +98,7 @@ static void parport_irq(void *handle)
+ 	/* timeout */
+ 	dev->cw_err++;
+ 	if (dev->cw_err >= CLEAR_WAIT_MAX_ERRORS) {
+-		dev_err(dev->pps->dev, "disabled clear edge capture after %d"
++		dev_err(&dev->pps->dev, "disabled clear edge capture after %d"
+ 				" timeouts\n", dev->cw_err);
+ 		dev->cw = 0;
+ 		dev->cw_err = 0;
+--- a/drivers/pps/kapi.c
++++ b/drivers/pps/kapi.c
+@@ -41,7 +41,7 @@ static void pps_add_offset(struct pps_kt
+ static void pps_echo_client_default(struct pps_device *pps, int event,
+ 		void *data)
+ {
+-	dev_info(pps->dev, "echo %s %s\n",
++	dev_info(&pps->dev, "echo %s %s\n",
+ 		event & PPS_CAPTUREASSERT ? "assert" : "",
+ 		event & PPS_CAPTURECLEAR ? "clear" : "");
+ }
+@@ -112,7 +112,7 @@ struct pps_device *pps_register_source(s
+ 		goto kfree_pps;
+ 	}
+ 
+-	dev_info(pps->dev, "new PPS source %s\n", info->name);
++	dev_dbg(&pps->dev, "new PPS source %s\n", info->name);
+ 
+ 	return pps;
+ 
+@@ -166,7 +166,7 @@ void pps_event(struct pps_device *pps, s
+ 	/* check event type */
+ 	BUG_ON((event & (PPS_CAPTUREASSERT | PPS_CAPTURECLEAR)) == 0);
+ 
+-	dev_dbg(pps->dev, "PPS event at %lld.%09ld\n",
++	dev_dbg(&pps->dev, "PPS event at %lld.%09ld\n",
+ 			(s64)ts->ts_real.tv_sec, ts->ts_real.tv_nsec);
+ 
+ 	timespec_to_pps_ktime(&ts_real, ts->ts_real);
+@@ -188,7 +188,7 @@ void pps_event(struct pps_device *pps, s
+ 		/* Save the time stamp */
+ 		pps->assert_tu = ts_real;
+ 		pps->assert_sequence++;
+-		dev_dbg(pps->dev, "capture assert seq #%u\n",
++		dev_dbg(&pps->dev, "capture assert seq #%u\n",
+ 			pps->assert_sequence);
+ 
+ 		captured = ~0;
+@@ -202,7 +202,7 @@ void pps_event(struct pps_device *pps, s
+ 		/* Save the time stamp */
+ 		pps->clear_tu = ts_real;
+ 		pps->clear_sequence++;
+-		dev_dbg(pps->dev, "capture clear seq #%u\n",
++		dev_dbg(&pps->dev, "capture clear seq #%u\n",
+ 			pps->clear_sequence);
+ 
+ 		captured = ~0;
+--- a/drivers/pps/kc.c
++++ b/drivers/pps/kc.c
+@@ -43,11 +43,11 @@ int pps_kc_bind(struct pps_device *pps,
+ 			pps_kc_hardpps_mode = 0;
+ 			pps_kc_hardpps_dev = NULL;
+ 			spin_unlock_irq(&pps_kc_hardpps_lock);
+-			dev_info(pps->dev, "unbound kernel"
++			dev_info(&pps->dev, "unbound kernel"
+ 					" consumer\n");
+ 		} else {
+ 			spin_unlock_irq(&pps_kc_hardpps_lock);
+-			dev_err(pps->dev, "selected kernel consumer"
++			dev_err(&pps->dev, "selected kernel consumer"
+ 					" is not bound\n");
+ 			return -EINVAL;
+ 		}
+@@ -57,11 +57,11 @@ int pps_kc_bind(struct pps_device *pps,
+ 			pps_kc_hardpps_mode = bind_args->edge;
+ 			pps_kc_hardpps_dev = pps;
+ 			spin_unlock_irq(&pps_kc_hardpps_lock);
+-			dev_info(pps->dev, "bound kernel consumer: "
++			dev_info(&pps->dev, "bound kernel consumer: "
+ 				"edge=0x%x\n", bind_args->edge);
+ 		} else {
+ 			spin_unlock_irq(&pps_kc_hardpps_lock);
+-			dev_err(pps->dev, "another kernel consumer"
++			dev_err(&pps->dev, "another kernel consumer"
+ 					" is already bound\n");
+ 			return -EINVAL;
+ 		}
+@@ -83,7 +83,7 @@ void pps_kc_remove(struct pps_device *pp
+ 		pps_kc_hardpps_mode = 0;
+ 		pps_kc_hardpps_dev = NULL;
+ 		spin_unlock_irq(&pps_kc_hardpps_lock);
+-		dev_info(pps->dev, "unbound kernel consumer"
++		dev_info(&pps->dev, "unbound kernel consumer"
+ 				" on device removal\n");
+ 	} else
+ 		spin_unlock_irq(&pps_kc_hardpps_lock);
+--- a/drivers/pps/pps.c
++++ b/drivers/pps/pps.c
+@@ -25,7 +25,7 @@
+  * Local variables
   */
- static inline int mab_calc_split(struct ma_state *mas,
--	 struct maple_big_node *bn, unsigned char *mid_split, unsigned long min)
-+	 struct maple_big_node *bn, unsigned char *mid_split)
- {
- 	unsigned char b_end = bn->b_end;
- 	int split = b_end / 2; /* Assume equal split. */
--	unsigned char slot_min, slot_count = mt_slots[bn->type];
-+	unsigned char slot_count = mt_slots[bn->type];
  
- 	/*
- 	 * To support gap tracking, all NULL entries are kept together and a node cannot
-@@ -1927,18 +1927,7 @@ static inline int mab_calc_split(struct
- 		split = b_end / 3;
- 		*mid_split = split * 2;
- 	} else {
--		slot_min = mt_min_slots[bn->type];
+-static dev_t pps_devt;
++static int pps_major;
+ static struct class *pps_class;
+ 
+ static DEFINE_MUTEX(pps_idr_lock);
+@@ -62,7 +62,7 @@ static int pps_cdev_pps_fetch(struct pps
+ 	else {
+ 		unsigned long ticks;
+ 
+-		dev_dbg(pps->dev, "timeout %lld.%09d\n",
++		dev_dbg(&pps->dev, "timeout %lld.%09d\n",
+ 				(long long) fdata->timeout.sec,
+ 				fdata->timeout.nsec);
+ 		ticks = fdata->timeout.sec * HZ;
+@@ -80,7 +80,7 @@ static int pps_cdev_pps_fetch(struct pps
+ 
+ 	/* Check for pending signals */
+ 	if (err == -ERESTARTSYS) {
+-		dev_dbg(pps->dev, "pending signal caught\n");
++		dev_dbg(&pps->dev, "pending signal caught\n");
+ 		return -EINTR;
+ 	}
+ 
+@@ -98,7 +98,7 @@ static long pps_cdev_ioctl(struct file *
+ 
+ 	switch (cmd) {
+ 	case PPS_GETPARAMS:
+-		dev_dbg(pps->dev, "PPS_GETPARAMS\n");
++		dev_dbg(&pps->dev, "PPS_GETPARAMS\n");
+ 
+ 		spin_lock_irq(&pps->lock);
+ 
+@@ -114,7 +114,7 @@ static long pps_cdev_ioctl(struct file *
+ 		break;
+ 
+ 	case PPS_SETPARAMS:
+-		dev_dbg(pps->dev, "PPS_SETPARAMS\n");
++		dev_dbg(&pps->dev, "PPS_SETPARAMS\n");
+ 
+ 		/* Check the capabilities */
+ 		if (!capable(CAP_SYS_TIME))
+@@ -124,14 +124,14 @@ static long pps_cdev_ioctl(struct file *
+ 		if (err)
+ 			return -EFAULT;
+ 		if (!(params.mode & (PPS_CAPTUREASSERT | PPS_CAPTURECLEAR))) {
+-			dev_dbg(pps->dev, "capture mode unspecified (%x)\n",
++			dev_dbg(&pps->dev, "capture mode unspecified (%x)\n",
+ 								params.mode);
+ 			return -EINVAL;
+ 		}
+ 
+ 		/* Check for supported capabilities */
+ 		if ((params.mode & ~pps->info.mode) != 0) {
+-			dev_dbg(pps->dev, "unsupported capabilities (%x)\n",
++			dev_dbg(&pps->dev, "unsupported capabilities (%x)\n",
+ 								params.mode);
+ 			return -EINVAL;
+ 		}
+@@ -144,7 +144,7 @@ static long pps_cdev_ioctl(struct file *
+ 		/* Restore the read only parameters */
+ 		if ((params.mode & (PPS_TSFMT_TSPEC | PPS_TSFMT_NTPFP)) == 0) {
+ 			/* section 3.3 of RFC 2783 interpreted */
+-			dev_dbg(pps->dev, "time format unspecified (%x)\n",
++			dev_dbg(&pps->dev, "time format unspecified (%x)\n",
+ 								params.mode);
+ 			pps->params.mode |= PPS_TSFMT_TSPEC;
+ 		}
+@@ -165,7 +165,7 @@ static long pps_cdev_ioctl(struct file *
+ 		break;
+ 
+ 	case PPS_GETCAP:
+-		dev_dbg(pps->dev, "PPS_GETCAP\n");
++		dev_dbg(&pps->dev, "PPS_GETCAP\n");
+ 
+ 		err = put_user(pps->info.mode, iuarg);
+ 		if (err)
+@@ -176,7 +176,7 @@ static long pps_cdev_ioctl(struct file *
+ 	case PPS_FETCH: {
+ 		struct pps_fdata fdata;
+ 
+-		dev_dbg(pps->dev, "PPS_FETCH\n");
++		dev_dbg(&pps->dev, "PPS_FETCH\n");
+ 
+ 		err = copy_from_user(&fdata, uarg, sizeof(struct pps_fdata));
+ 		if (err)
+@@ -206,7 +206,7 @@ static long pps_cdev_ioctl(struct file *
+ 	case PPS_KC_BIND: {
+ 		struct pps_bind_args bind_args;
+ 
+-		dev_dbg(pps->dev, "PPS_KC_BIND\n");
++		dev_dbg(&pps->dev, "PPS_KC_BIND\n");
+ 
+ 		/* Check the capabilities */
+ 		if (!capable(CAP_SYS_TIME))
+@@ -218,7 +218,7 @@ static long pps_cdev_ioctl(struct file *
+ 
+ 		/* Check for supported capabilities */
+ 		if ((bind_args.edge & ~pps->info.mode) != 0) {
+-			dev_err(pps->dev, "unsupported capabilities (%x)\n",
++			dev_err(&pps->dev, "unsupported capabilities (%x)\n",
+ 					bind_args.edge);
+ 			return -EINVAL;
+ 		}
+@@ -227,7 +227,7 @@ static long pps_cdev_ioctl(struct file *
+ 		if (bind_args.tsformat != PPS_TSFMT_TSPEC ||
+ 				(bind_args.edge & ~PPS_CAPTUREBOTH) != 0 ||
+ 				bind_args.consumer != PPS_KC_HARDPPS) {
+-			dev_err(pps->dev, "invalid kernel consumer bind"
++			dev_err(&pps->dev, "invalid kernel consumer bind"
+ 					" parameters (%x)\n", bind_args.edge);
+ 			return -EINVAL;
+ 		}
+@@ -259,7 +259,7 @@ static long pps_cdev_compat_ioctl(struct
+ 		struct pps_fdata fdata;
+ 		int err;
+ 
+-		dev_dbg(pps->dev, "PPS_FETCH\n");
++		dev_dbg(&pps->dev, "PPS_FETCH\n");
+ 
+ 		err = copy_from_user(&compat, uarg, sizeof(struct pps_fdata_compat));
+ 		if (err)
+@@ -296,20 +296,36 @@ static long pps_cdev_compat_ioctl(struct
+ #define pps_cdev_compat_ioctl	NULL
+ #endif
+ 
++static struct pps_device *pps_idr_get(unsigned long id)
++{
++	struct pps_device *pps;
++
++	mutex_lock(&pps_idr_lock);
++	pps = idr_find(&pps_idr, id);
++	if (pps)
++		get_device(&pps->dev);
++
++	mutex_unlock(&pps_idr_lock);
++	return pps;
++}
++
+ static int pps_cdev_open(struct inode *inode, struct file *file)
+ {
+-	struct pps_device *pps = container_of(inode->i_cdev,
+-						struct pps_device, cdev);
++	struct pps_device *pps = pps_idr_get(iminor(inode));
++
++	if (!pps)
++		return -ENODEV;
++
+ 	file->private_data = pps;
+-	kobject_get(&pps->dev->kobj);
+ 	return 0;
+ }
+ 
+ static int pps_cdev_release(struct inode *inode, struct file *file)
+ {
+-	struct pps_device *pps = container_of(inode->i_cdev,
+-						struct pps_device, cdev);
+-	kobject_put(&pps->dev->kobj);
++	struct pps_device *pps = file->private_data;
++
++	WARN_ON(pps->id != iminor(inode));
++	put_device(&pps->dev);
+ 	return 0;
+ }
+ 
+@@ -332,22 +348,13 @@ static void pps_device_destruct(struct d
+ {
+ 	struct pps_device *pps = dev_get_drvdata(dev);
+ 
+-	cdev_del(&pps->cdev);
 -
- 		*mid_split = 0;
--		/*
--		 * Avoid having a range less than the slot count unless it
--		 * causes one node to be deficient.
--		 * NOTE: mt_min_slots is 1 based, b_end and split are zero.
--		 */
--		while ((split < slot_count - 1) &&
--		       ((bn->pivot[split] - min) < slot_count - 1) &&
--		       (b_end - split > slot_min))
--			split++;
- 	}
+-	/* Now we can release the ID for re-use */
+ 	pr_debug("deallocating pps%d\n", pps->id);
+-	mutex_lock(&pps_idr_lock);
+-	idr_remove(&pps_idr, pps->id);
+-	mutex_unlock(&pps_idr_lock);
+-
+-	kfree(dev);
+ 	kfree(pps);
+ }
  
- 	/* Avoid ending a node on a NULL entry */
-@@ -2664,7 +2653,7 @@ static inline struct maple_enode
- static inline unsigned char mas_mab_to_node(struct ma_state *mas,
- 	struct maple_big_node *b_node, struct maple_enode **left,
- 	struct maple_enode **right, struct maple_enode **middle,
--	unsigned char *mid_split, unsigned long min)
-+	unsigned char *mid_split)
+ int pps_register_cdev(struct pps_device *pps)
  {
- 	unsigned char split = 0;
- 	unsigned char slot_count = mt_slots[b_node->type];
-@@ -2677,7 +2666,7 @@ static inline unsigned char mas_mab_to_n
- 	if (b_node->b_end < slot_count) {
- 		split = b_node->b_end;
- 	} else {
--		split = mab_calc_split(mas, b_node, mid_split, min);
-+		split = mab_calc_split(mas, b_node, mid_split);
- 		*right = mas_new_ma_node(mas, b_node);
+ 	int err;
+-	dev_t devt;
+ 
+ 	mutex_lock(&pps_idr_lock);
+ 	/*
+@@ -364,40 +371,29 @@ int pps_register_cdev(struct pps_device
+ 		goto out_unlock;
  	}
+ 	pps->id = err;
+-	mutex_unlock(&pps_idr_lock);
+-
+-	devt = MKDEV(MAJOR(pps_devt), pps->id);
+-
+-	cdev_init(&pps->cdev, &pps_cdev_fops);
+-	pps->cdev.owner = pps->info.owner;
  
-@@ -3076,7 +3065,7 @@ static int mas_spanning_rebalance(struct
- 		mast->bn->b_end--;
- 		mast->bn->type = mte_node_type(mast->orig_l->node);
- 		split = mas_mab_to_node(mas, mast->bn, &left, &right, &middle,
--					&mid_split, mast->orig_l->min);
-+					&mid_split);
- 		mast_set_split_parents(mast, left, middle, right, split,
- 				       mid_split);
- 		mast_cp_to_nodes(mast, left, middle, right, split, mid_split);
-@@ -3591,7 +3580,7 @@ static int mas_split(struct ma_state *ma
- 		if (mas_push_data(mas, height, &mast, false))
- 			break;
+-	err = cdev_add(&pps->cdev, devt, 1);
+-	if (err) {
+-		pr_err("%s: failed to add char device %d:%d\n",
+-				pps->info.name, MAJOR(pps_devt), pps->id);
++	pps->dev.class = pps_class;
++	pps->dev.parent = pps->info.dev;
++	pps->dev.devt = MKDEV(pps_major, pps->id);
++	dev_set_drvdata(&pps->dev, pps);
++	dev_set_name(&pps->dev, "pps%d", pps->id);
++	err = device_register(&pps->dev);
++	if (err)
+ 		goto free_idr;
+-	}
+-	pps->dev = device_create(pps_class, pps->info.dev, devt, pps,
+-							"pps%d", pps->id);
+-	if (IS_ERR(pps->dev)) {
+-		err = PTR_ERR(pps->dev);
+-		goto del_cdev;
+-	}
  
--		split = mab_calc_split(mas, b_node, &mid_split, prev_l_mas.min);
-+		split = mab_calc_split(mas, b_node, &mid_split);
- 		mast_split_data(&mast, mas, split);
- 		/*
- 		 * Usually correct, mab_mas_cp in the above call overwrites
+ 	/* Override the release function with our own */
+-	pps->dev->release = pps_device_destruct;
++	pps->dev.release = pps_device_destruct;
+ 
+-	pr_debug("source %s got cdev (%d:%d)\n", pps->info.name,
+-			MAJOR(pps_devt), pps->id);
++	pr_debug("source %s got cdev (%d:%d)\n", pps->info.name, pps_major,
++		 pps->id);
+ 
++	get_device(&pps->dev);
++	mutex_unlock(&pps_idr_lock);
+ 	return 0;
+ 
+-del_cdev:
+-	cdev_del(&pps->cdev);
+-
+ free_idr:
+-	mutex_lock(&pps_idr_lock);
+ 	idr_remove(&pps_idr, pps->id);
++	put_device(&pps->dev);
+ out_unlock:
+ 	mutex_unlock(&pps_idr_lock);
+ 	return err;
+@@ -407,7 +403,13 @@ void pps_unregister_cdev(struct pps_devi
+ {
+ 	pr_debug("unregistering pps%d\n", pps->id);
+ 	pps->lookup_cookie = NULL;
+-	device_destroy(pps_class, pps->dev->devt);
++	device_destroy(pps_class, pps->dev.devt);
++
++	/* Now we can release the ID for re-use */
++	mutex_lock(&pps_idr_lock);
++	idr_remove(&pps_idr, pps->id);
++	put_device(&pps->dev);
++	mutex_unlock(&pps_idr_lock);
+ }
+ 
+ /*
+@@ -427,6 +429,11 @@ void pps_unregister_cdev(struct pps_devi
+  * so that it will not be used again, even if the pps device cannot
+  * be removed from the idr due to pending references holding the minor
+  * number in use.
++ *
++ * Since pps_idr holds a reference to the device, the returned
++ * pps_device is guaranteed to be valid until pps_unregister_cdev() is
++ * called on it. But after calling pps_unregister_cdev(), it may be
++ * freed at any time.
+  */
+ struct pps_device *pps_lookup_dev(void const *cookie)
+ {
+@@ -449,13 +456,11 @@ EXPORT_SYMBOL(pps_lookup_dev);
+ static void __exit pps_exit(void)
+ {
+ 	class_destroy(pps_class);
+-	unregister_chrdev_region(pps_devt, PPS_MAX_SOURCES);
++	__unregister_chrdev(pps_major, 0, PPS_MAX_SOURCES, "pps");
+ }
+ 
+ static int __init pps_init(void)
+ {
+-	int err;
+-
+ 	pps_class = class_create(THIS_MODULE, "pps");
+ 	if (IS_ERR(pps_class)) {
+ 		pr_err("failed to allocate class\n");
+@@ -463,8 +468,9 @@ static int __init pps_init(void)
+ 	}
+ 	pps_class->dev_groups = pps_groups;
+ 
+-	err = alloc_chrdev_region(&pps_devt, 0, PPS_MAX_SOURCES, "pps");
+-	if (err < 0) {
++	pps_major = __register_chrdev(0, 0, PPS_MAX_SOURCES, "pps",
++				      &pps_cdev_fops);
++	if (pps_major < 0) {
+ 		pr_err("failed to allocate char device region\n");
+ 		goto remove_class;
+ 	}
+@@ -477,8 +483,7 @@ static int __init pps_init(void)
+ 
+ remove_class:
+ 	class_destroy(pps_class);
+-
+-	return err;
++	return pps_major;
+ }
+ 
+ subsys_initcall(pps_init);
+--- a/drivers/ptp/ptp_ocp.c
++++ b/drivers/ptp/ptp_ocp.c
+@@ -3589,7 +3589,7 @@ ptp_ocp_complete(struct ptp_ocp *bp)
+ 
+ 	pps = pps_lookup_dev(bp->ptp);
+ 	if (pps)
+-		ptp_ocp_symlink(bp, pps->dev, "pps");
++		ptp_ocp_symlink(bp, &pps->dev, "pps");
+ 
+ 	ptp_ocp_debugfs_add_device(bp);
+ 
+--- a/include/linux/pps_kernel.h
++++ b/include/linux/pps_kernel.h
+@@ -56,8 +56,7 @@ struct pps_device {
+ 
+ 	unsigned int id;			/* PPS source unique ID */
+ 	void const *lookup_cookie;		/* For pps_lookup_dev() only */
+-	struct cdev cdev;
+-	struct device *dev;
++	struct device dev;
+ 	struct fasync_struct *async_queue;	/* fasync method */
+ 	spinlock_t lock;
+ };
 
 
