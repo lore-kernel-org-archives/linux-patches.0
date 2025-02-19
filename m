@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A64155753;
-	Wed, 19 Feb 2025 08:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEDB1C5F0C;
+	Wed, 19 Feb 2025 08:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739953835; cv=none; b=jFjrCUbnJxhxeAKtz5g/TRIf4AWoVKmw6HdpQEITcWnVCo3iNEqOff/QnBZt/wEpa7mrLzAt9WPMtiawZ6BntbbonZ3/fEz14SklHu0pYKgLaTTwzcF6YXKiff4SQLr+u03Rd81Eq/9NxXYLek4bwTMlyc+Qjx8+CUVPosXUMPQ=
+	t=1739953837; cv=none; b=EXc6lFarsI7uY48WzGIXQ4uG4T9ylj186Pul92QSJ7Zm84nhDLirSpRs62ByW/eK83DaBgS2i/9xAQ9QKubmLxEZ2xn8rb114GEag+5ZR81du+iIldUwKVviTtt04EgsZb24Po8qspRvKCAa0ZYX2ffYLrcv6FSOoQu+KpnnJlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739953835; c=relaxed/simple;
-	bh=UvWW3FJrvK6fFryn71boterP599IFTEKFLCQYjneDFg=;
+	s=arc-20240116; t=1739953837; c=relaxed/simple;
+	bh=iLeFcNaTgNBdmh4ckvRMpnwldyTvv3Pk/7ZnCaKXvPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hKKRqAmo/kUyt4HvqswO+tc6ZpuaK1daDsWs+fhZHqRLXLX+0HRvi7kUfKMGnbC6cslEcE+DVusfV0/x9RteJlx1EkkYESXlMkG3U4u+28TWCenhYZ4RuYQ6qBZxQxSbWPubd85kkwgRPLLkzJ/G1Nd1K17lyg5n1GgdWPqdajk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbdA03J9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K4Osw3WgLje4wq/LQsqWKP6FZ6oXNsX/9u2NiWIzkckZNvd0WNhkdMa7p06neTBgQX8u8dRJ9Yj8ZaKmzmO9NxxwsODMxmVWhk6bGxjyhII8K9loWu39A8peRPnnAp/5oAUbX5Evm2hDd15HFE/M+YTJsy21l/Jtpsez8MQsDlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DSJWQHE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbdA03J9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A83C4CEE7;
-	Wed, 19 Feb 2025 08:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DSJWQHE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447FDC4CEE6;
+	Wed, 19 Feb 2025 08:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739953834;
-	bh=UvWW3FJrvK6fFryn71boterP599IFTEKFLCQYjneDFg=;
+	s=korg; t=1739953837;
+	bh=iLeFcNaTgNBdmh4ckvRMpnwldyTvv3Pk/7ZnCaKXvPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PbdA03J9TCxlWG+C2LJE3g+YqySrKJ3ZCIclJ3uii+/AUT4J0FOEKZ77vlf24Bs3i
-	 oEvj2w2VcPkrCrTsSPfqhey3yAAK92QF4U5X0JdhINP8bzMS8pDqE7VeP6dsLwv413
-	 rGCv3S2hKgJ/1raP7ju4lVWEAhbAkMouoyzPCnAY=
+	b=2DSJWQHEJtJ9dRWk57jsmH8V2orgTVpapS6Dls2ScL993DexuK8pCGME83N9GtMwq
+	 ZoB94vyOrOtuqVROLXKxydxsQiVIv1JyMQyyY5KCpF3RTshrB2Z7zxj7P0Ec9OtjB7
+	 HgQs0bjMlG7G+0vuHyG5pQ14ExqgmFh9dUXmkSm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	kernel test robot <lkp@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 013/274] HID: multitouch: Add NULL check in mt_input_configured
-Date: Wed, 19 Feb 2025 09:24:27 +0100
-Message-ID: <20250219082610.057633555@linuxfoundation.org>
+Subject: [PATCH 6.13 014/274] scripts/Makefile.extrawarn: Do not show clangs non-kprintf warnings at W=1
+Date: Wed, 19 Feb 2025 09:24:28 +0100
+Message-ID: <20250219082610.096596181@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -51,41 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 9b8e2220d3a052a690b1d1b23019673e612494c5 ]
+[ Upstream commit 738fc998b639407346a9e026514f0562301462cd ]
 
-devm_kasprintf() can return a NULL pointer on failure,but this
-returned value in mt_input_configured() is not checked.
-Add NULL check in mt_input_configured(), to handle kernel NULL
-pointer dereference error.
+Clang's -Wformat-overflow and -Wformat-truncation have chosen to check
+'%p' unlike GCC but it does not know about the kernel's pointer
+extensions in lib/vsprintf.c, so the developers split that part of the
+warning out for the kernel to disable because there will always be false
+positives.
 
-Fixes: 479439463529 ("HID: multitouch: Correct devm device reference for hidinput input_dev name")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Commit 908dd508276d ("kbuild: enable -Wformat-truncation on clang") did
+disabled these warnings but only in a block that would be called when
+W=1 was not passed, so they would appear with W=1. Move the disabling of
+the non-kprintf warnings to a block that always runs so that they are
+never seen, regardless of warning level.
+
+Fixes: 908dd508276d ("kbuild: enable -Wformat-truncation on clang")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501291646.VtwF98qd-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ scripts/Makefile.extrawarn | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 82900857bfd87..e50887a6d22c2 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -1679,9 +1679,12 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
- 		break;
- 	}
+diff --git a/scripts/Makefile.extrawarn b/scripts/Makefile.extrawarn
+index 04faf15ed316a..d75897559d184 100644
+--- a/scripts/Makefile.extrawarn
++++ b/scripts/Makefile.extrawarn
+@@ -31,6 +31,11 @@ KBUILD_CFLAGS-$(CONFIG_CC_NO_ARRAY_BOUNDS) += -Wno-array-bounds
+ ifdef CONFIG_CC_IS_CLANG
+ # The kernel builds with '-std=gnu11' so use of GNU extensions is acceptable.
+ KBUILD_CFLAGS += -Wno-gnu
++
++# Clang checks for overflow/truncation with '%p', while GCC does not:
++# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111219
++KBUILD_CFLAGS += $(call cc-disable-warning, format-overflow-non-kprintf)
++KBUILD_CFLAGS += $(call cc-disable-warning, format-truncation-non-kprintf)
+ else
  
--	if (suffix)
-+	if (suffix) {
- 		hi->input->name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
- 						 "%s %s", hdev->name, suffix);
-+		if (!hi->input->name)
-+			return -ENOMEM;
-+	}
+ # gcc inanely warns about local variables called 'main'
+@@ -102,11 +107,6 @@ KBUILD_CFLAGS += $(call cc-disable-warning, packed-not-aligned)
+ KBUILD_CFLAGS += $(call cc-disable-warning, format-overflow)
+ ifdef CONFIG_CC_IS_GCC
+ KBUILD_CFLAGS += $(call cc-disable-warning, format-truncation)
+-else
+-# Clang checks for overflow/truncation with '%p', while GCC does not:
+-# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111219
+-KBUILD_CFLAGS += $(call cc-disable-warning, format-overflow-non-kprintf)
+-KBUILD_CFLAGS += $(call cc-disable-warning, format-truncation-non-kprintf)
+ endif
+ KBUILD_CFLAGS += $(call cc-disable-warning, stringop-truncation)
  
- 	return 0;
- }
 -- 
 2.39.5
 
