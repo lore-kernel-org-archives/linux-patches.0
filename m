@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930AF1B6D0A;
-	Wed, 19 Feb 2025 08:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2F11D47A2;
+	Wed, 19 Feb 2025 08:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955095; cv=none; b=Ft/hVERwJlRXON9KzQVrBVKBUFMlDwUUH564x485CbWW+H6/WXlDo9XE6lyLtCUzIoLtncD/hJPLUHlH1RG1U8qLyThn2TEWyj2HBgsJxHugaXJdKz6XmSrlD9rv1s+w7DOUrhnOYY5s0ZBOy0cEPsFrYXroZMitkYlcaXWTcuU=
+	t=1739955098; cv=none; b=uyrtqKF1rMLfznYI3/hlz5Va9oYjncjp48o/T4kPSoDVW3X/WAZkbhkzdftIaAXsI7P9xa+5RbndmbtCKToQJ7t+Gi9VcSgOvM/60Vs1otaoL2Q1MAprCYiz9LNDNqRkCFZ8aMK6MCbvj91w7e89ZhWym3To+j44c7MIWAHWYKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955095; c=relaxed/simple;
-	bh=unFYozWLdHewEgyxeg0f5CpDgyJLidw275xsS8mlwyE=;
+	s=arc-20240116; t=1739955098; c=relaxed/simple;
+	bh=HGrnZXnPN81LzYrRBpASryEm6CzYH8724BcknCk50ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UT0JY/jYAxvNM00vHFJPP4nzPTM3aPL+o9lT+dV5rlY9n+pXa8XnnPlJMTtChaKYUo+4CXaxC31UbJ+CFe8/7uiIoH/zFH7WiSt6ExpC1PLTO4ULysqqE+jZIyQ4WzGvwev2g8/R5Rtxhwyt5ie6bC9WjJoIp4IgroNlkUjmmck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxxkvPHA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iaUibBClpY0hiOpVJRdwEab73/Q6HGuzlY0MOg2gdS93+DLErt+ezUdRq0bQMAemNjsRRYGrBiMYHIYBa9DMKPnha1v78bikkucTjF1XxZ2UcI+H78Y+37KhNpiRtXRqp97azS8t8HLtzPD5Mf0DS5q0gnjGgoB19Fql4jbVW9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MI8/UTMi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxxkvPHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1513EC4CED1;
-	Wed, 19 Feb 2025 08:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MI8/UTMi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D94C4CEE6;
+	Wed, 19 Feb 2025 08:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955095;
-	bh=unFYozWLdHewEgyxeg0f5CpDgyJLidw275xsS8mlwyE=;
+	s=korg; t=1739955098;
+	bh=HGrnZXnPN81LzYrRBpASryEm6CzYH8724BcknCk50ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxxkvPHA7zD3g0dthvRttPSxVlE/t6LEri2jVVp29m8TZgqoRjoIzLWI3NjzbOwwU
-	 LZ5jq8Wf8Dgv2yxh5cNPR98Hwii9kdT36r72hS7DxuPf5eOlDN5Wk6ZpW6QqmFOfTH
-	 2JH9I0OE+E5F4OPSaFiTZ4DZIW9QxRB37ga8KTDE=
+	b=MI8/UTMiQACLdKzoHwfp1MH6XxJE6VAH1hkqMo2nEyB90GtIxqLReNAmjNR48WPpZ
+	 Ll0UyzsXySZYRE3fmt9AUheWPy8KEllzKxaxZBXKOGQZSAqg0SosEoekyyS5tFyhAf
+	 GIG0aWsLJfDfwTKVfMP7rkqZ0YQSTXjlDXVCrdZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lijo Lazar <lijo.lazar@amd.com>,
+	Jiang Liu <gerry@linux.alibaba.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 098/230] drm/amdgpu: bump version for RV/PCO compute fix
-Date: Wed, 19 Feb 2025 09:26:55 +0100
-Message-ID: <20250219082605.530543710@linuxfoundation.org>
+Subject: [PATCH 6.12 099/230] drm/amdgpu: avoid buffer overflow attach in smu_sys_set_pp_table()
+Date: Wed, 19 Feb 2025 09:26:56 +0100
+Message-ID: <20250219082605.569700904@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -50,35 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jiang Liu <gerry@linux.alibaba.com>
 
-commit 55ed2b1b50d029dd7e49a35f6628ca64db6d75d8 upstream.
+commit 1abb2648698bf10783d2236a6b4a7ca5e8021699 upstream.
 
-Bump the driver version for RV/PCO compute stability fix
-so mesa can use this check to enable compute queues on
-RV/PCO.
+It malicious user provides a small pptable through sysfs and then
+a bigger pptable, it may cause buffer overflow attack in function
+smu_sys_set_pp_table().
 
 Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Jiang Liu <gerry@linux.alibaba.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.12.x
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |    3 ++-
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -119,9 +119,10 @@
-  * - 3.58.0 - Add GFX12 DCC support
-  * - 3.59.0 - Cleared VRAM
-  * - 3.60.0 - Add AMDGPU_TILING_GFX12_DCC_WRITE_COMPRESS_DISABLE (Vulkan requirement)
-+ * - 3.61.0 - Contains fix for RV/PCO compute queues
-  */
- #define KMS_DRIVER_MAJOR	3
--#define KMS_DRIVER_MINOR	60
-+#define KMS_DRIVER_MINOR	61
- #define KMS_DRIVER_PATCHLEVEL	0
+--- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
+@@ -607,7 +607,8 @@ static int smu_sys_set_pp_table(void *ha
+ 		return -EIO;
+ 	}
  
- /*
+-	if (!smu_table->hardcode_pptable) {
++	if (!smu_table->hardcode_pptable || smu_table->power_play_table_size < size) {
++		kfree(smu_table->hardcode_pptable);
+ 		smu_table->hardcode_pptable = kzalloc(size, GFP_KERNEL);
+ 		if (!smu_table->hardcode_pptable)
+ 			return -ENOMEM;
 
 
