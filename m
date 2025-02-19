@@ -1,44 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5421E17A2FE;
-	Wed, 19 Feb 2025 09:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B501DF732;
+	Wed, 19 Feb 2025 09:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956523; cv=none; b=nRLJkjXSf2UJjhdD8Iulm9H+zDyhEB2izlf28CVPozg07G9mRgyud6TBGlDtMH03iTg3hnZoEMiFLYQB1oVJwaxKrcCNePnS05uGU6kM3TRod77D1Ama/56juCv1/QJAXNEXIxd6UoAv/7l2Ixob+t2L2l3NledecRosV60V/CA=
+	t=1739956525; cv=none; b=PklGjumUTqoYwt37+bc13qeY+rFCf1HIUGkpD9Mx4XV5BjqAEiFDD1CIwMyoVG32r+nVxTDCcPQG/CrdCZ78bBdi5MniTHvgtTQHxbs9Gzk2z7Vawtw7EhC+r9VsUW1EMW6y92Bdtx1V4DVMf6Ec5JAQ8XZ9BnxY5DCHtgABmL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956523; c=relaxed/simple;
-	bh=sXfv+yVXqXQyYuzbqtSozsK3ZQor9pmpDqlG7A7oPTI=;
+	s=arc-20240116; t=1739956525; c=relaxed/simple;
+	bh=CsTBlu4PxzMm58+7iDpVQaMfkefep16Cd8DGhQ3z9z0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R5Gmy8beVbSsIQit9fRGRyYjkT6Jm4e9hMaI2wn3qgo/J2c+R8h2Np8V9BkWJMf9Hy/IlbPrfOCMLwE36c4pze188hmiA9pJmCbDbyvdj4NKwfWWONh70BNf5y+w6dZZY4lHF1BwO7YNdFDm0g4GfouO8Me+Nh4PVMOWKl1mgNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSun7rxC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lN9y1zwf86mvbkXGHtOD5PMx2o+hFttw7F8vxTlfFBxe7JhcdL1w2sVzibXaA8gpws8hHbmh8gCfDXGxCdeaPxmlGVn7no3iroBE5jwwkihwGEZRz+BZF4L8+uDexjdNwD83F+IJHiItNVNt0p2/7GWIfkxaLiAMKBaCGzG4pvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8TRMQcE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSun7rxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71211C4CEE6;
-	Wed, 19 Feb 2025 09:15:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8TRMQcE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156F1C4CEE6;
+	Wed, 19 Feb 2025 09:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956522;
-	bh=sXfv+yVXqXQyYuzbqtSozsK3ZQor9pmpDqlG7A7oPTI=;
+	s=korg; t=1739956525;
+	bh=CsTBlu4PxzMm58+7iDpVQaMfkefep16Cd8DGhQ3z9z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LSun7rxCQWDwasF5eqGVFuA5cqgO8stt9YivH657VsMcs5G8lPKnqQlXKceG0kd+G
-	 yLRWFUxFUIVTUQrRYJHw5RT2HcE4KTR+B2ZWzwzEUWZ5KCciQsj+I7GMF/Rnb26zQO
-	 Nf84HDHa9HEbvsKJViLv/Dtk3oJb9k00aoPVsUEU=
+	b=Y8TRMQcELYUxVdPvJ5lCUInj7sehoS/tSEJHfwcgDlEQPwtucx3AA+KBVFj1bOx7d
+	 xuDoCnYn0UHEI29pXCaKs5+wJTVIPUq0deaPX4q5qcZ0y5RBjuES/3cDmerKfl79HM
+	 5nBe1SaYkDKv0EKvPyg3TaD2mCXTdekq+9UOcRJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Yue <glass.su@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Helge Deller <deller@gmx.de>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Naveen N Rao <naveen@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Sergey Senozhatsky <sergey.senozhatsky.work@gmail.com>,
+	linux-parisc@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 206/578] ocfs2: mark dquot as inactive if failed to start trans while releasing dquot
-Date: Wed, 19 Feb 2025 09:23:30 +0100
-Message-ID: <20250219082701.159365275@linuxfoundation.org>
+Subject: [PATCH 6.1 207/578] module: Extend the preempt disabled section in dereference_symbol_descriptor().
+Date: Wed, 19 Feb 2025 09:23:31 +0100
+Message-ID: <20250219082701.205158327@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -57,65 +63,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Yue <glass.su@suse.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 276c61385f6bc3223a5ecd307cf4aba2dfbb9a31 ]
+[ Upstream commit a145c848d69f9c6f32008d8319edaa133360dd74 ]
 
-While running fstests generic/329, the kernel workqueue
-quota_release_workfn is dead looping in calling ocfs2_release_dquot().
-The ocfs2 state is already readonly but ocfs2_release_dquot wants to
-start a transaction but fails and returns.
+dereference_symbol_descriptor() needs to obtain the module pointer
+belonging to pointer in order to resolve that pointer.
+The returned mod pointer is obtained under RCU-sched/ preempt_disable()
+guarantees and needs to be used within this section to ensure that the
+module is not removed in the meantime.
 
-=====================================================================
-[ 2918.123602 ][  T275 ] On-disk corruption discovered. Please run
-fsck.ocfs2 once the filesystem is unmounted.
-[ 2918.124034 ][  T275 ] (kworker/u135:1,275,11):ocfs2_release_dquot:765
-ERROR: status = -30
-[ 2918.124452 ][  T275 ] (kworker/u135:1,275,11):ocfs2_release_dquot:795
-ERROR: status = -30
-[ 2918.124883 ][  T275 ] (kworker/u135:1,275,11):ocfs2_start_trans:357
-ERROR: status = -30
-[ 2918.125276 ][  T275 ] OCFS2: abort (device dm-0): ocfs2_start_trans:
-Detected aborted journal
-[ 2918.125710 ][  T275 ] On-disk corruption discovered. Please run
-fsck.ocfs2 once the filesystem is unmounted.
-=====================================================================
+Extend the preempt_disable() section to also cover
+dereference_module_function_descriptor().
 
-ocfs2_release_dquot() is much like dquot_release(), which is called by
-ext4 to handle similar situation.  So here fix it by marking the dquot as
-inactive like what dquot_release() does.
-
-Link: https://lkml.kernel.org/r/20250106140653.92292-1-glass.su@suse.com
-Fixes: 9e33d69f553a ("ocfs2: Implementation of local and global quota file handling")
-Signed-off-by: Su Yue <glass.su@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 04b8eb7a4ccd9 ("symbol lookup: introduce dereference_symbol_descriptor()")
+Cc: James E.J. Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Naveen N Rao <naveen@kernel.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Sergey Senozhatsky <sergey.senozhatsky.work@gmail.com>
+Cc: linux-parisc@vger.kernel.org
+Cc: linuxppc-dev@lists.ozlabs.org
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20250108090457.512198-2-bigeasy@linutronix.de
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/quota_global.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ include/linux/kallsyms.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/quota_global.c b/fs/ocfs2/quota_global.c
-index 0dffd6a44d39d..24b031dc44ee1 100644
---- a/fs/ocfs2/quota_global.c
-+++ b/fs/ocfs2/quota_global.c
-@@ -749,6 +749,11 @@ static int ocfs2_release_dquot(struct dquot *dquot)
- 	handle = ocfs2_start_trans(osb,
- 		ocfs2_calc_qdel_credits(dquot->dq_sb, dquot->dq_id.type));
- 	if (IS_ERR(handle)) {
-+		/*
-+		 * Mark dquot as inactive to avoid endless cycle in
-+		 * quota_release_workfn().
-+		 */
-+		clear_bit(DQ_ACTIVE_B, &dquot->dq_flags);
- 		status = PTR_ERR(handle);
- 		mlog_errno(status);
- 		goto out_ilock;
+diff --git a/include/linux/kallsyms.h b/include/linux/kallsyms.h
+index 0cd33be7142ad..6d10bd2b9e0fe 100644
+--- a/include/linux/kallsyms.h
++++ b/include/linux/kallsyms.h
+@@ -57,10 +57,10 @@ static inline void *dereference_symbol_descriptor(void *ptr)
+ 
+ 	preempt_disable();
+ 	mod = __module_address((unsigned long)ptr);
+-	preempt_enable();
+ 
+ 	if (mod)
+ 		ptr = dereference_module_function_descriptor(mod, ptr);
++	preempt_enable();
+ #endif
+ 	return ptr;
+ }
 -- 
 2.39.5
 
