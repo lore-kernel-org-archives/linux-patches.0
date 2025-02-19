@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9168A1DE3AE;
-	Wed, 19 Feb 2025 09:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CC11DED5C;
+	Wed, 19 Feb 2025 09:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955904; cv=none; b=ceWShIf2dJow3axRJbr1y+bXB2F5aq4f3IjGRVQecRzwevVc8RDNUKKEfyviV58w9BMQ7XfQbuiV9zEadLufC+dZvDwitpRfZ/TX2C0Dtzi51CuPM10iHjtajO8bQBR/aK6vbOG90M9CXbQSYXwVn3DAqODGcyimi0qK1/YeUjk=
+	t=1739955908; cv=none; b=ZpFfnIy84kcQrcKsk7GuaeEghUSikzBsmSSaSOfQjoGQtP9qzMxUFEA53kiUqAb5L78LUW5p+Um6J9qBrAORqcRS+whHXMW5XLRmh+chz6gWQMEEGRWGgDWGR0UNhxaG0iCWqHhWuhf8xYe0+DPPUFT95pIK7kH0mgS0NEx4kdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955904; c=relaxed/simple;
-	bh=KqV1jh75NvL3XcaKBSpWRLEazfijzrY3T2aIYxyZq/8=;
+	s=arc-20240116; t=1739955908; c=relaxed/simple;
+	bh=NPLljSztM/Xrsc8jaM2p+VnhX2uWeU6/ik+wxKQZmzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NxOBAdPQiJp2hHRoxCtCZvBZ4EM5x6hPTAvoTMFVx3kPbjbgytBqUUG0fvheetwXmiX0Khefkz8cGZ35EYlqIRk0D7BMpaMdhPLLjRbP1FxrnwO8kiHiX3PkCm9Aa9tT2axQbQyX3c68uKSKBmCyaY6/uLeZccMzQKXpW5d5E4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dU4TKMQD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hr9jpjAy9MIbt+0LltqfzOeK9nkD3QfT0BP0wummPeggXLmUoBmin6WblsjsRenehTbYufH2RTnK8lpgRIYZa+QXfCq460ei1GCy3Acv4k39WaLZ2Sqs8A0zr/UA7OTa9DE8+USmap8IYaSAOaAyQ7Ys8SeebAkbxK+Xm0pRrrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SB5wgwIu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dU4TKMQD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F95C4CEE7;
-	Wed, 19 Feb 2025 09:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SB5wgwIu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF79C4CED1;
+	Wed, 19 Feb 2025 09:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955904;
-	bh=KqV1jh75NvL3XcaKBSpWRLEazfijzrY3T2aIYxyZq/8=;
+	s=korg; t=1739955907;
+	bh=NPLljSztM/Xrsc8jaM2p+VnhX2uWeU6/ik+wxKQZmzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dU4TKMQDMME1/p62JV9oUAcBGUOpoJMZBozhXnu6Y3YHINWmQhpG6JqnA2NeL6nBT
-	 l7EQV8ZgytZkAFQlqa7q7Xkh6UA81/+ZRfIkD/ZgC74cgDubqksWDEs3KKfDSwQj5K
-	 R/D6Pu5JnWUm1BB1AdjF/dHkbeSsg8aQsrjnQa2c=
+	b=SB5wgwIuERgvuSn7HUfyYE3JYjBUMEdQ8dwEdvqDN4p3iM8V+gwBT2RmpADoRgt6o
+	 NSIjzVc20qqFRbpRlXwo1djGtw9RycimylrN3T0c96rITn3JyAIGiZxhppK0XetqO9
+	 wq/Gr4v4WQzQHaKm+QJb1LobCkaMcxsI+Jaz792o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Michael Kelley <mhkelley@outlook.com>
-Subject: [PATCH 6.6 151/152] x86/i8253: Disable PIT timer 0 when not in use
-Date: Wed, 19 Feb 2025 09:29:24 +0100
-Message-ID: <20250219082556.019564336@linuxfoundation.org>
+	=?UTF-8?q?Stefan=20N=C3=BCrnberger?= <stefan.nuernberger@cyberus-technology.de>
+Subject: [PATCH 6.6 152/152] Revert "vfio/platform: check the bounds of read/write syscalls"
+Date: Wed, 19 Feb 2025 09:29:25 +0100
+Message-ID: <20250219082556.058707261@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -45,102 +43,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 70e6b7d9ae3c63df90a7bba7700e8d5c300c3c60 upstream.
+This reverts commit 03844b1908114680ca35fa0a0aba3d906a6d78af.
 
-Leaving the PIT interrupt running can cause noticeable steal time for
-virtual guests. The VMM generally has a timer which toggles the IRQ input
-to the PIC and I/O APIC, which takes CPU time away from the guest. Even
-on real hardware, running the counter may use power needlessly (albeit
-not much).
+It had been committed multiple times to the tree, and isn't needed
+again.
 
-Make sure it's turned off if it isn't going to be used.
-
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Michael Kelley <mhkelley@outlook.com>
-Link: https://lore.kernel.org/all/20240802135555.564941-1-dwmw2@infradead.org
+Link: https://lore.kernel.org/r/a082db2605514513a0a8568382d5bd2b6f1877a0.camel@cyberus-technology.de
+Reported-by: Stefan Nürnberger <stefan.nuernberger@cyberus-technology.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/i8253.c     |   11 +++++++++--
- drivers/clocksource/i8253.c |   13 +++++++++----
- include/linux/i8253.h       |    1 +
- 3 files changed, 19 insertions(+), 6 deletions(-)
+ drivers/vfio/platform/vfio_platform_common.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
---- a/arch/x86/kernel/i8253.c
-+++ b/arch/x86/kernel/i8253.c
-@@ -8,6 +8,7 @@
- #include <linux/timex.h>
- #include <linux/i8253.h>
+--- a/drivers/vfio/platform/vfio_platform_common.c
++++ b/drivers/vfio/platform/vfio_platform_common.c
+@@ -393,11 +393,6 @@ static ssize_t vfio_platform_read_mmio(s
  
-+#include <asm/hypervisor.h>
- #include <asm/apic.h>
- #include <asm/hpet.h>
- #include <asm/time.h>
-@@ -39,9 +40,15 @@ static bool __init use_pit(void)
+ 	count = min_t(size_t, count, reg->size - off);
  
- bool __init pit_timer_init(void)
- {
--	if (!use_pit())
-+	if (!use_pit()) {
-+		/*
-+		 * Don't just ignore the PIT. Ensure it's stopped, because
-+		 * VMMs otherwise steal CPU time just to pointlessly waggle
-+		 * the (masked) IRQ.
-+		 */
-+		clockevent_i8253_disable();
- 		return false;
+-	if (off >= reg->size)
+-		return -EINVAL;
 -
-+	}
- 	clockevent_i8253_init(true);
- 	global_clock_event = &i8253_clockevent;
- 	return true;
---- a/drivers/clocksource/i8253.c
-+++ b/drivers/clocksource/i8253.c
-@@ -108,11 +108,8 @@ int __init clocksource_i8253_init(void)
- #endif
- 
- #ifdef CONFIG_CLKEVT_I8253
--static int pit_shutdown(struct clock_event_device *evt)
-+void clockevent_i8253_disable(void)
- {
--	if (!clockevent_state_oneshot(evt) && !clockevent_state_periodic(evt))
--		return 0;
+-	count = min_t(size_t, count, reg->size - off);
 -
- 	raw_spin_lock(&i8253_lock);
+ 	if (!reg->ioaddr) {
+ 		reg->ioaddr =
+ 			ioremap(reg->addr, reg->size);
+@@ -479,11 +474,6 @@ static ssize_t vfio_platform_write_mmio(
  
- 	outb_p(0x30, PIT_MODE);
-@@ -123,6 +120,14 @@ static int pit_shutdown(struct clock_eve
- 	}
+ 	if (off >= reg->size)
+ 		return -EINVAL;
+-
+-	count = min_t(size_t, count, reg->size - off);
+-
+-	if (off >= reg->size)
+-		return -EINVAL;
  
- 	raw_spin_unlock(&i8253_lock);
-+}
-+
-+static int pit_shutdown(struct clock_event_device *evt)
-+{
-+	if (!clockevent_state_oneshot(evt) && !clockevent_state_periodic(evt))
-+		return 0;
-+
-+	clockevent_i8253_disable();
- 	return 0;
- }
- 
---- a/include/linux/i8253.h
-+++ b/include/linux/i8253.h
-@@ -24,6 +24,7 @@ extern raw_spinlock_t i8253_lock;
- extern bool i8253_clear_counter_on_shutdown;
- extern struct clock_event_device i8253_clockevent;
- extern void clockevent_i8253_init(bool oneshot);
-+extern void clockevent_i8253_disable(void);
- 
- extern void setup_pit_timer(void);
+ 	count = min_t(size_t, count, reg->size - off);
  
 
 
