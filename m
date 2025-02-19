@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B11A1CAA9C;
-	Wed, 19 Feb 2025 08:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7A91DE2C2;
+	Wed, 19 Feb 2025 08:59:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955558; cv=none; b=MicMig9NACFCws/qG3rS3rSmuli1ZKklZ82rycP3M0ERYX9aeguHGK6urGymIrbKgEMe7co0gESGlapCfnrUvHrhxzLanPhls4WdiEbSfmgOAPLE8ls7zl9kWyr4axI7GekTAIeNCxYthjTkht93vNVG0CTQ+QVijx14j80FIh0=
+	t=1739955561; cv=none; b=XMk5ze2+ZsB31ybt7mz+M7cosU/LetRy6cyXOvBWlsQGdvSIg8jxCwM9S9IjLyXmwjZD/iZuXMGhnN27qaiVlRN7cbGmaawu3ibiFVyVPj3nTtyPCYhCVwwqMX+W05Io/1b6RXWTrbv4oWQJzADAw3LTsjBoZzV5xbzgUpGkam4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955558; c=relaxed/simple;
-	bh=oX5CLAjJ2+5/E6LWmP8KXiEhThUEPl6gpTDKpzi63uY=;
+	s=arc-20240116; t=1739955561; c=relaxed/simple;
+	bh=XdS5GrskjMFlIGSFDnlwUxKknI8QAYkenbIYXadQFVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rkh3nIRuMmhhuHmu4FY3fVIdneMFDwnA5O/px/6AxiBurOfp2kqkEy8YA5O88dfo041mhSCwNKeRcdMQMBuqCuTY4b2ZpVS0+gSn5Uy6BDrUD9bNSjsgpQQdbvhjE8z4n0REx94CJdcUUsO0Qm4DIlByLv2vTqbrCz8b2DEMHd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDRP+/Y8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NiIUHrY15jjRHOH6Qb9ppAWVXG750AHYawUuZaUTyoj+vmarxjZ/8AZ4Ie8/o8mO7B2AJen7jGr0BkX7RosnioHYwZULYlxxM5LJKBdcJ4rxaDgtZZ7+/AHZTm7tts6uVeyT0QkJUix44N90hiyEVJASYhzi1xfwQFe0R/1u95A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e23mX6+Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDRP+/Y8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D40C4CEE6;
-	Wed, 19 Feb 2025 08:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e23mX6+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70398C4CED1;
+	Wed, 19 Feb 2025 08:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955557;
-	bh=oX5CLAjJ2+5/E6LWmP8KXiEhThUEPl6gpTDKpzi63uY=;
+	s=korg; t=1739955560;
+	bh=XdS5GrskjMFlIGSFDnlwUxKknI8QAYkenbIYXadQFVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cDRP+/Y8VKOcXUmF9HxRvyuhnnLVoVvFNPCdpei39c8iYj4com5f0qIU89HLVJ9wo
-	 Za3kJpJRXCUI3ORJ9iqIF0We9Fo7ZtsiuQEcfu43dzRY5dRNCR+dQmYnJ+IMFZWkqe
-	 Q44iWDOms6WSBm04J4UGtxkatpBawIPMeVk5JY2Y=
+	b=e23mX6+ZX8OXamSgFV1x575M+VwLsdgthX23CdTgD6p0Lk6wzVHX7r9u2k+RlPNhr
+	 bPnTMrfE+XS8Fnx51/0tfT5OBdpv5H3SpJPp3PrfvVNo/BLnt/bKrahFoMqHMYUmTr
+	 Vgf47dvIPWVd5V79ItPxLPPIXb6EUCiDIKaMWeWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maksym Planeta <maksym@exostellar.io>,
-	Juergen Gross <jgross@suse.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Koichiro Den <koichiro.den@canonical.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/152] Grab mm lock before grabbing pt lock
-Date: Wed, 19 Feb 2025 09:27:36 +0100
-Message-ID: <20250219082551.746680652@linuxfoundation.org>
+Subject: [PATCH 6.6 044/152] selftests: gpio: gpio-sim: Fix missing chip disablements
+Date: Wed, 19 Feb 2025 09:27:37 +0100
+Message-ID: <20250219082551.787507387@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -51,154 +52,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maksym Planeta <maksym@exostellar.io>
+From: Koichiro Den <koichiro.den@canonical.com>
 
-[ Upstream commit 6d002348789bc16e9203e9818b7a3688787e3b29 ]
+[ Upstream commit f8524ac33cd452aef5384504b3264db6039a455e ]
 
-Function xen_pin_page calls xen_pte_lock, which in turn grab page
-table lock (ptlock). When locking, xen_pte_lock expect mm->page_table_lock
-to be held before grabbing ptlock, but this does not happen when pinning
-is caused by xen_mm_pin_all.
+Since upstream commit 8bd76b3d3f3a ("gpio: sim: lock up configfs that an
+instantiated device depends on"), rmdir for an active virtual devices
+been prohibited.
 
-This commit addresses lockdep warning below, which shows up when
-suspending a Xen VM.
+Update gpio-sim selftest to align with the change.
 
-[ 3680.658422] Freezing user space processes
-[ 3680.660156] Freezing user space processes completed (elapsed 0.001 seconds)
-[ 3680.660182] OOM killer disabled.
-[ 3680.660192] Freezing remaining freezable tasks
-[ 3680.661485] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
-[ 3680.685254]
-[ 3680.685265] ==================================
-[ 3680.685269] WARNING: Nested lock was not taken
-[ 3680.685274] 6.12.0+ #16 Tainted: G        W
-[ 3680.685279] ----------------------------------
-[ 3680.685283] migration/0/19 is trying to lock:
-[ 3680.685288] ffff88800bac33c0 (ptlock_ptr(ptdesc)#2){+.+.}-{3:3}, at: xen_pin_page+0x175/0x1d0
-[ 3680.685303]
-[ 3680.685303] but this task is not holding:
-[ 3680.685308] init_mm.page_table_lock
-[ 3680.685311]
-[ 3680.685311] stack backtrace:
-[ 3680.685316] CPU: 0 UID: 0 PID: 19 Comm: migration/0 Tainted: G        W          6.12.0+ #16
-[ 3680.685324] Tainted: [W]=WARN
-[ 3680.685328] Stopper: multi_cpu_stop+0x0/0x120 <- __stop_cpus.constprop.0+0x8c/0xd0
-[ 3680.685339] Call Trace:
-[ 3680.685344]  <TASK>
-[ 3680.685347]  dump_stack_lvl+0x77/0xb0
-[ 3680.685356]  __lock_acquire+0x917/0x2310
-[ 3680.685364]  lock_acquire+0xce/0x2c0
-[ 3680.685369]  ? xen_pin_page+0x175/0x1d0
-[ 3680.685373]  _raw_spin_lock_nest_lock+0x2f/0x70
-[ 3680.685381]  ? xen_pin_page+0x175/0x1d0
-[ 3680.685386]  xen_pin_page+0x175/0x1d0
-[ 3680.685390]  ? __pfx_xen_pin_page+0x10/0x10
-[ 3680.685394]  __xen_pgd_walk+0x233/0x2c0
-[ 3680.685401]  ? stop_one_cpu+0x91/0x100
-[ 3680.685405]  __xen_pgd_pin+0x5d/0x250
-[ 3680.685410]  xen_mm_pin_all+0x70/0xa0
-[ 3680.685415]  xen_pv_pre_suspend+0xf/0x280
-[ 3680.685420]  xen_suspend+0x57/0x1a0
-[ 3680.685428]  multi_cpu_stop+0x6b/0x120
-[ 3680.685432]  ? update_cpumasks_hier+0x7c/0xa60
-[ 3680.685439]  ? __pfx_multi_cpu_stop+0x10/0x10
-[ 3680.685443]  cpu_stopper_thread+0x8c/0x140
-[ 3680.685448]  ? smpboot_thread_fn+0x20/0x1f0
-[ 3680.685454]  ? __pfx_smpboot_thread_fn+0x10/0x10
-[ 3680.685458]  smpboot_thread_fn+0xed/0x1f0
-[ 3680.685462]  kthread+0xde/0x110
-[ 3680.685467]  ? __pfx_kthread+0x10/0x10
-[ 3680.685471]  ret_from_fork+0x2f/0x50
-[ 3680.685478]  ? __pfx_kthread+0x10/0x10
-[ 3680.685482]  ret_from_fork_asm+0x1a/0x30
-[ 3680.685489]  </TASK>
-[ 3680.685491]
-[ 3680.685491] other info that might help us debug this:
-[ 3680.685497] 1 lock held by migration/0/19:
-[ 3680.685500]  #0: ffffffff8284df38 (pgd_lock){+.+.}-{3:3}, at: xen_mm_pin_all+0x14/0xa0
-[ 3680.685512]
-[ 3680.685512] stack backtrace:
-[ 3680.685518] CPU: 0 UID: 0 PID: 19 Comm: migration/0 Tainted: G        W          6.12.0+ #16
-[ 3680.685528] Tainted: [W]=WARN
-[ 3680.685531] Stopper: multi_cpu_stop+0x0/0x120 <- __stop_cpus.constprop.0+0x8c/0xd0
-[ 3680.685538] Call Trace:
-[ 3680.685541]  <TASK>
-[ 3680.685544]  dump_stack_lvl+0x77/0xb0
-[ 3680.685549]  __lock_acquire+0x93c/0x2310
-[ 3680.685554]  lock_acquire+0xce/0x2c0
-[ 3680.685558]  ? xen_pin_page+0x175/0x1d0
-[ 3680.685562]  _raw_spin_lock_nest_lock+0x2f/0x70
-[ 3680.685568]  ? xen_pin_page+0x175/0x1d0
-[ 3680.685572]  xen_pin_page+0x175/0x1d0
-[ 3680.685578]  ? __pfx_xen_pin_page+0x10/0x10
-[ 3680.685582]  __xen_pgd_walk+0x233/0x2c0
-[ 3680.685588]  ? stop_one_cpu+0x91/0x100
-[ 3680.685592]  __xen_pgd_pin+0x5d/0x250
-[ 3680.685596]  xen_mm_pin_all+0x70/0xa0
-[ 3680.685600]  xen_pv_pre_suspend+0xf/0x280
-[ 3680.685607]  xen_suspend+0x57/0x1a0
-[ 3680.685611]  multi_cpu_stop+0x6b/0x120
-[ 3680.685615]  ? update_cpumasks_hier+0x7c/0xa60
-[ 3680.685620]  ? __pfx_multi_cpu_stop+0x10/0x10
-[ 3680.685625]  cpu_stopper_thread+0x8c/0x140
-[ 3680.685629]  ? smpboot_thread_fn+0x20/0x1f0
-[ 3680.685634]  ? __pfx_smpboot_thread_fn+0x10/0x10
-[ 3680.685638]  smpboot_thread_fn+0xed/0x1f0
-[ 3680.685642]  kthread+0xde/0x110
-[ 3680.685645]  ? __pfx_kthread+0x10/0x10
-[ 3680.685649]  ret_from_fork+0x2f/0x50
-[ 3680.685654]  ? __pfx_kthread+0x10/0x10
-[ 3680.685657]  ret_from_fork_asm+0x1a/0x30
-[ 3680.685662]  </TASK>
-[ 3680.685267] xen:grant_table: Grant tables using version 1 layout
-[ 3680.685921] OOM killer enabled.
-[ 3680.685934] Restarting tasks ... done.
-
-Signed-off-by: Maksym Planeta <maksym@exostellar.io>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20241204103516.3309112-1-maksym@exostellar.io>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202501221006.a1ca5dfa-lkp@intel.com
+Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
+Link: https://lore.kernel.org/r/20250122043309.304621-1-koichiro.den@canonical.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/mmu_pv.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/testing/selftests/gpio/gpio-sim.sh | 31 +++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/xen/mmu_pv.c b/arch/x86/xen/mmu_pv.c
-index 2db46626acea2..88a722954f3f7 100644
---- a/arch/x86/xen/mmu_pv.c
-+++ b/arch/x86/xen/mmu_pv.c
-@@ -827,6 +827,7 @@ void xen_mm_pin_all(void)
- {
- 	struct page *page;
- 
-+	spin_lock(&init_mm.page_table_lock);
- 	spin_lock(&pgd_lock);
- 
- 	list_for_each_entry(page, &pgd_list, lru) {
-@@ -837,6 +838,7 @@ void xen_mm_pin_all(void)
- 	}
- 
- 	spin_unlock(&pgd_lock);
-+	spin_unlock(&init_mm.page_table_lock);
+diff --git a/tools/testing/selftests/gpio/gpio-sim.sh b/tools/testing/selftests/gpio/gpio-sim.sh
+index 6fb66a687f173..bbc29ed9c60a9 100755
+--- a/tools/testing/selftests/gpio/gpio-sim.sh
++++ b/tools/testing/selftests/gpio/gpio-sim.sh
+@@ -46,12 +46,6 @@ remove_chip() {
+ 	rmdir $CONFIGFS_DIR/$CHIP || fail "Unable to remove the chip"
  }
  
- static void __init xen_mark_pinned(struct mm_struct *mm, struct page *page,
-@@ -936,6 +938,7 @@ void xen_mm_unpin_all(void)
- {
- 	struct page *page;
+-configfs_cleanup() {
+-	for CHIP in `ls $CONFIGFS_DIR/`; do
+-		remove_chip $CHIP
+-	done
+-}
+-
+ create_chip() {
+ 	local CHIP=$1
  
-+	spin_lock(&init_mm.page_table_lock);
- 	spin_lock(&pgd_lock);
- 
- 	list_for_each_entry(page, &pgd_list, lru) {
-@@ -947,6 +950,7 @@ void xen_mm_unpin_all(void)
- 	}
- 
- 	spin_unlock(&pgd_lock);
-+	spin_unlock(&init_mm.page_table_lock);
+@@ -105,6 +99,13 @@ disable_chip() {
+ 	echo 0 > $CONFIGFS_DIR/$CHIP/live || fail "Unable to disable the chip"
  }
  
- static void xen_enter_mmap(struct mm_struct *mm)
++configfs_cleanup() {
++	for CHIP in `ls $CONFIGFS_DIR/`; do
++		disable_chip $CHIP
++		remove_chip $CHIP
++	done
++}
++
+ configfs_chip_name() {
+ 	local CHIP=$1
+ 	local BANK=$2
+@@ -181,6 +182,7 @@ create_chip chip
+ create_bank chip bank
+ enable_chip chip
+ test -n `cat $CONFIGFS_DIR/chip/bank/chip_name` || fail "chip_name doesn't work"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "1.2. chip_name returns 'none' if the chip is still pending"
+@@ -195,6 +197,7 @@ create_chip chip
+ create_bank chip bank
+ enable_chip chip
+ test -n `cat $CONFIGFS_DIR/chip/dev_name` || fail "dev_name doesn't work"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "2. Creating and configuring simulated chips"
+@@ -204,6 +207,7 @@ create_chip chip
+ create_bank chip bank
+ enable_chip chip
+ test "`get_chip_num_lines chip bank`" = "1" || fail "default number of lines is not 1"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "2.2. Number of lines can be specified"
+@@ -212,6 +216,7 @@ create_bank chip bank
+ set_num_lines chip bank 16
+ enable_chip chip
+ test "`get_chip_num_lines chip bank`" = "16" || fail "number of lines is not 16"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "2.3. Label can be set"
+@@ -220,6 +225,7 @@ create_bank chip bank
+ set_label chip bank foobar
+ enable_chip chip
+ test "`get_chip_label chip bank`" = "foobar" || fail "label is incorrect"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "2.4. Label can be left empty"
+@@ -227,6 +233,7 @@ create_chip chip
+ create_bank chip bank
+ enable_chip chip
+ test -z "`cat $CONFIGFS_DIR/chip/bank/label`" || fail "label is not empty"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "2.5. Line names can be configured"
+@@ -238,6 +245,7 @@ set_line_name chip bank 2 bar
+ enable_chip chip
+ test "`get_line_name chip bank 0`" = "foo" || fail "line name is incorrect"
+ test "`get_line_name chip bank 2`" = "bar" || fail "line name is incorrect"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "2.6. Line config can remain unused if offset is greater than number of lines"
+@@ -248,6 +256,7 @@ set_line_name chip bank 5 foobar
+ enable_chip chip
+ test "`get_line_name chip bank 0`" = "" || fail "line name is incorrect"
+ test "`get_line_name chip bank 1`" = "" || fail "line name is incorrect"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "2.7. Line configfs directory names are sanitized"
+@@ -267,6 +276,7 @@ for CHIP in $CHIPS; do
+ 	enable_chip $CHIP
+ done
+ for CHIP in $CHIPS; do
++  disable_chip $CHIP
+ 	remove_chip $CHIP
+ done
+ 
+@@ -278,6 +288,7 @@ echo foobar > $CONFIGFS_DIR/chip/bank/label 2> /dev/null && \
+ 	fail "Setting label of a live chip should fail"
+ echo 8 > $CONFIGFS_DIR/chip/bank/num_lines 2> /dev/null && \
+ 	fail "Setting number of lines of a live chip should fail"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "2.10. Can't create line items when chip is live"
+@@ -285,6 +296,7 @@ create_chip chip
+ create_bank chip bank
+ enable_chip chip
+ mkdir $CONFIGFS_DIR/chip/bank/line0 2> /dev/null && fail "Creating line item should fail"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "2.11. Probe errors are propagated to user-space"
+@@ -316,6 +328,7 @@ mkdir -p $CONFIGFS_DIR/chip/bank/line4/hog
+ enable_chip chip
+ $BASE_DIR/gpio-mockup-cdev -s 1 /dev/`configfs_chip_name chip bank` 4 2> /dev/null && \
+ 	fail "Setting the value of a hogged line shouldn't succeed"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "3. Controlling simulated chips"
+@@ -331,6 +344,7 @@ test "$?" = "1" || fail "pull set incorrectly"
+ sysfs_set_pull chip bank 0 pull-down
+ $BASE_DIR/gpio-mockup-cdev /dev/`configfs_chip_name chip bank` 1
+ test "$?" = "0" || fail "pull set incorrectly"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "3.2. Pull can be read from sysfs"
+@@ -344,6 +358,7 @@ SYSFS_PATH=/sys/devices/platform/$DEVNAME/$CHIPNAME/sim_gpio0/pull
+ test `cat $SYSFS_PATH` = "pull-down" || fail "reading the pull failed"
+ sysfs_set_pull chip bank 0 pull-up
+ test `cat $SYSFS_PATH` = "pull-up" || fail "reading the pull failed"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "3.3. Incorrect input in sysfs is rejected"
+@@ -355,6 +370,7 @@ DEVNAME=`configfs_dev_name chip`
+ CHIPNAME=`configfs_chip_name chip bank`
+ SYSFS_PATH="/sys/devices/platform/$DEVNAME/$CHIPNAME/sim_gpio0/pull"
+ echo foobar > $SYSFS_PATH 2> /dev/null && fail "invalid input not detected"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "3.4. Can't write to value"
+@@ -365,6 +381,7 @@ DEVNAME=`configfs_dev_name chip`
+ CHIPNAME=`configfs_chip_name chip bank`
+ SYSFS_PATH="/sys/devices/platform/$DEVNAME/$CHIPNAME/sim_gpio0/value"
+ echo 1 > $SYSFS_PATH 2> /dev/null && fail "writing to 'value' succeeded unexpectedly"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "4. Simulated GPIO chips are functional"
+@@ -382,6 +399,7 @@ $BASE_DIR/gpio-mockup-cdev -s 1 /dev/`configfs_chip_name chip bank` 0 &
+ sleep 0.1 # FIXME Any better way?
+ test `cat $SYSFS_PATH` = "1" || fail "incorrect value read from sysfs"
+ kill $!
++disable_chip chip
+ remove_chip chip
+ 
+ echo "4.2. Bias settings work correctly"
+@@ -394,6 +412,7 @@ CHIPNAME=`configfs_chip_name chip bank`
+ SYSFS_PATH="/sys/devices/platform/$DEVNAME/$CHIPNAME/sim_gpio0/value"
+ $BASE_DIR/gpio-mockup-cdev -b pull-up /dev/`configfs_chip_name chip bank` 0
+ test `cat $SYSFS_PATH` = "1" || fail "bias setting does not work"
++disable_chip chip
+ remove_chip chip
+ 
+ echo "GPIO $MODULE test PASS"
 -- 
 2.39.5
 
