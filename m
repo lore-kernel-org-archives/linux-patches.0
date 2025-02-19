@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EDA1E5B9C;
-	Wed, 19 Feb 2025 08:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489E21EB184;
+	Wed, 19 Feb 2025 08:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954739; cv=none; b=CS8CHlxRZ9PkBvAyFI16yt2kFXaX239ReYLv58ri0zoy6mU894qazbTeyrWL+k6y4S4F58Elpe5kTP3QdgwZg6myf1oGYBihPtbA3en7npgEAz2SAaEe2nuuj5MX98PzlV6Brk74FaWxwHPqIEc+YZ+MD7cLmLUUQZEXqHcXqPw=
+	t=1739954743; cv=none; b=i4bVacM5hvsbeFBjwAWt8f07neuRh1SDKHeZVL5iPNChh57nm8JfQHHC07Rq0GErpr17s8QoZ6aecPWFQOiU9ZS2Udks2h31Zq8F17T4HYrkn9L9Z98DL5nsR6XQjh2lU4QSAduXEnUO3bBKJmMVnyzkIiC/3ZcIqRrgc8sPCCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954739; c=relaxed/simple;
-	bh=9DyzNTAVsNA0NLPW0pAEztVH8e1Axcf5pVg3qRqdnMI=;
+	s=arc-20240116; t=1739954743; c=relaxed/simple;
+	bh=qp23OwKToTqGYySvgNsb8TsgymsrdthQHsfGrUhC5NI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYYA9mlVjQQAtqeUXEk1V2v+UIju+9QzobkiTMtqRzoz+RUlwRS3GxPkuL2SbdmfRkKCmAcC6WWzKMbGXceACypLfNkEmU8rkdA2l+tOcEvXD71PHqOyf65QPKBKaf4/f0Xkax+NtAWklOk0mrG9jsJNid376jpvVC2dkbIGzAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fj5TTCdf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=drUL7uoCcQFJQCpl8Me+fvzXLC20upSDnhg+/zTaqnAHqpktCuradftbpKPhmZ+52aMIaZ3i5FS3lkl5XI+0nOvf1qUJQ6qJ0gASud8Ymk05kd+SNmC9FE1DzMOe7nx7HxPTB6sdur9MntXE+MP48E4fKWE0VoYu5UvfnKzEoKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMJBi2hG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fj5TTCdf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D580EC4CEE6;
-	Wed, 19 Feb 2025 08:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMJBi2hG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093F1C4CEEB;
+	Wed, 19 Feb 2025 08:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954739;
-	bh=9DyzNTAVsNA0NLPW0pAEztVH8e1Axcf5pVg3qRqdnMI=;
+	s=korg; t=1739954742;
+	bh=qp23OwKToTqGYySvgNsb8TsgymsrdthQHsfGrUhC5NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fj5TTCdfKZzq00kAqrW7+vvIXrBzU8Q6VwZX4/39CS/oZGwPE3CtyHkw9dowmY3gL
-	 9eRjubo4yuQpf3x8oaYzrpNET+q+EgXVcsW6IXrC6IyVUsLhHnRqHnVB6yLR4kcJJP
-	 vLzLJNvFpjpwfUuuYAZ/TYBAl8YS3flcqLHxKO0c=
+	b=pMJBi2hGak53sVl9e7km1cqpra5p9FdlfyXM0dzosZUGyEERmZxNbsRuRDxigLunG
+	 UchZ3OqnxEFIY07VxBvbzi24+AbhRhf+iZDZhBFBajZXAm+NaOHt9MqT61B8ACLtiK
+	 jGF+LbF/FQQXTs6dChn3ISlY60jHdmrbwiBZm6A0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/230] vrf: use RCU protection in l3mdev_l3_out()
-Date: Wed, 19 Feb 2025 09:25:37 +0100
-Message-ID: <20250219082602.494057405@linuxfoundation.org>
+Subject: [PATCH 6.12 021/230] idpf: fix handling rsc packet with a single segment
+Date: Wed, 19 Feb 2025 09:25:38 +0100
+Message-ID: <20250219082602.532340476@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -53,50 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Sridhar Samudrala <sridhar.samudrala@intel.com>
 
-[ Upstream commit 6d0ce46a93135d96b7fa075a94a88fe0da8e8773 ]
+[ Upstream commit 69ab25a74e2df53edc2de4acfce0a484bdb88155 ]
 
-l3mdev_l3_out() can be called without RCU being held:
+Handle rsc packet with a single segment same as a multi
+segment rsc packet so that CHECKSUM_PARTIAL is set in the
+skb->ip_summed field. The current code is passing CHECKSUM_NONE
+resulting in TCP GRO layer doing checksum in SW and hiding the
+issue. This will fail when using dmabufs as payload buffers as
+skb frag would be unreadable.
 
-raw_sendmsg()
- ip_push_pending_frames()
-  ip_send_skb()
-   ip_local_out()
-    __ip_local_out()
-     l3mdev_ip_out()
-
-Add rcu_read_lock() / rcu_read_unlock() pair to avoid
-a potential UAF.
-
-Fixes: a8e3e1a9f020 ("net: l3mdev: Add hook to output path")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250207135841.1948589-7-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3a8845af66ed ("idpf: add RX splitq napi poll support")
+Signed-off-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/l3mdev.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/idpf/idpf_txrx.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/include/net/l3mdev.h b/include/net/l3mdev.h
-index 031c661aa14df..bdfa9d414360c 100644
---- a/include/net/l3mdev.h
-+++ b/include/net/l3mdev.h
-@@ -198,10 +198,12 @@ struct sk_buff *l3mdev_l3_out(struct sock *sk, struct sk_buff *skb, u16 proto)
- 	if (netif_is_l3_slave(dev)) {
- 		struct net_device *master;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+index 60d15b3e6e2fa..cd7c297059aed 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+@@ -3008,8 +3008,6 @@ static int idpf_rx_rsc(struct idpf_rx_queue *rxq, struct sk_buff *skb,
+ 		return -EINVAL;
  
-+		rcu_read_lock();
- 		master = netdev_master_upper_dev_get_rcu(dev);
- 		if (master && master->l3mdev_ops->l3mdev_l3_out)
- 			skb = master->l3mdev_ops->l3mdev_l3_out(master, sk,
- 								skb, proto);
-+		rcu_read_unlock();
- 	}
+ 	rsc_segments = DIV_ROUND_UP(skb->data_len, rsc_seg_len);
+-	if (unlikely(rsc_segments == 1))
+-		return 0;
  
- 	return skb;
+ 	NAPI_GRO_CB(skb)->count = rsc_segments;
+ 	skb_shinfo(skb)->gso_size = rsc_seg_len;
 -- 
 2.39.5
 
