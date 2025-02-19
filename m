@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B536E1CCB21;
-	Wed, 19 Feb 2025 08:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B941E0E1A;
+	Wed, 19 Feb 2025 08:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954592; cv=none; b=eKH511OlJ2GkzTRUMKEz6Eum63RzEZkQ/G4Ob2VuDTCDogGi6B7BpfvcveBLlQt4oLtIqA+cToHzoK208LBkD0PZvPlu2gNulIbwLNfsq9nhDrcnT4lyyH9dWyiAacUwg7aXWHNKz/SHvMfmYF6SmqQF+HDbem6kymngKxouu+8=
+	t=1739954595; cv=none; b=XFc/TKTDx925qZ77hvGAcPdHBgzjdHsotlhq1F8zwxs/qyu+JkQ5XHl75i32pM/5TM74tTkzbWeFrBUaI7RSB+iQIHdNX9D0hGVH2jeRlRtQgzbQqAWKAYNi3x1vwvYri4CGatdP6hGJf1irxqayeT1g/ARIHN3Fn6Ze89i2Vis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954592; c=relaxed/simple;
-	bh=oHxKDsIfV5w54J8c6b6VAOR34Yqsce6TU3n1D08nQT8=;
+	s=arc-20240116; t=1739954595; c=relaxed/simple;
+	bh=tqmETMwfvdz13DCQIimpH8b4sUnW+FnFOOWKEEzoX5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ffa/WdtjcYU5sPTPnH0H1K/qdDYRrsjR+B8SOg6MGFf+kBGXpnLWOcmEpqDraZq7K4zupYaHZA6q2saljYxanwr1jcDYWVo/jnpiCUuFqRVLLd1uwWeKuhboXqRov+BKIFsEdZTKa+n6hKaxE6h6vWXz91sWq/5Z6tLy5GGZHRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=attecvNW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eM7tB0BLx9mH1QWSrWO+IgKN9Fr/xcu6MGVWdKu6Kt/eBJKEfpSxw+RC+6c1fVaodA5K4djXMtejACuWEhhf6q/ej+42G9qVhRj7ahco/bAOualZBHgMZhniMgEcRSVLZC+RpQorBIsimDwrd5FOr/5F8ST0DOnSAfMFMPlOmck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7j5I1s1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="attecvNW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4C9C4CEE6;
-	Wed, 19 Feb 2025 08:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7j5I1s1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44554C4CED1;
+	Wed, 19 Feb 2025 08:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954592;
-	bh=oHxKDsIfV5w54J8c6b6VAOR34Yqsce6TU3n1D08nQT8=;
+	s=korg; t=1739954595;
+	bh=tqmETMwfvdz13DCQIimpH8b4sUnW+FnFOOWKEEzoX5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=attecvNW2EE327c9PYiNB+ABRQOJbUfM+Ez9kF7r5G2GTQcTpUmkGqMxHRaWy0j6W
-	 NRHn56WtA5ioPgpdYZOg+g3C7BAAyETJulhf0ycMDNVoE4yYXdDrkPOWZHMh2oyGnm
-	 JdQoNAgZViydpEeiT4voUxC+muI2iqHHlaufRPCI=
+	b=Z7j5I1s1LD5toS8WgTIk/4F4M0F0ZphH1rn5zYoySl+KFqD2mXT14zD5Di6Vc1eef
+	 JK3NTfNeFm0jItG37hmD8lNjVPQgUBqsstLylZtx5vMqNYC9PKhMURWYppeNJ84oTd
+	 xG2s34BOjyGvEewjveB09/MmndGPVH1PAaoC9ulc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Liu <b-liu@ti.com>,
 	Devarsh Thakkar <devarsht@ti.com>,
 	Jonathan Cormier <jcormier@criticallink.com>,
 	Aradhya Bhatia <aradhya.bhatia@linux.dev>,
 	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: [PATCH 6.13 252/274] drm/tidss: Fix issue in irq handling causing irq-flood issue
-Date: Wed, 19 Feb 2025 09:28:26 +0100
-Message-ID: <20250219082619.442156779@linuxfoundation.org>
+Subject: [PATCH 6.13 253/274] drm/tidss: Fix race condition while handling interrupt registers
+Date: Wed, 19 Feb 2025 09:28:27 +0100
+Message-ID: <20250219082619.481963519@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082609.533585153@linuxfoundation.org>
 References: <20250219082609.533585153@linuxfoundation.org>
@@ -53,83 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Devarsh Thakkar <devarsht@ti.com>
 
-commit 44b6730ab53ef04944fbaf6da0e77397531517b7 upstream.
+commit a9a73f2661e6f625d306c9b0ef082e4593f45a21 upstream.
 
-It has been observed that sometimes DSS will trigger an interrupt and
-the top level interrupt (DISPC_IRQSTATUS) is not zero, but the VP and
-VID level interrupt-statuses are zero.
+The driver has a spinlock for protecting the irq_masks field and irq
+enable registers. However, the driver misses protecting the irq status
+registers which can lead to races.
 
-As the top level irqstatus is supposed to tell whether we have VP/VID
-interrupts, the thinking of the driver authors was that this particular
-case could never happen. Thus the driver only clears the DISPC_IRQSTATUS
-bits which has corresponding interrupts in VP/VID status. So when this
-issue happens, the driver will not clear DISPC_IRQSTATUS, and we get an
-interrupt flood.
+Take the spinlock when accessing irqstatus too.
 
-It is unclear why the issue happens. It could be a race issue in the
-driver, but no such race has been found. It could also be an issue with
-the HW. However a similar case can be easily triggered by manually
-writing to DISPC_IRQSTATUS_RAW. This will forcibly set a bit in the
-DISPC_IRQSTATUS and trigger an interrupt, and as the driver never clears
-the bit, we get an interrupt flood.
-
-To fix the issue, always clear DISPC_IRQSTATUS. The concern with this
-solution is that if the top level irqstatus is the one that triggers the
-interrupt, always clearing DISPC_IRQSTATUS might leave some interrupts
-unhandled if VP/VID interrupt statuses have bits set. However, testing
-shows that if any of the irqstatuses is set (i.e. even if
-DISPC_IRQSTATUS == 0, but a VID irqstatus has a bit set), we will get an
-interrupt.
-
-Co-developed-by: Bin Liu <b-liu@ti.com>
-Signed-off-by: Bin Liu <b-liu@ti.com>
-Co-developed-by: Devarsh Thakkar <devarsht@ti.com>
-Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
-Co-developed-by: Jonathan Cormier <jcormier@criticallink.com>
-Signed-off-by: Jonathan Cormier <jcormier@criticallink.com>
 Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
 Cc: stable@vger.kernel.org
+Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
+[Tomi: updated the desc]
+Reviewed-by: Jonathan Cormier <jcormier@criticallink.com>
 Tested-by: Jonathan Cormier <jcormier@criticallink.com>
 Reviewed-by: Aradhya Bhatia <aradhya.bhatia@linux.dev>
 Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241021-tidss-irq-fix-v1-1-82ddaec94e4a@ideasonboard.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20241021-tidss-irq-fix-v1-6-82ddaec94e4a@ideasonboard.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tidss/tidss_dispc.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/tidss/tidss_dispc.c |    4 ++++
+ drivers/gpu/drm/tidss/tidss_irq.c   |    2 ++
+ 2 files changed, 6 insertions(+)
 
 --- a/drivers/gpu/drm/tidss/tidss_dispc.c
 +++ b/drivers/gpu/drm/tidss/tidss_dispc.c
-@@ -780,24 +780,20 @@ static
- void dispc_k3_clear_irqstatus(struct dispc_device *dispc, dispc_irq_t clearmask)
+@@ -2763,8 +2763,12 @@ static void dispc_init_errata(struct dis
+  */
+ static void dispc_softreset_k2g(struct dispc_device *dispc)
  {
- 	unsigned int i;
--	u32 top_clear = 0;
++	unsigned long flags;
++
++	spin_lock_irqsave(&dispc->tidss->wait_lock, flags);
+ 	dispc_set_irqenable(dispc, 0);
+ 	dispc_read_and_clear_irqstatus(dispc);
++	spin_unlock_irqrestore(&dispc->tidss->wait_lock, flags);
  
- 	for (i = 0; i < dispc->feat->num_vps; ++i) {
--		if (clearmask & DSS_IRQ_VP_MASK(i)) {
-+		if (clearmask & DSS_IRQ_VP_MASK(i))
- 			dispc_k3_vp_write_irqstatus(dispc, i, clearmask);
--			top_clear |= BIT(i);
--		}
- 	}
- 	for (i = 0; i < dispc->feat->num_planes; ++i) {
--		if (clearmask & DSS_IRQ_PLANE_MASK(i)) {
-+		if (clearmask & DSS_IRQ_PLANE_MASK(i))
- 			dispc_k3_vid_write_irqstatus(dispc, i, clearmask);
--			top_clear |= BIT(4 + i);
--		}
- 	}
- 	if (dispc->feat->subrev == DISPC_K2G)
- 		return;
+ 	for (unsigned int vp_idx = 0; vp_idx < dispc->feat->num_vps; ++vp_idx)
+ 		VP_REG_FLD_MOD(dispc, vp_idx, DISPC_VP_CONTROL, 0, 0, 0);
+--- a/drivers/gpu/drm/tidss/tidss_irq.c
++++ b/drivers/gpu/drm/tidss/tidss_irq.c
+@@ -60,7 +60,9 @@ static irqreturn_t tidss_irq_handler(int
+ 	unsigned int id;
+ 	dispc_irq_t irqstatus;
  
--	dispc_write(dispc, DISPC_IRQSTATUS, top_clear);
-+	/* always clear the top level irqstatus */
-+	dispc_write(dispc, DISPC_IRQSTATUS, dispc_read(dispc, DISPC_IRQSTATUS));
++	spin_lock(&tidss->wait_lock);
+ 	irqstatus = dispc_read_and_clear_irqstatus(tidss->dispc);
++	spin_unlock(&tidss->wait_lock);
  
- 	/* Flush posted writes */
- 	dispc_read(dispc, DISPC_IRQSTATUS);
+ 	for (id = 0; id < tidss->num_crtcs; id++) {
+ 		struct drm_crtc *crtc = tidss->crtcs[id];
 
 
