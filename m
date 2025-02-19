@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2921C173F;
-	Wed, 19 Feb 2025 09:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BA41C173F;
+	Wed, 19 Feb 2025 09:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955774; cv=none; b=GCfF5TwHpfkEa5zou+lLA2qRRD8ivQtrOZd9OlDWN1vykD6BM02INTNW4QSl1GUr4d6KcsD8no6VYWA9tLxPPrT120COZpPWXL1Np4kEtPcdlz9n6azoailggT1uNigFs5E+oZloaDMIJF9wXjUqTIlnQ6vTh1Zm/1OA2Gk376o=
+	t=1739955777; cv=none; b=m7+go6/dZDwgkdN196DvofZWGqivhGGmYtIOSCnnkCqhuL5xkslC9MJ1lQSu3zITuvQJynNm8QXiA11CdW5xtzZcm71+1UDQ9fo55A9Ua/HL6XBcpyGSlXzkrjRur2MpregLlSQBceLETkZtx9IWjJ+5zSQ4X2KaamuXf2VNnDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955774; c=relaxed/simple;
-	bh=JjliWF8VDxqFCoEJEArIteFdS5qoAYVnVFknLUVfSfM=;
+	s=arc-20240116; t=1739955777; c=relaxed/simple;
+	bh=SLYMbHpY2TXmmD8JFpbhQaGbs+A320Ow2yU+hrkkeqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+xoXRStnQip1rt9F2FnlPzGK6YLM2U7sTn6GhJ/m2JqEvaNrBtEKuAfvtopH9B+VoHaOzyyv9/tVr0fEo4Zw+9jNDvl4FAc4vkInQm0s2khDR/6h42HAaxcDNyB69q6P7x5cE7Q7taV6tarXNI5Ob8fPSeL3/ZD6MZX6YdBKv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oObURpUC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RRfodrnqRyS7C3F5aoO1ZDVkr5bCUjnJAyWcnzn6lzQlnSlcSMhI3fSyDB0RnRwHoUUI0dVvKgNRUP4YDYG5UPW2T/c8SelMMwZmQCUqXXL5JUb8dcd5j9fI5gtCn058Is5sJuR0F5koEjJkjgCb+zU8pQaOpOwaK7IisAz/kb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukpzhUKv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oObURpUC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A8DC4CED1;
-	Wed, 19 Feb 2025 09:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukpzhUKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9293C4CEE6;
+	Wed, 19 Feb 2025 09:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955774;
-	bh=JjliWF8VDxqFCoEJEArIteFdS5qoAYVnVFknLUVfSfM=;
+	s=korg; t=1739955777;
+	bh=SLYMbHpY2TXmmD8JFpbhQaGbs+A320Ow2yU+hrkkeqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oObURpUC9xsQAphE1xID4uLm2ro8BECdi5Zals8HL/tkDFNG3YF05IxRcFwKuw8Pv
-	 np/ezMlhZfc1h83Yl/3y2B2sMvC9/17wFAEw18rcQdWhU6ehl06ct2DSvexnfS1UuM
-	 Vbw1suUPCh8yFJQl8ueCZSYL1e0oonIY5glzA7E4=
+	b=ukpzhUKvxBVZrg63JV/AsdGSWXLGPewGecKlpjonFHzlqgyVit1EEpNTVlJ6beRUS
+	 2LIdc3xHOr+Kvio9kGSy4tMjv/iULGOowBj5hDE6v1zxBSgn9fuPBcwcLOBQhOg07q
+	 TlfgfIa9sWxytD1Pg1RLwiYnACF7ImLVPUERDf94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vicki Pfau <vi@endrift.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 110/152] ipv6: icmp: convert to dev_net_rcu()
-Date: Wed, 19 Feb 2025 09:28:43 +0100
-Message-ID: <20250219082554.410331264@linuxfoundation.org>
+Subject: [PATCH 6.6 111/152] HID: hid-steam: Avoid overwriting smoothing parameter
+Date: Wed, 19 Feb 2025 09:28:44 +0100
+Message-ID: <20250219082554.449329321@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082550.014812078@linuxfoundation.org>
 References: <20250219082550.014812078@linuxfoundation.org>
@@ -51,189 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Vicki Pfau <vi@endrift.com>
 
-[ Upstream commit 34aef2b0ce3aa4eb4ef2e1f5cad3738d527032f5 ]
+[ Upstream commit 34281b4d916f167a6f77975380e1df07f06248b7 ]
 
-icmp6_send() must acquire rcu_read_lock() sooner to ensure
-the dev_net() call done from a safe context.
+The original implementation of this driver incorrectly guessed the function of
+this register. It's not only unnecessary to write to this register for lizard
+mode but actually counter-productive since it overwrites whatever previous
+value was intentionally set, for example by Steam.
 
-Other ICMPv6 uses of dev_net() seem safe, change them to
-dev_net_rcu() to get LOCKDEP support to catch bugs.
-
-Fixes: 9a43b709a230 ("[NETNS][IPV6] icmp6 - make icmpv6_socket per namespace")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250205155120.1676781-12-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Vicki Pfau <vi@endrift.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Stable-dep-of: 79504249d7e2 ("HID: hid-steam: Move hidraw input (un)registering to work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/icmp.c | 42 +++++++++++++++++++++++-------------------
- 1 file changed, 23 insertions(+), 19 deletions(-)
+ drivers/hid/hid-steam.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
-index 35df405ce1f75..fd91fd139d76c 100644
---- a/net/ipv6/icmp.c
-+++ b/net/ipv6/icmp.c
-@@ -76,7 +76,7 @@ static int icmpv6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
- {
- 	/* icmpv6_notify checks 8 bytes can be pulled, icmp6hdr is 8 bytes */
- 	struct icmp6hdr *icmp6 = (struct icmp6hdr *) (skb->data + offset);
--	struct net *net = dev_net(skb->dev);
-+	struct net *net = dev_net_rcu(skb->dev);
+diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
+index b110818fc9458..7aefd52e945a1 100644
+--- a/drivers/hid/hid-steam.c
++++ b/drivers/hid/hid-steam.c
+@@ -340,9 +340,6 @@ static void steam_set_lizard_mode(struct steam_device *steam, bool enable)
+ 		steam_send_report_byte(steam, STEAM_CMD_DEFAULT_MAPPINGS);
+ 		/* enable mouse */
+ 		steam_send_report_byte(steam, STEAM_CMD_DEFAULT_MOUSE);
+-		steam_write_registers(steam,
+-			STEAM_REG_RPAD_MARGIN, 0x01, /* enable margin */
+-			0);
  
- 	if (type == ICMPV6_PKT_TOOBIG)
- 		ip6_update_pmtu(skb, net, info, skb->dev->ifindex, 0, sock_net_uid(net, NULL));
-@@ -473,7 +473,10 @@ void icmp6_send(struct sk_buff *skb, u8 type, u8 code, __u32 info,
+ 		cancel_delayed_work_sync(&steam->heartbeat);
+ 	} else {
+@@ -351,7 +348,6 @@ static void steam_set_lizard_mode(struct steam_device *steam, bool enable)
  
- 	if (!skb->dev)
- 		return;
--	net = dev_net(skb->dev);
-+
-+	rcu_read_lock();
-+
-+	net = dev_net_rcu(skb->dev);
- 	mark = IP6_REPLY_MARK(net, skb->mark);
- 	/*
- 	 *	Make sure we respect the rules
-@@ -496,7 +499,7 @@ void icmp6_send(struct sk_buff *skb, u8 type, u8 code, __u32 info,
- 		    !(type == ICMPV6_PARAMPROB &&
- 		      code == ICMPV6_UNK_OPTION &&
- 		      (opt_unrec(skb, info))))
--			return;
-+			goto out;
- 
- 		saddr = NULL;
- 	}
-@@ -526,7 +529,7 @@ void icmp6_send(struct sk_buff *skb, u8 type, u8 code, __u32 info,
- 	if ((addr_type == IPV6_ADDR_ANY) || (addr_type & IPV6_ADDR_MULTICAST)) {
- 		net_dbg_ratelimited("icmp6_send: addr_any/mcast source [%pI6c > %pI6c]\n",
- 				    &hdr->saddr, &hdr->daddr);
--		return;
-+		goto out;
- 	}
- 
- 	/*
-@@ -535,7 +538,7 @@ void icmp6_send(struct sk_buff *skb, u8 type, u8 code, __u32 info,
- 	if (is_ineligible(skb)) {
- 		net_dbg_ratelimited("icmp6_send: no reply to icmp error [%pI6c > %pI6c]\n",
- 				    &hdr->saddr, &hdr->daddr);
--		return;
-+		goto out;
- 	}
- 
- 	/* Needed by both icmpv6_global_allow and icmpv6_xmit_lock */
-@@ -582,7 +585,7 @@ void icmp6_send(struct sk_buff *skb, u8 type, u8 code, __u32 info,
- 	np = inet6_sk(sk);
- 
- 	if (!icmpv6_xrlim_allow(sk, type, &fl6, apply_ratelimit))
--		goto out;
-+		goto out_unlock;
- 
- 	tmp_hdr.icmp6_type = type;
- 	tmp_hdr.icmp6_code = code;
-@@ -600,7 +603,7 @@ void icmp6_send(struct sk_buff *skb, u8 type, u8 code, __u32 info,
- 
- 	dst = icmpv6_route_lookup(net, skb, sk, &fl6);
- 	if (IS_ERR(dst))
--		goto out;
-+		goto out_unlock;
- 
- 	ipc6.hlimit = ip6_sk_dst_hoplimit(np, &fl6, dst);
- 
-@@ -616,7 +619,6 @@ void icmp6_send(struct sk_buff *skb, u8 type, u8 code, __u32 info,
- 		goto out_dst_release;
- 	}
- 
--	rcu_read_lock();
- 	idev = __in6_dev_get(skb->dev);
- 
- 	if (ip6_append_data(sk, icmpv6_getfrag, &msg,
-@@ -630,13 +632,15 @@ void icmp6_send(struct sk_buff *skb, u8 type, u8 code, __u32 info,
- 		icmpv6_push_pending_frames(sk, &fl6, &tmp_hdr,
- 					   len + sizeof(struct icmp6hdr));
- 	}
--	rcu_read_unlock();
-+
- out_dst_release:
- 	dst_release(dst);
--out:
-+out_unlock:
- 	icmpv6_xmit_unlock(sk);
- out_bh_enable:
- 	local_bh_enable();
-+out:
-+	rcu_read_unlock();
- }
- EXPORT_SYMBOL(icmp6_send);
- 
-@@ -679,8 +683,8 @@ int ip6_err_gen_icmpv6_unreach(struct sk_buff *skb, int nhs, int type,
- 	skb_pull(skb2, nhs);
- 	skb_reset_network_header(skb2);
- 
--	rt = rt6_lookup(dev_net(skb->dev), &ipv6_hdr(skb2)->saddr, NULL, 0,
--			skb, 0);
-+	rt = rt6_lookup(dev_net_rcu(skb->dev), &ipv6_hdr(skb2)->saddr,
-+			NULL, 0, skb, 0);
- 
- 	if (rt && rt->dst.dev)
- 		skb2->dev = rt->dst.dev;
-@@ -717,7 +721,7 @@ EXPORT_SYMBOL(ip6_err_gen_icmpv6_unreach);
- 
- static enum skb_drop_reason icmpv6_echo_reply(struct sk_buff *skb)
- {
--	struct net *net = dev_net(skb->dev);
-+	struct net *net = dev_net_rcu(skb->dev);
- 	struct sock *sk;
- 	struct inet6_dev *idev;
- 	struct ipv6_pinfo *np;
-@@ -832,7 +836,7 @@ enum skb_drop_reason icmpv6_notify(struct sk_buff *skb, u8 type,
- 				   u8 code, __be32 info)
- {
- 	struct inet6_skb_parm *opt = IP6CB(skb);
--	struct net *net = dev_net(skb->dev);
-+	struct net *net = dev_net_rcu(skb->dev);
- 	const struct inet6_protocol *ipprot;
- 	enum skb_drop_reason reason;
- 	int inner_offset;
-@@ -889,7 +893,7 @@ enum skb_drop_reason icmpv6_notify(struct sk_buff *skb, u8 type,
- static int icmpv6_rcv(struct sk_buff *skb)
- {
- 	enum skb_drop_reason reason = SKB_DROP_REASON_NOT_SPECIFIED;
--	struct net *net = dev_net(skb->dev);
-+	struct net *net = dev_net_rcu(skb->dev);
- 	struct net_device *dev = icmp6_dev(skb);
- 	struct inet6_dev *idev = __in6_dev_get(dev);
- 	const struct in6_addr *saddr, *daddr;
-@@ -921,7 +925,7 @@ static int icmpv6_rcv(struct sk_buff *skb)
- 		skb_set_network_header(skb, nh);
- 	}
- 
--	__ICMP6_INC_STATS(dev_net(dev), idev, ICMP6_MIB_INMSGS);
-+	__ICMP6_INC_STATS(dev_net_rcu(dev), idev, ICMP6_MIB_INMSGS);
- 
- 	saddr = &ipv6_hdr(skb)->saddr;
- 	daddr = &ipv6_hdr(skb)->daddr;
-@@ -939,7 +943,7 @@ static int icmpv6_rcv(struct sk_buff *skb)
- 
- 	type = hdr->icmp6_type;
- 
--	ICMP6MSGIN_INC_STATS(dev_net(dev), idev, type);
-+	ICMP6MSGIN_INC_STATS(dev_net_rcu(dev), idev, type);
- 
- 	switch (type) {
- 	case ICMPV6_ECHO_REQUEST:
-@@ -1034,9 +1038,9 @@ static int icmpv6_rcv(struct sk_buff *skb)
- 
- csum_error:
- 	reason = SKB_DROP_REASON_ICMP_CSUM;
--	__ICMP6_INC_STATS(dev_net(dev), idev, ICMP6_MIB_CSUMERRORS);
-+	__ICMP6_INC_STATS(dev_net_rcu(dev), idev, ICMP6_MIB_CSUMERRORS);
- discard_it:
--	__ICMP6_INC_STATS(dev_net(dev), idev, ICMP6_MIB_INERRORS);
-+	__ICMP6_INC_STATS(dev_net_rcu(dev), idev, ICMP6_MIB_INERRORS);
- drop_no_count:
- 	kfree_skb_reason(skb, reason);
- 	return 0;
+ 		if (steam->quirks & STEAM_QUIRK_DECK) {
+ 			steam_write_registers(steam,
+-				STEAM_REG_RPAD_MARGIN, 0x00, /* disable margin */
+ 				STEAM_REG_LPAD_MODE, 0x07, /* disable mouse */
+ 				STEAM_REG_RPAD_MODE, 0x07, /* disable mouse */
+ 				STEAM_REG_LPAD_CLICK_PRESSURE, 0xFFFF, /* disable clicky pad */
+@@ -365,7 +361,6 @@ static void steam_set_lizard_mode(struct steam_device *steam, bool enable)
+ 				schedule_delayed_work(&steam->heartbeat, 5 * HZ);
+ 		} else {
+ 			steam_write_registers(steam,
+-				STEAM_REG_RPAD_MARGIN, 0x00, /* disable margin */
+ 				STEAM_REG_LPAD_MODE, 0x07, /* disable mouse */
+ 				STEAM_REG_RPAD_MODE, 0x07, /* disable mouse */
+ 				0);
 -- 
 2.39.5
 
