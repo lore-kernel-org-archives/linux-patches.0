@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685C91CAA68;
-	Wed, 19 Feb 2025 09:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECE41C3F0A;
+	Wed, 19 Feb 2025 09:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956112; cv=none; b=R1nnv4aT1SpRt/2UYwliIm4ohmLxfgPlJ/tOpdOGGWnW764obWzwyX4sC0XsQlIRWfkdqlTXH05eOZZgK/FzfBhLZ8hfZTiJkoTOedR5l6qiEi+FOQYMS9Lhm4sblyQifIA9uZjWbF7CstnVhoNIpiUJaV2U49cjqytgO6jXn7Q=
+	t=1739956115; cv=none; b=uVGkZ9kRh3CvHjuD36bJAyJmj9mVjmTfjuugaaXDaplab3ov51EHK7zv6ZqQjR6WkRWxSeaSRGkro2JcX7Gjl+ydx3KGagnExEY/8YP7VpHWa1WQvt7dnX1qwXWcuhjrT2L8SSzFQw2osSHHuxObLckfx/wXaQWPYN2sbU/lBGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956112; c=relaxed/simple;
-	bh=jEMINu276ZWxM7XSUOi77mwBAYmVIGOoR4VRuMPEtdI=;
+	s=arc-20240116; t=1739956115; c=relaxed/simple;
+	bh=nLZ9OVDLn2vCkWgPhlP8aKpZxXVuP2TbrJY7ifDDxn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+hTvKmssP746bBa14kJNORP4EMKz4EEZFSYgZgwecfbNevAKL3Ds7TPLG927JmdnGnUx89A2kNywfzHdzKvRMDX0Hnn764Sb6OG7EqahiJ6sShDOLW+4q2mqHoBS20ER3Jr1GssDMxHxPmSOl8xtPDZk05ia4fptP4Dp6WDIDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFxw2e+E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jtiwrM8/DK/Ctyhq5Wav+CAczUjqXrTVh8ZGK5EOuUjW1NFTH+YZfY0uvhCs3yknIyTN/KDmsWSVITQbPxuR+gp4hW3wIzPc9ZroRK589TBKC7IoHU5t2AgdJCCzZq7O69GlYktpmTPzcbOHAjg9ESFme6rdNVzrCtBbR4Lk+9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOOz+Y8s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFxw2e+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2584C4CED1;
-	Wed, 19 Feb 2025 09:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOOz+Y8s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8884C4CED1;
+	Wed, 19 Feb 2025 09:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956112;
-	bh=jEMINu276ZWxM7XSUOi77mwBAYmVIGOoR4VRuMPEtdI=;
+	s=korg; t=1739956115;
+	bh=nLZ9OVDLn2vCkWgPhlP8aKpZxXVuP2TbrJY7ifDDxn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FFxw2e+EyumpSWX5o27UIrt5PyNHp+9ZVRPTgx1o5K3BwsHjcXvtx4Z3fZTMbmS6b
-	 Mh2mYLRI6Aw0Iuy3aSqBPXzrHN8AYDGk/wSavmxbOpGsUNqnnqyASR24MUWfAfuRZS
-	 HKuUOypy1e964UL0ALmlyG8ZWbGVE8ycfNUfzgH8=
+	b=vOOz+Y8sK4Kq2W5nlZrSuZvu7d0FKHkZJ2sTqcbd2+86EgkEUO8n6qkWtuiKmvDhj
+	 dtC82N2gQ5uwfbb19TeyCqQIWQ0EsW7FBDFGEhmIGoi9p95qnY2sZ8A8To4RYl3cHk
+	 h1vWVTG6Px/wd87BNrYFt1cFo2go/0hjCS+29Zfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/578] regulator: of: Implement the unwind path of of_regulator_match()
-Date: Wed, 19 Feb 2025 09:21:12 +0100
-Message-ID: <20250219082655.560753636@linuxfoundation.org>
+Subject: [PATCH 6.1 042/578] net_sched: sch_sfq: annotate data-races around q->perturb_period
+Date: Wed, 19 Feb 2025 09:20:46 +0100
+Message-ID: <20250219082654.549020382@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -51,64 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit dddca3b2fc676113c58b04aaefe84bfb958ac83e ]
+[ Upstream commit a17ef9e6c2c1cf0fc6cd6ca6a9ce525c67d1da7f ]
 
-of_regulator_match() does not release the OF node reference in the error
-path, resulting in an OF node leak. Therefore, call of_node_put() on the
-obtained nodes before returning the EINVAL error.
+sfq_perturbation() reads q->perturb_period locklessly.
+Add annotations to fix potential issues.
 
-Since it is possible that some drivers call this function and do not
-exit on failure, such as s2mps11_pmic_driver, clear the init_data and
-of_node in the error path.
-
-This was reported by an experimental verification tool that I am
-developing. As I do not have access to actual devices nor the QEMU board
-configuration to test drivers that call this function, no runtime test
-was able to be performed.
-
-Fixes: 1c8fa58f4750 ("regulator: Add generic DT parsing for regulators")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Link: https://patch.msgid.link/20250104080453.2153592-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240430180015.3111398-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 10685681bafc ("net_sched: sch_sfq: don't allow 1 packet limit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/of_regulator.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ net/sched/sch_sfq.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/regulator/of_regulator.c b/drivers/regulator/of_regulator.c
-index 59e71fd0db439..f23c12f4ffbfa 100644
---- a/drivers/regulator/of_regulator.c
-+++ b/drivers/regulator/of_regulator.c
-@@ -435,7 +435,7 @@ int of_regulator_match(struct device *dev, struct device_node *node,
- 					"failed to parse DT for regulator %pOFn\n",
- 					child);
- 				of_node_put(child);
--				return -EINVAL;
-+				goto err_put;
- 			}
- 			match->of_node = of_node_get(child);
- 			count++;
-@@ -444,6 +444,18 @@ int of_regulator_match(struct device *dev, struct device_node *node,
- 	}
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index 66dcb18638fea..ed362eefeea9a 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -608,6 +608,7 @@ static void sfq_perturbation(struct timer_list *t)
+ 	struct Qdisc *sch = q->sch;
+ 	spinlock_t *root_lock;
+ 	siphash_key_t nkey;
++	int period;
  
- 	return count;
-+
-+err_put:
-+	for (i = 0; i < num_matches; i++) {
-+		struct of_regulator_match *match = &matches[i];
-+
-+		match->init_data = NULL;
-+		if (match->of_node) {
-+			of_node_put(match->of_node);
-+			match->of_node = NULL;
-+		}
-+	}
-+	return -EINVAL;
+ 	get_random_bytes(&nkey, sizeof(nkey));
+ 	rcu_read_lock();
+@@ -618,8 +619,12 @@ static void sfq_perturbation(struct timer_list *t)
+ 		sfq_rehash(sch);
+ 	spin_unlock(root_lock);
+ 
+-	if (q->perturb_period)
+-		mod_timer(&q->perturb_timer, jiffies + q->perturb_period);
++	/* q->perturb_period can change under us from
++	 * sfq_change() and sfq_destroy().
++	 */
++	period = READ_ONCE(q->perturb_period);
++	if (period)
++		mod_timer(&q->perturb_timer, jiffies + period);
+ 	rcu_read_unlock();
  }
- EXPORT_SYMBOL_GPL(of_regulator_match);
  
+@@ -662,7 +667,7 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt)
+ 		q->quantum = ctl->quantum;
+ 		q->scaled_quantum = SFQ_ALLOT_SIZE(q->quantum);
+ 	}
+-	q->perturb_period = ctl->perturb_period * HZ;
++	WRITE_ONCE(q->perturb_period, ctl->perturb_period * HZ);
+ 	if (ctl->flows)
+ 		q->maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
+ 	if (ctl->divisor) {
+@@ -724,7 +729,7 @@ static void sfq_destroy(struct Qdisc *sch)
+ 	struct sfq_sched_data *q = qdisc_priv(sch);
+ 
+ 	tcf_block_put(q->block);
+-	q->perturb_period = 0;
++	WRITE_ONCE(q->perturb_period, 0);
+ 	del_timer_sync(&q->perturb_timer);
+ 	sfq_free(q->ht);
+ 	sfq_free(q->slots);
 -- 
 2.39.5
 
