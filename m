@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683FF1EDA3A;
-	Wed, 19 Feb 2025 08:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708761C7013;
+	Wed, 19 Feb 2025 08:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739955369; cv=none; b=S1HLXM1Vg82ewOdZYB5j2W1hwBS2GMKBKW75P+adJSQok6ZerAr49QvEZOQh43UFSpFiH9MVMxTAnyWlnZkxL/70YKvSruKtwo7+Uz0cnzXMXy9GxhUuXqrpcqOzR0l5vR4Y+5W0+S9J0vOA1wyIcmrJbWZv+myzNXyhKEj/XU8=
+	t=1739955372; cv=none; b=c1ExdLphX+gJC8tJH4S+ndnx1cBgPFSOl8lGp3o1bSog5y5HWv29SvLVICd5d+W0ENBMQYOGEpEmos4WoFhsmt6engpmF+ORZr4qKtEi/631DJKEpe/5yIff/aBy8hbF16UE4iHFn/dF2eLjhMZjqrLHnLjU4+lsP+Z83atlvos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739955369; c=relaxed/simple;
-	bh=fA5TmwjS/3vwO9Tgxt8S7nPWcJEb4dOfor+l7hvgMA0=;
+	s=arc-20240116; t=1739955372; c=relaxed/simple;
+	bh=lmmtaURWVhGfgTbkDl+uXA+V9pdUlY8mT6tm4RzuKyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=czWSQRxAJ9ecjRjMVPzq/3YEYOcQL2VoIQmyN1vl812vYHmxgmldSq3eKbZ9+xrUG5O5vQUm9EqdPERsE8fazmzuolpyeruAHUHLnb8ltzfcPC1ntdvUWxX7b4JjJnpkQxSHfY4kU+CTrtOAj/IDSuxxzmztH09ZgmC3/HR8TBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cF9eG4Nh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nGD6V30kZ7QkQTQ/iQSBWx4T7TDD8QW4JZIa2uS8evwHoyZrIJRA1FCKAARbll7xRDIwuxt8qmlvBhqmH6kUf6g9IISPPDF6AvqTwzMw2W9GRj4AQ9bEFizU3hRtNLh8GBzLRxGfMrIbhmKu742FuTU3vpwn8F+K53J/G6ybFxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0fuXFMU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cF9eG4Nh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8DCC4CED1;
-	Wed, 19 Feb 2025 08:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0fuXFMU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6832C4CED1;
+	Wed, 19 Feb 2025 08:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739955369;
-	bh=fA5TmwjS/3vwO9Tgxt8S7nPWcJEb4dOfor+l7hvgMA0=;
+	s=korg; t=1739955372;
+	bh=lmmtaURWVhGfgTbkDl+uXA+V9pdUlY8mT6tm4RzuKyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cF9eG4NhuYdRxY7WfjSjsoyeawLiDfuMkXX9BNgH13WPGU3k+uBKgO3oWTiF3EOGp
-	 t81GYLTNxegcNrJ33PZI96yiUhs8iRlPMMjpsl9K70C2Bn1f0QV3t/mZLD96rFh/lY
-	 EvYaHPTjyu+KgzivIrlyYGIZ2kM2hWB+Car3CUVU=
+	b=F0fuXFMU9UXqHwFgayLp17yDidu882G453XXutGFYeqrmhrG+L1bfSLjjSWaOghVY
+	 CuN+/t0I4CaIWBAZ5npXwCHas7fLv/Lommvg5FCanhDwdlJ+k/svw0XPnGRTciLrA/
+	 3cSNcpYE+CeobrkEqjH3uHUKdUf4fKQxLgpNFVgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 6.12 215/230] netdevsim: print human readable IP address
-Date: Wed, 19 Feb 2025 09:28:52 +0100
-Message-ID: <20250219082610.105892200@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 198/230] arp: use RCU protection in arp_xmit()
+Date: Wed, 19 Feb 2025 09:28:35 +0100
+Message-ID: <20250219082609.441406064@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -52,70 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit c71bc6da6198a6d88df86094f1052bb581951d65 upstream.
+[ Upstream commit a42b69f692165ec39db42d595f4f65a4c8f42e44 ]
 
-Currently, IPSec addresses are printed in hexadecimal format, which is
-not user-friendly. e.g.
+arp_xmit() can be called without RTNL or RCU protection.
 
-  # cat /sys/kernel/debug/netdevsim/netdevsim0/ports/0/ipsec
-  SA count=2 tx=20
-  sa[0] rx ipaddr=0x00000000 00000000 00000000 0100a8c0
-  sa[0]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
-  sa[0]    key=0x3167608a ca4f1397 43565909 941fa627
-  sa[1] tx ipaddr=0x00000000 00000000 00000000 00000000
-  sa[1]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
-  sa[1]    key=0x3167608a ca4f1397 43565909 941fa627
+Use RCU protection to avoid potential UAF.
 
-This patch updates the code to print the IPSec address in a human-readable
-format for easier debug. e.g.
-
- # cat /sys/kernel/debug/netdevsim/netdevsim0/ports/0/ipsec
- SA count=4 tx=40
- sa[0] tx ipaddr=0.0.0.0
- sa[0]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
- sa[0]    key=0x3167608a ca4f1397 43565909 941fa627
- sa[1] rx ipaddr=192.168.0.1
- sa[1]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
- sa[1]    key=0x3167608a ca4f1397 43565909 941fa627
- sa[2] tx ipaddr=::
- sa[2]    spi=0x00000100 proto=0x32 salt=0x0adecc3a crypt=1
- sa[2]    key=0x3167608a ca4f1397 43565909 941fa627
- sa[3] rx ipaddr=2000::1
- sa[3]    spi=0x00000101 proto=0x32 salt=0x0adecc3a crypt=1
- sa[3]    key=0x3167608a ca4f1397 43565909 941fa627
-
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20241010040027.21440-2-liuhangbin@gmail.com
+Fixes: 29a26a568038 ("netfilter: Pass struct net into the netfilter hooks")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250207135841.1948589-5-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/ipsec.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/ipv4/arp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/netdevsim/ipsec.c
-+++ b/drivers/net/netdevsim/ipsec.c
-@@ -39,10 +39,14 @@ static ssize_t nsim_dbg_netdev_ops_read(
- 		if (!sap->used)
- 			continue;
+diff --git a/net/ipv4/arp.c b/net/ipv4/arp.c
+index 11c1519b36993..59ffaa89d7b05 100644
+--- a/net/ipv4/arp.c
++++ b/net/ipv4/arp.c
+@@ -659,10 +659,12 @@ static int arp_xmit_finish(struct net *net, struct sock *sk, struct sk_buff *skb
+  */
+ void arp_xmit(struct sk_buff *skb)
+ {
++	rcu_read_lock();
+ 	/* Send it off, maybe filter it using firewalling first.  */
+ 	NF_HOOK(NFPROTO_ARP, NF_ARP_OUT,
+-		dev_net(skb->dev), NULL, skb, NULL, skb->dev,
++		dev_net_rcu(skb->dev), NULL, skb, NULL, skb->dev,
+ 		arp_xmit_finish);
++	rcu_read_unlock();
+ }
+ EXPORT_SYMBOL(arp_xmit);
  
--		p += scnprintf(p, bufsize - (p - buf),
--			       "sa[%i] %cx ipaddr=0x%08x %08x %08x %08x\n",
--			       i, (sap->rx ? 'r' : 't'), sap->ipaddr[0],
--			       sap->ipaddr[1], sap->ipaddr[2], sap->ipaddr[3]);
-+		if (sap->xs->props.family == AF_INET6)
-+			p += scnprintf(p, bufsize - (p - buf),
-+				       "sa[%i] %cx ipaddr=%pI6c\n",
-+				       i, (sap->rx ? 'r' : 't'), &sap->ipaddr);
-+		else
-+			p += scnprintf(p, bufsize - (p - buf),
-+				       "sa[%i] %cx ipaddr=%pI4\n",
-+				       i, (sap->rx ? 'r' : 't'), &sap->ipaddr[3]);
- 		p += scnprintf(p, bufsize - (p - buf),
- 			       "sa[%i]    spi=0x%08x proto=0x%x salt=0x%08x crypt=%d\n",
- 			       i, be32_to_cpu(sap->xs->id.spi),
+-- 
+2.39.5
+
 
 
