@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272611DE4EF;
-	Wed, 19 Feb 2025 09:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012B61D5175;
+	Wed, 19 Feb 2025 09:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739957221; cv=none; b=SzbdvfRkcP4lReE8LL5fiA9S3euI595+qTVI7EbjTJ85ZsMyjHLRQJVQNqoz2vd5VShyaVYgwjnl5ke3wBKxmHYnFqvSuik2ADlXzGiX2GLUja8s03dXhxW/t+IK+mJPWc2tRMRtYwh/Vr2nR8bnnIdpsq8DvMo8j9HUQ3DKkYc=
+	t=1739957224; cv=none; b=MyLlw6FK44lzBS7Bdvbai10unR7LQnBrAiTsrxZvyWHzcqmomWuZ2py0patXimEuGwQhZ8sL/BuUXmB8jydhttGvCH4wkyhoVlUro9SL4jgRP5qfRDXcRwIC+jTc2JqqGu2XJXkH20TryXD85gseKiyfeSjnNYarZNZTuQ6S/vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739957221; c=relaxed/simple;
-	bh=IB3q8em+o3sqWRIXKs1Tw1CpdaKqxTNTfjyqSlFZOaM=;
+	s=arc-20240116; t=1739957224; c=relaxed/simple;
+	bh=emzprnWGk+/rhfGqcEmNbECSlXQiXP5Pt/r+HuXazSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=vAvXmn2e74z1wILWsy2i5kS+pVaKe1L58D7EEJFNZunaDbr8kWRr0VP+D0rPENl690V+a5GijcUUxSSRj+2ONoF9TIVsmBRaEMw4EUo6vtZq2TXvjxXZJl1h42+gDpG/aEr3wzieXp3mgx057YQfdpq62k+pxnRspiaDEq9s0Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBmoOHoN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yfjwg59e8+zNoqbihD3LdjfklYUE2dDa/iAYtUlzgwz16CKuhKL5ySxBimBZLIPCpPI9bo6S26NPKfpWgrWHDRzhTj5TeKd9TIutk0XUyuG4/1nUzQ3n9z3N/4YTyBEuUTmvtB0tNwsX/WdKE8AXFhk4KXGTQlGSczsuuOJyMX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=de7Rqk2j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBmoOHoN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3729C4CED1;
-	Wed, 19 Feb 2025 09:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="de7Rqk2j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800D5C4CED1;
+	Wed, 19 Feb 2025 09:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739957221;
-	bh=IB3q8em+o3sqWRIXKs1Tw1CpdaKqxTNTfjyqSlFZOaM=;
+	s=korg; t=1739957223;
+	bh=emzprnWGk+/rhfGqcEmNbECSlXQiXP5Pt/r+HuXazSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aBmoOHoN8tm8J8zfoiTM+UfzMcYE1PNRXOvlchGmbu2lNqscspqh3f/dwJyJVk3oe
-	 fVmfDIUQtUQQLHrTwJM2HCmtV11mN44/mNiiExdmFx45yw9VntPz0oBXKrcpRx7XeB
-	 +5biNjIvYVlHvnq7OateLwYGY3+gaLNmUw5l5J/k=
+	b=de7Rqk2jycmtau3NZMT7CP4CRME9wLNC42JPl/xKmZAOwqWUx9zjGWYJsZDricPoX
+	 oXKaWdsH1kYzeBl4rcj1pFzojB+jPHn+wpTv5+XPmh6GdSX3ZKkBMv9IwnIRILRYPE
+	 f8Cwiul29Zc6Dcb0DbJsK3klJShPCIiEVf/nM8/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangYuli <wangyuli@uniontech.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.1 449/578] MIPS: ftrace: Declare ftrace_get_parent_ra_addr() as static
-Date: Wed, 19 Feb 2025 09:27:33 +0100
-Message-ID: <20250219082710.658862292@linuxfoundation.org>
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.1 420/578] nvmem: qcom-spmi-sdam: Set size in struct nvmem_config
+Date: Wed, 19 Feb 2025 09:27:04 +0100
+Message-ID: <20250219082709.539165893@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -46,51 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-commit ddd068d81445b17ac0bed084dfeb9e58b4df3ddd upstream.
+commit e88f516ea417c71bb3702603ac6af9e95338cfa6 upstream.
 
-Declare ftrace_get_parent_ra_addr() as static to suppress clang
-compiler warning that 'no previous prototype'. This function is
-not intended to be called from other parts.
+Let the nvmem core know what size the SDAM is, most notably this fixes
+the size of /sys/bus/nvmem/devices/spmi_sdam*/nvmem being '0' and makes
+user space work with that file.
 
-Fix follow error with clang-19:
+  ~ # hexdump -C -s 64 /sys/bus/nvmem/devices/spmi_sdam2/nvmem
+  00000040  02 01 00 00 04 00 00 00  00 00 00 00 00 00 00 00  |................|
+  00000050  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+  *
+  00000080
 
-arch/mips/kernel/ftrace.c:251:15: error: no previous prototype for function 'ftrace_get_parent_ra_addr' [-Werror,-Wmissing-prototypes]
-  251 | unsigned long ftrace_get_parent_ra_addr(unsigned long self_ra, unsigned long
-      |               ^
-arch/mips/kernel/ftrace.c:251:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-  251 | unsigned long ftrace_get_parent_ra_addr(unsigned long self_ra, unsigned long
-      | ^
-      | static
-1 error generated.
-
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 40ce9798794f ("nvmem: add QTI SDAM driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20241230141901.263976-6-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/ftrace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvmem/qcom-spmi-sdam.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/mips/kernel/ftrace.c
-+++ b/arch/mips/kernel/ftrace.c
-@@ -248,7 +248,7 @@ int ftrace_disable_ftrace_graph_caller(v
- #define S_R_SP	(0xafb0 << 16)	/* s{d,w} R, offset(sp) */
- #define OFFSET_MASK	0xffff	/* stack offset range: 0 ~ PT_SIZE */
- 
--unsigned long ftrace_get_parent_ra_addr(unsigned long self_ra, unsigned long
-+static unsigned long ftrace_get_parent_ra_addr(unsigned long self_ra, unsigned long
- 		old_parent_ra, unsigned long parent_ra_addr, unsigned long fp)
- {
- 	unsigned long sp, ip, tmp;
+--- a/drivers/nvmem/qcom-spmi-sdam.c
++++ b/drivers/nvmem/qcom-spmi-sdam.c
+@@ -143,6 +143,7 @@ static int sdam_probe(struct platform_de
+ 	sdam->sdam_config.id = NVMEM_DEVID_AUTO;
+ 	sdam->sdam_config.owner = THIS_MODULE;
+ 	sdam->sdam_config.stride = 1;
++	sdam->sdam_config.size = sdam->size;
+ 	sdam->sdam_config.word_size = 1;
+ 	sdam->sdam_config.reg_read = sdam_read;
+ 	sdam->sdam_config.reg_write = sdam_write;
 
 
