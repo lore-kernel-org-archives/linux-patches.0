@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88261DC184;
-	Wed, 19 Feb 2025 09:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE7C1DC184;
+	Wed, 19 Feb 2025 09:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739956343; cv=none; b=S3LoP2ablj7j/wvBRRUw4G8DbRxpr1lgg0SrxkWY+9uB5Q1aL9P7n9jCSAzEPi7B5cQog6B0vqW7ZxPXl5JFH6fXJso5t7gO/yA6F4DckjFwwDRKxtIruKaoUxUBrNjlqndVzRIxCy+BFToSW99HP/ezj2nNt+2sHvML3wwuUec=
+	t=1739956346; cv=none; b=GGoXt4H2Vr223K4HxLNF/S3w3n+EhBQAMpJjaysSLlJdTmnEiPrT2nr2hxnEKR6AWKbkAupXiHWsdhXuWSLwbsdfRUk5D44ZhesIAGl8mG4xHvabu1E3rSVdg8W0SWyZErrLLiCccKNmmIv3wv2BKu50gak2yabBaOIT4NbCCwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739956343; c=relaxed/simple;
-	bh=E1zuAFxbEWnUzF9u4QgLA1H1XxigXGSiP0KrpT8hwhE=;
+	s=arc-20240116; t=1739956346; c=relaxed/simple;
+	bh=YONoKE2Smrs4wy8/iKtQ6EwCnYnNtRfs9OgSebwyjvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZIgvAzTOLjweAn1VlAlfGC6BvN+PAPEdR3aPWaQfGw50O0gBX5PUdPr3smp3aRJb4f0/9mexi4s+/vhL5dstHRwHvzL/HO8aLQLnu+HIudtiMOsh9Hbjc9UA1RVNU9g9NMNPVBd+b+yMVVQflD0+lyu80w45tnG35rddj5AEwCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwA4P33w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tavgGgf3MWZe+vayxSulZXyR8r2kHseUBvIQlfExfyBbPFvjTOP5sMiVCSi1CVn+5D6pZyNvDd0lfSsLHbRpZflk2LAqdofQWe3SoQtFLZ+00e5v4CB+DnL3rNX+70QCPNZahtvJ1WmeGVMuLE+0iZG/O636BzwAzxwfIXBzXxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TfKQhDYA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwA4P33w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6806DC4CED1;
-	Wed, 19 Feb 2025 09:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TfKQhDYA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433DFC4CED1;
+	Wed, 19 Feb 2025 09:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739956342;
-	bh=E1zuAFxbEWnUzF9u4QgLA1H1XxigXGSiP0KrpT8hwhE=;
+	s=korg; t=1739956345;
+	bh=YONoKE2Smrs4wy8/iKtQ6EwCnYnNtRfs9OgSebwyjvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FwA4P33wqK0+3QOtNLb4Cbu6vLJy/cQQ0Fdwc8Y6I2zY8e+B/5PnTxNy6MPfllLhQ
-	 dy3B6U7rHu+QzIyNKoaEELrT2Bv7eNQA/jDHGciyEK7Fs2jgH1Rwt2SCc37la0DW2Y
-	 gDJD6LIPYcsCf6QX5ZihUtQ3r08qGRyuhlpKKRXE=
+	b=TfKQhDYAq8oOfmct7nxvuWZn3mnxhQWPk8BDRbvkJFCsjcJKMjBhAPz7jt6HwwG08
+	 C34EKan4rf4VNbDK1y3p09Nm5LnBbdzdOg8rvuy6z6wcWWB6tjvkZ1PWrTzg+lgZyI
+	 GOmRp2rYPmuUXPPlOSFRdDbgb8i6s5/uagDLP87U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/578] padata: fix sysfs store callback check
-Date: Wed, 19 Feb 2025 09:21:59 +0100
-Message-ID: <20250219082657.505106246@linuxfoundation.org>
+Subject: [PATCH 6.1 116/578] perf top: Dont complain about lack of vmlinux when not resolving some kernel samples
+Date: Wed, 19 Feb 2025 09:22:00 +0100
+Message-ID: <20250219082657.543508647@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082652.891560343@linuxfoundation.org>
 References: <20250219082652.891560343@linuxfoundation.org>
@@ -45,42 +51,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 9ff6e943bce67d125781fe4780a5d6f072dc44c0 ]
+[ Upstream commit 058b38ccd2af9e5c95590b018e8425fa148d7aca ]
 
-padata_sysfs_store() was copied from padata_sysfs_show() but this check
-was not adapted. Today there is no attribute which can fail this
-check, but if there is one it may as well be correct.
+Recently we got a case where a kernel sample wasn't being resolved due
+to a bug that was not setting the end address on kernel functions
+implemented in assembly (see Link: tag), and then those were not being
+found by machine__resolve() -> map__find_symbol().
 
-Fixes: 5e017dc3f8bc ("padata: Added sysfs primitives to padata subsystem")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+So we ended up with:
+
+  # perf top --stdio
+  PerfTop: 0 irqs/s  kernel: 0%  exact: 0% lost: 0/0 drop: 0/0 [cycles/P]
+  -----------------------------------------------------------------------
+
+  Warning:
+  A vmlinux file was not found.
+  Kernel samples will not be resolved.
+  ^Z
+  [1]+  Stopped                 perf top --stdio
+  #
+
+But then resolving all other kernel symbols.
+
+So just fixup the logic to only print that warning when there are no
+symbols in the kernel map.
+
+Fixes: d88205db9caa0e9d ("perf dso: Add dso__has_symbols() method")
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/lkml/Z3buKhcCsZi3_aGb@x1
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 2 +-
+ tools/perf/builtin-top.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/padata.c b/kernel/padata.c
-index 3e7bf1bbc6c26..46b75d6b3618c 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -959,7 +959,7 @@ static ssize_t padata_sysfs_store(struct kobject *kobj, struct attribute *attr,
- 
- 	pinst = kobj2pinst(kobj);
- 	pentry = attr2pentry(attr);
--	if (pentry->show)
-+	if (pentry->store)
- 		ret = pentry->store(pinst, attr, buf, count);
- 
- 	return ret;
+diff --git a/tools/perf/builtin-top.c b/tools/perf/builtin-top.c
+index f9917848cdad0..d24e495062a84 100644
+--- a/tools/perf/builtin-top.c
++++ b/tools/perf/builtin-top.c
+@@ -807,7 +807,7 @@ static void perf_event__process_sample(struct perf_tool *tool,
+ 		 * invalid --vmlinux ;-)
+ 		 */
+ 		if (!machine->kptr_restrict_warned && !top->vmlinux_warned &&
+-		    __map__is_kernel(al.map) && map__has_symbols(al.map)) {
++		    __map__is_kernel(al.map) && !map__has_symbols(al.map)) {
+ 			if (symbol_conf.vmlinux_name) {
+ 				char serr[256];
+ 				dso__strerror_load(al.map->dso, serr, sizeof(serr));
 -- 
 2.39.5
 
