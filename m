@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7911CAA82;
-	Wed, 19 Feb 2025 08:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82E01CAA68;
+	Wed, 19 Feb 2025 08:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739954899; cv=none; b=RJ48khkUtq89EcjiSfflNsQ/6LZJma+NMLpALKa/RMWv+W/5RYeovkdsH9yBdVPApj/wjqSZja3dMePb+8agn9olmikTIplKA6LmKBNZr8OH8DAHbhqAkEcXchzT8n3p0YxfEEOkqesSmWz8fyQCA7hQ19XUcEKcQIbAS52Sbew=
+	t=1739954901; cv=none; b=gLeSnBdECrZjDrCXp1025HSJeQfeG3psE0Rlht38yh5TOznprT37HqiigMeNLWmhwZ8c66rxsKm9o6XaYLZ1TXnRSbq5iJAZRcKcefVmRLHkbd/sG23QyfTVo2TJbU80V4Gxa6e6PP+hciQzIdgJvYJpxw9cRJRl2R/0cUN3+x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739954899; c=relaxed/simple;
-	bh=bDCbZ1SjxwGsr47kpgJ0dDbE4GDM3XY1NyNoySvv/tU=;
+	s=arc-20240116; t=1739954901; c=relaxed/simple;
+	bh=PKFdFfI1fHlNVO6BV/+clWnWLa1ZRejvTaWY3PVQFwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1kyCioXRPv9WXmGoszpBffkS+nXMPO2n1d9s9rssCPx12yIruUs9tkbc3wQxaubWCpVLyHN7xtPkAywyQ3ovo7xJARtv4ke2wzXvpkuwVkbiieehRQAZniialdXnBY59aboylRG0lGYqFYkDRzhzugoPSuvMWdZH0+eL8W35eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHTCbMbf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I7GlBngVfxxjrx6erz1l/29xlolPbauR+Dd4XvZ/Dk2a9YOS8sV7Y6LmvtksXjhxAJ5APPCaFVHT0XMifkl8nK+2FojofqMw2b50VsYbwForlgkFWMJpJ+qIP6Rqkb/CaIg4tnT8OUZIObTvKeWhEkpaJBSPjOFnTqRZRTfiOKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o8GjJr0r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHTCbMbf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E844C4CEE6;
-	Wed, 19 Feb 2025 08:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o8GjJr0r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB0EC4CEE6;
+	Wed, 19 Feb 2025 08:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1739954897;
-	bh=bDCbZ1SjxwGsr47kpgJ0dDbE4GDM3XY1NyNoySvv/tU=;
+	s=korg; t=1739954900;
+	bh=PKFdFfI1fHlNVO6BV/+clWnWLa1ZRejvTaWY3PVQFwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dHTCbMbfZ1AMeFNzaB4CI22Fio9ySmu4Nlg7QQoBqtjYL4AWBzrxdF2J8M3FeS1wE
-	 x40uaqj1z9qYlhNAa+GPahu68r+z7sFsys5FnZGIgmGSZ2xyiKzz/jpuqDE8CrVKRb
-	 Xv+LzI+9wcc9zZsiHbP/qnCBfPmE9JFjWA0GHBPE=
+	b=o8GjJr0rxhNLadhb+bhdLwklhi0Sf26YqyPj1a/BoRDVGO37TlQrOq8RiByc0VsBD
+	 wBkyRhQtqks7S0CB2q0Gz794aXewpV/KmhPP3Y5Ew0ksw6ErEOR7/pD7ja+fM9e/0W
+	 C/YV1FcKHQ5yaBzRQwEvyiXOOQhuGIekHTwWbrrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Isaac Scott <isaac.scott@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	syzbot+5e248227c80a3be8e96a@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 070/230] media: uvcvideo: Add Kurokesu C1 PRO camera
-Date: Wed, 19 Feb 2025 09:26:27 +0100
-Message-ID: <20250219082604.446323673@linuxfoundation.org>
+Subject: [PATCH 6.12 071/230] media: vidtv: Fix a null-ptr-deref in vidtv_mux_stop_thread
+Date: Wed, 19 Feb 2025 09:26:28 +0100
+Message-ID: <20250219082604.485865356@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219082601.683263930@linuxfoundation.org>
 References: <20250219082601.683263930@linuxfoundation.org>
@@ -52,44 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Isaac Scott <isaac.scott@ideasonboard.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 2762eab6d4140781840f253f9a04b8627017248b ]
+[ Upstream commit 1221989555db711578a327a9367f1be46500cb48 ]
 
-Add support for the Kurokesu C1 PRO camera. This camera experiences the
-same issues faced by the Sonix Technology Co. 292A IPC AR0330. As such,
-enable the UVC_QUIRK_MJPEG_NO_EOF quirk for this device to prevent
-frames from being erroneously dropped.
+syzbot report a null-ptr-deref in vidtv_mux_stop_thread. [1]
 
-Signed-off-by: Isaac Scott <isaac.scott@ideasonboard.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+If dvb->mux is not initialized successfully by vidtv_mux_init() in the
+vidtv_start_streaming(), it will trigger null pointer dereference about mux
+in vidtv_mux_stop_thread().
+
+Adjust the timing of streaming initialization and check it before
+stopping it.
+
+[1]
+KASAN: null-ptr-deref in range [0x0000000000000128-0x000000000000012f]
+CPU: 0 UID: 0 PID: 5842 Comm: syz-executor248 Not tainted 6.13.0-rc4-syzkaller-00012-g9b2ffa6148b1 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+RIP: 0010:vidtv_mux_stop_thread+0x26/0x80 drivers/media/test-drivers/vidtv/vidtv_mux.c:471
+Code: 90 90 90 90 66 0f 1f 00 55 53 48 89 fb e8 82 2e c8 f9 48 8d bb 28 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 04 02 84 c0 74 02 7e 3b 0f b6 ab 28 01 00 00 31 ff 89 ee e8
+RSP: 0018:ffffc90003f2faa8 EFLAGS: 00010202
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffffff87cfb125
+RDX: 0000000000000025 RSI: ffffffff87d120ce RDI: 0000000000000128
+RBP: ffff888029b8d220 R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000003 R12: ffff888029b8d188
+R13: ffffffff8f590aa0 R14: ffffc9000581c5c8 R15: ffff888029a17710
+FS:  00007f7eef5156c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f7eef5e635c CR3: 0000000076ca6000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ vidtv_stop_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:209 [inline]
+ vidtv_stop_feed+0x151/0x250 drivers/media/test-drivers/vidtv/vidtv_bridge.c:252
+ dmx_section_feed_stop_filtering+0x90/0x160 drivers/media/dvb-core/dvb_demux.c:1000
+ dvb_dmxdev_feed_stop.isra.0+0x1ee/0x270 drivers/media/dvb-core/dmxdev.c:486
+ dvb_dmxdev_filter_stop+0x22a/0x3a0 drivers/media/dvb-core/dmxdev.c:559
+ dvb_dmxdev_filter_free drivers/media/dvb-core/dmxdev.c:840 [inline]
+ dvb_demux_release+0x92/0x550 drivers/media/dvb-core/dmxdev.c:1246
+ __fput+0x3f8/0xb60 fs/file_table.c:450
+ task_work_run+0x14e/0x250 kernel/task_work.c:239
+ get_signal+0x1d3/0x2610 kernel/signal.c:2790
+ arch_do_signal_or_restart+0x90/0x7e0 arch/x86/kernel/signal.c:337
+ exit_to_user_mode_loop kernel/entry/common.c:111 [inline]
+ exit_to_user_mode_prepare include/linux/entry-common.h:329 [inline]
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
+ syscall_exit_to_user_mode+0x150/0x2a0 kernel/entry/common.c:218
+ do_syscall_64+0xda/0x250 arch/x86/entry/common.c:89
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Reported-by: syzbot+5e248227c80a3be8e96a@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5e248227c80a3be8e96a
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/media/test-drivers/vidtv/vidtv_bridge.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index 250c118e01bd4..4d8e00b425f44 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -2846,6 +2846,15 @@ static const struct usb_device_id uvc_ids[] = {
- 	  .bInterfaceSubClass	= 1,
- 	  .bInterfaceProtocol	= 0,
- 	  .driver_info		= (kernel_ulong_t)&uvc_quirk_probe_minmax },
-+	/* Kurokesu C1 PRO */
-+	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
-+				| USB_DEVICE_ID_MATCH_INT_INFO,
-+	  .idVendor		= 0x16d0,
-+	  .idProduct		= 0x0ed1,
-+	  .bInterfaceClass	= USB_CLASS_VIDEO,
-+	  .bInterfaceSubClass	= 1,
-+	  .bInterfaceProtocol	= 0,
-+	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_MJPEG_NO_EOF) },
- 	/* Syntek (HP Spartan) */
- 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
- 				| USB_DEVICE_ID_MATCH_INT_INFO,
+diff --git a/drivers/media/test-drivers/vidtv/vidtv_bridge.c b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
+index 613949df897d3..6d964e392d313 100644
+--- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
+@@ -191,10 +191,11 @@ static int vidtv_start_streaming(struct vidtv_dvb *dvb)
+ 
+ 	mux_args.mux_buf_sz  = mux_buf_sz;
+ 
+-	dvb->streaming = true;
+ 	dvb->mux = vidtv_mux_init(dvb->fe[0], dev, &mux_args);
+ 	if (!dvb->mux)
+ 		return -ENOMEM;
++
++	dvb->streaming = true;
+ 	vidtv_mux_start_thread(dvb->mux);
+ 
+ 	dev_dbg_ratelimited(dev, "Started streaming\n");
+@@ -205,6 +206,11 @@ static int vidtv_stop_streaming(struct vidtv_dvb *dvb)
+ {
+ 	struct device *dev = &dvb->pdev->dev;
+ 
++	if (!dvb->streaming) {
++		dev_warn_ratelimited(dev, "No streaming. Skipping.\n");
++		return 0;
++	}
++
+ 	dvb->streaming = false;
+ 	vidtv_mux_stop_thread(dvb->mux);
+ 	vidtv_mux_destroy(dvb->mux);
 -- 
 2.39.5
 
