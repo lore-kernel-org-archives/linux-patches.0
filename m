@@ -1,28 +1,27 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2041.outbound.protection.outlook.com [40.107.243.41])
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2052.outbound.protection.outlook.com [40.107.244.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BF6130A73;
-	Thu, 20 Feb 2025 01:32:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7851B6CE9;
+	Thu, 20 Feb 2025 01:32:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.52
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740015166; cv=fail; b=h6q6+RMs2+5eNL4uTLENHOwRJJyAdNFwOjcWBDvR+jQXTs5R00XxTVAOPWncl71LN+DD6Q7RjQMdytp9s2lRK5rDgrOTecvYH28eFl7rAfLuX4I8R0GofHQUqslk0GuriCImFCynG4CnCQQHDQ/E4REzD/6OvfFHyo0T1by2fQI=
+	t=1740015170; cv=fail; b=obUAV8fgQtFdpwKBEmjRbK0+KccPZRnKR/D2BwYDI/gLpJ7POhxSh6AajaZe2EtM5vcvRlplCXG8hrIl6if0AlactkeTRH7o0YUd2kmF+pZvk17yGoduG8oGLvWrRlXXlH45afW4J0KUIZuUKbSvFNkuJYGKQ6FSmSklA9Ccdds=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740015166; c=relaxed/simple;
-	bh=KBjRZJF27eSDna1biA1vwhv4sWUgJnuALrFID341rXY=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XGd6/LcG6YuJTi5LkVD3ViDLNehDQvFZdZbS38+t+Qdy6F+AW5r5KyRvXKvqz1AzUseGIK8P8Ah2SXXfciQ2PnMJtjD6jmURSM3nh4D1hwtS9Fxj4u717jfBXj8O3OpMGYs/5rMVG/i/UstkZjQdv3rC7f3swzsN5Z6v1jR+GF0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=kReTsOIh; arc=fail smtp.client-ip=40.107.243.41
+	s=arc-20240116; t=1740015170; c=relaxed/simple;
+	bh=AWIKk6LNcgclVY7dFmxvTmydCRbn7VufkLNGHDdj6GM=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=T5t4CFv+xeEds9joAokYZVk/SuWOxBXt20Qu0mOHefMyyFJgUKH/TWykrcR7gSqej1EYegKtXJCD+M2+ewI3FEKgBC85mOmwALWs9goeyDJYtIQLL3bQ7Zr0kPkBsrF9aHVpeSmHauJ7Zp3eDql/DvQMhfyaw0g6rlBVfjJ6/ZE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=C1Lpw3yQ; arc=fail smtp.client-ip=40.107.244.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="kReTsOIh"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="C1Lpw3yQ"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UQyBHV2vTTXbAAvIu7BNa+WlmnxCRiIVFdq8ojRwwdcRtZMJEWt4/aJP80rGm0mPwqYfqjy1hIWA49dmnebfOSd16bgF8Mr+vJJQXfJLZ+n1dI2yMvJT1A50qB7I7C72tfTs663cgThJ4XvqFGpPeVIAV6lDVSLZqEW/Iukr42H/4ydLkNxK6JkqUhSjxBBswChz9lVSFlGQeHzNs1VuStxngMB5LNrzeTwsbxHy9oDlWJuy/prwiw6f7UVlTbzGANhVX+uioNaEwQ4dILxeeGfGO7787HuNqSUFkPvf+cMvIiZV3JUYe51Zg7ht/8lKqXg59qKupDRkX4JXnTfYzQ==
+ b=srbVjzBQOhISl/doZqsvb82Txbc28e5qMqV4cSYSE29+/GbMtoIVjMtrHsTg7jBuJM+EbS4Xen2hYVqMiRizPAlEK1O1p+EUkaMs6M5Wyz0DDGGCdNLnQDo35m8+aTrtYrwOiRSVXuNRztWZkqhZOrfsuM2BLQaBMg6ksxE65NI7vCLLsIWyw1eppsClB1ecraz10aJWf4j9fOOPiaJsHKt83Qq1sPKgjptijX5juyQFa+GcNGiMFzugZZyhhKEeY5n8sq7I9b26GD7kKuARkr+qhvSMTzSmyzoEGO+k50kK1US1CyhhDY9KS/BdWI1AcutyYM+02Y14B7hg70oMgA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Hl0IOoxBe6+f0DNQfO/apREWAVhDS9iJmpX/KIbe3jc=;
- b=UHmgfDB33K6a2neLMk7WOe45smYN02olisHvPSeX92MJTnmCxWQ10Ot6VdN06zeEnaZ0+OJUaDn77kXCqO8hExYLMa1SFihl2FV2Hy1HKDu4lbEwalRA/7oAiuXtKqIjUVVEfAIFSmP7DWt35PsSjpUfpkStiWDxJXVVhZ2EKymoKxZOzM++CvrOr5lxIZ6DfNlkOEgE+UMkSj2uFOts7Hd+EasYM/Ka6oFThcjqN65oDZgpwio+vCYX+FD/FMs3BWVaRpyBMhIwpxR3lJTysjgE+5oL9Gb/W0+oxx8niTVfLoUeIZs6RQ3aHxQppQagjlf9kD/44BKk4sqJkVRlgw==
+ bh=bQstgESk+Qf+43/GmkvZDroq54ErnuRwTUlqr9D7GW0=;
+ b=W4Cx2x3BBaDU93gw4+MQzdC0D6wFkLajOLRgrEUd/PmpBbRLR81nBAKAizUxrgalSDPktYnFgAAbBzkHSesDG823+aiwf0xWqlElE62JzMoH6CbqYfqT7gwSR1m6TilJ1IDfDApFMBM/HX5QoWznW7xjL5t/ymLs1/aB9IjDcUWHBpkdvVyQH7p1g/csWOljdHLwpvxxENvW28VqG3Lw8KIpEwsIwSBT5aLV+YusB2Tcvspl+r3VXeNUrLw6OLUtsCiXk6MrkCOzcU9Wd+pDPXmna/kYnoxEklpmLDxSCACLzgspDMU8VUuOmro8A5o+6iAZZt0qSiQUTbC8WoDLcQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.117.161) smtp.rcpttodomain=gmail.com smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
@@ -30,18 +29,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Hl0IOoxBe6+f0DNQfO/apREWAVhDS9iJmpX/KIbe3jc=;
- b=kReTsOIhVNKb8mdkp6B2xuhOjuNhGxj3zCBj3YyCEBmya3rvdfU3PO4b5JC5YPyYgZ2zIUYOU7zpi1AhqT01naGgybHm63JBfl8ZhcDwafbQsc2pGp3YiqXL/EDaDi0kuDGnSA2jnXUqX08uAKTwpbCZRSb9Dq7Rb4dhXyE9uxu7CbVcRnI4+Y+rPTPh1qqts+YRKxUUF7Dpr3vvIhJJ3QmBDhNOzGf1bRQ9Xbw3YpjrrIXaIIELV2oGLdVzC72ivfF5RoVwAdcQoYmAfDBU0cZfOYPzu1qMqI0vBjQxS4v4ik8J0pi3D+JdSJcPQfWLVblKvgBxLANFEbbqNF9tNg==
-Received: from BN9P220CA0027.NAMP220.PROD.OUTLOOK.COM (2603:10b6:408:13e::32)
- by SJ2PR12MB9140.namprd12.prod.outlook.com (2603:10b6:a03:55f::10) with
+ bh=bQstgESk+Qf+43/GmkvZDroq54ErnuRwTUlqr9D7GW0=;
+ b=C1Lpw3yQ7NqJGpZUTlBFsAJ1Y5Q6g+ZO27Wg/QHY2V7oal9lM3wg7pl/ZdyZ27VVLvKLRBWEK4DsGQKC8c0h/KvohokMNgoATlegc/Q9EfY2+anWTrSAgF41gMZneDwseKmiPWwaQFSTzUz+CTl8PkEaxZCEcayUUVxIPs+yk9Kt+oF8eLk+NwO6EbrgpvtgZUdjp/dU+i5KzFeJIxbNBFyOonlNz5RYcSOTqoON4M05S+LgwIn3SEW9+NfU2sZqrqdLrQzUiwA7QG5ZCLIm+/t3yj333BwfvutkSOWdsgcxWHSjVAW9aeiwjDZ7lkaeuuixvW5l5VHL2Kpi4uFtOQ==
+Received: from BN9P220CA0010.NAMP220.PROD.OUTLOOK.COM (2603:10b6:408:13e::15)
+ by SA3PR12MB8812.namprd12.prod.outlook.com (2603:10b6:806:312::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.19; Thu, 20 Feb
- 2025 01:32:40 +0000
-Received: from BL6PEPF00022573.namprd02.prod.outlook.com
- (2603:10b6:408:13e:cafe::d7) by BN9P220CA0027.outlook.office365.com
- (2603:10b6:408:13e::32) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8466.14 via Frontend Transport; Thu,
- 20 Feb 2025 01:32:39 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.14; Thu, 20 Feb
+ 2025 01:32:36 +0000
+Received: from BL6PEPF00022575.namprd02.prod.outlook.com
+ (2603:10b6:408:13e:cafe::16) by BN9P220CA0010.outlook.office365.com
+ (2603:10b6:408:13e::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8466.15 via Frontend Transport; Thu,
+ 20 Feb 2025 01:32:36 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
  smtp.mailfrom=nvidia.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
@@ -49,20 +48,20 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
  216.228.117.161 as permitted sender) receiver=protection.outlook.com;
  client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
 Received: from mail.nvidia.com (216.228.117.161) by
- BL6PEPF00022573.mail.protection.outlook.com (10.167.249.41) with Microsoft
+ BL6PEPF00022575.mail.protection.outlook.com (10.167.249.43) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8466.11 via Frontend Transport; Thu, 20 Feb 2025 01:32:39 +0000
+ 15.20.8466.11 via Frontend Transport; Thu, 20 Feb 2025 01:32:36 +0000
 Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
  (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 19 Feb
- 2025 17:32:27 -0800
+ 2025 17:32:25 -0800
 Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
  (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 19 Feb
- 2025 17:32:27 -0800
+ 2025 17:32:24 -0800
 Received: from Asurada-Nvidia.nvidia.com (10.127.8.10) by mail.nvidia.com
  (10.129.68.10) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
- Transport; Wed, 19 Feb 2025 17:32:26 -0800
+ Transport; Wed, 19 Feb 2025 17:32:23 -0800
 From: Nicolin Chen <nicolinc@nvidia.com>
 To: <jgg@nvidia.com>, <kevin.tian@intel.com>, <tglx@linutronix.de>,
 	<maz@kernel.org>
@@ -72,12 +71,10 @@ CC: <joro@8bytes.org>, <will@kernel.org>, <robin.murphy@arm.com>,
 	<eric.auger@redhat.com>, <baolu.lu@linux.intel.com>, <yi.l.liu@intel.com>,
 	<yury.norov@gmail.com>, <jacob.pan@linux.microsoft.com>,
 	<patches@lists.linux.dev>
-Subject: [PATCH v2 2/7] genirq/msi: Refactor iommu_dma_compose_msi_msg()
-Date: Wed, 19 Feb 2025 17:31:37 -0800
-Message-ID: <eda62a9bafa825e9cdabd7ddc61ad5a21c32af24.1740014950.git.nicolinc@nvidia.com>
+Subject: [PATCH v2 0/7] iommu: Add MSI mapping support with nested SMMU (Part-1 core)
+Date: Wed, 19 Feb 2025 17:31:35 -0800
+Message-ID: <cover.1740014950.git.nicolinc@nvidia.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1740014950.git.nicolinc@nvidia.com>
-References: <cover.1740014950.git.nicolinc@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -89,283 +86,217 @@ Content-Type: text/plain
 X-NV-OnPremToCloud: AnonymousSubmission
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF00022573:EE_|SJ2PR12MB9140:EE_
-X-MS-Office365-Filtering-Correlation-Id: c6c1b070-43c1-4135-2f26-08dd514e76a4
+X-MS-TrafficTypeDiagnostic: BL6PEPF00022575:EE_|SA3PR12MB8812:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5d9b08ce-0948-497a-518b-08dd514e74ca
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|376014|82310400026|7416014|1800799024;
+	BCL:0;ARA:13230040|1800799024|376014|7416014|36860700013|82310400026|13003099007;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?ew87cpujUM2W2zmAGB0KXf9RNRSsmuOKRWyXSguOx5D6XFYP8e8asXQM5/1I?=
- =?us-ascii?Q?+SE0/F35vcb/R0BBn4vhOyVJY6+be2HKC2vKsfak4B3thF1nH8SipPtpJ6OC?=
- =?us-ascii?Q?c24NwsLw5huoelVOh/KsLzcDVijIfPE5YFu4kQ9/c0TKI0fcTYj6tGvEUMRq?=
- =?us-ascii?Q?2KY4zl/F9bWmu8AhJLpMAJzCh0ef9Juxh0ReE7AaKVyFfpxF5HZQIt+5kRD3?=
- =?us-ascii?Q?ob1zDtLmmqy6rupnyN3wFsI2p8ublL/GNyFG2faQp9Sq8RZ9xZFeTwuEf2+k?=
- =?us-ascii?Q?QlGKbUbJZg+ZySct9eiSGKpgOdCsBonYltay3dd/OmtqCkvLCtgNiq0PCmWY?=
- =?us-ascii?Q?kwtbWW1eeVXEwkfhaXYfEChZykZHexGvGVGqGp3XjzzAkIh9vB6iUEQA0Q8/?=
- =?us-ascii?Q?P2ivqm5YxG5M68ZlXjEqDIA9x4diJHuY/fNDszFCYg5fHiaRyRWsA/7R31NQ?=
- =?us-ascii?Q?wa1i941ORXDHeVj/9/XcJo/Y55DRsHn/8/97GaVz1aQ+K1IDddV7E4VU5w94?=
- =?us-ascii?Q?aKpaVTBpDXgxR+ZPv8xXgM+jt301yNwdQeXLPCJyQwy+2U3qSxBn6RT8DzRG?=
- =?us-ascii?Q?kaAYxNrEbPFS5+jnY9f1/yXxp2kUTs7sPq4riE+KZhPMxPggoHwmzV3r1tzt?=
- =?us-ascii?Q?Ua9vb6L3WVkRUoeuTacb8Khw6N+nMX6QT9P6y7cDvwVx+XMfZNuewLeQaKVQ?=
- =?us-ascii?Q?FSKqspLQWTE+zhM4uPKS+fe+bWtVoW1ETcoakovmn5B5ddWLvkmGog3RZsYj?=
- =?us-ascii?Q?DY5uMPi7df+CxUJ2pxwBzM8hFuiNe+i9mh6BiyNZJ1MX8nQ0UtOzMo8mjZ9C?=
- =?us-ascii?Q?FJy05e1g/8rW5P3U6J84OvxQHZmc7vavEouohP3WpbRMIL1o7tEwdzYJQX30?=
- =?us-ascii?Q?zBORAY7jIZsSMdnc8D0EHuCdM/25PwvRGQObQKNy5oNixS4DP7uJv4Udly3L?=
- =?us-ascii?Q?B6J3JfsJuExWNoZCEovw+sIaaicxXjNJ1J4jSX0kuII1riGSAbrGemIAe+aP?=
- =?us-ascii?Q?X0zbGWT2K7K9gyumVel3MciKpsLShEz8OjsWMxGkyalcPqy5aSFdCKFv60ty?=
- =?us-ascii?Q?iH2mN4nzGycBKqGI/4abOdPiL5sac/IaMakSv8EC6ZRLAfW8sW64WJ+ArPON?=
- =?us-ascii?Q?TNVFecKmLhuxNKDX0G18w10mhVUscQZjoWmA0FrvjMcKeS2ipYSG8xEqav3X?=
- =?us-ascii?Q?XvXTdy/wgXGjHvWMqTVncL8tMQLUC8bMYqwhyT9C50cQUAXRqjbTOoYwkZmy?=
- =?us-ascii?Q?tkm0auyYuYtyjIT+opXOnfI3e1a++Qg1ldsiCC+YlYpIprnnpdGckxyfB76y?=
- =?us-ascii?Q?xIWyFr/zLZ56h5s17rKBPgWSFy0Rk20cLWzWnKbtOFVXnHRWo3bESXD0ne/z?=
- =?us-ascii?Q?zwqhXuT9vlUy77ppFj2E+X2FDCuBWFzdWPWM7R+vHYrPz1cH8jUSZvBML7Cd?=
- =?us-ascii?Q?2Jf3u5jd08mN6ua1U6Coakx9njwZSUfuFJUhgg4Kr0hVv1T2TCfSnLeKEf9I?=
- =?us-ascii?Q?1MzQH5oqcSCbdBQ=3D?=
+	=?us-ascii?Q?MO9jGkesP7vCHzfPWknVoShxYsW1y2HmOdolBZv6nl9S4EBqgUbT+jGwOOFG?=
+ =?us-ascii?Q?R1D+gtZOrMm3Mh6v2TR2tHOZgahhk5MyPXxo2PV/fE5OnR59G8+3Me3CH4EB?=
+ =?us-ascii?Q?Fy1rF7st9EJFGWVzL8dUa7NI+1yn/mhPHxKVnKZ5d/urHPqF14YSWhvGPwyX?=
+ =?us-ascii?Q?h4jqH/7bU57QzGVf9IZtKb9MhBI+PECYwhVfwY1b7yr1DjYXu2JOK5QVRP1y?=
+ =?us-ascii?Q?p4SpkGLX9cq0tbcOBkghOca2XPN1n4pM3b53VAeihvb88UTdn52y2Cfd3rwm?=
+ =?us-ascii?Q?ULSVAO8wzNE1dm8awifs2RrIW9wuX0ad5iPcQmhFWHaelPyj6DaKn+ELlEdG?=
+ =?us-ascii?Q?eAH+wgyx9wRGaJk0LHhcpUY/mkAR4k/fbhQNKnme7rP9VRIFltjHKdvrNWxp?=
+ =?us-ascii?Q?lrbSE/aX0vEjN8se6dhrjJdELCUB1vUpXUkVWGijJ2i8D4ZIvF2d8gIDgVlO?=
+ =?us-ascii?Q?SLFiuQ1ovIx3yGC8DxjeDRD6akhpizWaMRsXImC+Reb3UtQP/ctoG1iLxXaz?=
+ =?us-ascii?Q?BtMSDjvrN+VKz7WdzoTQCHq1uKp05opJCQKuv0yl3qY4cpnIi6AGqOdus5Px?=
+ =?us-ascii?Q?pmWYCOeizhdu3Si675LMdJqkhfSosICWvDBeoKQ9MlPzf+tB6zyTkHa9ot39?=
+ =?us-ascii?Q?3HjXpqQqJbtDZF2Y49vBw3F8eDnXu3gIEaM05gtf7Y2hm47x3ZFfdUoQsgmy?=
+ =?us-ascii?Q?UujVF4IhPc0iYsF8m+3aW5jYfODuChIyPx1CNQargKpWgimAkFPIAYK+lqCZ?=
+ =?us-ascii?Q?QBLwuRVUZWzpeh7FsSSnuEKdVQImzHzbKMFEZGzaDY5DYCNtockKigPl9SeB?=
+ =?us-ascii?Q?EHMUD8oYJmDgo0CAOX7oWJ6pWaWzJ1QbED3oLJhj4HavhvHcjw3Jal0IGf3O?=
+ =?us-ascii?Q?nTI1ccHJjsuSoh41VLSPEan7tXIRz3qnNyxLe16KC9mJx0FFm+quyY4rorZm?=
+ =?us-ascii?Q?ngj8hosI8IBkDg4Si5KFZ1EQZvpm5cyT1rFQaEe+/f9vYxBb/s2a6Qw0AXqB?=
+ =?us-ascii?Q?XrmVvGwbROI9SodgdpxgmRw/pqR4/0piczT7wlg8ZCu1yyHB/JchJombiXre?=
+ =?us-ascii?Q?TNaDHI6aBixCfZy/i79Zrnm4U/9tlU11mArarSODCWjorrLH+JrkyURBV9Jz?=
+ =?us-ascii?Q?Lz9a7nPj1uq00BkpcYFdUiK5Kkz3P4CCaRm91mPdmBXNPT/t193G/OHaP/cU?=
+ =?us-ascii?Q?iQOBtZkEcBBBgZ2YWVefla+rzLdPM3Rt2uPygypKBPhgN8LU8ZRvlVU/uvp7?=
+ =?us-ascii?Q?J0KLu7R0TcZoJItN9Gf75j+ZbcaCaDeoYnaa32MdXhTilB45hejF6+XllW+r?=
+ =?us-ascii?Q?3/miuKobWIDMJLZng+4zFaERFTkbAD3N466SKnLFe2FKusSOAYfOd1u4fjLi?=
+ =?us-ascii?Q?dCr4o28sz0X9SqYatwrmCHPDqX0MLUX6VlsAXTeku/5C63HYPORz8PgMCyz6?=
+ =?us-ascii?Q?EiGIZqoE8+gKF6dJT4GM7/JmBChC9N7Sc/TaMw3bBGZHZ6sxX61sH0x5txrj?=
+ =?us-ascii?Q?g70w7HWozYjm5wI=3D?=
 X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(376014)(82310400026)(7416014)(1800799024);DIR:OUT;SFP:1101;
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(36860700013)(82310400026)(13003099007);DIR:OUT;SFP:1101;
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2025 01:32:39.4217
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2025 01:32:36.3162
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c6c1b070-43c1-4135-2f26-08dd514e76a4
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5d9b08ce-0948-497a-518b-08dd514e74ca
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
 X-MS-Exchange-CrossTenant-AuthSource:
-	BL6PEPF00022573.namprd02.prod.outlook.com
+	BL6PEPF00022575.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9140
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB8812
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+[ Background ]
+On ARM GIC systems and others, the target address of the MSI is translated
+by the IOMMU. For GIC, the MSI address page is called "ITS" page. When the
+IOMMU is disabled, the MSI address is programmed to the physical location
+of the GIC ITS page (e.g. 0x20200000). When the IOMMU is enabled, the ITS
+page is behind the IOMMU, so the MSI address is programmed to an allocated
+IO virtual address (a.k.a IOVA), e.g. 0xFFFF0000, which must be mapped to
+the physical ITS page: IOVA (0xFFFF0000) ===> PA (0x20200000).
+When a 2-stage translation is enabled, IOVA will be still used to program
+the MSI address, though the mappings will be in two stages:
+  IOVA (0xFFFF0000) ===> IPA (e.g. 0x80900000) ===> PA (0x20200000)
+(IPA stands for Intermediate Physical Address).
 
-The two-step process to translate the MSI address involves two functions,
-iommu_dma_prepare_msi() and iommu_dma_compose_msi_msg().
+If the device that generates MSI is attached to an IOMMU_DOMAIN_DMA, the
+IOVA is dynamically allocated from the top of the IOVA space. If attached
+to an IOMMU_DOMAIN_UNMANAGED (e.g. a VFIO passthrough device), the IOVA is
+fixed to an MSI window reported by the IOMMU driver via IOMMU_RESV_SW_MSI,
+which is hardwired to MSI_IOVA_BASE (IOVA==0x8000000) for ARM IOMMUs.
 
-Previously iommu_dma_compose_msi_msg() needed to be in the iommu layer as
-it had to dereference the opaque cookie pointer. Now, the previous patch
-changed the cookie pointer into an integer so there is no longer any need
-for the iommu layer to be involved.
+So far, this IOMMU_RESV_SW_MSI works well as kernel is entirely in charge
+of the IOMMU translation (1-stage translation), since the IOVA for the ITS
+page is fixed and known by kernel. However, with virtual machine enabling
+a nested IOMMU translation (2-stage), a guest kernel directly controls the
+stage-1 translation with an IOMMU_DOMAIN_DMA, mapping a vITS page (at an
+IPA 0x80900000) onto its own IOVA space (e.g. 0xEEEE0000). Then, the host
+kernel can't know that guest-level IOVA to program the MSI address.
 
-Further, the call sites of iommu_dma_compose_msi_msg() all follow the same
-pattern of setting an MSI message address_hi/lo to non-translated and then
-immediately calling iommu_dma_compose_msi_msg().
+There have been two approaches to solve this problem:
+1. Create an identity mapping in the stage-1. VMM could insert a few RMRs
+   (Reserved Memory Regions) in guest's IORT. Then the guest kernel would
+   fetch these RMR entries from the IORT and create an IOMMU_RESV_DIRECT
+   region per iommu group for a direct mapping. Eventually, the mappings
+   would look like: IOVA (0x8000000) === IPA (0x8000000) ===> 0x20200000
+   This requires an IOMMUFD ioctl for kernel and VMM to agree on the IPA.
+2. Forward the guest-level MSI IOVA captured by VMM to the host-level GIC
+   driver, to program the correct MSI IOVA. Forward the VMM-defined vITS
+   page location (IPA) to the kernel for the stage-2 mapping. Eventually:
+   IOVA (0xFFFF0000) ===> IPA (0x80900000) ===> PA (0x20200000)
+   This requires a VFIO ioctl (for IOVA) and an IOMMUFD ioctl (for IPA).
 
-Refactor iommu_dma_compose_msi_msg() into msi_msg_set_addr() that directly
-accepts the u64 version of the address and simplifies all the callers.
+Worth mentioning that when Eric Auger was working on the same topic with
+the VFIO iommu uAPI, he had a solution for approach (2) first, and then
+switched to approach (1), suggested by Jean-Philippe for the reduction of
+complexity.
 
-Move the new helper to linux/msi.h since it has nothing to do with iommu.
+Approach (1) basically feels like the existing VFIO passthrough that has
+a 1-stage mapping for the unmanaged domain, yet only by shifting the MSI
+mapping from stage 1 (no-viommu case) to stage 2 (has-viommu case). So,
+it could reuse the existing IOMMU_RESV_SW_MSI piece, by sharing the same
+idea of "VMM leaving everything to the kernel".
 
-Aside from refactoring, this logically prepares for the next patch, which
-allows multiple implementation options for iommu_dma_prepare_msi(). So, it
-does not make sense to have the iommu_dma_compose_msi_msg() in dma-iommu.c
-as it no longer provides the only iommu_dma_prepare_msi() implementation.
+Approach (2) is an ideal solution, yet it requires additional effort for
+kernel to be aware of the stage-1 gIOVAs and the stage-2 IPAs for vITS
+page(s), which demands VMM to closely cooperate.
+ * It also brings some complicated use cases to the table where the host
+   or/and guest system(s) has/have multiple ITS pages.
 
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+[ Execution ]
+Though these two approaches feel very different on the surface, they can
+share some underlying common infrastructure. Currently, only one pair of
+sw_msi functions (prepare/compose) are provided by dma-iommu for irqchip
+drivers to directly use. There could be different versions of functions
+from different domain owners: for existing VFIO passthrough cases and in-
+kernel DMA domain cases, reuse the existing dma-iommu's version of sw_msi
+functions; for nested translation use cases, there can be another version
+of sw_msi functions to handle mapping and msi_msg(s) differently.
+
+As a part-1 series, this refactors the core infrastructure:
+ - Get rid of the duplication in the "compose" function
+ - Introduce a function pointer for the previously "prepare" function
+ - Allow different domain owners to set their own "sw_msi" implementations
+ - Implement an iommufd_sw_msi function to additionally support non-nested
+   use cases and also prepare for a nested translation use case using the
+   approach (1)
+
+[ Future Plan ]
+Part-2 will add support of approach (1), i.e. RMR solution:
+ - Add a pair of IOMMUFD options for a SW_MSI window for kernel and VMM to
+   agree on (for approach 1)
+Part-3 and beyond will continue the effort of supporting approach (2) i.e.
+a complete vITS-to-pITS mapping:
+ - Map the phsical ITS page (potentially via IOMMUFD_CMD_IOAS_MAP_MSI)
+ - Convey the IOVAs per-irq (potentially via VFIO_IRQ_SET_ACTION_PREPARE)
+
 ---
- include/linux/iommu.h             |  6 ------
- include/linux/msi.h               | 28 ++++++++++++++++++++++++++++
- drivers/iommu/dma-iommu.c         | 18 ------------------
- drivers/irqchip/irq-gic-v2m.c     |  5 +----
- drivers/irqchip/irq-gic-v3-its.c  | 13 +++----------
- drivers/irqchip/irq-gic-v3-mbi.c  | 12 ++++--------
- drivers/irqchip/irq-ls-scfg-msi.c |  5 ++---
- 7 files changed, 38 insertions(+), 49 deletions(-)
 
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index 38c65e92ecd0..caee952febd4 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -1508,7 +1508,6 @@ static inline void iommu_debugfs_setup(void) {}
- int iommu_get_msi_cookie(struct iommu_domain *domain, dma_addr_t base);
- 
- int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr);
--void iommu_dma_compose_msi_msg(struct msi_desc *desc, struct msi_msg *msg);
- 
- #else /* CONFIG_IOMMU_DMA */
- 
-@@ -1524,11 +1523,6 @@ static inline int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_a
- {
- 	return 0;
- }
--
--static inline void iommu_dma_compose_msi_msg(struct msi_desc *desc, struct msi_msg *msg)
--{
--}
--
- #endif	/* CONFIG_IOMMU_DMA */
- 
- /*
-diff --git a/include/linux/msi.h b/include/linux/msi.h
-index fc4f3774c3af..8d97b890faec 100644
---- a/include/linux/msi.h
-+++ b/include/linux/msi.h
-@@ -299,6 +299,34 @@ static inline void msi_desc_set_iommu_msi_iova(struct msi_desc *desc, u64 msi_io
- #endif
- }
- 
-+/**
-+ * msi_msg_set_addr() - Set MSI address in an MSI message
-+ *
-+ * @desc:	MSI descriptor that may carry an IOVA base address for MSI via @iommu_msi_iova/shift
-+ * @msg:	Target MSI message to set its address_hi and address_lo
-+ * @msi_addr:	Physical address to set the MSI message
-+ *
-+ * Notes:
-+ *  - Override @msi_addr using the IOVA base address in the @desc if @iommu_msi_shift is set
-+ *  - Otherwise, simply set @msi_addr to @msg
-+ */
-+static inline void msi_msg_set_addr(struct msi_desc *desc, struct msi_msg *msg,
-+				    phys_addr_t msi_addr)
-+{
-+#ifdef CONFIG_IRQ_MSI_IOMMU
-+	if (desc->iommu_msi_shift) {
-+		u64 msi_iova = desc->iommu_msi_iova << desc->iommu_msi_shift;
-+
-+		msg->address_hi = upper_32_bits(msi_iova);
-+		msg->address_lo = lower_32_bits(msi_iova) |
-+				  (msi_addr & ((1 << desc->iommu_msi_shift) - 1));
-+		return;
-+	}
-+#endif
-+	msg->address_hi = upper_32_bits(msi_addr);
-+	msg->address_lo = lower_32_bits(msi_addr);
-+}
-+
- int msi_domain_insert_msi_desc(struct device *dev, unsigned int domid,
- 			       struct msi_desc *init_desc);
- /**
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index 0f0caf59023c..bf91e014d179 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -1836,24 +1836,6 @@ int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
- 	return 0;
- }
- 
--/**
-- * iommu_dma_compose_msi_msg() - Apply translation to an MSI message
-- * @desc: MSI descriptor prepared by iommu_dma_prepare_msi()
-- * @msg: MSI message containing target physical address
-- */
--void iommu_dma_compose_msi_msg(struct msi_desc *desc, struct msi_msg *msg)
--{
--#ifdef CONFIG_IRQ_MSI_IOMMU
--	if (desc->iommu_msi_shift) {
--		u64 msi_iova = desc->iommu_msi_iova << desc->iommu_msi_shift;
--
--		msg->address_hi = upper_32_bits(msi_iova);
--		msg->address_lo = lower_32_bits(msi_iova) |
--				  (msg->address_lo & ((1 << desc->iommu_msi_shift) - 1));
--	}
--#endif
--}
--
- static int iommu_dma_init(void)
- {
- 	if (is_kdump_kernel())
-diff --git a/drivers/irqchip/irq-gic-v2m.c b/drivers/irqchip/irq-gic-v2m.c
-index be35c5349986..57e0470e0d13 100644
---- a/drivers/irqchip/irq-gic-v2m.c
-+++ b/drivers/irqchip/irq-gic-v2m.c
-@@ -87,9 +87,6 @@ static void gicv2m_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
- 	struct v2m_data *v2m = irq_data_get_irq_chip_data(data);
- 	phys_addr_t addr = gicv2m_get_msi_addr(v2m, data->hwirq);
- 
--	msg->address_hi = upper_32_bits(addr);
--	msg->address_lo = lower_32_bits(addr);
--
- 	if (v2m->flags & GICV2M_GRAVITON_ADDRESS_ONLY)
- 		msg->data = 0;
- 	else
-@@ -97,7 +94,7 @@ static void gicv2m_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
- 	if (v2m->flags & GICV2M_NEEDS_SPI_OFFSET)
- 		msg->data -= v2m->spi_offset;
- 
--	iommu_dma_compose_msi_msg(irq_data_get_msi_desc(data), msg);
-+	msi_msg_set_addr(irq_data_get_msi_desc(data), msg, addr);
- }
- 
- static struct irq_chip gicv2m_irq_chip = {
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 8c3ec5734f1e..ce0bf70b9eaf 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -1809,17 +1809,10 @@ static u64 its_irq_get_msi_base(struct its_device *its_dev)
- static void its_irq_compose_msi_msg(struct irq_data *d, struct msi_msg *msg)
- {
- 	struct its_device *its_dev = irq_data_get_irq_chip_data(d);
--	struct its_node *its;
--	u64 addr;
--
--	its = its_dev->its;
--	addr = its->get_msi_base(its_dev);
--
--	msg->address_lo		= lower_32_bits(addr);
--	msg->address_hi		= upper_32_bits(addr);
--	msg->data		= its_get_event_id(d);
- 
--	iommu_dma_compose_msi_msg(irq_data_get_msi_desc(d), msg);
-+	msg->data = its_get_event_id(d);
-+	msi_msg_set_addr(irq_data_get_msi_desc(d), msg,
-+			 its_dev->its->get_msi_base(its_dev));
- }
- 
- static int its_irq_set_irqchip_state(struct irq_data *d,
-diff --git a/drivers/irqchip/irq-gic-v3-mbi.c b/drivers/irqchip/irq-gic-v3-mbi.c
-index 3fe870f8ee17..a6510128611e 100644
---- a/drivers/irqchip/irq-gic-v3-mbi.c
-+++ b/drivers/irqchip/irq-gic-v3-mbi.c
-@@ -147,22 +147,18 @@ static const struct irq_domain_ops mbi_domain_ops = {
- 
- static void mbi_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
- {
--	msg[0].address_hi = upper_32_bits(mbi_phys_base + GICD_SETSPI_NSR);
--	msg[0].address_lo = lower_32_bits(mbi_phys_base + GICD_SETSPI_NSR);
- 	msg[0].data = data->parent_data->hwirq;
--
--	iommu_dma_compose_msi_msg(irq_data_get_msi_desc(data), msg);
-+	msi_msg_set_addr(irq_data_get_msi_desc(data), &msg[0],
-+			 mbi_phys_base + GICD_SETSPI_NSR);
- }
- 
- static void mbi_compose_mbi_msg(struct irq_data *data, struct msi_msg *msg)
- {
- 	mbi_compose_msi_msg(data, msg);
- 
--	msg[1].address_hi = upper_32_bits(mbi_phys_base + GICD_CLRSPI_NSR);
--	msg[1].address_lo = lower_32_bits(mbi_phys_base + GICD_CLRSPI_NSR);
- 	msg[1].data = data->parent_data->hwirq;
--
--	iommu_dma_compose_msi_msg(irq_data_get_msi_desc(data), &msg[1]);
-+	msi_msg_set_addr(irq_data_get_msi_desc(data), &msg[1],
-+			 mbi_phys_base + GICD_CLRSPI_NSR);
- }
- 
- static bool mbi_init_dev_msi_info(struct device *dev, struct irq_domain *domain,
-diff --git a/drivers/irqchip/irq-ls-scfg-msi.c b/drivers/irqchip/irq-ls-scfg-msi.c
-index c0e1aafe468c..3cb80796cc7c 100644
---- a/drivers/irqchip/irq-ls-scfg-msi.c
-+++ b/drivers/irqchip/irq-ls-scfg-msi.c
-@@ -87,8 +87,6 @@ static void ls_scfg_msi_compose_msg(struct irq_data *data, struct msi_msg *msg)
- {
- 	struct ls_scfg_msi *msi_data = irq_data_get_irq_chip_data(data);
- 
--	msg->address_hi = upper_32_bits(msi_data->msiir_addr);
--	msg->address_lo = lower_32_bits(msi_data->msiir_addr);
- 	msg->data = data->hwirq;
- 
- 	if (msi_affinity_flag) {
-@@ -98,7 +96,8 @@ static void ls_scfg_msi_compose_msg(struct irq_data *data, struct msi_msg *msg)
- 		msg->data |= cpumask_first(mask);
- 	}
- 
--	iommu_dma_compose_msi_msg(irq_data_get_msi_desc(data), msg);
-+	msi_msg_set_addr(irq_data_get_msi_desc(data), msg,
-+			 msi_data->msiir_addr);
- }
- 
- static int ls_scfg_msi_set_affinity(struct irq_data *irq_data,
+This is a joint effort that includes Jason's rework in irq/iommu/iommufd
+base level and my additional patches on top of that for new uAPIs.
+
+This series is on github:
+https://github.com/nicolinc/iommufd/commits/iommufd_msi_p1-v2
+
+For testing with nested SMMU (approach 1):
+https://github.com/nicolinc/iommufd/commits/wip/iommufd_msi_p2-v2
+Pairing QEMU branch for testing (approach 1):
+https://github.com/nicolinc/qemu/commits/wip/for_iommufd_msi_p2-v2-rmr
+
+Changelog
+v2
+ * Split the iommufd ioctl for approach (1) out of this part-1
+ * Rebase on Jason's for-next tree (6.14-rc2) for two iommufd patches
+ * Update commit logs in two irqchip patches to make narrative clearer
+ * Keep iommu_dma_compose_msi_msg() in PATCH-1 as a small cleaner step
+ * Improve with some coding style changes: kdoc and 100-char wrapping
+v1
+ https://lore.kernel.org/kvm/cover.1739005085.git.nicolinc@nvidia.com/
+ * Rebase on v6.14-rc1 and iommufd_attach_handle-v1 series
+   https://lore.kernel.org/all/cover.1738645017.git.nicolinc@nvidia.com/
+ * Correct typos
+ * Replace set_bit with __set_bit
+ * Use a common helper to get iommufd_handle
+ * Add kdoc for iommu_msi_iova/iommu_msi_page_shift
+ * Rename msi_msg_set_msi_addr() to msi_msg_set_addr()
+ * Update selftest for a better coverage for the new options
+ * Change IOMMU_OPTION_SW_MSI_START/SIZE to be per-idev and properly
+   check against device's reserved region list
+RFCv2
+ https://lore.kernel.org/kvm/cover.1736550979.git.nicolinc@nvidia.com/
+ * Rebase on v6.13-rc6
+ * Drop all the irq/pci patches and rework the compose function instead
+ * Add a new sw_msi op to iommu_domain for a per type implementation and
+   let iommufd core has its own implementation to support both approaches
+ * Add RMR-solution (approach 1) support since it is straightforward and
+   have been used in some out-of-tree projects widely
+RFCv1
+ https://lore.kernel.org/kvm/cover.1731130093.git.nicolinc@nvidia.com/
+
+Thanks!
+Nicolin
+
+Jason Gunthorpe (5):
+  genirq/msi: Store the IOMMU IOVA directly in msi_desc instead of
+    iommu_cookie
+  genirq/msi: Refactor iommu_dma_compose_msi_msg()
+  iommu: Make iommu_dma_prepare_msi() into a generic operation
+  irqchip: Have CONFIG_IRQ_MSI_IOMMU be selected by irqchips that need
+    it
+  iommufd: Implement sw_msi support natively
+
+Nicolin Chen (2):
+  iommu: Turn fault_data to iommufd private pointer
+  iommu: Turn iova_cookie to dma-iommu private pointer
+
+ drivers/iommu/Kconfig                   |   1 -
+ drivers/irqchip/Kconfig                 |   4 +
+ kernel/irq/Kconfig                      |   1 +
+ drivers/iommu/iommufd/iommufd_private.h |  23 +++-
+ include/linux/iommu.h                   |  58 +++++----
+ include/linux/msi.h                     |  55 +++++---
+ drivers/iommu/dma-iommu.c               |  63 +++-------
+ drivers/iommu/iommu.c                   |  29 +++++
+ drivers/iommu/iommufd/device.c          | 160 ++++++++++++++++++++----
+ drivers/iommu/iommufd/fault.c           |   2 +-
+ drivers/iommu/iommufd/hw_pagetable.c    |   5 +-
+ drivers/iommu/iommufd/main.c            |   9 ++
+ drivers/irqchip/irq-gic-v2m.c           |   5 +-
+ drivers/irqchip/irq-gic-v3-its.c        |  13 +-
+ drivers/irqchip/irq-gic-v3-mbi.c        |  12 +-
+ drivers/irqchip/irq-ls-scfg-msi.c       |   5 +-
+ 16 files changed, 309 insertions(+), 136 deletions(-)
+
+
+base-commit: dc10ba25d43f433ad5d9e8e6be4f4d2bb3cd9ddb
+prerequisite-patch-id: 0000000000000000000000000000000000000000
 -- 
 2.43.0
 
