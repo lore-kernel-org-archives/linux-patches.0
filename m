@@ -1,117 +1,178 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D558D1CDA0B;
-	Thu, 20 Feb 2025 03:44:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740023092; cv=none; b=ipt1CLGQeqmwr6VspisC8FBgAF9OTfk9jLgMPlbMsCjI2gAazuxKbcI37n5PfYO20FBQq6nFLdNmsfb5By2HvqkVcsLuSGnB07LUlzkoo8jH9sykoqySR8/YTsXttk751XDF9/dD/zl7Md/C/sOEeMbGdrKKOVpASZSSlhwPGDY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740023092; c=relaxed/simple;
-	bh=t1f78zJ3zL/tABySKpou1GNLxAEfIHw4nDPssypqD5k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QVg20wQibdYxxVuQFbO3fSxWnMp92vUYOB60TqmaQBOaa73+vHwADJCwgm7qyr+183pPUEN2aBds9NBe0YZGAfD2uYY/Jw6uxNVy2POUVyoElHpsJIkB/Si2+gR6c6BoezMGjyOXME7+zUmJGO9Kt51+iAvoa1m+jKAarSr4YNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=ptqCmpz1; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2042.outbound.protection.outlook.com [40.107.244.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88861134BD;
+	Thu, 20 Feb 2025 05:17:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740028671; cv=fail; b=mTMlq/fxkmg9U5a2gxEJ2taMe6i5Kpz8f5jJPgOETkX40je5H5B5HYT6iUWjNv1RAt+qSoukVCv50aVrECpcI7NIr4tW071WhNk7LuZ9Ilo2GjJ+UPvhdHjBlliUfOuasdiawHIUWlHC0sB5xVYzLJ8nLUFr2+PX8hrYbervvnA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740028671; c=relaxed/simple;
+	bh=eWzWF7SscQD/NpjNYmGveN4tCSqoQBJDAd0eYqP15DU=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qbWxG9fs07RWgFDkzWvEnTgLzZfNFUZ1/E7x/puguNTK6SguHkv7tKSeQ8+PpzPT5ZRD7DdfU74O48UQpRavNjWYC0tilj6j/7gvoGVqy7W8TNO2jzanT2PDZjIr+fl3gHSZrGCgUXV1EWb2mka1WoSVm0KMhqNwGdVJQskV3/g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=BPbTqO5a; arc=fail smtp.client-ip=40.107.244.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="ptqCmpz1"
-Received: from localhost (unknown [167.220.232.230])
-	by linux.microsoft.com (Postfix) with ESMTPSA id C51512043DF3;
-	Wed, 19 Feb 2025 19:44:49 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C51512043DF3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1740023090;
-	bh=1boQEHta3r4wEo6Z2Lff0ZlqJmutPdDJsjmXWcQa570=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ptqCmpz1rsRLesosO7xLo11cOxOhY8D+L3GE+V2cL10EfQlklXXsbwIPVJAws8YJv
-	 Vftunh8kbOX9ax1asqsiqVU1tQDLKz8ArvCU8fHqZdkN4Yw2uyqRHd2o2T5YeF9b/m
-	 M8kLJ0bL6ynGnv9SaKrcC66YMONz9kCDx6XSpuVA=
-Date: Thu, 20 Feb 2025 11:44:47 +0800
-From: Yu Zhang <zhangyu1@linux.microsoft.com>
-To: Baolu Lu <baolu.lu@linux.intel.com>
-Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>, 
-	jacob.pan@linux.microsoft.com, Easwar Hariharan <eahariha@linux.microsoft.com>, 
-	"zhangyu1@microsoft.com" <zhangyu1@microsoft.com>, Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev, 
-	Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>, 
-	virtualization@lists.linux.dev, Will Deacon <will@kernel.org>, 
-	Eric Auger <eric.auger@redhat.com>, patches@lists.linux.dev
-Subject: Re: [PATCH 3/5] iommu/virtio: Move to domain_alloc_paging()
-Message-ID: <woysdxaprpf7nb2w3swwr46yyri5gnz3mi4sgw6ad4bn4weis3@fveqqcc45fhq>
-References: <3-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
- <20250212112235.714b0a14@DESKTOP-0403QTC.>
- <20250212233053.GV3754072@nvidia.com>
- <67ad876d.170a0220.3c21dc.85ceSMTPIN_ADDED_BROKEN@mx.google.com>
- <20250213094601.GA243081@myrica>
- <5irmuy6xwrjsrdjy7tmfzlnotxqdoqagjdsdtqjrrit673zaka@r43nyvc5gcyf>
- <20250213180919.GC243081@myrica>
- <cu7lznx5bxnqoavt3ri4dtzwt7lu3loitn7a344rbnmahpnc6h@2e2dknchxjmd>
- <20250219103518.GA513544@myrica>
- <98298574-66b6-4b14-be3b-28291f1551a8@linux.intel.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="BPbTqO5a"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VRPCaGCFkLb1r4RqyMuHP0IAmPiOgmcjeZsmVJHCDx5Zq23+ztTjt7CKGVeWNgI7XV9Ls4I2dsPrccmM1KI+UVoqUBzAJATNNzAItZR4sg5hhuXQjYog8W071bpD9r+yy1r7+EbEnzak8S8sIxuk/KWnmoZqmNCbOKKgZTo4iugsZvks44gNAgzBILa8S5h37kSGLu3hlgOpdxnWzNqhp+xEgymmk14aP3k2suO/r0/saSr9FNsJAj8i98VlYUCqGb5aQftoIaQNZVXjhet8pXuBUcf0nQidgcRCgVlAi9Ii8l3D2s3qJjS9xK+oHvReMSqOjCpwxZXP/FRC1u4jMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+XrtN4ek0pzutsbp2inBsEfI7MYyoOgN/8WvmNLs0lU=;
+ b=reNZDClBm/kk6/Ea7VK3LXfqJK239gvErINGKOUeI532WULP2lKEL/wDndlxtZmESt4H7ouKyh2u/y7TA3SNkUkOvPac3nCTwX8HTBChqE0c4gceOvL2EImrjGxllbr8LhG+MC+VM25EKcFHCgShLZfDuLQD9EH8uhvor31r1Kg/VOVD/txKndVcldGP7dWqjfN1r6C5o2ui7PgvoITqr74rQnyIl2iJboGS0uWm2lb3QCLQjJOw/qyoFrpxTwDiEjnYU+g4IGNzmpowAdO+u5GYZnFHymrBZoQUO3dhZV/iveyIBfQ2bAWN3hIpym3t41f5uz+kdSYuwS2EApA55A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+XrtN4ek0pzutsbp2inBsEfI7MYyoOgN/8WvmNLs0lU=;
+ b=BPbTqO5ahHdsrX1QNJ3ZMt1Yb2diIj1yNWzU4fYUoG96Cyd/D7inSB2cymoD7D2abqkIJx9J3DRjpPrus7xbl0rRRpMwOCdwvpawoLXn9Xq51/RnXvEpmj6zWt06E79Isdaq68A+uQ86MJrpzYWkx1LmlAEjnTCEm8wYq+zaJvA7hlosqBIoyouxY2ZnE9kwYNwHO3Gl9JsSYgdTbDAylrJd7yN8QVCFcpBz1zt1yAEEamaMaVZFAtNA75QZpuf1y9IXOHFG3nmXBcrsutCvdQCL6i9a142dQKpntKHyoe7vPeYVFzrfNNjMXrey/AbGriOE5Dn7QWl0JmZ9KPMUAA==
+Received: from BN9P221CA0002.NAMP221.PROD.OUTLOOK.COM (2603:10b6:408:10a::9)
+ by BL3PR12MB6425.namprd12.prod.outlook.com (2603:10b6:208:3b4::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.19; Thu, 20 Feb
+ 2025 05:17:39 +0000
+Received: from MN1PEPF0000F0E0.namprd04.prod.outlook.com
+ (2603:10b6:408:10a:cafe::c9) by BN9P221CA0002.outlook.office365.com
+ (2603:10b6:408:10a::9) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8466.16 via Frontend Transport; Thu,
+ 20 Feb 2025 05:17:39 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ MN1PEPF0000F0E0.mail.protection.outlook.com (10.167.242.38) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8466.11 via Frontend Transport; Thu, 20 Feb 2025 05:17:38 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 19 Feb
+ 2025 21:17:21 -0800
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 19 Feb
+ 2025 21:17:21 -0800
+Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Wed, 19 Feb 2025 21:17:20 -0800
+Date: Wed, 19 Feb 2025 21:17:18 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <kevin.tian@intel.com>, <corbet@lwn.net>, <will@kernel.org>,
+	<joro@8bytes.org>, <suravee.suthikulpanit@amd.com>, <robin.murphy@arm.com>,
+	<dwmw2@infradead.org>, <baolu.lu@linux.intel.com>, <shuah@kernel.org>,
+	<linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-kselftest@vger.kernel.org>,
+	<linux-doc@vger.kernel.org>, <eric.auger@redhat.com>,
+	<jean-philippe@linaro.org>, <mdf@kernel.org>, <mshavit@google.com>,
+	<shameerali.kolothum.thodi@huawei.com>, <smostafa@google.com>,
+	<ddutile@redhat.com>, <yi.l.liu@intel.com>, <patches@lists.linux.dev>
+Subject: Re: [PATCH v6 06/14] iommufd/viommu: Add iommufd_viommu_get_vdev_id
+ helper
+Message-ID: <Z7a63pqKaIpCC7MW@Asurada-Nvidia>
+References: <cover.1737754129.git.nicolinc@nvidia.com>
+ <313a27d92bd63e9571bf0f053eabfc3bfe4bfbae.1737754129.git.nicolinc@nvidia.com>
+ <20250218153154.GC4099685@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <98298574-66b6-4b14-be3b-28291f1551a8@linux.intel.com>
+In-Reply-To: <20250218153154.GC4099685@nvidia.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN1PEPF0000F0E0:EE_|BL3PR12MB6425:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2cd45115-548b-4434-6ebd-08dd516de4e6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|7416014|82310400026|36860700013|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?IhGLYdkrFrj374HfnvWPcqTVukFyxRi/PcaTG5dE7n/Z4f59VJ043o7H7eoI?=
+ =?us-ascii?Q?LFqwCvy6aDPJXlFMm89T42hn8LDIAGOP7k7uTaVGazyzWJNDMGn+CGJLMeGo?=
+ =?us-ascii?Q?0IUHufVoSU6vXPwy53dT/kM4GU7r60iMS1UypXhybAii5h4raw8jo5oWW1KO?=
+ =?us-ascii?Q?YVpT6D6EHWQAclYlnaWOvXeuwOU+BNYadWcwfubX/MH6BzW3afQgeybOEs5O?=
+ =?us-ascii?Q?dRTApAQV2DioqcPuGh9DMYSzgfZAX1ayqiRKVu9ss+yjwubTu5J/uxv0wKpy?=
+ =?us-ascii?Q?7PIbaXah2UN3kTL4ICQUwm3rQP92DyTynkmSK7vMBy41ZarBF90NMugN80X0?=
+ =?us-ascii?Q?VOhcHIN6j6lwFhLqmGluDEpgrLNm6u2RvtWc/Tpz6W/l17xwnX8i6bD0TsiM?=
+ =?us-ascii?Q?2WgKm4RGceQHmTKhPRfjX8CI3amcUcQfg1gqyfEWlqLtG1mf24Rgx/pKDizo?=
+ =?us-ascii?Q?o5y6vjCOvhCcLTSs4KEQA6n80AHjsbJv8Ws7iw4ej2t216muQbwxN+BmhQHk?=
+ =?us-ascii?Q?ukKnaGsG7WAhysSuLkCgN0kDzgH0+JWOvwVjVQC15JLn5unw5nKRPMkdIW0o?=
+ =?us-ascii?Q?E9PUdZy2I475zwtJyObQ4B18huZ1r/ypHCpxW6GTw5MgMwOAcMp6AgT9SKR6?=
+ =?us-ascii?Q?1dZEdpv8/EzMwuEaYLJ5TroC6UTwDwRP0DcLResSspZy+Ob64VKJbCL5s47a?=
+ =?us-ascii?Q?/J6Ri0rtm8JqBd/hKWYt6WZQEuNcNMf/306ftGmDXd/DYX0U9nsj3ck8ChxF?=
+ =?us-ascii?Q?iUyTBXhhd+z5XpEMcSfix9x9kMHjFklNhNcVAeGBYbvXQC8Vy5WEeNpdhO7G?=
+ =?us-ascii?Q?UcGQDxYqlc46hPpq8BmdgfS0G4FHhseBbNZRGeRKHDDqtoYl7yKsqIh3W6qY?=
+ =?us-ascii?Q?88wQ7EQrt+zjLkMJXq7CLM2YLbYjH926rSubXPUy/87vxEGBq7ScENpRPvrI?=
+ =?us-ascii?Q?e46foPEOto+E2SCb/yK5kBg+KG5iIFY5xA6uO4acCk0OC9MJdgTa1hvmyFoA?=
+ =?us-ascii?Q?W1y2RjyOdmNi/V3KJMwbZXSl1pB4M9XWwkZPYTf5BIntYT4Rager2gS1BQpx?=
+ =?us-ascii?Q?R1HlS8u+2kXK0cNXXxRVgcT5fHqYxi2lcGAa4y0IqghGA4uWu2R8rXzB9s/t?=
+ =?us-ascii?Q?ZCA2sE6/bxMpL6Ebx5FecEFr048yEJgpZ0CYBdetmX8At/ZunY8hMsjHxbFs?=
+ =?us-ascii?Q?8BLnqisp6v9LjfHmP1w5+FrITESbzjW/s+VEeaMdXfEFKLm9LPvBGE1kg5mA?=
+ =?us-ascii?Q?rkxf7DrxBojG/YJHXA+noNrTbgv4MoN8OYrKBD3KP2K6gQ1XxpQqhy/5U7Vb?=
+ =?us-ascii?Q?bzBEyaDdk3X+jfczOsKdNmpT7e2sMb6lwSxXzOzpxG8+zXYNsJsQ+dJTEo9C?=
+ =?us-ascii?Q?J44CXLuura7V0CocWe31TpvGlhA59sAJIbqsSE03G+52+6Y6deOIyCAxjm+W?=
+ =?us-ascii?Q?KyAtq8wc1ENBWfdYlSxlwvXl1B7786q6sQUuIzjFr4V7iUD5Swc2qaZNDZou?=
+ =?us-ascii?Q?vF/Tn/kW5tvQWPc=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(82310400026)(36860700013)(376014);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2025 05:17:38.7882
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2cd45115-548b-4434-6ebd-08dd516de4e6
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	MN1PEPF0000F0E0.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6425
 
-On Thu, Feb 20, 2025 at 10:58:05AM +0800, Baolu Lu wrote:
-> On 2/19/25 18:35, Jean-Philippe Brucker wrote:
-> > On Wed, Feb 19, 2025 at 05:39:19PM +0800, Yu Zhang wrote:
-> > > On Thu, Feb 13, 2025 at 06:09:19PM +0000, Jean-Philippe Brucker wrote:
-> > > > On Fri, Feb 14, 2025 at 01:03:43AM +0800, Yu Zhang wrote:
-> > > > > On Thu, Feb 13, 2025 at 09:46:01AM +0000, Jean-Philippe Brucker wrote:
-> > > > > > Hi Jacob,
-> > > > > > 
-> > > > > > On Wed, Feb 12, 2025 at 09:47:23PM -0800, Jacob Pan wrote:
-> > > > > > > Our code and backend support are still in the early stages, that is why
-> > > > > > > I am attempting to convert virtio-iommu driver to iommu_pt. Not sure if
-> > > > > > > anyone has done the QEMU part to support VIRTIO_IOMMU_F_ATTACH_TABLE?
-> > > > > > > @Jean @Eric Do you know?
-> > > > > > As far as I know Tina worked on this most recently:
-> > > > > > https://github.com/TinaZhangZW/qemu/commits/virtio-iommu/vt-d-pgtable/
-> > > > > > https://lore.kernel.org/all/20231106071226.9656-1-tina.zhang@intel.com/
-> > > > > Thanks a lot for this information, Jean.
-> > > > > IIUC, these patches were trying to add VT-d IO page table support in
-> > > > > virtio-iommu, but it is not based on Jason's generic PT [1]. Just wondering,
-> > > > > does anyone have plan to do the incorporation?
-> > > > I'm not aware of anyone working on this at the moment. Something you will
-> > > > need for a portable pviommu is a library that manages PASID tables rather
-> > > > than page tables [1], because the Arm SMMUv3 arch only support assigning
-> > > > PASID tables to the guest. Alternatively you could implement opaque PASID
-> > > > table allocation via host calls, letting the guest allocate GPA space and
-> > > > the host manage the PASID table, but that idea didn't seem very popular at
-> > > > the time.
-> > > Thank you, Jean. Just had a study of the spec. For ARM SMMUv3, letting
-> > > the guest manage the PASID table, and then assigning it directly to the
-> > > backend in ATTACH_TABLE request looks quite resonable. But for VT-d,
-> > > my understanding is the PASID table shall be managed by host. By "that
-> > > idea didn't seem very popular", do you mean that people also want the
-> > > ATTCH_TABLE request for VT-d also assign the PASID table(an virtual one
-> > > managed by the guest). If yes, why?
-> > No, the proposal for managing the PASID table in the host was done before
-> > the VT-d architecture added Scalable mode, so at the time they also had to
-> > assign whole PASID tables to the guest and weren't keen on managing it in
-> > the host. I believe in revision 3 (2018) the architecture added support
-> > for Scalable mode and the ability to manage PASID tables in the host.
+On Tue, Feb 18, 2025 at 11:31:54AM -0400, Jason Gunthorpe wrote:
+> On Fri, Jan 24, 2025 at 04:30:35PM -0800, Nicolin Chen wrote:
+> > This is a reverse search v.s. iommufd_viommu_find_dev, as drivers may want
+> > to convert a struct device pointer (physical) to its virtual device ID for
+> > an event injection to the user space VM.
 > > 
-> > Nowadays it wouldn't make sense for a pvIOMMU to manage the VT-d PASID
-> > tables in the guest, because as I understand it there is no demand for
-> > supporting the legacy mode address translation of VT-d.
+> > Again, this avoids exposing more core structures to the drivers, than the
+> > iommufd_viommu alone.
+> > 
+> > Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+> > Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+> > Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> > ---
+> >  include/linux/iommufd.h        |  9 +++++++++
+> >  drivers/iommu/iommufd/driver.c | 24 ++++++++++++++++++++++++
+> >  2 files changed, 33 insertions(+)
 > 
-> Are you talking about ECS mode? There is no hardware or software
+> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+> 
+> > +	xa_lock(&viommu->vdevs);
+> > +	xa_for_each(&viommu->vdevs, index, vdev) {
+> > +		if (vdev->dev == dev) {
+> > +			*vdev_id = (unsigned long)vdev->id;
+> 
+> I don't think we need this cast
 
-Thanks, Baolu. I suppose so (by 'legacy', Jean was refers to ECS, and he
-knows this is no longer supported).
+The left side is ulong for xarray index, while the right side is
+__aligned_u64 for uAPI. Could there be a gcc warning when somebody
+builds the kernel having a BITS_PER_LONG=32?
 
-> implementation for this mode, so we don't need to consider it.
+iommufd_vdevice_alloc_ioctl() does test vdev->id against ULONG_MAX
+though..
 
-It seems we have now reached a consensus that no PASID table needs to be
-managed by a pvIOMMU for VT-d.
-
-Meanwhile, it's worth noting that this is not the case for ARM SMMUv3,
-which is the opposite. And as to AMD IOMMU, we may choose either.
-
-B.R.
-Yu
+Thanks
+Nicolin
