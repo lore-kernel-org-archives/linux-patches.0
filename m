@@ -1,291 +1,309 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812751DFE00;
-	Fri, 21 Feb 2025 15:25:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 847D01A23B7;
+	Fri, 21 Feb 2025 15:39:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740151557; cv=none; b=BG3z0BC3HJcyhLQgmoj26/TFQDX3xa6zZ6JJpw+8mtCGuPH0xBLf7dyOWyUc2eOjooyzFlNffxlE+I3bUtiifaAIP0iBHa9LQ4GrGlHlnv3wIe3tI1FiVMWcwPwa9A27P2jBoXbPdo1V9LDkMOOqaMtcj5GoE22cfNbdGkOf+9U=
+	t=1740152393; cv=none; b=ObSBIjD6Yy+cahJM5EAxy2UgxH7Z4nLxNs/Prh3rjPXGZFtXlBUPmwElxqyFnHU54C3SQcf8U8RA/YYoe2zU7JGpwUaJYxxy7QBvfOxvPauLywqhXiB2VbUcWu9KgDZPoodmuRX/OiPndQXIwkc/dUUbMCeM02WAO0kKYGGjzIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740151557; c=relaxed/simple;
-	bh=OJcmkoiIcvVqjZ0P5kSBXFOodq7+Y4B8DpoSX5+y8gw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pxx5yZpBBiqFkeUirqddp+LvwVkPftkn4uWy49ZV7UwvRhPncElDw6KbsP7GMl3yGIoiQ2vWk14ZOY6hwfPb8Eub8R+EUpcEH60PgtSWzvdvS0wP1aNegdzRRM7shWf664VoZTekaPbPJn+436YnoUbDhg+uLB4iCINCEyPxLVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdAhZwhn; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdAhZwhn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969BAC4CED6;
-	Fri, 21 Feb 2025 15:25:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740151557;
-	bh=OJcmkoiIcvVqjZ0P5kSBXFOodq7+Y4B8DpoSX5+y8gw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MdAhZwhnNKgQlUTQBfCJuuOfZeIuEDKY7sM4QTMrufICLM1ACnbhibC/WosxCI5ZE
-	 RTWnQpr4eyb4jDKUBpWkr9UNaDj+xXsnRJIDeUq5eZoRXAZHptdktGeE2/EzgwO9cK
-	 OOUu4GH1dHUxT7hHeHo2WJKTB6Z21D7J2/hsZMyE=
-Date: Fri, 21 Feb 2025 16:25:54 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naman Jain <namjain@linux.microsoft.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	John Starks <jostarks@microsoft.com>,
-	Easwar Hariharan <eahariha@linux.microsoft.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>, Wei Liu <wei.liu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.13 085/274] Drivers: hv: vmbus: Wait for boot-time
- offers during boot and resume
-Message-ID: <2025022149-guru-collar-d55a@gregkh>
-References: <20250219082609.533585153@linuxfoundation.org>
- <20250219082612.949436698@linuxfoundation.org>
- <7278b63c-4858-418b-8ca2-c0fd50f215c8@linux.microsoft.com>
+	s=arc-20240116; t=1740152393; c=relaxed/simple;
+	bh=93zTaU6eg48C24RtWHpt4n45x2dQUGHjZDmPY7Frpw4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=r5Zozcz612Vo+45PhqdxStuU5FemtI7LCvAeCIomFEzdLw+HWHOZ/Pi/R7AEEvuFKwP9h9minwOjyzms0HgmzbD7zpC+u1kYcZLLmJ1VGLu0d/NSGZVuUU5B58WvMxJYPO+ifopdM+2KuwkBXu2CqpFhmH4z1ST51B51kg5TpNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9FD4C168F;
+	Fri, 21 Feb 2025 07:40:08 -0800 (PST)
+Received: from [10.57.36.60] (unknown [10.57.36.60])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 381703F59E;
+	Fri, 21 Feb 2025 07:39:47 -0800 (PST)
+Message-ID: <5b9e15e1-8081-46ef-b9db-3872e98a6f35@arm.com>
+Date: Fri, 21 Feb 2025 15:39:45 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7278b63c-4858-418b-8ca2-c0fd50f215c8@linux.microsoft.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/7] iommu: Make iommu_dma_prepare_msi() into a generic
+ operation
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
+ tglx@linutronix.de, maz@kernel.org
+Cc: joro@8bytes.org, will@kernel.org, shuah@kernel.org,
+ iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
+ eric.auger@redhat.com, baolu.lu@linux.intel.com, yi.l.liu@intel.com,
+ yury.norov@gmail.com, jacob.pan@linux.microsoft.com, patches@lists.linux.dev
+References: <cover.1740014950.git.nicolinc@nvidia.com>
+ <4ca696150d2baee03af27c4ddefdb7b0b0280e7b.1740014950.git.nicolinc@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <4ca696150d2baee03af27c4ddefdb7b0b0280e7b.1740014950.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Feb 21, 2025 at 11:09:32AM +0530, Naman Jain wrote:
+On 2025-02-20 1:31 am, Nicolin Chen wrote:
+> From: Jason Gunthorpe <jgg@nvidia.com>
 > 
+> SW_MSI supports IOMMU to translate an MSI message before the MSI message
+> is delivered to the interrupt controller. On such systems, an iommu_domain
+> must have a translation for the MSI message for interrupts to work.
 > 
-> On 2/19/2025 1:55 PM, Greg Kroah-Hartman wrote:
-> > 6.13-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Naman Jain <namjain@linux.microsoft.com>
-> > 
-> > [ Upstream commit 113386ca981c3997db6b83272c7ecf47456aeddb ]
-> > 
-> > Channel offers are requested during VMBus initialization and resume from
-> > hibernation. Add support to wait for all boot-time channel offers to
-> > be delivered and processed before returning from vmbus_request_offers.
-> > 
-> > This is in analogy to a PCI bus not returning from probe until it has
-> > scanned all devices on the bus.
-> > 
-> > Without this, user mode can race with VMBus initialization and miss
-> > channel offers. User mode has no way to work around this other than
-> > sleeping for a while, since there is no way to know when VMBus has
-> > finished processing boot-time offers.
-> > 
-> > With this added functionality, remove earlier logic which keeps track
-> > of count of offered channels post resume from hibernation. Once all
-> > offers delivered message is received, no further boot-time offers are
-> > going to be received. Consequently, logic to prevent suspend from
-> > happening after previous resume had missing offers, is also removed.
-> > 
-> > Co-developed-by: John Starks <jostarks@microsoft.com>
-> > Signed-off-by: John Starks <jostarks@microsoft.com>
-> > Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-> > Reviewed-by: Easwar Hariharan <eahariha@linux.microsoft.com>
-> > Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-> > Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-> > Link: https://lore.kernel.org/r/20250102130712.1661-2-namjain@linux.microsoft.com
-> > Signed-off-by: Wei Liu <wei.liu@kernel.org>
-> > Message-ID: <20250102130712.1661-2-namjain@linux.microsoft.com>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> >   drivers/hv/channel_mgmt.c | 61 +++++++++++++++++++++++++++++----------
-> >   drivers/hv/connection.c   |  4 +--
-> >   drivers/hv/hyperv_vmbus.h | 14 ++-------
-> >   drivers/hv/vmbus_drv.c    | 16 ----------
-> >   4 files changed, 51 insertions(+), 44 deletions(-)
-> > 
-> > diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
-> > index 3c6011a48dabe..6e084c2074141 100644
-> > --- a/drivers/hv/channel_mgmt.c
-> > +++ b/drivers/hv/channel_mgmt.c
-> > @@ -944,16 +944,6 @@ void vmbus_initiate_unload(bool crash)
-> >   		vmbus_wait_for_unload();
-> >   }
-> > -static void check_ready_for_resume_event(void)
-> > -{
-> > -	/*
-> > -	 * If all the old primary channels have been fixed up, then it's safe
-> > -	 * to resume.
-> > -	 */
-> > -	if (atomic_dec_and_test(&vmbus_connection.nr_chan_fixup_on_resume))
-> > -		complete(&vmbus_connection.ready_for_resume_event);
-> > -}
-> > -
-> >   static void vmbus_setup_channel_state(struct vmbus_channel *channel,
-> >   				      struct vmbus_channel_offer_channel *offer)
-> >   {
-> > @@ -1109,8 +1099,6 @@ static void vmbus_onoffer(struct vmbus_channel_message_header *hdr)
-> >   		/* Add the channel back to the array of channels. */
-> >   		vmbus_channel_map_relid(oldchannel);
-> > -		check_ready_for_resume_event();
-> > -
-> >   		mutex_unlock(&vmbus_connection.channel_mutex);
-> >   		return;
-> >   	}
-> > @@ -1296,13 +1284,28 @@ EXPORT_SYMBOL_GPL(vmbus_hvsock_device_unregister);
-> >   /*
-> >    * vmbus_onoffers_delivered -
-> > - * This is invoked when all offers have been delivered.
-> > + * The CHANNELMSG_ALLOFFERS_DELIVERED message arrives after all
-> > + * boot-time offers are delivered. A boot-time offer is for the primary
-> > + * channel for any virtual hardware configured in the VM at the time it boots.
-> > + * Boot-time offers include offers for physical devices assigned to the VM
-> > + * via Hyper-V's Discrete Device Assignment (DDA) functionality that are
-> > + * handled as virtual PCI devices in Linux (e.g., NVMe devices and GPUs).
-> > + * Boot-time offers do not include offers for VMBus sub-channels. Because
-> > + * devices can be hot-added to the VM after it is booted, additional channel
-> > + * offers that aren't boot-time offers can be received at any time after the
-> > + * all-offers-delivered message.
-> >    *
-> > - * Nothing to do here.
-> > + * SR-IOV NIC Virtual Functions (VFs) assigned to a VM are not considered
-> > + * to be assigned to the VM at boot-time, and offers for VFs may occur after
-> > + * the all-offers-delivered message. VFs are optional accelerators to the
-> > + * synthetic VMBus NIC and are effectively hot-added only after the VMBus
-> > + * NIC channel is opened (once it knows the guest can support it, via the
-> > + * sriov bit in the netvsc protocol).
-> >    */
-> >   static void vmbus_onoffers_delivered(
-> >   			struct vmbus_channel_message_header *hdr)
-> >   {
-> > +	complete(&vmbus_connection.all_offers_delivered_event);
-> >   }
-> >   /*
-> > @@ -1578,7 +1581,8 @@ void vmbus_onmessage(struct vmbus_channel_message_header *hdr)
-> >   }
-> >   /*
-> > - * vmbus_request_offers - Send a request to get all our pending offers.
-> > + * vmbus_request_offers - Send a request to get all our pending offers
-> > + * and wait for all boot-time offers to arrive.
-> >    */
-> >   int vmbus_request_offers(void)
-> >   {
-> > @@ -1596,6 +1600,10 @@ int vmbus_request_offers(void)
-> >   	msg->msgtype = CHANNELMSG_REQUESTOFFERS;
-> > +	/*
-> > +	 * This REQUESTOFFERS message will result in the host sending an all
-> > +	 * offers delivered message after all the boot-time offers are sent.
-> > +	 */
-> >   	ret = vmbus_post_msg(msg, sizeof(struct vmbus_channel_message_header),
-> >   			     true);
-> > @@ -1607,6 +1615,29 @@ int vmbus_request_offers(void)
-> >   		goto cleanup;
-> >   	}
-> > +	/*
-> > +	 * Wait for the host to send all boot-time offers.
-> > +	 * Keeping it as a best-effort mechanism, where a warning is
-> > +	 * printed if a timeout occurs, and execution is resumed.
-> > +	 */
-> > +	if (!wait_for_completion_timeout(&vmbus_connection.all_offers_delivered_event,
-> > +					 secs_to_jiffies(60))) {
-> > +		pr_warn("timed out waiting for all boot-time offers to be delivered.\n");
-> > +	}
-> > +
-> > +	/*
-> > +	 * Flush handling of offer messages (which may initiate work on
-> > +	 * other work queues).
-> > +	 */
-> > +	flush_workqueue(vmbus_connection.work_queue);
-> > +
-> > +	/*
-> > +	 * Flush workqueue for processing the incoming offers. Subchannel
-> > +	 * offers and their processing can happen later, so there is no need to
-> > +	 * flush that workqueue here.
-> > +	 */
-> > +	flush_workqueue(vmbus_connection.handle_primary_chan_wq);
-> > +
-> >   cleanup:
-> >   	kfree(msginfo);
-> > diff --git a/drivers/hv/connection.c b/drivers/hv/connection.c
-> > index f001ae880e1db..8351360bba161 100644
-> > --- a/drivers/hv/connection.c
-> > +++ b/drivers/hv/connection.c
-> > @@ -34,8 +34,8 @@ struct vmbus_connection vmbus_connection = {
-> >   	.ready_for_suspend_event = COMPLETION_INITIALIZER(
-> >   				  vmbus_connection.ready_for_suspend_event),
-> > -	.ready_for_resume_event	= COMPLETION_INITIALIZER(
-> > -				  vmbus_connection.ready_for_resume_event),
-> > +	.all_offers_delivered_event = COMPLETION_INITIALIZER(
-> > +				  vmbus_connection.all_offers_delivered_event),
-> >   };
-> >   EXPORT_SYMBOL_GPL(vmbus_connection);
-> > diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
-> > index 52cb744b4d7fd..e4058af987316 100644
-> > --- a/drivers/hv/hyperv_vmbus.h
-> > +++ b/drivers/hv/hyperv_vmbus.h
-> > @@ -287,18 +287,10 @@ struct vmbus_connection {
-> >   	struct completion ready_for_suspend_event;
-> >   	/*
-> > -	 * The number of primary channels that should be "fixed up"
-> > -	 * upon resume: these channels are re-offered upon resume, and some
-> > -	 * fields of the channel offers (i.e. child_relid and connection_id)
-> > -	 * can change, so the old offermsg must be fixed up, before the resume
-> > -	 * callbacks of the VSC drivers start to further touch the channels.
-> > +	 * Completed once the host has offered all boot-time channels.
-> > +	 * Note that some channels may still be under process on a workqueue.
-> >   	 */
-> > -	atomic_t nr_chan_fixup_on_resume;
-> > -	/*
-> > -	 * vmbus_bus_resume() waits for "nr_chan_fixup_on_resume" to
-> > -	 * drop to zero.
-> > -	 */
-> > -	struct completion ready_for_resume_event;
-> > +	struct completion all_offers_delivered_event;
-> >   };
-> > diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-> > index 2892b8da20a5e..bf5608a740561 100644
-> > --- a/drivers/hv/vmbus_drv.c
-> > +++ b/drivers/hv/vmbus_drv.c
-> > @@ -2427,11 +2427,6 @@ static int vmbus_bus_suspend(struct device *dev)
-> >   	if (atomic_read(&vmbus_connection.nr_chan_close_on_suspend) > 0)
-> >   		wait_for_completion(&vmbus_connection.ready_for_suspend_event);
-> > -	if (atomic_read(&vmbus_connection.nr_chan_fixup_on_resume) != 0) {
-> > -		pr_err("Can not suspend due to a previous failed resuming\n");
-> > -		return -EBUSY;
-> > -	}
-> > -
-> >   	mutex_lock(&vmbus_connection.channel_mutex);
-> >   	list_for_each_entry(channel, &vmbus_connection.chn_list, listentry) {
-> > @@ -2456,17 +2451,12 @@ static int vmbus_bus_suspend(struct device *dev)
-> >   			pr_err("Sub-channel not deleted!\n");
-> >   			WARN_ON_ONCE(1);
-> >   		}
-> > -
-> > -		atomic_inc(&vmbus_connection.nr_chan_fixup_on_resume);
-> >   	}
-> >   	mutex_unlock(&vmbus_connection.channel_mutex);
-> >   	vmbus_initiate_unload(false);
-> > -	/* Reset the event for the next resume. */
-> > -	reinit_completion(&vmbus_connection.ready_for_resume_event);
-> > -
-> >   	return 0;
-> >   }
-> > @@ -2502,14 +2492,8 @@ static int vmbus_bus_resume(struct device *dev)
-> >   	if (ret != 0)
-> >   		return ret;
-> > -	WARN_ON(atomic_read(&vmbus_connection.nr_chan_fixup_on_resume) == 0);
-> > -
-> >   	vmbus_request_offers();
-> > -	if (wait_for_completion_timeout(
-> > -		&vmbus_connection.ready_for_resume_event, secs_to_jiffies(10)) == 0)
-> > -		pr_err("Some vmbus device is missing after suspending?\n");
-> > -
-> >   	/* Reset the event for the next suspend. */
-> >   	reinit_completion(&vmbus_connection.ready_for_suspend_event);
+> The IRQ subsystem will call into IOMMU to request that a physical page be
+> set up to receive MSI messages, and the IOMMU then sets an IOVA that maps
+> to that physical page. Ultimately the IOVA is programmed into the device
+> via the msi_msg.
 > 
+> Generalize this by allowing iommu_domain owners to provide implementations
+> of this mapping. Add a function pointer in struct iommu_domain to allow a
+> domain owner to provide its own implementation.
 > 
-> Hi,
-> Thanks for porting this.
-> While we are picking this patch, it would be good to have the other
-> patch, which was part of the same series, picked as well. Reason being, with
-> this patch alone, we won't get any prints for missing offers. Patch 2/2
-> of the series adds those prints back.
+> Have dma-iommu supply its implementation for IOMMU_DOMAIN_DMA types during
+> the iommu_get_dma_cookie() path. For IOMMU_DOMAIN_UNMANAGED types used by
+> VFIO (and iommufd for now), have the same iommu_dma_sw_msi set as well in
+> the iommu_get_msi_cookie() path.
 > 
-> commit	fcf5203e289ca0ef75a18ce74a9eb716f7f1f569 (patch)
+> Hold the group mutex while in iommu_dma_prepare_msi() to ensure the domain
+> doesn't change or become freed while running. Races with IRQ operations
+> from VFIO and domain changes from iommufd are possible here.
 > 
-> Series: https://lore.kernel.org/all/20250102130712.1661-3-namjain@linux.microsoft.com/
+> Replace the msi_prepare_lock with a lockdep assertion for the group mutex
+> as documentation. For the dmau_iommu.c each iommu_domain is unique to a
+> group.
+> 
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> ---
+>   include/linux/iommu.h     | 44 ++++++++++++++++++++++++++-------------
+>   drivers/iommu/dma-iommu.c | 33 +++++++++++++----------------
+>   drivers/iommu/iommu.c     | 29 ++++++++++++++++++++++++++
+>   3 files changed, 73 insertions(+), 33 deletions(-)
+> 
+> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> index caee952febd4..761c5e186de9 100644
+> --- a/include/linux/iommu.h
+> +++ b/include/linux/iommu.h
+> @@ -44,6 +44,8 @@ struct iommu_dma_cookie;
+>   struct iommu_fault_param;
+>   struct iommufd_ctx;
+>   struct iommufd_viommu;
+> +struct msi_desc;
+> +struct msi_msg;
+>   
+>   #define IOMMU_FAULT_PERM_READ	(1 << 0) /* read */
+>   #define IOMMU_FAULT_PERM_WRITE	(1 << 1) /* write */
+> @@ -216,6 +218,12 @@ struct iommu_domain {
+>   	struct iommu_domain_geometry geometry;
+>   	struct iommu_dma_cookie *iova_cookie;
+>   	int (*iopf_handler)(struct iopf_group *group);
+> +
+> +#if IS_ENABLED(CONFIG_IRQ_MSI_IOMMU)
+> +	int (*sw_msi)(struct iommu_domain *domain, struct msi_desc *desc,
+> +		      phys_addr_t msi_addr);
+> +#endif
+> +
+>   	void *fault_data;
+>   	union {
+>   		struct {
+> @@ -234,6 +242,16 @@ struct iommu_domain {
+>   	};
+>   };
+>   
+> +static inline void iommu_domain_set_sw_msi(
+> +	struct iommu_domain *domain,
+> +	int (*sw_msi)(struct iommu_domain *domain, struct msi_desc *desc,
+> +		      phys_addr_t msi_addr))
+> +{
+> +#if IS_ENABLED(CONFIG_IRQ_MSI_IOMMU)
+> +	domain->sw_msi = sw_msi;
+> +#endif
+> +}
 
-Now queued up, thanks.
+Yuck. Realistically we are going to have no more than two different 
+implementations of this; a fiddly callback interface seems overkill. All 
+we should need in the domain is a simple indicator of *which* MSI 
+translation scheme is in use (if it can't be squeezed into the domain 
+type itself), then iommu_dma_prepare_msi() can simply dispatch between 
+iommu-dma and IOMMUFD based on that, and then it's easy to solve all the 
+other fragility issues too.
 
-greg k-h
+Thanks,
+Robin.
+
+> +
+>   static inline bool iommu_is_dma_domain(struct iommu_domain *domain)
+>   {
+>   	return domain->type & __IOMMU_DOMAIN_DMA_API;
+> @@ -1470,6 +1488,18 @@ static inline ioasid_t iommu_alloc_global_pasid(struct device *dev)
+>   static inline void iommu_free_global_pasid(ioasid_t pasid) {}
+>   #endif /* CONFIG_IOMMU_API */
+>   
+> +#ifdef CONFIG_IRQ_MSI_IOMMU
+> +#ifdef CONFIG_IOMMU_API
+> +int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr);
+> +#else
+> +static inline int iommu_dma_prepare_msi(struct msi_desc *desc,
+> +					phys_addr_t msi_addr)
+> +{
+> +	return 0;
+> +}
+> +#endif /* CONFIG_IOMMU_API */
+> +#endif /* CONFIG_IRQ_MSI_IOMMU */
+> +
+>   #if IS_ENABLED(CONFIG_LOCKDEP) && IS_ENABLED(CONFIG_IOMMU_API)
+>   void iommu_group_mutex_assert(struct device *dev);
+>   #else
+> @@ -1503,26 +1533,12 @@ static inline void iommu_debugfs_setup(void) {}
+>   #endif
+>   
+>   #ifdef CONFIG_IOMMU_DMA
+> -#include <linux/msi.h>
+> -
+>   int iommu_get_msi_cookie(struct iommu_domain *domain, dma_addr_t base);
+> -
+> -int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr);
+> -
+>   #else /* CONFIG_IOMMU_DMA */
+> -
+> -struct msi_desc;
+> -struct msi_msg;
+> -
+>   static inline int iommu_get_msi_cookie(struct iommu_domain *domain, dma_addr_t base)
+>   {
+>   	return -ENODEV;
+>   }
+> -
+> -static inline int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
+> -{
+> -	return 0;
+> -}
+>   #endif	/* CONFIG_IOMMU_DMA */
+>   
+>   /*
+> diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+> index bf91e014d179..3b58244e6344 100644
+> --- a/drivers/iommu/dma-iommu.c
+> +++ b/drivers/iommu/dma-iommu.c
+> @@ -24,6 +24,7 @@
+>   #include <linux/memremap.h>
+>   #include <linux/mm.h>
+>   #include <linux/mutex.h>
+> +#include <linux/msi.h>
+>   #include <linux/of_iommu.h>
+>   #include <linux/pci.h>
+>   #include <linux/scatterlist.h>
+> @@ -102,6 +103,9 @@ static int __init iommu_dma_forcedac_setup(char *str)
+>   }
+>   early_param("iommu.forcedac", iommu_dma_forcedac_setup);
+>   
+> +static int iommu_dma_sw_msi(struct iommu_domain *domain, struct msi_desc *desc,
+> +			    phys_addr_t msi_addr);
+> +
+>   /* Number of entries per flush queue */
+>   #define IOVA_DEFAULT_FQ_SIZE	256
+>   #define IOVA_SINGLE_FQ_SIZE	32768
+> @@ -398,6 +402,7 @@ int iommu_get_dma_cookie(struct iommu_domain *domain)
+>   		return -ENOMEM;
+>   
+>   	mutex_init(&domain->iova_cookie->mutex);
+> +	iommu_domain_set_sw_msi(domain, iommu_dma_sw_msi);
+>   	return 0;
+>   }
+>   
+> @@ -429,6 +434,7 @@ int iommu_get_msi_cookie(struct iommu_domain *domain, dma_addr_t base)
+>   
+>   	cookie->msi_iova = base;
+>   	domain->iova_cookie = cookie;
+> +	iommu_domain_set_sw_msi(domain, iommu_dma_sw_msi);
+>   	return 0;
+>   }
+>   EXPORT_SYMBOL(iommu_get_msi_cookie);
+> @@ -443,6 +449,9 @@ void iommu_put_dma_cookie(struct iommu_domain *domain)
+>   	struct iommu_dma_cookie *cookie = domain->iova_cookie;
+>   	struct iommu_dma_msi_page *msi, *tmp;
+>   
+> +	if (domain->sw_msi != iommu_dma_sw_msi)
+> +		return;
+> +
+>   	if (!cookie)
+>   		return;
+>   
+> @@ -1800,33 +1809,19 @@ static struct iommu_dma_msi_page *iommu_dma_get_msi_page(struct device *dev,
+>   	return NULL;
+>   }
+>   
+> -/**
+> - * iommu_dma_prepare_msi() - Map the MSI page in the IOMMU domain
+> - * @desc: MSI descriptor, will store the MSI page
+> - * @msi_addr: MSI target address to be mapped
+> - *
+> - * Return: 0 on success or negative error code if the mapping failed.
+> - */
+> -int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
+> +static int iommu_dma_sw_msi(struct iommu_domain *domain, struct msi_desc *desc,
+> +			    phys_addr_t msi_addr)
+>   {
+>   	struct device *dev = msi_desc_to_dev(desc);
+> -	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
+> -	struct iommu_dma_msi_page *msi_page;
+> -	static DEFINE_MUTEX(msi_prepare_lock); /* see below */
+> +	const struct iommu_dma_msi_page *msi_page;
+>   
+> -	if (!domain || !domain->iova_cookie) {
+> +	if (!domain->iova_cookie) {
+>   		msi_desc_set_iommu_msi_iova(desc, 0, 0);
+>   		return 0;
+>   	}
+>   
+> -	/*
+> -	 * In fact the whole prepare operation should already be serialised by
+> -	 * irq_domain_mutex further up the callchain, but that's pretty subtle
+> -	 * on its own, so consider this locking as failsafe documentation...
+> -	 */
+> -	mutex_lock(&msi_prepare_lock);
+> +	iommu_group_mutex_assert(dev);
+>   	msi_page = iommu_dma_get_msi_page(dev, msi_addr, domain);
+> -	mutex_unlock(&msi_prepare_lock);
+>   	if (!msi_page)
+>   		return -ENOMEM;
+>   
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 870c3cdbd0f6..022bf96a18c5 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -3596,3 +3596,32 @@ int iommu_replace_group_handle(struct iommu_group *group,
+>   	return ret;
+>   }
+>   EXPORT_SYMBOL_NS_GPL(iommu_replace_group_handle, "IOMMUFD_INTERNAL");
+> +
+> +#if IS_ENABLED(CONFIG_IRQ_MSI_IOMMU)
+> +/**
+> + * iommu_dma_prepare_msi() - Map the MSI page in the IOMMU domain
+> + * @desc: MSI descriptor, will store the MSI page
+> + * @msi_addr: MSI target address to be mapped
+> + *
+> + * The implementation of sw_msi() should take msi_addr and map it to
+> + * an IOVA in the domain and call msi_desc_set_iommu_msi_iova() with the
+> + * mapping information.
+> + *
+> + * Return: 0 on success or negative error code if the mapping failed.
+> + */
+> +int iommu_dma_prepare_msi(struct msi_desc *desc, phys_addr_t msi_addr)
+> +{
+> +	struct device *dev = msi_desc_to_dev(desc);
+> +	struct iommu_group *group = dev->iommu_group;
+> +	int ret = 0;
+> +
+> +	if (!group)
+> +		return 0;
+> +
+> +	mutex_lock(&group->mutex);
+> +	if (group->domain && group->domain->sw_msi)
+> +		ret = group->domain->sw_msi(group->domain, desc, msi_addr);
+> +	mutex_unlock(&group->mutex);
+> +	return ret;
+> +}
+> +#endif /* CONFIG_IRQ_MSI_IOMMU */
+
