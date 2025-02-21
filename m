@@ -1,53 +1,53 @@
 Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com [209.85.221.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6623F20F083
-	for <patches@lists.linux.dev>; Fri, 21 Feb 2025 14:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791DF3597F
+	for <patches@lists.linux.dev>; Fri, 21 Feb 2025 14:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740147641; cv=none; b=XI45nBRd9t/fMXXJHlbYtPQIfncQl5eDtr9+oAR91bn+6RMdg7YgE71yhaimkNisfwji8uWLAagBz/Y2pdS4/R0710HNQhqAhJNVc+X2sOV3m3pqEYZ2AgVLB4u4yb+AwGRnaNcQaEvWO39D7xAGfCoqYYPvf++ZfXf0a2vknW4=
+	t=1740148265; cv=none; b=WcqIJ3SqYhU0FaCNFxxjmnnsXYEeba7J4Y3lkWMbgzQZFPGK5CVxylj2fWDMT6JoTZvVWi0y28tHREdkCLhcONTUg3IAtbGPcUlNUrwcjPQcoDWfqlNUTq8zU65C3VJke6a0vSLOWmahODpHXKNN3koI4KnGWIf9LQpBknVm0Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740147641; c=relaxed/simple;
-	bh=GWlurt06QDhPiSWaPjMSrBRcLwFlXoXALEmItpHXRwg=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=UTtaPxyOTFNMQ3bdXvRm90Tt1Pex8IOD6L5KExE6GE5OAQ5j+wtXToTeiBCTx0ZHF/ayc+XSihqq0THYDE4jC7oDjFGJj11JNjKnd47HL12P/ABcf+MJfvT2xnPRmMJZts7Y6CB+seCQKbWWmEqVRMEMuLaPbGEoxMPRnNojm+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--derkling.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BvpYbdgO; arc=none smtp.client-ip=209.85.221.74
+	s=arc-20240116; t=1740148265; c=relaxed/simple;
+	bh=OXOS/+rmht491HT7vYQuTBtWV+4wAVuMUGedjiWsvoM=;
+	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=nUry8Mj9whzc59S7VqtOJDDCBq8vwI+ScAcMkM7fHzBhpKsPWXVXWKtZs5NI6xmSQla3gWMn647Hcj31UVEohJlyOPhqLFqyHkar7N3X0UBzxuoXajNRWd0AisSY5fEbHfOiv/qkdTUozP71q6pX6qZtNUB8PfIqOyXdHewqUuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--derkling.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sDkykc0X; arc=none smtp.client-ip=209.85.221.74
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--derkling.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BvpYbdgO"
-Received: by mail-wr1-f74.google.com with SMTP id ffacd0b85a97d-38f3eb82fceso1038692f8f.0
-        for <patches@lists.linux.dev>; Fri, 21 Feb 2025 06:20:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sDkykc0X"
+Received: by mail-wr1-f74.google.com with SMTP id ffacd0b85a97d-38f27acb979so2816530f8f.0
+        for <patches@lists.linux.dev>; Fri, 21 Feb 2025 06:31:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1740147638; x=1740752438; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1740148262; x=1740753062; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=gAN4vizlfThj3/spjFigcf7y4206n2EgGnYQHkF382M=;
-        b=BvpYbdgOFpfAndBW6zll+C5LOEMSdfpMbWHH3KwxMilGhbENEFUbYuwT4szM25aRwU
-         L6Quejd2XQ7CjfgRuXBSOENIw78qrjW7EOBehvvS51mam5k4JOBlejVTdGvRJWHsTbJ0
-         W94gUIHtusen5MHKFD4n0Nc5GD2UOX0je4+w8YGUFWRgE6gjgq9PjWDIQe85Qxc+4MKS
-         l8hkO4YI5IfC9iOllb0dqAKCvWLryjSdwsX3lgGzk12i91daYo9Zy9q2NL4L9sCrTAnM
-         BWUGvj2ZSxrgZdGaqG+fZ/BakA5ExDVJLn6W7brEMfVCm7noEVJWdQO08iMmDCr2L5MT
-         kIGw==
+        bh=d6lHGB4RW+fUm+w8DCgpzh+6Wzc49VTdZcnDOzB17rM=;
+        b=sDkykc0XdJ4tzaGnlNdi/8VcruXKQU0HF+sIHtCQjGoaiQYZvoCl0562zVInXVs9rY
+         mAq/VT2er/7ZHX4Y8yTWFrpwL0wOwU48deMKMgq5O1kU9RQX6YnczBKJFnzimXpzsS9X
+         y2PKHQa4uc1dvC73yDNScsgtg/1tk2s7GSD1FFSToDMLhFExk+hmy1eMj4ZyffY8Dps8
+         Jk55Fyh6Anj5NPID391RPJDObJlMaYSBpOdTlf5yT1wyjJBbFsmIcuppnAVOQUnYXIiM
+         MLUkfEQ3AU4TnrEXZuYAeG+AiOL2okSFUNJ+o870XC7HxAh935VDv9nihiGGvy4IkXrZ
+         mHdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740147638; x=1740752438;
+        d=1e100.net; s=20230601; t=1740148262; x=1740753062;
         h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gAN4vizlfThj3/spjFigcf7y4206n2EgGnYQHkF382M=;
-        b=oXDKiGvJyYRTjHhnhJlwxdGngSzQg88BdFefymNe6Ofu14gPbM15vpguAc0wjASbNc
-         lp2g6NTVZDESrDYaVEO/etxREQp2Qk3Nig2dE2iYF7oNJ46RxR+R7pKHA/hqBlS6FnoY
-         hGKlQGVn0D62+QMPr163xEfcKH2TouAJ2vYcUZVSnt1QLWokSGGa5R5QMutvO4OoOmGm
-         5rwkgyflOo+WKvegM7LO0LLYVH4KfCMSJycw9UoCC6FkBjpwtyqVvB0FjsrwCWNK7ra+
-         3YsAOG84MVovvdCJOopcNZt++ULK3wSvnz7gXcDgJuP2o/YGAbDZCJiTxcqm/LvUG7ZZ
-         H8jA==
-X-Gm-Message-State: AOJu0Yxoxa+OKIYfg/qT9EVrb/beSugoMDhAqoTQUQLScl8L8mgOLvIr
-	xElMeDz8Cu++zDpk01H38/ZQHk970mCPvcXAN7JSP7nTqI8oygbD1L02sCYZqO4BxCTAcxMYV7B
-	NwR95cWUcXg==
-X-Google-Smtp-Source: AGHT+IH0boqnUtNJDnNpCgtZHuh2dD37zGiE7VV1gYmY0oLj/YDEXi+H9uvRRXJRzLv9+vDrYYowHY6OLX2sWQ==
-X-Received: from wrbhb24.prod.google.com ([2002:a05:6000:4918:b0:38f:40d1:8309])
+        bh=d6lHGB4RW+fUm+w8DCgpzh+6Wzc49VTdZcnDOzB17rM=;
+        b=JWp+FEvThUMjGhvRMeZME8a1jW4oO+HiuKb1FeSoU6KP80k6ivWtlyYfYFHFi7EXWQ
+         C0zgqQvLr5aEHyt8fiE5ItdLfIT6D/K92fn4k1ucB+iYM32M77jOKNSeeNtQFZV/Fftm
+         XIersOZCs4tNWxX830klQWRKZ1M1KEdaTyRsKJ7xoMbUYR41naaxtZzHoVryK4LdBaLm
+         uxmYnT2Ifk5IRWhi4wvq7Q/KygN/RPwX0KA/s8pGGIPahWmWRR3TMqeje7Ln3cEjLxN9
+         qafRUGRpRmMFxqFnyrCgCWlLqThlPwvCQHTmvGgCZXIkhtAPnUOVWwgGqnyfNJq+YAiB
+         zDUQ==
+X-Gm-Message-State: AOJu0YxB4J9CvZEKyK2vD+cwjLqB/H22UbB710r9k3s0l+jS5DcRplAC
+	9d6yxP+Ewpzxloke9IERzI80310ocUmHZ2D/tns4t+nGcOXfcPucr/NGvOMoqkYt/nJIlqmAx5W
+	obPdgPfirbQ==
+X-Google-Smtp-Source: AGHT+IHp9KpPqihhkAMCoq7AJPuOMZlSKfO7K/P7TqXNdVLdlMAnTqXOd4eugadlp0OBHoJR/g4/4JhJ/pRKdA==
+X-Received: from wmsp4.prod.google.com ([2002:a05:600c:1d84:b0:439:942c:b180])
  (user=derkling job=prod-delivery.src-stubby-dispatcher) by
- 2002:a5d:6e8a:0:b0:38d:e378:20f7 with SMTP id ffacd0b85a97d-38f6f09749emr2344534f8f.41.1740147637844;
- Fri, 21 Feb 2025 06:20:37 -0800 (PST)
-Date: Fri, 21 Feb 2025 14:20:02 +0000
+ 2002:a5d:6da5:0:b0:38d:cf33:31a1 with SMTP id ffacd0b85a97d-38f707afc79mr2963941f8f.23.1740148261904;
+ Fri, 21 Feb 2025 06:31:01 -0800 (PST)
+Date: Fri, 21 Feb 2025 14:30:51 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,8 +55,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.48.1.601.g30ceb7b040-goog
-Message-ID: <20250221142002.4136456-1-derkling@google.com>
-Subject: [PATCH 6.6] x86/cpu/kvm: SRSO: Fix possible missing IBPB on VM-Exit
+Message-ID: <20250221143051.23140-1-derkling@google.com>
+Subject: [PATCH 6.1] x86/cpu/kvm: SRSO: Fix possible missing IBPB on VM-Exit
 From: Patrick Bellasi <derkling@google.com>
 To: stable@vger.kernel.org
 Cc: patches@lists.linux.dev, Borislav Petkov <bp@alien8.de>, 
@@ -124,14 +124,14 @@ Cc: stable@kernel.org
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 ---
  arch/x86/Kconfig           |  3 ++-
- arch/x86/kernel/cpu/bugs.c | 21 ++++++++++++++-------
- 2 files changed, 16 insertions(+), 8 deletions(-)
+ arch/x86/kernel/cpu/bugs.c | 20 ++++++++++++++------
+ 2 files changed, 16 insertions(+), 7 deletions(-)
 
 diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 05c82fd5d0f60..989d432b58345 100644
+index 49cea5b81649d..ca8dd7e5585f0 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
-@@ -2514,7 +2514,8 @@ config CPU_IBPB_ENTRY
+@@ -2506,7 +2506,8 @@ config CPU_IBPB_ENTRY
  	depends on CPU_SUP_AMD && X86_64
  	default y
  	help
@@ -142,10 +142,10 @@ index 05c82fd5d0f60..989d432b58345 100644
  config CPU_IBRS_ENTRY
  	bool "Enable IBRS on kernel entry"
 diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index 7b5ba5b8592a2..7df458a6553eb 100644
+index fa2045ad408a7..03221a060ae77 100644
 --- a/arch/x86/kernel/cpu/bugs.c
 +++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1113,6 +1113,8 @@ static void __init retbleed_select_mitigation(void)
+@@ -1092,6 +1092,8 @@ static void __init retbleed_select_mitigation(void)
  
  	case RETBLEED_MITIGATION_IBPB:
  		setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
@@ -154,17 +154,16 @@ index 7b5ba5b8592a2..7df458a6553eb 100644
  
  		/*
  		 * IBPB on entry already obviates the need for
-@@ -1122,9 +1124,6 @@ static void __init retbleed_select_mitigation(void)
+@@ -1101,8 +1103,6 @@ static void __init retbleed_select_mitigation(void)
  		setup_clear_cpu_cap(X86_FEATURE_UNRET);
  		setup_clear_cpu_cap(X86_FEATURE_RETHUNK);
  
--		setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
 -		mitigate_smt = true;
 -
  		/*
  		 * There is no need for RSB filling: entry_ibpb() ensures
  		 * all predictions, including the RSB, are invalidated,
-@@ -2626,6 +2625,7 @@ static void __init srso_select_mitigation(void)
+@@ -2607,6 +2607,7 @@ static void __init srso_select_mitigation(void)
  		if (IS_ENABLED(CONFIG_CPU_IBPB_ENTRY)) {
  			if (has_microcode) {
  				setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
@@ -172,7 +171,7 @@ index 7b5ba5b8592a2..7df458a6553eb 100644
  				srso_mitigation = SRSO_MITIGATION_IBPB;
  
  				/*
-@@ -2635,6 +2635,13 @@ static void __init srso_select_mitigation(void)
+@@ -2616,6 +2617,13 @@ static void __init srso_select_mitigation(void)
  				 */
  				setup_clear_cpu_cap(X86_FEATURE_UNRET);
  				setup_clear_cpu_cap(X86_FEATURE_RETHUNK);
@@ -186,7 +185,7 @@ index 7b5ba5b8592a2..7df458a6553eb 100644
  			}
  		} else {
  			pr_err("WARNING: kernel not compiled with CPU_IBPB_ENTRY.\n");
-@@ -2643,8 +2650,8 @@ static void __init srso_select_mitigation(void)
+@@ -2624,8 +2632,8 @@ static void __init srso_select_mitigation(void)
  		break;
  
  	case SRSO_CMD_IBPB_ON_VMEXIT:
@@ -197,7 +196,7 @@ index 7b5ba5b8592a2..7df458a6553eb 100644
  				setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
  				srso_mitigation = SRSO_MITIGATION_IBPB_ON_VMEXIT;
  
-@@ -2656,9 +2663,9 @@ static void __init srso_select_mitigation(void)
+@@ -2637,9 +2645,9 @@ static void __init srso_select_mitigation(void)
  				setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
  			}
  		} else {
