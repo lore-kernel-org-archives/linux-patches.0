@@ -1,213 +1,179 @@
-Received: from mail-wm1-f73.google.com (mail-wm1-f73.google.com [209.85.128.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2069.outbound.protection.outlook.com [40.107.237.69])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6505120E6FB
-	for <patches@lists.linux.dev>; Fri, 21 Feb 2025 14:42:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.73
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740148941; cv=none; b=oMELbn/Bfd27rnVXANHx17R0iOAKINy7w82dAnrWCjXAaVu0DwwUchETfYBWFAAm0gMgfrOGKEJIIhPuJt8ZUxJmZtq/CVbuN6FvhYGitwNb6DSQf4P31NsQoEtOG7jzPnyw1UykkTl+pheDysoQfTY/9Y//DBoF6yZWrCQWDrU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740148941; c=relaxed/simple;
-	bh=AFjIBXObHULWwBBeti/UQ9IenIPyekvwF6dd/WNVR1k=;
-	h=Date:Mime-Version:Message-ID:Subject:From:To:Cc:Content-Type; b=qVsfqrZMDRAtqcBI/QK4H/7vVnihV87iKiscFG+gD0+d6cCjWU+Ffq+SJo1MPkfhs98VnousZ+WTzBIQNEfnRfZZplhbCDoIMZAQ2DA3HXhyXD6KsJXSw7HjR9IJutaYN+m1+oFceEaHpsBzBPzl7P2dajGKuwSNZW/Oi7AQ+xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--derkling.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bYXN7u/7; arc=none smtp.client-ip=209.85.128.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--derkling.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD9E7080D;
+	Fri, 21 Feb 2025 14:48:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.69
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740149321; cv=fail; b=un+5rL+H/E0zw+QtnLyoB3+Lcgw9tm+x61PnuTNgmqYu+izye3z+9NjkSWpko3y2ag6CgVPAkdLM61UjNFXDJB10xQybQ4SmFdANi/PMeEcdLXjngMGFBbMMt6D4H+JlQEcwBVEQ0PPU66YedIoFtMMdBuvGA2NyUxcap8lLtcI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740149321; c=relaxed/simple;
+	bh=pakDMmdIbVrZ8rtUbnzO74PnckkOyPlKvsZFH8nbs5U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=gxOfyl7ewUIh9a/PrC0RYWQnnb79VH18StKddXbG3VxI0rUt5mE0O+nhBh2SUCGDCpXPQWnquedlrE9is1979lqeULfZ/0ukYzKact1QRX6F4bxKnRgz1RjGWMj8N5EV/9Xpros38xnBAC8GYDGMtVjNEbuyUvc/4l4ijYHs5VA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=suE7yiPc; arc=fail smtp.client-ip=40.107.237.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bYXN7u/7"
-Received: by mail-wm1-f73.google.com with SMTP id 5b1f17b1804b1-4398a60b61fso11497225e9.0
-        for <patches@lists.linux.dev>; Fri, 21 Feb 2025 06:42:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1740148937; x=1740753737; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=nkqxYFvP1YOYc3/mGAzLSNb9s+ekzsxk4Sz8UsgdvTg=;
-        b=bYXN7u/7F5zzyBYf3tgipdCqNwkAk91RofknLvpMfsEN6kahQ6qoU5kbt4qZ3GXxmW
-         Hkt2VSPUC2jB0uPsp2u5IeVdBVwAKSR7+IaEtPudmZxwjdaodh2ocEtZNxwlycZpbkO+
-         ROMsadiAs5V5OSjpNCtEYzAGKOSJqgMyUxFCf0ncfc+Ubgu4gDgyfAOcipwoJfi+p3qB
-         Yot/ZTARu5FrjXGfDfj3kGnBxFGT3HV8EhPzL6x7+vq+5N7BqbXlZWCvwoGw8ud2aPXo
-         16KbN3w75AsJeLt7kAdg6GzChiSrUuz4ivoAYdFC0S7do610G4IAUc+Os2nXeQLDuDIH
-         0GEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740148937; x=1740753737;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nkqxYFvP1YOYc3/mGAzLSNb9s+ekzsxk4Sz8UsgdvTg=;
-        b=nt07M1fse5JcT3Fwtx6g7zFMkTUTogYnxhpJevcy2wd6ETVhIOKsBp87dzOkSSLrJA
-         F3aD2k6NOA2aPKEBvDVXype4VivhMZB8V4grWC5mVGWsGIrtyUEG/O8PP/MGloubvJfx
-         gyKTCOeQ0l2IYOGUHXfdoVO6g296AMLQsBZVlYclu+mZ+Qi9gsY2I8+fJ9sqDCWF3tDe
-         K6R946O8Alra/OibAAAQGhWmD8Fz7fte19rGb99M/zl+NOPYp4moS4LAkFiGccdUYXtK
-         ey+ZrRgvzyRXgWI2h3ggU2X71YFp/EfaaLkH6tsb2ZxkgBWo83jhiJgGzFqx0Fv+vtR1
-         ONDw==
-X-Gm-Message-State: AOJu0YycVHr1bh/R1XBFivZ6WoyywebqFQyzFi9Fl4qHcGoSoe52IsmG
-	t6nD/9XoI2clShRaM/bXbcTP7F8AzKHyo43zEG+rFsyIniuWcjrSDitbfhodvZ7od40dUyMtpf/
-	rhJdlZhL4JQ==
-X-Google-Smtp-Source: AGHT+IF3X1+pcfYXoY0cCWqu4lNatPIFh55YyQdIDckUD8if227AnRzs56DLXcCjuXNi/nuuw+YQUa8szzXjQg==
-X-Received: from wmsd12.prod.google.com ([2002:a05:600c:3acc:b0:439:80fc:8bb2])
- (user=derkling job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:600c:5108:b0:439:9898:f18c with SMTP id 5b1f17b1804b1-439b5b3dbbcmr11992165e9.26.1740148937808;
- Fri, 21 Feb 2025 06:42:17 -0800 (PST)
-Date: Fri, 21 Feb 2025 14:42:09 +0000
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="suE7yiPc"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rDT/mk8M/gwaJEkLjX9NAcbq7y/2gM9w5jtNRFiClmXtkFGmckNeA/9oVIk5s7BSX4vxq9JrG2nCr+bwGDehQvqZ0diTJiBlG9ORv4lm0kap5IwvrSe9gmBMOwlkN4/c8SPIYkmBifqpb/Cm9xQrXQwmMHXEbBvgcNN6sJT5IUR6XtIvCKd+P/Zo1ThGWfrNWPyl3CJADemqUMBWeI0NXkc7x7roxEgxeE5AvjMf6goV1qXA47EGQ7RiePR316GyoDEed6/x9EgBRCUHX+N60QMYJktLgUEa98seSH3iE76KUg+ag7ns5aqG5UJ/Nrgsdv/Wi7r0vNyFsU4LJ/g+Yw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nWEIoKJ2dPR4FvssoT4qNeWkE4q9+iZvxeZwnrzE71Q=;
+ b=mTfD3bq5Yl0vFwLqdi0J+m0lT79O3I2BwRAVxFbbmNVfprxuv7GVUMIJKS+lK2kOxU0edllw9ZWpGpw2WIqASt5dUAgLwqs5LiZprQ9eP7rh6eI3h5UcJomJJTDnWvjcso3+HhGuT65Tff+UE8ca5BM+t2nAR/GCSSTXUnYxVE54a6aOzLcWNXmikmb3RtG56C/7Lzp3tYaQhrZ0uOTcYv2Rhduaj0tIRwe5b5KjWzFlu2H6vCqhYP1MOGlCR5H8yarG3iyucyth1Cxt+bkaIpOZFYrjbkrlElHN6H+mbYcfLJ6/KzXlTxrmfUxf6V7Wq72fKwyK9ma31wURTQqi2w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nWEIoKJ2dPR4FvssoT4qNeWkE4q9+iZvxeZwnrzE71Q=;
+ b=suE7yiPcGBHJEXSgTtbNXi1SlzBg/404qE2Zq1iUXGZEsIbbBNfP90kZN4so5CqsZGxpsu5dmqDfKGox67hxp3Mw2Q/oP1TU445jWfWmZtcJn7gpOE+MQn7y+6yvIxRZ8svFBWaliQ+T6rInt9HZQpAyz4dHbXZiMnbNUK7Vt6FqYg94OXF+xOixfVWfU0Fze2wonK9C0pu63lzCR68It704BlFJn/uk2haOnRPrY6uUCbPAr5Yk4/NTIDPunt94z6zkHL7cPu8/CnwP69o89LXhFwV9yJcyoGV9zdBsnXB+fYMvMi93Sgxuk/BLslHWuMQ13BtO4zRO/n/HaOCd6A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by CY5PR12MB6550.namprd12.prod.outlook.com (2603:10b6:930:42::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.15; Fri, 21 Feb
+ 2025 14:48:31 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8466.015; Fri, 21 Feb 2025
+ 14:48:31 +0000
+Date: Fri, 21 Feb 2025 10:48:30 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: kevin.tian@intel.com, tglx@linutronix.de, maz@kernel.org,
+	joro@8bytes.org, will@kernel.org, robin.murphy@arm.com,
+	shuah@kernel.org, iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-kselftest@vger.kernel.org, eric.auger@redhat.com,
+	baolu.lu@linux.intel.com, yi.l.liu@intel.com, yury.norov@gmail.com,
+	jacob.pan@linux.microsoft.com, patches@lists.linux.dev
+Subject: Re: [PATCH v2 4/7] irqchip: Have CONFIG_IRQ_MSI_IOMMU be selected by
+ irqchips that need it
+Message-ID: <20250221144830.GA285356@nvidia.com>
+References: <cover.1740014950.git.nicolinc@nvidia.com>
+ <a2620f67002c5cdf974e89ca3bf905f5c0817be6.1740014950.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a2620f67002c5cdf974e89ca3bf905f5c0817be6.1740014950.git.nicolinc@nvidia.com>
+X-ClientProxiedBy: BL0PR0102CA0029.prod.exchangelabs.com
+ (2603:10b6:207:18::42) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.48.1.601.g30ceb7b040-goog
-Message-ID: <20250221144209.135763-1-derkling@google.com>
-Subject: [PATCH 5.15] x86/cpu/kvm: SRSO: Fix possible missing IBPB on VM-Exit
-From: Patrick Bellasi <derkling@google.com>
-To: stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Borislav Petkov <bp@alien8.de>, 
-	Patrick Bellasi <derkling@matbug.net>, Brendan Jackman <jackmanb@google.com>, 
-	Yosry Ahmed <yosry.ahmed@linux.dev>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CY5PR12MB6550:EE_
+X-MS-Office365-Filtering-Correlation-Id: bd995de0-784c-45b3-fa2e-08dd5286cf43
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?9vfzPfUsMh7fnqIjrjyTVMwuLawjamsx0xz+vfRoAx5UryVg4V9l51qesZW2?=
+ =?us-ascii?Q?4Z9d8l1HZ8LMjwKmQfx9cnOBCvsJffHKiSd5Ln8GjL3T6ec97vnV9Jcv6PUX?=
+ =?us-ascii?Q?PNdbxEGTNBd3E1FRaTcqlVeOA7ZBFllqsMbWdCbUPZvug05RVFWnjfFhxxA1?=
+ =?us-ascii?Q?hrN3+S5nkBa8iw+X92kuVJxDMXFwzN+b9tcaxgzYNgS+bLM0xKn3doaU3RhF?=
+ =?us-ascii?Q?j7YQG9P6Z4Potr4hhlJs5S+hJSMb09lqkG3QQ8M9+zONQbXhqPnzVHzgkthD?=
+ =?us-ascii?Q?/UGbTslLLIXXH53jdX8UK0Q+lt+Oq831b0EQEPpyxFMzlgdcWuFoTLkc/ZWq?=
+ =?us-ascii?Q?cIQgRh66HbUuj/d8bMpKm/upprKY/Ba2ZyXDzwg9ypYlqVLD/CHoP4gHKY6r?=
+ =?us-ascii?Q?4KD2GeNMlW0IwGiRDZNjOxaOgIODCy6k5//QpiI92f4hnMaXAEvLMPSVCbHa?=
+ =?us-ascii?Q?2koVbFc4J1YJttg0Y9hJ/oceugPkZAhwkAm3IH1nGZ5tryShPFH/Uj3eWSFg?=
+ =?us-ascii?Q?0srCZ40mUUOQaUzpWUk5g+AhRHYFwg29IfzhzciTvDfE9ytlgOwE1fH2Eh5i?=
+ =?us-ascii?Q?u4xkewMtx6/+mTEPKJSWFU+5JberJwlbdR+fG/QlJ52LmHSLC2yZjh/+VEku?=
+ =?us-ascii?Q?cXAGf0JQrCdcXAsEr8bIw0ToBAsueoGfU7aRSrqLtKOxZnsayo91Zxnlo7ls?=
+ =?us-ascii?Q?CL4gqKRZjytHnJlJLR+Qyw6CSHXeJDz67cPqJhYvaZn7WXyMC5q9K/N92bgd?=
+ =?us-ascii?Q?ZJk+uJiOU7Tzg0rpbWyzkTcV/dvhfGO8Msl374xbXRXU4uR7ALBghg0HrQAS?=
+ =?us-ascii?Q?vB2GyVlkQy/MfXPgolllrgalDpAVM80sOMY2nPDigbjfUiDsh8VGNn4kod7N?=
+ =?us-ascii?Q?53lBYIM/ygsADt2MDsAwjRE9wQLzuvm0bTZi3BXRtopoiVuFnJOpHKGA/IfD?=
+ =?us-ascii?Q?yusaCNptFMk/IqDmBb4Tpz3WNVIM8xchGBXPwrmluSZcu1YIHF0zLaQDNusU?=
+ =?us-ascii?Q?dI2VuEs5bLTmipHvl4dz/ei8mrgmJjzqHG106x8OlxlG5jxaAsmLBVfGfcWz?=
+ =?us-ascii?Q?CAMT3sn+n0bwlSv2Xk3MzJSSxYhr2IDCn8cRPWnUcz08/RTvT09WkTpHaCDO?=
+ =?us-ascii?Q?APXg/SUjPut0Af6Vl1aAO8tI8SLGWaS8i09zHGUMZE3+ZNp+mrGKDZxDlTzZ?=
+ =?us-ascii?Q?6cXvYtlOjzMgtFqNZYBqqpSaAt1fM/QVbcWsFdU9JkGuN+21FYUOyzgS++bN?=
+ =?us-ascii?Q?f09vyTSTMLFfMqsIVEompO7EdZDU8b13IVGocEzQ8vDcH0lq/ePVe7z3N2Np?=
+ =?us-ascii?Q?vdZKRJ1iodGsV0AfZQ80hMCLbiWSF9JsUQohpJz+yFxwwE1iBJ7Bfma5hzos?=
+ =?us-ascii?Q?WQz9a8svCEqbRL+pXEFq5CvXxsZc?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?oHGPSzDn3vqVQuuWGCc3QGn6DhLhaJMv7syE4kPztxZhbXiXZkDL4kv7uVWv?=
+ =?us-ascii?Q?Dtu4InQVArcasayxGOHe8T9DxhIxRdkTqAUrODgRTxSV7QYJYS2SyJ6L+8te?=
+ =?us-ascii?Q?uASh2S/MqWaDPpXVUz3zU87eaR+7iyY7/NYpVyYvJqWDHeJsMTg+50/oB0On?=
+ =?us-ascii?Q?gef5vfUcVwXHBBJxBJufuJRD/Tmd9lYBZKPLLfL7BGfdyilxdv+axW6kqTdB?=
+ =?us-ascii?Q?a5e+mzDZXjfCy6T7YsGfjAbE7qryQzC7ZGm6VT6E+vWSE0/IfAbh9i0P71OS?=
+ =?us-ascii?Q?cc74WRjXjGk4j4YYd79oPPbR7l5pfbqlXNpA77lWoW2uqS4AzwfpnRm/Sdz4?=
+ =?us-ascii?Q?f7nOnbtmYeufLMj6WLZ5KrSb80nhZGcD9g0hQDHKO5t05kZlFWU4mOVVIMUN?=
+ =?us-ascii?Q?rM1n+KZipZ6zRUpe4AMD2EPD/d6+uICcTLLrf5vCUe2oLncBUx3kbYvStE6X?=
+ =?us-ascii?Q?wBbmQ1w/nGXvjiToK8XnbnGVt2OUjtSzY0X7Z5U8DmaHG/zr8velnCquAP8u?=
+ =?us-ascii?Q?vR6IibRny4pO9NXlWtsAlRChpes4BQ4qbxV+dSaYW8Ns7batAb1gUCFaOlZM?=
+ =?us-ascii?Q?IVioTkNcU0BkdAiAeGr0pLmvNJTkSHrsnVzZgGnXIzaEB9omoSEwtimZtPlx?=
+ =?us-ascii?Q?fxXf4X31EB6jZCXNusClHSW32lhR6n/ywk23vYt4epAZFaiWxWaKljH96ME3?=
+ =?us-ascii?Q?AYT+zkyenSInL5PVTpqd87WxaEDoCyAWjtCB4jzIb4bKWdS9BOtCYqy6DcN4?=
+ =?us-ascii?Q?OVsHtYK5SQSseWtD73orgcQx78zvnrrsezsi3ieZOI3yGj8Ka/stmko076Pk?=
+ =?us-ascii?Q?d9NDFu9uskFcr4ffC867+0OcLSaX8KB6MTOqjfLcpink79KZP70zbNJr0R3e?=
+ =?us-ascii?Q?JyJN8bzUJY/+QHsrsPSe9xD2u35WnqMkRK3euxVHEwSsGDLePO4LXX7aERRQ?=
+ =?us-ascii?Q?xUQooF1vQ22b4eDgRLf/HhIJhPaOF9TvtkohS7BY3kJHj+9eSvxm/bi/UxyB?=
+ =?us-ascii?Q?sDwO71gd09usVvnBQSyrB2+/zNjLdUFwWMyhwmUp+MFmCuEk+GhwO8TzKIoQ?=
+ =?us-ascii?Q?NXOfrjz/MBZeuzYblPkOM7ZYSSX1YKDc8byhaNXcqKfm1RkR/uQpCaXZ+8uh?=
+ =?us-ascii?Q?YYwVyetVktEY0ucwDHHniMHFQXppq3kv0V9i3aoRyxp8nB46MLo4XoRYV55T?=
+ =?us-ascii?Q?QhqtSwZC5F/5V+l5XZazXeo45QKQffTaRdDrpYXiqu/rxK/VTCEz9Xw6eI8E?=
+ =?us-ascii?Q?UVJgrFeAHFVhfA6ZB1hUnoW6hV6W2YYkZ6e9FCtSSsnJ0oy8CwagwYfQaVB+?=
+ =?us-ascii?Q?J9YRpSJs1wNhT63KBUwLTx8s/3TE/HV9CduH6128T97CXpp1xr2OEBhuNM9O?=
+ =?us-ascii?Q?uqGsTO7VDn4sH9WGtHAKZ0S77d3T6kYYSKUMD2zwT5++W3xf2xS0iyjDb4DP?=
+ =?us-ascii?Q?eZ0r6nAA/39pMiDEkIv2jwdkrJcIxwtFXY8d/ww90tWTFt8Qt635Yifj19qU?=
+ =?us-ascii?Q?PcEtD97bOYpr+yNfIapNnrxFirXof+Y+DW1n9lzmbAMBP8iPb2hzOR1qmpC2?=
+ =?us-ascii?Q?8qs7k+AhMHEmtXQkdiSnDE8u2vAkvn3KYdmNZTKB?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bd995de0-784c-45b3-fa2e-08dd5286cf43
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Feb 2025 14:48:31.5243
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Rr0zExZ4kno0g+fEwmLbjTgWOmQLTTuTnkT70E+K2kZ4HLyT2xh1GWBjEbUJnpvK
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6550
 
-commit 318e8c339c9a0891c389298bb328ed0762a9935e upstream.
+> --- a/drivers/iommu/Kconfig
+> +++ b/drivers/iommu/Kconfig
+> @@ -154,7 +154,6 @@ config IOMMU_DMA
+>  	select DMA_OPS_HELPERS
+>  	select IOMMU_API
+>  	select IOMMU_IOVA
+> -	select IRQ_MSI_IOMMU
+>  	select NEED_SG_DMA_LENGTH
+>  	select NEED_SG_DMA_FLAGS if SWIOTLB
 
-In [1] the meaning of the synthetic IBPB flags has been redefined for a
-better separation of concerns:
- - ENTRY_IBPB     -- issue IBPB on entry only
- - IBPB_ON_VMEXIT -- issue IBPB on VM-Exit only
-and the Retbleed mitigations have been updated to match this new
-semantics.
+Because of the above this patch needs to add:
 
-Commit [2] was merged shortly before [1], and their interaction was not
-handled properly. This resulted in IBPB not being triggered on VM-Exit
-in all SRSO mitigation configs requesting an IBPB there.
-
-Specifically, an IBPB on VM-Exit is triggered only when
-X86_FEATURE_IBPB_ON_VMEXIT is set. However:
-
- - X86_FEATURE_IBPB_ON_VMEXIT is not set for "spec_rstack_overflow=ibpb",
-   because before [1] having X86_FEATURE_ENTRY_IBPB was enough. Hence,
-   an IBPB is triggered on entry but the expected IBPB on VM-exit is
-   not.
-
- - X86_FEATURE_IBPB_ON_VMEXIT is not set also when
-   "spec_rstack_overflow=ibpb-vmexit" if X86_FEATURE_ENTRY_IBPB is
-   already set.
-
-   That's because before [1] this was effectively redundant. Hence, e.g.
-   a "retbleed=ibpb spec_rstack_overflow=bpb-vmexit" config mistakenly
-   reports the machine still vulnerable to SRSO, despite an IBPB being
-   triggered both on entry and VM-Exit, because of the Retbleed selected
-   mitigation config.
-
- - UNTRAIN_RET_VM won't still actually do anything unless
-   CONFIG_MITIGATION_IBPB_ENTRY is set.
-
-For "spec_rstack_overflow=ibpb", enable IBPB on both entry and VM-Exit
-and clear X86_FEATURE_RSB_VMEXIT which is made superfluous by
-X86_FEATURE_IBPB_ON_VMEXIT. This effectively makes this mitigation
-option similar to the one for 'retbleed=ibpb', thus re-order the code
-for the RETBLEED_MITIGATION_IBPB option to be less confusing by having
-all features enabling before the disabling of the not needed ones.
-
-For "spec_rstack_overflow=ibpb-vmexit", guard this mitigation setting
-with CONFIG_MITIGATION_IBPB_ENTRY to ensure UNTRAIN_RET_VM sequence is
-effectively compiled in. Drop instead the CONFIG_MITIGATION_SRSO guard,
-since none of the SRSO compile cruft is required in this configuration.
-Also, check only that the required microcode is present to effectively
-enabled the IBPB on VM-Exit.
-
-Finally, update the KConfig description for CONFIG_MITIGATION_IBPB_ENTRY
-to list also all SRSO config settings enabled by this guard.
-
-Fixes: 864bcaa38ee4 ("x86/cpu/kvm: Provide UNTRAIN_RET_VM") [1]
-Fixes: d893832d0e1e ("x86/srso: Add IBPB on VMEXIT") [2]
-Reported-by: Yosry Ahmed <yosryahmed@google.com>
-Signed-off-by: Patrick Bellasi <derkling@google.com>
-Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
- arch/x86/Kconfig           |  3 ++-
- arch/x86/kernel/cpu/bugs.c | 20 ++++++++++++++------
- 2 files changed, 16 insertions(+), 7 deletions(-)
-
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 2f6312e7ce81f..90ac8d84389cf 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -2449,7 +2449,8 @@ config CPU_IBPB_ENTRY
- 	depends on CPU_SUP_AMD && X86_64
- 	default y
- 	help
--	  Compile the kernel with support for the retbleed=ibpb mitigation.
-+	  Compile the kernel with support for the retbleed=ibpb and
-+	  spec_rstack_overflow={ibpb,ibpb-vmexit} mitigations.
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -449,8 +449,10 @@ void iommu_put_dma_cookie(struct iommu_domain *domain)
+        struct iommu_dma_cookie *cookie = domain->iova_cookie;
+        struct iommu_dma_msi_page *msi, *tmp;
  
- config CPU_IBRS_ENTRY
- 	bool "Enable IBRS on kernel entry"
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index f84d59cd180b3..dfc02fb32375c 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1092,6 +1092,8 @@ static void __init retbleed_select_mitigation(void)
++#if IS_ENABLED(CONFIG_IRQ_MSI_IOMMU)
+        if (domain->sw_msi != iommu_dma_sw_msi)
+                return;
++#endif
  
- 	case RETBLEED_MITIGATION_IBPB:
- 		setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
-+		setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
-+		mitigate_smt = true;
- 
- 		/*
- 		 * IBPB on entry already obviates the need for
-@@ -1101,8 +1103,6 @@ static void __init retbleed_select_mitigation(void)
- 		setup_clear_cpu_cap(X86_FEATURE_UNRET);
- 		setup_clear_cpu_cap(X86_FEATURE_RETHUNK);
- 
--		mitigate_smt = true;
--
- 		/*
- 		 * There is no need for RSB filling: entry_ibpb() ensures
- 		 * all predictions, including the RSB, are invalidated,
-@@ -2607,6 +2607,7 @@ static void __init srso_select_mitigation(void)
- 		if (IS_ENABLED(CONFIG_CPU_IBPB_ENTRY)) {
- 			if (has_microcode) {
- 				setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
-+				setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
- 				srso_mitigation = SRSO_MITIGATION_IBPB;
- 
- 				/*
-@@ -2616,6 +2617,13 @@ static void __init srso_select_mitigation(void)
- 				 */
- 				setup_clear_cpu_cap(X86_FEATURE_UNRET);
- 				setup_clear_cpu_cap(X86_FEATURE_RETHUNK);
-+
-+				/*
-+				 * There is no need for RSB filling: entry_ibpb() ensures
-+				 * all predictions, including the RSB, are invalidated,
-+				 * regardless of IBPB implementation.
-+				 */
-+				setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
- 			}
- 		} else {
- 			pr_err("WARNING: kernel not compiled with CPU_IBPB_ENTRY.\n");
-@@ -2624,8 +2632,8 @@ static void __init srso_select_mitigation(void)
- 		break;
- 
- 	case SRSO_CMD_IBPB_ON_VMEXIT:
--		if (IS_ENABLED(CONFIG_CPU_SRSO)) {
--			if (!boot_cpu_has(X86_FEATURE_ENTRY_IBPB) && has_microcode) {
-+		if (IS_ENABLED(CONFIG_CPU_IBPB_ENTRY)) {
-+			if (has_microcode) {
- 				setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
- 				srso_mitigation = SRSO_MITIGATION_IBPB_ON_VMEXIT;
- 
-@@ -2637,9 +2645,9 @@ static void __init srso_select_mitigation(void)
- 				setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
- 			}
- 		} else {
--			pr_err("WARNING: kernel not compiled with CPU_SRSO.\n");
-+			pr_err("WARNING: kernel not compiled with CPU_IBPB_ENTRY.\n");
- 			goto pred_cmd;
--                }
-+		}
- 		break;
- 
- 	default:
--- 
-2.48.1.601.g30ceb7b040-goog
+        if (!cookie)
+                return;
 
+I fixed it up
+
+I think the above if can be deleted with the sketch I showed in the
+last email since the put_dma_cookie will only ever be called on the
+default domain or on the vfio domain which guarantees it is not
+iommufd or something else using the union.
+
+Jason
