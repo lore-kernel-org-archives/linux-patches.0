@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119441946DF;
-	Mon, 24 Feb 2025 14:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E23114B080;
+	Mon, 24 Feb 2025 14:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409072; cv=none; b=lrs1Mn0b4BtUFRNb0bKD0zIXCRLuQ9mWJ8pmSTvMd7VkrFq8OBrJU8UIbwGbb0+OTikrZ5wEgRuODE2YRiL179JCf5Q7MJXrulRrsVARcMb6tDYOwSwjSOz+rOhPiQZgnb18WL5Ztn8r8z+iQYr4LZHk3mbCkuxELCvQid/ondQ=
+	t=1740409075; cv=none; b=s24NFUTEn8TRsQ5zezsVOnGEOK147e5ReRbSQFyzG1RRGpEEGXnuFLYNHeLuHxrMyrA9fEQ4RDes9Ut7NQhbMlUZrj8qLYuDDNhri9wdhR84qQLTMv77M+4I6z2uWqNBP7gDnK14zGhFeZOLiUp2PtLag3avL6dJ2A0zAoyJ/s0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409072; c=relaxed/simple;
-	bh=6uVKfUras1NCQ9SS+yZ4abFOB3MTeoXY4pEhI+VZMsA=;
+	s=arc-20240116; t=1740409075; c=relaxed/simple;
+	bh=rQiKx+I+rRitL7NXRQihAxDoVKaLefB+dSoYRB4B2dg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UMUwu8tze0JDDo7cBEMmr2EPnommbMImd/JNFBkRj5de8pl5sdoocJToSfARpF9EP/Q3QakibSAwIJvFXpu/DZUhsQUgiC0VErxxvHqaG+vE+pyGLuaXN0++D3DFmVlSkcYpJp0Ps9wMDz2EzvSFZHlSd9JfJ1JDRjG3cJXl3FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+WLB+Te; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S7p150aN6lBZlzI88Oug5j49RGTEz4yHXOBUttCBn684PON9NmNLLWFedKyz9ZGc6EyKUCRRhqU65DHW4nJQLN/hB4PfvOP5iDpbrywfQsIUyKvs/ugXF9ekwr0UqUSGErTAQV3XRfoTcmYw2ccX6Zgs3Q9Bsdr74yFVSsd6Fmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8+hrOvX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+WLB+Te"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F6AC4CED6;
-	Mon, 24 Feb 2025 14:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8+hrOvX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C83C4CED6;
+	Mon, 24 Feb 2025 14:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409071;
-	bh=6uVKfUras1NCQ9SS+yZ4abFOB3MTeoXY4pEhI+VZMsA=;
+	s=korg; t=1740409075;
+	bh=rQiKx+I+rRitL7NXRQihAxDoVKaLefB+dSoYRB4B2dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+WLB+TeJm7AuP04dA1dsZoRq3OGeq3+imLMVD1+ugvpSJnlpKJwxgOeZggHDyxFO
-	 PkvmGe0acgA196I+wIc8E51hErf+E2P5lSkku8YOfmLiucK1amSRn4C7S/f96fd/10
-	 3yK6WlsOUdtx0B0t4f+Gtn7bc+A1y9l/8hciXrsU=
+	b=D8+hrOvXjsTtH+cvid9y9luf2jSTmoCoJ/9biSkiNzaEmpI+XOGXvGE+M7yUTdoeP
+	 17JYTWpeSWnouvyeo9hZpAfBdDD0LorYlVQFcSjZADwddukx+RvTW0PManq3dSc8Ob
+	 Gn5D2ZTSqmga7+Pg6Ei7L6P7Py2AfE87h5zoLnqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.13 087/138] drm: panel: jd9365da-h3: fix reset signal polarity
-Date: Mon, 24 Feb 2025 15:35:17 +0100
-Message-ID: <20250224142607.895293212@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Dale Whinham <daleyo@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: [PATCH 6.13 088/138] drm/msm/dp: account for widebus and yuv420 during mode validation
+Date: Mon, 24 Feb 2025 15:35:18 +0100
+Message-ID: <20250224142607.933773425@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -51,70 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-commit a8972d5a49b408248294b5ecbdd0a085e4726349 upstream.
+commit df9cf852ca3099feb8fed781bdd5d3863af001c8 upstream.
 
-In jadard_prepare() a reset pulse is generated with the following
-statements (delays ommited for clarity):
+Widebus allows the DP controller to operate in 2 pixel per clock mode.
+The mode validation logic validates the mode->clock against the max
+DP pixel clock. However the max DP pixel clock limit assumes widebus
+is already enabled. Adjust the mode validation logic to only compare
+the adjusted pixel clock which accounts for widebus against the max DP
+pixel clock. Also fix the mode validation logic for YUV420 modes as in
+that case as well, only half the pixel clock is needed.
 
-    gpiod_set_value(jadard->reset, 1); --> Deassert reset
-    gpiod_set_value(jadard->reset, 0); --> Assert reset for 10ms
-    gpiod_set_value(jadard->reset, 1); --> Deassert reset
-
-However, specifying second argument of "0" to gpiod_set_value() means to
-deassert the GPIO, and "1" means to assert it. If the reset signal is
-defined as GPIO_ACTIVE_LOW in the DTS, the above statements will
-incorrectly generate the reset pulse (inverted) and leave it asserted
-(LOW) at the end of jadard_prepare().
-
-Fix reset behavior by inverting gpiod_set_value() second argument
-in jadard_prepare(). Also modify second argument to devm_gpiod_get()
-in jadard_dsi_probe() to assert the reset when probing.
-
-Do not modify it in jadard_unprepare() as it is already properly
-asserted with "1", which seems to be the intended behavior.
-
-Fixes: 6b818c533dd8 ("drm: panel: Add Jadard JD9365DA-H3 DSI panel")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20240927135306.857617-1-hugo@hugovil.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240927135306.857617-1-hugo@hugovil.com
+Fixes: 757a2f36ab09 ("drm/msm/dp: enable widebus feature for display port")
+Fixes: 6db6e5606576 ("drm/msm/dp: change clock related programming for YUV420 over DP")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dale Whinham <daleyo@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/635789/
+Link: https://lore.kernel.org/r/20250206-dp-widebus-fix-v2-1-cb89a0313286@quicinc.com
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c |   11 ++++++-----
+ drivers/gpu/drm/msm/dp/dp_drm.c     |    5 ++++-
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
-+++ b/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
-@@ -109,13 +109,13 @@ static int jadard_prepare(struct drm_pan
- 	if (jadard->desc->lp11_to_reset_delay_ms)
- 		msleep(jadard->desc->lp11_to_reset_delay_ms);
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -937,16 +937,17 @@ enum drm_mode_status msm_dp_bridge_mode_
+ 		return -EINVAL;
+ 	}
  
--	gpiod_set_value(jadard->reset, 1);
-+	gpiod_set_value(jadard->reset, 0);
- 	msleep(5);
+-	if (mode->clock > DP_MAX_PIXEL_CLK_KHZ)
+-		return MODE_CLOCK_HIGH;
+-
+ 	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+ 	link_info = &msm_dp_display->panel->link_info;
  
--	gpiod_set_value(jadard->reset, 0);
-+	gpiod_set_value(jadard->reset, 1);
- 	msleep(10);
+-	if (drm_mode_is_420_only(&dp->connector->display_info, mode) &&
+-	    msm_dp_display->panel->vsc_sdp_supported)
++	if ((drm_mode_is_420_only(&dp->connector->display_info, mode) &&
++	     msm_dp_display->panel->vsc_sdp_supported) ||
++	     msm_dp_wide_bus_available(dp))
+ 		mode_pclk_khz /= 2;
  
--	gpiod_set_value(jadard->reset, 1);
-+	gpiod_set_value(jadard->reset, 0);
- 	msleep(130);
++	if (mode_pclk_khz > DP_MAX_PIXEL_CLK_KHZ)
++		return MODE_CLOCK_HIGH;
++
+ 	mode_bpp = dp->connector->display_info.bpc * num_components;
+ 	if (!mode_bpp)
+ 		mode_bpp = default_bpp;
+--- a/drivers/gpu/drm/msm/dp/dp_drm.c
++++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+@@ -257,7 +257,10 @@ static enum drm_mode_status msm_edp_brid
+ 		return -EINVAL;
+ 	}
  
- 	ret = jadard->desc->init(jadard);
-@@ -1130,7 +1130,7 @@ static int jadard_dsi_probe(struct mipi_
- 	dsi->format = desc->format;
- 	dsi->lanes = desc->lanes;
+-	if (mode->clock > DP_MAX_PIXEL_CLK_KHZ)
++	if (msm_dp_wide_bus_available(dp))
++		mode_pclk_khz /= 2;
++
++	if (mode_pclk_khz > DP_MAX_PIXEL_CLK_KHZ)
+ 		return MODE_CLOCK_HIGH;
  
--	jadard->reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
-+	jadard->reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(jadard->reset)) {
- 		DRM_DEV_ERROR(&dsi->dev, "failed to get our reset GPIO\n");
- 		return PTR_ERR(jadard->reset);
+ 	/*
 
 
