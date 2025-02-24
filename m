@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3042E2837B;
-	Mon, 24 Feb 2025 14:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FD92571CB;
+	Mon, 24 Feb 2025 14:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409102; cv=none; b=tum0KOK/p6LAepH60F8wPvSI11x9LzpHSOEOET4k2a67f0E0/22YMkpbb1/qCVfKe6lRq+408E259ErfkzRKC1d/DwaWUc6NmmaIXf+TjzUWtYsWkJtIr2d87SkonIcD3gz+6YKf4r5xzA6+rsuJO6Ch6Nq2BB0aZAXi2Gcv0+g=
+	t=1740409105; cv=none; b=WSNNoboYQHcOm+DmJ7K4n/fMaXBodK57CmagZpTWgLNtV9cssauNAM0qMBzEyDDijAvMzVWHUxD+nwbj0ZL2+EM/XVwBkDQe45oeTVL4xe7DvGt4ADBGWoOEq02CArBQUfcswvvLVArwpWZynwLFYhPixQXPNkWNQojGAU74xpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409102; c=relaxed/simple;
-	bh=5M6jdALafyFkmYoIx0ZxwxB4fq2gJzven1R8MnKmKp8=;
+	s=arc-20240116; t=1740409105; c=relaxed/simple;
+	bh=UYTOT8nkdsYCLWo25fAMBxuRXhYFDMTdFvFhe0h6Q5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f/iZwyB3a5jUx2Ez/Vx9AmYo8I0wu1CRY9SoLihztY4vVL+LFYCSlRZs3l9RwFqs4iLS1cpoQqBAt3DRtGRD83hKfQev1eb90415kuvlm4LMSOnYTNxQ/inqP9y26/fJ3nw2fvXz9CLeIcmkYkOxBEiM1S/VUYuJ2lyFqbaNE5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T02wqxD8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fe4N8wFSW4W0yR9sZBO0S8Cf+HvuNBgG2fJuwkYMm1lRqXD1opYvsiKVvUIAXLigw705/A7DPmUNI19Z3sQL+oqnC32eZZYxP9ua9/Z4+TfT6hq2a6t9MC1FsPkAZ76Xr6br/QxBS1L0fYRzlqYBsud+REVOKXs58fYpHDSCO+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcR671SL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T02wqxD8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C121C4CEE6;
-	Mon, 24 Feb 2025 14:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcR671SL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C0EC4CEE6;
+	Mon, 24 Feb 2025 14:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409102;
-	bh=5M6jdALafyFkmYoIx0ZxwxB4fq2gJzven1R8MnKmKp8=;
+	s=korg; t=1740409105;
+	bh=UYTOT8nkdsYCLWo25fAMBxuRXhYFDMTdFvFhe0h6Q5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T02wqxD8x5Tq6xsOyRGcrRiVfKa746Uwd2Mp5KNGB7ZU+51yG4Q/BJPmD5Z1KJCi9
-	 h4GYbxymwUoGlxvzo9V5kQUlKzpNKTy2IJl9zgacHPCE/CJesq7lWdD/cUwA2Dt5Ui
-	 nmsDhL2Z0xJmkt3Eh+oBpLnwYz/H21qQMezu2Ric=
+	b=rcR671SLEZBjsGMmTBfQQNm2CE4Z2JbohEcuIJEYBeUt8DYwQAzTmtFHzljwDms7d
+	 ZfK92jKjXUlwNV/p2lPzgYtRdRuXHP2VHB870fQ2FHQ/la6awlV+1vMEH/0Gyf9IyB
+	 mDZMOrQA912DrB2sE9e2oIE9ltbygdwZMEic49So=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Yu Kuai <yukuai@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Fabio Estevam <festevam@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 065/138] md/raid*: Fix the set_queue_limits implementations
-Date: Mon, 24 Feb 2025 15:34:55 +0100
-Message-ID: <20250224142607.033252652@linuxfoundation.org>
+Subject: [PATCH 6.13 066/138] firmware: imx: IMX_SCMI_MISC_DRV should depend on ARCH_MXC
+Date: Mon, 24 Feb 2025 15:34:56 +0100
+Message-ID: <20250224142607.071910585@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -52,76 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit fbe8f2fa971c537571994a0df532c511c4fb5537 ]
+[ Upstream commit be6686b823b30a69b1f71bde228ce042c78a1941 ]
 
-queue_limits_cancel_update() must only be called if
-queue_limits_start_update() is called first. Remove the
-queue_limits_cancel_update() calls from the raid*_set_limits() functions
-because there is no corresponding queue_limits_start_update() call.
+The i.MX System Controller Management Interface firmware is only present
+on Freescale i.MX SoCs.  Hence add a dependency on ARCH_MXC, to prevent
+asking the user about this driver when configuring a kernel without
+Freescale i.MX platform support.
 
-Cc: Christoph Hellwig <hch@lst.de>
-Fixes: c6e56cf6b2e7 ("block: move integrity information into queue_limits")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/linux-raid/20250212171108.3483150-1-bvanassche@acm.org/
-Signed-off-by: Yu Kuai <yukuai@kernel.org>
+Fixes: 514b2262ade48a05 ("firmware: arm_scmi: Fix i.MX build dependency")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid0.c  | 4 +---
- drivers/md/raid1.c  | 4 +---
- drivers/md/raid10.c | 4 +---
- 3 files changed, 3 insertions(+), 9 deletions(-)
+ drivers/firmware/imx/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/md/raid0.c b/drivers/md/raid0.c
-index 7049ec7fb8eb4..e8802309ed600 100644
---- a/drivers/md/raid0.c
-+++ b/drivers/md/raid0.c
-@@ -386,10 +386,8 @@ static int raid0_set_limits(struct mddev *mddev)
- 	lim.io_opt = lim.io_min * mddev->raid_disks;
- 	lim.features |= BLK_FEAT_ATOMIC_WRITES_STACKED;
- 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
--	if (err) {
--		queue_limits_cancel_update(mddev->gendisk->queue);
-+	if (err)
- 		return err;
--	}
- 	return queue_limits_set(mddev->gendisk->queue, &lim);
- }
+diff --git a/drivers/firmware/imx/Kconfig b/drivers/firmware/imx/Kconfig
+index 907cd149c40a8..c964f4924359f 100644
+--- a/drivers/firmware/imx/Kconfig
++++ b/drivers/firmware/imx/Kconfig
+@@ -25,6 +25,7 @@ config IMX_SCU
  
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index a5cd6522fc2d4..3c75a69376f47 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -3219,10 +3219,8 @@ static int raid1_set_limits(struct mddev *mddev)
- 	lim.max_write_zeroes_sectors = 0;
- 	lim.features |= BLK_FEAT_ATOMIC_WRITES_STACKED;
- 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
--	if (err) {
--		queue_limits_cancel_update(mddev->gendisk->queue);
-+	if (err)
- 		return err;
--	}
- 	return queue_limits_set(mddev->gendisk->queue, &lim);
- }
- 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index e1e6cd7fb125e..8b736f30ef926 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -4020,10 +4020,8 @@ static int raid10_set_queue_limits(struct mddev *mddev)
- 	lim.io_opt = lim.io_min * raid10_nr_stripes(conf);
- 	lim.features |= BLK_FEAT_ATOMIC_WRITES_STACKED;
- 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
--	if (err) {
--		queue_limits_cancel_update(mddev->gendisk->queue);
-+	if (err)
- 		return err;
--	}
- 	return queue_limits_set(mddev->gendisk->queue, &lim);
- }
- 
+ config IMX_SCMI_MISC_DRV
+ 	tristate "IMX SCMI MISC Protocol driver"
++	depends on ARCH_MXC || COMPILE_TEST
+ 	default y if ARCH_MXC
+ 	help
+ 	  The System Controller Management Interface firmware (SCMI FW) is
 -- 
 2.39.5
 
