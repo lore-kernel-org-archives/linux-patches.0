@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C99F24BC09;
-	Mon, 24 Feb 2025 14:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2535617BEC6;
+	Mon, 24 Feb 2025 14:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408603; cv=none; b=bZhCLCojPqKwgQUCeMR+jH/YqwrofTKFLyHcqBuDa1qWQyPhHQ73kDxltKivIoWoS+ZygT0cK1mjUoqJ6OnCIyht793GINZEP2Zi9Wf3L8NY4T2mvpz6+ur66dWIchgU9GENaEVqfwGnBJwsqLXXyUwimi1INhpTBVyBqtQGkdE=
+	t=1740408607; cv=none; b=rg7vBFw9fHMT+KFUGdjBYFvnQWpcKIxOfQiSpaa3VmA2IpsSdROwADtDC+xjouJDv0QFWtIernJYMNyBW/Ame5zxZgPYFd634FhG0FxgEkFgjabr53+u2xpC1aKaN/NsS637ZmmiGmgMRTKrwv9daZCE+ACPtgHtgFGNJNwNU0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408603; c=relaxed/simple;
-	bh=11bXifA3UjSAQy1DU4CrDLXuERyAlBwJVNT3puVmoSE=;
+	s=arc-20240116; t=1740408607; c=relaxed/simple;
+	bh=qP6OzJGhrLTxJXqtHZZdfQNriQ0ybjTwMyW0OYxltrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ThL1N09o5scSIGeoGN6DVLo650QmscsVNBk90Svhb+y4Ec0n8G6DXG9n7NRVWH93yekqznAMulLZTbtQz12zai5HDUx8qGG+cwQcSu206SeEBPV9L0YIIpdx+et/3BfEumUTRzxQ6pXaY/iTca3OvY5fS9H5wV1hpBw58N6rV3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S90kFA/R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UTg0wNaFvrBS1NWnsEwzbHYU9YJ3x5D+64zeLlLxHhKX269C/qIdlrnt/lNpnGBmrI9F8cUnoGoszZJm2bGKDWhqUwIBv+hCDKDJphhjid84+XP43e/nzXvvhEWHhWqIHMnuce6r+A/DyZwlQWDDtq/F/7BPhxs6YDxylKLnjPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pqt5fVHv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S90kFA/R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1EAC4CED6;
-	Mon, 24 Feb 2025 14:50:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pqt5fVHv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574C5C4CED6;
+	Mon, 24 Feb 2025 14:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408603;
-	bh=11bXifA3UjSAQy1DU4CrDLXuERyAlBwJVNT3puVmoSE=;
+	s=korg; t=1740408607;
+	bh=qP6OzJGhrLTxJXqtHZZdfQNriQ0ybjTwMyW0OYxltrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S90kFA/RSEptUNvZbvXKW0Sv5y/B8JclSjsQVjzzhteJQNGgp4nwCiQkRuNFo3A6X
-	 6oSDOrK0iRb6AbtB9BY1Y9Xm+c3iNa/SMe/iqbM+R6lxLF+/RpoS0A3YM0kYJfVM16
-	 lUllBOQngNEFLcl8U3Q6s4+uN8l9RSxmmvyseRqo=
+	b=pqt5fVHv+ip4wuoeDPlZcWTnsViu/V5K3VGgEi3o+GjhrwHww5xOJhQARKVDBNhPk
+	 0zS+abnvbKctPHF6LCNPw0Sfa2c0BNDR/ml9aaZUHhNMyG79bszkvWjFhilTdxLVEd
+	 R+83X9AfxdXQLDyb5qzGMVT+Ud80ZuCRZGCSviQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.12 106/154] drm: panel: jd9365da-h3: fix reset signal polarity
-Date: Mon, 24 Feb 2025 15:35:05 +0100
-Message-ID: <20250224142611.209170914@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: [PATCH 6.12 107/154] drm/msm/dpu: Disable dither in phys encoder cleanup
+Date: Mon, 24 Feb 2025 15:35:06 +0100
+Message-ID: <20250224142611.247467228@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -51,70 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-commit a8972d5a49b408248294b5ecbdd0a085e4726349 upstream.
+commit f063ac6b55df03ed25996bdc84d9e1c50147cfa1 upstream.
 
-In jadard_prepare() a reset pulse is generated with the following
-statements (delays ommited for clarity):
+Disable pingpong dither in dpu_encoder_helper_phys_cleanup().
 
-    gpiod_set_value(jadard->reset, 1); --> Deassert reset
-    gpiod_set_value(jadard->reset, 0); --> Assert reset for 10ms
-    gpiod_set_value(jadard->reset, 1); --> Deassert reset
+This avoids the issue where an encoder unknowingly uses dither after
+reserving a pingpong block that was previously bound to an encoder that
+had enabled dither.
 
-However, specifying second argument of "0" to gpiod_set_value() means to
-deassert the GPIO, and "1" means to assert it. If the reset signal is
-defined as GPIO_ACTIVE_LOW in the DTS, the above statements will
-incorrectly generate the reset pulse (inverted) and leave it asserted
-(LOW) at the end of jadard_prepare().
-
-Fix reset behavior by inverting gpiod_set_value() second argument
-in jadard_prepare(). Also modify second argument to devm_gpiod_get()
-in jadard_dsi_probe() to assert the reset when probing.
-
-Do not modify it in jadard_unprepare() as it is already properly
-asserted with "1", which seems to be the intended behavior.
-
-Fixes: 6b818c533dd8 ("drm: panel: Add Jadard JD9365DA-H3 DSI panel")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20240927135306.857617-1-hugo@hugovil.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240927135306.857617-1-hugo@hugovil.com
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Closes: https://lore.kernel.org/all/jr7zbj5w7iq4apg3gofuvcwf4r2swzqjk7sshwcdjll4mn6ctt@l2n3qfpujg3q/
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: 3c128638a07d ("drm/msm/dpu: add support for dither block in display")
+Patchwork: https://patchwork.freedesktop.org/patch/636517/
+Link: https://lore.kernel.org/r/20250211-dither-disable-v1-1-ac2cb455f6b9@quicinc.com
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
-+++ b/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
-@@ -109,13 +109,13 @@ static int jadard_prepare(struct drm_pan
- 	if (jadard->desc->lp11_to_reset_delay_ms)
- 		msleep(jadard->desc->lp11_to_reset_delay_ms);
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -2125,6 +2125,9 @@ void dpu_encoder_helper_phys_cleanup(str
+ 		}
+ 	}
  
--	gpiod_set_value(jadard->reset, 1);
-+	gpiod_set_value(jadard->reset, 0);
- 	msleep(5);
- 
--	gpiod_set_value(jadard->reset, 0);
-+	gpiod_set_value(jadard->reset, 1);
- 	msleep(10);
- 
--	gpiod_set_value(jadard->reset, 1);
-+	gpiod_set_value(jadard->reset, 0);
- 	msleep(130);
- 
- 	ret = jadard->desc->init(jadard);
-@@ -1130,7 +1130,7 @@ static int jadard_dsi_probe(struct mipi_
- 	dsi->format = desc->format;
- 	dsi->lanes = desc->lanes;
- 
--	jadard->reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
-+	jadard->reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(jadard->reset)) {
- 		DRM_DEV_ERROR(&dsi->dev, "failed to get our reset GPIO\n");
- 		return PTR_ERR(jadard->reset);
++	if (phys_enc->hw_pp && phys_enc->hw_pp->ops.setup_dither)
++		phys_enc->hw_pp->ops.setup_dither(phys_enc->hw_pp, NULL);
++
+ 	/* reset the merge 3D HW block */
+ 	if (phys_enc->hw_pp && phys_enc->hw_pp->merge_3d) {
+ 		phys_enc->hw_pp->merge_3d->ops.setup_3d_mode(phys_enc->hw_pp->merge_3d,
 
 
