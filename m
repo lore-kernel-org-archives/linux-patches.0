@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC83117C21C;
-	Mon, 24 Feb 2025 14:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2A724C689;
+	Mon, 24 Feb 2025 14:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408862; cv=none; b=q9NrO/sEqAbSsxK0BYgVCIBBKWIa0Ck6p4ePN2dWJBOrxj8QBM5s86ZTZZd7JD4sDEF3bivtMMn0RInDCfEgN24aPF65O9heAVS+hAr7sw+DyOAFX04+rj1szYwMXTx7GgWdXzkqiHrpgK3K7KGufi+GH/UP756pJCFiLZQmLw0=
+	t=1740408865; cv=none; b=aLpjP3nBsItZgUmaS5Py8yi0MCjay2jssbUhbhxuzt+sfWSsBbwYLhwDbPibNzMxdS7FGCkDIogFYlNsZLvlyZQC3MmO7AfmjvTkFqvHF3swa1L50WkKM1x2EgLtMCeiSgG5oZmIYCh6lXSU+3sV+sfK9+qt9pVTpwjp1ULwcYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408862; c=relaxed/simple;
-	bh=Bg135oZRcWJ+J1LCFxJ1COiIsg/PX5zj3vPSFihlPgY=;
+	s=arc-20240116; t=1740408865; c=relaxed/simple;
+	bh=e37KHwi+ZSRYLImAhCMHixScSZtpB4l3Hw5fLqkqPRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a+R3dJ0HHbxDah4HcIwEEmoF76avJ4/OcGpiaxYL2RxZ9HUGu3XK4DPiblUwB3n57SVqjc8eXUHIC1xUEmZcAcfXalLN8OnFh+4lSXizogkjgBydlEuRU+hGUdFIHxML2eN9iI7ZcaaMyuQGccBpTqpEM51WLbaiXKgRBMBN2u0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kuv1z3Bc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rH2f+KSLK3wJHxSKk9XoY144/Mj9qP+3EGf4nRbrvwrmlr071Z6A3LmKCRJUejtE1jaL6cF0kz3Moh7aUm1xpgOgoJlWmUhBHKQTe4VQvEfFOqzbTNZNku3jP145y1r7opRqWOhaKFY01I8QQmrwCVt932Rh7xkf1FQMiwggyoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1wQcu2o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kuv1z3Bc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15547C4CED6;
-	Mon, 24 Feb 2025 14:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1wQcu2o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5049FC4CED6;
+	Mon, 24 Feb 2025 14:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408862;
-	bh=Bg135oZRcWJ+J1LCFxJ1COiIsg/PX5zj3vPSFihlPgY=;
+	s=korg; t=1740408865;
+	bh=e37KHwi+ZSRYLImAhCMHixScSZtpB4l3Hw5fLqkqPRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kuv1z3Bc75rZv3GCIAnpafzyLk3HxyN5YU64SZ/fKlhD/sDG9YOxcZfXXTEZBHfbS
-	 qN2LVEParnvRRhBtuS57mi1w/OnRSgmrpHCGn24i9c15v0ULD1cbqAJyhHi2OagKAH
-	 IK7RwL/4l1q6WkuyLms3XmUzhcmc2NOf8nIo6zyc=
+	b=m1wQcu2o5U5vQJbCFDRb7wUsFX3KwEXeuJA1djsJ/3gLog4F587MSqVzvaJMq7g7m
+	 lD5P9Veg5Jh5HXiTRd/T25p6peSpHMl3AIeHa5W/3ZfpZXhtyGdYPdO3WnJgBboNJR
+	 00vxOTK6m5JUdw79gbQqACGHNldFXeKELLb/wFcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Steev Klimaszewski <steev@kali.org>
-Subject: [PATCH 6.13 008/138] Bluetooth: qca: Fix poor RF performance for WCN6855
-Date: Mon, 24 Feb 2025 15:33:58 +0100
-Message-ID: <20250224142604.782381853@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 009/138] serial: sh-sci: Move runtime PM enable to sci_probe_single()
+Date: Mon, 24 Feb 2025 15:33:59 +0100
+Message-ID: <20250224142604.823545992@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -53,46 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit a2fad248947d702ed3dcb52b8377c1a3ae201e44 ]
+[ Upstream commit 239f11209e5f282e16f5241b99256e25dd0614b6 ]
 
-For WCN6855, board ID specific NVM needs to be downloaded once board ID
-is available, but the default NVM is always downloaded currently.
+Relocate the runtime PM enable operation to sci_probe_single(). This change
+prepares the codebase for upcoming fixes.
 
-The wrong NVM causes poor RF performance, and effects user experience
-for several types of laptop with WCN6855 on the market.
+While at it, replace the existing logic with a direct call to
+devm_pm_runtime_enable() and remove sci_cleanup_single(). The
+devm_pm_runtime_enable() function automatically handles disabling runtime
+PM during driver removal.
 
-Fix by downloading board ID specific NVM if board ID is available.
-
-Fixes: 095327fede00 ("Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6855")
-Cc: stable@vger.kernel.org # 6.4
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Steev Klimaszewski <steev@kali.org> #Thinkpad X13s
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250116182249.3828577-3-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 651dee03696e ("serial: sh-sci: Increment the runtime usage counter for the earlycon device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/tty/serial/sh-sci.c | 24 ++++++------------------
+ 1 file changed, 6 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 5cb1fd1a0c7b5..04d02c746ec0f 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -905,8 +905,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 				 "qca/msnv%02x.bin", rom_ver);
- 			break;
- 		case QCA_WCN6855:
--			snprintf(config.fwname, sizeof(config.fwname),
--				 "qca/hpnv%02x.bin", rom_ver);
-+			qca_read_fw_board_id(hdev, &boardid);
-+			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
-+						  "hpnv", soc_type, ver, rom_ver, boardid);
- 			break;
- 		case QCA_WCN7850:
- 			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
+diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
+index 0050d6253c05d..fece52c7f8976 100644
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -3057,10 +3057,6 @@ static int sci_init_single(struct platform_device *dev,
+ 		ret = sci_init_clocks(sci_port, &dev->dev);
+ 		if (ret < 0)
+ 			return ret;
+-
+-		port->dev = &dev->dev;
+-
+-		pm_runtime_enable(&dev->dev);
+ 	}
+ 
+ 	port->type		= p->type;
+@@ -3087,11 +3083,6 @@ static int sci_init_single(struct platform_device *dev,
+ 	return 0;
+ }
+ 
+-static void sci_cleanup_single(struct sci_port *port)
+-{
+-	pm_runtime_disable(port->port.dev);
+-}
+-
+ #if defined(CONFIG_SERIAL_SH_SCI_CONSOLE) || \
+     defined(CONFIG_SERIAL_SH_SCI_EARLYCON)
+ static void serial_console_putchar(struct uart_port *port, unsigned char ch)
+@@ -3261,8 +3252,6 @@ static void sci_remove(struct platform_device *dev)
+ 	sci_ports_in_use &= ~BIT(port->port.line);
+ 	uart_remove_one_port(&sci_uart_driver, &port->port);
+ 
+-	sci_cleanup_single(port);
+-
+ 	if (port->port.fifosize > 1)
+ 		device_remove_file(&dev->dev, &dev_attr_rx_fifo_trigger);
+ 	if (type == PORT_SCIFA || type == PORT_SCIFB || type == PORT_HSCIF)
+@@ -3426,6 +3415,11 @@ static int sci_probe_single(struct platform_device *dev,
+ 	if (ret)
+ 		return ret;
+ 
++	sciport->port.dev = &dev->dev;
++	ret = devm_pm_runtime_enable(&dev->dev);
++	if (ret)
++		return ret;
++
+ 	sciport->gpios = mctrl_gpio_init(&sciport->port, 0);
+ 	if (IS_ERR(sciport->gpios))
+ 		return PTR_ERR(sciport->gpios);
+@@ -3439,13 +3433,7 @@ static int sci_probe_single(struct platform_device *dev,
+ 		sciport->port.flags |= UPF_HARD_FLOW;
+ 	}
+ 
+-	ret = uart_add_one_port(&sci_uart_driver, &sciport->port);
+-	if (ret) {
+-		sci_cleanup_single(sciport);
+-		return ret;
+-	}
+-
+-	return 0;
++	return uart_add_one_port(&sci_uart_driver, &sciport->port);
+ }
+ 
+ static int sci_probe(struct platform_device *dev)
 -- 
 2.39.5
 
