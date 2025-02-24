@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6259D18A6BA;
-	Mon, 24 Feb 2025 14:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69661A2393;
+	Mon, 24 Feb 2025 14:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408512; cv=none; b=jmx1kIUcVPInHiJyC6k2JUSLeNmXiYIYpmTTJTmgWFWG/KeSo1UH0a9pZ2fS7PEzybwKrsZ5Lu8F3BVdkKGFe2pqEaFBG33rx89OpvJ3pRFpdt7zJBjUeE/nA75pd8fbBiz097OW+QrDEAMSBUCWD5TtBYkv5Q/V2jZmSXQtVuA=
+	t=1740408515; cv=none; b=LrA+kI+3i6nntPSmRLl44G0DiD+khTcexc0pyebdlz/OXmtyVGVcoxZPZGg5REhzKIG+vzPvFXzX8REHS6r3WHUYUMNqQAfF2rLjW+UwX9IRCqcp14+S8bfBZz/VX8umkn3itC0YuJAWY2l6QGDnoQvG5L44jtY7J9WkdBtSpqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408512; c=relaxed/simple;
-	bh=Ncziw3ojDIUUWFrdLaxk5Eu0o35Xw73ShBNigKvS4IE=;
+	s=arc-20240116; t=1740408515; c=relaxed/simple;
+	bh=NCE6Uo6+dww/CwtOiRL33XrP7UpE3BIA3O+2GYFhREY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S8h24nEQXVpK4KRCcauaz7WvcPuKs3fiIBxqGghgvyVxC+5gWr3kFYhcEjzmCEbZPdocLUYiUZNIB4kbkxeCMGJry8HiiyKw8TpuYM/G5JqY2Ruqy3EAIlZVqRwTh/U/XiE0g22cBx69Qe5jp7FH//8S9ISYHWn8RdktgC4nnd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7pkUFIv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EBwk0Nr8IljGqbYteZn+r5YMa5tYueziefV1/daalOPyt3RMcMK9X278dcJ/StHvZJnBlfV11ja9W8b+uaDTLCZXGhooR2ks5uiX9hoc1ABhLHlJPATLIcw1zVK+Et2v9fumaahVCvDdSmdYwzufIlrcsHcchskS1oinaVE196E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6GujHA3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7pkUFIv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B620AC4CEE9;
-	Mon, 24 Feb 2025 14:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6GujHA3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB47C4CED6;
+	Mon, 24 Feb 2025 14:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408512;
-	bh=Ncziw3ojDIUUWFrdLaxk5Eu0o35Xw73ShBNigKvS4IE=;
+	s=korg; t=1740408515;
+	bh=NCE6Uo6+dww/CwtOiRL33XrP7UpE3BIA3O+2GYFhREY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E7pkUFIvZ75uRRKpNLFzzdC1ojy2oY5z8SbzjlOTAuYEiU5lMEGmPJupGjNJOZuAE
-	 evQc8HmkJhkJJ+p9/fHxurukx3EIbE2Iu121ldMFfyohDTHXxXJJ2ICRhMjAWJcE4V
-	 QHMYj1mVs0aONm9ks2pTquX2ALa3Eqw1xcdIWlGk=
+	b=E6GujHA3Q9Qe5hSZVh6bjcfhlqL5+9vuJ4njky/sOTQAhPU2KomiZ8BHBM7n3Wlm2
+	 4rMtpw0JhceimWNW9/CY1jBqPb2WmT3FV4cP6ln0Tf9rnkWU00WpKOXSe2YzKOx+yl
+	 WJc6vnGdNiPWcuWEu+Yh/rL8xvktmXQ+zmBm6v+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <mrpre@163.com>,
+	Abel Wu <wuyun.abel@bytedance.com>,
 	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/154] bpf: Disable non stream socket for strparser
-Date: Mon, 24 Feb 2025 15:34:38 +0100
-Message-ID: <20250224142610.174186149@linuxfoundation.org>
+Subject: [PATCH 6.12 080/154] bpf: Fix deadlock when freeing cgroup storage
+Date: Mon, 24 Feb 2025 15:34:39 +0100
+Message-ID: <20250224142610.211889077@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -53,49 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <mrpre@163.com>
+From: Abel Wu <wuyun.abel@bytedance.com>
 
-[ Upstream commit 5459cce6bf49e72ee29be21865869c2ac42419f5 ]
+[ Upstream commit c78f4afbd962f43a3989f45f3ca04300252b19b5 ]
 
-Currently, only TCP supports strparser, but sockmap doesn't intercept
-non-TCP connections to attach strparser. For example, with UDP, although
-the read/write handlers are replaced, strparser is not executed due to
-the lack of a read_sock operation.
+The following commit
+bc235cdb423a ("bpf: Prevent deadlock from recursive bpf_task_storage_[get|delete]")
+first introduced deadlock prevention for fentry/fexit programs attaching
+on bpf_task_storage helpers. That commit also employed the logic in map
+free path in its v6 version.
 
-Furthermore, in udp_bpf_recvmsg(), it checks whether the psock has data,
-and if not, it falls back to the native UDP read interface, making
-UDP + strparser appear to read correctly. According to its commit history,
-this behavior is unexpected.
+Later bpf_cgrp_storage was first introduced in
+c4bcfb38a95e ("bpf: Implement cgroup storage available to non-cgroup-attached bpf progs")
+which faces the same issue as bpf_task_storage, instead of its busy
+counter, NULL was passed to bpf_local_storage_map_free() which opened
+a window to cause deadlock:
 
-Moreover, since UDP lacks the concept of streams, we intercept it directly.
+	<TASK>
+		(acquiring local_storage->lock)
+	_raw_spin_lock_irqsave+0x3d/0x50
+	bpf_local_storage_update+0xd1/0x460
+	bpf_cgrp_storage_get+0x109/0x130
+	bpf_prog_a4d4a370ba857314_cgrp_ptr+0x139/0x170
+	? __bpf_prog_enter_recur+0x16/0x80
+	bpf_trampoline_6442485186+0x43/0xa4
+	cgroup_storage_ptr+0x9/0x20
+		(holding local_storage->lock)
+	bpf_selem_unlink_storage_nolock.constprop.0+0x135/0x160
+	bpf_selem_unlink_storage+0x6f/0x110
+	bpf_local_storage_map_free+0xa2/0x110
+	bpf_map_free_deferred+0x5b/0x90
+	process_one_work+0x17c/0x390
+	worker_thread+0x251/0x360
+	kthread+0xd2/0x100
+	ret_from_fork+0x34/0x50
+	ret_from_fork_asm+0x1a/0x30
+	</TASK>
 
-Fixes: 1fa1fe8ff161 ("bpf, sockmap: Test shutdown() correctly exits epoll and recv()=0")
-Signed-off-by: Jiayuan Chen <mrpre@163.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://patch.msgid.link/20250122100917.49845-4-mrpre@163.com
+Progs:
+ - A: SEC("fentry/cgroup_storage_ptr")
+   - cgid (BPF_MAP_TYPE_HASH)
+	Record the id of the cgroup the current task belonging
+	to in this hash map, using the address of the cgroup
+	as the map key.
+   - cgrpa (BPF_MAP_TYPE_CGRP_STORAGE)
+	If current task is a kworker, lookup the above hash
+	map using function parameter @owner as the key to get
+	its corresponding cgroup id which is then used to get
+	a trusted pointer to the cgroup through
+	bpf_cgroup_from_id(). This trusted pointer can then
+	be passed to bpf_cgrp_storage_get() to finally trigger
+	the deadlock issue.
+ - B: SEC("tp_btf/sys_enter")
+   - cgrpb (BPF_MAP_TYPE_CGRP_STORAGE)
+	The only purpose of this prog is to fill Prog A's
+	hash map by calling bpf_cgrp_storage_get() for as
+	many userspace tasks as possible.
+
+Steps to reproduce:
+ - Run A;
+ - while (true) { Run B; Destroy B; }
+
+Fix this issue by passing its busy counter to the free procedure so
+it can be properly incremented before storage/smap locking.
+
+Fixes: c4bcfb38a95e ("bpf: Implement cgroup storage available to non-cgroup-attached bpf progs")
+Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/r/20241221061018.37717-1-wuyun.abel@bytedance.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/bpf/bpf_cgrp_storage.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 2f1be9baad057..82a14f131d00c 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -303,7 +303,10 @@ static int sock_map_link(struct bpf_map *map, struct sock *sk)
+diff --git a/kernel/bpf/bpf_cgrp_storage.c b/kernel/bpf/bpf_cgrp_storage.c
+index 28efd0a3f2200..6547fb7ac0dcb 100644
+--- a/kernel/bpf/bpf_cgrp_storage.c
++++ b/kernel/bpf/bpf_cgrp_storage.c
+@@ -154,7 +154,7 @@ static struct bpf_map *cgroup_storage_map_alloc(union bpf_attr *attr)
  
- 	write_lock_bh(&sk->sk_callback_lock);
- 	if (stream_parser && stream_verdict && !psock->saved_data_ready) {
--		ret = sk_psock_init_strp(sk, psock);
-+		if (sk_is_tcp(sk))
-+			ret = sk_psock_init_strp(sk, psock);
-+		else
-+			ret = -EOPNOTSUPP;
- 		if (ret) {
- 			write_unlock_bh(&sk->sk_callback_lock);
- 			sk_psock_put(sk, psock);
+ static void cgroup_storage_map_free(struct bpf_map *map)
+ {
+-	bpf_local_storage_map_free(map, &cgroup_cache, NULL);
++	bpf_local_storage_map_free(map, &cgroup_cache, &bpf_cgrp_storage_busy);
+ }
+ 
+ /* *gfp_flags* is a hidden argument provided by the verifier */
 -- 
 2.39.5
 
