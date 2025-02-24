@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7F01DFDE;
-	Mon, 24 Feb 2025 14:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14A04A33;
+	Mon, 24 Feb 2025 14:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740407917; cv=none; b=BQaJ4lrkq4FRqGsWRHRgJ1zdXCjatyPpywNludsPCxy901N+P0hB54Rw7FfF2S0JB9g6gyproYCFB9GNoaDp7f42BVJHvVxvg5KQzUL/Bd9TjNZjdrjlaZoCwdjAGk3F1ZBPGNqxN/HbxaG9pbZ4U01bHhzkdhDj1zLCFw+pIzA=
+	t=1740407921; cv=none; b=YvGIJFPqZRz10RNvgPMiKgLUmcL4W2mDO71MrGgUy3LdAkPa854E1P9RuxHSFHCO2xuKQqA/NukEtmPeCTbBXXy/SrwEGYXAQLbOfuAE69ummkHa/PnA3MNXI2sauT8mU+u5ayz6H9delO0VvU4beWsXwBLu7mliRb5EkxKBvGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740407917; c=relaxed/simple;
-	bh=seVyuiVNnBpDu5cYKwqJkrph/naTdwMHfK9HtxDLbZU=;
+	s=arc-20240116; t=1740407921; c=relaxed/simple;
+	bh=m9Ot6gPKOMKY//nu5cyto7sGXKOkMrr54vR5RPrG7LM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=shGSKg8dXSCZ/FDNIRtK4T9CVSA+pSDL+Ig+yUKYFxh0QHe+XxgvRLkaI+PCpdfNmWrCb6S4k8hCUvbfIBmSP0huwNwcYN1chZ8L1xAABX4ZFaGGQNanxTnA9xv85P1AaIKo3nUEhm8lLcnc2YYw93yUvbFpxl6orw/Fdue7LCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUraBksD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eYk3UhFGWlQcoHb+ua5xpXgmaPBIK91Xtbno8ow0VjNKsbcRrVSHKGRqDbazRtvzvtssRjUVSFRTIAopSFD1jEg8dW0pcIXrlTEeA46zZ3XRwW/QAqDy1C1lOcX9celt3UBoZT/XK3eye2u1ISwZVk7A+CjoCdCAkdu3a7/dBGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLEHfpp3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUraBksD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA77C4CED6;
-	Mon, 24 Feb 2025 14:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLEHfpp3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A1DC4CED6;
+	Mon, 24 Feb 2025 14:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740407916;
-	bh=seVyuiVNnBpDu5cYKwqJkrph/naTdwMHfK9HtxDLbZU=;
+	s=korg; t=1740407920;
+	bh=m9Ot6gPKOMKY//nu5cyto7sGXKOkMrr54vR5RPrG7LM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUraBksD4wIl9Rpto9Y4HWN2N4581/WKlfRq4pIfPhWDV/HnKPeIEa4LePlcbcn9r
-	 0bqoAeSQ7WqnTMp5BYj1MC0fFMAoE9lkjrzvfYBGkJAup8qa/iJGUF0rnAAA1icJMu
-	 O/SRxqyxS9a3s4J7caSfI1f8zGpryQhXB8pWLSVY=
+	b=eLEHfpp3ya9pJpRfJqXWqr0qCFURW8MSRMF8KYl0b9EtjHYBgd1MFm7MBao1KfMee
+	 1kjegfeJhQCOfxPkez0BshH5A7HX695usILGuZDTAkq68oh1OOMGczy42dj6i12iM/
+	 eW+7mqorkTYIsAD5ZVd92hULFpZgPQIpSFgVXy84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Gilbert <dgilbert@interlog.com>,
+	Igor Pylypiv <ipylypiv@google.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 046/140] scsi: core: Handle depopulation and restoration in progress
-Date: Mon, 24 Feb 2025 15:34:05 +0100
-Message-ID: <20250224142604.819212066@linuxfoundation.org>
+Subject: [PATCH 6.6 047/140] scsi: core: Do not retry I/Os during depopulation
+Date: Mon, 24 Feb 2025 15:34:06 +0100
+Message-ID: <20250224142604.860326394@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -51,61 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Gilbert <dgilbert@interlog.com>
+From: Igor Pylypiv <ipylypiv@google.com>
 
-[ Upstream commit 2bbeb8d12404cf0603f513fc33269ef9abfbb396 ]
+[ Upstream commit 9ff7c383b8ac0c482a1da7989f703406d78445c6 ]
 
-The default handling of the NOT READY sense key is to wait for the device
-to become ready. The "wait" is assumed to be relatively short. However
-there is a sub-class of NOT READY that have the "... in progress" phrase in
-their additional sense code and these can take much longer.  Following on
-from commit 505aa4b6a883 ("scsi: sd: Defer spinning up drive while SANITIZE
-is in progress") we now have element depopulation and restoration that can
-take a long time.  For example, over 24 hours for a 20 TB, 7200 rpm hard
-disk to depopulate 1 of its 20 elements.
+Fail I/Os instead of retry to prevent user space processes from being
+blocked on the I/O completion for several minutes.
 
-Add handling of ASC/ASCQ: 0x4,0x24 (depopulation in progress)
-and ASC/ASCQ: 0x4,0x25 (depopulation restoration in progress)
-to sd.c . The scsi_lib.c has incomplete handling of these
-two messages, so complete it.
+Retrying I/Os during "depopulation in progress" or "depopulation restore in
+progress" results in a continuous retry loop until the depopulation
+completes or until the I/O retry loop is aborted due to a timeout by the
+scsi_cmd_runtime_exceeced().
 
-Signed-off-by: Douglas Gilbert <dgilbert@interlog.com>
-Link: https://lore.kernel.org/r/20231015050650.131145-1-dgilbert@interlog.com
+Depopulation is slow and can take 24+ hours to complete on 20+ TB HDDs.
+Most I/Os in the depopulation retry loop end up taking several minutes
+before returning the failure to user space.
+
+Cc: stable@vger.kernel.org # 4.18.x: 2bbeb8d scsi: core: Handle depopulation and restoration in progress
+Cc: stable@vger.kernel.org # 4.18.x
+Fixes: e37c7d9a0341 ("scsi: core: sanitize++ in progress")
+Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
+Link: https://lore.kernel.org/r/20250131184408.859579-1-ipylypiv@google.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 9ff7c383b8ac ("scsi: core: Do not retry I/Os during depopulation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c | 1 +
- drivers/scsi/sd.c       | 4 ++++
- 2 files changed, 5 insertions(+)
+ drivers/scsi/scsi_lib.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index 97def2619ecf2..2f54e1a853099 100644
+index 2f54e1a853099..f026377f1cf1c 100644
 --- a/drivers/scsi/scsi_lib.c
 +++ b/drivers/scsi/scsi_lib.c
-@@ -775,6 +775,7 @@ static void scsi_io_completion_action(struct scsi_cmnd *cmd, int result)
+@@ -774,13 +774,18 @@ static void scsi_io_completion_action(struct scsi_cmnd *cmd, int result)
+ 				case 0x1a: /* start stop unit in progress */
  				case 0x1b: /* sanitize in progress */
  				case 0x1d: /* configuration in progress */
- 				case 0x24: /* depopulation in progress */
-+				case 0x25: /* depopulation restore in progress */
+-				case 0x24: /* depopulation in progress */
+-				case 0x25: /* depopulation restore in progress */
  					action = ACTION_DELAYED_RETRY;
  					break;
  				case 0x0a: /* ALUA state transition */
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index 2c627deedc1fa..fe694fec16b51 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -2309,6 +2309,10 @@ sd_spinup_disk(struct scsi_disk *sdkp)
- 				break;	/* unavailable */
- 			if (sshdr.asc == 4 && sshdr.ascq == 0x1b)
- 				break;	/* sanitize in progress */
-+			if (sshdr.asc == 4 && sshdr.ascq == 0x24)
-+				break;	/* depopulation in progress */
-+			if (sshdr.asc == 4 && sshdr.ascq == 0x25)
-+				break;	/* depopulation restoration in progress */
- 			/*
- 			 * Issue command to spin up drive when not ready
- 			 */
+ 					action = ACTION_DELAYED_REPREP;
+ 					break;
++				/*
++				 * Depopulation might take many hours,
++				 * thus it is not worthwhile to retry.
++				 */
++				case 0x24: /* depopulation in progress */
++				case 0x25: /* depopulation restore in progress */
++					fallthrough;
+ 				default:
+ 					action = ACTION_FAIL;
+ 					break;
 -- 
 2.39.5
 
