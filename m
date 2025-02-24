@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889CB38DD8;
-	Mon, 24 Feb 2025 15:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B51770E2;
+	Mon, 24 Feb 2025 15:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409226; cv=none; b=AYl+LmXILteZlEb4uiMnrKp3sbIxnMH+2uht2Ld4KTMcGn7G6v6sC6jXPTdLym4z55GeieS052KnCXmF+sjpRwbz5Nu9NVD8qwd8r0Sf7/HeFahFyajrNgoSvt0g0PMKkw3cZd10tDEGa1PKFDFKqcCLPXgtVJ+fOXxO/O3q2I4=
+	t=1740409229; cv=none; b=SqLdNtQ8pvCbCwvb+v3rdOm6G2v0P1EzFnQxSXnYfstK7len5aU4FefRYa0RYIYNObN4QMOqNMW0japmDKDuH0On6NVYofKDIgK2/OWsUgkEGAmgaJ8x8qWtlrVENNVubHWcD7J78Y3io04m+KzptHCH9+tZy5C/Vsw+2wDUhCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409226; c=relaxed/simple;
-	bh=MzOupoEHcZUS/0WBSe+jBhNymZ4JJnfZf4u1I0aOFS0=;
+	s=arc-20240116; t=1740409229; c=relaxed/simple;
+	bh=27llFbruzhkdYgeOi16+X4L8xWP+jSdk3xKOgu9crnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edXX8dW6epknX3Zwp23UFD2lvwoZ32ZSSFZ43VG/whEzwFgWvDQFjLlxaPC/c9O5BezA+iZQO7zX90b0KRNWq/WSBfXZ4L6VeZLstuhoLL7FS+6C6xhI6yEf1NNNh38tq5MfLYJy+MndziIdcW+N24bpd9GPsmfDhGKK0RZlKrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Emupblg8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R8GDRBNLAkkCUhvBzKcShmkRiLAXT845C5HuHorsheLvjx+BQXQjGK1iOKxwWF1nX90Gt6BaFEeKLha25Bx50BHykttlc0vpyyxX5NsxHNgLPJcpE4D7m1eAyFNU3wTWWaZ5VW34XsgEXDi5DqnnxzLRDYZ58QzUBfn0btt9uBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zE7ikeWR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Emupblg8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08620C4CED6;
-	Mon, 24 Feb 2025 15:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zE7ikeWR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D50C4CEE6;
+	Mon, 24 Feb 2025 15:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409226;
-	bh=MzOupoEHcZUS/0WBSe+jBhNymZ4JJnfZf4u1I0aOFS0=;
+	s=korg; t=1740409229;
+	bh=27llFbruzhkdYgeOi16+X4L8xWP+jSdk3xKOgu9crnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Emupblg8UjlFDwWy0/rTOFEZNGXLI4PhuvxcudDjFwarS7kJLrgUkgrnIGD1noFnj
-	 6VinxpJgmD1+mdwnwhmMiw3VinEioJSOupgWUE81dJE/MFefG//pkFas2MdKTivvES
-	 soBcFXijEp3GW/ufXaaQqBx4kwYUZb1Fi8l13WgM=
+	b=zE7ikeWRJiDUtMMuV9hsAekHZXPlo/LUUiQu4ylFeiYkfz3MH2CCxkooB7zIDHSSC
+	 4WJB19QEjtDJlYYCMX9jp+qJp76mBvMG/6qrL/LZ+6BPEVL+ZkV+ABjjHlKMv0rStw
+	 IQhKGgUZ/mJ7iKo6nh7b5NCP5HgNvzM01XNW7uJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.13 092/138] drm/i915/ddi: Fix HDMI port width programming in DDI_BUF_CTL
-Date: Mon, 24 Feb 2025 15:35:22 +0100
-Message-ID: <20250224142608.095127756@linuxfoundation.org>
+	Amiri Khalil <amiri.khalil@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.13 127/138] perf/x86/intel: Fix event constraints for LNC
+Date: Mon, 24 Feb 2025 15:35:57 +0100
+Message-ID: <20250224142609.462554382@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -51,47 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit 166ce267ae3f96e439d8ccc838e8ec4d8b4dab73 upstream.
+commit 782cffeec9ad96daa64ffb2d527b2a052fb02552 upstream.
 
-Fix the port width programming in the DDI_BUF_CTL register on MTLP+,
-where this had an off-by-one error.
+According to the latest event list, update the event constraint tables
+for Lion Cove core.
 
-Cc: <stable@vger.kernel.org> # v6.5+
-Fixes: b66a8abaa48a ("drm/i915/display/mtl: Fill port width in DDI_BUF_/TRANS_DDI_FUNC_/PORT_BUF_CTL for HDMI")
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250214142001.552916-3-imre.deak@intel.com
-(cherry picked from commit b2ecdabe46d23db275f94cd7c46ca414a144818b)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+The general rule (the event codes < 0x90 are restricted to counters
+0-3.) has been removed. There is no restriction for most of the
+performance monitoring events.
+
+Fixes: a932aa0e868f ("perf/x86: Add Lunar Lake and Arrow Lake support")
+Reported-by: Amiri Khalil <amiri.khalil@intel.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20250219141005.2446823-1-kan.liang@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_ddi.c |    2 +-
- drivers/gpu/drm/i915/i915_reg.h          |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/core.c |   20 +++++++-------------
+ arch/x86/events/intel/ds.c   |    2 +-
+ 2 files changed, 8 insertions(+), 14 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_ddi.c
-+++ b/drivers/gpu/drm/i915/display/intel_ddi.c
-@@ -3399,7 +3399,7 @@ static void intel_enable_ddi_hdmi(struct
- 		intel_de_rmw(dev_priv, XELPDP_PORT_BUF_CTL1(dev_priv, port),
- 			     XELPDP_PORT_WIDTH_MASK | XELPDP_PORT_REVERSAL, port_buf);
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -397,34 +397,28 @@ static struct event_constraint intel_lnc
+ 	METRIC_EVENT_CONSTRAINT(INTEL_TD_METRIC_FETCH_LAT, 6),
+ 	METRIC_EVENT_CONSTRAINT(INTEL_TD_METRIC_MEM_BOUND, 7),
  
--		buf_ctl |= DDI_PORT_WIDTH(lane_count);
-+		buf_ctl |= DDI_PORT_WIDTH(crtc_state->lane_count);
++	INTEL_EVENT_CONSTRAINT(0x20, 0xf),
++
++	INTEL_UEVENT_CONSTRAINT(0x012a, 0xf),
++	INTEL_UEVENT_CONSTRAINT(0x012b, 0xf),
+ 	INTEL_UEVENT_CONSTRAINT(0x0148, 0x4),
+ 	INTEL_UEVENT_CONSTRAINT(0x0175, 0x4),
  
- 		if (DISPLAY_VER(dev_priv) >= 20)
- 			buf_ctl |= XE2LPD_DDI_BUF_D2D_LINK_ENABLE;
---- a/drivers/gpu/drm/i915/i915_reg.h
-+++ b/drivers/gpu/drm/i915/i915_reg.h
-@@ -3917,7 +3917,7 @@ enum skl_power_gate {
- #define  DDI_BUF_IS_IDLE			(1 << 7)
- #define  DDI_BUF_CTL_TC_PHY_OWNERSHIP		REG_BIT(6)
- #define  DDI_A_4_LANES				(1 << 4)
--#define  DDI_PORT_WIDTH(width)			(((width) - 1) << 1)
-+#define  DDI_PORT_WIDTH(width)			(((width) == 3 ? 4 : ((width) - 1)) << 1)
- #define  DDI_PORT_WIDTH_MASK			(7 << 1)
- #define  DDI_PORT_WIDTH_SHIFT			1
- #define  DDI_INIT_DISPLAY_DETECTED		(1 << 0)
+ 	INTEL_EVENT_CONSTRAINT(0x2e, 0x3ff),
+ 	INTEL_EVENT_CONSTRAINT(0x3c, 0x3ff),
+-	/*
+-	 * Generally event codes < 0x90 are restricted to counters 0-3.
+-	 * The 0x2E and 0x3C are exception, which has no restriction.
+-	 */
+-	INTEL_EVENT_CONSTRAINT_RANGE(0x01, 0x8f, 0xf),
+ 
+-	INTEL_UEVENT_CONSTRAINT(0x01a3, 0xf),
+-	INTEL_UEVENT_CONSTRAINT(0x02a3, 0xf),
+ 	INTEL_UEVENT_CONSTRAINT(0x08a3, 0x4),
+ 	INTEL_UEVENT_CONSTRAINT(0x0ca3, 0x4),
+ 	INTEL_UEVENT_CONSTRAINT(0x04a4, 0x1),
+ 	INTEL_UEVENT_CONSTRAINT(0x08a4, 0x1),
+ 	INTEL_UEVENT_CONSTRAINT(0x10a4, 0x1),
+ 	INTEL_UEVENT_CONSTRAINT(0x01b1, 0x8),
++	INTEL_UEVENT_CONSTRAINT(0x01cd, 0x3fc),
+ 	INTEL_UEVENT_CONSTRAINT(0x02cd, 0x3),
+-	INTEL_EVENT_CONSTRAINT(0xce, 0x1),
+ 
+ 	INTEL_EVENT_CONSTRAINT_RANGE(0xd0, 0xdf, 0xf),
+-	/*
+-	 * Generally event codes >= 0x90 are likely to have no restrictions.
+-	 * The exception are defined as above.
+-	 */
+-	INTEL_EVENT_CONSTRAINT_RANGE(0x90, 0xfe, 0x3ff),
++
++	INTEL_UEVENT_CONSTRAINT(0x00e0, 0xf),
+ 
+ 	EVENT_CONSTRAINT_END
+ };
+--- a/arch/x86/events/intel/ds.c
++++ b/arch/x86/events/intel/ds.c
+@@ -1199,7 +1199,7 @@ struct event_constraint intel_lnc_pebs_e
+ 	INTEL_FLAGS_UEVENT_CONSTRAINT(0x100, 0x100000000ULL),	/* INST_RETIRED.PREC_DIST */
+ 	INTEL_FLAGS_UEVENT_CONSTRAINT(0x0400, 0x800000000ULL),
+ 
+-	INTEL_HYBRID_LDLAT_CONSTRAINT(0x1cd, 0x3ff),
++	INTEL_HYBRID_LDLAT_CONSTRAINT(0x1cd, 0x3fc),
+ 	INTEL_HYBRID_STLAT_CONSTRAINT(0x2cd, 0x3),
+ 	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x11d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_LOADS */
+ 	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x12d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_STORES */
 
 
