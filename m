@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E8D24889A;
-	Mon, 24 Feb 2025 14:49:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669D824889A;
+	Mon, 24 Feb 2025 14:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408579; cv=none; b=b9Acepb9MV8cm3Gg4ZTdSsJqYs6X2IINowYRPqrBzaJDCtgAslxUJgObkmt/NjHMt1WBTKYODDnYJiH9L9p4/dpelukVGWi1VVtm3XU9oQ0pgA9+K+1KU19bVPwL+agXVhgM7E8FHUjtYtiBQQYsm3BiFMvGRBfEhvjzi33p7TA=
+	t=1740408582; cv=none; b=CnhLR/O5N19NflYFuYHRLMAuu3+ThsvsCTU26AoNnOgWtmcM/jI0+hIv7pY8h7NNh/S1zcAW0DxipDgYYTrsFaLq6lLtpHU1I6HSDKmwLiZibXQqPO4VRiv+O+miPPMYjM0wWWllvSmq9QSkQvzaWEVaai3fI8gd4/l7lazG07o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408579; c=relaxed/simple;
-	bh=yWYYKPM3ydqFSbvymmiGgWqgPZUsAlAgZqQMCMcc9+I=;
+	s=arc-20240116; t=1740408582; c=relaxed/simple;
+	bh=vsV73hZ0o2Jo4qYRx1ifFGlZi6CNEDHEIXXLbP+E3VQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCFx6wBcTjZOBzGJEMPHXH2F7D8SYXEzqmRcgDFhOacKuhw/et9TTICb3MgXKICDj5I3kUSWPFPIdczsg05YhwpZRIHaJX57Nhb6WyplMo76hEjIpu5S1dDgpzlyjJLE5pcKN5CHy3RAWbKSpH6zTTzBLSX2/aUgEMs5PLdJAQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfazKz+S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q3+Q/757BuMuQWJQGDXihXhwUvFf3FGRVMtYm1SXxARjXAN0GzHbU0+w/Ml9/LFyzp+zjcXCRf0arZjPPpS6/wohW6ixOZOCej9Gc04drA2R7IkQLGz79mhETV5Kf7qWHsXyG906tdjpelcAb9CCX60cozlEsoUEwvLv4lRrEjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esF4bo7K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfazKz+S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624DCC4CED6;
-	Mon, 24 Feb 2025 14:49:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esF4bo7K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8301C4CED6;
+	Mon, 24 Feb 2025 14:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408578;
-	bh=yWYYKPM3ydqFSbvymmiGgWqgPZUsAlAgZqQMCMcc9+I=;
+	s=korg; t=1740408582;
+	bh=vsV73hZ0o2Jo4qYRx1ifFGlZi6CNEDHEIXXLbP+E3VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CfazKz+SQNoYbkgqt91ejaccTO8WCa7ha3wD1kkhvFvUdJpzJrSUsBRCUNZByqV7o
-	 oqmgBN539f8z9TtQFRRlWE3ptASnC9IfxYuNwdXRy1mz7Ct9c2TfHrWWJcfJv/XOW1
-	 zUxCrUPEu5furZ2JWJe4B5Je1E6Pm2jOFdzSrMvo=
+	b=esF4bo7KLw6LQTOa0t0kdBgCuZ1revtJtpSGXer3hYPVElkz3KTlWvEQcSwuOPylk
+	 HFItf+4aGPeBGT/0ccMBJodnt2EAxR2a4Nm2Al8wNql4o3APQOWvPulS7Mk0zNd8DF
+	 KgZ7684fXWrTiJ/xxZZNRMwU+mRJI/d3qaJkBC34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/154] drm/msm/dsi/phy: Do not overwite PHY_CMN_CLK_CFG1 when choosing bitclk source
-Date: Mon, 24 Feb 2025 15:34:58 +0100
-Message-ID: <20250224142610.940823600@linuxfoundation.org>
+Subject: [PATCH 6.12 100/154] nvme: tcp: Fix compilation warning with W=1
+Date: Mon, 24 Feb 2025 15:34:59 +0100
+Message-ID: <20250224142610.978720206@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -52,69 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 73f69c6be2a9f22c31c775ec03c6c286bfe12cfa ]
+[ Upstream commit cd513e0434c3e736c549bc99bf7982658b25114d ]
 
-PHY_CMN_CLK_CFG1 register has four fields being used in the driver: DSI
-clock divider, source of bitclk and two for enabling the DSI PHY PLL
-clocks.
+When compiling with W=1, a warning result for the function
+nvme_tcp_set_queue_io_cpu():
 
-dsi_7nm_set_usecase() sets only the source of bitclk, so should leave
-all other bits untouched.  Use newly introduced
-dsi_pll_cmn_clk_cfg1_update() to update respective bits without
-overwriting the rest.
+host/tcp.c:1578: warning: Function parameter or struct member 'queue'
+not described in 'nvme_tcp_set_queue_io_cpu'
+host/tcp.c:1578: warning: expecting prototype for Track the number of
+queues assigned to each cpu using a global per(). Prototype was for
+nvme_tcp_set_queue_io_cpu() instead
 
-While shuffling the code, define and use PHY_CMN_CLK_CFG1 bitfields to
-make the code more readable and obvious.
+Avoid this warning by using the regular comment format for the function
+nvme_tcp_set_queue_io_cpu() instead of the kdoc comment format.
 
-Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/637380/
-Link: https://lore.kernel.org/r/20250214-drm-msm-phy-pll-cfg-reg-v3-3-0943b850722c@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: 32193789878c ("nvme-tcp: Fix I/O queue cpu spreading for multiple controllers")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c             | 4 ++--
- drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml | 1 +
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/host/tcp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 388017db45d80..798168180c1ab 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -617,7 +617,6 @@ static int dsi_7nm_pll_restore_state(struct msm_dsi_phy *phy)
- static int dsi_7nm_set_usecase(struct msm_dsi_phy *phy)
- {
- 	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(phy->vco_hw);
--	void __iomem *base = phy->base;
- 	u32 data = 0x0;	/* internal PLL */
- 
- 	DBG("DSI PLL%d", pll_7nm->phy->id);
-@@ -636,7 +635,8 @@ static int dsi_7nm_set_usecase(struct msm_dsi_phy *phy)
- 	}
- 
- 	/* set PLL src */
--	writel(data << 2, base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-+	dsi_pll_cmn_clk_cfg1_update(pll_7nm, DSI_7nm_PHY_CMN_CLK_CFG1_BITCLK_SEL__MASK,
-+				    DSI_7nm_PHY_CMN_CLK_CFG1_BITCLK_SEL(data));
- 
- 	return 0;
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 8305d3c128074..34eb3dabdc8a6 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -1565,7 +1565,7 @@ static bool nvme_tcp_poll_queue(struct nvme_tcp_queue *queue)
+ 			  ctrl->io_queues[HCTX_TYPE_POLL];
  }
-diff --git a/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml b/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
-index cfaf78c028b13..35f7f40e405b7 100644
---- a/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
-+++ b/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
-@@ -16,6 +16,7 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
- 	<reg32 offset="0x00014" name="CLK_CFG1">
- 		<bitfield name="CLK_EN" pos="5" type="boolean"/>
- 		<bitfield name="CLK_EN_SEL" pos="4" type="boolean"/>
-+		<bitfield name="BITCLK_SEL" low="2" high="3" type="uint"/>
- 	</reg32>
- 	<reg32 offset="0x00018" name="GLBL_CTRL"/>
- 	<reg32 offset="0x0001c" name="RBUF_CTRL"/>
+ 
+-/**
++/*
+  * Track the number of queues assigned to each cpu using a global per-cpu
+  * counter and select the least used cpu from the mq_map. Our goal is to spread
+  * different controllers I/O threads across different cpu cores.
 -- 
 2.39.5
 
