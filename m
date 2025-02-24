@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA202747B;
-	Mon, 24 Feb 2025 15:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DEA1607B7;
+	Mon, 24 Feb 2025 15:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409245; cv=none; b=e3e4MCMUnoBlXnRryDjktIBGQNCilBK6Px53h2O2BfE3TDnWVVDQuqhpoWmM8O3f/3on5PqHdBOKFuiqqY9+xcPXd6W7xZUbygX5KniWkjnlwj5Idug79GgqSSkunM3Izb0p4qNIqhuu8i2CwrwO1ZkV4DY8R3/o1S/o6g3P4qQ=
+	t=1740409249; cv=none; b=a4atAuQrwMwMNueF5uPRJDBdYYzOWt6wXupVq2/eKK1yHaXKAG9z8ME2omqvdEVHQJuh1/odGnOVZzsSiDL24mf6Q4F4cvS9fEDubFvPmv16kI8u/ZoqOKgb2ASQlltcQpU4mXamECZzvPQlXVypuHnYhepMI/47fjmD1A0n3Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409245; c=relaxed/simple;
-	bh=hRpCyBx08YAWDBjBehNRezchc+RpafUCUH3nezJ/wKE=;
+	s=arc-20240116; t=1740409249; c=relaxed/simple;
+	bh=0bTxKVeRCBw0jMKZCSVBqUZgJWtFE1BQjLuZ66YL7O4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kt545Fw/uNhkSs5MXpWheCoVmFq+RM39d8UmM5ODDAQXfjz2gH0QtHRJZTNm8YYWceIIKWNIpuDcY++ATK3TxNyWiojfImKvTKj5NkpxZbHkrkP56TaYdi2BdT78gEn2I1PYSYeAvJeBqjl8cO5iOycJEXkq8Es8Uhy212vssNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDYEpZl3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KrlJVLGzMpBT5BiCEiUiD2zVLoK60NMv4p2DmjSsjtOGmKK/UczOnv2D5seUOUegupUh2LTnyLjiMB8+1JWSns9mGlx5i/jwuCo/dDWWc3itRJySoCtUp8N4biIVfZKUe0CvDwno1BUzHj7JpAHxCofxPkgXDVYvOHiizbY9j8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STG15ML5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDYEpZl3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5AFC4CED6;
-	Mon, 24 Feb 2025 15:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STG15ML5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F050C4CED6;
+	Mon, 24 Feb 2025 15:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409245;
-	bh=hRpCyBx08YAWDBjBehNRezchc+RpafUCUH3nezJ/wKE=;
+	s=korg; t=1740409249;
+	bh=0bTxKVeRCBw0jMKZCSVBqUZgJWtFE1BQjLuZ66YL7O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RDYEpZl3ICJnWn0EL4IYrYJrt1Axj96brOy+LCo2zPjcI4EaHcnYb5XBVxD+g0ubP
-	 mGrZDBhhvEMxTSwATbDOt7UB+joYNUndkc0EEbT0bdDxi+gevR5EATJvzJ6Bb/KkAP
-	 Uein3O0H0/9ZX8Nufz3cwQcdg+W6BBcstxgIzN+w=
+	b=STG15ML5ObzuaR53JIjWXuj3q7vkNLR6t5DOoCtv2LTgKfsSJxUEhbGOtteopPqE1
+	 FQNlfMWFyBmThFQWv0dXiM0e8+0Lwae+3LwZFVnflCEv/YaHG+05cnnDzJJw7klgYj
+	 eEje4Hyt1SjBDg2m+5rjsUBZdeX2CD3E18Ek5kyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.13 129/138] smb: client: Add check for next_buffer in receive_encrypted_standard()
-Date: Mon, 24 Feb 2025 15:35:59 +0100
-Message-ID: <20250224142609.540647282@linuxfoundation.org>
+	Komal Bajaj <quic_kbajaj@quicinc.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	stable@kernel.org
+Subject: [PATCH 6.13 130/138] EDAC/qcom: Correct interrupt enable register configuration
+Date: Mon, 24 Feb 2025 15:36:00 +0100
+Message-ID: <20250224142609.579025385@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -50,34 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Komal Bajaj <quic_kbajaj@quicinc.com>
 
-commit 860ca5e50f73c2a1cef7eefc9d39d04e275417f7 upstream.
+commit c158647c107358bf1be579f98e4bb705c1953292 upstream.
 
-Add check for the return value of cifs_buf_get() and cifs_small_buf_get()
-in receive_encrypted_standard() to prevent null pointer dereference.
+The previous implementation incorrectly configured the cmn_interrupt_2_enable
+register for interrupt handling. Using cmn_interrupt_2_enable to configure
+Tag, Data RAM ECC interrupts would lead to issues like double handling of the
+interrupts (EL1 and EL3) as cmn_interrupt_2_enable is meant to be configured
+for interrupts which needs to be handled by EL3.
 
-Fixes: eec04ea11969 ("smb: client: fix OOB in receive_encrypted_standard()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+EL1 LLCC EDAC driver needs to use cmn_interrupt_0_enable register to configure
+Tag, Data RAM ECC interrupts instead of cmn_interrupt_2_enable.
+
+Fixes: 27450653f1db ("drivers: edac: Add EDAC driver support for QCOM SoCs")
+Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20241119064608.12326-1-quic_kbajaj@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/edac/qcom_edac.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4964,6 +4964,10 @@ one_more:
- 			next_buffer = (char *)cifs_buf_get();
- 		else
- 			next_buffer = (char *)cifs_small_buf_get();
-+		if (!next_buffer) {
-+			cifs_server_dbg(VFS, "No memory for (large) SMB response\n");
-+			return -1;
-+		}
- 		memcpy(next_buffer, buf + next_cmd, pdu_length - next_cmd);
- 	}
+--- a/drivers/edac/qcom_edac.c
++++ b/drivers/edac/qcom_edac.c
+@@ -95,7 +95,7 @@ static int qcom_llcc_core_setup(struct l
+ 	 * Configure interrupt enable registers such that Tag, Data RAM related
+ 	 * interrupts are propagated to interrupt controller for servicing
+ 	 */
+-	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_2_enable,
++	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_0_enable,
+ 				 TRP0_INTERRUPT_ENABLE,
+ 				 TRP0_INTERRUPT_ENABLE);
+ 	if (ret)
+@@ -113,7 +113,7 @@ static int qcom_llcc_core_setup(struct l
+ 	if (ret)
+ 		return ret;
  
+-	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_2_enable,
++	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_0_enable,
+ 				 DRP0_INTERRUPT_ENABLE,
+ 				 DRP0_INTERRUPT_ENABLE);
+ 	if (ret)
 
 
