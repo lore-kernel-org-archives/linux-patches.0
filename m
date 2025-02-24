@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15B0254855;
-	Mon, 24 Feb 2025 14:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C09217C21C;
+	Mon, 24 Feb 2025 14:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740407983; cv=none; b=PgTRHpQIFzJsEamhICmCXeGze8NTjFSZL+WC+r6nHzs0gpmavVPZHUB4aAAC4qecrN0VqbisJXfeezI50bu3XrVPnHhojv9FrXN+erSGyJkXhrBYg7GGqoK3SUHwBMN1MNKcwH1RI2VExbN6xbkFc4Y9plI2oXszxpoHfTFkCBo=
+	t=1740407987; cv=none; b=YpBwUsgUxQqK/qGv9EhCDFBN/XYqd5AQn3nvh0je7d085Y02ImBbUY/xdrC7i1+U1nQ1F1Tb/keUbuJyogL1pM5PDHFGzBtAKXNXll8J3LDubUDTMNHkiM352wSjtMDIr6k+zu54oyhWiSF+P2IYqoZM2VJPe/p/hO9Ey/c89PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740407983; c=relaxed/simple;
-	bh=xpGehIMNHL5StDJPfORy0/7nOfPzqPSXQNQlE33k9yE=;
+	s=arc-20240116; t=1740407987; c=relaxed/simple;
+	bh=7GRIizgmyjvCu2zvm8kLLEEGxMB4SDns59B2MSinCMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EdFbXmUhuEpjZdfOCdqlOwgDwcUkQRWPOO8Zwr9n9MqVu2itsqwfk0iMOZUY1jwescGfdHMIKZoBvKyu6ssPVq+MxZ7IUwy49BJ5lG/4FY1FkSV/f2fCKOxK5eJk6LPDxBrehUDDK155sZpDc8G+DrHYHaw83ieksCsTUyBSjkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Um0NK8pW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dr8gVWgfu1/KpQz5xmqwBMFYPOZHHgIaGzzxF6yRmOmwKikno+rhGjRRNuxYJr78KEuSrHpqNbPTWysi92a6Qg4N6/sJjEjRiiEMLXgoFkhsC9lTW7NZ3TAueubLBXSSCxE/3rJ1b36rxaKLzZjqZQn3oq1f9A1C58uiO1IqCFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMUI8rtE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Um0NK8pW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484C4C4CED6;
-	Mon, 24 Feb 2025 14:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMUI8rtE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE56FC4CED6;
+	Mon, 24 Feb 2025 14:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740407982;
-	bh=xpGehIMNHL5StDJPfORy0/7nOfPzqPSXQNQlE33k9yE=;
+	s=korg; t=1740407986;
+	bh=7GRIizgmyjvCu2zvm8kLLEEGxMB4SDns59B2MSinCMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Um0NK8pWeQY9lA7qodWOb20FjGWa1Wpu1BTf/wYnpTuShOqA+X0iXDEr96NTUa//N
-	 SXzMEQpxrBHbokOesLWU8PK24j5uI9/G374VCpmdjkgLVgBQSlabm0qhrU4hQ4uNFx
-	 QQwYbKpSUcfS6ZdxSCJqLkZ53pcWdVkyv0FKzfV0=
+	b=DMUI8rtEc/zGviah9SsdWTnlYG5cYzIXos/PfQqRyJQQgFtICHHgTGXiZxVwH1L9r
+	 dyLoLKlokKqNHRcXMn9dqDww62nPyp1l0ymPBFIZTqAnoi04hEKaHD8DL/B4BOGIaT
+	 4MgUYgakaCGziALs2vzwnKlX93/sCW6DUZOsxBOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yu Kuai <yukuai3@huawei.com>,
 	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/140] md/md-bitmap: add sync_size into struct md_bitmap_stats
-Date: Mon, 24 Feb 2025 15:33:52 +0100
-Message-ID: <20250224142604.309617146@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 6.6 034/140] md/md-bitmap: Synchronize bitmap_get_stats() with bitmap lifetime
+Date: Mon, 24 Feb 2025 15:33:53 +0100
+Message-ID: <20250224142604.349402513@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -53,126 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit ec6bb299c7c3dd4ca1724d13d5f5fae3ee54fc65 ]
+[ Upstream commit 8d28d0ddb986f56920ac97ae704cc3340a699a30 ]
 
-To avoid dereferencing bitmap directly in md-cluster to prepare
-inventing a new bitmap.
+After commit ec6bb299c7c3 ("md/md-bitmap: add 'sync_size' into struct
+md_bitmap_stats"), following panic is reported:
 
-BTW, also fix following checkpatch warnings:
+Oops: general protection fault, probably for non-canonical address
+RIP: 0010:bitmap_get_stats+0x2b/0xa0
+Call Trace:
+ <TASK>
+ md_seq_show+0x2d2/0x5b0
+ seq_read_iter+0x2b9/0x470
+ seq_read+0x12f/0x180
+ proc_reg_read+0x57/0xb0
+ vfs_read+0xf6/0x380
+ ksys_read+0x6c/0xf0
+ do_syscall_64+0x82/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-WARNING: Deprecated use of 'kmap_atomic', prefer 'kmap_local_page' instead
-WARNING: Deprecated use of 'kunmap_atomic', prefer 'kunmap_local' instead
+Root cause is that bitmap_get_stats() can be called at anytime if mddev
+is still there, even if bitmap is destroyed, or not fully initialized.
+Deferenceing bitmap in this case can crash the kernel. Meanwhile, the
+above commit start to deferencing bitmap->storage, make the problem
+easier to trigger.
 
+Fix the problem by protecting bitmap_get_stats() with bitmap_info.mutex.
+
+Cc: stable@vger.kernel.org # v6.12+
+Fixes: 32a7627cf3a3 ("[PATCH] md: optimised resync using Bitmap based intent logging")
+Reported-and-tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Closes: https://lore.kernel.org/linux-raid/ca3a91a2-50ae-4f68-b317-abd9889f3907@oracle.com/T/#m6e5086c95201135e4941fe38f9efa76daf9666c5
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240826074452.1490072-7-yukuai1@huaweicloud.com
+Link: https://lore.kernel.org/r/20250124092055.4050195-1-yukuai1@huaweicloud.com
 Signed-off-by: Song Liu <song@kernel.org>
-Stable-dep-of: 8d28d0ddb986 ("md/md-bitmap: Synchronize bitmap_get_stats() with bitmap lifetime")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c  |  6 ++++++
- drivers/md/md-bitmap.h  |  1 +
- drivers/md/md-cluster.c | 34 ++++++++++++++++++++--------------
- 3 files changed, 27 insertions(+), 14 deletions(-)
+ drivers/md/md-bitmap.c | 5 ++++-
+ drivers/md/md.c        | 5 +++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index f7b02d87a6da7..80b0cd7b88995 100644
+index 80b0cd7b88995..deb40a8ba3999 100644
 --- a/drivers/md/md-bitmap.c
 +++ b/drivers/md/md-bitmap.c
-@@ -2115,10 +2115,15 @@ EXPORT_SYMBOL_GPL(md_bitmap_copy_from_slot);
- int md_bitmap_get_stats(struct bitmap *bitmap, struct md_bitmap_stats *stats)
- {
- 	struct bitmap_counts *counts;
-+	bitmap_super_t *sb;
+@@ -2119,7 +2119,10 @@ int md_bitmap_get_stats(struct bitmap *bitmap, struct md_bitmap_stats *stats)
  
  	if (!bitmap)
  		return -ENOENT;
+-
++	if (bitmap->mddev->bitmap_info.external)
++		return -ENOENT;
++	if (!bitmap->storage.sb_page) /* no superblock */
++		return -EINVAL;
+ 	sb = kmap_local_page(bitmap->storage.sb_page);
+ 	stats->sync_size = le64_to_cpu(sb->sync_size);
+ 	kunmap_local(sb);
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index b73649fd8e039..534c4efd935f6 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -8327,6 +8327,10 @@ static int md_seq_show(struct seq_file *seq, void *v)
+ 		return 0;
  
-+	sb = kmap_local_page(bitmap->storage.sb_page);
-+	stats->sync_size = le64_to_cpu(sb->sync_size);
-+	kunmap_local(sb);
+ 	spin_unlock(&all_mddevs_lock);
 +
- 	counts = &bitmap->counts;
- 	stats->missing_pages = counts->missing_pages;
- 	stats->pages = counts->pages;
-@@ -2126,6 +2131,7 @@ int md_bitmap_get_stats(struct bitmap *bitmap, struct md_bitmap_stats *stats)
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(md_bitmap_get_stats);
- 
- int md_bitmap_resize(struct bitmap *bitmap, sector_t blocks,
- 		  int chunksize, int init)
-diff --git a/drivers/md/md-bitmap.h b/drivers/md/md-bitmap.h
-index 60b86ee939081..840efd1b8a01c 100644
---- a/drivers/md/md-bitmap.h
-+++ b/drivers/md/md-bitmap.h
-@@ -236,6 +236,7 @@ struct bitmap {
- 
- struct md_bitmap_stats {
- 	unsigned long	missing_pages;
-+	unsigned long	sync_size;
- 	unsigned long	pages;
- 	struct file	*file;
- };
-diff --git a/drivers/md/md-cluster.c b/drivers/md/md-cluster.c
-index ca4d3a8d5dd76..6a89f6b5d64f9 100644
---- a/drivers/md/md-cluster.c
-+++ b/drivers/md/md-cluster.c
-@@ -1190,18 +1190,21 @@ static int resize_bitmaps(struct mddev *mddev, sector_t newsize, sector_t oldsiz
-  */
- static int cluster_check_sync_size(struct mddev *mddev)
- {
--	int i, rv;
--	bitmap_super_t *sb;
--	unsigned long my_sync_size, sync_size = 0;
--	int node_num = mddev->bitmap_info.nodes;
- 	int current_slot = md_cluster_ops->slot_number(mddev);
-+	int node_num = mddev->bitmap_info.nodes;
- 	struct bitmap *bitmap = mddev->bitmap;
--	char str[64];
- 	struct dlm_lock_resource *bm_lockres;
-+	struct md_bitmap_stats stats;
-+	unsigned long sync_size = 0;
-+	unsigned long my_sync_size;
-+	char str[64];
-+	int i, rv;
- 
--	sb = kmap_atomic(bitmap->storage.sb_page);
--	my_sync_size = le64_to_cpu(sb->sync_size);
--	kunmap_atomic(sb);
-+	rv = md_bitmap_get_stats(bitmap, &stats);
-+	if (rv)
-+		return rv;
++	/* prevent bitmap to be freed after checking */
++	mutex_lock(&mddev->bitmap_info.mutex);
 +
-+	my_sync_size = stats.sync_size;
- 
- 	for (i = 0; i < node_num; i++) {
- 		if (i == current_slot)
-@@ -1230,15 +1233,18 @@ static int cluster_check_sync_size(struct mddev *mddev)
- 			md_bitmap_update_sb(bitmap);
- 		lockres_free(bm_lockres);
- 
--		sb = kmap_atomic(bitmap->storage.sb_page);
--		if (sync_size == 0)
--			sync_size = le64_to_cpu(sb->sync_size);
--		else if (sync_size != le64_to_cpu(sb->sync_size)) {
--			kunmap_atomic(sb);
-+		rv = md_bitmap_get_stats(bitmap, &stats);
-+		if (rv) {
-+			md_bitmap_free(bitmap);
-+			return rv;
-+		}
-+
-+		if (sync_size == 0) {
-+			sync_size = stats.sync_size;
-+		} else if (sync_size != stats.sync_size) {
- 			md_bitmap_free(bitmap);
- 			return -1;
- 		}
--		kunmap_atomic(sb);
- 		md_bitmap_free(bitmap);
+ 	spin_lock(&mddev->lock);
+ 	if (mddev->pers || mddev->raid_disks || !list_empty(&mddev->disks)) {
+ 		seq_printf(seq, "%s : %sactive", mdname(mddev),
+@@ -8397,6 +8401,7 @@ static int md_seq_show(struct seq_file *seq, void *v)
+ 		seq_printf(seq, "\n");
  	}
- 
+ 	spin_unlock(&mddev->lock);
++	mutex_unlock(&mddev->bitmap_info.mutex);
+ 	spin_lock(&all_mddevs_lock);
+ 	if (atomic_dec_and_test(&mddev->active))
+ 		__mddev_put(mddev);
 -- 
 2.39.5
 
