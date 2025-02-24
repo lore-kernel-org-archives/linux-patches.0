@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3ED155308;
-	Mon, 24 Feb 2025 15:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889CB38DD8;
+	Mon, 24 Feb 2025 15:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409223; cv=none; b=JUWifCEowX7fr8ByGa8vIJx8qs19W2r2gRF9St9+kDh+zr38bYDMPF10e4Y1HdzWU02EETbpsm11O76qZ3Mc99N7ZIrwjIzisCkJD0bIhRdlQ9Vod/JGccf7Sl5iGeMnYxlAIrNa8ZWdkwDFPte+tDN6AlrqIM6XVB7KdHRuPCA=
+	t=1740409226; cv=none; b=AYl+LmXILteZlEb4uiMnrKp3sbIxnMH+2uht2Ld4KTMcGn7G6v6sC6jXPTdLym4z55GeieS052KnCXmF+sjpRwbz5Nu9NVD8qwd8r0Sf7/HeFahFyajrNgoSvt0g0PMKkw3cZd10tDEGa1PKFDFKqcCLPXgtVJ+fOXxO/O3q2I4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409223; c=relaxed/simple;
-	bh=IprL1EtaUCXKWP/+TgFT+IUQeVEjr+rbGv6gB5TI/8Y=;
+	s=arc-20240116; t=1740409226; c=relaxed/simple;
+	bh=MzOupoEHcZUS/0WBSe+jBhNymZ4JJnfZf4u1I0aOFS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z8BYr1Oo2eRCh4/vb1Dp428ms4aJVcnst/gt6HmJ7hgE4YLgHj9/7NVKUuTV89+MjZyi3RWzsio6tOQUzxAMl7WgMFOIc/cLkwREP3GYxmtkHunv3QFbqJIG8IHZbxQWkCN3X8FaUf6nrkp1Yb4EhJA78Gjv+0qND3HwuJnUE+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlD+AEyd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=edXX8dW6epknX3Zwp23UFD2lvwoZ32ZSSFZ43VG/whEzwFgWvDQFjLlxaPC/c9O5BezA+iZQO7zX90b0KRNWq/WSBfXZ4L6VeZLstuhoLL7FS+6C6xhI6yEf1NNNh38tq5MfLYJy+MndziIdcW+N24bpd9GPsmfDhGKK0RZlKrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Emupblg8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlD+AEyd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D39C4CED6;
-	Mon, 24 Feb 2025 15:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Emupblg8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08620C4CED6;
+	Mon, 24 Feb 2025 15:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409223;
-	bh=IprL1EtaUCXKWP/+TgFT+IUQeVEjr+rbGv6gB5TI/8Y=;
+	s=korg; t=1740409226;
+	bh=MzOupoEHcZUS/0WBSe+jBhNymZ4JJnfZf4u1I0aOFS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xlD+AEyddYFiXj/CA3sWETShKQFxEy6QUKw1D637YL5vzcBz6kjdkr/A158q/dk1H
-	 DouDT7MP5ailJN/NidA3Vbp4IznJI6ahw2+cJnn9Va1Fe9+NqoVgngio2XCorWpFW/
-	 koTKMJSRdf9WHcnjCjfKKuP9f+gkRoGFr0PQIJAE=
+	b=Emupblg8UjlFDwWy0/rTOFEZNGXLI4PhuvxcudDjFwarS7kJLrgUkgrnIGD1noFnj
+	 6VinxpJgmD1+mdwnwhmMiw3VinEioJSOupgWUE81dJE/MFefG//pkFas2MdKTivvES
+	 soBcFXijEp3GW/ufXaaQqBx4kwYUZb1Fi8l13WgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 101/138] mm/migrate_device: dont add folio to be freed to LRU in migrate_device_finalize()
-Date: Mon, 24 Feb 2025 15:35:31 +0100
-Message-ID: <20250224142608.448593303@linuxfoundation.org>
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.13 092/138] drm/i915/ddi: Fix HDMI port width programming in DDI_BUF_CTL
+Date: Mon, 24 Feb 2025 15:35:22 +0100
+Message-ID: <20250224142608.095127756@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -47,119 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit 41cddf83d8b00f29fd105e7a0777366edc69a5cf upstream.
+commit 166ce267ae3f96e439d8ccc838e8ec4d8b4dab73 upstream.
 
-If migration succeeded, we called
-folio_migrate_flags()->mem_cgroup_migrate() to migrate the memcg from the
-old to the new folio.  This will set memcg_data of the old folio to 0.
+Fix the port width programming in the DDI_BUF_CTL register on MTLP+,
+where this had an off-by-one error.
 
-Similarly, if migration failed, memcg_data of the dst folio is left unset.
-
-If we call folio_putback_lru() on such folios (memcg_data == 0), we will
-add the folio to be freed to the LRU, making memcg code unhappy.  Running
-the hmm selftests:
-
-  # ./hmm-tests
-  ...
-  #  RUN           hmm.hmm_device_private.migrate ...
-  [  102.078007][T14893] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x7ff27d200 pfn:0x13cc00
-  [  102.079974][T14893] anon flags: 0x17ff00000020018(uptodate|dirty|swapbacked|node=0|zone=2|lastcpupid=0x7ff)
-  [  102.082037][T14893] raw: 017ff00000020018 dead000000000100 dead000000000122 ffff8881353896c9
-  [  102.083687][T14893] raw: 00000007ff27d200 0000000000000000 00000001ffffffff 0000000000000000
-  [  102.085331][T14893] page dumped because: VM_WARN_ON_ONCE_FOLIO(!memcg && !mem_cgroup_disabled())
-  [  102.087230][T14893] ------------[ cut here ]------------
-  [  102.088279][T14893] WARNING: CPU: 0 PID: 14893 at ./include/linux/memcontrol.h:726 folio_lruvec_lock_irqsave+0x10e/0x170
-  [  102.090478][T14893] Modules linked in:
-  [  102.091244][T14893] CPU: 0 UID: 0 PID: 14893 Comm: hmm-tests Not tainted 6.13.0-09623-g6c216bc522fd #151
-  [  102.093089][T14893] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-2.fc40 04/01/2014
-  [  102.094848][T14893] RIP: 0010:folio_lruvec_lock_irqsave+0x10e/0x170
-  [  102.096104][T14893] Code: ...
-  [  102.099908][T14893] RSP: 0018:ffffc900236c37b0 EFLAGS: 00010293
-  [  102.101152][T14893] RAX: 0000000000000000 RBX: ffffea0004f30000 RCX: ffffffff8183f426
-  [  102.102684][T14893] RDX: ffff8881063cb880 RSI: ffffffff81b8117f RDI: ffff8881063cb880
-  [  102.104227][T14893] RBP: 0000000000000000 R08: 0000000000000005 R09: 0000000000000000
-  [  102.105757][T14893] R10: 0000000000000001 R11: 0000000000000002 R12: ffffc900236c37d8
-  [  102.107296][T14893] R13: ffff888277a2bcb0 R14: 000000000000001f R15: 0000000000000000
-  [  102.108830][T14893] FS:  00007ff27dbdd740(0000) GS:ffff888277a00000(0000) knlGS:0000000000000000
-  [  102.110643][T14893] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [  102.111924][T14893] CR2: 00007ff27d400000 CR3: 000000010866e000 CR4: 0000000000750ef0
-  [  102.113478][T14893] PKRU: 55555554
-  [  102.114172][T14893] Call Trace:
-  [  102.114805][T14893]  <TASK>
-  [  102.115397][T14893]  ? folio_lruvec_lock_irqsave+0x10e/0x170
-  [  102.116547][T14893]  ? __warn.cold+0x110/0x210
-  [  102.117461][T14893]  ? folio_lruvec_lock_irqsave+0x10e/0x170
-  [  102.118667][T14893]  ? report_bug+0x1b9/0x320
-  [  102.119571][T14893]  ? handle_bug+0x54/0x90
-  [  102.120494][T14893]  ? exc_invalid_op+0x17/0x50
-  [  102.121433][T14893]  ? asm_exc_invalid_op+0x1a/0x20
-  [  102.122435][T14893]  ? __wake_up_klogd.part.0+0x76/0xd0
-  [  102.123506][T14893]  ? dump_page+0x4f/0x60
-  [  102.124352][T14893]  ? folio_lruvec_lock_irqsave+0x10e/0x170
-  [  102.125500][T14893]  folio_batch_move_lru+0xd4/0x200
-  [  102.126577][T14893]  ? __pfx_lru_add+0x10/0x10
-  [  102.127505][T14893]  __folio_batch_add_and_move+0x391/0x720
-  [  102.128633][T14893]  ? __pfx_lru_add+0x10/0x10
-  [  102.129550][T14893]  folio_putback_lru+0x16/0x80
-  [  102.130564][T14893]  migrate_device_finalize+0x9b/0x530
-  [  102.131640][T14893]  dmirror_migrate_to_device.constprop.0+0x7c5/0xad0
-  [  102.133047][T14893]  dmirror_fops_unlocked_ioctl+0x89b/0xc80
-
-Likely, nothing else goes wrong: putting the last folio reference will
-remove the folio from the LRU again.  So besides memcg complaining, adding
-the folio to be freed to the LRU is just an unnecessary step.
-
-The new flow resembles what we have in migrate_folio_move(): add the dst
-to the lru, remove migration ptes, unlock and unref dst.
-
-Link: https://lkml.kernel.org/r/20250210161317.717936-1-david@redhat.com
-Fixes: 8763cb45ab96 ("mm/migrate: new memory migration helper for use with device memory")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Cc: Jérôme Glisse <jglisse@redhat.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: <stable@vger.kernel.org> # v6.5+
+Fixes: b66a8abaa48a ("drm/i915/display/mtl: Fill port width in DDI_BUF_/TRANS_DDI_FUNC_/PORT_BUF_CTL for HDMI")
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250214142001.552916-3-imre.deak@intel.com
+(cherry picked from commit b2ecdabe46d23db275f94cd7c46ca414a144818b)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate_device.c |   13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/i915/display/intel_ddi.c |    2 +-
+ drivers/gpu/drm/i915/i915_reg.h          |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/migrate_device.c
-+++ b/mm/migrate_device.c
-@@ -840,20 +840,15 @@ void migrate_device_finalize(unsigned lo
- 			dst = src;
- 		}
+--- a/drivers/gpu/drm/i915/display/intel_ddi.c
++++ b/drivers/gpu/drm/i915/display/intel_ddi.c
+@@ -3399,7 +3399,7 @@ static void intel_enable_ddi_hdmi(struct
+ 		intel_de_rmw(dev_priv, XELPDP_PORT_BUF_CTL1(dev_priv, port),
+ 			     XELPDP_PORT_WIDTH_MASK | XELPDP_PORT_REVERSAL, port_buf);
  
-+		if (!folio_is_zone_device(dst))
-+			folio_add_lru(dst);
- 		remove_migration_ptes(src, dst, 0);
- 		folio_unlock(src);
--
--		if (folio_is_zone_device(src))
--			folio_put(src);
--		else
--			folio_putback_lru(src);
-+		folio_put(src);
+-		buf_ctl |= DDI_PORT_WIDTH(lane_count);
++		buf_ctl |= DDI_PORT_WIDTH(crtc_state->lane_count);
  
- 		if (dst != src) {
- 			folio_unlock(dst);
--			if (folio_is_zone_device(dst))
--				folio_put(dst);
--			else
--				folio_putback_lru(dst);
-+			folio_put(dst);
- 		}
- 	}
- }
+ 		if (DISPLAY_VER(dev_priv) >= 20)
+ 			buf_ctl |= XE2LPD_DDI_BUF_D2D_LINK_ENABLE;
+--- a/drivers/gpu/drm/i915/i915_reg.h
++++ b/drivers/gpu/drm/i915/i915_reg.h
+@@ -3917,7 +3917,7 @@ enum skl_power_gate {
+ #define  DDI_BUF_IS_IDLE			(1 << 7)
+ #define  DDI_BUF_CTL_TC_PHY_OWNERSHIP		REG_BIT(6)
+ #define  DDI_A_4_LANES				(1 << 4)
+-#define  DDI_PORT_WIDTH(width)			(((width) - 1) << 1)
++#define  DDI_PORT_WIDTH(width)			(((width) == 3 ? 4 : ((width) - 1)) << 1)
+ #define  DDI_PORT_WIDTH_MASK			(7 << 1)
+ #define  DDI_PORT_WIDTH_SHIFT			1
+ #define  DDI_INIT_DISPLAY_DETECTED		(1 << 0)
 
 
