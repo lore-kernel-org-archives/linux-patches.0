@@ -1,112 +1,209 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E93F26AF3
-	for <patches@lists.linux.dev>; Mon, 24 Feb 2025 04:38:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D5C1DAC81
+	for <patches@lists.linux.dev>; Mon, 24 Feb 2025 08:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740371914; cv=none; b=KRzkz8cTKL4FaIEC8lmOfrMt1fW/frGT8tPSF+wnzWvcz1cUHF6aXO35C1OFuB51zgh2qyyEb596It1uaEvXRxhkkMAWobubKusoIXZhBtw7E/fFVulOOTKNwXjpSS8xUr4a6AeFu0KZ5Y6IJPcE3IovDHCUgzK3ffrs6a9wj0c=
+	t=1740384631; cv=none; b=RpABrxtWC+vRWo/6HVWFAYS3jzA2x8o84gs3a9fu7mLJzKtUa8EzOo4JJJMIwDX8AaVuf1mEEXRRmVuI/BTIwX3j7jqcvFcYk4ZbxySsXWEgaGG7YYkaiu+WJGMVahPAc/p3YjloZO3lyvFwnH1rk2D+HBplc4JeiUpLehE6iVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740371914; c=relaxed/simple;
-	bh=Kxoqux8ig1bneZc8TPbOtwtdCXGrWd1siptghYniyZ8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S4G4aj5+zcyk0JSh+vvWzR3E9wb7e6kNo5B2dppcUpsmPbS6dqnfs2Kq7UOjVsKwRtYX+gqD7NooDJKlHRQDQ0DOxzWkSeCaEvorWpYQUzdwaBd+AASvUvc9fDEh5QVPv5EGedg75mzZeNaY520K9bqzvw4r9g7q3FQx+984Lrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nE18YxXO; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1740384631; c=relaxed/simple;
+	bh=u8TrK9hYcC65/WeviX8JWvUBq96uK8ZgDDuf0b8u/ew=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KImR5MfDIEA71Si48jFv9rqdM3HnjjmHf7LB3YDOd3et88IN+UVHQ2U2KHUwCnx4hm7JNItYRsg9gyG8UtSGRFbkWDblJec25mBwEcBkMtXdRrETK73dsj587lo3iPZG5Lt/nFE0C3XtL2KPgP5XufwNLk7cEn+F9qNDZeg/2MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wnp1WruK; arc=none smtp.client-ip=209.85.222.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nE18YxXO"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-220e0575f5bso256105ad.0
-        for <patches@lists.linux.dev>; Sun, 23 Feb 2025 20:38:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wnp1WruK"
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-86715793b1fso1213649241.0
+        for <patches@lists.linux.dev>; Mon, 24 Feb 2025 00:10:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1740371911; x=1740976711; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QXOPbjowj6Hzwuap/XS84BFQBW4l8rdr65xne9mv6JE=;
-        b=nE18YxXOOaC8szMw2NnJoM85RcvyV0EpGhFAqyYpNxBuD4VKy23Z+92Fwn9AlFR3lv
-         yAAUzXZ4ZPFLv3R0gj4/YV3mBaAmxAmHWSVpWpAEWje1ydqz3vEbGkdBgGrwI0SJm/Ch
-         5HMfJfCbZKm/aC8klXSM2n9Yt+mnlp86Oy7kjHB8026Z8hBX8p0F36tsj323r0FuqqN7
-         TJL3Qe6p7thihKHfCVZbATP0nFd2bhCLarrbfeQgWcdmowUd+TnJr0rNyQmL4SLoo21c
-         VdhMDrbNDDBtMtVsoKG6QOpSesk1F6cH+kmbz9q/pPLxnBAhr2bY8/BJ8UrnCX9g3n8q
-         vtsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740371911; x=1740976711;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1740384628; x=1740989428; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QXOPbjowj6Hzwuap/XS84BFQBW4l8rdr65xne9mv6JE=;
-        b=iMI5p3sQoH6H4+lC+xP6tG8cYerm+OEqWsVXdJRFLNuvhubvboSGzDmuqUscqnlx93
-         /kPalVXJIqx34vNdp+Q7rp0bqLN4S7204u4uHOYVMi6oRtjuKt74zDUMXzd491VW75bF
-         KCFlgcERokxN+DlB3uWYqsGcKrR9lMi64xKKM1YwRGX9teAZoYm75XiHsY+28XAOueiA
-         Oi+JiPkiQ2N0KfrkfaKjFLI9HSN8XjzNBc5O+kcuZuu9d7MkU2sR6gzLVCPz0Okj2Zuf
-         Sc6dwhJ4HW29ICIb7SLhzgl9fQ+8a5xG6inZi3GIOHiO7yZZdixOlyuckI0vZysXTNVq
-         1hBw==
-X-Forwarded-Encrypted: i=1; AJvYcCWHQSckxtfTGAFBltT6dH/lvhhb0IJmGmF1/viLFJcAD/ohwsItQC4vGJzvvRdfodUC3Q+Xhg3r@lists.linux.dev
-X-Gm-Message-State: AOJu0YwJini4Puk0O9zq3Ru34auAkFTvTZ8l2BefQ5TFqdNn4F49yoJW
-	MQ5p7mM/EF/by1/hrQLKm9OtMUFGhLokg+k0Z/TM+vBQa+kSLJsZdIw0LUpfrg==
-X-Gm-Gg: ASbGncsc4hO2qebRCRM8VZDb8eHiDYqAwXK+B0KqFrFzIzF+lrF6xxRZ8YXCsak9eCW
-	RfwemfcvHuIYYppBIPtn2VF0nE0/FUg9effXNZAZT7sD7wvi9bGbEW/y9ECeiNTho7uduXF9JRe
-	+0sUQCZM/yvQDWVDDu95VkFxQwMSIWW9PFz/+Y1n3/zKdcU3YRDK8rOhkwy6R62Gezs8+cWTXoc
-	BqTEt550o4ucN5shNqHmSLWk286meM4ZjN9LX80E2FHcokZe9/dl/cGZd6kYpCVWV/1syr1Iynz
-	E3jWGs4w6lOVXfF7XmbSJ2MWrYi+L3F7Gec1tzAd1VmpifyNilI9w6vjzKyF8KE=
-X-Google-Smtp-Source: AGHT+IEdLGzG2X3YEfsIyog+f9j0aXsArsFeUuMcB+n8G7DuxjBKyqLer9ZGTISS6pMA8Im0wRP9Ug==
-X-Received: by 2002:a17:902:da8c:b0:216:21cb:2e14 with SMTP id d9443c01a7336-2226cc46c3amr2333105ad.21.1740371910429;
-        Sun, 23 Feb 2025 20:38:30 -0800 (PST)
-Received: from google.com (169.224.198.35.bc.googleusercontent.com. [35.198.224.169])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-add540f75f7sm15349070a12.46.2025.02.23.20.38.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 23 Feb 2025 20:38:29 -0800 (PST)
-Date: Mon, 24 Feb 2025 04:38:19 +0000
-From: Pranjal Shrivastava <praan@google.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
-	joro@8bytes.org, suravee.suthikulpanit@amd.com,
-	robin.murphy@arm.com, dwmw2@infradead.org, baolu.lu@linux.intel.com,
-	shuah@kernel.org, linux-kernel@vger.kernel.org,
-	iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-	linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org,
-	eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org,
-	mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
-	smostafa@google.com, ddutile@redhat.com, yi.l.liu@intel.com,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v7 14/14] iommu/arm-smmu-v3: Set MEV bit in nested STE
- for DoS mitigations
-Message-ID: <Z7v3u55JNDqveAuD@google.com>
-References: <cover.1740238876.git.nicolinc@nvidia.com>
- <2b088fe8d2c7e692426b0d1f58d4f2c12ecb907e.1740238876.git.nicolinc@nvidia.com>
+        bh=5rAfh0+TUi6TP02l6JXkpyL3aEAeCTCEFN0Bf4ro6c4=;
+        b=wnp1WruKfer3g7lxVvdUYUxIu0daXr8otjRj8o3DbI7bBMc0DQ4HMKjl4YMVVXmUwH
+         O7DzWYd367mU91l5vaDcnyVf0Wsh2JvWjIkDOnX80AO3WEDj/1h/jV2Eak3ucBJQNh2N
+         Jg0MlghXwT50GKKPsfTAQEW0ljLywS5iZw9yXYFE2ZkMPah8XOt8X5+eoVxfpBpecA6d
+         v3QNOoRrgGKQLlKKT9PL8N2kHWv4TuL8y0zO0MBV0V/cpfSK99cdE9hXCR77/jVsjmaZ
+         HHBrsgPKPVxn/k+rulJA+7Kqt2zlqJYIJDvRrxHzWhN8Ok/U5X7ip8F5Js2Rcr1I+Jxt
+         NrVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740384628; x=1740989428;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5rAfh0+TUi6TP02l6JXkpyL3aEAeCTCEFN0Bf4ro6c4=;
+        b=WRmsBSVheogwBudq2L7eSNBfxpHLQhpiP/izkfTY6hWSqaizGvebFLJz5ICMNDz/KR
+         MpK9EYfx2ylbiwKFK9qTq7+YQKpwoNi8M35ecf4Mfxh2T+mwCmonl+Q8hUJsd4d7jz+u
+         F+P9pnt9W1cCPrzLM6NVRObzOk2Y1oZ92y8qVSLR97GV52OwuudngnVIO0sH06LMceOE
+         GkxvoBkYXqflauNVLX9wXBgB81aqrpXiEZOU+LllULpdEf3hkQWwZyXMTtrL2PiafOAY
+         86laxYR9z5C7Pkd4EmuUTCZn+9AB3SXfrlx28Q1idpb69c9bLA6JNkbr0zqlILgtUVqL
+         F4rA==
+X-Forwarded-Encrypted: i=1; AJvYcCWM7QesauC+6FU2ZW6h1HdyJPTmuutrpYlEN+oLwtEmiUL793O0nYuKxsmsfIe/4dBw0rhMMe5M@lists.linux.dev
+X-Gm-Message-State: AOJu0YyZeM24n8v/GQ8nT8xzgbhozK+IE3//FXjinznjQ+1rrGy+zC68
+	Jqzqg3EcS41spAh5uYNbEYkE0LrLEwhnZSetdpBFX81gZsGcGTH9/MwhasO7oARpAL4/CIHQhCK
+	WOs8/4wp8oi8aVyGooas1Mu9yd4gkqL5G8Oib/Q==
+X-Gm-Gg: ASbGncsXdN/Zm0B3MdfMjJqJshql06mmdHOT8pdIWqFpowSF2YRAiS9d+PgsuZaULm9
+	LSRFqYL8bAfb/A73qV3eTjJ9ekb5KdR5Be4A7iAQ9DHo7/iC6UVRinVtPZaPUCp9zxjLg3fg1ht
+	n4gsvSed4NZUOMDaApL1B3Vha90sWyrXLDcpz9Ci3Z
+X-Google-Smtp-Source: AGHT+IFtTzjpecd4WNbfJBrPmnNi8gxRNYitwtUYtxG//98YquxYsUWInAxrtNW/QbRt9da1gEn7CzWKqroyZsH5TV8=
+X-Received: by 2002:a05:6102:c8c:b0:4bb:e8c5:b172 with SMTP id
+ ada2fe7eead31-4bfc0098918mr5692399137.8.1740384628553; Mon, 24 Feb 2025
+ 00:10:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2b088fe8d2c7e692426b0d1f58d4f2c12ecb907e.1740238876.git.nicolinc@nvidia.com>
+References: <20250220104545.805660879@linuxfoundation.org>
+In-Reply-To: <20250220104545.805660879@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Mon, 24 Feb 2025 13:40:16 +0530
+X-Gm-Features: AWEUYZkqBO2UQkfmgOsDe-rD71hPOBWtwJTpV4dFszBoXqdjV-sFVpZiDA8Hqo4
+Message-ID: <CA+G9fYuoYfGft-2D88dCVQeB5mTvyf6ADkWau172BZs2SD99VQ@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/569] 6.1.129-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Feb 22, 2025 at 07:54:11AM -0800, Nicolin Chen wrote:
-> There is a DoS concern on the shared hardware event queue among devices
-> passed through to VMs, that too many translation failures that belong to
-> VMs could overflow the shared hardware event queue if those VMs or their
-> VMMs don't handle/recover the devices properly.
-> 
-> The MEV bit in the STE allows to configure the SMMU HW to merge similar
-> event records, though there is no guarantee. Set it in a nested STE for
-> DoS mitigations.
-> 
-> In the future, we might want to enable the MEV for non-nested cases too
-> such as domain->type == IOMMU_DOMAIN_UNMANAGED or even IOMMU_DOMAIN_DMA.
-> 
-> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> ---
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h         | 1 +
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c | 2 ++
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c         | 4 ++--
->  3 files changed, 5 insertions(+), 2 deletions(-)
-> 
+On Thu, 20 Feb 2025 at 16:28, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.129 release.
+> There are 569 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 22 Feb 2025 10:44:04 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.129-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
 
-Thanks,
-Praan
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
+
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build
+* kernel: 6.1.129-rc2
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git commit: fdd3f50c8e3e56aa4407011c21e440d1f39bf99f
+* git describe: v6.1.128-570-gfdd3f50c8e3e
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.1=
+28-570-gfdd3f50c8e3e
+
+## Test Regressions (compared to v6.1.126-65-gc5148ca733b3)
+
+## Metric Regressions (compared to v6.1.126-65-gc5148ca733b3)
+
+## Test Fixes (compared to v6.1.126-65-gc5148ca733b3)
+
+## Metric Fixes (compared to v6.1.126-65-gc5148ca733b3)
+
+## Test result summary
+total: 104367, pass: 81540, fail: 3794, skip: 18597, xfail: 436
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 133 total, 133 passed, 0 failed
+* arm64: 20 total, 20 passed, 0 failed
+* i386: 26 total, 22 passed, 4 failed
+* mips: 24 total, 24 passed, 0 failed
+* parisc: 3 total, 3 passed, 0 failed
+* powerpc: 31 total, 30 passed, 1 failed
+* riscv: 9 total, 9 passed, 0 failed
+* s390: 11 total, 11 passed, 0 failed
+* sh: 12 total, 10 passed, 2 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 32 total, 32 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-exec
+* kselftest-fpu
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-capability
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-crypto
+* ltp-cve
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
