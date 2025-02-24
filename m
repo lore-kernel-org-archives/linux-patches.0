@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E23114B080;
-	Mon, 24 Feb 2025 14:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7C413AD18;
+	Mon, 24 Feb 2025 14:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409075; cv=none; b=s24NFUTEn8TRsQ5zezsVOnGEOK147e5ReRbSQFyzG1RRGpEEGXnuFLYNHeLuHxrMyrA9fEQ4RDes9Ut7NQhbMlUZrj8qLYuDDNhri9wdhR84qQLTMv77M+4I6z2uWqNBP7gDnK14zGhFeZOLiUp2PtLag3avL6dJ2A0zAoyJ/s0=
+	t=1740409078; cv=none; b=KZjeqGVQol7Ov6ZASXR68X/tL0GajAlbMOQihKNEIRpY3CE4vmtDX7Nxwnh8bUxMNdNvWSBpjjCVIIaioiftE3JAo+95o+T6RG+faDiIVYV03WAPyM8lWqkqjJpsyFBbDGJlGP/JXo/2WTS+UvnQ8IAyTHrQL3j55cGQ2B9LXZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409075; c=relaxed/simple;
-	bh=rQiKx+I+rRitL7NXRQihAxDoVKaLefB+dSoYRB4B2dg=;
+	s=arc-20240116; t=1740409078; c=relaxed/simple;
+	bh=FQr28IVuXFCR7mU+6MJp+8Wxk6zla0jITdb85/naYic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S7p150aN6lBZlzI88Oug5j49RGTEz4yHXOBUttCBn684PON9NmNLLWFedKyz9ZGc6EyKUCRRhqU65DHW4nJQLN/hB4PfvOP5iDpbrywfQsIUyKvs/ugXF9ekwr0UqUSGErTAQV3XRfoTcmYw2ccX6Zgs3Q9Bsdr74yFVSsd6Fmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8+hrOvX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z1VfP9btR2E4VQr8kTpN7rT48MB4Kw886ECJAaYW9dJmM00HobwYxthQWQ348KDjQx3LXNJpUbxG0rXegpzXJkES25LICsMm6uu5566YTX16vDKgz9Q9E4eHLyiZvdRNp8lcAbr4u4kbQ+elvQWpiQeMtwddYiHeLL1oKsJkxSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eU5VRahm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8+hrOvX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C83C4CED6;
-	Mon, 24 Feb 2025 14:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eU5VRahm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB21C4CED6;
+	Mon, 24 Feb 2025 14:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409075;
-	bh=rQiKx+I+rRitL7NXRQihAxDoVKaLefB+dSoYRB4B2dg=;
+	s=korg; t=1740409078;
+	bh=FQr28IVuXFCR7mU+6MJp+8Wxk6zla0jITdb85/naYic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D8+hrOvXjsTtH+cvid9y9luf2jSTmoCoJ/9biSkiNzaEmpI+XOGXvGE+M7yUTdoeP
-	 17JYTWpeSWnouvyeo9hZpAfBdDD0LorYlVQFcSjZADwddukx+RvTW0PManq3dSc8Ob
-	 Gn5D2ZTSqmga7+Pg6Ei7L6P7Py2AfE87h5zoLnqM=
+	b=eU5VRahmOTyVsDen79qXG0wTci898BX59D6bt6WZ9PAbHijtXWAeL8j7FoS32lV0E
+	 /WFdrg0+SwwZ1WV/xB5PmPDV+xFO9zbi6ttDjb7VVmBSbryEYptP7xFC756pDeh46d
+	 bv7j/to1zVUgG8wq0MAQltfxy19U3Mg0cB1etsy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Dale Whinham <daleyo@gmail.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: [PATCH 6.13 088/138] drm/msm/dp: account for widebus and yuv420 during mode validation
-Date: Mon, 24 Feb 2025 15:35:18 +0100
-Message-ID: <20250224142607.933773425@linuxfoundation.org>
+Subject: [PATCH 6.13 089/138] drm/msm/dpu: Disable dither in phys encoder cleanup
+Date: Mon, 24 Feb 2025 15:35:19 +0100
+Message-ID: <20250224142607.975729359@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -51,70 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-commit df9cf852ca3099feb8fed781bdd5d3863af001c8 upstream.
+commit f063ac6b55df03ed25996bdc84d9e1c50147cfa1 upstream.
 
-Widebus allows the DP controller to operate in 2 pixel per clock mode.
-The mode validation logic validates the mode->clock against the max
-DP pixel clock. However the max DP pixel clock limit assumes widebus
-is already enabled. Adjust the mode validation logic to only compare
-the adjusted pixel clock which accounts for widebus against the max DP
-pixel clock. Also fix the mode validation logic for YUV420 modes as in
-that case as well, only half the pixel clock is needed.
+Disable pingpong dither in dpu_encoder_helper_phys_cleanup().
+
+This avoids the issue where an encoder unknowingly uses dither after
+reserving a pingpong block that was previously bound to an encoder that
+had enabled dither.
 
 Cc: stable@vger.kernel.org
-Fixes: 757a2f36ab09 ("drm/msm/dp: enable widebus feature for display port")
-Fixes: 6db6e5606576 ("drm/msm/dp: change clock related programming for YUV420 over DP")
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Closes: https://lore.kernel.org/all/jr7zbj5w7iq4apg3gofuvcwf4r2swzqjk7sshwcdjll4mn6ctt@l2n3qfpujg3q/
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Dale Whinham <daleyo@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/635789/
-Link: https://lore.kernel.org/r/20250206-dp-widebus-fix-v2-1-cb89a0313286@quicinc.com
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: 3c128638a07d ("drm/msm/dpu: add support for dither block in display")
+Patchwork: https://patchwork.freedesktop.org/patch/636517/
+Link: https://lore.kernel.org/r/20250211-dither-disable-v1-1-ac2cb455f6b9@quicinc.com
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c |   11 ++++++-----
- drivers/gpu/drm/msm/dp/dp_drm.c     |    5 ++++-
- 2 files changed, 10 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -937,16 +937,17 @@ enum drm_mode_status msm_dp_bridge_mode_
- 		return -EINVAL;
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -2281,6 +2281,9 @@ void dpu_encoder_helper_phys_cleanup(str
+ 		}
  	}
  
--	if (mode->clock > DP_MAX_PIXEL_CLK_KHZ)
--		return MODE_CLOCK_HIGH;
--
- 	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
- 	link_info = &msm_dp_display->panel->link_info;
- 
--	if (drm_mode_is_420_only(&dp->connector->display_info, mode) &&
--	    msm_dp_display->panel->vsc_sdp_supported)
-+	if ((drm_mode_is_420_only(&dp->connector->display_info, mode) &&
-+	     msm_dp_display->panel->vsc_sdp_supported) ||
-+	     msm_dp_wide_bus_available(dp))
- 		mode_pclk_khz /= 2;
- 
-+	if (mode_pclk_khz > DP_MAX_PIXEL_CLK_KHZ)
-+		return MODE_CLOCK_HIGH;
++	if (phys_enc->hw_pp && phys_enc->hw_pp->ops.setup_dither)
++		phys_enc->hw_pp->ops.setup_dither(phys_enc->hw_pp, NULL);
 +
- 	mode_bpp = dp->connector->display_info.bpc * num_components;
- 	if (!mode_bpp)
- 		mode_bpp = default_bpp;
---- a/drivers/gpu/drm/msm/dp/dp_drm.c
-+++ b/drivers/gpu/drm/msm/dp/dp_drm.c
-@@ -257,7 +257,10 @@ static enum drm_mode_status msm_edp_brid
- 		return -EINVAL;
- 	}
- 
--	if (mode->clock > DP_MAX_PIXEL_CLK_KHZ)
-+	if (msm_dp_wide_bus_available(dp))
-+		mode_pclk_khz /= 2;
-+
-+	if (mode_pclk_khz > DP_MAX_PIXEL_CLK_KHZ)
- 		return MODE_CLOCK_HIGH;
- 
- 	/*
+ 	/* reset the merge 3D HW block */
+ 	if (phys_enc->hw_pp && phys_enc->hw_pp->merge_3d) {
+ 		phys_enc->hw_pp->merge_3d->ops.setup_3d_mode(phys_enc->hw_pp->merge_3d,
 
 
