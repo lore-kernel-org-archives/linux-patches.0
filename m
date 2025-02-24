@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DC2664C6;
-	Mon, 24 Feb 2025 14:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A742571CB;
+	Mon, 24 Feb 2025 14:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409192; cv=none; b=ocvoSf5LbwNNFDvOpOD1ZBhyrUE+rdDIYVrwPxmpaWi7yBIUXvtoTRqY+fk044dJ/OZprXxGOBIki/UzBjFGMDs3iTmR6tcxH8srxwiNWOcFbwrHKNEUkpCE5PelwPsXUfvrbS4eIyqLf7Z9MR9y/tNwsSusRzszQd6qKm6dPuw=
+	t=1740409196; cv=none; b=EOqgTEaAHuvSmuYNfwfkg8Q1/QxsACVeXP29RWAYdVBM1scb40mAUnmopxNiELLSqEyEMvkudU6wF3bMtd0IbXc0m2TG+xSTisvv7bXb7WdMtXkAgNHfHd4YEN3CFWknxkfjQitBa8b+wPOqT5Q08aev1L34FdlD1gHEIh/yszE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409192; c=relaxed/simple;
-	bh=73G7jxY4n94xUPOCOFDqodCvWVUzCH4JqTrjqoPVtL4=;
+	s=arc-20240116; t=1740409196; c=relaxed/simple;
+	bh=8vO+VKeqgdnCpzNuTyxfHTqaEDsNQxxIPoIGZI1SzsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cOjS+2algMe1YkZJCY9AZHbZHRytkwdebNzsiu+6p54yrO4ag7ljAir9Vw+Xh5JtOUW3+6RVkTlO0v8HbToJanmRKlY5RfAjQ1hHMcKoVbUQJdqjjqFFtFKyaBxV3YePwpZc7JTBVDBwq2UqWDDZrtyVE6mLtuGPQUXk3khO9mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OGR9Jwh4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=X7lS6mJqOWwoplm8ivGbJaZftonNAp5HdSgJhs91jfiMmBDUAWfOxThTfskZ7qyJO8I6uPBKJsu6mSsmSg+OEg2O5q4lKRk2KeecwEomVEhIRo0coyDP3aLxtZNXEpd+r6/W+yl26YqrAmfHlKyTgtjLM1B65mYWVy4Nnd+VnZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+ejPCBj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OGR9Jwh4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B2AC4CEE8;
-	Mon, 24 Feb 2025 14:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+ejPCBj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2ECC4CEE8;
+	Mon, 24 Feb 2025 14:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409192;
-	bh=73G7jxY4n94xUPOCOFDqodCvWVUzCH4JqTrjqoPVtL4=;
+	s=korg; t=1740409195;
+	bh=8vO+VKeqgdnCpzNuTyxfHTqaEDsNQxxIPoIGZI1SzsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OGR9Jwh4CBS6P30uNFw44HFhdvQTdAExlhcN583N0Jj9cs58kSaZAqaGenAx3Df5X
-	 OjTnIPPia/Dw93Z2nFFx6/ZEA5J8ny6Dt4oFsFFxVqimuQV0+clPsOAl2XTRL4k2Ks
-	 WgiZgr3eYAow9GlGZ+THnxqD2FXSAJS+KuUEYDMM=
+	b=k+ejPCBjjTi1YOLLlbUI8Gx5JZyI9NYGn5cj2XcWHMKrGQiVyxRzd3J3nNu2kVU3X
+	 FZ5/EvTfaOMAU2JcVGClQiENdFDGir42Ckw+EOpn9n4vLYfK9q4UMtYkl09fmIjMML
+	 9gAIo04Zy5dNqlUpyt2RVDdni/xsBq8JZsiJZ4a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo=20Navarro?= <rcn@igalia.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Florent Revest <revest@google.com>,
-	Rik van Riel <riel@surriel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.13 122/138] mm,madvise,hugetlb: check for 0-length range after end address adjustment
-Date: Mon, 24 Feb 2025 15:35:52 +0100
-Message-ID: <20250224142609.265851352@linuxfoundation.org>
+	Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>
+Subject: [PATCH 6.13 123/138] mtd: spi-nor: sst: Fix SST write failure
+Date: Mon, 24 Feb 2025 15:35:53 +0100
+Message-ID: <20250224142609.304738893@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -54,75 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Cañuelo Navarro <rcn@igalia.com>
+From: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
 
-commit 2ede647a6fde3e54a6bfda7cf01c716649655900 upstream.
+commit 539bd20352832b9244238a055eb169ccf1c41ff6 upstream.
 
-Add a sanity check to madvise_dontneed_free() to address a corner case in
-madvise where a race condition causes the current vma being processed to
-be backed by a different page size.
+'commit 18bcb4aa54ea ("mtd: spi-nor: sst: Factor out common write operation
+to `sst_nor_write_data()`")' introduced a bug where only one byte of data
+is written, regardless of the number of bytes passed to
+sst_nor_write_data(), causing a kernel crash during the write operation.
+Ensure the correct number of bytes are written as passed to
+sst_nor_write_data().
 
-During a madvise(MADV_DONTNEED) call on a memory region registered with a
-userfaultfd, there's a period of time where the process mm lock is
-temporarily released in order to send a UFFD_EVENT_REMOVE and let
-userspace handle the event.  During this time, the vma covering the
-current address range may change due to an explicit mmap done concurrently
-by another thread.
+Call trace:
+[   57.400180] ------------[ cut here ]------------
+[   57.404842] While writing 2 byte written 1 bytes
+[   57.409493] WARNING: CPU: 0 PID: 737 at drivers/mtd/spi-nor/sst.c:187 sst_nor_write_data+0x6c/0x74
+[   57.418464] Modules linked in:
+[   57.421517] CPU: 0 UID: 0 PID: 737 Comm: mtd_debug Not tainted 6.12.0-g5ad04afd91f9 #30
+[   57.429517] Hardware name: Xilinx Versal A2197 Processor board revA - x-prc-02 revA (DT)
+[   57.437600] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   57.444557] pc : sst_nor_write_data+0x6c/0x74
+[   57.448911] lr : sst_nor_write_data+0x6c/0x74
+[   57.453264] sp : ffff80008232bb40
+[   57.456570] x29: ffff80008232bb40 x28: 0000000000010000 x27: 0000000000000001
+[   57.463708] x26: 000000000000ffff x25: 0000000000000000 x24: 0000000000000000
+[   57.470843] x23: 0000000000010000 x22: ffff80008232bbf0 x21: ffff000816230000
+[   57.477978] x20: ffff0008056c0080 x19: 0000000000000002 x18: 0000000000000006
+[   57.485112] x17: 0000000000000000 x16: 0000000000000000 x15: ffff80008232b580
+[   57.492246] x14: 0000000000000000 x13: ffff8000816d1530 x12: 00000000000004a4
+[   57.499380] x11: 000000000000018c x10: ffff8000816fd530 x9 : ffff8000816d1530
+[   57.506515] x8 : 00000000fffff7ff x7 : ffff8000816fd530 x6 : 0000000000000001
+[   57.513649] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000000
+[   57.520782] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0008049b0000
+[   57.527916] Call trace:
+[   57.530354]  sst_nor_write_data+0x6c/0x74
+[   57.534361]  sst_nor_write+0xb4/0x18c
+[   57.538019]  mtd_write_oob_std+0x7c/0x88
+[   57.541941]  mtd_write_oob+0x70/0xbc
+[   57.545511]  mtd_write+0x68/0xa8
+[   57.548733]  mtdchar_write+0x10c/0x290
+[   57.552477]  vfs_write+0xb4/0x3a8
+[   57.555791]  ksys_write+0x74/0x10c
+[   57.559189]  __arm64_sys_write+0x1c/0x28
+[   57.563109]  invoke_syscall+0x54/0x11c
+[   57.566856]  el0_svc_common.constprop.0+0xc0/0xe0
+[   57.571557]  do_el0_svc+0x1c/0x28
+[   57.574868]  el0_svc+0x30/0xcc
+[   57.577921]  el0t_64_sync_handler+0x120/0x12c
+[   57.582276]  el0t_64_sync+0x190/0x194
+[   57.585933] ---[ end trace 0000000000000000 ]---
 
-If, after that change, the memory region, which was originally backed by
-4KB pages, is now backed by hugepages, the end address is rounded down to
-a hugepage boundary to avoid data loss (see "Fixes" below).  This rounding
-may cause the end address to be truncated to the same address as the
-start.
-
-Make this corner case follow the same semantics as in other similar cases
-where the requested region has zero length (ie.  return 0).
-
-This will make madvise_walk_vmas() continue to the next vma in the range
-(this time holding the process mm lock) which, due to the prev pointer
-becoming stale because of the vma change, will be the same hugepage-backed
-vma that was just checked before.  The next time madvise_dontneed_free()
-runs for this vma, if the start address isn't aligned to a hugepage
-boundary, it'll return -EINVAL, which is also in line with the madvise
-api.
-
->From userspace perspective, madvise() will return EINVAL because the start
-address isn't aligned according to the new vma alignment requirements
-(hugepage), even though it was correctly page-aligned when the call was
-issued.
-
-Link: https://lkml.kernel.org/r/20250203075206.1452208-1-rcn@igalia.com
-Fixes: 8ebe0a5eaaeb ("mm,madvise,hugetlb: fix unexpected data loss with MADV_DONTNEED on hugetlbfs")
-Signed-off-by: Ricardo Cañuelo Navarro <rcn@igalia.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Florent Revest <revest@google.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 18bcb4aa54ea ("mtd: spi-nor: sst: Factor out common write operation to `sst_nor_write_data()`")
+Signed-off-by: Amit Kumar Mahapatra <amit.kumar-mahapatra@amd.com>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Bence Csókás <csokas.bence@prolan.hu>
+[pratyush@kernel.org: add Cc stable tag]
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Link: https://lore.kernel.org/r/20250213054546.2078121-1-amit.kumar-mahapatra@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/madvise.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/mtd/spi-nor/sst.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -928,7 +928,16 @@ static long madvise_dontneed_free(struct
- 			 */
- 			end = vma->vm_end;
- 		}
--		VM_WARN_ON(start >= end);
-+		/*
-+		 * If the memory region between start and end was
-+		 * originally backed by 4kB pages and then remapped to
-+		 * be backed by hugepages while mmap_lock was dropped,
-+		 * the adjustment for hugetlb vma above may have rounded
-+		 * end down to the start address.
-+		 */
-+		if (start == end)
-+			return 0;
-+		VM_WARN_ON(start > end);
- 	}
+--- a/drivers/mtd/spi-nor/sst.c
++++ b/drivers/mtd/spi-nor/sst.c
+@@ -174,7 +174,7 @@ static int sst_nor_write_data(struct spi
+ 	int ret;
  
- 	if (behavior == MADV_DONTNEED || behavior == MADV_DONTNEED_LOCKED)
+ 	nor->program_opcode = op;
+-	ret = spi_nor_write_data(nor, to, 1, buf);
++	ret = spi_nor_write_data(nor, to, len, buf);
+ 	if (ret < 0)
+ 		return ret;
+ 	WARN(ret != len, "While writing %zu byte written %i bytes\n", len, ret);
 
 
