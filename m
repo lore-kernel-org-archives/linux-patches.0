@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34348190063;
-	Mon, 24 Feb 2025 14:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C9424888F;
+	Mon, 24 Feb 2025 14:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740407948; cv=none; b=IJgB098qLYzK74W8SlXcmLJy3bz/EiFUiKVKhKsnRAQ+Ko5TEAMGRgkwKXoy1RSr9YU4A5vUYQp7LQcCdsVjZDw0yet+yLku7qKGtHbutlOjiMrumaET810H/g6KyAZ4nURFANHq8BBb6Jq/WBCbcUCr7zWIOiTQGO5Mgp+Veqk=
+	t=1740407952; cv=none; b=N+EXNLRkojevEOPMsNZiglEn10m42dtzUA9mpnAZD2RJRXtfu/bPKTt8LQJkMZ866cTj0diH99/2Yu+xqSc0oKJmJQ7eX5FUwqkcZSUXWV32NphBUquPLDL1TyAWvvybzSXXNlISFydn7gnhYNTjzUVUNM4uitWmNQ1cxi1937w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740407948; c=relaxed/simple;
-	bh=3Qg/1SePnIqhOIu8ob6Hv3OXFkiyMkNIGKlSGZ+I9/8=;
+	s=arc-20240116; t=1740407952; c=relaxed/simple;
+	bh=gOPDnb3XL/itIGZwoZDQrL3Y6QT+iZqINQDbnZ2rQ8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JQ+2wNCAxMMbqcjV7fepqCOrc+feG4ZrwBNGABh9sq56LQMV8YB0KopMLtSU68rcr+rXcBanQjpLiLddwbWl7hkrUAt7PRbDPzCCarVJawatjkG2xkJnoQc8xWZrZQZoUrgQYSwrpMe7KnnHGjFPv6F4lG064l8siWyuG1LAYIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cROWt3lh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HCh4oR4Sh3Ba0teHhTZXgBmW17HHwICIY1qd6DrmYH3I1GV8RatX6tw11o0N1KgreTVi3YOYBIV0Ozrepeqq55U41saKWTOeqNPTq/9ZNn4O1RxzuSaOnAbiNtqx2Z6gKqaCTztkTtOtMtIYQvF46JU/luoDAiNK8GMluoXBL1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMdZ7/TA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cROWt3lh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F505C4CED6;
-	Mon, 24 Feb 2025 14:39:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMdZ7/TA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1594FC4CEEC;
+	Mon, 24 Feb 2025 14:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740407948;
-	bh=3Qg/1SePnIqhOIu8ob6Hv3OXFkiyMkNIGKlSGZ+I9/8=;
+	s=korg; t=1740407951;
+	bh=gOPDnb3XL/itIGZwoZDQrL3Y6QT+iZqINQDbnZ2rQ8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cROWt3lhZGO/pyklLliTRFur7hPetGYIdGuqM8TW4z6oone+RL/pA9tjnQw1fenLU
-	 l9qgzPLsdBWrDb9QG4jzWj8GrjqGAX3O/D4Iu7ldE/dnkSQTQUL0KfyOptDDKw/Cf/
-	 LPAYWIP+yAnJ55oV69iTLZkvqcviVrOajR92sKtU=
+	b=cMdZ7/TA56a1CFTGWbvw+bOfbbdMJLf0ekSTaWDaBqwM+0oUUY9pZAVLO0+PnaQBm
+	 H1Zfpk34v/DZ3Q3Vo9V8ykMpyA0ZwtRF35eDUl7rEYInoW4ZKyaLLOD5etzMFZkNnZ
+	 uG38alEBdaXAvI4/t6UeWfQc5GeG96rCOM/S/fxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/140] media: uvcvideo: Refactor iterators
-Date: Mon, 24 Feb 2025 15:34:14 +0100
-Message-ID: <20250224142605.176375325@linuxfoundation.org>
+Subject: [PATCH 6.6 029/140] md: factor out a helper from mddev_put()
+Date: Mon, 24 Feb 2025 15:33:48 +0100
+Message-ID: <20250224142604.153963124@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -53,85 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 64627daf0c5f7838111f52bbbd1a597cb5d6871a ]
+[ Upstream commit 3d8d32873c7b6d9cec5b40c2ddb8c7c55961694f ]
 
-Avoid using the iterators after the list_for_each() constructs.
-This patch should be a NOP, but makes cocci, happier:
+There are no functional changes, prepare to simplify md_seq_ops in next
+patch.
 
-drivers/media/usb/uvc/uvc_ctrl.c:1861:44-50: ERROR: invalid reference to the index variable of the iterator on line 1850
-drivers/media/usb/uvc/uvc_ctrl.c:2195:17-23: ERROR: invalid reference to the index variable of the iterator on line 2179
-
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: d9fecd096f67 ("media: uvcvideo: Only save async fh if success")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230927061241.1552837-2-yukuai1@huaweicloud.com
+Stable-dep-of: 8d28d0ddb986 ("md/md-bitmap: Synchronize bitmap_get_stats() with bitmap lifetime")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/md/md.c | 29 +++++++++++++++++------------
+ 1 file changed, 17 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index ce70e96b8fb52..f78e0c02b3379 100644
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1848,16 +1848,18 @@ int __uvc_ctrl_commit(struct uvc_fh *handle, int rollback,
- 	list_for_each_entry(entity, &chain->entities, chain) {
- 		ret = uvc_ctrl_commit_entity(chain->dev, entity, rollback,
- 					     &err_ctrl);
--		if (ret < 0)
-+		if (ret < 0) {
-+			if (ctrls)
-+				ctrls->error_idx =
-+					uvc_ctrl_find_ctrl_idx(entity, ctrls,
-+							       err_ctrl);
- 			goto done;
-+		}
- 	}
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 342407ea87d83..836e8ed58c8ad 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -633,23 +633,28 @@ static inline struct mddev *mddev_get(struct mddev *mddev)
  
- 	if (!rollback)
- 		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
- done:
--	if (ret < 0 && ctrls)
--		ctrls->error_idx = uvc_ctrl_find_ctrl_idx(entity, ctrls,
--							  err_ctrl);
- 	mutex_unlock(&chain->ctrl_mutex);
- 	return ret;
- }
-@@ -2170,7 +2172,7 @@ static int uvc_ctrl_init_xu_ctrl(struct uvc_device *dev,
- int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
- 	struct uvc_xu_control_query *xqry)
+ static void mddev_delayed_delete(struct work_struct *ws);
+ 
++static void __mddev_put(struct mddev *mddev)
++{
++	if (mddev->raid_disks || !list_empty(&mddev->disks) ||
++	    mddev->ctime || mddev->hold_active)
++		return;
++
++	/* Array is not configured at all, and not held active, so destroy it */
++	set_bit(MD_DELETED, &mddev->flags);
++
++	/*
++	 * Call queue_work inside the spinlock so that flush_workqueue() after
++	 * mddev_find will succeed in waiting for the work to be done.
++	 */
++	queue_work(md_misc_wq, &mddev->del_work);
++}
++
+ void mddev_put(struct mddev *mddev)
  {
--	struct uvc_entity *entity;
-+	struct uvc_entity *entity, *iter;
- 	struct uvc_control *ctrl;
- 	unsigned int i;
- 	bool found;
-@@ -2180,16 +2182,16 @@ int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
- 	int ret;
+ 	if (!atomic_dec_and_lock(&mddev->active, &all_mddevs_lock))
+ 		return;
+-	if (!mddev->raid_disks && list_empty(&mddev->disks) &&
+-	    mddev->ctime == 0 && !mddev->hold_active) {
+-		/* Array is not configured at all, and not held active,
+-		 * so destroy it */
+-		set_bit(MD_DELETED, &mddev->flags);
  
- 	/* Find the extension unit. */
--	found = false;
--	list_for_each_entry(entity, &chain->entities, chain) {
--		if (UVC_ENTITY_TYPE(entity) == UVC_VC_EXTENSION_UNIT &&
--		    entity->id == xqry->unit) {
--			found = true;
-+	entity = NULL;
-+	list_for_each_entry(iter, &chain->entities, chain) {
-+		if (UVC_ENTITY_TYPE(iter) == UVC_VC_EXTENSION_UNIT &&
-+		    iter->id == xqry->unit) {
-+			entity = iter;
- 			break;
- 		}
- 	}
+-		/*
+-		 * Call queue_work inside the spinlock so that
+-		 * flush_workqueue() after mddev_find will succeed in waiting
+-		 * for the work to be done.
+-		 */
+-		queue_work(md_misc_wq, &mddev->del_work);
+-	}
++	__mddev_put(mddev);
+ 	spin_unlock(&all_mddevs_lock);
+ }
  
--	if (!found) {
-+	if (!entity) {
- 		uvc_dbg(chain->dev, CONTROL, "Extension unit %u not found\n",
- 			xqry->unit);
- 		return -ENOENT;
 -- 
 2.39.5
 
