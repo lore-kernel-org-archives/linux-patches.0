@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6B625485E;
-	Mon, 24 Feb 2025 14:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CC413F43A;
+	Mon, 24 Feb 2025 14:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740407975; cv=none; b=StOBkuRt0CydRMmeR7fGoMgOgd8s4hGlNM1HpRepvoBW4SNMZ5gq/ozWFBmR+m55ttMtcFHWDo8WejEseFdCACtSKmubLrxZ2dGPCKZWt+1zmdwg10xdY8z1s9X+bWj6dBglUZmmt/kc19IdTRgo597AMtlc1Du6dv7wViLGI9c=
+	t=1740407979; cv=none; b=ohbrLv/R2edxqfSeFrRKupEHNAQbpzvqHEjX3cA5mqE0zyfSjWWf2ltKNJMzzYBVT+wPXxcHSO1TiUMOt1oK79AxzUz4qRNGUvCQS58FfI8YvSaAzLkTrYdqL9HDZxdphbeoGXrVg4YuywpPXIEgFUR7qD94Zzw2vu1D/puiIrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740407975; c=relaxed/simple;
-	bh=IhH5t6vVpn1YL3Hr2HLGRvpg/FUl1tgBiYYletTEaIY=;
+	s=arc-20240116; t=1740407979; c=relaxed/simple;
+	bh=97epbmB9Wz7Z/6pQGiPABCGvNdVzn35gRrfuaMCFPag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MXHCWy/HKqyGH65X4kJDDexCrecvmjDeKdNnNc7P28kboe0lNue2C3y9W3caqLB3CAcLEpJCvladdPsnO8ar3GdCubgdGC5d4qOJtAGHhxto99c0hxB9VcjT6gds3QyY2p7tGnicBWIRHom1BkCMRnDJGRFgOE0KnjOKredC1f8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQuBmG3m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oMqRiCpH9ZrLtBnX1/xvHV8bFDGR+IB2sFyZxg3m60+231+5VwkIH1LnVmWvI+L3X0XB6CmuTmPod5K39fTLZZVaqH5EIEbCOVoKFHp3AEdVVFLJiUJLxj61DMBojc+SCsDbII4gDZZM8D1IdocIIu8ljdGwCIuubrr2Mmyv3K0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXYBVhiX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQuBmG3m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343C1C4CED6;
-	Mon, 24 Feb 2025 14:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXYBVhiX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AD9C4CED6;
+	Mon, 24 Feb 2025 14:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740407975;
-	bh=IhH5t6vVpn1YL3Hr2HLGRvpg/FUl1tgBiYYletTEaIY=;
+	s=korg; t=1740407979;
+	bh=97epbmB9Wz7Z/6pQGiPABCGvNdVzn35gRrfuaMCFPag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQuBmG3mkagak/jbzkrwhCyrm++0vZXp9yf6iWluvO5q0w5ukjoFIb54QzdHrNaYf
-	 mGmpGrGD825ZNEe91/v1SKwq33d7X3QD6agnaa1ZXYI3evgr8ZTB1kc/SFn9N8fEZS
-	 S4pGP2iX6svwEZThi1CET7mtawe5mDUiXFJo1eUs=
+	b=yXYBVhiXfLIsiAECzEmU3WwC2lsecQBMgRe8na5fhefyCOW6i77vUzaI1Cu0LCNF7
+	 NfQXthWgf6Ops1tnku3ZYfBFMDCXIgrj2lgWkcVgF/X+AQLofiBF3JAQ28QBGqP7/S
+	 dRsUvdVcr0ygknAduUyaYrEF9KJKBHNvfBfqwL9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yu Kuai <yukuai3@huawei.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/140] md/md-bitmap: replace md_bitmap_status() with a new helper md_bitmap_get_stats()
-Date: Mon, 24 Feb 2025 15:33:50 +0100
-Message-ID: <20250224142604.230987839@linuxfoundation.org>
+Subject: [PATCH 6.6 032/140] md/md-cluster: fix spares warnings for __le64
+Date: Mon, 24 Feb 2025 15:33:51 +0100
+Message-ID: <20250224142604.270901914@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -53,139 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 38f287d7e495ae00d4481702f44ff7ca79f5c9bc ]
+[ Upstream commit 82697ccf7e495c1ba81e315c2886d6220ff84c2c ]
 
-There are no functional changes, and the new helper will be used in
-multiple places in following patches to avoid dereferencing bitmap
-directly.
+drivers/md/md-cluster.c:1220:22: warning: incorrect type in assignment (different base types)
+drivers/md/md-cluster.c:1220:22:    expected unsigned long my_sync_size
+drivers/md/md-cluster.c:1220:22:    got restricted __le64 [usertype] sync_size
+drivers/md/md-cluster.c:1252:35: warning: incorrect type in assignment (different base types)
+drivers/md/md-cluster.c:1252:35:    expected unsigned long sync_size
+drivers/md/md-cluster.c:1252:35:    got restricted __le64 [usertype] sync_size
+drivers/md/md-cluster.c:1253:41: warning: restricted __le64 degrades to integer
+
+Fix the warnings by using le64_to_cpu() to convet __le64 to integer.
 
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240826074452.1490072-3-yukuai1@huaweicloud.com
+Link: https://lore.kernel.org/r/20240826074452.1490072-6-yukuai1@huaweicloud.com
 Signed-off-by: Song Liu <song@kernel.org>
 Stable-dep-of: 8d28d0ddb986 ("md/md-bitmap: Synchronize bitmap_get_stats() with bitmap lifetime")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c | 25 ++++++-------------------
- drivers/md/md-bitmap.h |  8 +++++++-
- drivers/md/md.c        | 29 ++++++++++++++++++++++++++++-
- 3 files changed, 41 insertions(+), 21 deletions(-)
+ drivers/md/md-cluster.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 2085b1705f144..f7b02d87a6da7 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -2112,32 +2112,19 @@ int md_bitmap_copy_from_slot(struct mddev *mddev, int slot,
- }
- EXPORT_SYMBOL_GPL(md_bitmap_copy_from_slot);
+diff --git a/drivers/md/md-cluster.c b/drivers/md/md-cluster.c
+index 1e26eb2233495..ca4d3a8d5dd76 100644
+--- a/drivers/md/md-cluster.c
++++ b/drivers/md/md-cluster.c
+@@ -1200,7 +1200,7 @@ static int cluster_check_sync_size(struct mddev *mddev)
+ 	struct dlm_lock_resource *bm_lockres;
  
--
--void md_bitmap_status(struct seq_file *seq, struct bitmap *bitmap)
-+int md_bitmap_get_stats(struct bitmap *bitmap, struct md_bitmap_stats *stats)
- {
--	unsigned long chunk_kb;
- 	struct bitmap_counts *counts;
+ 	sb = kmap_atomic(bitmap->storage.sb_page);
+-	my_sync_size = sb->sync_size;
++	my_sync_size = le64_to_cpu(sb->sync_size);
+ 	kunmap_atomic(sb);
  
- 	if (!bitmap)
--		return;
-+		return -ENOENT;
+ 	for (i = 0; i < node_num; i++) {
+@@ -1232,8 +1232,8 @@ static int cluster_check_sync_size(struct mddev *mddev)
  
- 	counts = &bitmap->counts;
-+	stats->missing_pages = counts->missing_pages;
-+	stats->pages = counts->pages;
-+	stats->file = bitmap->storage.file;
- 
--	chunk_kb = bitmap->mddev->bitmap_info.chunksize >> 10;
--	seq_printf(seq, "bitmap: %lu/%lu pages [%luKB], "
--		   "%lu%s chunk",
--		   counts->pages - counts->missing_pages,
--		   counts->pages,
--		   (counts->pages - counts->missing_pages)
--		   << (PAGE_SHIFT - 10),
--		   chunk_kb ? chunk_kb : bitmap->mddev->bitmap_info.chunksize,
--		   chunk_kb ? "KB" : "B");
--	if (bitmap->storage.file) {
--		seq_printf(seq, ", file: ");
--		seq_file_path(seq, bitmap->storage.file, " \t\n");
--	}
--
--	seq_printf(seq, "\n");
-+	return 0;
- }
- 
- int md_bitmap_resize(struct bitmap *bitmap, sector_t blocks,
-diff --git a/drivers/md/md-bitmap.h b/drivers/md/md-bitmap.h
-index 8b89e260a93b7..60b86ee939081 100644
---- a/drivers/md/md-bitmap.h
-+++ b/drivers/md/md-bitmap.h
-@@ -234,6 +234,12 @@ struct bitmap {
- 	int cluster_slot;		/* Slot offset for clustered env */
- };
- 
-+struct md_bitmap_stats {
-+	unsigned long	missing_pages;
-+	unsigned long	pages;
-+	struct file	*file;
-+};
-+
- /* the bitmap API */
- 
- /* these are used only by md/bitmap */
-@@ -244,7 +250,7 @@ void md_bitmap_destroy(struct mddev *mddev);
- 
- void md_bitmap_print_sb(struct bitmap *bitmap);
- void md_bitmap_update_sb(struct bitmap *bitmap);
--void md_bitmap_status(struct seq_file *seq, struct bitmap *bitmap);
-+int md_bitmap_get_stats(struct bitmap *bitmap, struct md_bitmap_stats *stats);
- 
- int  md_bitmap_setallbits(struct bitmap *bitmap);
- void md_bitmap_write_all(struct bitmap *bitmap);
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 27a6a11b71ee4..b73649fd8e039 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -8290,6 +8290,33 @@ static void md_seq_stop(struct seq_file *seq, void *v)
- 	spin_unlock(&all_mddevs_lock);
- }
- 
-+static void md_bitmap_status(struct seq_file *seq, struct mddev *mddev)
-+{
-+	struct md_bitmap_stats stats;
-+	unsigned long used_pages;
-+	unsigned long chunk_kb;
-+	int err;
-+
-+	err = md_bitmap_get_stats(mddev->bitmap, &stats);
-+	if (err)
-+		return;
-+
-+	chunk_kb = mddev->bitmap_info.chunksize >> 10;
-+	used_pages = stats.pages - stats.missing_pages;
-+
-+	seq_printf(seq, "bitmap: %lu/%lu pages [%luKB], %lu%s chunk",
-+		   used_pages, stats.pages, used_pages << (PAGE_SHIFT - 10),
-+		   chunk_kb ? chunk_kb : mddev->bitmap_info.chunksize,
-+		   chunk_kb ? "KB" : "B");
-+
-+	if (stats.file) {
-+		seq_puts(seq, ", file: ");
-+		seq_file_path(seq, stats.file, " \t\n");
-+	}
-+
-+	seq_putc(seq, '\n');
-+}
-+
- static int md_seq_show(struct seq_file *seq, void *v)
- {
- 	struct mddev *mddev = list_entry(v, struct mddev, all_mddevs);
-@@ -8365,7 +8392,7 @@ static int md_seq_show(struct seq_file *seq, void *v)
- 		} else
- 			seq_printf(seq, "\n       ");
- 
--		md_bitmap_status(seq, mddev->bitmap);
-+		md_bitmap_status(seq, mddev);
- 
- 		seq_printf(seq, "\n");
- 	}
+ 		sb = kmap_atomic(bitmap->storage.sb_page);
+ 		if (sync_size == 0)
+-			sync_size = sb->sync_size;
+-		else if (sync_size != sb->sync_size) {
++			sync_size = le64_to_cpu(sb->sync_size);
++		else if (sync_size != le64_to_cpu(sb->sync_size)) {
+ 			kunmap_atomic(sb);
+ 			md_bitmap_free(bitmap);
+ 			return -1;
 -- 
 2.39.5
 
