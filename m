@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB27F2629F;
-	Mon, 24 Feb 2025 14:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FDD2192E8;
+	Mon, 24 Feb 2025 14:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408187; cv=none; b=slHXYFax2ilHdafyQGYBt3HBMwP18DWiVJDDOqtVjVFZFvx35uaC2G0tZJXRrZiBax9zjsv45F09nxyZqALWwgvQ17J6K8jrBDRN16nx1Q9c3DlChwTyPuJvPeh+sVmP6+w2DO+pUnJZO/nukDBCGOJeunlrzo5Rrp7qb7rfoQw=
+	t=1740408191; cv=none; b=br4aZTJhlAtjNVUVfYmMYJXWY9z6GBr3lj01vFUHphTPLlsv7sRjiYjaqDENT/PDCXEj8oUE7xeeETp6SSaqQRI8peDN+Oj/eCtIwVpaeD14hZFkxgMcYI0GTjix0A+KCtEkDMwTWyZyjHMokbmjJdQRfxyn3vo3LG8DGmIQBo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408187; c=relaxed/simple;
-	bh=+M5YfdWEhXlsurBmpzciMDYSOMRfCi6+dtbrpybF62g=;
+	s=arc-20240116; t=1740408191; c=relaxed/simple;
+	bh=zbrax0Tv0N6hSSUEJV5wgQwXRzcoN1zIz/6kX+VUuPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bD8h03eROx1MDR4JwW4OqyWGISHMK0YHYZT3PHfYaoWpOdkbjvXPl4Zs1veY5mkd+RsBk4OJVRaklgwdctQ+xyFeDkDaxL0RSCAIg4Ok6nJQABCBGu+eibJMvzAzD5czSPakHPr/RP4t+6qQjrNRLpuIEexqj3L9nbKls1Y7CBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1aSoAxfQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EtcFMmPXw6jI3RirWRoDetlvJDDWalXlQ353GptQKZZFtyiZvWCj4QPl83u6R0+SkvmR7eIzzmwbpe0p55Z7GPG/qL4kBCGWDCvd52OoAa1MOnv+DuLkfLh7Vt056K2Hao94xJEdUx7QovDpU8h0rj4m6OHFnNImXbuXFt/16+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igOfmg9I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1aSoAxfQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F2E4C4CEF0;
-	Mon, 24 Feb 2025 14:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igOfmg9I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959F7C4CED6;
+	Mon, 24 Feb 2025 14:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408187;
-	bh=+M5YfdWEhXlsurBmpzciMDYSOMRfCi6+dtbrpybF62g=;
+	s=korg; t=1740408191;
+	bh=zbrax0Tv0N6hSSUEJV5wgQwXRzcoN1zIz/6kX+VUuPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1aSoAxfQhkvhSewJdwI9SX67BAwYG9Y7Z+dE7ep1Xt9KFWNDZQqNrFH2mBW7Yfvn9
-	 zW/QxpD2RT/edEkIIBenJsc9/n6rlNfBzhfKKKle22ILQpcdm4E6jmZ1QVySNRJOIm
-	 OWvURVbTX9csHnQ6wZuAjdGy1nxZlljyIjhoo1vQ=
+	b=igOfmg9INcyoseMUO2j/CuN6mxVV6PC99meFQoCfvU27E4xNu2sfcBcGuu/8c8vRu
+	 wke3ExunLBI1nBOHDt3ncoHolBo/aIjwHpn9o0Ok6/V2Cn8XB+PmbV0Kz4Cx8gCn5G
+	 dIsQiHIgcP4WV394tkdgGApmobezx62tABEYts7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niravkumar L Rabara <niravkumar.l.rabara@intel.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.6 125/140] mtd: rawnand: cadence: fix error code in cadence_nand_init()
-Date: Mon, 24 Feb 2025 15:35:24 +0100
-Message-ID: <20250224142607.921139132@linuxfoundation.org>
+	Jiayuan Chen <mrpre@163.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 099/140] bpf: Disable non stream socket for strparser
+Date: Mon, 24 Feb 2025 15:34:58 +0100
+Message-ID: <20250224142606.906731813@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -50,39 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
+From: Jiayuan Chen <mrpre@163.com>
 
-commit 2b9df00cded911e2ca2cfae5c45082166b24f8aa upstream.
+[ Upstream commit 5459cce6bf49e72ee29be21865869c2ac42419f5 ]
 
-Replace dma_request_channel() with dma_request_chan_by_mask() and use
-helper functions to return proper error code instead of fixed -EBUSY.
+Currently, only TCP supports strparser, but sockmap doesn't intercept
+non-TCP connections to attach strparser. For example, with UDP, although
+the read/write handlers are replaced, strparser is not executed due to
+the lack of a read_sock operation.
 
-Fixes: ec4ba01e894d ("mtd: rawnand: Add new Cadence NAND driver to MTD subsystem")
-Cc: stable@vger.kernel.org
-Signed-off-by: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Furthermore, in udp_bpf_recvmsg(), it checks whether the psock has data,
+and if not, it falls back to the native UDP read interface, making
+UDP + strparser appear to read correctly. According to its commit history,
+this behavior is unexpected.
+
+Moreover, since UDP lacks the concept of streams, we intercept it directly.
+
+Fixes: 1fa1fe8ff161 ("bpf, sockmap: Test shutdown() correctly exits epoll and recv()=0")
+Signed-off-by: Jiayuan Chen <mrpre@163.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://patch.msgid.link/20250122100917.49845-4-mrpre@163.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/cadence-nand-controller.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ net/core/sock_map.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/cadence-nand-controller.c
-+++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
-@@ -2909,11 +2909,10 @@ static int cadence_nand_init(struct cdns
- 	dma_cap_set(DMA_MEMCPY, mask);
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index dcc0f31a17a8d..3a53b6a0e76e2 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -300,7 +300,10 @@ static int sock_map_link(struct bpf_map *map, struct sock *sk)
  
- 	if (cdns_ctrl->caps1->has_dma) {
--		cdns_ctrl->dmac = dma_request_channel(mask, NULL, NULL);
--		if (!cdns_ctrl->dmac) {
--			dev_err(cdns_ctrl->dev,
--				"Unable to get a DMA channel\n");
--			ret = -EBUSY;
-+		cdns_ctrl->dmac = dma_request_chan_by_mask(&mask);
-+		if (IS_ERR(cdns_ctrl->dmac)) {
-+			ret = dev_err_probe(cdns_ctrl->dev, PTR_ERR(cdns_ctrl->dmac),
-+					    "%d: Failed to get a DMA channel\n", ret);
- 			goto disable_irq;
- 		}
- 	}
+ 	write_lock_bh(&sk->sk_callback_lock);
+ 	if (stream_parser && stream_verdict && !psock->saved_data_ready) {
+-		ret = sk_psock_init_strp(sk, psock);
++		if (sk_is_tcp(sk))
++			ret = sk_psock_init_strp(sk, psock);
++		else
++			ret = -EOPNOTSUPP;
+ 		if (ret) {
+ 			write_unlock_bh(&sk->sk_callback_lock);
+ 			sk_psock_put(sk, psock);
+-- 
+2.39.5
+
 
 
