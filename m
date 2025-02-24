@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA2F2571CE;
-	Mon, 24 Feb 2025 14:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D49192D9D;
+	Mon, 24 Feb 2025 14:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408439; cv=none; b=UjlfIJC5IYSfMOiEpdeQPkj3KrNzRpS2aQrhe3KZI87AeUU685ze7KSSBLgl02XvN8PtoLyl68jOVzouBp/W7sWG5iRf8lFY069ws6lTU11mtCC+GXNM7DTqNRJoTsIhRegwe6NZIjx9auw3T/BNPwP220BeIu0vZE9J8MUtask=
+	t=1740408443; cv=none; b=mFT9dLF4bylro4N1RAE2D4QpiodCjLIH6rdblKfehHv0Kb3+8WbLLXB1jc3ycw+p+hb6nsE0iBRzAAhjYp3HVCayCH50lYfETLKm0fslYJLsgco7irn+bbMEQVkkxR3CsFDfppUafcL4csTMBsNijaoYaPyP0voJIIezz5WLQlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408439; c=relaxed/simple;
-	bh=W02ISFssbtXD5wXs8qbeSsDfbd41zDKgnNkovUqfHSk=;
+	s=arc-20240116; t=1740408443; c=relaxed/simple;
+	bh=yiQidxdVlLXjSXSMz3zOKVCadgtufD8Bf7e5ygkMLdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FnIONzb5YZ0jFsDKBdcruVmleeWtamO3/Oco+i6ZvZd2L9MWS/H9ta5J4TC0XVxat7F6Kxn4mFjiSNXS9Lfy/KhnuRu5s6SOQxqxP7eaCkHUNt/OIgmlXa6G/fwQ9wUNV7WZTqiEvB0FnANzOxff1pgTa5t5JhOsxF7ZXCAN5Mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lvfi0UYR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LjtCzuABaUXpd87fqOy14TCLRvMdM94e13oFijcgECeIkEYeDRo5d+H9LT/x8hOt2/qrZCI/A5Xt35EeqRJhRVMH/enM6N4mNtUQpZG1bhf+tNjTTwGcBE5nste/1SeHMKg7iIU7eOHT0UTQ13zwaaDFPYQv/8HsHwJzUFqbBPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mc8zfVkk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lvfi0UYR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF2CC4CED6;
-	Mon, 24 Feb 2025 14:47:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mc8zfVkk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73317C4CED6;
+	Mon, 24 Feb 2025 14:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408439;
-	bh=W02ISFssbtXD5wXs8qbeSsDfbd41zDKgnNkovUqfHSk=;
+	s=korg; t=1740408442;
+	bh=yiQidxdVlLXjSXSMz3zOKVCadgtufD8Bf7e5ygkMLdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lvfi0UYRweSctLjhxnWzBg0NWq0mzYGO67cdMIDwHv/BWGjJqCamukIdw0Q+zqBod
-	 2mOwcNU3PQTsYfJb2XjIh/0Wico68wkorzJDNqK8KPtTibZQUaeMBJ/wfgR8gUjOTP
-	 /KDmghwURkfw2TkklGnfxMHhxPUYuf5t32Weoh6k=
+	b=Mc8zfVkkZoWvXu7BUb0bKIASgKhr2IZzjfwrgrFjARhVx53WsTRuTtBZwEu93Zoxx
+	 G0SNIcuITZZQJLtlEXii5sdVFe1hJB8VDcEzeOHW7s0fvj4n3uMY9KJ4r0OCFk/Uxf
+	 GINqJQHaTI7xtNbAVrZZYfOdQliM5U2QYWYdAbhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	Philipp Stanner <pstanner@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/154] ASoC: renesas: rz-ssi: Add a check for negative sample_space
-Date: Mon, 24 Feb 2025 15:33:45 +0100
-Message-ID: <20250224142608.107743378@linuxfoundation.org>
+Subject: [PATCH 6.12 027/154] PCI: Make pcim_request_all_regions() a public function
+Date: Mon, 24 Feb 2025 15:33:46 +0100
+Message-ID: <20250224142608.149696252@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -46,49 +47,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Philipp Stanner <pstanner@redhat.com>
 
-[ Upstream commit 82a0a3e6f8c02b3236b55e784a083fa4ee07c321 ]
+[ Upstream commit d9d959c36bec59f11c0eb6b5308729e3c4901b5e ]
 
-My static checker rule complains about this code.  The concern is that
-if "sample_space" is negative then the "sample_space >= runtime->channels"
-condition will not work as intended because it will be type promoted to a
-high unsigned int value.
+In order to remove the deprecated function
+pcim_iomap_regions_request_all(), a few drivers need an interface to
+request all BARs a PCI device offers.
 
-strm->fifo_sample_size is SSI_FIFO_DEPTH (32).  The SSIFSR_TDC_MASK is
-0x3f.  Without any further context it does seem like a reasonable warning
-and it can't hurt to add a check for negatives.
+Make pcim_request_all_regions() a public interface.
 
-Cc: stable@vger.kernel.org
-Fixes: 03e786bd4341 ("ASoC: sh: Add RZ/G2L SSIF-2 driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/e07c3dc5-d885-4b04-a742-71f42243f4fd@stanley.mountain
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20241030112743.104395-2-pstanner@redhat.com
+Signed-off-by: Philipp Stanner <pstanner@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: d555ed45a5a1 ("PCI: Restore original INTX_DISABLE bit by pcim_intx()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sh/rz-ssi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/devres.c | 3 ++-
+ include/linux/pci.h  | 1 +
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sh/rz-ssi.c b/sound/soc/sh/rz-ssi.c
-index 1b74dc1137958..4f483bfa584f5 100644
---- a/sound/soc/sh/rz-ssi.c
-+++ b/sound/soc/sh/rz-ssi.c
-@@ -528,6 +528,8 @@ static int rz_ssi_pio_send(struct rz_ssi_priv *ssi, struct rz_ssi_stream *strm)
- 	sample_space = strm->fifo_sample_size;
- 	ssifsr = rz_ssi_reg_readl(ssi, SSIFSR);
- 	sample_space -= (ssifsr >> SSIFSR_TDC_SHIFT) & SSIFSR_TDC_MASK;
-+	if (sample_space < 0)
-+		return -EINVAL;
+diff --git a/drivers/pci/devres.c b/drivers/pci/devres.c
+index b133967faef84..2a64da5c91fb9 100644
+--- a/drivers/pci/devres.c
++++ b/drivers/pci/devres.c
+@@ -939,7 +939,7 @@ static void pcim_release_all_regions(struct pci_dev *pdev)
+  * desired, release individual regions with pcim_release_region() or all of
+  * them at once with pcim_release_all_regions().
+  */
+-static int pcim_request_all_regions(struct pci_dev *pdev, const char *name)
++int pcim_request_all_regions(struct pci_dev *pdev, const char *name)
+ {
+ 	int ret;
+ 	int bar;
+@@ -957,6 +957,7 @@ static int pcim_request_all_regions(struct pci_dev *pdev, const char *name)
  
- 	/* Only add full frames at a time */
- 	while (frames_left && (sample_space >= runtime->channels)) {
+ 	return ret;
+ }
++EXPORT_SYMBOL(pcim_request_all_regions);
+ 
+ /**
+  * pcim_iomap_regions_request_all - Request all BARs and iomap specified ones
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 4e77c4230c0a1..000965a713edf 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -2293,6 +2293,7 @@ static inline void pci_fixup_device(enum pci_fixup_pass pass,
+ 				    struct pci_dev *dev) { }
+ #endif
+ 
++int pcim_request_all_regions(struct pci_dev *pdev, const char *name);
+ void __iomem *pcim_iomap(struct pci_dev *pdev, int bar, unsigned long maxlen);
+ void __iomem *pcim_iomap_region(struct pci_dev *pdev, int bar,
+ 				const char *name);
 -- 
 2.39.5
 
