@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06425254846;
-	Mon, 24 Feb 2025 14:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3713254849;
+	Mon, 24 Feb 2025 14:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408873; cv=none; b=GUqI9X4RIWLFvF25K7K1dWYmCX5Yyd8vJLnWc6BvUGWE+BUJ3jVqL1P4p18u54B7+5wXK6xAEiJgfT+G1KVccD/x6Am3N+poAw8jbgyCfSx3H2CFz4HLn352gGU65ZAZjkHBlnLO4heypzTX59QNbSj9zuTvCGkq5SXzE+EFxds=
+	t=1740408875; cv=none; b=aM5cU6j5SsVzXmLX+NUEUakODYjtl5jRCdZoXt8YvJ/DWjE1svpUaQzGseWj8Cs3jQS4m14k9eaa54kSqdP2QKWW5oAZNMAnHybAkHhc9t5S43t8S8jSdMWIEUAsCFTGFXZnUHP3JBHjXBjrhORsNyR0jeR9hpe03bQr35YxLKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408873; c=relaxed/simple;
-	bh=hG0YSGFoQ9zoDGMvh+8zWtjGVgXyBitDIjjot95GPHY=;
+	s=arc-20240116; t=1740408875; c=relaxed/simple;
+	bh=q0fdf0tcqEiWlMVWIL38NQ8QNddob6HkH3Y2svCQqII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dlyOYNGU/Mwye60bBTyacuWtTiy/6q70AJJLOmYh0E16T3RhWCLNmEz+81VwxKEpjeOwMWpxChuRcLvy7faFTUzIqMv6at9tc63UVWJ+UfmF7z0YWdKkgTRWP+EzOppT6YPLHJmPSnKmRZPpe8bWkAQsuf91saqw9SziAq4kApc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KqAm6n8K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CWvBnBHtuYX3ZGWfI2YIBTtjjmQKsv42/YZtNJ/KErOKCACRiqRvZLFpMmiu/0c/nJ8fMJOStB1IzUxP/SaW3cqdK3EHGXLMh/TGInJ7QAalanJ8jqN+STImQrFIF+MyX7ke9NSYJXYG1LvUZG+4ZoNS3+c/esb2u99fXGzGWvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQrh6nqG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KqAm6n8K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA60C4CED6;
-	Mon, 24 Feb 2025 14:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQrh6nqG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7BFC4CEE6;
+	Mon, 24 Feb 2025 14:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408872;
-	bh=hG0YSGFoQ9zoDGMvh+8zWtjGVgXyBitDIjjot95GPHY=;
+	s=korg; t=1740408875;
+	bh=q0fdf0tcqEiWlMVWIL38NQ8QNddob6HkH3Y2svCQqII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KqAm6n8K7PrQrvVUKn56/kB5bNXbqqydkbVRcl5r9ETmYHrgzHngzJ4GQq26WEj+1
-	 9WB3GcYgP/zvC1N9/mZk3QNrPR9gTFKXi8QJ0lPW9BTaCdif7YGXfE3qS20vd7ke49
-	 yTbItfFZDZDri2NrR3I5k4RjVaw2YzeuF8yhXy+A=
+	b=tQrh6nqGFzxdfH124PMUes5Z2lSa80X8qBNK+00w3ak1jBonHRD0g2TUQ1ePE/rFb
+	 Thtx5+yXZ9YNTCcGEWqpWnajeJR6ON1JC5Auibduj2muv7g8nzDtjhvScSXHRDKyfc
+	 KT8L5tsjNOybnj9e/EkVrbaPFLBVrajMJw1ua3dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Julian Ruess <julianr@linux.ibm.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 023/138] powerpc/64s: Rewrite __real_pte() and __rpte_to_hidx() as static inline
-Date: Mon, 24 Feb 2025 15:34:13 +0100
-Message-ID: <20250224142605.381111853@linuxfoundation.org>
+Subject: [PATCH 6.13 032/138] s390/ism: add release function for struct device
+Date: Mon, 24 Feb 2025 15:34:22 +0100
+Message-ID: <20250224142605.731558447@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -53,61 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Julian Ruess <julianr@linux.ibm.com>
 
-[ Upstream commit 61bcc752d1b81fde3cae454ff20c1d3c359df500 ]
+[ Upstream commit 915e34d5ad35a6a9e56113f852ade4a730fb88f0 ]
 
-Rewrite __real_pte() and __rpte_to_hidx() as static inline in order to
-avoid following warnings/errors when building with 4k page size:
+According to device_release() in /drivers/base/core.c,
+a device without a release function is a broken device
+and must be fixed.
 
-	  CC      arch/powerpc/mm/book3s64/hash_tlb.o
-	arch/powerpc/mm/book3s64/hash_tlb.c: In function 'hpte_need_flush':
-	arch/powerpc/mm/book3s64/hash_tlb.c:49:16: error: variable 'offset' set but not used [-Werror=unused-but-set-variable]
-	   49 |         int i, offset;
-	      |                ^~~~~~
+The current code directly frees the device after calling device_add()
+without waiting for other kernel parts to release their references.
+Thus, a reference could still be held to a struct device,
+e.g., by sysfs, leading to potential use-after-free
+issues if a proper release function is not set.
 
-	  CC      arch/powerpc/mm/book3s64/hash_native.o
-	arch/powerpc/mm/book3s64/hash_native.c: In function 'native_flush_hash_range':
-	arch/powerpc/mm/book3s64/hash_native.c:782:29: error: variable 'index' set but not used [-Werror=unused-but-set-variable]
-	  782 |         unsigned long hash, index, hidx, shift, slot;
-	      |                             ^~~~~
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501081741.AYFwybsq-lkp@intel.com/
-Fixes: ff31e105464d ("powerpc/mm/hash64: Store the slot information at the right offset for hugetlb")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/e0d340a5b7bd478ecbf245d826e6ab2778b74e06.1736706263.git.christophe.leroy@csgroup.eu
+Fixes: 8c81ba20349d ("net/smc: De-tangle ism and smc device initialization")
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
+Signed-off-by: Julian Ruess <julianr@linux.ibm.com>
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250214120137.563409-1-wintera@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/book3s/64/hash-4k.h | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/s390/net/ism_drv.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/book3s/64/hash-4k.h b/arch/powerpc/include/asm/book3s/64/hash-4k.h
-index c3efacab4b941..aa90a048f319a 100644
---- a/arch/powerpc/include/asm/book3s/64/hash-4k.h
-+++ b/arch/powerpc/include/asm/book3s/64/hash-4k.h
-@@ -77,9 +77,17 @@
- /*
-  * With 4K page size the real_pte machinery is all nops.
-  */
--#define __real_pte(e, p, o)		((real_pte_t){(e)})
-+static inline real_pte_t __real_pte(pte_t pte, pte_t *ptep, int offset)
-+{
-+	return (real_pte_t){pte};
-+}
-+
- #define __rpte_to_pte(r)	((r).pte)
--#define __rpte_to_hidx(r,index)	(pte_val(__rpte_to_pte(r)) >> H_PAGE_F_GIX_SHIFT)
-+
-+static inline unsigned long __rpte_to_hidx(real_pte_t rpte, unsigned long index)
-+{
-+	return pte_val(__rpte_to_pte(rpte)) >> H_PAGE_F_GIX_SHIFT;
-+}
+diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
+index e36e3ea165d3b..2f34761e64135 100644
+--- a/drivers/s390/net/ism_drv.c
++++ b/drivers/s390/net/ism_drv.c
+@@ -588,6 +588,15 @@ static int ism_dev_init(struct ism_dev *ism)
+ 	return ret;
+ }
  
- #define pte_iterate_hashed_subpages(rpte, psize, va, index, shift)       \
- 	do {							         \
++static void ism_dev_release(struct device *dev)
++{
++	struct ism_dev *ism;
++
++	ism = container_of(dev, struct ism_dev, dev);
++
++	kfree(ism);
++}
++
+ static int ism_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ {
+ 	struct ism_dev *ism;
+@@ -601,6 +610,7 @@ static int ism_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	dev_set_drvdata(&pdev->dev, ism);
+ 	ism->pdev = pdev;
+ 	ism->dev.parent = &pdev->dev;
++	ism->dev.release = ism_dev_release;
+ 	device_initialize(&ism->dev);
+ 	dev_set_name(&ism->dev, dev_name(&pdev->dev));
+ 	ret = device_add(&ism->dev);
+@@ -637,7 +647,7 @@ static int ism_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	device_del(&ism->dev);
+ err_dev:
+ 	dev_set_drvdata(&pdev->dev, NULL);
+-	kfree(ism);
++	put_device(&ism->dev);
+ 
+ 	return ret;
+ }
+@@ -682,7 +692,7 @@ static void ism_remove(struct pci_dev *pdev)
+ 	pci_disable_device(pdev);
+ 	device_del(&ism->dev);
+ 	dev_set_drvdata(&pdev->dev, NULL);
+-	kfree(ism);
++	put_device(&ism->dev);
+ }
+ 
+ static struct pci_driver ism_driver = {
 -- 
 2.39.5
 
