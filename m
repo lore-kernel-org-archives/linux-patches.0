@@ -1,144 +1,242 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2059.outbound.protection.outlook.com [40.107.243.59])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D9A24394F
-	for <patches@lists.linux.dev>; Mon, 24 Feb 2025 18:22:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740421346; cv=none; b=sEKiWwmMbJXpSoNeRAfRIEm1IGhA5+z9ler0Xvj3z7SYL/lxthHm9K/DZts6tPUZkn92VW//BbL0u1AfLeLzpDOWqDyGkk4UVMOXYfarSmavwNI9HR26fqpoejwQeibmUyaWEna3lcmg68EDfQJ1cKIvMpn/eVTvQl9+EGgGLbg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740421346; c=relaxed/simple;
-	bh=naeVgrzsbRbKEcFwVbhDb2hcvAba94hy6j1nys2AWcE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U7vqhpRd5uyqcM1xQ3CJ4/y14d+H3xcQqg5G4ZgcVxZbE0IKiPyMoLildWHEUZWfZ3Fba3nPTuR6HKksZBUMHrjCdpo6JoXf07CaVstJM5mAkWaZMs9uhmWmh2xPW9xzE5sfUXR2D/onxXRyS9PXuRAl+dtzP/39fjNQpZQ/oSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ksWL88Ki; arc=none smtp.client-ip=209.85.210.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB10C1EA7E9;
+	Mon, 24 Feb 2025 19:37:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.59
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1740425848; cv=fail; b=VbY7O7PAiZ/NPpcAkPcVQ6vxSNiKX6ObvMJCLP041+etQyxk3CrijTGeGhtQHfauvf/STYuG3c0Cd6+NGhQGZlqF4JyA420gx2K2uXMibHnW60LGxFce9HiX3W09CvcsPuwi51IlN5WoEP6iZ4NfLmebEDqQezcaDC+HWLp7RZ0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1740425848; c=relaxed/simple;
+	bh=9PK0oOhfY8jhReLtdUDa5jmMZYbuOKbnJRlmU8z5GtA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=j89xbF+O7DryZJrlgnJOSTb58X1NUFFj7uMivPPe6I6io0gpqn51saaZlMOgghY8nLYIC4cVFEsngixaZW4c48X8NYF6wwWiWuLAgKuweeY3Idop6PzoD3Ms0/hTrQwfTz9Q+HptiaTXNmDOtta9oHvzFg8g2zWkbej5gpTOQ9g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=LmaKCIc8; arc=fail smtp.client-ip=40.107.243.59
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ksWL88Ki"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-727295a84c3so1280349a34.3
-        for <patches@lists.linux.dev>; Mon, 24 Feb 2025 10:22:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740421343; x=1741026143; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=UdKEHmyMd5H47y39cmettl3IA1fNENE9xIH3vBcrpPQ=;
-        b=ksWL88Ki9ihcPGaES/cgVf7ll4ZAWjgaic/+Qa00XXHTJoEh/an9yI/g2FDd75fCb4
-         lnOXR511f/Eqz0LOiKP1ctvOim/3qphvhEuBVAs7ftynoSkRlfgnGpRPHHIucPO/bbo/
-         Uni6p0JvB7esxCn+9kA2Gf2b8kpY4hAK+Hf8yZcdRuxcj3EYyvX9neXvMttBEXgZajB4
-         Gvy3PKiLFXRGi609L7rEa1fgMG8ErCde23Vskik7xSo+iRMgis72Sbjo9hqv/WmaDjCD
-         3/xk8ayq/IBtix+ov4vkTQ3j+qqn7ISEnJ4pch3fZvsewzYuuMnSt/FXC/xkEYviBac3
-         4rcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740421343; x=1741026143;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UdKEHmyMd5H47y39cmettl3IA1fNENE9xIH3vBcrpPQ=;
-        b=RojH5Emz4ha4N6zgLihfxhr5Kk576ZX531L02vImTAiQmuiYPUiaHFDVbEPi5w+b44
-         tZSCmLcJz2Yn/6PTiR5VznYSpx97f95Kxu9sbq3xC9PO+u/zaGtS5XkATvYA/vxxgUCI
-         T0deuUqAcy/MP34dCZEtA9GEs4hg/lGfTzbNZsPWILUMm2JDi3wqAkAiuWPY/OqQavak
-         UYCrvHZtqwFnWpxlgzZauFnv2BGT5YmwYIsGbVNuakRWmiJgm3B2feor4hpW65Zy8K4X
-         1wVK8gD51pIZ1+dezsSnQvMXTltIBi48Dmrrt85hRhf9p9AwEcmP6X3zlF0XYpgvN1J7
-         zSfA==
-X-Gm-Message-State: AOJu0Yx4k9i2m6Si0SawhLbIKsrodXej7W4rHiA4eGNgIZPx4cHkkKVV
-	0shxuyzKUw/OLqeaGKd4A2i4J2YP4qpfy4P5CtmnTxyGVzhHHPfm
-X-Gm-Gg: ASbGncsG+NFTIJ+80agcZIF1uguOmmBjeH3xDIlNPF1j2nK42h2bpqPeaGNfSmHVHtp
-	84EttPBEGBIfnIdVcjLQm80DNAqd00Md+l4SlckbxjbcaZ69vvY2ZKNqeKSbedZI/srTOMc7YKI
-	v8x4vs5QfZwn5cStZFWA9QVNyCqwUXp2v8THcGu/AVjCiY1KDS5F6a/zsE0Gp+ewM/uB13HZiQr
-	DVCNLGCeXdRMLNR8tmVcbnmGsAk1Vniw4D/1sfgKnaIQJO1noWWm9r7I4Tma+OIClXijn3ZhOXR
-	kRYrFzoC8uUPGhRLR+c+zN6SB1DSsouxJqhznT/m9Q==
-X-Google-Smtp-Source: AGHT+IE8yA1C9t9rSYbPuuyP8P6ehNeV+szdw5a8Yk0mho2cX/JB4I9hh8GU6Uw/l0HXkhoC4wvt/Q==
-X-Received: by 2002:a05:6830:2b14:b0:727:38a3:8a63 with SMTP id 46e09a7af769-7289d15ad9dmr257289a34.21.1740421343508;
-        Mon, 24 Feb 2025 10:22:23 -0800 (PST)
-Received: from [192.168.99.86] ([216.14.52.203])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7273b0d30f7sm2332167a34.59.2025.02.24.10.22.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 24 Feb 2025 10:22:22 -0800 (PST)
-Message-ID: <226b50e8-0e17-4842-b2f0-c8c84d59177f@gmail.com>
-Date: Mon, 24 Feb 2025 10:22:21 -0800
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="LmaKCIc8"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=lEaEFYRlXyxPUFvOTfQTv15Rp9sqac5zhwBMZrXCPhewNXcsa4R075rNgDIt89XRUD1RSK8uti5J0JOZ95OZs5KGVdQJc064F4diS3O7kPnPyCbrvpvZc1hbi035Vfr5PfIof3KUwwnuaHL1x62D7T3Rh3ZqmHV6KT5jB+/ksYtTmIDT6BrCdfgf/AuQ3EyevCBnKwa8gSu3EIUvKlcU6tnSa9T7AkNBcPCZR14UevAiQWgGKPL5rUN7y5avGpZYpeyIwRKRD4/6dA7Hv0xMJivJzcH7/g++5ebo3dtxXi6CpAZ5JXLvPfagqHnYX6fbPgHGEdGYIywCAJmeh8CpBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oBU4JJfnXg4Ctb65DKHYCVbte/sm+D3c7jeeygP7S6A=;
+ b=j/D2sq6vMlGJrMeVRD9UXQSCzoAOqnpP/42Ug91RsikJB3FC3o2sGSvN0z+EM6L0WHedXQYz+/CXWl1KM8n4+He7jCg7zbKVaYagVVWZWGTjyEr6ECbn7GjYE2w3qivR3piLijzhtUCrZzjXxO8HipOuvaZQF3oRPhZ+L8Ek0WJT2cAhfdZZ0prkoaeujMtG/YnSIxwQr5MSac0teKjuzYx9/Q86Kcj44bUrenmxm7nej367fY81xaBPmCwqn4zJcUFuuPBcWS2IrTC0hPtMbebow228tP2aZDQlULmgsp+IInjNnwmgyDrpNIfOfIy187loXBzH/fI2Oawn81Z43A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oBU4JJfnXg4Ctb65DKHYCVbte/sm+D3c7jeeygP7S6A=;
+ b=LmaKCIc8/kdzB/rnTux4Ky5KKALzEo9xih9ytFrqCe5r72K6OGDFnRyxOBzlzxPY0hdmLE8lrp+ZLz29zdWETPv9Wh4c4Pnpzh0HozeP5fzbfJn69JiKPYMXzs3G1IP4puHocUPq+gXAnQNc383q1B6Sno9SeGEXeAb0mGlpmCMz9S3uD0uymZ7GZfrfcBLl3CEDSXtUWZAxyU3eKQaqHMJysR4NSu1Wy6UDXb2enxSX0y/F2UPN+mKb19Jp7KMJOnIB0Y0Mx0rMExHALmhPRaQkoc94uZyS9xeFxUqKfeFr5EdvhfuVn6zuNz5VmGNXy5owGEtxSUcIj7TLWVYOsw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by LV8PR12MB9110.namprd12.prod.outlook.com (2603:10b6:408:18b::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.20; Mon, 24 Feb
+ 2025 19:37:19 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8466.016; Mon, 24 Feb 2025
+ 19:37:18 +0000
+Date: Mon, 24 Feb 2025 15:37:16 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	Robin Murphy <robin.murphy@arm.com>, virtualization@lists.linux.dev,
+	Will Deacon <will@kernel.org>, Eric Auger <eric.auger@redhat.com>,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 1/5] iommu/virtio: Break out bypass identity support into
+ a global static
+Message-ID: <20250224193716.GA524338@nvidia.com>
+References: <0-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
+ <1-v1-91eed9c8014a+53a37-iommu_virtio_domains_jgg@nvidia.com>
+ <20250221113527.GA719702@myrica>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250221113527.GA719702@myrica>
+X-ClientProxiedBy: YQZPR01CA0040.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c01:86::10) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.13 000/138] 6.13.5-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250224142604.442289573@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
- WlfRzlpjIPmdjgoicA==
-In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|LV8PR12MB9110:EE_
+X-MS-Office365-Filtering-Correlation-Id: 781559ba-e0e2-4c28-a731-08dd550aa666
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?tgbcFxeQAncWlOTS5AbH9/qeWbqc/Q+XfPkTLnXrdXL0SnFbeagMmViMCPQy?=
+ =?us-ascii?Q?VLtyvA0qW7Vqs22u/k7eMKo01j2Tse4Giipvn0pkObkICrEHJ0o+YMglgpUc?=
+ =?us-ascii?Q?bMGMbZ2nOUQXZbJkbZxHU2zfiZtqweB8AyHK9obEwiS4/HP/pHylAWWRZiQP?=
+ =?us-ascii?Q?/VEePYKFm8M02PonkYCOzX7Ywe+tSbWU7pv7Hl8cXfCxJHjBS88x3ACwH9oJ?=
+ =?us-ascii?Q?SdyoD1kDUL6XAXvohlx7FYJSka9/UUDDRy4+3BhF0yhObFH7VsYreNPALb5e?=
+ =?us-ascii?Q?dgnSMdqyUyocWQJkPfEue/ouYxi27nDbJXJPYc8Ep6k4/dxElRc7GOGC3SqK?=
+ =?us-ascii?Q?rwO56u+OAchlJn0voaOtxVrWowovs3HpUOoqWLQC5trU6UN1UigC+J5Tci0h?=
+ =?us-ascii?Q?f1zfZHfSFZcPwXnTN17M7hJlnhWmF31CVCoIUJ4A4kRhQkXa8GDnBpQMuEf/?=
+ =?us-ascii?Q?PbCc5aa03sgOpj3pWDc7JUDRtkD+AGSUvYTq2UlCB9Okuy3o69UuRQUxnH1t?=
+ =?us-ascii?Q?05nN2U7UVJJ1GUmi13QIwL0PneoLaIM/00w/SfTTFOOAmf9nGeQTiKo5QYNZ?=
+ =?us-ascii?Q?GoIg746mEtshhU5+mgqSC3QrwGiURhPZk3Ud/sb0IGe6RC7R5ahUVYPm36+h?=
+ =?us-ascii?Q?suM7jm2vh90tMKNwCkkJYVN/210f09AKN4jiLRm/e0cxUjWsCVEcaugI45u8?=
+ =?us-ascii?Q?9kBIBpn73A29NLjZ2qbORXQ2Wql7Vz7AaF/ozaxMZFzCt3MKTQ1Vs5FHGhsP?=
+ =?us-ascii?Q?WeHo5YFQ25cGDNdqgbTtGFuxJUOIm5HAn7SSp7Gv2cgLVzVoiu0E34d/tR2b?=
+ =?us-ascii?Q?X72HDhMNdCtOZmWzu1wbr6z1KhDTwj7A62hwIeshvM6mTjOuCfzht0zXyRRr?=
+ =?us-ascii?Q?iA7renGN1TA7vO30Qke4IP32Sfxe7PUh136A97d5bRusV0zdfDjrgUmTPUTv?=
+ =?us-ascii?Q?AzsiKXvdMh7i3NklRCPY3xJunW0EI5rzv/Wl0XrEcgeJuJIUtpMeM9oICZx1?=
+ =?us-ascii?Q?cwHBujnWl7AWp0kclL/2mDUeSOrOilO8LyjMddphfw57ukMI+CJ7AiLI64XJ?=
+ =?us-ascii?Q?viN1arGKgxfn9Um8apNVZx3C//4Ofc2Yp/08lSh6QYuobQt7B1eye5k0ycWq?=
+ =?us-ascii?Q?tbWd5ZID/ZzVqPo9K/MJXLS3hyOWDUp8jgGtC2qnpd5bpvcvzioJ6Axrkic1?=
+ =?us-ascii?Q?dm6/+VVI7vpnbViSK5ImxqBD9eSqNfiutyvtx/6APxMGlwpNvjBxguNIxIQ9?=
+ =?us-ascii?Q?7QoDtSNZsRvPDls1dTpXfltw3QWnGtWQD+r2tFetz9Xpdo45HiX861iDaWd5?=
+ =?us-ascii?Q?cHmaj4lMFKySFlFjuUPVb/IbtvoIE+07HfU2aqReSk/+ykQ4QNYDTdYe9Zy5?=
+ =?us-ascii?Q?Dak8YIM3fWggTQ8/8cJ/Iap1aeyi?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?ze7GzTs9tc//rtWnURgoEMpL5zZlS2eiErOhHDn0Ko6s0hg5vgzRaAOe2x00?=
+ =?us-ascii?Q?z3jMplPXoszHiHSNDpL5YHiFUIOgumIJ3n5/DsLnB7C3WH9ofpLN/GW1UJZD?=
+ =?us-ascii?Q?MmSDVVo58SqMP5ftROLeFVYnX34SkvlYeSn+T0g5iGIzRwtqf0YTHK9l1F/3?=
+ =?us-ascii?Q?UBhG9oCPiZy1bQ/MBUn9sLnAN4N2dzFhBAvUEu5oEybDcXSCukb9HWJFOMYH?=
+ =?us-ascii?Q?qL6WJjRYIZ3aUHG6im0dnk4OsywBinYVs/nEDCdCdL7o9kZEKrqVDlJLM/iM?=
+ =?us-ascii?Q?E0LxoQEOtdF1+67kPRn6B/Hz7dJiDXHe0dt7L+Q0tt2THGijM2Iu1Y+GSbBp?=
+ =?us-ascii?Q?k04KC/oMnXF6MXD171wwIqows2q0cfwaIavmhWad3hHS7yKCfDlZX/MUrrU+?=
+ =?us-ascii?Q?ks4J8IEPyjAi+icYpd7hZdBBX/YhxSdYtCIVrXZLIXcT4x1OBSn5eZDrulaU?=
+ =?us-ascii?Q?t+Wx8hNkY8AZuJCl/YO8i3RLHmwHudK+5oNwQhgNLRRKQdnRhDs+nVG/xiu+?=
+ =?us-ascii?Q?ZgWqsRX6REh8OSsVXTXUeU7AZCaIWeIX9mMrPYLhoF4vcJ9PUD6+IvIE4stt?=
+ =?us-ascii?Q?wIp0eof4h6s23hNvEdNkk7k0dWHatpYDtmGBHTBnFDComzmF/KlWalCjOfRi?=
+ =?us-ascii?Q?CbDfY1Pnb0AqYwcXeHzlla18Ky1pfCR0X4xIq2X3UPKYzThZg6By213mUwZ5?=
+ =?us-ascii?Q?vWDBR36I5zhvxGGSlJDydJgnrf8ci6OEADWG1Vg80AyVA/krFDzJXpce4JWY?=
+ =?us-ascii?Q?n8qsXCMb5Hi+17ZzJFLlQT9Rhia+IKNeEJSsi6IDa7RjoiY6GJwbU0d+JKN6?=
+ =?us-ascii?Q?jx0sBijGZUHpxaiv7QlL584dVODDFyW32wHfHZHcEqL+nWYZ48GsmwILKi29?=
+ =?us-ascii?Q?QnQLQJwZtM0SRIqJOWiUlIrBi5QN7xUGMthIzVcFwpKUJVfK8N58v1fCuJXI?=
+ =?us-ascii?Q?B2qKsWZnCNAnP/4qy37SfLKKxX6ZTuCMDanJbSKpTjoUfP/HpM4jjXHSxbwy?=
+ =?us-ascii?Q?i6+eP7diVNzSl/8SoRktz8cAWpZQtwMuIFdrTJ77lYpKDo+c+7F2IZ91a4Zs?=
+ =?us-ascii?Q?AFhgumZHSCvBEb5qY9WCA8jJi8/gCwkbeJOm/e/GVEBftE+bspCh/JBdZR6e?=
+ =?us-ascii?Q?7hiw0T+a8la43/WLaitVMUfPm43oL62s+u9p7KSYS+sanvWDaIgq7Bl7gPy3?=
+ =?us-ascii?Q?0uPV+ZHUuovYbLv9Rz3sPdbeVG+H8c6laB5+wPtwWMHrybm0cdnJJE2u+zVD?=
+ =?us-ascii?Q?7jcjSevlA3Q7faJjzpkn8x9um8qIr98fhz2vIrmJMPTwpqErS2xs8gqjM9jF?=
+ =?us-ascii?Q?YaJej/STHH1Vsl+zyHsRS/gP4pU4fyNjs+p+GT/EIz75w1nOslORkqpGTemD?=
+ =?us-ascii?Q?SqZ70gcIR1BDfULA1LSQb4Mlt/uDSIR/p33dMxuwNUvKc6BUgEnx4KuaOICM?=
+ =?us-ascii?Q?RSd1VqEA/sbWVgbEo0E7yfSz1/BqDZjPgJ8ptFzb/G/S1lzWz6DddyizCKEv?=
+ =?us-ascii?Q?cP5CwUtP1MJ5I8uLcCi/o30A0DpDJl2bbkh9RqEk1eeyHeejVAC9fLRNqSLH?=
+ =?us-ascii?Q?Aqkz042KNKSb4HZKP2gh+66jXVbis2blj6jotvDB?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 781559ba-e0e2-4c28-a731-08dd550aa666
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Feb 2025 19:37:18.7979
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4AU2dB6fcCV6mtj2yK9yiTNHWSqYaScQ4SMne6W0liYgWIFmW6pgI64OyrHcy2ED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9110
 
-
-
-On 2/24/2025 6:33 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.13.5 release.
-> There are 138 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Fri, Feb 21, 2025 at 11:35:27AM +0000, Jean-Philippe Brucker wrote:
+> > +static int viommu_attach_identity_domain(struct iommu_domain *domain,
+> > +					 struct device *dev)
+> > +{
+> > +	int ret = 0;
+> > +	struct virtio_iommu_req_attach req;
+> > +	struct viommu_endpoint *vdev = dev_iommu_priv_get(dev);
+> > +	struct viommu_domain *vdomain = to_viommu_domain(domain);
+> > +
+> > +	req = (struct virtio_iommu_req_attach) {
+> > +		.head.type	= VIRTIO_IOMMU_T_ATTACH,
+> > +		.domain		= cpu_to_le32(vdev->viommu->identity_domain_id),
+> > +		.flags          = cpu_to_le32(VIRTIO_IOMMU_ATTACH_F_BYPASS),
+> > +	};
+> > +
+> > +	ret = viommu_send_attach_req(vdev->viommu, dev, &req);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	if (vdev->vdomain) {
+> > +		vdev->vdomain->nr_endpoints--;
+> > +		vdomain->nr_endpoints++;
+> > +		vdev->vdomain = vdomain;
 > 
-> Responses should be made by Wed, 26 Feb 2025 14:25:29 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.13.5-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.13.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> These two need to be unconditional
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Woops yes
 
-Tested-by: FLorian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+> > +static struct viommu_domain viommu_identity_domain = {
+> > +	.domain = { .type = IOMMU_DOMAIN_IDENTITY,
+> > +		    .ops =
+> > +			    &(const struct iommu_domain_ops){
+> > +				    .attach_dev = viommu_attach_identity_domain,
+> > +			    } }
+> > +};
+> 
+> nit: how about
+> 
+> 	static struct viommu_domain viommu_identity_domain = {
+> 		.domain = {
+> 			.type = IOMMU_DOMAIN_IDENTITY,
+> 			.ops = &(const struct iommu_domain_ops) {
+> 				.attach_dev = viommu_attach_identity_domain,
+> 			},
+> 		},
+> 	};
 
+Done
+
+> > +	/* Reserve an ID to use as the bypass domain */
+> > +	if (virtio_has_feature(viommu->vdev, VIRTIO_IOMMU_F_BYPASS_CONFIG)) {
+> > +		viommu->identity_domain_id = viommu->first_domain;
+> > +		viommu->first_domain++;
+> > +	} else {
+> > +		/*
+> > +		 * Assume the VMM is sensible and it either supports bypass on
+> > +		 * all instances or no instances.
+> > +		 */
+> 
+> Maybe also a WARN_ON(!viommu_ops.identity_domain) above?
+
+It starts working in the following patch because the core will call
+viommu_domain_alloc_identity() that can make a correct
+per-device/per-viommu determination of bypass support.
+
+Let me fold this into the next patch to make that clearer:
+
+@@ -998,7 +998,7 @@ static void viommu_get_resv_regions(struct device *dev, struct list_head *head)
+        iommu_dma_get_resv_regions(dev, head);
+ }
+ 
+-static struct iommu_ops viommu_ops;
++static const struct iommu_ops viommu_ops;
+ static struct virtio_driver virtio_iommu_drv;
+ 
+ static int viommu_match_node(struct device *dev, const void *data)
+@@ -1086,8 +1086,7 @@ static bool viommu_capable(struct device *dev, enum iommu_cap cap)
+        }
+ }
+ 
+-static struct iommu_ops viommu_ops = {
+-       .identity_domain        = &viommu_identity_domain.domain,
++static const struct iommu_ops viommu_ops = {
+        .capable                = viommu_capable,
+        .domain_alloc_identity  = viommu_domain_alloc_identity,
+        .domain_alloc_paging    = viommu_domain_alloc_paging,
+@@ -1216,12 +1215,6 @@ static int viommu_probe(struct virtio_device *vdev)
+        if (virtio_has_feature(viommu->vdev, VIRTIO_IOMMU_F_BYPASS_CONFIG)) {
+                viommu->identity_domain_id = viommu->first_domain;
+                viommu->first_domain++;
+-       } else {
+-               /*
+-                * Assume the VMM is sensible and it either supports bypass on
+-                * all instances or no instances.
+-                */
+-               viommu_ops.identity_domain = NULL;
+        }
+
+Jason
