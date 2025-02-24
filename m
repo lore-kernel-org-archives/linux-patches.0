@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506CD14012;
-	Mon, 24 Feb 2025 14:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D8E19CC08;
+	Mon, 24 Feb 2025 14:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408976; cv=none; b=eaZrElVpxJhdsz8oB58U/ipqHCr4NPqEHH8du/i3kXlUFEznCY2eqVhxr2t+BaTfBSHVrrK7hCSzM5iiNJ1mZb4NDlMKRxbRgXZwMQ3XeAqsJ9fq8R+wFS7td8sOcpfnBP1QQyUq+s7UQv1iPwagEqtfYbKVX7j8mbfUid1o8+o=
+	t=1740408979; cv=none; b=jLeWaZ326SQPRPtwvG5i+c2L43weXP6y2hnMId1hX6bhSsqQMX+enInW5n2G+HhcCXTYZSnjKsc/4aI34Ndj8dT6rmcziH87o1vNyHYN79bKIg5i9ipItHRJjmj2+gLNEmoQrf37ZBdNWTzvrWZJSuZL6fVW4MSGwhp+Q/b4a0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408976; c=relaxed/simple;
-	bh=weiVP1LtS8zbd+HJl5Gs1s6S3IhVFa6dAtEvoFniK8E=;
+	s=arc-20240116; t=1740408979; c=relaxed/simple;
+	bh=YLbiMDuVDWEN0eIweYSCRSWm7pOp8Y5LcAHe0fGxaSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nte7IhGcxcWSXff2H0pgjeSk3d7lDt9k4tffXepOO90WLzm85HQms47Pjs2/FlE1/OAG7gu6Tu3QcNs60g5Bz8Z8YxG909Rqa9DkK/IreU5aUSGMxje/7ZSKCIEprD/82b4MlGgORyvQge64fonb8bfP+wbyZ0F7YVKWp4ASqFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhRJcZly; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dadNTN0BsX2AM2WD2UgOjB7od4LSHDtWu+e6OnDKZMvkdFcGefzAbYwrX9MY3OwhAFgm8F4P8L2/4Nzrw94gfAgy3m46ffONhcSC68r4R+O7LWDZgqloEZ7iZ7GSKdBaFsd/4kdK/M4NGNwoM3yUWwKfMBjy9ZTWG0Ts8m/50+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICAlpLph; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhRJcZly"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB740C4CED6;
-	Mon, 24 Feb 2025 14:56:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICAlpLph"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292EFC4CEE8;
+	Mon, 24 Feb 2025 14:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408976;
-	bh=weiVP1LtS8zbd+HJl5Gs1s6S3IhVFa6dAtEvoFniK8E=;
+	s=korg; t=1740408979;
+	bh=YLbiMDuVDWEN0eIweYSCRSWm7pOp8Y5LcAHe0fGxaSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bhRJcZly4521BoHRv/INeP3LYqQ954DgRj8FVqoEk6zPEcpIrFv2j19XjHNNZqdzz
-	 s4Xo12G2h40xoZsTgcl92vW96hXWIMZkyljCZbg/i5Cex/gZ954Qod95zVCR69vCZf
-	 hG8wwbZEYjFueT5kLYONyoxexejkq3x6ijqfaQ5o=
+	b=ICAlpLph/yByTPjSbdH5PqkAZegTN9MinsZCySYtoYddGLVAHw8lw5oSSL/69gW8j
+	 iSMOrodVyRTROc+8D500TOUxITPXXKssSS6hNrAFXi6n814VG8nrWO+d+ElVJPjL2Z
+	 0AN/lJRXcJo9Kc2h8U1JH17f+FR7LCq0+00ZDGPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 028/138] geneve: Fix use-after-free in geneve_find_dev().
-Date: Mon, 24 Feb 2025 15:34:18 +0100
-Message-ID: <20250224142605.577674205@linuxfoundation.org>
+Subject: [PATCH 6.13 029/138] ALSA: hda/cirrus: Correct the full scale volume set logic
+Date: Mon, 24 Feb 2025 15:34:19 +0100
+Message-ID: <20250224142605.615553842@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -52,198 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
 
-[ Upstream commit 9593172d93b9f91c362baec4643003dc29802929 ]
+[ Upstream commit 08b613b9e2ba431db3bd15cb68ca72472a50ef5c ]
 
-syzkaller reported a use-after-free in geneve_find_dev() [0]
-without repro.
+This patch corrects the full-scale volume setting logic. On certain
+platforms, the full-scale volume bit is required. The current logic
+mistakenly sets this bit and incorrectly clears reserved bit 0, causing
+the headphone output to be muted.
 
-geneve_configure() links struct geneve_dev.next to
-net_generic(net, geneve_net_id)->geneve_list.
-
-The net here could differ from dev_net(dev) if IFLA_NET_NS_PID,
-IFLA_NET_NS_FD, or IFLA_TARGET_NETNSID is set.
-
-When dev_net(dev) is dismantled, geneve_exit_batch_rtnl() finally
-calls unregister_netdevice_queue() for each dev in the netns,
-and later the dev is freed.
-
-However, its geneve_dev.next is still linked to the backend UDP
-socket netns.
-
-Then, use-after-free will occur when another geneve dev is created
-in the netns.
-
-Let's call geneve_dellink() instead in geneve_destroy_tunnels().
-
-[0]:
-BUG: KASAN: slab-use-after-free in geneve_find_dev drivers/net/geneve.c:1295 [inline]
-BUG: KASAN: slab-use-after-free in geneve_configure+0x234/0x858 drivers/net/geneve.c:1343
-Read of size 2 at addr ffff000054d6ee24 by task syz.1.4029/13441
-
-CPU: 1 UID: 0 PID: 13441 Comm: syz.1.4029 Not tainted 6.13.0-g0ad9617c78ac #24 dc35ca22c79fb82e8e7bc5c9c9adafea898b1e3d
-Hardware name: linux,dummy-virt (DT)
-Call trace:
- show_stack+0x38/0x50 arch/arm64/kernel/stacktrace.c:466 (C)
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xbc/0x108 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0x16c/0x6f0 mm/kasan/report.c:489
- kasan_report+0xc0/0x120 mm/kasan/report.c:602
- __asan_report_load2_noabort+0x20/0x30 mm/kasan/report_generic.c:379
- geneve_find_dev drivers/net/geneve.c:1295 [inline]
- geneve_configure+0x234/0x858 drivers/net/geneve.c:1343
- geneve_newlink+0xb8/0x128 drivers/net/geneve.c:1634
- rtnl_newlink_create+0x23c/0x868 net/core/rtnetlink.c:3795
- __rtnl_newlink net/core/rtnetlink.c:3906 [inline]
- rtnl_newlink+0x1054/0x1630 net/core/rtnetlink.c:4021
- rtnetlink_rcv_msg+0x61c/0x918 net/core/rtnetlink.c:6911
- netlink_rcv_skb+0x1dc/0x398 net/netlink/af_netlink.c:2543
- rtnetlink_rcv+0x34/0x50 net/core/rtnetlink.c:6938
- netlink_unicast_kernel net/netlink/af_netlink.c:1322 [inline]
- netlink_unicast+0x618/0x838 net/netlink/af_netlink.c:1348
- netlink_sendmsg+0x5fc/0x8b0 net/netlink/af_netlink.c:1892
- sock_sendmsg_nosec net/socket.c:713 [inline]
- __sock_sendmsg net/socket.c:728 [inline]
- ____sys_sendmsg+0x410/0x6f8 net/socket.c:2568
- ___sys_sendmsg+0x178/0x1d8 net/socket.c:2622
- __sys_sendmsg net/socket.c:2654 [inline]
- __do_sys_sendmsg net/socket.c:2659 [inline]
- __se_sys_sendmsg net/socket.c:2657 [inline]
- __arm64_sys_sendmsg+0x12c/0x1c8 net/socket.c:2657
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x90/0x278 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x13c/0x250 arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x54/0x70 arch/arm64/kernel/syscall.c:151
- el0_svc+0x4c/0xa8 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x78/0x108 arch/arm64/kernel/entry-common.c:762
- el0t_64_sync+0x198/0x1a0 arch/arm64/kernel/entry.S:600
-
-Allocated by task 13247:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x30/0x68 mm/kasan/common.c:68
- kasan_save_alloc_info+0x44/0x58 mm/kasan/generic.c:568
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0x84/0xa0 mm/kasan/common.c:394
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __do_kmalloc_node mm/slub.c:4298 [inline]
- __kmalloc_node_noprof+0x2a0/0x560 mm/slub.c:4304
- __kvmalloc_node_noprof+0x9c/0x230 mm/util.c:645
- alloc_netdev_mqs+0xb8/0x11a0 net/core/dev.c:11470
- rtnl_create_link+0x2b8/0xb50 net/core/rtnetlink.c:3604
- rtnl_newlink_create+0x19c/0x868 net/core/rtnetlink.c:3780
- __rtnl_newlink net/core/rtnetlink.c:3906 [inline]
- rtnl_newlink+0x1054/0x1630 net/core/rtnetlink.c:4021
- rtnetlink_rcv_msg+0x61c/0x918 net/core/rtnetlink.c:6911
- netlink_rcv_skb+0x1dc/0x398 net/netlink/af_netlink.c:2543
- rtnetlink_rcv+0x34/0x50 net/core/rtnetlink.c:6938
- netlink_unicast_kernel net/netlink/af_netlink.c:1322 [inline]
- netlink_unicast+0x618/0x838 net/netlink/af_netlink.c:1348
- netlink_sendmsg+0x5fc/0x8b0 net/netlink/af_netlink.c:1892
- sock_sendmsg_nosec net/socket.c:713 [inline]
- __sock_sendmsg net/socket.c:728 [inline]
- ____sys_sendmsg+0x410/0x6f8 net/socket.c:2568
- ___sys_sendmsg+0x178/0x1d8 net/socket.c:2622
- __sys_sendmsg net/socket.c:2654 [inline]
- __do_sys_sendmsg net/socket.c:2659 [inline]
- __se_sys_sendmsg net/socket.c:2657 [inline]
- __arm64_sys_sendmsg+0x12c/0x1c8 net/socket.c:2657
- __invoke_syscall arch/arm64/kernel/syscall.c:35 [inline]
- invoke_syscall+0x90/0x278 arch/arm64/kernel/syscall.c:49
- el0_svc_common+0x13c/0x250 arch/arm64/kernel/syscall.c:132
- do_el0_svc+0x54/0x70 arch/arm64/kernel/syscall.c:151
- el0_svc+0x4c/0xa8 arch/arm64/kernel/entry-common.c:744
- el0t_64_sync_handler+0x78/0x108 arch/arm64/kernel/entry-common.c:762
- el0t_64_sync+0x198/0x1a0 arch/arm64/kernel/entry.S:600
-
-Freed by task 45:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x30/0x68 mm/kasan/common.c:68
- kasan_save_free_info+0x58/0x70 mm/kasan/generic.c:582
- poison_slab_object mm/kasan/common.c:247 [inline]
- __kasan_slab_free+0x48/0x68 mm/kasan/common.c:264
- kasan_slab_free include/linux/kasan.h:233 [inline]
- slab_free_hook mm/slub.c:2353 [inline]
- slab_free mm/slub.c:4613 [inline]
- kfree+0x140/0x420 mm/slub.c:4761
- kvfree+0x4c/0x68 mm/util.c:688
- netdev_release+0x94/0xc8 net/core/net-sysfs.c:2065
- device_release+0x98/0x1c0
- kobject_cleanup lib/kobject.c:689 [inline]
- kobject_release lib/kobject.c:720 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x2b0/0x438 lib/kobject.c:737
- netdev_run_todo+0xe5c/0xfc8 net/core/dev.c:11185
- rtnl_unlock+0x20/0x38 net/core/rtnetlink.c:151
- cleanup_net+0x4fc/0x8c0 net/core/net_namespace.c:648
- process_one_work+0x700/0x1398 kernel/workqueue.c:3236
- process_scheduled_works kernel/workqueue.c:3317 [inline]
- worker_thread+0x8c4/0xe10 kernel/workqueue.c:3398
- kthread+0x4bc/0x608 kernel/kthread.c:464
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:862
-
-The buggy address belongs to the object at ffff000054d6e000
- which belongs to the cache kmalloc-cg-4k of size 4096
-The buggy address is located 3620 bytes inside of
- freed 4096-byte region [ffff000054d6e000, ffff000054d6f000)
-
-The buggy address belongs to the physical page:
-page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x94d68
-head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-memcg:ffff000016276181
-flags: 0x3fffe0000000040(head|node=0|zone=0|lastcpupid=0x1ffff)
-page_type: f5(slab)
-raw: 03fffe0000000040 ffff0000c000f500 dead000000000122 0000000000000000
-raw: 0000000000000000 0000000000040004 00000001f5000000 ffff000016276181
-head: 03fffe0000000040 ffff0000c000f500 dead000000000122 0000000000000000
-head: 0000000000000000 0000000000040004 00000001f5000000 ffff000016276181
-head: 03fffe0000000003 fffffdffc1535a01 ffffffffffffffff 0000000000000000
-head: 0000000000000008 0000000000000000 00000000ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff000054d6ed00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff000054d6ed80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff000054d6ee00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                               ^
- ffff000054d6ee80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff000054d6ef00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-
-Fixes: 2d07dc79fe04 ("geneve: add initial netdev driver for GENEVE tunnels")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250213043354.91368-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 342b6b610ae2 ("ALSA: hda/cs8409: Fix Full Scale Volume setting for all variants")
+Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250214210736.30814-1-vitalyr@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/geneve.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ sound/pci/hda/patch_cs8409-tables.c |  6 +++---
+ sound/pci/hda/patch_cs8409.c        | 20 +++++++++++---------
+ sound/pci/hda/patch_cs8409.h        |  5 +++--
+ 3 files changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
-index bc658bc608854..363fff28db737 100644
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -1907,16 +1907,11 @@ static void geneve_destroy_tunnels(struct net *net, struct list_head *head)
- 	/* gather any geneve devices that were moved into this ns */
- 	for_each_netdev_safe(net, dev, aux)
- 		if (dev->rtnl_link_ops == &geneve_link_ops)
--			unregister_netdevice_queue(dev, head);
-+			geneve_dellink(dev, head);
+diff --git a/sound/pci/hda/patch_cs8409-tables.c b/sound/pci/hda/patch_cs8409-tables.c
+index 759f48038273d..621f947e38174 100644
+--- a/sound/pci/hda/patch_cs8409-tables.c
++++ b/sound/pci/hda/patch_cs8409-tables.c
+@@ -121,7 +121,7 @@ static const struct cs8409_i2c_param cs42l42_init_reg_seq[] = {
+ 	{ CS42L42_MIXER_CHA_VOL, 0x3F },
+ 	{ CS42L42_MIXER_CHB_VOL, 0x3F },
+ 	{ CS42L42_MIXER_ADC_VOL, 0x3f },
+-	{ CS42L42_HP_CTL, 0x03 },
++	{ CS42L42_HP_CTL, 0x0D },
+ 	{ CS42L42_MIC_DET_CTL1, 0xB6 },
+ 	{ CS42L42_TIPSENSE_CTL, 0xC2 },
+ 	{ CS42L42_HS_CLAMP_DISABLE, 0x01 },
+@@ -315,7 +315,7 @@ static const struct cs8409_i2c_param dolphin_c0_init_reg_seq[] = {
+ 	{ CS42L42_ASP_TX_SZ_EN, 0x01 },
+ 	{ CS42L42_PWR_CTL1, 0x0A },
+ 	{ CS42L42_PWR_CTL2, 0x84 },
+-	{ CS42L42_HP_CTL, 0x03 },
++	{ CS42L42_HP_CTL, 0x0D },
+ 	{ CS42L42_MIXER_CHA_VOL, 0x3F },
+ 	{ CS42L42_MIXER_CHB_VOL, 0x3F },
+ 	{ CS42L42_MIXER_ADC_VOL, 0x3f },
+@@ -371,7 +371,7 @@ static const struct cs8409_i2c_param dolphin_c1_init_reg_seq[] = {
+ 	{ CS42L42_ASP_TX_SZ_EN, 0x00 },
+ 	{ CS42L42_PWR_CTL1, 0x0E },
+ 	{ CS42L42_PWR_CTL2, 0x84 },
+-	{ CS42L42_HP_CTL, 0x01 },
++	{ CS42L42_HP_CTL, 0x0D },
+ 	{ CS42L42_MIXER_CHA_VOL, 0x3F },
+ 	{ CS42L42_MIXER_CHB_VOL, 0x3F },
+ 	{ CS42L42_MIXER_ADC_VOL, 0x3f },
+diff --git a/sound/pci/hda/patch_cs8409.c b/sound/pci/hda/patch_cs8409.c
+index 614327218634c..b760332a4e357 100644
+--- a/sound/pci/hda/patch_cs8409.c
++++ b/sound/pci/hda/patch_cs8409.c
+@@ -876,7 +876,7 @@ static void cs42l42_resume(struct sub_codec *cs42l42)
+ 		{ CS42L42_DET_INT_STATUS2, 0x00 },
+ 		{ CS42L42_TSRS_PLUG_STATUS, 0x00 },
+ 	};
+-	int fsv_old, fsv_new;
++	unsigned int fsv;
  
- 	/* now gather any other geneve devices that were created in this ns */
--	list_for_each_entry_safe(geneve, next, &gn->geneve_list, next) {
--		/* If geneve->dev is in the same netns, it was already added
--		 * to the list by the previous loop.
--		 */
--		if (!net_eq(dev_net(geneve->dev), net))
--			unregister_netdevice_queue(geneve->dev, head);
--	}
-+	list_for_each_entry_safe(geneve, next, &gn->geneve_list, next)
-+		geneve_dellink(geneve->dev, head);
- }
+ 	/* Bring CS42L42 out of Reset */
+ 	spec->gpio_data = snd_hda_codec_read(codec, CS8409_PIN_AFG, 0, AC_VERB_GET_GPIO_DATA, 0);
+@@ -893,13 +893,15 @@ static void cs42l42_resume(struct sub_codec *cs42l42)
+ 	/* Clear interrupts, by reading interrupt status registers */
+ 	cs8409_i2c_bulk_read(cs42l42, irq_regs, ARRAY_SIZE(irq_regs));
  
- static void __net_exit geneve_exit_batch_rtnl(struct list_head *net_list,
+-	fsv_old = cs8409_i2c_read(cs42l42, CS42L42_HP_CTL);
+-	if (cs42l42->full_scale_vol == CS42L42_FULL_SCALE_VOL_0DB)
+-		fsv_new = fsv_old & ~CS42L42_FULL_SCALE_VOL_MASK;
+-	else
+-		fsv_new = fsv_old & CS42L42_FULL_SCALE_VOL_MASK;
+-	if (fsv_new != fsv_old)
+-		cs8409_i2c_write(cs42l42, CS42L42_HP_CTL, fsv_new);
++	fsv = cs8409_i2c_read(cs42l42, CS42L42_HP_CTL);
++	if (cs42l42->full_scale_vol) {
++		// Set the full scale volume bit
++		fsv |= CS42L42_FULL_SCALE_VOL_MASK;
++		cs8409_i2c_write(cs42l42, CS42L42_HP_CTL, fsv);
++	}
++	// Unmute analog channels A and B
++	fsv = (fsv & ~CS42L42_ANA_MUTE_AB);
++	cs8409_i2c_write(cs42l42, CS42L42_HP_CTL, fsv);
+ 
+ 	/* we have to explicitly allow unsol event handling even during the
+ 	 * resume phase so that the jack event is processed properly
+@@ -920,7 +922,7 @@ static void cs42l42_suspend(struct sub_codec *cs42l42)
+ 		{ CS42L42_MIXER_CHA_VOL, 0x3F },
+ 		{ CS42L42_MIXER_ADC_VOL, 0x3F },
+ 		{ CS42L42_MIXER_CHB_VOL, 0x3F },
+-		{ CS42L42_HP_CTL, 0x0F },
++		{ CS42L42_HP_CTL, 0x0D },
+ 		{ CS42L42_ASP_RX_DAI0_EN, 0x00 },
+ 		{ CS42L42_ASP_CLK_CFG, 0x00 },
+ 		{ CS42L42_PWR_CTL1, 0xFE },
+diff --git a/sound/pci/hda/patch_cs8409.h b/sound/pci/hda/patch_cs8409.h
+index 5e48115caf096..14645d25e70fd 100644
+--- a/sound/pci/hda/patch_cs8409.h
++++ b/sound/pci/hda/patch_cs8409.h
+@@ -230,9 +230,10 @@ enum cs8409_coefficient_index_registers {
+ #define CS42L42_PDN_TIMEOUT_US			(250000)
+ #define CS42L42_PDN_SLEEP_US			(2000)
+ #define CS42L42_INIT_TIMEOUT_MS			(45)
++#define CS42L42_ANA_MUTE_AB			(0x0C)
+ #define CS42L42_FULL_SCALE_VOL_MASK		(2)
+-#define CS42L42_FULL_SCALE_VOL_0DB		(1)
+-#define CS42L42_FULL_SCALE_VOL_MINUS6DB		(0)
++#define CS42L42_FULL_SCALE_VOL_0DB		(0)
++#define CS42L42_FULL_SCALE_VOL_MINUS6DB		(1)
+ 
+ /* Dell BULLSEYE / WARLOCK / CYBORG Specific Definitions */
+ 
 -- 
 2.39.5
 
