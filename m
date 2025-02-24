@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0DD38DD8;
-	Mon, 24 Feb 2025 14:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7ED13AD18;
+	Mon, 24 Feb 2025 14:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409086; cv=none; b=tYJC8+0POcRcZ79ETX69Tn2WYHrvPnCmfd/Iqyow5xBfYVU7jiziVIFeGTtHljKS6VUO346zROtNE16tT6OEquCNx0ghu3Ua6Tcgb+YnLJl4IWZLXCdO/nDfJjMVAXIg+ofQMMCla9pq2lh7xSvJiLvjUDCkn9bd02jsKz+a+tQ=
+	t=1740409089; cv=none; b=emhWbwZJGqkw3nOoY8r9uVkWqmRBBL2kQVB3dAvwVO8yi8rmLeVI0xxhYolsw2gXVRWhzzO/yj9HHK5d1RzdO+xghp5wTNFzt/84Hh+HP/a1iFaFQBZSIRebLxbFfEWS4uqfq9JYizhScvCzERCjciq7/nf4o6xON8wBz/UVT4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409086; c=relaxed/simple;
-	bh=f6O+/8Tb50jyPUU+Wk8BTVQWANVJ9lkhSnDClSsnENg=;
+	s=arc-20240116; t=1740409089; c=relaxed/simple;
+	bh=L0/fgzXMnfG9wLfNPgXCEw4D7rPz6CHJrd1SJuEo214=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TxW3zJ1O+wwkFPstl15V2lCNxWdwBBySsBK7R3cLR2zffHVysS3ScDzIlrqGxhYdaNW26w+QHfaz19VSsQNReaAwGFL02N3Ah9/+913cNXE4/CliA8/QuDfyqP+WM4iFgdwmCtAJSyxvl8QDjRSEeWkg9cnBNRq0c5I53lT7wDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/u4X0i7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R6bv/wR/xgoUBRZ8M6+WCryO0ueEYpfTSM8Lbkgj7o6tZSDYfBAMNk1O5RQm+wFKhPmTq9NI8B1/LEB8TiIFfsEJu8TaV9EFg0gBnMSJBZx72RrZj/40ceha/U649en6LjbL5gBwTQJwCi1zx9WysgZLs4wSv2ntMRyIdODulWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7k6BHdz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/u4X0i7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9BA2C4CED6;
-	Mon, 24 Feb 2025 14:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7k6BHdz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BAF5C4CED6;
+	Mon, 24 Feb 2025 14:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409085;
-	bh=f6O+/8Tb50jyPUU+Wk8BTVQWANVJ9lkhSnDClSsnENg=;
+	s=korg; t=1740409088;
+	bh=L0/fgzXMnfG9wLfNPgXCEw4D7rPz6CHJrd1SJuEo214=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f/u4X0i7+7utdHFnTJKPOjIHk7oi/hrEqEL2MfIqTJhgTS7oYqIqXLQ65uIwYv4hN
-	 9aNw7TjYrWBbdWNzfp08DummZIuqbvAc/woj3furb/l/qat7ffo1t8qImbavTwaI4Q
-	 R/q1If6m4f2Fo04SDSlUGoWRRJUPVa9JE5seO2gk=
+	b=x7k6BHdzhitP1yT6MU0Eg7zkfJVAjJLe5L6VEu3IUyxgg2oev5c7i7zAi1oChDTKH
+	 RcgQd2gi/QxIIGY857ESmr9+ge2esnR8SsLmYJohDF/ZcMIAMO1tro+EeEx+yBXmga
+	 vO9kUN2ofSuN7mlyIE0p+NEiYw06UKlzbBIg4BuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.13 091/138] drm/i915/dp: Fix error handling during 128b/132b link training
-Date: Mon, 24 Feb 2025 15:35:21 +0100
-Message-ID: <20250224142608.053897078@linuxfoundation.org>
+	Yan Zhai <yan@cloudflare.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 061/138] net: Add rx_skb of kfree_skb to raw_tp_null_args[].
+Date: Mon, 24 Feb 2025 15:34:51 +0100
+Message-ID: <20250224142606.879823908@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -51,73 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit b9275eabe31e6679ae12c46a4a0a18d622db4570 upstream.
+[ Upstream commit 5da7e15fb5a12e78de974d8908f348e279922ce9 ]
 
-At the end of a 128b/132b link training sequence, the HW expects the
-transcoder training pattern to be set to TPS2 and from that to normal
-mode (disabling the training pattern). Transitioning from TPS1 directly
-to normal mode leaves the transcoder in a stuck state, resulting in
-page-flip timeouts later in the modeset sequence.
+Yan Zhai reported a BPF prog could trigger a null-ptr-deref [0]
+in trace_kfree_skb if the prog does not check if rx_sk is NULL.
 
-Atm, in case of a failure during link training, the transcoder may be
-still set to output the TPS1 pattern. Later the transcoder is then set
-from TPS1 directly to normal mode in intel_dp_stop_link_train(), leading
-to modeset failures later as described above. Fix this by setting the
-training patter to TPS2, if the link training failed at any point.
+Commit c53795d48ee8 ("net: add rx_sk to trace_kfree_skb") added
+rx_sk to trace_kfree_skb, but rx_sk is optional and could be NULL.
 
-The clue in the specification about the above HW behavior is the
-explicit mention that TPS2 must be set after the link training sequence
-(and there isn't a similar requirement specified for the 8b/10b link
-training), see the Bspec links below.
+Let's add kfree_skb to raw_tp_null_args[] to let the BPF verifier
+validate such a prog and prevent the issue.
 
-v2: Add bspec aspect/link to the commit log. (Jani)
+Now we fail to load such a prog:
 
-Bspec: 54128, 65448, 68849
-Cc: stable@vger.kernel.org # v5.18+
-Cc: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250217223828.1166093-2-imre.deak@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 8b4bbaf8ddc1f68f3ee96a706f65fdb1bcd9d355)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  libbpf: prog 'drop': -- BEGIN PROG LOAD LOG --
+  0: R1=ctx() R10=fp0
+  ; int BPF_PROG(drop, struct sk_buff *skb, void *location, @ kfree_skb_sk_null.bpf.c:21
+  0: (79) r3 = *(u64 *)(r1 +24)
+  func 'kfree_skb' arg3 has btf_id 5253 type STRUCT 'sock'
+  1: R1=ctx() R3_w=trusted_ptr_or_null_sock(id=1)
+  ; bpf_printk("sk: %d, %d\n", sk, sk->__sk_common.skc_family); @ kfree_skb_sk_null.bpf.c:24
+  1: (69) r4 = *(u16 *)(r3 +16)
+  R3 invalid mem access 'trusted_ptr_or_null_'
+  processed 2 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
+  -- END PROG LOAD LOG --
+
+Note this fix requires commit 838a10bd2ebf ("bpf: Augment raw_tp
+arguments with PTR_MAYBE_NULL").
+
+[0]:
+BUG: kernel NULL pointer dereference, address: 0000000000000010
+ PF: supervisor read access in kernel mode
+ PF: error_code(0x0000) - not-present page
+PGD 0 P4D 0
+PREEMPT SMP
+RIP: 0010:bpf_prog_5e21a6db8fcff1aa_drop+0x10/0x2d
+Call Trace:
+ <TASK>
+ ? __die+0x1f/0x60
+ ? page_fault_oops+0x148/0x420
+ ? search_bpf_extables+0x5b/0x70
+ ? fixup_exception+0x27/0x2c0
+ ? exc_page_fault+0x75/0x170
+ ? asm_exc_page_fault+0x22/0x30
+ ? bpf_prog_5e21a6db8fcff1aa_drop+0x10/0x2d
+ bpf_trace_run4+0x68/0xd0
+ ? unix_stream_connect+0x1f4/0x6f0
+ sk_skb_reason_drop+0x90/0x120
+ unix_stream_connect+0x1f4/0x6f0
+ __sys_connect+0x7f/0xb0
+ __x64_sys_connect+0x14/0x20
+ do_syscall_64+0x47/0xc30
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Fixes: c53795d48ee8 ("net: add rx_sk to trace_kfree_skb")
+Reported-by: Yan Zhai <yan@cloudflare.com>
+Closes: https://lore.kernel.org/netdev/Z50zebTRzI962e6X@debian.debian/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Tested-by: Yan Zhai <yan@cloudflare.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20250201030142.62703-1-kuniyu@amazon.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp_link_training.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ kernel/bpf/btf.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_dp_link_training.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_link_training.c
-@@ -1565,7 +1565,7 @@ intel_dp_128b132b_link_train(struct inte
- 
- 	if (wait_for(intel_dp_128b132b_intra_hop(intel_dp, crtc_state) == 0, 500)) {
- 		lt_err(intel_dp, DP_PHY_DPRX, "128b/132b intra-hop not clear\n");
--		return false;
-+		goto out;
- 	}
- 
- 	if (intel_dp_128b132b_lane_eq(intel_dp, crtc_state) &&
-@@ -1577,6 +1577,19 @@ intel_dp_128b132b_link_train(struct inte
- 	       passed ? "passed" : "failed",
- 	       crtc_state->port_clock, crtc_state->lane_count);
- 
-+out:
-+	/*
-+	 * Ensure that the training pattern does get set to TPS2 even in case
-+	 * of a failure, as is the case at the end of a passing link training
-+	 * and what is expected by the transcoder. Leaving TPS1 set (and
-+	 * disabling the link train mode in DP_TP_CTL later from TPS1 directly)
-+	 * would result in a stuck transcoder HW state and flip-done timeouts
-+	 * later in the modeset sequence.
-+	 */
-+	if (!passed)
-+		intel_dp_program_link_training_pattern(intel_dp, crtc_state,
-+						       DP_PHY_DPRX, DP_TRAINING_PATTERN_2);
-+
- 	return passed;
- }
- 
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 10d0975deadab..c89604e6b6aab 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -6507,6 +6507,8 @@ static const struct bpf_raw_tp_null_args raw_tp_null_args[] = {
+ 	/* rxrpc */
+ 	{ "rxrpc_recvdata", 0x1 },
+ 	{ "rxrpc_resend", 0x10 },
++	/* skb */
++	{"kfree_skb", 0x1000},
+ 	/* sunrpc */
+ 	{ "xs_stream_read_data", 0x1 },
+ 	/* ... from xprt_cong_event event class */
+-- 
+2.39.5
+
 
 
