@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3713254849;
-	Mon, 24 Feb 2025 14:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B610724169C;
+	Mon, 24 Feb 2025 14:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408875; cv=none; b=aM5cU6j5SsVzXmLX+NUEUakODYjtl5jRCdZoXt8YvJ/DWjE1svpUaQzGseWj8Cs3jQS4m14k9eaa54kSqdP2QKWW5oAZNMAnHybAkHhc9t5S43t8S8jSdMWIEUAsCFTGFXZnUHP3JBHjXBjrhORsNyR0jeR9hpe03bQr35YxLKg=
+	t=1740408879; cv=none; b=tkPO3fsM938aIKEzvNOzrPLL5q93JYD2fb33grrNx8yp96CsxGvOwFK00xkqwUi16yJ+i+C74tKd6V+HUIwPhvOFMnrnaKkkg8IVMU60OsjJh/vQxMjgg0fzO7TquTdw/2sVmE0IV43BK0bJS4oWhJnRtBAYQfhKKHbuyiI0DK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408875; c=relaxed/simple;
-	bh=q0fdf0tcqEiWlMVWIL38NQ8QNddob6HkH3Y2svCQqII=;
+	s=arc-20240116; t=1740408879; c=relaxed/simple;
+	bh=EB/x4vK3XeJfpXcykAkN1mkrZOhSG1Nz94lu2JUPXAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWvBnBHtuYX3ZGWfI2YIBTtjjmQKsv42/YZtNJ/KErOKCACRiqRvZLFpMmiu/0c/nJ8fMJOStB1IzUxP/SaW3cqdK3EHGXLMh/TGInJ7QAalanJ8jqN+STImQrFIF+MyX7ke9NSYJXYG1LvUZG+4ZoNS3+c/esb2u99fXGzGWvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQrh6nqG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q1yL6EQpxAaNyqvbfDuNwCeya91SgxPEZEVI9hZKGVKM73sXiYLSwIdW75vSI3p0N/KV4lPe9o9p6YAqb6+PZhUaqHg6aWvx17QZ3f6cGn0c8/lWvXjl/iSaddHvR+JTpF1x1wczLmbrER8mq7nu4RgXXe9rmfL8aw2Apql1ifI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WmEgpTrR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQrh6nqG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7BFC4CEE6;
-	Mon, 24 Feb 2025 14:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WmEgpTrR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9498C4CED6;
+	Mon, 24 Feb 2025 14:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408875;
-	bh=q0fdf0tcqEiWlMVWIL38NQ8QNddob6HkH3Y2svCQqII=;
+	s=korg; t=1740408879;
+	bh=EB/x4vK3XeJfpXcykAkN1mkrZOhSG1Nz94lu2JUPXAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tQrh6nqGFzxdfH124PMUes5Z2lSa80X8qBNK+00w3ak1jBonHRD0g2TUQ1ePE/rFb
-	 Thtx5+yXZ9YNTCcGEWqpWnajeJR6ON1JC5Auibduj2muv7g8nzDtjhvScSXHRDKyfc
-	 KT8L5tsjNOybnj9e/EkVrbaPFLBVrajMJw1ua3dk=
+	b=WmEgpTrRjDpQ0JlgejqWSTXsahWCVDg50Simjhv0VxbxIesBdot0z7Zn1c9S4GULc
+	 FxGALy4eI+hvjyQCUWrwDdbT1XFttKWf6r8G0aqRw0U6f2XODq5NicZdp+ScXGXhwo
+	 gzHeKihwafsG7udcFNHDJrOfGKizJ47P2x05zRxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Julian Ruess <julianr@linux.ibm.com>,
+	Nick Child <nnac123@linux.ibm.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 032/138] s390/ism: add release function for struct device
-Date: Mon, 24 Feb 2025 15:34:22 +0100
-Message-ID: <20250224142605.731558447@linuxfoundation.org>
+Subject: [PATCH 6.13 033/138] ibmvnic: Dont reference skb after sending to VIOS
+Date: Mon, 24 Feb 2025 15:34:23 +0100
+Message-ID: <20250224142605.770994015@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -54,79 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Ruess <julianr@linux.ibm.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit 915e34d5ad35a6a9e56113f852ade4a730fb88f0 ]
+[ Upstream commit bdf5d13aa05ec314d4385b31ac974d6c7e0997c9 ]
 
-According to device_release() in /drivers/base/core.c,
-a device without a release function is a broken device
-and must be fixed.
+Previously, after successfully flushing the xmit buffer to VIOS,
+the tx_bytes stat was incremented by the length of the skb.
 
-The current code directly frees the device after calling device_add()
-without waiting for other kernel parts to release their references.
-Thus, a reference could still be held to a struct device,
-e.g., by sysfs, leading to potential use-after-free
-issues if a proper release function is not set.
+It is invalid to access the skb memory after sending the buffer to
+the VIOS because, at any point after sending, the VIOS can trigger
+an interrupt to free this memory. A race between reading skb->len
+and freeing the skb is possible (especially during LPM) and will
+result in use-after-free:
+ ==================================================================
+ BUG: KASAN: slab-use-after-free in ibmvnic_xmit+0x75c/0x1808 [ibmvnic]
+ Read of size 4 at addr c00000024eb48a70 by task hxecom/14495
+ <...>
+ Call Trace:
+ [c000000118f66cf0] [c0000000018cba6c] dump_stack_lvl+0x84/0xe8 (unreliable)
+ [c000000118f66d20] [c0000000006f0080] print_report+0x1a8/0x7f0
+ [c000000118f66df0] [c0000000006f08f0] kasan_report+0x128/0x1f8
+ [c000000118f66f00] [c0000000006f2868] __asan_load4+0xac/0xe0
+ [c000000118f66f20] [c0080000046eac84] ibmvnic_xmit+0x75c/0x1808 [ibmvnic]
+ [c000000118f67340] [c0000000014be168] dev_hard_start_xmit+0x150/0x358
+ <...>
+ Freed by task 0:
+ kasan_save_stack+0x34/0x68
+ kasan_save_track+0x2c/0x50
+ kasan_save_free_info+0x64/0x108
+ __kasan_mempool_poison_object+0x148/0x2d4
+ napi_skb_cache_put+0x5c/0x194
+ net_tx_action+0x154/0x5b8
+ handle_softirqs+0x20c/0x60c
+ do_softirq_own_stack+0x6c/0x88
+ <...>
+ The buggy address belongs to the object at c00000024eb48a00 which
+  belongs to the cache skbuff_head_cache of size 224
+==================================================================
 
-Fixes: 8c81ba20349d ("net/smc: De-tangle ism and smc device initialization")
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Signed-off-by: Julian Ruess <julianr@linux.ibm.com>
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Fixes: 032c5e82847a ("Driver for IBM System i/p VNIC protocol")
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250214120137.563409-1-wintera@linux.ibm.com
+Link: https://patch.msgid.link/20250214155233.235559-1-nnac123@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/ism_drv.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/ibm/ibmvnic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
-index e36e3ea165d3b..2f34761e64135 100644
---- a/drivers/s390/net/ism_drv.c
-+++ b/drivers/s390/net/ism_drv.c
-@@ -588,6 +588,15 @@ static int ism_dev_init(struct ism_dev *ism)
- 	return ret;
- }
+diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
+index e95ae0d39948c..0676fc547b6f4 100644
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -2408,6 +2408,7 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 	dma_addr_t data_dma_addr;
+ 	struct netdev_queue *txq;
+ 	unsigned long lpar_rc;
++	unsigned int skblen;
+ 	union sub_crq tx_crq;
+ 	unsigned int offset;
+ 	bool use_scrq_send_direct = false;
+@@ -2522,6 +2523,7 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 	tx_buff->skb = skb;
+ 	tx_buff->index = bufidx;
+ 	tx_buff->pool_index = queue_num;
++	skblen = skb->len;
  
-+static void ism_dev_release(struct device *dev)
-+{
-+	struct ism_dev *ism;
-+
-+	ism = container_of(dev, struct ism_dev, dev);
-+
-+	kfree(ism);
-+}
-+
- static int ism_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- {
- 	struct ism_dev *ism;
-@@ -601,6 +610,7 @@ static int ism_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	dev_set_drvdata(&pdev->dev, ism);
- 	ism->pdev = pdev;
- 	ism->dev.parent = &pdev->dev;
-+	ism->dev.release = ism_dev_release;
- 	device_initialize(&ism->dev);
- 	dev_set_name(&ism->dev, dev_name(&pdev->dev));
- 	ret = device_add(&ism->dev);
-@@ -637,7 +647,7 @@ static int ism_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	device_del(&ism->dev);
- err_dev:
- 	dev_set_drvdata(&pdev->dev, NULL);
--	kfree(ism);
-+	put_device(&ism->dev);
+ 	memset(&tx_crq, 0, sizeof(tx_crq));
+ 	tx_crq.v1.first = IBMVNIC_CRQ_CMD;
+@@ -2614,7 +2616,7 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 		netif_stop_subqueue(netdev, queue_num);
+ 	}
  
- 	return ret;
- }
-@@ -682,7 +692,7 @@ static void ism_remove(struct pci_dev *pdev)
- 	pci_disable_device(pdev);
- 	device_del(&ism->dev);
- 	dev_set_drvdata(&pdev->dev, NULL);
--	kfree(ism);
-+	put_device(&ism->dev);
- }
- 
- static struct pci_driver ism_driver = {
+-	tx_bytes += skb->len;
++	tx_bytes += skblen;
+ 	txq_trans_cond_update(txq);
+ 	ret = NETDEV_TX_OK;
+ 	goto out;
 -- 
 2.39.5
 
