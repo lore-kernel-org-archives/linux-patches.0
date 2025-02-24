@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99AC81624CF;
-	Mon, 24 Feb 2025 14:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27757155308;
+	Mon, 24 Feb 2025 14:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408160; cv=none; b=EG75KvuGYrpwIezXWAwa+N23lhKNdCwHfyw33IV2+5rATgDLPvh8DbytNbsI9ScX6pqK+sQwTMpBRU+BC6cSE8at1k66zgcBM8XI033FVehjMb2nZRXeUjViHlNcFoNNNnAEFFr/m62S1McrdtkBwUMTv76HRBKrGIMXeAnd9Kg=
+	t=1740408164; cv=none; b=EP8dDv/7uRotzzqFDOGw8U7rz5oQsIzF67KP5YUEAjKQllnHeKxs3+403+H200Ygl6fVqiB7rrOybO94K1no7WGJ9Ygad0HB6oGV7/iRWK1mEE0N5Q8Gz2NSOvPayVY05+8PCDHIfL85piOUe4UmwzsoqV/kA2tUaKxekXARrBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408160; c=relaxed/simple;
-	bh=x+3i/0azM51lYoOjuACFPspbuvSPM3LRixa8g0zE6j0=;
+	s=arc-20240116; t=1740408164; c=relaxed/simple;
+	bh=6vzYBVw7TSmImArvpnBRX0D2Yink986C3eoPRD88kPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J53Ur3fG2/6Rw96DNNIwf8Ot92X3+VBzeECumbmhv2iitf0M2650vMqwk1VXpCCMHChErfGWBjoZtIy5vqDEwnmiRSSLANZTCowqnlnpZbIq2XRNEmRKIhh3c05uM2xVpxtwNkPe3vTMLfQ19tWv8FJ2XTkF3LC/hBqeSgdiUu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPP5AGuq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tn1UdzyZKWDdv4TRkvpDdSEu9FQ0Y094QNw5/jCVANfGMHLNNOShajaOneAYhxB+NR5WKf+O8sKVSRwqbsd9HijSBaJZaVM5ag2AX9WQHceIco4LCtzffg/IuRKWiFINSv1qeR5bw851LWL49Jsf3a17MeIopzXxFZUyzhVouuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snR6nccw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPP5AGuq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF8FC4CED6;
-	Mon, 24 Feb 2025 14:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snR6nccw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F676C4CEE6;
+	Mon, 24 Feb 2025 14:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408160;
-	bh=x+3i/0azM51lYoOjuACFPspbuvSPM3LRixa8g0zE6j0=;
+	s=korg; t=1740408163;
+	bh=6vzYBVw7TSmImArvpnBRX0D2Yink986C3eoPRD88kPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPP5AGuqnxtRw7+dIC56ajIBr0prvILarox746abmwPbv99r0J1PC3IL9Qqvz3Ts3
-	 x/v8RNUE10PwG9qJgWRzdQROYAudEsU49aniLiFgavi+UrRtGmkDRJAVY1RrcduJW1
-	 A1ghjEfKdsVMto1S2etkLqpKbevIDddyaX3LtMIw=
+	b=snR6nccw8kn1EhY9devJ6cJqozEwMLznYb86f6szeciYPiFeOHjl+/yxJtdoksDT2
+	 PTK/lP3D5A0LS3yaYA36/rwFgk9znEvFsf4vr4L7J8b7FbQgVtEGJyl0/8esuk0dxB
+	 GPjfcPi+gN/M2MGiY1hdLRNXUgRGMUr+vxk1f5MM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Curtis Malainey <cujomalainey@chromium.org>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 117/140] ASoC: SOF: stream-ipc: Check for cstream nullity in sof_ipc_msg_data()
-Date: Mon, 24 Feb 2025 15:35:16 +0100
-Message-ID: <20250224142607.613911347@linuxfoundation.org>
+Subject: [PATCH 6.6 118/140] ASoC: fsl_micfil: Enable default case in micfil_set_quality()
+Date: Mon, 24 Feb 2025 15:35:17 +0100
+Message-ID: <20250224142607.654579378@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -54,57 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit d8d99c3b5c485f339864aeaa29f76269cc0ea975 upstream.
+commit a8c9a453387640dbe45761970f41301a6985e7fa upstream.
 
-The nullity of sps->cstream should be checked similarly as it is done in
-sof_set_stream_data_offset() function.
-Assuming that it is not NULL if sps->stream is NULL is incorrect and can
-lead to NULL pointer dereference.
+If 'micfil->quality' received from micfil_quality_set() somehow ends
+up with an unpredictable value, switch() operator will fail to
+initialize local variable qsel before regmap_update_bits() tries
+to utilize it.
 
-Fixes: 090349a9feba ("ASoC: SOF: Add support for compress API for stream data/offset")
+While it is unlikely, play it safe and enable a default case that
+returns -EINVAL error.
+
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: bea1d61d5892 ("ASoC: fsl_micfil: rework quality setting")
 Cc: stable@vger.kernel.org
-Reported-by: Curtis Malainey <cujomalainey@chromium.org>
-Closes: https://github.com/thesofproject/linux/pull/5214
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Curtis Malainey <cujomalainey@chromium.org>
-Link: https://patch.msgid.link/20250205135232.19762-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://patch.msgid.link/20250116142436.22389-1-n.zhandarovich@fintech.ru
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/stream-ipc.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_micfil.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/sof/stream-ipc.c b/sound/soc/sof/stream-ipc.c
-index 794c7bbccbaf..8262443ac89a 100644
---- a/sound/soc/sof/stream-ipc.c
-+++ b/sound/soc/sof/stream-ipc.c
-@@ -43,7 +43,7 @@ int sof_ipc_msg_data(struct snd_sof_dev *sdev,
- 				return -ESTRPIPE;
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -156,6 +156,8 @@ static int micfil_set_quality(struct fsl
+ 	case QUALITY_VLOW2:
+ 		qsel = MICFIL_QSEL_VLOW2_QUALITY;
+ 		break;
++	default:
++		return -EINVAL;
+ 	}
  
- 			posn_offset = stream->posn_offset;
--		} else {
-+		} else if (sps->cstream) {
- 
- 			struct sof_compr_stream *sstream = sps->cstream->runtime->private_data;
- 
-@@ -51,6 +51,10 @@ int sof_ipc_msg_data(struct snd_sof_dev *sdev,
- 				return -ESTRPIPE;
- 
- 			posn_offset = sstream->posn_offset;
-+
-+		} else {
-+			dev_err(sdev->dev, "%s: No stream opened\n", __func__);
-+			return -EINVAL;
- 		}
- 
- 		snd_sof_dsp_mailbox_read(sdev, posn_offset, p, sz);
--- 
-2.48.1
-
+ 	return regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
 
 
