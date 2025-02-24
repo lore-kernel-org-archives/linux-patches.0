@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0BD1B7F4;
-	Mon, 24 Feb 2025 14:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150362571CA;
+	Mon, 24 Feb 2025 14:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408925; cv=none; b=uJcmmoWvVe7efCGzYsI6nutcZUL3FYJTu5/xkJbMYdqiqNeh3weTk6nSvLA4ft/7FfOUNiwEMVjd0cUVzQIfBMFRxdYxu/mgji8lX2rIAuj0uzPvu09QyNBMH0e6iKyUx76Sp1rVCisPvpjj8XeANQwMNu3dYPiVh0DkAiaQV/g=
+	t=1740408928; cv=none; b=WD9bPCbGtzD9B5NEVTPsaiqHdDX+8JuFqvqQny+aGtXPlkIKt05u2nNNDiI1JCaG1Q//5NJ06am6atyhhsN38WyTMTd4tOsLH+EYNwj60irWV1yHxop8F1bXpwjzDZ3lzgbMOesZ/L8rl6TlD9kuFoOO3P+/LEFzC2bBX34dUW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408925; c=relaxed/simple;
-	bh=gZ4cRY1G3NKKHi5Zokh3mU1qPnzLvEsOpbij6BD3MTA=;
+	s=arc-20240116; t=1740408928; c=relaxed/simple;
+	bh=6aWLg6yEsA3FI7742LsJ+uf5lI0DjP0IRih4i7+iMFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WHkP+1EcXbXKAQ5BvU7DzO6rW+d5JykukEvWWm/FH2QMLflZVCmNmUfahost5rRlA05/GbsFrxk+L06fCDoflAidbNWM93yjTzBaTZags2DWEsAVgbr6sYzJ5Mr20cDgnx1VrweoI1zKotnYvBZx2PENpNS0UsrM8Wj7oEhtsUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmjoXx00; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oWj7p4mbiv0eNvynX4FeGmKNVrMM+C3nmC23oczS4x5JIZY3aNfkq7aI88w+0qPW3mtuQscWcrqaY18OIizT1G9322FwnmZHFvdle6mQ9XwrrgBuRYw/2m16SPftvMSaygDo/dDZ+wtswV8iZ4SboVf9qYtLEyQNxpPQhTswECg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giGb77yt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmjoXx00"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65977C4CED6;
-	Mon, 24 Feb 2025 14:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giGb77yt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890AEC4CED6;
+	Mon, 24 Feb 2025 14:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408924;
-	bh=gZ4cRY1G3NKKHi5Zokh3mU1qPnzLvEsOpbij6BD3MTA=;
+	s=korg; t=1740408928;
+	bh=6aWLg6yEsA3FI7742LsJ+uf5lI0DjP0IRih4i7+iMFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OmjoXx002iwghzfaqc+Y4n0Y0BXxg/H4SqfPbRHHtDcwArsj58szGEtNp/AxTLPvs
-	 tovApcOQo3qNpYa1Fm9jbSEmISwogbcY0VSZxvE8kiBSciUofj8ZsWeLUqrengLrAe
-	 T62UA/V4HrV2HJwPEAHjnXkrAHgb3pRxbOhSCYb0=
+	b=giGb77ytP2z9yVf0u7G3dQ+tur5NE7Z7S5zv2Be6J24s5zVTkdV42iCDICVKUlOKw
+	 sAtPqXxoBPMFSQqRdsGoZZNG4v62gh+mv4ORfZBhevfaQn9DS04ZmoR3wsWn3TbRGi
+	 TwjGT3Z9vtqgMIzq1lNG5FVbqKDBcqVUNkRBupiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nick Hu <nick.hu@sifive.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 045/138] arp: switch to dev_getbyhwaddr() in arp_req_set_public()
-Date: Mon, 24 Feb 2025 15:34:35 +0100
-Message-ID: <20250224142606.241338774@linuxfoundation.org>
+Subject: [PATCH 6.13 046/138] net: axienet: Set mac_managed_pm
+Date: Mon, 24 Feb 2025 15:34:36 +0100
+Message-ID: <20250224142606.281281939@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -52,45 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Nick Hu <nick.hu@sifive.com>
 
-[ Upstream commit 4eae0ee0f1e6256d0b0b9dd6e72f1d9cf8f72e08 ]
+[ Upstream commit a370295367b55662a32a4be92565fe72a5aa79bb ]
 
-The arp_req_set_public() function is called with the rtnl lock held,
-which provides enough synchronization protection. This makes the RCU
-variant of dev_getbyhwaddr() unnecessary. Switch to using the simpler
-dev_getbyhwaddr() function since we already have the required rtnl
-locking.
+The external PHY will undergo a soft reset twice during the resume process
+when it wake up from suspend. The first reset occurs when the axienet
+driver calls phylink_of_phy_connect(), and the second occurs when
+mdio_bus_phy_resume() invokes phy_init_hw(). The second soft reset of the
+external PHY does not reinitialize the internal PHY, which causes issues
+with the internal PHY, resulting in the PHY link being down. To prevent
+this, setting the mac_managed_pm flag skips the mdio_bus_phy_resume()
+function.
 
-This change helps maintain consistency in the networking code by using
-the appropriate helper function for the existing locking context.
-Since we're not holding the RCU read lock in arp_req_set_public()
-existing code could trigger false positive locking warnings.
-
-Fixes: 941666c2e3e0 ("net: RCU conversion of dev_getbyhwaddr() and arp_ioctl()")
-Suggested-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20250218-arm_fix_selftest-v5-2-d3d6892db9e1@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a129b41fe0a8 ("Revert "net: phy: dp83867: perform soft reset and retain established link"")
+Signed-off-by: Nick Hu <nick.hu@sifive.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20250217055843.19799-1-nick.hu@sifive.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/arp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/arp.c b/net/ipv4/arp.c
-index f23a1ec6694cb..814300eee39de 100644
---- a/net/ipv4/arp.c
-+++ b/net/ipv4/arp.c
-@@ -1077,7 +1077,7 @@ static int arp_req_set_public(struct net *net, struct arpreq *r,
- 	__be32 mask = ((struct sockaddr_in *)&r->arp_netmask)->sin_addr.s_addr;
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index ae743991117c4..300cf7fed8bca 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -2888,6 +2888,7 @@ static int axienet_probe(struct platform_device *pdev)
  
- 	if (!dev && (r->arp_flags & ATF_COM)) {
--		dev = dev_getbyhwaddr_rcu(net, r->arp_ha.sa_family,
-+		dev = dev_getbyhwaddr(net, r->arp_ha.sa_family,
- 				      r->arp_ha.sa_data);
- 		if (!dev)
- 			return -ENODEV;
+ 	lp->phylink_config.dev = &ndev->dev;
+ 	lp->phylink_config.type = PHYLINK_NETDEV;
++	lp->phylink_config.mac_managed_pm = true;
+ 	lp->phylink_config.mac_capabilities = MAC_SYM_PAUSE | MAC_ASYM_PAUSE |
+ 		MAC_10FD | MAC_100FD | MAC_1000FD;
+ 
 -- 
 2.39.5
 
