@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CC518BC26;
-	Mon, 24 Feb 2025 14:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B78927701;
+	Mon, 24 Feb 2025 14:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408778; cv=none; b=PQd0FydHh2zoab7UKr4Z+pDyrlwdz7VRl1MVbZ4evgpOJmG50jZuSwmtORM1dilVRbUOVXUU9ONlbGKv8AcxmsH3kpqu8e5w/iduTpfxh0nwyK+Gy29CYhEgffCe9GmeYMBq3eC8xSQHTvTmJp3ONVb0fjGVkhrvTFqTKSR5fAk=
+	t=1740408782; cv=none; b=pGrLe27rgzIgNeg5oiq3epQZDoVDccEPBj+OEymamaSuK3QfjWkL06KMvMCeZcqSXo4pO8Z5veVpLVpkDV1GZO9HQjTk6Wwu81xaSXh5ZYkwfjRYUscAhP8WHyuBVCHFAuZz5TLuE2On3jfK7iQWRTlj4hQ3iFFkte0IJui6YcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408778; c=relaxed/simple;
-	bh=zRpA3/IqZiMC608y+violUdrBGAa5pJdO8X30feEtZw=;
+	s=arc-20240116; t=1740408782; c=relaxed/simple;
+	bh=xR2dnc63Qppt4W9Am2y9jBBJQItYXb/I4dlvD8O6v5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ci66hi7eDycIQySlk8MgvqdHPelVXzlYbPc4ZMcTclOtkyqIvMYRjAIM8EvkzuUpavmBpQJ1YoSfSsyPROc4lKM3qVgZ3F3EGkr7lU67zxxLzFRAutb5EZljD/Pedo58WOKfj2CuUqFgyuaynnqzPdIyPLU1T6erII9Vp1O/BpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7Iirykx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gdj1dcML9bMr3ARJ0qoDHqXfIsZxa/vzmBLFH6KQQJ3dsOTBAAakwKWHokQ/IEkyoXppn6rnCs958g2xW1so126A5pHuTWzIovirmUWPdnZXZZ7yocSc91GOS71juZi5tV1avUD7sAxuTpkG290W/L1DUsozk2pw3dl3gyJwaek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ix0fabdq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7Iirykx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DD4C4CED6;
-	Mon, 24 Feb 2025 14:52:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ix0fabdq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7171DC4CED6;
+	Mon, 24 Feb 2025 14:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408778;
-	bh=zRpA3/IqZiMC608y+violUdrBGAa5pJdO8X30feEtZw=;
+	s=korg; t=1740408781;
+	bh=xR2dnc63Qppt4W9Am2y9jBBJQItYXb/I4dlvD8O6v5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N7IirykxyEqxVaXhiQlR/J+ReDf6oc+dCFFhO7h/COr0j0LrNv6/DPYJnr47BjGRd
-	 gBm8WlF8dEpC3AqAaoSbK8q0cfBbVvpGzQRkaVj4MudYPKFCztkVj2HUtH3YI8QsV5
-	 Zrgf/xjsKpb3CyXEEjz2RBeDox6GYGrY8GBLB5FE=
+	b=Ix0fabdqAq173Fu5pz4dzJp10gtxfjTs+ioNb3oIjIXhAXsVn8zbqxq79Bn3FQF3r
+	 2tQXqimDpP4oK60lagqAxS6XKrnSwcYNwiaEcWKhYaLYt+Sa6k23emLkgEZKZbXJ1f
+	 0RJySQUiUlDQ1xbf8y56HQGuKzki+xpVmRTgr52U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Jeroen de Borst <jeroendb@google.com>,
-	Joshua Washington <joshwash@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 128/154] gve: set xdp redirect target only when it is available
-Date: Mon, 24 Feb 2025 15:35:27 +0100
-Message-ID: <20250224142612.062355327@linuxfoundation.org>
+	Curtis Malainey <cujomalainey@chromium.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 129/154] ASoC: SOF: stream-ipc: Check for cstream nullity in sof_ipc_msg_data()
+Date: Mon, 24 Feb 2025 15:35:28 +0100
+Message-ID: <20250224142612.100314032@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -52,80 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Washington <joshwash@google.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 415cadd505464d9a11ff5e0f6e0329c127849da5 upstream.
+commit d8d99c3b5c485f339864aeaa29f76269cc0ea975 upstream.
 
-Before this patch the NETDEV_XDP_ACT_NDO_XMIT XDP feature flag is set by
-default as part of driver initialization, and is never cleared. However,
-this flag differs from others in that it is used as an indicator for
-whether the driver is ready to perform the ndo_xdp_xmit operation as
-part of an XDP_REDIRECT. Kernel helpers
-xdp_features_(set|clear)_redirect_target exist to convey this meaning.
+The nullity of sps->cstream should be checked similarly as it is done in
+sof_set_stream_data_offset() function.
+Assuming that it is not NULL if sps->stream is NULL is incorrect and can
+lead to NULL pointer dereference.
 
-This patch ensures that the netdev is only reported as a redirect target
-when XDP queues exist to forward traffic.
-
-Fixes: 39a7f4aa3e4a ("gve: Add XDP REDIRECT support for GQI-QPL format")
+Fixes: 090349a9feba ("ASoC: SOF: Add support for compress API for stream data/offset")
 Cc: stable@vger.kernel.org
-Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Reviewed-by: Jeroen de Borst <jeroendb@google.com>
-Signed-off-by: Joshua Washington <joshwash@google.com>
-Link: https://patch.msgid.link/20250214224417.1237818-1-joshwash@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Curtis Malainey <cujomalainey@chromium.org>
+Closes: https://github.com/thesofproject/linux/pull/5214
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Curtis Malainey <cujomalainey@chromium.org>
+Link: https://patch.msgid.link/20250205135232.19762-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve.h      |   10 ++++++++++
- drivers/net/ethernet/google/gve/gve_main.c |    6 +++++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ sound/soc/sof/stream-ipc.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/google/gve/gve.h
-+++ b/drivers/net/ethernet/google/gve/gve.h
-@@ -1110,6 +1110,16 @@ static inline u32 gve_xdp_tx_start_queue
- 	return gve_xdp_tx_queue_id(priv, 0);
- }
+--- a/sound/soc/sof/stream-ipc.c
++++ b/sound/soc/sof/stream-ipc.c
+@@ -43,7 +43,7 @@ int sof_ipc_msg_data(struct snd_sof_dev
+ 				return -ESTRPIPE;
  
-+static inline bool gve_supports_xdp_xmit(struct gve_priv *priv)
-+{
-+	switch (priv->queue_format) {
-+	case GVE_GQI_QPL_FORMAT:
-+		return true;
-+	default:
-+		return false;
-+	}
-+}
+ 			posn_offset = stream->posn_offset;
+-		} else {
++		} else if (sps->cstream) {
+ 
+ 			struct sof_compr_stream *sstream = sps->cstream->runtime->private_data;
+ 
+@@ -51,6 +51,10 @@ int sof_ipc_msg_data(struct snd_sof_dev
+ 				return -ESTRPIPE;
+ 
+ 			posn_offset = sstream->posn_offset;
 +
- /* gqi napi handler defined in gve_main.c */
- int gve_napi_poll(struct napi_struct *napi, int budget);
++		} else {
++			dev_err(sdev->dev, "%s: No stream opened\n", __func__);
++			return -EINVAL;
+ 		}
  
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -1895,6 +1895,8 @@ static void gve_turndown(struct gve_priv
- 	/* Stop tx queues */
- 	netif_tx_disable(priv->dev);
- 
-+	xdp_features_clear_redirect_target(priv->dev);
-+
- 	gve_clear_napi_enabled(priv);
- 	gve_clear_report_stats(priv);
- 
-@@ -1955,6 +1957,9 @@ static void gve_turnup(struct gve_priv *
- 		napi_schedule(&block->napi);
- 	}
- 
-+	if (priv->num_xdp_queues && gve_supports_xdp_xmit(priv))
-+		xdp_features_set_redirect_target(priv->dev, false);
-+
- 	gve_set_napi_enabled(priv);
- }
- 
-@@ -2229,7 +2234,6 @@ static void gve_set_netdev_xdp_features(
- 	if (priv->queue_format == GVE_GQI_QPL_FORMAT) {
- 		xdp_features = NETDEV_XDP_ACT_BASIC;
- 		xdp_features |= NETDEV_XDP_ACT_REDIRECT;
--		xdp_features |= NETDEV_XDP_ACT_NDO_XMIT;
- 		xdp_features |= NETDEV_XDP_ACT_XSK_ZEROCOPY;
- 	} else {
- 		xdp_features = 0;
+ 		snd_sof_dsp_mailbox_read(sdev, posn_offset, p, sz);
 
 
