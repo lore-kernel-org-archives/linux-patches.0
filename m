@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14A04A33;
-	Mon, 24 Feb 2025 14:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4BF18A95E;
+	Mon, 24 Feb 2025 14:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740407921; cv=none; b=YvGIJFPqZRz10RNvgPMiKgLUmcL4W2mDO71MrGgUy3LdAkPa854E1P9RuxHSFHCO2xuKQqA/NukEtmPeCTbBXXy/SrwEGYXAQLbOfuAE69ummkHa/PnA3MNXI2sauT8mU+u5ayz6H9delO0VvU4beWsXwBLu7mliRb5EkxKBvGs=
+	t=1740407923; cv=none; b=BydokzAbb7I6EdokILVuvBhI1D2XnGCEbcWVL6KIgDZ4AJ2QJkIxTJgZuRM0JAzYNAbL7WJlSxqFJ9Kwi1o6eu7uU4j3cCK7KMumpCaN+DIhC5KWNpyoMfB/cRas96yEndFh3zeMvgbUhts98I/sXykOWOQG9uqwST19eaVOAL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740407921; c=relaxed/simple;
-	bh=m9Ot6gPKOMKY//nu5cyto7sGXKOkMrr54vR5RPrG7LM=;
+	s=arc-20240116; t=1740407923; c=relaxed/simple;
+	bh=6cimDX7seyBQ4u4Zhamw2x9IllH3UcIx55CBpoJFUpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eYk3UhFGWlQcoHb+ua5xpXgmaPBIK91Xtbno8ow0VjNKsbcRrVSHKGRqDbazRtvzvtssRjUVSFRTIAopSFD1jEg8dW0pcIXrlTEeA46zZ3XRwW/QAqDy1C1lOcX9celt3UBoZT/XK3eye2u1ISwZVk7A+CjoCdCAkdu3a7/dBGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLEHfpp3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WMf5OG811HMN6C6DjONq0Ff/ioHAHk/tLtQngZNnsNWKdp67rNfAaW75qHBJ37fcT9bimffMQFZj8hoBHP/dDvTQ9uZIYnqq7dWF+ktPZ+ZWfmyHLVAN9KfsVI53638mNUSiHlms4096HH1SdYRBlC61zhKnKqq3Cklx+ef/o3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ww4QJW8e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLEHfpp3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A1DC4CED6;
-	Mon, 24 Feb 2025 14:38:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ww4QJW8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A148C4CED6;
+	Mon, 24 Feb 2025 14:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740407920;
-	bh=m9Ot6gPKOMKY//nu5cyto7sGXKOkMrr54vR5RPrG7LM=;
+	s=korg; t=1740407923;
+	bh=6cimDX7seyBQ4u4Zhamw2x9IllH3UcIx55CBpoJFUpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eLEHfpp3ya9pJpRfJqXWqr0qCFURW8MSRMF8KYl0b9EtjHYBgd1MFm7MBao1KfMee
-	 1kjegfeJhQCOfxPkez0BshH5A7HX695usILGuZDTAkq68oh1OOMGczy42dj6i12iM/
-	 eW+7mqorkTYIsAD5ZVd92hULFpZgPQIpSFgVXy84=
+	b=Ww4QJW8erwsznOvIGORAWMBdFqZoas0qn+vlXFSDbIldG/1Fm2FTcF254H0JDcPhk
+	 RSk+kdtz1+vdNy73B5eiCJq1fg8T7u657ruNqn3B3yMjmhQBHIY6LbVdu0F2GLhnCK
+	 NKYTaiQ6hx0U+W3UtbJEAq7Sz6hiPDVyKnmTrEys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Pylypiv <ipylypiv@google.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/140] scsi: core: Do not retry I/Os during depopulation
-Date: Mon, 24 Feb 2025 15:34:06 +0100
-Message-ID: <20250224142604.860326394@linuxfoundation.org>
+Subject: [PATCH 6.6 048/140] arm64: dts: qcom: sm8450: add missing qcom,non-secure-domain property
+Date: Mon, 24 Feb 2025 15:34:07 +0100
+Message-ID: <20250224142604.901321244@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -51,58 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Pylypiv <ipylypiv@google.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 9ff7c383b8ac0c482a1da7989f703406d78445c6 ]
+[ Upstream commit 033fbfa0eb60e519f50e97ef93baec270cd28a88 ]
 
-Fail I/Os instead of retry to prevent user space processes from being
-blocked on the I/O completion for several minutes.
+By default the DSP domains are non secure, add the missing
+qcom,non-secure-domain property to mark them as non-secure.
 
-Retrying I/Os during "depopulation in progress" or "depopulation restore in
-progress" results in a continuous retry loop until the depopulation
-completes or until the I/O retry loop is aborted due to a timeout by the
-scsi_cmd_runtime_exceeced().
-
-Depopulation is slow and can take 24+ hours to complete on 20+ TB HDDs.
-Most I/Os in the depopulation retry loop end up taking several minutes
-before returning the failure to user space.
-
-Cc: stable@vger.kernel.org # 4.18.x: 2bbeb8d scsi: core: Handle depopulation and restoration in progress
-Cc: stable@vger.kernel.org # 4.18.x
-Fixes: e37c7d9a0341 ("scsi: core: sanitize++ in progress")
-Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
-Link: https://lore.kernel.org/r/20250131184408.859579-1-ipylypiv@google.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 91d70eb70867 ("arm64: dts: qcom: sm8450: add fastrpc nodes")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240227-topic-sm8x50-upstream-fastrpc-non-secure-domain-v1-1-15c4c864310f@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 13c96bee5d5e ("arm64: dts: qcom: sm8450: Fix ADSP memory base and length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index 2f54e1a853099..f026377f1cf1c 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -774,13 +774,18 @@ static void scsi_io_completion_action(struct scsi_cmnd *cmd, int result)
- 				case 0x1a: /* start stop unit in progress */
- 				case 0x1b: /* sanitize in progress */
- 				case 0x1d: /* configuration in progress */
--				case 0x24: /* depopulation in progress */
--				case 0x25: /* depopulation restore in progress */
- 					action = ACTION_DELAYED_RETRY;
- 					break;
- 				case 0x0a: /* ALUA state transition */
- 					action = ACTION_DELAYED_REPREP;
- 					break;
-+				/*
-+				 * Depopulation might take many hours,
-+				 * thus it is not worthwhile to retry.
-+				 */
-+				case 0x24: /* depopulation in progress */
-+				case 0x25: /* depopulation restore in progress */
-+					fallthrough;
- 				default:
- 					action = ACTION_FAIL;
- 					break;
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 2a49a29713752..fb0162e65a38c 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -2135,6 +2135,7 @@
+ 					compatible = "qcom,fastrpc";
+ 					qcom,glink-channels = "fastrpcglink-apps-dsp";
+ 					label = "sdsp";
++					qcom,non-secure-domain;
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+ 
+@@ -2449,6 +2450,7 @@
+ 					compatible = "qcom,fastrpc";
+ 					qcom,glink-channels = "fastrpcglink-apps-dsp";
+ 					label = "adsp";
++					qcom,non-secure-domain;
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+ 
+@@ -2515,6 +2517,7 @@
+ 					compatible = "qcom,fastrpc";
+ 					qcom,glink-channels = "fastrpcglink-apps-dsp";
+ 					label = "cdsp";
++					qcom,non-secure-domain;
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+ 
 -- 
 2.39.5
 
