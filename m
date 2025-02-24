@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2147F7F7FC;
-	Mon, 24 Feb 2025 14:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A20824A3;
+	Mon, 24 Feb 2025 14:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740407865; cv=none; b=UIN1y1XgjKyHSxutvP3zBxvqT/Hc7yFsmK/CZXVsZFczKnEiAlmgA1r24up8x4ntKDW/62IXJemTcVTmkmwUKZYrjUkNspP88deaMGnk9Wsq5YPGBMN+BFar/lwG1Zfp/ecvpcLEeH3VJNykJ0rnSXqv+rwpXr5DnOkxAMcMAKU=
+	t=1740407868; cv=none; b=c1ZSWa0dTRRlFn/SlDF3GAJzIDLsTcb6riwoVBj0y8agx+3x0czPNnzS2UDzu3ZD4ufqgkOJqx7/3Wg6JcBm+dlHNCz4x7p+Oco+UAcuXzLOilPs8EaEYHq4or1I8zrZGaKugTePzYZ8vnuLh6VlengdjdCIOxu5qnEPKsvhlyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740407865; c=relaxed/simple;
-	bh=9yqfVsuMi4oTfkPqOolA3okH/gk3554yqfjYxcSSMSw=;
+	s=arc-20240116; t=1740407868; c=relaxed/simple;
+	bh=HJH9WLJo2aVOihYBHWvQR1qfKqMZ4PzLGjFfsgsevd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgfEhVnhWQUzRPx05tVer88l/kKDutUDujmfHn1j8gZOi2ZzfRoswmKfIqbPQfnOQMKvlmnzBzNekcT2wUsMzcSitO8tOi68QLpqm103yaZl8k+bI2Fo1qma6er9u5YdL76z1iLvt6RhClaANjYuspG8bPsRsiydnXS6YcbnBqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCOOe9yY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b/4ZtUofC3uzzYEICdxVds7xTQthwZfwJyYWfubAsbDdnYYf9NjDrtVC05UC4l0Cfr8bNBiaOPLa1J+QK9C6gYstzdD8dR4AVoa49ojAc5nkj97FNS33BcSa9h5ckxCYYaCrydwHv2kqflvJbIF79l6DTVyMYIWBMR57OHdAtB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+SJaTeG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCOOe9yY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23FA4C4CEE8;
-	Mon, 24 Feb 2025 14:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+SJaTeG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A8BC4CED6;
+	Mon, 24 Feb 2025 14:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740407864;
-	bh=9yqfVsuMi4oTfkPqOolA3okH/gk3554yqfjYxcSSMSw=;
+	s=korg; t=1740407868;
+	bh=HJH9WLJo2aVOihYBHWvQR1qfKqMZ4PzLGjFfsgsevd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCOOe9yYWVGevLBEhEutevoTjxRP2dh+0PA6+aQ7UeDOFIiioZxTzxU8Lz9q4Agl1
-	 gPEg+kDeOLfCU1dVOvEOriCLFU73WxDQGtf2RUTu4YrhaqgjM/1Sy9jE7T7zN2Ogsq
-	 n1D03D3rR2mLRpfMre0EGoxv4HDnN1ZZHzbOoS8g=
+	b=j+SJaTeGXb82nFAM/fIluXuoCG5vt9iDHoC3Zuh3Osa80QlPU0bpFlEXCHIzWEZGf
+	 7XpZQgoqmc2Y9vz5ET5k6JwRTFIt2fCbkgDu6oSddkATBeiWwldvvktK/CwSwYd2Vp
+	 UOIxbvDHH0SaC4rx1yXxEOtRRgSaB3JCQVjM7+Sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Carlos Maiolino <cem@kernel.org>,
 	Catherine Hoang <catherine.hoang@oracle.com>
-Subject: [PATCH 6.6 008/140] xfs: merge xfs_attr_leaf_try_add into xfs_attr_leaf_addname
-Date: Mon, 24 Feb 2025 15:33:27 +0100
-Message-ID: <20250224142603.334264712@linuxfoundation.org>
+Subject: [PATCH 6.6 009/140] xfs: return bool from xfs_attr3_leaf_add
+Date: Mon, 24 Feb 2025 15:33:28 +0100
+Message-ID: <20250224142603.376051598@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -55,15 +55,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-commit b1c649da15c2e4c86344c8e5af69c8afa215efec upstream.
+commit 346c1d46d4c631c0c88592d371f585214d714da4 upstream.
 
 [backport: dependency of a5f7334 and b3f4e84]
 
-xfs_attr_leaf_try_add is only called by xfs_attr_leaf_addname, and
-merging the two will simplify a following error handling fix.
+xfs_attr3_leaf_add only has two potential return values, indicating if the
+entry could be added or not.  Replace the errno return with a bool so that
+ENOSPC from it can't easily be confused with a real ENOSPC.
 
-To facilitate this move the remote block state save/restore helpers up in
-the file so that they don't need forward declarations now.
+Remove the return value from the xfs_attr3_leaf_add_work helper entirely,
+as it always return 0.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
@@ -72,238 +73,199 @@ Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_attr.c |  176 +++++++++++++++++++----------------------------
- 1 file changed, 74 insertions(+), 102 deletions(-)
+ fs/xfs/libxfs/xfs_attr.c      |   13 +++++--------
+ fs/xfs/libxfs/xfs_attr_leaf.c |   37 +++++++++++++++++++------------------
+ fs/xfs/libxfs/xfs_attr_leaf.h |    2 +-
+ 3 files changed, 25 insertions(+), 27 deletions(-)
 
 --- a/fs/xfs/libxfs/xfs_attr.c
 +++ b/fs/xfs/libxfs/xfs_attr.c
-@@ -50,7 +50,6 @@ STATIC int xfs_attr_shortform_addname(xf
- STATIC int xfs_attr_leaf_get(xfs_da_args_t *args);
- STATIC int xfs_attr_leaf_removename(xfs_da_args_t *args);
- STATIC int xfs_attr_leaf_hasname(struct xfs_da_args *args, struct xfs_buf **bp);
--STATIC int xfs_attr_leaf_try_add(struct xfs_da_args *args);
- 
- /*
-  * Internal routines when attribute list is more than one block.
-@@ -401,6 +400,33 @@ out:
- 	return error;
- }
- 
-+/* Save the current remote block info and clear the current pointers. */
-+static void
-+xfs_attr_save_rmt_blk(
-+	struct xfs_da_args	*args)
-+{
-+	args->blkno2 = args->blkno;
-+	args->index2 = args->index;
-+	args->rmtblkno2 = args->rmtblkno;
-+	args->rmtblkcnt2 = args->rmtblkcnt;
-+	args->rmtvaluelen2 = args->rmtvaluelen;
-+	args->rmtblkno = 0;
-+	args->rmtblkcnt = 0;
-+	args->rmtvaluelen = 0;
-+}
-+
-+/* Set stored info about a remote block */
-+static void
-+xfs_attr_restore_rmt_blk(
-+	struct xfs_da_args	*args)
-+{
-+	args->blkno = args->blkno2;
-+	args->index = args->index2;
-+	args->rmtblkno = args->rmtblkno2;
-+	args->rmtblkcnt = args->rmtblkcnt2;
-+	args->rmtvaluelen = args->rmtvaluelen2;
-+}
-+
- /*
-  * Handle the state change on completion of a multi-state attr operation.
-  *
-@@ -428,49 +454,77 @@ xfs_attr_complete_op(
- 	return XFS_DAS_DONE;
- }
- 
-+/*
-+ * Try to add an attribute to an inode in leaf form.
-+ */
- static int
- xfs_attr_leaf_addname(
- 	struct xfs_attr_intent	*attr)
- {
- 	struct xfs_da_args	*args = attr->xattri_da_args;
-+	struct xfs_buf		*bp;
- 	int			error;
- 
- 	ASSERT(xfs_attr_is_leaf(args->dp));
- 
-+	error = xfs_attr3_leaf_read(args->trans, args->dp, 0, &bp);
-+	if (error)
-+		return error;
-+
- 	/*
--	 * Use the leaf buffer we may already hold locked as a result of
--	 * a sf-to-leaf conversion.
-+	 * Look up the xattr name to set the insertion point for the new xattr.
- 	 */
--	error = xfs_attr_leaf_try_add(args);
--
--	if (error == -ENOSPC) {
--		error = xfs_attr3_leaf_to_node(args);
--		if (error)
--			return error;
-+	error = xfs_attr3_leaf_lookup_int(bp, args);
-+	switch (error) {
-+	case -ENOATTR:
-+		if (args->op_flags & XFS_DA_OP_REPLACE)
-+			goto out_brelse;
-+		break;
-+	case -EEXIST:
-+		if (!(args->op_flags & XFS_DA_OP_REPLACE))
-+			goto out_brelse;
- 
-+		trace_xfs_attr_leaf_replace(args);
- 		/*
--		 * We're not in leaf format anymore, so roll the transaction and
--		 * retry the add to the newly allocated node block.
-+		 * Save the existing remote attr state so that the current
-+		 * values reflect the state of the new attribute we are about to
-+		 * add, not the attribute we just found and will remove later.
- 		 */
--		attr->xattri_dela_state = XFS_DAS_NODE_ADD;
--		goto out;
-+		xfs_attr_save_rmt_blk(args);
-+		break;
-+	case 0:
-+		break;
-+	default:
-+		goto out_brelse;
- 	}
--	if (error)
--		return error;
- 
- 	/*
- 	 * We need to commit and roll if we need to allocate remote xattr blocks
+@@ -503,10 +503,7 @@ xfs_attr_leaf_addname(
  	 * or perform more xattr manipulations. Otherwise there is nothing more
  	 * to do and we can return success.
  	 */
--	if (args->rmtblkno)
-+	error = xfs_attr3_leaf_add(bp, args);
-+	if (error) {
-+		if (error != -ENOSPC)
-+			return error;
-+		error = xfs_attr3_leaf_to_node(args);
-+		if (error)
-+			return error;
-+
-+		attr->xattri_dela_state = XFS_DAS_NODE_ADD;
-+	} else if (args->rmtblkno) {
- 		attr->xattri_dela_state = XFS_DAS_LEAF_SET_RMT;
--	else
--		attr->xattri_dela_state = xfs_attr_complete_op(attr,
--							XFS_DAS_LEAF_REPLACE);
--out:
-+	} else {
-+		attr->xattri_dela_state =
-+			xfs_attr_complete_op(attr, XFS_DAS_LEAF_REPLACE);
-+	}
-+
+-	error = xfs_attr3_leaf_add(bp, args);
+-	if (error) {
+-		if (error != -ENOSPC)
+-			return error;
++	if (!xfs_attr3_leaf_add(bp, args)) {
+ 		error = xfs_attr3_leaf_to_node(args);
+ 		if (error)
+ 			return error;
+@@ -520,7 +517,7 @@ xfs_attr_leaf_addname(
+ 	}
+ 
  	trace_xfs_attr_leaf_addname_return(attr->xattri_dela_state, args->dp);
- 	return error;
-+
-+out_brelse:
-+	xfs_trans_brelse(args->trans, bp);
-+	return error;
+-	return error;
++	return 0;
+ 
+ out_brelse:
+ 	xfs_trans_brelse(args->trans, bp);
+@@ -1393,21 +1390,21 @@ xfs_attr_node_try_addname(
+ {
+ 	struct xfs_da_state		*state = attr->xattri_da_state;
+ 	struct xfs_da_state_blk		*blk;
+-	int				error;
++	int				error = 0;
+ 
+ 	trace_xfs_attr_node_addname(state->args);
+ 
+ 	blk = &state->path.blk[state->path.active-1];
+ 	ASSERT(blk->magic == XFS_ATTR_LEAF_MAGIC);
+ 
+-	error = xfs_attr3_leaf_add(blk->bp, state->args);
+-	if (error == -ENOSPC) {
++	if (!xfs_attr3_leaf_add(blk->bp, state->args)) {
+ 		if (state->path.active == 1) {
+ 			/*
+ 			 * Its really a single leaf node, but it had
+ 			 * out-of-line values so it looked like it *might*
+ 			 * have been a b-tree. Let the caller deal with this.
+ 			 */
++			error = -ENOSPC;
+ 			goto out;
+ 		}
+ 
+--- a/fs/xfs/libxfs/xfs_attr_leaf.c
++++ b/fs/xfs/libxfs/xfs_attr_leaf.c
+@@ -46,7 +46,7 @@
+  */
+ STATIC int xfs_attr3_leaf_create(struct xfs_da_args *args,
+ 				 xfs_dablk_t which_block, struct xfs_buf **bpp);
+-STATIC int xfs_attr3_leaf_add_work(struct xfs_buf *leaf_buffer,
++STATIC void xfs_attr3_leaf_add_work(struct xfs_buf *leaf_buffer,
+ 				   struct xfs_attr3_icleaf_hdr *ichdr,
+ 				   struct xfs_da_args *args, int freemap_index);
+ STATIC void xfs_attr3_leaf_compact(struct xfs_da_args *args,
+@@ -990,10 +990,8 @@ xfs_attr_shortform_to_leaf(
+ 		}
+ 		error = xfs_attr3_leaf_lookup_int(bp, &nargs); /* set a->index */
+ 		ASSERT(error == -ENOATTR);
+-		error = xfs_attr3_leaf_add(bp, &nargs);
+-		ASSERT(error != -ENOSPC);
+-		if (error)
+-			goto out;
++		if (!xfs_attr3_leaf_add(bp, &nargs))
++			ASSERT(0);
+ 		sfe = xfs_attr_sf_nextentry(sfe);
+ 	}
+ 	error = 0;
+@@ -1349,8 +1347,9 @@ xfs_attr3_leaf_split(
+ 	struct xfs_da_state_blk	*oldblk,
+ 	struct xfs_da_state_blk	*newblk)
+ {
+-	xfs_dablk_t blkno;
+-	int error;
++	bool			added;
++	xfs_dablk_t		blkno;
++	int			error;
+ 
+ 	trace_xfs_attr_leaf_split(state->args);
+ 
+@@ -1385,10 +1384,10 @@ xfs_attr3_leaf_split(
+ 	 */
+ 	if (state->inleaf) {
+ 		trace_xfs_attr_leaf_add_old(state->args);
+-		error = xfs_attr3_leaf_add(oldblk->bp, state->args);
++		added = xfs_attr3_leaf_add(oldblk->bp, state->args);
+ 	} else {
+ 		trace_xfs_attr_leaf_add_new(state->args);
+-		error = xfs_attr3_leaf_add(newblk->bp, state->args);
++		added = xfs_attr3_leaf_add(newblk->bp, state->args);
+ 	}
+ 
+ 	/*
+@@ -1396,13 +1395,15 @@ xfs_attr3_leaf_split(
+ 	 */
+ 	oldblk->hashval = xfs_attr_leaf_lasthash(oldblk->bp, NULL);
+ 	newblk->hashval = xfs_attr_leaf_lasthash(newblk->bp, NULL);
+-	return error;
++	if (!added)
++		return -ENOSPC;
++	return 0;
  }
  
  /*
-@@ -1164,88 +1218,6 @@ xfs_attr_shortform_addname(
-  * External routines when attribute list is one block
-  *========================================================================*/
- 
--/* Save the current remote block info and clear the current pointers. */
--static void
--xfs_attr_save_rmt_blk(
--	struct xfs_da_args	*args)
--{
--	args->blkno2 = args->blkno;
--	args->index2 = args->index;
--	args->rmtblkno2 = args->rmtblkno;
--	args->rmtblkcnt2 = args->rmtblkcnt;
--	args->rmtvaluelen2 = args->rmtvaluelen;
--	args->rmtblkno = 0;
--	args->rmtblkcnt = 0;
--	args->rmtvaluelen = 0;
--}
--
--/* Set stored info about a remote block */
--static void
--xfs_attr_restore_rmt_blk(
--	struct xfs_da_args	*args)
--{
--	args->blkno = args->blkno2;
--	args->index = args->index2;
--	args->rmtblkno = args->rmtblkno2;
--	args->rmtblkcnt = args->rmtblkcnt2;
--	args->rmtvaluelen = args->rmtvaluelen2;
--}
--
--/*
-- * Tries to add an attribute to an inode in leaf form
-- *
-- * This function is meant to execute as part of a delayed operation and leaves
-- * the transaction handling to the caller.  On success the attribute is added
-- * and the inode and transaction are left dirty.  If there is not enough space,
-- * the attr data is converted to node format and -ENOSPC is returned. Caller is
-- * responsible for handling the dirty inode and transaction or adding the attr
-- * in node format.
-- */
--STATIC int
--xfs_attr_leaf_try_add(
--	struct xfs_da_args	*args)
--{
--	struct xfs_buf		*bp;
--	int			error;
--
--	error = xfs_attr3_leaf_read(args->trans, args->dp, 0, &bp);
--	if (error)
--		return error;
--
--	/*
--	 * Look up the xattr name to set the insertion point for the new xattr.
--	 */
--	error = xfs_attr3_leaf_lookup_int(bp, args);
--	switch (error) {
--	case -ENOATTR:
--		if (args->op_flags & XFS_DA_OP_REPLACE)
--			goto out_brelse;
--		break;
--	case -EEXIST:
--		if (!(args->op_flags & XFS_DA_OP_REPLACE))
--			goto out_brelse;
--
--		trace_xfs_attr_leaf_replace(args);
--		/*
--		 * Save the existing remote attr state so that the current
--		 * values reflect the state of the new attribute we are about to
--		 * add, not the attribute we just found and will remove later.
--		 */
--		xfs_attr_save_rmt_blk(args);
--		break;
--	case 0:
--		break;
--	default:
--		goto out_brelse;
--	}
--
--	return xfs_attr3_leaf_add(bp, args);
--
--out_brelse:
--	xfs_trans_brelse(args->trans, bp);
--	return error;
--}
--
- /*
-  * Return EEXIST if attr is found, or ENOATTR if not
+  * Add a name to the leaf attribute list structure.
   */
+-int
++bool
+ xfs_attr3_leaf_add(
+ 	struct xfs_buf		*bp,
+ 	struct xfs_da_args	*args)
+@@ -1411,6 +1412,7 @@ xfs_attr3_leaf_add(
+ 	struct xfs_attr3_icleaf_hdr ichdr;
+ 	int			tablesize;
+ 	int			entsize;
++	bool			added = true;
+ 	int			sum;
+ 	int			tmp;
+ 	int			i;
+@@ -1439,7 +1441,7 @@ xfs_attr3_leaf_add(
+ 		if (ichdr.freemap[i].base < ichdr.firstused)
+ 			tmp += sizeof(xfs_attr_leaf_entry_t);
+ 		if (ichdr.freemap[i].size >= tmp) {
+-			tmp = xfs_attr3_leaf_add_work(bp, &ichdr, args, i);
++			xfs_attr3_leaf_add_work(bp, &ichdr, args, i);
+ 			goto out_log_hdr;
+ 		}
+ 		sum += ichdr.freemap[i].size;
+@@ -1451,7 +1453,7 @@ xfs_attr3_leaf_add(
+ 	 * no good and we should just give up.
+ 	 */
+ 	if (!ichdr.holes && sum < entsize)
+-		return -ENOSPC;
++		return false;
+ 
+ 	/*
+ 	 * Compact the entries to coalesce free space.
+@@ -1464,24 +1466,24 @@ xfs_attr3_leaf_add(
+ 	 * free region, in freemap[0].  If it is not big enough, give up.
+ 	 */
+ 	if (ichdr.freemap[0].size < (entsize + sizeof(xfs_attr_leaf_entry_t))) {
+-		tmp = -ENOSPC;
++		added = false;
+ 		goto out_log_hdr;
+ 	}
+ 
+-	tmp = xfs_attr3_leaf_add_work(bp, &ichdr, args, 0);
++	xfs_attr3_leaf_add_work(bp, &ichdr, args, 0);
+ 
+ out_log_hdr:
+ 	xfs_attr3_leaf_hdr_to_disk(args->geo, leaf, &ichdr);
+ 	xfs_trans_log_buf(args->trans, bp,
+ 		XFS_DA_LOGRANGE(leaf, &leaf->hdr,
+ 				xfs_attr3_leaf_hdr_size(leaf)));
+-	return tmp;
++	return added;
+ }
+ 
+ /*
+  * Add a name to a leaf attribute list structure.
+  */
+-STATIC int
++STATIC void
+ xfs_attr3_leaf_add_work(
+ 	struct xfs_buf		*bp,
+ 	struct xfs_attr3_icleaf_hdr *ichdr,
+@@ -1599,7 +1601,6 @@ xfs_attr3_leaf_add_work(
+ 		}
+ 	}
+ 	ichdr->usedbytes += xfs_attr_leaf_entsize(leaf, args->index);
+-	return 0;
+ }
+ 
+ /*
+--- a/fs/xfs/libxfs/xfs_attr_leaf.h
++++ b/fs/xfs/libxfs/xfs_attr_leaf.h
+@@ -78,7 +78,7 @@ int	xfs_attr3_leaf_split(struct xfs_da_s
+ int	xfs_attr3_leaf_lookup_int(struct xfs_buf *leaf,
+ 					struct xfs_da_args *args);
+ int	xfs_attr3_leaf_getvalue(struct xfs_buf *bp, struct xfs_da_args *args);
+-int	xfs_attr3_leaf_add(struct xfs_buf *leaf_buffer,
++bool	xfs_attr3_leaf_add(struct xfs_buf *leaf_buffer,
+ 				 struct xfs_da_args *args);
+ int	xfs_attr3_leaf_remove(struct xfs_buf *leaf_buffer,
+ 				    struct xfs_da_args *args);
 
 
