@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BE41537AC;
-	Mon, 24 Feb 2025 14:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A5424EF83;
+	Mon, 24 Feb 2025 14:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740407961; cv=none; b=CyB6vKsey/zVWvTvbA3Ul+7OhoGi/oHXG5zy6VWpwPfln1fZGOC7F0OnBbKfEsxPr9fz2DI9b63B1JKRVLIJ/ljaPIaGOY5NQD6woSuo4txUJXHB/Czf7DLQrgx/88s3SwF/pTHayNOXE/BtCsj0MitlyukZwwebUJtNKVl6ECs=
+	t=1740407962; cv=none; b=LpNvTgvx/dLPPuZcVFL/tdethrNyhWNmYZluCaF2xnL7+oxmcsF9aTLTVkmjzVfGGpe1ki8E7X08W3jHByjSRZRiEpOMjYlMeoryQKkPDIrqxghKOvNPFQ/q0c43rUrIohgcbIJ9JmJlQXNl4qZX5le02C2kE89Tn375wC7RbSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740407961; c=relaxed/simple;
-	bh=7M1pZ9ty33cZgBfyLrqBd1VfTMb+EhLrWuKeH4cX7Uw=;
+	s=arc-20240116; t=1740407962; c=relaxed/simple;
+	bh=tV9xg/DkNjp7jtjcmEHwxYyQNmCCEYQLLdwFvpslpqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+bHAg8FZBTF7c0GmGldWDBretPe6Bz/Bpv/b0x4k45qlOVGijrJ8P44vbAt0LNi/UtkY3CZSHl+y/NuXe+6zCa2N0rB77k4d3z2br74FkJiH4u3RsZNkp+bMPK7mVbJbiBZ+OP1+l09iy2gHl+WgmCjMWRm382klMBHEGxnRJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gO9LO5Vl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fqBsOgRGgF6ny7jR+/SIinaHrgFn26eVL+vTCKZxffjeZkPWfvWsHGn0NccBBYoyCCzA8NnOjybTc8pe85HgAyUZwrUYbOr15cNrup8UBoHhK7qN/rfNkwHV4ugHroESZvVURieBWKthvhOCLj8aVrVh4ek2c3l1h9hEUyV3BHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9aGqw7l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gO9LO5Vl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 266A0C4CED6;
-	Mon, 24 Feb 2025 14:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9aGqw7l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C396C4CEE9;
+	Mon, 24 Feb 2025 14:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740407958;
-	bh=7M1pZ9ty33cZgBfyLrqBd1VfTMb+EhLrWuKeH4cX7Uw=;
+	s=korg; t=1740407962;
+	bh=tV9xg/DkNjp7jtjcmEHwxYyQNmCCEYQLLdwFvpslpqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gO9LO5VlBooSji2I8pzjVnHrjkxDs6DR6is4hVEZcOOmsaGPzOKbXK8Bp4u9fheUL
-	 ctWSw8+pmrkihHLVUk9ctdpSqEZNxRG8QlVLnCSMVjgXTuGPaRuTQXNwsjsqmvTp5l
-	 VpJMnXJA8LF74AsI7VY0pPg4DBi6vH/YOuQZiyYA=
+	b=a9aGqw7lxG+WgPSc4D9n8CqKDwgrY37Sx8rcVzYp36X4OaTBABAkke+g8MJ2fj6fq
+	 tqCX1sFUXGHbHb5rtsPsxtLtE28nee7bCk0BhED0a3qsFwz5xYviqCCSJbsKamPNBr
+	 EMWKFd3TUDbyDiJlFTOtSNs2LO8LbqtYBrRr1uJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/140] media: uvcvideo: Remove dangling pointers
-Date: Mon, 24 Feb 2025 15:34:16 +0100
-Message-ID: <20250224142605.255811386@linuxfoundation.org>
+Subject: [PATCH 6.6 058/140] nvmem: Create a header for internal sharing
+Date: Mon, 24 Feb 2025 15:34:17 +0100
+Message-ID: <20250224142605.296057610@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -53,177 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 221cd51efe4565501a3dbf04cc011b537dcce7fb ]
+[ Upstream commit ec9c08a1cb8dc5e8e003f95f5f62de41dde235bb ]
 
-When an async control is written, we copy a pointer to the file handle
-that started the operation. That pointer will be used when the device is
-done. Which could be anytime in the future.
+Before adding all the NVMEM layout bus infrastructure to the core, let's
+move the main nvmem_device structure in an internal header, only
+available to the core. This way all the additional code can be added in
+a dedicated file in order to keep the current core file tidy.
 
-If the user closes that file descriptor, its structure will be freed,
-and there will be one dangling pointer per pending async control, that
-the driver will try to use.
-
-Clean all the dangling pointers during release().
-
-To avoid adding a performance penalty in the most common case (no async
-operation), a counter has been introduced with some logic to make sure
-that it is properly handled.
-
-Cc: stable@vger.kernel.org
-Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20241203-uvc-fix-async-v6-3-26c867231118@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20231215111536.316972-4-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 391b06ecb63e ("nvmem: imx-ocotp-ele: fix MAC address byte order")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 59 ++++++++++++++++++++++++++++++--
- drivers/media/usb/uvc/uvc_v4l2.c |  2 ++
- drivers/media/usb/uvc/uvcvideo.h |  9 ++++-
- 3 files changed, 67 insertions(+), 3 deletions(-)
+ drivers/nvmem/core.c      | 24 +-----------------------
+ drivers/nvmem/internals.h | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 23 deletions(-)
+ create mode 100644 drivers/nvmem/internals.h
 
-diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index 478e2c1fdf0fd..028c4a5049af9 100644
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1532,6 +1532,40 @@ static void uvc_ctrl_send_slave_event(struct uvc_video_chain *chain,
- 	uvc_ctrl_send_event(chain, handle, ctrl, mapping, val, changes);
- }
+diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+index fd11d3825cf85..ec35886e921a8 100644
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -19,29 +19,7 @@
+ #include <linux/of.h>
+ #include <linux/slab.h>
  
-+static void uvc_ctrl_set_handle(struct uvc_fh *handle, struct uvc_control *ctrl,
-+				struct uvc_fh *new_handle)
-+{
-+	lockdep_assert_held(&handle->chain->ctrl_mutex);
-+
-+	if (new_handle) {
-+		if (ctrl->handle)
-+			dev_warn_ratelimited(&handle->stream->dev->udev->dev,
-+					     "UVC non compliance: Setting an async control with a pending operation.");
-+
-+		if (new_handle == ctrl->handle)
-+			return;
-+
-+		if (ctrl->handle) {
-+			WARN_ON(!ctrl->handle->pending_async_ctrls);
-+			if (ctrl->handle->pending_async_ctrls)
-+				ctrl->handle->pending_async_ctrls--;
-+		}
-+
-+		ctrl->handle = new_handle;
-+		handle->pending_async_ctrls++;
-+		return;
-+	}
-+
-+	/* Cannot clear the handle for a control not owned by us.*/
-+	if (WARN_ON(ctrl->handle != handle))
-+		return;
-+
-+	ctrl->handle = NULL;
-+	if (WARN_ON(!handle->pending_async_ctrls))
-+		return;
-+	handle->pending_async_ctrls--;
-+}
-+
- void uvc_ctrl_status_event(struct uvc_video_chain *chain,
- 			   struct uvc_control *ctrl, const u8 *data)
- {
-@@ -1542,7 +1576,8 @@ void uvc_ctrl_status_event(struct uvc_video_chain *chain,
- 	mutex_lock(&chain->ctrl_mutex);
+-struct nvmem_device {
+-	struct module		*owner;
+-	struct device		dev;
+-	int			stride;
+-	int			word_size;
+-	int			id;
+-	struct kref		refcnt;
+-	size_t			size;
+-	bool			read_only;
+-	bool			root_only;
+-	int			flags;
+-	enum nvmem_type		type;
+-	struct bin_attribute	eeprom;
+-	struct device		*base_dev;
+-	struct list_head	cells;
+-	const struct nvmem_keepout *keepout;
+-	unsigned int		nkeepout;
+-	nvmem_reg_read_t	reg_read;
+-	nvmem_reg_write_t	reg_write;
+-	struct gpio_desc	*wp_gpio;
+-	struct nvmem_layout	*layout;
+-	void *priv;
+-};
++#include "internals.h"
  
- 	handle = ctrl->handle;
--	ctrl->handle = NULL;
-+	if (handle)
-+		uvc_ctrl_set_handle(handle, ctrl, NULL);
+ #define to_nvmem_device(d) container_of(d, struct nvmem_device, dev)
  
- 	list_for_each_entry(mapping, &ctrl->info.mappings, list) {
- 		s32 value = __uvc_ctrl_get_value(mapping, data);
-@@ -1816,7 +1851,7 @@ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
- 
- 		if (!rollback && handle &&
- 		    ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
--			ctrl->handle = handle;
-+			uvc_ctrl_set_handle(handle, ctrl, handle);
- 	}
- 
- 	return 0;
-@@ -2754,6 +2789,26 @@ int uvc_ctrl_init_device(struct uvc_device *dev)
- 	return 0;
- }
- 
-+void uvc_ctrl_cleanup_fh(struct uvc_fh *handle)
-+{
-+	struct uvc_entity *entity;
+diff --git a/drivers/nvmem/internals.h b/drivers/nvmem/internals.h
+new file mode 100644
+index 0000000000000..ce353831cd655
+--- /dev/null
++++ b/drivers/nvmem/internals.h
+@@ -0,0 +1,35 @@
++/* SPDX-License-Identifier: GPL-2.0 */
 +
-+	guard(mutex)(&handle->chain->ctrl_mutex);
++#ifndef _LINUX_NVMEM_INTERNALS_H
++#define _LINUX_NVMEM_INTERNALS_H
 +
-+	if (!handle->pending_async_ctrls)
-+		return;
++#include <linux/device.h>
++#include <linux/nvmem-consumer.h>
++#include <linux/nvmem-provider.h>
 +
-+	list_for_each_entry(entity, &handle->chain->dev->entities, list) {
-+		for (unsigned int i = 0; i < entity->ncontrols; ++i) {
-+			if (entity->controls[i].handle != handle)
-+				continue;
-+			uvc_ctrl_set_handle(handle, &entity->controls[i], NULL);
-+		}
-+	}
++struct nvmem_device {
++	struct module		*owner;
++	struct device		dev;
++	struct list_head	node;
++	int			stride;
++	int			word_size;
++	int			id;
++	struct kref		refcnt;
++	size_t			size;
++	bool			read_only;
++	bool			root_only;
++	int			flags;
++	enum nvmem_type		type;
++	struct bin_attribute	eeprom;
++	struct device		*base_dev;
++	struct list_head	cells;
++	const struct nvmem_keepout *keepout;
++	unsigned int		nkeepout;
++	nvmem_reg_read_t	reg_read;
++	nvmem_reg_write_t	reg_write;
++	struct gpio_desc	*wp_gpio;
++	struct nvmem_layout	*layout;
++	void *priv;
++};
 +
-+	WARN_ON(handle->pending_async_ctrls);
-+}
-+
- /*
-  * Cleanup device controls.
-  */
-diff --git a/drivers/media/usb/uvc/uvc_v4l2.c b/drivers/media/usb/uvc/uvc_v4l2.c
-index f4988f03640ae..7bcd706281daf 100644
---- a/drivers/media/usb/uvc/uvc_v4l2.c
-+++ b/drivers/media/usb/uvc/uvc_v4l2.c
-@@ -659,6 +659,8 @@ static int uvc_v4l2_release(struct file *file)
- 
- 	uvc_dbg(stream->dev, CALLS, "%s\n", __func__);
- 
-+	uvc_ctrl_cleanup_fh(handle);
-+
- 	/* Only free resources if this is a privileged handle. */
- 	if (uvc_has_privileges(handle))
- 		uvc_queue_release(&stream->queue);
-diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index 30fd056b2aec9..e99bfaa622669 100644
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -334,7 +334,11 @@ struct uvc_video_chain {
- 	struct uvc_entity *processing;		/* Processing unit */
- 	struct uvc_entity *selector;		/* Selector unit */
- 
--	struct mutex ctrl_mutex;		/* Protects ctrl.info */
-+	struct mutex ctrl_mutex;		/*
-+						 * Protects ctrl.info,
-+						 * ctrl.handle and
-+						 * uvc_fh.pending_async_ctrls
-+						 */
- 
- 	struct v4l2_prio_state prio;		/* V4L2 priority state */
- 	u32 caps;				/* V4L2 chain-wide caps */
-@@ -609,6 +613,7 @@ struct uvc_fh {
- 	struct uvc_video_chain *chain;
- 	struct uvc_streaming *stream;
- 	enum uvc_handle_state state;
-+	unsigned int pending_async_ctrls;
- };
- 
- struct uvc_driver {
-@@ -794,6 +799,8 @@ int uvc_ctrl_is_accessible(struct uvc_video_chain *chain, u32 v4l2_id,
- int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
- 		      struct uvc_xu_control_query *xqry);
- 
-+void uvc_ctrl_cleanup_fh(struct uvc_fh *handle);
-+
- /* Utility functions */
- struct usb_host_endpoint *uvc_find_endpoint(struct usb_host_interface *alts,
- 					    u8 epaddr);
++#endif  /* ifndef _LINUX_NVMEM_INTERNALS_H */
 -- 
 2.39.5
 
