@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0454D84A35;
-	Mon, 24 Feb 2025 14:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F65584A35;
+	Mon, 24 Feb 2025 14:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408986; cv=none; b=Z8kYK6hSJwkmPIwcEA3Z514byT80ksHacZ+cOCKfi6K3Fi+bjz5Vun2vXwEpJ3p0WrtDM9VURv4ymgvu24YV3Bvyquq2wkTVMU0eGlHnRnWQVbZLlb74KU1OXPNj/OspuY4aZwZ+nU27qSmPjnnIwZxJbxwuvTZ+WcFt5soWJhQ=
+	t=1740408989; cv=none; b=YFyNXfk8oPLZHIzPWfAWc8GdVbd5hqDNKrDiam67+Yp1IVkXxltS0E/BvAgGr+YU8fFNd51EMqC3plgWBihuJITzxH4vN5FRO1tXY4oSt7tXjhcs3LSjO8pC5ijpzXNjvP7LUXG9rLPlBYKWQUoCcq4U2qCfgMdkspfikXVvb+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408986; c=relaxed/simple;
-	bh=YRei2AEhMZTdLytwTHmyf45TIiT4OzNc5B8Kf4WnfoM=;
+	s=arc-20240116; t=1740408989; c=relaxed/simple;
+	bh=o+XhRH7adXP2TjeCtKavcvpQdCB15TKR3mr6Z+Ux+CI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOv/HJeot9GxREKRXIpjXsgtgZa5Bs6tE/+xaaLOoeT08KsxJDxHbPgS/LGtKbDqyg1S3sKW/nG5XtZzbeJ+xdiZ6xiMZt3MF6+AwRFnjitpQgw6C6HZX3vZALj4GlAFMLgTDPg2QcLYyCQi10nVbKtgocFXfycXpfaovI32s+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICILYi9X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=trtaX0uF+KLLW13HX/g5OhpYouO/AH5YnQc86tSSojAi5wgeSSk0BHIrzIJEqdON15nCsEeliTwEYDdMx6ttbTXWG0UmQnVCcfbrAwFzItxooKux0fYw2Yv/6/db1xyuUWsJwk57xIO8GSW0zfiNS1D2h9LAUrH8JU2+DGQmNIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjGCjMhW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICILYi9X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8297DC4CED6;
-	Mon, 24 Feb 2025 14:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjGCjMhW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63BCC4CED6;
+	Mon, 24 Feb 2025 14:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408985;
-	bh=YRei2AEhMZTdLytwTHmyf45TIiT4OzNc5B8Kf4WnfoM=;
+	s=korg; t=1740408989;
+	bh=o+XhRH7adXP2TjeCtKavcvpQdCB15TKR3mr6Z+Ux+CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ICILYi9XL+M2kr7tksmPw9dEAc6YlVPDeO0QPS6jKn8oovtgCTiWcDP1r9SvRT3Rf
-	 z+6XHwcmL8zv0vs0pjvqDDDDQJ0J4w4dRLsZnLyV5sQ7zrdx8ETFKvSrSQGX8CVryB
-	 f62Cf0YRHrmjFMbWk0jf2SmWbNqWHh6fOtVmL8yw=
+	b=sjGCjMhWNjqocLsUsqbshLffjYghoo6kQ0srvEx+q0zXqxuZEH2mAwx0ksMqFFbYc
+	 MAKsxXeDNeKj+PVHDcgRqzUzIaZV6i9JBgXQ93IOXFQmvsoir+ppunYjJGSX1rSdIh
+	 7YZdIgmXsJRsujAvW6LggWfGXNpcgsx9KS8QSHIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Erhard Furtner <erhard_f@mailbox.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 031/138] ALSA: seq: Drop UMP events when no UMP-conversion is set
-Date: Mon, 24 Feb 2025 15:34:21 +0100
-Message-ID: <20250224142605.692709966@linuxfoundation.org>
+Subject: [PATCH 6.13 022/138] powerpc/code-patching: Disable KASAN report during patching via temporary mm
+Date: Mon, 24 Feb 2025 15:34:12 +0100
+Message-ID: <20250224142605.339496976@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -50,55 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit e77aa4b2eaa7fb31b2a7a50214ecb946b2a8b0f6 ]
+[ Upstream commit dc9c5166c3cb044f8a001e397195242fd6796eee ]
 
-When a destination client is a user client in the legacy MIDI mode and
-it sets the no-UMP-conversion flag, currently the all UMP events are
-still passed as-is.  But this may confuse the user-space, because the
-event packet size is different from the legacy mode.
+Erhard reports the following KASAN hit on Talos II (power9) with kernel 6.13:
 
-Since we cannot handle UMP events in user clients unless it's running
-in the UMP client mode, we should filter out those events instead of
-accepting blindly.  This patch addresses it by slightly adjusting the
-conditions for UMP event handling at the event delivery time.
+[   12.028126] ==================================================================
+[   12.028198] BUG: KASAN: user-memory-access in copy_to_kernel_nofault+0x8c/0x1a0
+[   12.028260] Write of size 8 at addr 0000187e458f2000 by task systemd/1
 
-Fixes: 329ffe11a014 ("ALSA: seq: Allow suppressing UMP conversions")
-Link: https://lore.kernel.org/b77a2cd6-7b59-4eb0-a8db-22d507d3af5f@gmail.com
-Link: https://patch.msgid.link/20250217170034.21930-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[   12.028346] CPU: 87 UID: 0 PID: 1 Comm: systemd Tainted: G                T  6.13.0-P9-dirty #3
+[   12.028408] Tainted: [T]=RANDSTRUCT
+[   12.028446] Hardware name: T2P9D01 REV 1.01 POWER9 0x4e1202 opal:skiboot-bc106a0 PowerNV
+[   12.028500] Call Trace:
+[   12.028536] [c000000008dbf3b0] [c000000001656a48] dump_stack_lvl+0xbc/0x110 (unreliable)
+[   12.028609] [c000000008dbf3f0] [c0000000006e2fc8] print_report+0x6b0/0x708
+[   12.028666] [c000000008dbf4e0] [c0000000006e2454] kasan_report+0x164/0x300
+[   12.028725] [c000000008dbf600] [c0000000006e54d4] kasan_check_range+0x314/0x370
+[   12.028784] [c000000008dbf640] [c0000000006e6310] __kasan_check_write+0x20/0x40
+[   12.028842] [c000000008dbf660] [c000000000578e8c] copy_to_kernel_nofault+0x8c/0x1a0
+[   12.028902] [c000000008dbf6a0] [c0000000000acfe4] __patch_instructions+0x194/0x210
+[   12.028965] [c000000008dbf6e0] [c0000000000ade80] patch_instructions+0x150/0x590
+[   12.029026] [c000000008dbf7c0] [c0000000001159bc] bpf_arch_text_copy+0x6c/0xe0
+[   12.029085] [c000000008dbf800] [c000000000424250] bpf_jit_binary_pack_finalize+0x40/0xc0
+[   12.029147] [c000000008dbf830] [c000000000115dec] bpf_int_jit_compile+0x3bc/0x930
+[   12.029206] [c000000008dbf990] [c000000000423720] bpf_prog_select_runtime+0x1f0/0x280
+[   12.029266] [c000000008dbfa00] [c000000000434b18] bpf_prog_load+0xbb8/0x1370
+[   12.029324] [c000000008dbfb70] [c000000000436ebc] __sys_bpf+0x5ac/0x2e00
+[   12.029379] [c000000008dbfd00] [c00000000043a228] sys_bpf+0x28/0x40
+[   12.029435] [c000000008dbfd20] [c000000000038eb4] system_call_exception+0x334/0x610
+[   12.029497] [c000000008dbfe50] [c00000000000c270] system_call_vectored_common+0xf0/0x280
+[   12.029561] --- interrupt: 3000 at 0x3fff82f5cfa8
+[   12.029608] NIP:  00003fff82f5cfa8 LR: 00003fff82f5cfa8 CTR: 0000000000000000
+[   12.029660] REGS: c000000008dbfe80 TRAP: 3000   Tainted: G                T   (6.13.0-P9-dirty)
+[   12.029735] MSR:  900000000280f032 <SF,HV,VEC,VSX,EE,PR,FP,ME,IR,DR,RI>  CR: 42004848  XER: 00000000
+[   12.029855] IRQMASK: 0
+               GPR00: 0000000000000169 00003fffdcf789a0 00003fff83067100 0000000000000005
+               GPR04: 00003fffdcf78a98 0000000000000090 0000000000000000 0000000000000008
+               GPR08: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+               GPR12: 0000000000000000 00003fff836ff7e0 c000000000010678 0000000000000000
+               GPR16: 0000000000000000 0000000000000000 00003fffdcf78f28 00003fffdcf78f90
+               GPR20: 0000000000000000 0000000000000000 0000000000000000 00003fffdcf78f80
+               GPR24: 00003fffdcf78f70 00003fffdcf78d10 00003fff835c7239 00003fffdcf78bd8
+               GPR28: 00003fffdcf78a98 0000000000000000 0000000000000000 000000011f547580
+[   12.030316] NIP [00003fff82f5cfa8] 0x3fff82f5cfa8
+[   12.030361] LR [00003fff82f5cfa8] 0x3fff82f5cfa8
+[   12.030405] --- interrupt: 3000
+[   12.030444] ==================================================================
+
+Commit c28c15b6d28a ("powerpc/code-patching: Use temporary mm for
+Radix MMU") is inspired from x86 but unlike x86 is doesn't disable
+KASAN reports during patching. This wasn't a problem at the begining
+because __patch_mem() is not instrumented.
+
+Commit 465cabc97b42 ("powerpc/code-patching: introduce
+patch_instructions()") use copy_to_kernel_nofault() to copy several
+instructions at once. But when using temporary mm the destination is
+not regular kernel memory but a kind of kernel-like memory located
+in user address space. Because it is not in kernel address space it is
+not covered by KASAN shadow memory. Since commit e4137f08816b ("mm,
+kasan, kmsan: instrument copy_from/to_kernel_nofault") KASAN reports
+bad accesses from copy_to_kernel_nofault(). Here a bad access to user
+memory is reported because KASAN detects the lack of shadow memory and
+the address is below TASK_SIZE.
+
+Do like x86 in commit b3fd8e83ada0 ("x86/alternatives: Use temporary
+mm for text poking") and disable KASAN reports during patching when
+using temporary mm.
+
+Reported-by: Erhard Furtner <erhard_f@mailbox.org>
+Close: https://lore.kernel.org/all/20250201151435.48400261@yea/
+Fixes: 465cabc97b42 ("powerpc/code-patching: introduce patch_instructions()")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/1c05b2a1b02ad75b981cfc45927e0b4a90441046.1738577687.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_clientmgr.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ arch/powerpc/lib/code-patching.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
-index 77b6ac9b5c11b..9955c4d54e42a 100644
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -678,12 +678,18 @@ static int snd_seq_deliver_single_event(struct snd_seq_client *client,
- 					  dest_port->time_real);
+diff --git a/arch/powerpc/lib/code-patching.c b/arch/powerpc/lib/code-patching.c
+index af97fbb3c257e..81c0f673eb252 100644
+--- a/arch/powerpc/lib/code-patching.c
++++ b/arch/powerpc/lib/code-patching.c
+@@ -493,7 +493,9 @@ static int __do_patch_instructions_mm(u32 *addr, u32 *code, size_t len, bool rep
  
- #if IS_ENABLED(CONFIG_SND_SEQ_UMP)
--	if (!(dest->filter & SNDRV_SEQ_FILTER_NO_CONVERT)) {
--		if (snd_seq_ev_is_ump(event)) {
-+	if (snd_seq_ev_is_ump(event)) {
-+		if (!(dest->filter & SNDRV_SEQ_FILTER_NO_CONVERT)) {
- 			result = snd_seq_deliver_from_ump(client, dest, dest_port,
- 							  event, atomic, hop);
- 			goto __skip;
--		} else if (snd_seq_client_is_ump(dest)) {
-+		} else if (dest->type == USER_CLIENT &&
-+			   !snd_seq_client_is_ump(dest)) {
-+			result = 0; // drop the event
-+			goto __skip;
-+		}
-+	} else if (snd_seq_client_is_ump(dest)) {
-+		if (!(dest->filter & SNDRV_SEQ_FILTER_NO_CONVERT)) {
- 			result = snd_seq_deliver_to_ump(client, dest, dest_port,
- 							event, atomic, hop);
- 			goto __skip;
+ 	orig_mm = start_using_temp_mm(patching_mm);
+ 
++	kasan_disable_current();
+ 	err = __patch_instructions(patch_addr, code, len, repeat_instr);
++	kasan_enable_current();
+ 
+ 	/* context synchronisation performed by __patch_instructions */
+ 	stop_using_temp_mm(patching_mm, orig_mm);
 -- 
 2.39.5
 
