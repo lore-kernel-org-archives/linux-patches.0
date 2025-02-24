@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69661A2393;
-	Mon, 24 Feb 2025 14:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A0F23371B;
+	Mon, 24 Feb 2025 14:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408515; cv=none; b=LrA+kI+3i6nntPSmRLl44G0DiD+khTcexc0pyebdlz/OXmtyVGVcoxZPZGg5REhzKIG+vzPvFXzX8REHS6r3WHUYUMNqQAfF2rLjW+UwX9IRCqcp14+S8bfBZz/VX8umkn3itC0YuJAWY2l6QGDnoQvG5L44jtY7J9WkdBtSpqA=
+	t=1740408519; cv=none; b=OV1gDsU3c1CDrpISNq4Y/dNgu9viomcFj8LnDCZOFh2KujYEONDAdH48ncaRG/XsU+OuZPwpiplMcfsXPu/DGNxX2PbAQXNC4qyI1r5gI9N3yMNxI7KRTPCAqZ5fep7Tq5SzpaTMQQtt8CzUAf4MTZhAB/GOCNxmao48wgwNods=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408515; c=relaxed/simple;
-	bh=NCE6Uo6+dww/CwtOiRL33XrP7UpE3BIA3O+2GYFhREY=;
+	s=arc-20240116; t=1740408519; c=relaxed/simple;
+	bh=f/obqDhn5MXGIJdewsYZYilywWkiVRfEyp77aMT+7Uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EBwk0Nr8IljGqbYteZn+r5YMa5tYueziefV1/daalOPyt3RMcMK9X278dcJ/StHvZJnBlfV11ja9W8b+uaDTLCZXGhooR2ks5uiX9hoc1ABhLHlJPATLIcw1zVK+Et2v9fumaahVCvDdSmdYwzufIlrcsHcchskS1oinaVE196E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6GujHA3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ilBsnNBb6Vinvsd5ExYUyXganhp1BIRe2jrAM4RGWbB+PJPciu5QalojxCYy/JIbb2fx+VIDv25iLe1Kij56eZVWFS1q0ChdfMejj9kPXw/pIMoxsoZPPHYKmdVS17ZjkHblB1kdh05Gx47xShQccNnF3HcrhxPz9rZdq/7Fp24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9P5P4an; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6GujHA3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB47C4CED6;
-	Mon, 24 Feb 2025 14:48:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9P5P4an"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B4FC4CEE8;
+	Mon, 24 Feb 2025 14:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408515;
-	bh=NCE6Uo6+dww/CwtOiRL33XrP7UpE3BIA3O+2GYFhREY=;
+	s=korg; t=1740408519;
+	bh=f/obqDhn5MXGIJdewsYZYilywWkiVRfEyp77aMT+7Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6GujHA3Q9Qe5hSZVh6bjcfhlqL5+9vuJ4njky/sOTQAhPU2KomiZ8BHBM7n3Wlm2
-	 4rMtpw0JhceimWNW9/CY1jBqPb2WmT3FV4cP6ln0Tf9rnkWU00WpKOXSe2YzKOx+yl
-	 WJc6vnGdNiPWcuWEu+Yh/rL8xvktmXQ+zmBm6v+s=
+	b=H9P5P4an4psuAqdZYU1i+q0oBRSNKDdbsx4rf5bQ2MIdvbMct7EY4kC8kY+NuAsOu
+	 yWfKeEWQFsNeTKoe88+zDm01rEJPDK7Pxq3daZTZlHFqcmaec8iGoTudJVBIQdEkuf
+	 9xxkRI58xlfuOHnOxx00N/XHy1Cnr1Tp9tZFCsbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Wu <wuyun.abel@bytedance.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Andy Yan <andyshrk@163.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 080/154] bpf: Fix deadlock when freeing cgroup storage
-Date: Mon, 24 Feb 2025 15:34:39 +0100
-Message-ID: <20250224142610.211889077@linuxfoundation.org>
+Subject: [PATCH 6.12 081/154] arm64: dts: rockchip: Fix lcdpwr_en pin for Cool Pi GenBook
+Date: Mon, 24 Feb 2025 15:34:40 +0100
+Message-ID: <20250224142610.249287406@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -52,93 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Wu <wuyun.abel@bytedance.com>
+From: Andy Yan <andyshrk@163.com>
 
-[ Upstream commit c78f4afbd962f43a3989f45f3ca04300252b19b5 ]
+[ Upstream commit a1d939055a22be06d8c12bf53afb258b9d38575f ]
 
-The following commit
-bc235cdb423a ("bpf: Prevent deadlock from recursive bpf_task_storage_[get|delete]")
-first introduced deadlock prevention for fentry/fexit programs attaching
-on bpf_task_storage helpers. That commit also employed the logic in map
-free path in its v6 version.
+According to the schematic, the lcdpwr_en pin is GPIO0_C4,
+not GPIO1_C4.
 
-Later bpf_cgrp_storage was first introduced in
-c4bcfb38a95e ("bpf: Implement cgroup storage available to non-cgroup-attached bpf progs")
-which faces the same issue as bpf_task_storage, instead of its busy
-counter, NULL was passed to bpf_local_storage_map_free() which opened
-a window to cause deadlock:
-
-	<TASK>
-		(acquiring local_storage->lock)
-	_raw_spin_lock_irqsave+0x3d/0x50
-	bpf_local_storage_update+0xd1/0x460
-	bpf_cgrp_storage_get+0x109/0x130
-	bpf_prog_a4d4a370ba857314_cgrp_ptr+0x139/0x170
-	? __bpf_prog_enter_recur+0x16/0x80
-	bpf_trampoline_6442485186+0x43/0xa4
-	cgroup_storage_ptr+0x9/0x20
-		(holding local_storage->lock)
-	bpf_selem_unlink_storage_nolock.constprop.0+0x135/0x160
-	bpf_selem_unlink_storage+0x6f/0x110
-	bpf_local_storage_map_free+0xa2/0x110
-	bpf_map_free_deferred+0x5b/0x90
-	process_one_work+0x17c/0x390
-	worker_thread+0x251/0x360
-	kthread+0xd2/0x100
-	ret_from_fork+0x34/0x50
-	ret_from_fork_asm+0x1a/0x30
-	</TASK>
-
-Progs:
- - A: SEC("fentry/cgroup_storage_ptr")
-   - cgid (BPF_MAP_TYPE_HASH)
-	Record the id of the cgroup the current task belonging
-	to in this hash map, using the address of the cgroup
-	as the map key.
-   - cgrpa (BPF_MAP_TYPE_CGRP_STORAGE)
-	If current task is a kworker, lookup the above hash
-	map using function parameter @owner as the key to get
-	its corresponding cgroup id which is then used to get
-	a trusted pointer to the cgroup through
-	bpf_cgroup_from_id(). This trusted pointer can then
-	be passed to bpf_cgrp_storage_get() to finally trigger
-	the deadlock issue.
- - B: SEC("tp_btf/sys_enter")
-   - cgrpb (BPF_MAP_TYPE_CGRP_STORAGE)
-	The only purpose of this prog is to fill Prog A's
-	hash map by calling bpf_cgrp_storage_get() for as
-	many userspace tasks as possible.
-
-Steps to reproduce:
- - Run A;
- - while (true) { Run B; Destroy B; }
-
-Fix this issue by passing its busy counter to the free procedure so
-it can be properly incremented before storage/smap locking.
-
-Fixes: c4bcfb38a95e ("bpf: Implement cgroup storage available to non-cgroup-attached bpf progs")
-Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/r/20241221061018.37717-1-wuyun.abel@bytedance.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 4a8c1161b843 ("arm64: dts: rockchip: Add support for rk3588 based Cool Pi CM5 GenBook")
+Signed-off-by: Andy Yan <andyshrk@163.com>
+Link: https://lore.kernel.org/r/20250113104825.2390427-1-andyshrk@163.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_cgrp_storage.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/bpf_cgrp_storage.c b/kernel/bpf/bpf_cgrp_storage.c
-index 28efd0a3f2200..6547fb7ac0dcb 100644
---- a/kernel/bpf/bpf_cgrp_storage.c
-+++ b/kernel/bpf/bpf_cgrp_storage.c
-@@ -154,7 +154,7 @@ static struct bpf_map *cgroup_storage_map_alloc(union bpf_attr *attr)
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts b/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts
+index 6418286efe40d..762d36ad733ab 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts
+@@ -101,7 +101,7 @@ vcc3v3_lcd: vcc3v3-lcd-regulator {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vcc3v3_lcd";
+ 		enable-active-high;
+-		gpio = <&gpio1 RK_PC4 GPIO_ACTIVE_HIGH>;
++		gpio = <&gpio0 RK_PC4 GPIO_ACTIVE_HIGH>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&lcdpwr_en>;
+ 		vin-supply = <&vcc3v3_sys>;
+@@ -207,7 +207,7 @@ &pcie3x4 {
+ &pinctrl {
+ 	lcd {
+ 		lcdpwr_en: lcdpwr-en {
+-			rockchip,pins = <1 RK_PC4 RK_FUNC_GPIO &pcfg_pull_down>;
++			rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_down>;
+ 		};
  
- static void cgroup_storage_map_free(struct bpf_map *map)
- {
--	bpf_local_storage_map_free(map, &cgroup_cache, NULL);
-+	bpf_local_storage_map_free(map, &cgroup_cache, &bpf_cgrp_storage_busy);
- }
- 
- /* *gfp_flags* is a hidden argument provided by the verifier */
+ 		bl_en: bl-en {
 -- 
 2.39.5
 
