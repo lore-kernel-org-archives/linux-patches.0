@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4D41514CC;
-	Mon, 24 Feb 2025 14:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE01E18CC1C;
+	Mon, 24 Feb 2025 14:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408651; cv=none; b=UFsL/GoUIaaIKv0CuBO0V22sOeooUCUzGdHWnujI0vzChAkuyb1b4IDmb4kqySQOlh5N7VdeR0qB99RVUuOCkmkpBEA1tfVlT45wggVtjmG0H7FZflVivIlGKqkUC4gaogQOPIkgk3gybREECS8OIBhoT3h34f+Blmg9f15YvsU=
+	t=1740408655; cv=none; b=GQs5gfIRWcDVy80Zk2hTiOJPDdfr7H7safoGD48GvVrF+o+7FWgblekhgtx/uAirovmhtu5FNMrJMx41yHIVFgRFCXkT8mlB1YaV/sZ8G6TLCmcj/RLbaXwmUjzRuAjqF3ZPVfV/SdOsZdfXM1/I+W9vDLthUdLsU/lqfC33u94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408651; c=relaxed/simple;
-	bh=zbXdLYQFr+XQzFb22Q1kps1e4bVRuKYk75VKWcaKzsg=;
+	s=arc-20240116; t=1740408655; c=relaxed/simple;
+	bh=BMD234qbTTXKOnjcV5L4ZjpbvxbY/5u/2JqQ4SALw30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hG3EDJ9nsY5/SWwr1XB8lKLV0HL+7P8l1N7K293gu5olDkyqvKwf/9tNYYCQn6peOZ+OAKCXBUm6MvhTKtdG7uHEIPV6BpuLbuQndeGkbh8q/tSCstrXDBUPoUDZT4MTG0bRRMkSjeE40zZAzPQA/jR5+4tRdIwt8cnfFd7Souo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tr6ZIiIw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eOSDnJgsndevW/XNCWsx1+m1Ov9E85Xpuj4geF55qT6SKHVw/4+xtoUzqcxj4/xc1li7nR8JHZZ0G/yF2832SYwbQkOAciHLv3lnw480lP5vkZFNyY1YNbdB8ESuwyXup4hDvhmqQtein0D8aXo/7bi7prD/fD62A45O7MBbxoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INNyZGLx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tr6ZIiIw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0115EC4CED6;
-	Mon, 24 Feb 2025 14:50:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INNyZGLx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10784C4CED6;
+	Mon, 24 Feb 2025 14:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408651;
-	bh=zbXdLYQFr+XQzFb22Q1kps1e4bVRuKYk75VKWcaKzsg=;
+	s=korg; t=1740408654;
+	bh=BMD234qbTTXKOnjcV5L4ZjpbvxbY/5u/2JqQ4SALw30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tr6ZIiIw/H19T2KnDoJfyIq+OY/LmjFq99jVPnZ7hYL29/L7Uyd9+AyLMMGLRfhDj
-	 6gvzSMGC519M8HSvikyJo13p8Rj6BWkdmAFoKcOaUXVonP7a9RElkex0vDdTDSUkNj
-	 HkNOBj6oEyPLZjKv+pVd3EcLWjlwzKo8yzyiTsLM=
+	b=INNyZGLxTi83Ysbr6DYYoFnAQHHh9e9EoDRYkWYxUQ4i48eJgsOfXWi9+8KsJcbuk
+	 fOL4Klgx/HeLHCeIxuxfr+ajFUlvCKIdDksT+7dXEtMocZF5fHiKoVe+1CyvK+ix95
+	 AAwFf82CkDNrtLzpLdm1iolEsyEXmHU2DIUxUoJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragan Simic <dsimic@manjaro.org>,
-	Alexander Shiyan <eagle.alexander923@gmail.com>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Lukasz Czechowski <lukasz.czechowski@thaumatec.com>,
 	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.12 119/154] arm64: dts: rockchip: Fix broken tsadc pinctrl names for rk3588
-Date: Mon, 24 Feb 2025 15:35:18 +0100
-Message-ID: <20250224142611.713598366@linuxfoundation.org>
+Subject: [PATCH 6.12 120/154] arm64: dts: rockchip: Move uart5 pin configuration to px30 ringneck SoM
+Date: Mon, 24 Feb 2025 15:35:19 +0100
+Message-ID: <20250224142611.752460957@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -51,43 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Shiyan <eagle.alexander923@gmail.com>
+From: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
 
-commit 5c8f9a05336cf5cadbd57ad461621b386aadb762 upstream.
+commit 4eee627ea59304cdd66c5d4194ef13486a6c44fc upstream.
 
-The tsadc driver does not handle pinctrl "gpio" and "otpout".
-Let's use the correct pinctrl names "default" and "sleep".
-Additionally, Alexey Charkov's testing [1] has established that
-it is necessary for pinctrl state to reference the &tsadc_shut_org
-configuration rather than &tsadc_shut for the driver to function correctly.
+In the PX30-uQ7 (Ringneck) SoM, the hardware CTS and RTS pins for
+uart5 cannot be used for the UART CTS/RTS, because they are already
+allocated for different purposes. CTS pin is routed to SUS_S3#
+signal, while RTS pin is used internally and is not available on
+Q7 connector. Move definition of the pinctrl-0 property from
+px30-ringneck-haikou.dts to px30-ringneck.dtsi.
 
-[1] https://lkml.org/lkml/2025/1/24/966
+This commit is a dependency to next commit in the patch series,
+that disables DMA for uart5.
 
-Fixes: 32641b8ab1a5 ("arm64: dts: rockchip: add rk3588 thermal sensor")
 Cc: stable@vger.kernel.org
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
-Link: https://lore.kernel.org/r/20250130053849.4902-1-eagle.alexander923@gmail.com
+Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
+Signed-off-by: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
+Link: https://lore.kernel.org/r/20250121125604.3115235-2-lukasz.czechowski@thaumatec.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-base.dtsi |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/px30-ringneck-haikou.dts |    1 -
+ arch/arm64/boot/dts/rockchip/px30-ringneck.dtsi       |    4 ++++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-base.dtsi
-@@ -2626,9 +2626,9 @@
- 		rockchip,hw-tshut-temp = <120000>;
- 		rockchip,hw-tshut-mode = <0>; /* tshut mode 0:CRU 1:GPIO */
- 		rockchip,hw-tshut-polarity = <0>; /* tshut polarity 0:LOW 1:HIGH */
--		pinctrl-0 = <&tsadc_gpio_func>;
--		pinctrl-1 = <&tsadc_shut>;
--		pinctrl-names = "gpio", "otpout";
-+		pinctrl-0 = <&tsadc_shut_org>;
-+		pinctrl-1 = <&tsadc_gpio_func>;
-+		pinctrl-names = "default", "sleep";
- 		#thermal-sensor-cells = <1>;
- 		status = "disabled";
- 	};
+--- a/arch/arm64/boot/dts/rockchip/px30-ringneck-haikou.dts
++++ b/arch/arm64/boot/dts/rockchip/px30-ringneck-haikou.dts
+@@ -226,7 +226,6 @@
+ };
+ 
+ &uart5 {
+-	pinctrl-0 = <&uart5_xfer>;
+ 	rts-gpios = <&gpio0 RK_PB5 GPIO_ACTIVE_HIGH>;
+ 	status = "okay";
+ };
+--- a/arch/arm64/boot/dts/rockchip/px30-ringneck.dtsi
++++ b/arch/arm64/boot/dts/rockchip/px30-ringneck.dtsi
+@@ -373,6 +373,10 @@
+ 	status = "okay";
+ };
+ 
++&uart5 {
++	pinctrl-0 = <&uart5_xfer>;
++};
++
+ /* Mule UCAN */
+ &usb_host0_ehci {
+ 	status = "okay";
 
 
