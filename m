@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67FE38DD8;
-	Mon, 24 Feb 2025 14:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3042E2837B;
+	Mon, 24 Feb 2025 14:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409098; cv=none; b=NrT96QVF8UOPN6y0fSxQ125I3y9v7V1WwRHIv3X4lFtNyhXp6QQLO60cy5HtPEpBCVh6EKVAtq9Il01un/9lMWrikhfNNI4M2acUch6VVXZJznS/ru0TpGZ1olM4+0mgjyZ6f8OfcCAc+HWfdozpJ6lrxHByNzte+tmkj7xM1qE=
+	t=1740409102; cv=none; b=tum0KOK/p6LAepH60F8wPvSI11x9LzpHSOEOET4k2a67f0E0/22YMkpbb1/qCVfKe6lRq+408E259ErfkzRKC1d/DwaWUc6NmmaIXf+TjzUWtYsWkJtIr2d87SkonIcD3gz+6YKf4r5xzA6+rsuJO6Ch6Nq2BB0aZAXi2Gcv0+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409098; c=relaxed/simple;
-	bh=Wp9tY5zSMb+IZhPNwSOrKkAl31tuH8kTm3wzuzxsV7k=;
+	s=arc-20240116; t=1740409102; c=relaxed/simple;
+	bh=5M6jdALafyFkmYoIx0ZxwxB4fq2gJzven1R8MnKmKp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXzK3gg+jZGz6d/rJ4PNeeaJw2/sOUz6EJA+CRnkaw9mso54kUVJeLMPIdxIogn8iAg3wGKNHDyz/Hcxs0FFpU4tRSqugsfu9hqwk3zXmyLGda+FvApa86kywzNuwpweGUDW1CZwoM354le4tjlOR7T+wBAKLau60BFPHVy6G34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0KAeEYE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f/iZwyB3a5jUx2Ez/Vx9AmYo8I0wu1CRY9SoLihztY4vVL+LFYCSlRZs3l9RwFqs4iLS1cpoQqBAt3DRtGRD83hKfQev1eb90415kuvlm4LMSOnYTNxQ/inqP9y26/fJ3nw2fvXz9CLeIcmkYkOxBEiM1S/VUYuJ2lyFqbaNE5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T02wqxD8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0KAeEYE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46694C4CED6;
-	Mon, 24 Feb 2025 14:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T02wqxD8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C121C4CEE6;
+	Mon, 24 Feb 2025 14:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409098;
-	bh=Wp9tY5zSMb+IZhPNwSOrKkAl31tuH8kTm3wzuzxsV7k=;
+	s=korg; t=1740409102;
+	bh=5M6jdALafyFkmYoIx0ZxwxB4fq2gJzven1R8MnKmKp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q0KAeEYEgwd1DUH0e0FboTjwCV9N9sDplxL0TmPOM6WPCE/ilX58ynO+mtySaATot
-	 9LTOrKL8nSZ69GhW68j68fd0dbUOx7HABsRkpyr4emF51VuHxv/9LAgkk26TO547XM
-	 haknAv9eqpcWitr2PeOLfs+9esX9bjmqPKMfeLYc=
+	b=T02wqxD8x5Tq6xsOyRGcrRiVfKa746Uwd2Mp5KNGB7ZU+51yG4Q/BJPmD5Z1KJCi9
+	 h4GYbxymwUoGlxvzo9V5kQUlKzpNKTy2IJl9zgacHPCE/CJesq7lWdD/cUwA2Dt5Ui
+	 nmsDhL2Z0xJmkt3Eh+oBpLnwYz/H21qQMezu2Ric=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Bai <ping.bai@nxp.com>,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Jason Liu <jason.hui.liu@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Yu Kuai <yukuai@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 064/138] firmware: arm_scmi: imx: Correct tx size of scmi_imx_misc_ctrl_set
-Date: Mon, 24 Feb 2025 15:34:54 +0100
-Message-ID: <20250224142606.995018328@linuxfoundation.org>
+Subject: [PATCH 6.13 065/138] md/raid*: Fix the set_queue_limits implementations
+Date: Mon, 24 Feb 2025 15:34:55 +0100
+Message-ID: <20250224142607.033252652@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -54,45 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit ab027c488fc4a1fff0a5b712d4bdb2d2d324e8f8 ]
+[ Upstream commit fbe8f2fa971c537571994a0df532c511c4fb5537 ]
 
-'struct scmi_imx_misc_ctrl_set_in' has a zero length array in the end,
-The sizeof will not count 'value[]', and hence Tx size will be smaller
-than actual size for Tx,and SCMI firmware will flag this as protocol
-error.
+queue_limits_cancel_update() must only be called if
+queue_limits_start_update() is called first. Remove the
+queue_limits_cancel_update() calls from the raid*_set_limits() functions
+because there is no corresponding queue_limits_start_update() call.
 
-Fix this by enlarge the Tx size with 'num * sizeof(__le32)' to count in
-the size of data.
-
-Fixes: 61c9f03e22fc ("firmware: arm_scmi: Add initial support for i.MX MISC protocol")
-Reviewed-by: Jacky Bai <ping.bai@nxp.com>
-Tested-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Acked-by: Jason Liu <jason.hui.liu@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Message-Id: <20250123063441.392555-1-peng.fan@oss.nxp.com>
-(sudeep.holla: Commit rewording and replace hardcoded sizeof(__le32) value)
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Fixes: c6e56cf6b2e7 ("block: move integrity information into queue_limits")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/linux-raid/20250212171108.3483150-1-bvanassche@acm.org/
+Signed-off-by: Yu Kuai <yukuai@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/vendors/imx/imx-sm-misc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/raid0.c  | 4 +---
+ drivers/md/raid1.c  | 4 +---
+ drivers/md/raid10.c | 4 +---
+ 3 files changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/vendors/imx/imx-sm-misc.c b/drivers/firmware/arm_scmi/vendors/imx/imx-sm-misc.c
-index a86ab9b35953f..2641faa329cdd 100644
---- a/drivers/firmware/arm_scmi/vendors/imx/imx-sm-misc.c
-+++ b/drivers/firmware/arm_scmi/vendors/imx/imx-sm-misc.c
-@@ -254,8 +254,8 @@ static int scmi_imx_misc_ctrl_set(const struct scmi_protocol_handle *ph,
- 	if (num > max_num)
- 		return -EINVAL;
+diff --git a/drivers/md/raid0.c b/drivers/md/raid0.c
+index 7049ec7fb8eb4..e8802309ed600 100644
+--- a/drivers/md/raid0.c
++++ b/drivers/md/raid0.c
+@@ -386,10 +386,8 @@ static int raid0_set_limits(struct mddev *mddev)
+ 	lim.io_opt = lim.io_min * mddev->raid_disks;
+ 	lim.features |= BLK_FEAT_ATOMIC_WRITES_STACKED;
+ 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
+-	if (err) {
+-		queue_limits_cancel_update(mddev->gendisk->queue);
++	if (err)
+ 		return err;
+-	}
+ 	return queue_limits_set(mddev->gendisk->queue, &lim);
+ }
  
--	ret = ph->xops->xfer_get_init(ph, SCMI_IMX_MISC_CTRL_SET, sizeof(*in),
--				      0, &t);
-+	ret = ph->xops->xfer_get_init(ph, SCMI_IMX_MISC_CTRL_SET,
-+				      sizeof(*in) + num * sizeof(__le32), 0, &t);
- 	if (ret)
- 		return ret;
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index a5cd6522fc2d4..3c75a69376f47 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -3219,10 +3219,8 @@ static int raid1_set_limits(struct mddev *mddev)
+ 	lim.max_write_zeroes_sectors = 0;
+ 	lim.features |= BLK_FEAT_ATOMIC_WRITES_STACKED;
+ 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
+-	if (err) {
+-		queue_limits_cancel_update(mddev->gendisk->queue);
++	if (err)
+ 		return err;
+-	}
+ 	return queue_limits_set(mddev->gendisk->queue, &lim);
+ }
+ 
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index e1e6cd7fb125e..8b736f30ef926 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -4020,10 +4020,8 @@ static int raid10_set_queue_limits(struct mddev *mddev)
+ 	lim.io_opt = lim.io_min * raid10_nr_stripes(conf);
+ 	lim.features |= BLK_FEAT_ATOMIC_WRITES_STACKED;
+ 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
+-	if (err) {
+-		queue_limits_cancel_update(mddev->gendisk->queue);
++	if (err)
+ 		return err;
+-	}
+ 	return queue_limits_set(mddev->gendisk->queue, &lim);
+ }
  
 -- 
 2.39.5
