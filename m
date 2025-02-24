@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F24B146A63;
-	Mon, 24 Feb 2025 14:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE65A14012;
+	Mon, 24 Feb 2025 14:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408947; cv=none; b=gwQvmWR+hH3+PF0lnn9I3BQbAoyp07Sk3VsyEzqX1yo6a4nh2ZK1G0iyqFH8j/AMwDZH0jBq2g2uygvj3uI3YqGyIpv94b1IJU7WF+qbq8aEpRKpjc5qCbPY1j97oK/wtT4YDkilqc6IzKENF+AwUi7VB+Y2Nf9eRTrva5rDN1U=
+	t=1740408950; cv=none; b=inbJ6quRghy2wRKI95cihNLZS9Rkbpchl34hwMIHJsKjkAdk06yedLqo/1btQ7r4dcAMKeBxq3Qr1ad4ClBfE1ky2mwqB9+c20cLVeO37H6ptFIq8nifx0ux1qK0spg4JB/QrXEostohhXeTP2bdF9MUXb81ab1tA6cAN6JdRDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408947; c=relaxed/simple;
-	bh=XTJaoq5eI0ui+whTVzO+zWKA9LU/Q6eslEB6P5GExUc=;
+	s=arc-20240116; t=1740408950; c=relaxed/simple;
+	bh=bGCwoYCm/Gfm7PSokRBya+kluby/SsRBQpqEhb6iaPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=itNjRlJZkeq60AXvEzXPVbce/1iwVzTIeKk7HWCXFbdHcO9sdMWd3FIbLxqpOgE78df71nEp3b1ueUVWEIZ+RE9Z/FZchK+rLN5MhZDALBphw5faExJsc0RopUxY29YNtbIoWGqgBjJYcBxz4BAFl74AFHhIEV45zjvPkl157O0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBJHa092; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f2UsXwM1WN9sS7nVT7kjLHX914nqRc7lEk2pdow4K7WD6WHtELDUFdmrYgsB+qsg2jpuLavRE8zji79r+s87vT337IQ30Nc/Id7FaGmwN4phvB+HRulVeOGp3W3qmZNX6DJZgO87gtfbk50kCElRmbandlMa3h2KAQrRuktyKZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shH7Zu7I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBJHa092"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDF1C4CEE6;
-	Mon, 24 Feb 2025 14:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shH7Zu7I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC240C4CEE6;
+	Mon, 24 Feb 2025 14:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408947;
-	bh=XTJaoq5eI0ui+whTVzO+zWKA9LU/Q6eslEB6P5GExUc=;
+	s=korg; t=1740408950;
+	bh=bGCwoYCm/Gfm7PSokRBya+kluby/SsRBQpqEhb6iaPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBJHa0924uFaz974tTa8Y2vVMs2bs7SMYtSLct1Ght6daEwSgg2mFN9o20uaMFj77
-	 fqMKKdMMeBRilc8PGvwrfUI/sVhmtjkbDnLaD+sD20DZAIRJeGo73BWkcxhDw1xQ6L
-	 SDVwu7gfC8eN9TIcIbZ5GOVdvXD0hlIZaHLNAzoY=
+	b=shH7Zu7IKEuvxmTyKuSDqKGCjFYGURuJDdvpCSCsdI7ZmB2IqzUq4RhQO+Inq7bUY
+	 F7+iANNIAc0np5a/c27n2gZLlEaNkHgcf9wLHZX4Nj7tKpRv1Kqs2vAa+pHTgmEJV0
+	 zqMO2SeP2TXh9dbOgclwfRABRGq4miT0ov9ivKC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.13 051/138] rust: cleanup unnecessary casts
-Date: Mon, 24 Feb 2025 15:34:41 +0100
-Message-ID: <20250224142606.485245521@linuxfoundation.org>
+	Erhard Furtner <erhard_f@mailbox.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 025/138] powerpc/code-patching: Fix KASAN hit by not flagging text patching area as VM_ALLOC
+Date: Mon, 24 Feb 2025 15:34:15 +0100
+Message-ID: <20250224142605.459018954@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -51,76 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit 9b98be76855f14bd5180b59c1ac646b5add98f33 upstream.
+[ Upstream commit d262a192d38e527faa5984629aabda2e0d1c4f54 ]
 
-With `long` mapped to `isize`, `size_t`/`__kernel_size_t` mapped to
-`usize` and `char` mapped to `u8`, many of the existing casts are no
-longer necessary.
+Erhard reported the following KASAN hit while booting his PowerMac G4
+with a KASAN-enabled kernel 6.13-rc6:
 
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20240913213041.395655-6-gary@garyguo.net
-[ Moved `uaccess` changes to the previous commit, since they were
-  irrefutable patterns that Rust >= 1.82.0 warns about. Removed a
-  couple casts that now use `c""` literals. Rebased on top of
-  `rust-next`. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  BUG: KASAN: vmalloc-out-of-bounds in copy_to_kernel_nofault+0xd8/0x1c8
+  Write of size 8 at addr f1000000 by task chronyd/1293
+
+  CPU: 0 UID: 123 PID: 1293 Comm: chronyd Tainted: G        W          6.13.0-rc6-PMacG4 #2
+  Tainted: [W]=WARN
+  Hardware name: PowerMac3,6 7455 0x80010303 PowerMac
+  Call Trace:
+  [c2437590] [c1631a84] dump_stack_lvl+0x70/0x8c (unreliable)
+  [c24375b0] [c0504998] print_report+0xdc/0x504
+  [c2437610] [c050475c] kasan_report+0xf8/0x108
+  [c2437690] [c0505a3c] kasan_check_range+0x24/0x18c
+  [c24376a0] [c03fb5e4] copy_to_kernel_nofault+0xd8/0x1c8
+  [c24376c0] [c004c014] patch_instructions+0x15c/0x16c
+  [c2437710] [c00731a8] bpf_arch_text_copy+0x60/0x7c
+  [c2437730] [c0281168] bpf_jit_binary_pack_finalize+0x50/0xac
+  [c2437750] [c0073cf4] bpf_int_jit_compile+0xb30/0xdec
+  [c2437880] [c0280394] bpf_prog_select_runtime+0x15c/0x478
+  [c24378d0] [c1263428] bpf_prepare_filter+0xbf8/0xc14
+  [c2437990] [c12677ec] bpf_prog_create_from_user+0x258/0x2b4
+  [c24379d0] [c027111c] do_seccomp+0x3dc/0x1890
+  [c2437ac0] [c001d8e0] system_call_exception+0x2dc/0x420
+  [c2437f30] [c00281ac] ret_from_syscall+0x0/0x2c
+  --- interrupt: c00 at 0x5a1274
+  NIP:  005a1274 LR: 006a3b3c CTR: 005296c8
+  REGS: c2437f40 TRAP: 0c00   Tainted: G        W           (6.13.0-rc6-PMacG4)
+  MSR:  0200f932 <VEC,EE,PR,FP,ME,IR,DR,RI>  CR: 24004422  XER: 00000000
+
+  GPR00: 00000166 af8f3fa0 a7ee3540 00000001 00000000 013b6500 005a5858 0200f932
+  GPR08: 00000000 00001fe9 013d5fc8 005296c8 2822244c 00b2fcd8 00000000 af8f4b57
+  GPR16: 00000000 00000001 00000000 00000000 00000000 00000001 00000000 00000002
+  GPR24: 00afdbb0 00000000 00000000 00000000 006e0004 013ce060 006e7c1c 00000001
+  NIP [005a1274] 0x5a1274
+  LR [006a3b3c] 0x6a3b3c
+  --- interrupt: c00
+
+  The buggy address belongs to the virtual mapping at
+   [f1000000, f1002000) created by:
+   text_area_cpu_up+0x20/0x190
+
+  The buggy address belongs to the physical page:
+  page: refcount:1 mapcount:0 mapping:00000000 index:0x0 pfn:0x76e30
+  flags: 0x80000000(zone=2)
+  raw: 80000000 00000000 00000122 00000000 00000000 00000000 ffffffff 00000001
+  raw: 00000000
+  page dumped because: kasan: bad access detected
+
+  Memory state around the buggy address:
+   f0ffff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+   f0ffff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  >f1000000: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+             ^
+   f1000080: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+   f1000100: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+  ==================================================================
+
+f8 corresponds to KASAN_VMALLOC_INVALID which means the area is not
+initialised hence not supposed to be used yet.
+
+Powerpc text patching infrastructure allocates a virtual memory area
+using get_vm_area() and flags it as VM_ALLOC. But that flag is meant
+to be used for vmalloc() and vmalloc() allocated memory is not
+supposed to be used before a call to __vmalloc_node_range() which is
+never called for that area.
+
+That went undetected until commit e4137f08816b ("mm, kasan, kmsan:
+instrument copy_from/to_kernel_nofault")
+
+The area allocated by text_area_cpu_up() is not vmalloc memory, it is
+mapped directly on demand when needed by map_kernel_page(). There is
+no VM flag corresponding to such usage, so just pass no flag. That way
+the area will be unpoisonned and usable immediately.
+
+Reported-by: Erhard Furtner <erhard_f@mailbox.org>
+Closes: https://lore.kernel.org/all/20250112135832.57c92322@yea/
+Fixes: 37bc3e5fd764 ("powerpc/lib/code-patching: Use alternate map for patch_instruction()")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/06621423da339b374f48c0886e3a5db18e896be8.1739342693.git.christophe.leroy@csgroup.eu
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/print.rs |    4 ++--
- rust/kernel/str.rs   |    6 +++---
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ arch/powerpc/lib/code-patching.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/rust/kernel/print.rs
-+++ b/rust/kernel/print.rs
-@@ -107,7 +107,7 @@ pub unsafe fn call_printk(
-     // SAFETY: TODO.
-     unsafe {
-         bindings::_printk(
--            format_string.as_ptr() as _,
-+            format_string.as_ptr(),
-             module_name.as_ptr(),
-             &args as *const _ as *const c_void,
-         );
-@@ -128,7 +128,7 @@ pub fn call_printk_cont(args: fmt::Argum
-     #[cfg(CONFIG_PRINTK)]
-     unsafe {
-         bindings::_printk(
--            format_strings::CONT.as_ptr() as _,
-+            format_strings::CONT.as_ptr(),
-             &args as *const _ as *const c_void,
-         );
-     }
---- a/rust/kernel/str.rs
-+++ b/rust/kernel/str.rs
-@@ -189,7 +189,7 @@ impl CStr {
-         // to a `NUL`-terminated C string.
-         let len = unsafe { bindings::strlen(ptr) } + 1;
-         // SAFETY: Lifetime guaranteed by the safety precondition.
--        let bytes = unsafe { core::slice::from_raw_parts(ptr as _, len as _) };
-+        let bytes = unsafe { core::slice::from_raw_parts(ptr as _, len) };
-         // SAFETY: As `len` is returned by `strlen`, `bytes` does not contain interior `NUL`.
-         // As we have added 1 to `len`, the last byte is known to be `NUL`.
-         unsafe { Self::from_bytes_with_nul_unchecked(bytes) }
-@@ -248,7 +248,7 @@ impl CStr {
-     /// Returns a C pointer to the string.
-     #[inline]
-     pub const fn as_char_ptr(&self) -> *const crate::ffi::c_char {
--        self.0.as_ptr() as _
-+        self.0.as_ptr()
-     }
+diff --git a/arch/powerpc/lib/code-patching.c b/arch/powerpc/lib/code-patching.c
+index 81c0f673eb252..f84e0337cc029 100644
+--- a/arch/powerpc/lib/code-patching.c
++++ b/arch/powerpc/lib/code-patching.c
+@@ -108,7 +108,7 @@ static int text_area_cpu_up(unsigned int cpu)
+ 	unsigned long addr;
+ 	int err;
  
-     /// Convert the string to a byte slice without the trailing `NUL` byte.
-@@ -838,7 +838,7 @@ impl CString {
-         // SAFETY: The buffer is valid for read because `f.bytes_written()` is bounded by `size`
-         // (which the minimum buffer size) and is non-zero (we wrote at least the `NUL` terminator)
-         // so `f.bytes_written() - 1` doesn't underflow.
--        let ptr = unsafe { bindings::memchr(buf.as_ptr().cast(), 0, (f.bytes_written() - 1) as _) };
-+        let ptr = unsafe { bindings::memchr(buf.as_ptr().cast(), 0, f.bytes_written() - 1) };
-         if !ptr.is_null() {
-             return Err(EINVAL);
-         }
+-	area = get_vm_area(PAGE_SIZE, VM_ALLOC);
++	area = get_vm_area(PAGE_SIZE, 0);
+ 	if (!area) {
+ 		WARN_ONCE(1, "Failed to create text area for cpu %d\n",
+ 			cpu);
+-- 
+2.39.5
+
 
 
