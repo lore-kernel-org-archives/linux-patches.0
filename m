@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0679192D9D;
-	Mon, 24 Feb 2025 14:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836C42A8D0;
+	Mon, 24 Feb 2025 14:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408000; cv=none; b=lKuuQsz9FkV3rrKXJq+FSAwEhjPm8xc8QQaXTkR2dj1v63+e4FxCn7xBIJpuQJlUQsV7v/LnlaPDQbPLGLdlMSzDZ9H9UwHMGkaKbXN4PVotPpPIaRdM7LoMu0M3YJJmXOWL/K5OyafFdEhSB7C8JxVWAERoTu1I6Ad+WT3Y2qA=
+	t=1740408004; cv=none; b=udZzizUczKs/QS4g5JkiGUF8WmBLf9jk1W5RrYrHf47N7NMn1Xml3hbtvAJ22XBmmK7a0pNVE3PkbUVijF0/tdKgLU2HyMyNRPsWAn2tz/d4hUFKiMoiXFJdbNSJWF7og5A2Y1UKV2q9u0+NzgA/xzNQRcRevgntmKrzpt2C0C4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408000; c=relaxed/simple;
-	bh=wljYc+ZsNQBmtY1lnXNeSteLUWGLLDmKXwBFN3WnmCI=;
+	s=arc-20240116; t=1740408004; c=relaxed/simple;
+	bh=lpUMDqkt/DAdGXzEz6TdVmgZvWOSmVnq2PKSxIWT5sQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIBkXr+cjHNVaPcgBNOvLeeZgRl81J1vqCXSSjiWEvSJZIz1U3ruop8dxvnFdN41R1LZkIU7a84Q0EiDydE7y3zwYseAbzWuuoNSxYP736tlwa1WmL5zht/hISw20BfX5v08zmexter2b/SeTItnVOYVzUuwqO/Ph2g4+ivN1wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qebIhH8i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mosxJxqJ2eKWVax6hV4T2OQcC0HXykf/y4iUPDhRSoEDdv2gdA6mxnchUvjU1Eq8fd2Cwxi4HfAT83KoJcKdsulE7sHHAZrOinq7Wl8GL3S/nTek2U7vIewO0/Tjp9bU9DnWvq6JUuzoiq/ZlVTqG+0S1e7lVgquiku9M9ao0YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=suX9q+41; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qebIhH8i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C89DC4CED6;
-	Mon, 24 Feb 2025 14:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suX9q+41"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3194C4CED6;
+	Mon, 24 Feb 2025 14:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408000;
-	bh=wljYc+ZsNQBmtY1lnXNeSteLUWGLLDmKXwBFN3WnmCI=;
+	s=korg; t=1740408004;
+	bh=lpUMDqkt/DAdGXzEz6TdVmgZvWOSmVnq2PKSxIWT5sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qebIhH8iVnlV93AP8qAiF9bIT2JsFlYTGFtBWt5Q9YCsDTAzFwdhLrTUxJUNazjib
-	 9ZczHT4Nr6xPX3QuRytvCAH2G9DIWJ/HAWG1XBfgp7ofdxOVpZ0B9ZsjYzF9FQ2f+i
-	 W+WfWocEYcrJ5y0ipkR2IgRticb2EJuN+TtqMNLc=
+	b=suX9q+41+6qk1tgTRRaLzTONsLF8/3bdSecm+dt95kdaeq5zxtG38u0ceyrclNx5l
+	 D/uP1ryJgBqMwc8q12voBpjRJHoCgYSXceq21YQ0uwJ6NJEJ2OjeSTJgf6JzMZhPLB
+	 rGTi1E9+ByAiibYBlLOnn6j6yMdZOJPuaWHxVheQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Pierre Riteau <pierre@stackhpc.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/140] ALSA: hda/cirrus: Correct the full scale volume set logic
-Date: Mon, 24 Feb 2025 15:34:30 +0100
-Message-ID: <20250224142605.798900604@linuxfoundation.org>
+Subject: [PATCH 6.6 072/140] net/sched: cls_api: fix error handling causing NULL dereference
+Date: Mon, 24 Feb 2025 15:34:31 +0100
+Message-ID: <20250224142605.837029870@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -51,119 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+From: Pierre Riteau <pierre@stackhpc.com>
 
-[ Upstream commit 08b613b9e2ba431db3bd15cb68ca72472a50ef5c ]
+[ Upstream commit 071ed42cff4fcdd89025d966d48eabef59913bf2 ]
 
-This patch corrects the full-scale volume setting logic. On certain
-platforms, the full-scale volume bit is required. The current logic
-mistakenly sets this bit and incorrectly clears reserved bit 0, causing
-the headphone output to be muted.
+tcf_exts_miss_cookie_base_alloc() calls xa_alloc_cyclic() which can
+return 1 if the allocation succeeded after wrapping. This was treated as
+an error, with value 1 returned to caller tcf_exts_init_ex() which sets
+exts->actions to NULL and returns 1 to caller fl_change().
 
-Fixes: 342b6b610ae2 ("ALSA: hda/cs8409: Fix Full Scale Volume setting for all variants")
-Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250214210736.30814-1-vitalyr@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+fl_change() treats err == 1 as success, calling tcf_exts_validate_ex()
+which calls tcf_action_init() with exts->actions as argument, where it
+is dereferenced.
+
+Example trace:
+
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+CPU: 114 PID: 16151 Comm: handler114 Kdump: loaded Not tainted 5.14.0-503.16.1.el9_5.x86_64 #1
+RIP: 0010:tcf_action_init+0x1f8/0x2c0
+Call Trace:
+ tcf_action_init+0x1f8/0x2c0
+ tcf_exts_validate_ex+0x175/0x190
+ fl_change+0x537/0x1120 [cls_flower]
+
+Fixes: 80cd22c35c90 ("net/sched: cls_api: Support hardware miss to tc action")
+Signed-off-by: Pierre Riteau <pierre@stackhpc.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250213223610.320278-1-pierre@stackhpc.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_cs8409-tables.c |  6 +++---
- sound/pci/hda/patch_cs8409.c        | 20 +++++++++++---------
- sound/pci/hda/patch_cs8409.h        |  5 +++--
- 3 files changed, 17 insertions(+), 14 deletions(-)
+ net/sched/cls_api.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_cs8409-tables.c b/sound/pci/hda/patch_cs8409-tables.c
-index 759f48038273d..621f947e38174 100644
---- a/sound/pci/hda/patch_cs8409-tables.c
-+++ b/sound/pci/hda/patch_cs8409-tables.c
-@@ -121,7 +121,7 @@ static const struct cs8409_i2c_param cs42l42_init_reg_seq[] = {
- 	{ CS42L42_MIXER_CHA_VOL, 0x3F },
- 	{ CS42L42_MIXER_CHB_VOL, 0x3F },
- 	{ CS42L42_MIXER_ADC_VOL, 0x3f },
--	{ CS42L42_HP_CTL, 0x03 },
-+	{ CS42L42_HP_CTL, 0x0D },
- 	{ CS42L42_MIC_DET_CTL1, 0xB6 },
- 	{ CS42L42_TIPSENSE_CTL, 0xC2 },
- 	{ CS42L42_HS_CLAMP_DISABLE, 0x01 },
-@@ -315,7 +315,7 @@ static const struct cs8409_i2c_param dolphin_c0_init_reg_seq[] = {
- 	{ CS42L42_ASP_TX_SZ_EN, 0x01 },
- 	{ CS42L42_PWR_CTL1, 0x0A },
- 	{ CS42L42_PWR_CTL2, 0x84 },
--	{ CS42L42_HP_CTL, 0x03 },
-+	{ CS42L42_HP_CTL, 0x0D },
- 	{ CS42L42_MIXER_CHA_VOL, 0x3F },
- 	{ CS42L42_MIXER_CHB_VOL, 0x3F },
- 	{ CS42L42_MIXER_ADC_VOL, 0x3f },
-@@ -371,7 +371,7 @@ static const struct cs8409_i2c_param dolphin_c1_init_reg_seq[] = {
- 	{ CS42L42_ASP_TX_SZ_EN, 0x00 },
- 	{ CS42L42_PWR_CTL1, 0x0E },
- 	{ CS42L42_PWR_CTL2, 0x84 },
--	{ CS42L42_HP_CTL, 0x01 },
-+	{ CS42L42_HP_CTL, 0x0D },
- 	{ CS42L42_MIXER_CHA_VOL, 0x3F },
- 	{ CS42L42_MIXER_CHB_VOL, 0x3F },
- 	{ CS42L42_MIXER_ADC_VOL, 0x3f },
-diff --git a/sound/pci/hda/patch_cs8409.c b/sound/pci/hda/patch_cs8409.c
-index 892223d9e64ab..b003ac1990ba8 100644
---- a/sound/pci/hda/patch_cs8409.c
-+++ b/sound/pci/hda/patch_cs8409.c
-@@ -876,7 +876,7 @@ static void cs42l42_resume(struct sub_codec *cs42l42)
- 		{ CS42L42_DET_INT_STATUS2, 0x00 },
- 		{ CS42L42_TSRS_PLUG_STATUS, 0x00 },
- 	};
--	int fsv_old, fsv_new;
-+	unsigned int fsv;
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 84e18b5f72a30..96c39e9a873c7 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -97,7 +97,7 @@ tcf_exts_miss_cookie_base_alloc(struct tcf_exts *exts, struct tcf_proto *tp,
  
- 	/* Bring CS42L42 out of Reset */
- 	spec->gpio_data = snd_hda_codec_read(codec, CS8409_PIN_AFG, 0, AC_VERB_GET_GPIO_DATA, 0);
-@@ -893,13 +893,15 @@ static void cs42l42_resume(struct sub_codec *cs42l42)
- 	/* Clear interrupts, by reading interrupt status registers */
- 	cs8409_i2c_bulk_read(cs42l42, irq_regs, ARRAY_SIZE(irq_regs));
+ 	err = xa_alloc_cyclic(&tcf_exts_miss_cookies_xa, &n->miss_cookie_base,
+ 			      n, xa_limit_32b, &next, GFP_KERNEL);
+-	if (err)
++	if (err < 0)
+ 		goto err_xa_alloc;
  
--	fsv_old = cs8409_i2c_read(cs42l42, CS42L42_HP_CTL);
--	if (cs42l42->full_scale_vol == CS42L42_FULL_SCALE_VOL_0DB)
--		fsv_new = fsv_old & ~CS42L42_FULL_SCALE_VOL_MASK;
--	else
--		fsv_new = fsv_old & CS42L42_FULL_SCALE_VOL_MASK;
--	if (fsv_new != fsv_old)
--		cs8409_i2c_write(cs42l42, CS42L42_HP_CTL, fsv_new);
-+	fsv = cs8409_i2c_read(cs42l42, CS42L42_HP_CTL);
-+	if (cs42l42->full_scale_vol) {
-+		// Set the full scale volume bit
-+		fsv |= CS42L42_FULL_SCALE_VOL_MASK;
-+		cs8409_i2c_write(cs42l42, CS42L42_HP_CTL, fsv);
-+	}
-+	// Unmute analog channels A and B
-+	fsv = (fsv & ~CS42L42_ANA_MUTE_AB);
-+	cs8409_i2c_write(cs42l42, CS42L42_HP_CTL, fsv);
- 
- 	/* we have to explicitly allow unsol event handling even during the
- 	 * resume phase so that the jack event is processed properly
-@@ -921,7 +923,7 @@ static void cs42l42_suspend(struct sub_codec *cs42l42)
- 		{ CS42L42_MIXER_CHA_VOL, 0x3F },
- 		{ CS42L42_MIXER_ADC_VOL, 0x3F },
- 		{ CS42L42_MIXER_CHB_VOL, 0x3F },
--		{ CS42L42_HP_CTL, 0x0F },
-+		{ CS42L42_HP_CTL, 0x0D },
- 		{ CS42L42_ASP_RX_DAI0_EN, 0x00 },
- 		{ CS42L42_ASP_CLK_CFG, 0x00 },
- 		{ CS42L42_PWR_CTL1, 0xFE },
-diff --git a/sound/pci/hda/patch_cs8409.h b/sound/pci/hda/patch_cs8409.h
-index 5e48115caf096..14645d25e70fd 100644
---- a/sound/pci/hda/patch_cs8409.h
-+++ b/sound/pci/hda/patch_cs8409.h
-@@ -230,9 +230,10 @@ enum cs8409_coefficient_index_registers {
- #define CS42L42_PDN_TIMEOUT_US			(250000)
- #define CS42L42_PDN_SLEEP_US			(2000)
- #define CS42L42_INIT_TIMEOUT_MS			(45)
-+#define CS42L42_ANA_MUTE_AB			(0x0C)
- #define CS42L42_FULL_SCALE_VOL_MASK		(2)
--#define CS42L42_FULL_SCALE_VOL_0DB		(1)
--#define CS42L42_FULL_SCALE_VOL_MINUS6DB		(0)
-+#define CS42L42_FULL_SCALE_VOL_0DB		(0)
-+#define CS42L42_FULL_SCALE_VOL_MINUS6DB		(1)
- 
- /* Dell BULLSEYE / WARLOCK / CYBORG Specific Definitions */
- 
+ 	exts->miss_cookie_node = n;
 -- 
 2.39.5
 
