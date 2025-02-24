@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C1F14D28C;
-	Mon, 24 Feb 2025 14:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE46D148850;
+	Mon, 24 Feb 2025 14:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408408; cv=none; b=H+YwMSsvsQGurwiw4WUEoyoLl77BdCKWU5/Z1OFBY0n5G4JobXhZzrJOhT2GIUNGk+za+ilxvipqZTMm0iqVmYdaTp0nahSeJhd1+KUuFn7tbddHGVhDChLvlnQNY/kiga7gB7cBid/Fmu5RdUWzpzGEBKnZahOcjVLxEhVqLeU=
+	t=1740408412; cv=none; b=Bg7VrANxc3DZE/U8B6wllWQNGv+UZ3BaHQETLPAqRJrTti15IJjyRuy0W+UrXYtcL+pyETJlVxbYgksd44xsmNrWxJLGVW55pLEGk00SGUKrgnarcaDZtCtQgBY8W62rIHDfjuOm7q5gI3jOgdtJ76w1cBvJ5KILBRCeXm9XFZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408408; c=relaxed/simple;
-	bh=r+VfOjUOTLcdgTmBlJHYy6LUlCTuigeBKlcpKGWeBI0=;
+	s=arc-20240116; t=1740408412; c=relaxed/simple;
+	bh=apeJxBvXD0M5D+glOd97zUMM8fxNEeoyeJJtnMa+X94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmXuHSH5iGk5ijyeNqtdr1r9jQzKeOnCYmxGmVpglAt9876SOgT3HrAKU5iHG5lcU1oG8F9d31mu0Op5t/K5gUIcf8uHd4Nv2iNcumiReqs/VZxzv4bya6uAt6CNZ8lm2u8m893e5J5CXUFA778qC1Fc4zHnOeMM5xsxXqDy4jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebwsACHP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XxFJpOeSSQl03dhGJT5pyqNOf7ERDGyN38yGk+M+mrRhzoOWej+qxQb+x3A/QoBSFlUZDkhXGmcvBNWMXPoaxxyJRZuPU6gTsWDQEdGC5biV2COlMS1OFodiPZVQ1LzTvJ1yOIahJq9ASb+DObvhF/QmtFqg+/r9DiwvJPLcklE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/KL481o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebwsACHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83B0C4CED6;
-	Mon, 24 Feb 2025 14:46:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/KL481o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134C0C4CED6;
+	Mon, 24 Feb 2025 14:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408408;
-	bh=r+VfOjUOTLcdgTmBlJHYy6LUlCTuigeBKlcpKGWeBI0=;
+	s=korg; t=1740408411;
+	bh=apeJxBvXD0M5D+glOd97zUMM8fxNEeoyeJJtnMa+X94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ebwsACHPGpqLKrgsgYBpS6eqidZUyh6d2efQCUqfPT7rbGsuv+uOTwsLlq+j9t0YC
-	 n6pSKxLtKh0BPTFPKZvsu3IRuCZ3F+tnm0gT4SxHCezGynpZQmWWVhWxUX18ucElqr
-	 s0roDzVH+l7512nUi3zXioVwondAD7/1MucxpA9M=
+	b=g/KL481oEsrpgKb8sPgsuk2O4V/E1UObDRP8JPcQOBKzuiuGjPIaBRQeyVXTFCOSk
+	 Oa4r26zwQsrkbHgcV/2E8YOego0sMU+JrmTOQZQSUgKhYTVWMb8eT+hU5Y1e2KYBAl
+	 thkqJet9jAGeWiIoGOu7w3mjQanKp+pWzmxoSUM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Steev Klimaszewski <steev@kali.org>
-Subject: [PATCH 6.12 022/154] Bluetooth: qca: Fix poor RF performance for WCN6855
-Date: Mon, 24 Feb 2025 15:33:41 +0100
-Message-ID: <20250224142607.948363456@linuxfoundation.org>
+	Erhard Furtner <erhard_f@mailbox.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 049/154] powerpc/code-patching: Fix KASAN hit by not flagging text patching area as VM_ALLOC
+Date: Mon, 24 Feb 2025 15:34:08 +0100
+Message-ID: <20250224142609.014527516@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -53,46 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit a2fad248947d702ed3dcb52b8377c1a3ae201e44 ]
+[ Upstream commit d262a192d38e527faa5984629aabda2e0d1c4f54 ]
 
-For WCN6855, board ID specific NVM needs to be downloaded once board ID
-is available, but the default NVM is always downloaded currently.
+Erhard reported the following KASAN hit while booting his PowerMac G4
+with a KASAN-enabled kernel 6.13-rc6:
 
-The wrong NVM causes poor RF performance, and effects user experience
-for several types of laptop with WCN6855 on the market.
+  BUG: KASAN: vmalloc-out-of-bounds in copy_to_kernel_nofault+0xd8/0x1c8
+  Write of size 8 at addr f1000000 by task chronyd/1293
 
-Fix by downloading board ID specific NVM if board ID is available.
+  CPU: 0 UID: 123 PID: 1293 Comm: chronyd Tainted: G        W          6.13.0-rc6-PMacG4 #2
+  Tainted: [W]=WARN
+  Hardware name: PowerMac3,6 7455 0x80010303 PowerMac
+  Call Trace:
+  [c2437590] [c1631a84] dump_stack_lvl+0x70/0x8c (unreliable)
+  [c24375b0] [c0504998] print_report+0xdc/0x504
+  [c2437610] [c050475c] kasan_report+0xf8/0x108
+  [c2437690] [c0505a3c] kasan_check_range+0x24/0x18c
+  [c24376a0] [c03fb5e4] copy_to_kernel_nofault+0xd8/0x1c8
+  [c24376c0] [c004c014] patch_instructions+0x15c/0x16c
+  [c2437710] [c00731a8] bpf_arch_text_copy+0x60/0x7c
+  [c2437730] [c0281168] bpf_jit_binary_pack_finalize+0x50/0xac
+  [c2437750] [c0073cf4] bpf_int_jit_compile+0xb30/0xdec
+  [c2437880] [c0280394] bpf_prog_select_runtime+0x15c/0x478
+  [c24378d0] [c1263428] bpf_prepare_filter+0xbf8/0xc14
+  [c2437990] [c12677ec] bpf_prog_create_from_user+0x258/0x2b4
+  [c24379d0] [c027111c] do_seccomp+0x3dc/0x1890
+  [c2437ac0] [c001d8e0] system_call_exception+0x2dc/0x420
+  [c2437f30] [c00281ac] ret_from_syscall+0x0/0x2c
+  --- interrupt: c00 at 0x5a1274
+  NIP:  005a1274 LR: 006a3b3c CTR: 005296c8
+  REGS: c2437f40 TRAP: 0c00   Tainted: G        W           (6.13.0-rc6-PMacG4)
+  MSR:  0200f932 <VEC,EE,PR,FP,ME,IR,DR,RI>  CR: 24004422  XER: 00000000
 
-Fixes: 095327fede00 ("Bluetooth: hci_qca: Add support for QTI Bluetooth chip wcn6855")
-Cc: stable@vger.kernel.org # 6.4
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Steev Klimaszewski <steev@kali.org> #Thinkpad X13s
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  GPR00: 00000166 af8f3fa0 a7ee3540 00000001 00000000 013b6500 005a5858 0200f932
+  GPR08: 00000000 00001fe9 013d5fc8 005296c8 2822244c 00b2fcd8 00000000 af8f4b57
+  GPR16: 00000000 00000001 00000000 00000000 00000000 00000001 00000000 00000002
+  GPR24: 00afdbb0 00000000 00000000 00000000 006e0004 013ce060 006e7c1c 00000001
+  NIP [005a1274] 0x5a1274
+  LR [006a3b3c] 0x6a3b3c
+  --- interrupt: c00
+
+  The buggy address belongs to the virtual mapping at
+   [f1000000, f1002000) created by:
+   text_area_cpu_up+0x20/0x190
+
+  The buggy address belongs to the physical page:
+  page: refcount:1 mapcount:0 mapping:00000000 index:0x0 pfn:0x76e30
+  flags: 0x80000000(zone=2)
+  raw: 80000000 00000000 00000122 00000000 00000000 00000000 ffffffff 00000001
+  raw: 00000000
+  page dumped because: kasan: bad access detected
+
+  Memory state around the buggy address:
+   f0ffff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+   f0ffff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  >f1000000: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+             ^
+   f1000080: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+   f1000100: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+  ==================================================================
+
+f8 corresponds to KASAN_VMALLOC_INVALID which means the area is not
+initialised hence not supposed to be used yet.
+
+Powerpc text patching infrastructure allocates a virtual memory area
+using get_vm_area() and flags it as VM_ALLOC. But that flag is meant
+to be used for vmalloc() and vmalloc() allocated memory is not
+supposed to be used before a call to __vmalloc_node_range() which is
+never called for that area.
+
+That went undetected until commit e4137f08816b ("mm, kasan, kmsan:
+instrument copy_from/to_kernel_nofault")
+
+The area allocated by text_area_cpu_up() is not vmalloc memory, it is
+mapped directly on demand when needed by map_kernel_page(). There is
+no VM flag corresponding to such usage, so just pass no flag. That way
+the area will be unpoisonned and usable immediately.
+
+Reported-by: Erhard Furtner <erhard_f@mailbox.org>
+Closes: https://lore.kernel.org/all/20250112135832.57c92322@yea/
+Fixes: 37bc3e5fd764 ("powerpc/lib/code-patching: Use alternate map for patch_instruction()")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/06621423da339b374f48c0886e3a5db18e896be8.1739342693.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/powerpc/lib/code-patching.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 5cb1fd1a0c7b5..04d02c746ec0f 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -905,8 +905,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 				 "qca/msnv%02x.bin", rom_ver);
- 			break;
- 		case QCA_WCN6855:
--			snprintf(config.fwname, sizeof(config.fwname),
--				 "qca/hpnv%02x.bin", rom_ver);
-+			qca_read_fw_board_id(hdev, &boardid);
-+			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
-+						  "hpnv", soc_type, ver, rom_ver, boardid);
- 			break;
- 		case QCA_WCN7850:
- 			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
+diff --git a/arch/powerpc/lib/code-patching.c b/arch/powerpc/lib/code-patching.c
+index 2685d7efea511..c1d9b031f0d57 100644
+--- a/arch/powerpc/lib/code-patching.c
++++ b/arch/powerpc/lib/code-patching.c
+@@ -108,7 +108,7 @@ static int text_area_cpu_up(unsigned int cpu)
+ 	unsigned long addr;
+ 	int err;
+ 
+-	area = get_vm_area(PAGE_SIZE, VM_ALLOC);
++	area = get_vm_area(PAGE_SIZE, 0);
+ 	if (!area) {
+ 		WARN_ONCE(1, "Failed to create text area for cpu %d\n",
+ 			cpu);
 -- 
 2.39.5
 
