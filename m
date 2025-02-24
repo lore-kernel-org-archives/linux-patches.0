@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86EE14D28C;
-	Mon, 24 Feb 2025 14:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF621664C6;
+	Mon, 24 Feb 2025 14:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408416; cv=none; b=drrWRQn6UlmQhPTWhh7XOzjMZsoRixli8I5o/7aGeXSKGKDVuFAVWO8vQTjbrHfQeZuYuG0WwHbi/5+dBBGmY2hbRO++UbRR5EOS4TL1q9PvNtK72Ar5eV9qDm+vunAR+C76RiUDF8NJpPk29bBWgbMtii3cmn0LAcWvyvg77Dk=
+	t=1740408418; cv=none; b=bohNrJI297E5zBlowxyeUNhDIjlVBhi6+IAb2GfU5wzSbdCzxNtVXT4t1PBw0+FUt8+yQoS2z79dQrSr6dFe9w3cjqBxEPeWxx6OgsjaN2XcPfzU6tQBmjt4NvOPbO26fL+m+sLpfv9CiPOEPVMv0KaEz1EE62dLVvRkMoWmKbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408416; c=relaxed/simple;
-	bh=abl0tGNIxkHxTXa5n+yilEG/4rkXCOG+iMy8X4axm4Q=;
+	s=arc-20240116; t=1740408418; c=relaxed/simple;
+	bh=DinY9s/BBkhjBWWuS94CJ99BNm59EKnMtqChjsvk9RU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckrWRXpfaBx5Rtqw46xL3uQ7tF/l8I6j1Ne2OiBd4T1wD8gZz3WxaRlwOuEJsu4/LsbFg7sHW8wAl8eeY5HsZ7XEF1sCzld0rEspCRTvUGHtcr1n2MtayUSgs5qEEceGpZjKkrYTZO6zzechC76eidysqQeH84R5vAyp9ma/lbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bmVyeAUC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JgP2YtnBouAHBioxXk/oK1C8EEbLqfpETlMoFMz/ZKzEylDWEtZvrqcI6raihxyIC7FCqgxG/BW1Z+Ykrmesz7LXlr39WBEU9oa3Yls9sVgHhlL83/4xny15mSEWlD7h74dCulv9Qhpi+riXc5Mc3RtIpHhNRc83Ts2HRBJuT/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6mruHBX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bmVyeAUC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8877C4CED6;
-	Mon, 24 Feb 2025 14:46:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6mruHBX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DA3C4CED6;
+	Mon, 24 Feb 2025 14:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408415;
-	bh=abl0tGNIxkHxTXa5n+yilEG/4rkXCOG+iMy8X4axm4Q=;
+	s=korg; t=1740408418;
+	bh=DinY9s/BBkhjBWWuS94CJ99BNm59EKnMtqChjsvk9RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bmVyeAUCqkFb3MJzojurNKqPYokLd/7CPVWJ9njMm7IUivFLcXlaeGJ/PMBRFDG0J
-	 Bro6gtvfWrSCZrClw8aBkPdDs4JUDYqq4ikFP+isgKYPALJEZQUVbgW/LwF42mW6mQ
-	 WaOcSa3lZLZvWfS5SPVFbB8zqXHL4FPvNxaAFVJM=
+	b=T6mruHBXI89z/PFt5aqK4j9M2ah8oBNGNft1j+mEkgHT8AsiEChXPYfcDMrsq5ADJ
+	 gJYMUVvACExnkuk4V3kgMTzR0QzXzXOR9ElwN7LdowQ1hfpwcCzzjBGY4TbK5+d1Uq
+	 6ku/MdSoFPb0la1nAiISE9Coz69XtVZcsQEP5lw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ying Gao <ying01.gao@samsung.com>,
+	Junnan Wu <junnan01.wu@samsung.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/154] ASoC: imx-audmix: remove cpu_mclk which is from cpu dai device
-Date: Mon, 24 Feb 2025 15:34:09 +0100
-Message-ID: <20250224142609.052553291@linuxfoundation.org>
+Subject: [PATCH 6.12 051/154] vsock/virtio: fix variables initialization during resuming
+Date: Mon, 24 Feb 2025 15:34:10 +0100
+Message-ID: <20250224142609.091197753@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -51,91 +55,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Junnan Wu <junnan01.wu@samsung.com>
 
-[ Upstream commit 571b69f2f9b1ec7cf7d0e9b79e52115a87a869c4 ]
+[ Upstream commit 55eff109e76a14e5ed10c8c3c3978d20a35e2a4d ]
 
-When defer probe happens, there may be below error:
+When executing suspend to ram twice in a row,
+the `rx_buf_nr` and `rx_buf_max_nr` increase to three times vq->num_free.
+Then after virtqueue_get_buf and `rx_buf_nr` decreased
+in function virtio_transport_rx_work,
+the condition to fill rx buffer
+(rx_buf_nr < rx_buf_max_nr / 2) will never be met.
 
-platform 59820000.sai: Resources present before probing
+It is because that `rx_buf_nr` and `rx_buf_max_nr`
+are initialized only in virtio_vsock_probe(),
+but they should be reset whenever virtqueues are recreated,
+like after a suspend/resume.
 
-The cpu_mclk clock is from the cpu dai device, if it is not released,
-then the cpu dai device probe will fail for the second time.
+Move the `rx_buf_nr` and `rx_buf_max_nr` initialization in
+virtio_vsock_vqs_init(), so we are sure that they are properly
+initialized, every time we initialize the virtqueues, either when we
+load the driver or after a suspend/resume.
 
-The cpu_mclk is used to get rate for rate constraint, rate constraint
-may be specific for each platform, which is not necessary for machine
-driver, so remove it.
+To prevent erroneous atomic load operations on the `queued_replies`
+in the virtio_transport_send_pkt_work() function
+which may disrupt the scheduling of vsock->rx_work
+when transmitting reply-required socket packets,
+this atomic variable must undergo synchronized initialization
+alongside the preceding two variables after a suspend/resume.
 
-Fixes: b86ef5367761 ("ASoC: fsl: Add Audio Mixer machine driver")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20250213070518.547375-1-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: bd50c5dc182b ("vsock/virtio: add support for device suspend/resume")
+Link: https://lore.kernel.org/virtualization/20250207052033.2222629-1-junnan01.wu@samsung.com/
+Co-developed-by: Ying Gao <ying01.gao@samsung.com>
+Signed-off-by: Ying Gao <ying01.gao@samsung.com>
+Signed-off-by: Junnan Wu <junnan01.wu@samsung.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20250214012200.1883896-1-junnan01.wu@samsung.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/imx-audmix.c | 31 -------------------------------
- 1 file changed, 31 deletions(-)
+ net/vmw_vsock/virtio_transport.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
-index 8e7b75cf64db4..ff3671226306b 100644
---- a/sound/soc/fsl/imx-audmix.c
-+++ b/sound/soc/fsl/imx-audmix.c
-@@ -23,7 +23,6 @@ struct imx_audmix {
- 	struct snd_soc_card card;
- 	struct platform_device *audmix_pdev;
- 	struct platform_device *out_pdev;
--	struct clk *cpu_mclk;
- 	int num_dai;
- 	struct snd_soc_dai_link *dai;
- 	int num_dai_conf;
-@@ -32,34 +31,11 @@ struct imx_audmix {
- 	struct snd_soc_dapm_route *dapm_routes;
- };
- 
--static const u32 imx_audmix_rates[] = {
--	8000, 12000, 16000, 24000, 32000, 48000, 64000, 96000,
--};
--
--static const struct snd_pcm_hw_constraint_list imx_audmix_rate_constraints = {
--	.count = ARRAY_SIZE(imx_audmix_rates),
--	.list = imx_audmix_rates,
--};
--
- static int imx_audmix_fe_startup(struct snd_pcm_substream *substream)
- {
--	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
--	struct imx_audmix *priv = snd_soc_card_get_drvdata(rtd->card);
- 	struct snd_pcm_runtime *runtime = substream->runtime;
--	struct device *dev = rtd->card->dev;
--	unsigned long clk_rate = clk_get_rate(priv->cpu_mclk);
+diff --git a/net/vmw_vsock/virtio_transport.c b/net/vmw_vsock/virtio_transport.c
+index b58c3818f284f..f0e48e6911fc4 100644
+--- a/net/vmw_vsock/virtio_transport.c
++++ b/net/vmw_vsock/virtio_transport.c
+@@ -670,6 +670,13 @@ static int virtio_vsock_vqs_init(struct virtio_vsock *vsock)
+ 	};
  	int ret;
  
--	if (clk_rate % 24576000 == 0) {
--		ret = snd_pcm_hw_constraint_list(runtime, 0,
--						 SNDRV_PCM_HW_PARAM_RATE,
--						 &imx_audmix_rate_constraints);
--		if (ret < 0)
--			return ret;
--	} else {
--		dev_warn(dev, "mclk may be not supported %lu\n", clk_rate);
--	}
--
- 	ret = snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_CHANNELS,
- 					   1, 8);
++	mutex_lock(&vsock->rx_lock);
++	vsock->rx_buf_nr = 0;
++	vsock->rx_buf_max_nr = 0;
++	mutex_unlock(&vsock->rx_lock);
++
++	atomic_set(&vsock->queued_replies, 0);
++
+ 	ret = virtio_find_vqs(vdev, VSOCK_VQ_MAX, vsock->vqs, vqs_info, NULL);
  	if (ret < 0)
-@@ -325,13 +301,6 @@ static int imx_audmix_probe(struct platform_device *pdev)
- 	}
- 	put_device(&cpu_pdev->dev);
+ 		return ret;
+@@ -779,9 +786,6 @@ static int virtio_vsock_probe(struct virtio_device *vdev)
  
--	priv->cpu_mclk = devm_clk_get(&cpu_pdev->dev, "mclk1");
--	if (IS_ERR(priv->cpu_mclk)) {
--		ret = PTR_ERR(priv->cpu_mclk);
--		dev_err(&cpu_pdev->dev, "failed to get DAI mclk1: %d\n", ret);
--		return ret;
--	}
--
- 	priv->audmix_pdev = audmix_pdev;
- 	priv->out_pdev  = cpu_pdev;
+ 	vsock->vdev = vdev;
  
+-	vsock->rx_buf_nr = 0;
+-	vsock->rx_buf_max_nr = 0;
+-	atomic_set(&vsock->queued_replies, 0);
+ 
+ 	mutex_init(&vsock->tx_lock);
+ 	mutex_init(&vsock->rx_lock);
 -- 
 2.39.5
 
