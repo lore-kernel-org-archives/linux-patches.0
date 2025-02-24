@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92F9282F0;
-	Mon, 24 Feb 2025 15:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A132938DD8;
+	Mon, 24 Feb 2025 15:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409209; cv=none; b=sKDYVlmCJm8ho4YCdSFjWcO8qsALoMWu9uHZUQH6+4/FWoo57kv7PLkF5RFYaeE0sInPei9u1P3HN/G2Q7I03MNz4QPDxAAj20Dnly23hog9x5HEx/hdyatgk54VGBfyYadLD9pTEyM2sbi38jokPGpA/nPMxP4yBPJMynVA7U0=
+	t=1740409213; cv=none; b=lkU8hUnGNShRvOUiBwrqVNeeBhYufoQ+Y1B8da+W1K1ofhKH6TN8QgcczWHbXXwWJ8e6ZQv9eQjhIWwwMELS8JCPKUNy/SOrn8QitTGXMCCcYd2fq7xweF/4r6nAJ/rI0XeKEr8u4eZwsLGH4/TnFOqm2pA/Xnj7LLLZAM4GEKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409209; c=relaxed/simple;
-	bh=0hrYQq/1NYOjsFTHc14qV7K1SQtvcMywQnnYeVPb+gM=;
+	s=arc-20240116; t=1740409213; c=relaxed/simple;
+	bh=tCOvXfhhMJNl0c6YP4a5Ttnf56LKr7WS1shAxLavZpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ic53BdK3WgJoJEuS2OFnWiWcAqvYsvSfOHCmpasrJ4nHNBdwtmaMVKWKfe+ysChSo5eRQIod1H3J8mtJ8aC9QcGAkFIpeCK2pogDn6jgY44hP073XCRH8pV78TU9QJGXfqenMV410+DzOAxHLl0esUzqU656M68tyOFNu6HaDc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QM4BirN1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JthNNHxmK0G+UipVAQzajgczXZpY7s9umXqi9CtnqWsQ8KmAiPRtyvKi/CTx4fwt8FZz0SADoSGefbpqD4sxThcWqI04cV5iL+RdLQwj0rEDOlxJOX+LmF1JTuaGhwucaF24MQcGIZIBgiXHMUFzAKo3SmaAH93AaC5HKTlFkUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7GMXyNm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QM4BirN1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7A2C4CEE6;
-	Mon, 24 Feb 2025 15:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7GMXyNm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A33C4CEE8;
+	Mon, 24 Feb 2025 15:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409208;
-	bh=0hrYQq/1NYOjsFTHc14qV7K1SQtvcMywQnnYeVPb+gM=;
+	s=korg; t=1740409213;
+	bh=tCOvXfhhMJNl0c6YP4a5Ttnf56LKr7WS1shAxLavZpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QM4BirN158Aw8vjjnGUezoS1wOiXxmCpyH0BQw6vgmsG86howUac3EYRI9Dmq2Prh
-	 +0J6eQNhhAbhLWfbhoLkKKuPvuPg5eavIdX0ocXrL7jKClgugXkyrqq6Dbg0e1yRrn
-	 CgXEf3iF4S4uMTrtPLiZKhy8ttGRDQ/hV8Kn74is=
+	b=T7GMXyNmWV+/D/VQOragDGLARUK9VmwKvw6RDSVdcQ4WzwPXmfvb6kXHErZP1xOyA
+	 l3tCeIz41IrVWXhAryc7ts7pZeV1ALtGgOfKwjxG27yhV+V33L4RmAQJlEJm8E5FKZ
+	 tNvyu0/TCfaxguYliv6TXlZ/K25rWK5T8ODmOLus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.13 097/138] gpiolib: check the return value of gpio_chip::get_direction()
-Date: Mon, 24 Feb 2025 15:35:27 +0100
-Message-ID: <20250224142608.291477818@linuxfoundation.org>
+Subject: [PATCH 6.13 098/138] gpiolib: protect gpio_chip with SRCU in array_info paths in multi get/set
+Date: Mon, 24 Feb 2025 15:35:28 +0100
+Message-ID: <20250224142608.331187545@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -52,88 +51,195 @@ Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 9d846b1aebbe488f245f1aa463802ff9c34cc078 upstream.
+commit 81570d6a7ad37033c7895811551a5a9023706eda upstream.
 
-As per the API contract - gpio_chip::get_direction() may fail and return
-a negative error number. However, we treat it as if it always returned 0
-or 1. Check the return value of the callback and propagate the error
-number up the stack.
+During the locking rework in GPIOLIB, we omitted one important use-case,
+namely: setting and getting values for GPIO descriptor arrays with
+array_info present.
+
+This patch does two things: first it makes struct gpio_array store the
+address of the underlying GPIO device and not chip. Next: it protects
+the chip with SRCU from removal in gpiod_get_array_value_complex() and
+gpiod_set_array_value_complex().
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20250210-gpio-sanitize-retvals-v1-1-12ea88506cb2@linaro.org
+Link: https://lore.kernel.org/r/20250215095655.23152-1-brgl@bgdev.pl
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib.c |   44 +++++++++++++++++++++++++++++---------------
- 1 file changed, 29 insertions(+), 15 deletions(-)
+ drivers/gpio/gpiolib.c |   48 +++++++++++++++++++++++++++++++++---------------
+ drivers/gpio/gpiolib.h |    4 ++--
+ 2 files changed, 35 insertions(+), 17 deletions(-)
 
 --- a/drivers/gpio/gpiolib.c
 +++ b/drivers/gpio/gpiolib.c
-@@ -1057,8 +1057,11 @@ int gpiochip_add_data_with_key(struct gp
- 		desc->gdev = gdev;
+@@ -3143,6 +3143,8 @@ static int gpiod_get_raw_value_commit(co
+ static int gpio_chip_get_multiple(struct gpio_chip *gc,
+ 				  unsigned long *mask, unsigned long *bits)
+ {
++	lockdep_assert_held(&gc->gpiodev->srcu);
++
+ 	if (gc->get_multiple)
+ 		return gc->get_multiple(gc, mask, bits);
+ 	if (gc->get) {
+@@ -3173,6 +3175,7 @@ int gpiod_get_array_value_complex(bool r
+ 				  struct gpio_array *array_info,
+ 				  unsigned long *value_bitmap)
+ {
++	struct gpio_chip *gc;
+ 	int ret, i = 0;
  
- 		if (gc->get_direction && gpiochip_line_is_valid(gc, desc_index)) {
--			assign_bit(FLAG_IS_OUT,
--				   &desc->flags, !gc->get_direction(gc, desc_index));
-+			ret = gc->get_direction(gc, desc_index);
-+			if (ret < 0)
-+				goto err_cleanup_desc_srcu;
+ 	/*
+@@ -3184,10 +3187,15 @@ int gpiod_get_array_value_complex(bool r
+ 	    array_size <= array_info->size &&
+ 	    (void *)array_info == desc_array + array_info->size) {
+ 		if (!can_sleep)
+-			WARN_ON(array_info->chip->can_sleep);
++			WARN_ON(array_info->gdev->can_sleep);
+ 
+-		ret = gpio_chip_get_multiple(array_info->chip,
+-					     array_info->get_mask,
++		guard(srcu)(&array_info->gdev->srcu);
++		gc = srcu_dereference(array_info->gdev->chip,
++				      &array_info->gdev->srcu);
++		if (!gc)
++			return -ENODEV;
 +
-+			assign_bit(FLAG_IS_OUT, &desc->flags, !ret);
- 		} else {
- 			assign_bit(FLAG_IS_OUT,
- 				   &desc->flags, !gc->direction_input);
-@@ -2728,13 +2731,18 @@ int gpiod_direction_input_nonotify(struc
- 	if (guard.gc->direction_input) {
- 		ret = guard.gc->direction_input(guard.gc,
- 						gpio_chip_hwgpio(desc));
--	} else if (guard.gc->get_direction &&
--		  (guard.gc->get_direction(guard.gc,
--					   gpio_chip_hwgpio(desc)) != 1)) {
--		gpiod_warn(desc,
--			   "%s: missing direction_input() operation and line is output\n",
--			   __func__);
--		return -EIO;
-+	} else if (guard.gc->get_direction) {
-+		ret = guard.gc->get_direction(guard.gc,
-+					      gpio_chip_hwgpio(desc));
-+		if (ret < 0)
-+			return ret;
++		ret = gpio_chip_get_multiple(gc, array_info->get_mask,
+ 					     value_bitmap);
+ 		if (ret)
+ 			return ret;
+@@ -3468,6 +3476,8 @@ static void gpiod_set_raw_value_commit(s
+ static void gpio_chip_set_multiple(struct gpio_chip *gc,
+ 				   unsigned long *mask, unsigned long *bits)
+ {
++	lockdep_assert_held(&gc->gpiodev->srcu);
 +
-+		if (ret != GPIO_LINE_DIRECTION_IN) {
-+			gpiod_warn(desc,
-+				   "%s: missing direction_input() operation and line is output\n",
-+				    __func__);
-+			return -EIO;
-+		}
- 	}
- 	if (ret == 0) {
- 		clear_bit(FLAG_IS_OUT, &desc->flags);
-@@ -2771,12 +2779,18 @@ static int gpiod_direction_output_raw_co
- 						 gpio_chip_hwgpio(desc), val);
+ 	if (gc->set_multiple) {
+ 		gc->set_multiple(gc, mask, bits);
  	} else {
- 		/* Check that we are in output mode if we can */
--		if (guard.gc->get_direction &&
--		    guard.gc->get_direction(guard.gc, gpio_chip_hwgpio(desc))) {
--			gpiod_warn(desc,
--				"%s: missing direction_output() operation\n",
--				__func__);
--			return -EIO;
-+		if (guard.gc->get_direction) {
-+			ret = guard.gc->get_direction(guard.gc,
-+						      gpio_chip_hwgpio(desc));
-+			if (ret < 0)
-+				return ret;
+@@ -3485,6 +3495,7 @@ int gpiod_set_array_value_complex(bool r
+ 				  struct gpio_array *array_info,
+ 				  unsigned long *value_bitmap)
+ {
++	struct gpio_chip *gc;
+ 	int i = 0;
+ 
+ 	/*
+@@ -3496,14 +3507,19 @@ int gpiod_set_array_value_complex(bool r
+ 	    array_size <= array_info->size &&
+ 	    (void *)array_info == desc_array + array_info->size) {
+ 		if (!can_sleep)
+-			WARN_ON(array_info->chip->can_sleep);
++			WARN_ON(array_info->gdev->can_sleep);
 +
-+			if (ret != GPIO_LINE_DIRECTION_OUT) {
-+				gpiod_warn(desc,
-+					   "%s: missing direction_output() operation\n",
-+					   __func__);
-+				return -EIO;
-+			}
- 		}
++		guard(srcu)(&array_info->gdev->srcu);
++		gc = srcu_dereference(array_info->gdev->chip,
++				      &array_info->gdev->srcu);
++		if (!gc)
++			return -ENODEV;
+ 
+ 		if (!raw && !bitmap_empty(array_info->invert_mask, array_size))
+ 			bitmap_xor(value_bitmap, value_bitmap,
+ 				   array_info->invert_mask, array_size);
+ 
+-		gpio_chip_set_multiple(array_info->chip, array_info->set_mask,
+-				       value_bitmap);
++		gpio_chip_set_multiple(gc, array_info->set_mask, value_bitmap);
+ 
+ 		i = find_first_zero_bit(array_info->set_mask, array_size);
+ 		if (i == array_size)
+@@ -4765,9 +4781,10 @@ struct gpio_descs *__must_check gpiod_ge
+ {
+ 	struct gpio_desc *desc;
+ 	struct gpio_descs *descs;
++	struct gpio_device *gdev;
+ 	struct gpio_array *array_info = NULL;
+-	struct gpio_chip *gc;
+ 	int count, bitmap_size;
++	unsigned long dflags;
+ 	size_t descs_size;
+ 
+ 	count = gpiod_count(dev, con_id);
+@@ -4788,7 +4805,7 @@ struct gpio_descs *__must_check gpiod_ge
+ 
+ 		descs->desc[descs->ndescs] = desc;
+ 
+-		gc = gpiod_to_chip(desc);
++		gdev = gpiod_to_gpio_device(desc);
  		/*
- 		 * If we can't actively set the direction, we are some
+ 		 * If pin hardware number of array member 0 is also 0, select
+ 		 * its chip as a candidate for fast bitmap processing path.
+@@ -4796,8 +4813,8 @@ struct gpio_descs *__must_check gpiod_ge
+ 		if (descs->ndescs == 0 && gpio_chip_hwgpio(desc) == 0) {
+ 			struct gpio_descs *array;
+ 
+-			bitmap_size = BITS_TO_LONGS(gc->ngpio > count ?
+-						    gc->ngpio : count);
++			bitmap_size = BITS_TO_LONGS(gdev->ngpio > count ?
++						    gdev->ngpio : count);
+ 
+ 			array = krealloc(descs, descs_size +
+ 					 struct_size(array_info, invert_mask, 3 * bitmap_size),
+@@ -4817,7 +4834,7 @@ struct gpio_descs *__must_check gpiod_ge
+ 
+ 			array_info->desc = descs->desc;
+ 			array_info->size = count;
+-			array_info->chip = gc;
++			array_info->gdev = gdev;
+ 			bitmap_set(array_info->get_mask, descs->ndescs,
+ 				   count - descs->ndescs);
+ 			bitmap_set(array_info->set_mask, descs->ndescs,
+@@ -4830,7 +4847,7 @@ struct gpio_descs *__must_check gpiod_ge
+ 			continue;
+ 
+ 		/* Unmark array members which don't belong to the 'fast' chip */
+-		if (array_info->chip != gc) {
++		if (array_info->gdev != gdev) {
+ 			__clear_bit(descs->ndescs, array_info->get_mask);
+ 			__clear_bit(descs->ndescs, array_info->set_mask);
+ 		}
+@@ -4853,9 +4870,10 @@ struct gpio_descs *__must_check gpiod_ge
+ 					    array_info->set_mask);
+ 			}
+ 		} else {
++			dflags = READ_ONCE(desc->flags);
+ 			/* Exclude open drain or open source from fast output */
+-			if (gpiochip_line_is_open_drain(gc, descs->ndescs) ||
+-			    gpiochip_line_is_open_source(gc, descs->ndescs))
++			if (test_bit(FLAG_OPEN_DRAIN, &dflags) ||
++			    test_bit(FLAG_OPEN_SOURCE, &dflags))
+ 				__clear_bit(descs->ndescs,
+ 					    array_info->set_mask);
+ 			/* Identify 'fast' pins which require invertion */
+@@ -4867,7 +4885,7 @@ struct gpio_descs *__must_check gpiod_ge
+ 	if (array_info)
+ 		dev_dbg(dev,
+ 			"GPIO array info: chip=%s, size=%d, get_mask=%lx, set_mask=%lx, invert_mask=%lx\n",
+-			array_info->chip->label, array_info->size,
++			array_info->gdev->label, array_info->size,
+ 			*array_info->get_mask, *array_info->set_mask,
+ 			*array_info->invert_mask);
+ 	return descs;
+--- a/drivers/gpio/gpiolib.h
++++ b/drivers/gpio/gpiolib.h
+@@ -114,7 +114,7 @@ extern const char *const gpio_suffixes[]
+  *
+  * @desc:		Array of pointers to the GPIO descriptors
+  * @size:		Number of elements in desc
+- * @chip:		Parent GPIO chip
++ * @gdev:		Parent GPIO device
+  * @get_mask:		Get mask used in fastpath
+  * @set_mask:		Set mask used in fastpath
+  * @invert_mask:	Invert mask used in fastpath
+@@ -126,7 +126,7 @@ extern const char *const gpio_suffixes[]
+ struct gpio_array {
+ 	struct gpio_desc	**desc;
+ 	unsigned int		size;
+-	struct gpio_chip	*chip;
++	struct gpio_device	*gdev;
+ 	unsigned long		*get_mask;
+ 	unsigned long		*set_mask;
+ 	unsigned long		invert_mask[];
 
 
