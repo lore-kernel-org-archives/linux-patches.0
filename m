@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1509821CC59;
-	Mon, 24 Feb 2025 14:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D03B2192E8;
+	Mon, 24 Feb 2025 14:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408196; cv=none; b=DM26vi8kRru4Jc6x+gIXi7gvtpQp8GZ8tGEmg8CqaTM7VGI+d+jUH07Y8byXgafdjA34d1PqTrtVNzkfv1Sx6iw4kvgXB3s8MEpnLsuy1+KDnulYA41YRIih2bNTjb5bQjxkzG5Uvx7h9NdEbhxRFx8N0GOA3Pfi/9uINx+YRGQ=
+	t=1740408198; cv=none; b=qkyXPBCacdl4n/ClhCn489dk5r5PWKzVsbPI3jkQwTs3AL53F4SVyDo4EAWYrtIlcjp5dJcsgXVHzBqb5cXb0/C6yRNPosd2lvv9ozptYWIFo225lwchMyFoVVjAbYY7O6vpTJ1ibyb6m2er6MYwdsOKim1CYTRLa0CezuRXcz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408196; c=relaxed/simple;
-	bh=jO56iBB/h0BjxXec17cODPeoZi3uvPTni5Mv/wJ0g+Y=;
+	s=arc-20240116; t=1740408198; c=relaxed/simple;
+	bh=eB99jKI0dm31Y/cgu77K6Sw1ZjdbInRS0ygIjDa8mQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PXznYUpRog1y12aqmmiPga5DorR+gCUdHn1SzzC3RsEyHtR0nzjzQHztJguhH3Sghdx8nv+/EsqcCifig4Xk7nRy4OF3dYEg9cSK1Lb5g+ibOh2qa60lPDXC/3gpnR1VJpMSwJklZzWJDc9I0POWiZiP4XTd0rXLX2+FvkCNCzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sp5TiwLZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=klNZxvDM2UtBgsYa8T7TqEkWdC6WOcGcJLrJSFa6iAUE4AvM0+naOQYOBONbzZKkYY8CgHRK93QUsmvc8z35Fh49QS65+kiJ8JR2h4Dy28R1zam2zyhTz3oeuhySTvD659Y31Xii608BSx8kutWCkTCYHxNzSHnpK3y+Dn82RmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ANQyEyw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sp5TiwLZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CC0C4CED6;
-	Mon, 24 Feb 2025 14:43:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ANQyEyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721B4C4CED6;
+	Mon, 24 Feb 2025 14:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408194;
-	bh=jO56iBB/h0BjxXec17cODPeoZi3uvPTni5Mv/wJ0g+Y=;
+	s=korg; t=1740408197;
+	bh=eB99jKI0dm31Y/cgu77K6Sw1ZjdbInRS0ygIjDa8mQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sp5TiwLZdFlGF8pqIYH/sqt3SjgfQf6vfo2sK3Oqkq7R1jANgAhRPNpXZE8PL3HNA
-	 jwNEjfFi2ZkzF2NRydhWhV2cu1FlgNQ+h3ZjL4BhVzS3RAL5/AZ0bftnrOKuYSNiGB
-	 R21eY0yu3JWb9BODIAfZ7MdSJ49ALU62cg8lZx+c=
+	b=2ANQyEywEoOKHCFhZxhNOVKjYUpyXwvH2KtQ6Ax4LaK3aFjRmhivPLW9fj+2RyFVT
+	 Ws08LmDVWPg+6PM0w/z7vnmS0ExbnlhMnd0D/yh2ddCSmVItNc9vOGp+Vj3JJNZgb1
+	 GjPR2SuWuNDnZKV3DVCvapjjryouwOZ623ooPmlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Niravkumar L Rabara <niravkumar.l.rabara@intel.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.6 126/140] mtd: rawnand: cadence: use dma_map_resource for sdma address
-Date: Mon, 24 Feb 2025 15:35:25 +0100
-Message-ID: <20250224142607.958684681@linuxfoundation.org>
+Subject: [PATCH 6.6 127/140] mtd: rawnand: cadence: fix incorrect device in dma_unmap_single
+Date: Mon, 24 Feb 2025 15:35:26 +0100
+Message-ID: <20250224142607.997047285@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -52,11 +52,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
 
-commit d76d22b5096c5b05208fd982b153b3f182350b19 upstream.
+commit f37d135b42cb484bdecee93f56b9f483214ede78 upstream.
 
-Remap the slave DMA I/O resources to enhance driver portability.
-Using a physical address causes DMA translation failure when the
-ARM SMMU is enabled.
+dma_map_single is using physical/bus device (DMA) but dma_unmap_single
+is using framework device(NAND controller), which is incorrect.
+Fixed dma_unmap_single to use correct physical/bus device.
 
 Fixes: ec4ba01e894d ("mtd: rawnand: Add new Cadence NAND driver to MTD subsystem")
 Cc: stable@vger.kernel.org
@@ -64,102 +64,25 @@ Signed-off-by: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/cadence-nand-controller.c |   29 +++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ drivers/mtd/nand/raw/cadence-nand-controller.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/mtd/nand/raw/cadence-nand-controller.c
 +++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
-@@ -469,6 +469,8 @@ struct cdns_nand_ctrl {
- 	struct {
- 		void __iomem *virt;
- 		dma_addr_t dma;
-+		dma_addr_t iova_dma;
-+		u32 size;
- 	} io;
+@@ -1866,12 +1866,12 @@ static int cadence_nand_slave_dma_transf
+ 	dma_async_issue_pending(cdns_ctrl->dmac);
+ 	wait_for_completion(&finished);
  
- 	int irq;
-@@ -1838,11 +1840,11 @@ static int cadence_nand_slave_dma_transf
- 	}
- 
- 	if (dir == DMA_FROM_DEVICE) {
--		src_dma = cdns_ctrl->io.dma;
-+		src_dma = cdns_ctrl->io.iova_dma;
- 		dst_dma = buf_dma;
- 	} else {
- 		src_dma = buf_dma;
--		dst_dma = cdns_ctrl->io.dma;
-+		dst_dma = cdns_ctrl->io.iova_dma;
- 	}
- 
- 	tx = dmaengine_prep_dma_memcpy(cdns_ctrl->dmac, dst_dma, src_dma, len,
-@@ -2874,6 +2876,7 @@ cadence_nand_irq_cleanup(int irqnum, str
- static int cadence_nand_init(struct cdns_nand_ctrl *cdns_ctrl)
- {
- 	dma_cap_mask_t mask;
-+	struct dma_device *dma_dev = cdns_ctrl->dmac->device;
- 	int ret;
- 
- 	cdns_ctrl->cdma_desc = dma_alloc_coherent(cdns_ctrl->dev,
-@@ -2917,6 +2920,16 @@ static int cadence_nand_init(struct cdns
- 		}
- 	}
- 
-+	cdns_ctrl->io.iova_dma = dma_map_resource(dma_dev->dev, cdns_ctrl->io.dma,
-+						  cdns_ctrl->io.size,
-+						  DMA_BIDIRECTIONAL, 0);
-+
-+	ret = dma_mapping_error(dma_dev->dev, cdns_ctrl->io.iova_dma);
-+	if (ret) {
-+		dev_err(cdns_ctrl->dev, "Failed to map I/O resource to DMA\n");
-+		goto dma_release_chnl;
-+	}
-+
- 	nand_controller_init(&cdns_ctrl->controller);
- 	INIT_LIST_HEAD(&cdns_ctrl->chips);
- 
-@@ -2927,18 +2940,22 @@ static int cadence_nand_init(struct cdns
- 	if (ret) {
- 		dev_err(cdns_ctrl->dev, "Failed to register MTD: %d\n",
- 			ret);
--		goto dma_release_chnl;
-+		goto unmap_dma_resource;
- 	}
- 
- 	kfree(cdns_ctrl->buf);
- 	cdns_ctrl->buf = kzalloc(cdns_ctrl->buf_size, GFP_KERNEL);
- 	if (!cdns_ctrl->buf) {
- 		ret = -ENOMEM;
--		goto dma_release_chnl;
-+		goto unmap_dma_resource;
- 	}
+-	dma_unmap_single(cdns_ctrl->dev, buf_dma, len, dir);
++	dma_unmap_single(dma_dev->dev, buf_dma, len, dir);
  
  	return 0;
  
-+unmap_dma_resource:
-+	dma_unmap_resource(dma_dev->dev, cdns_ctrl->io.iova_dma,
-+			   cdns_ctrl->io.size, DMA_BIDIRECTIONAL, 0);
-+
- dma_release_chnl:
- 	if (cdns_ctrl->dmac)
- 		dma_release_channel(cdns_ctrl->dmac);
-@@ -2960,6 +2977,8 @@ free_buf_desc:
- static void cadence_nand_remove(struct cdns_nand_ctrl *cdns_ctrl)
- {
- 	cadence_nand_chips_cleanup(cdns_ctrl);
-+	dma_unmap_resource(cdns_ctrl->dmac->device->dev, cdns_ctrl->io.iova_dma,
-+			   cdns_ctrl->io.size, DMA_BIDIRECTIONAL, 0);
- 	cadence_nand_irq_cleanup(cdns_ctrl->irq, cdns_ctrl);
- 	kfree(cdns_ctrl->buf);
- 	dma_free_coherent(cdns_ctrl->dev, sizeof(struct cadence_nand_cdma_desc),
-@@ -3028,7 +3047,9 @@ static int cadence_nand_dt_probe(struct
- 	cdns_ctrl->io.virt = devm_platform_get_and_ioremap_resource(ofdev, 1, &res);
- 	if (IS_ERR(cdns_ctrl->io.virt))
- 		return PTR_ERR(cdns_ctrl->io.virt);
-+
- 	cdns_ctrl->io.dma = res->start;
-+	cdns_ctrl->io.size = resource_size(res);
+ err_unmap:
+-	dma_unmap_single(cdns_ctrl->dev, buf_dma, len, dir);
++	dma_unmap_single(dma_dev->dev, buf_dma, len, dir);
  
- 	dt->clk = devm_clk_get(cdns_ctrl->dev, "nf_clk");
- 	if (IS_ERR(dt->clk))
+ err:
+ 	dev_dbg(cdns_ctrl->dev, "Fall back to CPU I/O\n");
 
 
