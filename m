@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3456EAF1;
-	Mon, 24 Feb 2025 14:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E3314012;
+	Mon, 24 Feb 2025 14:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408050; cv=none; b=TOJjCFa/mmMfnhH/XgNyqpgf5ud89lu302pAOsgLnrRwQOTBuMm1dikUAZNNOLvLRSD4JoGEYoBbNKNuZRE+PGCgfLjucaoXFFidelFEoPiirukQap5TXDJKUYRQIhh4B3weyypIUfhNDZgp7yGbGXo3Tq2JxVPfnGTLNSvHshs=
+	t=1740408053; cv=none; b=K61W33Z3rX0JVBrWDoCNX2yUr8LWhEeaHKanywirbd24s8NvVJbjqkIwXDbjSWJ7KlG97gGan9HJwxTv/xZ2skA+uACPAe7vOfQaM9uL/ardQhv0Ip6M8HstllxhXFVK6oc4sg7E+CYm3eMRbwcOSjULTKFWzYE+BXBr1EUyK2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408050; c=relaxed/simple;
-	bh=yZTny4Pru4AuIlOlHmrVo2gLLmjq18SrnB8LEpwTgG4=;
+	s=arc-20240116; t=1740408053; c=relaxed/simple;
+	bh=lFYhSf7OzSBCYKNBJG6PdOioxma9jxu49tmFOQ/FbLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=babRw7UIZTJuSZmHaYaMI5JUG/jid70WKrRjMHvophzWXXWRAFD0CCgnsfG0+//tnUnjQcGST7NyNznQgD0tQKOK/X5QjXJoKqloufa9hrvIvcngVQqZaHDHTIYOsOtvdHhWWY4qSWFkFeYFgM+owzvSAsn8U8GYaO6kEHp45bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxsKbr/s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hig6EdtWjmw6KG1NCFMwVH3QZrIrXyLJP4Tw+Aw33MiGCmRq1pLO2kPafBGsiGBSZWccGxjwVW+snmibbvmPsWemdHTja3YcpOGMuZG1jYMTfunBp1M8cT8yvUDRjWTL5eJ+ECA06m4eHj4C1gVoPcySLgcEArtu8FSCXdZWnCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSrPaZUZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxsKbr/s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54ADCC4CED6;
-	Mon, 24 Feb 2025 14:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSrPaZUZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2B3C4CEE6;
+	Mon, 24 Feb 2025 14:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408049;
-	bh=yZTny4Pru4AuIlOlHmrVo2gLLmjq18SrnB8LEpwTgG4=;
+	s=korg; t=1740408053;
+	bh=lFYhSf7OzSBCYKNBJG6PdOioxma9jxu49tmFOQ/FbLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vxsKbr/s+in9qTyRJAT9mdzjeJXE2JD0JbTFgf96zRal/2galr12r8og/hpqosIj3
-	 tWmr/65KeQ0jcoq9nne7NESKBPlAyIEE3XV3gstXFI7uA+IcVllCz3VzRJj2NJoNm1
-	 TscPvSMJdrGWOJqk/sagCpUMz+V2eQf6MqpuDnu8=
+	b=aSrPaZUZcAy37io2EV7IngW2rjoNxBeO7UxM30eOo2oRS8vpYZmT8VZOoYnWoDhck
+	 VOSxUPHwt+RgaTKxAwTRJrBrnIgpcMBQdXYO/4QRE8VYvBL0RRI/4mdpxhXcve5Fba
+	 v9Yv9hsefi0J5pFpboH6BAO0BC8Xprr5DphUKNT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Zhang <dtzq01@gmail.com>,
-	Yoshiki Komachi <komachi.yoshiki@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jiri Pirko <jiri@resnulli.us>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
+	kuniyu@amazon.com,
+	ushankar@purestorage.com,
+	Eric Dumazet <edumazet@google.com>,
+	Breno Leitao <leitao@debian.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 085/140] flow_dissector: Fix port range key handling in BPF conversion
-Date: Mon, 24 Feb 2025 15:34:44 +0100
-Message-ID: <20250224142606.351729569@linuxfoundation.org>
+Subject: [PATCH 6.6 086/140] net: Add non-RCU dev_getbyhwaddr() helper
+Date: Mon, 24 Feb 2025 15:34:45 +0100
+Message-ID: <20250224142606.391783654@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -55,74 +54,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <xiyou.wangcong@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 69ab34f705fbfabcace64b5d53bb7a4450fac875 ]
+[ Upstream commit 4b5a28b38c4a0106c64416a1b2042405166b26ce ]
 
-Fix how port range keys are handled in __skb_flow_bpf_to_target() by:
-- Separating PORTS and PORTS_RANGE key handling
-- Using correct key_ports_range structure for range keys
-- Properly initializing both key types independently
+Add dedicated helper for finding devices by hardware address when
+holding rtnl_lock, similar to existing dev_getbyhwaddr_rcu(). This prevents
+PROVE_LOCKING warnings when rtnl_lock is held but RCU read lock is not.
 
-This ensures port range information is correctly stored in its dedicated
-structure rather than incorrectly using the regular ports key structure.
+Extract common address comparison logic into dev_addr_cmp().
 
-Fixes: 59fb9b62fb6c ("flow_dissector: Fix to use new variables for port ranges in bpf hook")
-Reported-by: Qiang Zhang <dtzq01@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAPx+-5uvFxkhkz4=j_Xuwkezjn9U6kzKTD5jz4tZ9msSJ0fOJA@mail.gmail.com/
-Cc: Yoshiki Komachi <komachi.yoshiki@gmail.com>
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Jiri Pirko <jiri@resnulli.us>
-Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
-Link: https://patch.msgid.link/20250218043210.732959-4-xiyou.wangcong@gmail.com
+The context about this change could be found in the following
+discussion:
+
+Link: https://lore.kernel.org/all/20250206-scarlet-ermine-of-improvement-1fcac5@leitao/
+
+Cc: kuniyu@amazon.com
+Cc: ushankar@purestorage.com
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250218-arm_fix_selftest-v5-1-d3d6892db9e1@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4eae0ee0f1e6 ("arp: switch to dev_getbyhwaddr() in arp_req_set_public()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ include/linux/netdevice.h |  2 ++
+ net/core/dev.c            | 37 ++++++++++++++++++++++++++++++++++---
+ 2 files changed, 36 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index 842da66034158..aafa754b6cbab 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -907,6 +907,7 @@ static void __skb_flow_bpf_to_target(const struct bpf_flow_keys *flow_keys,
- 				     struct flow_dissector *flow_dissector,
- 				     void *target_container)
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 95ee88dfe0b9c..337a9d1c558f3 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -3072,6 +3072,8 @@ static inline struct net_device *first_net_device_rcu(struct net *net)
+ }
+ 
+ int netdev_boot_setup_check(struct net_device *dev);
++struct net_device *dev_getbyhwaddr(struct net *net, unsigned short type,
++				   const char *hwaddr);
+ struct net_device *dev_getbyhwaddr_rcu(struct net *net, unsigned short type,
+ 				       const char *hwaddr);
+ struct net_device *dev_getfirstbyhwtype(struct net *net, unsigned short type);
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 479a3892f98c3..8c30cdcf05d4b 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -954,6 +954,12 @@ int netdev_get_name(struct net *net, char *name, int ifindex)
+ 	return ret;
+ }
+ 
++static bool dev_addr_cmp(struct net_device *dev, unsigned short type,
++			 const char *ha)
++{
++	return dev->type == type && !memcmp(dev->dev_addr, ha, dev->addr_len);
++}
++
+ /**
+  *	dev_getbyhwaddr_rcu - find a device by its hardware address
+  *	@net: the applicable net namespace
+@@ -962,7 +968,7 @@ int netdev_get_name(struct net *net, char *name, int ifindex)
+  *
+  *	Search for an interface by MAC address. Returns NULL if the device
+  *	is not found or a pointer to the device.
+- *	The caller must hold RCU or RTNL.
++ *	The caller must hold RCU.
+  *	The returned device has not had its ref count increased
+  *	and the caller must therefore be careful about locking
+  *
+@@ -974,14 +980,39 @@ struct net_device *dev_getbyhwaddr_rcu(struct net *net, unsigned short type,
+ 	struct net_device *dev;
+ 
+ 	for_each_netdev_rcu(net, dev)
+-		if (dev->type == type &&
+-		    !memcmp(dev->dev_addr, ha, dev->addr_len))
++		if (dev_addr_cmp(dev, type, ha))
+ 			return dev;
+ 
+ 	return NULL;
+ }
+ EXPORT_SYMBOL(dev_getbyhwaddr_rcu);
+ 
++/**
++ * dev_getbyhwaddr() - find a device by its hardware address
++ * @net: the applicable net namespace
++ * @type: media type of device
++ * @ha: hardware address
++ *
++ * Similar to dev_getbyhwaddr_rcu(), but the owner needs to hold
++ * rtnl_lock.
++ *
++ * Context: rtnl_lock() must be held.
++ * Return: pointer to the net_device, or NULL if not found
++ */
++struct net_device *dev_getbyhwaddr(struct net *net, unsigned short type,
++				   const char *ha)
++{
++	struct net_device *dev;
++
++	ASSERT_RTNL();
++	for_each_netdev(net, dev)
++		if (dev_addr_cmp(dev, type, ha))
++			return dev;
++
++	return NULL;
++}
++EXPORT_SYMBOL(dev_getbyhwaddr);
++
+ struct net_device *dev_getfirstbyhwtype(struct net *net, unsigned short type)
  {
-+	struct flow_dissector_key_ports_range *key_ports_range = NULL;
- 	struct flow_dissector_key_ports *key_ports = NULL;
- 	struct flow_dissector_key_control *key_control;
- 	struct flow_dissector_key_basic *key_basic;
-@@ -951,20 +952,21 @@ static void __skb_flow_bpf_to_target(const struct bpf_flow_keys *flow_keys,
- 		key_control->addr_type = FLOW_DISSECTOR_KEY_IPV6_ADDRS;
- 	}
- 
--	if (dissector_uses_key(flow_dissector, FLOW_DISSECTOR_KEY_PORTS))
-+	if (dissector_uses_key(flow_dissector, FLOW_DISSECTOR_KEY_PORTS)) {
- 		key_ports = skb_flow_dissector_target(flow_dissector,
- 						      FLOW_DISSECTOR_KEY_PORTS,
- 						      target_container);
--	else if (dissector_uses_key(flow_dissector,
--				    FLOW_DISSECTOR_KEY_PORTS_RANGE))
--		key_ports = skb_flow_dissector_target(flow_dissector,
--						      FLOW_DISSECTOR_KEY_PORTS_RANGE,
--						      target_container);
--
--	if (key_ports) {
- 		key_ports->src = flow_keys->sport;
- 		key_ports->dst = flow_keys->dport;
- 	}
-+	if (dissector_uses_key(flow_dissector,
-+			       FLOW_DISSECTOR_KEY_PORTS_RANGE)) {
-+		key_ports_range = skb_flow_dissector_target(flow_dissector,
-+							    FLOW_DISSECTOR_KEY_PORTS_RANGE,
-+							    target_container);
-+		key_ports_range->tp.src = flow_keys->sport;
-+		key_ports_range->tp.dst = flow_keys->dport;
-+	}
- 
- 	if (dissector_uses_key(flow_dissector,
- 			       FLOW_DISSECTOR_KEY_FLOW_LABEL)) {
+ 	struct net_device *dev, *ret = NULL;
 -- 
 2.39.5
 
