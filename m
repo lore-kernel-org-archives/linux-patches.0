@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AE22A8D0;
-	Mon, 24 Feb 2025 14:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC343190063;
+	Mon, 24 Feb 2025 14:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408664; cv=none; b=OZalxe1XeOKvDCHFjlsjpou/AA3sH6x0hCqVxdn/gU4IQc6HEOwNvLoLx6yjGLSHKnGQJaNjZDDrLXhIEgm86ssRbc2TfN94I0+TAJvgjs5zHFvmTwOVOobOzZk+w5xsI3azFK6pEkclZbCPVPZnrf6/QTZXlu+o+KOiKDXhwc8=
+	t=1740408668; cv=none; b=UdSKt2c5eAZUltrAaGVk5BKi656LvpQkvsBKug+tglC1EDhxq0Iel8wItHBcP5cwfD+MPlNBuZ7jdbEJreutSFsT0jsV0eV08pG92LJ7oMLkcy2N7W1WXp2kXqyGM7/go/Elkfvp4yrBansm6ShedjqmqN4E6gyZNQMRi93ic1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408664; c=relaxed/simple;
-	bh=Vhv64plsBRJ4rhTu9GrsJWAoYjvSDzELEu1GWUi7/eg=;
+	s=arc-20240116; t=1740408668; c=relaxed/simple;
+	bh=M/5cKXVjQUao2IXF2+B6QvfrL5LMzT2og+IEXME0FGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTKoIR4V3k5CHS35ta0wS+kX6HTgiIR0pKMF8tuKJzSyjus0awZ3jwHRXuqzM0y0f4Y8UWxSQe93FWFP2kVW34ebc1j18NAPvsBk+IrcEjOKFvAhpvJpVP2k51pmuTzLvKsTNR4pnPNeJq9i7KlCSJH09Df2l1JmWFx9rf0gVrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+E3yndT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J/xiBScAp6d70kszCtTmKNAa5YhIWCzeWTgZPm4SuKV1x2Hry/lX4ntBPqG1D4RUSxPZEK7SE3PiGPHIC6s5+av/5Ux+obKJAgAQ6rtzh4mMztvHPbnW6qb2kY/4CDxA8GET7pkpY0pf6bRiERrOnRFpFFD5kYO6p673ZDBttDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3b1ycRY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+E3yndT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B879C4CEE6;
-	Mon, 24 Feb 2025 14:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3b1ycRY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76ADCC4CED6;
+	Mon, 24 Feb 2025 14:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408664;
-	bh=Vhv64plsBRJ4rhTu9GrsJWAoYjvSDzELEu1GWUi7/eg=;
+	s=korg; t=1740408667;
+	bh=M/5cKXVjQUao2IXF2+B6QvfrL5LMzT2og+IEXME0FGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+E3yndTg+mODPAlrymQKrKfefhQhVABkeUWlaqcyTxD1oRmajW38X8f97q2GPzV0
-	 HuhBZJl2rCKn/n9tAxVWk7KovjgpzYE9vbZxFbHUdZeraxohkiuxhZnCtkSiyLjkvI
-	 jQa6QAh7ujh9t7GVe134/LTHVrIdtMss+Ujt4bg4=
+	b=e3b1ycRYRXURfvMxwMaUuj58XJau4T5hKzFZbkHkHyeNjHHIGFB6bqQDOEZrmc/vZ
+	 Q2Y4xLXEf3kWO/KdxVQDbv6NGsslbnA9Q26rmv7TgRK54GcpMSCJrvU/lvIfvVysdZ
+	 jCfCGD8iWb1z+9ZriVwYcZFynOgm4/8qraADYeyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 092/154] nouveau/svm: fix missing folio unlock + put after make_device_exclusive_range()
-Date: Mon, 24 Feb 2025 15:34:51 +0100
-Message-ID: <20250224142610.672143587@linuxfoundation.org>
+Subject: [PATCH 6.12 093/154] drm/msm: Avoid rounding up to one jiffy
+Date: Mon, 24 Feb 2025 15:34:52 +0100
+Message-ID: <20250224142610.708851150@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -52,71 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit b3fefbb30a1691533cb905006b69b2a474660744 ]
+[ Upstream commit 669c285620231786fffe9d87ab432e08a6ed922b ]
 
-In case we have to retry the loop, we are missing to unlock+put the
-folio. In that case, we will keep failing make_device_exclusive_range()
-because we cannot grab the folio lock, and even return from the function
-with the folio locked and referenced, effectively never succeeding the
-make_device_exclusive_range().
+If userspace is trying to achieve a timeout of zero, let 'em have it.
+Only round up if the timeout is greater than zero.
 
-While at it, convert the other unlock+put to use a folio as well.
-
-This was found by code inspection.
-
-Fixes: 8f187163eb89 ("nouveau/svm: implement atomic SVM access")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Tested-by: Alistair Popple <apopple@nvidia.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250124181524.3584236-2-david@redhat.com
+Fixes: 4969bccd5f4e ("drm/msm: Avoid rounding down to zero jiffies")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/632264/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_svm.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.h | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_svm.c b/drivers/gpu/drm/nouveau/nouveau_svm.c
-index b4da82ddbb6b2..8ea98f06d39af 100644
---- a/drivers/gpu/drm/nouveau/nouveau_svm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_svm.c
-@@ -590,6 +590,7 @@ static int nouveau_atomic_range_fault(struct nouveau_svmm *svmm,
- 	unsigned long timeout =
- 		jiffies + msecs_to_jiffies(HMM_RANGE_DEFAULT_TIMEOUT);
- 	struct mm_struct *mm = svmm->notifier.mm;
-+	struct folio *folio;
- 	struct page *page;
- 	unsigned long start = args->p.addr;
- 	unsigned long notifier_seq;
-@@ -616,12 +617,16 @@ static int nouveau_atomic_range_fault(struct nouveau_svmm *svmm,
- 			ret = -EINVAL;
- 			goto out;
- 		}
-+		folio = page_folio(page);
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 2e28a13446366..9526b22038ab8 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -543,15 +543,12 @@ static inline int align_pitch(int width, int bpp)
+ static inline unsigned long timeout_to_jiffies(const ktime_t *timeout)
+ {
+ 	ktime_t now = ktime_get();
+-	s64 remaining_jiffies;
  
- 		mutex_lock(&svmm->mutex);
- 		if (!mmu_interval_read_retry(&notifier->notifier,
- 					     notifier_seq))
- 			break;
- 		mutex_unlock(&svmm->mutex);
-+
-+		folio_unlock(folio);
-+		folio_put(folio);
- 	}
+-	if (ktime_compare(*timeout, now) < 0) {
+-		remaining_jiffies = 0;
+-	} else {
+-		ktime_t rem = ktime_sub(*timeout, now);
+-		remaining_jiffies = ktime_divns(rem, NSEC_PER_SEC / HZ);
+-	}
++	if (ktime_compare(*timeout, now) <= 0)
++		return 0;
  
- 	/* Map the page on the GPU. */
-@@ -637,8 +642,8 @@ static int nouveau_atomic_range_fault(struct nouveau_svmm *svmm,
- 	ret = nvif_object_ioctl(&svmm->vmm->vmm.object, args, size, NULL);
- 	mutex_unlock(&svmm->mutex);
++	ktime_t rem = ktime_sub(*timeout, now);
++	s64 remaining_jiffies = ktime_divns(rem, NSEC_PER_SEC / HZ);
+ 	return clamp(remaining_jiffies, 1LL, (s64)INT_MAX);
+ }
  
--	unlock_page(page);
--	put_page(page);
-+	folio_unlock(folio);
-+	folio_put(folio);
- 
- out:
- 	mmu_interval_notifier_remove(&notifier->notifier);
 -- 
 2.39.5
 
