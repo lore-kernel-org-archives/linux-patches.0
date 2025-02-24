@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998A419CC0E;
-	Mon, 24 Feb 2025 14:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1A818B484;
+	Mon, 24 Feb 2025 14:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408119; cv=none; b=BVpIEPwzyPnqtuwFMm2MLjJLnJ250lRSLpPyqNeVHXhK9W3ZljoO5nAobaAJU8tk+wtVFa++JZnC7AJ8kffR/aEBSumcRzNg183iquW0ucCfPNR+ubNsWG1pJRb6aeopdsFyECJwK4Ul8jtwaepoUxnEaMRn8NQ/sffueaDk+5g=
+	t=1740408122; cv=none; b=LMsg5bU7n4aSi1LbN11d9h8JOwIqxKuWtLLmZukIqwKIJrGJ1G1x3X+2S5GM8aUHt8e7Z+oRCCBoLSGowpev5h6TA6ZW1kmKaJKcUavbSNBel/4kuyV80EkCEdAGZ1xSvd/TnvYN+VHchmaRIkyns8P19E1sRMRmsBFEPfz0vjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408119; c=relaxed/simple;
-	bh=pE741Dk5yJzJdbHLmCcCmy5OCh+vUf4e0EWtGOIWrz4=;
+	s=arc-20240116; t=1740408122; c=relaxed/simple;
+	bh=Ndjd6P4NBkUixSkJkfRMSplOpdKQv/MHITqNh6eJvCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B3O32lOoHENjlywhQixcrG4gfBfD7Q/VLljtAJK7SCAXWmvYwxaZdBA3L+NSn08EU4tpmhOQwxNJ6yO7siheWUc5h8bbGzZ8JzjzbkzXbiwGrLTwi8rl/uXMjjYGF1axyDIC0H4zAW7jeTrD21t+kjkWLyXZdiMIao+2nHBuFTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaxW8Knu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lxN4tHEX4pTW2kYNjW313H82xftjC7LLE7ivRSmCJ7SU6hCf5WYoH6Wm4zBC4ZjdMILJvOjD9GJwawmNlijwAUU1HcCrkRA1+YQTWhLxNpMcLWjlVZPgJ8NPNXfKgRcMWF8XK0LWPY272VihHQOWYbMK2ElIbQ2UxhwPGSUU8tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Te0xB/mB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaxW8Knu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB61C4CED6;
-	Mon, 24 Feb 2025 14:41:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Te0xB/mB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B6EC4CED6;
+	Mon, 24 Feb 2025 14:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408119;
-	bh=pE741Dk5yJzJdbHLmCcCmy5OCh+vUf4e0EWtGOIWrz4=;
+	s=korg; t=1740408122;
+	bh=Ndjd6P4NBkUixSkJkfRMSplOpdKQv/MHITqNh6eJvCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jaxW8Knu6LgwK/cijtndwklG+rQWdaSyDsiH3PtU/sUq+J9IV7ZNpUtJzzGRlV3tt
-	 CVnrqKhWusNh/3MPA3G0qtdUOC+WY3cFvQPFYfC3dVlbpXxnrgAhRATWL0nYKkN6g7
-	 lkQYHvUW6av7jBVNvBJZicIOuUoq/nEnFV0/PX68=
+	b=Te0xB/mBi9EwDbBFDLXnC0AR+OZSFNygu1sQa9j82dYRX3O+XDtju+F81UHfHyO31
+	 qzI8h9haIW/OaFxggZoQboNqPqGxmqmiNWO+rP/nTp7eXT2q8hxp2PgeUbkDGG5PlY
+	 RlkEDruKQH1S/6KzD6dESG0LWJ9qVXh/c+HGI+Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Fei Shao <fshao@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 106/140] drm/nouveau/pmu: Fix gp10b firmware guard
-Date: Mon, 24 Feb 2025 15:35:05 +0100
-Message-ID: <20250224142607.179973602@linuxfoundation.org>
+Subject: [PATCH 6.6 107/140] arm64: dts: mediatek: mt8183: Disable DSI display output by default
+Date: Mon, 24 Feb 2025 15:35:06 +0100
+Message-ID: <20250224142607.218683604@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -51,36 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 3dbc0215e3c502a9f3221576da0fdc9847fb9721 ]
+[ Upstream commit 26f6e91fa29a58fdc76b47f94f8f6027944a490c ]
 
-Most kernel configs enable multiple Tegra SoC generations, causing this
-typo to go unnoticed. But in the case where a kernel config is strictly
-for Tegra186, this is a problem.
+Most SoC dtsi files have the display output interfaces disabled by
+default, and only enabled on boards that utilize them. The MT8183
+has it backwards: the display outputs are left enabled by default,
+and only disabled at the board level.
 
-Fixes: 989863d7cbe5 ("drm/nouveau/pmu: select implementation based on available firmware")
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250218-nouveau-gm10b-guard-v2-1-a4de71500d48@gmail.com
+Reverse the situation for the DSI output so that it follows the
+normal scheme. For ease of backporting the DPI output is handled
+in a separate patch.
+
+Fixes: 88ec840270e6 ("arm64: dts: mt8183: Add dsi node")
+Fixes: 19b6403f1e2a ("arm64: dts: mt8183: add mt8183 pumpkin board")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Fei Shao <fshao@chromium.org>
+Link: https://lore.kernel.org/r/20241025075630.3917458-2-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/pmu/gp10b.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8183.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/pmu/gp10b.c b/drivers/gpu/drm/nouveau/nvkm/subdev/pmu/gp10b.c
-index a6f410ba60bc9..d393bc540f862 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/pmu/gp10b.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/pmu/gp10b.c
-@@ -75,7 +75,7 @@ gp10b_pmu_acr = {
- 	.bootstrap_multiple_falcons = gp10b_pmu_acr_bootstrap_multiple_falcons,
- };
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+index d1b6355148620..f3a1b96f1ee4d 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+@@ -1828,6 +1828,7 @@ dsi0: dsi@14014000 {
+ 			resets = <&mmsys MT8183_MMSYS_SW0_RST_B_DISP_DSI0>;
+ 			phys = <&mipi_tx0>;
+ 			phy-names = "dphy";
++			status = "disabled";
+ 		};
  
--#if IS_ENABLED(CONFIG_ARCH_TEGRA_210_SOC)
-+#if IS_ENABLED(CONFIG_ARCH_TEGRA_186_SOC)
- MODULE_FIRMWARE("nvidia/gp10b/pmu/desc.bin");
- MODULE_FIRMWARE("nvidia/gp10b/pmu/image.bin");
- MODULE_FIRMWARE("nvidia/gp10b/pmu/sig.bin");
+ 		mutex: mutex@14016000 {
 -- 
 2.39.5
 
