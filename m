@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7DB2571CE;
-	Mon, 24 Feb 2025 14:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFC0245002;
+	Mon, 24 Feb 2025 14:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408758; cv=none; b=ZfRKiTFRYzhde+kaIG7lBpt3i/T3nzQkZzh9erMsX7a8pb84ZSoHV6gziOxm/0d306JLYiPtRKhwGCF8QJIi6dorTsvT49FiM36eEJIOwAEP6tCMWJIYOywx2Tcqxg1A/xM9d6+BpWe/EWvVN6L1hR9v+2JnsjHFayAakvEFMxc=
+	t=1740408761; cv=none; b=WlQ3TTytpL5uas4Qpc5OTIR0P18lKrt0LI1mdR7A1D7WXx6PN0jljJAyHV8gQsYGZx6jM/AubzBhr0U4frJoMdkDPdW7BryvBRmh+6sdqTqruu/CpNcH5gii0BO2QbMac4Y/SbhgEIfnDAjVTrp4/1aXLKqWvQ/OhLGM/pH7ShU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408758; c=relaxed/simple;
-	bh=rR9mji96kMIsxyuV9R9IRLepEy2FSDQMtXjTDmJW/rk=;
+	s=arc-20240116; t=1740408761; c=relaxed/simple;
+	bh=V0xjJcGQzLb/gbh8DZsHBNI7iD6oSQckPjYnVncfD40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GuI17xweOm3od9lfsT4GokKcsYL/CNm6amkXm4zk+91ugsh/Neqout/UzSZlwS/RnMr0lYij6RnRKIe9w9fOsJswVNavBqo0Y4SqgNCcaqIMSsEbfvOtgBf9oL7fKZ5IQE0OK3/l0KbPEgnXskQwMBshWDWUCpty/l1aCqJtguU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pb9H9eLS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H1YInoGgSEe/94LeupgMIzKU8MQy5rUNUEJxj9bh4dnKh92jUQ51JYLMkZ5jucGYuOa84y+XT02eaxQRfFVEzM++BD1dDJRrUS1HiWihWaoZA05ZOrpVnBjQS2wCzefXX3bAzy1kxKr+N3yDbKtgz/1ilJsEfDoUtmrIasq+si8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQjivjxi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pb9H9eLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47130C4CED6;
-	Mon, 24 Feb 2025 14:52:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQjivjxi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168E5C4CED6;
+	Mon, 24 Feb 2025 14:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408758;
-	bh=rR9mji96kMIsxyuV9R9IRLepEy2FSDQMtXjTDmJW/rk=;
+	s=korg; t=1740408761;
+	bh=V0xjJcGQzLb/gbh8DZsHBNI7iD6oSQckPjYnVncfD40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pb9H9eLSpXwsNtrzOM9iCZokhSkTrDF/EBigTAXKDN48R+HHSAMdCR5PdXku34nc1
-	 fdAaLOKWcPSmOxpGO7efJNOq/esCY0Lz105Vo6nOmBIg5/fqbcA8+jqrVScKsAvW5B
-	 BTVXY1z5s1VCcyG5aYT/VbOPWeOy0hSMXEbbXF9o=
+	b=aQjivjxioaKK6e5c+id32u2+8vEllntEYyB9cqHlJT+BOVijtKAuDM9vkAHA30Rrl
+	 xgEyWrqvouZ1IN/VHZqjB8vbZDGn6Iyg9vbwDHu9QjRNdwlpZna1LEdlWgMBWOxwxJ
+	 NiypqBdORFT3H+mzLOviggrGe9JKSq6cAGsIfJtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Brodsky <kevin.brodsky@arm.com>,
-	Aruna Ramakrishna <aruna.ramakrishna@oracle.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Joey Gouly <joey.gouly@arm.com>,
-	Keith Lucas <keith.lucas@oracle.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Yifei Liu <yifei.l.liu@oracle.com>
-Subject: [PATCH 6.12 151/154] selftests/mm: build with -O2
-Date: Mon, 24 Feb 2025 15:35:50 +0100
-Message-ID: <20250224142612.957453182@linuxfoundation.org>
+	Tianling Shen <cnsztl@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.12 152/154] arm64: dts: rockchip: change eth phy mode to rgmii-id for orangepi r1 plus lts
+Date: Mon, 24 Feb 2025 15:35:51 +0100
+Message-ID: <20250224142612.995547337@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -58,54 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Brodsky <kevin.brodsky@arm.com>
+From: Tianling Shen <cnsztl@gmail.com>
 
-commit 46036188ea1f5266df23a6149dea0df1c77cd1c7 upstream.
+commit a6a7cba17c544fb95d5a29ab9d9ed4503029cb29 upstream.
 
-The mm kselftests are currently built with no optimisation (-O0).  It's
-unclear why, and besides being obviously suboptimal, this also prevents
-the pkeys tests from working as intended.  Let's build all the tests with
--O2.
+In general the delay should be added by the PHY instead of the MAC,
+and this improves network stability on some boards which seem to
+need different delay.
 
-[kevin.brodsky@arm.com: silence unused-result warnings]
-  Link: https://lkml.kernel.org/r/20250107170110.2819685-1-kevin.brodsky@arm.com
-Link: https://lkml.kernel.org/r/20241209095019.1732120-6-kevin.brodsky@arm.com
-Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
-Cc: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Joey Gouly <joey.gouly@arm.com>
-Cc: Keith Lucas <keith.lucas@oracle.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ Yifei: This commit also fix the failure of pkey_sighandler_tests_64,
-  which is also in linux-6.12.y, thus backport this commit. ]
-Signed-off-by: Yifei Liu <yifei.l.liu@oracle.com>
+Fixes: 387b3bbac5ea ("arm64: dts: rockchip: Add Xunlong OrangePi R1 Plus LTS")
+Cc: stable@vger.kernel.org # 6.6+
+Signed-off-by: Tianling Shen <cnsztl@gmail.com>
+Link: https://lore.kernel.org/r/20250119091154.1110762-1-cnsztl@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+[Fix conflicts due to missing dtsi conversion]
+Signed-off-by: Tianling Shen <cnsztl@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/Makefile |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3328-orangepi-r1-plus-lts.dts |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/mm/Makefile
-+++ b/tools/testing/selftests/mm/Makefile
-@@ -33,9 +33,16 @@ endif
- # LDLIBS.
- MAKEFLAGS += --no-builtin-rules
+--- a/arch/arm64/boot/dts/rockchip/rk3328-orangepi-r1-plus-lts.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3328-orangepi-r1-plus-lts.dts
+@@ -15,9 +15,11 @@
+ };
  
--CFLAGS = -Wall -I $(top_srcdir) $(EXTRA_CFLAGS) $(KHDR_INCLUDES) $(TOOLS_INCLUDES)
-+CFLAGS = -Wall -O2 -I $(top_srcdir) $(EXTRA_CFLAGS) $(KHDR_INCLUDES) $(TOOLS_INCLUDES)
- LDLIBS = -lrt -lpthread -lm
- 
-+# Some distributions (such as Ubuntu) configure GCC so that _FORTIFY_SOURCE is
-+# automatically enabled at -O1 or above. This triggers various unused-result
-+# warnings where functions such as read() or write() are called and their
-+# return value is not checked. Disable _FORTIFY_SOURCE to silence those
-+# warnings.
-+CFLAGS += -U_FORTIFY_SOURCE
+ &gmac2io {
++	/delete-property/ tx_delay;
++	/delete-property/ rx_delay;
 +
- TEST_GEN_FILES = cow
- TEST_GEN_FILES += compaction_test
- TEST_GEN_FILES += gup_longterm
+ 	phy-handle = <&yt8531c>;
+-	tx_delay = <0x19>;
+-	rx_delay = <0x05>;
++	phy-mode = "rgmii-id";
+ 
+ 	mdio {
+ 		/delete-node/ ethernet-phy@1;
 
 
