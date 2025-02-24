@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77AB14012;
-	Mon, 24 Feb 2025 14:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBF414012;
+	Mon, 24 Feb 2025 14:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408953; cv=none; b=g5sGSq/BQJjju32qH637u8zjvJCqgCvgSl1brOcST/AXghCxTl6Fhwdg+SBiR3gmvgc/KgQpXaN7Wgtd/AVGxhS1akhvLRXa4i5fSfEG8I3ayyYqsoER3R1LlF8opyGyFfAREAW0GE+XOq5yT0pBV75SZQrJFWQDmUxXIabS5GA=
+	t=1740408957; cv=none; b=ELmBPQt5jKYOR/+3BAK5LbOlvxYoIVtOTKMCjx8dC0kepnAlTJPl4Zsg32VV/vuBQGOEYrAaXcAnRMD5kJA50N1zvSfwsjZqxgc5wAluAELNy5bFRyzxMUVTcnPzCxEY18Jg6xDobsLyNdwXLbly3u8MYmp+nOiCLZykXIcSYbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408953; c=relaxed/simple;
-	bh=ZAoxeKaNrWrbYvHpiVwzKVQKTVnsf96Ed+JFv0KJFcM=;
+	s=arc-20240116; t=1740408957; c=relaxed/simple;
+	bh=tb7uO0RN5KDBszsxsmmj93oClKyw05D1HWJ6xRylQKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaosOtFKn+QBj+8rCwdvxDC1O3XSybNntRf1H7qFmqFbrenyUCUimrtTShd80mBP4Z/JH68B7KWEdDae4sUQna3jJYMfGMCcIB/lhLWsHpwJVdSJOwyEMdeqcUKhXIdK39wju4dH5dtnNJa6l4PRzuSqQqh7o0ZLRLIkEfNH2tA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHyfxoMk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MrNBsrPgXZwSI6DpfUoeoz3u4FK4KZQdILVRM1XbxNsnXvXgqcuww09uSEI84CmjLv/uBisF5zlOCzOveIjUrMPwu09hapYUglcSPRg71RjfAQI/Uw3+uni4TjFWyA2JwBKfLF0g5pBbKy7JIipuNKnVV+ljhFtOtQnGINSA9Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UT2tIYln; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHyfxoMk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46734C4CED6;
-	Mon, 24 Feb 2025 14:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UT2tIYln"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC96C4CED6;
+	Mon, 24 Feb 2025 14:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408953;
-	bh=ZAoxeKaNrWrbYvHpiVwzKVQKTVnsf96Ed+JFv0KJFcM=;
+	s=korg; t=1740408957;
+	bh=tb7uO0RN5KDBszsxsmmj93oClKyw05D1HWJ6xRylQKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHyfxoMkF1Js403MYjbqEwIHIFCicO81GcFRC6NbkcJFLe+eSq0M7TN9zUD1OBmRc
-	 bBvUaHS13MajmAKGmhPcZrfrUGGCZCo95F1/GEx2FkjoKlLtOuR2Yptni6LMsyEcVg
-	 K3utjEy2W9sosqYUog8Yne6zO1NGhLxYTrXRkwDI=
+	b=UT2tIYlnUvcOoNNGnPM07aTfuj9IPXdB4icZNZWucToVzu8Iml5xaqHvopzfuDBtA
+	 rtSxAxKiCpISs6Me60il2qx2xR7cAh1IH2XPtq2jhqHT59wd/aOAAEApAkuk5UdTv1
+	 Kjn+JJMxXkkgm2zwD6Ox719Ex4Xb1a18/aZ/+fIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Jann Horn <jannh@google.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 052/138] bpf, test_run: Fix use-after-free issue in eth_skb_pkt_type()
-Date: Mon, 24 Feb 2025 15:34:42 +0100
-Message-ID: <20250224142606.524625269@linuxfoundation.org>
+Subject: [PATCH 6.13 053/138] bpf: unify VM_WRITE vs VM_MAYWRITE use in BPF map mmaping logic
+Date: Mon, 24 Feb 2025 15:34:43 +0100
+Message-ID: <20250224142606.563988448@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -56,90 +54,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 6b3d638ca897e099fa99bd6d02189d3176f80a47 ]
+[ Upstream commit 98671a0fd1f14e4a518ee06b19037c20014900eb ]
 
-KMSAN reported a use-after-free issue in eth_skb_pkt_type()[1]. The
-cause of the issue was that eth_skb_pkt_type() accessed skb's data
-that didn't contain an Ethernet header. This occurs when
-bpf_prog_test_run_xdp() passes an invalid value as the user_data
-argument to bpf_test_init().
+For all BPF maps we ensure that VM_MAYWRITE is cleared when
+memory-mapping BPF map contents as initially read-only VMA. This is
+because in some cases BPF verifier relies on the underlying data to not
+be modified afterwards by user space, so once something is mapped
+read-only, it shouldn't be re-mmap'ed as read-write.
 
-Fix this by returning an error when user_data is less than ETH_HLEN in
-bpf_test_init(). Additionally, remove the check for "if (user_size >
-size)" as it is unnecessary.
+As such, it's not necessary to check VM_MAYWRITE in bpf_map_mmap() and
+map->ops->map_mmap() callbacks: VM_WRITE should be consistently set for
+read-write mappings, and if VM_WRITE is not set, there is no way for
+user space to upgrade read-only mapping to read-write one.
 
-[1]
-BUG: KMSAN: use-after-free in eth_skb_pkt_type include/linux/etherdevice.h:627 [inline]
-BUG: KMSAN: use-after-free in eth_type_trans+0x4ee/0x980 net/ethernet/eth.c:165
- eth_skb_pkt_type include/linux/etherdevice.h:627 [inline]
- eth_type_trans+0x4ee/0x980 net/ethernet/eth.c:165
- __xdp_build_skb_from_frame+0x5a8/0xa50 net/core/xdp.c:635
- xdp_recv_frames net/bpf/test_run.c:272 [inline]
- xdp_test_run_batch net/bpf/test_run.c:361 [inline]
- bpf_test_run_xdp_live+0x2954/0x3330 net/bpf/test_run.c:390
- bpf_prog_test_run_xdp+0x148e/0x1b10 net/bpf/test_run.c:1318
- bpf_prog_test_run+0x5b7/0xa30 kernel/bpf/syscall.c:4371
- __sys_bpf+0x6a6/0xe20 kernel/bpf/syscall.c:5777
- __do_sys_bpf kernel/bpf/syscall.c:5866 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:5864 [inline]
- __x64_sys_bpf+0xa4/0xf0 kernel/bpf/syscall.c:5864
- x64_sys_call+0x2ea0/0x3d90 arch/x86/include/generated/asm/syscalls_64.h:322
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xd9/0x1d0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+This patch cleans up this VM_WRITE vs VM_MAYWRITE handling within
+bpf_map_mmap(), which is an entry point for any BPF map mmap()-ing
+logic. We also drop unnecessary sanitization of VM_MAYWRITE in BPF
+ringbuf's map_mmap() callback implementation, as it is already performed
+by common code in bpf_map_mmap().
 
-Uninit was created at:
- free_pages_prepare mm/page_alloc.c:1056 [inline]
- free_unref_page+0x156/0x1320 mm/page_alloc.c:2657
- __free_pages+0xa3/0x1b0 mm/page_alloc.c:4838
- bpf_ringbuf_free kernel/bpf/ringbuf.c:226 [inline]
- ringbuf_map_free+0xff/0x1e0 kernel/bpf/ringbuf.c:235
- bpf_map_free kernel/bpf/syscall.c:838 [inline]
- bpf_map_free_deferred+0x17c/0x310 kernel/bpf/syscall.c:862
- process_one_work kernel/workqueue.c:3229 [inline]
- process_scheduled_works+0xa2b/0x1b60 kernel/workqueue.c:3310
- worker_thread+0xedf/0x1550 kernel/workqueue.c:3391
- kthread+0x535/0x6b0 kernel/kthread.c:389
- ret_from_fork+0x6e/0x90 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+Note, though, that in bpf_map_mmap_{open,close}() callbacks we can't
+drop VM_MAYWRITE use, because it's possible (and is outside of
+subsystem's control) to have initially read-write memory mapping, which
+is subsequently dropped to read-only by user space through mprotect().
+In such case, from BPF verifier POV it's read-write data throughout the
+lifetime of BPF map, and is counted as "active writer".
 
-CPU: 1 UID: 0 PID: 17276 Comm: syz.1.16450 Not tainted 6.12.0-05490-g9bb88c659673 #8
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
+But its VMAs will start out as VM_WRITE|VM_MAYWRITE, then mprotect() can
+change it to just VM_MAYWRITE (and no VM_WRITE), so when its finally
+munmap()'ed and bpf_map_mmap_close() is called, vm_flags will be just
+VM_MAYWRITE, but we still need to decrement active writer count with
+bpf_map_write_active_dec() as it's still considered to be a read-write
+mapping by the rest of BPF subsystem.
 
-Fixes: be3d72a2896c ("bpf: move user_size out of bpf_test_init")
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://patch.msgid.link/20250121150643.671650-1-syoshida@redhat.com
+Similar reasoning applies to bpf_map_mmap_open(), which is called
+whenever mmap(), munmap(), and/or mprotect() forces mm subsystem to
+split original VMA into multiple discontiguous VMAs.
+
+Memory-mapping handling is a bit tricky, yes.
+
+Cc: Jann Horn <jannh@google.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20250129012246.1515826-1-andrii@kernel.org
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: bc27c52eea18 ("bpf: avoid holding freeze_mutex during mmap operation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ kernel/bpf/ringbuf.c |  4 ----
+ kernel/bpf/syscall.c | 10 ++++++++--
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 501ec4249fedc..8612023bec60d 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -660,12 +660,9 @@ static void *bpf_test_init(const union bpf_attr *kattr, u32 user_size,
- 	void __user *data_in = u64_to_user_ptr(kattr->test.data_in);
- 	void *data;
+diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
+index e1cfe890e0be6..1499d8caa9a35 100644
+--- a/kernel/bpf/ringbuf.c
++++ b/kernel/bpf/ringbuf.c
+@@ -268,8 +268,6 @@ static int ringbuf_map_mmap_kern(struct bpf_map *map, struct vm_area_struct *vma
+ 		/* allow writable mapping for the consumer_pos only */
+ 		if (vma->vm_pgoff != 0 || vma->vm_end - vma->vm_start != PAGE_SIZE)
+ 			return -EPERM;
+-	} else {
+-		vm_flags_clear(vma, VM_MAYWRITE);
+ 	}
+ 	/* remap_vmalloc_range() checks size and offset constraints */
+ 	return remap_vmalloc_range(vma, rb_map->rb,
+@@ -289,8 +287,6 @@ static int ringbuf_map_mmap_user(struct bpf_map *map, struct vm_area_struct *vma
+ 			 * position, and the ring buffer data itself.
+ 			 */
+ 			return -EPERM;
+-	} else {
+-		vm_flags_clear(vma, VM_MAYWRITE);
+ 	}
+ 	/* remap_vmalloc_range() checks size and offset constraints */
+ 	return remap_vmalloc_range(vma, rb_map->rb, vma->vm_pgoff + RINGBUF_PGOFF);
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 5684e8ce132d5..60417b79639e5 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -1061,15 +1061,21 @@ static int bpf_map_mmap(struct file *filp, struct vm_area_struct *vma)
+ 	vma->vm_ops = &bpf_map_default_vmops;
+ 	vma->vm_private_data = map;
+ 	vm_flags_clear(vma, VM_MAYEXEC);
++	/* If mapping is read-only, then disallow potentially re-mapping with
++	 * PROT_WRITE by dropping VM_MAYWRITE flag. This VM_MAYWRITE clearing
++	 * means that as far as BPF map's memory-mapped VMAs are concerned,
++	 * VM_WRITE and VM_MAYWRITE and equivalent, if one of them is set,
++	 * both should be set, so we can forget about VM_MAYWRITE and always
++	 * check just VM_WRITE
++	 */
+ 	if (!(vma->vm_flags & VM_WRITE))
+-		/* disallow re-mapping with PROT_WRITE */
+ 		vm_flags_clear(vma, VM_MAYWRITE);
  
--	if (size < ETH_HLEN || size > PAGE_SIZE - headroom - tailroom)
-+	if (user_size < ETH_HLEN || user_size > PAGE_SIZE - headroom - tailroom)
- 		return ERR_PTR(-EINVAL);
+ 	err = map->ops->map_mmap(map, vma);
+ 	if (err)
+ 		goto out;
  
--	if (user_size > size)
--		return ERR_PTR(-EMSGSIZE);
--
- 	size = SKB_DATA_ALIGN(size);
- 	data = kzalloc(size + headroom + tailroom, GFP_USER);
- 	if (!data)
+-	if (vma->vm_flags & VM_MAYWRITE)
++	if (vma->vm_flags & VM_WRITE)
+ 		bpf_map_write_active_inc(map);
+ out:
+ 	mutex_unlock(&map->freeze_mutex);
 -- 
 2.39.5
 
