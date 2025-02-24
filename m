@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BE514A62A;
-	Mon, 24 Feb 2025 14:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACCC165F16;
+	Mon, 24 Feb 2025 14:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408261; cv=none; b=TX7GqdxHtemnIDRJT/P3lzoFjEwehZPvO97ctUG3/wYdowf8YmmDh6sl+0Qrz67UQ/nOScSJBoyzXOpeCgRwIckhzZhplxiD/fJe20GSpprNDgjwsaTI92we9UNRsKGXWm4+wcxF1cUwM4h11rF7WpZMmQXY4/ZacEvPu6ftNXo=
+	t=1740408264; cv=none; b=XglbSxGYYH2gS5KQ9jvNiNoxk7QvagsrOBQsMlkbhv4Nur2ahBS7Ws4ACVAo3NrzNDlknF5WftpYhWHV/a0SOCvY9PjU1ZXZNaAQ4nRPExTdPIpdi8Cn+tdRMGUzIXprho5AvdoCU/0VyapT6WCoHsWH0UAcWHFPeolVZ0KukQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408261; c=relaxed/simple;
-	bh=x884eRx1x2ivftZ1h/k6dMa1OodXYG1/7woAtObQrJ4=;
+	s=arc-20240116; t=1740408264; c=relaxed/simple;
+	bh=/A8KQXtD3n++29WuSO5UnMl3kf8FylkbrvER9eYX7to=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PfZXXbirBkrb5DO/Z7HpbdMXGDxFNZXoT20K++H2ydYxA8xqzqTsHbkBkD8DJq1Wd0gZmT2vMngHeuc2fmNgjWKWYLsmyR/QbstsFaLiN0uRpuDQvA4oMOL6N0lddxQZeWduFFV9758GsnjbVz2BrsyzZmq3QLHmy+625nT/0aY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vLbJ9cq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=om3ZcH26lK5AvGz2IfurxgpnVdAUU3XMKbGMUoDe2l7PZ+No1tJ3qddpdddor6tH04ylOpcZqcWEA/0nPZox1TyUqpjstgM63MQFfGm7WGlpxIRmVHq3n5FVqWjJccUeCcaBApU8XUD6XC8hZoWQErlSa2FaAMXrLeeHHKrlDTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fo+LjOZH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vLbJ9cq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965F2C4CED6;
-	Mon, 24 Feb 2025 14:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fo+LjOZH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35D7C4CED6;
+	Mon, 24 Feb 2025 14:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408261;
-	bh=x884eRx1x2ivftZ1h/k6dMa1OodXYG1/7woAtObQrJ4=;
+	s=korg; t=1740408264;
+	bh=/A8KQXtD3n++29WuSO5UnMl3kf8FylkbrvER9eYX7to=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1vLbJ9cqb5rxIF5TAGfUGtMvytfhjBDEfgfeKayDk1kskvzaVKeNaIZb9oOe6wqGo
-	 mDQnBHSgvefRRkFsT8tC2eK7XNHjQS+Ant+Cegw6G8agOQpXz8UphVPO0jFLsnOaFz
-	 rMA6pi3vWkSNANulpfHK5b1oE1v8ictm9A8Sivpo=
+	b=Fo+LjOZHD6UR4JstmvvsJQ7aq+svPnoUahb+4OkutAfzp/ThgYda+gCrhOT4Zcnxn
+	 Jn6cdna3VqOPsazgFsOr7Y5rsHxaw6Ja5Jmg5lNUvVc4jXY+nzm3u7nGXzBowDuVe7
+	 LG1LhT29J0ohsuei4MProqEJhCgJQ7Vh2drGLoVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+32c3706ebf5d95046ea1@syzkaller.appspotmail.com,
-	syzbot+1097e95f134f37d9395c@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 139/140] nilfs2: handle errors that nilfs_prepare_chunk() may return
-Date: Mon, 24 Feb 2025 15:35:38 +0100
-Message-ID: <20250224142608.470868563@linuxfoundation.org>
+	Yosry Ahmed <yosryahmed@google.com>,
+	Patrick Bellasi <derkling@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.6 140/140] x86/cpu/kvm: SRSO: Fix possible missing IBPB on VM-Exit
+Date: Mon, 24 Feb 2025 15:35:39 +0100
+Message-ID: <20250224142608.510993467@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -52,158 +53,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Patrick Bellasi <derkling@google.com>
 
-commit ee70999a988b8abc3490609142f50ebaa8344432 upstream.
+commit 318e8c339c9a0891c389298bb328ed0762a9935e upstream.
 
-Patch series "nilfs2: fix issues with rename operations".
+In [1] the meaning of the synthetic IBPB flags has been redefined for a
+better separation of concerns:
+ - ENTRY_IBPB     -- issue IBPB on entry only
+ - IBPB_ON_VMEXIT -- issue IBPB on VM-Exit only
+and the Retbleed mitigations have been updated to match this new
+semantics.
 
-This series fixes BUG_ON check failures reported by syzbot around rename
-operations, and a minor behavioral issue where the mtime of a child
-directory changes when it is renamed instead of moved.
+Commit [2] was merged shortly before [1], and their interaction was not
+handled properly. This resulted in IBPB not being triggered on VM-Exit
+in all SRSO mitigation configs requesting an IBPB there.
 
-This patch (of 2):
+Specifically, an IBPB on VM-Exit is triggered only when
+X86_FEATURE_IBPB_ON_VMEXIT is set. However:
 
-The directory manipulation routines nilfs_set_link() and
-nilfs_delete_entry() rewrite the directory entry in the folio/page
-previously read by nilfs_find_entry(), so error handling is omitted on the
-assumption that nilfs_prepare_chunk(), which prepares the buffer for
-rewriting, will always succeed for these.  And if an error is returned, it
-triggers the legacy BUG_ON() checks in each routine.
+ - X86_FEATURE_IBPB_ON_VMEXIT is not set for "spec_rstack_overflow=ibpb",
+   because before [1] having X86_FEATURE_ENTRY_IBPB was enough. Hence,
+   an IBPB is triggered on entry but the expected IBPB on VM-exit is
+   not.
 
-This assumption is wrong, as proven by syzbot: the buffer layer called by
-nilfs_prepare_chunk() may call nilfs_get_block() if necessary, which may
-fail due to metadata corruption or other reasons.  This has been there all
-along, but improved sanity checks and error handling may have made it more
-reproducible in fuzzing tests.
+ - X86_FEATURE_IBPB_ON_VMEXIT is not set also when
+   "spec_rstack_overflow=ibpb-vmexit" if X86_FEATURE_ENTRY_IBPB is
+   already set.
 
-Fix this issue by adding missing error paths in nilfs_set_link(),
-nilfs_delete_entry(), and their caller nilfs_rename().
+   That's because before [1] this was effectively redundant. Hence, e.g.
+   a "retbleed=ibpb spec_rstack_overflow=bpb-vmexit" config mistakenly
+   reports the machine still vulnerable to SRSO, despite an IBPB being
+   triggered both on entry and VM-Exit, because of the Retbleed selected
+   mitigation config.
 
-[konishi.ryusuke@gmail.com: adjusted for page/folio conversion]
-Link: https://lkml.kernel.org/r/20250111143518.7901-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20250111143518.7901-2-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+32c3706ebf5d95046ea1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=32c3706ebf5d95046ea1
-Reported-by: syzbot+1097e95f134f37d9395c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1097e95f134f37d9395c
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+ - UNTRAIN_RET_VM won't still actually do anything unless
+   CONFIG_MITIGATION_IBPB_ENTRY is set.
+
+For "spec_rstack_overflow=ibpb", enable IBPB on both entry and VM-Exit
+and clear X86_FEATURE_RSB_VMEXIT which is made superfluous by
+X86_FEATURE_IBPB_ON_VMEXIT. This effectively makes this mitigation
+option similar to the one for 'retbleed=ibpb', thus re-order the code
+for the RETBLEED_MITIGATION_IBPB option to be less confusing by having
+all features enabling before the disabling of the not needed ones.
+
+For "spec_rstack_overflow=ibpb-vmexit", guard this mitigation setting
+with CONFIG_MITIGATION_IBPB_ENTRY to ensure UNTRAIN_RET_VM sequence is
+effectively compiled in. Drop instead the CONFIG_MITIGATION_SRSO guard,
+since none of the SRSO compile cruft is required in this configuration.
+Also, check only that the required microcode is present to effectively
+enabled the IBPB on VM-Exit.
+
+Finally, update the KConfig description for CONFIG_MITIGATION_IBPB_ENTRY
+to list also all SRSO config settings enabled by this guard.
+
+Fixes: 864bcaa38ee4 ("x86/cpu/kvm: Provide UNTRAIN_RET_VM") [1]
+Fixes: d893832d0e1e ("x86/srso: Add IBPB on VMEXIT") [2]
+Reported-by: Yosry Ahmed <yosryahmed@google.com>
+Signed-off-by: Patrick Bellasi <derkling@google.com>
+Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dir.c   |   13 ++++++++++---
- fs/nilfs2/namei.c |   29 +++++++++++++++--------------
- fs/nilfs2/nilfs.h |    4 ++--
- 3 files changed, 27 insertions(+), 19 deletions(-)
+ arch/x86/Kconfig           |    3 ++-
+ arch/x86/kernel/cpu/bugs.c |   21 ++++++++++++++-------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -444,7 +444,7 @@ int nilfs_inode_by_name(struct inode *di
- 	return 0;
- }
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -2514,7 +2514,8 @@ config CPU_IBPB_ENTRY
+ 	depends on CPU_SUP_AMD && X86_64
+ 	default y
+ 	help
+-	  Compile the kernel with support for the retbleed=ibpb mitigation.
++	  Compile the kernel with support for the retbleed=ibpb and
++	  spec_rstack_overflow={ibpb,ibpb-vmexit} mitigations.
  
--void nilfs_set_link(struct inode *dir, struct nilfs_dir_entry *de,
-+int nilfs_set_link(struct inode *dir, struct nilfs_dir_entry *de,
- 		    struct page *page, struct inode *inode)
- {
- 	unsigned int from = (char *)de - (char *)page_address(page);
-@@ -454,11 +454,15 @@ void nilfs_set_link(struct inode *dir, s
+ config CPU_IBRS_ENTRY
+ 	bool "Enable IBRS on kernel entry"
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1113,6 +1113,8 @@ do_cmd_auto:
  
- 	lock_page(page);
- 	err = nilfs_prepare_chunk(page, from, to);
--	BUG_ON(err);
-+	if (unlikely(err)) {
-+		unlock_page(page);
-+		return err;
-+	}
- 	de->inode = cpu_to_le64(inode->i_ino);
- 	nilfs_set_de_type(de, inode);
- 	nilfs_commit_chunk(page, mapping, from, to);
- 	dir->i_mtime = inode_set_ctime_current(dir);
-+	return 0;
- }
+ 	case RETBLEED_MITIGATION_IBPB:
+ 		setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
++		setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
++		mitigate_smt = true;
  
- /*
-@@ -590,7 +594,10 @@ int nilfs_delete_entry(struct nilfs_dir_
- 		from = (char *)pde - (char *)page_address(page);
- 	lock_page(page);
- 	err = nilfs_prepare_chunk(page, from, to);
--	BUG_ON(err);
-+	if (unlikely(err)) {
-+		unlock_page(page);
-+		goto out;
-+	}
- 	if (pde)
- 		pde->rec_len = nilfs_rec_len_to_disk(to - from);
- 	dir->inode = 0;
---- a/fs/nilfs2/namei.c
-+++ b/fs/nilfs2/namei.c
-@@ -406,8 +406,10 @@ static int nilfs_rename(struct mnt_idmap
- 			err = PTR_ERR(new_de);
- 			goto out_dir;
- 		}
--		nilfs_set_link(new_dir, new_de, new_page, old_inode);
-+		err = nilfs_set_link(new_dir, new_de, new_page, old_inode);
- 		nilfs_put_page(new_page);
-+		if (unlikely(err))
-+			goto out_dir;
- 		nilfs_mark_inode_dirty(new_dir);
- 		inode_set_ctime_current(new_inode);
- 		if (dir_de)
-@@ -430,28 +432,27 @@ static int nilfs_rename(struct mnt_idmap
- 	 */
- 	inode_set_ctime_current(old_inode);
+ 		/*
+ 		 * IBPB on entry already obviates the need for
+@@ -1122,9 +1124,6 @@ do_cmd_auto:
+ 		setup_clear_cpu_cap(X86_FEATURE_UNRET);
+ 		setup_clear_cpu_cap(X86_FEATURE_RETHUNK);
  
--	nilfs_delete_entry(old_de, old_page);
+-		setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
+-		mitigate_smt = true;
 -
--	if (dir_de) {
--		nilfs_set_link(old_inode, dir_de, dir_page, new_dir);
--		nilfs_put_page(dir_page);
--		drop_nlink(old_dir);
-+	err = nilfs_delete_entry(old_de, old_page);
-+	if (likely(!err)) {
-+		if (dir_de) {
-+			err = nilfs_set_link(old_inode, dir_de, dir_page,
-+					     new_dir);
-+			drop_nlink(old_dir);
+ 		/*
+ 		 * There is no need for RSB filling: entry_ibpb() ensures
+ 		 * all predictions, including the RSB, are invalidated,
+@@ -2626,6 +2625,7 @@ static void __init srso_select_mitigatio
+ 		if (IS_ENABLED(CONFIG_CPU_IBPB_ENTRY)) {
+ 			if (has_microcode) {
+ 				setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
++				setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
+ 				srso_mitigation = SRSO_MITIGATION_IBPB;
+ 
+ 				/*
+@@ -2635,6 +2635,13 @@ static void __init srso_select_mitigatio
+ 				 */
+ 				setup_clear_cpu_cap(X86_FEATURE_UNRET);
+ 				setup_clear_cpu_cap(X86_FEATURE_RETHUNK);
++
++				/*
++				 * There is no need for RSB filling: entry_ibpb() ensures
++				 * all predictions, including the RSB, are invalidated,
++				 * regardless of IBPB implementation.
++				 */
++				setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
+ 			}
+ 		} else {
+ 			pr_err("WARNING: kernel not compiled with CPU_IBPB_ENTRY.\n");
+@@ -2643,8 +2650,8 @@ static void __init srso_select_mitigatio
+ 		break;
+ 
+ 	case SRSO_CMD_IBPB_ON_VMEXIT:
+-		if (IS_ENABLED(CONFIG_CPU_SRSO)) {
+-			if (!boot_cpu_has(X86_FEATURE_ENTRY_IBPB) && has_microcode) {
++		if (IS_ENABLED(CONFIG_CPU_IBPB_ENTRY)) {
++			if (has_microcode) {
+ 				setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
+ 				srso_mitigation = SRSO_MITIGATION_IBPB_ON_VMEXIT;
+ 
+@@ -2656,9 +2663,9 @@ static void __init srso_select_mitigatio
+ 				setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
+ 			}
+ 		} else {
+-			pr_err("WARNING: kernel not compiled with CPU_SRSO.\n");
++			pr_err("WARNING: kernel not compiled with CPU_IBPB_ENTRY.\n");
+ 			goto pred_cmd;
+-                }
 +		}
-+		nilfs_mark_inode_dirty(old_dir);
- 	}
--	nilfs_put_page(old_page);
--
--	nilfs_mark_inode_dirty(old_dir);
- 	nilfs_mark_inode_dirty(old_inode);
+ 		break;
  
--	err = nilfs_transaction_commit(old_dir->i_sb);
--	return err;
--
- out_dir:
- 	if (dir_de)
- 		nilfs_put_page(dir_page);
- out_old:
- 	nilfs_put_page(old_page);
- out:
--	nilfs_transaction_abort(old_dir->i_sb);
-+	if (likely(!err))
-+		err = nilfs_transaction_commit(old_dir->i_sb);
-+	else
-+		nilfs_transaction_abort(old_dir->i_sb);
- 	return err;
- }
- 
---- a/fs/nilfs2/nilfs.h
-+++ b/fs/nilfs2/nilfs.h
-@@ -240,8 +240,8 @@ nilfs_find_entry(struct inode *, const s
- extern int nilfs_delete_entry(struct nilfs_dir_entry *, struct page *);
- extern int nilfs_empty_dir(struct inode *);
- extern struct nilfs_dir_entry *nilfs_dotdot(struct inode *, struct page **);
--extern void nilfs_set_link(struct inode *, struct nilfs_dir_entry *,
--			   struct page *, struct inode *);
-+int nilfs_set_link(struct inode *dir, struct nilfs_dir_entry *de,
-+		   struct page *page, struct inode *inode);
- 
- static inline void nilfs_put_page(struct page *page)
- {
+ 	default:
 
 
