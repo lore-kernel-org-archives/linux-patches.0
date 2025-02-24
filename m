@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2129824A3;
-	Mon, 24 Feb 2025 14:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0C22571CE;
+	Mon, 24 Feb 2025 14:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408886; cv=none; b=mIAf+q9GBtGaWHClCAILUnjuyCaYnL5rOZqcsI2ixjx3ui1h+ETATg/QO4JfEpPxYWteb8zdJZed3e1h6FaPY4k3VjNS+Jf4FiNl2u5m9xZUwOYcll02JGuW03VutCQw9uAIvX4xrvXglMt91j90OESFkJ7Lq55I0he+1zE4OCM=
+	t=1740408889; cv=none; b=Pw5KiTWC/V9GNln9isIiXGs/qFGKcPl2nDUHyFZj8QUYy4gejdxWwCpgweYcm0eWFcBJtiPLPVNymLGKj4yK3dfm0asIjdV9eb9mgt0qTQCFyZmBpHqkKaH0LtoLvpxZ9ZN8M8BgQUKQW9+5LrzR8VyM4Fj/xPzP/l8oY+saEL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408886; c=relaxed/simple;
-	bh=4hhB3VefAqUZASLyie2kRBebQe4H7eFh6iCXSUs8uu4=;
+	s=arc-20240116; t=1740408889; c=relaxed/simple;
+	bh=2YZ8QHEHc/4/NUFyBG9Gic51xKxjWiJBT2I+63aQQcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S89QHhJOud/mhh/+hUG4MeRRFHP6W3IHXQo7vEHXN5CW9hjguXCN/QsUdaf60Fr+Mtw/kmLqaFqpiHMwKWvneUNm/mAect96JcVOBXCLVmC2vQ80ULfcmt+E+jwDwQz/3mWJi/c1EKF+5yM4X3+Ew9OZlvsUerF8wjz2v39q8MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6GgFg1D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ixeo/W3tOauqgsPLNov0QT276NbIweaI/m/o+Ce1E0sygn4QF191x/RrPSU6iCdALQbFjXqRRM2VhIK9wfjXfefAqmeAqeNPsv8bRt8miIRoLsQ8ey4Ch3bvI7fyrhDhJZYXoo6wxHf9hDlPBJPdEPMz/DH/NCm+YGYZZ3N//h8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kI8XkC7T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6GgFg1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B38C4CED6;
-	Mon, 24 Feb 2025 14:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kI8XkC7T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEAC1C4CED6;
+	Mon, 24 Feb 2025 14:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408885;
-	bh=4hhB3VefAqUZASLyie2kRBebQe4H7eFh6iCXSUs8uu4=;
+	s=korg; t=1740408889;
+	bh=2YZ8QHEHc/4/NUFyBG9Gic51xKxjWiJBT2I+63aQQcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6GgFg1DHgXD7TCBsMGeDInfNZ/sIo4KvlAQl8b0gpr3Hmlt0puzQltmvnU+Vrlau
-	 ewJETshN0xfUb4TR+rsS9RfW8+OzftxqfZkMpD3rdYghgvuPO7nq7WmvK3DVmVt/aA
-	 eO8tguTqlHMdJpPJNA026V0QqXGAs2/Q5IhtmPzc=
+	b=kI8XkC7T1AueDjl4l+hD1KqLfWZZ7VBJvrONsXDzOQFkYTP5yeSeOUjuYgFey9AOc
+	 onnlILcE5SNErynEYjbZsL92c4aeTOR5odRUiAkVicG67xgiiFI4Jk+ATjhZXellI9
+	 PV7B5U8GDSHi1Pgku3LL6sK7CLvlTGCP/WTX6n+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 035/138] vsock/bpf: Warn on socket without transport
-Date: Mon, 24 Feb 2025 15:34:25 +0100
-Message-ID: <20250224142605.847694983@linuxfoundation.org>
+Subject: [PATCH 6.13 036/138] tcp: adjust rcvq_space after updating scaling ratio
+Date: Mon, 24 Feb 2025 15:34:26 +0100
+Message-ID: <20250224142605.886488623@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -52,51 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 857ae05549ee2542317e7084ecaa5f8536634dd9 ]
+[ Upstream commit f5da7c45188eea71394bf445655cae2df88a7788 ]
 
-In the spirit of commit 91751e248256 ("vsock: prevent null-ptr-deref in
-vsock_*[has_data|has_space]"), armorize the "impossible" cases with a
-warning.
+Since commit under Fixes we set the window clamp in accordance
+to newly measured rcvbuf scaling_ratio. If the scaling_ratio
+decreased significantly we may put ourselves in a situation
+where windows become smaller than rcvq_space, preventing
+tcp_rcv_space_adjust() from increasing rcvbuf.
 
-Fixes: 634f1a7110b4 ("vsock: support sockmap")
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The significant decrease of scaling_ratio is far more likely
+since commit 697a6c8cec03 ("tcp: increase the default TCP scaling ratio"),
+which increased the "default" scaling ratio from ~30% to 50%.
+
+Hitting the bad condition depends a lot on TCP tuning, and
+drivers at play. One of Meta's workloads hits it reliably
+under following conditions:
+ - default rcvbuf of 125k
+ - sender MTU 1500, receiver MTU 5000
+ - driver settles on scaling_ratio of 78 for the config above.
+Initial rcvq_space gets calculated as TCP_INIT_CWND * tp->advmss
+(10 * 5k = 50k). Once we find out the true scaling ratio and
+MSS we clamp the windows to 38k. Triggering the condition also
+depends on the message sequence of this workload. I can't repro
+the problem with simple iperf or TCP_RR-style tests.
+
+Fixes: a2cbb1603943 ("tcp: Update window clamping condition")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Link: https://patch.msgid.link/20250217232905.3162187-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c  | 3 +++
- net/vmw_vsock/vsock_bpf.c | 2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_input.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 53a081d49d28a..7e3db87ae4333 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1189,6 +1189,9 @@ static int vsock_read_skb(struct sock *sk, skb_read_actor_t read_actor)
- {
- 	struct vsock_sock *vsk = vsock_sk(sk);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 4811727b8a022..4ffebfb503269 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -243,9 +243,15 @@ static void tcp_measure_rcv_mss(struct sock *sk, const struct sk_buff *skb)
+ 			do_div(val, skb->truesize);
+ 			tcp_sk(sk)->scaling_ratio = val ? val : 1;
  
-+	if (WARN_ON_ONCE(!vsk->transport))
-+		return -ENODEV;
+-			if (old_ratio != tcp_sk(sk)->scaling_ratio)
+-				WRITE_ONCE(tcp_sk(sk)->window_clamp,
+-					   tcp_win_from_space(sk, sk->sk_rcvbuf));
++			if (old_ratio != tcp_sk(sk)->scaling_ratio) {
++				struct tcp_sock *tp = tcp_sk(sk);
 +
- 	return vsk->transport->read_skb(vsk, read_actor);
- }
- 
-diff --git a/net/vmw_vsock/vsock_bpf.c b/net/vmw_vsock/vsock_bpf.c
-index f201d9eca1df2..07b96d56f3a57 100644
---- a/net/vmw_vsock/vsock_bpf.c
-+++ b/net/vmw_vsock/vsock_bpf.c
-@@ -87,7 +87,7 @@ static int vsock_bpf_recvmsg(struct sock *sk, struct msghdr *msg,
- 	lock_sock(sk);
- 	vsk = vsock_sk(sk);
- 
--	if (!vsk->transport) {
-+	if (WARN_ON_ONCE(!vsk->transport)) {
- 		copied = -ENODEV;
- 		goto out;
- 	}
++				val = tcp_win_from_space(sk, sk->sk_rcvbuf);
++				tcp_set_window_clamp(sk, val);
++
++				if (tp->window_clamp < tp->rcvq_space.space)
++					tp->rcvq_space.space = tp->window_clamp;
++			}
+ 		}
+ 		icsk->icsk_ack.rcv_mss = min_t(unsigned int, len,
+ 					       tcp_sk(sk)->advmss);
 -- 
 2.39.5
 
