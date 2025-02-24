@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3542629F;
-	Mon, 24 Feb 2025 14:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC561624D5;
+	Mon, 24 Feb 2025 14:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740407927; cv=none; b=hZkMh7W1PxKrEmBnt2eX3r3oMhw2yoFv86JUWVf3RhLV1YSz9mzrH+v1QK9FuLTK2X3M5B68+WyRCrzQ9OTJabAmQGPsINALOad/PrQsCJnd7TXG0nhIJpBHGDHXmI6ttiBq+SZGd5xie8izw45tpjHmpAUQsm7nIHlXVlXnvQM=
+	t=1740407930; cv=none; b=JjVi3dvLH8tfaJoecfU0SsPeCCvdyYFTq15RCc1B2p80fPSWweUvstDw3wXEahgNNlECMM2uey6W39VkKM8+SPnA8zbyNUZuX3htm681JFrHdSxb9QCUb1AefN+S28u5thPDucsuZR4eg5KTsMK1Z8H8tBcSF0CflavdrBn8dGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740407927; c=relaxed/simple;
-	bh=/jTI4RBYDrNHvrkm5M7DjsIUYeuMRYN4+sj+06zJbBU=;
+	s=arc-20240116; t=1740407930; c=relaxed/simple;
+	bh=Y7X2OXiQFh6khghTjaC/80bezUNgo5FSs2eJ9FrEyBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S3NILeSmNNkUqS4XDnWsQnp0ytNfV+HhoQfLC/qewosEn2WwunRn7yNjqS4Pq1KfTJj9qBbwv2DB95CYU2CIOY+ubYoGhqlbD00E0rZr9uXF14NnojFo1LD292JNSrTb1zlJOJo3JtjjI0F45b/usEgH/2N+/cMIDSMVKDzQM4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5+SAksX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UxP29uB30xJXxbLtYYPG7l0xntR2pIStpi7YBGKSHGo34mVMg+J3f6XvSWqD9pwz0JnuhTiU7UAQp9EexyPjYoLGmDMFPqCog8CtGsApREzOPzDkUWV1X0w6gGRCjIgfoiju/WSCx0i6kGQEA0nOsZDWyliYftNtH8LE+sx7BOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/yQdQ0/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5+SAksX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39B5C4CED6;
-	Mon, 24 Feb 2025 14:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/yQdQ0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3BBC4CED6;
+	Mon, 24 Feb 2025 14:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740407927;
-	bh=/jTI4RBYDrNHvrkm5M7DjsIUYeuMRYN4+sj+06zJbBU=;
+	s=korg; t=1740407930;
+	bh=Y7X2OXiQFh6khghTjaC/80bezUNgo5FSs2eJ9FrEyBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5+SAksXJtv6a/sB8AXUVwfC5YU3KKq8fKLbAFnllrfhRkwkgWUNY1y2Y6R0MRvqB
-	 gyiiv93Lv8mHEYUFPIAaJDLQ6IHWpKIG3L89Y3i1c+fHp13+G+5VDkIUcHQi7Cy2ds
-	 7zvUno2XAxJONhSpt2shozbYyQCoUUL5lQnJpqs8=
+	b=Y/yQdQ0/ZCCni49Qkk2wkqd5TiRWTHApUZgDSNuwqChUZxrQxsY3sjcvaQcdR0+gG
+	 zA40RBs5JGQvd8njQ7f1WLd6L7tMvPSLVf29gwIjyKI9e+7pfcY1dB+jIjfbbVuiSA
+	 JQrOpQke2O4ESfjMhdnlTIQ7/4P7f9lKAYnRvywM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Ling Xu <quic_lxu5@quicinc.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/140] arm64: dts: qcom: sm8450: Fix ADSP memory base and length
-Date: Mon, 24 Feb 2025 15:34:08 +0100
-Message-ID: <20250224142604.940609413@linuxfoundation.org>
+Subject: [PATCH 6.6 050/140] arm64: dts: qcom: sm8550: Add dma-coherent property
+Date: Mon, 24 Feb 2025 15:34:09 +0100
+Message-ID: <20250224142604.980436439@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -52,263 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Ling Xu <quic_lxu5@quicinc.com>
 
-[ Upstream commit 13c96bee5d5e5b61a9d8d000c9bb37bb9a2a0551 ]
+[ Upstream commit 4a03b85b8491d8bfe84a26ff979507b6ae7122c1 ]
 
-The address space in ADSP PAS (Peripheral Authentication Service)
-remoteproc node should point to the QDSP PUB address space
-(QDSP6...SS_PUB): 0x0300_0000 with length of 0x10000, which also matches
-downstream DTS.  0x3000_0000, value used so far, was in datasheet is the
-region of CDSP.
+Add dma-coherent property to fastRPC context bank nodes to pass dma
+sequence test in fastrpc sanity test, ensure that data integrity is
+maintained during DMA operations.
 
-Correct the base address and length, which also moves the node to
-different place to keep things sorted by unit address.  The diff looks
-big, but only the unit address and "reg" property were changed.  This
-should have no functional impact on Linux users, because PAS loader does
-not use this address space at all.
-
-Fixes: 1172729576fb ("arm64: dts: qcom: sm8450: Add remoteproc enablers and instances")
-Cc: stable@vger.kernel.org
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20241213-dts-qcom-cdsp-mpss-base-address-v3-4-2e0036fccd8d@linaro.org
+Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
+Link: https://lore.kernel.org/r/20240125102413.3016-2-quic_lxu5@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: a6a8f54bc2af ("arm64: dts: qcom: sm8550: Fix ADSP memory base and length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 212 +++++++++++++--------------
- 1 file changed, 106 insertions(+), 106 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index fb0162e65a38c..3b4d788230089 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -2161,6 +2161,112 @@
- 			};
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index f3a0e1fe333c4..51407c482b51f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -4006,6 +4006,7 @@
+ 						reg = <3>;
+ 						iommus = <&apps_smmu 0x1003 0x80>,
+ 							 <&apps_smmu 0x1063 0x0>;
++						dma-coherent;
+ 					};
  
-+		remoteproc_adsp: remoteproc@3000000 {
-+			compatible = "qcom,sm8450-adsp-pas";
-+			reg = <0x0 0x03000000 0x0 0x10000>;
-+
-+			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
-+					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
-+					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
-+					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
-+					      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "wdog", "fatal", "ready",
-+					  "handover", "stop-ack";
-+
-+			clocks = <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "xo";
-+
-+			power-domains = <&rpmhpd RPMHPD_LCX>,
-+					<&rpmhpd RPMHPD_LMX>;
-+			power-domain-names = "lcx", "lmx";
-+
-+			memory-region = <&adsp_mem>;
-+
-+			qcom,qmp = <&aoss_qmp>;
-+
-+			qcom,smem-states = <&smp2p_adsp_out 0>;
-+			qcom,smem-state-names = "stop";
-+
-+			status = "disabled";
-+
-+			remoteproc_adsp_glink: glink-edge {
-+				interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
-+							     IPCC_MPROC_SIGNAL_GLINK_QMP
-+							     IRQ_TYPE_EDGE_RISING>;
-+				mboxes = <&ipcc IPCC_CLIENT_LPASS
-+						IPCC_MPROC_SIGNAL_GLINK_QMP>;
-+
-+				label = "lpass";
-+				qcom,remote-pid = <2>;
-+
-+				gpr {
-+					compatible = "qcom,gpr";
-+					qcom,glink-channels = "adsp_apps";
-+					qcom,domain = <GPR_DOMAIN_ID_ADSP>;
-+					qcom,intents = <512 20>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					q6apm: service@1 {
-+						compatible = "qcom,q6apm";
-+						reg = <GPR_APM_MODULE_IID>;
-+						#sound-dai-cells = <0>;
-+						qcom,protection-domain = "avs/audio",
-+									 "msm/adsp/audio_pd";
-+
-+						q6apmdai: dais {
-+							compatible = "qcom,q6apm-dais";
-+							iommus = <&apps_smmu 0x1801 0x0>;
-+						};
-+
-+						q6apmbedai: bedais {
-+							compatible = "qcom,q6apm-lpass-dais";
-+							#sound-dai-cells = <1>;
-+						};
-+					};
-+
-+					q6prm: service@2 {
-+						compatible = "qcom,q6prm";
-+						reg = <GPR_PRM_MODULE_IID>;
-+						qcom,protection-domain = "avs/audio",
-+									 "msm/adsp/audio_pd";
-+
-+						q6prmcc: clock-controller {
-+							compatible = "qcom,q6prm-lpass-clocks";
-+							#clock-cells = <2>;
-+						};
-+					};
-+				};
-+
-+				fastrpc {
-+					compatible = "qcom,fastrpc";
-+					qcom,glink-channels = "fastrpcglink-apps-dsp";
-+					label = "adsp";
-+					qcom,non-secure-domain;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+						iommus = <&apps_smmu 0x1803 0x0>;
-+					};
-+
-+					compute-cb@4 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <4>;
-+						iommus = <&apps_smmu 0x1804 0x0>;
-+					};
-+
-+					compute-cb@5 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <5>;
-+						iommus = <&apps_smmu 0x1805 0x0>;
-+					};
-+				};
-+			};
-+		};
-+
- 		wsa2macro: codec@31e0000 {
- 			compatible = "qcom,sm8450-lpass-wsa-macro";
- 			reg = <0 0x031e0000 0 0x1000>;
-@@ -2369,112 +2475,6 @@
- 			status = "disabled";
- 		};
+ 					compute-cb@4 {
+@@ -4013,6 +4014,7 @@
+ 						reg = <4>;
+ 						iommus = <&apps_smmu 0x1004 0x80>,
+ 							 <&apps_smmu 0x1064 0x0>;
++						dma-coherent;
+ 					};
  
--		remoteproc_adsp: remoteproc@30000000 {
--			compatible = "qcom,sm8450-adsp-pas";
--			reg = <0 0x30000000 0 0x100>;
--
--			interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
--					      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
--					      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
--					      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
--					      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
--			interrupt-names = "wdog", "fatal", "ready",
--					  "handover", "stop-ack";
--
--			clocks = <&rpmhcc RPMH_CXO_CLK>;
--			clock-names = "xo";
--
--			power-domains = <&rpmhpd RPMHPD_LCX>,
--					<&rpmhpd RPMHPD_LMX>;
--			power-domain-names = "lcx", "lmx";
--
--			memory-region = <&adsp_mem>;
--
--			qcom,qmp = <&aoss_qmp>;
--
--			qcom,smem-states = <&smp2p_adsp_out 0>;
--			qcom,smem-state-names = "stop";
--
--			status = "disabled";
--
--			remoteproc_adsp_glink: glink-edge {
--				interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
--							     IPCC_MPROC_SIGNAL_GLINK_QMP
--							     IRQ_TYPE_EDGE_RISING>;
--				mboxes = <&ipcc IPCC_CLIENT_LPASS
--						IPCC_MPROC_SIGNAL_GLINK_QMP>;
--
--				label = "lpass";
--				qcom,remote-pid = <2>;
--
--				gpr {
--					compatible = "qcom,gpr";
--					qcom,glink-channels = "adsp_apps";
--					qcom,domain = <GPR_DOMAIN_ID_ADSP>;
--					qcom,intents = <512 20>;
--					#address-cells = <1>;
--					#size-cells = <0>;
--
--					q6apm: service@1 {
--						compatible = "qcom,q6apm";
--						reg = <GPR_APM_MODULE_IID>;
--						#sound-dai-cells = <0>;
--						qcom,protection-domain = "avs/audio",
--									 "msm/adsp/audio_pd";
--
--						q6apmdai: dais {
--							compatible = "qcom,q6apm-dais";
--							iommus = <&apps_smmu 0x1801 0x0>;
--						};
--
--						q6apmbedai: bedais {
--							compatible = "qcom,q6apm-lpass-dais";
--							#sound-dai-cells = <1>;
--						};
--					};
--
--					q6prm: service@2 {
--						compatible = "qcom,q6prm";
--						reg = <GPR_PRM_MODULE_IID>;
--						qcom,protection-domain = "avs/audio",
--									 "msm/adsp/audio_pd";
--
--						q6prmcc: clock-controller {
--							compatible = "qcom,q6prm-lpass-clocks";
--							#clock-cells = <2>;
--						};
--					};
--				};
--
--				fastrpc {
--					compatible = "qcom,fastrpc";
--					qcom,glink-channels = "fastrpcglink-apps-dsp";
--					label = "adsp";
--					qcom,non-secure-domain;
--					#address-cells = <1>;
--					#size-cells = <0>;
--
--					compute-cb@3 {
--						compatible = "qcom,fastrpc-compute-cb";
--						reg = <3>;
--						iommus = <&apps_smmu 0x1803 0x0>;
--					};
--
--					compute-cb@4 {
--						compatible = "qcom,fastrpc-compute-cb";
--						reg = <4>;
--						iommus = <&apps_smmu 0x1804 0x0>;
--					};
--
--					compute-cb@5 {
--						compatible = "qcom,fastrpc-compute-cb";
--						reg = <5>;
--						iommus = <&apps_smmu 0x1805 0x0>;
--					};
--				};
--			};
--		};
--
- 		remoteproc_cdsp: remoteproc@32300000 {
- 			compatible = "qcom,sm8450-cdsp-pas";
- 			reg = <0 0x32300000 0 0x10000>;
+ 					compute-cb@5 {
+@@ -4020,6 +4022,7 @@
+ 						reg = <5>;
+ 						iommus = <&apps_smmu 0x1005 0x80>,
+ 							 <&apps_smmu 0x1065 0x0>;
++						dma-coherent;
+ 					};
+ 
+ 					compute-cb@6 {
+@@ -4027,6 +4030,7 @@
+ 						reg = <6>;
+ 						iommus = <&apps_smmu 0x1006 0x80>,
+ 							 <&apps_smmu 0x1066 0x0>;
++						dma-coherent;
+ 					};
+ 
+ 					compute-cb@7 {
+@@ -4034,6 +4038,7 @@
+ 						reg = <7>;
+ 						iommus = <&apps_smmu 0x1007 0x80>,
+ 							 <&apps_smmu 0x1067 0x0>;
++						dma-coherent;
+ 					};
+ 				};
+ 
+@@ -4140,6 +4145,7 @@
+ 						iommus = <&apps_smmu 0x1961 0x0>,
+ 							 <&apps_smmu 0x0c01 0x20>,
+ 							 <&apps_smmu 0x19c1 0x10>;
++						dma-coherent;
+ 					};
+ 
+ 					compute-cb@2 {
+@@ -4148,6 +4154,7 @@
+ 						iommus = <&apps_smmu 0x1962 0x0>,
+ 							 <&apps_smmu 0x0c02 0x20>,
+ 							 <&apps_smmu 0x19c2 0x10>;
++						dma-coherent;
+ 					};
+ 
+ 					compute-cb@3 {
+@@ -4156,6 +4163,7 @@
+ 						iommus = <&apps_smmu 0x1963 0x0>,
+ 							 <&apps_smmu 0x0c03 0x20>,
+ 							 <&apps_smmu 0x19c3 0x10>;
++						dma-coherent;
+ 					};
+ 
+ 					compute-cb@4 {
+@@ -4164,6 +4172,7 @@
+ 						iommus = <&apps_smmu 0x1964 0x0>,
+ 							 <&apps_smmu 0x0c04 0x20>,
+ 							 <&apps_smmu 0x19c4 0x10>;
++						dma-coherent;
+ 					};
+ 
+ 					compute-cb@5 {
+@@ -4172,6 +4181,7 @@
+ 						iommus = <&apps_smmu 0x1965 0x0>,
+ 							 <&apps_smmu 0x0c05 0x20>,
+ 							 <&apps_smmu 0x19c5 0x10>;
++						dma-coherent;
+ 					};
+ 
+ 					compute-cb@6 {
+@@ -4180,6 +4190,7 @@
+ 						iommus = <&apps_smmu 0x1966 0x0>,
+ 							 <&apps_smmu 0x0c06 0x20>,
+ 							 <&apps_smmu 0x19c6 0x10>;
++						dma-coherent;
+ 					};
+ 
+ 					compute-cb@7 {
+@@ -4188,6 +4199,7 @@
+ 						iommus = <&apps_smmu 0x1967 0x0>,
+ 							 <&apps_smmu 0x0c07 0x20>,
+ 							 <&apps_smmu 0x19c7 0x10>;
++						dma-coherent;
+ 					};
+ 
+ 					compute-cb@8 {
+@@ -4196,6 +4208,7 @@
+ 						iommus = <&apps_smmu 0x1968 0x0>,
+ 							 <&apps_smmu 0x0c08 0x20>,
+ 							 <&apps_smmu 0x19c8 0x10>;
++						dma-coherent;
+ 					};
+ 
+ 					/* note: secure cb9 in downstream */
 -- 
 2.39.5
 
