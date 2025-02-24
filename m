@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD39E27701;
-	Mon, 24 Feb 2025 14:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7658627701;
+	Mon, 24 Feb 2025 14:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408720; cv=none; b=TpCj+N3+ymd4/3nkuKNp4Iqys1cmOLIiK7BcykxvErtY7fWpeIHgRMQL67jogHCCyQS8X7q1X7jrltCdMlM0RwACr+Ug0tC1iR56Pc2JgNS9vM7KSTM30EgQ3tHs8tNMxd9kIBJV0CsNCEMoRivTEJgBWCMjADTd8iiCww2Tbc4=
+	t=1740408723; cv=none; b=F+VIZZAvo6R+IpAdFMsmDSJmoOvYGafx2PMkF1MK1XSE7/h11fgpC1Rp/aPtW+7Z3sS31vA0a9chxx5s6VASFW1vhLHwr4RqQ7IVH6droXFbF293V3GBsqvJ3GOJoCgRpVMVaREtKwQb8+pyRGVxJCB0mH60ZgvH4z+ef14Y6ZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408720; c=relaxed/simple;
-	bh=EPI8ivjA6+khzZskXtt972tf96XOlIRgLFUhAQpdXEM=;
+	s=arc-20240116; t=1740408723; c=relaxed/simple;
+	bh=towHdp0lEUYi2E7cFBy+2eXx3UNruU4go3uk/FlhTLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EdUg8qGuAt8Md2FBu4sAT18ghh9y7llYN56NGAnAmNQagv/mszAD5TcAHSYSXdpraLp/IoYfsncGZUZd6HxQ4Od3fm+suydgoPVnoqvLhFpuBco+cGFeQ1Z5PqFZULwcL2lXh2zqqGH9kYMAeQhXuVyOAA8Dwcad89plR8S7JbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POrbD+Ih; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rdqqxDVhCGr13YsOdEpvfQTGSsiNZ6PtlO8JUvtG6S5cWPbFCvvl0HRbkwRJfbHhUs8F/WyUx9pn+jjn4zxxLZd3uWTxs7mx6ApPR6vK8KhIWjzQgLmTEYY658p3K8h+iG6cNKJNsD5K9XajZ5aG8BNWA4lPupi5pUEc7qHCY3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJWmJnPm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POrbD+Ih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E656C4CED6;
-	Mon, 24 Feb 2025 14:51:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJWmJnPm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9266C4CED6;
+	Mon, 24 Feb 2025 14:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408719;
-	bh=EPI8ivjA6+khzZskXtt972tf96XOlIRgLFUhAQpdXEM=;
+	s=korg; t=1740408723;
+	bh=towHdp0lEUYi2E7cFBy+2eXx3UNruU4go3uk/FlhTLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=POrbD+IhbJlMTkJumbH/ZFTapDYIfaHYOp1Qo+FLWuvfUo8WBrEmOdqq9tcaBQWxD
-	 szHoXIlgXtmro92tVjX2vRjEX4hhGwONDOijziMh+asKIpSWdCP6nUb1GHf2lAp5R/
-	 WjMExNuRIQgs6cJwg8WueNKDOofwyppOqswfudaI=
+	b=bJWmJnPm1a8yOj6r/XIz7/HLywySGrM8PgJcD17t5o7DcNC1klM2OO40dErsFIxjw
+	 NSxSEZoxGGi5+5foHbSvizVAPX4bTtW5TFQfMSWyMIDHjVUPrjsOBr7SwsRkJRpW68
+	 dvLI3uxbc16Zagk4glIN2/PkEyoR8NvEk6mOEapE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amiri Khalil <amiri.khalil@intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 141/154] perf/x86/intel: Fix event constraints for LNC
-Date: Mon, 24 Feb 2025 15:35:40 +0100
-Message-ID: <20250224142612.571170285@linuxfoundation.org>
+	Christoph Fritz <chf.fritz@googlemail.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.12 142/154] irqchip/gic-v3: Fix rk3399 workaround when secure interrupts are enabled
+Date: Mon, 24 Feb 2025 15:35:41 +0100
+Message-ID: <20250224142612.610656911@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -51,83 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 782cffeec9ad96daa64ffb2d527b2a052fb02552 upstream.
+commit 4cb77793842a351b39a030f77caebace3524840e upstream.
 
-According to the latest event list, update the event constraint tables
-for Lion Cove core.
+Christoph reports that their rk3399 system dies since commit 773c05f417fa1
+("irqchip/gic-v3: Work around insecure GIC integrations").
 
-The general rule (the event codes < 0x90 are restricted to counters
-0-3.) has been removed. There is no restriction for most of the
-performance monitoring events.
+It appears that some rk3399 have secure payloads, and that the firmware
+sets SCR_EL3.FIQ==1. Obivously, disabling security in that configuration
+leads to even more problems.
 
-Fixes: a932aa0e868f ("perf/x86: Add Lunar Lake and Arrow Lake support")
-Reported-by: Amiri Khalil <amiri.khalil@intel.com>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Revisit the workaround by:
+
+  - making it rk3399 specific
+  - checking whether Group-0 is available, which is a good proxy
+    for SCR_EL3.FIQ being 0
+  - either apply the workaround if Group-0 is available, or disable
+    pseudo-NMIs if not
+
+Note that this doesn't mean that the secure side is able to receive
+interrupts, as all interrupts are made non-secure anyway.
+
+Clearly, nobody ever tested secure interrupts on this platform.
+
+Fixes: 773c05f417fa1 ("irqchip/gic-v3: Work around insecure GIC integrations")
+Reported-by: Christoph Fritz <chf.fritz@googlemail.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Christoph Fritz <chf.fritz@googlemail.com>
 Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20250219141005.2446823-1-kan.liang@linux.intel.com
+Link: https://lore.kernel.org/all/20250215185241.3768218-1-maz@kernel.org
+Closes: https://lore.kernel.org/r/b1266652fb64857246e8babdf268d0df8f0c36d9.camel@googlemail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |   20 +++++++-------------
- arch/x86/events/intel/ds.c   |    2 +-
- 2 files changed, 8 insertions(+), 14 deletions(-)
+ drivers/irqchip/irq-gic-v3.c | 49 ++++++++++++++++++++++++++++--------
+ 1 file changed, 38 insertions(+), 11 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -397,34 +397,28 @@ static struct event_constraint intel_lnc
- 	METRIC_EVENT_CONSTRAINT(INTEL_TD_METRIC_FETCH_LAT, 6),
- 	METRIC_EVENT_CONSTRAINT(INTEL_TD_METRIC_MEM_BOUND, 7),
+diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
+index 76dce0aac246..270d7a4d85a6 100644
+--- a/drivers/irqchip/irq-gic-v3.c
++++ b/drivers/irqchip/irq-gic-v3.c
+@@ -44,6 +44,7 @@ static u8 dist_prio_nmi __ro_after_init = GICV3_PRIO_NMI;
+ #define FLAGS_WORKAROUND_GICR_WAKER_MSM8996	(1ULL << 0)
+ #define FLAGS_WORKAROUND_CAVIUM_ERRATUM_38539	(1ULL << 1)
+ #define FLAGS_WORKAROUND_ASR_ERRATUM_8601001	(1ULL << 2)
++#define FLAGS_WORKAROUND_INSECURE		(1ULL << 3)
  
-+	INTEL_EVENT_CONSTRAINT(0x20, 0xf),
+ #define GIC_IRQ_TYPE_PARTITION	(GIC_IRQ_TYPE_LPI + 1)
+ 
+@@ -83,6 +84,8 @@ static DEFINE_STATIC_KEY_TRUE(supports_deactivate_key);
+ #define GIC_LINE_NR	min(GICD_TYPER_SPIS(gic_data.rdists.gicd_typer), 1020U)
+ #define GIC_ESPI_NR	GICD_TYPER_ESPIS(gic_data.rdists.gicd_typer)
+ 
++static bool nmi_support_forbidden;
 +
-+	INTEL_UEVENT_CONSTRAINT(0x012a, 0xf),
-+	INTEL_UEVENT_CONSTRAINT(0x012b, 0xf),
- 	INTEL_UEVENT_CONSTRAINT(0x0148, 0x4),
- 	INTEL_UEVENT_CONSTRAINT(0x0175, 0x4),
+ /*
+  * There are 16 SGIs, though we only actually use 8 in Linux. The other 8 SGIs
+  * are potentially stolen by the secure side. Some code, especially code dealing
+@@ -163,21 +166,27 @@ static void __init gic_prio_init(void)
+ {
+ 	bool ds;
  
- 	INTEL_EVENT_CONSTRAINT(0x2e, 0x3ff),
- 	INTEL_EVENT_CONSTRAINT(0x3c, 0x3ff),
--	/*
--	 * Generally event codes < 0x90 are restricted to counters 0-3.
--	 * The 0x2E and 0x3C are exception, which has no restriction.
--	 */
--	INTEL_EVENT_CONSTRAINT_RANGE(0x01, 0x8f, 0xf),
- 
--	INTEL_UEVENT_CONSTRAINT(0x01a3, 0xf),
--	INTEL_UEVENT_CONSTRAINT(0x02a3, 0xf),
- 	INTEL_UEVENT_CONSTRAINT(0x08a3, 0x4),
- 	INTEL_UEVENT_CONSTRAINT(0x0ca3, 0x4),
- 	INTEL_UEVENT_CONSTRAINT(0x04a4, 0x1),
- 	INTEL_UEVENT_CONSTRAINT(0x08a4, 0x1),
- 	INTEL_UEVENT_CONSTRAINT(0x10a4, 0x1),
- 	INTEL_UEVENT_CONSTRAINT(0x01b1, 0x8),
-+	INTEL_UEVENT_CONSTRAINT(0x01cd, 0x3fc),
- 	INTEL_UEVENT_CONSTRAINT(0x02cd, 0x3),
--	INTEL_EVENT_CONSTRAINT(0xce, 0x1),
- 
- 	INTEL_EVENT_CONSTRAINT_RANGE(0xd0, 0xdf, 0xf),
--	/*
--	 * Generally event codes >= 0x90 are likely to have no restrictions.
--	 * The exception are defined as above.
--	 */
--	INTEL_EVENT_CONSTRAINT_RANGE(0x90, 0xfe, 0x3ff),
++	cpus_have_group0 = gic_has_group0();
 +
-+	INTEL_UEVENT_CONSTRAINT(0x00e0, 0xf),
+ 	ds = gic_dist_security_disabled();
+-	if (!ds) {
+-		u32 val;
++	if ((gic_data.flags & FLAGS_WORKAROUND_INSECURE) && !ds) {
++		if (cpus_have_group0) {
++			u32 val;
  
- 	EVENT_CONSTRAINT_END
+-		val = readl_relaxed(gic_data.dist_base + GICD_CTLR);
+-		val |= GICD_CTLR_DS;
+-		writel_relaxed(val, gic_data.dist_base + GICD_CTLR);
++			val = readl_relaxed(gic_data.dist_base + GICD_CTLR);
++			val |= GICD_CTLR_DS;
++			writel_relaxed(val, gic_data.dist_base + GICD_CTLR);
+ 
+-		ds = gic_dist_security_disabled();
+-		if (ds)
+-			pr_warn("Broken GIC integration, security disabled");
++			ds = gic_dist_security_disabled();
++			if (ds)
++				pr_warn("Broken GIC integration, security disabled\n");
++		} else {
++			pr_warn("Broken GIC integration, pNMI forbidden\n");
++			nmi_support_forbidden = true;
++		}
+ 	}
+ 
+ 	cpus_have_security_disabled = ds;
+-	cpus_have_group0 = gic_has_group0();
+ 
+ 	/*
+ 	 * How priority values are used by the GIC depends on two things:
+@@ -209,7 +218,7 @@ static void __init gic_prio_init(void)
+ 	 * be in the non-secure range, we program the non-secure values into
+ 	 * the distributor to match the PMR values we want.
+ 	 */
+-	if (cpus_have_group0 & !cpus_have_security_disabled) {
++	if (cpus_have_group0 && !cpus_have_security_disabled) {
+ 		dist_prio_irq = __gicv3_prio_to_ns(dist_prio_irq);
+ 		dist_prio_nmi = __gicv3_prio_to_ns(dist_prio_nmi);
+ 	}
+@@ -1922,6 +1931,18 @@ static bool gic_enable_quirk_arm64_2941627(void *data)
+ 	return true;
+ }
+ 
++static bool gic_enable_quirk_rk3399(void *data)
++{
++	struct gic_chip_data *d = data;
++
++	if (of_machine_is_compatible("rockchip,rk3399")) {
++		d->flags |= FLAGS_WORKAROUND_INSECURE;
++		return true;
++	}
++
++	return false;
++}
++
+ static bool rd_set_non_coherent(void *data)
+ {
+ 	struct gic_chip_data *d = data;
+@@ -1996,6 +2017,12 @@ static const struct gic_quirk gic_quirks[] = {
+ 		.property = "dma-noncoherent",
+ 		.init   = rd_set_non_coherent,
+ 	},
++	{
++		.desc	= "GICv3: Insecure RK3399 integration",
++		.iidr	= 0x0000043b,
++		.mask	= 0xff000fff,
++		.init	= gic_enable_quirk_rk3399,
++	},
+ 	{
+ 	}
  };
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -1178,7 +1178,7 @@ struct event_constraint intel_lnc_pebs_e
- 	INTEL_FLAGS_UEVENT_CONSTRAINT(0x100, 0x100000000ULL),	/* INST_RETIRED.PREC_DIST */
- 	INTEL_FLAGS_UEVENT_CONSTRAINT(0x0400, 0x800000000ULL),
+@@ -2004,7 +2031,7 @@ static void gic_enable_nmi_support(void)
+ {
+ 	int i;
  
--	INTEL_HYBRID_LDLAT_CONSTRAINT(0x1cd, 0x3ff),
-+	INTEL_HYBRID_LDLAT_CONSTRAINT(0x1cd, 0x3fc),
- 	INTEL_HYBRID_STLAT_CONSTRAINT(0x2cd, 0x3),
- 	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x11d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_LOADS */
- 	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x12d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_STORES */
+-	if (!gic_prio_masking_enabled())
++	if (!gic_prio_masking_enabled() || nmi_support_forbidden)
+ 		return;
+ 
+ 	rdist_nmi_refs = kcalloc(gic_data.ppi_nr + SGI_NR,
+-- 
+2.48.1
+
 
 
