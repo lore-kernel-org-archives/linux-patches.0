@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A51824502A;
-	Mon, 24 Feb 2025 14:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D63424886B;
+	Mon, 24 Feb 2025 14:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409006; cv=none; b=SFqmoFWRsG1vKY5/5nirWUY/cB+w2zEcA+JPhIe55rUdnikaAVqLm3xrXSrPyy0KsXHUpJbCPvJ+3IpjcBxTWQyfMQbUIqLvpPUtsrS3+xzT13HYLnDYQt26rLN5cVV1FAa8/VHqzm4r9sro5Ruby2YRs8j+aKTtZvhKNhCT9k4=
+	t=1740409010; cv=none; b=Hqn+KSeYFIVXJPFTaVB2krkIEaVB1sIyBQ4/U0Lgvn14EOPThhbtIp/6B60beeihB1DgTxQweU6LJhOLiAkzYpRgglObNkdCWqoLQUA1Saz6bhQuClfU9FSNZdvYBghRLd6nrBp/Uc0gwoG7DSn/nk3Dzw4l6RQZW/rkEbCnb7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409006; c=relaxed/simple;
-	bh=ytyYYd44ltk/qgYAUOoCYX64+QiumJVwj5yXSsFBpL4=;
+	s=arc-20240116; t=1740409010; c=relaxed/simple;
+	bh=+mSXZ8ZNfuoBunKGgd/CW8NDqr5+hIZ6VzUO1QgBF7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pqL0ImqHVD1Tnn7NKZYee9chylBw8Hq4Iko21I5oybuyq4JK8A7NPbr6AlL80+i4kjgAa8fJV7KXZKRd1yZ7hys6jhMsp7zZ2bi0dGk1+b3BmFTBPJsaPl9Q+EQ77ghZjo6b9dGBcm281KPrg5lGQM6F714b8rJJjx5lkhmFqqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yF7e9ZUP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F8UNTJwNtXT0OmVD588Hog5ApUb3IeIw+UVgtgG0wuenXkECAKAT7LzOPPl35Hf6jFZITVRx6rlfeAeo6pCAh/ivau3WYIWpUSPLNicCaiML7v7eCTBdAaBe0wexfzW5B+/hU5tAfpUI0hF107osUxmB3AOtKID7Xdh90VjHFas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVE216/Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yF7e9ZUP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0621EC4CED6;
-	Mon, 24 Feb 2025 14:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVE216/Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628FBC4CED6;
+	Mon, 24 Feb 2025 14:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409006;
-	bh=ytyYYd44ltk/qgYAUOoCYX64+QiumJVwj5yXSsFBpL4=;
+	s=korg; t=1740409010;
+	bh=+mSXZ8ZNfuoBunKGgd/CW8NDqr5+hIZ6VzUO1QgBF7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yF7e9ZUPUFpZGgap+bmHNDPTow074w9aEOmAvl2IE2/zw+OnkGAuGc12Sh5+4BVuT
-	 RnB1t98pC7HQu9TlPbn6IPmOjEJUYn+y8RjA5QvZGxzN9NDG+LEDAsC4206blox/ZL
-	 89JB9gNvN0YuhJaRPiKA4h73hHOMydG+ITLY7hQg=
+	b=jVE216/QrFL7+79DgAePtI1sK80gXwcCGuBWgYGepHJv4FtbxhCSupQaBSutF6+CZ
+	 YYtUUTreNjYFywPNc84c7Dr8XQBLP260vk7bgpafe2Y74RENMlS+GJM6Gxl10c+udZ
+	 EUxXCUHuvO86bbDuK+lJ/xYiA+TBDhObhu9HG3Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 070/138] drm/msm/dpu: skip watchdog timer programming through TOP on >= SM8450
-Date: Mon, 24 Feb 2025 15:35:00 +0100
-Message-ID: <20250224142607.227188129@linuxfoundation.org>
+Subject: [PATCH 6.13 071/138] drm/msm/dpu: enable DPU_WB_INPUT_CTRL for DPU 5.x
+Date: Mon, 24 Feb 2025 15:35:01 +0100
+Message-ID: <20250224142607.266642195@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -53,37 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 2f69e54584475ac85ea0e3407c9198ac7c6ea8ad ]
+[ Upstream commit af0a4a2090cce732c70ad6c5f4145b43f39e3fe9 ]
 
-The SM8450 and later chips have DPU_MDP_PERIPH_0_REMOVED feature bit
-set, which means that those platforms have dropped some of the
-registers, including the WD TIMER-related ones. Stop providing the
-callback to program WD timer on those platforms.
+Several DPU 5.x platforms are supposed to be using DPU_WB_INPUT_CTRL,
+to bind WB and PINGPONG blocks, but they do not. Change those platforms
+to use WB_SM8250_MASK, which includes that bit.
 
-Fixes: 100d7ef6995d ("drm/msm/dpu: add support for SM8450")
+Fixes: 1f5bcc4316b3 ("drm/msm/dpu: enable writeback on SC8108X")
+Fixes: ab2b03d73a66 ("drm/msm/dpu: enable writeback on SM6125")
+Fixes: 47cebb740a83 ("drm/msm/dpu: enable writeback on SM8150")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/628874/
-Link: https://lore.kernel.org/r/20241214-dpu-drop-features-v1-1-988f0662cb7e@linaro.org
+Patchwork: https://patchwork.freedesktop.org/patch/628876/
+Link: https://lore.kernel.org/r/20241214-dpu-drop-features-v1-2-988f0662cb7e@linaro.org
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h  | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-index ad19330de61ab..562a3f4c5238a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-@@ -272,7 +272,7 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
- 
- 	if (cap & BIT(DPU_MDP_VSYNC_SEL))
- 		ops->setup_vsync_source = dpu_hw_setup_vsync_sel;
--	else
-+	else if (!(cap & BIT(DPU_MDP_PERIPH_0_REMOVED)))
- 		ops->setup_vsync_source = dpu_hw_setup_wd_timer;
- 
- 	ops->get_safe_status = dpu_hw_get_safe_status;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+index 421afacb72480..36cc9dbc00b5c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+@@ -297,7 +297,7 @@ static const struct dpu_wb_cfg sm8150_wb[] = {
+ 	{
+ 		.name = "wb_2", .id = WB_2,
+ 		.base = 0x65000, .len = 0x2c8,
+-		.features = WB_SDM845_MASK,
++		.features = WB_SM8250_MASK,
+ 		.format_list = wb2_formats_rgb,
+ 		.num_formats = ARRAY_SIZE(wb2_formats_rgb),
+ 		.clk_ctrl = DPU_CLK_CTRL_WB2,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+index 641023b102bf5..e8eacdb47967a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+@@ -304,7 +304,7 @@ static const struct dpu_wb_cfg sc8180x_wb[] = {
+ 	{
+ 		.name = "wb_2", .id = WB_2,
+ 		.base = 0x65000, .len = 0x2c8,
+-		.features = WB_SDM845_MASK,
++		.features = WB_SM8250_MASK,
+ 		.format_list = wb2_formats_rgb,
+ 		.num_formats = ARRAY_SIZE(wb2_formats_rgb),
+ 		.clk_ctrl = DPU_CLK_CTRL_WB2,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
+index d039b96beb97c..76f60a2df7a89 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
+@@ -144,7 +144,7 @@ static const struct dpu_wb_cfg sm6125_wb[] = {
+ 	{
+ 		.name = "wb_2", .id = WB_2,
+ 		.base = 0x65000, .len = 0x2c8,
+-		.features = WB_SDM845_MASK,
++		.features = WB_SM8250_MASK,
+ 		.format_list = wb2_formats_rgb,
+ 		.num_formats = ARRAY_SIZE(wb2_formats_rgb),
+ 		.clk_ctrl = DPU_CLK_CTRL_WB2,
 -- 
 2.39.5
 
