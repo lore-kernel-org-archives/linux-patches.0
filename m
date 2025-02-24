@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B34170A13;
-	Mon, 24 Feb 2025 14:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2311459EA;
+	Mon, 24 Feb 2025 14:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408833; cv=none; b=CscXGwc3eWldVeXbcUZGV3IpqsykTcqLuCrQItDbkQ7fXLoZdfFI1RkH8PrYbCQ6hk0JMVDdDEn6NkNKz+aM8YFeA2hw5XIiE4GqdIcicaMJsA890ACLrkN64QK41kJ2+vAc+eEwqYDio/e2GonpWTMblJc88Nk4Uf54FcS3jbE=
+	t=1740408836; cv=none; b=F+gVSGrhSYsJ/CS5UW461XcEWXkZSLqIk8KDyzx+8vMwllTAPrztWA2VbBlSf6Bcv3ZgEXigNFEnzEc7XhavrpW4PkUXtzAQ+myWvJVzbRVmv83yGC9yayYjRMO7gbubBAKb1Z0PU4ZNfceLp3N87hU8RsJo/dbNFivZPCvJqm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408833; c=relaxed/simple;
-	bh=1xGUlbHWWJy2nYWR58F/r1p05qskOi/hwM4ikPi8ndc=;
+	s=arc-20240116; t=1740408836; c=relaxed/simple;
+	bh=HjAqguSbTjm9wPBQR4Wbz8alUSsAwFgJnyT0lLAxlvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=utVtzb//EmBoBgdGlsPmjgE+el/h6JeDK6lfIkuZws85Of+KJ3jNc/JbPYGVF0RtxHa8P0GfQnyGxmDGsQ4eLZViolBNy/BrjVmXjKI5UmOGqdY4PwAQnztNa27Qj1+sITtKJQKkUyMMxfImxWHfC32KVj9cPCb/DqRrREwWQok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGbhuQdh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ts6eAwS6Si+r+0mFMFOyhe1dIWYJ8si75zvZF4jt+gHeRCdT6F7TAnDTvlZ1iCSPGZ7VQxp8zBuBgT/TZz2qYpg8F1wtJWE1lPzrx+b2zlmYVKedVdLWB4oRCbWDZs3uaQ/EXl9tnCgG60n6tkZ/gx6GForPih6RwE73iZFJZGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNw7pnW6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGbhuQdh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB64C4CED6;
-	Mon, 24 Feb 2025 14:53:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNw7pnW6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52D7C4CED6;
+	Mon, 24 Feb 2025 14:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408832;
-	bh=1xGUlbHWWJy2nYWR58F/r1p05qskOi/hwM4ikPi8ndc=;
+	s=korg; t=1740408836;
+	bh=HjAqguSbTjm9wPBQR4Wbz8alUSsAwFgJnyT0lLAxlvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGbhuQdhnHhPC6RT/4nNx18/PYkvSHl4FYZGXzBrGc1/mHpWmip8AZlki87+2vypp
-	 mpvkuCKck39sR0YD5H9ZrnzyTuuB05RaXuhvcYMJ/E5rCPG58wQ/7QhSs9Cl0Dgsrr
-	 cv5aRDoeZh8xGb0wMYh+Gj/hbuem9HdPCEPNvVzw=
+	b=eNw7pnW60FlkihB1ChImqBIBJXMsWsRJVURszo7WLv8i2DD1acTOzhLLfbrzS5uE0
+	 fJTSv/sSVFwWdjV7uFi8uQXH56owepdZ7JF6KBsdsi3yunXw7Ju9VLilNT/2D0V660
+	 bBEt+St4AFc2qm5O4FvqAJD4pkbWPQq+5yoLFMzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jill Donahue <jilliandonahue58@gmail.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 019/138] USB: gadget: f_midi: f_midi_complete to call queue_work
-Date: Mon, 24 Feb 2025 15:34:09 +0100
-Message-ID: <20250224142605.221150474@linuxfoundation.org>
+Subject: [PATCH 6.13 002/138] btrfs: use btrfs_inode in extent_writepage()
+Date: Mon, 24 Feb 2025 15:33:52 +0100
+Message-ID: <20250224142604.542622433@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -51,40 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jill Donahue <jilliandonahue58@gmail.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 4ab37fcb42832cdd3e9d5e50653285ca84d6686f ]
+[ Upstream commit 011a9a1f244656cc3cbde47edba2b250f794d440 ]
 
-When using USB MIDI, a lock is attempted to be acquired twice through a
-re-entrant call to f_midi_transmit, causing a deadlock.
+As extent_writepage() is internal helper we should use our inode type,
+so change it from struct inode.
 
-Fix it by using queue_work() to schedule the inner f_midi_transmit() via
-a high priority work queue from the completion handler.
-
-Link: https://lore.kernel.org/all/CAArt=LjxU0fUZOj06X+5tkeGT+6RbXzpWg1h4t4Fwa_KGVAX6g@mail.gmail.com/
-Fixes: d5daf49b58661 ("USB: gadget: midi: add midi function driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jill Donahue <jilliandonahue58@gmail.com>
-Link: https://lore.kernel.org/r/20250211174805.1369265-1-jdonahue@fender.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 8bf334beb349 ("btrfs: fix double accounting race when extent_writepage_io() failed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_midi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/extent_io.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_midi.c b/drivers/usb/gadget/function/f_midi.c
-index 47260d65066a8..da82598fcef8a 100644
---- a/drivers/usb/gadget/function/f_midi.c
-+++ b/drivers/usb/gadget/function/f_midi.c
-@@ -283,7 +283,7 @@ f_midi_complete(struct usb_ep *ep, struct usb_request *req)
- 			/* Our transmit completed. See if there's more to go.
- 			 * f_midi_transmit eats req, don't queue it again. */
- 			req->length = 0;
--			f_midi_transmit(midi);
-+			queue_work(system_highpri_wq, &midi->work);
- 			return;
- 		}
- 		break;
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index d14ecbe24d775..299507c0008d9 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -1467,15 +1467,15 @@ static noinline_for_stack int extent_writepage_io(struct btrfs_inode *inode,
+  */
+ static int extent_writepage(struct folio *folio, struct btrfs_bio_ctrl *bio_ctrl)
+ {
+-	struct inode *inode = folio->mapping->host;
+-	struct btrfs_fs_info *fs_info = inode_to_fs_info(inode);
++	struct btrfs_inode *inode = BTRFS_I(folio->mapping->host);
++	struct btrfs_fs_info *fs_info = inode->root->fs_info;
+ 	const u64 page_start = folio_pos(folio);
+ 	int ret;
+ 	size_t pg_offset;
+-	loff_t i_size = i_size_read(inode);
++	loff_t i_size = i_size_read(&inode->vfs_inode);
+ 	unsigned long end_index = i_size >> PAGE_SHIFT;
+ 
+-	trace_extent_writepage(folio, inode, bio_ctrl->wbc);
++	trace_extent_writepage(folio, &inode->vfs_inode, bio_ctrl->wbc);
+ 
+ 	WARN_ON(!folio_test_locked(folio));
+ 
+@@ -1499,13 +1499,13 @@ static int extent_writepage(struct folio *folio, struct btrfs_bio_ctrl *bio_ctrl
+ 	if (ret < 0)
+ 		goto done;
+ 
+-	ret = writepage_delalloc(BTRFS_I(inode), folio, bio_ctrl);
++	ret = writepage_delalloc(inode, folio, bio_ctrl);
+ 	if (ret == 1)
+ 		return 0;
+ 	if (ret)
+ 		goto done;
+ 
+-	ret = extent_writepage_io(BTRFS_I(inode), folio, folio_pos(folio),
++	ret = extent_writepage_io(inode, folio, folio_pos(folio),
+ 				  PAGE_SIZE, bio_ctrl, i_size);
+ 	if (ret == 1)
+ 		return 0;
+@@ -1514,7 +1514,7 @@ static int extent_writepage(struct folio *folio, struct btrfs_bio_ctrl *bio_ctrl
+ 
+ done:
+ 	if (ret) {
+-		btrfs_mark_ordered_io_finished(BTRFS_I(inode), folio,
++		btrfs_mark_ordered_io_finished(inode, folio,
+ 					       page_start, PAGE_SIZE, !ret);
+ 		mapping_set_error(folio->mapping, ret);
+ 	}
 -- 
 2.39.5
 
