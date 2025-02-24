@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A73123BD1D;
-	Mon, 24 Feb 2025 14:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E645324634F;
+	Mon, 24 Feb 2025 14:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408568; cv=none; b=pODHu5OGTTPKWObNTevr4TvfTctF0ET4lU5099uwxHMCfMcn7r/uZJTM7RMHhVgEMg3Y7xa7TVBv6CaKh3aXLIt5R88IOa9x/m18nlq0K5DzM44PMvhewI2akYTL3brBYAJIi/GLumTPiGgbWxIVP3OHeGwjrqEBdE+GXsYWaCE=
+	t=1740408572; cv=none; b=JvVQ0DZV5wIX9cf8NVXbVG1pfgbs4pYFQU7hkLAZVHmQ8nxxONfGU0b+F9kjAz+7XPfK3bMJNS1ol9SVo9xQ8DQgRP+ELjnwL5J6MmkJ350SbS/eF57IYlTKi5HPUyN3FOdFJBJev9iPm+sf1KzdN/3VUwhwszLrdMy4mvvDlBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408568; c=relaxed/simple;
-	bh=t78vH593wOMIUWY0/hB+GDmchf+c63sB4Wh1KNAu1/0=;
+	s=arc-20240116; t=1740408572; c=relaxed/simple;
+	bh=RPTMrh6G/eKrAQeLZSWODbShVtsZrmvpN4qlOUr9rSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I5qLMfRVW/Rm/uExHhSLBuxm13Za+p61PVqzDsS4O+sfrHuBYJBUIa+bmI/tEjd0hQY0TwOk0DNzXx+gS31lpOFo2oitdDxwRCEfkBiv2B8HXZcZwkIJUdB57d8MglEe43v+4K85DNczKIXf2iq4Udn1Qf38MWRSOgfjoxjx7Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkH5EtEm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z/R2y/jM5gskUcr/AluMZi5cwfLqL8gAGUop77ZpcD6aY8CDpbwlR7O73Sz16ocCDZHXNAg0azVfunHxN39PDEVUpv8kgJSGN8QfqzyQoA4/wkGTc+LxCLpTtmRRfmCwn6FXmo373UPwiAb3+KYpkR6zdTRtsxjLocks4+jz/M8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j04VQpH2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkH5EtEm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37F1C4CED6;
-	Mon, 24 Feb 2025 14:49:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j04VQpH2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5195DC4CED6;
+	Mon, 24 Feb 2025 14:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408568;
-	bh=t78vH593wOMIUWY0/hB+GDmchf+c63sB4Wh1KNAu1/0=;
+	s=korg; t=1740408571;
+	bh=RPTMrh6G/eKrAQeLZSWODbShVtsZrmvpN4qlOUr9rSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SkH5EtEm2QV19GXv4u/lAsL6dsCU1xiDYFEwvK1V9RU7NSMJL4wh25Z2QoRRO3j0d
-	 Gakp2QnT5u6jYPS5fEGYr6TKd8RV4Z6E198i0JKkk0sf9KlBhtoS6wCdDLXSZfz0Jb
-	 0ND3rh5BRaIZLb2V5Txv+ZGsMSXH4LIKlRXy3Mhc=
+	b=j04VQpH2OB6ZtierLWH+GFxZlgFTn20k9JmHA8lJM7iY6p1rU3/u/2O3mUUClNnjg
+	 ceo2q9Gq3SG0gjrVPPe9x9qSqRzo8FkAeqh0iC6q9gU0DQYuHXlMI2lllx15LQnnLr
+	 jW6cwZ6WHtHq/qo0FnX0zbVfFZOIb80qidA2+ErI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Riteau <pierre@stackhpc.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Yu Kuai <yukuai@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 054/154] net/sched: cls_api: fix error handling causing NULL dereference
-Date: Mon, 24 Feb 2025 15:34:13 +0100
-Message-ID: <20250224142609.206347293@linuxfoundation.org>
+Subject: [PATCH 6.12 089/154] md/raid*: Fix the set_queue_limits implementations
+Date: Mon, 24 Feb 2025 15:34:48 +0100
+Message-ID: <20250224142610.558327170@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -52,52 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre Riteau <pierre@stackhpc.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 071ed42cff4fcdd89025d966d48eabef59913bf2 ]
+[ Upstream commit fbe8f2fa971c537571994a0df532c511c4fb5537 ]
 
-tcf_exts_miss_cookie_base_alloc() calls xa_alloc_cyclic() which can
-return 1 if the allocation succeeded after wrapping. This was treated as
-an error, with value 1 returned to caller tcf_exts_init_ex() which sets
-exts->actions to NULL and returns 1 to caller fl_change().
+queue_limits_cancel_update() must only be called if
+queue_limits_start_update() is called first. Remove the
+queue_limits_cancel_update() calls from the raid*_set_limits() functions
+because there is no corresponding queue_limits_start_update() call.
 
-fl_change() treats err == 1 as success, calling tcf_exts_validate_ex()
-which calls tcf_action_init() with exts->actions as argument, where it
-is dereferenced.
-
-Example trace:
-
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-CPU: 114 PID: 16151 Comm: handler114 Kdump: loaded Not tainted 5.14.0-503.16.1.el9_5.x86_64 #1
-RIP: 0010:tcf_action_init+0x1f8/0x2c0
-Call Trace:
- tcf_action_init+0x1f8/0x2c0
- tcf_exts_validate_ex+0x175/0x190
- fl_change+0x537/0x1120 [cls_flower]
-
-Fixes: 80cd22c35c90 ("net/sched: cls_api: Support hardware miss to tc action")
-Signed-off-by: Pierre Riteau <pierre@stackhpc.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Link: https://patch.msgid.link/20250213223610.320278-1-pierre@stackhpc.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Fixes: c6e56cf6b2e7 ("block: move integrity information into queue_limits")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/linux-raid/20250212171108.3483150-1-bvanassche@acm.org/
+Signed-off-by: Yu Kuai <yukuai@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid0.c  | 4 +---
+ drivers/md/raid1.c  | 4 +---
+ drivers/md/raid10.c | 4 +---
+ 3 files changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index dfa3067084948..998ea3b5badfc 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -97,7 +97,7 @@ tcf_exts_miss_cookie_base_alloc(struct tcf_exts *exts, struct tcf_proto *tp,
+diff --git a/drivers/md/raid0.c b/drivers/md/raid0.c
+index 32d5875247784..31bea72bcb01a 100644
+--- a/drivers/md/raid0.c
++++ b/drivers/md/raid0.c
+@@ -385,10 +385,8 @@ static int raid0_set_limits(struct mddev *mddev)
+ 	lim.io_min = mddev->chunk_sectors << 9;
+ 	lim.io_opt = lim.io_min * mddev->raid_disks;
+ 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
+-	if (err) {
+-		queue_limits_cancel_update(mddev->gendisk->queue);
++	if (err)
+ 		return err;
+-	}
+ 	return queue_limits_set(mddev->gendisk->queue, &lim);
+ }
  
- 	err = xa_alloc_cyclic(&tcf_exts_miss_cookies_xa, &n->miss_cookie_base,
- 			      n, xa_limit_32b, &next, GFP_KERNEL);
--	if (err)
-+	if (err < 0)
- 		goto err_xa_alloc;
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index d83fe3b3abc00..8a994a1975ca7 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -3171,10 +3171,8 @@ static int raid1_set_limits(struct mddev *mddev)
+ 	md_init_stacking_limits(&lim);
+ 	lim.max_write_zeroes_sectors = 0;
+ 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
+-	if (err) {
+-		queue_limits_cancel_update(mddev->gendisk->queue);
++	if (err)
+ 		return err;
+-	}
+ 	return queue_limits_set(mddev->gendisk->queue, &lim);
+ }
  
- 	exts->miss_cookie_node = n;
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index daf42acc4fb6f..a214fed4f1622 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -3963,10 +3963,8 @@ static int raid10_set_queue_limits(struct mddev *mddev)
+ 	lim.io_min = mddev->chunk_sectors << 9;
+ 	lim.io_opt = lim.io_min * raid10_nr_stripes(conf);
+ 	err = mddev_stack_rdev_limits(mddev, &lim, MDDEV_STACK_INTEGRITY);
+-	if (err) {
+-		queue_limits_cancel_update(mddev->gendisk->queue);
++	if (err)
+ 		return err;
+-	}
+ 	return queue_limits_set(mddev->gendisk->queue, &lim);
+ }
+ 
 -- 
 2.39.5
 
