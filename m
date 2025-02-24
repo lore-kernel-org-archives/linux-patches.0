@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB1218BC26;
-	Mon, 24 Feb 2025 14:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1379984A35;
+	Mon, 24 Feb 2025 14:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408625; cv=none; b=K9UcVO+5nkDQHljUHulw0iSIat+B0zf/6yBhsyBEkWRxME6QFe7GIBQLdFhg0bdxatrS0hqpqe+Heaeb1Fd0sGm3M92LZPi/IlYxwYV6hP/twdDWbLnaECxrwkYrkTFjdG9Tpkc6UsGs072YodrQbDxEEwkcQl9KLRIg1gTCoE0=
+	t=1740408629; cv=none; b=qOnM1HsxJX+LN32U9KbkIeKJ3bAq54lkwsj1MR11ye0bsGJMuqNWESI158fKkKH9FN+aw0rrV4/nU/ZavO4e+BsM52K8jKkFzb0fPRW5dhehhCXyLUQ2YuTS+LiWH020KKqn06RhQGQ/tgiW9uD0YrQ9BxNE9wtqaWseexeUkGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408625; c=relaxed/simple;
-	bh=MXWBQvoLypf7Y+HeqlC17xqtPIuXQRAQKrTFZ3R1pjg=;
+	s=arc-20240116; t=1740408629; c=relaxed/simple;
+	bh=zc9OTsf102lbE/wyikEB7D3BK0aKlGAKFz/hR19z8QQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fv6Vib6CMXEErg/VyRCFu6K0DhbdJG0BhExK2cNTgRrK8in9SDBTDBEEpAEusEnJw6DqojwXGrLYNFaeDw4potnlLWuUheRfvIsFGrU7sIoCDiaoJNqWpGDxvyXRnkAC0vhhvil79xJf176QKddG76ZPZFdwoQ10Y66yFMABYgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFgRsor7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YvfID5CFmTcsG+VvuwHKZ+el1cskdJHnw1omq9YfcP9SDEO50r4qEAliHpL1UABikIAbHEuHYqt60if6rR7QZvxc7pjINljWTm/wFxQIKPM8BYrxC64u/aetYcChg4PVc1Gl6lw+p8nEPqSvKkq5+FGNLYZUatNXvOpc7YjcAGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlZaPhe3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFgRsor7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2E3C4CED6;
-	Mon, 24 Feb 2025 14:50:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlZaPhe3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77207C4CEE9;
+	Mon, 24 Feb 2025 14:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408625;
-	bh=MXWBQvoLypf7Y+HeqlC17xqtPIuXQRAQKrTFZ3R1pjg=;
+	s=korg; t=1740408629;
+	bh=zc9OTsf102lbE/wyikEB7D3BK0aKlGAKFz/hR19z8QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bFgRsor7VXkY0Tg/FwStZuS5ghGsMbYvk9zTmqBEYh9OZM04cuDzezp4nmErLSuO/
-	 W664xsV1wsMJ8JMj17hsm0wCnILAKoeALZt9HLUj8NpJN/PbvT7J+x/5c3//9gQZcw
-	 WFWzrLiffsbe5B2S4mAKcQbfd86K7tezzLKYBoiY=
+	b=nlZaPhe3Q/qJxGlmod5YKtJgpvFm7k8e8wa76hsPIhEipmc7Uyzy/9GMu0f93Aih6
+	 wSZCNqLAjwK3ma6p1RLVm5J3ih4evf+D+9JJCFjQPROG2U8TMnMvCPHqQJuF01XrrC
+	 SmTOq3YgKAme34rPEZvPUyv3s3ffhx3hUNdL23ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chase xd <sl1589472800@gmail.com>,
 	Pavel Begunkov <asml.silence@gmail.com>,
+	Li Zetao <lizetao1@huawei.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 112/154] io_uring/rw: forbid multishot async reads
-Date: Mon, 24 Feb 2025 15:35:11 +0100
-Message-ID: <20250224142611.443257463@linuxfoundation.org>
+Subject: [PATCH 6.12 113/154] io_uring: prevent opcode speculation
+Date: Mon, 24 Feb 2025 15:35:12 +0100
+Message-ID: <20250224142611.481940404@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -53,54 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 67b0025d19f99fb9fbb8b62e6975553c183f3a16 upstream.
+commit 1e988c3fe1264708f4f92109203ac5b1d65de50b upstream.
 
-At the moment we can't sanely handle queuing an async request from a
-multishot context, so disable them. It shouldn't matter as pollable
-files / socekts don't normally do async.
-
-Patching it in __io_read() is not the cleanest way, but it's simpler
-than other options, so let's fix it there and clean up on top.
+sqe->opcode is used for different tables, make sure we santitise it
+against speculations.
 
 Cc: stable@vger.kernel.org
-Reported-by: chase xd <sl1589472800@gmail.com>
-Fixes: fc68fcda04910 ("io_uring/rw: add support for IORING_OP_READ_MULTISHOT")
+Fixes: d3656344fea03 ("io_uring: add lookup table for various opcode needs")
 Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/7d51732c125159d17db4fe16f51ec41b936973f8.1739919038.git.asml.silence@gmail.com
+Reviewed-by: Li Zetao <lizetao1@huawei.com>
+Link: https://lore.kernel.org/r/7eddbf31c8ca0a3947f8ed98271acc2b4349c016.1739568408.git.asml.silence@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rw.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -862,7 +862,15 @@ static int __io_read(struct io_kiocb *re
- 	if (unlikely(ret))
- 		return ret;
- 
--	ret = io_iter_do_read(rw, &io->iter);
-+	if (unlikely(req->opcode == IORING_OP_READ_MULTISHOT)) {
-+		void *cb_copy = rw->kiocb.ki_complete;
-+
-+		rw->kiocb.ki_complete = NULL;
-+		ret = io_iter_do_read(rw, &io->iter);
-+		rw->kiocb.ki_complete = cb_copy;
-+	} else {
-+		ret = io_iter_do_read(rw, &io->iter);
-+	}
- 
- 	/*
- 	 * Some file systems like to return -EOPNOTSUPP for an IOCB_NOWAIT
-@@ -887,7 +895,8 @@ static int __io_read(struct io_kiocb *re
- 	} else if (ret == -EIOCBQUEUED) {
- 		return IOU_ISSUE_SKIP_COMPLETE;
- 	} else if (ret == req->cqe.res || ret <= 0 || !force_nonblock ||
--		   (req->flags & REQ_F_NOWAIT) || !need_complete_io(req)) {
-+		   (req->flags & REQ_F_NOWAIT) || !need_complete_io(req) ||
-+		   (issue_flags & IO_URING_F_MULTISHOT)) {
- 		/* read all, failed, already did sync or don't want to retry */
- 		goto done;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2053,6 +2053,8 @@ static int io_init_req(struct io_ring_ct
+ 		req->opcode = 0;
+ 		return io_init_fail_req(req, -EINVAL);
  	}
++	opcode = array_index_nospec(opcode, IORING_OP_LAST);
++
+ 	def = &io_issue_defs[opcode];
+ 	if (unlikely(sqe_flags & ~SQE_COMMON_FLAGS)) {
+ 		/* enforce forwards compatibility on users */
 
 
