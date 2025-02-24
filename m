@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231392837B;
-	Mon, 24 Feb 2025 14:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A7127701;
+	Mon, 24 Feb 2025 14:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408734; cv=none; b=SotTjm+sXmSmXei2VKiX+JM3m1i3KiJ6oAYj6L1nH+aRxeFhcB5ZTZVu1SU5aWTp3gSIwYEu4ylKjT03LhXU4QjZojNRpdqXtSFnyCPXDuqiCzyqr51etU9EwhhdC6s4vIM+Ue6QDw7FHuf/P0uJnXIHpvELN39dJ78eBsZCs34=
+	t=1740408737; cv=none; b=WeSmuT/GkImmJk+ZRwyHHzAaCExC7sNfVUJdrtgfYCqF/kKtgO+9ZXh422jq+WXmQC8LQHcvLzlx8iboxuWjNc/2fXMU0V2aTSG09kb9aw2a4HNBMbezUEufXxYQsoCFOehylHdNhFSGYnBNgYlBxBVFRu+bOkc4TiMbWVBc3FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408734; c=relaxed/simple;
-	bh=o01WfcWPSS0yrohvRg8hOi4lQIo6TAIa9rKnGUObxGU=;
+	s=arc-20240116; t=1740408737; c=relaxed/simple;
+	bh=ztCvN/1lU66tIZ4Pz1H/1pRV0t1lNYcrNmM55gtTNM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHfUsg1/Q28CEZ7UbM5QfG8MtTK3AqLZ6HuqVhGyOQ00m8L+SthY5QWnLRtHSdU/tSA+LIefrceqDKdj43sI2KDSeOTvBctPmo5IZOHz/cXtCxsriCZRnPudwmQO2H2zTh+WA6VD/p1nNrYsbm1WOHhaIYy2knrnAWKdSuwSpr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZSzHCzU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pGrSznN9HAPzNADnjyUwnYNJvraLxWFeikXZ2ftBD2/KVBweHdmgkjRZLY2iDILbiWwFAmCacszC/ZCfCXotqC3MkOOg8FaMHvs7/T9LkqXqCsaaccVJg1IFPzr/7jVh3pQ/GejrcaVjoWVKL2DAZeUG2mn2WsZ/St6tmo0AUEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeMiZPR1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZSzHCzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EC4C4CED6;
-	Mon, 24 Feb 2025 14:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeMiZPR1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B47C4CED6;
+	Mon, 24 Feb 2025 14:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408734;
-	bh=o01WfcWPSS0yrohvRg8hOi4lQIo6TAIa9rKnGUObxGU=;
+	s=korg; t=1740408737;
+	bh=ztCvN/1lU66tIZ4Pz1H/1pRV0t1lNYcrNmM55gtTNM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZSzHCzUj0n055YQO9y+yTOBVQrjxbQVe7KdWxop9uq4/gf5Op9aM13GJzNC3PLM5
-	 LcpK9NDJvH2BwJm1zF1+2XC7wvHZbyRR2W4hPYG/hNqLqPGkj7NOHNOpsATeShKaJL
-	 eVg+AVQdkytfi9zxEdam/LAWDsNJli/RDis5UDrU=
+	b=MeMiZPR1z+7o/RbYR53cUhxm8P9VaiZi8EY/bEzypkrMN8q/sfNrv8/OabCfTFNq1
+	 LwG6IU3Wyjhj0Vx0XWAu9bBugrVINkaOqyjsAn3eF4Qx6phtD1lM8GMULswVQr1QWY
+	 iUNYRw2E52mOHOXnn7Zk8X3bsRa0++FrOf/lgPjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Komal Bajaj <quic_kbajaj@quicinc.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	stable@kernel.org
-Subject: [PATCH 6.12 144/154] EDAC/qcom: Correct interrupt enable register configuration
-Date: Mon, 24 Feb 2025 15:35:43 +0100
-Message-ID: <20250224142612.686956380@linuxfoundation.org>
+	Wander Lairson Costa <wander@redhat.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 145/154] ftrace: Correct preemption accounting for function tracing.
+Date: Mon, 24 Feb 2025 15:35:44 +0100
+Message-ID: <20250224142612.726200639@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -52,49 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Komal Bajaj <quic_kbajaj@quicinc.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit c158647c107358bf1be579f98e4bb705c1953292 upstream.
+commit 57b76bedc5c52c66968183b5ef57234894c25ce7 upstream.
 
-The previous implementation incorrectly configured the cmn_interrupt_2_enable
-register for interrupt handling. Using cmn_interrupt_2_enable to configure
-Tag, Data RAM ECC interrupts would lead to issues like double handling of the
-interrupts (EL1 and EL3) as cmn_interrupt_2_enable is meant to be configured
-for interrupts which needs to be handled by EL3.
+The function tracer should record the preemption level at the point when
+the function is invoked. If the tracing subsystem decrement the
+preemption counter it needs to correct this before feeding the data into
+the trace buffer. This was broken in the commit cited below while
+shifting the preempt-disabled section.
 
-EL1 LLCC EDAC driver needs to use cmn_interrupt_0_enable register to configure
-Tag, Data RAM ECC interrupts instead of cmn_interrupt_2_enable.
+Use tracing_gen_ctx_dec() which properly subtracts one from the
+preemption counter on a preemptible kernel.
 
-Fixes: 27450653f1db ("drivers: edac: Add EDAC driver support for QCOM SoCs")
-Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20241119064608.12326-1-quic_kbajaj@quicinc.com
+Cc: stable@vger.kernel.org
+Cc: Wander Lairson Costa <wander@redhat.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/20250220140749.pfw8qoNZ@linutronix.de
+Fixes: ce5e48036c9e7 ("ftrace: disable preemption when recursion locked")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Tested-by: Wander Lairson Costa <wander@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/qcom_edac.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/trace_functions.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/edac/qcom_edac.c
-+++ b/drivers/edac/qcom_edac.c
-@@ -95,7 +95,7 @@ static int qcom_llcc_core_setup(struct l
- 	 * Configure interrupt enable registers such that Tag, Data RAM related
- 	 * interrupts are propagated to interrupt controller for servicing
- 	 */
--	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_2_enable,
-+	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_0_enable,
- 				 TRP0_INTERRUPT_ENABLE,
- 				 TRP0_INTERRUPT_ENABLE);
- 	if (ret)
-@@ -113,7 +113,7 @@ static int qcom_llcc_core_setup(struct l
- 	if (ret)
- 		return ret;
+--- a/kernel/trace/trace_functions.c
++++ b/kernel/trace/trace_functions.c
+@@ -193,7 +193,7 @@ function_trace_call(unsigned long ip, un
+ 	if (bit < 0)
+ 		return;
  
--	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_2_enable,
-+	ret = regmap_update_bits(llcc_bcast_regmap, drv->edac_reg_offset->cmn_interrupt_0_enable,
- 				 DRP0_INTERRUPT_ENABLE,
- 				 DRP0_INTERRUPT_ENABLE);
- 	if (ret)
+-	trace_ctx = tracing_gen_ctx();
++	trace_ctx = tracing_gen_ctx_dec();
+ 
+ 	cpu = smp_processor_id();
+ 	data = per_cpu_ptr(tr->array_buffer.data, cpu);
+@@ -298,7 +298,6 @@ function_no_repeats_trace_call(unsigned
+ 	struct trace_array *tr = op->private;
+ 	struct trace_array_cpu *data;
+ 	unsigned int trace_ctx;
+-	unsigned long flags;
+ 	int bit;
+ 	int cpu;
+ 
+@@ -325,8 +324,7 @@ function_no_repeats_trace_call(unsigned
+ 	if (is_repeat_check(tr, last_info, ip, parent_ip))
+ 		goto out;
+ 
+-	local_save_flags(flags);
+-	trace_ctx = tracing_gen_ctx_flags(flags);
++	trace_ctx = tracing_gen_ctx_dec();
+ 	process_repeats(tr, ip, parent_ip, last_info, trace_ctx);
+ 
+ 	trace_function(tr, ip, parent_ip, trace_ctx);
 
 
