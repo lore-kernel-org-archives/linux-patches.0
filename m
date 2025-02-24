@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8F238DD8;
-	Mon, 24 Feb 2025 14:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99FF27701;
+	Mon, 24 Feb 2025 14:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408129; cv=none; b=L0+05sh+EYZ83JjrBRzF9rjAV8ewuMWShg+IIXu9j+N/ZEYGVXD1nxl80WkhEE9dY352FgMrxVW9/JaBK2Nt476mW0F8TZNzOFYxZOXvUctam3/waKN9DL7q5ONxr3cFsr3sSm24BEUx2DK80YoUuwLzxhjSulSsr8RKc0XLRdY=
+	t=1740408132; cv=none; b=P4KiWMUc8PTAUrRonFt4syZUJiXdmZujC9OyDNNnx412ayHcGAvYo0etrOV4vlga9o1TwSw8Ubzi/HQ1BE4SbaQ/dZrYcKOZvg/PXiqdvOBTl1nwm0qL6kV3EmnKXutfVdjdgimeBWUZQHDBKMOF/F294Ci23YWDIjhOIeuGpyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408129; c=relaxed/simple;
-	bh=cf9ZyMFv1kovjxRlQbxtOW/GDy6GqCsuKxRtw/SNUlM=;
+	s=arc-20240116; t=1740408132; c=relaxed/simple;
+	bh=VRN8QnpupbJNpafqC+boRgPOAkXuKj0hS38qfG1vovY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UFddJUlMH54m8AawgSjt6+4EqHebGbaje/YbSZxSB2geSYeM9/JBy09cLYcM+o7bGqTuxQCazRQ1XAXgtICBnErlldIpfcyX73u0s1Tj2JOg/qpz8jD8C7KijbPxZpRzGMGBS29vKv2Dj+q/kCQPr8//zw79/6n48+6mgJVCpX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OoEQdJd1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kqppzsWyIRlyghvmbJdNXuZckC15305ShAEp50fctNnJvYUrTRrirJTUbbxqbqIft2Wa/p4/0jG9xgOqgVaE/J/KALEcIYFE9MjXBQT0dFEpBR4cviEy8S9FCW96dysbTCKXmbEJXjPHOH3z+uFKUIGszO+SK+z3LEoLBcs4Jck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12V/A41O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OoEQdJd1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACE6C4CED6;
-	Mon, 24 Feb 2025 14:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12V/A41O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4728BC4CED6;
+	Mon, 24 Feb 2025 14:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408129;
-	bh=cf9ZyMFv1kovjxRlQbxtOW/GDy6GqCsuKxRtw/SNUlM=;
+	s=korg; t=1740408132;
+	bh=VRN8QnpupbJNpafqC+boRgPOAkXuKj0hS38qfG1vovY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OoEQdJd1KSVSagzl2GtrE4vjrbRlgZ952GO6Kp4Ii9FcfAj91t6vawYcUiPnw5hby
-	 miJMMEPJwPygIDC4G2ORx9LNsYaGy2GL3IVQhfEgZh08hkA9wlSKvVHkq0fpdK5ffL
-	 69d0Acz1U3H5L6klN6EhMQzsZlIhdj+bURn+m6kg=
+	b=12V/A41Or252+lE0u9VmYH/yXbyl33UOfreQu582Q4e2FoTAbxKtnTf4B61wlAmbo
+	 FU9jzisiJi+31CzdgXClt302TDHl0WC09YmQPq1lL6F6FhrFcpZSA5s3zunXCCx9FL
+	 U49lUXwX6vOJgPvDd+eng/40QwujehK7jtz+LhqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.6 109/140] drm/i915: Make sure all planes in use by the joiner have their crtc included
-Date: Mon, 24 Feb 2025 15:35:08 +0100
-Message-ID: <20250224142607.294645306@linuxfoundation.org>
+Subject: [PATCH 6.6 110/140] drm/i915/dp: Fix error handling during 128b/132b link training
+Date: Mon, 24 Feb 2025 15:35:09 +0100
+Message-ID: <20250224142607.333999753@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -45,75 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit 07fb70d82e0df085980246bf17bc12537588795f upstream.
+commit b9275eabe31e6679ae12c46a4a0a18d622db4570 upstream.
 
-Any active plane needs to have its crtc included in the atomic
-state. For planes enabled via uapi that is all handler in the core.
-But when we use a plane for joiner the uapi code things the plane
-is disabled and therefore doesn't have a crtc. So we need to pull
-those in by hand. We do it first thing in
-intel_joiner_add_affected_crtcs() so that any newly added crtc will
-subsequently pull in all of its joined crtcs as well.
+At the end of a 128b/132b link training sequence, the HW expects the
+transcoder training pattern to be set to TPS2 and from that to normal
+mode (disabling the training pattern). Transitioning from TPS1 directly
+to normal mode leaves the transcoder in a stuck state, resulting in
+page-flip timeouts later in the modeset sequence.
 
-The symptoms from failing to do this are:
-- duct tape in the form of commit 1d5b09f8daf8 ("drm/i915: Fix NULL
-  ptr deref by checking new_crtc_state")
-- the plane's hw state will get overwritten by the disabled
-  uapi state if it can't find the uapi counterpart plane in
-  the atomic state from where it should copy the correct state
+Atm, in case of a failure during link training, the transcoder may be
+still set to output the TPS1 pattern. Later the transcoder is then set
+from TPS1 directly to normal mode in intel_dp_stop_link_train(), leading
+to modeset failures later as described above. Fix this by setting the
+training patter to TPS2, if the link training failed at any point.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250212164330.16891-2-ville.syrjala@linux.intel.com
-(cherry picked from commit 91077d1deb5374eb8be00fb391710f00e751dc4b)
+The clue in the specification about the above HW behavior is the
+explicit mention that TPS2 must be set after the link training sequence
+(and there isn't a similar requirement specified for the 8b/10b link
+training), see the Bspec links below.
+
+v2: Add bspec aspect/link to the commit log. (Jani)
+
+Bspec: 54128, 65448, 68849
+Cc: stable@vger.kernel.org # v5.18+
+Cc: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250217223828.1166093-2-imre.deak@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 8b4bbaf8ddc1f68f3ee96a706f65fdb1bcd9d355)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/gpu/drm/i915/display/intel_dp_link_training.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -6141,12 +6141,30 @@ static int intel_async_flip_check_hw(str
- static int intel_bigjoiner_add_affected_crtcs(struct intel_atomic_state *state)
- {
- 	struct drm_i915_private *i915 = to_i915(state->base.dev);
-+	const struct intel_plane_state *plane_state;
- 	struct intel_crtc_state *crtc_state;
-+	struct intel_plane *plane;
- 	struct intel_crtc *crtc;
- 	u8 affected_pipes = 0;
- 	u8 modeset_pipes = 0;
- 	int i;
+--- a/drivers/gpu/drm/i915/display/intel_dp_link_training.c
++++ b/drivers/gpu/drm/i915/display/intel_dp_link_training.c
+@@ -1364,7 +1364,7 @@ intel_dp_128b132b_link_train(struct inte
  
+ 	if (wait_for(intel_dp_128b132b_intra_hop(intel_dp, crtc_state) == 0, 500)) {
+ 		lt_err(intel_dp, DP_PHY_DPRX, "128b/132b intra-hop not clear\n");
+-		return false;
++		goto out;
+ 	}
+ 
+ 	if (intel_dp_128b132b_lane_eq(intel_dp, crtc_state) &&
+@@ -1376,6 +1376,19 @@ intel_dp_128b132b_link_train(struct inte
+ 	       passed ? "passed" : "failed",
+ 	       crtc_state->port_clock, crtc_state->lane_count);
+ 
++out:
 +	/*
-+	 * Any plane which is in use by the joiner needs its crtc.
-+	 * Pull those in first as this will not have happened yet
-+	 * if the plane remains disabled according to uapi.
++	 * Ensure that the training pattern does get set to TPS2 even in case
++	 * of a failure, as is the case at the end of a passing link training
++	 * and what is expected by the transcoder. Leaving TPS1 set (and
++	 * disabling the link train mode in DP_TP_CTL later from TPS1 directly)
++	 * would result in a stuck transcoder HW state and flip-done timeouts
++	 * later in the modeset sequence.
 +	 */
-+	for_each_new_intel_plane_in_state(state, plane, plane_state, i) {
-+		crtc = to_intel_crtc(plane_state->hw.crtc);
-+		if (!crtc)
-+			continue;
++	if (!passed)
++		intel_dp_program_link_training_pattern(intel_dp, crtc_state,
++						       DP_PHY_DPRX, DP_TRAINING_PATTERN_2);
 +
-+		crtc_state = intel_atomic_get_crtc_state(&state->base, crtc);
-+		if (IS_ERR(crtc_state))
-+			return PTR_ERR(crtc_state);
-+	}
-+
-+	/* Now pull in all joined crtcs */
- 	for_each_new_intel_crtc_in_state(state, crtc, crtc_state, i) {
- 		affected_pipes |= crtc_state->bigjoiner_pipes;
- 		if (intel_crtc_needs_modeset(crtc_state))
+ 	return passed;
+ }
+ 
 
 
