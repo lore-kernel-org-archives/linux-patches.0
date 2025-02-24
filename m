@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2535617BEC6;
-	Mon, 24 Feb 2025 14:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4AD18BC36;
+	Mon, 24 Feb 2025 14:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408607; cv=none; b=rg7vBFw9fHMT+KFUGdjBYFvnQWpcKIxOfQiSpaa3VmA2IpsSdROwADtDC+xjouJDv0QFWtIernJYMNyBW/Ame5zxZgPYFd634FhG0FxgEkFgjabr53+u2xpC1aKaN/NsS637ZmmiGmgMRTKrwv9daZCE+ACPtgHtgFGNJNwNU0M=
+	t=1740408610; cv=none; b=cv1NrQSA0/xaSwMbmleDCOEeOIBDU83pWqjZlSBQsDbqEos5FwHofURdDmSz3lJvxtoLkkefVxWrTw0M5Ocnh6+TXvMt1ZxUdebl2mAJ5nXNXGOF4T0u4aoh6aGg5wCowdIfRPaOvJ5BJrPrYjNaw8xUZ4MD6khZ/Qtd0vfxoJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408607; c=relaxed/simple;
-	bh=qP6OzJGhrLTxJXqtHZZdfQNriQ0ybjTwMyW0OYxltrI=;
+	s=arc-20240116; t=1740408610; c=relaxed/simple;
+	bh=619182//C05fMuBt+GQnG34ODCRX3YYRoUrRkZPEwQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UTg0wNaFvrBS1NWnsEwzbHYU9YJ3x5D+64zeLlLxHhKX269C/qIdlrnt/lNpnGBmrI9F8cUnoGoszZJm2bGKDWhqUwIBv+hCDKDJphhjid84+XP43e/nzXvvhEWHhWqIHMnuce6r+A/DyZwlQWDDtq/F/7BPhxs6YDxylKLnjPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pqt5fVHv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5G6CULFS40RktQQhIl6kJiPZbH/5GbbvXXrWVm1pI+5JeL3Q6gjtj5dG1CZv8wLzUxJCW8QMU0sbS0MPYa7aDzlqU9N9iFjtiPuLynVc/FbzWG9BfxkgrnF6i5iIOVkTaBb4Abxu0014+dip+i3Jut5fxcUwg8BZLjTsn0Ai5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpTjLvIy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pqt5fVHv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574C5C4CED6;
-	Mon, 24 Feb 2025 14:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpTjLvIy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D42EC4CED6;
+	Mon, 24 Feb 2025 14:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408607;
-	bh=qP6OzJGhrLTxJXqtHZZdfQNriQ0ybjTwMyW0OYxltrI=;
+	s=korg; t=1740408610;
+	bh=619182//C05fMuBt+GQnG34ODCRX3YYRoUrRkZPEwQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pqt5fVHv+ip4wuoeDPlZcWTnsViu/V5K3VGgEi3o+GjhrwHww5xOJhQARKVDBNhPk
-	 0zS+abnvbKctPHF6LCNPw0Sfa2c0BNDR/ml9aaZUHhNMyG79bszkvWjFhilTdxLVEd
-	 R+83X9AfxdXQLDyb5qzGMVT+Ud80ZuCRZGCSviQs=
+	b=SpTjLvIy9B/FZbROZQWGOoa1+TetKycUvhSEKmtiRgashE9TNbpOmQy7qYTMb3yha
+	 cAB6v3NOorfAGo6zpUyR2B1Mvxycj7OLMTjHGObBprC/2N8p2rD1/8YzX38S/XGdIw
+	 fzq0CZ26tRwJO5MRhOjw0WA1rAzviVkc45KgTVnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: [PATCH 6.12 107/154] drm/msm/dpu: Disable dither in phys encoder cleanup
-Date: Mon, 24 Feb 2025 15:35:06 +0100
-Message-ID: <20250224142611.247467228@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Fabio Estevam <festevam@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 090/154] firmware: imx: IMX_SCMI_MISC_DRV should depend on ARCH_MXC
+Date: Mon, 24 Feb 2025 15:34:49 +0100
+Message-ID: <20250224142610.596192917@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -51,42 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit f063ac6b55df03ed25996bdc84d9e1c50147cfa1 upstream.
+[ Upstream commit be6686b823b30a69b1f71bde228ce042c78a1941 ]
 
-Disable pingpong dither in dpu_encoder_helper_phys_cleanup().
+The i.MX System Controller Management Interface firmware is only present
+on Freescale i.MX SoCs.  Hence add a dependency on ARCH_MXC, to prevent
+asking the user about this driver when configuring a kernel without
+Freescale i.MX platform support.
 
-This avoids the issue where an encoder unknowingly uses dither after
-reserving a pingpong block that was previously bound to an encoder that
-had enabled dither.
-
-Cc: stable@vger.kernel.org
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Closes: https://lore.kernel.org/all/jr7zbj5w7iq4apg3gofuvcwf4r2swzqjk7sshwcdjll4mn6ctt@l2n3qfpujg3q/
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Fixes: 3c128638a07d ("drm/msm/dpu: add support for dither block in display")
-Patchwork: https://patchwork.freedesktop.org/patch/636517/
-Link: https://lore.kernel.org/r/20250211-dither-disable-v1-1-ac2cb455f6b9@quicinc.com
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 514b2262ade48a05 ("firmware: arm_scmi: Fix i.MX build dependency")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/firmware/imx/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -2125,6 +2125,9 @@ void dpu_encoder_helper_phys_cleanup(str
- 		}
- 	}
+diff --git a/drivers/firmware/imx/Kconfig b/drivers/firmware/imx/Kconfig
+index 907cd149c40a8..c964f4924359f 100644
+--- a/drivers/firmware/imx/Kconfig
++++ b/drivers/firmware/imx/Kconfig
+@@ -25,6 +25,7 @@ config IMX_SCU
  
-+	if (phys_enc->hw_pp && phys_enc->hw_pp->ops.setup_dither)
-+		phys_enc->hw_pp->ops.setup_dither(phys_enc->hw_pp, NULL);
-+
- 	/* reset the merge 3D HW block */
- 	if (phys_enc->hw_pp && phys_enc->hw_pp->merge_3d) {
- 		phys_enc->hw_pp->merge_3d->ops.setup_3d_mode(phys_enc->hw_pp->merge_3d,
+ config IMX_SCMI_MISC_DRV
+ 	tristate "IMX SCMI MISC Protocol driver"
++	depends on ARCH_MXC || COMPILE_TEST
+ 	default y if ARCH_MXC
+ 	help
+ 	  The System Controller Management Interface firmware (SCMI FW) is
+-- 
+2.39.5
+
 
 
