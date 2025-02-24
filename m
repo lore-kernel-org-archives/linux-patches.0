@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023FD27701;
-	Mon, 24 Feb 2025 14:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7DB2571CE;
+	Mon, 24 Feb 2025 14:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408755; cv=none; b=tW8vdVbgS+1hPtzBhKuq/gpT4wnaD3FMB0Z5FlT65QaH3G9vZ2s/xLFESCf3dDyt0m/aX8Xa3o+memJkaLfhl0vW4vdq3tz+6u5GtLKvxkHEhWKv9YuAh8A4efXNTdTX5X6QNm1VhdIMrN4LbaIv5RcE7YTt104Lsak0feotLQ0=
+	t=1740408758; cv=none; b=ZfRKiTFRYzhde+kaIG7lBpt3i/T3nzQkZzh9erMsX7a8pb84ZSoHV6gziOxm/0d306JLYiPtRKhwGCF8QJIi6dorTsvT49FiM36eEJIOwAEP6tCMWJIYOywx2Tcqxg1A/xM9d6+BpWe/EWvVN6L1hR9v+2JnsjHFayAakvEFMxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408755; c=relaxed/simple;
-	bh=d4xv90brtP8oU5FiuIuWIiMQWcLx2IlEn6lLSKpNdFg=;
+	s=arc-20240116; t=1740408758; c=relaxed/simple;
+	bh=rR9mji96kMIsxyuV9R9IRLepEy2FSDQMtXjTDmJW/rk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ci0KYPJjyrE01DEENdLKDglfSlqdQh6PAr1n4s9yKT93Myp7VyzCDAlPZ2DrP0j/BGEOYhEq7CsgzUXsxIcUhwUsB1r9+wB+i+32UZVJRdR3K5QDblTZIphasIDgvKdFH3IufJKweTpfQAF7v6atazgkUg2AKSFmO8DzdO9F9Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SaxZOCS+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GuI17xweOm3od9lfsT4GokKcsYL/CNm6amkXm4zk+91ugsh/Neqout/UzSZlwS/RnMr0lYij6RnRKIe9w9fOsJswVNavBqo0Y4SqgNCcaqIMSsEbfvOtgBf9oL7fKZ5IQE0OK3/l0KbPEgnXskQwMBshWDWUCpty/l1aCqJtguU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pb9H9eLS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaxZOCS+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07787C4CED6;
-	Mon, 24 Feb 2025 14:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pb9H9eLS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47130C4CED6;
+	Mon, 24 Feb 2025 14:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408754;
-	bh=d4xv90brtP8oU5FiuIuWIiMQWcLx2IlEn6lLSKpNdFg=;
+	s=korg; t=1740408758;
+	bh=rR9mji96kMIsxyuV9R9IRLepEy2FSDQMtXjTDmJW/rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SaxZOCS++c1J39WDBL1xRv3Zk5z+3NKl6Y4aCEm4S2I3M9gkvD4skQcdXMbmkf7Hj
-	 WbV3oXWqlVD7jEnbIPbykveRjtTT/t6AxQjZkFYZoNN92gBQlFzcul5Q2WmjzKoYV9
-	 3qfF8qVm1Pq6hVRXdlAoIf9/5Zxpc4xgXnFnqLDc=
+	b=Pb9H9eLSpXwsNtrzOM9iCZokhSkTrDF/EBigTAXKDN48R+HHSAMdCR5PdXku34nc1
+	 fdAaLOKWcPSmOxpGO7efJNOq/esCY0Lz105Vo6nOmBIg5/fqbcA8+jqrVScKsAvW5B
+	 BTVXY1z5s1VCcyG5aYT/VbOPWeOy0hSMXEbbXF9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
-	Jake Hillion <jakehillion@meta.com>
-Subject: [PATCH 6.12 150/154] sched_ext: Fix incorrect assumption about migration disabled tasks in task_can_run_on_remote_rq()
-Date: Mon, 24 Feb 2025 15:35:49 +0100
-Message-ID: <20250224142612.918620591@linuxfoundation.org>
+	Kevin Brodsky <kevin.brodsky@arm.com>,
+	Aruna Ramakrishna <aruna.ramakrishna@oracle.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	Keith Lucas <keith.lucas@oracle.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Yifei Liu <yifei.l.liu@oracle.com>
+Subject: [PATCH 6.12 151/154] selftests/mm: build with -O2
+Date: Mon, 24 Feb 2025 15:35:50 +0100
+Message-ID: <20250224142612.957453182@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -51,106 +58,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Kevin Brodsky <kevin.brodsky@arm.com>
 
-commit f3f08c3acfb8860e07a22814a344e83c99ad7398 upstream.
+commit 46036188ea1f5266df23a6149dea0df1c77cd1c7 upstream.
 
-While fixing migration disabled task handling, 32966821574c ("sched_ext: Fix
-migration disabled handling in targeted dispatches") assumed that a
-migration disabled task's ->cpus_ptr would only have the pinned CPU. While
-this is eventually true for migration disabled tasks that are switched out,
-->cpus_ptr update is performed by migrate_disable_switch() which is called
-right before context_switch() in __scheduler(). However, the task is
-enqueued earlier during pick_next_task() via put_prev_task_scx(), so there
-is a race window where another CPU can see the task on a DSQ.
+The mm kselftests are currently built with no optimisation (-O0).  It's
+unclear why, and besides being obviously suboptimal, this also prevents
+the pkeys tests from working as intended.  Let's build all the tests with
+-O2.
 
-If the CPU tries to dispatch the migration disabled task while in that
-window, task_allowed_on_cpu() will succeed and task_can_run_on_remote_rq()
-will subsequently trigger SCHED_WARN(is_migration_disabled()).
-
-  WARNING: CPU: 8 PID: 1837 at kernel/sched/ext.c:2466 task_can_run_on_remote_rq+0x12e/0x140
-  Sched_ext: layered (enabled+all), task: runnable_at=-10ms
-  RIP: 0010:task_can_run_on_remote_rq+0x12e/0x140
-  ...
-   <TASK>
-   consume_dispatch_q+0xab/0x220
-   scx_bpf_dsq_move_to_local+0x58/0xd0
-   bpf_prog_84dd17b0654b6cf0_layered_dispatch+0x290/0x1cfa
-   bpf__sched_ext_ops_dispatch+0x4b/0xab
-   balance_one+0x1fe/0x3b0
-   balance_scx+0x61/0x1d0
-   prev_balance+0x46/0xc0
-   __pick_next_task+0x73/0x1c0
-   __schedule+0x206/0x1730
-   schedule+0x3a/0x160
-   __do_sys_sched_yield+0xe/0x20
-   do_syscall_64+0xbb/0x1e0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fix it by converting the SCHED_WARN() back to a regular failure path. Also,
-perform the migration disabled test before task_allowed_on_cpu() test so
-that BPF schedulers which fail to handle migration disabled tasks can be
-noticed easily.
-
-While at it, adjust scx_ops_error() message for !task_allowed_on_cpu() case
-for brevity and consistency.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Fixes: 32966821574c ("sched_ext: Fix migration disabled handling in targeted dispatches")
-Acked-by: Andrea Righi <arighi@nvidia.com>
-Reported-by: Jake Hillion <jakehillion@meta.com>
+[kevin.brodsky@arm.com: silence unused-result warnings]
+  Link: https://lkml.kernel.org/r/20250107170110.2819685-1-kevin.brodsky@arm.com
+Link: https://lkml.kernel.org/r/20241209095019.1732120-6-kevin.brodsky@arm.com
+Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
+Cc: Aruna Ramakrishna <aruna.ramakrishna@oracle.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Joey Gouly <joey.gouly@arm.com>
+Cc: Keith Lucas <keith.lucas@oracle.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Yifei: This commit also fix the failure of pkey_sighandler_tests_64,
+  which is also in linux-6.12.y, thus backport this commit. ]
+Signed-off-by: Yifei Liu <yifei.l.liu@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |   29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ tools/testing/selftests/mm/Makefile |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -2311,6 +2311,25 @@ static bool task_can_run_on_remote_rq(st
- 	SCHED_WARN_ON(task_cpu(p) == cpu);
+--- a/tools/testing/selftests/mm/Makefile
++++ b/tools/testing/selftests/mm/Makefile
+@@ -33,9 +33,16 @@ endif
+ # LDLIBS.
+ MAKEFLAGS += --no-builtin-rules
  
- 	/*
-+	 * If @p has migration disabled, @p->cpus_ptr is updated to contain only
-+	 * the pinned CPU in migrate_disable_switch() while @p is being switched
-+	 * out. However, put_prev_task_scx() is called before @p->cpus_ptr is
-+	 * updated and thus another CPU may see @p on a DSQ inbetween leading to
-+	 * @p passing the below task_allowed_on_cpu() check while migration is
-+	 * disabled.
-+	 *
-+	 * Test the migration disabled state first as the race window is narrow
-+	 * and the BPF scheduler failing to check migration disabled state can
-+	 * easily be masked if task_allowed_on_cpu() is done first.
-+	 */
-+	if (unlikely(is_migration_disabled(p))) {
-+		if (trigger_error)
-+			scx_ops_error("SCX_DSQ_LOCAL[_ON] cannot move migration disabled %s[%d] from CPU %d to %d",
-+				      p->comm, p->pid, task_cpu(p), cpu);
-+		return false;
-+	}
+-CFLAGS = -Wall -I $(top_srcdir) $(EXTRA_CFLAGS) $(KHDR_INCLUDES) $(TOOLS_INCLUDES)
++CFLAGS = -Wall -O2 -I $(top_srcdir) $(EXTRA_CFLAGS) $(KHDR_INCLUDES) $(TOOLS_INCLUDES)
+ LDLIBS = -lrt -lpthread -lm
+ 
++# Some distributions (such as Ubuntu) configure GCC so that _FORTIFY_SOURCE is
++# automatically enabled at -O1 or above. This triggers various unused-result
++# warnings where functions such as read() or write() are called and their
++# return value is not checked. Disable _FORTIFY_SOURCE to silence those
++# warnings.
++CFLAGS += -U_FORTIFY_SOURCE
 +
-+	/*
- 	 * We don't require the BPF scheduler to avoid dispatching to offline
- 	 * CPUs mostly for convenience but also because CPUs can go offline
- 	 * between scx_bpf_dispatch() calls and here. Trigger error iff the
-@@ -2318,17 +2337,11 @@ static bool task_can_run_on_remote_rq(st
- 	 */
- 	if (!task_allowed_on_cpu(p, cpu)) {
- 		if (trigger_error)
--			scx_ops_error("SCX_DSQ_LOCAL[_ON] verdict target cpu %d not allowed for %s[%d]",
--				      cpu_of(rq), p->comm, p->pid);
-+			scx_ops_error("SCX_DSQ_LOCAL[_ON] target CPU %d not allowed for %s[%d]",
-+				      cpu, p->comm, p->pid);
- 		return false;
- 	}
- 
--	/*
--	 * If @p has migration disabled, @p->cpus_ptr only contains its current
--	 * CPU and the above task_allowed_on_cpu() test should have failed.
--	 */
--	SCHED_WARN_ON(is_migration_disabled(p));
--
- 	if (!scx_rq_online(rq))
- 		return false;
- 
+ TEST_GEN_FILES = cow
+ TEST_GEN_FILES += compaction_test
+ TEST_GEN_FILES += gup_longterm
 
 
