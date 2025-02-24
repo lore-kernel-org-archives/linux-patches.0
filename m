@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F4F2571CB;
-	Mon, 24 Feb 2025 14:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48B92571CB;
+	Mon, 24 Feb 2025 14:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408839; cv=none; b=FC4PLbue3HH8sjY5K9veHguzqPfsbBBmU+xz4nVLps9yePRW6Fk5qUksAJzLDdn5l7GdWA5HFbAz/QjTjrYAVV+A6+qGQi607UG9RUEHaHjuMJKULiewlduBzdJ8AuBv2tFB8tBJfWwyMjneHB60DGAOIJSYUvAXZqp/ZUKLIgw=
+	t=1740408843; cv=none; b=L2b3pgYtD9rgLYiq1Ga1KBfkgW0KNneHKDJL1Hu1jK7AiklGmuey5VEDyk0GQkDzQSaTDgy0PMTQprYlUgA96JwqScdDMbtz8rZvaAU8icseZQInbsruUqcpusrPx0LK4c/tCm5rJWNHQes/ocVNkQzZ10DqBlZmvgSqAZtPVBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408839; c=relaxed/simple;
-	bh=5PR4vcGm9wPSjUOI68j96h0wbfgCnUp5eT7iUBd9sCU=;
+	s=arc-20240116; t=1740408843; c=relaxed/simple;
+	bh=OngfjGcfhBoyAnbhzGotD5FuNHVc2RyyVsi/WhOw5Cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VUD6zQqy2GSm3wu0ECsuZL3bXVnzD97EXdXEqpMHwAbynJfhuiS/rA7fNR1S04rF+MOo4gMwdvlXJI96D5r1Jp+KqAaDw0hC4Fi4c5Io7u8q0TtV1TxYs4vCaLBipNo0Qv4mfOKArwGeng7bs1mbzaV0g3wg31wGngzVkrsvuR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5eAJTqG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YR/UGXuFJpPw11LjBdFA4gM+fU6iUvE4aBo1dtpgMQLlhH2pFlEqYjYvXYjAbx+PT5WDE80XYDeWBIqAy+r+Z80XyEji1817UvWtIBP85lI50Xrihub3JtQ36EEH76fDGYW8K62x2I51r2icXh0n0cP+uI6UUHxHCmr8+64fHVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyGISA+J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5eAJTqG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3C0C4CED6;
-	Mon, 24 Feb 2025 14:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyGISA+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313BEC4CED6;
+	Mon, 24 Feb 2025 14:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408839;
-	bh=5PR4vcGm9wPSjUOI68j96h0wbfgCnUp5eT7iUBd9sCU=;
+	s=korg; t=1740408842;
+	bh=OngfjGcfhBoyAnbhzGotD5FuNHVc2RyyVsi/WhOw5Cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n5eAJTqGbLcVfAGRDgp4eJsEJ4A64JCstx7qTyrHOIpwtEreeFGHE3ZlfeoflNEMt
-	 Pe4EI/7xlklW6UotIHZxVg7KPct+I0yufJItBgIN40H78Le2I+8c+8EU7lE3Jo1Vgk
-	 DUl1aeL/uDBLekV/h+Vf8uKJ2+qIdMf+Ushn6a6U=
+	b=ZyGISA+JFHxQKOcpqSbCsP6P5FNnHKOTjwiUjijRIVNP/iOCmYe925YvqmdQXfE8F
+	 1bKWUZRHWoU9M8jzwB+PssB/bINXzgnSuoJHX41aMv58i1QaYD6s+f1QNrBlC+Dg2e
+	 JXoj3l0CGHHpma5kIvxa3ojqcqdLvhWCj651EHDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
+	Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 020/138] ASoC: rockchip: i2s-tdm: fix shift config for SND_SOC_DAIFMT_DSP_[AB]
-Date: Mon, 24 Feb 2025 15:34:10 +0100
-Message-ID: <20250224142605.260326683@linuxfoundation.org>
+Subject: [PATCH 6.13 021/138] ASoC: SOF: ipc4-topology: Harden loops for looking up ALH copiers
+Date: Mon, 24 Feb 2025 15:34:11 +0100
+Message-ID: <20250224142605.301252562@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -51,44 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 6b24e67b4056ba83b1e95e005b7e50fdb1cc6cf4 ]
+[ Upstream commit 6fd60136d256b3b948333ebdb3835f41a95ab7ef ]
 
-Commit 2f45a4e289779 ("ASoC: rockchip: i2s_tdm: Fixup config for
-SND_SOC_DAIFMT_DSP_A/B") applied a partial change to fix the
-configuration for DSP A and DSP B formats.
+Other, non DAI copier widgets could have the same  stream name (sname) as
+the ALH copier and in that case the copier->data is NULL, no alh_data is
+attached, which could lead to NULL pointer dereference.
+We could check for this NULL pointer in sof_ipc4_prepare_copier_module()
+and avoid the crash, but a similar loop in sof_ipc4_widget_setup_comp_dai()
+will miscalculate the ALH device count, causing broken audio.
 
-The shift control also needs updating to set the correct offset for
-frame data compared to LRCK.  Set the correct values.
+The correct fix is to harden the matching logic by making sure that the
+1. widget is a DAI widget - so dai = w->private is valid
+2. the dai (and thus the copier) is ALH copier
 
-Fixes: 081068fd64140 ("ASoC: rockchip: add support for i2s-tdm controller")
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Link: https://patch.msgid.link/20250204161311.2117240-1-jkeeping@inmusicbrands.com
+Fixes: a150345aa758 ("ASoC: SOF: ipc4-topology: add SoundWire/ALH aggregation support")
+Reported-by: Seppo Ingalsuo <seppo.ingalsuo@linux.intel.com>
+Link: https://github.com/thesofproject/sof/pull/9652
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20250206084642.14988-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/rockchip_i2s_tdm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/sof/ipc4-topology.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/rockchip/rockchip_i2s_tdm.c b/sound/soc/rockchip/rockchip_i2s_tdm.c
-index acd75e48851fc..7feefeb6b876d 100644
---- a/sound/soc/rockchip/rockchip_i2s_tdm.c
-+++ b/sound/soc/rockchip/rockchip_i2s_tdm.c
-@@ -451,11 +451,11 @@ static int rockchip_i2s_tdm_set_fmt(struct snd_soc_dai *cpu_dai,
- 			break;
- 		case SND_SOC_DAIFMT_DSP_A:
- 			val = I2S_TXCR_TFS_TDM_PCM;
--			tdm_val = TDM_SHIFT_CTRL(0);
-+			tdm_val = TDM_SHIFT_CTRL(2);
- 			break;
- 		case SND_SOC_DAIFMT_DSP_B:
- 			val = I2S_TXCR_TFS_TDM_PCM;
--			tdm_val = TDM_SHIFT_CTRL(2);
-+			tdm_val = TDM_SHIFT_CTRL(4);
- 			break;
- 		default:
- 			ret = -EINVAL;
+diff --git a/sound/soc/sof/ipc4-topology.c b/sound/soc/sof/ipc4-topology.c
+index b55eb977e443d..70b7bfb080f47 100644
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -765,10 +765,16 @@ static int sof_ipc4_widget_setup_comp_dai(struct snd_sof_widget *swidget)
+ 		}
+ 
+ 		list_for_each_entry(w, &sdev->widget_list, list) {
+-			if (w->widget->sname &&
++			struct snd_sof_dai *alh_dai;
++
++			if (!WIDGET_IS_DAI(w->id) || !w->widget->sname ||
+ 			    strcmp(w->widget->sname, swidget->widget->sname))
+ 				continue;
+ 
++			alh_dai = w->private;
++			if (alh_dai->type != SOF_DAI_INTEL_ALH)
++				continue;
++
+ 			blob->alh_cfg.device_count++;
+ 		}
+ 
+@@ -2061,11 +2067,13 @@ sof_ipc4_prepare_copier_module(struct snd_sof_widget *swidget,
+ 			list_for_each_entry(w, &sdev->widget_list, list) {
+ 				u32 node_type;
+ 
+-				if (w->widget->sname &&
++				if (!WIDGET_IS_DAI(w->id) || !w->widget->sname ||
+ 				    strcmp(w->widget->sname, swidget->widget->sname))
+ 					continue;
+ 
+ 				dai = w->private;
++				if (dai->type != SOF_DAI_INTEL_ALH)
++					continue;
+ 				alh_copier = (struct sof_ipc4_copier *)dai->private;
+ 				alh_data = &alh_copier->data;
+ 				node_type = SOF_IPC4_GET_NODE_TYPE(alh_data->gtw_cfg.node_id);
 -- 
 2.39.5
 
