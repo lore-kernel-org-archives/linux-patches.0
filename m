@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40014254863;
-	Mon, 24 Feb 2025 14:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECE025485D;
+	Mon, 24 Feb 2025 14:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408342; cv=none; b=IB78Lxsyq1zkL+kXOLEkNzsNdDRm85B5+UL19kcv/fiopmJYRHlmaatE9Wr7kWCO+qQzcKAT2/HkP5aZ/n/uXuDmKGrvoLjUY+Jn5mqNKvVPWQhrwBpoIy+4jjtmp4jw/PaXEmIDQreNBBjdOs+hH33PglnY5xIjvPxVv1KaHac=
+	t=1740408345; cv=none; b=f5frK+Sb1I3cAigD89/6aTM+eEVdXLHm+kMVOZQ6QC5bp6sUQ0TANs8J+aJJrgggh1powfNwA9fjwRtmqBF9KwuxNw8nluJKe17JrXiv4t4tn0f2fr1iqXRf5iGdn43X7Mx2AQOv+eqJcNzbo3E8Ebw1c4MsPVQFPZ6QnE/hnoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408342; c=relaxed/simple;
-	bh=TAYpFPzzjML0TRN2bysKfN4mDHrdKcOtFOhT1L+dgTE=;
+	s=arc-20240116; t=1740408345; c=relaxed/simple;
+	bh=dN2wFG8lvfqMeQBIE4iRFGgdSHB0lGyVR+VAg4LUSaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aqRYK1U7fdnMReNrV5zcUTwav54qCKNEUelAf1rnf+8hbQqqxldn77d9fVc9EKAQjG1RY+AAj0HjRym+y6NQHakweuzOAR22NE6O2D4u62Iwno0YsmgwsryALS9crmZBMG2AKvhtQrvUzXJmg11EpGWof1RiT12CxxbIemZ8T9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQ186IJR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SPF75whdRAPGtqkQT2gzDalgryuPYW19HuqNyWU+H1QMw8uHk7050d+rQMZIAX6nP3g2NDR/pxgkrdXDw94fzNtuVdntYr0sKRZreGk5TU93vo4v1uaobSF8Q41n9U0+X2X8n2urvIfYDXk6LYHelmYDVrrJW93Vhh2BNJUhVH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqNPaFah; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQ186IJR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BE5C4CED6;
-	Mon, 24 Feb 2025 14:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqNPaFah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C6EC4CEE8;
+	Mon, 24 Feb 2025 14:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408341;
-	bh=TAYpFPzzjML0TRN2bysKfN4mDHrdKcOtFOhT1L+dgTE=;
+	s=korg; t=1740408345;
+	bh=dN2wFG8lvfqMeQBIE4iRFGgdSHB0lGyVR+VAg4LUSaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CQ186IJRjpfRtHgZCfgw+bHhrJnsiZqNn5US1cGU7tEGMcBJbQ8ZOg30doDE+lTDe
-	 B3ma26uxir6uEFgiqpp7E4yHIiWsciWjenQZw+qfyUInYgTNp2bLy49dq+NN81ym0w
-	 MPjJT/GQneme/vhn1dcj5iZW9YepwF5A3Sua9ORM=
+	b=sqNPaFah+4LE58yfr6VUTDrjhLyI1j9iUL2j+OTRwkyE1tqdOptCxq+AN7ucAtfjB
+	 NVDN8hAemmZPcSXCP1CUG6hYju+LkE7UBs7U9+piI6K9BY6Gxac/T48veeoKVxGqug
+	 O7ZiteVIIawcI3w0A/25dBD/CQ8qej0UHwj4e7qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Philipp Stanner <pstanner@redhat.com>,
+	Fabien Parent <fparent@baylibre.com>,
+	Pin-yen Lin <treapking@chromium.org>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/154] PCI: Restore original INTX_DISABLE bit by pcim_intx()
-Date: Mon, 24 Feb 2025 15:33:49 +0100
-Message-ID: <20250224142608.265870886@linuxfoundation.org>
+Subject: [PATCH 6.12 031/154] arm64: dts: mediatek: mt8183-pumpkin: add HDMI support
+Date: Mon, 24 Feb 2025 15:33:50 +0100
+Message-ID: <20250224142608.304733388@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -46,115 +47,186 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Fabien Parent <fparent@baylibre.com>
 
-[ Upstream commit d555ed45a5a10a813528c7685f432369d536ae3d ]
+[ Upstream commit 72f3e3d68cfda508ec4b6c8927c50814229cd04e ]
 
-pcim_intx() tries to restore the INTx bit at removal via devres, but there
-is a chance that it restores a wrong value.
+The MT8183 Pumpkin board has a micro-HDMI connector. HDMI support is
+provided by an IT66121 DPI <-> HDMI bridge.
 
-Because the value to be restored is blindly assumed to be the negative of
-the enable argument, when a driver calls pcim_intx() unnecessarily for the
-already enabled state, it'll restore to the disabled state in turn.  That
-is, the function assumes the case like:
+Enable the DPI and add the node for the IT66121 bridge.
 
-  // INTx == 1
-  pcim_intx(pdev, 0); // old INTx value assumed to be 1 -> correct
-
-but it might be like the following, too:
-
-  // INTx == 0
-  pcim_intx(pdev, 0); // old INTx value assumed to be 1 -> wrong
-
-Also, when a driver calls pcim_intx() multiple times with different enable
-argument values, the last one will win no matter what value it is.  This
-can lead to inconsistency, e.g.
-
-  // INTx == 1
-  pcim_intx(pdev, 0); // OK
-  ...
-  pcim_intx(pdev, 1); // now old INTx wrongly assumed to be 0
-
-This patch addresses those inconsistencies by saving the original INTx
-state at the first pcim_intx() call.  For that, get_or_create_intx_devres()
-is folded into pcim_intx() caller side; it allows us to simply check the
-already allocated devres and record the original INTx along with the
-devres_alloc() call.
-
-Link: https://lore.kernel.org/r/20241031134300.10296-1-tiwai@suse.de
-Fixes: 25216afc9db5 ("PCI: Add managed pcim_intx()")
-Link: https://lore.kernel.org/87v7xk2ps5.wl-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Philipp Stanner <pstanner@redhat.com>
-Cc: stable@vger.kernel.org	# v6.11+
+Signed-off-by: Fabien Parent <fparent@baylibre.com>
+Co-developed-by: Pin-yen Lin <treapking@chromium.org>
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Link: https://lore.kernel.org/r/20240919094212.1902073-1-treapking@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Stable-dep-of: 26f6e91fa29a ("arm64: dts: mediatek: mt8183: Disable DSI display output by default")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/devres.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ .../boot/dts/mediatek/mt8183-pumpkin.dts      | 123 ++++++++++++++++++
+ 1 file changed, 123 insertions(+)
 
-diff --git a/drivers/pci/devres.c b/drivers/pci/devres.c
-index 70f1a46d07c5e..643f85849ef64 100644
---- a/drivers/pci/devres.c
-+++ b/drivers/pci/devres.c
-@@ -419,19 +419,12 @@ static void pcim_intx_restore(struct device *dev, void *data)
- 	pci_intx(pdev, res->orig_intx);
- }
- 
--static struct pcim_intx_devres *get_or_create_intx_devres(struct device *dev)
-+static void save_orig_intx(struct pci_dev *pdev, struct pcim_intx_devres *res)
- {
--	struct pcim_intx_devres *res;
--
--	res = devres_find(dev, pcim_intx_restore, NULL, NULL);
--	if (res)
--		return res;
-+	u16 pci_command;
- 
--	res = devres_alloc(pcim_intx_restore, sizeof(*res), GFP_KERNEL);
--	if (res)
--		devres_add(dev, res);
--
--	return res;
-+	pci_read_config_word(pdev, PCI_COMMAND, &pci_command);
-+	res->orig_intx = !(pci_command & PCI_COMMAND_INTX_DISABLE);
- }
- 
- /**
-@@ -447,12 +440,23 @@ static struct pcim_intx_devres *get_or_create_intx_devres(struct device *dev)
- int pcim_intx(struct pci_dev *pdev, int enable)
- {
- 	struct pcim_intx_devres *res;
-+	struct device *dev = &pdev->dev;
- 
--	res = get_or_create_intx_devres(&pdev->dev);
--	if (!res)
--		return -ENOMEM;
-+	/*
-+	 * pcim_intx() must only restore the INTx value that existed before the
-+	 * driver was loaded, i.e., before it called pcim_intx() for the
-+	 * first time.
-+	 */
-+	res = devres_find(dev, pcim_intx_restore, NULL, NULL);
-+	if (!res) {
-+		res = devres_alloc(pcim_intx_restore, sizeof(*res), GFP_KERNEL);
-+		if (!res)
-+			return -ENOMEM;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts b/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts
+index 1aa668c3ccf92..61a6f66914b86 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts
+@@ -63,6 +63,18 @@
+ 		pulldown-ohm = <0>;
+ 		io-channels = <&auxadc 0>;
+ 	};
 +
-+		save_orig_intx(pdev, res);
-+		devres_add(dev, res);
-+	}
++	connector {
++		compatible = "hdmi-connector";
++		label = "hdmi";
++		type = "d";
++
++		port {
++			hdmi_connector_in: endpoint {
++				remote-endpoint = <&hdmi_connector_out>;
++			};
++		};
++	};
+ };
  
--	res->orig_intx = !enable;
- 	pci_intx(pdev, enable);
+ &auxadc {
+@@ -120,6 +132,43 @@
+ 	pinctrl-0 = <&i2c6_pins>;
+ 	status = "okay";
+ 	clock-frequency = <100000>;
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	it66121hdmitx: hdmitx@4c {
++		compatible = "ite,it66121";
++		reg = <0x4c>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&ite_pins>;
++		reset-gpios = <&pio 160 GPIO_ACTIVE_LOW>;
++		interrupt-parent = <&pio>;
++		interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
++		vcn33-supply = <&mt6358_vcn33_reg>;
++		vcn18-supply = <&mt6358_vcn18_reg>;
++		vrf12-supply = <&mt6358_vrf12_reg>;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				it66121_in: endpoint {
++					bus-width = <12>;
++					remote-endpoint = <&dpi_out>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++
++				hdmi_connector_out: endpoint {
++					remote-endpoint = <&hdmi_connector_in>;
++				};
++			};
++		};
++	};
+ };
  
- 	return 0;
+ &keyboard {
+@@ -362,6 +411,67 @@
+ 			input-enable;
+ 		};
+ 	};
++
++	ite_pins: ite-pins {
++		pins-irq {
++			pinmux = <PINMUX_GPIO4__FUNC_GPIO4>;
++			input-enable;
++			bias-pull-up;
++		};
++
++		pins-rst {
++			pinmux = <PINMUX_GPIO160__FUNC_GPIO160>;
++			output-high;
++		};
++	};
++
++	dpi_func_pins: dpi-func-pins {
++		pins-dpi {
++			pinmux = <PINMUX_GPIO12__FUNC_I2S5_BCK>,
++				 <PINMUX_GPIO46__FUNC_I2S5_LRCK>,
++				 <PINMUX_GPIO47__FUNC_I2S5_DO>,
++				 <PINMUX_GPIO13__FUNC_DBPI_D0>,
++				 <PINMUX_GPIO14__FUNC_DBPI_D1>,
++				 <PINMUX_GPIO15__FUNC_DBPI_D2>,
++				 <PINMUX_GPIO16__FUNC_DBPI_D3>,
++				 <PINMUX_GPIO17__FUNC_DBPI_D4>,
++				 <PINMUX_GPIO18__FUNC_DBPI_D5>,
++				 <PINMUX_GPIO19__FUNC_DBPI_D6>,
++				 <PINMUX_GPIO20__FUNC_DBPI_D7>,
++				 <PINMUX_GPIO21__FUNC_DBPI_D8>,
++				 <PINMUX_GPIO22__FUNC_DBPI_D9>,
++				 <PINMUX_GPIO23__FUNC_DBPI_D10>,
++				 <PINMUX_GPIO24__FUNC_DBPI_D11>,
++				 <PINMUX_GPIO25__FUNC_DBPI_HSYNC>,
++				 <PINMUX_GPIO26__FUNC_DBPI_VSYNC>,
++				 <PINMUX_GPIO27__FUNC_DBPI_DE>,
++				 <PINMUX_GPIO28__FUNC_DBPI_CK>;
++		};
++	};
++
++	dpi_idle_pins: dpi-idle-pins {
++		pins-idle {
++			pinmux = <PINMUX_GPIO12__FUNC_GPIO12>,
++				 <PINMUX_GPIO46__FUNC_GPIO46>,
++				 <PINMUX_GPIO47__FUNC_GPIO47>,
++				 <PINMUX_GPIO13__FUNC_GPIO13>,
++				 <PINMUX_GPIO14__FUNC_GPIO14>,
++				 <PINMUX_GPIO15__FUNC_GPIO15>,
++				 <PINMUX_GPIO16__FUNC_GPIO16>,
++				 <PINMUX_GPIO17__FUNC_GPIO17>,
++				 <PINMUX_GPIO18__FUNC_GPIO18>,
++				 <PINMUX_GPIO19__FUNC_GPIO19>,
++				 <PINMUX_GPIO20__FUNC_GPIO20>,
++				 <PINMUX_GPIO21__FUNC_GPIO21>,
++				 <PINMUX_GPIO22__FUNC_GPIO22>,
++				 <PINMUX_GPIO23__FUNC_GPIO23>,
++				 <PINMUX_GPIO24__FUNC_GPIO24>,
++				 <PINMUX_GPIO25__FUNC_GPIO25>,
++				 <PINMUX_GPIO26__FUNC_GPIO26>,
++				 <PINMUX_GPIO27__FUNC_GPIO27>,
++				 <PINMUX_GPIO28__FUNC_GPIO28>;
++		};
++	};
+ };
+ 
+ &pmic {
+@@ -415,3 +525,16 @@
+ &dsi0 {
+ 	status = "disabled";
+ };
++
++&dpi0 {
++	pinctrl-names = "default", "sleep";
++	pinctrl-0 = <&dpi_func_pins>;
++	pinctrl-1 = <&dpi_idle_pins>;
++	status = "okay";
++
++	port {
++		dpi_out: endpoint {
++			remote-endpoint = <&it66121_in>;
++		};
++	};
++};
 -- 
 2.39.5
 
