@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673EA2837B;
-	Mon, 24 Feb 2025 14:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15EE2837B;
+	Mon, 24 Feb 2025 14:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409027; cv=none; b=gMSkxjRSigi7GG4Jxy1w+ZOLAqnplhcwJozovMbftkTafXdzmwQoz4jYwqcnnz3pcauE5PN1rMw2BuaIXoVFTFDJaQAWFsm33xlCt914GQut2Q/HpszXhC9JXiIsaFOElUbZRiT5dImZfkPfFUmHVhJvTmIRryh3e5zIXZMUJ3Q=
+	t=1740409030; cv=none; b=p+en3FyeCS+Gm9Q6fe00a1gywHoYpfKNSl7TTm1WNff2iMOn4Iqi8B+rQp9E5FZrRJAEUmuprf2Onsi0vmsjd/N/GCZ2Qi1gbl0OWy8J5jrdZJ6XNSOMbE4yan1hKu60bO6MAHyVeVKf2NB2bqEGbQWkj2lEYqnpaM3ECFuuOG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409027; c=relaxed/simple;
-	bh=BFtE77ypvExws955kAwdoQ3+qCsMi+HgF1hb2nHJssE=;
+	s=arc-20240116; t=1740409030; c=relaxed/simple;
+	bh=s2qYv/oCo21kow6aevjQkv9pB5M5qmJHBEe9uulUsHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=boN7tXR7oGShUF7QjXcX8VP5CXO+Q4FzNkWxLyHmc5ypo5Nkm9q0cAt+W4J3uCmjxa3idlHkm5+4HiF0tpVm4WaFmi9FyCbM90+saYXIo1UtBvxPGdmgnqfrI7Qxzb05ruGA/OuhcO6Ow0vJruWPV811EduLZZRTCyMXgs/alQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJaN2o08; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gKlp1pklLgIVtumkhMq7cI0l/vx4I6KqWkLAPCYdTINSp3pM4NyKbBPaTXTtHLtad6YUuqiL+kyAsal6p4PA2BDozHk7Ywxr9maFk0vqaiey7cKMWDjrzPxBJlJzY/ZoX7mKzAw1e9pxHVQlq169LsvSLn6zFPLYDeIEHYDcCdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijUCWrQZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJaN2o08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9322C4CED6;
-	Mon, 24 Feb 2025 14:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijUCWrQZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33864C4CED6;
+	Mon, 24 Feb 2025 14:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409027;
-	bh=BFtE77ypvExws955kAwdoQ3+qCsMi+HgF1hb2nHJssE=;
+	s=korg; t=1740409030;
+	bh=s2qYv/oCo21kow6aevjQkv9pB5M5qmJHBEe9uulUsHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJaN2o08fOz2mTnIzXvE5LoKbyXIxEn2UTbQL1qTOrgUKRNYaL8wUoIM7e2lSeLrN
-	 F/vgmOAHCa2BkJHAacWPe68lLIyRbw2MHSukKwNbpCvkrM4W1KdaPP8TX/KH4TVu2c
-	 5G+SYcGTXTln1RD6NfCkZU0bg5zwzwoSW9rUFiV0=
+	b=ijUCWrQZYId1mRC3fMHKmibSNWEFqHd7e3rmaNrXQVGl0Ebg4TVDFIKKsFzPx/2TB
+	 DzxpblyDkv8D6TpxdOP9KBbALVX6jWzNk+a+qwghXojfT3wCutNvJ81LWHmgr3WK9X
+	 wS3YTGe1nYbYuxKztV9b9NX7+hi/DOsWBcLJT3QU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilia Levi <ilia.levi@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Andrey Vatoropin <a.vatoropin@crpt.ru>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 076/138] drm/xe: Make irq enabled flag atomic
-Date: Mon, 24 Feb 2025 15:35:06 +0100
-Message-ID: <20250224142607.462894819@linuxfoundation.org>
+Subject: [PATCH 6.13 059/138] power: supply: da9150-fg: fix potential overflow
+Date: Mon, 24 Feb 2025 15:34:49 +0100
+Message-ID: <20250224142606.801030323@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -51,151 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilia Levi <ilia.levi@intel.com>
+From: Andrey Vatoropin <a.vatoropin@crpt.ru>
 
-[ Upstream commit 4d79a1266d4cc3c967bc8823502466cad1ac8514 ]
+[ Upstream commit 3fb3cb4350befc4f901c54e0cb4a2a47b1302e08 ]
 
-The irq.enabled flag was protected by a spin lock (irq.lock).
-By making it atomic we no longer need to wait for the spin lock in
-irq handlers. This will become especially useful for MSI-X irq
-handlers to prevent lock contention between different interrupts.
+Size of variable sd_gain equals four bytes - DA9150_QIF_SD_GAIN_SIZE.
+Size of variable shunt_val equals two bytes - DA9150_QIF_SHUNT_VAL_SIZE.
 
-Signed-off-by: Ilia Levi <ilia.levi@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241210173506.202150-1-ilia.levi@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Stable-dep-of: 0c455f3a1229 ("drm/xe: Fix error handling in xe_irq_install()")
+The expression sd_gain * shunt_val is currently being evaluated using
+32-bit arithmetic. So during the multiplication an overflow may occur.
+
+As the value of type 'u64' is used as storage for the eventual result, put
+ULL variable at the first position of each expression in order to give the
+compiler complete information about the proper arithmetic to use. According
+to C99 the guaranteed width for a variable of type 'unsigned long long' >=
+64 bits.
+
+Remove the explicit cast to u64 as it is meaningless.
+
+Just for the sake of consistency, perform the similar trick with another
+expression concerning 'iavg'.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a419b4fd9138 ("power: Add support for DA9150 Fuel-Gauge")
+Signed-off-by: Andrey Vatoropin <a.vatoropin@crpt.ru>
+Link: https://lore.kernel.org/r/20250130090030.53422-1-a.vatoropin@crpt.ru
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/display/ext/i915_irq.c | 13 +---------
- drivers/gpu/drm/xe/xe_device_types.h      |  2 +-
- drivers/gpu/drm/xe/xe_irq.c               | 29 ++++++-----------------
- 3 files changed, 9 insertions(+), 35 deletions(-)
+ drivers/power/supply/da9150-fg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/display/ext/i915_irq.c b/drivers/gpu/drm/xe/display/ext/i915_irq.c
-index a7dbc6554d694..ac4cda2d81c7a 100644
---- a/drivers/gpu/drm/xe/display/ext/i915_irq.c
-+++ b/drivers/gpu/drm/xe/display/ext/i915_irq.c
-@@ -53,18 +53,7 @@ void gen2_irq_init(struct intel_uncore *uncore, struct i915_irq_regs regs,
+diff --git a/drivers/power/supply/da9150-fg.c b/drivers/power/supply/da9150-fg.c
+index 652c1f213af1c..4f28ef1bba1a3 100644
+--- a/drivers/power/supply/da9150-fg.c
++++ b/drivers/power/supply/da9150-fg.c
+@@ -247,9 +247,9 @@ static int da9150_fg_current_avg(struct da9150_fg *fg,
+ 				      DA9150_QIF_SD_GAIN_SIZE);
+ 	da9150_fg_read_sync_end(fg);
  
- bool intel_irqs_enabled(struct xe_device *xe)
- {
--	/*
--	 * XXX: i915 has a racy handling of the irq.enabled, since it doesn't
--	 * lock its transitions. Because of that, the irq.enabled sometimes
--	 * is not read with the irq.lock in place.
--	 * However, the most critical cases like vblank and page flips are
--	 * properly using the locks.
--	 * We cannot take the lock in here or run any kind of assert because
--	 * of i915 inconsistency.
--	 * But at this point the xe irq is better protected against races,
--	 * although the full solution would be protecting the i915 side.
--	 */
--	return xe->irq.enabled;
-+	return atomic_read(&xe->irq.enabled);
- }
+-	div = (u64) (sd_gain * shunt_val * 65536ULL);
++	div = 65536ULL * sd_gain * shunt_val;
+ 	do_div(div, 1000000);
+-	res = (u64) (iavg * 1000000ULL);
++	res = 1000000ULL * iavg;
+ 	do_div(res, div);
  
- void intel_synchronize_irq(struct xe_device *xe)
-diff --git a/drivers/gpu/drm/xe/xe_device_types.h b/drivers/gpu/drm/xe/xe_device_types.h
-index b9ea455d6f59f..09068ea7349a8 100644
---- a/drivers/gpu/drm/xe/xe_device_types.h
-+++ b/drivers/gpu/drm/xe/xe_device_types.h
-@@ -345,7 +345,7 @@ struct xe_device {
- 		spinlock_t lock;
- 
- 		/** @irq.enabled: interrupts enabled on this device */
--		bool enabled;
-+		atomic_t enabled;
- 	} irq;
- 
- 	/** @ttm: ttm device */
-diff --git a/drivers/gpu/drm/xe/xe_irq.c b/drivers/gpu/drm/xe/xe_irq.c
-index b7995ebd54abd..32547b6a6d1cb 100644
---- a/drivers/gpu/drm/xe/xe_irq.c
-+++ b/drivers/gpu/drm/xe/xe_irq.c
-@@ -348,12 +348,8 @@ static irqreturn_t xelp_irq_handler(int irq, void *arg)
- 	unsigned long intr_dw[2];
- 	u32 identity[32];
- 
--	spin_lock(&xe->irq.lock);
--	if (!xe->irq.enabled) {
--		spin_unlock(&xe->irq.lock);
-+	if (!atomic_read(&xe->irq.enabled))
- 		return IRQ_NONE;
--	}
--	spin_unlock(&xe->irq.lock);
- 
- 	master_ctl = xelp_intr_disable(xe);
- 	if (!master_ctl) {
-@@ -417,12 +413,8 @@ static irqreturn_t dg1_irq_handler(int irq, void *arg)
- 
- 	/* TODO: This really shouldn't be copied+pasted */
- 
--	spin_lock(&xe->irq.lock);
--	if (!xe->irq.enabled) {
--		spin_unlock(&xe->irq.lock);
-+	if (!atomic_read(&xe->irq.enabled))
- 		return IRQ_NONE;
--	}
--	spin_unlock(&xe->irq.lock);
- 
- 	master_tile_ctl = dg1_intr_disable(xe);
- 	if (!master_tile_ctl) {
-@@ -644,12 +636,8 @@ static irqreturn_t vf_mem_irq_handler(int irq, void *arg)
- 	struct xe_tile *tile;
- 	unsigned int id;
- 
--	spin_lock(&xe->irq.lock);
--	if (!xe->irq.enabled) {
--		spin_unlock(&xe->irq.lock);
-+	if (!atomic_read(&xe->irq.enabled))
- 		return IRQ_NONE;
--	}
--	spin_unlock(&xe->irq.lock);
- 
- 	for_each_tile(tile, xe, id)
- 		xe_memirq_handler(&tile->memirq);
-@@ -674,10 +662,9 @@ static void irq_uninstall(void *arg)
- 	struct pci_dev *pdev = to_pci_dev(xe->drm.dev);
- 	int irq;
- 
--	if (!xe->irq.enabled)
-+	if (!atomic_xchg(&xe->irq.enabled, 0))
- 		return;
- 
--	xe->irq.enabled = false;
- 	xe_irq_reset(xe);
- 
- 	irq = pci_irq_vector(pdev, 0);
-@@ -724,7 +711,7 @@ int xe_irq_install(struct xe_device *xe)
- 		return err;
- 	}
- 
--	xe->irq.enabled = true;
-+	atomic_set(&xe->irq.enabled, 1);
- 
- 	xe_irq_postinstall(xe);
- 
-@@ -744,9 +731,7 @@ void xe_irq_suspend(struct xe_device *xe)
- {
- 	int irq = to_pci_dev(xe->drm.dev)->irq;
- 
--	spin_lock_irq(&xe->irq.lock);
--	xe->irq.enabled = false; /* no new irqs */
--	spin_unlock_irq(&xe->irq.lock);
-+	atomic_set(&xe->irq.enabled, 0); /* no new irqs */
- 
- 	synchronize_irq(irq); /* flush irqs */
- 	xe_irq_reset(xe); /* turn irqs off */
-@@ -762,7 +747,7 @@ void xe_irq_resume(struct xe_device *xe)
- 	 * 1. no irq will arrive before the postinstall
- 	 * 2. display is not yet resumed
- 	 */
--	xe->irq.enabled = true;
-+	atomic_set(&xe->irq.enabled, 1);
- 	xe_irq_reset(xe);
- 	xe_irq_postinstall(xe); /* turn irqs on */
- 
+ 	val->intval = (int) res;
 -- 
 2.39.5
 
