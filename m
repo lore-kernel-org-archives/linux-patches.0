@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D63424886B;
-	Mon, 24 Feb 2025 14:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E8038DD8;
+	Mon, 24 Feb 2025 14:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409010; cv=none; b=Hqn+KSeYFIVXJPFTaVB2krkIEaVB1sIyBQ4/U0Lgvn14EOPThhbtIp/6B60beeihB1DgTxQweU6LJhOLiAkzYpRgglObNkdCWqoLQUA1Saz6bhQuClfU9FSNZdvYBghRLd6nrBp/Uc0gwoG7DSn/nk3Dzw4l6RQZW/rkEbCnb7k=
+	t=1740409013; cv=none; b=kICpyanpNwa7WjmlaAEegMl7jj57pbGt4iWKiHDm1xZNwQqgIaHyPl4M20mXG0gNHGdz6HINVXRwbr68XT3rVpJAtPodxUOQjB8jzuG9GHp0KA4R/z0r1xfekbeDHlAq1DTOSwxsNPLjpJUMtEtfBmUJsBOfdvjMLFHOedNR4qY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409010; c=relaxed/simple;
-	bh=+mSXZ8ZNfuoBunKGgd/CW8NDqr5+hIZ6VzUO1QgBF7Q=;
+	s=arc-20240116; t=1740409013; c=relaxed/simple;
+	bh=95KCCsBXI0i7AO57MX8B4nSj+IUu9UNJyU/cstF9iPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F8UNTJwNtXT0OmVD588Hog5ApUb3IeIw+UVgtgG0wuenXkECAKAT7LzOPPl35Hf6jFZITVRx6rlfeAeo6pCAh/ivau3WYIWpUSPLNicCaiML7v7eCTBdAaBe0wexfzW5B+/hU5tAfpUI0hF107osUxmB3AOtKID7Xdh90VjHFas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVE216/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NJjdZMuu7hNcVYABUaP5Epv5kp5I7SrjLpiU26Qzynk/NjUuC3hyGi5x9VGchQ4uzXUKw9P77+caMxzUORCKPTyIuvu4F5kaDiPBdaS9qpnfJcusYKfEnNAg+KRnVk221R2E5Iec7Nj/SY6g2f5tNRYoHERODAKThi5q/DjypdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WqlKoRXY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVE216/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628FBC4CED6;
-	Mon, 24 Feb 2025 14:56:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqlKoRXY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B6CC4CED6;
+	Mon, 24 Feb 2025 14:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409010;
-	bh=+mSXZ8ZNfuoBunKGgd/CW8NDqr5+hIZ6VzUO1QgBF7Q=;
+	s=korg; t=1740409013;
+	bh=95KCCsBXI0i7AO57MX8B4nSj+IUu9UNJyU/cstF9iPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jVE216/QrFL7+79DgAePtI1sK80gXwcCGuBWgYGepHJv4FtbxhCSupQaBSutF6+CZ
-	 YYtUUTreNjYFywPNc84c7Dr8XQBLP260vk7bgpafe2Y74RENMlS+GJM6Gxl10c+udZ
-	 EUxXCUHuvO86bbDuK+lJ/xYiA+TBDhObhu9HG3Yo=
+	b=WqlKoRXYgkPrhZgt4eii9NPJ1kZXvu5FLNxQ6iyW9NQNOuzRkEr6snUTAVQPuiQXT
+	 TJ0yvRsLDa5uDNxd5dswnHzqJ0z0u7WpcgkaUDarLckH0jDt7W8n0A0gJSRy/JqLhY
+	 dH2T2RUgD7/efEb92WlKB5/xcJZwxFMCKiI+src4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 071/138] drm/msm/dpu: enable DPU_WB_INPUT_CTRL for DPU 5.x
-Date: Mon, 24 Feb 2025 15:35:01 +0100
-Message-ID: <20250224142607.266642195@linuxfoundation.org>
+Subject: [PATCH 6.13 072/138] drm/msm/dpu: Dont leak bits_per_component into random DSC_ENC fields
+Date: Mon, 24 Feb 2025 15:35:02 +0100
+Message-ID: <20250224142607.305954114@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -51,68 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit af0a4a2090cce732c70ad6c5f4145b43f39e3fe9 ]
+[ Upstream commit 144429831f447223253a0e4376489f84ff37d1a7 ]
 
-Several DPU 5.x platforms are supposed to be using DPU_WB_INPUT_CTRL,
-to bind WB and PINGPONG blocks, but they do not. Change those platforms
-to use WB_SM8250_MASK, which includes that bit.
+What used to be the input_10_bits boolean - feeding into the lowest
+bit of DSC_ENC - on MSM downstream turned into an accidental OR with
+the full bits_per_component number when it was ported to the upstream
+kernel.
 
-Fixes: 1f5bcc4316b3 ("drm/msm/dpu: enable writeback on SC8108X")
-Fixes: ab2b03d73a66 ("drm/msm/dpu: enable writeback on SM6125")
-Fixes: 47cebb740a83 ("drm/msm/dpu: enable writeback on SM8150")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On typical bpc=8 setups we don't notice this because line_buf_depth is
+always an odd value (it contains bpc+1) and will also set the 4th bit
+after left-shifting by 3 (hence this |= bits_per_component is a no-op).
+
+Now that guards are being removed to allow more bits_per_component
+values besides 8 (possible since commit 49fd30a7153b ("drm/msm/dsi: use
+DRM DSC helpers for DSC setup")), a bpc of 10 will instead clash with
+the 5th bit which is convert_rgb.  This is "fortunately" also always set
+to true by MSM's dsi_populate_dsc_params() already, but once a bpc of 12
+starts being used it'll write into simple_422 which is normally false.
+
+To solve all these overlaps, simply replicate downstream code and only
+set this lowest bit if bits_per_component is equal to 10.  It is unclear
+why DSC requires this only for bpc=10 but not bpc=12, and also notice
+that this lowest bit wasn't set previously despite having a panel and
+patch on the list using it without any mentioned issues.
+
+Fixes: c110cfd1753e ("drm/msm/disp/dpu1: Add support for DSC")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/628876/
-Link: https://lore.kernel.org/r/20241214-dpu-drop-features-v1-2-988f0662cb7e@linaro.org
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/636311/
+Link: https://lore.kernel.org/r/20250211-dsc-10-bit-v1-1-1c85a9430d9a@somainline.org
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h  | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h  | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-index 421afacb72480..36cc9dbc00b5c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
-@@ -297,7 +297,7 @@ static const struct dpu_wb_cfg sm8150_wb[] = {
- 	{
- 		.name = "wb_2", .id = WB_2,
- 		.base = 0x65000, .len = 0x2c8,
--		.features = WB_SDM845_MASK,
-+		.features = WB_SM8250_MASK,
- 		.format_list = wb2_formats_rgb,
- 		.num_formats = ARRAY_SIZE(wb2_formats_rgb),
- 		.clk_ctrl = DPU_CLK_CTRL_WB2,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-index 641023b102bf5..e8eacdb47967a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-@@ -304,7 +304,7 @@ static const struct dpu_wb_cfg sc8180x_wb[] = {
- 	{
- 		.name = "wb_2", .id = WB_2,
- 		.base = 0x65000, .len = 0x2c8,
--		.features = WB_SDM845_MASK,
-+		.features = WB_SM8250_MASK,
- 		.format_list = wb2_formats_rgb,
- 		.num_formats = ARRAY_SIZE(wb2_formats_rgb),
- 		.clk_ctrl = DPU_CLK_CTRL_WB2,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-index d039b96beb97c..76f60a2df7a89 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-@@ -144,7 +144,7 @@ static const struct dpu_wb_cfg sm6125_wb[] = {
- 	{
- 		.name = "wb_2", .id = WB_2,
- 		.base = 0x65000, .len = 0x2c8,
--		.features = WB_SDM845_MASK,
-+		.features = WB_SM8250_MASK,
- 		.format_list = wb2_formats_rgb,
- 		.num_formats = ARRAY_SIZE(wb2_formats_rgb),
- 		.clk_ctrl = DPU_CLK_CTRL_WB2,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+index 657200401f576..cec6d4e8baec4 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
+@@ -52,6 +52,7 @@ static void dpu_hw_dsc_config(struct dpu_hw_dsc *hw_dsc,
+ 	u32 slice_last_group_size;
+ 	u32 det_thresh_flatness;
+ 	bool is_cmd_mode = !(mode & DSC_MODE_VIDEO);
++	bool input_10_bits = dsc->bits_per_component == 10;
+ 
+ 	DPU_REG_WRITE(c, DSC_COMMON_MODE, mode);
+ 
+@@ -68,7 +69,7 @@ static void dpu_hw_dsc_config(struct dpu_hw_dsc *hw_dsc,
+ 	data |= (dsc->line_buf_depth << 3);
+ 	data |= (dsc->simple_422 << 2);
+ 	data |= (dsc->convert_rgb << 1);
+-	data |= dsc->bits_per_component;
++	data |= input_10_bits;
+ 
+ 	DPU_REG_WRITE(c, DSC_ENC, data);
+ 
 -- 
 2.39.5
 
