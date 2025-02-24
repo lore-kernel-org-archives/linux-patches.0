@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C79A27701;
-	Mon, 24 Feb 2025 14:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0963327701;
+	Mon, 24 Feb 2025 14:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408765; cv=none; b=WCgBU29ZS2o0pRWoHMMEzur12xlWjaHK2qswlcY3UesSHsb59CrxkLwVJ+0+Tdqs5Djq2hVJn2iCw/UF+td5V3E7Dz+qkFLLNT0HvumwwTa9XCUruUCuNdDVBGxEZUXgitdumZ+TNt8sb1kLipsqSTHep2ZhSI70SjlrCekukNw=
+	t=1740408769; cv=none; b=Dqe6e/hfya6unzkIn2cRoffASzIfjYYVUYwtc5h1Ur3yWn68ToLvGquMrIaur01lvaxfhJF1TZTKPMD5/zxDsjk/DluVlOhFASdvvwXLenEfZy3WmQYIkG7N3CvHj3nxp6dOVWa9veMiG5S6svjauizwrTjAEub6423oc+XeoTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408765; c=relaxed/simple;
-	bh=/h3YdYjTco52b16FBC375zgpccEM3Qkz5eheT7nLPcg=;
+	s=arc-20240116; t=1740408769; c=relaxed/simple;
+	bh=Z/wNIa3O5pdsMy2bXlwNwrHSxxulCZMBbRWR18Wg3qU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Reev9XEko6rNSl6IwcFcc3bpFaydqOAEz5xk4CMrrwF4eIjnTmE9qbxypSu4QULtpJ6WmxVQuspYuaUTUt0nP+E+A12ao4Gr3YytPvDyw91NGKMtZJjj0ReOTkY5AXMSCTd08WqLzKk0nE6MUmasq0bULrV7fqTTTDAz622jxKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKFrR8MQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jeFn2KmGRPtchUAq/ukDNa5AchfARLLZ4U8hmcqdDCTF8h4dGEDD1ttlh0MGpVjmNzdt6qN2s9iBbyVmBb819eFui2e0ujojxyufxlEKGdMu2m/h7FtDVYkyqdu7ZaJa1SGkxcYE0y+sSUv79i9YiPqoNNHdlbwby1D5fg2w7n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smfPpIF9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKFrR8MQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BF1C4CED6;
-	Mon, 24 Feb 2025 14:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smfPpIF9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE89C4CED6;
+	Mon, 24 Feb 2025 14:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408765;
-	bh=/h3YdYjTco52b16FBC375zgpccEM3Qkz5eheT7nLPcg=;
+	s=korg; t=1740408768;
+	bh=Z/wNIa3O5pdsMy2bXlwNwrHSxxulCZMBbRWR18Wg3qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oKFrR8MQeg7r01Hie7a5H0rzVKPCPrmOv8b8wVKZATo5eKxywQfnfgHrwWwy7ZFkH
-	 NIYaBUmwN6kQNZc4fTKglBpMaLcw/6eitbGFY22Oka8Yk3D3b/qlV5WPNS1dzV00Jc
-	 O2bUO1LynZkFQXeBQpnr5m5blq0WfBCtJhOqZY7c=
+	b=smfPpIF9AKJ+WdE1qSWoYvDCG+R7mlfFGbqe7K4lslfLPdhouR3UWcMXJZ4RY+538
+	 f4NwETHaCwAqr+OFZKOUffSlPqnELmJXPcFQi768XZHlWmzh2QJ4uPQA/qRyDhr1WK
+	 Bz0Eg0UzS46WY/J3Ezjz9a+hK19/gAT6RUwZiXNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horst Reiterer <horst.reiterer@fabasoft.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 126/154] smb: client: fix chmod(2) regression with ATTR_READONLY
-Date: Mon, 24 Feb 2025 15:35:25 +0100
-Message-ID: <20250224142611.985559560@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	=?UTF-8?q?B=C5=82a=C5=BCej=20Szczygie=C5=82?= <mumei6102@gmail.com>,
+	Sergey Kovalenko <seryoga.engineering@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 153/154] drm/amdgpu/gfx9: manually control gfxoff for CS on RV
+Date: Mon, 24 Feb 2025 15:35:52 +0100
+Message-ID: <20250224142613.034422417@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -45,63 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 654292a0b264e9b8c51b98394146218a21612aa1 upstream.
+commit b35eb9128ebeec534eed1cefd6b9b1b7282cf5ba upstream.
 
-When the user sets a file or directory as read-only (e.g. ~S_IWUGO),
-the client will set the ATTR_READONLY attribute by sending an
-SMB2_SET_INFO request to the server in cifs_setattr_{,nounix}(), but
-cifsInodeInfo::cifsAttrs will be left unchanged as the client will
-only update the new file attributes in the next call to
-{smb311_posix,cifs}_get_inode_info() with the new metadata filled in
-@data parameter.
+When mesa started using compute queues more often
+we started seeing additional hangs with compute queues.
+Disabling gfxoff seems to mitigate that.  Manually
+control gfxoff and gfx pg with command submissions to avoid
+any issues related to gfxoff.  KFD already does the same
+thing for these chips.
 
-Commit a18280e7fdea ("smb: cilent: set reparse mount points as
-automounts") mistakenly removed the @data NULL check when calling
-is_inode_cache_good(), which broke the above case as the new
-ATTR_READONLY attribute would end up not being updated on files with a
-read lease.
+v2: limit to compute
+v3: limit to APUs
+v4: limit to Raven/PCO
+v5: only update the compute ring_funcs
+v6: Disable GFX PG
+v7: adjust order
 
-Fix this by updating the inode whenever we have cached metadata in
-@data parameter.
-
-Reported-by: Horst Reiterer <horst.reiterer@fabasoft.com>
-Closes: https://lore.kernel.org/r/85a16504e09147a195ac0aac1c801280@fabasoft.com
-Fixes: a18280e7fdea ("smb: cilent: set reparse mount points as automounts")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Suggested-by: Błażej Szczygieł <mumei6102@gmail.com>
+Suggested-by: Sergey Kovalenko <seryoga.engineering@gmail.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3861
+Link: https://lists.freedesktop.org/archives/amd-gfx/2025-January/119116.html
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.12.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |   32 ++++++++++++++++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -1381,7 +1381,7 @@ int cifs_get_inode_info(struct inode **i
- 	struct cifs_fattr fattr = {};
- 	int rc;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -7415,6 +7415,34 @@ static void gfx_v9_0_ring_emit_cleaner_s
+ 	amdgpu_ring_write(ring, 0);  /* RESERVED field, programmed to zero */
+ }
  
--	if (is_inode_cache_good(*inode)) {
-+	if (!data && is_inode_cache_good(*inode)) {
- 		cifs_dbg(FYI, "No need to revalidate cached inode sizes\n");
- 		return 0;
- 	}
-@@ -1480,7 +1480,7 @@ int smb311_posix_get_inode_info(struct i
- 	struct cifs_fattr fattr = {};
- 	int rc;
++static void gfx_v9_0_ring_begin_use_compute(struct amdgpu_ring *ring)
++{
++	struct amdgpu_device *adev = ring->adev;
++
++	amdgpu_gfx_enforce_isolation_ring_begin_use(ring);
++
++	/* Raven and PCO APUs seem to have stability issues
++	 * with compute and gfxoff and gfx pg.  Disable gfx pg during
++	 * submission and allow again afterwards.
++	 */
++	if (amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 1, 0))
++		gfx_v9_0_set_powergating_state(adev, AMD_PG_STATE_UNGATE);
++}
++
++static void gfx_v9_0_ring_end_use_compute(struct amdgpu_ring *ring)
++{
++	struct amdgpu_device *adev = ring->adev;
++
++	/* Raven and PCO APUs seem to have stability issues
++	 * with compute and gfxoff and gfx pg.  Disable gfx pg during
++	 * submission and allow again afterwards.
++	 */
++	if (amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 1, 0))
++		gfx_v9_0_set_powergating_state(adev, AMD_PG_STATE_GATE);
++
++	amdgpu_gfx_enforce_isolation_ring_end_use(ring);
++}
++
+ static const struct amd_ip_funcs gfx_v9_0_ip_funcs = {
+ 	.name = "gfx_v9_0",
+ 	.early_init = gfx_v9_0_early_init,
+@@ -7591,8 +7619,8 @@ static const struct amdgpu_ring_funcs gf
+ 	.emit_wave_limit = gfx_v9_0_emit_wave_limit,
+ 	.reset = gfx_v9_0_reset_kcq,
+ 	.emit_cleaner_shader = gfx_v9_0_ring_emit_cleaner_shader,
+-	.begin_use = amdgpu_gfx_enforce_isolation_ring_begin_use,
+-	.end_use = amdgpu_gfx_enforce_isolation_ring_end_use,
++	.begin_use = gfx_v9_0_ring_begin_use_compute,
++	.end_use = gfx_v9_0_ring_end_use_compute,
+ };
  
--	if (is_inode_cache_good(*inode)) {
-+	if (!data && is_inode_cache_good(*inode)) {
- 		cifs_dbg(FYI, "No need to revalidate cached inode sizes\n");
- 		return 0;
- 	}
+ static const struct amdgpu_ring_funcs gfx_v9_0_ring_funcs_kiq = {
 
 
