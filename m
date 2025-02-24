@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B41257451;
-	Mon, 24 Feb 2025 14:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC25614012;
+	Mon, 24 Feb 2025 14:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408522; cv=none; b=aDkhwn2fl4szWKAfVdxU0/YE1YImrqyN6EOw7hCbMc4WvxGNJp7Y4Os9V4XBAxY/6I7O0UNummxqtT3Gs1iF1GjZw3RXqpabn5y9D6JAgkQqWdp36amYyXLSh43LL51ejNsBL6foIYpTJ0ELXOxcXL27Px/8RmVCAY3QKq9YwNc=
+	t=1740408526; cv=none; b=R7vAKN+vqk28PPIo8SHmq20lj5IlhB3G7XuTi9RmKZ0J8YWCTWWkiiM0I0dpRtVdDhJgJMieL6AyuxtTm+JFRCx1n96NYGGYZhkFZFKA2gxdt4VkFJ+sGc4KEZQTmz+SJ0h+kphHqqrIOg9lG8i58kd8OU0qUwFQ3B6AHr+xn1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408522; c=relaxed/simple;
-	bh=oiJDQmN+kSbLCd79WJ8k72RxAVTcEJzEHGuDMDAEEhQ=;
+	s=arc-20240116; t=1740408526; c=relaxed/simple;
+	bh=eCI8lSAWwjb+rFDzsjq+ED/mH/KHtHRhWfMDk0lLuDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=spuM9qP/qjDSgllPFJNDm4zoOLQDJgsrChR6qqz4MNqaS1WVXFAp9WVIsdpWNOs93zT4BwS8kICYiT41rJjyx53gwlUkB0qTrM+fDdWzNbMs5tfcbgGy+9uUD82PmPSHbXTMydrbPU4WS1oCtRpGim+n8FRAHFoOJzaj1Zf/H6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKAszPFw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YGmt4/DoAVYviSQwDnzP4wszYUFtVvJC4lfdQfrbhAbAZWt3d87k8ELXbvVMRNF1jMG1iwkOHwKlIrkeZgs/Cwv9Cp55HbkoxP052iSF5LMXB99VMWDwt/q+aeTi3/XCPrOEQW8zLcxEUFAxyX2EdnVHKXptf17bGcClxh1HAL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6TXvU7z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKAszPFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4CBC4CED6;
-	Mon, 24 Feb 2025 14:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6TXvU7z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57188C4CED6;
+	Mon, 24 Feb 2025 14:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408522;
-	bh=oiJDQmN+kSbLCd79WJ8k72RxAVTcEJzEHGuDMDAEEhQ=;
+	s=korg; t=1740408525;
+	bh=eCI8lSAWwjb+rFDzsjq+ED/mH/KHtHRhWfMDk0lLuDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OKAszPFw0m1YgDPAe3/uvH1XG9MYeFcm9MvOJOP2mIoF2K7hx5xMyc7RbjPiHUTws
-	 uwDfmyYqmvyaSdJAE6s2VC/SLDRSyeQFDLbib2V68icYQJJ68Jxilyuhr3CMuussJt
-	 brL6Y+Ab8e14tapl3T1XM1623NwRfL5FvNCdUpAI=
+	b=n6TXvU7zuRLcXQKjJp4F4y+GxUCGkRGxkjuql2fLlUWfCS5dMy31MR63Zvg5J6cuG
+	 W2r3Z8L9YoN1jGV2w57EqL/g/TKRZeCbCeHv6gH2gDoJSmUBLMCayQZ68k0qZf0jFA
+	 qj5c0vmxfiFRDqrMpah7L1r9MofWrqaGkFiR0MFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Vatoropin <a.vatoropin@crpt.ru>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Chen-Yu Tsai <wens@csie.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 082/154] power: supply: da9150-fg: fix potential overflow
-Date: Mon, 24 Feb 2025 15:34:41 +0100
-Message-ID: <20250224142610.288860462@linuxfoundation.org>
+Subject: [PATCH 6.12 083/154] power: supply: axp20x_battery: Fix fault handling for AXP717
+Date: Mon, 24 Feb 2025 15:34:42 +0100
+Message-ID: <20250224142610.327708763@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -51,54 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Vatoropin <a.vatoropin@crpt.ru>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit 3fb3cb4350befc4f901c54e0cb4a2a47b1302e08 ]
+[ Upstream commit 98380110bd48fbfd6a798ee11fffff893d36062c ]
 
-Size of variable sd_gain equals four bytes - DA9150_QIF_SD_GAIN_SIZE.
-Size of variable shunt_val equals two bytes - DA9150_QIF_SHUNT_VAL_SIZE.
+Correct the fault handling for the AXP717 by changing the i2c write
+from regmap_update_bits() to regmap_write_bits(). The update bits
+function does not work properly on a RW1C register where we must
+write a 1 back to an existing register to clear it.
 
-The expression sd_gain * shunt_val is currently being evaluated using
-32-bit arithmetic. So during the multiplication an overflow may occur.
+Additionally, as part of this testing I confirmed the behavior of
+errors reappearing, so remove comment about assumptions.
 
-As the value of type 'u64' is used as storage for the eventual result, put
-ULL variable at the first position of each expression in order to give the
-compiler complete information about the proper arithmetic to use. According
-to C99 the guaranteed width for a variable of type 'unsigned long long' >=
-64 bits.
-
-Remove the explicit cast to u64 as it is meaningless.
-
-Just for the sake of consistency, perform the similar trick with another
-expression concerning 'iavg'.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: a419b4fd9138 ("power: Add support for DA9150 Fuel-Gauge")
-Signed-off-by: Andrey Vatoropin <a.vatoropin@crpt.ru>
-Link: https://lore.kernel.org/r/20250130090030.53422-1-a.vatoropin@crpt.ru
+Fixes: 6625767049c2 ("power: supply: axp20x_battery: add support for AXP717")
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Link: https://lore.kernel.org/r/20250131231455.153447-2-macroalpha82@gmail.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/da9150-fg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/power/supply/axp20x_battery.c | 31 +++++++++++++--------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/power/supply/da9150-fg.c b/drivers/power/supply/da9150-fg.c
-index 652c1f213af1c..4f28ef1bba1a3 100644
---- a/drivers/power/supply/da9150-fg.c
-+++ b/drivers/power/supply/da9150-fg.c
-@@ -247,9 +247,9 @@ static int da9150_fg_current_avg(struct da9150_fg *fg,
- 				      DA9150_QIF_SD_GAIN_SIZE);
- 	da9150_fg_read_sync_end(fg);
+diff --git a/drivers/power/supply/axp20x_battery.c b/drivers/power/supply/axp20x_battery.c
+index f71cc90fea127..57eba1ddb17ba 100644
+--- a/drivers/power/supply/axp20x_battery.c
++++ b/drivers/power/supply/axp20x_battery.c
+@@ -466,10 +466,9 @@ static int axp717_battery_get_prop(struct power_supply *psy,
  
--	div = (u64) (sd_gain * shunt_val * 65536ULL);
-+	div = 65536ULL * sd_gain * shunt_val;
- 	do_div(div, 1000000);
--	res = (u64) (iavg * 1000000ULL);
-+	res = 1000000ULL * iavg;
- 	do_div(res, div);
+ 	/*
+ 	 * If a fault is detected it must also be cleared; if the
+-	 * condition persists it should reappear (This is an
+-	 * assumption, it's actually not documented). A restart was
+-	 * not sufficient to clear the bit in testing despite the
+-	 * register listed as POR.
++	 * condition persists it should reappear. A restart was not
++	 * sufficient to clear the bit in testing despite the register
++	 * listed as POR.
+ 	 */
+ 	case POWER_SUPPLY_PROP_HEALTH:
+ 		ret = regmap_read(axp20x_batt->regmap, AXP717_PMU_FAULT,
+@@ -480,26 +479,26 @@ static int axp717_battery_get_prop(struct power_supply *psy,
+ 		switch (reg & AXP717_BATT_PMU_FAULT_MASK) {
+ 		case AXP717_BATT_UVLO_2_5V:
+ 			val->intval = POWER_SUPPLY_HEALTH_DEAD;
+-			regmap_update_bits(axp20x_batt->regmap,
+-					   AXP717_PMU_FAULT,
+-					   AXP717_BATT_UVLO_2_5V,
+-					   AXP717_BATT_UVLO_2_5V);
++			regmap_write_bits(axp20x_batt->regmap,
++					  AXP717_PMU_FAULT,
++					  AXP717_BATT_UVLO_2_5V,
++					  AXP717_BATT_UVLO_2_5V);
+ 			return 0;
  
- 	val->intval = (int) res;
+ 		case AXP717_BATT_OVER_TEMP:
+ 			val->intval = POWER_SUPPLY_HEALTH_HOT;
+-			regmap_update_bits(axp20x_batt->regmap,
+-					   AXP717_PMU_FAULT,
+-					   AXP717_BATT_OVER_TEMP,
+-					   AXP717_BATT_OVER_TEMP);
++			regmap_write_bits(axp20x_batt->regmap,
++					  AXP717_PMU_FAULT,
++					  AXP717_BATT_OVER_TEMP,
++					  AXP717_BATT_OVER_TEMP);
+ 			return 0;
+ 
+ 		case AXP717_BATT_UNDER_TEMP:
+ 			val->intval = POWER_SUPPLY_HEALTH_COLD;
+-			regmap_update_bits(axp20x_batt->regmap,
+-					   AXP717_PMU_FAULT,
+-					   AXP717_BATT_UNDER_TEMP,
+-					   AXP717_BATT_UNDER_TEMP);
++			regmap_write_bits(axp20x_batt->regmap,
++					  AXP717_PMU_FAULT,
++					  AXP717_BATT_UNDER_TEMP,
++					  AXP717_BATT_UNDER_TEMP);
+ 			return 0;
+ 
+ 		default:
 -- 
 2.39.5
 
