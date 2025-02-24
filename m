@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A0F23371B;
-	Mon, 24 Feb 2025 14:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B41257451;
+	Mon, 24 Feb 2025 14:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408519; cv=none; b=OV1gDsU3c1CDrpISNq4Y/dNgu9viomcFj8LnDCZOFh2KujYEONDAdH48ncaRG/XsU+OuZPwpiplMcfsXPu/DGNxX2PbAQXNC4qyI1r5gI9N3yMNxI7KRTPCAqZ5fep7Tq5SzpaTMQQtt8CzUAf4MTZhAB/GOCNxmao48wgwNods=
+	t=1740408522; cv=none; b=aDkhwn2fl4szWKAfVdxU0/YE1YImrqyN6EOw7hCbMc4WvxGNJp7Y4Os9V4XBAxY/6I7O0UNummxqtT3Gs1iF1GjZw3RXqpabn5y9D6JAgkQqWdp36amYyXLSh43LL51ejNsBL6foIYpTJ0ELXOxcXL27Px/8RmVCAY3QKq9YwNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408519; c=relaxed/simple;
-	bh=f/obqDhn5MXGIJdewsYZYilywWkiVRfEyp77aMT+7Uk=;
+	s=arc-20240116; t=1740408522; c=relaxed/simple;
+	bh=oiJDQmN+kSbLCd79WJ8k72RxAVTcEJzEHGuDMDAEEhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ilBsnNBb6Vinvsd5ExYUyXganhp1BIRe2jrAM4RGWbB+PJPciu5QalojxCYy/JIbb2fx+VIDv25iLe1Kij56eZVWFS1q0ChdfMejj9kPXw/pIMoxsoZPPHYKmdVS17ZjkHblB1kdh05Gx47xShQccNnF3HcrhxPz9rZdq/7Fp24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9P5P4an; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=spuM9qP/qjDSgllPFJNDm4zoOLQDJgsrChR6qqz4MNqaS1WVXFAp9WVIsdpWNOs93zT4BwS8kICYiT41rJjyx53gwlUkB0qTrM+fDdWzNbMs5tfcbgGy+9uUD82PmPSHbXTMydrbPU4WS1oCtRpGim+n8FRAHFoOJzaj1Zf/H6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKAszPFw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9P5P4an"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B4FC4CEE8;
-	Mon, 24 Feb 2025 14:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKAszPFw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4CBC4CED6;
+	Mon, 24 Feb 2025 14:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408519;
-	bh=f/obqDhn5MXGIJdewsYZYilywWkiVRfEyp77aMT+7Uk=;
+	s=korg; t=1740408522;
+	bh=oiJDQmN+kSbLCd79WJ8k72RxAVTcEJzEHGuDMDAEEhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9P5P4an4psuAqdZYU1i+q0oBRSNKDdbsx4rf5bQ2MIdvbMct7EY4kC8kY+NuAsOu
-	 yWfKeEWQFsNeTKoe88+zDm01rEJPDK7Pxq3daZTZlHFqcmaec8iGoTudJVBIQdEkuf
-	 9xxkRI58xlfuOHnOxx00N/XHy1Cnr1Tp9tZFCsbo=
+	b=OKAszPFw0m1YgDPAe3/uvH1XG9MYeFcm9MvOJOP2mIoF2K7hx5xMyc7RbjPiHUTws
+	 uwDfmyYqmvyaSdJAE6s2VC/SLDRSyeQFDLbib2V68icYQJJ68Jxilyuhr3CMuussJt
+	 brL6Y+Ab8e14tapl3T1XM1623NwRfL5FvNCdUpAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andyshrk@163.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Andrey Vatoropin <a.vatoropin@crpt.ru>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 081/154] arm64: dts: rockchip: Fix lcdpwr_en pin for Cool Pi GenBook
-Date: Mon, 24 Feb 2025 15:34:40 +0100
-Message-ID: <20250224142610.249287406@linuxfoundation.org>
+Subject: [PATCH 6.12 082/154] power: supply: da9150-fg: fix potential overflow
+Date: Mon, 24 Feb 2025 15:34:41 +0100
+Message-ID: <20250224142610.288860462@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -51,44 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Yan <andyshrk@163.com>
+From: Andrey Vatoropin <a.vatoropin@crpt.ru>
 
-[ Upstream commit a1d939055a22be06d8c12bf53afb258b9d38575f ]
+[ Upstream commit 3fb3cb4350befc4f901c54e0cb4a2a47b1302e08 ]
 
-According to the schematic, the lcdpwr_en pin is GPIO0_C4,
-not GPIO1_C4.
+Size of variable sd_gain equals four bytes - DA9150_QIF_SD_GAIN_SIZE.
+Size of variable shunt_val equals two bytes - DA9150_QIF_SHUNT_VAL_SIZE.
 
-Fixes: 4a8c1161b843 ("arm64: dts: rockchip: Add support for rk3588 based Cool Pi CM5 GenBook")
-Signed-off-by: Andy Yan <andyshrk@163.com>
-Link: https://lore.kernel.org/r/20250113104825.2390427-1-andyshrk@163.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+The expression sd_gain * shunt_val is currently being evaluated using
+32-bit arithmetic. So during the multiplication an overflow may occur.
+
+As the value of type 'u64' is used as storage for the eventual result, put
+ULL variable at the first position of each expression in order to give the
+compiler complete information about the proper arithmetic to use. According
+to C99 the guaranteed width for a variable of type 'unsigned long long' >=
+64 bits.
+
+Remove the explicit cast to u64 as it is meaningless.
+
+Just for the sake of consistency, perform the similar trick with another
+expression concerning 'iavg'.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a419b4fd9138 ("power: Add support for DA9150 Fuel-Gauge")
+Signed-off-by: Andrey Vatoropin <a.vatoropin@crpt.ru>
+Link: https://lore.kernel.org/r/20250130090030.53422-1-a.vatoropin@crpt.ru
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts | 4 ++--
+ drivers/power/supply/da9150-fg.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts b/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts
-index 6418286efe40d..762d36ad733ab 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts
-@@ -101,7 +101,7 @@ vcc3v3_lcd: vcc3v3-lcd-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vcc3v3_lcd";
- 		enable-active-high;
--		gpio = <&gpio1 RK_PC4 GPIO_ACTIVE_HIGH>;
-+		gpio = <&gpio0 RK_PC4 GPIO_ACTIVE_HIGH>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&lcdpwr_en>;
- 		vin-supply = <&vcc3v3_sys>;
-@@ -207,7 +207,7 @@ &pcie3x4 {
- &pinctrl {
- 	lcd {
- 		lcdpwr_en: lcdpwr-en {
--			rockchip,pins = <1 RK_PC4 RK_FUNC_GPIO &pcfg_pull_down>;
-+			rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_down>;
- 		};
+diff --git a/drivers/power/supply/da9150-fg.c b/drivers/power/supply/da9150-fg.c
+index 652c1f213af1c..4f28ef1bba1a3 100644
+--- a/drivers/power/supply/da9150-fg.c
++++ b/drivers/power/supply/da9150-fg.c
+@@ -247,9 +247,9 @@ static int da9150_fg_current_avg(struct da9150_fg *fg,
+ 				      DA9150_QIF_SD_GAIN_SIZE);
+ 	da9150_fg_read_sync_end(fg);
  
- 		bl_en: bl-en {
+-	div = (u64) (sd_gain * shunt_val * 65536ULL);
++	div = 65536ULL * sd_gain * shunt_val;
+ 	do_div(div, 1000000);
+-	res = (u64) (iavg * 1000000ULL);
++	res = 1000000ULL * iavg;
+ 	do_div(res, div);
+ 
+ 	val->intval = (int) res;
 -- 
 2.39.5
 
