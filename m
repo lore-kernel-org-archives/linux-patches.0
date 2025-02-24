@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925D11624F3;
-	Mon, 24 Feb 2025 14:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1EAC7F7FC;
+	Mon, 24 Feb 2025 14:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408305; cv=none; b=kni2Ol0bVvddUrcEhPUMi901plTw3C4FoI4oGj1XlCRHQoGUOzoR69ZckI/shxVQEhEsacIMg774PeAxPgFNXEfJyDj3ezkbmAM9kS4dquFCSxo7keOcCywXUyal4xdvzGJiVDwFCOjiinLpCXo/BaT82rmdYz6Go5hMlIRjogE=
+	t=1740408308; cv=none; b=g1se9ULhsPciVnzPdyyu1SZt/g4rJ9vqDqN+oY7iVr2NWn+ghVJ4xvtEoku/y24Uz0dOWcUp+C5uIFf+RZjw3AT3EGOmbyQTiX//25LAPNAGqhyMkynwmgX5sAyMV9MxwGhNJhGQC7CX17poxEtfGgCc1aBixcx/eO2N4CsoESM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408305; c=relaxed/simple;
-	bh=u1qhEhsg2u2qX0pP6bAXsl7PjhgAe1GqCab5iY5ZlRk=;
+	s=arc-20240116; t=1740408308; c=relaxed/simple;
+	bh=v05a1F9KRJ1K1RZ+afkfOlqesolmSm4kiKYsXMXVzVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFImSLRyQihFB3qrAGECmRUdeU4DoxxG3WMx2p3bhDgoxy3vaJUpmIp713q4p/NXTtPTpS9kTDQvyiTnGEVdDAVTTaYvUU/kHAvZCclXMwlxP8rXowV6zpRNs/zuccL1sGkvbS0ZTLdX+17FYPo31+yqUTjTfgisnr4+BSRTbrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8YdRErs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aw7fvBwtmnrxPMwUoDOR0th/a89Kk5azQxg4En1Lz8EjRcF84qoEM+5kzSeOliTsKMrc2an1OgaMwD3+qqDzx14Wum2CxNl13AHGrV8tDgJwqr73Yl5g/XQZrZqbspph1ykZK3rOf/9WAv/xondc8Oy5zEHqo5JyscV4LArZMHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H93KOi6S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8YdRErs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00E9C4CED6;
-	Mon, 24 Feb 2025 14:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H93KOi6S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287FCC4CEE8;
+	Mon, 24 Feb 2025 14:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408305;
-	bh=u1qhEhsg2u2qX0pP6bAXsl7PjhgAe1GqCab5iY5ZlRk=;
+	s=korg; t=1740408308;
+	bh=v05a1F9KRJ1K1RZ+afkfOlqesolmSm4kiKYsXMXVzVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v8YdRErsZr66bFThKNCPL1qgkDl3BTY9CTaO0HPb6kO8mTipmS6OOUzfFD/x65wNR
-	 5pWnH5jc/3VFuAMwvwd12tqo0M20BDrahgeFxf90TPy6TU+tOx13mEN1V9KFDuIYQ2
-	 5OmJLMDLo7QuLY0m5gECnh2INvwzANM6F9TR6qh4=
+	b=H93KOi6SX/GGz3aZ3WBIe5mfd7EIvk3FXYVvgISUafoHxk6VWEO3ghIZFZ1MD53/R
+	 rwmNEiOL7mL1htzNlFASaze3sya7o/Rus0TVUW4gOMxwFj+FgnL5OCdCusg4VgH2lN
+	 jQgO2A6trnTJHgnQTo8WKb404RxrWoHyfbRb1GXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
 	Jonathan Cavitt <jonathan.cavitt@intel.com>,
 	Ashutosh Dixit <ashutosh.dixit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/154] drm/xe/oa: Separate batch submission from waiting for completion
-Date: Mon, 24 Feb 2025 15:33:21 +0100
-Message-ID: <20250224142607.160163230@linuxfoundation.org>
+Subject: [PATCH 6.12 003/154] drm/xe/oa/uapi: Define and parse OA sync properties
+Date: Mon, 24 Feb 2025 15:33:22 +0100
+Message-ID: <20250224142607.201582007@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -45,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -53,146 +55,246 @@ Content-Transfer-Encoding: 8bit
 
 From: Ashutosh Dixit <ashutosh.dixit@intel.com>
 
-[ Upstream commit dddcb19ad4d4bbe943a72a1fb3266c6e8aa8d541 ]
+[ Upstream commit c8507a25cebd179db935dd266a33c51bef1b1e80 ]
 
-When we introduce xe_syncs, we don't wait for internal OA programming
-batches to complete. That is, xe_syncs are signaled asynchronously. In
-anticipation for this, separate out batch submission from waiting for
-completion of those batches.
+Now that we have laid the groundwork, introduce OA sync properties in the
+uapi and parse the input xe_sync array as is done elsewhere in the
+driver. Also add DRM_XE_OA_CAPS_SYNCS bit in OA capabilities for userspace.
 
-v2: Change return type of xe_oa_submit_bb to "struct dma_fence *" (Matt B)
-v3: Retain init "int err = 0;" in xe_oa_submit_bb (Jose)
+v2: Fix and document DRM_XE_SYNC_TYPE_USER_FENCE for OA (Matt B)
+    Add DRM_XE_OA_CAPS_SYNCS bit to OA capabilities (Jose)
 
+Acked-by: José Roberto de Souza <jose.souza@intel.com>
 Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
 Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241022200352.1192560-2-ashutosh.dixit@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20241022200352.1192560-3-ashutosh.dixit@intel.com
 Stable-dep-of: f0ed39830e60 ("xe/oa: Fix query mode of operation for OAR/OAC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_oa.c | 57 +++++++++++++++++++++++++++++---------
- 1 file changed, 44 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/xe/xe_oa.c       | 83 +++++++++++++++++++++++++++++++-
+ drivers/gpu/drm/xe/xe_oa_types.h |  6 +++
+ drivers/gpu/drm/xe/xe_query.c    |  2 +-
+ include/uapi/drm/xe_drm.h        | 17 +++++++
+ 4 files changed, 106 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
-index 6fc00d63b2857..3328529774cb7 100644
+index 3328529774cb7..20d279ed3c382 100644
 --- a/drivers/gpu/drm/xe/xe_oa.c
 +++ b/drivers/gpu/drm/xe/xe_oa.c
-@@ -567,11 +567,10 @@ static __poll_t xe_oa_poll(struct file *file, poll_table *wait)
- 	return ret;
+@@ -36,6 +36,7 @@
+ #include "xe_pm.h"
+ #include "xe_sched_job.h"
+ #include "xe_sriov.h"
++#include "xe_sync.h"
+ 
+ #define DEFAULT_POLL_FREQUENCY_HZ 200
+ #define DEFAULT_POLL_PERIOD_NS (NSEC_PER_SEC / DEFAULT_POLL_FREQUENCY_HZ)
+@@ -70,6 +71,7 @@ struct flex {
+ };
+ 
+ struct xe_oa_open_param {
++	struct xe_file *xef;
+ 	u32 oa_unit_id;
+ 	bool sample;
+ 	u32 metric_set;
+@@ -81,6 +83,9 @@ struct xe_oa_open_param {
+ 	struct xe_exec_queue *exec_q;
+ 	struct xe_hw_engine *hwe;
+ 	bool no_preempt;
++	struct drm_xe_sync __user *syncs_user;
++	int num_syncs;
++	struct xe_sync_entry *syncs;
+ };
+ 
+ struct xe_oa_config_bo {
+@@ -1393,6 +1398,9 @@ static int xe_oa_stream_init(struct xe_oa_stream *stream,
+ 	stream->period_exponent = param->period_exponent;
+ 	stream->no_preempt = param->no_preempt;
+ 
++	stream->num_syncs = param->num_syncs;
++	stream->syncs = param->syncs;
++
+ 	/*
+ 	 * For Xe2+, when overrun mode is enabled, there are no partial reports at the end
+ 	 * of buffer, making the OA buffer effectively a non-power-of-2 size circular
+@@ -1743,6 +1751,20 @@ static int xe_oa_set_no_preempt(struct xe_oa *oa, u64 value,
+ 	return 0;
  }
  
--static int xe_oa_submit_bb(struct xe_oa_stream *stream, struct xe_bb *bb)
-+static struct dma_fence *xe_oa_submit_bb(struct xe_oa_stream *stream, struct xe_bb *bb)
- {
- 	struct xe_sched_job *job;
- 	struct dma_fence *fence;
--	long timeout;
- 	int err = 0;
++static int xe_oa_set_prop_num_syncs(struct xe_oa *oa, u64 value,
++				    struct xe_oa_open_param *param)
++{
++	param->num_syncs = value;
++	return 0;
++}
++
++static int xe_oa_set_prop_syncs_user(struct xe_oa *oa, u64 value,
++				     struct xe_oa_open_param *param)
++{
++	param->syncs_user = u64_to_user_ptr(value);
++	return 0;
++}
++
+ typedef int (*xe_oa_set_property_fn)(struct xe_oa *oa, u64 value,
+ 				     struct xe_oa_open_param *param);
+ static const xe_oa_set_property_fn xe_oa_set_property_funcs[] = {
+@@ -1755,6 +1777,8 @@ static const xe_oa_set_property_fn xe_oa_set_property_funcs[] = {
+ 	[DRM_XE_OA_PROPERTY_EXEC_QUEUE_ID] = xe_oa_set_prop_exec_queue_id,
+ 	[DRM_XE_OA_PROPERTY_OA_ENGINE_INSTANCE] = xe_oa_set_prop_engine_instance,
+ 	[DRM_XE_OA_PROPERTY_NO_PREEMPT] = xe_oa_set_no_preempt,
++	[DRM_XE_OA_PROPERTY_NUM_SYNCS] = xe_oa_set_prop_num_syncs,
++	[DRM_XE_OA_PROPERTY_SYNCS] = xe_oa_set_prop_syncs_user,
+ };
  
- 	/* Kernel configuration is issued on stream->k_exec_q, not stream->exec_q */
-@@ -585,14 +584,9 @@ static int xe_oa_submit_bb(struct xe_oa_stream *stream, struct xe_bb *bb)
- 	fence = dma_fence_get(&job->drm.s_fence->finished);
- 	xe_sched_job_push(job);
- 
--	timeout = dma_fence_wait_timeout(fence, false, HZ);
--	dma_fence_put(fence);
--	if (timeout < 0)
--		err = timeout;
--	else if (!timeout)
--		err = -ETIME;
-+	return fence;
- exit:
--	return err;
-+	return ERR_PTR(err);
+ static int xe_oa_user_ext_set_property(struct xe_oa *oa, u64 extension,
+@@ -1814,6 +1838,49 @@ static int xe_oa_user_extensions(struct xe_oa *oa, u64 extension, int ext_number
+ 	return 0;
  }
  
- static void write_cs_mi_lri(struct xe_bb *bb, const struct xe_oa_reg *reg_data, u32 n_regs)
-@@ -656,6 +650,7 @@ static void xe_oa_store_flex(struct xe_oa_stream *stream, struct xe_lrc *lrc,
- static int xe_oa_modify_ctx_image(struct xe_oa_stream *stream, struct xe_lrc *lrc,
- 				  const struct flex *flex, u32 count)
- {
-+	struct dma_fence *fence;
- 	struct xe_bb *bb;
- 	int err;
- 
-@@ -667,7 +662,16 @@ static int xe_oa_modify_ctx_image(struct xe_oa_stream *stream, struct xe_lrc *lr
- 
- 	xe_oa_store_flex(stream, lrc, bb, flex, count);
- 
--	err = xe_oa_submit_bb(stream, bb);
-+	fence = xe_oa_submit_bb(stream, bb);
-+	if (IS_ERR(fence)) {
-+		err = PTR_ERR(fence);
-+		goto free_bb;
-+	}
-+	xe_bb_free(bb, fence);
-+	dma_fence_put(fence);
++static int xe_oa_parse_syncs(struct xe_oa *oa, struct xe_oa_open_param *param)
++{
++	int ret, num_syncs, num_ufence = 0;
 +
-+	return 0;
-+free_bb:
- 	xe_bb_free(bb, NULL);
- exit:
- 	return err;
-@@ -675,6 +679,7 @@ static int xe_oa_modify_ctx_image(struct xe_oa_stream *stream, struct xe_lrc *lr
- 
- static int xe_oa_load_with_lri(struct xe_oa_stream *stream, struct xe_oa_reg *reg_lri)
- {
-+	struct dma_fence *fence;
- 	struct xe_bb *bb;
- 	int err;
- 
-@@ -686,7 +691,16 @@ static int xe_oa_load_with_lri(struct xe_oa_stream *stream, struct xe_oa_reg *re
- 
- 	write_cs_mi_lri(bb, reg_lri, 1);
- 
--	err = xe_oa_submit_bb(stream, bb);
-+	fence = xe_oa_submit_bb(stream, bb);
-+	if (IS_ERR(fence)) {
-+		err = PTR_ERR(fence);
-+		goto free_bb;
-+	}
-+	xe_bb_free(bb, fence);
-+	dma_fence_put(fence);
-+
-+	return 0;
-+free_bb:
- 	xe_bb_free(bb, NULL);
- exit:
- 	return err;
-@@ -914,15 +928,32 @@ static int xe_oa_emit_oa_config(struct xe_oa_stream *stream, struct xe_oa_config
- {
- #define NOA_PROGRAM_ADDITIONAL_DELAY_US 500
- 	struct xe_oa_config_bo *oa_bo;
--	int err, us = NOA_PROGRAM_ADDITIONAL_DELAY_US;
-+	int err = 0, us = NOA_PROGRAM_ADDITIONAL_DELAY_US;
-+	struct dma_fence *fence;
-+	long timeout;
- 
-+	/* Emit OA configuration batch */
- 	oa_bo = xe_oa_alloc_config_buffer(stream, config);
- 	if (IS_ERR(oa_bo)) {
- 		err = PTR_ERR(oa_bo);
- 		goto exit;
- 	}
- 
--	err = xe_oa_submit_bb(stream, oa_bo->bb);
-+	fence = xe_oa_submit_bb(stream, oa_bo->bb);
-+	if (IS_ERR(fence)) {
-+		err = PTR_ERR(fence);
++	if (param->num_syncs && !param->syncs_user) {
++		drm_dbg(&oa->xe->drm, "num_syncs specified without sync array\n");
++		ret = -EINVAL;
 +		goto exit;
 +	}
 +
-+	/* Wait till all previous batches have executed */
-+	timeout = dma_fence_wait_timeout(fence, false, 5 * HZ);
-+	dma_fence_put(fence);
-+	if (timeout < 0)
-+		err = timeout;
-+	else if (!timeout)
-+		err = -ETIME;
-+	if (err)
-+		drm_dbg(&stream->oa->xe->drm, "dma_fence_wait_timeout err %d\n", err);
++	if (param->num_syncs) {
++		param->syncs = kcalloc(param->num_syncs, sizeof(*param->syncs), GFP_KERNEL);
++		if (!param->syncs) {
++			ret = -ENOMEM;
++			goto exit;
++		}
++	}
++
++	for (num_syncs = 0; num_syncs < param->num_syncs; num_syncs++) {
++		ret = xe_sync_entry_parse(oa->xe, param->xef, &param->syncs[num_syncs],
++					  &param->syncs_user[num_syncs], 0);
++		if (ret)
++			goto err_syncs;
++
++		if (xe_sync_is_ufence(&param->syncs[num_syncs]))
++			num_ufence++;
++	}
++
++	if (XE_IOCTL_DBG(oa->xe, num_ufence > 1)) {
++		ret = -EINVAL;
++		goto err_syncs;
++	}
++
++	return 0;
++
++err_syncs:
++	while (num_syncs--)
++		xe_sync_entry_cleanup(&param->syncs[num_syncs]);
++	kfree(param->syncs);
++exit:
++	return ret;
++}
++
+ /**
+  * xe_oa_stream_open_ioctl - Opens an OA stream
+  * @dev: @drm_device
+@@ -1839,6 +1906,7 @@ int xe_oa_stream_open_ioctl(struct drm_device *dev, u64 data, struct drm_file *f
+ 		return -ENODEV;
+ 	}
  
- 	/* Additional empirical delay needed for NOA programming after registers are written */
- 	usleep_range(us, 2 * us);
++	param.xef = xef;
+ 	ret = xe_oa_user_extensions(oa, data, 0, &param);
+ 	if (ret)
+ 		return ret;
+@@ -1907,11 +1975,24 @@ int xe_oa_stream_open_ioctl(struct drm_device *dev, u64 data, struct drm_file *f
+ 		drm_dbg(&oa->xe->drm, "Using periodic sampling freq %lld Hz\n", oa_freq_hz);
+ 	}
+ 
++	ret = xe_oa_parse_syncs(oa, &param);
++	if (ret)
++		goto err_exec_q;
++
+ 	mutex_lock(&param.hwe->gt->oa.gt_lock);
+ 	ret = xe_oa_stream_open_ioctl_locked(oa, &param);
+ 	mutex_unlock(&param.hwe->gt->oa.gt_lock);
++	if (ret < 0)
++		goto err_sync_cleanup;
++
++	return ret;
++
++err_sync_cleanup:
++	while (param.num_syncs--)
++		xe_sync_entry_cleanup(&param.syncs[param.num_syncs]);
++	kfree(param.syncs);
+ err_exec_q:
+-	if (ret < 0 && param.exec_q)
++	if (param.exec_q)
+ 		xe_exec_queue_put(param.exec_q);
+ 	return ret;
+ }
+diff --git a/drivers/gpu/drm/xe/xe_oa_types.h b/drivers/gpu/drm/xe/xe_oa_types.h
+index 8862eca73fbe3..99f4b2d4bdcf6 100644
+--- a/drivers/gpu/drm/xe/xe_oa_types.h
++++ b/drivers/gpu/drm/xe/xe_oa_types.h
+@@ -238,5 +238,11 @@ struct xe_oa_stream {
+ 
+ 	/** @no_preempt: Whether preemption and timeslicing is disabled for stream exec_q */
+ 	u32 no_preempt;
++
++	/** @num_syncs: size of @syncs array */
++	u32 num_syncs;
++
++	/** @syncs: syncs to wait on and to signal */
++	struct xe_sync_entry *syncs;
+ };
+ #endif
+diff --git a/drivers/gpu/drm/xe/xe_query.c b/drivers/gpu/drm/xe/xe_query.c
+index 1c96375bd7df7..6fec5d1a1eb44 100644
+--- a/drivers/gpu/drm/xe/xe_query.c
++++ b/drivers/gpu/drm/xe/xe_query.c
+@@ -679,7 +679,7 @@ static int query_oa_units(struct xe_device *xe,
+ 			du->oa_unit_id = u->oa_unit_id;
+ 			du->oa_unit_type = u->type;
+ 			du->oa_timestamp_freq = xe_oa_timestamp_frequency(gt);
+-			du->capabilities = DRM_XE_OA_CAPS_BASE;
++			du->capabilities = DRM_XE_OA_CAPS_BASE | DRM_XE_OA_CAPS_SYNCS;
+ 
+ 			j = 0;
+ 			for_each_hw_engine(hwe, gt, hwe_id) {
+diff --git a/include/uapi/drm/xe_drm.h b/include/uapi/drm/xe_drm.h
+index c4182e95a6195..4a8a4a63e99ca 100644
+--- a/include/uapi/drm/xe_drm.h
++++ b/include/uapi/drm/xe_drm.h
+@@ -1485,6 +1485,7 @@ struct drm_xe_oa_unit {
+ 	/** @capabilities: OA capabilities bit-mask */
+ 	__u64 capabilities;
+ #define DRM_XE_OA_CAPS_BASE		(1 << 0)
++#define DRM_XE_OA_CAPS_SYNCS		(1 << 1)
+ 
+ 	/** @oa_timestamp_freq: OA timestamp freq */
+ 	__u64 oa_timestamp_freq;
+@@ -1634,6 +1635,22 @@ enum drm_xe_oa_property_id {
+ 	 * to be disabled for the stream exec queue.
+ 	 */
+ 	DRM_XE_OA_PROPERTY_NO_PREEMPT,
++
++	/**
++	 * @DRM_XE_OA_PROPERTY_NUM_SYNCS: Number of syncs in the sync array
++	 * specified in @DRM_XE_OA_PROPERTY_SYNCS
++	 */
++	DRM_XE_OA_PROPERTY_NUM_SYNCS,
++
++	/**
++	 * @DRM_XE_OA_PROPERTY_SYNCS: Pointer to struct @drm_xe_sync array
++	 * with array size specified via @DRM_XE_OA_PROPERTY_NUM_SYNCS. OA
++	 * configuration will wait till input fences signal. Output fences
++	 * will signal after the new OA configuration takes effect. For
++	 * @DRM_XE_SYNC_TYPE_USER_FENCE, @addr is a user pointer, similar
++	 * to the VM bind case.
++	 */
++	DRM_XE_OA_PROPERTY_SYNCS,
+ };
+ 
+ /**
 -- 
 2.39.5
 
