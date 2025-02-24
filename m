@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7142571C3;
-	Mon, 24 Feb 2025 14:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1E284A35;
+	Mon, 24 Feb 2025 14:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408992; cv=none; b=PR8VGljxF8q2O/Am+yf2K8d/LMDfdOSEpMvN6Pd5Tx7ABJhx3fXj2Y9h/atUrBhgs7YcN8d0dk+KjxOOyg4q2H7OKRpdisUN58LfHW21D66HKGs06hZQgf9fvsmcsNf5eoqxoViKLh+E/4F4mJDoqOxP4evgpxD4XTkoS9x9BOA=
+	t=1740408996; cv=none; b=giTsQk92O5Ao07t7Gw3SCH3J3Ag38WKcvVHGFa+NniYr/OprKl8NRYOJ8Xiam/rwcOwF4gDY2O2gOzo6YeRwXTpkhg0t/wRApJkYeXomoG26nHaXn6f/YCnEOq6QsPhS6fm/TvTWBdO/LGhLHIcm6mOhgXmx5bu4AqKqgI0Ccik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408992; c=relaxed/simple;
-	bh=a+RiTtWwAKAGysSKXz5XLve0kA8FO1383OQcAgqFHVo=;
+	s=arc-20240116; t=1740408996; c=relaxed/simple;
+	bh=rWxLhzRe4isl779ruCRjlFT02s4h5NwjHMP9BVqyZK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SrMzoiFiYk9SCDxWkj3NBUVLImtlSIfQxsYfz0ZGGoVWBoQQAoqABEIG8Gy6JwAjRuYyhwFyHAP0FS8S4eJjNahfe29rNCRDoFldNB8gkd9IbiJefHdic9+GLLokNGmhQVBaSUseERJ1YIIwM5OSR9LVe4WDNRDsB8u235rc1wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMVlsv8B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cw2uq/PnBFNWuMeoYv6rhGjvjiWpgNcnsYqyUhbssrHZMovCTTAjNrKnFxLSdefO6kqvss/6lHxWFxfss3cQfkqtcPd6zQEu15l9C1pCswQpPaXEmbVgZ55bv7ukFYuGoj+6FV9e2xoDGSkQhv7JVwlEnz0WymE8We8+5eedLYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4xNnL+s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMVlsv8B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325CEC4CED6;
-	Mon, 24 Feb 2025 14:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4xNnL+s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E359C4CED6;
+	Mon, 24 Feb 2025 14:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408992;
-	bh=a+RiTtWwAKAGysSKXz5XLve0kA8FO1383OQcAgqFHVo=;
+	s=korg; t=1740408996;
+	bh=rWxLhzRe4isl779ruCRjlFT02s4h5NwjHMP9BVqyZK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LMVlsv8B1gOUjQ0Hf60GY5zp+JkIuKzNcRk1xAelONm17g/2CH1t8Dkc78dGAKJVU
-	 uugHilGRfiyraMmN3XZqTLZFbyIldvMJlBB+PD9PQ3FKxMAmZiOBua7/u2GmAwJnZc
-	 TzBhAYuH3o2+MFaGTqwn8PiyTE07hGc7SHyC+cv0=
+	b=z4xNnL+sJBQUpYT7EDu3jXV/WCXQFwqzwVqesRX6kWaW2GxZKchwgApRlhASCStCj
+	 QTS+W2EYzRBX2KAOWY7aoH4cs5cfC5W6wX59bMTYhB08gBgdlw5HfEgs9JZvi7Vp2d
+	 dZXAODNRMOJ+g8w0Ai0yYEIZw4GxqoDwvwSyQo2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andyshrk@163.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 058/138] arm64: dts: rockchip: Fix lcdpwr_en pin for Cool Pi GenBook
-Date: Mon, 24 Feb 2025 15:34:48 +0100
-Message-ID: <20250224142606.761103697@linuxfoundation.org>
+Subject: [PATCH 6.13 067/138] platform: cznic: CZNIC_PLATFORMS should depend on ARCH_MVEBU
+Date: Mon, 24 Feb 2025 15:34:57 +0100
+Message-ID: <20250224142607.109673081@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -51,44 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Yan <andyshrk@163.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit a1d939055a22be06d8c12bf53afb258b9d38575f ]
+[ Upstream commit dd0f05b98925111f4530d7dab774398cdb32e9e3 ]
 
-According to the schematic, the lcdpwr_en pin is GPIO0_C4,
-not GPIO1_C4.
+CZ.NIC's Turris devices are based on Marvell EBU SoCs.  Hence add a
+dependency on ARCH_MVEBU, to prevent asking the user about these drivers
+when configuring a kernel that cannot run on an affected CZ.NIC Turris
+system.
 
-Fixes: 4a8c1161b843 ("arm64: dts: rockchip: Add support for rk3588 based Cool Pi CM5 GenBook")
-Signed-off-by: Andy Yan <andyshrk@163.com>
-Link: https://lore.kernel.org/r/20250113104825.2390427-1-andyshrk@163.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 992f1a3d4e88498d ("platform: cznic: Add preliminary support for Turris Omnia MCU")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/cznic/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts b/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts
-index 92f0ed83c9902..bc6b43a771537 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-coolpi-cm5-genbook.dts
-@@ -113,7 +113,7 @@ vcc3v3_lcd: regulator-vcc3v3-lcd {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vcc3v3_lcd";
- 		enable-active-high;
--		gpio = <&gpio1 RK_PC4 GPIO_ACTIVE_HIGH>;
-+		gpio = <&gpio0 RK_PC4 GPIO_ACTIVE_HIGH>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&lcdpwr_en>;
- 		vin-supply = <&vcc3v3_sys>;
-@@ -241,7 +241,7 @@ &pcie3x4 {
- &pinctrl {
- 	lcd {
- 		lcdpwr_en: lcdpwr-en {
--			rockchip,pins = <1 RK_PC4 RK_FUNC_GPIO &pcfg_pull_down>;
-+			rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_down>;
- 		};
+diff --git a/drivers/platform/cznic/Kconfig b/drivers/platform/cznic/Kconfig
+index 49c383eb67854..13e37b49d9d01 100644
+--- a/drivers/platform/cznic/Kconfig
++++ b/drivers/platform/cznic/Kconfig
+@@ -6,6 +6,7 @@
  
- 		bl_en: bl-en {
+ menuconfig CZNIC_PLATFORMS
+ 	bool "Platform support for CZ.NIC's Turris hardware"
++	depends on ARCH_MVEBU || COMPILE_TEST
+ 	help
+ 	  Say Y here to be able to choose driver support for CZ.NIC's Turris
+ 	  devices. This option alone does not add any kernel code.
 -- 
 2.39.5
 
