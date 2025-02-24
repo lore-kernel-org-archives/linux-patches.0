@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23C624EF74;
-	Mon, 24 Feb 2025 14:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C10F25487A;
+	Mon, 24 Feb 2025 14:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408464; cv=none; b=V6pYxVXLKUG/bodKmeq3QeI89Q69wWwYZFRiA5hS0baWUiYjOWug9C7j9lzLPfS7VvFmY9akywWr52I8GCWTJeqALZ+a6rKy6NKQ8aceRFtNK4GIYNQFVtAFSoCoMu10qmPsFk57Qxwl1NwMSzgaXl2q8/qWVR0/WCanxVJZ6Wc=
+	t=1740408467; cv=none; b=QaxltRylZoiEjV55/V8Uab7qXO/512ZflIb2n9rBJ4z8bcXq1vxzifasqhXMjs+o/CuXYNSSz5MtRhLjpRRO5plMiRXYG/Mgpn4ZOVHK2Snq8ssCg2btSSIp0pJZDktPE22GSzW4MBLHsL8PBUPuRBXOTyIRYk3lSAMucgO76Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408464; c=relaxed/simple;
-	bh=t1NfmhSYr/5XyB73FYo2uskaVyMNt4FRa7zYoWP9xeM=;
+	s=arc-20240116; t=1740408467; c=relaxed/simple;
+	bh=JI+o9aGrLvCESVrz4edoRTSxiEE8XNmZAenqRmDgiDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E2fvvYw7dceh8yunLQu+75MvYEfZDBQ6anhDr5ndgoyO9sLBCbo09VCnZG5noYFqTQd/KgZmHmujticTqXdybwQuLkrr7aic08q4qfMxPXgMvF2ICjntS/3Skoq8beXIlsvTyR9laihQ44e3oOCuwVAg3EEXfr81v9/bxAy6tx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyd452Se; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RfYuhgA+QcsgZSNNgvMSfDfi1vW4z2RfOiAW9LomdjFXzLhGzMeJzFQh+dggjQ0VsuffHiv8XLhVxnYk4IMp/uk2eMfUKY7C3kd6c06ZWANPCBwmF1V9v69MmHCiIrB5YT3VfuEGvhOChI91iiEYUoGePCZcQlzZAFeztcEgkRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UyR1m/cC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyd452Se"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64BE0C4CEE8;
-	Mon, 24 Feb 2025 14:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyR1m/cC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8017C4CEE6;
+	Mon, 24 Feb 2025 14:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408463;
-	bh=t1NfmhSYr/5XyB73FYo2uskaVyMNt4FRa7zYoWP9xeM=;
+	s=korg; t=1740408467;
+	bh=JI+o9aGrLvCESVrz4edoRTSxiEE8XNmZAenqRmDgiDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nyd452SeP5P2k7y5BWHTb1hUnHyh0v9fe4Bnjv+I3Zu6zVmJYUtRH2b48xDFWB5PP
-	 0WDwo09qi/RBvBTBgp5/siHZT27mvD6IrtkR72w5viUzw2+x08zI5Ncnpnemyp7/Za
-	 zTp4cZYWboy4Z1u1I4xU3nhKrFKgX5PM40Zgz3pQ=
+	b=UyR1m/cCi2HDe331ofESWO2hpBy+8uY1RROUie40FJyNGcSzsXNg2j8z6opU/ZtD/
+	 b3kFh+JzKYXCVgxYk+GAK5diXY0l6XClrdAdU50FxCToOo+ygkG0io4MKciteGo54w
+	 Aafc6Q0NIKxzjINDGBEPTMFu2S1I/iu9iJrszN8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Qiang Zhang <dtzq01@gmail.com>,
+	Yoshiki Komachi <komachi.yoshiki@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jiri Pirko <jiri@resnulli.us>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/154] geneve: Suppress list corruption splat in geneve_destroy_tunnels().
-Date: Mon, 24 Feb 2025 15:34:25 +0100
-Message-ID: <20250224142609.669927205@linuxfoundation.org>
+Subject: [PATCH 6.12 067/154] flow_dissector: Fix handling of mixed port and port-range keys
+Date: Mon, 24 Feb 2025 15:34:26 +0100
+Message-ID: <20250224142609.708323659@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -51,48 +56,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Cong Wang <xiyou.wangcong@gmail.com>
 
-[ Upstream commit 62fab6eef61f245dc8797e3a6a5b890ef40e8628 ]
+[ Upstream commit 3e5796862c692ea608d96f0a1437f9290f44953a ]
 
-As explained in the previous patch, iterating for_each_netdev() and
-gn->geneve_list during ->exit_batch_rtnl() could trigger ->dellink()
-twice for the same device.
+This patch fixes a bug in TC flower filter where rules combining a
+specific destination port with a source port range weren't working
+correctly.
 
-If CONFIG_DEBUG_LIST is enabled, we will see a list_del() corruption
-splat in the 2nd call of geneve_dellink().
+The specific case was when users tried to configure rules like:
 
-Let's remove for_each_netdev() in geneve_destroy_tunnels() and delegate
-that part to default_device_exit_batch().
+tc filter add dev ens38 ingress protocol ip flower ip_proto udp \
+dst_port 5000 src_port 2000-3000 action drop
 
-Fixes: 9593172d93b9 ("geneve: Fix use-after-free in geneve_find_dev().")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250217203705.40342-3-kuniyu@amazon.com
+The root cause was in the flow dissector code. While both
+FLOW_DISSECTOR_KEY_PORTS and FLOW_DISSECTOR_KEY_PORTS_RANGE flags
+were being set correctly in the classifier, the __skb_flow_dissect_ports()
+function was only populating one of them: whichever came first in
+the enum check. This meant that when the code needed both a specific
+port and a port range, one of them would be left as 0, causing the
+filter to not match packets as expected.
+
+Fix it by removing the either/or logic and instead checking and
+populating both key types independently when they're in use.
+
+Fixes: 8ffb055beae5 ("cls_flower: Fix the behavior using port ranges with hw-offload")
+Reported-by: Qiang Zhang <dtzq01@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAPx+-5uvFxkhkz4=j_Xuwkezjn9U6kzKTD5jz4tZ9msSJ0fOJA@mail.gmail.com/
+Cc: Yoshiki Komachi <komachi.yoshiki@gmail.com>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Jiri Pirko <jiri@resnulli.us>
+Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250218043210.732959-2-xiyou.wangcong@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/geneve.c | 7 -------
- 1 file changed, 7 deletions(-)
+ net/core/flow_dissector.c | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
-index 9c53b0bbb4c57..963fb9261f017 100644
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -1902,14 +1902,7 @@ static void geneve_destroy_tunnels(struct net *net, struct list_head *head)
+diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
+index 5db41bf2ed93e..c33af3ef0b790 100644
+--- a/net/core/flow_dissector.c
++++ b/net/core/flow_dissector.c
+@@ -853,23 +853,30 @@ __skb_flow_dissect_ports(const struct sk_buff *skb,
+ 			 void *target_container, const void *data,
+ 			 int nhoff, u8 ip_proto, int hlen)
  {
- 	struct geneve_net *gn = net_generic(net, geneve_net_id);
- 	struct geneve_dev *geneve, *next;
--	struct net_device *dev, *aux;
+-	enum flow_dissector_key_id dissector_ports = FLOW_DISSECTOR_KEY_MAX;
+-	struct flow_dissector_key_ports *key_ports;
++	struct flow_dissector_key_ports_range *key_ports_range = NULL;
++	struct flow_dissector_key_ports *key_ports = NULL;
++	__be32 ports;
  
--	/* gather any geneve devices that were moved into this ns */
--	for_each_netdev_safe(net, dev, aux)
--		if (dev->rtnl_link_ops == &geneve_link_ops)
--			geneve_dellink(dev, head);
--
--	/* now gather any other geneve devices that were created in this ns */
- 	list_for_each_entry_safe(geneve, next, &gn->geneve_list, next)
- 		geneve_dellink(geneve->dev, head);
+ 	if (dissector_uses_key(flow_dissector, FLOW_DISSECTOR_KEY_PORTS))
+-		dissector_ports = FLOW_DISSECTOR_KEY_PORTS;
+-	else if (dissector_uses_key(flow_dissector,
+-				    FLOW_DISSECTOR_KEY_PORTS_RANGE))
+-		dissector_ports = FLOW_DISSECTOR_KEY_PORTS_RANGE;
++		key_ports = skb_flow_dissector_target(flow_dissector,
++						      FLOW_DISSECTOR_KEY_PORTS,
++						      target_container);
+ 
+-	if (dissector_ports == FLOW_DISSECTOR_KEY_MAX)
++	if (dissector_uses_key(flow_dissector, FLOW_DISSECTOR_KEY_PORTS_RANGE))
++		key_ports_range = skb_flow_dissector_target(flow_dissector,
++							    FLOW_DISSECTOR_KEY_PORTS_RANGE,
++							    target_container);
++
++	if (!key_ports && !key_ports_range)
+ 		return;
+ 
+-	key_ports = skb_flow_dissector_target(flow_dissector,
+-					      dissector_ports,
+-					      target_container);
+-	key_ports->ports = __skb_flow_get_ports(skb, nhoff, ip_proto,
+-						data, hlen);
++	ports = __skb_flow_get_ports(skb, nhoff, ip_proto, data, hlen);
++
++	if (key_ports)
++		key_ports->ports = ports;
++
++	if (key_ports_range)
++		key_ports_range->tp.ports = ports;
  }
+ 
+ static void
 -- 
 2.39.5
 
