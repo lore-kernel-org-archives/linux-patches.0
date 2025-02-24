@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0836B2571CB;
-	Mon, 24 Feb 2025 14:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673EA2837B;
+	Mon, 24 Feb 2025 14:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409024; cv=none; b=PnFmFEPtkGwBEsAwsRQrEj9ZQ9u2kAVP9x8o4CDN3/ruBdMfaz8ScC6Bk1H2OGlslrzC4wl7RLflafgc/1XfDtz5OyWIRz5AYpgq6wMWGblo1OhOXxACXfaH/x2tpHpOBrn4fx4DBR6agmJvtafHvGc8952fYZdc3mDRh4tqsmU=
+	t=1740409027; cv=none; b=gMSkxjRSigi7GG4Jxy1w+ZOLAqnplhcwJozovMbftkTafXdzmwQoz4jYwqcnnz3pcauE5PN1rMw2BuaIXoVFTFDJaQAWFsm33xlCt914GQut2Q/HpszXhC9JXiIsaFOElUbZRiT5dImZfkPfFUmHVhJvTmIRryh3e5zIXZMUJ3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409024; c=relaxed/simple;
-	bh=OKfBFp0iSn+BMHiGtLcONIBgQoUVDGB1AbIpzf0shcM=;
+	s=arc-20240116; t=1740409027; c=relaxed/simple;
+	bh=BFtE77ypvExws955kAwdoQ3+qCsMi+HgF1hb2nHJssE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tuCCLcPszSbjtdW3Rc1dkHSVIcxOSJsZrR56KJlOvjLYM5M4Is/dFnLshD/IE27RJKTlOCjGzI3/ZAPjvFnn9ymT7sxwqINRy9k+Kb4Ky7oHWiUR8cXEyurWVfkhZ5MLAoN0YwOfFc3c9Vq3My+uR+Deuj7ct4YhyvsvB4+bg/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZWOLwBz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=boN7tXR7oGShUF7QjXcX8VP5CXO+Q4FzNkWxLyHmc5ypo5Nkm9q0cAt+W4J3uCmjxa3idlHkm5+4HiF0tpVm4WaFmi9FyCbM90+saYXIo1UtBvxPGdmgnqfrI7Qxzb05ruGA/OuhcO6Ow0vJruWPV811EduLZZRTCyMXgs/alQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJaN2o08; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZWOLwBz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D72C4CEE6;
-	Mon, 24 Feb 2025 14:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJaN2o08"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9322C4CED6;
+	Mon, 24 Feb 2025 14:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409023;
-	bh=OKfBFp0iSn+BMHiGtLcONIBgQoUVDGB1AbIpzf0shcM=;
+	s=korg; t=1740409027;
+	bh=BFtE77ypvExws955kAwdoQ3+qCsMi+HgF1hb2nHJssE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZWOLwBzWIS6PW6qN1MQGqJ5lGaKeGOkBaB7znWDkUwTpZbPwvKNewadQ/IC+qbTC
-	 poOpPuWws03Ne2phUa8R2S9WNlro8vZt195FOYowtAmpubn0B63NPHSJvRczTsag+Z
-	 y/lIbmVF83ueWc2Urse+44sFnmZiIty/3o+lIPjI=
+	b=RJaN2o08fOz2mTnIzXvE5LoKbyXIxEn2UTbQL1qTOrgUKRNYaL8wUoIM7e2lSeLrN
+	 F/vgmOAHCa2BkJHAacWPe68lLIyRbw2MHSukKwNbpCvkrM4W1KdaPP8TX/KH4TVu2c
+	 5G+SYcGTXTln1RD6NfCkZU0bg5zwzwoSW9rUFiV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Ilia Levi <ilia.levi@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 075/138] drm/msm/dsi/phy: Do not overwite PHY_CMN_CLK_CFG1 when choosing bitclk source
-Date: Mon, 24 Feb 2025 15:35:05 +0100
-Message-ID: <20250224142607.424693925@linuxfoundation.org>
+Subject: [PATCH 6.13 076/138] drm/xe: Make irq enabled flag atomic
+Date: Mon, 24 Feb 2025 15:35:06 +0100
+Message-ID: <20250224142607.462894819@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -52,69 +51,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Ilia Levi <ilia.levi@intel.com>
 
-[ Upstream commit 73f69c6be2a9f22c31c775ec03c6c286bfe12cfa ]
+[ Upstream commit 4d79a1266d4cc3c967bc8823502466cad1ac8514 ]
 
-PHY_CMN_CLK_CFG1 register has four fields being used in the driver: DSI
-clock divider, source of bitclk and two for enabling the DSI PHY PLL
-clocks.
+The irq.enabled flag was protected by a spin lock (irq.lock).
+By making it atomic we no longer need to wait for the spin lock in
+irq handlers. This will become especially useful for MSI-X irq
+handlers to prevent lock contention between different interrupts.
 
-dsi_7nm_set_usecase() sets only the source of bitclk, so should leave
-all other bits untouched.  Use newly introduced
-dsi_pll_cmn_clk_cfg1_update() to update respective bits without
-overwriting the rest.
-
-While shuffling the code, define and use PHY_CMN_CLK_CFG1 bitfields to
-make the code more readable and obvious.
-
-Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/637380/
-Link: https://lore.kernel.org/r/20250214-drm-msm-phy-pll-cfg-reg-v3-3-0943b850722c@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Ilia Levi <ilia.levi@intel.com>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241210173506.202150-1-ilia.levi@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Stable-dep-of: 0c455f3a1229 ("drm/xe: Fix error handling in xe_irq_install()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c             | 4 ++--
- drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml | 1 +
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/display/ext/i915_irq.c | 13 +---------
+ drivers/gpu/drm/xe/xe_device_types.h      |  2 +-
+ drivers/gpu/drm/xe/xe_irq.c               | 29 ++++++-----------------
+ 3 files changed, 9 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 388017db45d80..798168180c1ab 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -617,7 +617,6 @@ static int dsi_7nm_pll_restore_state(struct msm_dsi_phy *phy)
- static int dsi_7nm_set_usecase(struct msm_dsi_phy *phy)
- {
- 	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(phy->vco_hw);
--	void __iomem *base = phy->base;
- 	u32 data = 0x0;	/* internal PLL */
+diff --git a/drivers/gpu/drm/xe/display/ext/i915_irq.c b/drivers/gpu/drm/xe/display/ext/i915_irq.c
+index a7dbc6554d694..ac4cda2d81c7a 100644
+--- a/drivers/gpu/drm/xe/display/ext/i915_irq.c
++++ b/drivers/gpu/drm/xe/display/ext/i915_irq.c
+@@ -53,18 +53,7 @@ void gen2_irq_init(struct intel_uncore *uncore, struct i915_irq_regs regs,
  
- 	DBG("DSI PLL%d", pll_7nm->phy->id);
-@@ -636,7 +635,8 @@ static int dsi_7nm_set_usecase(struct msm_dsi_phy *phy)
+ bool intel_irqs_enabled(struct xe_device *xe)
+ {
+-	/*
+-	 * XXX: i915 has a racy handling of the irq.enabled, since it doesn't
+-	 * lock its transitions. Because of that, the irq.enabled sometimes
+-	 * is not read with the irq.lock in place.
+-	 * However, the most critical cases like vblank and page flips are
+-	 * properly using the locks.
+-	 * We cannot take the lock in here or run any kind of assert because
+-	 * of i915 inconsistency.
+-	 * But at this point the xe irq is better protected against races,
+-	 * although the full solution would be protecting the i915 side.
+-	 */
+-	return xe->irq.enabled;
++	return atomic_read(&xe->irq.enabled);
+ }
+ 
+ void intel_synchronize_irq(struct xe_device *xe)
+diff --git a/drivers/gpu/drm/xe/xe_device_types.h b/drivers/gpu/drm/xe/xe_device_types.h
+index b9ea455d6f59f..09068ea7349a8 100644
+--- a/drivers/gpu/drm/xe/xe_device_types.h
++++ b/drivers/gpu/drm/xe/xe_device_types.h
+@@ -345,7 +345,7 @@ struct xe_device {
+ 		spinlock_t lock;
+ 
+ 		/** @irq.enabled: interrupts enabled on this device */
+-		bool enabled;
++		atomic_t enabled;
+ 	} irq;
+ 
+ 	/** @ttm: ttm device */
+diff --git a/drivers/gpu/drm/xe/xe_irq.c b/drivers/gpu/drm/xe/xe_irq.c
+index b7995ebd54abd..32547b6a6d1cb 100644
+--- a/drivers/gpu/drm/xe/xe_irq.c
++++ b/drivers/gpu/drm/xe/xe_irq.c
+@@ -348,12 +348,8 @@ static irqreturn_t xelp_irq_handler(int irq, void *arg)
+ 	unsigned long intr_dw[2];
+ 	u32 identity[32];
+ 
+-	spin_lock(&xe->irq.lock);
+-	if (!xe->irq.enabled) {
+-		spin_unlock(&xe->irq.lock);
++	if (!atomic_read(&xe->irq.enabled))
+ 		return IRQ_NONE;
+-	}
+-	spin_unlock(&xe->irq.lock);
+ 
+ 	master_ctl = xelp_intr_disable(xe);
+ 	if (!master_ctl) {
+@@ -417,12 +413,8 @@ static irqreturn_t dg1_irq_handler(int irq, void *arg)
+ 
+ 	/* TODO: This really shouldn't be copied+pasted */
+ 
+-	spin_lock(&xe->irq.lock);
+-	if (!xe->irq.enabled) {
+-		spin_unlock(&xe->irq.lock);
++	if (!atomic_read(&xe->irq.enabled))
+ 		return IRQ_NONE;
+-	}
+-	spin_unlock(&xe->irq.lock);
+ 
+ 	master_tile_ctl = dg1_intr_disable(xe);
+ 	if (!master_tile_ctl) {
+@@ -644,12 +636,8 @@ static irqreturn_t vf_mem_irq_handler(int irq, void *arg)
+ 	struct xe_tile *tile;
+ 	unsigned int id;
+ 
+-	spin_lock(&xe->irq.lock);
+-	if (!xe->irq.enabled) {
+-		spin_unlock(&xe->irq.lock);
++	if (!atomic_read(&xe->irq.enabled))
+ 		return IRQ_NONE;
+-	}
+-	spin_unlock(&xe->irq.lock);
+ 
+ 	for_each_tile(tile, xe, id)
+ 		xe_memirq_handler(&tile->memirq);
+@@ -674,10 +662,9 @@ static void irq_uninstall(void *arg)
+ 	struct pci_dev *pdev = to_pci_dev(xe->drm.dev);
+ 	int irq;
+ 
+-	if (!xe->irq.enabled)
++	if (!atomic_xchg(&xe->irq.enabled, 0))
+ 		return;
+ 
+-	xe->irq.enabled = false;
+ 	xe_irq_reset(xe);
+ 
+ 	irq = pci_irq_vector(pdev, 0);
+@@ -724,7 +711,7 @@ int xe_irq_install(struct xe_device *xe)
+ 		return err;
  	}
  
- 	/* set PLL src */
--	writel(data << 2, base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
-+	dsi_pll_cmn_clk_cfg1_update(pll_7nm, DSI_7nm_PHY_CMN_CLK_CFG1_BITCLK_SEL__MASK,
-+				    DSI_7nm_PHY_CMN_CLK_CFG1_BITCLK_SEL(data));
+-	xe->irq.enabled = true;
++	atomic_set(&xe->irq.enabled, 1);
  
- 	return 0;
- }
-diff --git a/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml b/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
-index cfaf78c028b13..35f7f40e405b7 100644
---- a/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
-+++ b/drivers/gpu/drm/msm/registers/display/dsi_phy_7nm.xml
-@@ -16,6 +16,7 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
- 	<reg32 offset="0x00014" name="CLK_CFG1">
- 		<bitfield name="CLK_EN" pos="5" type="boolean"/>
- 		<bitfield name="CLK_EN_SEL" pos="4" type="boolean"/>
-+		<bitfield name="BITCLK_SEL" low="2" high="3" type="uint"/>
- 	</reg32>
- 	<reg32 offset="0x00018" name="GLBL_CTRL"/>
- 	<reg32 offset="0x0001c" name="RBUF_CTRL"/>
+ 	xe_irq_postinstall(xe);
+ 
+@@ -744,9 +731,7 @@ void xe_irq_suspend(struct xe_device *xe)
+ {
+ 	int irq = to_pci_dev(xe->drm.dev)->irq;
+ 
+-	spin_lock_irq(&xe->irq.lock);
+-	xe->irq.enabled = false; /* no new irqs */
+-	spin_unlock_irq(&xe->irq.lock);
++	atomic_set(&xe->irq.enabled, 0); /* no new irqs */
+ 
+ 	synchronize_irq(irq); /* flush irqs */
+ 	xe_irq_reset(xe); /* turn irqs off */
+@@ -762,7 +747,7 @@ void xe_irq_resume(struct xe_device *xe)
+ 	 * 1. no irq will arrive before the postinstall
+ 	 * 2. display is not yet resumed
+ 	 */
+-	xe->irq.enabled = true;
++	atomic_set(&xe->irq.enabled, 1);
+ 	xe_irq_reset(xe);
+ 	xe_irq_postinstall(xe); /* turn irqs on */
+ 
 -- 
 2.39.5
 
