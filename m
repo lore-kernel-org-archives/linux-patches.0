@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D641459EA;
-	Mon, 24 Feb 2025 14:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B34170A13;
+	Mon, 24 Feb 2025 14:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408829; cv=none; b=WqmdhSYc9vshIVIf2wGHBPwJ4E/i7GSIdcbakdl1FhIe06zCC162TUAYUj3T+C6wDXHClVKa3hCcZiP1Gx0l8wfJsV/Uy3ibchXScIR9/UpEUpnHHoq7Qt7TAVs8S6ylNZrrlOYO3au+XkqeGy+FqGPrV4rLW9R7RJfx+7AgQ20=
+	t=1740408833; cv=none; b=CscXGwc3eWldVeXbcUZGV3IpqsykTcqLuCrQItDbkQ7fXLoZdfFI1RkH8PrYbCQ6hk0JMVDdDEn6NkNKz+aM8YFeA2hw5XIiE4GqdIcicaMJsA890ACLrkN64QK41kJ2+vAc+eEwqYDio/e2GonpWTMblJc88Nk4Uf54FcS3jbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408829; c=relaxed/simple;
-	bh=Mdl10YjekZ65da15eMumOToQeyYDvx4gvqgQbGiGq1Q=;
+	s=arc-20240116; t=1740408833; c=relaxed/simple;
+	bh=1xGUlbHWWJy2nYWR58F/r1p05qskOi/hwM4ikPi8ndc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HKbY909wUeetM2viZortAseghze5Q1BS9Ipq479XxypOSb63jzFW+f/bkcqM7ajo5AjZ7EWmBVlK2nKA32wh0OoV5Vctu3RI9sbv98rlLfjTXcynCkVnUcGey8ltrE3rLobgiP5jk3iLHXsNS15dzJJumCSDj+CP27qz3DpSNqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZU+y1MkC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=utVtzb//EmBoBgdGlsPmjgE+el/h6JeDK6lfIkuZws85Of+KJ3jNc/JbPYGVF0RtxHa8P0GfQnyGxmDGsQ4eLZViolBNy/BrjVmXjKI5UmOGqdY4PwAQnztNa27Qj1+sITtKJQKkUyMMxfImxWHfC32KVj9cPCb/DqRrREwWQok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGbhuQdh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZU+y1MkC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD58C4CED6;
-	Mon, 24 Feb 2025 14:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGbhuQdh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB64C4CED6;
+	Mon, 24 Feb 2025 14:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408829;
-	bh=Mdl10YjekZ65da15eMumOToQeyYDvx4gvqgQbGiGq1Q=;
+	s=korg; t=1740408832;
+	bh=1xGUlbHWWJy2nYWR58F/r1p05qskOi/hwM4ikPi8ndc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZU+y1MkCUDsdHlYZmGNDpNl2p2xw134WHGr+pNSryUA6VcCYW8LmvRyxaEIA5WnL2
-	 t9Lqzl8oSULiKyjymO+wvyyxigloRYeZuHm8AN7pOoGw77QP1elV6IedvYOKnf6Rt5
-	 1pUlfW0aun7aA/+3LjGuFqwILk448VT0qvNEBjhw=
+	b=UGbhuQdhnHhPC6RT/4nNx18/PYkvSHl4FYZGXzBrGc1/mHpWmip8AZlki87+2vypp
+	 mpvkuCKck39sR0YD5H9ZrnzyTuuB05RaXuhvcYMJ/E5rCPG58wQ/7QhSs9Cl0Dgsrr
+	 cv5aRDoeZh8xGb0wMYh+Gj/hbuem9HdPCEPNvVzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	stable <stable@kernel.org>,
+	Jill Donahue <jilliandonahue58@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 018/138] tracing: Have the error of __tracing_resize_ring_buffer() passed to user
-Date: Mon, 24 Feb 2025 15:34:08 +0100
-Message-ID: <20250224142605.182499731@linuxfoundation.org>
+Subject: [PATCH 6.13 019/138] USB: gadget: f_midi: f_midi_complete to call queue_work
+Date: Mon, 24 Feb 2025 15:34:09 +0100
+Message-ID: <20250224142605.221150474@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -53,56 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Jill Donahue <jilliandonahue58@gmail.com>
 
-[ Upstream commit 60b8f711143de7cd9c0f55be0fe7eb94b19eb5c7 ]
+[ Upstream commit 4ab37fcb42832cdd3e9d5e50653285ca84d6686f ]
 
-Currently if __tracing_resize_ring_buffer() returns an error, the
-tracing_resize_ringbuffer() returns -ENOMEM. But it may not be a memory
-issue that caused the function to fail. If the ring buffer is memory
-mapped, then the resizing of the ring buffer will be disabled. But if the
-user tries to resize the buffer, it will get an -ENOMEM returned, which is
-confusing because there is plenty of memory. The actual error returned was
--EBUSY, which would make much more sense to the user.
+When using USB MIDI, a lock is attempted to be acquired twice through a
+re-entrant call to f_midi_transmit, causing a deadlock.
 
-Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Vincent Donnefort <vdonnefort@google.com>
-Link: https://lore.kernel.org/20250213134132.7e4505d7@gandalf.local.home
-Fixes: 117c39200d9d7 ("ring-buffer: Introducing ring-buffer mapping functions")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fix it by using queue_work() to schedule the inner f_midi_transmit() via
+a high priority work queue from the completion handler.
+
+Link: https://lore.kernel.org/all/CAArt=LjxU0fUZOj06X+5tkeGT+6RbXzpWg1h4t4Fwa_KGVAX6g@mail.gmail.com/
+Fixes: d5daf49b58661 ("USB: gadget: midi: add midi function driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jill Donahue <jilliandonahue58@gmail.com>
+Link: https://lore.kernel.org/r/20250211174805.1369265-1-jdonahue@fender.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/usb/gadget/function/f_midi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 69aaa8ed7a047..14179a1ee9cca 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -5975,8 +5975,6 @@ static int __tracing_resize_ring_buffer(struct trace_array *tr,
- ssize_t tracing_resize_ring_buffer(struct trace_array *tr,
- 				  unsigned long size, int cpu_id)
- {
--	int ret;
--
- 	guard(mutex)(&trace_types_lock);
- 
- 	if (cpu_id != RING_BUFFER_ALL_CPUS) {
-@@ -5985,11 +5983,7 @@ ssize_t tracing_resize_ring_buffer(struct trace_array *tr,
- 			return -EINVAL;
- 	}
- 
--	ret = __tracing_resize_ring_buffer(tr, size, cpu_id);
--	if (ret < 0)
--		ret = -ENOMEM;
--
--	return ret;
-+	return __tracing_resize_ring_buffer(tr, size, cpu_id);
- }
- 
- static void update_last_data(struct trace_array *tr)
+diff --git a/drivers/usb/gadget/function/f_midi.c b/drivers/usb/gadget/function/f_midi.c
+index 47260d65066a8..da82598fcef8a 100644
+--- a/drivers/usb/gadget/function/f_midi.c
++++ b/drivers/usb/gadget/function/f_midi.c
+@@ -283,7 +283,7 @@ f_midi_complete(struct usb_ep *ep, struct usb_request *req)
+ 			/* Our transmit completed. See if there's more to go.
+ 			 * f_midi_transmit eats req, don't queue it again. */
+ 			req->length = 0;
+-			f_midi_transmit(midi);
++			queue_work(system_highpri_wq, &midi->work);
+ 			return;
+ 		}
+ 		break;
 -- 
 2.39.5
 
