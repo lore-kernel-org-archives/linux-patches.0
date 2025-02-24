@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE65A14012;
-	Mon, 24 Feb 2025 14:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77AB14012;
+	Mon, 24 Feb 2025 14:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408950; cv=none; b=inbJ6quRghy2wRKI95cihNLZS9Rkbpchl34hwMIHJsKjkAdk06yedLqo/1btQ7r4dcAMKeBxq3Qr1ad4ClBfE1ky2mwqB9+c20cLVeO37H6ptFIq8nifx0ux1qK0spg4JB/QrXEostohhXeTP2bdF9MUXb81ab1tA6cAN6JdRDk=
+	t=1740408953; cv=none; b=g5sGSq/BQJjju32qH637u8zjvJCqgCvgSl1brOcST/AXghCxTl6Fhwdg+SBiR3gmvgc/KgQpXaN7Wgtd/AVGxhS1akhvLRXa4i5fSfEG8I3ayyYqsoER3R1LlF8opyGyFfAREAW0GE+XOq5yT0pBV75SZQrJFWQDmUxXIabS5GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408950; c=relaxed/simple;
-	bh=bGCwoYCm/Gfm7PSokRBya+kluby/SsRBQpqEhb6iaPs=;
+	s=arc-20240116; t=1740408953; c=relaxed/simple;
+	bh=ZAoxeKaNrWrbYvHpiVwzKVQKTVnsf96Ed+JFv0KJFcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f2UsXwM1WN9sS7nVT7kjLHX914nqRc7lEk2pdow4K7WD6WHtELDUFdmrYgsB+qsg2jpuLavRE8zji79r+s87vT337IQ30Nc/Id7FaGmwN4phvB+HRulVeOGp3W3qmZNX6DJZgO87gtfbk50kCElRmbandlMa3h2KAQrRuktyKZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shH7Zu7I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZaosOtFKn+QBj+8rCwdvxDC1O3XSybNntRf1H7qFmqFbrenyUCUimrtTShd80mBP4Z/JH68B7KWEdDae4sUQna3jJYMfGMCcIB/lhLWsHpwJVdSJOwyEMdeqcUKhXIdK39wju4dH5dtnNJa6l4PRzuSqQqh7o0ZLRLIkEfNH2tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHyfxoMk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shH7Zu7I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC240C4CEE6;
-	Mon, 24 Feb 2025 14:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHyfxoMk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46734C4CED6;
+	Mon, 24 Feb 2025 14:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408950;
-	bh=bGCwoYCm/Gfm7PSokRBya+kluby/SsRBQpqEhb6iaPs=;
+	s=korg; t=1740408953;
+	bh=ZAoxeKaNrWrbYvHpiVwzKVQKTVnsf96Ed+JFv0KJFcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shH7Zu7IKEuvxmTyKuSDqKGCjFYGURuJDdvpCSCsdI7ZmB2IqzUq4RhQO+Inq7bUY
-	 F7+iANNIAc0np5a/c27n2gZLlEaNkHgcf9wLHZX4Nj7tKpRv1Kqs2vAa+pHTgmEJV0
-	 zqMO2SeP2TXh9dbOgclwfRABRGq4miT0ov9ivKC0=
+	b=bHyfxoMkF1Js403MYjbqEwIHIFCicO81GcFRC6NbkcJFLe+eSq0M7TN9zUD1OBmRc
+	 bBvUaHS13MajmAKGmhPcZrfrUGGCZCo95F1/GEx2FkjoKlLtOuR2Yptni6LMsyEcVg
+	 K3utjEy2W9sosqYUog8Yne6zO1NGhLxYTrXRkwDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erhard Furtner <erhard_f@mailbox.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 025/138] powerpc/code-patching: Fix KASAN hit by not flagging text patching area as VM_ALLOC
-Date: Mon, 24 Feb 2025 15:34:15 +0100
-Message-ID: <20250224142605.459018954@linuxfoundation.org>
+Subject: [PATCH 6.13 052/138] bpf, test_run: Fix use-after-free issue in eth_skb_pkt_type()
+Date: Mon, 24 Feb 2025 15:34:42 +0100
+Message-ID: <20250224142606.524625269@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -52,109 +56,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit d262a192d38e527faa5984629aabda2e0d1c4f54 ]
+[ Upstream commit 6b3d638ca897e099fa99bd6d02189d3176f80a47 ]
 
-Erhard reported the following KASAN hit while booting his PowerMac G4
-with a KASAN-enabled kernel 6.13-rc6:
+KMSAN reported a use-after-free issue in eth_skb_pkt_type()[1]. The
+cause of the issue was that eth_skb_pkt_type() accessed skb's data
+that didn't contain an Ethernet header. This occurs when
+bpf_prog_test_run_xdp() passes an invalid value as the user_data
+argument to bpf_test_init().
 
-  BUG: KASAN: vmalloc-out-of-bounds in copy_to_kernel_nofault+0xd8/0x1c8
-  Write of size 8 at addr f1000000 by task chronyd/1293
+Fix this by returning an error when user_data is less than ETH_HLEN in
+bpf_test_init(). Additionally, remove the check for "if (user_size >
+size)" as it is unnecessary.
 
-  CPU: 0 UID: 123 PID: 1293 Comm: chronyd Tainted: G        W          6.13.0-rc6-PMacG4 #2
-  Tainted: [W]=WARN
-  Hardware name: PowerMac3,6 7455 0x80010303 PowerMac
-  Call Trace:
-  [c2437590] [c1631a84] dump_stack_lvl+0x70/0x8c (unreliable)
-  [c24375b0] [c0504998] print_report+0xdc/0x504
-  [c2437610] [c050475c] kasan_report+0xf8/0x108
-  [c2437690] [c0505a3c] kasan_check_range+0x24/0x18c
-  [c24376a0] [c03fb5e4] copy_to_kernel_nofault+0xd8/0x1c8
-  [c24376c0] [c004c014] patch_instructions+0x15c/0x16c
-  [c2437710] [c00731a8] bpf_arch_text_copy+0x60/0x7c
-  [c2437730] [c0281168] bpf_jit_binary_pack_finalize+0x50/0xac
-  [c2437750] [c0073cf4] bpf_int_jit_compile+0xb30/0xdec
-  [c2437880] [c0280394] bpf_prog_select_runtime+0x15c/0x478
-  [c24378d0] [c1263428] bpf_prepare_filter+0xbf8/0xc14
-  [c2437990] [c12677ec] bpf_prog_create_from_user+0x258/0x2b4
-  [c24379d0] [c027111c] do_seccomp+0x3dc/0x1890
-  [c2437ac0] [c001d8e0] system_call_exception+0x2dc/0x420
-  [c2437f30] [c00281ac] ret_from_syscall+0x0/0x2c
-  --- interrupt: c00 at 0x5a1274
-  NIP:  005a1274 LR: 006a3b3c CTR: 005296c8
-  REGS: c2437f40 TRAP: 0c00   Tainted: G        W           (6.13.0-rc6-PMacG4)
-  MSR:  0200f932 <VEC,EE,PR,FP,ME,IR,DR,RI>  CR: 24004422  XER: 00000000
+[1]
+BUG: KMSAN: use-after-free in eth_skb_pkt_type include/linux/etherdevice.h:627 [inline]
+BUG: KMSAN: use-after-free in eth_type_trans+0x4ee/0x980 net/ethernet/eth.c:165
+ eth_skb_pkt_type include/linux/etherdevice.h:627 [inline]
+ eth_type_trans+0x4ee/0x980 net/ethernet/eth.c:165
+ __xdp_build_skb_from_frame+0x5a8/0xa50 net/core/xdp.c:635
+ xdp_recv_frames net/bpf/test_run.c:272 [inline]
+ xdp_test_run_batch net/bpf/test_run.c:361 [inline]
+ bpf_test_run_xdp_live+0x2954/0x3330 net/bpf/test_run.c:390
+ bpf_prog_test_run_xdp+0x148e/0x1b10 net/bpf/test_run.c:1318
+ bpf_prog_test_run+0x5b7/0xa30 kernel/bpf/syscall.c:4371
+ __sys_bpf+0x6a6/0xe20 kernel/bpf/syscall.c:5777
+ __do_sys_bpf kernel/bpf/syscall.c:5866 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:5864 [inline]
+ __x64_sys_bpf+0xa4/0xf0 kernel/bpf/syscall.c:5864
+ x64_sys_call+0x2ea0/0x3d90 arch/x86/include/generated/asm/syscalls_64.h:322
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xd9/0x1d0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-  GPR00: 00000166 af8f3fa0 a7ee3540 00000001 00000000 013b6500 005a5858 0200f932
-  GPR08: 00000000 00001fe9 013d5fc8 005296c8 2822244c 00b2fcd8 00000000 af8f4b57
-  GPR16: 00000000 00000001 00000000 00000000 00000000 00000001 00000000 00000002
-  GPR24: 00afdbb0 00000000 00000000 00000000 006e0004 013ce060 006e7c1c 00000001
-  NIP [005a1274] 0x5a1274
-  LR [006a3b3c] 0x6a3b3c
-  --- interrupt: c00
+Uninit was created at:
+ free_pages_prepare mm/page_alloc.c:1056 [inline]
+ free_unref_page+0x156/0x1320 mm/page_alloc.c:2657
+ __free_pages+0xa3/0x1b0 mm/page_alloc.c:4838
+ bpf_ringbuf_free kernel/bpf/ringbuf.c:226 [inline]
+ ringbuf_map_free+0xff/0x1e0 kernel/bpf/ringbuf.c:235
+ bpf_map_free kernel/bpf/syscall.c:838 [inline]
+ bpf_map_free_deferred+0x17c/0x310 kernel/bpf/syscall.c:862
+ process_one_work kernel/workqueue.c:3229 [inline]
+ process_scheduled_works+0xa2b/0x1b60 kernel/workqueue.c:3310
+ worker_thread+0xedf/0x1550 kernel/workqueue.c:3391
+ kthread+0x535/0x6b0 kernel/kthread.c:389
+ ret_from_fork+0x6e/0x90 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
 
-  The buggy address belongs to the virtual mapping at
-   [f1000000, f1002000) created by:
-   text_area_cpu_up+0x20/0x190
+CPU: 1 UID: 0 PID: 17276 Comm: syz.1.16450 Not tainted 6.12.0-05490-g9bb88c659673 #8
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
 
-  The buggy address belongs to the physical page:
-  page: refcount:1 mapcount:0 mapping:00000000 index:0x0 pfn:0x76e30
-  flags: 0x80000000(zone=2)
-  raw: 80000000 00000000 00000122 00000000 00000000 00000000 ffffffff 00000001
-  raw: 00000000
-  page dumped because: kasan: bad access detected
-
-  Memory state around the buggy address:
-   f0ffff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-   f0ffff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  >f1000000: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-             ^
-   f1000080: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-   f1000100: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
-  ==================================================================
-
-f8 corresponds to KASAN_VMALLOC_INVALID which means the area is not
-initialised hence not supposed to be used yet.
-
-Powerpc text patching infrastructure allocates a virtual memory area
-using get_vm_area() and flags it as VM_ALLOC. But that flag is meant
-to be used for vmalloc() and vmalloc() allocated memory is not
-supposed to be used before a call to __vmalloc_node_range() which is
-never called for that area.
-
-That went undetected until commit e4137f08816b ("mm, kasan, kmsan:
-instrument copy_from/to_kernel_nofault")
-
-The area allocated by text_area_cpu_up() is not vmalloc memory, it is
-mapped directly on demand when needed by map_kernel_page(). There is
-no VM flag corresponding to such usage, so just pass no flag. That way
-the area will be unpoisonned and usable immediately.
-
-Reported-by: Erhard Furtner <erhard_f@mailbox.org>
-Closes: https://lore.kernel.org/all/20250112135832.57c92322@yea/
-Fixes: 37bc3e5fd764 ("powerpc/lib/code-patching: Use alternate map for patch_instruction()")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/06621423da339b374f48c0886e3a5db18e896be8.1739342693.git.christophe.leroy@csgroup.eu
+Fixes: be3d72a2896c ("bpf: move user_size out of bpf_test_init")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/20250121150643.671650-1-syoshida@redhat.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/lib/code-patching.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bpf/test_run.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/lib/code-patching.c b/arch/powerpc/lib/code-patching.c
-index 81c0f673eb252..f84e0337cc029 100644
---- a/arch/powerpc/lib/code-patching.c
-+++ b/arch/powerpc/lib/code-patching.c
-@@ -108,7 +108,7 @@ static int text_area_cpu_up(unsigned int cpu)
- 	unsigned long addr;
- 	int err;
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index 501ec4249fedc..8612023bec60d 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -660,12 +660,9 @@ static void *bpf_test_init(const union bpf_attr *kattr, u32 user_size,
+ 	void __user *data_in = u64_to_user_ptr(kattr->test.data_in);
+ 	void *data;
  
--	area = get_vm_area(PAGE_SIZE, VM_ALLOC);
-+	area = get_vm_area(PAGE_SIZE, 0);
- 	if (!area) {
- 		WARN_ONCE(1, "Failed to create text area for cpu %d\n",
- 			cpu);
+-	if (size < ETH_HLEN || size > PAGE_SIZE - headroom - tailroom)
++	if (user_size < ETH_HLEN || user_size > PAGE_SIZE - headroom - tailroom)
+ 		return ERR_PTR(-EINVAL);
+ 
+-	if (user_size > size)
+-		return ERR_PTR(-EMSGSIZE);
+-
+ 	size = SKB_DATA_ALIGN(size);
+ 	data = kzalloc(size + headroom + tailroom, GFP_USER);
+ 	if (!data)
 -- 
 2.39.5
 
