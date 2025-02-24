@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D79927701;
-	Mon, 24 Feb 2025 14:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C67B18BC2F;
+	Mon, 24 Feb 2025 14:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408251; cv=none; b=kbenSa4RGPU7eREJDSFx6X/BEKSrX2AaWcCcILkocdObwu1N7VSyn+lljNPWiIuR9PN2ucO1GpawHGb9nFmVB8VpF3PG3vube1t17+4uevpZ2vHIK1gnITME34DPFQAginWrebZ6XEjNsmQsWd4ZQYJ0/Cqqho+bssktH8TkUC0=
+	t=1740408254; cv=none; b=jkGp+4s+L2xrnw1Fx8eBhEXwU9kvuQFDNOtfMJF+c/uE4D20S0HDYFeAkNzYFhZ7MGClzOLT+NfobNPr9tyxZs9piwX5fEqoigL4yU6NQjpQo7oVhhNyTxbgtUDkNI3PUsRY5+7uXRpzvkyqCCRqun3I5TBNMgPHg9qd2DmaeoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408251; c=relaxed/simple;
-	bh=lA/QuMu77X2kbtTpe3xw3bROzIzw5BwaCo2H2uI96W0=;
+	s=arc-20240116; t=1740408254; c=relaxed/simple;
+	bh=EdlsDqmjyDMZKGbx9yi5gjVdIidqspDVnbWDoe1ipWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7DSYDouQq3zTgQc97A476Rpq3/uJXXrzYN0uzuwJaH9ipSV/aN8FWa4jMnn3r5eoTsFSJ8XCdNo0o1gmNq5+kzZ8wsnF8xfNsXOKIEG2XNhGm5lidx1mXfVjAKZoQBNkeDUz6IL2dCNaB92PVbQ5s9EwNqj+RvXJ2GwXZJ3Pjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIa9ZGdt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rhU9KnAiIYkWlUXE4AHZyeB78YrCTbI87UD26Z474xvnA7yGjlsLFJ+IKda6Az7hecvvOdVZdz7G9HUy/ELb1EJTrM1o1u99tr6BQCfakuBnkB8mKRhhnnBuLEsFNK4gPuJpn/Ynw016QxTkzEH88sVKH3sYMgNxqQzPIoLtadU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBzhjtLW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIa9ZGdt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEF2C4CED6;
-	Mon, 24 Feb 2025 14:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBzhjtLW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D95C4CEE6;
+	Mon, 24 Feb 2025 14:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408250;
-	bh=lA/QuMu77X2kbtTpe3xw3bROzIzw5BwaCo2H2uI96W0=;
+	s=korg; t=1740408254;
+	bh=EdlsDqmjyDMZKGbx9yi5gjVdIidqspDVnbWDoe1ipWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qIa9ZGdtLi7RC+XQzgwypyG6w7qyqV9reYEqAH/ALJR/KwBlJ23jZYvB2ZCQUEtaj
-	 KYT2QlQNPE2Z3pAd6qKcDTAoMTenMPhOmkM44Tu0nUGaAog7/hh1oimx4zlA9W6aNz
-	 NQK/6GBFL896wOXKWVZHeEDTaXsChjHSadYOFhJI=
+	b=dBzhjtLWfS4rmTxhcFPJRxDtZ0mVSmBh/UB9/WgOP4xuMB5qyRCyjDj0Wv8CI224d
+	 8xAgV2KSaqfsn7ECGCdjjVbVuCyZuZD47ZzQPERVPRA6qZBvHJrCU5UA7Rp9T77jIi
+	 kDsXsSZcDMlhjcow/l1EfG5FgpiyThCOzNBpgWCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.6 136/140] perf/x86/intel: Fix ARCH_PERFMON_NUM_COUNTER_LEAF
-Date: Mon, 24 Feb 2025 15:35:35 +0100
-Message-ID: <20250224142608.354228001@linuxfoundation.org>
+	Andrew Morton <akpm@linux-foundation.org>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>
+Subject: [PATCH 6.6 137/140] nilfs2: move page release outside of nilfs_delete_entry and nilfs_set_link
+Date: Mon, 24 Feb 2025 15:35:36 +0100
+Message-ID: <20250224142608.391916959@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -50,102 +51,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 47a973fd75639fe80d59f9e1860113bb2a0b112b upstream.
+commit 584db20c181f5e28c0386d7987406ace7fbd3e49 upstream.
 
-The EAX of the CPUID Leaf 023H enumerates the mask of valid sub-leaves.
-To tell the availability of the sub-leaf 1 (enumerate the counter mask),
-perf should check the bit 1 (0x2) of EAS, rather than bit 0 (0x1).
+Patch series "nilfs2: Folio conversions for directory paths".
 
-The error is not user-visible on bare metal. Because the sub-leaf 0 and
-the sub-leaf 1 are always available. However, it may bring issues in a
-virtualization environment when a VMM only enumerates the sub-leaf 0.
+This series applies page->folio conversions to nilfs2 directory
+operations.  This reduces hidden compound_head() calls and also converts
+deprecated kmap calls to kmap_local in the directory code.
 
-Introduce the cpuid35_e?x to replace the macros, which makes the
-implementation style consistent.
+Although nilfs2 does not yet support large folios, Matthew has done his
+best here to include support for large folios, which will be needed for
+devices with large block sizes.
 
-Fixes: eb467aaac21e ("perf/x86/intel: Support Architectural PerfMon Extension leaf")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20250129154820.3755948-3-kan.liang@linux.intel.com
-[ The patch is not exactly the same as the upstream patch. Because in the 6.6
-  stable kernel, the umask2/eq enumeration is not supported. The number of
-  counters is used rather than the counter mask. But the change is
-  straightforward, which utilizes the structured union to replace the macros
-  when parsing the CPUID enumeration. It also fixed a wrong macros. ]
+This series corresponds to the second half of the original post [1], but
+with two complementary patches inserted at the beginning and some
+adjustments, to prevent a kmap_local constraint violation found during
+testing with highmem mapping.
+
+[1] https://lkml.kernel.org/r/20231106173903.1734114-1-willy@infradead.org
+
+I have reviewed all changes and tested this for regular and small block
+sizes, both on machines with and without highmem mapping.  No issues
+found.
+
+This patch (of 17):
+
+In a few directory operations, the call to nilfs_put_page() for a page
+obtained using nilfs_find_entry() or nilfs_dotdot() is hidden in
+nilfs_set_link() and nilfs_delete_entry(), making it difficult to track
+page release and preventing change of its call position.
+
+By moving nilfs_put_page() out of these functions, this makes the page
+get/put correspondence clearer and makes it easier to swap
+nilfs_put_page() calls (and kunmap calls within them) when modifying
+multiple directory entries simultaneously in nilfs_rename().
+
+Also, update comments for nilfs_set_link() and nilfs_delete_entry() to
+reflect changes in their behavior.
+
+To make nilfs_put_page() visible from namei.c, this moves its definition
+to nilfs.h and replaces existing equivalents to use it, but the exposure
+of that definition is temporary and will be removed on a later kmap ->
+kmap_local conversion.
+
+Link: https://lkml.kernel.org/r/20231127143036.2425-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20231127143036.2425-2-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: ee70999a988b ("nilfs2: handle errors that nilfs_prepare_chunk() may return")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c      |   17 ++++++++++-------
- arch/x86/include/asm/perf_event.h |   26 +++++++++++++++++++++++++-
- 2 files changed, 35 insertions(+), 8 deletions(-)
+ fs/nilfs2/dir.c   |   11 +----------
+ fs/nilfs2/namei.c |   13 +++++++------
+ fs/nilfs2/nilfs.h |    6 ++++++
+ 3 files changed, 14 insertions(+), 16 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -4643,16 +4643,19 @@ static void intel_pmu_check_num_counters
- 
- static void update_pmu_cap(struct x86_hybrid_pmu *pmu)
- {
--	unsigned int sub_bitmaps = cpuid_eax(ARCH_PERFMON_EXT_LEAF);
--	unsigned int eax, ebx, ecx, edx;
-+	unsigned int cntr, fixed_cntr, ecx, edx;
-+	union cpuid35_eax eax;
-+	union cpuid35_ebx ebx;
- 
--	if (sub_bitmaps & ARCH_PERFMON_NUM_COUNTER_LEAF_BIT) {
-+	cpuid(ARCH_PERFMON_EXT_LEAF, &eax.full, &ebx.full, &ecx, &edx);
-+
-+	if (eax.split.cntr_subleaf) {
- 		cpuid_count(ARCH_PERFMON_EXT_LEAF, ARCH_PERFMON_NUM_COUNTER_LEAF,
--			    &eax, &ebx, &ecx, &edx);
--		pmu->num_counters = fls(eax);
--		pmu->num_counters_fixed = fls(ebx);
-+			    &cntr, &fixed_cntr, &ecx, &edx);
-+		pmu->num_counters = fls(cntr);
-+		pmu->num_counters_fixed = fls(fixed_cntr);
- 		intel_pmu_check_num_counters(&pmu->num_counters, &pmu->num_counters_fixed,
--					     &pmu->intel_ctrl, ebx);
-+					     &pmu->intel_ctrl, fixed_cntr);
- 	}
+--- a/fs/nilfs2/dir.c
++++ b/fs/nilfs2/dir.c
+@@ -64,12 +64,6 @@ static inline unsigned int nilfs_chunk_s
+ 	return inode->i_sb->s_blocksize;
  }
  
---- a/arch/x86/include/asm/perf_event.h
-+++ b/arch/x86/include/asm/perf_event.h
-@@ -177,9 +177,33 @@ union cpuid10_edx {
-  * detection/enumeration details:
-  */
- #define ARCH_PERFMON_EXT_LEAF			0x00000023
--#define ARCH_PERFMON_NUM_COUNTER_LEAF_BIT	0x1
- #define ARCH_PERFMON_NUM_COUNTER_LEAF		0x1
- 
-+union cpuid35_eax {
-+	struct {
-+		unsigned int	leaf0:1;
-+		/* Counters Sub-Leaf */
-+		unsigned int    cntr_subleaf:1;
-+		/* Auto Counter Reload Sub-Leaf */
-+		unsigned int    acr_subleaf:1;
-+		/* Events Sub-Leaf */
-+		unsigned int    events_subleaf:1;
-+		unsigned int	reserved:28;
-+	} split;
-+	unsigned int            full;
-+};
-+
-+union cpuid35_ebx {
-+	struct {
-+		/* UnitMask2 Supported */
-+		unsigned int    umask2:1;
-+		/* EQ-bit Supported */
-+		unsigned int    eq:1;
-+		unsigned int	reserved:30;
-+	} split;
-+	unsigned int            full;
-+};
-+
+-static inline void nilfs_put_page(struct page *page)
+-{
+-	kunmap(page);
+-	put_page(page);
+-}
+-
  /*
-  * Intel Architectural LBR CPUID detection/enumeration details:
+  * Return the offset into page `page_nr' of the last valid
+  * byte in that page, plus one.
+@@ -450,7 +444,6 @@ int nilfs_inode_by_name(struct inode *di
+ 	return 0;
+ }
+ 
+-/* Releases the page */
+ void nilfs_set_link(struct inode *dir, struct nilfs_dir_entry *de,
+ 		    struct page *page, struct inode *inode)
+ {
+@@ -465,7 +458,6 @@ void nilfs_set_link(struct inode *dir, s
+ 	de->inode = cpu_to_le64(inode->i_ino);
+ 	nilfs_set_de_type(de, inode);
+ 	nilfs_commit_chunk(page, mapping, from, to);
+-	nilfs_put_page(page);
+ 	dir->i_mtime = inode_set_ctime_current(dir);
+ }
+ 
+@@ -569,7 +561,7 @@ out_unlock:
+ 
+ /*
+  * nilfs_delete_entry deletes a directory entry by merging it with the
+- * previous entry. Page is up-to-date. Releases the page.
++ * previous entry. Page is up-to-date.
   */
+ int nilfs_delete_entry(struct nilfs_dir_entry *dir, struct page *page)
+ {
+@@ -605,7 +597,6 @@ int nilfs_delete_entry(struct nilfs_dir_
+ 	nilfs_commit_chunk(page, mapping, from, to);
+ 	inode->i_mtime = inode_set_ctime_current(inode);
+ out:
+-	nilfs_put_page(page);
+ 	return err;
+ }
+ 
+--- a/fs/nilfs2/namei.c
++++ b/fs/nilfs2/namei.c
+@@ -297,6 +297,7 @@ static int nilfs_do_unlink(struct inode
+ 		set_nlink(inode, 1);
+ 	}
+ 	err = nilfs_delete_entry(de, page);
++	nilfs_put_page(page);
+ 	if (err)
+ 		goto out;
+ 
+@@ -406,6 +407,7 @@ static int nilfs_rename(struct mnt_idmap
+ 			goto out_dir;
+ 		}
+ 		nilfs_set_link(new_dir, new_de, new_page, old_inode);
++		nilfs_put_page(new_page);
+ 		nilfs_mark_inode_dirty(new_dir);
+ 		inode_set_ctime_current(new_inode);
+ 		if (dir_de)
+@@ -429,9 +431,11 @@ static int nilfs_rename(struct mnt_idmap
+ 	inode_set_ctime_current(old_inode);
+ 
+ 	nilfs_delete_entry(old_de, old_page);
++	nilfs_put_page(old_page);
+ 
+ 	if (dir_de) {
+ 		nilfs_set_link(old_inode, dir_de, dir_page, new_dir);
++		nilfs_put_page(dir_page);
+ 		drop_nlink(old_dir);
+ 	}
+ 	nilfs_mark_inode_dirty(old_dir);
+@@ -441,13 +445,10 @@ static int nilfs_rename(struct mnt_idmap
+ 	return err;
+ 
+ out_dir:
+-	if (dir_de) {
+-		kunmap(dir_page);
+-		put_page(dir_page);
+-	}
++	if (dir_de)
++		nilfs_put_page(dir_page);
+ out_old:
+-	kunmap(old_page);
+-	put_page(old_page);
++	nilfs_put_page(old_page);
+ out:
+ 	nilfs_transaction_abort(old_dir->i_sb);
+ 	return err;
+--- a/fs/nilfs2/nilfs.h
++++ b/fs/nilfs2/nilfs.h
+@@ -243,6 +243,12 @@ extern struct nilfs_dir_entry *nilfs_dot
+ extern void nilfs_set_link(struct inode *, struct nilfs_dir_entry *,
+ 			   struct page *, struct inode *);
+ 
++static inline void nilfs_put_page(struct page *page)
++{
++	kunmap(page);
++	put_page(page);
++}
++
+ /* file.c */
+ extern int nilfs_sync_file(struct file *, loff_t, loff_t, int);
+ 
 
 
