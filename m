@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1379984A35;
-	Mon, 24 Feb 2025 14:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3790C84A35;
+	Mon, 24 Feb 2025 14:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408629; cv=none; b=qOnM1HsxJX+LN32U9KbkIeKJ3bAq54lkwsj1MR11ye0bsGJMuqNWESI158fKkKH9FN+aw0rrV4/nU/ZavO4e+BsM52K8jKkFzb0fPRW5dhehhCXyLUQ2YuTS+LiWH020KKqn06RhQGQ/tgiW9uD0YrQ9BxNE9wtqaWseexeUkGU=
+	t=1740408632; cv=none; b=bUMWDmSEUbmu3hW2z4bH6xkH7Iz1G+Qfy3JtWjWNMi3l59Q0dvc2PnVD+Vt1Y7RdGgTJqjAgEefXSE4XSBZ/dzQLovreD5IIe/12TsKGxwzHcKf/QhiXjoetB8fhbL/RkmveSJFLnEf6h+3QeeJRHVVZ83ee8FJXc+2EbIfhgos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408629; c=relaxed/simple;
-	bh=zc9OTsf102lbE/wyikEB7D3BK0aKlGAKFz/hR19z8QQ=;
+	s=arc-20240116; t=1740408632; c=relaxed/simple;
+	bh=gn6JmfYJ+mZs4mrMFweKqHkvaUVjmDQ1zWPr6LAdEgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YvfID5CFmTcsG+VvuwHKZ+el1cskdJHnw1omq9YfcP9SDEO50r4qEAliHpL1UABikIAbHEuHYqt60if6rR7QZvxc7pjINljWTm/wFxQIKPM8BYrxC64u/aetYcChg4PVc1Gl6lw+p8nEPqSvKkq5+FGNLYZUatNXvOpc7YjcAGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlZaPhe3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RznLOT7wKa+TU8VpVByHrO20T5GKPpjodVoTUA54G/MdwuxVYkM8TAWfIjuxaETLLGek4gozgDX67rNbvxr7xGRCTzxzXulGOE9hpYytoQQa0D8/SuWrE0b8iMsg5eS3egzrbnuTC6QnHOiE1e/GnlV5vOgMJWpNz/JFTBcCVjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tb5QnLn+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlZaPhe3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77207C4CEE9;
-	Mon, 24 Feb 2025 14:50:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tb5QnLn+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18A2C4CED6;
+	Mon, 24 Feb 2025 14:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408629;
-	bh=zc9OTsf102lbE/wyikEB7D3BK0aKlGAKFz/hR19z8QQ=;
+	s=korg; t=1740408632;
+	bh=gn6JmfYJ+mZs4mrMFweKqHkvaUVjmDQ1zWPr6LAdEgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlZaPhe3Q/qJxGlmod5YKtJgpvFm7k8e8wa76hsPIhEipmc7Uyzy/9GMu0f93Aih6
-	 wSZCNqLAjwK3ma6p1RLVm5J3ih4evf+D+9JJCFjQPROG2U8TMnMvCPHqQJuF01XrrC
-	 SmTOq3YgKAme34rPEZvPUyv3s3ffhx3hUNdL23ls=
+	b=tb5QnLn+UHOAUn1w9NM6md08JGYKpZRC5eSApG/CGYsKTandRKKpoTLe+ldKD14XZ
+	 fa9BUYkS0t6kjKXugAKnNSGMDKht2TR1cJY5k/D2fZX2TUFb0dG5xDgJQ0LoMr2rN7
+	 LE6o1grgZi6pK919ZKP8k1RdIxW7QBj2E8r+3+h8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Li Zetao <lizetao1@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 113/154] io_uring: prevent opcode speculation
-Date: Mon, 24 Feb 2025 15:35:12 +0100
-Message-ID: <20250224142611.481940404@linuxfoundation.org>
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.12 114/154] gpiolib: check the return value of gpio_chip::get_direction()
+Date: Mon, 24 Feb 2025 15:35:13 +0100
+Message-ID: <20250224142611.521183263@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -51,34 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 1e988c3fe1264708f4f92109203ac5b1d65de50b upstream.
+commit 9d846b1aebbe488f245f1aa463802ff9c34cc078 upstream.
 
-sqe->opcode is used for different tables, make sure we santitise it
-against speculations.
+As per the API contract - gpio_chip::get_direction() may fail and return
+a negative error number. However, we treat it as if it always returned 0
+or 1. Check the return value of the callback and propagate the error
+number up the stack.
 
 Cc: stable@vger.kernel.org
-Fixes: d3656344fea03 ("io_uring: add lookup table for various opcode needs")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Reviewed-by: Li Zetao <lizetao1@huawei.com>
-Link: https://lore.kernel.org/r/7eddbf31c8ca0a3947f8ed98271acc2b4349c016.1739568408.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20250210-gpio-sanitize-retvals-v1-1-12ea88506cb2@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpio/gpiolib.c |   44 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 29 insertions(+), 15 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2053,6 +2053,8 @@ static int io_init_req(struct io_ring_ct
- 		req->opcode = 0;
- 		return io_init_fail_req(req, -EINVAL);
- 	}
-+	opcode = array_index_nospec(opcode, IORING_OP_LAST);
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -1059,8 +1059,11 @@ int gpiochip_add_data_with_key(struct gp
+ 		struct gpio_desc *desc = &gdev->descs[desc_index];
+ 
+ 		if (gc->get_direction && gpiochip_line_is_valid(gc, desc_index)) {
+-			assign_bit(FLAG_IS_OUT,
+-				   &desc->flags, !gc->get_direction(gc, desc_index));
++			ret = gc->get_direction(gc, desc_index);
++			if (ret < 0)
++				goto err_cleanup_desc_srcu;
 +
- 	def = &io_issue_defs[opcode];
- 	if (unlikely(sqe_flags & ~SQE_COMMON_FLAGS)) {
- 		/* enforce forwards compatibility on users */
++			assign_bit(FLAG_IS_OUT, &desc->flags, !ret);
+ 		} else {
+ 			assign_bit(FLAG_IS_OUT,
+ 				   &desc->flags, !gc->direction_input);
+@@ -2702,13 +2705,18 @@ int gpiod_direction_input(struct gpio_de
+ 	if (guard.gc->direction_input) {
+ 		ret = guard.gc->direction_input(guard.gc,
+ 						gpio_chip_hwgpio(desc));
+-	} else if (guard.gc->get_direction &&
+-		  (guard.gc->get_direction(guard.gc,
+-					   gpio_chip_hwgpio(desc)) != 1)) {
+-		gpiod_warn(desc,
+-			   "%s: missing direction_input() operation and line is output\n",
+-			   __func__);
+-		return -EIO;
++	} else if (guard.gc->get_direction) {
++		ret = guard.gc->get_direction(guard.gc,
++					      gpio_chip_hwgpio(desc));
++		if (ret < 0)
++			return ret;
++
++		if (ret != GPIO_LINE_DIRECTION_IN) {
++			gpiod_warn(desc,
++				   "%s: missing direction_input() operation and line is output\n",
++				    __func__);
++			return -EIO;
++		}
+ 	}
+ 	if (ret == 0) {
+ 		clear_bit(FLAG_IS_OUT, &desc->flags);
+@@ -2746,12 +2754,18 @@ static int gpiod_direction_output_raw_co
+ 						 gpio_chip_hwgpio(desc), val);
+ 	} else {
+ 		/* Check that we are in output mode if we can */
+-		if (guard.gc->get_direction &&
+-		    guard.gc->get_direction(guard.gc, gpio_chip_hwgpio(desc))) {
+-			gpiod_warn(desc,
+-				"%s: missing direction_output() operation\n",
+-				__func__);
+-			return -EIO;
++		if (guard.gc->get_direction) {
++			ret = guard.gc->get_direction(guard.gc,
++						      gpio_chip_hwgpio(desc));
++			if (ret < 0)
++				return ret;
++
++			if (ret != GPIO_LINE_DIRECTION_OUT) {
++				gpiod_warn(desc,
++					   "%s: missing direction_output() operation\n",
++					   __func__);
++				return -EIO;
++			}
+ 		}
+ 		/*
+ 		 * If we can't actively set the direction, we are some
 
 
