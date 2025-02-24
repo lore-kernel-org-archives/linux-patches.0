@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B1714012;
-	Mon, 24 Feb 2025 14:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F8414012;
+	Mon, 24 Feb 2025 14:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408849; cv=none; b=FGNvwQn471jptlE5kGOJpxk4R3c4t8uCNZAezcQGjxGn4V5zq9XZhSNozRYcM/o1kzy+wBEe5fEJIUJ/GVVxPLGh3v8pHkvn/ypWV+bPR/wOPBHFtu1zJsqs4JNLvm6IV9f2IOJOBxKrejRmDLl9IQYbH7+eDac9x7sLs9mL8Ww=
+	t=1740408853; cv=none; b=ekLpyeBH73cIcVjmCrUvahHO68b58k/YiLKUJIYj4+8nby1QxS9eLLIlQb7iXdoBLBx1FJa3nNhc1waLbPEtT8aI8UmHf7oRB0/MXbib0vkBxOE0PUSYcjkKNOFerwg1Gz5gJdWNs0vks1oDnO87Lr2qOmk6xCt+Rg57Yph/G4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408849; c=relaxed/simple;
-	bh=Y34t0DUfJvxOvPdWn9d5CnknyZUVvcP4/I9iyj/bCXg=;
+	s=arc-20240116; t=1740408853; c=relaxed/simple;
+	bh=sH+THtH1rRupuF2mZ0pUVAQQDiZg6XIOuVCDCvvAdQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kq7CZbv0mDU3RHahQWd/iFDi09M7/73LFZDbTDFnsuu1XtnYCCD0GBm4+mRjPEcffYIGLKB7KgjT1cxQVFu3rwZ0vUPADHDUaiHjpM5z4FzaJbE6m8B3hxV9zSMNVPCiUHuAqInCEBA1/2x4iXA7d5vZJxc/MRgKRsZvpBbPJAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yS4C3yVe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o6kc71vjHMBeWN9jShyvnL7FXaLyxhfDYKS5HseoGP6uxTPCV3wtNK15/pLlNuoF+opf0I622akfrl5YJJThslNHb/TkDy7dZsBuepY9V74is7n7HCfZluMekNk0ob+a7scAyiwl1XGx2cLO3xs4gs/7v5UhH1+fg3S1S/iy2ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oq8p0Smm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yS4C3yVe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA80C4CED6;
-	Mon, 24 Feb 2025 14:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oq8p0Smm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2569EC4CED6;
+	Mon, 24 Feb 2025 14:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408849;
-	bh=Y34t0DUfJvxOvPdWn9d5CnknyZUVvcP4/I9iyj/bCXg=;
+	s=korg; t=1740408852;
+	bh=sH+THtH1rRupuF2mZ0pUVAQQDiZg6XIOuVCDCvvAdQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yS4C3yVeG0Wb+YBpH1mVMpMsU7qV3hpCW0fzQ4+0dFFf4EclCWP0QfJuhp9m3gT47
-	 rT/d5KNpHcmNijAM6jbrBv8HL2qCvB+G2E/DRTsQdkQ18rItu/3YSHlHt80jKcogwA
-	 ylX1m0sWyWWHFRuLmhbPjZlgrGSSgOvJwQETDDw4=
+	b=oq8p0Smm594pvaNDxiazwecd5q3aHu+DSNqeM2FjUYmd9l6Gf/OHckVUjBxwEqGBk
+	 rZg9V+huLMmWpCKlym83+fA8HrZpPbjrEjRZyAhqknF4U62sVgeocJtJg6iXO43Kpn
+	 +7dmFQykOgRm/iAK5WT3BqPnKkSYk4dtjU8rOaEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Martin Leung <martin.leung@amd.com>,
+	Charlene Liu <Charlene.Liu@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 004/138] btrfs: fix double accounting race when extent_writepage_io() failed
-Date: Mon, 24 Feb 2025 15:33:54 +0100
-Message-ID: <20250224142604.622784072@linuxfoundation.org>
+Subject: [PATCH 6.13 005/138] drm/amd/display: update dcn351 used clock offset
+Date: Mon, 24 Feb 2025 15:33:55 +0100
+Message-ID: <20250224142604.663546583@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -51,154 +54,503 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Charlene Liu <Charlene.Liu@amd.com>
 
-[ Upstream commit 8bf334beb3496da3c3fbf3daf3856f7eec70dacc ]
+[ Upstream commit a1fc2837f4960e84e9375e12292584ad2ae472da ]
 
-[BUG]
-If submit_one_sector() failed inside extent_writepage_io() for sector
-size < page size cases (e.g. 4K sector size and 64K page size), then
-we can hit double ordered extent accounting error.
+[why]
+hw register offset delta
 
-This should be very rare, as submit_one_sector() only fails when we
-failed to grab the extent map, and such extent map should exist inside
-the memory and has been pinned.
-
-[CAUSE]
-For example we have the following folio layout:
-
-    0  4K          32K    48K   60K 64K
-    |//|           |//////|     |///|
-
-Where |///| is the dirty range we need to writeback. The 3 different
-dirty ranges are submitted for regular COW.
-
-Now we hit the following sequence:
-
-- submit_one_sector() returned 0 for [0, 4K)
-
-- submit_one_sector() returned 0 for [32K, 48K)
-
-- submit_one_sector() returned error for [60K, 64K)
-
-- btrfs_mark_ordered_io_finished() called for the whole folio
-  This will mark the following ranges as finished:
-  * [0, 4K)
-  * [32K, 48K)
-    Both ranges have their IO already submitted, this cleanup will
-    lead to double accounting.
-
-  * [60K, 64K)
-    That's the correct cleanup.
-
-The only good news is, this error is only theoretical, as the target
-extent map is always pinned, thus we should directly grab it from
-memory, other than reading it from the disk.
-
-[FIX]
-Instead of calling btrfs_mark_ordered_io_finished() for the whole folio
-range, which can touch ranges we should not touch, instead
-move the error handling inside extent_writepage_io().
-
-So that we can cleanup exact sectors that ought to be submitted but failed.
-
-This provides much more accurate cleanup, avoiding the double accounting.
-
-CC: stable@vger.kernel.org # 5.15+
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Martin Leung <martin.leung@amd.com>
+Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: f88192d2335b ("drm/amd/display: Correct register address in dcn35")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 37 ++++++++++++++++++++++++-------------
- 1 file changed, 24 insertions(+), 13 deletions(-)
+ .../gpu/drm/amd/display/dc/clk_mgr/Makefile   |   2 +-
+ .../gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c  |   5 +-
+ .../display/dc/clk_mgr/dcn35/dcn351_clk_mgr.c | 140 ++++++++++++++++++
+ .../display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c  | 132 +++++++++++++----
+ .../display/dc/clk_mgr/dcn35/dcn35_clk_mgr.h  |   4 +
+ .../amd/display/dc/inc/hw/clk_mgr_internal.h  |  59 ++++++++
+ 6 files changed, 308 insertions(+), 34 deletions(-)
+ create mode 100644 drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn351_clk_mgr.c
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index 3d138bfd59e18..0dd24d1289863 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -1431,6 +1431,7 @@ static noinline_for_stack int extent_writepage_io(struct btrfs_inode *inode,
- 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
- 	unsigned long range_bitmap = 0;
- 	bool submitted_io = false;
-+	bool error = false;
- 	const u64 folio_start = folio_pos(folio);
- 	u64 cur;
- 	int bit;
-@@ -1473,11 +1474,26 @@ static noinline_for_stack int extent_writepage_io(struct btrfs_inode *inode,
- 			break;
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/Makefile b/drivers/gpu/drm/amd/display/dc/clk_mgr/Makefile
+index ab1132bc896a3..d9955c5d2e5ed 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/Makefile
+@@ -174,7 +174,7 @@ AMD_DISPLAY_FILES += $(AMD_DAL_CLK_MGR_DCN32)
+ ###############################################################################
+ # DCN35
+ ###############################################################################
+-CLK_MGR_DCN35 = dcn35_smu.o dcn35_clk_mgr.o
++CLK_MGR_DCN35 = dcn35_smu.o dcn351_clk_mgr.o dcn35_clk_mgr.o
+ 
+ AMD_DAL_CLK_MGR_DCN35 = $(addprefix $(AMDDALPATH)/dc/clk_mgr/dcn35/,$(CLK_MGR_DCN35))
+ 
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c
+index 0e243f4344d05..4c3e58c730b11 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c
+@@ -355,8 +355,11 @@ struct clk_mgr *dc_clk_mgr_create(struct dc_context *ctx, struct pp_smu_funcs *p
+ 			BREAK_TO_DEBUGGER();
+ 			return NULL;
  		}
- 		ret = submit_one_sector(inode, folio, cur, bio_ctrl, i_size);
--		if (ret < 0)
--			goto out;
-+		if (unlikely(ret < 0)) {
-+			/*
-+			 * bio_ctrl may contain a bio crossing several folios.
-+			 * Submit it immediately so that the bio has a chance
-+			 * to finish normally, other than marked as error.
-+			 */
-+			submit_one_bio(bio_ctrl);
-+			/*
-+			 * Failed to grab the extent map which should be very rare.
-+			 * Since there is no bio submitted to finish the ordered
-+			 * extent, we have to manually finish this sector.
-+			 */
-+			btrfs_mark_ordered_io_finished(inode, folio, cur,
-+						       fs_info->sectorsize, false);
-+			error = true;
-+			continue;
-+		}
- 		submitted_io = true;
++		if (ctx->dce_version == DCN_VERSION_3_51)
++			dcn351_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
++		else
++			dcn35_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
+ 
+-		dcn35_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
+ 		return &clk_mgr->base.base;
  	}
--out:
+ 	break;
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn351_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn351_clk_mgr.c
+new file mode 100644
+index 0000000000000..6a6ae618650b6
+--- /dev/null
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn351_clk_mgr.c
+@@ -0,0 +1,140 @@
++/*
++ * Copyright 2024 Advanced Micro Devices, Inc.
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a
++ * copy of this software and associated documentation files (the "Software"),
++ * to deal in the Software without restriction, including without limitation
++ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
++ * and/or sell copies of the Software, and to permit persons to whom the
++ * Software is furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
++ * THE COPYRIGHT HOLDER(S) OR AUTHOR(S) BE LIABLE FOR ANY CLAIM, DAMAGES OR
++ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
++ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ * OTHER DEALINGS IN THE SOFTWARE.
++ *
++ * Authors: AMD
++ *
++ */
 +
- 	/*
- 	 * If we didn't submitted any sector (>= i_size), folio dirty get
- 	 * cleared but PAGECACHE_TAG_DIRTY is not cleared (only cleared
-@@ -1485,8 +1501,11 @@ static noinline_for_stack int extent_writepage_io(struct btrfs_inode *inode,
- 	 *
- 	 * Here we set writeback and clear for the range. If the full folio
- 	 * is no longer dirty then we clear the PAGECACHE_TAG_DIRTY tag.
-+	 *
-+	 * If we hit any error, the corresponding sector will still be dirty
-+	 * thus no need to clear PAGECACHE_TAG_DIRTY.
- 	 */
--	if (!submitted_io) {
-+	if (!submitted_io && !error) {
- 		btrfs_folio_set_writeback(fs_info, folio, start, len);
- 		btrfs_folio_clear_writeback(fs_info, folio, start, len);
- 	}
-@@ -1506,7 +1525,6 @@ static int extent_writepage(struct folio *folio, struct btrfs_bio_ctrl *bio_ctrl
- {
- 	struct btrfs_inode *inode = BTRFS_I(folio->mapping->host);
- 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
--	const u64 page_start = folio_pos(folio);
- 	int ret;
- 	size_t pg_offset;
- 	loff_t i_size = i_size_read(&inode->vfs_inode);
-@@ -1549,10 +1567,6 @@ static int extent_writepage(struct folio *folio, struct btrfs_bio_ctrl *bio_ctrl
++#include "core_types.h"
++#include "dcn35_clk_mgr.h"
++
++#define DCN_BASE__INST0_SEG1 0x000000C0
++#define mmCLK1_CLK_PLL_REQ 0x16E37
++
++#define mmCLK1_CLK0_DFS_CNTL 0x16E69
++#define mmCLK1_CLK1_DFS_CNTL 0x16E6C
++#define mmCLK1_CLK2_DFS_CNTL 0x16E6F
++#define mmCLK1_CLK3_DFS_CNTL 0x16E72
++#define mmCLK1_CLK4_DFS_CNTL 0x16E75
++#define mmCLK1_CLK5_DFS_CNTL 0x16E78
++
++#define mmCLK1_CLK0_CURRENT_CNT 0x16EFC
++#define mmCLK1_CLK1_CURRENT_CNT 0x16EFD
++#define mmCLK1_CLK2_CURRENT_CNT 0x16EFE
++#define mmCLK1_CLK3_CURRENT_CNT 0x16EFF
++#define mmCLK1_CLK4_CURRENT_CNT 0x16F00
++#define mmCLK1_CLK5_CURRENT_CNT 0x16F01
++
++#define mmCLK1_CLK0_BYPASS_CNTL 0x16E8A
++#define mmCLK1_CLK1_BYPASS_CNTL 0x16E93
++#define mmCLK1_CLK2_BYPASS_CNTL 0x16E9C
++#define mmCLK1_CLK3_BYPASS_CNTL 0x16EA5
++#define mmCLK1_CLK4_BYPASS_CNTL 0x16EAE
++#define mmCLK1_CLK5_BYPASS_CNTL 0x16EB7
++
++#define mmCLK1_CLK0_DS_CNTL 0x16E83
++#define mmCLK1_CLK1_DS_CNTL 0x16E8C
++#define mmCLK1_CLK2_DS_CNTL 0x16E95
++#define mmCLK1_CLK3_DS_CNTL 0x16E9E
++#define mmCLK1_CLK4_DS_CNTL 0x16EA7
++#define mmCLK1_CLK5_DS_CNTL 0x16EB0
++
++#define mmCLK1_CLK0_ALLOW_DS 0x16E84
++#define mmCLK1_CLK1_ALLOW_DS 0x16E8D
++#define mmCLK1_CLK2_ALLOW_DS 0x16E96
++#define mmCLK1_CLK3_ALLOW_DS 0x16E9F
++#define mmCLK1_CLK4_ALLOW_DS 0x16EA8
++#define mmCLK1_CLK5_ALLOW_DS 0x16EB1
++
++#define mmCLK5_spll_field_8 0x1B04B
++#define mmDENTIST_DISPCLK_CNTL 0x0124
++#define regDENTIST_DISPCLK_CNTL 0x0064
++#define regDENTIST_DISPCLK_CNTL_BASE_IDX 1
++
++#define CLK1_CLK_PLL_REQ__FbMult_int__SHIFT 0x0
++#define CLK1_CLK_PLL_REQ__PllSpineDiv__SHIFT 0xc
++#define CLK1_CLK_PLL_REQ__FbMult_frac__SHIFT 0x10
++#define CLK1_CLK_PLL_REQ__FbMult_int_MASK 0x000001FFL
++#define CLK1_CLK_PLL_REQ__PllSpineDiv_MASK 0x0000F000L
++#define CLK1_CLK_PLL_REQ__FbMult_frac_MASK 0xFFFF0000L
++
++#define CLK1_CLK2_BYPASS_CNTL__CLK2_BYPASS_SEL_MASK 0x00000007L
++
++// DENTIST_DISPCLK_CNTL
++#define DENTIST_DISPCLK_CNTL__DENTIST_DISPCLK_WDIVIDER__SHIFT 0x0
++#define DENTIST_DISPCLK_CNTL__DENTIST_DISPCLK_RDIVIDER__SHIFT 0x8
++#define DENTIST_DISPCLK_CNTL__DENTIST_DISPCLK_CHG_DONE__SHIFT 0x13
++#define DENTIST_DISPCLK_CNTL__DENTIST_DPPCLK_CHG_DONE__SHIFT 0x14
++#define DENTIST_DISPCLK_CNTL__DENTIST_DPPCLK_WDIVIDER__SHIFT 0x18
++#define DENTIST_DISPCLK_CNTL__DENTIST_DISPCLK_WDIVIDER_MASK 0x0000007FL
++#define DENTIST_DISPCLK_CNTL__DENTIST_DISPCLK_RDIVIDER_MASK 0x00007F00L
++#define DENTIST_DISPCLK_CNTL__DENTIST_DISPCLK_CHG_DONE_MASK 0x00080000L
++#define DENTIST_DISPCLK_CNTL__DENTIST_DPPCLK_CHG_DONE_MASK 0x00100000L
++#define DENTIST_DISPCLK_CNTL__DENTIST_DPPCLK_WDIVIDER_MASK 0x7F000000L
++
++#define CLK5_spll_field_8__spll_ssc_en_MASK 0x00002000L
++
++#define REG(reg) \
++	(clk_mgr->regs->reg)
++
++#define BASE_INNER(seg) DCN_BASE__INST0_SEG ## seg
++
++#define BASE(seg) BASE_INNER(seg)
++
++#define SR(reg_name)\
++		.reg_name = BASE(reg ## reg_name ## _BASE_IDX) +  \
++					reg ## reg_name
++
++#define CLK_SR_DCN35(reg_name)\
++	.reg_name = mm ## reg_name
++
++static const struct clk_mgr_registers clk_mgr_regs_dcn351 = {
++	CLK_REG_LIST_DCN35()
++};
++
++static const struct clk_mgr_shift clk_mgr_shift_dcn351 = {
++	CLK_COMMON_MASK_SH_LIST_DCN32(__SHIFT)
++};
++
++static const struct clk_mgr_mask clk_mgr_mask_dcn351 = {
++	CLK_COMMON_MASK_SH_LIST_DCN32(_MASK)
++};
++
++#define TO_CLK_MGR_DCN35(clk_mgr)\
++	container_of(clk_mgr, struct clk_mgr_dcn35, base)
++
++
++void dcn351_clk_mgr_construct(
++		struct dc_context *ctx,
++		struct clk_mgr_dcn35 *clk_mgr,
++		struct pp_smu_funcs *pp_smu,
++		struct dccg *dccg)
++{
++	/*register offset changed*/
++	clk_mgr->base.regs = &clk_mgr_regs_dcn351;
++	clk_mgr->base.clk_mgr_shift = &clk_mgr_shift_dcn351;
++	clk_mgr->base.clk_mgr_mask = &clk_mgr_mask_dcn351;
++
++	dcn35_clk_mgr_construct(ctx,  clk_mgr, pp_smu, dccg);
++
++}
++
++
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
+index b77333817f189..6d6cb8ef59db0 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
+@@ -36,15 +36,11 @@
+ #include "dcn20/dcn20_clk_mgr.h"
  
- 	bio_ctrl->wbc->nr_to_write--;
  
--	if (ret)
--		btrfs_mark_ordered_io_finished(inode, folio,
--					       page_start, PAGE_SIZE, !ret);
 -
- done:
- 	if (ret < 0)
- 		mapping_set_error(folio->mapping, ret);
-@@ -2332,11 +2346,8 @@ void extent_write_locked_range(struct inode *inode, const struct folio *locked_f
- 		if (ret == 1)
- 			goto next_page;
+-
+ #include "reg_helper.h"
+ #include "core_types.h"
+ #include "dcn35_smu.h"
+ #include "dm_helpers.h"
  
--		if (ret) {
--			btrfs_mark_ordered_io_finished(BTRFS_I(inode), folio,
--						       cur, cur_len, !ret);
-+		if (ret)
- 			mapping_set_error(mapping, ret);
--		}
- 		btrfs_folio_end_lock(fs_info, folio, cur, cur_len);
- 		if (ret < 0)
- 			found_error = true;
+-/* TODO: remove this include once we ported over remaining clk mgr functions*/
+-#include "dcn30/dcn30_clk_mgr.h"
+ #include "dcn31/dcn31_clk_mgr.h"
+ 
+ #include "dc_dmub_srv.h"
+@@ -55,35 +51,102 @@
+ #define DC_LOGGER \
+ 	clk_mgr->base.base.ctx->logger
+ 
++#define DCN_BASE__INST0_SEG1 0x000000C0
++#define mmCLK1_CLK_PLL_REQ 0x16E37
++
++#define mmCLK1_CLK0_DFS_CNTL 0x16E69
++#define mmCLK1_CLK1_DFS_CNTL 0x16E6C
++#define mmCLK1_CLK2_DFS_CNTL 0x16E6F
++#define mmCLK1_CLK3_DFS_CNTL 0x16E72
++#define mmCLK1_CLK4_DFS_CNTL 0x16E75
++#define mmCLK1_CLK5_DFS_CNTL 0x16E78
++
++#define mmCLK1_CLK0_CURRENT_CNT 0x16EFB
++#define mmCLK1_CLK1_CURRENT_CNT 0x16EFC
++#define mmCLK1_CLK2_CURRENT_CNT 0x16EFD
++#define mmCLK1_CLK3_CURRENT_CNT 0x16EFE
++#define mmCLK1_CLK4_CURRENT_CNT 0x16EFF
++#define mmCLK1_CLK5_CURRENT_CNT 0x16F00
++
++#define mmCLK1_CLK0_BYPASS_CNTL 0x16E8A
++#define mmCLK1_CLK1_BYPASS_CNTL 0x16E93
++#define mmCLK1_CLK2_BYPASS_CNTL 0x16E9C
++#define mmCLK1_CLK3_BYPASS_CNTL 0x16EA5
++#define mmCLK1_CLK4_BYPASS_CNTL 0x16EAE
++#define mmCLK1_CLK5_BYPASS_CNTL 0x16EB7
++
++#define mmCLK1_CLK0_DS_CNTL 0x16E83
++#define mmCLK1_CLK1_DS_CNTL 0x16E8C
++#define mmCLK1_CLK2_DS_CNTL 0x16E95
++#define mmCLK1_CLK3_DS_CNTL 0x16E9E
++#define mmCLK1_CLK4_DS_CNTL 0x16EA7
++#define mmCLK1_CLK5_DS_CNTL 0x16EB0
++
++#define mmCLK1_CLK0_ALLOW_DS 0x16E84
++#define mmCLK1_CLK1_ALLOW_DS 0x16E8D
++#define mmCLK1_CLK2_ALLOW_DS 0x16E96
++#define mmCLK1_CLK3_ALLOW_DS 0x16E9F
++#define mmCLK1_CLK4_ALLOW_DS 0x16EA8
++#define mmCLK1_CLK5_ALLOW_DS 0x16EB1
++
++#define mmCLK5_spll_field_8 0x1B04B
++#define mmDENTIST_DISPCLK_CNTL 0x0124
++#define regDENTIST_DISPCLK_CNTL 0x0064
++#define regDENTIST_DISPCLK_CNTL_BASE_IDX 1
++
++#define CLK1_CLK_PLL_REQ__FbMult_int__SHIFT 0x0
++#define CLK1_CLK_PLL_REQ__PllSpineDiv__SHIFT 0xc
++#define CLK1_CLK_PLL_REQ__FbMult_frac__SHIFT 0x10
++#define CLK1_CLK_PLL_REQ__FbMult_int_MASK 0x000001FFL
++#define CLK1_CLK_PLL_REQ__PllSpineDiv_MASK 0x0000F000L
++#define CLK1_CLK_PLL_REQ__FbMult_frac_MASK 0xFFFF0000L
++
++#define CLK1_CLK2_BYPASS_CNTL__CLK2_BYPASS_SEL_MASK 0x00000007L
++#define CLK1_CLK2_BYPASS_CNTL__CLK2_BYPASS_DIV_MASK 0x000F0000L
++// DENTIST_DISPCLK_CNTL
++#define DENTIST_DISPCLK_CNTL__DENTIST_DISPCLK_WDIVIDER__SHIFT 0x0
++#define DENTIST_DISPCLK_CNTL__DENTIST_DISPCLK_RDIVIDER__SHIFT 0x8
++#define DENTIST_DISPCLK_CNTL__DENTIST_DISPCLK_CHG_DONE__SHIFT 0x13
++#define DENTIST_DISPCLK_CNTL__DENTIST_DPPCLK_CHG_DONE__SHIFT 0x14
++#define DENTIST_DISPCLK_CNTL__DENTIST_DPPCLK_WDIVIDER__SHIFT 0x18
++#define DENTIST_DISPCLK_CNTL__DENTIST_DISPCLK_WDIVIDER_MASK 0x0000007FL
++#define DENTIST_DISPCLK_CNTL__DENTIST_DISPCLK_RDIVIDER_MASK 0x00007F00L
++#define DENTIST_DISPCLK_CNTL__DENTIST_DISPCLK_CHG_DONE_MASK 0x00080000L
++#define DENTIST_DISPCLK_CNTL__DENTIST_DPPCLK_CHG_DONE_MASK 0x00100000L
++#define DENTIST_DISPCLK_CNTL__DENTIST_DPPCLK_WDIVIDER_MASK 0x7F000000L
++
++#define CLK5_spll_field_8__spll_ssc_en_MASK 0x00002000L
++
++#define SMU_VER_THRESHOLD 0x5D4A00 //93.74.0
++#undef FN
++#define FN(reg_name, field_name) \
++	clk_mgr->clk_mgr_shift->field_name, clk_mgr->clk_mgr_mask->field_name
+ 
+-#define regCLK1_CLK_PLL_REQ			0x0237
+-#define regCLK1_CLK_PLL_REQ_BASE_IDX		0
++#define REG(reg) \
++	(clk_mgr->regs->reg)
+ 
+-#define CLK1_CLK_PLL_REQ__FbMult_int__SHIFT	0x0
+-#define CLK1_CLK_PLL_REQ__PllSpineDiv__SHIFT	0xc
+-#define CLK1_CLK_PLL_REQ__FbMult_frac__SHIFT	0x10
+-#define CLK1_CLK_PLL_REQ__FbMult_int_MASK	0x000001FFL
+-#define CLK1_CLK_PLL_REQ__PllSpineDiv_MASK	0x0000F000L
+-#define CLK1_CLK_PLL_REQ__FbMult_frac_MASK	0xFFFF0000L
++#define BASE_INNER(seg) DCN_BASE__INST0_SEG ## seg
+ 
+-#define regCLK1_CLK2_BYPASS_CNTL			0x029c
+-#define regCLK1_CLK2_BYPASS_CNTL_BASE_IDX	0
++#define BASE(seg) BASE_INNER(seg)
+ 
+-#define CLK1_CLK2_BYPASS_CNTL__CLK2_BYPASS_SEL__SHIFT	0x0
+-#define CLK1_CLK2_BYPASS_CNTL__CLK2_BYPASS_DIV__SHIFT	0x10
+-#define CLK1_CLK2_BYPASS_CNTL__CLK2_BYPASS_SEL_MASK		0x00000007L
+-#define CLK1_CLK2_BYPASS_CNTL__CLK2_BYPASS_DIV_MASK		0x000F0000L
++#define SR(reg_name)\
++		.reg_name = BASE(reg ## reg_name ## _BASE_IDX) +  \
++					reg ## reg_name
+ 
+-#define regCLK5_0_CLK5_spll_field_8				0x464b
+-#define regCLK5_0_CLK5_spll_field_8_BASE_IDX	0
++#define CLK_SR_DCN35(reg_name)\
++	.reg_name = mm ## reg_name
+ 
+-#define CLK5_0_CLK5_spll_field_8__spll_ssc_en__SHIFT	0xd
+-#define CLK5_0_CLK5_spll_field_8__spll_ssc_en_MASK		0x00002000L
++static const struct clk_mgr_registers clk_mgr_regs_dcn35 = {
++	CLK_REG_LIST_DCN35()
++};
+ 
+-#define SMU_VER_THRESHOLD 0x5D4A00 //93.74.0
++static const struct clk_mgr_shift clk_mgr_shift_dcn35 = {
++	CLK_COMMON_MASK_SH_LIST_DCN32(__SHIFT)
++};
+ 
+-#define REG(reg_name) \
+-	(ctx->clk_reg_offsets[reg ## reg_name ## _BASE_IDX] + reg ## reg_name)
++static const struct clk_mgr_mask clk_mgr_mask_dcn35 = {
++	CLK_COMMON_MASK_SH_LIST_DCN32(_MASK)
++};
+ 
+ #define TO_CLK_MGR_DCN35(clk_mgr)\
+ 	container_of(clk_mgr, struct clk_mgr_dcn35, base)
+@@ -452,7 +515,6 @@ static int get_vco_frequency_from_reg(struct clk_mgr_internal *clk_mgr)
+ 	struct fixed31_32 pll_req;
+ 	unsigned int fbmult_frac_val = 0;
+ 	unsigned int fbmult_int_val = 0;
+-	struct dc_context *ctx = clk_mgr->base.ctx;
+ 
+ 	/*
+ 	 * Register value of fbmult is in 8.16 format, we are converting to 314.32
+@@ -512,12 +574,12 @@ static void dcn35_dump_clk_registers(struct clk_state_registers_and_bypass *regs
+ static bool dcn35_is_spll_ssc_enabled(struct clk_mgr *clk_mgr_base)
+ {
+ 	struct clk_mgr_internal *clk_mgr = TO_CLK_MGR_INTERNAL(clk_mgr_base);
+-	struct dc_context *ctx = clk_mgr->base.ctx;
++
+ 	uint32_t ssc_enable;
+ 
+-	REG_GET(CLK5_0_CLK5_spll_field_8, spll_ssc_en, &ssc_enable);
++	ssc_enable = REG_READ(CLK5_spll_field_8) & CLK5_spll_field_8__spll_ssc_en_MASK;
+ 
+-	return ssc_enable == 1;
++	return ssc_enable != 0;
+ }
+ 
+ static void init_clk_states(struct clk_mgr *clk_mgr)
+@@ -642,10 +704,10 @@ static struct dcn35_ss_info_table ss_info_table = {
+ 
+ static void dcn35_read_ss_info_from_lut(struct clk_mgr_internal *clk_mgr)
+ {
+-	struct dc_context *ctx = clk_mgr->base.ctx;
+-	uint32_t clock_source;
++	uint32_t clock_source = 0;
++
++	clock_source = REG_READ(CLK1_CLK2_BYPASS_CNTL) & CLK1_CLK2_BYPASS_CNTL__CLK2_BYPASS_SEL_MASK;
+ 
+-	REG_GET(CLK1_CLK2_BYPASS_CNTL, CLK2_BYPASS_SEL, &clock_source);
+ 	// If it's DFS mode, clock_source is 0.
+ 	if (dcn35_is_spll_ssc_enabled(&clk_mgr->base) && (clock_source < ARRAY_SIZE(ss_info_table.ss_percentage))) {
+ 		clk_mgr->dprefclk_ss_percentage = ss_info_table.ss_percentage[clock_source];
+@@ -1112,6 +1174,12 @@ void dcn35_clk_mgr_construct(
+ 	clk_mgr->base.dprefclk_ss_divider = 1000;
+ 	clk_mgr->base.ss_on_dprefclk = false;
+ 	clk_mgr->base.dfs_ref_freq_khz = 48000;
++	if (ctx->dce_version == DCN_VERSION_3_5) {
++		clk_mgr->base.regs = &clk_mgr_regs_dcn35;
++		clk_mgr->base.clk_mgr_shift = &clk_mgr_shift_dcn35;
++		clk_mgr->base.clk_mgr_mask = &clk_mgr_mask_dcn35;
++	}
++
+ 
+ 	clk_mgr->smu_wm_set.wm_set = (struct dcn35_watermarks *)dm_helpers_allocate_gpu_mem(
+ 				clk_mgr->base.base.ctx,
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.h b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.h
+index 1203dc605b12c..a12a9bf90806e 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.h
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.h
+@@ -60,4 +60,8 @@ void dcn35_clk_mgr_construct(struct dc_context *ctx,
+ 
+ void dcn35_clk_mgr_destroy(struct clk_mgr_internal *clk_mgr_int);
+ 
++void dcn351_clk_mgr_construct(struct dc_context *ctx,
++		struct clk_mgr_dcn35 *clk_mgr,
++		struct pp_smu_funcs *pp_smu,
++		struct dccg *dccg);
+ #endif //__DCN35_CLK_MGR_H__
+diff --git a/drivers/gpu/drm/amd/display/dc/inc/hw/clk_mgr_internal.h b/drivers/gpu/drm/amd/display/dc/inc/hw/clk_mgr_internal.h
+index c2dd061892f4d..7a1ca1e98059b 100644
+--- a/drivers/gpu/drm/amd/display/dc/inc/hw/clk_mgr_internal.h
++++ b/drivers/gpu/drm/amd/display/dc/inc/hw/clk_mgr_internal.h
+@@ -166,6 +166,41 @@ enum dentist_divider_range {
+     CLK_SR_DCN32(CLK1_CLK4_CURRENT_CNT), \
+     CLK_SR_DCN32(CLK4_CLK0_CURRENT_CNT)
+ 
++#define CLK_REG_LIST_DCN35()	  \
++	CLK_SR_DCN35(CLK1_CLK_PLL_REQ), \
++	CLK_SR_DCN35(CLK1_CLK0_DFS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK1_DFS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK2_DFS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK3_DFS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK4_DFS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK5_DFS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK0_CURRENT_CNT), \
++	CLK_SR_DCN35(CLK1_CLK1_CURRENT_CNT), \
++	CLK_SR_DCN35(CLK1_CLK2_CURRENT_CNT), \
++	CLK_SR_DCN35(CLK1_CLK3_CURRENT_CNT), \
++	CLK_SR_DCN35(CLK1_CLK4_CURRENT_CNT), \
++	CLK_SR_DCN35(CLK1_CLK5_CURRENT_CNT), \
++	CLK_SR_DCN35(CLK1_CLK0_BYPASS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK1_BYPASS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK2_BYPASS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK3_BYPASS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK4_BYPASS_CNTL),\
++	CLK_SR_DCN35(CLK1_CLK5_BYPASS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK0_DS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK1_DS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK2_DS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK3_DS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK4_DS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK5_DS_CNTL), \
++	CLK_SR_DCN35(CLK1_CLK0_ALLOW_DS), \
++	CLK_SR_DCN35(CLK1_CLK1_ALLOW_DS), \
++	CLK_SR_DCN35(CLK1_CLK2_ALLOW_DS), \
++	CLK_SR_DCN35(CLK1_CLK3_ALLOW_DS), \
++	CLK_SR_DCN35(CLK1_CLK4_ALLOW_DS), \
++	CLK_SR_DCN35(CLK1_CLK5_ALLOW_DS), \
++	CLK_SR_DCN35(CLK5_spll_field_8), \
++	SR(DENTIST_DISPCLK_CNTL), \
++
+ #define CLK_COMMON_MASK_SH_LIST_DCN32(mask_sh) \
+ 	CLK_COMMON_MASK_SH_LIST_DCN20_BASE(mask_sh),\
+ 	CLK_SF(CLK1_CLK_PLL_REQ, FbMult_int, mask_sh),\
+@@ -236,6 +271,7 @@ struct clk_mgr_registers {
+ 	uint32_t CLK1_CLK2_DFS_CNTL;
+ 	uint32_t CLK1_CLK3_DFS_CNTL;
+ 	uint32_t CLK1_CLK4_DFS_CNTL;
++	uint32_t CLK1_CLK5_DFS_CNTL;
+ 	uint32_t CLK2_CLK2_DFS_CNTL;
+ 
+ 	uint32_t CLK1_CLK0_CURRENT_CNT;
+@@ -243,11 +279,34 @@ struct clk_mgr_registers {
+     uint32_t CLK1_CLK2_CURRENT_CNT;
+     uint32_t CLK1_CLK3_CURRENT_CNT;
+     uint32_t CLK1_CLK4_CURRENT_CNT;
++	uint32_t CLK1_CLK5_CURRENT_CNT;
+ 
+ 	uint32_t CLK0_CLK0_DFS_CNTL;
+ 	uint32_t CLK0_CLK1_DFS_CNTL;
+ 	uint32_t CLK0_CLK3_DFS_CNTL;
+ 	uint32_t CLK0_CLK4_DFS_CNTL;
++	uint32_t CLK1_CLK0_BYPASS_CNTL;
++	uint32_t CLK1_CLK1_BYPASS_CNTL;
++	uint32_t CLK1_CLK2_BYPASS_CNTL;
++	uint32_t CLK1_CLK3_BYPASS_CNTL;
++	uint32_t CLK1_CLK4_BYPASS_CNTL;
++	uint32_t CLK1_CLK5_BYPASS_CNTL;
++
++	uint32_t CLK1_CLK0_DS_CNTL;
++	uint32_t CLK1_CLK1_DS_CNTL;
++	uint32_t CLK1_CLK2_DS_CNTL;
++	uint32_t CLK1_CLK3_DS_CNTL;
++	uint32_t CLK1_CLK4_DS_CNTL;
++	uint32_t CLK1_CLK5_DS_CNTL;
++
++	uint32_t CLK1_CLK0_ALLOW_DS;
++	uint32_t CLK1_CLK1_ALLOW_DS;
++	uint32_t CLK1_CLK2_ALLOW_DS;
++	uint32_t CLK1_CLK3_ALLOW_DS;
++	uint32_t CLK1_CLK4_ALLOW_DS;
++	uint32_t CLK1_CLK5_ALLOW_DS;
++	uint32_t CLK5_spll_field_8;
++
+ };
+ 
+ struct clk_mgr_shift {
 -- 
 2.39.5
 
