@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0559618A6C5;
-	Mon, 24 Feb 2025 14:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36EA41519A5;
+	Mon, 24 Feb 2025 14:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408017; cv=none; b=TxIAd79QSqczWuBtPCqyGYOBGKz0FLLPmIuOlT7SXFHfgKWvCr0eLlpKrajSWHJSBwy+JmrmcaTDrhzfXq9vgNeK3vqVsQAyh3DTcTWlxsI/JtK1uirNPbA0PURe3x4i7QfO+nmmr+1hhVUKFb0RThF0ZZwCHvZh6MY0m15h1co=
+	t=1740408020; cv=none; b=mruUqD+eg/598nc4LvQj3dlasYEMLLL779oBgUdvX2rcPT1Wxl3eQ65290s/ms5P+evq7gpua0GsjSc6ZlpPyjDz8nIJ0bSLOUIB8FPoU2nVcsIf1a5nqmGpfFXVifNrIz3/9FGKW5GZ9GT6xXhAgVWeYhuXra0J+usiViqzOSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408017; c=relaxed/simple;
-	bh=ncM0eKGImkI3z3Xt58oaXRsEBtU3l+Wmq/O8at/2A8E=;
+	s=arc-20240116; t=1740408020; c=relaxed/simple;
+	bh=tK+l/Go4SFt3/NYF/3zGx0CjIJHOpTWJK28MP8kTwzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ek9h12wGtJ5WH/84r2xD3YdlAeZMd7wA5jOLjcQRzOlLbXk91Iz/QEQ3li0WE7qkblu2bF4egrxwRFaM1YnP/8I3TqzY/yzYST29f37sJ6xGiheGan4pV3bh5sizLWOMh+QXhtcDSDWcr8AXoEpXQt6uCn0BP/MqzwTPjss7M80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfBlVsiF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LoHQ9fJg76CRmHepgi3VLaOg2FXIPJ26rvRH+q6yV8xcf8QBCBGCSwe/i03xNodjrKuVWzjnTcoRoRW5Pk4AwMm536CjlYg96CfvYvv44ZHdTZ/jMJPc4Hz1oWnKgNQLcsnbO4lK0L/o8/L1uvsMBTRLb+ZiqPqGMqNA0Y05AD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ae3LKGmm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfBlVsiF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6A2C4CED6;
-	Mon, 24 Feb 2025 14:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ae3LKGmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD67C4CEE9;
+	Mon, 24 Feb 2025 14:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408016;
-	bh=ncM0eKGImkI3z3Xt58oaXRsEBtU3l+Wmq/O8at/2A8E=;
+	s=korg; t=1740408020;
+	bh=tK+l/Go4SFt3/NYF/3zGx0CjIJHOpTWJK28MP8kTwzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PfBlVsiFuvLpTASSUPfVC2mhhjXj64qyzIP7Xd3Br7yq1jM9DPZpeRjL1Z4Gmv9II
-	 RJK95PIm6AH1a5CoB3fOFqbx+O9GEwBA8l4+a3r7sjIMTIOo7kNL428YpY7JCU1djk
-	 HP4KCl1V6VQrfv9QtDlXyHP3JGwtavTQHqKLlFpM=
+	b=Ae3LKGmmr92bLM+sDBN6edLP+OuUb+x8V7NcxAkh34yKxkQWgaMAPDLCQ814VrZpw
+	 WG/B4GG2HxS5liCIXG0NLxH+f5yrQBb/am4uj3s1AX2+opoc+3uKZqmaUDwD8iq0pI
+	 pw0qvHAZoLlb80tu665e4Bjbj+mnlNuUC/jT2Oz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nick Child <nnac123@linux.ibm.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/140] ibmvnic: Introduce send sub-crq direct
-Date: Mon, 24 Feb 2025 15:34:35 +0100
-Message-ID: <20250224142605.996478511@linuxfoundation.org>
+Subject: [PATCH 6.6 077/140] ibmvnic: Add stat for tx direct vs tx batched
+Date: Mon, 24 Feb 2025 15:34:36 +0100
+Message-ID: <20250224142606.036391237@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -53,166 +54,123 @@ Content-Transfer-Encoding: 8bit
 
 From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit 74839f7a82689bf5a21a5447cae8e3a7b7a606d2 ]
+[ Upstream commit 2ee73c54a615b74d2e7ee6f20844fd3ba63fc485 ]
 
-Firmware supports two hcalls to send a sub-crq request:
-H_SEND_SUB_CRQ_INDIRECT and H_SEND_SUB_CRQ. The indirect hcall allows
-for submission of batched messages while the other hcall is limited to
-only one message. This protocol is defined in PAPR section 17.2.3.3.
-
-Previously, the ibmvnic xmit function only used the indirect hcall. This
-allowed the driver to batch it's skbs. A single skb can occupy a few
-entries per hcall depending on if FW requires skb header information or
-not. The FW only needs header information if the packet is segmented.
-
-By this logic, if an skb is not GSO then it can fit in one sub-crq
-message and therefore is a candidate for H_SEND_SUB_CRQ.
-Batching skb transmission is only useful when there are more packets
-coming down the line (ie netdev_xmit_more is true).
-
-As it turns out, H_SEND_SUB_CRQ induces less latency than
-H_SEND_SUB_CRQ_INDIRECT. Therefore, use H_SEND_SUB_CRQ where
-appropriate.
-
-Small latency gains seen when doing TCP_RR_150 (request/response
-workload). Ftrace results (graph-time=1):
-  Previous:
-     ibmvnic_xmit = 29618270.83 us / 8860058.0 hits = AVG 3.34
-     ibmvnic_tx_scrq_flush = 21972231.02 us / 6553972.0 hits = AVG 3.35
-  Now:
-     ibmvnic_xmit = 22153350.96 us / 8438942.0 hits = AVG 2.63
-     ibmvnic_tx_scrq_flush = 15858922.4 us / 6244076.0 hits = AVG 2.54
+Allow tracking of packets sent with send_subcrq direct vs
+indirect. `ethtool -S <dev>` will now provide a counter
+of the number of uses of each xmit method. This metric will
+be useful in performance debugging.
 
 Signed-off-by: Nick Child <nnac123@linux.ibm.com>
-Link: https://patch.msgid.link/20240807211809.1259563-6-nnac123@linux.ibm.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241001163531.1803152-1-nnac123@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: bdf5d13aa05e ("ibmvnic: Don't reference skb after sending to VIOS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmvnic.c | 52 ++++++++++++++++++++++++++----
- 1 file changed, 46 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/ibm/ibmvnic.c | 23 ++++++++++++++++-------
+ drivers/net/ethernet/ibm/ibmvnic.h |  3 ++-
+ 2 files changed, 18 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
-index e1e4dc81ad309..e2e4a1a2fa74f 100644
+index e2e4a1a2fa74f..cd5224f6c42a3 100644
 --- a/drivers/net/ethernet/ibm/ibmvnic.c
 +++ b/drivers/net/ethernet/ibm/ibmvnic.c
-@@ -117,6 +117,7 @@ static void free_long_term_buff(struct ibmvnic_adapter *adapter,
- 				struct ibmvnic_long_term_buff *ltb);
- static void ibmvnic_disable_irqs(struct ibmvnic_adapter *adapter);
- static void flush_reset_queue(struct ibmvnic_adapter *adapter);
-+static void print_subcrq_error(struct device *dev, int rc, const char *func);
- 
- struct ibmvnic_stat {
- 	char name[ETH_GSTRING_LEN];
-@@ -2350,8 +2351,29 @@ static void ibmvnic_tx_scrq_clean_buffer(struct ibmvnic_adapter *adapter,
- 	}
- }
- 
-+static int send_subcrq_direct(struct ibmvnic_adapter *adapter,
-+			      u64 remote_handle, u64 *entry)
-+{
-+	unsigned int ua = adapter->vdev->unit_address;
-+	struct device *dev = &adapter->vdev->dev;
-+	int rc;
-+
-+	/* Make sure the hypervisor sees the complete request */
-+	dma_wmb();
-+	rc = plpar_hcall_norets(H_SEND_SUB_CRQ, ua,
-+				cpu_to_be64(remote_handle),
-+				cpu_to_be64(entry[0]), cpu_to_be64(entry[1]),
-+				cpu_to_be64(entry[2]), cpu_to_be64(entry[3]));
-+
-+	if (rc)
-+		print_subcrq_error(dev, rc, __func__);
-+
-+	return rc;
-+}
-+
- static int ibmvnic_tx_scrq_flush(struct ibmvnic_adapter *adapter,
--				 struct ibmvnic_sub_crq_queue *tx_scrq)
-+				 struct ibmvnic_sub_crq_queue *tx_scrq,
-+				 bool indirect)
- {
- 	struct ibmvnic_ind_xmit_queue *ind_bufp;
- 	u64 dma_addr;
-@@ -2366,7 +2388,13 @@ static int ibmvnic_tx_scrq_flush(struct ibmvnic_adapter *adapter,
- 
- 	if (!entries)
- 		return 0;
--	rc = send_subcrq_indirect(adapter, handle, dma_addr, entries);
-+
-+	if (indirect)
-+		rc = send_subcrq_indirect(adapter, handle, dma_addr, entries);
-+	else
-+		rc = send_subcrq_direct(adapter, handle,
-+					(u64 *)ind_bufp->indir_arr);
-+
- 	if (rc)
- 		ibmvnic_tx_scrq_clean_buffer(adapter, tx_scrq);
- 	else
-@@ -2424,7 +2452,7 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
- 		tx_dropped++;
- 		tx_send_failed++;
- 		ret = NETDEV_TX_OK;
--		lpar_rc = ibmvnic_tx_scrq_flush(adapter, tx_scrq);
-+		lpar_rc = ibmvnic_tx_scrq_flush(adapter, tx_scrq, true);
+@@ -2326,7 +2326,7 @@ static void ibmvnic_tx_scrq_clean_buffer(struct ibmvnic_adapter *adapter,
+ 		tx_buff = &tx_pool->tx_buff[index];
+ 		adapter->netdev->stats.tx_packets--;
+ 		adapter->netdev->stats.tx_bytes -= tx_buff->skb->len;
+-		adapter->tx_stats_buffers[queue_num].packets--;
++		adapter->tx_stats_buffers[queue_num].batched_packets--;
+ 		adapter->tx_stats_buffers[queue_num].bytes -=
+ 						tx_buff->skb->len;
+ 		dev_kfree_skb_any(tx_buff->skb);
+@@ -2418,7 +2418,8 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 	unsigned int tx_map_failed = 0;
+ 	union sub_crq indir_arr[16];
+ 	unsigned int tx_dropped = 0;
+-	unsigned int tx_packets = 0;
++	unsigned int tx_dpackets = 0;
++	unsigned int tx_bpackets = 0;
+ 	unsigned int tx_bytes = 0;
+ 	dma_addr_t data_dma_addr;
+ 	struct netdev_queue *txq;
+@@ -2577,6 +2578,7 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
  		if (lpar_rc != H_SUCCESS)
  			goto tx_err;
- 		goto out;
-@@ -2442,7 +2470,7 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
- 		tx_send_failed++;
- 		tx_dropped++;
- 		ret = NETDEV_TX_OK;
--		lpar_rc = ibmvnic_tx_scrq_flush(adapter, tx_scrq);
-+		lpar_rc = ibmvnic_tx_scrq_flush(adapter, tx_scrq, true);
- 		if (lpar_rc != H_SUCCESS)
- 			goto tx_err;
- 		goto out;
-@@ -2540,6 +2568,16 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
- 		tx_crq.v1.flags1 |= IBMVNIC_TX_LSO;
- 		tx_crq.v1.mss = cpu_to_be16(skb_shinfo(skb)->gso_size);
- 		hdrs += 2;
-+	} else if (!ind_bufp->index && !netdev_xmit_more()) {
-+		ind_bufp->indir_arr[0] = tx_crq;
-+		ind_bufp->index = 1;
-+		tx_buff->num_entries = 1;
-+		netdev_tx_sent_queue(txq, skb->len);
-+		lpar_rc = ibmvnic_tx_scrq_flush(adapter, tx_scrq, false);
-+		if (lpar_rc != H_SUCCESS)
-+			goto tx_err;
-+
-+		goto early_exit;
+ 
++		tx_dpackets++;
+ 		goto early_exit;
  	}
  
- 	if ((*hdrs >> 7) & 1)
-@@ -2549,7 +2587,7 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
- 	tx_buff->num_entries = num_entries;
- 	/* flush buffer if current entry can not fit */
- 	if (num_entries + ind_bufp->index > IBMVNIC_MAX_IND_DESCS) {
--		lpar_rc = ibmvnic_tx_scrq_flush(adapter, tx_scrq);
-+		lpar_rc = ibmvnic_tx_scrq_flush(adapter, tx_scrq, true);
- 		if (lpar_rc != H_SUCCESS)
- 			goto tx_flush_err;
- 	}
-@@ -2557,15 +2595,17 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
- 	indir_arr[0] = tx_crq;
- 	memcpy(&ind_bufp->indir_arr[ind_bufp->index], &indir_arr[0],
- 	       num_entries * sizeof(struct ibmvnic_generic_scrq));
-+
- 	ind_bufp->index += num_entries;
- 	if (__netdev_tx_sent_queue(txq, skb->len,
- 				   netdev_xmit_more() &&
- 				   ind_bufp->index < IBMVNIC_MAX_IND_DESCS)) {
--		lpar_rc = ibmvnic_tx_scrq_flush(adapter, tx_scrq);
-+		lpar_rc = ibmvnic_tx_scrq_flush(adapter, tx_scrq, true);
- 		if (lpar_rc != H_SUCCESS)
+@@ -2605,6 +2607,8 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
  			goto tx_err;
  	}
  
-+early_exit:
++	tx_bpackets++;
++
+ early_exit:
  	if (atomic_add_return(num_entries, &tx_scrq->used)
  					>= adapter->req_tx_entries_per_subcrq) {
- 		netdev_dbg(netdev, "Stopping queue %d\n", queue_num);
+@@ -2612,7 +2616,6 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 		netif_stop_subqueue(netdev, queue_num);
+ 	}
+ 
+-	tx_packets++;
+ 	tx_bytes += skb->len;
+ 	txq_trans_cond_update(txq);
+ 	ret = NETDEV_TX_OK;
+@@ -2642,10 +2645,11 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 	rcu_read_unlock();
+ 	netdev->stats.tx_dropped += tx_dropped;
+ 	netdev->stats.tx_bytes += tx_bytes;
+-	netdev->stats.tx_packets += tx_packets;
++	netdev->stats.tx_packets += tx_bpackets + tx_dpackets;
+ 	adapter->tx_send_failed += tx_send_failed;
+ 	adapter->tx_map_failed += tx_map_failed;
+-	adapter->tx_stats_buffers[queue_num].packets += tx_packets;
++	adapter->tx_stats_buffers[queue_num].batched_packets += tx_bpackets;
++	adapter->tx_stats_buffers[queue_num].direct_packets += tx_dpackets;
+ 	adapter->tx_stats_buffers[queue_num].bytes += tx_bytes;
+ 	adapter->tx_stats_buffers[queue_num].dropped_packets += tx_dropped;
+ 
+@@ -3811,7 +3815,10 @@ static void ibmvnic_get_strings(struct net_device *dev, u32 stringset, u8 *data)
+ 		memcpy(data, ibmvnic_stats[i].name, ETH_GSTRING_LEN);
+ 
+ 	for (i = 0; i < adapter->req_tx_queues; i++) {
+-		snprintf(data, ETH_GSTRING_LEN, "tx%d_packets", i);
++		snprintf(data, ETH_GSTRING_LEN, "tx%d_batched_packets", i);
++		data += ETH_GSTRING_LEN;
++
++		snprintf(data, ETH_GSTRING_LEN, "tx%d_direct_packets", i);
+ 		data += ETH_GSTRING_LEN;
+ 
+ 		snprintf(data, ETH_GSTRING_LEN, "tx%d_bytes", i);
+@@ -3876,7 +3883,9 @@ static void ibmvnic_get_ethtool_stats(struct net_device *dev,
+ 				      (adapter, ibmvnic_stats[i].offset));
+ 
+ 	for (j = 0; j < adapter->req_tx_queues; j++) {
+-		data[i] = adapter->tx_stats_buffers[j].packets;
++		data[i] = adapter->tx_stats_buffers[j].batched_packets;
++		i++;
++		data[i] = adapter->tx_stats_buffers[j].direct_packets;
+ 		i++;
+ 		data[i] = adapter->tx_stats_buffers[j].bytes;
+ 		i++;
+diff --git a/drivers/net/ethernet/ibm/ibmvnic.h b/drivers/net/ethernet/ibm/ibmvnic.h
+index 4e18b4cefa972..b3fc18db4f4c3 100644
+--- a/drivers/net/ethernet/ibm/ibmvnic.h
++++ b/drivers/net/ethernet/ibm/ibmvnic.h
+@@ -213,7 +213,8 @@ struct ibmvnic_statistics {
+ 
+ #define NUM_TX_STATS 3
+ struct ibmvnic_tx_queue_stats {
+-	u64 packets;
++	u64 batched_packets;
++	u64 direct_packets;
+ 	u64 bytes;
+ 	u64 dropped_packets;
+ };
 -- 
 2.39.5
 
