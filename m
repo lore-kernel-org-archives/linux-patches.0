@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B2E13AD18;
-	Mon, 24 Feb 2025 14:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1421A23AA;
+	Mon, 24 Feb 2025 14:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408368; cv=none; b=eMIR8FJsk4ynYfk3jG1tq/iajza4HOq+I7AYgTWAnNuI9VFRjUI2ADPBb0OpPef/SU1SKy8qjPNkKfAaK0IP4eAwXimNJynayf9LmAtzXwEhQ8lkU2qSmcUCyPEIzUanrI4NnttfmXNBp8VE7gF0spK/1Q83ind96ivZEML7tG4=
+	t=1740408372; cv=none; b=tiOXoa+p92lmtj3iPflKqKIP4VSlHD2pZW0JzqCeNGwB+JuFIWgLFd2hVQ16yc/4Etmyiym1fUQodQE0Th8DQ2iyLGOVCAfg5qLUivzD+vAnjWXwk8GeOmQhUa5J+afne28814xCnFTfGWpIslpx5lc1OYZTCtunRaBGphYfk6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408368; c=relaxed/simple;
-	bh=EkpL3Nf5l+woQWFikTHEnzgdc+1rH4XXm5lge8QNQqo=;
+	s=arc-20240116; t=1740408372; c=relaxed/simple;
+	bh=eVHNN+9VKxwn35/XP30HxdOBGbwyQk1VljWUZkNgfQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sN3Ghk2o75OsEdSKBm/E0Z9KuBq+lCWW/SYd193fwj7ZY1UW+lA86hBZ4eXS4f0m7vnQmfuMY6AdOR8g6NmS4Ak2guphaclhfftuDBuvYBvVzDg7G2AM+roaYwQPNIrHjz2xJVui6bCOVOUx5qcSUeiHATHnBVR4tQkCDJXtbok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMMkuJlR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZI/ZTGlP3tFgG6HmD8pSJZlW2GftnqO31ZzoShpBWvBTGzH08bXe/+3SY5QPko3G9dcwRcj6D0SMCrOJkjh3exWeADEAuB2w/3uinuG9r2iZONhpQS+KbvTaAGIzHPcPCDgsJvPmp4KZQLAermrk9rfqK/YN+jU0X07Zjljzcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TR+QU9sn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMMkuJlR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47B8C4CED6;
-	Mon, 24 Feb 2025 14:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TR+QU9sn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088E7C4CEEE;
+	Mon, 24 Feb 2025 14:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408368;
-	bh=EkpL3Nf5l+woQWFikTHEnzgdc+1rH4XXm5lge8QNQqo=;
+	s=korg; t=1740408371;
+	bh=eVHNN+9VKxwn35/XP30HxdOBGbwyQk1VljWUZkNgfQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yMMkuJlRzgmkScbNKHPNOA2QvUxxPQUjR+F01vcfEBUCLldm4WifwUWcPWL1hBz7f
-	 Mfg/hMHEqih8zjpecvsXzpoV4S3jSlQRefcLKoYQ9H5OmQtfVeuwogrmZe067EBq6g
-	 6Wr3/4YwXWbwkupUsfSH1ae7p/ybpjXwnYgtw9IY=
+	b=TR+QU9snZGgDA75B5u7vGoxXtIv9Dqp7lHGFDOj8B7D0m146gDDqJYKf05Z+979nU
+	 ijl4pr0n8PoNAMy/UfAWQF9a+Bma+BBczmEszmKQXCGgCDhOlmbVEnn8fcoEwsLW+N
+	 u4BPftvGdJ4EUqx0qqNx+5kmpfrlxNNQxb5wvoso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lancelot SIX <lancelot.six@amd.com>,
-	Jay Cornwall <jay.cornwall@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Cheng Jiang <quic_chejiang@quicinc.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/154] drm/amdkfd: Ensure consistent barrier state saved in gfx12 trap handler
-Date: Mon, 24 Feb 2025 15:33:57 +0100
-Message-ID: <20250224142608.581426028@linuxfoundation.org>
+Subject: [PATCH 6.12 021/154] Bluetooth: qca: Update firmware-name to support board specific nvm
+Date: Mon, 24 Feb 2025 15:33:40 +0100
+Message-ID: <20250224142607.910223292@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -52,58 +51,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lancelot SIX <lancelot.six@amd.com>
+From: Cheng Jiang <quic_chejiang@quicinc.com>
 
-[ Upstream commit d584198a6fe4c51f4aa88ad72f258f8961a0f11c ]
+[ Upstream commit a4c5a468c6329bde7dfd46bacff2cbf5f8a8152e ]
 
-It is possible for some waves in a workgroup to finish their save
-sequence before the group leader has had time to capture the workgroup
-barrier state.  When this happens, having those waves exit do impact the
-barrier state.  As a consequence, the state captured by the group leader
-is invalid, and is eventually incorrectly restored.
+Different connectivity boards may be attached to the same platform. For
+example, QCA6698-based boards can support either a two-antenna or
+three-antenna solution, both of which work on the sa8775p-ride platform.
+Due to differences in connectivity boards and variations in RF
+performance from different foundries, different NVM configurations are
+used based on the board ID.
 
-This patch proposes to have all waves in a workgroup wait for each other
-at the end of their save sequence (just before calling s_endpgm_saved).
+Therefore, in the firmware-name property, if the NVM file has an
+extension, the NVM file will be used. Otherwise, the system will first
+try the .bNN (board ID) file, and if that fails, it will fall back to
+the .bin file.
 
-Signed-off-by: Lancelot SIX <lancelot.six@amd.com>
-Reviewed-by: Jay Cornwall <jay.cornwall@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.12.x
+Possible configurations:
+firmware-name = "QCA6698/hpnv21";
+firmware-name = "QCA6698/hpnv21.bin";
+
+Signed-off-by: Cheng Jiang <quic_chejiang@quicinc.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: a2fad248947d ("Bluetooth: qca: Fix poor RF performance for WCN6855")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/cwsr_trap_handler.h         | 3 ++-
- drivers/gpu/drm/amd/amdkfd/cwsr_trap_handler_gfx12.asm | 4 ++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btqca.c | 113 ++++++++++++++++++++++++++++----------
+ 1 file changed, 85 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/cwsr_trap_handler.h b/drivers/gpu/drm/amd/amdkfd/cwsr_trap_handler.h
-index 02f7ba8c93cd4..7062f12b5b751 100644
---- a/drivers/gpu/drm/amd/amdkfd/cwsr_trap_handler.h
-+++ b/drivers/gpu/drm/amd/amdkfd/cwsr_trap_handler.h
-@@ -4117,7 +4117,8 @@ static const uint32_t cwsr_trap_gfx12_hex[] = {
- 	0x0000ffff, 0x8bfe7e7e,
- 	0x8bea6a6a, 0xb97af804,
- 	0xbe804ec2, 0xbf94fffe,
--	0xbe804a6c, 0xbfb10000,
-+	0xbe804a6c, 0xbe804ec2,
-+	0xbf94fffe, 0xbfb10000,
- 	0xbf9f0000, 0xbf9f0000,
- 	0xbf9f0000, 0xbf9f0000,
- 	0xbf9f0000, 0x00000000,
-diff --git a/drivers/gpu/drm/amd/amdkfd/cwsr_trap_handler_gfx12.asm b/drivers/gpu/drm/amd/amdkfd/cwsr_trap_handler_gfx12.asm
-index 1740e98c6719d..7b9d36e5fa437 100644
---- a/drivers/gpu/drm/amd/amdkfd/cwsr_trap_handler_gfx12.asm
-+++ b/drivers/gpu/drm/amd/amdkfd/cwsr_trap_handler_gfx12.asm
-@@ -1049,6 +1049,10 @@ L_SKIP_BARRIER_RESTORE:
- 	s_rfe_b64	s_restore_pc_lo						//Return to the main shader program and resume execution
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index dfbbac92242a8..5cb1fd1a0c7b5 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -272,6 +272,39 @@ int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+ }
+ EXPORT_SYMBOL_GPL(qca_send_pre_shutdown_cmd);
  
- L_END_PGM:
-+	// Make sure that no wave of the workgroup can exit the trap handler
-+	// before the workgroup barrier state is saved.
-+	s_barrier_signal	-2
-+	s_barrier_wait	-2
- 	s_endpgm_saved
- end
++static bool qca_filename_has_extension(const char *filename)
++{
++	const char *suffix = strrchr(filename, '.');
++
++	/* File extensions require a dot, but not as the first or last character */
++	if (!suffix || suffix == filename || *(suffix + 1) == '\0')
++		return 0;
++
++	/* Avoid matching directories with names that look like files with extensions */
++	return !strchr(suffix, '/');
++}
++
++static bool qca_get_alt_nvm_file(char *filename, size_t max_size)
++{
++	char fwname[64];
++	const char *suffix;
++
++	/* nvm file name has an extension, replace with .bin */
++	if (qca_filename_has_extension(filename)) {
++		suffix = strrchr(filename, '.');
++		strscpy(fwname, filename, suffix - filename + 1);
++		snprintf(fwname + (suffix - filename),
++		       sizeof(fwname) - (suffix - filename), ".bin");
++		/* If nvm file is already the default one, return false to skip the retry. */
++		if (strcmp(fwname, filename) == 0)
++			return false;
++
++		snprintf(filename, max_size, "%s", fwname);
++		return true;
++	}
++	return false;
++}
++
+ static int qca_tlv_check_data(struct hci_dev *hdev,
+ 			       struct qca_fw_config *config,
+ 			       u8 *fw_data, size_t fw_size,
+@@ -564,6 +597,19 @@ static int qca_download_firmware(struct hci_dev *hdev,
+ 					   config->fwname, ret);
+ 				return ret;
+ 			}
++		}
++		/* If the board-specific file is missing, try loading the default
++		 * one, unless that was attempted already.
++		 */
++		else if (config->type == TLV_TYPE_NVM &&
++			 qca_get_alt_nvm_file(config->fwname, sizeof(config->fwname))) {
++			bt_dev_info(hdev, "QCA Downloading %s", config->fwname);
++			ret = request_firmware(&fw, config->fwname, &hdev->dev);
++			if (ret) {
++				bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
++					   config->fwname, ret);
++				return ret;
++			}
+ 		} else {
+ 			bt_dev_err(hdev, "QCA Failed to request file: %s (%d)",
+ 				   config->fwname, ret);
+@@ -700,34 +746,38 @@ static int qca_check_bdaddr(struct hci_dev *hdev, const struct qca_fw_config *co
+ 	return 0;
+ }
  
+-static void qca_generate_hsp_nvm_name(char *fwname, size_t max_size,
++static void qca_get_nvm_name_by_board(char *fwname, size_t max_size,
++		const char *stem, enum qca_btsoc_type soc_type,
+ 		struct qca_btsoc_version ver, u8 rom_ver, u16 bid)
+ {
+ 	const char *variant;
++	const char *prefix;
+ 
+-	/* hsp gf chip */
+-	if ((le32_to_cpu(ver.soc_id) & QCA_HSP_GF_SOC_MASK) == QCA_HSP_GF_SOC_ID)
+-		variant = "g";
+-	else
+-		variant = "";
++	/* Set the default value to variant and prefix */
++	variant = "";
++	prefix = "b";
+ 
+-	if (bid == 0x0)
+-		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
+-	else
+-		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x", rom_ver, variant, bid);
+-}
++	if (soc_type == QCA_QCA2066)
++		prefix = "";
+ 
+-static inline void qca_get_nvm_name_generic(struct qca_fw_config *cfg,
+-					    const char *stem, u8 rom_ver, u16 bid)
+-{
+-	if (bid == 0x0)
+-		snprintf(cfg->fwname, sizeof(cfg->fwname), "qca/%snv%02x.bin", stem, rom_ver);
+-	else if (bid & 0xff00)
+-		snprintf(cfg->fwname, sizeof(cfg->fwname),
+-			 "qca/%snv%02x.b%x", stem, rom_ver, bid);
+-	else
+-		snprintf(cfg->fwname, sizeof(cfg->fwname),
+-			 "qca/%snv%02x.b%02x", stem, rom_ver, bid);
++	if (soc_type == QCA_WCN6855 || soc_type == QCA_QCA2066) {
++		/* If the chip is manufactured by GlobalFoundries */
++		if ((le32_to_cpu(ver.soc_id) & QCA_HSP_GF_SOC_MASK) == QCA_HSP_GF_SOC_ID)
++			variant = "g";
++	}
++
++	if (rom_ver != 0) {
++		if (bid == 0x0 || bid == 0xffff)
++			snprintf(fwname, max_size, "qca/%s%02x%s.bin", stem, rom_ver, variant);
++		else
++			snprintf(fwname, max_size, "qca/%s%02x%s.%s%02x", stem, rom_ver,
++						variant, prefix, bid);
++	} else {
++		if (bid == 0x0 || bid == 0xffff)
++			snprintf(fwname, max_size, "qca/%s%s.bin", stem, variant);
++		else
++			snprintf(fwname, max_size, "qca/%s%s.%s%02x", stem, variant, prefix, bid);
++	}
+ }
+ 
+ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+@@ -816,8 +866,14 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	/* Download NVM configuration */
+ 	config.type = TLV_TYPE_NVM;
+ 	if (firmware_name) {
+-		snprintf(config.fwname, sizeof(config.fwname),
+-			 "qca/%s", firmware_name);
++		/* The firmware name has an extension, use it directly */
++		if (qca_filename_has_extension(firmware_name)) {
++			snprintf(config.fwname, sizeof(config.fwname), "qca/%s", firmware_name);
++		} else {
++			qca_read_fw_board_id(hdev, &boardid);
++			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
++				 firmware_name, soc_type, ver, 0, boardid);
++		}
+ 	} else {
+ 		switch (soc_type) {
+ 		case QCA_WCN3990:
+@@ -836,8 +892,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 				 "qca/apnv%02x.bin", rom_ver);
+ 			break;
+ 		case QCA_QCA2066:
+-			qca_generate_hsp_nvm_name(config.fwname,
+-				sizeof(config.fwname), ver, rom_ver, boardid);
++			qca_get_nvm_name_by_board(config.fwname,
++				sizeof(config.fwname), "hpnv", soc_type, ver,
++				rom_ver, boardid);
+ 			break;
+ 		case QCA_QCA6390:
+ 			snprintf(config.fwname, sizeof(config.fwname),
+@@ -852,9 +909,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 				 "qca/hpnv%02x.bin", rom_ver);
+ 			break;
+ 		case QCA_WCN7850:
+-			qca_get_nvm_name_generic(&config, "hmt", rom_ver, boardid);
++			qca_get_nvm_name_by_board(config.fwname, sizeof(config.fwname),
++				 "hmtnv", soc_type, ver, rom_ver, boardid);
+ 			break;
+-
+ 		default:
+ 			snprintf(config.fwname, sizeof(config.fwname),
+ 				 "qca/nvm_%08x.bin", soc_ver);
 -- 
 2.39.5
 
