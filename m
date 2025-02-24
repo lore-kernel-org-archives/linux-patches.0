@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35830189BBB;
-	Mon, 24 Feb 2025 15:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50FD18A6AD;
+	Mon, 24 Feb 2025 15:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409266; cv=none; b=OjWO2slC8Ey85ZXMW21A7mPUG3iGz/eN3hF62ChMD2Q7Zp5/cpiQ7Ew200sGG+olchJ0lQnAgNefm0N9uVs426oKjJba/+gU9suMMp6L8nx+O2P6gSV5e8SSuSMimkdfXi6GMrqRpChMrIO1uU2Wdyx1nEM2ZPXEKH+Qsq29WfE=
+	t=1740409268; cv=none; b=KtdFpssFl7VJ83AOH9JIMhHS7bZDj7PggewFCbLOvC53SPjKpwynWlhEo1Alw36HgvxS9I0zTdfOY7kyGumYIwMnky8V8JVNkDtVG/cZcqHjwGNcUSP2lGs5JB/c6c2DTsVeZSGwblSsQovZ6sjHweEzXdfOMuXc6vxBk/oPN/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409266; c=relaxed/simple;
-	bh=rEuGArpgKcQPqAxK3FVkbL0RzXk65hqCKcVB+TeJQZo=;
+	s=arc-20240116; t=1740409268; c=relaxed/simple;
+	bh=BKGPQHAO9yskAZiyM5aLNrgWQqYOCufkAFPkzMXk2Yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OxpzLzy9i2ZiaA+G7Yf/Qf5LYFzNv3NMrBAzvl0Wz5t4RwQHYQ1mJj4cmHFl6dYZKTM6rt62XjU9whNPcIOkT3Vu14jmRJxo+LpqOHDnz+12iRfUrQVPaZsXpu+qBOqsu59ZYShA7D/BJCwlI6HhYpWM2L12Ly1tBCxicdm2ACw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvRsiJX3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dexvQyup9MRR4foT6iAAbkoGCdHtoZzhv3h1SDx6PGu76KJzKyfbVNcM4/eKMxg7Ktqh2Ha35IMLwXvvrOGSi1tnrVdlAfPFkFf5pPjlbhu0eogatCEIJOQzlxCpjA+o7viRJpZBEMGBf/qrvAAHaJcBejsbDwK5kXPFAjTTXJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILt9VG/M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvRsiJX3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3563FC4CEE6;
-	Mon, 24 Feb 2025 15:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILt9VG/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58878C4CED6;
+	Mon, 24 Feb 2025 15:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409265;
-	bh=rEuGArpgKcQPqAxK3FVkbL0RzXk65hqCKcVB+TeJQZo=;
+	s=korg; t=1740409268;
+	bh=BKGPQHAO9yskAZiyM5aLNrgWQqYOCufkAFPkzMXk2Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nvRsiJX3YKPRbCAXYNqi2ZxnYreMfscALqet2CNIPk8MrJqPe2DCXb/bzVtxTRd2/
-	 1n7wBuEeOxt/y5qq47StoCn3BkOdVYEB97TRrPspVq4FVD5aziulOblKqf0IWjJdZI
-	 4ZOppyyRTUn4biOjNfDfPA6Pks54hzaCeOrvB0EI=
+	b=ILt9VG/MH1LEkk2AOr0JpmlcKfyQJyivvX3DqznLRnTFA7mj1mD7GXdoW7GJEiZN7
+	 ifF0azB6B/gUt3c3aghnH3wk3Zg0rlog5wBihBEAdPwuvKVDMHANj3XsQ6WXiMkkqA
+	 KulvwHTbOpuE9OYOPYAnLDVYhXBsydhPCSSr0GfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.13 135/138] tracing: Fix using ret variable in tracing_set_tracer()
-Date: Mon, 24 Feb 2025 15:36:05 +0100
-Message-ID: <20250224142609.774996710@linuxfoundation.org>
+	Niravkumar L Rabara <niravkumar.l.rabara@intel.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.13 126/138] mtd: rawnand: cadence: fix incorrect device in dma_unmap_single
+Date: Mon, 24 Feb 2025 15:35:56 +0100
+Message-ID: <20250224142609.423892991@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -53,47 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
 
-commit 22bec11a569983f39c6061cb82279e7de9e3bdfc upstream.
+commit f37d135b42cb484bdecee93f56b9f483214ede78 upstream.
 
-When the function tracing_set_tracer() switched over to using the guard()
-infrastructure, it did not need to save the 'ret' variable and would just
-return the value when an error arised, instead of setting ret and jumping
-to an out label.
+dma_map_single is using physical/bus device (DMA) but dma_unmap_single
+is using framework device(NAND controller), which is incorrect.
+Fixed dma_unmap_single to use correct physical/bus device.
 
-When CONFIG_TRACER_SNAPSHOT is enabled, it had code that expected the
-"ret" variable to be initialized to zero and had set 'ret' while holding
-an arch_spin_lock() (not used by guard), and then upon releasing the lock
-it would check 'ret' and exit if set. But because ret was only set when an
-error occurred while holding the locks, 'ret' would be used uninitialized
-if there was no error. The code in the CONFIG_TRACER_SNAPSHOT block should
-be self contain. Make sure 'ret' is also set when no error occurred.
-
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20250106111143.2f90ff65@gandalf.local.home
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202412271654.nJVBuwmF-lkp@intel.com/
-Fixes: d33b10c0c73ad ("tracing: Switch trace.c code over to use guard()")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: ec4ba01e894d ("mtd: rawnand: Add new Cadence NAND driver to MTD subsystem")
+Cc: stable@vger.kernel.org
+Signed-off-by: Niravkumar L Rabara <niravkumar.l.rabara@intel.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/mtd/nand/raw/cadence-nand-controller.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -6102,8 +6102,7 @@ int tracing_set_tracer(struct trace_arra
- 	if (t->use_max_tr) {
- 		local_irq_disable();
- 		arch_spin_lock(&tr->max_lock);
--		if (tr->cond_snapshot)
--			ret = -EBUSY;
-+		ret = tr->cond_snapshot ? -EBUSY : 0;
- 		arch_spin_unlock(&tr->max_lock);
- 		local_irq_enable();
- 		if (ret)
+--- a/drivers/mtd/nand/raw/cadence-nand-controller.c
++++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
+@@ -1863,12 +1863,12 @@ static int cadence_nand_slave_dma_transf
+ 	dma_async_issue_pending(cdns_ctrl->dmac);
+ 	wait_for_completion(&finished);
+ 
+-	dma_unmap_single(cdns_ctrl->dev, buf_dma, len, dir);
++	dma_unmap_single(dma_dev->dev, buf_dma, len, dir);
+ 
+ 	return 0;
+ 
+ err_unmap:
+-	dma_unmap_single(cdns_ctrl->dev, buf_dma, len, dir);
++	dma_unmap_single(dma_dev->dev, buf_dma, len, dir);
+ 
+ err:
+ 	dev_dbg(cdns_ctrl->dev, "Fall back to CPU I/O\n");
 
 
