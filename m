@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B4F1514CC;
-	Mon, 24 Feb 2025 14:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45586165F09;
+	Mon, 24 Feb 2025 14:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740409048; cv=none; b=oOv8ANQIPCWhjO5IN7Bn0OcxIrlkgpHBcfcqQ4FhdtsacRJgz+GZqljjaqR5bXaZhd4mRqBItCwLc9oG8ZAVo/+9hOP14LnZCd5S8pwKTEamPY+oljCwHaFpKZSrRjMuN6sttiW/boyP4WruEUjEFi8oUZOMSl+9chHJyq4N1UQ=
+	t=1740409051; cv=none; b=NMzAtoZmfLBMXd2WlHFAwNIm6E+9zuSlQjcBXNl02h41/3FHh4MXt+ZSsnc2HY8iIKki3m/YgKuK1FfRp1Dt6KOa3hKrR9Yl4HJRx9G9rGvRZKt+fFCsbjn4y0KXfCvOjc5xlKXDo0IvP3cuLtg+PHI504zPAWlCaJkYCtbcAQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740409048; c=relaxed/simple;
-	bh=Sfe3W8Qq/t1hWc49CF5KqwZ/hOABB54n7u7aZRWP1Js=;
+	s=arc-20240116; t=1740409051; c=relaxed/simple;
+	bh=BO9/gdLdfdNbXY9ELiG+8BD+wMbQXHsPKTqRQnMrA/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qmAsB3OMlbE/FEJ8gPIU5GO7wtFkPBhzxrdXckeaiWCCBIQr8LQ77iHR2aPikca9zcPYmcwSXn0napfZZJIiZDMW6J/EDY3VEZWmz3YuxHVlLk2mufIZaRDU7Iadv0BLkAYRmRpgM5lp82hd0VAXPDSQYobRlxsA50/q2REbOsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wg7l9trd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kbBKKORRTEmv/EmhABgHda8Si2+Hom1MBZlBqXglKz9nq6QwbEUUdL2qMvqPSU9l01HIbuwCjnL0cLwfWO/ujeD0JCcHXspZzWgO5QbDmrTeH1dK0kNCqrQxvqa0je3xw+CrlDvVZJhvAqUwfK69OV+c+QS5lFWJgRYRnt2R+Kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLtP82E0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wg7l9trd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB7DC4CED6;
-	Mon, 24 Feb 2025 14:57:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLtP82E0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6AC7C4CEE6;
+	Mon, 24 Feb 2025 14:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740409047;
-	bh=Sfe3W8Qq/t1hWc49CF5KqwZ/hOABB54n7u7aZRWP1Js=;
+	s=korg; t=1740409051;
+	bh=BO9/gdLdfdNbXY9ELiG+8BD+wMbQXHsPKTqRQnMrA/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wg7l9trdz4bdmOGQPqrJicDID5qJf0+Lg7/z33FfWyyUkFkRLrUcsx2XWTNxI2w+s
-	 x9gnaQVOWCWpkh5hXrlCqjdEo4dkWGOrmPfwT+ZgWtV+OsnqZLrDzTjm4fKe4w4iSe
-	 5iLk2qYwxWE97i4GkPOoqUZ3t2FnLiLc/NbEUCUc=
+	b=cLtP82E0EPF7Ai7vCtrZrKcwGW1l1REYGly0tAH6sHsNb00x8Z84MSGcdVUZPkrx+
+	 q2jeOfXE63qjKOHutP16A2GWiVSBOpfBm7LNAOtQsFa42y7joEnRjjZpvNIwreISV7
+	 cn1D9Fdm1J6ILB7NIPppzo66dlIwAx2nIa1zNhXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Caleb Sander Mateos <csander@purestorage.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 081/138] nvme-tcp: fix connect failure on receiving partial ICResp PDU
-Date: Mon, 24 Feb 2025 15:35:11 +0100
-Message-ID: <20250224142607.664936752@linuxfoundation.org>
+Subject: [PATCH 6.13 082/138] nvme/ioctl: add missing space in err message
+Date: Mon, 24 Feb 2025 15:35:12 +0100
+Message-ID: <20250224142607.704430770@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142604.442289573@linuxfoundation.org>
 References: <20250224142604.442289573@linuxfoundation.org>
@@ -55,50 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Caleb Sander Mateos <csander@purestorage.com>
 
-[ Upstream commit 578539e0969028f711c34d9a4565931edfe1d730 ]
+[ Upstream commit 487a3ea7b1b8ba2ca7d2c2bb3c3594dc360d6261 ]
 
-nvme_tcp_init_connection() attempts to receive an ICResp PDU but only
-checks that the return value from recvmsg() is non-negative. If the
-sender closes the TCP connection or sends fewer than 128 bytes, this
-check will pass even though the full PDU wasn't received.
+nvme_validate_passthru_nsid() logs an err message whose format string is
+split over 2 lines. There is a missing space between the two pieces,
+resulting in log lines like "... does not match nsid (1)of namespace".
+Add the missing space between ")" and "of". Also combine the format
+string pieces onto a single line to make the err message easier to grep.
 
-Ensure the full ICResp PDU is received by checking that recvmsg()
-returns the expected 128 bytes.
-
-Additionally set the MSG_WAITALL flag for recvmsg(), as a sender could
-split the ICResp over multiple TCP frames. Without MSG_WAITALL,
-recvmsg() could return prematurely with only part of the PDU.
-
-Fixes: 3f2304f8c6d6 ("nvme-tcp: add NVMe over TCP host driver")
+Fixes: e7d4b5493a2d ("nvme: factor out a nvme_validate_passthru_nsid helper")
 Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/nvme/host/ioctl.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 4162893d49395..d7c193028e7c3 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -1449,11 +1449,14 @@ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
- 		msg.msg_control = cbuf;
- 		msg.msg_controllen = sizeof(cbuf);
+diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
+index e8930146847af..b1b46c2713e1c 100644
+--- a/drivers/nvme/host/ioctl.c
++++ b/drivers/nvme/host/ioctl.c
+@@ -283,8 +283,7 @@ static bool nvme_validate_passthru_nsid(struct nvme_ctrl *ctrl,
+ {
+ 	if (ns && nsid != ns->head->ns_id) {
+ 		dev_err(ctrl->device,
+-			"%s: nsid (%u) in cmd does not match nsid (%u)"
+-			"of namespace\n",
++			"%s: nsid (%u) in cmd does not match nsid (%u) of namespace\n",
+ 			current->comm, nsid, ns->head->ns_id);
+ 		return false;
  	}
-+	msg.msg_flags = MSG_WAITALL;
- 	ret = kernel_recvmsg(queue->sock, &msg, &iov, 1,
- 			iov.iov_len, msg.msg_flags);
--	if (ret < 0) {
-+	if (ret < sizeof(*icresp)) {
- 		pr_warn("queue %d: failed to receive icresp, error %d\n",
- 			nvme_tcp_queue_id(queue), ret);
-+		if (ret >= 0)
-+			ret = -ECONNRESET;
- 		goto free_icresp;
- 	}
- 	ret = -ENOTCONN;
 -- 
 2.39.5
 
