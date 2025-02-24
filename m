@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1D21474A9;
-	Mon, 24 Feb 2025 14:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B542571CE;
+	Mon, 24 Feb 2025 14:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408212; cv=none; b=D4IW9uj7DkB5gDLtA9z3k5e1+6Ff3RpoKgAOnXA81vZjWwYHPkwwFN8Xt9SGVZFadoYKXIJ6XmheYwZJ0RpVUtoTyi0VCZfDab3F2FhE0hsdDQ0+ZOSeM1ovOjR22vOaXbEBHEm0+UQNk04stG4fc1ml5Teia/1eeK58KArB4HU=
+	t=1740408215; cv=none; b=hW7yPO6WmSllPgzOIWUGRgqhDJRA80DQziU1tFuuXwWl0xoKkqfT9LYsiLzGLQPJPLnJQqeibL5RUbCdDHIHQc7ReqrCVNmjLYwdEzR+hao0neI9PidIlwrOwdES3Myr1qsNMKDVa9ABrNysVyPDofMiCMDUY6xhWWeuWkpCp+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408212; c=relaxed/simple;
-	bh=HLkXzvmfHy9tExlimtWv2JEzkqXiawnv4/30NOh/3E8=;
+	s=arc-20240116; t=1740408215; c=relaxed/simple;
+	bh=5Lny5PIklB7wrsjKAyNJO+GnJN92ymzI4NhhuQWgHmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=noYAOwcxV0ts02crMfPludHupLfEpX0XUHcn08VUwHQOKie+5DrFj3R6hC1MOR4smFKY/w9JCjYk+wt6KvYYw4mIgOICbPkQjob02Ih3wTAcPRNR5tNpYYQ8OIBtwZ3FxyFZD+RNxkRoP1M7st1bJ17zMr4ms4ky/blL38F9iSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A45xAA3g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DCZLyEcfpGwI2wKynS6G061F5bHaeRkSAp9IF3tnaYw41zHLwXl51Qm93Yw+W6jE3rwpJ1jEzuNqBpXchN9/V5mOTpYlMzW0fX4MR8zAn8qdsVdP+tVI4vOWDjnveK9BQUF/PQUu/08AfaqeWwL4shzo7UKM4SVZ0/e3bIbVGsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtBQM2rL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A45xAA3g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAA6C4CED6;
-	Mon, 24 Feb 2025 14:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtBQM2rL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12647C4CED6;
+	Mon, 24 Feb 2025 14:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408212;
-	bh=HLkXzvmfHy9tExlimtWv2JEzkqXiawnv4/30NOh/3E8=;
+	s=korg; t=1740408215;
+	bh=5Lny5PIklB7wrsjKAyNJO+GnJN92ymzI4NhhuQWgHmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A45xAA3g9b/Pebg2j+XoeEYIqSc3xFxJhaficqyftwFZ6zjy4RFOaIbBRghUV9DwG
-	 x50D0+5Xut7ZD2LCFrWUMh01q1lNSvSwL/9SaghdpVCtDXTBlWsEmrXD3Ujyaz0BoP
-	 KTSgv6b9HsOdq/vGD2J2MxRJJ1qTKbqKFYGHaXu8=
+	b=CtBQM2rLFtDK9dsLxlOqfRjXBmRORSuYPWX8gT+3z6iFNs5tpqtU7/RqEGiIR4Lcu
+	 /YUDFw0FAewTOCUC7rTdivfzBDdiQZlrgwHQjcd3vXSiKN1i/MXdU9pGv534FRXKSP
+	 IekVcj0buonbbhvhC9w7JA0mhEYzfwwFCS0bg3g0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Wu <wuyun.abel@bytedance.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Andrey Vatoropin <a.vatoropin@crpt.ru>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 100/140] bpf: Fix deadlock when freeing cgroup storage
-Date: Mon, 24 Feb 2025 15:34:59 +0100
-Message-ID: <20250224142606.946194461@linuxfoundation.org>
+Subject: [PATCH 6.6 101/140] power: supply: da9150-fg: fix potential overflow
+Date: Mon, 24 Feb 2025 15:35:00 +0100
+Message-ID: <20250224142606.985288371@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -52,93 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Wu <wuyun.abel@bytedance.com>
+From: Andrey Vatoropin <a.vatoropin@crpt.ru>
 
-[ Upstream commit c78f4afbd962f43a3989f45f3ca04300252b19b5 ]
+[ Upstream commit 3fb3cb4350befc4f901c54e0cb4a2a47b1302e08 ]
 
-The following commit
-bc235cdb423a ("bpf: Prevent deadlock from recursive bpf_task_storage_[get|delete]")
-first introduced deadlock prevention for fentry/fexit programs attaching
-on bpf_task_storage helpers. That commit also employed the logic in map
-free path in its v6 version.
+Size of variable sd_gain equals four bytes - DA9150_QIF_SD_GAIN_SIZE.
+Size of variable shunt_val equals two bytes - DA9150_QIF_SHUNT_VAL_SIZE.
 
-Later bpf_cgrp_storage was first introduced in
-c4bcfb38a95e ("bpf: Implement cgroup storage available to non-cgroup-attached bpf progs")
-which faces the same issue as bpf_task_storage, instead of its busy
-counter, NULL was passed to bpf_local_storage_map_free() which opened
-a window to cause deadlock:
+The expression sd_gain * shunt_val is currently being evaluated using
+32-bit arithmetic. So during the multiplication an overflow may occur.
 
-	<TASK>
-		(acquiring local_storage->lock)
-	_raw_spin_lock_irqsave+0x3d/0x50
-	bpf_local_storage_update+0xd1/0x460
-	bpf_cgrp_storage_get+0x109/0x130
-	bpf_prog_a4d4a370ba857314_cgrp_ptr+0x139/0x170
-	? __bpf_prog_enter_recur+0x16/0x80
-	bpf_trampoline_6442485186+0x43/0xa4
-	cgroup_storage_ptr+0x9/0x20
-		(holding local_storage->lock)
-	bpf_selem_unlink_storage_nolock.constprop.0+0x135/0x160
-	bpf_selem_unlink_storage+0x6f/0x110
-	bpf_local_storage_map_free+0xa2/0x110
-	bpf_map_free_deferred+0x5b/0x90
-	process_one_work+0x17c/0x390
-	worker_thread+0x251/0x360
-	kthread+0xd2/0x100
-	ret_from_fork+0x34/0x50
-	ret_from_fork_asm+0x1a/0x30
-	</TASK>
+As the value of type 'u64' is used as storage for the eventual result, put
+ULL variable at the first position of each expression in order to give the
+compiler complete information about the proper arithmetic to use. According
+to C99 the guaranteed width for a variable of type 'unsigned long long' >=
+64 bits.
 
-Progs:
- - A: SEC("fentry/cgroup_storage_ptr")
-   - cgid (BPF_MAP_TYPE_HASH)
-	Record the id of the cgroup the current task belonging
-	to in this hash map, using the address of the cgroup
-	as the map key.
-   - cgrpa (BPF_MAP_TYPE_CGRP_STORAGE)
-	If current task is a kworker, lookup the above hash
-	map using function parameter @owner as the key to get
-	its corresponding cgroup id which is then used to get
-	a trusted pointer to the cgroup through
-	bpf_cgroup_from_id(). This trusted pointer can then
-	be passed to bpf_cgrp_storage_get() to finally trigger
-	the deadlock issue.
- - B: SEC("tp_btf/sys_enter")
-   - cgrpb (BPF_MAP_TYPE_CGRP_STORAGE)
-	The only purpose of this prog is to fill Prog A's
-	hash map by calling bpf_cgrp_storage_get() for as
-	many userspace tasks as possible.
+Remove the explicit cast to u64 as it is meaningless.
 
-Steps to reproduce:
- - Run A;
- - while (true) { Run B; Destroy B; }
+Just for the sake of consistency, perform the similar trick with another
+expression concerning 'iavg'.
 
-Fix this issue by passing its busy counter to the free procedure so
-it can be properly incremented before storage/smap locking.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: c4bcfb38a95e ("bpf: Implement cgroup storage available to non-cgroup-attached bpf progs")
-Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/r/20241221061018.37717-1-wuyun.abel@bytedance.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: a419b4fd9138 ("power: Add support for DA9150 Fuel-Gauge")
+Signed-off-by: Andrey Vatoropin <a.vatoropin@crpt.ru>
+Link: https://lore.kernel.org/r/20250130090030.53422-1-a.vatoropin@crpt.ru
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_cgrp_storage.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/da9150-fg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/bpf_cgrp_storage.c b/kernel/bpf/bpf_cgrp_storage.c
-index d44fe8dd97329..ee1c7b77096e7 100644
---- a/kernel/bpf/bpf_cgrp_storage.c
-+++ b/kernel/bpf/bpf_cgrp_storage.c
-@@ -154,7 +154,7 @@ static struct bpf_map *cgroup_storage_map_alloc(union bpf_attr *attr)
+diff --git a/drivers/power/supply/da9150-fg.c b/drivers/power/supply/da9150-fg.c
+index 652c1f213af1c..4f28ef1bba1a3 100644
+--- a/drivers/power/supply/da9150-fg.c
++++ b/drivers/power/supply/da9150-fg.c
+@@ -247,9 +247,9 @@ static int da9150_fg_current_avg(struct da9150_fg *fg,
+ 				      DA9150_QIF_SD_GAIN_SIZE);
+ 	da9150_fg_read_sync_end(fg);
  
- static void cgroup_storage_map_free(struct bpf_map *map)
- {
--	bpf_local_storage_map_free(map, &cgroup_cache, NULL);
-+	bpf_local_storage_map_free(map, &cgroup_cache, &bpf_cgrp_storage_busy);
- }
+-	div = (u64) (sd_gain * shunt_val * 65536ULL);
++	div = 65536ULL * sd_gain * shunt_val;
+ 	do_div(div, 1000000);
+-	res = (u64) (iavg * 1000000ULL);
++	res = 1000000ULL * iavg;
+ 	do_div(res, div);
  
- /* *gfp_flags* is a hidden argument provided by the verifier */
+ 	val->intval = (int) res;
 -- 
 2.39.5
 
