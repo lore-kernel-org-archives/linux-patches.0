@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4410E1885B8;
-	Mon, 24 Feb 2025 14:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C99F24BC09;
+	Mon, 24 Feb 2025 14:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408600; cv=none; b=YE4GCcZi2/9BjYO7KXaPvssSFaztTbIMrnjpdovJbTV5s4ynQVb2oGozbJDKhGdO3UkGMo9awSpda0/ttG9X7UMSaqXrsYpfxM9VXlwVv3G7j/2yr+t2852qDtDh9IiDcWS/rnyvjAkN9dForH94i7cJefUSILB5fylnfHj2xQQ=
+	t=1740408603; cv=none; b=bZhCLCojPqKwgQUCeMR+jH/YqwrofTKFLyHcqBuDa1qWQyPhHQ73kDxltKivIoWoS+ZygT0cK1mjUoqJ6OnCIyht793GINZEP2Zi9Wf3L8NY4T2mvpz6+ur66dWIchgU9GENaEVqfwGnBJwsqLXXyUwimi1INhpTBVyBqtQGkdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408600; c=relaxed/simple;
-	bh=+eZoJ88QDrWFPe8xZr4K7aKW/OrMEh6BXiXD0Jg81co=;
+	s=arc-20240116; t=1740408603; c=relaxed/simple;
+	bh=11bXifA3UjSAQy1DU4CrDLXuERyAlBwJVNT3puVmoSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JOQReuJS7L9fNpFtH0J5EF7relw5tUFeD4OeAN/l4qFN3lEztBIgHgqCfXwYrdfeIIhwiPBDhgZP8s9rf86Og1vaiUZX17/2zpSMr5S5LImUFnMn6lrc9x2xcQJq3S/pp8ZAy4YlIU606s0Wg34I/viVOaOOTCpLQLInsejr024=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3wIX1Mz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ThL1N09o5scSIGeoGN6DVLo650QmscsVNBk90Svhb+y4Ec0n8G6DXG9n7NRVWH93yekqznAMulLZTbtQz12zai5HDUx8qGG+cwQcSu206SeEBPV9L0YIIpdx+et/3BfEumUTRzxQ6pXaY/iTca3OvY5fS9H5wV1hpBw58N6rV3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S90kFA/R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3wIX1Mz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A7BC4CED6;
-	Mon, 24 Feb 2025 14:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S90kFA/R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1EAC4CED6;
+	Mon, 24 Feb 2025 14:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408599;
-	bh=+eZoJ88QDrWFPe8xZr4K7aKW/OrMEh6BXiXD0Jg81co=;
+	s=korg; t=1740408603;
+	bh=11bXifA3UjSAQy1DU4CrDLXuERyAlBwJVNT3puVmoSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3wIX1Mz/RIX6hhKRk01BCSyBU6FGqfF5V+9XaWgCOe7mj0DYQdKbeg8NEHy+Ft9H
-	 9KhQTQeavkjZSbV6vQl0K+0a9nnIpoxL1OrPfH9ImDznOSEDTwFB9z+Cl2UA+ydRa/
-	 JcChyuJThjdjvTioXw7QIAwgjAqi5rmZsyzLKzko=
+	b=S90kFA/RSEptUNvZbvXKW0Sv5y/B8JclSjsQVjzzhteJQNGgp4nwCiQkRuNFo3A6X
+	 6oSDOrK0iRb6AbtB9BY1Y9Xm+c3iNa/SMe/iqbM+R6lxLF+/RpoS0A3YM0kYJfVM16
+	 lUllBOQngNEFLcl8U3Q6s4+uN8l9RSxmmvyseRqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artur Rojek <contact@artur-rojek.eu>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 105/154] irqchip/jcore-aic, clocksource/drivers/jcore: Fix jcore-pit interrupt request
-Date: Mon, 24 Feb 2025 15:35:04 +0100
-Message-ID: <20250224142611.170996790@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.12 106/154] drm: panel: jd9365da-h3: fix reset signal polarity
+Date: Mon, 24 Feb 2025 15:35:05 +0100
+Message-ID: <20250224142611.209170914@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142607.058226288@linuxfoundation.org>
 References: <20250224142607.058226288@linuxfoundation.org>
@@ -52,98 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artur Rojek <contact@artur-rojek.eu>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit d7e3fd658248f257006227285095d190e70ee73a ]
+commit a8972d5a49b408248294b5ecbdd0a085e4726349 upstream.
 
-The jcore-aic irqchip does not have separate interrupt numbers reserved for
-cpu-local vs global interrupts. Therefore the device drivers need to
-request the given interrupt as per CPU interrupt.
+In jadard_prepare() a reset pulse is generated with the following
+statements (delays ommited for clarity):
 
-69a9dcbd2d65 ("clocksource/drivers/jcore: Use request_percpu_irq()")
-converted the clocksource driver over to request_percpu_irq(), but failed
-to do add all the required changes, resulting in a failure to register PIT
-interrupts.
+    gpiod_set_value(jadard->reset, 1); --> Deassert reset
+    gpiod_set_value(jadard->reset, 0); --> Assert reset for 10ms
+    gpiod_set_value(jadard->reset, 1); --> Deassert reset
 
-Fix this by:
+However, specifying second argument of "0" to gpiod_set_value() means to
+deassert the GPIO, and "1" means to assert it. If the reset signal is
+defined as GPIO_ACTIVE_LOW in the DTS, the above statements will
+incorrectly generate the reset pulse (inverted) and leave it asserted
+(LOW) at the end of jadard_prepare().
 
- 1) Explicitly mark the interrupt via irq_set_percpu_devid() in
-    jcore_pit_init().
+Fix reset behavior by inverting gpiod_set_value() second argument
+in jadard_prepare(). Also modify second argument to devm_gpiod_get()
+in jadard_dsi_probe() to assert the reset when probing.
 
- 2) Enable and disable the per CPU interrupt in the CPU hotplug callbacks.
+Do not modify it in jadard_unprepare() as it is already properly
+asserted with "1", which seems to be the intended behavior.
 
- 3) Pass the correct per-cpu cookie to the irq handler by using
-    handle_percpu_devid_irq() instead of handle_percpu_irq() in
-    handle_jcore_irq().
-
-[ tglx: Massage change log ]
-
-Fixes: 69a9dcbd2d65 ("clocksource/drivers/jcore: Use request_percpu_irq()")
-Signed-off-by: Artur Rojek <contact@artur-rojek.eu>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Uros Bizjak <ubizjak@gmail.com>
-Link: https://lore.kernel.org/all/20250216175545.35079-3-contact@artur-rojek.eu
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6b818c533dd8 ("drm: panel: Add Jadard JD9365DA-H3 DSI panel")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20240927135306.857617-1-hugo@hugovil.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240927135306.857617-1-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clocksource/jcore-pit.c | 15 ++++++++++++++-
- drivers/irqchip/irq-jcore-aic.c |  2 +-
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clocksource/jcore-pit.c b/drivers/clocksource/jcore-pit.c
-index a3fe98cd38382..82815428f8f92 100644
---- a/drivers/clocksource/jcore-pit.c
-+++ b/drivers/clocksource/jcore-pit.c
-@@ -114,6 +114,18 @@ static int jcore_pit_local_init(unsigned cpu)
- 	pit->periodic_delta = DIV_ROUND_CLOSEST(NSEC_PER_SEC, HZ * buspd);
+--- a/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
++++ b/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
+@@ -109,13 +109,13 @@ static int jadard_prepare(struct drm_pan
+ 	if (jadard->desc->lp11_to_reset_delay_ms)
+ 		msleep(jadard->desc->lp11_to_reset_delay_ms);
  
- 	clockevents_config_and_register(&pit->ced, freq, 1, ULONG_MAX);
-+	enable_percpu_irq(pit->ced.irq, IRQ_TYPE_NONE);
-+
-+	return 0;
-+}
-+
-+static int jcore_pit_local_teardown(unsigned cpu)
-+{
-+	struct jcore_pit *pit = this_cpu_ptr(jcore_pit_percpu);
-+
-+	pr_info("Local J-Core PIT teardown on cpu %u\n", cpu);
-+
-+	disable_percpu_irq(pit->ced.irq);
+-	gpiod_set_value(jadard->reset, 1);
++	gpiod_set_value(jadard->reset, 0);
+ 	msleep(5);
  
- 	return 0;
- }
-@@ -168,6 +180,7 @@ static int __init jcore_pit_init(struct device_node *node)
- 		return -ENOMEM;
- 	}
+-	gpiod_set_value(jadard->reset, 0);
++	gpiod_set_value(jadard->reset, 1);
+ 	msleep(10);
  
-+	irq_set_percpu_devid(pit_irq);
- 	err = request_percpu_irq(pit_irq, jcore_timer_interrupt,
- 				 "jcore_pit", jcore_pit_percpu);
- 	if (err) {
-@@ -237,7 +250,7 @@ static int __init jcore_pit_init(struct device_node *node)
+-	gpiod_set_value(jadard->reset, 1);
++	gpiod_set_value(jadard->reset, 0);
+ 	msleep(130);
  
- 	cpuhp_setup_state(CPUHP_AP_JCORE_TIMER_STARTING,
- 			  "clockevents/jcore:starting",
--			  jcore_pit_local_init, NULL);
-+			  jcore_pit_local_init, jcore_pit_local_teardown);
+ 	ret = jadard->desc->init(jadard);
+@@ -1130,7 +1130,7 @@ static int jadard_dsi_probe(struct mipi_
+ 	dsi->format = desc->format;
+ 	dsi->lanes = desc->lanes;
  
- 	return 0;
- }
-diff --git a/drivers/irqchip/irq-jcore-aic.c b/drivers/irqchip/irq-jcore-aic.c
-index b9dcc8e78c750..1f613eb7b7f03 100644
---- a/drivers/irqchip/irq-jcore-aic.c
-+++ b/drivers/irqchip/irq-jcore-aic.c
-@@ -38,7 +38,7 @@ static struct irq_chip jcore_aic;
- static void handle_jcore_irq(struct irq_desc *desc)
- {
- 	if (irqd_is_per_cpu(irq_desc_get_irq_data(desc)))
--		handle_percpu_irq(desc);
-+		handle_percpu_devid_irq(desc);
- 	else
- 		handle_simple_irq(desc);
- }
--- 
-2.39.5
-
+-	jadard->reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
++	jadard->reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(jadard->reset)) {
+ 		DRM_DEV_ERROR(&dsi->dev, "failed to get our reset GPIO\n");
+ 		return PTR_ERR(jadard->reset);
 
 
