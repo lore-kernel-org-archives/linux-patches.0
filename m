@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3336521345;
-	Mon, 24 Feb 2025 14:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76832571CE;
+	Mon, 24 Feb 2025 14:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408230; cv=none; b=qnOmiUIZ20sM2kSW2Vnr5yBTA89EP2mcsDVbFcJbtfuWmogDnYElt1MU+c+8gRSv3W0x/97NB2b5DgBkUvTPY50PmQxMiQDW/HKupYIGjTry8fMT82UUc40ZYJa7jhqFgeZ26SoBMWWPkEAAUsLcdrrWxzSwElNl+a9/uN7dcBM=
+	t=1740408235; cv=none; b=tdad7hN4D1UYQw0vlxgh/tBcbyTdEe1vljsWGlmPifoj10RmUobdtInxho8Yr7mZeYqFKOC7X8O370TCZNeYWnrl4UKgxumvXiv/agdqYhXvYFUAHhXsLAJ1fEB9FFiAIg51ENnqEYgBpYu02iOmBpwTlV/i/opfZ4FI270/V/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408230; c=relaxed/simple;
-	bh=r1tBppUIxZ//nzgYXkl/2JmhU8+bg78KnmeWlWEuLCM=;
+	s=arc-20240116; t=1740408235; c=relaxed/simple;
+	bh=9NWCUzu6nY2UraAUwuGpeXJ171j8EBfLR/42p0f46Dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X9udrmmOUjp64EfkSbCUjhKURM1sLgkeCytnP7vNknlJkALBt0idN2jy4dvUb8PDZhmpzziJN4H1sPOb2gjWPFNoLUaxRldgfJevPvr1pU3hFGb68gYvYOkArJOr8atK6/pnVcG/epFbosLQUNZsJ0X2DEFUELg86AEX+x8CzQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdqGVta5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oWUHKVuwGTW3RohYTvHM5iJLZ3cyvk5xGBYm6ZIl3m5E4tdGvODH4ZzAozl+4FaDeyKurTo5oKxS2+nlxQwxglPS5AcK6nMWvjR7+1O5pefLLlVih8tyvncZ+r1BbE7kO0HxNK0hITguNUCNnIDuwCQEd2MELDHlF+o7uFGS6dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVZRLr/D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdqGVta5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD35C4CED6;
-	Mon, 24 Feb 2025 14:43:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVZRLr/D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD85EC4CEE6;
+	Mon, 24 Feb 2025 14:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740408229;
-	bh=r1tBppUIxZ//nzgYXkl/2JmhU8+bg78KnmeWlWEuLCM=;
+	s=korg; t=1740408233;
+	bh=9NWCUzu6nY2UraAUwuGpeXJ171j8EBfLR/42p0f46Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdqGVta5hwu/d5VdWM6rh5Z6X/mWZj0gNeflMCs5AP/BfXDiJO08T/QXAEWJunU8V
-	 xRW9eeWNUc2QZenWiIjlIZMtPV0PUHHBBW1sWvLdpLjhFbTntVVfTxyQbOHUy+i5jK
-	 eeFI/QN2HbdQ8HbNto32Or8sUF49BNUBb/ZgiuLc=
+	b=FVZRLr/D6Hnr8LMQDZ4ERtAilo+QCwVyFvajizCnNMhz/dk8QnPMHWaQgIkkpJTra
+	 EKz6cEVZgaSa8Vt/xC9Ce/OB4uGBr84nHaaWUf3SI5Agfvg90m30dUGZoy/U+3uGzB
+	 WCsCR7jV3UyDPiOcsNzAVlZUJJTTpdUtnpSerwfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yan Zhai <yan@cloudflare.com>,
-	Hou Tao <houtao1@huawei.com>,
+	syzbot+4dc041c686b7c816a71e@syzkaller.appspotmail.com,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/140] bpf: skip non exist keys in generic_map_lookup_batch
-Date: Mon, 24 Feb 2025 15:35:04 +0100
-Message-ID: <20250224142607.141107582@linuxfoundation.org>
+Subject: [PATCH 6.6 096/140] bpf: avoid holding freeze_mutex during mmap operation
+Date: Mon, 24 Feb 2025 15:34:55 +0100
+Message-ID: <20250224142606.787290836@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250224142602.998423469@linuxfoundation.org>
 References: <20250224142602.998423469@linuxfoundation.org>
@@ -52,116 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 5644c6b50ffee0a56c1e01430a8c88e34decb120 ]
+[ Upstream commit bc27c52eea189e8f7492d40739b7746d67b65beb ]
 
-The generic_map_lookup_batch currently returns EINTR if it fails with
-ENOENT and retries several times on bpf_map_copy_value. The next batch
-would start from the same location, presuming it's a transient issue.
-This is incorrect if a map can actually have "holes", i.e.
-"get_next_key" can return a key that does not point to a valid value. At
-least the array of maps type may contain such holes legitly. Right now
-these holes show up, generic batch lookup cannot proceed any more. It
-will always fail with EINTR errors.
+We use map->freeze_mutex to prevent races between map_freeze() and
+memory mapping BPF map contents with writable permissions. The way we
+naively do this means we'll hold freeze_mutex for entire duration of all
+the mm and VMA manipulations, which is completely unnecessary. This can
+potentially also lead to deadlocks, as reported by syzbot in [0].
 
-Rather, do not retry in generic_map_lookup_batch. If it finds a non
-existing element, skip to the next key. This simple solution comes with
-a price that transient errors may not be recovered, and the iteration
-might cycle back to the first key under parallel deletion. For example,
-Hou Tao <houtao@huaweicloud.com> pointed out a following scenario:
+So, instead, hold freeze_mutex only during writeability checks, bump
+(proactively) "write active" count for the map, unlock the mutex and
+proceed with mmap logic. And only if something went wrong during mmap
+logic, then undo that "write active" counter increment.
 
-For LPM trie map:
-(1) ->map_get_next_key(map, prev_key, key) returns a valid key
+  [0] https://lore.kernel.org/bpf/678dcbc9.050a0220.303755.0066.GAE@google.com/
 
-(2) bpf_map_copy_value() return -ENOMENT
-It means the key must be deleted concurrently.
-
-(3) goto next_key
-It swaps the prev_key and key
-
-(4) ->map_get_next_key(map, prev_key, key) again
-prev_key points to a non-existing key, for LPM trie it will treat just
-like prev_key=NULL case, the returned key will be duplicated.
-
-With the retry logic, the iteration can continue to the key next to the
-deleted one. But if we directly skip to the next key, the iteration loop
-would restart from the first key for the lpm_trie type.
-
-However, not all races may be recovered. For example, if current key is
-deleted after instead of before bpf_map_copy_value, or if the prev_key
-also gets deleted, then the loop will still restart from the first key
-for lpm_tire anyway. For generic lookup it might be better to stay
-simple, i.e. just skip to the next key. To guarantee that the output
-keys are not duplicated, it is better to implement map type specific
-batch operations, which can properly lock the trie and synchronize with
-concurrent mutators.
-
-Fixes: cb4d03ab499d ("bpf: Add generic support for lookup batch op")
-Closes: https://lore.kernel.org/bpf/Z6JXtA1M5jAZx8xD@debian.debian/
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Acked-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/85618439eea75930630685c467ccefeac0942e2b.1739171594.git.yan@cloudflare.com
+Fixes: fc9702273e2e ("bpf: Add mmap() support for BPF_MAP_TYPE_ARRAY")
+Reported-by: syzbot+4dc041c686b7c816a71e@syzkaller.appspotmail.com
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20250129012246.1515826-2-andrii@kernel.org
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ kernel/bpf/syscall.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
 diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 9f791b6b09edc..f089a61630111 100644
+index 98d7558e2f2be..9f791b6b09edc 100644
 --- a/kernel/bpf/syscall.c
 +++ b/kernel/bpf/syscall.c
-@@ -1807,8 +1807,6 @@ int generic_map_update_batch(struct bpf_map *map, struct file *map_file,
+@@ -882,7 +882,7 @@ static const struct vm_operations_struct bpf_map_default_vmops = {
+ static int bpf_map_mmap(struct file *filp, struct vm_area_struct *vma)
+ {
+ 	struct bpf_map *map = filp->private_data;
+-	int err;
++	int err = 0;
+ 
+ 	if (!map->ops->map_mmap || !IS_ERR_OR_NULL(map->record))
+ 		return -ENOTSUPP;
+@@ -906,7 +906,12 @@ static int bpf_map_mmap(struct file *filp, struct vm_area_struct *vma)
+ 			err = -EACCES;
+ 			goto out;
+ 		}
++		bpf_map_write_active_inc(map);
+ 	}
++out:
++	mutex_unlock(&map->freeze_mutex);
++	if (err)
++		return err;
+ 
+ 	/* set default open/close callbacks */
+ 	vma->vm_ops = &bpf_map_default_vmops;
+@@ -923,13 +928,11 @@ static int bpf_map_mmap(struct file *filp, struct vm_area_struct *vma)
+ 		vm_flags_clear(vma, VM_MAYWRITE);
+ 
+ 	err = map->ops->map_mmap(map, vma);
+-	if (err)
+-		goto out;
++	if (err) {
++		if (vma->vm_flags & VM_WRITE)
++			bpf_map_write_active_dec(map);
++	}
+ 
+-	if (vma->vm_flags & VM_WRITE)
+-		bpf_map_write_active_inc(map);
+-out:
+-	mutex_unlock(&map->freeze_mutex);
  	return err;
  }
- 
--#define MAP_LOOKUP_RETRIES 3
--
- int generic_map_lookup_batch(struct bpf_map *map,
- 				    const union bpf_attr *attr,
- 				    union bpf_attr __user *uattr)
-@@ -1818,8 +1816,8 @@ int generic_map_lookup_batch(struct bpf_map *map,
- 	void __user *values = u64_to_user_ptr(attr->batch.values);
- 	void __user *keys = u64_to_user_ptr(attr->batch.keys);
- 	void *buf, *buf_prevkey, *prev_key, *key, *value;
--	int err, retry = MAP_LOOKUP_RETRIES;
- 	u32 value_size, cp, max_count;
-+	int err;
- 
- 	if (attr->batch.elem_flags & ~BPF_F_LOCK)
- 		return -EINVAL;
-@@ -1865,14 +1863,8 @@ int generic_map_lookup_batch(struct bpf_map *map,
- 		err = bpf_map_copy_value(map, key, value,
- 					 attr->batch.elem_flags);
- 
--		if (err == -ENOENT) {
--			if (retry) {
--				retry--;
--				continue;
--			}
--			err = -EINTR;
--			break;
--		}
-+		if (err == -ENOENT)
-+			goto next_key;
- 
- 		if (err)
- 			goto free_buf;
-@@ -1887,12 +1879,12 @@ int generic_map_lookup_batch(struct bpf_map *map,
- 			goto free_buf;
- 		}
- 
-+		cp++;
-+next_key:
- 		if (!prev_key)
- 			prev_key = buf_prevkey;
- 
- 		swap(prev_key, key);
--		retry = MAP_LOOKUP_RETRIES;
--		cp++;
- 		cond_resched();
- 	}
  
 -- 
 2.39.5
