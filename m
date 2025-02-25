@@ -1,139 +1,107 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A7121ABC1
-	for <patches@lists.linux.dev>; Tue, 25 Feb 2025 14:49:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C036D25D546
+	for <patches@lists.linux.dev>; Tue, 25 Feb 2025 15:21:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740494960; cv=none; b=iMZusr60bBrFwZ07i2h/U9G4MAHxlOGtM+/J6U7AC+Fm+ad4M4f0Dwo+FLdOBBR1QThauY73qiHIeyD9pdiOYFvXG5WqtLRCbEMEEwGH/3vciY5/V+E/RDTEJzNu+SgxlnO2XT3QWTT82Qx5n9EyhebNApH10AOBq7yBM3QaBJc=
+	t=1740496865; cv=none; b=O6ilIMtQ/rm6eITkpGZl4dXUygHuyCWd3wI/HFO0CKIM9ibDsujxhhvlLnJejjyCL6icQSnMMsyCHL0I0ZmMpA8lCYaDV5iD7ZL1Png189UaliLyjL94Gm0tFyNoHeGATXdbrA3+PmIG4iChxQMHMaP90nrxvQMbB1k6HL+3Rqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740494960; c=relaxed/simple;
-	bh=jB2KNx2xiJKVw67d/M0TT8okvRHhKlz8iuO0X0oMk5o=;
+	s=arc-20240116; t=1740496865; c=relaxed/simple;
+	bh=LEYExAvOlZQZSspB1c18HV8RXpGDdV5MPj6WidEcY3s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MQ54DaNrrvxSW+V7aQWBMeHPOwO4HkhOZ0LQl6Jipiv3d4bYM14bH1mjJ+wH8/qW+Uehp7duFNaBknK+p4ENhal5vJnz7XpjKDoveNiCVFSt0vHPG5KotcD+OS8xLEpOCqKa+nTFWzXlRIM/v3w6EYRC7LIiGmg90HTCafTNj8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eMBACx/6; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	 In-Reply-To:Content-Type; b=NgHHb4FZ4oXd00q1xc+yZjNbmZNY71/6ZEX31tU+Feufm/HGEgfts5EwyB/lyhQfxSV9A0kZMqb5mXnO8P5dervFi6+O6aUtLueux1sKZ7mJSfMIpPgBupLidCZI6qofsAD/svvbVNAIlNmtXudwkzH2meyhXe6b3UNpno6Gg2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=kD1DhZl9; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eMBACx/6"
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51P8Dm2A009109
-	for <patches@lists.linux.dev>; Tue, 25 Feb 2025 14:49:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MdZblCZrtqr5nSTII/rdTDMLLzlyRaA57jSGq74yb+Y=; b=eMBACx/628VwpC7D
-	9lZ9O1PFLSPuTVS+tc53m1rF4B52Mdcqsa73TtHeh14XTNF7xVuHNInbVxviXI5c
-	nUMgSrt0e1IwjROayup08XZGHjpuDJLR6Yh0Qv9NThGeqizuXjGgKPWlfeNn6g/5
-	kIknF1gyMCgHn/3QPf80VXMP/L+tv3OeZ1qWPsGChjgewvTkFFtB8g6FjwqOo4Eh
-	7V76ZVlFLvCPgw/oZHcTgdfC9isHIjrt4/zVitJZrrpleyixZOwylqsORPiWFT44
-	2VzO+9meT7BbaaCLA2x6PaW6W1LsRvNUnaGNJserjXFoleIcqIGHVNtm+SmYBbdN
-	RpL8Mw==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44y6y6s6ag-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <patches@lists.linux.dev>; Tue, 25 Feb 2025 14:49:15 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6e665343a70so10133826d6.1
-        for <patches@lists.linux.dev>; Tue, 25 Feb 2025 06:49:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="kD1DhZl9"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4398e3dfc66so50524325e9.0
+        for <patches@lists.linux.dev>; Tue, 25 Feb 2025 07:21:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1740496862; x=1741101662; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=R00iFC92M1deh98zQEz+YC258SvnhDWpARo05Vlc3R0=;
+        b=kD1DhZl9ppIC2M5QQ7K/9y+5Rso7eCwRZ2Bca5+EH0ZnkjB78IcF6ytUg/DRxPzzBu
+         04fDQvooQmTfZgL+6ncajUwb5SS7xwxePa4FanFi18kGFVtlUrnvZgXy4atT7Gxssh9B
+         AUZNYV/ZYDlSjGb/8fS/AWbEmq3TIqguMhGgGW1Faxq/j78ItVLz7FMdi901pgsLyFex
+         INUNhGLJnPXUQXc1WmQ6CGQBz3Yea2IpPTQmjPR6OebVRhLhrcT2oK4yQgdDN3lVeTBk
+         eY4fRzQ5NX2o6XcYWhaE0XfNYwreglrCufDTI1Mj0TlqVJ2t1yVSpvWSn9Y6fYezNy85
+         xe3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740494955; x=1741099755;
+        d=1e100.net; s=20230601; t=1740496862; x=1741101662;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MdZblCZrtqr5nSTII/rdTDMLLzlyRaA57jSGq74yb+Y=;
-        b=rxyvpnYGgabQ5ujmpLA1UoZBVJnvumEK8zPvyNL9McWedRolM1EIdJer6S+6RhgZzM
-         G/HDco/Y2mmxTBaQ7bydIG7I1m8+svYrfJ8yB4+CbNxGTj+GXhs8yM44hP0B5qwA2NNJ
-         St+vvpH4PWZUUa9X6LoxuuEqcXTJc/2q4lg44lz5RD86zJKv8nkiN1yd9qIBsDEF1HGH
-         GuJmGVIrNe3ub+/YuWfNjxu/Em5gvr5skrg11tLyKC3qMMZZIiPejbwnSm2hyIf4OCau
-         RqJzR0Mr81uFHNVhWL6H7J0p0MrW5ISssEFPVw3FObkEQYkTSZA5tKJZPrzaSYntlZ0R
-         hsew==
-X-Forwarded-Encrypted: i=1; AJvYcCVjc8fuOIWHelPf4ieBTO8gUM6bA1w1bmzF5jX0abqNKt5yWy2oqQWiTRLLaQV31OAHwC/AdN39@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy3Xlgnc2Dj3UMfphqOu7sKWV6Nnq/zWvP36izly8tQjo87hP7v
-	T1OI7GPAp0X23xGTgPGQDZcwoeykLl26m9CiHLWI4gFAO70/5VlPow8KSacbqLP1PZqsPjU5NH8
-	Ha3dG2hOqbz6tATvaxNzmiq2Ufi0psQvWlJLJzdzKv2ElF0w3scYOUivE
-X-Gm-Gg: ASbGncuEnhxwl/hFb6TzxTzREfeY2VGawmXld/qA8yZNUjMDC5LrHQY8IURfRvWXWoq
-	/cb2b+/xdpcKDS/8oalKnrA/ldtndWEaUpgMYh8qWYdfJNF/FAZ+cfYIrp7yEYWuYzWAahOXt0X
-	RP6UJU9iLYjSUvU1fa4RsriyTX0ks2gn5r1HmX8sKwTATr8KYHuGhP5HZIDTZIGxMiHpfCgF1Sz
-	G6P5wW0x/uLDBCUCs76o+wvNa9UtdyW97lKQyC5RJ4TS2TKJtaPcVTvua9xRfpTS7lhNj0lLWzo
-	taOrgjo4A+KS5XD6LIDBU9tMYNWGCw6115rifU6F46nn2jSbHQBAkSjCIlm+L4el6spAMw==
-X-Received: by 2002:a05:6214:e64:b0:6e6:60f6:56dd with SMTP id 6a1803df08f44-6e6ae9b4a82mr78584546d6.7.1740494955184;
-        Tue, 25 Feb 2025 06:49:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE1Q6ox4nvENUzBFA4fILrABEqSIsQiZXCOTgUYTSKSMgYH+75qvmwIn5Zxz7zObrGAIRpFQw==
-X-Received: by 2002:a05:6214:e64:b0:6e6:60f6:56dd with SMTP id 6a1803df08f44-6e6ae9b4a82mr78584296d6.7.1740494954729;
-        Tue, 25 Feb 2025 06:49:14 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abed2010df7sm153581666b.95.2025.02.25.06.49.12
+        bh=R00iFC92M1deh98zQEz+YC258SvnhDWpARo05Vlc3R0=;
+        b=Zh2i4s1eKfb0THJ86//pFUS26fqc43znqZns3KXvHxfVgWT8BU28dQJ0dZdWt/KX3J
+         j8cuWvcAJ9I/4lbO9zGWpDU6qvzP0OqBU40vgCf0AjS8XDS67ugHv2wFqpdkPllZfKeF
+         aG4T0oeD4Y4Ps9hw4uxb6262yRTSaDTchyk++zxy/TzOZHx08CqEBl/8X4svLpvhlryt
+         +9yqRyas8XJlHMnb0wt7OztOHykIjnEb/5fHHCGD5SfFWkksDlyq+JOaXthAhpFtcdSe
+         ztqylSAxsQHxpX3Lfkgfl9ACNqLBHkIz9WQeHTN2C2q2IEqiuI1omthzqD3fFDimizlf
+         KVuw==
+X-Gm-Message-State: AOJu0YyBfO9WzpSUZPoH6NHV06DxZNOG/7i+2b5FyuE/igAARqNmRrVn
+	vi/bSZDyI70hmz0Ycb4mRhQTvI+iu/IivBRS0sIawc2SIPor4VQ=
+X-Gm-Gg: ASbGncv3uX3Mc6wp7L4s91KdQBnQVa6Sy9d9/qcp5pg0rBhj1FPqyTJwl7KZben7epl
+	USDxWW3WrjcoweFjN4cl4tgGKWHmBY2TZeFbsr9wdcp+SsEZwZ13dzovBf4jSXeRbsueLXLgBnd
+	QS9jGUnFBe5MfoVZTNPTKVANxsgsD7PHW0U9xAc4B+AyezA8dfJv9Jn8k1M4134tgSTpsdCQwRv
+	ZQstcrK3A+saeQrVvvgJgTryxH/HqwDsXquBu8G0dOp1eD8F7MWAjf8GtmiKDogpVQPPNCs+FMl
+	0sQnHcWrtiCRKM/+4qmL1zCpDq5GTTXnEaOFxkLdN20CgthvY3DAl5y4YPZSqU2CM9xBN/qYsMP
+	Q1Nap
+X-Google-Smtp-Source: AGHT+IFTmPOZNMUYbjq0xktjOwR/hrjcj7eKjTft/BEOywT7Z0vceEUrKjh0CqgKZ053FHdrLSzW4w==
+X-Received: by 2002:a05:6000:1788:b0:38d:d9bd:1897 with SMTP id ffacd0b85a97d-38f6e95ef5bmr14241054f8f.22.1740496861848;
+        Tue, 25 Feb 2025 07:21:01 -0800 (PST)
+Received: from [192.168.1.3] (p5b2aca7c.dip0.t-ipconnect.de. [91.42.202.124])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-439b02d60c0sm143189335e9.12.2025.02.25.07.21.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Feb 2025 06:49:14 -0800 (PST)
-Message-ID: <051fdebf-baf0-4d67-b044-fdbb50d2f7fc@oss.qualcomm.com>
-Date: Tue, 25 Feb 2025 15:49:11 +0100
+        Tue, 25 Feb 2025 07:21:01 -0800 (PST)
+Message-ID: <066123b3-127d-4200-946f-61b118de1a45@googlemail.com>
+Date: Tue, 25 Feb 2025 16:21:00 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: sc7180-trogdor: Wire up USB to
- usb-c-connectors
-To: Stephen Boyd <swboyd@chromium.org>,
-        Konrad Dybcio
- <konradybcio@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        patches@lists.linux.dev, cros-qcom-dts-watchers@chromium.org,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        Pin-yen Lin <treapking@chromium.org>
-References: <20250221233120.3596158-1-swboyd@chromium.org>
- <20250221233120.3596158-3-swboyd@chromium.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250221233120.3596158-3-swboyd@chromium.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: ol_wef33QiTcpApIB3pnKeCgOphrQJa5
-X-Proofpoint-GUID: ol_wef33QiTcpApIB3pnKeCgOphrQJa5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-25_04,2025-02-25_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- mlxlogscore=964 impostorscore=0 priorityscore=1501 bulkscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502100000 definitions=main-2502250099
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.13 000/137] 6.13.5-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250225064750.953124108@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20250225064750.953124108@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 22.02.2025 12:31 AM, Stephen Boyd wrote:
-> Fully describe the USB type-c on sc7180 Trogdor devices. Most Trogdor
-> devices have two USB type-c ports (i.e. usb-c-connector nodes), but
-> Quackingstick only has one. Also, clamshell devices such as Lazor have a
-> USB webcam connected to the USB hub, while detachable devices such as
-> Wormdingler don't have a webcam, or a USB type-a connector. Instead they
-> have the pogo pins for the detachable keyboard.
-> 
-> Fully describing the topology like this will let us expose information
-> about what devices are connected to which physical USB connector (type-A
-> or type-C).
-> 
-> Cc: <cros-qcom-dts-watchers@chromium.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konradybcio@kernel.org>
-> Cc: Rob Herring <robh@kernel.org>
-> Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
-> Cc: Conor Dooley <conor+dt@kernel.org>
-> Cc: <linux-arm-msm@vger.kernel.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: Pin-yen Lin <treapking@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
+Am 25.02.2025 um 07:49 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.13.5 release.
+> There are 137 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-This is quite a patch, but it seems to do what it promises..
+Like -rc1, no problems with -rc2 here. Builds, boots and works on my 2-socket Ivy Bridge 
+Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
 
-Please add newlines between defined properties and subnodes
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-With that: 
 
-Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Beste Grüße,
+Peter Schneider
 
-Konrad
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
