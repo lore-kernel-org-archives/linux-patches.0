@@ -1,120 +1,122 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from dispatch1-us1.ppe-hosted.com (dispatch1-us1.ppe-hosted.com [67.231.154.164])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6531FBEB5
-	for <patches@lists.linux.dev>; Tue, 25 Feb 2025 17:59:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573681FC0F4
+	for <patches@lists.linux.dev>; Tue, 25 Feb 2025 18:24:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.154.164
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740506395; cv=none; b=BmsM5hWupx2JWhmnUK9TVSIjJj6B2Drk0L2UGNX8oAPiiUj9EMf7TTRPZFZWs1orW7jciNcY4RSKPiUG9aQDvahADi9GUoCuYa7FoDvYF6Nr4CLAFIqUvO7u0eDRnG1rpMhO35TGasZQgKbmKciVQPmDjWi0MSugwsJC/LufcWs=
+	t=1740507848; cv=none; b=fmTZGPZUodLyhECX2FwKxeSaHHU3nIRFrJDx51a5Y789HbPqIUp6x+y1gvZvPhCe8nu7MGyKz6sqAOoHdtaMhsFZeKIduGrsKjqVLXTO8xspbVt14/h41hh/txa6Z7UbK3PiEF6gIuLKkEGq/3nwennJ/tfr+HNE9su7NazBxSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740506395; c=relaxed/simple;
-	bh=t+3/xgTztA90riGckbgrI9IzG66KkbXPYhDKFDRxAeM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pnqt5QYvU8CFjUJZeDyqyAaQ0EJc9hpGrrKNU3yWOl8JIYI7ptUSGJc40w7cql16Wp4aCKJxh7HghzJDrVb5NQ6GniNEPXQpRoM1hstTnurklk1nfb4qVPipq9fryi/kDWwj+xqWES4PgYWsD6IrfJmXHrceMYmAqO7Cf4ImKa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=omoHpupr; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1740507848; c=relaxed/simple;
+	bh=SBkC6K1saiGACNoan7QB2EPwo5J7cMg6MkvBnK5tNHY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OUHeKGyrK5w2L8lqcG1kz6wPCXwF3nouWXp/6qPL1O1+NFMK62jGdWw7h3KWuWQ+tOkOUIr/hUksNNf7wlTVzrOPKQ70ykhj8W/mABwO2cgDo88m5jQJUn053n7aRU/QRa6vmAR3SMSETdwV16PVqFIBVgrNddmvJdxshQ+Wcy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sladewatkins.net; spf=pass smtp.mailfrom=sladewatkins.com; dkim=pass (2048-bit key) header.d=sladewatkins.com header.i=@sladewatkins.com header.b=GNbCf/o3; dkim=pass (2048-bit key) header.d=sladewatkins.net header.i=@sladewatkins.net header.b=dumL0WRr; arc=none smtp.client-ip=67.231.154.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sladewatkins.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sladewatkins.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="omoHpupr"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-221ac1f849fso3645ad.1
-        for <patches@lists.linux.dev>; Tue, 25 Feb 2025 09:59:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=sladewatkins.com header.i=@sladewatkins.com header.b="GNbCf/o3";
+	dkim=pass (2048-bit key) header.d=sladewatkins.net header.i=@sladewatkins.net header.b="dumL0WRr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sladewatkins.com;
+ h=cc:cc:content-transfer-encoding:content-transfer-encoding:content-type:content-type:date:date:from:from:in-reply-to:in-reply-to:message-id:message-id:mime-version:mime-version:references:references:subject:subject:to:to;
+ s=selector-1739986532; bh=xkCeOl6nj9IK5tQwcy8oiuh52jYXAnIOceDA8IVe+lQ=;
+ b=GNbCf/o3kO4exRHdGWDWiY3J0McRGr0JhvLtWvKZSi4gvTxctTYvYJCMrZN8wnFMs8w+0oVAqH0YfOrErVm8FUZ4FSZsGrVKTDIVBPOdfSgpn4NTX27FeXDKHSEkiLKQepjv6ZSqjyq59K74d1ND3tDVtKrWisFydo2+PFMpu6qbDHeT+RJAsVewpWVvkqWVSVc1xDQQyP1qHuEaWgVS0nPr+9jYA25c/xslJQ8HB6X8r5B/DatCUNg9ySwXvC2XqnaQ7fvpjzHkPxo18tUi8w7HiV0mis8Z2FI3LndPM2NvyI8yRX673H01XrACrPX3xo4f55gZypUc6SkVtoXQqg==
+X-Virus-Scanned: Proofpoint Essentials engine
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTPS id 47AE5800A0
+	for <patches@lists.linux.dev>; Tue, 25 Feb 2025 18:23:58 +0000 (UTC)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7c09d661887so588375185a.0
+        for <patches@lists.linux.dev>; Tue, 25 Feb 2025 10:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1740506392; x=1741111192; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zet+c1c4ONj7xvmenDNyn9l5ztIYraYudvekwtRFR4g=;
-        b=omoHpupru8f9xcVj4QPXcpFIlP5h8TLFOaRkqRC83hq4Bi2NSXAwu4AQh4pb61ZN1h
-         Xx6ly2m8+7rvP5/CPAQm8bA4nzTqmF9ReyuF7Ey6r+4/IxXMQ/NovqwCQSDVg3rnVONu
-         Q4UV4oHp5BcmJEqHZKairm3lXmQ1j0St8/pobLCGg30+5uItq9UqzZkYTemDufLZa2Aj
-         AfdnfCRfMAsMSBRS+g9T7PSakf+XrGjjw7YUQs16iMBJq36TfVti2CGSRxcS737OUw1x
-         VwW5HCaPvV9hfFRf49MFwiJ47so8fH7QoZTjcvvZOm92a1E+UzAPVGXnqMnsvn+TJm5L
-         zyxQ==
+        d=sladewatkins.net; s=google; t=1740507837; x=1741112637; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xkCeOl6nj9IK5tQwcy8oiuh52jYXAnIOceDA8IVe+lQ=;
+        b=dumL0WRrU3ZnBLE5lOsexD3w5q2Nz9+TjQD9f2vCwuO3vcWoYyYb9uuGHxS/JTiCR+
+         XcptkAybu6RxR8HOoz1SIkDAPUMW/06GsbLq+87GD3Og5UZmuleh9FbRb6NrH6ODqd3c
+         KGQ3JqcuWY/PKQevzZBtExzyIfhk3np6+jPHeYUDifZ3EsqH4sKbw4yfxfbYUov4zNOL
+         YPNqU9OQv1cn/qTcf9EL4KdKG3MWP6wm0oBKFVjCoevdJZFY85lFXnU5gPnMtjz3A/JN
+         JRmGJ+uWJ22FPD3y+wOBegQ+cE1AUcK4DoH+gNJHwrX7yanlG4YuUxjS/LHQFiE3b7DZ
+         NV9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740506392; x=1741111192;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zet+c1c4ONj7xvmenDNyn9l5ztIYraYudvekwtRFR4g=;
-        b=o9t9nLJYODySoFrcOC/H5W3DTVndZhvsxT2f6Qk3170h7Xs0NEo2iVIl34wVOa4wU0
-         3BylYgp3Z6h2yvpCGTqXjMhN0bwT+hYd3YmvgyfegDU24R+459sW4s8LxCJkUcNMEN/L
-         eYSP90omleoTpcYAnnPeMew1BUaNVM87smoTVfWETK8/RTMWUEiNELKxpNUrIj/kr5wB
-         5sAgccwmee6bWOATtkela4zu0DHBGzzV4P6Jr/WgUWejkB9aR6pvgzAh64NBPf+8WJO5
-         pIZT8jBRqtmn5BZZol8dUkboCtOuRkGvyb5v1YueKBLJnOGqpex9VEkclBhlPpHF7cu4
-         y6SA==
-X-Forwarded-Encrypted: i=1; AJvYcCUsLgCJM33C4bmhwdPxSWpQsATNv4OIcdKbBZIyin1gmlBm9kbX5pyPhxIsW2ol+MpiununCZGZ@lists.linux.dev
-X-Gm-Message-State: AOJu0YzPc/Z7LA+ZWdL1GkDr+Myi2CHInwi4zpL8+2v3eE7KeNsIfoeO
-	PEq2McJgqoum2gFydzETKxbXWv5EEwh+AGOoe1lT0+r9XbJjpjpHuXC25aCQKg==
-X-Gm-Gg: ASbGncs0agPPlQMa43L0kKoYsJ9HkInz/dTAavbNbE4hqdHii3HoKcdott2M06iBcCl
-	WaZXfmay3IZP7Q0NVnh8YnpFJD0bQFwsVRMeiC4Ds0RyLpn1vm/5qqgnUYeNgXtM0N7omDh/UQm
-	f4R51oYToYdTC9CB6Vwjcgn5tix+lrWLQhjtljMBKiTYNjHZdWm5vwDe4C3xJYGkqnd0ykswiza
-	3quXvUQ32YW/6DBBakbRjIiHcJ9lU0IYfEcW6aZdCt0U6R2JEWZK2+7Xee2uMYkLYVpBvJpXfG0
-	LuG+CeW867ucKIY2V3JlwCAaNBu2cX+4Xe8k2xINblXVfrm3u7L17OQH1cUJGng=
-X-Google-Smtp-Source: AGHT+IHt1jR5XD9845sVRfVXJk9oOqx4VZihn8kcHDN1a+U5MuzF3NMe86gHqr8wYv7wnn00ZADsGQ==
-X-Received: by 2002:a17:902:ec85:b0:21f:631c:7fc9 with SMTP id d9443c01a7336-2230798c8c9mr3956505ad.0.1740506392319;
-        Tue, 25 Feb 2025 09:59:52 -0800 (PST)
-Received: from google.com (169.224.198.35.bc.googleusercontent.com. [35.198.224.169])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7347a6f8ec9sm1867028b3a.53.2025.02.25.09.59.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 09:59:51 -0800 (PST)
-Date: Tue, 25 Feb 2025 17:59:41 +0000
-From: Pranjal Shrivastava <praan@google.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
-	joro@8bytes.org, suravee.suthikulpanit@amd.com,
-	robin.murphy@arm.com, dwmw2@infradead.org, baolu.lu@linux.intel.com,
-	linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org,
-	eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org,
-	mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
-	smostafa@google.com, ddutile@redhat.com, yi.l.liu@intel.com,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v8 14/14] iommu/arm-smmu-v3: Set MEV bit in nested STE
- for DoS mitigations
-Message-ID: <Z74FDTtZkjwrjv29@google.com>
-References: <cover.1740504232.git.nicolinc@nvidia.com>
- <f465dd9defdc0fc748c2fa2cfc829e37778a4ced.1740504232.git.nicolinc@nvidia.com>
+        d=1e100.net; s=20230601; t=1740507837; x=1741112637;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xkCeOl6nj9IK5tQwcy8oiuh52jYXAnIOceDA8IVe+lQ=;
+        b=LcV9RlJWcX6IZssF8ph1LQdl+X8JrVdIKgnGJvgtUqtq37AO8OYEthWiuyDxnfxLos
+         F5OIJ2U07T0D1nALDIENUTeRCjoBhYES42iHbpHQiIO+YCt2c8NI1K+3JaQeIZw9ZA5t
+         EGbMLPSEfGzRBxNAcvQX1lQr42A7Vw5S4PXfhuNlxVvlP13Z1CsoKLwo2OQkc7lhI6vt
+         HCzS6gEmgUhalCURSp4VcZhcZnMlvwtFFrp6Km7V2hjLlGU4rlFWEuGyK++VSw7/PKD8
+         +X/eXJnmcNFNpuAhmKFu77IfQFH56IrS/tFACMseWzLyT1pDPd0S52WaQ35sCTFg7eVE
+         6qjQ==
+X-Gm-Message-State: AOJu0YyDCG9ZPZNCqv+7SzFEwSBdV28xGcWGs9hcAhasvzKU45FXXFD2
+	PjLB78w0VWCPZXfp24HOSNMwHBYQaUOv8Ma7Hcu6eZMeAqbq36pjbZN7omWZ45vCoQvv6YiukE7
+	fxRDKZMrw4Z5N9yPhs9c7V/vFd4wCu0aN0Vk3NobkOq8A4HFpEoa4HMAXhQQLEIyCzk0VGV2pWf
+	t2eWhlRIihtkA=
+X-Gm-Gg: ASbGncvgTJMp7ciCupu8BeYn8pCWZI7TkbNpp+Mn2G39tUPS+M8gMpjIM0KMiNJs5AW
+	/K2t1joFvOQcJEZVJ/LburqFULq6nBXV/+i8JLei0me42M7OHULpEAfguQ8gE5eWuXCV5IFdA9r
+	jpKxC9Et51paggdShaos64UCFjcp2I3p5jXeIgerdRhDm9h3k4+T6BDcsHD0A9+UcdrOxnvfqJX
+	TJuZ6BUVIgaFbjMnnm7zIAl4DkeuEr1iIGvE2hxSHlte2D8KZa8th/jLEpS9IrumCAVWU3LW/bn
+	ReICQzyUUXBcCLth9a7YpUveDbJWsa6q2XnbNT2ZQ7H9UkSVPsFJjHXkkidcYeWZJLzYFWCI9MW
+	0hxT6R3uwhYn+BJ0tblbt1VjiNFmMAaxzWvw5
+X-Received: by 2002:a05:620a:294f:b0:7b6:d8da:9095 with SMTP id af79cd13be357-7c247f20022mr65058285a.13.1740507837357;
+        Tue, 25 Feb 2025 10:23:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH55M+1Ifas+XqNzr8X3+KkOff8XpRApkTQhxLbzscTrrKWkaE4uVGMnrWH4qExo9dqce3f1g==
+X-Received: by 2002:a05:620a:294f:b0:7b6:d8da:9095 with SMTP id af79cd13be357-7c247f20022mr65054885a.13.1740507837013;
+        Tue, 25 Feb 2025 10:23:57 -0800 (PST)
+Received: from ghostleviathan.computer.sladewatkins.net (syn-076-037-141-128.res.spectrum.com. [76.37.141.128])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e87b06dd6esm12101966d6.19.2025.02.25.10.23.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Feb 2025 10:23:56 -0800 (PST)
+Message-ID: <09882df3-a186-404f-adce-cdde1a6e887a@sladewatkins.net>
+Date: Tue, 25 Feb 2025 13:23:55 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f465dd9defdc0fc748c2fa2cfc829e37778a4ced.1740504232.git.nicolinc@nvidia.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 000/153] 6.12.17-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250225064751.133174920@linuxfoundation.org>
+Content-Language: en-US
+From: Slade Watkins <srw@sladewatkins.net>
+In-Reply-To: <20250225064751.133174920@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-MDID: 1740507838-WFXaa1f0Gn1w
+X-MDID-O:
+ us5;at1;1740507838;WFXaa1f0Gn1w;<slade@sladewatkins.com>;34a45300d431351f6eba03f8f221989b
+X-PPE-TRUSTED: V=1;DIR=OUT;
 
-On Tue, Feb 25, 2025 at 09:25:42AM -0800, Nicolin Chen wrote:
-> There is a DoS concern on the shared hardware event queue among devices
-> passed through to VMs, that too many translation failures that belong to
-> VMs could overflow the shared hardware event queue if those VMs or their
-> VMMs don't handle/recover the devices properly.
+
+On 2/25/2025 1:49 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.17 release.
+> There are 153 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> The MEV bit in the STE allows to configure the SMMU HW to merge similar
-> event records, though there is no guarantee. Set it in a nested STE for
-> DoS mitigations.
-> 
-> In the future, we might want to enable the MEV for non-nested cases too
-> such as domain->type == IOMMU_DOMAIN_UNMANAGED or even IOMMU_DOMAIN_DMA.
-> 
-> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-> Reviewed-by: Pranjal Shrivastavat <praan@google.com>
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> ---
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h         | 1 +
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c | 2 ++
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c         | 4 ++--
->  3 files changed, 5 insertions(+), 2 deletions(-)
-> 
-Apologies for my spelling error in [1]. It's supposed to be:
+> Responses should be made by Thu, 27 Feb 2025 06:47:31 +0000.
+> Anything received after that time might be too late.
 
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Hey Greg,
+No regressions or any sort of issues to speak of. Builds fine on my 
+x86_64 test machine.
 
-Correct spelling in [2].
+Tested-by: Slade Watkins <srw@sladewatkins.net>
 
-Thanks,
-Praan
-
-[1] https://lore.kernel.org/all/Z73zvIbsXzJMCaNt@google.com/
-[2] https://lore.kernel.org/all/Z730M3XptvDRObBp@google.com/ 
+All the best,
+-slade
 
