@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC27269B0E;
-	Wed, 26 Feb 2025 06:59:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3A21624F3;
+	Wed, 26 Feb 2025 07:06:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740553193; cv=none; b=HvSEr0vMvQ4+h3LwBAbBqLGIM2z+IKexIEce2Vie1rZkKo9TXtqibgkyR4PZA/Gz83kSZumLk8lm2VMrtd0Tau69/RMHfT4ng8GQjGoqXx7ldV0W0kyOtEI+ESuHtf1J7CGQ+YvpTqfG2h+Bq+rX5ERfw2f4yyKry5Wati95WOg=
+	t=1740553582; cv=none; b=iW9exsYdx5tOv4VFRNaya2yf3DkFhnLRSZotM7AjlEWEb1Csq0hP31TFZG0El7dKz46XIyWBpBjR7NRPjm8GZUKStPhkyAKeBuMwibNhdnNLb0QbkCy+Hv0W088aWKjzSkqjI6VKF+zcPG8DeP94Et+S0q3DiMorfAYpnfYJr/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740553193; c=relaxed/simple;
-	bh=qpSxoD9rlSgkQH/htkteQeAZ4TqZJLdpOv+rX9TDkNo=;
+	s=arc-20240116; t=1740553582; c=relaxed/simple;
+	bh=W5m8VXXaCJzooM7nBsw1fkyJLmefcSUyEyU2R1fyCSM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ek+SC5/iIAO1dv9VsYcb6/VLr7lfqfzaHyYHopSyVYPe1eqMlhdn04U65emQ1DQ5U0kKCSPMLyyx/Phf3jcwjrdV3MWp8rQKIETgVtpIYPXP8QLpYzjtCi5Um5rCS4xObS6IcdLLjnKOw0mn2Li21BoRJJeZDoLI99YW0ywqB9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eKrBksxE; arc=none smtp.client-ip=198.175.65.11
+	 In-Reply-To:Content-Type; b=WUbKcGMpKQ6KI0dKMwqvvbZeVMCDrAzuC1aEW0pGNfGGiQObAtXR1RJyMCia45LPgREGspr7/4XeTzeL4f075ytJZaLYeVpVxVjJzdn3nDr0t/E6hW+WQ0c9uk2xLmmbRK4LAwugNenm+NHgC38OxahZen0Ocup0KYdU3lLN5Ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MThRaYb/; arc=none smtp.client-ip=192.198.163.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eKrBksxE"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MThRaYb/"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1740553192; x=1772089192;
+  t=1740553581; x=1772089581;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=qpSxoD9rlSgkQH/htkteQeAZ4TqZJLdpOv+rX9TDkNo=;
-  b=eKrBksxETGmj1EewkXS89AmkxqkegYLPwOPxZLOazAsfjFolAvbxyqGQ
-   S/+kcjbRK1U+qIwacgNfKP+rlG3PitcOQpG1jCXF5F2ClNEfS5cNKDC2v
-   6CyDh25dL5h8cykjvJmOQY49h9Yx/V4mJcPqXleX+3ZEQidaQBN69MIFg
-   pRYNYsDdqRt9HpgigblRIYajaGS/K8FKzLgYCLCYTwp417QMSTe8sm3cO
-   fL2iAOAOAofvUFzcbEcZCtP45pl4ZPXJPPVo+UDvis4LhwiozW7aqEzUs
-   eQ9zhmOUKezMpK0FUKxkJ3u4eS0BHZD1BiVFpZ8D4r+R4NGm1K5qLkrCx
+  bh=W5m8VXXaCJzooM7nBsw1fkyJLmefcSUyEyU2R1fyCSM=;
+  b=MThRaYb/MD3R9bSbWTl5MdSSFldXfiLiD298pBpXCX+/NmeQGygdlT/f
+   ZxO6VqfaAF5uYJXuof4nY+RDtSDNhmBDZfd4J/UdwTKb90qpBGxDdw+gk
+   wLJZuLmrdo66ZnCfM13a4TBYB4WGu4myPq2B90zA9qO8asip8KCRM4i4P
+   iyGIPcXE8MwnF7JGZaZPHzA5O4je+43M8uA/R5Lu5eUMC/pjrUfLJFOSn
+   x7p0KABW38suS3S5vV0JEwfyaWuiv8rehg9ZM+HvxVnGs7K53sFwRBBTh
+   8XzwHtEB1b8Sk5X3efiTLpRItgJQZCCDwxNgCj6fGumcS+76NDCXhrpns
    A==;
-X-CSE-ConnectionGUID: 3DcwKSTyQy+iXi0o3uoF9Q==
-X-CSE-MsgGUID: kuwj/r8IQhmKTsdPgiLrAQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11356"; a="51596072"
+X-CSE-ConnectionGUID: iJfPzNPFS2WlKDHSUhd5Ng==
+X-CSE-MsgGUID: RcdK0DvnTpu5clbizFwUgQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11356"; a="45300918"
 X-IronPort-AV: E=Sophos;i="6.13,316,1732608000"; 
-   d="scan'208";a="51596072"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2025 22:59:51 -0800
-X-CSE-ConnectionGUID: gU9ME5xMS/Sg/5K4xpwzVw==
-X-CSE-MsgGUID: pqpzR+GkRgCwrPW8n3kWtw==
+   d="scan'208";a="45300918"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2025 23:06:20 -0800
+X-CSE-ConnectionGUID: o2XeqybiSAuGJr9XU9Ilgg==
+X-CSE-MsgGUID: 55W0no9QSx2jxxin+p8ALw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.13,316,1732608000"; 
-   d="scan'208";a="116621933"
+   d="scan'208";a="121717131"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2025 22:59:43 -0800
-Message-ID: <6d9ceeb5-581e-48e8-a5cc-100a9699a9e8@linux.intel.com>
-Date: Wed, 26 Feb 2025 14:56:29 +0800
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2025 23:06:12 -0800
+Message-ID: <7e70dfea-1be1-4699-b238-2d63fbfc2bc5@linux.intel.com>
+Date: Wed, 26 Feb 2025 15:02:57 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,7 +52,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/23] iommu/pages: Formalize the freelist API
+Subject: Re: [PATCH v3 12/23] iommu: Change iommu_iotlb_gather to use
+ iommu_page_list
 To: Jason Gunthorpe <jgg@nvidia.com>, Alim Akhtar <alim.akhtar@samsung.com>,
  Alyssa Rosenzweig <alyssa@rosenzweig.io>, Albert Ou <aou@eecs.berkeley.edu>,
  asahi@lists.linux.dev, David Woodhouse <dwmw2@infradead.org>,
@@ -73,39 +74,19 @@ To: Jason Gunthorpe <jgg@nvidia.com>, Alim Akhtar <alim.akhtar@samsung.com>,
 Cc: Bagas Sanjaya <bagasdotme@gmail.com>, Joerg Roedel <jroedel@suse.de>,
  Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
  David Rientjes <rientjes@google.com>, Matthew Wilcox <willy@infradead.org>
-References: <9-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
+References: <12-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <9-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
+In-Reply-To: <12-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 2/26/25 03:39, Jason Gunthorpe wrote:
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index 38c65e92ecd091..e414951c0af83f 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -326,6 +326,18 @@ typedef unsigned int ioasid_t;
->   /* Read but do not clear any dirty bits */
->   #define IOMMU_DIRTY_NO_CLEAR (1 << 0)
->   
-> +/*
-> + * Pages allocated through iommu_alloc_pages_node() can be placed on this list
-> + * using iommu_pages_list_add(). Note: ONLY pages from iommu_alloc_pages_node()
-> + * can be used this way!
-> + */
-> +struct iommu_pages_list {
-> +	struct list_head pages;
-> +};
-> +
-> +#define IOMMU_PAGES_LIST_INIT(name) \
-> +	((struct iommu_pages_list){ .pages = LIST_HEAD_INIT(name.pages) })
-> +
->   #ifdef CONFIG_IOMMU_API
+> This converts the remaining places using list of pages to the new API.
+> 
+> The Intel free path was shared with its gather path, so it is converted at
+> the same time.
+> 
+> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
 
-Any reason why the above cannot be placed in the iommu-pages.h header
-file? My understanding is that iommu-pages is only for the iommu drivers
-and should not be accessible for external subsystems.
-
-Thanks,
-baolu
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
