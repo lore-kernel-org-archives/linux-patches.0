@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6F7192D63;
-	Wed, 26 Feb 2025 06:46:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC27269B0E;
+	Wed, 26 Feb 2025 06:59:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740552395; cv=none; b=FHj1kTgFZMojxSoCIpCk75RTcV0iPifmAuYIKFGBHrQnL3NdbvnHwh/mUWZcvH5lULdoGwIVHGjDm4areCkl6eAjlrZJw6Qo/yd2GVoax35cvm9fj2dqpH+vzU4rnh6kWe9KGOlRRKp3cLuuHxJolC7uGOX998gKBLA6dwyEER8=
+	t=1740553193; cv=none; b=HvSEr0vMvQ4+h3LwBAbBqLGIM2z+IKexIEce2Vie1rZkKo9TXtqibgkyR4PZA/Gz83kSZumLk8lm2VMrtd0Tau69/RMHfT4ng8GQjGoqXx7ldV0W0kyOtEI+ESuHtf1J7CGQ+YvpTqfG2h+Bq+rX5ERfw2f4yyKry5Wati95WOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740552395; c=relaxed/simple;
-	bh=DcJW8rnikbMnBHMjyLqT5C+TmnYl/QP63LXAKlFTjQA=;
+	s=arc-20240116; t=1740553193; c=relaxed/simple;
+	bh=qpSxoD9rlSgkQH/htkteQeAZ4TqZJLdpOv+rX9TDkNo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q8wNwN2vG5LAy2/G7ugY51fucEvEOR4qpks2J0ugSsWusLspQ+HvKCckkqW77DbNGOT4ivwZncieMgueahhW3GcRJ0YoaUHpsWROmpfq21kuuY/la2I9ZC76pC45bKLpRm2kSSevoqvWyUN+lvRQooHbl6HcWDCRF4DDnKxl+18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KeKA8mn9; arc=none smtp.client-ip=198.175.65.21
+	 In-Reply-To:Content-Type; b=ek+SC5/iIAO1dv9VsYcb6/VLr7lfqfzaHyYHopSyVYPe1eqMlhdn04U65emQ1DQ5U0kKCSPMLyyx/Phf3jcwjrdV3MWp8rQKIETgVtpIYPXP8QLpYzjtCi5Um5rCS4xObS6IcdLLjnKOw0mn2Li21BoRJJeZDoLI99YW0ywqB9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eKrBksxE; arc=none smtp.client-ip=198.175.65.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KeKA8mn9"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eKrBksxE"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1740552395; x=1772088395;
+  t=1740553192; x=1772089192;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=DcJW8rnikbMnBHMjyLqT5C+TmnYl/QP63LXAKlFTjQA=;
-  b=KeKA8mn9/yko5cO/ZXhr0n15l9jRRSwSjBZP7eLNUrTdH1xp/ztMcFAk
-   7CSpjD0O0YfJK1E0vKDvK365wMGhOay1i/2lol9gyjeUyHKtfns6zmfFS
-   vNfdyYXgw6BiRs6P2Aq8UIfiyJcHVyoyQ10q1aOjZIJurxo1uHrCSNuUV
-   ezV1ZqAK1Soc+DAoDilNqynGmbxsPmhe1tj2knbxO7/CWeIj2slew3Xrq
-   uRGzfQ/r4uNlAPui3jTbPDSla1B8Ee53/7a4sRlcQ8wSCRPzzUP+ueixH
-   r6OUZE+oBCkMOb5tOPSlyZcmrWPkSgR4HQXKAXPx4xlAkslEZ3zNnigw/
-   Q==;
-X-CSE-ConnectionGUID: j556L88mR8uNE3N0SzhmQg==
-X-CSE-MsgGUID: SPwKFNC7Sc6711JiM7QQ5A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11356"; a="41300219"
+  bh=qpSxoD9rlSgkQH/htkteQeAZ4TqZJLdpOv+rX9TDkNo=;
+  b=eKrBksxETGmj1EewkXS89AmkxqkegYLPwOPxZLOazAsfjFolAvbxyqGQ
+   S/+kcjbRK1U+qIwacgNfKP+rlG3PitcOQpG1jCXF5F2ClNEfS5cNKDC2v
+   6CyDh25dL5h8cykjvJmOQY49h9Yx/V4mJcPqXleX+3ZEQidaQBN69MIFg
+   pRYNYsDdqRt9HpgigblRIYajaGS/K8FKzLgYCLCYTwp417QMSTe8sm3cO
+   fL2iAOAOAofvUFzcbEcZCtP45pl4ZPXJPPVo+UDvis4LhwiozW7aqEzUs
+   eQ9zhmOUKezMpK0FUKxkJ3u4eS0BHZD1BiVFpZ8D4r+R4NGm1K5qLkrCx
+   A==;
+X-CSE-ConnectionGUID: 3DcwKSTyQy+iXi0o3uoF9Q==
+X-CSE-MsgGUID: kuwj/r8IQhmKTsdPgiLrAQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11356"; a="51596072"
 X-IronPort-AV: E=Sophos;i="6.13,316,1732608000"; 
-   d="scan'208";a="41300219"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2025 22:46:33 -0800
-X-CSE-ConnectionGUID: vhSj9HPxQdixfCU6Udz2DQ==
-X-CSE-MsgGUID: f6KHA8H/TGKMHtiGBJpThQ==
+   d="scan'208";a="51596072"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2025 22:59:51 -0800
+X-CSE-ConnectionGUID: gU9ME5xMS/Sg/5K4xpwzVw==
+X-CSE-MsgGUID: pqpzR+GkRgCwrPW8n3kWtw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="147528550"
+X-IronPort-AV: E=Sophos;i="6.13,316,1732608000"; 
+   d="scan'208";a="116621933"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2025 22:46:24 -0800
-Message-ID: <cdab4b5f-f943-4091-a03c-252769221fcd@linux.intel.com>
-Date: Wed, 26 Feb 2025 14:43:08 +0800
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2025 22:59:43 -0800
+Message-ID: <6d9ceeb5-581e-48e8-a5cc-100a9699a9e8@linux.intel.com>
+Date: Wed, 26 Feb 2025 14:56:29 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,7 +52,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/23] iommu/pages: De-inline the substantial functions
+Subject: Re: [PATCH v3 09/23] iommu/pages: Formalize the freelist API
 To: Jason Gunthorpe <jgg@nvidia.com>, Alim Akhtar <alim.akhtar@samsung.com>,
  Alyssa Rosenzweig <alyssa@rosenzweig.io>, Albert Ou <aou@eecs.berkeley.edu>,
  asahi@lists.linux.dev, David Woodhouse <dwmw2@infradead.org>,
@@ -73,22 +73,39 @@ To: Jason Gunthorpe <jgg@nvidia.com>, Alim Akhtar <alim.akhtar@samsung.com>,
 Cc: Bagas Sanjaya <bagasdotme@gmail.com>, Joerg Roedel <jroedel@suse.de>,
  Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
  David Rientjes <rientjes@google.com>, Matthew Wilcox <willy@infradead.org>
-References: <7-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
+References: <9-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <7-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
+In-Reply-To: <9-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 2/26/25 03:39, Jason Gunthorpe wrote:
-> These are called in a lot of places and are not trivial. Move them to the
-> core module.
-> 
-> Tidy some of the comments and function arguments, fold
-> __iommu_alloc_account() into its only caller, change
-> __iommu_free_account() into __iommu_free_page() to remove some
-> duplication.
-> 
-> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
+> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> index 38c65e92ecd091..e414951c0af83f 100644
+> --- a/include/linux/iommu.h
+> +++ b/include/linux/iommu.h
+> @@ -326,6 +326,18 @@ typedef unsigned int ioasid_t;
+>   /* Read but do not clear any dirty bits */
+>   #define IOMMU_DIRTY_NO_CLEAR (1 << 0)
+>   
+> +/*
+> + * Pages allocated through iommu_alloc_pages_node() can be placed on this list
+> + * using iommu_pages_list_add(). Note: ONLY pages from iommu_alloc_pages_node()
+> + * can be used this way!
+> + */
+> +struct iommu_pages_list {
+> +	struct list_head pages;
+> +};
+> +
+> +#define IOMMU_PAGES_LIST_INIT(name) \
+> +	((struct iommu_pages_list){ .pages = LIST_HEAD_INIT(name.pages) })
+> +
+>   #ifdef CONFIG_IOMMU_API
 
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Any reason why the above cannot be placed in the iommu-pages.h header
+file? My understanding is that iommu-pages is only for the iommu drivers
+and should not be accessible for external subsystems.
+
+Thanks,
+baolu
