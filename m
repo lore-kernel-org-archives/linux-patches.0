@@ -1,78 +1,207 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9D820AF8E;
-	Wed, 26 Feb 2025 15:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AA421C9E8
+	for <patches@lists.linux.dev>; Wed, 26 Feb 2025 16:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740585245; cv=none; b=mmyOL9vFdmAE90jxSh/ywZVL8Wdqgxr2TZDWGLbULW1mXJH4HW2k+TijB/3C6SSHjDMFgxXbsWbewKcUHda8SDKAYci73n3IUsrOfKZax9/7Si8cigiPcGvEhxde4IN6tno3SjccBGDc76a8p6t/mOJr4Y+S8WaVR5sFVhoTpXM=
+	t=1740586409; cv=none; b=Q1Kj4K5QVdMdEshyfCU0U5yr8zRM+uda20YAyQLO0wdE+m+ghMoo1OxV2EjIeA1lLwN4rACDbHA+KyiS9xBGKqUmJMt5A1titGwn9JDpXJDjH70VqpSJGDHdp30hm8eQO+SqCDXVHeQMlDdg3P+wg/kh5LfqFliFSnFtO0run6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740585245; c=relaxed/simple;
-	bh=IHPkSRz8POGRAPI3+TsZtf+aSugk/+coyipS7hZDYFU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jARmyNxrBMKlk2r2i8jFyHoMB/kW0x3Yfau+iuOhXrcJYuRckZMlPsmlIMToBX7LWJ+JDfuw61QtLuU7qelOcA40kyjjN+2msW5JNJpDnAd6Pwi43JCSAx9xFZyJGXHhuqW01H+JX4Dl4geXj1zFmJyWmhrqJhxmO20HrvfZNeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ebRrTCn0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1740586409; c=relaxed/simple;
+	bh=AIa07tIosd2Q/2NEoeR7hFtxOIpGbJrJEPR0A/jih34=;
+	h=From:To:CC:Date:Message-ID:MIME-Version:Content-Type:Subject; b=Y2m7t4Y6+SwiXjLReLokk2r+qVtUBL2JjCjAsPGUEuT+GNkDgxcYjSHrUjIIeItk24Ks1zqcRsR2R/51Bnq/mH0fqGjBBPOAFSckaSU0o6dpJzy6tmeulyA1QfDBwFjVd72bS3m5nb1jPVCIusXiSvoHMS7ErA1ZHpp3FnnDHew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=tx9qgFTf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ebRrTCn0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D0CC4CED6;
-	Wed, 26 Feb 2025 15:54:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740585244;
-	bh=IHPkSRz8POGRAPI3+TsZtf+aSugk/+coyipS7hZDYFU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ebRrTCn0FtzefQG7EREqZV+fhlEodGXj9wNSk+4qoYb6UP5dS/y/P1v0gQ54I/juH
-	 zbvnuRNk8SaufOg5oUcragcZLJVgJaMahtSZT7gJn5vfkeFGrLhauR0Y1aHAiSE8In
-	 BbZcumY7bidvd8HoKmA7/0fbzPUOHtjdw3GhQ3JiYNsQEuLCR9m9b60KkHhaVYzil7
-	 kPgWEfJVI0vYEVLsfN+dAVflnpE5u5C0CFWEgdP5qaW2sg5ftTCG4LnzgXCZxjsJ7K
-	 SqF5eeujjSSpT+IfMlJTmyw9IRBi0SU5wimHcZASFDIJWXeFWQSJ5OzHiCQeuXdf3J
-	 8Y76xMSVlGm2w==
-Date: Wed, 26 Feb 2025 09:54:02 -0600
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: linux-arm-msm@vger.kernel.org, patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>, chrome-platform@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-kernel@vger.kernel.org, Pin-yen Lin <treapking@chromium.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 1/2] dt-bindings: usb: Add binding for ChromeOS Pogo
- pin keyboard connector
-Message-ID: <174058524070.2499032.1136545857184253798.robh@kernel.org>
-References: <20250225223038.879614-1-swboyd@chromium.org>
- <20250225223038.879614-2-swboyd@chromium.org>
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="tx9qgFTf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B795C4CED6
+	for <patches@lists.linux.dev>; Wed, 26 Feb 2025 16:13:28 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="tx9qgFTf"
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Wed, 26 Feb 2025 16:13:25 +0000
+Resent-Message-ID: <Z789pYzxFPbHImnU@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Wed, 26 Feb 2025 14:44:29 +0000
+Received: from tor.source.kernel.org ([2600:3c04::f03c:95ff:fe5e:7468])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=w8x5=VR=ti.com=baojun.xu@kernel.org>)
+	id 1tnIeA-00G4Te-QM
+	for broonie@sirena.co.uk; Wed, 26 Feb 2025 14:44:29 +0000
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by tor.source.kernel.org (Postfix) with ESMTP id 281586123C
+	for <broonie@sirena.co.uk>; Wed, 26 Feb 2025 14:44:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id B7407C4CEE4; Wed, 26 Feb 2025 14:44:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0FC95C4CED6
+	for <broonie@kernel.org>; Wed, 26 Feb 2025 14:44:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 0FC95C4CED6
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=ti.com
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+	by lelvem-ot02.ext.ti.com (8.15.2/8.15.2) with ESMTPS id 51QEhvEr2100790
+	(version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 26 Feb 2025 08:43:57 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1740581037;
+	bh=/wxTwVL29KQhkgsTJJ0gr+cFwivRLGhTw6aMtsW1W0M=;
+	h=From:To:CC:Subject:Date;
+	b=tx9qgFTfAYPyyzBRUiUVoPKFb2ARIkEtiNw9Z3jtv/wG/il5lXKvruQE1/phkiFyq
+	 VBRzYCMJcIvxFZ9oCcyp+ll0zFAMnUxf+mCSDcxtJ9C9T7yx61PfclBTSr07PJuv5q
+	 fjpxE0dE+xLjHwFG6K1RPnuWmuWDJ9dmWnEq3rOg=
+Received: from DLEE107.ent.ti.com (dlee107.ent.ti.com [157.170.170.37])
+	by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 51QEhvCR092538
+	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Wed, 26 Feb 2025 08:43:57 -0600
+Received: from DLEE110.ent.ti.com (157.170.170.21) by DLEE107.ent.ti.com
+ (157.170.170.37) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Wed, 26
+ Feb 2025 08:43:56 -0600
+Received: from lelvsmtp6.itg.ti.com (10.180.75.249) by DLEE110.ent.ti.com
+ (157.170.170.21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Wed, 26 Feb 2025 08:43:57 -0600
+Received: from lelvsmtp6.itg.ti.com ([10.250.165.138])
+	by lelvsmtp6.itg.ti.com (8.15.2/8.15.2) with ESMTP id 51QEhrsp103598;
+	Wed, 26 Feb 2025 08:43:54 -0600
+From: Baojun Xu <baojun.xu@ti.com>
+To: <broonie@kernel.org>, <tiwai@suse.de>
+CC: <andriy.shevchenko@linux.intel.com>, <13916275206@139.com>,
+        <alsa-devel@alsa-project.org>, <shenghao-ding@ti.com>,
+        <baojun.xu@ti.com>
+Date: Wed, 26 Feb 2025 22:43:28 +0800
+Message-ID: <20250226144328.11645-1-baojun.xu@ti.com>
+X-Mailer: git-send-email 2.43.0.windows.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250225223038.879614-2-swboyd@chromium.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-C2ProcessedOrg: 333ef613-75bf-4e12-a4b1-8e3623f5dcea
+X-SA-Exim-Connect-IP: 2600:3c04::f03c:95ff:fe5e:7468
+X-SA-Exim-Mail-From: SRS0=w8x5=VR=ti.com=baojun.xu@kernel.org
+Subject: [PATCH v1] ASoC: tas2781: Clean up for some define
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: CwNsrROQ38kS
 
+Do some clean up for some define in header file.
+Like change lower case in value, up case in define,
+space add in recommends, change date of files and add author.
 
-On Tue, 25 Feb 2025 14:30:36 -0800, Stephen Boyd wrote:
-> Describe the set of pins used to connect the detachable keyboard on
-> detachable ChromeOS devices. The set of pins is called the "pogo pins".
-> It's basically USB 2.0 with an extra pin for base detection. We expect
-> to find a keyboard on the other side of this connector with a specific
-> vid/pid, so describe that as a child device at the port of the usb
-> device connected upstream.
-> 
-> Cc: Rob Herring <robh@kernel.org>
-> Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
-> Cc: Conor Dooley <conor+dt@kernel.org>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Cc: Pin-yen Lin <treapking@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  .../usb/google,usb-pogo-keyboard.yaml         | 68 +++++++++++++++++++
->  1 file changed, 68 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/usb/google,usb-pogo-keyboard.yaml
-> 
+Signed-off-by: Baojun Xu <baojun.xu@ti.com>
+---
+ include/sound/tas2781.h           | 21 +++++++++++----------
+ sound/soc/codecs/tas2781-fmwlib.c |  7 ++++---
+ 2 files changed, 15 insertions(+), 13 deletions(-)
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+diff --git a/include/sound/tas2781.h b/include/sound/tas2781.h
+index 72d2060904f6..a2c8eb111e5f 100644
+--- a/include/sound/tas2781.h
++++ b/include/sound/tas2781.h
+@@ -2,7 +2,7 @@
+ //
+ // ALSA SoC Texas Instruments TAS2563/TAS2781 Audio Smart Amplifier
+ //
+-// Copyright (C) 2022 - 2024 Texas Instruments Incorporated
++// Copyright (C) 2022 - 2025 Texas Instruments Incorporated
+ // https://www.ti.com
+ //
+ // The TAS2563/TAS2781 driver implements a flexible and configurable
+@@ -11,6 +11,7 @@
+ //
+ // Author: Shenghao Ding <shenghao-ding@ti.com>
+ // Author: Kevin Lu <kevin-lu@ti.com>
++// Author: Baojun Xu <baojun.xu@ti.com>
+ //
+ 
+ #ifndef __TAS2781_H__
+@@ -31,7 +32,7 @@
+ 	SNDRV_PCM_FMTBIT_S24_LE | \
+ 	SNDRV_PCM_FMTBIT_S32_LE)
+ 
+-/*PAGE Control Register (available in page0 of each book) */
++/* PAGE Control Register (available in page0 of each book) */
+ #define TASDEVICE_PAGE_SELECT		0x00
+ #define TASDEVICE_BOOKCTL_PAGE		0x00
+ #define TASDEVICE_BOOKCTL_REG		127
+@@ -42,12 +43,12 @@
+ #define TASDEVICE_REG(book, page, reg)	(((book * 256 * 128) + \
+ 					(page * 128)) + reg)
+ 
+-/*Software Reset */
+-#define TASDEVICE_REG_SWRESET		TASDEVICE_REG(0x0, 0X0, 0x01)
++/* Software Reset */
++#define TASDEVICE_REG_SWRESET		TASDEVICE_REG(0x0, 0x0, 0x01)
+ #define TASDEVICE_REG_SWRESET_RESET	BIT(0)
+ 
+-/*I2C Checksum */
+-#define TASDEVICE_I2CChecksum		TASDEVICE_REG(0x0, 0x0, 0x7E)
++/* I2C Checksum */
++#define TASDEVICE_CHECKSUM_REG		TASDEVICE_REG(0x0, 0x0, 0x7e)
+ 
+ /* XM_340 */
+ #define	TASDEVICE_XM_A1_REG	TASDEVICE_REG(0x64, 0x63, 0x3c)
+@@ -55,8 +56,8 @@
+ #define	TASDEVICE_XM_A2_REG	TASDEVICE_REG(0x64, 0x63, 0x38)
+ 
+ /* Volume control */
+-#define TAS2563_DVC_LVL			TASDEVICE_REG(0x00, 0x02, 0x0C)
+-#define TAS2781_DVC_LVL			TASDEVICE_REG(0x0, 0x0, 0x1A)
++#define TAS2563_DVC_LVL			TASDEVICE_REG(0x00, 0x02, 0x0c)
++#define TAS2781_DVC_LVL			TASDEVICE_REG(0x0, 0x0, 0x1a)
+ #define TAS2781_AMP_LEVEL		TASDEVICE_REG(0x0, 0x0, 0x03)
+ #define TAS2781_AMP_LEVEL_MASK		GENMASK(5, 1)
+ 
+@@ -95,8 +96,8 @@
+ #define TAS2781_PRM_SINEGAIN_REG	TASDEVICE_REG(0x00, 0x14, 0x40)
+ #define TAS2781_PRM_SINEGAIN2_REG	TASDEVICE_REG(0x00, 0x14, 0x44)
+ 
+-#define TAS2781_TEST_UNLOCK_REG		TASDEVICE_REG(0x00, 0xFD, 0x0D)
+-#define TAS2781_TEST_PAGE_UNLOCK	0x0D
++#define TAS2781_TEST_UNLOCK_REG		TASDEVICE_REG(0x00, 0xfd, 0x0d)
++#define TAS2781_TEST_PAGE_UNLOCK	0x0d
+ 
+ #define TAS2781_RUNTIME_LATCH_RE_REG	TASDEVICE_REG(0x00, 0x00, 0x49)
+ #define TAS2781_RUNTIME_RE_REG_TF	TASDEVICE_REG(0x64, 0x62, 0x48)
+diff --git a/sound/soc/codecs/tas2781-fmwlib.c b/sound/soc/codecs/tas2781-fmwlib.c
+index 61d9c220b6a4..bc2f68bd9846 100644
+--- a/sound/soc/codecs/tas2781-fmwlib.c
++++ b/sound/soc/codecs/tas2781-fmwlib.c
+@@ -2,9 +2,10 @@
+ //
+ // tas2781-fmwlib.c -- TASDEVICE firmware support
+ //
+-// Copyright 2023 - 2024 Texas Instruments, Inc.
++// Copyright 2023 - 2025 Texas Instruments, Inc.
+ //
+ // Author: Shenghao Ding <shenghao-ding@ti.com>
++// Author: Baojun Xu <baojun.xu@ti.com>
+ 
+ #include <linux/crc8.h>
+ #include <linux/firmware.h>
+@@ -1496,7 +1497,7 @@ static int tasdev_block_chksum(struct tasdevice_priv *tas_priv,
+ 	unsigned int nr_value;
+ 	int ret;
+ 
+-	ret = tasdevice_dev_read(tas_priv, chn, TASDEVICE_I2CChecksum,
++	ret = tasdevice_dev_read(tas_priv, chn, TASDEVICE_CHECKSUM_REG,
+ 		&nr_value);
+ 	if (ret < 0) {
+ 		dev_err(tas_priv->dev, "%s: Chn %d\n", __func__, chn);
+@@ -1540,7 +1541,7 @@ static int tasdev_load_blk(struct tasdevice_priv *tas_priv,
+ 	while (block->nr_retry > 0) {
+ 		if (block->is_pchksum_present) {
+ 			ret = tasdevice_dev_write(tas_priv, chn,
+-				TASDEVICE_I2CChecksum, 0);
++				TASDEVICE_CHECKSUM_REG, 0);
+ 			if (ret < 0)
+ 				break;
+ 		}
+-- 
+2.34.1
 
