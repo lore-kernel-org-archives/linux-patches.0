@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2581F2192E1;
-	Wed, 26 Feb 2025 12:22:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF07214817;
+	Wed, 26 Feb 2025 12:24:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740572543; cv=none; b=bYdvSBd1jIgQfNP9hC+X9Ux371g2cEaWn+fpKT/B8wIM/GhSYBA7f1ydq1jsJnr33tNDE8SWM8XGVJYx36GnaKBYdbJ0k2pks9X9EMEIHdfCwI9RXnjfMBh0SxkKHft+WbC2HLXlnv41FoJTsFrYpz5UZrwhuyPd9VEgy0ITqhs=
+	t=1740572653; cv=none; b=i9mGLJ7u3L7EUrRRlUsVFLQps4stjjr1yR16RzDavBFKjH/FgH97sngXK1xztAW8lQhLe71I0PO+XWIGJGNYD1QqKLAVJqvdkGbuWYpn9XLk4GkCsOSw0By5nLJtKsjzAqRC+CMx9r50zyddTQR1UAlFqh3+K/G9oY6np3qsuVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740572543; c=relaxed/simple;
-	bh=lFhxRXpv6QTFcMfVUvDqKANeqKNOPbO6YgonBgCYQJI=;
+	s=arc-20240116; t=1740572653; c=relaxed/simple;
+	bh=P9888PT4GlbGGm/Br9DmxmDaQSRLXoZLVYOYGsAgjmY=;
 	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=RxndwLWCCL5hu87V/4UGzq3BtNPZFj+j6eAh20/XMc2MNq4YUV+6JR6SlefukmcZ7aIuvcdG6pPJkvoLwo061Ce9yU1YXhsXbc/UPFS2hl02iwr0zLmGCkWdJxsmGu/+9AAWFm8kbfCfmoiUuiz3GVnnQYvunIEIhDAS6cQk1fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bKxa+tzr; arc=none smtp.client-ip=198.175.65.9
+	 In-Reply-To:Content-Type; b=KPnY+cjcNsTEXUi74/t8EU9BooaBpMq152VjPGaboK7Idu2dxt+vZT/Y7yA9VhaTBwZotlGO86M0LsudSpzI5c6UmNIiEUse2GzpkF0VxllqwXJEOCTg+lGpoYG95JOTr/xyybEOt2/7LfMaOzq7ymOg6BMddZVsytlGqDulCKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HTNcSLuu; arc=none smtp.client-ip=198.175.65.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bKxa+tzr"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HTNcSLuu"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1740572542; x=1772108542;
+  t=1740572652; x=1772108652;
   h=message-id:date:mime-version:cc:subject:to:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=lFhxRXpv6QTFcMfVUvDqKANeqKNOPbO6YgonBgCYQJI=;
-  b=bKxa+tzriX9SBviBJdHIMUH6iCJgBJEvxhkwM1m5hArCp2Sz5MP6G7P3
-   /hy5lb/BLJayYYMINt46SKFzoUdQlIt8ko/mrQ5FOGDn4h36gC1uH6JM+
-   eggHeaGCT0ohkZmGD5tXr4+vI/+2p7Epp9DEVBlks+pio6OI8KzFthkij
-   hf9HMNSJQBQNf/28iWlZijwCKwmGbwwWciUoChVuIaN+IDtZDrBL7HOEQ
-   YOmglOS33jEHb+R8XvCyL0FeEhHwfufZQMuB+9GM0KVKT1tDzOFufQSnm
-   oQf3V6/jwlZdbTuF7pPnpmG7KhmjHr594ORgAfp9zh/6Z0lSR1bYaZxXq
-   Q==;
-X-CSE-ConnectionGUID: +MzoPnBKQbGep6v6v3he3g==
-X-CSE-MsgGUID: N5nTX+1OQHOm85QuGJm0jQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11357"; a="63877919"
+  bh=P9888PT4GlbGGm/Br9DmxmDaQSRLXoZLVYOYGsAgjmY=;
+  b=HTNcSLuuCnkjr12kdolK7FvPQ4a6nMG/x28YDZCQYlVv3YWpj55aOEhS
+   sJBpaT2AbUk+gn1bKPB8VCa5psW0bQfBrX4ClVT2O7BHRdZI8U/P13AXO
+   lmM0FVJ0i+Dngt+kySa8yd1IwFCtpAapStyTWEnuvblHyBUtLABsU78RC
+   bujUzrMCkDqC6EnmK79wM7UeO3kvrcbfRwzap5IqJtJmNNe5RUxMXPL3m
+   q2vaWXpJoP80O2TqSMFhR1hhG2epFX1mhwr5ki2tBL4/P/qqWfwesqSyc
+   G34f20iSWM7caqj7rRgwzG++ZfGZjkTowDRaG+4vkOE4s+vWfM/ILf3L/
+   g==;
+X-CSE-ConnectionGUID: hTwY1SnlQGKgCh1LXRZe4w==
+X-CSE-MsgGUID: H5RxPgJFR9GsXo5P31WaKA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11357"; a="41541450"
 X-IronPort-AV: E=Sophos;i="6.13,317,1732608000"; 
-   d="scan'208";a="63877919"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 04:22:21 -0800
-X-CSE-ConnectionGUID: hCu3EQHDT2qlP3dV1KuKQw==
-X-CSE-MsgGUID: vpSaOO0DSI+Av8u8OcxQ2A==
+   d="scan'208";a="41541450"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 04:24:11 -0800
+X-CSE-ConnectionGUID: wzzbivYHT0KOHQkWAqrFjQ==
+X-CSE-MsgGUID: mecjk28SRGKVrI7hEWbiJw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.13,317,1732608000"; 
-   d="scan'208";a="116691259"
+   d="scan'208";a="139907373"
 Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.124.240.105]) ([10.124.240.105])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 04:22:13 -0800
-Message-ID: <caff123f-0910-4949-8512-acb77c6f0a8b@linux.intel.com>
-Date: Wed, 26 Feb 2025 20:22:10 +0800
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 04:24:03 -0800
+Message-ID: <e50cf21d-49b1-4c9c-8e85-41d70e6fdb5b@linux.intel.com>
+Date: Wed, 26 Feb 2025 20:24:01 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,8 +56,8 @@ Cc: baolu.lu@linux.intel.com, Bagas Sanjaya <bagasdotme@gmail.com>,
  Joerg Roedel <jroedel@suse.de>, Pasha Tatashin <pasha.tatashin@soleen.com>,
  patches@lists.linux.dev, David Rientjes <rientjes@google.com>,
  Matthew Wilcox <willy@infradead.org>
-Subject: Re: [PATCH v3 16/23] iommu/pages: Allow sub page sizes to be passed
- into the allocator
+Subject: Re: [PATCH v3 20/23] iommu: Update various drivers to pass in lg2sz
+ instead of order to iommu pages
 To: Jason Gunthorpe <jgg@nvidia.com>, Alim Akhtar <alim.akhtar@samsung.com>,
  Alyssa Rosenzweig <alyssa@rosenzweig.io>, Albert Ou <aou@eecs.berkeley.edu>,
  asahi@lists.linux.dev, David Woodhouse <dwmw2@infradead.org>,
@@ -75,29 +75,28 @@ To: Jason Gunthorpe <jgg@nvidia.com>, Alim Akhtar <alim.akhtar@samsung.com>,
  Sven Peter <sven@svenpeter.dev>, Thierry Reding <thierry.reding@gmail.com>,
  Tomasz Jeznach <tjeznach@rivosinc.com>, Krishna Reddy <vdumpa@nvidia.com>,
  Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>
-References: <16-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
+References: <20-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <16-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
+In-Reply-To: <20-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 2025/2/26 3:39, Jason Gunthorpe wrote:
-> Generally drivers have a specific idea what their HW structure size should
-> be. In a lot of cases this is related to PAGE_SIZE, but not always. ARM64,
-> for example, allows a 4K IO page table size on a 64K CPU page table
-> system.
-> 
-> Currently we don't have any good support for sub page allocations, but
-> make the API accommodate this by accepting a sub page size from the caller
-> and rounding up internally.
-> 
-> This is done by moving away from order as the size input and using size:
->    size == 1 << (order + PAGE_SHIFT)
-> 
-> Following patches convert drivers away from using order and try to specify
-> allocation sizes independent of PAGE_SIZE.
+> Convert most of the places calling get_order() as an argument to the
+> iommu-pages allocator into order_base_2() or the _sz flavour
+> instead. These places already have an exact size, there is no particular
+> reason to use order here.
 > 
 > Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
+> ---
+>   drivers/iommu/amd/init.c        | 29 +++++++++++++++--------------
+>   drivers/iommu/intel/dmar.c      |  6 +++---
+>   drivers/iommu/io-pgtable-arm.c  |  3 +--
+>   drivers/iommu/io-pgtable-dart.c | 12 +++---------
+>   drivers/iommu/sun50i-iommu.c    |  4 ++--
+>   5 files changed, 24 insertions(+), 30 deletions(-)
+
+For changes in intel iommu driver,
 
 Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
