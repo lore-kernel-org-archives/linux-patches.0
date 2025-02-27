@@ -1,86 +1,76 @@
-Received: from out30-112.freemail.mail.aliyun.com (out30-112.freemail.mail.aliyun.com [115.124.30.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B90227EB4
-	for <patches@lists.linux.dev>; Thu, 27 Feb 2025 09:40:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.112
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A8EB22D4E4;
+	Thu, 27 Feb 2025 11:21:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740649217; cv=none; b=bZ0Q+v+h+M0zClmi9AJqtGGLacqtV7zOP9EuFi+J54jQT1jyMpTy9h3UtVr7n8CgpHOoMWwYMfBGvfZ8FClp7OjK48h2ybQfL4w5MbNTBkcJC5aM0C5tZihMPMseAmGIK5XoEZId0AZ084wkm0ZId/CL9sU99LCvk8qOavTRa+w=
+	t=1740655295; cv=none; b=iVGozsxSxcgUrqZ+ELqcobZjss2pbSItJ2TSQJNO+nFGT4NVrE0u0GtNlPbo6o0cIufs91rTsXfUrDAwpiDqwCcCfbjI9TgHVpbrQzgF9qMbDZ5e7OGNYA05pfiKpffMe6qi1bPobVFFboiKSw5KN7lbqVbGyZwQqZizZCzvy9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740649217; c=relaxed/simple;
-	bh=EEXIRx6reIB0eQTcIZZ/5RTO9C7ruM7nE+KfhaCS6jM=;
+	s=arc-20240116; t=1740655295; c=relaxed/simple;
+	bh=n5A5jWSgLUSSadyEt6s8yXZl0yYcRoLAG1jkS7dW07E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xb4NusuF5ZIOinxIIq2D44+jNCvSTySXkh/i04PO3OASzRSQ2r0aMaEWyEEyj/6UwMr4XnQrlZXAG91yLJ9UG1rF8si7q/q/0UVvdHTWjYaJGqA3TrBPKtwk//LpNAJIeDO00BpJXDBljqdy3wFObVEkt6vQk6nm4oviF0czM9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=PKCHsH3j; arc=none smtp.client-ip=115.124.30.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="PKCHsH3j"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1740649205; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
-	bh=j9ZR+GBvrG/gafVcZuHcfzZzaTrIy3pXM8NhiHSvvgY=;
-	b=PKCHsH3jVfJq+cnf2v+hI+hnjUxs6ewhboDTfWUzcA93gDJ/egKajmZKb3PlyjqgF7jRIPFgf2HD9mVPwyaboHqYTrdG/TOWIA24sZZhnkDLZkvq0QAPjaqhdBczOufyKHE+CaqauNmjEp4Y4XW4VLMy/dUESNSPpzAWQEcu6js=
-Received: from 30.74.130.95(mailfrom:dtcccc@linux.alibaba.com fp:SMTPD_---0WQLwyRm_1740649203 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Thu, 27 Feb 2025 17:40:04 +0800
-Message-ID: <445cf95d-b695-4e8d-b4ba-6ca0c12b1c52@linux.alibaba.com>
-Date: Thu, 27 Feb 2025 17:40:02 +0800
+	 In-Reply-To:Content-Type; b=UrzXNXhCrJJv384iRl5joVFwZ5ZcWK5S+a73pKCHzIlJ4CU7wxru1UszPHBxk8+dlbqNe/mz7XtqmP9lOcq41QpCtwAvqtvJ1XwVQp1wn2JLDf3CjilAlYMVL03MhVZ6GyTWG3yEx8//CTFXtOQAdxEyPVRrskiyLW7/y5ra60A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9A6302BCC;
+	Thu, 27 Feb 2025 03:21:48 -0800 (PST)
+Received: from [10.57.36.150] (unknown [10.57.36.150])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BD2583F6A8;
+	Thu, 27 Feb 2025 03:21:29 -0800 (PST)
+Message-ID: <634c60ea-fec3-43ad-923a-cf9ba5e76065@arm.com>
+Date: Thu, 27 Feb 2025 11:21:28 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH 6.6 238/676] bpf, sockmap: Several fixes to
- bpf_msg_pop_data
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: patches@lists.linux.dev, Zijian Zhang <zijianzhang@bytedance.com>,
- John Fastabend <john.fastabend@gmail.com>,
- Martin KaFai Lau <martin.lau@kernel.org>, Sasha Levin <sashal@kernel.org>,
- stable@vger.kernel.org, Levi Zim <rsworktech@outlook.com>,
- Daniel Borkmann <daniel@iogearbox.net>
-References: <20241206143653.344873888@linuxfoundation.org>
- <20241206143702.627526560@linuxfoundation.org>
-Content-Language: en-US
-From: Tianchen Ding <dtcccc@linux.alibaba.com>
-In-Reply-To: <20241206143702.627526560@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/7] iommu: Make iommu_dma_prepare_msi() into a generic
+ operation
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Nicolin Chen <nicolinc@nvidia.com>, kevin.tian@intel.com,
+ tglx@linutronix.de, maz@kernel.org, joro@8bytes.org, will@kernel.org,
+ shuah@kernel.org, iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
+ eric.auger@redhat.com, baolu.lu@linux.intel.com, yi.l.liu@intel.com,
+ yury.norov@gmail.com, jacob.pan@linux.microsoft.com, patches@lists.linux.dev
+References: <cover.1740014950.git.nicolinc@nvidia.com>
+ <4ca696150d2baee03af27c4ddefdb7b0b0280e7b.1740014950.git.nicolinc@nvidia.com>
+ <5b9e15e1-8081-46ef-b9db-3872e98a6f35@arm.com>
+ <20250221164400.GN50639@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <20250221164400.GN50639@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi,
+On 2025-02-21 4:44 pm, Jason Gunthorpe wrote:
+> On Fri, Feb 21, 2025 at 03:39:45PM +0000, Robin Murphy wrote:
+>> Yuck. Realistically we are going to have no more than two different
+>> implementations of this; a fiddly callback interface seems overkill. All we
+>> should need in the domain is a simple indicator of *which* MSI translation
+>> scheme is in use (if it can't be squeezed into the domain type itself), then
+>> iommu_dma_prepare_msi() can simply dispatch between iommu-dma and IOMMUFD
+>> based on that, and then it's easy to solve all the other fragility issues
+>> too.
+> 
+> That would make module dependency problems, we have so far avoided
+> having the core kernel hard depend on iommufd.
 
-On 12/6/24 10:30 PM, Greg Kroah-Hartman wrote:
-> 6.6-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Zijian Zhang <zijianzhang@bytedance.com>
-> 
-> [ Upstream commit 5d609ba262475db450ba69b8e8a557bd768ac07a ]
-> 
-> Several fixes to bpf_msg_pop_data,
-> 1. In sk_msg_shift_left, we should put_page
-> 2. if (len == 0), return early is better
-> 3. pop the entire sk_msg (last == msg->sg.size) should be supported
-> 4. Fix for the value of variable "a"
-> 5. In sk_msg_shift_left, after shifting, i has already pointed to the next
-> element. Addtional sk_msg_iter_var_next may result in BUG.
-> 
-> Fixes: 7246d8ed4dcc ("bpf: helper to pop data from messages")
-> Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
-> Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-> Link: https://lore.kernel.org/r/20241106222520.527076-8-zijianzhang@bytedance.com
-> Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+It wouldn't need a hard dependency, it's easy to have a trivial built-in 
+stub function which becomes valid once the module loads - you literally 
+have the iommufd_driver infrastructure for precisely that sort of thing 
+already. All I'm saying is to hide the callback detail in the IOMMUFD 
+code because being IOMMUFD modular is unique to IOMMUFD and not the rest 
+of the core code's problem.
 
-We found the kernel crashed when running kselftests (bpf/test_sockmap) in 
-kernel 6.6 LTS, which is introduced by this commit. I guess all other 
-stable kernels (containing this commit) are also affected.
+And frankly otherwise, what even is the benefit of moving the 
+iova_cookie pointer into the union if we have to replace it with another 
+whole pointer to make it work? This is just adding more code and more 
+complexity in in order to make struct iommu_domain... the same size it 
+already is :/
 
-Please consider backporting the following 2 commits:
-fdf478d236dc ("skmsg: Return copied bytes in sk_msg_memcopy_from_iter")
-5153a75ef34b ("tcp_bpf: Fix copied value in tcp_bpf_sendmsg")
-
-Thanks.
+Thanks,
+Robin.
