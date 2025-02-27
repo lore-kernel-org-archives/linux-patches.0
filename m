@@ -1,50 +1,50 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD624186E2D;
-	Thu, 27 Feb 2025 05:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62A2186E2D;
+	Thu, 27 Feb 2025 05:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740633628; cv=none; b=AlcVfHogMdjBHmiHHrd1FHGRbvIyDASj11G8Zu47uvdIDLK92rlLuA6HymhhtFBrn28hjNUh9uY9t4N2gK0AquCpvEXMKWfFkodGwPXo4FEZcbE2ffCxPUr5c8LgsJRGnPqQhQC9xQJbp+CrgJ5gT4H5bbUDXY4G2h1NyRFRa8c=
+	t=1740633668; cv=none; b=iYSoHcH4BqS6VCCr0Zi1QKkXmST17dQurhxHwz3QVMrHKCZNFmIyyXh5NGmtEQM5nC+kWTb4PSSqPDsyPnM6uI+abZDvPddbk1PfF6d5d5YwZGHIIw+no9LHTnh4rwinlAiNs2JZCm9lgYWAX4ueLh7+8EyrjyoDurrxD0vFXhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740633628; c=relaxed/simple;
-	bh=vGpcN7P16mx836ZMuMkEdKUR6edRJ0QZzGvP196Ce2I=;
+	s=arc-20240116; t=1740633668; c=relaxed/simple;
+	bh=PQtjihnmxnJNt9cGH7dsXgv0bEF3d3LqLBB92T9bDY8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hhVOtHtdNh4N0eYetHoqHt2sdB3p6KDvz1NVqycsG8umS1zUFJYJVC+li1OHdDi/746GFd/2ot/Qu5koI8p7UHzrhn+Z/JNKGfTSqxCqYGNQehy8vEt5kLow9w9eMOmhq5Lt/cDB3+nwOegCcBuI4Xlw3MGNu8nT2ViLI6Vfv2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UtkgQnB9; arc=none smtp.client-ip=198.175.65.16
+	 In-Reply-To:Content-Type; b=qWhxiLB+6/+X6Zp5nnF8ltTIThpohzXFfwjac0TCNsa4oeIBFMsBuSag4REcPOF8sHU8rOXOQ8GP6Pa6dscXCmwPJdml9pbr+fcPSg6Qd8f301BNGOhMV1pLfwcYEfRQEaekdReUQjizRVHEntMZjTxpkU9rryN+sybbGPkWUzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QkcO6Uq4; arc=none smtp.client-ip=198.175.65.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UtkgQnB9"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QkcO6Uq4"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1740633627; x=1772169627;
+  t=1740633666; x=1772169666;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=vGpcN7P16mx836ZMuMkEdKUR6edRJ0QZzGvP196Ce2I=;
-  b=UtkgQnB9NfRGk0o73qXLWkahrfB2ZIdoreCaiCatcf/1d14eeG12hB9J
-   kQCYlJXisFE5oTdzBzAoSAGGIdXILWxWuOCHUN9u4pS48JsukVWiCN3u+
-   9qA85PqXBPfy9ORQ33EzZP+4Rxia1BYU96L4JxgxBMSlBbn7BSwa0k9Wn
-   uKjAO/DxPs83wV3jbEneD380F6LSI8YZQ2D1GDle5Xsnm0pjVpTRm/csJ
-   +9HvxphqEidYSi0ZaHTyef04ysjoe/tCir5bZgYqBfpbeU2+A8UxBmMyl
-   NGRMYiKj5miez+ACLiCzc1SC2q/DRLjYvFUe5XR3EeVH/myWOsViLvj4w
-   w==;
-X-CSE-ConnectionGUID: YWGz3ryUTSy080R9iadp/A==
-X-CSE-MsgGUID: CqfRi5huTF6thTgq8blrNg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11357"; a="41638729"
+  bh=PQtjihnmxnJNt9cGH7dsXgv0bEF3d3LqLBB92T9bDY8=;
+  b=QkcO6Uq40NqJDKdRzFmlfPbpFWOmb1YUkWFaoqMIADOUfqJbcC0gdGxv
+   t87IOpayWAYMs0U/YdK1QJiwjd7f4j60KoDF0SpyWOXdk2BerQsSfTcQe
+   j6fWsQWLZZpOjUq5U9wNi31u2g4+n2xHhKUF7VbJNXzzI/qInfvllDqJz
+   2PXQUnRoEwLLGdjp1xFUoGay60yT38VJn+dPtc+ZL54iwTU9ILL2UFKsD
+   wUsqNcZmAnDu5fdHDWnVyMXjbWUHqvMt364JLwN/dmQqZhTepLC2fuSFd
+   pRLdkQHUAOSe89GSuC+LVQl41dFuGnQvXM+nkUunjDH4Y2MtD4SAkxdbc
+   g==;
+X-CSE-ConnectionGUID: UnmPFd7aQCSwI814rnj/fw==
+X-CSE-MsgGUID: U/qJTFY9TP6NAG1gMIoYdQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11357"; a="41638788"
 X-IronPort-AV: E=Sophos;i="6.13,319,1732608000"; 
-   d="scan'208";a="41638729"
+   d="scan'208";a="41638788"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 21:20:26 -0800
-X-CSE-ConnectionGUID: Lk/GChz9R1GaGsF8Qphm4A==
-X-CSE-MsgGUID: M2gLbS9DTJqV6N7Ph1buOQ==
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 21:21:06 -0800
+X-CSE-ConnectionGUID: IDSQ03WOT0Sf2y1g0JuloQ==
+X-CSE-MsgGUID: X4xnN020QO2lRkAamUgJOA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.13,319,1732608000"; 
-   d="scan'208";a="117561459"
+   d="scan'208";a="117561589"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 21:20:19 -0800
-Message-ID: <35920cb4-05cf-4814-9648-0c7ad39f55aa@linux.intel.com>
-Date: Thu, 27 Feb 2025 13:17:02 +0800
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 21:20:59 -0800
+Message-ID: <397fbef1-3aef-4421-bd68-107e289a95aa@linux.intel.com>
+Date: Thu, 27 Feb 2025 13:17:42 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,8 +54,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 14/23] iommu/pages: Move from struct page to struct
  ioptdesc and folio
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>,
+To: Jason Gunthorpe <jgg@nvidia.com>, Alim Akhtar <alim.akhtar@samsung.com>,
  Alyssa Rosenzweig <alyssa@rosenzweig.io>, Albert Ou <aou@eecs.berkeley.edu>,
  asahi@lists.linux.dev, David Woodhouse <dwmw2@infradead.org>,
  Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
@@ -71,69 +70,32 @@ Cc: Alim Akhtar <alim.akhtar@samsung.com>,
  Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
  Sven Peter <sven@svenpeter.dev>, Thierry Reding <thierry.reding@gmail.com>,
  Tomasz Jeznach <tjeznach@rivosinc.com>, Krishna Reddy <vdumpa@nvidia.com>,
- Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
- Bagas Sanjaya <bagasdotme@gmail.com>, Joerg Roedel <jroedel@suse.de>,
+ Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>
+Cc: Bagas Sanjaya <bagasdotme@gmail.com>, Joerg Roedel <jroedel@suse.de>,
  Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
  David Rientjes <rientjes@google.com>, Matthew Wilcox <willy@infradead.org>
 References: <14-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
- <fafdcc71-b246-4855-a088-24854b124b21@linux.intel.com>
- <20250226135112.GB28425@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <20250226135112.GB28425@nvidia.com>
+In-Reply-To: <14-v3-e797f4dc6918+93057-iommu_pages_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2/26/25 21:51, Jason Gunthorpe wrote:
-> On Wed, Feb 26, 2025 at 08:42:23PM +0800, Baolu Lu wrote:
->> On 2025/2/26 3:39, Jason Gunthorpe wrote:
->>> This brings the iommu page table allocator into the modern world of having
->>> its own private page descriptor and not re-using fields from struct page
->>> for its own purpose. It follows the basic pattern of struct ptdesc which
->>> did this transformation for the CPU page table allocator.
->>>
->>> Currently iommu-pages is pretty basic so this isn't a huge benefit,
->>> however I see a coming need for features that CPU allocator has, like sub
->>> PAGE_SIZE allocations, and RCU freeing. This provides the base
->>> infrastructure to implement those cleanly.
->> I understand that this is intended as the start point of having private
->> descriptors for folios allocated to iommu drivers. But I don't believe
->> this is currently the case after this patch, as the underlying memory
->> remains a struct folio. This patch merely uses an iommu-pages specific
->> structure pointer to reference it.
-> Right now the mm provides 64 bytes of per-page memory that is a struct
-> page.
+On 2/26/25 03:39, Jason Gunthorpe wrote:
+> This brings the iommu page table allocator into the modern world of having
+> its own private page descriptor and not re-using fields from struct page
+> for its own purpose. It follows the basic pattern of struct ptdesc which
+> did this transformation for the CPU page table allocator.
 > 
-> You can call that 64 bytes a struct folio sometimes, and we have now
-> been also calling those bytes a struct XXdesc like this patch does.
+> Currently iommu-pages is pretty basic so this isn't a huge benefit,
+> however I see a coming need for features that CPU allocator has, like sub
+> PAGE_SIZE allocations, and RCU freeing. This provides the base
+> infrastructure to implement those cleanly.
 > 
-> This is all a slow incremental evolution toward giving each user of
-> the per-page memory its own unique type and understanding of what it
-> needs while removing use of of the highly overloaded struct page.
+> Remove numa_node_id() calls from the inlines and instead use NUMA_NO_NODE
+> which will get switched to numa_mem_id(), which seems to be the right ID
+> to use for memory allocations.
 > 
-> Eventually Matthew wants to drop the 64 bytes down to 8 bytes and
-> allocate the per-page memory directly. This would allow each user to
-> use more/less memory depending on their need.
-> 
-> https://kernelnewbies.org/MatthewWilcox/Memdescs
-> 
-> When that happens the
-> 
-> 	folio = __folio_alloc_node(gfp | __GFP_ZERO, order, nid);
-> 
-> Will turn into something maybe more like:
-> 
->     ioptdesc = memdesc_alloc_node(gfp, order, nid, sizeof(struct ioptdesc));
-> 
-> And then the folio word would disappear from this code.
-> 
-> Right now things are going down Matthew's list:
-> 
-> https://kernelnewbies.org/MatthewWilcox/Memdescs/Path
-> 
-> This series is part of "Remove page->lru uses"
+> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
 
-Cool! Thank you for the explanation.
-
-Thanks,
-baolu
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
