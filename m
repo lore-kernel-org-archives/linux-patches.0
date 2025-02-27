@@ -1,167 +1,126 @@
-Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBC6433C8;
-	Thu, 27 Feb 2025 03:26:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.166.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A184A1C
+	for <patches@lists.linux.dev>; Thu, 27 Feb 2025 04:33:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740626813; cv=none; b=JOOziXww+4gSJ0/dX4wuu6a5ICv/IIqd7gp1xdE8gkaiMRN+UQZe22sixZC5OJkMXadah75eh9zjw7FsZi8sWlJphH25utdF0Aj0wVrL/nnV7ALL48TK5iyN99Z7nGofNMGVZGEIlWdv76p/9eS3cIlvJRRbi3TATMQ/zBDVbpk=
+	t=1740630794; cv=none; b=XhV7X8VYy57URAVNpVMGaue7o24KIidZbWMh3jSEokeQut5W4klNLInjMzcS0cRLehnTZBXsg8IswbYd68N7QvLQPXeeY0CYhM+5hJUCpntzzQIyocEUIbU70sfEpe9ml/MzdSdhixPiscTjhPXhL76yMBLddopiJm0r1Z6RFr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740626813; c=relaxed/simple;
-	bh=kHrgT+eGXWxskQXGY/v3bbTVYXzRBd8UcfF4UWA/gng=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZUXzgBD++iehnNRsy17KA+77zWw1d3yXQXgrQhuyK+r4GdgdK4Xo9WC3AjvjH8NTa28aZYORkdan/hq1A44N0M6DeezJGSwoKQviGhF5Hm+WsXlYLsyZKyvtHytpbGGTZ+tCh6ZSCBRwHNqU3IxrRL6nVa6IlgBtBp8R6ldrp8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.166.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250810.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51R3L8oi015977;
-	Wed, 26 Feb 2025 19:26:40 -0800
-Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 451ptmhmej-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Wed, 26 Feb 2025 19:26:40 -0800 (PST)
-Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Wed, 26 Feb 2025 19:26:39 -0800
-Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Wed, 26 Feb 2025 19:26:34 -0800
-From: <jianqi.ren.cn@windriver.com>
-To: <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <alexander.deucher@amd.com>,
-        <daniel.wheeler@amd.com>, <mario.limonciello@amd.com>,
-        <josip.pavic@amd.com>, <aurabindo.pillai@amd.com>,
-        <sohaib.nadeem@amd.com>, <gregkh@linuxfoundation.org>,
-        <harry.wentland@amd.com>, <sunpeng.li@amd.com>,
-        <Rodrigo.Siqueira@amd.com>, <christian.koenig@amd.com>,
-        <Xinhui.Pan@amd.com>, <airlied@gmail.com>, <daniel@ffwll.ch>,
-        <wayne.lin@amd.com>, <sashal@kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <charlene.liu@amd.com>, <gabe.teeger@amd.com>,
-        <amd-gfx@lists.freedesktop.org>, <Nicholas.Kazlauskas@amd.com>
-Subject: [PATCH 6.1.y] drm/amd/display: fixed integer types and null check locations
-Date: Thu, 27 Feb 2025 11:26:33 +0800
-Message-ID: <20250227032633.4176866-1-jianqi.ren.cn@windriver.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1740630794; c=relaxed/simple;
+	bh=YtZ5CKgC1l5YAr+QgfvUWGH0Dop2tg9dyuK7ovDLanU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bx99vQQ1PTYr3xM55s4lo8QF5eFHrGgabh/fNT5gdNyUIKb8OaV39h5h0bcQbvSagX5jV0cfgjNXuLdXSSf8n08IwkY/Y8ACNl70iWrEf3I7+OI3iz6lUmMMt1xGUFS3bNrBfE23K/LrsXzzZgy8DGvN9oYwQrNMtwuexs8ivw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KG3Eqhiq; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KG3Eqhiq"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-307c13298eeso6980541fa.0
+        for <patches@lists.linux.dev>; Wed, 26 Feb 2025 20:33:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1740630790; x=1741235590; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=obscijDO91Mt88inTL4A7vtLGjjQitrqKYoQVkgXUGk=;
+        b=KG3EqhiqjoOuexv+/Whi4lWuUryMY4lwPtp5raCw7NrgTZle3IHptUMOAk2bCxpItk
+         kGTP5vY4IrXnN74fWy3lYlsKuiB9WkE5kZsfH14pru5lc8hNu/GLfcYFVk8Icz2A2SRy
+         NOtcTqU9qCXjVyx6eN4aeBDnrMLfniJZBsmM99ejZHDt3JVcHZXkqR8Q5JtzfisJregF
+         bHodkiuIG1PsX3KKG9fyMjqUL2/65duKswMiswISfzo9DMn5rol1yLLuRMaEEhnEMfxQ
+         EXi11XCG+5yLDCD8U9tJOEiVN+dTjHCkcPjL9fTjyd1O7eYMsZl1dFs80b0i9AAtw/v2
+         JPrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740630790; x=1741235590;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=obscijDO91Mt88inTL4A7vtLGjjQitrqKYoQVkgXUGk=;
+        b=ltVLGgdDVOVpSBNSnCbygRHqmH4xtUlupuLS67bnaym7uzd808Fj7QjsUC0v/qe+86
+         tm3L3k2W9PWHYziJxttVs0qD8LKPIUvPRrEtE1t6nGb8fmRtDGrHLVheri2tdR3I1jFH
+         Grap5lXTvZGvThUPO55JD7Z08SNt2ZoGKXoHRHJTzlN4+WzFkVQevm6aUGVsHeXM2b5l
+         KQ2PMGfzBrATwpP+xf69pLHEkX56iPKdF6G6o5fmRDFFjMnADw9LpRz5BTLEQ52ORacP
+         3e8c6mRcJSa9+ySkJYPDExy+rbsQ0hds4+yktWUfR40+rbvzb3ZOkKkIZkgv6fHGq3x3
+         PbQA==
+X-Forwarded-Encrypted: i=1; AJvYcCX3glmZLDJkLPw/5HevHHHi3DJ6lxScrSzFxs7+lEnrF8WAIlGMalyy2828Q9usmvNdT0KnZ+tp@lists.linux.dev
+X-Gm-Message-State: AOJu0YzGrsCs/Vpj5L7pEA2njdtFVMRdD1VTjA2P+e79kyZy8nmtmQc0
+	dd3XiUzau72wrvizcLUS6pgApa1IT2EPttwXim39p0M8q32zDrFOqgSQTyaNQcQ=
+X-Gm-Gg: ASbGnct47QHrQN/CcWFGSJNFsua3xyr1WckU8iyMDhHn5pCt/cprf/u/uGoiqI2q5a2
+	XdurPKVkrCB3SnF1SEjEF4/NevR2Xev5Tn2oTP6n0AU/ubacHEc2R94MU5SM09GxmsC6pPebA/f
+	bcqwZvPXaYnfRZvByJFzXMxmVC6NuAiqDdnZB0M4DxEN/Hte1K7++7Rh5DDh+e7SQUdJX8D8WCZ
+	foobmhgHukVWIB46m+ixdaZieNVf9h+Zp7Mf5KenvgHphBQF1fuxqx54/eXwHzTpyrE7iFPpJhC
+	cCsO8wA3ZFu+04zwNYNRAOBmoXrXNA9SdYnDapNu54lU3O/jKlfLhnK3UCSpgi1Us5v5mTJnueZ
+	BYwoQmQ==
+X-Google-Smtp-Source: AGHT+IHn49HjynasOW0d3PE6ed9GscgrGPeAaHZGAfjQ6cYekzKg6vVVq5xB21jaMu9bNtfIFG8yJw==
+X-Received: by 2002:a2e:9d0c:0:b0:308:eabd:297b with SMTP id 38308e7fff4ca-30b8464b31dmr7624621fa.4.1740630790326;
+        Wed, 26 Feb 2025 20:33:10 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30b8685b31fsm610901fa.77.2025.02.26.20.33.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Feb 2025 20:33:09 -0800 (PST)
+Date: Thu, 27 Feb 2025 06:33:06 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	patches@lists.linux.dev, cros-qcom-dts-watchers@chromium.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
+	Pin-yen Lin <treapking@chromium.org>
+Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: sc7180-trogdor: Wire up USB to
+ usb-c-connectors
+Message-ID: <nnklm22zfnjiabjsbo7fsdigwx6nbcqjidhzynjyr2aunmk5r2@6m4dj45ddfge>
+References: <20250225223038.879614-1-swboyd@chromium.org>
+ <20250225223038.879614-3-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Proofpoint-GUID: aMIR4xxGOCX5NeqdwxXpYEWFVpqL_Trx
-X-Authority-Analysis: v=2.4 cv=TuEchCXh c=1 sm=1 tr=0 ts=67bfdb70 cx=c_pps a=/ZJR302f846pc/tyiSlYyQ==:117 a=/ZJR302f846pc/tyiSlYyQ==:17 a=T2h4t0Lz3GQA:10 a=zd2uoN0lAAAA:8 a=VwQbUJbxAAAA:8 a=t7CeM3EgAAAA:8 a=fmNT8XcYnNex_eyvA98A:9 a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-ORIG-GUID: aMIR4xxGOCX5NeqdwxXpYEWFVpqL_Trx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-02-27_01,2025-02-26_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- adultscore=0 phishscore=0 spamscore=0 mlxlogscore=999 priorityscore=1501
- clxscore=1011 impostorscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.21.0-2502100000
- definitions=main-2502270025
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250225223038.879614-3-swboyd@chromium.org>
 
-From: Sohaib Nadeem <sohaib.nadeem@amd.com>
+On Tue, Feb 25, 2025 at 02:30:37PM -0800, Stephen Boyd wrote:
+> Fully describe the USB type-c on sc7180 Trogdor devices. Most Trogdor
+> devices have two USB type-c ports (i.e. usb-c-connector nodes), but
+> Quackingstick only has one. Also, clamshell devices such as Lazor have a
+> USB webcam connected to the USB hub, while detachable devices such as
+> Wormdingler don't have a webcam, or a USB type-a connector. Instead they
+> have the pogo pins for the detachable keyboard.
+> 
+> Fully describing the topology like this will let us expose information
+> about what devices are connected to which physical USB connector (type-A
+> or type-C).
+> 
+> Cc: <cros-qcom-dts-watchers@chromium.org>
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Cc: Rob Herring <robh@kernel.org>
+> Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
+> Cc: Conor Dooley <conor+dt@kernel.org>
+> Cc: <linux-arm-msm@vger.kernel.org>
+> Cc: <devicetree@vger.kernel.org>
+> Cc: Pin-yen Lin <treapking@chromium.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  .../dts/qcom/sc7180-trogdor-clamshell.dtsi    |  21 +++
+>  .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  47 +++++++
+>  .../dts/qcom/sc7180-trogdor-detachable.dtsi   |  16 +++
+>  .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  47 +++++++
+>  .../dts/qcom/sc7180-trogdor-kingoftown.dts    |  55 ++++++++
+>  .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  55 ++++++++
+>  .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi |  55 ++++++++
+>  .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  44 +++++++
+>  .../qcom/sc7180-trogdor-quackingstick.dtsi    |  31 +++++
+>  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  57 ++++++++-
+>  .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |  47 +++++++
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 121 ++++++++++++++++++
+>  12 files changed, 594 insertions(+), 2 deletions(-)
+> 
 
-[ Upstream commit 0484e05d048b66d01d1f3c1d2306010bb57d8738 ]
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[why]:
-issues fixed:
-- comparison with wider integer type in loop condition which can cause
-infinite loops
-- pointer dereference before null check
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Josip Pavic <josip.pavic@amd.com>
-Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ To fix CVE-2024-26767, delete changes made in drivers/gpu/drm/amd/display/dc/link/link_validation.c
- for this file is deleted in linux-6.1 ]
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
-Signed-off-by: He Zhe <zhe.he@windriver.com>
----
-Verified the build test.
----
- .../gpu/drm/amd/display/dc/bios/bios_parser2.c   | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-index 4d2590964a20..75e44d8a7b40 100644
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-@@ -1862,19 +1862,21 @@ static enum bp_result get_firmware_info_v3_2(
- 		/* Vega12 */
- 		smu_info_v3_2 = GET_IMAGE(struct atom_smu_info_v3_2,
- 							DATA_TABLES(smu_info));
--		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_2->gpuclk_ss_percentage);
- 		if (!smu_info_v3_2)
- 			return BP_RESULT_BADBIOSTABLE;
- 
-+		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_2->gpuclk_ss_percentage);
-+
- 		info->default_engine_clk = smu_info_v3_2->bootup_dcefclk_10khz * 10;
- 	} else if (revision.minor == 3) {
- 		/* Vega20 */
- 		smu_info_v3_3 = GET_IMAGE(struct atom_smu_info_v3_3,
- 							DATA_TABLES(smu_info));
--		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_3->gpuclk_ss_percentage);
- 		if (!smu_info_v3_3)
- 			return BP_RESULT_BADBIOSTABLE;
- 
-+		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_3->gpuclk_ss_percentage);
-+
- 		info->default_engine_clk = smu_info_v3_3->bootup_dcefclk_10khz * 10;
- 	}
- 
-@@ -2439,10 +2441,11 @@ static enum bp_result get_integrated_info_v11(
- 	info_v11 = GET_IMAGE(struct atom_integrated_system_info_v1_11,
- 					DATA_TABLES(integratedsysteminfo));
- 
--	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v11->gpuclk_ss_percentage);
- 	if (info_v11 == NULL)
- 		return BP_RESULT_BADBIOSTABLE;
- 
-+	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v11->gpuclk_ss_percentage);
-+
- 	info->gpu_cap_info =
- 	le32_to_cpu(info_v11->gpucapinfo);
- 	/*
-@@ -2654,11 +2657,12 @@ static enum bp_result get_integrated_info_v2_1(
- 
- 	info_v2_1 = GET_IMAGE(struct atom_integrated_system_info_v2_1,
- 					DATA_TABLES(integratedsysteminfo));
--	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_1->gpuclk_ss_percentage);
- 
- 	if (info_v2_1 == NULL)
- 		return BP_RESULT_BADBIOSTABLE;
- 
-+	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_1->gpuclk_ss_percentage);
-+
- 	info->gpu_cap_info =
- 	le32_to_cpu(info_v2_1->gpucapinfo);
- 	/*
-@@ -2816,11 +2820,11 @@ static enum bp_result get_integrated_info_v2_2(
- 	info_v2_2 = GET_IMAGE(struct atom_integrated_system_info_v2_2,
- 					DATA_TABLES(integratedsysteminfo));
- 
--	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_2->gpuclk_ss_percentage);
--
- 	if (info_v2_2 == NULL)
- 		return BP_RESULT_BADBIOSTABLE;
- 
-+	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_2->gpuclk_ss_percentage);
-+
- 	info->gpu_cap_info =
- 	le32_to_cpu(info_v2_2->gpucapinfo);
- 	/*
 -- 
-2.25.1
-
+With best wishes
+Dmitry
