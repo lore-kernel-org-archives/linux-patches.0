@@ -1,36 +1,36 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2042.outbound.protection.outlook.com [40.107.94.42])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2053.outbound.protection.outlook.com [40.107.94.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFD346B8;
-	Fri, 28 Feb 2025 00:20:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3303B4A3E;
+	Fri, 28 Feb 2025 00:20:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740702015; cv=fail; b=oKPnBuxtuKUH1f/AQaa7dGVTQoYIxa5sN1kuWsq8NzhfoIW9yhd2WD4lQLJS8Mr+roQXscdE5txW7X/445c2MhTPyHYhGOJt+KX3PodedjwBpVhPRbX5eflmjd9mME8tS4Bmq9POVX4qLXZMPbv7ryIBghRPao/cKY1Wjb6J3zQ=
+	t=1740702015; cv=fail; b=GJbON/ZyTL5WpU3oWeLbIR65ZmBUgiu1lH7CN3ijClnxjcE7xx+n3tf2YwzlfB5RPv4DKi3/SVi0XlPGWozm+mEUXAO622lhUkrNZwZBkzrPfSKNQaWx7caREtULt7+8ELYRPP0J0XlWLbkQKm47df/lze3mN1Rm6XgsyS+Om0o=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1740702015; c=relaxed/simple;
-	bh=ccXCrlZY6Za72Qi//cY+cGqRV903qA6GJA/oGh3iBR4=;
+	bh=xMpziuwDlEcDtsvDnM9L2EsfwiGlvKJH2jRvifY0WhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=QwbkmNSFHx0u4+dGbg6f/6uxyQcYxB9flxrcpmWU/HFiklJJG+oo3sJILJS/R8BPgixph+e+blx4NhczbcVgXaj27FSUSRcGq2hMr6YB4tE6YNwCpkl3Jws9XO3M5Um/ilesovudDkIgq+K1M1qfN5uPNHhjZZNYU6UfSDrfN5Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Awpp/muu; arc=fail smtp.client-ip=40.107.94.42
+	 Content-Type:MIME-Version; b=CAd+fxvkZe8YtmzoArGkHJYLxgYolZfbHWtC0yGNYE/Wn7peFciRjiSo21UDGIIWYtz+sPqj8fBWQDAZ5jUDOK/6w8CEdCe3H23NdxhghAvRSS5Qjh+60W+6RgsMQuvGrnIwWmBEp+yEWI4I/5Laq8KVtORZIPUogDymBUFFimE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Peo/uogd; arc=fail smtp.client-ip=40.107.94.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Awpp/muu"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Peo/uogd"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Qf0/W6b3Ft2ZcJO4imnZ4nfTpL9jVWOrRb1O5Vm1u8EcR0fnW+NXCUpmmVjY+6/IVYf1VYVI2UWSrUjptuYAsgdiVj5CLhzGVPRG2sLq86HVitSFVq/1u2wZvtsf5E4nXC8YSBP2rTHQ6S1KrDZHhHY3DCR7b3Y5FLinRjr+U6aDyrZXqGQn50PHN+KH/bBYmGo1A8I10PDevy5DKhlRNR/4yteQ2f93g1IQfSDemXCnmN10AClyzZbaxohe+Ka1lEkOYNB5AjeHBjIbAPNV9EMWnScHYGECM2+AitW98kJnRg3Y7EKLhHL4Xq7r+jL7xm/2DU8PHXeeyAIH8NQkog==
+ b=IGJ/xiS01OOlnwo8ygAOv4PvI4a2BCEJM1eok7rFHiBftB3DCXUoxZ6HVS0i8peTJXyPRsURduqYweZTm+JwQQ4cD3EqdvtystJjv1aekFJVyYY+yHXSsryOJ95+QmbQTtFKXl2p8VqPpsgf5I4gRrjPrpZUKIN5judK3iO0CzyYZROQEkFmt1U9DpOpU+neWI34feX24PK9lHht8pswOpYEYyWy/XOMH2TdZQhAjH7O9RwPfZ2+BWMrtvQEdRp6wNKJh3bDlHgVaN9h+bS0UNKW/ncQ11HJDOsxI81OXfK5q9RoqsOkPcox2x23sXAhpvMmB/9P0y4MJ8Q11kVOaA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NFsNFaa/RGi1ajQOjidwsoz+ELtvVOKOZI8sLxbhULE=;
- b=XjgVY0dVilGVEnmZGnpA7cQyBmCWB60tSEmh62uFCpomucc2ggWco3NqExmnD7tZWVHUN2Glrz7vlAgXfYTIUHPLc2ITiX4S/gX+wDOs8iDyKMtJ7nthoZcYTsy+x6d8sgadMEbgBfO0vM8jg+qCFuI+7tAUx689W5dCwlzRF5zQURtLhc6jQMZutrJV+fACubtuAoUgsHFA/0XRY+j3BkAbF4sdYZ8lNoEO8Aaa6Z8KrWXwXrZKuPQ5nyCccG5K0323YqK3VoobXFQf+StE88mmKW4ZGtzMCONJaEojgt12k0f9yoMS4AJZZ1p2TBEfCRSIPaBDaovXEA85al6S2w==
+ bh=Z+86hRHj4xAEs7GuJljSW5ZbGQ0x5uhgu6ico2Fg85c=;
+ b=YfsyablflkCqQhPkh5RNW4ryxEfwGhEqxXgmvUBMxnj/KqKitMd18LQoDy5IOiGMtwsjNGPTuCJioPGS+l4MU3EKz7HrMuvE3+UqEu2dbbUU5rG1s4nlR9Ahbt0FECgxbligRux7m5PuDvLU6pwCqRcT38rqiUF13VuTPBur08zVUmH4aE+Op+NHHeHlmFu1cjjni0t0/WQRLgTM4sA/AoEjvYh123AbZgZp5IV9cY8H44z/xcLO4lAObMn0dmH3nRnkJXpUiFuDQDmFkq9bHmHMFd3r1Egumo+ROK+kBBEdVMCzIL4fzeE9uvnSHDV7gM5rjupU4ASMJbRVf4socg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NFsNFaa/RGi1ajQOjidwsoz+ELtvVOKOZI8sLxbhULE=;
- b=Awpp/muu26Jx/R4Zkzzq6E6BIIyg0CDkNoQ/aXLufXvJZFMhQVsUu+QuPW1KBPdSmPalbkaIwrjH4tsJuTd6bd17wdTJF1y9oDUDOY4LBlc29D5bsvh9u8ihaf7qajUMqHGs7v/I9tlFkF8bmnbwENipSPV1QtMz/GLcwKUnBIj+eYDacqga9PaL2qA1vPeYtxHszM/ieBmBJ7kplgV4MU28f4xeSy9zkNX7cpA4Vzt7O93QgLFzPBWPpImA/DSgATprK/cKVbGfAg/KqdilXfF6lEN0MSyDezNmYkVaFE64JFfzhWJdWMhznbkV7Mzn4laorMUHenJ/NjriUyk0xw==
+ bh=Z+86hRHj4xAEs7GuJljSW5ZbGQ0x5uhgu6ico2Fg85c=;
+ b=Peo/uogd7wdHWQSD9DLOL42Yn7kYsYcxzgHu5h1udmG84jObu2yyO5LXAwN5dxLHw8mqDCB4mAzg8AHPGUHj//JLNigaaPkfAGCsSXOG8VCy15Yseyl/q8lz91Ppa8AkjzfuonYyRxtg2A/EXHwg+2NH7O7SAPF4R63YNMLYVWIBrBtgJv9yerEk6UqacZPK/GFohrupNjWa9oVk2eYDrVwZ+zJ/IBneESfGcmZY+S+o+I09eLK3eSXFcon3AI6yvkl6SK3TLkJAuB1Ou4HrRe5FNBnm12oDphFmfK1EZPFTEJJzJvZIUlY1LZp+gPZ7Bts6xhtlkRZxr9LgZM+mZQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
@@ -51,15 +51,15 @@ To: iommu@lists.linux.dev,
 	Will Deacon <will@kernel.org>
 Cc: Eric Auger <eric.auger@redhat.com>,
 	patches@lists.linux.dev
-Subject: [PATCH v2 1/5] iommu/virtio: Break out bypass identity support into a global static
-Date: Thu, 27 Feb 2025 20:19:59 -0400
-Message-ID: <1-v2-a3b72fd4b99a+1b6-iommu_virtio_domains_jgg@nvidia.com>
+Subject: [PATCH v2 3/5] iommu/virtio: Move to domain_alloc_paging()
+Date: Thu, 27 Feb 2025 20:20:01 -0400
+Message-ID: <3-v2-a3b72fd4b99a+1b6-iommu_virtio_domains_jgg@nvidia.com>
 In-Reply-To: <0-v2-a3b72fd4b99a+1b6-iommu_virtio_domains_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BL1PR13CA0141.namprd13.prod.outlook.com
- (2603:10b6:208:2bb::26) To CH3PR12MB8659.namprd12.prod.outlook.com
+X-ClientProxiedBy: BL1PR13CA0144.namprd13.prod.outlook.com
+ (2603:10b6:208:2bb::29) To CH3PR12MB8659.namprd12.prod.outlook.com
  (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -69,245 +69,292 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CY8PR12MB7433:EE_
-X-MS-Office365-Filtering-Correlation-Id: 59800929-dd0b-4d78-da67-08dd578da713
+X-MS-Office365-Filtering-Correlation-Id: d3350774-418c-440d-07b3-08dd578da73c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?fxmkYh8ALZrZ8lVBUpvz5eVLAuE1qAxHkTh4Yd8/7W5WgnOXPoQtioDQ20f/?=
- =?us-ascii?Q?zEa3OS/34GRUOhSbyzUnKKcHUvp1645JxLoC7U5+XxUC84paff39BbK1DRJm?=
- =?us-ascii?Q?7X6SdBnbkoY4Jp1p0Kt14Gyh83969fmXLoek/GPX0iI81NrvrSyV3qB19ce6?=
- =?us-ascii?Q?UfudNHpy67S7Z3HL7okJUS1chDoSoxdDuD0+sTk5uFimC1HwNO5Rn6stoDe1?=
- =?us-ascii?Q?PkiBJfxyPcskT7+ZSl0zLI854DsSDQwgqR04cydE3w2JY0yrJ7HjPPyOD28T?=
- =?us-ascii?Q?dqv40hHoJGCXmbyNdc12dxhvUIkqjGe4h80M8L37Ao+rfwBigw+zyCO+7SOg?=
- =?us-ascii?Q?9j/A8dsmOFxT8j4fBhupd+fSvEl151DcGiiK8QB/BYQL0AsuG1GM/m7N37K6?=
- =?us-ascii?Q?KQG46USPw3ZZTGNMJvW4ksxszxCWhBKI79ehqm/h2mCFZ/qLwG16GWC3c/l1?=
- =?us-ascii?Q?mGk3bwp6q21GVbWxudljtWssh56bFbcNvIzayp87Wl/tXJo5gVAXgUbA5D8O?=
- =?us-ascii?Q?PVExKZLTlT6RWi46OQd9/cAYiZ9hNjmkzRDg1QhetEf1qUgeSIsLOfr+De0v?=
- =?us-ascii?Q?5m6j7ReMXRO6L311DAr3n/gZ5rXJCBvR2Tk6mLWX0PSu8rvzG2DyTDyeACbb?=
- =?us-ascii?Q?3MzLUMWt5T/oMjVIU5MPorbOwdcRt+UovAJsMepf5hWM/jWKsezjHC765GzR?=
- =?us-ascii?Q?1woj3yFhwan4+FiX/Yeoe++R6xePUbyfvzBC7nByFnxvs1L7avJAhGtlPND9?=
- =?us-ascii?Q?nJ6KVJ2pcSATZTb6ewz+gl7uq9k9ttfqkqgx0TTWGV1LtqheCKTeEHBdYPsL?=
- =?us-ascii?Q?WCQytJuQ2lxaPLi6bp5TQCIxa/gKX5EfnyA8stzoy43og5sS5LNW5ur2UFQk?=
- =?us-ascii?Q?9HCr0ufZ2FFRWnjwpH4o8Yk1z3BEd10Fe3ia0AXPAxTLLqeLgJsmfeVyJ4tR?=
- =?us-ascii?Q?261jrl2tDaordNhS9uIIuRgo5ozYCU8wdFKGMcCJ7POjEMs6oceqpssoMqNw?=
- =?us-ascii?Q?4bQ7MJ6rQ6pA9TyPMLXxmIUGYga9Bli/KqGfnc649mr+Pr28di//PRtlrfrz?=
- =?us-ascii?Q?eWmvIRCK5dhSPYaKe35xeWjJToTJvEF8tCEDcGQcjXKQ96ygCOy9Ed7K588g?=
- =?us-ascii?Q?+NNDF35N8CJuwiq3Tcf0wBbdN7cwE1pRp9A472e6g8PY7rvfiC3ja5P9NRkt?=
- =?us-ascii?Q?UH+5Fm2JNxtZ6TP6J0FSra1yWkAjffWK6C0jIPHn+G/gECK4OEDP62xTDpt6?=
- =?us-ascii?Q?PKZbCQQupjkeeOxeJBwQhmp6kelXIrfFoyJ3sXsVbHZsw+ttGT4/7F2qXlmi?=
- =?us-ascii?Q?DeQQG/kj00Ux646yHtKMqQo6r5sm3m+pL0t9jSqpAv1BkOhIfg8XSwHVES+C?=
- =?us-ascii?Q?T7ANRfJtHtCLJIp+dk+TW4fJsfkV?=
+	=?us-ascii?Q?cXpvA3bTxbF+UVEQC3+q7NGayob3fTWaBk6FRpMNmb63QUm6RO9a43DtOJiJ?=
+ =?us-ascii?Q?leVnKRvFKo5XLiWOvqJUOPssqnldaqcPe8V85DteUlnJgZ36ozGKCDLfF3EA?=
+ =?us-ascii?Q?BWtHLwxJcqgrfCvRkYx+U3pUzWtJTC5u1YMo+gdr46PemfSP3sCfCPYi18qc?=
+ =?us-ascii?Q?ExgGnrTOUXgHzzZ9OdAh+S6HYsaspUIv1kKkA4Oi1vPEpdadoaYBixswQVOm?=
+ =?us-ascii?Q?cV9tvKz9GOBrxJYvgOb+3yPEdpdUbnBRt6cggxIMC6U9lu8oHfsryeFEzwkh?=
+ =?us-ascii?Q?shevP87/AKJ5+kgQADGVpO1fOjNUtqvaIKLpqVS9y5KTsU00X1EZ+uz9qGci?=
+ =?us-ascii?Q?7FrwLj2DOQ3YLnOmha1ktXH7PLJYifRaPhtlco6uib29m2esvTecsv7N1jMa?=
+ =?us-ascii?Q?SRLMmL8gbS2Nk+DUA7HfjcBZY+Mb03geByVmemRpO+4VqVNmB8RXYBA26dUR?=
+ =?us-ascii?Q?7cZLc+9lImlMjFXODyOs1WAPVe7boXag7ebaPFzZxCJHFxUY0QtckzpenzfT?=
+ =?us-ascii?Q?FnsdCvDlZvv3/+v83b9AzFazpKQRjHSWcnfAhJopSkJ3due7cX/x32czdKLL?=
+ =?us-ascii?Q?HFBl8Snb6qxCcv6xUkteTThP2I1//VBa2jtzkBF/sfJgHX/FPxoeKOCGBb14?=
+ =?us-ascii?Q?hFI9BFxRcBwsicx9Gv+Sbf2A6pN4OzHwlUuOf4Nbu0uwNMd8fmmnmCgjYgME?=
+ =?us-ascii?Q?gVO7HNPy5T4SS6TFC2KTvfBvExBCDtuvlFwJGMTuTX9TfyrDnwGBdnLlRMAE?=
+ =?us-ascii?Q?ugrpChaVp/wVlp4iDebJyKFqgThf9xqCtwtp3fH2pn7zy8RrLB4oODUbPGSi?=
+ =?us-ascii?Q?oTWZlkrz3I95GyT8H0ELuyB72QWG51sfjmcLH/UTk63DXKSVSGrWGboB7EzA?=
+ =?us-ascii?Q?oJHEeRPJcVpfUmVqZj45XpKe2j2GQT3YtBZ/rJSscqKMD1Wh61dYU/cCyvLt?=
+ =?us-ascii?Q?IQQz/e7xAKCUjaYd45rWJPnm3gJq6XIMgM9neBO87bJNHqBoXW9ODHs2r+J3?=
+ =?us-ascii?Q?LKx6UKshb62t/AA1qcIg1j7DMLvn8nLrzh1lVNDKKCdRkFLHVhSfq5+ihcfl?=
+ =?us-ascii?Q?yI6YgNLDgx+hw+Dm9luFqb+iYaw8N2bSYslrd7D4DgtR5Y6d4xZoDuRaxGzL?=
+ =?us-ascii?Q?TTKuBO5fV3d12f2AgiqrxGP+c4RNSxR0yDtmzW/VnX7ALaILgsllehtMrUT2?=
+ =?us-ascii?Q?ooTl9vz+TS5AtsWQO0lh7dXIwbkVCBKG7qA3naH0/5R63RxKc2upHPNDimDR?=
+ =?us-ascii?Q?EffQC30JRDnjSHs0JPg05t0Aa3org1KUILmnESisKO65vEzVTc1uOFt37L1E?=
+ =?us-ascii?Q?JpYTqtO02QaYtNDN5PH7/GIPKP91JwED0uYnKt3iRGqoeUK3BuU3Yculg37+?=
+ =?us-ascii?Q?ZZr4bNpVfvU4+68mGz4E0wdM151R?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?bMqVhtLvuP2nOOfDHIlNbPktNQS397qaNRzuEqkN/+IB2AqGiydl4Pihh/NS?=
- =?us-ascii?Q?9hFnmqgY48Ia9PIGP8KT7K/3D/60dbNkaGvPVyRySTgPpiij6nZSFWlrhYTN?=
- =?us-ascii?Q?YlDWWBclLfflBU55zke78QkogLoJNMYL3zvTePzlNgeKiZJx2rdYRLJKV0RI?=
- =?us-ascii?Q?grSMgyzYu5JmA/3GncJ4DbvD75JRUQap3jXwjfgr4b0cOLdst0Sw+jZTg6JK?=
- =?us-ascii?Q?GK3NFEKaC74axFFinVnBf/R12BBCqHP2e0n8xQrV4Sgy3EJycGepBbsKerOX?=
- =?us-ascii?Q?D2IgFp43cwFjcDAlgVKeSPGMJrUClFy5GfxJTyYhF0UmgZftqWysQcZTMn1D?=
- =?us-ascii?Q?d9J32+CKn/9HBHHUR3ATwpWLachJ2VZWoVvsKE27ghQzy09atl4qZgEXuwCx?=
- =?us-ascii?Q?iI+kXZGkd4hTpPgfe/JYLaRZcGZzwWq5Q1a3e88fiE42tYtuIPgWPdOJ1X6N?=
- =?us-ascii?Q?wFh8guMBAVj7T6aMR5Qp7EYUKAYXGHLn7I2PP+Kglz0GjQiv4dCPOdJPqM/K?=
- =?us-ascii?Q?RaO63/y03rTC4XGjsXuNEQFntI2QkS6/uJDfLg7bqw9GW/48uo3OYZRpwI07?=
- =?us-ascii?Q?f/a5/UwgvncDiSdbfz9fyoXA2lXvjDspBo2qpi1ulfa3dsSDoZYeLBxWXK76?=
- =?us-ascii?Q?erTXolpVzsEaObllwgUgahsg5p5LVr8XS/TKD776cNzKo6UE8ujYyih8eI6u?=
- =?us-ascii?Q?cJqSMqurGOwNI/BYl7rrBb3M8MlfJmCZOCCdgHHn40FzSnRqF6omO0FPKAAZ?=
- =?us-ascii?Q?VE5KZe0MrUG+BYMY7Jfq185tMaAThDHh5pCiFyqvhQy6J2SmtmcOUAIxYTlg?=
- =?us-ascii?Q?dI8rjmnZjPkIAZjidbC906zcr7aXCh4QNc8/xA8DieSHlUr/tzHkqENU4sfK?=
- =?us-ascii?Q?QLjSgEK2HviuSfu3OQ+ncY2qCn5zAo/S16b1NJs/EcfH16RWfvQr427g/x7C?=
- =?us-ascii?Q?vv+wyR1wfu8J1puQBclFKnxStvGygLSqNtYkJ67OhfVj3JNNm8GWtDV58PXX?=
- =?us-ascii?Q?+9SCKg3gOSyowqEqCEO+y9JXn4qPHLHP/wopGRsCGo/5M1oVKVVepnyIVwbY?=
- =?us-ascii?Q?iA6GyWJARP13Iij2ckq7FNAw5YTIWO03y6vDZbA4hAfinEF+Qcikz1ct9Udq?=
- =?us-ascii?Q?Pr25B/9TaPX22/QmEtkXagZ3dC8LMNz7hdFg4uzAAUi+M0XeOdvj1gEsF5pV?=
- =?us-ascii?Q?utb5s7y0dvkW9yUNGHw6m7LnThwMmuTTi714aRsmsdLGouGeVp/MoHl94Rgd?=
- =?us-ascii?Q?3ZZ6sV33WlZVJcd8od3kN10GuSECFIQ6D/sPRVUoxZu9xOoAm3VeWUHOYJcQ?=
- =?us-ascii?Q?wD3s6s2h+CQmRvffS/HRQKYwkvZ5reo3ZcdcN8ENI5WMqYj38vh6cRmNMmRX?=
- =?us-ascii?Q?JeroxXfWopuA1LCN9QFANo5oGMiMA7jkmxoAtmdao3LVvTc9MZV83BCfq9xN?=
- =?us-ascii?Q?Fm/Z+9FksfjoBtkf500LccozAQ8Yz1gDsZE276zGvU1I1hixgAXPS7GxSoqR?=
- =?us-ascii?Q?fidm/fHTOCvsDa9gM0gqHrV9wqPA1r6XSjFbsz7j0usok9rTF0WhAyziijDc?=
- =?us-ascii?Q?r1hbKySMnM9TjM/9Ghs4pb2h57Zz1mNZWL49OhEq?=
+	=?us-ascii?Q?zbHaHSKz1h9ynhjogQO+es+zHXhy9AMFo7WA87NbDsUhmMxDupAOyEa4grnL?=
+ =?us-ascii?Q?9HX4mR9k9o1oRimnSbCuuinmb2payaJUHeQh0KlUglbk4xJ4Fw12HojoBpU7?=
+ =?us-ascii?Q?BVlMgyyXZzpgyVDK1zkATjhj/Ll64jkwjAXFjcNgCnMRMyDQW1OhCJln3XS2?=
+ =?us-ascii?Q?KtEJ5wZz9xm7i1waVvGt+9eeWK268VGpYUiq5QnhdfH0AbvVCFXGjz0Y7Xiq?=
+ =?us-ascii?Q?lY03SqtSMqevY2NNOHrOWwDFUxT/in+30KDaTfC0nWK0ICeEEz0YMxim6iPH?=
+ =?us-ascii?Q?tXkqdVGNLuOcJ8sU2lhfAa9Y3mPozUpl7gwudl5RL9nlU/CaNBN8DM6DUpXI?=
+ =?us-ascii?Q?Zub7/FYxW4SjVh4vQfRtQ81syMN8iHTfBFLwqGn2GVmHhKhb5bjTIJCG9YiK?=
+ =?us-ascii?Q?1LALxX6ai+j7FE5Z2sbVpLdUxe4/G1ZBBiMuzA1yn/1hKvJL1vPzEy7hKI79?=
+ =?us-ascii?Q?jRqTZfWWBdKEwv2y+XdkmrYN1cROxVMj75RZXe3BLMIvbcrlqjoKlssAcCgL?=
+ =?us-ascii?Q?GOruK9SSKMhPIZnpLGCOoM1hqqTJ+bT495CGfrQtH+DyxPtJp7/DUJC8OpoD?=
+ =?us-ascii?Q?/bx5PiCXyQiAeQvAGzIarTNv6qVfs4MVCJbDncFGqwUaxCdlTghG+pCclXO+?=
+ =?us-ascii?Q?0BvFpZaj5ATBGXsKd4ABDgGIFQHRoy65g03yG3FxKBt5+2OpJ2sEx3Nq8w3t?=
+ =?us-ascii?Q?3PNyvxi1W6d7lKuFLRMadKVqIHElOrvM+BdslSSM00q+62mMxHyUAqDogs12?=
+ =?us-ascii?Q?4alVrxUwTmnklAaXBGdtTR7Y1Rxfg7b0eIX5w7rMHxHCoG4h+USjoGoMRYow?=
+ =?us-ascii?Q?ssp6t+3zs4r6KJ9DrMIBlkTzCVd0cgRC7S+P3/3ezNYMQ99ejKrDoH+APMOb?=
+ =?us-ascii?Q?JADxk04RJQXOclP4Gq1EWaveQ06ViudqcRPu9yd56M0lWvB5DFAJhL489Gkz?=
+ =?us-ascii?Q?PycMElvjZ6rSNlV/15zgrUp6dsZX8Nnp2XnGDtAgPVey84z7zpSf7soFCgEg?=
+ =?us-ascii?Q?QCR5rE9A++/mf2PHiW2mL2s6SBHSnZSv49zRYPVKuqWK/Q9m9MuO9bf4WWWX?=
+ =?us-ascii?Q?Bih3uCPVjsAo/gevMS08vLdZBbNpTarrSVrwTjNmDgRaWnFn/AOpDGvE1ZLC?=
+ =?us-ascii?Q?uu5BBh5aoEyc/yqjfvj1mPtqUDKhQgCZ6UOLX3v39zi9wHwCg0UI6sZEB4ey?=
+ =?us-ascii?Q?ISNld+dTnAH9/6FQfjQhyopDy2D7GNmmpDucQQat5a/Dq2fbkVEwJL2qtnyt?=
+ =?us-ascii?Q?JXG1o2eALwMMZBdm1Gb2H82U/UI8w3HRRlxEoGOsTLWToanXtiYh4jQSneam?=
+ =?us-ascii?Q?rZPwUAXWjKEpmk3TBWCAEUS/NrP90ViKYK0/jChiANktYSz7ROWsoImy1fal?=
+ =?us-ascii?Q?OX6WvpMAHgENzKJjq/fudLZKC1pmhOGzNyC4Ylxg4C5j10jQSw7JYz1GcA/f?=
+ =?us-ascii?Q?XHgVum+Fsi8sgLSC23EhljfFWNzmhEQZzFnnXVHxShAKTPcolX2AFRGFV/D0?=
+ =?us-ascii?Q?KFK7k1XG2Z5GfuWAgVK2CGvEgsfJLlG4rDMGr1l42HdLReLam9Cj0EncVu4E?=
+ =?us-ascii?Q?zyFfg6Vr7E7RhlcK3ume1XGmcbuPGgiSzEzedjD2?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 59800929-dd0b-4d78-da67-08dd578da713
+X-MS-Exchange-CrossTenant-Network-Message-Id: d3350774-418c-440d-07b3-08dd578da73c
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2025 00:20:06.7734
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2025 00:20:06.8009
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BA0LFR06/dECF6ztZHnCafzom9BH7honcpXDLmKhopVxdBhDP/6SAO7CxuJwxw0J
+X-MS-Exchange-CrossTenant-UserPrincipalName: EiymTCEknKi5TGeA2m8deljEfiFTvLbww5TlKqHQaSXGl3tvz6g2Jas/d/3IVDP4
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7433
 
-To make way for a domain_alloc_paging conversion add the typical global
-static IDENTITY domain. This supports VMMs that have a
-VIRTIO_IOMMU_F_BYPASS_CONFIG config.
+virtio has the complication that it sometimes wants to return a paging
+domain for IDENTITY which makes this conversion a little different than
+other drivers.
 
-If the VMM does not have support then the domain_alloc path is still used,
-which creates an IDENTITY domain out of a paging domain.
+Add a viommu_domain_alloc_paging() that combines viommu_domain_alloc() and
+viommu_domain_finalise() to always return a fully initialized and
+finalized paging domain.
+
+Use viommu_domain_alloc_identity() to implement the special non-bypass
+IDENTITY flow by calling viommu_domain_alloc_paging() then
+viommu_domain_map_identity().
+
+Remove support for deferred finalize and the vdomain->mutex.
+
+Remove core support for domain_alloc() IDENTITY as virtio was the last
+driver using it.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/virtio-iommu.c | 86 ++++++++++++++++++++++++++++--------
- 1 file changed, 67 insertions(+), 19 deletions(-)
+ drivers/iommu/iommu.c        |   6 --
+ drivers/iommu/virtio-iommu.c | 114 ++++++++++++++++-------------------
+ 2 files changed, 53 insertions(+), 67 deletions(-)
 
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index ee33d26dfcd40d..73a05b34de4768 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -1599,12 +1599,6 @@ static struct iommu_domain *__iommu_alloc_identity_domain(struct device *dev)
+ 		domain = ops->domain_alloc_identity(dev);
+ 		if (IS_ERR(domain))
+ 			return domain;
+-	} else if (ops->domain_alloc) {
+-		domain = ops->domain_alloc(IOMMU_DOMAIN_IDENTITY);
+-		if (!domain)
+-			return ERR_PTR(-ENOMEM);
+-		if (IS_ERR(domain))
+-			return domain;
+ 	} else {
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 	}
 diff --git a/drivers/iommu/virtio-iommu.c b/drivers/iommu/virtio-iommu.c
-index b85ce6310ddbda..55a2188197c621 100644
+index 2287b89967067d..cdb8034ece9bde 100644
 --- a/drivers/iommu/virtio-iommu.c
 +++ b/drivers/iommu/virtio-iommu.c
-@@ -48,6 +48,7 @@ struct viommu_dev {
- 	u64				pgsize_bitmap;
- 	u32				first_domain;
- 	u32				last_domain;
-+	u32				identity_domain_id;
- 	/* Supported MAP flags */
+@@ -63,7 +63,6 @@ struct viommu_mapping {
+ struct viommu_domain {
+ 	struct iommu_domain		domain;
+ 	struct viommu_dev		*viommu;
+-	struct mutex			mutex; /* protects viommu pointer */
+ 	unsigned int			id;
  	u32				map_flags;
- 	u32				probe_size;
-@@ -70,7 +71,6 @@ struct viommu_domain {
- 	struct rb_root_cached		mappings;
  
- 	unsigned long			nr_endpoints;
--	bool				bypass;
+@@ -97,6 +96,8 @@ struct viommu_event {
+ 	};
  };
  
- struct viommu_endpoint {
-@@ -305,6 +305,22 @@ static int viommu_send_req_sync(struct viommu_dev *viommu, void *buf,
- 	return ret;
++static struct viommu_domain viommu_identity_domain;
++
+ #define to_viommu_domain(domain)	\
+ 	container_of(domain, struct viommu_domain, domain)
+ 
+@@ -653,65 +654,45 @@ static void viommu_event_handler(struct virtqueue *vq)
+ 
+ /* IOMMU API */
+ 
+-static struct iommu_domain *viommu_domain_alloc(unsigned type)
++static struct iommu_domain *viommu_domain_alloc_paging(struct device *dev)
+ {
+-	struct viommu_domain *vdomain;
+-
+-	if (type != IOMMU_DOMAIN_UNMANAGED &&
+-	    type != IOMMU_DOMAIN_DMA &&
+-	    type != IOMMU_DOMAIN_IDENTITY)
+-		return NULL;
+-
+-	vdomain = kzalloc(sizeof(*vdomain), GFP_KERNEL);
+-	if (!vdomain)
+-		return NULL;
+-
+-	mutex_init(&vdomain->mutex);
+-	spin_lock_init(&vdomain->mappings_lock);
+-	vdomain->mappings = RB_ROOT_CACHED;
+-
+-	return &vdomain->domain;
+-}
+-
+-static int viommu_domain_finalise(struct viommu_endpoint *vdev,
+-				  struct iommu_domain *domain)
+-{
+-	int ret;
+-	unsigned long viommu_page_size;
++	struct viommu_endpoint *vdev = dev_iommu_priv_get(dev);
+ 	struct viommu_dev *viommu = vdev->viommu;
+-	struct viommu_domain *vdomain = to_viommu_domain(domain);
++	unsigned long viommu_page_size;
++	struct viommu_domain *vdomain;
++	int ret;
+ 
+ 	viommu_page_size = 1UL << __ffs(viommu->pgsize_bitmap);
+ 	if (viommu_page_size > PAGE_SIZE) {
+ 		dev_err(vdev->dev,
+ 			"granule 0x%lx larger than system page size 0x%lx\n",
+ 			viommu_page_size, PAGE_SIZE);
+-		return -ENODEV;
++		return ERR_PTR(-ENODEV);
+ 	}
+ 
++	vdomain = kzalloc(sizeof(*vdomain), GFP_KERNEL);
++	if (!vdomain)
++		return ERR_PTR(-ENOMEM);
++
++	spin_lock_init(&vdomain->mappings_lock);
++	vdomain->mappings = RB_ROOT_CACHED;
++
+ 	ret = ida_alloc_range(&viommu->domain_ids, viommu->first_domain,
+ 			      viommu->last_domain, GFP_KERNEL);
+-	if (ret < 0)
+-		return ret;
+-
+-	vdomain->id		= (unsigned int)ret;
+-
+-	domain->pgsize_bitmap	= viommu->pgsize_bitmap;
+-	domain->geometry	= viommu->geometry;
+-
+-	vdomain->map_flags	= viommu->map_flags;
+-	vdomain->viommu		= viommu;
+-
+-	if (domain->type == IOMMU_DOMAIN_IDENTITY) {
+-		ret = viommu_domain_map_identity(vdev, vdomain);
+-		if (ret) {
+-			ida_free(&viommu->domain_ids, vdomain->id);
+-			vdomain->viommu = NULL;
+-			return ret;
+-		}
++	if (ret < 0) {
++		kfree(vdomain);
++		return ERR_PTR(ret);
+ 	}
+ 
+-	return 0;
++	vdomain->id = (unsigned int)ret;
++
++	vdomain->domain.pgsize_bitmap = viommu->pgsize_bitmap;
++	vdomain->domain.geometry = viommu->geometry;
++
++	vdomain->map_flags = viommu->map_flags;
++	vdomain->viommu = viommu;
++
++	return &vdomain->domain;
  }
  
-+static int viommu_send_attach_req(struct viommu_dev *viommu, struct device *dev,
-+				  struct virtio_iommu_req_attach *req)
+ static void viommu_domain_free(struct iommu_domain *domain)
+@@ -727,6 +708,28 @@ static void viommu_domain_free(struct iommu_domain *domain)
+ 	kfree(vdomain);
+ }
+ 
++static struct iommu_domain *viommu_domain_alloc_identity(struct device *dev)
 +{
++	struct viommu_endpoint *vdev = dev_iommu_priv_get(dev);
++	struct iommu_domain *domain;
 +	int ret;
-+	unsigned int i;
-+	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
 +
-+	for (i = 0; i < fwspec->num_ids; i++) {
-+		req->endpoint = cpu_to_le32(fwspec->ids[i]);
-+		ret = viommu_send_req_sync(viommu, req, sizeof(*req));
-+		if (ret)
-+			return ret;
++	if (virtio_has_feature(vdev->viommu->vdev,
++			       VIRTIO_IOMMU_F_BYPASS_CONFIG))
++		return &viommu_identity_domain.domain;
++
++	domain = viommu_domain_alloc_paging(dev);
++	if (IS_ERR(domain))
++		return domain;
++
++	ret = viommu_domain_map_identity(vdev, to_viommu_domain(domain));
++	if (ret) {
++		viommu_domain_free(domain);
++		return ERR_PTR(ret);
 +	}
-+	return 0;
++	return domain;
 +}
 +
- /*
-  * viommu_add_mapping - add a mapping to the internal tree
-  *
-@@ -687,12 +703,6 @@ static int viommu_domain_finalise(struct viommu_endpoint *vdev,
- 	vdomain->viommu		= viommu;
- 
- 	if (domain->type == IOMMU_DOMAIN_IDENTITY) {
--		if (virtio_has_feature(viommu->vdev,
--				       VIRTIO_IOMMU_F_BYPASS_CONFIG)) {
--			vdomain->bypass = true;
--			return 0;
--		}
--
- 		ret = viommu_domain_map_identity(vdev, vdomain);
- 		if (ret) {
- 			ida_free(&viommu->domain_ids, vdomain->id);
-@@ -719,10 +729,8 @@ static void viommu_domain_free(struct iommu_domain *domain)
- 
  static int viommu_attach_dev(struct iommu_domain *domain, struct device *dev)
  {
--	int i;
  	int ret = 0;
- 	struct virtio_iommu_req_attach req;
--	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+@@ -734,20 +737,8 @@ static int viommu_attach_dev(struct iommu_domain *domain, struct device *dev)
  	struct viommu_endpoint *vdev = dev_iommu_priv_get(dev);
  	struct viommu_domain *vdomain = to_viommu_domain(domain);
  
-@@ -761,16 +769,9 @@ static int viommu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 		.domain		= cpu_to_le32(vdomain->id),
- 	};
- 
--	if (vdomain->bypass)
--		req.flags |= cpu_to_le32(VIRTIO_IOMMU_ATTACH_F_BYPASS);
--
--	for (i = 0; i < fwspec->num_ids; i++) {
--		req.endpoint = cpu_to_le32(fwspec->ids[i]);
--
--		ret = viommu_send_req_sync(vdomain->viommu, &req, sizeof(req));
--		if (ret)
--			return ret;
+-	mutex_lock(&vdomain->mutex);
+-	if (!vdomain->viommu) {
+-		/*
+-		 * Properly initialize the domain now that we know which viommu
+-		 * owns it.
+-		 */
+-		ret = viommu_domain_finalise(vdev, domain);
+-	} else if (vdomain->viommu != vdev->viommu) {
+-		ret = -EINVAL;
 -	}
-+	ret = viommu_send_attach_req(vdomain->viommu, dev, &req);
-+	if (ret)
-+		return ret;
+-	mutex_unlock(&vdomain->mutex);
+-
+-	if (ret)
+-		return ret;
++	if (vdomain->viommu != vdev->viommu)
++		return -EINVAL;
  
- 	if (!vdomain->nr_endpoints) {
- 		/*
-@@ -788,6 +789,40 @@ static int viommu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 	return 0;
- }
+ 	/*
+ 	 * In the virtio-iommu device, when attaching the endpoint to a new
+@@ -1097,7 +1088,8 @@ static bool viommu_capable(struct device *dev, enum iommu_cap cap)
  
-+static int viommu_attach_identity_domain(struct iommu_domain *domain,
-+					 struct device *dev)
-+{
-+	int ret = 0;
-+	struct virtio_iommu_req_attach req;
-+	struct viommu_endpoint *vdev = dev_iommu_priv_get(dev);
-+	struct viommu_domain *vdomain = to_viommu_domain(domain);
-+
-+	req = (struct virtio_iommu_req_attach) {
-+		.head.type	= VIRTIO_IOMMU_T_ATTACH,
-+		.domain		= cpu_to_le32(vdev->viommu->identity_domain_id),
-+		.flags          = cpu_to_le32(VIRTIO_IOMMU_ATTACH_F_BYPASS),
-+	};
-+
-+	ret = viommu_send_attach_req(vdev->viommu, dev, &req);
-+	if (ret)
-+		return ret;
-+
-+	if (vdev->vdomain)
-+		vdev->vdomain->nr_endpoints--;
-+	vdomain->nr_endpoints++;
-+	vdev->vdomain = vdomain;
-+	return 0;
-+}
-+
-+static struct viommu_domain viommu_identity_domain = {
-+	.domain = {
-+		.type = IOMMU_DOMAIN_IDENTITY,
-+		.ops = &(const struct iommu_domain_ops) {
-+			.attach_dev = viommu_attach_identity_domain,
-+		},
-+	},
-+};
-+
- static void viommu_detach_dev(struct viommu_endpoint *vdev)
- {
- 	int i;
-@@ -1061,6 +1096,7 @@ static bool viommu_capable(struct device *dev, enum iommu_cap cap)
- }
- 
- static struct iommu_ops viommu_ops = {
-+	.identity_domain	= &viommu_identity_domain.domain,
+ static const struct iommu_ops viommu_ops = {
  	.capable		= viommu_capable,
- 	.domain_alloc		= viommu_domain_alloc,
+-	.domain_alloc		= viommu_domain_alloc,
++	.domain_alloc_identity	= viommu_domain_alloc_identity,
++	.domain_alloc_paging	= viommu_domain_alloc_paging,
  	.probe_device		= viommu_probe_device,
-@@ -1184,6 +1220,18 @@ static int viommu_probe(struct virtio_device *vdev)
- 	if (virtio_has_feature(vdev, VIRTIO_IOMMU_F_MMIO))
- 		viommu->map_flags |= VIRTIO_IOMMU_MAP_F_MMIO;
- 
-+	/* Reserve an ID to use as the bypass domain */
-+	if (virtio_has_feature(viommu->vdev, VIRTIO_IOMMU_F_BYPASS_CONFIG)) {
-+		viommu->identity_domain_id = viommu->first_domain;
-+		viommu->first_domain++;
-+	} else {
-+		/*
-+		 * Assume the VMM is sensible and it either supports bypass on
-+		 * all instances or no instances.
-+		 */
-+		viommu_ops.identity_domain = NULL;
-+	}
-+
- 	viommu_ops.pgsize_bitmap = viommu->pgsize_bitmap;
- 
- 	virtio_device_ready(vdev);
+ 	.release_device		= viommu_release_device,
+ 	.device_group		= viommu_device_group,
 -- 
 2.43.0
 
