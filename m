@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420B222FAC3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0589E23ED71
 	for <patches@lists.linux.dev>; Mon,  3 Mar 2025 23:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741044895; cv=none; b=czk0wGD34XHWeE+pk4P94PcHnLWkeLHdqAQX4O7SVNUeK7ZLs00pZN1MXtb6cYEc7wQ3wbMHmmBV/1exuwIZSvpN4wJmOGsKVIqe8MTyfLV8TwKrvRIIhlxjvlCeI3iOwWcW9kHhewSejNvJCzGQodXuwPZQon2fHt1R5+e7PQs=
+	t=1741044895; cv=none; b=oipbpG9s9bwyCJECsxSYKnaO1qS8oNLxJQfAUVaWsPkE+0DkP4FscGLxhv2+ABnVdqsclNfAkOQ7S6RqXP8kkhoIbrh6SELDnQlfvS/aeGvjFR9NAkwKAOVdSis52tpW7xL5HjnJKiDu0sCvtgL9tmk3HxSZW4nEygtr+0xwt5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1741044895; c=relaxed/simple;
-	bh=d7RQfizMQbYx4OTl2luYPTFNKrA57PgoWS6A/03o7W8=;
+	bh=dUOelVMIQQD73F+GAf+V+9g1dvlZdazGdQL8u6euTHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Coh96MhSz7/SiwJuW+gWojYJV1twg5zRnLH2H5/fgbmKt7RMVfOZmXI/+eoQK5HYxCjtLJ1ZdBlAMZu4q4r7DPoPethFGjO+daf//mrTgenImzotg/TMBNvCJq2pV7X5VvMlusjSMctH8lGC0147wuzNQCkWKF5erMpWez05Ucc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EleZ5YpN; arc=none smtp.client-ip=192.198.163.17
+	 MIME-Version; b=YOo/ENZRHTnkgailM1r6vkdHH+9AmZZMtALqUAlWuzXvdtn5R2AO9Xj1ubPHpwG6XxtvdeSKPtdiribAnbBRP7jU9KmSE6YQx87JnMN/n8Cs22rznVsEsOPglfG60/ahjRFi8QKa5MlGKXv5pYgPz+c70OglEDibR4k5AFeMcBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bEdljwJ0; arc=none smtp.client-ip=192.198.163.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EleZ5YpN"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bEdljwJ0"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741044893; x=1772580893;
+  t=1741044894; x=1772580894;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=d7RQfizMQbYx4OTl2luYPTFNKrA57PgoWS6A/03o7W8=;
-  b=EleZ5YpNzBOXOE+knpQVEooQwPCsbLtfAeAg1cwlhfG8h/gpZACZ44HA
-   3puS0rthhx8dA2nqbUtuaBdK2xHK+ElXwdiVAAjKTWKfkKzUJOAnyTuqt
-   XfHuDwbjkAnb0t44kanbjt8u3+t3K7ZZkOUHeKHUQ3Q25T2E6sl2LooXg
-   Pk1iDUbvJJGB2mIW9lwl/NJ0fWW2s2LyG/Vh6Gx/062PE+FMSNBQZ+/yO
-   4L5q17Q6A0c/Sg/KmtVhg/YKVpuj2adV+pLOz1WGyKvR3JXDO6M54Zisz
-   AzimxkVoLy9/GxK6FvjMwKIrZYXhrBUZqMNzu2U+LZIi43jquTRZNosiW
-   Q==;
-X-CSE-ConnectionGUID: 0KnmRgAXS9e5KQslBXkDlg==
-X-CSE-MsgGUID: 1szy5rwARriRNuSSskSrCQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11362"; a="41835954"
+  bh=dUOelVMIQQD73F+GAf+V+9g1dvlZdazGdQL8u6euTHI=;
+  b=bEdljwJ0qDL8x4aT2tgJo320I4Hq6eUQfNbzRvJxcSpRn1W+6bmw/J2K
+   hHFf4hZ1WinUj3SoieYbr7ZrL+547yj04jOS4mwqVQFSET8p0CfofetPX
+   NEenD7na9jd/parBdeA7gSY2Szjqi9rcp3ES6M1olgCtN5XVepdu1etfH
+   IxizwksYWyZgNVhnuVYGrXZjhkGhUPFebjfPF0B3OvBwTNuQb1iqRMjnP
+   Bai6tLZWap7U9yPUO/+IUYPm672SB8jZrk3p/wZra3uPoC+4Xl6FDj9nq
+   sdPv8li4qiOoM96IjFByFZijGMU8YF7GQXVmOO8cPYknJFyc/kPE+4Zz6
+   g==;
+X-CSE-ConnectionGUID: JLRC1kZ2SuGm5+q5YVQC8g==
+X-CSE-MsgGUID: dTaJe3FRQR+Ee69dtsMB8w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11362"; a="41835963"
 X-IronPort-AV: E=Sophos;i="6.13,330,1732608000"; 
-   d="scan'208";a="41835954"
+   d="scan'208";a="41835963"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
   by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2025 15:34:47 -0800
-X-CSE-ConnectionGUID: cgak7XuLRfK2/yvUzIkgew==
-X-CSE-MsgGUID: wQBnkkGqT3e0lCNvfpvjyg==
+X-CSE-ConnectionGUID: 0g3CZYF7QdqyW55C6dFfFQ==
+X-CSE-MsgGUID: Vjr083SeSjC+Ly+ovxcDjw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.13,330,1732608000"; 
-   d="scan'208";a="117982296"
+   d="scan'208";a="117982298"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
   by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2025 15:33:52 -0800
 From: Tony Luck <tony.luck@intel.com>
@@ -55,9 +55,9 @@ To: Fenghua Yu <fenghuay@nvidia.com>,
 Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [RFC PATCH 09/17] x86/resctrl: Add Intel PMT domain specific code
-Date: Mon,  3 Mar 2025 15:33:29 -0800
-Message-ID: <20250303233340.333743-10-tony.luck@intel.com>
+Subject: [RFC PATCH 10/17] x86/resctrl: Add detailed descriptions for Clearwater Forest events
+Date: Mon,  3 Mar 2025 15:33:30 -0800
+Message-ID: <20250303233340.333743-11-tony.luck@intel.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250303233340.333743-1-tony.luck@intel.com>
 References: <20250303233340.333743-1-tony.luck@intel.com>
@@ -69,127 +69,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Domain specific initialization and tear down. Very simple as
-there are no domain specific elements that need to be allocated
-or initiailazed. Just the domain itself.
+There are two event groups one for energy reporting and another
+for "perf" events.
 
-This does need the mkdir_mondata_subdir_allrdtgrp() and
-rmdir_mondata_subdir_allrdtgrp() functions. So change them
-from static to global so they can be called from other source
-files.
+See the XML description files in https://github.com/intel/Intel-PMT
+in the xml/CWF/OOBMSM/{RMID-ENERGY,RMID-PERF}/ for the detailed
+descriptions that were used to derive these descriptions.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/internal.h  |  7 +++++++
- arch/x86/kernel/cpu/resctrl/core.c      | 12 ++++++++++++
- arch/x86/kernel/cpu/resctrl/intel_pmt.c | 16 ++++++++++++++++
- arch/x86/kernel/cpu/resctrl/rdtgroup.c  |  6 ++----
- 4 files changed, 37 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/resctrl/intel_pmt.c | 43 +++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index f530382d8871..65bbe223f8a1 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -640,9 +640,12 @@ int rdt_get_mon_l3_config(struct rdt_resource *r);
- #ifdef CONFIG_INTEL_PMT_RESCTRL
- int rdt_get_intel_pmt_mon_config(void);
- void rdt_get_intel_pmt_mount(void);
-+void setup_intel_pmt_mon_domain(int cpu, int id, struct rdt_resource *r, struct list_head *add_pos);
- #else
- static inline int rdt_get_intel_pmt_mon_config(void) { return 0; }
- static inline void rdt_get_intel_pmt_mount(void) { }
-+static inline void setup_intel_pmt_mon_domain(int cpu, int id, struct rdt_resource *r,
-+					      struct list_head *add_pos) { }
- #endif
- void __exit rdt_put_mon_l3_config(void);
- bool __init rdt_cpu_has(int flag);
-@@ -667,4 +670,8 @@ void resctrl_file_fflags_init(const char *config, unsigned long fflags);
- void rdt_staged_configs_clear(void);
- bool closid_allocated(unsigned int closid);
- int resctrl_find_cleanest_closid(void);
-+void mkdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
-+				    struct rdt_domain_hdr *hdr);
-+void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
-+				    struct rdt_domain_hdr *hdr);
- #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index c18d79e470d2..b6e6a25520f7 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -657,6 +657,9 @@ static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
- 	case RDT_RESOURCE_L3:
- 		setup_l3_mon_domain(cpu, id, r, add_pos);
- 		break;
-+	case RDT_RESOURCE_INTEL_PMT:
-+		setup_intel_pmt_mon_domain(cpu, id, r, add_pos);
-+		break;
- 	default:
- 		WARN_ON_ONCE(1);
- 	}
-@@ -752,6 +755,15 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
- 		synchronize_rcu();
- 		mon_domain_free(hw_dom);
- 		break;
-+	case RDT_RESOURCE_INTEL_PMT:
-+		mutex_lock(&rdtgroup_mutex);
-+		if (resctrl_mounted && resctrl_arch_mon_capable())
-+			rmdir_mondata_subdir_allrdtgrp(r, hdr);
-+		mutex_unlock(&rdtgroup_mutex);
-+		list_del_rcu(&hdr->list);
-+		synchronize_rcu();
-+		kfree(container_of(hdr, struct rdt_core_mon_domain, hdr));
-+		break;
- 	}
- }
- 
 diff --git a/arch/x86/kernel/cpu/resctrl/intel_pmt.c b/arch/x86/kernel/cpu/resctrl/intel_pmt.c
-index 44373052ca49..76ec42a67c48 100644
+index 76ec42a67c48..78ab6d899ee2 100644
 --- a/arch/x86/kernel/cpu/resctrl/intel_pmt.c
 +++ b/arch/x86/kernel/cpu/resctrl/intel_pmt.c
-@@ -167,3 +167,19 @@ void rdt_get_intel_pmt_mount(void)
- 		r->mon_capable = false;
- 	}
- }
+@@ -70,7 +70,50 @@ struct telem_entry {
+ 	struct pmt_event evts[];
+ };
+ 
++#define CWF_NUM_RMIDS	576
++#define CWF_ENERGY_GUID	0x26696143
++#define CWF_PERF_GUID	0x26557651
++#define	CWF_ENERGY_STRIDE	0x10
++#define CWF_PERF_STRIDE	0x38
 +
-+void setup_intel_pmt_mon_domain(int cpu, int id, struct rdt_resource *r, struct list_head *add_pos)
-+{
-+	struct rdt_core_mon_domain *hw_dom;
++static struct telem_entry cwf_energy = {
++	.name				= "energy",
++	.guid				= CWF_ENERGY_GUID,
++	.num_rmids			= CWF_NUM_RMIDS,
++	.stride				= CWF_ENERGY_STRIDE,
++	.overflow_counter_off		= CWF_NUM_RMIDS * CWF_ENERGY_STRIDE,
++	.last_overflow_tstamp_off	= CWF_NUM_RMIDS * CWF_ENERGY_STRIDE + 8,
++	.last_update_tstamp_off		= CWF_NUM_RMIDS * CWF_ENERGY_STRIDE + 16,
++	.evts				= {
++		EVT(PMT_EVENT_ENERGY, "core_energy", 0x0, EVT_U46_18),
++		EVT(PMT_EVENT_ACTIVITY, "activity", 0x8, EVT_U46_18),
++		{ }
++	}
++};
 +
-+	hw_dom = kzalloc_node(sizeof(*hw_dom), GFP_KERNEL, cpu_to_node(cpu));
-+	if (!hw_dom)
-+		return;
++static struct telem_entry cwf_perf = {
++	.name				= "perf",
++	.guid				= CWF_PERF_GUID,
++	.num_rmids			= CWF_NUM_RMIDS,
++	.stride				= CWF_PERF_STRIDE,
++	.overflow_counter_off		= CWF_NUM_RMIDS * CWF_PERF_STRIDE,
++	.last_overflow_tstamp_off	= CWF_NUM_RMIDS * CWF_PERF_STRIDE + 8,
++	.last_update_tstamp_off		= CWF_NUM_RMIDS * CWF_PERF_STRIDE + 16,
++	.evts				= {
++		EVT(PMT_EVENT_STALLS_LLC_HIT, "stalls_llc_hit", 0x0, EVT_U64),
++		EVT(PMT_EVENT_C1_RES, "c1_res", 0x8, EVT_U64),
++		EVT(PMT_EVENT_UNHALTED_CORE_CYCLES, "unhalted_core_cycles", 0x10, EVT_U64),
++		EVT(PMT_EVENT_STALLS_LLC_MISS, "stalls_llc_miss", 0x18, EVT_U64),
++		EVT(PMT_EVENT_AUTO_C6_RES, "c6_res", 0x20, EVT_U64),
++		EVT(PMT_EVENT_UNHALTED_REF_CYCLES, "unhalted_ref_cycles", 0x28, EVT_U64),
++		EVT(PMT_EVENT_UOPS_RETIRED, "uops_retired", 0x30, EVT_U64),
++		{ }
++	}
++};
 +
-+	hw_dom->hdr.id = id;
-+	hw_dom->hdr.type = RESCTRL_MON_DOMAIN;
-+	cpumask_set_cpu(cpu, &hw_dom->hdr.cpu_mask);
-+	list_add_tail_rcu(&hw_dom->hdr.list, add_pos);
-+	if (resctrl_mounted && resctrl_arch_mon_capable())
-+		mkdir_mondata_subdir_allrdtgrp(r, &hw_dom->hdr);
-+}
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 4259bded5b7b..93da2e4f7fec 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -3041,8 +3041,7 @@ static void mon_rmdir_one_subdir(struct kernfs_node *pkn, char *name, char *subn
-  * Remove files and directories containing "sum" of domain data
-  * when last domain being summed is removed.
-  */
--static void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
--					   struct rdt_domain_hdr *hdr)
-+void rmdir_mondata_subdir_allrdtgrp(struct rdt_resource *r, struct rdt_domain_hdr *hdr)
- {
- 	struct rdtgroup *prgrp, *crgrp;
- 	char subname[32];
-@@ -3170,8 +3169,7 @@ static int mkdir_mondata_subdir(struct kernfs_node *parent_kn,
-  * Add all subdirectories of mon_data for "ctrl_mon" groups
-  * and "monitor" groups with given domain id.
-  */
--static void mkdir_mondata_subdir_allrdtgrp(struct rdt_resource *r,
--					   struct rdt_domain_hdr *hdr)
-+void mkdir_mondata_subdir_allrdtgrp(struct rdt_resource *r, struct rdt_domain_hdr *hdr)
- {
- 	struct kernfs_node *parent_kn;
- 	struct rdtgroup *prgrp, *crgrp;
+ static struct telem_entry *telem_entry[] = {
++	&cwf_energy,
++	&cwf_perf,
+ 	NULL
+ };
+ 
 -- 
 2.48.1
 
