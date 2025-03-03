@@ -1,108 +1,95 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A97F1E2847
-	for <patches@lists.linux.dev>; Mon,  3 Mar 2025 08:06:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29D1EC4;
+	Mon,  3 Mar 2025 09:33:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740989165; cv=none; b=k51ExCRNwIxt6dU5Xp2Uu3mJ0GRoBRDdDvmbhwLPYTHejUVJMAY02gbJHU+FcGgGALU98Isbg/LhiALZIk7OyfytnMeB7I935eXpwp/oQbvKDjZfL04ZthdAiK0znCAK0XVqSDggy35+KunjqrnEp/eHsLOzUn0HHNWCuJH5EzE=
+	t=1740994391; cv=none; b=NiPv1PwMB8LpO+QkLoMMgUM1clrRNYC677k2+6Ru9ESBDOZFIJ67FX2LJveO/m64vGhc15hXltOhFT/gzXoqDwcC4tTgFNUf3k+rBxEFQzAmVxcbDNGOKFiwRJuLyhRQwry/BBFBJebHbLro99Fey6JagYHRtQEfdO+YM+BAGK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740989165; c=relaxed/simple;
-	bh=IH4Qw4OZUiaQzCHILHMnQ5Z2BcYMRjESRbrTXR7+1/s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XBp3l0fVBTFNGb7cTRVBB7QQVRbnPKI8R1Anum8P3q2rOs+HEisC6sXPDsIuKnA3GNUC5/WEZ8gtxRs1TwMfhQxfXgJzfMm+dqlafrAP2g6UH+z0R7evDM5DhtegAmzPNA4izeptutC5KDBdXdYiQhQ16oKKQLqb0n6Dc99bw+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bAGOwRp5; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1740994391; c=relaxed/simple;
+	bh=uxWb5weZnx4w75c+cNd9geof+3mOOtF83ztdgamkHZc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Bw8nVXWp3rynnNr5wgMScj+rpi0MXrSNlRY6bK6POlCnqDt0iwMlosR4r0uF9O8o3pISRLaP0zNU8wjjVLAlhvV1nnZQ6Qla7gGvpS8Juy0fQeY4lKZWzEErtXZfp5wdlx8lE6U8bUf5EkzWffj8GLaKseVMlNWSFofb2xktZko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zot24OU+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bAGOwRp5"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-390df942558so3241550f8f.2
-        for <patches@lists.linux.dev>; Mon, 03 Mar 2025 00:06:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1740989162; x=1741593962; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=X0iUVs2ZQh+M1rl5kLkJ/YPcqr6UkD+Cttj33+uPFnc=;
-        b=bAGOwRp5fC0SHPexCiBm0jBut5IHJzsL8U0WFc+kcplpBZIPggp2Il0Rlwmcr/P7QI
-         3rlS94hHKVeVZ27LFdOIoSXSMC4hTaRs8vTpWLMshbjOKRloyskgy0v+tjSd1fBq8xNY
-         RTzIL5QhYAqxFvC6TWRGm+qmO5NhxpxCu9ud/0Tr1ScxZeP36wJbwFqYKB2TNHXA8MnH
-         0/7V/mqiM5Gwp4/i/qGrCpBg/dfNRK79VCjM3isItf3jAJ1TbE3vkskorWrEF9XP+btT
-         VtNOous4c022KF7RA8VSy/U45jZRRQgny33ri7txrtmZ++mTMmdU/M5psfpSWby4cFUQ
-         PQiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740989162; x=1741593962;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=X0iUVs2ZQh+M1rl5kLkJ/YPcqr6UkD+Cttj33+uPFnc=;
-        b=PkRCAuCcENnZjembvtaiiSzvYW2l7rasR/MP1/t+8Oyo55D9vdQTr2Mba5VRaUmYH0
-         s/njPfwiJn1y+hUO+LppQ6oz4h6HrIOmkWNZ7BEbv9z8yHgvSRDU78a1ddyizgEnjCpR
-         QdJJ7YfBva4TjuqR6a8LuFa+3A5BvP4RKLnhfm7gzVcGPqkV/Zk5JOUqpQdyjcu5U/kD
-         vO/pO+G/919XS9xRlNX7ByafdeC5qFtSZyybKpWZyUIJOfFF0o/jEoenWAvh0FuitQ/c
-         w5kEJXkM78BiylDHzd+6P7mEdztEcGrUjAEMNedF+D9gEAtlbGVQGJxACRa3ck2YejL2
-         0Tnw==
-X-Forwarded-Encrypted: i=1; AJvYcCU4x9wiisLbD04r/XEvz1KBeoygM8mRgi2UPN20mT1MtBNFofIhw0G74M9nm+VWmj+iJV2igBvG@lists.linux.dev
-X-Gm-Message-State: AOJu0YxJ5pMEhAkrWjIEgRfj9n+3dmETDqAfw7OcjR0kbhPFzfovRWUa
-	GnxJsmbuHRmb2aB3t6LOeEQFLGkNOfCGGJrLwh2SITp2CRzgeZng55AKB/SmWokYGqq00RpE2PH
-	1JuOdHmvRgIHVVXbrJlM3QFWj8Kd6XkW1s4Y6
-X-Gm-Gg: ASbGncu3++JRbR5hUleWd8YrJy5tweuAsy5UsybudzvPckY3grpwcFY6Qal2MOkDsLS
-	Wb5bXZ+DgBQVSd5tlVWd6ZMiADGsZcTjNzfQUz7helAJVBJsItqj8JvAHEvlPI6/mklvfk1j1Fi
-	mB/SOtaS0Zv+pfoPAs8ixON92ciaS0E7Rivm90CbtFNAM8MfkcMYFTJs7a
-X-Google-Smtp-Source: AGHT+IEk6318AFfc1LcVsJJ84wt3g9PnbPRWzDdM7m2/xTI/OwzWoyIK3cmNaUT7+G0p9cZPZuhg9T+sy8bKgxhf/+k=
-X-Received: by 2002:a5d:5f91:0:b0:38f:3c8a:4bf4 with SMTP id
- ffacd0b85a97d-390ec7cd27fmr9441896f8f.6.1740989162420; Mon, 03 Mar 2025
- 00:06:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zot24OU+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E6CC4CED6;
+	Mon,  3 Mar 2025 09:33:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1740994391;
+	bh=uxWb5weZnx4w75c+cNd9geof+3mOOtF83ztdgamkHZc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Zot24OU+Kr3IVKlNxS8Ms3Pi6PvMwu9DHSIsqRFgjxP7aaO6HBF+zxguPxwkhaO2a
+	 xrdRh9uBrtzK+Ykgl393iwGLK8grS93jXMrw/M0Jj0oWxBTRY58YtHO+mmTaRseX2I
+	 bwx01tB5PVV+suC6VLbWhT09Tqr1VNPpdd3/9dK4QlGfahn05Hh3Kp5xbqtzv3xwhm
+	 O65rL/CJBPtzWDzv1AOWI5Q5YPz+w3dHiYps7UNc3zVcLGycvh5U026fbDNLbGuWdj
+	 Bnj8SfZx8IFw+vKyH2xq2DVorZGK5IOZDXsua4NUVPxKkq4g9T8Y1Rw4H+/nn9pxqK
+	 tcLnUaY4LNqEQ==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Jocelyn Falempe <jfalempe@redhat.com>,
+	=?UTF-8?q?Thomas=20B=C3=B6hler?= <witcher@wiredspace.de>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: dri-devel@lists.freedesktop.org,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] drm/panic: clean Clippy warning
+Date: Mon,  3 Mar 2025 10:32:42 +0100
+Message-ID: <20250303093242.1011790-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250301231602.917580-1-ojeda@kernel.org>
-In-Reply-To: <20250301231602.917580-1-ojeda@kernel.org>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Mon, 3 Mar 2025 09:05:49 +0100
-X-Gm-Features: AQ5f1JrxAQw0Rq7Ilhd1yFsj2dY9VjMUraWB3QJMgYSvaEWDQVWq8PuNQusYF1c
-Message-ID: <CAH5fLgjhMfk1vZCc242vKYnTN13Ss23VhVhaAjwU67Z5qhP9mA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] drm/panic: use `div_ceil` to clean Clippy warning
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>, =?UTF-8?Q?Thomas_B=C3=B6hler?= <witcher@wiredspace.de>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, dri-devel@lists.freedesktop.org, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Mar 2, 2025 at 12:17=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> Starting with the upcoming Rust 1.86.0 (to be released 2025-04-03),
-> Clippy warns:
->
->     error: manually reimplementing `div_ceil`
->        --> drivers/gpu/drm/drm_panic_qr.rs:548:26
->         |
->     548 |         let pad_offset =3D (offset + 7) / 8;
->         |                          ^^^^^^^^^^^^^^^^ help: consider using =
-`.div_ceil()`: `offset.div_ceil(8)`
->         |
->         =3D help: for further information visit https://rust-lang.github.=
-io/rust-clippy/master/index.html#manual_div_ceil
->
-> And similarly for `stride`. Thus apply the suggestion to both.
->
-> The behavior (and thus codegen) is not exactly equivalent [1][2], since
-> `div_ceil()` returns the right value for the values that currently
-> would overflow.
->
-> Link: https://github.com/rust-lang/rust-clippy/issues/14333 [1]
-> Link: https://godbolt.org/z/dPq6nGnv3 [2]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Clippy warns:
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+    error: manual implementation of an assign operation
+       --> drivers/gpu/drm/drm_panic_qr.rs:418:25
+        |
+    418 |                         self.carry = self.carry % pow;
+        |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: replace it with: `self.carry %= pow`
+        |
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assign_op_pattern
+
+Thus clean it up.
+
+Fixes: dbed4a797e00 ("drm/panic: Better binary encoding in QR code")
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ drivers/gpu/drm/drm_panic_qr.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/drm_panic_qr.rs b/drivers/gpu/drm/drm_panic_qr.rs
+index 62cb8a162483..3b0dd59781d4 100644
+--- a/drivers/gpu/drm/drm_panic_qr.rs
++++ b/drivers/gpu/drm/drm_panic_qr.rs
+@@ -415,7 +415,7 @@ fn next(&mut self) -> Option<Self::Item> {
+                         self.carry_len -= out_len;
+                         let pow = u64::pow(10, self.carry_len as u32);
+                         let out = (self.carry / pow) as u16;
+-                        self.carry = self.carry % pow;
++                        self.carry %= pow;
+                         Some((out, NUM_CHARS_BITS[out_len]))
+                     }
+                 }
+
+base-commit: c0eb65494e59d9834af7cbad983629e9017b25a1
+-- 
+2.48.1
+
