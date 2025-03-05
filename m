@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E67252907;
-	Wed,  5 Mar 2025 18:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A124251785;
+	Wed,  5 Mar 2025 18:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198153; cv=none; b=iT92BzyoF1XHeGXC0nzrpUNP9L4EbFOvIMD7w9zoJBKckjK/vCWSPEDCRly48rV9G6APiDJkdtLIfKG7x0KUDJn+qbMnPXNRtFPLKay+PQVH0EwNGEhIqr2S6OtTusfGdL0hmtqMFkCBP8hAvjHnPJnrmCbvmMHALIehs7S9fx0=
+	t=1741198157; cv=none; b=spFJl4DzSiBNdS9SV8TrH5vogaj5/nWNhPUl0Ijvyb8FOkjBk9FyHaYy63Npe8BJJqIKuymNJtDkDYukxXfFSCJU8wEhLeSQGAz11IXk2MV198Vyg64Qrvj0aJ6yfUtHQF9z8Mr/e9iSwWSEVVxLxFIsrVj9hdRBLWHQAh3IHk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198153; c=relaxed/simple;
-	bh=sBl4dMOskKfvC06smnjw6DoDwQkuOIpT4qx8IG1qPo4=;
+	s=arc-20240116; t=1741198157; c=relaxed/simple;
+	bh=lxf1Z7JCNRN97T59fTHht8Nhktr8mXWi3bEoa0TG5Ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QT7lH/tqIWHXDZm1iug30IcWTJH4t8+u7jQEXQDtFSS3Yy7lcNCzVXQwgbMuYpR+CURXEDniPw4dnqtoGgz1vIExrmXf59ThNxTKCHLFvBW3lWAguIpCapHyFhfHOqy5+PRbY+k2/ukQla4tQnDzK9v1TniBZ8i2aND9BZRlFzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUg//yH4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MMy+c+17i26GubNMUI26eD934vkUijhQdgpl/yJ1ocvcqln8h0I0019h7ii8zMtqPjR4P6wMepNPqRldeLS+CfGJqU+Og73i94ie0Yc0V+A/gElXZVn+3cm66QBvlxyyJe8F73jtDlVAFqY/FSfVHfEXsJaag46E/lIVgIrds9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPJehBHI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUg//yH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B03C4CED1;
-	Wed,  5 Mar 2025 18:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPJehBHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250B6C4CED1;
+	Wed,  5 Mar 2025 18:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198153;
-	bh=sBl4dMOskKfvC06smnjw6DoDwQkuOIpT4qx8IG1qPo4=;
+	s=korg; t=1741198156;
+	bh=lxf1Z7JCNRN97T59fTHht8Nhktr8mXWi3bEoa0TG5Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wUg//yH4yxq0lLGJYZqm7q9orJtAX/+h6nDAGqmc2qRuMgrIRg/6kiq+mHx3oy/x+
-	 IY5slZCOU8lVSudCO24mPF4SBx1iubN48fWSPK95MW3EF47BuvOvlHB7cFN79jL8um
-	 6JAZv6gTQz9XjqSVhikuhY7Pv+gUyP8/afkwG6zg=
+	b=NPJehBHIduTqNO4WkZNyGKnS64fIBPW9Th5ewTNPdYo7vQ80ix18RyPg6Gdx5wBPQ
+	 5YPyTOFR5fyORjOYKUOTRtMNHyIvcbJ5ZfELbiYLJJLiffwIcSxKxY8wQlpi+jXGUB
+	 LyJizVBRDiF/5zSPEd8gvExCFpPSoh+GBX+He9VI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Chancel Liu <chancel.liu@nxp.com>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/150] ALSA: hda/realtek: Fix wrong mic setup for ASUS VivoBook 15
-Date: Wed,  5 Mar 2025 18:48:00 +0100
-Message-ID: <20250305174505.874275375@linuxfoundation.org>
+Subject: [PATCH 6.12 042/150] ASoC: fsl: Rename stream name of SAI DAI driver
+Date: Wed,  5 Mar 2025 18:47:51 +0100
+Message-ID: <20250305174505.511586519@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -50,43 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Chancel Liu <chancel.liu@nxp.com>
 
-[ Upstream commit 9e7c6779e3530bbdd465214afcd13f19c33e51a2 ]
+[ Upstream commit 0da83ab025bc45e9742e87c2cce19bff423377c8 ]
 
-ASUS VivoBook 15 with SSID 1043:1460 took an incorrect quirk via the
-pin pattern matching for ASUS (ALC256_FIXUP_ASUS_MIC), resulting in
-the two built-in mic pins (0x13 and 0x1b).  This had worked without
-problems casually in the past because the right pin (0x1b) was picked
-up as the primary device.  But since we fixed the pin enumeration for
-other bugs, the bogus one (0x13) is picked up as the primary device,
-hence the bug surfaced now.
+If stream names of DAI driver are duplicated there'll be warnings when
+machine driver tries to add widgets on a route:
 
-For addressing the regression, this patch explicitly specifies the
-quirk entry with ALC256_FIXUP_ASUS_MIC_NO_PRESENCE, which sets up only
-the headset mic pin.
+[    8.831335] fsl-asoc-card sound-wm8960: ASoC: sink widget CPU-Playback overwritten
+[    8.839917] fsl-asoc-card sound-wm8960: ASoC: source widget CPU-Capture overwritten
 
-Fixes: 3b4309546b48 ("ALSA: hda: Fix headset detection failure due to unstable sort")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219807
-Link: https://patch.msgid.link/20250225154540.13543-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Use different stream names to avoid such warnings.
+DAI names in AUDMIX are also updated accordingly.
+
+Fixes: 15c958390460 ("ASoC: fsl_sai: Add separate DAI for transmitter and receiver")
+Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
+Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
+Link: https://patch.msgid.link/20250217010437.258621-1-chancel.liu@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/fsl/fsl_sai.c    | 6 +++---
+ sound/soc/fsl/imx-audmix.c | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 9bf99fe6cd34d..63e22f5845f82 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10564,6 +10564,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x13b0, "ASUS Z550SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1427, "Asus Zenbook UX31E", ALC269VB_FIXUP_ASUS_ZENBOOK),
- 	SND_PCI_QUIRK(0x1043, 0x1433, "ASUS GX650PY/PZ/PV/PU/PYV/PZV/PIV/PVV", ALC285_FIXUP_ASUS_I2C_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x1460, "Asus VivoBook 15", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1463, "Asus GA402X/GA402N", ALC285_FIXUP_ASUS_I2C_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1473, "ASUS GU604VI/VC/VE/VG/VJ/VQ/VU/VV/VY/VZ", ALC285_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1483, "ASUS GU603VQ/VU/VV/VJ/VI", ALC285_FIXUP_ASUS_HEADSET_MIC),
+diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
+index 634168d2bb6e5..c5efbceb06d1f 100644
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -994,10 +994,10 @@ static struct snd_soc_dai_driver fsl_sai_dai_template[] = {
+ 	{
+ 		.name = "sai-tx",
+ 		.playback = {
+-			.stream_name = "CPU-Playback",
++			.stream_name = "SAI-Playback",
+ 			.channels_min = 1,
+ 			.channels_max = 32,
+-				.rate_min = 8000,
++			.rate_min = 8000,
+ 			.rate_max = 2822400,
+ 			.rates = SNDRV_PCM_RATE_KNOT,
+ 			.formats = FSL_SAI_FORMATS,
+@@ -1007,7 +1007,7 @@ static struct snd_soc_dai_driver fsl_sai_dai_template[] = {
+ 	{
+ 		.name = "sai-rx",
+ 		.capture = {
+-			.stream_name = "CPU-Capture",
++			.stream_name = "SAI-Capture",
+ 			.channels_min = 1,
+ 			.channels_max = 32,
+ 			.rate_min = 8000,
+diff --git a/sound/soc/fsl/imx-audmix.c b/sound/soc/fsl/imx-audmix.c
+index ff3671226306b..ca33ecad07521 100644
+--- a/sound/soc/fsl/imx-audmix.c
++++ b/sound/soc/fsl/imx-audmix.c
+@@ -119,8 +119,8 @@ static const struct snd_soc_ops imx_audmix_be_ops = {
+ static const char *name[][3] = {
+ 	{"HiFi-AUDMIX-FE-0", "HiFi-AUDMIX-FE-1", "HiFi-AUDMIX-FE-2"},
+ 	{"sai-tx", "sai-tx", "sai-rx"},
+-	{"AUDMIX-Playback-0", "AUDMIX-Playback-1", "CPU-Capture"},
+-	{"CPU-Playback", "CPU-Playback", "AUDMIX-Capture-0"},
++	{"AUDMIX-Playback-0", "AUDMIX-Playback-1", "SAI-Capture"},
++	{"SAI-Playback", "SAI-Playback", "AUDMIX-Capture-0"},
+ };
+ 
+ static int imx_audmix_probe(struct platform_device *pdev)
 -- 
 2.39.5
 
