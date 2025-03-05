@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB6E24C07D;
-	Wed,  5 Mar 2025 17:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF50250BE9;
+	Wed,  5 Mar 2025 17:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197448; cv=none; b=suniuelV7opW+jRoqgI30TVZgUHLdHKb4099sNNyrYjSsLQ+4djLmTBAOMAY2iZTSorTh4XZWyG3I3uF8v+jD6LEG3QpWwNB+6j2egws3ad3ysF1Lhm7iJMZANJY62fyO2t/jjmapsDZE4R1hf4xRn1RmBDflRyvKfItMFbMJJ8=
+	t=1741197450; cv=none; b=Y2wCOAAIg2Fvsg2e5qeEAsspapZUcXmaVQKbXFLyB2xBJRG1QyrhXRULyQP0QzkuIw8wbNgXzM/NqXgeUb0+2Oj76448WypJS27YWeSBjvKYUjyyuzMZTAxnvmGtbvbtdYHuyyY2qr5Ridc4c8s7T4jCu5rll2BmNmF79Xxw8nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197448; c=relaxed/simple;
-	bh=WLb+agunoQhFbyQ9XzRTJ44y7APLQHOflaqKEOkWiyI=;
+	s=arc-20240116; t=1741197450; c=relaxed/simple;
+	bh=2oOOcqEFSVLZiL1E8gRMF/pyOMQ4dL1FVbIg8d1UfXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XnoBHEqHiudLSFfSwGayZj/1+fUVwl9o+M2GPVVvIHygPW/FLPldKbUepwQVAcQVujRuyw2u1y/GqTXzGOCGFadjNEzddh/WKd5S0W4pZtZEu4i9DQqcmvStJWijntbzDFfOQOlifLPbEwud9C67eVoPDYJh/FWyysyiiK79j5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qCaZoVjy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eVO5LpXqzFuXF1cbzFnOYR9HMXVqPED2h/6B7/S/d/5+khSwkav4K6IBrojdRT+g74ib8MZCyRPpsKEEopU/dyCO0yIXgPNUvkdXUyxCAoOwLJvEBERES9O8FYmlmhkELSkXjeyumzv5pDOgfvWbGAs0GlIpxUxJSk3RS1DOvRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ItGMsOM7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qCaZoVjy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A545C4CED1;
-	Wed,  5 Mar 2025 17:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ItGMsOM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BC5C4CED1;
+	Wed,  5 Mar 2025 17:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197447;
-	bh=WLb+agunoQhFbyQ9XzRTJ44y7APLQHOflaqKEOkWiyI=;
+	s=korg; t=1741197450;
+	bh=2oOOcqEFSVLZiL1E8gRMF/pyOMQ4dL1FVbIg8d1UfXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qCaZoVjy7bsqA2Vsz+bmxI03KjrBG+74NtFeBvb7PgtuXxiFfFjffe3nxynob99gH
-	 6GTLMBLZTe6yBf57NiVhMQkU7yydKA7KhypXSEHel+dbt+3u/QOMCQXhzTDYWAR32I
-	 8ej6KNjjOfBeCKfAnxFWuA3UEQ9tjbURjFBrhv+A=
+	b=ItGMsOM72vKRc/g3yanIALl4A+xYrJHpKJqUaQGUK4MDzv8NFnbwdR+un9y3+Ks4G
+	 ygpoD2V03DM0t3w9+9+r/EfGmfSSLmuzvv0oGuBK6pyzUAGJrSsHb5QoEftdk7OnTO
+	 8trr5mBXQ4+iiBCU3aUh17kJTQjX558Xdrq45CnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wei Fang <wei.fang@nxp.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 159/176] net: enetc: update UDP checksum when updating originTimestamp field
-Date: Wed,  5 Mar 2025 18:48:48 +0100
-Message-ID: <20250305174511.822835691@linuxfoundation.org>
+Subject: [PATCH 6.1 160/176] net: enetc: correct the xdp_tx statistics
+Date: Wed,  5 Mar 2025 18:48:49 +0100
+Message-ID: <20250305174511.863586340@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -53,86 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Fang <wei.fang@nxp.com>
 
-commit bbcbc906ab7b5834c1219cd17a38d78dba904aa0 upstream.
+commit 432a2cb3ee97a7c6ea578888fe81baad035b9307 upstream.
 
-There is an issue with one-step timestamp based on UDP/IP. The peer will
-discard the sync packet because of the wrong UDP checksum. For ENETC v1,
-the software needs to update the UDP checksum when updating the
-originTimestamp field, so that the hardware can correctly update the UDP
-checksum when updating the correction field. Otherwise, the UDP checksum
-in the sync packet will be wrong.
+The 'xdp_tx' is used to count the number of XDP_TX frames sent, not the
+number of Tx BDs.
 
-Fixes: 7294380c5211 ("enetc: support PTP Sync packet one-step timestamping")
+Fixes: 7ed2bc80074e ("net: enetc: add support for XDP_TX")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
 Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250224111251.1061098-6-wei.fang@nxp.com
+Link: https://patch.msgid.link/20250224111251.1061098-4-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c |   41 ++++++++++++++++++++++-----
- 1 file changed, 34 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/net/ethernet/freescale/enetc/enetc.c
 +++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -231,9 +231,11 @@ static int enetc_map_tx_buffs(struct ene
- 		}
- 
- 		if (do_onestep_tstamp) {
--			u32 lo, hi, val;
--			u64 sec, nsec;
-+			__be32 new_sec_l, new_nsec;
-+			u32 lo, hi, nsec, val;
-+			__be16 new_sec_h;
- 			u8 *data;
-+			u64 sec;
- 
- 			lo = enetc_rd_hot(hw, ENETC_SICTR0);
- 			hi = enetc_rd_hot(hw, ENETC_SICTR1);
-@@ -247,13 +249,38 @@ static int enetc_map_tx_buffs(struct ene
- 			/* Update originTimestamp field of Sync packet
- 			 * - 48 bits seconds field
- 			 * - 32 bits nanseconds field
-+			 *
-+			 * In addition, the UDP checksum needs to be updated
-+			 * by software after updating originTimestamp field,
-+			 * otherwise the hardware will calculate the wrong
-+			 * checksum when updating the correction field and
-+			 * update it to the packet.
- 			 */
- 			data = skb_mac_header(skb);
--			*(__be16 *)(data + offset2) =
--				htons((sec >> 32) & 0xffff);
--			*(__be32 *)(data + offset2 + 2) =
--				htonl(sec & 0xffffffff);
--			*(__be32 *)(data + offset2 + 6) = htonl(nsec);
-+			new_sec_h = htons((sec >> 32) & 0xffff);
-+			new_sec_l = htonl(sec & 0xffffffff);
-+			new_nsec = htonl(nsec);
-+			if (udp) {
-+				struct udphdr *uh = udp_hdr(skb);
-+				__be32 old_sec_l, old_nsec;
-+				__be16 old_sec_h;
-+
-+				old_sec_h = *(__be16 *)(data + offset2);
-+				inet_proto_csum_replace2(&uh->check, skb, old_sec_h,
-+							 new_sec_h, false);
-+
-+				old_sec_l = *(__be32 *)(data + offset2 + 2);
-+				inet_proto_csum_replace4(&uh->check, skb, old_sec_l,
-+							 new_sec_l, false);
-+
-+				old_nsec = *(__be32 *)(data + offset2 + 6);
-+				inet_proto_csum_replace4(&uh->check, skb, old_nsec,
-+							 new_nsec, false);
-+			}
-+
-+			*(__be16 *)(data + offset2) = new_sec_h;
-+			*(__be32 *)(data + offset2 + 2) = new_sec_l;
-+			*(__be32 *)(data + offset2 + 6) = new_nsec;
- 
- 			/* Configure single-step register */
- 			val = ENETC_PM0_SINGLE_STEP_EN;
+@@ -1624,7 +1624,7 @@ static int enetc_clean_rx_ring_xdp(struc
+ 				enetc_xdp_drop(rx_ring, orig_i, i);
+ 				tx_ring->stats.xdp_tx_drops++;
+ 			} else {
+-				tx_ring->stats.xdp_tx += xdp_tx_bd_cnt;
++				tx_ring->stats.xdp_tx++;
+ 				rx_ring->xdp.xdp_tx_in_flight += xdp_tx_bd_cnt;
+ 				xdp_tx_frm_cnt++;
+ 				/* The XDP_TX enqueue was successful, so we
 
 
