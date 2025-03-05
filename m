@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7A11946C7;
-	Wed,  5 Mar 2025 17:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA701946C7;
+	Wed,  5 Mar 2025 17:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197025; cv=none; b=pm0FBoB0Owj/KQLL1NcjI7z1QQzhZZaxefayzCtCVuv3XmLic7Iu/JyLc50xCBMfme05Kuzbufq0caJxSfrF2o+JdaHI/YsBSK/J55MNfWZYVy7n7zA2YIfJxbp5v9/DTpQ8+yHbXUixBe4RuYyUxeddvZrBEXmrva9s9ZoR0X4=
+	t=1741197028; cv=none; b=ExusXYf6MlcblelBL0ucKC5FnoRcCUmh/jd1v5oSaDVxNjTG9QN5Qy3QH4JP8EhikQXz3ABWsVUzKqDz9QT0jC0wxa5TE+h84Bb2F9vJ2vUJmzA1sWqZ5TtGSdj6DC9p+7Yoykj4Yc4wCYHgMvsPE5n62oPopAf53E/zG/i5CBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197025; c=relaxed/simple;
-	bh=VxPTycoYH2/qyyOIZnCkm7vM7Sny3NTs2TK4kx6yRAw=;
+	s=arc-20240116; t=1741197028; c=relaxed/simple;
+	bh=4KYWw379CMHmzwa9URiDpYpHrnBiPOUJsOD4YJ8bs4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AKmFqh9vdH8qCgPezlqojyKV/ZlDi2s6GJ9Vp+6P77Cf6P2VeWgWF34wMLGoakpEvApecASkUbCz5/bK0Z0SAiuicdO4jq6to9uk+37tEUmZKigXzJdX0s/dQLjjiMkbFgbkP4Y+LMH9uiMSByzpVqd8nYS2EjzXpMlPPycmsjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2cHoBUJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UUiX96BdlXeYruhQf70YVeTMcuvZvR3wjP9YxEsy8xaTus2WSmLkwpFA0P8TEWLpjstxTirY7Znx2PGuMXznG2k5abLgnHfMiEDrQ0PdHcHv6TjiJ4ghFYnDoI+ofPLxFjEtScOC9oWEhHUWBUBhOw9I9atau2Jf4t3ANY+pyTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwNQalaI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2cHoBUJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CC0C4CED1;
-	Wed,  5 Mar 2025 17:50:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwNQalaI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80607C4CED1;
+	Wed,  5 Mar 2025 17:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197025;
-	bh=VxPTycoYH2/qyyOIZnCkm7vM7Sny3NTs2TK4kx6yRAw=;
+	s=korg; t=1741197027;
+	bh=4KYWw379CMHmzwa9URiDpYpHrnBiPOUJsOD4YJ8bs4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2cHoBUJYSoQp31b/phXvlqOmexUcFQhWoiBMsDBfuLATuH21dcJjcl+0chMlTUkY
-	 d5P1x6obr0EtKkBvtMYmH3zT+ToZod3lyjjnx9pn4jReQfdD2h2N0ku3i6Zl71Tdic
-	 WXg4tMwya5w4188Q2lkuZ/p4aljZCeeqixyubol4=
+	b=rwNQalaIxUlIk1ysZFBOdh/gEIinKrpVLXaLeSh8qAEFIfIygUNUSJJXD3c/3INwj
+	 4RYxvJsbOSUXuHR495NC0SET4TF6eQxMaAuNSr+xO0CPWjbdyUw32HtrLU1Z4uIOiJ
+	 du87mIc0c5r1K6RnDClpPal/nHZ8zlQ0pxhUsQug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari.PrasathGE@microchip.com,
-	Mahesh.Abotula@microchip.com,
-	Marco.Cardellini@microchip.com,
-	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
-	Mark Brown <broonie@kernel.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/176] spi: atmel-qspi: Memory barriers after memory-mapped I/O
-Date: Wed,  5 Mar 2025 18:46:23 +0100
-Message-ID: <20250305174506.033524782@linuxfoundation.org>
+Subject: [PATCH 6.1 015/176] Bluetooth: qca: Support downloading board id specific NVM for WCN7850
+Date: Wed,  5 Mar 2025 18:46:24 +0100
+Message-ID: <20250305174506.073606047@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -48,97 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bence Csókás <csokas.bence@prolan.hu>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit be92ab2de0ee1a13291c3b47b2d7eb24d80c0a2c ]
+[ Upstream commit e41137d8bd1a8e8bab8dcbfe3ec056418db3df18 ]
 
-The QSPI peripheral control and status registers are
-accessible via the SoC's APB bus, whereas MMIO transactions'
-data travels on the AHB bus.
+Download board id specific NVM instead of default for WCN7850 if board id
+is available.
 
-Microchip documentation and even sample code from Atmel
-emphasises the need for a memory barrier before the first
-MMIO transaction to the AHB-connected QSPI, and before the
-last write to its registers via APB. This is achieved by
-the following lines in `atmel_qspi_transfer()`:
-
-	/* Dummy read of QSPI_IFR to synchronize APB and AHB accesses */
-	(void)atmel_qspi_read(aq, QSPI_IFR);
-
-However, the current documentation makes no mention to
-synchronization requirements in the other direction, i.e.
-after the last data written via AHB, and before the first
-register access on APB.
-
-In our case, we were facing an issue where the QSPI peripheral
-would cease to send any new CSR (nCS Rise) interrupts,
-leading to a timeout in `atmel_qspi_wait_for_completion()`
-and ultimately this panic in higher levels:
-
-	ubi0 error: ubi_io_write: error -110 while writing 63108 bytes
- to PEB 491:128, written 63104 bytes
-
-After months of extensive research of the codebase, fiddling
-around the debugger with kgdb, and back-and-forth with
-Microchip, we came to the conclusion that the issue is
-probably that the peripheral is still busy receiving on AHB
-when the LASTXFER bit is written to its Control Register
-on APB, therefore this write gets lost, and the peripheral
-still thinks there is more data to come in the MMIO transfer.
-This was first formulated when we noticed that doubling the
-write() of QSPI_CR_LASTXFER seemed to solve the problem.
-
-Ultimately, the solution is to introduce memory barriers
-after the AHB-mapped MMIO transfers, to ensure ordering.
-
-Fixes: d5433def3153 ("mtd: spi-nor: atmel-quadspi: Add spi-mem support to atmel-quadspi")
-Cc: Hari.PrasathGE@microchip.com
-Cc: Mahesh.Abotula@microchip.com
-Cc: Marco.Cardellini@microchip.com
-Cc: stable@vger.kernel.org # c0a0203cf579: ("spi: atmel-quadspi: Create `atmel_qspi_ops`"...)
-Cc: stable@vger.kernel.org # 6.x.y
-Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
-Link: https://patch.msgid.link/20241219091258.395187-1-csokas.bence@prolan.hu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: a2fad248947d ("Bluetooth: qca: Fix poor RF performance for WCN6855")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/atmel-quadspi.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btqca.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
-index 32fcab2a11885..a62baef08e6a8 100644
---- a/drivers/spi/atmel-quadspi.c
-+++ b/drivers/spi/atmel-quadspi.c
-@@ -454,13 +454,20 @@ static int atmel_qspi_transfer(struct spi_mem *mem,
- 	(void)atmel_qspi_read(aq, QSPI_IFR);
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 35fb26cbf2294..513ff87a7a049 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -739,6 +739,19 @@ static void qca_generate_hsp_nvm_name(char *fwname, size_t max_size,
+ 		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x", rom_ver, variant, bid);
+ }
  
- 	/* Send/Receive data */
--	if (op->data.dir == SPI_MEM_DATA_IN)
-+	if (op->data.dir == SPI_MEM_DATA_IN) {
- 		memcpy_fromio(op->data.buf.in, aq->mem + offset,
- 			      op->data.nbytes);
--	else
++static inline void qca_get_nvm_name_generic(struct qca_fw_config *cfg,
++					    const char *stem, u8 rom_ver, u16 bid)
++{
++	if (bid == 0x0)
++		snprintf(cfg->fwname, sizeof(cfg->fwname), "qca/%snv%02x.bin", stem, rom_ver);
++	else if (bid & 0xff00)
++		snprintf(cfg->fwname, sizeof(cfg->fwname),
++			 "qca/%snv%02x.b%x", stem, rom_ver, bid);
++	else
++		snprintf(cfg->fwname, sizeof(cfg->fwname),
++			 "qca/%snv%02x.b%02x", stem, rom_ver, bid);
++}
 +
-+		/* Synchronize AHB and APB accesses again */
-+		rmb();
-+	} else {
- 		memcpy_toio(aq->mem + offset, op->data.buf.out,
- 			    op->data.nbytes);
+ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
+ 		   const char *firmware_name)
+@@ -819,7 +832,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	/* Give the controller some time to get ready to receive the NVM */
+ 	msleep(10);
  
-+		/* Synchronize AHB and APB accesses again */
-+		wmb();
-+	}
-+
- 	/* Release the chip-select */
- 	atmel_qspi_write(QSPI_CR_LASTXFER, aq, QSPI_CR);
+-	if (soc_type == QCA_QCA2066)
++	if (soc_type == QCA_QCA2066 || soc_type == QCA_WCN7850)
+ 		qca_read_fw_board_id(hdev, &boardid);
  
+ 	/* Download NVM configuration */
+@@ -861,8 +874,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 				 "qca/hpnv%02x.bin", rom_ver);
+ 			break;
+ 		case QCA_WCN7850:
+-			snprintf(config.fwname, sizeof(config.fwname),
+-				 "qca/hmtnv%02x.bin", rom_ver);
++			qca_get_nvm_name_generic(&config, "hmt", rom_ver, boardid);
+ 			break;
+ 
+ 		default:
 -- 
 2.39.5
 
