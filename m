@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7DF19C542;
-	Wed,  5 Mar 2025 18:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09271C6FF6;
+	Wed,  5 Mar 2025 18:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198042; cv=none; b=a3sX1POBm8tWDUPkTrqFC3EjUG8+r0x8wydjFwkMR+F/wMy5dULMkYHBxoszN4kzysfHvEdtobdpj5RJ2KZby+4u8kiG8rJHHhyEDqd3+POH0yE8hdR9yde1L7WmlAqP4XmoPNbzMyLnrYFOi1nqPgSCcjyx+wDcl1sEFYkE6gg=
+	t=1741198044; cv=none; b=S4vc4Uab8M76muXvBZsR/C8D2xzFD2kmmzVr5qAziIjMndmPfgHmKXTF0zrBAE51MHrpT9SVtb6GOF+9E3GDVFabgKs9HxJ+iaMtpKibgWhRUzkZj+lKHYApcaV/KL83BhIizw2P8xhld3r+qaBoDwDK6Axxf+MwePv63fdODSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198042; c=relaxed/simple;
-	bh=szMhxv+c5W2QNpckEPrulQOC23vhWSue+UmsoYT4aLg=;
+	s=arc-20240116; t=1741198044; c=relaxed/simple;
+	bh=lh8mVYMUKs03vJP0OeBQcJEPNhzh1cqbJMEMc8oje7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJdNp+AGspvYA5nhRQVeDCL0bemfl0ubkgLy5sYuzSrvPzSdaMiqtt5ljDHIZKPznik9HnpmqKwdt7IG5raujg5HVRo2oo2O1A7EtqXLtHKrMg9vxAqGpVyAGnyUW1T93dNBDaZrUVmZmJXZIqbVMbaK+OlfP8MfxsNujWEDOhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p61Oz7wF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=haDUCpaxkxFyTKy406rNXAA2/8ZtWPaxAyf6mkWh3tsvSinGqlHbw2TYEZVW1rXZqUDpXMalq1sshciFjoZVIJLv6ZG1k+5kQDnb42Zc1vHsd5JhEvwcwGBFZG75ecwOdTrBqYJCd5b9NyP8mzewUa6g3Or0OWttkKi7bYcNA0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVqf7v49; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p61Oz7wF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BF0C4CED1;
-	Wed,  5 Mar 2025 18:07:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVqf7v49"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40923C4CED1;
+	Wed,  5 Mar 2025 18:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198041;
-	bh=szMhxv+c5W2QNpckEPrulQOC23vhWSue+UmsoYT4aLg=;
+	s=korg; t=1741198044;
+	bh=lh8mVYMUKs03vJP0OeBQcJEPNhzh1cqbJMEMc8oje7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p61Oz7wFTeQ/Jkcb/4ajb4LZqtaNXM9RCBFR+G9e4lbQr58+wq8mEy4yjAza6DZPK
-	 fRFVtJqde17LKZO95t3YxTuEtadYpIAuj3Mu9iTdyNlg6RPEmMNt3NYwBPyxF0NdRy
-	 DSrcPtx6Eh+KsB3yJmUP2kEExRYw1JYbn44Ua+nE=
+	b=PVqf7v49e5bNXOuMafIYajTE05e1HXG3q8DGn2Q48Q//uksBwq4IfFHJcBvmxgEor
+	 ndjSO/syLDRWrsPUevxt8kCscmXTdJJYbDi4E4OnxH1VnVCycT7JT1Bd87FIBizyUy
+	 1HEzZwp3vkyt18YLYfP9GUatu7iR0lHZv60xx8Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/150] RDMA/bnxt_re: Fix the statistics for Gen P7 VF
-Date: Wed,  5 Mar 2025 18:47:21 +0100
-Message-ID: <20250305174504.301304456@linuxfoundation.org>
+Subject: [PATCH 6.12 013/150] landlock: Fix non-TCP sockets restriction
+Date: Wed,  5 Mar 2025 18:47:22 +0100
+Message-ID: <20250305174504.340334667@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -45,64 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>
 
-[ Upstream commit 8238c7bd84209c8216b1381ab0dbe6db9e203769 ]
+[ Upstream commit 854277e2cc8c75dc3c216c82e72523258fcf65b9 ]
 
-Gen P7 VF support the extended stats and is prevented
-by a VF check. Fix the check to issue the FW command
-for GenP7 VFs also.
+Use sk_is_tcp() to check if socket is TCP in bind(2) and connect(2)
+hooks.
 
-Fixes: 1801d87b3598 ("RDMA/bnxt_re: Support new 5760X P7 devices")
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1738657285-23968-5-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+SMC, MPTCP, SCTP protocols are currently restricted by TCP access
+rights.  The purpose of TCP access rights is to provide control over
+ports that can be used by userland to establish a TCP connection.
+Therefore, it is incorrect to deny bind(2) and connect(2) requests for a
+socket of another protocol.
+
+However, SMC, MPTCP and RDS implementations use TCP internal sockets to
+establish communication or even to exchange packets over a TCP
+connection [1]. Landlock rules that configure bind(2) and connect(2)
+usage for TCP sockets should not cover requests for sockets of such
+protocols. These protocols have different set of security issues and
+security properties, therefore, it is necessary to provide the userland
+with the ability to distinguish between them (eg. [2]).
+
+Control over TCP connection used by other protocols can be achieved with
+upcoming support of socket creation control [3].
+
+[1] https://lore.kernel.org/all/62336067-18c2-3493-d0ec-6dd6a6d3a1b5@huawei-partners.com/
+[2] https://lore.kernel.org/all/20241204.fahVio7eicim@digikod.net/
+[3] https://lore.kernel.org/all/20240904104824.1844082-1-ivanov.mikhail1@huawei-partners.com/
+
+Closes: https://github.com/landlock-lsm/linux/issues/40
+Fixes: fff69fb03dde ("landlock: Support network rules with TCP bind and connect")
+Signed-off-by: Mikhail Ivanov <ivanov.mikhail1@huawei-partners.com>
+Link: https://lore.kernel.org/r/20250205093651.1424339-2-ivanov.mikhail1@huawei-partners.com
+[mic: Format commit message to 72 columns]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/hw_counters.c | 4 ++--
- drivers/infiniband/hw/bnxt_re/qplib_res.h   | 8 ++++++++
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ security/landlock/net.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/hw_counters.c b/drivers/infiniband/hw/bnxt_re/hw_counters.c
-index 656c150e38e6f..f51adb0a97e66 100644
---- a/drivers/infiniband/hw/bnxt_re/hw_counters.c
-+++ b/drivers/infiniband/hw/bnxt_re/hw_counters.c
-@@ -357,8 +357,8 @@ int bnxt_re_ib_get_hw_stats(struct ib_device *ibdev,
- 			goto done;
- 		}
- 		bnxt_re_copy_err_stats(rdev, stats, err_s);
--		if (_is_ext_stats_supported(rdev->dev_attr->dev_cap_flags) &&
--		    !rdev->is_virtfn) {
-+		if (bnxt_ext_stats_supported(rdev->chip_ctx, rdev->dev_attr->dev_cap_flags,
-+					     rdev->is_virtfn)) {
- 			rc = bnxt_re_get_ext_stat(rdev, stats);
- 			if (rc) {
- 				clear_bit(BNXT_RE_FLAG_ISSUE_ROCE_STATS,
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.h b/drivers/infiniband/hw/bnxt_re/qplib_res.h
-index 0bef58bd44e77..b40cff8252bc4 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.h
-@@ -544,6 +544,14 @@ static inline bool _is_ext_stats_supported(u16 dev_cap_flags)
- 		CREQ_QUERY_FUNC_RESP_SB_EXT_STATS;
- }
+diff --git a/security/landlock/net.c b/security/landlock/net.c
+index d5dcc4407a197..104b6c01fe503 100644
+--- a/security/landlock/net.c
++++ b/security/landlock/net.c
+@@ -63,8 +63,7 @@ static int current_check_access_socket(struct socket *const sock,
+ 	if (WARN_ON_ONCE(dom->num_layers < 1))
+ 		return -EACCES;
  
-+static inline int bnxt_ext_stats_supported(struct bnxt_qplib_chip_ctx *ctx,
-+					   u16 flags, bool virtfn)
-+{
-+	/* ext stats supported if cap flag is set AND is a PF OR a Thor2 VF */
-+	return (_is_ext_stats_supported(flags) &&
-+		((virtfn && bnxt_qplib_is_chip_gen_p7(ctx)) || (!virtfn)));
-+}
-+
- static inline bool _is_hw_retx_supported(u16 dev_cap_flags)
- {
- 	return dev_cap_flags &
+-	/* Checks if it's a (potential) TCP socket. */
+-	if (sock->type != SOCK_STREAM)
++	if (!sk_is_tcp(sock->sk))
+ 		return 0;
+ 
+ 	/* Checks for minimal header length to safely read sa_family. */
 -- 
 2.39.5
 
