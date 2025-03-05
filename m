@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD27253F3C;
-	Wed,  5 Mar 2025 18:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8860C255E2A;
+	Wed,  5 Mar 2025 18:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198702; cv=none; b=OeY5j8eG2sUj4s2lc7SeyEDYjhT6Zp1rgaknZ227Mf3Yb7FbSHbSwWPp09of6xbYav4/lVaTz/+YAd+ffLQD/C+c2sS3O/fqs5kA/qRj13OjPWluHY7symovQXt7PP1/Lu6r7NVXfsrlxobCnVdFwGMLL/R2EgbaCyJbaieAVy0=
+	t=1741198704; cv=none; b=T94VT8JtAfnUr58sxwpRQ2l+yp06CM3YHPa/xgJET1GAYWrAEyGZJvMc7Nx6+PLuc5Ytd1EbmCc3uuZiF4bgB04MWT5RTl3k3nY0utx/xHt3tAc2Zu30WrQUepcyd/Ylrwy66RmXllv55G1vMdM4vDbb1jbZQdL1pgoEvMlEChQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198702; c=relaxed/simple;
-	bh=YPMIV+rJvdueSg8vpytdqPgbxSROPcbcq9X9NO2AS6U=;
+	s=arc-20240116; t=1741198704; c=relaxed/simple;
+	bh=F1MgD5z6gwPixm+lRmouIn68kCQ4WWs14ptuquTXMko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mjje03zwKXSTNFVLxF4/6Xun3sxtB+sllTpxx3MIHAIu2CQD5QaNR/AJW77rouooF1Pkm0dEnXPV8PMF8z7cGE+jGwGEaCkNNGp4/W/ZMGBeJ8/CWOQiASfU5N5ePazFjQbgF6jpur9pZ39yoYqLyCti1zGuOKg1AMAOCQqY1L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0XS6dbAQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fjZriNah/mnTF4Kp3ANFlsexoTwHIDX8BhUZ4Kh+SfsZd7NBLSU3vs5VPUL3mfaoyGenuTQhdQurgbLx0jwWny9Zp6WttRjZdFIxO/+PYb0heqQ3paVvJ7L+TUHtjzb2bBz1uG+5e3304K19G4qWwI53BE6QcpIye7c27T/7y1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vci5QGQH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0XS6dbAQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD83EC4CEE0;
-	Wed,  5 Mar 2025 18:18:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vci5QGQH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FD4C4CED1;
+	Wed,  5 Mar 2025 18:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198701;
-	bh=YPMIV+rJvdueSg8vpytdqPgbxSROPcbcq9X9NO2AS6U=;
+	s=korg; t=1741198704;
+	bh=F1MgD5z6gwPixm+lRmouIn68kCQ4WWs14ptuquTXMko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0XS6dbAQtkrj/2VpP/0J9sJ8qxlhZb1N42n2ZdCs15DsvS6+0A91OFR0SKOjIG50Y
-	 o3IPdO84n7XhP+2eywIxsh2jLQpY8Yel8tlcQ/cGAQnLZgGNgRZ/y0YGGNypRi1Nvr
-	 r/Rh31WuSfuLf/LbcHNbcDL6Utsy+fgafzTq4+2Q=
+	b=Vci5QGQH4kdeBowsGV1ZoZPTbWsrYDbA/0H7qO49NkKRprNkmn3HfPRV3g+0G7IDO
+	 7AJCoSmyvRzsZgCbroalSx+EnUGM5mBnwwlpT/rdhBeTlGo0BKinwHreLZ1WC0q8CI
+	 wK/xU++VHTeJIruMXHli/GIlK4wgwIj75RVGR4HY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.13 118/157] net: enetc: remove the mm_lock from the ENETC v4 driver
-Date: Wed,  5 Mar 2025 18:49:14 +0100
-Message-ID: <20250305174510.054981472@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	=?UTF-8?q?Nuno=20Gon=C3=A7alves?= <nunojpg@gmail.com>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Javier Martinez Canillas <javierm@redhat.com>
+Subject: [PATCH 6.13 092/157] drm/fbdev-dma: Add shadow buffering for deferred I/O
+Date: Wed,  5 Mar 2025 18:48:48 +0100
+Message-ID: <20250305174509.011489638@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -45,40 +46,339 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 119049b66b883c7e7e575a0b69dc6e3d211662cc upstream.
+commit 3603996432997f7c88da37a97062a46cda01ac9d upstream.
 
-Currently, the ENETC v4 driver has not added the MAC merge layer support
-in the upstream, so the mm_lock is not initialized and used, so remove
-the mm_lock from the driver.
+DMA areas are not necessarily backed by struct page, so we cannot
+rely on it for deferred I/O. Allocate a shadow buffer for drivers
+that require deferred I/O and use it as framebuffer memory.
 
-Fixes: 99100d0d9922 ("net: enetc: add preliminary support for i.MX95 ENETC PF")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20250224111251.1061098-8-wei.fang@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes driver errors about being "Unable to handle kernel NULL pointer
+dereference at virtual address" or "Unable to handle kernel paging
+request at virtual address".
+
+The patch splits drm_fbdev_dma_driver_fbdev_probe() in an initial
+allocation, which creates the DMA-backed buffer object, and a tail
+that sets up the fbdev data structures. There is a tail function for
+direct memory mappings and a tail function for deferred I/O with
+the shadow buffer.
+
+It is no longer possible to use deferred I/O without shadow buffer.
+It can be re-added if there exists a reliably test for usable struct
+page in the allocated DMA-backed buffer object.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reported-by: Nuno Gonçalves <nunojpg@gmail.com>
+CLoses: https://lore.kernel.org/dri-devel/CAEXMXLR55DziAMbv_+2hmLeH-jP96pmit6nhs6siB22cpQFr9w@mail.gmail.com/
+Tested-by: Nuno Gonçalves <nunojpg@gmail.com>
+Fixes: 5ab91447aa13 ("drm/tiny/ili9225: Use fbdev-dma")
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: <stable@vger.kernel.org> # v6.11+
+Reviewed-by: Simona Vetter <simona.vetter@ffwll.ch>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241211090643.74250-1-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc4_pf.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/drm_fbdev_dma.c |  217 ++++++++++++++++++++++++++++------------
+ 1 file changed, 155 insertions(+), 62 deletions(-)
 
---- a/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
-@@ -672,7 +672,6 @@ err_link_init:
- err_alloc_msix:
- err_config_si:
- err_clk_get:
--	mutex_destroy(&priv->mm_lock);
- 	free_netdev(ndev);
+--- a/drivers/gpu/drm/drm_fbdev_dma.c
++++ b/drivers/gpu/drm/drm_fbdev_dma.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: MIT
  
- 	return err;
+ #include <linux/fb.h>
++#include <linux/vmalloc.h>
+ 
+ #include <drm/drm_drv.h>
+ #include <drm/drm_fbdev_dma.h>
+@@ -70,37 +71,102 @@ static const struct fb_ops drm_fbdev_dma
+ 	.fb_destroy = drm_fbdev_dma_fb_destroy,
+ };
+ 
+-FB_GEN_DEFAULT_DEFERRED_DMAMEM_OPS(drm_fbdev_dma,
++FB_GEN_DEFAULT_DEFERRED_DMAMEM_OPS(drm_fbdev_dma_shadowed,
+ 				   drm_fb_helper_damage_range,
+ 				   drm_fb_helper_damage_area);
+ 
+-static int drm_fbdev_dma_deferred_fb_mmap(struct fb_info *info, struct vm_area_struct *vma)
++static void drm_fbdev_dma_shadowed_fb_destroy(struct fb_info *info)
+ {
+ 	struct drm_fb_helper *fb_helper = info->par;
+-	struct drm_framebuffer *fb = fb_helper->fb;
+-	struct drm_gem_dma_object *dma = drm_fb_dma_get_gem_obj(fb, 0);
++	void *shadow = info->screen_buffer;
++
++	if (!fb_helper->dev)
++		return;
+ 
+-	if (!dma->map_noncoherent)
+-		vma->vm_page_prot = pgprot_writecombine(vma->vm_page_prot);
++	if (info->fbdefio)
++		fb_deferred_io_cleanup(info);
++	drm_fb_helper_fini(fb_helper);
++	vfree(shadow);
+ 
+-	return fb_deferred_io_mmap(info, vma);
++	drm_client_buffer_vunmap(fb_helper->buffer);
++	drm_client_framebuffer_delete(fb_helper->buffer);
++	drm_client_release(&fb_helper->client);
++	drm_fb_helper_unprepare(fb_helper);
++	kfree(fb_helper);
+ }
+ 
+-static const struct fb_ops drm_fbdev_dma_deferred_fb_ops = {
++static const struct fb_ops drm_fbdev_dma_shadowed_fb_ops = {
+ 	.owner = THIS_MODULE,
+ 	.fb_open = drm_fbdev_dma_fb_open,
+ 	.fb_release = drm_fbdev_dma_fb_release,
+-	__FB_DEFAULT_DEFERRED_OPS_RDWR(drm_fbdev_dma),
++	FB_DEFAULT_DEFERRED_OPS(drm_fbdev_dma_shadowed),
+ 	DRM_FB_HELPER_DEFAULT_OPS,
+-	__FB_DEFAULT_DEFERRED_OPS_DRAW(drm_fbdev_dma),
+-	.fb_mmap = drm_fbdev_dma_deferred_fb_mmap,
+-	.fb_destroy = drm_fbdev_dma_fb_destroy,
++	.fb_destroy = drm_fbdev_dma_shadowed_fb_destroy,
+ };
+ 
+ /*
+  * struct drm_fb_helper
+  */
+ 
++static void drm_fbdev_dma_damage_blit_real(struct drm_fb_helper *fb_helper,
++					   struct drm_clip_rect *clip,
++					   struct iosys_map *dst)
++{
++	struct drm_framebuffer *fb = fb_helper->fb;
++	size_t offset = clip->y1 * fb->pitches[0];
++	size_t len = clip->x2 - clip->x1;
++	unsigned int y;
++	void *src;
++
++	switch (drm_format_info_bpp(fb->format, 0)) {
++	case 1:
++		offset += clip->x1 / 8;
++		len = DIV_ROUND_UP(len + clip->x1 % 8, 8);
++		break;
++	case 2:
++		offset += clip->x1 / 4;
++		len = DIV_ROUND_UP(len + clip->x1 % 4, 4);
++		break;
++	case 4:
++		offset += clip->x1 / 2;
++		len = DIV_ROUND_UP(len + clip->x1 % 2, 2);
++		break;
++	default:
++		offset += clip->x1 * fb->format->cpp[0];
++		len *= fb->format->cpp[0];
++		break;
++	}
++
++	src = fb_helper->info->screen_buffer + offset;
++	iosys_map_incr(dst, offset); /* go to first pixel within clip rect */
++
++	for (y = clip->y1; y < clip->y2; y++) {
++		iosys_map_memcpy_to(dst, 0, src, len);
++		iosys_map_incr(dst, fb->pitches[0]);
++		src += fb->pitches[0];
++	}
++}
++
++static int drm_fbdev_dma_damage_blit(struct drm_fb_helper *fb_helper,
++				     struct drm_clip_rect *clip)
++{
++	struct drm_client_buffer *buffer = fb_helper->buffer;
++	struct iosys_map dst;
++
++	/*
++	 * For fbdev emulation, we only have to protect against fbdev modeset
++	 * operations. Nothing else will involve the client buffer's BO. So it
++	 * is sufficient to acquire struct drm_fb_helper.lock here.
++	 */
++	mutex_lock(&fb_helper->lock);
++
++	dst = buffer->map;
++	drm_fbdev_dma_damage_blit_real(fb_helper, clip, &dst);
++
++	mutex_unlock(&fb_helper->lock);
++
++	return 0;
++}
+ static int drm_fbdev_dma_helper_fb_dirty(struct drm_fb_helper *helper,
+ 					 struct drm_clip_rect *clip)
+ {
+@@ -112,6 +178,10 @@ static int drm_fbdev_dma_helper_fb_dirty
+ 		return 0;
+ 
+ 	if (helper->fb->funcs->dirty) {
++		ret = drm_fbdev_dma_damage_blit(helper, clip);
++		if (drm_WARN_ONCE(dev, ret, "Damage blitter failed: ret=%d\n", ret))
++			return ret;
++
+ 		ret = helper->fb->funcs->dirty(helper->fb, NULL, 0, 0, clip, 1);
+ 		if (drm_WARN_ONCE(dev, ret, "Dirty helper failed: ret=%d\n", ret))
+ 			return ret;
+@@ -128,14 +198,80 @@ static const struct drm_fb_helper_funcs
+  * struct drm_fb_helper
+  */
+ 
++static int drm_fbdev_dma_driver_fbdev_probe_tail(struct drm_fb_helper *fb_helper,
++						 struct drm_fb_helper_surface_size *sizes)
++{
++	struct drm_device *dev = fb_helper->dev;
++	struct drm_client_buffer *buffer = fb_helper->buffer;
++	struct drm_gem_dma_object *dma_obj = to_drm_gem_dma_obj(buffer->gem);
++	struct drm_framebuffer *fb = fb_helper->fb;
++	struct fb_info *info = fb_helper->info;
++	struct iosys_map map = buffer->map;
++
++	info->fbops = &drm_fbdev_dma_fb_ops;
++
++	/* screen */
++	info->flags |= FBINFO_VIRTFB; /* system memory */
++	if (dma_obj->map_noncoherent)
++		info->flags |= FBINFO_READS_FAST; /* signal caching */
++	info->screen_size = sizes->surface_height * fb->pitches[0];
++	info->screen_buffer = map.vaddr;
++	if (!(info->flags & FBINFO_HIDE_SMEM_START)) {
++		if (!drm_WARN_ON(dev, is_vmalloc_addr(info->screen_buffer)))
++			info->fix.smem_start = page_to_phys(virt_to_page(info->screen_buffer));
++	}
++	info->fix.smem_len = info->screen_size;
++
++	return 0;
++}
++
++static int drm_fbdev_dma_driver_fbdev_probe_tail_shadowed(struct drm_fb_helper *fb_helper,
++							  struct drm_fb_helper_surface_size *sizes)
++{
++	struct drm_client_buffer *buffer = fb_helper->buffer;
++	struct fb_info *info = fb_helper->info;
++	size_t screen_size = buffer->gem->size;
++	void *screen_buffer;
++	int ret;
++
++	/*
++	 * Deferred I/O requires struct page for framebuffer memory,
++	 * which is not guaranteed for all DMA ranges. We thus create
++	 * a shadow buffer in system memory.
++	 */
++	screen_buffer = vzalloc(screen_size);
++	if (!screen_buffer)
++		return -ENOMEM;
++
++	info->fbops = &drm_fbdev_dma_shadowed_fb_ops;
++
++	/* screen */
++	info->flags |= FBINFO_VIRTFB; /* system memory */
++	info->flags |= FBINFO_READS_FAST; /* signal caching */
++	info->screen_buffer = screen_buffer;
++	info->fix.smem_len = screen_size;
++
++	fb_helper->fbdefio.delay = HZ / 20;
++	fb_helper->fbdefio.deferred_io = drm_fb_helper_deferred_io;
++
++	info->fbdefio = &fb_helper->fbdefio;
++	ret = fb_deferred_io_init(info);
++	if (ret)
++		goto err_vfree;
++
++	return 0;
++
++err_vfree:
++	vfree(screen_buffer);
++	return ret;
++}
++
+ int drm_fbdev_dma_driver_fbdev_probe(struct drm_fb_helper *fb_helper,
+ 				     struct drm_fb_helper_surface_size *sizes)
+ {
+ 	struct drm_client_dev *client = &fb_helper->client;
+ 	struct drm_device *dev = fb_helper->dev;
+-	bool use_deferred_io = false;
+ 	struct drm_client_buffer *buffer;
+-	struct drm_gem_dma_object *dma_obj;
+ 	struct drm_framebuffer *fb;
+ 	struct fb_info *info;
+ 	u32 format;
+@@ -152,19 +288,9 @@ int drm_fbdev_dma_driver_fbdev_probe(str
+ 					       sizes->surface_height, format);
+ 	if (IS_ERR(buffer))
+ 		return PTR_ERR(buffer);
+-	dma_obj = to_drm_gem_dma_obj(buffer->gem);
+ 
+ 	fb = buffer->fb;
+ 
+-	/*
+-	 * Deferred I/O requires struct page for framebuffer memory,
+-	 * which is not guaranteed for all DMA ranges. We thus only
+-	 * install deferred I/O if we have a framebuffer that requires
+-	 * it.
+-	 */
+-	if (fb->funcs->dirty)
+-		use_deferred_io = true;
+-
+ 	ret = drm_client_buffer_vmap(buffer, &map);
+ 	if (ret) {
+ 		goto err_drm_client_buffer_delete;
+@@ -185,45 +311,12 @@ int drm_fbdev_dma_driver_fbdev_probe(str
+ 
+ 	drm_fb_helper_fill_info(info, fb_helper, sizes);
+ 
+-	if (use_deferred_io)
+-		info->fbops = &drm_fbdev_dma_deferred_fb_ops;
++	if (fb->funcs->dirty)
++		ret = drm_fbdev_dma_driver_fbdev_probe_tail_shadowed(fb_helper, sizes);
+ 	else
+-		info->fbops = &drm_fbdev_dma_fb_ops;
+-
+-	/* screen */
+-	info->flags |= FBINFO_VIRTFB; /* system memory */
+-	if (dma_obj->map_noncoherent)
+-		info->flags |= FBINFO_READS_FAST; /* signal caching */
+-	info->screen_size = sizes->surface_height * fb->pitches[0];
+-	info->screen_buffer = map.vaddr;
+-	if (!(info->flags & FBINFO_HIDE_SMEM_START)) {
+-		if (!drm_WARN_ON(dev, is_vmalloc_addr(info->screen_buffer)))
+-			info->fix.smem_start = page_to_phys(virt_to_page(info->screen_buffer));
+-	}
+-	info->fix.smem_len = info->screen_size;
+-
+-	/*
+-	 * Only set up deferred I/O if the screen buffer supports
+-	 * it. If this disagrees with the previous test for ->dirty,
+-	 * mmap on the /dev/fb file might not work correctly.
+-	 */
+-	if (!is_vmalloc_addr(info->screen_buffer) && info->fix.smem_start) {
+-		unsigned long pfn = info->fix.smem_start >> PAGE_SHIFT;
+-
+-		if (drm_WARN_ON(dev, !pfn_to_page(pfn)))
+-			use_deferred_io = false;
+-	}
+-
+-	/* deferred I/O */
+-	if (use_deferred_io) {
+-		fb_helper->fbdefio.delay = HZ / 20;
+-		fb_helper->fbdefio.deferred_io = drm_fb_helper_deferred_io;
+-
+-		info->fbdefio = &fb_helper->fbdefio;
+-		ret = fb_deferred_io_init(info);
+-		if (ret)
+-			goto err_drm_fb_helper_release_info;
+-	}
++		ret = drm_fbdev_dma_driver_fbdev_probe_tail(fb_helper, sizes);
++	if (ret)
++		goto err_drm_fb_helper_release_info;
+ 
+ 	return 0;
+ 
 
 
