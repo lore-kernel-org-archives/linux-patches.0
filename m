@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F0424C07D;
-	Wed,  5 Mar 2025 17:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FDF2517AF;
+	Wed,  5 Mar 2025 17:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197352; cv=none; b=TaUjHVkZqxMoLaYSCcS98Ykk8uy6neAkCF3ly+ZCcMgq1OR2wH7C7+PqdcMrFLsxAizGMunCMfh5GUigj1HuhFMKfwa2fd/kgJPteM0VUV2iX8LoOF99HQ2MK7wyfERvrHWu86UJJj5qxh2/y5v45V3RvqgToHuiQExvkuIgEnA=
+	t=1741197355; cv=none; b=hDeEmx8q0dp6B8Qx5ShBPmYy1QQdKKyLEYauYbjKQxQI8zoYdlOVthRYzoyb1UuoHCoHulO39t0iRfyVSDwtjYYkkCxDIYHL85bmxy7zsq9r4e/S92WhY48eJ0ikxu2s68uxUH3uQxss6mL8XZ+ngwRfB6mcEvZlTCbBpOZA9Jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197352; c=relaxed/simple;
-	bh=qBntL0jYTZn7DO6Wusg2BMQRN/tvvHk8tNid8FFwGj8=;
+	s=arc-20240116; t=1741197355; c=relaxed/simple;
+	bh=KidvwaX1iuC8NN2LzrRBD8JWDuwP3iby9bl2RUXs7Yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lSsaJxjdnkT7qEeajmGklnP63S9a12IEdKY0tzKPeqH+t0AEcDg6Altjrk23790ah1hVAZ6uXfd3ilL0EYRJmG4tlnZGYovzUmeReLSUy7lnI0Fbp+rB44g7zZV1G8ngWr1+molxhLwqxVjNMpH5hv9vpedWEbix39h7sj00oEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySw2WqRu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BqtOK+z/W0xMQqqbIuf5xUsOOXOvFV+wkyii5CQgof1Opk2KN592cbRTbYlGYN8n4wWtGk0YucI9jCaRNJj4RWVXK8b0h8MhSjGakwM0qC5zRPLLB7J9wn851tHQEST56wZJK+EK78q6XJONz7TwqRbkFizg1vpFVgpJCRG7QlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhNK0ffA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySw2WqRu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA7AC4CED1;
-	Wed,  5 Mar 2025 17:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhNK0ffA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2422DC4CEE2;
+	Wed,  5 Mar 2025 17:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197352;
-	bh=qBntL0jYTZn7DO6Wusg2BMQRN/tvvHk8tNid8FFwGj8=;
+	s=korg; t=1741197355;
+	bh=KidvwaX1iuC8NN2LzrRBD8JWDuwP3iby9bl2RUXs7Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ySw2WqRuM0sgmJHoYY80WCGteq29+oqRyTG3OdYh1DpijWkrvpmAGWUYevECF5iiX
-	 AoS18vrQfJlr3UyCJ+39Vi4JXq7iyXGcqlNZEOUWO8Kz/y3n8/jFqRNPtBh6jSna6j
-	 c4TcC9mtbLGbzygN3VfqyJyy1u1M3mhBWlWl3sDI=
+	b=KhNK0ffASZZsfX8EKzxY146lwB5KWf7hi6Dv7w3cdeySG2pbt4krw5V9HxtAqQA2n
+	 7phsgs8VObAnMESfGrT8dzP1w/GJpXlJ25XLpKU8sTUvZGH+/DV7AaeRJ3LdRYAhd+
+	 zbv39B6EqJmY+DkYv9U1s5vN4XepWwAfROaI5FZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
 	Guillaume Nault <gnault@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 126/176] ipvlan: Unmask upper DSCP bits in ipvlan_process_v4_outbound()
-Date: Wed,  5 Mar 2025 18:48:15 +0100
-Message-ID: <20250305174510.511555979@linuxfoundation.org>
+Subject: [PATCH 6.1 127/176] ipv4: Convert icmp_route_lookup() to dscp_t.
+Date: Wed,  5 Mar 2025 18:48:16 +0100
+Message-ID: <20250305174510.550676050@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -52,45 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 939cd1abf080c629552a9c5e6db4c0509d13e4c7 ]
+[ Upstream commit 913c83a610bb7dd8e5952a2b4663e1feec0b5de6 ]
 
-Unmask the upper DSCP bits when calling ip_route_output_flow() so that
-in the future it could perform the FIB lookup according to the full DSCP
-value.
+Pass a dscp_t variable to icmp_route_lookup(), instead of a plain u8,
+to prevent accidental setting of ECN bits in ->flowi4_tos. Rename that
+variable ("tos" -> "dscp") to make the intent clear.
 
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+While there, reorganise the function parameters to fill up horizontal
+space.
+
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/294fead85c6035bcdc5fcf9a6bb4ce8798c45ba1.1727807926.git.gnault@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 27843ce6ba3d ("ipvlan: ensure network headers are in skb linear part")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv4/icmp.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
-index 1d49771d07f4c..d22a705ac4d6f 100644
---- a/drivers/net/ipvlan/ipvlan_core.c
-+++ b/drivers/net/ipvlan/ipvlan_core.c
-@@ -2,6 +2,8 @@
- /* Copyright (c) 2014 Mahesh Bandewar <maheshb@google.com>
-  */
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index a154339845dd4..855fcef829e2c 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -484,13 +484,11 @@ static struct net_device *icmp_get_route_lookup_dev(struct sk_buff *skb)
+ 	return route_lookup_dev;
+ }
  
-+#include <net/inet_dscp.h>
-+
- #include "ipvlan.h"
+-static struct rtable *icmp_route_lookup(struct net *net,
+-					struct flowi4 *fl4,
++static struct rtable *icmp_route_lookup(struct net *net, struct flowi4 *fl4,
+ 					struct sk_buff *skb_in,
+-					const struct iphdr *iph,
+-					__be32 saddr, u8 tos, u32 mark,
+-					int type, int code,
+-					struct icmp_bxm *param)
++					const struct iphdr *iph, __be32 saddr,
++					dscp_t dscp, u32 mark, int type,
++					int code, struct icmp_bxm *param)
+ {
+ 	struct net_device *route_lookup_dev;
+ 	struct rtable *rt, *rt2;
+@@ -503,7 +501,7 @@ static struct rtable *icmp_route_lookup(struct net *net,
+ 	fl4->saddr = saddr;
+ 	fl4->flowi4_mark = mark;
+ 	fl4->flowi4_uid = sock_net_uid(net, NULL);
+-	fl4->flowi4_tos = tos & INET_DSCP_MASK;
++	fl4->flowi4_tos = inet_dscp_to_dsfield(dscp);
+ 	fl4->flowi4_proto = IPPROTO_ICMP;
+ 	fl4->fl4_icmp_type = type;
+ 	fl4->fl4_icmp_code = code;
+@@ -551,7 +549,7 @@ static struct rtable *icmp_route_lookup(struct net *net,
+ 		orefdst = skb_in->_skb_refdst; /* save old refdst */
+ 		skb_dst_set(skb_in, NULL);
+ 		err = ip_route_input(skb_in, fl4_dec.daddr, fl4_dec.saddr,
+-				     tos, rt2->dst.dev);
++				     inet_dscp_to_dsfield(dscp), rt2->dst.dev);
  
- static u32 ipvlan_jhash_secret __read_mostly;
-@@ -420,7 +422,7 @@ static noinline_for_stack int ipvlan_process_v4_outbound(struct sk_buff *skb)
- 	int err, ret = NET_XMIT_DROP;
- 	struct flowi4 fl4 = {
- 		.flowi4_oif = dev->ifindex,
--		.flowi4_tos = RT_TOS(ip4h->tos),
-+		.flowi4_tos = ip4h->tos & INET_DSCP_MASK,
- 		.flowi4_flags = FLOWI_FLAG_ANYSRC,
- 		.flowi4_mark = skb->mark,
- 		.daddr = ip4h->daddr,
+ 		dst_release(&rt2->dst);
+ 		rt2 = skb_rtable(skb_in);
+@@ -747,8 +745,9 @@ void __icmp_send(struct sk_buff *skb_in, int type, int code, __be32 info,
+ 	ipc.opt = &icmp_param.replyopts.opt;
+ 	ipc.sockc.mark = mark;
+ 
+-	rt = icmp_route_lookup(net, &fl4, skb_in, iph, saddr, tos, mark,
+-			       type, code, &icmp_param);
++	rt = icmp_route_lookup(net, &fl4, skb_in, iph, saddr,
++			       inet_dsfield_to_dscp(tos), mark, type, code,
++			       &icmp_param);
+ 	if (IS_ERR(rt))
+ 		goto out_unlock;
+ 
 -- 
 2.39.5
 
