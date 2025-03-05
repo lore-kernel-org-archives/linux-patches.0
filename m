@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D55B253326;
-	Wed,  5 Mar 2025 18:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E572528E4;
+	Wed,  5 Mar 2025 18:19:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198786; cv=none; b=CUMkWG7rYpiMg59ZmcRofIKRDEehV1QpkACrueUByxYiRVLv4pswLa1PIH16HiYWec1e82uI3cg9h8zrDsGSIcTiWXMaWZ7VcE66IG2na0KVVubYlFpqgL1sVINj8zXgveBKMVzfBD0xuJbUhKSTQPWzq+tItWaErmpuVmStvfU=
+	t=1741198790; cv=none; b=cnsNF7Rotd060f4SaB/p+1bPd2YbdW5IkNVAbJYkkzvFLYbrnQ1G0cuwdJbmkxNvcvk8yICHsXKiEpfYX94+XbTcYVlIT1SqeNx9/svV5wMWyAwVEGo2mD/BTwCEZSgX3iBlprIfXpYFBDLVKQMNlzsRFV1qghD6xTVIp47t8DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198786; c=relaxed/simple;
-	bh=qmRk0N7DZtpDyKGPKzfitTUKHAuNeMybTFYDj1cYNng=;
+	s=arc-20240116; t=1741198790; c=relaxed/simple;
+	bh=bnDnCmM2F9akUVAP+EanQMA9afaVJP0gsVXKqTYJEnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tuaV1br5DrrmoXGyfpizf1I0uHGzdONDn7Sh1la/qxxGN2OIQxQujWZYJmFGnM4QogVmZsECNjn4uv1FYPs4va8DWXVB+S8yd3yZ+UnozSDSMLBAezZgUcNzBUxOzeftcBZs02H5xQIZ6P5SgUZbRRoONKurVjZ+dLe0sfDVQXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+9zSh6M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z3bI7o/ITTQNppXMN3Y//r8LJYaJ+x0QKh3dMsEVnkgYMzwVLEalCEFZuZLbiivl8z+JpmGElF0mosKM04VHsSGletWMNC2jjwEFhd2QjdGY4X7XgwU8ZxLbEU+FWYdjxJCL3h7stwTBqj39bskxvv2HAas3qP/GtIdKCazM0sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4UdjtA3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+9zSh6M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282B3C4CED1;
-	Wed,  5 Mar 2025 18:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4UdjtA3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91435C4CEE8;
+	Wed,  5 Mar 2025 18:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198786;
-	bh=qmRk0N7DZtpDyKGPKzfitTUKHAuNeMybTFYDj1cYNng=;
+	s=korg; t=1741198790;
+	bh=bnDnCmM2F9akUVAP+EanQMA9afaVJP0gsVXKqTYJEnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+9zSh6MvarTxvvNvyFaxYmVD2zEzhjT+cEiicg2nc/EcOdS/pIB4enJTseTPkJy6
-	 szilOOZDsGuP2aANWYNagrWPpetiWBEzDwQYQzoYgUOfHuXWSV7zKBspwx4b2Z8krA
-	 XJAPIIwsDx3jzWVTGtHsi/LqMSZi8jGl5FOr/cCQ=
+	b=P4UdjtA3lFvi0CoDwQZUg/zcGO37Oq6NAaDxN7Jvltyj/QRtqoYVfyoWDHJ8Q7w9K
+	 R8+XVr9pwcXkTnEGM4p/uAJzcr5y/KMOg3e3Gr+ZdfqYVbcrH/KcPDAsoOuvzEiSGY
+	 ZDnB/aWuJcsqGKu/j+cdMBgVOy7kBNeLw2WZYuCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
-	Zong Li <zong.li@sifive.com>,
-	Andy Chiu <andybnac@gmail.com>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
 	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.13 147/157] riscv: signal: fix signal_minsigstksz
-Date: Wed,  5 Mar 2025 18:49:43 +0100
-Message-ID: <20250305174511.204591598@linuxfoundation.org>
+Subject: [PATCH 6.13 148/157] riscv: cpufeature: use bitmap_equal() instead of memcmp()
+Date: Wed,  5 Mar 2025 18:49:44 +0100
+Message-ID: <20250305174511.243531141@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -47,46 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+From: Clément Léger <cleger@rivosinc.com>
 
-commit 564fc8eb6f78e01292ff10801f318feae6153fdd upstream.
+commit c6ec1e1b078d8e2ecd075e46db6197a14930a3fc upstream.
 
-The init_rt_signal_env() funciton is called before the alternative patch
-is applied, so using the alternative-related API to check the availability
-of an extension within this function doesn't have the intended effect.
-This patch reorders the init_rt_signal_env() and apply_boot_alternatives()
-to get the correct signal_minsigstksz.
+Comparison of bitmaps should be done using bitmap_equal(), not memcmp(),
+use the former one to compare isa bitmaps.
 
-Fixes: e92f469b0771 ("riscv: signal: Report signal frame size to userspace via auxv")
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Reviewed-by: Zong Li <zong.li@sifive.com>
-Reviewed-by: Andy Chiu <andybnac@gmail.com>
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Fixes: 625034abd52a8c ("riscv: add ISA extensions validation callback")
 Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20241220083926.19453-3-yongxuan.wang@sifive.com
+Link: https://lore.kernel.org/r/20250210155615.1545738-1-cleger@rivosinc.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/setup.c |    2 +-
+ arch/riscv/kernel/cpufeature.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/setup.c
-+++ b/arch/riscv/kernel/setup.c
-@@ -324,8 +324,8 @@ void __init setup_arch(char **cmdline_p)
+--- a/arch/riscv/kernel/cpufeature.c
++++ b/arch/riscv/kernel/cpufeature.c
+@@ -475,7 +475,7 @@ static void __init riscv_resolve_isa(uns
+ 			if (bit < RISCV_ISA_EXT_BASE)
+ 				*this_hwcap |= isa2hwcap[bit];
+ 		}
+-	} while (loop && memcmp(prev_resolved_isa, resolved_isa, sizeof(prev_resolved_isa)));
++	} while (loop && !bitmap_equal(prev_resolved_isa, resolved_isa, RISCV_ISA_EXT_MAX));
+ }
  
- 	riscv_init_cbo_blocksizes();
- 	riscv_fill_hwcap();
--	init_rt_signal_env();
- 	apply_boot_alternatives();
-+	init_rt_signal_env();
- 
- 	if (IS_ENABLED(CONFIG_RISCV_ISA_ZICBOM) &&
- 	    riscv_isa_extension_available(NULL, ZICBOM))
+ static void __init match_isa_ext(const char *name, const char *name_end, unsigned long *bitmap)
 
 
