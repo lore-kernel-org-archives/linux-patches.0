@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A302512C0;
-	Wed,  5 Mar 2025 18:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875762512C0;
+	Wed,  5 Mar 2025 18:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198460; cv=none; b=sNV0RyDfPYNxHY07KrAPalv9cMf+nRS5iAZdZO5Ib264Dp7viUQRhIqxwT+l9eAj9WIhYAItDB27RfoGJ0nEBUii7vGtd4jnaYvIkAAWAyU4x/eh5S0IbvXf7e5DvAUoyMi8Ir8SWNM0NJ21QYJ1FWq/ofPB4R6YiF4OSFyIEjE=
+	t=1741198463; cv=none; b=myQNg6vYSZm7E32biifwRO9JZ/94Pdv2jj8AwmJzLsncD/1xnx8SLzpNqmQcn3d7Dekz8hbEr/IWizc1cSNKw6nMK4xOAGJXJJFhFYdKmj9X17Yx/f/uO1mdzZx3LvT/9Zmsx+uT+ijA3HGjZWmBWNIjAfXvea2x290Iptl2qsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198460; c=relaxed/simple;
-	bh=sHogIAyyQCVs+gKGP8Moac6XTQQFImN86wUsSZdUvyM=;
+	s=arc-20240116; t=1741198463; c=relaxed/simple;
+	bh=oLSBhHF/WJtid30BRUHLbe+br9OGCsS8H4ErE6WJEYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tj31Ji/wyWFii+/jyEIq3235D840PX+MgWdyZl0FBeB6cB8Nx8c1Ilc1dsBwtyjlt59I3UfzotHSvZZVeE2XbvSCLHbs9fXlOpacAYW3pQI8gzkfKi+WPj0nAi/wP6iw5vX6APJN+PNEcbp2ebrQkRO3/3uCn/7BljloK+zE50Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iFp8rxCC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cdww1acV+S2OSxWsRFvioNBVFBWdsMGOP1wXyFp4ePAJMkVuyVl4cxsfOZ9Gx+rLBJRzJHDGd0r9WMplGNG1n0XeuVrxLjeIJ/sC41XklyXpsSVJhOzkX8hYtvOk4ZRivbY89S6prU1CeF4wR/Fj8vAhobqtPpQIMO89pD+9hI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3yMKytv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iFp8rxCC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D453FC4CED1;
-	Wed,  5 Mar 2025 18:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3yMKytv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67D6C4CEE0;
+	Wed,  5 Mar 2025 18:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198460;
-	bh=sHogIAyyQCVs+gKGP8Moac6XTQQFImN86wUsSZdUvyM=;
+	s=korg; t=1741198463;
+	bh=oLSBhHF/WJtid30BRUHLbe+br9OGCsS8H4ErE6WJEYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iFp8rxCCooHsiLWxbtceZiS5o3Ic7MFPQXqjHmRbEgm7gYj0slSVNo0jgrjz7z91M
-	 d19Rk6eHpXGAQe8RSllTullSCzMt/rsFXMbdFmhXscb2c2ckugnZQlJPTRhDSHiif9
-	 U9iY6aZoHzF1aLQRwjFBdfCh21mS95jkgyiH+BrU=
+	b=F3yMKytvlPhcX9i3acwZx93OWkFKGSAHPRighOANWs6cMbKJLJKn6CmLmghe/oNl4
+	 gFgQ/E1wmAo7XaMkMcbTTb/b8d5lLuWbJoimCY11j+Blt4ZrBCSCf7cJ1zdyLyKTbu
+	 GUeukZZkQGZhbVFE4Zdw7D3C32js5yX6x3N0VrMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 036/157] net: dsa: rtl8366rb: Fix compilation problem
-Date: Wed,  5 Mar 2025 18:47:52 +0100
-Message-ID: <20250305174506.748213072@linuxfoundation.org>
+Subject: [PATCH 6.13 037/157] ASoC: es8328: fix route from DAC to output
+Date: Wed,  5 Mar 2025 18:47:53 +0100
+Message-ID: <20250305174506.789111151@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -53,682 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
 
-[ Upstream commit f15176b8b6e72ac30e14fd273282d2b72562d26b ]
+[ Upstream commit 5b0c02f9b8acf2a791e531bbc09acae2d51f4f9b ]
 
-When the kernel is compiled without LED framework support the
-rtl8366rb fails to build like this:
+The ES8328 codec driver, which is also used for the ES8388 chip that
+appears to have an identical register map, claims that the output can
+either take the route from DAC->Mixer->Output or through DAC->Output
+directly. To the best of what I could find, this is not true, and
+creates problems.
 
-rtl8366rb.o: in function `rtl8366rb_setup_led':
-rtl8366rb.c:953:(.text.unlikely.rtl8366rb_setup_led+0xe8):
-  undefined reference to `led_init_default_state_get'
-rtl8366rb.c:980:(.text.unlikely.rtl8366rb_setup_led+0x240):
-  undefined reference to `devm_led_classdev_register_ext'
+Without DACCONTROL17 bit index 7 set for the left channel, as well as
+DACCONTROL20 bit index 7 set for the right channel, I cannot get any
+analog audio out on Left Out 2 and Right Out 2 respectively, despite the
+DAPM routes claiming that this should be possible. Furthermore, the same
+is the case for Left Out 1 and Right Out 1, showing that those two don't
+have a direct route from DAC to output bypassing the mixer either.
 
-As this is constantly coming up in different randconfig builds,
-bite the bullet and create a separate file for the offending
-code, split out a header with all stuff needed both in the
-core driver and the leds code.
+Those control bits toggle whether the DACs are fed (stale bread?) into
+their respective mixers. If one "unmutes" the mixer controls in
+alsamixer, then sure, the audio output works, but if it doesn't work
+without the mixer being fed the DAC input then evidently it's not a
+direct output from the DAC.
 
-Add a new bool Kconfig option for the LED compile target, such
-that it depends on LEDS_CLASS=y || LEDS_CLASS=RTL8366RB
-which make LED support always available when LEDS_CLASS is
-compiled into the kernel and enforce that if the LEDS_CLASS
-is a module, then the RTL8366RB driver needs to be a module
-as well so that modprobe can resolve the dependencies.
+ES8328/ES8388 are seemingly not alone in this. ES8323, which uses a
+separate driver for what appears to be a very similar register map,
+simply flips those two bits on in its probe function, and then pretends
+there is no power management whatsoever for the individual controls.
+Fair enough.
 
-Fixes: 32d617005475 ("net: dsa: realtek: add LED drivers for rtl8366rb")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202502070525.xMUImayb-lkp@intel.com/
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+My theory as to why nobody has noticed this up to this point is that
+everyone just assumes it's their fault when they had to unmute an
+additional control in ALSA.
+
+Fix this in the es8328 driver by removing the erroneous direct route,
+then get rid of the playback switch controls and have those bits tied to
+the mixer's widget instead, which until now had no register to play
+with.
+
+Fixes: 567e4f98922c ("ASoC: add es8328 codec driver")
+Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Link: https://patch.msgid.link/20250222-es8328-route-bludgeoning-v1-1-99bfb7fb22d9@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/realtek/Kconfig          |   6 +
- drivers/net/dsa/realtek/Makefile         |   3 +
- drivers/net/dsa/realtek/rtl8366rb-leds.c | 177 ++++++++++++++++
- drivers/net/dsa/realtek/rtl8366rb.c      | 258 +----------------------
- drivers/net/dsa/realtek/rtl8366rb.h      | 107 ++++++++++
- 5 files changed, 299 insertions(+), 252 deletions(-)
- create mode 100644 drivers/net/dsa/realtek/rtl8366rb-leds.c
- create mode 100644 drivers/net/dsa/realtek/rtl8366rb.h
+ sound/soc/codecs/es8328.c | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/dsa/realtek/Kconfig b/drivers/net/dsa/realtek/Kconfig
-index 6989972eebc30..10687722d14c0 100644
---- a/drivers/net/dsa/realtek/Kconfig
-+++ b/drivers/net/dsa/realtek/Kconfig
-@@ -43,4 +43,10 @@ config NET_DSA_REALTEK_RTL8366RB
- 	help
- 	  Select to enable support for Realtek RTL8366RB.
+diff --git a/sound/soc/codecs/es8328.c b/sound/soc/codecs/es8328.c
+index f3c97da798dc8..76159c45e6b52 100644
+--- a/sound/soc/codecs/es8328.c
++++ b/sound/soc/codecs/es8328.c
+@@ -233,7 +233,6 @@ static const struct snd_kcontrol_new es8328_right_line_controls =
  
-+config NET_DSA_REALTEK_RTL8366RB_LEDS
-+	bool "Support RTL8366RB LED control"
-+	depends on (LEDS_CLASS=y || LEDS_CLASS=NET_DSA_REALTEK_RTL8366RB)
-+	depends on NET_DSA_REALTEK_RTL8366RB
-+	default NET_DSA_REALTEK_RTL8366RB
-+
- endif
-diff --git a/drivers/net/dsa/realtek/Makefile b/drivers/net/dsa/realtek/Makefile
-index 35491dc20d6d6..17367bcba496c 100644
---- a/drivers/net/dsa/realtek/Makefile
-+++ b/drivers/net/dsa/realtek/Makefile
-@@ -12,4 +12,7 @@ endif
+ /* Left Mixer */
+ static const struct snd_kcontrol_new es8328_left_mixer_controls[] = {
+-	SOC_DAPM_SINGLE("Playback Switch", ES8328_DACCONTROL17, 7, 1, 0),
+ 	SOC_DAPM_SINGLE("Left Bypass Switch", ES8328_DACCONTROL17, 6, 1, 0),
+ 	SOC_DAPM_SINGLE("Right Playback Switch", ES8328_DACCONTROL18, 7, 1, 0),
+ 	SOC_DAPM_SINGLE("Right Bypass Switch", ES8328_DACCONTROL18, 6, 1, 0),
+@@ -243,7 +242,6 @@ static const struct snd_kcontrol_new es8328_left_mixer_controls[] = {
+ static const struct snd_kcontrol_new es8328_right_mixer_controls[] = {
+ 	SOC_DAPM_SINGLE("Left Playback Switch", ES8328_DACCONTROL19, 7, 1, 0),
+ 	SOC_DAPM_SINGLE("Left Bypass Switch", ES8328_DACCONTROL19, 6, 1, 0),
+-	SOC_DAPM_SINGLE("Playback Switch", ES8328_DACCONTROL20, 7, 1, 0),
+ 	SOC_DAPM_SINGLE("Right Bypass Switch", ES8328_DACCONTROL20, 6, 1, 0),
+ };
  
- obj-$(CONFIG_NET_DSA_REALTEK_RTL8366RB) += rtl8366.o
- rtl8366-objs 				:= rtl8366-core.o rtl8366rb.o
-+ifdef CONFIG_NET_DSA_REALTEK_RTL8366RB_LEDS
-+rtl8366-objs 				+= rtl8366rb-leds.o
-+endif
- obj-$(CONFIG_NET_DSA_REALTEK_RTL8365MB) += rtl8365mb.o
-diff --git a/drivers/net/dsa/realtek/rtl8366rb-leds.c b/drivers/net/dsa/realtek/rtl8366rb-leds.c
-new file mode 100644
-index 0000000000000..99c890681ae60
---- /dev/null
-+++ b/drivers/net/dsa/realtek/rtl8366rb-leds.c
-@@ -0,0 +1,177 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <linux/bitops.h>
-+#include <linux/regmap.h>
-+#include <net/dsa.h>
-+#include "rtl83xx.h"
-+#include "rtl8366rb.h"
-+
-+static inline u32 rtl8366rb_led_group_port_mask(u8 led_group, u8 port)
-+{
-+	switch (led_group) {
-+	case 0:
-+		return FIELD_PREP(RTL8366RB_LED_0_X_CTRL_MASK, BIT(port));
-+	case 1:
-+		return FIELD_PREP(RTL8366RB_LED_0_X_CTRL_MASK, BIT(port));
-+	case 2:
-+		return FIELD_PREP(RTL8366RB_LED_0_X_CTRL_MASK, BIT(port));
-+	case 3:
-+		return FIELD_PREP(RTL8366RB_LED_0_X_CTRL_MASK, BIT(port));
-+	default:
-+		return 0;
-+	}
-+}
-+
-+static int rb8366rb_get_port_led(struct rtl8366rb_led *led)
-+{
-+	struct realtek_priv *priv = led->priv;
-+	u8 led_group = led->led_group;
-+	u8 port_num = led->port_num;
-+	int ret;
-+	u32 val;
-+
-+	ret = regmap_read(priv->map, RTL8366RB_LED_X_X_CTRL_REG(led_group),
-+			  &val);
-+	if (ret) {
-+		dev_err(priv->dev, "error reading LED on port %d group %d\n",
-+			led_group, port_num);
-+		return ret;
-+	}
-+
-+	return !!(val & rtl8366rb_led_group_port_mask(led_group, port_num));
-+}
-+
-+static int rb8366rb_set_port_led(struct rtl8366rb_led *led, bool enable)
-+{
-+	struct realtek_priv *priv = led->priv;
-+	u8 led_group = led->led_group;
-+	u8 port_num = led->port_num;
-+	int ret;
-+
-+	ret = regmap_update_bits(priv->map,
-+				 RTL8366RB_LED_X_X_CTRL_REG(led_group),
-+				 rtl8366rb_led_group_port_mask(led_group,
-+							       port_num),
-+				 enable ? 0xffff : 0);
-+	if (ret) {
-+		dev_err(priv->dev, "error updating LED on port %d group %d\n",
-+			led_group, port_num);
-+		return ret;
-+	}
-+
-+	/* Change the LED group to manual controlled LEDs if required */
-+	ret = rb8366rb_set_ledgroup_mode(priv, led_group,
-+					 RTL8366RB_LEDGROUP_FORCE);
-+
-+	if (ret) {
-+		dev_err(priv->dev, "error updating LED GROUP group %d\n",
-+			led_group);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static int
-+rtl8366rb_cled_brightness_set_blocking(struct led_classdev *ldev,
-+				       enum led_brightness brightness)
-+{
-+	struct rtl8366rb_led *led = container_of(ldev, struct rtl8366rb_led,
-+						 cdev);
-+
-+	return rb8366rb_set_port_led(led, brightness == LED_ON);
-+}
-+
-+static int rtl8366rb_setup_led(struct realtek_priv *priv, struct dsa_port *dp,
-+			       struct fwnode_handle *led_fwnode)
-+{
-+	struct rtl8366rb *rb = priv->chip_data;
-+	struct led_init_data init_data = { };
-+	enum led_default_state state;
-+	struct rtl8366rb_led *led;
-+	u32 led_group;
-+	int ret;
-+
-+	ret = fwnode_property_read_u32(led_fwnode, "reg", &led_group);
-+	if (ret)
-+		return ret;
-+
-+	if (led_group >= RTL8366RB_NUM_LEDGROUPS) {
-+		dev_warn(priv->dev, "Invalid LED reg %d defined for port %d",
-+			 led_group, dp->index);
-+		return -EINVAL;
-+	}
-+
-+	led = &rb->leds[dp->index][led_group];
-+	led->port_num = dp->index;
-+	led->led_group = led_group;
-+	led->priv = priv;
-+
-+	state = led_init_default_state_get(led_fwnode);
-+	switch (state) {
-+	case LEDS_DEFSTATE_ON:
-+		led->cdev.brightness = 1;
-+		rb8366rb_set_port_led(led, 1);
-+		break;
-+	case LEDS_DEFSTATE_KEEP:
-+		led->cdev.brightness =
-+			rb8366rb_get_port_led(led);
-+		break;
-+	case LEDS_DEFSTATE_OFF:
-+	default:
-+		led->cdev.brightness = 0;
-+		rb8366rb_set_port_led(led, 0);
-+	}
-+
-+	led->cdev.max_brightness = 1;
-+	led->cdev.brightness_set_blocking =
-+		rtl8366rb_cled_brightness_set_blocking;
-+	init_data.fwnode = led_fwnode;
-+	init_data.devname_mandatory = true;
-+
-+	init_data.devicename = kasprintf(GFP_KERNEL, "Realtek-%d:0%d:%d",
-+					 dp->ds->index, dp->index, led_group);
-+	if (!init_data.devicename)
-+		return -ENOMEM;
-+
-+	ret = devm_led_classdev_register_ext(priv->dev, &led->cdev, &init_data);
-+	if (ret) {
-+		dev_warn(priv->dev, "Failed to init LED %d for port %d",
-+			 led_group, dp->index);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+int rtl8366rb_setup_leds(struct realtek_priv *priv)
-+{
-+	struct dsa_switch *ds = &priv->ds;
-+	struct device_node *leds_np;
-+	struct dsa_port *dp;
-+	int ret = 0;
-+
-+	dsa_switch_for_each_port(dp, ds) {
-+		if (!dp->dn)
-+			continue;
-+
-+		leds_np = of_get_child_by_name(dp->dn, "leds");
-+		if (!leds_np) {
-+			dev_dbg(priv->dev, "No leds defined for port %d",
-+				dp->index);
-+			continue;
-+		}
-+
-+		for_each_child_of_node_scoped(leds_np, led_np) {
-+			ret = rtl8366rb_setup_led(priv, dp,
-+						  of_fwnode_handle(led_np));
-+			if (ret)
-+				break;
-+		}
-+
-+		of_node_put(leds_np);
-+		if (ret)
-+			return ret;
-+	}
-+	return 0;
-+}
-diff --git a/drivers/net/dsa/realtek/rtl8366rb.c b/drivers/net/dsa/realtek/rtl8366rb.c
-index 23374178a1760..6bf8427f14fbd 100644
---- a/drivers/net/dsa/realtek/rtl8366rb.c
-+++ b/drivers/net/dsa/realtek/rtl8366rb.c
-@@ -26,11 +26,7 @@
- #include "realtek-smi.h"
- #include "realtek-mdio.h"
- #include "rtl83xx.h"
--
--#define RTL8366RB_PORT_NUM_CPU		5
--#define RTL8366RB_NUM_PORTS		6
--#define RTL8366RB_PHY_NO_MAX		4
--#define RTL8366RB_PHY_ADDR_MAX		31
-+#include "rtl8366rb.h"
+@@ -336,10 +334,10 @@ static const struct snd_soc_dapm_widget es8328_dapm_widgets[] = {
+ 	SND_SOC_DAPM_DAC("Left DAC", "Left Playback", ES8328_DACPOWER,
+ 			ES8328_DACPOWER_LDAC_OFF, 1),
  
- /* Switch Global Configuration register */
- #define RTL8366RB_SGCR				0x0000
-@@ -175,39 +171,6 @@
-  */
- #define RTL8366RB_VLAN_INGRESS_CTRL2_REG	0x037f
+-	SND_SOC_DAPM_MIXER("Left Mixer", SND_SOC_NOPM, 0, 0,
++	SND_SOC_DAPM_MIXER("Left Mixer", ES8328_DACCONTROL17, 7, 0,
+ 		&es8328_left_mixer_controls[0],
+ 		ARRAY_SIZE(es8328_left_mixer_controls)),
+-	SND_SOC_DAPM_MIXER("Right Mixer", SND_SOC_NOPM, 0, 0,
++	SND_SOC_DAPM_MIXER("Right Mixer", ES8328_DACCONTROL20, 7, 0,
+ 		&es8328_right_mixer_controls[0],
+ 		ARRAY_SIZE(es8328_right_mixer_controls)),
  
--/* LED control registers */
--/* The LED blink rate is global; it is used by all triggers in all groups. */
--#define RTL8366RB_LED_BLINKRATE_REG		0x0430
--#define RTL8366RB_LED_BLINKRATE_MASK		0x0007
--#define RTL8366RB_LED_BLINKRATE_28MS		0x0000
--#define RTL8366RB_LED_BLINKRATE_56MS		0x0001
--#define RTL8366RB_LED_BLINKRATE_84MS		0x0002
--#define RTL8366RB_LED_BLINKRATE_111MS		0x0003
--#define RTL8366RB_LED_BLINKRATE_222MS		0x0004
--#define RTL8366RB_LED_BLINKRATE_446MS		0x0005
--
--/* LED trigger event for each group */
--#define RTL8366RB_LED_CTRL_REG			0x0431
--#define RTL8366RB_LED_CTRL_OFFSET(led_group)	\
--	(4 * (led_group))
--#define RTL8366RB_LED_CTRL_MASK(led_group)	\
--	(0xf << RTL8366RB_LED_CTRL_OFFSET(led_group))
--
--/* The RTL8366RB_LED_X_X registers are used to manually set the LED state only
-- * when the corresponding LED group in RTL8366RB_LED_CTRL_REG is
-- * RTL8366RB_LEDGROUP_FORCE. Otherwise, it is ignored.
-- */
--#define RTL8366RB_LED_0_1_CTRL_REG		0x0432
--#define RTL8366RB_LED_2_3_CTRL_REG		0x0433
--#define RTL8366RB_LED_X_X_CTRL_REG(led_group)	\
--	((led_group) <= 1 ? \
--		RTL8366RB_LED_0_1_CTRL_REG : \
--		RTL8366RB_LED_2_3_CTRL_REG)
--#define RTL8366RB_LED_0_X_CTRL_MASK		GENMASK(5, 0)
--#define RTL8366RB_LED_X_1_CTRL_MASK		GENMASK(11, 6)
--#define RTL8366RB_LED_2_X_CTRL_MASK		GENMASK(5, 0)
--#define RTL8366RB_LED_X_3_CTRL_MASK		GENMASK(11, 6)
--
- #define RTL8366RB_MIB_COUNT			33
- #define RTL8366RB_GLOBAL_MIB_COUNT		1
- #define RTL8366RB_MIB_COUNTER_PORT_OFFSET	0x0050
-@@ -243,7 +206,6 @@
- #define RTL8366RB_PORT_STATUS_AN_MASK		0x0080
+@@ -418,19 +416,14 @@ static const struct snd_soc_dapm_route es8328_dapm_routes[] = {
+ 	{ "Right Line Mux", "PGA", "Right PGA Mux" },
+ 	{ "Right Line Mux", "Differential", "Differential Mux" },
  
- #define RTL8366RB_NUM_VLANS		16
--#define RTL8366RB_NUM_LEDGROUPS		4
- #define RTL8366RB_NUM_VIDS		4096
- #define RTL8366RB_PRIORITYMAX		7
- #define RTL8366RB_NUM_FIDS		8
-@@ -350,46 +312,6 @@
- #define RTL8366RB_GREEN_FEATURE_TX	BIT(0)
- #define RTL8366RB_GREEN_FEATURE_RX	BIT(2)
+-	{ "Left Out 1", NULL, "Left DAC" },
+-	{ "Right Out 1", NULL, "Right DAC" },
+-	{ "Left Out 2", NULL, "Left DAC" },
+-	{ "Right Out 2", NULL, "Right DAC" },
+-
+-	{ "Left Mixer", "Playback Switch", "Left DAC" },
++	{ "Left Mixer", NULL, "Left DAC" },
+ 	{ "Left Mixer", "Left Bypass Switch", "Left Line Mux" },
+ 	{ "Left Mixer", "Right Playback Switch", "Right DAC" },
+ 	{ "Left Mixer", "Right Bypass Switch", "Right Line Mux" },
  
--enum rtl8366_ledgroup_mode {
--	RTL8366RB_LEDGROUP_OFF			= 0x0,
--	RTL8366RB_LEDGROUP_DUP_COL		= 0x1,
--	RTL8366RB_LEDGROUP_LINK_ACT		= 0x2,
--	RTL8366RB_LEDGROUP_SPD1000		= 0x3,
--	RTL8366RB_LEDGROUP_SPD100		= 0x4,
--	RTL8366RB_LEDGROUP_SPD10		= 0x5,
--	RTL8366RB_LEDGROUP_SPD1000_ACT		= 0x6,
--	RTL8366RB_LEDGROUP_SPD100_ACT		= 0x7,
--	RTL8366RB_LEDGROUP_SPD10_ACT		= 0x8,
--	RTL8366RB_LEDGROUP_SPD100_10_ACT	= 0x9,
--	RTL8366RB_LEDGROUP_FIBER		= 0xa,
--	RTL8366RB_LEDGROUP_AN_FAULT		= 0xb,
--	RTL8366RB_LEDGROUP_LINK_RX		= 0xc,
--	RTL8366RB_LEDGROUP_LINK_TX		= 0xd,
--	RTL8366RB_LEDGROUP_MASTER		= 0xe,
--	RTL8366RB_LEDGROUP_FORCE		= 0xf,
--
--	__RTL8366RB_LEDGROUP_MODE_MAX
--};
--
--struct rtl8366rb_led {
--	u8 port_num;
--	u8 led_group;
--	struct realtek_priv *priv;
--	struct led_classdev cdev;
--};
--
--/**
-- * struct rtl8366rb - RTL8366RB-specific data
-- * @max_mtu: per-port max MTU setting
-- * @pvid_enabled: if PVID is set for respective port
-- * @leds: per-port and per-ledgroup led info
-- */
--struct rtl8366rb {
--	unsigned int max_mtu[RTL8366RB_NUM_PORTS];
--	bool pvid_enabled[RTL8366RB_NUM_PORTS];
--	struct rtl8366rb_led leds[RTL8366RB_NUM_PORTS][RTL8366RB_NUM_LEDGROUPS];
--};
--
- static struct rtl8366_mib_counter rtl8366rb_mib_counters[] = {
- 	{ 0,  0, 4, "IfInOctets"				},
- 	{ 0,  4, 4, "EtherStatsOctets"				},
-@@ -830,9 +752,10 @@ static int rtl8366rb_jam_table(const struct rtl8366rb_jam_tbl_entry *jam_table,
- 	return 0;
- }
+ 	{ "Right Mixer", "Left Playback Switch", "Left DAC" },
+ 	{ "Right Mixer", "Left Bypass Switch", "Left Line Mux" },
+-	{ "Right Mixer", "Playback Switch", "Right DAC" },
++	{ "Right Mixer", NULL, "Right DAC" },
+ 	{ "Right Mixer", "Right Bypass Switch", "Right Line Mux" },
  
--static int rb8366rb_set_ledgroup_mode(struct realtek_priv *priv,
--				      u8 led_group,
--				      enum rtl8366_ledgroup_mode mode)
-+/* This code is used also with LEDs disabled */
-+int rb8366rb_set_ledgroup_mode(struct realtek_priv *priv,
-+			       u8 led_group,
-+			       enum rtl8366_ledgroup_mode mode)
- {
- 	int ret;
- 	u32 val;
-@@ -849,144 +772,7 @@ static int rb8366rb_set_ledgroup_mode(struct realtek_priv *priv,
- 	return 0;
- }
- 
--static inline u32 rtl8366rb_led_group_port_mask(u8 led_group, u8 port)
--{
--	switch (led_group) {
--	case 0:
--		return FIELD_PREP(RTL8366RB_LED_0_X_CTRL_MASK, BIT(port));
--	case 1:
--		return FIELD_PREP(RTL8366RB_LED_0_X_CTRL_MASK, BIT(port));
--	case 2:
--		return FIELD_PREP(RTL8366RB_LED_0_X_CTRL_MASK, BIT(port));
--	case 3:
--		return FIELD_PREP(RTL8366RB_LED_0_X_CTRL_MASK, BIT(port));
--	default:
--		return 0;
--	}
--}
--
--static int rb8366rb_get_port_led(struct rtl8366rb_led *led)
--{
--	struct realtek_priv *priv = led->priv;
--	u8 led_group = led->led_group;
--	u8 port_num = led->port_num;
--	int ret;
--	u32 val;
--
--	ret = regmap_read(priv->map, RTL8366RB_LED_X_X_CTRL_REG(led_group),
--			  &val);
--	if (ret) {
--		dev_err(priv->dev, "error reading LED on port %d group %d\n",
--			led_group, port_num);
--		return ret;
--	}
--
--	return !!(val & rtl8366rb_led_group_port_mask(led_group, port_num));
--}
--
--static int rb8366rb_set_port_led(struct rtl8366rb_led *led, bool enable)
--{
--	struct realtek_priv *priv = led->priv;
--	u8 led_group = led->led_group;
--	u8 port_num = led->port_num;
--	int ret;
--
--	ret = regmap_update_bits(priv->map,
--				 RTL8366RB_LED_X_X_CTRL_REG(led_group),
--				 rtl8366rb_led_group_port_mask(led_group,
--							       port_num),
--				 enable ? 0xffff : 0);
--	if (ret) {
--		dev_err(priv->dev, "error updating LED on port %d group %d\n",
--			led_group, port_num);
--		return ret;
--	}
--
--	/* Change the LED group to manual controlled LEDs if required */
--	ret = rb8366rb_set_ledgroup_mode(priv, led_group,
--					 RTL8366RB_LEDGROUP_FORCE);
--
--	if (ret) {
--		dev_err(priv->dev, "error updating LED GROUP group %d\n",
--			led_group);
--		return ret;
--	}
--
--	return 0;
--}
--
--static int
--rtl8366rb_cled_brightness_set_blocking(struct led_classdev *ldev,
--				       enum led_brightness brightness)
--{
--	struct rtl8366rb_led *led = container_of(ldev, struct rtl8366rb_led,
--						 cdev);
--
--	return rb8366rb_set_port_led(led, brightness == LED_ON);
--}
--
--static int rtl8366rb_setup_led(struct realtek_priv *priv, struct dsa_port *dp,
--			       struct fwnode_handle *led_fwnode)
--{
--	struct rtl8366rb *rb = priv->chip_data;
--	struct led_init_data init_data = { };
--	enum led_default_state state;
--	struct rtl8366rb_led *led;
--	u32 led_group;
--	int ret;
--
--	ret = fwnode_property_read_u32(led_fwnode, "reg", &led_group);
--	if (ret)
--		return ret;
--
--	if (led_group >= RTL8366RB_NUM_LEDGROUPS) {
--		dev_warn(priv->dev, "Invalid LED reg %d defined for port %d",
--			 led_group, dp->index);
--		return -EINVAL;
--	}
--
--	led = &rb->leds[dp->index][led_group];
--	led->port_num = dp->index;
--	led->led_group = led_group;
--	led->priv = priv;
--
--	state = led_init_default_state_get(led_fwnode);
--	switch (state) {
--	case LEDS_DEFSTATE_ON:
--		led->cdev.brightness = 1;
--		rb8366rb_set_port_led(led, 1);
--		break;
--	case LEDS_DEFSTATE_KEEP:
--		led->cdev.brightness =
--			rb8366rb_get_port_led(led);
--		break;
--	case LEDS_DEFSTATE_OFF:
--	default:
--		led->cdev.brightness = 0;
--		rb8366rb_set_port_led(led, 0);
--	}
--
--	led->cdev.max_brightness = 1;
--	led->cdev.brightness_set_blocking =
--		rtl8366rb_cled_brightness_set_blocking;
--	init_data.fwnode = led_fwnode;
--	init_data.devname_mandatory = true;
--
--	init_data.devicename = kasprintf(GFP_KERNEL, "Realtek-%d:0%d:%d",
--					 dp->ds->index, dp->index, led_group);
--	if (!init_data.devicename)
--		return -ENOMEM;
--
--	ret = devm_led_classdev_register_ext(priv->dev, &led->cdev, &init_data);
--	if (ret) {
--		dev_warn(priv->dev, "Failed to init LED %d for port %d",
--			 led_group, dp->index);
--		return ret;
--	}
--
--	return 0;
--}
--
-+/* This code is used also with LEDs disabled */
- static int rtl8366rb_setup_all_leds_off(struct realtek_priv *priv)
- {
- 	int ret = 0;
-@@ -1007,38 +793,6 @@ static int rtl8366rb_setup_all_leds_off(struct realtek_priv *priv)
- 	return ret;
- }
- 
--static int rtl8366rb_setup_leds(struct realtek_priv *priv)
--{
--	struct dsa_switch *ds = &priv->ds;
--	struct device_node *leds_np;
--	struct dsa_port *dp;
--	int ret = 0;
--
--	dsa_switch_for_each_port(dp, ds) {
--		if (!dp->dn)
--			continue;
--
--		leds_np = of_get_child_by_name(dp->dn, "leds");
--		if (!leds_np) {
--			dev_dbg(priv->dev, "No leds defined for port %d",
--				dp->index);
--			continue;
--		}
--
--		for_each_child_of_node_scoped(leds_np, led_np) {
--			ret = rtl8366rb_setup_led(priv, dp,
--						  of_fwnode_handle(led_np));
--			if (ret)
--				break;
--		}
--
--		of_node_put(leds_np);
--		if (ret)
--			return ret;
--	}
--	return 0;
--}
--
- static int rtl8366rb_setup(struct dsa_switch *ds)
- {
- 	struct realtek_priv *priv = ds->priv;
-diff --git a/drivers/net/dsa/realtek/rtl8366rb.h b/drivers/net/dsa/realtek/rtl8366rb.h
-new file mode 100644
-index 0000000000000..685ff3275faa1
---- /dev/null
-+++ b/drivers/net/dsa/realtek/rtl8366rb.h
-@@ -0,0 +1,107 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
-+
-+#ifndef _RTL8366RB_H
-+#define _RTL8366RB_H
-+
-+#include "realtek.h"
-+
-+#define RTL8366RB_PORT_NUM_CPU		5
-+#define RTL8366RB_NUM_PORTS		6
-+#define RTL8366RB_PHY_NO_MAX		4
-+#define RTL8366RB_NUM_LEDGROUPS		4
-+#define RTL8366RB_PHY_ADDR_MAX		31
-+
-+/* LED control registers */
-+/* The LED blink rate is global; it is used by all triggers in all groups. */
-+#define RTL8366RB_LED_BLINKRATE_REG		0x0430
-+#define RTL8366RB_LED_BLINKRATE_MASK		0x0007
-+#define RTL8366RB_LED_BLINKRATE_28MS		0x0000
-+#define RTL8366RB_LED_BLINKRATE_56MS		0x0001
-+#define RTL8366RB_LED_BLINKRATE_84MS		0x0002
-+#define RTL8366RB_LED_BLINKRATE_111MS		0x0003
-+#define RTL8366RB_LED_BLINKRATE_222MS		0x0004
-+#define RTL8366RB_LED_BLINKRATE_446MS		0x0005
-+
-+/* LED trigger event for each group */
-+#define RTL8366RB_LED_CTRL_REG			0x0431
-+#define RTL8366RB_LED_CTRL_OFFSET(led_group)	\
-+	(4 * (led_group))
-+#define RTL8366RB_LED_CTRL_MASK(led_group)	\
-+	(0xf << RTL8366RB_LED_CTRL_OFFSET(led_group))
-+
-+/* The RTL8366RB_LED_X_X registers are used to manually set the LED state only
-+ * when the corresponding LED group in RTL8366RB_LED_CTRL_REG is
-+ * RTL8366RB_LEDGROUP_FORCE. Otherwise, it is ignored.
-+ */
-+#define RTL8366RB_LED_0_1_CTRL_REG		0x0432
-+#define RTL8366RB_LED_2_3_CTRL_REG		0x0433
-+#define RTL8366RB_LED_X_X_CTRL_REG(led_group)	\
-+	((led_group) <= 1 ? \
-+		RTL8366RB_LED_0_1_CTRL_REG : \
-+		RTL8366RB_LED_2_3_CTRL_REG)
-+#define RTL8366RB_LED_0_X_CTRL_MASK		GENMASK(5, 0)
-+#define RTL8366RB_LED_X_1_CTRL_MASK		GENMASK(11, 6)
-+#define RTL8366RB_LED_2_X_CTRL_MASK		GENMASK(5, 0)
-+#define RTL8366RB_LED_X_3_CTRL_MASK		GENMASK(11, 6)
-+
-+enum rtl8366_ledgroup_mode {
-+	RTL8366RB_LEDGROUP_OFF			= 0x0,
-+	RTL8366RB_LEDGROUP_DUP_COL		= 0x1,
-+	RTL8366RB_LEDGROUP_LINK_ACT		= 0x2,
-+	RTL8366RB_LEDGROUP_SPD1000		= 0x3,
-+	RTL8366RB_LEDGROUP_SPD100		= 0x4,
-+	RTL8366RB_LEDGROUP_SPD10		= 0x5,
-+	RTL8366RB_LEDGROUP_SPD1000_ACT		= 0x6,
-+	RTL8366RB_LEDGROUP_SPD100_ACT		= 0x7,
-+	RTL8366RB_LEDGROUP_SPD10_ACT		= 0x8,
-+	RTL8366RB_LEDGROUP_SPD100_10_ACT	= 0x9,
-+	RTL8366RB_LEDGROUP_FIBER		= 0xa,
-+	RTL8366RB_LEDGROUP_AN_FAULT		= 0xb,
-+	RTL8366RB_LEDGROUP_LINK_RX		= 0xc,
-+	RTL8366RB_LEDGROUP_LINK_TX		= 0xd,
-+	RTL8366RB_LEDGROUP_MASTER		= 0xe,
-+	RTL8366RB_LEDGROUP_FORCE		= 0xf,
-+
-+	__RTL8366RB_LEDGROUP_MODE_MAX
-+};
-+
-+#if IS_ENABLED(CONFIG_NET_DSA_REALTEK_RTL8366RB_LEDS)
-+
-+struct rtl8366rb_led {
-+	u8 port_num;
-+	u8 led_group;
-+	struct realtek_priv *priv;
-+	struct led_classdev cdev;
-+};
-+
-+int rtl8366rb_setup_leds(struct realtek_priv *priv);
-+
-+#else
-+
-+static inline int rtl8366rb_setup_leds(struct realtek_priv *priv)
-+{
-+	return 0;
-+}
-+
-+#endif /* IS_ENABLED(CONFIG_LEDS_CLASS) */
-+
-+/**
-+ * struct rtl8366rb - RTL8366RB-specific data
-+ * @max_mtu: per-port max MTU setting
-+ * @pvid_enabled: if PVID is set for respective port
-+ * @leds: per-port and per-ledgroup led info
-+ */
-+struct rtl8366rb {
-+	unsigned int max_mtu[RTL8366RB_NUM_PORTS];
-+	bool pvid_enabled[RTL8366RB_NUM_PORTS];
-+#if IS_ENABLED(CONFIG_NET_DSA_REALTEK_RTL8366RB_LEDS)
-+	struct rtl8366rb_led leds[RTL8366RB_NUM_PORTS][RTL8366RB_NUM_LEDGROUPS];
-+#endif
-+};
-+
-+/* This code is used also with LEDs disabled */
-+int rb8366rb_set_ledgroup_mode(struct realtek_priv *priv,
-+			       u8 led_group,
-+			       enum rtl8366_ledgroup_mode mode);
-+
-+#endif /* _RTL8366RB_H */
+ 	{ "DAC DIG", NULL, "DAC STM" },
 -- 
 2.39.5
 
