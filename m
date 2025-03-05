@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE01252908;
-	Wed,  5 Mar 2025 17:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F26D2512CB;
+	Wed,  5 Mar 2025 17:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197292; cv=none; b=IV9HIBUnXjfvH9opRRqDHUj06zTxMOwmkZ8+jewo/DrBMXRiETTju27EEqpS+QMeDyywf1pWCfntkYNJqP+t/fF7yRu4IPJE/yy0NO1B0nRif0Pw+V7xkkIOFuaOCkC8rgZWdBnHnbodx0wKdh50jUdBxC32IGOmy0DP508I4aE=
+	t=1741197294; cv=none; b=AUWXzxnHcWmKEDTJZMjhWPXo8ml46QpkkHMnW24O4OZpAckEXHGCdHSIWdqeHrZQwCLwwt3NqjlYGPm8Z5hxBCAJbX2yN25r3uq9TgAtdayRSBnppklR+yeIqOb+6VhJZRw7YQpN0gH4friY3B+fbcc5KNLKQkaJiKcglscV4Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197292; c=relaxed/simple;
-	bh=R5V8ucSDUEiz2C0ECwPU7q4jb88MemiNBqAmKiSzoGI=;
+	s=arc-20240116; t=1741197294; c=relaxed/simple;
+	bh=+yh+R+QNm/Rou1ovpKiTOPxBckvJY2b/ZPan4qXZuzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hQeHeGYjbZoL/LG31OkKDp6plse3Ue40tjcXT3ugHaPTkmiqnJTMHPQTCYVy9PTWfG3pJLHO526fq92reieqETAg2DnpTsg/n58p80eURcEKnlHJuwQ4ESlZzHlLnZbVK8IFXAjwtFXKZdWlfkS7CR3cuhsRZm6xN/P7walRngM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzUakfbQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=meY4PsJ1U7ABX1VrrcsW/gREXv+2d7TSGA37qpN/mfZjwFYH1dGq/D5ZtcCehDNq4shDRaejRYxeAwxW2h0quLhBjUhtcLiikcIpXCzm4LOEQTuHThsyB/m57b6AGgrJGHMjmkc/U3oMAkl4mMEUVrj72mopjl33jsWZI3x2MZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GG04vOmd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzUakfbQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F781C4CEE0;
-	Wed,  5 Mar 2025 17:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GG04vOmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6776C4CEE0;
+	Wed,  5 Mar 2025 17:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197291;
-	bh=R5V8ucSDUEiz2C0ECwPU7q4jb88MemiNBqAmKiSzoGI=;
+	s=korg; t=1741197294;
+	bh=+yh+R+QNm/Rou1ovpKiTOPxBckvJY2b/ZPan4qXZuzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pzUakfbQ/PQnkfxibqNEH7dr0DI9yqRTt5mwSTLTq5f9RvTynehw7AxsCeUCkO17S
-	 Z1N0+7cs1v15M6ceG61+qox3vH6emB5pAY4tjGbzuD2HUmu0cnSiW+hpmmbt0HHu+I
-	 4suRLzV7BRndy4sLnnIL7k0PlohblSbkgGnaAOCg=
+	b=GG04vOmdvuzsf/PaptSvhtNtugDuF9Sww9CrVUDBlxtqAJHxAkBFjfBcS3EuSDwBo
+	 9p7H6Smv7Pr6mF0pVmjFSoWQqocBZY3Lq63xzrHxq8LeCtm1yUDDbsSKj8c5yLSmtA
+	 xiSSgtTYibQTUWzrNZVqqBV/ZlFNDtmsIqYJebyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 073/176] drm/i915: Make sure all planes in use by the joiner have their crtc included
-Date: Wed,  5 Mar 2025 18:47:22 +0100
-Message-ID: <20250305174508.393175654@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 6.1 074/176] tee: optee: Fix supplicant wait loop
+Date: Wed,  5 Mar 2025 18:47:23 +0100
+Message-ID: <20250305174508.435805000@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -45,75 +45,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Sumit Garg <sumit.garg@linaro.org>
 
-commit 07fb70d82e0df085980246bf17bc12537588795f upstream.
+commit 70b0d6b0a199c5a3ee6c72f5e61681ed6f759612 upstream.
 
-Any active plane needs to have its crtc included in the atomic
-state. For planes enabled via uapi that is all handler in the core.
-But when we use a plane for joiner the uapi code things the plane
-is disabled and therefore doesn't have a crtc. So we need to pull
-those in by hand. We do it first thing in
-intel_joiner_add_affected_crtcs() so that any newly added crtc will
-subsequently pull in all of its joined crtcs as well.
+OP-TEE supplicant is a user-space daemon and it's possible for it
+be hung or crashed or killed in the middle of processing an OP-TEE
+RPC call. It becomes more complicated when there is incorrect shutdown
+ordering of the supplicant process vs the OP-TEE client application which
+can eventually lead to system hang-up waiting for the closure of the
+client application.
 
-The symptoms from failing to do this are:
-- duct tape in the form of commit 1d5b09f8daf8 ("drm/i915: Fix NULL
-  ptr deref by checking new_crtc_state")
-- the plane's hw state will get overwritten by the disabled
-  uapi state if it can't find the uapi counterpart plane in
-  the atomic state from where it should copy the correct state
+Allow the client process waiting in kernel for supplicant response to
+be killed rather than indefinitely waiting in an unkillable state. Also,
+a normal uninterruptible wait should not have resulted in the hung-task
+watchdog getting triggered, but the endless loop would.
 
+This fixes issues observed during system reboot/shutdown when supplicant
+got hung for some reason or gets crashed/killed which lead to client
+getting hung in an unkillable state. It in turn lead to system being in
+hung up state requiring hard power off/on to recover.
+
+Fixes: 4fb0a5eb364d ("tee: add OP-TEE driver")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
 Cc: stable@vger.kernel.org
-Reviewed-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250212164330.16891-2-ville.syrjala@linux.intel.com
-(cherry picked from commit 91077d1deb5374eb8be00fb391710f00e751dc4b)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/tee/optee/supp.c |   35 ++++++++---------------------------
+ 1 file changed, 8 insertions(+), 27 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -6691,12 +6691,30 @@ static int intel_async_flip_check_hw(str
- static int intel_bigjoiner_add_affected_crtcs(struct intel_atomic_state *state)
- {
- 	struct drm_i915_private *i915 = to_i915(state->base.dev);
-+	const struct intel_plane_state *plane_state;
- 	struct intel_crtc_state *crtc_state;
-+	struct intel_plane *plane;
- 	struct intel_crtc *crtc;
- 	u8 affected_pipes = 0;
- 	u8 modeset_pipes = 0;
- 	int i;
+--- a/drivers/tee/optee/supp.c
++++ b/drivers/tee/optee/supp.c
+@@ -80,7 +80,6 @@ u32 optee_supp_thrd_req(struct tee_conte
+ 	struct optee *optee = tee_get_drvdata(ctx->teedev);
+ 	struct optee_supp *supp = &optee->supp;
+ 	struct optee_supp_req *req;
+-	bool interruptable;
+ 	u32 ret;
  
-+	/*
-+	 * Any plane which is in use by the joiner needs its crtc.
-+	 * Pull those in first as this will not have happened yet
-+	 * if the plane remains disabled according to uapi.
-+	 */
-+	for_each_new_intel_plane_in_state(state, plane, plane_state, i) {
-+		crtc = to_intel_crtc(plane_state->hw.crtc);
-+		if (!crtc)
-+			continue;
-+
-+		crtc_state = intel_atomic_get_crtc_state(&state->base, crtc);
-+		if (IS_ERR(crtc_state))
-+			return PTR_ERR(crtc_state);
-+	}
-+
-+	/* Now pull in all joined crtcs */
- 	for_each_new_intel_crtc_in_state(state, crtc, crtc_state, i) {
- 		affected_pipes |= crtc_state->bigjoiner_pipes;
- 		if (intel_crtc_needs_modeset(crtc_state))
+ 	/*
+@@ -111,36 +110,18 @@ u32 optee_supp_thrd_req(struct tee_conte
+ 	/*
+ 	 * Wait for supplicant to process and return result, once we've
+ 	 * returned from wait_for_completion(&req->c) successfully we have
+-	 * exclusive access again.
++	 * exclusive access again. Allow the wait to be killable such that
++	 * the wait doesn't turn into an indefinite state if the supplicant
++	 * gets hung for some reason.
+ 	 */
+-	while (wait_for_completion_interruptible(&req->c)) {
++	if (wait_for_completion_killable(&req->c)) {
+ 		mutex_lock(&supp->mutex);
+-		interruptable = !supp->ctx;
+-		if (interruptable) {
+-			/*
+-			 * There's no supplicant available and since the
+-			 * supp->mutex currently is held none can
+-			 * become available until the mutex released
+-			 * again.
+-			 *
+-			 * Interrupting an RPC to supplicant is only
+-			 * allowed as a way of slightly improving the user
+-			 * experience in case the supplicant hasn't been
+-			 * started yet. During normal operation the supplicant
+-			 * will serve all requests in a timely manner and
+-			 * interrupting then wouldn't make sense.
+-			 */
+-			if (req->in_queue) {
+-				list_del(&req->link);
+-				req->in_queue = false;
+-			}
++		if (req->in_queue) {
++			list_del(&req->link);
++			req->in_queue = false;
+ 		}
+ 		mutex_unlock(&supp->mutex);
+-
+-		if (interruptable) {
+-			req->ret = TEEC_ERROR_COMMUNICATION;
+-			break;
+-		}
++		req->ret = TEEC_ERROR_COMMUNICATION;
+ 	}
+ 
+ 	ret = req->ret;
 
 
