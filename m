@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A721714B075;
-	Wed,  5 Mar 2025 18:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A2014B075;
+	Wed,  5 Mar 2025 18:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197647; cv=none; b=ogynMNc4Lh+tD84UuC8ZDjATP3c9j7LslFSC5epmEDWOIkB9g2/vI4mDlK40DOZ2oskEsPoSYVw9AuxUpJEnRDuqcbeXoHG1Qd+cUWVxemH18go8CTVK1a4dzikAGwD0ySbMWuuWbgKYe3fILwrU1jQbfcGaNCtqCWZVFApnLhc=
+	t=1741197650; cv=none; b=SwLFlqqHZATqng5bLygpggX4KI+diAAa2s4PUmogD2KQbhC9FOgKQGPx2GcrVMxbcb0mX4sKnVacdWg2TRxWP39ZXMsNhWsr/uBvu6emZHLiUOfBJaIllexc302RtyHDrJ0CYTAZUwBeEDPj9+zradWGzHrbxqfkhRCoSBZfPhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197647; c=relaxed/simple;
-	bh=pYYeP4YiEM1Khn3C3VdjPDEtX3PrABdQl/qoQckF968=;
+	s=arc-20240116; t=1741197650; c=relaxed/simple;
+	bh=13DtybAkjUmKqDEBq8Q7l/B3on1ZTxlmL/dDJeV4ogE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5lehzXJetjk+KVgr5JjmufFQtoH+dWOqLsNbvcP4Dmdfjw5JUFWRTAh+KORWZrIfr8LWHbuINhZ5hNW02/z+sPNIIPUF06geiAkmKGeOXcpj71QWgxxagp48JkfxePmrZSPSEJnPRWnWaKWw3Rm5hMbv1MhPWQqAetgHynRPRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYdHzR03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MuDvUEKNa2LSgzJPRNqrS1KsZUOk2hZbYdNswN1c0MDeN7XKwt97vDN/uQtg5XEQTraAD9961TQSIv2up+hmY0B4uRFDUjP+xC3MUlUTFiTtzaWfUSE/JaBIO3R460iPyZHf8GtuN2goV0aJwioOax6WlbuTWvWqcprMVYy7xNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhZcVrEK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYdHzR03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DEF7C4CED1;
-	Wed,  5 Mar 2025 18:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhZcVrEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB11C4CED1;
+	Wed,  5 Mar 2025 18:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197647;
-	bh=pYYeP4YiEM1Khn3C3VdjPDEtX3PrABdQl/qoQckF968=;
+	s=korg; t=1741197650;
+	bh=13DtybAkjUmKqDEBq8Q7l/B3on1ZTxlmL/dDJeV4ogE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aYdHzR03e3ISgc3tuKmKOc3qxjTZGL25ilAqkZj7eezBShXZXwYtJRIuskTGlM/mO
-	 ZjIOp+VjAqEmcAVbc6W/d7NwwqQULqj0rCLNcmo2bSJ/jv7CIysFjWDLgZg0eNBzMW
-	 0dRls7k9mL0kdvLIODh6Gt2MtUJdbA98EfGoHFlk=
+	b=JhZcVrEKCbtahQ/0PyFmZPhlYVN52FvS62SJlDFatiqoO0ZHixqNUcc4NNec08cxM
+	 87izibhGxwbgLVluvCyQvbjw3+fCNfBdqyr4uaF37v1lhOJmfCQdrxkFon51sIHL0N
+	 lX/t3c8c3RmX09fSFR1eIPCkwglQo8X8JHaPALGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Gengkun <luogengkun@huaweicloud.com>,
+	Tong Tiangen <tongtiangen@huawei.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/142] perf/core: Order the PMU list to fix warning about unordered pmu_ctx_list
-Date: Wed,  5 Mar 2025 18:47:51 +0100
-Message-ID: <20250305174502.428609184@linuxfoundation.org>
+Subject: [PATCH 6.6 053/142] uprobes: Reject the shared zeropage in uprobe_write_opcode()
+Date: Wed,  5 Mar 2025 18:47:52 +0100
+Message-ID: <20250305174502.468970216@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -52,105 +55,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Gengkun <luogengkun@huaweicloud.com>
+From: Tong Tiangen <tongtiangen@huawei.com>
 
-[ Upstream commit 2016066c66192a99d9e0ebf433789c490a6785a2 ]
+[ Upstream commit bddf10d26e6e5114e7415a0e442ec6f51a559468 ]
 
-Syskaller triggers a warning due to prev_epc->pmu != next_epc->pmu in
-perf_event_swap_task_ctx_data(). vmcore shows that two lists have the same
-perf_event_pmu_context, but not in the same order.
+We triggered the following crash in syzkaller tests:
 
-The problem is that the order of pmu_ctx_list for the parent is impacted by
-the time when an event/PMU is added. While the order for a child is
-impacted by the event order in the pinned_groups and flexible_groups. So
-the order of pmu_ctx_list in the parent and child may be different.
+  BUG: Bad page state in process syz.7.38  pfn:1eff3
+  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1eff3
+  flags: 0x3fffff00004004(referenced|reserved|node=0|zone=1|lastcpupid=0x1fffff)
+  raw: 003fffff00004004 ffffe6c6c07bfcc8 ffffe6c6c07bfcc8 0000000000000000
+  raw: 0000000000000000 0000000000000000 00000000fffffffe 0000000000000000
+  page dumped because: PAGE_FLAGS_CHECK_AT_FREE flag(s) set
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x32/0x50
+   bad_page+0x69/0xf0
+   free_unref_page_prepare+0x401/0x500
+   free_unref_page+0x6d/0x1b0
+   uprobe_write_opcode+0x460/0x8e0
+   install_breakpoint.part.0+0x51/0x80
+   register_for_each_vma+0x1d9/0x2b0
+   __uprobe_register+0x245/0x300
+   bpf_uprobe_multi_link_attach+0x29b/0x4f0
+   link_create+0x1e2/0x280
+   __sys_bpf+0x75f/0xac0
+   __x64_sys_bpf+0x1a/0x30
+   do_syscall_64+0x56/0x100
+   entry_SYSCALL_64_after_hwframe+0x78/0xe2
 
-To fix this problem, insert the perf_event_pmu_context to its proper place
-after iteration of the pmu_ctx_list.
+   BUG: Bad rss-counter state mm:00000000452453e0 type:MM_FILEPAGES val:-1
 
-The follow testcase can trigger above warning:
+The following syzkaller test case can be used to reproduce:
 
- # perf record -e cycles --call-graph lbr -- taskset -c 3 ./a.out &
- # perf stat -e cpu-clock,cs -p xxx // xxx is the pid of a.out
+  r2 = creat(&(0x7f0000000000)='./file0\x00', 0x8)
+  write$nbd(r2, &(0x7f0000000580)=ANY=[], 0x10)
+  r4 = openat(0xffffffffffffff9c, &(0x7f0000000040)='./file0\x00', 0x42, 0x0)
+  mmap$IORING_OFF_SQ_RING(&(0x7f0000ffd000/0x3000)=nil, 0x3000, 0x0, 0x12, r4, 0x0)
+  r5 = userfaultfd(0x80801)
+  ioctl$UFFDIO_API(r5, 0xc018aa3f, &(0x7f0000000040)={0xaa, 0x20})
+  r6 = userfaultfd(0x80801)
+  ioctl$UFFDIO_API(r6, 0xc018aa3f, &(0x7f0000000140))
+  ioctl$UFFDIO_REGISTER(r6, 0xc020aa00, &(0x7f0000000100)={{&(0x7f0000ffc000/0x4000)=nil, 0x4000}, 0x2})
+  ioctl$UFFDIO_ZEROPAGE(r5, 0xc020aa04, &(0x7f0000000000)={{&(0x7f0000ffd000/0x1000)=nil, 0x1000}})
+  r7 = bpf$PROG_LOAD(0x5, &(0x7f0000000140)={0x2, 0x3, &(0x7f0000000200)=ANY=[@ANYBLOB="1800000000120000000000000000000095"], &(0x7f0000000000)='GPL\x00', 0x7, 0x0, 0x0, 0x0, 0x0, '\x00', 0x0, @fallback=0x30, 0xffffffffffffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x10, 0x0, @void, @value}, 0x94)
+  bpf$BPF_LINK_CREATE_XDP(0x1c, &(0x7f0000000040)={r7, 0x0, 0x30, 0x1e, @val=@uprobe_multi={&(0x7f0000000080)='./file0\x00', &(0x7f0000000100)=[0x2], 0x0, 0x0, 0x1}}, 0x40)
 
- test.c
+The cause is that zero pfn is set to the PTE without increasing the RSS
+count in mfill_atomic_pte_zeropage() and the refcount of zero folio does
+not increase accordingly. Then, the operation on the same pfn is performed
+in uprobe_write_opcode()->__replace_page() to unconditional decrease the
+RSS count and old_folio's refcount.
 
- void main() {
-        int count = 0;
-        pid_t pid;
+Therefore, two bugs are introduced:
 
-        printf("%d running\n", getpid());
-        sleep(30);
-        printf("running\n");
+ 1. The RSS count is incorrect, when process exit, the check_mm() report
+    error "Bad rss-count".
 
-        pid = fork();
-        if (pid == -1) {
-                printf("fork error\n");
-                return;
-        }
-        if (pid == 0) {
-                while (1) {
-                        count++;
-                }
-        } else {
-                while (1) {
-                        count++;
-                }
-        }
- }
+ 2. The reserved folio (zero folio) is freed when folio->refcount is zero,
+    then free_pages_prepare->free_page_is_bad() report error
+    "Bad page state".
 
-The testcase first opens an LBR event, so it will allocate task_ctx_data,
-and then open tracepoint and software events, so the parent context will
-have 3 different perf_event_pmu_contexts. On inheritance, child ctx will
-insert the perf_event_pmu_context in another order and the warning will
-trigger.
+There is more, the following warning could also theoretically be triggered:
 
-[ mingo: Tidied up the changelog. ]
+  __replace_page()
+    -> ...
+      -> folio_remove_rmap_pte()
+        -> VM_WARN_ON_FOLIO(is_zero_folio(folio), folio)
 
-Fixes: bd2756811766 ("perf: Rewrite core context handling")
-Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
+Considering that uprobe hit on the zero folio is a very rare case, just
+reject zero old folio immediately after get_user_page_vma_remote().
+
+[ mingo: Cleaned up the changelog ]
+
+Fixes: 7396fa818d62 ("uprobes/core: Make background page replacement logic account for rss_stat counters")
+Fixes: 2b1444983508 ("uprobes, mm, x86: Add the ability to install and remove uprobes breakpoints")
+Signed-off-by: Tong Tiangen <tongtiangen@huawei.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20250122073356.1824736-1-luogengkun@huaweicloud.com
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Link: https://lore.kernel.org/r/20250224031149.1598949-1-tongtiangen@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ kernel/events/uprobes.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 5d6458ea675e9..18f0a3aa6d7c6 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4842,7 +4842,7 @@ static struct perf_event_pmu_context *
- find_get_pmu_context(struct pmu *pmu, struct perf_event_context *ctx,
- 		     struct perf_event *event)
- {
--	struct perf_event_pmu_context *new = NULL, *epc;
-+	struct perf_event_pmu_context *new = NULL, *pos = NULL, *epc;
- 	void *task_ctx_data = NULL;
+diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+index 6dac0b5798213..7e2edd1b06939 100644
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -481,6 +481,11 @@ int uprobe_write_opcode(struct arch_uprobe *auprobe, struct mm_struct *mm,
+ 	if (ret <= 0)
+ 		goto put_old;
  
- 	if (!ctx->task) {
-@@ -4899,12 +4899,19 @@ find_get_pmu_context(struct pmu *pmu, struct perf_event_context *ctx,
- 			atomic_inc(&epc->refcount);
- 			goto found_epc;
- 		}
-+		/* Make sure the pmu_ctx_list is sorted by PMU type: */
-+		if (!pos && epc->pmu->type > pmu->type)
-+			pos = epc;
- 	}
- 
- 	epc = new;
- 	new = NULL;
- 
--	list_add(&epc->pmu_ctx_entry, &ctx->pmu_ctx_list);
-+	if (!pos)
-+		list_add_tail(&epc->pmu_ctx_entry, &ctx->pmu_ctx_list);
-+	else
-+		list_add(&epc->pmu_ctx_entry, pos->pmu_ctx_entry.prev);
++	if (is_zero_page(old_page)) {
++		ret = -EINVAL;
++		goto put_old;
++	}
 +
- 	epc->ctx = ctx;
- 
- found_epc:
+ 	if (WARN(!is_register && PageCompound(old_page),
+ 		 "uprobe unregister should never work on compound page\n")) {
+ 		ret = -EINVAL;
 -- 
 2.39.5
 
