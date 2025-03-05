@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D1B1A3174;
-	Wed,  5 Mar 2025 18:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A651A3174;
+	Wed,  5 Mar 2025 18:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197885; cv=none; b=UvHr4Fm+myMdp/yFJW8vf9DoYzbU8oEQz67lsfJLMlUgZNEF8Z2sMdoCR+FJqaZiAFOnLgF/ZnD5JpK/a9DVmQr+Sg9o1AB78fL5nVNLvV43iUk5yO+YPxYHr5CFFedL2t3sHdfwJ9YY0S8QXfDITcY25tw7MyYuU0i6WkZOp7I=
+	t=1741197888; cv=none; b=HgiToyCuPT1GuD7WbzEhY5bHWfeg4DNRTHPd0jec3k1YyT7vBgqtTq/9vjJXjlZa1CQrdYifhyaogsVlvHdc4ltJW1iJfSL4RAsQxUwbAID/apsQr7IGwX5pdKu0QDN/n4Q9lYDaO8LM4LHbPJDipBh4TMNR194jCX4kVBEo+a8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197885; c=relaxed/simple;
-	bh=Tb0RlUr7XEb9qqbOtWilhsV18lHIxlreVM53IDTvok8=;
+	s=arc-20240116; t=1741197888; c=relaxed/simple;
+	bh=s1Zv9OMGNUhfK3R9OqQDVarQwezhoRlmy0Y+gSfMsMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nz3Ty9ZKnSS+QmNjyjq8wSABEwCj8uTkaUQiv4A9g/LWwPlW0oYRqxobXr3rW0JA34fMTcQMe6UiSEyP4U1GhROzUup1gwscVl4AGl9Y2cgomWGqk2ReRCdMNPpKVqVULjMOkf/TbBzYMRFuoe5jIj8r9CdBO8XjsEZI6QZRxSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tv5R22U7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iOLHYghWqjADeto772Wo1EsZw5wX0q8P6OAIPAUt4SCfMIeDigGF9VlgLsKGbz2Fi3uH9cu1PvkdbXqI/vTIojgGau8LL6+/X9eS4YcgZ9Q0cgsAVa4i2p9SWGfdkLgr0uPvz7LV/+PpUdU3raoAfSddudWhj1GxzjKfM4XRfZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CkEVQlE6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tv5R22U7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56C7C4CEE0;
-	Wed,  5 Mar 2025 18:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CkEVQlE6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD04C4CED1;
+	Wed,  5 Mar 2025 18:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197885;
-	bh=Tb0RlUr7XEb9qqbOtWilhsV18lHIxlreVM53IDTvok8=;
+	s=korg; t=1741197887;
+	bh=s1Zv9OMGNUhfK3R9OqQDVarQwezhoRlmy0Y+gSfMsMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tv5R22U7j28QHL95l3RV9EHtBMGzHtVvQ7pBj1FRd38WmtwtEJ9Wz33MQlM/yxHky
-	 hw0bq2idsGUdjky1oi/NwJSJYatqMUnRj/X2ELlE3RpjHtjjHtDuzV1V4LfGRuI25Q
-	 hZZ72lmSiImppiG+iSCo/LliIbT6OmYOjLkzWIuY=
+	b=CkEVQlE6XzuzaG5g/fz1YAIFg7aRyt2krtc0HNDO6Yn0TjntaX/7NXfUcq8kE43BH
+	 JFjmv9mssNlXCRUD205MMRDBOawQrhvXXwn1pdW/ZEZTTKnkaxSF33LZayaVN8w93i
+	 MRGaaEDgpf4Yi4IpL8Zgjsd1QaQXGsHjIhnDPdZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.6 106/142] x86/microcode/intel: Rework intel_cpu_collect_info()
-Date: Wed,  5 Mar 2025 18:48:45 +0100
-Message-ID: <20250305174504.589559993@linuxfoundation.org>
+Subject: [PATCH 6.6 133/142] x86/microcode/AMD: Split load_microcode_amd()
+Date: Wed,  5 Mar 2025 18:49:12 +0100
+Message-ID: <20250305174505.676974951@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -50,118 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-commit 164aa1ca537238c46923ccacd8995b4265aee47b upstream
+commit 1d81d85d1a19e50d5237dc67d6b825c34ae13de8 upstream
 
-Nothing needs struct ucode_cpu_info. Make it take struct cpu_signature,
-let it return a boolean and simplify the implementation. Rename it now
-that the silly name clash with collect_cpu_info() is gone.
+This function should've been split a long time ago because it is used in
+two paths:
 
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+1) On the late loading path, when the microcode is loaded through the
+   request_firmware interface
+
+2) In the save_microcode_in_initrd() path which collects all the
+   microcode patches which are relevant for the current system before
+   the initrd with the microcode container has been jettisoned.
+
+   In that path, it is not really necessary to iterate over the nodes on
+   a system and match a patch however it didn't cause any trouble so it
+   was left for a later cleanup
+
+However, that later cleanup was expedited by the fact that Jens was
+enabling "Use L3 as a NUMA node" in the BIOS setting in his machine and
+so this causes the NUMA CPU masks used in cpumask_of_node() to be
+generated *after* 2) above happened on the first node. Which means, all
+those masks were funky, wrong, uninitialized and whatnot, leading to
+explosions when dereffing c->microcode in load_microcode_amd().
+
+So split that function and do only the necessary work needed at each
+stage.
+
+Fixes: 94838d230a6c ("x86/microcode/AMD: Use the family,model,stepping encoded in the patch ID")
+Reported-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20231017211722.851573238@linutronix.de
+Tested-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/r/91194406-3fdf-4e38-9838-d334af538f74@kernel.dk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpu.h            |    4 ++--
- arch/x86/kernel/cpu/microcode/intel.c |   33 +++++++++------------------------
- drivers/platform/x86/intel/ifs/load.c |    8 +++-----
- 3 files changed, 14 insertions(+), 31 deletions(-)
+ arch/x86/kernel/cpu/microcode/amd.c |   25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
---- a/arch/x86/include/asm/cpu.h
-+++ b/arch/x86/include/asm/cpu.h
-@@ -71,9 +71,9 @@ static inline void init_ia32_feat_ctl(st
- 
- extern __noendbr void cet_disable(void);
- 
--struct ucode_cpu_info;
-+struct cpu_signature;
- 
--int intel_cpu_collect_info(struct ucode_cpu_info *uci);
-+void intel_collect_cpu_info(struct cpu_signature *sig);
- 
- static inline bool intel_cpu_signatures_match(unsigned int s1, unsigned int p1,
- 					      unsigned int s2, unsigned int p2)
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -68,36 +68,21 @@ static inline unsigned int exttable_size
- 	return et->count * EXT_SIGNATURE_SIZE + EXT_HEADER_SIZE;
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -586,7 +586,7 @@ void __init load_ucode_amd_bsp(struct ea
+ 		native_rdmsr(MSR_AMD64_PATCH_LEVEL, ed->new_rev, dummy);
  }
  
--int intel_cpu_collect_info(struct ucode_cpu_info *uci)
-+void intel_collect_cpu_info(struct cpu_signature *sig)
+-static enum ucode_state load_microcode_amd(u8 family, const u8 *data, size_t size);
++static enum ucode_state _load_microcode_amd(u8 family, const u8 *data, size_t size);
+ 
+ static int __init save_microcode_in_initrd(void)
  {
--	unsigned int val[2];
--	unsigned int family, model;
--	struct cpu_signature csig = { 0 };
--	unsigned int eax, ebx, ecx, edx;
-+	sig->sig = cpuid_eax(1);
-+	sig->pf = 0;
-+	sig->rev = intel_get_microcode_revision();
+@@ -607,7 +607,7 @@ static int __init save_microcode_in_init
+ 	if (!desc.mc)
+ 		return -EINVAL;
  
--	memset(uci, 0, sizeof(*uci));
-+	if (x86_model(sig->sig) >= 5 || x86_family(sig->sig) > 6) {
-+		unsigned int val[2];
+-	ret = load_microcode_amd(x86_family(cpuid_1_eax), desc.data, desc.size);
++	ret = _load_microcode_amd(x86_family(cpuid_1_eax), desc.data, desc.size);
+ 	if (ret > UCODE_UPDATED)
+ 		return -EINVAL;
  
--	eax = 0x00000001;
--	ecx = 0;
--	native_cpuid(&eax, &ebx, &ecx, &edx);
--	csig.sig = eax;
--
--	family = x86_family(eax);
--	model  = x86_model(eax);
--
--	if (model >= 5 || family > 6) {
- 		/* get processor flags from MSR 0x17 */
- 		native_rdmsr(MSR_IA32_PLATFORM_ID, val[0], val[1]);
--		csig.pf = 1 << ((val[1] >> 18) & 7);
-+		sig->pf = 1 << ((val[1] >> 18) & 7);
- 	}
--
--	csig.rev = intel_get_microcode_revision();
--
--	uci->cpu_sig = csig;
--
--	return 0;
+@@ -956,21 +956,30 @@ static enum ucode_state __load_microcode
+ 	return UCODE_OK;
  }
--EXPORT_SYMBOL_GPL(intel_cpu_collect_info);
-+EXPORT_SYMBOL_GPL(intel_collect_cpu_info);
  
- /*
-  * Returns 1 if update has been found, 0 otherwise.
-@@ -391,7 +376,7 @@ static __init struct microcode_intel *ge
- 	if (!(cp.data && cp.size))
- 		return NULL;
- 
--	intel_cpu_collect_info(uci);
-+	intel_collect_cpu_info(&uci->cpu_sig);
- 
- 	return scan_microcode(cp.data, cp.size, uci, save);
- }
---- a/drivers/platform/x86/intel/ifs/load.c
-+++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -227,7 +227,7 @@ out:
- 
- static int image_sanity_check(struct device *dev, const struct microcode_header_intel *data)
+-static enum ucode_state load_microcode_amd(u8 family, const u8 *data, size_t size)
++static enum ucode_state _load_microcode_amd(u8 family, const u8 *data, size_t size)
  {
--	struct ucode_cpu_info uci;
-+	struct cpu_signature sig;
+-	struct cpuinfo_x86 *c;
+-	unsigned int nid, cpu;
+-	struct ucode_patch *p;
+ 	enum ucode_state ret;
  
- 	/* Provide a specific error message when loading an older/unsupported image */
- 	if (data->hdrver != MC_HEADER_TYPE_IFS) {
-@@ -240,11 +240,9 @@ static int image_sanity_check(struct dev
- 		return -EINVAL;
- 	}
+ 	/* free old equiv table */
+ 	free_equiv_cpu_table();
  
--	intel_cpu_collect_info(&uci);
-+	intel_collect_cpu_info(&sig);
+ 	ret = __load_microcode_amd(family, data, size);
+-	if (ret != UCODE_OK) {
++	if (ret != UCODE_OK)
+ 		cleanup();
++
++	return ret;
++}
++
++static enum ucode_state load_microcode_amd(u8 family, const u8 *data, size_t size)
++{
++	struct cpuinfo_x86 *c;
++	unsigned int nid, cpu;
++	struct ucode_patch *p;
++	enum ucode_state ret;
++
++	ret = _load_microcode_amd(family, data, size);
++	if (ret != UCODE_OK)
+ 		return ret;
+-	}
  
--	if (!intel_find_matching_signature((void *)data,
--					   uci.cpu_sig.sig,
--					   uci.cpu_sig.pf)) {
-+	if (!intel_find_matching_signature((void *)data, sig.sig, sig.pf)) {
- 		dev_err(dev, "cpu signature, processor flags not matching\n");
- 		return -EINVAL;
- 	}
+ 	for_each_node(nid) {
+ 		cpu = cpumask_first(cpumask_of_node(nid));
 
 
