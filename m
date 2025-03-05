@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620C42528FD;
-	Wed,  5 Mar 2025 18:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507AA252909;
+	Wed,  5 Mar 2025 18:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198165; cv=none; b=aDGkXePc/l5BsLEuxz8AVQY9EU4rg3IO4IZLx5R888DM+T3T1/pUd+K2+koCycqW23F+qhirAXWhECiN8FXlPsxk+dXLwO1tYDEydMOQS/qtLZhLQW0mC/3OzZ9JYqBZCxUU4R7xldG6erW6b1QNt0F4A6CLUkd/hs6SHSJ4AsE=
+	t=1741198168; cv=none; b=S9gpUaW0jzcw2tnGqwdR2dP0UkuxfZppDr/X1VnO7tGe2eMYOmCHzqD83bbxPEefEiVvLUEpvtSt07ab3OKjiRbnL42IaUlv4MIjjFvmLuuJYjypWmBkqxq10ISb9tHZg+A6URhd4n2rqYJMYA2KagkNUahWQLSx4WtyWiXuBjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198165; c=relaxed/simple;
-	bh=9+J4qV/NtRm1tgvAIQCFUwvRp44NJWAyD54QIerqPFI=;
+	s=arc-20240116; t=1741198168; c=relaxed/simple;
+	bh=RfLBkLPpOhxrfrcdLB2/1bAmhsyJP6ja5tvNlwXZuBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dOHBoO8XJky36dpOQxUwX8HbOnwaW5G7DN4Hhrvl22933xw9sv9w7Z/SRfHq40zwaIz14mukcAuhH1cZu7v2G9MoILbfkCzw6pzsaadWsHPtzp9VYFY+BidGatBu+WXagqaqLEt5CGY8EPyveIiNyshfee8au4eUen1JCwHrQK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=di9eH+BU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sDN38domj2YP9okpDK/qRUFhkmbLqn3j0c8aLzbMJQH7J4/vIUKj/dis4MCaEZAeXWqnUAaVA1TBNS+XoECZ5vFmdZ+L+icgh0NbzgfAMD90jtGrldM352QSJa02KveClskB/8UNlkcS0TGgOnnqK1UXxx2gaDtOxUU5ujlTmLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ssuK5a/Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="di9eH+BU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8F9C4CED1;
-	Wed,  5 Mar 2025 18:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ssuK5a/Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C289EC4CED1;
+	Wed,  5 Mar 2025 18:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198165;
-	bh=9+J4qV/NtRm1tgvAIQCFUwvRp44NJWAyD54QIerqPFI=;
+	s=korg; t=1741198168;
+	bh=RfLBkLPpOhxrfrcdLB2/1bAmhsyJP6ja5tvNlwXZuBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=di9eH+BUJsmQYLZUdrXHYYYfPf6ilL8b0EfJw7Spe/T1fRS+6UIthMmurIpH1mCGV
-	 ceVaIyPHbx6wUifmoIZUsSwUdtD9EKxHkLMW/WuRcVEoWyAYEEwWgFonLsRut3ylAN
-	 kV+gts9313NAw/t6ddVmd8m2hxD62zTwHdVT1clk=
+	b=ssuK5a/QeDu+8e5bsR5AGvep81oTL0MWpxjBhZFm0KpxuEyY2AiqJrc4ruCAT9jiU
+	 s/8it/yJ/NlmuqIxLniltrNEDr4QkjtBQGRWpR2697xgrRW0X5VCmjY1F7ymS69zMv
+	 fsQ2kSCAtkwzLqkLTw3jQhW/D0SXyg8xRvYoKxgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Panchenko <dmitry@d-systems.ee>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Chris Chiu <chris.chiu@canonical.com>,
+	=?UTF-8?q?Adrien=20Verg=C3=A9?= <adrienverge@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 087/150] ALSA: usb-audio: Re-add sample rate quirk for Pioneer DJM-900NXS2
-Date: Wed,  5 Mar 2025 18:48:36 +0100
-Message-ID: <20250305174507.308964328@linuxfoundation.org>
+Subject: [PATCH 6.12 088/150] ALSA: hda/realtek: Fix microphone regression on ASUS N705UD
+Date: Wed,  5 Mar 2025 18:48:37 +0100
+Message-ID: <20250305174507.349349521@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -44,37 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Panchenko <dmitry@d-systems.ee>
+From: Adrien Vergé <adrienverge@gmail.com>
 
-commit 9af3b4f2d879da01192d6168e6c651e7fb5b652d upstream.
+commit c6557ccf8094ce2e1142c6e49cd47f5d5e2933a8 upstream.
 
-Re-add the sample-rate quirk for the Pioneer DJM-900NXS2. This
-device does not work without setting sample-rate.
+This fixes a regression introduced a few weeks ago in stable kernels
+6.12.14 and 6.13.3. The internal microphone on ASUS Vivobook N705UD /
+X705UD laptops is broken: the microphone appears in userspace (e.g.
+Gnome settings) but no sound is detected.
+I bisected it to commit 3b4309546b48 ("ALSA: hda: Fix headset detection
+failure due to unstable sort").
 
-Signed-off-by: Dmitry Panchenko <dmitry@d-systems.ee>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250220161540.3624660-1-dmitry@d-systems.ee
+I figured out the cause:
+1. The initial pins enabled for the ALC256 driver are:
+       cfg->inputs == {
+         { pin=0x19, type=AUTO_PIN_MIC,
+           is_headset_mic=1, is_headphone_mic=0, has_boost_on_pin=1 },
+         { pin=0x1a, type=AUTO_PIN_MIC,
+           is_headset_mic=0, is_headphone_mic=0, has_boost_on_pin=1 } }
+2. Since 2017 and commits c1732ede5e8 ("ALSA: hda/realtek - Fix headset
+   and mic on several ASUS laptops with ALC256") and 28e8af8a163 ("ALSA:
+   hda/realtek: Fix mic and headset jack sense on ASUS X705UD"), the
+   quirk ALC256_FIXUP_ASUS_MIC is also applied to ASUS X705UD / N705UD
+   laptops.
+   This added another internal microphone on pin 0x13:
+       cfg->inputs == {
+         { pin=0x13, type=AUTO_PIN_MIC,
+           is_headset_mic=0, is_headphone_mic=0, has_boost_on_pin=1 },
+         { pin=0x19, type=AUTO_PIN_MIC,
+           is_headset_mic=1, is_headphone_mic=0, has_boost_on_pin=1 },
+         { pin=0x1a, type=AUTO_PIN_MIC,
+           is_headset_mic=0, is_headphone_mic=0, has_boost_on_pin=1 } }
+   I don't know what this pin 0x13 corresponds to. To the best of my
+   knowledge, these laptops have only one internal microphone.
+3. Before 2025 and commit 3b4309546b48 ("ALSA: hda: Fix headset
+   detection failure due to unstable sort"), the sort function would let
+   the microphone of pin 0x1a (the working one) *before* the microphone
+   of pin 0x13 (the phantom one).
+4. After this commit 3b4309546b48, the fixed sort function puts the
+   working microphone (pin 0x1a) *after* the phantom one (pin 0x13). As
+   a result, no sound is detected anymore.
+
+It looks like the quirk ALC256_FIXUP_ASUS_MIC is not needed anymore for
+ASUS Vivobook X705UD / N705UD laptops. Without it, everything works
+fine:
+- the internal microphone is detected and records actual sound,
+- plugging in a jack headset is detected and can record actual sound
+  with it,
+- unplugging the jack headset makes the system go back to internal
+  microphone and can record actual sound.
+
+Cc: stable@vger.kernel.org
+Cc: Kuan-Wei Chiu <visitorckw@gmail.com>
+Cc: Chris Chiu <chris.chiu@canonical.com>
+Fixes: 3b4309546b48 ("ALSA: hda: Fix headset detection failure due to unstable sort")
+Tested-by: Adrien Vergé <adrienverge@gmail.com>
+Signed-off-by: Adrien Vergé <adrienverge@gmail.com>
+Link: https://patch.msgid.link/20250226135515.24219-1-adrienverge@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_realtek.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1868,6 +1868,7 @@ void snd_usb_set_format_quirk(struct snd
- 	case USB_ID(0x534d, 0x2109): /* MacroSilicon MS2109 */
- 		subs->stream_offset_adj = 2;
- 		break;
-+	case USB_ID(0x2b73, 0x000a): /* Pioneer DJM-900NXS2 */
- 	case USB_ID(0x2b73, 0x0013): /* Pioneer DJM-450 */
- 		pioneer_djm_set_format_quirk(subs, 0x0082);
- 		break;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10598,7 +10598,6 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1043, 0x19ce, "ASUS B9450FA", ALC294_FIXUP_ASUS_HPE),
+ 	SND_PCI_QUIRK(0x1043, 0x19e1, "ASUS UX581LV", ALC295_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1a13, "Asus G73Jw", ALC269_FIXUP_ASUS_G73JW),
+-	SND_PCI_QUIRK(0x1043, 0x1a30, "ASUS X705UD", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1a63, "ASUS UX3405MA", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1a83, "ASUS UM5302LA", ALC294_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1a8f, "ASUS UX582ZS", ALC245_FIXUP_CS35L41_SPI_2),
 
 
