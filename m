@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFD0251798;
-	Wed,  5 Mar 2025 18:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039C6253325;
+	Wed,  5 Mar 2025 18:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197780; cv=none; b=VUAKH4XsXVO56Gta8gyS7ffTBvUgMN6k31/3LpcyfzPAluC23e31kwQpCdLIKCwACJyQC0CK++eSwHAiUmEfVYk0983muBrP5+mgch05DQ8NKUV+gw33RsFjv7o15oRNE7bVPRudWUwjXfpxwaOXvmCQ4POjuul1NAndf+gaiWg=
+	t=1741197783; cv=none; b=mzm6id88iCUKRUc38VPE5lafbc3w8tAYLm5SOeKgm7BjMil7jIYiSmdY8sq3nr2YW7AL/lBV3eJ4g6tWcGD/8D4PpoTBRhEYELkGkfnjTFY3XtJpWf9K7aGBjHZXSqVfUFEqZsc0Or5WlbPslgs78vqgleZZw1fazlK5v/SGgeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197780; c=relaxed/simple;
-	bh=J0hj0jXCSk5WKJdXjiTRLVrmssAYMCSBb0u1t0rsr1s=;
+	s=arc-20240116; t=1741197783; c=relaxed/simple;
+	bh=ZiA+2k7cim360Zwcno7nbRRd/uEyAef/33PrOmxaUS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GlOhMuWUAYwTkMnXunG6wUauOR2EJpoUYHhVSCoV0uMbX8/EYl5gX1O95jDMkm2R2gDoeEpkdkzwEG9xQUkN8UuGs+MsdofXoDhsaWDcbm4b0kRnutX1WcLjskI/1Isv4UhcyO8IGKFZ+uNDYloXQGQlRzxmjZXjgaVe8cjyGlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOGXCEiJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FXWvSAuM62MAEC10O273+KSw4ZUtVvffY7+zvnxmWjlUItzWD1sNlSKs+iqR8z6hLD+Vr4Ujrp0FLmxJzJNEF25hm9I3ddZ8pdZl6u5zos8zR/7LjQN0Q4hOfVz++vy/NVSwprbCLHps//kKofXGlTe93Dx0nAb167yRtjpx6ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itvqXSFq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOGXCEiJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7FCC4CEE2;
-	Wed,  5 Mar 2025 18:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itvqXSFq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB48C4CEEA;
+	Wed,  5 Mar 2025 18:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197779;
-	bh=J0hj0jXCSk5WKJdXjiTRLVrmssAYMCSBb0u1t0rsr1s=;
+	s=korg; t=1741197782;
+	bh=ZiA+2k7cim360Zwcno7nbRRd/uEyAef/33PrOmxaUS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IOGXCEiJxiqp2vekRlW+fFIGap28Hul0gjSOim4hdCAi0djiJbjEDHKWvXkPTgj67
-	 GtQy3TmTOnQm/xS6VLR0UJXxBIubfBPVavHkPJFdVO+zQQ82ODg2aS9NvoRHRhaaId
-	 Qa6X3uGIsp9lAIs6M0jDfnLPE4rAWvH647lyVbz0=
+	b=itvqXSFqXXILQr3Hcz79KIa8hUdgu79M4QToiKOYWT9VOAPQ7xgq3ps8RZBL1L5y3
+	 GTIm3s9Gpng/CSOrK/L2bSzHouiber4Bd7FTr1MhZXde6hAuZ9G0N2P6e5ZWHcsG3I
+	 RwovZA+2dF4qq0ak8IMVrAp8mkyc2UCogGfVPI7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ashok Raj <ashok.raj@intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.6 097/142] x86/microcode/32: Move early loading after paging enable
-Date: Wed,  5 Mar 2025 18:48:36 +0100
-Message-ID: <20250305174504.232653774@linuxfoundation.org>
+Subject: [PATCH 6.6 098/142] x86/microcode/intel: Rip out mixed stepping support for Intel CPUs
+Date: Wed,  5 Mar 2025 18:48:37 +0100
+Message-ID: <20250305174504.271716236@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -50,838 +51,303 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Ashok Raj <ashok.raj@intel.com>
 
-commit 0b62f6cb07738d7211d926c39f6946b87f72e792 upstream.
+commit ae76d951f6537001bdf77894d19cd4a446de337e upstream
 
-32-bit loads microcode before paging is enabled. The commit which
-introduced that has zero justification in the changelog. The cover
-letter has slightly more content, but it does not give any technical
-justification either:
+Mixed steppings aren't supported on Intel CPUs. Only one microcode patch
+is required for the entire system. The caching of microcode blobs which
+match the family and model is therefore pointless and in fact is
+dysfunctional as CPU hotplug updates use only a single microcode blob,
+i.e. the one where *intel_ucode_patch points to.
 
-  "The problem in current microcode loading method is that we load a
-   microcode way, way too late; ideally we should load it before turning
-   paging on.  This may only be practical on 32 bits since we can't get
-   to 64-bit mode without paging on, but we should still do it as early
-   as at all possible."
+Remove the microcode cache and make it an AMD local feature.
 
-Handwaving word salad with zero technical content.
+  [ tglx:
+     - save only at the end. Otherwise random microcode ends up in the
+  	  pointer for early loading
+     - free the ucode patch pointer in save_microcode_patch() only
+    after kmemdup() has succeeded, as reported by Andrew Cooper ]
 
-Someone claimed in an offlist conversation that this is required for
-curing the ATOM erratum AAE44/AAF40/AAG38/AAH41. That erratum requires
-an microcode update in order to make the usage of PSE safe. But during
-early boot, PSE is completely irrelevant and it is evaluated way later.
-
-Neither is it relevant for the AP on single core HT enabled CPUs as the
-microcode loading on the AP is not doing anything.
-
-On dual core CPUs there is a theoretical problem if a split of an
-executable large page between enabling paging including PSE and loading
-the microcode happens. But that's only theoretical, it's practically
-irrelevant because the affected dual core CPUs are 64bit enabled and
-therefore have paging and PSE enabled before loading the microcode on
-the second core. So why would it work on 64-bit but not on 32-bit?
-
-The erratum:
-
-  "AAG38 Code Fetch May Occur to Incorrect Address After a Large Page is
-   Split Into 4-Kbyte Pages
-
-   Problem: If software clears the PS (page size) bit in a present PDE
-   (page directory entry), that will cause linear addresses mapped through
-   this PDE to use 4-KByte pages instead of using a large page after old
-   TLB entries are invalidated. Due to this erratum, if a code fetch uses
-   this PDE before the TLB entry for the large page is invalidated then it
-   may fetch from a different physical address than specified by either the
-   old large page translation or the new 4-KByte page translation. This
-   erratum may also cause speculative code fetches from incorrect addresses."
-
-The practical relevance for this is exactly zero because there is no
-splitting of large text pages during early boot-time, i.e. between paging
-enable and microcode loading, and neither during CPU hotplug.
-
-IOW, this load microcode before paging enable is yet another voodoo
-programming solution in search of a problem. What's worse is that it causes
-at least two serious problems:
-
- 1) When stackprotector is enabled, the microcode loader code has the
-    stackprotector mechanics enabled. The read from the per CPU variable
-    __stack_chk_guard is always accessing the virtual address either
-    directly on UP or via %fs on SMP. In physical address mode this
-    results in an access to memory above 3GB. So this works by chance as
-    the hardware returns the same value when there is no RAM at this
-    physical address. When there is RAM populated above 3G then the read
-    is by chance the same as nothing changes that memory during the very
-    early boot stage. That's not necessarily true during runtime CPU
-    hotplug.
-
- 2) When function tracing is enabled, the relevant microcode loader
-    functions and the functions invoked from there will call into the
-    tracing code and evaluate global and per CPU variables in physical
-    address mode. What could potentially go wrong?
-
-Cure this and move the microcode loading after the early paging enable, use
-the new temporary initrd mapping and remove the gunk in the microcode
-loader which is required to handle physical address mode.
-
+Originally-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ashok Raj <ashok.raj@intel.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20231017211722.348298216@linutronix.de
+Link: https://lore.kernel.org/r/20231017211722.404362809@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/microcode.h         |    5 -
- arch/x86/kernel/cpu/common.c             |   12 ---
- arch/x86/kernel/cpu/microcode/amd.c      |  103 ++++++++-------------------
- arch/x86/kernel/cpu/microcode/core.c     |   78 ++++----------------
- arch/x86/kernel/cpu/microcode/intel.c    |  116 ++++---------------------------
- arch/x86/kernel/cpu/microcode/internal.h |    2 
- arch/x86/kernel/head32.c                 |    3 
- arch/x86/kernel/head_32.S                |   10 --
- arch/x86/kernel/smpboot.c                |   12 +--
- 9 files changed, 72 insertions(+), 269 deletions(-)
+ arch/x86/kernel/cpu/microcode/amd.c      |   10 ++
+ arch/x86/kernel/cpu/microcode/core.c     |    2 
+ arch/x86/kernel/cpu/microcode/intel.c    |  133 +++++--------------------------
+ arch/x86/kernel/cpu/microcode/internal.h |   10 --
+ 4 files changed, 34 insertions(+), 121 deletions(-)
 
---- a/arch/x86/include/asm/microcode.h
-+++ b/arch/x86/include/asm/microcode.h
-@@ -68,11 +68,6 @@ static inline u32 intel_get_microcode_re
- 
- 	return rev;
- }
--
--void show_ucode_info_early(void);
--
--#else /* CONFIG_CPU_SUP_INTEL */
--static inline void show_ucode_info_early(void) { }
- #endif /* !CONFIG_CPU_SUP_INTEL */
- 
- #endif /* _ASM_X86_MICROCODE_H */
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -2224,8 +2224,6 @@ static inline void setup_getcpu(int cpu)
- }
- 
- #ifdef CONFIG_X86_64
--static inline void ucode_cpu_init(int cpu) { }
--
- static inline void tss_setup_ist(struct tss_struct *tss)
- {
- 	/* Set up the per-CPU TSS IST stacks */
-@@ -2236,16 +2234,8 @@ static inline void tss_setup_ist(struct
- 	/* Only mapped when SEV-ES is active */
- 	tss->x86_tss.ist[IST_INDEX_VC] = __this_cpu_ist_top_va(VC);
- }
--
- #else /* CONFIG_X86_64 */
--
--static inline void ucode_cpu_init(int cpu)
--{
--	show_ucode_info_early();
--}
--
- static inline void tss_setup_ist(struct tss_struct *tss) { }
--
- #endif /* !CONFIG_X86_64 */
- 
- static inline void tss_setup_io_bitmap(struct tss_struct *tss)
-@@ -2301,8 +2291,6 @@ void cpu_init(void)
- 	struct task_struct *cur = current;
- 	int cpu = raw_smp_processor_id();
- 
--	ucode_cpu_init(cpu);
--
- #ifdef CONFIG_NUMA
- 	if (this_cpu_read(numa_node) == 0 &&
- 	    early_cpu_to_node(cpu) != NUMA_NO_NODE)
 --- a/arch/x86/kernel/cpu/microcode/amd.c
 +++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -121,24 +121,20 @@ static u16 find_equiv_id(struct equiv_cp
+@@ -37,6 +37,16 @@
  
- /*
-  * Check whether there is a valid microcode container file at the beginning
-- * of @buf of size @buf_size. Set @early to use this function in the early path.
-+ * of @buf of size @buf_size.
-  */
--static bool verify_container(const u8 *buf, size_t buf_size, bool early)
-+static bool verify_container(const u8 *buf, size_t buf_size)
- {
- 	u32 cont_magic;
+ #include "internal.h"
  
- 	if (buf_size <= CONTAINER_HDR_SZ) {
--		if (!early)
--			pr_debug("Truncated microcode container header.\n");
--
-+		pr_debug("Truncated microcode container header.\n");
- 		return false;
- 	}
- 
- 	cont_magic = *(const u32 *)buf;
- 	if (cont_magic != UCODE_MAGIC) {
--		if (!early)
--			pr_debug("Invalid magic value (0x%08x).\n", cont_magic);
--
-+		pr_debug("Invalid magic value (0x%08x).\n", cont_magic);
- 		return false;
- 	}
- 
-@@ -147,23 +143,20 @@ static bool verify_container(const u8 *b
- 
- /*
-  * Check whether there is a valid, non-truncated CPU equivalence table at the
-- * beginning of @buf of size @buf_size. Set @early to use this function in the
-- * early path.
-+ * beginning of @buf of size @buf_size.
-  */
--static bool verify_equivalence_table(const u8 *buf, size_t buf_size, bool early)
-+static bool verify_equivalence_table(const u8 *buf, size_t buf_size)
- {
- 	const u32 *hdr = (const u32 *)buf;
- 	u32 cont_type, equiv_tbl_len;
- 
--	if (!verify_container(buf, buf_size, early))
-+	if (!verify_container(buf, buf_size))
- 		return false;
- 
- 	cont_type = hdr[1];
- 	if (cont_type != UCODE_EQUIV_CPU_TABLE_TYPE) {
--		if (!early)
--			pr_debug("Wrong microcode container equivalence table type: %u.\n",
--			       cont_type);
--
-+		pr_debug("Wrong microcode container equivalence table type: %u.\n",
-+			 cont_type);
- 		return false;
- 	}
- 
-@@ -172,9 +165,7 @@ static bool verify_equivalence_table(con
- 	equiv_tbl_len = hdr[2];
- 	if (equiv_tbl_len < sizeof(struct equiv_cpu_entry) ||
- 	    buf_size < equiv_tbl_len) {
--		if (!early)
--			pr_debug("Truncated equivalence table.\n");
--
-+		pr_debug("Truncated equivalence table.\n");
- 		return false;
- 	}
- 
-@@ -183,22 +174,19 @@ static bool verify_equivalence_table(con
- 
- /*
-  * Check whether there is a valid, non-truncated microcode patch section at the
-- * beginning of @buf of size @buf_size. Set @early to use this function in the
-- * early path.
-+ * beginning of @buf of size @buf_size.
-  *
-  * On success, @sh_psize returns the patch size according to the section header,
-  * to the caller.
-  */
- static bool
--__verify_patch_section(const u8 *buf, size_t buf_size, u32 *sh_psize, bool early)
-+__verify_patch_section(const u8 *buf, size_t buf_size, u32 *sh_psize)
- {
- 	u32 p_type, p_size;
- 	const u32 *hdr;
- 
- 	if (buf_size < SECTION_HDR_SIZE) {
--		if (!early)
--			pr_debug("Truncated patch section.\n");
--
-+		pr_debug("Truncated patch section.\n");
- 		return false;
- 	}
- 
-@@ -207,17 +195,13 @@ __verify_patch_section(const u8 *buf, si
- 	p_size = hdr[1];
- 
- 	if (p_type != UCODE_UCODE_TYPE) {
--		if (!early)
--			pr_debug("Invalid type field (0x%x) in container file section header.\n",
--				p_type);
--
-+		pr_debug("Invalid type field (0x%x) in container file section header.\n",
-+			 p_type);
- 		return false;
- 	}
- 
- 	if (p_size < sizeof(struct microcode_header_amd)) {
--		if (!early)
--			pr_debug("Patch of size %u too short.\n", p_size);
--
-+		pr_debug("Patch of size %u too short.\n", p_size);
- 		return false;
- 	}
- 
-@@ -269,7 +253,7 @@ static unsigned int __verify_patch_size(
-  * 0: success
-  */
- static int
--verify_patch(u8 family, const u8 *buf, size_t buf_size, u32 *patch_size, bool early)
-+verify_patch(u8 family, const u8 *buf, size_t buf_size, u32 *patch_size)
- {
- 	struct microcode_header_amd *mc_hdr;
- 	unsigned int ret;
-@@ -277,7 +261,7 @@ verify_patch(u8 family, const u8 *buf, s
- 	u16 proc_id;
- 	u8 patch_fam;
- 
--	if (!__verify_patch_section(buf, buf_size, &sh_psize, early))
-+	if (!__verify_patch_section(buf, buf_size, &sh_psize))
- 		return -1;
- 
- 	/*
-@@ -292,16 +276,13 @@ verify_patch(u8 family, const u8 *buf, s
- 	 * size sh_psize, as the section claims.
- 	 */
- 	if (buf_size < sh_psize) {
--		if (!early)
--			pr_debug("Patch of size %u truncated.\n", sh_psize);
--
-+		pr_debug("Patch of size %u truncated.\n", sh_psize);
- 		return -1;
- 	}
- 
- 	ret = __verify_patch_size(family, sh_psize, buf_size);
- 	if (!ret) {
--		if (!early)
--			pr_debug("Per-family patch size mismatch.\n");
-+		pr_debug("Per-family patch size mismatch.\n");
- 		return -1;
- 	}
- 
-@@ -309,8 +290,7 @@ verify_patch(u8 family, const u8 *buf, s
- 
- 	mc_hdr	= (struct microcode_header_amd *)(buf + SECTION_HDR_SIZE);
- 	if (mc_hdr->nb_dev_id || mc_hdr->sb_dev_id) {
--		if (!early)
--			pr_err("Patch-ID 0x%08x: chipset-specific code unsupported.\n", mc_hdr->patch_id);
-+		pr_err("Patch-ID 0x%08x: chipset-specific code unsupported.\n", mc_hdr->patch_id);
- 		return -1;
- 	}
- 
-@@ -337,7 +317,7 @@ static size_t parse_container(u8 *ucode,
- 	u16 eq_id;
- 	u8 *buf;
- 
--	if (!verify_equivalence_table(ucode, size, true))
-+	if (!verify_equivalence_table(ucode, size))
- 		return 0;
- 
- 	buf = ucode;
-@@ -364,7 +344,7 @@ static size_t parse_container(u8 *ucode,
- 		u32 patch_size;
- 		int ret;
- 
--		ret = verify_patch(x86_family(desc->cpuid_1_eax), buf, size, &patch_size, true);
-+		ret = verify_patch(x86_family(desc->cpuid_1_eax), buf, size, &patch_size);
- 		if (ret < 0) {
- 			/*
- 			 * Patch verification failed, skip to the next container, if
-@@ -456,14 +436,8 @@ static bool early_apply_microcode(u32 cp
- {
- 	struct cont_desc desc = { 0 };
- 	struct microcode_amd *mc;
--	u32 rev, dummy, *new_rev;
- 	bool ret = false;
--
--#ifdef CONFIG_X86_32
--	new_rev = (u32 *)__pa_nodebug(&ucode_new_rev);
--#else
--	new_rev = &ucode_new_rev;
--#endif
-+	u32 rev, dummy;
- 
- 	desc.cpuid_1_eax = cpuid_1_eax;
- 
-@@ -484,8 +458,8 @@ static bool early_apply_microcode(u32 cp
- 		return ret;
- 
- 	if (!__apply_microcode_amd(mc)) {
--		*new_rev = mc->hdr.patch_id;
--		ret      = true;
-+		ucode_new_rev = mc->hdr.patch_id;
-+		ret = true;
- 	}
- 
- 	return ret;
-@@ -514,26 +488,13 @@ static bool get_builtin_microcode(struct
- 
- static void find_blobs_in_containers(unsigned int cpuid_1_eax, struct cpio_data *ret)
- {
--	struct ucode_cpu_info *uci;
- 	struct cpio_data cp;
--	const char *path;
--	bool use_pa;
--
--	if (IS_ENABLED(CONFIG_X86_32)) {
--		uci	= (struct ucode_cpu_info *)__pa_nodebug(ucode_cpu_info);
--		path	= (const char *)__pa_nodebug(ucode_path);
--		use_pa	= true;
--	} else {
--		uci     = ucode_cpu_info;
--		path	= ucode_path;
--		use_pa	= false;
--	}
- 
- 	if (!get_builtin_microcode(&cp, x86_family(cpuid_1_eax)))
--		cp = find_microcode_in_initrd(path, use_pa);
-+		cp = find_microcode_in_initrd(ucode_path);
- 
- 	/* Needed in load_microcode_amd() */
--	uci->cpu_sig.sig = cpuid_1_eax;
-+	ucode_cpu_info->cpu_sig.sig = cpuid_1_eax;
- 
- 	*ret = cp;
- }
-@@ -562,7 +523,7 @@ int __init save_microcode_in_initrd_amd(
- 	enum ucode_state ret;
- 	struct cpio_data cp;
- 
--	cp = find_microcode_in_initrd(ucode_path, false);
-+	cp = find_microcode_in_initrd(ucode_path);
- 	if (!(cp.data && cp.size))
- 		return -EINVAL;
- 
-@@ -738,7 +699,7 @@ static size_t install_equiv_cpu_table(co
- 	u32 equiv_tbl_len;
- 	const u32 *hdr;
- 
--	if (!verify_equivalence_table(buf, buf_size, false))
-+	if (!verify_equivalence_table(buf, buf_size))
- 		return 0;
- 
- 	hdr = (const u32 *)buf;
-@@ -784,7 +745,7 @@ static int verify_and_add_patch(u8 famil
- 	u16 proc_id;
- 	int ret;
- 
--	ret = verify_patch(family, fw, leftover, patch_size, false);
-+	ret = verify_patch(family, fw, leftover, patch_size);
- 	if (ret)
- 		return ret;
- 
-@@ -918,7 +879,7 @@ static enum ucode_state request_microcod
- 	}
- 
- 	ret = UCODE_ERROR;
--	if (!verify_container(fw->data, fw->size, false))
-+	if (!verify_container(fw->data, fw->size))
- 		goto fw_release;
- 
- 	ret = load_microcode_amd(c->x86, fw->data, fw->size);
++struct ucode_patch {
++	struct list_head plist;
++	void *data;
++	unsigned int size;
++	u32 patch_id;
++	u16 equiv_cpu;
++};
++
++static LIST_HEAD(microcode_cache);
++
+ #define UCODE_MAGIC			0x00414d44
+ #define UCODE_EQUIV_CPU_TABLE_TYPE	0x00000000
+ #define UCODE_UCODE_TYPE		0x00000001
 --- a/arch/x86/kernel/cpu/microcode/core.c
 +++ b/arch/x86/kernel/cpu/microcode/core.c
-@@ -90,10 +90,7 @@ static bool amd_check_current_patch_leve
+@@ -46,8 +46,6 @@ static bool dis_ucode_ldr = true;
  
- 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, lvl, dummy);
+ bool initrd_gone;
  
--	if (IS_ENABLED(CONFIG_X86_32))
--		levels = (u32 *)__pa_nodebug(&final_levels);
--	else
--		levels = final_levels;
-+	levels = final_levels;
- 
- 	for (i = 0; levels[i]; i++) {
- 		if (lvl == levels[i])
-@@ -105,17 +102,8 @@ static bool amd_check_current_patch_leve
- static bool __init check_loader_disabled_bsp(void)
- {
- 	static const char *__dis_opt_str = "dis_ucode_ldr";
+-LIST_HEAD(microcode_cache);
 -
--#ifdef CONFIG_X86_32
--	const char *cmdline = (const char *)__pa_nodebug(boot_command_line);
--	const char *option  = (const char *)__pa_nodebug(__dis_opt_str);
--	bool *res = (bool *)__pa_nodebug(&dis_ucode_ldr);
--
--#else /* CONFIG_X86_64 */
- 	const char *cmdline = boot_command_line;
- 	const char *option  = __dis_opt_str;
--	bool *res = &dis_ucode_ldr;
--#endif
- 
- 	/*
- 	 * CPUID(1).ECX[31]: reserved for hypervisor use. This is still not
-@@ -123,17 +111,17 @@ static bool __init check_loader_disabled
- 	 * that's good enough as they don't land on the BSP path anyway.
- 	 */
- 	if (native_cpuid_ecx(1) & BIT(31))
--		return *res;
-+		return true;
- 
- 	if (x86_cpuid_vendor() == X86_VENDOR_AMD) {
- 		if (amd_check_current_patch_level())
--			return *res;
-+			return true;
- 	}
- 
- 	if (cmdline_find_option_bool(cmdline, option) <= 0)
--		*res = false;
-+		dis_ucode_ldr = false;
- 
--	return *res;
-+	return dis_ucode_ldr;
- }
- 
- void __init load_ucode_bsp(void)
-@@ -171,20 +159,11 @@ void __init load_ucode_bsp(void)
- 		load_ucode_amd_early(cpuid_1_eax);
- }
- 
--static bool check_loader_disabled_ap(void)
--{
--#ifdef CONFIG_X86_32
--	return *((bool *)__pa_nodebug(&dis_ucode_ldr));
--#else
--	return dis_ucode_ldr;
--#endif
--}
--
- void load_ucode_ap(void)
- {
- 	unsigned int cpuid_1_eax;
- 
--	if (check_loader_disabled_ap())
-+	if (dis_ucode_ldr)
- 		return;
- 
- 	cpuid_1_eax = native_cpuid_eax(1);
-@@ -232,40 +211,28 @@ out:
- 	return ret;
- }
- 
--struct cpio_data find_microcode_in_initrd(const char *path, bool use_pa)
-+struct cpio_data find_microcode_in_initrd(const char *path)
- {
- #ifdef CONFIG_BLK_DEV_INITRD
- 	unsigned long start = 0;
- 	size_t size;
- 
- #ifdef CONFIG_X86_32
--	struct boot_params *params;
--
--	if (use_pa)
--		params = (struct boot_params *)__pa_nodebug(&boot_params);
--	else
--		params = &boot_params;
--
--	size = params->hdr.ramdisk_size;
--
--	/*
--	 * Set start only if we have an initrd image. We cannot use initrd_start
--	 * because it is not set that early yet.
--	 */
-+	size = boot_params.hdr.ramdisk_size;
-+	/* Early load on BSP has a temporary mapping. */
- 	if (size)
--		start = params->hdr.ramdisk_image;
-+		start = initrd_start_early;
- 
--# else /* CONFIG_X86_64 */
-+#else /* CONFIG_X86_64 */
- 	size  = (unsigned long)boot_params.ext_ramdisk_size << 32;
- 	size |= boot_params.hdr.ramdisk_size;
- 
- 	if (size) {
- 		start  = (unsigned long)boot_params.ext_ramdisk_image << 32;
- 		start |= boot_params.hdr.ramdisk_image;
--
- 		start += PAGE_OFFSET;
- 	}
--# endif
-+#endif
- 
- 	/*
- 	 * Fixup the start address: after reserve_initrd() runs, initrd_start
-@@ -276,23 +243,10 @@ struct cpio_data find_microcode_in_initr
- 	 * initrd_gone is for the hotplug case where we've thrown out initrd
- 	 * already.
- 	 */
--	if (!use_pa) {
--		if (initrd_gone)
--			return (struct cpio_data){ NULL, 0, "" };
--		if (initrd_start)
--			start = initrd_start;
--	} else {
--		/*
--		 * The picture with physical addresses is a bit different: we
--		 * need to get the *physical* address to which the ramdisk was
--		 * relocated, i.e., relocated_ramdisk (not initrd_start) and
--		 * since we're running from physical addresses, we need to access
--		 * relocated_ramdisk through its *physical* address too.
--		 */
--		u64 *rr = (u64 *)__pa_nodebug(&relocated_ramdisk);
--		if (*rr)
--			start = *rr;
--	}
-+	if (initrd_gone)
-+		return (struct cpio_data){ NULL, 0, "" };
-+	if (initrd_start)
-+		start = initrd_start;
- 
- 	return find_cpio_data(path, (void *)start, size, NULL);
- #else /* !CONFIG_BLK_DEV_INITRD */
+ /*
+  * Synchronization.
+  *
 --- a/arch/x86/kernel/cpu/microcode/intel.c
 +++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -319,15 +319,8 @@ static void save_microcode_patch(struct
- 	if (!intel_find_matching_signature(p->data, uci->cpu_sig.sig, uci->cpu_sig.pf))
+@@ -33,10 +33,10 @@
+ static const char ucode_path[] = "kernel/x86/microcode/GenuineIntel.bin";
+ 
+ /* Current microcode patch used in early patching on the APs. */
+-static struct microcode_intel *intel_ucode_patch;
++static struct microcode_intel *intel_ucode_patch __read_mostly;
+ 
+ /* last level cache size per core */
+-static int llc_size_per_core;
++static int llc_size_per_core __ro_after_init;
+ 
+ /* microcode format is extended from prescott processors */
+ struct extended_signature {
+@@ -253,74 +253,17 @@ static int has_newer_microcode(void *mc,
+ 	return intel_find_matching_signature(mc, csig, cpf);
+ }
+ 
+-static struct ucode_patch *memdup_patch(void *data, unsigned int size)
++static void save_microcode_patch(void *data, unsigned int size)
+ {
+-	struct ucode_patch *p;
++	struct microcode_header_intel *p;
+ 
+-	p = kzalloc(sizeof(struct ucode_patch), GFP_KERNEL);
++	p = kmemdup(data, size, GFP_KERNEL);
+ 	if (!p)
+-		return NULL;
+-
+-	p->data = kmemdup(data, size, GFP_KERNEL);
+-	if (!p->data) {
+-		kfree(p);
+-		return NULL;
+-	}
+-
+-	return p;
+-}
+-
+-static void save_microcode_patch(struct ucode_cpu_info *uci, void *data, unsigned int size)
+-{
+-	struct microcode_header_intel *mc_hdr, *mc_saved_hdr;
+-	struct ucode_patch *iter, *tmp, *p = NULL;
+-	bool prev_found = false;
+-	unsigned int sig, pf;
+-
+-	mc_hdr = (struct microcode_header_intel *)data;
+-
+-	list_for_each_entry_safe(iter, tmp, &microcode_cache, plist) {
+-		mc_saved_hdr = (struct microcode_header_intel *)iter->data;
+-		sig	     = mc_saved_hdr->sig;
+-		pf	     = mc_saved_hdr->pf;
+-
+-		if (intel_find_matching_signature(data, sig, pf)) {
+-			prev_found = true;
+-
+-			if (mc_hdr->rev <= mc_saved_hdr->rev)
+-				continue;
+-
+-			p = memdup_patch(data, size);
+-			if (!p)
+-				pr_err("Error allocating buffer %p\n", data);
+-			else {
+-				list_replace(&iter->plist, &p->plist);
+-				kfree(iter->data);
+-				kfree(iter);
+-			}
+-		}
+-	}
+-
+-	/*
+-	 * There weren't any previous patches found in the list cache; save the
+-	 * newly found.
+-	 */
+-	if (!prev_found) {
+-		p = memdup_patch(data, size);
+-		if (!p)
+-			pr_err("Error allocating buffer for %p\n", data);
+-		else
+-			list_add_tail(&p->plist, &microcode_cache);
+-	}
+-
+-	if (!p)
+-		return;
+-
+-	if (!intel_find_matching_signature(p->data, uci->cpu_sig.sig, uci->cpu_sig.pf))
  		return;
  
--	/*
--	 * Save for early loading. On 32-bit, that needs to be a physical
--	 * address as the APs are running from physical addresses, before
--	 * paging has been enabled.
--	 */
--	if (IS_ENABLED(CONFIG_X86_32))
--		intel_ucode_patch = (struct microcode_intel *)__pa_nodebug(p->data);
--	else
--		intel_ucode_patch = p->data;
-+	/* Save for early loading */
-+	intel_ucode_patch = p->data;
++	kfree(intel_ucode_patch);
+ 	/* Save for early loading */
+-	intel_ucode_patch = p->data;
++	intel_ucode_patch = (struct microcode_intel *)p;
  }
  
  /*
-@@ -420,66 +413,10 @@ static bool load_builtin_intel_microcode
- 	return false;
- }
- 
--static void print_ucode_info(int old_rev, int new_rev, unsigned int date)
--{
--	pr_info_once("updated early: 0x%x -> 0x%x, date = %04x-%02x-%02x\n",
--		     old_rev,
--		     new_rev,
--		     date & 0xffff,
--		     date >> 24,
--		     (date >> 16) & 0xff);
--}
--
--#ifdef CONFIG_X86_32
--
--static int delay_ucode_info;
--static int current_mc_date;
--static int early_old_rev;
--
--/*
-- * Print early updated ucode info after printk works. This is delayed info dump.
-- */
--void show_ucode_info_early(void)
--{
--	struct ucode_cpu_info uci;
--
--	if (delay_ucode_info) {
--		intel_cpu_collect_info(&uci);
--		print_ucode_info(early_old_rev, uci.cpu_sig.rev, current_mc_date);
--		delay_ucode_info = 0;
--	}
--}
--
--/*
-- * At this point, we can not call printk() yet. Delay printing microcode info in
-- * show_ucode_info_early() until printk() works.
-- */
--static void print_ucode(int old_rev, int new_rev, int date)
--{
--	int *delay_ucode_info_p;
--	int *current_mc_date_p;
--	int *early_old_rev_p;
--
--	delay_ucode_info_p = (int *)__pa_nodebug(&delay_ucode_info);
--	current_mc_date_p = (int *)__pa_nodebug(&current_mc_date);
--	early_old_rev_p = (int *)__pa_nodebug(&early_old_rev);
--
--	*delay_ucode_info_p = 1;
--	*current_mc_date_p = date;
--	*early_old_rev_p = old_rev;
--}
--#else
--
--static inline void print_ucode(int old_rev, int new_rev, int date)
--{
--	print_ucode_info(old_rev, new_rev, date);
--}
--#endif
--
--static int apply_microcode_early(struct ucode_cpu_info *uci, bool early)
-+static int apply_microcode_early(struct ucode_cpu_info *uci)
+@@ -332,6 +275,7 @@ scan_microcode(void *data, size_t size,
  {
- 	struct microcode_intel *mc;
--	u32 rev, old_rev;
-+	u32 rev, old_rev, date;
+ 	struct microcode_header_intel *mc_header;
+ 	struct microcode_intel *patch = NULL;
++	u32 cur_rev = uci->cpu_sig.rev;
+ 	unsigned int mc_size;
  
- 	mc = uci->mc;
- 	if (!mc)
-@@ -513,11 +450,9 @@ static int apply_microcode_early(struct
+ 	while (size) {
+@@ -341,8 +285,7 @@ scan_microcode(void *data, size_t size,
+ 		mc_header = (struct microcode_header_intel *)data;
  
- 	uci->cpu_sig.rev = rev;
+ 		mc_size = get_totalsize(mc_header);
+-		if (!mc_size ||
+-		    mc_size > size ||
++		if (!mc_size || mc_size > size ||
+ 		    intel_microcode_sanity_check(data, false, MC_HEADER_TYPE_MICROCODE) < 0)
+ 			break;
  
--	if (early)
--		print_ucode(old_rev, uci->cpu_sig.rev, mc->hdr.date);
--	else
--		print_ucode_info(old_rev, uci->cpu_sig.rev, mc->hdr.date);
+@@ -354,31 +297,16 @@ scan_microcode(void *data, size_t size,
+ 			continue;
+ 		}
+ 
+-		if (save) {
+-			save_microcode_patch(uci, data, mc_size);
++		/* BSP scan: Check whether there is newer microcode */
++		if (!save && cur_rev >= mc_header->rev)
+ 			goto next;
+-		}
 -
-+	date = mc->hdr.date;
-+	pr_info_once("updated early: 0x%x -> 0x%x, date = %04x-%02x-%02x\n",
-+		     old_rev, rev, date & 0xffff, date >> 24, (date >> 16) & 0xff);
- 	return 0;
- }
  
-@@ -535,7 +470,7 @@ int __init save_microcode_in_initrd_inte
- 	intel_ucode_patch = NULL;
- 
- 	if (!load_builtin_intel_microcode(&cp))
--		cp = find_microcode_in_initrd(ucode_path, false);
-+		cp = find_microcode_in_initrd(ucode_path);
- 
- 	if (!(cp.data && cp.size))
- 		return 0;
-@@ -551,21 +486,11 @@ int __init save_microcode_in_initrd_inte
-  */
- static struct microcode_intel *__load_ucode_intel(struct ucode_cpu_info *uci)
- {
--	static const char *path;
- 	struct cpio_data cp;
--	bool use_pa;
+-		if (!patch) {
+-			if (!has_newer_microcode(data,
+-						 uci->cpu_sig.sig,
+-						 uci->cpu_sig.pf,
+-						 uci->cpu_sig.rev))
+-				goto next;
 -
--	if (IS_ENABLED(CONFIG_X86_32)) {
--		path	  = (const char *)__pa_nodebug(ucode_path);
--		use_pa	  = true;
--	} else {
--		path	  = ucode_path;
--		use_pa	  = false;
--	}
+-		} else {
+-			struct microcode_header_intel *phdr = &patch->hdr;
+-
+-			if (!has_newer_microcode(data,
+-						 phdr->sig,
+-						 phdr->pf,
+-						 phdr->rev))
+-				goto next;
+-		}
++		/* Save scan: Check whether there is newer or matching microcode */
++		if (save && cur_rev != mc_header->rev)
++			goto next;
  
- 	/* try built-in microcode first */
- 	if (!load_builtin_intel_microcode(&cp))
--		cp = find_microcode_in_initrd(path, use_pa);
-+		cp = find_microcode_in_initrd(ucode_path);
+-		/* We have a newer patch, save it. */
+ 		patch = data;
++		cur_rev = mc_header->rev;
  
- 	if (!(cp.data && cp.size))
+ next:
+ 		data += mc_size;
+@@ -387,6 +315,9 @@ next:
+ 	if (size)
  		return NULL;
-@@ -586,30 +511,21 @@ void __init load_ucode_intel_bsp(void)
  
- 	uci.mc = patch;
- 
--	apply_microcode_early(&uci, true);
-+	apply_microcode_early(&uci);
++	if (save && patch)
++		save_microcode_patch(patch, mc_size);
++
+ 	return patch;
  }
  
- void load_ucode_intel_ap(void)
+@@ -528,26 +459,10 @@ void load_ucode_intel_ap(void)
+ 	apply_microcode_early(&uci);
+ }
+ 
+-static struct microcode_intel *find_patch(struct ucode_cpu_info *uci)
++/* Accessor for microcode pointer */
++static struct microcode_intel *ucode_get_patch(void)
  {
--	struct microcode_intel *patch, **iup;
- 	struct ucode_cpu_info uci;
- 
--	if (IS_ENABLED(CONFIG_X86_32))
--		iup = (struct microcode_intel **) __pa_nodebug(&intel_ucode_patch);
--	else
--		iup = &intel_ucode_patch;
+-	struct microcode_header_intel *phdr;
+-	struct ucode_patch *iter, *tmp;
 -
--	if (!*iup) {
--		patch = __load_ucode_intel(&uci);
--		if (!patch)
-+	if (!intel_ucode_patch) {
-+		intel_ucode_patch = __load_ucode_intel(&uci);
-+		if (!intel_ucode_patch)
- 			return;
+-	list_for_each_entry_safe(iter, tmp, &microcode_cache, plist) {
 -
--		*iup = patch;
- 	}
- 
--	uci.mc = *iup;
+-		phdr = (struct microcode_header_intel *)iter->data;
 -
--	apply_microcode_early(&uci, true);
-+	uci.mc = intel_ucode_patch;
-+	apply_microcode_early(&uci);
+-		if (phdr->rev <= uci->cpu_sig.rev)
+-			continue;
+-
+-		if (!intel_find_matching_signature(phdr,
+-						   uci->cpu_sig.sig,
+-						   uci->cpu_sig.pf))
+-			continue;
+-
+-		return iter->data;
+-	}
+-	return NULL;
++	return intel_ucode_patch;
  }
  
- static struct microcode_intel *find_patch(struct ucode_cpu_info *uci)
-@@ -647,7 +563,7 @@ void reload_ucode_intel(void)
+ void reload_ucode_intel(void)
+@@ -557,7 +472,7 @@ void reload_ucode_intel(void)
  
- 	uci.mc = p;
+ 	intel_cpu_collect_info(&uci);
  
--	apply_microcode_early(&uci, false);
-+	apply_microcode_early(&uci);
- }
+-	p = find_patch(&uci);
++	p = ucode_get_patch();
+ 	if (!p)
+ 		return;
  
- static int collect_cpu_info(int cpu_num, struct cpu_signature *csig)
+@@ -601,7 +516,7 @@ static enum ucode_state apply_microcode_
+ 		return UCODE_ERROR;
+ 
+ 	/* Look for a newer patch in our cache: */
+-	mc = find_patch(uci);
++	mc = ucode_get_patch();
+ 	if (!mc) {
+ 		mc = uci->mc;
+ 		if (!mc)
+@@ -730,7 +645,7 @@ static enum ucode_state generic_load_mic
+ 	uci->mc = (struct microcode_intel *)new_mc;
+ 
+ 	/* Save for CPU hotplug */
+-	save_microcode_patch(uci, new_mc, new_mc_size);
++	save_microcode_patch(new_mc, new_mc_size);
+ 
+ 	pr_debug("CPU%d found a matching microcode update with version 0x%x (current=0x%x)\n",
+ 		 cpu, new_rev, uci->cpu_sig.rev);
 --- a/arch/x86/kernel/cpu/microcode/internal.h
 +++ b/arch/x86/kernel/cpu/microcode/internal.h
-@@ -44,7 +44,7 @@ struct microcode_ops {
- };
+@@ -8,16 +8,6 @@
+ #include <asm/cpu.h>
+ #include <asm/microcode.h>
  
- extern struct ucode_cpu_info ucode_cpu_info[];
--struct cpio_data find_microcode_in_initrd(const char *path, bool use_pa);
-+struct cpio_data find_microcode_in_initrd(const char *path);
- 
- #define MAX_UCODE_COUNT 128
- 
---- a/arch/x86/kernel/head32.c
-+++ b/arch/x86/kernel/head32.c
-@@ -19,6 +19,7 @@
- #include <asm/apic.h>
- #include <asm/io_apic.h>
- #include <asm/bios_ebda.h>
-+#include <asm/microcode.h>
- #include <asm/tlbflush.h>
- #include <asm/bootparam_utils.h>
- 
-@@ -34,6 +35,8 @@ asmlinkage __visible void __init __noret
- 	/* Make sure IDT is set up before any exception happens */
- 	idt_setup_early_handler();
- 
-+	load_ucode_bsp();
-+
- 	cr4_init_shadow();
- 
- 	sanitize_boot_params(&boot_params);
---- a/arch/x86/kernel/head_32.S
-+++ b/arch/x86/kernel/head_32.S
-@@ -118,11 +118,6 @@ SYM_CODE_START(startup_32)
- 	movl %eax, pa(olpc_ofw_pgd)
- #endif
- 
--#ifdef CONFIG_MICROCODE
--	/* Early load ucode on BSP. */
--	call load_ucode_bsp
--#endif
+-struct ucode_patch {
+-	struct list_head plist;
+-	void *data;		/* Intel uses only this one */
+-	unsigned int size;
+-	u32 patch_id;
+-	u16 equiv_cpu;
+-};
 -
- 	/* Create early pagetables. */
- 	call  mk_early_pgtbl_32
- 
-@@ -157,11 +152,6 @@ SYM_FUNC_START(startup_32_smp)
- 	movl %eax,%ss
- 	leal -__PAGE_OFFSET(%ecx),%esp
- 
--#ifdef CONFIG_MICROCODE
--	/* Early load ucode on AP. */
--	call load_ucode_ap
--#endif
+-extern struct list_head microcode_cache;
 -
- .Ldefault_entry:
- 	movl $(CR0_STATE & ~X86_CR0_PG),%eax
- 	movl %eax,%cr0
---- a/arch/x86/kernel/smpboot.c
-+++ b/arch/x86/kernel/smpboot.c
-@@ -259,12 +259,9 @@ static void notrace start_secondary(void
- 	cpu_init_exception_handling();
+ struct device;
  
- 	/*
--	 * 32-bit systems load the microcode from the ASM startup code for
--	 * historical reasons.
--	 *
--	 * On 64-bit systems load it before reaching the AP alive
--	 * synchronization point below so it is not part of the full per
--	 * CPU serialized bringup part when "parallel" bringup is enabled.
-+	 * Load the microcode before reaching the AP alive synchronization
-+	 * point below so it is not part of the full per CPU serialized
-+	 * bringup part when "parallel" bringup is enabled.
- 	 *
- 	 * That's even safe when hyperthreading is enabled in the CPU as
- 	 * the core code starts the primary threads first and leaves the
-@@ -277,8 +274,7 @@ static void notrace start_secondary(void
- 	 * CPUID, MSRs etc. must be strictly serialized to maintain
- 	 * software state correctness.
- 	 */
--	if (IS_ENABLED(CONFIG_X86_64))
--		load_ucode_ap();
-+	load_ucode_ap();
- 
- 	/*
- 	 * Synchronization point with the hotplug core. Sets this CPUs
+ enum ucode_state {
 
 
