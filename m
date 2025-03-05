@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D91E1A5BB7;
-	Wed,  5 Mar 2025 18:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52C61A5BB7;
+	Wed,  5 Mar 2025 18:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198227; cv=none; b=DOFcXy+zfwu1dsPRtuoOLAOpAdNycjXLWbjgNY7CVk4lWx3M+4tJTqnO1zYnFb/Ocw2Nkj72lM1rl+ToJlPBXzHJriorDU9OSg6JYzbW1lMkSilya/6QcZU8n/S3TRt6M8Ne0qi2eTrgLAszhPkOV3F+hDznBZLX+s18aIwMSA4=
+	t=1741198229; cv=none; b=BmtNxaIbRYZ3VDHp8gTLx8ZlVJK3pWe9SCjy7pnRWdjPHm7FCAAYmmDtUAAd0dUoJbikdYn7pe+oEdXeKQ2haNIlNHgpR1eYoUeSRv9OlnmAhJPK9U0RuAgEyV7yxrLZZWzXtIQjPOovFj3Itmiz4ZJcNBXuz4mZq4XHooK7pDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198227; c=relaxed/simple;
-	bh=cfSIBNmxO+1spJX8gFgw+kZD6T0OYaQynvUd+wJr2rM=;
+	s=arc-20240116; t=1741198229; c=relaxed/simple;
+	bh=7sfTGDax39TT3x+0O0+tWH9YIUDXOBIzCI0q/7SG6Fc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MYL6/nieINT27WmvkQRYD9VRuBKbOel9z3S6HcWQMD9IuMxlhD7EPXG/46QayH4WyX+2f/iudEoqlqdQ6sC+N/a30C5Eld+H0bN7STtU+GeUTu3RKzzhLV+99w8ZXlKmbqssRfYXj3EiukNxzVJnvEDIsa6Sj7N4XnDYtLXaaWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4KfAP6j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bfhHPB9CRZYIos9dcCmIywo7FKIRpzWfx+ftjMYKtBZB0kf6W9tsjdkgIRKZS9ps1EhHL4CErTu3wFRMMZbBmsW+lu11Kr9tt7GESMTAIkvNVYMqaC8/ZsoDnwoe9EsILjfRzQtq7yh0vkFsfWDgVwSFV/rGkSJqwVUtf4QHt6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3UGYzVs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4KfAP6j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F19C4CEE0;
-	Wed,  5 Mar 2025 18:10:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3UGYzVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDC7C4CEE0;
+	Wed,  5 Mar 2025 18:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198226;
-	bh=cfSIBNmxO+1spJX8gFgw+kZD6T0OYaQynvUd+wJr2rM=;
+	s=korg; t=1741198229;
+	bh=7sfTGDax39TT3x+0O0+tWH9YIUDXOBIzCI0q/7SG6Fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l4KfAP6jd6Yn06CMLOhql5nmdlJrvn+86fnJfv3OQ5Gc/lhC8VnBVj3QTVBHf8BBH
-	 UcAs3Noa4w/T2vNzEQh2NJiaGasGlR+8U0gFTMvhSuT53iPjqtxb9Y+xKz6em5Kt7N
-	 pFudNxSPxjqPTyMmXXRkm/35P8cwV9nu43v+aj+M=
+	b=V3UGYzVsKkhgxcpwAC/4AVLE9ZXJ/rA2pKf7COi6d/k2BxyMCVc4UPqtToOU65Os3
+	 wL+qqHbvdQfrB1OXMM1OIvM1zjirOPOXVAxvPxCvwC24+zQa/RXtbgVuq4rpRKnXod
+	 1jB9GmD7aAC2b+iJByt42lWp/nyJUPMy+J6zMw20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyrone Ting <kfting@nuvoton.com>,
-	Tali Perry <tali.perry1@gmail.com>,
+	Hongliang Wang <wanghongliang@loongson.cn>,
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Andy Shevchenko <andy@kernel.org>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.12 106/150] i2c: npcm: disable interrupt enable bit before devm_request_irq
-Date: Wed,  5 Mar 2025 18:48:55 +0100
-Message-ID: <20250305174508.067791202@linuxfoundation.org>
+Subject: [PATCH 6.12 107/150] i2c: ls2x: Fix frequency division register access
+Date: Wed,  5 Mar 2025 18:48:56 +0100
+Message-ID: <20250305174508.112909451@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -51,104 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tyrone Ting <kfting@nuvoton.com>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
 
-commit dd1998e243f5fa25d348a384ba0b6c84d980f2b2 upstream.
+commit 71c49ee9bb41e1709abac7e2eb05f9193222e580 upstream.
 
-The customer reports that there is a soft lockup issue related to
-the i2c driver. After checking, the i2c module was doing a tx transfer
-and the bmc machine reboots in the middle of the i2c transaction, the i2c
-module keeps the status without being reset.
+According to the chip manual, the I2C register access type of
+Loongson-2K2000/LS7A is "B", so we can only access registers in byte
+form (readb()/writeb()).
 
-Due to such an i2c module status, the i2c irq handler keeps getting
-triggered since the i2c irq handler is registered in the kernel booting
-process after the bmc machine is doing a warm rebooting.
-The continuous triggering is stopped by the soft lockup watchdog timer.
+Although Loongson-2K0500/Loongson-2K1000 do not have similar
+constraints, register accesses in byte form also behave correctly.
 
-Disable the interrupt enable bit in the i2c module before calling
-devm_request_irq to fix this issue since the i2c relative status bit
-is read-only.
+Also, in hardware, the frequency division registers are defined as two
+separate registers (high 8-bit and low 8-bit), so we just access them
+directly as bytes.
 
-Here is the soft lockup log.
-[   28.176395] watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [swapper/0:1]
-[   28.183351] Modules linked in:
-[   28.186407] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.15.120-yocto-s-dirty-bbebc78 #1
-[   28.201174] pstate: 40000005 (nZcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   28.208128] pc : __do_softirq+0xb0/0x368
-[   28.212055] lr : __do_softirq+0x70/0x368
-[   28.215972] sp : ffffff8035ebca00
-[   28.219278] x29: ffffff8035ebca00 x28: 0000000000000002 x27: ffffff80071a3780
-[   28.226412] x26: ffffffc008bdc000 x25: ffffffc008bcc640 x24: ffffffc008be50c0
-[   28.233546] x23: ffffffc00800200c x22: 0000000000000000 x21: 000000000000001b
-[   28.240679] x20: 0000000000000000 x19: ffffff80001c3200 x18: ffffffffffffffff
-[   28.247812] x17: ffffffc02d2e0000 x16: ffffff8035eb8b40 x15: 00001e8480000000
-[   28.254945] x14: 02c3647e37dbfcb6 x13: 02c364f2ab14200c x12: 0000000002c364f2
-[   28.262078] x11: 00000000fa83b2da x10: 000000000000b67e x9 : ffffffc008010250
-[   28.269211] x8 : 000000009d983d00 x7 : 7fffffffffffffff x6 : 0000036d74732434
-[   28.276344] x5 : 00ffffffffffffff x4 : 0000000000000015 x3 : 0000000000000198
-[   28.283476] x2 : ffffffc02d2e0000 x1 : 00000000000000e0 x0 : ffffffc008bdcb40
-[   28.290611] Call trace:
-[   28.293052]  __do_softirq+0xb0/0x368
-[   28.296625]  __irq_exit_rcu+0xe0/0x100
-[   28.300374]  irq_exit+0x14/0x20
-[   28.303513]  handle_domain_irq+0x68/0x90
-[   28.307440]  gic_handle_irq+0x78/0xb0
-[   28.311098]  call_on_irq_stack+0x20/0x38
-[   28.315019]  do_interrupt_handler+0x54/0x5c
-[   28.319199]  el1_interrupt+0x2c/0x4c
-[   28.322777]  el1h_64_irq_handler+0x14/0x20
-[   28.326872]  el1h_64_irq+0x74/0x78
-[   28.330269]  __setup_irq+0x454/0x780
-[   28.333841]  request_threaded_irq+0xd0/0x1b4
-[   28.338107]  devm_request_threaded_irq+0x84/0x100
-[   28.342809]  npcm_i2c_probe_bus+0x188/0x3d0
-[   28.346990]  platform_probe+0x6c/0xc4
-[   28.350653]  really_probe+0xcc/0x45c
-[   28.354227]  __driver_probe_device+0x8c/0x160
-[   28.358578]  driver_probe_device+0x44/0xe0
-[   28.362670]  __driver_attach+0x124/0x1d0
-[   28.366589]  bus_for_each_dev+0x7c/0xe0
-[   28.370426]  driver_attach+0x28/0x30
-[   28.373997]  bus_add_driver+0x124/0x240
-[   28.377830]  driver_register+0x7c/0x124
-[   28.381662]  __platform_driver_register+0x2c/0x34
-[   28.386362]  npcm_i2c_init+0x3c/0x5c
-[   28.389937]  do_one_initcall+0x74/0x230
-[   28.393768]  kernel_init_freeable+0x24c/0x2b4
-[   28.398126]  kernel_init+0x28/0x130
-[   28.401614]  ret_from_fork+0x10/0x20
-[   28.405189] Kernel panic - not syncing: softlockup: hung tasks
-[   28.411011] SMP: stopping secondary CPUs
-[   28.414933] Kernel Offset: disabled
-[   28.418412] CPU features: 0x00000000,00000802
-[   28.427644] Rebooting in 20 seconds..
-
-Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
-Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-Cc: <stable@vger.kernel.org> # v5.8+
-Reviewed-by: Tali Perry <tali.perry1@gmail.com>
+Fixes: 015e61f0bffd ("i2c: ls2x: Add driver for Loongson-2K/LS7A I2C controller")
+Co-developed-by: Hongliang Wang <wanghongliang@loongson.cn>
+Signed-off-by: Hongliang Wang <wanghongliang@loongson.cn>
+Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+Cc: stable@vger.kernel.org # v6.3+
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250220040029.27596-2-kfting@nuvoton.com
+Link: https://lore.kernel.org/r/20250220125612.1910990-1-zhoubinbin@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-npcm7xx.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/i2c/busses/i2c-ls2x.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -2319,6 +2319,13 @@ static int npcm_i2c_probe_bus(struct pla
- 	if (irq < 0)
- 		return irq;
+--- a/drivers/i2c/busses/i2c-ls2x.c
++++ b/drivers/i2c/busses/i2c-ls2x.c
+@@ -10,6 +10,7 @@
+  * Rewritten for mainline by Binbin Zhou <zhoubinbin@loongson.cn>
+  */
  
++#include <linux/bitfield.h>
+ #include <linux/bits.h>
+ #include <linux/completion.h>
+ #include <linux/device.h>
+@@ -26,7 +27,8 @@
+ #include <linux/units.h>
+ 
+ /* I2C Registers */
+-#define I2C_LS2X_PRER		0x0 /* Freq Division Register(16 bits) */
++#define I2C_LS2X_PRER_LO	0x0 /* Freq Division Low Byte Register */
++#define I2C_LS2X_PRER_HI	0x1 /* Freq Division High Byte Register */
+ #define I2C_LS2X_CTR		0x2 /* Control Register */
+ #define I2C_LS2X_TXR		0x3 /* Transport Data Register */
+ #define I2C_LS2X_RXR		0x3 /* Receive Data Register */
+@@ -93,6 +95,7 @@ static irqreturn_t ls2x_i2c_isr(int this
+  */
+ static void ls2x_i2c_adjust_bus_speed(struct ls2x_i2c_priv *priv)
+ {
++	u16 val;
+ 	struct i2c_timings *t = &priv->i2c_t;
+ 	struct device *dev = priv->adapter.dev.parent;
+ 	u32 acpi_speed = i2c_acpi_find_bus_speed(dev);
+@@ -104,9 +107,14 @@ static void ls2x_i2c_adjust_bus_speed(st
+ 	else
+ 		t->bus_freq_hz = LS2X_I2C_FREQ_STD;
+ 
+-	/* Calculate and set i2c frequency. */
+-	writew(LS2X_I2C_PCLK_FREQ / (5 * t->bus_freq_hz) - 1,
+-	       priv->base + I2C_LS2X_PRER);
 +	/*
-+	 * Disable the interrupt to avoid the interrupt handler being triggered
-+	 * incorrectly by the asynchronous interrupt status since the machine
-+	 * might do a warm reset during the last smbus/i2c transfer session.
++	 * According to the chip manual, we can only access the registers as bytes,
++	 * otherwise the high bits will be truncated.
++	 * So set the I2C frequency with a sequential writeb() instead of writew().
 +	 */
-+	npcm_i2c_int_enable(bus, false);
-+
- 	ret = devm_request_irq(bus->dev, irq, npcm_i2c_bus_irq, 0,
- 			       dev_name(bus->dev), bus);
- 	if (ret)
++	val = LS2X_I2C_PCLK_FREQ / (5 * t->bus_freq_hz) - 1;
++	writeb(FIELD_GET(GENMASK(7, 0), val), priv->base + I2C_LS2X_PRER_LO);
++	writeb(FIELD_GET(GENMASK(15, 8), val), priv->base + I2C_LS2X_PRER_HI);
+ }
+ 
+ static void ls2x_i2c_init(struct ls2x_i2c_priv *priv)
 
 
