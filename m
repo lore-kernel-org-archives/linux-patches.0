@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E353481DD;
-	Wed,  5 Mar 2025 17:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20471C6FFE;
+	Wed,  5 Mar 2025 17:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197419; cv=none; b=SdGha0LZfqWAdLVzWiGn9Ns81LXsR2EJPIulfhPKZpcUs6UvwdSdYDLPOH1K0bymquir18N4Kd46mt7DyMQfTLFfTtGtGmAEPF/+l2vRUgCoV6qDGX0qS6JTQJoz4zOkRu4n7ra7GJtvcx4l0CMIx7L3jxr0LJMDVpyCsHqY4mM=
+	t=1741197422; cv=none; b=U0/WYn7dRnhlHLMR/M1GOtOYpKlrVzGuAOmIDiQkbAKP5HFPYukicR1A3vwIwOMUtlV7DXLpojBnfD/i5i8Bnxpde5KUCtYju7n408I8xMVdupiHnKOti5l0jEgCsKYREUMDzFRbOCpEFhvir6PQgyTJRBQH8uo3CI1g5df20ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197419; c=relaxed/simple;
-	bh=t0ffan+qAdIdqlYWOs4H7/Ey0qxmtkK4LYLroZRia0I=;
+	s=arc-20240116; t=1741197422; c=relaxed/simple;
+	bh=ky/ecm6wlp5ZK7ur6pUfejkOqoV8cAT/KY09WPcPuHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qUwWRsFYwraOdEd31DDMPOj7RVTlkex6nDuyaQPTo6Y6NarbP7bJPAG8+0cPEwNHb4ZGJmvWCDnUH/fBslCMowk8j9/ff8X0WhzcMfy9i/FDAvgobdPx0DtL7HEAcOYqI+Ra8q4j5G1yd68QQLJsIkGSM9snlp+2GUcrxouM2i8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFZ5hEUG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GZDQaDFwV14/2ZWTVeCTHSMjFftMZRPFSdNrssM5SeEOCv846mdRz491aG1fDm70v8nDsR9GcS65ANKRPjBkx1jYu6V4QiuPGNfUxlLw7G7RArMw6+SVGHITPedq2/5DhYt1rSkItCjEZDxQiy5p+BceylgrN0jsOcrK12Spxg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NtrE56Ks; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFZ5hEUG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDC8C4CED1;
-	Wed,  5 Mar 2025 17:56:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NtrE56Ks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794C2C4CED1;
+	Wed,  5 Mar 2025 17:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197419;
-	bh=t0ffan+qAdIdqlYWOs4H7/Ey0qxmtkK4LYLroZRia0I=;
+	s=korg; t=1741197421;
+	bh=ky/ecm6wlp5ZK7ur6pUfejkOqoV8cAT/KY09WPcPuHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gFZ5hEUGk2/g59OqsUSuXYejjRlhcY78fWWOCn1We77BurGM8/DKjF2BYCBOlQu72
-	 ykqMKzJ9N0H+EKpogB3sHnKpgUt54/yHqS2ZIZC2IR8ACYWaHGnYifticfufhH2+kj
-	 py2weFDrz+/dPWU7lZ1nCIkLKf+fQLV6F1YIU6XU=
+	b=NtrE56KsPEjPuj5Mlj/fCr5otKWEIsEdIoL9ZQuL9clvvPj1X6jg3WRZojOd587Oi
+	 bREdbgRooV0IFZ3PvMrbHFORiSwUFod3Xz9bix9BBsGcJ4BnoShQD80VsOkII2VGeA
+	 yxkNj2K8j9fs7FgvaymbHX/cS6sc94g8YgAmCw+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Panchenko <dmitry@d-systems.ee>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 150/176] ALSA: usb-audio: Re-add sample rate quirk for Pioneer DJM-900NXS2
-Date: Wed,  5 Mar 2025 18:48:39 +0100
-Message-ID: <20250305174511.461812705@linuxfoundation.org>
+	Kan Liang <kan.liang@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 6.1 151/176] perf/x86: Fix low freqency setting issue
+Date: Wed,  5 Mar 2025 18:48:40 +0100
+Message-ID: <20250305174511.501583581@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -50,31 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Panchenko <dmitry@d-systems.ee>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit 9af3b4f2d879da01192d6168e6c651e7fb5b652d upstream.
+commit 88ec7eedbbd21cad38707620ad6c48a4e9a87c18 upstream.
 
-Re-add the sample-rate quirk for the Pioneer DJM-900NXS2. This
-device does not work without setting sample-rate.
+Perf doesn't work at low frequencies:
 
-Signed-off-by: Dmitry Panchenko <dmitry@d-systems.ee>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250220161540.3624660-1-dmitry@d-systems.ee
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  $ perf record -e cpu_core/instructions/ppp -F 120
+  Error:
+  The sys_perf_event_open() syscall returned with 22 (Invalid argument)
+  for event (cpu_core/instructions/ppp).
+  "dmesg | grep -i perf" may provide additional information.
+
+The limit_period() check avoids a low sampling period on a counter. It
+doesn't intend to limit the frequency.
+
+The check in the x86_pmu_hw_config() should be limited to non-freq mode.
+The attr.sample_period and attr.sample_freq are union. The
+attr.sample_period should not be used to indicate the frequency mode.
+
+Fixes: c46e665f0377 ("perf/x86: Add INST_RETIRED.ALL workarounds")
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250117151913.3043942-1-kan.liang@linux.intel.com
+Closes: https://lore.kernel.org/lkml/20250115154949.3147-1-ravi.bangoria@amd.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/events/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1773,6 +1773,7 @@ void snd_usb_set_format_quirk(struct snd
- 	case USB_ID(0x534d, 0x2109): /* MacroSilicon MS2109 */
- 		subs->stream_offset_adj = 2;
- 		break;
-+	case USB_ID(0x2b73, 0x000a): /* Pioneer DJM-900NXS2 */
- 	case USB_ID(0x2b73, 0x0013): /* Pioneer DJM-450 */
- 		pioneer_djm_set_format_quirk(subs, 0x0082);
- 		break;
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -623,7 +623,7 @@ int x86_pmu_hw_config(struct perf_event
+ 	if (event->attr.type == event->pmu->type)
+ 		event->hw.config |= event->attr.config & X86_RAW_EVENT_MASK;
+ 
+-	if (event->attr.sample_period && x86_pmu.limit_period) {
++	if (!event->attr.freq && x86_pmu.limit_period) {
+ 		s64 left = event->attr.sample_period;
+ 		x86_pmu.limit_period(event, &left);
+ 		if (left > event->attr.sample_period)
 
 
