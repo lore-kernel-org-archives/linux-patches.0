@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8150E2512D6;
-	Wed,  5 Mar 2025 18:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A26E2512D6;
+	Wed,  5 Mar 2025 18:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198743; cv=none; b=Sv1JRd6v2L5lY1l0V2iHCU81XV+JIH8tOkVpp1HZidhMBW099Cqvjd76bhoR+rvUdtnL6qJ5o0zIXQzSDRUXnBgqaxKhIBZiIxoNin0S0KzxcrGNOetjOthNlXITPl4xHkIOv16SabSncHleBcVfMLXPZu+7dLRZLUJsjBMLils=
+	t=1741198746; cv=none; b=mN8+WojJ4NQS3UytNJhtfbXPwF9gehf82kkiqUtp4AWO8/VT5ZE1HRIfdS/CYj++hJO1vTaVEG2flPT/iYP/rmwcudTGioSWXI2FgzOn2wx1B72zIJ5I5yCm468ny/uyUKA/nBGlJkt5gaSWDN1/8Y7iBWMfchsQiJ6Tj+AkkZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198743; c=relaxed/simple;
-	bh=sZpMhMmyqDBAN35nJE3ZTOnGhAloXKvD+YLjB/k1elQ=;
+	s=arc-20240116; t=1741198746; c=relaxed/simple;
+	bh=9Tm59dTf3LZKRishnARiGS+DXSxI6BjF7vcrGMGrDo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=owBpn/oYdBBvuFyyEYyCt3i/pFNrGY7ok8uHfGlUqxn5DcMRL5iV0EBKTGcQ0Np37gpJFU1ZGAo3jmI2Mor8iW27ZN8oOEzWPuI9vOgRdZHyLF9LyXc26jKUWq/wI7j67aRLR7XMu6wp6tFnISR8HJBdEglKrpzUzUQ5z1dhXWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxHsRa2m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QzMEV4adxr4G4++lXVDrnvqxQvhEiRQkOESUWDlvE1puaG+Le8TsDOw7SICOBmtmKmt0Mh88j7EQjcW5ljZVLsXq8s2/AaYB7tgiDE68DHtQtDEDbvkzJqJs1drzDTf08x6aRap5Qz8R1LpVTTkmzhAPZK6vMMIQkwb8vnrMBBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3LcofPF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxHsRa2m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A1FC4CED1;
-	Wed,  5 Mar 2025 18:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3LcofPF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88135C4CED1;
+	Wed,  5 Mar 2025 18:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198743;
-	bh=sZpMhMmyqDBAN35nJE3ZTOnGhAloXKvD+YLjB/k1elQ=;
+	s=korg; t=1741198745;
+	bh=9Tm59dTf3LZKRishnARiGS+DXSxI6BjF7vcrGMGrDo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KxHsRa2mXl2jYlXij4cIU2Cvc12mjHBWKzLFlub9ROwsoZAYfXUJ4nrziYFbFulTw
-	 tC6kk6shoZeScIHEy+GD5j8C2r/QD+CV2Okgono+bfPYy8qFygtIIXxFK9i+Dt8OxR
-	 JWsHofw9OOVUVZA8xD2zT82aaN8tdoA6L973MaI4=
+	b=l3LcofPF0y6+Jh0Rm3qpy7F16sRsdAug7FDIlKGxwreku82EFshBDG+O0JpWx3eNo
+	 2T3+c9qnS9GD6IVW+uOy1DhZtv5zLAFxES0VRWKGMlwnZMo6h0wdrQ2qPsCVBKZejt
+	 wXTcN8oSliZu/0nqMqo/YJxbeu/Q73TFJLLSANNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Subject: [PATCH 6.13 133/157] rcuref: Plug slowpath race in rcuref_put()
-Date: Wed,  5 Mar 2025 18:49:29 +0100
-Message-ID: <20250305174510.648364273@linuxfoundation.org>
+	Ingo Molnar <mingo@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.13 134/157] sched/core: Prevent rescheduling when interrupts are disabled
+Date: Wed,  5 Mar 2025 18:49:30 +0100
+Message-ID: <20250305174510.687400636@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -53,113 +55,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-commit b9a49520679e98700d3d89689cc91c08a1c88c1d upstream.
+commit 82c387ef7568c0d96a918a5a78d9cad6256cfa15 upstream.
 
-Kernel test robot reported an "imbalanced put" in the rcuref_put() slow
-path, which turned out to be a false positive. Consider the following race:
+David reported a warning observed while loop testing kexec jump:
 
-            ref  = 0 (via rcuref_init(ref, 1))
- T1                                      T2
- rcuref_put(ref)
- -> atomic_add_negative_release(-1, ref)                                         # ref -> 0xffffffff
- -> rcuref_put_slowpath(ref)
-                                         rcuref_get(ref)
-                                         -> atomic_add_negative_relaxed(1, &ref->refcnt)
-                                           -> return true;                       # ref -> 0
+  Interrupts enabled after irqrouter_resume+0x0/0x50
+  WARNING: CPU: 0 PID: 560 at drivers/base/syscore.c:103 syscore_resume+0x18a/0x220
+   kernel_kexec+0xf6/0x180
+   __do_sys_reboot+0x206/0x250
+   do_syscall_64+0x95/0x180
 
-                                         rcuref_put(ref)
-                                         -> atomic_add_negative_release(-1, ref) # ref -> 0xffffffff
-                                         -> rcuref_put_slowpath()
+The corresponding interrupt flag trace:
 
-    -> cnt = atomic_read(&ref->refcnt);                                          # cnt -> 0xffffffff / RCUREF_NOREF
-    -> atomic_try_cmpxchg_release(&ref->refcnt, &cnt, RCUREF_DEAD))              # ref -> 0xe0000000 / RCUREF_DEAD
-       -> return true
-                                           -> cnt = atomic_read(&ref->refcnt);   # cnt -> 0xe0000000 / RCUREF_DEAD
-                                           -> if (cnt > RCUREF_RELEASED)         # 0xe0000000 > 0xc0000000
-                                             -> WARN_ONCE(cnt >= RCUREF_RELEASED, "rcuref - imbalanced put()")
+  hardirqs last  enabled at (15573): [<ffffffffa8281b8e>] __up_console_sem+0x7e/0x90
+  hardirqs last disabled at (15580): [<ffffffffa8281b73>] __up_console_sem+0x63/0x90
 
-The problem is the additional read in the slow path (after it
-decremented to RCUREF_NOREF) which can happen after the counter has been
-marked RCUREF_DEAD.
+That means __up_console_sem() was invoked with interrupts enabled. Further
+instrumentation revealed that in the interrupt disabled section of kexec
+jump one of the syscore_suspend() callbacks woke up a task, which set the
+NEED_RESCHED flag. A later callback in the resume path invoked
+cond_resched() which in turn led to the invocation of the scheduler:
 
-Prevent this by reusing the return value of the decrement. Now every "final"
-put uses RCUREF_NOREF in the slow path and attempts the final cmpxchg() to
-RCUREF_DEAD.
+  __cond_resched+0x21/0x60
+  down_timeout+0x18/0x60
+  acpi_os_wait_semaphore+0x4c/0x80
+  acpi_ut_acquire_mutex+0x3d/0x100
+  acpi_ns_get_node+0x27/0x60
+  acpi_ns_evaluate+0x1cb/0x2d0
+  acpi_rs_set_srs_method_data+0x156/0x190
+  acpi_pci_link_set+0x11c/0x290
+  irqrouter_resume+0x54/0x60
+  syscore_resume+0x6a/0x200
+  kernel_kexec+0x145/0x1c0
+  __do_sys_reboot+0xeb/0x240
+  do_syscall_64+0x95/0x180
 
-[ bigeasy: Add changelog ]
+This is a long standing problem, which probably got more visible with
+the recent printk changes. Something does a task wakeup and the
+scheduler sets the NEED_RESCHED flag. cond_resched() sees it set and
+invokes schedule() from a completely bogus context. The scheduler
+enables interrupts after context switching, which causes the above
+warning at the end.
 
-Fixes: ee1ee6db07795 ("atomics: Provide rcuref - scalable reference counting")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Debugged-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Quite some of the code paths in syscore_suspend()/resume() can result in
+triggering a wakeup with the exactly same consequences. They might not
+have done so yet, but as they share a lot of code with normal operations
+it's just a question of time.
+
+The problem only affects the PREEMPT_NONE and PREEMPT_VOLUNTARY scheduling
+models. Full preemption is not affected as cond_resched() is disabled and
+the preemption check preemptible() takes the interrupt disabled flag into
+account.
+
+Cure the problem by adding a corresponding check into cond_resched().
+
+Reported-by: David Woodhouse <dwmw@amazon.co.uk>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: David Woodhouse <dwmw@amazon.co.uk>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/oe-lkp/202412311453.9d7636a2-lkp@intel.com
+Closes: https://lore.kernel.org/all/7717fe2ac0ce5f0a2c43fdab8b11f4483d54a2a4.camel@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/rcuref.h |    9 ++++++---
- lib/rcuref.c           |    5 ++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ kernel/sched/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/rcuref.h
-+++ b/include/linux/rcuref.h
-@@ -71,27 +71,30 @@ static inline __must_check bool rcuref_g
- 	return rcuref_get_slowpath(ref);
- }
- 
--extern __must_check bool rcuref_put_slowpath(rcuref_t *ref);
-+extern __must_check bool rcuref_put_slowpath(rcuref_t *ref, unsigned int cnt);
- 
- /*
-  * Internal helper. Do not invoke directly.
-  */
- static __always_inline __must_check bool __rcuref_put(rcuref_t *ref)
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -7278,7 +7278,7 @@ out_unlock:
+ #if !defined(CONFIG_PREEMPTION) || defined(CONFIG_PREEMPT_DYNAMIC)
+ int __sched __cond_resched(void)
  {
-+	int cnt;
-+
- 	RCU_LOCKDEP_WARN(!rcu_read_lock_held() && preemptible(),
- 			 "suspicious rcuref_put_rcusafe() usage");
- 	/*
- 	 * Unconditionally decrease the reference count. The saturation and
- 	 * dead zones provide enough tolerance for this.
- 	 */
--	if (likely(!atomic_add_negative_release(-1, &ref->refcnt)))
-+	cnt = atomic_sub_return_release(1, &ref->refcnt);
-+	if (likely(cnt >= 0))
- 		return false;
- 
- 	/*
- 	 * Handle the last reference drop and cases inside the saturation
- 	 * and dead zones.
- 	 */
--	return rcuref_put_slowpath(ref);
-+	return rcuref_put_slowpath(ref, cnt);
- }
- 
- /**
---- a/lib/rcuref.c
-+++ b/lib/rcuref.c
-@@ -220,6 +220,7 @@ EXPORT_SYMBOL_GPL(rcuref_get_slowpath);
- /**
-  * rcuref_put_slowpath - Slowpath of __rcuref_put()
-  * @ref:	Pointer to the reference count
-+ * @cnt:	The resulting value of the fastpath decrement
-  *
-  * Invoked when the reference count is outside of the valid zone.
-  *
-@@ -233,10 +234,8 @@ EXPORT_SYMBOL_GPL(rcuref_get_slowpath);
-  *	with a concurrent get()/put() pair. Caller is not allowed to
-  *	deconstruct the protected object.
-  */
--bool rcuref_put_slowpath(rcuref_t *ref)
-+bool rcuref_put_slowpath(rcuref_t *ref, unsigned int cnt)
- {
--	unsigned int cnt = atomic_read(&ref->refcnt);
--
- 	/* Did this drop the last reference? */
- 	if (likely(cnt == RCUREF_NOREF)) {
- 		/*
+-	if (should_resched(0)) {
++	if (should_resched(0) && !irqs_disabled()) {
+ 		preempt_schedule_common();
+ 		return 1;
+ 	}
 
 
