@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4D21C5F2C;
-	Wed,  5 Mar 2025 17:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68DD2512EB;
+	Wed,  5 Mar 2025 17:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197285; cv=none; b=tcHbeWZfyO8p25Z4zePeyTLa7NzCjweaf+ZoNSyUgFxi58Sumz/eTxDa+DyU+mK2SivqdV8zlwFqiBk41Ch/4T6Z568iO/XRfdR9eJEQo7aEt9lVwJPxnaX5vymyZ8WWEUH0l8P0smgD1C2EAOH/DLnuIH02CNida0KZ3GFyJ6s=
+	t=1741197288; cv=none; b=BPiKoHJPWyX0ZInpR8HG8ofGfVN/aAHdHytKYSmhk/C8BKnztlfweUwIgsD4y3DpwCm8JhT56jk+CbXbX4UkpMRH+IXmUF9KHG4CP4TFrmkVZVubZ57MleH6Ox22C+1u8SW5pkewcw25208fiRJ4j8d4l8qlyRfLM6LsonlFfo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197285; c=relaxed/simple;
-	bh=V2sqC9QgsLx7I97rF3V93XR500H3a846FBVuCVZy7WM=;
+	s=arc-20240116; t=1741197288; c=relaxed/simple;
+	bh=Ek6xFVjgEXa/E2CQp3Zc07kvGUK5ieRyfbKc0HSOxjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t3FUS6ypzlbnFTt2aadhhV3qRKHQmo2IZt66PIaCibbqRaqctEfsNXdIg3b/8tj9pn6VW5koJ0cQ9s71t48zevq78K+EG6YKh02DMna5W+Ww4S9iYnJoJmu4qGQInldLnOBgh4YJTDIVfZG2S4i4NZaI70SH/ZU9gwhpV7HSO7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7XB5jFc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MvBmSnKto4EEiIENzXrOZ94GDdfDWIf+lCR2mYO/pOWaAHZtxvznp0hgVLY3o1nF6aLtlGomuHNDQfwKBCZvvoVbzqxAAMLwJ3NY6TFp/Z9YDYglmdi7UbEc+Py91vXZMlz4EtCUTfumA7ru1Z8hcH4dG/5VILP2/iimw+b68uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQ/ovTAH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7XB5jFc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A7BC4CED1;
-	Wed,  5 Mar 2025 17:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQ/ovTAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A29C4CEE2;
+	Wed,  5 Mar 2025 17:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197285;
-	bh=V2sqC9QgsLx7I97rF3V93XR500H3a846FBVuCVZy7WM=;
+	s=korg; t=1741197288;
+	bh=Ek6xFVjgEXa/E2CQp3Zc07kvGUK5ieRyfbKc0HSOxjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7XB5jFcmjyGnRzrRxb4TJiXlGm/dOAWi6o0gikbOTp1GNBbVWqo5MtBokxRlbNd4
-	 J49jT6SXEQpb8mtnddoXR9Og7i2XZ/zUpbf982qPK1FnbKkXPS1xNLAcVqdyRTlZDl
-	 LsTYBYiStlpv/KgFvXDebyqMHOvUogA33BOYBJL0=
+	b=tQ/ovTAHoVP+bdDwmcXMEfJqoEjQnJTE6BZgeOBHm7vTqG7Hns7ld8VjuABELbq9T
+	 4JwO0uA8pOgUjrMZuQaFPE47LBCCT9w7OcFNDRK29OwsFi1GYjE+du+RrVh2fkI1xG
+	 KCt1pSo1f9sMjiq0OjzK7Tzwb1gLGGAd2OwKPljY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yan Zhai <yan@cloudflare.com>,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/176] bpf: skip non exist keys in generic_map_lookup_batch
-Date: Wed,  5 Mar 2025 18:47:20 +0100
-Message-ID: <20250305174508.308882634@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: [PATCH 6.1 072/176] drm/msm/dpu: Disable dither in phys encoder cleanup
+Date: Wed,  5 Mar 2025 18:47:21 +0100
+Message-ID: <20250305174508.352417215@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -52,119 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-[ Upstream commit 5644c6b50ffee0a56c1e01430a8c88e34decb120 ]
+commit f063ac6b55df03ed25996bdc84d9e1c50147cfa1 upstream.
 
-The generic_map_lookup_batch currently returns EINTR if it fails with
-ENOENT and retries several times on bpf_map_copy_value. The next batch
-would start from the same location, presuming it's a transient issue.
-This is incorrect if a map can actually have "holes", i.e.
-"get_next_key" can return a key that does not point to a valid value. At
-least the array of maps type may contain such holes legitly. Right now
-these holes show up, generic batch lookup cannot proceed any more. It
-will always fail with EINTR errors.
+Disable pingpong dither in dpu_encoder_helper_phys_cleanup().
 
-Rather, do not retry in generic_map_lookup_batch. If it finds a non
-existing element, skip to the next key. This simple solution comes with
-a price that transient errors may not be recovered, and the iteration
-might cycle back to the first key under parallel deletion. For example,
-Hou Tao <houtao@huaweicloud.com> pointed out a following scenario:
+This avoids the issue where an encoder unknowingly uses dither after
+reserving a pingpong block that was previously bound to an encoder that
+had enabled dither.
 
-For LPM trie map:
-(1) ->map_get_next_key(map, prev_key, key) returns a valid key
-
-(2) bpf_map_copy_value() return -ENOMENT
-It means the key must be deleted concurrently.
-
-(3) goto next_key
-It swaps the prev_key and key
-
-(4) ->map_get_next_key(map, prev_key, key) again
-prev_key points to a non-existing key, for LPM trie it will treat just
-like prev_key=NULL case, the returned key will be duplicated.
-
-With the retry logic, the iteration can continue to the key next to the
-deleted one. But if we directly skip to the next key, the iteration loop
-would restart from the first key for the lpm_trie type.
-
-However, not all races may be recovered. For example, if current key is
-deleted after instead of before bpf_map_copy_value, or if the prev_key
-also gets deleted, then the loop will still restart from the first key
-for lpm_tire anyway. For generic lookup it might be better to stay
-simple, i.e. just skip to the next key. To guarantee that the output
-keys are not duplicated, it is better to implement map type specific
-batch operations, which can properly lock the trie and synchronize with
-concurrent mutators.
-
-Fixes: cb4d03ab499d ("bpf: Add generic support for lookup batch op")
-Closes: https://lore.kernel.org/bpf/Z6JXtA1M5jAZx8xD@debian.debian/
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Acked-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/85618439eea75930630685c467ccefeac0942e2b.1739171594.git.yan@cloudflare.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Closes: https://lore.kernel.org/all/jr7zbj5w7iq4apg3gofuvcwf4r2swzqjk7sshwcdjll4mn6ctt@l2n3qfpujg3q/
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: 3c128638a07d ("drm/msm/dpu: add support for dither block in display")
+Patchwork: https://patchwork.freedesktop.org/patch/636517/
+Link: https://lore.kernel.org/r/20250211-dither-disable-v1-1-ac2cb455f6b9@quicinc.com
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/syscall.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index cfb361f4b00ea..7a4004f09bae7 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -1713,8 +1713,6 @@ int generic_map_update_batch(struct bpf_map *map,
- 	return err;
- }
- 
--#define MAP_LOOKUP_RETRIES 3
--
- int generic_map_lookup_batch(struct bpf_map *map,
- 				    const union bpf_attr *attr,
- 				    union bpf_attr __user *uattr)
-@@ -1724,8 +1722,8 @@ int generic_map_lookup_batch(struct bpf_map *map,
- 	void __user *values = u64_to_user_ptr(attr->batch.values);
- 	void __user *keys = u64_to_user_ptr(attr->batch.keys);
- 	void *buf, *buf_prevkey, *prev_key, *key, *value;
--	int err, retry = MAP_LOOKUP_RETRIES;
- 	u32 value_size, cp, max_count;
-+	int err;
- 
- 	if (attr->batch.elem_flags & ~BPF_F_LOCK)
- 		return -EINVAL;
-@@ -1771,14 +1769,8 @@ int generic_map_lookup_batch(struct bpf_map *map,
- 		err = bpf_map_copy_value(map, key, value,
- 					 attr->batch.elem_flags);
- 
--		if (err == -ENOENT) {
--			if (retry) {
--				retry--;
--				continue;
--			}
--			err = -EINTR;
--			break;
--		}
-+		if (err == -ENOENT)
-+			goto next_key;
- 
- 		if (err)
- 			goto free_buf;
-@@ -1793,12 +1785,12 @@ int generic_map_lookup_batch(struct bpf_map *map,
- 			goto free_buf;
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -2059,6 +2059,9 @@ void dpu_encoder_helper_phys_cleanup(str
  		}
- 
-+		cp++;
-+next_key:
- 		if (!prev_key)
- 			prev_key = buf_prevkey;
- 
- 		swap(prev_key, key);
--		retry = MAP_LOOKUP_RETRIES;
--		cp++;
- 		cond_resched();
  	}
  
--- 
-2.39.5
-
++	if (phys_enc->hw_pp && phys_enc->hw_pp->ops.setup_dither)
++		phys_enc->hw_pp->ops.setup_dither(phys_enc->hw_pp, NULL);
++
+ 	/* reset the merge 3D HW block */
+ 	if (phys_enc->hw_pp && phys_enc->hw_pp->merge_3d) {
+ 		phys_enc->hw_pp->merge_3d->ops.setup_3d_mode(phys_enc->hw_pp->merge_3d,
 
 
