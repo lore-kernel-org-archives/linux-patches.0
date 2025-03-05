@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8192719C542;
-	Wed,  5 Mar 2025 18:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6399D19C542;
+	Wed,  5 Mar 2025 18:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198021; cv=none; b=lS0r/yQG/6+F4xA112jer8UL+H+8Pjl9PFg5LRqeANIpfGhmbIhdiGdqsjM2LDYvnLi+JIZG0talhesJLJdoCja+OAq6OqrZHhkhyRZjvsoDbmwUYo8ULd75mdVciCB8D/rXL8KmapgkFPxAmTjWaDg3WmZ2CuKwL38SHLNDYJQ=
+	t=1741198024; cv=none; b=F3boAqaMOmPQiPY64EF/SzSAF3DXOchWz3ROTn3rSeLPNKHB1/I2tgOfGoTG7b8QAZnw6tm2s5hvXi9mDmWRHUiIVW+Ahy0hUv8iX9OGWEYNit8ABe75ythEKMHoH1zfxXSXucAUwhqQf4rjfURjjJ0gVVT7+94AUhPV8qtlwvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198021; c=relaxed/simple;
-	bh=BkvhtDEdjGxim9O4X1tUGbMLm8wmmURCPaM75AFTIMc=;
+	s=arc-20240116; t=1741198024; c=relaxed/simple;
+	bh=tSMFVVSekHGjCYRndUYVyDJsI8bktsXxmC4wWWYKUsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qOuRTQX8wbcLwah9NlB+EkLkRCJXmvpF+l2rqwhACvBK3y8EjBqsxp02gS6nxudp8y2AeMTm9suB/oRBjIGanIXIp8uc4csdGCG9j5ySaOYTSvlVC2QlscYjCmOuKAzeAhzhydcCCQFhu3MptH1J0J8VAPrLL7Q2EAxJbZzEebU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP0qKp3h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cIMq/mdEynoQyW6pzC97z6gL++ZSVHcZkbdLBsDIi3LrO8Tt8GIXJYcDzFj59mQaWwHzhxnYunnpFgDbodGoGVw+wV5nL/zpdU65Yodsmv4iJqWwhx3q0+mJABdBoKDAwuZZqJeeueXzvA2WpPoMiyE4X21bG06V9pkJ0MCaR6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBsb5nfW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP0qKp3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CEEC4CED1;
-	Wed,  5 Mar 2025 18:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBsb5nfW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED2FC4CED1;
+	Wed,  5 Mar 2025 18:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198021;
-	bh=BkvhtDEdjGxim9O4X1tUGbMLm8wmmURCPaM75AFTIMc=;
+	s=korg; t=1741198024;
+	bh=tSMFVVSekHGjCYRndUYVyDJsI8bktsXxmC4wWWYKUsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CP0qKp3h9deg7mBoUv5Ealz+PinU8XxzVYxGz87rCqMhqgPYZOS+KRA0np+BVDm+h
-	 UU9ZxJNU146DB1qze6IphvYkznuR9FMr8qwXSBedx2Vl8ylo0Fr/PaNVxiHUW3tt1a
-	 w4q1pJqnhn5c1bccMTvESkKn/xpmY98ZDisCN3RY=
+	b=EBsb5nfWZwSKKa5YHSjEIPUuYzACOvveCACXHcNut5YNv+PN2e1mqbAmB6zB5jw+V
+	 HKhBGLrkrw+Ry2P9RzQ7ORmU19KgQhs/65OuNrKiyddWnMCmcR/cNC90qX4Sr/c0+L
+	 vFa31BsLQVpZDim4qP00dfmBQZIP4LvqQq3tMSKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Guillaume Nault <gnault@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 010/150] RDMA/bnxt_re: Add sanity checks on rdev validity
-Date: Wed,  5 Mar 2025 18:47:19 +0100
-Message-ID: <20250305174504.220558890@linuxfoundation.org>
+Subject: [PATCH 6.12 037/150] ipvlan: Prepare ipvlan_process_v4_outbound() to future .flowi4_tos conversion.
+Date: Wed,  5 Mar 2025 18:47:46 +0100
+Message-ID: <20250305174505.304022637@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -52,55 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit f0df225d12fcb049429fb5bf5122afe143c2dd15 ]
+[ Upstream commit 0c30d6eedd1ec0c1382bcab9576d26413cd278a3 ]
 
-There is a possibility that ulp_irq_stop and ulp_irq_start
-callbacks will be called when the device is in detached state.
-This can cause a crash due to NULL pointer dereference as
-the rdev is already freed.
+Use ip4h_dscp() to get the DSCP from the IPv4 header, then convert the
+dscp_t value to __u8 with inet_dscp_to_dsfield().
 
-Fixes: cc5b9b48d447 ("RDMA/bnxt_re: Recover the device when FW error is detected")
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1738657285-23968-3-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Then, when we'll convert .flowi4_tos to dscp_t, we'll just have to drop
+the inet_dscp_to_dsfield() call.
+
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/f48335504a05b3587e0081a9b4511e0761571ca5.1730292157.git.gnault@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 27843ce6ba3d ("ipvlan: ensure network headers are in skb linear part")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ipvlan/ipvlan_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/main.c b/drivers/infiniband/hw/bnxt_re/main.c
-index 08cc9ea175276..9fd83189d00a5 100644
---- a/drivers/infiniband/hw/bnxt_re/main.c
-+++ b/drivers/infiniband/hw/bnxt_re/main.c
-@@ -314,6 +314,8 @@ static void bnxt_re_stop_irq(void *handle)
- 	int indx;
+diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
+index b1afcb8740de1..fd591ddb3884d 100644
+--- a/drivers/net/ipvlan/ipvlan_core.c
++++ b/drivers/net/ipvlan/ipvlan_core.c
+@@ -3,6 +3,7 @@
+  */
  
- 	rdev = en_info->rdev;
-+	if (!rdev)
-+		return;
- 	rcfw = &rdev->rcfw;
+ #include <net/inet_dscp.h>
++#include <net/ip.h>
  
- 	for (indx = BNXT_RE_NQ_IDX; indx < rdev->nqr->num_msix; indx++) {
-@@ -334,6 +336,8 @@ static void bnxt_re_start_irq(void *handle, struct bnxt_msix_entry *ent)
- 	int indx, rc;
+ #include "ipvlan.h"
  
- 	rdev = en_info->rdev;
-+	if (!rdev)
-+		return;
- 	msix_ent = rdev->nqr->msix_entries;
- 	rcfw = &rdev->rcfw;
- 	if (!ent) {
-@@ -2077,6 +2081,7 @@ static int bnxt_re_suspend(struct auxiliary_device *adev, pm_message_t state)
- 	ibdev_info(&rdev->ibdev, "%s: L2 driver notified to stop en_state 0x%lx",
- 		   __func__, en_dev->en_state);
- 	bnxt_re_remove_device(rdev, BNXT_RE_PRE_RECOVERY_REMOVE, adev);
-+	bnxt_re_update_en_info_rdev(NULL, en_info, adev);
- 	mutex_unlock(&bnxt_re_mutex);
- 
- 	return 0;
+@@ -422,7 +423,7 @@ static noinline_for_stack int ipvlan_process_v4_outbound(struct sk_buff *skb)
+ 	int err, ret = NET_XMIT_DROP;
+ 	struct flowi4 fl4 = {
+ 		.flowi4_oif = dev->ifindex,
+-		.flowi4_tos = ip4h->tos & INET_DSCP_MASK,
++		.flowi4_tos = inet_dscp_to_dsfield(ip4h_dscp(ip4h)),
+ 		.flowi4_flags = FLOWI_FLAG_ANYSRC,
+ 		.flowi4_mark = skb->mark,
+ 		.daddr = ip4h->daddr,
 -- 
 2.39.5
 
