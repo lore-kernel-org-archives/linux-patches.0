@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A56198A0D;
-	Wed,  5 Mar 2025 17:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1080D1946C7;
+	Wed,  5 Mar 2025 17:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197074; cv=none; b=CIH79mmUCRnTYfxwz//LYFCup+K98plfhB1IEg7n2i3NaDJtdWo2k6o+ikrGK/+4NocBLcNde2yx27xJIrDbdbNKQHAgC+9MxOdlwSezFXennWOAqxcuT6SX7bDcvIyOdkMt1KdG44oOrk9uksU5ZhOs46IfNjTtRoE8BoytLUI=
+	t=1741197079; cv=none; b=CSQ/THAslHPMS1vH1IlfM7aRnNOLPjxeYxIx+vt5dgfO63aWWNhlPVXtwXc2W0yk52UYiEZI9p0hPSuhbXiPpNUk7/s5XazscHT7FkGWbK0epzRMy2qTx/eHO4eBVzSJAHromEFy/+uSnHI4sFzaCBF4ncsZM1OUGTcQ/lfckcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197074; c=relaxed/simple;
-	bh=t+1KIkb/chcv1EKPjtFDBcUN/H5YSovWiI+IUKE2Jfk=;
+	s=arc-20240116; t=1741197079; c=relaxed/simple;
+	bh=aJNFtZfNbLLFl/UWidywGSeo/5fTJX9kgnpdbByWE3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gVqxw72S+8EW6Hggx7AePJHEmZ//A62+oGpTFut8D1P5qLtDSpxlyT0pn3Oo/Zfq16l2FLFriuQ4qe5iaSw6GQlKdWwho4kB6mIGQZEqRf/vbV+3cL4p5NXWBDEPq9dLoBrKhCn76SIqoNWKNXibv6Sk1a/74YroUrgD4YYgv+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRIVe9Ox; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E+IcE24ZKyJCGCyVw3MpznIYH0D4urM+Ns8NyQ2gbgRrITxcWTGx7qxiDfcnyHX27T0axTZk3Ccx1BztRA+kPsi0tBbkhe0osrLkC8T5qhlq0fBaPUwC3cWKKjnf31VLJW+ovDYxORf46M4vaJxnBgTrk37hT2KniFW+NqFsLYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tB9JXmlm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRIVe9Ox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BCDBC4CED1;
-	Wed,  5 Mar 2025 17:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tB9JXmlm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B8CC4CED1;
+	Wed,  5 Mar 2025 17:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197074;
-	bh=t+1KIkb/chcv1EKPjtFDBcUN/H5YSovWiI+IUKE2Jfk=;
+	s=korg; t=1741197077;
+	bh=aJNFtZfNbLLFl/UWidywGSeo/5fTJX9kgnpdbByWE3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sRIVe9OxQc6nRe5tAnm/zn8B1icXmUOceTnQ/ZBgNFpRoW5+4lcLoNX8Fi1/53rDL
-	 drwMvlxYeqjpgjkpDG2EIYJDNGjulm90Efv23WzI+2Uan9ro+nKa7zGroq/k+ZW9RY
-	 II739xU1xIFzIIKuMsUemmOQWZkUQge38q4YMQyk=
+	b=tB9JXmlmGAZlGn6EZHbVH4u2yg7VSbmvXVBg/4wQN8D5TJC0U2d5oKhxYsCh/ddUY
+	 L5yO0+3NZgKq5ZebvqkrHG35SlTo5a95MvpmYOi0PJfdjd7TGbdzwJTCQFLwy0Z6LH
+	 Y+uLGu25UZrpvIaUpPz5dViJJ12SN8nK1TTL2WGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/176] md: factor out a helper from mddev_put()
-Date: Wed,  5 Mar 2025 18:46:12 +0100
-Message-ID: <20250305174505.584755957@linuxfoundation.org>
+Subject: [PATCH 6.1 030/176] soc: mediatek: mtk-devapc: Switch to devm_clk_get_enabled()
+Date: Wed,  5 Mar 2025 18:46:39 +0100
+Message-ID: <20250305174506.672167194@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -51,65 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 3d8d32873c7b6d9cec5b40c2ddb8c7c55961694f ]
+[ Upstream commit 916120df5aa926d65f4666c075ed8d4955ef7bab ]
 
-There are no functional changes, prepare to simplify md_seq_ops in next
-patch.
+This driver does exactly devm_clk_get() and clk_prepare_enable() right
+after, which is exactly what devm_clk_get_enabled() does: clean that
+up by switching to the latter.
 
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230927061241.1552837-2-yukuai1@huaweicloud.com
-Stable-dep-of: 8d28d0ddb986 ("md/md-bitmap: Synchronize bitmap_get_stats() with bitmap lifetime")
+This commit brings no functional changes.
+
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221006110935.59695-1-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Stable-dep-of: c0eb059a4575 ("soc: mediatek: mtk-devapc: Fix leaking IO map on error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+ drivers/soc/mediatek/mtk-devapc.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 4b629b7a540f7..44bac1e7d47e2 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -667,23 +667,28 @@ static inline struct mddev *mddev_get(struct mddev *mddev)
+diff --git a/drivers/soc/mediatek/mtk-devapc.c b/drivers/soc/mediatek/mtk-devapc.c
+index fc13334db1b11..bad139cb117ea 100644
+--- a/drivers/soc/mediatek/mtk-devapc.c
++++ b/drivers/soc/mediatek/mtk-devapc.c
+@@ -276,19 +276,14 @@ static int mtk_devapc_probe(struct platform_device *pdev)
+ 	if (!devapc_irq)
+ 		return -EINVAL;
  
- static void mddev_delayed_delete(struct work_struct *ws);
+-	ctx->infra_clk = devm_clk_get(&pdev->dev, "devapc-infra-clock");
++	ctx->infra_clk = devm_clk_get_enabled(&pdev->dev, "devapc-infra-clock");
+ 	if (IS_ERR(ctx->infra_clk))
+ 		return -EINVAL;
  
-+static void __mddev_put(struct mddev *mddev)
-+{
-+	if (mddev->raid_disks || !list_empty(&mddev->disks) ||
-+	    mddev->ctime || mddev->hold_active)
-+		return;
-+
-+	/* Array is not configured at all, and not held active, so destroy it */
-+	set_bit(MD_DELETED, &mddev->flags);
-+
-+	/*
-+	 * Call queue_work inside the spinlock so that flush_workqueue() after
-+	 * mddev_find will succeed in waiting for the work to be done.
-+	 */
-+	queue_work(md_misc_wq, &mddev->del_work);
-+}
-+
- void mddev_put(struct mddev *mddev)
- {
- 	if (!atomic_dec_and_lock(&mddev->active, &all_mddevs_lock))
- 		return;
--	if (!mddev->raid_disks && list_empty(&mddev->disks) &&
--	    mddev->ctime == 0 && !mddev->hold_active) {
--		/* Array is not configured at all, and not held active,
--		 * so destroy it */
--		set_bit(MD_DELETED, &mddev->flags);
- 
--		/*
--		 * Call queue_work inside the spinlock so that
--		 * flush_workqueue() after mddev_find will succeed in waiting
--		 * for the work to be done.
--		 */
--		queue_work(md_misc_wq, &mddev->del_work);
+-	if (clk_prepare_enable(ctx->infra_clk))
+-		return -EINVAL;
+-
+ 	ret = devm_request_irq(&pdev->dev, devapc_irq, devapc_violation_irq,
+ 			       IRQF_TRIGGER_NONE, "devapc", ctx);
+-	if (ret) {
+-		clk_disable_unprepare(ctx->infra_clk);
++	if (ret)
+ 		return ret;
 -	}
-+	__mddev_put(mddev);
- 	spin_unlock(&all_mddevs_lock);
+ 
+ 	platform_set_drvdata(pdev, ctx);
+ 
+@@ -303,8 +298,6 @@ static int mtk_devapc_remove(struct platform_device *pdev)
+ 
+ 	stop_devapc(ctx);
+ 
+-	clk_disable_unprepare(ctx->infra_clk);
+-
+ 	return 0;
  }
  
 -- 
