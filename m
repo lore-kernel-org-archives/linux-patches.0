@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6412512C7;
-	Wed,  5 Mar 2025 17:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37FF2512C7;
+	Wed,  5 Mar 2025 17:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197373; cv=none; b=qFzsK6BXJpGeoVM5j1oNgTlMCnRwTaoU4KZ42bXa6yZ5GvrFyLoeIZ7f+6fazyBJEzYqVxo3o5EkVDaUItDfZpzUmKJpZrJdGfFR0ri92vW8OQswzqdVPaEdg1dovrYD9mWAs74yFGc/TlaSvnCQbIWlIHgEzSd49BJK7enRPg0=
+	t=1741197376; cv=none; b=tvisk2NQkvgY2YGl4oF+fQ2rIbTl2WblY3CqZds1I1Zv2hgjYwL7t09v994ow8UDGJcgldzQWO45XoNksBRdRMe9u+CV7dcb2CwaA8gA6dXCns/nsttQu1wx++a5e/AhgQlXIqwgBv0F5VGPjStJmS0sl7cCKKWKHn1gRqMTq/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197373; c=relaxed/simple;
-	bh=r7JTRsrOZ1KOc4IFt29SHwgFMuM7cc2lifcKx30lvAU=;
+	s=arc-20240116; t=1741197376; c=relaxed/simple;
+	bh=nLAsvKCvk0Y9a/W6OHmsLFcG4HtowDTyW0UjR4ElKNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R3cRqBPOGhc1uw7uC39LUFbGYIGnOT2fCS9/vcGp3bP23PWWz30IE4C6sq9pZEdsJgckEbU1YAXYDw+qBBjTHF3T0Il/YujvN9vZ1vu4KGQwtvT2JHmLW4AO0FQYrnpwaBz5FRY/2eZeGQucLbmy+9yCp+gbSwCRMVpG7dk0yyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6ZZm9d1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mkbKEnI92IDAlmrr5inILvuJMRLtE84e3Z2kQWPMtt25BCCo1/kKSux6UAsCvrJszGT9Pn5Lcx7oKHqGlb79krLNer4IrC6hBIIx4nZ2ULKBkmnYtcpHhP90pXLr2N70LfJn4XeIhavo01T7/HbQrRDgEk2ugZR+rhJ/JoWZ6CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2TuKc3f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6ZZm9d1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A973C4CED1;
-	Wed,  5 Mar 2025 17:56:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2TuKc3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F15DC4CED1;
+	Wed,  5 Mar 2025 17:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197373;
-	bh=r7JTRsrOZ1KOc4IFt29SHwgFMuM7cc2lifcKx30lvAU=;
+	s=korg; t=1741197375;
+	bh=nLAsvKCvk0Y9a/W6OHmsLFcG4HtowDTyW0UjR4ElKNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n6ZZm9d1y121rXvpCmL+GUACVxhbQP5BYb97q4LgINtEzb/+CYxniRKArzxHXHFK5
-	 TXYAaw3v0LdlLVhgD04yvXZVpk+BZucJNod4ZDQAxYjSyKSclw4ohwMNG4YpKrqLsa
-	 IneFfI3cHuV6m2eT99jh2NzcetkdZytdZcU/WzcY=
+	b=e2TuKc3fTLPZdfuaUr/I+qdi0ZpuHXMrIjhUA2gqwYk9djXGsB4NqpLX/tXDJ11ip
+	 ivpvY7IYcd94itv2FyoNzj4LYLciUEVwwVbkhSzyBC/ej1pJo5c596CpRmXqc2h/J6
+	 5US4PwJcioUxtZ/4eZccJmehftFBQXDd0nMt78+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Philo Lu <lulie@linux.alibaba.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 132/176] ASoC: es8328: fix route from DAC to output
-Date: Wed,  5 Mar 2025 18:48:21 +0100
-Message-ID: <20250305174510.747333268@linuxfoundation.org>
+Subject: [PATCH 6.1 133/176] ipvs: Always clear ipvs_property flag in skb_scrub_packet()
+Date: Wed,  5 Mar 2025 18:48:22 +0100
+Message-ID: <20250305174510.786401999@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -51,108 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+From: Philo Lu <lulie@linux.alibaba.com>
 
-[ Upstream commit 5b0c02f9b8acf2a791e531bbc09acae2d51f4f9b ]
+[ Upstream commit de2c211868b9424f9aa9b3432c4430825bafb41b ]
 
-The ES8328 codec driver, which is also used for the ES8388 chip that
-appears to have an identical register map, claims that the output can
-either take the route from DAC->Mixer->Output or through DAC->Output
-directly. To the best of what I could find, this is not true, and
-creates problems.
+We found an issue when using bpf_redirect with ipvs NAT mode after
+commit ff70202b2d1a ("dev_forward_skb: do not scrub skb mark within
+the same name space"). Particularly, we use bpf_redirect to return
+the skb directly back to the netif it comes from, i.e., xnet is
+false in skb_scrub_packet(), and then ipvs_property is preserved
+and SNAT is skipped in the rx path.
 
-Without DACCONTROL17 bit index 7 set for the left channel, as well as
-DACCONTROL20 bit index 7 set for the right channel, I cannot get any
-analog audio out on Left Out 2 and Right Out 2 respectively, despite the
-DAPM routes claiming that this should be possible. Furthermore, the same
-is the case for Left Out 1 and Right Out 1, showing that those two don't
-have a direct route from DAC to output bypassing the mixer either.
+ipvs_property has been already cleared when netns is changed in
+commit 2b5ec1a5f973 ("netfilter/ipvs: clear ipvs_property flag when
+SKB net namespace changed"). This patch just clears it in spite of
+netns.
 
-Those control bits toggle whether the DACs are fed (stale bread?) into
-their respective mixers. If one "unmutes" the mixer controls in
-alsamixer, then sure, the audio output works, but if it doesn't work
-without the mixer being fed the DAC input then evidently it's not a
-direct output from the DAC.
-
-ES8328/ES8388 are seemingly not alone in this. ES8323, which uses a
-separate driver for what appears to be a very similar register map,
-simply flips those two bits on in its probe function, and then pretends
-there is no power management whatsoever for the individual controls.
-Fair enough.
-
-My theory as to why nobody has noticed this up to this point is that
-everyone just assumes it's their fault when they had to unmute an
-additional control in ALSA.
-
-Fix this in the es8328 driver by removing the erroneous direct route,
-then get rid of the playback switch controls and have those bits tied to
-the mixer's widget instead, which until now had no register to play
-with.
-
-Fixes: 567e4f98922c ("ASoC: add es8328 codec driver")
-Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-Link: https://patch.msgid.link/20250222-es8328-route-bludgeoning-v1-1-99bfb7fb22d9@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2b5ec1a5f973 ("netfilter/ipvs: clear ipvs_property flag when SKB net namespace changed")
+Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Link: https://patch.msgid.link/20250222033518.126087-1-lulie@linux.alibaba.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8328.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ net/core/skbuff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/es8328.c b/sound/soc/codecs/es8328.c
-index 160adc706cc69..8182e9b37c03d 100644
---- a/sound/soc/codecs/es8328.c
-+++ b/sound/soc/codecs/es8328.c
-@@ -234,7 +234,6 @@ static const struct snd_kcontrol_new es8328_right_line_controls =
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 768b8d65a5baa..d8a3ada886ffb 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -5556,11 +5556,11 @@ void skb_scrub_packet(struct sk_buff *skb, bool xnet)
+ 	skb->offload_fwd_mark = 0;
+ 	skb->offload_l3_fwd_mark = 0;
+ #endif
++	ipvs_reset(skb);
  
- /* Left Mixer */
- static const struct snd_kcontrol_new es8328_left_mixer_controls[] = {
--	SOC_DAPM_SINGLE("Playback Switch", ES8328_DACCONTROL17, 7, 1, 0),
- 	SOC_DAPM_SINGLE("Left Bypass Switch", ES8328_DACCONTROL17, 6, 1, 0),
- 	SOC_DAPM_SINGLE("Right Playback Switch", ES8328_DACCONTROL18, 7, 1, 0),
- 	SOC_DAPM_SINGLE("Right Bypass Switch", ES8328_DACCONTROL18, 6, 1, 0),
-@@ -244,7 +243,6 @@ static const struct snd_kcontrol_new es8328_left_mixer_controls[] = {
- static const struct snd_kcontrol_new es8328_right_mixer_controls[] = {
- 	SOC_DAPM_SINGLE("Left Playback Switch", ES8328_DACCONTROL19, 7, 1, 0),
- 	SOC_DAPM_SINGLE("Left Bypass Switch", ES8328_DACCONTROL19, 6, 1, 0),
--	SOC_DAPM_SINGLE("Playback Switch", ES8328_DACCONTROL20, 7, 1, 0),
- 	SOC_DAPM_SINGLE("Right Bypass Switch", ES8328_DACCONTROL20, 6, 1, 0),
- };
+ 	if (!xnet)
+ 		return;
  
-@@ -337,10 +335,10 @@ static const struct snd_soc_dapm_widget es8328_dapm_widgets[] = {
- 	SND_SOC_DAPM_DAC("Left DAC", "Left Playback", ES8328_DACPOWER,
- 			ES8328_DACPOWER_LDAC_OFF, 1),
- 
--	SND_SOC_DAPM_MIXER("Left Mixer", SND_SOC_NOPM, 0, 0,
-+	SND_SOC_DAPM_MIXER("Left Mixer", ES8328_DACCONTROL17, 7, 0,
- 		&es8328_left_mixer_controls[0],
- 		ARRAY_SIZE(es8328_left_mixer_controls)),
--	SND_SOC_DAPM_MIXER("Right Mixer", SND_SOC_NOPM, 0, 0,
-+	SND_SOC_DAPM_MIXER("Right Mixer", ES8328_DACCONTROL20, 7, 0,
- 		&es8328_right_mixer_controls[0],
- 		ARRAY_SIZE(es8328_right_mixer_controls)),
- 
-@@ -419,19 +417,14 @@ static const struct snd_soc_dapm_route es8328_dapm_routes[] = {
- 	{ "Right Line Mux", "PGA", "Right PGA Mux" },
- 	{ "Right Line Mux", "Differential", "Differential Mux" },
- 
--	{ "Left Out 1", NULL, "Left DAC" },
--	{ "Right Out 1", NULL, "Right DAC" },
--	{ "Left Out 2", NULL, "Left DAC" },
--	{ "Right Out 2", NULL, "Right DAC" },
--
--	{ "Left Mixer", "Playback Switch", "Left DAC" },
-+	{ "Left Mixer", NULL, "Left DAC" },
- 	{ "Left Mixer", "Left Bypass Switch", "Left Line Mux" },
- 	{ "Left Mixer", "Right Playback Switch", "Right DAC" },
- 	{ "Left Mixer", "Right Bypass Switch", "Right Line Mux" },
- 
- 	{ "Right Mixer", "Left Playback Switch", "Left DAC" },
- 	{ "Right Mixer", "Left Bypass Switch", "Left Line Mux" },
--	{ "Right Mixer", "Playback Switch", "Right DAC" },
-+	{ "Right Mixer", NULL, "Right DAC" },
- 	{ "Right Mixer", "Right Bypass Switch", "Right Line Mux" },
- 
- 	{ "DAC DIG", NULL, "DAC STM" },
+-	ipvs_reset(skb);
+ 	skb->mark = 0;
+ 	skb_clear_tstamp(skb);
+ }
 -- 
 2.39.5
 
