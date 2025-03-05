@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135DC252905;
-	Wed,  5 Mar 2025 18:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD078253348;
+	Wed,  5 Mar 2025 18:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198493; cv=none; b=sszqViJeOyVF1yBuRFzEHdrC0BPE4J8l+9P8cHtVC5aBlWgJnQT/mVkbBj+Ow46xjmx99KmO1Q2hBTTUIVWk3RJggfwAak7P3Gzo4zH6LFwFNbxsLKiqF9RhlgHTD4abkJSIEipatH+v2A2DaB2x0H3ZpsSniMI4fjTzF//GBsE=
+	t=1741198495; cv=none; b=CqQkdHNeJuI5yLidBhyYGOUcRLcvdXARTRz9/ZwmHxY1A+vaz5GuUSfXLCbcKcncFJ+zLbis8QkeWt292jp9hhToAQnMdy6mUN8O+Jmvp5y1uZWZunNyW4hScqyBlYy4Pq8O9jb6F965XROyGGoVJQvZc4TsCzl85XjlshQeeyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198493; c=relaxed/simple;
-	bh=iy5HdzvCCDkLD/K+kyJNjVnLJIPcjeqr+P0xW1FhTJs=;
+	s=arc-20240116; t=1741198495; c=relaxed/simple;
+	bh=dUc/QTfTLEGPABvlIP0rhrl8bshnUttK/oWLpAqmcCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcN2xZKO3aNxWhZMydrllUfBqXUMITivYSr+giPJzz+7moobsuC7Eljv7eF5blDSn6vKX/uaJ/xdC5YLSPpPcXWXmjgksJU5DLZuhC+9q7tFI/pJLcFCb3RYBZfzIxHRtO5BUbzbn37fmOmA1hxxTADmIwKS+dqXTiISHSBjyjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2567Sxp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mxXXB3VeCVe0H3ArV7Pr/PatlNFdzkFg2sFB4HDfKProC6+kMXoscFUVSq5wLwG4bJqax71nVbJuTiPNtsDzwIOpJ003yPPaOuwF/jZT4t682DCwiAoOitoJFmqxVir4XW4YS+6c+XQtoGd5YElnGZODMzKphVNk9/eLCL83N+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPUJJVMm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2567Sxp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11EA9C4CED1;
-	Wed,  5 Mar 2025 18:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPUJJVMm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26BD2C4AF0D;
+	Wed,  5 Mar 2025 18:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198492;
-	bh=iy5HdzvCCDkLD/K+kyJNjVnLJIPcjeqr+P0xW1FhTJs=;
+	s=korg; t=1741198495;
+	bh=dUc/QTfTLEGPABvlIP0rhrl8bshnUttK/oWLpAqmcCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G2567SxptZpwyOHPD/AeDkDdDaOs4x+f4XoqdlcKEfTnPNHuDPzjnrn1UVoSgNKpU
-	 NaMttrznxJ6Cp7Het296A5WbqozfdgZbhUh6SQ0ct47RC9TR7g5SjlVkBgInbqztC6
-	 KTFxBPQFiAHOG3rOkTUE0UDy7lKfeoFQQGKInJek=
+	b=PPUJJVMmfkfdwy8Gh+zV+wCca0qoO4to9dCZGt7hlJXgNdYMmaptzEUpH5Up4Ys60
+	 h9NOn5AYB1GLJIoHo8dEGrrs49Aq3jPyKgqhkdoPYK4Mi2qXj13Dj1ds17DJah7IFN
+	 1V60Jfxs+Ugc+G6EJipGJBRtvI3wp/BYjh+FVZ6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Roman Li <Roman.Li@amd.com>,
-	Aurabindo Pillai <Aurabindo.Pillai@amd.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 046/157] drm/amd/display: restore edid reading from a given i2c adapter
-Date: Wed,  5 Mar 2025 18:48:02 +0100
-Message-ID: <20250305174507.157203479@linuxfoundation.org>
+Subject: [PATCH 6.13 047/157] net: ethernet: ti: am65-cpsw: select PAGE_POOL
+Date: Wed,  5 Mar 2025 18:48:03 +0100
+Message-ID: <20250305174507.197050595@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -55,76 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-[ Upstream commit 12f3b92d1cfa5526715fff93a6d6fe29300d5e2a ]
+[ Upstream commit bab3a6e9ffd600f9db0ebaf8f45e1c6111cf314c ]
 
-When switching to drm_edid, we slightly changed how to get edid by
-removing the possibility of getting them from dc_link when in aux
-transaction mode. As MST doesn't initialize the connector with
-`drm_connector_init_with_ddc()`, restore the original behavior to avoid
-functional changes.
+am65-cpsw uses page_pool_dev_alloc_pages(), thus needs PAGE_POOL
+selected to avoid linker errors. This is missing since the driver
+started to use page_pool helpers in 8acacc40f733 ("net: ethernet:
+ti: am65-cpsw: Add minimal XDP support")
 
-v2:
-- Fix build warning of unchecked dereference (kernel test bot)
-
-CC: Alex Hung <alex.hung@amd.com>
-CC: Mario Limonciello <mario.limonciello@amd.com>
-CC: Roman Li <Roman.Li@amd.com>
-CC: Aurabindo Pillai <Aurabindo.Pillai@amd.com>
-Fixes: 48edb2a4256e ("drm/amd/display: switch amdgpu_dm_connector to use struct drm_edid")
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 81262b1656feb3813e3d917ab78824df6831e69e)
+Fixes: 8acacc40f733 ("net: ethernet: ti: am65-cpsw: Add minimal XDP support")
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250224-net-am654-nuss-kconfig-v2-1-c124f4915c92@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c   | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/ti/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index f7c0d7625ff12..35b9e026fe0d5 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -7180,8 +7180,14 @@ static void amdgpu_dm_connector_funcs_force(struct drm_connector *connector)
- 	struct dc_link *dc_link = aconnector->dc_link;
- 	struct dc_sink *dc_em_sink = aconnector->dc_em_sink;
- 	const struct drm_edid *drm_edid;
-+	struct i2c_adapter *ddc;
- 
--	drm_edid = drm_edid_read(connector);
-+	if (dc_link && dc_link->aux_mode)
-+		ddc = &aconnector->dm_dp_aux.aux.ddc;
-+	else
-+		ddc = &aconnector->i2c->base;
-+
-+	drm_edid = drm_edid_read_ddc(connector, ddc);
- 	drm_edid_connector_update(connector, drm_edid);
- 	if (!drm_edid) {
- 		DRM_ERROR("No EDID found on connector: %s.\n", connector->name);
-@@ -7226,14 +7232,21 @@ static int get_modes(struct drm_connector *connector)
- static void create_eml_sink(struct amdgpu_dm_connector *aconnector)
- {
- 	struct drm_connector *connector = &aconnector->base;
-+	struct dc_link *dc_link = aconnector->dc_link;
- 	struct dc_sink_init_data init_params = {
- 			.link = aconnector->dc_link,
- 			.sink_signal = SIGNAL_TYPE_VIRTUAL
- 	};
- 	const struct drm_edid *drm_edid;
- 	const struct edid *edid;
-+	struct i2c_adapter *ddc;
-+
-+	if (dc_link && dc_link->aux_mode)
-+		ddc = &aconnector->dm_dp_aux.aux.ddc;
-+	else
-+		ddc = &aconnector->i2c->base;
- 
--	drm_edid = drm_edid_read(connector);
-+	drm_edid = drm_edid_read_ddc(connector, ddc);
- 	drm_edid_connector_update(connector, drm_edid);
- 	if (!drm_edid) {
- 		DRM_ERROR("No EDID found on connector: %s.\n", connector->name);
+diff --git a/drivers/net/ethernet/ti/Kconfig b/drivers/net/ethernet/ti/Kconfig
+index 0d5a862cd78a6..3a13d60a947a8 100644
+--- a/drivers/net/ethernet/ti/Kconfig
++++ b/drivers/net/ethernet/ti/Kconfig
+@@ -99,6 +99,7 @@ config TI_K3_AM65_CPSW_NUSS
+ 	select NET_DEVLINK
+ 	select TI_DAVINCI_MDIO
+ 	select PHYLINK
++	select PAGE_POOL
+ 	select TI_K3_CPPI_DESC_POOL
+ 	imply PHY_TI_GMII_SEL
+ 	depends on TI_K3_AM65_CPTS || !TI_K3_AM65_CPTS
 -- 
 2.39.5
 
