@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880F725332A;
-	Wed,  5 Mar 2025 17:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C3325333C;
+	Wed,  5 Mar 2025 17:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197306; cv=none; b=IF0mWCWC/K3IOgRARCWgnk7PZ3+HxQ1HPjuBsFbD6XzfXEAd0N9bW8hvqH4kXSZGn00Ufv0sv1dpZtzvkipgqUBYHzOH3YJ87Am5p/v4f9XVgtrPrJs5K/ToC9sY/tJJi6XBUpHAsUSNzLi5L5H2682Aaiwy/1qVokfirUePmOs=
+	t=1741197309; cv=none; b=kO3vPkHc+PY88UMO+ui5YtwBEECKQtsm1265XPttdXwLojlmAZ851gCxSNZNLP+8Fn/6sVbfboB9bUJd8gs8hhByBc4av1lmSEefr41xlVm4La3y0+Hpv/cPuPawKesaZaqlsKaOGUsEa6eYaa5VZSHFp5KPvPlKmFa53w41wE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197306; c=relaxed/simple;
-	bh=IFRwBEPwzlfQB5ZMHQfuy97JPu24GWtLhQiUOUMZmxc=;
+	s=arc-20240116; t=1741197309; c=relaxed/simple;
+	bh=Q+0afMF/M6AP5NVXbpmUJnoZoqmNuFQpk8OcnvKSKw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SNaCHfMnJGuWZCFceFbDGjdOI0NEg9H4PjDCOYS4saaPyOscDU7TnfaRN4GT9hLJnLJ7cxpyLTxm6jHHYqFqoGcfyMhCZXoQKczqnkpUIP3Iu1p+i6YUWMPx2kbT27kce/Gtaf8Uds0izT+t6LjmbF7Obqsr3lHfOzmM950gBk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R2rSu+tj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FqcVCGXVj4eOepamcDyulFQ3p4yw9EPXQ4gafExJMxQz+GkFfHXD+2lJd0ij2ahSEhS8c3E+prgR8oRAS1oMLeynFPjIFya4/sf5OMxe+aoflEuoLxZJHfEu8ObWltN3FGgEV/2AFQ8pBL1TKMQeHtb1NoJ9mtLDSChYNLRnWX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+zoi8JP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R2rSu+tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11328C4CEE9;
-	Wed,  5 Mar 2025 17:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+zoi8JP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1C5C4CED1;
+	Wed,  5 Mar 2025 17:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197306;
-	bh=IFRwBEPwzlfQB5ZMHQfuy97JPu24GWtLhQiUOUMZmxc=;
+	s=korg; t=1741197309;
+	bh=Q+0afMF/M6AP5NVXbpmUJnoZoqmNuFQpk8OcnvKSKw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R2rSu+tj+ZJugMVMUCszzUzPihBvfsnrxM5ScSvm7f5EXvLnhzmjP0koVRiP7kD1I
-	 7adeEgqyQ/73poZ9/FlASryuT0syz14KvlByyAS4L14pQlJIxc9Td6y6gBCtlo3V9b
-	 qcnpvSLJAXZPTunSFosaIBNFyVGHdKRyj62WaMVQ=
+	b=x+zoi8JPZOGVrwfN+ID5lUh/3sMbrQn5SbkN7ZYdk5jdhEvX2bUJLJukRUlbo69fU
+	 5d4wwoC86WU9So/jH/phoeYtxidoWJ4gDasdESHD5BsvzpNZOUgGw2ccTdRZQNuh4/
+	 pfblTqcOp79RHCrARqOu93pMjBhUDyijMw++KRSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Mark Zhang <markzhang@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/176] IB/core: Add support for XDR link speed
-Date: Wed,  5 Mar 2025 18:48:00 +0100
-Message-ID: <20250305174509.922021341@linuxfoundation.org>
+Subject: [PATCH 6.1 112/176] RDMA/mlx5: Fix AH static rate parsing
+Date: Wed,  5 Mar 2025 18:48:01 +0100
+Message-ID: <20250305174509.962563231@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -53,129 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 703289ce43f740b0096724300107df82d008552f ]
+[ Upstream commit c534ffda781f44a1c6ac25ef6e0e444da38ca8af ]
 
-Add new IBTA speed XDR, the new rate that was added to Infiniband spec
-as part of XDR and supporting signaling rate of 200Gb.
+Previously static rate wasn't translated according to our PRM but simply
+used the 4 lower bytes.
 
-In order to report that value to rdma-core, add new u32 field to
-query_port response.
+Correctly translate static rate value passed in AH creation attribute
+according to our PRM expected values.
 
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Reviewed-by: Mark Zhang <markzhang@nvidia.com>
-Link: https://lore.kernel.org/r/9d235fc600a999e8274010f0e18b40fa60540e6c.1695204156.git.leon@kernel.org
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+In addition change 800GB mapping to zero, which is the PRM
+specified value.
+
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Link: https://patch.msgid.link/18ef4cc5396caf80728341eb74738cd777596f60.1739187089.git.leon@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: c534ffda781f ("RDMA/mlx5: Fix AH static rate parsing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/sysfs.c                   | 4 ++++
- drivers/infiniband/core/uverbs_std_types_device.c | 3 ++-
- drivers/infiniband/core/verbs.c                   | 3 +++
- include/rdma/ib_verbs.h                           | 2 ++
- include/uapi/rdma/ib_user_ioctl_verbs.h           | 3 ++-
- 5 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx5/ah.c | 3 ++-
+ drivers/infiniband/hw/mlx5/qp.c | 6 +++---
+ drivers/infiniband/hw/mlx5/qp.h | 1 +
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/core/sysfs.c b/drivers/infiniband/core/sysfs.c
-index ec5efdc166601..9f97bef021497 100644
---- a/drivers/infiniband/core/sysfs.c
-+++ b/drivers/infiniband/core/sysfs.c
-@@ -342,6 +342,10 @@ static ssize_t rate_show(struct ib_device *ibdev, u32 port_num,
- 		speed = " NDR";
- 		rate = 1000;
- 		break;
-+	case IB_SPEED_XDR:
-+		speed = " XDR";
-+		rate = 2000;
-+		break;
- 	case IB_SPEED_SDR:
- 	default:		/* default to SDR for invalid rates */
- 		speed = " SDR";
-diff --git a/drivers/infiniband/core/uverbs_std_types_device.c b/drivers/infiniband/core/uverbs_std_types_device.c
-index 049684880ae03..fb0555647336f 100644
---- a/drivers/infiniband/core/uverbs_std_types_device.c
-+++ b/drivers/infiniband/core/uverbs_std_types_device.c
-@@ -203,6 +203,7 @@ static int UVERBS_HANDLER(UVERBS_METHOD_QUERY_PORT)(
- 
- 	copy_port_attr_to_resp(&attr, &resp.legacy_resp, ib_dev, port_num);
- 	resp.port_cap_flags2 = attr.port_cap_flags2;
-+	resp.active_speed_ex = attr.active_speed;
- 
- 	return uverbs_copy_to_struct_or_zero(attrs, UVERBS_ATTR_QUERY_PORT_RESP,
- 					     &resp, sizeof(resp));
-@@ -461,7 +462,7 @@ DECLARE_UVERBS_NAMED_METHOD(
- 	UVERBS_ATTR_PTR_OUT(
- 		UVERBS_ATTR_QUERY_PORT_RESP,
- 		UVERBS_ATTR_STRUCT(struct ib_uverbs_query_port_resp_ex,
--				   reserved),
-+				   active_speed_ex),
- 		UA_MANDATORY));
- 
- DECLARE_UVERBS_NAMED_METHOD(
-diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
-index b99b3cc283b65..90848546f1704 100644
---- a/drivers/infiniband/core/verbs.c
-+++ b/drivers/infiniband/core/verbs.c
-@@ -147,6 +147,7 @@ __attribute_const__ int ib_rate_to_mult(enum ib_rate rate)
- 	case IB_RATE_50_GBPS:  return  20;
- 	case IB_RATE_400_GBPS: return 160;
- 	case IB_RATE_600_GBPS: return 240;
-+	case IB_RATE_800_GBPS: return 320;
- 	default:	       return  -1;
+diff --git a/drivers/infiniband/hw/mlx5/ah.c b/drivers/infiniband/hw/mlx5/ah.c
+index 505bc47fd575d..99036afb3aef0 100644
+--- a/drivers/infiniband/hw/mlx5/ah.c
++++ b/drivers/infiniband/hw/mlx5/ah.c
+@@ -67,7 +67,8 @@ static void create_ib_ah(struct mlx5_ib_dev *dev, struct mlx5_ib_ah *ah,
+ 		ah->av.tclass = grh->traffic_class;
  	}
+ 
+-	ah->av.stat_rate_sl = (rdma_ah_get_static_rate(ah_attr) << 4);
++	ah->av.stat_rate_sl =
++		(mlx5r_ib_rate(dev, rdma_ah_get_static_rate(ah_attr)) << 4);
+ 
+ 	if (ah_attr->type == RDMA_AH_ATTR_TYPE_ROCE) {
+ 		if (init_attr->xmit_slave)
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index 43c0123babd10..59dca0cd89052 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -3379,11 +3379,11 @@ static int ib_to_mlx5_rate_map(u8 rate)
+ 	return 0;
  }
-@@ -176,6 +177,7 @@ __attribute_const__ enum ib_rate mult_to_ib_rate(int mult)
- 	case 20:  return IB_RATE_50_GBPS;
- 	case 160: return IB_RATE_400_GBPS;
- 	case 240: return IB_RATE_600_GBPS;
-+	case 320: return IB_RATE_800_GBPS;
- 	default:  return IB_RATE_PORT_CURRENT;
+ 
+-static int ib_rate_to_mlx5(struct mlx5_ib_dev *dev, u8 rate)
++int mlx5r_ib_rate(struct mlx5_ib_dev *dev, u8 rate)
+ {
+ 	u32 stat_rate_support;
+ 
+-	if (rate == IB_RATE_PORT_CURRENT)
++	if (rate == IB_RATE_PORT_CURRENT || rate == IB_RATE_800_GBPS)
+ 		return 0;
+ 
+ 	if (rate < IB_RATE_2_5_GBPS || rate > IB_RATE_600_GBPS)
+@@ -3528,7 +3528,7 @@ static int mlx5_set_path(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
+ 		       sizeof(grh->dgid.raw));
  	}
- }
-@@ -205,6 +207,7 @@ __attribute_const__ int ib_rate_to_mbps(enum ib_rate rate)
- 	case IB_RATE_50_GBPS:  return 53125;
- 	case IB_RATE_400_GBPS: return 425000;
- 	case IB_RATE_600_GBPS: return 637500;
-+	case IB_RATE_800_GBPS: return 850000;
- 	default:	       return -1;
- 	}
- }
-diff --git a/include/rdma/ib_verbs.h b/include/rdma/ib_verbs.h
-index 68fd6d22adfd4..750effb875783 100644
---- a/include/rdma/ib_verbs.h
-+++ b/include/rdma/ib_verbs.h
-@@ -557,6 +557,7 @@ enum ib_port_speed {
- 	IB_SPEED_EDR	= 32,
- 	IB_SPEED_HDR	= 64,
- 	IB_SPEED_NDR	= 128,
-+	IB_SPEED_XDR	= 256,
- };
  
- enum ib_stat_flag {
-@@ -836,6 +837,7 @@ enum ib_rate {
- 	IB_RATE_50_GBPS  = 20,
- 	IB_RATE_400_GBPS = 21,
- 	IB_RATE_600_GBPS = 22,
-+	IB_RATE_800_GBPS = 23,
- };
- 
- /**
-diff --git a/include/uapi/rdma/ib_user_ioctl_verbs.h b/include/uapi/rdma/ib_user_ioctl_verbs.h
-index 7dd56210226f5..125fb9f0ef4ab 100644
---- a/include/uapi/rdma/ib_user_ioctl_verbs.h
-+++ b/include/uapi/rdma/ib_user_ioctl_verbs.h
-@@ -218,7 +218,8 @@ enum ib_uverbs_advise_mr_flag {
- struct ib_uverbs_query_port_resp_ex {
- 	struct ib_uverbs_query_port_resp legacy_resp;
- 	__u16 port_cap_flags2;
--	__u8  reserved[6];
-+	__u8  reserved[2];
-+	__u32 active_speed_ex;
- };
- 
- struct ib_uverbs_qp_cap {
+-	err = ib_rate_to_mlx5(dev, rdma_ah_get_static_rate(ah));
++	err = mlx5r_ib_rate(dev, rdma_ah_get_static_rate(ah));
+ 	if (err < 0)
+ 		return err;
+ 	MLX5_SET(ads, path, stat_rate, err);
+diff --git a/drivers/infiniband/hw/mlx5/qp.h b/drivers/infiniband/hw/mlx5/qp.h
+index e677fa0ca4226..4abb77d551670 100644
+--- a/drivers/infiniband/hw/mlx5/qp.h
++++ b/drivers/infiniband/hw/mlx5/qp.h
+@@ -55,4 +55,5 @@ int mlx5_core_xrcd_dealloc(struct mlx5_ib_dev *dev, u32 xrcdn);
+ int mlx5_ib_qp_set_counter(struct ib_qp *qp, struct rdma_counter *counter);
+ int mlx5_ib_qp_event_init(void);
+ void mlx5_ib_qp_event_cleanup(void);
++int mlx5r_ib_rate(struct mlx5_ib_dev *dev, u8 rate);
+ #endif /* _MLX5_IB_QP_H */
 -- 
 2.39.5
 
