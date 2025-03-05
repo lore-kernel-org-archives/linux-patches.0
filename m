@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7E5253338;
-	Wed,  5 Mar 2025 18:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F9225334A;
+	Wed,  5 Mar 2025 18:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198411; cv=none; b=bfzLvAIH3MF3+HKdzzNXe42ftRyHjap1F1h+pvA4oAFk8Lqr/kmf2dJ7YhHOPvDrQQ5ijZrPrBkIDXshH8Vz5VPlbaXky7UfZwKTD+sBgHMHyQcWqq6wlIGmjwrGj0jJcPDmPjDjk4QC8jTBME9ZoMF1LKb9l5Wg/8hvHmEZd7A=
+	t=1741198413; cv=none; b=CeODvFIvAExqHQ16ALrcpI2WUDQWO6+OfJF8c3mUnEKNv5WncvGPukwtN4fUHAJYq4v4WXFGC9Vbpkt3kbf76sAXWWwCUzaqzf5pcWl21L+M5MnflSMnfXZB0/Eru7Lo7xavSr+bTM3XX2m+peTuElCnzxN5zk384tyUBpZHRXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198411; c=relaxed/simple;
-	bh=Ukw6pboOhDJhKJZBg+G92epl4WdExiZegRiNeXx7+1c=;
+	s=arc-20240116; t=1741198413; c=relaxed/simple;
+	bh=eYy4ih9yuMHV6pTD62qjeR1HgOO/roA1K/r39vFiuOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FOHsEfkg4ILPTJ/ab/01UNClygaxA3qmDzf2vV6S50iQDSKOg0PSDkBgsROPztFhnCV5B6Dwyz3AWzea0h95hGsLofv9ODPYSQui6o6PZH3sLHdXftm/caMj6J1u2cPN4Uq1oqUYeRV04GzV9SdjXOgIV0BGyAm6U4mRk7XSz2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsSKRtny; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FOQhv8ALtXSy7WFkxABIR+zAXT3rcDbUlph+dv9g7MEaZYQcwU/sBaPO6dMRGvsCYxVfsi2mQuxyO7R14tvuVBamoRgOGhKfi/DpVLeXm25jDzsRFFuJ/aNm5xPVjL4JlpyHllLgP0cDfWzbRzHLpWrgA0fH+yN9OyAIa1oC14s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZfMcT6N0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsSKRtny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15647C4CED1;
-	Wed,  5 Mar 2025 18:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfMcT6N0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DCFC4CED1;
+	Wed,  5 Mar 2025 18:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198410;
-	bh=Ukw6pboOhDJhKJZBg+G92epl4WdExiZegRiNeXx7+1c=;
+	s=korg; t=1741198413;
+	bh=eYy4ih9yuMHV6pTD62qjeR1HgOO/roA1K/r39vFiuOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YsSKRtnySPebMVPr7EoovThMD/2k0l2FMEUWq9FAM2TSqK8LaYYdCtLa6TvsLOyzc
-	 yptpJ/brLGEiu0JjvKoTJ3KKRsZnKBTEArCGVzujithXH9U68rPTYyGB1XbYp+O1cn
-	 NVuJXIEBKceD/vGClpX8KdoLwKPp1Xyulv2L8hR4=
+	b=ZfMcT6N07HeYDY5oZUqXGhXTOGZg31UGSgAsZQvEiIvN8lUEaDgZPcCsJdLyFdUPV
+	 ay0vL0twulZEwKFaPd4tolTbCnnusXQrr5OM0bjqNoO8vELaa1g8X117TBBXzFO6mJ
+	 WRfEllgTNK1LkrafsKEUI+K6gzY0/OR7mciVzRaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Maor Gottlieb <maorg@nvidia.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 019/157] RDMA/mlx5: Fix AH static rate parsing
-Date: Wed,  5 Mar 2025 18:47:35 +0100
-Message-ID: <20250305174506.062530355@linuxfoundation.org>
+Subject: [PATCH 6.13 002/157] IB/mlx5: Set and get correct qp_num for a DCT QP
+Date: Wed,  5 Mar 2025 18:47:18 +0100
+Message-ID: <20250305174505.374449955@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -52,82 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit c534ffda781f44a1c6ac25ef6e0e444da38ca8af ]
+[ Upstream commit 12d044770e12c4205fa69535b4fa8a9981fea98f ]
 
-Previously static rate wasn't translated according to our PRM but simply
-used the 4 lower bytes.
+When a DCT QP is created on an active lag, it's dctc.port is assigned
+in a round-robin way, which is from 1 to dev->lag_port. In this case
+when querying this QP, we may get qp_attr.port_num > 2.
+Fix this by setting qp->port when modifying a DCT QP, and read port_num
+from qp->port instead of dctc.port when querying it.
 
-Correctly translate static rate value passed in AH creation attribute
-according to our PRM expected values.
-
-In addition change 800GB mapping to zero, which is the PRM
-specified value.
-
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
-Link: https://patch.msgid.link/18ef4cc5396caf80728341eb74738cd777596f60.1739187089.git.leon@kernel.org
+Fixes: 7c4b1ab9f167 ("IB/mlx5: Add DCT RoCE LAG support")
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
+Link: https://patch.msgid.link/94c76bf0adbea997f87ffa27674e0a7118ad92a9.1737290358.git.leon@kernel.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/ah.c | 3 ++-
- drivers/infiniband/hw/mlx5/qp.c | 6 +++---
- drivers/infiniband/hw/mlx5/qp.h | 1 +
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/mlx5/qp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/ah.c b/drivers/infiniband/hw/mlx5/ah.c
-index 505bc47fd575d..99036afb3aef0 100644
---- a/drivers/infiniband/hw/mlx5/ah.c
-+++ b/drivers/infiniband/hw/mlx5/ah.c
-@@ -67,7 +67,8 @@ static void create_ib_ah(struct mlx5_ib_dev *dev, struct mlx5_ib_ah *ah,
- 		ah->av.tclass = grh->traffic_class;
- 	}
- 
--	ah->av.stat_rate_sl = (rdma_ah_get_static_rate(ah_attr) << 4);
-+	ah->av.stat_rate_sl =
-+		(mlx5r_ib_rate(dev, rdma_ah_get_static_rate(ah_attr)) << 4);
- 
- 	if (ah_attr->type == RDMA_AH_ATTR_TYPE_ROCE) {
- 		if (init_attr->xmit_slave)
 diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index 08d22db8dca91..88724d15705d4 100644
+index a43eba9d3572c..08d22db8dca91 100644
 --- a/drivers/infiniband/hw/mlx5/qp.c
 +++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -3447,11 +3447,11 @@ static int ib_to_mlx5_rate_map(u8 rate)
- 	return 0;
- }
+@@ -4579,6 +4579,8 @@ static int mlx5_ib_modify_dct(struct ib_qp *ibqp, struct ib_qp_attr *attr,
  
--static int ib_rate_to_mlx5(struct mlx5_ib_dev *dev, u8 rate)
-+int mlx5r_ib_rate(struct mlx5_ib_dev *dev, u8 rate)
- {
- 	u32 stat_rate_support;
- 
--	if (rate == IB_RATE_PORT_CURRENT)
-+	if (rate == IB_RATE_PORT_CURRENT || rate == IB_RATE_800_GBPS)
- 		return 0;
- 
- 	if (rate < IB_RATE_2_5_GBPS || rate > IB_RATE_800_GBPS)
-@@ -3596,7 +3596,7 @@ static int mlx5_set_path(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
- 		       sizeof(grh->dgid.raw));
+ 		set_id = mlx5_ib_get_counters_id(dev, attr->port_num - 1);
+ 		MLX5_SET(dctc, dctc, counter_set_id, set_id);
++
++		qp->port = attr->port_num;
+ 	} else if (cur_state == IB_QPS_INIT && new_state == IB_QPS_RTR) {
+ 		struct mlx5_ib_modify_qp_resp resp = {};
+ 		u32 out[MLX5_ST_SZ_DW(create_dct_out)] = {};
+@@ -5074,7 +5076,7 @@ static int mlx5_ib_dct_query_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *mqp,
  	}
  
--	err = ib_rate_to_mlx5(dev, rdma_ah_get_static_rate(ah));
-+	err = mlx5r_ib_rate(dev, rdma_ah_get_static_rate(ah));
- 	if (err < 0)
- 		return err;
- 	MLX5_SET(ads, path, stat_rate, err);
-diff --git a/drivers/infiniband/hw/mlx5/qp.h b/drivers/infiniband/hw/mlx5/qp.h
-index b6ee7c3ee1ca1..2530e7730635f 100644
---- a/drivers/infiniband/hw/mlx5/qp.h
-+++ b/drivers/infiniband/hw/mlx5/qp.h
-@@ -56,4 +56,5 @@ int mlx5_core_xrcd_dealloc(struct mlx5_ib_dev *dev, u32 xrcdn);
- int mlx5_ib_qp_set_counter(struct ib_qp *qp, struct rdma_counter *counter);
- int mlx5_ib_qp_event_init(void);
- void mlx5_ib_qp_event_cleanup(void);
-+int mlx5r_ib_rate(struct mlx5_ib_dev *dev, u8 rate);
- #endif /* _MLX5_IB_QP_H */
+ 	if (qp_attr_mask & IB_QP_PORT)
+-		qp_attr->port_num = MLX5_GET(dctc, dctc, port);
++		qp_attr->port_num = mqp->port;
+ 	if (qp_attr_mask & IB_QP_MIN_RNR_TIMER)
+ 		qp_attr->min_rnr_timer = MLX5_GET(dctc, dctc, min_rnr_nak);
+ 	if (qp_attr_mask & IB_QP_AV) {
 -- 
 2.39.5
 
