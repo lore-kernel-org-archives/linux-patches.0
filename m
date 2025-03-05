@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E158119ABA3;
-	Wed,  5 Mar 2025 18:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7DE230BC6;
+	Wed,  5 Mar 2025 18:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198562; cv=none; b=K4uK2r4CeolW/EFW5PH2t4fIEYOdaPmXI8ApHJLJZ/OKBuRZKxAv4pSAyG+3AXm0xNjSbejgqIt/nNvBXLrXk1zI3cqIi0rY5oOf8QRZvDEP6Qgnr3i9lhQUW76wquPblkbcHt168mUqfDJJOqH80YNQDHkVNlvRrJq+Sifqi54=
+	t=1741198564; cv=none; b=OLp/5R28l76gbBd5ZNacx0Ikj1h0GLHSGEOS2jcm+3LlNSOaT7bU7kV7JTkX+7uGuzzwNNvyeGYCH1apOOgxS4QNfm2WlgI9I4F892yzcI/kM02b9M4RwuYuGZrofiC03ImT9dmm671UXTWXzqKCPyJuPqjTdeI8ZFzQTmFhu5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198562; c=relaxed/simple;
-	bh=au/wMKkrfQtDqAtWWtVP1rTolXcTFPqoXOE0pwf6NiU=;
+	s=arc-20240116; t=1741198564; c=relaxed/simple;
+	bh=UTaBqSy9B+UtNlGSZY6nB6/MveFCK85PQ2Nzx6c323Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mt5TrO77OozVwkyrTJG/sVKt4Rwcr52Q9M7yk92b4i741b7iwHmb/vhmGqvZ/HJOMwF1hSr7Ka8AaWbgCpPUARakwE6X5Ct4R+Ng3bs8OsifFfK5nhEDGlTgHIE1M8Jy6JWZTJEa9VWIp3Cyjevpc8ho7L5O3xBHdJREwaIQG04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cktN27Vk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N/RLVi8do5b5djQJg2DI8l+oPvODO2kiG7gKhGqn6ynKGX83JaeP/RhtcCO3LkZMa38XJyO7PyHCxFzU7CqPkGh4piP7KMl319tFjxi5+AV8KAdVaZvlh6S98uaYTAoUMnVDu6kbaKpyZtS6CuCRO8kmc20qpJpXeZ0TxhBSOiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMptg8ia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cktN27Vk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADC4C4CED1;
-	Wed,  5 Mar 2025 18:16:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMptg8ia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539ABC4CED1;
+	Wed,  5 Mar 2025 18:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198561;
-	bh=au/wMKkrfQtDqAtWWtVP1rTolXcTFPqoXOE0pwf6NiU=;
+	s=korg; t=1741198564;
+	bh=UTaBqSy9B+UtNlGSZY6nB6/MveFCK85PQ2Nzx6c323Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cktN27Vk3IC3EqP3RLGxamB2MhygBeqz9yV0zELfmGTvvQxl9NJPHcpSYNWlSQwJJ
-	 TvrITiSVQQPyvT4XZQyCoA4wIhmLrkd9eDVEyJDMVdvcPqi2aCLi4VCi4VfprlIBEk
-	 6iXFzORbNloGOrXwcjFfGA6kfhV7QZWpHnpQf71w=
+	b=XMptg8iazE9zpE3vs7L8W2fbfI9zbwgCxagFeAHFLl8HZv9kyZz34LSa5eWsxs2nL
+	 /JnCQakCPpmGrjuyhX1xNMjQEwOH3xfiMNR2eud7Siu60UOAOJYoXD2vb9rRVXkYD8
+	 z6zOYweufjMQ/XaxebT0gUoLqjg9TGVpfpDoQr/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Russell Senior <russell@personaltelco.net>,
+	Ingo Molnar <mingo@kernel.org>,
+	Matthew Whitehead <tedheadster@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>
-Subject: [PATCH 6.13 071/157] objtool: Fix C jump table annotations for Clang
-Date: Wed,  5 Mar 2025 18:48:27 +0100
-Message-ID: <20250305174508.156006944@linuxfoundation.org>
+	Jonas Gorski <jonas.gorski@gmail.com>
+Subject: [PATCH 6.13 072/157] x86/CPU: Fix warm boot hang regression on AMD SC1100 SoC systems
+Date: Wed,  5 Mar 2025 18:48:28 +0100
+Message-ID: <20250305174508.196047399@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -52,104 +54,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Russell Senior <russell@personaltelco.net>
 
-[ Upstream commit 73cfc53cc3b6380eccf013049574485f64cb83ca ]
+[ Upstream commit bebe35bb738b573c32a5033499cd59f20293f2a3 ]
 
-A C jump table (such as the one used by the BPF interpreter) is a const
-global array of absolute code addresses, and this means that the actual
-values in the table may not be known until the kernel is booted (e.g.,
-when using KASLR or when the kernel VA space is sized dynamically).
+I still have some Soekris net4826 in a Community Wireless Network I
+volunteer with. These devices use an AMD SC1100 SoC. I am running
+OpenWrt on them, which uses a patched kernel, that naturally has
+evolved over time.  I haven't updated the ones in the field in a
+number of years (circa 2017), but have one in a test bed, where I have
+intermittently tried out test builds.
 
-When using PIE codegen, the compiler will default to placing such const
-global objects in .data.rel.ro (which is annotated as writable), rather
-than .rodata (which is annotated as read-only). As C jump tables are
-explicitly emitted into .rodata, this used to result in warnings for
-LoongArch builds (which uses PIE codegen for the entire kernel) like
+A few years ago, I noticed some trouble, particularly when "warm
+booting", that is, doing a reboot without removing power, and noticed
+the device was hanging after the kernel message:
 
-  Warning: setting incorrect section attributes for .rodata..c_jump_table
+  [    0.081615] Working around Cyrix MediaGX virtual DMA bugs.
 
-due to the fact that the explicitly specified .rodata section inherited
-the read-write annotation that the compiler uses for such objects when
-using PIE codegen.
+If I removed power and then restarted, it would boot fine, continuing
+through the message above, thusly:
 
-This warning was suppressed by explicitly adding the read-only
-annotation to the __attribute__((section(""))) string, by commit
+  [    0.081615] Working around Cyrix MediaGX virtual DMA bugs.
+  [    0.090076] Enable Memory-Write-back mode on Cyrix/NSC processor.
+  [    0.100000] Enable Memory access reorder on Cyrix/NSC processor.
+  [    0.100070] Last level iTLB entries: 4KB 0, 2MB 0, 4MB 0
+  [    0.110058] Last level dTLB entries: 4KB 0, 2MB 0, 4MB 0, 1GB 0
+  [    0.120037] CPU: NSC Geode(TM) Integrated Processor by National Semi (family: 0x5, model: 0x9, stepping: 0x1)
+  [...]
 
-  c5b1184decc8 ("compiler.h: specify correct attribute for .rodata..c_jump_table")
+In order to continue using modern tools, like ssh, to interact with
+the software on these old devices, I need modern builds of the OpenWrt
+firmware on the devices. I confirmed that the warm boot hang was still
+an issue in modern OpenWrt builds (currently using a patched linux
+v6.6.65).
 
-Unfortunately, this hack does not work on Clang's integrated assembler,
-which happily interprets the appended section type and permission
-specifiers as part of the section name, which therefore no longer
-matches the hard-coded pattern '.rodata..c_jump_table' that objtool
-expects, causing it to emit a warning
+Last night, I decided it was time to get to the bottom of the warm
+boot hang, and began bisecting. From preserved builds, I narrowed down
+the bisection window from late February to late May 2019. During this
+period, the OpenWrt builds were using 4.14.x. I was able to build
+using period-correct Ubuntu 18.04.6. After a number of bisection
+iterations, I identified a kernel bump from 4.14.112 to 4.14.113 as
+the commit that introduced the warm boot hang.
 
-  kernel/bpf/core.o: warning: objtool: ___bpf_prog_run+0x20: sibling call from callable instruction with modified stack frame
+  https://github.com/openwrt/openwrt/commit/07aaa7e3d62ad32767d7067107db64b6ade81537
 
-Work around this, by emitting C jump tables into .data.rel.ro instead,
-which is treated as .rodata by the linker script for all builds, not
-just PIE based ones.
+Looking at the upstream changes in the stable kernel between 4.14.112
+and 4.14.113 (tig v4.14.112..v4.14.113), I spotted a likely suspect:
 
-Fixes: c5b1184decc8 ("compiler.h: specify correct attribute for .rodata..c_jump_table")
-Tested-by: Tiezhu Yang <yangtiezhu@loongson.cn> # on LoongArch
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20250221135704.431269-6-ardb+git@google.com
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+  https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=20afb90f730982882e65b01fb8bdfe83914339c5
+
+So, I tried reverting just that kernel change on top of the breaking
+OpenWrt commit, and my warm boot hang went away.
+
+Presumably, the warm boot hang is due to some register not getting
+cleared in the same way that a loss of power does. That is
+approximately as much as I understand about the problem.
+
+More poking/prodding and coaching from Jonas Gorski, it looks
+like this test patch fixes the problem on my board: Tested against
+v6.6.67 and v4.14.113.
+
+Fixes: 18fb053f9b82 ("x86/cpu/cyrix: Use correct macros for Cyrix calls on Geode processors")
+Debugged-by: Jonas Gorski <jonas.gorski@gmail.com>
+Signed-off-by: Russell Senior <russell@personaltelco.net>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/CAHP3WfOgs3Ms4Z+L9i0-iBOE21sdMk5erAiJurPjnrL9LSsgRA@mail.gmail.com
+Cc: Matthew Whitehead <tedheadster@gmail.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/compiler.h                | 2 +-
- tools/objtool/check.c                   | 7 ++++---
- tools/objtool/include/objtool/special.h | 2 +-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ arch/x86/kernel/cpu/cyrix.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/compiler.h b/include/linux/compiler.h
-index 8104d3568d673..d004f9b5528d7 100644
---- a/include/linux/compiler.h
-+++ b/include/linux/compiler.h
-@@ -110,7 +110,7 @@ void ftrace_likely_update(struct ftrace_likely_data *f, int val,
- /* Unreachable code */
- #ifdef CONFIG_OBJTOOL
- /* Annotate a C jump table to allow objtool to follow the code flow */
--#define __annotate_jump_table __section(".rodata..c_jump_table,\"a\",@progbits #")
-+#define __annotate_jump_table __section(".data.rel.ro.c_jump_table")
- #else /* !CONFIG_OBJTOOL */
- #define __annotate_jump_table
- #endif /* CONFIG_OBJTOOL */
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 4d7d2c115cbac..6691bd106e4b6 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -2589,13 +2589,14 @@ static void mark_rodata(struct objtool_file *file)
- 	 *
- 	 * - .rodata: can contain GCC switch tables
- 	 * - .rodata.<func>: same, if -fdata-sections is being used
--	 * - .rodata..c_jump_table: contains C annotated jump tables
-+	 * - .data.rel.ro.c_jump_table: contains C annotated jump tables
- 	 *
- 	 * .rodata.str1.* sections are ignored; they don't contain jump tables.
- 	 */
- 	for_each_sec(file, sec) {
--		if (!strncmp(sec->name, ".rodata", 7) &&
--		    !strstr(sec->name, ".str1.")) {
-+		if ((!strncmp(sec->name, ".rodata", 7) &&
-+		     !strstr(sec->name, ".str1.")) ||
-+		    !strncmp(sec->name, ".data.rel.ro", 12)) {
- 			sec->rodata = true;
- 			found = true;
- 		}
-diff --git a/tools/objtool/include/objtool/special.h b/tools/objtool/include/objtool/special.h
-index 86d4af9c5aa9d..89ee12b1a1384 100644
---- a/tools/objtool/include/objtool/special.h
-+++ b/tools/objtool/include/objtool/special.h
-@@ -10,7 +10,7 @@
- #include <objtool/check.h>
- #include <objtool/elf.h>
+diff --git a/arch/x86/kernel/cpu/cyrix.c b/arch/x86/kernel/cpu/cyrix.c
+index 9651275aecd1b..dfec2c61e3547 100644
+--- a/arch/x86/kernel/cpu/cyrix.c
++++ b/arch/x86/kernel/cpu/cyrix.c
+@@ -153,8 +153,8 @@ static void geode_configure(void)
+ 	u8 ccr3;
+ 	local_irq_save(flags);
  
--#define C_JUMP_TABLE_SECTION ".rodata..c_jump_table"
-+#define C_JUMP_TABLE_SECTION ".data.rel.ro.c_jump_table"
+-	/* Suspend on halt power saving and enable #SUSP pin */
+-	setCx86(CX86_CCR2, getCx86(CX86_CCR2) | 0x88);
++	/* Suspend on halt power saving */
++	setCx86(CX86_CCR2, getCx86(CX86_CCR2) | 0x08);
  
- struct special_alt {
- 	struct list_head list;
+ 	ccr3 = getCx86(CX86_CCR3);
+ 	setCx86(CX86_CCR3, (ccr3 & 0x0f) | 0x10);	/* enable MAPEN */
 -- 
 2.39.5
 
