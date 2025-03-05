@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA1914884C;
-	Wed,  5 Mar 2025 18:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D025A2512C9;
+	Wed,  5 Mar 2025 18:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198634; cv=none; b=WIE1NVidrgPb6O/XrPl8UqEUzkk1Iqig1s6gAvv1ulBLSn7XeoIjwj4lhIpNDj/d/gY3jXImwvQCaUjV//0jOQJFN6pvHg1aU8hclPK4RvNgwcOqzpL8UmlBtINqhXKqhCeSjECinMqT6ahsYTOLx+xdgMcwmhXbigST0KKktMo=
+	t=1741198636; cv=none; b=qGeOZRbMsLTIMJ7zd76Uv83sfjlmo3tUMVPa97RQjiHPwPOV9LiNHBWkbwgfkt4wtBBT7zFtSTYxfcW1AO2RP9uStfNk0wrtksELGE9ryB/UailTGJ65rx0eKJOVNXcWkudm8jdLYJDtqSIZYWqtCshyE8/r8YROd/RDq3IGxC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198634; c=relaxed/simple;
-	bh=dG/jBU+VJhnrHtVfpj9SKqP02UnMFNDyzQ9M7Y/a81c=;
+	s=arc-20240116; t=1741198636; c=relaxed/simple;
+	bh=uCSDiswUyRinFCVIF7L2Gz5L0Y0f2YuY8GMNWAMs5KA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMuU3mVdRYXgH4iXHKphMBQpFCCT059FSUYT89KbhAJj67l4EKdRrOYZy3GqJTXkSJpf2VcIppK0HEJgJCCuga6sh/S8Xg0EtlgXWwbOjkxmhDcX4NVHVumaZo9BCMYq08vHvpNV52UxpzYQKHKue1ZKEiZnk5pk+6M47e8UWXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=reKufo/U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RTXERzht9KTgOnK220vatvKyRNHUu3qXUutiukPgT6wIUZ16jKYRMxujvMeZQs0rT+V4hDxb7J55nJ9GO7+ytn8dYpGIpwQiT1o2K7Wd7Su3+MOsF6UHms7T94xJ9FSElFeaUWbrgKHrKJ3D3bq7JyzEfF3TyYuaztoBHfWWtLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ow3DkuyT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="reKufo/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE8DC4CED1;
-	Wed,  5 Mar 2025 18:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ow3DkuyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E795AC4CED1;
+	Wed,  5 Mar 2025 18:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198633;
-	bh=dG/jBU+VJhnrHtVfpj9SKqP02UnMFNDyzQ9M7Y/a81c=;
+	s=korg; t=1741198636;
+	bh=uCSDiswUyRinFCVIF7L2Gz5L0Y0f2YuY8GMNWAMs5KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=reKufo/UGM9LDBBo2xyzrNAknwcQrK3lDFjhEq5A1brLwJJoaaFM6fTYw9juNtJ6l
-	 7q8vzYsSx4gzAcIReDFdTDUKdj68hXCftmOSsaxo4nFN0C3cUWHug3oEtZxWghmWqF
-	 5S5bR66V67JBFJ1SonkzQrMpPpBZ6f5L2O2zQ77c=
+	b=Ow3DkuyTqXcHJdfK+VCJVnnoaLnY3mktqKkqTeVYKQHAg3ZlNj41SSBxWe+vZQeQr
+	 PYdcJTvNx8dxDcBhVAxOsksmhnKzEb7ZyPC6S+CAqE9Cne1Djadkp8GVN4vZ6x/C3B
+	 W3UNRnkXFRtFeOd8Q15q7DNhJd+7UKcRz7bNnK54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Gengkun <luogengkun@huaweicloud.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 064/157] perf/core: Order the PMU list to fix warning about unordered pmu_ctx_list
-Date: Wed,  5 Mar 2025 18:48:20 +0100
-Message-ID: <20250305174507.877792526@linuxfoundation.org>
+Subject: [PATCH 6.13 055/157] net/mlx5: Fix vport QoS cleanup on error
+Date: Wed,  5 Mar 2025 18:48:11 +0100
+Message-ID: <20250305174507.517657831@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -52,105 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Gengkun <luogengkun@huaweicloud.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 2016066c66192a99d9e0ebf433789c490a6785a2 ]
+[ Upstream commit 7f3528f7d2f98b70e19a6bb7b130fc82c079ac54 ]
 
-Syskaller triggers a warning due to prev_epc->pmu != next_epc->pmu in
-perf_event_swap_task_ctx_data(). vmcore shows that two lists have the same
-perf_event_pmu_context, but not in the same order.
+When enabling vport QoS fails, the scheduling node was never freed,
+causing a leak.
 
-The problem is that the order of pmu_ctx_list for the parent is impacted by
-the time when an event/PMU is added. While the order for a child is
-impacted by the event order in the pinned_groups and flexible_groups. So
-the order of pmu_ctx_list in the parent and child may be different.
+Add the missing free and reset the vport scheduling node pointer to
+NULL.
 
-To fix this problem, insert the perf_event_pmu_context to its proper place
-after iteration of the pmu_ctx_list.
-
-The follow testcase can trigger above warning:
-
- # perf record -e cycles --call-graph lbr -- taskset -c 3 ./a.out &
- # perf stat -e cpu-clock,cs -p xxx // xxx is the pid of a.out
-
- test.c
-
- void main() {
-        int count = 0;
-        pid_t pid;
-
-        printf("%d running\n", getpid());
-        sleep(30);
-        printf("running\n");
-
-        pid = fork();
-        if (pid == -1) {
-                printf("fork error\n");
-                return;
-        }
-        if (pid == 0) {
-                while (1) {
-                        count++;
-                }
-        } else {
-                while (1) {
-                        count++;
-                }
-        }
- }
-
-The testcase first opens an LBR event, so it will allocate task_ctx_data,
-and then open tracepoint and software events, so the parent context will
-have 3 different perf_event_pmu_contexts. On inheritance, child ctx will
-insert the perf_event_pmu_context in another order and the warning will
-trigger.
-
-[ mingo: Tidied up the changelog. ]
-
-Fixes: bd2756811766 ("perf: Rewrite core context handling")
-Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20250122073356.1824736-1-luogengkun@huaweicloud.com
+Fixes: be034baba83e ("net/mlx5: Make vport QoS enablement more flexible for future extensions")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250225072608.526866-2-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index e9f698c08dc17..91c58014fe5dc 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4950,7 +4950,7 @@ static struct perf_event_pmu_context *
- find_get_pmu_context(struct pmu *pmu, struct perf_event_context *ctx,
- 		     struct perf_event *event)
- {
--	struct perf_event_pmu_context *new = NULL, *epc;
-+	struct perf_event_pmu_context *new = NULL, *pos = NULL, *epc;
- 	void *task_ctx_data = NULL;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
+index 8b7c843446e11..07a28073a49ea 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
+@@ -591,8 +591,11 @@ static int mlx5_esw_qos_vport_enable(struct mlx5_vport *vport, enum sched_node_t
+ 	sched_node->vport = vport;
+ 	vport->qos.sched_node = sched_node;
+ 	err = esw_qos_vport_enable(vport, parent, extack);
+-	if (err)
++	if (err) {
++		__esw_qos_free_node(sched_node);
+ 		esw_qos_put(esw);
++		vport->qos.sched_node = NULL;
++	}
  
- 	if (!ctx->task) {
-@@ -5007,12 +5007,19 @@ find_get_pmu_context(struct pmu *pmu, struct perf_event_context *ctx,
- 			atomic_inc(&epc->refcount);
- 			goto found_epc;
- 		}
-+		/* Make sure the pmu_ctx_list is sorted by PMU type: */
-+		if (!pos && epc->pmu->type > pmu->type)
-+			pos = epc;
- 	}
- 
- 	epc = new;
- 	new = NULL;
- 
--	list_add(&epc->pmu_ctx_entry, &ctx->pmu_ctx_list);
-+	if (!pos)
-+		list_add_tail(&epc->pmu_ctx_entry, &ctx->pmu_ctx_list);
-+	else
-+		list_add(&epc->pmu_ctx_entry, pos->pmu_ctx_entry.prev);
-+
- 	epc->ctx = ctx;
- 
- found_epc:
+ 	return err;
+ }
 -- 
 2.39.5
 
