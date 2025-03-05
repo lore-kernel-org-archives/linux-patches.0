@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB12251785;
-	Wed,  5 Mar 2025 17:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E562512D6;
+	Wed,  5 Mar 2025 17:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197160; cv=none; b=T7SoQ38OiF/hovLXX7HPxiuTd48p0CwtbDBPl7+0CBKjOpmSRfAFV6XAFbMfph21Pzqry9Tntof3AFHZJjaeLILKCX15pjpJdnZXTFYg/TCzps5ErmduGgeXQoNAfaNOKrnUJfAg+Zz7cgqxfttxGmfjDE74BfCBW4Q5CJjhPKY=
+	t=1741197163; cv=none; b=pvbZwxXA/7owUSNyFrTzTmPxuDtMNKG2fjHaE6F1/lkwzoYBdKKELxHR8peZ6yG5WOWQSGVyQ+RKMsigwsQ2mRT7ywluEMoRdULyTjskV2Rn4swEn1h8RFhNGbUN9F6Lhn61hxYVxItPg+2iCDGdFS1wDtE+2mtylasFzZr+4+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197160; c=relaxed/simple;
-	bh=jxYBiDghYj+bsylHOI2Nzjn79SqORXTPspCuMZOjO0A=;
+	s=arc-20240116; t=1741197163; c=relaxed/simple;
+	bh=tmtnQsqKoTNHTB+elyiXPa08zZFygSH5CP+XHYutlJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BzYTp59n1QHYYIKTXZPcs2sXOilv8b14YMG22pzBcBx4bVocEzoULNH8qFeIkE4louK/zkR6bFfhUxNGYeCzB8RbFKUAe9DmTYX1/yg3HPSnClmNmXOT9Xavqa61eKl3Wtu6g3x9N9k4ciGTa65UXcZKNejFc9N67aVrp93P5Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQ0Q8T2y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iE3aSDIVBkzoeFwwEv0jpa1jNbagRZP++MUsnoBIa2VOR8s87y7V73mFNH8j6MzU1V5dUv/ngEbwWRAqUdmmHYQeq8m5qqD7H4yvAa+CzWNMERChmnqog1LXiR4hLfm+n0INCchV9U24/Wmzeo5tLArTqtoQJzZC0dyYo4aVjU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUUjVSMI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQ0Q8T2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FB7C4CED1;
-	Wed,  5 Mar 2025 17:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUUjVSMI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279F8C4CED1;
+	Wed,  5 Mar 2025 17:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197160;
-	bh=jxYBiDghYj+bsylHOI2Nzjn79SqORXTPspCuMZOjO0A=;
+	s=korg; t=1741197163;
+	bh=tmtnQsqKoTNHTB+elyiXPa08zZFygSH5CP+XHYutlJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kQ0Q8T2yba5ZXSFiYNnPtXRhe5GESGagZvtnqSKwQ+aS5f4A1zYHpMmpelWHQnRYm
-	 E8ad+occV9WUye4Q0jfWJiaH1zYiBa3uVbtcSejZe4a+fm82u6t74QDJ3jq62F1Qfy
-	 loXI5b4VmVJumtr/w0m6dVVCphL8CptAM+FMj8Tg=
+	b=aUUjVSMIsqscGrLp7FdzkDXiH/7speXWyWVuFqGE3YcIQ0QgTwyBTlhba2qIFQ4hB
+	 10J+xCoA3ZlRqDb7MUJsCgK4TBapTWaHk1qL8O/Io2uL7iKlQviNR+7d5H/EAOIcyV
+	 QLsLmtO76Wp/JewXF6nMXWROQRS6oBJDjuS/QV7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiumei Mu <xmu@redhat.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sean Young <sean@mess.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/176] tcp: drop secpath at the same time as we currently drop dst
-Date: Wed,  5 Mar 2025 18:47:09 +0100
-Message-ID: <20250305174507.868225624@linuxfoundation.org>
+Subject: [PATCH 6.1 034/176] media: Switch to use dev_err_probe() helper
+Date: Wed,  5 Mar 2025 18:46:43 +0100
+Message-ID: <20250305174506.833834642@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -53,156 +55,317 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 9b6412e6979f6f9e0632075f8f008937b5cd4efd ]
+[ Upstream commit 6cb7d1b3ff83e98e852db9739892c4643a31804b ]
 
-Xiumei reported hitting the WARN in xfrm6_tunnel_net_exit while
-running tests that boil down to:
- - create a pair of netns
- - run a basic TCP test over ipcomp6
- - delete the pair of netns
+In the probe path, dev_err() can be replaced with dev_err_probe()
+which will check if error code is -EPROBE_DEFER.
 
-The xfrm_state found on spi_byaddr was not deleted at the time we
-delete the netns, because we still have a reference on it. This
-lingering reference comes from a secpath (which holds a ref on the
-xfrm_state), which is still attached to an skb. This skb is not
-leaked, it ends up on sk_receive_queue and then gets defer-free'd by
-skb_attempt_defer_free.
-
-The problem happens when we defer freeing an skb (push it on one CPU's
-defer_list), and don't flush that list before the netns is deleted. In
-that case, we still have a reference on the xfrm_state that we don't
-expect at this point.
-
-We already drop the skb's dst in the TCP receive path when it's no
-longer needed, so let's also drop the secpath. At this point,
-tcp_filter has already called into the LSM hooks that may require the
-secpath, so it should not be needed anymore. However, in some of those
-places, the MPTCP extension has just been attached to the skb, so we
-cannot simply drop all extensions.
-
-Fixes: 68822bdf76f1 ("net: generalize skb freeing deferral to per-cpu lists")
-Reported-by: Xiumei Mu <xmu@redhat.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/5055ba8f8f72bdcb602faa299faca73c280b7735.1739743613.git.sd@queasysnail.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Sean Young <sean@mess.org>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Stable-dep-of: a9ea1a3d88b7 ("media: uvcvideo: Fix crash during unbind if gpio unit is in use")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h       | 14 ++++++++++++++
- net/ipv4/tcp_fastopen.c |  4 ++--
- net/ipv4/tcp_input.c    |  8 ++++----
- net/ipv4/tcp_ipv4.c     |  2 +-
- 4 files changed, 21 insertions(+), 7 deletions(-)
+ drivers/media/cec/platform/stm32/stm32-cec.c  |  9 +++----
+ drivers/media/i2c/ad5820.c                    | 18 +++++--------
+ drivers/media/i2c/imx274.c                    |  5 ++--
+ drivers/media/i2c/tc358743.c                  |  9 +++----
+ .../platform/mediatek/mdp/mtk_mdp_comp.c      |  5 ++--
+ .../platform/samsung/exynos4-is/media-dev.c   |  4 +--
+ drivers/media/platform/st/stm32/stm32-dcmi.c  | 27 +++++++------------
+ drivers/media/platform/ti/omap3isp/isp.c      |  3 +--
+ .../media/platform/xilinx/xilinx-csi2rxss.c   |  8 +++---
+ drivers/media/rc/gpio-ir-recv.c               | 10 +++----
+ drivers/media/rc/gpio-ir-tx.c                 |  9 +++----
+ drivers/media/rc/ir-rx51.c                    |  9 ++-----
+ drivers/media/usb/uvc/uvc_driver.c            |  9 +++----
+ 13 files changed, 41 insertions(+), 84 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index a770210fda9bc..14a00cdd31f42 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -40,6 +40,7 @@
- #include <net/inet_ecn.h>
- #include <net/dst.h>
- #include <net/mptcp.h>
-+#include <net/xfrm.h>
+diff --git a/drivers/media/cec/platform/stm32/stm32-cec.c b/drivers/media/cec/platform/stm32/stm32-cec.c
+index 40db7911b437b..7b2db46a57222 100644
+--- a/drivers/media/cec/platform/stm32/stm32-cec.c
++++ b/drivers/media/cec/platform/stm32/stm32-cec.c
+@@ -288,12 +288,9 @@ static int stm32_cec_probe(struct platform_device *pdev)
+ 		return ret;
  
- #include <linux/seq_file.h>
- #include <linux/memcontrol.h>
-@@ -640,6 +641,19 @@ void tcp_fin(struct sock *sk);
- void tcp_check_space(struct sock *sk);
- void tcp_sack_compress_send_ack(struct sock *sk);
+ 	cec->clk_cec = devm_clk_get(&pdev->dev, "cec");
+-	if (IS_ERR(cec->clk_cec)) {
+-		if (PTR_ERR(cec->clk_cec) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Cannot get cec clock\n");
+-
+-		return PTR_ERR(cec->clk_cec);
+-	}
++	if (IS_ERR(cec->clk_cec))
++		return dev_err_probe(&pdev->dev, PTR_ERR(cec->clk_cec),
++				     "Cannot get cec clock\n");
  
-+static inline void tcp_cleanup_skb(struct sk_buff *skb)
-+{
-+	skb_dst_drop(skb);
-+	secpath_reset(skb);
-+}
-+
-+static inline void tcp_add_receive_queue(struct sock *sk, struct sk_buff *skb)
-+{
-+	DEBUG_NET_WARN_ON_ONCE(skb_dst(skb));
-+	DEBUG_NET_WARN_ON_ONCE(secpath_exists(skb));
-+	__skb_queue_tail(&sk->sk_receive_queue, skb);
-+}
-+
- /* tcp_timer.c */
- void tcp_init_xmit_timers(struct sock *);
- static inline void tcp_clear_xmit_timers(struct sock *sk)
-diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
-index d0b7ded591bd4..cb01c770d8cf5 100644
---- a/net/ipv4/tcp_fastopen.c
-+++ b/net/ipv4/tcp_fastopen.c
-@@ -178,7 +178,7 @@ void tcp_fastopen_add_skb(struct sock *sk, struct sk_buff *skb)
- 	if (!skb)
- 		return;
+ 	ret = clk_prepare(cec->clk_cec);
+ 	if (ret) {
+diff --git a/drivers/media/i2c/ad5820.c b/drivers/media/i2c/ad5820.c
+index 088c29c4e2529..56d22d02a0d91 100644
+--- a/drivers/media/i2c/ad5820.c
++++ b/drivers/media/i2c/ad5820.c
+@@ -301,21 +301,15 @@ static int ad5820_probe(struct i2c_client *client,
+ 		return -ENOMEM;
  
--	skb_dst_drop(skb);
-+	tcp_cleanup_skb(skb);
- 	/* segs_in has been initialized to 1 in tcp_create_openreq_child().
- 	 * Hence, reset segs_in to 0 before calling tcp_segs_in()
- 	 * to avoid double counting.  Also, tcp_segs_in() expects
-@@ -195,7 +195,7 @@ void tcp_fastopen_add_skb(struct sock *sk, struct sk_buff *skb)
- 	TCP_SKB_CB(skb)->tcp_flags &= ~TCPHDR_SYN;
+ 	coil->vana = devm_regulator_get(&client->dev, "VANA");
+-	if (IS_ERR(coil->vana)) {
+-		ret = PTR_ERR(coil->vana);
+-		if (ret != -EPROBE_DEFER)
+-			dev_err(&client->dev, "could not get regulator for vana\n");
+-		return ret;
+-	}
++	if (IS_ERR(coil->vana))
++		return dev_err_probe(&client->dev, PTR_ERR(coil->vana),
++				     "could not get regulator for vana\n");
  
- 	tp->rcv_nxt = TCP_SKB_CB(skb)->end_seq;
--	__skb_queue_tail(&sk->sk_receive_queue, skb);
-+	tcp_add_receive_queue(sk, skb);
- 	tp->syn_data_acked = 1;
+ 	coil->enable_gpio = devm_gpiod_get_optional(&client->dev, "enable",
+ 						    GPIOD_OUT_LOW);
+-	if (IS_ERR(coil->enable_gpio)) {
+-		ret = PTR_ERR(coil->enable_gpio);
+-		if (ret != -EPROBE_DEFER)
+-			dev_err(&client->dev, "could not get enable gpio\n");
+-		return ret;
+-	}
++	if (IS_ERR(coil->enable_gpio))
++		return dev_err_probe(&client->dev, PTR_ERR(coil->enable_gpio),
++				     "could not get enable gpio\n");
  
- 	/* u64_stats_update_begin(&tp->syncp) not needed here,
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 2379ee5511645..3b81f6df829ff 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -4836,7 +4836,7 @@ static void tcp_ofo_queue(struct sock *sk)
- 		tcp_rcv_nxt_update(tp, TCP_SKB_CB(skb)->end_seq);
- 		fin = TCP_SKB_CB(skb)->tcp_flags & TCPHDR_FIN;
- 		if (!eaten)
--			__skb_queue_tail(&sk->sk_receive_queue, skb);
-+			tcp_add_receive_queue(sk, skb);
- 		else
- 			kfree_skb_partial(skb, fragstolen);
+ 	mutex_init(&coil->power_lock);
  
-@@ -5027,7 +5027,7 @@ static int __must_check tcp_queue_rcv(struct sock *sk, struct sk_buff *skb,
- 				  skb, fragstolen)) ? 1 : 0;
- 	tcp_rcv_nxt_update(tcp_sk(sk), TCP_SKB_CB(skb)->end_seq);
- 	if (!eaten) {
--		__skb_queue_tail(&sk->sk_receive_queue, skb);
-+		tcp_add_receive_queue(sk, skb);
- 		skb_set_owner_r(skb, sk);
+diff --git a/drivers/media/i2c/imx274.c b/drivers/media/i2c/imx274.c
+index a00761b1e18c2..9219f3c9594b0 100644
+--- a/drivers/media/i2c/imx274.c
++++ b/drivers/media/i2c/imx274.c
+@@ -2060,9 +2060,8 @@ static int imx274_probe(struct i2c_client *client)
+ 	imx274->reset_gpio = devm_gpiod_get_optional(dev, "reset",
+ 						     GPIOD_OUT_HIGH);
+ 	if (IS_ERR(imx274->reset_gpio)) {
+-		if (PTR_ERR(imx274->reset_gpio) != -EPROBE_DEFER)
+-			dev_err(dev, "Reset GPIO not setup in DT");
+-		ret = PTR_ERR(imx274->reset_gpio);
++		ret = dev_err_probe(dev, PTR_ERR(imx274->reset_gpio),
++				    "Reset GPIO not setup in DT\n");
+ 		goto err_me;
  	}
- 	return eaten;
-@@ -5110,7 +5110,7 @@ static void tcp_data_queue(struct sock *sk, struct sk_buff *skb)
- 		__kfree_skb(skb);
- 		return;
+ 
+diff --git a/drivers/media/i2c/tc358743.c b/drivers/media/i2c/tc358743.c
+index 45dd91d1cd816..2c8189e04a131 100644
+--- a/drivers/media/i2c/tc358743.c
++++ b/drivers/media/i2c/tc358743.c
+@@ -1891,12 +1891,9 @@ static int tc358743_probe_of(struct tc358743_state *state)
+ 	int ret;
+ 
+ 	refclk = devm_clk_get(dev, "refclk");
+-	if (IS_ERR(refclk)) {
+-		if (PTR_ERR(refclk) != -EPROBE_DEFER)
+-			dev_err(dev, "failed to get refclk: %ld\n",
+-				PTR_ERR(refclk));
+-		return PTR_ERR(refclk);
+-	}
++	if (IS_ERR(refclk))
++		return dev_err_probe(dev, PTR_ERR(refclk),
++				     "failed to get refclk\n");
+ 
+ 	ep = of_graph_get_next_endpoint(dev->of_node, NULL);
+ 	if (!ep) {
+diff --git a/drivers/media/platform/mediatek/mdp/mtk_mdp_comp.c b/drivers/media/platform/mediatek/mdp/mtk_mdp_comp.c
+index 1e3833f1c9ae2..ad5fab2d8bfae 100644
+--- a/drivers/media/platform/mediatek/mdp/mtk_mdp_comp.c
++++ b/drivers/media/platform/mediatek/mdp/mtk_mdp_comp.c
+@@ -52,9 +52,8 @@ int mtk_mdp_comp_init(struct device *dev, struct device_node *node,
+ 	for (i = 0; i < ARRAY_SIZE(comp->clk); i++) {
+ 		comp->clk[i] = of_clk_get(node, i);
+ 		if (IS_ERR(comp->clk[i])) {
+-			if (PTR_ERR(comp->clk[i]) != -EPROBE_DEFER)
+-				dev_err(dev, "Failed to get clock\n");
+-			ret = PTR_ERR(comp->clk[i]);
++			ret = dev_err_probe(dev, PTR_ERR(comp->clk[i]),
++					    "Failed to get clock\n");
+ 			goto put_dev;
+ 		}
+ 
+diff --git a/drivers/media/platform/samsung/exynos4-is/media-dev.c b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+index 2f3071acb9c97..98a60f01129d4 100644
+--- a/drivers/media/platform/samsung/exynos4-is/media-dev.c
++++ b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+@@ -1471,9 +1471,7 @@ static int fimc_md_probe(struct platform_device *pdev)
+ 
+ 	pinctrl = devm_pinctrl_get(dev);
+ 	if (IS_ERR(pinctrl)) {
+-		ret = PTR_ERR(pinctrl);
+-		if (ret != -EPROBE_DEFER)
+-			dev_err(dev, "Failed to get pinctrl: %d\n", ret);
++		ret = dev_err_probe(dev, PTR_ERR(pinctrl), "Failed to get pinctrl\n");
+ 		goto err_clk;
  	}
--	skb_dst_drop(skb);
-+	tcp_cleanup_skb(skb);
- 	__skb_pull(skb, tcp_hdr(skb)->doff * 4);
  
- 	reason = SKB_DROP_REASON_NOT_SPECIFIED;
-@@ -6041,7 +6041,7 @@ void tcp_rcv_established(struct sock *sk, struct sk_buff *skb)
- 			NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPHPHITS);
+diff --git a/drivers/media/platform/st/stm32/stm32-dcmi.c b/drivers/media/platform/st/stm32/stm32-dcmi.c
+index 37458d4d9564b..06be28b361f1a 100644
+--- a/drivers/media/platform/st/stm32/stm32-dcmi.c
++++ b/drivers/media/platform/st/stm32/stm32-dcmi.c
+@@ -1946,12 +1946,9 @@ static int dcmi_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
  
- 			/* Bulk data transfer: receiver */
--			skb_dst_drop(skb);
-+			tcp_cleanup_skb(skb);
- 			__skb_pull(skb, tcp_header_len);
- 			eaten = tcp_queue_rcv(sk, skb, &fragstolen);
+ 	dcmi->rstc = devm_reset_control_get_exclusive(&pdev->dev, NULL);
+-	if (IS_ERR(dcmi->rstc)) {
+-		if (PTR_ERR(dcmi->rstc) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Could not get reset control\n");
+-
+-		return PTR_ERR(dcmi->rstc);
+-	}
++	if (IS_ERR(dcmi->rstc))
++		return dev_err_probe(&pdev->dev, PTR_ERR(dcmi->rstc),
++				     "Could not get reset control\n");
  
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 805b1a9eca1c5..7647f1ec0584e 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1791,7 +1791,7 @@ bool tcp_add_backlog(struct sock *sk, struct sk_buff *skb,
- 	 */
- 	skb_condense(skb);
+ 	/* Get bus characteristics from devicetree */
+ 	np = of_graph_get_next_endpoint(np, NULL);
+@@ -2003,20 +2000,14 @@ static int dcmi_probe(struct platform_device *pdev)
+ 	}
  
--	skb_dst_drop(skb);
-+	tcp_cleanup_skb(skb);
+ 	mclk = devm_clk_get(&pdev->dev, "mclk");
+-	if (IS_ERR(mclk)) {
+-		if (PTR_ERR(mclk) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Unable to get mclk\n");
+-		return PTR_ERR(mclk);
+-	}
++	if (IS_ERR(mclk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(mclk),
++				     "Unable to get mclk\n");
  
- 	if (unlikely(tcp_checksum_complete(skb))) {
- 		bh_unlock_sock(sk);
+ 	chan = dma_request_chan(&pdev->dev, "tx");
+-	if (IS_ERR(chan)) {
+-		ret = PTR_ERR(chan);
+-		if (ret != -EPROBE_DEFER)
+-			dev_err(&pdev->dev,
+-				"Failed to request DMA channel: %d\n", ret);
+-		return ret;
+-	}
++	if (IS_ERR(chan))
++		return dev_err_probe(&pdev->dev, PTR_ERR(chan),
++				     "Failed to request DMA channel\n");
+ 
+ 	dcmi->dma_max_burst = UINT_MAX;
+ 	ret = dma_get_slave_caps(chan, &caps);
+diff --git a/drivers/media/platform/ti/omap3isp/isp.c b/drivers/media/platform/ti/omap3isp/isp.c
+index 11ae479ee89c8..e7327e38482de 100644
+--- a/drivers/media/platform/ti/omap3isp/isp.c
++++ b/drivers/media/platform/ti/omap3isp/isp.c
+@@ -1884,8 +1884,7 @@ static int isp_initialize_modules(struct isp_device *isp)
+ 
+ 	ret = omap3isp_ccp2_init(isp);
+ 	if (ret < 0) {
+-		if (ret != -EPROBE_DEFER)
+-			dev_err(isp->dev, "CCP2 initialization failed\n");
++		dev_err_probe(isp->dev, ret, "CCP2 initialization failed\n");
+ 		goto error_ccp2;
+ 	}
+ 
+diff --git a/drivers/media/platform/xilinx/xilinx-csi2rxss.c b/drivers/media/platform/xilinx/xilinx-csi2rxss.c
+index 29b53febc2e7a..d8a23f18cfbce 100644
+--- a/drivers/media/platform/xilinx/xilinx-csi2rxss.c
++++ b/drivers/media/platform/xilinx/xilinx-csi2rxss.c
+@@ -976,11 +976,9 @@ static int xcsi2rxss_probe(struct platform_device *pdev)
+ 	/* Reset GPIO */
+ 	xcsi2rxss->rst_gpio = devm_gpiod_get_optional(dev, "video-reset",
+ 						      GPIOD_OUT_HIGH);
+-	if (IS_ERR(xcsi2rxss->rst_gpio)) {
+-		if (PTR_ERR(xcsi2rxss->rst_gpio) != -EPROBE_DEFER)
+-			dev_err(dev, "Video Reset GPIO not setup in DT");
+-		return PTR_ERR(xcsi2rxss->rst_gpio);
+-	}
++	if (IS_ERR(xcsi2rxss->rst_gpio))
++		return dev_err_probe(dev, PTR_ERR(xcsi2rxss->rst_gpio),
++				     "Video Reset GPIO not setup in DT\n");
+ 
+ 	ret = xcsi2rxss_parse_of(xcsi2rxss);
+ 	if (ret < 0)
+diff --git a/drivers/media/rc/gpio-ir-recv.c b/drivers/media/rc/gpio-ir-recv.c
+index 16795e07dc103..41ef8cdba28c4 100644
+--- a/drivers/media/rc/gpio-ir-recv.c
++++ b/drivers/media/rc/gpio-ir-recv.c
+@@ -74,13 +74,9 @@ static int gpio_ir_recv_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	gpio_dev->gpiod = devm_gpiod_get(dev, NULL, GPIOD_IN);
+-	if (IS_ERR(gpio_dev->gpiod)) {
+-		rc = PTR_ERR(gpio_dev->gpiod);
+-		/* Just try again if this happens */
+-		if (rc != -EPROBE_DEFER)
+-			dev_err(dev, "error getting gpio (%d)\n", rc);
+-		return rc;
+-	}
++	if (IS_ERR(gpio_dev->gpiod))
++		return dev_err_probe(dev, PTR_ERR(gpio_dev->gpiod),
++				     "error getting gpio\n");
+ 	gpio_dev->irq = gpiod_to_irq(gpio_dev->gpiod);
+ 	if (gpio_dev->irq < 0)
+ 		return gpio_dev->irq;
+diff --git a/drivers/media/rc/gpio-ir-tx.c b/drivers/media/rc/gpio-ir-tx.c
+index d3063ddb472e3..2b829c146db15 100644
+--- a/drivers/media/rc/gpio-ir-tx.c
++++ b/drivers/media/rc/gpio-ir-tx.c
+@@ -174,12 +174,9 @@ static int gpio_ir_tx_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	gpio_ir->gpio = devm_gpiod_get(&pdev->dev, NULL, GPIOD_OUT_LOW);
+-	if (IS_ERR(gpio_ir->gpio)) {
+-		if (PTR_ERR(gpio_ir->gpio) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "Failed to get gpio (%ld)\n",
+-				PTR_ERR(gpio_ir->gpio));
+-		return PTR_ERR(gpio_ir->gpio);
+-	}
++	if (IS_ERR(gpio_ir->gpio))
++		return dev_err_probe(&pdev->dev, PTR_ERR(gpio_ir->gpio),
++				     "Failed to get gpio\n");
+ 
+ 	rcdev->priv = gpio_ir;
+ 	rcdev->driver_name = DRIVER_NAME;
+diff --git a/drivers/media/rc/ir-rx51.c b/drivers/media/rc/ir-rx51.c
+index a3b1451832603..85080c3d20535 100644
+--- a/drivers/media/rc/ir-rx51.c
++++ b/drivers/media/rc/ir-rx51.c
+@@ -231,13 +231,8 @@ static int ir_rx51_probe(struct platform_device *dev)
+ 	struct rc_dev *rcdev;
+ 
+ 	pwm = pwm_get(&dev->dev, NULL);
+-	if (IS_ERR(pwm)) {
+-		int err = PTR_ERR(pwm);
+-
+-		if (err != -EPROBE_DEFER)
+-			dev_err(&dev->dev, "pwm_get failed: %d\n", err);
+-		return err;
+-	}
++	if (IS_ERR(pwm))
++		return dev_err_probe(&dev->dev, PTR_ERR(pwm), "pwm_get failed\n");
+ 
+ 	/* Use default, in case userspace does not set the carrier */
+ 	ir_rx51.freq = DIV_ROUND_CLOSEST_ULL(pwm_get_period(pwm), NSEC_PER_SEC);
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index c8e72079b4278..92af9caf6b5db 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -1253,12 +1253,9 @@ static int uvc_gpio_parse(struct uvc_device *dev)
+ 		return PTR_ERR_OR_ZERO(gpio_privacy);
+ 
+ 	irq = gpiod_to_irq(gpio_privacy);
+-	if (irq < 0) {
+-		if (irq != EPROBE_DEFER)
+-			dev_err(&dev->udev->dev,
+-				"No IRQ for privacy GPIO (%d)\n", irq);
+-		return irq;
+-	}
++	if (irq < 0)
++		return dev_err_probe(&dev->udev->dev, irq,
++				     "No IRQ for privacy GPIO\n");
+ 
+ 	unit = uvc_alloc_entity(UVC_EXT_GPIO_UNIT, UVC_EXT_GPIO_UNIT_ID, 0, 1);
+ 	if (!unit)
 -- 
 2.39.5
 
