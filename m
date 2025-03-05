@@ -1,98 +1,96 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC2E1547DE
-	for <patches@lists.linux.dev>; Wed,  5 Mar 2025 21:56:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB2F2080E8
+	for <patches@lists.linux.dev>; Wed,  5 Mar 2025 23:02:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741211775; cv=none; b=laPqUvglO2X6yFRju/VR+sR91JYxRdtLyseDSIR7gVliJA8YHZDeTQnq27ZGiakA1QLZmZHGoR58dT7O63fIH7wkGaqznhEgYEIixF4kDJxBYXcmETl3SHx7yKBeE3yL3s/lPRiMKu/ry9FUIyq3XkhLj8zQsKnmIAMWqD9I7sI=
+	t=1741215730; cv=none; b=U0gERmzaWj4r58DbtZplApXHvQzUTldeQc26816xIKpTJGIgfj8XCPGCXdp91pNg7TVAB9MbiTv96o9tW2dzvIqNIKEahNFF6KDfLF2Cwpx+uuNyzcF4AyIJEFnHGnj1OfFepCoqnsVgW+kRMQj+9AdOW6raiv9GJxj8MAGTrZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741211775; c=relaxed/simple;
-	bh=a24G2GQTmbedCjRrq2xzRNIeT29utGGOPqKuDP07n4w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KeZbk8deqTHvIr+vfqZvCB5r3XGSR8iiCY6r7sguWdGjS00GllIJdC7EOkTByKsLSdRKsGhde1GqRIqUcCc3YWv1HmzjJIUHqiBaYHoAARuxZI9xKTkunE63YFHTc8trcz3YR0/utD0ggT8IEQH9mXhuJfupTK/eBy4OViPKb1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=TjmNZFGh; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1741215730; c=relaxed/simple;
+	bh=rgcs8jkGVo3NHV3xZ6/0r5NLYIo7kc98WvHTCah+c3I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SA15+7j919FkN44IKHeAk6Do+or5YR3FeQBhXvAZZSD5KVRZWM5UzHF+C061igRFmu4Ynj10POd7Vb6pplpkTN7mRNkL61PZmeftHwhvRPfGOXVNgYvWpwueLbtQWQ6YOo+gcqF1KoPDroVnAaH5+4Rf174E3ZQim7iX/8pRVK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B+y1q6n1; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="TjmNZFGh"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 5519E10382C18;
-	Wed,  5 Mar 2025 22:56:05 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1741211770; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=fpIpMR1mMV4sUOTWVCWFQ2VcPSUOQ5igCmsV8RlXIA4=;
-	b=TjmNZFGhW5phz3eqlfKAHhn3GcNytlwuQ7RRpBf/NMCrJtlNieUVdHqNPMK5z4ys2CjTQT
-	AW6X0f5XaF0DawCCxT3xJefpIkgmtrHSGIqTcsPP90y62enq9lKEuNAYCW7uBiC0ye1tHs
-	tuXqaC5iKCY1yPPpyRvmZLpbzaooss8kXWrZCXFmwHeWx+pNzLPQsdaCIxV549cD9CTYuK
-	XOnYXudPoUPaGI0ladoz3tAKsoHfP/Vepdxufq+pR7Geu8fjesUJjbavBkcb7tjcUHvLv9
-	mhJhakG1Dt2++b7fn1F4h/PbY6PQbLbhpIFAW30Cjpw0Gup8/N2/kdOZX0+LJQ==
-Date: Wed, 5 Mar 2025 22:56:03 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.6 000/142] 6.6.81-rc1 review
-Message-ID: <Z8jIc+33EHHcHSw+@duo.ucw.cz>
-References: <20250305174500.327985489@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B+y1q6n1"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2240b4de10eso538755ad.1
+        for <patches@lists.linux.dev>; Wed, 05 Mar 2025 15:02:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741215728; x=1741820528; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rgcs8jkGVo3NHV3xZ6/0r5NLYIo7kc98WvHTCah+c3I=;
+        b=B+y1q6n1oDAOWq5mdtQS/OVXN8rarkaFq3M6kXl5p5GKZwpWUVSULnkuLvlzZJLPPh
+         fxgdDJtiqg/I3xgykhPNF4D3VZ6v1+U8d73qdRN8A9XXy2NmtAOYBjWav/LUcr2pbRoA
+         yniX2pttw2cZL8gfTuDBgvdHIR1M5MNjZN8y3aYZmiqR4wNfmt7vdJ7DCouAQ3n6wEG7
+         FK4CP308zYafnambvYXWGzIOP4MFyab4gZ2er3d40SKVP03V4VOneiH5VeoWy7MMQXL9
+         EOZ07TER0OwBb5mF/wnug8pSv+hZ/1TyeCXWvjEzPUsRjpUogNofOz09Q53XRHOQuNbi
+         lMXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741215728; x=1741820528;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rgcs8jkGVo3NHV3xZ6/0r5NLYIo7kc98WvHTCah+c3I=;
+        b=aVlPTzqQf7CWwc8QbCoukrrn6LBzgb5KxgLu8nK/ZVlW3C2rZTZ5N5nuGus3DDKbxN
+         QHipDZvGQuZyezysXptRtfEhhpw62k4gtJ/TflWDvduZfSg10VfZ6A/r0jdpXUROCERI
+         dZZlmYEwGxzc8SBoijQgqgjMz8O9BHeJvgi7LKA2V58Mo3SrPN0G7OBHqjDtMErw5aLn
+         QXhpvbC23o8lde6S6g/RGwRTMe1eBPJPwdipALhiAdvnpDJVX41Fafe6bAdF8ZtDl2Ti
+         0VzFcOyIOfY6Lf5sdCaAz8tBCFm0OVA5ehRN6c36NLkPVX8zmZQR5sS4yn+Lc+fgxtaX
+         v0nA==
+X-Forwarded-Encrypted: i=1; AJvYcCVTLcPt0jZsg+zLBUWnLLKvk8rtsi4QG+ywFU0g9VQnPSWkPf4HByo0YR56CVHcCp/P3F+gvHZo@lists.linux.dev
+X-Gm-Message-State: AOJu0YyAmO8qjITkl2Ww0vw/mmOnHpna6ukSBLG8POtaBBYM2pYUAbkf
+	m2mOpjFKJFbqGP6AOxX7FSt32Q0c2s5PO6/6nVBXGiAcmb2/5SIaVmEfmtoQGFf1pXek2HEC0un
+	El0qeThIMkw3KanczhmsyZtiXEK8=
+X-Gm-Gg: ASbGncup0AoN0+iU0vjYtxWtBUlaBP4+A13TY6sVPP3krFAjeryVwZG1YA63CxMBLdO
+	155jGjYL81F7YSgjsEAvCKoitgGFB5RwW7rOhG0NleoOcWThDDufSW+jVOTslrstpx1z+Qjzr1t
+	VtBdnO/5bmFO2TlRcaBh0HTcaV5w==
+X-Google-Smtp-Source: AGHT+IEOHQytaLDZQAvKtNTBltPyvqtYSsB5GrP/DGnmAkK70fPpVPLtg/WQaJM4nJWg6uLzp9GDjBc7m87M++pdEDE=
+X-Received: by 2002:a17:902:ea08:b0:216:30f9:93db with SMTP id
+ d9443c01a7336-223f1b87ad3mr29085005ad.0.1741215728049; Wed, 05 Mar 2025
+ 15:02:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="8jf0unX4r4KrASvT"
-Content-Disposition: inline
-In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
-
-
---8jf0unX4r4KrASvT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20250303171030.1081134-1-ojeda@kernel.org>
+In-Reply-To: <20250303171030.1081134-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Thu, 6 Mar 2025 00:01:55 +0100
+X-Gm-Features: AQ5f1Jr0OQTle1lIKSehc5uqZjrZL6QS1aOiHJlFeVVcIb6JdJy8vamJVkQrFE4
+Message-ID: <CANiq72n8_rJq5SzRV69JutFmbbJak=pb_ZekSgsLtL1evqy8Qw@mail.gmail.com>
+Subject: Re: [PATCH] rust: remove leftover mentions of the `alloc` crate
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi!
+On Mon, Mar 3, 2025 at 6:10=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
+e:
+>
+> In commit 392e34b6bc22 ("kbuild: rust: remove the `alloc` crate and
+> `GlobalAlloc`") we stopped using the upstream `alloc` crate.
+>
+> Thus remove a few leftover mentions treewide.
+>
+> Cc: stable@vger.kernel.org # Also to 6.12.y after the `alloc` backport la=
+nds
+> Fixes: 392e34b6bc22 ("kbuild: rust: remove the `alloc` crate and `GlobalA=
+lloc`")
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-> This is the start of the stable review cycle for the 6.6.81 release.
-> There are 142 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Applied to `rust-fixes` -- thanks everyone!
 
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.6.y
-
-6.12 and 6.13 pass our testing, too:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.13.y
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.12.y
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
-
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---8jf0unX4r4KrASvT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZ8jIcwAKCRAw5/Bqldv6
-8ltqAJwJQgOM0lXi8sRYkEhvOQxLmbDBwwCgm75XWL3UVdjntvjt/toWFZlMfsM=
-=2sob
------END PGP SIGNATURE-----
-
---8jf0unX4r4KrASvT--
+Cheers,
+Miguel
