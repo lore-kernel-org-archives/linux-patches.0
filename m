@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B50225179E;
-	Wed,  5 Mar 2025 18:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBE6250C14;
+	Wed,  5 Mar 2025 18:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198100; cv=none; b=Grss57BvHTvRBO5ghVfIZcfUO5pFPsM0/PsqofxICh5ZQWqLmjp3jXdqPIePbWsH2aa5S8qw0M7BO9aHRFQXxnbB05ynqvaVmzNyrJ/SRXMILVHdGwX1zajebZ7/Rko1ZDVd+7GFymiY6rPp7ouMFhn4NAhorm7grfDPxDlovjE=
+	t=1741198103; cv=none; b=mGfeQTvTeEktlMCtOgklrUTljPTy4ktPssdKb+akTYmO9lUDGTc+oAbEh6FkuOfXxvlsCwGLD39aAqSf4VvKDYkmSKT4fQriDDpZQwZzx4SLTUqGLZRzEMzqOeln56pLEAMRMwSVpknC9fAeRRBWI+NEzbbf9go8QDnYQ2hIc5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198100; c=relaxed/simple;
-	bh=7puEq7QkPGAsg1F2K2slKdcM83SlK7oyHaKR+BKLsmQ=;
+	s=arc-20240116; t=1741198103; c=relaxed/simple;
+	bh=slrw86S9Bj0njc3BD8tXF0dfhkI3eRAtghacwKON8y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W4Y0zVfPoscioYO3W8+5lOj/ImYTdZG3Znmgu1IkH+RNYAppsM43BE8blZtnF33f+0QUsws1CErVxUhOFyWebx6CwrDVZRiLPrx3gGBkfJsRXVgxPmMmO3Cow0hpww2jTYERcHHivoRg6Hn6Ez5kXDkIddlJnEMdX1bzey7pz5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6dlv/jR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QrXsTHx4Allj1QQyrfURsJ4KIdi0CjK5rV5MYdlqSspAbsR2lZywWeqwpBESMm+czrea09z6JHc9Cfb59wLFvQXqgyBJFb8hlouDSQTB778Q7Cv+SydyRrD1PAjIt2JflepHXxExnx9TLn7kQKXIQeQtRWGsnB7HhXsSux59L9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npfUX6OE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6dlv/jR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7956C4CED1;
-	Wed,  5 Mar 2025 18:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npfUX6OE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD40C4CEE9;
+	Wed,  5 Mar 2025 18:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198100;
-	bh=7puEq7QkPGAsg1F2K2slKdcM83SlK7oyHaKR+BKLsmQ=;
+	s=korg; t=1741198103;
+	bh=slrw86S9Bj0njc3BD8tXF0dfhkI3eRAtghacwKON8y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R6dlv/jRWU5x2qFAAy5w0KBll4sqXQcHwGX4Xdr2qrZ8xQzLjZ7Sm5qn5rYaLTuqM
-	 zzfNxiawhs5UvNHNqEBlCXpjYlk5MFk7x2tnHx2SFDlL9YVKCKR9ZrCttbjkX5ZvNq
-	 uQ17/JTOBBi3Bo9M4cWBcoThLoK1eN8RlWjcGJIU=
+	b=npfUX6OE8Ijp4rLCZpijcYqI3C4sIWfVmTv1Svx3R5JIDdQV6GE6A7+WnC/1i0Udt
+	 yJp8AdtxlaNN+NNoylhE0n8FsnfKaFTg5Eql2oSoWjVwv+q49RqaJDId6LnCV2If4H
+	 duLd/Thjq/NkGvobhyRPO+ZFoB/5sVdPngmucDDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <jdamato@fastly.com>,
-	David Wei <dw@davidwei.uk>,
+	Eric Dumazet <edumazet@google.com>,
+	Alan Brady <alan.brady@intel.com>,
+	Joshua Hay <joshua.a.hay@intel.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/150] selftests: drv-net: Check if combined-count exists
-Date: Wed,  5 Mar 2025 18:48:13 +0100
-Message-ID: <20250305174506.392627484@linuxfoundation.org>
+Subject: [PATCH 6.12 065/150] idpf: fix checksums set in idpf_rx_rsc()
+Date: Wed,  5 Mar 2025 18:48:14 +0100
+Message-ID: <20250305174506.431656897@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -52,80 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <jdamato@fastly.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1cbddbddee68d17feb6467fc556c144777af91ef ]
+[ Upstream commit 674fcb4f4a7e3e277417a01788cc6daae47c3804 ]
 
-Some drivers, like tg3, do not set combined-count:
+idpf_rx_rsc() uses skb_transport_offset(skb) while the transport header
+is not set yet.
 
-$ ethtool -l enp4s0f1
-Channel parameters for enp4s0f1:
-Pre-set maximums:
-RX:		4
-TX:		4
-Other:		n/a
-Combined:	n/a
-Current hardware settings:
-RX:		4
-TX:		1
-Other:		n/a
-Combined:	n/a
+This triggers the following warning for CONFIG_DEBUG_NET=y builds.
 
-In the case where combined-count is not set, the ethtool netlink code
-in the kernel elides the value and the code in the test:
+DEBUG_NET_WARN_ON_ONCE(!skb_transport_header_was_set(skb))
 
-  netnl.channels_get(...)
+[   69.261620] WARNING: CPU: 7 PID: 0 at ./include/linux/skbuff.h:3020 idpf_vport_splitq_napi_poll (include/linux/skbuff.h:3020) idpf
+[   69.261629] Modules linked in: vfat fat dummy bridge intel_uncore_frequency_tpmi intel_uncore_frequency_common intel_vsec_tpmi idpf intel_vsec cdc_ncm cdc_eem cdc_ether usbnet mii xhci_pci xhci_hcd ehci_pci ehci_hcd libeth
+[   69.261644] CPU: 7 UID: 0 PID: 0 Comm: swapper/7 Tainted: G S      W          6.14.0-smp-DEV #1697
+[   69.261648] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   69.261650] RIP: 0010:idpf_vport_splitq_napi_poll (include/linux/skbuff.h:3020) idpf
+[   69.261677] ? __warn (kernel/panic.c:242 kernel/panic.c:748)
+[   69.261682] ? idpf_vport_splitq_napi_poll (include/linux/skbuff.h:3020) idpf
+[   69.261687] ? report_bug (lib/bug.c:?)
+[   69.261690] ? handle_bug (arch/x86/kernel/traps.c:285)
+[   69.261694] ? exc_invalid_op (arch/x86/kernel/traps.c:309)
+[   69.261697] ? asm_exc_invalid_op (arch/x86/include/asm/idtentry.h:621)
+[   69.261700] ? __pfx_idpf_vport_splitq_napi_poll (drivers/net/ethernet/intel/idpf/idpf_txrx.c:4011) idpf
+[   69.261704] ? idpf_vport_splitq_napi_poll (include/linux/skbuff.h:3020) idpf
+[   69.261708] ? idpf_vport_splitq_napi_poll (drivers/net/ethernet/intel/idpf/idpf_txrx.c:3072) idpf
+[   69.261712] __napi_poll (net/core/dev.c:7194)
+[   69.261716] net_rx_action (net/core/dev.c:7265)
+[   69.261718] ? __qdisc_run (net/sched/sch_generic.c:293)
+[   69.261721] ? sched_clock (arch/x86/include/asm/preempt.h:84 arch/x86/kernel/tsc.c:288)
+[   69.261726] handle_softirqs (kernel/softirq.c:561)
 
-With a tg3 device, the returned dictionary looks like:
-
-{'header': {'dev-index': 3, 'dev-name': 'enp4s0f1'},
- 'rx-max': 4,
- 'rx-count': 4,
- 'tx-max': 4,
- 'tx-count': 1}
-
-Note that the key 'combined-count' is missing. As a result of this
-missing key the test raises an exception:
-
- # Exception|     if channels['combined-count'] == 0:
- # Exception|        ~~~~~~~~^^^^^^^^^^^^^^^^^^
- # Exception| KeyError: 'combined-count'
-
-Change the test to check if 'combined-count' is a key in the dictionary
-first and if not assume that this means the driver has separate RX and
-TX queues.
-
-With this change, the test now passes successfully on tg3 and mlx5
-(which does have a 'combined-count').
-
-Fixes: 1cf270424218 ("net: selftest: add test for netdev netlink queue-get API")
-Signed-off-by: Joe Damato <jdamato@fastly.com>
-Reviewed-by: David Wei <dw@davidwei.uk>
-Link: https://patch.msgid.link/20250226181957.212189-1-jdamato@fastly.com
+Fixes: 3a8845af66edb ("idpf: add RX splitq napi poll support")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Alan Brady <alan.brady@intel.com>
+Cc: Joshua Hay <joshua.a.hay@intel.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Acked-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Link: https://patch.msgid.link/20250226221253.1927782-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/queues.py | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_txrx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/drivers/net/queues.py b/tools/testing/selftests/drivers/net/queues.py
-index 30f29096e27c2..4868b514ae78d 100755
---- a/tools/testing/selftests/drivers/net/queues.py
-+++ b/tools/testing/selftests/drivers/net/queues.py
-@@ -40,10 +40,9 @@ def addremove_queues(cfg, nl) -> None:
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+index 1e0d1f9b07fbc..afc902ae4763e 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+@@ -3013,7 +3013,6 @@ static int idpf_rx_rsc(struct idpf_rx_queue *rxq, struct sk_buff *skb,
+ 	skb_shinfo(skb)->gso_size = rsc_seg_len;
  
-     netnl = EthtoolFamily()
-     channels = netnl.channels_get({'header': {'dev-index': cfg.ifindex}})
--    if channels['combined-count'] == 0:
--        rx_type = 'rx'
--    else:
--        rx_type = 'combined'
-+    rx_type = 'rx'
-+    if channels.get('combined-count', 0) > 0:
-+            rx_type = 'combined'
+ 	skb_reset_network_header(skb);
+-	len = skb->len - skb_transport_offset(skb);
  
-     expected = curr_queues - 1
-     cmd(f"ethtool -L {cfg.dev['ifname']} {rx_type} {expected}", timeout=10)
+ 	if (ipv4) {
+ 		struct iphdr *ipv4h = ip_hdr(skb);
+@@ -3022,6 +3021,7 @@ static int idpf_rx_rsc(struct idpf_rx_queue *rxq, struct sk_buff *skb,
+ 
+ 		/* Reset and set transport header offset in skb */
+ 		skb_set_transport_header(skb, sizeof(struct iphdr));
++		len = skb->len - skb_transport_offset(skb);
+ 
+ 		/* Compute the TCP pseudo header checksum*/
+ 		tcp_hdr(skb)->check =
+@@ -3031,6 +3031,7 @@ static int idpf_rx_rsc(struct idpf_rx_queue *rxq, struct sk_buff *skb,
+ 
+ 		skb_shinfo(skb)->gso_type = SKB_GSO_TCPV6;
+ 		skb_set_transport_header(skb, sizeof(struct ipv6hdr));
++		len = skb->len - skb_transport_offset(skb);
+ 		tcp_hdr(skb)->check =
+ 			~tcp_v6_check(len, &ipv6h->saddr, &ipv6h->daddr, 0);
+ 	}
 -- 
 2.39.5
 
