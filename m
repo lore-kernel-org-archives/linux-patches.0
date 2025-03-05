@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACF5481DD;
-	Wed,  5 Mar 2025 17:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7488E481DD;
+	Wed,  5 Mar 2025 17:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197330; cv=none; b=MLHh2MK93eDZ7zs0rB+OU5rLWn4u9INaoBFBKOYILA/5wBXtJ+lgvkIP8LDL0JuktokhVUEYMajceWLSTbLA4YUeG6r5HUyTsgI5DSggcxBy+QZfiM+ks6YaZKiaAb1UQUSp7ECd4iUTCczaytddOPKS4rMDQadHHhnguoyF01A=
+	t=1741197332; cv=none; b=Rr2dhnazbusNM5ByYYH2tnZewd6jeiH7vfq9IEOYpsYHY9Cp3Vcj5C99DYLlyBLCtSaOrArpFvewbIEx//6p4Ibsfk643ZXJjKzZSKg4PSsrTq5p0XQYyrt8znmy9uWcvyPi2wgBUQT7o96+a7XpSmafEvYDKnkx3tdez58rjz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197330; c=relaxed/simple;
-	bh=4NXfncGCufU+hkDvKgSyymiletaxt7zBDn2zE5qgW0k=;
+	s=arc-20240116; t=1741197332; c=relaxed/simple;
+	bh=WSXlIedrcj0W75CDxoxJXS08f0zsBJ/vBSnI6VcRtVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FaVyFe15lR6li3IOW/LkO+QM4+5q+YxgV6LyZtecLHufaz/HOcMTYK4lTKTrziCaafgjhEGtJ/zh6T/tb+BgY/IuFCvsLRu55FItK/ChAh2W6azvBoqRstDdZBi5QUBMTDjohx0gw9pnfy//6yJsklN9tw9dH1Zx9lJLX0dKM4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQ5czwmq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cN4UQCEIL1+55kvwQ8rGmHy7Y/jW88VMXLLtbtWXB07bEIctHO6XT7sb9qn18LBYLetBYm2C2wORVAk8dzqwhzSNi9WN6F1IrH7Qe72W6KC4ICzF9LvQ7KIAysxM3mfn63KWQvhdDwY+4+YkyhHhtbxzUnPuaVrlt7pZcoJEKzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ut6ZYLiA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQ5czwmq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18444C4CED1;
-	Wed,  5 Mar 2025 17:55:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ut6ZYLiA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C21C4CED1;
+	Wed,  5 Mar 2025 17:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197329;
-	bh=4NXfncGCufU+hkDvKgSyymiletaxt7zBDn2zE5qgW0k=;
+	s=korg; t=1741197332;
+	bh=WSXlIedrcj0W75CDxoxJXS08f0zsBJ/vBSnI6VcRtVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jQ5czwmqjvrn9/QPmlkKWi2QtYPVLLLiO1qqmKMC6w2j4WNxA4JhqN5w3Ez/2FOJP
-	 O8aFnHvPoKfubcwoMfxYCTR0e/N3OqPnZbuJZvy4rKsee/RkDXIThkqsX+pVQ2+tdq
-	 Cy+xXHWKhg5ONN+rvJhWTtGic3Dh/heQHon9/Zyw=
+	b=Ut6ZYLiA5n4GR73JbSMIlVghK6t4AYbS1FtQRq25jnXZbZ0+st05VmQwjpGCgMu6k
+	 nbu1kglENmMW+eVdx2JGBGBPPOATHAm/2LUi+zzVBlbHys80Q72TqL0atH+rlW0x5w
+	 bX5nW7qIuDmYEsYrrPu6nC3xQ3bXIhEOTV2GGDd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/176] afs: Make it possible to find the volumes that are using a server
-Date: Wed,  5 Mar 2025 18:48:08 +0100
-Message-ID: <20250305174510.236450860@linuxfoundation.org>
+Subject: [PATCH 6.1 102/176] RDMA/mlx5: Add work to remove temporary entries from the cache
+Date: Wed,  5 Mar 2025 18:47:51 +0100
+Message-ID: <20250305174509.559609622@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -52,415 +51,313 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit ca0e79a46097d54e4af46c67c852479d97af35bb ]
+[ Upstream commit 627122280c878cf5d3cda2d2c5a0a8f6a7e35cb7 ]
 
-Make it possible to find the afs_volume structs that are using an
-afs_server struct to aid in breaking volume callbacks.
+The non-cache mkeys are stored in the cache only to shorten restarting
+application time. Don't store them longer than needed.
 
-The way this is done is that each afs_volume already has an array of
-afs_server_entry records that point to the servers where that volume might
-be found.  An afs_volume backpointer and a list node is added to each entry
-and each entry is then added to an RCU-traversable list on the afs_server
-to which it points.
+Configure cache entries that store non-cache MRs as temporary entries.  If
+30 seconds have passed and no user reclaimed the temporarily cached mkeys,
+an asynchronous work will destroy the mkeys entries.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Stable-dep-of: add117e48df4 ("afs: Fix the server_list to unuse a displaced server rather than putting it")
+Link: https://lore.kernel.org/r/20230125222807.6921-7-michaelgur@nvidia.com
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: d97505baea64 ("RDMA/mlx5: Fix the recovery flow of the UMR QP")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/cell.c        |   1 +
- fs/afs/internal.h    |  23 +++++----
- fs/afs/server.c      |   1 +
- fs/afs/server_list.c | 112 +++++++++++++++++++++++++++++++++++++++----
- fs/afs/vl_alias.c    |   2 +-
- fs/afs/volume.c      |  36 ++++++++------
- 6 files changed, 143 insertions(+), 32 deletions(-)
+ drivers/infiniband/hw/mlx5/mlx5_ib.h |  9 ++-
+ drivers/infiniband/hw/mlx5/mr.c      | 94 ++++++++++++++++++++++------
+ drivers/infiniband/hw/mlx5/odp.c     |  2 +-
+ 3 files changed, 82 insertions(+), 23 deletions(-)
 
-diff --git a/fs/afs/cell.c b/fs/afs/cell.c
-index 926cb1188eba6..7c0dce8eecadd 100644
---- a/fs/afs/cell.c
-+++ b/fs/afs/cell.c
-@@ -161,6 +161,7 @@ static struct afs_cell *afs_alloc_cell(struct afs_net *net,
- 	refcount_set(&cell->ref, 1);
- 	atomic_set(&cell->active, 0);
- 	INIT_WORK(&cell->manager, afs_manage_cell_work);
-+	spin_lock_init(&cell->vs_lock);
- 	cell->volumes = RB_ROOT;
- 	INIT_HLIST_HEAD(&cell->proc_volumes);
- 	seqlock_init(&cell->volume_lock);
-diff --git a/fs/afs/internal.h b/fs/afs/internal.h
-index 097d5a5f07b1a..fd4310272ccc1 100644
---- a/fs/afs/internal.h
-+++ b/fs/afs/internal.h
-@@ -378,6 +378,7 @@ struct afs_cell {
- 	unsigned int		debug_id;
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index f345e2ae394d2..7c72e0e9db54a 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -770,6 +770,7 @@ struct mlx5_cache_ent {
+ 	struct rb_node		node;
+ 	struct mlx5r_cache_rb_key rb_key;
  
- 	/* The volumes belonging to this cell */
-+	spinlock_t		vs_lock;	/* Lock for server->volumes */
- 	struct rb_root		volumes;	/* Tree of volumes on this server */
- 	struct hlist_head	proc_volumes;	/* procfs volume list */
- 	seqlock_t		volume_lock;	/* For volumes */
-@@ -501,6 +502,7 @@ struct afs_server {
- 	struct hlist_node	addr4_link;	/* Link in net->fs_addresses4 */
- 	struct hlist_node	addr6_link;	/* Link in net->fs_addresses6 */
- 	struct hlist_node	proc_link;	/* Link in net->fs_proc */
-+	struct list_head	volumes;	/* RCU list of afs_server_entry objects */
- 	struct work_struct	initcb_work;	/* Work for CB.InitCallBackState* */
- 	struct afs_server	*gc_next;	/* Next server in manager's list */
- 	time64_t		unuse_time;	/* Time at which last unused */
-@@ -549,12 +551,14 @@ struct afs_server {
-  */
- struct afs_server_entry {
- 	struct afs_server	*server;
-+	struct afs_volume	*volume;
-+	struct list_head	slink;		/* Link in server->volumes */
++	u8 is_tmp:1;
+ 	u8 disabled:1;
+ 	u8 fill_to_high_water:1;
+ 
+@@ -803,6 +804,7 @@ struct mlx5_mkey_cache {
+ 	struct mutex		rb_lock;
+ 	struct dentry		*fs_root;
+ 	unsigned long		last_add;
++	struct delayed_work	remove_ent_dwork;
  };
  
- struct afs_server_list {
- 	struct rcu_head		rcu;
--	afs_volid_t		vids[AFS_MAXTYPES]; /* Volume IDs */
- 	refcount_t		usage;
-+	bool			attached;	/* T if attached to servers */
- 	unsigned char		nr_servers;
- 	unsigned char		preferred;	/* Preferred server */
- 	unsigned short		vnovol_mask;	/* Servers to be skipped due to VNOVOL */
-@@ -567,10 +571,9 @@ struct afs_server_list {
-  * Live AFS volume management.
-  */
- struct afs_volume {
--	union {
--		struct rcu_head	rcu;
--		afs_volid_t	vid;		/* volume ID */
--	};
-+	struct rcu_head	rcu;
-+	afs_volid_t		vid;		/* The volume ID of this volume */
-+	afs_volid_t		vids[AFS_MAXTYPES]; /* All associated volume IDs */
- 	refcount_t		ref;
- 	time64_t		update_at;	/* Time at which to next update */
- 	struct afs_cell		*cell;		/* Cell to which belongs (pins ref) */
-@@ -1450,10 +1453,14 @@ static inline struct afs_server_list *afs_get_serverlist(struct afs_server_list
+ struct mlx5_ib_port_resources {
+@@ -1346,9 +1348,10 @@ void mlx5_ib_copy_pas(u64 *old, u64 *new, int step, int num);
+ int mlx5_ib_get_cqe_size(struct ib_cq *ibcq);
+ int mlx5_mkey_cache_init(struct mlx5_ib_dev *dev);
+ int mlx5_mkey_cache_cleanup(struct mlx5_ib_dev *dev);
+-struct mlx5_cache_ent *mlx5r_cache_create_ent(struct mlx5_ib_dev *dev,
+-					      struct mlx5r_cache_rb_key rb_key,
+-					      bool persistent_entry);
++struct mlx5_cache_ent *
++mlx5r_cache_create_ent_locked(struct mlx5_ib_dev *dev,
++			      struct mlx5r_cache_rb_key rb_key,
++			      bool persistent_entry);
+ 
+ struct mlx5_ib_mr *mlx5_mr_cache_alloc(struct mlx5_ib_dev *dev,
+ 				       int access_flags, int access_mode,
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index bf1ca7565be67..2c1a935734273 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -140,19 +140,16 @@ static void create_mkey_warn(struct mlx5_ib_dev *dev, int status, void *out)
+ 	mlx5_cmd_out_err(dev->mdev, MLX5_CMD_OP_CREATE_MKEY, 0, out);
  }
  
- extern void afs_put_serverlist(struct afs_net *, struct afs_server_list *);
--extern struct afs_server_list *afs_alloc_server_list(struct afs_cell *, struct key *,
--						     struct afs_vldb_entry *,
--						     u8);
-+struct afs_server_list *afs_alloc_server_list(struct afs_volume *volume,
-+					      struct key *key,
-+					      struct afs_vldb_entry *vldb);
- extern bool afs_annotate_server_list(struct afs_server_list *, struct afs_server_list *);
-+void afs_attach_volume_to_servers(struct afs_volume *volume, struct afs_server_list *slist);
-+void afs_reattach_volume_to_servers(struct afs_volume *volume, struct afs_server_list *slist,
-+				    struct afs_server_list *old);
-+void afs_detach_volume_from_servers(struct afs_volume *volume, struct afs_server_list *slist);
- 
- /*
-  * super.c
-diff --git a/fs/afs/server.c b/fs/afs/server.c
-index 0bd2f5ba6900c..87381c2ffe374 100644
---- a/fs/afs/server.c
-+++ b/fs/afs/server.c
-@@ -236,6 +236,7 @@ static struct afs_server *afs_alloc_server(struct afs_cell *cell,
- 	server->addr_version = alist->version;
- 	server->uuid = *uuid;
- 	rwlock_init(&server->fs_lock);
-+	INIT_LIST_HEAD(&server->volumes);
- 	INIT_WORK(&server->initcb_work, afs_server_init_callback_work);
- 	init_waitqueue_head(&server->probe_wq);
- 	INIT_LIST_HEAD(&server->probe_link);
-diff --git a/fs/afs/server_list.c b/fs/afs/server_list.c
-index b59896b1de0af..4d6369477f54e 100644
---- a/fs/afs/server_list.c
-+++ b/fs/afs/server_list.c
-@@ -24,13 +24,13 @@ void afs_put_serverlist(struct afs_net *net, struct afs_server_list *slist)
- /*
-  * Build a server list from a VLDB record.
-  */
--struct afs_server_list *afs_alloc_server_list(struct afs_cell *cell,
-+struct afs_server_list *afs_alloc_server_list(struct afs_volume *volume,
- 					      struct key *key,
--					      struct afs_vldb_entry *vldb,
--					      u8 type_mask)
-+					      struct afs_vldb_entry *vldb)
- {
- 	struct afs_server_list *slist;
- 	struct afs_server *server;
-+	unsigned int type_mask = 1 << volume->type;
- 	int ret = -ENOMEM, nr_servers = 0, i, j;
- 
- 	for (i = 0; i < vldb->nr_servers; i++)
-@@ -44,15 +44,12 @@ struct afs_server_list *afs_alloc_server_list(struct afs_cell *cell,
- 	refcount_set(&slist->usage, 1);
- 	rwlock_init(&slist->lock);
- 
--	for (i = 0; i < AFS_MAXTYPES; i++)
--		slist->vids[i] = vldb->vid[i];
 -
- 	/* Make sure a records exists for each server in the list. */
- 	for (i = 0; i < vldb->nr_servers; i++) {
- 		if (!(vldb->fs_mask[i] & type_mask))
- 			continue;
+-static int push_mkey(struct mlx5_cache_ent *ent, bool limit_pendings,
+-		     void *to_store)
++static int push_mkey_locked(struct mlx5_cache_ent *ent, bool limit_pendings,
++			    void *to_store)
+ {
+ 	XA_STATE(xas, &ent->mkeys, 0);
+ 	void *curr;
  
--		server = afs_lookup_server(cell, key, &vldb->fs_server[i],
-+		server = afs_lookup_server(volume->cell, key, &vldb->fs_server[i],
- 					   vldb->addr_version[i]);
- 		if (IS_ERR(server)) {
- 			ret = PTR_ERR(server);
-@@ -70,7 +67,7 @@ struct afs_server_list *afs_alloc_server_list(struct afs_cell *cell,
- 				break;
- 		if (j < slist->nr_servers) {
- 			if (slist->servers[j].server == server) {
--				afs_put_server(cell->net, server,
-+				afs_put_server(volume->cell->net, server,
- 					       afs_server_trace_put_slist_isort);
- 				continue;
- 			}
-@@ -81,6 +78,7 @@ struct afs_server_list *afs_alloc_server_list(struct afs_cell *cell,
- 		}
- 
- 		slist->servers[j].server = server;
-+		slist->servers[j].volume = volume;
- 		slist->nr_servers++;
+-	xa_lock_irq(&ent->mkeys);
+ 	if (limit_pendings &&
+-	    (ent->reserved - ent->stored) > MAX_PENDING_REG_MR) {
+-		xa_unlock_irq(&ent->mkeys);
++	    (ent->reserved - ent->stored) > MAX_PENDING_REG_MR)
+ 		return -EAGAIN;
+-	}
++
+ 	while (1) {
+ 		/*
+ 		 * This is cmpxchg (NULL, XA_ZERO_ENTRY) however this version
+@@ -191,6 +188,7 @@ static int push_mkey(struct mlx5_cache_ent *ent, bool limit_pendings,
+ 			break;
+ 		xa_lock_irq(&ent->mkeys);
  	}
- 
-@@ -92,7 +90,7 @@ struct afs_server_list *afs_alloc_server_list(struct afs_cell *cell,
- 	return slist;
- 
- error_2:
--	afs_put_serverlist(cell->net, slist);
-+	afs_put_serverlist(volume->cell->net, slist);
- error:
- 	return ERR_PTR(ret);
++	xa_lock_irq(&ent->mkeys);
+ 	if (xas_error(&xas))
+ 		return xas_error(&xas);
+ 	if (WARN_ON(curr))
+@@ -198,6 +196,17 @@ static int push_mkey(struct mlx5_cache_ent *ent, bool limit_pendings,
+ 	return 0;
  }
-@@ -127,3 +125,99 @@ bool afs_annotate_server_list(struct afs_server_list *new,
  
- 	return true;
- }
-+
-+/*
-+ * Attach a volume to the servers it is going to use.
-+ */
-+void afs_attach_volume_to_servers(struct afs_volume *volume, struct afs_server_list *slist)
++static int push_mkey(struct mlx5_cache_ent *ent, bool limit_pendings,
++		     void *to_store)
 +{
-+	struct afs_server_entry *se, *pe;
-+	struct afs_server *server;
-+	struct list_head *p;
-+	unsigned int i;
++	int ret;
 +
-+	spin_lock(&volume->cell->vs_lock);
-+
-+	for (i = 0; i < slist->nr_servers; i++) {
-+		se = &slist->servers[i];
-+		server = se->server;
-+
-+		list_for_each(p, &server->volumes) {
-+			pe = list_entry(p, struct afs_server_entry, slink);
-+			if (volume->vid <= pe->volume->vid)
-+				break;
-+		}
-+		list_add_tail_rcu(&se->slink, p);
-+	}
-+
-+	slist->attached = true;
-+	spin_unlock(&volume->cell->vs_lock);
++	xa_lock_irq(&ent->mkeys);
++	ret = push_mkey_locked(ent, limit_pendings, to_store);
++	xa_unlock_irq(&ent->mkeys);
++	return ret;
 +}
 +
-+/*
-+ * Reattach a volume to the servers it is going to use when server list is
-+ * replaced.  We try to switch the attachment points to avoid rewalking the
-+ * lists.
-+ */
-+void afs_reattach_volume_to_servers(struct afs_volume *volume, struct afs_server_list *new,
-+				    struct afs_server_list *old)
+ static void undo_push_reserve_mkey(struct mlx5_cache_ent *ent)
+ {
+ 	void *old;
+@@ -545,7 +554,7 @@ static void queue_adjust_cache_locked(struct mlx5_cache_ent *ent)
+ {
+ 	lockdep_assert_held(&ent->mkeys.xa_lock);
+ 
+-	if (ent->disabled || READ_ONCE(ent->dev->fill_delay))
++	if (ent->disabled || READ_ONCE(ent->dev->fill_delay) || ent->is_tmp)
+ 		return;
+ 	if (ent->stored < ent->limit) {
+ 		ent->fill_to_high_water = true;
+@@ -675,7 +684,6 @@ static int mlx5_cache_ent_insert(struct mlx5_mkey_cache *cache,
+ 	struct mlx5_cache_ent *cur;
+ 	int cmp;
+ 
+-	mutex_lock(&cache->rb_lock);
+ 	/* Figure out where to put new node */
+ 	while (*new) {
+ 		cur = rb_entry(*new, struct mlx5_cache_ent, node);
+@@ -695,7 +703,6 @@ static int mlx5_cache_ent_insert(struct mlx5_mkey_cache *cache,
+ 	rb_link_node(&ent->node, parent, new);
+ 	rb_insert_color(&ent->node, &cache->rb_root);
+ 
+-	mutex_unlock(&cache->rb_lock);
+ 	return 0;
+ }
+ 
+@@ -867,9 +874,10 @@ static void delay_time_func(struct timer_list *t)
+ 	WRITE_ONCE(dev->fill_delay, 0);
+ }
+ 
+-struct mlx5_cache_ent *mlx5r_cache_create_ent(struct mlx5_ib_dev *dev,
+-					      struct mlx5r_cache_rb_key rb_key,
+-					      bool persistent_entry)
++struct mlx5_cache_ent *
++mlx5r_cache_create_ent_locked(struct mlx5_ib_dev *dev,
++			      struct mlx5r_cache_rb_key rb_key,
++			      bool persistent_entry)
+ {
+ 	struct mlx5_cache_ent *ent;
+ 	int order;
+@@ -882,6 +890,7 @@ struct mlx5_cache_ent *mlx5r_cache_create_ent(struct mlx5_ib_dev *dev,
+ 	xa_init_flags(&ent->mkeys, XA_FLAGS_LOCK_IRQ);
+ 	ent->rb_key = rb_key;
+ 	ent->dev = dev;
++	ent->is_tmp = !persistent_entry;
+ 
+ 	INIT_DELAYED_WORK(&ent->dwork, delayed_cache_work_func);
+ 
+@@ -905,11 +914,44 @@ struct mlx5_cache_ent *mlx5r_cache_create_ent(struct mlx5_ib_dev *dev,
+ 			ent->limit = 0;
+ 
+ 		mlx5_mkey_cache_debugfs_add_ent(dev, ent);
++	} else {
++		mod_delayed_work(ent->dev->cache.wq,
++				 &ent->dev->cache.remove_ent_dwork,
++				 msecs_to_jiffies(30 * 1000));
+ 	}
+ 
+ 	return ent;
+ }
+ 
++static void remove_ent_work_func(struct work_struct *work)
 +{
-+	unsigned int n = 0, o = 0;
++	struct mlx5_mkey_cache *cache;
++	struct mlx5_cache_ent *ent;
++	struct rb_node *cur;
 +
-+	spin_lock(&volume->cell->vs_lock);
++	cache = container_of(work, struct mlx5_mkey_cache,
++			     remove_ent_dwork.work);
++	mutex_lock(&cache->rb_lock);
++	cur = rb_last(&cache->rb_root);
++	while (cur) {
++		ent = rb_entry(cur, struct mlx5_cache_ent, node);
++		cur = rb_prev(cur);
++		mutex_unlock(&cache->rb_lock);
 +
-+	while (n < new->nr_servers || o < old->nr_servers) {
-+		struct afs_server_entry *pn = n < new->nr_servers ? &new->servers[n] : NULL;
-+		struct afs_server_entry *po = o < old->nr_servers ? &old->servers[o] : NULL;
-+		struct afs_server_entry *s;
-+		struct list_head *p;
-+		int diff;
-+
-+		if (pn && po && pn->server == po->server) {
-+			list_replace_rcu(&po->slink, &pn->slink);
-+			n++;
-+			o++;
++		xa_lock_irq(&ent->mkeys);
++		if (!ent->is_tmp) {
++			xa_unlock_irq(&ent->mkeys);
++			mutex_lock(&cache->rb_lock);
 +			continue;
 +		}
++		xa_unlock_irq(&ent->mkeys);
 +
-+		if (pn && po)
-+			diff = memcmp(&pn->server->uuid, &po->server->uuid,
-+				      sizeof(pn->server->uuid));
-+		else
-+			diff = pn ? -1 : 1;
-+
-+		if (diff < 0) {
-+			list_for_each(p, &pn->server->volumes) {
-+				s = list_entry(p, struct afs_server_entry, slink);
-+				if (volume->vid <= s->volume->vid)
-+					break;
-+			}
-+			list_add_tail_rcu(&pn->slink, p);
-+			n++;
-+		} else {
-+			list_del_rcu(&po->slink);
-+			o++;
-+		}
++		clean_keys(ent->dev, ent);
++		mutex_lock(&cache->rb_lock);
 +	}
-+
-+	spin_unlock(&volume->cell->vs_lock);
++	mutex_unlock(&cache->rb_lock);
 +}
 +
-+/*
-+ * Detach a volume from the servers it has been using.
-+ */
-+void afs_detach_volume_from_servers(struct afs_volume *volume, struct afs_server_list *slist)
-+{
-+	unsigned int i;
-+
-+	if (!slist->attached)
-+		return;
-+
-+	spin_lock(&volume->cell->vs_lock);
-+
-+	for (i = 0; i < slist->nr_servers; i++)
-+		list_del_rcu(&slist->servers[i].slink);
-+
-+	slist->attached = false;
-+	spin_unlock(&volume->cell->vs_lock);
-+}
-diff --git a/fs/afs/vl_alias.c b/fs/afs/vl_alias.c
-index 83cf1bfbe343a..b2cc10df95308 100644
---- a/fs/afs/vl_alias.c
-+++ b/fs/afs/vl_alias.c
-@@ -126,7 +126,7 @@ static int afs_compare_volume_slists(const struct afs_volume *vol_a,
- 	lb = rcu_dereference(vol_b->servers);
- 
- 	for (i = 0; i < AFS_MAXTYPES; i++)
--		if (la->vids[i] != lb->vids[i])
-+		if (vol_a->vids[i] != vol_b->vids[i])
- 			return 0;
- 
- 	while (a < la->nr_servers && b < lb->nr_servers) {
-diff --git a/fs/afs/volume.c b/fs/afs/volume.c
-index c028598a903c9..0f64b97581272 100644
---- a/fs/afs/volume.c
-+++ b/fs/afs/volume.c
-@@ -72,11 +72,11 @@ static void afs_remove_volume_from_cell(struct afs_volume *volume)
-  */
- static struct afs_volume *afs_alloc_volume(struct afs_fs_context *params,
- 					   struct afs_vldb_entry *vldb,
--					   unsigned long type_mask)
-+					   struct afs_server_list **_slist)
+ int mlx5_mkey_cache_init(struct mlx5_ib_dev *dev)
  {
- 	struct afs_server_list *slist;
- 	struct afs_volume *volume;
--	int ret = -ENOMEM;
-+	int ret = -ENOMEM, i;
+ 	struct mlx5_mkey_cache *cache = &dev->cache;
+@@ -925,6 +967,7 @@ int mlx5_mkey_cache_init(struct mlx5_ib_dev *dev)
+ 	mutex_init(&dev->slow_path_mutex);
+ 	mutex_init(&dev->cache.rb_lock);
+ 	dev->cache.rb_root = RB_ROOT;
++	INIT_DELAYED_WORK(&dev->cache.remove_ent_dwork, remove_ent_work_func);
+ 	cache->wq = alloc_ordered_workqueue("mkey_cache", WQ_MEM_RECLAIM);
+ 	if (!cache->wq) {
+ 		mlx5_ib_warn(dev, "failed to create work queue\n");
+@@ -934,9 +977,10 @@ int mlx5_mkey_cache_init(struct mlx5_ib_dev *dev)
+ 	mlx5_cmd_init_async_ctx(dev->mdev, &dev->async_ctx);
+ 	timer_setup(&dev->delay_timer, delay_time_func, 0);
+ 	mlx5_mkey_cache_debugfs_init(dev);
++	mutex_lock(&cache->rb_lock);
+ 	for (i = 0; i <= mkey_cache_max_order(dev); i++) {
+ 		rb_key.ndescs = 1 << (i + 2);
+-		ent = mlx5r_cache_create_ent(dev, rb_key, true);
++		ent = mlx5r_cache_create_ent_locked(dev, rb_key, true);
+ 		if (IS_ERR(ent)) {
+ 			ret = PTR_ERR(ent);
+ 			goto err;
+@@ -947,6 +991,7 @@ int mlx5_mkey_cache_init(struct mlx5_ib_dev *dev)
+ 	if (ret)
+ 		goto err;
  
- 	volume = kzalloc(sizeof(struct afs_volume), GFP_KERNEL);
- 	if (!volume)
-@@ -95,13 +95,16 @@ static struct afs_volume *afs_alloc_volume(struct afs_fs_context *params,
- 	rwlock_init(&volume->cb_v_break_lock);
- 	memcpy(volume->name, vldb->name, vldb->name_len + 1);
++	mutex_unlock(&cache->rb_lock);
+ 	for (node = rb_first(root); node; node = rb_next(node)) {
+ 		ent = rb_entry(node, struct mlx5_cache_ent, node);
+ 		xa_lock_irq(&ent->mkeys);
+@@ -957,6 +1002,7 @@ int mlx5_mkey_cache_init(struct mlx5_ib_dev *dev)
+ 	return 0;
  
--	slist = afs_alloc_server_list(params->cell, params->key, vldb, type_mask);
-+	for (i = 0; i < AFS_MAXTYPES; i++)
-+		volume->vids[i] = vldb->vid[i];
-+
-+	slist = afs_alloc_server_list(volume, params->key, vldb);
- 	if (IS_ERR(slist)) {
- 		ret = PTR_ERR(slist);
- 		goto error_1;
- 	}
- 
--	refcount_set(&slist->usage, 1);
-+	*_slist = slist;
- 	rcu_assign_pointer(volume->servers, slist);
- 	trace_afs_volume(volume->vid, 1, afs_volume_trace_alloc);
- 	return volume;
-@@ -117,17 +120,19 @@ static struct afs_volume *afs_alloc_volume(struct afs_fs_context *params,
-  * Look up or allocate a volume record.
-  */
- static struct afs_volume *afs_lookup_volume(struct afs_fs_context *params,
--					    struct afs_vldb_entry *vldb,
--					    unsigned long type_mask)
-+					    struct afs_vldb_entry *vldb)
- {
-+	struct afs_server_list *slist;
- 	struct afs_volume *candidate, *volume;
- 
--	candidate = afs_alloc_volume(params, vldb, type_mask);
-+	candidate = afs_alloc_volume(params, vldb, &slist);
- 	if (IS_ERR(candidate))
- 		return candidate;
- 
- 	volume = afs_insert_volume_into_cell(params->cell, candidate);
--	if (volume != candidate)
-+	if (volume == candidate)
-+		afs_attach_volume_to_servers(volume, slist);
-+	else
- 		afs_put_volume(params->net, candidate, afs_volume_trace_put_cell_dup);
- 	return volume;
+ err:
++	mutex_unlock(&cache->rb_lock);
+ 	mlx5_ib_warn(dev, "failed to create mkey cache entry\n");
+ 	return ret;
  }
-@@ -208,8 +213,7 @@ struct afs_volume *afs_create_volume(struct afs_fs_context *params)
- 		goto error;
- 	}
+@@ -970,6 +1016,7 @@ int mlx5_mkey_cache_cleanup(struct mlx5_ib_dev *dev)
+ 	if (!dev->cache.wq)
+ 		return 0;
  
--	type_mask = 1UL << params->type;
--	volume = afs_lookup_volume(params, vldb, type_mask);
-+	volume = afs_lookup_volume(params, vldb);
- 
- error:
- 	kfree(vldb);
-@@ -221,14 +225,17 @@ struct afs_volume *afs_create_volume(struct afs_fs_context *params)
-  */
- static void afs_destroy_volume(struct afs_net *net, struct afs_volume *volume)
++	cancel_delayed_work_sync(&dev->cache.remove_ent_dwork);
+ 	mutex_lock(&dev->cache.rb_lock);
+ 	for (node = rb_first(root); node; node = rb_next(node)) {
+ 		ent = rb_entry(node, struct mlx5_cache_ent, node);
+@@ -1752,33 +1799,42 @@ static int cache_ent_find_and_store(struct mlx5_ib_dev *dev,
  {
-+	struct afs_server_list *slist = rcu_access_pointer(volume->servers);
-+
- 	_enter("%p", volume);
+ 	struct mlx5_mkey_cache *cache = &dev->cache;
+ 	struct mlx5_cache_ent *ent;
++	int ret;
  
- #ifdef CONFIG_AFS_FSCACHE
- 	ASSERTCMP(volume->cache, ==, NULL);
- #endif
- 
-+	afs_detach_volume_from_servers(volume, slist);
- 	afs_remove_volume_from_cell(volume);
--	afs_put_serverlist(net, rcu_access_pointer(volume->servers));
-+	afs_put_serverlist(net, slist);
- 	afs_put_cell(volume->cell, afs_cell_trace_put_vol);
- 	trace_afs_volume(volume->vid, refcount_read(&volume->ref),
- 			 afs_volume_trace_free);
-@@ -362,8 +369,7 @@ static int afs_update_volume_status(struct afs_volume *volume, struct key *key)
+ 	if (mr->mmkey.cache_ent) {
+ 		xa_lock_irq(&mr->mmkey.cache_ent->mkeys);
+ 		mr->mmkey.cache_ent->in_use--;
+-		xa_unlock_irq(&mr->mmkey.cache_ent->mkeys);
+ 		goto end;
  	}
  
- 	/* See if the volume's server list got updated. */
--	new = afs_alloc_server_list(volume->cell, key,
--				    vldb, (1 << volume->type));
-+	new = afs_alloc_server_list(volume, key, vldb);
- 	if (IS_ERR(new)) {
- 		ret = PTR_ERR(new);
- 		goto error_vldb;
-@@ -384,9 +390,11 @@ static int afs_update_volume_status(struct afs_volume *volume, struct key *key)
+ 	mutex_lock(&cache->rb_lock);
+ 	ent = mkey_cache_ent_from_rb_key(dev, mr->mmkey.rb_key);
+-	mutex_unlock(&cache->rb_lock);
+ 	if (ent) {
+ 		if (ent->rb_key.ndescs == mr->mmkey.rb_key.ndescs) {
++			if (ent->disabled) {
++				mutex_unlock(&cache->rb_lock);
++				return -EOPNOTSUPP;
++			}
+ 			mr->mmkey.cache_ent = ent;
++			xa_lock_irq(&mr->mmkey.cache_ent->mkeys);
++			mutex_unlock(&cache->rb_lock);
+ 			goto end;
+ 		}
+ 	}
  
- 	volume->update_at = ktime_get_real_seconds() + afs_volume_record_life;
- 	write_unlock(&volume->servers_lock);
--	ret = 0;
+-	ent = mlx5r_cache_create_ent(dev, mr->mmkey.rb_key, false);
++	ent = mlx5r_cache_create_ent_locked(dev, mr->mmkey.rb_key, false);
++	mutex_unlock(&cache->rb_lock);
+ 	if (IS_ERR(ent))
+ 		return PTR_ERR(ent);
  
-+	if (discard == old)
-+		afs_reattach_volume_to_servers(volume, new, old);
- 	afs_put_serverlist(volume->cell->net, discard);
-+	ret = 0;
- error_vldb:
- 	kfree(vldb);
- error:
+ 	mr->mmkey.cache_ent = ent;
++	xa_lock_irq(&mr->mmkey.cache_ent->mkeys);
+ 
+ end:
+-	return push_mkey(mr->mmkey.cache_ent, false,
+-			 xa_mk_value(mr->mmkey.key));
++	ret = push_mkey_locked(mr->mmkey.cache_ent, false,
++			       xa_mk_value(mr->mmkey.key));
++	xa_unlock_irq(&mr->mmkey.cache_ent->mkeys);
++	return ret;
+ }
+ 
+ int mlx5_ib_dereg_mr(struct ib_mr *ibmr, struct ib_udata *udata)
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index 96d4faabbff8a..6ba4aa1afdc2d 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -1602,7 +1602,7 @@ int mlx5_odp_init_mkey_cache(struct mlx5_ib_dev *dev)
+ 	if (!(dev->odp_caps.general_caps & IB_ODP_SUPPORT_IMPLICIT))
+ 		return 0;
+ 
+-	ent = mlx5r_cache_create_ent(dev, rb_key, true);
++	ent = mlx5r_cache_create_ent_locked(dev, rb_key, true);
+ 	if (IS_ERR(ent))
+ 		return PTR_ERR(ent);
+ 
 -- 
 2.39.5
 
