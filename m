@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015C3250C1D;
-	Wed,  5 Mar 2025 17:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EF114B075;
+	Wed,  5 Mar 2025 17:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197586; cv=none; b=mQ4ypHj2ffXN41c/fa3dMSaE8+dHUtJCy1voOcoqS8moyMzQBLQVPbhAs/N0OBLgwWlTj5R2FkeFRmuMzLMRFbRBMhsPixQC8n9tWp3rSqSC6ukwmnEvweDTScjSV2nKyLQDwWp/BGUlR3eexBSlmXFq8uEgfRYzGbSUFA0jxPE=
+	t=1741197589; cv=none; b=jzKJUN/FmHRkOXphqgmH2HcDVpRE0Y7nX7KM6CIUcz3AtJOlkwPS2i4XHMIuh7F689Chx8oMWlYFVFvH1LtvAHleCpHt+3g6OS9lOx2/s1g2zujjT6jl0Osh33d816912ylzWlvU4YewTHxe+c0XOyZKGox61yg/6mFjd5Q1Tu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197586; c=relaxed/simple;
-	bh=dBm4OkqFCQI49vePFq4xLGk4kU3zGwigYBPb7HDHzPE=;
+	s=arc-20240116; t=1741197589; c=relaxed/simple;
+	bh=7P8rdEbqhlM+367WWBqXSvMJjWBIN+Cl/PQQiFCAVlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ek4sBw87Q4nJPokjvZK3jn98evo3/V5XYMGrVGoD3kizKj4uIIPICQl3zbrjbiOiQ8w6j4Hv6ntQN/fPKDX8ZdjGc0LeuarTFRuRrO5bJqJ6lw9BvesH159ungIg1Jn9TRpbpGJeCHlMUlhEkxLOfuKB/o0IdCI1mYWqoXzCSsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK0kwWtB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pqShYgk38yqSwFKEzyEg6oL0NJhogG2r2ni4qCv1yCc25es3ijd8XAI4USN86NNA1LuKcrRsaxnMtk8zDfXBIoJZPQT+6jhy60dorh+anr8rcpxbfLqio0UcgZ/5a/j1XLhmwyhJ/KFys34uSG4OkYUzl8f043EeRIVYzhXypuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjwANFPz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK0kwWtB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83E28C4CED1;
-	Wed,  5 Mar 2025 17:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjwANFPz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6A9C4CED1;
+	Wed,  5 Mar 2025 17:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197585;
-	bh=dBm4OkqFCQI49vePFq4xLGk4kU3zGwigYBPb7HDHzPE=;
+	s=korg; t=1741197589;
+	bh=7P8rdEbqhlM+367WWBqXSvMJjWBIN+Cl/PQQiFCAVlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VK0kwWtBGTvV7ZEpX9PkNrxKlsjPcdIkU5dAhHvQ2Qlc4YEu1ETFSlWxiqVVLrsD9
-	 QuVpCEqyZP3jFhCWjCHioaqeFdp0CA+TLq9jH33qYzHGblSv8BeEQEpdNanuw1m1ZE
-	 e9caTczjg6CF23buOqqkNOj9OHpqCg/GybveTBxA=
+	b=hjwANFPzl2b+h+JwaHYrX88SHrp240dOnsj+GdHIL3RS1ys532N+t6iK0as0QJLNl
+	 8lVudKv5WIfMvphDg+whw8t8eSXJmdy3BAqQ0m0AF8rXdZEZULukyJ3dLA9zqBZ28U
+	 BzFiQFXKIb8YT2THqP2Bj5bs/fRkXntx1d0VlxMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bean Huo <beanhuo@micron.com>,
+	Mike Bi <mikebi@micron.com>,
+	Luca Porzio <lporzio@micron.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/142] ipvlan: Prepare ipvlan_process_v4_outbound() to future .flowi4_tos conversion.
-Date: Wed,  5 Mar 2025 18:47:29 +0100
-Message-ID: <20250305174501.550084795@linuxfoundation.org>
+Subject: [PATCH 6.6 004/142] scsi: ufs: core: Add UFS RTC support
+Date: Wed,  5 Mar 2025 18:47:03 +0100
+Message-ID: <20250305174500.514483153@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -46,53 +49,258 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Bean Huo <beanhuo@micron.com>
 
-[ Upstream commit 0c30d6eedd1ec0c1382bcab9576d26413cd278a3 ]
+[ Upstream commit 6bf999e0eb41850d5c857102535d5c53b2ede224 ]
 
-Use ip4h_dscp() to get the DSCP from the IPv4 header, then convert the
-dscp_t value to __u8 with inet_dscp_to_dsfield().
+Add Real Time Clock (RTC) support for UFS device. This enhancement is
+crucial for the internal maintenance operations of the UFS device. The
+patch enables the device to handle both absolute and relative time
+information. Furthermore, it includes periodic task to update the RTC in
+accordance with the UFS Spec, ensuring the accuracy of RTC information for
+the device's internal processes.
 
-Then, when we'll convert .flowi4_tos to dscp_t, we'll just have to drop
-the inet_dscp_to_dsfield() call.
+RTC and qTimestamp serve distinct purposes. The RTC provides a coarse level
+of granularity with, at best, approximate single-second resolution. This
+makes the RTC well-suited for the device to determine the approximate age
+of programmed blocks after being updated by the host. On the other hand,
+qTimestamp offers nanosecond granularity and is specifically designed for
+synchronizing Device Error Log entries with corresponding host-side logs.
 
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/f48335504a05b3587e0081a9b4511e0761571ca5.1730292157.git.gnault@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 27843ce6ba3d ("ipvlan: ensure network headers are in skb linear part")
+Given that the RTC has been a standard feature since UFS Spec 2.0, and
+qTimestamp was introduced in UFS Spec 4.0, the majority of UFS devices
+currently on the market rely on RTC. Therefore, it is advisable to continue
+supporting RTC in the Linux kernel. This ensures compatibility with the
+prevailing UFS device implementations and facilitates seamless integration
+with existing hardware.  By maintaining support for RTC, we ensure broad
+compatibility and avoid potential issues arising from deviations in device
+specifications across different UFS versions.
+
+Signed-off-by: Bean Huo <beanhuo@micron.com>
+Signed-off-by: Mike Bi <mikebi@micron.com>
+Signed-off-by: Luca Porzio <lporzio@micron.com>
+Link: https://lore.kernel.org/r/20231212220825.85255-3-beanhuo@iokpp.de
+Acked-by: Avri Altman <avri.altman@wdc.com>
+Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 4fa382be4304 ("scsi: ufs: core: Fix ufshcd_is_ufs_dev_busy() and ufshcd_eh_timed_out()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 83 ++++++++++++++++++++++++++++++++++++++-
+ include/ufs/ufs.h         | 13 ++++++
+ include/ufs/ufshcd.h      |  4 ++
+ 3 files changed, 98 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
-index b1afcb8740de1..fd591ddb3884d 100644
---- a/drivers/net/ipvlan/ipvlan_core.c
-+++ b/drivers/net/ipvlan/ipvlan_core.c
-@@ -3,6 +3,7 @@
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index fe1c56bc0a127..a9a7a84e6cbbc 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -98,6 +98,9 @@
+ /* Polling time to wait for fDeviceInit */
+ #define FDEVICEINIT_COMPL_TIMEOUT 1500 /* millisecs */
+ 
++/* Default RTC update every 10 seconds */
++#define UFS_RTC_UPDATE_INTERVAL_MS (10 * MSEC_PER_SEC)
++
+ /* UFSHC 4.0 compliant HC support this mode. */
+ static bool use_mcq_mode = true;
+ 
+@@ -682,6 +685,8 @@ static void ufshcd_device_reset(struct ufs_hba *hba)
+ 			hba->dev_info.wb_enabled = false;
+ 			hba->dev_info.wb_buf_flush_enabled = false;
+ 		}
++		if (hba->dev_info.rtc_type == UFS_RTC_RELATIVE)
++			hba->dev_info.rtc_time_baseline = 0;
+ 	}
+ 	if (err != -EOPNOTSUPP)
+ 		ufshcd_update_evt_hist(hba, UFS_EVT_DEV_RESET, err);
+@@ -8149,6 +8154,72 @@ static void ufs_fixup_device_setup(struct ufs_hba *hba)
+ 	ufshcd_vops_fixup_dev_quirks(hba);
+ }
+ 
++static void ufshcd_update_rtc(struct ufs_hba *hba)
++{
++	struct timespec64 ts64;
++	int err;
++	u32 val;
++
++	ktime_get_real_ts64(&ts64);
++
++	if (ts64.tv_sec < hba->dev_info.rtc_time_baseline) {
++		dev_warn_once(hba->dev, "%s: Current time precedes previous setting!\n", __func__);
++		return;
++	}
++
++	/*
++	 * The Absolute RTC mode has a 136-year limit, spanning from 2010 to 2146. If a time beyond
++	 * 2146 is required, it is recommended to choose the relative RTC mode.
++	 */
++	val = ts64.tv_sec - hba->dev_info.rtc_time_baseline;
++
++	ufshcd_rpm_get_sync(hba);
++	err = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_WRITE_ATTR, QUERY_ATTR_IDN_SECONDS_PASSED,
++				0, 0, &val);
++	ufshcd_rpm_put_sync(hba);
++
++	if (err)
++		dev_err(hba->dev, "%s: Failed to update rtc %d\n", __func__, err);
++	else if (hba->dev_info.rtc_type == UFS_RTC_RELATIVE)
++		hba->dev_info.rtc_time_baseline = ts64.tv_sec;
++}
++
++static void ufshcd_rtc_work(struct work_struct *work)
++{
++	struct ufs_hba *hba;
++
++	hba = container_of(to_delayed_work(work), struct ufs_hba, ufs_rtc_update_work);
++
++	 /* Update RTC only when there are no requests in progress and UFSHCI is operational */
++	if (!ufshcd_is_ufs_dev_busy(hba) && hba->ufshcd_state == UFSHCD_STATE_OPERATIONAL)
++		ufshcd_update_rtc(hba);
++
++	if (ufshcd_is_ufs_dev_active(hba))
++		schedule_delayed_work(&hba->ufs_rtc_update_work,
++				      msecs_to_jiffies(UFS_RTC_UPDATE_INTERVAL_MS));
++}
++
++static void ufs_init_rtc(struct ufs_hba *hba, u8 *desc_buf)
++{
++	u16 periodic_rtc_update = get_unaligned_be16(&desc_buf[DEVICE_DESC_PARAM_FRQ_RTC]);
++	struct ufs_dev_info *dev_info = &hba->dev_info;
++
++	if (periodic_rtc_update & UFS_RTC_TIME_BASELINE) {
++		dev_info->rtc_type = UFS_RTC_ABSOLUTE;
++
++		/*
++		 * The concept of measuring time in Linux as the number of seconds elapsed since
++		 * 00:00:00 UTC on January 1, 1970, and UFS ABS RTC is elapsed from January 1st
++		 * 2010 00:00, here we need to adjust ABS baseline.
++		 */
++		dev_info->rtc_time_baseline = mktime64(2010, 1, 1, 0, 0, 0) -
++							mktime64(1970, 1, 1, 0, 0, 0);
++	} else {
++		dev_info->rtc_type = UFS_RTC_RELATIVE;
++		dev_info->rtc_time_baseline = 0;
++	}
++}
++
+ static int ufs_get_device_desc(struct ufs_hba *hba)
+ {
+ 	int err;
+@@ -8201,6 +8272,8 @@ static int ufs_get_device_desc(struct ufs_hba *hba)
+ 
+ 	ufshcd_temp_notif_probe(hba, desc_buf);
+ 
++	ufs_init_rtc(hba, desc_buf);
++
+ 	if (hba->ext_iid_sup)
+ 		ufshcd_ext_iid_probe(hba, desc_buf);
+ 
+@@ -8753,6 +8826,8 @@ static int ufshcd_device_init(struct ufs_hba *hba, bool init_dev_params)
+ 	ufshcd_force_reset_auto_bkops(hba);
+ 
+ 	ufshcd_set_timestamp_attr(hba);
++	schedule_delayed_work(&hba->ufs_rtc_update_work,
++			      msecs_to_jiffies(UFS_RTC_UPDATE_INTERVAL_MS));
+ 
+ 	/* Gear up to HS gear if supported */
+ 	if (hba->max_pwr_info.is_valid) {
+@@ -9698,6 +9773,8 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	ret = ufshcd_vops_suspend(hba, pm_op, POST_CHANGE);
+ 	if (ret)
+ 		goto set_link_active;
++
++	cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
+ 	goto out;
+ 
+ set_link_active:
+@@ -9792,6 +9869,8 @@ static int __ufshcd_wl_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 		if (ret)
+ 			goto set_old_link_state;
+ 		ufshcd_set_timestamp_attr(hba);
++		schedule_delayed_work(&hba->ufs_rtc_update_work,
++				      msecs_to_jiffies(UFS_RTC_UPDATE_INTERVAL_MS));
+ 	}
+ 
+ 	if (ufshcd_keep_autobkops_enabled_except_suspend(hba))
+@@ -10500,8 +10579,8 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
+ 						UFS_SLEEP_PWR_MODE,
+ 						UIC_LINK_HIBERN8_STATE);
+ 
+-	INIT_DELAYED_WORK(&hba->rpm_dev_flush_recheck_work,
+-			  ufshcd_rpm_dev_flush_recheck_work);
++	INIT_DELAYED_WORK(&hba->rpm_dev_flush_recheck_work, ufshcd_rpm_dev_flush_recheck_work);
++	INIT_DELAYED_WORK(&hba->ufs_rtc_update_work, ufshcd_rtc_work);
+ 
+ 	/* Set the default auto-hiberate idle timer value to 150 ms */
+ 	if (ufshcd_is_auto_hibern8_supported(hba) && !hba->ahit) {
+diff --git a/include/ufs/ufs.h b/include/ufs/ufs.h
+index 49c90795a2a67..571a08ce91242 100644
+--- a/include/ufs/ufs.h
++++ b/include/ufs/ufs.h
+@@ -14,6 +14,7 @@
+ #include <linux/bitops.h>
+ #include <linux/types.h>
+ #include <uapi/scsi/scsi_bsg_ufs.h>
++#include <linux/time64.h>
+ 
+ /*
+  * Using static_assert() is not allowed in UAPI header files. Hence the check
+@@ -550,6 +551,14 @@ struct ufs_vreg_info {
+ 	struct ufs_vreg *vdd_hba;
+ };
+ 
++/* UFS device descriptor wPeriodicRTCUpdate bit9 defines RTC time baseline */
++#define UFS_RTC_TIME_BASELINE BIT(9)
++
++enum ufs_rtc_time {
++	UFS_RTC_RELATIVE,
++	UFS_RTC_ABSOLUTE
++};
++
+ struct ufs_dev_info {
+ 	bool	f_power_on_wp_en;
+ 	/* Keeps information if any of the LU is power on write protected */
+@@ -577,6 +586,10 @@ struct ufs_dev_info {
+ 
+ 	/* UFS EXT_IID Enable */
+ 	bool	b_ext_iid_en;
++
++	/* UFS RTC */
++	enum ufs_rtc_time rtc_type;
++	time64_t rtc_time_baseline;
+ };
+ 
+ /*
+diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+index 20d129914121d..d5aa832f8dba3 100644
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -908,6 +908,8 @@ enum ufshcd_mcq_opr {
+  * @mcq_base: Multi circular queue registers base address
+  * @uhq: array of supported hardware queues
+  * @dev_cmd_queue: Queue for issuing device management commands
++ * @mcq_opr: MCQ operation and runtime registers
++ * @ufs_rtc_update_work: A work for UFS RTC periodic update
   */
+ struct ufs_hba {
+ 	void __iomem *mmio_base;
+@@ -1068,6 +1070,8 @@ struct ufs_hba {
+ 	struct ufs_hw_queue *uhq;
+ 	struct ufs_hw_queue *dev_cmd_queue;
+ 	struct ufshcd_mcq_opr_info_t mcq_opr[OPR_MAX];
++
++	struct delayed_work ufs_rtc_update_work;
+ };
  
- #include <net/inet_dscp.h>
-+#include <net/ip.h>
- 
- #include "ipvlan.h"
- 
-@@ -422,7 +423,7 @@ static noinline_for_stack int ipvlan_process_v4_outbound(struct sk_buff *skb)
- 	int err, ret = NET_XMIT_DROP;
- 	struct flowi4 fl4 = {
- 		.flowi4_oif = dev->ifindex,
--		.flowi4_tos = ip4h->tos & INET_DSCP_MASK,
-+		.flowi4_tos = inet_dscp_to_dsfield(ip4h_dscp(ip4h)),
- 		.flowi4_flags = FLOWI_FLAG_ANYSRC,
- 		.flowi4_mark = skb->mark,
- 		.daddr = ip4h->daddr,
+ /**
 -- 
 2.39.5
 
