@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8797250BFC;
-	Wed,  5 Mar 2025 18:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8C818D65C;
+	Wed,  5 Mar 2025 18:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198138; cv=none; b=RQUDlqd5HsvIBHsTxblou+FSOd4KgFW9NnPbwVoypiTLzK8fXvajF/qz7F317W87sW8A4I7H1q78KfR1c5fyRsm8u6ROGmtFLCGpducBHkyaMrqHc0izKhBFHKxAszT84TpbO7RjTI2GbeLuSmMqA1sEGvc9CSBZBea3f1ATFWU=
+	t=1741198141; cv=none; b=sTD/LaOeJxtNFT2hULe0QriVGgptS8frJAjHl0Vai2vxYNiXP++6VHeFqpXuK2giuvz+pRTbKj3O1mYZirRiS10l2RB7P/kHSxfzv/l8OAWk9IXmitFVjs3JVI5wP9bWMLIS0vf845vJwhNzTVVbCOYPOYUJX26KPiacs99OAik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198138; c=relaxed/simple;
-	bh=HUUNtD/eJfpj+O5GvFhT5VIC/liyt4iqId5Tx08Dka4=;
+	s=arc-20240116; t=1741198141; c=relaxed/simple;
+	bh=h1LmIEozX1AOkHaxOnLETMdPiAalhZhOiCr+hZbBuFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=okHuGASbuAHVrbXjCPOh6IqNDVMmGUQOXo1xPf6LUFfZW0iWeOeI9rSAkDfkv08HrxMuoZ3LCTjvaNOr9db0sciR6JP2qlFMSqWvwRBlRumG2TdpNCNKnneeK14TfXK4Muku9Iv3pXrTtwb0M6/FaUpbxzq3aoyd0ONxgt4xUww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHTIFlwI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VqAGYtrnUH+4il/FGztHGJSxC5/6aVmRpj3oyAe4enx1XAQ2I2cqKTkl2pk+rHV2hiMSK8M24KSn2ONBZjC6rKdIG/LBwKtCwPzJKaX/2K20KR8f1iZfRqBGUsdstr+EubO+YEkXKW2y7SkOnzn4thM5p2WdeVoXb1EWbSin7zI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSHFpS7Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHTIFlwI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5594AC4CED1;
-	Wed,  5 Mar 2025 18:08:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSHFpS7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31AF8C4CED1;
+	Wed,  5 Mar 2025 18:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198138;
-	bh=HUUNtD/eJfpj+O5GvFhT5VIC/liyt4iqId5Tx08Dka4=;
+	s=korg; t=1741198141;
+	bh=h1LmIEozX1AOkHaxOnLETMdPiAalhZhOiCr+hZbBuFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHTIFlwIN9YT53TemLXrLA+gJpxfLURFrQI2XAEtai6vF3z5UmVmTeFP65AZlSMt4
-	 LJEpTk6P/X4LzXughULmpLw08LudgwgxIPsnYcMi4btqHP0HDKI/VG3+TqB1I1PTvt
-	 gkQpKHNrk+E1JHoJlY7M+DNxcQb3zDlWE5EP+9/o=
+	b=JSHFpS7YGR4QeUKoMfR6KDyXxARrMsUlJkE6xNPdxehEpR77s005kB4dE+YHAmS2h
+	 ZGjRW5usOpW37kep+NqbAXqQDdTGByYyiLwvnqWKDTX7bRjp3dcsDpf2URPNIRCUzv
+	 ruRyJ1QEAbyOQq7ZfGzzap3WR3+uWbn7Q+LudnPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jonathan Cavitt <jonathan.cavitt@intel.com>,
 	Ashutosh Dixit <ashutosh.dixit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/150] drm/xe/oa: Add syncs support to OA config ioctl
-Date: Wed,  5 Mar 2025 18:47:55 +0100
-Message-ID: <20250305174505.672720301@linuxfoundation.org>
+Subject: [PATCH 6.12 047/150] drm/xe/oa: Allow only certain property changes from config
+Date: Wed,  5 Mar 2025 18:47:56 +0100
+Message-ID: <20250305174505.712675066@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -53,126 +53,153 @@ Content-Transfer-Encoding: 8bit
 
 From: Ashutosh Dixit <ashutosh.dixit@intel.com>
 
-[ Upstream commit 9920c8b88c5cf2e44f4ff508dd3c0c96e4364db0 ]
+[ Upstream commit 85d3f9e84e0628c412b69aa99b63654dfa08ad68 ]
 
-In addition to stream open, add xe_sync support to the OA config ioctl,
-where it is even more useful. This allows e.g. Mesa to replay a workload
-repeatedly on the GPU, each time with a different OA configuration, while
-precisely controlling (at batch buffer granularity) the workload segment
-for which a particular OA configuration is active, without introducing
-stalls in the userspace pipeline.
+Whereas all properties can be specified during OA stream open, when the OA
+stream is reconfigured only the config_id and syncs can be specified.
 
-v2: Emit OA config even when config id is same as previous, to ensure
-    consistent sync behavior (Jose)
+v2: Use separate function table for reconfig case (Jonathan)
+    Change bool function args to enum (Matt B)
+v3: s/xe_oa_set_property_funcs/xe_oa_set_property_funcs_open/ (Jonathan)
 
 Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Suggested-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
 Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241022200352.1192560-7-ashutosh.dixit@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20241022200352.1192560-8-ashutosh.dixit@intel.com
 Stable-dep-of: 5bd566703e16 ("drm/xe/oa: Allow oa_exponent value of 0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_oa.c       | 41 ++++++++++++++++++--------------
- drivers/gpu/drm/xe/xe_oa_types.h |  3 +++
- 2 files changed, 26 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/xe/xe_oa.c | 60 +++++++++++++++++++++++++++++---------
+ 1 file changed, 46 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
-index dd541b62942f8..78f662fd197c4 100644
+index 78f662fd197c4..210b8bae59102 100644
 --- a/drivers/gpu/drm/xe/xe_oa.c
 +++ b/drivers/gpu/drm/xe/xe_oa.c
-@@ -844,6 +844,7 @@ static void xe_oa_stream_destroy(struct xe_oa_stream *stream)
- 		xe_gt_WARN_ON(gt, xe_guc_pc_unset_gucrc_mode(&gt->uc.guc.pc));
+@@ -47,6 +47,11 @@ enum xe_oa_submit_deps {
+ 	XE_OA_SUBMIT_ADD_DEPS,
+ };
  
- 	xe_oa_free_configs(stream);
-+	xe_file_put(stream->xef);
++enum xe_oa_user_extn_from {
++	XE_OA_USER_EXTN_FROM_OPEN,
++	XE_OA_USER_EXTN_FROM_CONFIG,
++};
++
+ struct xe_oa_reg {
+ 	struct xe_reg addr;
+ 	u32 value;
+@@ -1205,9 +1210,15 @@ static int xe_oa_set_prop_syncs_user(struct xe_oa *oa, u64 value,
+ 	return 0;
  }
  
- static int xe_oa_alloc_oa_buffer(struct xe_oa_stream *stream)
-@@ -1413,36 +1414,38 @@ static int xe_oa_disable_locked(struct xe_oa_stream *stream)
++static int xe_oa_set_prop_ret_inval(struct xe_oa *oa, u64 value,
++				    struct xe_oa_open_param *param)
++{
++	return -EINVAL;
++}
++
+ typedef int (*xe_oa_set_property_fn)(struct xe_oa *oa, u64 value,
+ 				     struct xe_oa_open_param *param);
+-static const xe_oa_set_property_fn xe_oa_set_property_funcs[] = {
++static const xe_oa_set_property_fn xe_oa_set_property_funcs_open[] = {
+ 	[DRM_XE_OA_PROPERTY_OA_UNIT_ID] = xe_oa_set_prop_oa_unit_id,
+ 	[DRM_XE_OA_PROPERTY_SAMPLE_OA] = xe_oa_set_prop_sample_oa,
+ 	[DRM_XE_OA_PROPERTY_OA_METRIC_SET] = xe_oa_set_prop_metric_set,
+@@ -1221,8 +1232,22 @@ static const xe_oa_set_property_fn xe_oa_set_property_funcs[] = {
+ 	[DRM_XE_OA_PROPERTY_SYNCS] = xe_oa_set_prop_syncs_user,
+ };
  
- static long xe_oa_config_locked(struct xe_oa_stream *stream, u64 arg)
+-static int xe_oa_user_ext_set_property(struct xe_oa *oa, u64 extension,
+-				       struct xe_oa_open_param *param)
++static const xe_oa_set_property_fn xe_oa_set_property_funcs_config[] = {
++	[DRM_XE_OA_PROPERTY_OA_UNIT_ID] = xe_oa_set_prop_ret_inval,
++	[DRM_XE_OA_PROPERTY_SAMPLE_OA] = xe_oa_set_prop_ret_inval,
++	[DRM_XE_OA_PROPERTY_OA_METRIC_SET] = xe_oa_set_prop_metric_set,
++	[DRM_XE_OA_PROPERTY_OA_FORMAT] = xe_oa_set_prop_ret_inval,
++	[DRM_XE_OA_PROPERTY_OA_PERIOD_EXPONENT] = xe_oa_set_prop_ret_inval,
++	[DRM_XE_OA_PROPERTY_OA_DISABLED] = xe_oa_set_prop_ret_inval,
++	[DRM_XE_OA_PROPERTY_EXEC_QUEUE_ID] = xe_oa_set_prop_ret_inval,
++	[DRM_XE_OA_PROPERTY_OA_ENGINE_INSTANCE] = xe_oa_set_prop_ret_inval,
++	[DRM_XE_OA_PROPERTY_NO_PREEMPT] = xe_oa_set_prop_ret_inval,
++	[DRM_XE_OA_PROPERTY_NUM_SYNCS] = xe_oa_set_prop_num_syncs,
++	[DRM_XE_OA_PROPERTY_SYNCS] = xe_oa_set_prop_syncs_user,
++};
++
++static int xe_oa_user_ext_set_property(struct xe_oa *oa, enum xe_oa_user_extn_from from,
++				       u64 extension, struct xe_oa_open_param *param)
  {
--	struct drm_xe_ext_set_property ext;
-+	struct xe_oa_open_param param = {};
- 	long ret = stream->oa_config->id;
+ 	u64 __user *address = u64_to_user_ptr(extension);
+ 	struct drm_xe_ext_set_property ext;
+@@ -1233,23 +1258,30 @@ static int xe_oa_user_ext_set_property(struct xe_oa *oa, u64 extension,
+ 	if (XE_IOCTL_DBG(oa->xe, err))
+ 		return -EFAULT;
+ 
+-	if (XE_IOCTL_DBG(oa->xe, ext.property >= ARRAY_SIZE(xe_oa_set_property_funcs)) ||
++	BUILD_BUG_ON(ARRAY_SIZE(xe_oa_set_property_funcs_open) !=
++		     ARRAY_SIZE(xe_oa_set_property_funcs_config));
++
++	if (XE_IOCTL_DBG(oa->xe, ext.property >= ARRAY_SIZE(xe_oa_set_property_funcs_open)) ||
+ 	    XE_IOCTL_DBG(oa->xe, ext.pad))
+ 		return -EINVAL;
+ 
+-	idx = array_index_nospec(ext.property, ARRAY_SIZE(xe_oa_set_property_funcs));
+-	return xe_oa_set_property_funcs[idx](oa, ext.value, param);
++	idx = array_index_nospec(ext.property, ARRAY_SIZE(xe_oa_set_property_funcs_open));
++
++	if (from == XE_OA_USER_EXTN_FROM_CONFIG)
++		return xe_oa_set_property_funcs_config[idx](oa, ext.value, param);
++	else
++		return xe_oa_set_property_funcs_open[idx](oa, ext.value, param);
+ }
+ 
+-typedef int (*xe_oa_user_extension_fn)(struct xe_oa *oa, u64 extension,
+-				       struct xe_oa_open_param *param);
++typedef int (*xe_oa_user_extension_fn)(struct xe_oa *oa,  enum xe_oa_user_extn_from from,
++				       u64 extension, struct xe_oa_open_param *param);
+ static const xe_oa_user_extension_fn xe_oa_user_extension_funcs[] = {
+ 	[DRM_XE_OA_EXTENSION_SET_PROPERTY] = xe_oa_user_ext_set_property,
+ };
+ 
+ #define MAX_USER_EXTENSIONS	16
+-static int xe_oa_user_extensions(struct xe_oa *oa, u64 extension, int ext_number,
+-				 struct xe_oa_open_param *param)
++static int xe_oa_user_extensions(struct xe_oa *oa, enum xe_oa_user_extn_from from, u64 extension,
++				 int ext_number, struct xe_oa_open_param *param)
+ {
+ 	u64 __user *address = u64_to_user_ptr(extension);
+ 	struct drm_xe_user_extension ext;
+@@ -1268,12 +1300,12 @@ static int xe_oa_user_extensions(struct xe_oa *oa, u64 extension, int ext_number
+ 		return -EINVAL;
+ 
+ 	idx = array_index_nospec(ext.name, ARRAY_SIZE(xe_oa_user_extension_funcs));
+-	err = xe_oa_user_extension_funcs[idx](oa, extension, param);
++	err = xe_oa_user_extension_funcs[idx](oa, from, extension, param);
+ 	if (XE_IOCTL_DBG(oa->xe, err))
+ 		return err;
+ 
+ 	if (ext.next_extension)
+-		return xe_oa_user_extensions(oa, ext.next_extension, ++ext_number, param);
++		return xe_oa_user_extensions(oa, from, ext.next_extension, ++ext_number, param);
+ 
+ 	return 0;
+ }
+@@ -1419,7 +1451,7 @@ static long xe_oa_config_locked(struct xe_oa_stream *stream, u64 arg)
  	struct xe_oa_config *config;
  	int err;
  
--	err = __copy_from_user(&ext, u64_to_user_ptr(arg), sizeof(ext));
--	if (XE_IOCTL_DBG(stream->oa->xe, err))
--		return -EFAULT;
--
--	if (XE_IOCTL_DBG(stream->oa->xe, ext.pad) ||
--	    XE_IOCTL_DBG(stream->oa->xe, ext.base.name != DRM_XE_OA_EXTENSION_SET_PROPERTY) ||
--	    XE_IOCTL_DBG(stream->oa->xe, ext.base.next_extension) ||
--	    XE_IOCTL_DBG(stream->oa->xe, ext.property != DRM_XE_OA_PROPERTY_OA_METRIC_SET))
--		return -EINVAL;
-+	err = xe_oa_user_extensions(stream->oa, arg, 0, &param);
-+	if (err)
-+		return err;
+-	err = xe_oa_user_extensions(stream->oa, arg, 0, &param);
++	err = xe_oa_user_extensions(stream->oa, XE_OA_USER_EXTN_FROM_CONFIG, arg, 0, &param);
+ 	if (err)
+ 		return err;
  
--	config = xe_oa_get_oa_config(stream->oa, ext.value);
-+	config = xe_oa_get_oa_config(stream->oa, param.metric_set);
- 	if (!config)
- 		return -ENODEV;
- 
--	if (config != stream->oa_config) {
--		err = xe_oa_emit_oa_config(stream, config);
--		if (!err)
--			config = xchg(&stream->oa_config, config);
--		else
--			ret = err;
-+	param.xef = stream->xef;
-+	err = xe_oa_parse_syncs(stream->oa, &param);
-+	if (err)
-+		goto err_config_put;
-+
-+	stream->num_syncs = param.num_syncs;
-+	stream->syncs = param.syncs;
-+
-+	err = xe_oa_emit_oa_config(stream, config);
-+	if (!err) {
-+		config = xchg(&stream->oa_config, config);
-+		drm_dbg(&stream->oa->xe->drm, "changed to oa config uuid=%s\n",
-+			stream->oa_config->uuid);
+@@ -1970,7 +2002,7 @@ int xe_oa_stream_open_ioctl(struct drm_device *dev, u64 data, struct drm_file *f
  	}
  
-+err_config_put:
- 	xe_oa_config_put(config);
- 
--	return ret;
-+	return err ?: ret;
- }
- 
- static long xe_oa_status_locked(struct xe_oa_stream *stream, unsigned long arg)
-@@ -1685,6 +1688,7 @@ static int xe_oa_stream_init(struct xe_oa_stream *stream,
- 	stream->period_exponent = param->period_exponent;
- 	stream->no_preempt = param->no_preempt;
- 
-+	stream->xef = xe_file_get(param->xef);
- 	stream->num_syncs = param->num_syncs;
- 	stream->syncs = param->syncs;
- 
-@@ -1784,6 +1788,7 @@ static int xe_oa_stream_init(struct xe_oa_stream *stream,
- err_free_configs:
- 	xe_oa_free_configs(stream);
- exit:
-+	xe_file_put(stream->xef);
- 	return ret;
- }
- 
-diff --git a/drivers/gpu/drm/xe/xe_oa_types.h b/drivers/gpu/drm/xe/xe_oa_types.h
-index c8e0df13faf83..fea9d981e414f 100644
---- a/drivers/gpu/drm/xe/xe_oa_types.h
-+++ b/drivers/gpu/drm/xe/xe_oa_types.h
-@@ -239,6 +239,9 @@ struct xe_oa_stream {
- 	/** @no_preempt: Whether preemption and timeslicing is disabled for stream exec_q */
- 	u32 no_preempt;
- 
-+	/** @xef: xe_file with which the stream was opened */
-+	struct xe_file *xef;
-+
- 	/** @last_fence: fence to use in stream destroy when needed */
- 	struct dma_fence *last_fence;
+ 	param.xef = xef;
+-	ret = xe_oa_user_extensions(oa, data, 0, &param);
++	ret = xe_oa_user_extensions(oa, XE_OA_USER_EXTN_FROM_OPEN, data, 0, &param);
+ 	if (ret)
+ 		return ret;
  
 -- 
 2.39.5
