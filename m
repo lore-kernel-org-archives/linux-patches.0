@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C301A01B0;
-	Wed,  5 Mar 2025 18:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E7A19066D;
+	Wed,  5 Mar 2025 18:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198068; cv=none; b=uluW5b97MOrbf82E/FtPgO94HEImiHIje0vp5wSsCD0hEqNJ7C06yXlSFNHboKf+MyzSwA/Y/8BTUeh19HZoVf6UkeQeu9XPwUiiYVfuEU0sHAU67y6HwfKDuDJZ+cMjIJlMNK96+Oqz5XjoZBV7mjEqzd+a5sCgc2ZHP/TOcwA=
+	t=1741198071; cv=none; b=Q6+9UX67DbO65ukGUl0l27XHrjD+M6zz2/5/DHfykvXRMBPBkAzCsTkMhD3sU0MlHNBDmbFPR/3mlWKWqh/mZ5DD3pgSko3lNL6+9MEkY5sMlM5ctn3jMJPtaiMJK3mGFV1oYnw3V1aBGt6bgldxlC05p3SYkBsu6GjH1cX/6mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198068; c=relaxed/simple;
-	bh=vDpasfGu1WWFt7m2BCA7HkZHIAstpsBiCQoCUodGfeg=;
+	s=arc-20240116; t=1741198071; c=relaxed/simple;
+	bh=+fRL+NJbZqWSRnYWekx8B5GGpHKLRhiOngQHn8Cw9T4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qD1FevqYzRNX47HxFy3lF9ilRciA1NcNqI2K/HpqJcPV6EgTxSL3KKPR1S/7+D5LZL85hnSIfolUjVVgiijLpplk1L7kWNuuYGOUiA7E6j9EfawMR5tflquJDsq2lQGgb3NquaOEbSAVQpLt1U/WEmVdx0Y+B+XxWfHZWFCN2lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfaBXqzD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ldmRQ7Hw2CEk+QajYNNvJp2THdmgDuB7zXCp7yc8s+OnAnSJbT1aSgKCMe4loYMjrUoa/520pMG9W/2PXt78Gcdz7sK+g+x7G+6mjd1Y2UGfEZ5EbFZ5/QDggeG5uD7u4xogOTLVuyJcLGDLiyUzjLKau7i/E2Qb4kS6Ux3N5ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/Fid+g5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfaBXqzD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8C4C4CED1;
-	Wed,  5 Mar 2025 18:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/Fid+g5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC38C4CED1;
+	Wed,  5 Mar 2025 18:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198068;
-	bh=vDpasfGu1WWFt7m2BCA7HkZHIAstpsBiCQoCUodGfeg=;
+	s=korg; t=1741198071;
+	bh=+fRL+NJbZqWSRnYWekx8B5GGpHKLRhiOngQHn8Cw9T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rfaBXqzDwaojqXPQMG3DCor7VjqpNr18rF7lrUoVRJ9IdtWtEejZFwwXWr49XF7rR
-	 wzexTkWgFeVFNb2A9nevF2pn2nTq91f/dKECWhXShB4z4FSBuINRz+BAbfyxQ3faiJ
-	 /nurHX+S94l0suVv3IUkPid8GY2Y9SHsxdYO1Nrg=
+	b=A/Fid+g5NYMssCJBKYAr5IdA5S6MzA8xlqpDTfMziNpI8YJouZXsKeJtY3LODrcSW
+	 Y71ePHcDeIYt5quSAA39GOtJD3OIHQ+5ujp3xAHPBruvKNFkw05N0awJPxBNvR6zrv
+	 D9HM/n1p3zudm4fG9CDfYmvJWL5vN76IVzSMYoN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Greenwalt <paul.greenwalt@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
+	Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 054/150] ice: add E830 HW VF mailbox message limit support
-Date: Wed,  5 Mar 2025 18:48:03 +0100
-Message-ID: <20250305174505.996822153@linuxfoundation.org>
+Subject: [PATCH 6.12 055/150] ice: Fix deinitializing VF in error path
+Date: Wed,  5 Mar 2025 18:48:04 +0100
+Message-ID: <20250305174506.037196876@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -53,287 +55,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Greenwalt <paul.greenwalt@intel.com>
+From: Marcin Szycik <marcin.szycik@linux.intel.com>
 
-[ Upstream commit 59f4d59b25aec39a015c0949f4ec235c7a839c44 ]
+[ Upstream commit 79990cf5e7aded76d0c092c9f5ed31eb1c75e02c ]
 
-E830 adds hardware support to prevent the VF from overflowing the PF
-mailbox with VIRTCHNL messages. E830 will use the hardware feature
-(ICE_F_MBX_LIMIT) instead of the software solution ice_is_malicious_vf().
+If ice_ena_vfs() fails after calling ice_create_vf_entries(), it frees
+all VFs without removing them from snapshot PF-VF mailbox list, leading
+to list corruption.
 
-To prevent a VF from overflowing the PF, the PF sets the number of
-messages per VF that can be in the PF's mailbox queue
-(ICE_MBX_OVERFLOW_WATERMARK). When the PF processes a message from a VF,
-the PF decrements the per VF message count using the E830_MBX_VF_DEC_TRIG
-register.
+Reproducer:
+  devlink dev eswitch set $PF1_PCI mode switchdev
+  ip l s $PF1 up
+  ip l s $PF1 promisc on
+  sleep 1
+  echo 1 > /sys/class/net/$PF1/device/sriov_numvfs
+  sleep 1
+  echo 1 > /sys/class/net/$PF1/device/sriov_numvfs
 
-Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Trace (minimized):
+  list_add corruption. next->prev should be prev (ffff8882e241c6f0), but was 0000000000000000. (next=ffff888455da1330).
+  kernel BUG at lib/list_debug.c:29!
+  RIP: 0010:__list_add_valid_or_report+0xa6/0x100
+   ice_mbx_init_vf_info+0xa7/0x180 [ice]
+   ice_initialize_vf_entry+0x1fa/0x250 [ice]
+   ice_sriov_configure+0x8d7/0x1520 [ice]
+   ? __percpu_ref_switch_mode+0x1b1/0x5d0
+   ? __pfx_ice_sriov_configure+0x10/0x10 [ice]
+
+Sometimes a KASAN report can be seen instead with a similar stack trace:
+  BUG: KASAN: use-after-free in __list_add_valid_or_report+0xf1/0x100
+
+VFs are added to this list in ice_mbx_init_vf_info(), but only removed
+in ice_free_vfs(). Move the removing to ice_free_vf_entries(), which is
+also being called in other places where VFs are being removed (including
+ice_free_vfs() itself).
+
+Fixes: 8cd8a6b17d27 ("ice: move VF overflow message count into struct ice_mbx_vf_info")
+Reported-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
+Closes: https://lore.kernel.org/intel-wired-lan/PH0PR11MB50138B635F2E5CEB7075325D961F2@PH0PR11MB5013.namprd11.prod.outlook.com
+Reviewed-by: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
+Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 79990cf5e7ad ("ice: Fix deinitializing VF in error path")
+Link: https://patch.msgid.link/20250224190647.3601930-2-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice.h          |  1 +
- .../net/ethernet/intel/ice/ice_hw_autogen.h   |  3 ++
- drivers/net/ethernet/intel/ice/ice_lib.c      |  3 ++
- drivers/net/ethernet/intel/ice/ice_main.c     | 24 ++++++++++----
- drivers/net/ethernet/intel/ice/ice_sriov.c    |  3 +-
- drivers/net/ethernet/intel/ice/ice_vf_lib.c   | 26 +++++++++++++--
- drivers/net/ethernet/intel/ice/ice_vf_mbx.c   | 32 +++++++++++++++++++
- drivers/net/ethernet/intel/ice/ice_vf_mbx.h   |  9 ++++++
- drivers/net/ethernet/intel/ice/ice_virtchnl.c |  8 +++--
- 9 files changed, 96 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_sriov.c          | 5 +----
+ drivers/net/ethernet/intel/ice/ice_vf_lib.c         | 8 ++++++++
+ drivers/net/ethernet/intel/ice/ice_vf_lib_private.h | 1 +
+ 3 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
-index 558cda577191d..2960709f6b62c 100644
---- a/drivers/net/ethernet/intel/ice/ice.h
-+++ b/drivers/net/ethernet/intel/ice/ice.h
-@@ -207,6 +207,7 @@ enum ice_feature {
- 	ICE_F_GNSS,
- 	ICE_F_ROCE_LAG,
- 	ICE_F_SRIOV_LAG,
-+	ICE_F_MBX_LIMIT,
- 	ICE_F_MAX
- };
- 
-diff --git a/drivers/net/ethernet/intel/ice/ice_hw_autogen.h b/drivers/net/ethernet/intel/ice/ice_hw_autogen.h
-index 91cbae1eec89a..8d31bfe28cc88 100644
---- a/drivers/net/ethernet/intel/ice/ice_hw_autogen.h
-+++ b/drivers/net/ethernet/intel/ice/ice_hw_autogen.h
-@@ -539,5 +539,8 @@
- #define E830_PRTMAC_CL01_QNT_THR_CL0_M		GENMASK(15, 0)
- #define VFINT_DYN_CTLN(_i)			(0x00003800 + ((_i) * 4))
- #define VFINT_DYN_CTLN_CLEARPBA_M		BIT(1)
-+#define E830_MBX_PF_IN_FLIGHT_VF_MSGS_THRESH	0x00234000
-+#define E830_MBX_VF_DEC_TRIG(_VF)		(0x00233800 + (_VF) * 4)
-+#define E830_MBX_VF_IN_FLIGHT_MSGS_AT_PF_CNT(_VF)	(0x00233000 + (_VF) * 4)
- 
- #endif /* _ICE_HW_AUTOGEN_H_ */
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 06e712cdc3d9e..d4e74f96a8ad5 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -3880,6 +3880,9 @@ void ice_init_feature_support(struct ice_pf *pf)
- 	default:
- 		break;
- 	}
-+
-+	if (pf->hw.mac_type == ICE_MAC_E830)
-+		ice_set_feature_support(pf, ICE_F_MBX_LIMIT);
- }
- 
- /**
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 45eefe22fb5b7..ca707dfcb286e 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -1546,12 +1546,20 @@ static int __ice_clean_ctrlq(struct ice_pf *pf, enum ice_ctl_q q_type)
- 			ice_vf_lan_overflow_event(pf, &event);
- 			break;
- 		case ice_mbx_opc_send_msg_to_pf:
--			data.num_msg_proc = i;
--			data.num_pending_arq = pending;
--			data.max_num_msgs_mbx = hw->mailboxq.num_rq_entries;
--			data.async_watermark_val = ICE_MBX_OVERFLOW_WATERMARK;
-+			if (ice_is_feature_supported(pf, ICE_F_MBX_LIMIT)) {
-+				ice_vc_process_vf_msg(pf, &event, NULL);
-+				ice_mbx_vf_dec_trig_e830(hw, &event);
-+			} else {
-+				u16 val = hw->mailboxq.num_rq_entries;
-+
-+				data.max_num_msgs_mbx = val;
-+				val = ICE_MBX_OVERFLOW_WATERMARK;
-+				data.async_watermark_val = val;
-+				data.num_msg_proc = i;
-+				data.num_pending_arq = pending;
- 
--			ice_vc_process_vf_msg(pf, &event, &data);
-+				ice_vc_process_vf_msg(pf, &event, &data);
-+			}
- 			break;
- 		case ice_aqc_opc_fw_logs_event:
- 			ice_get_fwlog_data(pf, &event);
-@@ -4082,7 +4090,11 @@ static int ice_init_pf(struct ice_pf *pf)
- 
- 	mutex_init(&pf->vfs.table_lock);
- 	hash_init(pf->vfs.table);
--	ice_mbx_init_snapshot(&pf->hw);
-+	if (ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
-+		wr32(&pf->hw, E830_MBX_PF_IN_FLIGHT_VF_MSGS_THRESH,
-+		     ICE_MBX_OVERFLOW_WATERMARK);
-+	else
-+		ice_mbx_init_snapshot(&pf->hw);
- 
- 	xa_init(&pf->dyn_ports);
- 	xa_init(&pf->sf_nums);
 diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
-index 91cb393f616f2..b83f99c01d91b 100644
+index b83f99c01d91b..8aabf7749aa5e 100644
 --- a/drivers/net/ethernet/intel/ice/ice_sriov.c
 +++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
-@@ -194,7 +194,8 @@ void ice_free_vfs(struct ice_pf *pf)
+@@ -36,6 +36,7 @@ static void ice_free_vf_entries(struct ice_pf *pf)
+ 
+ 	hash_for_each_safe(vfs->table, bkt, tmp, vf, entry) {
+ 		hash_del_rcu(&vf->entry);
++		ice_deinitialize_vf_entry(vf);
+ 		ice_put_vf(vf);
+ 	}
+ }
+@@ -193,10 +194,6 @@ void ice_free_vfs(struct ice_pf *pf)
+ 			wr32(hw, GLGEN_VFLRSTAT(reg_idx), BIT(bit_idx));
  		}
  
- 		/* clear malicious info since the VF is getting released */
--		list_del(&vf->mbx_info.list_entry);
-+		if (!ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
-+			list_del(&vf->mbx_info.list_entry);
- 
+-		/* clear malicious info since the VF is getting released */
+-		if (!ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
+-			list_del(&vf->mbx_info.list_entry);
+-
  		mutex_unlock(&vf->cfg_lock);
  	}
+ 
 diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-index 8c434689e3f78..c7c0c2f50c265 100644
+index c7c0c2f50c265..815ad0bfe8326 100644
 --- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
 +++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-@@ -716,6 +716,23 @@ ice_vf_clear_vsi_promisc(struct ice_vf *vf, struct ice_vsi *vsi, u8 promisc_m)
- 	return 0;
+@@ -1036,6 +1036,14 @@ void ice_initialize_vf_entry(struct ice_vf *vf)
+ 	mutex_init(&vf->cfg_lock);
  }
  
-+/**
-+ * ice_reset_vf_mbx_cnt - reset VF mailbox message count
-+ * @vf: pointer to the VF structure
-+ *
-+ * This function clears the VF mailbox message count, and should be called on
-+ * VF reset.
-+ */
-+static void ice_reset_vf_mbx_cnt(struct ice_vf *vf)
++void ice_deinitialize_vf_entry(struct ice_vf *vf)
 +{
 +	struct ice_pf *pf = vf->pf;
 +
-+	if (ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
-+		ice_mbx_vf_clear_cnt_e830(&pf->hw, vf->vf_id);
-+	else
-+		ice_mbx_clear_malvf(&vf->mbx_info);
++	if (!ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
++		list_del(&vf->mbx_info.list_entry);
 +}
 +
  /**
-  * ice_reset_all_vfs - reset all allocated VFs in one go
-  * @pf: pointer to the PF structure
-@@ -742,7 +759,7 @@ void ice_reset_all_vfs(struct ice_pf *pf)
+  * ice_dis_vf_qs - Disable the VF queues
+  * @vf: pointer to the VF structure
+diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h b/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
+index 0c7e77c0a09fa..5392b04049862 100644
+--- a/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
++++ b/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
+@@ -24,6 +24,7 @@
+ #endif
  
- 	/* clear all malicious info if the VFs are getting reset */
- 	ice_for_each_vf(pf, bkt, vf)
--		ice_mbx_clear_malvf(&vf->mbx_info);
-+		ice_reset_vf_mbx_cnt(vf);
- 
- 	/* If VFs have been disabled, there is no need to reset */
- 	if (test_and_set_bit(ICE_VF_DIS, pf->state)) {
-@@ -958,7 +975,7 @@ int ice_reset_vf(struct ice_vf *vf, u32 flags)
- 	ice_eswitch_update_repr(&vf->repr_id, vsi);
- 
- 	/* if the VF has been reset allow it to come up again */
--	ice_mbx_clear_malvf(&vf->mbx_info);
-+	ice_reset_vf_mbx_cnt(vf);
- 
- out_unlock:
- 	if (lag && lag->bonded && lag->primary &&
-@@ -1011,7 +1028,10 @@ void ice_initialize_vf_entry(struct ice_vf *vf)
- 	ice_vf_fdir_init(vf);
- 
- 	/* Initialize mailbox info for this VF */
--	ice_mbx_init_vf_info(&pf->hw, &vf->mbx_info);
-+	if (ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
-+		ice_mbx_vf_clear_cnt_e830(&pf->hw, vf->vf_id);
-+	else
-+		ice_mbx_init_vf_info(&pf->hw, &vf->mbx_info);
- 
- 	mutex_init(&vf->cfg_lock);
- }
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_mbx.c b/drivers/net/ethernet/intel/ice/ice_vf_mbx.c
-index 40cb4ba0789ce..75c8113e58ee9 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_mbx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_mbx.c
-@@ -210,6 +210,38 @@ ice_mbx_detect_malvf(struct ice_hw *hw, struct ice_mbx_vf_info *vf_info,
- 	return 0;
- }
- 
-+/**
-+ * ice_mbx_vf_dec_trig_e830 - Decrements the VF mailbox queue counter
-+ * @hw: pointer to the HW struct
-+ * @event: pointer to the control queue receive event
-+ *
-+ * This function triggers to decrement the counter
-+ * MBX_VF_IN_FLIGHT_MSGS_AT_PF_CNT when the driver replenishes
-+ * the buffers at the PF mailbox queue.
-+ */
-+void ice_mbx_vf_dec_trig_e830(const struct ice_hw *hw,
-+			      const struct ice_rq_event_info *event)
-+{
-+	u16 vfid = le16_to_cpu(event->desc.retval);
-+
-+	wr32(hw, E830_MBX_VF_DEC_TRIG(vfid), 1);
-+}
-+
-+/**
-+ * ice_mbx_vf_clear_cnt_e830 - Clear the VF mailbox queue count
-+ * @hw: pointer to the HW struct
-+ * @vf_id: VF ID in the PF space
-+ *
-+ * This function clears the counter MBX_VF_IN_FLIGHT_MSGS_AT_PF_CNT, and should
-+ * be called when a VF is created and on VF reset.
-+ */
-+void ice_mbx_vf_clear_cnt_e830(const struct ice_hw *hw, u16 vf_id)
-+{
-+	u32 reg = rd32(hw, E830_MBX_VF_IN_FLIGHT_MSGS_AT_PF_CNT(vf_id));
-+
-+	wr32(hw, E830_MBX_VF_DEC_TRIG(vf_id), reg);
-+}
-+
- /**
-  * ice_mbx_vf_state_handler - Handle states of the overflow algorithm
-  * @hw: pointer to the HW struct
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_mbx.h b/drivers/net/ethernet/intel/ice/ice_vf_mbx.h
-index 44bc030d17e07..684de89e5c5ed 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_mbx.h
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_mbx.h
-@@ -19,6 +19,9 @@ ice_aq_send_msg_to_vf(struct ice_hw *hw, u16 vfid, u32 v_opcode, u32 v_retval,
- 		      u8 *msg, u16 msglen, struct ice_sq_cd *cd);
- 
- u32 ice_conv_link_speed_to_virtchnl(bool adv_link_support, u16 link_speed);
-+void ice_mbx_vf_dec_trig_e830(const struct ice_hw *hw,
-+			      const struct ice_rq_event_info *event);
-+void ice_mbx_vf_clear_cnt_e830(const struct ice_hw *hw, u16 vf_id);
- int
- ice_mbx_vf_state_handler(struct ice_hw *hw, struct ice_mbx_data *mbx_data,
- 			 struct ice_mbx_vf_info *vf_info, bool *report_malvf);
-@@ -47,5 +50,11 @@ static inline void ice_mbx_init_snapshot(struct ice_hw *hw)
- {
- }
- 
-+static inline void
-+ice_mbx_vf_dec_trig_e830(const struct ice_hw *hw,
-+			 const struct ice_rq_event_info *event)
-+{
-+}
-+
- #endif /* CONFIG_PCI_IOV */
- #endif /* _ICE_VF_MBX_H_ */
-diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl.c b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-index b6ec01f6fa73e..c8c1d48ff793d 100644
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-@@ -4008,8 +4008,10 @@ ice_is_malicious_vf(struct ice_vf *vf, struct ice_mbx_data *mbxdata)
-  * @event: pointer to the AQ event
-  * @mbxdata: information used to detect VF attempting mailbox overflow
-  *
-- * called from the common asq/arq handler to
-- * process request from VF
-+ * Called from the common asq/arq handler to process request from VF. When this
-+ * flow is used for devices with hardware VF to PF message queue overflow
-+ * support (ICE_F_MBX_LIMIT) mbxdata is set to NULL and ice_is_malicious_vf
-+ * check is skipped.
-  */
- void ice_vc_process_vf_msg(struct ice_pf *pf, struct ice_rq_event_info *event,
- 			   struct ice_mbx_data *mbxdata)
-@@ -4035,7 +4037,7 @@ void ice_vc_process_vf_msg(struct ice_pf *pf, struct ice_rq_event_info *event,
- 	mutex_lock(&vf->cfg_lock);
- 
- 	/* Check if the VF is trying to overflow the mailbox */
--	if (ice_is_malicious_vf(vf, mbxdata))
-+	if (mbxdata && ice_is_malicious_vf(vf, mbxdata))
- 		goto finish;
- 
- 	/* Check if VF is disabled. */
+ void ice_initialize_vf_entry(struct ice_vf *vf);
++void ice_deinitialize_vf_entry(struct ice_vf *vf);
+ void ice_dis_vf_qs(struct ice_vf *vf);
+ int ice_check_vf_init(struct ice_vf *vf);
+ enum virtchnl_status_code ice_err_to_virt_err(int err);
 -- 
 2.39.5
 
