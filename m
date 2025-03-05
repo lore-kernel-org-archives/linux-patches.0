@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6392F19C542;
-	Wed,  5 Mar 2025 18:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C7E1A23A6;
+	Wed,  5 Mar 2025 18:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198363; cv=none; b=VsN0GpzFJNjSSUmavXZQFA/OmjIus4xhFilWLQobnqPza8MNlD0Uf3XrXThIFmaLGFSeWpLmr0F4nmhZ4ASqpDmeZqx+KpP6sAPkPlMbP6Aa9Qpps1zdRQIk4K8ezLTbIpXQIEEPnvpWN0ZNfu9DpKTjCuRDlkOA1cp2LAXaexI=
+	t=1741198366; cv=none; b=K7XCI3wA5xmZ4QlDeqJ2NobUjrvdx3Tzqm1i4Ll48U6hFvNUAaeU2hfcPhPCfbDPSSHSQ2Z2/t2Fw0lKadI6laNk9t7x3Uc0t5Z5eRCqDxLkB+hW65/g5eB7hd1yB6KUxlbBEBjQG74z3EBExJbe6SEdN1DxZRSS47yQSYD/BN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198363; c=relaxed/simple;
-	bh=d6XE41NaonQB9Geem9hZ/d4ZcHuUHPUZkvGzd07n9So=;
+	s=arc-20240116; t=1741198366; c=relaxed/simple;
+	bh=+9rRt1Z/lJ5UQeq56GPzlObf1J96Vvb13H2tvW43Jz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I5uz84FqXqvGyuP/KzRGqQoaIOQU4YvwM7q+zT5CfXlQYeRmsUV9vSsSUYDpUZA3Juxa9XyfxWCtf4zmY0G+3kBDmQWz4Wmg4T16VQPjOazmt0LrTyMqwWwljyLz2HS08Dgt/kR6qmDozfky9/CdK8BbAN4JSNDNCS+IT2ky4Cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ou2WKeps; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MOUUtJXr6XITkjFTK7PNTd2PLUPlJzQwsKiScUFrQBxdYGh1FZrlavYGLxFzfmZOLwtlGIYu4ZHoqz8PHuFZPrAItT12+cqoBSMrwsz66HRHCZslL2IrBj3ZP9JhVNfHgm6NcIjJc1V1i1oAuHTZQfuR1OPZrsXZ4KJVgABabdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6nY3vrv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ou2WKeps"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCDAC4CED1;
-	Wed,  5 Mar 2025 18:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6nY3vrv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C986CC4CED1;
+	Wed,  5 Mar 2025 18:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198363;
-	bh=d6XE41NaonQB9Geem9hZ/d4ZcHuUHPUZkvGzd07n9So=;
+	s=korg; t=1741198366;
+	bh=+9rRt1Z/lJ5UQeq56GPzlObf1J96Vvb13H2tvW43Jz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ou2WKepsFZmnd9vxfRGNUrFg2g1vJGsviIbU9VWHLEj0QNq8vPUUr2FtdmikwwG16
-	 NgkMPFJInLaJvc4flhImV6WYFNgGG6U0YsxPooPeJR5Oem/XKyWXDac1JZlbvWzJ3V
-	 OkbUZBPXXqxrgH4BzClUwwHfzJwBGk0cI31Yb3S0=
+	b=Y6nY3vrvdvV//EvKqgSuevoK4KJLO4KP6JtlRw7N/L8c3BorNsdSNQoOBn77+yHe9
+	 sYtJRmSVqV7rj4h8X7MJG6bYHdU3tTHga0R9KdPYnjVdEVk6hfDinHbZrsCAky/lOm
+	 +iX1tTA8ORvljjWDbKqsYOJO36FxWTTEah9aJ4ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.12 146/150] x86/microcode/AMD: Remove unused save_microcode_in_initrd_amd() declarations
-Date: Wed,  5 Mar 2025 18:49:35 +0100
-Message-ID: <20250305174509.682358698@linuxfoundation.org>
+Subject: [PATCH 6.12 147/150] x86/microcode/AMD: Merge early_apply_microcode() into its single callsite
+Date: Wed,  5 Mar 2025 18:49:36 +0100
+Message-ID: <20250305174509.721704758@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -52,53 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-commit 3ef0740d10b005a45e8ae5b4b7b5d37bfddf63c0 upstream.
-
-Commit
-
-  a7939f016720 ("x86/microcode/amd: Cache builtin/initrd microcode early")
-
-renamed it to save_microcode_in_initrd() and made it static. Zap the
-forgotten declarations.
+commit dc15675074dcfd79a2f10a6e39f96b0244961a01 upstream.
 
 No functional changes.
 
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20250211163648.30531-3-bp@kernel.org
+Link: https://lore.kernel.org/r/20250211163648.30531-4-bp@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c      |    2 +-
- arch/x86/kernel/cpu/microcode/internal.h |    2 --
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ arch/x86/kernel/cpu/microcode/amd.c |   60 +++++++++++++++---------------------
+ 1 file changed, 26 insertions(+), 34 deletions(-)
 
 --- a/arch/x86/kernel/cpu/microcode/amd.c
 +++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -517,7 +517,7 @@ static bool __apply_microcode_amd(struct
-  * patch container file in initrd, traverse equivalent cpu table, look for a
-  * matching microcode patch, and update, all in initrd memory in place.
-  * When vmalloc() is available for use later -- on 64-bit during first AP load,
-- * and on 32-bit during save_microcode_in_initrd_amd() -- we can call
+@@ -512,39 +512,6 @@ static bool __apply_microcode_amd(struct
+ 	return true;
+ }
+ 
+-/*
+- * Early load occurs before we can vmalloc(). So we look for the microcode
+- * patch container file in initrd, traverse equivalent cpu table, look for a
+- * matching microcode patch, and update, all in initrd memory in place.
+- * When vmalloc() is available for use later -- on 64-bit during first AP load,
+- * and on 32-bit during save_microcode_in_initrd() -- we can call
+- * load_microcode_amd() to save equivalent cpu table and microcode patches in
+- * kernel heap memory.
+- *
+- * Returns true if container found (sets @desc), false otherwise.
+- */
+-static bool early_apply_microcode(u32 old_rev, void *ucode, size_t size)
+-{
+-	struct cont_desc desc = { 0 };
+-	struct microcode_amd *mc;
+-	bool ret = false;
+-
+-	scan_containers(ucode, size, &desc);
+-
+-	mc = desc.mc;
+-	if (!mc)
+-		return ret;
+-
+-	/*
+-	 * Allow application of the same revision to pick up SMT-specific
+-	 * changes even if the revision of the other SMT thread is already
+-	 * up-to-date.
+-	 */
+-	if (old_rev > mc->hdr.patch_id)
+-		return ret;
+-
+-	return __apply_microcode_amd(mc, desc.psize);
+-}
+ 
+ static bool get_builtin_microcode(struct cpio_data *cp)
+ {
+@@ -583,8 +550,19 @@ static bool __init find_blobs_in_contain
+ 	return found;
+ }
+ 
++/*
++ * Early load occurs before we can vmalloc(). So we look for the microcode
++ * patch container file in initrd, traverse equivalent cpu table, look for a
++ * matching microcode patch, and update, all in initrd memory in place.
++ * When vmalloc() is available for use later -- on 64-bit during first AP load,
 + * and on 32-bit during save_microcode_in_initrd() -- we can call
-  * load_microcode_amd() to save equivalent cpu table and microcode patches in
-  * kernel heap memory.
-  *
---- a/arch/x86/kernel/cpu/microcode/internal.h
-+++ b/arch/x86/kernel/cpu/microcode/internal.h
-@@ -100,14 +100,12 @@ extern bool force_minrev;
- #ifdef CONFIG_CPU_SUP_AMD
- void load_ucode_amd_bsp(struct early_load_data *ed, unsigned int family);
- void load_ucode_amd_ap(unsigned int family);
--int save_microcode_in_initrd_amd(unsigned int family);
- void reload_ucode_amd(unsigned int cpu);
- struct microcode_ops *init_amd_microcode(void);
- void exit_amd_microcode(void);
- #else /* CONFIG_CPU_SUP_AMD */
- static inline void load_ucode_amd_bsp(struct early_load_data *ed, unsigned int family) { }
- static inline void load_ucode_amd_ap(unsigned int family) { }
--static inline int save_microcode_in_initrd_amd(unsigned int family) { return -EINVAL; }
- static inline void reload_ucode_amd(unsigned int cpu) { }
- static inline struct microcode_ops *init_amd_microcode(void) { return NULL; }
- static inline void exit_amd_microcode(void) { }
++ * load_microcode_amd() to save equivalent cpu table and microcode patches in
++ * kernel heap memory.
++ */
+ void __init load_ucode_amd_bsp(struct early_load_data *ed, unsigned int cpuid_1_eax)
+ {
++	struct cont_desc desc = { };
++	struct microcode_amd *mc;
+ 	struct cpio_data cp = { };
+ 	u32 dummy;
+ 
+@@ -598,7 +576,21 @@ void __init load_ucode_amd_bsp(struct ea
+ 	if (!find_blobs_in_containers(&cp))
+ 		return;
+ 
+-	if (early_apply_microcode(ed->old_rev, cp.data, cp.size))
++	scan_containers(cp.data, cp.size, &desc);
++
++	mc = desc.mc;
++	if (!mc)
++		return;
++
++	/*
++	 * Allow application of the same revision to pick up SMT-specific
++	 * changes even if the revision of the other SMT thread is already
++	 * up-to-date.
++	 */
++	if (ed->old_rev > mc->hdr.patch_id)
++		return;
++
++	if (__apply_microcode_amd(mc, desc.psize))
+ 		native_rdmsr(MSR_AMD64_PATCH_LEVEL, ed->new_rev, dummy);
+ }
+ 
 
 
