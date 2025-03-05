@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F991C6FF9;
-	Wed,  5 Mar 2025 18:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA88424C07D;
+	Wed,  5 Mar 2025 18:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197774; cv=none; b=BH9njm4eaZeH7p2WVmRi1GF8S1KQkr3aY4q9dHa05PylJV7MowltzjhwIAubfeZnC0AkMI87qmuxnwOvjBPtOIq02AubGUiL/NEWEwpgmrqosWd57FLOUl85L2vbsycnk/T1VfDrmuiH6KlMRt7fkTmE3EGdhmi0FtfSg0V0K9E=
+	t=1741197777; cv=none; b=j/USgODjudWSdLaI5i70LmehBBRFpRF8HHpxauV2KqU7IoSO0w8G09DCTfTi+yM3/lCIS8A6naqj86O87YjDVR1uAAhFLag5s2lrAGTm3RZY86AbHLB9bC+ynaJkDf3aBElak6AQT//hr6N70eN7gpR0GIIznzshtMpiMmlGli4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197774; c=relaxed/simple;
-	bh=+WWhcrVRZHktbVjO2M0A76uDN8zllF9jfOhtiFYZB0Y=;
+	s=arc-20240116; t=1741197777; c=relaxed/simple;
+	bh=CANcjSlNqJwqQuD4YMXgtWhVnBdfPz7GQ6JfYlVgPGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sPTFlsp4tE5uQN4kaFUHAkjgs2KMRVcdtncz1M7KJ5jZKyqGi6/yqNIKovOVHpL7KK7XxcDI3+wsu9h0GyeEYfLGNNYuKbfg+TC2jX+Ht6uuGIY8LWTxI34TgVxS/pUZ1U89K9OFtDYLqE3OPlahDInH11yrM6FE4nNt2WBavLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDl6uCjo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RYbJkp69wNznFDErELEAR/VK85vyIqXHcjRrZ15nx3Yh8RlX7PadEkQd7AxWey/2hvuVwe+taUS6jB3cRm6V1vjtpTvU1CnRV3n7bMsuJVU1rHI1f67fy2BGV0ADZPxymfInVDmjbaq0GsoicdvKeKT97l+73z77zQwGza8Pd6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pP8Rzi/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDl6uCjo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FDC2C4CED1;
-	Wed,  5 Mar 2025 18:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pP8Rzi/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73DD5C4CED1;
+	Wed,  5 Mar 2025 18:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197774;
-	bh=+WWhcrVRZHktbVjO2M0A76uDN8zllF9jfOhtiFYZB0Y=;
+	s=korg; t=1741197776;
+	bh=CANcjSlNqJwqQuD4YMXgtWhVnBdfPz7GQ6JfYlVgPGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NDl6uCjopNf1W0REmUzc/w5Tn/dK3VDplMEXCB2hinFj5YoZdTZvZy9fBA3aiUhJl
-	 MPqGZ1P7mGILxLrU1Z7QkHUpMKEfSL79mkbQIZBQlCvWGA75c1jNIVaky9xriXZnd8
-	 cktyfV1qEJOWOTNwQQX5+emhZX43JcYnZnK7fClg=
+	b=pP8Rzi/Aotivq7jTAJPUAmMIEEuwZii5HufTTZnPXKAdxyKGZ4Ou1HKQtcuwLpWLr
+	 Ce5raA8QQGXR7IA6phpU2gTdqBgK+jcx3zOkSUyUz2zm6pL8sHHE7+BvIKZ2fN4YQ/
+	 SjEjP4tahdm+2sVY+LRAhkUU8X8uCmyY6OUew0U8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fab Stz <fabstz-it@yahoo.fr>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 095/142] intel_idle: Handle older CPUs, which stop the TSC in deeper C states, correctly
-Date: Wed,  5 Mar 2025 18:48:34 +0100
-Message-ID: <20250305174504.148842861@linuxfoundation.org>
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Lukasz Czechowski <lukasz.czechowski@thaumatec.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.6 096/142] arm64: dts: rockchip: Disable DMA for uart5 on px30-ringneck
+Date: Wed,  5 Mar 2025 18:48:35 +0100
+Message-ID: <20250305174504.190725123@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -45,60 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
 
-commit c157d351460bcf202970e97e611cb6b54a3dd4a4 upstream.
+commit 5ae4dca718eacd0a56173a687a3736eb7e627c77 upstream.
 
-The Intel idle driver is preferred over the ACPI processor idle driver,
-but fails to implement the work around for Core2 generation CPUs, where
-the TSC stops in C2 and deeper C-states. This causes stalls and boot
-delays, when the clocksource watchdog does not catch the unstable TSC
-before the CPU goes deep idle for the first time.
+UART controllers without flow control seem to behave unstable
+in case DMA is enabled. The issues were indicated in the message:
+https://lore.kernel.org/linux-arm-kernel/CAMdYzYpXtMocCtCpZLU_xuWmOp2Ja_v0Aj0e6YFNRA-yV7u14g@mail.gmail.com/
+In case of PX30-uQ7 Ringneck SoM, it was noticed that after couple
+of hours of UART communication, the CPU stall was occurring,
+leading to the system becoming unresponsive.
+After disabling the DMA, extensive UART communication tests for
+up to two weeks were performed, and no issues were further
+observed.
+The flow control pins for uart5 are not available on PX30-uQ7
+Ringneck, as configured by pinctrl-0, so the DMA nodes were
+removed on SoM dtsi.
 
-The ACPI driver marks the TSC unstable when it detects that the CPU
-supports C2 or deeper and the CPU does not have a non-stop TSC.
-
-Add the equivivalent work around to the Intel idle driver to cure that.
-
-Fixes: 18734958e9bf ("intel_idle: Use ACPI _CST for processor models without C-state tables")
-Reported-by: Fab Stz <fabstz-it@yahoo.fr>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Fab Stz <fabstz-it@yahoo.fr>
-Cc: All applicable <stable@vger.kernel.org>
-Closes: https://lore.kernel.org/all/10cf96aa-1276-4bd4-8966-c890377030c3@yahoo.fr
-Link: https://patch.msgid.link/87bjupfy7f.ffs@tglx
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Fixes: c484cf93f61b ("arm64: dts: rockchip: add PX30-µQ7 (Ringneck) SoM with Haikou baseboard")
+Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
+Signed-off-by: Lukasz Czechowski <lukasz.czechowski@thaumatec.com>
+Link: https://lore.kernel.org/r/20250121125604.3115235-3-lukasz.czechowski@thaumatec.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+[ conflict resolution due to missing (cosmetic) backport of
+  4eee627ea59304cdd66c5d4194ef13486a6c44fc]
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/idle/intel_idle.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/rockchip/px30-ringneck.dtsi |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/idle/intel_idle.c
-+++ b/drivers/idle/intel_idle.c
-@@ -56,6 +56,7 @@
- #include <asm/nospec-branch.h>
- #include <asm/mwait.h>
- #include <asm/msr.h>
-+#include <asm/tsc.h>
- #include <asm/fpu/api.h>
+--- a/arch/arm64/boot/dts/rockchip/px30-ringneck.dtsi
++++ b/arch/arm64/boot/dts/rockchip/px30-ringneck.dtsi
+@@ -367,6 +367,11 @@
+ 	status = "okay";
+ };
  
- #define INTEL_IDLE_VERSION "0.5.1"
-@@ -1573,6 +1574,9 @@ static void __init intel_idle_init_cstat
- 		if (intel_idle_state_needs_timer_stop(state))
- 			state->flags |= CPUIDLE_FLAG_TIMER_STOP;
- 
-+		if (cx->type > ACPI_STATE_C1 && !boot_cpu_has(X86_FEATURE_NONSTOP_TSC))
-+			mark_tsc_unstable("TSC halts in idle");
++&uart5 {
++	/delete-property/ dmas;
++	/delete-property/ dma-names;
++};
 +
- 		state->enter = intel_idle;
- 		state->enter_s2idle = intel_idle_s2idle;
- 	}
+ /* Mule UCAN */
+ &usb_host0_ehci {
+ 	status = "okay";
 
 
