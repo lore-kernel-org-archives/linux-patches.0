@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7951A3174;
-	Wed,  5 Mar 2025 18:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944301A840E;
+	Wed,  5 Mar 2025 18:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197934; cv=none; b=SMcE1gDesw4NxUCp/qwqKVmOCAGf07iqCABEr11wcUPdEkixndExL/WpsFuk8DCJqC4LIlG9uv5V3IVfjjKcLhbsoI/qbBCVNcv3ADFUQNTqmwDwVF1YhhKk6hyrTFe0cV5Eexhm6lBO7cMmPnWtWMti3j6m4J5BpbHhno3gclY=
+	t=1741197937; cv=none; b=Ryba6w2VunEl6ApctiS+F57jEYtu+AbPFRNXayzlViLaNw2tCeOckhCSgaRvXi99K0D3xwtof/CAxanMK2JO6kbsXRdNgVRB8xbiklqV6FSlFk7ezlMMsIumleZsAFh1/hP0ag8tsOMYbFQH5gFMPuSLzeG+DazHlx1ETKnBz6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197934; c=relaxed/simple;
-	bh=Mck8a4P65WHE8tuoHjj6/0t2uS06Gjcyh6yRZP/l3sI=;
+	s=arc-20240116; t=1741197937; c=relaxed/simple;
+	bh=OUTOTo+2TasM/mR5dTXsrvRI4bOwvaqvE1cUbMURuYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZH5pk7O3fVfcoWR735jTzvRgrK/+ZVwwsa9kxvQqfurBipNrdEpTsuoihSjYCS23SRHv3Da23+kL3vHV+wjkMjLYO3+Dxts+PD96z6gITrM6CXTy91YkeP+lS9NElUQ3xCSAO/Zhp3j8coZqRq3M0jnnTexj5naz8cS/+vVV8Mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xo7Nu8zk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mLLpl8qfYNiqW/y0zHKa5RjpcLfGU3EsQ+MXpFGjYis29FWtKwfpEr9vMsd36RyuNoSdppq8MR7j6RN8liJMT6OXxPMU1iF6i94oYv/qvuIMn03I0dUPuBePN1cOdjQw9FIAqy1TxOxBWXET3TiUjQwna+7YeRVQduY5riCO1KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYGuzf9/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xo7Nu8zk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB1DC4CED1;
-	Wed,  5 Mar 2025 18:05:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYGuzf9/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DD3C4CED1;
+	Wed,  5 Mar 2025 18:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197934;
-	bh=Mck8a4P65WHE8tuoHjj6/0t2uS06Gjcyh6yRZP/l3sI=;
+	s=korg; t=1741197937;
+	bh=OUTOTo+2TasM/mR5dTXsrvRI4bOwvaqvE1cUbMURuYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xo7Nu8zk6p1dSrBc4u/xOkfuhHMIOUcuj7kFrCCU/tlSTe12T3e3zvZ719EF/MDHn
-	 nilGEbCy5agXv/0EkWURD/vxTgIc0VdCMw73sY661ij/OGEyuUuQ12dcIel5OfWAFG
-	 ENkbgmI7uNHxCOEB+ShtjGcIJHdG5qwPxfBFzNF0=
+	b=pYGuzf9/NLhIl3t8yC6RWBEAfBtwgUGDrU+oJA95i+M46TLZLGVV32MFmLrM7Ac/C
+	 Ay25TFIoCOoHLX9yFEQjYs1zU2E8237s4iMASNgFxsQD+4Bqhf7sro7gU89cXaurgf
+	 4yhl62uKws8UHfNaz9i5WB19BN0Dgjv+HZV1+/0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.6 138/142] x86/microcode/AMD: Have __apply_microcode_amd() return bool
-Date: Wed,  5 Mar 2025 18:49:17 +0100
-Message-ID: <20250305174505.880910499@linuxfoundation.org>
+	Yishai Hadas <yishaih@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/150] RDMA/mlx5: Fix the recovery flow of the UMR QP
+Date: Wed,  5 Mar 2025 18:47:10 +0100
+Message-ID: <20250305174503.862743588@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
-References: <20250305174500.327985489@linuxfoundation.org>
+In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
+References: <20250305174503.801402104@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,73 +48,213 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Borislav Petkov (AMD)" <bp@alien8.de>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-commit 78e0aadbd4c6807a06a9d25bc190fe515d3f3c42 upstream
+[ Upstream commit d97505baea64d93538b16baf14ce7b8c1fbad746 ]
 
-This is the natural thing to do anyway.
+This patch addresses an issue in the recovery flow of the UMR QP,
+ensuring tasks do not get stuck, as highlighted by the call trace [1].
 
-No functional changes.
+During recovery, before transitioning the QP to the RESET state, the
+software must wait for all outstanding WRs to complete.
 
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Failing to do so can cause the firmware to skip sending some flushed
+CQEs with errors and simply discard them upon the RESET, as per the IB
+specification.
+
+This race condition can result in lost CQEs and tasks becoming stuck.
+
+To resolve this, the patch sends a final WR which serves only as a
+barrier before moving the QP state to RESET.
+
+Once a CQE is received for that final WR, it guarantees that no
+outstanding WRs remain, making it safe to transition the QP to RESET and
+subsequently back to RTS, restoring proper functionality.
+
+Note:
+For the barrier WR, we simply reuse the failed and ready WR.
+Since the QP is in an error state, it will only receive
+IB_WC_WR_FLUSH_ERR. However, as it serves only as a barrier we don't
+care about its status.
+
+[1]
+INFO: task rdma_resource_l:1922 blocked for more than 120 seconds.
+Tainted: G        W          6.12.0-rc7+ #1626
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:rdma_resource_l state:D stack:0  pid:1922 tgid:1922  ppid:1369
+     flags:0x00004004
+Call Trace:
+<TASK>
+__schedule+0x420/0xd30
+schedule+0x47/0x130
+schedule_timeout+0x280/0x300
+? mark_held_locks+0x48/0x80
+? lockdep_hardirqs_on_prepare+0xe5/0x1a0
+wait_for_completion+0x75/0x130
+mlx5r_umr_post_send_wait+0x3c2/0x5b0 [mlx5_ib]
+? __pfx_mlx5r_umr_done+0x10/0x10 [mlx5_ib]
+mlx5r_umr_revoke_mr+0x93/0xc0 [mlx5_ib]
+__mlx5_ib_dereg_mr+0x299/0x520 [mlx5_ib]
+? _raw_spin_unlock_irq+0x24/0x40
+? wait_for_completion+0xfe/0x130
+? rdma_restrack_put+0x63/0xe0 [ib_core]
+ib_dereg_mr_user+0x5f/0x120 [ib_core]
+? lock_release+0xc6/0x280
+destroy_hw_idr_uobject+0x1d/0x60 [ib_uverbs]
+uverbs_destroy_uobject+0x58/0x1d0 [ib_uverbs]
+uobj_destroy+0x3f/0x70 [ib_uverbs]
+ib_uverbs_cmd_verbs+0x3e4/0xbb0 [ib_uverbs]
+? __pfx_uverbs_destroy_def_handler+0x10/0x10 [ib_uverbs]
+? __lock_acquire+0x64e/0x2080
+? mark_held_locks+0x48/0x80
+? find_held_lock+0x2d/0xa0
+? lock_acquire+0xc1/0x2f0
+? ib_uverbs_ioctl+0xcb/0x170 [ib_uverbs]
+? __fget_files+0xc3/0x1b0
+ib_uverbs_ioctl+0xe7/0x170 [ib_uverbs]
+? ib_uverbs_ioctl+0xcb/0x170 [ib_uverbs]
+__x64_sys_ioctl+0x1b0/0xa70
+do_syscall_64+0x6b/0x140
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7f99c918b17b
+RSP: 002b:00007ffc766d0468 EFLAGS: 00000246 ORIG_RAX:
+     0000000000000010
+RAX: ffffffffffffffda RBX: 00007ffc766d0578 RCX:
+     00007f99c918b17b
+RDX: 00007ffc766d0560 RSI: 00000000c0181b01 RDI:
+     0000000000000003
+RBP: 00007ffc766d0540 R08: 00007f99c8f99010 R09:
+     000000000000bd7e
+R10: 00007f99c94c1c70 R11: 0000000000000246 R12:
+     00007ffc766d0530
+R13: 000000000000001c R14: 0000000040246a80 R15:
+     0000000000000000
+</TASK>
+
+Fixes: 158e71bb69e3 ("RDMA/mlx5: Add a umr recovery flow")
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Link: https://patch.msgid.link/27b51b92ec42dfb09d8096fcbd51878f397ce6ec.1737290141.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/mlx5/umr.c | 83 +++++++++++++++++++++-----------
+ 1 file changed, 56 insertions(+), 27 deletions(-)
 
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -486,7 +486,7 @@ static void scan_containers(u8 *ucode, s
- 	}
+diff --git a/drivers/infiniband/hw/mlx5/umr.c b/drivers/infiniband/hw/mlx5/umr.c
+index 887fd6fa3ba93..793f3c5c4d012 100644
+--- a/drivers/infiniband/hw/mlx5/umr.c
++++ b/drivers/infiniband/hw/mlx5/umr.c
+@@ -231,30 +231,6 @@ void mlx5r_umr_cleanup(struct mlx5_ib_dev *dev)
+ 	ib_dealloc_pd(dev->umrc.pd);
  }
  
--static int __apply_microcode_amd(struct microcode_amd *mc, unsigned int psize)
-+static bool __apply_microcode_amd(struct microcode_amd *mc, unsigned int psize)
- {
- 	unsigned long p_addr = (unsigned long)&mc->hdr.data_code;
- 	u32 rev, dummy;
-@@ -510,9 +510,9 @@ static int __apply_microcode_amd(struct
- 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
- 
- 	if (rev != mc->hdr.patch_id)
--		return -1;
-+		return false;
- 
+-static int mlx5r_umr_recover(struct mlx5_ib_dev *dev)
+-{
+-	struct umr_common *umrc = &dev->umrc;
+-	struct ib_qp_attr attr;
+-	int err;
+-
+-	attr.qp_state = IB_QPS_RESET;
+-	err = ib_modify_qp(umrc->qp, &attr, IB_QP_STATE);
+-	if (err) {
+-		mlx5_ib_dbg(dev, "Couldn't modify UMR QP\n");
+-		goto err;
+-	}
+-
+-	err = mlx5r_umr_qp_rst2rts(dev, umrc->qp);
+-	if (err)
+-		goto err;
+-
+-	umrc->state = MLX5_UMR_STATE_ACTIVE;
 -	return 0;
-+	return true;
+-
+-err:
+-	umrc->state = MLX5_UMR_STATE_ERR;
+-	return err;
+-}
+ 
+ static int mlx5r_umr_post_send(struct ib_qp *ibqp, u32 mkey, struct ib_cqe *cqe,
+ 			       struct mlx5r_umr_wqe *wqe, bool with_data)
+@@ -302,6 +278,61 @@ static int mlx5r_umr_post_send(struct ib_qp *ibqp, u32 mkey, struct ib_cqe *cqe,
+ 	return err;
  }
  
- /*
-@@ -546,7 +546,7 @@ static bool early_apply_microcode(u32 ol
- 	if (old_rev > mc->hdr.patch_id)
- 		return ret;
- 
--	return !__apply_microcode_amd(mc, desc.psize);
-+	return __apply_microcode_amd(mc, desc.psize);
- }
- 
- static bool get_builtin_microcode(struct cpio_data *cp)
-@@ -765,7 +765,7 @@ void reload_ucode_amd(unsigned int cpu)
- 	rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
- 
- 	if (rev < mc->hdr.patch_id) {
--		if (!__apply_microcode_amd(mc, p->size))
-+		if (__apply_microcode_amd(mc, p->size))
- 			pr_info_once("reload revision: 0x%08x\n", mc->hdr.patch_id);
- 	}
- }
-@@ -818,7 +818,7 @@ static enum ucode_state apply_microcode_
- 		goto out;
- 	}
- 
--	if (__apply_microcode_amd(mc_amd, p->size)) {
-+	if (!__apply_microcode_amd(mc_amd, p->size)) {
- 		pr_err("CPU%d: update failed for patch_level=0x%08x\n",
- 			cpu, mc_amd->hdr.patch_id);
- 		return UCODE_ERROR;
++static int mlx5r_umr_recover(struct mlx5_ib_dev *dev, u32 mkey,
++			     struct mlx5r_umr_context *umr_context,
++			     struct mlx5r_umr_wqe *wqe, bool with_data)
++{
++	struct umr_common *umrc = &dev->umrc;
++	struct ib_qp_attr attr;
++	int err;
++
++	mutex_lock(&umrc->lock);
++	/* Preventing any further WRs to be sent now */
++	if (umrc->state != MLX5_UMR_STATE_RECOVER) {
++		mlx5_ib_warn(dev, "UMR recovery encountered an unexpected state=%d\n",
++			     umrc->state);
++		umrc->state = MLX5_UMR_STATE_RECOVER;
++	}
++	mutex_unlock(&umrc->lock);
++
++	/* Sending a final/barrier WR (the failed one) and wait for its completion.
++	 * This will ensure that all the previous WRs got a completion before
++	 * we set the QP state to RESET.
++	 */
++	err = mlx5r_umr_post_send(umrc->qp, mkey, &umr_context->cqe, wqe,
++				  with_data);
++	if (err) {
++		mlx5_ib_warn(dev, "UMR recovery post send failed, err %d\n", err);
++		goto err;
++	}
++
++	/* Since the QP is in an error state, it will only receive
++	 * IB_WC_WR_FLUSH_ERR. However, as it serves only as a barrier
++	 * we don't care about its status.
++	 */
++	wait_for_completion(&umr_context->done);
++
++	attr.qp_state = IB_QPS_RESET;
++	err = ib_modify_qp(umrc->qp, &attr, IB_QP_STATE);
++	if (err) {
++		mlx5_ib_warn(dev, "Couldn't modify UMR QP to RESET, err=%d\n", err);
++		goto err;
++	}
++
++	err = mlx5r_umr_qp_rst2rts(dev, umrc->qp);
++	if (err) {
++		mlx5_ib_warn(dev, "Couldn't modify UMR QP to RTS, err=%d\n", err);
++		goto err;
++	}
++
++	umrc->state = MLX5_UMR_STATE_ACTIVE;
++	return 0;
++
++err:
++	umrc->state = MLX5_UMR_STATE_ERR;
++	return err;
++}
++
+ static void mlx5r_umr_done(struct ib_cq *cq, struct ib_wc *wc)
+ {
+ 	struct mlx5_ib_umr_context *context =
+@@ -366,9 +397,7 @@ static int mlx5r_umr_post_send_wait(struct mlx5_ib_dev *dev, u32 mkey,
+ 		mlx5_ib_warn(dev,
+ 			"reg umr failed (%u). Trying to recover and resubmit the flushed WQEs, mkey = %u\n",
+ 			umr_context.status, mkey);
+-		mutex_lock(&umrc->lock);
+-		err = mlx5r_umr_recover(dev);
+-		mutex_unlock(&umrc->lock);
++		err = mlx5r_umr_recover(dev, mkey, &umr_context, wqe, with_data);
+ 		if (err)
+ 			mlx5_ib_warn(dev, "couldn't recover UMR, err %d\n",
+ 				     err);
+-- 
+2.39.5
+
 
 
