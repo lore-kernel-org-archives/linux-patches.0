@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06651A3174;
-	Wed,  5 Mar 2025 18:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B257117B505;
+	Wed,  5 Mar 2025 18:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197890; cv=none; b=P+e3eSzgGY4TWuwccRwDPRQTSEYJIoVe2bbJNNTo69p9HekOH07M8QjfAfbNc0GMu9SGidpF7ixGxCyb6kqhTWPPkdJ89iFjPnSjq8Uc20CpIa0WlYE7Mu74PurgMVJ9k9KALtw63ga0CSE2mnpZo28+yGjriJyXdbM1/08ADiM=
+	t=1741197893; cv=none; b=uHjhrSBUFZ1bHdhGeTIzBALpZSyHnxjSmzYyoC5rfQmJMnts6TbF6AYuRikpuGiRdZVjM02k6V4sayWkk7jHxzk7iXEUQ408MLt2PifTkGcVaFNV+h7zjl37cyG0pJcDNeIO+RGtiEyuZC+lJR9DFxrUvXhN8soiRTC6/l/PLMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197890; c=relaxed/simple;
-	bh=dA/i9TWil9kfAL0dE0S4kNr4KNm+nKydOEp1w7Byhx4=;
+	s=arc-20240116; t=1741197893; c=relaxed/simple;
+	bh=P9nXMTa4L2VuMt7thI6HjYnaS60kh9PNx7BKMj2ITmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h/KnRq51R4Ql9yItsYB+wKWvA3ByFZOSzHSf3bksgxJaRTwsMG5xIm9ow+FvrtOjSOTAsnEh2n6mEIP0DUsY/7E7ueVWeC1SMcmX8NFPsGeWdtKFMWlCsyC8AV8XT3zqz84tLbcVMJ8QTQVm8Cx1D0KqrIUxavhGnIr4QcfDBx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRPOAJs1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A8jB6O3v5Ezvco105bsBzoKyjGoPL38hXrm0g8n7ZVwE146uown8Jas48wTO0YDG7p1QcinAwtop9EPKFAyxu4Aby5Ar23iCS/EV8eaUB+0y6U6/RYrmoxo7YXM2ex7dWOVFI+p61tCd5VW/8lYdKzyr4E/F/G2FhqmphA05WB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maxlGyb+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRPOAJs1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59468C4CED1;
-	Wed,  5 Mar 2025 18:04:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maxlGyb+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A43C4CED1;
+	Wed,  5 Mar 2025 18:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197890;
-	bh=dA/i9TWil9kfAL0dE0S4kNr4KNm+nKydOEp1w7Byhx4=;
+	s=korg; t=1741197893;
+	bh=P9nXMTa4L2VuMt7thI6HjYnaS60kh9PNx7BKMj2ITmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRPOAJs1Ob+S3UTuOHOeKUYN0leLzgwptIckQqsYG0D968Np3pL+Wo7NgV31ZKKyc
-	 KdEi/XyaQVCc/nLqIFcfc5b505vyfhYWnf8kng1bLabhMpF13Emjr3VSlAkNY4WRcw
-	 UZV5ApMgjNQb4ThsikpJ/ygftJXFX1YfLZuq0NYE=
+	b=maxlGyb+4bgS18xazRr2U1FVlBg0injnjjd2EJGkgEU5Jg8tKWSwM5gLOqCxihEjy
+	 LakO+/2PAl8nWUAQMJJOhKUaa37S0oYK/uJ9anrQjy1VmY6HYxxyYvlvPkEYOWNlVu
+	 6llZuYhitWO9nEhgGcIjL3pr3uLXOLs6iHHQNM1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yan Hua Wu <yanhua1.wu@intel.com>,
-	William Xie <william.xie@intel.com>,
-	"Chang S. Bae" <chang.seok.bae@intel.com>,
+	Thomas De Schampheleire <thomas.de_schampheleire@nokia.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ashok Raj <ashok.raj@intel.com>
-Subject: [PATCH 6.6 134/142] x86/microcode/intel: Remove unnecessary cache writeback and invalidation
-Date: Wed,  5 Mar 2025 18:49:13 +0100
-Message-ID: <20250305174505.717620782@linuxfoundation.org>
+	stable@kernel.org
+Subject: [PATCH 6.6 135/142] x86/microcode/AMD: Flush patch buffer mapping after application
+Date: Wed,  5 Mar 2025 18:49:14 +0100
+Message-ID: <20250305174505.756974651@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -53,70 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Chang S. Bae" <chang.seok.bae@intel.com>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-commit 9a819753b0209c6edebdea447a1aa53e8c697653 upstream
+commit c809b0d0e52d01c30066367b2952c4c4186b1047 upstream
 
-Currently, an unconditional cache flush is performed during every
-microcode update. Although the original changelog did not mention
-a specific erratum, this measure was primarily intended to address
-a specific microcode bug, the load of which has already been blocked by
-is_blacklisted(). Therefore, this cache flush is no longer necessary.
+Due to specific requirements while applying microcode patches on Zen1
+and 2, the patch buffer mapping needs to be flushed from the TLB after
+application. Do so.
 
-Additionally, the side effects of doing this have been overlooked. It
-increases CPU rendezvous time during late loading, where the cache flush
-takes between 1x to 3.5x longer than the actual microcode update.
+If not, unnecessary and unnatural delays happen in the boot process.
 
-Remove native_wbinvd() and update the erratum name to align with the
-latest errata documentation, document ID 334163 Version 022US.
-
-  [ bp: Zap the flaky documentation URL. ]
-
-Fixes: 91df9fdf5149 ("x86/microcode/intel: Writeback and invalidate caches before updating microcode")
-Reported-by: Yan Hua Wu <yanhua1.wu@intel.com>
-Reported-by: William Xie <william.xie@intel.com>
-Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
+Reported-by: Thomas De Schampheleire <thomas.de_schampheleire@nokia.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Ashok Raj <ashok.raj@intel.com>
-Tested-by: Yan Hua Wu <yanhua1.wu@intel.com>
-Link: https://lore.kernel.org/r/20241001161042.465584-2-chang.seok.bae@intel.com
+Tested-by: Thomas De Schampheleire <thomas.de_schampheleire@nokia.com>
+Cc: <stable@kernel.org> # f1d84b59cbb9 ("x86/mm: Carve out INVLPG inline asm for use by others")
+Link: https://lore.kernel.org/r/ZyulbYuvrkshfsd2@antipodes
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/microcode/intel.c |   10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ arch/x86/kernel/cpu/microcode/amd.c |   25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -319,12 +319,6 @@ static enum ucode_state __apply_microcod
- 		return UCODE_OK;
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -34,6 +34,7 @@
+ #include <asm/setup.h>
+ #include <asm/cpu.h>
+ #include <asm/msr.h>
++#include <asm/tlb.h>
+ 
+ #include "internal.h"
+ 
+@@ -485,11 +486,25 @@ static void scan_containers(u8 *ucode, s
+ 	}
+ }
+ 
+-static int __apply_microcode_amd(struct microcode_amd *mc)
++static int __apply_microcode_amd(struct microcode_amd *mc, unsigned int psize)
+ {
++	unsigned long p_addr = (unsigned long)&mc->hdr.data_code;
+ 	u32 rev, dummy;
+ 
+-	native_wrmsrl(MSR_AMD64_PATCH_LOADER, (u64)(long)&mc->hdr.data_code);
++	native_wrmsrl(MSR_AMD64_PATCH_LOADER, p_addr);
++
++	if (x86_family(bsp_cpuid_1_eax) == 0x17) {
++		unsigned long p_addr_end = p_addr + psize - 1;
++
++		invlpg(p_addr);
++
++		/*
++		 * Flush next page too if patch image is crossing a page
++		 * boundary.
++		 */
++		if (p_addr >> PAGE_SHIFT != p_addr_end >> PAGE_SHIFT)
++			invlpg(p_addr_end);
++	}
+ 
+ 	/* verify patch application was successful */
+ 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+@@ -531,7 +546,7 @@ static bool early_apply_microcode(u32 ol
+ 	if (old_rev > mc->hdr.patch_id)
+ 		return ret;
+ 
+-	return !__apply_microcode_amd(mc);
++	return !__apply_microcode_amd(mc, desc.psize);
+ }
+ 
+ static bool get_builtin_microcode(struct cpio_data *cp)
+@@ -747,7 +762,7 @@ void reload_ucode_amd(unsigned int cpu)
+ 	rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+ 
+ 	if (rev < mc->hdr.patch_id) {
+-		if (!__apply_microcode_amd(mc))
++		if (!__apply_microcode_amd(mc, p->size))
+ 			pr_info_once("reload revision: 0x%08x\n", mc->hdr.patch_id);
+ 	}
+ }
+@@ -800,7 +815,7 @@ static enum ucode_state apply_microcode_
+ 		goto out;
  	}
  
--	/*
--	 * Writeback and invalidate caches before updating microcode to avoid
--	 * internal issues depending on what the microcode is updating.
--	 */
--	native_wbinvd();
--
- 	/* write microcode via MSR 0x79 */
- 	native_wrmsrl(MSR_IA32_UCODE_WRITE, (unsigned long)mc->bits);
- 
-@@ -551,7 +545,7 @@ static bool is_blacklisted(unsigned int
- 	/*
- 	 * Late loading on model 79 with microcode revision less than 0x0b000021
- 	 * and LLC size per core bigger than 2.5MB may result in a system hang.
--	 * This behavior is documented in item BDF90, #334165 (Intel Xeon
-+	 * This behavior is documented in item BDX90, #334165 (Intel Xeon
- 	 * Processor E7-8800/4800 v4 Product Family).
- 	 */
- 	if (c->x86 == 6 &&
-@@ -559,7 +553,7 @@ static bool is_blacklisted(unsigned int
- 	    c->x86_stepping == 0x01 &&
- 	    llc_size_per_core > 2621440 &&
- 	    c->microcode < 0x0b000021) {
--		pr_err_once("Erratum BDF90: late loading with revision < 0x0b000021 (0x%x) disabled.\n", c->microcode);
-+		pr_err_once("Erratum BDX90: late loading with revision < 0x0b000021 (0x%x) disabled.\n", c->microcode);
- 		pr_err_once("Please consider either early loading through initrd/built-in or a potential BIOS update.\n");
- 		return true;
- 	}
+-	if (__apply_microcode_amd(mc_amd)) {
++	if (__apply_microcode_amd(mc_amd, p->size)) {
+ 		pr_err("CPU%d: update failed for patch_level=0x%08x\n",
+ 			cpu, mc_amd->hdr.patch_id);
+ 		return UCODE_ERROR;
 
 
