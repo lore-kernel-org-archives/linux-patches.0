@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FE714884C;
-	Wed,  5 Mar 2025 18:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74E21A316B;
+	Wed,  5 Mar 2025 18:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198570; cv=none; b=PVTgzqubyFZnbsgAAnEbSrDOMNTOjTvkjcdI0t46o1T0TkiPH4drL4xZ7w/dwhwJGnCfWQB9MWLJ+SkDsiPYiN+b7pY1NgGo16jQw56qo+2DezlzXs5Azoq03WylXSh0ruh1AlEwTzQv8vOZUFOTJsl0k8uowPo4eOYFTBB1FVY=
+	t=1741198573; cv=none; b=O9mCVjsJPmiRNx51UTxe9mR2Ai4v/RPhwkT2q5PSDsa0cq6nu8gFjejVBYYb6HwESPN70hMhLEctDG+EsFPk1hIiVx7rnwWqkhRzKrWCT1vseg/IToc0qKd3N3kLAxOZkNvftT347U+Pygd8Jxdw5yBU3GKsBMIUtbd1ynzBOIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198570; c=relaxed/simple;
-	bh=1E5E8yKNhyKaquklQe1o5DZWIKYWqch2BhwdolLpv6g=;
+	s=arc-20240116; t=1741198573; c=relaxed/simple;
+	bh=rv81iGikYhgTyIQDZyXgHtCp4MK6JTfpcFYwIVDLSdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EqOf8R59k057cGeXXfkdxwYuPOP9cUEywbt96NI/YB/TYamuwYv1ICraHWVzHSrk63TJ9E+q6c45EJ1Q9LWPpWznLl2o7r1NPE6Llzn6dddEyJsmaF/hnIYxowX/fHvFeKAt6eWWEE6rZ2/oY3fE0TR360FaMRzwBNW1QQE6W3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvIAzdl8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I+7UoXvmec1XaFwJ3pyTTTVUEg++9Q37vzI7T+cHBTQf1xN4zacB5aYrFS6jlYPpjDD576GM1L0BEKfR2st92dNFlrUzumvWQYDovGqDisn7F0YykSiydPkJ4vcLCkrVIBhS7ndlcse589YbDrXFfYgfyM6yBBmu/l10hFhL5Wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeokwYxW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvIAzdl8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B897C4CED1;
-	Wed,  5 Mar 2025 18:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeokwYxW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB409C4CED1;
+	Wed,  5 Mar 2025 18:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198570;
-	bh=1E5E8yKNhyKaquklQe1o5DZWIKYWqch2BhwdolLpv6g=;
+	s=korg; t=1741198573;
+	bh=rv81iGikYhgTyIQDZyXgHtCp4MK6JTfpcFYwIVDLSdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XvIAzdl881hI0Rni7/KHDimtkvmanTODjbBRZrf0tpTh+5ZNgBT2Bff1kNSIZnFBV
-	 +piW8/7y9v8xocp5wL+UWnHjEgMkb2OAgEse66jvQR2CFUAIBSEFZIH3n4xBSjwW4b
-	 WgQ3vmP86cFF9RvD48eQ6+CSTcva2nPj+DNROsXo=
+	b=EeokwYxWk2ixUpi/lLr8qe2cfDvSaf7PYqefUOnmj8nr79+b1k00rKV3TgQST4tgP
+	 wDEEnC/mt4yjt+PPXr6kL57DvBqY+nGpuBx703WBl2PHpi0J38u3/uI6m/Upwbmikh
+	 5gzl3ihTEHObtxq0fsaPAbJfpwKRnK+VImAQs2Us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Vinod Koul <vkoul@kernel.org>,
+	Shay Drory <shayd@nvidia.com>,
+	kernel test robot <lkp@intel.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 074/157] phy: rockchip: fix Kconfig dependency more
-Date: Wed,  5 Mar 2025 18:48:30 +0100
-Message-ID: <20250305174508.278528771@linuxfoundation.org>
+Subject: [PATCH 6.13 057/157] net/mlx5: IRQ, Fix null string in debug print
+Date: Wed,  5 Mar 2025 18:48:13 +0100
+Message-ID: <20250305174507.596322511@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -53,46 +55,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit fcf5d353b09b3fc212ab24b89ef23a7a8f7b308e ]
+[ Upstream commit 2f5a6014eb168a97b24153adccfa663d3b282767 ]
 
-A previous patch ensured that USB Type C connector support is enabled,
-but it is still possible to build the phy driver without enabling
-CONFIG_USB (host support) or CONFIG_USB_GADGET (device support), and
-in that case the common helper functions are unavailable:
+irq_pool_alloc() debug print can print a null string.
+Fix it by providing a default string to print.
 
-aarch64-linux-ld: drivers/phy/rockchip/phy-rockchip-usbdp.o: in function `rk_udphy_probe':
-phy-rockchip-usbdp.c:(.text+0xe74): undefined reference to `usb_get_maximum_speed'
-
-Select CONFIG_USB_COMMON directly here, like we do in some other phy
-drivers, to make sure this is available even when actual USB support
-is disabled or in a loadable module that cannot be reached from a
-built-in phy driver.
-
-Fixes: 9c79b779643e ("phy: rockchip: fix CONFIG_TYPEC dependency")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20250122065249.1390081-1-arnd@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 71e084e26414 ("net/mlx5: Allocating a pool of MSI-X vectors for SFs")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501141055.SwfIphN0-lkp@intel.com/
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Link: https://patch.msgid.link/20250225072608.526866-4-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/phy/rockchip/Kconfig b/drivers/phy/rockchip/Kconfig
-index 2f7a05f21dc59..dcb8e1628632e 100644
---- a/drivers/phy/rockchip/Kconfig
-+++ b/drivers/phy/rockchip/Kconfig
-@@ -125,6 +125,7 @@ config PHY_ROCKCHIP_USBDP
- 	depends on ARCH_ROCKCHIP && OF
- 	depends on TYPEC
- 	select GENERIC_PHY
-+	select USB_COMMON
- 	help
- 	  Enable this to support the Rockchip USB3.0/DP combo PHY with
- 	  Samsung IP block. This is required for USB3 support on RK3588.
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
+index 7db9cab9bedf6..d9362eabc6a1c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
+@@ -572,7 +572,7 @@ irq_pool_alloc(struct mlx5_core_dev *dev, int start, int size, char *name,
+ 	pool->min_threshold = min_threshold * MLX5_EQ_REFS_PER_IRQ;
+ 	pool->max_threshold = max_threshold * MLX5_EQ_REFS_PER_IRQ;
+ 	mlx5_core_dbg(dev, "pool->name = %s, pool->size = %d, pool->start = %d",
+-		      name, size, start);
++		      name ? name : "mlx5_pcif_pool", size, start);
+ 	return pool;
+ }
+ 
 -- 
 2.39.5
 
