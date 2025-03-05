@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A651A3174;
-	Wed,  5 Mar 2025 18:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06651A3174;
+	Wed,  5 Mar 2025 18:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197888; cv=none; b=HgiToyCuPT1GuD7WbzEhY5bHWfeg4DNRTHPd0jec3k1YyT7vBgqtTq/9vjJXjlZa1CQrdYifhyaogsVlvHdc4ltJW1iJfSL4RAsQxUwbAID/apsQr7IGwX5pdKu0QDN/n4Q9lYDaO8LM4LHbPJDipBh4TMNR194jCX4kVBEo+a8=
+	t=1741197890; cv=none; b=P+e3eSzgGY4TWuwccRwDPRQTSEYJIoVe2bbJNNTo69p9HekOH07M8QjfAfbNc0GMu9SGidpF7ixGxCyb6kqhTWPPkdJ89iFjPnSjq8Uc20CpIa0WlYE7Mu74PurgMVJ9k9KALtw63ga0CSE2mnpZo28+yGjriJyXdbM1/08ADiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197888; c=relaxed/simple;
-	bh=s1Zv9OMGNUhfK3R9OqQDVarQwezhoRlmy0Y+gSfMsMs=;
+	s=arc-20240116; t=1741197890; c=relaxed/simple;
+	bh=dA/i9TWil9kfAL0dE0S4kNr4KNm+nKydOEp1w7Byhx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iOLHYghWqjADeto772Wo1EsZw5wX0q8P6OAIPAUt4SCfMIeDigGF9VlgLsKGbz2Fi3uH9cu1PvkdbXqI/vTIojgGau8LL6+/X9eS4YcgZ9Q0cgsAVa4i2p9SWGfdkLgr0uPvz7LV/+PpUdU3raoAfSddudWhj1GxzjKfM4XRfZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CkEVQlE6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h/KnRq51R4Ql9yItsYB+wKWvA3ByFZOSzHSf3bksgxJaRTwsMG5xIm9ow+FvrtOjSOTAsnEh2n6mEIP0DUsY/7E7ueVWeC1SMcmX8NFPsGeWdtKFMWlCsyC8AV8XT3zqz84tLbcVMJ8QTQVm8Cx1D0KqrIUxavhGnIr4QcfDBx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRPOAJs1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CkEVQlE6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD04C4CED1;
-	Wed,  5 Mar 2025 18:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRPOAJs1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59468C4CED1;
+	Wed,  5 Mar 2025 18:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197887;
-	bh=s1Zv9OMGNUhfK3R9OqQDVarQwezhoRlmy0Y+gSfMsMs=;
+	s=korg; t=1741197890;
+	bh=dA/i9TWil9kfAL0dE0S4kNr4KNm+nKydOEp1w7Byhx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CkEVQlE6XzuzaG5g/fz1YAIFg7aRyt2krtc0HNDO6Yn0TjntaX/7NXfUcq8kE43BH
-	 JFjmv9mssNlXCRUD205MMRDBOawQrhvXXwn1pdW/ZEZTTKnkaxSF33LZayaVN8w93i
-	 MRGaaEDgpf4Yi4IpL8Zgjsd1QaQXGsHjIhnDPdZs=
+	b=SRPOAJs1Ob+S3UTuOHOeKUYN0leLzgwptIckQqsYG0D968Np3pL+Wo7NgV31ZKKyc
+	 KdEi/XyaQVCc/nLqIFcfc5b505vyfhYWnf8kng1bLabhMpF13Emjr3VSlAkNY4WRcw
+	 UZV5ApMgjNQb4ThsikpJ/ygftJXFX1YfLZuq0NYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.6 133/142] x86/microcode/AMD: Split load_microcode_amd()
-Date: Wed,  5 Mar 2025 18:49:12 +0100
-Message-ID: <20250305174505.676974951@linuxfoundation.org>
+	Yan Hua Wu <yanhua1.wu@intel.com>,
+	William Xie <william.xie@intel.com>,
+	"Chang S. Bae" <chang.seok.bae@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ashok Raj <ashok.raj@intel.com>
+Subject: [PATCH 6.6 134/142] x86/microcode/intel: Remove unnecessary cache writeback and invalidation
+Date: Wed,  5 Mar 2025 18:49:13 +0100
+Message-ID: <20250305174505.717620782@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -50,100 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Borislav Petkov (AMD)" <bp@alien8.de>
+From: "Chang S. Bae" <chang.seok.bae@intel.com>
 
-commit 1d81d85d1a19e50d5237dc67d6b825c34ae13de8 upstream
+commit 9a819753b0209c6edebdea447a1aa53e8c697653 upstream
 
-This function should've been split a long time ago because it is used in
-two paths:
+Currently, an unconditional cache flush is performed during every
+microcode update. Although the original changelog did not mention
+a specific erratum, this measure was primarily intended to address
+a specific microcode bug, the load of which has already been blocked by
+is_blacklisted(). Therefore, this cache flush is no longer necessary.
 
-1) On the late loading path, when the microcode is loaded through the
-   request_firmware interface
+Additionally, the side effects of doing this have been overlooked. It
+increases CPU rendezvous time during late loading, where the cache flush
+takes between 1x to 3.5x longer than the actual microcode update.
 
-2) In the save_microcode_in_initrd() path which collects all the
-   microcode patches which are relevant for the current system before
-   the initrd with the microcode container has been jettisoned.
+Remove native_wbinvd() and update the erratum name to align with the
+latest errata documentation, document ID 334163 Version 022US.
 
-   In that path, it is not really necessary to iterate over the nodes on
-   a system and match a patch however it didn't cause any trouble so it
-   was left for a later cleanup
+  [ bp: Zap the flaky documentation URL. ]
 
-However, that later cleanup was expedited by the fact that Jens was
-enabling "Use L3 as a NUMA node" in the BIOS setting in his machine and
-so this causes the NUMA CPU masks used in cpumask_of_node() to be
-generated *after* 2) above happened on the first node. Which means, all
-those masks were funky, wrong, uninitialized and whatnot, leading to
-explosions when dereffing c->microcode in load_microcode_amd().
-
-So split that function and do only the necessary work needed at each
-stage.
-
-Fixes: 94838d230a6c ("x86/microcode/AMD: Use the family,model,stepping encoded in the patch ID")
-Reported-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 91df9fdf5149 ("x86/microcode/intel: Writeback and invalidate caches before updating microcode")
+Reported-by: Yan Hua Wu <yanhua1.wu@intel.com>
+Reported-by: William Xie <william.xie@intel.com>
+Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Jens Axboe <axboe@kernel.dk>
-Link: https://lore.kernel.org/r/91194406-3fdf-4e38-9838-d334af538f74@kernel.dk
+Acked-by: Ashok Raj <ashok.raj@intel.com>
+Tested-by: Yan Hua Wu <yanhua1.wu@intel.com>
+Link: https://lore.kernel.org/r/20241001161042.465584-2-chang.seok.bae@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c |   25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ arch/x86/kernel/cpu/microcode/intel.c |   10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -586,7 +586,7 @@ void __init load_ucode_amd_bsp(struct ea
- 		native_rdmsr(MSR_AMD64_PATCH_LEVEL, ed->new_rev, dummy);
- }
+--- a/arch/x86/kernel/cpu/microcode/intel.c
++++ b/arch/x86/kernel/cpu/microcode/intel.c
+@@ -319,12 +319,6 @@ static enum ucode_state __apply_microcod
+ 		return UCODE_OK;
+ 	}
  
--static enum ucode_state load_microcode_amd(u8 family, const u8 *data, size_t size);
-+static enum ucode_state _load_microcode_amd(u8 family, const u8 *data, size_t size);
+-	/*
+-	 * Writeback and invalidate caches before updating microcode to avoid
+-	 * internal issues depending on what the microcode is updating.
+-	 */
+-	native_wbinvd();
+-
+ 	/* write microcode via MSR 0x79 */
+ 	native_wrmsrl(MSR_IA32_UCODE_WRITE, (unsigned long)mc->bits);
  
- static int __init save_microcode_in_initrd(void)
- {
-@@ -607,7 +607,7 @@ static int __init save_microcode_in_init
- 	if (!desc.mc)
- 		return -EINVAL;
- 
--	ret = load_microcode_amd(x86_family(cpuid_1_eax), desc.data, desc.size);
-+	ret = _load_microcode_amd(x86_family(cpuid_1_eax), desc.data, desc.size);
- 	if (ret > UCODE_UPDATED)
- 		return -EINVAL;
- 
-@@ -956,21 +956,30 @@ static enum ucode_state __load_microcode
- 	return UCODE_OK;
- }
- 
--static enum ucode_state load_microcode_amd(u8 family, const u8 *data, size_t size)
-+static enum ucode_state _load_microcode_amd(u8 family, const u8 *data, size_t size)
- {
--	struct cpuinfo_x86 *c;
--	unsigned int nid, cpu;
--	struct ucode_patch *p;
- 	enum ucode_state ret;
- 
- 	/* free old equiv table */
- 	free_equiv_cpu_table();
- 
- 	ret = __load_microcode_amd(family, data, size);
--	if (ret != UCODE_OK) {
-+	if (ret != UCODE_OK)
- 		cleanup();
-+
-+	return ret;
-+}
-+
-+static enum ucode_state load_microcode_amd(u8 family, const u8 *data, size_t size)
-+{
-+	struct cpuinfo_x86 *c;
-+	unsigned int nid, cpu;
-+	struct ucode_patch *p;
-+	enum ucode_state ret;
-+
-+	ret = _load_microcode_amd(family, data, size);
-+	if (ret != UCODE_OK)
- 		return ret;
--	}
- 
- 	for_each_node(nid) {
- 		cpu = cpumask_first(cpumask_of_node(nid));
+@@ -551,7 +545,7 @@ static bool is_blacklisted(unsigned int
+ 	/*
+ 	 * Late loading on model 79 with microcode revision less than 0x0b000021
+ 	 * and LLC size per core bigger than 2.5MB may result in a system hang.
+-	 * This behavior is documented in item BDF90, #334165 (Intel Xeon
++	 * This behavior is documented in item BDX90, #334165 (Intel Xeon
+ 	 * Processor E7-8800/4800 v4 Product Family).
+ 	 */
+ 	if (c->x86 == 6 &&
+@@ -559,7 +553,7 @@ static bool is_blacklisted(unsigned int
+ 	    c->x86_stepping == 0x01 &&
+ 	    llc_size_per_core > 2621440 &&
+ 	    c->microcode < 0x0b000021) {
+-		pr_err_once("Erratum BDF90: late loading with revision < 0x0b000021 (0x%x) disabled.\n", c->microcode);
++		pr_err_once("Erratum BDX90: late loading with revision < 0x0b000021 (0x%x) disabled.\n", c->microcode);
+ 		pr_err_once("Please consider either early loading through initrd/built-in or a potential BIOS update.\n");
+ 		return true;
+ 	}
 
 
