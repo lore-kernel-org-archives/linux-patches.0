@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B5C256C61;
-	Wed,  5 Mar 2025 18:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D55B253326;
+	Wed,  5 Mar 2025 18:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198783; cv=none; b=GiA5NrdB0f3lnCgSgGKmaLGUquy962fsYoNn7hmDEh5b5TAPy6hm3WaBlwyHb194yu1RfjeB3xX4mS2wAxpU7FWm4O5iZ59F1e9uoqzgs/GkS82LWUYhYMiOTZ9jL1jJgaUqqAova7OIgLqLLv/k2HtyFe2qwl1rOF0KLRqtnlA=
+	t=1741198786; cv=none; b=CUMkWG7rYpiMg59ZmcRofIKRDEehV1QpkACrueUByxYiRVLv4pswLa1PIH16HiYWec1e82uI3cg9h8zrDsGSIcTiWXMaWZ7VcE66IG2na0KVVubYlFpqgL1sVINj8zXgveBKMVzfBD0xuJbUhKSTQPWzq+tItWaErmpuVmStvfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198783; c=relaxed/simple;
-	bh=WDXxnfjpAqVq0no40ShDP8jLA2Vp/4k0cKGQXyuN+4Y=;
+	s=arc-20240116; t=1741198786; c=relaxed/simple;
+	bh=qmRk0N7DZtpDyKGPKzfitTUKHAuNeMybTFYDj1cYNng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qfJ16LnmkwJzuSDy1CGjtshWFHeHsuuXt6jjxqyBS0/Bil1TR8hmkZy7Xs2EuPopNOmlI5nJVVoHL5yjKBUVtfoc35ERe8dBCaZD3gBNjVkItgQPcUIwOP0cVxaVr1zBpWeeaBty0fPYg/vRSUYaU5dSUWXd76OzCi82klA34Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkESHHeX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tuaV1br5DrrmoXGyfpizf1I0uHGzdONDn7Sh1la/qxxGN2OIQxQujWZYJmFGnM4QogVmZsECNjn4uv1FYPs4va8DWXVB+S8yd3yZ+UnozSDSMLBAezZgUcNzBUxOzeftcBZs02H5xQIZ6P5SgUZbRRoONKurVjZ+dLe0sfDVQXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+9zSh6M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkESHHeX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0A6C4CED1;
-	Wed,  5 Mar 2025 18:19:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+9zSh6M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282B3C4CED1;
+	Wed,  5 Mar 2025 18:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198783;
-	bh=WDXxnfjpAqVq0no40ShDP8jLA2Vp/4k0cKGQXyuN+4Y=;
+	s=korg; t=1741198786;
+	bh=qmRk0N7DZtpDyKGPKzfitTUKHAuNeMybTFYDj1cYNng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GkESHHeX787L3em36wraCLa61/WAU5MteNqWQRgc8x0GHFIrfGUaiMkIyEVX9WBIY
-	 9iGD/K8f18eQZDJQG2/wO4t1Tba7DU/gNSrXUj4v23hiwQ6Ml2cPxuaOrSXH8p4AhA
-	 gwlEJMS2qXEgu+0on+gEPSdHPIGT0FrXsPa6qX6c=
+	b=a+9zSh6MvarTxvvNvyFaxYmVD2zEzhjT+cEiicg2nc/EcOdS/pIB4enJTseTPkJy6
+	 szilOOZDsGuP2aANWYNagrWPpetiWBEzDwQYQzoYgUOfHuXWSV7zKBspwx4b2Z8krA
+	 XJAPIIwsDx3jzWVTGtHsi/LqMSZi8jGl5FOr/cCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+	Zong Li <zong.li@sifive.com>,
+	Andy Chiu <andybnac@gmail.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.13 146/157] riscv: cacheinfo: Use of_property_present() for non-boolean properties
-Date: Wed,  5 Mar 2025 18:49:42 +0100
-Message-ID: <20250305174511.166168892@linuxfoundation.org>
+Subject: [PATCH 6.13 147/157] riscv: signal: fix signal_minsigstksz
+Date: Wed,  5 Mar 2025 18:49:43 +0100
+Message-ID: <20250305174511.204591598@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -45,63 +47,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Herring <robh@kernel.org>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
-commit fb8179ce2996bffaa36a04e2b6262843b01b7565 upstream.
+commit 564fc8eb6f78e01292ff10801f318feae6153fdd upstream.
 
-The use of of_property_read_bool() for non-boolean properties is
-deprecated in favor of of_property_present() when testing for property
-presence.
+The init_rt_signal_env() funciton is called before the alternative patch
+is applied, so using the alternative-related API to check the availability
+of an extension within this function doesn't have the intended effect.
+This patch reorders the init_rt_signal_env() and apply_boot_alternatives()
+to get the correct signal_minsigstksz.
 
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-Reviewed-by: Clément Léger <cleger@rivosinc.com>
+Fixes: e92f469b0771 ("riscv: signal: Report signal frame size to userspace via auxv")
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Reviewed-by: Zong Li <zong.li@sifive.com>
+Reviewed-by: Andy Chiu <andybnac@gmail.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Cc: stable@vger.kernel.org
-Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
-Link: https://lore.kernel.org/r/20241104190314.270095-1-robh@kernel.org
+Link: https://lore.kernel.org/r/20241220083926.19453-3-yongxuan.wang@sifive.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/cacheinfo.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/riscv/kernel/setup.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/cacheinfo.c
-+++ b/arch/riscv/kernel/cacheinfo.c
-@@ -108,11 +108,11 @@ int populate_cache_leaves(unsigned int c
- 	if (!np)
- 		return -ENOENT;
+--- a/arch/riscv/kernel/setup.c
++++ b/arch/riscv/kernel/setup.c
+@@ -324,8 +324,8 @@ void __init setup_arch(char **cmdline_p)
  
--	if (of_property_read_bool(np, "cache-size"))
-+	if (of_property_present(np, "cache-size"))
- 		ci_leaf_init(this_leaf++, CACHE_TYPE_UNIFIED, level);
--	if (of_property_read_bool(np, "i-cache-size"))
-+	if (of_property_present(np, "i-cache-size"))
- 		ci_leaf_init(this_leaf++, CACHE_TYPE_INST, level);
--	if (of_property_read_bool(np, "d-cache-size"))
-+	if (of_property_present(np, "d-cache-size"))
- 		ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
+ 	riscv_init_cbo_blocksizes();
+ 	riscv_fill_hwcap();
+-	init_rt_signal_env();
+ 	apply_boot_alternatives();
++	init_rt_signal_env();
  
- 	prev = np;
-@@ -125,11 +125,11 @@ int populate_cache_leaves(unsigned int c
- 			break;
- 		if (level <= levels)
- 			break;
--		if (of_property_read_bool(np, "cache-size"))
-+		if (of_property_present(np, "cache-size"))
- 			ci_leaf_init(this_leaf++, CACHE_TYPE_UNIFIED, level);
--		if (of_property_read_bool(np, "i-cache-size"))
-+		if (of_property_present(np, "i-cache-size"))
- 			ci_leaf_init(this_leaf++, CACHE_TYPE_INST, level);
--		if (of_property_read_bool(np, "d-cache-size"))
-+		if (of_property_present(np, "d-cache-size"))
- 			ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
- 		levels = level;
- 	}
+ 	if (IS_ENABLED(CONFIG_RISCV_ISA_ZICBOM) &&
+ 	    riscv_isa_extension_available(NULL, ZICBOM))
 
 
