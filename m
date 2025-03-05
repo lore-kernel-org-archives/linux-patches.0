@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A616253F29;
-	Wed,  5 Mar 2025 18:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7910025485B;
+	Wed,  5 Mar 2025 18:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198674; cv=none; b=PfXUok77GK4AvYwUc2T3qCGNSREpl6wqpvmifcb+mtRQYfvXu4KCJVPQqtUXyd3xGCu2e8VOl+e0NbVbIJl8WoF0HRuSwa9zv029yRXniuAMuQ9bDqXpuCCZklsqgJpygw0XSQagF0bXP2Z7XfNavURpvI77diAU7yRrRH4ueek=
+	t=1741198677; cv=none; b=qSjowF4IIGJGR0ECt4Qr5QtbZIMWVNBQ2RMQVADkq0HihBj1Ly4b/f4+wSw/U31gt1ByicSrJ4gh6NQ3TAVrTJeWQUPezhY9Q7tqtY2R6c4ihq3lEJWeRPnYDYnaOX+MD4Q1fQIyDQ1/icvdV67EdX1pvw4qH6J0uqP8n2fIn0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198674; c=relaxed/simple;
-	bh=aIF810AYyM4TKpfnfxugQ472Qo9W6xw7wuYDa8k7Yjc=;
+	s=arc-20240116; t=1741198677; c=relaxed/simple;
+	bh=z1vDJckBKF78Ko4IUqEsqw+0q8jiyKjFW5uoY3oFTfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZJ4OCYH6BOhQV2m2681ksSR6f/WWW9RhQvZq/PxjbeJdYmO+vlio3wZDB33vOnw1XM8iDIUuWq7wSkA7r3ks4jc/W8WGa6y3uZoowNhRy7uDWse0zIU4FUmosEh4ujVBAwxyMWozfzkSsFVx+iE0JeBzk/IM09vulJbZ96UsU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x04DUYle; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tJ4291rO+x65kM/l4mg+M64LR7IqI3CQtzT3EVnEyUQAnJ4U0ixzTExY1NzbkahNjvccbZ9BuwZkJSlqun7bBTwIvM2UU2lm13/emnIGzzFgPFiGOexRnhncQzHZJqVBX+Va/B+2skXyieFy0Pt3JB4fP7EvGUgMce4bLpj/ojE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVYd3zlF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x04DUYle"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB84C4CEE0;
-	Wed,  5 Mar 2025 18:17:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVYd3zlF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02835C4CEE0;
+	Wed,  5 Mar 2025 18:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198674;
-	bh=aIF810AYyM4TKpfnfxugQ472Qo9W6xw7wuYDa8k7Yjc=;
+	s=korg; t=1741198677;
+	bh=z1vDJckBKF78Ko4IUqEsqw+0q8jiyKjFW5uoY3oFTfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x04DUYle1EO49GPh+j4UrLG+6gUwpFK/g+BiKWW+g+kA5JYddAxeEG+HpqK6sLD98
-	 3RIJf7B/znU0OMc3t2T4bvB80F+guFb4G7RP7/OlYg/OZu+/wC5K2zxWWcLCXjJs/W
-	 /lAP90YN8RvXxbO4ZNSkzp5MYOtv5q9SCxhDQIcU=
+	b=DVYd3zlFWJmzEklLsNrrUPbuAsg0lk/DkAc7cdk2x4hyFPcZmR5DuQxIqqTCqRR9j
+	 N8XWq5XjhIV1yygz1nUkpBeRS1Bqv81tqUrl/tdVxXgdYssb+ozJgjwNkvVwatEaR4
+	 AbEzAA+v0lsovKJnTHEsBLtOR5ZMCU9MqGgvCFsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanket Goswami <Sanket.Goswami@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.13 109/157] i2c: amd-asf: Fix EOI register write to enable successive interrupts
-Date: Wed,  5 Mar 2025 18:49:05 +0100
-Message-ID: <20250305174509.691948430@linuxfoundation.org>
+	syzbot+d693c07c6f647e0388d3@syzkaller.appspotmail.com,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.13 110/157] usbnet: gl620a: fix endpoint checking in genelink_bind()
+Date: Wed,  5 Mar 2025 18:49:06 +0100
+Message-ID: <20250305174509.733810252@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -51,40 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 9f3c507cb44498067c980674139bcad56e582ee6 upstream.
+commit 1cf9631d836b289bd5490776551961c883ae8a4f upstream.
 
-The commit b1f8921dfbaa
-("i2c: amd-asf: Clear remote IRR bit to get successive interrupt")
-introduced a method to enable successive interrupts but inadvertently
-omitted the necessary write to the EOI register, resulting in a failure to
-receive successive interrupts.
+Syzbot reports [1] a warning in usb_submit_urb() triggered by
+inconsistencies between expected and actually present endpoints
+in gl620a driver. Since genelink_bind() does not properly
+verify whether specified eps are in fact provided by the device,
+in this case, an artificially manufactured one, one may get a
+mismatch.
 
-Fix this by adding the required write to the EOI register.
+Fix the issue by resorting to a usbnet utility function
+usbnet_get_endpoints(), usually reserved for this very problem.
+Check for endpoints and return early before proceeding further if
+any are missing.
 
-Fixes: b1f8921dfbaa ("i2c: amd-asf: Clear remote IRR bit to get successive interrupt")
-Cc: stable@vger.kernel.org # v6.13+
-Co-developed-by: Sanket Goswami <Sanket.Goswami@amd.com>
-Signed-off-by: Sanket Goswami <Sanket.Goswami@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Fixes: 9b25419ad397 ("i2c: amd-asf: Add routine to handle the ASF slave process")
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20250219135747.3251182-1-Shyam-sundar.S-k@amd.com
+[1] Syzbot report:
+usb 5-1: Manufacturer: syz
+usb 5-1: SerialNumber: syz
+usb 5-1: config 0 descriptor??
+gl620a 5-1:0.23 usb0: register 'gl620a' at usb-dummy_hcd.0-1, ...
+------------[ cut here ]------------
+usb 5-1: BOGUS urb xfer, pipe 3 != type 1
+WARNING: CPU: 2 PID: 1841 at drivers/usb/core/urb.c:503 usb_submit_urb+0xe4b/0x1730 drivers/usb/core/urb.c:503
+Modules linked in:
+CPU: 2 UID: 0 PID: 1841 Comm: kworker/2:2 Not tainted 6.12.0-syzkaller-07834-g06afb0f36106 #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+Workqueue: mld mld_ifc_work
+RIP: 0010:usb_submit_urb+0xe4b/0x1730 drivers/usb/core/urb.c:503
+...
+Call Trace:
+ <TASK>
+ usbnet_start_xmit+0x6be/0x2780 drivers/net/usb/usbnet.c:1467
+ __netdev_start_xmit include/linux/netdevice.h:5002 [inline]
+ netdev_start_xmit include/linux/netdevice.h:5011 [inline]
+ xmit_one net/core/dev.c:3590 [inline]
+ dev_hard_start_xmit+0x9a/0x7b0 net/core/dev.c:3606
+ sch_direct_xmit+0x1ae/0xc30 net/sched/sch_generic.c:343
+ __dev_xmit_skb net/core/dev.c:3827 [inline]
+ __dev_queue_xmit+0x13d4/0x43e0 net/core/dev.c:4400
+ dev_queue_xmit include/linux/netdevice.h:3168 [inline]
+ neigh_resolve_output net/core/neighbour.c:1514 [inline]
+ neigh_resolve_output+0x5bc/0x950 net/core/neighbour.c:1494
+ neigh_output include/net/neighbour.h:539 [inline]
+ ip6_finish_output2+0xb1b/0x2070 net/ipv6/ip6_output.c:141
+ __ip6_finish_output net/ipv6/ip6_output.c:215 [inline]
+ ip6_finish_output+0x3f9/0x1360 net/ipv6/ip6_output.c:226
+ NF_HOOK_COND include/linux/netfilter.h:303 [inline]
+ ip6_output+0x1f8/0x540 net/ipv6/ip6_output.c:247
+ dst_output include/net/dst.h:450 [inline]
+ NF_HOOK include/linux/netfilter.h:314 [inline]
+ NF_HOOK include/linux/netfilter.h:308 [inline]
+ mld_sendpack+0x9f0/0x11d0 net/ipv6/mcast.c:1819
+ mld_send_cr net/ipv6/mcast.c:2120 [inline]
+ mld_ifc_work+0x740/0xca0 net/ipv6/mcast.c:2651
+ process_one_work+0x9c5/0x1ba0 kernel/workqueue.c:3229
+ process_scheduled_works kernel/workqueue.c:3310 [inline]
+ worker_thread+0x6c8/0xf00 kernel/workqueue.c:3391
+ kthread+0x2c1/0x3a0 kernel/kthread.c:389
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+ </TASK>
+
+Reported-by: syzbot+d693c07c6f647e0388d3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d693c07c6f647e0388d3
+Fixes: 47ee3051c856 ("[PATCH] USB: usbnet (5/9) module for genesys gl620a cables")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://patch.msgid.link/20250224172919.1220522-1-n.zhandarovich@fintech.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-amd-asf-plat.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/usb/gl620a.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/i2c/busses/i2c-amd-asf-plat.c
-+++ b/drivers/i2c/busses/i2c-amd-asf-plat.c
-@@ -293,6 +293,7 @@ static irqreturn_t amd_asf_irq_handler(i
- 		amd_asf_update_ioport_target(piix4_smba, ASF_SLV_INTR, SMBHSTSTS, true);
- 	}
- 
-+	iowrite32(irq, dev->eoi_base);
- 	return IRQ_HANDLED;
+--- a/drivers/net/usb/gl620a.c
++++ b/drivers/net/usb/gl620a.c
+@@ -179,9 +179,7 @@ static int genelink_bind(struct usbnet *
+ {
+ 	dev->hard_mtu = GL_RCV_BUF_SIZE;
+ 	dev->net->hard_header_len += 4;
+-	dev->in = usb_rcvbulkpipe(dev->udev, dev->driver_info->in);
+-	dev->out = usb_sndbulkpipe(dev->udev, dev->driver_info->out);
+-	return 0;
++	return usbnet_get_endpoints(dev, intf);
  }
  
+ static const struct driver_info	genelink_info = {
 
 
