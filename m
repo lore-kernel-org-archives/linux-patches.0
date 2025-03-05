@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2681946C7;
-	Wed,  5 Mar 2025 17:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FD72505A7;
+	Wed,  5 Mar 2025 17:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197138; cv=none; b=Ak7wX0F0aGY5ypbt6htEY7Wt6g66U/VhCR0YJVj/o5am04pXxUz92F+7iqojEhlplOUpBJpgw0rHlUPDH4KtSue2HxcyqEz8SFIrNuFhVyni//J1iMyIqua2A8VuMNiRioEA0oBSoxvK1/42+CqWCG1kOjQBREIRdxL5G/7UZlk=
+	t=1741197140; cv=none; b=q3M7YiUHAEuOkcjEMQFCwbPiP3FXlDqB1wVlSeEFonV/516NMTPbbrwSR7+StzWG63XXxDbTpLjxVP0l+9VqtJXw+PIukswcVtTF3Aip01V5lTenaxzqE5ARM5BUwkGwlUdvAuJ/D1vyrNO3ul1itSy8SnsyZu6Ro8gyex12aSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197138; c=relaxed/simple;
-	bh=js0oVKBgofyfGszQXKWxPf+oAeL/xKr+ZMmgbQGxqag=;
+	s=arc-20240116; t=1741197140; c=relaxed/simple;
+	bh=3q5ecGm2MxJtbvGmnWZR76Lt8bkAI1rkEyyE/MFi26s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UtEMSYwE0bV6ON9xjuXcyTMw4Q/Ay/Qxx0fFuog4dgSC9pFMYQpvIK9zHCzGMUkDep9cRekOxCrm1uIVhuYPFFJm6ia8m7f/ktVUI4ZOpNwwqu3stJYiC0tiFZT0qzUbMxkyfqxn1LyXt7NRLKfKz0NO2Vd2Wk0s/6I+bTzOUiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFU4oIAF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sSgi4Q1KNi2Hm+HSfXKjDycwQeBNGz2u+NTpNOSKKSlQQYEGs9MsD+CBzYsqIGpmhemoPfQkQlI6zwn/jJ3zfFZicS9L0Z7s6PD4IvDiNldGeP7rwL65SkV91NxOK22yjSY0ljPnHNrdErjiaBcKniX2a/Qbasap0525xTz7Np0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9uB169g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFU4oIAF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68419C4CED1;
-	Wed,  5 Mar 2025 17:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9uB169g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D35C4CED1;
+	Wed,  5 Mar 2025 17:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197137;
-	bh=js0oVKBgofyfGszQXKWxPf+oAeL/xKr+ZMmgbQGxqag=;
+	s=korg; t=1741197140;
+	bh=3q5ecGm2MxJtbvGmnWZR76Lt8bkAI1rkEyyE/MFi26s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFU4oIAFLoJJrSCB/xDtzaSTUZm/As0utUwxMIVDarUAP5JCHu5dWUTxqufJ7D6aB
-	 9d80pHY7I4B/baF1XucSQl/SrSoZGVJ1Mhou2ehKb5NsRTpgaIuIaRX4le5+21+BQD
-	 jRGojnQxoF2jIXCxG8CfMtuz8mpph/myKu2B5oNA=
+	b=G9uB169gTa/AnEdZblx1pBindtpsHYiEfEI/BmH6tHCDX1/fJGTylRckWpB8UzvYv
+	 ltIg4+LMhI3L3YlFm13xruB6LrIJiLVog/9KhpyPPHFP5QOFYaizO+aa1PdLtWkJu/
+	 yp7bIA6Rfg9iR2HgW3sxqXLGdY7sw8Qd00IXeZU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Child <nnac123@linux.ibm.com>,
-	Simon Horman <horms@kernel.org>,
+	Brad Spengler <spender@grsecurity.net>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/176] ibmvnic: Dont reference skb after sending to VIOS
-Date: Wed,  5 Mar 2025 18:47:01 +0100
-Message-ID: <20250305174507.550170640@linuxfoundation.org>
+Subject: [PATCH 6.1 053/176] gtp: Suppress list corruption splat in gtp_net_exit_batch_rtnl().
+Date: Wed,  5 Mar 2025 18:47:02 +0100
+Message-ID: <20250305174507.588342828@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -52,83 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Child <nnac123@linux.ibm.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit bdf5d13aa05ec314d4385b31ac974d6c7e0997c9 ]
+[ Upstream commit 4ccacf86491d33d2486b62d4d44864d7101b299d ]
 
-Previously, after successfully flushing the xmit buffer to VIOS,
-the tx_bytes stat was incremented by the length of the skb.
+Brad Spengler reported the list_del() corruption splat in
+gtp_net_exit_batch_rtnl(). [0]
 
-It is invalid to access the skb memory after sending the buffer to
-the VIOS because, at any point after sending, the VIOS can trigger
-an interrupt to free this memory. A race between reading skb->len
-and freeing the skb is possible (especially during LPM) and will
-result in use-after-free:
- ==================================================================
- BUG: KASAN: slab-use-after-free in ibmvnic_xmit+0x75c/0x1808 [ibmvnic]
- Read of size 4 at addr c00000024eb48a70 by task hxecom/14495
- <...>
- Call Trace:
- [c000000118f66cf0] [c0000000018cba6c] dump_stack_lvl+0x84/0xe8 (unreliable)
- [c000000118f66d20] [c0000000006f0080] print_report+0x1a8/0x7f0
- [c000000118f66df0] [c0000000006f08f0] kasan_report+0x128/0x1f8
- [c000000118f66f00] [c0000000006f2868] __asan_load4+0xac/0xe0
- [c000000118f66f20] [c0080000046eac84] ibmvnic_xmit+0x75c/0x1808 [ibmvnic]
- [c000000118f67340] [c0000000014be168] dev_hard_start_xmit+0x150/0x358
- <...>
- Freed by task 0:
- kasan_save_stack+0x34/0x68
- kasan_save_track+0x2c/0x50
- kasan_save_free_info+0x64/0x108
- __kasan_mempool_poison_object+0x148/0x2d4
- napi_skb_cache_put+0x5c/0x194
- net_tx_action+0x154/0x5b8
- handle_softirqs+0x20c/0x60c
- do_softirq_own_stack+0x6c/0x88
- <...>
- The buggy address belongs to the object at c00000024eb48a00 which
-  belongs to the cache skbuff_head_cache of size 224
-==================================================================
+Commit eb28fd76c0a0 ("gtp: Destroy device along with udp socket's netns
+dismantle.") added the for_each_netdev() loop in gtp_net_exit_batch_rtnl()
+to destroy devices in each netns as done in geneve and ip tunnels.
 
-Fixes: 032c5e82847a ("Driver for IBM System i/p VNIC protocol")
-Signed-off-by: Nick Child <nnac123@linux.ibm.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250214155233.235559-1-nnac123@linux.ibm.com
+However, this could trigger ->dellink() twice for the same device during
+->exit_batch_rtnl().
+
+Say we have two netns A & B and gtp device B that resides in netns B but
+whose UDP socket is in netns A.
+
+  1. cleanup_net() processes netns A and then B.
+
+  2. gtp_net_exit_batch_rtnl() finds the device B while iterating
+     netns A's gn->gtp_dev_list and calls ->dellink().
+
+  [ device B is not yet unlinked from netns B
+    as unregister_netdevice_many() has not been called. ]
+
+  3. gtp_net_exit_batch_rtnl() finds the device B while iterating
+     netns B's for_each_netdev() and calls ->dellink().
+
+gtp_dellink() cleans up the device's hash table, unlinks the dev from
+gn->gtp_dev_list, and calls unregister_netdevice_queue().
+
+Basically, calling gtp_dellink() multiple times is fine unless
+CONFIG_DEBUG_LIST is enabled.
+
+Let's remove for_each_netdev() in gtp_net_exit_batch_rtnl() and
+delegate the destruction to default_device_exit_batch() as done
+in bareudp.
+
+[0]:
+list_del corruption, ffff8880aaa62c00->next (autoslab_size_M_dev_P_net_core_dev_11127_8_1328_8_S_4096_A_64_n_139+0xc00/0x1000 [slab object]) is LIST_POISON1 (ffffffffffffff02) (prev is 0xffffffffffffff04)
+kernel BUG at lib/list_debug.c:58!
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+CPU: 1 UID: 0 PID: 1804 Comm: kworker/u8:7 Tainted: G                T   6.12.13-grsec-full-20250211091339 #1
+Tainted: [T]=RANDSTRUCT
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Workqueue: netns cleanup_net
+RIP: 0010:[<ffffffff84947381>] __list_del_entry_valid_or_report+0x141/0x200 lib/list_debug.c:58
+Code: c2 76 91 31 c0 e8 9f b1 f7 fc 0f 0b 4d 89 f0 48 c7 c1 02 ff ff ff 48 89 ea 48 89 ee 48 c7 c7 e0 c2 76 91 31 c0 e8 7f b1 f7 fc <0f> 0b 4d 89 e8 48 c7 c1 04 ff ff ff 48 89 ea 48 89 ee 48 c7 c7 60
+RSP: 0018:fffffe8040b4fbd0 EFLAGS: 00010283
+RAX: 00000000000000cc RBX: dffffc0000000000 RCX: ffffffff818c4054
+RDX: ffffffff84947381 RSI: ffffffff818d1512 RDI: 0000000000000000
+RBP: ffff8880aaa62c00 R08: 0000000000000001 R09: fffffbd008169f32
+R10: fffffe8040b4f997 R11: 0000000000000001 R12: a1988d84f24943e4
+R13: ffffffffffffff02 R14: ffffffffffffff04 R15: ffff8880aaa62c08
+RBX: kasan shadow of 0x0
+RCX: __wake_up_klogd.part.0+0x74/0xe0 kernel/printk/printk.c:4554
+RDX: __list_del_entry_valid_or_report+0x141/0x200 lib/list_debug.c:58
+RSI: vprintk+0x72/0x100 kernel/printk/printk_safe.c:71
+RBP: autoslab_size_M_dev_P_net_core_dev_11127_8_1328_8_S_4096_A_64_n_139+0xc00/0x1000 [slab object]
+RSP: process kstack fffffe8040b4fbd0+0x7bd0/0x8000 [kworker/u8:7+netns 1804 ]
+R09: kasan shadow of process kstack fffffe8040b4f990+0x7990/0x8000 [kworker/u8:7+netns 1804 ]
+R10: process kstack fffffe8040b4f997+0x7997/0x8000 [kworker/u8:7+netns 1804 ]
+R15: autoslab_size_M_dev_P_net_core_dev_11127_8_1328_8_S_4096_A_64_n_139+0xc08/0x1000 [slab object]
+FS:  0000000000000000(0000) GS:ffff888116000000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000748f5372c000 CR3: 0000000015408000 CR4: 00000000003406f0 shadow CR4: 00000000003406f0
+Stack:
+ 0000000000000000 ffffffff8a0c35e7 ffffffff8a0c3603 ffff8880aaa62c00
+ ffff8880aaa62c00 0000000000000004 ffff88811145311c 0000000000000005
+ 0000000000000001 ffff8880aaa62000 fffffe8040b4fd40 ffffffff8a0c360d
+Call Trace:
+ <TASK>
+ [<ffffffff8a0c360d>] __list_del_entry_valid include/linux/list.h:131 [inline] fffffe8040b4fc28
+ [<ffffffff8a0c360d>] __list_del_entry include/linux/list.h:248 [inline] fffffe8040b4fc28
+ [<ffffffff8a0c360d>] list_del include/linux/list.h:262 [inline] fffffe8040b4fc28
+ [<ffffffff8a0c360d>] gtp_dellink+0x16d/0x360 drivers/net/gtp.c:1557 fffffe8040b4fc28
+ [<ffffffff8a0d0404>] gtp_net_exit_batch_rtnl+0x124/0x2c0 drivers/net/gtp.c:2495 fffffe8040b4fc88
+ [<ffffffff8e705b24>] cleanup_net+0x5a4/0xbe0 net/core/net_namespace.c:635 fffffe8040b4fcd0
+ [<ffffffff81754c97>] process_one_work+0xbd7/0x2160 kernel/workqueue.c:3326 fffffe8040b4fd88
+ [<ffffffff81757195>] process_scheduled_works kernel/workqueue.c:3407 [inline] fffffe8040b4fec0
+ [<ffffffff81757195>] worker_thread+0x6b5/0xfa0 kernel/workqueue.c:3488 fffffe8040b4fec0
+ [<ffffffff817782a0>] kthread+0x360/0x4c0 kernel/kthread.c:397 fffffe8040b4ff78
+ [<ffffffff814d8594>] ret_from_fork+0x74/0xe0 arch/x86/kernel/process.c:172 fffffe8040b4ffb8
+ [<ffffffff8110f509>] ret_from_fork_asm+0x29/0xc0 arch/x86/entry/entry_64.S:399 fffffe8040b4ffe8
+ </TASK>
+Modules linked in:
+
+Fixes: eb28fd76c0a0 ("gtp: Destroy device along with udp socket's netns dismantle.")
+Reported-by: Brad Spengler <spender@grsecurity.net>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250217203705.40342-2-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmvnic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/gtp.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
-index b83877cafaf7f..44991cae94045 100644
---- a/drivers/net/ethernet/ibm/ibmvnic.c
-+++ b/drivers/net/ethernet/ibm/ibmvnic.c
-@@ -2234,6 +2234,7 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
- 	dma_addr_t data_dma_addr;
- 	struct netdev_queue *txq;
- 	unsigned long lpar_rc;
-+	unsigned int skblen;
- 	union sub_crq tx_crq;
- 	unsigned int offset;
- 	int num_entries = 1;
-@@ -2336,6 +2337,7 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
- 	tx_buff->skb = skb;
- 	tx_buff->index = bufidx;
- 	tx_buff->pool_index = queue_num;
-+	skblen = skb->len;
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 0de3dcd07cb7e..797886f10868a 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -1894,11 +1894,6 @@ static void __net_exit gtp_net_exit_batch_rtnl(struct list_head *net_list,
+ 	list_for_each_entry(net, net_list, exit_list) {
+ 		struct gtp_net *gn = net_generic(net, gtp_net_id);
+ 		struct gtp_dev *gtp, *gtp_next;
+-		struct net_device *dev;
+-
+-		for_each_netdev(net, dev)
+-			if (dev->rtnl_link_ops == &gtp_link_ops)
+-				gtp_dellink(dev, dev_to_kill);
  
- 	memset(&tx_crq, 0, sizeof(tx_crq));
- 	tx_crq.v1.first = IBMVNIC_CRQ_CMD;
-@@ -2426,7 +2428,7 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
- 		netif_stop_subqueue(netdev, queue_num);
- 	}
- 
--	tx_bytes += skb->len;
-+	tx_bytes += skblen;
- 	txq_trans_cond_update(txq);
- 	ret = NETDEV_TX_OK;
- 	goto out;
+ 		list_for_each_entry_safe(gtp, gtp_next, &gn->gtp_dev_list, list)
+ 			gtp_dellink(gtp->dev, dev_to_kill);
 -- 
 2.39.5
 
