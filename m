@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942C82512D7;
-	Wed,  5 Mar 2025 17:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AA92505A7;
+	Wed,  5 Mar 2025 17:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197106; cv=none; b=ld8eiPw1bLp+/O1rN4NWaa+lq3V3aSh+E98c3E1UkqdbDZ8w7tvQNJO95otAcmKEVtx581N8uBBLBTl/VODZeSG0tHAA/p5FZ7/VhQ0PD9SgZXLIkZyid0QN/StQCD7zeVt2JO1K0oJyEEWFMCC0dGnPPdrwTY1u//oFkZnI2fY=
+	t=1741197109; cv=none; b=Im9936wZhnzXJdk0AX2R+i9cbikE6ik2by3yDgWFcvtzd3bDYQn9HVa5aLLqnDnjv+x3rY8kFI9heSt56awB51K1gaFGH+Q9MMsQPTykUkZnxZ/0Dp1EPSqBR2JXcl1DLRXlAj5s3wQehz7+p4a3coq2NzQJVyjZwiQTYczxaqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197106; c=relaxed/simple;
-	bh=mg/z/+ckuZZDfUd4htDVOVw+2Hb8F3XkxG3Jg/1+y00=;
+	s=arc-20240116; t=1741197109; c=relaxed/simple;
+	bh=hvA8qIB3ocI1zjsA8EJulHasZzKaWsrNBrbF2/aabIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BE90SfWa8PuCjdelE+8MBt/FQ6jRn/D2s4cbwZvP4q4fwKY3Ooo+8mwJEXw1e8Cntm+ck9TyDoQUNE6gm1OyVVZ0owSx2evYbmmvRusBvPJuLcV2nSSMo8YG6pAiYVFAqv5BcRy7l1a3/bznBaUSuykWEkDJcY9Ylg4jb+shB8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbxuJaGR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uUEoeKbxvuql1GvBxEOvJ7SmZhOvxtmgpC7fIm6iisdUaSd49Kawkt70ctqG/08eoTe8Ef2eHn9kVFR73tFy9xUeZm+U/xPcAB031kc9JXWNGPFlO1H/qQaw6dAdMC/8zo/48Mr/khawVEKAYkreTIfnUYtugVYEVaIyFJp7k+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muge2di7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbxuJaGR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA7CC4CEE0;
-	Wed,  5 Mar 2025 17:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muge2di7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F085CC4CEE2;
+	Wed,  5 Mar 2025 17:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197106;
-	bh=mg/z/+ckuZZDfUd4htDVOVw+2Hb8F3XkxG3Jg/1+y00=;
+	s=korg; t=1741197109;
+	bh=hvA8qIB3ocI1zjsA8EJulHasZzKaWsrNBrbF2/aabIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fbxuJaGRTFg/7APNcYDs2RYzq9KWZjY1XeXdy7jpT0cUWjQOVjVlNLaryla6Zya8G
-	 26MjBMpNDRnUN3nS5/yEBQtfeYj5gnzZKjoZ143SR9c2GB3/mBNEcICo86Xe3xRq0L
-	 8ZT1gmBaRrFeyHTKjpWODS39wh+VExkolx7yn4Vc=
+	b=muge2di7Yg7AEB88/+c4Cj/yV8IoOaf1AZq2WYKKnyT1Bqhf0A9zqPomP7rStNKL5
+	 3RgITzqf36vnaq+y1s1ZuPMzx7D68pneov/TvncETFEOlaiK02kzK3gAFAaI0lWYhh
+	 +RaHGLn8eto491pZcWL1EhWIe92b9bWHvcUDGFl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 042/176] ASoC: rockchip: i2s-tdm: fix shift config for SND_SOC_DAIFMT_DSP_[AB]
-Date: Wed,  5 Mar 2025 18:46:51 +0100
-Message-ID: <20250305174507.156270866@linuxfoundation.org>
+Subject: [PATCH 6.1 043/176] powerpc/64s/mm: Move __real_pte stubs into hash-4k.h
+Date: Wed,  5 Mar 2025 18:46:52 +0100
+Message-ID: <20250305174507.194625192@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -51,44 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 6b24e67b4056ba83b1e95e005b7e50fdb1cc6cf4 ]
+[ Upstream commit 8ae4f16f7d7b59cca55aeca6db7c9636ffe7fbaa ]
 
-Commit 2f45a4e289779 ("ASoC: rockchip: i2s_tdm: Fixup config for
-SND_SOC_DAIFMT_DSP_A/B") applied a partial change to fix the
-configuration for DSP A and DSP B formats.
+The stub versions of __real_pte() etc are only used with HPT & 4K pages,
+so move them into the hash-4k.h header.
 
-The shift control also needs updating to set the correct offset for
-frame data compared to LRCK.  Set the correct values.
-
-Fixes: 081068fd64140 ("ASoC: rockchip: add support for i2s-tdm controller")
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Link: https://patch.msgid.link/20250204161311.2117240-1-jkeeping@inmusicbrands.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240821080729.872034-1-mpe@ellerman.id.au
+Stable-dep-of: 61bcc752d1b8 ("powerpc/64s: Rewrite __real_pte() and __rpte_to_hidx() as static inline")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/rockchip_i2s_tdm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/powerpc/include/asm/book3s/64/hash-4k.h | 20 +++++++++++++++
+ arch/powerpc/include/asm/book3s/64/pgtable.h | 26 --------------------
+ 2 files changed, 20 insertions(+), 26 deletions(-)
 
-diff --git a/sound/soc/rockchip/rockchip_i2s_tdm.c b/sound/soc/rockchip/rockchip_i2s_tdm.c
-index d20438cf8fc4a..ff743ba0a9441 100644
---- a/sound/soc/rockchip/rockchip_i2s_tdm.c
-+++ b/sound/soc/rockchip/rockchip_i2s_tdm.c
-@@ -453,11 +453,11 @@ static int rockchip_i2s_tdm_set_fmt(struct snd_soc_dai *cpu_dai,
- 			break;
- 		case SND_SOC_DAIFMT_DSP_A:
- 			val = I2S_TXCR_TFS_TDM_PCM;
--			tdm_val = TDM_SHIFT_CTRL(0);
-+			tdm_val = TDM_SHIFT_CTRL(2);
- 			break;
- 		case SND_SOC_DAIFMT_DSP_B:
- 			val = I2S_TXCR_TFS_TDM_PCM;
--			tdm_val = TDM_SHIFT_CTRL(2);
-+			tdm_val = TDM_SHIFT_CTRL(4);
- 			break;
- 		default:
- 			ret = -EINVAL;
+diff --git a/arch/powerpc/include/asm/book3s/64/hash-4k.h b/arch/powerpc/include/asm/book3s/64/hash-4k.h
+index b6ac4f86c87b4..5a79dd66b2ed0 100644
+--- a/arch/powerpc/include/asm/book3s/64/hash-4k.h
++++ b/arch/powerpc/include/asm/book3s/64/hash-4k.h
+@@ -89,6 +89,26 @@ static inline int hash__hugepd_ok(hugepd_t hpd)
+ }
+ #endif
+ 
++/*
++ * With 4K page size the real_pte machinery is all nops.
++ */
++#define __real_pte(e, p, o)		((real_pte_t){(e)})
++#define __rpte_to_pte(r)	((r).pte)
++#define __rpte_to_hidx(r,index)	(pte_val(__rpte_to_pte(r)) >> H_PAGE_F_GIX_SHIFT)
++
++#define pte_iterate_hashed_subpages(rpte, psize, va, index, shift)       \
++	do {							         \
++		index = 0;					         \
++		shift = mmu_psize_defs[psize].shift;		         \
++
++#define pte_iterate_hashed_end() } while(0)
++
++/*
++ * We expect this to be called only for user addresses or kernel virtual
++ * addresses other than the linear mapping.
++ */
++#define pte_pagesize_index(mm, addr, pte)	MMU_PAGE_4K
++
+ /*
+  * 4K PTE format is different from 64K PTE format. Saving the hash_slot is just
+  * a matter of returning the PTE bits that need to be modified. On 64K PTE,
+diff --git a/arch/powerpc/include/asm/book3s/64/pgtable.h b/arch/powerpc/include/asm/book3s/64/pgtable.h
+index c436d84226540..fdbe0b381f3ae 100644
+--- a/arch/powerpc/include/asm/book3s/64/pgtable.h
++++ b/arch/powerpc/include/asm/book3s/64/pgtable.h
+@@ -318,32 +318,6 @@ extern unsigned long pci_io_base;
+ 
+ #ifndef __ASSEMBLY__
+ 
+-/*
+- * This is the default implementation of various PTE accessors, it's
+- * used in all cases except Book3S with 64K pages where we have a
+- * concept of sub-pages
+- */
+-#ifndef __real_pte
+-
+-#define __real_pte(e, p, o)		((real_pte_t){(e)})
+-#define __rpte_to_pte(r)	((r).pte)
+-#define __rpte_to_hidx(r,index)	(pte_val(__rpte_to_pte(r)) >> H_PAGE_F_GIX_SHIFT)
+-
+-#define pte_iterate_hashed_subpages(rpte, psize, va, index, shift)       \
+-	do {							         \
+-		index = 0;					         \
+-		shift = mmu_psize_defs[psize].shift;		         \
+-
+-#define pte_iterate_hashed_end() } while(0)
+-
+-/*
+- * We expect this to be called only for user addresses or kernel virtual
+- * addresses other than the linear mapping.
+- */
+-#define pte_pagesize_index(mm, addr, pte)	MMU_PAGE_4K
+-
+-#endif /* __real_pte */
+-
+ static inline unsigned long pte_update(struct mm_struct *mm, unsigned long addr,
+ 				       pte_t *ptep, unsigned long clr,
+ 				       unsigned long set, int huge)
 -- 
 2.39.5
 
