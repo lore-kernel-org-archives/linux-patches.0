@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EB517B505;
-	Wed,  5 Mar 2025 18:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE0B1A3174;
+	Wed,  5 Mar 2025 18:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198007; cv=none; b=sdc4WcuRQ17moU79++7IVGTjvggylEhr60a7e0v61SS0LLZ9izRCgCLJ/XaOeQIdzXazA9BMp83UTJwtyvEa3++w6Dl+Bu24MDMPgffBQUNQGr/4H2CPoahakCi9eZgE0IkJQxbJ4FEYMvk9646lcK2x8dFzQwNBtCg89EYlQRk=
+	t=1741198010; cv=none; b=hIOArOxVTjVg7bGeODjdCm/CkTLkDEWgzrWkgb33U5YhUqQ1p2FZuky6U0exj/YYDY3j2m/EP/NU7zmREjzOCHXVUWqrLBDk/gBBtDSMOjEiopcU0IbVdLzFUdbHOm3Qdo3kzHT1CxWGz6tDYB5yOSZnESE1BUBsYgIUM2sbWuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198007; c=relaxed/simple;
-	bh=HLVG3gfnVwv/KiNKPdrGOakXx9Vy2oeP/umLa3A5FLw=;
+	s=arc-20240116; t=1741198010; c=relaxed/simple;
+	bh=zTjsH1a9EZLWb2eYGP5ujdEZo6KVrwofTYNArvqqsPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qx9xEbOkKhv5YeIR8YV3hBy9D+HZMRu9bFU/DefANREIE39Y9Ukz/wsZeq/NiOitUvz2R+3CY0ueyfvuJxYTDhMhfTdPSaB10B7AQV94XlCwzbJNCOOQPxdP5MYEA3/4fh+THdyculLspc6SoO6tP47GPbu4q6mcBCwWYbfkt/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXtU7wXo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ro9Ngzq0buQ1e5xbAKnlVIylWnXYSLsMvhR3S1zCEkZ6sXb1G1eHt28p0K7Jzv2B6GgmIPEoNL5rQil2TRu80x208vpoq+Lrr9dDoDwtV+HF+FTnHK7BblxFb/IM/B9lbQLyuceaEW+7EH1DSfIv7B5THpm99dAWswQb2795FsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKQ3xwsc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXtU7wXo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F56CC4CED1;
-	Wed,  5 Mar 2025 18:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKQ3xwsc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8976FC4CED1;
+	Wed,  5 Mar 2025 18:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198007;
-	bh=HLVG3gfnVwv/KiNKPdrGOakXx9Vy2oeP/umLa3A5FLw=;
+	s=korg; t=1741198009;
+	bh=zTjsH1a9EZLWb2eYGP5ujdEZo6KVrwofTYNArvqqsPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXtU7wXoV3iZ33f23dX4cnUz1rZiEdsk5zt//Fxr1I85/Lfy1LZu3sU5YgCY8P5+4
-	 SEo0ouIJ9BwhCaS5pZADDb5Z+T1G7d2M0UQJ4SH/XSc1UEVVAlOXS2xuhB1vmXwgU8
-	 kG0p4PDlamw+8M8/sCwZUBR55lyeL0HUd+Ht4t2s=
+	b=bKQ3xwsc/CFfM7U2FAIO2hAJy1CBmgNR9UAptR8jSis1JU+OhmT1FZpHla87xG6wE
+	 mDcDoHiMk6kCp+OBWXheTJfquBf6u7O++vZphPFiehdDp58ymZvCtzX6vgxcFAEWZB
+	 YvAiYAWvfLolhS3fviEqyDKSiiO7aqc3z03cUTjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
+	Florian Meister <fmei@sfs.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/150] afs: Give an afs_server object a ref on the afs_cell object it points to
-Date: Wed,  5 Mar 2025 18:47:41 +0100
-Message-ID: <20250305174505.105535129@linuxfoundation.org>
+Subject: [PATCH 6.12 033/150] net: loopback: Avoid sending IP packets without an Ethernet header
+Date: Wed,  5 Mar 2025 18:47:42 +0100
+Message-ID: <20250305174505.145914502@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -54,74 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 1f0fc3374f3345ff1d150c5c56ac5016e5d3826a ]
+[ Upstream commit 0e4427f8f587c4b603475468bb3aee9418574893 ]
 
-Give an afs_server object a ref on the afs_cell object it points to so that
-the cell doesn't get deleted before the server record.
+After commit 22600596b675 ("ipv4: give an IPv4 dev to blackhole_netdev")
+IPv4 neighbors can be constructed on the blackhole net device, but they
+are constructed with an output function (neigh_direct_output()) that
+simply calls dev_queue_xmit(). The latter will transmit packets via
+'skb->dev' which might not be the blackhole net device if dst_dev_put()
+switched 'dst->dev' to the blackhole net device while another CPU was
+using the dst entry in ip_output(), but after it already initialized
+'skb->dev' from 'dst->dev'.
 
-Whilst this is circular (cell -> vol -> server_list -> server -> cell), the
-ref only pins the memory, not the lifetime as that's controlled by the
-activity counter.  When the volume's activity counter reaches 0, it
-detaches from the cell and discards its server list; when a cell's activity
-counter reaches 0, it discards its root volume.  At that point, the
-circularity is cut.
+Specifically, the following can happen:
 
-Fixes: d2ddc776a458 ("afs: Overhaul volume and server record caching and fileserver rotation")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20250218192250.296870-6-dhowells@redhat.com
+    CPU1                                      CPU2
+
+udp_sendmsg(sk1)                          udp_sendmsg(sk2)
+udp_send_skb()                            [...]
+ip_output()
+    skb->dev = skb_dst(skb)->dev
+                                          dst_dev_put()
+                                              dst->dev = blackhole_netdev
+ip_finish_output2()
+    resolves neigh on dst->dev
+neigh_output()
+neigh_direct_output()
+dev_queue_xmit()
+
+This will result in IPv4 packets being sent without an Ethernet header
+via a valid net device:
+
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on enp9s0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+22:07:02.329668 20:00:40:11:18:fb > 45:00:00:44:f4:94, ethertype Unknown
+(0x58c6), length 68:
+        0x0000:  8dda 74ca f1ae ca6c ca6c 0098 969c 0400  ..t....l.l......
+        0x0010:  0000 4730 3f18 6800 0000 0000 0000 9971  ..G0?.h........q
+        0x0020:  c4c9 9055 a157 0a70 9ead bf83 38ca ab38  ...U.W.p....8..8
+        0x0030:  8add ab96 e052                           .....R
+
+Fix by making sure that neighbors are constructed on top of the
+blackhole net device with an output function that simply consumes the
+packets, in a similar fashion to dst_discard_out() and
+blackhole_netdev_xmit().
+
+Fixes: 8d7017fd621d ("blackhole_netdev: use blackhole_netdev to invalidate dst entries")
+Fixes: 22600596b675 ("ipv4: give an IPv4 dev to blackhole_netdev")
+Reported-by: Florian Meister <fmei@sfs.com>
+Closes: https://lore.kernel.org/netdev/20250210084931.23a5c2e4@hermes.local/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250220072559.782296-1-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/server.c            | 3 +++
- include/trace/events/afs.h | 2 ++
- 2 files changed, 5 insertions(+)
+ drivers/net/loopback.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/fs/afs/server.c b/fs/afs/server.c
-index 038f9d0ae3af8..4504e16b458cc 100644
---- a/fs/afs/server.c
-+++ b/fs/afs/server.c
-@@ -163,6 +163,8 @@ static struct afs_server *afs_install_server(struct afs_cell *cell,
- 	rb_insert_color(&server->uuid_rb, &net->fs_servers);
- 	hlist_add_head_rcu(&server->proc_link, &net->fs_proc);
- 
-+	afs_get_cell(cell, afs_cell_trace_get_server);
-+
- added_dup:
- 	write_seqlock(&net->fs_addr_lock);
- 	estate = rcu_dereference_protected(server->endpoint_state,
-@@ -442,6 +444,7 @@ static void afs_server_rcu(struct rcu_head *rcu)
- 			 atomic_read(&server->active), afs_server_trace_free);
- 	afs_put_endpoint_state(rcu_access_pointer(server->endpoint_state),
- 			       afs_estate_trace_put_server);
-+	afs_put_cell(server->cell, afs_cell_trace_put_server);
- 	kfree(server);
+diff --git a/drivers/net/loopback.c b/drivers/net/loopback.c
+index 1993b90b1a5f9..491e56b3263fd 100644
+--- a/drivers/net/loopback.c
++++ b/drivers/net/loopback.c
+@@ -244,8 +244,22 @@ static netdev_tx_t blackhole_netdev_xmit(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
  }
  
-diff --git a/include/trace/events/afs.h b/include/trace/events/afs.h
-index 9a75590227f26..3dddfc6abf0ee 100644
---- a/include/trace/events/afs.h
-+++ b/include/trace/events/afs.h
-@@ -173,6 +173,7 @@ enum yfs_cm_operation {
- 	EM(afs_cell_trace_get_queue_dns,	"GET q-dns ") \
- 	EM(afs_cell_trace_get_queue_manage,	"GET q-mng ") \
- 	EM(afs_cell_trace_get_queue_new,	"GET q-new ") \
-+	EM(afs_cell_trace_get_server,		"GET server") \
- 	EM(afs_cell_trace_get_vol,		"GET vol   ") \
- 	EM(afs_cell_trace_insert,		"INSERT    ") \
- 	EM(afs_cell_trace_manage,		"MANAGE    ") \
-@@ -180,6 +181,7 @@ enum yfs_cm_operation {
- 	EM(afs_cell_trace_put_destroy,		"PUT destry") \
- 	EM(afs_cell_trace_put_queue_work,	"PUT q-work") \
- 	EM(afs_cell_trace_put_queue_fail,	"PUT q-fail") \
-+	EM(afs_cell_trace_put_server,		"PUT server") \
- 	EM(afs_cell_trace_put_vol,		"PUT vol   ") \
- 	EM(afs_cell_trace_see_source,		"SEE source") \
- 	EM(afs_cell_trace_see_ws,		"SEE ws    ") \
++static int blackhole_neigh_output(struct neighbour *n, struct sk_buff *skb)
++{
++	kfree_skb(skb);
++	return 0;
++}
++
++static int blackhole_neigh_construct(struct net_device *dev,
++				     struct neighbour *n)
++{
++	n->output = blackhole_neigh_output;
++	return 0;
++}
++
+ static const struct net_device_ops blackhole_netdev_ops = {
+ 	.ndo_start_xmit = blackhole_netdev_xmit,
++	.ndo_neigh_construct = blackhole_neigh_construct,
+ };
+ 
+ /* This is a dst-dummy device used specifically for invalidated
 -- 
 2.39.5
 
