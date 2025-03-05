@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507AA252909;
-	Wed,  5 Mar 2025 18:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E7B2512D6;
+	Wed,  5 Mar 2025 18:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198168; cv=none; b=S9gpUaW0jzcw2tnGqwdR2dP0UkuxfZppDr/X1VnO7tGe2eMYOmCHzqD83bbxPEefEiVvLUEpvtSt07ab3OKjiRbnL42IaUlv4MIjjFvmLuuJYjypWmBkqxq10ISb9tHZg+A6URhd4n2rqYJMYA2KagkNUahWQLSx4WtyWiXuBjc=
+	t=1741198171; cv=none; b=L85KXixzJPzdNA9NjYop+WIz+4Ex9mTfA/ebMC4JQm7N5V46DQACppExJmTzHUhKLqABfIVzI1Kf+OnW2na9QiY29tkI64+0c7/YOXwarvXscyMq9GZwbNtrSAs8SKpFl6IPsKOWznE/O4mHpIfIfbYEu2NkWu88AFVhN0XMSXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198168; c=relaxed/simple;
-	bh=RfLBkLPpOhxrfrcdLB2/1bAmhsyJP6ja5tvNlwXZuBE=;
+	s=arc-20240116; t=1741198171; c=relaxed/simple;
+	bh=vFKhiTn4PG/Xkvt4lpQznJ5KLahtMBho8I0OF4CE1hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sDN38domj2YP9okpDK/qRUFhkmbLqn3j0c8aLzbMJQH7J4/vIUKj/dis4MCaEZAeXWqnUAaVA1TBNS+XoECZ5vFmdZ+L+icgh0NbzgfAMD90jtGrldM352QSJa02KveClskB/8UNlkcS0TGgOnnqK1UXxx2gaDtOxUU5ujlTmLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ssuK5a/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=twonOZwGAEu/uBs4yR50vryR7rXLJiR6AI7T8f/E2AbOvbir5SbJI+nXU/NlbjN8KDuiyy9XfFUcUX/OiAj3ZmCr4tUhiET24CCE9Btl10P5CpnRVl5BPUYrsLjnoPqstL9JJ0RH0gp4vAw+CA/dPQmufKGJVFWBMcH/tWy9tng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1NfkdEAz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ssuK5a/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C289EC4CED1;
-	Wed,  5 Mar 2025 18:09:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1NfkdEAz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40F5C4CED1;
+	Wed,  5 Mar 2025 18:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198168;
-	bh=RfLBkLPpOhxrfrcdLB2/1bAmhsyJP6ja5tvNlwXZuBE=;
+	s=korg; t=1741198171;
+	bh=vFKhiTn4PG/Xkvt4lpQznJ5KLahtMBho8I0OF4CE1hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ssuK5a/QeDu+8e5bsR5AGvep81oTL0MWpxjBhZFm0KpxuEyY2AiqJrc4ruCAT9jiU
-	 s/8it/yJ/NlmuqIxLniltrNEDr4QkjtBQGRWpR2697xgrRW0X5VCmjY1F7ymS69zMv
-	 fsQ2kSCAtkwzLqkLTw3jQhW/D0SXyg8xRvYoKxgA=
+	b=1NfkdEAzqUfSzRAyAh9fc44LvNcWE/s2k3fm4aTpbuPihp3CaUcjEqkeu4e2/2Pib
+	 GmkRmRdyztwDhGc5xyYORkDE5T1AIo/d6bE0i5R1OLXZ/29MK+wq7ytI7lDCyZTPrI
+	 Ql/USWn6BNrIatL6Pip5CHdrBjZSKnz+KlHyGYdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Chris Chiu <chris.chiu@canonical.com>,
-	=?UTF-8?q?Adrien=20Verg=C3=A9?= <adrienverge@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 088/150] ALSA: hda/realtek: Fix microphone regression on ASUS N705UD
-Date: Wed,  5 Mar 2025 18:48:37 +0100
-Message-ID: <20250305174507.349349521@linuxfoundation.org>
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.12 089/150] KVM: arm64: Ensure a VMID is allocated before programming VTTBR_EL2
+Date: Wed,  5 Mar 2025 18:48:38 +0100
+Message-ID: <20250305174507.389227946@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -46,85 +45,151 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrien Vergé <adrienverge@gmail.com>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-commit c6557ccf8094ce2e1142c6e49cd47f5d5e2933a8 upstream.
+commit fa808ed4e199ed17d878eb75b110bda30dd52434 upstream.
 
-This fixes a regression introduced a few weeks ago in stable kernels
-6.12.14 and 6.13.3. The internal microphone on ASUS Vivobook N705UD /
-X705UD laptops is broken: the microphone appears in userspace (e.g.
-Gnome settings) but no sound is detected.
-I bisected it to commit 3b4309546b48 ("ALSA: hda: Fix headset detection
-failure due to unstable sort").
+Vladimir reports that a race condition to attach a VMID to a stage-2 MMU
+sometimes results in a vCPU entering the guest with a VMID of 0:
 
-I figured out the cause:
-1. The initial pins enabled for the ALC256 driver are:
-       cfg->inputs == {
-         { pin=0x19, type=AUTO_PIN_MIC,
-           is_headset_mic=1, is_headphone_mic=0, has_boost_on_pin=1 },
-         { pin=0x1a, type=AUTO_PIN_MIC,
-           is_headset_mic=0, is_headphone_mic=0, has_boost_on_pin=1 } }
-2. Since 2017 and commits c1732ede5e8 ("ALSA: hda/realtek - Fix headset
-   and mic on several ASUS laptops with ALC256") and 28e8af8a163 ("ALSA:
-   hda/realtek: Fix mic and headset jack sense on ASUS X705UD"), the
-   quirk ALC256_FIXUP_ASUS_MIC is also applied to ASUS X705UD / N705UD
-   laptops.
-   This added another internal microphone on pin 0x13:
-       cfg->inputs == {
-         { pin=0x13, type=AUTO_PIN_MIC,
-           is_headset_mic=0, is_headphone_mic=0, has_boost_on_pin=1 },
-         { pin=0x19, type=AUTO_PIN_MIC,
-           is_headset_mic=1, is_headphone_mic=0, has_boost_on_pin=1 },
-         { pin=0x1a, type=AUTO_PIN_MIC,
-           is_headset_mic=0, is_headphone_mic=0, has_boost_on_pin=1 } }
-   I don't know what this pin 0x13 corresponds to. To the best of my
-   knowledge, these laptops have only one internal microphone.
-3. Before 2025 and commit 3b4309546b48 ("ALSA: hda: Fix headset
-   detection failure due to unstable sort"), the sort function would let
-   the microphone of pin 0x1a (the working one) *before* the microphone
-   of pin 0x13 (the phantom one).
-4. After this commit 3b4309546b48, the fixed sort function puts the
-   working microphone (pin 0x1a) *after* the phantom one (pin 0x13). As
-   a result, no sound is detected anymore.
+| CPU1                                            |   CPU2
+|                                                 |
+|                                                 | kvm_arch_vcpu_ioctl_run
+|                                                 |   vcpu_load             <= load VTTBR_EL2
+|                                                 |                            kvm_vmid->id = 0
+|                                                 |
+| kvm_arch_vcpu_ioctl_run                         |
+|   vcpu_load             <= load VTTBR_EL2       |
+|                            with kvm_vmid->id = 0|
+|   kvm_arm_vmid_update   <= allocates fresh      |
+|                            kvm_vmid->id and     |
+|                            reload VTTBR_EL2     |
+|                                                 |
+|                                                 |   kvm_arm_vmid_update <= observes that kvm_vmid->id
+|                                                 |                          already allocated,
+|                                                 |                          skips reload VTTBR_EL2
 
-It looks like the quirk ALC256_FIXUP_ASUS_MIC is not needed anymore for
-ASUS Vivobook X705UD / N705UD laptops. Without it, everything works
-fine:
-- the internal microphone is detected and records actual sound,
-- plugging in a jack headset is detected and can record actual sound
-  with it,
-- unplugging the jack headset makes the system go back to internal
-  microphone and can record actual sound.
+Oh yeah, it's as bad as it looks. Remember that VHE loads the stage-2
+MMU eagerly but a VMID only gets attached to the MMU later on in the
+KVM_RUN loop.
+
+Even in the "best case" where VTTBR_EL2 correctly gets reprogrammed
+before entering the EL1&0 regime, there is a period of time where
+hardware is configured with VMID 0. That's completely insane. So, rather
+than decorating the 'late' binding with another hack, just allocate the
+damn thing up front.
+
+Attaching a VMID from vcpu_load() is still rollover safe since
+(surprise!) it'll always get called after a vCPU was preempted.
+
+Excuse me while I go find a brown paper bag.
 
 Cc: stable@vger.kernel.org
-Cc: Kuan-Wei Chiu <visitorckw@gmail.com>
-Cc: Chris Chiu <chris.chiu@canonical.com>
-Fixes: 3b4309546b48 ("ALSA: hda: Fix headset detection failure due to unstable sort")
-Tested-by: Adrien Vergé <adrienverge@gmail.com>
-Signed-off-by: Adrien Vergé <adrienverge@gmail.com>
-Link: https://patch.msgid.link/20250226135515.24219-1-adrienverge@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 934bf871f011 ("KVM: arm64: Load the stage-2 MMU context in kvm_vcpu_load_vhe()")
+Reported-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20250219220737.130842-1-oliver.upton@linux.dev
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/include/asm/kvm_host.h |    2 +-
+ arch/arm64/kvm/arm.c              |   22 ++++++++++------------
+ arch/arm64/kvm/vmid.c             |   11 +++--------
+ 3 files changed, 14 insertions(+), 21 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10598,7 +10598,6 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x1043, 0x19ce, "ASUS B9450FA", ALC294_FIXUP_ASUS_HPE),
- 	SND_PCI_QUIRK(0x1043, 0x19e1, "ASUS UX581LV", ALC295_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1a13, "Asus G73Jw", ALC269_FIXUP_ASUS_G73JW),
--	SND_PCI_QUIRK(0x1043, 0x1a30, "ASUS X705UD", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x1a63, "ASUS UX3405MA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1a83, "ASUS UM5302LA", ALC294_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1a8f, "ASUS UX582ZS", ALC245_FIXUP_CS35L41_SPI_2),
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -1243,7 +1243,7 @@ int kvm_arm_pvtime_has_attr(struct kvm_v
+ extern unsigned int __ro_after_init kvm_arm_vmid_bits;
+ int __init kvm_arm_vmid_alloc_init(void);
+ void __init kvm_arm_vmid_alloc_free(void);
+-bool kvm_arm_vmid_update(struct kvm_vmid *kvm_vmid);
++void kvm_arm_vmid_update(struct kvm_vmid *kvm_vmid);
+ void kvm_arm_vmid_clear_active(void);
+ 
+ static inline void kvm_arm_pvtime_vcpu_init(struct kvm_vcpu_arch *vcpu_arch)
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -581,6 +581,16 @@ void kvm_arch_vcpu_load(struct kvm_vcpu
+ 	last_ran = this_cpu_ptr(mmu->last_vcpu_ran);
+ 
+ 	/*
++	 * Ensure a VMID is allocated for the MMU before programming VTTBR_EL2,
++	 * which happens eagerly in VHE.
++	 *
++	 * Also, the VMID allocator only preserves VMIDs that are active at the
++	 * time of rollover, so KVM might need to grab a new VMID for the MMU if
++	 * this is called from kvm_sched_in().
++	 */
++	kvm_arm_vmid_update(&mmu->vmid);
++
++	/*
+ 	 * We guarantee that both TLBs and I-cache are private to each
+ 	 * vcpu. If detecting that a vcpu from the same VM has
+ 	 * previously run on the same physical CPU, call into the
+@@ -1155,18 +1165,6 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
+ 		 */
+ 		preempt_disable();
+ 
+-		/*
+-		 * The VMID allocator only tracks active VMIDs per
+-		 * physical CPU, and therefore the VMID allocated may not be
+-		 * preserved on VMID roll-over if the task was preempted,
+-		 * making a thread's VMID inactive. So we need to call
+-		 * kvm_arm_vmid_update() in non-premptible context.
+-		 */
+-		if (kvm_arm_vmid_update(&vcpu->arch.hw_mmu->vmid) &&
+-		    has_vhe())
+-			__load_stage2(vcpu->arch.hw_mmu,
+-				      vcpu->arch.hw_mmu->arch);
+-
+ 		kvm_pmu_flush_hwstate(vcpu);
+ 
+ 		local_irq_disable();
+--- a/arch/arm64/kvm/vmid.c
++++ b/arch/arm64/kvm/vmid.c
+@@ -135,11 +135,10 @@ void kvm_arm_vmid_clear_active(void)
+ 	atomic64_set(this_cpu_ptr(&active_vmids), VMID_ACTIVE_INVALID);
+ }
+ 
+-bool kvm_arm_vmid_update(struct kvm_vmid *kvm_vmid)
++void kvm_arm_vmid_update(struct kvm_vmid *kvm_vmid)
+ {
+ 	unsigned long flags;
+ 	u64 vmid, old_active_vmid;
+-	bool updated = false;
+ 
+ 	vmid = atomic64_read(&kvm_vmid->id);
+ 
+@@ -157,21 +156,17 @@ bool kvm_arm_vmid_update(struct kvm_vmid
+ 	if (old_active_vmid != 0 && vmid_gen_match(vmid) &&
+ 	    0 != atomic64_cmpxchg_relaxed(this_cpu_ptr(&active_vmids),
+ 					  old_active_vmid, vmid))
+-		return false;
++		return;
+ 
+ 	raw_spin_lock_irqsave(&cpu_vmid_lock, flags);
+ 
+ 	/* Check that our VMID belongs to the current generation. */
+ 	vmid = atomic64_read(&kvm_vmid->id);
+-	if (!vmid_gen_match(vmid)) {
++	if (!vmid_gen_match(vmid))
+ 		vmid = new_vmid(kvm_vmid);
+-		updated = true;
+-	}
+ 
+ 	atomic64_set(this_cpu_ptr(&active_vmids), vmid);
+ 	raw_spin_unlock_irqrestore(&cpu_vmid_lock, flags);
+-
+-	return updated;
+ }
+ 
+ /*
 
 
