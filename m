@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB76624C07D;
-	Wed,  5 Mar 2025 18:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9655224C07D;
+	Wed,  5 Mar 2025 18:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198451; cv=none; b=pEi3k76y7BaOk08ZrKF8B+MSq+U+DMybb6OqQu5LNSVISJJu0VnDdJ6Z2P87v+YPObpFfv56scoTO/m7mpU2Ge60dFWNpiTuuXuWSe6vvrw3L/vOIxpRW7/KcZkC0FIiQVXNY8yfE5TBotUb4mCKgTG5gUnBcF+pvbE6ZkD7QH0=
+	t=1741198454; cv=none; b=s1w3b5OLLy+8Kw3KtX5bOdwtDPIBHS/fGBfA/pmcwn39lkM+5zU/Mgb9OSwsDIM2taJe8bkioibLenQy2jEDwwofV+CwTS6zAR+djr4sR5Zur7NSGdHjFuD47WFjNB8OTIBTQa1sq/plfYCe75YndmAkECIYnb3zCx/MWRHAroQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198451; c=relaxed/simple;
-	bh=LBqXchfDDPL7J7xqkmRmO+4TsJJ6cN1f0Hz1j33BYOI=;
+	s=arc-20240116; t=1741198454; c=relaxed/simple;
+	bh=SI6/UUHgcpld0X/H0GZyXoC4zdz9ND7Ns63a+tplkKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HOqGjoLj81O4syS4s7Mcp4IMSfHQBXxk5IvViVoRE2o2rWDLucw99uEoloNdl5bGGtRTLRdoqy1Zusj4ZkyVc6JTfruVBPUellcIAJTJv/0gYMpG47QqakA9UvL48Dt9DG0m/9ubF9cH7hMz94z0AtzNmhvI61ogNPzt9FHM3eI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zB6ymUgY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AAe58uB3Pd/9YI7XnqJKTkBEWQkIIcyDkQiXHQ7Ctm4+syJAC9cn46sy3Txsr2G6b9L6nUhxD8HMpYuobqxmYOttlTpEFwVDxYVB5fH70Wt7ds6w8nW6CQJtkyPHipuXR5VTuNxi8VIobt5/k94bc+YbduL2N5B4B6mco7Jv0EA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ne4Yvcaq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zB6ymUgY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315E0C4CED1;
-	Wed,  5 Mar 2025 18:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ne4Yvcaq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA42C4CED1;
+	Wed,  5 Mar 2025 18:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198451;
-	bh=LBqXchfDDPL7J7xqkmRmO+4TsJJ6cN1f0Hz1j33BYOI=;
+	s=korg; t=1741198454;
+	bh=SI6/UUHgcpld0X/H0GZyXoC4zdz9ND7Ns63a+tplkKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zB6ymUgYRDnfO9HL/+CRLQC0zKdBGcHyT73ySZXw1iPf+Qk3qbGOQivqmAG7C8XkN
-	 cKaQC8moie+5QbYy/Ot9fBlXSDisORJqhdxjWCzFyhPcsx2uYHJoLY+54bc1xThCA/
-	 rRYfwd90DTFLwxjJ1rOUmSg4dMdwv1O1P9yCVb6M=
+	b=Ne4YvcaqPj+NrbLLPM7uhdHLBhGoDgFQvQ3yowrWDyNNhC0uw68iWn97mjLuSB9Hj
+	 MQMFIKwIJuCGn3oZnyxA7S7WheoGEB8nldpQtEqvkdHYGWI8GGHczFVrsEfxZdV8f0
+	 9fS+8T8JE5jojHVnMFWhgwRfC45+oP0QjTvWCKUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Dmitry Yakunin <zeil@yandex-team.ru>,
-	Konstantin Khlebnikov <khlebnikov@yandex-team.ru>,
+	syzbot+93ab4a777bafb9d9f960@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Mahesh Bandewar <maheshb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 033/157] net: set the minimum for net_hotdata.netdev_budget_usecs
-Date: Wed,  5 Mar 2025 18:47:49 +0100
-Message-ID: <20250305174506.626630288@linuxfoundation.org>
+Subject: [PATCH 6.13 034/157] ipvlan: ensure network headers are in skb linear part
+Date: Wed,  5 Mar 2025 18:47:50 +0100
+Message-ID: <20250305174506.666028657@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -53,56 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c180188ec02281126045414e90d08422a80f75b4 ]
+[ Upstream commit 27843ce6ba3d3122b65066550fe33fb8839f8aef ]
 
-Commit 7acf8a1e8a28 ("Replace 2 jiffies with sysctl netdev_budget_usecs
-to enable softirq tuning") added a possibility to set
-net_hotdata.netdev_budget_usecs, but added no lower bound checking.
+syzbot found that ipvlan_process_v6_outbound() was assuming
+the IPv6 network header isis present in skb->head [1]
 
-Commit a4837980fd9f ("net: revert default NAPI poll timeout to 2 jiffies")
-made the *initial* value HZ-dependent, so the initial value is at least
-2 jiffies even for lower HZ values (2 ms for 1000 Hz, 8ms for 250 Hz, 20
-ms for 100 Hz).
+Add the needed pskb_network_may_pull() calls for both
+IPv4 and IPv6 handlers.
 
-But a user still can set improper values by a sysctl. Set .extra1
-(the lower bound) for net_hotdata.netdev_budget_usecs to the same value
-as in the latter commit. That is to 2 jiffies.
+[1]
+BUG: KMSAN: uninit-value in __ipv6_addr_type+0xa2/0x490 net/ipv6/addrconf_core.c:47
+  __ipv6_addr_type+0xa2/0x490 net/ipv6/addrconf_core.c:47
+  ipv6_addr_type include/net/ipv6.h:555 [inline]
+  ip6_route_output_flags_noref net/ipv6/route.c:2616 [inline]
+  ip6_route_output_flags+0x51/0x720 net/ipv6/route.c:2651
+  ip6_route_output include/net/ip6_route.h:93 [inline]
+  ipvlan_route_v6_outbound+0x24e/0x520 drivers/net/ipvlan/ipvlan_core.c:476
+  ipvlan_process_v6_outbound drivers/net/ipvlan/ipvlan_core.c:491 [inline]
+  ipvlan_process_outbound drivers/net/ipvlan/ipvlan_core.c:541 [inline]
+  ipvlan_xmit_mode_l3 drivers/net/ipvlan/ipvlan_core.c:605 [inline]
+  ipvlan_queue_xmit+0xd72/0x1780 drivers/net/ipvlan/ipvlan_core.c:671
+  ipvlan_start_xmit+0x5b/0x210 drivers/net/ipvlan/ipvlan_main.c:223
+  __netdev_start_xmit include/linux/netdevice.h:5150 [inline]
+  netdev_start_xmit include/linux/netdevice.h:5159 [inline]
+  xmit_one net/core/dev.c:3735 [inline]
+  dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3751
+  sch_direct_xmit+0x399/0xd40 net/sched/sch_generic.c:343
+  qdisc_restart net/sched/sch_generic.c:408 [inline]
+  __qdisc_run+0x14da/0x35d0 net/sched/sch_generic.c:416
+  qdisc_run+0x141/0x4d0 include/net/pkt_sched.h:127
+  net_tx_action+0x78b/0x940 net/core/dev.c:5484
+  handle_softirqs+0x1a0/0x7c0 kernel/softirq.c:561
+  __do_softirq+0x14/0x1a kernel/softirq.c:595
+  do_softirq+0x9a/0x100 kernel/softirq.c:462
+  __local_bh_enable_ip+0x9f/0xb0 kernel/softirq.c:389
+  local_bh_enable include/linux/bottom_half.h:33 [inline]
+  rcu_read_unlock_bh include/linux/rcupdate.h:919 [inline]
+  __dev_queue_xmit+0x2758/0x57d0 net/core/dev.c:4611
+  dev_queue_xmit include/linux/netdevice.h:3311 [inline]
+  packet_xmit+0x9c/0x6c0 net/packet/af_packet.c:276
+  packet_snd net/packet/af_packet.c:3132 [inline]
+  packet_sendmsg+0x93e0/0xa7e0 net/packet/af_packet.c:3164
+  sock_sendmsg_nosec net/socket.c:718 [inline]
 
-Fixes: a4837980fd9f ("net: revert default NAPI poll timeout to 2 jiffies")
-Fixes: 7acf8a1e8a28 ("Replace 2 jiffies with sysctl netdev_budget_usecs to enable softirq tuning")
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Cc: Dmitry Yakunin <zeil@yandex-team.ru>
-Cc: Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
-Link: https://patch.msgid.link/20250220110752.137639-1-jirislaby@kernel.org
+Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
+Reported-by: syzbot+93ab4a777bafb9d9f960@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/67b74f01.050a0220.14d86d.02d8.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Mahesh Bandewar <maheshb@google.com>
+Link: https://patch.msgid.link/20250220155336.61884-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sysctl_net_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ipvlan/ipvlan_core.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/net/core/sysctl_net_core.c b/net/core/sysctl_net_core.c
-index ad2741f1346af..c7769ee0d9c55 100644
---- a/net/core/sysctl_net_core.c
-+++ b/net/core/sysctl_net_core.c
-@@ -34,6 +34,7 @@ static int min_sndbuf = SOCK_MIN_SNDBUF;
- static int min_rcvbuf = SOCK_MIN_RCVBUF;
- static int max_skb_frags = MAX_SKB_FRAGS;
- static int min_mem_pcpu_rsv = SK_MEMORY_PCPU_RESERVE;
-+static int netdev_budget_usecs_min = 2 * USEC_PER_SEC / HZ;
+diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
+index fd591ddb3884d..ca62188a317ad 100644
+--- a/drivers/net/ipvlan/ipvlan_core.c
++++ b/drivers/net/ipvlan/ipvlan_core.c
+@@ -416,20 +416,25 @@ struct ipvl_addr *ipvlan_addr_lookup(struct ipvl_port *port, void *lyr3h,
  
- static int net_msg_warn;	/* Unused, but still a sysctl */
+ static noinline_for_stack int ipvlan_process_v4_outbound(struct sk_buff *skb)
+ {
+-	const struct iphdr *ip4h = ip_hdr(skb);
+ 	struct net_device *dev = skb->dev;
+ 	struct net *net = dev_net(dev);
+-	struct rtable *rt;
+ 	int err, ret = NET_XMIT_DROP;
++	const struct iphdr *ip4h;
++	struct rtable *rt;
+ 	struct flowi4 fl4 = {
+ 		.flowi4_oif = dev->ifindex,
+-		.flowi4_tos = inet_dscp_to_dsfield(ip4h_dscp(ip4h)),
+ 		.flowi4_flags = FLOWI_FLAG_ANYSRC,
+ 		.flowi4_mark = skb->mark,
+-		.daddr = ip4h->daddr,
+-		.saddr = ip4h->saddr,
+ 	};
  
-@@ -587,7 +588,7 @@ static struct ctl_table net_core_table[] = {
- 		.maxlen		= sizeof(unsigned int),
- 		.mode		= 0644,
- 		.proc_handler	= proc_dointvec_minmax,
--		.extra1		= SYSCTL_ZERO,
-+		.extra1		= &netdev_budget_usecs_min,
- 	},
- 	{
- 		.procname	= "fb_tunnels_only_for_init_net",
++	if (!pskb_network_may_pull(skb, sizeof(struct iphdr)))
++		goto err;
++
++	ip4h = ip_hdr(skb);
++	fl4.daddr = ip4h->daddr;
++	fl4.saddr = ip4h->saddr;
++	fl4.flowi4_tos = inet_dscp_to_dsfield(ip4h_dscp(ip4h));
++
+ 	rt = ip_route_output_flow(net, &fl4, NULL);
+ 	if (IS_ERR(rt))
+ 		goto err;
+@@ -488,6 +493,12 @@ static int ipvlan_process_v6_outbound(struct sk_buff *skb)
+ 	struct net_device *dev = skb->dev;
+ 	int err, ret = NET_XMIT_DROP;
+ 
++	if (!pskb_network_may_pull(skb, sizeof(struct ipv6hdr))) {
++		DEV_STATS_INC(dev, tx_errors);
++		kfree_skb(skb);
++		return ret;
++	}
++
+ 	err = ipvlan_route_v6_outbound(dev, skb);
+ 	if (unlikely(err)) {
+ 		DEV_STATS_INC(dev, tx_errors);
 -- 
 2.39.5
 
