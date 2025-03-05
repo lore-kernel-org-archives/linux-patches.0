@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FA619E7D1;
-	Wed,  5 Mar 2025 18:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E21D251785;
+	Wed,  5 Mar 2025 18:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198177; cv=none; b=iuTAgktfcPOaQQ+BRqu2KAJkWlm2CcfYQ+Ju4lIACTqnxX4CM6Js7Q853YMPDSN+QQkqFQrkVGeSlFeBlqFs6yt83FjiZ7+4C5asNUoFzqpLwPpM7D934wmljWKaHKiIaweTPal/3u7QqVW412TqEUKk+92S1/2E1GH7rKnDyJ4=
+	t=1741198180; cv=none; b=MmLq9RgdC/WNzn4q80qJDUaXOM1aTACjCBkxxg4ehnZSWCLR2hiXrLXYm22dY56yDuXd0jEn1Orq/W8mU9vat8URT65/npFMMAM+zozAKxi6cc1q5De4FUiTbC0nawX0k4SN7q8m02ZJ3VM+3KVx2tPqDTeAe6S9pGVUq7rUAho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198177; c=relaxed/simple;
-	bh=7sNqrlv5ShrvLZHiq5ha6wjR7G6zUebM6TnzNfLNlXo=;
+	s=arc-20240116; t=1741198180; c=relaxed/simple;
+	bh=upxf7/R7plvCHL4kq005/f5wtvGwqzYj51Lff1ZfFco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtIJQSlUpTWcpfSCzjG5LBMtW2+azwfnD12b0dkjGhV7jmt5BoNxAbPXnGTc996VM09lK0fOfNIXKpWPfyPMZc5sNNaWv591XCtSL8lClEx7bfoiWT2GIXDbIl9M//SBXau/jFlS0xTnVDnluCHv9nn2cGA0wWCgL0HLBBh3wNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uB0+TcvS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QF3MVU7Z/1CpCAjLVCQhevNG52I+ozo8zMRE8enH+dyLX+VQynyNYtevz0y+eB96cVqHNsSvUl+xXsoFTunC+XFTVE066NUCmFUYxyXNqreA8VXo6Gj5zhorHhK/VPO36tosHqPv6d7NjW2zv0YHjPtOI5MAmZMNa+TGEEL6smM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ho5L0bzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uB0+TcvS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AABC4CEE0;
-	Wed,  5 Mar 2025 18:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ho5L0bzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134E7C4CED1;
+	Wed,  5 Mar 2025 18:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198177;
-	bh=7sNqrlv5ShrvLZHiq5ha6wjR7G6zUebM6TnzNfLNlXo=;
+	s=korg; t=1741198180;
+	bh=upxf7/R7plvCHL4kq005/f5wtvGwqzYj51Lff1ZfFco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uB0+TcvS/Owyol91tzjEY+pCkDKocSZ9iFVt6dJqreZaIikF7J4USKGfLeip774Xo
-	 pS9pEWTV95uxGNafyyBOSGDiZ2UjBYfmDuzxTKO6fVJNXf7Pp4wxKbk3SRw7Y9NNBd
-	 G+V1eoxioPSdWOjkYWhA77PpUZQm2CHOUlUjlSwk=
+	b=Ho5L0bzQY98tgfSFMIgwIP/obaajAyFxDUbcGHbYb6I9eHdP5sQn35jp05nd35WMp
+	 i+j2FVEGfLjmlYXXf7OI1bvaPWsDTJYQ9VnNVy+t2ZemffDtrG3usC2rFGpd1Vs/ME
+	 1WHon7/oYt8KBo+13yBYlGjMlUhq/sz6APAhEd/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ingo Molnar <mingo@kernel.org>,
 	Ravi Bangoria <ravi.bangoria@amd.com>,
 	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.12 091/150] perf/x86: Fix low freqency setting issue
-Date: Wed,  5 Mar 2025 18:48:40 +0100
-Message-ID: <20250305174507.467590478@linuxfoundation.org>
+Subject: [PATCH 6.12 092/150] perf/core: Fix low freq setting via IOC_PERIOD
+Date: Wed,  5 Mar 2025 18:48:41 +0100
+Message-ID: <20250305174507.506575950@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -54,46 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Kan Liang <kan.liang@linux.intel.com>
 
-commit 88ec7eedbbd21cad38707620ad6c48a4e9a87c18 upstream.
+commit 0d39844150546fa1415127c5fbae26db64070dd3 upstream.
 
-Perf doesn't work at low frequencies:
+A low attr::freq value cannot be set via IOC_PERIOD on some platforms.
 
-  $ perf record -e cpu_core/instructions/ppp -F 120
-  Error:
-  The sys_perf_event_open() syscall returned with 22 (Invalid argument)
-  for event (cpu_core/instructions/ppp).
-  "dmesg | grep -i perf" may provide additional information.
+The perf_event_check_period() introduced in:
 
-The limit_period() check avoids a low sampling period on a counter. It
-doesn't intend to limit the frequency.
+  81ec3f3c4c4d ("perf/x86: Add check_period PMU callback")
 
-The check in the x86_pmu_hw_config() should be limited to non-freq mode.
-The attr.sample_period and attr.sample_freq are union. The
-attr.sample_period should not be used to indicate the frequency mode.
+was intended to check the period, rather than the frequency.
+A low frequency may be mistakenly rejected by limit_period().
 
-Fixes: c46e665f0377 ("perf/x86: Add INST_RETIRED.ALL workarounds")
+Fix it.
+
+Fixes: 81ec3f3c4c4d ("perf/x86: Add check_period PMU callback")
 Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250117151913.3043942-1-kan.liang@linux.intel.com
+Link: https://lore.kernel.org/r/20250117151913.3043942-2-kan.liang@linux.intel.com
 Closes: https://lore.kernel.org/lkml/20250115154949.3147-1-ravi.bangoria@amd.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/events/core.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -628,7 +628,7 @@ int x86_pmu_hw_config(struct perf_event
- 	if (event->attr.type == event->pmu->type)
- 		event->hw.config |= x86_pmu_get_event_config(event);
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -5976,14 +5976,15 @@ static int _perf_event_period(struct per
+ 	if (!value)
+ 		return -EINVAL;
  
--	if (event->attr.sample_period && x86_pmu.limit_period) {
-+	if (!event->attr.freq && x86_pmu.limit_period) {
- 		s64 left = event->attr.sample_period;
- 		x86_pmu.limit_period(event, &left);
- 		if (left > event->attr.sample_period)
+-	if (event->attr.freq && value > sysctl_perf_event_sample_rate)
+-		return -EINVAL;
+-
+-	if (perf_event_check_period(event, value))
+-		return -EINVAL;
+-
+-	if (!event->attr.freq && (value & (1ULL << 63)))
+-		return -EINVAL;
++	if (event->attr.freq) {
++		if (value > sysctl_perf_event_sample_rate)
++			return -EINVAL;
++	} else {
++		if (perf_event_check_period(event, value))
++			return -EINVAL;
++		if (value & (1ULL << 63))
++			return -EINVAL;
++	}
+ 
+ 	event_function_call(event, __perf_event_period, &value);
+ 
 
 
