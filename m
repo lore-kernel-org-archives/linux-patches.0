@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B09252908;
-	Wed,  5 Mar 2025 17:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D860F2512D7;
+	Wed,  5 Mar 2025 17:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197206; cv=none; b=F4QWdO8yhHPjqXLk8FXnxBATUUIAR7wb/TVZuZYFYO/2x4JwkmFcWdJHC4kCPvR+GFGaJSWcNmAJTrkmBO2kCBicEfdA4Vw5A7nhsH1cvRut/imgpFaYfjDFVlbVJNVMGX26CeOxxvNfMrySKnNF7BjaBcWhCBFxh5qjRFnwzmI=
+	t=1741197209; cv=none; b=HSakdRG4nJe/DBGAB+9dFYdcmDZIIoA2mWzvwyKqnq+YjWje5R3/a5gSWalm+cemcpUZmIof7cicUl3eU+vlHswHUGVQrCObr5ddy5pcQI0Im0uEsGYHgqtUOM7ko+XMaGIfYn08Qh8qgvxXPPG3W15RlBL+Aw/XZFG0g+I1ABU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197206; c=relaxed/simple;
-	bh=vq9IsntABmKwvMXG+04JJhIzZ2d3Gpj8Z+bl9kN1P0w=;
+	s=arc-20240116; t=1741197209; c=relaxed/simple;
+	bh=p50723vu2a1dQV2jOiqOHBeape2u1NNVp2phr5Mbgvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kOWb1VsOgT01iQndWqxqt5/iQWFqKLxN2ewqufzHKtDBGbAPliF6Qz0+apjomzyZGLTSpW/oeMvahnslnLXalO4/aWw1NFuZWZ57oYhsE4bLaTg5PJYzcNkugW0jy1pAapN1EnXjrDyvVbrHh5UOBnQSYxiigTFtV9vSSQn0n5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gez2VFNB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M+CpfPQa/eHjQVxhDpwdiiihExsM2zRuoOONzpNE9WFqgo/PkMwJhNZdEpZhhJjzX05FTCSYm8ECTs4+VrnolBOiuwJVI6O2YZ+UHgXeT9YPiv5wJvV9sIXxksmokY8XNDDPGkvAe/oi/79R+4X/XTdYkiavtYEqg6Rt4pX6ZfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yj/TfVXe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gez2VFNB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41354C4CED1;
-	Wed,  5 Mar 2025 17:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yj/TfVXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E89C4CEE0;
+	Wed,  5 Mar 2025 17:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197206;
-	bh=vq9IsntABmKwvMXG+04JJhIzZ2d3Gpj8Z+bl9kN1P0w=;
+	s=korg; t=1741197209;
+	bh=p50723vu2a1dQV2jOiqOHBeape2u1NNVp2phr5Mbgvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gez2VFNBO1En+2d2UJ7ES3Ik4/4wAUr8uGikxIJcp/udfDdLnMCly8f2g88oqutKH
-	 mCrG+TQvYT6GjuGUu01ouOL+E7m5Ss3DePBAdPquxTJbXHPF55gZ6AucKKwP2ecopI
-	 bttKs2wjwy62KEtE2ak89tKUMOo7r/vymKPdj5fo=
+	b=Yj/TfVXe2L5c5Yfyll8HX/W/PScXM4RZPjvr44XBgVWntk1pCfGrt++K32FeUwpyw
+	 HMCFVKscljGjm2SfFfW8zhp2zbXxDn5bUII4wEvn1dQbpvLq/CnXMXdvwNsG+HlIEw
+	 P+BBK9+3LaSpCxxm8/6D3vcTlzsXpg980w0F1Guc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 077/176] ASoC: fsl_micfil: Enable default case in micfil_set_quality()
-Date: Wed,  5 Mar 2025 18:47:26 +0100
-Message-ID: <20250305174508.556083843@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 078/176] ALSA: hda: Add error check for snd_ctl_rename_id() in snd_hda_create_dig_out_ctls()
+Date: Wed,  5 Mar 2025 18:47:27 +0100
+Message-ID: <20250305174508.595019847@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -50,41 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit a8c9a453387640dbe45761970f41301a6985e7fa upstream.
+commit 822b7ec657e99b44b874e052d8540d8b54fe8569 upstream.
 
-If 'micfil->quality' received from micfil_quality_set() somehow ends
-up with an unpredictable value, switch() operator will fail to
-initialize local variable qsel before regmap_update_bits() tries
-to utilize it.
+Check the return value of snd_ctl_rename_id() in
+snd_hda_create_dig_out_ctls(). Ensure that failures
+are properly handled.
 
-While it is unlikely, play it safe and enable a default case that
-returns -EINVAL error.
+[ Note: the error cannot happen practically because the only error
+  condition in snd_ctl_rename_id() is the missing ID, but this is a
+  rename, hence it must be present.  But for the code consistency,
+  it's safer to have always the proper return check -- tiwai ]
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: bea1d61d5892 ("ASoC: fsl_micfil: rework quality setting")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patch.msgid.link/20250116142436.22389-1-n.zhandarovich@fintech.ru
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5c219a340850 ("ALSA: hda: Fix kctl->id initialization")
+Cc: stable@vger.kernel.org # 6.4+
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20250213074543.1620-1-vulab@iscas.ac.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_micfil.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/hda_codec.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/soc/fsl/fsl_micfil.c
-+++ b/sound/soc/fsl/fsl_micfil.c
-@@ -123,6 +123,8 @@ static int micfil_set_quality(struct fsl
- 	case QUALITY_VLOW2:
- 		qsel = MICFIL_QSEL_VLOW2_QUALITY;
- 		break;
-+	default:
-+		return -EINVAL;
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -2465,7 +2465,9 @@ int snd_hda_create_dig_out_ctls(struct h
+ 				break;
+ 			id = kctl->id;
+ 			id.index = spdif_index;
+-			snd_ctl_rename_id(codec->card, &kctl->id, &id);
++			err = snd_ctl_rename_id(codec->card, &kctl->id, &id);
++			if (err < 0)
++				return err;
+ 		}
+ 		bus->primary_dig_out_type = HDA_PCM_TYPE_HDMI;
  	}
- 
- 	return regmap_update_bits(micfil->regmap, REG_MICFIL_CTRL2,
 
 
