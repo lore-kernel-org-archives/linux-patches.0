@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971E9250BE9;
-	Wed,  5 Mar 2025 18:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6AF1FC7D0;
+	Wed,  5 Mar 2025 18:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197803; cv=none; b=IoipBbnr4Saf/RWFeKIbwJ4gYzF7xgzFC3wzqX8X30yiWvBATCeZz5Tbo7QPf+b5M6WDVOHSKOpQOuT1DWb0N/bvOBUc1ZJgvLNxCR6jzoE2HhHTgTa7Bugt/IYKnWtmbEynBx5ElwrTxGzezNJCb1ZsOQdl3cKRgtJ3gVtvJH8=
+	t=1741197806; cv=none; b=JwPD7hiaspm4noM6HiPtGI7NpLoBq0YCTwSU3guUwG7zL70gMoHcfEX2GylmFptgyLQCJYVGDGsqMX1VNa1lyQQ1jxGMcs6SqVEhilRmKwtCE3lwa1SKvJnHN2+kkNQuVGLMLwfYuqcz0RRJLmSBBpJLLu+AMmYHQqTX+z8uebw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197803; c=relaxed/simple;
-	bh=BjVGJp2aFwLZbq68WPRjzWg3gYUAOroneRQrAQnfaHA=;
+	s=arc-20240116; t=1741197806; c=relaxed/simple;
+	bh=3x0G2vJMQkR5r+GnhrLno7vXkgyvf0zWuI0oLb6zDf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A71sYJ1A5W0BOUO5Dtny3DYA2xIG+qSHXb0bHIUKH9D19MRGLy9MgQogyzT6TXEq4VFfQZubcCa8mcJi0phA7afnnHt750gzvgZSRY8zMef4AhysdNKfJmkFf+hTvNHvDarihNteofJnds/t1bfpnK+/DuvDG2udp58IqCDtxeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQNmd85T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S1FcuZFyxIJT/z9+dpeKCdrCv0HqEvdJHnTe7/Z763EAGulInRIQVbnw/cN/L7rjrsrhceGqJpVatfrzIeEX3KdyjzIK37u6sn0yocZyBtz2QHRHIZCMFWVMN8GlCtAih7OjXl11yumJXnZ0KNvatJ3cDCc9T23Yi8e3Z/X06Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/5Q4TUZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQNmd85T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC4AC4CED1;
-	Wed,  5 Mar 2025 18:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/5Q4TUZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9918AC4CED1;
+	Wed,  5 Mar 2025 18:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197803;
-	bh=BjVGJp2aFwLZbq68WPRjzWg3gYUAOroneRQrAQnfaHA=;
+	s=korg; t=1741197806;
+	bh=3x0G2vJMQkR5r+GnhrLno7vXkgyvf0zWuI0oLb6zDf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQNmd85TPIcWaMIFBsF6pAmuskChZqRIO+xqYVUDZEeIxdSf9xBKfcMyCJsfrBw0c
-	 HyTtctzd3Ok3WZuh84Vo8KmlFgVNlk0/lorkIPljQMcLhLCyeZa9w+/fQMS9k18ouI
-	 V+qm8yQwfRGVxOcBuGUgx3wCZdec4P8Njlmaww74=
+	b=T/5Q4TUZ/DCJBnGBO1kcJEW6+8LvqNiGxG+c8iu5QI2g1/Bzr7G/QN2/tYF7JJsYm
+	 rwvEYwRkJH2YXGZ41bxNP5HlAmqbfCFB/lAR0vK18h7d6KG65N2akAGaDAndWPgrHq
+	 psM1PauwC9otxn/QNdYz18yizJeghTm15UwexoYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Wei Fang <wei.fang@nxp.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 074/142] net: enetc: keep track of correct Tx BD count in enetc_map_tx_tso_buffs()
-Date: Wed,  5 Mar 2025 18:48:13 +0100
-Message-ID: <20250305174503.308760810@linuxfoundation.org>
+Subject: [PATCH 6.6 075/142] net: enetc: update UDP checksum when updating originTimestamp field
+Date: Wed,  5 Mar 2025 18:48:14 +0100
+Message-ID: <20250305174503.350067587@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -54,70 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Fang <wei.fang@nxp.com>
 
-commit da291996b16ebd10626d4b20288327b743aff110 upstream.
+commit bbcbc906ab7b5834c1219cd17a38d78dba904aa0 upstream.
 
-When creating a TSO header, if the skb is VLAN tagged, the extended BD
-will be used and the 'count' should be increased by 2 instead of 1.
-Otherwise, when an error occurs, less tx_swbd will be freed than the
-actual number.
+There is an issue with one-step timestamp based on UDP/IP. The peer will
+discard the sync packet because of the wrong UDP checksum. For ENETC v1,
+the software needs to update the UDP checksum when updating the
+originTimestamp field, so that the hardware can correctly update the UDP
+checksum when updating the correction field. Otherwise, the UDP checksum
+in the sync packet will be wrong.
 
-Fixes: fb8629e2cbfc ("net: enetc: add support for software TSO")
+Fixes: 7294380c5211 ("enetc: support PTP Sync packet one-step timestamping")
 Cc: stable@vger.kernel.org
-Suggested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: Wei Fang <wei.fang@nxp.com>
 Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Link: https://patch.msgid.link/20250224111251.1061098-3-wei.fang@nxp.com
+Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20250224111251.1061098-6-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c |   41 ++++++++++++++++++++++-----
+ 1 file changed, 34 insertions(+), 7 deletions(-)
 
 --- a/drivers/net/ethernet/freescale/enetc/enetc.c
 +++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -351,14 +351,15 @@ dma_err:
- 	return 0;
- }
+@@ -253,9 +253,11 @@ static int enetc_map_tx_buffs(struct ene
+ 		}
  
--static void enetc_map_tx_tso_hdr(struct enetc_bdr *tx_ring, struct sk_buff *skb,
--				 struct enetc_tx_swbd *tx_swbd,
--				 union enetc_tx_bd *txbd, int *i, int hdr_len,
--				 int data_len)
-+static int enetc_map_tx_tso_hdr(struct enetc_bdr *tx_ring, struct sk_buff *skb,
-+				struct enetc_tx_swbd *tx_swbd,
-+				union enetc_tx_bd *txbd, int *i, int hdr_len,
-+				int data_len)
- {
- 	union enetc_tx_bd txbd_tmp;
- 	u8 flags = 0, e_flags = 0;
- 	dma_addr_t addr;
-+	int count = 1;
+ 		if (do_onestep_tstamp) {
+-			u32 lo, hi, val;
+-			u64 sec, nsec;
++			__be32 new_sec_l, new_nsec;
++			u32 lo, hi, nsec, val;
++			__be16 new_sec_h;
+ 			u8 *data;
++			u64 sec;
  
- 	enetc_clear_tx_bd(&txbd_tmp);
- 	addr = tx_ring->tso_headers_dma + *i * TSO_HEADER_SIZE;
-@@ -401,7 +402,10 @@ static void enetc_map_tx_tso_hdr(struct
- 		/* Write the BD */
- 		txbd_tmp.ext.e_flags = e_flags;
- 		*txbd = txbd_tmp;
-+		count++;
- 	}
+ 			lo = enetc_rd_hot(hw, ENETC_SICTR0);
+ 			hi = enetc_rd_hot(hw, ENETC_SICTR1);
+@@ -269,13 +271,38 @@ static int enetc_map_tx_buffs(struct ene
+ 			/* Update originTimestamp field of Sync packet
+ 			 * - 48 bits seconds field
+ 			 * - 32 bits nanseconds field
++			 *
++			 * In addition, the UDP checksum needs to be updated
++			 * by software after updating originTimestamp field,
++			 * otherwise the hardware will calculate the wrong
++			 * checksum when updating the correction field and
++			 * update it to the packet.
+ 			 */
+ 			data = skb_mac_header(skb);
+-			*(__be16 *)(data + offset2) =
+-				htons((sec >> 32) & 0xffff);
+-			*(__be32 *)(data + offset2 + 2) =
+-				htonl(sec & 0xffffffff);
+-			*(__be32 *)(data + offset2 + 6) = htonl(nsec);
++			new_sec_h = htons((sec >> 32) & 0xffff);
++			new_sec_l = htonl(sec & 0xffffffff);
++			new_nsec = htonl(nsec);
++			if (udp) {
++				struct udphdr *uh = udp_hdr(skb);
++				__be32 old_sec_l, old_nsec;
++				__be16 old_sec_h;
 +
-+	return count;
- }
++				old_sec_h = *(__be16 *)(data + offset2);
++				inet_proto_csum_replace2(&uh->check, skb, old_sec_h,
++							 new_sec_h, false);
++
++				old_sec_l = *(__be32 *)(data + offset2 + 2);
++				inet_proto_csum_replace4(&uh->check, skb, old_sec_l,
++							 new_sec_l, false);
++
++				old_nsec = *(__be32 *)(data + offset2 + 6);
++				inet_proto_csum_replace4(&uh->check, skb, old_nsec,
++							 new_nsec, false);
++			}
++
++			*(__be16 *)(data + offset2) = new_sec_h;
++			*(__be32 *)(data + offset2 + 2) = new_sec_l;
++			*(__be32 *)(data + offset2 + 6) = new_nsec;
  
- static int enetc_map_tx_tso_data(struct enetc_bdr *tx_ring, struct sk_buff *skb,
-@@ -533,9 +537,9 @@ static int enetc_map_tx_tso_buffs(struct
- 
- 		/* compute the csum over the L4 header */
- 		csum = enetc_tso_hdr_csum(&tso, skb, hdr, hdr_len, &pos);
--		enetc_map_tx_tso_hdr(tx_ring, skb, tx_swbd, txbd, &i, hdr_len, data_len);
-+		count += enetc_map_tx_tso_hdr(tx_ring, skb, tx_swbd, txbd,
-+					      &i, hdr_len, data_len);
- 		bd_data_num = 0;
--		count++;
- 
- 		while (data_len > 0) {
- 			int size;
+ 			/* Configure single-step register */
+ 			val = ENETC_PM0_SINGLE_STEP_EN;
 
 
