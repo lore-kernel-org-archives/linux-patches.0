@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4D82528E0;
-	Wed,  5 Mar 2025 18:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF52253B4B;
+	Wed,  5 Mar 2025 18:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198502; cv=none; b=B7ZWP7x0XEsI0WO1C4/10zPz4eclAE+eAEwPW/CqgiVcUyr49WNZxYnh5VzitD3AmsewJgi6UosMrmSXg4DzGtFF9B/KFmcpBqSKB25fBT8DNfDnOQq16Oj1zVXF4oq4oBfipWVBTRLdjYBSjz2spPIQ42oCccszyB+VCQ/MjLo=
+	t=1741198504; cv=none; b=o3X4DwNOMrQab1uSAKSj6ZydYxsvErOwCbBo255SAalcOC0rCOGCkJyROQx7vLeYHmQ396+CoR6In+YshCqRG/6RaYoVYHPoKl5nxSQOnYN1k5ksRegb2GfdeTgf36+tLObuSTIyq3NjlvmPiso6b1eEZNpuQJPXrge43kPc6iY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198502; c=relaxed/simple;
-	bh=UJbFeV/pv3KY5lxnLuPKHldY68pvQQFHof/+U1ItIzo=;
+	s=arc-20240116; t=1741198504; c=relaxed/simple;
+	bh=34SD2XJBWRvUKJTG0K2q7pHoRA5vuf2RuEj6V+hMClE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HcvgavGn5yNlu5v0JQWT14LasutsQLVFSjQgQModN6Jur2kAgf0Z31sxlibZgRS36sDpubw9Flx3FdRWXT/El1B7+z5VemIbqLbka1Rvs7x3UA0p+WACeAHrNrkLEvWtsQ4dkG9omi0f77YZCtxIHM26daqSGOTM8CnGmx2PWuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/uNUQDA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lzfh4j0tOnCouaDx1dJq1Y5uAAODXPs+fXtqbAi29bSUIYxVNIIdCzzW0dnVRqT5Of/Tl8A/MKHy/BKRUSW1oOH8/0s7ECVjoICciWzscThgkp9/SREo9yX0rM6UJUcfcnOwyai+5duKH9imEBVPR9TThyjePhNaq3fEjhilgrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yEHodeFv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/uNUQDA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296D8C4CED1;
-	Wed,  5 Mar 2025 18:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yEHodeFv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BB0C4CED1;
+	Wed,  5 Mar 2025 18:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198501;
-	bh=UJbFeV/pv3KY5lxnLuPKHldY68pvQQFHof/+U1ItIzo=;
+	s=korg; t=1741198504;
+	bh=34SD2XJBWRvUKJTG0K2q7pHoRA5vuf2RuEj6V+hMClE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X/uNUQDA5kVOJNs3vUESGi48xNVJJehrVFAxbMVgAQadOoyIKfHPAGXct5y/F18/Q
-	 LZexZ4wL1XrAQ/vAajlTSdyo7RVULLgT6mnm1IyXsB2Smof3Sl1d3MHpWnmRcZNQ7K
-	 TUl45dKdcrpqpQ63KysaZ0KsU2y3kiDhCefJ2ics=
+	b=yEHodeFvh+6l8M7iaCz13Qj6W4GL8wfKsHAQAq/xI8EjnvmlewB2iREjoTxQSI/gY
+	 BZOkUa5hp5FrRCmVrfvHb7SEBDwQWkedAsSFKisQyhDmonzGQXZdQSu4mJxyvkvbZd
+	 kyjnLguIgmoe0Tkp0VkTVDJnRbS7L25+lJz4tTr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
-	Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>,
-	Marcin Szycik <marcin.szycik@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 049/157] ice: Fix deinitializing VF in error path
-Date: Wed,  5 Mar 2025 18:48:05 +0100
-Message-ID: <20250305174507.277047705@linuxfoundation.org>
+Subject: [PATCH 6.13 023/157] RDMA/bnxt_re: Fix the page details for the srq created by kernel consumers
+Date: Wed,  5 Mar 2025 18:47:39 +0100
+Message-ID: <20250305174506.227810598@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -55,112 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcin Szycik <marcin.szycik@linux.intel.com>
+From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit 79990cf5e7aded76d0c092c9f5ed31eb1c75e02c ]
+[ Upstream commit b66535356a4834a234f99e16a97eb51f2c6c5a7d ]
 
-If ice_ena_vfs() fails after calling ice_create_vf_entries(), it frees
-all VFs without removing them from snapshot PF-VF mailbox list, leading
-to list corruption.
+While using nvme target with use_srq on, below kernel panic is noticed.
 
-Reproducer:
-  devlink dev eswitch set $PF1_PCI mode switchdev
-  ip l s $PF1 up
-  ip l s $PF1 promisc on
-  sleep 1
-  echo 1 > /sys/class/net/$PF1/device/sriov_numvfs
-  sleep 1
-  echo 1 > /sys/class/net/$PF1/device/sriov_numvfs
+[  549.698111] bnxt_en 0000:41:00.0 enp65s0np0: FEC autoneg off encoding: Clause 91 RS(544,514)
+[  566.393619] Oops: divide error: 0000 [#1] PREEMPT SMP NOPTI
+..
+[  566.393799]  <TASK>
+[  566.393807]  ? __die_body+0x1a/0x60
+[  566.393823]  ? die+0x38/0x60
+[  566.393835]  ? do_trap+0xe4/0x110
+[  566.393847]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393867]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393881]  ? do_error_trap+0x7c/0x120
+[  566.393890]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393911]  ? exc_divide_error+0x34/0x50
+[  566.393923]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393939]  ? asm_exc_divide_error+0x16/0x20
+[  566.393966]  ? bnxt_qplib_alloc_init_hwq+0x1d4/0x580 [bnxt_re]
+[  566.393997]  bnxt_qplib_create_srq+0xc9/0x340 [bnxt_re]
+[  566.394040]  bnxt_re_create_srq+0x335/0x3b0 [bnxt_re]
+[  566.394057]  ? srso_return_thunk+0x5/0x5f
+[  566.394068]  ? __init_swait_queue_head+0x4a/0x60
+[  566.394090]  ib_create_srq_user+0xa7/0x150 [ib_core]
+[  566.394147]  nvmet_rdma_queue_connect+0x7d0/0xbe0 [nvmet_rdma]
+[  566.394174]  ? lock_release+0x22c/0x3f0
+[  566.394187]  ? srso_return_thunk+0x5/0x5f
 
-Trace (minimized):
-  list_add corruption. next->prev should be prev (ffff8882e241c6f0), but was 0000000000000000. (next=ffff888455da1330).
-  kernel BUG at lib/list_debug.c:29!
-  RIP: 0010:__list_add_valid_or_report+0xa6/0x100
-   ice_mbx_init_vf_info+0xa7/0x180 [ice]
-   ice_initialize_vf_entry+0x1fa/0x250 [ice]
-   ice_sriov_configure+0x8d7/0x1520 [ice]
-   ? __percpu_ref_switch_mode+0x1b1/0x5d0
-   ? __pfx_ice_sriov_configure+0x10/0x10 [ice]
+Page size and shift info is set only for the user space SRQs.
+Set page size and page shift for kernel space SRQs also.
 
-Sometimes a KASAN report can be seen instead with a similar stack trace:
-  BUG: KASAN: use-after-free in __list_add_valid_or_report+0xf1/0x100
-
-VFs are added to this list in ice_mbx_init_vf_info(), but only removed
-in ice_free_vfs(). Move the removing to ice_free_vf_entries(), which is
-also being called in other places where VFs are being removed (including
-ice_free_vfs() itself).
-
-Fixes: 8cd8a6b17d27 ("ice: move VF overflow message count into struct ice_mbx_vf_info")
-Reported-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Closes: https://lore.kernel.org/intel-wired-lan/PH0PR11MB50138B635F2E5CEB7075325D961F2@PH0PR11MB5013.namprd11.prod.outlook.com
-Reviewed-by: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
-Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20250224190647.3601930-2-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/1740237621-29291-1-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_sriov.c          | 5 +----
- drivers/net/ethernet/intel/ice/ice_vf_lib.c         | 8 ++++++++
- drivers/net/ethernet/intel/ice/ice_vf_lib_private.h | 1 +
- 3 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
-index b83f99c01d91b..8aabf7749aa5e 100644
---- a/drivers/net/ethernet/intel/ice/ice_sriov.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
-@@ -36,6 +36,7 @@ static void ice_free_vf_entries(struct ice_pf *pf)
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 4b61867188c4c..0ed62d3e494c0 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1872,6 +1872,8 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
+ 	srq->qplib_srq.threshold = srq_init_attr->attr.srq_limit;
+ 	srq->srq_limit = srq_init_attr->attr.srq_limit;
+ 	srq->qplib_srq.eventq_hw_ring_id = rdev->nqr->nq[0].ring_id;
++	srq->qplib_srq.sg_info.pgsize = PAGE_SIZE;
++	srq->qplib_srq.sg_info.pgshft = PAGE_SHIFT;
+ 	nq = &rdev->nqr->nq[0];
  
- 	hash_for_each_safe(vfs->table, bkt, tmp, vf, entry) {
- 		hash_del_rcu(&vf->entry);
-+		ice_deinitialize_vf_entry(vf);
- 		ice_put_vf(vf);
- 	}
- }
-@@ -193,10 +194,6 @@ void ice_free_vfs(struct ice_pf *pf)
- 			wr32(hw, GLGEN_VFLRSTAT(reg_idx), BIT(bit_idx));
- 		}
- 
--		/* clear malicious info since the VF is getting released */
--		if (!ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
--			list_del(&vf->mbx_info.list_entry);
--
- 		mutex_unlock(&vf->cfg_lock);
- 	}
- 
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-index c7c0c2f50c265..815ad0bfe8326 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-@@ -1036,6 +1036,14 @@ void ice_initialize_vf_entry(struct ice_vf *vf)
- 	mutex_init(&vf->cfg_lock);
- }
- 
-+void ice_deinitialize_vf_entry(struct ice_vf *vf)
-+{
-+	struct ice_pf *pf = vf->pf;
-+
-+	if (!ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
-+		list_del(&vf->mbx_info.list_entry);
-+}
-+
- /**
-  * ice_dis_vf_qs - Disable the VF queues
-  * @vf: pointer to the VF structure
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h b/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
-index 0c7e77c0a09fa..5392b04049862 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
-@@ -24,6 +24,7 @@
- #endif
- 
- void ice_initialize_vf_entry(struct ice_vf *vf);
-+void ice_deinitialize_vf_entry(struct ice_vf *vf);
- void ice_dis_vf_qs(struct ice_vf *vf);
- int ice_check_vf_init(struct ice_vf *vf);
- enum virtchnl_status_code ice_err_to_virt_err(int err);
+ 	if (udata) {
 -- 
 2.39.5
 
