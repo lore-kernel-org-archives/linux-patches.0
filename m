@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7ED91D6DB4;
-	Wed,  5 Mar 2025 18:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB76624C07D;
+	Wed,  5 Mar 2025 18:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198448; cv=none; b=nBVVPe/rnQ8vIwGlwq63+wi1Pwcazo7GSR4U+jE5KrcwLlx7yNjOTSWZklo6leRT/BnkDKMS1UyJRrR6sVXdmN5mZxwW5Hop2GVNcWwegl8CkSuaD4YRTajIqMd/EEJmeTNKvho1tHxm/vWILzfl9OtwBKaeuvzF36wOzWzYT+4=
+	t=1741198451; cv=none; b=pEi3k76y7BaOk08ZrKF8B+MSq+U+DMybb6OqQu5LNSVISJJu0VnDdJ6Z2P87v+YPObpFfv56scoTO/m7mpU2Ge60dFWNpiTuuXuWSe6vvrw3L/vOIxpRW7/KcZkC0FIiQVXNY8yfE5TBotUb4mCKgTG5gUnBcF+pvbE6ZkD7QH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198448; c=relaxed/simple;
-	bh=zedOVlCZu+yPsZvXNICouy5a+cHjqtIp6Fz+KmDvm4g=;
+	s=arc-20240116; t=1741198451; c=relaxed/simple;
+	bh=LBqXchfDDPL7J7xqkmRmO+4TsJJ6cN1f0Hz1j33BYOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GwfNops5LLrxXjAse/QWPCEuMnfbSYhdMaQVUcgQ+MLw+MWlFN1rVIf+SwGlNL24ahtm1953Vu0crrkOnVuK+BEzZtF7flnsjuI/aoV9MoFolZ+rrSBy7mbSWI1ZuLXZnYNWIJGo9k3SRf6ZsUUoVuMTFi5mAn6k1KvYWe8zC1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDNsf8Qa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HOqGjoLj81O4syS4s7Mcp4IMSfHQBXxk5IvViVoRE2o2rWDLucw99uEoloNdl5bGGtRTLRdoqy1Zusj4ZkyVc6JTfruVBPUellcIAJTJv/0gYMpG47QqakA9UvL48Dt9DG0m/9ubF9cH7hMz94z0AtzNmhvI61ogNPzt9FHM3eI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zB6ymUgY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDNsf8Qa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43CC1C4CED1;
-	Wed,  5 Mar 2025 18:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zB6ymUgY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315E0C4CED1;
+	Wed,  5 Mar 2025 18:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198448;
-	bh=zedOVlCZu+yPsZvXNICouy5a+cHjqtIp6Fz+KmDvm4g=;
+	s=korg; t=1741198451;
+	bh=LBqXchfDDPL7J7xqkmRmO+4TsJJ6cN1f0Hz1j33BYOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EDNsf8QaEU9Bbea64t6pK21hdcpZKgkaCylQ8Xbku5MzNyjWXJ2hpIkpL8eK2Y27T
-	 p/KmibXBBKa5LTBlbk75we/nUKOQlJZx1BqDX3hzGogou/g1v/0YbNrZA0mNaTGgBH
-	 X6Wb0IM1MEerAQsDILop9YpDJLXjtTxEJnUcqit8=
+	b=zB6ymUgYRDnfO9HL/+CRLQC0zKdBGcHyT73ySZXw1iPf+Qk3qbGOQivqmAG7C8XkN
+	 cKaQC8moie+5QbYy/Ot9fBlXSDisORJqhdxjWCzFyhPcsx2uYHJoLY+54bc1xThCA/
+	 rRYfwd90DTFLwxjJ1rOUmSg4dMdwv1O1P9yCVb6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Meister <fmei@sfs.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Dmitry Yakunin <zeil@yandex-team.ru>,
+	Konstantin Khlebnikov <khlebnikov@yandex-team.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 032/157] net: loopback: Avoid sending IP packets without an Ethernet header
-Date: Wed,  5 Mar 2025 18:47:48 +0100
-Message-ID: <20250305174506.585060534@linuxfoundation.org>
+Subject: [PATCH 6.13 033/157] net: set the minimum for net_hotdata.netdev_budget_usecs
+Date: Wed,  5 Mar 2025 18:47:49 +0100
+Message-ID: <20250305174506.626630288@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -53,92 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 0e4427f8f587c4b603475468bb3aee9418574893 ]
+[ Upstream commit c180188ec02281126045414e90d08422a80f75b4 ]
 
-After commit 22600596b675 ("ipv4: give an IPv4 dev to blackhole_netdev")
-IPv4 neighbors can be constructed on the blackhole net device, but they
-are constructed with an output function (neigh_direct_output()) that
-simply calls dev_queue_xmit(). The latter will transmit packets via
-'skb->dev' which might not be the blackhole net device if dst_dev_put()
-switched 'dst->dev' to the blackhole net device while another CPU was
-using the dst entry in ip_output(), but after it already initialized
-'skb->dev' from 'dst->dev'.
+Commit 7acf8a1e8a28 ("Replace 2 jiffies with sysctl netdev_budget_usecs
+to enable softirq tuning") added a possibility to set
+net_hotdata.netdev_budget_usecs, but added no lower bound checking.
 
-Specifically, the following can happen:
+Commit a4837980fd9f ("net: revert default NAPI poll timeout to 2 jiffies")
+made the *initial* value HZ-dependent, so the initial value is at least
+2 jiffies even for lower HZ values (2 ms for 1000 Hz, 8ms for 250 Hz, 20
+ms for 100 Hz).
 
-    CPU1                                      CPU2
+But a user still can set improper values by a sysctl. Set .extra1
+(the lower bound) for net_hotdata.netdev_budget_usecs to the same value
+as in the latter commit. That is to 2 jiffies.
 
-udp_sendmsg(sk1)                          udp_sendmsg(sk2)
-udp_send_skb()                            [...]
-ip_output()
-    skb->dev = skb_dst(skb)->dev
-                                          dst_dev_put()
-                                              dst->dev = blackhole_netdev
-ip_finish_output2()
-    resolves neigh on dst->dev
-neigh_output()
-neigh_direct_output()
-dev_queue_xmit()
-
-This will result in IPv4 packets being sent without an Ethernet header
-via a valid net device:
-
-tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
-listening on enp9s0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
-22:07:02.329668 20:00:40:11:18:fb > 45:00:00:44:f4:94, ethertype Unknown
-(0x58c6), length 68:
-        0x0000:  8dda 74ca f1ae ca6c ca6c 0098 969c 0400  ..t....l.l......
-        0x0010:  0000 4730 3f18 6800 0000 0000 0000 9971  ..G0?.h........q
-        0x0020:  c4c9 9055 a157 0a70 9ead bf83 38ca ab38  ...U.W.p....8..8
-        0x0030:  8add ab96 e052                           .....R
-
-Fix by making sure that neighbors are constructed on top of the
-blackhole net device with an output function that simply consumes the
-packets, in a similar fashion to dst_discard_out() and
-blackhole_netdev_xmit().
-
-Fixes: 8d7017fd621d ("blackhole_netdev: use blackhole_netdev to invalidate dst entries")
-Fixes: 22600596b675 ("ipv4: give an IPv4 dev to blackhole_netdev")
-Reported-by: Florian Meister <fmei@sfs.com>
-Closes: https://lore.kernel.org/netdev/20250210084931.23a5c2e4@hermes.local/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250220072559.782296-1-idosch@nvidia.com
+Fixes: a4837980fd9f ("net: revert default NAPI poll timeout to 2 jiffies")
+Fixes: 7acf8a1e8a28 ("Replace 2 jiffies with sysctl netdev_budget_usecs to enable softirq tuning")
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Cc: Dmitry Yakunin <zeil@yandex-team.ru>
+Cc: Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
+Link: https://patch.msgid.link/20250220110752.137639-1-jirislaby@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/loopback.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ net/core/sysctl_net_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/loopback.c b/drivers/net/loopback.c
-index 1993b90b1a5f9..491e56b3263fd 100644
---- a/drivers/net/loopback.c
-+++ b/drivers/net/loopback.c
-@@ -244,8 +244,22 @@ static netdev_tx_t blackhole_netdev_xmit(struct sk_buff *skb,
- 	return NETDEV_TX_OK;
- }
+diff --git a/net/core/sysctl_net_core.c b/net/core/sysctl_net_core.c
+index ad2741f1346af..c7769ee0d9c55 100644
+--- a/net/core/sysctl_net_core.c
++++ b/net/core/sysctl_net_core.c
+@@ -34,6 +34,7 @@ static int min_sndbuf = SOCK_MIN_SNDBUF;
+ static int min_rcvbuf = SOCK_MIN_RCVBUF;
+ static int max_skb_frags = MAX_SKB_FRAGS;
+ static int min_mem_pcpu_rsv = SK_MEMORY_PCPU_RESERVE;
++static int netdev_budget_usecs_min = 2 * USEC_PER_SEC / HZ;
  
-+static int blackhole_neigh_output(struct neighbour *n, struct sk_buff *skb)
-+{
-+	kfree_skb(skb);
-+	return 0;
-+}
-+
-+static int blackhole_neigh_construct(struct net_device *dev,
-+				     struct neighbour *n)
-+{
-+	n->output = blackhole_neigh_output;
-+	return 0;
-+}
-+
- static const struct net_device_ops blackhole_netdev_ops = {
- 	.ndo_start_xmit = blackhole_netdev_xmit,
-+	.ndo_neigh_construct = blackhole_neigh_construct,
- };
+ static int net_msg_warn;	/* Unused, but still a sysctl */
  
- /* This is a dst-dummy device used specifically for invalidated
+@@ -587,7 +588,7 @@ static struct ctl_table net_core_table[] = {
+ 		.maxlen		= sizeof(unsigned int),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec_minmax,
+-		.extra1		= SYSCTL_ZERO,
++		.extra1		= &netdev_budget_usecs_min,
+ 	},
+ 	{
+ 		.procname	= "fb_tunnels_only_for_init_net",
 -- 
 2.39.5
 
