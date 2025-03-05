@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3562561D9;
-	Wed,  5 Mar 2025 18:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6B8255E53;
+	Wed,  5 Mar 2025 18:18:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198722; cv=none; b=U4MD5lTvIjdiApco1KIPTu/RZxkRxUp0KOsFPM09ViSlOKkPYFcuEbCCl5m11iVZ83pIxPtIB+q3LBsjEIpZ6UQ/1MjwEP3eZ/ANtixYPBltPGqXuKxP4wwDAiWJR6J8IfLKy3AZVvvmXeKM2JWFi6I0kGRPeY6ASEHvYGZJMtU=
+	t=1741198725; cv=none; b=tjqCJFoSzls6geF1FVqgMDL76mMnO+LG/1b3AvoXPXAdcHIX16mfZvKMOKv1NCq3okU+i/eoH0qGruHECHLFRIZxwjePJdGSdu2CspZlDqAoyOz9OEe+ouEOv9+U4N5Csv+I7BYVc//5pEnR3nzRstz+3yUPz9qbkvA1aMkp1II=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198722; c=relaxed/simple;
-	bh=s8CtKQBLpd6zaTNhrPdVr048Hd2Vm69caznVdJG362w=;
+	s=arc-20240116; t=1741198725; c=relaxed/simple;
+	bh=VH7UdYV3FBiD7Fp3Cwev5wThqgeOM5+zX3NUEIEbNe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hr4dL45+Q7V3lGgAJv2ozs0rBObXIWj7mZ06tIfyjeNsWffeQWi8BFwXPHATI84mKKEeWI/ofzdOkEui5kE2rkNHjY+RxVFqLwXq1Xq5AcZ08JpXtEjrmVyGKwTVsshVn0nXW33G2L6sggIWDqkBP/OrwzDW4br6lWUNoBbch18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvLa9xft; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tFAdTziHpOwkylXRHLKL2fBTAgCiLTm/hF6vcLJoCByadE5Odgi9meNlM/2ojE55P44/v4rD5JMhFPOXImPU7cxcs7nbGzNMJ0OFuBtkBXeQYUuV5EL+geDunFsYmvJG05BE8bMVslyWJoaF3tPWbOrNLBGrI/q1+6Vu05cj1hU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3JIpnrM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvLa9xft"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11093C4CED1;
-	Wed,  5 Mar 2025 18:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3JIpnrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E24C4CEE0;
+	Wed,  5 Mar 2025 18:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198722;
-	bh=s8CtKQBLpd6zaTNhrPdVr048Hd2Vm69caznVdJG362w=;
+	s=korg; t=1741198725;
+	bh=VH7UdYV3FBiD7Fp3Cwev5wThqgeOM5+zX3NUEIEbNe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvLa9xft91fxqVecWhkvaxj8aSKJ+fP1QZWPAxBGWTcLENGz1GlyBBji4ZI5j9kGk
-	 XMEjEv0fzeAb6bbsaMbEma+IjGQC0B3hR6F4UOmFPeQBONjAdqIfzLjmd4uZZsWxuI
-	 X6lPYowRQU18ff4V8IV4sTqfugItHUeXatjePwB8=
+	b=i3JIpnrMTaeCe/4eCJ9BZhoOHbOEokO8Ro20F8g73F0NFKhL9pdWGMkinCPzM66l7
+	 N/KaaBs7kmwfFdQPfzugiCCdMqIJAc/ZiBbhRJHGJidtkELk0MQucXB2TiIEMplNZg
+	 YApZm5RGhIlIUt1YyNF5+O3JSQJWeii05OME5jeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.13 094/157] drm/amdgpu: disable BAR resize on Dell G5 SE
-Date: Wed,  5 Mar 2025 18:48:50 +0100
-Message-ID: <20250305174509.091869766@linuxfoundation.org>
+	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 6.13 095/157] drm/amdgpu: init return value in amdgpu_ttm_clear_buffer
+Date: Wed,  5 Mar 2025 18:48:51 +0100
+Message-ID: <20250305174509.132376597@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -44,51 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 
-commit 099bffc7cadff40bfab1517c3461c53a7a38a0d7 upstream.
+commit d3c7059b6a8600fc62cd863f1ea203b8675e63e1 upstream.
 
-There was a quirk added to add a workaround for a Sapphire
-RX 5600 XT Pulse that didn't allow BAR resizing.  However,
-the quirk caused a regression with runtime pm on Dell laptops
-using those chips, rather than narrowing the scope of the
-resizing quirk, add a quirk to prevent amdgpu from resizing
-the BAR on those Dell platforms unless runtime pm is disabled.
+Otherwise an uninitialized value can be returned if
+amdgpu_res_cleared returns true for all regions.
 
-v2: update commit message, add runpm check
+Possibly closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3812
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/1707
-Fixes: 907830b0fc9e ("PCI: Add a REBAR size quirk for Sapphire RX 5600 XT Pulse")
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Fixes: a68c7eaa7a8f ("drm/amdgpu: Enable clear page functionality")
+Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5235053f443cef4210606e5fb71f99b915a9723d)
+(cherry picked from commit 7c62aacc3b452f73a1284198c81551035fac6d71)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1635,6 +1635,13 @@ int amdgpu_device_resize_fb_bar(struct a
- 	if (amdgpu_sriov_vf(adev))
- 		return 0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -2280,7 +2280,7 @@ int amdgpu_ttm_clear_buffer(struct amdgp
+ 	struct amdgpu_ring *ring = adev->mman.buffer_funcs_ring;
+ 	struct amdgpu_res_cursor cursor;
+ 	u64 addr;
+-	int r;
++	int r = 0;
  
-+	/* resizing on Dell G5 SE platforms causes problems with runtime pm */
-+	if ((amdgpu_runtime_pm != 0) &&
-+	    adev->pdev->vendor == PCI_VENDOR_ID_ATI &&
-+	    adev->pdev->device == 0x731f &&
-+	    adev->pdev->subsystem_vendor == PCI_VENDOR_ID_DELL)
-+		return 0;
-+
- 	/* PCI_EXT_CAP_ID_VNDR extended capability is located at 0x100 */
- 	if (!pci_find_ext_capability(adev->pdev, PCI_EXT_CAP_ID_VNDR))
- 		DRM_WARN("System can't access extended configuration space, please check!!\n");
+ 	if (!adev->mman.buffer_funcs_enabled)
+ 		return -EINVAL;
 
 
