@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C53250C1C;
-	Wed,  5 Mar 2025 17:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19512512E1;
+	Wed,  5 Mar 2025 17:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197517; cv=none; b=KVyVHfnO+VVOzd7spRqp0X7riiAOOdl7n49yHH1iWFK5Mr+SYE1qvG7o4roLrqD+jOB4KdixjULqnWU6jdHbUTvANAAFUV2aymJF+Zj22QmURIQVPssV6uZD1iaHzpOb34DCWY8LtM5lWES846OoLD5VX0r7dWKcHDDgHASL+3o=
+	t=1741197519; cv=none; b=tTGiVOWJ2OLgf/6cyLDxv1IHaNsExjL2tISQ8KZPhzWXfLgQwB3V1CJa8B4gDiD8iZJJxXUUwVzCALC0UNjMIs9GyhvtkbdktO0dzsPhNvVak2AJyPRnvMsaRmOi9kSgr/tS3LjYp/FYVAEY1CGw8hG962D4uharrUue4ewgMdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197517; c=relaxed/simple;
-	bh=LCZCzvVSA46cgAfb3DP0BWmRshSoRuU29A2Rmhkff70=;
+	s=arc-20240116; t=1741197519; c=relaxed/simple;
+	bh=EhDIp33TnNRIS/oGWJ/xe/Usui2T304qSwzhagLNQyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgZAoDMMRnf42ZU+ZsCHuR/7hQfEjplE39w3iG0kSLDOQgt8GPczJKdHbQ9ihktsk9uBj3S1nQfVb/1j6Gq+r3cUZc/27d1udzyzFhecBtp38H8hoUHQDX518h00KVYcyjE71jVE+Kw1gdJYEH0LVQ5O2WaaC6SL/9GR8w94vDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZcZAdUpM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f/YWWqyCqA0RtQPDYTGWrQola6CHvW7MTlyvcDTjVf52FKOX3qb8yTyRKK60JdrDFP/j7kItt/rfiUcpvc4OpGkAXHOiQgan/zGyrSeWgJZgWrbNx8Z+kLIv5Gchc7yv/BkuDDyrHqAy4Po6ISMCl2MERRLgEY5eHANdOaca+vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAnLD9Hi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZcZAdUpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7936AC4CED1;
-	Wed,  5 Mar 2025 17:58:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAnLD9Hi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B202C4CED1;
+	Wed,  5 Mar 2025 17:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197516;
-	bh=LCZCzvVSA46cgAfb3DP0BWmRshSoRuU29A2Rmhkff70=;
+	s=korg; t=1741197519;
+	bh=EhDIp33TnNRIS/oGWJ/xe/Usui2T304qSwzhagLNQyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZcZAdUpMz1AWlAgj57AlCTm7Bl1+oDprPmq+um3Kt2/XT6xFpv7rXfwDZz5/zMvyN
-	 jyZfHLwaVCFtbqWOhA4yA/rv+pS03aLPLpb/3aUptfWXOgLdu+9YQ+unm5rJ/3OeL3
-	 UU285ttfUcIimmr7X7M6nGzwmC64kVIQkEVcl3Ts=
+	b=RAnLD9Hihk7LOQzBE9c78u1Bc92GAIfOGCz62IMHnwqc6QjfbeWfYWr6wzBM/RdC8
+	 xBdOsl2fDzO0FGnl7YtaHUXgUuletNy/OA+1cQBouOmY05K6s92eQlOaBsdFoebbmO
+	 UY66ylMaWE6Ma+RY9i8T8/karveHNoTMbTi5qUjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fullway Wang <fullwaywang@outlook.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Josip Pavic <josip.pavic@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Sohaib Nadeem <sohaib.nadeem@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Jianqi Ren <jianqi.ren.cn@windriver.com>,
 	He Zhe <zhe.he@windriver.com>
-Subject: [PATCH 6.1 176/176] media: mtk-vcodec: potential null pointer deference in SCP
-Date: Wed,  5 Mar 2025 18:49:05 +0100
-Message-ID: <20250305174512.504068563@linuxfoundation.org>
+Subject: [PATCH 6.1 169/176] drm/amd/display: fixed integer types and null check locations
+Date: Wed,  5 Mar 2025 18:48:58 +0100
+Message-ID: <20250305174512.225601690@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -52,33 +56,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fullway Wang <fullwaywang@outlook.com>
+From: Sohaib Nadeem <sohaib.nadeem@amd.com>
 
-commit 53dbe08504442dc7ba4865c09b3bbf5fe849681b upstream.
+commit 0484e05d048b66d01d1f3c1d2306010bb57d8738 upstream.
 
-The return value of devm_kzalloc() needs to be checked to avoid
-NULL pointer deference. This is similar to CVE-2022-3113.
+[why]:
+issues fixed:
+- comparison with wider integer type in loop condition which can cause
+infinite loops
+- pointer dereference before null check
 
-Link: https://lore.kernel.org/linux-media/PH7PR20MB5925094DAE3FD750C7E39E01BF712@PH7PR20MB5925.namprd20.prod.outlook.com
-Signed-off-by: Fullway Wang <fullwaywang@outlook.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Josip Pavic <josip.pavic@amd.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ delete changes made in drivers/gpu/drm/amd/display/dc/link/link_validation.c
+  for this file is not present in linux-6.1.y  ]
 Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
 Signed-off-by: He Zhe <zhe.he@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/vcodec/mtk_vcodec_fw_scp.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_fw_scp.c
-+++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_fw_scp.c
-@@ -65,6 +65,8 @@ struct mtk_vcodec_fw *mtk_vcodec_fw_scp_
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -1862,19 +1862,21 @@ static enum bp_result get_firmware_info_
+ 		/* Vega12 */
+ 		smu_info_v3_2 = GET_IMAGE(struct atom_smu_info_v3_2,
+ 							DATA_TABLES(smu_info));
+-		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_2->gpuclk_ss_percentage);
+ 		if (!smu_info_v3_2)
+ 			return BP_RESULT_BADBIOSTABLE;
+ 
++		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_2->gpuclk_ss_percentage);
++
+ 		info->default_engine_clk = smu_info_v3_2->bootup_dcefclk_10khz * 10;
+ 	} else if (revision.minor == 3) {
+ 		/* Vega20 */
+ 		smu_info_v3_3 = GET_IMAGE(struct atom_smu_info_v3_3,
+ 							DATA_TABLES(smu_info));
+-		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_3->gpuclk_ss_percentage);
+ 		if (!smu_info_v3_3)
+ 			return BP_RESULT_BADBIOSTABLE;
+ 
++		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_3->gpuclk_ss_percentage);
++
+ 		info->default_engine_clk = smu_info_v3_3->bootup_dcefclk_10khz * 10;
  	}
  
- 	fw = devm_kzalloc(&dev->plat_dev->dev, sizeof(*fw), GFP_KERNEL);
-+	if (!fw)
-+		return ERR_PTR(-ENOMEM);
- 	fw->type = SCP;
- 	fw->ops = &mtk_vcodec_rproc_msg;
- 	fw->scp = scp;
+@@ -2439,10 +2441,11 @@ static enum bp_result get_integrated_inf
+ 	info_v11 = GET_IMAGE(struct atom_integrated_system_info_v1_11,
+ 					DATA_TABLES(integratedsysteminfo));
+ 
+-	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v11->gpuclk_ss_percentage);
+ 	if (info_v11 == NULL)
+ 		return BP_RESULT_BADBIOSTABLE;
+ 
++	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v11->gpuclk_ss_percentage);
++
+ 	info->gpu_cap_info =
+ 	le32_to_cpu(info_v11->gpucapinfo);
+ 	/*
+@@ -2654,11 +2657,12 @@ static enum bp_result get_integrated_inf
+ 
+ 	info_v2_1 = GET_IMAGE(struct atom_integrated_system_info_v2_1,
+ 					DATA_TABLES(integratedsysteminfo));
+-	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_1->gpuclk_ss_percentage);
+ 
+ 	if (info_v2_1 == NULL)
+ 		return BP_RESULT_BADBIOSTABLE;
+ 
++	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_1->gpuclk_ss_percentage);
++
+ 	info->gpu_cap_info =
+ 	le32_to_cpu(info_v2_1->gpucapinfo);
+ 	/*
+@@ -2816,11 +2820,11 @@ static enum bp_result get_integrated_inf
+ 	info_v2_2 = GET_IMAGE(struct atom_integrated_system_info_v2_2,
+ 					DATA_TABLES(integratedsysteminfo));
+ 
+-	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_2->gpuclk_ss_percentage);
+-
+ 	if (info_v2_2 == NULL)
+ 		return BP_RESULT_BADBIOSTABLE;
+ 
++	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_2->gpuclk_ss_percentage);
++
+ 	info->gpu_cap_info =
+ 	le32_to_cpu(info_v2_2->gpucapinfo);
+ 	/*
 
 
