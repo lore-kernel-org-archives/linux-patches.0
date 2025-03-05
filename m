@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FEB1A3174;
-	Wed,  5 Mar 2025 18:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B546219067C;
+	Wed,  5 Mar 2025 18:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197905; cv=none; b=M9t1nM5HoKD0vbjAfGxQpma3FSSZsdOJn1AJtDtLpd34poOjwt6gV7ws4ho2ZHgUXWSNldKofw3moQ1VZ5Dg98CV0zE3xdR3pymhWOLuCYJUURNlPNKiJgsw5KOeY6qdp5e1pYVVS8EJ/sKY8fxh7ph+4853Ruc2jUV7a/+NX/s=
+	t=1741197908; cv=none; b=ObU60TX/lxekZsgeJ3d7S6yFX2LtnkThuGg+tN0g/foXNyx2OQfXZXFwE8zmgUWJxjFEiyLwSQ4wO34wrepTnK3+rhENLOtcc1HJ9529+Pj7OSxdh/m3g/YL6oPkijt8ANo6qzvHAm/8olDMqwxu6hklBNG6N4QQrrInCa8vyfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197905; c=relaxed/simple;
-	bh=rKGCkPJfe4+vvPT/RpNaPQwbspce3VtZBzCWwXz1XuM=;
+	s=arc-20240116; t=1741197908; c=relaxed/simple;
+	bh=6srE4pLpWDZ72nPOLoOVFOtYUaAQgi6FnDTXjda6QcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VW9lLLolnxVAbWe3vWCCE+m/MPSXzUV/Z2JyGmNLrf3g3lOHnPiJBhihbSykF/K74lofgU4Dp1jpuwMro3SI3wr8OvZ4l9qSaA2VvdOr+/TRKlc82CjXDvxDS9ug0iLQ1SKK7A6ps4cFDPng0wrTlr4NlpKD4G1UrGbwuRrlafk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjojdXlX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=smRN7JuDT/uYWJ6MNNoyVEUiBM1+xw1+jqPxPYyOJDulysGUg5hHSfh/469aYthuifdePbC9jKChypWkilJ/Qb1xuZv8BnauZhYL6ZuAfQt5JUz+8PQVLz9rvHK3SGArgRC9RFqyXPRg+rNXVE64rpwbmGe5tqTD4Uw1ukfyM58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRll03cU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjojdXlX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33F5C4CED1;
-	Wed,  5 Mar 2025 18:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRll03cU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A12C4CED1;
+	Wed,  5 Mar 2025 18:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197905;
-	bh=rKGCkPJfe4+vvPT/RpNaPQwbspce3VtZBzCWwXz1XuM=;
+	s=korg; t=1741197908;
+	bh=6srE4pLpWDZ72nPOLoOVFOtYUaAQgi6FnDTXjda6QcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjojdXlXRewJjFfYoqrb6/UsDSIMrFgmtdIAC/yCPlFjHL2BvVhmG02IZIPI2ZwPX
-	 xnYyECAdh02jZkztLzUaEn/084ZQCr4lelDFLstB0lVqRySCTdvLn/SneOLBcZyO3L
-	 BCA0YhaR3+u8LPS7QqrrJqrUqR5RPBJrEObCJf9o=
+	b=DRll03cU1vRFIK46Oi35Kp1VShOx5HismO3xlRyf1Bj4vkWks7/uhBP/dX+pG43Te
+	 Vf786AFG4v0RxCqQy//p0R6AzTYrNJ4OpiSpX7YBwPIKWP154NaoalNTWzX3ZFiR3Z
+	 PUuxw1W1L8vANQyKVFl91ypQwJPgEvqiXP1zm5YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.6 108/142] x86/microcode/intel: Rework intel_find_matching_signature()
-Date: Wed,  5 Mar 2025 18:48:47 +0100
-Message-ID: <20250305174504.670092530@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.6 109/142] x86/microcode: Remove pointless apply() invocation
+Date: Wed,  5 Mar 2025 18:48:48 +0100
+Message-ID: <20250305174504.709560169@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -52,125 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-commit b7fcd995b261c9976e05f47554529c98a0f1cbb0 upstream
+commit b48b26f992a3828b4ae274669f99ce68451d4904 upstream
 
-Take a cpu_signature argument and work from there. Move the match()
-helper next to the callsite as there is no point for having it in
-a header.
+Microcode is applied on the APs during early bringup. There is no point
+in trying to apply the microcode again during the hotplug operations and
+neither at the point where the microcode device is initialized.
 
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Collect CPU info and microcode revision in setup_online_cpu() for now.
+This will move to the CPU hotplug callback later.
+
+  [ bp: Leave the starting notifier for the following scenario:
+
+    - boot, late load, suspend to disk, resume
+
+    without the starting notifier, only the last core manages to update the
+    microcode upon resume:
+
+    # rdmsr -a 0x8b
+    10000bf
+    10000bf
+    10000bf
+    10000bf
+    10000bf
+    10000dc <----
+
+    This is on an AMD F10h machine.
+
+    For the future, one should check whether potential unification of
+    the CPU init path could cover the resume path too so that this can
+    be simplified even more.
+
+  tglx: This is caused by the odd handling of APs which try to find the
+  microcode blob in builtin or initrd instead of caching the microcode
+  blob during early init before the APs are brought up. Will be cleaned
+  up in a later step. ]
+
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20231002115902.797820205@linutronix.de
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20231017211723.018821624@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpu.h            |   16 +---------------
- arch/x86/kernel/cpu/microcode/intel.c |   31 +++++++++++++++++++------------
- drivers/platform/x86/intel/ifs/load.c |    2 +-
- 3 files changed, 21 insertions(+), 28 deletions(-)
+ arch/x86/kernel/cpu/microcode/core.c |   23 ++++++-----------------
+ 1 file changed, 6 insertions(+), 17 deletions(-)
 
---- a/arch/x86/include/asm/cpu.h
-+++ b/arch/x86/include/asm/cpu.h
-@@ -75,22 +75,8 @@ struct cpu_signature;
+--- a/arch/x86/kernel/cpu/microcode/core.c
++++ b/arch/x86/kernel/cpu/microcode/core.c
+@@ -493,17 +493,6 @@ static void microcode_fini_cpu(int cpu)
+ 		microcode_ops->microcode_fini_cpu(cpu);
+ }
  
- void intel_collect_cpu_info(struct cpu_signature *sig);
- 
--static inline bool intel_cpu_signatures_match(unsigned int s1, unsigned int p1,
--					      unsigned int s2, unsigned int p2)
+-static enum ucode_state microcode_init_cpu(int cpu)
 -{
--	if (s1 != s2)
--		return false;
+-	struct ucode_cpu_info *uci = ucode_cpu_info + cpu;
 -
--	/* Processor flags are either both 0 ... */
--	if (!p1 && !p2)
--		return true;
+-	memset(uci, 0, sizeof(*uci));
 -
--	/* ... or they intersect. */
--	return p1 & p2;
+-	microcode_ops->collect_cpu_info(cpu, &uci->cpu_sig);
+-
+-	return microcode_ops->apply_microcode(cpu);
 -}
 -
- extern u64 x86_read_arch_cap_msr(void);
--int intel_find_matching_signature(void *mc, unsigned int csig, int cpf);
-+bool intel_find_matching_signature(void *mc, struct cpu_signature *sig);
- int intel_microcode_sanity_check(void *mc, bool print_err, int hdr_type);
- 
- extern struct cpumask cpus_stop_mask;
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -84,29 +84,36 @@ void intel_collect_cpu_info(struct cpu_s
- }
- EXPORT_SYMBOL_GPL(intel_collect_cpu_info);
- 
--/*
-- * Returns 1 if update has been found, 0 otherwise.
-- */
--int intel_find_matching_signature(void *mc, unsigned int csig, int cpf)
-+static inline bool cpu_signatures_match(struct cpu_signature *s1, unsigned int sig2,
-+					unsigned int pf2)
-+{
-+	if (s1->sig != sig2)
-+		return false;
-+
-+	/* Processor flags are either both 0 or they intersect. */
-+	return ((!s1->pf && !pf2) || (s1->pf & pf2));
-+}
-+
-+bool intel_find_matching_signature(void *mc, struct cpu_signature *sig)
+ /**
+  * microcode_bsp_resume - Update boot CPU microcode during resume.
+  */
+@@ -558,14 +547,14 @@ static int mc_cpu_down_prep(unsigned int
+ static void setup_online_cpu(struct work_struct *work)
  {
- 	struct microcode_header_intel *mc_hdr = mc;
--	struct extended_sigtable *ext_hdr;
- 	struct extended_signature *ext_sig;
-+	struct extended_sigtable *ext_hdr;
- 	int i;
+ 	int cpu = smp_processor_id();
+-	enum ucode_state err;
++	struct ucode_cpu_info *uci = ucode_cpu_info + cpu;
  
--	if (intel_cpu_signatures_match(csig, cpf, mc_hdr->sig, mc_hdr->pf))
--		return 1;
-+	if (cpu_signatures_match(sig, mc_hdr->sig, mc_hdr->pf))
-+		return true;
+-	err = microcode_init_cpu(cpu);
+-	if (err == UCODE_ERROR) {
+-		pr_err("Error applying microcode on CPU%d\n", cpu);
+-		return;
+-	}
++	memset(uci, 0, sizeof(*uci));
  
- 	/* Look for ext. headers: */
- 	if (get_totalsize(mc_hdr) <= intel_microcode_get_datasize(mc_hdr) + MC_HEADER_SIZE)
--		return 0;
-+		return false;
++	microcode_ops->collect_cpu_info(cpu, &uci->cpu_sig);
++	cpu_data(cpu).microcode = uci->cpu_sig.rev;
++	if (!cpu)
++		boot_cpu_data.microcode = uci->cpu_sig.rev;
+ 	mc_cpu_online(cpu);
+ }
  
- 	ext_hdr = mc + intel_microcode_get_datasize(mc_hdr) + MC_HEADER_SIZE;
- 	ext_sig = (void *)ext_hdr + EXT_HEADER_SIZE;
- 
- 	for (i = 0; i < ext_hdr->count; i++) {
--		if (intel_cpu_signatures_match(csig, cpf, ext_sig->sig, ext_sig->pf))
--			return 1;
-+		if (cpu_signatures_match(sig, ext_sig->sig, ext_sig->pf))
-+			return true;
- 		ext_sig++;
- 	}
- 	return 0;
-@@ -268,7 +275,7 @@ static __init struct microcode_intel *sc
- 		    intel_microcode_sanity_check(data, false, MC_HEADER_TYPE_MICROCODE) < 0)
- 			break;
- 
--		if (!intel_find_matching_signature(data, uci->cpu_sig.sig, uci->cpu_sig.pf))
-+		if (!intel_find_matching_signature(data, &uci->cpu_sig))
- 			continue;
- 
- 		/*
-@@ -512,7 +519,7 @@ static enum ucode_state parse_microcode_
- 		if (cur_rev >= mc_header.rev)
- 			continue;
- 
--		if (!intel_find_matching_signature(mc, uci->cpu_sig.sig, uci->cpu_sig.pf))
-+		if (!intel_find_matching_signature(mc, &uci->cpu_sig))
- 			continue;
- 
- 		kvfree(new_mc);
---- a/drivers/platform/x86/intel/ifs/load.c
-+++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -242,7 +242,7 @@ static int image_sanity_check(struct dev
- 
- 	intel_collect_cpu_info(&sig);
- 
--	if (!intel_find_matching_signature((void *)data, sig.sig, sig.pf)) {
-+	if (!intel_find_matching_signature((void *)data, &sig)) {
- 		dev_err(dev, "cpu signature, processor flags not matching\n");
- 		return -EINVAL;
- 	}
 
 
