@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8500250C02;
-	Wed,  5 Mar 2025 17:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EB21C5F2C;
+	Wed,  5 Mar 2025 17:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197297; cv=none; b=JuXnnDXC1WnT38CcvOcvT3m2A7qWHRlkGfLqdH9FU1C1rYMewDShBPeoeH7dW5+wfEgHoQUS10qJXYPIZ2SHZJ757alhOZSIHrR5OLmTfHLsXlDGsCbFrJQRnhtgyDL8b/fI4WnIuJgbxWOxIsoRMXBo0Ht5aGTW1pcInrToW34=
+	t=1741197300; cv=none; b=K6B7J7EpEj0AWnXlNAWraVs24OsUT9pJrJCmwNaIBZlOV1zfqpO1wr5f2F9sA2V0/jnq9AElXX09Eu+v/DUZUz35i1fD/RqgmcLIvf5GbJda4Hu1q1pHR99EkVn9KvS9mCNNrW/RWKXlGHcOZAv31o1/U55MnXdQhiCkpkG+5vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197297; c=relaxed/simple;
-	bh=8uBL0e8VsrlStgaAh8DLqefyopEaf0Bm8cCbFLRFs2g=;
+	s=arc-20240116; t=1741197300; c=relaxed/simple;
+	bh=NN57pOU6/B7DtChFcJM2Uva/2Zbkk3uGn+ra4EIksdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1SN/mtKiLvZWxjJhNRMPH3foHdC66icYNG4D1wIcMkNMg0hzdrr5gwh9kbT0P0M5C3C8te3Ln715qTUmUkI/FGVs+3RihqcLht+pM3u0DShgMxMwM1SQwXlxrAsHyfBshacYR7s8MxbHjTh+bg1sMO2/gBKtFJdAVXO3NmeADE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjiM1iX+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oegvhjunVtxVIrIfHgqruuztR9sIxiPNFDxm6JOzYHYw8Q61QZqQabmDsHoTvwuSKiLYr0eOd2gnq6pI1W0BP/uRVolQ7d44a8lWNfitS4JBNQm1JyWAZVQkOa/lOiFd2Wp3qrXGYE9vA9JNj70dd5qKKe5Nu/z15WsSPcTPYws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2iicfaA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjiM1iX+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C59C4CED1;
-	Wed,  5 Mar 2025 17:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2iicfaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A812FC4CED1;
+	Wed,  5 Mar 2025 17:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197297;
-	bh=8uBL0e8VsrlStgaAh8DLqefyopEaf0Bm8cCbFLRFs2g=;
+	s=korg; t=1741197300;
+	bh=NN57pOU6/B7DtChFcJM2Uva/2Zbkk3uGn+ra4EIksdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjiM1iX+WlNiVy8T/TxXCry2DwR4zt6NQfCbQwosxhYKx16zI94EW4ZBr6paX21qd
-	 2Z3jr/AfedgjpA+IUsrQexaMltBkt1g84BY2SBBnU+4YuoGugTiCNcAWglQ6upk9+5
-	 AzeV/wT+I6Bv0EICps9orv9uEBeQA+jdQDBHdr/M=
+	b=W2iicfaAQ+9QkSHpVElDDG19AUOZFjXqRduzmebNmM+k93wfnR8jr776ytnGIarhH
+	 SUgYTLOnJLTVoMCDaR2nZBhXv9GXg5pLcqmtqREaj08bDBymWSt7x7LEpWzUNcv+6C
+	 4vtIvK3VRKa9h5LPLEqxH1u7XQZZWYDiRlpiVVIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <mrpre@163.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/176] strparser: Add read_sock callback
-Date: Wed,  5 Mar 2025 18:47:14 +0100
-Message-ID: <20250305174508.064410217@linuxfoundation.org>
+Subject: [PATCH 6.1 101/176] RDMA/mlx5: Cache all user cacheable mkeys on dereg MR flow
+Date: Wed,  5 Mar 2025 18:47:50 +0100
+Message-ID: <20250305174509.519454849@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -53,102 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <mrpre@163.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit 0532a79efd68a4d9686b0385e4993af4b130ff82 ]
+[ Upstream commit dd1b913fb0d0e3e6d55e92d2319d954474dd66ac ]
 
-Added a new read_sock handler, allowing users to customize read operations
-instead of relying on the native socket's read_sock.
+Currently, when dereging an MR, if the mkey doesn't belong to a cache
+entry, it will be destroyed.  As a result, the restart of applications
+with many non-cached mkeys is not efficient since all the mkeys are
+destroyed and then recreated.  This process takes a long time (for 100,000
+MRs, it is ~20 seconds for dereg and ~28 seconds for re-reg).
 
-Signed-off-by: Jiayuan Chen <mrpre@163.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://patch.msgid.link/20250122100917.49845-2-mrpre@163.com
-Stable-dep-of: 36b62df5683c ("bpf: Fix wrong copied_seq calculation")
+To shorten the restart runtime, insert all cacheable mkeys to the cache.
+If there is no fitting entry to the mkey properties, create a temporary
+entry that fits it.
+
+After a predetermined timeout, the cache entries will shrink to the
+initial high limit.
+
+The mkeys will still be in the cache when consuming them again after an
+application restart. Therefore, the registration will be much faster
+(for 100,000 MRs, it is ~4 seconds for dereg and ~5 seconds for re-reg).
+
+The temporary cache entries created to store the non-cache mkeys are not
+exposed through sysfs like the default cache entries.
+
+Link: https://lore.kernel.org/r/20230125222807.6921-6-michaelgur@nvidia.com
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: d97505baea64 ("RDMA/mlx5: Fix the recovery flow of the UMR QP")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/strparser.rst |  9 ++++++++-
- include/net/strparser.h                |  2 ++
- net/strparser/strparser.c              | 11 +++++++++--
- 3 files changed, 19 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/mlx5/mlx5_ib.h |  2 +
+ drivers/infiniband/hw/mlx5/mr.c      | 55 +++++++++++++++++++++-------
+ 2 files changed, 44 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/networking/strparser.rst b/Documentation/networking/strparser.rst
-index 6cab1f74ae05a..7f623d1db72aa 100644
---- a/Documentation/networking/strparser.rst
-+++ b/Documentation/networking/strparser.rst
-@@ -112,7 +112,7 @@ Functions
- Callbacks
- =========
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index 7c9d5648947e9..f345e2ae394d2 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -650,6 +650,8 @@ struct mlx5_ib_mkey {
+ 	unsigned int ndescs;
+ 	struct wait_queue_head wait;
+ 	refcount_t usecount;
++	/* User Mkey must hold either a rb_key or a cache_ent. */
++	struct mlx5r_cache_rb_key rb_key;
+ 	struct mlx5_cache_ent *cache_ent;
+ };
  
--There are six callbacks:
-+There are seven callbacks:
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index 1060b30a837a0..bf1ca7565be67 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -1110,15 +1110,14 @@ static struct mlx5_ib_mr *alloc_cacheable_mr(struct ib_pd *pd,
+ 	rb_key.access_flags = get_unchangeable_access_flags(dev, access_flags);
+ 	ent = mkey_cache_ent_from_rb_key(dev, rb_key);
+ 	/*
+-	 * Matches access in alloc_cache_mr(). If the MR can't come from the
+-	 * cache then synchronously create an uncached one.
++	 * If the MR can't come from the cache then synchronously create an uncached
++	 * one.
+ 	 */
+-	if (!ent || ent->limit == 0 ||
+-	    !mlx5r_umr_can_reconfig(dev, 0, access_flags) ||
+-	    mlx5_umem_needs_ats(dev, umem, access_flags)) {
++	if (!ent) {
+ 		mutex_lock(&dev->slow_path_mutex);
+ 		mr = reg_create(pd, umem, iova, access_flags, page_size, false);
+ 		mutex_unlock(&dev->slow_path_mutex);
++		mr->mmkey.rb_key = rb_key;
+ 		return mr;
+ 	}
  
-     ::
+@@ -1209,6 +1208,7 @@ static struct mlx5_ib_mr *reg_create(struct ib_pd *pd, struct ib_umem *umem,
+ 		goto err_2;
+ 	}
+ 	mr->mmkey.type = MLX5_MKEY_MR;
++	mr->mmkey.ndescs = get_octo_len(iova, umem->length, mr->page_shift);
+ 	mr->umem = umem;
+ 	set_mr_fields(dev, mr, umem->length, access_flags, iova);
+ 	kvfree(in);
+@@ -1747,6 +1747,40 @@ mlx5_free_priv_descs(struct mlx5_ib_mr *mr)
+ 	}
+ }
  
-@@ -182,6 +182,13 @@ There are six callbacks:
-     the length of the message. skb->len - offset may be greater
-     then full_len since strparser does not trim the skb.
- 
-+    ::
++static int cache_ent_find_and_store(struct mlx5_ib_dev *dev,
++				    struct mlx5_ib_mr *mr)
++{
++	struct mlx5_mkey_cache *cache = &dev->cache;
++	struct mlx5_cache_ent *ent;
 +
-+	int (*read_sock)(struct strparser *strp, read_descriptor_t *desc,
-+                     sk_read_actor_t recv_actor);
++	if (mr->mmkey.cache_ent) {
++		xa_lock_irq(&mr->mmkey.cache_ent->mkeys);
++		mr->mmkey.cache_ent->in_use--;
++		xa_unlock_irq(&mr->mmkey.cache_ent->mkeys);
++		goto end;
++	}
 +
-+    The read_sock callback is used by strparser instead of
-+    sock->ops->read_sock, if provided.
-     ::
- 
- 	int (*read_sock_done)(struct strparser *strp, int err);
-diff --git a/include/net/strparser.h b/include/net/strparser.h
-index 41e2ce9e9e10f..0a83010b3a64a 100644
---- a/include/net/strparser.h
-+++ b/include/net/strparser.h
-@@ -43,6 +43,8 @@ struct strparser;
- struct strp_callbacks {
- 	int (*parse_msg)(struct strparser *strp, struct sk_buff *skb);
- 	void (*rcv_msg)(struct strparser *strp, struct sk_buff *skb);
-+	int (*read_sock)(struct strparser *strp, read_descriptor_t *desc,
-+			 sk_read_actor_t recv_actor);
- 	int (*read_sock_done)(struct strparser *strp, int err);
- 	void (*abort_parser)(struct strparser *strp, int err);
- 	void (*lock)(struct strparser *strp);
-diff --git a/net/strparser/strparser.c b/net/strparser/strparser.c
-index 8299ceb3e3739..95696f42647ec 100644
---- a/net/strparser/strparser.c
-+++ b/net/strparser/strparser.c
-@@ -347,7 +347,10 @@ static int strp_read_sock(struct strparser *strp)
- 	struct socket *sock = strp->sk->sk_socket;
- 	read_descriptor_t desc;
- 
--	if (unlikely(!sock || !sock->ops || !sock->ops->read_sock))
-+	if (unlikely(!sock || !sock->ops))
-+		return -EBUSY;
++	mutex_lock(&cache->rb_lock);
++	ent = mkey_cache_ent_from_rb_key(dev, mr->mmkey.rb_key);
++	mutex_unlock(&cache->rb_lock);
++	if (ent) {
++		if (ent->rb_key.ndescs == mr->mmkey.rb_key.ndescs) {
++			mr->mmkey.cache_ent = ent;
++			goto end;
++		}
++	}
 +
-+	if (unlikely(!strp->cb.read_sock && !sock->ops->read_sock))
- 		return -EBUSY;
++	ent = mlx5r_cache_create_ent(dev, mr->mmkey.rb_key, false);
++	if (IS_ERR(ent))
++		return PTR_ERR(ent);
++
++	mr->mmkey.cache_ent = ent;
++
++end:
++	return push_mkey(mr->mmkey.cache_ent, false,
++			 xa_mk_value(mr->mmkey.key));
++}
++
+ int mlx5_ib_dereg_mr(struct ib_mr *ibmr, struct ib_udata *udata)
+ {
+ 	struct mlx5_ib_mr *mr = to_mmr(ibmr);
+@@ -1792,16 +1826,11 @@ int mlx5_ib_dereg_mr(struct ib_mr *ibmr, struct ib_udata *udata)
+ 	}
  
- 	desc.arg.data = strp;
-@@ -355,7 +358,10 @@ static int strp_read_sock(struct strparser *strp)
- 	desc.count = 1; /* give more than one skb per call */
- 
- 	/* sk should be locked here, so okay to do read_sock */
--	sock->ops->read_sock(strp->sk, &desc, strp_recv);
-+	if (strp->cb.read_sock)
-+		strp->cb.read_sock(strp, &desc, strp_recv);
-+	else
-+		sock->ops->read_sock(strp->sk, &desc, strp_recv);
- 
- 	desc.error = strp->cb.read_sock_done(strp, desc.error);
- 
-@@ -468,6 +474,7 @@ int strp_init(struct strparser *strp, struct sock *sk,
- 	strp->cb.unlock = cb->unlock ? : strp_sock_unlock;
- 	strp->cb.rcv_msg = cb->rcv_msg;
- 	strp->cb.parse_msg = cb->parse_msg;
-+	strp->cb.read_sock = cb->read_sock;
- 	strp->cb.read_sock_done = cb->read_sock_done ? : default_read_sock_done;
- 	strp->cb.abort_parser = cb->abort_parser ? : strp_abort_strp;
- 
+ 	/* Stop DMA */
+-	if (mr->mmkey.cache_ent) {
+-		xa_lock_irq(&mr->mmkey.cache_ent->mkeys);
+-		mr->mmkey.cache_ent->in_use--;
+-		xa_unlock_irq(&mr->mmkey.cache_ent->mkeys);
+-
++	if (mr->umem && mlx5r_umr_can_load_pas(dev, mr->umem->length))
+ 		if (mlx5r_umr_revoke_mr(mr) ||
+-		    push_mkey(mr->mmkey.cache_ent, false,
+-			      xa_mk_value(mr->mmkey.key)))
++		    cache_ent_find_and_store(dev, mr))
+ 			mr->mmkey.cache_ent = NULL;
+-	}
++
+ 	if (!mr->mmkey.cache_ent) {
+ 		rc = destroy_mkey(to_mdev(mr->ibmr.device), mr);
+ 		if (rc)
 -- 
 2.39.5
 
