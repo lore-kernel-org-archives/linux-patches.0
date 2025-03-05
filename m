@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD23B2528FD;
-	Wed,  5 Mar 2025 17:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE25E1C6FFE;
+	Wed,  5 Mar 2025 17:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197496; cv=none; b=T9Bq+PO+3Z32NMe3+I52EyAvNb6XkwUhHDBlE482fxqNCpelEjNRFcbuaiQPOQyOuPamPuADLY5f9Wa2cn+l4QzLGaVhrEXDaQGvga3jiuT0G/S7CvOkfVfncPXtgqL+ft/aXcVXB0wUpq78EzcIJd3aofm5dBWyvLZ0PEZQpnI=
+	t=1741197499; cv=none; b=tX3gYAn6VjtHSm4O0qgdey+n0p0ybakTKCl4md4NlC/tJJPLCqW5eJM61+2n3POo0FNkCkPiivSRFajqWRZ+voQ69IseEr3LIhj6PHrTS2ovofX9szqO/YDMorTHnN4vIM6/6zlKytxQCUCwyOVM4VVDUAjWrvHVzuxYTwGYBMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197496; c=relaxed/simple;
-	bh=fUtP1AMJbBHI4SBFrGLj1PzhR+HxYNk8R1xiTydFhBU=;
+	s=arc-20240116; t=1741197499; c=relaxed/simple;
+	bh=vBrvbcEHef14tOD01uujXOoGTVoMKFpyLnfU2fYI8+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWenjXvmTxp06d7yeD1LN/8mc+QYfBB43Xl1ecHGI3BG3v0uS55k3rlQifD1a6B7X0W6H4w0r3rJky6je50DdqpkSOlBfwcgadR7pXlxtiJ8p2kV66wInhplx4LZ0sYj3QKoCdEKjic0izj9KwW9DIAKO2PNLBWwIFTdRQXhMJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eAm9nfO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bpOvAd/QZNPam0Ewov6uBH2S0U7WyhvNAEp9yIvlGTHDj2GvusFVUjdBtmkYWjSVpMGb1qrVFlAXvilJw7u/KiS551wfpw29dgyZyg+8A1qWH40//A4HFdhy1Qt52FIU8nfCshEiLbN0u4+WpKoAPnmDdr1HVEukerGn21p1PWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PW8ozBPN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eAm9nfO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55468C4CEE9;
-	Wed,  5 Mar 2025 17:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PW8ozBPN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F4DC4CED1;
+	Wed,  5 Mar 2025 17:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197496;
-	bh=fUtP1AMJbBHI4SBFrGLj1PzhR+HxYNk8R1xiTydFhBU=;
+	s=korg; t=1741197499;
+	bh=vBrvbcEHef14tOD01uujXOoGTVoMKFpyLnfU2fYI8+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2eAm9nfOULzShMBZf3r+EzxOKVTgnV/rTlibT6TcBecdTK3o/ZyBGbh5q+Dn12nSH
-	 YAEnaeh04HCcYrudT9YSYGz9GkCgS5H+gjbdKKpuybKRjIM1oS6Z4HkLPmq1TCYsf0
-	 6XlH/pqZDPw9QFuC1ugVLPwtiCSk1PLGvrQiAEWc=
+	b=PW8ozBPNfmxR0ta/im2vTUiFCFhfTPi8yX1/6aO/yrwB0NL6RP4JTdXdb2OYh4COA
+	 hGyCVWc8HltEzajRNGp+j6y1G27hUsHHXPPOR4UipcU//A3wRB8Y7701Z3Mh9Dj0ea
+	 iSIyptCmEGJpRzDk+BIUgaBExKU+ZrZH7amRbGCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 134/176] tcp: Defer ts_recent changes until req is owned
-Date: Wed,  5 Mar 2025 18:48:23 +0100
-Message-ID: <20250305174510.826100177@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	"chr[]" <chris@rudorff.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Subject: [PATCH 6.1 170/176] amdgpu/pm/legacy: fix suspend/resume issues
+Date: Wed,  5 Mar 2025 18:48:59 +0100
+Message-ID: <20250305174512.265134017@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -54,92 +52,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Hai <wanghai38@huawei.com>
+From: chr[] <chris@rudorff.com>
 
-[ Upstream commit 8d52da23b6c68a0f6bad83959ebb61a2cf623c4e ]
+commit 91dcc66b34beb72dde8412421bdc1b4cd40e4fb8 upstream.
 
-Recently a bug was discovered where the server had entered TCP_ESTABLISHED
-state, but the upper layers were not notified.
+resume and irq handler happily races in set_power_state()
 
-The same 5-tuple packet may be processed by different CPUSs, so two
-CPUs may receive different ack packets at the same time when the
-state is TCP_NEW_SYN_RECV.
+* amdgpu_legacy_dpm_compute_clocks() needs lock
+* protect irq work handler
+* fix dpm_enabled usage
 
-In that case, req->ts_recent in tcp_check_req may be changed concurrently,
-which will probably cause the newsk's ts_recent to be incorrectly large.
-So that tcp_validate_incoming will fail. At this point, newsk will not be
-able to enter the TCP_ESTABLISHED.
+v2: fix clang build, integrate Lijo's comments (Alex)
 
-cpu1                                    cpu2
-tcp_check_req
-                                        tcp_check_req
- req->ts_recent = rcv_tsval = t1
-                                         req->ts_recent = rcv_tsval = t2
-
- syn_recv_sock
-  tcp_sk(child)->rx_opt.ts_recent = req->ts_recent = t2 // t1 < t2
-tcp_child_process
- tcp_rcv_state_process
-  tcp_validate_incoming
-   tcp_paws_check
-    if ((s32)(rx_opt->ts_recent - rx_opt->rcv_tsval) <= paws_win)
-        // t2 - t1 > paws_win, failed
-                                        tcp_v4_do_rcv
-                                         tcp_rcv_state_process
-                                         // TCP_ESTABLISHED
-
-The cpu2's skb or a newly received skb will call tcp_v4_do_rcv to get
-the newsk into the TCP_ESTABLISHED state, but at this point it is no
-longer possible to notify the upper layer application. A notification
-mechanism could be added here, but the fix is more complex, so the
-current fix is used.
-
-In tcp_check_req, req->ts_recent is used to assign a value to
-tcp_sk(child)->rx_opt.ts_recent, so removing the change in req->ts_recent
-and changing tcp_sk(child)->rx_opt.ts_recent directly after owning the
-req fixes this bug.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2524
+Fixes: 3712e7a49459 ("drm/amd/pm: unified lock protections in amdgpu_dpm.c")
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Tested-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name> # on Oland PRO
+Signed-off-by: chr[] <chris@rudorff.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ee3dc9e204d271c9c7a8d4d38a0bce4745d33e71)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_minisocks.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c     |   25 ++++++++++++++++++------
+ drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c |    8 +++++--
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c     |   26 +++++++++++++++++++------
+ 3 files changed, 45 insertions(+), 14 deletions(-)
 
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index c562cb965e742..bc94df0140bfd 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -735,12 +735,6 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
+@@ -3056,6 +3056,7 @@ static int kv_dpm_hw_init(void *handle)
+ 	if (!amdgpu_dpm)
+ 		return 0;
  
- 	/* In sequence, PAWS is OK. */
- 
--	/* TODO: We probably should defer ts_recent change once
--	 * we take ownership of @req.
--	 */
--	if (tmp_opt.saw_tstamp && !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
--		WRITE_ONCE(req->ts_recent, tmp_opt.rcv_tsval);
--
- 	if (TCP_SKB_CB(skb)->seq == tcp_rsk(req)->rcv_isn) {
- 		/* Truncate SYN, it is out of window starting
- 		   at tcp_rsk(req)->rcv_isn + 1. */
-@@ -789,6 +783,10 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 	if (!child)
- 		goto listen_overflow;
- 
-+	if (own_req && tmp_opt.saw_tstamp &&
-+	    !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
-+		tcp_sk(child)->rx_opt.ts_recent = tmp_opt.rcv_tsval;
++	mutex_lock(&adev->pm.mutex);
+ 	kv_dpm_setup_asic(adev);
+ 	ret = kv_dpm_enable(adev);
+ 	if (ret)
+@@ -3063,6 +3064,8 @@ static int kv_dpm_hw_init(void *handle)
+ 	else
+ 		adev->pm.dpm_enabled = true;
+ 	amdgpu_legacy_dpm_compute_clocks(adev);
++	mutex_unlock(&adev->pm.mutex);
 +
- 	if (own_req && rsk_drop_req(req)) {
- 		reqsk_queue_removed(&inet_csk(req->rsk_listener)->icsk_accept_queue, req);
- 		inet_csk_reqsk_queue_drop_and_put(req->rsk_listener, req);
--- 
-2.39.5
-
+ 	return ret;
+ }
+ 
+@@ -3080,32 +3083,42 @@ static int kv_dpm_suspend(void *handle)
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 
++	cancel_work_sync(&adev->pm.dpm.thermal.work);
++
+ 	if (adev->pm.dpm_enabled) {
++		mutex_lock(&adev->pm.mutex);
++		adev->pm.dpm_enabled = false;
+ 		/* disable dpm */
+ 		kv_dpm_disable(adev);
+ 		/* reset the power state */
+ 		adev->pm.dpm.current_ps = adev->pm.dpm.requested_ps = adev->pm.dpm.boot_ps;
++		mutex_unlock(&adev->pm.mutex);
+ 	}
+ 	return 0;
+ }
+ 
+ static int kv_dpm_resume(void *handle)
+ {
+-	int ret;
++	int ret = 0;
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 
+-	if (adev->pm.dpm_enabled) {
++	if (!amdgpu_dpm)
++		return 0;
++
++	if (!adev->pm.dpm_enabled) {
++		mutex_lock(&adev->pm.mutex);
+ 		/* asic init will reset to the boot state */
+ 		kv_dpm_setup_asic(adev);
+ 		ret = kv_dpm_enable(adev);
+-		if (ret)
++		if (ret) {
+ 			adev->pm.dpm_enabled = false;
+-		else
++		} else {
+ 			adev->pm.dpm_enabled = true;
+-		if (adev->pm.dpm_enabled)
+ 			amdgpu_legacy_dpm_compute_clocks(adev);
++		}
++		mutex_unlock(&adev->pm.mutex);
+ 	}
+-	return 0;
++	return ret;
+ }
+ 
+ static bool kv_dpm_is_idle(void *handle)
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c
+@@ -1018,9 +1018,12 @@ void amdgpu_dpm_thermal_work_handler(str
+ 	enum amd_pm_state_type dpm_state = POWER_STATE_TYPE_INTERNAL_THERMAL;
+ 	int temp, size = sizeof(temp);
+ 
+-	if (!adev->pm.dpm_enabled)
+-		return;
++	mutex_lock(&adev->pm.mutex);
+ 
++	if (!adev->pm.dpm_enabled) {
++		mutex_unlock(&adev->pm.mutex);
++		return;
++	}
+ 	if (!pp_funcs->read_sensor(adev->powerplay.pp_handle,
+ 				   AMDGPU_PP_SENSOR_GPU_TEMP,
+ 				   (void *)&temp,
+@@ -1042,4 +1045,5 @@ void amdgpu_dpm_thermal_work_handler(str
+ 	adev->pm.dpm.state = dpm_state;
+ 
+ 	amdgpu_legacy_dpm_compute_clocks(adev->powerplay.pp_handle);
++	mutex_unlock(&adev->pm.mutex);
+ }
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -7796,6 +7796,7 @@ static int si_dpm_hw_init(void *handle)
+ 	if (!amdgpu_dpm)
+ 		return 0;
+ 
++	mutex_lock(&adev->pm.mutex);
+ 	si_dpm_setup_asic(adev);
+ 	ret = si_dpm_enable(adev);
+ 	if (ret)
+@@ -7803,6 +7804,7 @@ static int si_dpm_hw_init(void *handle)
+ 	else
+ 		adev->pm.dpm_enabled = true;
+ 	amdgpu_legacy_dpm_compute_clocks(adev);
++	mutex_unlock(&adev->pm.mutex);
+ 	return ret;
+ }
+ 
+@@ -7820,32 +7822,44 @@ static int si_dpm_suspend(void *handle)
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 
++	cancel_work_sync(&adev->pm.dpm.thermal.work);
++
+ 	if (adev->pm.dpm_enabled) {
++		mutex_lock(&adev->pm.mutex);
++		adev->pm.dpm_enabled = false;
+ 		/* disable dpm */
+ 		si_dpm_disable(adev);
+ 		/* reset the power state */
+ 		adev->pm.dpm.current_ps = adev->pm.dpm.requested_ps = adev->pm.dpm.boot_ps;
++		mutex_unlock(&adev->pm.mutex);
+ 	}
++
+ 	return 0;
+ }
+ 
+ static int si_dpm_resume(void *handle)
+ {
+-	int ret;
++	int ret = 0;
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 
+-	if (adev->pm.dpm_enabled) {
++	if (!amdgpu_dpm)
++		return 0;
++
++	if (!adev->pm.dpm_enabled) {
+ 		/* asic init will reset to the boot state */
++		mutex_lock(&adev->pm.mutex);
+ 		si_dpm_setup_asic(adev);
+ 		ret = si_dpm_enable(adev);
+-		if (ret)
++		if (ret) {
+ 			adev->pm.dpm_enabled = false;
+-		else
++		} else {
+ 			adev->pm.dpm_enabled = true;
+-		if (adev->pm.dpm_enabled)
+ 			amdgpu_legacy_dpm_compute_clocks(adev);
++		}
++		mutex_unlock(&adev->pm.mutex);
+ 	}
+-	return 0;
++
++	return ret;
+ }
+ 
+ static bool si_dpm_is_idle(void *handle)
 
 
