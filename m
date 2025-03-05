@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FDC250BFB;
-	Wed,  5 Mar 2025 17:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558021946C7;
+	Wed,  5 Mar 2025 17:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197124; cv=none; b=P+f4XyqF3694H87zMWZsoIpPG/HYICUlgUYtMuR4WP7nMaM3I+oeA91TPBxz/KUerycNHGY1/ExumP6R2Mein1lmXS+pxVXnyzRd6i2jN4PZVlw4oRlkoE9jXZtBVH+IttdlS9f22N5RrN8HFMFRCmgfJTxeCtcpy5k7q8h5H0M=
+	t=1741197126; cv=none; b=BK/Bq654AlaGUP0w+sdWVn9uherZSr4JJXNldoYrTuZFdXwz0Dr84mBEq7dGRt4EXC5RCoPWvxHACuonb7iEdIjPTkL1T+cdmW6UcnhK535Z2i1MfW9BJchB5DJlO7N0JH/FZyf17Oi5YY0ZdAS7gOW4OzXhqy0cFelP7phVFhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197124; c=relaxed/simple;
-	bh=/+h51MR3ZrsMOh5s2yxLb+Un6C/VngYuoJi1xg6UA90=;
+	s=arc-20240116; t=1741197126; c=relaxed/simple;
+	bh=nEqHWVCfpaoadstBiHD/KsX2pO+kJfi0ZwWSwn/tTc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uTBWeQvOdQvupEPGYQxi660HOFFnYCKca7FWw2Y3FUwcXmHF7gQyCFW8RCG90aI4ADkT3updMm8nLjExw+a8fmKTEF6DB+E8U+GYmqyv7T6E07kt01pfpjHD+nhElFAjREita7tMG4p7HvfPhqPKmIlFyXQFc1wjyznIw1nmY4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O2/GQvKA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rB73FRRS5X7NGQZmKBB1OWmdU741/wGeGTYi3igYY6USpZd5fKPqxc08vM8QmRy9kPYnG06DqprqIwGt8FGwIAag4a5SKEyGgz7KsR60urs6b3LQIGUKhO8lXzUZH36fGMyj3NK3+wynPQ6suwBxKhS3lRgcGRaxXiPsig7sbms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjEia55J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O2/GQvKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15943C4CED1;
-	Wed,  5 Mar 2025 17:52:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjEia55J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7247C4CED1;
+	Wed,  5 Mar 2025 17:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197123;
-	bh=/+h51MR3ZrsMOh5s2yxLb+Un6C/VngYuoJi1xg6UA90=;
+	s=korg; t=1741197126;
+	bh=nEqHWVCfpaoadstBiHD/KsX2pO+kJfi0ZwWSwn/tTc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O2/GQvKA8hgILixPjrzGUnD1sDZvdffXUsmzgizk5L9MAz4Q9JL5otOKA3BEBG4UL
-	 aTYns2ylk46KDz2TGbWz/36BCICiSh3h0cAoBO+ANzkTXaKE1895+DsKhqt6cc6Udf
-	 XWFUdllfmg+xvoEmMjiH2ILxQXuYe4Yt37xe6qYQ=
+	b=WjEia55JY+PoM3QJlfTDdV1/IvYsTzAwtCFqT/J3QBrec7Y1AJH4d3Ph7C3L23sA8
+	 Liv0ecUYp/xmFFYusrzDjcE5jE6rZDDvRNxDFoC9SuFRoWxId81+KhGJ8ywrmvFaCo
+	 VO4B8NqPHjpEWQUok9eCFLBF3b9PjfvWtpofCmSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Nick Child <nnac123@linux.ibm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 048/176] ALSA: hda/cirrus: Correct the full scale volume set logic
-Date: Wed,  5 Mar 2025 18:46:57 +0100
-Message-ID: <20250305174507.393168118@linuxfoundation.org>
+Subject: [PATCH 6.1 049/176] ibmvnic: Return error code on TX scrq flush fail
+Date: Wed,  5 Mar 2025 18:46:58 +0100
+Message-ID: <20250305174507.433385482@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -51,118 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit 08b613b9e2ba431db3bd15cb68ca72472a50ef5c ]
+[ Upstream commit 5cb431dcf8048572e9ffc6c30cdbd8832cbe502d ]
 
-This patch corrects the full-scale volume setting logic. On certain
-platforms, the full-scale volume bit is required. The current logic
-mistakenly sets this bit and incorrectly clears reserved bit 0, causing
-the headphone output to be muted.
+In ibmvnic_xmit() if ibmvnic_tx_scrq_flush() returns H_CLOSED then
+it will inform upper level networking functions to disable tx
+queues. H_CLOSED signals that the connection with the vnic server is
+down and a transport event is expected to recover the device.
 
-Fixes: 342b6b610ae2 ("ALSA: hda/cs8409: Fix Full Scale Volume setting for all variants")
-Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250214210736.30814-1-vitalyr@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Previously, ibmvnic_tx_scrq_flush() was hard-coded to return success.
+Therefore, the queues would remain active until ibmvnic_cleanup() is
+called within do_reset().
+
+The problem is that do_reset() depends on the RTNL lock. If several
+ibmvnic devices are resetting then there can be a long wait time until
+the last device can grab the lock. During this time the tx/rx queues
+still appear active to upper level functions.
+
+FYI, we do make a call to netif_carrier_off() outside the RTNL lock but
+its calls to dev_deactivate() are also dependent on the RTNL lock.
+
+As a result, large amounts of retransmissions were observed in a short
+period of time, eventually leading to ETIMEOUT. This was specifically
+seen with HNV devices, likely because of even more RTNL dependencies.
+
+Therefore, ensure the return code of ibmvnic_tx_scrq_flush() is
+propagated to the xmit function to allow for an earlier (and lock-less)
+response to a transport event.
+
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240416164128.387920-1-nnac123@linux.ibm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: bdf5d13aa05e ("ibmvnic: Don't reference skb after sending to VIOS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_cs8409-tables.c |  6 +++---
- sound/pci/hda/patch_cs8409.c        | 20 +++++++++++---------
- sound/pci/hda/patch_cs8409.h        |  5 +++--
- 3 files changed, 17 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/ibm/ibmvnic.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/patch_cs8409-tables.c b/sound/pci/hda/patch_cs8409-tables.c
-index b288874e401e5..b2e1856ab8918 100644
---- a/sound/pci/hda/patch_cs8409-tables.c
-+++ b/sound/pci/hda/patch_cs8409-tables.c
-@@ -121,7 +121,7 @@ static const struct cs8409_i2c_param cs42l42_init_reg_seq[] = {
- 	{ CS42L42_MIXER_CHA_VOL, 0x3F },
- 	{ CS42L42_MIXER_CHB_VOL, 0x3F },
- 	{ CS42L42_MIXER_ADC_VOL, 0x3f },
--	{ CS42L42_HP_CTL, 0x03 },
-+	{ CS42L42_HP_CTL, 0x0D },
- 	{ CS42L42_MIC_DET_CTL1, 0xB6 },
- 	{ CS42L42_TIPSENSE_CTL, 0xC2 },
- 	{ CS42L42_HS_CLAMP_DISABLE, 0x01 },
-@@ -315,7 +315,7 @@ static const struct cs8409_i2c_param dolphin_c0_init_reg_seq[] = {
- 	{ CS42L42_ASP_TX_SZ_EN, 0x01 },
- 	{ CS42L42_PWR_CTL1, 0x0A },
- 	{ CS42L42_PWR_CTL2, 0x84 },
--	{ CS42L42_HP_CTL, 0x03 },
-+	{ CS42L42_HP_CTL, 0x0D },
- 	{ CS42L42_MIXER_CHA_VOL, 0x3F },
- 	{ CS42L42_MIXER_CHB_VOL, 0x3F },
- 	{ CS42L42_MIXER_ADC_VOL, 0x3f },
-@@ -371,7 +371,7 @@ static const struct cs8409_i2c_param dolphin_c1_init_reg_seq[] = {
- 	{ CS42L42_ASP_TX_SZ_EN, 0x00 },
- 	{ CS42L42_PWR_CTL1, 0x0E },
- 	{ CS42L42_PWR_CTL2, 0x84 },
--	{ CS42L42_HP_CTL, 0x01 },
-+	{ CS42L42_HP_CTL, 0x0D },
- 	{ CS42L42_MIXER_CHA_VOL, 0x3F },
- 	{ CS42L42_MIXER_CHB_VOL, 0x3F },
- 	{ CS42L42_MIXER_ADC_VOL, 0x3f },
-diff --git a/sound/pci/hda/patch_cs8409.c b/sound/pci/hda/patch_cs8409.c
-index 892223d9e64ab..b003ac1990ba8 100644
---- a/sound/pci/hda/patch_cs8409.c
-+++ b/sound/pci/hda/patch_cs8409.c
-@@ -876,7 +876,7 @@ static void cs42l42_resume(struct sub_codec *cs42l42)
- 		{ CS42L42_DET_INT_STATUS2, 0x00 },
- 		{ CS42L42_TSRS_PLUG_STATUS, 0x00 },
- 	};
--	int fsv_old, fsv_new;
-+	unsigned int fsv;
+diff --git a/drivers/net/ethernet/ibm/ibmvnic.c b/drivers/net/ethernet/ibm/ibmvnic.c
+index 6d17738c1c536..7fe1fefef9934 100644
+--- a/drivers/net/ethernet/ibm/ibmvnic.c
++++ b/drivers/net/ethernet/ibm/ibmvnic.c
+@@ -2181,7 +2181,7 @@ static int ibmvnic_tx_scrq_flush(struct ibmvnic_adapter *adapter,
+ 		ibmvnic_tx_scrq_clean_buffer(adapter, tx_scrq);
+ 	else
+ 		ind_bufp->index = 0;
+-	return 0;
++	return rc;
+ }
  
- 	/* Bring CS42L42 out of Reset */
- 	spec->gpio_data = snd_hda_codec_read(codec, CS8409_PIN_AFG, 0, AC_VERB_GET_GPIO_DATA, 0);
-@@ -893,13 +893,15 @@ static void cs42l42_resume(struct sub_codec *cs42l42)
- 	/* Clear interrupts, by reading interrupt status registers */
- 	cs8409_i2c_bulk_read(cs42l42, irq_regs, ARRAY_SIZE(irq_regs));
+ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
+@@ -2234,7 +2234,9 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 		tx_dropped++;
+ 		tx_send_failed++;
+ 		ret = NETDEV_TX_OK;
+-		ibmvnic_tx_scrq_flush(adapter, tx_scrq);
++		lpar_rc = ibmvnic_tx_scrq_flush(adapter, tx_scrq);
++		if (lpar_rc != H_SUCCESS)
++			goto tx_err;
+ 		goto out;
+ 	}
  
--	fsv_old = cs8409_i2c_read(cs42l42, CS42L42_HP_CTL);
--	if (cs42l42->full_scale_vol == CS42L42_FULL_SCALE_VOL_0DB)
--		fsv_new = fsv_old & ~CS42L42_FULL_SCALE_VOL_MASK;
--	else
--		fsv_new = fsv_old & CS42L42_FULL_SCALE_VOL_MASK;
--	if (fsv_new != fsv_old)
--		cs8409_i2c_write(cs42l42, CS42L42_HP_CTL, fsv_new);
-+	fsv = cs8409_i2c_read(cs42l42, CS42L42_HP_CTL);
-+	if (cs42l42->full_scale_vol) {
-+		// Set the full scale volume bit
-+		fsv |= CS42L42_FULL_SCALE_VOL_MASK;
-+		cs8409_i2c_write(cs42l42, CS42L42_HP_CTL, fsv);
-+	}
-+	// Unmute analog channels A and B
-+	fsv = (fsv & ~CS42L42_ANA_MUTE_AB);
-+	cs8409_i2c_write(cs42l42, CS42L42_HP_CTL, fsv);
- 
- 	/* we have to explicitly allow unsol event handling even during the
- 	 * resume phase so that the jack event is processed properly
-@@ -921,7 +923,7 @@ static void cs42l42_suspend(struct sub_codec *cs42l42)
- 		{ CS42L42_MIXER_CHA_VOL, 0x3F },
- 		{ CS42L42_MIXER_ADC_VOL, 0x3F },
- 		{ CS42L42_MIXER_CHB_VOL, 0x3F },
--		{ CS42L42_HP_CTL, 0x0F },
-+		{ CS42L42_HP_CTL, 0x0D },
- 		{ CS42L42_ASP_RX_DAI0_EN, 0x00 },
- 		{ CS42L42_ASP_CLK_CFG, 0x00 },
- 		{ CS42L42_PWR_CTL1, 0xFE },
-diff --git a/sound/pci/hda/patch_cs8409.h b/sound/pci/hda/patch_cs8409.h
-index 937e9387abdc7..bca81d49f201a 100644
---- a/sound/pci/hda/patch_cs8409.h
-+++ b/sound/pci/hda/patch_cs8409.h
-@@ -230,9 +230,10 @@ enum cs8409_coefficient_index_registers {
- #define CS42L42_PDN_TIMEOUT_US			(250000)
- #define CS42L42_PDN_SLEEP_US			(2000)
- #define CS42L42_INIT_TIMEOUT_MS			(45)
-+#define CS42L42_ANA_MUTE_AB			(0x0C)
- #define CS42L42_FULL_SCALE_VOL_MASK		(2)
--#define CS42L42_FULL_SCALE_VOL_0DB		(1)
--#define CS42L42_FULL_SCALE_VOL_MINUS6DB		(0)
-+#define CS42L42_FULL_SCALE_VOL_0DB		(0)
-+#define CS42L42_FULL_SCALE_VOL_MINUS6DB		(1)
- 
- /* Dell BULLSEYE / WARLOCK / CYBORG Specific Definitions */
+@@ -2249,8 +2251,10 @@ static netdev_tx_t ibmvnic_xmit(struct sk_buff *skb, struct net_device *netdev)
+ 		dev_kfree_skb_any(skb);
+ 		tx_send_failed++;
+ 		tx_dropped++;
+-		ibmvnic_tx_scrq_flush(adapter, tx_scrq);
+ 		ret = NETDEV_TX_OK;
++		lpar_rc = ibmvnic_tx_scrq_flush(adapter, tx_scrq);
++		if (lpar_rc != H_SUCCESS)
++			goto tx_err;
+ 		goto out;
+ 	}
  
 -- 
 2.39.5
