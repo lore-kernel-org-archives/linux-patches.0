@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4731946C7;
-	Wed,  5 Mar 2025 17:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CAA6ADD;
+	Wed,  5 Mar 2025 17:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197066; cv=none; b=DdLp3iYvJKVpU4zrZCZ6S1VWkieX+rFeSTvzuMLB6s9J3LTmdkh1K/WEhvzJbN/uYhKfPA2mASrjaoejScSxRgNxE6yD79u8zWi6koxeA+ul11WKA9FbYYxICQPD4KmUtDqSfGV6E72r86ECyfob9X589L2vuOiavYGVerl5m+c=
+	t=1741197069; cv=none; b=i7vXXEDcqQjXkT1c67PmAtWVfnQyBJx7OMK9OvkrZOMLn7uY2RCvNgqIGym7/ZrD8T7Ba3gq6rWEn+33CHONUxZiRvqnc7MppMMA9XLnn3H56dalxSY3tiZNsNADsKXNVTtddqXM/zee6FEzy2cJ8Begh4/XgkADSI5JV7kMcIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197066; c=relaxed/simple;
-	bh=QBfP1r0fUJI9SaCP1ZMuJ0w82MWXJP/pMvREZJQjvkg=;
+	s=arc-20240116; t=1741197069; c=relaxed/simple;
+	bh=zE3GVj/Ye2zlkYczCLPt/xge4HhtZHhb1MUwmo/mUoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcpRH9Dx6KL85+rH2JcGAZkULjPy+YwZe2y5quChLIcdjLC6y6JiWyBpxRwl/50Xvr1kwi8onVI7sA40cF7yn+B0Df9ZDwQoqU918HcZQkW93JUw3XMOHW0PhCRiwKg3G6wZouyNef8Xvj7Nwt7B027zHNIzdExpnXCAnLfFnPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USb6TcBp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ff+l80z1GuP0yknHFnl9X+ohi/YYnUHjDMn+0VIweHZoAi7j/NWHJK2dbbOoejj2l/IASG2Ys+4nwTPQX+nKZ8WhkrXmQ2F1xkEG1Nl2uWuIx++5M9qv27wDhAXoDM2ukYH//vuNoF7l86CaZsdb0OYbqZPxHWYTxSbFUhYCWfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwLIXDmX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USb6TcBp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD22DC4CED1;
-	Wed,  5 Mar 2025 17:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwLIXDmX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AC4C4CED1;
+	Wed,  5 Mar 2025 17:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197066;
-	bh=QBfP1r0fUJI9SaCP1ZMuJ0w82MWXJP/pMvREZJQjvkg=;
+	s=korg; t=1741197069;
+	bh=zE3GVj/Ye2zlkYczCLPt/xge4HhtZHhb1MUwmo/mUoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USb6TcBpuMFYE9uPzbs/WXAtqkT/gN3C6ABcz3tz+uoDI+gYDN5+Xh7szs6LrF4l5
-	 Lmd+cio+HBraFY/dge6zZK5lS8pP49OSCunW2H9Ff64y9o6FY+y0G+XHwb++1CB3Ep
-	 BQSiSs5Q59m7aP/E7YmAQ61cxA/drt4igYGfsY7A=
+	b=EwLIXDmXqUmkvNLsJ2jXwVsySC+rI4VIF52ieRDSpSQyltkfQaCDyRi9GhpFq/gFp
+	 tfjMAsZZPcFzDyePetW97sTREfTiLsmf9lHZvtSrB7y58Uf0iYWuABdD2/p79xqIpW
+	 XD/dCwKL2UqGjXRqC64TQvbjSS7sL1229qSsk2ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Eddie James <eajames@linux.ibm.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/176] arm64: dts: qcom: sm8450: Fix CDSP memory length
-Date: Wed,  5 Mar 2025 18:46:36 +0100
-Message-ID: <20250305174506.552330967@linuxfoundation.org>
+Subject: [PATCH 6.1 028/176] tpm: Use managed allocation for bios event log
+Date: Wed,  5 Mar 2025 18:46:37 +0100
+Message-ID: <20250305174506.591845606@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -52,42 +51,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Eddie James <eajames@linux.ibm.com>
 
-[ Upstream commit 3751fe2cba2a9fba2204ef62102bc4bb027cec7b ]
+[ Upstream commit 441b7152729f4a2bdb100135a58625fa0aeb69e4 ]
 
-The address space in CDSP PAS (Peripheral Authentication Service)
-remoteproc node should point to the QDSP PUB address space
-(QDSP6...SS_PUB) which has a length of 0x10000.  Value of 0x1400000 was
-copied from older DTS, but it does not look accurate at all.
+Since the bios event log is freed in the device release function,
+let devres handle the deallocation. This will allow other memory
+allocation/mapping functions to be used for the bios event log.
 
-This should have no functional impact on Linux users, because PAS loader
-does not use this address space at all.
-
-Fixes: 1172729576fb ("arm64: dts: qcom: sm8450: Add remoteproc enablers and instances")
-Cc: stable@vger.kernel.org
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20241213-dts-qcom-cdsp-mpss-base-address-v3-5-2e0036fccd8d@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Stable-dep-of: a3a860bc0fd6 ("tpm: Change to kvalloc() in eventlog/acpi.c")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/tpm/eventlog/acpi.c |  5 +++--
+ drivers/char/tpm/eventlog/efi.c  | 13 +++++++------
+ drivers/char/tpm/eventlog/of.c   |  3 ++-
+ drivers/char/tpm/tpm-chip.c      |  1 -
+ 4 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 9151ed3b0a62f..9420857871b1e 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -2159,7 +2159,7 @@
+diff --git a/drivers/char/tpm/eventlog/acpi.c b/drivers/char/tpm/eventlog/acpi.c
+index cd266021d0103..bd757d836c5cf 100644
+--- a/drivers/char/tpm/eventlog/acpi.c
++++ b/drivers/char/tpm/eventlog/acpi.c
+@@ -14,6 +14,7 @@
+  * Access to the event log extended by the TCG BIOS of PC platform
+  */
  
- 		remoteproc_cdsp: remoteproc@32300000 {
- 			compatible = "qcom,sm8450-cdsp-pas";
--			reg = <0 0x32300000 0 0x1400000>;
-+			reg = <0 0x32300000 0 0x10000>;
++#include <linux/device.h>
+ #include <linux/seq_file.h>
+ #include <linux/fs.h>
+ #include <linux/security.h>
+@@ -135,7 +136,7 @@ int tpm_read_log_acpi(struct tpm_chip *chip)
+ 	}
  
- 			interrupts-extended = <&intc GIC_SPI 578 IRQ_TYPE_EDGE_RISING>,
- 					      <&smp2p_cdsp_in 0 IRQ_TYPE_EDGE_RISING>,
+ 	/* malloc EventLog space */
+-	log->bios_event_log = kmalloc(len, GFP_KERNEL);
++	log->bios_event_log = devm_kmalloc(&chip->dev, len, GFP_KERNEL);
+ 	if (!log->bios_event_log)
+ 		return -ENOMEM;
+ 
+@@ -164,7 +165,7 @@ int tpm_read_log_acpi(struct tpm_chip *chip)
+ 	return format;
+ 
+ err:
+-	kfree(log->bios_event_log);
++	devm_kfree(&chip->dev, log->bios_event_log);
+ 	log->bios_event_log = NULL;
+ 	return ret;
+ }
+diff --git a/drivers/char/tpm/eventlog/efi.c b/drivers/char/tpm/eventlog/efi.c
+index e6cb9d525e30c..4e9d7c2bf32ee 100644
+--- a/drivers/char/tpm/eventlog/efi.c
++++ b/drivers/char/tpm/eventlog/efi.c
+@@ -6,6 +6,7 @@
+  *      Thiebaud Weksteen <tweek@google.com>
+  */
+ 
++#include <linux/device.h>
+ #include <linux/efi.h>
+ #include <linux/tpm_eventlog.h>
+ 
+@@ -55,7 +56,7 @@ int tpm_read_log_efi(struct tpm_chip *chip)
+ 	}
+ 
+ 	/* malloc EventLog space */
+-	log->bios_event_log = kmemdup(log_tbl->log, log_size, GFP_KERNEL);
++	log->bios_event_log = devm_kmemdup(&chip->dev, log_tbl->log, log_size, GFP_KERNEL);
+ 	if (!log->bios_event_log) {
+ 		ret = -ENOMEM;
+ 		goto out;
+@@ -76,7 +77,7 @@ int tpm_read_log_efi(struct tpm_chip *chip)
+ 			     MEMREMAP_WB);
+ 	if (!final_tbl) {
+ 		pr_err("Could not map UEFI TPM final log\n");
+-		kfree(log->bios_event_log);
++		devm_kfree(&chip->dev, log->bios_event_log);
+ 		ret = -ENOMEM;
+ 		goto out;
+ 	}
+@@ -91,11 +92,11 @@ int tpm_read_log_efi(struct tpm_chip *chip)
+ 	 * Allocate memory for the 'combined log' where we will append the
+ 	 * 'final events log' to.
+ 	 */
+-	tmp = krealloc(log->bios_event_log,
+-		       log_size + final_events_log_size,
+-		       GFP_KERNEL);
++	tmp = devm_krealloc(&chip->dev, log->bios_event_log,
++			    log_size + final_events_log_size,
++			    GFP_KERNEL);
+ 	if (!tmp) {
+-		kfree(log->bios_event_log);
++		devm_kfree(&chip->dev, log->bios_event_log);
+ 		ret = -ENOMEM;
+ 		goto out;
+ 	}
+diff --git a/drivers/char/tpm/eventlog/of.c b/drivers/char/tpm/eventlog/of.c
+index a9ce66d09a754..741ab2204b11a 100644
+--- a/drivers/char/tpm/eventlog/of.c
++++ b/drivers/char/tpm/eventlog/of.c
+@@ -10,6 +10,7 @@
+  * Read the event log created by the firmware on PPC64
+  */
+ 
++#include <linux/device.h>
+ #include <linux/slab.h>
+ #include <linux/of.h>
+ #include <linux/tpm_eventlog.h>
+@@ -65,7 +66,7 @@ int tpm_read_log_of(struct tpm_chip *chip)
+ 		return -EIO;
+ 	}
+ 
+-	log->bios_event_log = kmemdup(__va(base), size, GFP_KERNEL);
++	log->bios_event_log = devm_kmemdup(&chip->dev, __va(base), size, GFP_KERNEL);
+ 	if (!log->bios_event_log)
+ 		return -ENOMEM;
+ 
+diff --git a/drivers/char/tpm/tpm-chip.c b/drivers/char/tpm/tpm-chip.c
+index c0759d49fd145..916ee815b1401 100644
+--- a/drivers/char/tpm/tpm-chip.c
++++ b/drivers/char/tpm/tpm-chip.c
+@@ -267,7 +267,6 @@ static void tpm_dev_release(struct device *dev)
+ 	idr_remove(&dev_nums_idr, chip->dev_num);
+ 	mutex_unlock(&idr_lock);
+ 
+-	kfree(chip->log.bios_event_log);
+ 	kfree(chip->work_space.context_buf);
+ 	kfree(chip->work_space.session_buf);
+ 	kfree(chip->allocated_banks);
 -- 
 2.39.5
 
