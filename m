@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0E525179E;
-	Wed,  5 Mar 2025 17:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DEC6ADD;
+	Wed,  5 Mar 2025 17:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197181; cv=none; b=dlvvOc2K1v7MgS+GfvBxuaagIl+jQxuNYq9hpJF3fiYylsu3trdzlDbc7MeEXAYWmrx/rcoIe1flznzpmSgrugZGbVqvWwvTJbrA/WAeG2KZkicS4MSVG8DI5LorDlNFW3zpva6ln38P0pY5B+OnTmaGgqNmQ+SUg4aNeo5bz2s=
+	t=1741197183; cv=none; b=cLA2v3IR+ITvv6Oyd/CYmk8UhnqIgdrK8PBhxcrK75Ux2xtBD8EK2EwXWBId9ik/UqqU60kqXSJW1jJGQ27TcsYM8tLUOWW1NxZ+O51UirLpVZZFtb1Z1QaLt0fhJqRHcnmCN7rcsxuG0a5OORv5/qLf1zR0vscOcW1ghLpURyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197181; c=relaxed/simple;
-	bh=s9jG0Xbp0JcjGYuKLmZWrwdHE4bATNWc3MAwHDpQjOk=;
+	s=arc-20240116; t=1741197183; c=relaxed/simple;
+	bh=IG1C5bdAm8VlxLRtpqb1seTJSC6vGyxmx26Hs6lq2p0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N5hTHzzNV6OpTZrco3Ik3/k96b+3iH+kCBn31kCedkKcQeoMwzWkA70MD2MWwraLFoprbgSkCLe4QGX14zZtp5nY+qTXJKNPPL/3CrTiuFUmpc+i4xobaNeVn5TVw2WaccummEdo1TYelMJRX6+N+N8caj+33wo/tl2iOIkpdKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwVGW5vO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kJy5nXlyYnsaEICHYAsOj3uFqZ4rhxRRdvgLTXAo4SsPOgFNEgWChTJSQ1RS4YrKDM+XwBNihCMm5ITgDNHY50ylMLh/hP5DSbhQntiCWp6Nq3z7GC46LAXu3WxD6WnuFJMIynv7viTCOcgxhVLetu7KlrJhCkOjeDI2n7ppqP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaKJUpG0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwVGW5vO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB1FC4CED1;
-	Wed,  5 Mar 2025 17:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaKJUpG0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF45C4CED1;
+	Wed,  5 Mar 2025 17:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197180;
-	bh=s9jG0Xbp0JcjGYuKLmZWrwdHE4bATNWc3MAwHDpQjOk=;
+	s=korg; t=1741197183;
+	bh=IG1C5bdAm8VlxLRtpqb1seTJSC6vGyxmx26Hs6lq2p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WwVGW5vOc36ix9ffJF0fKfAAyPOKh4oLFqVZLTJeRBE+nAof7VYt2kH8cWVdN90VU
-	 D4bOPXniMwdd+90/N2DY5LV3lRcD1gVWbjenOnHtR+0ruIgi7Gv8Pp5Gp+2donR0cb
-	 BsGJIWbITCB5U08Vuic0jRSIdPh0WKb5LcQjyigk=
+	b=AaKJUpG0jQXg8qJHE5x4/kb+uspHykV9kHhjl5drHa5SgGmG7zsh4/ToQ3iY4y7Zc
+	 ivvW+yiBhnEm6eQlF1ItXJbn4M2GhBLKZVRgxR3zazHpQ2KpkA6H1kfbl4Hto0ZnhW
+	 tZLRimgHZErIP84xlP7QV++d+m6TuOPVab11V9GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/176] media: uvcvideo: Refactor iterators
-Date: Wed,  5 Mar 2025 18:46:45 +0100
-Message-ID: <20250305174506.912340603@linuxfoundation.org>
+Subject: [PATCH 6.1 037/176] media: uvcvideo: Only save async fh if success
+Date: Wed,  5 Mar 2025 18:46:46 +0100
+Message-ID: <20250305174506.953309422@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -55,83 +55,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 64627daf0c5f7838111f52bbbd1a597cb5d6871a ]
+[ Upstream commit d9fecd096f67a4469536e040a8a10bbfb665918b ]
 
-Avoid using the iterators after the list_for_each() constructs.
-This patch should be a NOP, but makes cocci, happier:
+Now we keep a reference to the active fh for any call to uvc_ctrl_set,
+regardless if it is an actual set or if it is a just a try or if the
+device refused the operation.
 
-drivers/media/usb/uvc/uvc_ctrl.c:1861:44-50: ERROR: invalid reference to the index variable of the iterator on line 1850
-drivers/media/usb/uvc/uvc_ctrl.c:2195:17-23: ERROR: invalid reference to the index variable of the iterator on line 2179
+We should only keep the file handle if the device actually accepted
+applying the operation.
 
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: stable@vger.kernel.org
+Fixes: e5225c820c05 ("media: uvcvideo: Send a control event when a Control Change interrupt arrives")
+Suggested-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: d9fecd096f67 ("media: uvcvideo: Only save async fh if success")
+Link: https://lore.kernel.org/r/20241203-uvc-fix-async-v6-1-26c867231118@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index 1bad64f4499ae..986e94f7164a6 100644
+index 986e94f7164a6..6be1aff23e71c 100644
 --- a/drivers/media/usb/uvc/uvc_ctrl.c
 +++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1786,16 +1786,18 @@ int __uvc_ctrl_commit(struct uvc_fh *handle, int rollback,
- 	list_for_each_entry(entity, &chain->entities, chain) {
- 		ret = uvc_ctrl_commit_entity(chain->dev, entity, rollback,
- 					     &err_ctrl);
--		if (ret < 0)
-+		if (ret < 0) {
-+			if (ctrls)
-+				ctrls->error_idx =
-+					uvc_ctrl_find_ctrl_idx(entity, ctrls,
-+							       err_ctrl);
- 			goto done;
-+		}
- 	}
- 
- 	if (!rollback)
- 		uvc_ctrl_send_events(handle, ctrls->controls, ctrls->count);
- done:
--	if (ret < 0 && ctrls)
--		ctrls->error_idx = uvc_ctrl_find_ctrl_idx(entity, ctrls,
--							  err_ctrl);
- 	mutex_unlock(&chain->ctrl_mutex);
- 	return ret;
+@@ -1700,7 +1700,10 @@ int uvc_ctrl_begin(struct uvc_video_chain *chain)
  }
-@@ -2100,7 +2102,7 @@ static int uvc_ctrl_init_xu_ctrl(struct uvc_device *dev,
- int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
- 	struct uvc_xu_control_query *xqry)
+ 
+ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
+-	struct uvc_entity *entity, int rollback, struct uvc_control **err_ctrl)
++				  struct uvc_fh *handle,
++				  struct uvc_entity *entity,
++				  int rollback,
++				  struct uvc_control **err_ctrl)
  {
--	struct uvc_entity *entity;
-+	struct uvc_entity *entity, *iter;
  	struct uvc_control *ctrl;
  	unsigned int i;
- 	bool found;
-@@ -2110,16 +2112,16 @@ int uvc_xu_ctrl_query(struct uvc_video_chain *chain,
- 	int ret;
- 
- 	/* Find the extension unit. */
--	found = false;
--	list_for_each_entry(entity, &chain->entities, chain) {
--		if (UVC_ENTITY_TYPE(entity) == UVC_VC_EXTENSION_UNIT &&
--		    entity->id == xqry->unit) {
--			found = true;
-+	entity = NULL;
-+	list_for_each_entry(iter, &chain->entities, chain) {
-+		if (UVC_ENTITY_TYPE(iter) == UVC_VC_EXTENSION_UNIT &&
-+		    iter->id == xqry->unit) {
-+			entity = iter;
- 			break;
+@@ -1748,6 +1751,10 @@ static int uvc_ctrl_commit_entity(struct uvc_device *dev,
+ 				*err_ctrl = ctrl;
+ 			return ret;
  		}
++
++		if (!rollback && handle &&
++		    ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
++			ctrl->handle = handle;
  	}
  
--	if (!found) {
-+	if (!entity) {
- 		uvc_dbg(chain->dev, CONTROL, "Extension unit %u not found\n",
- 			xqry->unit);
- 		return -ENOENT;
+ 	return 0;
+@@ -1784,8 +1791,8 @@ int __uvc_ctrl_commit(struct uvc_fh *handle, int rollback,
+ 
+ 	/* Find the control. */
+ 	list_for_each_entry(entity, &chain->entities, chain) {
+-		ret = uvc_ctrl_commit_entity(chain->dev, entity, rollback,
+-					     &err_ctrl);
++		ret = uvc_ctrl_commit_entity(chain->dev, handle, entity,
++					     rollback, &err_ctrl);
+ 		if (ret < 0) {
+ 			if (ctrls)
+ 				ctrls->error_idx =
+@@ -1927,9 +1934,6 @@ int uvc_ctrl_set(struct uvc_fh *handle,
+ 	mapping->set(mapping, value,
+ 		uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT));
+ 
+-	if (ctrl->info.flags & UVC_CTRL_FLAG_ASYNCHRONOUS)
+-		ctrl->handle = handle;
+-
+ 	ctrl->dirty = 1;
+ 	ctrl->modified = 1;
+ 	return 0;
+@@ -2258,7 +2262,7 @@ int uvc_ctrl_restore_values(struct uvc_device *dev)
+ 			ctrl->dirty = 1;
+ 		}
+ 
+-		ret = uvc_ctrl_commit_entity(dev, entity, 0, NULL);
++		ret = uvc_ctrl_commit_entity(dev, NULL, entity, 0, NULL);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
 -- 
 2.39.5
 
