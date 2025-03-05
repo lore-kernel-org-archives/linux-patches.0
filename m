@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236FE2528E0;
-	Wed,  5 Mar 2025 18:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EAC1C6FF6;
+	Wed,  5 Mar 2025 18:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198192; cv=none; b=TnGASO3UQOooxftahEicZI6WvIZYRuDgTwcqkql6Ro60oqx98OORvcsgRyTUxMvgotEYkri8hqDVp+eI0zG6UrJd5GPLJffcnyjd+LWVC6n/LYnx6jXBnb+kMdqsOtnV9URbTdZphHw8rrwwbmfAuyIy5162gT57YfDdksh4+Xs=
+	t=1741198195; cv=none; b=tkDB02pLra5WTfDlO5DToC5D7wjwMX99awzhuSjaJPJIk5z63ZmYb3IkjXZ3EJV73N6XJFtvYeOcD5jzp5S0ualRaToReCzxCP0V1fK+h2AwwafIB9SAtNE4P9mNT3zsuyoSnYfFrnWFbFeVL4FNuClYLG+KzQUnIDosrHQ1hC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198192; c=relaxed/simple;
-	bh=PPbfPL6jbvouscKsfe2kZ+E2ohXBovZ6BKIqmP0y8ag=;
+	s=arc-20240116; t=1741198195; c=relaxed/simple;
+	bh=a2/BQARqFeiZNkhtN3IdBO7qlL+Y1UYCKP1CV7fJTDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iOTyLEzLINQ7Q9UQwzw0LXX6HEJbNNbuSzJcRIIW98ero4S8N7QRF3a/yr95l8DtRezeQ3/hCmzY3ZDM6eLOTPV+Mi7dq5w3/ns75j1iKKNXEGGq1wb/zN1EAkKMcluI2/egHDi9YWXyFafZ+lYpJrgMZXiCXinxhiZr2dnPrGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hzPCj4bb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mQQgevyiMTK4PaDaMzR4mIz0mlJTnXXvdROwp+eVMlVRo+O2l1ReVayaqWscdm3P2P/Mnsom1x1eWIsfv8Dj4mK9e+qQLSGHJEXUbYFCVQja7ggoUtCaAgzXnNkNxXrTP3WPnknw/1Q8u5je3/1EXOfzKPIY4fgJvXQvC7njmJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+pvJG+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzPCj4bb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0037C4CED1;
-	Wed,  5 Mar 2025 18:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+pvJG+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922B4C4CED1;
+	Wed,  5 Mar 2025 18:09:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198192;
-	bh=PPbfPL6jbvouscKsfe2kZ+E2ohXBovZ6BKIqmP0y8ag=;
+	s=korg; t=1741198195;
+	bh=a2/BQARqFeiZNkhtN3IdBO7qlL+Y1UYCKP1CV7fJTDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hzPCj4bblmymiA/yuNp0BRdSldyEJz0YPZ34NNQF9Wm/jHZIR8pW286DUiCZe501s
-	 /84iq7F3lU/X25wRHFESOEoWj+izKKcq02fi1Qa2Si9i+do6XmO4gUdWWV5Omij1Gx
-	 4U+ARQ8a5zS0pl7+o1ZZ+NAJbAv1f5NMdmaAvou8=
+	b=v+pvJG+oVFwwo4wahy3iK+Hm1pvm2NZq1ejUAMoCe0gco8oEg//RnDBmN9ZXNG6zi
+	 FyVBAvdA2CJfnZvAYMcoyrWCz9giVvmDv07MDNBH5KeilnQG02BqJre5kCPGrCZIkN
+	 mbi7MBgzfXU7mW7aVpZr63nztTuB+cGzSgiBPN1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell Senior <russell@personaltelco.net>,
-	Ingo Molnar <mingo@kernel.org>,
-	Matthew Whitehead <tedheadster@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Jonas Gorski <jonas.gorski@gmail.com>
-Subject: [PATCH 6.12 078/150] x86/CPU: Fix warm boot hang regression on AMD SC1100 SoC systems
-Date: Wed,  5 Mar 2025 18:48:27 +0100
-Message-ID: <20250305174506.948577174@linuxfoundation.org>
+	David Yat Sin <David.YatSin@amd.com>,
+	Jay Cornwall <jay.cornwall@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 096/150] drm/amdkfd: Preserve cp_hqd_pq_control on update_mqd
+Date: Wed,  5 Mar 2025 18:48:45 +0100
+Message-ID: <20250305174507.668112520@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -54,95 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell Senior <russell@personaltelco.net>
+From: David Yat Sin <David.YatSin@amd.com>
 
-[ Upstream commit bebe35bb738b573c32a5033499cd59f20293f2a3 ]
+commit 3502ab5022bb5ef1edd063bdb6465a8bf3b46e66 upstream.
 
-I still have some Soekris net4826 in a Community Wireless Network I
-volunteer with. These devices use an AMD SC1100 SoC. I am running
-OpenWrt on them, which uses a patched kernel, that naturally has
-evolved over time.  I haven't updated the ones in the field in a
-number of years (circa 2017), but have one in a test bed, where I have
-intermittently tried out test builds.
+When userspace applications call AMDKFD_IOC_UPDATE_QUEUE. Preserve
+bitfields that do not need to be modified as they contain flags to
+track queue states that are used by CP FW.
 
-A few years ago, I noticed some trouble, particularly when "warm
-booting", that is, doing a reboot without removing power, and noticed
-the device was hanging after the kernel message:
-
-  [    0.081615] Working around Cyrix MediaGX virtual DMA bugs.
-
-If I removed power and then restarted, it would boot fine, continuing
-through the message above, thusly:
-
-  [    0.081615] Working around Cyrix MediaGX virtual DMA bugs.
-  [    0.090076] Enable Memory-Write-back mode on Cyrix/NSC processor.
-  [    0.100000] Enable Memory access reorder on Cyrix/NSC processor.
-  [    0.100070] Last level iTLB entries: 4KB 0, 2MB 0, 4MB 0
-  [    0.110058] Last level dTLB entries: 4KB 0, 2MB 0, 4MB 0, 1GB 0
-  [    0.120037] CPU: NSC Geode(TM) Integrated Processor by National Semi (family: 0x5, model: 0x9, stepping: 0x1)
-  [...]
-
-In order to continue using modern tools, like ssh, to interact with
-the software on these old devices, I need modern builds of the OpenWrt
-firmware on the devices. I confirmed that the warm boot hang was still
-an issue in modern OpenWrt builds (currently using a patched linux
-v6.6.65).
-
-Last night, I decided it was time to get to the bottom of the warm
-boot hang, and began bisecting. From preserved builds, I narrowed down
-the bisection window from late February to late May 2019. During this
-period, the OpenWrt builds were using 4.14.x. I was able to build
-using period-correct Ubuntu 18.04.6. After a number of bisection
-iterations, I identified a kernel bump from 4.14.112 to 4.14.113 as
-the commit that introduced the warm boot hang.
-
-  https://github.com/openwrt/openwrt/commit/07aaa7e3d62ad32767d7067107db64b6ade81537
-
-Looking at the upstream changes in the stable kernel between 4.14.112
-and 4.14.113 (tig v4.14.112..v4.14.113), I spotted a likely suspect:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=20afb90f730982882e65b01fb8bdfe83914339c5
-
-So, I tried reverting just that kernel change on top of the breaking
-OpenWrt commit, and my warm boot hang went away.
-
-Presumably, the warm boot hang is due to some register not getting
-cleared in the same way that a loss of power does. That is
-approximately as much as I understand about the problem.
-
-More poking/prodding and coaching from Jonas Gorski, it looks
-like this test patch fixes the problem on my board: Tested against
-v6.6.67 and v4.14.113.
-
-Fixes: 18fb053f9b82 ("x86/cpu/cyrix: Use correct macros for Cyrix calls on Geode processors")
-Debugged-by: Jonas Gorski <jonas.gorski@gmail.com>
-Signed-off-by: Russell Senior <russell@personaltelco.net>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/CAHP3WfOgs3Ms4Z+L9i0-iBOE21sdMk5erAiJurPjnrL9LSsgRA@mail.gmail.com
-Cc: Matthew Whitehead <tedheadster@gmail.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: David Yat Sin <David.YatSin@amd.com>
+Reviewed-by: Jay Cornwall <jay.cornwall@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 8150827990b709ab5a40c46c30d21b7f7b9e9440)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/cyrix.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c |    6 ++++--
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c |    5 +++--
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c |    5 +++--
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c  |    5 ++++-
+ 4 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/cyrix.c b/arch/x86/kernel/cpu/cyrix.c
-index 9651275aecd1b..dfec2c61e3547 100644
---- a/arch/x86/kernel/cpu/cyrix.c
-+++ b/arch/x86/kernel/cpu/cyrix.c
-@@ -153,8 +153,8 @@ static void geode_configure(void)
- 	u8 ccr3;
- 	local_irq_save(flags);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
+@@ -107,6 +107,8 @@ static void init_mqd(struct mqd_manager
+ 	m->cp_hqd_persistent_state = CP_HQD_PERSISTENT_STATE__PRELOAD_REQ_MASK |
+ 			0x53 << CP_HQD_PERSISTENT_STATE__PRELOAD_SIZE__SHIFT;
  
--	/* Suspend on halt power saving and enable #SUSP pin */
--	setCx86(CX86_CCR2, getCx86(CX86_CCR2) | 0x88);
-+	/* Suspend on halt power saving */
-+	setCx86(CX86_CCR2, getCx86(CX86_CCR2) | 0x08);
++	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
+ 	m->cp_mqd_control = 1 << CP_MQD_CONTROL__PRIV_STATE__SHIFT;
  
- 	ccr3 = getCx86(CX86_CCR3);
- 	setCx86(CX86_CCR3, (ccr3 & 0x0f) | 0x10);	/* enable MAPEN */
--- 
-2.39.5
-
+ 	m->cp_mqd_base_addr_lo        = lower_32_bits(addr);
+@@ -167,10 +169,10 @@ static void update_mqd(struct mqd_manage
+ 
+ 	m = get_mqd(mqd);
+ 
+-	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control &= ~CP_HQD_PQ_CONTROL__QUEUE_SIZE_MASK;
+ 	m->cp_hqd_pq_control |=
+ 			ffs(q->queue_size / sizeof(unsigned int)) - 1 - 1;
+-	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
++
+ 	pr_debug("cp_hqd_pq_control 0x%x\n", m->cp_hqd_pq_control);
+ 
+ 	m->cp_hqd_pq_base_lo = lower_32_bits((uint64_t)q->queue_address >> 8);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
+@@ -154,6 +154,8 @@ static void init_mqd(struct mqd_manager
+ 	m->cp_hqd_persistent_state = CP_HQD_PERSISTENT_STATE__PRELOAD_REQ_MASK |
+ 			0x55 << CP_HQD_PERSISTENT_STATE__PRELOAD_SIZE__SHIFT;
+ 
++	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
+ 	m->cp_mqd_control = 1 << CP_MQD_CONTROL__PRIV_STATE__SHIFT;
+ 
+ 	m->cp_mqd_base_addr_lo        = lower_32_bits(addr);
+@@ -221,10 +223,9 @@ static void update_mqd(struct mqd_manage
+ 
+ 	m = get_mqd(mqd);
+ 
+-	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control &= ~CP_HQD_PQ_CONTROL__QUEUE_SIZE_MASK;
+ 	m->cp_hqd_pq_control |=
+ 			ffs(q->queue_size / sizeof(unsigned int)) - 1 - 1;
+-	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
+ 	pr_debug("cp_hqd_pq_control 0x%x\n", m->cp_hqd_pq_control);
+ 
+ 	m->cp_hqd_pq_base_lo = lower_32_bits((uint64_t)q->queue_address >> 8);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
+@@ -121,6 +121,8 @@ static void init_mqd(struct mqd_manager
+ 	m->cp_hqd_persistent_state = CP_HQD_PERSISTENT_STATE__PRELOAD_REQ_MASK |
+ 			0x55 << CP_HQD_PERSISTENT_STATE__PRELOAD_SIZE__SHIFT;
+ 
++	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
+ 	m->cp_mqd_control = 1 << CP_MQD_CONTROL__PRIV_STATE__SHIFT;
+ 
+ 	m->cp_mqd_base_addr_lo        = lower_32_bits(addr);
+@@ -184,10 +186,9 @@ static void update_mqd(struct mqd_manage
+ 
+ 	m = get_mqd(mqd);
+ 
+-	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control &= ~CP_HQD_PQ_CONTROL__QUEUE_SIZE_MASK;
+ 	m->cp_hqd_pq_control |=
+ 			ffs(q->queue_size / sizeof(unsigned int)) - 1 - 1;
+-	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
+ 	pr_debug("cp_hqd_pq_control 0x%x\n", m->cp_hqd_pq_control);
+ 
+ 	m->cp_hqd_pq_base_lo = lower_32_bits((uint64_t)q->queue_address >> 8);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+@@ -182,6 +182,9 @@ static void init_mqd(struct mqd_manager
+ 	m->cp_hqd_persistent_state = CP_HQD_PERSISTENT_STATE__PRELOAD_REQ_MASK |
+ 			0x53 << CP_HQD_PERSISTENT_STATE__PRELOAD_SIZE__SHIFT;
+ 
++	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
++
+ 	m->cp_mqd_control = 1 << CP_MQD_CONTROL__PRIV_STATE__SHIFT;
+ 
+ 	m->cp_mqd_base_addr_lo        = lower_32_bits(addr);
+@@ -244,7 +247,7 @@ static void update_mqd(struct mqd_manage
+ 
+ 	m = get_mqd(mqd);
+ 
+-	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control &= ~CP_HQD_PQ_CONTROL__QUEUE_SIZE_MASK;
+ 	m->cp_hqd_pq_control |= order_base_2(q->queue_size / 4) - 1;
+ 	pr_debug("cp_hqd_pq_control 0x%x\n", m->cp_hqd_pq_control);
+ 
 
 
