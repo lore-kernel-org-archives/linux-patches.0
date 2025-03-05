@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C68517B505;
-	Wed,  5 Mar 2025 18:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9347119C542;
+	Wed,  5 Mar 2025 18:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198061; cv=none; b=U2oRtuKXMZWX2UNSK0mUWh8j3u4TpYlK9VGI1Mz6ciTsCDMkqVz4WC123bKHufmBPxyjagOayEHKXU1AtAwdK5XadJhT1j0QuqYevnqtt4dC+iwpAH9pi/G1CCYx/pJYj8N4O6SEKcTI1irFf6b6/kfbwCm/i7WGJY2dd0z2Pjg=
+	t=1741198062; cv=none; b=UWuy7k/1LBOmavKsAXksynTDqmJ0Uts49gW6NcYoa52b82DzJ2Q3oLDMxQn1JXAwnd4eNFzlnXkHWVoyu7BCccFyjzY+lQzHqTNSnhjp117b9krY2ZNE20H6qnZR2XjACkV0mN/3LKSnoBV/Ez6kOF+gcMFR2PEvyUTBz2VS+ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198061; c=relaxed/simple;
-	bh=oyPhUNP4e0ZP5G3YkKSzhlKEfIr6Es7PkkoLkEiiEh0=;
+	s=arc-20240116; t=1741198062; c=relaxed/simple;
+	bh=ZX/i6anOEqVF6MWpmVXY1n4KznvWPgk1No/dRoXT6Kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KIirMTGK37elmXD3whmV8J1H+KK00soxE/CCTygiGYq8w5y0bMgcdb45OANyTfzsPb5nIKBpIIUq9J819T6xP2L9ad2AVTkJMy0lvV5cML1/OyGdqCCZpoqLhJAQy5rwyEaeQkIgLXHjcmP9DecOh7DCJpTlMVB/SAzMAML0tAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvqDxKwF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JrD7CTa9zV0JEUvy3KaAdL5OvxRrMw37gJRY/pbzomAmfhSYPSwEZm8InrFGO/FJZZ60s34ZtEibyNDCAmzIJiUMfXRSnhtJnrZYGCqkQBv9w7+oF9y+2XXGvSpWSo9WZxkv2zxWk/JPaDIMEH5u/ITe7Mr10zo3wgOXYGO8mvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EIwiPvC+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvqDxKwF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE38C4CED1;
-	Wed,  5 Mar 2025 18:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EIwiPvC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CD9C4CED1;
+	Wed,  5 Mar 2025 18:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198059;
-	bh=oyPhUNP4e0ZP5G3YkKSzhlKEfIr6Es7PkkoLkEiiEh0=;
+	s=korg; t=1741198062;
+	bh=ZX/i6anOEqVF6MWpmVXY1n4KznvWPgk1No/dRoXT6Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JvqDxKwFVhvzp/uHOWpHI7LeO/ae7TfQYqZs3rI5eNdnt0aiI5NUVHjrv+iRU8Bh1
-	 Wt04IurGBW1jV3uQGvNUwQJjXqjAXLyh9JeNnQxwCE+/345m4hRrmN+8nfr65PO3JA
-	 SXu5f7wh/ryALQFCLC+yEM4Gt+eZsjruy4JJEwN0=
+	b=EIwiPvC+9Uuni2O90jwv+C3zVLaHKh4lye1My6pFCqQbZSi/4I+wojr9qKz3mE6Pn
+	 vML3xK3seR0vbzFo8HOee4lF/xQQjtDhzkCPhaOi9IRlIJxBRd4wQPDaDFTkX8ZmX+
+	 /654g4kIMEetxkXQz+Gs8YwphkDwxDkZjalPmIRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philo Lu <lulie@linux.alibaba.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/150] ipvs: Always clear ipvs_property flag in skb_scrub_packet()
-Date: Wed,  5 Mar 2025 18:47:52 +0100
-Message-ID: <20250305174505.552763835@linuxfoundation.org>
+Subject: [PATCH 6.12 052/150] net: ethernet: ti: am65-cpsw: select PAGE_POOL
+Date: Wed,  5 Mar 2025 18:48:01 +0100
+Message-ID: <20250305174505.914607309@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -52,49 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philo Lu <lulie@linux.alibaba.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-[ Upstream commit de2c211868b9424f9aa9b3432c4430825bafb41b ]
+[ Upstream commit bab3a6e9ffd600f9db0ebaf8f45e1c6111cf314c ]
 
-We found an issue when using bpf_redirect with ipvs NAT mode after
-commit ff70202b2d1a ("dev_forward_skb: do not scrub skb mark within
-the same name space"). Particularly, we use bpf_redirect to return
-the skb directly back to the netif it comes from, i.e., xnet is
-false in skb_scrub_packet(), and then ipvs_property is preserved
-and SNAT is skipped in the rx path.
+am65-cpsw uses page_pool_dev_alloc_pages(), thus needs PAGE_POOL
+selected to avoid linker errors. This is missing since the driver
+started to use page_pool helpers in 8acacc40f733 ("net: ethernet:
+ti: am65-cpsw: Add minimal XDP support")
 
-ipvs_property has been already cleared when netns is changed in
-commit 2b5ec1a5f973 ("netfilter/ipvs: clear ipvs_property flag when
-SKB net namespace changed"). This patch just clears it in spite of
-netns.
-
-Fixes: 2b5ec1a5f973 ("netfilter/ipvs: clear ipvs_property flag when SKB net namespace changed")
-Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Link: https://patch.msgid.link/20250222033518.126087-1-lulie@linux.alibaba.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8acacc40f733 ("net: ethernet: ti: am65-cpsw: Add minimal XDP support")
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250224-net-am654-nuss-kconfig-v2-1-c124f4915c92@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/ti/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 61a950f13a91c..f220306731dac 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -6127,11 +6127,11 @@ void skb_scrub_packet(struct sk_buff *skb, bool xnet)
- 	skb->offload_fwd_mark = 0;
- 	skb->offload_l3_fwd_mark = 0;
- #endif
-+	ipvs_reset(skb);
- 
- 	if (!xnet)
- 		return;
- 
--	ipvs_reset(skb);
- 	skb->mark = 0;
- 	skb_clear_tstamp(skb);
- }
+diff --git a/drivers/net/ethernet/ti/Kconfig b/drivers/net/ethernet/ti/Kconfig
+index 0d5a862cd78a6..3a13d60a947a8 100644
+--- a/drivers/net/ethernet/ti/Kconfig
++++ b/drivers/net/ethernet/ti/Kconfig
+@@ -99,6 +99,7 @@ config TI_K3_AM65_CPSW_NUSS
+ 	select NET_DEVLINK
+ 	select TI_DAVINCI_MDIO
+ 	select PHYLINK
++	select PAGE_POOL
+ 	select TI_K3_CPPI_DESC_POOL
+ 	imply PHY_TI_GMII_SEL
+ 	depends on TI_K3_AM65_CPTS || !TI_K3_AM65_CPTS
 -- 
 2.39.5
 
