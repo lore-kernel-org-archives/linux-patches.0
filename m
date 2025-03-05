@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74332505A7;
-	Wed,  5 Mar 2025 17:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF97F2505A7;
+	Wed,  5 Mar 2025 17:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197323; cv=none; b=iSCN2/1nj2jlGNYERX3bOfO1DCeBXZ6vD4uC5bIPCbK+c1kiLHTODbzyX6Msje4AdWr/VAOeHHMjrrkWdXw7foL2jFsBDj/VWvfSD5L/MJryRok3OefdIg9aJiVEpxSE8qtlgsKJdnxiCIG16tEh14rSrqcxQfN3yH0LcH1foNI=
+	t=1741197326; cv=none; b=g2MCdrQu2wppnvHRrggfQcHZ8Rzwey3y7HuManJnE/qxknimAOGeTqMMylWjZ1j9jnoUf2AHNoBLlaFL817//Y+dyDlAyzxgDshFj18fJH7F6accLL+2Bc9qWG+Ofl0PHwBvrWyiAzF1TFJ0449a7rI9WT0iQ3bHFq2aLDSmYHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197323; c=relaxed/simple;
-	bh=JdbrmXWm9CKTMGWsLiBIEtS2PC3kYfCQ86ZFM9Co0D4=;
+	s=arc-20240116; t=1741197326; c=relaxed/simple;
+	bh=2mmBXDJ3hI8LnoJB4FsrWF8QosQ/JasnnqrC2gmD+6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C/w3wbYunuzsbPsORX/GxVxUfW2Oh/CWereGJLXQWdEmfJre3SuxtS153hUdS5CyXot+DmnCGyn0ds5DQlh2MKRKuc1NFYEqWUu0pYvh5QGnTZuCwOjZeqRc1H7b2mhfqgbSMtuToYGm8p6+1z4hOG0mgVUaJsF/QaRjEmul/08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubLd/Fcp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TmDqNZuaDESyINZFU8trSzdYnsZRiR8jGgRfhAhQbtZp10SxscCov3Pa5kdEwIZUaruwfkGRVMWfwC1GceNtsdZk3aplu2wu/QPBaFwfxfUrzzmmAz9fVoVRshESbExmVfoMx/FWmkELp1WYXVMi3BaHsRmC2BLKc/Yf9wxCyLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkXoSkb/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubLd/Fcp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4F6C4CED1;
-	Wed,  5 Mar 2025 17:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkXoSkb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F9F7C4CED1;
+	Wed,  5 Mar 2025 17:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197323;
-	bh=JdbrmXWm9CKTMGWsLiBIEtS2PC3kYfCQ86ZFM9Co0D4=;
+	s=korg; t=1741197326;
+	bh=2mmBXDJ3hI8LnoJB4FsrWF8QosQ/JasnnqrC2gmD+6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ubLd/Fcpp092UejeX7wn+GPR9C18/GfgOiTJ/3hjGB7UDpUj1FATjfPCKmB52MmOf
-	 hF1lkni6cQlQ9Ie9NTI66c4yRaHQOF5AixEI0MVFwg+/gkXng/PxCcREET6fsSFqe9
-	 E+RpFSeIkp5XlO9j2LjiHLdleFpLBlJFAPKBCIaY=
+	b=xkXoSkb/EKfj0fZ20jXyQ9L7MTY45wEnIai9W1E8G9ggC1AobzyCltesSJ4783Jkf
+	 iDSOPOQE2U8CmQQ0LLGsbB+p68Rickgb52LHjxTACZZ9TxPQHmZeW3w9WXrFVIV7zW
+	 6Ir02ippN2YoCMJBI26j9n0ckveLM/2jHR3GyFkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 117/176] Bluetooth: L2CAP: Fix L2CAP_ECRED_CONN_RSP response
-Date: Wed,  5 Mar 2025 18:48:06 +0100
-Message-ID: <20250305174510.158244876@linuxfoundation.org>
+Subject: [PATCH 6.1 118/176] afs: remove variable nr_servers
+Date: Wed,  5 Mar 2025 18:48:07 +0100
+Message-ID: <20250305174510.197015940@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
 References: <20250305174505.437358097@linuxfoundation.org>
@@ -50,97 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit b25120e1d5f2ebb3db00af557709041f47f7f3d0 ]
+[ Upstream commit 318b83b71242998814a570c3420c042ee6165fca ]
 
-L2CAP_ECRED_CONN_RSP needs to respond DCID in the same order received as
-SCID but the order is reversed due to use of list_add which actually
-prepend channels to the list so the response is reversed:
+Variable nr_servers is no longer being used, the last reference
+to it was removed in commit 45df8462730d ("afs: Fix server list handling")
+so clean up the code by removing it.
 
-> ACL Data RX: Handle 16 flags 0x02 dlen 26
-      LE L2CAP: Enhanced Credit Connection Request (0x17) ident 2 len 18
-        PSM: 39 (0x0027)
-        MTU: 256
-        MPS: 251
-        Credits: 65535
-        Source CID: 116
-        Source CID: 117
-        Source CID: 118
-        Source CID: 119
-        Source CID: 120
-< ACL Data TX: Handle 16 flags 0x00 dlen 26
-      LE L2CAP: Enhanced Credit Connection Response (0x18) ident 2 len 18
-        MTU: 517
-        MPS: 247
-        Credits: 3
-        Result: Connection successful (0x0000)
-        Destination CID: 68
-        Destination CID: 67
-        Destination CID: 66
-        Destination CID: 65
-        Destination CID: 64
-
-Also make sure the response don't include channels that are not on
-BT_CONNECT2 since the chan->ident can be set to the same value as in the
-following trace:
-
-< ACL Data TX: Handle 16 flags 0x00 dlen 12
-      LE L2CAP: LE Flow Control Credit (0x16) ident 6 len 4
-        Source CID: 64
-        Credits: 1
-...
-> ACL Data RX: Handle 16 flags 0x02 dlen 18
-      LE L2CAP: Enhanced Credit Connection Request (0x17) ident 6 len 10
-        PSM: 39 (0x0027)
-        MTU: 517
-        MPS: 251
-        Credits: 255
-        Source CID: 70
-< ACL Data TX: Handle 16 flags 0x00 dlen 20
-      LE L2CAP: Enhanced Credit Connection Response (0x18) ident 6 len 12
-        MTU: 517
-        MPS: 247
-        Credits: 3
-        Result: Connection successful (0x0000)
-        Destination CID: 64
-        Destination CID: 68
-
-Closes: https://github.com/bluez/bluez/issues/1094
-Fixes: 9aa9d9473f15 ("Bluetooth: L2CAP: Fix responding with wrong PDU type")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://lore.kernel.org/r/20221020173923.21342-1-colin.i.king@gmail.com/
+Stable-dep-of: add117e48df4 ("afs: Fix the server_list to unuse a displaced server rather than putting it")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/afs/volume.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 2a8051fae08c7..36d6122f2e12d 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -656,7 +656,8 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
- 	    test_bit(FLAG_HOLD_HCI_CONN, &chan->flags))
- 		hci_conn_hold(conn->hcon);
- 
--	list_add(&chan->list, &conn->chan_l);
-+	/* Append to the list since the order matters for ECRED */
-+	list_add_tail(&chan->list, &conn->chan_l);
- }
- 
- void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
-@@ -3995,7 +3996,11 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
+diff --git a/fs/afs/volume.c b/fs/afs/volume.c
+index a146d70efa650..c028598a903c9 100644
+--- a/fs/afs/volume.c
++++ b/fs/afs/volume.c
+@@ -76,11 +76,7 @@ static struct afs_volume *afs_alloc_volume(struct afs_fs_context *params,
  {
- 	struct l2cap_ecred_rsp_data *rsp = data;
+ 	struct afs_server_list *slist;
+ 	struct afs_volume *volume;
+-	int ret = -ENOMEM, nr_servers = 0, i;
+-
+-	for (i = 0; i < vldb->nr_servers; i++)
+-		if (vldb->fs_mask[i] & type_mask)
+-			nr_servers++;
++	int ret = -ENOMEM;
  
--	if (test_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
-+	/* Check if channel for outgoing connection or if it wasn't deferred
-+	 * since in those cases it must be skipped.
-+	 */
-+	if (test_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags) ||
-+	    !test_and_clear_bit(FLAG_DEFER_SETUP, &chan->flags))
- 		return;
- 
- 	/* Reset ident so only one response is sent */
+ 	volume = kzalloc(sizeof(struct afs_volume), GFP_KERNEL);
+ 	if (!volume)
 -- 
 2.39.5
 
