@@ -1,92 +1,99 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F3033C9;
-	Wed,  5 Mar 2025 14:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC7F24BC17;
+	Wed,  5 Mar 2025 17:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741183444; cv=none; b=mx5fcySQ/KvKwivOGGahfbYtc3Sq6zmGzezTXU/NTs+WBwX/RFtWLHyluiR+fjyuYoiA2D9Tok07nbfBDeAUZB1k3hgdJpP7C9ooWuzeQT7bQaCTuy3P56LZvU6zjjXIgRgYTNfVrsemkaBZt0oCbcMC4zen6WlYLFOV55UHgfU=
+	t=1741197011; cv=none; b=Ys3EpQP2azR2y7FQJuNbl07QTbZjav58Zcycqa29zoiDS3yee8mQOSOaPUBSfG53nhDuwCZIvjbsQ9OIJYeRCCbzDDPPt7cTc4ZcJ3Fdcax+yPyOpzezTqccKHKUgZDPeBC9cJtB+h9ZzBcQl/UrFV+iq82EL0t4pbi60dbXsu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741183444; c=relaxed/simple;
-	bh=HcsY7DDq4XH4OmEl92ldJL3YkDr23xKJetfRPqzjsGs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lxetNjM/flM35clbHO5ZwxW6Q50t33lGsxGPagxxUUflAiBrMb+IT92LRpWwj253aqQ+L/KaUC5vCJckqtBaGPW6vOFTsS12zaSyFbvZc1KgfZvd4/ceMTD84SfVCo7r3L/8CTTm2seVfXy4aS7Nu+PuKsdNG+CrydERGuQcYAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qydRrlYF; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741197011; c=relaxed/simple;
+	bh=yXq+p4W1Bv5Sj+GvZABCZ8NmeJWUOaNNAY1AQHuNnjA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IKC/TSU+JrjJTR4j/G4Trkqp1E/9BwzUKF1FvktoB4qFR2JosWfy8X/W0uUxrf+H8UFrVDoGm//vLreCe68eBo0aa57HBZJpgsCUYfJHm4WD+6gqkajTqgQlLkAMVrEbwtbd3XViRkYtPPR6cs49qiBzPENxdRUtw2EVlqMKhnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHDJKMuM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qydRrlYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7BDC4CED1;
-	Wed,  5 Mar 2025 14:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHDJKMuM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CAE9C4CED1;
+	Wed,  5 Mar 2025 17:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741183443;
-	bh=HcsY7DDq4XH4OmEl92ldJL3YkDr23xKJetfRPqzjsGs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qydRrlYFn41HVh4alDbihgeqoOewUuIYpjMRLbkhPx9lZgzsheLabrRLrcLTojXwz
-	 WhdNE2EHijZVi9WS2FoWbkzK8+OEkDxXCRnKV5x+wFFYFGZ0GUKI3KRND2debedK95
-	 btLd0PB8JXn743GyWKLt2SLlhXo7cgZcMy/dJF9k=
-Date: Wed, 5 Mar 2025 15:03:55 +0100
+	s=korg; t=1741197010;
+	bh=yXq+p4W1Bv5Sj+GvZABCZ8NmeJWUOaNNAY1AQHuNnjA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=jHDJKMuMVRqF7TxSnJqVBRjbwR3znLtbQGKK4ilCOV1iLLS5Q+2j+wGF4C4bG/LVz
+	 JL4UuDC/5RgmZk/dhwYj8hG1q/JGVfMs97nv4BbHy1fxhKzqgDdIg1Ib71gTkOhdIw
+	 dulutpvfEMolBusqFppxDGWHeQtfcv81ka910BCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Tianchen Ding <dtcccc@linux.alibaba.com>
-Cc: patches@lists.linux.dev, Zijian Zhang <zijianzhang@bytedance.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org,
-	Levi Zim <rsworktech@outlook.com>,
-	Daniel Borkmann <daniel@iogearbox.net>
-Subject: Re: [PATCH 6.6 238/676] bpf, sockmap: Several fixes to
- bpf_msg_pop_data
-Message-ID: <2025030512-lens-refill-2e71@gregkh>
-References: <20241206143653.344873888@linuxfoundation.org>
- <20241206143702.627526560@linuxfoundation.org>
- <445cf95d-b695-4e8d-b4ba-6ca0c12b1c52@linux.alibaba.com>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	"yang@os.amperecomputing.com, Naresh Kamboju" <naresh.kamboju@linaro.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>
+Subject: [PATCH 6.1 001/176] arm64: mte: Do not allow PROT_MTE on MAP_HUGETLB user mappings
+Date: Wed,  5 Mar 2025 18:46:10 +0100
+Message-ID: <20250305174505.502440313@linuxfoundation.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250305174505.437358097@linuxfoundation.org>
+References: <20250305174505.437358097@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <445cf95d-b695-4e8d-b4ba-6ca0c12b1c52@linux.alibaba.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Feb 27, 2025 at 05:40:02PM +0800, Tianchen Ding wrote:
-> Hi,
-> 
-> On 12/6/24 10:30 PM, Greg Kroah-Hartman wrote:
-> > 6.6-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Zijian Zhang <zijianzhang@bytedance.com>
-> > 
-> > [ Upstream commit 5d609ba262475db450ba69b8e8a557bd768ac07a ]
-> > 
-> > Several fixes to bpf_msg_pop_data,
-> > 1. In sk_msg_shift_left, we should put_page
-> > 2. if (len == 0), return early is better
-> > 3. pop the entire sk_msg (last == msg->sg.size) should be supported
-> > 4. Fix for the value of variable "a"
-> > 5. In sk_msg_shift_left, after shifting, i has already pointed to the next
-> > element. Addtional sk_msg_iter_var_next may result in BUG.
-> > 
-> > Fixes: 7246d8ed4dcc ("bpf: helper to pop data from messages")
-> > Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
-> > Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-> > Link: https://lore.kernel.org/r/20241106222520.527076-8-zijianzhang@bytedance.com
-> > Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> 
-> We found the kernel crashed when running kselftests (bpf/test_sockmap) in
-> kernel 6.6 LTS, which is introduced by this commit. I guess all other stable
-> kernels (containing this commit) are also affected.
-> 
-> Please consider backporting the following 2 commits:
-> fdf478d236dc ("skmsg: Return copied bytes in sk_msg_memcopy_from_iter")
-> 5153a75ef34b ("tcp_bpf: Fix copied value in tcp_bpf_sendmsg")
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-Please submit the tested series to us, properly backported, and we will
-be glad to review them for stable inclusion (remember to also properly
-send patches for newer stable releases as needed.)
+------------------
 
-thanks,
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-greg k-h
+PROT_MTE (memory tagging extensions) is not supported on all user mmap()
+types for various reasons (memory attributes, backing storage, CoW
+handling). The arm64 arch_validate_flags() function checks whether the
+VM_MTE_ALLOWED flag has been set for a vma during mmap(), usually by
+arch_calc_vm_flag_bits().
+
+Linux prior to 6.13 does not support PROT_MTE hugetlb mappings. This was
+added by commit 25c17c4b55de ("hugetlb: arm64: add mte support").
+However, earlier kernels inadvertently set VM_MTE_ALLOWED on
+(MAP_ANONYMOUS | MAP_HUGETLB) mappings by only checking for
+MAP_ANONYMOUS.
+
+Explicitly check MAP_HUGETLB in arch_calc_vm_flag_bits() and avoid
+setting VM_MTE_ALLOWED for such mappings.
+
+Fixes: 9f3419315f3c ("arm64: mte: Add PROT_MTE support to mmap() and mprotect()")
+Cc: <stable@vger.kernel.org> # 5.10.x-6.12.x
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ arch/arm64/include/asm/mman.h |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+--- a/arch/arm64/include/asm/mman.h
++++ b/arch/arm64/include/asm/mman.h
+@@ -31,9 +31,12 @@ static inline unsigned long arch_calc_vm
+ 	 * backed by tags-capable memory. The vm_flags may be overridden by a
+ 	 * filesystem supporting MTE (RAM-based).
+ 	 */
+-	if (system_supports_mte() &&
+-	    ((flags & MAP_ANONYMOUS) || shmem_file(file)))
+-		return VM_MTE_ALLOWED;
++	if (system_supports_mte()) {
++		if ((flags & MAP_ANONYMOUS) && !(flags & MAP_HUGETLB))
++			return VM_MTE_ALLOWED;
++		if (shmem_file(file))
++			return VM_MTE_ALLOWED;
++	}
+ 
+ 	return 0;
+ }
+
+
