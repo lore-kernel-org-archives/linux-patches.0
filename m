@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306F824C07D;
-	Wed,  5 Mar 2025 18:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912C624C07D;
+	Wed,  5 Mar 2025 18:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198426; cv=none; b=NWnRJgPEbeA5THEv1NG6H0JKzaGphehrHOokmJhtGjtQJYeMMNaMCWv2sMZRp71hi1U+HauHodqQe+pqMrG4WPVMwto7XTqgBCTEmMgkrJvWTfuv4K98o4f/VCWZwwKRzJ8CAAYCFBUG39dd6sp4N03CsdgB2oOhdwqQbhZEcSI=
+	t=1741198427; cv=none; b=rDDOBTVoSrRP6AHxdprE53UummfQr1eYOsl0Ck4Snq8k+5LLzKioQ5dw3xqcUNvwu3cn866ph3GpKFKEDHNKrPQMqfndj5WwNd91dS8EG+5Cjjh3+y4kzM6ZdOFNPPM7UB305RU74WjBmARJxhT7MDzr4eaYp7zxjagg1RfBub4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198426; c=relaxed/simple;
-	bh=nd7hyW9pb4AA9rL6YrRJBU3TcqUNoqI9etUavvGFK34=;
+	s=arc-20240116; t=1741198427; c=relaxed/simple;
+	bh=LXq70PEjj2xXr/YoSdOJLLxfh8PimtHPqzbJy83KEjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fy2EAnk1z3ZLOXu5QFCigb4qp5ELL/72NA8K2XSYnpGVqHRwS9ZjQopdUSak36qGoCIG0JafR7FWji/wblb4IC/v6mfkOyaR44t/bj1jI7YZnn100pNEG9MQwvMpDESwd4c8iq5nYRc2KPciXLrkWK4bfJnetZ7ZQainNf6U3Gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LujwxrbF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NzZ61LgSawIuF1/tL9xcZBZfJjlP4A9uIr0QfQ8SEhb3gVnao1Q/EpjxjcWIV0jOzUEq2YKRLL9O5gCqW9aHFHXk3tWRcZ/EWTX3iqxAHEUgzyqr2szvYjCLLGf5re6urKBDwM4oPZCeGnqFXQ98r9BotmXqV/zH/7k1Po8cQLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbMz7f+B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LujwxrbF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4373EC4CED1;
-	Wed,  5 Mar 2025 18:13:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbMz7f+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8A2C4CEE0;
+	Wed,  5 Mar 2025 18:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198424;
-	bh=nd7hyW9pb4AA9rL6YrRJBU3TcqUNoqI9etUavvGFK34=;
+	s=korg; t=1741198427;
+	bh=LXq70PEjj2xXr/YoSdOJLLxfh8PimtHPqzbJy83KEjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LujwxrbF0gBGs1c5ozrYY8hDPRDCjHOn5yITu+AJLrKkcfx5WrJKm7W/fDppVsMd0
-	 9BO+HGop1HUpBdVpYJ4p+e4jbBV+vcE0qcjv2eA3u2BSj4zfLnd6xTs9Afeald8Yat
-	 S5dwREnXMHSo/QH8R2TWk8oCz6yBQZUKzUM5GoDw=
+	b=MbMz7f+BvzPowlzIthY7i9bjzG8hO5gEmwPAoBhke7OffJrVEHW8/zyCi5ZzGwr/J
+	 NhGdKJ86FO6F7v3Y+hkGtIHn2oLl7SNfOUwqAXLzapgk7MPLFTwsDtRhiT0BypBwfr
+	 IEn0RvyX9j26Lm9sUQ1oX1z/ew9y0czpkC0RRG4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 006/157] RDMA/hns: Fix mbox timing out by adding retry mechanism
-Date: Wed,  5 Mar 2025 18:47:22 +0100
-Message-ID: <20250305174505.533418033@linuxfoundation.org>
+Subject: [PATCH 6.13 007/157] RDMA/bnxt_re: Add sanity checks on rdev validity
+Date: Wed,  5 Mar 2025 18:47:23 +0100
+Message-ID: <20250305174505.571739741@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -51,165 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 9747c0c7791d4a5a62018a0c9c563dd2e6f6c1c0 ]
+[ Upstream commit f0df225d12fcb049429fb5bf5122afe143c2dd15 ]
 
-If a QP is modified to error state and a flush CQE process is triggered,
-the subsequent QP destruction mbox can still be successfully posted but
-will be blocked in HW until the flush CQE process finishes. This causes
-further mbox posting timeouts in driver. The blocking time is related
-to QP depth. Considering an extreme case where SQ depth and RQ depth
-are both 32K, the blocking time can reach about 135ms.
+There is a possibility that ulp_irq_stop and ulp_irq_start
+callbacks will be called when the device is in detached state.
+This can cause a crash due to NULL pointer dereference as
+the rdev is already freed.
 
-This patch adds a retry mechanism for mbox posting. For each try, FW
-waits 15ms for HW to complete the previous mbox, otherwise return a
-timeout error code to driver. Counting other time consumption in FW,
-set 8 tries for mbox posting and a 5ms time gap before each retry to
-increase to a sufficient timeout limit.
-
-Fixes: 0425e3e6e0c7 ("RDMA/hns: Support flush cqe for hip08 in kernel space")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20250208105930.522796-1-huangjunxian6@hisilicon.com
+Fixes: cc5b9b48d447 ("RDMA/bnxt_re: Recover the device when FW error is detected")
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/1738657285-23968-3-git-send-email-selvin.xavier@broadcom.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 64 ++++++++++++++++------
- drivers/infiniband/hw/hns/hns_roce_hw_v2.h |  2 +
- 2 files changed, 50 insertions(+), 16 deletions(-)
+ drivers/infiniband/hw/bnxt_re/main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 0144e7210d05a..f5c3e560df58d 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -1286,10 +1286,8 @@ static u32 hns_roce_cmdq_tx_timeout(u16 opcode, u32 tx_timeout)
- 	return tx_timeout;
- }
+diff --git a/drivers/infiniband/hw/bnxt_re/main.c b/drivers/infiniband/hw/bnxt_re/main.c
+index c143f273b7596..7368b0482bb87 100644
+--- a/drivers/infiniband/hw/bnxt_re/main.c
++++ b/drivers/infiniband/hw/bnxt_re/main.c
+@@ -321,6 +321,8 @@ static void bnxt_re_stop_irq(void *handle)
+ 	int indx;
  
--static void hns_roce_wait_csq_done(struct hns_roce_dev *hr_dev, u16 opcode)
-+static void hns_roce_wait_csq_done(struct hns_roce_dev *hr_dev, u32 tx_timeout)
- {
--	struct hns_roce_v2_priv *priv = hr_dev->priv;
--	u32 tx_timeout = hns_roce_cmdq_tx_timeout(opcode, priv->cmq.tx_timeout);
- 	u32 timeout = 0;
+ 	rdev = en_info->rdev;
++	if (!rdev)
++		return;
+ 	rcfw = &rdev->rcfw;
  
- 	do {
-@@ -1299,8 +1297,9 @@ static void hns_roce_wait_csq_done(struct hns_roce_dev *hr_dev, u16 opcode)
- 	} while (++timeout < tx_timeout);
- }
+ 	for (indx = BNXT_RE_NQ_IDX; indx < rdev->nqr->num_msix; indx++) {
+@@ -341,6 +343,8 @@ static void bnxt_re_start_irq(void *handle, struct bnxt_msix_entry *ent)
+ 	int indx, rc;
  
--static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
--			       struct hns_roce_cmq_desc *desc, int num)
-+static int __hns_roce_cmq_send_one(struct hns_roce_dev *hr_dev,
-+				   struct hns_roce_cmq_desc *desc,
-+				   int num, u32 tx_timeout)
- {
- 	struct hns_roce_v2_priv *priv = hr_dev->priv;
- 	struct hns_roce_v2_cmq_ring *csq = &priv->cmq.csq;
-@@ -1309,8 +1308,6 @@ static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
- 	int ret;
- 	int i;
+ 	rdev = en_info->rdev;
++	if (!rdev)
++		return;
+ 	msix_ent = rdev->nqr->msix_entries;
+ 	rcfw = &rdev->rcfw;
+ 	if (!ent) {
+@@ -2356,6 +2360,7 @@ static int bnxt_re_suspend(struct auxiliary_device *adev, pm_message_t state)
+ 	ibdev_info(&rdev->ibdev, "%s: L2 driver notified to stop en_state 0x%lx",
+ 		   __func__, en_dev->en_state);
+ 	bnxt_re_remove_device(rdev, BNXT_RE_PRE_RECOVERY_REMOVE, adev);
++	bnxt_re_update_en_info_rdev(NULL, en_info, adev);
+ 	mutex_unlock(&bnxt_re_mutex);
  
--	spin_lock_bh(&csq->lock);
--
- 	tail = csq->head;
- 
- 	for (i = 0; i < num; i++) {
-@@ -1324,22 +1321,17 @@ static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
- 
- 	atomic64_inc(&hr_dev->dfx_cnt[HNS_ROCE_DFX_CMDS_CNT]);
- 
--	hns_roce_wait_csq_done(hr_dev, le16_to_cpu(desc->opcode));
-+	hns_roce_wait_csq_done(hr_dev, tx_timeout);
- 	if (hns_roce_cmq_csq_done(hr_dev)) {
- 		ret = 0;
- 		for (i = 0; i < num; i++) {
- 			/* check the result of hardware write back */
--			desc[i] = csq->desc[tail++];
-+			desc_ret = le16_to_cpu(csq->desc[tail++].retval);
- 			if (tail == csq->desc_num)
- 				tail = 0;
--
--			desc_ret = le16_to_cpu(desc[i].retval);
- 			if (likely(desc_ret == CMD_EXEC_SUCCESS))
- 				continue;
- 
--			dev_err_ratelimited(hr_dev->dev,
--					    "Cmdq IO error, opcode = 0x%x, return = 0x%x.\n",
--					    desc->opcode, desc_ret);
- 			ret = hns_roce_cmd_err_convert_errno(desc_ret);
- 		}
- 	} else {
-@@ -1354,14 +1346,54 @@ static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
- 		ret = -EAGAIN;
- 	}
- 
--	spin_unlock_bh(&csq->lock);
--
- 	if (ret)
- 		atomic64_inc(&hr_dev->dfx_cnt[HNS_ROCE_DFX_CMDS_ERR_CNT]);
- 
- 	return ret;
- }
- 
-+static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
-+			       struct hns_roce_cmq_desc *desc, int num)
-+{
-+	struct hns_roce_v2_priv *priv = hr_dev->priv;
-+	struct hns_roce_v2_cmq_ring *csq = &priv->cmq.csq;
-+	u16 opcode = le16_to_cpu(desc->opcode);
-+	u32 tx_timeout = hns_roce_cmdq_tx_timeout(opcode, priv->cmq.tx_timeout);
-+	u8 try_cnt = HNS_ROCE_OPC_POST_MB_TRY_CNT;
-+	u32 rsv_tail;
-+	int ret;
-+	int i;
-+
-+	while (try_cnt) {
-+		try_cnt--;
-+
-+		spin_lock_bh(&csq->lock);
-+		rsv_tail = csq->head;
-+		ret = __hns_roce_cmq_send_one(hr_dev, desc, num, tx_timeout);
-+		if (opcode == HNS_ROCE_OPC_POST_MB && ret == -ETIME &&
-+		    try_cnt) {
-+			spin_unlock_bh(&csq->lock);
-+			mdelay(HNS_ROCE_OPC_POST_MB_RETRY_GAP_MSEC);
-+			continue;
-+		}
-+
-+		for (i = 0; i < num; i++) {
-+			desc[i] = csq->desc[rsv_tail++];
-+			if (rsv_tail == csq->desc_num)
-+				rsv_tail = 0;
-+		}
-+		spin_unlock_bh(&csq->lock);
-+		break;
-+	}
-+
-+	if (ret)
-+		dev_err_ratelimited(hr_dev->dev,
-+				    "Cmdq IO error, opcode = 0x%x, return = %d.\n",
-+				    opcode, ret);
-+
-+	return ret;
-+}
-+
- static int hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
- 			     struct hns_roce_cmq_desc *desc, int num)
- {
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-index cbdbc9edbce6e..91a5665465ffb 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-@@ -230,6 +230,8 @@ enum hns_roce_opcode_type {
- };
- 
- #define HNS_ROCE_OPC_POST_MB_TIMEOUT 35000
-+#define HNS_ROCE_OPC_POST_MB_TRY_CNT 8
-+#define HNS_ROCE_OPC_POST_MB_RETRY_GAP_MSEC 5
- struct hns_roce_cmdq_tx_timeout_map {
- 	u16 opcode;
- 	u32 tx_timeout;
+ 	return 0;
 -- 
 2.39.5
 
