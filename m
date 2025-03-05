@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8245619C542;
-	Wed,  5 Mar 2025 18:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF0E1ACEDD;
+	Wed,  5 Mar 2025 18:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197975; cv=none; b=gQUdlk5P0rJ471zBljl6M72o4rACKtMx4BeV2elpQRZ8zHL0c0neTDwj+kuQ3nThyPZ/yfzZZ71BA4LD8t/5RKMjwNwdK2zWBUCgIJgdJFrI5Rfk2WqLIDhOJf1SNXs7j0GYe7M4la5odD1pKxt13AuZTac5SUNve8AY6iABs50=
+	t=1741197978; cv=none; b=npZRMQLsNYoTIoVNQqZ4AguqruiKgKU1EArkxftXXC8Xjw0H1wzhKd1UUsX01Q8cyY5hb9Ti6OPaZ82x1sK+zyTNH+RsFfcs5w+RAHUBYcOMq5EGnK76Q2FisBG8betry+1GzAD6I6u4SypN+knDNvENEa3919yCHsHwEd11Qfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197975; c=relaxed/simple;
-	bh=9+kxyz16AMhJGOy4ELXxxJMUD/HAiOeocdY+tVc3IYM=;
+	s=arc-20240116; t=1741197978; c=relaxed/simple;
+	bh=rheAOM3p8ft55Q71uARPnC2yJp+i+GGTymvOmsmDoJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ItnlsjEs0tbCDSKtmKPLlDqS/AS+jMVlgiunN7UnAlZeivukHG0RqVa9wh/v/PpocYEKcqv8LeyPhzCdIh3RNjDmp0fwInkHLTC9Vay/2K8aXl2VEZr+A1vr9mUsloRniHoU2GCXg9tlekYDslhU/+R6NOpu6kjgdH+LZ1yTPqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jNlvIQpF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IXkD/rR8m5VWos0dGZa+hEl3zFjjtc8sa7ng9KVPJ3qIw88Mced0IoP8X5ZBuO9thk99FR0DDYjJFoTRZiosvnUZftdgGKZTkaAp9yFX44yCKcNcC53ZUauhwId17Q/ANoaRGJX6my55xwJLVayxZW73NHRAc0ut/jvuWLlHyZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1Q8UCm/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jNlvIQpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21F2C4CEEC;
-	Wed,  5 Mar 2025 18:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1Q8UCm/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB128C4CED1;
+	Wed,  5 Mar 2025 18:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197975;
-	bh=9+kxyz16AMhJGOy4ELXxxJMUD/HAiOeocdY+tVc3IYM=;
+	s=korg; t=1741197978;
+	bh=rheAOM3p8ft55Q71uARPnC2yJp+i+GGTymvOmsmDoJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jNlvIQpFfXY15frpB8C3Let2wjysFSQXcG03TmSpfrDgMTAHV2f+aBdLXOVgX82SR
-	 leN12Ax5CME0BpbtjVhJsdB9fKKp15IIdNFbIO88cuXKJP8DkuMjBG2Z1bh7exCghz
-	 xAXuMBAgrBtWZJWfwitfuEHffO4QNAIZg3McxbHE=
+	b=O1Q8UCm/6PRbKWW7jsFBFbDzPBku76QKXbq6yNNozX1XhlNUwO7slkmkrhdhvTdle
+	 rqx9kYucakFFZ6gVMobhjna63SNAA7zfZSnMFKyuzsPK0qU1KpzSFFgYS2uezomQbi
+	 Vurlqf8YPhPpsE5mV15Dbri2W4+NvCMV4H2HoUPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Maor Gottlieb <maorg@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ye Bin <yebin10@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/150] RDMA/mlx5: Fix AH static rate parsing
-Date: Wed,  5 Mar 2025 18:47:31 +0100
-Message-ID: <20250305174504.702665498@linuxfoundation.org>
+Subject: [PATCH 6.12 023/150] scsi: core: Clear driver private data when retrying request
+Date: Wed,  5 Mar 2025 18:47:32 +0100
+Message-ID: <20250305174504.742837962@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -52,82 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit c534ffda781f44a1c6ac25ef6e0e444da38ca8af ]
+[ Upstream commit dce5c4afd035e8090a26e5d776b1682c0e649683 ]
 
-Previously static rate wasn't translated according to our PRM but simply
-used the 4 lower bytes.
+After commit 1bad6c4a57ef ("scsi: zero per-cmd private driver data for each
+MQ I/O"), the xen-scsifront/virtio_scsi/snic drivers all removed code that
+explicitly zeroed driver-private command data.
 
-Correctly translate static rate value passed in AH creation attribute
-according to our PRM expected values.
+In combination with commit 464a00c9e0ad ("scsi: core: Kill DRIVER_SENSE"),
+after virtio_scsi performs a capacity expansion, the first request will
+return a unit attention to indicate that the capacity has changed. And then
+the original command is retried. As driver-private command data was not
+cleared, the request would return UA again and eventually time out and fail.
 
-In addition change 800GB mapping to zero, which is the PRM
-specified value.
+Zero driver-private command data when a request is retried.
 
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
-Link: https://patch.msgid.link/18ef4cc5396caf80728341eb74738cd777596f60.1739187089.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: f7de50da1479 ("scsi: xen-scsifront: Remove code that zeroes driver-private command data")
+Fixes: c2bb87318baa ("scsi: virtio_scsi: Remove code that zeroes driver-private command data")
+Fixes: c3006a926468 ("scsi: snic: Remove code that zeroes driver-private command data")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20250217021628.2929248-1-yebin@huaweicloud.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/ah.c | 3 ++-
- drivers/infiniband/hw/mlx5/qp.c | 6 +++---
- drivers/infiniband/hw/mlx5/qp.h | 1 +
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/scsi/scsi_lib.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/ah.c b/drivers/infiniband/hw/mlx5/ah.c
-index 505bc47fd575d..99036afb3aef0 100644
---- a/drivers/infiniband/hw/mlx5/ah.c
-+++ b/drivers/infiniband/hw/mlx5/ah.c
-@@ -67,7 +67,8 @@ static void create_ib_ah(struct mlx5_ib_dev *dev, struct mlx5_ib_ah *ah,
- 		ah->av.tclass = grh->traffic_class;
- 	}
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index c9dde1ac9523e..3023b07dc483b 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -1653,13 +1653,6 @@ static blk_status_t scsi_prepare_cmd(struct request *req)
+ 	if (in_flight)
+ 		__set_bit(SCMD_STATE_INFLIGHT, &cmd->state);
  
--	ah->av.stat_rate_sl = (rdma_ah_get_static_rate(ah_attr) << 4);
-+	ah->av.stat_rate_sl =
-+		(mlx5r_ib_rate(dev, rdma_ah_get_static_rate(ah_attr)) << 4);
+-	/*
+-	 * Only clear the driver-private command data if the LLD does not supply
+-	 * a function to initialize that data.
+-	 */
+-	if (!shost->hostt->init_cmd_priv)
+-		memset(cmd + 1, 0, shost->hostt->cmd_size);
+-
+ 	cmd->prot_op = SCSI_PROT_NORMAL;
+ 	if (blk_rq_bytes(req))
+ 		cmd->sc_data_direction = rq_dma_dir(req);
+@@ -1826,6 +1819,13 @@ static blk_status_t scsi_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	if (!scsi_host_queue_ready(q, shost, sdev, cmd))
+ 		goto out_dec_target_busy;
  
- 	if (ah_attr->type == RDMA_AH_ATTR_TYPE_ROCE) {
- 		if (init_attr->xmit_slave)
-diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index 0d8a8b109a751..ded139b4e87aa 100644
---- a/drivers/infiniband/hw/mlx5/qp.c
-+++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -3420,11 +3420,11 @@ static int ib_to_mlx5_rate_map(u8 rate)
- 	return 0;
- }
- 
--static int ib_rate_to_mlx5(struct mlx5_ib_dev *dev, u8 rate)
-+int mlx5r_ib_rate(struct mlx5_ib_dev *dev, u8 rate)
- {
- 	u32 stat_rate_support;
- 
--	if (rate == IB_RATE_PORT_CURRENT)
-+	if (rate == IB_RATE_PORT_CURRENT || rate == IB_RATE_800_GBPS)
- 		return 0;
- 
- 	if (rate < IB_RATE_2_5_GBPS || rate > IB_RATE_800_GBPS)
-@@ -3569,7 +3569,7 @@ static int mlx5_set_path(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
- 		       sizeof(grh->dgid.raw));
- 	}
- 
--	err = ib_rate_to_mlx5(dev, rdma_ah_get_static_rate(ah));
-+	err = mlx5r_ib_rate(dev, rdma_ah_get_static_rate(ah));
- 	if (err < 0)
- 		return err;
- 	MLX5_SET(ads, path, stat_rate, err);
-diff --git a/drivers/infiniband/hw/mlx5/qp.h b/drivers/infiniband/hw/mlx5/qp.h
-index b6ee7c3ee1ca1..2530e7730635f 100644
---- a/drivers/infiniband/hw/mlx5/qp.h
-+++ b/drivers/infiniband/hw/mlx5/qp.h
-@@ -56,4 +56,5 @@ int mlx5_core_xrcd_dealloc(struct mlx5_ib_dev *dev, u32 xrcdn);
- int mlx5_ib_qp_set_counter(struct ib_qp *qp, struct rdma_counter *counter);
- int mlx5_ib_qp_event_init(void);
- void mlx5_ib_qp_event_cleanup(void);
-+int mlx5r_ib_rate(struct mlx5_ib_dev *dev, u8 rate);
- #endif /* _MLX5_IB_QP_H */
++	/*
++	 * Only clear the driver-private command data if the LLD does not supply
++	 * a function to initialize that data.
++	 */
++	if (shost->hostt->cmd_size && !shost->hostt->init_cmd_priv)
++		memset(cmd + 1, 0, shost->hostt->cmd_size);
++
+ 	if (!(req->rq_flags & RQF_DONTPREP)) {
+ 		ret = scsi_prepare_cmd(req);
+ 		if (ret != BLK_STS_OK)
 -- 
 2.39.5
 
