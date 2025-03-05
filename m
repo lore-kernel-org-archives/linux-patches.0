@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24305250C1C;
-	Wed,  5 Mar 2025 17:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBD9250C07;
+	Wed,  5 Mar 2025 17:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197543; cv=none; b=L4vOEaF3O3nfu8dUd9EYYDYi7ORADSG5VKD4EQV+oiLbPuLPbYvha7i8V+1nTmT68rsGkq4FXYYRxMp/RlOy0yiH+q0HQ9wKx1P+lNQovguqKVcmBlGt5fw14tu7hRCSnwDnzRkhVru40b59+V+x+p+7qC4tbKKS/aU/w6cu+pM=
+	t=1741197546; cv=none; b=E45vd/5ei84p91Xr85nPVivS0jOvv6g3C2waXselkps6+gQspBTbSVRcIQNCLYt4LH6vZJymIvvFI/ZGhobHXv8B0SziylnL0NRDoqSLGwVyLScBCxDGPw7huhGzdNea438s6K6nj9T4bXSDxgYEGHH3/GRhgt+1nHOPGKHrJKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197543; c=relaxed/simple;
-	bh=jS139xoVAaNR87ua1ukmM4eam7/fAZWvMIcme84mQsY=;
+	s=arc-20240116; t=1741197546; c=relaxed/simple;
+	bh=d0Bxg4WYmJ7UFU42cb1ocnIbi5tHzNDw0BFvTIwh7l8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gMTRJDeUM053EdaRW4Qqx2KIgequV/HoLx1UHzCYqrcocCH2R0/BCpvcuFPJXf1wGuSZqfZMmCI85m1ruZ6EUni5fNkerp5GzZ1pQ518GSm1/J4Ftjo79XuoKqAc4NPJIejJ80EKD9LARU06VGThhngOwYGDZkjTHfMSAzJ0SyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuqxxhW/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KkrNqkm8jmcEUsFud/RY7Co5Krx1vFLwFzAoKRKf4xFyWf2gGQ1gaDHI0v1JnY6BiN3f5YiYMDTQNp2zAseHu1MPrMPcgByEldNLM1rTrIF2kxQlesBvfFSZToHQSxedPDqiwfe85e0rHELijbRjMf14FDoziYvPcW3MHscrIEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kn7KwhNx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuqxxhW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37C5C4CED1;
-	Wed,  5 Mar 2025 17:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kn7KwhNx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F02FC4CED1;
+	Wed,  5 Mar 2025 17:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197543;
-	bh=jS139xoVAaNR87ua1ukmM4eam7/fAZWvMIcme84mQsY=;
+	s=korg; t=1741197545;
+	bh=d0Bxg4WYmJ7UFU42cb1ocnIbi5tHzNDw0BFvTIwh7l8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DuqxxhW/vtWZuoHgUX+83LhNRpZuf8ayqebH4FoSWpjY/aATmil3QzResHFiekD4G
-	 PSQ7VuVTZgqVZMWAGUPe978YhMeU2JqUybXQdiDpgQLDCWSBspBSR8OiqB6J6Mu2Fw
-	 4katC79qwfJ3lWkUGNAYiOfegAHW5pO9sQTIVEKg=
+	b=kn7KwhNx0fTNYXMrz84kDgCTsR/G7QQf3HEPxTvRjG17xVDE6XeE3AG2kyWLS1pzK
+	 fXB2v9vSgAJKQcKdg4KKsy7A+auBnCZTEugg0rfjdVyL9DuWdQ/8R6jDVo3pzcJVhw
+	 VdGXu4grIBTBwEeNxs5KLUgjZEsg0tvhNiqZBDuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/142] sunrpc: suppress warnings for unused procfs functions
-Date: Wed,  5 Mar 2025 18:47:15 +0100
-Message-ID: <20250305174500.996812001@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	John Keeping <jkeeping@inmusicbrands.com>
+Subject: [PATCH 6.6 017/142] ALSA: usb-audio: Avoid dropping MIDI events at closing multiple ports
+Date: Wed,  5 Mar 2025 18:47:16 +0100
+Message-ID: <20250305174501.035018290@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -53,69 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 1f7a4f98c11fbeb18ed21f3b3a497e90a50ad2e0 ]
+[ Upstream commit a3bdd8f5c2217e1cb35db02c2eed36ea20fb50f5 ]
 
-There is a warning about unused variables when building with W=1 and no procfs:
+We fixed the UAF issue in USB MIDI code by canceling the pending work
+at closing each MIDI output device in the commit below.  However, this
+assumed that it's the only one that is tied with the endpoint, and it
+resulted in unexpected data truncations when multiple devices are
+assigned to a single endpoint and opened simultaneously.
 
-net/sunrpc/cache.c:1660:30: error: 'cache_flush_proc_ops' defined but not used [-Werror=unused-const-variable=]
- 1660 | static const struct proc_ops cache_flush_proc_ops = {
-      |                              ^~~~~~~~~~~~~~~~~~~~
-net/sunrpc/cache.c:1622:30: error: 'content_proc_ops' defined but not used [-Werror=unused-const-variable=]
- 1622 | static const struct proc_ops content_proc_ops = {
-      |                              ^~~~~~~~~~~~~~~~
-net/sunrpc/cache.c:1598:30: error: 'cache_channel_proc_ops' defined but not used [-Werror=unused-const-variable=]
- 1598 | static const struct proc_ops cache_channel_proc_ops = {
-      |                              ^~~~~~~~~~~~~~~~~~~~~~
+For addressing the unexpected MIDI message drops, simply replace
+cancel_work_sync() with flush_work().  The drain callback should have
+been already invoked before the close callback, hence the port->active
+flag must be already cleared.  So this just assures that the pending
+work is finished before freeing the resources.
 
-These are used inside of an #ifdef, so replacing that with an
-IS_ENABLED() check lets the compiler see how they are used while
-still dropping them during dead code elimination.
-
-Fixes: dbf847ecb631 ("knfsd: allow cache_register to return error on failure")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Acked-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Fixes: 0125de38122f ("ALSA: usb-audio: Cancel pending work at closing a MIDI substream")
+Reported-and-tested-by: John Keeping <jkeeping@inmusicbrands.com>
+Closes: https://lore.kernel.org/20250217111647.3368132-1-jkeeping@inmusicbrands.com
+Link: https://patch.msgid.link/20250218114024.23125-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/cache.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ sound/usb/midi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/cache.c b/net/sunrpc/cache.c
-index 3298da2e37e43..cb6a6bc9fea77 100644
---- a/net/sunrpc/cache.c
-+++ b/net/sunrpc/cache.c
-@@ -1675,12 +1675,14 @@ static void remove_cache_proc_entries(struct cache_detail *cd)
- 	}
+diff --git a/sound/usb/midi.c b/sound/usb/midi.c
+index 6b0993258e039..6d861046b582b 100644
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -1145,7 +1145,7 @@ static int snd_usbmidi_output_close(struct snd_rawmidi_substream *substream)
+ {
+ 	struct usbmidi_out_port *port = substream->runtime->private_data;
+ 
+-	cancel_work_sync(&port->ep->work);
++	flush_work(&port->ep->work);
+ 	return substream_open(substream, 0, 0);
  }
  
--#ifdef CONFIG_PROC_FS
- static int create_cache_proc_entries(struct cache_detail *cd, struct net *net)
- {
- 	struct proc_dir_entry *p;
- 	struct sunrpc_net *sn;
- 
-+	if (!IS_ENABLED(CONFIG_PROC_FS))
-+		return 0;
-+
- 	sn = net_generic(net, sunrpc_net_id);
- 	cd->procfs = proc_mkdir(cd->name, sn->proc_net_rpc);
- 	if (cd->procfs == NULL)
-@@ -1708,12 +1710,6 @@ static int create_cache_proc_entries(struct cache_detail *cd, struct net *net)
- 	remove_cache_proc_entries(cd);
- 	return -ENOMEM;
- }
--#else /* CONFIG_PROC_FS */
--static int create_cache_proc_entries(struct cache_detail *cd, struct net *net)
--{
--	return 0;
--}
--#endif
- 
- void __init cache_initialize(void)
- {
 -- 
 2.39.5
 
