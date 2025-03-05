@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB35C78F3A;
-	Wed,  5 Mar 2025 18:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF7814B075;
+	Wed,  5 Mar 2025 18:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197702; cv=none; b=m1q2ptfbtCbvn9+BLkBaiU+eoyarSgWmuKFa5Lvgcr8vl9OWkws+02yqyTXvIZBT8lnlJJaCQmx2PGq9wxAnmiO1N7RKELFS9ygZ486yfWcBHsDx0xF9I+h43vHKs6phKGWSsh7wuiDPHAEGcf9pqvj2Xr1vZO7/vgyzXICG6WE=
+	t=1741197705; cv=none; b=ZbGkPTnfMuA7e3dFFvbQahzsW6wCi3OhUwS1I3AsMzFOcL8L71H4HIxcBOjX1rxtGlm9S/qsQsnNYtzBi1PaC/wx4LMAUU07SxvcKijwHVXbOCWwj+8dlC2PO4/t5kKiD3o/Cxvf4kJk8NSd+5bgYZsW5uX4SU8eC/Al/gH4P2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197702; c=relaxed/simple;
-	bh=iuJfuFSc1k5DP1SKBW12MP5WoQK9iBcVTEyrlZFaCDg=;
+	s=arc-20240116; t=1741197705; c=relaxed/simple;
+	bh=EVp+gSlkHH/QLz5w4GGEIDDk/k+CgZPqbdeZA6mpDYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XL4djdw9HMHuRYtsuMBQ7QVtVJvYMnf9zyfJm9Ylr4vJ/7UJQlSJpGMFhmbjgapvGAHlY2sb66bQABBgdyuG3ekOfYjoq0u8utkC2uVEyKzDHT5wijUf+82mq8W5DRF+S8Xmk6mPVv7XJZY0bnRYW1ggyeV4e/EacRVSkxgbRXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qS8RjzBA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mcBuPkrtDyAceS5kBvYzWDkEda6/5Malj/U4YwB8TaeOORCauEGXmSCogG7+xlCTmWH+xHi4lTxRsq5FCGU5znBK1Qb2aRFiQOP0CYZJWZ9w0kDFhhl0s2CnsqHs4Z5UGhMBFhb2HCb5yEevD+IBVgAALtTrtEFBdRm5w7sM9Bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9Y4+iqt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qS8RjzBA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A39C4CED1;
-	Wed,  5 Mar 2025 18:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9Y4+iqt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5792EC4CED1;
+	Wed,  5 Mar 2025 18:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197701;
-	bh=iuJfuFSc1k5DP1SKBW12MP5WoQK9iBcVTEyrlZFaCDg=;
+	s=korg; t=1741197704;
+	bh=EVp+gSlkHH/QLz5w4GGEIDDk/k+CgZPqbdeZA6mpDYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qS8RjzBAdW8iK0pEWw/zOrj4wQHIkkc87EwpPuiGo85hUodwKGNei6UWP5cTyyNh/
-	 KaTnIoP9zYsqC0eSppbg85A8pPBocWlNfrPZsx9IsBtbh3xUshHcDI/bcwC2jPVrUt
-	 9sDDA/vF17ip7lNMEZ9gNHxH5PkTDjwrbPNKpAvE=
+	b=y9Y4+iqtKEgJcnHsZ5VNTZfGee4X0BsyvRaRQWO/AM5JiwkPZH63s2jXuub0JpHxa
+	 FQ4ghZMPtDekbzS8NwvmuZCvIHlBBpmHFn0t6kCm+DFJdBg9tNz63ATVkyymReeKCC
+	 99Fgvcwi13zY0vUv06ZwQeKLuun/g0OWXQLUbpoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Milena Olech <milena.olech@intel.com>,
-	Dan Nowlin <dan.nowlin@intel.com>,
-	Scott Taylor <scott.w.taylor@intel.com>,
-	Pawel Chmielewski <pawel.chmielewski@intel.com>,
-	Simon Horman <horms@kernel.org>,
 	Paul Greenwalt <paul.greenwalt@intel.com>,
-	Tony Brelinski <tony.brelinski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/142] ice: Add E830 device IDs, MAC type and registers
-Date: Wed,  5 Mar 2025 18:47:37 +0100
-Message-ID: <20250305174501.868482060@linuxfoundation.org>
+Subject: [PATCH 6.6 039/142] ice: add E830 HW VF mailbox message limit support
+Date: Wed,  5 Mar 2025 18:47:38 +0100
+Message-ID: <20250305174501.909444829@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -60,472 +55,285 @@ Content-Transfer-Encoding: 8bit
 
 From: Paul Greenwalt <paul.greenwalt@intel.com>
 
-[ Upstream commit ba1124f58afd37d9ff155d4ab7c9f209346aaed9 ]
+[ Upstream commit 59f4d59b25aec39a015c0949f4ec235c7a839c44 ]
 
-E830 is the 200G NIC family which uses the ice driver.
+E830 adds hardware support to prevent the VF from overflowing the PF
+mailbox with VIRTCHNL messages. E830 will use the hardware feature
+(ICE_F_MBX_LIMIT) instead of the software solution ice_is_malicious_vf().
 
-Add specific E830 registers. Embed macros to use proper register based on
-(hw)->mac_type & name those macros to [ORIGINAL]_BY_MAC(hw). Registers
-only available on one of the macs will need to be explicitly referred to
-as E800_NAME instead of just NAME. PTP is not yet supported.
+To prevent a VF from overflowing the PF, the PF sets the number of
+messages per VF that can be in the PF's mailbox queue
+(ICE_MBX_OVERFLOW_WATERMARK). When the PF processes a message from a VF,
+the PF decrements the per VF message count using the E830_MBX_VF_DEC_TRIG
+register.
 
-Co-developed-by: Milena Olech <milena.olech@intel.com>
-Signed-off-by: Milena Olech <milena.olech@intel.com>
-Co-developed-by: Dan Nowlin <dan.nowlin@intel.com>
-Signed-off-by: Dan Nowlin <dan.nowlin@intel.com>
-Co-developed-by: Scott Taylor <scott.w.taylor@intel.com>
-Signed-off-by: Scott Taylor <scott.w.taylor@intel.com>
-Co-developed-by: Pawel Chmielewski <pawel.chmielewski@intel.com>
-Signed-off-by: Pawel Chmielewski <pawel.chmielewski@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
-Tested-by: Tony Brelinski <tony.brelinski@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20231025214157.1222758-2-jacob.e.keller@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Stable-dep-of: 79990cf5e7ad ("ice: Fix deinitializing VF in error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_common.c   | 71 ++++++++++++-------
- drivers/net/ethernet/intel/ice/ice_devids.h   | 10 ++-
- .../net/ethernet/intel/ice/ice_ethtool_fdir.c | 24 ++++---
- .../net/ethernet/intel/ice/ice_hw_autogen.h   | 52 ++++++++++----
- drivers/net/ethernet/intel/ice/ice_main.c     | 13 ++--
- drivers/net/ethernet/intel/ice/ice_type.h     |  3 +-
- .../ethernet/intel/ice/ice_virtchnl_fdir.c    | 29 +++++---
- 7 files changed, 141 insertions(+), 61 deletions(-)
+ drivers/net/ethernet/intel/ice/ice.h          |  1 +
+ .../net/ethernet/intel/ice/ice_hw_autogen.h   |  3 ++
+ drivers/net/ethernet/intel/ice/ice_lib.c      |  3 ++
+ drivers/net/ethernet/intel/ice/ice_main.c     | 24 ++++++++++----
+ drivers/net/ethernet/intel/ice/ice_sriov.c    |  3 +-
+ drivers/net/ethernet/intel/ice/ice_vf_lib.c   | 26 +++++++++++++--
+ drivers/net/ethernet/intel/ice/ice_vf_mbx.c   | 32 +++++++++++++++++++
+ drivers/net/ethernet/intel/ice/ice_vf_mbx.h   |  9 ++++++
+ drivers/net/ethernet/intel/ice/ice_virtchnl.c |  8 +++--
+ 9 files changed, 96 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
-index 80deca45ab599..983332cbace21 100644
---- a/drivers/net/ethernet/intel/ice/ice_common.c
-+++ b/drivers/net/ethernet/intel/ice/ice_common.c
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
--/* Copyright (c) 2018, Intel Corporation. */
-+/* Copyright (c) 2018-2023, Intel Corporation. */
- 
- #include "ice_common.h"
- #include "ice_sched.h"
-@@ -153,6 +153,12 @@ static int ice_set_mac_type(struct ice_hw *hw)
- 	case ICE_DEV_ID_E823L_SFP:
- 		hw->mac_type = ICE_MAC_GENERIC;
- 		break;
-+	case ICE_DEV_ID_E830_BACKPLANE:
-+	case ICE_DEV_ID_E830_QSFP56:
-+	case ICE_DEV_ID_E830_SFP:
-+	case ICE_DEV_ID_E830_SFP_DD:
-+		hw->mac_type = ICE_MAC_E830;
-+		break;
- 	default:
- 		hw->mac_type = ICE_MAC_UNKNOWN;
- 		break;
-@@ -684,8 +690,7 @@ static void
- ice_fill_tx_timer_and_fc_thresh(struct ice_hw *hw,
- 				struct ice_aqc_set_mac_cfg *cmd)
- {
--	u16 fc_thres_val, tx_timer_val;
--	u32 val;
-+	u32 val, fc_thres_m;
- 
- 	/* We read back the transmit timer and FC threshold value of
- 	 * LFC. Thus, we will use index =
-@@ -694,19 +699,32 @@ ice_fill_tx_timer_and_fc_thresh(struct ice_hw *hw,
- 	 * Also, because we are operating on transmit timer and FC
- 	 * threshold of LFC, we don't turn on any bit in tx_tmr_priority
- 	 */
--#define IDX_OF_LFC PRTMAC_HSEC_CTL_TX_PAUSE_QUANTA_MAX_INDEX
--
--	/* Retrieve the transmit timer */
--	val = rd32(hw, PRTMAC_HSEC_CTL_TX_PAUSE_QUANTA(IDX_OF_LFC));
--	tx_timer_val = val &
--		PRTMAC_HSEC_CTL_TX_PAUSE_QUANTA_HSEC_CTL_TX_PAUSE_QUANTA_M;
--	cmd->tx_tmr_value = cpu_to_le16(tx_timer_val);
--
--	/* Retrieve the FC threshold */
--	val = rd32(hw, PRTMAC_HSEC_CTL_TX_PAUSE_REFRESH_TIMER(IDX_OF_LFC));
--	fc_thres_val = val & PRTMAC_HSEC_CTL_TX_PAUSE_REFRESH_TIMER_M;
--
--	cmd->fc_refresh_threshold = cpu_to_le16(fc_thres_val);
-+#define E800_IDX_OF_LFC E800_PRTMAC_HSEC_CTL_TX_PS_QNT_MAX
-+#define E800_REFRESH_TMR E800_PRTMAC_HSEC_CTL_TX_PS_RFSH_TMR
-+
-+	if (hw->mac_type == ICE_MAC_E830) {
-+		/* Retrieve the transmit timer */
-+		val = rd32(hw, E830_PRTMAC_CL01_PS_QNT);
-+		cmd->tx_tmr_value =
-+			le16_encode_bits(val, E830_PRTMAC_CL01_PS_QNT_CL0_M);
-+
-+		/* Retrieve the fc threshold */
-+		val = rd32(hw, E830_PRTMAC_CL01_QNT_THR);
-+		fc_thres_m = E830_PRTMAC_CL01_QNT_THR_CL0_M;
-+	} else {
-+		/* Retrieve the transmit timer */
-+		val = rd32(hw,
-+			   E800_PRTMAC_HSEC_CTL_TX_PS_QNT(E800_IDX_OF_LFC));
-+		cmd->tx_tmr_value =
-+			le16_encode_bits(val,
-+					 E800_PRTMAC_HSEC_CTL_TX_PS_QNT_M);
-+
-+		/* Retrieve the fc threshold */
-+		val = rd32(hw,
-+			   E800_REFRESH_TMR(E800_IDX_OF_LFC));
-+		fc_thres_m = E800_PRTMAC_HSEC_CTL_TX_PS_RFSH_TMR_M;
-+	}
-+	cmd->fc_refresh_threshold = le16_encode_bits(val, fc_thres_m);
- }
- 
- /**
-@@ -2389,16 +2407,21 @@ ice_parse_1588_func_caps(struct ice_hw *hw, struct ice_hw_func_caps *func_p,
- static void
- ice_parse_fdir_func_caps(struct ice_hw *hw, struct ice_hw_func_caps *func_p)
- {
--	u32 reg_val, val;
-+	u32 reg_val, gsize, bsize;
- 
- 	reg_val = rd32(hw, GLQF_FD_SIZE);
--	val = (reg_val & GLQF_FD_SIZE_FD_GSIZE_M) >>
--		GLQF_FD_SIZE_FD_GSIZE_S;
--	func_p->fd_fltr_guar =
--		ice_get_num_per_func(hw, val);
--	val = (reg_val & GLQF_FD_SIZE_FD_BSIZE_M) >>
--		GLQF_FD_SIZE_FD_BSIZE_S;
--	func_p->fd_fltr_best_effort = val;
-+	switch (hw->mac_type) {
-+	case ICE_MAC_E830:
-+		gsize = FIELD_GET(E830_GLQF_FD_SIZE_FD_GSIZE_M, reg_val);
-+		bsize = FIELD_GET(E830_GLQF_FD_SIZE_FD_BSIZE_M, reg_val);
-+		break;
-+	case ICE_MAC_E810:
-+	default:
-+		gsize = FIELD_GET(E800_GLQF_FD_SIZE_FD_GSIZE_M, reg_val);
-+		bsize = FIELD_GET(E800_GLQF_FD_SIZE_FD_BSIZE_M, reg_val);
-+	}
-+	func_p->fd_fltr_guar = ice_get_num_per_func(hw, gsize);
-+	func_p->fd_fltr_best_effort = bsize;
- 
- 	ice_debug(hw, ICE_DBG_INIT, "func caps: fd_fltr_guar = %d\n",
- 		  func_p->fd_fltr_guar);
-diff --git a/drivers/net/ethernet/intel/ice/ice_devids.h b/drivers/net/ethernet/intel/ice/ice_devids.h
-index 6d560d1c74a4a..a2d384dbfc767 100644
---- a/drivers/net/ethernet/intel/ice/ice_devids.h
-+++ b/drivers/net/ethernet/intel/ice/ice_devids.h
-@@ -1,5 +1,5 @@
- /* SPDX-License-Identifier: GPL-2.0 */
--/* Copyright (c) 2018, Intel Corporation. */
-+/* Copyright (c) 2018-2023, Intel Corporation. */
- 
- #ifndef _ICE_DEVIDS_H_
- #define _ICE_DEVIDS_H_
-@@ -16,6 +16,14 @@
- #define ICE_DEV_ID_E823L_1GBE		0x124F
- /* Intel(R) Ethernet Connection E823-L for QSFP */
- #define ICE_DEV_ID_E823L_QSFP		0x151D
-+/* Intel(R) Ethernet Controller E830-C for backplane */
-+#define ICE_DEV_ID_E830_BACKPLANE	0x12D1
-+/* Intel(R) Ethernet Controller E830-C for QSFP */
-+#define ICE_DEV_ID_E830_QSFP56		0x12D2
-+/* Intel(R) Ethernet Controller E830-C for SFP */
-+#define ICE_DEV_ID_E830_SFP		0x12D3
-+/* Intel(R) Ethernet Controller E830-C for SFP-DD */
-+#define ICE_DEV_ID_E830_SFP_DD		0x12D4
- /* Intel(R) Ethernet Controller E810-C for backplane */
- #define ICE_DEV_ID_E810C_BACKPLANE	0x1591
- /* Intel(R) Ethernet Controller E810-C for QSFP */
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-index b6bbf2376ef5c..d43b642cbc01c 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
--/* Copyright (C) 2018-2020, Intel Corporation. */
-+/* Copyright (C) 2018-2023, Intel Corporation. */
- 
- /* flow director ethtool support for ice */
- 
-@@ -540,16 +540,24 @@ int ice_fdir_num_avail_fltr(struct ice_hw *hw, struct ice_vsi *vsi)
- 	/* total guaranteed filters assigned to this VSI */
- 	num_guar = vsi->num_gfltr;
- 
--	/* minus the guaranteed filters programed by this VSI */
--	num_guar -= (rd32(hw, VSIQF_FD_CNT(vsi_num)) &
--		     VSIQF_FD_CNT_FD_GCNT_M) >> VSIQF_FD_CNT_FD_GCNT_S;
--
- 	/* total global best effort filters */
- 	num_be = hw->func_caps.fd_fltr_best_effort;
- 
--	/* minus the global best effort filters programmed */
--	num_be -= (rd32(hw, GLQF_FD_CNT) & GLQF_FD_CNT_FD_BCNT_M) >>
--		   GLQF_FD_CNT_FD_BCNT_S;
-+	/* Subtract the number of programmed filters from the global values */
-+	switch (hw->mac_type) {
-+	case ICE_MAC_E830:
-+		num_guar -= FIELD_GET(E830_VSIQF_FD_CNT_FD_GCNT_M,
-+				      rd32(hw, VSIQF_FD_CNT(vsi_num)));
-+		num_be -= FIELD_GET(E830_GLQF_FD_CNT_FD_BCNT_M,
-+				    rd32(hw, GLQF_FD_CNT));
-+		break;
-+	case ICE_MAC_E810:
-+	default:
-+		num_guar -= FIELD_GET(E800_VSIQF_FD_CNT_FD_GCNT_M,
-+				      rd32(hw, VSIQF_FD_CNT(vsi_num)));
-+		num_be -= FIELD_GET(E800_GLQF_FD_CNT_FD_BCNT_M,
-+				    rd32(hw, GLQF_FD_CNT));
-+	}
- 
- 	return num_guar + num_be;
- }
-diff --git a/drivers/net/ethernet/intel/ice/ice_hw_autogen.h b/drivers/net/ethernet/intel/ice/ice_hw_autogen.h
-index 531cc2194741e..67519a985b327 100644
---- a/drivers/net/ethernet/intel/ice/ice_hw_autogen.h
-+++ b/drivers/net/ethernet/intel/ice/ice_hw_autogen.h
-@@ -1,5 +1,5 @@
- /* SPDX-License-Identifier: GPL-2.0 */
--/* Copyright (c) 2018, Intel Corporation. */
-+/* Copyright (c) 2018-2023, Intel Corporation. */
- 
- /* Machine-generated file */
- 
-@@ -284,11 +284,11 @@
- #define VPLAN_TX_QBASE_VFNUMQ_M			ICE_M(0xFF, 16)
- #define VPLAN_TXQ_MAPENA(_VF)			(0x00073800 + ((_VF) * 4))
- #define VPLAN_TXQ_MAPENA_TX_ENA_M		BIT(0)
--#define PRTMAC_HSEC_CTL_TX_PAUSE_QUANTA(_i)	(0x001E36E0 + ((_i) * 32))
--#define PRTMAC_HSEC_CTL_TX_PAUSE_QUANTA_MAX_INDEX 8
--#define PRTMAC_HSEC_CTL_TX_PAUSE_QUANTA_HSEC_CTL_TX_PAUSE_QUANTA_M ICE_M(0xFFFF, 0)
--#define PRTMAC_HSEC_CTL_TX_PAUSE_REFRESH_TIMER(_i) (0x001E3800 + ((_i) * 32))
--#define PRTMAC_HSEC_CTL_TX_PAUSE_REFRESH_TIMER_M ICE_M(0xFFFF, 0)
-+#define E800_PRTMAC_HSEC_CTL_TX_PS_QNT(_i)	(0x001E36E0 + ((_i) * 32))
-+#define E800_PRTMAC_HSEC_CTL_TX_PS_QNT_MAX	8
-+#define E800_PRTMAC_HSEC_CTL_TX_PS_QNT_M	GENMASK(15, 0)
-+#define E800_PRTMAC_HSEC_CTL_TX_PS_RFSH_TMR(_i)	(0x001E3800 + ((_i) * 32))
-+#define E800_PRTMAC_HSEC_CTL_TX_PS_RFSH_TMR_M	GENMASK(15, 0)
- #define GL_MDCK_TX_TDPU				0x00049348
- #define GL_MDCK_TX_TDPU_RCU_ANTISPOOF_ITR_DIS_M BIT(1)
- #define GL_MDET_RX				0x00294C00
-@@ -311,7 +311,11 @@
- #define GL_MDET_TX_PQM_MAL_TYPE_S		26
- #define GL_MDET_TX_PQM_MAL_TYPE_M		ICE_M(0x1F, 26)
- #define GL_MDET_TX_PQM_VALID_M			BIT(31)
--#define GL_MDET_TX_TCLAN			0x000FC068
-+#define GL_MDET_TX_TCLAN_BY_MAC(hw)				  \
-+	((hw)->mac_type == ICE_MAC_E830 ? E830_GL_MDET_TX_TCLAN : \
-+	 E800_GL_MDET_TX_TCLAN)
-+#define E800_GL_MDET_TX_TCLAN			0x000FC068
-+#define E830_GL_MDET_TX_TCLAN			0x000FCCC0
- #define GL_MDET_TX_TCLAN_QNUM_S			0
- #define GL_MDET_TX_TCLAN_QNUM_M			ICE_M(0x7FFF, 0)
- #define GL_MDET_TX_TCLAN_VF_NUM_S		15
-@@ -325,7 +329,11 @@
- #define PF_MDET_RX_VALID_M			BIT(0)
- #define PF_MDET_TX_PQM				0x002D2C80
- #define PF_MDET_TX_PQM_VALID_M			BIT(0)
--#define PF_MDET_TX_TCLAN			0x000FC000
-+#define PF_MDET_TX_TCLAN_BY_MAC(hw)				  \
-+	((hw)->mac_type == ICE_MAC_E830 ? E830_PF_MDET_TX_TCLAN : \
-+	 E800_PF_MDET_TX_TCLAN)
-+#define E800_PF_MDET_TX_TCLAN			0x000FC000
-+#define E830_PF_MDET_TX_TCLAN			0x000FCC00
- #define PF_MDET_TX_TCLAN_VALID_M		BIT(0)
- #define VP_MDET_RX(_VF)				(0x00294400 + ((_VF) * 4))
- #define VP_MDET_RX_VALID_M			BIT(0)
-@@ -335,6 +343,8 @@
- #define VP_MDET_TX_TCLAN_VALID_M		BIT(0)
- #define VP_MDET_TX_TDPU(_VF)			(0x00040000 + ((_VF) * 4))
- #define VP_MDET_TX_TDPU_VALID_M			BIT(0)
-+#define E800_GL_MNG_FWSM_FW_MODES_M		GENMASK(2, 0)
-+#define E830_GL_MNG_FWSM_FW_MODES_M		GENMASK(1, 0)
- #define GL_MNG_FWSM				0x000B6134
- #define GL_MNG_FWSM_FW_LOADING_M		BIT(30)
- #define GLNVM_FLA				0x000B6108
-@@ -363,13 +373,18 @@
- #define GL_PWR_MODE_CTL_CAR_MAX_BW_S		30
- #define GL_PWR_MODE_CTL_CAR_MAX_BW_M		ICE_M(0x3, 30)
- #define GLQF_FD_CNT				0x00460018
-+#define E800_GLQF_FD_CNT_FD_GCNT_M		GENMASK(14, 0)
-+#define E830_GLQF_FD_CNT_FD_GCNT_M		GENMASK(15, 0)
- #define GLQF_FD_CNT_FD_BCNT_S			16
--#define GLQF_FD_CNT_FD_BCNT_M			ICE_M(0x7FFF, 16)
-+#define E800_GLQF_FD_CNT_FD_BCNT_M		GENMASK(30, 16)
-+#define E830_GLQF_FD_CNT_FD_BCNT_M		GENMASK(31, 16)
- #define GLQF_FD_SIZE				0x00460010
- #define GLQF_FD_SIZE_FD_GSIZE_S			0
--#define GLQF_FD_SIZE_FD_GSIZE_M			ICE_M(0x7FFF, 0)
-+#define E800_GLQF_FD_SIZE_FD_GSIZE_M		GENMASK(14, 0)
-+#define E830_GLQF_FD_SIZE_FD_GSIZE_M		GENMASK(15, 0)
- #define GLQF_FD_SIZE_FD_BSIZE_S			16
--#define GLQF_FD_SIZE_FD_BSIZE_M			ICE_M(0x7FFF, 16)
-+#define E800_GLQF_FD_SIZE_FD_BSIZE_M		GENMASK(30, 16)
-+#define E830_GLQF_FD_SIZE_FD_BSIZE_M		GENMASK(31, 16)
- #define GLQF_FDINSET(_i, _j)			(0x00412000 + ((_i) * 4 + (_j) * 512))
- #define GLQF_FDMASK(_i)				(0x00410800 + ((_i) * 4))
- #define GLQF_FDMASK_MAX_INDEX			31
-@@ -388,6 +403,10 @@
- #define GLQF_HMASK_SEL(_i)			(0x00410000 + ((_i) * 4))
- #define GLQF_HMASK_SEL_MAX_INDEX		127
- #define GLQF_HMASK_SEL_MASK_SEL_S		0
-+#define E800_PFQF_FD_CNT_FD_GCNT_M		GENMASK(14, 0)
-+#define E830_PFQF_FD_CNT_FD_GCNT_M		GENMASK(15, 0)
-+#define E800_PFQF_FD_CNT_FD_BCNT_M		GENMASK(30, 16)
-+#define E830_PFQF_FD_CNT_FD_BCNT_M		GENMASK(31, 16)
- #define PFQF_FD_ENA				0x0043A000
- #define PFQF_FD_ENA_FD_ENA_M			BIT(0)
- #define PFQF_FD_SIZE				0x00460100
-@@ -478,6 +497,7 @@
- #define GLTSYN_SYNC_DLAY			0x00088818
- #define GLTSYN_TGT_H_0(_i)			(0x00088930 + ((_i) * 4))
- #define GLTSYN_TGT_L_0(_i)			(0x00088928 + ((_i) * 4))
-+#define GLTSYN_TIME_0(_i)			(0x000888C8 + ((_i) * 4))
- #define GLTSYN_TIME_H(_i)			(0x000888D8 + ((_i) * 4))
- #define GLTSYN_TIME_L(_i)			(0x000888D0 + ((_i) * 4))
- #define PFHH_SEM				0x000A4200 /* Reset Source: PFR */
-@@ -486,9 +506,11 @@
- #define PFTSYN_SEM_BUSY_M			BIT(0)
- #define VSIQF_FD_CNT(_VSI)			(0x00464000 + ((_VSI) * 4))
- #define VSIQF_FD_CNT_FD_GCNT_S			0
--#define VSIQF_FD_CNT_FD_GCNT_M			ICE_M(0x3FFF, 0)
-+#define E800_VSIQF_FD_CNT_FD_GCNT_M		GENMASK(13, 0)
-+#define E830_VSIQF_FD_CNT_FD_GCNT_M		GENMASK(15, 0)
- #define VSIQF_FD_CNT_FD_BCNT_S			16
--#define VSIQF_FD_CNT_FD_BCNT_M			ICE_M(0x3FFF, 16)
-+#define E800_VSIQF_FD_CNT_FD_BCNT_M		GENMASK(29, 16)
-+#define E830_VSIQF_FD_CNT_FD_BCNT_M		GENMASK(31, 16)
- #define VSIQF_FD_SIZE(_VSI)			(0x00462000 + ((_VSI) * 4))
- #define VSIQF_HKEY_MAX_INDEX			12
- #define PFPM_APM				0x000B8080
-@@ -500,6 +522,10 @@
- #define PFPM_WUS_MAG_M				BIT(1)
- #define PFPM_WUS_MNG_M				BIT(3)
- #define PFPM_WUS_FW_RST_WK_M			BIT(31)
-+#define E830_PRTMAC_CL01_PS_QNT			0x001E32A0
-+#define E830_PRTMAC_CL01_PS_QNT_CL0_M		GENMASK(15, 0)
-+#define E830_PRTMAC_CL01_QNT_THR		0x001E3320
-+#define E830_PRTMAC_CL01_QNT_THR_CL0_M		GENMASK(15, 0)
- #define VFINT_DYN_CTLN(_i)			(0x00003800 + ((_i) * 4))
- #define VFINT_DYN_CTLN_CLEARPBA_M		BIT(1)
- 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 9f12c9a0fe296..ef5d43f2804e7 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
--/* Copyright (c) 2018, Intel Corporation. */
-+/* Copyright (c) 2018-2023, Intel Corporation. */
- 
- /* Intel(R) Ethernet Connection E800 Series Linux Driver */
- 
-@@ -1748,7 +1748,7 @@ static void ice_handle_mdd_event(struct ice_pf *pf)
- 		wr32(hw, GL_MDET_TX_PQM, 0xffffffff);
- 	}
- 
--	reg = rd32(hw, GL_MDET_TX_TCLAN);
-+	reg = rd32(hw, GL_MDET_TX_TCLAN_BY_MAC(hw));
- 	if (reg & GL_MDET_TX_TCLAN_VALID_M) {
- 		u8 pf_num = (reg & GL_MDET_TX_TCLAN_PF_NUM_M) >>
- 				GL_MDET_TX_TCLAN_PF_NUM_S;
-@@ -1762,7 +1762,7 @@ static void ice_handle_mdd_event(struct ice_pf *pf)
- 		if (netif_msg_tx_err(pf))
- 			dev_info(dev, "Malicious Driver Detection event %d on TX queue %d PF# %d VF# %d\n",
- 				 event, queue, pf_num, vf_num);
--		wr32(hw, GL_MDET_TX_TCLAN, 0xffffffff);
-+		wr32(hw, GL_MDET_TX_TCLAN_BY_MAC(hw), U32_MAX);
- 	}
- 
- 	reg = rd32(hw, GL_MDET_RX);
-@@ -1790,9 +1790,9 @@ static void ice_handle_mdd_event(struct ice_pf *pf)
- 			dev_info(dev, "Malicious Driver Detection event TX_PQM detected on PF\n");
- 	}
- 
--	reg = rd32(hw, PF_MDET_TX_TCLAN);
-+	reg = rd32(hw, PF_MDET_TX_TCLAN_BY_MAC(hw));
- 	if (reg & PF_MDET_TX_TCLAN_VALID_M) {
--		wr32(hw, PF_MDET_TX_TCLAN, 0xFFFF);
-+		wr32(hw, PF_MDET_TX_TCLAN_BY_MAC(hw), 0xffff);
- 		if (netif_msg_tx_err(pf))
- 			dev_info(dev, "Malicious Driver Detection event TX_TCLAN detected on PF\n");
- 	}
-@@ -3873,7 +3873,8 @@ static void ice_set_pf_caps(struct ice_pf *pf)
- 	}
- 
- 	clear_bit(ICE_FLAG_PTP_SUPPORTED, pf->flags);
--	if (func_caps->common_cap.ieee_1588)
-+	if (func_caps->common_cap.ieee_1588 &&
-+	    !(pf->hw.mac_type == ICE_MAC_E830))
- 		set_bit(ICE_FLAG_PTP_SUPPORTED, pf->flags);
- 
- 	pf->max_pf_txqs = func_caps->common_cap.num_txq;
-diff --git a/drivers/net/ethernet/intel/ice/ice_type.h b/drivers/net/ethernet/intel/ice/ice_type.h
-index 5e353b0cbe6f7..35ee5b29ea34e 100644
---- a/drivers/net/ethernet/intel/ice/ice_type.h
-+++ b/drivers/net/ethernet/intel/ice/ice_type.h
-@@ -1,5 +1,5 @@
- /* SPDX-License-Identifier: GPL-2.0 */
--/* Copyright (c) 2018, Intel Corporation. */
-+/* Copyright (c) 2018-2023, Intel Corporation. */
- 
- #ifndef _ICE_TYPE_H_
- #define _ICE_TYPE_H_
-@@ -129,6 +129,7 @@ enum ice_set_fc_aq_failures {
- enum ice_mac_type {
- 	ICE_MAC_UNKNOWN = 0,
- 	ICE_MAC_E810,
-+	ICE_MAC_E830,
- 	ICE_MAC_GENERIC,
+diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
+index f943964ec05ae..e29a7ffd5f143 100644
+--- a/drivers/net/ethernet/intel/ice/ice.h
++++ b/drivers/net/ethernet/intel/ice/ice.h
+@@ -202,6 +202,7 @@ enum ice_feature {
+ 	ICE_F_GNSS,
+ 	ICE_F_ROCE_LAG,
+ 	ICE_F_SRIOV_LAG,
++	ICE_F_MBX_LIMIT,
+ 	ICE_F_MAX
  };
  
-diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-index 974c71490d97c..3ca5f44dea26e 100644
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
--/* Copyright (C) 2021, Intel Corporation. */
-+/* Copyright (C) 2021-2023, Intel Corporation. */
+diff --git a/drivers/net/ethernet/intel/ice/ice_hw_autogen.h b/drivers/net/ethernet/intel/ice/ice_hw_autogen.h
+index 67519a985b327..96f70c0a96598 100644
+--- a/drivers/net/ethernet/intel/ice/ice_hw_autogen.h
++++ b/drivers/net/ethernet/intel/ice/ice_hw_autogen.h
+@@ -528,5 +528,8 @@
+ #define E830_PRTMAC_CL01_QNT_THR_CL0_M		GENMASK(15, 0)
+ #define VFINT_DYN_CTLN(_i)			(0x00003800 + ((_i) * 4))
+ #define VFINT_DYN_CTLN_CLEARPBA_M		BIT(1)
++#define E830_MBX_PF_IN_FLIGHT_VF_MSGS_THRESH	0x00234000
++#define E830_MBX_VF_DEC_TRIG(_VF)		(0x00233800 + (_VF) * 4)
++#define E830_MBX_VF_IN_FLIGHT_MSGS_AT_PF_CNT(_VF)	(0x00233000 + (_VF) * 4)
  
- #include "ice.h"
- #include "ice_base.h"
-@@ -1421,8 +1421,8 @@ ice_vc_fdir_irq_handler(struct ice_vsi *ctrl_vsi,
-  */
- static void ice_vf_fdir_dump_info(struct ice_vf *vf)
- {
-+	u32 fd_size, fd_cnt, fd_size_g, fd_cnt_g, fd_size_b, fd_cnt_b;
- 	struct ice_vsi *vf_vsi;
--	u32 fd_size, fd_cnt;
- 	struct device *dev;
- 	struct ice_pf *pf;
- 	struct ice_hw *hw;
-@@ -1441,12 +1441,25 @@ static void ice_vf_fdir_dump_info(struct ice_vf *vf)
- 
- 	fd_size = rd32(hw, VSIQF_FD_SIZE(vsi_num));
- 	fd_cnt = rd32(hw, VSIQF_FD_CNT(vsi_num));
--	dev_dbg(dev, "VF %d: space allocated: guar:0x%x, be:0x%x, space consumed: guar:0x%x, be:0x%x\n",
--		vf->vf_id,
--		(fd_size & VSIQF_FD_CNT_FD_GCNT_M) >> VSIQF_FD_CNT_FD_GCNT_S,
--		(fd_size & VSIQF_FD_CNT_FD_BCNT_M) >> VSIQF_FD_CNT_FD_BCNT_S,
--		(fd_cnt & VSIQF_FD_CNT_FD_GCNT_M) >> VSIQF_FD_CNT_FD_GCNT_S,
--		(fd_cnt & VSIQF_FD_CNT_FD_BCNT_M) >> VSIQF_FD_CNT_FD_BCNT_S);
-+	switch (hw->mac_type) {
-+	case ICE_MAC_E830:
-+		fd_size_g = FIELD_GET(E830_VSIQF_FD_CNT_FD_GCNT_M, fd_size);
-+		fd_size_b = FIELD_GET(E830_VSIQF_FD_CNT_FD_BCNT_M, fd_size);
-+		fd_cnt_g = FIELD_GET(E830_VSIQF_FD_CNT_FD_GCNT_M, fd_cnt);
-+		fd_cnt_b = FIELD_GET(E830_VSIQF_FD_CNT_FD_BCNT_M, fd_cnt);
-+		break;
-+	case ICE_MAC_E810:
-+	default:
-+		fd_size_g = FIELD_GET(E800_VSIQF_FD_CNT_FD_GCNT_M, fd_size);
-+		fd_size_b = FIELD_GET(E800_VSIQF_FD_CNT_FD_BCNT_M, fd_size);
-+		fd_cnt_g = FIELD_GET(E800_VSIQF_FD_CNT_FD_GCNT_M, fd_cnt);
-+		fd_cnt_b = FIELD_GET(E800_VSIQF_FD_CNT_FD_BCNT_M, fd_cnt);
-+	}
+ #endif /* _ICE_HW_AUTOGEN_H_ */
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 3a0ef56d3edca..1fc4805353eb5 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -4023,6 +4023,9 @@ void ice_init_feature_support(struct ice_pf *pf)
+ 	default:
+ 		break;
+ 	}
 +
-+	dev_dbg(dev, "VF %d: Size in the FD table: guaranteed:0x%x, best effort:0x%x\n",
-+		vf->vf_id, fd_size_g, fd_size_b);
-+	dev_dbg(dev, "VF %d: Filter counter in the FD table: guaranteed:0x%x, best effort:0x%x\n",
-+		vf->vf_id, fd_cnt_g, fd_cnt_b);
++	if (pf->hw.mac_type == ICE_MAC_E830)
++		ice_set_feature_support(pf, ICE_F_MBX_LIMIT);
  }
  
  /**
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index ef5d43f2804e7..0ae7bdfff83fb 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -1514,12 +1514,20 @@ static int __ice_clean_ctrlq(struct ice_pf *pf, enum ice_ctl_q q_type)
+ 			ice_vf_lan_overflow_event(pf, &event);
+ 			break;
+ 		case ice_mbx_opc_send_msg_to_pf:
+-			data.num_msg_proc = i;
+-			data.num_pending_arq = pending;
+-			data.max_num_msgs_mbx = hw->mailboxq.num_rq_entries;
+-			data.async_watermark_val = ICE_MBX_OVERFLOW_WATERMARK;
++			if (ice_is_feature_supported(pf, ICE_F_MBX_LIMIT)) {
++				ice_vc_process_vf_msg(pf, &event, NULL);
++				ice_mbx_vf_dec_trig_e830(hw, &event);
++			} else {
++				u16 val = hw->mailboxq.num_rq_entries;
++
++				data.max_num_msgs_mbx = val;
++				val = ICE_MBX_OVERFLOW_WATERMARK;
++				data.async_watermark_val = val;
++				data.num_msg_proc = i;
++				data.num_pending_arq = pending;
+ 
+-			ice_vc_process_vf_msg(pf, &event, &data);
++				ice_vc_process_vf_msg(pf, &event, &data);
++			}
+ 			break;
+ 		case ice_aqc_opc_fw_logging:
+ 			ice_output_fw_log(hw, &event.desc, event.msg_buf);
+@@ -3920,7 +3928,11 @@ static int ice_init_pf(struct ice_pf *pf)
+ 
+ 	mutex_init(&pf->vfs.table_lock);
+ 	hash_init(pf->vfs.table);
+-	ice_mbx_init_snapshot(&pf->hw);
++	if (ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
++		wr32(&pf->hw, E830_MBX_PF_IN_FLIGHT_VF_MSGS_THRESH,
++		     ICE_MBX_OVERFLOW_WATERMARK);
++	else
++		ice_mbx_init_snapshot(&pf->hw);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
+index 31314e7540f8c..b82c47f8865b4 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sriov.c
++++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
+@@ -195,7 +195,8 @@ void ice_free_vfs(struct ice_pf *pf)
+ 		}
+ 
+ 		/* clear malicious info since the VF is getting released */
+-		list_del(&vf->mbx_info.list_entry);
++		if (!ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
++			list_del(&vf->mbx_info.list_entry);
+ 
+ 		mutex_unlock(&vf->cfg_lock);
+ 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
+index 03b9d7d748518..3f80ba02f634e 100644
+--- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
+@@ -701,6 +701,23 @@ ice_vf_clear_vsi_promisc(struct ice_vf *vf, struct ice_vsi *vsi, u8 promisc_m)
+ 	return 0;
+ }
+ 
++/**
++ * ice_reset_vf_mbx_cnt - reset VF mailbox message count
++ * @vf: pointer to the VF structure
++ *
++ * This function clears the VF mailbox message count, and should be called on
++ * VF reset.
++ */
++static void ice_reset_vf_mbx_cnt(struct ice_vf *vf)
++{
++	struct ice_pf *pf = vf->pf;
++
++	if (ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
++		ice_mbx_vf_clear_cnt_e830(&pf->hw, vf->vf_id);
++	else
++		ice_mbx_clear_malvf(&vf->mbx_info);
++}
++
+ /**
+  * ice_reset_all_vfs - reset all allocated VFs in one go
+  * @pf: pointer to the PF structure
+@@ -727,7 +744,7 @@ void ice_reset_all_vfs(struct ice_pf *pf)
+ 
+ 	/* clear all malicious info if the VFs are getting reset */
+ 	ice_for_each_vf(pf, bkt, vf)
+-		ice_mbx_clear_malvf(&vf->mbx_info);
++		ice_reset_vf_mbx_cnt(vf);
+ 
+ 	/* If VFs have been disabled, there is no need to reset */
+ 	if (test_and_set_bit(ICE_VF_DIS, pf->state)) {
+@@ -944,7 +961,7 @@ int ice_reset_vf(struct ice_vf *vf, u32 flags)
+ 	ice_eswitch_update_repr(vsi);
+ 
+ 	/* if the VF has been reset allow it to come up again */
+-	ice_mbx_clear_malvf(&vf->mbx_info);
++	ice_reset_vf_mbx_cnt(vf);
+ 
+ out_unlock:
+ 	if (lag && lag->bonded && lag->primary &&
+@@ -994,7 +1011,10 @@ void ice_initialize_vf_entry(struct ice_vf *vf)
+ 	ice_vf_fdir_init(vf);
+ 
+ 	/* Initialize mailbox info for this VF */
+-	ice_mbx_init_vf_info(&pf->hw, &vf->mbx_info);
++	if (ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
++		ice_mbx_vf_clear_cnt_e830(&pf->hw, vf->vf_id);
++	else
++		ice_mbx_init_vf_info(&pf->hw, &vf->mbx_info);
+ 
+ 	mutex_init(&vf->cfg_lock);
+ }
+diff --git a/drivers/net/ethernet/intel/ice/ice_vf_mbx.c b/drivers/net/ethernet/intel/ice/ice_vf_mbx.c
+index 40cb4ba0789ce..75c8113e58ee9 100644
+--- a/drivers/net/ethernet/intel/ice/ice_vf_mbx.c
++++ b/drivers/net/ethernet/intel/ice/ice_vf_mbx.c
+@@ -210,6 +210,38 @@ ice_mbx_detect_malvf(struct ice_hw *hw, struct ice_mbx_vf_info *vf_info,
+ 	return 0;
+ }
+ 
++/**
++ * ice_mbx_vf_dec_trig_e830 - Decrements the VF mailbox queue counter
++ * @hw: pointer to the HW struct
++ * @event: pointer to the control queue receive event
++ *
++ * This function triggers to decrement the counter
++ * MBX_VF_IN_FLIGHT_MSGS_AT_PF_CNT when the driver replenishes
++ * the buffers at the PF mailbox queue.
++ */
++void ice_mbx_vf_dec_trig_e830(const struct ice_hw *hw,
++			      const struct ice_rq_event_info *event)
++{
++	u16 vfid = le16_to_cpu(event->desc.retval);
++
++	wr32(hw, E830_MBX_VF_DEC_TRIG(vfid), 1);
++}
++
++/**
++ * ice_mbx_vf_clear_cnt_e830 - Clear the VF mailbox queue count
++ * @hw: pointer to the HW struct
++ * @vf_id: VF ID in the PF space
++ *
++ * This function clears the counter MBX_VF_IN_FLIGHT_MSGS_AT_PF_CNT, and should
++ * be called when a VF is created and on VF reset.
++ */
++void ice_mbx_vf_clear_cnt_e830(const struct ice_hw *hw, u16 vf_id)
++{
++	u32 reg = rd32(hw, E830_MBX_VF_IN_FLIGHT_MSGS_AT_PF_CNT(vf_id));
++
++	wr32(hw, E830_MBX_VF_DEC_TRIG(vf_id), reg);
++}
++
+ /**
+  * ice_mbx_vf_state_handler - Handle states of the overflow algorithm
+  * @hw: pointer to the HW struct
+diff --git a/drivers/net/ethernet/intel/ice/ice_vf_mbx.h b/drivers/net/ethernet/intel/ice/ice_vf_mbx.h
+index 44bc030d17e07..684de89e5c5ed 100644
+--- a/drivers/net/ethernet/intel/ice/ice_vf_mbx.h
++++ b/drivers/net/ethernet/intel/ice/ice_vf_mbx.h
+@@ -19,6 +19,9 @@ ice_aq_send_msg_to_vf(struct ice_hw *hw, u16 vfid, u32 v_opcode, u32 v_retval,
+ 		      u8 *msg, u16 msglen, struct ice_sq_cd *cd);
+ 
+ u32 ice_conv_link_speed_to_virtchnl(bool adv_link_support, u16 link_speed);
++void ice_mbx_vf_dec_trig_e830(const struct ice_hw *hw,
++			      const struct ice_rq_event_info *event);
++void ice_mbx_vf_clear_cnt_e830(const struct ice_hw *hw, u16 vf_id);
+ int
+ ice_mbx_vf_state_handler(struct ice_hw *hw, struct ice_mbx_data *mbx_data,
+ 			 struct ice_mbx_vf_info *vf_info, bool *report_malvf);
+@@ -47,5 +50,11 @@ static inline void ice_mbx_init_snapshot(struct ice_hw *hw)
+ {
+ }
+ 
++static inline void
++ice_mbx_vf_dec_trig_e830(const struct ice_hw *hw,
++			 const struct ice_rq_event_info *event)
++{
++}
++
+ #endif /* CONFIG_PCI_IOV */
+ #endif /* _ICE_VF_MBX_H_ */
+diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl.c b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+index 9f7268bb2ee3b..e709b10a29761 100644
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+@@ -3899,8 +3899,10 @@ ice_is_malicious_vf(struct ice_vf *vf, struct ice_mbx_data *mbxdata)
+  * @event: pointer to the AQ event
+  * @mbxdata: information used to detect VF attempting mailbox overflow
+  *
+- * called from the common asq/arq handler to
+- * process request from VF
++ * Called from the common asq/arq handler to process request from VF. When this
++ * flow is used for devices with hardware VF to PF message queue overflow
++ * support (ICE_F_MBX_LIMIT) mbxdata is set to NULL and ice_is_malicious_vf
++ * check is skipped.
+  */
+ void ice_vc_process_vf_msg(struct ice_pf *pf, struct ice_rq_event_info *event,
+ 			   struct ice_mbx_data *mbxdata)
+@@ -3926,7 +3928,7 @@ void ice_vc_process_vf_msg(struct ice_pf *pf, struct ice_rq_event_info *event,
+ 	mutex_lock(&vf->cfg_lock);
+ 
+ 	/* Check if the VF is trying to overflow the mailbox */
+-	if (ice_is_malicious_vf(vf, mbxdata))
++	if (mbxdata && ice_is_malicious_vf(vf, mbxdata))
+ 		goto finish;
+ 
+ 	/* Check if VF is disabled. */
 -- 
 2.39.5
 
