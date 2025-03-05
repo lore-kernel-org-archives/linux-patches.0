@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56F125A2B9;
-	Wed,  5 Mar 2025 18:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0A52561D9;
+	Wed,  5 Mar 2025 18:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198716; cv=none; b=bmtF3bN3cOF3ug6Bp3mxuzsAK9+V7YyuukUcc3hoJCaL9R2g26CorlHpR4jPn8G7tOUIwNuBosT3YsUMd4QY5vcpXKmnJTnDgPD0kzYzaG5jOdT0Vz0AH3Dyk3HA8Yay4QvNG/Cem6JQIO/9nT6XOPxxyiDWa6EwhWcqqWZ6LPQ=
+	t=1741198719; cv=none; b=ad1MXDUgVWh9/nQJIiuxqDrgZKfli0DrXv2CWx6J/wH0NeEqet2hzHENdtndPo8PqavxU5axTFnNcEoxsbHsTH2Pg6ANA9mw5MVb3wkk7kW0JZZicbcJM6KeUSRuJL4zLMlt56zNrsJkhY4serWtCRpSjtLCGQ+4nyyRH46BSa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198716; c=relaxed/simple;
-	bh=vvTAQqTlefaiKNegzXrSCB1DN+xe6GGz2dEtzhn+9pM=;
+	s=arc-20240116; t=1741198719; c=relaxed/simple;
+	bh=B3o48Xqky6fgKHuWJGglnBiKH1IFT3kPlqOxlvI+Xig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uuGlN5nJW0C8UPzAuYy68tKpfq1HXntEuwEOfPxVqu58K4KK7hxDmRDYUx1NlP7TnIfWRXLbjBW7NrwfnKfoXz6GoBOF5NeQG5VyAdy2euo4y2r/fKK4tvbQqv140xPwXTRbjpeZfnSkQOg7XZ2nO7dMra6ieR7n0nCSXR6UK98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEJ/OlXz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pFlRFPyL4IS6yfeMkir06QzA/h2/Fuy5+aYope3jAWFnvW0c5O2AaTtLBd0PI/9ftMZHpb7H53JzJgY3OIL+TGsfb/lzxmKMbGdSeaYdtgVbWJS7b0J+zoHRQjvII3ODrp3hb+0aNXz8I0osjDDrxVU8L1F92vd5KRrW120wGpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFMjWTYZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEJ/OlXz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D48DC4CED1;
-	Wed,  5 Mar 2025 18:18:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFMjWTYZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8A4C4CED1;
+	Wed,  5 Mar 2025 18:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198716;
-	bh=vvTAQqTlefaiKNegzXrSCB1DN+xe6GGz2dEtzhn+9pM=;
+	s=korg; t=1741198719;
+	bh=B3o48Xqky6fgKHuWJGglnBiKH1IFT3kPlqOxlvI+Xig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TEJ/OlXzCWC+qI5s3w1AElZ8xC7qdjkgdrzLk9omNw4x9LUwU1+3SkbyZ/oK+CBs7
-	 A+/ugl1/seF70f/UOJecAoFLSJ4eOj19n+gSkpldc3BV3DPND3CYNyMeyiP5rQ6aWh
-	 4LZdfXQmoMobxN84++ySg6+oSd40aY1VWVGoKT5A=
+	b=dFMjWTYZp77MlGj5Sio8AyT1x8iDbevGI0q/zqwth3/7VYvxQlXg495GHg7mQ03G5
+	 qUOYqW5F3ExyfbXnzd5eVdWF2iI3YTzaSnsHlKKI5UXasnawiigr05sk6gv0pkoAsG
+	 HeNzi3yynbfI1FS5Al7Tkt+CgsdE6MF9YeaMGr6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaustabh Chakraborty <kauschluss@disroot.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Anand Moon <linux.amoon@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.13 122/157] phy: exynos5-usbdrd: fix MPLL_MULTIPLIER and SSC_REFCLKSEL masks in refclk
-Date: Wed,  5 Mar 2025 18:49:18 +0100
-Message-ID: <20250305174510.209577201@linuxfoundation.org>
+	David Yat Sin <David.YatSin@amd.com>,
+	Jay Cornwall <jay.cornwall@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.13 093/157] drm/amdkfd: Preserve cp_hqd_pq_control on update_mqd
+Date: Wed,  5 Mar 2025 18:48:49 +0100
+Message-ID: <20250305174509.052792095@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -52,53 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaustabh Chakraborty <kauschluss@disroot.org>
+From: David Yat Sin <David.YatSin@amd.com>
 
-commit e2158c953c973adb49383ddea2504faf08d375b7 upstream.
+commit 3502ab5022bb5ef1edd063bdb6465a8bf3b46e66 upstream.
 
-In exynos5_usbdrd_{pipe3,utmi}_set_refclk(), the masks
-PHYCLKRST_MPLL_MULTIPLIER_MASK and PHYCLKRST_SSC_REFCLKSEL_MASK are not
-inverted when applied to the register values. Fix it.
+When userspace applications call AMDKFD_IOC_UPDATE_QUEUE. Preserve
+bitfields that do not need to be modified as they contain flags to
+track queue states that are used by CP FW.
 
+Signed-off-by: David Yat Sin <David.YatSin@amd.com>
+Reviewed-by: Jay Cornwall <jay.cornwall@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 8150827990b709ab5a40c46c30d21b7f7b9e9440)
 Cc: stable@vger.kernel.org
-Fixes: 59025887fb08 ("phy: Add new Exynos5 USB 3.0 PHY driver")
-Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Anand Moon <linux.amoon@gmail.com>
-Link: https://lore.kernel.org/r/20250209-exynos5-usbdrd-masks-v1-1-4f7f83f323d7@disroot.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/samsung/phy-exynos5-usbdrd.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c |    6 ++++--
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c |    5 +++--
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c |    5 +++--
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c  |    5 ++++-
+ 4 files changed, 14 insertions(+), 7 deletions(-)
 
---- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-+++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-@@ -488,9 +488,9 @@ exynos5_usbdrd_pipe3_set_refclk(struct p
- 	reg |=	PHYCLKRST_REFCLKSEL_EXT_REFCLK;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
+@@ -107,6 +107,8 @@ static void init_mqd(struct mqd_manager
+ 	m->cp_hqd_persistent_state = CP_HQD_PERSISTENT_STATE__PRELOAD_REQ_MASK |
+ 			0x53 << CP_HQD_PERSISTENT_STATE__PRELOAD_SIZE__SHIFT;
  
- 	/* FSEL settings corresponding to reference clock */
--	reg &= ~PHYCLKRST_FSEL_PIPE_MASK |
--		PHYCLKRST_MPLL_MULTIPLIER_MASK |
--		PHYCLKRST_SSC_REFCLKSEL_MASK;
-+	reg &= ~(PHYCLKRST_FSEL_PIPE_MASK |
-+		 PHYCLKRST_MPLL_MULTIPLIER_MASK |
-+		 PHYCLKRST_SSC_REFCLKSEL_MASK);
- 	switch (phy_drd->extrefclk) {
- 	case EXYNOS5_FSEL_50MHZ:
- 		reg |= (PHYCLKRST_MPLL_MULTIPLIER_50M_REF |
-@@ -532,9 +532,9 @@ exynos5_usbdrd_utmi_set_refclk(struct ph
- 	reg &= ~PHYCLKRST_REFCLKSEL_MASK;
- 	reg |=	PHYCLKRST_REFCLKSEL_EXT_REFCLK;
++	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
+ 	m->cp_mqd_control = 1 << CP_MQD_CONTROL__PRIV_STATE__SHIFT;
  
--	reg &= ~PHYCLKRST_FSEL_UTMI_MASK |
--		PHYCLKRST_MPLL_MULTIPLIER_MASK |
--		PHYCLKRST_SSC_REFCLKSEL_MASK;
-+	reg &= ~(PHYCLKRST_FSEL_UTMI_MASK |
-+		 PHYCLKRST_MPLL_MULTIPLIER_MASK |
-+		 PHYCLKRST_SSC_REFCLKSEL_MASK);
- 	reg |= PHYCLKRST_FSEL(phy_drd->extrefclk);
+ 	m->cp_mqd_base_addr_lo        = lower_32_bits(addr);
+@@ -167,10 +169,10 @@ static void update_mqd(struct mqd_manage
  
- 	return reg;
+ 	m = get_mqd(mqd);
+ 
+-	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control &= ~CP_HQD_PQ_CONTROL__QUEUE_SIZE_MASK;
+ 	m->cp_hqd_pq_control |=
+ 			ffs(q->queue_size / sizeof(unsigned int)) - 1 - 1;
+-	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
++
+ 	pr_debug("cp_hqd_pq_control 0x%x\n", m->cp_hqd_pq_control);
+ 
+ 	m->cp_hqd_pq_base_lo = lower_32_bits((uint64_t)q->queue_address >> 8);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
+@@ -154,6 +154,8 @@ static void init_mqd(struct mqd_manager
+ 	m->cp_hqd_persistent_state = CP_HQD_PERSISTENT_STATE__PRELOAD_REQ_MASK |
+ 			0x55 << CP_HQD_PERSISTENT_STATE__PRELOAD_SIZE__SHIFT;
+ 
++	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
+ 	m->cp_mqd_control = 1 << CP_MQD_CONTROL__PRIV_STATE__SHIFT;
+ 
+ 	m->cp_mqd_base_addr_lo        = lower_32_bits(addr);
+@@ -221,10 +223,9 @@ static void update_mqd(struct mqd_manage
+ 
+ 	m = get_mqd(mqd);
+ 
+-	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control &= ~CP_HQD_PQ_CONTROL__QUEUE_SIZE_MASK;
+ 	m->cp_hqd_pq_control |=
+ 			ffs(q->queue_size / sizeof(unsigned int)) - 1 - 1;
+-	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
+ 	pr_debug("cp_hqd_pq_control 0x%x\n", m->cp_hqd_pq_control);
+ 
+ 	m->cp_hqd_pq_base_lo = lower_32_bits((uint64_t)q->queue_address >> 8);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v12.c
+@@ -121,6 +121,8 @@ static void init_mqd(struct mqd_manager
+ 	m->cp_hqd_persistent_state = CP_HQD_PERSISTENT_STATE__PRELOAD_REQ_MASK |
+ 			0x55 << CP_HQD_PERSISTENT_STATE__PRELOAD_SIZE__SHIFT;
+ 
++	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
+ 	m->cp_mqd_control = 1 << CP_MQD_CONTROL__PRIV_STATE__SHIFT;
+ 
+ 	m->cp_mqd_base_addr_lo        = lower_32_bits(addr);
+@@ -184,10 +186,9 @@ static void update_mqd(struct mqd_manage
+ 
+ 	m = get_mqd(mqd);
+ 
+-	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control &= ~CP_HQD_PQ_CONTROL__QUEUE_SIZE_MASK;
+ 	m->cp_hqd_pq_control |=
+ 			ffs(q->queue_size / sizeof(unsigned int)) - 1 - 1;
+-	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
+ 	pr_debug("cp_hqd_pq_control 0x%x\n", m->cp_hqd_pq_control);
+ 
+ 	m->cp_hqd_pq_base_lo = lower_32_bits((uint64_t)q->queue_address >> 8);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+@@ -182,6 +182,9 @@ static void init_mqd(struct mqd_manager
+ 	m->cp_hqd_persistent_state = CP_HQD_PERSISTENT_STATE__PRELOAD_REQ_MASK |
+ 			0x53 << CP_HQD_PERSISTENT_STATE__PRELOAD_SIZE__SHIFT;
+ 
++	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
++
+ 	m->cp_mqd_control = 1 << CP_MQD_CONTROL__PRIV_STATE__SHIFT;
+ 
+ 	m->cp_mqd_base_addr_lo        = lower_32_bits(addr);
+@@ -244,7 +247,7 @@ static void update_mqd(struct mqd_manage
+ 
+ 	m = get_mqd(mqd);
+ 
+-	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
++	m->cp_hqd_pq_control &= ~CP_HQD_PQ_CONTROL__QUEUE_SIZE_MASK;
+ 	m->cp_hqd_pq_control |= order_base_2(q->queue_size / 4) - 1;
+ 	pr_debug("cp_hqd_pq_control 0x%x\n", m->cp_hqd_pq_control);
+ 
 
 
