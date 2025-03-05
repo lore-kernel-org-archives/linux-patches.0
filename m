@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D365217B505;
-	Wed,  5 Mar 2025 18:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F891FC7D0;
+	Wed,  5 Mar 2025 18:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198012; cv=none; b=Z/hDyrN40uXexJlg3hAm+a1yTdZnxZj5bjfxlh8/MP23Lgv1syFKqDO05+vFPP1DpODCACFG8KVJmuEMYpMJyMCM+4nRJ60UJwUJTrbSa59ihM4YuPN6BfOHmXyaCNu431HrXWBw42jknQ/gmgs8wAVnP7Hv4JYsacgl9hG7LOQ=
+	t=1741198015; cv=none; b=Mnpya4AabY8s4VVIeqK67Jjx+PfIxSvfQj3slb6PxkNnteqApUCN/8ly9H8H4hx5ma7uispw/68v6AhISTdH3mhszfC69xyOSoHHifzQNLE+LMKcddg0Gmqaldba96PF2smhcSPvCzhRwOha0wfsNKtDNMGkR9yQnsdPgStYWb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198012; c=relaxed/simple;
-	bh=TTYcWq/LXJciIM7GSOIrN10x69xUG0gi6shufEaAugQ=;
+	s=arc-20240116; t=1741198015; c=relaxed/simple;
+	bh=08jgndekO2rOfw4Hot5B5aK2YviS5bR0x7ESI5tC5yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UFgpm62EOMXhOgVl30ioS7YvXaYgTKtnK0gc27ebblSU/01KFr8aFAmRHPB8cMMIB2XqzWlTuE5THzMjbWty5StNlOgl9DWwBiDnmYeVGpjD+xWkEbPlMFlCOoO3OQAH8FuZH2ZfXFF5U/1bWWCdfBHRTpAc+ORqzU6EgXeIQTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ct3XVd0O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uwlHxAULtZw8idN14+8FxHtvKq4XF2Q7yABfccWjn7fLzkRtFdFpnVc0fkt0v4uKNHSBqL3IkZ/xDNrcYc8O6mpae4FCAzZjFNxqmX+acuLt9MFvZ1l4s8HFe++Il91xet0rXmNvxAwuKAbdZjfkuKohKIWnneTgEV8eXOAvalI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFdVlQfS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ct3XVd0O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B072C4CED1;
-	Wed,  5 Mar 2025 18:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFdVlQfS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 470B6C4CED1;
+	Wed,  5 Mar 2025 18:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198012;
-	bh=TTYcWq/LXJciIM7GSOIrN10x69xUG0gi6shufEaAugQ=;
+	s=korg; t=1741198015;
+	bh=08jgndekO2rOfw4Hot5B5aK2YviS5bR0x7ESI5tC5yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ct3XVd0OudX5SCZHWsbdpOpMr6SW1ZWMtwYuy6QMz66SJky8rb/BqxgJUwP80TpOS
-	 coeVNbz+eXFFx0qsZ6LYzwMiQZ07jfDjoBLoUnfiYuq51RKn2V3BVwvIO9/SWTSRiu
-	 o1rMtOetzLDg2+YyFMjhpyGjq24Mwhx7qnXWL31Q=
+	b=JFdVlQfSH0UiAvW9wgmrHF6Rd9fAYgYWLzLrHWsml4K8F6bSz302vvD50J0gk5AYD
+	 jwMYK+ZgdOf+qoePFb1F6IzdWCS7YXVNHsjhLntEjhRCZmCFjSlDCFhoeL2IR2OBqD
+	 Z8A8DRn+lbvyhm1yhs7hWpbSvuQghZMQJ2FhBJKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Dmitry Yakunin <zeil@yandex-team.ru>,
-	Konstantin Khlebnikov <khlebnikov@yandex-team.ru>,
+	Guillaume Nault <gnault@redhat.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 034/150] net: set the minimum for net_hotdata.netdev_budget_usecs
-Date: Wed,  5 Mar 2025 18:47:43 +0100
-Message-ID: <20250305174505.185552710@linuxfoundation.org>
+Subject: [PATCH 6.12 035/150] ipv4: Convert icmp_route_lookup() to dscp_t.
+Date: Wed,  5 Mar 2025 18:47:44 +0100
+Message-ID: <20250305174505.225677094@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -53,56 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit c180188ec02281126045414e90d08422a80f75b4 ]
+[ Upstream commit 913c83a610bb7dd8e5952a2b4663e1feec0b5de6 ]
 
-Commit 7acf8a1e8a28 ("Replace 2 jiffies with sysctl netdev_budget_usecs
-to enable softirq tuning") added a possibility to set
-net_hotdata.netdev_budget_usecs, but added no lower bound checking.
+Pass a dscp_t variable to icmp_route_lookup(), instead of a plain u8,
+to prevent accidental setting of ECN bits in ->flowi4_tos. Rename that
+variable ("tos" -> "dscp") to make the intent clear.
 
-Commit a4837980fd9f ("net: revert default NAPI poll timeout to 2 jiffies")
-made the *initial* value HZ-dependent, so the initial value is at least
-2 jiffies even for lower HZ values (2 ms for 1000 Hz, 8ms for 250 Hz, 20
-ms for 100 Hz).
+While there, reorganise the function parameters to fill up horizontal
+space.
 
-But a user still can set improper values by a sysctl. Set .extra1
-(the lower bound) for net_hotdata.netdev_budget_usecs to the same value
-as in the latter commit. That is to 2 jiffies.
-
-Fixes: a4837980fd9f ("net: revert default NAPI poll timeout to 2 jiffies")
-Fixes: 7acf8a1e8a28 ("Replace 2 jiffies with sysctl netdev_budget_usecs to enable softirq tuning")
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Cc: Dmitry Yakunin <zeil@yandex-team.ru>
-Cc: Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
-Link: https://patch.msgid.link/20250220110752.137639-1-jirislaby@kernel.org
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/294fead85c6035bcdc5fcf9a6bb4ce8798c45ba1.1727807926.git.gnault@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 27843ce6ba3d ("ipvlan: ensure network headers are in skb linear part")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sysctl_net_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/icmp.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/net/core/sysctl_net_core.c b/net/core/sysctl_net_core.c
-index 5dd54a8133980..47e2743ffe228 100644
---- a/net/core/sysctl_net_core.c
-+++ b/net/core/sysctl_net_core.c
-@@ -34,6 +34,7 @@ static int min_sndbuf = SOCK_MIN_SNDBUF;
- static int min_rcvbuf = SOCK_MIN_RCVBUF;
- static int max_skb_frags = MAX_SKB_FRAGS;
- static int min_mem_pcpu_rsv = SK_MEMORY_PCPU_RESERVE;
-+static int netdev_budget_usecs_min = 2 * USEC_PER_SEC / HZ;
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index f45bc187a92a7..0a2f988c4c24e 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -477,13 +477,11 @@ static struct net_device *icmp_get_route_lookup_dev(struct sk_buff *skb)
+ 	return route_lookup_dev;
+ }
  
- static int net_msg_warn;	/* Unused, but still a sysctl */
+-static struct rtable *icmp_route_lookup(struct net *net,
+-					struct flowi4 *fl4,
++static struct rtable *icmp_route_lookup(struct net *net, struct flowi4 *fl4,
+ 					struct sk_buff *skb_in,
+-					const struct iphdr *iph,
+-					__be32 saddr, u8 tos, u32 mark,
+-					int type, int code,
+-					struct icmp_bxm *param)
++					const struct iphdr *iph, __be32 saddr,
++					dscp_t dscp, u32 mark, int type,
++					int code, struct icmp_bxm *param)
+ {
+ 	struct net_device *route_lookup_dev;
+ 	struct dst_entry *dst, *dst2;
+@@ -497,7 +495,7 @@ static struct rtable *icmp_route_lookup(struct net *net,
+ 	fl4->saddr = saddr;
+ 	fl4->flowi4_mark = mark;
+ 	fl4->flowi4_uid = sock_net_uid(net, NULL);
+-	fl4->flowi4_tos = tos & INET_DSCP_MASK;
++	fl4->flowi4_tos = inet_dscp_to_dsfield(dscp);
+ 	fl4->flowi4_proto = IPPROTO_ICMP;
+ 	fl4->fl4_icmp_type = type;
+ 	fl4->fl4_icmp_code = code;
+@@ -549,7 +547,7 @@ static struct rtable *icmp_route_lookup(struct net *net,
+ 		orefdst = skb_in->_skb_refdst; /* save old refdst */
+ 		skb_dst_set(skb_in, NULL);
+ 		err = ip_route_input(skb_in, fl4_dec.daddr, fl4_dec.saddr,
+-				     tos, rt2->dst.dev);
++				     inet_dscp_to_dsfield(dscp), rt2->dst.dev);
  
-@@ -580,7 +581,7 @@ static struct ctl_table net_core_table[] = {
- 		.maxlen		= sizeof(unsigned int),
- 		.mode		= 0644,
- 		.proc_handler	= proc_dointvec_minmax,
--		.extra1		= SYSCTL_ZERO,
-+		.extra1		= &netdev_budget_usecs_min,
- 	},
- 	{
- 		.procname	= "fb_tunnels_only_for_init_net",
+ 		dst_release(&rt2->dst);
+ 		rt2 = skb_rtable(skb_in);
+@@ -745,8 +743,9 @@ void __icmp_send(struct sk_buff *skb_in, int type, int code, __be32 info,
+ 	ipc.opt = &icmp_param.replyopts.opt;
+ 	ipc.sockc.mark = mark;
+ 
+-	rt = icmp_route_lookup(net, &fl4, skb_in, iph, saddr, tos, mark,
+-			       type, code, &icmp_param);
++	rt = icmp_route_lookup(net, &fl4, skb_in, iph, saddr,
++			       inet_dsfield_to_dscp(tos), mark, type, code,
++			       &icmp_param);
+ 	if (IS_ERR(rt))
+ 		goto out_unlock;
+ 
 -- 
 2.39.5
 
