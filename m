@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E92C1D6DB4;
-	Wed,  5 Mar 2025 18:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9551A5BB7;
+	Wed,  5 Mar 2025 18:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198266; cv=none; b=caclrn9XHI3cDlaEoR91IFeIahUOHi8GWzyhSTxVAwKH1ac/U69C0Cg3cgPvvZhpeWSWDZi0eAJUJj1xsD/a6fRx0YVTuuG9zU5Bk4srlIwR3N+J+sRH9TxxeapPmTmLdcne9ci8QGmKKfLh0SRQI/fUtRXa3Wg1hnyNL2PTZNM=
+	t=1741198269; cv=none; b=lf+QU6VUywI+tN56QLK8AwhKjXeT/lmHSDAGtXdsc8zcWVNGBHM0qETlGX9k2/HC07bN8b+smO9GeHr8z5xLmkv+KtIAVWpx5FPA2ME/Q0jShvt6aJ6gZ/mT2n8KzCbGypUmkbSifaXqfPzJx7OQL917TsnIDSaD76Ls6nuaQg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198266; c=relaxed/simple;
-	bh=GQsULk/klRfS1xvmAfX0TdtqIZKbBLY3KwhJ5rv2aOU=;
+	s=arc-20240116; t=1741198269; c=relaxed/simple;
+	bh=pWj1iiKk17ixQP9YXBlZq3WhRmc6jpfFxu0Uk08xEXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UofGuUhahZ9zNt0eotuJ11cSRiNVnJAduajHkK0PEo0rCLkdtjc7NJvWpGHVwNuCZRTaF2bSINFiZKFK4WymnI0016efu90mufEydHQrNFI0PoMu2DqRJCli9PNf0UcKguc2yL9EwE9U5F4rs6qmEVpC9GpnHvmst5S1nOIEjMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVFIfqhm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qMn3DNqV3Sb+12yS6xffYkJhAygbUy7uRiw4QdEtcLl1BEJIgsP0sVTDqNdZr2uXM+SRpWzFzgRisMLrjRrafj4yf+/f+WDehFep3PLWaSu1Ker083qkltam144tFA7OWkWjh7d+DWtd1D8ZzKcFmXgP0hl6kgp+kdwXHF2sI8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvcOdOLp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVFIfqhm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA853C4CEE2;
-	Wed,  5 Mar 2025 18:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvcOdOLp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91927C4CEE0;
+	Wed,  5 Mar 2025 18:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198266;
-	bh=GQsULk/klRfS1xvmAfX0TdtqIZKbBLY3KwhJ5rv2aOU=;
+	s=korg; t=1741198269;
+	bh=pWj1iiKk17ixQP9YXBlZq3WhRmc6jpfFxu0Uk08xEXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xVFIfqhm3piob2bfeySkCFRvdRvOrTu+inMFnitv0F6UTTvt6UihiDCBO6Dc97tl+
-	 WQwBjm7EsqfN6IMOXl6UZbhEYze0fEcPD7UNBrQofCT3yoFZpScuYJ7c6+dDWex6ot
-	 u1+eCt+xgiml2nwo1Q8ePvmTuh7hOrjMhrmVQYqA=
+	b=KvcOdOLphOgxT0HcoYFtOm5I7JjVvk8uAxu6x+ulNP7a12DcCKSaNnCUi/Zv1R66X
+	 j5k+XUYIxibOSglqEq4oiZYGu3RPHmABwVoIBRyXNdFIOHyO2JONeBzIMSPB1acelQ
+	 tz8XIt09u9yrjXejnpcY31lmpwTMLyIjvEXJb8pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 6.12 121/150] iommu/vt-d: Fix suspicious RCU usage
-Date: Wed,  5 Mar 2025 18:49:10 +0100
-Message-ID: <20250305174508.680642566@linuxfoundation.org>
+	Fab Stz <fabstz-it@yahoo.fr>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 122/150] intel_idle: Handle older CPUs, which stop the TSC in deeper C states, correctly
+Date: Wed,  5 Mar 2025 18:49:11 +0100
+Message-ID: <20250305174508.719041473@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -53,93 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit b150654f74bf0df8e6a7936d5ec51400d9ec06d8 upstream.
+commit c157d351460bcf202970e97e611cb6b54a3dd4a4 upstream.
 
-Commit <d74169ceb0d2> ("iommu/vt-d: Allocate DMAR fault interrupts
-locally") moved the call to enable_drhd_fault_handling() to a code
-path that does not hold any lock while traversing the drhd list. Fix
-it by ensuring the dmar_global_lock lock is held when traversing the
-drhd list.
+The Intel idle driver is preferred over the ACPI processor idle driver,
+but fails to implement the work around for Core2 generation CPUs, where
+the TSC stops in C2 and deeper C-states. This causes stalls and boot
+delays, when the clocksource watchdog does not catch the unstable TSC
+before the CPU goes deep idle for the first time.
 
-Without this fix, the following warning is triggered:
- =============================
- WARNING: suspicious RCU usage
- 6.14.0-rc3 #55 Not tainted
- -----------------------------
- drivers/iommu/intel/dmar.c:2046 RCU-list traversed in non-reader section!!
-               other info that might help us debug this:
-               rcu_scheduler_active = 1, debug_locks = 1
- 2 locks held by cpuhp/1/23:
- #0: ffffffff84a67c50 (cpu_hotplug_lock){++++}-{0:0}, at: cpuhp_thread_fun+0x87/0x2c0
- #1: ffffffff84a6a380 (cpuhp_state-up){+.+.}-{0:0}, at: cpuhp_thread_fun+0x87/0x2c0
- stack backtrace:
- CPU: 1 UID: 0 PID: 23 Comm: cpuhp/1 Not tainted 6.14.0-rc3 #55
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0xb7/0xd0
-  lockdep_rcu_suspicious+0x159/0x1f0
-  ? __pfx_enable_drhd_fault_handling+0x10/0x10
-  enable_drhd_fault_handling+0x151/0x180
-  cpuhp_invoke_callback+0x1df/0x990
-  cpuhp_thread_fun+0x1ea/0x2c0
-  smpboot_thread_fn+0x1f5/0x2e0
-  ? __pfx_smpboot_thread_fn+0x10/0x10
-  kthread+0x12a/0x2d0
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x4a/0x60
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
+The ACPI driver marks the TSC unstable when it detects that the CPU
+supports C2 or deeper and the CPU does not have a non-stop TSC.
 
-Holding the lock in enable_drhd_fault_handling() triggers a lockdep splat
-about a possible deadlock between dmar_global_lock and cpu_hotplug_lock.
-This is avoided by not holding dmar_global_lock when calling
-iommu_device_register(), which initiates the device probe process.
+Add the equivivalent work around to the Intel idle driver to cure that.
 
-Fixes: d74169ceb0d2 ("iommu/vt-d: Allocate DMAR fault interrupts locally")
-Reported-and-tested-by: Ido Schimmel <idosch@nvidia.com>
-Closes: https://lore.kernel.org/linux-iommu/Zx9OwdLIc_VoQ0-a@shredder.mtl.com/
-Tested-by: Breno Leitao <leitao@debian.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20250218022422.2315082-1-baolu.lu@linux.intel.com
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 18734958e9bf ("intel_idle: Use ACPI _CST for processor models without C-state tables")
+Reported-by: Fab Stz <fabstz-it@yahoo.fr>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Fab Stz <fabstz-it@yahoo.fr>
+Cc: All applicable <stable@vger.kernel.org>
+Closes: https://lore.kernel.org/all/10cf96aa-1276-4bd4-8966-c890377030c3@yahoo.fr
+Link: https://patch.msgid.link/87bjupfy7f.ffs@tglx
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/dmar.c  |    1 +
- drivers/iommu/intel/iommu.c |    7 +++++++
- 2 files changed, 8 insertions(+)
+ drivers/idle/intel_idle.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -2056,6 +2056,7 @@ int enable_drhd_fault_handling(unsigned
- 	/*
- 	 * Enable fault control interrupt.
- 	 */
-+	guard(rwsem_read)(&dmar_global_lock);
- 	for_each_iommu(iommu, drhd) {
- 		u32 fault_status;
- 		int ret;
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -3307,7 +3307,14 @@ int __init intel_iommu_init(void)
- 		iommu_device_sysfs_add(&iommu->iommu, NULL,
- 				       intel_iommu_groups,
- 				       "%s", iommu->name);
-+		/*
-+		 * The iommu device probe is protected by the iommu_probe_device_lock.
-+		 * Release the dmar_global_lock before entering the device probe path
-+		 * to avoid unnecessary lock order splat.
-+		 */
-+		up_read(&dmar_global_lock);
- 		iommu_device_register(&iommu->iommu, &intel_iommu_ops, NULL);
-+		down_read(&dmar_global_lock);
+--- a/drivers/idle/intel_idle.c
++++ b/drivers/idle/intel_idle.c
+@@ -55,6 +55,7 @@
+ #include <asm/intel-family.h>
+ #include <asm/mwait.h>
+ #include <asm/spec-ctrl.h>
++#include <asm/tsc.h>
+ #include <asm/fpu/api.h>
  
- 		iommu_pmu_register(iommu);
+ #define INTEL_IDLE_VERSION "0.5.1"
+@@ -1749,6 +1750,9 @@ static void __init intel_idle_init_cstat
+ 		if (intel_idle_state_needs_timer_stop(state))
+ 			state->flags |= CPUIDLE_FLAG_TIMER_STOP;
+ 
++		if (cx->type > ACPI_STATE_C1 && !boot_cpu_has(X86_FEATURE_NONSTOP_TSC))
++			mark_tsc_unstable("TSC halts in idle");
++
+ 		state->enter = intel_idle;
+ 		state->enter_s2idle = intel_idle_s2idle;
  	}
 
 
