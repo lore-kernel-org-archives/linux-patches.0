@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E44B253F0A;
-	Wed,  5 Mar 2025 18:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2831253344;
+	Wed,  5 Mar 2025 18:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198651; cv=none; b=HAhz2eeHrOPLAcxcLz+e30fk/d9xpdQNQ9auBJdodqMo57Crct8D8+gb2IPwFR33rPgDFWXNMYy4SNqlrQjiuMRUfwOM1Ogw1EdJ1xk0b2mU93tRBCQE6epzwQYJZcx2hslrswiS5VsWnd2FK7LenDGtyg8JqfR4aXusY+8fb2I=
+	t=1741198653; cv=none; b=N12v+xTUwbHvVVIaQAVYdJASb2qGp24SNeH/KUDnCYjBSx+PPwbVgvwICPYCgdEcbJpsDaPnukXSdBmLsZlicVNUyAIryrLUUodNApud+RAI/ShhGLZIOvcsCSxGFHs//jvsDiwLG4maZA8pxz7H8bJwTYsg+Uv+q2pXyN/Mdjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198651; c=relaxed/simple;
-	bh=nKIal9WYEsJegSwG0yBwiW6X7uENd1xKZD7l9OpzIiU=;
+	s=arc-20240116; t=1741198653; c=relaxed/simple;
+	bh=YJyU4NvcuG/hAhzrWzKSp3MaxMPskY+DGeYtj3Mcbl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LyU7htpoHPoa/bj8rTIF8r9PQCS6vMqpHYsUW3Fzy6w7350PF0O8MYPQTr8EkKAwGjF7WWAp/+V9pd8EOjqTnSEUcs9dFNZzhdJqFdbzI87+EowFl6MbttFaiPDGRRB6hgUtQIuHxKmr+COtv+PekBPk6tNUPBhYGYJDvIL2fPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVQLhnR/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dntSUQjB6g7/m9o3xBuVdevvuGde1PhDeJfELBZk2tk7afQYqcCahbfuOBx/XSyB38IMicM1c/X942VhmDy+wtaNoF4rQ4Rlg2+8vQCebHUQ4GTkY+UXp46elecy62ius1GBQ4qG6vcJOTgMHkggAqYlMsionUAOv1T3ql+07NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mY6hhOmU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVQLhnR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489B8C4CED1;
-	Wed,  5 Mar 2025 18:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mY6hhOmU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2537CC4CED1;
+	Wed,  5 Mar 2025 18:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198650;
-	bh=nKIal9WYEsJegSwG0yBwiW6X7uENd1xKZD7l9OpzIiU=;
+	s=korg; t=1741198653;
+	bh=YJyU4NvcuG/hAhzrWzKSp3MaxMPskY+DGeYtj3Mcbl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OVQLhnR/xexSeZVOsQigzt657XVt3JwT2+tBn0epey0i29E9SEckrsH1juZNjcLrp
-	 YFgfJbg38Idwfw1g68E7516BHVCzbFN/C00G3H32oxVcka3eFNa0sWMR0y+uLV1IEe
-	 02VkiYVfXhJ9P8x4zkpASPPZ5uIQemIRMAmuiOY0=
+	b=mY6hhOmUcbTmhfLLEMUn5/O7DeGKvMR67IV13YGzKJUu1OR2IwPVCNZr6FqXMliVN
+	 0boybwrSAjwFBXvjSEa7yVoiMDRfVoW4w2Z/f2LQ/6dayy8ffk53HvfAW+8uPpJN4A
+	 krT1xe8ZPFj08yfBe7h1+6+SaUvnGF3S9TVWGcWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorgen Hansen <Jorgen.Hansen@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.13 102/157] block: Remove zone write plugs when handling native zone append writes
-Date: Wed,  5 Mar 2025 18:48:58 +0100
-Message-ID: <20250305174509.406408504@linuxfoundation.org>
+	Ivan Shapovalov <intelfx@intelfx.name>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.13 103/157] btrfs: skip inodes without loaded extent maps when shrinking extent maps
+Date: Wed,  5 Mar 2025 18:48:59 +0100
+Message-ID: <20250305174509.445503506@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -51,234 +53,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit a6aa36e957a1bfb5341986dec32d013d23228fe1 upstream.
+commit c6c9c4d56483d941f567eb921434c25fc6086dfa upstream.
 
-For devices that natively support zone append operations,
-REQ_OP_ZONE_APPEND BIOs are not processed through zone write plugging
-and are immediately issued to the zoned device. This means that there is
-no write pointer offset tracking done for these operations and that a
-zone write plug is not necessary.
+If there are inodes that don't have any loaded extent maps, we end up
+grabbing a reference on them and later adding a delayed iput, which wakes
+up the cleaner and makes it do unnecessary work. This is common when for
+example the inodes were open only to run stat(2) or all their extent maps
+were already released through the folio release callback
+(btrfs_release_folio()) or released by a previous run of the shrinker, or
+directories which never have extent maps.
 
-However, when receiving a zone append BIO, we may already have a zone
-write plug for the target zone if that zone was previously partially
-written using regular write operations. In such case, since the write
-pointer offset of the zone write plug is not incremented by the amount
-of sectors appended to the zone, 2 issues arise:
-1) we risk leaving the plug in the disk hash table if the zone is fully
-   written using zone append or regular write operations, because the
-   write pointer offset will never reach the "zone full" state.
-2) Regular write operations that are issued after zone append operations
-   will always be failed by blk_zone_wplug_prepare_bio() as the write
-   pointer alignment check will fail, even if the user correctly
-   accounted for the zone append operations and issued the regular
-   writes with a correct sector.
-
-Avoid these issues by immediately removing the zone write plug of zones
-that are the target of zone append operations when blk_zone_plug_bio()
-is called. The new function blk_zone_wplug_handle_native_zone_append()
-implements this for devices that natively support zone append. The
-removal of the zone write plug using disk_remove_zone_wplug() requires
-aborting all plugged regular write using disk_zone_wplug_abort() as
-otherwise the plugged write BIOs would never be executed (with the plug
-removed, the completion path will never see again the zone write plug as
-disk_get_zone_wplug() will return NULL). Rate-limited warnings are added
-to blk_zone_wplug_handle_native_zone_append() and to
-disk_zone_wplug_abort() to signal this.
-
-Since blk_zone_wplug_handle_native_zone_append() is called in the hot
-path for operations that will not be plugged, disk_get_zone_wplug() is
-optimized under the assumption that a user issuing zone append
-operations is not at the same time issuing regular writes and that there
-are no hashed zone write plugs. The struct gendisk atomic counter
-nr_zone_wplugs is added to check this, with this counter incremented in
-disk_insert_zone_wplug() and decremented in disk_remove_zone_wplug().
-
-To be consistent with this fix, we do not need to fill the zone write
-plug hash table with zone write plugs for zones that are partially
-written for a device that supports native zone append operations.
-So modify blk_revalidate_seq_zone() to return early to avoid allocating
-and inserting a zone write plug for partially written sequential zones
-if the device natively supports zone append.
-
-Reported-by: Jorgen Hansen <Jorgen.Hansen@wdc.com>
-Fixes: 9b1ce7f0c6f8 ("block: Implement zone append emulation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Tested-by: Jorgen Hansen <Jorgen.Hansen@wdc.com>
-Link: https://lore.kernel.org/r/20250214041434.82564-1-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: Ivan Shapovalov <intelfx@intelfx.name>
+Tested-by: Ivan Shapovalov <intelfx@intelfx.name>
+Link: https://lore.kernel.org/linux-btrfs/0414d690ac5680d0d77dfc930606cdc36e42e12f.camel@intelfx.name/
+CC: stable@vger.kernel.org # 6.13+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-zoned.c      |   76 ++++++++++++++++++++++++++++++++++++++++++++-----
- include/linux/blkdev.h |    7 ++--
- 2 files changed, 73 insertions(+), 10 deletions(-)
+ fs/btrfs/extent_map.c |   78 ++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 57 insertions(+), 21 deletions(-)
 
---- a/block/blk-zoned.c
-+++ b/block/blk-zoned.c
-@@ -414,13 +414,14 @@ static bool disk_insert_zone_wplug(struc
- 		}
- 	}
- 	hlist_add_head_rcu(&zwplug->node, &disk->zone_wplugs_hash[idx]);
-+	atomic_inc(&disk->nr_zone_wplugs);
- 	spin_unlock_irqrestore(&disk->zone_wplugs_lock, flags);
+--- a/fs/btrfs/extent_map.c
++++ b/fs/btrfs/extent_map.c
+@@ -1128,6 +1128,8 @@ static long btrfs_scan_inode(struct btrf
+ 	long nr_dropped = 0;
+ 	struct rb_node *node;
  
- 	return true;
- }
- 
--static struct blk_zone_wplug *disk_get_zone_wplug(struct gendisk *disk,
--						  sector_t sector)
-+static struct blk_zone_wplug *disk_get_hashed_zone_wplug(struct gendisk *disk,
-+							 sector_t sector)
- {
- 	unsigned int zno = disk_zone_no(disk, sector);
- 	unsigned int idx = hash_32(zno, disk->zone_wplugs_hash_bits);
-@@ -441,6 +442,15 @@ static struct blk_zone_wplug *disk_get_z
- 	return NULL;
- }
- 
-+static inline struct blk_zone_wplug *disk_get_zone_wplug(struct gendisk *disk,
-+							 sector_t sector)
-+{
-+	if (!atomic_read(&disk->nr_zone_wplugs))
-+		return NULL;
++	lockdep_assert_held_write(&tree->lock);
 +
-+	return disk_get_hashed_zone_wplug(disk, sector);
-+}
-+
- static void disk_free_zone_wplug_rcu(struct rcu_head *rcu_head)
- {
- 	struct blk_zone_wplug *zwplug =
-@@ -505,6 +515,7 @@ static void disk_remove_zone_wplug(struc
- 	zwplug->flags |= BLK_ZONE_WPLUG_UNHASHED;
- 	spin_lock_irqsave(&disk->zone_wplugs_lock, flags);
- 	hlist_del_init_rcu(&zwplug->node);
-+	atomic_dec(&disk->nr_zone_wplugs);
- 	spin_unlock_irqrestore(&disk->zone_wplugs_lock, flags);
- 	disk_put_zone_wplug(zwplug);
- }
-@@ -594,6 +605,11 @@ static void disk_zone_wplug_abort(struct
- {
- 	struct bio *bio;
- 
-+	if (bio_list_empty(&zwplug->bio_list))
-+		return;
-+
-+	pr_warn_ratelimited("%s: zone %u: Aborting plugged BIOs\n",
-+			    zwplug->disk->disk_name, zwplug->zone_no);
- 	while ((bio = bio_list_pop(&zwplug->bio_list)))
- 		blk_zone_wplug_bio_io_error(zwplug, bio);
- }
-@@ -1042,6 +1058,47 @@ plug:
- 	return true;
- }
- 
-+static void blk_zone_wplug_handle_native_zone_append(struct bio *bio)
-+{
-+	struct gendisk *disk = bio->bi_bdev->bd_disk;
-+	struct blk_zone_wplug *zwplug;
-+	unsigned long flags;
-+
-+	/*
-+	 * We have native support for zone append operations, so we are not
-+	 * going to handle @bio through plugging. However, we may already have a
-+	 * zone write plug for the target zone if that zone was previously
-+	 * partially written using regular writes. In such case, we risk leaving
-+	 * the plug in the disk hash table if the zone is fully written using
-+	 * zone append operations. Avoid this by removing the zone write plug.
-+	 */
-+	zwplug = disk_get_zone_wplug(disk, bio->bi_iter.bi_sector);
-+	if (likely(!zwplug))
-+		return;
-+
-+	spin_lock_irqsave(&zwplug->lock, flags);
-+
-+	/*
-+	 * We are about to remove the zone write plug. But if the user
-+	 * (mistakenly) has issued regular writes together with native zone
-+	 * append, we must aborts the writes as otherwise the plugged BIOs would
-+	 * not be executed by the plug BIO work as disk_get_zone_wplug() will
-+	 * return NULL after the plug is removed. Aborting the plugged write
-+	 * BIOs is consistent with the fact that these writes will most likely
-+	 * fail anyway as there is no ordering guarantees between zone append
-+	 * operations and regular write operations.
-+	 */
-+	if (!bio_list_empty(&zwplug->bio_list)) {
-+		pr_warn_ratelimited("%s: zone %u: Invalid mix of zone append and regular writes\n",
-+				    disk->disk_name, zwplug->zone_no);
-+		disk_zone_wplug_abort(zwplug);
-+	}
-+	disk_remove_zone_wplug(disk, zwplug);
-+	spin_unlock_irqrestore(&zwplug->lock, flags);
-+
-+	disk_put_zone_wplug(zwplug);
-+}
-+
- /**
-  * blk_zone_plug_bio - Handle a zone write BIO with zone write plugging
-  * @bio: The BIO being submitted
-@@ -1098,8 +1155,10 @@ bool blk_zone_plug_bio(struct bio *bio,
- 	 */
- 	switch (bio_op(bio)) {
- 	case REQ_OP_ZONE_APPEND:
--		if (!bdev_emulates_zone_append(bdev))
-+		if (!bdev_emulates_zone_append(bdev)) {
-+			blk_zone_wplug_handle_native_zone_append(bio);
- 			return false;
-+		}
- 		fallthrough;
- 	case REQ_OP_WRITE:
- 	case REQ_OP_WRITE_ZEROES:
-@@ -1286,6 +1345,7 @@ static int disk_alloc_zone_resources(str
- {
- 	unsigned int i;
- 
-+	atomic_set(&disk->nr_zone_wplugs, 0);
- 	disk->zone_wplugs_hash_bits =
- 		min(ilog2(pool_size) + 1, BLK_ZONE_WPLUG_MAX_HASH_BITS);
- 
-@@ -1340,6 +1400,7 @@ static void disk_destroy_zone_wplugs_has
- 		}
- 	}
- 
-+	WARN_ON_ONCE(atomic_read(&disk->nr_zone_wplugs));
- 	kfree(disk->zone_wplugs_hash);
- 	disk->zone_wplugs_hash = NULL;
- 	disk->zone_wplugs_hash_bits = 0;
-@@ -1552,11 +1613,12 @@ static int blk_revalidate_seq_zone(struc
- 	}
- 
  	/*
--	 * We need to track the write pointer of all zones that are not
--	 * empty nor full. So make sure we have a zone write plug for
--	 * such zone if the device has a zone write plug hash table.
-+	 * If the device needs zone append emulation, we need to track the
-+	 * write pointer of all zones that are not empty nor full. So make sure
-+	 * we have a zone write plug for such zone if the device has a zone
-+	 * write plug hash table.
+ 	 * Take the mmap lock so that we serialize with the inode logging phase
+ 	 * of fsync because we may need to set the full sync flag on the inode,
+@@ -1139,28 +1141,12 @@ static long btrfs_scan_inode(struct btrf
+ 	 * to find new extents, which may not be there yet because ordered
+ 	 * extents haven't completed yet.
+ 	 *
+-	 * We also do a try lock because otherwise we could deadlock. This is
+-	 * because the shrinker for this filesystem may be invoked while we are
+-	 * in a path that is holding the mmap lock in write mode. For example in
+-	 * a reflink operation while COWing an extent buffer, when allocating
+-	 * pages for a new extent buffer and under memory pressure, the shrinker
+-	 * may be invoked, and therefore we would deadlock by attempting to read
+-	 * lock the mmap lock while we are holding already a write lock on it.
++	 * We also do a try lock because we don't want to block for too long and
++	 * we are holding the extent map tree's lock in write mode.
  	 */
--	if (!disk->zone_wplugs_hash)
-+	if (!queue_emulates_zone_append(disk->queue) || !disk->zone_wplugs_hash)
+ 	if (!down_read_trylock(&inode->i_mmap_lock))
  		return 0;
  
- 	disk_zone_wplug_sync_wp_offset(disk, zone);
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -196,10 +196,11 @@ struct gendisk {
- 	unsigned int		zone_capacity;
- 	unsigned int		last_zone_capacity;
- 	unsigned long __rcu	*conv_zones_bitmap;
--	unsigned int            zone_wplugs_hash_bits;
--	spinlock_t              zone_wplugs_lock;
-+	unsigned int		zone_wplugs_hash_bits;
-+	atomic_t		nr_zone_wplugs;
-+	spinlock_t		zone_wplugs_lock;
- 	struct mempool_s	*zone_wplugs_pool;
--	struct hlist_head       *zone_wplugs_hash;
-+	struct hlist_head	*zone_wplugs_hash;
- 	struct workqueue_struct *zone_wplugs_wq;
- #endif /* CONFIG_BLK_DEV_ZONED */
+-	/*
+-	 * We want to be fast so if the lock is busy we don't want to spend time
+-	 * waiting for it - either some task is about to do IO for the inode or
+-	 * we may have another task shrinking extent maps, here in this code, so
+-	 * skip this inode.
+-	 */
+-	if (!write_trylock(&tree->lock)) {
+-		up_read(&inode->i_mmap_lock);
+-		return 0;
+-	}
+-
+ 	node = rb_first(&tree->root);
+ 	while (node) {
+ 		struct rb_node *next = rb_next(node);
+@@ -1201,12 +1187,61 @@ next:
+ 			break;
+ 		node = next;
+ 	}
+-	write_unlock(&tree->lock);
+ 	up_read(&inode->i_mmap_lock);
  
+ 	return nr_dropped;
+ }
+ 
++static struct btrfs_inode *find_first_inode_to_shrink(struct btrfs_root *root,
++						      u64 min_ino)
++{
++	struct btrfs_inode *inode;
++	unsigned long from = min_ino;
++
++	xa_lock(&root->inodes);
++	while (true) {
++		struct extent_map_tree *tree;
++
++		inode = xa_find(&root->inodes, &from, ULONG_MAX, XA_PRESENT);
++		if (!inode)
++			break;
++
++		tree = &inode->extent_tree;
++
++		/*
++		 * We want to be fast so if the lock is busy we don't want to
++		 * spend time waiting for it (some task is about to do IO for
++		 * the inode).
++		 */
++		if (!write_trylock(&tree->lock))
++			goto next;
++
++		/*
++		 * Skip inode if it doesn't have loaded extent maps, so we avoid
++		 * getting a reference and doing an iput later. This includes
++		 * cases like files that were opened for things like stat(2), or
++		 * files with all extent maps previously released through the
++		 * release folio callback (btrfs_release_folio()) or released in
++		 * a previous run, or directories which never have extent maps.
++		 */
++		if (RB_EMPTY_ROOT(&tree->root)) {
++			write_unlock(&tree->lock);
++			goto next;
++		}
++
++		if (igrab(&inode->vfs_inode))
++			break;
++
++		write_unlock(&tree->lock);
++next:
++		from = btrfs_ino(inode) + 1;
++		cond_resched_lock(&root->inodes.xa_lock);
++	}
++	xa_unlock(&root->inodes);
++
++	return inode;
++}
++
+ static long btrfs_scan_root(struct btrfs_root *root, struct btrfs_em_shrink_ctx *ctx)
+ {
+ 	struct btrfs_fs_info *fs_info = root->fs_info;
+@@ -1214,9 +1249,10 @@ static long btrfs_scan_root(struct btrfs
+ 	long nr_dropped = 0;
+ 	u64 min_ino = fs_info->em_shrinker_last_ino + 1;
+ 
+-	inode = btrfs_find_first_inode(root, min_ino);
++	inode = find_first_inode_to_shrink(root, min_ino);
+ 	while (inode) {
+ 		nr_dropped += btrfs_scan_inode(inode, ctx);
++		write_unlock(&inode->extent_tree.lock);
+ 
+ 		min_ino = btrfs_ino(inode) + 1;
+ 		fs_info->em_shrinker_last_ino = btrfs_ino(inode);
+@@ -1228,7 +1264,7 @@ static long btrfs_scan_root(struct btrfs
+ 
+ 		cond_resched();
+ 
+-		inode = btrfs_find_first_inode(root, min_ino);
++		inode = find_first_inode_to_shrink(root, min_ino);
+ 	}
+ 
+ 	if (inode) {
 
 
