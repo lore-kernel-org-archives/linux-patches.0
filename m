@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E7A19066D;
-	Wed,  5 Mar 2025 18:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D47B1C860D;
+	Wed,  5 Mar 2025 18:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198071; cv=none; b=Q6+9UX67DbO65ukGUl0l27XHrjD+M6zz2/5/DHfykvXRMBPBkAzCsTkMhD3sU0MlHNBDmbFPR/3mlWKWqh/mZ5DD3pgSko3lNL6+9MEkY5sMlM5ctn3jMJPtaiMJK3mGFV1oYnw3V1aBGt6bgldxlC05p3SYkBsu6GjH1cX/6mw=
+	t=1741198074; cv=none; b=bw/u7mvnQQePQeB+65cwRjFI9DIDUom/MQu9fvZm42Yk045QJTfYHRhhg3HNe8B6Ms6FtBgMeKlKqqKNChyrr5fzPxcjpAtm6MZ02K0lqC83t5YDFyVlDmIqeSnV/jo3LPSXIfx65rSTZMgEJaF2K/QahwtS/Lz6JyZfVD8sVY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198071; c=relaxed/simple;
-	bh=+fRL+NJbZqWSRnYWekx8B5GGpHKLRhiOngQHn8Cw9T4=;
+	s=arc-20240116; t=1741198074; c=relaxed/simple;
+	bh=jkW8eFFGksJI7Wdbt/xtw+VboScgc3ImmURBJtxsOcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ldmRQ7Hw2CEk+QajYNNvJp2THdmgDuB7zXCp7yc8s+OnAnSJbT1aSgKCMe4loYMjrUoa/520pMG9W/2PXt78Gcdz7sK+g+x7G+6mjd1Y2UGfEZ5EbFZ5/QDggeG5uD7u4xogOTLVuyJcLGDLiyUzjLKau7i/E2Qb4kS6Ux3N5ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/Fid+g5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y6CATT/YwA247D/CVRHGNPTGrRlgOdw27/pZOvNDpVHTw/Z/qUm75dmBUzamUUPkhiA3KNyf1xFFvW+e8h/0X2zChN6K1RtD2wCpUkiv3/nKl1y/7nL3pxbA9OA7aaeGbZRJhrUoYG5ZAXZcwaW+dEizQktnrFT++SdoPrIxdVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGmZ/IbI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/Fid+g5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC38C4CED1;
-	Wed,  5 Mar 2025 18:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGmZ/IbI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3999C4CED1;
+	Wed,  5 Mar 2025 18:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198071;
-	bh=+fRL+NJbZqWSRnYWekx8B5GGpHKLRhiOngQHn8Cw9T4=;
+	s=korg; t=1741198074;
+	bh=jkW8eFFGksJI7Wdbt/xtw+VboScgc3ImmURBJtxsOcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/Fid+g5NYMssCJBKYAr5IdA5S6MzA8xlqpDTfMziNpI8YJouZXsKeJtY3LODrcSW
-	 Y71ePHcDeIYt5quSAA39GOtJD3OIHQ+5ujp3xAHPBruvKNFkw05N0awJPxBNvR6zrv
-	 D9HM/n1p3zudm4fG9CDfYmvJWL5vN76IVzSMYoN8=
+	b=hGmZ/IbIfiK8EcDxlvMzDAUy8g2sIX6v8CcDI5P2ts7cuE0E4G4WKWONzEdfdCmew
+	 C2LTbGv3MUudBpZVfUWlqkz3XLmnR/B02LgU1pezOdt8FfhGrUnS76Kx0E24LXhDdX
+	 RqVAGtVhxEwzIjToewORzKaEt10Exb+2UJDIbYew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/150] ice: Fix deinitializing VF in error path
-Date: Wed,  5 Mar 2025 18:48:04 +0100
-Message-ID: <20250305174506.037196876@linuxfoundation.org>
+Subject: [PATCH 6.12 056/150] ice: Avoid setting default Rx VSI twice in switchdev setup
+Date: Wed,  5 Mar 2025 18:48:05 +0100
+Message-ID: <20250305174506.075019377@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -57,40 +57,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Marcin Szycik <marcin.szycik@linux.intel.com>
 
-[ Upstream commit 79990cf5e7aded76d0c092c9f5ed31eb1c75e02c ]
+[ Upstream commit 5c07be96d8b3f8447e980f29b967bf2e1d7ac732 ]
 
-If ice_ena_vfs() fails after calling ice_create_vf_entries(), it frees
-all VFs without removing them from snapshot PF-VF mailbox list, leading
-to list corruption.
+As part of switchdev environment setup, uplink VSI is configured as
+default for both Tx and Rx. Default Rx VSI is also used by promiscuous
+mode. If promisc mode is enabled and an attempt to enter switchdev mode
+is made, the setup will fail because Rx VSI is already configured as
+default (rule exists).
 
 Reproducer:
   devlink dev eswitch set $PF1_PCI mode switchdev
   ip l s $PF1 up
   ip l s $PF1 promisc on
-  sleep 1
-  echo 1 > /sys/class/net/$PF1/device/sriov_numvfs
-  sleep 1
   echo 1 > /sys/class/net/$PF1/device/sriov_numvfs
 
-Trace (minimized):
-  list_add corruption. next->prev should be prev (ffff8882e241c6f0), but was 0000000000000000. (next=ffff888455da1330).
-  kernel BUG at lib/list_debug.c:29!
-  RIP: 0010:__list_add_valid_or_report+0xa6/0x100
-   ice_mbx_init_vf_info+0xa7/0x180 [ice]
-   ice_initialize_vf_entry+0x1fa/0x250 [ice]
-   ice_sriov_configure+0x8d7/0x1520 [ice]
-   ? __percpu_ref_switch_mode+0x1b1/0x5d0
-   ? __pfx_ice_sriov_configure+0x10/0x10 [ice]
+In switchdev setup, use ice_set_dflt_vsi() instead of plain
+ice_cfg_dflt_vsi(), which avoids repeating setting default VSI for Rx if
+it's already configured.
 
-Sometimes a KASAN report can be seen instead with a similar stack trace:
-  BUG: KASAN: use-after-free in __list_add_valid_or_report+0xf1/0x100
-
-VFs are added to this list in ice_mbx_init_vf_info(), but only removed
-in ice_free_vfs(). Move the removing to ice_free_vf_entries(), which is
-also being called in other places where VFs are being removed (including
-ice_free_vfs() itself).
-
-Fixes: 8cd8a6b17d27 ("ice: move VF overflow message count into struct ice_mbx_vf_info")
+Fixes: 50d62022f455 ("ice: default Tx rule instead of to queue")
 Reported-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
 Closes: https://lore.kernel.org/intel-wired-lan/PH0PR11MB50138B635F2E5CEB7075325D961F2@PH0PR11MB5013.namprd11.prod.outlook.com
 Reviewed-by: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
@@ -98,69 +83,27 @@ Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20250224190647.3601930-2-anthony.l.nguyen@intel.com
+Link: https://patch.msgid.link/20250224190647.3601930-3-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_sriov.c          | 5 +----
- drivers/net/ethernet/intel/ice/ice_vf_lib.c         | 8 ++++++++
- drivers/net/ethernet/intel/ice/ice_vf_lib_private.h | 1 +
- 3 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_eswitch.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
-index b83f99c01d91b..8aabf7749aa5e 100644
---- a/drivers/net/ethernet/intel/ice/ice_sriov.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
-@@ -36,6 +36,7 @@ static void ice_free_vf_entries(struct ice_pf *pf)
+diff --git a/drivers/net/ethernet/intel/ice/ice_eswitch.c b/drivers/net/ethernet/intel/ice/ice_eswitch.c
+index fb527434b58b1..d649c197cf673 100644
+--- a/drivers/net/ethernet/intel/ice/ice_eswitch.c
++++ b/drivers/net/ethernet/intel/ice/ice_eswitch.c
+@@ -38,8 +38,7 @@ static int ice_eswitch_setup_env(struct ice_pf *pf)
+ 	if (ice_vsi_add_vlan_zero(uplink_vsi))
+ 		goto err_vlan_zero;
  
- 	hash_for_each_safe(vfs->table, bkt, tmp, vf, entry) {
- 		hash_del_rcu(&vf->entry);
-+		ice_deinitialize_vf_entry(vf);
- 		ice_put_vf(vf);
- 	}
- }
-@@ -193,10 +194,6 @@ void ice_free_vfs(struct ice_pf *pf)
- 			wr32(hw, GLGEN_VFLRSTAT(reg_idx), BIT(bit_idx));
- 		}
+-	if (ice_cfg_dflt_vsi(uplink_vsi->port_info, uplink_vsi->idx, true,
+-			     ICE_FLTR_RX))
++	if (ice_set_dflt_vsi(uplink_vsi))
+ 		goto err_def_rx;
  
--		/* clear malicious info since the VF is getting released */
--		if (!ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
--			list_del(&vf->mbx_info.list_entry);
--
- 		mutex_unlock(&vf->cfg_lock);
- 	}
- 
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-index c7c0c2f50c265..815ad0bfe8326 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-@@ -1036,6 +1036,14 @@ void ice_initialize_vf_entry(struct ice_vf *vf)
- 	mutex_init(&vf->cfg_lock);
- }
- 
-+void ice_deinitialize_vf_entry(struct ice_vf *vf)
-+{
-+	struct ice_pf *pf = vf->pf;
-+
-+	if (!ice_is_feature_supported(pf, ICE_F_MBX_LIMIT))
-+		list_del(&vf->mbx_info.list_entry);
-+}
-+
- /**
-  * ice_dis_vf_qs - Disable the VF queues
-  * @vf: pointer to the VF structure
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h b/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
-index 0c7e77c0a09fa..5392b04049862 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib_private.h
-@@ -24,6 +24,7 @@
- #endif
- 
- void ice_initialize_vf_entry(struct ice_vf *vf);
-+void ice_deinitialize_vf_entry(struct ice_vf *vf);
- void ice_dis_vf_qs(struct ice_vf *vf);
- int ice_check_vf_init(struct ice_vf *vf);
- enum virtchnl_status_code ice_err_to_virt_err(int err);
+ 	if (ice_cfg_dflt_vsi(uplink_vsi->port_info, uplink_vsi->idx, true,
 -- 
 2.39.5
 
