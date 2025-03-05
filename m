@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB341C6FF6;
-	Wed,  5 Mar 2025 18:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A333F1A23A6;
+	Wed,  5 Mar 2025 18:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198237; cv=none; b=AvGJ1QJKy6zHuPMmx54Zk4jirK9W9ganAFMLY4bItmllfZAkweolc3jY8YnYv3ePtgc/HE7Mxo07Y+3KykEiQV2V+z05r8nvQSCR4UQHuUEwWzkl4nkd0KlUoVZKJlaPIII1AVt+pAAs6hr4Vz74sqAGYxJnXDDc7Xu5olTgfB8=
+	t=1741198240; cv=none; b=hotPQVLLaY6wETWVc4wbyEYay0MB1abBiNMeqKx3yFtyWooDPzD/AjsVtTsAqe2lLHQGCaeWmoTCEZUN1/qJCaPegtBxU+SOtA7mV9Z07YIUpCd2GCzJM5b7jkSyyBjQVz7GEQkVFw+PsJH+/dt1PCYUjNB8Lo0S2U1L+e2WV64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198237; c=relaxed/simple;
-	bh=hyY0zMr5LU4XaqUWN6yhqNQ18cZUWtbOAb1ZKbg8qDA=;
+	s=arc-20240116; t=1741198240; c=relaxed/simple;
+	bh=6VjPmFvI+4lk9pcX8OahjGytqO69lhtQ+42hAogU0vw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sMiHjGC9dAHTef4V4eSRD7WOVu0QWmYj79/TdSoB7TIWqR5y9M/U9jxCxdn610CfDOLxSmyp7/AyET6wFx0NH2yD6gIWawX6PIovV6RxF4ne+gQljF19w7YSn4iMyzQ/k/V/IsD/LwOPoeFOjan9/5fGqiNX5uij9Wsp07ND8B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nayGqy4c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Boyj172kwS5XThUuLJL0GZqSDTp+OhxbV+A4MWxaYY9mzIagB/ZxvLPIg667hX77Rx0REonOjJyZT2jVKFa1ui7FIb70VWbskk3tyX6HA93gxc9dHC1tBJNzCazAwCxqt0Ci0Nhv0Q2vMa9xtymJGI/qMEgeYOWXkrhXPBQkEsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bp5evLc0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nayGqy4c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5467C4CEE0;
-	Wed,  5 Mar 2025 18:10:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bp5evLc0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5620C4CEE0;
+	Wed,  5 Mar 2025 18:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198237;
-	bh=hyY0zMr5LU4XaqUWN6yhqNQ18cZUWtbOAb1ZKbg8qDA=;
+	s=korg; t=1741198240;
+	bh=6VjPmFvI+4lk9pcX8OahjGytqO69lhtQ+42hAogU0vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nayGqy4crvQqyZT7011zsVOjvGIOJKIlLsoN1t/UG0WbRP6KDwSmFiqRWk9IgJT18
-	 uHZBZBRbLiCQsbhD7j1eJGFtIDOVmgfSunJOIr85u+W4JKCUxn313UHKW9A07YpY7w
-	 MFDNJQU1FQ9hZwv2XFjqCyGl+dE6LO5L77YkQvj4=
+	b=bp5evLc0YLpsT5lIT00z22EvihzQSrqt5N9SiJyxeZXathQvo/Qq2NAHvxWHtlN7S
+	 cih6/uJGIeqjq9H3Cg0x40hOCZbCNRNGHwkvb8ewW6+4/RwWikMPuFY5aIp8hOF7/s
+	 xJldJNAPB8MygKMPWMv2jrjeHaz17ZjL50tkzuYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qunqin Zhao <zhaoqunqin@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Yanteng Si <si.yanteng@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 109/150] net: stmmac: dwmac-loongson: Add fix_soc_reset() callback
-Date: Wed,  5 Mar 2025 18:48:58 +0100
-Message-ID: <20250305174508.191771610@linuxfoundation.org>
+	Jianfeng Liu <liujianfeng1994@gmail.com>,
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 080/150] phy: rockchip: naneng-combphy: compatible reset with old DT
+Date: Wed,  5 Mar 2025 18:48:29 +0100
+Message-ID: <20250305174507.029064591@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -53,63 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qunqin Zhao <zhaoqunqin@loongson.cn>
+From: Chukun Pan <amadeus@jmu.edu.cn>
 
-commit f06e4bfd010faefa637689d2df2c727dbf6e1d27 upstream.
+[ Upstream commit 3126ea9be66b53e607f87f067641ba724be24181 ]
 
-Loongson's DWMAC device may take nearly two seconds to complete DMA reset,
-however, the default waiting time for reset is 200 milliseconds.
-Therefore, the following error message may appear:
+The device tree of RK3568 did not specify reset-names before.
+So add fallback to old behaviour to be compatible with old DT.
 
-[14.427169] dwmac-loongson-pci 0000:00:03.2: Failed to reset the dma
-
-Fixes: 803fc61df261 ("net: stmmac: dwmac-loongson: Add Loongson Multi-channels GMAC support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qunqin Zhao <zhaoqunqin@loongson.cn>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Acked-by: Yanteng Si <si.yanteng@linux.dev>
-Link: https://patch.msgid.link/20250219020701.15139-1-zhaoqunqin@loongson.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fbcbffbac994 ("phy: rockchip: naneng-combphy: fix phy reset")
+Cc: Jianfeng Liu <liujianfeng1994@gmail.com>
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Reviewed-by: Jonas Karlman <jonas@kwiboo.se>
+Link: https://lore.kernel.org/r/20250106100001.1344418-2-amadeus@jmu.edu.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/dwmac-loongson.c   | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/phy/rockchip/phy-rockchip-naneng-combphy.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-index bfe6e2d631bd..f5acfb7d4ff6 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-@@ -516,6 +516,19 @@ static int loongson_dwmac_acpi_config(struct pci_dev *pdev,
- 	return 0;
- }
+diff --git a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
+index 2eb3329ca23f6..1ef6d9630f7e0 100644
+--- a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
++++ b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
+@@ -309,7 +309,10 @@ static int rockchip_combphy_parse_dt(struct device *dev, struct rockchip_combphy
  
-+/* Loongson's DWMAC device may take nearly two seconds to complete DMA reset */
-+static int loongson_dwmac_fix_reset(void *priv, void __iomem *ioaddr)
-+{
-+	u32 value = readl(ioaddr + DMA_BUS_MODE);
-+
-+	value |= DMA_BUS_MODE_SFT_RESET;
-+	writel(value, ioaddr + DMA_BUS_MODE);
-+
-+	return readl_poll_timeout(ioaddr + DMA_BUS_MODE, value,
-+				  !(value & DMA_BUS_MODE_SFT_RESET),
-+				  10000, 2000000);
-+}
-+
- static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- {
- 	struct plat_stmmacenet_data *plat;
-@@ -566,6 +579,7 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
+ 	priv->ext_refclk = device_property_present(dev, "rockchip,ext-refclk");
  
- 	plat->bsp_priv = ld;
- 	plat->setup = loongson_dwmac_setup;
-+	plat->fix_soc_reset = loongson_dwmac_fix_reset;
- 	ld->dev = &pdev->dev;
- 	ld->loongson_id = readl(res.addr + GMAC_VERSION) & 0xff;
+-	priv->phy_rst = devm_reset_control_get(dev, "phy");
++	priv->phy_rst = devm_reset_control_get_exclusive(dev, "phy");
++	/* fallback to old behaviour */
++	if (PTR_ERR(priv->phy_rst) == -ENOENT)
++		priv->phy_rst = devm_reset_control_array_get_exclusive(dev);
+ 	if (IS_ERR(priv->phy_rst))
+ 		return dev_err_probe(dev, PTR_ERR(priv->phy_rst), "failed to get phy reset\n");
  
 -- 
-2.48.1
+2.39.5
 
 
 
