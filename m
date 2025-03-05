@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8C5250C1A;
-	Wed,  5 Mar 2025 18:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA0924CEE3;
+	Wed,  5 Mar 2025 18:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198472; cv=none; b=mYapXg1kq83B0VE46E3QOfs7WzXYVd/zgwo6nJwRVOY5RA3M7TBmJSyS5MApBwitg5oPzjPXga1ViSFjRj5gCO7IqxqWbQZ5T1GEw1Nf+E8YhKDMTtft08BrYGoa5iJvMVEpY1u2gZNSSD0lu9s8JOiJh+zEPirh0PI14lxrtxs=
+	t=1741198475; cv=none; b=paBGIpGlX5KjAX9wowj6SUEu40A9uQiceZ5E5DNBKOI+8mN0Uolo+jVnR32+R6+gslQpVKjx60YP9b39AR3O7LyZVF1Xr0jHIjtseEU8N2LFFKjXrYEXRxHsB7XV/KVLb0KrS7BpZX5skatrt3Ke5Ko75dSmpu1CpVfaeKrswY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198472; c=relaxed/simple;
-	bh=cN5oDnjGdOuJmYaIsrAfqjjqGd2VeXIZHYEcgiZYFcQ=;
+	s=arc-20240116; t=1741198475; c=relaxed/simple;
+	bh=8fNIKGLTTDm+MLG/vyuE383JeueB5gnVUJjsjOYZ+W4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YU+Y/ujFbf3aC41nhuKfjhBejKVbB2q1Wqecn7O+2bvxkwaKKE6RoGZs38ty2qTcSR+KZ8MklHzw6duyRwh9lkgf5KrGKXx3aDVq1yVWTvF0+tbk/nH68qIeUp/hBNUScQudr5FRsJtHm7PZg6NumeZ0Og4hMjDaK9/8wgp/78s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exCDNqtn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PzbYQJPKVRyX8XLjaWGGIdrF06bEwCDZVl2IKo7pJe/tKtw/j65FljAZkXIdjEvsOLbVytbvBws8bABvHSnS38m+lVrsY8P+ZsFfjaUQ18xTfCVB2iH1PY5M2sRfodaiflM+kH5XUF4ft4Be3Ttj/mNprEIk7ZPbtC5F1WtuYYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbIkGeni; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exCDNqtn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B30C4CED1;
-	Wed,  5 Mar 2025 18:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbIkGeni"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98173C4CED1;
+	Wed,  5 Mar 2025 18:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198472;
-	bh=cN5oDnjGdOuJmYaIsrAfqjjqGd2VeXIZHYEcgiZYFcQ=;
+	s=korg; t=1741198475;
+	bh=8fNIKGLTTDm+MLG/vyuE383JeueB5gnVUJjsjOYZ+W4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=exCDNqtnhIvk8aps6lS9PkPCoCy5YK59SacxgvL+ONPIANsjDIEClRhdStndn7Dzp
-	 fxsmHxYiR+20afx53+fnYze3ampI1gQLzupp4vxDEtguvp6+aU9bkIxZg4bUPNgYBf
-	 OW05H/ZJH391Ce4TJNgBkGDIwzTSdlNys6NsnRXs=
+	b=XbIkGeniK8hGGuAWDeaqVFxAMp4vzK4vjgW1HVwE8Jo04i1ABM3FaPEPLuauupVp3
+	 QgsffIaw1EXijIrvxNJWEMAWslYMPYwDHPeFn9uQI8AXBBlwm8BkkGu9hdFRTJl+/v
+	 OkX1L9izkZTXVLvMCF8wy5f5yvE+xe46J6tWnkcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Mark Zhang <markzhang@nvidia.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 022/157] RDMA/mlx5: Fix bind QP error cleanup flow
-Date: Wed,  5 Mar 2025 18:47:38 +0100
-Message-ID: <20250305174506.183574123@linuxfoundation.org>
+Subject: [PATCH 6.13 040/157] drm/xe/oa: Allow oa_exponent value of 0
+Date: Wed,  5 Mar 2025 18:47:56 +0100
+Message-ID: <20250305174506.908945007@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -53,61 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
 
-[ Upstream commit e1a0bdbdfdf08428f0ede5ae49c7f4139ac73ef5 ]
+[ Upstream commit 5bd566703e16b17d17f4fb648440d54f8967462c ]
 
-When there is a failure during bind QP, the cleanup flow destroys the
-counter regardless if it is the one that created it or not, which is
-problematic since if it isn't the one that created it, that counter could
-still be in use.
+OA exponent value of 0 is a valid value for periodic reports. Allow user
+to pass 0 for the OA sampling interval since it gets converted to 2 gt
+clock ticks.
 
-Fix that by destroying the counter only if it was created during this call.
+v2: Update the check in xe_oa_stream_init as well (Ashutosh)
+v3: Fix mi-rpc failure by setting default exponent to -1 (CI)
+v4: Add the Fixes tag
 
-Fixes: 45842fc627c7 ("IB/mlx5: Support statistic q counter configuration")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Mark Zhang <markzhang@nvidia.com>
-Link: https://patch.msgid.link/25dfefddb0ebefa668c32e06a94d84e3216257cf.1740033937.git.leon@kernel.org
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: b6fd51c62119 ("drm/xe/oa/uapi: Define and parse OA stream properties")
+Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250221213352.1712932-1-umesh.nerlige.ramappa@intel.com
+(cherry picked from commit 30341f0b8ea71725cc4ab2c43e3a3b749892fc92)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/counters.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_oa.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/counters.c b/drivers/infiniband/hw/mlx5/counters.c
-index 4f6c1968a2ee3..81cfa74147a18 100644
---- a/drivers/infiniband/hw/mlx5/counters.c
-+++ b/drivers/infiniband/hw/mlx5/counters.c
-@@ -546,6 +546,7 @@ static int mlx5_ib_counter_bind_qp(struct rdma_counter *counter,
- 				   struct ib_qp *qp)
- {
- 	struct mlx5_ib_dev *dev = to_mdev(qp->device);
-+	bool new = false;
- 	int err;
+diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
+index 913f6ba606370..5c50ca8cd8e78 100644
+--- a/drivers/gpu/drm/xe/xe_oa.c
++++ b/drivers/gpu/drm/xe/xe_oa.c
+@@ -1766,7 +1766,7 @@ static int xe_oa_stream_init(struct xe_oa_stream *stream,
+ 	stream->oa_buffer.format = &stream->oa->oa_formats[param->oa_format];
  
- 	if (!counter->id) {
-@@ -560,6 +561,7 @@ static int mlx5_ib_counter_bind_qp(struct rdma_counter *counter,
- 			return err;
- 		counter->id =
- 			MLX5_GET(alloc_q_counter_out, out, counter_set_id);
-+		new = true;
+ 	stream->sample = param->sample;
+-	stream->periodic = param->period_exponent > 0;
++	stream->periodic = param->period_exponent >= 0;
+ 	stream->period_exponent = param->period_exponent;
+ 	stream->no_preempt = param->no_preempt;
+ 	stream->wait_num_reports = param->wait_num_reports;
+@@ -2058,6 +2058,7 @@ int xe_oa_stream_open_ioctl(struct drm_device *dev, u64 data, struct drm_file *f
  	}
  
- 	err = mlx5_ib_qp_set_counter(qp, counter);
-@@ -569,8 +571,10 @@ static int mlx5_ib_counter_bind_qp(struct rdma_counter *counter,
- 	return 0;
+ 	param.xef = xef;
++	param.period_exponent = -1;
+ 	ret = xe_oa_user_extensions(oa, XE_OA_USER_EXTN_FROM_OPEN, data, 0, &param);
+ 	if (ret)
+ 		return ret;
+@@ -2112,7 +2113,7 @@ int xe_oa_stream_open_ioctl(struct drm_device *dev, u64 data, struct drm_file *f
+ 		goto err_exec_q;
+ 	}
  
- fail_set_counter:
--	mlx5_ib_counter_dealloc(counter);
--	counter->id = 0;
-+	if (new) {
-+		mlx5_ib_counter_dealloc(counter);
-+		counter->id = 0;
-+	}
+-	if (param.period_exponent > 0) {
++	if (param.period_exponent >= 0) {
+ 		u64 oa_period, oa_freq_hz;
  
- 	return err;
- }
+ 		/* Requesting samples from OAG buffer is a privileged operation */
 -- 
 2.39.5
 
