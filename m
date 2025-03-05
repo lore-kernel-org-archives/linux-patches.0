@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC521AAE2E;
-	Wed,  5 Mar 2025 18:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FEC41A5BB7;
+	Wed,  5 Mar 2025 18:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198317; cv=none; b=hA5E+ryIrdWP469UA9B5rd7bL6vVcPHMy+4sFYgi0gaRAG/d/pFArA3Sofw+a2eg+f+2RZCGJMLctwxKEdlwONFYOW+a/Aorh3hYfXH/+BgVcl+/ZFSh9h0mvBJz2zCgmXPoh65/BMnyCaoKo+d43LawGit6qI17STJj9KgvT/Q=
+	t=1741198320; cv=none; b=Te5Nsu+J8pXzGFC4Gc6li/rHurYI//QIUaxHK6RVqEVv2/CwQw5dWHRprDr+XXs6BlJziY0ct4n3xMYXJMPiaLLNkrUyETY2TRc+xzu+JpxdfRhQMs3s9Ze707b4plGFEQwFLaCPGTboZFYNhLjEMn+QUVyTzpI/P9jUNUQOsTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198317; c=relaxed/simple;
-	bh=lDocIipGyygMHiuaBxyK9eQ0D+YMKCCHxSFNH3Rq+xM=;
+	s=arc-20240116; t=1741198320; c=relaxed/simple;
+	bh=1NoJnQ7fR6lRvV69Q4fBGy/ae97Fy1V4+WGVpOqHxlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJT6a/Z8IjtwCsSxCsbIdT4rjdNZHmeDlu8dovrkxVfdcsW9w075gYc4lOvm05tV2mE+ZK0IKo+laD5vpS4xmsle4J6bu/Ioyxwzo9atRtBhQnizJdj2ZScJPBhqSz0jJ/muPWyUS2ksjRUxWtQoX4dKBzw7T2RizxOWQx8X2oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHsvwfoF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=vCarhex7c0xmHkC/wNt+RLSbpil7hhcw89sXPbLyjmVIrNs4Hizzx9IEPLZRTR0icDozR9EvPBAns/PgfsB97gxEIsXqDy10HiwRrJKYq9q8G9CmX+EgHX0L3QdQJJmXHtnaBSeHeOUGuk6Lw1PQtkDk0OMp6qovJrjW3pnH+Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBXfjogL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHsvwfoF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BACC4CED1;
-	Wed,  5 Mar 2025 18:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBXfjogL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEA9C4CED1;
+	Wed,  5 Mar 2025 18:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198317;
-	bh=lDocIipGyygMHiuaBxyK9eQ0D+YMKCCHxSFNH3Rq+xM=;
+	s=korg; t=1741198320;
+	bh=1NoJnQ7fR6lRvV69Q4fBGy/ae97Fy1V4+WGVpOqHxlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHsvwfoFdHLB64GBh2edYyrnCwXW/Ru6pkdZX+kQIQNswEp0n3zcrqLIVM4SPmQu6
-	 lP9cZseZDoaEK+FGk86OzY6NF0uXe0b3iWT+8YFnuNuWDH9OiE+rJ0DP0K9QwurdDV
-	 aheFuvB+ktWp8dO32umhSWSHvJE3Pwp8+Ez3bPJk=
+	b=OBXfjogLSHvVNajrXbxQE0wXvz5Ye8QKHHP2XOBtoAgAtgqOVRBxL1xYxZDVHvAkU
+	 WWEf8Ygq18tsZeIthn4K7/lK22323SsLqlPOCSGHB097A7/xE7SbyP0ice3riUGYJe
+	 L/y7nPghVjhk9uxYisUdxI2LSJkz5yjEZ2I6wtxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
-	Zong Li <zong.li@sifive.com>,
-	Andy Chiu <AndybnAC@gmail.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.12 137/150] riscv: signal: fix signal frame size
-Date: Wed,  5 Mar 2025 18:49:26 +0100
-Message-ID: <20250305174509.321995816@linuxfoundation.org>
+Subject: [PATCH 6.12 138/150] riscv: cacheinfo: Use of_property_present() for non-boolean properties
+Date: Wed,  5 Mar 2025 18:49:27 +0100
+Message-ID: <20250305174509.361913102@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -47,48 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+From: Rob Herring <robh@kernel.org>
 
-commit aa49bc2ca8524186ceb0811c23a7f00c3dea6987 upstream.
+commit fb8179ce2996bffaa36a04e2b6262843b01b7565 upstream.
 
-The signal context of certain RISC-V extensions will be appended after
-struct __riscv_extra_ext_header, which already includes an empty context
-header. Therefore, there is no need to preserve a separate hdr for the
-END of signal context.
+The use of of_property_read_bool() for non-boolean properties is
+deprecated in favor of of_property_present() when testing for property
+presence.
 
-Fixes: 8ee0b41898fa ("riscv: signal: Add sigcontext save/restore for vector")
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Reviewed-by: Zong Li <zong.li@sifive.com>
-Reviewed-by: Andy Chiu <AndybnAC@gmail.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Clément Léger <cleger@rivosinc.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20241220083926.19453-2-yongxuan.wang@sifive.com
+Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
+Link: https://lore.kernel.org/r/20241104190314.270095-1-robh@kernel.org
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/signal.c |    6 ------
- 1 file changed, 6 deletions(-)
+ arch/riscv/kernel/cacheinfo.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/riscv/kernel/signal.c
-+++ b/arch/riscv/kernel/signal.c
-@@ -215,12 +215,6 @@ static size_t get_rt_frame_size(bool cal
- 		if (cal_all || riscv_v_vstate_query(task_pt_regs(current)))
- 			total_context_size += riscv_v_sc_size;
+--- a/arch/riscv/kernel/cacheinfo.c
++++ b/arch/riscv/kernel/cacheinfo.c
+@@ -108,11 +108,11 @@ int populate_cache_leaves(unsigned int c
+ 	if (!np)
+ 		return -ENOENT;
+ 
+-	if (of_property_read_bool(np, "cache-size"))
++	if (of_property_present(np, "cache-size"))
+ 		ci_leaf_init(this_leaf++, CACHE_TYPE_UNIFIED, level);
+-	if (of_property_read_bool(np, "i-cache-size"))
++	if (of_property_present(np, "i-cache-size"))
+ 		ci_leaf_init(this_leaf++, CACHE_TYPE_INST, level);
+-	if (of_property_read_bool(np, "d-cache-size"))
++	if (of_property_present(np, "d-cache-size"))
+ 		ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
+ 
+ 	prev = np;
+@@ -125,11 +125,11 @@ int populate_cache_leaves(unsigned int c
+ 			break;
+ 		if (level <= levels)
+ 			break;
+-		if (of_property_read_bool(np, "cache-size"))
++		if (of_property_present(np, "cache-size"))
+ 			ci_leaf_init(this_leaf++, CACHE_TYPE_UNIFIED, level);
+-		if (of_property_read_bool(np, "i-cache-size"))
++		if (of_property_present(np, "i-cache-size"))
+ 			ci_leaf_init(this_leaf++, CACHE_TYPE_INST, level);
+-		if (of_property_read_bool(np, "d-cache-size"))
++		if (of_property_present(np, "d-cache-size"))
+ 			ci_leaf_init(this_leaf++, CACHE_TYPE_DATA, level);
+ 		levels = level;
  	}
--	/*
--	 * Preserved a __riscv_ctx_hdr for END signal context header if an
--	 * extension uses __riscv_extra_ext_header
--	 */
--	if (total_context_size)
--		total_context_size += sizeof(struct __riscv_ctx_hdr);
- 
- 	frame_size += total_context_size;
- 
 
 
