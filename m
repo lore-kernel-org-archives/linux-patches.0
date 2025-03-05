@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0DF1FC7D0;
-	Wed,  5 Mar 2025 18:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09EDE1A3174;
+	Wed,  5 Mar 2025 18:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197981; cv=none; b=EpTJOnKR2jQZOiivhME+3LChphEuBvEBZbNKJ4i2e0iWWhctn6wtjlc+26nQ4VysgguLn5w38EdWGjHSvVSEa0qF+B+BjWWCGQQaf3k4EIkWSoazA4rRBydxgeso9gtrKTP10/kbaSKfdfdpGOE7X9vqqydcya48BsxdAPlvWO0=
+	t=1741197984; cv=none; b=p8WpUlMcFVdPluY5I0JZmS415LN44D0lvxgb4S9jDy4ITWL6iJF//dk4IvBnr5fRoSG12Q5lnlPXkBiK2ugEunYu+8umpR/49Nty8NhlJnEA0HJyinY0/qa11xDjzMF3z5G+utSBKUcBYAYdkMqTl3i+AHUEidWLlYj+M87bO/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197981; c=relaxed/simple;
-	bh=yc2SCE3kppb/91lLPx4sBodgo7+Uzpv9Aj9e7kila8M=;
+	s=arc-20240116; t=1741197984; c=relaxed/simple;
+	bh=Hfg68BAVngC5OVh4ZPIvJMMYRVulObG4r/wjmUu/wrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vEtAZvtjsy23YXfA933Snv3Q24EUzMq5oQ6+CpzuycgWwVInsSCckuXn0DpDQ7ftQVufM//0hYQy4RvEHxK9l2/DNMw1UVIdBcsdC4EIGEhKAMgPW9Wr5R12pY6t+T9lfo+j0ib58yyfgZBFOdIGGlbgoGioViEVy033AqXzmdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGrYKtXQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F8qPvs734v7NpgVoZ6lj9UhF8gkqTw9LiNQwL6rI3qWhhvhKuxKt0+lqB4PqfaWViomThXsDt2gb6gs21JLzee7EvygVH9hOwohzOPrBErCXNUewkvbTDYZtmaf2Ael5F1WfNo0hcHtI9OaCpDDFvxWf7XNRRaGbNX7p1BHVCAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMWrTjm+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGrYKtXQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C79C4CEE0;
-	Wed,  5 Mar 2025 18:06:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMWrTjm+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86369C4CED1;
+	Wed,  5 Mar 2025 18:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197981;
-	bh=yc2SCE3kppb/91lLPx4sBodgo7+Uzpv9Aj9e7kila8M=;
+	s=korg; t=1741197983;
+	bh=Hfg68BAVngC5OVh4ZPIvJMMYRVulObG4r/wjmUu/wrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MGrYKtXQA1VxDxvwvGj/aLoqTLtWxhMJ5Cz4+pVyrsNiPmPOzpKXpIHZagNAKIv6B
-	 VWvq62dx/tnk1Jyf2Jux5sFW5utR3M+bde2o9r/+vDWrT9bI5B0XRLDqjQgYuobfo0
-	 e0rnBJBRkGP6vvX/yXyIuvy1jv1WHoye1l9+xIrI=
+	b=NMWrTjm+QphvLjJ8FMuaiMTqh/Wr26KsbrJS2KyzFbJmzo51aXDal/Ery9LLVp6vH
+	 AdeXgXUsrm4X+KKrR2ScoqzbsDARIQcGThIY6kzKvSaVYEiXMIydTUCIgHKYGZP/1i
+	 kfLlZlCQEaaulhGBXwpAnlituZzA2ude9kURUvQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/150] scsi: ufs: core: Set default runtime/system PM levels before ufshcd_hba_init()
-Date: Wed,  5 Mar 2025 18:47:33 +0100
-Message-ID: <20250305174504.783490462@linuxfoundation.org>
+Subject: [PATCH 6.12 025/150] RDMA/mlx5: Fix bind QP error cleanup flow
+Date: Wed,  5 Mar 2025 18:47:34 +0100
+Message-ID: <20250305174504.825004897@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -53,80 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit fe06b7c07f3fbcce2a2ca6f7b0d543b5699ea00f ]
+[ Upstream commit e1a0bdbdfdf08428f0ede5ae49c7f4139ac73ef5 ]
 
-Commit bb9850704c04 ("scsi: ufs: core: Honor runtime/system PM levels if
-set by host controller drivers") introduced the check for setting default
-PM levels only if the levels are uninitialized by the host controller
-drivers. But it missed the fact that the levels could be initialized to 0
-(UFS_PM_LVL_0) on purpose by the controller drivers. Even though none of
-the drivers are doing so now, the logic should be fixed irrespectively.
+When there is a failure during bind QP, the cleanup flow destroys the
+counter regardless if it is the one that created it or not, which is
+problematic since if it isn't the one that created it, that counter could
+still be in use.
 
-So set the default levels unconditionally before calling ufshcd_hba_init()
-API which initializes the controller drivers. It ensures that the
-controller drivers could override the default levels if required.
+Fix that by destroying the counter only if it was created during this call.
 
-Fixes: bb9850704c04 ("scsi: ufs: core: Honor runtime/system PM levels if set by host controller drivers")
-Reported-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20250219105047.49932-1-manivannan.sadhasivam@linaro.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 45842fc627c7 ("IB/mlx5: Support statistic q counter configuration")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://patch.msgid.link/25dfefddb0ebefa668c32e06a94d84e3216257cf.1740033937.git.leon@kernel.org
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ drivers/infiniband/hw/mlx5/counters.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index ff4878cf882be..a3e95ef5eda82 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -10457,6 +10457,21 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 	 */
- 	spin_lock_init(&hba->clk_gating.lock);
+diff --git a/drivers/infiniband/hw/mlx5/counters.c b/drivers/infiniband/hw/mlx5/counters.c
+index 4f6c1968a2ee3..81cfa74147a18 100644
+--- a/drivers/infiniband/hw/mlx5/counters.c
++++ b/drivers/infiniband/hw/mlx5/counters.c
+@@ -546,6 +546,7 @@ static int mlx5_ib_counter_bind_qp(struct rdma_counter *counter,
+ 				   struct ib_qp *qp)
+ {
+ 	struct mlx5_ib_dev *dev = to_mdev(qp->device);
++	bool new = false;
+ 	int err;
  
-+	/*
-+	 * Set the default power management level for runtime and system PM.
-+	 * Host controller drivers can override them in their
-+	 * 'ufs_hba_variant_ops::init' callback.
-+	 *
-+	 * Default power saving mode is to keep UFS link in Hibern8 state
-+	 * and UFS device in sleep state.
-+	 */
-+	hba->rpm_lvl = ufs_get_desired_pm_lvl_for_dev_link_state(
-+						UFS_SLEEP_PWR_MODE,
-+						UIC_LINK_HIBERN8_STATE);
-+	hba->spm_lvl = ufs_get_desired_pm_lvl_for_dev_link_state(
-+						UFS_SLEEP_PWR_MODE,
-+						UIC_LINK_HIBERN8_STATE);
-+
- 	err = ufshcd_hba_init(hba);
- 	if (err)
- 		goto out_error;
-@@ -10606,21 +10621,6 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 		goto free_tmf_queue;
+ 	if (!counter->id) {
+@@ -560,6 +561,7 @@ static int mlx5_ib_counter_bind_qp(struct rdma_counter *counter,
+ 			return err;
+ 		counter->id =
+ 			MLX5_GET(alloc_q_counter_out, out, counter_set_id);
++		new = true;
  	}
  
--	/*
--	 * Set the default power management level for runtime and system PM if
--	 * not set by the host controller drivers.
--	 * Default power saving mode is to keep UFS link in Hibern8 state
--	 * and UFS device in sleep state.
--	 */
--	if (!hba->rpm_lvl)
--		hba->rpm_lvl = ufs_get_desired_pm_lvl_for_dev_link_state(
--						UFS_SLEEP_PWR_MODE,
--						UIC_LINK_HIBERN8_STATE);
--	if (!hba->spm_lvl)
--		hba->spm_lvl = ufs_get_desired_pm_lvl_for_dev_link_state(
--						UFS_SLEEP_PWR_MODE,
--						UIC_LINK_HIBERN8_STATE);
--
- 	INIT_DELAYED_WORK(&hba->rpm_dev_flush_recheck_work, ufshcd_rpm_dev_flush_recheck_work);
- 	INIT_DELAYED_WORK(&hba->ufs_rtc_update_work, ufshcd_rtc_work);
+ 	err = mlx5_ib_qp_set_counter(qp, counter);
+@@ -569,8 +571,10 @@ static int mlx5_ib_counter_bind_qp(struct rdma_counter *counter,
+ 	return 0;
  
+ fail_set_counter:
+-	mlx5_ib_counter_dealloc(counter);
+-	counter->id = 0;
++	if (new) {
++		mlx5_ib_counter_dealloc(counter);
++		counter->id = 0;
++	}
+ 
+ 	return err;
+ }
 -- 
 2.39.5
 
