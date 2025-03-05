@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C832B1ACEDD;
-	Wed,  5 Mar 2025 18:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3783678F3A;
+	Wed,  5 Mar 2025 18:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198391; cv=none; b=U5JAJhapQI34loMq0KUk5Ij6CqNYN+SQ1i/Yu8vlRhOtszm/PLYjHbnrY74AUnS3XMp711X7OtwQ41OZlnH6L9zVC+4NtDCrG1FL/jmznTK9ht/KEUW/s8wny0j7HYhMvShFp48jwo+xeAg3kDWsqlG4+Wx7ykd/V8HQ9d/ctmY=
+	t=1741198393; cv=none; b=huenFvG2IxlDGuEg+ip9wWlNY3YZwsIUVcsvmCNPUjXoKchzqRE1Mz7m8QQy3AfWyS0V+p1fXCSDtx1xxlo0tkViTMfOrSM5EiHlOntP8EHaG6r35asuOWTprXBf0wx/FuQq47IhFJKFRpVC16eNQQSrwjjkUslmgm8f0qwmcqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198391; c=relaxed/simple;
-	bh=STKOyyJHhW1jOwbfa1+7YsjJ7n17R/sFvXnTUrv0o3k=;
+	s=arc-20240116; t=1741198393; c=relaxed/simple;
+	bh=8bWcm94E2memMbaZZKS35c8PeZYPZ+v0LpgtU8iqWpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4QfrAGies5Vzb7/jOslpw6TN/hsYj8xlWPvnDIWOiuDtdYb+Ur/OvzAkM3bOod2kuh8icjlF1/9WotVz1hAKeAYiym1GbsxtoS9NZFgxKe0l4vh0KRB93JtPSpb8lX4irF4LSphSfIqWfJzCJx/dBXN+Vgljidzff5ibgS7Un8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azyj9ySK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shgb72uAmbG3U9qtO+PpV5aBxT53GJ3vfwYxFhSNXMdJvPndGE4eqAUrIhu8FGGWjMOQ3AhqSCkvIw/7D94iQI8WqVk1BuCsk9j59wo9nOzeWchnduPAy8BG0abCNUQuaeefCn8k7GQTcg0RoxZ3DB0JnHaY/DJ9m4YaCuU/lok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evpz9e91; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azyj9ySK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB658C4CED1;
-	Wed,  5 Mar 2025 18:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evpz9e91"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B312FC4CED1;
+	Wed,  5 Mar 2025 18:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198390;
-	bh=STKOyyJHhW1jOwbfa1+7YsjJ7n17R/sFvXnTUrv0o3k=;
+	s=korg; t=1741198393;
+	bh=8bWcm94E2memMbaZZKS35c8PeZYPZ+v0LpgtU8iqWpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=azyj9ySKdoqkw9+hekmtbSthN/Z1mp+qE+xu8chxQ0X3nBlDQ2zxyy+PGXk0A0Tdj
-	 00X3w2JEDobYJ0969pe+oMslMWfVxK7oSsa4D1prLGU1y6pTYSnW3X1JwDQ0AnKEyq
-	 Vw/vR7/y6Stz/W9Zf9t7bxaFoEY0rnzDBIJBsn8U=
+	b=evpz9e91pGmFGTt8gc6VpgweuRZUNXB9uHYZpOk0hVQfHakhfba5N6cyOnZPKxKv2
+	 AAtAt7D3iuVaPa1MQBT1m8+ay8cSTj1uX38sT104PmaXRgCzB8NkrvsUNH49k/wjA4
+	 9HVF3WTL/zfxjY9WGMSabwNjR/Xn/PAuUZi3POAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+316db8a1191938280eb6@syzkaller.appspotmail.com,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 012/157] ovl: fix UAF in ovl_dentry_update_reval by moving dput() in ovl_link_up
-Date: Wed,  5 Mar 2025 18:47:28 +0100
-Message-ID: <20250305174505.776827829@linuxfoundation.org>
+Subject: [PATCH 6.13 013/157] NFS: O_DIRECT writes must check and adjust the file length
+Date: Wed,  5 Mar 2025 18:47:29 +0100
+Message-ID: <20250305174505.816324359@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -53,68 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit c84e125fff2615b4d9c259e762596134eddd2f27 ]
+[ Upstream commit fcf857ee1958e9247298251f7615d0c76f1e9b38 ]
 
-The issue was caused by dput(upper) being called before
-ovl_dentry_update_reval(), while upper->d_flags was still
-accessed in ovl_dentry_remote().
+While it is uncommon for delegations to be held while O_DIRECT writes
+are in progress, it is possible. The xfstests generic/647 and
+generic/729 both end up triggering that state, and end up failing due to
+the fact that the file size is not adjusted.
 
-Move dput(upper) after its last use to prevent use-after-free.
-
-BUG: KASAN: slab-use-after-free in ovl_dentry_remote fs/overlayfs/util.c:162 [inline]
-BUG: KASAN: slab-use-after-free in ovl_dentry_update_reval+0xd2/0xf0 fs/overlayfs/util.c:167
-
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:114
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0xc3/0x620 mm/kasan/report.c:488
- kasan_report+0xd9/0x110 mm/kasan/report.c:601
- ovl_dentry_remote fs/overlayfs/util.c:162 [inline]
- ovl_dentry_update_reval+0xd2/0xf0 fs/overlayfs/util.c:167
- ovl_link_up fs/overlayfs/copy_up.c:610 [inline]
- ovl_copy_up_one+0x2105/0x3490 fs/overlayfs/copy_up.c:1170
- ovl_copy_up_flags+0x18d/0x200 fs/overlayfs/copy_up.c:1223
- ovl_rename+0x39e/0x18c0 fs/overlayfs/dir.c:1136
- vfs_rename+0xf84/0x20a0 fs/namei.c:4893
-...
- </TASK>
-
-Fixes: b07d5cc93e1b ("ovl: update of dentry revalidate flags after copy up")
-Reported-by: syzbot+316db8a1191938280eb6@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=316db8a1191938280eb6
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://lore.kernel.org/r/20250214215148.761147-1-kovalev@altlinux.org
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reported-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219738
+Cc: stable@vger.kernel.org
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Stable-dep-of: 88025c67fe3c ("NFS: Adjust delegated timestamps for O_DIRECT reads and writes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/copy_up.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/direct.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
-index 0c28e5fa34077..d7310fcf38881 100644
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -618,7 +618,6 @@ static int ovl_link_up(struct ovl_copy_up_ctx *c)
- 	err = PTR_ERR(upper);
- 	if (!IS_ERR(upper)) {
- 		err = ovl_do_link(ofs, ovl_dentry_upper(c->dentry), udir, upper);
--		dput(upper);
+diff --git a/fs/nfs/direct.c b/fs/nfs/direct.c
+index b08dbe96bc579..8f2aa2bf45659 100644
+--- a/fs/nfs/direct.c
++++ b/fs/nfs/direct.c
+@@ -130,6 +130,20 @@ static void nfs_direct_truncate_request(struct nfs_direct_req *dreq,
+ 		dreq->count = req_start;
+ }
  
- 		if (!err) {
- 			/* Restore timestamps on parent (best effort) */
-@@ -626,6 +625,7 @@ static int ovl_link_up(struct ovl_copy_up_ctx *c)
- 			ovl_dentry_set_upper_alias(c->dentry);
- 			ovl_dentry_update_reval(c->dentry, upper);
- 		}
-+		dput(upper);
++static void nfs_direct_file_adjust_size_locked(struct inode *inode,
++					       loff_t offset, size_t count)
++{
++	loff_t newsize = offset + (loff_t)count;
++	loff_t oldsize = i_size_read(inode);
++
++	if (newsize > oldsize) {
++		i_size_write(inode, newsize);
++		NFS_I(inode)->cache_validity &= ~NFS_INO_INVALID_SIZE;
++		trace_nfs_size_grow(inode, newsize);
++		nfs_inc_stats(inode, NFSIOS_EXTENDWRITE);
++	}
++}
++
+ /**
+  * nfs_swap_rw - NFS address space operation for swap I/O
+  * @iocb: target I/O control block
+@@ -740,6 +754,7 @@ static void nfs_direct_write_completion(struct nfs_pgio_header *hdr)
+ 	struct nfs_direct_req *dreq = hdr->dreq;
+ 	struct nfs_commit_info cinfo;
+ 	struct nfs_page *req = nfs_list_entry(hdr->pages.next);
++	struct inode *inode = dreq->inode;
+ 	int flags = NFS_ODIRECT_DONE;
+ 
+ 	trace_nfs_direct_write_completion(dreq);
+@@ -761,6 +776,10 @@ static void nfs_direct_write_completion(struct nfs_pgio_header *hdr)
  	}
- 	inode_unlock(udir);
- 	if (err)
+ 	spin_unlock(&dreq->lock);
+ 
++	spin_lock(&inode->i_lock);
++	nfs_direct_file_adjust_size_locked(inode, dreq->io_start, dreq->count);
++	spin_unlock(&inode->i_lock);
++
+ 	while (!list_empty(&hdr->pages)) {
+ 
+ 		req = nfs_list_entry(hdr->pages.next);
 -- 
 2.39.5
 
