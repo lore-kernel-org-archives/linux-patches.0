@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956AD1ACEDD;
-	Wed,  5 Mar 2025 18:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5BE1A5BB7;
+	Wed,  5 Mar 2025 18:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198257; cv=none; b=QWLMQGozhRPjlG4Z0DFKMXIPYUBhSo7yBhWD99UuB7PGuRYgN0zKoeOfFkx0RXPKabf/9FHbU/MZbdnqrt2KnZtLmzZpkQm2uJpMJ6IX0jXRIA40qXcg/AcOPhnoqD0H0al7Z0FhdbqU8PMk2jx3NX3ulAY3HGt+f2EuSPdNqSk=
+	t=1741198260; cv=none; b=klTcuunqAceNw2SjjLG1P1/N+LahTq24AXpjBP3tbnr/jtA+XMb3k/GBmg5CP34ieP9nvIyHwVa5zVcOPx6kk4Wm7V/JxWGVXVGb6p39pgugjYbQp3JWCbzFiEN2G3Fzy1sgNUbNlTORrlwcwDrufrZTJJyiHpVMAFFOf640xzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198257; c=relaxed/simple;
-	bh=hVc+fGo2CEXARBREtSdBWE7AgWoTh3QaNxG24f5PQrk=;
+	s=arc-20240116; t=1741198260; c=relaxed/simple;
+	bh=N4eCURzchOLq7p9MRWji8wnEYKkRn0I338IXUyIapfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLDxajBsWCf7vXl2/wMrixEy57kAgQzylznbUPATcn+0tbh4yg8jn+imLGkDrrBvG7lIvtqMbx5NSoEqqc28oOoPYYj6luXqddFquSSYDXJZ5QNfWnd2uXq4c4jrO72JT0TiCFKY6INmU4xVEPoVjr5kqiatXG/n7J1mZM3za1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+fe98SP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OkPzR/+vSGTzkcLJQdPETDXFsr6pjMldAopnjyci585oZMwhlIUmTQkAUVRgWTgA6RKSL4SojUMfDWZVASDsgP3JonBB2Owuby+pL8LRojJw2eqMuz19yCNo3nInpSkuweOKqgH1kV+yYfzcUf2E/64/gup1A9WEseq96Yf1FC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKOhrPDb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+fe98SP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F08C4CEE0;
-	Wed,  5 Mar 2025 18:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKOhrPDb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3943C4CEE0;
+	Wed,  5 Mar 2025 18:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198257;
-	bh=hVc+fGo2CEXARBREtSdBWE7AgWoTh3QaNxG24f5PQrk=;
+	s=korg; t=1741198260;
+	bh=N4eCURzchOLq7p9MRWji8wnEYKkRn0I338IXUyIapfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W+fe98SPElNTkMO9fltepx9USbmtOyLPmTwglFm90SqBbk9Qm9Redf84wIAzDg373
-	 JXTgeqosP2QfdJihstJ305+mO2vpVP0VbaexycnqtjE5NyK9Snn1Uc5LrTpFcQ/2vu
-	 GJELXWZ8RzcKTlwKBEaMBUBj1/bgeOIzfek2hJ5E=
+	b=eKOhrPDbLHfAMo//aZzK4Wru8UnoNhK6OXbql/2TZjLqmKEIdeCxC4DV8hpavhUxj
+	 nM8RctWjTBbIKlB/rx5w1FsWWjzTfDWr3zihmr66J8KCYQtBGIkdJ2dFjf1SIbypXO
+	 WEdABT7uX2AgljZxmZkbRWTgEZPjY9D/P/dcj80Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/150] objtool: Remove annotate_{,un}reachable()
-Date: Wed,  5 Mar 2025 18:48:25 +0100
-Message-ID: <20250305174506.868421566@linuxfoundation.org>
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 111/150] net: enetc: fix the off-by-one issue in enetc_map_tx_buffs()
+Date: Wed,  5 Mar 2025 18:49:00 +0100
+Message-ID: <20250305174508.274644768@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -51,131 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 06e24745985c8dd0da18337503afcf2f2fdbdff1 ]
+commit 39ab773e4c120f7f98d759415ccc2aca706bbc10 upstream.
 
-There are no users of annotate_reachable() left.
+When a DMA mapping error occurs while processing skb frags, it will free
+one more tx_swbd than expected, so fix this off-by-one issue.
 
-And the annotate_unreachable() usage in unreachable() is plain wrong;
-it will hide dangerous fall-through code-gen.
-
-Remove both.
-
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://lore.kernel.org/r/20241128094312.235637588@infradead.org
-Stable-dep-of: 73cfc53cc3b6 ("objtool: Fix C jump table annotations for Clang")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d4fd0404c1c9 ("enetc: Introduce basic PF and VF ENETC ethernet drivers")
+Cc: stable@vger.kernel.org
+Suggested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Suggested-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
+Link: https://patch.msgid.link/20250224111251.1061098-2-wei.fang@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/compiler.h | 27 -------------------------
- tools/objtool/check.c    | 43 ++--------------------------------------
- 2 files changed, 2 insertions(+), 68 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c |   26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/compiler.h b/include/linux/compiler.h
-index 0d10d75218f51..75a83394824c4 100644
---- a/include/linux/compiler.h
-+++ b/include/linux/compiler.h
-@@ -109,35 +109,9 @@ void ftrace_likely_update(struct ftrace_likely_data *f, int val,
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -145,6 +145,24 @@ static int enetc_ptp_parse(struct sk_buf
+ 	return 0;
+ }
  
- /* Unreachable code */
- #ifdef CONFIG_OBJTOOL
--/*
-- * These macros help objtool understand GCC code flow for unreachable code.
-- * The __COUNTER__ based labels are a hack to make each instance of the macros
-- * unique, to convince GCC not to merge duplicate inline asm statements.
-- */
--#define __stringify_label(n) #n
--
--#define __annotate_reachable(c) ({					\
--	asm volatile(__stringify_label(c) ":\n\t"			\
--			".pushsection .discard.reachable\n\t"		\
--			".long " __stringify_label(c) "b - .\n\t"	\
--			".popsection\n\t");				\
--})
--#define annotate_reachable() __annotate_reachable(__COUNTER__)
--
--#define __annotate_unreachable(c) ({					\
--	asm volatile(__stringify_label(c) ":\n\t"			\
--		     ".pushsection .discard.unreachable\n\t"		\
--		     ".long " __stringify_label(c) "b - .\n\t"		\
--		     ".popsection\n\t" : : "i" (c));			\
--})
--#define annotate_unreachable() __annotate_unreachable(__COUNTER__)
--
- /* Annotate a C jump table to allow objtool to follow the code flow */
- #define __annotate_jump_table __section(".rodata..c_jump_table,\"a\",@progbits #")
--
- #else /* !CONFIG_OBJTOOL */
--#define annotate_reachable()
--#define annotate_unreachable()
- #define __annotate_jump_table
- #endif /* CONFIG_OBJTOOL */
++/**
++ * enetc_unwind_tx_frame() - Unwind the DMA mappings of a multi-buffer Tx frame
++ * @tx_ring: Pointer to the Tx ring on which the buffer descriptors are located
++ * @count: Number of Tx buffer descriptors which need to be unmapped
++ * @i: Index of the last successfully mapped Tx buffer descriptor
++ */
++static void enetc_unwind_tx_frame(struct enetc_bdr *tx_ring, int count, int i)
++{
++	while (count--) {
++		struct enetc_tx_swbd *tx_swbd = &tx_ring->tx_swbd[i];
++
++		enetc_free_tx_frame(tx_ring, tx_swbd);
++		if (i == 0)
++			i = tx_ring->bd_count;
++		i--;
++	}
++}
++
+ static int enetc_map_tx_buffs(struct enetc_bdr *tx_ring, struct sk_buff *skb)
+ {
+ 	bool do_vlan, do_onestep_tstamp = false, do_twostep_tstamp = false;
+@@ -328,13 +346,7 @@ static int enetc_map_tx_buffs(struct ene
+ dma_err:
+ 	dev_err(tx_ring->dev, "DMA map error");
  
-@@ -147,7 +121,6 @@ void ftrace_likely_update(struct ftrace_likely_data *f, int val,
-  * control elsewhere.
-  */
- #define unreachable() do {		\
--	annotate_unreachable();		\
- 	barrier_before_unreachable();	\
- 	__builtin_unreachable();	\
- } while (0)
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 8e02db7e83323..3e72c9f9b7f37 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -639,47 +639,8 @@ static int add_dead_ends(struct objtool_file *file)
- 	uint64_t offset;
+-	do {
+-		tx_swbd = &tx_ring->tx_swbd[i];
+-		enetc_free_tx_frame(tx_ring, tx_swbd);
+-		if (i == 0)
+-			i = tx_ring->bd_count;
+-		i--;
+-	} while (count--);
++	enetc_unwind_tx_frame(tx_ring, count, i);
  
- 	/*
--	 * Check for manually annotated dead ends.
--	 */
--	rsec = find_section_by_name(file->elf, ".rela.discard.unreachable");
--	if (!rsec)
--		goto reachable;
--
--	for_each_reloc(rsec, reloc) {
--		if (reloc->sym->type == STT_SECTION) {
--			offset = reloc_addend(reloc);
--		} else if (reloc->sym->local_label) {
--			offset = reloc->sym->offset;
--		} else {
--			WARN("unexpected relocation symbol type in %s", rsec->name);
--			return -1;
--		}
--
--		insn = find_insn(file, reloc->sym->sec, offset);
--		if (insn)
--			insn = prev_insn_same_sec(file, insn);
--		else if (offset == reloc->sym->sec->sh.sh_size) {
--			insn = find_last_insn(file, reloc->sym->sec);
--			if (!insn) {
--				WARN("can't find unreachable insn at %s+0x%" PRIx64,
--				     reloc->sym->sec->name, offset);
--				return -1;
--			}
--		} else {
--			WARN("can't find unreachable insn at %s+0x%" PRIx64,
--			     reloc->sym->sec->name, offset);
--			return -1;
--		}
--
--		insn->dead_end = true;
--	}
--
--reachable:
--	/*
--	 * These manually annotated reachable checks are needed for GCC 4.4,
--	 * where the Linux unreachable() macro isn't supported.  In that case
--	 * GCC doesn't know the "ud2" is fatal, so it generates code as if it's
--	 * not a dead end.
-+	 * UD2 defaults to being a dead-end, allow them to be annotated for
-+	 * non-fatal, eg WARN.
- 	 */
- 	rsec = find_section_by_name(file->elf, ".rela.discard.reachable");
- 	if (!rsec)
--- 
-2.39.5
-
+ 	return 0;
+ }
 
 
