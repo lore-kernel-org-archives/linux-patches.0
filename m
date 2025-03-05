@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109842517B4;
-	Wed,  5 Mar 2025 18:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FA619E7D1;
+	Wed,  5 Mar 2025 18:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198174; cv=none; b=LH6rsBtDj1cYUCK36sCBhGGffmzDK4VLDX6sJBYlz/i5DbUTe37jjt3GDz2rhlv7LJofpd1M2WUNeC5JLAlmlm+HTJxyPoWXg4b+fdXpH8pADW5u5uZJ+rY0V+b28B/K8peF2KNcmuYu+PjKi/Ghx5yaBbaOaCdr8L1oCak4O4A=
+	t=1741198177; cv=none; b=iuTAgktfcPOaQQ+BRqu2KAJkWlm2CcfYQ+Ju4lIACTqnxX4CM6Js7Q853YMPDSN+QQkqFQrkVGeSlFeBlqFs6yt83FjiZ7+4C5asNUoFzqpLwPpM7D934wmljWKaHKiIaweTPal/3u7QqVW412TqEUKk+92S1/2E1GH7rKnDyJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198174; c=relaxed/simple;
-	bh=3lOCr6fIrQcOwxxGB9Cch5ebJTt9S51P5I+wFXGIFMI=;
+	s=arc-20240116; t=1741198177; c=relaxed/simple;
+	bh=7sNqrlv5ShrvLZHiq5ha6wjR7G6zUebM6TnzNfLNlXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXVrv1gbmPx+6GQS0gcgzG1OdF2EJiP3pMdwsQUn5ALwDw7XEmpBXZZ65p+Ezdyqo+B5Sy96epIXkjSGtykaHxYQvsUHQ6Dl7edr35Zu4cubkUo359JT24MYKrlLDhR3LuocsJ3o5PjZnUVzmtKWpnEZj+sTOMQv6EvfOBltMJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoNjG+Jk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HtIJQSlUpTWcpfSCzjG5LBMtW2+azwfnD12b0dkjGhV7jmt5BoNxAbPXnGTc996VM09lK0fOfNIXKpWPfyPMZc5sNNaWv591XCtSL8lClEx7bfoiWT2GIXDbIl9M//SBXau/jFlS0xTnVDnluCHv9nn2cGA0wWCgL0HLBBh3wNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uB0+TcvS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoNjG+Jk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D36CC4CED1;
-	Wed,  5 Mar 2025 18:09:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uB0+TcvS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AABC4CEE0;
+	Wed,  5 Mar 2025 18:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198173;
-	bh=3lOCr6fIrQcOwxxGB9Cch5ebJTt9S51P5I+wFXGIFMI=;
+	s=korg; t=1741198177;
+	bh=7sNqrlv5ShrvLZHiq5ha6wjR7G6zUebM6TnzNfLNlXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CoNjG+JkgrwjJ4PiW1UNao1hT1y3vIWQ+sgqxGxqjAZZivA/I1Eofksxucxs8zs5H
-	 iXzhxwRJf3pFmSxlWBhJTly1ugSgCoywoSqvZ0sIUpZIK+F1xl50xIiLo5kXtGwCvR
-	 0IKFGMwwezJ1Dt8wRgsW3pXFmFdvYTu1g7D/dSEs=
+	b=uB0+TcvS/Owyol91tzjEY+pCkDKocSZ9iFVt6dJqreZaIikF7J4USKGfLeip774Xo
+	 pS9pEWTV95uxGNafyyBOSGDiZ2UjBYfmDuzxTKO6fVJNXf7Pp4wxKbk3SRw7Y9NNBd
+	 G+V1eoxioPSdWOjkYWhA77PpUZQm2CHOUlUjlSwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 090/150] perf/core: Add RCU read lock protection to perf_iterate_ctx()
-Date: Wed,  5 Mar 2025 18:48:39 +0100
-Message-ID: <20250305174507.428430808@linuxfoundation.org>
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 6.12 091/150] perf/x86: Fix low freqency setting issue
+Date: Wed,  5 Mar 2025 18:48:40 +0100
+Message-ID: <20250305174507.467590478@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -51,63 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit 0fe8813baf4b2e865d3b2c735ce1a15b86002c74 upstream.
+commit 88ec7eedbbd21cad38707620ad6c48a4e9a87c18 upstream.
 
-The perf_iterate_ctx() function performs RCU list traversal but
-currently lacks RCU read lock protection. This causes lockdep warnings
-when running perf probe with unshare(1) under CONFIG_PROVE_RCU_LIST=y:
+Perf doesn't work at low frequencies:
 
-	WARNING: suspicious RCU usage
-	kernel/events/core.c:8168 RCU-list traversed in non-reader section!!
+  $ perf record -e cpu_core/instructions/ppp -F 120
+  Error:
+  The sys_perf_event_open() syscall returned with 22 (Invalid argument)
+  for event (cpu_core/instructions/ppp).
+  "dmesg | grep -i perf" may provide additional information.
 
-	 Call Trace:
-	  lockdep_rcu_suspicious
-	  ? perf_event_addr_filters_apply
-	  perf_iterate_ctx
-	  perf_event_exec
-	  begin_new_exec
-	  ? load_elf_phdrs
-	  load_elf_binary
-	  ? lock_acquire
-	  ? find_held_lock
-	  ? bprm_execve
-	  bprm_execve
-	  do_execveat_common.isra.0
-	  __x64_sys_execve
-	  do_syscall_64
-	  entry_SYSCALL_64_after_hwframe
+The limit_period() check avoids a low sampling period on a counter. It
+doesn't intend to limit the frequency.
 
-This protection was previously present but was removed in commit
-bd2756811766 ("perf: Rewrite core context handling"). Add back the
-necessary rcu_read_lock()/rcu_read_unlock() pair around
-perf_iterate_ctx() call in perf_event_exec().
+The check in the x86_pmu_hw_config() should be limited to non-freq mode.
+The attr.sample_period and attr.sample_freq are union. The
+attr.sample_period should not be used to indicate the frequency mode.
 
-[ mingo: Use scoped_guard() as suggested by Peter ]
-
-Fixes: bd2756811766 ("perf: Rewrite core context handling")
-Signed-off-by: Breno Leitao <leitao@debian.org>
+Fixes: c46e665f0377 ("perf/x86: Add INST_RETIRED.ALL workarounds")
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250117-fix_perf_rcu-v1-1-13cb9210fc6a@debian.org
+Link: https://lore.kernel.org/r/20250117151913.3043942-1-kan.liang@linux.intel.com
+Closes: https://lore.kernel.org/lkml/20250115154949.3147-1-ravi.bangoria@amd.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/events/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -8240,7 +8240,8 @@ void perf_event_exec(void)
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -628,7 +628,7 @@ int x86_pmu_hw_config(struct perf_event
+ 	if (event->attr.type == event->pmu->type)
+ 		event->hw.config |= x86_pmu_get_event_config(event);
  
- 	perf_event_enable_on_exec(ctx);
- 	perf_event_remove_on_exec(ctx);
--	perf_iterate_ctx(ctx, perf_event_addr_filters_exec, NULL, true);
-+	scoped_guard(rcu)
-+		perf_iterate_ctx(ctx, perf_event_addr_filters_exec, NULL, true);
- 
- 	perf_unpin_context(ctx);
- 	put_ctx(ctx);
+-	if (event->attr.sample_period && x86_pmu.limit_period) {
++	if (!event->attr.freq && x86_pmu.limit_period) {
+ 		s64 left = event->attr.sample_period;
+ 		x86_pmu.limit_period(event, &left);
+ 		if (left > event->attr.sample_period)
 
 
