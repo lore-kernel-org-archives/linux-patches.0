@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4C11C5D4E;
-	Wed,  5 Mar 2025 18:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1691ACEDD;
+	Wed,  5 Mar 2025 18:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198399; cv=none; b=kEHUbjp9Z3B4gY1ADeQR3XvCKTfLO45UwscvHQ1hLDLxtx26/uLwQf5sS6Avit1R9FIAIBiBWpQ3KtJhjpeM+aNlxqLQQUFUmMhoyitUOr6JZPYOpwXKIDeqNE0Ao1y41cbhkNkpMb+JcCVw6jF9M6pkFRqvK4DX3ZcBQYgBVpQ=
+	t=1741198401; cv=none; b=QxIkrRmdu52JpsM3PA4+ng6cocCglz6LK4SPI0MUOYVnMeg9R8MsQ1jFDWoU7EH7F0L+hLuyLBPWWea30sZrfaZfxZlVYwVdMzKSrxd2yFILvD9UVBf4b5cTlZ5sruLb/XH9nebMc/rQtlArapimWEQ7ep7yxWLy/8IZm81eUzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198399; c=relaxed/simple;
-	bh=09g19/rt4OuHwI4DEYUOxpKN6rvYtGRtURuJiLggqJE=;
+	s=arc-20240116; t=1741198401; c=relaxed/simple;
+	bh=G7yY2RrMuCBbvUWrZtOW9IH3mUeu80XjvjGpkJY6l9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXd157j96PkCDaimKC9l1D9+AK3NgasNSkqKBisn5hRcRJqN6o+ZHK8P9yvIGqr5JBmqZkNbg2sAv4sxPzrTrXGVW/1/+syuaWELy3l8/5ygjK7TRgBClKd8L68goUI3pgPmfFfkE30+0fcFiQj0VbhIRXcXyz4wOzaUBCnvQoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JItg/d6q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i71G/fMzidG5xHe0EOuwH3Isz8rMvZ6lMd5XlwUua6EOigeiCTKA8nHXwQ5fqmezsoMHuTYWkAmsqEaseGFbSr8YNfDYWW7Pns16Zj1Z5rvPqs7Am+ntcgURpxrKUufXmR/FvZyM2pEjuArwEKZQbqmtQftevb/Nma9Fryqvikw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ReGnFyjb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JItg/d6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F2CC4CED1;
-	Wed,  5 Mar 2025 18:13:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ReGnFyjb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA54C4CED1;
+	Wed,  5 Mar 2025 18:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198398;
-	bh=09g19/rt4OuHwI4DEYUOxpKN6rvYtGRtURuJiLggqJE=;
+	s=korg; t=1741198401;
+	bh=G7yY2RrMuCBbvUWrZtOW9IH3mUeu80XjvjGpkJY6l9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JItg/d6qle3W/OpuTlgyDOcHq3jKM+Ne5V+S6Ge5SGOk3Z2e7sCsTFypWW5qUcCBC
-	 AGiWWxn9MyiXCj03ZNPrYy0FCyeZBQyTZDfse2/y9jO6H2ipNxhNesWw8axJCbeODw
-	 KnTANpvWazANdsBtuGdWuer7t1OoSruyTpgrWBQA=
+	b=ReGnFyjbuVCkR6IpnergZ1tIMkyT5BS5EXL6zS4wkNWKF8b6Oi9FK+lYOHu35RJWG
+	 tHXKJnd100fukW2sIDOiJdSKDcbwV5fEdEAHi4F3XtdvlcwN1taF7xUcD8GMpgmafi
+	 Xrm9ejrKQ3jXKr/nBh1owCOjuLuP8UwqtHpG3YG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Li Lingfeng <lilingfeng3@huawei.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 015/157] SUNRPC: Prevent looping due to rpc_signal_task() races
-Date: Wed,  5 Mar 2025 18:47:31 +0100
-Message-ID: <20250305174505.899182669@linuxfoundation.org>
+Subject: [PATCH 6.13 016/157] NFSv4: Fix a deadlock when recovering state on a sillyrenamed file
+Date: Wed,  5 Mar 2025 18:47:32 +0100
+Message-ID: <20250305174505.938772356@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -55,75 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 5bbd6e863b15a85221e49b9bdb2d5d8f0bb91f3d ]
+[ Upstream commit 8f8df955f078e1a023ee55161935000a67651f38 ]
 
-If rpc_signal_task() is called while a task is in an rpc_call_done()
-callback function, and the latter calls rpc_restart_call(), the task can
-end up looping due to the RPC_TASK_SIGNALLED flag being set without the
-tk_rpc_status being set.
-Removing the redundant mechanism for signalling the task fixes the
-looping behaviour.
+If the file is sillyrenamed, and slated for delete on close, it is
+possible for a server reboot to triggeer an open reclaim, with can again
+race with the application call to close(). When that happens, the call
+to put_nfs_open_context() can trigger a synchronous delegreturn call
+which deadlocks because it is not marked as privileged.
+
+Instead, ensure that the call to nfs4_inode_return_delegation_on_close()
+catches the delegreturn, and schedules it asynchronously.
 
 Reported-by: Li Lingfeng <lilingfeng3@huawei.com>
-Fixes: 39494194f93b ("SUNRPC: Fix races with rpc_killall_tasks()")
+Fixes: adb4b42d19ae ("Return the delegation when deleting sillyrenamed files")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/sched.h  | 3 +--
- include/trace/events/sunrpc.h | 3 +--
- net/sunrpc/sched.c            | 2 --
- 3 files changed, 2 insertions(+), 6 deletions(-)
+ fs/nfs/delegation.c | 37 +++++++++++++++++++++++++++++++++++++
+ fs/nfs/delegation.h |  1 +
+ fs/nfs/nfs4proc.c   |  3 +++
+ 3 files changed, 41 insertions(+)
 
-diff --git a/include/linux/sunrpc/sched.h b/include/linux/sunrpc/sched.h
-index fec1e8a1570c3..eac57914dcf32 100644
---- a/include/linux/sunrpc/sched.h
-+++ b/include/linux/sunrpc/sched.h
-@@ -158,7 +158,6 @@ enum {
- 	RPC_TASK_NEED_XMIT,
- 	RPC_TASK_NEED_RECV,
- 	RPC_TASK_MSG_PIN_WAIT,
--	RPC_TASK_SIGNALLED,
- };
+diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
+index 035ba52742a50..4db912f562305 100644
+--- a/fs/nfs/delegation.c
++++ b/fs/nfs/delegation.c
+@@ -780,6 +780,43 @@ int nfs4_inode_return_delegation(struct inode *inode)
+ 	return 0;
+ }
  
- #define rpc_test_and_set_running(t) \
-@@ -171,7 +170,7 @@ enum {
++/**
++ * nfs4_inode_set_return_delegation_on_close - asynchronously return a delegation
++ * @inode: inode to process
++ *
++ * This routine is called to request that the delegation be returned as soon
++ * as the file is closed. If the file is already closed, the delegation is
++ * immediately returned.
++ */
++void nfs4_inode_set_return_delegation_on_close(struct inode *inode)
++{
++	struct nfs_delegation *delegation;
++	struct nfs_delegation *ret = NULL;
++
++	if (!inode)
++		return;
++	rcu_read_lock();
++	delegation = nfs4_get_valid_delegation(inode);
++	if (!delegation)
++		goto out;
++	spin_lock(&delegation->lock);
++	if (!delegation->inode)
++		goto out_unlock;
++	if (list_empty(&NFS_I(inode)->open_files) &&
++	    !test_and_set_bit(NFS_DELEGATION_RETURNING, &delegation->flags)) {
++		/* Refcount matched in nfs_end_delegation_return() */
++		ret = nfs_get_delegation(delegation);
++	} else
++		set_bit(NFS_DELEGATION_RETURN_IF_CLOSED, &delegation->flags);
++out_unlock:
++	spin_unlock(&delegation->lock);
++	if (ret)
++		nfs_clear_verifier_delegated(inode);
++out:
++	rcu_read_unlock();
++	nfs_end_delegation_return(inode, ret, 0);
++}
++
+ /**
+  * nfs4_inode_return_delegation_on_close - asynchronously return a delegation
+  * @inode: inode to process
+diff --git a/fs/nfs/delegation.h b/fs/nfs/delegation.h
+index 71524d34ed207..8ff5ab9c5c256 100644
+--- a/fs/nfs/delegation.h
++++ b/fs/nfs/delegation.h
+@@ -49,6 +49,7 @@ void nfs_inode_reclaim_delegation(struct inode *inode, const struct cred *cred,
+ 				  unsigned long pagemod_limit, u32 deleg_type);
+ int nfs4_inode_return_delegation(struct inode *inode);
+ void nfs4_inode_return_delegation_on_close(struct inode *inode);
++void nfs4_inode_set_return_delegation_on_close(struct inode *inode);
+ int nfs_async_inode_return_delegation(struct inode *inode, const nfs4_stateid *stateid);
+ void nfs_inode_evict_delegation(struct inode *inode);
  
- #define RPC_IS_ACTIVATED(t)	test_bit(RPC_TASK_ACTIVE, &(t)->tk_runstate)
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 405f17e6e0b45..e7bc99c69743c 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -3898,8 +3898,11 @@ nfs4_atomic_open(struct inode *dir, struct nfs_open_context *ctx,
  
--#define RPC_SIGNALLED(t)	test_bit(RPC_TASK_SIGNALLED, &(t)->tk_runstate)
-+#define RPC_SIGNALLED(t)	(READ_ONCE(task->tk_rpc_status) == -ERESTARTSYS)
- 
- /*
-  * Task priorities.
-diff --git a/include/trace/events/sunrpc.h b/include/trace/events/sunrpc.h
-index b13dc275ef4a7..851841336ee65 100644
---- a/include/trace/events/sunrpc.h
-+++ b/include/trace/events/sunrpc.h
-@@ -360,8 +360,7 @@ TRACE_EVENT(rpc_request,
- 		{ (1UL << RPC_TASK_ACTIVE), "ACTIVE" },			\
- 		{ (1UL << RPC_TASK_NEED_XMIT), "NEED_XMIT" },		\
- 		{ (1UL << RPC_TASK_NEED_RECV), "NEED_RECV" },		\
--		{ (1UL << RPC_TASK_MSG_PIN_WAIT), "MSG_PIN_WAIT" },	\
--		{ (1UL << RPC_TASK_SIGNALLED), "SIGNALLED" })
-+		{ (1UL << RPC_TASK_MSG_PIN_WAIT), "MSG_PIN_WAIT" })
- 
- DECLARE_EVENT_CLASS(rpc_task_running,
- 
-diff --git a/net/sunrpc/sched.c b/net/sunrpc/sched.c
-index cef623ea15060..9b45fbdc90cab 100644
---- a/net/sunrpc/sched.c
-+++ b/net/sunrpc/sched.c
-@@ -864,8 +864,6 @@ void rpc_signal_task(struct rpc_task *task)
- 	if (!rpc_task_set_rpc_status(task, -ERESTARTSYS))
+ static void nfs4_close_context(struct nfs_open_context *ctx, int is_sync)
+ {
++	struct dentry *dentry = ctx->dentry;
+ 	if (ctx->state == NULL)
  		return;
- 	trace_rpc_task_signalled(task, task->tk_action);
--	set_bit(RPC_TASK_SIGNALLED, &task->tk_runstate);
--	smp_mb__after_atomic();
- 	queue = READ_ONCE(task->tk_waitqueue);
- 	if (queue)
- 		rpc_wake_up_queued_task(queue, task);
++	if (dentry->d_flags & DCACHE_NFSFS_RENAMED)
++		nfs4_inode_set_return_delegation_on_close(d_inode(dentry));
+ 	if (is_sync)
+ 		nfs4_close_sync(ctx->state, _nfs4_ctx_to_openmode(ctx));
+ 	else
 -- 
 2.39.5
 
