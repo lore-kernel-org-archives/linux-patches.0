@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9655224C07D;
-	Wed,  5 Mar 2025 18:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799811D6DB4;
+	Wed,  5 Mar 2025 18:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198454; cv=none; b=s1w3b5OLLy+8Kw3KtX5bOdwtDPIBHS/fGBfA/pmcwn39lkM+5zU/Mgb9OSwsDIM2taJe8bkioibLenQy2jEDwwofV+CwTS6zAR+djr4sR5Zur7NSGdHjFuD47WFjNB8OTIBTQa1sq/plfYCe75YndmAkECIYnb3zCx/MWRHAroQ=
+	t=1741198457; cv=none; b=dOfUf4zsXtjquzuIuu8uYco8AxnQFeXcDRn5SqADz3Yq1GLPBtGcXfpPP5DBYYnJ28/Hpx9FKjAkecGZ/uxzasT6t8zXRcrJynSC+43aabeXc6BKriKK/mh1esVjmp2nIKHCYSkWTkVqS08mrES15DQ7QjQidBYQaUlR1X8uUP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198454; c=relaxed/simple;
-	bh=SI6/UUHgcpld0X/H0GZyXoC4zdz9ND7Ns63a+tplkKU=;
+	s=arc-20240116; t=1741198457; c=relaxed/simple;
+	bh=xuPEsk4ouLIM74kbk7umUMkgm7tUpRuXLZbH69La+Kw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AAe58uB3Pd/9YI7XnqJKTkBEWQkIIcyDkQiXHQ7Ctm4+syJAC9cn46sy3Txsr2G6b9L6nUhxD8HMpYuobqxmYOttlTpEFwVDxYVB5fH70Wt7ds6w8nW6CQJtkyPHipuXR5VTuNxi8VIobt5/k94bc+YbduL2N5B4B6mco7Jv0EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ne4Yvcaq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YlZgVnZeDzEZo6NRSVXbfy4eYVvn0UrpjfA06BryqYf+pZ+K3NXzdZw8mBqTd1p3UBR1DooA85r6jtBBLYYSwo+BnotkxiWkztMx442TJjEByXqzDSlJ/fhBMeySFnrY30Taiy+0Nf+oDNw7MDJrC60cULI4A7GSYpFUEl3vbuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xprp/k9o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ne4Yvcaq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA42C4CED1;
-	Wed,  5 Mar 2025 18:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xprp/k9o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0507AC4CED1;
+	Wed,  5 Mar 2025 18:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198454;
-	bh=SI6/UUHgcpld0X/H0GZyXoC4zdz9ND7Ns63a+tplkKU=;
+	s=korg; t=1741198457;
+	bh=xuPEsk4ouLIM74kbk7umUMkgm7tUpRuXLZbH69La+Kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ne4YvcaqPj+NrbLLPM7uhdHLBhGoDgFQvQ3yowrWDyNNhC0uw68iWn97mjLuSB9Hj
-	 MQMFIKwIJuCGn3oZnyxA7S7WheoGEB8nldpQtEqvkdHYGWI8GGHczFVrsEfxZdV8f0
-	 9fS+8T8JE5jojHVnMFWhgwRfC45+oP0QjTvWCKUk=
+	b=Xprp/k9oHj6ux7oflqI5bupJlEb57u0NE5m/u2DHJZXrHl38w5gNZYwPs7PCrbmDG
+	 4JtqNrH6DhRJeOPeGzhOio7bNCcOmGOvKtRRc7kyOI/FuN08xe0DYc6xGHj5VNG9q4
+	 qLp8Xs5mbBANsxwHDpeiIu+crUETdVJuPMCReQR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+93ab4a777bafb9d9f960@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Mahesh Bandewar <maheshb@google.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 034/157] ipvlan: ensure network headers are in skb linear part
-Date: Wed,  5 Mar 2025 18:47:50 +0100
-Message-ID: <20250305174506.666028657@linuxfoundation.org>
+Subject: [PATCH 6.13 035/157] net: cadence: macb: Synchronize stats calculations
+Date: Wed,  5 Mar 2025 18:47:51 +0100
+Message-ID: <20250305174506.705807415@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -53,111 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 27843ce6ba3d3122b65066550fe33fb8839f8aef ]
+[ Upstream commit fa52f15c745ce55261b92873676f64f7348cfe82 ]
 
-syzbot found that ipvlan_process_v6_outbound() was assuming
-the IPv6 network header isis present in skb->head [1]
+Stats calculations involve a RMW to add the stat update to the existing
+value. This is currently not protected by any synchronization mechanism,
+so data races are possible. Add a spinlock to protect the update. The
+reader side could be protected using u64_stats, but we would still need
+a spinlock for the update side anyway. And we always do an update
+immediately before reading the stats anyway.
 
-Add the needed pskb_network_may_pull() calls for both
-IPv4 and IPv6 handlers.
-
-[1]
-BUG: KMSAN: uninit-value in __ipv6_addr_type+0xa2/0x490 net/ipv6/addrconf_core.c:47
-  __ipv6_addr_type+0xa2/0x490 net/ipv6/addrconf_core.c:47
-  ipv6_addr_type include/net/ipv6.h:555 [inline]
-  ip6_route_output_flags_noref net/ipv6/route.c:2616 [inline]
-  ip6_route_output_flags+0x51/0x720 net/ipv6/route.c:2651
-  ip6_route_output include/net/ip6_route.h:93 [inline]
-  ipvlan_route_v6_outbound+0x24e/0x520 drivers/net/ipvlan/ipvlan_core.c:476
-  ipvlan_process_v6_outbound drivers/net/ipvlan/ipvlan_core.c:491 [inline]
-  ipvlan_process_outbound drivers/net/ipvlan/ipvlan_core.c:541 [inline]
-  ipvlan_xmit_mode_l3 drivers/net/ipvlan/ipvlan_core.c:605 [inline]
-  ipvlan_queue_xmit+0xd72/0x1780 drivers/net/ipvlan/ipvlan_core.c:671
-  ipvlan_start_xmit+0x5b/0x210 drivers/net/ipvlan/ipvlan_main.c:223
-  __netdev_start_xmit include/linux/netdevice.h:5150 [inline]
-  netdev_start_xmit include/linux/netdevice.h:5159 [inline]
-  xmit_one net/core/dev.c:3735 [inline]
-  dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3751
-  sch_direct_xmit+0x399/0xd40 net/sched/sch_generic.c:343
-  qdisc_restart net/sched/sch_generic.c:408 [inline]
-  __qdisc_run+0x14da/0x35d0 net/sched/sch_generic.c:416
-  qdisc_run+0x141/0x4d0 include/net/pkt_sched.h:127
-  net_tx_action+0x78b/0x940 net/core/dev.c:5484
-  handle_softirqs+0x1a0/0x7c0 kernel/softirq.c:561
-  __do_softirq+0x14/0x1a kernel/softirq.c:595
-  do_softirq+0x9a/0x100 kernel/softirq.c:462
-  __local_bh_enable_ip+0x9f/0xb0 kernel/softirq.c:389
-  local_bh_enable include/linux/bottom_half.h:33 [inline]
-  rcu_read_unlock_bh include/linux/rcupdate.h:919 [inline]
-  __dev_queue_xmit+0x2758/0x57d0 net/core/dev.c:4611
-  dev_queue_xmit include/linux/netdevice.h:3311 [inline]
-  packet_xmit+0x9c/0x6c0 net/packet/af_packet.c:276
-  packet_snd net/packet/af_packet.c:3132 [inline]
-  packet_sendmsg+0x93e0/0xa7e0 net/packet/af_packet.c:3164
-  sock_sendmsg_nosec net/socket.c:718 [inline]
-
-Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
-Reported-by: syzbot+93ab4a777bafb9d9f960@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/67b74f01.050a0220.14d86d.02d8.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Mahesh Bandewar <maheshb@google.com>
-Link: https://patch.msgid.link/20250220155336.61884-1-edumazet@google.com
+Fixes: 89e5785fc8a6 ("[PATCH] Atmel MACB ethernet driver")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://patch.msgid.link/20250220162950.95941-1-sean.anderson@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_core.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/cadence/macb.h      |  2 ++
+ drivers/net/ethernet/cadence/macb_main.c | 12 ++++++++++--
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
-index fd591ddb3884d..ca62188a317ad 100644
---- a/drivers/net/ipvlan/ipvlan_core.c
-+++ b/drivers/net/ipvlan/ipvlan_core.c
-@@ -416,20 +416,25 @@ struct ipvl_addr *ipvlan_addr_lookup(struct ipvl_port *port, void *lyr3h,
+diff --git a/drivers/net/ethernet/cadence/macb.h b/drivers/net/ethernet/cadence/macb.h
+index 5740c98d8c9f0..2847278d9cd48 100644
+--- a/drivers/net/ethernet/cadence/macb.h
++++ b/drivers/net/ethernet/cadence/macb.h
+@@ -1279,6 +1279,8 @@ struct macb {
+ 	struct clk		*rx_clk;
+ 	struct clk		*tsu_clk;
+ 	struct net_device	*dev;
++	/* Protects hw_stats and ethtool_stats */
++	spinlock_t		stats_lock;
+ 	union {
+ 		struct macb_stats	macb;
+ 		struct gem_stats	gem;
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index daa416fb1724e..af2debcaf7dcc 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -1987,10 +1987,12 @@ static irqreturn_t macb_interrupt(int irq, void *dev_id)
  
- static noinline_for_stack int ipvlan_process_v4_outbound(struct sk_buff *skb)
+ 		if (status & MACB_BIT(ISR_ROVR)) {
+ 			/* We missed at least one packet */
++			spin_lock(&bp->stats_lock);
+ 			if (macb_is_gem(bp))
+ 				bp->hw_stats.gem.rx_overruns++;
+ 			else
+ 				bp->hw_stats.macb.rx_overruns++;
++			spin_unlock(&bp->stats_lock);
+ 
+ 			if (bp->caps & MACB_CAPS_ISR_CLEAR_ON_WRITE)
+ 				queue_writel(queue, ISR, MACB_BIT(ISR_ROVR));
+@@ -3111,6 +3113,7 @@ static struct net_device_stats *gem_get_stats(struct macb *bp)
+ 	if (!netif_running(bp->dev))
+ 		return nstat;
+ 
++	spin_lock_irq(&bp->stats_lock);
+ 	gem_update_stats(bp);
+ 
+ 	nstat->rx_errors = (hwstat->rx_frame_check_sequence_errors +
+@@ -3140,6 +3143,7 @@ static struct net_device_stats *gem_get_stats(struct macb *bp)
+ 	nstat->tx_aborted_errors = hwstat->tx_excessive_collisions;
+ 	nstat->tx_carrier_errors = hwstat->tx_carrier_sense_errors;
+ 	nstat->tx_fifo_errors = hwstat->tx_underrun;
++	spin_unlock_irq(&bp->stats_lock);
+ 
+ 	return nstat;
+ }
+@@ -3147,12 +3151,13 @@ static struct net_device_stats *gem_get_stats(struct macb *bp)
+ static void gem_get_ethtool_stats(struct net_device *dev,
+ 				  struct ethtool_stats *stats, u64 *data)
  {
--	const struct iphdr *ip4h = ip_hdr(skb);
- 	struct net_device *dev = skb->dev;
- 	struct net *net = dev_net(dev);
--	struct rtable *rt;
- 	int err, ret = NET_XMIT_DROP;
-+	const struct iphdr *ip4h;
-+	struct rtable *rt;
- 	struct flowi4 fl4 = {
- 		.flowi4_oif = dev->ifindex,
--		.flowi4_tos = inet_dscp_to_dsfield(ip4h_dscp(ip4h)),
- 		.flowi4_flags = FLOWI_FLAG_ANYSRC,
- 		.flowi4_mark = skb->mark,
--		.daddr = ip4h->daddr,
--		.saddr = ip4h->saddr,
- 	};
+-	struct macb *bp;
++	struct macb *bp = netdev_priv(dev);
  
-+	if (!pskb_network_may_pull(skb, sizeof(struct iphdr)))
-+		goto err;
-+
-+	ip4h = ip_hdr(skb);
-+	fl4.daddr = ip4h->daddr;
-+	fl4.saddr = ip4h->saddr;
-+	fl4.flowi4_tos = inet_dscp_to_dsfield(ip4h_dscp(ip4h));
-+
- 	rt = ip_route_output_flow(net, &fl4, NULL);
- 	if (IS_ERR(rt))
- 		goto err;
-@@ -488,6 +493,12 @@ static int ipvlan_process_v6_outbound(struct sk_buff *skb)
- 	struct net_device *dev = skb->dev;
- 	int err, ret = NET_XMIT_DROP;
+-	bp = netdev_priv(dev);
++	spin_lock_irq(&bp->stats_lock);
+ 	gem_update_stats(bp);
+ 	memcpy(data, &bp->ethtool_stats, sizeof(u64)
+ 			* (GEM_STATS_LEN + QUEUE_STATS_LEN * MACB_MAX_QUEUES));
++	spin_unlock_irq(&bp->stats_lock);
+ }
  
-+	if (!pskb_network_may_pull(skb, sizeof(struct ipv6hdr))) {
-+		DEV_STATS_INC(dev, tx_errors);
-+		kfree_skb(skb);
-+		return ret;
-+	}
-+
- 	err = ipvlan_route_v6_outbound(dev, skb);
- 	if (unlikely(err)) {
- 		DEV_STATS_INC(dev, tx_errors);
+ static int gem_get_sset_count(struct net_device *dev, int sset)
+@@ -3202,6 +3207,7 @@ static struct net_device_stats *macb_get_stats(struct net_device *dev)
+ 		return gem_get_stats(bp);
+ 
+ 	/* read stats from hardware */
++	spin_lock_irq(&bp->stats_lock);
+ 	macb_update_stats(bp);
+ 
+ 	/* Convert HW stats into netdevice stats */
+@@ -3235,6 +3241,7 @@ static struct net_device_stats *macb_get_stats(struct net_device *dev)
+ 	nstat->tx_carrier_errors = hwstat->tx_carrier_errors;
+ 	nstat->tx_fifo_errors = hwstat->tx_underruns;
+ 	/* Don't know about heartbeat or window errors... */
++	spin_unlock_irq(&bp->stats_lock);
+ 
+ 	return nstat;
+ }
+@@ -5106,6 +5113,7 @@ static int macb_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 	spin_lock_init(&bp->lock);
++	spin_lock_init(&bp->stats_lock);
+ 
+ 	/* setup capabilities */
+ 	macb_configure_caps(bp, macb_config);
 -- 
 2.39.5
 
