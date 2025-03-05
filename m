@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AA12517BC;
-	Wed,  5 Mar 2025 18:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D116B2512D9;
+	Wed,  5 Mar 2025 18:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198114; cv=none; b=okhB0XEkoBAQ1bJKirH90J81z9yG/zwG/q2HkpOj2++Nh6OGLP+MG87RHsVQ/FVDhC5CQI3SU+Yie9/uVtyhzv6obkk4gYo6AM0xrEMuL+O9kLBUtb5JVg1GQxz9k20QsgAfPLxwd7vOnheb+QdSJujGPVaQxDnbuF/C6YK6NRo=
+	t=1741198117; cv=none; b=TTQ/5eWA/mCQva4DyD59idbgEE5jRVQwNKWMpLdVuHHKtp8i9qmqyJrvuSQMeupvsxHzkGCEhN2sWjZBJBlNbngoPJV8a4YyyGOO1S1x30K46rANJvsVfI/TWNrHh1SlewmFTwlV4Sbs0/S7xaAjRjfrH61PvngPEhreUtD5F8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198114; c=relaxed/simple;
-	bh=SUr4n2ixrn2vwA/EdRI1eKrNlVBFPrsAXpDfe6v5ias=;
+	s=arc-20240116; t=1741198117; c=relaxed/simple;
+	bh=UTbLbgFRfzatikuvwkCaAko6G7Vo9YQJlMshoMoceR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c0nwULnBmYY+a08sdANpHaQ8L8B8t7tubqyVSd1cjjnX8o/B6e834h4qWJZMNkPmg0dY+dxAENyxPGLhuVOCPnSI402YeVw3vEhr0WiCZ/oPmbLoc1k+BVltq8wMo18SnZuKN6i+xraJcCRDue7ezdg26wsqpwULZwgDqvmprlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0sdi3mt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYmOmeL/JdOB/HCzUZJB0bvAUNG/PA1Gk8gk0QGTPmAAL4FiHJkM++Mir2T5qIwxKckJdLWH80YCvIPdnzWN28ZhXKzBznDRtmm38B35nKkxw3sPSOhHSafD7ZS0qJiktPzCpLog6oE2hxR+aLTVjxeWnMiTCKl/VcsT3MgoqIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhAsTlrx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0sdi3mt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29827C4CEE0;
-	Wed,  5 Mar 2025 18:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhAsTlrx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0934CC4CED1;
+	Wed,  5 Mar 2025 18:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198114;
-	bh=SUr4n2ixrn2vwA/EdRI1eKrNlVBFPrsAXpDfe6v5ias=;
+	s=korg; t=1741198117;
+	bh=UTbLbgFRfzatikuvwkCaAko6G7Vo9YQJlMshoMoceR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c0sdi3mteCI7tPSMig1sUbUOnMoqB0FoWMwPUyK8oPU8nJOyWQHCc3kJNTu5oT9Kc
-	 OVbQMDM4rrhbK4zOhNVoPGKw6XxReozEhO+eCywinsyYqfSz1YYDLKEskHHpliDGxl
-	 bb00s9GKmNGt9QkYe8jM9tbA4pll2SFAYDd7b06k=
+	b=bhAsTlrxJuNoTzP3gNoXbAJ2UQfsYGv6uuG2xJXvj7VumFNu2WwHWvrCZBm/iSfEu
+	 4La4BckHI887yWRt7v+oY/RqtA8MVzljaoIEb0HyGX+5Vy+Xzs78AYzKEz+79uP4V7
+	 pk0d0FPbaEHUN2O0Im5t+9fCU6hZADh5Ib+PIRkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tong Tiangen <tongtiangen@huawei.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	David Hildenbrand <david@redhat.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/150] uprobes: Reject the shared zeropage in uprobe_write_opcode()
-Date: Wed,  5 Mar 2025 18:48:18 +0100
-Message-ID: <20250305174506.589007035@linuxfoundation.org>
+Subject: [PATCH 6.12 070/150] thermal: of: Simplify thermal_of_should_bind with scoped for each OF child
+Date: Wed,  5 Mar 2025 18:48:19 +0100
+Message-ID: <20250305174506.629288099@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -55,110 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tong Tiangen <tongtiangen@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit bddf10d26e6e5114e7415a0e442ec6f51a559468 ]
+[ Upstream commit 69f3aa6ad92447d6e9f50c5b5aea85b56e80b198 ]
 
-We triggered the following crash in syzkaller tests:
+Use scoped for_each_child_of_node_scoped() when iterating over device
+nodes to make code a bit simpler.
 
-  BUG: Bad page state in process syz.7.38  pfn:1eff3
-  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1eff3
-  flags: 0x3fffff00004004(referenced|reserved|node=0|zone=1|lastcpupid=0x1fffff)
-  raw: 003fffff00004004 ffffe6c6c07bfcc8 ffffe6c6c07bfcc8 0000000000000000
-  raw: 0000000000000000 0000000000000000 00000000fffffffe 0000000000000000
-  page dumped because: PAGE_FLAGS_CHECK_AT_FREE flag(s) set
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x32/0x50
-   bad_page+0x69/0xf0
-   free_unref_page_prepare+0x401/0x500
-   free_unref_page+0x6d/0x1b0
-   uprobe_write_opcode+0x460/0x8e0
-   install_breakpoint.part.0+0x51/0x80
-   register_for_each_vma+0x1d9/0x2b0
-   __uprobe_register+0x245/0x300
-   bpf_uprobe_multi_link_attach+0x29b/0x4f0
-   link_create+0x1e2/0x280
-   __sys_bpf+0x75f/0xac0
-   __x64_sys_bpf+0x1a/0x30
-   do_syscall_64+0x56/0x100
-   entry_SYSCALL_64_after_hwframe+0x78/0xe2
-
-   BUG: Bad rss-counter state mm:00000000452453e0 type:MM_FILEPAGES val:-1
-
-The following syzkaller test case can be used to reproduce:
-
-  r2 = creat(&(0x7f0000000000)='./file0\x00', 0x8)
-  write$nbd(r2, &(0x7f0000000580)=ANY=[], 0x10)
-  r4 = openat(0xffffffffffffff9c, &(0x7f0000000040)='./file0\x00', 0x42, 0x0)
-  mmap$IORING_OFF_SQ_RING(&(0x7f0000ffd000/0x3000)=nil, 0x3000, 0x0, 0x12, r4, 0x0)
-  r5 = userfaultfd(0x80801)
-  ioctl$UFFDIO_API(r5, 0xc018aa3f, &(0x7f0000000040)={0xaa, 0x20})
-  r6 = userfaultfd(0x80801)
-  ioctl$UFFDIO_API(r6, 0xc018aa3f, &(0x7f0000000140))
-  ioctl$UFFDIO_REGISTER(r6, 0xc020aa00, &(0x7f0000000100)={{&(0x7f0000ffc000/0x4000)=nil, 0x4000}, 0x2})
-  ioctl$UFFDIO_ZEROPAGE(r5, 0xc020aa04, &(0x7f0000000000)={{&(0x7f0000ffd000/0x1000)=nil, 0x1000}})
-  r7 = bpf$PROG_LOAD(0x5, &(0x7f0000000140)={0x2, 0x3, &(0x7f0000000200)=ANY=[@ANYBLOB="1800000000120000000000000000000095"], &(0x7f0000000000)='GPL\x00', 0x7, 0x0, 0x0, 0x0, 0x0, '\x00', 0x0, @fallback=0x30, 0xffffffffffffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x10, 0x0, @void, @value}, 0x94)
-  bpf$BPF_LINK_CREATE_XDP(0x1c, &(0x7f0000000040)={r7, 0x0, 0x30, 0x1e, @val=@uprobe_multi={&(0x7f0000000080)='./file0\x00', &(0x7f0000000100)=[0x2], 0x0, 0x0, 0x1}}, 0x40)
-
-The cause is that zero pfn is set to the PTE without increasing the RSS
-count in mfill_atomic_pte_zeropage() and the refcount of zero folio does
-not increase accordingly. Then, the operation on the same pfn is performed
-in uprobe_write_opcode()->__replace_page() to unconditional decrease the
-RSS count and old_folio's refcount.
-
-Therefore, two bugs are introduced:
-
- 1. The RSS count is incorrect, when process exit, the check_mm() report
-    error "Bad rss-count".
-
- 2. The reserved folio (zero folio) is freed when folio->refcount is zero,
-    then free_pages_prepare->free_page_is_bad() report error
-    "Bad page state".
-
-There is more, the following warning could also theoretically be triggered:
-
-  __replace_page()
-    -> ...
-      -> folio_remove_rmap_pte()
-        -> VM_WARN_ON_FOLIO(is_zero_folio(folio), folio)
-
-Considering that uprobe hit on the zero folio is a very rare case, just
-reject zero old folio immediately after get_user_page_vma_remote().
-
-[ mingo: Cleaned up the changelog ]
-
-Fixes: 7396fa818d62 ("uprobes/core: Make background page replacement logic account for rss_stat counters")
-Fixes: 2b1444983508 ("uprobes, mm, x86: Add the ability to install and remove uprobes breakpoints")
-Signed-off-by: Tong Tiangen <tongtiangen@huawei.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Link: https://lore.kernel.org/r/20250224031149.1598949-1-tongtiangen@huawei.com
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20241010-b4-cleanup-h-of-node-put-thermal-v4-1-bfbe29ad81f4@linaro.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 423de5b5bc5b ("thermal/of: Fix cdev lookup in thermal_of_should_bind()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/uprobes.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/thermal/thermal_of.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index 4b52cb2ae6d62..a0e0676f5d8bb 100644
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -489,6 +489,11 @@ int uprobe_write_opcode(struct arch_uprobe *auprobe, struct mm_struct *mm,
- 	if (ret <= 0)
- 		goto put_old;
+diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
+index 5d3d8ce672cd5..111d2c15601b9 100644
+--- a/drivers/thermal/thermal_of.c
++++ b/drivers/thermal/thermal_of.c
+@@ -298,7 +298,7 @@ static bool thermal_of_should_bind(struct thermal_zone_device *tz,
+ 				   struct thermal_cooling_device *cdev,
+ 				   struct cooling_spec *c)
+ {
+-	struct device_node *tz_np, *cm_np, *child;
++	struct device_node *tz_np, *cm_np;
+ 	bool result = false;
  
-+	if (is_zero_page(old_page)) {
-+		ret = -EINVAL;
-+		goto put_old;
-+	}
-+
- 	if (WARN(!is_register && PageCompound(old_page),
- 		 "uprobe unregister should never work on compound page\n")) {
- 		ret = -EINVAL;
+ 	tz_np = thermal_of_zone_get_by_name(tz);
+@@ -312,7 +312,7 @@ static bool thermal_of_should_bind(struct thermal_zone_device *tz,
+ 		goto out;
+ 
+ 	/* Look up the trip and the cdev in the cooling maps. */
+-	for_each_child_of_node(cm_np, child) {
++	for_each_child_of_node_scoped(cm_np, child) {
+ 		struct device_node *tr_np;
+ 		int count, i;
+ 
+@@ -331,7 +331,6 @@ static bool thermal_of_should_bind(struct thermal_zone_device *tz,
+ 				break;
+ 		}
+ 
+-		of_node_put(child);
+ 		break;
+ 	}
+ 
 -- 
 2.39.5
 
