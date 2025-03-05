@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D47B1C860D;
-	Wed,  5 Mar 2025 18:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FC11ACEDD;
+	Wed,  5 Mar 2025 18:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198074; cv=none; b=bw/u7mvnQQePQeB+65cwRjFI9DIDUom/MQu9fvZm42Yk045QJTfYHRhhg3HNe8B6Ms6FtBgMeKlKqqKNChyrr5fzPxcjpAtm6MZ02K0lqC83t5YDFyVlDmIqeSnV/jo3LPSXIfx65rSTZMgEJaF2K/QahwtS/Lz6JyZfVD8sVY8=
+	t=1741198077; cv=none; b=dgP4LCcfKvO4x9ygpDXd/lJ561omU3KxAY3SpB9DALZkwAg/TjW28vp61D6Qh0d41jOEXLy6WLdkMGo+MsyiB4aVWqxZiYW5H9MSnaKoAWWeowaJ4byXE6mNCuE98K33zTLUEPoJNxujkS3qUWVVRcP8JDQh64I1ToQ2TKIF+Ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198074; c=relaxed/simple;
-	bh=jkW8eFFGksJI7Wdbt/xtw+VboScgc3ImmURBJtxsOcE=;
+	s=arc-20240116; t=1741198077; c=relaxed/simple;
+	bh=xVby5w4vsSTLyuE0zV0LfAchmw8156h5fctSdn0Zdn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y6CATT/YwA247D/CVRHGNPTGrRlgOdw27/pZOvNDpVHTw/Z/qUm75dmBUzamUUPkhiA3KNyf1xFFvW+e8h/0X2zChN6K1RtD2wCpUkiv3/nKl1y/7nL3pxbA9OA7aaeGbZRJhrUoYG5ZAXZcwaW+dEizQktnrFT++SdoPrIxdVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGmZ/IbI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fIZkc8jrMuxYg2jU7uAdGD1r13o/HVT9gV0G6ocSm/vIIOs86WqeAMRFH9+p6PZmEqlr7zyezyApkcjCY2CMZKLPilo+01/cJnAaozXbv3V3JzXUIrjzLMSwdJo02aEwILv3Q8NtVmHou6oVdBow0WpMLQ1qMKQD9hzpp4T9zvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hP2Pdi38; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGmZ/IbI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3999C4CED1;
-	Wed,  5 Mar 2025 18:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hP2Pdi38"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0A0C4CED1;
+	Wed,  5 Mar 2025 18:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198074;
-	bh=jkW8eFFGksJI7Wdbt/xtw+VboScgc3ImmURBJtxsOcE=;
+	s=korg; t=1741198077;
+	bh=xVby5w4vsSTLyuE0zV0LfAchmw8156h5fctSdn0Zdn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hGmZ/IbIfiK8EcDxlvMzDAUy8g2sIX6v8CcDI5P2ts7cuE0E4G4WKWONzEdfdCmew
-	 C2LTbGv3MUudBpZVfUWlqkz3XLmnR/B02LgU1pezOdt8FfhGrUnS76Kx0E24LXhDdX
-	 RqVAGtVhxEwzIjToewORzKaEt10Exb+2UJDIbYew=
+	b=hP2Pdi38Cm+KafahtLIbQVvw5xz+jXIZOs2Mpm0D6s0W7tkW661jt4Bmrz5ZPmHXE
+	 /4RGRKyZ0Z5ixyDMJRQEoQ+F2LrTjMOVPG+n4+/Nx+e0g3EQ2wx5Fb4+RhQuXxD7vu
+	 ZGau2S/iP+ApcSJWBD8ML54QGmAJ2KtmUEatM+Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
-	Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>,
-	Marcin Szycik <marcin.szycik@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wang Hai <wanghai38@huawei.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/150] ice: Avoid setting default Rx VSI twice in switchdev setup
-Date: Wed,  5 Mar 2025 18:48:05 +0100
-Message-ID: <20250305174506.075019377@linuxfoundation.org>
+Subject: [PATCH 6.12 057/150] tcp: Defer ts_recent changes until req is owned
+Date: Wed,  5 Mar 2025 18:48:06 +0100
+Message-ID: <20250305174506.116271973@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -55,55 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcin Szycik <marcin.szycik@linux.intel.com>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit 5c07be96d8b3f8447e980f29b967bf2e1d7ac732 ]
+[ Upstream commit 8d52da23b6c68a0f6bad83959ebb61a2cf623c4e ]
 
-As part of switchdev environment setup, uplink VSI is configured as
-default for both Tx and Rx. Default Rx VSI is also used by promiscuous
-mode. If promisc mode is enabled and an attempt to enter switchdev mode
-is made, the setup will fail because Rx VSI is already configured as
-default (rule exists).
+Recently a bug was discovered where the server had entered TCP_ESTABLISHED
+state, but the upper layers were not notified.
 
-Reproducer:
-  devlink dev eswitch set $PF1_PCI mode switchdev
-  ip l s $PF1 up
-  ip l s $PF1 promisc on
-  echo 1 > /sys/class/net/$PF1/device/sriov_numvfs
+The same 5-tuple packet may be processed by different CPUSs, so two
+CPUs may receive different ack packets at the same time when the
+state is TCP_NEW_SYN_RECV.
 
-In switchdev setup, use ice_set_dflt_vsi() instead of plain
-ice_cfg_dflt_vsi(), which avoids repeating setting default VSI for Rx if
-it's already configured.
+In that case, req->ts_recent in tcp_check_req may be changed concurrently,
+which will probably cause the newsk's ts_recent to be incorrectly large.
+So that tcp_validate_incoming will fail. At this point, newsk will not be
+able to enter the TCP_ESTABLISHED.
 
-Fixes: 50d62022f455 ("ice: default Tx rule instead of to queue")
-Reported-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Closes: https://lore.kernel.org/intel-wired-lan/PH0PR11MB50138B635F2E5CEB7075325D961F2@PH0PR11MB5013.namprd11.prod.outlook.com
-Reviewed-by: Martyna Szapar-Mudlaw <martyna.szapar-mudlaw@linux.intel.com>
-Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20250224190647.3601930-3-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+cpu1                                    cpu2
+tcp_check_req
+                                        tcp_check_req
+ req->ts_recent = rcv_tsval = t1
+                                         req->ts_recent = rcv_tsval = t2
+
+ syn_recv_sock
+  tcp_sk(child)->rx_opt.ts_recent = req->ts_recent = t2 // t1 < t2
+tcp_child_process
+ tcp_rcv_state_process
+  tcp_validate_incoming
+   tcp_paws_check
+    if ((s32)(rx_opt->ts_recent - rx_opt->rcv_tsval) <= paws_win)
+        // t2 - t1 > paws_win, failed
+                                        tcp_v4_do_rcv
+                                         tcp_rcv_state_process
+                                         // TCP_ESTABLISHED
+
+The cpu2's skb or a newly received skb will call tcp_v4_do_rcv to get
+the newsk into the TCP_ESTABLISHED state, but at this point it is no
+longer possible to notify the upper layer application. A notification
+mechanism could be added here, but the fix is more complex, so the
+current fix is used.
+
+In tcp_check_req, req->ts_recent is used to assign a value to
+tcp_sk(child)->rx_opt.ts_recent, so removing the change in req->ts_recent
+and changing tcp_sk(child)->rx_opt.ts_recent directly after owning the
+req fixes this bug.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_eswitch.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/ipv4/tcp_minisocks.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_eswitch.c b/drivers/net/ethernet/intel/ice/ice_eswitch.c
-index fb527434b58b1..d649c197cf673 100644
---- a/drivers/net/ethernet/intel/ice/ice_eswitch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_eswitch.c
-@@ -38,8 +38,7 @@ static int ice_eswitch_setup_env(struct ice_pf *pf)
- 	if (ice_vsi_add_vlan_zero(uplink_vsi))
- 		goto err_vlan_zero;
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index bb1fe1ba867ac..f3e4fc9572196 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -806,12 +806,6 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
  
--	if (ice_cfg_dflt_vsi(uplink_vsi->port_info, uplink_vsi->idx, true,
--			     ICE_FLTR_RX))
-+	if (ice_set_dflt_vsi(uplink_vsi))
- 		goto err_def_rx;
+ 	/* In sequence, PAWS is OK. */
  
- 	if (ice_cfg_dflt_vsi(uplink_vsi->port_info, uplink_vsi->idx, true,
+-	/* TODO: We probably should defer ts_recent change once
+-	 * we take ownership of @req.
+-	 */
+-	if (tmp_opt.saw_tstamp && !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
+-		WRITE_ONCE(req->ts_recent, tmp_opt.rcv_tsval);
+-
+ 	if (TCP_SKB_CB(skb)->seq == tcp_rsk(req)->rcv_isn) {
+ 		/* Truncate SYN, it is out of window starting
+ 		   at tcp_rsk(req)->rcv_isn + 1. */
+@@ -860,6 +854,10 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 	if (!child)
+ 		goto listen_overflow;
+ 
++	if (own_req && tmp_opt.saw_tstamp &&
++	    !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
++		tcp_sk(child)->rx_opt.ts_recent = tmp_opt.rcv_tsval;
++
+ 	if (own_req && rsk_drop_req(req)) {
+ 		reqsk_queue_removed(&inet_csk(req->rsk_listener)->icsk_accept_queue, req);
+ 		inet_csk_reqsk_queue_drop_and_put(req->rsk_listener, req);
 -- 
 2.39.5
 
