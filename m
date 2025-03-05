@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD931C5D4E;
-	Wed,  5 Mar 2025 18:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECFB2528EE;
+	Wed,  5 Mar 2025 18:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197725; cv=none; b=CA0QzlFJM2BNCrWsjiThlLTukLeQefsE8mDUc8N3W7VQ1dtWux/Rpz3TOIp8JETQJ9S0DxbL+OgQgYspImy1DHtNfe52lNaihiP00IZpzxBbMtpvJwwMuSWZJ4vOoClYBetMW0bW9/PSGAAHE4GLttDosWs9RjKYWmvZ4FW/x5k=
+	t=1741197728; cv=none; b=ql+EkGe0RsTE08scMkNZn1UxdVY7mfmuhHDzYQoWXfQarzSrzkB++Tbx/qyqDM1yJk2OLH7ehJKFmojCdCifgJLsU+BvzLzuMHK0y31EQx3PKyD/oy3PQK04wW4972OULCIzrUqdlUldNCPdKUcgIG+zj9KKEafYNtsO2rISPfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197725; c=relaxed/simple;
-	bh=1+Ev5uC8+l/WW1BkVuuSqUpuHfyaOuEjtKdgQtRdl6U=;
+	s=arc-20240116; t=1741197728; c=relaxed/simple;
+	bh=0o9LL22HPKSKgy0QEmDkel6lokp9lImG5vkYl6IPyl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jKmN80Hkg7cqPdmNuFnKeHKGKgLPzohG7aNuU3k6QNrt+UrGYg5TiViavnTGQaUHATclHrIGnu/kkcdiFiLuY9EkTeL7maqOpxfvEEKDMK9FNWdI4/UBEAU2Y/e4/x4ydEy/pc/M9mBXmGi34NZQ2zzb0+GcB+OWNBl6Qz3TOGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMLbpaaX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=phuR+iWJx2J54QBlz3ZThE2QnNAZ+gE20JEGr8gCsXpEUHg1wJ53YwzLQ4LKtOTmrNY+7Jhq+kt2Doa7S2IFKvoTbijzV4KOc4SqyLuoegLN0G21ghQnPGkTrH/YQMv4EIOdQNtgY8y5Iaht9+4krl07U7Boxb0YE6JOvp9lclk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLnMqDPL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMLbpaaX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6CCC4CED1;
-	Wed,  5 Mar 2025 18:02:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLnMqDPL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ACBEC4CEE0;
+	Wed,  5 Mar 2025 18:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197725;
-	bh=1+Ev5uC8+l/WW1BkVuuSqUpuHfyaOuEjtKdgQtRdl6U=;
+	s=korg; t=1741197728;
+	bh=0o9LL22HPKSKgy0QEmDkel6lokp9lImG5vkYl6IPyl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xMLbpaaXRWw5M2PD2Sau+PIUCFuMsH/lgymDhJo3x3tx/yuKOPUeuXpnn9xQXUv8F
-	 qjNEA6bGzb/M2FKALzEFm0j+9zst6fr5rZ1JO9yO4bTjkJjwKkogQhYSCAq6wamfW8
-	 F3ToJ8x1E0NHIOTNB6tIx5/Bo4GoY5Rc2yysf7Hc=
+	b=ZLnMqDPLKhjGYfvINyEBm0HaQ9xv4+hMANm0cxqxhJmj0o9kZwcg9gi9sGwboAEj1
+	 Hl0LsRNC6xGvC/Zv4tbRIaXfAkEHiHpeqNxy9LmQxzJxO8Q745yhvML4G42BcpoxtX
+	 LQrKDm7yb1vVqKSPFlr8Jzd0ndv5nyzUL1Xn6m9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaustabh Chakraborty <kauschluss@disroot.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Anand Moon <linux.amoon@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 079/142] phy: exynos5-usbdrd: fix MPLL_MULTIPLIER and SSC_REFCLKSEL masks in refclk
-Date: Wed,  5 Mar 2025 18:48:18 +0100
-Message-ID: <20250305174503.509362843@linuxfoundation.org>
+	syzbot+cd3ce3d03a3393ae9700@syzkaller.appspotmail.com,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 080/142] mptcp: always handle address removal under msk socket lock
+Date: Wed,  5 Mar 2025 18:48:19 +0100
+Message-ID: <20250305174503.548604713@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -52,53 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaustabh Chakraborty <kauschluss@disroot.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit e2158c953c973adb49383ddea2504faf08d375b7 upstream.
+commit f865c24bc55158313d5779fc81116023a6940ca3 upstream.
 
-In exynos5_usbdrd_{pipe3,utmi}_set_refclk(), the masks
-PHYCLKRST_MPLL_MULTIPLIER_MASK and PHYCLKRST_SSC_REFCLKSEL_MASK are not
-inverted when applied to the register values. Fix it.
+Syzkaller reported a lockdep splat in the PM control path:
 
+  WARNING: CPU: 0 PID: 6693 at ./include/net/sock.h:1711 sock_owned_by_me include/net/sock.h:1711 [inline]
+  WARNING: CPU: 0 PID: 6693 at ./include/net/sock.h:1711 msk_owned_by_me net/mptcp/protocol.h:363 [inline]
+  WARNING: CPU: 0 PID: 6693 at ./include/net/sock.h:1711 mptcp_pm_nl_addr_send_ack+0x57c/0x610 net/mptcp/pm_netlink.c:788
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 6693 Comm: syz.0.205 Not tainted 6.14.0-rc2-syzkaller-00303-gad1b832bf1cf #0
+  Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 12/27/2024
+  RIP: 0010:sock_owned_by_me include/net/sock.h:1711 [inline]
+  RIP: 0010:msk_owned_by_me net/mptcp/protocol.h:363 [inline]
+  RIP: 0010:mptcp_pm_nl_addr_send_ack+0x57c/0x610 net/mptcp/pm_netlink.c:788
+  Code: 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc e8 ca 7b d3 f5 eb b9 e8 c3 7b d3 f5 90 0f 0b 90 e9 dd fb ff ff e8 b5 7b d3 f5 90 <0f> 0b 90 e9 3e fb ff ff 44 89 f1 80 e1 07 38 c1 0f 8c eb fb ff ff
+  RSP: 0000:ffffc900034f6f60 EFLAGS: 00010283
+  RAX: ffffffff8bee3c2b RBX: 0000000000000001 RCX: 0000000000080000
+  RDX: ffffc90004d42000 RSI: 000000000000a407 RDI: 000000000000a408
+  RBP: ffffc900034f7030 R08: ffffffff8bee37f6 R09: 0100000000000000
+  R10: dffffc0000000000 R11: ffffed100bcc62e4 R12: ffff88805e6316e0
+  R13: ffff88805e630c00 R14: dffffc0000000000 R15: ffff88805e630c00
+  FS:  00007f7e9a7e96c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 0000001b2fd18ff8 CR3: 0000000032c24000 CR4: 00000000003526f0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  Call Trace:
+   <TASK>
+   mptcp_pm_remove_addr+0x103/0x1d0 net/mptcp/pm.c:59
+   mptcp_pm_remove_anno_addr+0x1f4/0x2f0 net/mptcp/pm_netlink.c:1486
+   mptcp_nl_remove_subflow_and_signal_addr net/mptcp/pm_netlink.c:1518 [inline]
+   mptcp_pm_nl_del_addr_doit+0x118d/0x1af0 net/mptcp/pm_netlink.c:1629
+   genl_family_rcv_msg_doit net/netlink/genetlink.c:1115 [inline]
+   genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
+   genl_rcv_msg+0xb1f/0xec0 net/netlink/genetlink.c:1210
+   netlink_rcv_skb+0x206/0x480 net/netlink/af_netlink.c:2543
+   genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
+   netlink_unicast_kernel net/netlink/af_netlink.c:1322 [inline]
+   netlink_unicast+0x7f6/0x990 net/netlink/af_netlink.c:1348
+   netlink_sendmsg+0x8de/0xcb0 net/netlink/af_netlink.c:1892
+   sock_sendmsg_nosec net/socket.c:718 [inline]
+   __sock_sendmsg+0x221/0x270 net/socket.c:733
+   ____sys_sendmsg+0x53a/0x860 net/socket.c:2573
+   ___sys_sendmsg net/socket.c:2627 [inline]
+   __sys_sendmsg+0x269/0x350 net/socket.c:2659
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f7e9998cde9
+  Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+  RSP: 002b:00007f7e9a7e9038 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+  RAX: ffffffffffffffda RBX: 00007f7e99ba5fa0 RCX: 00007f7e9998cde9
+  RDX: 000000002000c094 RSI: 0000400000000000 RDI: 0000000000000007
+  RBP: 00007f7e99a0e2a0 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  R13: 0000000000000000 R14: 00007f7e99ba5fa0 R15: 00007fff49231088
+
+Indeed the PM can try to send a RM_ADDR over a msk without acquiring
+first the msk socket lock.
+
+The bugged code-path comes from an early optimization: when there
+are no subflows, the PM should (usually) not send RM_ADDR
+notifications.
+
+The above statement is incorrect, as without locks another process
+could concurrent create a new subflow and cause the RM_ADDR generation.
+
+Additionally the supposed optimization is not very effective even
+performance-wise, as most mptcp sockets should have at least one
+subflow: the MPC one.
+
+Address the issue removing the buggy code path, the existing "slow-path"
+will handle correctly even the edge case.
+
+Fixes: b6c08380860b ("mptcp: remove addr and subflow in PM netlink")
 Cc: stable@vger.kernel.org
-Fixes: 59025887fb08 ("phy: Add new Exynos5 USB 3.0 PHY driver")
-Signed-off-by: Kaustabh Chakraborty <kauschluss@disroot.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Anand Moon <linux.amoon@gmail.com>
-Link: https://lore.kernel.org/r/20250209-exynos5-usbdrd-masks-v1-1-4f7f83f323d7@disroot.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reported-by: syzbot+cd3ce3d03a3393ae9700@syzkaller.appspotmail.com
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/546
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250224-net-mptcp-misc-fixes-v1-1-f550f636b435@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/samsung/phy-exynos5-usbdrd.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/mptcp/pm_netlink.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/drivers/phy/samsung/phy-exynos5-usbdrd.c
-+++ b/drivers/phy/samsung/phy-exynos5-usbdrd.c
-@@ -319,9 +319,9 @@ exynos5_usbdrd_pipe3_set_refclk(struct p
- 	reg |=	PHYCLKRST_REFCLKSEL_EXT_REFCLK;
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1559,11 +1559,6 @@ static int mptcp_nl_remove_subflow_and_s
+ 		if (mptcp_pm_is_userspace(msk))
+ 			goto next;
  
- 	/* FSEL settings corresponding to reference clock */
--	reg &= ~PHYCLKRST_FSEL_PIPE_MASK |
--		PHYCLKRST_MPLL_MULTIPLIER_MASK |
--		PHYCLKRST_SSC_REFCLKSEL_MASK;
-+	reg &= ~(PHYCLKRST_FSEL_PIPE_MASK |
-+		 PHYCLKRST_MPLL_MULTIPLIER_MASK |
-+		 PHYCLKRST_SSC_REFCLKSEL_MASK);
- 	switch (phy_drd->extrefclk) {
- 	case EXYNOS5_FSEL_50MHZ:
- 		reg |= (PHYCLKRST_MPLL_MULTIPLIER_50M_REF |
-@@ -363,9 +363,9 @@ exynos5_usbdrd_utmi_set_refclk(struct ph
- 	reg &= ~PHYCLKRST_REFCLKSEL_MASK;
- 	reg |=	PHYCLKRST_REFCLKSEL_EXT_REFCLK;
- 
--	reg &= ~PHYCLKRST_FSEL_UTMI_MASK |
--		PHYCLKRST_MPLL_MULTIPLIER_MASK |
--		PHYCLKRST_SSC_REFCLKSEL_MASK;
-+	reg &= ~(PHYCLKRST_FSEL_UTMI_MASK |
-+		 PHYCLKRST_MPLL_MULTIPLIER_MASK |
-+		 PHYCLKRST_SSC_REFCLKSEL_MASK);
- 	reg |= PHYCLKRST_FSEL(phy_drd->extrefclk);
- 
- 	return reg;
+-		if (list_empty(&msk->conn_list)) {
+-			mptcp_pm_remove_anno_addr(msk, addr, false);
+-			goto next;
+-		}
+-
+ 		lock_sock(sk);
+ 		remove_subflow = lookup_subflow_by_saddr(&msk->conn_list, addr);
+ 		mptcp_pm_remove_anno_addr(msk, addr, remove_subflow &&
 
 
