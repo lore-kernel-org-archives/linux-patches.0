@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B257117B505;
-	Wed,  5 Mar 2025 18:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A482017B505;
+	Wed,  5 Mar 2025 18:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197893; cv=none; b=uHjhrSBUFZ1bHdhGeTIzBALpZSyHnxjSmzYyoC5rfQmJMnts6TbF6AYuRikpuGiRdZVjM02k6V4sayWkk7jHxzk7iXEUQ408MLt2PifTkGcVaFNV+h7zjl37cyG0pJcDNeIO+RGtiEyuZC+lJR9DFxrUvXhN8soiRTC6/l/PLMA=
+	t=1741197896; cv=none; b=BRfyzl1FZaNrSRGc+/GmGWrNRBDXH2QaDa/WHxfgoWlbf2W4sHv1k0nyXkLYmk7AHfDGaMbwd87zgCY8eUaKqiMRQ047cA2g4lChg2J7abyYcslye9bcKO354P3/xR+vv14HwZtTCoFGd4ZIneZbLBlS0FYINYZnRTKgrzbqf/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197893; c=relaxed/simple;
-	bh=P9nXMTa4L2VuMt7thI6HjYnaS60kh9PNx7BKMj2ITmw=;
+	s=arc-20240116; t=1741197896; c=relaxed/simple;
+	bh=QOPeakIYZvuEVW+7/5pkmBo1Sn+wAJRcX2zvt61npFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A8jB6O3v5Ezvco105bsBzoKyjGoPL38hXrm0g8n7ZVwE146uown8Jas48wTO0YDG7p1QcinAwtop9EPKFAyxu4Aby5Ar23iCS/EV8eaUB+0y6U6/RYrmoxo7YXM2ex7dWOVFI+p61tCd5VW/8lYdKzyr4E/F/G2FhqmphA05WB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maxlGyb+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mt6XZrr7JkkjScDTjPva+qbkJw3X4P0w/K5iZF9Po/yaS8SCxciQREyYnK1LlxRGcEc1Y/8wkhM29GB06ZVGbCG2YEHTPdKfYQhl2KAOceo4T2azjB3VKaEEq1s/8k8SiXhjmyRrgdaTMbMPTx1H+yCn9h6Q1YVZC1kodttHu10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfzxT5l2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maxlGyb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A43C4CED1;
-	Wed,  5 Mar 2025 18:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfzxT5l2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29094C4CED1;
+	Wed,  5 Mar 2025 18:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197893;
-	bh=P9nXMTa4L2VuMt7thI6HjYnaS60kh9PNx7BKMj2ITmw=;
+	s=korg; t=1741197896;
+	bh=QOPeakIYZvuEVW+7/5pkmBo1Sn+wAJRcX2zvt61npFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=maxlGyb+4bgS18xazRr2U1FVlBg0injnjjd2EJGkgEU5Jg8tKWSwM5gLOqCxihEjy
-	 LakO+/2PAl8nWUAQMJJOhKUaa37S0oYK/uJ9anrQjy1VmY6HYxxyYvlvPkEYOWNlVu
-	 6llZuYhitWO9nEhgGcIjL3pr3uLXOLs6iHHQNM1I=
+	b=EfzxT5l2WmB2nyGYy86VajEqmONtonyiJAvRrf5pXF2sgB5Sph/42R+ctvseaDQQQ
+	 6vt+t4AZr9atCMHd061bbg2cCC7k84bTbfUnR+1eIEvrTavtXB8/Wybqy7VWsRopCK
+	 MdOILhO+YnN17QqBb+GjKBXfxm0Vc5i51frWK7Xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas De Schampheleire <thomas.de_schampheleire@nokia.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.6 135/142] x86/microcode/AMD: Flush patch buffer mapping after application
-Date: Wed,  5 Mar 2025 18:49:14 +0100
-Message-ID: <20250305174505.756974651@linuxfoundation.org>
+	Nikolay Borisov <nik.borisov@suse.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.6 136/142] x86/microcode/AMD: Return bool from find_blobs_in_containers()
+Date: Wed,  5 Mar 2025 18:49:15 +0100
+Message-ID: <20250305174505.799622198@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -51,90 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Borislav Petkov (AMD)" <bp@alien8.de>
+From: Nikolay Borisov <nik.borisov@suse.com>
 
-commit c809b0d0e52d01c30066367b2952c4c4186b1047 upstream
+commit a85c08aaa665b5436d325f6d7138732a0e1315ce upstream
 
-Due to specific requirements while applying microcode patches on Zen1
-and 2, the patch buffer mapping needs to be flushed from the TLB after
-application. Do so.
+Instead of open-coding the check for size/data move it inside the
+function and make it return a boolean indicating whether data was found
+or not.
 
-If not, unnecessary and unnatural delays happen in the boot process.
+No functional changes.
 
-Reported-by: Thomas De Schampheleire <thomas.de_schampheleire@nokia.com>
+  [ bp: Write @ret in find_blobs_in_containers() only on success. ]
+
+Signed-off-by: Nikolay Borisov <nik.borisov@suse.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Thomas De Schampheleire <thomas.de_schampheleire@nokia.com>
-Cc: <stable@kernel.org> # f1d84b59cbb9 ("x86/mm: Carve out INVLPG inline asm for use by others")
-Link: https://lore.kernel.org/r/ZyulbYuvrkshfsd2@antipodes
+Link: https://lore.kernel.org/r/20241018155151.702350-2-nik.borisov@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c |   25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ arch/x86/kernel/cpu/microcode/amd.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
 --- a/arch/x86/kernel/cpu/microcode/amd.c
 +++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -34,6 +34,7 @@
- #include <asm/setup.h>
- #include <asm/cpu.h>
- #include <asm/msr.h>
-+#include <asm/tlb.h>
- 
- #include "internal.h"
- 
-@@ -485,11 +486,25 @@ static void scan_containers(u8 *ucode, s
- 	}
+@@ -571,14 +571,19 @@ static bool get_builtin_microcode(struct
+ 	return false;
  }
  
--static int __apply_microcode_amd(struct microcode_amd *mc)
-+static int __apply_microcode_amd(struct microcode_amd *mc, unsigned int psize)
+-static void __init find_blobs_in_containers(struct cpio_data *ret)
++static bool __init find_blobs_in_containers(struct cpio_data *ret)
  {
-+	unsigned long p_addr = (unsigned long)&mc->hdr.data_code;
- 	u32 rev, dummy;
+ 	struct cpio_data cp;
++	bool found;
  
--	native_wrmsrl(MSR_AMD64_PATCH_LOADER, (u64)(long)&mc->hdr.data_code);
-+	native_wrmsrl(MSR_AMD64_PATCH_LOADER, p_addr);
-+
-+	if (x86_family(bsp_cpuid_1_eax) == 0x17) {
-+		unsigned long p_addr_end = p_addr + psize - 1;
-+
-+		invlpg(p_addr);
-+
-+		/*
-+		 * Flush next page too if patch image is crossing a page
-+		 * boundary.
-+		 */
-+		if (p_addr >> PAGE_SHIFT != p_addr_end >> PAGE_SHIFT)
-+			invlpg(p_addr_end);
-+	}
+ 	if (!get_builtin_microcode(&cp))
+ 		cp = find_microcode_in_initrd(ucode_path);
  
- 	/* verify patch application was successful */
- 	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
-@@ -531,7 +546,7 @@ static bool early_apply_microcode(u32 ol
- 	if (old_rev > mc->hdr.patch_id)
- 		return ret;
- 
--	return !__apply_microcode_amd(mc);
-+	return !__apply_microcode_amd(mc, desc.psize);
+-	*ret = cp;
++	found = cp.data && cp.size;
++	if (found)
++		*ret = cp;
++
++	return found;
  }
  
- static bool get_builtin_microcode(struct cpio_data *cp)
-@@ -747,7 +762,7 @@ void reload_ucode_amd(unsigned int cpu)
- 	rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+ void __init load_ucode_amd_bsp(struct early_load_data *ed, unsigned int cpuid_1_eax)
+@@ -593,8 +598,7 @@ void __init load_ucode_amd_bsp(struct ea
+ 	/* Needed in load_microcode_amd() */
+ 	ucode_cpu_info[0].cpu_sig.sig = cpuid_1_eax;
  
- 	if (rev < mc->hdr.patch_id) {
--		if (!__apply_microcode_amd(mc))
-+		if (!__apply_microcode_amd(mc, p->size))
- 			pr_info_once("reload revision: 0x%08x\n", mc->hdr.patch_id);
- 	}
- }
-@@ -800,7 +815,7 @@ static enum ucode_state apply_microcode_
- 		goto out;
- 	}
+-	find_blobs_in_containers(&cp);
+-	if (!(cp.data && cp.size))
++	if (!find_blobs_in_containers(&cp))
+ 		return;
  
--	if (__apply_microcode_amd(mc_amd)) {
-+	if (__apply_microcode_amd(mc_amd, p->size)) {
- 		pr_err("CPU%d: update failed for patch_level=0x%08x\n",
- 			cpu, mc_amd->hdr.patch_id);
- 		return UCODE_ERROR;
+ 	if (early_apply_microcode(ed->old_rev, cp.data, cp.size))
+@@ -614,8 +618,7 @@ static int __init save_microcode_in_init
+ 	if (dis_ucode_ldr || c->x86_vendor != X86_VENDOR_AMD || c->x86 < 0x10)
+ 		return 0;
+ 
+-	find_blobs_in_containers(&cp);
+-	if (!(cp.data && cp.size))
++	if (!find_blobs_in_containers(&cp))
+ 		return -EINVAL;
+ 
+ 	scan_containers(cp.data, cp.size, &desc);
 
 
