@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FC11ACEDD;
-	Wed,  5 Mar 2025 18:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFA21A840E;
+	Wed,  5 Mar 2025 18:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198077; cv=none; b=dgP4LCcfKvO4x9ygpDXd/lJ561omU3KxAY3SpB9DALZkwAg/TjW28vp61D6Qh0d41jOEXLy6WLdkMGo+MsyiB4aVWqxZiYW5H9MSnaKoAWWeowaJ4byXE6mNCuE98K33zTLUEPoJNxujkS3qUWVVRcP8JDQh64I1ToQ2TKIF+Ko=
+	t=1741198080; cv=none; b=pJVE8JTVW4qSroPMKsyVZb9ME7YECN+Il8ciZk21CS7faT6RhMRtbLiwXAX1igXDz3cdoa1AMbP4HJKAJSo2i5IuqHKEmobBzvs1j9kzle31x/FU2SuOIP31g5rRrRwVEDMyMHyOKwNOadtyVZ6HseSL4+WbDQ3I8W6OYo4N/ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198077; c=relaxed/simple;
-	bh=xVby5w4vsSTLyuE0zV0LfAchmw8156h5fctSdn0Zdn8=;
+	s=arc-20240116; t=1741198080; c=relaxed/simple;
+	bh=w67TLsNIhvYRQl+eku/O1OAvWEAUH8TT1xVRTrUJqbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fIZkc8jrMuxYg2jU7uAdGD1r13o/HVT9gV0G6ocSm/vIIOs86WqeAMRFH9+p6PZmEqlr7zyezyApkcjCY2CMZKLPilo+01/cJnAaozXbv3V3JzXUIrjzLMSwdJo02aEwILv3Q8NtVmHou6oVdBow0WpMLQ1qMKQD9hzpp4T9zvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hP2Pdi38; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AcYUe8tuA3nZcxC38PGY8Pa1AbWFZ28nYICS8L8hbRCmRIcIkDmytujP8MlJK7ZbPIo9/ddpEfGlXvI5I5HqTMMTHYcDBVOSH85ez6GpVa9DHPbTB77e1aSWpVwD1SGZeizfUnlZn8etblAgnTQOUdIkeRjpUx8V3OS3KjTtQI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+2+Hy0U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hP2Pdi38"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0A0C4CED1;
-	Wed,  5 Mar 2025 18:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+2+Hy0U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83418C4CEE2;
+	Wed,  5 Mar 2025 18:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198077;
-	bh=xVby5w4vsSTLyuE0zV0LfAchmw8156h5fctSdn0Zdn8=;
+	s=korg; t=1741198079;
+	bh=w67TLsNIhvYRQl+eku/O1OAvWEAUH8TT1xVRTrUJqbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hP2Pdi38Cm+KafahtLIbQVvw5xz+jXIZOs2Mpm0D6s0W7tkW661jt4Bmrz5ZPmHXE
-	 /4RGRKyZ0Z5ixyDMJRQEoQ+F2LrTjMOVPG+n4+/Nx+e0g3EQ2wx5Fb4+RhQuXxD7vu
-	 ZGau2S/iP+ApcSJWBD8ML54QGmAJ2KtmUEatM+Ag=
+	b=N+2+Hy0UNVJqZLzcEIu0xoPJzyay30jwmgCeFJ+HLWdRRqN8J0mO5rR/vSIgjcKEz
+	 ma2kAhftk7VmZabwDOhVHs/0fVYDQUZnATWKzD1jCIihnMniX0BSU6HzgnLULRQUQk
+	 lbBXGhm1tBQCkf/VO+RiHge6W/GxtiQ1+AWXjgv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 057/150] tcp: Defer ts_recent changes until req is owned
-Date: Wed,  5 Mar 2025 18:48:06 +0100
-Message-ID: <20250305174506.116271973@linuxfoundation.org>
+Subject: [PATCH 6.12 058/150] drm/xe: cancel pending job timer before freeing scheduler
+Date: Wed,  5 Mar 2025 18:48:07 +0100
+Message-ID: <20250305174506.154179603@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174503.801402104@linuxfoundation.org>
 References: <20250305174503.801402104@linuxfoundation.org>
@@ -54,90 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Hai <wanghai38@huawei.com>
+From: Tejas Upadhyay <tejas.upadhyay@intel.com>
 
-[ Upstream commit 8d52da23b6c68a0f6bad83959ebb61a2cf623c4e ]
+[ Upstream commit 12c2f962fe71f390951d9242725bc7e608f55927 ]
 
-Recently a bug was discovered where the server had entered TCP_ESTABLISHED
-state, but the upper layers were not notified.
+The async call to __guc_exec_queue_fini_async frees the scheduler
+while a submission may time out and restart. To prevent this race
+condition, the pending job timer should be canceled before freeing
+the scheduler.
 
-The same 5-tuple packet may be processed by different CPUSs, so two
-CPUs may receive different ack packets at the same time when the
-state is TCP_NEW_SYN_RECV.
+V3(MattB):
+ - Adjust position of cancel pending job
+ - Remove gitlab issue# from commit message
+V2(MattB):
+ - Cancel pending jobs before scheduler finish
 
-In that case, req->ts_recent in tcp_check_req may be changed concurrently,
-which will probably cause the newsk's ts_recent to be incorrectly large.
-So that tcp_validate_incoming will fail. At this point, newsk will not be
-able to enter the TCP_ESTABLISHED.
-
-cpu1                                    cpu2
-tcp_check_req
-                                        tcp_check_req
- req->ts_recent = rcv_tsval = t1
-                                         req->ts_recent = rcv_tsval = t2
-
- syn_recv_sock
-  tcp_sk(child)->rx_opt.ts_recent = req->ts_recent = t2 // t1 < t2
-tcp_child_process
- tcp_rcv_state_process
-  tcp_validate_incoming
-   tcp_paws_check
-    if ((s32)(rx_opt->ts_recent - rx_opt->rcv_tsval) <= paws_win)
-        // t2 - t1 > paws_win, failed
-                                        tcp_v4_do_rcv
-                                         tcp_rcv_state_process
-                                         // TCP_ESTABLISHED
-
-The cpu2's skb or a newly received skb will call tcp_v4_do_rcv to get
-the newsk into the TCP_ESTABLISHED state, but at this point it is no
-longer possible to notify the upper layer application. A notification
-mechanism could be added here, but the fix is more complex, so the
-current fix is used.
-
-In tcp_check_req, req->ts_recent is used to assign a value to
-tcp_sk(child)->rx_opt.ts_recent, so removing the change in req->ts_recent
-and changing tcp_sk(child)->rx_opt.ts_recent directly after owning the
-req fixes this bug.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: a20c75dba192 ("drm/xe: Call __guc_exec_queue_fini_async direct for KERNEL exec_queues")
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250225045754.600905-1-tejas.upadhyay@intel.com
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+(cherry picked from commit 18fbd567e75f9b97b699b2ab4f1fa76b7cf268f6)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_minisocks.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/xe/xe_guc_submit.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
-index bb1fe1ba867ac..f3e4fc9572196 100644
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -806,12 +806,6 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
+index fed23304e4da5..3fd2b28b91ab9 100644
+--- a/drivers/gpu/drm/xe/xe_guc_submit.c
++++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+@@ -1215,6 +1215,8 @@ static void __guc_exec_queue_fini_async(struct work_struct *w)
  
- 	/* In sequence, PAWS is OK. */
- 
--	/* TODO: We probably should defer ts_recent change once
--	 * we take ownership of @req.
--	 */
--	if (tmp_opt.saw_tstamp && !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
--		WRITE_ONCE(req->ts_recent, tmp_opt.rcv_tsval);
--
- 	if (TCP_SKB_CB(skb)->seq == tcp_rsk(req)->rcv_isn) {
- 		/* Truncate SYN, it is out of window starting
- 		   at tcp_rsk(req)->rcv_isn + 1. */
-@@ -860,6 +854,10 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
- 	if (!child)
- 		goto listen_overflow;
- 
-+	if (own_req && tmp_opt.saw_tstamp &&
-+	    !after(TCP_SKB_CB(skb)->seq, tcp_rsk(req)->rcv_nxt))
-+		tcp_sk(child)->rx_opt.ts_recent = tmp_opt.rcv_tsval;
-+
- 	if (own_req && rsk_drop_req(req)) {
- 		reqsk_queue_removed(&inet_csk(req->rsk_listener)->icsk_accept_queue, req);
- 		inet_csk_reqsk_queue_drop_and_put(req->rsk_listener, req);
+ 	if (xe_exec_queue_is_lr(q))
+ 		cancel_work_sync(&ge->lr_tdr);
++	/* Confirm no work left behind accessing device structures */
++	cancel_delayed_work_sync(&ge->sched.base.work_tdr);
+ 	release_guc_id(guc, q);
+ 	xe_sched_entity_fini(&ge->entity);
+ 	xe_sched_fini(&ge->sched);
 -- 
 2.39.5
 
