@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F731EDA26;
-	Wed,  5 Mar 2025 12:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F3033C9;
+	Wed,  5 Mar 2025 14:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741179571; cv=none; b=NWJOGSwvbsLmnfLKK2yiunW9NQzZTRuB9SB/msJOYacDj9D/RMW75BDghRbCJVcTL9FpHKM0iQXpbE8l6CVHROtgvGemq4jHN0zAJktG0vBkHQneCzQ9u+n9YpeD6YUJODlqPfnvB4Ie671y37DNZmLlvINJ+nw/Q31livw0/OE=
+	t=1741183444; cv=none; b=mx5fcySQ/KvKwivOGGahfbYtc3Sq6zmGzezTXU/NTs+WBwX/RFtWLHyluiR+fjyuYoiA2D9Tok07nbfBDeAUZB1k3hgdJpP7C9ooWuzeQT7bQaCTuy3P56LZvU6zjjXIgRgYTNfVrsemkaBZt0oCbcMC4zen6WlYLFOV55UHgfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741179571; c=relaxed/simple;
-	bh=ydjrl0nn4CMEHtCBM5l94ZW9OOFOLfL9ZmqhrjUkLU8=;
+	s=arc-20240116; t=1741183444; c=relaxed/simple;
+	bh=HcsY7DDq4XH4OmEl92ldJL3YkDr23xKJetfRPqzjsGs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GrN8EfArMXUXOFjEdEKdFdbhvbbmWq2rxAddrUdFUQJaUvrvS+CTCQ7K7TJwK1IA02BIgtV18s3bDeSqKco/I/7v/AjPqMvFNGJXKP2F7b4vh87u5ac3QNFbyD69yhq3RZWDGrWvANjjspK+4dNNbia5vF5olGXbYnlI7xpIBDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gxtn+5Go; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=lxetNjM/flM35clbHO5ZwxW6Q50t33lGsxGPagxxUUflAiBrMb+IT92LRpWwj253aqQ+L/KaUC5vCJckqtBaGPW6vOFTsS12zaSyFbvZc1KgfZvd4/ceMTD84SfVCo7r3L/8CTTm2seVfXy4aS7Nu+PuKsdNG+CrydERGuQcYAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qydRrlYF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gxtn+5Go"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724A7C4CEE2;
-	Wed,  5 Mar 2025 12:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qydRrlYF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7BDC4CED1;
+	Wed,  5 Mar 2025 14:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741179571;
-	bh=ydjrl0nn4CMEHtCBM5l94ZW9OOFOLfL9ZmqhrjUkLU8=;
+	s=korg; t=1741183443;
+	bh=HcsY7DDq4XH4OmEl92ldJL3YkDr23xKJetfRPqzjsGs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Gxtn+5GoabVjRIFGeo6k90yuhftoXIsgh8485THT0klS3lm3MELFOiTyn9puOh/Hh
-	 oZhEMXf8RNe1BicDJVNZ806+RUl3367La3PehMzeDn7q7wdk/VJdt2EdP3GZAUvF0N
-	 y1xvdNowyOrM4+rj7hiRFtGWLOsVtFgATFEZV1qs=
-Date: Wed, 5 Mar 2025 13:59:28 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: jianqi.ren.cn@windriver.com
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	alexander.deucher@amd.com, daniel.wheeler@amd.com,
-	mario.limonciello@amd.com, josip.pavic@amd.com,
-	aurabindo.pillai@amd.com, sohaib.nadeem@amd.com,
-	harry.wentland@amd.com, sunpeng.li@amd.com,
-	Rodrigo.Siqueira@amd.com, christian.koenig@amd.com,
-	Xinhui.Pan@amd.com, airlied@gmail.com, daniel@ffwll.ch,
-	wayne.lin@amd.com, sashal@kernel.org,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	charlene.liu@amd.com, gabe.teeger@amd.com,
-	amd-gfx@lists.freedesktop.org, Nicholas.Kazlauskas@amd.com
-Subject: Re: [PATCH 6.1.y] drm/amd/display: fixed integer types and null
- check locations
-Message-ID: <2025030548-spinal-breezy-ef8e@gregkh>
-References: <20250227032633.4176866-1-jianqi.ren.cn@windriver.com>
+	b=qydRrlYFn41HVh4alDbihgeqoOewUuIYpjMRLbkhPx9lZgzsheLabrRLrcLTojXwz
+	 WhdNE2EHijZVi9WS2FoWbkzK8+OEkDxXCRnKV5x+wFFYFGZ0GUKI3KRND2debedK95
+	 btLd0PB8JXn743GyWKLt2SLlhXo7cgZcMy/dJF9k=
+Date: Wed, 5 Mar 2025 15:03:55 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Tianchen Ding <dtcccc@linux.alibaba.com>
+Cc: patches@lists.linux.dev, Zijian Zhang <zijianzhang@bytedance.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org,
+	Levi Zim <rsworktech@outlook.com>,
+	Daniel Borkmann <daniel@iogearbox.net>
+Subject: Re: [PATCH 6.6 238/676] bpf, sockmap: Several fixes to
+ bpf_msg_pop_data
+Message-ID: <2025030512-lens-refill-2e71@gregkh>
+References: <20241206143653.344873888@linuxfoundation.org>
+ <20241206143702.627526560@linuxfoundation.org>
+ <445cf95d-b695-4e8d-b4ba-6ca0c12b1c52@linux.alibaba.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,35 +46,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250227032633.4176866-1-jianqi.ren.cn@windriver.com>
+In-Reply-To: <445cf95d-b695-4e8d-b4ba-6ca0c12b1c52@linux.alibaba.com>
 
-On Thu, Feb 27, 2025 at 11:26:33AM +0800, jianqi.ren.cn@windriver.com wrote:
-> From: Sohaib Nadeem <sohaib.nadeem@amd.com>
+On Thu, Feb 27, 2025 at 05:40:02PM +0800, Tianchen Ding wrote:
+> Hi,
 > 
-> [ Upstream commit 0484e05d048b66d01d1f3c1d2306010bb57d8738 ]
+> On 12/6/24 10:30 PM, Greg Kroah-Hartman wrote:
+> > 6.6-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Zijian Zhang <zijianzhang@bytedance.com>
+> > 
+> > [ Upstream commit 5d609ba262475db450ba69b8e8a557bd768ac07a ]
+> > 
+> > Several fixes to bpf_msg_pop_data,
+> > 1. In sk_msg_shift_left, we should put_page
+> > 2. if (len == 0), return early is better
+> > 3. pop the entire sk_msg (last == msg->sg.size) should be supported
+> > 4. Fix for the value of variable "a"
+> > 5. In sk_msg_shift_left, after shifting, i has already pointed to the next
+> > element. Addtional sk_msg_iter_var_next may result in BUG.
+> > 
+> > Fixes: 7246d8ed4dcc ("bpf: helper to pop data from messages")
+> > Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
+> > Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+> > Link: https://lore.kernel.org/r/20241106222520.527076-8-zijianzhang@bytedance.com
+> > Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > 
-> [why]:
-> issues fixed:
-> - comparison with wider integer type in loop condition which can cause
-> infinite loops
-> - pointer dereference before null check
+> We found the kernel crashed when running kselftests (bpf/test_sockmap) in
+> kernel 6.6 LTS, which is introduced by this commit. I guess all other stable
+> kernels (containing this commit) are also affected.
 > 
-> Cc: Mario Limonciello <mario.limonciello@amd.com>
-> Cc: Alex Deucher <alexander.deucher@amd.com>
-> Cc: stable@vger.kernel.org
-> Reviewed-by: Josip Pavic <josip.pavic@amd.com>
-> Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-> Signed-off-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
-> Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-> Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-> [ To fix CVE-2024-26767, delete changes made in drivers/gpu/drm/amd/display/dc/link/link_validation.c
->  for this file is deleted in linux-6.1 ]
+> Please consider backporting the following 2 commits:
+> fdf478d236dc ("skmsg: Return copied bytes in sk_msg_memcopy_from_iter")
+> 5153a75ef34b ("tcp_bpf: Fix copied value in tcp_bpf_sendmsg")
 
-It's not that the file is deleted, it is just not present yet, as it had
-not shown up in the tree.
-
-I've manually edited this changelog, please be more careful next time.
-Also, no need to mention a CVE id, they don't mean anything here :)
+Please submit the tested series to us, properly backported, and we will
+be glad to review them for stable inclusion (remember to also properly
+send patches for newer stable releases as needed.)
 
 thanks,
 
