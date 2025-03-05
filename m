@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4446E259CA9;
-	Wed,  5 Mar 2025 18:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2548B259CA3;
+	Wed,  5 Mar 2025 18:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741198606; cv=none; b=OhnqFEoZwKa/VPxNmsluOOJx3n48eG1VV3bhOAO5p8RGjI6aQl09ZyLe8X2dPTVdDH/d/a0R/WDPfG9ljFu5OoBpCgNdcBg2ufTpZX+yok2P6pM983IqLFzWhjT8yjZbv3vTzGIWx+5Z/7w6ADuAEbkvvtC9N/GVFx+t+3HtJkw=
+	t=1741198608; cv=none; b=NKw57yZpgSoWJ3rDf64EtcCkZAJes1VD/unCAW4Og1sC1A0BrzJBkhK1RFhFZkoVZENXJydMbcqqjMlS1HE/gJKmvouXyR6nzft+/1AQf3GvqS+V9LcVd3deNVSIRyIbIy2GvNgoj3YQQJJVx80XHm/w3J50sXYktL4dCxonpPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741198606; c=relaxed/simple;
-	bh=RQ5Puj7myqXCo5r+oFwVXJnE7tGqHSbBaksDFEht6+4=;
+	s=arc-20240116; t=1741198608; c=relaxed/simple;
+	bh=IfjODqrflO6ExfGT8HFAkhskMi7S4sQcVb1vjGkbxOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O3MTc5Z5n6VX+YnID+EHnK4YtXtaA+XigdbsLkvdiIx8HggttAwO0QQKVrCKsB8ZQnVYrFBaDwj2mROF73oP4Dkn7TV+mTAdHuq6HOQnQ+1SqMpGV4JiCF8pwmUSKWXl9uLH4HCEOkqCwaV+E+ya38v74WqfkPBpIUmcCSsij7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/+RMLoV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EbDlUFzY4KfHOy4XJCvLcIIK49roY1995krwolZxBw80uvfIC7I3yfl9fMrZkrI8htUKK2daj/H+hk8W4OJ1GQjN+W42Fh1TnGDnIXyyXZNCBC30VoE8Um8m2k4/eMHk+XHASDZmRio0eL9UxTZzDBVjQK0ezuAr/ChTtNj4uqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GPs8MFHR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/+RMLoV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61EDCC4CED1;
-	Wed,  5 Mar 2025 18:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GPs8MFHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46423C4CED1;
+	Wed,  5 Mar 2025 18:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741198604;
-	bh=RQ5Puj7myqXCo5r+oFwVXJnE7tGqHSbBaksDFEht6+4=;
+	s=korg; t=1741198607;
+	bh=IfjODqrflO6ExfGT8HFAkhskMi7S4sQcVb1vjGkbxOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/+RMLoV13T+cQ3Jb46Fmy0QR6Z/4rAy6UaiEacVW8+7yiP5E5TTiEnm7JBry5V9w
-	 juHCpkfMkKnsfEkWUCLs2ttlURPStZyXm5KnnjXGsyqu05AVgI3Z+AEnjizKDMtCu6
-	 1vJGYR7nx4PZko/Ko4anzhcqfDnxhlWhI9AZ4Jng=
+	b=GPs8MFHRlmUY9yN7LpGQMyKrt0zIxkrkouGbO/sp2gHuCfjPbbv94+OGDac3/Znr/
+	 pPbPA6Ry1lSYtMWysNeXAJo/1ffKNBGMwr49ufENlOxQ5NcDfR1Aw3VF7MQHua9Z+M
+	 VqfCJCkDON3SEjdJpoPx8Gmra82KQsDb08Hvbr9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lebrun <dlebrun@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Justin Iurman <justin.iurman@uliege.be>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 058/157] net: ipv6: fix dst ref loop on input in seg6 lwt
-Date: Wed,  5 Mar 2025 18:48:14 +0100
-Message-ID: <20250305174507.635933469@linuxfoundation.org>
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.13 085/157] KVM: arm64: Ensure a VMID is allocated before programming VTTBR_EL2
+Date: Wed,  5 Mar 2025 18:48:41 +0100
+Message-ID: <20250305174508.726343650@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174505.268725418@linuxfoundation.org>
 References: <20250305174505.268725418@linuxfoundation.org>
@@ -53,60 +51,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Iurman <justin.iurman@uliege.be>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-[ Upstream commit c64a0727f9b1cbc63a5538c8c0014e9a175ad864 ]
+commit fa808ed4e199ed17d878eb75b110bda30dd52434 upstream.
 
-Prevent a dst ref loop on input in seg6_iptunnel.
+Vladimir reports that a race condition to attach a VMID to a stage-2 MMU
+sometimes results in a vCPU entering the guest with a VMID of 0:
 
-Fixes: af4a2209b134 ("ipv6: sr: use dst_cache in seg6_input")
-Cc: David Lebrun <dlebrun@google.com>
-Cc: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+| CPU1                                            |   CPU2
+|                                                 |
+|                                                 | kvm_arch_vcpu_ioctl_run
+|                                                 |   vcpu_load             <= load VTTBR_EL2
+|                                                 |                            kvm_vmid->id = 0
+|                                                 |
+| kvm_arch_vcpu_ioctl_run                         |
+|   vcpu_load             <= load VTTBR_EL2       |
+|                            with kvm_vmid->id = 0|
+|   kvm_arm_vmid_update   <= allocates fresh      |
+|                            kvm_vmid->id and     |
+|                            reload VTTBR_EL2     |
+|                                                 |
+|                                                 |   kvm_arm_vmid_update <= observes that kvm_vmid->id
+|                                                 |                          already allocated,
+|                                                 |                          skips reload VTTBR_EL2
+
+Oh yeah, it's as bad as it looks. Remember that VHE loads the stage-2
+MMU eagerly but a VMID only gets attached to the MMU later on in the
+KVM_RUN loop.
+
+Even in the "best case" where VTTBR_EL2 correctly gets reprogrammed
+before entering the EL1&0 regime, there is a period of time where
+hardware is configured with VMID 0. That's completely insane. So, rather
+than decorating the 'late' binding with another hack, just allocate the
+damn thing up front.
+
+Attaching a VMID from vcpu_load() is still rollover safe since
+(surprise!) it'll always get called after a vCPU was preempted.
+
+Excuse me while I go find a brown paper bag.
+
+Cc: stable@vger.kernel.org
+Fixes: 934bf871f011 ("KVM: arm64: Load the stage-2 MMU context in kvm_vcpu_load_vhe()")
+Reported-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20250219220737.130842-1-oliver.upton@linux.dev
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_iptunnel.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/kvm_host.h |    2 +-
+ arch/arm64/kvm/arm.c              |   22 ++++++++++------------
+ arch/arm64/kvm/vmid.c             |   11 +++--------
+ 3 files changed, 14 insertions(+), 21 deletions(-)
 
-diff --git a/net/ipv6/seg6_iptunnel.c b/net/ipv6/seg6_iptunnel.c
-index 33833b2064c07..51583461ae29b 100644
---- a/net/ipv6/seg6_iptunnel.c
-+++ b/net/ipv6/seg6_iptunnel.c
-@@ -472,10 +472,18 @@ static int seg6_input_core(struct net *net, struct sock *sk,
- {
- 	struct dst_entry *orig_dst = skb_dst(skb);
- 	struct dst_entry *dst = NULL;
-+	struct lwtunnel_state *lwtst;
- 	struct seg6_lwt *slwt;
- 	int err;
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -1262,7 +1262,7 @@ int kvm_arm_pvtime_has_attr(struct kvm_v
+ extern unsigned int __ro_after_init kvm_arm_vmid_bits;
+ int __init kvm_arm_vmid_alloc_init(void);
+ void __init kvm_arm_vmid_alloc_free(void);
+-bool kvm_arm_vmid_update(struct kvm_vmid *kvm_vmid);
++void kvm_arm_vmid_update(struct kvm_vmid *kvm_vmid);
+ void kvm_arm_vmid_clear_active(void);
  
--	slwt = seg6_lwt_lwtunnel(orig_dst->lwtstate);
-+	/* We cannot dereference "orig_dst" once ip6_route_input() or
-+	 * skb_dst_drop() is called. However, in order to detect a dst loop, we
-+	 * need the address of its lwtstate. So, save the address of lwtstate
-+	 * now and use it later as a comparison.
+ static inline void kvm_arm_pvtime_vcpu_init(struct kvm_vcpu_arch *vcpu_arch)
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -581,6 +581,16 @@ void kvm_arch_vcpu_load(struct kvm_vcpu
+ 	last_ran = this_cpu_ptr(mmu->last_vcpu_ran);
+ 
+ 	/*
++	 * Ensure a VMID is allocated for the MMU before programming VTTBR_EL2,
++	 * which happens eagerly in VHE.
++	 *
++	 * Also, the VMID allocator only preserves VMIDs that are active at the
++	 * time of rollover, so KVM might need to grab a new VMID for the MMU if
++	 * this is called from kvm_sched_in().
 +	 */
-+	lwtst = orig_dst->lwtstate;
++	kvm_arm_vmid_update(&mmu->vmid);
 +
-+	slwt = seg6_lwt_lwtunnel(lwtst);
++	/*
+ 	 * We guarantee that both TLBs and I-cache are private to each
+ 	 * vcpu. If detecting that a vcpu from the same VM has
+ 	 * previously run on the same physical CPU, call into the
+@@ -1147,18 +1157,6 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
+ 		 */
+ 		preempt_disable();
  
- 	local_bh_disable();
- 	dst = dst_cache_get(&slwt->cache);
-@@ -490,7 +498,9 @@ static int seg6_input_core(struct net *net, struct sock *sk,
- 	if (!dst) {
- 		ip6_route_input(skb);
- 		dst = skb_dst(skb);
--		if (!dst->error) {
-+
-+		/* cache only if we don't create a dst reference loop */
-+		if (!dst->error && lwtst != dst->lwtstate) {
- 			local_bh_disable();
- 			dst_cache_set_ip6(&slwt->cache, dst,
- 					  &ipv6_hdr(skb)->saddr);
--- 
-2.39.5
-
+-		/*
+-		 * The VMID allocator only tracks active VMIDs per
+-		 * physical CPU, and therefore the VMID allocated may not be
+-		 * preserved on VMID roll-over if the task was preempted,
+-		 * making a thread's VMID inactive. So we need to call
+-		 * kvm_arm_vmid_update() in non-premptible context.
+-		 */
+-		if (kvm_arm_vmid_update(&vcpu->arch.hw_mmu->vmid) &&
+-		    has_vhe())
+-			__load_stage2(vcpu->arch.hw_mmu,
+-				      vcpu->arch.hw_mmu->arch);
+-
+ 		kvm_pmu_flush_hwstate(vcpu);
+ 
+ 		local_irq_disable();
+--- a/arch/arm64/kvm/vmid.c
++++ b/arch/arm64/kvm/vmid.c
+@@ -135,11 +135,10 @@ void kvm_arm_vmid_clear_active(void)
+ 	atomic64_set(this_cpu_ptr(&active_vmids), VMID_ACTIVE_INVALID);
+ }
+ 
+-bool kvm_arm_vmid_update(struct kvm_vmid *kvm_vmid)
++void kvm_arm_vmid_update(struct kvm_vmid *kvm_vmid)
+ {
+ 	unsigned long flags;
+ 	u64 vmid, old_active_vmid;
+-	bool updated = false;
+ 
+ 	vmid = atomic64_read(&kvm_vmid->id);
+ 
+@@ -157,21 +156,17 @@ bool kvm_arm_vmid_update(struct kvm_vmid
+ 	if (old_active_vmid != 0 && vmid_gen_match(vmid) &&
+ 	    0 != atomic64_cmpxchg_relaxed(this_cpu_ptr(&active_vmids),
+ 					  old_active_vmid, vmid))
+-		return false;
++		return;
+ 
+ 	raw_spin_lock_irqsave(&cpu_vmid_lock, flags);
+ 
+ 	/* Check that our VMID belongs to the current generation. */
+ 	vmid = atomic64_read(&kvm_vmid->id);
+-	if (!vmid_gen_match(vmid)) {
++	if (!vmid_gen_match(vmid))
+ 		vmid = new_vmid(kvm_vmid);
+-		updated = true;
+-	}
+ 
+ 	atomic64_set(this_cpu_ptr(&active_vmids), vmid);
+ 	raw_spin_unlock_irqrestore(&cpu_vmid_lock, flags);
+-
+-	return updated;
+ }
+ 
+ /*
 
 
