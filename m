@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9012714B075;
-	Wed,  5 Mar 2025 18:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D3914B075;
+	Wed,  5 Mar 2025 18:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741197716; cv=none; b=NoceOF5vo5aeUxtgrFq810yY12yaeF8o4iyCTsCsLSXbFHA4PErQlaNg2xxg6v0nIC6ONgm1trsKRwVLdqsSytmEuRCRpVP1rej7pupoVP2GgPzVhr0dpCuFQG8FwB2pfDQbZR/SIa/7JC7tVP7r+33DQr/LGVP+p2yZIMsxm9w=
+	t=1741197719; cv=none; b=KVLFfy7w8/EzFuex7PDFZkoPGGxA4hnrftkip9tS9BIGhGMEwZU6VTHyFxvdhlMFXlJczzZeBIi8mVTxO/bto+12sMs+vzFwxGGx/eD4Uk0b5VBEEt0PLgD0RygCndPSiSi2Dwx+bxu/+Z5XCZboUU3B/ytX8I6gsmAZ+Ac1GgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741197716; c=relaxed/simple;
-	bh=JY7Gij6oONr68iDEqLaeZM6zzV4op7qTYt/q8WwIt5Y=;
+	s=arc-20240116; t=1741197719; c=relaxed/simple;
+	bh=X2en+sAH6G9CcOPIZwVG6+rMrqdLgHekgz6y+mh+mSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ISWFM8UDcn02k+GXL2GnksIqTWlWjWLBFTnbn/duWIpTufOjjdH1UEzmL2FR3Og4et3qk1i9zLFOLfU+1KV4wKuBTUZoRW619XrxWEHLay9LFvYPDeHybdl9ROSqvAdvUTv8LT44cctyB52m/YImzyG1q8+7PrGA3koWF/HUrQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=onnFM1o6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=llQw0QqfSMQteu5iSnM1oUF/PHYMpgckg9D5r6ekubQ4on/t9ZJSXpoiX3+x9fP97IByJpfw8hprGaohv4/XEaGnSka7mJWRdxTMtTOmiyrL2Z1jWyQ+pUiCBXmyAH/vpwF5rMi2oqiw8xhAvCc/tzpiiPQgEiW/SyEYj5q9p+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Doj4bh69; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="onnFM1o6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D9DC4CEE0;
-	Wed,  5 Mar 2025 18:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Doj4bh69"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22CFC4CED1;
+	Wed,  5 Mar 2025 18:01:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1741197716;
-	bh=JY7Gij6oONr68iDEqLaeZM6zzV4op7qTYt/q8WwIt5Y=;
+	s=korg; t=1741197719;
+	bh=X2en+sAH6G9CcOPIZwVG6+rMrqdLgHekgz6y+mh+mSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=onnFM1o6rtacezmcrsRITpOpl8bVkKxkWx8R3wsWQGpRAnZBzlj6E0ntZeh6qhcg2
-	 St+grdvQh5MfoBIIhWbUFwgkR96pBRzHR1rxXgzlCxpI7kOhJBCle3gW3hx3EPaU1J
-	 Hz1uwyBa5+3nGsxVsLrqObyD8nqSfoyXaTlMESlQ=
+	b=Doj4bh69xgsYmbBu6iAbzU6Z/KibjjVWSLgLlsvtkLb/Gj/G1LMsZG0f8hVakavwx
+	 i2tQFQnbXB6DtWQUWHK7KQniKQGENVzSh43qjg65FCAf79joQK7HMywKpElZqUWVKU
+	 f/L+8Gye7B6RfcI3h4BlTJ+QulK7P6mMhvwRy4LQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshal Chaudhari <hchaudhari@marvell.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Philo Lu <lulie@linux.alibaba.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/142] net: mvpp2: cls: Fixed Non IP flow, with vlan tag flow defination.
-Date: Wed,  5 Mar 2025 18:47:42 +0100
-Message-ID: <20250305174502.067828261@linuxfoundation.org>
+Subject: [PATCH 6.6 034/142] ipvs: Always clear ipvs_property flag in skb_scrub_packet()
+Date: Wed,  5 Mar 2025 18:47:33 +0100
+Message-ID: <20250305174501.708569757@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305174500.327985489@linuxfoundation.org>
 References: <20250305174500.327985489@linuxfoundation.org>
@@ -52,38 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshal Chaudhari <hchaudhari@marvell.com>
+From: Philo Lu <lulie@linux.alibaba.com>
 
-[ Upstream commit 2d253726ff7106b39a44483b6864398bba8a2f74 ]
+[ Upstream commit de2c211868b9424f9aa9b3432c4430825bafb41b ]
 
-Non IP flow, with vlan tag not working as expected while
-running below command for vlan-priority. fixed that.
+We found an issue when using bpf_redirect with ipvs NAT mode after
+commit ff70202b2d1a ("dev_forward_skb: do not scrub skb mark within
+the same name space"). Particularly, we use bpf_redirect to return
+the skb directly back to the netif it comes from, i.e., xnet is
+false in skb_scrub_packet(), and then ipvs_property is preserved
+and SNAT is skipped in the rx path.
 
-ethtool -N eth1 flow-type ether vlan 0x8000 vlan-mask 0x1fff action 0 loc 0
+ipvs_property has been already cleared when netns is changed in
+commit 2b5ec1a5f973 ("netfilter/ipvs: clear ipvs_property flag when
+SKB net namespace changed"). This patch just clears it in spite of
+netns.
 
-Fixes: 1274daede3ef ("net: mvpp2: cls: Add steering based on vlan Id and priority.")
-Signed-off-by: Harshal Chaudhari <hchaudhari@marvell.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20250225042058.2643838-1-hchaudhari@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2b5ec1a5f973 ("netfilter/ipvs: clear ipvs_property flag when SKB net namespace changed")
+Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Link: https://patch.msgid.link/20250222033518.126087-1-lulie@linux.alibaba.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c | 2 +-
+ net/core/skbuff.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
-index 40aeaa7bd739f..d2757cc116139 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
-@@ -324,7 +324,7 @@ static const struct mvpp2_cls_flow cls_flows[MVPP2_N_PRS_FLOWS] = {
- 		       MVPP2_PRS_RI_VLAN_MASK),
- 	/* Non IP flow, with vlan tag */
- 	MVPP2_DEF_FLOW(MVPP22_FLOW_ETHERNET, MVPP2_FL_NON_IP_TAG,
--		       MVPP22_CLS_HEK_OPT_VLAN,
-+		       MVPP22_CLS_HEK_TAGGED,
- 		       0, 0),
- };
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index f0a9ef1aeaa29..21a83e26f004b 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -5867,11 +5867,11 @@ void skb_scrub_packet(struct sk_buff *skb, bool xnet)
+ 	skb->offload_fwd_mark = 0;
+ 	skb->offload_l3_fwd_mark = 0;
+ #endif
++	ipvs_reset(skb);
  
+ 	if (!xnet)
+ 		return;
+ 
+-	ipvs_reset(skb);
+ 	skb->mark = 0;
+ 	skb_clear_tstamp(skb);
+ }
 -- 
 2.39.5
 
